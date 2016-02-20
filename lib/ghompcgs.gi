@@ -16,7 +16,14 @@ local p,q;
     p:=hom!.sourcePcgs;
     q:=hom!.sourcePcgsImages;
     hom!.sourcePcgsImagesPowers := List([1..Length(p)],
-      i->List([1..RelativeOrders(p)[i]-1], j->q[i]^j));
+      function (i)
+        local pow, j;
+        pow := [q[i]];
+        for j in [2..RelativeOrders(p)[i]-1] do
+            pow[j] := pow[j-1]*q[i];
+        od;
+        return pow;
+      end);
   fi;
   return hom!.sourcePcgsImagesPowers;
 end);
@@ -88,6 +95,10 @@ InstallMethod( CompositionMapping2, "method for two pc group automorphisms",
 function( hom1, hom2 )
 local fam,hom, pcgs, pcgsimgs, G;
 
+  # is it automorphism?
+  if Range(hom1)<>Source(hom2) then
+    TryNextMethod();
+  fi;
   pcgs := hom2!.sourcePcgs;
   pcgsimgs := List( hom2!.sourcePcgsImages, 
                     x -> ImageElm(hom1, x ) );

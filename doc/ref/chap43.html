@@ -83,11 +83,12 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap43.html#X7AC8F165875906DE">43.10-7 IndicesStabChain</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap43.html#X7CF607BC82C2C202">43.10-8 ListStabChain</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap43.html#X7F40E52D7B0438BF">43.10-9 ElementsStabChain</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap43.html#X861062AE87ACF340">43.10-10 InverseRepresentative</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap43.html#X79D2248C8787EAF2">43.10-11 SiftedPermutation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap43.html#X7B870C217D0B9997">43.10-12 MinimalElementCosetStabChain</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap43.html#X87435B7884D9B353">43.10-13 LargestElementStabChain</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap43.html#X809B2C3B7C5F77AB">43.10-14 ApproximateSuborbitsStabilizerPermGroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap43.html#X780875477CD2A57D">43.10-10 IteratorStabChain</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap43.html#X861062AE87ACF340">43.10-11 InverseRepresentative</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap43.html#X79D2248C8787EAF2">43.10-12 SiftedPermutation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap43.html#X7B870C217D0B9997">43.10-13 MinimalElementCosetStabChain</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap43.html#X87435B7884D9B353">43.10-14 LargestElementStabChain</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap43.html#X809B2C3B7C5F77AB">43.10-15 ApproximateSuborbitsStabilizerPermGroup</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap43.html#X8188051F79E72A95">43.11 <span class="Heading">Low Level Routines to Modify and Create Stabilizer Chains</span></a>
 </span>
@@ -379,7 +380,7 @@ rec(
 
 <h4>43.6 <span class="Heading">Stabilizer Chains</span></h4>
 
-<p>Many of the algorithms for permutation groups use a <em>stabilizer chain</em> of the group. The concepts of stabilizer chains, <em>bases</em>, and <em>strong generating sets</em> were introduced by Charles Sims in <a href="chapBib.html#biBSim70">[Sim70]</a>. A further discussion of base change is given in section <a href="chap87.html#X870717BA831A0365"><span class="RefLink">87.1</span></a>.</p>
+<p>Many of the algorithms for permutation groups use a <em>stabilizer chain</em> of the group. The concepts of stabilizer chains, <em>bases</em>, and <em>strong generating sets</em> were introduced by Charles Sims in <a href="chapBib.html#biBSim70">[Sim70]</a>. An extensive account of basic algorithms together with asymptotic runtime analysis can be found in reference <a href="chapBib.html#biBSeress2003">[Ser03, Chapter 4]</a>. A further discussion of base change is given in section <a href="chap87.html#X870717BA831A0365"><span class="RefLink">87.1</span></a>.</p>
 
 <p>Let <span class="SimpleMath">B = [ b_1, ..., b_n ]</span> be a list of points, <span class="SimpleMath">G^(1) = G</span> and <span class="SimpleMath">G^{(i+1)} = Stab_{G^(i)}(b_i)</span>, such that <span class="SimpleMath">G^(n+1) = { () }</span>. Then the list <span class="SimpleMath">[ b_1, ..., b_n ]</span> is called a <em>base</em> of <span class="SimpleMath">G</span>, the points <span class="SimpleMath">b_i</span> are called <em>base points</em>. A set <span class="SimpleMath">S</span> of generators for <span class="SimpleMath">G</span> satisfying the condition <span class="SimpleMath">⟨ S ∩ G^(i) ⟩ = G^(i)</span> for each <span class="SimpleMath">1 ≤ i ≤ n</span>, is called a <em>strong generating set</em> (SGS) of <span class="SimpleMath">G</span>. (More precisely we ought to say that it is a SGS of <span class="SimpleMath">G</span> <em>relative</em> to <span class="SimpleMath">B</span>). The chain of subgroups <span class="SimpleMath">G^(i)</span> of <span class="SimpleMath">G</span> itself is called the <em>stabilizer chain</em> of <span class="SimpleMath">G</span> relative to <span class="SimpleMath">B</span>.</p>
 
@@ -699,16 +700,23 @@ rec( random := 1000, reduced := true, tryPcgs := true )
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementsStabChain</code>( <var class="Arg">S</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>returns a list of all elements of the group described by the stabilizer chain <var class="Arg">S</var>.</p>
 
+<p><a id="X780875477CD2A57D" name="X780875477CD2A57D"></a></p>
+
+<h5>43.10-10 IteratorStabChain</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorStabChain</code>( <var class="Arg">S</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>returns an iterator for the elments of the group described by the stabilizer chain <var class="Arg">S</var>. The elements of the group <var class="Arg">G</var> are produced by iterating through all base images in turn, and in the ordering induced by the base. For more details see <a href="chap43.html#X7FA58C3A8283F3BD"><span class="RefLink">43.6</span></a></p>
+
 <p><a id="X861062AE87ACF340" name="X861062AE87ACF340"></a></p>
 
-<h5>43.10-10 InverseRepresentative</h5>
+<h5>43.10-11 InverseRepresentative</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseRepresentative</code>( <var class="Arg">S</var>, <var class="Arg">pnt</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>calculates the transversal element which maps <var class="Arg">pnt</var> back to the base point of <var class="Arg">S</var>. It just runs back through the Schreier tree from <var class="Arg">pnt</var> to the root and multiplies the labels along the way.</p>
 
 <p><a id="X79D2248C8787EAF2" name="X79D2248C8787EAF2"></a></p>
 
-<h5>43.10-11 SiftedPermutation</h5>
+<h5>43.10-12 SiftedPermutation</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SiftedPermutation</code>( <var class="Arg">S</var>, <var class="Arg">g</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>sifts the permutation <var class="Arg">g</var> through the stabilizer chain <var class="Arg">S</var> and returns the result after the last step.</p>
@@ -717,21 +725,21 @@ rec( random := 1000, reduced := true, tryPcgs := true )
 
 <p><a id="X7B870C217D0B9997" name="X7B870C217D0B9997"></a></p>
 
-<h5>43.10-12 MinimalElementCosetStabChain</h5>
+<h5>43.10-13 MinimalElementCosetStabChain</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalElementCosetStabChain</code>( <var class="Arg">S</var>, <var class="Arg">g</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Let <span class="SimpleMath">G</span> be the group described by the stabilizer chain <var class="Arg">S</var>. This function returns a permutation <span class="SimpleMath">h</span> such that <span class="SimpleMath">G <var class="Arg">g</var> = G h</span> (that is, <span class="SimpleMath"><var class="Arg">g</var> / h ∈ G</span>) and with the additional property that the list of images under <span class="SimpleMath">h</span> of the base belonging to <var class="Arg">S</var> is minimal w.r.t. lexicographical ordering.</p>
 
 <p><a id="X87435B7884D9B353" name="X87435B7884D9B353"></a></p>
 
-<h5>43.10-13 LargestElementStabChain</h5>
+<h5>43.10-14 LargestElementStabChain</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestElementStabChain</code>( <var class="Arg">S</var>, <var class="Arg">id</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Let <span class="SimpleMath">G</span> be the group described by the stabilizer chain <var class="Arg">S</var>. This function returns the element <span class="SimpleMath">h ∈ G</span> with the property that the list of images under <span class="SimpleMath">h</span> of the base belonging to <var class="Arg">S</var> is maximal w.r.t. lexicographical ordering. The second argument must be an identity element (used to start the recursion).</p>
 
 <p><a id="X809B2C3B7C5F77AB" name="X809B2C3B7C5F77AB"></a></p>
 
-<h5>43.10-14 ApproximateSuborbitsStabilizerPermGroup</h5>
+<h5>43.10-15 ApproximateSuborbitsStabilizerPermGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ApproximateSuborbitsStabilizerPermGroup</code>( <var class="Arg">G</var>, <var class="Arg">pnt</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>returns an approximation of the orbits of <code class="code">Stabilizer( <var class="Arg">G</var>, <var class="Arg">pnt</var> )</code> on all points of the orbit <code class="code">Orbit( <var class="Arg">G</var>, <var class="Arg">pnt</var> )</code>, without computing the full point stabilizer; As not all Schreier generators are used, the result may represent the orbits of only a subgroup of the point stabilizer.</p>

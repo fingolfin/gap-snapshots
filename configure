@@ -629,6 +629,8 @@ GMP_CFLAGS
 m4_PRESENT
 GAPARCH
 CONFIGNAME
+wincygbin
+wingapdir
 gapdir
 SET_MAKE
 BASECC
@@ -1350,8 +1352,8 @@ Some influential environment variables:
               not deselect it) in 32- or 64-bit mode. The default value for
               this option is determined by testing the behaviour of your
               compiler, so should be 32 on a 32-bit system and 64 on one which
-              is 64-bit. On ARM processors, leave this unset (the build system
-              will set it to "standard" for GMP).
+              is 64-bit. If this is unset, the build system will set a value
+              of 64 or 32 depending of the pointer size of the host.
   CONFIGNAME  Supply a (meaningful) name for the configuration you are
               building. This name will be appended to the
               architecture-dependent named sub-directory of bin/. Allows for
@@ -3370,8 +3372,10 @@ elif test "$ABI" = "64"; then
 elif test "$ABI" = "32"; then
   ABI_CFLAGS="-m32"
 else
-  as_fn_error $? " $ABI is not a supported value for ABI. Please use ABI=64
-                 or 32, or leave it unset." "$LINENO" 5
+  { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING:  $ABI is not a supported value for ABI. The supported values are ABI=64
+                 or 32." >&5
+$as_echo "$as_me: WARNING:  $ABI is not a supported value for ABI. The supported values are ABI=64
+                 or 32." >&2;}
 fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ABI" >&5
@@ -4096,6 +4100,15 @@ fi
 
 gapdir=`pwd`
 
+case $target_os in
+  cygwin*)
+
+    wingapdir=$(cygpath -w $(pwd))
+
+    wincygbin=$(cygpath -w /bin)
+    gapdir=$(echo /proc/cygdrive/"$(cygpath -am $(pwd))" | sed -e 's/:\//\//g')
+esac
+
 
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking GAP config name" >&5
@@ -4128,9 +4141,9 @@ case "$with_gmp" in
     MAKE_GMP=""
     USE_GMP=no
     ;;
-  yes | 5.0.5 | 5.0.4)
+  yes | 6.0.0a | 5.0.5 | 5.0.4)
     if test "$with_gmp" = "yes" ; then
-      with_gmp="5.0.5"
+      with_gmp="6.0.0a"
     fi;
     GMP_HOME="`pwd`/bin/$GAPARCH/extern/gmp"
     GMP_CFLAGS="-I${GMP_HOME}/include"
@@ -4235,6 +4248,13 @@ fi
 
 mkdir -p bin
 ac_config_files="$ac_config_files Makefile-${CONFIGNAME}:Makefile.in sysinfo.gap-${CONFIGNAME}:sysinfo.in bin/gap-${CONFIGNAME}.sh:gap.shi"
+
+
+case $target_os in
+  cygwin*)
+    ac_config_files="$ac_config_files bin/gap.bat:cnf/gap.bai bin/gapcmd.bat:cnf/gapcmd.bai bin/gaprxvt.bat:cnf/gaprxvt.bai"
+
+esac
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -4944,6 +4964,9 @@ do
     "Makefile-${CONFIGNAME}") CONFIG_FILES="$CONFIG_FILES Makefile-${CONFIGNAME}:Makefile.in" ;;
     "sysinfo.gap-${CONFIGNAME}") CONFIG_FILES="$CONFIG_FILES sysinfo.gap-${CONFIGNAME}:sysinfo.in" ;;
     "bin/gap-${CONFIGNAME}.sh") CONFIG_FILES="$CONFIG_FILES bin/gap-${CONFIGNAME}.sh:gap.shi" ;;
+    "bin/gap.bat") CONFIG_FILES="$CONFIG_FILES bin/gap.bat:cnf/gap.bai" ;;
+    "bin/gapcmd.bat") CONFIG_FILES="$CONFIG_FILES bin/gapcmd.bat:cnf/gapcmd.bai" ;;
+    "bin/gaprxvt.bat") CONFIG_FILES="$CONFIG_FILES bin/gaprxvt.bat:cnf/gaprxvt.bai" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac
@@ -5392,6 +5415,7 @@ if test -n "$ac_unrecognized_opts" && test "$enable_option_checking" != no; then
   { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: unrecognized options: $ac_unrecognized_opts" >&5
 $as_echo "$as_me: WARNING: unrecognized options: $ac_unrecognized_opts" >&2;}
 fi
+
 
 ln -sf gap-${CONFIGNAME}.sh bin/gap.sh
 ln -sf Makefile-${CONFIGNAME} Makefile

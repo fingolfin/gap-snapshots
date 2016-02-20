@@ -51,7 +51,7 @@
   [29X[2XIsInputStream[102X( [3Xobj[103X ) [32X Category
   
   [33X[0;0YAll input streams lie in this category, and support input operations such as
-  [2XReadByte[102X ([14X10.3-4[114X) (see [14X10.3[114X)[133X
+  [2XReadByte[102X ([14X10.3-3[114X) (see [14X10.3[114X)[133X
   
   [1X10.1-4 IsInputTextStream[101X
   
@@ -143,14 +143,13 @@
   
   [1X10.3 [33X[0;0YOperations for Input Streams[133X[101X
   
-  [33X[0;0YThree  operations  normally used to read files: [2XRead[102X ([14X9.7-1[114X), [2XReadAsFunction[102X
-  ([14X9.7-2[114X)  and  [2XReadTest[102X  ([14X7.9-1[114X)  can  also  be used to read [5XGAP[105X input from a
-  stream.  The  input  is immediately parsed and executed. When reading from a
-  stream  [3Xstr[103X,  the [5XGAP[105X kernel generates calls to [10XReadLine([3Xstr[103X[10X)[110X to supply text
-  to the parser.[133X
+  [33X[0;0YTwo  operations normally used to read files: [2XRead[102X ([14X9.7-1[114X) and [2XReadAsFunction[102X
+  ([14X9.7-2[114X)  can  also  be  used  to  read [5XGAP[105X input from a stream. The input is
+  immediately  parsed  and  executed.  When reading from a stream [3Xstr[103X, the [5XGAP[105X
+  kernel generates calls to [10XReadLine([3Xstr[103X[10X)[110X to supply text to the parser.[133X
   
-  [33X[0;0YThree  further  operations: [2XReadByte[102X ([14X10.3-4[114X), [2XReadLine[102X ([14X10.3-5[114X) and [2XReadAll[102X
-  ([14X10.3-6[114X),  support  reading  characters from an input stream without parsing
+  [33X[0;0YThree  further  operations: [2XReadByte[102X ([14X10.3-3[114X), [2XReadLine[102X ([14X10.3-4[114X) and [2XReadAll[102X
+  ([14X10.3-5[114X),  support  reading  characters from an input stream without parsing
   them. This can be used to read data in any format and process it in [5XGAP[105X.[133X
   
   [33X[0;0YAdditional  operations for input streams support detection of end of stream,
@@ -186,14 +185,7 @@
     [4X[28X10[128X[104X
   [4X[32X[104X
   
-  [1X10.3-3 ReadTest[101X
-  
-  [29X[2XReadTest[102X( [3Xinput-text-stream[103X ) [32X operation
-  
-  [33X[0;0Yreads  the  input-text-stream  as test input until [10Xend-of-stream[110X occurs. See
-  [14X9.7[114X for details.[133X
-  
-  [1X10.3-4 ReadByte[101X
+  [1X10.3-3 ReadByte[101X
   
   [29X[2XReadByte[102X( [3Xinput-stream[103X ) [32X operation
   
@@ -213,7 +205,7 @@
   stream  is  a connection to another process, it will wait for the process to
   output a byte.[133X
   
-  [1X10.3-5 ReadLine[101X
+  [1X10.3-4 ReadLine[101X
   
   [29X[2XReadLine[102X( [3Xinput-stream[103X ) [32X operation
   
@@ -228,11 +220,11 @@
   limit of one line[133X
   
   [33X[0;0YA  default  method  is  supplied  for  [2XReadLine[102X  which simply calls [2XReadByte[102X
-  ([14X10.3-4[114X)  repeatedly.  This  is only safe for streams that cannot block. The
+  ([14X10.3-3[114X)  repeatedly.  This  is only safe for streams that cannot block. The
   kernel  uses  calls  to  [2XReadLine[102X to supply input to the parser when reading
   from a stream.[133X
   
-  [1X10.3-6 ReadAll[101X
+  [1X10.3-5 ReadAll[101X
   
   [29X[2XReadAll[102X( [3Xinput-stream[103X[, [3Xlimit[103X] ) [32X operation
   
@@ -252,7 +244,7 @@
   internal buffer.[133X
   
   [33X[0;0YA  default  method  is  supplied  for  [2XReadAll[102X  which  simply calls [2XReadLine[102X
-  ([14X10.3-5[114X)  repeatedly.  This  is  only  really  safe for streams which cannot
+  ([14X10.3-4[114X)  repeatedly.  This  is  only  really  safe for streams which cannot
   block. Other streams should install a method for [2XReadAll[102X[133X
   
   [4X[32X  Example  [32X[104X
@@ -276,21 +268,21 @@
     [4X[28X"1Hallo\nYou\n1"[128X[104X
   [4X[32X[104X
   
-  [1X10.3-7 IsEndOfStream[101X
+  [1X10.3-6 IsEndOfStream[101X
   
   [29X[2XIsEndOfStream[102X( [3Xinput-stream[103X ) [32X operation
   
   [33X[0;0Y[2XIsEndOfStream[102X  returns  [9Xtrue[109X  if  the  input stream is at [13Xend-of-stream[113X, and
   [9Xfalse[109X otherwise. Note that [2XIsEndOfStream[102X might return [9Xfalse[109X even if the next
-  [2XReadByte[102X ([14X10.3-4[114X) fails.[133X
+  [2XReadByte[102X ([14X10.3-3[114X) fails.[133X
   
-  [1X10.3-8 PositionStream[101X
+  [1X10.3-7 PositionStream[101X
   
   [29X[2XPositionStream[102X( [3Xinput-stream[103X ) [32X operation
   
   [33X[0;0YSome input streams, such as string streams and file streams attached to disk
   files,   support   a  form  of  random  access  by  way  of  the  operations
-  [2XPositionStream[102X,  [2XSeekPositionStream[102X  ([14X10.3-10[114X)  and  [2XRewindStream[102X  ([14X10.3-9[114X).
+  [2XPositionStream[102X,   [2XSeekPositionStream[102X  ([14X10.3-9[114X)  and  [2XRewindStream[102X  ([14X10.3-8[114X).
   [2XPositionStream[102X  returns a non-negative integer denoting the current position
   in  the  stream  (usually the number of characters [13Xbefore[113X the next one to be
   read.[133X
@@ -298,7 +290,7 @@
   [33X[0;0YIf  this  is  not  possible,  for  example  for  an input stream attached to
   standard input (normally the keyboard), then [9Xfail[109X is returned[133X
   
-  [1X10.3-9 RewindStream[101X
+  [1X10.3-8 RewindStream[101X
   
   [29X[2XRewindStream[102X( [3Xinput-stream[103X ) [32X operation
   
@@ -306,9 +298,9 @@
   so  that  all  the same characters can be read again. It returns [9Xtrue[109X if the
   rewind succeeds and [9Xfail[109X otherwise[133X
   
-  [33X[0;0YA default method implements RewindStream using [2XSeekPositionStream[102X ([14X10.3-10[114X).[133X
+  [33X[0;0YA default method implements RewindStream using [2XSeekPositionStream[102X ([14X10.3-9[114X).[133X
   
-  [1X10.3-10 SeekPositionStream[101X
+  [1X10.3-9 SeekPositionStream[101X
   
   [29X[2XSeekPositionStream[102X( [3Xinput-stream[103X, [3Xpos[103X ) [32X operation
   
@@ -476,18 +468,18 @@
   
   [1X10.5-1 InputTextFile[101X
   
-  [29X[2XInputTextFile[102X( [3Xname-file[103X ) [32X operation
+  [29X[2XInputTextFile[102X( [3Xfilename[103X ) [32X operation
   
-  [33X[0;0Y[10XInputTextFile(   [3Xname-file[103X[10X  )[110X  returns  an  input  stream  in  the  category
+  [33X[0;0Y[10XInputTextFile(   [3Xfilename[103X[10X   )[110X  returns  an  input  stream  in  the  category
   [2XIsInputTextStream[102X  ([14X10.1-4[114X)  that  delivers  the  characters  from  the file
-  [3Xname-file[103X.[133X
+  [3Xfilename[103X.[133X
   
   [1X10.5-2 OutputTextFile[101X
   
-  [29X[2XOutputTextFile[102X( [3Xname-file[103X, [3Xappend[103X ) [32X operation
+  [29X[2XOutputTextFile[102X( [3Xfilename[103X, [3Xappend[103X ) [32X operation
   
-  [33X[0;0Y[10XOutputTextFile( [3Xname-file[103X[10X, [3Xappend[103X[10X )[110X returns an output stream in the category
-  [10XIsOutputTextFile[110X  that  writes received characters to the file [3Xname-file[103X. If
+  [33X[0;0Y[10XOutputTextFile(  [3Xfilename[103X[10X, [3Xappend[103X[10X )[110X returns an output stream in the category
+  [10XIsOutputTextFile[110X  that  writes  received characters to the file [3Xfilename[103X. If
   [3Xappend[103X  is  [9Xfalse[109X,  then  the  file  is  emptied  first,  otherwise received
   characters are added at the end of the file.[133X
   
@@ -551,7 +543,7 @@
   [33X[0;0Yprints the [3Xarg[103X as a prompt, then waits until a text is typed by the user (or
   from the standard input device if it has been redirected). This text must be
   a  [13Xsingle[113X  expression,  followed  by  one  [13Xenter[113X.  This  is  evaluated  (see
-  [2XEvalString[102X ([14X27.8-3[114X)) and the result is returned.[133X
+  [2XEvalString[102X ([14X27.9-3[114X)) and the result is returned.[133X
   
   
   [1X10.7 [33X[0;0YString Streams[133X[101X
@@ -693,7 +685,7 @@
   that writes a [21Xprompt[121X for data that does not terminate with a newline.[133X
   
   [33X[0;0YIf the first argument is an input stream but not an input/output stream then
-  [2XReadAllLine[102X  behaves  as if [2XReadLine[102X ([14X10.3-5[114X) was called with just the first
+  [2XReadAllLine[102X  behaves  as if [2XReadLine[102X ([14X10.3-4[114X) was called with just the first
   argument and any additional arguments are ignored.[133X
   
   

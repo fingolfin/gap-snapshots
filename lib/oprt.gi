@@ -205,17 +205,9 @@ InstallOtherMethod( ExternalSubsetOp,
 
     type := TypeObj( xset );
 
-    # The type of an external set can store the type of its external subsets,
-    # to avoid repeated calls of `NewType'.
-    if not IsBound( type![XSET_XSSETTYPE] )  then
-        xsset := ExternalSetByFilterConstructor( IsExternalSubset,
-                         G, HomeEnumerator( xset ), gens, acts, act );
-        type![XSET_XSSETTYPE] := TypeObj( xsset );
-    else
-        xsset := ExternalSetByTypeConstructor( type![XSET_XSSETTYPE],
-                         G, HomeEnumerator( xset ), gens, acts, act );
-    fi;
-    
+    xsset := ExternalSetByFilterConstructor( IsExternalSubset,
+                     G, HomeEnumerator( xset ), gens, acts, act );
+
     xsset!.start := Immutable( start );
     return xsset;
 end );
@@ -339,18 +331,10 @@ InstallOtherMethod( ExternalOrbitOp,
     local   type,  xorb;
 
     type := TypeObj( xset );
-    
-    # The type of  an external set  can store the type  of external orbits of
-    # its points, to avoid repeated calls of `NewType'.
-    if not IsBound( type![XSET_XORBTYPE] )  then
-        xorb := ExternalSetByFilterConstructor( IsExternalOrbit,
-                        G, HomeEnumerator( xset ), gens, acts, act );
-        type![XSET_XORBTYPE] := TypeObj( xorb );
-    else
-        xorb := ExternalSetByTypeConstructor( type![XSET_XORBTYPE],
-                        G, HomeEnumerator( xset ), gens, acts, act );
-    fi;
-    
+
+    xorb := ExternalSetByFilterConstructor( IsExternalOrbit,
+                    G, HomeEnumerator( xset ), gens, acts, act );
+
     SetRepresentative( xorb, pnt );
     xorb!.start := Immutable( [ pnt ] );
     return xorb;
@@ -674,7 +658,7 @@ local   xset,surj,G,  D,  act,  fam,  filter,  hom,  i;
         #fi;
 
 
-    # test for action on disjoint sets of numbers-> blocks homomorphism
+    # test for action on disjoint sets of numbers, preserved by group -> blocks homomorphism
     elif not IsExternalSubset( xset )
          and IsPermGroup( G )
          and IsList( D )
@@ -683,6 +667,8 @@ local   xset,surj,G,  D,  act,  fam,  filter,  hom,  i;
          and act = OnSets
 	 # disjointness test
 	 and Length(Set(Flat(D)))=Sum(List(D,Length))
+	 # preserved test
+	 and ForAll(D,b->ForAll(GeneratorsOfGroup(G),g->OnSets(b,g) in D))
 	 then
         filter := IsBlocksHomomorphism;
         hom.reps := [  ];
@@ -1458,6 +1444,10 @@ local   orbs, orb,sort,plist,pos,use,o;
   fi;
   sort:=Length(D)>0 and CanEasilySortElements(D[1]);
   plist:=IsPlistRep(D);
+  if plist and Length(D)>0 and IsHomogeneousList(D) and CanEasilySortElements(D[1]) then
+    plist:=false;
+    D:=AsSortedList(D);
+  fi;
   if not plist then
     use:=BlistList([1..Length(D)],[]);
   fi;
@@ -2183,7 +2173,8 @@ InstallMethod( BlocksOp,
     
     if Length(D)=1 then return Immutable([D]);fi;
     hom := ActionHomomorphism( G, D, gens, acts, act );
-    B := Blocks( ImagesSource( hom ), [ 1 .. Length( D ) ] );
+    B := Blocks( ImagesSource( hom ), [ 1 .. Length( D ) ],
+      Set(List(seed,x->Position(D,x))) );
     B:=List( B, b -> D{ b } );
     # force sortedness
     if Length(B[1])>0 and CanEasilySortElements(B[1][1]) then
@@ -3406,4 +3397,3 @@ InstallMethod( IsInjective, "for a linear action homomorphism",
 #############################################################################
 ##
 #E
-

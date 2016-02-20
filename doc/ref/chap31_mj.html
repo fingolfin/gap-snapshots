@@ -303,7 +303,7 @@
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Parent</code>( <var class="Arg">D</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetParent</code>( <var class="Arg">D</var>, <var class="Arg">P</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasParent</code>( <var class="Arg">D</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasParent</code>( <var class="Arg">D</var> )</td><td class="tdright">( filter )</td></tr></table></div>
 <p>It is possible to assign to a domain <var class="Arg">D</var> one other domain <var class="Arg">P</var> containing <var class="Arg">D</var> as a subset, in order to exploit this subset relation between <var class="Arg">D</var> and <var class="Arg">P</var>. Note that <var class="Arg">P</var> need not have the same operational structure as <var class="Arg">D</var>, for example <var class="Arg">P</var> may be a magma and <var class="Arg">D</var> a field.</p>
 
 <p>The assignment is done by calling <code class="func">SetParent</code>, and <var class="Arg">P</var> is called the <em>parent</em> of <var class="Arg">D</var>. If <var class="Arg">D</var> has already a parent, calls to <code class="func">SetParent</code> will be ignored.</p>
@@ -481,7 +481,8 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=Representative(MagmaWithZeroAdjoined(G));</span>
 &lt;group with 0 adjoined elt: ()&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MultiplicativeZeroOp(x);</span>
-&lt;group with 0 adjoined elt: 0&gt;</pre></div>
+&lt;group with 0 adjoined elt: 0&gt;
+</pre></div>
 
 <p><a id="X814D78347858EC13" name="X814D78347858EC13"></a></p>
 
@@ -855,8 +856,8 @@ true
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation( [ 1, 1, 1 ] ));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M:=MagmaWithZeroAdjoined(S);</span>
-&lt;&lt;commutative transformation semigroup on 3 pts with 1 generator&gt;
-with 0 adjoined&gt;
+&lt;&lt;commutative transformation semigroup of degree 3 with 1 generator&gt;
+  with 0 adjoined&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=Representative(M);</span>
 &lt;semigroup with 0 adjoined elt: Transformation( [ 1, 1, 1 ] )&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMultiplicativeElementWithZero(x);</span>

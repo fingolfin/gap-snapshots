@@ -159,7 +159,7 @@
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Transformation</code>( <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Transformation</code>( <var class="Arg">list</var>, <var class="Arg">func</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransformationList</code>( <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransformationList</code>( <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: A transformation or <code class="keyw">fail</code>.</p>
 
 <p><code class="code">TransformationList</code> returns the transformation <code class="code">f</code> such that <code class="code">i^<var class="Arg">f</var>=<var class="Arg">list</var>[i]</code> if <code class="code">i</code> is between <code class="code">1</code> and the length of <var class="Arg">list</var> and <code class="code">i^<var class="Arg">f</var>=i</code> if <code class="code">i</code> is larger than the length of <var class="Arg">list</var>. <code class="code">TransformationList</code> will return <code class="keyw">fail</code> if <var class="Arg">list</var> is not dense, if <var class="Arg">list</var> contains an element which is not a positive integer, or if <var class="Arg">list</var> contains an integer not in <code class="code">[1..Length(<var class="Arg">list</var>)]</code>.</p>
@@ -178,14 +178,15 @@ Transformation( [ 2, 3, 3, 1 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetUserPreference("NotationForTransformations", "fr");</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Transformation([10, 11], x-&gt; x^2);</span>
 &lt;transformation: 1,2,3,4,5,6,7,8,9,100,121&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetUserPreference("NotationForTransformations", "input");</span></pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetUserPreference("NotationForTransformations", "input");</span>
+</pre></div>
 
 <p><a id="X8040642687531E7F" name="X8040642687531E7F"></a></p>
 
 <h5>53.2-2 Transformation</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Transformation</code>( <var class="Arg">src</var>, <var class="Arg">dst</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransformationListList</code>( <var class="Arg">src</var>, <var class="Arg">dst</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransformationListList</code>( <var class="Arg">src</var>, <var class="Arg">dst</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: A transformation or <code class="keyw">fail</code>.</p>
 
 <p>If <var class="Arg">src</var> and <var class="Arg">dst</var> are lists of positive integers of the same length, such that <var class="Arg">src</var> contains no element twice, then <code class="code">TransformationListList(<var class="Arg">src</var>, <var class="Arg">dst</var>)</code> returns a transformation <code class="code">f</code> such that <code class="code">src[i]^<var class="Arg">f</var>= dst[i]</code>. The transformation <var class="Arg">f</var> fixes all points larger than the maximum of the entries in <var class="Arg">src</var> and <var class="Arg">dst</var>.</p>
@@ -197,7 +198,8 @@ Transformation( [ 2, 3, 3, 1 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Transformation( [ 10, 11 ],[ 11, 12 ] );</span>
 Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 12 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TransformationListList( [ 1, 2, 3 ], [ 4, 5, 6 ] );</span>
-Transformation( [ 4, 5, 6, 4, 5, 6 ] )</pre></div>
+Transformation( [ 4, 5, 6, 4, 5, 6 ] )
+</pre></div>
 
 <p><a id="X7E82EBD68455EE4A" name="X7E82EBD68455EE4A"></a></p>
 
@@ -217,16 +219,17 @@ Transformation( [ 4, 5, 6, 4, 5, 6 ] )</pre></div>
 Transformation( [ 8, 1, 3, 8, 1, 8, 1, 4 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TransformationByImageAndKernel([ 1, 3, 8, 4 ],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 1, 2, 3, 1, 2, 1, 2, 4 ]);</span>
-Transformation( [ 1, 3, 8, 1, 3, 1, 3, 4 ] )</pre></div>
+Transformation( [ 1, 3, 8, 1, 3, 1, 3, 4 ] )
+</pre></div>
 
 <p><a id="X85D1071484CE004C" name="X85D1071484CE004C"></a></p>
 
 <h5>53.2-4 Idempotent</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Idempotent</code>( <var class="Arg">im</var>, <var class="Arg">ker</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Idempotent</code>( <var class="Arg">im</var>, <var class="Arg">ker</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: A transformation or <code class="keyw">fail</code>.</p>
 
-<p><code class="code">Idempotent</code> returns the idempotent transformation with image set <var class="Arg">im</var> and flat kernel <var class="Arg">ker</var> if such a transformation exists and <code class="keyw">fail</code> if it does not.</p>
+<p><code class="func">Idempotent</code> returns the idempotent transformation with image set <var class="Arg">im</var> and flat kernel <var class="Arg">ker</var> if such a transformation exists and <code class="keyw">fail</code> if it does not.</p>
 
 <p>More specifically, a transformation is returned when the argument <var class="Arg">im</var> is a set of positive integers and <var class="Arg">ker</var> is the flat kernel of a transformation with rank equal to the length of <var class="Arg">im</var> and where <var class="Arg">im</var> has one element in every class of the kernel corresponding to <var class="Arg">ker</var>.</p>
 
@@ -239,23 +242,24 @@ Transformation( [ 1, 3, 8, 1, 3, 1, 3, 4 ] )</pre></div>
 Transformation( [ 8, 2, 8, 4, 4, 6, 7, 8, 10, 10, 11, 7 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TransformationByImageAndKernel([ 2, 4, 6, 7, 8, 10, 11 ],</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 1, 2, 1, 3, 3, 4, 5, 1, 6, 6, 7, 5 ] );</span>
-Transformation( [ 2, 4, 2, 6, 6, 7, 8, 2, 10, 10, 11, 8 ] )</pre></div>
+Transformation( [ 2, 4, 2, 6, 6, 7, 8, 2, 10, 10, 11, 8 ] )
+</pre></div>
 
 <p><a id="X7C2A3FC9782F2099" name="X7C2A3FC9782F2099"></a></p>
 
 <h5>53.2-5 TransformationOp</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransformationOp</code>( <var class="Arg">obj</var>, <var class="Arg">list</var>[, <var class="Arg">func</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransformationOpNC</code>( <var class="Arg">obj</var>, <var class="Arg">list</var>[, <var class="Arg">func</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransformationOp</code>( <var class="Arg">obj</var>, <var class="Arg">list</var>[, <var class="Arg">func</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransformationOpNC</code>( <var class="Arg">obj</var>, <var class="Arg">list</var>[, <var class="Arg">func</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: A transformation or <code class="keyw">fail</code>.</p>
 
-<p><code class="code">TransformationOp</code> returns the transformation that corresponds to the action of the object <var class="Arg">obj</var> on the domain or list <var class="Arg">list</var> via the function <var class="Arg">func</var>. If the optional third argument <var class="Arg">func</var> is not specified, then the action <code class="func">OnPoints</code> (<a href="chap41.html#X7FE417DD837987B4"><span class="RefLink">41.2-1</span></a>) is used by default. Note that the returned transformation refers to the positions in <var class="Arg">list</var> even if <var class="Arg">list</var> itself consists of integers.</p>
+<p><code class="func">TransformationOp</code> returns the transformation that corresponds to the action of the object <var class="Arg">obj</var> on the domain or list <var class="Arg">list</var> via the function <var class="Arg">func</var>. If the optional third argument <var class="Arg">func</var> is not specified, then the action <code class="func">OnPoints</code> (<a href="chap41.html#X7FE417DD837987B4"><span class="RefLink">41.2-1</span></a>) is used by default. Note that the returned transformation refers to the positions in <var class="Arg">list</var> even if <var class="Arg">list</var> itself consists of integers.</p>
 
 <p>This function is the analogue in the context of transformations of <code class="func">Permutation</code> (<a href="../../doc/ref/chap41.html#X7807A33381DCAB26"><span class="RefLink">Reference: Permutation</span></a>).</p>
 
 <p>If <var class="Arg">obj</var> does not map elements of <var class="Arg">list</var> into <var class="Arg">list</var>, then <code class="keyw">fail</code> is returned.</p>
 
-<p><code class="code">TransformationOpNC</code> does not check that <var class="Arg">obj</var> maps elements of <var class="Arg">list</var> to elements of <var class="Arg">list</var> or that a transformation is defined by the action of <var class="Arg">obj</var> on <var class="Arg">list</var> via <var class="Arg">func</var>. This function should be used only with caution, and in situations where it is guaranteed that the arguments have the required properties.</p>
+<p><code class="func">TransformationOpNC</code> does not check that <var class="Arg">obj</var> maps elements of <var class="Arg">list</var> to elements of <var class="Arg">list</var> or that a transformation is defined by the action of <var class="Arg">obj</var> on <var class="Arg">list</var> via <var class="Arg">func</var>. This function should be used only with caution, and in situations where it is guaranteed that the arguments have the required properties.</p>
 
 
 <div class="example"><pre>
@@ -269,7 +273,8 @@ fail
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TransformationOp(Elements(S)[1], S, OnRight);</span>
 Transformation( [ 1, 1, 1 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TransformationOp(Elements(S)[3], S, OnRight);</span>
-Transformation( [ 1, 1, 2 ] )</pre></div>
+Transformation( [ 1, 1, 2 ] )
+</pre></div>
 
 <p><a id="X7D6FCC417DE86CD1" name="X7D6FCC417DE86CD1"></a></p>
 
@@ -295,7 +300,8 @@ Transformation( [ 1, 1, 2 ] )</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TransformationNumber(2242256790, 10);</span>
 Transformation( [ 3, 3, 5, 3, 3 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TransformationNumber(1613, 5); </span>
-Transformation( [ 3, 3, 5, 3, 3 ] )</pre></div>
+Transformation( [ 3, 3, 5, 3, 3 ] )
+</pre></div>
 
 <p><a id="X8475448F87E8CB8A" name="X8475448F87E8CB8A"></a></p>
 
@@ -323,7 +329,8 @@ Transformation( [ 2, 1, 2, 1, 1, 2 ] )</pre></div>
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=IdentityTransformation;</span>
-IdentityTransformation</pre></div>
+IdentityTransformation
+</pre></div>
 
 <p><a id="X7F1E4B5184210D2B" name="X7F1E4B5184210D2B"></a></p>
 
@@ -339,7 +346,8 @@ IdentityTransformation</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ConstantTransformation(5, 1);</span>
 Transformation( [ 1, 1, 1, 1, 1 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ConstantTransformation(6, 4);</span>
-Transformation( [ 4, 4, 4, 4, 4, 4 ] )</pre></div>
+Transformation( [ 4, 4, 4, 4, 4, 4 ] )
+</pre></div>
 
 <p><a id="X7F81A18B813C9DF0" name="X7F81A18B813C9DF0"></a></p>
 
@@ -353,7 +361,7 @@ Transformation( [ 4, 4, 4, 4, 4, 4 ] )</pre></div>
 
 <h5>53.3-1 AsTransformation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsTransformation</code>( <var class="Arg">f</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsTransformation</code>( <var class="Arg">f</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>Returns: A transformation.</p>
 
 <p><code class="code">AsTransformation</code> returns the permutation, transformation, partial permutation or binary relation <var class="Arg">f</var> as a transformation.</p>
@@ -407,7 +415,8 @@ Transformation( [ 6, 7, 1, 4, 3, 2, 14, 14, 14, 14, 14, 14, 14, 14 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsTransformation(f);</span>
 Transformation( [ 6, 7, 1, 4, 3, 2, 8, 8 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsTransformation(Transformation( [ 1, 1, 2 ] ), 0);</span>
-IdentityTransformation</pre></div>
+IdentityTransformation
+</pre></div>
 
 <p><a id="X846A6F6B7B715188" name="X846A6F6B7B715188"></a></p>
 
@@ -425,7 +434,8 @@ IdentityTransformation</pre></div>
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Transformation( [ 2, 10, 5, 9, 10, 9, 6, 3, 8, 4, 6, 5 ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RestrictedTransformation(f, [ 1, 2, 3, 10, 11, 12 ] );</span>
-Transformation( [ 2, 10, 5, 4, 5, 6, 7, 8, 9, 4, 6, 5 ] )</pre></div>
+Transformation( [ 2, 10, 5, 4, 5, 6, 7, 8, 9, 4, 6, 5 ] )
+</pre></div>
 
 <p><a id="X8708AE247F5B129B" name="X8708AE247F5B129B"></a></p>
 
@@ -451,7 +461,8 @@ fail
 (2,3,6,10,5)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Transformation( [ 5, 2, 8, 4, 1, 8, 10, 3, 5, 7 ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PermutationOfImage(f);</span>
-(1,5)(3,8)(7,10)</pre></div>
+(1,5)(3,8)(7,10)
+</pre></div>
 
 <p><a id="X812CEC008609A8A2" name="X812CEC008609A8A2"></a></p>
 
@@ -507,7 +518,8 @@ fail
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PermLeftQuoTransformation(f, g);</span>
 (1,6,7)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PermLeftQuoTransformation(g, f);</span>
-(1,7,6)</pre></div>
+(1,7,6)
+</pre></div>
 
 <p><a id="X8275DFAA8270BB59" name="X8275DFAA8270BB59"></a></p>
 
@@ -530,13 +542,14 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsInjectiveListTrans( [ 5, 1, 5, 1, 1, ], f );</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsInjectiveListTrans( [ 5, 1, 2, 3 ], [ 1, 2, 3, 4, 5 ] );</span>
-true</pre></div>
+true
+</pre></div>
 
 <p><a id="X834A313B7DAF06D5" name="X834A313B7DAF06D5"></a></p>
 
 <h5>53.4-3 ComponentTransformationInt</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComponentTransformationInt</code>( <var class="Arg">f</var>, <var class="Arg">n</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComponentTransformationInt</code>( <var class="Arg">f</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: A list of positive integers.</p>
 
 <p>If <var class="Arg">f</var> is a transformation and <var class="Arg">n</var> is a positive integer, then <code class="code">ComponentTransformationInt</code> returns those elements <code class="code">i</code> such that <code class="code"><var class="Arg">n</var>^<var class="Arg">f</var>^j=i</code> for some positive integer <code class="code">j</code>, i.e. the elements of the component of <var class="Arg">f</var> containing <var class="Arg">n</var> that can be obtained by applying powers of <var class="Arg">f</var> to <var class="Arg">n</var>.</p>
@@ -549,7 +562,8 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ComponentTransformationInt(f, 12);</span>
 [ 12 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ComponentTransformationInt(f, 5); </span>
-[ 5, 7, 8, 3 ]</pre></div>
+[ 5, 7, 8, 3 ]
+</pre></div>
 
 <p><a id="X82F5DEEC837B60A3" name="X82F5DEEC837B60A3"></a></p>
 
@@ -568,7 +582,8 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreImagesOfTransformation(f, 3);</span>
 [  ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreImagesOfTransformation(f, 100);</span>
-[ 100 ]</pre></div>
+[ 100 ]
+</pre></div>
 
 <p><a id="X86DE4F7A7C535820" name="X86DE4F7A7C535820"></a></p>
 
@@ -592,7 +607,8 @@ true</pre></div>
 0
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DegreeOfTransformationCollection([ Transformation( [ 1, 3, 4, 1 ] ), </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 1, 1, 3, 4 ]), Transformation( [ 2, 4, 1, 2 ] ) ]);</span>
-5</pre></div>
+5
+</pre></div>
 
 <p><a id="X7AEC9E6687B3505A" name="X7AEC9E6687B3505A"></a></p>
 
@@ -612,7 +628,8 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageListOfTransformation(f);</span>
 [ 2, 3, 4, 2, 4 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageListOfTransformation(f, 10);</span>
-[ 2, 3, 4, 2, 4, 6, 7, 8, 9, 10 ]</pre></div>
+[ 2, 3, 4, 2, 4, 6, 7, 8, 9, 10 ]
+</pre></div>
 
 <p><a id="X839A6D6082A21D1F" name="X839A6D6082A21D1F"></a></p>
 
@@ -629,7 +646,8 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageSetOfTransformation(f);</span>
 [ 1, 2, 3, 4, 5, 6, 7 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageSetOfTransformation(f, 10);</span>
-[ 1, 2, 3, 4, 5, 6, 7, 9, 10 ]</pre></div>
+[ 1, 2, 3, 4, 5, 6, 7, 9, 10 ]
+</pre></div>
 
 <p><a id="X818EBB167C7EA37B" name="X818EBB167C7EA37B"></a></p>
 
@@ -653,7 +671,8 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RankOfTransformation(f, 100);                   </span>
 97
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RankOfTransformation(f, [ 2, 5, 8 ] );</span>
-3</pre></div>
+3
+</pre></div>
 
 <p><a id="X844F00F982D5BD3C" name="X844F00F982D5BD3C"></a></p>
 
@@ -673,14 +692,15 @@ true</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=IdentityTransformation;  </span>
 IdentityTransformation
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MovedPoints(f);</span>
-[  ]</pre></div>
+[  ]
+</pre></div>
 
 <p><a id="X7FA6A4B57FDA003D" name="X7FA6A4B57FDA003D"></a></p>
 
 <h5>53.5-6 NrMovedPoints</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrMovedPoints</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrMovedPoints</code>( <var class="Arg">coll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrMovedPoints</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrMovedPoints</code>( <var class="Arg">coll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>Returns: A positive integer.</p>
 
 <p>When the argument is a transformation,<code class="code">NrMovedPoints</code> returns the number of positive integers <code class="code">i</code> such that <code class="code">i^<var class="Arg">f</var>&lt;&gt;i</code>. <code class="code">MovedPoints</code> returns the number of points which are moved by at least one element of the collection of transformations <var class="Arg">coll</var>.</p>
@@ -691,14 +711,15 @@ IdentityTransformation
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrMovedPoints(f);</span>
 9
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrMovedPoints(IdentityTransformation);</span>
-0</pre></div>
+0
+</pre></div>
 
 <p><a id="X86C0DDDC7881273A" name="X86C0DDDC7881273A"></a></p>
 
 <h5>53.5-7 SmallestMovedPoint</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestMovedPoint</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestMovedPoint</code>( <var class="Arg">coll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestMovedPoint</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestMovedPoint</code>( <var class="Arg">coll</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Returns: A positive integer or <code class="keyw">infinity</code>.</p>
 
 <p><code class="code">SmallestMovedPoint</code> returns the smallest positive integer <code class="code">i</code> such that <code class="code">i^<var class="Arg">f</var>&lt;&gt;i</code> if such an <code class="code">i</code> exists. If <var class="Arg">f</var> is the identity transformation, then <code class="keyw">infinity</code> is returned.</p>
@@ -707,23 +728,25 @@ IdentityTransformation
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=FullTransformationSemigroup(5);    </span>
-&lt;full transformation semigroup on 5 pts&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullTransformationSemigroup(5);    </span>
+&lt;full transformation monoid of degree 5&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallestMovedPoint(S);              </span>
 1
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(IdentityTransformation);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(IdentityTransformation);</span>
+&lt;trivial transformation group of degree 0 with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallestMovedPoint(S);</span>
 infinity
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Transformation( [ 1, 2, 3, 6, 6, 6 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := Transformation( [ 1, 2, 3, 6, 6, 6 ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallestMovedPoint(f);</span>
-4</pre></div>
+4
+</pre></div>
 
 <p><a id="X8383A7727AC97724" name="X8383A7727AC97724"></a></p>
 
 <h5>53.5-8 LargestMovedPoint</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestMovedPoint</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestMovedPoint</code>( <var class="Arg">coll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestMovedPoint</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestMovedPoint</code>( <var class="Arg">coll</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Returns: A positive integer.</p>
 
 <p><code class="code">LargestMovedPoint</code> returns the largest positive integers <code class="code">i</code> such that <code class="code">i^<var class="Arg">f</var>&lt;&gt;i</code> if such an <code class="code">i</code> exists. If <var class="Arg">f</var> is the identity transformation, then <code class="code">0</code> is returned.</p>
@@ -732,23 +755,25 @@ infinity
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=FullTransformationSemigroup(5);    </span>
-&lt;full transformation semigroup on 5 pts&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullTransformationSemigroup(5);    </span>
+&lt;full transformation monoid of degree 5&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LargestMovedPoint(S);</span>
 5
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(IdentityTransformation);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(IdentityTransformation);</span>
+&lt;trivial transformation group of degree 0 with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LargestMovedPoint(S);</span>
 0
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Transformation( [ 1, 2, 3, 6, 6, 6 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := Transformation( [ 1, 2, 3, 6, 6, 6 ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LargestMovedPoint(f); </span>
-5</pre></div>
+5
+</pre></div>
 
 <p><a id="X7CCFE27E83676572" name="X7CCFE27E83676572"></a></p>
 
 <h5>53.5-9 SmallestImageOfMovedPoint</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestImageOfMovedPoint</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestImageOfMovedPoint</code>( <var class="Arg">coll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestImageOfMovedPoint</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestImageOfMovedPoint</code>( <var class="Arg">coll</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Returns: A positive integer or <code class="keyw">infinity</code>.</p>
 
 <p><code class="code">SmallestImageOfMovedPoint</code> returns the smallest positive integer <code class="code">i^<var class="Arg">f</var></code> such that <code class="code">i^<var class="Arg">f</var>&lt;&gt;i</code> if such an <code class="code">i</code> exists. If <var class="Arg">f</var> is the identity transformation, then <code class="keyw">infinity</code> is returned.</p>
@@ -757,23 +782,25 @@ infinity
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=FullTransformationSemigroup(5);    </span>
-&lt;full transformation semigroup on 5 pts&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullTransformationSemigroup(5);    </span>
+&lt;full transformation monoid of degree 5&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallestImageOfMovedPoint(S);              </span>
 1
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(IdentityTransformation);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(IdentityTransformation);</span>
+&lt;trivial transformation group of degree 0 with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallestImageOfMovedPoint(S);</span>
 infinity
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Transformation( [ 1, 2, 3, 6, 6, 6 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := Transformation( [ 1, 2, 3, 6, 6, 6 ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallestImageOfMovedPoint(f);</span>
-6</pre></div>
+6
+</pre></div>
 
 <p><a id="X7E7172567C3A3E63" name="X7E7172567C3A3E63"></a></p>
 
 <h5>53.5-10 LargestImageOfMovedPoint</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestImageOfMovedPoint</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestImageOfMovedPoint</code>( <var class="Arg">coll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestImageOfMovedPoint</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestImageOfMovedPoint</code>( <var class="Arg">coll</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Returns: A positive integer.</p>
 
 <p><code class="code">LargestImageOfMovedPoint</code> returns the largest positive integer <code class="code">i^<var class="Arg">f</var></code> such that <code class="code">i^<var class="Arg">f</var>&lt;&gt;i</code> if such an <code class="code">i</code> exists. If <var class="Arg">f</var> is the identity transformation, then <code class="code">0</code> is returned.</p>
@@ -782,16 +809,17 @@ infinity
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=FullTransformationSemigroup(5);    </span>
-&lt;full transformation semigroup on 5 pts&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullTransformationSemigroup(5);    </span>
+&lt;full transformation monoid of degree 5&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LargestImageOfMovedPoint(S);</span>
 5
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(IdentityTransformation);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(IdentityTransformation);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LargestImageOfMovedPoint(S);</span>
 0
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Transformation( [ 1, 2, 3, 6, 6, 6 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := Transformation( [ 1, 2, 3, 6, 6, 6 ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LargestImageOfMovedPoint(f); </span>
-6</pre></div>
+6
+</pre></div>
 
 <p><a id="X8083794579274E87" name="X8083794579274E87"></a></p>
 
@@ -808,7 +836,8 @@ infinity
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Transformation( [ 10, 3, 7, 10, 1, 5, 9, 2, 6, 10 ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FlatKernelOfTransformation(f);</span>
-[ 1, 2, 3, 1, 4, 5, 6, 7, 8, 1 ]</pre></div>
+[ 1, 2, 3, 1, 4, 5, 6, 7, 8, 1 ]
+</pre></div>
 
 <p><a id="X80FCB5048789CF75" name="X80FCB5048789CF75"></a></p>
 
@@ -835,7 +864,8 @@ infinity
 [ [ 1, 4 ], [ 2, 5 ], [ 3 ], [ 6, 7 ], [ 8, 10 ], [ 9 ], [ 11 ], 
   [ 12 ], [ 13 ], [ 14 ], [ 15 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KernelOfTransformation(f, false);    </span>
-[ [ 1, 4 ], [ 2, 5 ], [ 6, 7 ], [ 8, 10 ] ]</pre></div>
+[ [ 1, 4 ], [ 2, 5 ], [ 6, 7 ], [ 8, 10 ] ]
+</pre></div>
 
 <p><a id="X860306EB7FAAD2D4" name="X860306EB7FAAD2D4"></a></p>
 
@@ -854,7 +884,8 @@ Transformation( [ 8, 1, 1, 1, 10, 2, 3, 1, 6, 1 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f*g*f;</span>
 Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g*f*g;</span>
-Transformation( [ 8, 1, 1, 1, 10, 2, 3, 1, 6, 1 ] )</pre></div>
+Transformation( [ 8, 1, 1, 1, 10, 2, 3, 1, 6, 1 ] )
+</pre></div>
 
 <p><a id="X7BB9DB6E8558356D" name="X7BB9DB6E8558356D"></a></p>
 
@@ -870,7 +901,8 @@ Transformation( [ 8, 1, 1, 1, 10, 2, 3, 1, 6, 1 ] )</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Transformation( [ 3, 8, 12, 1, 11, 9, 9, 4, 10, 5, 10, 6 ] )^-1;</span>
 fail
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Transformation( [ 2, 3, 1 ] )^-1;</span>
-Transformation( [ 3, 1, 2 ] )</pre></div>
+Transformation( [ 3, 1, 2 ] )
+</pre></div>
 
 <p><a id="X863216CB7AF88BED" name="X863216CB7AF88BED"></a></p>
 
@@ -895,7 +927,8 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IndexPeriodOfTransformation(Transformation([1,2,3]));</span>
 [ 1, 1 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IndexPeriodOfTransformation(Transformation([1,3,2]));</span>
-[ 1, 2 ]</pre></div>
+[ 1, 2 ]
+</pre></div>
 
 <p><a id="X85FE9F20810BCC70" name="X85FE9F20810BCC70"></a></p>
 
@@ -913,7 +946,8 @@ true
 3
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Transformation( [ 6, 6, 6, 2, 7, 1, 5, 3, 10, 6 ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallestIdempotentPower(f);</span>
-2</pre></div>
+2
+</pre></div>
 
 <p><a id="X858E944481F6B591" name="X858E944481F6B591"></a></p>
 
@@ -933,7 +967,8 @@ Transformation( [ 6, 12, 11, 1, 7, 6, 2, 8, 4, 7, 5, 12 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=AsTransformation((1,8,2,4,11,5,10)(3,7)(9,12));</span>
 Transformation( [ 8, 4, 7, 11, 10, 6, 3, 2, 12, 1, 5, 9 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ComponentsOfTransformation(f);  </span>
-[ [ 1, 2, 4, 5, 8, 10, 11 ], [ 3, 7 ], [ 6 ], [ 9, 12 ] ]</pre></div>
+[ [ 1, 2, 4, 5, 8, 10, 11 ], [ 3, 7 ], [ 6 ], [ 9, 12 ] ]
+</pre></div>
 
 <p><a id="X8640AE1C79201470" name="X8640AE1C79201470"></a></p>
 
@@ -953,7 +988,8 @@ Transformation( [ 6, 12, 11, 1, 7, 6, 2, 8, 4, 7, 5, 12 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=AsTransformation((1,8,2,4,11,5,10)(3,7)(9,12));</span>
 Transformation( [ 8, 4, 7, 11, 10, 6, 3, 2, 12, 1, 5, 9 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrComponentsOfTransformation(f);</span>
-4</pre></div>
+4
+</pre></div>
 
 <p><a id="X784650B583CEAF7D" name="X784650B583CEAF7D"></a></p>
 
@@ -973,7 +1009,8 @@ Transformation( [ 6, 12, 11, 1, 7, 6, 2, 8, 4, 7, 5, 12 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=AsTransformation((1,8,2,4,11,5,10)(3,7)(9,12));</span>
 Transformation( [ 8, 4, 7, 11, 10, 6, 3, 2, 12, 1, 5, 9 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ComponentRepsOfTransformation(f);</span>
-[ [ 1 ], [ 3 ], [ 6 ], [ 9 ] ]</pre></div>
+[ [ 1 ], [ 3 ], [ 6 ], [ 9 ] ]
+</pre></div>
 
 <p><a id="X7EAA15557D55D93B" name="X7EAA15557D55D93B"></a></p>
 
@@ -995,7 +1032,8 @@ Transformation( [ 6, 12, 11, 1, 7, 6, 2, 8, 4, 7, 5, 12 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CyclesOfTransformation(f, [ 1, 2, 4 ] ); </span>
 [ [ 6 ], [ 12 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CyclesOfTransformation(f, [ 1 .. 17 ]);</span>
-[ [ 6 ], [ 12 ], [ 8 ], [ 13 ], [ 14 ], [ 15 ], [ 16 ], [ 17 ] ]</pre></div>
+[ [ 6 ], [ 12 ], [ 8 ], [ 13 ], [ 14 ], [ 15 ], [ 16 ], [ 17 ] ]
+</pre></div>
 
 <p><a id="X786EB02A829260DB" name="X786EB02A829260DB"></a></p>
 
@@ -1014,7 +1052,8 @@ Transformation( [ 6, 12, 11, 1, 7, 6, 2, 8, 4, 7, 5, 12 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CycleTransformationInt(f, 12);</span>
 [ 12 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CycleTransformationInt(f, 5); </span>
-[ 8, 3 ]</pre></div>
+[ 8, 3 ]
+</pre></div>
 
 <p><a id="X845869E0815A6AA6" name="X845869E0815A6AA6"></a></p>
 
@@ -1042,7 +1081,8 @@ Transformation( [ 1, 2, 3, 1, 5, 5, 7, 8, 9, 2, 11, 1 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e*f=f;  </span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIdempotent(e);</span>
-true</pre></div>
+true
+</pre></div>
 
 <p><a id="X7F19C9C77F9F8981" name="X7F19C9C77F9F8981"></a></p>
 
@@ -1077,7 +1117,8 @@ Transformation( [ 2, 2 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DegreeOfTransformation(h); IsTrans4Rep(h); MemoryUsage(h);</span>
 2
 false
-44</pre></div>
+44
+</pre></div>
 
 <p><a id="X810D23017A5527B7" name="X810D23017A5527B7"></a></p>
 
@@ -1117,7 +1158,8 @@ false
 Transformation( [ 3, 8, 12, 1, 11, 9, 9, 4, 10, 5, 10, 6 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetUserPreference("NotationForTransformations", "fr");</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f;</span>
-&lt;transformation: 3,8,12,1,11,9,9,4,10,5,10,6&gt;</pre></div>
+&lt;transformation: 3,8,12,1,11,9,9,4,10,5,10,6&gt;
+</pre></div>
 
 <p><a id="X7B51CE257B814B09" name="X7B51CE257B814B09"></a></p>
 
@@ -1143,22 +1185,24 @@ Transformation( [ 3, 8, 12, 1, 11, 9, 9, 4, 10, 5, 10, 6 ] )
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(f, One(f));</span>
-&lt;commutative transformation monoid on 10 pts with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := Transformation( [ 2, 6, 7, 2, 6, 9, 9, 1, 1, 5 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(f, One(f));</span>
+&lt;commutative transformation monoid of degree 10 with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonoid(S);</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsTransformationMonoid(S);</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup( Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1, 10, 10 ] ), </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup( </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1, 10, 10 ] ), </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 10, 10 ] ) );</span>
-&lt;transformation semigroup on 10 pts with 2 generators&gt;
+&lt;transformation semigroup of degree 10 with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">One(S);</span>
 fail
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MultiplicativeNeutralElement(S);</span>
 Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 10, 10 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonoid(S);</span>
-false</pre></div>
+false
+</pre></div>
 
 <p>In this example <code class="code">S</code> cannot be converted into a monoid using <code class="func">AsMonoid</code> (<a href="chap51.html#X7B22038F832B9C0F"><span class="RefLink">51.2-5</span></a>) since the <code class="func">One</code> (<a href="chap31.html#X8046262384895B2A"><span class="RefLink">31.10-2</span></a>) of any element in <code class="code">S</code> differs from the multiplicative neutral element.</p>
 
@@ -1175,11 +1219,13 @@ false</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1, 10, 10, 11 ] ),</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 8, 1, 4, 5, 6, 7, 1, 10, 10, 11 ] ),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 1, 2, 3, 4, 5, 6, 7, 8, 1, 1, 11 ] ) );</span>
-&lt;transformation semigroup on 10 pts with 2 generators&gt;
+&lt;transformation semigroup of degree 10 with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DegreeOfTransformationSemigroup(S);</span>
-10</pre></div>
+10
+</pre></div>
 
 <p><a id="X7D2B0685815B4053" name="X7D2B0685815B4053"></a></p>
 
@@ -1198,7 +1244,8 @@ false</pre></div>
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FullTransformationSemigroup(1234); </span>
-&lt;full transformation semigroup on 1234 pts&gt;</pre></div>
+&lt;full transformation monoid of degree 1234&gt;
+</pre></div>
 
 <p><a id="X85C58E1E818C838C" name="X85C58E1E818C838C"></a></p>
 
@@ -1214,18 +1261,20 @@ false</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(AsTransformation((1,3,4,2), 5), AsTransformation((1,3,5), 5),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 1, 1, 2, 3, 4 ] ));</span>
-&lt;transformation semigroup on 5 pts with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(AsTransformation((1,3,4,2), 5), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  AsTransformation((1,3,5), 5),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation( [ 1, 1, 2, 3, 4 ] ));</span>
+&lt;transformation semigroup of degree 5 with 3 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFullTransformationSemigroup(S);</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S;</span>
-&lt;full transformation semigroup on 5 pts&gt;
+&lt;full transformation monoid of degree 5&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFullTransformationMonoid(S);</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=FullTransformationSemigroup(5);; </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := FullTransformationSemigroup(5);; </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFullTransformationSemigroup(S);</span>
-true</pre></div>
+true
+</pre></div>
 
 <p><a id="X78F29C817CF6827F" name="X78F29C817CF6827F"></a></p>
 
@@ -1247,20 +1296,20 @@ true</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens:= [ [ [ Z(3), 0*Z(3) ], [ 0*Z(3), Z(3)^0 ] ], </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens := [ [ [ Z(3), 0*Z(3) ], [ 0*Z(3), Z(3) ^ 0 ] ], </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput"> [ [ Z(3), Z(3)^0 ], [ Z(3), 0*Z(3) ] ], </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput"> [ [ Z(3)^0, 0*Z(3) ], [ 0*Z(3), 0*Z(3) ] ] ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(gens);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(gens);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
 81
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismTransformationSemigroup(S);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=SymmetricInverseSemigroup(4);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseSemigroup(4);</span>
 &lt;symmetric inverse semigroup on 4 pts&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismTransformationMonoid(S);</span>
 MappingByFunction( &lt;symmetric inverse semigroup on 4 pts&gt;, 
 &lt;transformation monoid on 5 pts with 4 generators&gt;
  , function( x ) ... end, &lt;Operation "AsPartialPerm"&gt; )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=Group((1,2,3));</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group((1,2,3));</span>
 Group([ (1,2,3) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismTransformationMonoid(G);</span>
 MappingByFunction( Group([ (1,2,3) ]), &lt;commutative transformation 
@@ -1278,16 +1327,16 @@ MappingByFunction( Group([ (1,2,3) ]), &lt;commutative transformation
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup( Transformation( [ 5, 5, 1, 1, 3 ] ), </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup( Transformation( [ 5, 5, 1, 1, 3 ] ), </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 2, 4, 1, 5, 5 ] ) );</span>
-&lt;transformation semigroup on 5 pts with 2 generators&gt;
+&lt;transformation semigroup of degree 5 with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
 172
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AntiIsomorphismTransformationSemigroup(S);</span>
-MappingByFunction( &lt;transformation semigroup of size 172, 
- on 5 pts with 2 generators&gt;, &lt;transformation semigroup 
- on 173 pts with 2 generators&gt;
- , function( x ) ... end, function( x ) ... end )</pre></div>
+MappingByFunction( &lt;transformation semigroup of size 172, degree 5 
+ with 2 generators&gt;, &lt;transformation semigroup of degree 173 with 2 
+ generators&gt;, function( x ) ... end, function( x ) ... end )
+</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap52.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap54.html">[Next Chapter]</a>&nbsp;  </div>

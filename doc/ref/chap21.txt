@@ -145,7 +145,7 @@
   element at a given position (see [14X21.5[114X).[133X
   
   [33X[0;0YThe  term  basic  operation  means  that  each  other  list operation can be
-  formulated  in  terms of the basic operations. (But note that usually a more
+  formulated  in  terms  of  the basic operations. (But note that often a more
   efficient method than this one is implemented.)[133X
   
   [33X[0;0YAny  [5XGAP[105X  object [3Xlist[103X in the category [2XIsList[102X ([14X21.1-1[114X) is regarded as a list,
@@ -153,23 +153,23 @@
   [3Xlist[103X can be used also for the other list operations.[133X
   
   [33X[0;0YFor  internally represented lists, kernel methods are provided for the basic
-  list  operations.  For  other  lists,  it is possible to install appropriate
-  methods  for these operations. This permits the implementation of lists that
-  do  not  need  to store all list elements (see also [14X21.23[114X); for example, the
-  elements  might be described by an algorithm, such as the elements list of a
-  group.  For this reduction of space requirements, however, a price in access
-  time may have to be paid (see [2XConstantTimeAccessList[102X ([14X21.17-6[114X)).[133X
+  list  operations  with  positive  integer  indices. For other lists or other
+  indices, it is possible to install appropriate methods for these operations.
+  This  permits the implementation of lists that do not need to store all list
+  elements  (see  also [14X21.23[114X); for example, the elements might be described by
+  an  algorithm,  such  as the elements list of a group. For this reduction of
+  space  requirements,  however,  a  price  in access time may have to be paid
+  (see [2XConstantTimeAccessList[102X ([14X21.17-6[114X)).[133X
   
   [1X21.2-1 \[\][101X
   
-  [29X[2X\[\][102X( [3Xlist[103X, [3Xpos[103X ) [32X operation
-  [29X[2XIsBound\[\][102X( [3Xlist[103X, [3Xpos[103X ) [32X operation
-  [29X[2X\[\]\:\=[102X( [3Xlist[103X, [3Xpos[103X, [3Xval[103X ) [32X operation
-  [29X[2XUnbind\[\][102X( [3Xlist[103X, [3Xpos[103X ) [32X operation
+  [29X[2X\[\][102X( [3Xlist[103X, [3Xix[103X ) [32X operation
+  [29X[2XIsBound\[\][102X( [3Xlist[103X, [3Xix[103X ) [32X operation
+  [29X[2X\[\]\:\=[102X( [3Xlist[103X, [3Xpos[103X, [3Xix[103X ) [32X operation
+  [29X[2XUnbind\[\][102X( [3Xlist[103X, [3Xix[103X ) [32X operation
   
   [33X[0;0YThese  operations  implement  element  access, test for element boundedness,
-  list  element assignment, and removal of the element at position [3Xpos[103X. In all
-  cases, the index [3Xpos[103X must be a positive integer.[133X
+  list element assignment, and removal of the element with index [3Xix[103X.[133X
   
   [33X[0;0YNote  that  the  special  characters  [10X[[110X,  [10X][110X, [10X:[110X, and [10X=[110X must be escaped with a
   backslash [10X\[110X (see [14X4.3[114X); so [2X\[\][102X denotes the operation for element access in a
@@ -177,10 +177,14 @@
   special   characters   look   strange,   but  nevertheless  they  are  quite
   suggestive.)[133X
   
-  [33X[0;0Y[10X\[\](  [3Xlist[103X[10X,  [3Xpos[103X[10X )[110X is equivalent to [10X[3Xlist[103X[10X[ [3Xpos[103X[10X ][110X, which clearly will usually
-  be  preferred;  the  former  is  useful  mainly  if  one wants to access the
-  operation  itself,  for example if one wants to install a method for element
-  access in a special kind of lists.[133X
+  [33X[0;0Y[10X\[\](  [3Xlist[103X[10X, [3Xix[103X[10X )[110X is equivalent to [10X[3Xlist[103X[10X[ [3Xix[103X[10X ][110X, which clearly will usually be
+  preferred;  the former is useful mainly if one wants to access the operation
+  itself, for example if one wants to install a method for element access in a
+  special kind of lists.[133X
+  
+  [33X[0;0YThe syntax [10X[3Xlist[103X[10X[ [3Xix1[103X[10X, [3Xix2[103X[10X,.... [3Xixn[103X[10X ][110X, with two or more indices is treated as
+  a  shorthand  for  [10X[3Xlist[103X[10X[[  [3Xix1[103X[10X, [3Xix2[103X[10X,.... [3Xixn[103X[10X]][110X This is intended to provide a
+  nicer syntax for accessing elements of matrices and tensors.[133X
   
   [33X[0;0YSimilarly, [2XIsBound\[\][102X is used explicitly mainly in method installations. In
   other situations, one can simply call [2XIsBound[102X ([14X21.5-1[114X), which then delegates
@@ -192,11 +196,11 @@
   
   [1X21.3 [33X[0;0YList Elements[133X[101X
   
-  [33X[0;0Y[10X[3Xlist[103X[10X[ [3Xpos[103X[10X ][110X[133X
+  [33X[0;0Y[10X[3Xlist[103X[10X[ [3Xix[103X[10X ][110X[133X
   
-  [33X[0;0YThe  above construct evaluates to the [3Xpos[103X-th element of the list [3Xlist[103X, where
-  [3Xpos[103X  must  be a positive integer. List indexing is done with origin 1, i.e.,
-  the first element of the list is the element at position 1.[133X
+  [33X[0;0YThe above construct evaluates to the element of the list [3Xlist[103X with index [3Xix[103X.
+  For  built-in  list  types  and collections, indexing is done with origin 1,
+  i.e., the first element of the list is the element with index 1.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xl := [ 2, 3, 5, 7, 11, 13 ];;  l[1];  l[2];  l[6];[127X[104X
@@ -205,16 +209,21 @@
     [4X[28X13[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YIf  [3Xlist[103X  is  not a list, or [3Xpos[103X does not evaluate to a positive integer, or
-  [10X[3Xlist[103X[10X[[3Xpos[103X[10X][110X is unbound an error is signalled.[133X
+  [33X[0;0YIf  [3Xlist[103X  is  not  a  built-in  list,  or [3Xix[103X does not evaluate to a positive
+  integer,  method selection is invoked to try and find a way of indexing [3Xlist[103X
+  with  index [3Xix[103X. If this fails, or the selected method finds that [10X[3Xlist[103X[10X[[3Xix[103X[10X][110X is
+  unbound, an error is signalled.[133X
+  
+  [33X[0;0Y[10X[3Xlist[103X[10X[ [3Xix1[103X[10X,[3Xix2[103X[10X,...][110X[133X
+  
+  [33X[0;0Yis a short-hand for [10X[3Xlist[103X[10X[[[3Xix1[103X[10X,[3Xix2[103X[10X,...]][110X[133X
   
   [33X[0;0Y[10X[3Xlist[103X[10X{ [3Xposs[103X[10X }[110X[133X
   
   [33X[0;0YThe  above  construct  evaluates  to  a  new list [3Xnew[103X whose first element is
-  [10X[3Xlist[103X[10X[[3Xposs[103X[10X[1]][110X,  whose  second element is [10X[3Xlist[103X[10X[[3Xposs[103X[10X[2]][110X, and so on. [3Xposs[103X must
-  be a dense list of positive integers. However, it does not need to be sorted
-  and  may  contain  duplicate  elements.  If  for  any  [22Xi[122X, [10X[3Xlist[103X[10X[ [3Xposs[103X[10X[[110X[22Xi[122X[10X] ][110X is
-  unbound, an error is signalled.[133X
+  [10X[3Xlist[103X[10X[[3Xposs[103X[10X[1]][110X, whose second element is [10X[3Xlist[103X[10X[[3Xposs[103X[10X[2]][110X, and so on. However, it
+  does not need to be sorted and may contain duplicate elements. If for any [22Xi[122X,
+  [10X[3Xlist[103X[10X[ [3Xposs[103X[10X[[110X[22Xi[122X[10X] ][110X is unbound, an error is signalled.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xl := [ 2, 3, 5, 7, 11, 13, 17, 19 ];;[127X[104X
@@ -290,12 +299,12 @@
   
   [1X21.4 [33X[0;0YList Assignment[133X[101X
   
-  [33X[0;0Y[10X[3Xlist[103X[10X[ [3Xpos[103X[10X ] := [3Xobject[103X[10X;[110X[133X
+  [33X[0;0Y[10X[3Xlist[103X[10X[ [3Xix[103X[10X ] := [3Xobject[103X[10X;[110X[133X
   
   [33X[0;0YThe  list  element assignment assigns the object [3Xobject[103X, which can be of any
-  type,  to  the  list  entry  at  the  position [3Xpos[103X, which must be a positive
-  integer,  in the mutable (see [14X12.6[114X) list [3Xlist[103X. That means that accessing the
-  [3Xpos[103X-th element of the list [3Xlist[103X will return [3Xobject[103X after this assignment.[133X
+  type,  to  the list with index [3Xix[103X, in the mutable (see [14X12.6[114X) list [3Xlist[103X. That
+  means  that  accessing the [3Xix[103X-th element of the list [3Xlist[103X will return [3Xobject[103X
+  after this assignment.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xl := [ 1, 2, 3 ];;[127X[104X
@@ -307,9 +316,9 @@
     [4X[28X[ 3, [ 4, 5, 6 ], 10 ][128X[104X
   [4X[32X[104X
   
-  [33X[0;0YIf  the  index  [3Xpos[103X  is  larger than the length of the list [3Xlist[103X (see [2XLength[102X
-  ([14X21.17-5[114X)),  the  list  is  automatically  enlarged to make room for the new
-  element. Note that it is possible to generate lists with holes that way.[133X
+  [33X[0;0YIf  the  index [3Xix[103X is an integer larger than the length of the list [3Xlist[103X (see
+  [2XLength[102X  ([14X21.17-5[114X)),  the list is automatically enlarged to make room for the
+  new element. Note that it is possible to generate lists with holes that way.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xl[4] := "another entry";; l;  # <list> is enlarged[127X[104X
@@ -327,6 +336,10 @@
   [33X[0;0YIf  [3Xlist[103X  does  not  evaluate to a list, [3Xpos[103X does not evaluate to a positive
   integer or [3Xobject[103X is a call to a function which does not return a value (for
   example [10XPrint[110X) an error is signalled.[133X
+  
+  [33X[0;0Y[10X[3Xlist[103X[10X[ [3Xix1[103X[10X,[3Xix2[103X[10X,...] := [3Xobj[103X[10X[110X[133X
+  
+  [33X[0;0Yis a short-hand for [10X[3Xlist[103X[10X[[[3Xix1[103X[10X,[3Xix2[103X[10X,...]] := [3Xobj[103X[10X[110X.[133X
   
   [33X[0;0Y[10X[3Xlist[103X[10X{ [3Xposs[103X[10X } := [3Xobjects[103X[10X;[110X[133X
   
@@ -490,10 +503,10 @@
   [1X21.5-1 IsBound[101X
   
   [29X[2XIsBound[102X( [3Xlist[103X[, [3Xn[103X] ) [32X operation
+  [29X[2XIsBound[102X( [3Xlist[103X[, [3Xix1[103X, [3Xix2[103X, [3X...[103X] ) [32X operation
   
-  [33X[0;0Y[2XIsBound[102X  returns  [9Xtrue[109X if the list [3Xlist[103X has a element at the position [3Xn[103X, and
-  [9Xfalse[109X  otherwise.  [3Xlist[103X  must  evaluate  to  a  list,  otherwise an error is
-  signalled.[133X
+  [33X[0;0Y[2XIsBound[102X  returns  [9Xtrue[109X  if the list [3Xlist[103X has a element at index [3Xn[103X, and [9Xfalse[109X
+  otherwise. [3Xlist[103X must evaluate to a list, otherwise an error is signalled.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xl := [ , 2, 3, , 5, , 7, , , , 11 ];;[127X[104X
@@ -505,15 +518,18 @@
     [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
+  [33X[0;0Y[10XIsBound([3Xlist[103X[10X[[3Xix1[103X[10X,[3Xix2[103X[10X,...][110X is a short-hand for [10XIsBound([3Xlist[103X[10X[[[3Xix1[103X[10X,[3Xix2[103X[10X,...]][110X[133X
+  
   [1X21.5-2 Unbind[101X
   
   [29X[2XUnbind[102X( [3Xlist[103X[, [3Xn[103X] ) [32X operation
+  [29X[2XUnbind[102X( [3Xlist[103X[, [3Xix1[103X, [3Xix2[103X, [3X...[103X] ) [32X operation
   
-  [33X[0;0Y[2XUnbind[102X  deletes the element at the position [3Xn[103X in the mutable list [3Xlist[103X. That
-  is,  after  execution of [2XUnbind[102X, [3Xlist[103X no longer has an assigned value at the
-  position [3Xn[103X. Thus [2XUnbind[102X can be used to produce holes in a list. Note that it
-  is  not an error to unbind a nonexisting list element. [3Xlist[103X must evaluate to
-  a list, otherwise an error is signalled.[133X
+  [33X[0;0Y[2XUnbind[102X  deletes  the element with index [3Xn[103X in the mutable list [3Xlist[103X. That is,
+  after  execution  of [2XUnbind[102X, [3Xlist[103X no longer has an assigned value with index
+  [3Xn[103X.  Thus  [2XUnbind[102X can be used to produce holes in a list. Note that it is not
+  an error to unbind a nonexistant list element. [3Xlist[103X must evaluate to a list,
+  otherwise an error is signalled.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xl := [ , 2, 3, 5, , 7, , , , 11 ];;[127X[104X
@@ -526,7 +542,8 @@
   [33X[0;0YNote  that  [2XIsBound[102X  ([14X21.5-1[114X)  and  [2XUnbind[102X  are  special in that they do not
   evaluate  their  argument, otherwise [2XIsBound[102X ([14X21.5-1[114X) would always signal an
   error  when it is supposed to return [9Xfalse[109X and there would be no way to tell
-  [2XUnbind[102X which component to remove.[133X
+  [2XUnbind[102X  which  component to remove. [10XUnbind([3Xlist[103X[10X[[3Xix1[103X[10X,[3Xix2[103X[10X,...][110X is a short-hand
+  for [10XUnbind([3Xlist[103X[10X[[[3Xix1[103X[10X,[3Xix2[103X[10X,...]][110X[133X
   
   
   [1X21.6 [33X[0;0YIdentical Lists[133X[101X
@@ -806,8 +823,8 @@
   physical  memory  which  is allocated for the plain list [3Xl[103X but not needed by
   the current number of entries.[133X
   
-  [33X[0;0YNote   that   there   are   similar   functions   [2XEmptyString[102X  ([14X27.3-5[114X)  and
-  [2XShrinkAllocationString[102X ([14X27.3-5[114X) for strings instead of plain lists.[133X
+  [33X[0;0YNote   that   there   are   similar   functions   [2XEmptyString[102X  ([14X27.4-5[114X)  and
+  [2XShrinkAllocationString[102X ([14X27.4-5[114X) for strings instead of plain lists.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xl:=[]; for i in [1..160] do Add(l, i^2); od; [127X[104X
@@ -1637,13 +1654,6 @@
   [33X[0;0YTo  determine  whether  [3Xsub[103X  matches  [3Xlist[103X  at  a  particular  position, use
   [2XIsMatchingSublist[102X ([14X21.17-1[114X) instead.[133X
   
-  [1X21.16-13 PositionFirstComponent[101X
-  
-  [29X[2XPositionFirstComponent[102X( [3Xlist[103X, [3Xobj[103X ) [32X operation
-  
-  [33X[0;0Yreturns  the  index  [3Xi[103X in [3Xlist[103X such that [3Xlist[103X[10X[[110X[3Xi[103X[10X][1] = [110X[3Xobj[103X or the place where
-  such an entry should be added (cf. [2XPositionSorted[102X ([14X21.16-5[114X)).[133X
-  
   
   [1X21.17 [33X[0;0YProperties and Attributes for Lists[133X[101X
   
@@ -2238,7 +2248,7 @@
   
   [1X21.20-11 Perform[101X
   
-  [29X[2XPerform[102X( [3Xlist[103X, [3Xfunc[103X ) [32X operation
+  [29X[2XPerform[102X( [3Xlist[103X, [3Xfunc[103X ) [32X function
   
   [33X[0;0Y[2XPerform[102X  applies  the  function  [3Xfunc[103X  to  every  element  of the list [3Xlist[103X,
   discarding any return values. It does not return a value.[133X
@@ -2412,7 +2422,7 @@
   [33X[0;0YThis  function returns a new mutable list [10Xnew[110X of the same length as the list
   [3Xlist[103X  (which  may  have  holes).  The  entry [10Xnew[i][110X is unbound if [10X[3Xlist[103X[10X[i][110X is
   unbound.  Otherwise [10Xnew[i] = [3Xfunc[103X[10X([3Xlist[103X[10X[i])[110X. If the argument [3Xfunc[103X is omitted,
-  its default is [2XIdFunc[102X ([14X5.3-4[114X), so this function does the same as [2XShallowCopy[102X
+  its default is [2XIdFunc[102X ([14X5.4-6[114X), so this function does the same as [2XShallowCopy[102X
   ([14X12.7-1[114X) (see also [14X21.7[114X).[133X
   
   [4X[32X  Example  [32X[104X
@@ -2665,7 +2675,7 @@
   
   [1X21.21-1 ListX[101X
   
-  [29X[2XListX[102X( [3Xarg1[103X, [3Xarg2[103X, [3X...[103X, [3Xargn[103X, [3Xfunc[103X ) [32X operation
+  [29X[2XListX[102X( [3Xarg1[103X, [3Xarg2[103X, [3X...[103X, [3Xargn[103X, [3Xfunc[103X ) [32X function
   
   [33X[0;0Y[2XListX[102X returns a new list constructed from the arguments.[133X
   
@@ -2732,21 +2742,21 @@
   
   [1X21.21-2 SetX[101X
   
-  [29X[2XSetX[102X( [3Xarg1[103X, [3Xarg2[103X, [3X...[103X, [3Xfunc[103X ) [32X operation
+  [29X[2XSetX[102X( [3Xarg1[103X, [3Xarg2[103X, [3X...[103X, [3Xfunc[103X ) [32X function
   
   [33X[0;0YThe only difference between [2XSetX[102X and [2XListX[102X ([14X21.21-1[114X) is that the result list
   of [2XSetX[102X is strictly sorted.[133X
   
   [1X21.21-3 SumX[101X
   
-  [29X[2XSumX[102X( [3Xarg1[103X, [3Xarg2[103X, [3X...[103X, [3Xfunc[103X ) [32X operation
+  [29X[2XSumX[102X( [3Xarg1[103X, [3Xarg2[103X, [3X...[103X, [3Xfunc[103X ) [32X function
   
   [33X[0;0Y[2XSumX[102X returns the sum of the elements in the list obtained by [2XListX[102X ([14X21.21-1[114X)
   when this is called with the same arguments.[133X
   
   [1X21.21-4 ProductX[101X
   
-  [29X[2XProductX[102X( [3Xarg1[103X, [3Xarg2[103X, [3X...[103X, [3Xfunc[103X ) [32X operation
+  [29X[2XProductX[102X( [3Xarg1[103X, [3Xarg2[103X, [3X...[103X, [3Xfunc[103X ) [32X function
   
   [33X[0;0Y[2XProductX[102X  returns  the product of the elements in the list obtained by [2XListX[102X
   ([14X21.21-1[114X) when this is called with the same arguments.[133X

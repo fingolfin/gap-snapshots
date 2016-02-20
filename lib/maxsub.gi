@@ -21,7 +21,11 @@ BindGlobal("MaxSubmodsByPcgs",function( G, pcgs, field )
     local mats, modu, max, pcgD, pcgN, i, base, sub;
     mats := LinearOperationLayer( G, pcgs );
     modu := GModuleByMats( mats, Length(pcgs), field );
-    max  := MTX.BasesMaximalSubmodules( modu );
+    if modu.dimension=1 then 
+      max:=[[]];
+    else
+      max  := MTX.BasesMaximalSubmodules( modu );
+    fi;
     pcgD := DenominatorOfModuloPcgs( pcgs );
     pcgN := NumeratorOfModuloPcgs( pcgs );
     for i in [1..Length( max )] do
@@ -96,7 +100,9 @@ function( G, fampcgs,pcgs,fphom,words,wordgens,wordimgs)
       reps:=Concatenation(reps,den);
       reps:=InducedPcgsByGenerators(fampcgs,reps);
       SetOneOfPcgs(reps,OneOfPcgs(fampcgs));
+      #z:=Size(Group(wordimgs,()))*Product(RelativeOrders(reps));
       reps:=SubgroupByFittingFreeData( G, ggens, wordimgs,reps);
+      #SetSize(reps,z);
 #if IsSubset(reps,RadicalGroup(G)) then Error("radicalA");fi;
       reps!.classsize:=Size(ocr.oneCoboundaries);
       Add(cls,reps);
@@ -198,8 +204,10 @@ BindGlobal("MaximalSubgroupClassesSol",function(G)
     wordpre:=List(wordfpgens,x->PreImagesRepresentative(ff.factorhom,
 	      PreImagesRepresentative(fphom,x)));
     fphom:=ff.factorhom*fphom;
-    f:=GroupHomomorphismByImagesNC(Range(fphom),Source(fphom),
-	wordfpgens,wordpre);
+    # no assertion as this is not a proper homomorphism, but an inverse
+    # multiplicative map
+    f:=GroupGeneralMappingByImagesNC(Range(fphom),Source(fphom),
+	wordfpgens,wordpre:noassert);
     SetInverseGeneralMapping(fphom,f);
 
     homliftlevel:=0;
@@ -218,7 +226,8 @@ BindGlobal("MaximalSubgroupClassesSol",function(G)
 	  if homliftlevel+1<f then
             pcgsM := InducedPcgsByPcSequenceNC( spec, spec{[homliftlevel+1..f-1]} );
 	    RUN_IN_GGMBI:=true;
-	    fphom:=LiftFactorFpHom(fphom,G,fail,fail,pcgsM);
+	    fphom:=LiftFactorFpHom(fphom,G,Group(spec),
+	      Group(spec{[f..Length(spec)]}),pcgsM);
 	    RUN_IN_GGMBI:=false;
 	    # translate words
 	    L:=FreeGeneratorsOfFpGroup(Range(fphom)){[1..Length(wordgens)]};
@@ -289,32 +298,33 @@ BindGlobal("MaximalSubgroupClassesSol",function(G)
 	od;
     else
 
-                # here we use head complements
-                Info(InfoLattice,2,"  compute head complement"); 
-                index := Filtered( [1..m], x -> weights[x][1] = w[1]-1
-                                            and weights[x][2] = 1
-                                            and weights[x][3] <> p ); 
-                pcgsT := Concatenation( spec{index}, pcgsM );
-                pcgsT := InducedPcgsByPcSequenceNC( spec, pcgsT );
-                pcgsT := pcgsT mod pcgsM;
-                gensK := HeadComplementGens( gensG, pcgsT, pcgsF, field );
-                index := Filtered( [1..m], x -> weights[x] <> w );
-                #Append( gensK, spec{index} );
-                for modu in modus do
-		  K:=Concatenation(spec{index},modu);
-		  K:=InducedPcgsByGenerators(ff.pcgs,K);
-		  K:=SubgroupByFittingFreeData(G,gensK,mgi[2]{sel},K);
-#if IsSubset(K,RadicalGroup(G)) then Error("radicalB");fi;
-		  #cl := ConjugacyClassSubgroups( G, K );
-		  #SetSize( cl, p^(Length(pcgsF)-Length(modu)) );
-		  #Add( max, cl );
-		  K!.classsize:=p^(Length(pcgsF)-Length(modu));
-		  Add(max,K);
-		od;
-	    fi;
-	fi;
-    od;
-    return max;
+	# here we use head complements
+	Info(InfoLattice,2,"  compute head complement"); 
+	index := Filtered( [1..m], x -> weights[x][1] = w[1]-1
+				    and weights[x][2] = 1
+				    and weights[x][3] <> p ); 
+	pcgsT := Concatenation( spec{index}, pcgsM );
+	pcgsT := InducedPcgsByPcSequenceNC( spec, pcgsT );
+	pcgsT := pcgsT mod pcgsM;
+	gensK := HeadComplementGens( gensG, pcgsT, pcgsF, field );
+	index := Filtered( [1..m], x -> weights[x] <> w );
+	#Append( gensK, spec{index} );
+	for modu in modus do
+	  K:=Concatenation(spec{index},modu);
+	  K:=InducedPcgsByGenerators(ff.pcgs,K);
+	  K:=SubgroupByFittingFreeData(G,gensK,mgi[2]{sel},K);
+  #if IsSubset(K,RadicalGroup(G)) then Error("radicalB");fi;
+	  #cl := ConjugacyClassSubgroups( G, K );
+	  #SetSize( cl, p^(Length(pcgsF)-Length(modu)) );
+	  #Add( max, cl );
+	  K!.classsize:=p^(Length(pcgsF)-Length(modu));
+	  Add(max,K);
+	od;
+      fi;
+    fi;
+
+  od;
+  return max;
 end);
 
 #############################################################################
@@ -513,14 +523,33 @@ local hom,embs,s,k,agens,ad,i,j,perm,dia,ggens,e,tgens,d,m,reco,emba,outs,id;
 end);
 
 BindGlobal("MaxesAlmostSimple",function(G)
-local recog,m;
+local id,m,epi;
   # which cases can we deal with already?
   if IsNaturalSymmetricGroup(G) or IsNaturalAlternatingGroup(G) then
     Info(InfoLattice,1,"MaxesAlmostSimple: Use S_n/A_n");
     return MaximalSubgroupClassReps(G);
   fi;
+
+  # does the table of marks have it?
   m:=TomDataMaxesAlmostSimple(G);
   if m<>fail then return m;fi;
+
+  id:=DataAboutSimpleGroup(G);
+  if id.idSimple.series="A" then
+    Info(InfoWarning,1,"Alternating recognition needed!");
+  elif id.idSimple.series="L" then
+    m:=ClassicalMaximals("L",id.idSimple.parameter[1],id.idSimple.parameter[2]);
+    if m<>fail then
+      epi:=EpimorphismFromClassical(G);
+      if epi<>fail then
+	m:=List(m,x->SubgroupNC(Range(epi),
+             List(GeneratorsOfGroup(x),y->ImageElm(epi,y))));
+        return m;
+      fi;
+    fi;
+
+  fi;
+
   if ValueOption("cheap")=true then return [];fi;
   Info(InfoLattice,1,"MaxesAlmostSimple: Fallback to lattice");
   return MaxesByLattice(G);
@@ -773,9 +802,10 @@ local G,types,ff,maxes,lmax,q,d,dorb,dorbt,i,dorbc,dorba,dn,act,comb,smax,soc,
     else
       lmax:=DoMaxesTF(ImagesSource(act),types);
     fi;
+    List(lmax,Size);
     Info(InfoLattice,1,Length(lmax)," socle factor maxes");
     lmax:=List(lmax,x->PreImage(act,x));
-for mm in lmax do mm!.type:="1";od;
+    for mm in lmax do mm!.type:="1";od;
     Append(maxes,lmax);
   fi;
 
@@ -902,8 +932,67 @@ end);
 #F  MaximalSubgroupClassReps(<G>) . . . . TF method
 ##
 InstallMethod(MaximalSubgroupClassReps,"TF method",true,
-  [IsGroup and IsFinite and HasFittingFreeLiftSetup],0,DoMaxesTF);
+  [IsGroup and IsFinite and HasFittingFreeLiftSetup],OVERRIDENICE,DoMaxesTF);
 
 InstallMethod(MaximalSubgroupClassReps,"perm group",true,
   [IsPermGroup and IsFinite],0,DoMaxesTF);
 
+BindGlobal("NextLevelMaximals",function(g,l)
+local m;
+  if Length(l)=0 then return [];fi;
+  m:=Concatenation(List(l,x->MaximalSubgroupClassReps(x)));
+  if Length(l)>1 then
+    m:=Unique(m);
+  fi;
+  if Length(l)>1 or Size(l[1])<Size(g) then
+    m:=List(SubgroupsOrbitsAndNormalizers(g,m,false),x->x.representative);
+  fi;
+  return m;
+end);
+
+InstallGlobalFunction(MaximalPropertySubgroups,function(g,prop)
+local all,m,sel,i,new,containedconj;
+
+  containedconj:=function(g,u,v)
+  local m,n,dc,i;
+    if not IsInt(Size(u)/Size(v)) then 
+      return false;
+    fi;
+    m:=Normalizer(g,u);
+    n:=Normalizer(g,v);
+    dc:=DoubleCosetRepsAndSizes(g,n,m);
+    for i in dc do
+      if ForAll(GeneratorsOfGroup(v),x->x^i[1] in u) then
+	return true;
+      fi;
+    od;
+    return false;
+  end;
+
+  all:=[];
+  m:=MaximalSubgroupClassReps(g);
+  while Length(m)>0 do
+    sel:=Filtered([1..Length(m)],x->prop(m[x]));
+
+    # eliminate those that are contained in a conjugate of a subgroup of all
+    new:=m{sel};
+    SortBy(new,x->Size(g)/Size(x)); # small indices first to deal with
+				    # conjugate inclusion here
+    for i in new do
+      if not ForAny(all,x->containedconj(g,x,i)) then
+	Add(all,i);
+      fi;
+    od;
+
+    #Append(all,Filtered(m{sel},
+    #  x->ForAll(all,y->Size(x)<>Size(y) or not IsSubset(y,x))));
+    m:=NextLevelMaximals(g,m{Difference([1..Length(m)],sel)});
+
+  od;
+  # there could be conjugates after all by different routes
+  #all:=List(SubgroupsOrbitsAndNormalizers(g,all,false),x->x.representative);
+  return all;
+end);
+
+InstallGlobalFunction(MaximalSolvableSubgroups,
+  g->MaximalPropertySubgroups(g,IsSolvableGroup));

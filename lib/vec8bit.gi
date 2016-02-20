@@ -910,9 +910,6 @@ end);
 #M PowerModCoeffs( <vec1>, <len1>, <exp>, <vec2>, <len2> )
 ##
 
-IsFamXYFamZ := function(F1, F2, F3, F4, F5) return
-  IsIdenticalObj(F1,F4); end;
-
 InstallMethod( PowerModCoeffs, 
         "for 8 bit vectors", 
         IsFamXYFamZ,

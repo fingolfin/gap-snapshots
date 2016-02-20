@@ -377,8 +377,8 @@
   [33X[0;0YFor  this  mechanism  to  work, of course there must be effective methods to
   evaluate  the  [2XNiceMonomorphism[102X  ([14X40.5-2[114X)  value  on  elements  and  to take
   preimages under it. As by definition no good algorithms exist for the source
-  group,  normally this can only be achieved by using the the result of a call
-  to  [2XActionHomomorphism[102X ([14X41.7-1[114X) or [2XGroupHomomorphismByFunction[102X ([14X40.1-4[114X) (see
+  group,  normally  this can only be achieved by using the result of a call to
+  [2XActionHomomorphism[102X  ([14X41.7-1[114X)  or  [2XGroupHomomorphismByFunction[102X  ([14X40.1-4[114X) (see
   also section [14X40.3[114X).[133X
   
   [1X40.5-1 IsHandledByNiceMonomorphism[101X

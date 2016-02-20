@@ -14,6 +14,13 @@ BindGlobal("OVERRIDENICE",Maximum(NICE_FLAGS,
 
 #############################################################################
 ##
+#V  InfoFitFree
+##
+##  the info class for fitting free calculations
+DeclareInfoClass("InfoFitFree");
+
+#############################################################################
+##
 #F  CanComputeFittingFree( <grp> ) . . . . .  TF approach is possible
 ##
 ##  <#GAPDoc Label="CanComputeFittingFree">
@@ -177,6 +184,18 @@ DeclareGlobalFunction("FittingFreeElementarySeries");
 ##  the direct factors of the socle of <A>G</A>. If <A>G</A> is not
 ##  fitting-free then <K>fail</K> is returned.
 DeclareAttribute("DirectFactorsFittingFreeSocle",IsGroup);
+
+#############################################################################
+##
+#A  ChiefSeriesTF( <G> )
+##
+##  <#GAPDoc Label="ChiefSeriesTF">
+##  <ManSection>
+##  <Attr Name="ChiefSeriesTF" Arg='G'/>
+##
+##  <Description>
+##  A chief series for <A>G</A> that fits with the FittingFreeLiftSetup.
+DeclareAttribute("ChiefSeriesTF",IsGroup);
 
 #############################################################################
 ##

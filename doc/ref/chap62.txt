@@ -529,7 +529,7 @@
   [4X[32X[104X
   
   
-  [1X62.7 [33X[0;0YIdeals[133X[101X
+  [1X62.7 [33X[0;0YIdeals of Algebras[133X[101X
   
   [33X[0;0YFor  constructing and working with ideals in algebras the same functions are
   available  as  for  ideals in rings. So for the precise description of these
@@ -639,7 +639,7 @@
   
   [1X62.8-5 IsLieAlgebra[101X
   
-  [29X[2XIsLieAlgebra[102X( [3XA[103X ) [32X property
+  [29X[2XIsLieAlgebra[102X( [3XA[103X ) [32X filter
   
   [33X[0;0YAn algebra [3XA[103X is called Lie algebra if [22Xa * a = 0[122X for all [22Xa[122X in [3XA[103X and [22X( a * ( b
   *  c  )  )  +  (  b * ( c * a ) ) + ( c * ( a * b ) ) = 0[122X for all [22Xa, b, c ∈[122X[3XA[103X

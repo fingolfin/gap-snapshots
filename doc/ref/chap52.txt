@@ -112,7 +112,7 @@
   
   [1X52.1-1 IsSubsemigroupFpSemigroup[101X
   
-  [29X[2XIsSubsemigroupFpSemigroup[102X( [3Xt[103X ) [32X attribute
+  [29X[2XIsSubsemigroupFpSemigroup[102X( [3Xt[103X ) [32X filter
   
   [33X[0;0Ytrue  if [3Xt[103X is a finitely presented semigroup or a subsemigroup of a finitely
   presented   semigroup  (generally  speaking,  such  a  subsemigroup  can  be
@@ -121,7 +121,7 @@
   
   [1X52.1-2 IsSubmonoidFpMonoid[101X
   
-  [29X[2XIsSubmonoidFpMonoid[102X( [3Xt[103X ) [32X attribute
+  [29X[2XIsSubmonoidFpMonoid[102X( [3Xt[103X ) [32X filter
   
   [33X[0;0Ytrue  if  [3Xt[103X  is  a  finitely  presented  monoid or a submonoid of a finitely
   presented  monoid  (generally  speaking, such a semigroup can be constructed
@@ -132,7 +132,7 @@
   
   [1X52.1-3 IsFpSemigroup[101X
   
-  [29X[2XIsFpSemigroup[102X( [3Xs[103X ) [32X property
+  [29X[2XIsFpSemigroup[102X( [3Xs[103X ) [32X filter
   
   [33X[0;0Yis  a synonym for [10XIsSubsemigroupFpSemigroup([3Xs[103X[10X)[110X and [10XIsWholeFamily([3Xs[103X[10X)[110X (this is
   because  a subsemigroup of a finitely presented semigroup is not necessarily
@@ -140,7 +140,7 @@
   
   [1X52.1-4 IsFpMonoid[101X
   
-  [29X[2XIsFpMonoid[102X( [3Xm[103X ) [32X property
+  [29X[2XIsFpMonoid[102X( [3Xm[103X ) [32X filter
   
   [33X[0;0Yis  a  synonym  for  [10XIsSubmonoidFpMonoid([3Xm[103X[10X)[110X  and  [10XIsWholeFamily([3Xm[103X[10X)[110X  (this is
   because  a  submonoid  of  a  finitely  presented  monoid is not necessarily
@@ -173,7 +173,7 @@
     [4X[25Xgap>[125X [27XIsFpSemigroup( s );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27Xt := Semigroup( [ GeneratorsOfSemigroup( s )[ 1 ] ]);[127X[104X
-    [4X[28X<semigroup with 1 generator>[128X[104X
+    [4X[28X<commutative semigroup with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XIsSubsemigroupFpSemigroup( t );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XIsElementOfFpSemigroup( GeneratorsOfSemigroup( t )[ 1 ] );[127X[104X
@@ -447,8 +447,8 @@
   
   [1X52.6-3 [33X[0;0YKnuthBendixRewritingSystem[133X[101X
   
-  [29X[2XKnuthBendixRewritingSystem[102X( [3Xs[103X, [3Xwordord[103X ) [32X function
-  [29X[2XKnuthBendixRewritingSystem[102X( [3Xm[103X, [3Xwordord[103X ) [32X function
+  [29X[2XKnuthBendixRewritingSystem[102X( [3Xs[103X, [3Xwordord[103X ) [32X operation
+  [29X[2XKnuthBendixRewritingSystem[102X( [3Xm[103X, [3Xwordord[103X ) [32X operation
   
   [33X[0;0Yin  the  first  form,  for  a  semigroup  [3Xs[103X and a reduction ordering for the
   underlying  free  semigroup, it returns the Knuth-Bendix rewriting system of

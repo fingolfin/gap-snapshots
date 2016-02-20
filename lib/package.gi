@@ -147,7 +147,12 @@ InstallGlobalFunction( RECORDS_FILE, function( name )
 #F  SetPackageInfo( <record> )
 ##
 InstallGlobalFunction( SetPackageInfo, function( record )
-    GAPInfo.PackageInfoCurrent:= record;
+    local rnam, info;
+    info := rec();
+    for rnam in REC_NAMES(record) do
+      info.(rnam) := Immutable(record.(rnam));
+    od;
+    GAPInfo.PackageInfoCurrent:= info;
     end );
 
 
@@ -167,6 +172,7 @@ InstallGlobalFunction( InitializePackagesInfoRecords, function( arg )
       return;
     fi;
 
+    GAPInfo.LoadPackageLevel:= 0;
     GAPInfo.PackagesInfo:= [];
     GAPInfo.PackagesInfoRefuseLoad:= [];
 
@@ -178,7 +184,7 @@ InstallGlobalFunction( InitializePackagesInfoRecords, function( arg )
       LogPackageLoadingMessage( PACKAGE_DEBUG,
           "exit InitializePackagesInfoRecords (no pkg directories found)",
           "GAP" );
-      GAPInfo.PackagesInfo:= rec();
+      GAPInfo.PackagesInfo:= AtomicRecord();
       return;
     fi;
 
@@ -271,7 +277,7 @@ InstallGlobalFunction( InitializePackagesInfoRecords, function( arg )
                   elif IsRecord( record.PackageDoc ) then
                     record.PackageDoc:= [ record.PackageDoc ];
                   fi;
-                  Add( GAPInfo.PackagesInfo, record );
+                  Add( GAPInfo.PackagesInfo, `record );
                 fi;
               fi;
             fi;
@@ -288,14 +294,14 @@ InstallGlobalFunction( InitializePackagesInfoRecords, function( arg )
     # Turn the lists into records.
     record:= rec();
     for r in GAPInfo.PackagesInfo do
-      name:= LowercaseString( r.PackageName );
+      name:= `LowercaseString( r.PackageName );
       if IsBound( record.( name ) ) then
-        Add( record.( name ), r );
+        record.( name ) := `Concatenation( record.( name ), [ r ] );
       else
-        record.( name ):= [ r ];
+        record.( name ):= `[ r ];
       fi;
     od;
-    GAPInfo.PackagesInfo:= record;
+    GAPInfo.PackagesInfo:= AtomicRecord(record);
 
     GAPInfo.PackagesInfoInitialized:= true;
     LogPackageLoadingMessage( PACKAGE_DEBUG,
@@ -1513,7 +1519,7 @@ InstallGlobalFunction( LoadPackage, function( arg )
       # inside the package code causes the files to be read more than once.
       for pkgname in cycle do
         pos:= PositionSorted( paths[1], pkgname );
-        GAPInfo.PackagesLoaded.( pkgname ):= paths[2][ pos ];
+        GAPInfo.PackagesLoaded.( pkgname ):= MakeImmutable(paths[2][ pos ]);
 #T Remove the following as soon as the obsolete variable has been removed!
 if IsBoundGlobal( "PACKAGES_VERSIONS" ) then
   ValueGlobal( "PACKAGES_VERSIONS" ).( pkgname ):= paths[2][ pos ][2];
@@ -1684,7 +1690,7 @@ InstallGlobalFunction( ExtendRootDirectories, function( rootpaths )
       GAPInfo.RootPaths:= Immutable( Concatenation( GAPInfo.RootPaths,
           rootpaths ) );
       # Clear the cache.
-      GAPInfo.DirectoriesLibrary:= rec();
+      GAPInfo.DirectoriesLibrary:= AtomicRecord( rec() );
       # Deal with an obsolete variable.
       if IsBoundGlobal( "GAP_ROOT_PATHS" ) then
         MakeReadWriteGlobal( "GAP_ROOT_PATHS" );
@@ -1923,7 +1929,6 @@ fi;
         "GAP" );
     end );
 
-
 #############################################################################
 ##
 #F  GAPDocManualLab(<pkgname>) . create manual.lab for package w/ GAPDoc docs
@@ -1937,7 +1942,11 @@ InstallGlobalFunction( GAPDocManualLabFromSixFile,
     local stream, entries, SecNumber, esctex, file;
 
     stream:= InputTextFile( sixfilepath );
-    entries:= HELP_BOOK_HANDLER.GapDocGAP.ReadSix( stream ).entries;
+    
+    atomic readonly HELP_REGION do
+      entries:= HELP_BOOK_HANDLER.GapDocGAP.ReadSix( stream ).entries;
+    od;
+    
     SecNumber:= function( list )
       if IsEmpty( list ) or list[1] = 0 then
         return "";
@@ -2035,13 +2044,13 @@ InstallGlobalFunction( DeclareAutoreadableVariables,
 #F  ValidatePackageInfo( <info> )
 ##
 InstallGlobalFunction( ValidatePackageInfo, function( info )
-    local record, pkgdir, i, IsStringList, IsRecordList, IsProperBool,
+    local record, pkgdir, i, IsStringList, IsRecordList, IsProperBool, IsURL,
           IsFilename, IsFilenameList, result, TestOption, TestMandat, subrec,
           list;
 
     if IsString( info ) then
       if IsReadableFile( info ) then
-        Unbind( GAPInfo.PackageInfoCurrent );
+	Unbind( GAPInfo.PackageInfoCurrent );
         Read( info );
         if IsBound( GAPInfo.PackageInfoCurrent ) then
           record:= GAPInfo.PackageInfoCurrent;
@@ -2073,6 +2082,7 @@ InstallGlobalFunction( ValidatePackageInfo, function( info )
         ( pkgdir = fail or
           ( x[1] <> '/' and IsReadableFile( Concatenation( pkgdir, x ) ) ) );
     IsFilenameList:= x -> IsList( x ) and ForAll( x, IsFilename );
+    IsURL := x -> ForAny(["http://","https://","ftp://"], s -> StartsWith(x,s));
 
     result:= true;
 
@@ -2107,7 +2117,7 @@ InstallGlobalFunction( ValidatePackageInfo, function( info )
         x -> IsString(x) and Length(x) = 10 and x{ [3,6] } = "//"
                  and ForAll( x{ [1,2,4,5,7,8,9,10] }, IsDigitChar ),
         "a string of the form `dd/mm/yyyy'" );
-    TestMandat( record, "ArchiveURL", IsString, "a string" );
+    TestMandat( record, "ArchiveURL", IsURL, "a string started with http://, https:// or ftp://" );
     TestMandat( record, "ArchiveFormats", IsString, "a string" );
     TestOption( record, "TextFiles", IsStringList, "a list of strings" );
     TestOption( record, "BinaryFiles", IsStringList, "a list of strings" );
@@ -2148,7 +2158,7 @@ InstallGlobalFunction( ValidatePackageInfo, function( info )
           fi;
         fi;
         TestOption( subrec, "Email", IsString, "a string" );
-        TestOption( subrec, "WWWHome", IsString, "a string" );
+        TestOption( subrec, "WWWHome", IsURL, "a string started with http://, https:// or ftp://" );
         TestOption( subrec, "PostalAddress", IsString, "a string" );
         TestOption( subrec, "Place", IsString, "a string" );
         TestOption( subrec, "Institution", IsString, "a string" );
@@ -2168,10 +2178,19 @@ InstallGlobalFunction( ValidatePackageInfo, function( info )
                    and ForAll( x{ [1,2,4,5,6,7] }, IsDigitChar ),
           "a string of the form `mm/yyyy'" );
     fi;
-    TestMandat( record, "README_URL", IsString, "a string" );
-    TestMandat( record, "PackageInfoURL", IsString, "a string" );
+    TestMandat( record, "README_URL", IsURL, "a string started with http://, https:// or ftp://" );
+    TestMandat( record, "PackageInfoURL", IsURL, "a string started with http://, https:// or ftp://" );
+
+    if TestOption( record, "SourceRepository", IsRecord, "a record" ) then
+      if IsBound( record.SourceRepository ) then
+        TestMandat( record.SourceRepository, "Type", IsString, "a string" );
+        TestMandat( record.SourceRepository, "URL", IsString, "a string" );
+      fi;  
+    fi;
+    TestOption( record, "IssueTrackerURL", IsURL, "a string started with http://, https:// or ftp://" );
+    TestOption( record, "SupportEmail", IsString, "a string" );
     TestMandat( record, "AbstractHTML", IsString, "a string" );
-    TestMandat( record, "PackageWWWHome", IsString, "a string" );
+    TestMandat( record, "PackageWWWHome", IsURL, "a string started with http://, https:// or ftp://" );
     if TestMandat( record, "PackageDoc",
            x -> IsRecord( x ) or IsRecordList( x ),
            "a record or a list of records" ) then
@@ -2325,8 +2344,8 @@ InstallGlobalFunction( CheckPackageLoading, function( pkgname )
 ##  </Description>
 ##  </ManSection>
 ##
-GAPInfo.PackagesRestrictions := rec(
-  anupq := rec(
+GAPInfo.PackagesRestrictions := AtomicRecord(rec(
+  anupq := `rec(
     OnInitialization := function( pkginfo )
         if CompareVersionNumbers( pkginfo.Version, "1.3" ) = false then
           return false;
@@ -2346,7 +2365,7 @@ GAPInfo.PackagesRestrictions := rec(
         fi;
         end ),
 
-  autpgrp := rec(
+  autpgrp := `rec(
     OnInitialization := function( pkginfo )
         return true;
         end,
@@ -2361,7 +2380,7 @@ GAPInfo.PackagesRestrictions := rec(
               "most recent version, see URL\n",
               "      http://www.gap-system.org/Packages/autpgrp.html\n" );
         fi;
-        end ) );
+        end ) ));
 
 
 #############################################################################
@@ -3364,4 +3383,3 @@ InstallGlobalFunction( ShowPackageVariables, function( arg )
 #############################################################################
 ##
 #E
-

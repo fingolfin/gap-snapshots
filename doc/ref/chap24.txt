@@ -317,8 +317,8 @@
   
   [1X24.4-3 TraceMat[101X
   
-  [29X[2XTraceMat[102X( [3Xmat[103X ) [32X function
-  [29X[2XTrace[102X( [3Xmat[103X ) [32X function
+  [29X[2XTraceMat[102X( [3Xmat[103X ) [32X operation
+  [29X[2XTrace[102X( [3Xmat[103X ) [32X attribute
   
   [33X[0;0YThe trace of a square matrix is the sum of its diagonal entries.[133X
   

@@ -2199,33 +2199,18 @@
     [4X[25Xgap>[125X [27Xphi := IsomorphismPermGroup( G );;[127X[104X
     [4X[25Xgap>[125X [27XP := Image( phi );[127X[104X
     [4X[28XGroup([ (1,7,6)(2,9)(4,5,10), (2,3,4,5)(6,9,8,7) ])[128X[104X
-    [4X[25Xgap>[125X [27XD := DerivedSubgroup( P );[127X[104X
-    [4X[28XGroup([ (1,2,10,9)(3,8)(4,5)(6,7), (1,6)(2,7,9,4)(3,8)(5,10), (1,9)[128X[104X
-    [4X[28X(2,10)(3,6,8,5)(4,7) ])[128X[104X
+    [4X[25Xgap>[125X [27XD := DerivedSubgroup( P );;[127X[104X
     [4X[25Xgap>[125X [27XSize( D );[127X[104X
     [4X[28X960[128X[104X
     [4X[25Xgap>[125X [27XIsPerfectGroup( D );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27X# We have found the solvable residuum of P,[127X[104X
     [4X[25Xgap>[125X [27X# now move the results back to the matrix group G.[127X[104X
-    [4X[25Xgap>[125X [27XR := PreImage( phi, D );[127X[104X
-    [4X[28X<matrix group of size 960 with 3 generators>[128X[104X
-    [4X[25Xgap>[125X [27Xfor m in GeneratorsOfGroup( R ) do PrintArray( m ); od;[127X[104X
-    [4X[28X[ [  -1,  -1,  -1,  -1,   2 ],[128X[104X
-    [4X[28X  [   0,  -1,   0,   0,   0 ],[128X[104X
-    [4X[28X  [   0,   0,   0,   1,   0 ],[128X[104X
-    [4X[28X  [   0,   0,   1,   0,   0 ],[128X[104X
-    [4X[28X  [  -1,  -1,   0,   0,   1 ] ][128X[104X
-    [4X[28X[ [   0,   0,  -1,   0,   0 ],[128X[104X
-    [4X[28X  [   0,  -1,   0,   0,   0 ],[128X[104X
-    [4X[28X  [   1,   0,   0,   0,   0 ],[128X[104X
-    [4X[28X  [  -1,  -1,  -1,  -1,   2 ],[128X[104X
-    [4X[28X  [   0,  -1,  -1,   0,   1 ] ][128X[104X
-    [4X[28X[ [  -1,  -1,  -1,  -1,   2 ],[128X[104X
-    [4X[28X  [   0,   0,   0,  -1,   0 ],[128X[104X
-    [4X[28X  [   0,   0,  -1,   0,   0 ],[128X[104X
-    [4X[28X  [   0,   1,   0,   0,   0 ],[128X[104X
-    [4X[28X  [   0,   0,  -1,  -1,   1 ] ][128X[104X
+    [4X[25Xgap>[125X [27XR := PreImage( phi, D );;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(R);[127X[104X
+    [4X[28X"(C2 x C2 x C2 x C2) : A5"[128X[104X
+    [4X[25Xgap>[125X [27XIdGroup(D)=IdGroup(R);[127X[104X
+    [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
   [1X50.12-6 IsomorphismPermGroupImfGroup[101X

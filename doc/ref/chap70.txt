@@ -410,7 +410,7 @@
   
   [1X70.6-3 TableOfMarksFamily[101X
   
-  [29X[2XTableOfMarksFamily[102X[32X global variable
+  [29X[2XTableOfMarksFamily[102X[32X family
   
   [33X[0;0YEach table of marks belongs to this family.[133X
   
@@ -1081,7 +1081,7 @@
   
   [1X70.10-3 IsTableOfMarksWithGens[101X
   
-  [29X[2XIsTableOfMarksWithGens[102X( [3Xtom[103X ) [32X function
+  [29X[2XIsTableOfMarksWithGens[102X( [3Xtom[103X ) [32X filter
   
   [33X[0;0YThis  filter  shall  express  the  union  of  the filters [10XIsTableOfMarks and
   HasStraightLineProgramsTom[110X and [10XIsTableOfMarks and HasGeneratorsSubgroupsTom[110X.

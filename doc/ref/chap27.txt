@@ -33,7 +33,7 @@
   writing  the  characters  between  [13Xdoublequotes[113X  [10X"[110X.  [5XGAP[105X  will always output
   strings in the latter format. However, the input via the double quote syntax
   enables   [5XGAP[105X   to  store  the  string  in  an  efficient  compact  internal
-  representation. See [2XIsStringRep[102X ([14X27.3-1[114X) below for more details.[133X
+  representation. See [2XIsStringRep[102X ([14X27.4-1[114X) below for more details.[133X
   
   [33X[0;0YEach  character, in particular those which cannot be typed directly from the
   keyboard,  can  also  be  typed  in three digit octal notation. And for some
@@ -103,7 +103,7 @@
   displayed  with enclosing doublequotes. (But note that there is an ambiguity
   for  the  empty string which is also an empty list of arbitrary [5XGAP[105X objects;
   it  is  only  printed  like  a  string  if  it  was input as empty string or
-  converted  to  a  string  with  [2XConvertToStringRep[102X  ([14X27.3-2[114X).) The output of
+  converted  to  a  string  with  [2XConvertToStringRep[102X  ([14X27.4-2[114X).) The output of
   [2XPrintObj[102X can be read back into [5XGAP[105X.[133X
   
   [33X[0;0YStrings  behave  differently  from  other  [5XGAP[105X objects with respect to [2XPrint[102X
@@ -253,44 +253,65 @@
   case  the  last character of each input line, except the last line must be a
   backslash.  Both  backslash and [3Xnewline[103X are thrown away by [5XGAP[105X while reading
   the  string.  Note  that  the  same  continuation mechanism is available for
-  identifiers and integers, see [14X6.2[114X.[133X
+  identifiers  and  integers,  see [14X6.2[114X. The rules on escaping are ignored in a
+  triple quoted string, see [14X27.3[114X[133X
   
   
-  [1X27.3 [33X[0;0YInternally Represented Strings[133X[101X
+  [1X27.3 [33X[0;0YTriple Quoted Strings[133X[101X
   
-  [1X27.3-1 IsStringRep[101X
+  [33X[0;0YAnother  method  of entering strings in GAP is triple quoted strings. Triple
+  quoted  strings  ignore  the  rules on escaping given in [14X27.2[114X. Triple quoted
+  strings  begin  an  end with three doublequotes. Inside the triple quotes no
+  escaping  is done, and the string continues, including newlines, until three
+  doublequotes are found.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27X"""Print("\n")""";[127X[104X
+    [4X[28X"Print(\"\\n\")"[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YTriple  quoted  strings  are represented internally identically to all other
+  strings,  they  only provide an alternative method of giving strings to GAP.
+  Triple  quoted  strings  still  follow GAP's line editing rules ([14X6.2[114X), which
+  state  that  in  normal line editing mode, lines starting [10Xgap> [110X, [10X> [110X or [10Xbrk> [110X
+  will have this beginning part removed.[133X
+  
+  
+  [1X27.4 [33X[0;0YInternally Represented Strings[133X[101X
+  
+  [1X27.4-1 IsStringRep[101X
   
   [29X[2XIsStringRep[102X( [3Xobj[103X ) [32X Representation
   
   [33X[0;0Y[2XIsStringRep[102X  is  a  special  (internal)  representation  of  dense  lists of
   characters.   Dense   lists   of  characters  can  be  converted  into  this
-  representation using [2XConvertToStringRep[102X ([14X27.3-2[114X). Note that calling [2XIsString[102X
+  representation using [2XConvertToStringRep[102X ([14X27.4-2[114X). Note that calling [2XIsString[102X
   ([14X27.1-2[114X) does [13Xnot[113X change the representation.[133X
   
-  [1X27.3-2 ConvertToStringRep[101X
+  [1X27.4-2 ConvertToStringRep[101X
   
   [29X[2XConvertToStringRep[102X( [3Xobj[103X ) [32X function
   
   [33X[0;0YIf   [3Xobj[103X   is  a  dense  internally  represented  list  of  characters  then
-  [2XConvertToStringRep[102X  changes the representation to [2XIsStringRep[102X ([14X27.3-1[114X). This
+  [2XConvertToStringRep[102X  changes the representation to [2XIsStringRep[102X ([14X27.4-1[114X). This
   is  useful  in particular for converting the empty list [10X[][110X, which usually is
-  in  [10XIsPlistRep[110X,  to  [2XIsStringRep[102X  ([14X27.3-1[114X).  If  [3Xobj[103X  is  not  a string then
+  in  [10XIsPlistRep[110X,  to  [2XIsStringRep[102X  ([14X27.4-1[114X).  If  [3Xobj[103X  is  not  a string then
   [2XConvertToStringRep[102X signals an error.[133X
   
-  [1X27.3-3 CopyToStringRep[101X
+  [1X27.4-3 CopyToStringRep[101X
   
   [29X[2XCopyToStringRep[102X( [3Xobj[103X ) [32X function
   
   [33X[0;0YIf   [3Xobj[103X   is  a  dense  internally  represented  list  of  characters  then
   [2XCopyToStringRep[102X  copies  [3Xobj[103X to a new object with representation [2XIsStringRep[102X
-  ([14X27.3-1[114X). If [3Xobj[103X is not a string then [2XCopyToStringRep[102X signals an error.[133X
+  ([14X27.4-1[114X). If [3Xobj[103X is not a string then [2XCopyToStringRep[102X signals an error.[133X
   
-  [1X27.3-4 IsEmptyString[101X
+  [1X27.4-4 IsEmptyString[101X
   
   [29X[2XIsEmptyString[102X( [3Xstr[103X ) [32X function
   
   [33X[0;0Y[2XIsEmptyString[102X  returns [9Xtrue[109X if [3Xstr[103X is the empty string in the representation
-  [2XIsStringRep[102X  ([14X27.3-1[114X),  and [9Xfalse[109X otherwise. Note that the empty list [10X[][110X and
+  [2XIsStringRep[102X  ([14X27.4-1[114X),  and [9Xfalse[109X otherwise. Note that the empty list [10X[][110X and
   the  empty  string [10X""[110X have the same type, the recommended way to distinguish
   them  is  via  [2XIsEmptyString[102X.  For  formatted  printing, this distinction is
   sometimes necessary.[133X
@@ -315,7 +336,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X27.3-5 EmptyString[101X
+  [1X27.4-5 EmptyString[101X
   
   [29X[2XEmptyString[102X( [3Xlen[103X ) [32X function
   [6XReturns:[106X  [33X[0;10Ya string[133X
@@ -336,39 +357,39 @@
   functions  [2XEmptyPlist[102X  ([14X21.9-1[114X) and [2XShrinkAllocationPlist[102X ([14X21.9-1[114X) for plain
   lists.[133X
   
-  [1X27.3-6 CharsFamily[101X
+  [1X27.4-6 CharsFamily[101X
   
-  [29X[2XCharsFamily[102X[32X global variable
+  [29X[2XCharsFamily[102X[32X family
   
   [33X[0;0YEach  character lies in the family [2XCharsFamily[102X, each nonempty string lies in
   the  collections  family of this family. Note the subtle differences between
   the empty list [10X[][110X and the empty string [10X""[110X when both are printed.[133X
   
   
-  [1X27.4 [33X[0;0YRecognizing Characters[133X[101X
+  [1X27.5 [33X[0;0YRecognizing Characters[133X[101X
   
-  [1X27.4-1 IsDigitChar[101X
+  [1X27.5-1 IsDigitChar[101X
   
   [29X[2XIsDigitChar[102X( [3Xc[103X ) [32X function
   
   [33X[0;0Ychecks  whether  the  character  [3Xc[103X  is  a  digit, i.e., occurs in the string
   [10X"0123456789"[110X.[133X
   
-  [1X27.4-2 IsLowerAlphaChar[101X
+  [1X27.5-2 IsLowerAlphaChar[101X
   
   [29X[2XIsLowerAlphaChar[102X( [3Xc[103X ) [32X function
   
   [33X[0;0Ychecks  whether the character [3Xc[103X is a lowercase alphabet letter, i.e., occurs
   in the string [10X"abcdefghijklmnopqrstuvwxyz"[110X.[133X
   
-  [1X27.4-3 IsUpperAlphaChar[101X
+  [1X27.5-3 IsUpperAlphaChar[101X
   
   [29X[2XIsUpperAlphaChar[102X( [3Xc[103X ) [32X function
   
   [33X[0;0Ychecks whether the character [3Xc[103X is an uppercase alphabet letter, i.e., occurs
   in the string [10X"ABCDEFGHIJKLMNOPQRSTUVWXYZ"[110X.[133X
   
-  [1X27.4-4 IsAlphaChar[101X
+  [1X27.5-4 IsAlphaChar[101X
   
   [29X[2XIsAlphaChar[102X( [3Xc[103X ) [32X function
   
@@ -376,9 +397,9 @@
   alphabet letter.[133X
   
   
-  [1X27.5 [33X[0;0YComparisons of Strings[133X[101X
+  [1X27.6 [33X[0;0YComparisons of Strings[133X[101X
   
-  [1X27.5-1 \=[101X
+  [1X27.6-1 \=[101X
   
   [29X[2X\=[102X( [3Xstring1[103X, [3Xstring2[103X ) [32X method
   
@@ -399,7 +420,7 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X27.5-2 \<[101X
+  [1X27.6-2 \<[101X
   
   [29X[2X\<[102X( [3Xstring1[103X, [3Xstring2[103X ) [32X method
   
@@ -423,11 +444,11 @@
   see [14X4.12[114X for the details.[133X
   
   
-  [1X27.6 [33X[0;0YOperations to Produce or Manipulate Strings[133X[101X
+  [1X27.7 [33X[0;0YOperations to Produce or Manipulate Strings[133X[101X
   
   [33X[0;0YFor the possibility to print [5XGAP[105X objects to strings, see [14X10.7[114X.[133X
   
-  [1X27.6-1 DisplayString[101X
+  [1X27.7-1 DisplayString[101X
   
   [29X[2XDisplayString[102X( [3Xobj[103X ) [32X operation
   
@@ -438,28 +459,28 @@
   no  method  for  [2XDisplayString[102X may delegate to any of the operations [2XDisplay[102X
   ([14X6.3-6[114X), [2XViewObj[102X ([14X6.3-5[114X) or [2XPrintObj[102X ([14X6.3-5[114X) to avoid circular delegations.[133X
   
-  [1X27.6-2 DEFAULTDISPLAYSTRING[101X
+  [1X27.7-2 DEFAULTDISPLAYSTRING[101X
   
   [29X[2XDEFAULTDISPLAYSTRING[102X[32X global variable
   
-  [33X[0;0YThis is the default value for [2XDisplayString[102X ([14X27.6-1[114X).[133X
+  [33X[0;0YThis is the default value for [2XDisplayString[102X ([14X27.7-1[114X).[133X
   
-  [1X27.6-3 ViewString[101X
+  [1X27.7-3 ViewString[101X
   
   [29X[2XViewString[102X( [3Xobj[103X ) [32X operation
   
   [33X[0;0Y[2XViewString[102X  returns a string which would be displayed by [2XViewObj[102X ([14X6.3-5[114X) for
   an  object.  Note  that  no method for [2XViewString[102X may delegate to any of the
-  operations  [2XDisplay[102X  ([14X6.3-6[114X),  [2XViewObj[102X  ([14X6.3-5[114X),  [2XDisplayString[102X  ([14X27.6-1[114X) or
+  operations  [2XDisplay[102X  ([14X6.3-6[114X),  [2XViewObj[102X  ([14X6.3-5[114X),  [2XDisplayString[102X  ([14X27.7-1[114X) or
   [2XPrintObj[102X ([14X6.3-5[114X) to avoid circular delegations.[133X
   
-  [1X27.6-4 DEFAULTVIEWSTRING[101X
+  [1X27.7-4 DEFAULTVIEWSTRING[101X
   
   [29X[2XDEFAULTVIEWSTRING[102X[32X global variable
   
-  [33X[0;0YThis is the default value for [2XViewString[102X ([14X27.6-3[114X).[133X
+  [33X[0;0YThis is the default value for [2XViewString[102X ([14X27.7-3[114X).[133X
   
-  [1X27.6-5 PrintString[101X
+  [1X27.7-5 PrintString[101X
   
   [29X[2XPrintString[102X( [3Xobj[103X[, [3Xlength[103X] ) [32X operation
   
@@ -485,9 +506,9 @@
   
   [33X[0;0Y[2XPrintString[102X is entitled to put in additional control characters [10X\<[110X (ASCII 1)
   and [10X\>[110X (ASCII 2) that allow proper line breaks. See [2XStripLineBreakCharacters[102X
-  ([14X27.6-7[114X) for a function to get rid of these control characters.[133X
+  ([14X27.7-7[114X) for a function to get rid of these control characters.[133X
   
-  [1X27.6-6 String[101X
+  [1X27.7-6 String[101X
   
   [29X[2XString[102X( [3Xobj[103X[, [3Xlength[103X] ) [32X attribute
   
@@ -513,24 +534,24 @@
   [33X[0;0Y[2XString[102X  must  not  put  in additional control characters [10X\<[110X (ASCII 1) and [10X\>[110X
   (ASCII 2) that allow proper line breaks.[133X
   
-  [1X27.6-7 StripLineBreakCharacters[101X
+  [1X27.7-7 StripLineBreakCharacters[101X
   
   [29X[2XStripLineBreakCharacters[102X( [3Xst[103X ) [32X function
   
   [33X[0;0YThis  function  takes  a  string  [3Xst[103X  as an argument and removes all control
   characters  [10X\<[110X  (ASCII  1)  and  [10X\>[110X  (ASCII 2) which are used by [2XPrintString[102X
-  ([14X27.6-5[114X)  and  [2XPrintObj[102X ([14X6.3-5[114X) to ensure proper line breaking. A new string
+  ([14X27.7-5[114X)  and  [2XPrintObj[102X ([14X6.3-5[114X) to ensure proper line breaking. A new string
   with these characters removed is returned.[133X
   
-  [1X27.6-8 HexStringInt[101X
+  [1X27.7-8 HexStringInt[101X
   
   [29X[2XHexStringInt[102X( [3Xint[103X ) [32X function
   
   [33X[0;0Yreturns  a  string which represents the integer [3Xint[103X with hexa-decimal digits
   (using  [10XA[110X  to [10XF[110X as digits [10X10[110X to [10X15[110X). The inverse translation can be achieved
-  with [2XIntHexString[102X ([14X27.8-1[114X).[133X
+  with [2XIntHexString[102X ([14X27.9-1[114X).[133X
   
-  [1X27.6-9 StringPP[101X
+  [1X27.7-9 StringPP[101X
   
   [29X[2XStringPP[102X( [3Xint[103X ) [32X function
   
@@ -542,7 +563,7 @@
     [4X[28X"2^7*3^2*5*7"[128X[104X
   [4X[32X[104X
   
-  [1X27.6-10 WordAlp[101X
+  [1X27.7-10 WordAlp[101X
   
   [29X[2XWordAlp[102X( [3Xalpha[103X, [3Xnr[103X ) [32X function
   
@@ -555,7 +576,7 @@
     [4X[28X[ "", "a", "b", "c", "aa", "ab" ][128X[104X
   [4X[32X[104X
   
-  [1X27.6-11 LowercaseString[101X
+  [1X27.7-11 LowercaseString[101X
   
   [29X[2XLowercaseString[102X( [3Xstring[103X ) [32X function
   
@@ -568,7 +589,7 @@
     [4X[28X"this is uppercase"[128X[104X
   [4X[32X[104X
   
-  [1X27.6-12 SplitString[101X
+  [1X27.7-12 SplitString[101X
   
   [29X[2XSplitString[102X( [3Xstring[103X, [3Xseps[103X[, [3Xwspace[103X] ) [32X operation
   
@@ -589,7 +610,7 @@
   
   [33X[0;0YA  separator  at the end of a string is interpreted as a terminator; in this
   case, the separator does not produce a trailing empty string. Also see [2XChomp[102X
-  ([14X27.6-18[114X).[133X
+  ([14X27.7-18[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XSplitString( "substr1:substr2::substr4", ":" );[127X[104X
@@ -600,7 +621,7 @@
     [4X[28X[ "home", "user", "dir" ][128X[104X
   [4X[32X[104X
   
-  [1X27.6-13 ReplacedString[101X
+  [1X27.7-13 ReplacedString[101X
   
   [29X[2XReplacedString[102X( [3Xstring[103X, [3Xold[103X, [3Xnew[103X ) [32X function
   
@@ -618,7 +639,7 @@
     [4X[28X"babbacbab"[128X[104X
   [4X[32X[104X
   
-  [1X27.6-14 NormalizeWhitespace[101X
+  [1X27.7-14 NormalizeWhitespace[101X
   
   [29X[2XNormalizeWhitespace[102X( [3Xstring[103X ) [32X function
   
@@ -627,7 +648,7 @@
   space  characters in [3Xstring[103X are removed. Sequences of white space characters
   between other characters are replaced by a single space character.[133X
   
-  [33X[0;0YSee [2XNormalizedWhitespace[102X ([14X27.6-15[114X) for a non-destructive version.[133X
+  [33X[0;0YSee [2XNormalizedWhitespace[102X ([14X27.7-15[114X) for a non-destructive version.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xs := "   x y \n\n\t\r  z\n   \n";[127X[104X
@@ -637,14 +658,14 @@
     [4X[28X"x y z"[128X[104X
   [4X[32X[104X
   
-  [1X27.6-15 NormalizedWhitespace[101X
+  [1X27.7-15 NormalizedWhitespace[101X
   
   [29X[2XNormalizedWhitespace[102X( [3Xstr[103X ) [32X function
   
   [33X[0;0YThis  function  returns  a  copy  of string [3Xstr[103X to which [2XNormalizeWhitespace[102X
-  ([14X27.6-14[114X) was applied.[133X
+  ([14X27.7-14[114X) was applied.[133X
   
-  [1X27.6-16 RemoveCharacters[101X
+  [1X27.7-16 RemoveCharacters[101X
   
   [29X[2XRemoveCharacters[102X( [3Xstring[103X, [3Xchars[103X ) [32X function
   
@@ -659,7 +680,7 @@
     [4X[28X"abcdefghi."[128X[104X
   [4X[32X[104X
   
-  [1X27.6-17 JoinStringsWithSeparator[101X
+  [1X27.7-17 JoinStringsWithSeparator[101X
   
   [29X[2XJoinStringsWithSeparator[102X( [3Xlist[103X[, [3Xsep[103X] ) [32X function
   
@@ -683,7 +704,7 @@
     [4X[28X    d[128X[104X
   [4X[32X[104X
   
-  [1X27.6-18 Chomp[101X
+  [1X27.7-18 Chomp[101X
   
   [29X[2XChomp[102X( [3Xstr[103X ) [32X function
   
@@ -710,7 +731,7 @@
   [33X[0;0Y[13XNote:[113X  [2XChomp[102X  only  removes  a  trailing newline character from [3Xstr[103X. If your
   string  contains several newline characters and you really want to split [3Xstr[103X
   into  lines  at the newline characters (and remove those newline characters)
-  then you should use [2XSplitString[102X ([14X27.6-12[114X), e.g.[133X
+  then you should use [2XSplitString[102X ([14X27.7-12[114X), e.g.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xstr := "The quick brown fox\njumps over the lazy dog.\n";[127X[104X
@@ -721,10 +742,17 @@
     [4X[28X"The quick brown fox\njumps over the lazy dog."[128X[104X
   [4X[32X[104X
   
+  [1X27.7-19 StartsWith[101X
+  
+  [29X[2XStartsWith[102X( [3Xstring[103X, [3Xprefix[103X ) [32X function
+  [29X[2XEndsWith[102X( [3Xstring[103X, [3Xsuffix[103X ) [32X function
+  
+  [33X[0;0YDetermines whether a string starts or ends with another string.[133X
+  
   [33X[0;0YThe  following  two  functions convert basic strings to lists of numbers and
   vice versa. They are useful for examples of text encryption.[133X
   
-  [1X27.6-19 NumbersString[101X
+  [1X27.7-20 NumbersString[101X
   
   [29X[2XNumbersString[102X( [3Xs[103X, [3Xm[103X[, [3Xtable[103X] ) [32X function
   
@@ -739,12 +767,12 @@
     [4X[28X  301835, 103025, 321529 ][128X[104X
   [4X[32X[104X
   
-  [1X27.6-20 StringNumbers[101X
+  [1X27.7-21 StringNumbers[101X
   
   [29X[2XStringNumbers[102X( [3Xl[103X, [3Xm[103X[, [3Xtable[103X] ) [32X function
   
   [33X[0;0Y[2XStringNumbers[102X   takes   a   list  [3Xl[103X  of  integers  that  was  encoded  using
-  [2XNumbersString[102X  ([14X27.6-19[114X)  and  the  size  integer  [3Xm[103X,  and returns a message
+  [2XNumbersString[102X  ([14X27.7-20[114X)  and  the  size  integer  [3Xm[103X,  and returns a message
   string,  using  the  scheme [22XA=11[122X, [22XB=12[122X and so on. If a list of characters is
   given in [3Xtable[103X, it is used instead for decoding).[133X
   
@@ -754,7 +782,7 @@
   [4X[32X[104X
   
   
-  [1X27.7 [33X[0;0YCharacter Conversion[133X[101X
+  [1X27.8 [33X[0;0YCharacter Conversion[133X[101X
   
   [33X[0;0YThe  following functions convert characters in their internal integer values
   and vice versa. Note that the number corresponding to a particular character
@@ -762,13 +790,13 @@
   ASCII,  in particular character values outside the range [10X[ 32 .. 126 ][110X might
   differ between architectures.[133X
   
-  [1X27.7-1 IntChar[101X
+  [1X27.8-1 IntChar[101X
   
   [29X[2XIntChar[102X( [3Xchar[103X ) [32X function
   
   [33X[0;0Yreturns an integer value in the range [10X[ 0 .. 255 ][110X that corresponds to [3Xchar[103X.[133X
   
-  [1X27.7-2 CharInt[101X
+  [1X27.8-2 CharInt[101X
   
   [29X[2XCharInt[102X( [3Xint[103X ) [32X function
   
@@ -782,14 +810,14 @@
     [4X[28X65[128X[104X
   [4X[32X[104X
   
-  [1X27.7-3 SIntChar[101X
+  [1X27.8-3 SIntChar[101X
   
   [29X[2XSIntChar[102X( [3Xchar[103X ) [32X function
   
   [33X[0;0Yreturns a signed integer value in the range [10X[ -128 .. 127 ][110X that corresponds
   to [3Xchar[103X.[133X
   
-  [1X27.7-4 CharSInt[101X
+  [1X27.8-4 CharSInt[101X
   
   [29X[2XCharSInt[102X( [3Xint[103X ) [32X function
   
@@ -812,9 +840,9 @@
   [4X[32X[104X
   
   
-  [1X27.8 [33X[0;0YOperations to Evaluate Strings[133X[101X
+  [1X27.9 [33X[0;0YOperations to Evaluate Strings[133X[101X
   
-  [1X27.8-1 Int[101X
+  [1X27.9-1 Int[101X
   
   [29X[2XInt[102X( [3Xstr[103X ) [32X attribute
   [29X[2XRat[102X( [3Xstr[103X ) [32X attribute
@@ -831,12 +859,12 @@
   [33X[0;0Y[2XIntHexString[102X evaluates an integer written with hexa-decimal digits. Here the
   letters [10Xa[110X-[10Xf[110X or [10XA[110X-[10XF[110X are used as [13Xdigits[113X [22X10[122X to [22X15[122X. An error occurs when a wrong
   character  is  found in the string. This function can be used (together with
-  [2XHexStringInt[102X  ([14X27.6-8[114X))  for  efficiently storing and reading large integers
+  [2XHexStringInt[102X  ([14X27.7-8[114X))  for  efficiently storing and reading large integers
   from  respectively  into [5XGAP[105X. Note that the translation between integers and
   their  hexa-decimal representation costs linear computation time in terms of
   the number of digits, while translation from and into decimal representation
   needs   substantial   computations.   If   [3Xstr[103X  is  not  in  compact  string
-  representation  then  [2XConvertToStringRep[102X  ([14X27.3-2[114X)  is applied to it as side
+  representation  then  [2XConvertToStringRep[102X  ([14X27.4-2[114X)  is applied to it as side
   effect.[133X
   
   [4X[32X  Example  [32X[104X
@@ -858,7 +886,7 @@
     [4X[28X"-ABCDEF0123456789"[128X[104X
   [4X[32X[104X
   
-  [1X27.8-2 Ordinal[101X
+  [1X27.9-2 Ordinal[101X
   
   [29X[2XOrdinal[102X( [3Xn[103X ) [32X function
   
@@ -872,7 +900,7 @@
     [4X[28X"-33rd"[128X[104X
   [4X[32X[104X
   
-  [1X27.8-3 EvalString[101X
+  [1X27.9-3 EvalString[101X
   
   [29X[2XEvalString[102X( [3Xexpr[103X ) [32X function
   
@@ -909,7 +937,7 @@
     [4X[28X10[128X[104X
   [4X[32X[104X
   
-  [1X27.8-4 CrcString[101X
+  [1X27.9-4 CrcString[101X
   
   [29X[2XCrcString[102X( [3Xstr[103X ) [32X function
   [6XReturns:[106X  [33X[0;10Yan integer[133X
@@ -923,17 +951,17 @@
   [4X[32X[104X
   
   
-  [1X27.9 [33X[0;0YCalendar Arithmetic[133X[101X
+  [1X27.10 [33X[0;0YCalendar Arithmetic[133X[101X
   
   [33X[0;0YAll calendar functions use the Gregorian calendar.[133X
   
-  [1X27.9-1 DaysInYear[101X
+  [1X27.10-1 DaysInYear[101X
   
   [29X[2XDaysInYear[102X( [3Xyear[103X ) [32X function
   
   [33X[0;0Yreturns the number of days in the year [3Xyear[103X.[133X
   
-  [1X27.9-2 DaysInMonth[101X
+  [1X27.10-2 DaysInMonth[101X
   
   [29X[2XDaysInMonth[102X( [3Xmonth[103X, [3Xyear[103X ) [32X function
   
@@ -947,14 +975,14 @@
     [4X[28X31[128X[104X
   [4X[32X[104X
   
-  [1X27.9-3 DMYDay[101X
+  [1X27.10-3 DMYDay[101X
   
   [29X[2XDMYDay[102X( [3Xday[103X ) [32X function
   
   [33X[0;0Yconverts a number of days, starting 1-Jan-1970, to a list [10X[ day, month, year
   ][110X in Gregorian calendar counting.[133X
   
-  [1X27.9-4 DayDMY[101X
+  [1X27.10-4 DayDMY[101X
   
   [29X[2XDayDMY[102X( [3Xdmy[103X ) [32X function
   
@@ -966,14 +994,14 @@
   Gregorian  calendar  at  all),  or  before  1753  in  many  English speaking
   countries or before 1917 in Russia.[133X
   
-  [1X27.9-5 WeekDay[101X
+  [1X27.10-5 WeekDay[101X
   
   [29X[2XWeekDay[102X( [3Xdate[103X ) [32X function
   
   [33X[0;0Yreturns  the  weekday  of a day given by [3Xdate[103X, which can be a number of days
   since 1-Jan-1970 or a list [10X[ day, month, year ][110X.[133X
   
-  [1X27.9-6 StringDate[101X
+  [1X27.10-6 StringDate[101X
   
   [29X[2XStringDate[102X( [3Xdate[103X ) [32X function
   
@@ -992,20 +1020,20 @@
     [4X[28X"11-Mar-1998"[128X[104X
   [4X[32X[104X
   
-  [1X27.9-7 HMSMSec[101X
+  [1X27.10-7 HMSMSec[101X
   
   [29X[2XHMSMSec[102X( [3Xmsec[103X ) [32X function
   
   [33X[0;0Yconverts  a  number [3Xmsec[103X of milliseconds into a list [10X[ hour, min, sec, milli
   ][110X.[133X
   
-  [1X27.9-8 SecHMSM[101X
+  [1X27.10-8 SecHMSM[101X
   
   [29X[2XSecHMSM[102X( [3Xhmsm[103X ) [32X function
   
-  [33X[0;0Yis the reverse of [2XHMSMSec[102X ([14X27.9-7[114X).[133X
+  [33X[0;0Yis the reverse of [2XHMSMSec[102X ([14X27.10-7[114X).[133X
   
-  [1X27.9-9 StringTime[101X
+  [1X27.10-9 StringTime[101X
   
   [29X[2XStringTime[102X( [3Xtime[103X ) [32X function
   
@@ -1021,21 +1049,21 @@
     [4X[28X" 1:10:05.013"[128X[104X
   [4X[32X[104X
   
-  [1X27.9-10 SecondsDMYhms[101X
+  [1X27.10-10 SecondsDMYhms[101X
   
   [29X[2XSecondsDMYhms[102X( [3XDMYhms[103X ) [32X function
   
   [33X[0;0Yreturns  the number of seconds from 01-Jan-1970, 00:00:00, to the time given
   by  [3XDMYhms[103X,  which  must  be  a  list  of the form [10X[ day, month, year, hour,
   minute,  second  ][110X.  The remarks on the Gregorian calendar in the section on
-  [2XDayDMY[102X ([14X27.9-4[114X) apply here as well. The last three arguments must lie in the
-  appropriate ranges.[133X
+  [2XDayDMY[102X  ([14X27.10-4[114X)  apply  here as well. The last three arguments must lie in
+  the appropriate ranges.[133X
   
-  [1X27.9-11 DMYhmsSeconds[101X
+  [1X27.10-11 DMYhmsSeconds[101X
   
   [29X[2XDMYhmsSeconds[102X( [3Xsecs[103X ) [32X function
   
-  [33X[0;0YThis is the inverse function to [2XSecondsDMYhms[102X ([14X27.9-10[114X).[133X
+  [33X[0;0YThis is the inverse function to [2XSecondsDMYhms[102X ([14X27.10-10[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XSecondsDMYhms([ 9, 9, 2001, 1, 46, 40 ]);[127X[104X
@@ -1045,7 +1073,7 @@
   [4X[32X[104X
   
   
-  [1X27.10 [33X[0;0YObtaining LaTeX Representations of Objects[133X[101X
+  [1X27.11 [33X[0;0YObtaining LaTeX Representations of Objects[133X[101X
   
   [33X[0;0YFor  the  purpose of generating LaTeX source code with [5XGAP[105X it is recommended
   to  add  new  functions  which  will  print the LaTeX source or return LaTeX

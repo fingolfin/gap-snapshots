@@ -20,7 +20,7 @@
   
   [1X78.1 [33X[0;0YOperations and Methods[133X[101X
   
-  [33X[0;0YOperations are functions in the category [2XIsOperation[102X ([14X5.4-2[114X).[133X
+  [33X[0;0YOperations are functions in the category [2XIsOperation[102X ([14X5.5-2[114X).[133X
   
   [33X[0;0YSo  on  the  one  hand,  [13Xoperations[113X  are [5XGAP[105X functions, that is, they can be
   applied to arguments and return a result or cause a side-effect.[133X
@@ -70,7 +70,7 @@
   measures the priority of the method.[133X
   
   [33X[0;0YThe  default  values  for  [3Xinfo[103X,  [3Xfamp[103X,  and  [3Xval[103X  are the empty string, the
-  function [2XReturnTrue[102X ([14X5.3-1[114X), and the integer zero, respectively.[133X
+  function [2XReturnTrue[102X ([14X5.4-1[114X), and the integer zero, respectively.[133X
   
   [33X[0;0YThe exact meaning of the arguments [3Xfamp[103X, [3Xargs-filts[103X, and [3Xval[103X is explained in
   Section [14X78.3[114X.[133X
@@ -108,7 +108,7 @@
   relation between the arguments.[133X
   
   [33X[0;0YFor  unary  operations  such  as attributes and properties, there is no such
-  relation  to  postulate,  [3Xfamp[103X is [2XReturnTrue[102X ([14X5.3-1[114X) for these operations, a
+  relation  to  postulate,  [3Xfamp[103X is [2XReturnTrue[102X ([14X5.4-1[114X) for these operations, a
   function that always returns [9Xtrue[109X. For binary operations, the usual value of
   [3Xfamp[103X is [2XIsIdenticalObj[102X ([14X12.5-1[114X), which means that both arguments must lie in
   the same family.[133X
@@ -200,7 +200,7 @@
   
   [1X78.5-1 RedispatchOnCondition[101X
   
-  [29X[2XRedispatchOnCondition[102X( [3Xoper[103X, [3Xfampred[103X, [3Xreqs[103X, [3Xcond[103X, [3Xval[103X ) [32X function
+  [29X[2XRedispatchOnCondition[102X( [3Xoper[103X[, [3Xinfo[103X], [3Xfampred[103X, [3Xreqs[103X, [3Xcond[103X, [3Xval[103X ) [32X function
   
   [33X[0;0YThis  function installs a method for the operation [3Xoper[103X under the conditions
   [3Xfampred[103X  and  [3Xreqs[103X  which  has absolute value [3Xval[103X; that is, the value of the
@@ -208,10 +208,12 @@
   values  of properties involved in these filters are already known for actual
   arguments  of  the  method,  they  are  explicitly  tested  and  if they are
   fulfilled  [13Xand[113X  stored  after  this test, the operation is dispatched again.
-  Otherwise  the method exits with [2XTryNextMethod[102X ([14X78.4-1[114X). This can be used to
-  enforce tests like [2XIsFinite[102X ([14X30.4-2[114X) in situations when all existing methods
-  require  this property. The list [3Xcond[103X may have unbound entries in which case
-  the corresponding argument is ignored for further tests.[133X
+  Otherwise  the  method  exits with [2XTryNextMethod[102X ([14X78.4-1[114X). If supplied, [3Xinfo[103X
+  should  be  a  short but informative string that describes these conditions.
+  This  can be used to enforce tests like [2XIsFinite[102X ([14X30.4-2[114X) in situations when
+  all  existing  methods require this property. The list [3Xcond[103X may have unbound
+  entries  in  which  case  the  corresponding argument is ignored for further
+  tests.[133X
   
   
   [1X78.6 [33X[0;0YImmediate Methods[133X[101X

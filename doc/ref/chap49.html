@@ -165,8 +165,8 @@ Group([ f1, f2 ])
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p:=SemidirectProduct(g,apci,n);</span>
 &lt;pc group of size 24 with 4 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismGroups(p,Group((1,2,3,4),(1,2)));</span>
-[ f1, f2, f3, f4 ] -&gt; [ (3,4), (1,4,3), (1,2)(3,4), (1,3)(2,4) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismGroups(p,Group((1,2,3,4),(1,2))) &lt;&gt; fail;</span>
+true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SemidirectProduct(SU(3,3),GF(9)^3);</span>
 &lt;matrix group of size 4408992 with 3 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SemidirectProduct(Group((1,2,3),(2,3,4)),GF(5)^4);</span>
@@ -378,14 +378,14 @@ Group([ (2,3,4), (1,2,4) ])
 
 <h5>49.6-1 Embedding</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Embedding</code>( <var class="Arg">P</var>, <var class="Arg">nr</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Embedding</code>( <var class="Arg">P</var>, <var class="Arg">nr</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>returns the <var class="Arg">nr</var>-th embedding in the group product <var class="Arg">P</var>. The actual meaning of this embedding is described in the manual section for the appropriate product.</p>
 
 <p><a id="X86F275AC7C625626" name="X86F275AC7C625626"></a></p>
 
 <h5>49.6-2 Projection</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Projection</code>( <var class="Arg">P</var>, <var class="Arg">nr</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Projection</code>( <var class="Arg">P</var>, <var class="Arg">nr</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>returns the (<var class="Arg">nr</var>-th) projection of the group product <var class="Arg">P</var>. The actual meaning of the projection returned is described in the manual section for the appropriate product.</p>
 
 

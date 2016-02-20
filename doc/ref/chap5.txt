@@ -10,7 +10,7 @@
   
   [1X5.1-1 NameFunction[101X
   
-  [29X[2XNameFunction[102X( [3Xfunc[103X ) [32X function
+  [29X[2XNameFunction[102X( [3Xfunc[103X ) [32X operation
   
   [33X[0;0Yreturns  the  name  of  a function. For operations, this is the name used in
   their  declaration. For functions, this is the variable name they were first
@@ -35,11 +35,12 @@
   
   [1X5.1-2 NumberArgumentsFunction[101X
   
-  [29X[2XNumberArgumentsFunction[102X( [3Xfunc[103X ) [32X function
+  [29X[2XNumberArgumentsFunction[102X( [3Xfunc[103X ) [32X operation
   
-  [33X[0;0Yreturns  the  number  of  arguments the function [3Xfunc[103X accepts. For functions
-  that  use  [10Xarg[110X  to  take  a  variable  number  of  arguments, as well as for
-  operations, -1 is returned. For attributes, 1 is returned.[133X
+  [33X[0;0Yreturns  the  number  of arguments the function [3Xfunc[103X accepts. -1 is returned
+  for  all  operations.  For  functions that use [10X...[110X or [10Xarg[110X to take a variable
+  number  of  arguments,  the  number returned is -1 times the total number of
+  parameters. For attributes, 1 is returned.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XNumberArgumentsFunction(function(a,b,c,d,e,f,g,h,i,j,k)return 1;end);[127X[104X
@@ -50,11 +51,13 @@
     [4X[28X3[128X[104X
     [4X[25Xgap>[125X [27XNumberArgumentsFunction(Sum);[127X[104X
     [4X[28X-1[128X[104X
+    [4X[25Xgap>[125X [27XNumberArgumentsFunction(function(a, x...) return 1; end);[127X[104X
+    [4X[28X-2[128X[104X
   [4X[32X[104X
   
   [1X5.1-3 NamesLocalVariablesFunction[101X
   
-  [29X[2XNamesLocalVariablesFunction[102X( [3Xfunc[103X ) [32X function
+  [29X[2XNamesLocalVariablesFunction[102X( [3Xfunc[103X ) [32X operation
   
   [33X[0;0Yreturns  a  mutable  list of strings; the first entries are the names of the
   arguments  of  the  function [3Xfunc[103X, in the same order as they were entered in
@@ -178,27 +181,94 @@
     [4X[25X>[125X [27X    CallFuncList( Print, arg );[127X[104X
     [4X[25X>[125X [27X    Print( "\n" );[127X[104X
     [4X[25X>[125X [27X   end;[127X[104X
-    [4X[28Xfunction( arg ) ... end[128X[104X
+    [4X[28Xfunction( arg... ) ... end[128X[104X
     [4X[25Xgap>[125X [27XPrintNumberFromDigits( 1, 9, 7, 3, 2 );[127X[104X
     [4X[28X19732[128X[104X
     [4X[25Xgap>[125X [27XPrintDigits := function ( arg )[127X[104X
     [4X[25X>[125X [27X    Print( arg );[127X[104X
     [4X[25X>[125X [27X    Print( "\n" );[127X[104X
     [4X[25X>[125X [27X   end;[127X[104X
-    [4X[28Xfunction( arg ) ... end[128X[104X
+    [4X[28Xfunction( arg... ) ... end[128X[104X
     [4X[25Xgap>[125X [27XPrintDigits( 1, 9, 7, 3, 2 );[127X[104X
     [4X[28X[ 1, 9, 7, 3, 2 ][128X[104X
   [4X[32X[104X
   
   
-  [1X5.3 [33X[0;0YFunctions that do nothing[133X[101X
+  [1X5.3 [33X[0;0YCalling a function with a time limit[133X[101X
+  
+  [1X5.3-1 CallWithTimeout[101X
+  
+  [29X[2XCallWithTimeout[102X( [3Xtimeout[103X, [3Xfunc[103X, [3X.....[103X ) [32X function
+  [29X[2XCallWithTimeoutList[102X( [3Xtimeout[103X, [3Xfunc[103X, [3Xarglist[103X ) [32X function
+  
+  [33X[0;0Y[10XCallWithTimeout[110X  and  [10XCallWithTimeoutList[110X  support calling a function with a
+  limit on the CPU time it can consume.[133X
+  
+  [33X[0;0YThis  functionality may not be available on all systems and you should check
+  [2XGAPInfo.TimeoutsSupported[102X ([14X5.3-2[114X) before using this functionality.[133X
+  
+  [33X[0;0Y[10XCallWithTimeout[110X is variadic. Its third and subsequent arguments, if any, are
+  the  arguments passed to [3Xfunc[103X. [10XCallWithTimeoutList[110X in contrast takes exactly
+  three  arguments, of which the third is a list (possibly empty) or arguments
+  to pass to [3Xfunc[103X.[133X
+  
+  [33X[0;0YIf  the call completes within the allotted time and returns a value [10Xres[110X, the
+  result  of [10XCallWithTimeout[List][110X is a length 2 list of the form [10X [ true, res
+  ] [110X.[133X
+  
+  [33X[0;0YIf  the  call  completes  within the allotted time and returns no value, the
+  result  of  [10XCallWithTimeout[List][110X is a list of length 1 containing the value
+  [10Xtrue[110X.[133X
+  
+  [33X[0;0YIf   the   call  does  not  complete  within  the  timeout,  the  result  of
+  [10XCallWithTimeout[List][110X  is  a  list of length 1 containing the value [10Xfalse[110X In
+  this  case,  just  as  if you had [10Xquit[110X from a break loop, there is some risk
+  that  internal  data structures in [5XGAP[105X may have been left in an inconsistent
+  state, and you should proceed with caution.[133X
+  
+  [33X[0;0YThe  timer  is suspended during execution of a break loop and abandoned when
+  you quit from a break loop.[133X
+  
+  [33X[0;0YTimeouts    may    not   be   nested.   That   is,   during   execution   of
+  [10XCallWithTimeout([3Xtimeout[103X[10X,[3Xfunc[103X[10X,...)[110X, [3Xfunc[103X (or functions it calls) may not call
+  [10XCallWithTimeout[110X or [10XCallWithTimeoutList[110X. This restriction may be lifted on at
+  least   some   systems   in   future   releases.  It  is  permitted  to  use
+  [10XCallWithTimeout[110X  or  [10XCallWithTimeoutList[110X from within a break loop, even if a
+  suspended  timeout  exists,  although  there  is  limit on the depth of such
+  nesting.[133X
+  
+  [33X[0;0YThe  limit  [3Xtimeout[103X  is  specified  as  a  record.  At present the following
+  components  are recognised [10Xnanoseconds[110X, [10Xmicroseconds[110X, [10Xmilliseconds[110X, [10Xseconds[110X,
+  [10Xminutes[110X,  [10Xhours[110X,  [10Xdays[110X  and  [10Xweeks[110X. Any of these components which is present
+  should  be  bound  to  a  positive  integer, rational or float and the times
+  represented  are  totalled  to  give  the  actual timeout. As a shorthand, a
+  single  positive  integers  may  be  supplied,  and  is taken as a number of
+  microseconds.  Further  components  are  permitted and ignored, to allow for
+  future functionality.[133X
+  
+  [33X[0;0YThe  precision  of  the  timeouts  is  not guaranteed, and there is a system
+  dependent  upper limit on the timeout which is typically about 8 years on 32
+  bit  systems  and  about 30 billion years on 64 bit systems. Timeouts longer
+  than this will be reduced to this limit. On Windows systems, timing is based
+  on  elapsed time, not CPU time because the necessary POSIX CPU timing API is
+  not supported.[133X
+  
+  [1X5.3-2 GAPInfo.TimeoutsSupported[101X
+  
+  [29X[2XGAPInfo.TimeoutsSupported[102X[32X global variable
+  
+  [33X[0;0Ytests whether this installation of [5XGAP[105X supports the timeout functionality of
+  [2XCallWithTimeout[102X ([14X5.3-1[114X) and related functions.[133X
+  
+  
+  [1X5.4 [33X[0;0YFunctions that do nothing[133X[101X
   
   [33X[0;0YThe  following  functions return fixed results (or just their own argument).
   They  can  be  useful  in  places  when  the syntax requires a function, but
-  actually  no  functionality is required. So [2XReturnTrue[102X ([14X5.3-1[114X) is often used
+  actually  no  functionality is required. So [2XReturnTrue[102X ([14X5.4-1[114X) is often used
   as family predicate in [2XInstallMethod[102X ([14X78.2-1[114X).[133X
   
-  [1X5.3-1 ReturnTrue[101X
+  [1X5.4-1 ReturnTrue[101X
   
   [29X[2XReturnTrue[102X( [3X...[103X ) [32X function
   
@@ -206,14 +276,14 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xf:=ReturnTrue;  [127X[104X
-    [4X[28Xfunction( arg ) ... end[128X[104X
+    [4X[28Xfunction( arg... ) ... end[128X[104X
     [4X[25Xgap>[125X [27Xf();  [127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27Xf(42);[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X5.3-2 ReturnFalse[101X
+  [1X5.4-2 ReturnFalse[101X
   
   [29X[2XReturnFalse[102X( [3X...[103X ) [32X function
   
@@ -221,14 +291,14 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xf:=ReturnFalse;  [127X[104X
-    [4X[28Xfunction( arg ) ... end[128X[104X
+    [4X[28Xfunction( arg... ) ... end[128X[104X
     [4X[25Xgap>[125X [27Xf();  [127X[104X
     [4X[28Xfalse[128X[104X
     [4X[25Xgap>[125X [27Xf("any_string");[127X[104X
     [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
-  [1X5.3-3 ReturnFail[101X
+  [1X5.4-3 ReturnFail[101X
   
   [29X[2XReturnFail[102X( [3X...[103X ) [32X function
   
@@ -236,18 +306,51 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xoops:=ReturnFail;  [127X[104X
-    [4X[28Xfunction( arg ) ... end[128X[104X
+    [4X[28Xfunction( arg... ) ... end[128X[104X
     [4X[25Xgap>[125X [27Xoops();  [127X[104X
     [4X[28Xfail[128X[104X
     [4X[25Xgap>[125X [27Xoops(-42);  [127X[104X
     [4X[28Xfail[128X[104X
   [4X[32X[104X
   
-  [1X5.3-4 IdFunc[101X
+  [1X5.4-4 ReturnNothing[101X
+  
+  [29X[2XReturnNothing[102X( [3X...[103X ) [32X function
+  
+  [33X[0;0YThis function takes any number of arguments, and always returns nothing.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xn:=ReturnNothing;[127X[104X
+    [4X[28Xfunction( object... ) ... end[128X[104X
+    [4X[25Xgap>[125X [27Xn();[127X[104X
+    [4X[25Xgap>[125X [27Xn(-42);[127X[104X
+  [4X[32X[104X
+  
+  [1X5.4-5 ReturnFirst[101X
+  
+  [29X[2XReturnFirst[102X( [3X...[103X ) [32X function
+  
+  [33X[0;0YThis  function  takes  one  or  more arguments, and always returns the first
+  argument.  [2XIdFunc[102X  ([14X5.4-6[114X)  behaves  similarly,  but  only  accepts a single
+  argument.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xf:=ReturnFirst;[127X[104X
+    [4X[28Xfunction( object... ) ... end[128X[104X
+    [4X[25Xgap>[125X [27Xf(1);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27Xf(2,3,4);[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27Xf();[127X[104X
+    [4X[28XError, RETURN_FIRST requires one or more arguments[128X[104X
+  [4X[32X[104X
+  
+  [1X5.4-6 IdFunc[101X
   
   [29X[2XIdFunc[102X( [3Xobj[103X ) [32X function
   
-  [33X[0;0Yreturns [3Xobj[103X.[133X
+  [33X[0;0Yreturns  [3Xobj[103X.  [2XReturnFirst[102X  ([14X5.4-5[114X)  is  similar,  but  accepts  one or more
+  arguments, returning only the first.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xid:=IdFunc;  [127X[104X
@@ -263,11 +366,11 @@
   [4X[32X[104X
   
   
-  [1X5.4 [33X[0;0YFunction Types[133X[101X
+  [1X5.5 [33X[0;0YFunction Types[133X[101X
   
   [33X[0;0YFunctions are [5XGAP[105X objects and thus have categories and a family.[133X
   
-  [1X5.4-1 IsFunction[101X
+  [1X5.5-1 IsFunction[101X
   
   [29X[2XIsFunction[102X( [3Xobj[103X ) [32X Category
   
@@ -284,7 +387,7 @@
     [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
-  [1X5.4-2 IsOperation[101X
+  [1X5.5-2 IsOperation[101X
   
   [29X[2XIsOperation[102X( [3Xobj[103X ) [32X Category
   
@@ -304,14 +407,14 @@
     [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
-  [1X5.4-3 FunctionsFamily[101X
+  [1X5.5-3 FunctionsFamily[101X
   
-  [29X[2XFunctionsFamily[102X[32X global variable
+  [29X[2XFunctionsFamily[102X[32X family
   
   [33X[0;0Yis the family of all functions.[133X
   
   
-  [1X5.5 [33X[0;0YNaming Conventions[133X[101X
+  [1X5.6 [33X[0;0YNaming Conventions[133X[101X
   
   [33X[0;0YThe  way  functions  are  named  in [5XGAP[105X might help to memorize or even guess
   names of library functions.[133X

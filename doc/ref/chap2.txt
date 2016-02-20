@@ -166,7 +166,7 @@
         far,  since  we  do  not  yet  use  many special characters which such
         terminals could not display).[133X
   
-  [8X[10X"firefox"[110X, [10Xchrome[110X, [10X"mozilla"[110X, [10X"netscape"[110X, [10X"konqueror"[110X[108X
+  [8X[10X"firefox"[110X, [10X"chrome"[110X, [10X"mozilla"[110X, [10X"netscape"[110X, [10X"konqueror"[110X[108X
         [33X[0;6YIf  a  book  is  available  in  HTML  format  this  is shown using the
         corresponding web browser. How well this works, for example by using a
         running  instance  of  this  browser, depends on your particular start

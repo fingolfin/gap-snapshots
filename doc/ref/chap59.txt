@@ -182,9 +182,9 @@
   
   [1X59.2-1 DegreeFFE[101X
   
-  [29X[2XDegreeFFE[102X( [3Xz[103X ) [32X operation
-  [29X[2XDegreeFFE[102X( [3Xvec[103X ) [32X operation
-  [29X[2XDegreeFFE[102X( [3Xmat[103X ) [32X operation
+  [29X[2XDegreeFFE[102X( [3Xz[103X ) [32X attribute
+  [29X[2XDegreeFFE[102X( [3Xvec[103X ) [32X method
+  [29X[2XDegreeFFE[102X( [3Xmat[103X ) [32X method
   
   [33X[0;0Y[2XDegreeFFE[102X  returns  the degree of the smallest finite field [3XF[103X containing the
   element  [3Xz[103X,  respectively  all  elements of the row vector [3Xvec[103X over a finite

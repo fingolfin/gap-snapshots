@@ -167,14 +167,14 @@ false
 
 <h5>36.2-1 \=</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \=</code>( <var class="Arg">w1</var>, <var class="Arg">w2</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \=</code>( <var class="Arg">w1</var>, <var class="Arg">w2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Two words are equal if and only if they are words over the same alphabet and with equal external representations (see <a href="chap36_mj.html#X84C2F9037EEE9CED"><span class="RefLink">36.5</span></a> and <a href="chap37_mj.html#X7934D3D5797102EC"><span class="RefLink">37.7</span></a>). For nonassociative words, the latter means that the words arise from the letters of the alphabet by the same sequence of multiplications.</p>
 
 <p><a id="X82D4C7BE803166D6" name="X82D4C7BE803166D6"></a></p>
 
 <h5>36.2-2 \&lt;</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \&lt;</code>( <var class="Arg">w1</var>, <var class="Arg">w2</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \&lt;</code>( <var class="Arg">w1</var>, <var class="Arg">w2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Words are ordered according to their external representation. More precisely, two words can be compared if they are words over the same alphabet, and the word with smaller external representation is smaller. For nonassociative words, the ordering is defined in <a href="chap36_mj.html#X84C2F9037EEE9CED"><span class="RefLink">36.5</span></a>; associative words are ordered by the shortlex ordering via <code class="code">&lt;</code> (see <a href="chap37_mj.html#X7934D3D5797102EC"><span class="RefLink">37.7</span></a>).</p>
 
 <p>Note that the alphabet of a word is determined by its family (see <a href="chap13_mj.html#X846063757EC05986"><span class="RefLink">13.1</span></a>), and that the result of each call to <code class="func">FreeMagma</code> (<a href="chap36_mj.html#X7CFFD9027DDD1555"><span class="RefLink">36.4-1</span></a>), <code class="func">FreeGroup</code> (<a href="chap37_mj.html#X8215999E835290F0"><span class="RefLink">37.2-1</span></a>) etc. consists of words over a new alphabet. In particular, there is no "universal" empty word, every families of words in <code class="func">IsWordWithOne</code> (<a href="chap36_mj.html#X843F5C3A82239398"><span class="RefLink">36.1-1</span></a>) has its own empty word.</p>

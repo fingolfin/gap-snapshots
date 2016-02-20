@@ -33,7 +33,7 @@
   [1X17.1-1 Rationals[101X
   
   [29X[2XRationals[102X[32X global variable
-  [29X[2XIsRationals[102X( [3Xobj[103X ) [32X property
+  [29X[2XIsRationals[102X( [3Xobj[103X ) [32X filter
   
   [33X[0;0Y[2XRationals[102X  is  the  field  [22Xℚ[122X  of  rational  integers, as a set of cyclotomic
   numbers,  see  Chapter [14X18[114X  for  basic  operations,  Functions  for the field
@@ -133,7 +133,7 @@
   
   [33X[0;0YIf  [3Xelm[103X  is a string consisting of digits [10X'0'[110X, [10X'1'[110X, [22X...[122X, [10X'9'[110X and [10X'-'[110X (at the
   first  position),  [10X'/'[110X  and  the  decimal  dot  [10X'.'[110X then [3Xrat[103X is the rational
-  described  by  this  string.  The  operation  [2XString[102X ([14X27.6-6[114X) can be used to
+  described  by  this  string.  The  operation  [2XString[102X ([14X27.7-6[114X) can be used to
   compute a string for rational numbers, in fact for all cyclotomics.[133X
   
   [4X[32X  Example  [32X[104X

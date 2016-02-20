@@ -97,7 +97,7 @@
   [10XNewFloat(1.0,355/113)[110X, by supplying a sample floating-point number.[133X
   
   [33X[0;0YFloating-point  numbers may also be converted to other [5XGAP[105X formats using the
-  usual commands [2XInt[102X ([14X14.2-3[114X), [2XRat[102X ([14X17.2-6[114X), [2XString[102X ([14X27.6-6[114X).[133X
+  usual commands [2XInt[102X ([14X14.2-3[114X), [2XRat[102X ([14X17.2-6[114X), [2XString[102X ([14X27.7-6[114X).[133X
   
   [33X[0;0YExact  conversion  to  and  from  floating-point  format  may  be done using
   external  representations. The "external representation" of a floating-point
@@ -142,48 +142,48 @@
   
   [1X19.2-1 [33X[0;0YMathematical operations[133X[101X
   
-  [29X[2XCos[102X( [3Xx[103X ) [32X operation
-  [29X[2XSin[102X( [3Xx[103X ) [32X operation
-  [29X[2XSinCos[102X( [3Xx[103X ) [32X operation
-  [29X[2XTan[102X( [3Xx[103X ) [32X operation
-  [29X[2XSec[102X( [3Xx[103X ) [32X operation
-  [29X[2XCsc[102X( [3Xx[103X ) [32X operation
-  [29X[2XCot[102X( [3Xx[103X ) [32X operation
-  [29X[2XAsin[102X( [3Xx[103X ) [32X operation
-  [29X[2XAcos[102X( [3Xx[103X ) [32X operation
-  [29X[2XAtan[102X( [3Xx[103X ) [32X operation
+  [29X[2XCos[102X( [3Xx[103X ) [32X attribute
+  [29X[2XSin[102X( [3Xx[103X ) [32X attribute
+  [29X[2XSinCos[102X( [3Xx[103X ) [32X attribute
+  [29X[2XTan[102X( [3Xx[103X ) [32X attribute
+  [29X[2XSec[102X( [3Xx[103X ) [32X attribute
+  [29X[2XCsc[102X( [3Xx[103X ) [32X attribute
+  [29X[2XCot[102X( [3Xx[103X ) [32X attribute
+  [29X[2XAsin[102X( [3Xx[103X ) [32X attribute
+  [29X[2XAcos[102X( [3Xx[103X ) [32X attribute
+  [29X[2XAtan[102X( [3Xx[103X ) [32X attribute
   [29X[2XAtan2[102X( [3Xy[103X, [3Xx[103X ) [32X operation
-  [29X[2XCosh[102X( [3Xx[103X ) [32X operation
-  [29X[2XSinh[102X( [3Xx[103X ) [32X operation
-  [29X[2XTanh[102X( [3Xx[103X ) [32X operation
-  [29X[2XSech[102X( [3Xx[103X ) [32X operation
-  [29X[2XCsch[102X( [3Xx[103X ) [32X operation
-  [29X[2XCoth[102X( [3Xx[103X ) [32X operation
-  [29X[2XAsinh[102X( [3Xx[103X ) [32X operation
-  [29X[2XAcosh[102X( [3Xx[103X ) [32X operation
-  [29X[2XAtanh[102X( [3Xx[103X ) [32X operation
+  [29X[2XCosh[102X( [3Xx[103X ) [32X attribute
+  [29X[2XSinh[102X( [3Xx[103X ) [32X attribute
+  [29X[2XTanh[102X( [3Xx[103X ) [32X attribute
+  [29X[2XSech[102X( [3Xx[103X ) [32X attribute
+  [29X[2XCsch[102X( [3Xx[103X ) [32X attribute
+  [29X[2XCoth[102X( [3Xx[103X ) [32X attribute
+  [29X[2XAsinh[102X( [3Xx[103X ) [32X attribute
+  [29X[2XAcosh[102X( [3Xx[103X ) [32X attribute
+  [29X[2XAtanh[102X( [3Xx[103X ) [32X attribute
   [29X[2XLog[102X( [3Xx[103X ) [32X operation
-  [29X[2XLog2[102X( [3Xx[103X ) [32X operation
-  [29X[2XLog10[102X( [3Xx[103X ) [32X operation
-  [29X[2XLog1p[102X( [3Xx[103X ) [32X operation
-  [29X[2XExp[102X( [3Xx[103X ) [32X operation
-  [29X[2XExp2[102X( [3Xx[103X ) [32X operation
-  [29X[2XExp10[102X( [3Xx[103X ) [32X operation
-  [29X[2XExpm1[102X( [3Xx[103X ) [32X operation
-  [29X[2XCuberoot[102X( [3Xx[103X ) [32X operation
-  [29X[2XSquare[102X( [3Xx[103X ) [32X operation
+  [29X[2XLog2[102X( [3Xx[103X ) [32X attribute
+  [29X[2XLog10[102X( [3Xx[103X ) [32X attribute
+  [29X[2XLog1p[102X( [3Xx[103X ) [32X attribute
+  [29X[2XExp[102X( [3Xx[103X ) [32X attribute
+  [29X[2XExp2[102X( [3Xx[103X ) [32X attribute
+  [29X[2XExp10[102X( [3Xx[103X ) [32X attribute
+  [29X[2XExpm1[102X( [3Xx[103X ) [32X attribute
+  [29X[2XCubeRoot[102X( [3Xx[103X ) [32X attribute
+  [29X[2XSquare[102X( [3Xx[103X ) [32X attribute
   [29X[2XHypothenuse[102X( [3Xx[103X, [3Xy[103X ) [32X operation
-  [29X[2XCeil[102X( [3Xx[103X ) [32X operation
-  [29X[2XFloor[102X( [3Xx[103X ) [32X operation
-  [29X[2XRound[102X( [3Xx[103X ) [32X operation
-  [29X[2XTrunc[102X( [3Xx[103X ) [32X operation
-  [29X[2XFrac[102X( [3Xx[103X ) [32X operation
-  [29X[2XSignFloat[102X( [3Xx[103X ) [32X operation
-  [29X[2XArgument[102X( [3Xx[103X ) [32X operation
-  [29X[2XErf[102X( [3Xx[103X ) [32X operation
-  [29X[2XZeta[102X( [3Xx[103X ) [32X operation
-  [29X[2XGamma[102X( [3Xx[103X ) [32X operation
-  [29X[2XComplexI[102X( [3Xx[103X ) [32X operation
+  [29X[2XCeil[102X( [3Xx[103X ) [32X attribute
+  [29X[2XFloor[102X( [3Xx[103X ) [32X attribute
+  [29X[2XRound[102X( [3Xx[103X ) [32X attribute
+  [29X[2XTrunc[102X( [3Xx[103X ) [32X attribute
+  [29X[2XFrac[102X( [3Xx[103X ) [32X attribute
+  [29X[2XSignFloat[102X( [3Xx[103X ) [32X attribute
+  [29X[2XArgument[102X( [3Xx[103X ) [32X attribute
+  [29X[2XErf[102X( [3Xx[103X ) [32X attribute
+  [29X[2XZeta[102X( [3Xx[103X ) [32X attribute
+  [29X[2XGamma[102X( [3Xx[103X ) [32X attribute
+  [29X[2XComplexI[102X( [3Xx[103X ) [32X attribute
   
   [33X[0;0YUsual mathematical functions.[133X
   
@@ -198,7 +198,7 @@
   
   [1X19.2-3 PrecisionFloat[101X
   
-  [29X[2XPrecisionFloat[102X( [3Xx[103X ) [32X operation
+  [29X[2XPrecisionFloat[102X( [3Xx[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10YThe precision of [3Xx[103X[133X
   
   [33X[0;0YThis  function returns the precision, counted in number of binary digits, of
@@ -207,11 +207,11 @@
   
   [1X19.2-4 [33X[0;0YInterval operations[133X[101X
   
-  [29X[2XSup[102X( [3Xinterval[103X ) [32X operation
-  [29X[2XInf[102X( [3Xinterval[103X ) [32X operation
-  [29X[2XMid[102X( [3Xinterval[103X ) [32X operation
-  [29X[2XAbsoluteDiameter[102X( [3Xinterval[103X ) [32X operation
-  [29X[2XRelativeDiameter[102X( [3Xinterval[103X ) [32X operation
+  [29X[2XSup[102X( [3Xinterval[103X ) [32X attribute
+  [29X[2XInf[102X( [3Xinterval[103X ) [32X attribute
+  [29X[2XMid[102X( [3Xinterval[103X ) [32X attribute
+  [29X[2XAbsoluteDiameter[102X( [3Xinterval[103X ) [32X attribute
+  [29X[2XRelativeDiameter[102X( [3Xinterval[103X ) [32X attribute
   [29X[2XOverlaps[102X( [3Xinterval1[103X, [3Xinterval2[103X ) [32X operation
   [29X[2XIsDisjoint[102X( [3Xinterval1[103X, [3Xinterval2[103X ) [32X operation
   [29X[2XIncreaseInterval[102X( [3Xinterval[103X, [3Xdelta[103X ) [32X operation
@@ -287,7 +287,7 @@
   
   [1X19.2-7 Float[101X
   
-  [29X[2XFloat[102X( [3Xobj[103X ) [32X operation
+  [29X[2XFloat[102X( [3Xobj[103X ) [32X function
   [29X[2XNewFloat[102X( [3Xfilter[103X, [3Xobj[103X ) [32X operation
   [29X[2XMakeFloat[102X( [3Xsample[103X, [3Xobj[103X, [3Xobj[103X ) [32X operation
   [6XReturns:[106X  [33X[0;10YA new floating-point number, based on [3Xobj[103X[133X
@@ -313,7 +313,7 @@
   
   [1X19.2-8 Rat[101X
   
-  [29X[2XRat[102X( [3Xf[103X ) [32X operation
+  [29X[2XRat[102X( [3Xf[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10YA rational approximation to [3Xf[103X[133X
   
   [33X[0;0YThis  command  constructs  a  rational  approximation  to the floating-point

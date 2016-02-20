@@ -11,11 +11,11 @@ all: $(MAKE_GMP)
 
 all_gmp_mpfr: $(MAKE_GMP) mpfr
 
-../../../extern/gmp-5.0.4: ../../../extern/gmp-5.0.4.tar.gz
-	( cd ../../../extern; tar zxvf gmp-5.0.4.tar.gz )
-
 ../../../extern/gmp-5.0.5: ../../../extern/gmp-5.0.5.tar.gz
 	( cd ../../../extern; tar zxvf gmp-5.0.5.tar.gz )
+
+../../../extern/gmp-6.0.0a: ../../../extern/gmp-6.0.0a.tar.bz2
+	( cd ../../../extern; tar jxvf gmp-6.0.0a.tar.bz2; mv gmp-6.0.0 gmp-6.0.0a )
 
 gmp_config: ../../../extern/gmp-$(GMP_VER)
 	@mkdir -p gmp-$(GMP_VER)
@@ -33,7 +33,7 @@ gmp_config: ../../../extern/gmp-$(GMP_VER)
 	    echo ""; \
 	    echo "Configuring GMP. Logging to bin/$(GAPARCH)/extern/gmp-$(GMP_VER)/build_log. Please wait... "; \
 	    echo ""; \
-	    ./configure --prefix=`pwd`/../../bin/$(GAPARCH)/extern/gmp-$(GMP_VER) ABI=$(ABI) \
+	    ./configure --prefix=`pwd`/../../bin/$(GAPARCH)/extern/gmp-$(GMP_VER) --enable-cxx ABI=$(ABI) \
 	     > ../../bin/$(GAPARCH)/extern/gmp-$(GMP_VER)/build_log 2>&1; \
 	    rm -f LASTBUILD*; \
 	    touch LASTBUILD.$(GAPARCH); \

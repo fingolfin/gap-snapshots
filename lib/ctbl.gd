@@ -332,7 +332,7 @@ DeclareCategory( "IsCharacterTableInProgress", IsNearlyCharacterTable );
 ##
 ##  <#GAPDoc Label="NearlyCharacterTablesFamily">
 ##  <ManSection>
-##  <Var Name="NearlyCharacterTablesFamily"/>
+##  <Fam Name="NearlyCharacterTablesFamily"/>
 ##
 ##  <Description>
 ##  Every character table like object lies in this family
@@ -1644,16 +1644,16 @@ DeclareAttributeSuppCT( "Identifier", IsNearlyCharacterTable, [] );
 DeclareGlobalVariable( "LARGEST_IDENTIFIER_NUMBER",
     "list containing the largest identifier of an ordinary character table\
  in the current session" );
-InstallFlushableValue( LARGEST_IDENTIFIER_NUMBER, [ 0 ] );
+InstallValue( LARGEST_IDENTIFIER_NUMBER, FixedAtomicList([ 0 ]) );
 
 
 #############################################################################
 ##
 #A  InfoText( <tbl> )
 ##
-##  <#GAPDoc Label="InfoText">
+##  <#GAPDoc Label="InfoText_ctbl">
 ##  <ManSection>
-##  <Attr Name="InfoText" Arg='tbl'/>
+##  <Meth Name="InfoText" Arg='tbl' Label="for character tables"/>
 ##
 ##  <Description>
 ##  is a mutable string with information about the character table
@@ -4373,18 +4373,18 @@ DeclareGlobalFunction( "NormalSubgroupClasses" );
 ##    Character( CharacterTable( S4 ), [ 3, 1, -1, 0, -1 ] ), 
 ##    Character( CharacterTable( S4 ), [ 1, 1, 1, 1, 1 ] ) ]
 ##  gap> kernel:= KernelOfCharacter( irr[3] );
-##  Group([ (1,2)(3,4), (1,4)(2,3) ])
+##  Group([ (1,2)(3,4), (1,3)(2,4) ])
 ##  gap> HasNormalSubgroupClassesInfo( tbl );
 ##  true
 ##  gap> NormalSubgroupClassesInfo( tbl );
-##  rec( nsg := [ Group([ (1,2)(3,4), (1,4)(2,3) ]) ], 
+##  rec( nsg := [ Group([ (1,2)(3,4), (1,3)(2,4) ]) ],
 ##    nsgclasses := [ [ 1, 3 ] ], nsgfactors := [  ] )
 ##  gap> ClassPositionsOfNormalSubgroup( tbl, kernel );
 ##  [ 1, 3 ]
 ##  gap> FactorGroupNormalSubgroupClasses( tbl, [ 1, 3 ] );
 ##  Group([ f1, f2 ])
 ##  gap> NormalSubgroupClassesInfo( tbl );
-##  rec( nsg := [ Group([ (1,2)(3,4), (1,4)(2,3) ]) ], 
+##  rec( nsg := [ Group([ (1,2)(3,4), (1,3)(2,4) ]) ],
 ##    nsgclasses := [ [ 1, 3 ] ], nsgfactors := [ Group([ f1, f2 ]) ] )
 ##  ]]></Example>
 ##  </Description>

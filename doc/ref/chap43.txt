@@ -285,8 +285,10 @@
   
   [33X[0;0YMany  of the algorithms for permutation groups use a [13Xstabilizer chain[113X of the
   group.  The concepts of stabilizer chains, [13Xbases[113X, and [13Xstrong generating sets[113X
-  were  introduced  by  Charles  Sims in [Sim70]. A further discussion of base
-  change is given in section [14X87.1[114X.[133X
+  were  introduced  by  Charles Sims in [Sim70]. An extensive account of basic
+  algorithms  together  with  asymptotic  runtime  analysis  can  be  found in
+  reference [Ser03,  Chapter  4]. A further discussion of base change is given
+  in section [14X87.1[114X.[133X
   
   [33X[0;0YLet  [22XB  =  [  b_1, ..., b_n ][122X be a list of points, [22XG^(1) = G[122X and [22XG^{(i+1)} =
   Stab_{G^(i)}(b_i)[122X, such that [22XG^(n+1) = { () }[122X. Then the list [22X[ b_1, ..., b_n
@@ -765,7 +767,16 @@
   [33X[0;0Yreturns  a  list  of  all  elements of the group described by the stabilizer
   chain [3XS[103X.[133X
   
-  [1X43.10-10 InverseRepresentative[101X
+  [1X43.10-10 IteratorStabChain[101X
+  
+  [29X[2XIteratorStabChain[102X( [3XS[103X ) [32X function
+  
+  [33X[0;0Yreturns an iterator for the elments of the group described by the stabilizer
+  chain  [3XS[103X.  The elements of the group [3XG[103X are produced by iterating through all
+  base  images  in  turn,  and  in  the ordering induced by the base. For more
+  details see [14X43.6[114X[133X
+  
+  [1X43.10-11 InverseRepresentative[101X
   
   [29X[2XInverseRepresentative[102X( [3XS[103X, [3Xpnt[103X ) [32X function
   
@@ -773,7 +784,7 @@
   [3XS[103X.  It  just  runs  back  through the Schreier tree from [3Xpnt[103X to the root and
   multiplies the labels along the way.[133X
   
-  [1X43.10-11 SiftedPermutation[101X
+  [1X43.10-12 SiftedPermutation[101X
   
   [29X[2XSiftedPermutation[102X( [3XS[103X, [3Xg[103X ) [32X function
   
@@ -787,7 +798,7 @@
   permutation if and only if the original [3Xg[103X is in the group [22XG[122X described by the
   original [3XS[103X.[133X
   
-  [1X43.10-12 MinimalElementCosetStabChain[101X
+  [1X43.10-13 MinimalElementCosetStabChain[101X
   
   [29X[2XMinimalElementCosetStabChain[102X( [3XS[103X, [3Xg[103X ) [32X function
   
@@ -796,7 +807,7 @@
   the  additional  property  that  the  list  of  images  under  [22Xh[122X of the base
   belonging to [3XS[103X is minimal w.r.t. lexicographical ordering.[133X
   
-  [1X43.10-13 LargestElementStabChain[101X
+  [1X43.10-14 LargestElementStabChain[101X
   
   [29X[2XLargestElementStabChain[102X( [3XS[103X, [3Xid[103X ) [32X function
   
@@ -805,7 +816,7 @@
   of  the  base belonging to [3XS[103X is maximal w.r.t. lexicographical ordering. The
   second argument must be an identity element (used to start the recursion).[133X
   
-  [1X43.10-14 ApproximateSuborbitsStabilizerPermGroup[101X
+  [1X43.10-15 ApproximateSuborbitsStabilizerPermGroup[101X
   
   [29X[2XApproximateSuborbitsStabilizerPermGroup[102X( [3XG[103X, [3Xpnt[103X ) [32X function
   

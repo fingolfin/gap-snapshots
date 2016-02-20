@@ -36,7 +36,7 @@
     [4X[25Xgap>[125X [27Xb:= Transformation( [ 2, 2, 3, 4 ] );[127X[104X
     [4X[28XTransformation( [ 2, 2 ] )[128X[104X
     [4X[25Xgap>[125X [27Xs:= Semigroup(a, b);[127X[104X
-    [4X[28X<transformation semigroup on 4 pts with 2 generators>[128X[104X
+    [4X[28X<transformation semigroup of degree 4 with 2 generators>[128X[104X
   [4X[32X[104X
   
   [1X51.1-3 Subsemigroup[101X
@@ -51,7 +51,7 @@
     [4X[25Xgap>[125X [27Xa:=GeneratorsOfSemigroup(s)[1];[127X[104X
     [4X[28XTransformation( [ 2, 3, 4, 1 ] )[128X[104X
     [4X[25Xgap>[125X [27Xt:=Subsemigroup(s,[a]);[127X[104X
-    [4X[28X<commutative transformation semigroup on 4 pts with 1 generator>[128X[104X
+    [4X[28X<commutative transformation semigroup of degree 4 with 1 generator>[128X[104X
   [4X[32X[104X
   
   [1X51.1-4 IsSubsemigroup[101X
@@ -216,7 +216,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XSemigroupByMultiplicationTable([[1,2,3],[2,3,1],[3,1,2]]);[127X[104X
-    [4X[28X<semigroup with 3 generators>[128X[104X
+    [4X[28X<semigroup of size 3, with 3 generators>[128X[104X
     [4X[25Xgap>[125X [27XSemigroupByMultiplicationTable([[1,2,3],[2,3,1],[3,2,1]]);[127X[104X
     [4X[28Xfail[128X[104X
   [4X[32X[104X
@@ -333,7 +333,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XMonoidByMultiplicationTable([[1,2,3],[2,3,1],[3,1,2]]);[127X[104X
-    [4X[28X<monoid with 3 generators>[128X[104X
+    [4X[28X<monoid of size 3, with 3 generators>[128X[104X
     [4X[25Xgap>[125X [27XMonoidByMultiplicationTable([[1,2,3],[2,3,1],[1,3,2]]);[127X[104X
     [4X[28Xfail[128X[104X
   [4X[32X[104X
@@ -361,12 +361,12 @@
   [14X54[114X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS:=InverseSemigroup([127X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup([127X[104X
     [4X[25X>[125X [27XPartialPerm( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ) );;[127X[104X
-    [4X[25Xgap>[125X [27Xf:=PartialPerm( [ 1, 2, 3, 4, 5, 8, 10 ], [127X[104X
+    [4X[25Xgap>[125X [27Xf := PartialPerm( [ 1, 2, 3, 4, 5, 8, 10 ], [127X[104X
     [4X[25X>[125X [27X[ 7, 1, 4, 3, 2, 6, 5 ] );;[127X[104X
-    [4X[25Xgap>[125X [27XS:=InverseSemigroup(S, f, Idempotents(SymmetricInverseSemigroup(5)));[127X[104X
-    [4X[28X<inverse partial perm semigroup on 10 pts with 34 generators>[128X[104X
+    [4X[25Xgap>[125X [27XS := InverseSemigroup(S, f, Idempotents(SymmetricInverseSemigroup(5)));[127X[104X
+    [4X[28X<inverse partial perm semigroup of rank 10 with 34 generators>[128X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
     [4X[28X1233[128X[104X
   [4X[32X[104X
@@ -390,12 +390,12 @@
   [10XUnion(GeneratorsOfInverseMonoid(S), [f], Idempotents(T)));[110X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS:=InverseMonoid([127X[104X
+    [4X[25Xgap>[125X [27XS := InverseMonoid([127X[104X
     [4X[25X>[125X [27XPartialPerm( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ) );;[127X[104X
-    [4X[25Xgap>[125X [27Xf:=PartialPerm( [ 1, 2, 3, 4, 5, 8, 10 ], [127X[104X
+    [4X[25Xgap>[125X [27Xf := PartialPerm( [ 1, 2, 3, 4, 5, 8, 10 ], [127X[104X
     [4X[25X>[125X [27X[ 7, 1, 4, 3, 2, 6, 5 ] );;[127X[104X
-    [4X[25Xgap>[125X [27XS:=InverseMonoid(S, f, Idempotents(SymmetricInverseSemigroup(5)));[127X[104X
-    [4X[28X<inverse partial perm monoid on 10 pts with 35 generators>[128X[104X
+    [4X[25Xgap>[125X [27XS := InverseMonoid(S, f, Idempotents(SymmetricInverseSemigroup(5)));[127X[104X
+    [4X[28X<inverse partial perm monoid of rank 10 with 35 generators>[128X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
     [4X[28X1243[128X[104X
   [4X[32X[104X
@@ -694,23 +694,23 @@
   
   [1X51.8-2 IsGreensRelation[101X
   
-  [29X[2XIsGreensRelation[102X( [3Xbin-relation[103X ) [32X property
-  [29X[2XIsGreensRRelation[102X( [3Xequiv-relation[103X ) [32X property
-  [29X[2XIsGreensLRelation[102X( [3Xequiv-relation[103X ) [32X property
-  [29X[2XIsGreensJRelation[102X( [3Xequiv-relation[103X ) [32X property
-  [29X[2XIsGreensHRelation[102X( [3Xequiv-relation[103X ) [32X property
-  [29X[2XIsGreensDRelation[102X( [3Xequiv-relation[103X ) [32X property
+  [29X[2XIsGreensRelation[102X( [3Xbin-relation[103X ) [32X filter
+  [29X[2XIsGreensRRelation[102X( [3Xequiv-relation[103X ) [32X filter
+  [29X[2XIsGreensLRelation[102X( [3Xequiv-relation[103X ) [32X filter
+  [29X[2XIsGreensJRelation[102X( [3Xequiv-relation[103X ) [32X filter
+  [29X[2XIsGreensHRelation[102X( [3Xequiv-relation[103X ) [32X filter
+  [29X[2XIsGreensDRelation[102X( [3Xequiv-relation[103X ) [32X filter
   
   [33X[0;0YCategories for the Green's relations.[133X
   
   [1X51.8-3 IsGreensClass[101X
   
-  [29X[2XIsGreensClass[102X( [3Xequiv-class[103X ) [32X property
-  [29X[2XIsGreensRClass[102X( [3Xequiv-class[103X ) [32X property
-  [29X[2XIsGreensLClass[102X( [3Xequiv-class[103X ) [32X property
-  [29X[2XIsGreensJClass[102X( [3Xequiv-class[103X ) [32X property
-  [29X[2XIsGreensHClass[102X( [3Xequiv-class[103X ) [32X property
-  [29X[2XIsGreensDClass[102X( [3Xequiv-class[103X ) [32X property
+  [29X[2XIsGreensClass[102X( [3Xequiv-class[103X ) [32X filter
+  [29X[2XIsGreensRClass[102X( [3Xequiv-class[103X ) [32X filter
+  [29X[2XIsGreensLClass[102X( [3Xequiv-class[103X ) [32X filter
+  [29X[2XIsGreensJClass[102X( [3Xequiv-class[103X ) [32X filter
+  [29X[2XIsGreensHClass[102X( [3Xequiv-class[103X ) [32X filter
+  [29X[2XIsGreensDClass[102X( [3Xequiv-class[103X ) [32X filter
   
   [33X[0;0Yreturn  [9Xtrue[109X  if the equivalence class [3Xequiv-class[103X is a Green's class of any
   type, or of [22XR[122X, [22XL[122X, [22XJ[122X, [22XH[122X, [22XD[122X type, respectively, or [9Xfalse[109X otherwise.[133X
@@ -877,7 +877,7 @@
   of  its  matrix  contains  a non-zero entry, and its underlying semigroup is
   simple.  A finite semigroup is 0-simple if and only if it is isomorphic to a
   Rees 0-matrix semigroup over a group; again this isomorphism can be found by
-  using [2XIsomorphismReesMatrixSemigroup[102X ([14X51.9-3[114X).[133X
+  using [2XIsomorphismReesZeroMatrixSemigroup[102X ([14X51.9-3[114X).[133X
   
   [33X[0;0YElements  of  a  Rees  matrix or 0-matrix semigroup belong to the categories
   [2XIsReesMatrixSemigroupElement[102X  ([14X51.9-4[114X)  and [2XIsReesZeroMatrixSemigroupElement[102X
@@ -946,6 +946,7 @@
   [1X51.9-3 IsomorphismReesMatrixSemigroup[101X
   
   [29X[2XIsomorphismReesMatrixSemigroup[102X( [3XS[103X ) [32X attribute
+  [29X[2XIsomorphismReesZeroMatrixSemigroup[102X( [3XS[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10YAn isomorphism.[133X
   
   [33X[0;0YEvery  finite simple semigroup is isomorphic to a Rees matrix semigroup over
@@ -953,36 +954,42 @@
   0-matrix semigroup over a group.[133X
   
   [33X[0;0YIf the argument [3XS[103X is a simple semigroup, then [10XIsomorphismReesMatrixSemigroup[110X
-  returns  an  isomorphism  to  a  Rees  matrix semigroup over a group. If the
-  argument  is  a  0-simple  semigroup, then an isomorphism to a Rees 0-matrix
-  semigroup over a group is returned.[133X
+  returns  an isomorphism to a Rees matrix semigroup over a group. If [3XS[103X is not
+  simple, then [10XIsomorphismReesMatrixSemigroup[110X returns an error.[133X
+  
+  [33X[0;0YIf     the     argument     [3XS[103X     is     a    0-simple    semigroup,    then
+  [10XIsomorphismReesZeroMatrixSemigroup[110X returns an isomorphism to a Rees 0-matrix
+  semigroup    over    a    group.    If    [3XS[103X    is    not    0-simple,   then
+  [10XIsomorphismReesMatrixSemigroup[110X returns an error.[133X
   
   [33X[0;0YSee [2XIsSimpleSemigroup[102X ([14X51.4-4[114X) and [2XIsZeroSimpleSemigroup[102X ([14X51.4-5[114X).[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ), [127X[104X
-    [4X[25X>[125X [27XTransformation( [ 3, 4, 3, 4, 4 ] ), [127X[104X
-    [4X[25X>[125X [27XTransformation( [ 3, 4, 3, 4, 3 ] ),  [127X[104X
-    [4X[25X>[125X [27XTransformation( [ 4, 3, 3, 4, 4 ] ));;[127X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(Transformation([2, 1, 1, 2, 1]), [127X[104X
+    [4X[25X>[125X [27X                  Transformation([3, 4, 3, 4, 4]), [127X[104X
+    [4X[25X>[125X [27X                  Transformation([3, 4, 3, 4, 3]),  [127X[104X
+    [4X[25X>[125X [27X                  Transformation([4, 3, 3, 4, 4]));;[127X[104X
     [4X[25Xgap>[125X [27XIsSimpleSemigroup(S);[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XRange(IsomorphismReesMatrixSemigroup(S));[127X[104X
     [4X[28X<Rees matrix semigroup 4x2 over Group([ (1,2) ])>[128X[104X
-    [4X[25Xgap>[125X [27Xmat:=[[(), 0, 0], [0, (), 0], [0, 0, ()]];;[127X[104X
-    [4X[25Xgap>[125X [27XR:=ReesZeroMatrixSemigroup(Group((1,2,4,5,6)), mat);[127X[104X
+    [4X[25Xgap>[125X [27Xmat := [[(), 0, 0], [127X[104X
+    [4X[25X>[125X [27X           [0, (), 0], [127X[104X
+    [4X[25X>[125X [27X           [0, 0, ()]];;[127X[104X
+    [4X[25Xgap>[125X [27XR := ReesZeroMatrixSemigroup(Group((1,2,4,5,6)), mat);[127X[104X
     [4X[28X<Rees 0-matrix semigroup 3x3 over Group([ (1,2,4,5,6) ])>[128X[104X
-    [4X[25Xgap>[125X [27XU:=ReesZeroMatrixSubsemigroup(R, [1,2], Group(()), [2,3]);[127X[104X
+    [4X[25Xgap>[125X [27XU := ReesZeroMatrixSubsemigroup(R, [1, 2], Group(()), [2, 3]);[127X[104X
     [4X[28X<subsemigroup of 3x3 Rees 0-matrix semigroup with 4 generators>[128X[104X
     [4X[25Xgap>[125X [27XIsZeroSimpleSemigroup(U);[127X[104X
     [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XU:=ReesZeroMatrixSubsemigroup(R, [2,3], Group(()), [2,3]);[127X[104X
+    [4X[25Xgap>[125X [27XU := ReesZeroMatrixSubsemigroup(R, [2, 3], Group(()), [2, 3]);[127X[104X
     [4X[28X<subsemigroup of 3x3 Rees 0-matrix semigroup with 3 generators>[128X[104X
     [4X[25Xgap>[125X [27XIsZeroSimpleSemigroup(U);[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XRows(U); Columns(U);[127X[104X
     [4X[28X[ 2, 3 ][128X[104X
     [4X[28X[ 2, 3 ][128X[104X
-    [4X[25Xgap>[125X [27XV:=Range(IsomorphismReesMatrixSemigroup(U));[127X[104X
+    [4X[25Xgap>[125X [27XV := Range(IsomorphismReesZeroMatrixSemigroup(U));[127X[104X
     [4X[28X<Rees 0-matrix semigroup 2x2 over Group(())>[128X[104X
     [4X[25Xgap>[125X [27XRows(V); Columns(V); [127X[104X
     [4X[28X[ 1, 2 ][128X[104X
@@ -1117,7 +1124,7 @@
     [4X[25Xgap>[125X [27XIsReesZeroMatrixSemigroup(V);[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XS:=Semigroup(Transformation([1,1]), Transformation([1,2]));[127X[104X
-    [4X[28X<commutative transformation monoid on 2 pts with 1 generator>[128X[104X
+    [4X[28X<commutative transformation monoid of degree 2 with 1 generator>[128X[104X
     [4X[25Xgap>[125X [27XIsSimpleSemigroup(S);[127X[104X
     [4X[28Xfalse[128X[104X
     [4X[25Xgap>[125X [27Xmat:=[[0, One(S), 0, One(S)], [One(S), 0, One(S), 0], [127X[104X
@@ -1253,6 +1260,5 @@
     [4X[25Xgap>[125X [27XAssociatedReesMatrixSemigroupOfDClass(D);[127X[104X
     [4X[28X<Rees 0-matrix semigroup 25x10 over Group([ (1,2)(3,5)(4,6), (1,3)[128X[104X
     [4X[28X(2,4)(5,6) ])>[128X[104X
-    [4X[28X  [128X[104X
   [4X[32X[104X
   

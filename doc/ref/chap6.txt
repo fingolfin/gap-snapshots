@@ -162,9 +162,9 @@
   
   [33X[0;0YAll  three  operations  have  corresponding  operations  which  do not print
   anything  to  standard  output  but return the output as a string. These are
-  [2XDisplayString[102X   ([14X27.6-1[114X),   [2XViewString[102X  ([14X27.6-3[114X)  and  [2XPrintString[102X  ([14X27.6-5[114X)
-  (corresponding  to [2XPrintObj[102X ([14X6.3-5[114X)). Additionally, there is [2XString[102X ([14X27.6-6[114X)
-  which  is  very  similar to [2XPrintString[102X ([14X27.6-5[114X) but does not insert control
+  [2XDisplayString[102X   ([14X27.7-1[114X),   [2XViewString[102X  ([14X27.7-3[114X)  and  [2XPrintString[102X  ([14X27.7-5[114X)
+  (corresponding  to [2XPrintObj[102X ([14X6.3-5[114X)). Additionally, there is [2XString[102X ([14X27.7-6[114X)
+  which  is  very  similar to [2XPrintString[102X ([14X27.7-5[114X) but does not insert control
   characters for line breaks.[133X
   
   [33X[0;0YFor  implementation  convenience it is allowed that some of these operations
@@ -179,13 +179,13 @@
       ├────────────────────────┤
       │    [2XPrintObj[102X ([14X6.3-5[114X)    │ 
       ├────────────────────────┤
-      │ [2XDisplayString[102X ([14X27.6-1[114X) │ 
+      │ [2XDisplayString[102X ([14X27.7-1[114X) │ 
       ├────────────────────────┤
-      │  [2XViewString[102X ([14X27.6-3[114X)   │ 
+      │  [2XViewString[102X ([14X27.7-3[114X)   │ 
       ├────────────────────────┤
-      │  [2XPrintString[102X ([14X27.6-5[114X)  │ 
+      │  [2XPrintString[102X ([14X27.7-5[114X)  │ 
       ├────────────────────────┤
-      │    [2XString[102X ([14X27.6-6[114X)     │ 
+      │    [2XString[102X ([14X27.7-6[114X)     │ 
       └────────────────────────┘
   
   [33X[0;0YThis is to avoid circular delegations.[133X
@@ -201,26 +201,26 @@
   
   [33X[0;0YThe library contains the following low ranked default methods:[133X
   
-  [30X    [33X[0;6YA  method  for [2XDisplayString[102X ([14X27.6-1[114X) which returns the constant value
-        of the global variable [2XDEFAULTDISPLAYSTRING[102X ([14X27.6-2[114X).[133X
+  [30X    [33X[0;6YA  method  for [2XDisplayString[102X ([14X27.7-1[114X) which returns the constant value
+        of the global variable [2XDEFAULTDISPLAYSTRING[102X ([14X27.7-2[114X).[133X
   
-  [30X    [33X[0;6YA  method  for [2XViewString[102X ([14X27.6-3[114X) which returns the constant value of
-        the global variable [2XDEFAULTVIEWSTRING[102X ([14X27.6-4[114X).[133X
+  [30X    [33X[0;6YA  method  for [2XViewString[102X ([14X27.7-3[114X) which returns the constant value of
+        the global variable [2XDEFAULTVIEWSTRING[102X ([14X27.7-4[114X).[133X
   
-  [30X    [33X[0;6YA  method for [2XDisplay[102X ([14X6.3-6[114X) which first calls [2XDisplayString[102X ([14X27.6-1[114X)
+  [30X    [33X[0;6YA  method for [2XDisplay[102X ([14X6.3-6[114X) which first calls [2XDisplayString[102X ([14X27.7-1[114X)
         and   prints   the   result,   if   it  is  a  different  object  than
-        [2XDEFAULTDISPLAYSTRING[102X  ([14X27.6-2[114X).  Otherwise  the  method  delegates  to
+        [2XDEFAULTDISPLAYSTRING[102X  ([14X27.7-2[114X).  Otherwise  the  method  delegates  to
         [2XPrintObj[102X ([14X6.3-5[114X).[133X
   
-  [30X    [33X[0;6YA method for [2XViewObj[102X ([14X6.3-5[114X) which first calls [2XViewString[102X ([14X27.6-3[114X) and
+  [30X    [33X[0;6YA method for [2XViewObj[102X ([14X6.3-5[114X) which first calls [2XViewString[102X ([14X27.7-3[114X) and
         prints  the result, if it is a different object than [2XDEFAULTVIEWSTRING[102X
-        ([14X27.6-4[114X). Otherwise the method delegates to [2XPrintObj[102X ([14X6.3-5[114X).[133X
+        ([14X27.7-4[114X). Otherwise the method delegates to [2XPrintObj[102X ([14X6.3-5[114X).[133X
   
   [30X    [33X[0;6YA  method  for [2XPrintObj[102X ([14X6.3-5[114X) which prints the result of [2XPrintString[102X
-        ([14X27.6-5[114X).[133X
+        ([14X27.7-5[114X).[133X
   
-  [30X    [33X[0;6YA  method  for [2XPrintString[102X ([14X27.6-5[114X) which returns the result of [2XString[102X
-        ([14X27.6-6[114X)[133X
+  [30X    [33X[0;6YA  method  for [2XPrintString[102X ([14X27.7-5[114X) which returns the result of [2XString[102X
+        ([14X27.7-6[114X)[133X
   
   
   [1X6.3-2 [33X[0;0YRecommendations for the implementation[133X[101X
@@ -228,33 +228,33 @@
   [33X[0;0YThis  subsection  describes what methods for printing and viewing one should
   implement for new [5XGAP[105X objects.[133X
   
-  [33X[0;0YOne  should  at  the  very  least  install a [2XString[102X ([14X27.6-6[114X) method to allow
+  [33X[0;0YOne  should  at  the  very  least  install a [2XString[102X ([14X27.7-6[114X) method to allow
   printing.  Using  the  standard  delegations  this enables a limited form of
   viewing, displaying and printing.[133X
   
   [33X[0;0YIf,  for  larger objects, nicer line breaks are needed, one should install a
-  separate  [2XPrintString[102X  ([14X27.6-5[114X) method which puts in positions for good line
+  separate  [2XPrintString[102X  ([14X27.7-5[114X) method which puts in positions for good line
   breaks using the control characters [10X\<[110X (ASCII 1) and [10X\>[110X (ASCII 2).[133X
   
   [33X[0;0YIf,  for  even  larger objects, output performance and memory usage matters,
   one should install a separate [2XPrintObj[102X ([14X6.3-5[114X) method.[133X
   
-  [33X[0;0YOne  should  usually  install a [2XViewString[102X ([14X27.6-3[114X) method, unless the above
-  [2XString[102X  ([14X27.6-6[114X)  method  is  good  enough  for  [2XViewObj[102X  ([14X6.3-5[114X)  purposes.
+  [33X[0;0YOne  should  usually  install a [2XViewString[102X ([14X27.7-3[114X) method, unless the above
+  [2XString[102X  ([14X27.7-6[114X)  method  is  good  enough  for  [2XViewObj[102X  ([14X6.3-5[114X)  purposes.
   Performance   and  memory  should  never  matter  here,  so  it  is  usually
   unnecessary to install a separate [2XViewObj[102X ([14X6.3-5[114X) method.[133X
   
   [33X[0;0YIf  the  type  of  object  calls  for  it one should install a [2XDisplayString[102X
-  ([14X27.6-1[114X)  method.  This  is  the  case  if  a human readable verbose form is
+  ([14X27.7-1[114X)  method.  This  is  the  case  if  a human readable verbose form is
   required.[133X
   
   [33X[0;0YIf  the performance and memory usage for [2XDisplay[102X ([14X6.3-6[114X) matters, one should
   install a separate [2XDisplay[102X ([14X6.3-6[114X) method.[133X
   
-  [33X[0;0YNote  that  if  only  a  [2XString[102X  ([14X27.6-6[114X)  method is installed, then [2XViewObj[102X
-  ([14X6.3-5[114X)  works  and  [2XViewString[102X ([14X27.6-3[114X) returns [2XDEFAULTVIEWSTRING[102X ([14X27.6-4[114X).
-  Likewise,   [2XDisplay[102X   ([14X6.3-6[114X)   works  and  [2XDisplayString[102X  ([14X27.6-1[114X)  returns
-  [2XDEFAULTDISPLAYSTRING[102X  ([14X27.6-2[114X).  If  you  want  to  avoid  this then install
+  [33X[0;0YNote  that  if  only  a  [2XString[102X  ([14X27.7-6[114X)  method is installed, then [2XViewObj[102X
+  ([14X6.3-5[114X)  works  and  [2XViewString[102X ([14X27.7-3[114X) returns [2XDEFAULTVIEWSTRING[102X ([14X27.7-4[114X).
+  Likewise,   [2XDisplay[102X   ([14X6.3-6[114X)   works  and  [2XDisplayString[102X  ([14X27.7-1[114X)  returns
+  [2XDEFAULTDISPLAYSTRING[102X  ([14X27.7-2[114X).  If  you  want  to  avoid  this then install
   methods for these operations as well.[133X
   
   [1X6.3-3 View[101X
@@ -471,7 +471,7 @@
   
   [1X6.4-3 OnBreak[101X
   
-  [29X[2XOnBreak[102X[32X global variable
+  [29X[2XOnBreak[102X(  ) [32X function
   
   [33X[0;0YBy  default,  when  a  break  loop  is  entered,  [5XGAP[105X  prints a trace of the
   innermost  5  commands  currently  being  executed.  This  behaviour  can be
@@ -529,7 +529,7 @@
     [4X[25X>[125X [27X     OnBreak := ENTBOnBreak;[127X[104X
     [4X[25X>[125X [27X     Error();[127X[104X
     [4X[25X>[125X [27X   end;[127X[104X
-    [4X[28Xfunction( arg ) ... end[128X[104X
+    [4X[28Xfunction( arg... ) ... end[128X[104X
   [4X[32X[104X
   
   [33X[0;0YHere is a somewhat trivial demonstration of the use of [10XErrorNoTraceBack[110X.[133X
@@ -565,7 +565,7 @@
   
   [1X6.4-4 OnBreakMessage[101X
   
-  [29X[2XOnBreakMessage[102X[32X global variable
+  [29X[2XOnBreakMessage[102X(  ) [32X function
   
   [33X[0;0YWhen  a  break  loop is entered by a call to [2XError[102X ([14X6.6-1[114X) the message after
   the [21X[10XEntering break read-eval-print loop ...[110X[121X line is produced by the function
@@ -767,9 +767,21 @@
   with  these  arguments.  Then  a break loop (see [14X6.4[114X) is entered, unless the
   standard  error  output  is  not connected to a terminal. You can leave this
   break  loop  with [10Xreturn;[110X to continue execution with the statement following
-  the call to [2XError[102X.[133X
+  the  call  to  [2XError[102X.  [2XErrorNoReturn[102X  ([14X6.6-2[114X) operates identically to [2XError[102X,
+  except it does not allow using [10Xreturn;[110X to continue execution.[133X
   
-  [1X6.6-2 ErrorCount[101X
+  [1X6.6-2 ErrorNoReturn[101X
+  
+  [29X[2XErrorNoReturn[102X( [3Xmessages[103X, [3X...[103X ) [32X function
+  
+  [33X[0;0Y[2XErrorNoReturn[102X  signals  an  error from within a function. First the messages
+  [3Xmessages[103X  are  printed,  this  is done exactly as if [2XPrint[102X ([14X6.3-4[114X) (see [14X6.3[114X)
+  were  called  with  these arguments. Then a break loop (see [14X6.4[114X) is entered,
+  unless  the standard error output is not connected to a terminal. This break
+  loop  can only be exited with [10Xquit;[110X. The function differs from [2XError[102X ([14X6.6-1[114X)
+  by not allowing execution to continue.[133X
+  
+  [1X6.6-3 ErrorCount[101X
   
   [29X[2XErrorCount[102X(  ) [32X function
   
@@ -793,7 +805,32 @@
   [33X[0;0YAn  emergency  way  to  leave  [5XGAP[105X  is  to enter [9XQUIT[109X at any [10Xgap>[110X or [10Xbrk>[110X or
   [10Xbrk_[3Xnn[103X[10X>[110X prompt.[133X
   
-  [1X6.7-2 InstallAtExit[101X
+  [1X6.7-2 GAP_EXIT_CODE[101X
+  
+  [29X[2XGAP_EXIT_CODE[102X( [3Xret[103X ) [32X function
+  
+  [33X[0;0YA  [10XGAP_EXIT_CODE[110X  sets  the  return value which will be used when [5XGAP[105X exits.
+  This  may  be  an integer, or a boolean (where [9Xtrue[109X is interpreted as 0, and
+  [9Xfalse[109X is interpreted as 1.[133X
+  
+  [1X6.7-3 QUIT_GAP[101X
+  
+  [29X[2XQUIT_GAP[102X( [[3Xret[103X] ) [32X function
+  
+  [33X[0;0YA [10XQUIT_GAP[110X acts similarly to the keyword [10Xquit[110X. It exits [5XGAP[105X cleanly, calling
+  any  function  installed  using [10XInstallAtExit[110X. The optional argument will be
+  passed to [10XGAP_EXIT_CODE[110X.[133X
+  
+  [1X6.7-4 FORCE_QUIT_GAP[101X
+  
+  [29X[2XFORCE_QUIT_GAP[102X( [[3Xret[103X] ) [32X function
+  
+  [33X[0;0YA  [10XFORCE_QUIT_GAP[110X  is  similar  to [10XQUIT_GAP[110X, except it ignores any functions
+  installed  with  [10XInstallAtExit[110X,  or  any other functions normally run at GAP
+  exit,  and  exits  GAP  immediately. The optional argument will be passed to
+  [10XGAP_EXIT_CODE[110X.[133X
+  
+  [1X6.7-5 InstallAtExit[101X
   
   [29X[2XInstallAtExit[102X( [3Xfunc[103X ) [32X function
   [29X[2XQUITTING[102X[32X global variable
@@ -816,7 +853,7 @@
   otherwise.  Since  [9XQUIT[109X  is  considered  as  an emergency measure, different
   action may be appropriate.[133X
   
-  [1X6.7-3 SaveOnExitFile[101X
+  [1X6.7-6 SaveOnExitFile[101X
   
   [29X[2XSaveOnExitFile[102X[32X global variable
   

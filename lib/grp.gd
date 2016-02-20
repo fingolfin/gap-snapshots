@@ -301,7 +301,7 @@ InstallTrueMethod( IsSubsetLocallyFiniteGroup, IsFFECollection and IsMagma );
 ##
 ##  <#GAPDoc Label="CanEasilyTestMembership">
 ##  <ManSection>
-##  <Func Name="CanEasilyTestMembership" Arg='G'/>
+##  <Filt Name="CanEasilyTestMembership" Arg='G'/>
 ##
 ##  <Description>
 ##  This filter indicates whether &GAP; can test membership of elements in
@@ -323,7 +323,7 @@ DeclareFilter( "CanEasilyTestMembership" );
 ##
 ##  <#GAPDoc Label="CanEasilyComputeWithIndependentGensAbelianGroup">
 ##  <ManSection>
-##  <Func Name="CanEasilyComputeWithIndependentGensAbelianGroup" Arg='G'/>
+##  <Filt Name="CanEasilyComputeWithIndependentGensAbelianGroup" Arg='G'/>
 ##
 ##  <Description>
 ##  This filter indicates whether &GAP; can in reasonable time compute
@@ -347,7 +347,7 @@ DeclareFilter( "CanEasilyComputeWithIndependentGensAbelianGroup" );
 ##
 ##  <#GAPDoc Label="CanComputeSizeAnySubgroup">
 ##  <ManSection>
-##  <Func Name="CanComputeSizeAnySubgroup" Arg='G'/>
+##  <Filt Name="CanComputeSizeAnySubgroup" Arg='G'/>
 ##
 ##  <Description>
 ##  This filter indicates whether &GAP; can easily compute the size of any
@@ -378,7 +378,7 @@ InstallTrueMethod( CanComputeSize, IsTrivial );
 ##
 ##  <#GAPDoc Label="CanComputeIndex">
 ##  <ManSection>
-##  <Func Name="CanComputeIndex" Arg='G, H'/>
+##  <Oper Name="CanComputeIndex" Arg='G, H'/>
 ##
 ##  <Description>
 ##  This function indicates whether the index <M>[<A>G</A>:<A>H</A>]</M>
@@ -1152,6 +1152,34 @@ DeclareAttribute( "MaximalSubgroups", IsGroup );
 ##
 DeclareAttribute("MaximalSubgroupClassReps",IsGroup);
 
+#############################################################################
+##
+#F  MaximalPropertySubgroups( <G>, <prop> )
+##
+##  <#GAPDoc Label="MaximalPropertySubgroups">
+##  <ManSection>
+##  <Func Name="MaximalPropertySubgroups" Arg='G,prop'/>
+##
+##  <Description>
+##  For a function <A>prop</A> that tests for a property that persists
+##  under taking subgroups, this function returns conjugacy class
+##  representatives of the subgroups of <A>G</A> that are maximal subject to
+##  this property. 
+##  <Example><![CDATA[
+##  gap> max:=MaximalPropertySubgroups(AlternatingGroup(8),IsNilpotent);;
+##  gap> List(max,Size);
+##  [ 64, 15, 12, 9, 7, 6 ]
+##  gap> max:=MaximalSolvableSubgroups(AlternatingGroup(10));;
+##  gap> List(max,Size);
+##  [ 1152, 864, 648, 576, 400, 384, 320, 216, 126, 240, 168, 120 ]
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction("MaximalPropertySubgroups");
+DeclareGlobalFunction("MaximalSolvableSubgroups");
+
 
 #############################################################################
 ##
@@ -1165,7 +1193,7 @@ DeclareAttribute("MaximalSubgroupClassReps",IsGroup);
 ##  is the smallest normal subgroup of <A>G</A> that has a solvable factor group.
 ##  <Example><![CDATA[
 ##  gap> PerfectResiduum(Group((1,2,3,4,5),(1,2)));
-##  Group([ (1,3,2), (2,4,3), (1,3)(4,5) ])
+##  Group([ (1,3,2), (1,4,3), (1,5,4) ])
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -1194,14 +1222,11 @@ DeclareAttribute( "PerfectResiduum", IsGroup );
 ##  <Example><![CDATA[
 ##  gap> m11:=TransitiveGroup(11,6);
 ##  M(11)
-##  gap> r:=RepresentativesPerfectSubgroups(m11);
-##  [ Group([ (3,9,11)(4,8,6)(5,10,7), (1,3)(2,11)(4,6)(7,8) ]), 
-##    Group([ (2,3,4)(5,6,8)(7,11,9), (1,3)(2,11)(4,6)(7,8) ]), 
-##    Group([ (4,11,10,9)(5,7,8,6), (1,6,4)(2,9,7)(8,11,10) ]), 
-##    Group([ (3,5,8)(4,11,7)(6,9,10), (1,3)(2,11)(4,6)(7,8) ]), M(11), 
-##    Group(()) ]
+##  gap> r:=RepresentativesPerfectSubgroups(m11);;
 ##  gap> List(r,Size);
 ##  [ 60, 60, 360, 660, 7920, 1 ]
+##  gap> List(r,StructureDescription);
+##  [ "A5", "A5", "A6", "PSL(2,11)", "M11", "1" ]
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -1223,15 +1248,11 @@ DeclareAttribute( "RepresentativesSimpleSubgroups", IsGroup );
 ##  returns a list of the conjugacy classes of perfect subgroups of <A>G</A>.
 ##  (see <Ref Func="RepresentativesPerfectSubgroups"/>.)
 ##  <Example><![CDATA[
-##  gap> ConjugacyClassesPerfectSubgroups(m11);
-##  [ Group( [ ( 3, 9,11)( 4, 8, 6)( 5,10, 7), 
-##        ( 1, 3)( 2,11)( 4, 6)( 7, 8) ] )^G, 
-##    Group( [ ( 2, 3, 4)( 5, 6, 8)( 7,11, 9), 
-##        ( 1, 3)( 2,11)( 4, 6)( 7, 8) ] )^G, 
-##    Group( [ ( 4,11,10, 9)( 5, 7, 8, 6), ( 1, 6, 4)( 2, 9, 7)( 8,11,10) 
-##       ] )^G, 
-##    Group( [ ( 3, 5, 8)( 4,11, 7)( 6, 9,10), 
-##        ( 1, 3)( 2,11)( 4, 6)( 7, 8) ] )^G, M(11)^G, Group( () )^G ]
+##  gap> r := ConjugacyClassesPerfectSubgroups(m11);;
+##  gap> List(r, x -> StructureDescription(Representative(x)));
+##  [ "A5", "A5", "A6", "PSL(2,11)", "M11", "1" ]
+##  gap> SortedList( List(r,Size) );
+##  [ 1, 1, 11, 12, 66, 132 ]
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -1384,7 +1405,7 @@ DeclareAttribute( "DerivedSeriesOfGroup", IsGroup );
 ##  <Example><![CDATA[
 ##  gap> g:=Group((1,2,3,4),(1,2));;
 ##  gap> DerivedSubgroup(g);
-##  Group([ (1,3,2), (1,4,3) ])
+##  Group([ (1,3,2), (2,4,3) ])
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -2042,7 +2063,7 @@ DeclareAttribute( "SmallGeneratingSet", IsGroup );
 ##  <M><A>G</A> / N</M> is supersolvable.
 ##  <Example><![CDATA[
 ##  gap> SupersolvableResiduum(g);
-##  Group([ (1,3)(2,4), (1,4)(2,3) ])
+##  Group([ (1,2)(3,4), (1,4)(2,3) ])
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -2645,8 +2666,8 @@ DeclareOperation( "CosetTableNormalClosure", [ IsGroup, IsGroup ] );
 ##
 ##  <Description>
 ##  returns the image of the <C>NaturalHomomorphismByNormalSubgroup(<A>G</A>,<A>N</A>)</C>.
-##  The homomorphism will be stored in the attribute
-##  <C>NaturalHomomorphism</C> of the result.
+##  The homomorphism will be returned by calling the function
+##  <C>NaturalHomomorphism</C> on the result.
 ##  The <C>NC</C> version does not test whether <A>N</A> is normal in <A>G</A>.
 ##  <Example><![CDATA[
 ##  gap> g:=Group((1,2,3,4),(1,2));;n:=Subgroup(g,[(1,2)(3,4),(1,3)(2,4)]);;
@@ -2654,8 +2675,9 @@ DeclareOperation( "CosetTableNormalClosure", [ IsGroup, IsGroup ] );
 ##  [ (1,2,3,4), (1,2) ] -> [ f1*f2, f1 ]
 ##  gap> Size(ImagesSource(hom));
 ##  6
-##  gap> FactorGroup(g,n);
-##  Group([ f1, f2 ])
+##  gap> FactorGroup(g,n);;
+##  gap> StructureDescription(last);
+##  "S3"
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -2670,16 +2692,16 @@ DeclareOperation( "FactorGroupNC", [ IsGroup, IsGroup ] );
 ##
 ##  <#GAPDoc Label="NaturalHomomorphism">
 ##  <ManSection>
-##  <Attr Name="NaturalHomomorphism" Arg='F'/>
+##  <Oper Name="NaturalHomomorphism" Arg='F'/>
 ##
 ##  <Description>
-##  For a group <A>F</A> obtained via <C>FactorGroup</C>, this attribute
-##  holds the natural homomorphism onto <A>F</A>
+##  For a group <A>F</A> obtained via <C>FactorGroup</C>, this operation
+##  returns the natural homomorphism onto <A>F</A>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareAttribute( "NaturalHomomorphism", IsGroup );
+DeclareOperation( "NaturalHomomorphism", [ IsGroup ] );
 
 
 
@@ -2988,7 +3010,7 @@ DeclareOperation( "IsSubnormal", [ IsGroup, IsGroup ] );
 ##  of the closure of <A>G</A> and <A>U</A> which contains <A>U</A>.
 ##  <Example><![CDATA[
 ##  gap> NormalClosure(g,Subgroup(g,[(1,2,3)]));
-##  Group([ (1,2,3), (1,3,4) ])
+##  Group([ (1,2,3), (2,3,4) ])
 ##  gap> NormalClosure(g,Group((3,4,5)));
 ##  Group([ (3,4,5), (1,5,4), (1,2,5) ])
 ##  ]]></Example>
@@ -3085,7 +3107,7 @@ DeclareOperation("CentralizerModulo", [IsGroup,IsGroup,IsObject]);
 ##
 ##  <#GAPDoc Label="PCentralSeries">
 ##  <ManSection>
-##  <Func Name="PCentralSeries" Arg='G, p'/>
+##  <Oper Name="PCentralSeries" Arg='G, p'/>
 ##
 ##  <Description>
 ##  The <A>p</A>-central series of <A>G</A> is defined by
@@ -3124,7 +3146,7 @@ KeyDependentOperation( "PRump", IsGroup, IsPosInt, "prime" );
 ##
 ##  <#GAPDoc Label="PCore">
 ##  <ManSection>
-##  <Func Name="PCore" Arg='G, p'/>
+##  <Oper Name="PCore" Arg='G, p'/>
 ##
 ##  <Description>
 ##  <Index Key="Op(G)" Subkey="see PCore"><C>PCore</C></Index>
@@ -3157,7 +3179,7 @@ KeyDependentOperation( "PCore", IsGroup, IsPosInt, "prime" );
 ##  <M>V \geq </M><A>U</A>. If <A>U</A> is subnormal, <M>V =</M> <A>U</A>.
 ##  <Example><![CDATA[
 ##  gap> s:=SubnormalSeries(g,Group((1,2)(3,4)));
-##  [ Group([ (1,2,3,4), (1,2) ]), Group([ (1,2)(3,4), (1,3)(2,4) ]), 
+##  [ Group([ (1,2,3,4), (1,2) ]), Group([ (1,2)(3,4), (1,4)(2,3) ]),
 ##    Group([ (1,2)(3,4) ]) ]
 ##  ]]></Example>
 ##  </Description>
@@ -3173,13 +3195,13 @@ InParentFOA( "SubnormalSeries", IsGroup, IsGroup, DeclareAttribute );
 ##
 ##  <#GAPDoc Label="SylowSubgroup">
 ##  <ManSection>
-##  <Func Name="SylowSubgroup" Arg='G, p'/>
+##  <Oper Name="SylowSubgroup" Arg='G, p'/>
 ##
 ##  <Description>
 ##  returns a Sylow <A>p</A> subgroup of the finite group <A>G</A>.
 ##  This is a <A>p</A>-subgroup of <A>G</A> whose index in <A>G</A> is
 ##  coprime to <A>p</A>.
-##  <Ref Func="SylowSubgroup"/> computes Sylow subgroups via the operation
+##  <Ref Oper="SylowSubgroup"/> computes Sylow subgroups via the operation
 ##  <C>SylowSubgroupOp</C>.
 ##  <Example><![CDATA[
 ##  gap> g:=SymmetricGroup(4);;
@@ -3199,7 +3221,7 @@ KeyDependentOperation( "SylowSubgroup", IsGroup, IsPosInt, "prime" );
 ##
 ##  <#GAPDoc Label="SylowComplement">
 ##  <ManSection>
-##  <Func Name="SylowComplement" Arg='G, p'/>
+##  <Oper Name="SylowComplement" Arg='G, p'/>
 ##
 ##  <Description>
 ##  returns a Sylow <A>p</A>-complement of the finite group <A>G</A>.
@@ -3226,7 +3248,7 @@ KeyDependentOperation( "SylowComplement", IsGroup, IsPosInt, "prime" );
 ##
 ##  <#GAPDoc Label="HallSubgroup">
 ##  <ManSection>
-##  <Func Name="HallSubgroup" Arg='G, P'/>
+##  <Oper Name="HallSubgroup" Arg='G, P'/>
 ##
 ##  <Description>
 ##  computes a <A>P</A>-Hall subgroup for a set <A>P</A> of primes.
@@ -3251,10 +3273,10 @@ KeyDependentOperation( "SylowComplement", IsGroup, IsPosInt, "prime" );
 ##  gap> HallSubgroup(h,[2,3]);  
 ##  [ <permutation group of size 96 with 6 generators>, 
 ##    <permutation group of size 96 with 6 generators> ]
-##  gap> HallSubgroup(h,[3,31]);
-##  Group([ (2,29,7)(3,30,11)(4,28,8)(5,27,9)(6,31,10)(12,24,21)(13,25,20)
-##  (14,23,17)(15,22,19)(16,26,18), (1,20,31,23,11,25,29,3,21,24,6,19,5,
-##  17,12,14,4,18,8,10,30,27,16,26,22,13,7,15,28,9,2) ])
+##  gap> u := HallSubgroup(h,[3,31]);;
+##  gap> Size(u); StructureDescription(u);
+##  93
+##  "C31 : C3"
 ##  gap> HallSubgroup(h,[5,31]);
 ##  fail
 ##  ]]></Example>
@@ -4104,7 +4126,7 @@ DeclareAttribute( "IsomorphismFpGroup", IsGroup );
 ##  #I  the image group has 3 gens and 11 rels of total length 92
 ##  gap> iso := IsomorphismFpGroupByGenerators( M12, gens : 
 ##  >                                           method := "fast" );;
-##  #I  the image group has 3 gens and 162 rels of total length 3737
+##  #I  the image group has 3 gens and 150 rels of total length 3336
 ##  ]]></Example>
 ##  <P/>
 ##  Though the option <C>method := "regular"</C> is only checked in the case
@@ -4126,7 +4148,7 @@ DeclareAttribute( "IsomorphismFpGroup", IsGroup );
 ##    [ [ 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 0 ], 
 ##        [ 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1 ] ] ]
 ##  gap> iso := IsomorphismFpGroupByGenerators( G, gens );;
-##  #I  the image group has 2 gens and 9 rels of total length 94
+##  #I  the image group has 2 gens and 10 rels of total length 126
 ##  gap> iso := IsomorphismFpGroupByGenerators( G, gens : 
 ##  >                                           method := "regular");;
 ##  #I  the image group has 2 gens and 6 rels of total length 56
@@ -4138,15 +4160,7 @@ DeclareAttribute( "IsomorphismFpGroup", IsGroup );
 ##  , 0, 0, 0, 1 ] ] ]->[ F1, F2 ]>
 ##  gap> ConstituentsCompositionMapping(iso);
 ##  [ <action isomorphism>, 
-##   [ (2,3)(4,6,10,17,7,12)(5,8,13,19,26,24)(9,15,23,35,31,43)(14,21,
-##         32)(16,25,38)(18,27,39,33,45,57)(20,30,36,48,28,40)(22,34,44,
-##         55,66,74)(29,41,51,61,60,47)(37,49,54,52,46,58)(42,53,65)(50,
-##         62,63,72,56,67)(59,69,77,78,64,73)(68,71,75)(76,79), 
-##       (1,2,4,7)(3,5,9,16)(6,11,18,28)(8,14,22,30)(12,13,20,31)(15,24,
-##         37,50)(17,26,38,45)(19,29,42,27)(21,33,46,35)(23,36,25,39)(32,
-##         44,56,40)(34,47,59,70)(41,52,64,72)(43,54,65,66)(48,60)(49,61,
-##         71,55)(51,63,53,57)(58,68,76,62)(67,75,74,77)(73,78,80,79) 
-##      ] -> [ F1, F2 ] ]
+##    [ (2,3,4)(5,6)(8,9,10), (1,2,3,5)(6,7,8,9) ] -> [ F1, F2 ] ]
 ##  ]]></Example>
 ##  <P/>
 ##  Since &GAP; cannot decompose elements of a matrix group into generators,
@@ -4254,7 +4268,14 @@ DeclareGlobalFunction( "PowerMapOfGroupWithInvariants" );
 ##
 ##  <Description>
 ##  tests whether <A>G</A> <M>/</M> <A>N</A> is abelian
-##  (without explicitly constructing the factor group).
+##  (without explicitly constructing the factor group and without testing
+##  whether <A>N</A> is in fact a normal subgroup).
+##  <Example><![CDATA[
+##  gap> HasAbelianFactorGroup(g,n);
+##  false
+##  gap> HasAbelianFactorGroup(DerivedSubgroup(g),n);
+##  true
+##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -4271,7 +4292,8 @@ DeclareGlobalFunction("HasAbelianFactorGroup");
 ##
 ##  <Description>
 ##  tests whether <A>G</A> <M>/</M> <A>N</A> is solvable
-##  (without explicitly constructing the factor group).
+##  (without explicitly constructing the factor group and without testing
+##  whether <A>N</A> is in fact a normal subgroup).
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -4289,13 +4311,8 @@ DeclareGlobalFunction("HasSolvableFactorGroup");
 ##
 ##  <Description>
 ##  tests whether <A>G</A> <M>/</M> <A>N</A> is elementary abelian
-##  (without explicitly constructing the factor group).
-##  <Example><![CDATA[
-##  gap> HasAbelianFactorGroup(g,n);
-##  false
-##  gap> HasAbelianFactorGroup(DerivedSubgroup(g),n);
-##  true
-##  ]]></Example>
+##  (without explicitly constructing the factor group and without testing
+##  whether <A>N</A> is in fact a normal subgroup).
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>

@@ -87,7 +87,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap46_mj.html#X7EAC6B8B7ABEEB86">46.8-7 ModuleOfExtension</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap46_mj.html#X824F2B2E7C11ABAF">46.8-8 CompatiblePairs</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap46_mj.html#X854FFEF187C4AAB9">46.8-9 ExtensionRepresentatives</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap46_mj.html#X7958281D801DC9FF">46.8-10 SplitExtensions</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap46_mj.html#X84E2DA897FAAF6D8">46.8-10 SplitExtension</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap46_mj.html#X874E4B107BD78F5A">46.9 <span class="Heading">Coding a Pc Presentation</span></a>
 </span>
@@ -236,7 +236,7 @@
 <h5>46.2-2 <span class="Heading">Arithmetic operations for elements of pc groups</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \*</code>( <var class="Arg">pcword1</var>, <var class="Arg">pcword2</var> )</td><td class="tdright">( method )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Inverse</code>( <var class="Arg">pcword</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Inverse</code>( <var class="Arg">pcword</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>However, multiplication and inversion of elements in pc groups is not as straightforward as in arbitrary finitely presented groups where a simple concatenation or reversion of the corresponding words is sufficient (but one cannot solve the word problem).</p>
 
 <p>To multiply two elements in a pc group, we first concatenate the corresponding words and then use an algorithm called <em>collection</em> to transform the new word into a word in normal form.</p>
@@ -341,8 +341,8 @@ Pcgs([ f1, f2, f3, f4 ])
 
 <h5>46.4-2 SingleCollector</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingleCollector</code>( <var class="Arg">fgrp</var>, <var class="Arg">relorders</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CombinatorialCollector</code>( <var class="Arg">fgrp</var>, <var class="Arg">relorders</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingleCollector</code>( <var class="Arg">fgrp</var>, <var class="Arg">relorders</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CombinatorialCollector</code>( <var class="Arg">fgrp</var>, <var class="Arg">relorders</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>initializes a single collector or a combinatorial collector, where <var class="Arg">fgrp</var> must be a free group and <var class="Arg">relorders</var> must be a list of the relative orders of the pc series.</p>
 
 <p>A combinatorial collector can only be set up for a finite <span class="SimpleMath">\(p\)</span>-group. Here, the relative orders <var class="Arg">relorders</var> must all be equal and a prime.</p>
@@ -351,7 +351,7 @@ Pcgs([ f1, f2, f3, f4 ])
 
 <h5>46.4-3 SetConjugate</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetConjugate</code>( <var class="Arg">coll</var>, <var class="Arg">j</var>, <var class="Arg">i</var>, <var class="Arg">w</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetConjugate</code>( <var class="Arg">coll</var>, <var class="Arg">j</var>, <var class="Arg">i</var>, <var class="Arg">w</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Let <span class="SimpleMath">\(f_1, \ldots, f_n\)</span> be the generators of the underlying free group of the collector <var class="Arg">coll</var>.</p>
 
 <p>For <var class="Arg">i</var> <span class="SimpleMath">\(&lt;\)</span> <var class="Arg">j</var>, <code class="func">SetConjugate</code> sets the conjugate <span class="SimpleMath">\(f_j^{{f_i}}\)</span> to equal <var class="Arg">w</var>, which is assumed to be a word in <span class="SimpleMath">\(f_{{i+1}}, \ldots, f_n\)</span>.</p>
@@ -360,7 +360,7 @@ Pcgs([ f1, f2, f3, f4 ])
 
 <h5>46.4-4 SetCommutator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetCommutator</code>( <var class="Arg">coll</var>, <var class="Arg">j</var>, <var class="Arg">i</var>, <var class="Arg">w</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetCommutator</code>( <var class="Arg">coll</var>, <var class="Arg">j</var>, <var class="Arg">i</var>, <var class="Arg">w</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Let <span class="SimpleMath">\(f_1, \ldots, f_n\)</span> be the generators of the underlying free group of the collector <var class="Arg">coll</var>.</p>
 
 <p>For <var class="Arg">i</var> <span class="SimpleMath">\(&lt;\)</span> <var class="Arg">j</var>, <code class="func">SetCommutator</code> sets the commutator of <span class="SimpleMath">\(f_j\)</span> and <span class="SimpleMath">\(f_i\)</span> to equal <var class="Arg">w</var>, which is assumed to be a word in <span class="SimpleMath">\(f_{{i+1}}, \ldots, f_n\)</span>.</p>
@@ -369,7 +369,7 @@ Pcgs([ f1, f2, f3, f4 ])
 
 <h5>46.4-5 SetPower</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetPower</code>( <var class="Arg">coll</var>, <var class="Arg">i</var>, <var class="Arg">w</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetPower</code>( <var class="Arg">coll</var>, <var class="Arg">i</var>, <var class="Arg">w</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Let <span class="SimpleMath">\(f_1, \ldots, f_n\)</span> be the generators of the underlying free group of the collector <var class="Arg">coll</var>, and let <span class="SimpleMath">\(r_i\)</span> be the corresponding relative orders.</p>
 
 <p><code class="func">SetPower</code> sets the power <span class="SimpleMath">\(f_i^{{r_i}}\)</span> to equal <var class="Arg">w</var>, which is assumed to be a word in <span class="SimpleMath">\(f_{{i+1}}, \ldots, f_n\)</span>.</p>
@@ -378,15 +378,15 @@ Pcgs([ f1, f2, f3, f4 ])
 
 <h5>46.4-6 GroupByRws</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupByRws</code>( <var class="Arg">coll</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupByRwsNC</code>( <var class="Arg">coll</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupByRws</code>( <var class="Arg">coll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupByRwsNC</code>( <var class="Arg">coll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>creates a group from a rewriting system. In the first version it is checked whether the rewriting system is confluent, in the second version this is assumed to be true.</p>
 
 <p><a id="X7DF4835F79667099" name="X7DF4835F79667099"></a></p>
 
 <h5>46.4-7 IsConfluent</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConfluent</code>( <var class="Arg">G</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConfluent</code>( <var class="Arg">G</var> )</td><td class="tdright">( property )</td></tr></table></div>
 <p>checks whether the pc group <var class="Arg">G</var> has been built from a collector with a confluent power-commutator presentation.</p>
 
 
@@ -534,7 +534,7 @@ true
 
 <p>See also the <strong class="pkg">GAP</strong> package <strong class="pkg">GrpConst</strong> by Hans Ulrich Besche and Bettina Eick that contains methods to construct up to isomorphism the groups of a given order.</p>
 
-<p>Finally we note that for the computation of split extensions it is not necessary that <var class="Arg">M</var> must correspond to an elementary abelian group. Here it is possible to construct split extensions of arbitrary pc groups, see <code class="func">SplitExtensions</code> (<a href="chap46_mj.html#X7958281D801DC9FF"><span class="RefLink">46.8-10</span></a>).</p>
+<p>Finally we note that for the computation of split extensions it is not necessary that <var class="Arg">M</var> must correspond to an elementary abelian group. Here it is possible to construct split extensions of arbitrary pc groups, see <code class="func">SplitExtension</code> (<a href="chap46_mj.html#X83DCB5AB7B6EE785"><span class="RefLink">46.8-6</span></a>).</p>
 
 <p><a id="X78E6E11E8285E288" name="X78E6E11E8285E288"></a></p>
 
@@ -562,9 +562,9 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SmallGroup( 4, 2 );</span>
 &lt;pc group of size 4 with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mats := List( Pcgs( G ), x -&gt; IdentityMat( 1, GF(2) ) );</span>
-[ &lt;a 1x1 matrix over GF2&gt;, &lt;a 1x1 matrix over GF2&gt; ]
+[ [ &lt;a GF2 vector of length 1&gt; ], [ &lt;a GF2 vector of length 1&gt; ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">M := GModuleByMats( mats, GF(2) );</span>
-rec( IsOverFiniteField := true, dimension := 1, field := GF(2),
+rec( IsOverFiniteField := true, dimension := 1, field := GF(2), 
   generators := [ &lt;an immutable 1x1 matrix over GF2&gt;, 
       &lt;an immutable 1x1 matrix over GF2&gt; ], isMTXModule := true )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TwoCoboundaries( G, M );</span>
@@ -597,14 +597,14 @@ rec( IsOverFiniteField := true, dimension := 1, field := GF(2),
 
 <h5>46.8-6 SplitExtension</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SplitExtension</code>( <var class="Arg">G</var>, <var class="Arg">M</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>returns the split extension of <var class="Arg">G</var> by the <var class="Arg">G</var>-module <var class="Arg">M</var>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SplitExtension</code>( <var class="Arg">G</var>, <var class="Arg">M</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>returns the split extension of <var class="Arg">G</var> by the <var class="Arg">G</var>-module <var class="Arg">M</var>. See also <code class="func">SplitExtension</code> (<a href="chap46_mj.html#X84E2DA897FAAF6D8"><span class="RefLink">46.8-10</span></a>) for its 3-argument version.</p>
 
 <p><a id="X7EAC6B8B7ABEEB86" name="X7EAC6B8B7ABEEB86"></a></p>
 
 <h5>46.8-7 ModuleOfExtension</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ModuleOfExtension</code>( <var class="Arg">E</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ModuleOfExtension</code>( <var class="Arg">E</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>returns the module of an extension <var class="Arg">E</var> of <var class="Arg">G</var> by <var class="Arg">M</var>. This is the normal subgroup of <var class="Arg">E</var> which corresponds to <var class="Arg">M</var>.</p>
 
 
@@ -674,11 +674,11 @@ rec( IsOverFiniteField := true, dimension := 1, field := GF(2),
   &lt;pc group of size 8 with 3 generators&gt; ]
 </pre></div>
 
-<p><a id="X7958281D801DC9FF" name="X7958281D801DC9FF"></a></p>
+<p><a id="X84E2DA897FAAF6D8" name="X84E2DA897FAAF6D8"></a></p>
 
-<h5>46.8-10 SplitExtensions</h5>
+<h5>46.8-10 SplitExtension</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SplitExtensions</code>( <var class="Arg">G</var>, <var class="Arg">aut</var>, <var class="Arg">N</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SplitExtension</code>( <var class="Arg">G</var>, <var class="Arg">aut</var>, <var class="Arg">N</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>returns the split extensions of the pc group <var class="Arg">G</var> by the pc group <var class="Arg">N</var>. <var class="Arg">aut</var> should be a homomorphism from <var class="Arg">G</var> into Aut(<var class="Arg">N</var>).</p>
 
 <p>In the following example we construct the holomorph of <span class="SimpleMath">\(Q_8\)</span> as split extension of <span class="SimpleMath">\(Q_8\)</span> by <span class="SimpleMath">\(S_4\)</span>.</p>

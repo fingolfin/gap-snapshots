@@ -36,6 +36,8 @@
 
 #include        "gap.h"                 /* error handling, initialisation  */
 
+#include        "code.h"                /* coder                           */
+
 #include        "gvars.h"               /* global variables                */
 
 #include        "calls.h"               /* generic call mechanism          */
@@ -50,9 +52,12 @@
 
 #include        "bool.h"                /* booleans                        */
 
+#include        "tls.h"                 /* thread-local storage            */
+#include        "thread.h"              /* threads                         */
+#include        "aobjects.h"            /* atomic objects                  */
+
 /****************************************************************************
 **
-
 *V  ValGVars  . . . . . . . . . . . . . . . . . .  values of global variables
 *V  PtrGVars  . . . . . . . . . . . . . pointer to values of global variables
 **
@@ -176,7 +181,6 @@ void            AssGVar (
     Obj                 cops;           /* list of internal copies         */
     Obj *               copy;           /* one copy                        */
     UInt                i;              /* loop variable                   */
-    Char *              name;           /* name of a function              */
     Obj                 onam;           /* object of <name>                */
 
     /* make certain that the variable is not read only                     */
@@ -231,8 +235,7 @@ void            AssGVar (
 
     /* assign name to a function                                           */
     if ( val != 0 && TNUM_OBJ(val) == T_FUNCTION && NAME_FUNC(val) == 0 ) {
-        name = NameGVar(gvar);
-        C_NEW_STRING_DYN(onam, name);
+        onam = CopyToStringRep(NameGVarObj(gvar));
         RESET_FILT_LIST( onam, FN_IS_MUTABLE );
         NAME_FUNC(val) = onam;
         CHANGED_BAG(val);
@@ -294,20 +297,19 @@ Obj NameGVarObj ( UInt gvar )
     return ELM_PLIST( NameGVars, gvar );
 }
 
-
 #define NSCHAR '@'
 
 Obj CurrNamespace = 0;
 
 Obj FuncSET_NAMESPACE(Obj self, Obj str)
 {
-    CurrNamespace = str;
+    TLS(CurrNamespace) = str;
     return 0;
 }
 
 Obj FuncGET_NAMESPACE(Obj self)
 {
-    return CurrNamespace;
+    return TLS(CurrNamespace);
 }
 
 /****************************************************************************
@@ -332,7 +334,7 @@ UInt GVarName (
     Int                 len;            /* length of name                  */
 
     /* First see whether it could be namespace-local: */
-    cns = CSTR_STRING(CurrNamespace);
+    cns = CSTR_STRING(TLS(CurrNamespace));
     if (*cns) {   /* only if a namespace is set */
         len = strlen(name);
         if (name[len-1] == NSCHAR) {
@@ -1191,8 +1193,8 @@ static Int InitLibrary (
     SET_LEN_PLIST( TableGVars, SizeGVars );
 
     /* Create the current namespace: */
-    CurrNamespace = NEW_STRING(0);
-    SET_LEN_STRING(CurrNamespace,0);
+    TLS(CurrNamespace) = NEW_STRING(0);
+    SET_LEN_STRING(TLS(CurrNamespace),0);
     
     /* fix C vars                                                          */
     PostRestore( module );
@@ -1245,7 +1247,6 @@ static StructInitInfo module = {
 
 StructInitInfo * InitInfoGVars ( void )
 {
-    FillInVersion( &module );
     return &module;
 }
 

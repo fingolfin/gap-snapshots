@@ -115,7 +115,7 @@
   
   [1X37.2-3 AssignGeneratorVariables[101X
   
-  [29X[2XAssignGeneratorVariables[102X( [3XG[103X ) [32X function
+  [29X[2XAssignGeneratorVariables[102X( [3XG[103X ) [32X operation
   
   [33X[0;0YIf  [3XG[103X is a group, whose generators are represented by symbols (for example a
   free  group, a finitely presented group or a pc group) this function assigns
@@ -145,7 +145,7 @@
   
   [1X37.3-1 \=[101X
   
-  [29X[2X\=[102X( [3Xw1[103X, [3Xw2[103X ) [32X function
+  [29X[2X\=[102X( [3Xw1[103X, [3Xw2[103X ) [32X operation
   
   [33X[0;0YTwo associative words are equal if they are words over the same alphabet and
   if they are sequences of the same letters. This is equivalent to saying that
@@ -174,7 +174,7 @@
   
   [1X37.3-2 \<[101X
   
-  [29X[2X\<[102X( [3Xw1[103X, [3Xw2[103X ) [32X function
+  [29X[2X\<[102X( [3Xw1[103X, [3Xw2[103X ) [32X operation
   
   [33X[0;0YThe  ordering  of  associative  words  is defined by length and lexicography
   (this  ordering  is  called  [13Xshort-lex[113X ordering), that is, shorter words are
@@ -588,7 +588,7 @@
   [2XResultOfStraightLineProgram[102X ([14X37.8-5[114X).[133X
   
   [33X[0;0YSpecial  methods  applicable to straight line programs are installed for the
-  operations   [2XDisplay[102X   ([14X6.3-6[114X),  [2XIsInternallyConsistent[102X  ([14X12.8-3[114X),  [2XPrintObj[102X
+  operations   [2XDisplay[102X   ([14X6.3-6[114X),  [2XIsInternallyConsistent[102X  ([14X12.8-4[114X),  [2XPrintObj[102X
   ([14X6.3-5[114X), and [2XViewObj[102X ([14X6.3-5[114X).[133X
   
   [33X[0;0YFor  a straight line program [3Xprog[103X, the default [2XDisplay[102X ([14X6.3-6[114X) method prints
@@ -625,7 +625,7 @@
   expression in terms of the strings in the list [3Xgens[103X, where multiplication is
   denoted  by concatenation, powering is denoted by [10X^[110X, and round brackets [10X([110X, [10X)[110X
   may  be used. Each entry in [3Xgens[103X must consist only of uppercase or lowercase
-  letters  (i.e.,  letters  in  [2XIsAlphaChar[102X ([14X27.4-4[114X)) such that no entry is an
+  letters  (i.e.,  letters  in  [2XIsAlphaChar[102X ([14X27.5-4[114X)) such that no entry is an
   initial  part  of  another  one. Called with this input, [2XStraightLineProgram[102X
   returns  a straight line program that evaluates to the word corresponding to
   [3Xstring[103X when called with generators corresponding to [3Xgens[103X.[133X

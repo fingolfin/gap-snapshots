@@ -27,7 +27,7 @@
   
   [1X56.1-1 IsRing[101X
   
-  [29X[2XIsRing[102X( [3XR[103X ) [32X property
+  [29X[2XIsRing[102X( [3XR[103X ) [32X filter
   
   [33X[0;0YA  [13Xring[113X  in  [5XGAP[105X is an additive group (see [2XIsAdditiveGroup[102X ([14X55.1-6[114X)) that is
   also a magma (see [2XIsMagma[102X ([14X35.1-1[114X)), such that addition [10X+[110X and multiplication
@@ -180,7 +180,7 @@
   [4X[32X[104X
   
   
-  [1X56.2 [33X[0;0YIdeals in Rings[133X[101X
+  [1X56.2 [33X[0;0YIdeals of Rings[133X[101X
   
   [33X[0;0YA  [13Xleft  ideal[113X  in  a  ring  [22XR[122X  is  a  subring  of  [22XR[122X  that  is closed under
   multiplication with elements of [22XR[122X from the left.[133X
@@ -398,7 +398,7 @@
   
   [1X56.3-1 IsRingWithOne[101X
   
-  [29X[2XIsRingWithOne[102X( [3XR[103X ) [32X property
+  [29X[2XIsRingWithOne[102X( [3XR[103X ) [32X filter
   
   [33X[0;0YA  [13Xring-with-one[113X  in  [5XGAP[105X  is  a  ring  (see [2XIsRing[102X ([14X56.1-1[114X)) that is also a
   magma-with-one (see [2XIsMagmaWithOne[102X ([14X35.1-2[114X)).[133X
@@ -1060,4 +1060,99 @@
   [33X[0;0Yis  the  homomorphism  of  rings provided by the natural projection map of [3XR[103X
   onto  the  quotient ring [3XR[103X/[3XI[103X. This map can be used to take pre-images in the
   original ring from elements in the quotient.[133X
+  
+  
+  [1X56.9 [33X[0;0YSmall Rings[133X[101X
+  
+  [33X[0;0Y[5XGAP[105X contains a library of small (order up to 15) rings.[133X
+  
+  [1X56.9-1 SmallRing[101X
+  
+  [29X[2XSmallRing[102X( [3Xs[103X, [3Xn[103X ) [32X function
+  
+  [33X[0;0Yreturns  the [22Xn[122X-th ring of order [22Xs[122X from a library of rings of small order (up
+  to isomorphism).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XR:=SmallRing(8,37);[127X[104X
+    [4X[28X<ring with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XShowMultiplicationTable(R);                 [127X[104X
+    [4X[28X*     | 0*a   c     b     b+c   a     a+c   a+b   a+b+c[128X[104X
+    [4X[28X------+------------------------------------------------[128X[104X
+    [4X[28X0*a   | 0*a   0*a   0*a   0*a   0*a   0*a   0*a   0*a  [128X[104X
+    [4X[28Xc     | 0*a   0*a   0*a   0*a   0*a   0*a   0*a   0*a  [128X[104X
+    [4X[28Xb     | 0*a   0*a   0*a   0*a   b     b     b     b    [128X[104X
+    [4X[28Xb+c   | 0*a   0*a   0*a   0*a   b     b     b     b    [128X[104X
+    [4X[28Xa     | 0*a   c     b     b+c   a+b   a+b+c a     a+c  [128X[104X
+    [4X[28Xa+c   | 0*a   c     b     b+c   a+b   a+b+c a     a+c  [128X[104X
+    [4X[28Xa+b   | 0*a   c     b     b+c   a     a+c   a+b   a+b+c[128X[104X
+    [4X[28Xa+b+c | 0*a   c     b     b+c   a     a+c   a+b   a+b+c[128X[104X
+  [4X[32X[104X
+  
+  [1X56.9-2 NumberSmallRings[101X
+  
+  [29X[2XNumberSmallRings[102X( [3Xs[103X ) [32X function
+  
+  [33X[0;0Yreturns the number of (nonisomorphic) rings of order [22Xs[122X stored in the library
+  of small rings.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XList([1..15],NumberSmallRings);[127X[104X
+    [4X[28X[ 1, 2, 2, 11, 2, 4, 2, 52, 11, 4, 2, 22, 2, 4, 4 ][128X[104X
+  [4X[32X[104X
+  
+  [1X56.9-3 Subrings[101X
+  
+  [29X[2XSubrings[102X( [3XR[103X ) [32X attribute
+  
+  [33X[0;0Yfor a finite ring [3XR[103X this function returns a list of all subrings of [3XR[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSubrings(SmallRing(8,37));     [127X[104X
+    [4X[28X[ <ring with 1 generators>, <ring with 1 generators>, [128X[104X
+    [4X[28X  <ring with 1 generators>, <ring with 1 generators>, [128X[104X
+    [4X[28X  <ring with 1 generators>, <ring with 1 generators>, [128X[104X
+    [4X[28X  <ring with 2 generators>, <ring with 2 generators>, [128X[104X
+    [4X[28X  <ring with 2 generators>, <ring with 2 generators>, [128X[104X
+    [4X[28X  <ring with 3 generators> ][128X[104X
+  [4X[32X[104X
+  
+  [1X56.9-4 Ideals[101X
+  
+  [29X[2XIdeals[102X( [3XR[103X ) [32X attribute
+  
+  [33X[0;0Yfor a finite ring [3XR[103X this function returns a list of all ideals of [3XR[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XIdeals(SmallRing(8,37));[127X[104X
+    [4X[28X[ <ring with 1 generators>, <ring with 1 generators>, [128X[104X
+    [4X[28X  <ring with 1 generators>, <ring with 2 generators>, [128X[104X
+    [4X[28X  <ring with 3 generators> ][128X[104X
+  [4X[32X[104X
+  
+  [1X56.9-5 DirectSum[101X
+  
+  [29X[2XDirectSum[102X( [3XR{[103X, [3XS}[103X ) [32X function
+  [29X[2XDirectSumOp[102X( [3Xlist[103X, [3Xexpl[103X ) [32X operation
+  
+  [33X[0;0YThese  functions  construct  the direct sum of the rings given as arguments.
+  [10XDirectSum[110X  takes  an  arbitrary  positive  number of arguments and calls the
+  operation  [10XDirectSumOp[110X, which takes exactly two arguments, namely a nonempty
+  list  of  rings and one of these rings. (This somewhat strange syntax allows
+  the method selection to choose a reasonable method for special cases.)[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XDirectSum(SmallRing(5,1),SmallRing(5,1));[127X[104X
+    [4X[28X<ring with 2 generators>[128X[104X
+  [4X[32X[104X
+  
+  [1X56.9-6 RingByStructureConstants[101X
+  
+  [29X[2XRingByStructureConstants[102X( [3Xmoduli[103X, [3Xsctable[103X[, [3Xnameinfo[103X] ) [32X function
+  
+  [33X[0;0Yreturns  a ring [22XR[122X whose additive group is described by the list [3Xmoduli[103X, with
+  multiplication  defined  by  the  structure  constants  table  [3Xsctable[103X.  The
+  optional  argument  [3Xnameinfo[103X can be used to prescribe names for the elements
+  of  the  canonical  generators  of  [22XR[122X;  it can be either a string [3Xname[103X (then
+  [3Xname[103X[10X1[110X, [3Xname[103X[10X2[110X etc. are chosen) or a list of strings which are then chosen.[133X
   

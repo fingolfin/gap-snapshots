@@ -47,14 +47,13 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7A5DC83D7E295568">10.3-1 Read</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7D62F2877F0E45A7">10.3-2 ReadAsFunction</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7D1702FE7C7530EB">10.3-3 ReadTest</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X79E1E6A57AE58BB8">10.3-4 ReadByte</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7D2CA44C7D110C4F">10.3-5 ReadLine</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X85C603D7867430D0">10.3-6 ReadAll</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X81D4FB097F631A79">10.3-7 IsEndOfStream</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7B646FA3860521D1">10.3-8 PositionStream</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7A777E1186EB330B">10.3-9 RewindStream</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7A60AD8C7E0D0507">10.3-10 SeekPositionStream</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X79E1E6A57AE58BB8">10.3-3 ReadByte</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7D2CA44C7D110C4F">10.3-4 ReadLine</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X85C603D7867430D0">10.3-5 ReadAll</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X81D4FB097F631A79">10.3-6 IsEndOfStream</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7B646FA3860521D1">10.3-7 PositionStream</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7A777E1186EB330B">10.3-8 RewindStream</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7A60AD8C7E0D0507">10.3-9 SeekPositionStream</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X7F454EB286947C85">10.4 <span class="Heading">Operations for Output Streams</span></a>
 </span>
@@ -148,7 +147,7 @@
 <h5>10.1-3 IsInputStream</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInputStream</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<p>All input streams lie in this category, and support input operations such as <code class="func">ReadByte</code> (<a href="chap10.html#X79E1E6A57AE58BB8"><span class="RefLink">10.3-4</span></a>) (see <a href="chap10.html#X7D1D33A587BFD93D"><span class="RefLink">10.3</span></a>)</p>
+<p>All input streams lie in this category, and support input operations such as <code class="func">ReadByte</code> (<a href="chap10.html#X79E1E6A57AE58BB8"><span class="RefLink">10.3-3</span></a>) (see <a href="chap10.html#X7D1D33A587BFD93D"><span class="RefLink">10.3</span></a>)</p>
 
 <p><a id="X7C8956BB7FE2A89C" name="X7C8956BB7FE2A89C"></a></p>
 
@@ -227,9 +226,9 @@
 
 <h4>10.3 <span class="Heading">Operations for Input Streams</span></h4>
 
-<p>Three operations normally used to read files: <code class="func">Read</code> (<a href="chap9.html#X8373AC6B7D5F9167"><span class="RefLink">9.7-1</span></a>), <code class="func">ReadAsFunction</code> (<a href="chap9.html#X7824CB7D7D4BAFBC"><span class="RefLink">9.7-2</span></a>) and <code class="func">ReadTest</code> (<a href="chap7.html#X7DBA18E38405A147"><span class="RefLink">7.9-1</span></a>) can also be used to read <strong class="pkg">GAP</strong> input from a stream. The input is immediately parsed and executed. When reading from a stream <var class="Arg">str</var>, the <strong class="pkg">GAP</strong> kernel generates calls to <code class="code">ReadLine(<var class="Arg">str</var>)</code> to supply text to the parser.</p>
+<p>Two operations normally used to read files: <code class="func">Read</code> (<a href="chap9.html#X8373AC6B7D5F9167"><span class="RefLink">9.7-1</span></a>) and <code class="func">ReadAsFunction</code> (<a href="chap9.html#X7824CB7D7D4BAFBC"><span class="RefLink">9.7-2</span></a>) can also be used to read <strong class="pkg">GAP</strong> input from a stream. The input is immediately parsed and executed. When reading from a stream <var class="Arg">str</var>, the <strong class="pkg">GAP</strong> kernel generates calls to <code class="code">ReadLine(<var class="Arg">str</var>)</code> to supply text to the parser.</p>
 
-<p>Three further operations: <code class="func">ReadByte</code> (<a href="chap10.html#X79E1E6A57AE58BB8"><span class="RefLink">10.3-4</span></a>), <code class="func">ReadLine</code> (<a href="chap10.html#X7D2CA44C7D110C4F"><span class="RefLink">10.3-5</span></a>) and <code class="func">ReadAll</code> (<a href="chap10.html#X85C603D7867430D0"><span class="RefLink">10.3-6</span></a>), support reading characters from an input stream without parsing them. This can be used to read data in any format and process it in <strong class="pkg">GAP</strong>.</p>
+<p>Three further operations: <code class="func">ReadByte</code> (<a href="chap10.html#X79E1E6A57AE58BB8"><span class="RefLink">10.3-3</span></a>), <code class="func">ReadLine</code> (<a href="chap10.html#X7D2CA44C7D110C4F"><span class="RefLink">10.3-4</span></a>) and <code class="func">ReadAll</code> (<a href="chap10.html#X85C603D7867430D0"><span class="RefLink">10.3-5</span></a>), support reading characters from an input stream without parsing them. This can be used to read data in any format and process it in <strong class="pkg">GAP</strong>.</p>
 
 <p>Additional operations for input streams support detection of end of stream, and (for those streams for which it is appropriate) random access to the data.</p>
 
@@ -263,16 +262,9 @@
 10
 </pre></div>
 
-<p><a id="X7D1702FE7C7530EB" name="X7D1702FE7C7530EB"></a></p>
-
-<h5>10.3-3 ReadTest</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadTest</code>( <var class="Arg">input-text-stream</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>reads the input-text-stream as test input until <code class="code">end-of-stream</code> occurs. See <a href="chap9.html#X81A0A4FF842B039B"><span class="RefLink">9.7</span></a> for details.</p>
-
 <p><a id="X79E1E6A57AE58BB8" name="X79E1E6A57AE58BB8"></a></p>
 
-<h5>10.3-4 ReadByte</h5>
+<h5>10.3-3 ReadByte</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadByte</code>( <var class="Arg">input-stream</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p><code class="func">ReadByte</code> returns one character (returned as integer) from the input stream <var class="Arg">input-stream</var>. <code class="func">ReadByte</code> returns <code class="keyw">fail</code> if there is no character available, in particular if it is at the end of a file.</p>
@@ -285,25 +277,25 @@
 
 <p><a id="X7D2CA44C7D110C4F" name="X7D2CA44C7D110C4F"></a></p>
 
-<h5>10.3-5 ReadLine</h5>
+<h5>10.3-4 ReadLine</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadLine</code>( <var class="Arg">input-stream</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p><code class="func">ReadLine</code> returns one line (returned as string <em>with</em> the newline) from the input stream <var class="Arg">input-stream</var>. <code class="func">ReadLine</code> reads in the input until a newline is read or the end-of-stream is encountered.</p>
 
 <p>If <var class="Arg">input-stream</var> is the input stream of a input/output process, <code class="func">ReadLine</code> may also return <code class="keyw">fail</code> or return an incomplete line if the other process has not yet written any more. It will always wait (block) for at least one byte to be available, but will then return as much input as is available, up to a limit of one line</p>
 
-<p>A default method is supplied for <code class="func">ReadLine</code> which simply calls <code class="func">ReadByte</code> (<a href="chap10.html#X79E1E6A57AE58BB8"><span class="RefLink">10.3-4</span></a>) repeatedly. This is only safe for streams that cannot block. The kernel uses calls to <code class="func">ReadLine</code> to supply input to the parser when reading from a stream.</p>
+<p>A default method is supplied for <code class="func">ReadLine</code> which simply calls <code class="func">ReadByte</code> (<a href="chap10.html#X79E1E6A57AE58BB8"><span class="RefLink">10.3-3</span></a>) repeatedly. This is only safe for streams that cannot block. The kernel uses calls to <code class="func">ReadLine</code> to supply input to the parser when reading from a stream.</p>
 
 <p><a id="X85C603D7867430D0" name="X85C603D7867430D0"></a></p>
 
-<h5>10.3-6 ReadAll</h5>
+<h5>10.3-5 ReadAll</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadAll</code>( <var class="Arg">input-stream</var>[, <var class="Arg">limit</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
 <p><code class="func">ReadAll</code> returns all characters as string from the input stream <var class="Arg">stream-in</var>. It waits (blocks) until at least one character is available from the stream, or until there is evidence that no characters will ever be available again. This last indicates that the stream is at end-of-stream. Otherwise, it reads as much input as it can from the stream without blocking further and returns it to the user. If the stream is already at end of file, so that no bytes are available, <code class="keyw">fail</code> is returned. In the case of a file stream connected to a normal file (not a pseudo-tty or named pipe or similar), all the bytes should be immediately available and this function will read the remainder of the file.</p>
 
 <p>With a second argument, at most <var class="Arg">limit</var> bytes will be returned. Depending on the stream a bounded number of additional bytes may have been read into an internal buffer.</p>
 
-<p>A default method is supplied for <code class="func">ReadAll</code> which simply calls <code class="func">ReadLine</code> (<a href="chap10.html#X7D2CA44C7D110C4F"><span class="RefLink">10.3-5</span></a>) repeatedly. This is only really safe for streams which cannot block. Other streams should install a method for <code class="func">ReadAll</code></p>
+<p>A default method is supplied for <code class="func">ReadAll</code> which simply calls <code class="func">ReadLine</code> (<a href="chap10.html#X7D2CA44C7D110C4F"><span class="RefLink">10.3-4</span></a>) repeatedly. This is only really safe for streams which cannot block. Other streams should install a method for <code class="func">ReadAll</code></p>
 
 
 <div class="example"><pre>
@@ -329,32 +321,32 @@ fail
 
 <p><a id="X81D4FB097F631A79" name="X81D4FB097F631A79"></a></p>
 
-<h5>10.3-7 IsEndOfStream</h5>
+<h5>10.3-6 IsEndOfStream</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEndOfStream</code>( <var class="Arg">input-stream</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p><code class="func">IsEndOfStream</code> returns <code class="keyw">true</code> if the input stream is at <em>end-of-stream</em>, and <code class="keyw">false</code> otherwise. Note that <code class="func">IsEndOfStream</code> might return <code class="keyw">false</code> even if the next <code class="func">ReadByte</code> (<a href="chap10.html#X79E1E6A57AE58BB8"><span class="RefLink">10.3-4</span></a>) fails.</p>
+<p><code class="func">IsEndOfStream</code> returns <code class="keyw">true</code> if the input stream is at <em>end-of-stream</em>, and <code class="keyw">false</code> otherwise. Note that <code class="func">IsEndOfStream</code> might return <code class="keyw">false</code> even if the next <code class="func">ReadByte</code> (<a href="chap10.html#X79E1E6A57AE58BB8"><span class="RefLink">10.3-3</span></a>) fails.</p>
 
 <p><a id="X7B646FA3860521D1" name="X7B646FA3860521D1"></a></p>
 
-<h5>10.3-8 PositionStream</h5>
+<h5>10.3-7 PositionStream</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionStream</code>( <var class="Arg">input-stream</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Some input streams, such as string streams and file streams attached to disk files, support a form of random access by way of the operations <code class="func">PositionStream</code>, <code class="func">SeekPositionStream</code> (<a href="chap10.html#X7A60AD8C7E0D0507"><span class="RefLink">10.3-10</span></a>) and <code class="func">RewindStream</code> (<a href="chap10.html#X7A777E1186EB330B"><span class="RefLink">10.3-9</span></a>). <code class="func">PositionStream</code> returns a non-negative integer denoting the current position in the stream (usually the number of characters <em>before</em> the next one to be read.</p>
+<p>Some input streams, such as string streams and file streams attached to disk files, support a form of random access by way of the operations <code class="func">PositionStream</code>, <code class="func">SeekPositionStream</code> (<a href="chap10.html#X7A60AD8C7E0D0507"><span class="RefLink">10.3-9</span></a>) and <code class="func">RewindStream</code> (<a href="chap10.html#X7A777E1186EB330B"><span class="RefLink">10.3-8</span></a>). <code class="func">PositionStream</code> returns a non-negative integer denoting the current position in the stream (usually the number of characters <em>before</em> the next one to be read.</p>
 
 <p>If this is not possible, for example for an input stream attached to standard input (normally the keyboard), then <code class="keyw">fail</code> is returned</p>
 
 <p><a id="X7A777E1186EB330B" name="X7A777E1186EB330B"></a></p>
 
-<h5>10.3-9 RewindStream</h5>
+<h5>10.3-8 RewindStream</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RewindStream</code>( <var class="Arg">input-stream</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p><code class="func">RewindStream</code> attempts to return an input stream to its starting condition, so that all the same characters can be read again. It returns <code class="keyw">true</code> if the rewind succeeds and <code class="keyw">fail</code> otherwise</p>
 
-<p>A default method implements RewindStream using <code class="func">SeekPositionStream</code> (<a href="chap10.html#X7A60AD8C7E0D0507"><span class="RefLink">10.3-10</span></a>).</p>
+<p>A default method implements RewindStream using <code class="func">SeekPositionStream</code> (<a href="chap10.html#X7A60AD8C7E0D0507"><span class="RefLink">10.3-9</span></a>).</p>
 
 <p><a id="X7A60AD8C7E0D0507" name="X7A60AD8C7E0D0507"></a></p>
 
-<h5>10.3-10 SeekPositionStream</h5>
+<h5>10.3-9 SeekPositionStream</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SeekPositionStream</code>( <var class="Arg">input-stream</var>, <var class="Arg">pos</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p><code class="func">SeekPositionStream</code> attempts to rewind or wind forward an input stream to the specified position. This is not possible for all streams. It returns <code class="keyw">true</code> if the seek is successful and <code class="keyw">fail</code> otherwise.</p>
@@ -493,15 +485,15 @@ You
 
 <h5>10.5-1 InputTextFile</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputTextFile</code>( <var class="Arg">name-file</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p><code class="code">InputTextFile( <var class="Arg">name-file</var> )</code> returns an input stream in the category <code class="func">IsInputTextStream</code> (<a href="chap10.html#X7C8956BB7FE2A89C"><span class="RefLink">10.1-4</span></a>) that delivers the characters from the file <var class="Arg">name-file</var>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputTextFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p><code class="code">InputTextFile( <var class="Arg">filename</var> )</code> returns an input stream in the category <code class="func">IsInputTextStream</code> (<a href="chap10.html#X7C8956BB7FE2A89C"><span class="RefLink">10.1-4</span></a>) that delivers the characters from the file <var class="Arg">filename</var>.</p>
 
 <p><a id="X83F53291822B7126" name="X83F53291822B7126"></a></p>
 
 <h5>10.5-2 OutputTextFile</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OutputTextFile</code>( <var class="Arg">name-file</var>, <var class="Arg">append</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p><code class="code">OutputTextFile( <var class="Arg">name-file</var>, <var class="Arg">append</var> )</code> returns an output stream in the category <code class="code">IsOutputTextFile</code> that writes received characters to the file <var class="Arg">name-file</var>. If <var class="Arg">append</var> is <code class="keyw">false</code>, then the file is emptied first, otherwise received characters are added at the end of the file.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OutputTextFile</code>( <var class="Arg">filename</var>, <var class="Arg">append</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p><code class="code">OutputTextFile( <var class="Arg">filename</var>, <var class="Arg">append</var> )</code> returns an output stream in the category <code class="code">IsOutputTextFile</code> that writes received characters to the file <var class="Arg">filename</var>. If <var class="Arg">append</var> is <code class="keyw">false</code>, then the file is emptied first, otherwise received characters are added at the end of the file.</p>
 
 
 <div class="example"><pre>
@@ -556,7 +548,7 @@ AppendLine
 <h5>10.6-3 InputFromUser</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputFromUser</code>( <var class="Arg">arg</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>prints the <var class="Arg">arg</var> as a prompt, then waits until a text is typed by the user (or from the standard input device if it has been redirected). This text must be a <em>single</em> expression, followed by one <em>enter</em>. This is evaluated (see <code class="func">EvalString</code> (<a href="chap27.html#X7DE4CCD285440659"><span class="RefLink">27.8-3</span></a>)) and the result is returned.</p>
+<p>prints the <var class="Arg">arg</var> as a prompt, then waits until a text is typed by the user (or from the standard input device if it has been redirected). This text must be a <em>single</em> expression, followed by one <em>enter</em>. This is evaluated (see <code class="func">EvalString</code> (<a href="chap27.html#X7DE4CCD285440659"><span class="RefLink">27.9-3</span></a>)) and the result is returned.</p>
 
 <p><a id="X8028E1D87CE2F059" name="X8028E1D87CE2F059"></a></p>
 
@@ -670,7 +662,7 @@ line -&gt; 0 &lt; Length(line) and line[Length(line)] = '\n'
 
 <p>for the <var class="Arg">IsAllLine</var> argument. The purpose of the <var class="Arg">IsAllLine</var> argument is to cater for the case where the input being read is from an external process that writes a "prompt" for data that does not terminate with a newline.</p>
 
-<p>If the first argument is an input stream but not an input/output stream then <code class="func">ReadAllLine</code> behaves as if <code class="func">ReadLine</code> (<a href="chap10.html#X7D2CA44C7D110C4F"><span class="RefLink">10.3-5</span></a>) was called with just the first argument and any additional arguments are ignored.</p>
+<p>If the first argument is an input stream but not an input/output stream then <code class="func">ReadAllLine</code> behaves as if <code class="func">ReadLine</code> (<a href="chap10.html#X7D2CA44C7D110C4F"><span class="RefLink">10.3-4</span></a>) was called with just the first argument and any additional arguments are ignored.</p>
 
 <p><a id="X8724699C7D67BA47" name="X8724699C7D67BA47"></a></p>
 

@@ -664,7 +664,7 @@
   
   [1X66.6-4 LeadingMonomial[101X
   
-  [29X[2XLeadingMonomial[102X( [3Xpol[103X ) [32X function
+  [29X[2XLeadingMonomial[102X( [3Xpol[103X ) [32X operation
   
   [33X[0;0Yreturns  the  leading  monomial  (with  respect  to  the  ordering  given by
   [2XMonomialExtGrlexLess[102X  ([14X66.17-14[114X)) of the polynomial [3Xpol[103X as a list containing
@@ -870,7 +870,7 @@
   
   [1X66.11-1 PrimitivePolynomial[101X
   
-  [29X[2XPrimitivePolynomial[102X( [3Xf[103X ) [32X function
+  [29X[2XPrimitivePolynomial[102X( [3Xf[103X ) [32X operation
   
   [33X[0;0Ytakes  a  polynomial  [3Xf[103X  with  rational  coefficients  and  computes  a  new
   polynomial  with integral coefficients, obtained by multiplying with the Lcm
@@ -887,7 +887,7 @@
   
   [1X66.11-3 GaloisType[101X
   
-  [29X[2XGaloisType[102X( [3Xf[103X[, [3Xcand[103X] ) [32X function
+  [29X[2XGaloisType[102X( [3Xf[103X ) [32X attribute
   
   [33X[0;0YLet [3Xf[103X be an irreducible polynomial with rational coefficients. This function
   returns  the type of Gal([3Xf[103X) (considered as a transitive permutation group of
@@ -1007,7 +1007,7 @@
   
   [1X66.13-3 IndeterminateNumberOfLaurentPolynomial[101X
   
-  [29X[2XIndeterminateNumberOfLaurentPolynomial[102X( [3Xpol[103X ) [32X function
+  [29X[2XIndeterminateNumberOfLaurentPolynomial[102X( [3Xpol[103X ) [32X attribute
   
   [33X[0;0YIs a synonym for [2XIndeterminateNumberOfUnivariateRationalFunction[102X ([14X66.1-2[114X).[133X
   
@@ -1270,7 +1270,7 @@
   
   [1X66.17-2 LeadingMonomialOfPolynomial[101X
   
-  [29X[2XLeadingMonomialOfPolynomial[102X( [3Xpol[103X, [3Xord[103X ) [32X function
+  [29X[2XLeadingMonomialOfPolynomial[102X( [3Xpol[103X, [3Xord[103X ) [32X operation
   
   [33X[0;0Yreturns  the  leading  monomial  (with  respect  to the ordering [3Xord[103X) of the
   polynomial [3Xpol[103X.[133X
@@ -1292,7 +1292,7 @@
   
   [1X66.17-3 LeadingTermOfPolynomial[101X
   
-  [29X[2XLeadingTermOfPolynomial[102X( [3Xpol[103X, [3Xord[103X ) [32X function
+  [29X[2XLeadingTermOfPolynomial[102X( [3Xpol[103X, [3Xord[103X ) [32X operation
   
   [33X[0;0Yreturns  the  leading  term  (with  respect  to  the  ordering  [3Xord[103X)  of the
   polynomial  [3Xpol[103X,  i.e.  the  product  of  leading  coefficient  and  leading
@@ -1506,7 +1506,7 @@
   
   [29X[2XGroebnerBasis[102X( [3XL[103X, [3XO[103X ) [32X operation
   [29X[2XGroebnerBasis[102X( [3XI[103X, [3XO[103X ) [32X operation
-  [29X[2XGroebnerBasisNC[102X( [3XL[103X, [3XO[103X ) [32X operation
+  [29X[2XGroebnerBasisNC[102X( [3XL[103X, [3XO[103X ) [32X function
   
   [33X[0;0YLet [3XO[103X be a monomial ordering and [3XL[103X be a list of polynomials that generate an
   ideal  [3XI[103X.  This  operation returns a Groebner basis of [3XI[103X with respect to the
@@ -1897,9 +1897,9 @@
   cancelled  polynomials.  As there is no proper multivariate GCD cancellation
   is not guaranteed to be optimal.[133X
   
-  [1X66.24-3 HeuristicCancelPolynomials[101X
+  [1X66.24-3 HeuristicCancelPolynomialsExtRep[101X
   
-  [29X[2XHeuristicCancelPolynomials[102X( [3Xfam[103X, [3Xext1[103X, [3Xext2[103X ) [32X operation
+  [29X[2XHeuristicCancelPolynomialsExtRep[102X( [3Xfam[103X, [3Xext1[103X, [3Xext2[103X ) [32X operation
   
   [33X[0;0Yis  called  by [2XTryGcdCancelExtRepPolynomials[102X ([14X66.24-2[114X) to perform the actual
   work.   It   will   return  either  [9Xfail[109X  or  a  new  list  of  of  external

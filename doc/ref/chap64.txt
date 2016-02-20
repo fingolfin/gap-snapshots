@@ -1546,7 +1546,7 @@
   
   [1X64.14-3 ObjByExtRep[101X
   
-  [29X[2XObjByExtRep[102X( [3XF[103X, [3Xdescr[103X ) [32X function
+  [29X[2XObjByExtRep[102X( [3XF[103X, [3Xdescr[103X ) [32X method
   
   [33X[0;0YAn UEALattice element is represented by a list of the form [10X[ m1, c1, m2, c2,
   ...  ][110X,  where  the  [10Xc1[110X,  [10Xc2[110X  etc. are coefficients, and the [10Xm1[110X, [10Xm2[110X etc. are

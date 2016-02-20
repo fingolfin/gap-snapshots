@@ -649,21 +649,21 @@
   
   [1X61.9-1 IsRowSpace[101X
   
-  [29X[2XIsRowSpace[102X( [3XV[103X ) [32X function
+  [29X[2XIsRowSpace[102X( [3XV[103X ) [32X filter
   
   [33X[0;0YA  [13Xrow  space[113X  in  [5XGAP[105X  is  a vector space that consists of row vectors (see
   Chapter [14X23[114X).[133X
   
   [1X61.9-2 IsMatrixSpace[101X
   
-  [29X[2XIsMatrixSpace[102X( [3XV[103X ) [32X function
+  [29X[2XIsMatrixSpace[102X( [3XV[103X ) [32X filter
   
   [33X[0;0YA  [13Xmatrix  space[113X  in  [5XGAP[105X  is  a vector space that consists of matrices (see
   Chapter [14X24[114X).[133X
   
   [1X61.9-3 IsGaussianSpace[101X
   
-  [29X[2XIsGaussianSpace[102X( [3XV[103X ) [32X function
+  [29X[2XIsGaussianSpace[102X( [3XV[103X ) [32X filter
   
   [33X[0;0YThe  filter  [2XIsGaussianSpace[102X  (see [14X13.2[114X)  for  the row space (see [2XIsRowSpace[102X
   ([14X61.9-1[114X))  or  matrix space (see [2XIsMatrixSpace[102X ([14X61.9-2[114X)) [3XV[103X over the field [22XF[122X,

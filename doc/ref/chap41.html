@@ -386,7 +386,7 @@ Group([ (1,2), (3,4) ])
 
 <h5>41.2-14 Permuted</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Permuted</code>( <var class="Arg">list</var>, <var class="Arg">perm</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Permuted</code>( <var class="Arg">list</var>, <var class="Arg">perm</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>The following example demonstrates <code class="func">Permuted</code> (<a href="chap21.html#X7B5A19098406347A"><span class="RefLink">21.20-18</span></a>) being used to implement a permutation action on a domain:</p>
 
 
@@ -584,7 +584,7 @@ rec(
 
 <h5>41.5-3 OrbitStabilizerAlgorithm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitStabilizerAlgorithm</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>, <var class="Arg">blist</var>, <var class="Arg">gens</var>, <var class="Arg">acts</var>, <var class="Arg">pntact</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitStabilizerAlgorithm</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>, <var class="Arg">blist</var>, <var class="Arg">gens</var>, <var class="Arg">acts</var>, <var class="Arg">pntact</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>This operation should not be called by a user. It is documented however for purposes to extend or maintain the group actions package (the word "package" here refers to the <strong class="pkg">GAP</strong> functionality for group actions, not to a <strong class="pkg">GAP</strong> package).</p>
 
 <p><code class="func">OrbitStabilizerAlgorithm</code> performs an orbit stabilizer algorithm for the group <var class="Arg">G</var> acting with the generators <var class="Arg">gens</var> via the generator images <var class="Arg">gens</var> and the group action <var class="Arg">act</var> on the element <var class="Arg">pnt</var>. (For technical reasons <var class="Arg">pnt</var> and <var class="Arg">act</var> are put in one record with components <code class="code">pnt</code> and <code class="code">act</code> respectively.)</p>
@@ -603,7 +603,7 @@ rec(
 
 <h5>41.6-1 RepresentativeAction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RepresentativeAction</code>( <var class="Arg">G</var>[, <var class="Arg">Omega</var>], <var class="Arg">d</var>, <var class="Arg">e</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RepresentativeAction</code>( <var class="Arg">G</var>[, <var class="Arg">Omega</var>], <var class="Arg">d</var>, <var class="Arg">e</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( function )</td></tr></table></div>
 <p>computes an element of <var class="Arg">G</var> that maps <var class="Arg">d</var> to <var class="Arg">e</var> under the given action and returns <code class="keyw">fail</code> if no such element exists.</p>
 
 
@@ -641,9 +641,9 @@ fail
 
 <h5>41.7-1 <span class="Heading">ActionHomomorphism</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActionHomomorphism</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>][, <var class="Arg">"surjective"</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActionHomomorphism</code>( <var class="Arg">xset</var>[, <var class="Arg">"surjective"</var>] )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActionHomomorphism</code>( <var class="Arg">action</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActionHomomorphism</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>][, <var class="Arg">"surjective"</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActionHomomorphism</code>( <var class="Arg">xset</var>[, <var class="Arg">"surjective"</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActionHomomorphism</code>( <var class="Arg">action</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>computes a homomorphism from <var class="Arg">G</var> into the symmetric group on <span class="SimpleMath">|<var class="Arg">Omega</var>|</span> points that gives the permutation action of <var class="Arg">G</var> on <var class="Arg">Omega</var>.</p>
 
 <p>By default the homomorphism returned by <code class="func">ActionHomomorphism</code> is not necessarily surjective (its <code class="func">Range</code> (<a href="chap32.html#X7B6FD7277CDE9FCB"><span class="RefLink">32.3-7</span></a>) value is the full symmetric group) to avoid unnecessary computation of the image. If the optional string argument <code class="code">"surjective"</code> is given, a surjective homomorphism is created.</p>
@@ -677,8 +677,8 @@ Group(
 
 <h5>41.7-2 Action</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Action</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Action</code>( <var class="Arg">xset</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Action</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Action</code>( <var class="Arg">xset</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>returns the image group of <code class="func">ActionHomomorphism</code> (<a href="chap41.html#X78E6A002835288A4"><span class="RefLink">41.7-1</span></a>) called with the same parameters.</p>
 
 <p>Note that (for compatibility reasons to be able to get the action homomorphism) this image group internally stores the action homomorphism. If <var class="Arg">G</var> or <var class="Arg">Omega</var> are extremely big, this can cause memory problems. In this case compute only generator images and form the image group yourself.</p>
@@ -739,9 +739,8 @@ Group([ (1,2,3,4,5,6) ])
 15
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FactorCosetAction(g,u);</span>
 &lt;action epimorphism&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Range(last);</span>
-Group([ (1,9,13,10,4)(2,8,14,11,5)(3,7,15,12,6), 
-  (1,7)(2,8)(3,9)(5,6)(10,11)(14,15) ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(Range(last));</span>
+"S5"
 </pre></div>
 
 <p><a id="X8561DEBA79E01ABD" name="X8561DEBA79E01ABD"></a></p>
@@ -808,7 +807,7 @@ false
 
 <h5>41.9-2 PermutationCycle</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermutationCycle</code>( <var class="Arg">g</var>, <var class="Arg">Omega</var>, <var class="Arg">pnt</var>[, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermutationCycle</code>( <var class="Arg">g</var>, <var class="Arg">Omega</var>, <var class="Arg">pnt</var>[, <var class="Arg">act</var>] )</td><td class="tdright">( function )</td></tr></table></div>
 <p>computes the permutation that represents the cycle of <var class="Arg">pnt</var> under the action of the element <var class="Arg">g</var>.</p>
 
 

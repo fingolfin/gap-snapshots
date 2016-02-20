@@ -194,9 +194,9 @@ Character( CharacterTable( SL(2,3) ), [ 3, 0, 0, 3, 0, 0, -1 ] )
 rec( character := Character( CharacterTable( Group(
     [ [ [ 0*Z(3), Z(3) ], [ Z(3)^0, 0*Z(3) ] ], 
       [ [ Z(3), 0*Z(3) ], [ 0*Z(3), Z(3) ] ], 
-      [ [ Z(3)^0, Z(3) ], [ Z(3), Z(3) ] ] ]) ), [ 1, -1, 1, -1, 1 ] )
-    , comment := "restriction checked", isHomogeneous := false, 
-  multiplicity := 1 )
+      [ [ Z(3), Z(3)^0 ], [ Z(3)^0, Z(3)^0 ] ] ]) ),
+  [ 1, -1, 1, -1, 1 ] ), comment := "restriction checked",
+  isHomogeneous := false, multiplicity := 1 )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">chi:= Irr( Sl23 )[4];</span>
 Character( CharacterTable( SL(2,3) ), [ 2, 1, 1, -2, -1, -1, 0 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">cln:= ClassPositionsOfNormalSubgroup( CharacterTable( Sl23 ), n );</span>
@@ -244,8 +244,9 @@ Character( CharacterTable( SL(2,3) ), [ 3, 0, 0, 3, 0, 0, -1 ] )
 rec( character := Character( CharacterTable( Group(
     [ [ [ 0*Z(3), Z(3) ], [ Z(3)^0, 0*Z(3) ] ], 
       [ [ Z(3), 0*Z(3) ], [ 0*Z(3), Z(3) ] ], 
-      [ [ Z(3)^0, Z(3) ], [ Z(3), Z(3) ] ] ]) ), [ 1, -1, 1, -1, 1 ] )
-    , comment := "restriction checked", isQuasiPrimitive := false )
+      [ [ Z(3), Z(3)^0 ], [ Z(3)^0, Z(3)^0 ] ] ]) ),
+  [ 1, -1, 1, -1, 1 ] ), comment := "restriction checked",
+  isQuasiPrimitive := false )
 </pre></div>
 
 <p><a id="X84860E3A7FECDBA3" name="X84860E3A7FECDBA3"></a></p>

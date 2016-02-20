@@ -731,25 +731,30 @@
   [3Xto[103X (inclusive) for arbitrary integers [3Xfrom[103X and [3Xto[103X.[133X
   
   [33X[0;0YThe distribution of elements returned by [2XRandom[102X depends on the argument. For
-  a  list,  all elements are equally likely. The same holds usually for finite
-  collections  that  are  not  lists. For infinite collections some reasonable
-  distribution is used.[133X
+  a  list  the  distribution is uniform (all elements are equally likely). The
+  same  holds  usually for finite collections that are not lists. For infinite
+  collections some reasonable distribution is used.[133X
   
   [33X[0;0YSee  the  chapters of the various collections to find out which distribution
   is being used.[133X
   
   [33X[0;0YFor some collections ensuring a reasonable distribution can be difficult and
-  require  substantial  runtime. If speed at the cost of equal distribution is
-  desired, the operation [2XPseudoRandom[102X ([14X30.7-2[114X) should be used instead.[133X
+  require  substantial runtime (for example for large finite groups). If speed
+  is more important than a guaranteed distribution, the operation [2XPseudoRandom[102X
+  ([14X30.7-2[114X) should be used instead.[133X
   
   [33X[0;0YNote that [2XRandom[102X is of course [13Xnot[113X an attribute.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XRandom(Rationals);[127X[104X
-    [4X[28X4[128X[104X
+    [4X[25Xgap>[125X [27XRandom([1..6]);[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27XRandom(1, 2^100);[127X[104X
+    [4X[28X866227015645295902682304086250[128X[104X
     [4X[25Xgap>[125X [27Xg:= Group( (1,2,3) );;  Random( g );  Random( g );[127X[104X
     [4X[28X(1,3,2)[128X[104X
-    [4X[28X()[128X[104X
+    [4X[28X(1,2,3)[128X[104X
+    [4X[25Xgap>[125X [27XRandom(Rationals);[127X[104X
+    [4X[28X-2[128X[104X
   [4X[32X[104X
   
   [1X30.7-2 PseudoRandom[101X
@@ -782,6 +787,7 @@
   [1X30.8-1 Iterator[101X
   
   [29X[2XIterator[102X( [3Xlistorcoll[103X ) [32X operation
+  [29X[2XIsStandardIterator[102X( [3Xlistorcoll[103X ) [32X filter
   
   [33X[0;0YIterators  provide  a possibility to loop over the elements of a (countable)
   collection  or  list [3Xlistorcoll[103X, without repetition. For many collections [22XC[122X,
@@ -830,6 +836,11 @@
   [33X[0;0YFor  random  access  to  the  elements  of a (possibly infinite) collection,
   [13Xenumerators[113X  are  used. See [14X21.23[114X for the facility to compute a list from [22XC[122X,
   which provides a (partial) mapping from [22XC[122X to the positive integers.[133X
+  
+  [33X[0;0YThe  filter  [2XIsStandardIterator[102X  means that the iterator is implemented as a
+  component  object  and  has components [10XIsDoneIterator[110X and [10XNextIterator[110X which
+  are  bound  to  the  methods  of  the  operations  of the same name for this
+  iterator.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xiter:= Iterator( GF(5) );[127X[104X
@@ -952,9 +963,17 @@
         that  is  independent  of  [3Xiter[103X  but  behaves  like  [3Xiter[103X  w.r.t.  the
         operations [2XNextIterator[102X ([14X30.8-5[114X) and [2XIsDoneIterator[102X ([14X30.8-4[114X).[133X
   
+  [8X[10XViewObj[110X and [10XPrintObj[110X[108X
+        [33X[0;6Ytwo  functions that print what one wants to be printed when [10XView( [3Xiter[103X[10X
+        )[110X  or  [10XPrint(  [3Xitem[103X[10X )[110X is called (see [14X6.3[114X), if the [10XViewObj[110X component is
+        missing then the [10XPrintObj[110X method is used as a default.[133X
+  
   [33X[0;0YFurther  (data)  components  may be contained in [3Xrecord[103X which can be used by
   these function.[133X
   
   [33X[0;0Y[2XIteratorByFunctions[102X  does  [13Xnot[113X make a shallow copy of [3Xrecord[103X, this record is
   changed in place (see Section  [14X79.9[114X).[133X
+  
+  [33X[0;0YIterators   constructed   with   [2XIteratorByFunctions[102X   are   in  the  filter
+  [2XIsStandardIterator[102X ([14X30.8-1[114X).[133X
   

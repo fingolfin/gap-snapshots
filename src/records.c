@@ -36,6 +36,10 @@
 #include        "plist.h"               /* plain lists                     */
 #include        "string.h"              /* strings                         */
 
+#include	"code.h"		/* coder                           */
+#include	"thread.h"		/* threads			   */
+#include	"tls.h"			/* thread-local storage		   */
+
 
 /****************************************************************************
 **
@@ -79,6 +83,7 @@ UInt            RNamName (
 {
     Obj                 rnam;           /* record name (as imm intobj)     */
     UInt                pos;            /* hash position                   */
+    UInt                len;            /* length of name                  */
     Char                namx [1024];    /* temporary copy of <name>        */
     Obj                 string;         /* temporary string object <name>  */
     Obj                 table;          /* temporary copy of <HashRNam>    */
@@ -88,11 +93,17 @@ UInt            RNamName (
 
     /* start looking in the table at the following hash position           */
     pos = 0;
+    len = 0;
     for ( p = name; *p != '\0'; p++ ) {
         pos = 65599 * pos + *p;
+        len++;
     }
     pos = (pos % SizeRNam) + 1;
 
+    if(len >= 1023) {
+        // Note: We can't pass 'name' here, as it might get moved by garbage collection
+        ErrorQuit("Record names must consist of less than 1023 characters", 0, 0);
+    }
     /* look through the table until we find a free slot or the global      */
     while ( (rnam = ELM_PLIST( HashRNam, pos )) != 0
          && strncmp( NAME_RNAM( INT_INTOBJ(rnam) ), name, 1023 ) ) {
@@ -238,7 +249,7 @@ Obj             NameRNamHandler (
     Obj                 rnam )
 {
     Obj                 name;
-    Char                *cname;
+    Obj                 oname;
     while ( ! IS_INTOBJ(rnam)
          || INT_INTOBJ(rnam) <= 0
         || CountRNam < INT_INTOBJ(rnam) ) {
@@ -247,8 +258,8 @@ Obj             NameRNamHandler (
             (Int)TNAM_OBJ(rnam), 0L,
             "you can replace <rnam> via 'return <rnam>;'" );
     }
-    cname = NAME_RNAM( INT_INTOBJ(rnam) );
-    C_NEW_STRING_DYN( name, cname);
+    oname = NAME_OBJ_RNAM( INT_INTOBJ(rnam) );
+    name = CopyToStringRep(oname);
     return name;
 }
 
@@ -547,12 +558,12 @@ Obj FuncALL_RNAMES (
 {
     Obj                 copy, s;
     UInt                i;
-    Char*               name;
+    Obj                 name;
 
     copy = NEW_PLIST( T_PLIST+IMMUTABLE, CountRNam );
     for ( i = 1;  i <= CountRNam;  i++ ) {
-        name = NAME_RNAM( i );
-        C_NEW_STRING_DYN(s, name);
+        name = NAME_OBJ_RNAM( i );
+        s = CopyToStringRep(name);
         SET_ELM_PLIST( copy, i, s );
     }
     SET_LEN_PLIST( copy, CountRNam );
@@ -724,11 +735,13 @@ static Int InitLibrary (
     /* make the list of names of record names                              */
     CountRNam = 0;
     NamesRNam = NEW_PLIST( T_PLIST, 0 );
+    MakeBagPublic(NamesRNam);
     SET_LEN_PLIST( NamesRNam, 0 );
 
     /* make the hash list of record names                                  */
     SizeRNam = 997;
     HashRNam = NEW_PLIST( T_PLIST, SizeRNam );
+    MakeBagPublic(HashRNam);
     SET_LEN_PLIST( HashRNam, SizeRNam );
 
     /* init filters and functions                                          */
@@ -762,7 +775,6 @@ static StructInitInfo module = {
 
 StructInitInfo * InitInfoRecords ( void )
 {
-    FillInVersion( &module );
     return &module;
 }
 
@@ -772,4 +784,3 @@ StructInitInfo * InitInfoRecords ( void )
 
 *E  records.c . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
 */
-

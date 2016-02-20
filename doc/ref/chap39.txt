@@ -1138,7 +1138,7 @@
   
   [1X39.11-3 PCore[101X
   
-  [29X[2XPCore[102X( [3XG[103X, [3Xp[103X ) [32X function
+  [29X[2XPCore[102X( [3XG[103X, [3Xp[103X ) [32X operation
   
   [33X[0;0YThe  [13X[3Xp[103X-core[113X  of [3XG[103X is the largest normal [3Xp[103X-subgroup of [3XG[103X. It is the core of a
   Sylow [3Xp[103X subgroup of [3XG[103X, see [2XCore[102X ([14X39.11-2[114X).[133X
@@ -1157,7 +1157,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XNormalClosure(g,Subgroup(g,[(1,2,3)]));[127X[104X
-    [4X[28XGroup([ (1,2,3), (1,3,4) ])[128X[104X
+    [4X[28XGroup([ (1,2,3), (2,3,4) ])[128X[104X
     [4X[25Xgap>[125X [27XNormalClosure(g,Group((3,4,5)));[127X[104X
     [4X[28XGroup([ (3,4,5), (1,5,4), (1,2,5) ])[128X[104X
   [4X[32X[104X
@@ -1240,7 +1240,7 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xg:=Group((1,2,3,4),(1,2));;[127X[104X
     [4X[25Xgap>[125X [27XDerivedSubgroup(g);[127X[104X
-    [4X[28XGroup([ (1,3,2), (1,4,3) ])[128X[104X
+    [4X[28XGroup([ (1,3,2), (2,4,3) ])[128X[104X
   [4X[32X[104X
   
   [1X39.12-4 CommutatorLength[101X
@@ -1316,7 +1316,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XPerfectResiduum(Group((1,2,3,4,5),(1,2)));[127X[104X
-    [4X[28XGroup([ (1,3,2), (2,4,3), (1,3)(4,5) ])[128X[104X
+    [4X[28XGroup([ (1,3,2), (1,4,3), (1,5,4) ])[128X[104X
   [4X[32X[104X
   
   [1X39.12-9 RadicalGroup[101X
@@ -1353,7 +1353,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XSupersolvableResiduum(g);[127X[104X
-    [4X[28XGroup([ (1,3)(2,4), (1,4)(2,3) ])[128X[104X
+    [4X[28XGroup([ (1,2)(3,4), (1,4)(2,3) ])[128X[104X
   [4X[32X[104X
   
   [1X39.12-12 PRump[101X
@@ -1383,7 +1383,7 @@
   
   [1X39.13-1 SylowSubgroup[101X
   
-  [29X[2XSylowSubgroup[102X( [3XG[103X, [3Xp[103X ) [32X function
+  [29X[2XSylowSubgroup[102X( [3XG[103X, [3Xp[103X ) [32X operation
   
   [33X[0;0Yreturns  a Sylow [3Xp[103X subgroup of the finite group [3XG[103X. This is a [3Xp[103X-subgroup of [3XG[103X
   whose index in [3XG[103X is coprime to [3Xp[103X. [2XSylowSubgroup[102X computes Sylow subgroups via
@@ -1397,7 +1397,7 @@
   
   [1X39.13-2 SylowComplement[101X
   
-  [29X[2XSylowComplement[102X( [3XG[103X, [3Xp[103X ) [32X function
+  [29X[2XSylowComplement[102X( [3XG[103X, [3Xp[103X ) [32X operation
   
   [33X[0;0Yreturns  a Sylow [3Xp[103X-complement of the finite group [3XG[103X. This is a subgroup [22XU[122X of
   order coprime to [3Xp[103X such that the index [22X[[3XG[103X:U][122X is a [3Xp[103X-power.[133X
@@ -1412,7 +1412,7 @@
   
   [1X39.13-3 HallSubgroup[101X
   
-  [29X[2XHallSubgroup[102X( [3XG[103X, [3XP[103X ) [32X function
+  [29X[2XHallSubgroup[102X( [3XG[103X, [3XP[103X ) [32X operation
   
   [33X[0;0Ycomputes  a  [3XP[103X-Hall  subgroup  for a set [3XP[103X of primes. This is a subgroup the
   order  of  which is only divisible by primes in [3XP[103X and whose index is coprime
@@ -1436,10 +1436,10 @@
     [4X[25Xgap>[125X [27XHallSubgroup(h,[2,3]);  [127X[104X
     [4X[28X[ <permutation group of size 96 with 6 generators>, [128X[104X
     [4X[28X  <permutation group of size 96 with 6 generators> ][128X[104X
-    [4X[25Xgap>[125X [27XHallSubgroup(h,[3,31]);[127X[104X
-    [4X[28XGroup([ (2,29,7)(3,30,11)(4,28,8)(5,27,9)(6,31,10)(12,24,21)(13,25,20)[128X[104X
-    [4X[28X(14,23,17)(15,22,19)(16,26,18), (1,20,31,23,11,25,29,3,21,24,6,19,5,[128X[104X
-    [4X[28X17,12,14,4,18,8,10,30,27,16,26,22,13,7,15,28,9,2) ])[128X[104X
+    [4X[25Xgap>[125X [27Xu := HallSubgroup(h,[3,31]);;[127X[104X
+    [4X[25Xgap>[125X [27XSize(u); StructureDescription(u);[127X[104X
+    [4X[28X93[128X[104X
+    [4X[28X"C31 : C3"[128X[104X
     [4X[25Xgap>[125X [27XHallSubgroup(h,[5,31]);[127X[104X
     [4X[28Xfail[128X[104X
   [4X[32X[104X
@@ -2053,7 +2053,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xs:=SubnormalSeries(g,Group((1,2)(3,4)));[127X[104X
-    [4X[28X[ Group([ (1,2,3,4), (1,2) ]), Group([ (1,2)(3,4), (1,3)(2,4) ]), [128X[104X
+    [4X[28X[ Group([ (1,2,3,4), (1,2) ]), Group([ (1,2)(3,4), (1,4)(2,3) ]),[128X[104X
     [4X[28X  Group([ (1,2)(3,4) ]) ][128X[104X
   [4X[32X[104X
   
@@ -2132,7 +2132,7 @@
   
   [1X39.17-10 InvariantElementaryAbelianSeries[101X
   
-  [29X[2XInvariantElementaryAbelianSeries[102X( [3XG[103X, [3Xmorph[103X[, [3XN[103X[, [3Xfine[103X]] ) [32X operation
+  [29X[2XInvariantElementaryAbelianSeries[102X( [3XG[103X, [3Xmorph[103X[, [3XN[103X[, [3Xfine[103X]] ) [32X function
   
   [33X[0;0YFor  a  (solvable)  group  [3XG[103X  and  a  list of automorphisms [3Xmorph[103X of [3XG[103X, this
   command finds a normal series of [3XG[103X with elementary abelian factors such that
@@ -2174,7 +2174,7 @@
   
   [1X39.17-13 PCentralSeries[101X
   
-  [29X[2XPCentralSeries[102X( [3XG[103X, [3Xp[103X ) [32X function
+  [29X[2XPCentralSeries[102X( [3XG[103X, [3Xp[103X ) [32X operation
   
   [33X[0;0YThe  [3Xp[103X-central  series  of  [3XG[103X  is  defined  by  [22XU_1:=  [3XG[103X[122X, [22XU_i:= [[3XG[103X, U_{i-1}]
   U_{i-1}^[3Xp[103X[122X.[133X
@@ -2266,8 +2266,8 @@
   [29X[2XFactorGroupNC[102X( [3XG[103X, [3XN[103X ) [32X operation
   
   [33X[0;0Yreturns  the  image  of  the  [10XNaturalHomomorphismByNormalSubgroup([3XG[103X[10X,[3XN[103X[10X)[110X.  The
-  homomorphism  will  be  stored  in  the attribute [10XNaturalHomomorphism[110X of the
-  result. The [10XNC[110X version does not test whether [3XN[103X is normal in [3XG[103X.[133X
+  homomorphism will be returned by calling the function [10XNaturalHomomorphism[110X on
+  the result. The [10XNC[110X version does not test whether [3XN[103X is normal in [3XG[103X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xg:=Group((1,2,3,4),(1,2));;n:=Subgroup(g,[(1,2)(3,4),(1,3)(2,4)]);;[127X[104X
@@ -2275,8 +2275,9 @@
     [4X[28X[ (1,2,3,4), (1,2) ] -> [ f1*f2, f1 ][128X[104X
     [4X[25Xgap>[125X [27XSize(ImagesSource(hom));[127X[104X
     [4X[28X6[128X[104X
-    [4X[25Xgap>[125X [27XFactorGroup(g,n);[127X[104X
-    [4X[28XGroup([ f1, f2 ])[128X[104X
+    [4X[25Xgap>[125X [27XFactorGroup(g,n);;[127X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(last);[127X[104X
+    [4X[28X"S3"[128X[104X
   [4X[32X[104X
   
   [1X39.18-3 CommutatorFactorGroup[101X
@@ -2303,14 +2304,7 @@
   [29X[2XHasAbelianFactorGroup[102X( [3XG[103X, [3XN[103X ) [32X operation
   
   [33X[0;0Ytests  whether  [3XG[103X [22X/[122X [3XN[103X is abelian (without explicitly constructing the factor
-  group).[133X
-  
-  [1X39.18-6 HasElementaryAbelianFactorGroup[101X
-  
-  [29X[2XHasElementaryAbelianFactorGroup[102X( [3XG[103X, [3XN[103X ) [32X operation
-  
-  [33X[0;0Ytests  whether  [3XG[103X [22X/[122X [3XN[103X is elementary abelian (without explicitly constructing
-  the factor group).[133X
+  group and without testing whether [3XN[103X is in fact a normal subgroup).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XHasAbelianFactorGroup(g,n);[127X[104X
@@ -2318,6 +2312,14 @@
     [4X[25Xgap>[125X [27XHasAbelianFactorGroup(DerivedSubgroup(g),n);[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
+  
+  [1X39.18-6 HasElementaryAbelianFactorGroup[101X
+  
+  [29X[2XHasElementaryAbelianFactorGroup[102X( [3XG[103X, [3XN[103X ) [32X operation
+  
+  [33X[0;0Ytests  whether  [3XG[103X [22X/[122X [3XN[103X is elementary abelian (without explicitly constructing
+  the  factor  group  and  without  testing  whether  [3XN[103X  is  in  fact a normal
+  subgroup).[133X
   
   [1X39.18-7 CentralizerModulo[101X
   
@@ -2626,14 +2628,11 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xm11:=TransitiveGroup(11,6);[127X[104X
     [4X[28XM(11)[128X[104X
-    [4X[25Xgap>[125X [27Xr:=RepresentativesPerfectSubgroups(m11);[127X[104X
-    [4X[28X[ Group([ (3,9,11)(4,8,6)(5,10,7), (1,3)(2,11)(4,6)(7,8) ]), [128X[104X
-    [4X[28X  Group([ (2,3,4)(5,6,8)(7,11,9), (1,3)(2,11)(4,6)(7,8) ]), [128X[104X
-    [4X[28X  Group([ (4,11,10,9)(5,7,8,6), (1,6,4)(2,9,7)(8,11,10) ]), [128X[104X
-    [4X[28X  Group([ (3,5,8)(4,11,7)(6,9,10), (1,3)(2,11)(4,6)(7,8) ]), M(11), [128X[104X
-    [4X[28X  Group(()) ][128X[104X
+    [4X[25Xgap>[125X [27Xr:=RepresentativesPerfectSubgroups(m11);;[127X[104X
     [4X[25Xgap>[125X [27XList(r,Size);[127X[104X
     [4X[28X[ 60, 60, 360, 660, 7920, 1 ][128X[104X
+    [4X[25Xgap>[125X [27XList(r,StructureDescription);[127X[104X
+    [4X[28X[ "A5", "A5", "A6", "PSL(2,11)", "M11", "1" ][128X[104X
   [4X[32X[104X
   
   [1X39.20-7 ConjugacyClassesPerfectSubgroups[101X
@@ -2644,15 +2643,11 @@
   [2XRepresentativesPerfectSubgroups[102X ([14X39.20-6[114X).)[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XConjugacyClassesPerfectSubgroups(m11);[127X[104X
-    [4X[28X[ Group( [ ( 3, 9,11)( 4, 8, 6)( 5,10, 7), [128X[104X
-    [4X[28X      ( 1, 3)( 2,11)( 4, 6)( 7, 8) ] )^G, [128X[104X
-    [4X[28X  Group( [ ( 2, 3, 4)( 5, 6, 8)( 7,11, 9), [128X[104X
-    [4X[28X      ( 1, 3)( 2,11)( 4, 6)( 7, 8) ] )^G, [128X[104X
-    [4X[28X  Group( [ ( 4,11,10, 9)( 5, 7, 8, 6), ( 1, 6, 4)( 2, 9, 7)( 8,11,10) [128X[104X
-    [4X[28X     ] )^G, [128X[104X
-    [4X[28X  Group( [ ( 3, 5, 8)( 4,11, 7)( 6, 9,10), [128X[104X
-    [4X[28X      ( 1, 3)( 2,11)( 4, 6)( 7, 8) ] )^G, M(11)^G, Group( () )^G ][128X[104X
+    [4X[25Xgap>[125X [27Xr := ConjugacyClassesPerfectSubgroups(m11);;[127X[104X
+    [4X[25Xgap>[125X [27XList(r, x -> StructureDescription(Representative(x)));[127X[104X
+    [4X[28X[ "A5", "A5", "A6", "PSL(2,11)", "M11", "1" ][128X[104X
+    [4X[25Xgap>[125X [27XSortedList( List(r,Size) );[127X[104X
+    [4X[28X[ 1, 1, 11, 12, 66, 132 ][128X[104X
   [4X[32X[104X
   
   [1X39.20-8 Zuppos[101X
@@ -2994,10 +2989,10 @@
   
   [1X39.23-1 [33X[0;0YOneCocycles[133X[101X
   
-  [29X[2XOneCocycles[102X( [3XG[103X, [3XM[103X ) [32X operation
-  [29X[2XOneCocycles[102X( [3XG[103X, [3Xmpcgs[103X ) [32X operation
-  [29X[2XOneCocycles[102X( [3Xgens[103X, [3XM[103X ) [32X operation
-  [29X[2XOneCocycles[102X( [3Xgens[103X, [3Xmpcgs[103X ) [32X operation
+  [29X[2XOneCocycles[102X( [3XG[103X, [3XM[103X ) [32X function
+  [29X[2XOneCocycles[102X( [3XG[103X, [3Xmpcgs[103X ) [32X function
+  [29X[2XOneCocycles[102X( [3Xgens[103X, [3XM[103X ) [32X function
+  [29X[2XOneCocycles[102X( [3Xgens[103X, [3Xmpcgs[103X ) [32X function
   
   [33X[0;0YComputes  the  group  of 1-cocycles [22XZ^1([3XG[103X/[3XM[103X,[3XM[103X)[122X. The normal subgroup [3XM[103X may be
   given  by  a  (Modulo)Pcgs  [3Xmpcgs[103X.  In  this  case  the whole calculation is
@@ -3011,7 +3006,7 @@
   
   [1X39.23-2 OneCoboundaries[101X
   
-  [29X[2XOneCoboundaries[102X( [3XG[103X, [3XM[103X ) [32X operation
+  [29X[2XOneCoboundaries[102X( [3XG[103X, [3XM[103X ) [32X function
   
   [33X[0;0Ycomputes  the  group of 1-coboundaries. Syntax of input and output otherwise
   is  the same as with [2XOneCocycles[102X ([14X39.23-1[114X) except that entries that refer to
@@ -3101,7 +3096,7 @@
   
   [1X39.23-3 OCOneCocycles[101X
   
-  [29X[2XOCOneCocycles[102X( [3Xocr[103X, [3XonlySplit[103X ) [32X operation
+  [29X[2XOCOneCocycles[102X( [3Xocr[103X, [3XonlySplit[103X ) [32X function
   
   [33X[0;0Yis the more technical function to compute 1-cocycles. It takes an record [3Xocr[103X
   as  first  argument which must contain at least the components [10Xgroup[110X for the
@@ -3116,7 +3111,7 @@
   
   [1X39.23-4 ComplementClassesRepresentativesEA[101X
   
-  [29X[2XComplementClassesRepresentativesEA[102X( [3XG[103X, [3XN[103X ) [32X operation
+  [29X[2XComplementClassesRepresentativesEA[102X( [3XG[103X, [3XN[103X ) [32X function
   
   [33X[0;0Ycomputes  complement  classes to an elementary abelian normal subgroup [3XN[103X via
   1-Cohomology.      Normally,      a     user     program     should     call
@@ -3139,7 +3134,7 @@
   
   [1X39.24-1 EpimorphismSchurCover[101X
   
-  [29X[2XEpimorphismSchurCover[102X( [3XG[103X[, [3Xpl[103X] ) [32X operation
+  [29X[2XEpimorphismSchurCover[102X( [3XG[103X[, [3Xpl[103X] ) [32X attribute
   
   [33X[0;0Yreturns  an  epimorphism  [22Xepi[122X  from a group [22XD[122X onto [3XG[103X. The group [22XD[122X is one (of
   possibly  several)  Schur  covers  of  [3XG[103X. The group [22XD[122X can be obtained as the
@@ -3150,7 +3145,7 @@
   
   [1X39.24-2 SchurCover[101X
   
-  [29X[2XSchurCover[102X( [3XG[103X ) [32X operation
+  [29X[2XSchurCover[102X( [3XG[103X ) [32X attribute
   
   [33X[0;0Yreturns one (of possibly several) Schur covers of the group [3XG[103X.[133X
   
@@ -3290,7 +3285,8 @@
   adjacent  transposition  [22X(i,i+1)[122X  has  order  4,  -1 gives a group where the
   preimage  of  an  adjacent  transposition [22X(i,i+1)[122X has order 2. If no [3Xsign[103X is
   specified,  +1  is  used  by  default.  If  no  [3Xp[103X is specified, 3 is used by
-  default.[133X
+  default.  (Note  that  the  convention  of  which cover is labelled as +1 is
+  inconsistent in the literature.)[133X
   
   [1X39.24-10 SchurCoverOfSymmetricGroup[101X
   
@@ -3302,23 +3298,25 @@
   preimage  of an adjacent transposition [22X(i,i+1)[122X has order 4, -1 gives a group
   where  the  preimage of an adjacent transposition [22X(i,i+1)[122X has order 2. If no
   [3Xsign[103X is specified, +1 is used by default. If no [3Xp[103X is specified, 3 is used by
-  default.  For  [22X[3Xn[103X ≤ 3[122X, the symmetric group is its own Schur cover and [3Xsign[103X is
-  ignored.  For [22X[3Xp[103X = 2[122X, there is no faithful, irreducible representation of the
-  Schur  cover unless [22X[3Xn[103X = 1[122X or [22X[3Xn[103X = 3[122X, so [9Xfail[109X is returned if [22X[3Xp[103X = 2[122X. For [22X[3Xp[103X = 3[122X,
-  [22X[3Xn[103X = 3[122X, the representation is indecomposable, but reducible. The field of the
-  matrix group is generally [10XGF([3Xp[103X[10X^2)[110X if [22X[3Xp[103X > 0[122X, and an abelian number field if [22X[3Xp[103X
-  = 0[122X.[133X
+  default.  (Note  that  the  convention  of  which cover is labelled as +1 is
+  inconsistent  in  the literature.) For [22X[3Xn[103X ≤ 3[122X, the symmetric group is its own
+  Schur  cover  and  [3Xsign[103X  is  ignored.  For  [22X[3Xp[103X  =  2[122X,  there  is no faithful,
+  irreducible representation of the Schur cover unless [22X[3Xn[103X = 1[122X or [22X[3Xn[103X = 3[122X, so [9Xfail[109X
+  is  returned  if  [22X[3Xp[103X  =  2[122X.  For  [22X[3Xp[103X  =  3[122X,  [22X[3Xn[103X  =  3[122X,  the  representation  is
+  indecomposable,  but  reducible.  The field of the matrix group is generally
+  [10XGF([3Xp[103X[10X^2)[110X if [22X[3Xp[103X > 0[122X, and an abelian number field if [22X[3Xp[103X = 0[122X.[133X
   
   [1X39.24-11 DoubleCoverOfAlternatingGroup[101X
   
   [29X[2XDoubleCoverOfAlternatingGroup[102X( [3Xn[103X, [3Xp[103X ) [32X operation
   
   [33X[0;0YConstructs  a  double cover of [10XAlternatingGroup([3Xn[103X[10X)[110X as a faithful, completely
-  reducible matrix group in characteristic [3Xp[103X ([22Xp ≠ 2[122X) for [22Xn ≥ 4[122X. For [22Xn ≥ 3[122X, the
-  symmetric group is its own Schur cover so [9Xfail[109X is returned. For [22Xp = 2[122X, there
-  is  no faithful, completely reducible representation of the double cover, so
-  [9Xfail[109X is returned. The field of the matrix group is generally [10XGF(p^2)[110X if [22Xp>0[122X,
-  and an abelian number field if [22Xp=0[122X. If [3Xp[103X is omitted, the default is 3.[133X
+  reducible matrix group in characteristic [3Xp[103X ([22Xp ≠ 2[122X) for [22Xn ≥ 4[122X. For [22Xn ≤ 3[122X, the
+  alternating  group  is its own Schur cover, and [9Xfail[109X is returned. For [22Xp = 2[122X,
+  there  is  no  faithful,  completely  reducible representation of the double
+  cover,  so  [9Xfail[109X  is  returned.  The  field of the matrix group is generally
+  [10XGF(p^2)[110X  if  [22Xp>0[122X,  and  an abelian number field if [22Xp=0[122X. If [3Xp[103X is omitted, the
+  default is 3.[133X
   
   
   [1X39.25 [33X[0;0YTests for the Availability of Methods[133X[101X
@@ -3341,7 +3339,7 @@
   
   [1X39.25-1 CanEasilyTestMembership[101X
   
-  [29X[2XCanEasilyTestMembership[102X( [3XG[103X ) [32X function
+  [29X[2XCanEasilyTestMembership[102X( [3XG[103X ) [32X filter
   
   [33X[0;0YThis  filter  indicates  whether  [5XGAP[105X can test membership of elements in the
   group  [3XG[103X  (via the operation [2X\in[102X ([14X30.6-1[114X)) in reasonable time. It is used by
@@ -3350,7 +3348,7 @@
   
   [1X39.25-2 CanEasilyComputeWithIndependentGensAbelianGroup[101X
   
-  [29X[2XCanEasilyComputeWithIndependentGensAbelianGroup[102X( [3XG[103X ) [32X function
+  [29X[2XCanEasilyComputeWithIndependentGensAbelianGroup[102X( [3XG[103X ) [32X filter
   
   [33X[0;0YThis filter indicates whether [5XGAP[105X can in reasonable time compute independent
   abelian  generators  of the group [3XG[103X (via [2XIndependentGeneratorsOfAbelianGroup[102X
@@ -3368,7 +3366,7 @@
   
   [1X39.25-4 CanComputeSizeAnySubgroup[101X
   
-  [29X[2XCanComputeSizeAnySubgroup[102X( [3XG[103X ) [32X function
+  [29X[2XCanComputeSizeAnySubgroup[102X( [3XG[103X ) [32X filter
   
   [33X[0;0YThis  filter  indicates  whether  [5XGAP[105X  can  easily  compute  the size of any
   subgroup  of  the group [3XG[103X. (This is for example advantageous if one can test
@@ -3377,7 +3375,7 @@
   
   [1X39.25-5 CanComputeIndex[101X
   
-  [29X[2XCanComputeIndex[102X( [3XG[103X, [3XH[103X ) [32X function
+  [29X[2XCanComputeIndex[102X( [3XG[103X, [3XH[103X ) [32X operation
   
   [33X[0;0YThis  function  indicates  whether  the index [22X[[3XG[103X:[3XH[103X][122X (which might be [2Xinfinity[102X
   ([14X18.2-1[114X))  can  be  computed.  It assumes that [22X[3XH[103X ≤ [3XG[103X[122X (see [2XCanComputeIsSubset[102X

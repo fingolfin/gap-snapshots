@@ -3,7 +3,7 @@
   
   [33X[0;0YThe  functionality  of  [5XGAP[105X  can  be  extended  by loading [5XGAP[105X packages. [5XGAP[105X
   distribution  already contains all currently redistributed with [5XGAP[105X packages
-  in the [11Xgap4r7/pkg[111X directory.[133X
+  in the [11Xgap4r8/pkg[111X directory.[133X
   
   [33X[0;0Y[5XGAP[105X  packages  are written by (groups of) [5XGAP[105X users which may not be members
   of the [5XGAP[105X developer team. The responsibility and copyright of a [5XGAP[105X package
@@ -58,10 +58,27 @@
   
   [29X[2XLoadPackage[102X( [3Xname[103X[, [3Xversion[103X][, [3Xbanner[103X] ) [32X function
   
-  [33X[0;0Yloads the [5XGAP[105X package with name [3Xname[103X. If the optional version string [3Xversion[103X
-  is  given,  the  package will only be loaded in a version number at least as
-  large  as  [3Xversion[103X,  or  equal  to  [3Xversion[103X  if  its  first  character  is [10X=[110X
-  (see [2XCompareVersionNumbers[102X ([14X76.3-6[114X)). The argument [3Xname[103X is case insensitive.[133X
+  [33X[0;0Yloads the [5XGAP[105X package with name [3Xname[103X.[133X
+  
+  [33X[0;0YAs an example, the following loads the [5XGAP[105X package [5XSONATA[105X (case insensitive)
+  which   provides  methods  for  the  construction  and  analysis  of  finite
+  nearrings:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XLoadPackage("sonata");[127X[104X
+    [4X[28X... some more lines with package banner(s) ...[128X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe   package   name   may   be   appropriately  abbreviated.  For  example,
+  [10XLoadPackage("semi");[110X will load the [5XSemigroups[105X package, and [10XLoadPackage("d");[110X
+  will  load  the  [5XDESIGN[105X  package.  If  the  abbreviation can not be uniquely
+  completed, further suggestions will be offered.[133X
+  
+  [33X[0;0YIf  the  optional  version string [3Xversion[103X is given, the package will only be
+  loaded in a version number at least as large as [3Xversion[103X, or equal to [3Xversion[103X
+  if  its  first  character  is  [10X=[110X  (see [2XCompareVersionNumbers[102X  ([14X76.3-6[114X)). The
+  argument [3Xname[103X is case insensitive.[133X
   
   [33X[0;0Y[2XLoadPackage[102X will return [9Xtrue[109X if the package has been successfully loaded and
   will  return  [9Xfail[109X if the package could not be loaded. The latter may be the

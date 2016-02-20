@@ -164,12 +164,84 @@ local g;
   return g;
 end);
 
+BindGlobal("ChevalleyG",function(q)
+local p,f,z,G,o;
+  # Generators probably due to Don Taylor, communicated by Derek Holt
+  p:=Factors(q);
+  if Length(Set(p))>1 then Error("<q> must be prime power");fi;
+  p:=p[1];
+  f:=GF(q);
+  z:=PrimitiveRoot(f);
+  o:=One(f);
+
+  # first generator differs for q=2,p=3
+  if q=2 then 
+    G:=Group(
+	o*[[1,1,0,0,0,0,0],
+	[0,1,0,0,0,0,0],
+	[0,0,1,1,1,0,0],
+	[0,0,0,1,0,0,0],
+	[0,0,0,0,1,0,0],
+	[0,0,0,0,0,1,1],
+	[0,0,0,0,0,0,1]],
+	o*[[0,0,1,0,0,0,0],
+	[1,0,0,0,0,0,0],
+	[0,0,0,0,0,1,0],
+	[0,0,0,1,0,0,0],
+	[0,1,0,0,0,0,0],
+	[0,0,0,0,0,0,1],
+	[0,0,0,0,1,0,0]]);
+  elif p=3 then 
+    G:=Group(
+    o*[[z^2,0,0,0,0,0,0],
+      [0,z,0,0,0,0,0],
+      [0,0,z,0,0,0,0],
+      [0,0,0,1,0,0,0],
+      [0,0,0,0,z^(q-2),0,0],
+      [0,0,0,0,0,z^(q-2),0],
+      [0,0,0,0,0,0,z^(q-3)]],
+      o*[[0,0,1,0,0,0,0],
+      [2,0,1,0,0,1,0],
+      [0,0,0,0,0,1,0],
+      [0,0,0,2,0,2,0],
+      [0,2,0,2,0,1,1],
+      [0,0,0,0,0,0,1],
+      [0,0,0,0,1,0,1]]
+    );
+  else
+    G:=Group(
+     o*[[z,0,0,0,0,0,0],
+      [0,z^(q-2),0,0,0,0,0],
+      [0,0,z^2,0,0,0,0],
+      [0,0,0,1,0,0,0],
+      [0,0,0,0,z^(q-3),0,0],
+      [0,0,0,0,0,z,0],
+      [0,0,0,0,0,0,z^(q-2)]],
+      o*[[p-1,0,1,0,0,0,0],
+      [p-1,0,0,0,0,0,0],
+      [0,p-1,0,p-1,0,1,0],
+      [0,p-2,0,p-1,0,0,0],
+      [0,p-1,0,0,0,0,0],
+      [0,0,0,0,1,0,1],
+      [0,0,0,0,1,0,0]]);
+  fi;
+
+  return G; 
+end);
+
 InstallGlobalFunction(SimpleGroup,function(arg)
 local brg,str,p,a,param,g,s,small,plus,sets;
   if IsRecord(arg[1]) then
     p:=arg[1];
     if p.series="Spor" then
-      brg:=p.parameter;
+      brg:=p.parameter[1];
+      if '=' in brg then
+	brg:=brg{[1..Position(brg,'=')-1]};
+      fi;
+      while brg[Length(brg)]=' ' do
+	brg:=brg{[1..Length(brg)-1]};
+      od;
+      brg:=[brg];
     else
       brg:=Concatenation([p.series],p.parameter);
     fi;
@@ -467,10 +539,12 @@ local brg,str,p,a,param,g,s,small,plus,sets;
       g:=PrimitiveGroup(351,7);
     elif a=4 then
       g:=PrimitiveGroup(416,7);
-    elif a=5 then
-      g:=DoAtlasrepGroup(["G2(5)"]);
     else
-      Error("Can't do yet");
+      g:=ChevalleyG(a);
+      g:=Action(g,
+	   Set(Orbit(g,One(DefaultFieldOfMatrixGroup(g))*[1,0,0,0,0,0,0],
+	     OnLines)),
+	  OnLines);
     fi;
     s:=Concatenation("G_2(",String(a),")");
 
@@ -650,7 +724,11 @@ InstallGlobalFunction(SimpleGroupsIterator,function(arg)
   return IteratorByFunctions(rec(
     IsDoneIterator:=IsDoneIterator_SimGp,
     NextIterator:=NextIterator_SimGp,
-    ShallowCopy:=ShallowCopy,
+    ShallowCopy:=iter -> rec( a:=iter!.a,
+      b:=iter!.b, ende:=iter!.ende,
+      stack:=ShallowCopy(iter!.stack), pos:=iter!.pos,
+      nopsl2:=iter!.nopsl2,
+      done:=iter!.done),
     a:=a,
     b:=b,
     ende:=ende,
@@ -1092,7 +1170,10 @@ local H,d,id,hom,field,C,dom,orbs;
     Error("inconsistent image");
   fi;
 
-  if Image(hom)=G then
+  if # catch if one group is with memory
+     RepresentationsOfObject(One(Image(hom)))=
+     RepresentationsOfObject(One(G)) 
+     and Image(hom)=G then
     d:=IdentityMapping(G);
   else
     # Image(hom) is the better group to search in, e.g. classes.

@@ -107,10 +107,6 @@
   [33X[0;0YFree groups are a special case of finitely presented groups, namely finitely
   presented groups with no relators.[133X
   
-  [33X[0;0YAnother  special case are groups given by polycyclic presentations. [5XGAP[105X uses
-  a  special  representation  for these groups which is created in a different
-  way. See chapter [14X46[114X for details.[133X
-  
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xg:=FreeGroup(2);[127X[104X
     [4X[28X<free group on the generators [ f1, f2 ]>[128X[104X
@@ -121,6 +117,10 @@
     [4X[25Xgap>[125X [27XIsFpGroup(h);[127X[104X
     [4X[28Xfalse[128X[104X
   [4X[32X[104X
+  
+  [33X[0;0YAnother  special case are groups given by polycyclic presentations. [5XGAP[105X uses
+  a  special  representation  for these groups which is created in a different
+  way. See chapter [14X46[114X for details.[133X
   
   [1X47.1-3 InfoFpGroup[101X
   
@@ -308,7 +308,7 @@
   
   [1X47.4-4 UnderlyingElement[101X
   
-  [29X[2XUnderlyingElement[102X( [3Xelm[103X ) [32X function
+  [29X[2XUnderlyingElement[102X( [3Xelm[103X ) [32X operation
   
   [33X[0;0YLet  [3Xelm[103X  be  an  element of a group whose elements are represented as words
   with  further  properties.  Then [2XUnderlyingElement[102X returns the word from the
@@ -462,7 +462,7 @@
   
   [1X47.6-3 FactorCosetAction[101X
   
-  [29X[2XFactorCosetAction[102X( [3XG[103X, [3XH[103X ) [32X function
+  [29X[2XFactorCosetAction[102X( [3XG[103X, [3XH[103X ) [32X operation
   
   [33X[0;0Yreturns the action of [3XG[103X on the cosets of its subgroup [3XH[103X.[133X
   
@@ -967,7 +967,7 @@
     [4X[28X#I  the image group has 3 gens and 11 rels of total length 92[128X[104X
     [4X[25Xgap>[125X [27Xiso := IsomorphismFpGroupByGenerators( M12, gens : [127X[104X
     [4X[25X>[125X [27X                                          method := "fast" );;[127X[104X
-    [4X[28X#I  the image group has 3 gens and 162 rels of total length 3737[128X[104X
+    [4X[28X#I  the image group has 3 gens and 150 rels of total length 3336[128X[104X
   [4X[32X[104X
   
   [33X[0;0YThough  the  option  [10Xmethod  :=  "regular"[110X  is only checked in the case of a
@@ -987,7 +987,7 @@
     [4X[28X  [ [ 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 0 ], [128X[104X
     [4X[28X      [ 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1 ] ] ][128X[104X
     [4X[25Xgap>[125X [27Xiso := IsomorphismFpGroupByGenerators( G, gens );;[127X[104X
-    [4X[28X#I  the image group has 2 gens and 9 rels of total length 94[128X[104X
+    [4X[28X#I  the image group has 2 gens and 10 rels of total length 126[128X[104X
     [4X[25Xgap>[125X [27Xiso := IsomorphismFpGroupByGenerators( G, gens : [127X[104X
     [4X[25X>[125X [27X                                          method := "regular");;[127X[104X
     [4X[28X#I  the image group has 2 gens and 6 rels of total length 56[128X[104X
@@ -999,15 +999,7 @@
     [4X[28X, 0, 0, 0, 1 ] ] ]->[ F1, F2 ]>[128X[104X
     [4X[25Xgap>[125X [27XConstituentsCompositionMapping(iso);[127X[104X
     [4X[28X[ <action isomorphism>, [128X[104X
-    [4X[28X [ (2,3)(4,6,10,17,7,12)(5,8,13,19,26,24)(9,15,23,35,31,43)(14,21,[128X[104X
-    [4X[28X       32)(16,25,38)(18,27,39,33,45,57)(20,30,36,48,28,40)(22,34,44,[128X[104X
-    [4X[28X       55,66,74)(29,41,51,61,60,47)(37,49,54,52,46,58)(42,53,65)(50,[128X[104X
-    [4X[28X       62,63,72,56,67)(59,69,77,78,64,73)(68,71,75)(76,79), [128X[104X
-    [4X[28X     (1,2,4,7)(3,5,9,16)(6,11,18,28)(8,14,22,30)(12,13,20,31)(15,24,[128X[104X
-    [4X[28X       37,50)(17,26,38,45)(19,29,42,27)(21,33,46,35)(23,36,25,39)(32,[128X[104X
-    [4X[28X       44,56,40)(34,47,59,70)(41,52,64,72)(43,54,65,66)(48,60)(49,61,[128X[104X
-    [4X[28X       71,55)(51,63,53,57)(58,68,76,62)(67,75,74,77)(73,78,80,79) [128X[104X
-    [4X[28X    ] -> [ F1, F2 ] ][128X[104X
+    [4X[28X  [ (2,3,4)(5,6)(8,9,10), (1,2,3,5)(6,7,8,9) ] -> [ F1, F2 ] ][128X[104X
   [4X[32X[104X
   
   [33X[0;0YSince  [5XGAP[105X  cannot decompose elements of a matrix group into generators, the

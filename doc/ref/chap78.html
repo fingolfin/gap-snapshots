@@ -75,7 +75,7 @@
 
 <h4>78.1 <span class="Heading">Operations and Methods</span></h4>
 
-<p>Operations are functions in the category <code class="func">IsOperation</code> (<a href="chap5.html#X874C7C6D8650D648"><span class="RefLink">5.4-2</span></a>).</p>
+<p>Operations are functions in the category <code class="func">IsOperation</code> (<a href="chap5.html#X874C7C6D8650D648"><span class="RefLink">5.5-2</span></a>).</p>
 
 <p>So on the one hand, <em>operations</em> are <strong class="pkg">GAP</strong> functions, that is, they can be applied to arguments and return a result or cause a side-effect.</p>
 
@@ -106,7 +106,7 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallMethod</code>( <var class="Arg">opr</var>[, <var class="Arg">info</var>][, <var class="Arg">famp</var>], <var class="Arg">args-filts</var>[, <var class="Arg">val</var>], <var class="Arg">method</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>installs a function method <var class="Arg">method</var> for the operation <var class="Arg">opr</var>; <var class="Arg">args-filts</var> should be a list of requirements for the arguments, each entry being a filter; if supplied <var class="Arg">info</var> should be a short but informative string that describes for what situation the method is installed, <var class="Arg">famp</var> should be a function to be applied to the families of the arguments, and <var class="Arg">val</var> should be an integer that measures the priority of the method.</p>
 
-<p>The default values for <var class="Arg">info</var>, <var class="Arg">famp</var>, and <var class="Arg">val</var> are the empty string, the function <code class="func">ReturnTrue</code> (<a href="chap5.html#X7DB422A2876CCC4D"><span class="RefLink">5.3-1</span></a>), and the integer zero, respectively.</p>
+<p>The default values for <var class="Arg">info</var>, <var class="Arg">famp</var>, and <var class="Arg">val</var> are the empty string, the function <code class="func">ReturnTrue</code> (<a href="chap5.html#X7DB422A2876CCC4D"><span class="RefLink">5.4-1</span></a>), and the integer zero, respectively.</p>
 
 <p>The exact meaning of the arguments <var class="Arg">famp</var>, <var class="Arg">args-filts</var>, and <var class="Arg">val</var> is explained in Section <a href="chap78.html#X851FC6387CA2B241"><span class="RefLink">78.3</span></a>.</p>
 
@@ -129,7 +129,7 @@
 
 <p>So <var class="Arg">args-filt</var> describes conditions for each argument, and <var class="Arg">famp</var> describes a relation between the arguments.</p>
 
-<p>For unary operations such as attributes and properties, there is no such relation to postulate, <var class="Arg">famp</var> is <code class="func">ReturnTrue</code> (<a href="chap5.html#X7DB422A2876CCC4D"><span class="RefLink">5.3-1</span></a>) for these operations, a function that always returns <code class="keyw">true</code>. For binary operations, the usual value of <var class="Arg">famp</var> is <code class="func">IsIdenticalObj</code> (<a href="chap12.html#X7961183378DFB902"><span class="RefLink">12.5-1</span></a>), which means that both arguments must lie in the same family.</p>
+<p>For unary operations such as attributes and properties, there is no such relation to postulate, <var class="Arg">famp</var> is <code class="func">ReturnTrue</code> (<a href="chap5.html#X7DB422A2876CCC4D"><span class="RefLink">5.4-1</span></a>) for these operations, a function that always returns <code class="keyw">true</code>. For binary operations, the usual value of <var class="Arg">famp</var> is <code class="func">IsIdenticalObj</code> (<a href="chap12.html#X7961183378DFB902"><span class="RefLink">12.5-1</span></a>), which means that both arguments must lie in the same family.</p>
 
 <p>Note that any properties which occur among the filters in the filter list will <em>not</em> be tested by the method selection if they are not yet known. (More exact: if <var class="Arg">prop</var> is a property then the filter implicitly uses not <var class="Arg">prop</var> but <code class="code">Has<var class="Arg">prop</var> and <var class="Arg">prop</var></code>.) If this is desired you must explicitly enforce a test (see section <a href="chap78.html#X7B85DD797A907106"><span class="RefLink">78.5</span></a>) below.</p>
 
@@ -178,8 +178,8 @@
 
 <h5>78.5-1 RedispatchOnCondition</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RedispatchOnCondition</code>( <var class="Arg">oper</var>, <var class="Arg">fampred</var>, <var class="Arg">reqs</var>, <var class="Arg">cond</var>, <var class="Arg">val</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>This function installs a method for the operation <var class="Arg">oper</var> under the conditions <var class="Arg">fampred</var> and <var class="Arg">reqs</var> which has absolute value <var class="Arg">val</var>; that is, the value of the filters <var class="Arg">reqs</var> is disregarded. <var class="Arg">cond</var> is a list of filters. If not all the values of properties involved in these filters are already known for actual arguments of the method, they are explicitly tested and if they are fulfilled <em>and</em> stored after this test, the operation is dispatched again. Otherwise the method exits with <code class="func">TryNextMethod</code> (<a href="chap78.html#X7EED949B83046A7F"><span class="RefLink">78.4-1</span></a>). This can be used to enforce tests like <code class="func">IsFinite</code> (<a href="chap30.html#X808A4061809A6E67"><span class="RefLink">30.4-2</span></a>) in situations when all existing methods require this property. The list <var class="Arg">cond</var> may have unbound entries in which case the corresponding argument is ignored for further tests.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RedispatchOnCondition</code>( <var class="Arg">oper</var>[, <var class="Arg">info</var>], <var class="Arg">fampred</var>, <var class="Arg">reqs</var>, <var class="Arg">cond</var>, <var class="Arg">val</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>This function installs a method for the operation <var class="Arg">oper</var> under the conditions <var class="Arg">fampred</var> and <var class="Arg">reqs</var> which has absolute value <var class="Arg">val</var>; that is, the value of the filters <var class="Arg">reqs</var> is disregarded. <var class="Arg">cond</var> is a list of filters. If not all the values of properties involved in these filters are already known for actual arguments of the method, they are explicitly tested and if they are fulfilled <em>and</em> stored after this test, the operation is dispatched again. Otherwise the method exits with <code class="func">TryNextMethod</code> (<a href="chap78.html#X7EED949B83046A7F"><span class="RefLink">78.4-1</span></a>). If supplied, <var class="Arg">info</var> should be a short but informative string that describes these conditions. This can be used to enforce tests like <code class="func">IsFinite</code> (<a href="chap30.html#X808A4061809A6E67"><span class="RefLink">30.4-2</span></a>) in situations when all existing methods require this property. The list <var class="Arg">cond</var> may have unbound entries in which case the corresponding argument is ignored for further tests.</p>
 
 <p><a id="X87D38D2584D0A8AF" name="X87D38D2584D0A8AF"></a></p>
 

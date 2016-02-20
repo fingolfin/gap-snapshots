@@ -1,8 +1,11 @@
 language: c
 matrix:
   include:
+    - os: linux
+      env: TEST_SUITE=testtravis
+      compiler: gcc
     - os: osx
-      env: TEST_SUITE=testinstall
+      env: TEST_SUITE=testtravis
       compiler: clang
     - os: linux
       env: TEST_SUITE=testinstall

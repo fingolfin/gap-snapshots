@@ -43,7 +43,6 @@ local l,f,dim,m;
   fi;
   m.dimension:=dim;
   m.generators:=l;
-
   m.IsOverFiniteField:= Size(f)<>infinity and IsFFECollCollColl(l);
   return m;
 end);
@@ -87,7 +86,7 @@ InstallGlobalFunction(InducedGModule,function (g, h, m)
    hdim:=SMTX.Dimension(m);
    F:=SMTX.Field(m);
    if Characteristic(F)=0 then
-       ghom:=GroupHomomorphismByImagesNC(h,Group(mats),gensh,mats);
+       ghom:=GroupHomomorphismByImagesNC(h,Group(mats),gensh,mats); 
    else
        ghom:=GroupHomomorphismByImages(h,GL(hdim,F),gensh,mats);
    fi;
@@ -1129,7 +1128,7 @@ SMTX_IrreducibilityTest:=function ( module )
       return Error ("Argument of IsIrreducible is not a module.");
    fi;
 
-   if not module.IsOverFiniteField then
+   if not module.IsOverFiniteField then 
       return Error ("Argument of IsIrreducible is not over a finite field.");
    fi;
    matrices:=ShallowCopy(module.generators);
@@ -1848,7 +1847,7 @@ local dim, ndim, gcd, div, e, ct, F, q, ok,
       Error("Argument of iIsAbsoluteIrreducible s not an irreducible module");
    fi;
 
-   if not module.IsOverFiniteField then
+   if not module.IsOverFiniteField then 
       return Error ("Argument of IsAbsoluteIrreducible is not over a finite field.");
    fi;
    dim:=SMTX.Dimension(module);
@@ -3348,7 +3347,7 @@ SMTX_SpanOfMinimalSubGModules:=function (m1, m2)
    if Length(homs) = 1 then
      return homs[1];
    fi;
-   #The span of the the images of homs is what we want!
+   #The span of the images of homs is what we want!
    mat:=homs[1];
    for i in [2..Length(homs)] do
      mat:=Concatenation(mat,homs[i]);

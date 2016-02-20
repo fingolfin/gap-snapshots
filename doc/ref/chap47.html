@@ -228,8 +228,6 @@ true
 
 <p>Free groups are a special case of finitely presented groups, namely finitely presented groups with no relators.</p>
 
-<p>Another special case are groups given by polycyclic presentations. <strong class="pkg">GAP</strong> uses a special representation for these groups which is created in a different way. See chapter <a href="chap46.html#X7EAD57C97EBF7E67"><span class="RefLink">46</span></a> for details.</p>
-
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=FreeGroup(2);</span>
@@ -241,6 +239,8 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFpGroup(h);</span>
 false
 </pre></div>
+
+<p>Another special case are groups given by polycyclic presentations. <strong class="pkg">GAP</strong> uses a special representation for these groups which is created in a different way. See chapter <a href="chap46.html#X7EAD57C97EBF7E67"><span class="RefLink">46</span></a> for details.</p>
 
 <p><a id="X8370BF3B78D0B14D" name="X8370BF3B78D0B14D"></a></p>
 
@@ -397,7 +397,7 @@ true
 
 <h5>47.4-4 UnderlyingElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingElement</code>( <var class="Arg">elm</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingElement</code>( <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Let <var class="Arg">elm</var> be an element of a group whose elements are represented as words with further properties. Then <code class="func">UnderlyingElement</code> returns the word from the free group that is used as a representative for <var class="Arg">elm</var>.</p>
 
 
@@ -525,7 +525,7 @@ a^3*b^2*a^-2*b^-1*a*b^-4*a*b^-1*a*b^-4
 
 <h5>47.6-3 FactorCosetAction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FactorCosetAction</code>( <var class="Arg">G</var>, <var class="Arg">H</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FactorCosetAction</code>( <var class="Arg">G</var>, <var class="Arg">H</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>returns the action of <var class="Arg">G</var> on the cosets of its subgroup <var class="Arg">H</var>.</p>
 
 
@@ -917,7 +917,7 @@ Group([ (1,2,3,4,5,6,7,8,9,10,11), (3,7,11,8)(4,10,5,6),
 #I  the image group has 3 gens and 11 rels of total length 92
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismFpGroupByGenerators( M12, gens : </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                          method := "fast" );;</span>
-#I  the image group has 3 gens and 162 rels of total length 3737
+#I  the image group has 3 gens and 150 rels of total length 3336
 </pre></div>
 
 <p>Though the option <code class="code">method := "regular"</code> is only checked in the case of a permutation group it also affects the performance and the results of the function <code class="func">IsomorphismFpGroupByGenerators</code> for other groups, e. g. for matrix groups. This happens because, for these groups, the function first calls the function <code class="func">NiceMonomorphism</code> (<a href="chap40.html#X7965086E82ABCF41"><span class="RefLink">40.5-2</span></a>) to get a bijective action homomorphism from <var class="Arg">G</var> to a suitable permutation group, <span class="SimpleMath">P</span> say, and then, recursively, calls itself for the group <span class="SimpleMath">P</span> so that now the option becomes relevant.</p>
@@ -932,7 +932,7 @@ ImfMatrixGroup(5,1,3)
   [ [ 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 0 ], 
       [ 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1 ] ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismFpGroupByGenerators( G, gens );;</span>
-#I  the image group has 2 gens and 9 rels of total length 94
+#I  the image group has 2 gens and 10 rels of total length 126
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismFpGroupByGenerators( G, gens : </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                          method := "regular");;</span>
 #I  the image group has 2 gens and 6 rels of total length 56
@@ -944,15 +944,7 @@ ImfMatrixGroup(5,1,3)
 , 0, 0, 0, 1 ] ] ]-&gt;[ F1, F2 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ConstituentsCompositionMapping(iso);</span>
 [ &lt;action isomorphism&gt;, 
- [ (2,3)(4,6,10,17,7,12)(5,8,13,19,26,24)(9,15,23,35,31,43)(14,21,
-       32)(16,25,38)(18,27,39,33,45,57)(20,30,36,48,28,40)(22,34,44,
-       55,66,74)(29,41,51,61,60,47)(37,49,54,52,46,58)(42,53,65)(50,
-       62,63,72,56,67)(59,69,77,78,64,73)(68,71,75)(76,79), 
-     (1,2,4,7)(3,5,9,16)(6,11,18,28)(8,14,22,30)(12,13,20,31)(15,24,
-       37,50)(17,26,38,45)(19,29,42,27)(21,33,46,35)(23,36,25,39)(32,
-       44,56,40)(34,47,59,70)(41,52,64,72)(43,54,65,66)(48,60)(49,61,
-       71,55)(51,63,53,57)(58,68,76,62)(67,75,74,77)(73,78,80,79) 
-    ] -&gt; [ F1, F2 ] ]
+  [ (2,3,4)(5,6)(8,9,10), (1,2,3,5)(6,7,8,9) ] -&gt; [ F1, F2 ] ]
 </pre></div>
 
 <p>Since <strong class="pkg">GAP</strong> cannot decompose elements of a matrix group into generators, the resulting isomorphism is stored as a composition of a (faithful) permutation action on vectors and a homomorphism from the permutation image to the finitely presented group. In such a situation the constituent mappings can be obtained via <code class="func">ConstituentsCompositionMapping</code> (<a href="chap32.html#X87775B438008DCA5"><span class="RefLink">32.2-7</span></a>) as separate <strong class="pkg">GAP</strong> objects.</p>

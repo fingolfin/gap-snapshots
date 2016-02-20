@@ -95,9 +95,15 @@
         [10XMutableIdentityMat[110X      │ [2XIdentityMat[102X ([14X24.5-1[114X)           
         [10XMutableNullMat[110X          │ [2XNullMat[102X ([14X24.5-2[114X)               
   
+  [33X[0;0YThe  operation  [10XPositionFirstComponent[110X  has  been  deprecated in GAP 4.8 and
+  later  due  to  issues with its documentation and implementation. Instead of
+  [10XPositionFirstComponent(list,obj)[110X,  you may use [10XPositionSorted(list,[obj])[110X or
+  [10XPositionProperty(list,x->x[1]=obj)[110X  as  a  replacement,  depending  on  your
+  specific use case.[133X
+  
   [1X77.4-1 InfoObsolete[101X
   
-  [29X[2XInfoObsolete[102X[32X global variable
+  [29X[2XInfoObsolete[102X[32X info class
   
   [33X[0;0Yis  an  info class to display warnings when an obsolete variable is used. By
   default, these warnings are switched off since the info level for this class
@@ -136,4 +142,33 @@
   additional  files,  then  move this into the file [11Xgaprc[111X (without the leading
   dot,   same   name   for   all   operating   systems)   in   the   directory
   [10XGAPInfo.UserGapRoot[110X.[133X
+  
+  
+  [1X77.6 [33X[0;0YProperties of semigroups[133X[101X
+  
+  [33X[0;0YUntil  Version  4.8  of  [5XGAP[105X  there  was  inconsistent  use of the following
+  properties   of  semigroups:  [10XIsGroupAsSemigroup[110X,  [10XIsMonoidAsSemigroup[110X,  and
+  [10XIsSemilatticeAsSemigroup[110X.  [10XIsGroupAsSemigroup[110X  was  true for semigroups that
+  mathematically  defined  a group, and for semigroups in the category [2XIsGroup[102X
+  ([14X39.2-7[114X);  [10XIsMonoidAsSemigroup[110X  was  true for semigroups that mathematically
+  defined  monoids,  but did not belong to the category [2XIsMonoid[102X ([14X51.2-1[114X); and
+  [10XIsSemilatticeAsSemigroup[110X  was  simply  a property of semigroups, there is no
+  category [10XIsSemilattice[110X.[133X
+  
+  [33X[0;0YFrom Version 4.8 onwards, [10XIsSemilatticeAsSemigroup[110X is renamed [10XIsSemilattice[110X,
+  and [10XIsMonoidAsSemigroup[110X returns [10Xtrue[110X for semigroups in the category [2XIsMonoid[102X
+  ([14X51.2-1[114X).[133X
+  
+  [1X77.6-1 IsSemilatticeAsSemigroup[101X
+  
+  [29X[2XIsSemilatticeAsSemigroup[102X( [3XS[103X ) [32X property
+  
+  [33X[0;0Y[10XIsSemilatticeAsSemigroup[110X  returns  [9Xtrue[109X  if the semigroup [3XS[103X is a semilattice
+  and [9Xfalse[109X if it is not.[133X
+  
+  [33X[0;0YA  semigroup  is  a [13Xsemilattice[113X if it is commutative and every element is an
+  idempotent. The idempotents of an inverse semigroup form a semilattice. This
+  is  identical  to [2XIsSemilattice[102X ([14XSemigroups: IsSemilattice[114X) # and is present
+  in  [5XGAP[105X 4.8  #  only  for the sake of compatibility with beta-releases. # It
+  should [13Xnot[113X be used in new code.[133X
   

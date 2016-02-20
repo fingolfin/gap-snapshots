@@ -203,6 +203,12 @@
 ##  <#/GAPDoc>
 ##
 
+## Shared region for storing results of FamiliesOfGeneralMappingsAndRanges
+## This has to have higher precedence than TRANSREGION, because
+## while doing TransitiveIdentification we hold a lock on TRANSREGION
+## and want a lock for GENERAL_MAPPING_REGION
+BindGlobal("GENERAL_MAPPING_REGION",
+        NewInternalRegion("FamiliesOfGeneralMappingsAndRanges region"));
 
 #############################################################################
 ##
@@ -424,7 +430,7 @@ DeclareProperty( "IsSingleValued", IsGeneralMapping );
 ##
 ##  <#GAPDoc Label="IsMapping">
 ##  <ManSection>
-##  <Prop Name="IsMapping" Arg='map'/>
+##  <Filt Name="IsMapping" Arg='map'/>
 ##
 ##  <Description>
 ##  A <E>mapping</E> <A>map</A> is a general mapping that assigns to each

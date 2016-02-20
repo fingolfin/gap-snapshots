@@ -634,7 +634,7 @@
   
   [1X45.9-6 CorrespondingGeneratorsByModuloPcgs[101X
   
-  [29X[2XCorrespondingGeneratorsByModuloPcgs[102X( [3Xmpcgs[103X, [3Ximgs[103X ) [32X operation
+  [29X[2XCorrespondingGeneratorsByModuloPcgs[102X( [3Xmpcgs[103X, [3Ximgs[103X ) [32X function
   
   [33X[0;0YLet [3Xmpcgs[103X be a modulo pcgs for a factor of a group [22XG[122X and let [22XU[122X be a subgroup
   of  [22XG[122X  generated  by [3Ximgs[103X such that [22XU[122X covers the factor for the modulo pcgs.

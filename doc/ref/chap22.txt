@@ -67,7 +67,7 @@
   
   [1X22.2-2 ListBlist[101X
   
-  [29X[2XListBlist[102X( [3Xlist[103X, [3Xblist[103X ) [32X operation
+  [29X[2XListBlist[102X( [3Xlist[103X, [3Xblist[103X ) [32X function
   
   [33X[0;0Yreturns  the  sublist  [22Xsub[122X  of  the  list  [3Xlist[103X,  which  must have no holes,
   represented  by  the  boolean list [3Xblist[103X, which must have the same length as

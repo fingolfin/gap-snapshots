@@ -485,7 +485,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xu8 := Stabilizer( a8, 1 );[127X[104X
-    [4X[28XGroup([ (2,3,4), (2,4)(3,5), (2,6,4), (2,4)(5,7), (2,8,6,4)(3,5) ])[128X[104X
+    [4X[28XGroup([ (2,3,4,5,6,7,8), (2,4,5,6,7,8,3) ])[128X[104X
     [4X[25Xgap>[125X [27XIndex( a8, u8 );[127X[104X
     [4X[28X8[128X[104X
     [4X[25Xgap>[125X [27XOrbit( a8, 1 ); Length( last );[127X[104X
@@ -730,9 +730,9 @@
     [4X[25Xgap>[125X [27Xblocks := Blocks( a8, orb );; Length( blocks );[127X[104X
     [4X[28X15[128X[104X
     [4X[25Xgap>[125X [27Xblocks[1];[127X[104X
-    [4X[28X[ (1,2)(3,4)(5,6)(7,8), (1,3)(2,4)(5,7)(6,8), (1,4)(2,3)(5,8)(6,7), [128X[104X
-    [4X[28X  (1,5)(2,6)(3,7)(4,8), (1,6)(2,5)(3,8)(4,7), (1,7)(2,8)(3,5)(4,6), [128X[104X
-    [4X[28X  (1,8)(2,7)(3,6)(4,5) ][128X[104X
+    [4X[28X[ (1,2)(3,4)(5,6)(7,8), (1,3)(2,4)(5,8)(6,7), (1,4)(2,3)(5,7)(6,8),[128X[104X
+    [4X[28X  (1,5)(2,6)(3,8)(4,7), (1,6)(2,5)(3,7)(4,8), (1,7)(2,8)(3,6)(4,5),[128X[104X
+    [4X[28X  (1,8)(2,7)(3,5)(4,6) ][128X[104X
   [4X[32X[104X
   
   [33X[0;0YTo  find  the  subgroup  of  index 15 we again use closure. Now we must be a
@@ -802,15 +802,15 @@
     [4X[28XGroup([ (1,4)(2,3), (1,3)(2,4) ])[128X[104X
     [4X[25Xgap>[125X [27XImage( hom, (1,2,3) );[127X[104X
     [4X[28X(1,2,3)[128X[104X
-    [4X[25Xgap>[125X [27XImage( hom, DerivedSubgroup(s4) );[127X[104X
-    [4X[28XGroup([ (1,3,2), (1,3,2) ])[128X[104X
+    [4X[25Xgap>[125X [27XSize( Image( hom, DerivedSubgroup(s4) ) );[127X[104X
+    [4X[28X3[128X[104X
   [4X[32X[104X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XPreImage( hom, (1,2,3) );[127X[104X
     [4X[28XError, <map> must be an inj. and surj. mapping called from[128X[104X
-    [4X[28X<function>( <arguments> ) called from read-eval-loop[128X[104X
-    [4X[28XEntering break read-eval-print loop ...[128X[104X
+    [4X[28X<function "PreImage">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at line 4 of *stdin*[128X[104X
     [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
     [4X[28Xyou can 'return;' to continue[128X[104X
     [4X[26Xbrk>[126X [27Xquit;[127X[104X
@@ -1029,7 +1029,7 @@
     [4X[28XGroup([ (1,4,2,3), (1,5,4)(2,6,3), (1,2)(3,4), (3,4)(5,6) ])[128X[104X
     [4X[25Xgap>[125X [27XIsomorphismGroups( niceaut, SymmetricGroup( 4 ) );[127X[104X
     [4X[28X[ (1,4,2,3), (1,5,4)(2,6,3), (1,2)(3,4), (3,4)(5,6) ] -> [128X[104X
-    [4X[28X[ (1,2,4,3), (1,4,3), (1,4)(2,3), (1,3)(2,4) ][128X[104X
+    [4X[28X[ (1,2,3,4), (2,3,4), (1,3)(2,4), (1,2)(3,4) ][128X[104X
   [4X[32X[104X
   
   [33X[0;0YThe  range  of  a  nice  monomorphism  is in most cases a permutation group,

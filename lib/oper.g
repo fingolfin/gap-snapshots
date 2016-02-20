@@ -49,6 +49,7 @@ end );
 ##  </ManSection>
 ##
 BIND_GLOBAL( "CATS_AND_REPS", [] );
+ShareSpecialObj(CATS_AND_REPS);
 
 
 #############################################################################
@@ -63,6 +64,13 @@ BIND_GLOBAL( "CATS_AND_REPS", [] );
 ##  </ManSection>
 ##
 BIND_GLOBAL( "CONSTRUCTORS", [] );
+ShareSpecialObj(CONSTRUCTORS);
+
+BIND_GLOBAL( "IS_CONSTRUCTOR", function(op) 
+    atomic readonly CONSTRUCTORS do
+        return op in CONSTRUCTORS;
+    od;
+end);
 
 
 #############################################################################
@@ -94,7 +102,7 @@ BIND_GLOBAL( "CONSTRUCTORS", [] );
 ##  </Description>
 ##  </ManSection>
 ##
-BIND_GLOBAL( "IMMEDIATES", [] );
+BIND_GLOBAL( "IMMEDIATES", AtomicList([]) );
 
 
 #############################################################################
@@ -109,7 +117,7 @@ BIND_GLOBAL( "IMMEDIATES", [] );
 ##  </Description>
 ##  </ManSection>
 ##
-BIND_GLOBAL( "IMMEDIATE_METHODS", [] );
+BIND_GLOBAL( "IMMEDIATE_METHODS", AtomicList([]) );
 
 
 #############################################################################
@@ -145,8 +153,8 @@ BIND_GLOBAL( "NUMBERS_PROPERTY_GETTERS", [] );
 ##  </Description>
 ##  </ManSection>
 ##
-BIND_GLOBAL( "OPERATIONS", [] );
-
+OPERATIONS_REGION := ShareSpecialObj("OPERATIONS_REGION");
+BIND_GLOBAL( "OPERATIONS", LockAndMigrateObj( [], OPERATIONS_REGION) );
 
 #############################################################################
 ##
@@ -164,7 +172,7 @@ BIND_GLOBAL( "OPERATIONS", [] );
 ##  </Description>
 ##  </ManSection>
 ##
-BIND_GLOBAL( "WRAPPER_OPERATIONS", [] );
+BIND_GLOBAL( "WRAPPER_OPERATIONS", LockAndMigrateObj( [], OPERATIONS_REGION) );
 
 
 #############################################################################
@@ -249,10 +257,12 @@ BIND_GLOBAL( "INSTALL_IMMEDIATE_METHOD",
         Error( "no immediate methods for mutable objects!" );
     fi;
     relev := [];
+    atomic readonly CATS_AND_REPS do
     for i  in flags  do
         if not i in CATS_AND_REPS  then
             ADD_LIST( relev, i );
         fi;
+    od;
     od;
 
     # All requirements are categories/representations.
@@ -262,6 +272,7 @@ BIND_GLOBAL( "INSTALL_IMMEDIATE_METHOD",
     fi;
     flags:= relev;
 
+    atomic FILTER_REGION do
     # Remove requirements that are implied by the remaining ones.
     # (Note that it is possible to have implications from a filter
     # to another one with a bigger number.)
@@ -352,7 +363,7 @@ BIND_GLOBAL( "INSTALL_IMMEDIATE_METHOD",
       IMMEDIATES[j][i+7] := IMMUTABLE_COPY_OBJ(desc);
 
     od;
-
+    od;
 end );
 
 
@@ -454,14 +465,17 @@ end );
 ##
 ##  <#GAPDoc Label="TraceImmediateMethods">
 ##  <ManSection>
-##  <Func Name="TraceImmediateMethods" Arg='flag'/>
+##  <Func Name="TraceImmediateMethods" Arg='[flag]'/>
+##  <Func Name="UntraceImmediateMethods" Arg=''/>
 ##
 ##  <Description>
-##  If <A>flag</A> is true, tracing for all immediate methods is turned on.
-##  If <A>flag</A> is false it is turned off.
+##  <Ref Func="TraceImmediateMethods"/> enables tracing for all immediate methods
+##  if <A>flag</A> is either <K>true</K>, or not present.
+##  <Ref Func="UntraceImmediateMethods"/>, or <Ref Func="TraceImmediateMethods"/>
+##  with <A>flag</A> equal <K>false</K> turns tracing off.
 ##  (There is no facility to trace <E>specific</E> immediate methods.)
 ##  <Example><![CDATA[
-##  gap> TraceImmediateMethods( true );
+##  gap> TraceImmediateMethods( );
 ##  gap> g:= Group( (1,2,3), (1,2) );;
 ##  #I  immediate: Size
 ##  #I  immediate: IsCyclic
@@ -477,7 +491,7 @@ end );
 ##  #I  immediate: IsPerfectGroup
 ##  #I  immediate: IsEmpty
 ##  6
-##  gap> TraceImmediateMethods( false );
+##  gap> UntraceImmediateMethods( );
 ##  gap> UntraceMethods( [ Size ] );
 ##  ]]></Example>
 ##  <P/>
@@ -496,8 +510,21 @@ end );
 ##
 TRACE_IMMEDIATE_METHODS := false;
 
-BIND_GLOBAL( "TraceImmediateMethods", function( flag )
-    if flag  then
+BIND_GLOBAL( "UntraceImmediateMethods", function ()
+    TRACE_IMMEDIATE_METHODS := false;
+end );
+
+BIND_GLOBAL( "TraceImmediateMethods", function( arg )
+    if LENGTH(arg) = 0 then
+        TRACE_IMMEDIATE_METHODS := true;
+        return;
+    fi;
+
+    if LENGTH(arg) > 1 or not IS_BOOL(arg[1]) then
+      Error("Usage: TraceImmediateMethods( [bool] )");
+    fi;
+
+    if arg[1] then
         TRACE_IMMEDIATE_METHODS := true;
     else
         TRACE_IMMEDIATE_METHODS := false;
@@ -548,8 +575,10 @@ BIND_GLOBAL( "NewOperation", function ( name, filters )
         fi;
         ADD_LIST( filt, FLAGS_FILTER( filter ) );
     od;
+    atomic readwrite OPERATIONS_REGION do
     ADD_LIST( OPERATIONS, oper );
-    ADD_LIST( OPERATIONS, [ filt ] );
+        ADD_LIST( OPERATIONS, MigrateObj([ filt ], OPERATIONS_REGION ) );
+    od;    
     return oper;
 end );
 
@@ -598,9 +627,13 @@ BIND_GLOBAL( "NewConstructor", function ( name, filters )
         fi;
         ADD_LIST( filt, FLAGS_FILTER( filter ) );
     od;
+    atomic readwrite CONSTRUCTORS do
     ADD_LIST( CONSTRUCTORS, oper );
+    od;
+    atomic readwrite OPERATIONS_REGION do
     ADD_LIST( OPERATIONS,   oper );
-    ADD_LIST( OPERATIONS,   [ filt ] );
+        ADD_LIST( OPERATIONS,   MigrateObj([ filt ], OPERATIONS_REGION ) );
+    od;    
     return oper;
 end );
 
@@ -651,7 +684,9 @@ BIND_GLOBAL( "DeclareOperation", function ( name, filters )
           Error( "operation `", name,
                  "' was created as an attribute, use`DeclareAttribute'" );
 
-        elif    INFO_FILTERS[ pos ] in FNUM_TPRS
+        else
+	  atomic readonly FILTER_REGION do
+	    if    INFO_FILTERS[ pos ] in FNUM_TPRS
              or INFO_FILTERS[ pos ] in FNUM_ATTS then
 
           # `gvar' is an attribute tester or property tester.
@@ -665,6 +700,8 @@ BIND_GLOBAL( "DeclareOperation", function ( name, filters )
                  "' was created as a property, use`DeclareProperty'" );
 
         fi;
+	  od;
+	fi;
 
       fi;
 
@@ -677,6 +714,8 @@ BIND_GLOBAL( "DeclareOperation", function ( name, filters )
         ADD_LIST( filt, FLAGS_FILTER( filter ) );
       od;
       
+      atomic readwrite OPERATIONS_REGION do
+      
       pos:= POS_LIST_DEFAULT( OPERATIONS, gvar, 0 );
       if filt in OPERATIONS[ pos+1 ] then
         if not REREADING then
@@ -684,9 +723,11 @@ BIND_GLOBAL( "DeclareOperation", function ( name, filters )
               "for operation `", name, "'\n" );
         fi;
       else
-        ADD_LIST( OPERATIONS[ pos+1 ], filt );
+        ADD_LIST( OPERATIONS[ pos+1 ], MigrateObj( filt, OPERATIONS_REGION) );
       fi;
 
+      od;
+      
     else
 
       # The operation is new.
@@ -729,8 +770,10 @@ BIND_GLOBAL( "DeclareOperationKernel", function ( name, filters, oper )
         ADD_LIST( filt, FLAGS_FILTER( filter ) );
     od;
 
+    atomic readwrite OPERATIONS_REGION do
     ADD_LIST( OPERATIONS, oper );
-    ADD_LIST( OPERATIONS, [ filt ] );
+        ADD_LIST( OPERATIONS, MigrateObj( [ filt ], OPERATIONS_REGION ) );
+    od;
 end );
 
 
@@ -768,7 +811,7 @@ BIND_GLOBAL( "DeclareConstructor", function ( name, filters )
       # The constructor has already been declared.
       # If it was not created as a constructor
       # then ask for re-declaration as an ordinary operation.
-      if not gvar in CONSTRUCTORS then
+      if not IS_CONSTRUCTOR(gvar) then
         Error( "operation `", name, "' was not created as a constructor" );
       fi;
 
@@ -781,8 +824,10 @@ BIND_GLOBAL( "DeclareConstructor", function ( name, filters )
         ADD_LIST( filt, FLAGS_FILTER( filter ) );
       od;
 
+      atomic readwrite OPERATIONS_REGION do
       pos:= POS_LIST_DEFAULT( OPERATIONS, gvar, 0 );
-      ADD_LIST( OPERATIONS[ pos+1 ], filt );
+          ADD_LIST( OPERATIONS[ pos+1 ], MigrateObj( filt, OPERATIONS_REGION) );
+      od;
 
     else
 
@@ -826,9 +871,11 @@ BIND_GLOBAL( "DeclareConstructorKernel", function ( name, filters, oper )
         ADD_LIST( filt, FLAGS_FILTER( filter ) );
     od;
 
+    atomic readwrite CONSTRUCTORS, OPERATIONS_REGION do
     ADD_LIST( CONSTRUCTORS, oper );
     ADD_LIST( OPERATIONS,   oper );
-    ADD_LIST( OPERATIONS,   [ filt ] );
+        ADD_LIST( OPERATIONS,   MigrateObj( [ filt ], OPERATIONS_REGION) );
+    od;
 end );
 
 
@@ -846,9 +893,9 @@ end );
 ##  </Description>
 ##  </ManSection>
 ##
-BIND_GLOBAL( "ATTRIBUTES", [] );
+BIND_GLOBAL( "ATTRIBUTES", MakeStrictWriteOnceAtomic([]) );
 
-BIND_GLOBAL( "ATTR_FUNCS", [] );
+BIND_GLOBAL( "ATTR_FUNCS", MakeStrictWriteOnceAtomic([]) );
 
 BIND_GLOBAL( "InstallAttributeFunction", function ( func )
     local   attr;
@@ -865,7 +912,7 @@ BIND_GLOBAL( "RUN_ATTR_FUNCS",
     for func in ATTR_FUNCS do
         func( name, filter, getter, setter, tester, mutflag );
     od;
-    ADD_LIST( ATTRIBUTES, [ name, filter, getter, setter, tester, mutflag ] );
+    ADD_LIST( ATTRIBUTES, `[ name, filter, getter, setter, tester, mutflag ] );
 end );
 
 
@@ -893,19 +940,23 @@ BIND_GLOBAL( "DeclareAttributeKernel", function ( name, filter, getter )
     setter := SETTER_FILTER( getter );
     tester := TESTER_FILTER( getter );
 
+    atomic readwrite OPERATIONS_REGION do
     # add getter, setter and tester to the list of operations
     ADD_LIST( OPERATIONS, getter );
-    ADD_LIST( OPERATIONS, [ [ FLAGS_FILTER(filter) ] ] );
+    ADD_LIST( OPERATIONS, MigrateObj( [ [ FLAGS_FILTER(filter) ] ], OPERATIONS_REGION ) );
     ADD_LIST( OPERATIONS, setter );
-    ADD_LIST( OPERATIONS,
-              [ [ FLAGS_FILTER( filter ), FLAGS_FILTER( IS_OBJECT ) ] ] );
+    ADD_LIST( OPERATIONS, MigrateObj(
+              [ [ FLAGS_FILTER( filter ), FLAGS_FILTER( IS_OBJECT ) ] ], OPERATIONS_REGION ) );
     ADD_LIST( OPERATIONS, tester );
-    ADD_LIST( OPERATIONS, [ [ FLAGS_FILTER(filter) ] ] );
+    ADD_LIST( OPERATIONS, MigrateObj( [ [ FLAGS_FILTER(filter) ] ], OPERATIONS_REGION ) );
+    od;
 
     # store the information about the filter
+    atomic FILTER_REGION do
     FILTERS[ FLAG2_FILTER( tester ) ] := tester;
     IMM_FLAGS:= AND_FLAGS( IMM_FLAGS, FLAGS_FILTER( tester ) );
     INFO_FILTERS[ FLAG2_FILTER( tester ) ] := 5;
+    od;
 
     # clear the cache because <filter> is something old
     InstallHiddenTrueMethod( filter, tester );
@@ -915,7 +966,9 @@ BIND_GLOBAL( "DeclareAttributeKernel", function ( name, filter, getter )
     RUN_ATTR_FUNCS( filter, getter, setter, tester, false );
 
     # store the ranks
+    atomic FILTER_REGION do
     RANK_FILTERS[ FLAG2_FILTER( tester ) ] := 1;
+    od;
 
     # and make the remaining assignments
     nname:= "Set"; APPEND_LIST_INTR( nname, name );
@@ -990,10 +1043,12 @@ BIND_GLOBAL( "OPER_SetupAttribute", function(getter, flags, mutflag, filter, ran
           setter := SETTER_FILTER( getter );
           tester := TESTER_FILTER( getter );
 
+          atomic readwrite OPERATIONS_REGION do
           ADD_LIST( OPERATIONS, setter );
-          ADD_LIST( OPERATIONS, [ [ flags, FLAGS_FILTER( IS_OBJECT ) ] ] );
+          ADD_LIST( OPERATIONS, MigrateObj([ [ flags, FLAGS_FILTER( IS_OBJECT ) ] ], OPERATIONS_REGION ) );
           ADD_LIST( OPERATIONS, tester );
-          ADD_LIST( OPERATIONS, [ [ flags ] ] );
+          ADD_LIST( OPERATIONS, MigrateObj([ [ flags ] ], OPERATIONS_REGION ) );
+          od;
 
           # install the default functions
           FILTERS[ FLAG2_FILTER( tester ) ] := tester;
@@ -1078,6 +1133,7 @@ BIND_GLOBAL( "DeclareAttribute", function ( arg )
 
     if ISB_GVAR( name ) then
 
+      atomic FILTER_REGION, OPERATIONS_REGION do
       # The variable exists already.
       gvar:= VALUE_GLOBAL( name );
 
@@ -1147,14 +1203,16 @@ BIND_GLOBAL( "DeclareAttribute", function ( arg )
       if not IS_OPERATION( filter ) then
         Error( "<filter> must be an operation" );
       fi;
+
       pos:= POS_LIST_DEFAULT( OPERATIONS, gvar, 0 );
-      ADD_LIST( OPERATIONS[ pos+1 ], [ FLAGS_FILTER( filter ) ] );
+	ADD_LIST( OPERATIONS[ pos+1 ], MigrateObj( [ FLAGS_FILTER( filter ) ], OPERATIONS_REGION ) );
 
       # also set the extended range for the setter
       pos:= POS_LIST_DEFAULT( OPERATIONS, Setter(gvar), pos );
-      ADD_LIST( OPERATIONS[ pos+1 ],
-                [ FLAGS_FILTER( filter),OPERATIONS[pos+1][1][2] ] );
+	ADD_LIST( OPERATIONS[ pos+1 ], MigrateObj(
+		  [ FLAGS_FILTER( filter),OPERATIONS[pos+1][1][2] ], OPERATIONS_REGION ) );
 
+      od;
     else
 
       # The attribute is new.
@@ -1216,21 +1274,25 @@ BIND_GLOBAL( "DeclarePropertyKernel", function ( name, filter, getter )
     # store the property getters
     ADD_LIST( NUMBERS_PROPERTY_GETTERS, FLAG1_FILTER( getter ) );
 
+    atomic readwrite OPERATIONS_REGION do
     # add getter, setter and tester to the list of operations
     ADD_LIST( OPERATIONS, getter );
-    ADD_LIST( OPERATIONS, [ [ FLAGS_FILTER(filter) ] ] );
+    ADD_LIST( OPERATIONS, MigrateObj([ [ FLAGS_FILTER(filter) ] ], OPERATIONS_REGION ) );
     ADD_LIST( OPERATIONS, setter );
-    ADD_LIST( OPERATIONS,
-              [ [ FLAGS_FILTER( filter ), FLAGS_FILTER( IS_BOOL ) ] ] );
+    ADD_LIST( OPERATIONS, MigrateObj(
+              [ [ FLAGS_FILTER( filter ), FLAGS_FILTER( IS_BOOL ) ] ], OPERATIONS_REGION ) );
     ADD_LIST( OPERATIONS, tester );
-    ADD_LIST( OPERATIONS, [ [ FLAGS_FILTER(filter) ] ] );
+    ADD_LIST( OPERATIONS, MigrateObj([ [ FLAGS_FILTER(filter) ] ], OPERATIONS_REGION ) );
+    od;
 
     # install the default functions
+    atomic FILTER_REGION do
     FILTERS[ FLAG1_FILTER( getter ) ]:= getter;
     IMM_FLAGS:= AND_FLAGS( IMM_FLAGS, FLAGS_FILTER( getter ) );
     FILTERS[ FLAG2_FILTER( getter ) ]:= tester;
     INFO_FILTERS[ FLAG1_FILTER( getter ) ]:= 7;
     INFO_FILTERS[ FLAG2_FILTER( getter ) ]:= 8;
+    od;
 
     # clear the cache because <filter> is something old
     InstallHiddenTrueMethod( tester, getter );
@@ -1242,8 +1304,10 @@ BIND_GLOBAL( "DeclarePropertyKernel", function ( name, filter, getter )
     RUN_ATTR_FUNCS( filter, getter, setter, tester, false );
 
     # store the ranks
+    atomic FILTER_REGION do
     RANK_FILTERS[ FLAG1_FILTER( getter ) ] := 1;
     RANK_FILTERS[ FLAG2_FILTER( getter ) ] := 1;
+    od;
 
     # and make the remaining assignments
     nname:= "Set"; APPEND_LIST_INTR( nname, name );
@@ -1292,23 +1356,27 @@ BIND_GLOBAL( "NewProperty", function ( arg )
     setter := SETTER_FILTER( getter );
     tester := TESTER_FILTER( getter );
 
+    atomic readwrite OPERATIONS_REGION do
     # add getter, setter and tester to the list of operations
     ADD_LIST( OPERATIONS, getter );
-    ADD_LIST( OPERATIONS, [ [ flags ] ] );
+    ADD_LIST( OPERATIONS, MigrateObj([ [ flags ] ], OPERATIONS_REGION ) );
     ADD_LIST( OPERATIONS, setter );
-    ADD_LIST( OPERATIONS, [ [ flags, FLAGS_FILTER( IS_BOOL ) ] ] );
+    ADD_LIST( OPERATIONS, MigrateObj([ [ flags, FLAGS_FILTER( IS_BOOL ) ] ], OPERATIONS_REGION ) );
     ADD_LIST( OPERATIONS, tester );
-    ADD_LIST( OPERATIONS, [ [ flags ] ] );
+    ADD_LIST( OPERATIONS, MigrateObj([ [ flags ] ], OPERATIONS_REGION ) );
+    od;
 
     # store the property getters
     ADD_LIST( NUMBERS_PROPERTY_GETTERS, FLAG1_FILTER( getter ) );
 
     # install the default functions
+    atomic FILTER_REGION do
     FILTERS[ FLAG1_FILTER( getter ) ] := getter;
     IMM_FLAGS:= AND_FLAGS( IMM_FLAGS, FLAGS_FILTER( getter ) );
     FILTERS[ FLAG2_FILTER( getter ) ] := tester;
     INFO_FILTERS[ FLAG1_FILTER( getter ) ] := 9;
     INFO_FILTERS[ FLAG2_FILTER( getter ) ] := 10;
+    od;
 
     # the <tester> and  <getter> are newly  made, therefore the cache cannot
     # contain a flag list involving <tester> or <getter>
@@ -1320,12 +1388,14 @@ BIND_GLOBAL( "NewProperty", function ( arg )
     RUN_ATTR_FUNCS( filter, getter, setter, tester, false );
 
     # store the rank
+    atomic FILTER_REGION do
     if LEN_LIST( arg ) = 3 and IS_INT( arg[3] ) then
         RANK_FILTERS[ FLAG1_FILTER( getter ) ]:= arg[3];
     else
         RANK_FILTERS[ FLAG1_FILTER( getter ) ]:= 1;
     fi;
     RANK_FILTERS[ FLAG2_FILTER( tester ) ]:= 1;
+    od;
 
     # and return the getter
     return getter;
@@ -1359,6 +1429,8 @@ BIND_GLOBAL( "DeclareProperty", function ( arg )
 
     if ISB_GVAR( name ) then
 
+      atomic readwrite OPERATIONS_REGION do
+
       gvar:= VALUE_GLOBAL( name );
 
       # Check that the variable is in fact an operation.
@@ -1386,7 +1458,9 @@ BIND_GLOBAL( "DeclareProperty", function ( arg )
       fi;
 
       pos:= POS_LIST_DEFAULT( OPERATIONS, gvar, 0 );
-      ADD_LIST( OPERATIONS[ pos+1 ], [ FLAGS_FILTER( filter ) ] );
+      ADD_LIST( OPERATIONS[ pos+1 ], MigrateObj([ FLAGS_FILTER( filter ) ], OPERATIONS_REGION ) );
+
+      od;
 
     else
 
@@ -1525,6 +1599,25 @@ BIND_GLOBAL( "TraceMethods", function( arg )
 
 end );
 
+#############################################################################
+##
+#F  TraceAllMethods( )
+##
+##  <#GAPDoc Label="TraceAllMethods">
+##  <ManSection>
+##  <Func Name="TraceAllMethods" Arg=""/>
+##
+##  <Description>
+##  Invokes <C>TraceMethods</C> for all operations.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+BIND_GLOBAL( "TraceAllMethods", function( arg )
+    local   fun;
+    TraceMethods(OPERATIONS{[ 1, 3 .. LEN_LIST(OPERATIONS)-1 ]});
+end );
+
 
 #############################################################################
 ##
@@ -1538,17 +1631,17 @@ end );
 ##  <Description>
 ##  turns the tracing off for all operations <A>opr1</A>, <A>opr2</A>, ... or
 ##  in the second form, for all operations in the list <A>oprs</A>.
-##  <Example><![CDATA[
+##  <Log><![CDATA[
 ##  gap> TraceMethods( [ Size ] );
 ##  gap> g:= Group( (1,2,3), (1,2) );;
 ##  gap> Size( g );
-##  #I  Size: for a permutation group
+##  #I  Size: for a permutation group at /gap5/lib/grpperm.gi:487
 ##  #I  Setter(Size): system setter
 ##  #I  Size: system getter
 ##  #I  Size: system getter
 ##  6
 ##  gap> UntraceMethods( [ Size ] );
-##  ]]></Example>
+##  ]]></Log>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -1567,6 +1660,25 @@ BIND_GLOBAL( "UntraceMethods", function( arg )
 
 end );
 
+
+#############################################################################
+##
+#F  UntraceAllMethods( <oprs>)
+##
+##  <#GAPDoc Label="UntraceAllMethods">
+##  <ManSection>
+##  <Func Name="UntraceAllMethods" Arg=""/>
+##
+##  <Description>
+##  Equivalent to calling <C>UntraceMethods</C> for all operations.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+BIND_GLOBAL( "UntraceAllMethods", function( arg )
+    local   fun;
+    UntraceMethods(OPERATIONS{[ 1, 3 .. LEN_LIST(OPERATIONS)-1 ]});
+end );
 
 #############################################################################
 ##
@@ -1622,13 +1734,15 @@ end );
 ##  global variables (see <C>variable.g</C>) because of the completion
 ##  mechanism.
 ##
-BIND_GLOBAL( "GLOBAL_FUNCTION_NAMES", [] );
+BIND_GLOBAL( "GLOBAL_FUNCTION_NAMES", ShareSpecialObj([], "GLOBAL_FUNCTION_NAMES") );
 
 BIND_GLOBAL( "DeclareGlobalFunction", function( arg )
     local   name;
 
     name := arg[1];
+    atomic GLOBAL_FUNCTION_NAMES do
     ADD_SET( GLOBAL_FUNCTION_NAMES, IMMUTABLE_COPY_OBJ(name) );
+    od;
     BIND_GLOBAL( name, NEW_OPERATION_ARGS( name ) );
 end );
 
@@ -1646,20 +1760,24 @@ BIND_GLOBAL( "InstallGlobalFunction", function( arg )
     if IS_STRING( oper ) then
       oper:= VALUE_GLOBAL( oper );
     fi;
+    atomic readonly GLOBAL_FUNCTION_NAMES do
     if NAME_FUNC(func) in GLOBAL_FUNCTION_NAMES then
       Error("you cannot install a global function for another global ",
             "function,\nuse `DeclareSynonym' instead!");
     fi;
     INSTALL_METHOD_ARGS( oper, func );
+    od;
 end );
 
 
 BIND_GLOBAL( "FLUSH_ALL_METHOD_CACHES", function()
     local i,j;
+    atomic readonly OPERATIONS_REGION do
     for i in [1,3..LEN_LIST(OPERATIONS)-1] do
         for j in [1..6] do
             CHANGED_METHODS_OPERATION(OPERATIONS[i],j);
         od;
+    od;
     od;
 end);
         
@@ -1667,4 +1785,3 @@ end);
 #############################################################################
 ##
 #E
-

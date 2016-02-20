@@ -1346,7 +1346,7 @@ Group(())
 
 <h5>39.11-3 PCore</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PCore</code>( <var class="Arg">G</var>, <var class="Arg">p</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PCore</code>( <var class="Arg">G</var>, <var class="Arg">p</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>The <em><var class="Arg">p</var>-core</em> of <var class="Arg">G</var> is the largest normal <var class="Arg">p</var>-subgroup of <var class="Arg">G</var>. It is the core of a Sylow <var class="Arg">p</var> subgroup of <var class="Arg">G</var>, see <code class="func">Core</code> (<a href="chap39.html#X7C4E00297E37AA44"><span class="RefLink">39.11-2</span></a>).</p>
 
 
@@ -1365,7 +1365,7 @@ Group([ (1,4)(2,3), (1,2)(3,4) ])
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NormalClosure(g,Subgroup(g,[(1,2,3)]));</span>
-Group([ (1,2,3), (1,3,4) ])
+Group([ (1,2,3), (2,3,4) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NormalClosure(g,Group((3,4,5)));</span>
 Group([ (3,4,5), (1,5,4), (1,2,5) ])
 </pre></div>
@@ -1448,7 +1448,7 @@ Group([ (1,4)(2,3), (1,3,4) ])
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Group((1,2,3,4),(1,2));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DerivedSubgroup(g);</span>
-Group([ (1,3,2), (1,4,3) ])
+Group([ (1,3,2), (2,4,3) ])
 </pre></div>
 
 <p><a id="X7B10B58F83DDE56E" name="X7B10B58F83DDE56E"></a></p>
@@ -1525,7 +1525,7 @@ Group([  ])
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PerfectResiduum(Group((1,2,3,4,5),(1,2)));</span>
-Group([ (1,3,2), (2,4,3), (1,3)(4,5) ])
+Group([ (1,3,2), (1,4,3), (1,5,4) ])
 </pre></div>
 
 <p><a id="X787F5F14844FAACE" name="X787F5F14844FAACE"></a></p>
@@ -1566,7 +1566,7 @@ Group([ (1,4)(2,3), (1,2)(3,4) ])
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SupersolvableResiduum(g);</span>
-Group([ (1,3)(2,4), (1,4)(2,3) ])
+Group([ (1,2)(3,4), (1,4)(2,3) ])
 </pre></div>
 
 <p><a id="X796DA805853FAC90" name="X796DA805853FAC90"></a></p>
@@ -1602,7 +1602,7 @@ Group([ (1,3)(2,4), (1,4)(2,3) ])
 
 <h5>39.13-1 SylowSubgroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SylowSubgroup</code>( <var class="Arg">G</var>, <var class="Arg">p</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SylowSubgroup</code>( <var class="Arg">G</var>, <var class="Arg">p</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>returns a Sylow <var class="Arg">p</var> subgroup of the finite group <var class="Arg">G</var>. This is a <var class="Arg">p</var>-subgroup of <var class="Arg">G</var> whose index in <var class="Arg">G</var> is coprime to <var class="Arg">p</var>. <code class="func">SylowSubgroup</code> computes Sylow subgroups via the operation <code class="code">SylowSubgroupOp</code>.</p>
 
 
@@ -1616,7 +1616,7 @@ Group([ (1,2), (3,4), (1,3)(2,4) ])
 
 <h5>39.13-2 SylowComplement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SylowComplement</code>( <var class="Arg">G</var>, <var class="Arg">p</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SylowComplement</code>( <var class="Arg">G</var>, <var class="Arg">p</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>returns a Sylow <var class="Arg">p</var>-complement of the finite group <var class="Arg">G</var>. This is a subgroup <span class="SimpleMath">U</span> of order coprime to <var class="Arg">p</var> such that the index <span class="SimpleMath">[<var class="Arg">G</var>:U]</span> is a <var class="Arg">p</var>-power.</p>
 
 <p>At the moment methods exist only if <var class="Arg">G</var> is solvable and <strong class="pkg">GAP</strong> will issue an error if <var class="Arg">G</var> is not solvable.</p>
@@ -1631,7 +1631,7 @@ Group([ (1,2), (3,4), (1,3)(2,4) ])
 
 <h5>39.13-3 HallSubgroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HallSubgroup</code>( <var class="Arg">G</var>, <var class="Arg">P</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HallSubgroup</code>( <var class="Arg">G</var>, <var class="Arg">P</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>computes a <var class="Arg">P</var>-Hall subgroup for a set <var class="Arg">P</var> of primes. This is a subgroup the order of which is only divisible by primes in <var class="Arg">P</var> and whose index is coprime to all primes in <var class="Arg">P</var>. Such a subgroup is unique up to conjugacy if <var class="Arg">G</var> is solvable. The function computes Hall subgroups via the operation <code class="code">HallSubgroupOp</code>.</p>
 
 <p>If <var class="Arg">G</var> is solvable this function always returns a subgroup. If <var class="Arg">G</var> is not solvable this function might return a subgroup (if it is unique up to conjugacy), a list of subgroups (which are representatives of the conjugacy classes in case there are several such classes) or <code class="keyw">fail</code> if no such subgroup exists.</p>
@@ -1647,10 +1647,10 @@ Group([ f1, f2, f3 ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HallSubgroup(h,[2,3]);  </span>
 [ &lt;permutation group of size 96 with 6 generators&gt;, 
   &lt;permutation group of size 96 with 6 generators&gt; ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HallSubgroup(h,[3,31]);</span>
-Group([ (2,29,7)(3,30,11)(4,28,8)(5,27,9)(6,31,10)(12,24,21)(13,25,20)
-(14,23,17)(15,22,19)(16,26,18), (1,20,31,23,11,25,29,3,21,24,6,19,5,
-17,12,14,4,18,8,10,30,27,16,26,22,13,7,15,28,9,2) ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">u := HallSubgroup(h,[3,31]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(u); StructureDescription(u);</span>
+93
+"C31 : C3"
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HallSubgroup(h,[5,31]);</span>
 fail
 </pre></div>
@@ -2219,7 +2219,7 @@ PSL(3,4)
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=SubnormalSeries(g,Group((1,2)(3,4)));</span>
-[ Group([ (1,2,3,4), (1,2) ]), Group([ (1,2)(3,4), (1,3)(2,4) ]), 
+[ Group([ (1,2,3,4), (1,2) ]), Group([ (1,2)(3,4), (1,4)(2,3) ]),
   Group([ (1,2)(3,4) ]) ]
 </pre></div>
 
@@ -2297,7 +2297,7 @@ S (5 gens, size 2520)
 
 <h5>39.17-10 InvariantElementaryAbelianSeries</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InvariantElementaryAbelianSeries</code>( <var class="Arg">G</var>, <var class="Arg">morph</var>[, <var class="Arg">N</var>[, <var class="Arg">fine</var>]] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InvariantElementaryAbelianSeries</code>( <var class="Arg">G</var>, <var class="Arg">morph</var>[, <var class="Arg">N</var>[, <var class="Arg">fine</var>]] )</td><td class="tdright">( function )</td></tr></table></div>
 <p>For a (solvable) group <var class="Arg">G</var> and a list of automorphisms <var class="Arg">morph</var> of <var class="Arg">G</var>, this command finds a normal series of <var class="Arg">G</var> with elementary abelian factors such that every group in this series is invariant under every automorphism in <var class="Arg">morph</var>.</p>
 
 <p>If a normal subgroup <var class="Arg">N</var> of <var class="Arg">G</var> which is invariant under <var class="Arg">morph</var> is given, this series is chosen to contain <var class="Arg">N</var>. No tests are performed to check the validity of the arguments.</p>
@@ -2333,7 +2333,7 @@ Group([ (1,2,3,4), (1,3) ])
 
 <h5>39.17-13 PCentralSeries</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PCentralSeries</code>( <var class="Arg">G</var>, <var class="Arg">p</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PCentralSeries</code>( <var class="Arg">G</var>, <var class="Arg">p</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>The <var class="Arg">p</var>-central series of <var class="Arg">G</var> is defined by <span class="SimpleMath">U_1:= <var class="Arg">G</var></span>, <span class="SimpleMath">U_i:= [<var class="Arg">G</var>, U_{i-1}] U_{i-1}^<var class="Arg">p</var></span>.</p>
 
 <p><a id="X82A34BD681F24A94" name="X82A34BD681F24A94"></a></p>
@@ -2408,7 +2408,7 @@ Group([ (1,2,3,4), (1,3) ])
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FactorGroup</code>( <var class="Arg">G</var>, <var class="Arg">N</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FactorGroupNC</code>( <var class="Arg">G</var>, <var class="Arg">N</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>returns the image of the <code class="code">NaturalHomomorphismByNormalSubgroup(<var class="Arg">G</var>,<var class="Arg">N</var>)</code>. The homomorphism will be stored in the attribute <code class="code">NaturalHomomorphism</code> of the result. The <code class="code">NC</code> version does not test whether <var class="Arg">N</var> is normal in <var class="Arg">G</var>.</p>
+<p>returns the image of the <code class="code">NaturalHomomorphismByNormalSubgroup(<var class="Arg">G</var>,<var class="Arg">N</var>)</code>. The homomorphism will be returned by calling the function <code class="code">NaturalHomomorphism</code> on the result. The <code class="code">NC</code> version does not test whether <var class="Arg">N</var> is normal in <var class="Arg">G</var>.</p>
 
 
 <div class="example"><pre>
@@ -2417,8 +2417,9 @@ Group([ (1,2,3,4), (1,3) ])
 [ (1,2,3,4), (1,2) ] -&gt; [ f1*f2, f1 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(ImagesSource(hom));</span>
 6
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FactorGroup(g,n);</span>
-Group([ f1, f2 ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FactorGroup(g,n);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(last);</span>
+"S3"
 </pre></div>
 
 <p><a id="X7816FA867BF1B8ED" name="X7816FA867BF1B8ED"></a></p>
@@ -2446,14 +2447,7 @@ Group([ f1 ])
 <h5>39.18-5 HasAbelianFactorGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasAbelianFactorGroup</code>( <var class="Arg">G</var>, <var class="Arg">N</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>tests whether <var class="Arg">G</var> <span class="SimpleMath">/</span> <var class="Arg">N</var> is abelian (without explicitly constructing the factor group).</p>
-
-<p><a id="X7FAC018680B766B7" name="X7FAC018680B766B7"></a></p>
-
-<h5>39.18-6 HasElementaryAbelianFactorGroup</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasElementaryAbelianFactorGroup</code>( <var class="Arg">G</var>, <var class="Arg">N</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>tests whether <var class="Arg">G</var> <span class="SimpleMath">/</span> <var class="Arg">N</var> is elementary abelian (without explicitly constructing the factor group).</p>
+<p>tests whether <var class="Arg">G</var> <span class="SimpleMath">/</span> <var class="Arg">N</var> is abelian (without explicitly constructing the factor group and without testing whether <var class="Arg">N</var> is in fact a normal subgroup).</p>
 
 
 <div class="example"><pre>
@@ -2462,6 +2456,13 @@ false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HasAbelianFactorGroup(DerivedSubgroup(g),n);</span>
 true
 </pre></div>
+
+<p><a id="X7FAC018680B766B7" name="X7FAC018680B766B7"></a></p>
+
+<h5>39.18-6 HasElementaryAbelianFactorGroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasElementaryAbelianFactorGroup</code>( <var class="Arg">G</var>, <var class="Arg">N</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>tests whether <var class="Arg">G</var> <span class="SimpleMath">/</span> <var class="Arg">N</var> is elementary abelian (without explicitly constructing the factor group and without testing whether <var class="Arg">N</var> is in fact a normal subgroup).</p>
 
 <p><a id="X822A3AB27919BC1E" name="X822A3AB27919BC1E"></a></p>
 
@@ -2750,14 +2751,11 @@ true
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m11:=TransitiveGroup(11,6);</span>
 M(11)
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r:=RepresentativesPerfectSubgroups(m11);</span>
-[ Group([ (3,9,11)(4,8,6)(5,10,7), (1,3)(2,11)(4,6)(7,8) ]), 
-  Group([ (2,3,4)(5,6,8)(7,11,9), (1,3)(2,11)(4,6)(7,8) ]), 
-  Group([ (4,11,10,9)(5,7,8,6), (1,6,4)(2,9,7)(8,11,10) ]), 
-  Group([ (3,5,8)(4,11,7)(6,9,10), (1,3)(2,11)(4,6)(7,8) ]), M(11), 
-  Group(()) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r:=RepresentativesPerfectSubgroups(m11);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(r,Size);</span>
 [ 60, 60, 360, 660, 7920, 1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(r,StructureDescription);</span>
+[ "A5", "A5", "A6", "PSL(2,11)", "M11", "1" ]
 </pre></div>
 
 <p><a id="X7B2233D180DF77A1" name="X7B2233D180DF77A1"></a></p>
@@ -2769,15 +2767,11 @@ M(11)
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ConjugacyClassesPerfectSubgroups(m11);</span>
-[ Group( [ ( 3, 9,11)( 4, 8, 6)( 5,10, 7), 
-      ( 1, 3)( 2,11)( 4, 6)( 7, 8) ] )^G, 
-  Group( [ ( 2, 3, 4)( 5, 6, 8)( 7,11, 9), 
-      ( 1, 3)( 2,11)( 4, 6)( 7, 8) ] )^G, 
-  Group( [ ( 4,11,10, 9)( 5, 7, 8, 6), ( 1, 6, 4)( 2, 9, 7)( 8,11,10) 
-     ] )^G, 
-  Group( [ ( 3, 5, 8)( 4,11, 7)( 6, 9,10), 
-      ( 1, 3)( 2,11)( 4, 6)( 7, 8) ] )^G, M(11)^G, Group( () )^G ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r := ConjugacyClassesPerfectSubgroups(m11);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(r, x -&gt; StructureDescription(Representative(x)));</span>
+[ "A5", "A5", "A6", "PSL(2,11)", "M11", "1" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SortedList( List(r,Size) );</span>
+[ 1, 1, 11, 12, 66, 132 ]
 </pre></div>
 
 <p><a id="X7BFE573187B4BEF8" name="X7BFE573187B4BEF8"></a></p>
@@ -3060,17 +3054,17 @@ Group([ (1,2,3), (1,2), (4,5,6), (4,5), (7,8,9), (7,8) ])
 
 <h5>39.23-1 <span class="Heading">OneCocycles</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OneCocycles</code>( <var class="Arg">G</var>, <var class="Arg">M</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OneCocycles</code>( <var class="Arg">G</var>, <var class="Arg">mpcgs</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OneCocycles</code>( <var class="Arg">gens</var>, <var class="Arg">M</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OneCocycles</code>( <var class="Arg">gens</var>, <var class="Arg">mpcgs</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OneCocycles</code>( <var class="Arg">G</var>, <var class="Arg">M</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OneCocycles</code>( <var class="Arg">G</var>, <var class="Arg">mpcgs</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OneCocycles</code>( <var class="Arg">gens</var>, <var class="Arg">M</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OneCocycles</code>( <var class="Arg">gens</var>, <var class="Arg">mpcgs</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Computes the group of 1-cocycles <span class="SimpleMath">Z^1(<var class="Arg">G</var>/<var class="Arg">M</var>,<var class="Arg">M</var>)</span>. The normal subgroup <var class="Arg">M</var> may be given by a (Modulo)Pcgs <var class="Arg">mpcgs</var>. In this case the whole calculation is performed modulo the normal subgroup defined by <code class="code">DenominatorOfModuloPcgs(<var class="Arg">mpcgs</var>)</code> (see <a href="chap45.html#X7F18A01785DBAC4E"><span class="RefLink">45.1</span></a>). Similarly the group <var class="Arg">G</var> may instead be specified by a set of elements <var class="Arg">gens</var> that are representatives for a generating system for the factor group <var class="Arg">G</var>/<var class="Arg">M</var>. If this is done the 1-cocycles are computed with respect to these generators (otherwise the routines try to select suitable generators themselves). The current version of the code assumes that <var class="Arg">G</var> is a permutation group or a pc group.</p>
 
 <p><a id="X7E6438D5834ACCDA" name="X7E6438D5834ACCDA"></a></p>
 
 <h5>39.23-2 OneCoboundaries</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OneCoboundaries</code>( <var class="Arg">G</var>, <var class="Arg">M</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OneCoboundaries</code>( <var class="Arg">G</var>, <var class="Arg">M</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>computes the group of 1-coboundaries. Syntax of input and output otherwise is the same as with <code class="func">OneCocycles</code> (<a href="chap39.html#X847BEC137A49BAF4"><span class="RefLink">39.23-1</span></a>) except that entries that refer to cocycles are not computed.</p>
 
 <p>The operations <code class="func">OneCocycles</code> (<a href="chap39.html#X847BEC137A49BAF4"><span class="RefLink">39.23-1</span></a>) and <code class="func">OneCoboundaries</code> return a record with (at least) the components:</p>
@@ -3150,7 +3144,7 @@ true
 
 <h5>39.23-3 OCOneCocycles</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OCOneCocycles</code>( <var class="Arg">ocr</var>, <var class="Arg">onlySplit</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OCOneCocycles</code>( <var class="Arg">ocr</var>, <var class="Arg">onlySplit</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>is the more technical function to compute 1-cocycles. It takes an record <var class="Arg">ocr</var> as first argument which must contain at least the components <code class="code">group</code> for the group and <code class="code">modulePcgs</code> for a (modulo) pcgs of the module. This record will also be returned with components as described under <code class="func">OneCocycles</code> (<a href="chap39.html#X847BEC137A49BAF4"><span class="RefLink">39.23-1</span></a>) (with the exception of <code class="code">isSplitExtension</code> which is indicated by the existence of a <code class="code">complement</code>) but components such as <code class="code">oneCoboundaries</code> will only be computed if not already present.</p>
 
 <p>If <var class="Arg">onlySplit</var> is <code class="keyw">true</code>, <code class="func">OCOneCocycles</code> returns <code class="keyw">false</code> as soon as possible if the extension does not split.</p>
@@ -3159,7 +3153,7 @@ true
 
 <h5>39.23-4 ComplementClassesRepresentativesEA</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComplementClassesRepresentativesEA</code>( <var class="Arg">G</var>, <var class="Arg">N</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComplementClassesRepresentativesEA</code>( <var class="Arg">G</var>, <var class="Arg">N</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>computes complement classes to an elementary abelian normal subgroup <var class="Arg">N</var> via 1-Cohomology. Normally, a user program should call <code class="func">ComplementClassesRepresentatives</code> (<a href="chap39.html#X811B8A4683DDE1F9"><span class="RefLink">39.11-6</span></a>) instead, which also works for a solvable (not necessarily elementary abelian) <var class="Arg">N</var>.</p>
 
 <p><a id="X8199B1D27D487897" name="X8199B1D27D487897"></a></p>
@@ -3179,14 +3173,14 @@ true
 
 <h5>39.24-1 EpimorphismSchurCover</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EpimorphismSchurCover</code>( <var class="Arg">G</var>[, <var class="Arg">pl</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EpimorphismSchurCover</code>( <var class="Arg">G</var>[, <var class="Arg">pl</var>] )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>returns an epimorphism <span class="SimpleMath">epi</span> from a group <span class="SimpleMath">D</span> onto <var class="Arg">G</var>. The group <span class="SimpleMath">D</span> is one (of possibly several) Schur covers of <var class="Arg">G</var>. The group <span class="SimpleMath">D</span> can be obtained as the <code class="func">Source</code> (<a href="chap32.html#X7DE8173F80E07AB1"><span class="RefLink">32.3-8</span></a>) value of <var class="Arg">epi</var>. The kernel of <span class="SimpleMath">epi</span> is the Schur multiplier of <var class="Arg">G</var>. If <var class="Arg">pl</var> is given as a list of primes, only the multiplier part for these primes is realized. At the moment, <span class="SimpleMath">D</span> is represented as a finitely presented group.</p>
 
 <p><a id="X7DD1E37987612042" name="X7DD1E37987612042"></a></p>
 
 <h5>39.24-2 SchurCover</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SchurCover</code>( <var class="Arg">G</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SchurCover</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>returns one (of possibly several) Schur covers of the group <var class="Arg">G</var>.</p>
 
 <p>At the moment this cover is represented as a finitely presented group and <code class="func">IsomorphismPermGroup</code> (<a href="chap43.html#X80B7B1C783AA1567"><span class="RefLink">43.3-1</span></a>) would be needed to convert it to a permutation group.</p>
@@ -3231,7 +3225,7 @@ true
 
 <p>(Note that the last command from the example will take some time.)</p>
 
-<p>The <strong class="pkg">GAP</strong> 4.4.12 manual contained examples for larger groups e.g. <span class="SimpleMath">M_22</span>. However, some issues that may very rarely (and not easily reproducibly) lead to wrong results were discovered in the code capable of handling larger groups, and in <strong class="pkg">GAP</strong> 4.5 it was replaced by a more reliable basic method. To deal with larger groups, one can use the function <code class="func">SchurMultiplier</code> (<span class="RefLink">cohomolo: SchurMultiplier</span>) from the <strong class="pkg">cohomolo</strong> package. Also, additional methods for <code class="func">AbelianInvariantsMultiplier</code> are installed in the <strong class="pkg">Polycyclic</strong> package for pcp-groups.</p>
+<p>The <strong class="pkg">GAP</strong> 4.4.12 manual contained examples for larger groups e.g. <span class="SimpleMath">M_22</span>. However, some issues that may very rarely (and not easily reproducibly) lead to wrong results were discovered in the code capable of handling larger groups, and in <strong class="pkg">GAP</strong> 4.5 it was replaced by a more reliable basic method. To deal with larger groups, one can use the function <code class="func">SchurMultiplier</code> (<a href="../../pkg/cohomolo-1.6.4/htm/CHAP001.htm#SECT002"><span class="RefLink">cohomolo: SchurMultiplier</span></a>) from the <strong class="pkg">cohomolo</strong> package. Also, additional methods for <code class="func">AbelianInvariantsMultiplier</code> are installed in the <strong class="pkg">Polycyclic</strong> package for pcp-groups.</p>
 
 <p><a id="X819E8AEC835F8CD1" name="X819E8AEC835F8CD1"></a></p>
 
@@ -3299,21 +3293,21 @@ true
 <h5>39.24-9 BasicSpinRepresentationOfSymmetricGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BasicSpinRepresentationOfSymmetricGroup</code>( <var class="Arg">n</var>, <var class="Arg">p</var>, <var class="Arg">sign</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Constructs the image of the Coxeter generators in the basic spin (projective) representation of the symmetric group of degree <var class="Arg">n</var> over a field of characteristic <span class="SimpleMath"><var class="Arg">p</var> ≥ 0</span>. There are two such representations and <var class="Arg">sign</var> controls which is returned: +1 gives a group where the preimage of an adjacent transposition <span class="SimpleMath">(i,i+1)</span> has order 4, -1 gives a group where the preimage of an adjacent transposition <span class="SimpleMath">(i,i+1)</span> has order 2. If no <var class="Arg">sign</var> is specified, +1 is used by default. If no <var class="Arg">p</var> is specified, 3 is used by default.</p>
+<p>Constructs the image of the Coxeter generators in the basic spin (projective) representation of the symmetric group of degree <var class="Arg">n</var> over a field of characteristic <span class="SimpleMath"><var class="Arg">p</var> ≥ 0</span>. There are two such representations and <var class="Arg">sign</var> controls which is returned: +1 gives a group where the preimage of an adjacent transposition <span class="SimpleMath">(i,i+1)</span> has order 4, -1 gives a group where the preimage of an adjacent transposition <span class="SimpleMath">(i,i+1)</span> has order 2. If no <var class="Arg">sign</var> is specified, +1 is used by default. If no <var class="Arg">p</var> is specified, 3 is used by default. (Note that the convention of which cover is labelled as +1 is inconsistent in the literature.)</p>
 
 <p><a id="X844CFFDE80F6AD15" name="X844CFFDE80F6AD15"></a></p>
 
 <h5>39.24-10 SchurCoverOfSymmetricGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SchurCoverOfSymmetricGroup</code>( <var class="Arg">n</var>, <var class="Arg">p</var>, <var class="Arg">sign</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Constructs a Schur cover of <code class="code">SymmetricGroup(<var class="Arg">n</var>)</code> as a faithful, irreducible matrix group in characteristic <var class="Arg">p</var> (<span class="SimpleMath"><var class="Arg">p</var> ≠ 2</span>). For <span class="SimpleMath"><var class="Arg">n</var> ≥ 4</span>, there are two such covers, and <var class="Arg">sign</var> determines which is returned: +1 gives a group where the preimage of an adjacent transposition <span class="SimpleMath">(i,i+1)</span> has order 4, -1 gives a group where the preimage of an adjacent transposition <span class="SimpleMath">(i,i+1)</span> has order 2. If no <var class="Arg">sign</var> is specified, +1 is used by default. If no <var class="Arg">p</var> is specified, 3 is used by default. For <span class="SimpleMath"><var class="Arg">n</var> ≤ 3</span>, the symmetric group is its own Schur cover and <var class="Arg">sign</var> is ignored. For <span class="SimpleMath"><var class="Arg">p</var> = 2</span>, there is no faithful, irreducible representation of the Schur cover unless <span class="SimpleMath"><var class="Arg">n</var> = 1</span> or <span class="SimpleMath"><var class="Arg">n</var> = 3</span>, so <code class="keyw">fail</code> is returned if <span class="SimpleMath"><var class="Arg">p</var> = 2</span>. For <span class="SimpleMath"><var class="Arg">p</var> = 3</span>, <span class="SimpleMath"><var class="Arg">n</var> = 3</span>, the representation is indecomposable, but reducible. The field of the matrix group is generally <code class="code">GF(<var class="Arg">p</var>^2)</code> if <span class="SimpleMath"><var class="Arg">p</var> &gt; 0</span>, and an abelian number field if <span class="SimpleMath"><var class="Arg">p</var> = 0</span>.</p>
+<p>Constructs a Schur cover of <code class="code">SymmetricGroup(<var class="Arg">n</var>)</code> as a faithful, irreducible matrix group in characteristic <var class="Arg">p</var> (<span class="SimpleMath"><var class="Arg">p</var> ≠ 2</span>). For <span class="SimpleMath"><var class="Arg">n</var> ≥ 4</span>, there are two such covers, and <var class="Arg">sign</var> determines which is returned: +1 gives a group where the preimage of an adjacent transposition <span class="SimpleMath">(i,i+1)</span> has order 4, -1 gives a group where the preimage of an adjacent transposition <span class="SimpleMath">(i,i+1)</span> has order 2. If no <var class="Arg">sign</var> is specified, +1 is used by default. If no <var class="Arg">p</var> is specified, 3 is used by default. (Note that the convention of which cover is labelled as +1 is inconsistent in the literature.) For <span class="SimpleMath"><var class="Arg">n</var> ≤ 3</span>, the symmetric group is its own Schur cover and <var class="Arg">sign</var> is ignored. For <span class="SimpleMath"><var class="Arg">p</var> = 2</span>, there is no faithful, irreducible representation of the Schur cover unless <span class="SimpleMath"><var class="Arg">n</var> = 1</span> or <span class="SimpleMath"><var class="Arg">n</var> = 3</span>, so <code class="keyw">fail</code> is returned if <span class="SimpleMath"><var class="Arg">p</var> = 2</span>. For <span class="SimpleMath"><var class="Arg">p</var> = 3</span>, <span class="SimpleMath"><var class="Arg">n</var> = 3</span>, the representation is indecomposable, but reducible. The field of the matrix group is generally <code class="code">GF(<var class="Arg">p</var>^2)</code> if <span class="SimpleMath"><var class="Arg">p</var> &gt; 0</span>, and an abelian number field if <span class="SimpleMath"><var class="Arg">p</var> = 0</span>.</p>
 
 <p><a id="X7E0F4896795E34FC" name="X7E0F4896795E34FC"></a></p>
 
 <h5>39.24-11 DoubleCoverOfAlternatingGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DoubleCoverOfAlternatingGroup</code>( <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>Constructs a double cover of <code class="code">AlternatingGroup(<var class="Arg">n</var>)</code> as a faithful, completely reducible matrix group in characteristic <var class="Arg">p</var> (<span class="SimpleMath">p ≠ 2</span>) for <span class="SimpleMath">n ≥ 4</span>. For <span class="SimpleMath">n ≥ 3</span>, the symmetric group is its own Schur cover so <code class="keyw">fail</code> is returned. For <span class="SimpleMath">p = 2</span>, there is no faithful, completely reducible representation of the double cover, so <code class="keyw">fail</code> is returned. The field of the matrix group is generally <code class="code">GF(p^2)</code> if <span class="SimpleMath">p&gt;0</span>, and an abelian number field if <span class="SimpleMath">p=0</span>. If <var class="Arg">p</var> is omitted, the default is 3.</p>
+<p>Constructs a double cover of <code class="code">AlternatingGroup(<var class="Arg">n</var>)</code> as a faithful, completely reducible matrix group in characteristic <var class="Arg">p</var> (<span class="SimpleMath">p ≠ 2</span>) for <span class="SimpleMath">n ≥ 4</span>. For <span class="SimpleMath">n ≤ 3</span>, the alternating group is its own Schur cover, and <code class="keyw">fail</code> is returned. For <span class="SimpleMath">p = 2</span>, there is no faithful, completely reducible representation of the double cover, so <code class="keyw">fail</code> is returned. The field of the matrix group is generally <code class="code">GF(p^2)</code> if <span class="SimpleMath">p&gt;0</span>, and an abelian number field if <span class="SimpleMath">p=0</span>. If <var class="Arg">p</var> is omitted, the default is 3.</p>
 
 <p><a id="X865722987E0E19B6" name="X865722987E0E19B6"></a></p>
 
@@ -3329,14 +3323,14 @@ true
 
 <h5>39.25-1 CanEasilyTestMembership</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanEasilyTestMembership</code>( <var class="Arg">G</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanEasilyTestMembership</code>( <var class="Arg">G</var> )</td><td class="tdright">( filter )</td></tr></table></div>
 <p>This filter indicates whether <strong class="pkg">GAP</strong> can test membership of elements in the group <var class="Arg">G</var> (via the operation <code class="func">\in</code> (<a href="chap30.html#X84B7FA8C7C94400F"><span class="RefLink">30.6-1</span></a>)) in reasonable time. It is used by the method selection to decide whether an algorithm that relies on membership tests may be used.</p>
 
 <p><a id="X7C2A89607BDFD920" name="X7C2A89607BDFD920"></a></p>
 
 <h5>39.25-2 CanEasilyComputeWithIndependentGensAbelianGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanEasilyComputeWithIndependentGensAbelianGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanEasilyComputeWithIndependentGensAbelianGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( filter )</td></tr></table></div>
 <p>This filter indicates whether <strong class="pkg">GAP</strong> can in reasonable time compute independent abelian generators of the group <var class="Arg">G</var> (via <code class="func">IndependentGeneratorsOfAbelianGroup</code> (<a href="chap39.html#X7D1574457B152333"><span class="RefLink">39.22-5</span></a>)) and then can decompose arbitrary group elements with respect to these generators using <code class="func">IndependentGeneratorExponents</code> (<a href="chap39.html#X86F835DA8264A0CE"><span class="RefLink">39.22-6</span></a>). It is used by the method selection to decide whether an algorithm that relies on these two operations may be used.</p>
 
 <p><a id="X83245C82835D496C" name="X83245C82835D496C"></a></p>
@@ -3350,14 +3344,14 @@ true
 
 <h5>39.25-4 CanComputeSizeAnySubgroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanComputeSizeAnySubgroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanComputeSizeAnySubgroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( filter )</td></tr></table></div>
 <p>This filter indicates whether <strong class="pkg">GAP</strong> can easily compute the size of any subgroup of the group <var class="Arg">G</var>. (This is for example advantageous if one can test that a stabilizer index equals the length of the orbit computed so far to stop early.)</p>
 
 <p><a id="X82DDE00D82A32083" name="X82DDE00D82A32083"></a></p>
 
 <h5>39.25-5 CanComputeIndex</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanComputeIndex</code>( <var class="Arg">G</var>, <var class="Arg">H</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanComputeIndex</code>( <var class="Arg">G</var>, <var class="Arg">H</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>This function indicates whether the index <span class="SimpleMath">[<var class="Arg">G</var>:<var class="Arg">H</var>]</span> (which might be <code class="func">infinity</code> (<a href="chap18.html#X8511B8DF83324C27"><span class="RefLink">18.2-1</span></a>)) can be computed. It assumes that <span class="SimpleMath"><var class="Arg">H</var> ≤ <var class="Arg">G</var></span> (see <code class="func">CanComputeIsSubset</code> (<a href="chap39.html#X7BE7C36B84C23511"><span class="RefLink">39.25-6</span></a>)).</p>
 
 <p><a id="X7BE7C36B84C23511" name="X7BE7C36B84C23511"></a></p>

@@ -76,8 +76,8 @@
   with more than 2 elements is 0-simple if and only if every row and every
   column of its matrix contains a non-zero entry, and its underlying semigroup
   is simple. A finite semigroup is 0-simple if and only if it is isomorphic to a
-  Rees 0-matrix semigroup over a group; again this isomorphism can be found by using 
-  <Ref Attr="IsomorphismReesMatrixSemigroup"/>.<P/>
+  Rees 0-matrix semigroup over a group; again this isomorphism can be found by
+  using <Ref Attr="IsomorphismReesZeroMatrixSemigroup"/>.<P/>
 
   Elements of a Rees matrix or 0-matrix semigroup belong to the categories 
   <Ref Filt="IsReesMatrixSemigroupElement"/> and 
@@ -107,16 +107,16 @@
       semigroup always contains a multiplicative zero element, regardless of
       whether there are any entries in <A>mat</A> which are equal to <C>0</C>.
       
-      <Example>
+      <Example><![CDATA[
 gap> G:=Random(AllGroups(Size, 32));;
 gap> mat:=List([1..5], x-> List([1..3], y-> Random(G)));;
 gap> S:=ReesMatrixSemigroup(G, mat);
-&lt;Rees matrix semigroup 3x5 over &lt;pc group of size 32 with 
+<Rees matrix semigroup 3x5 over <pc group of size 32 with 
  5 generators>>
 gap> mat:=[[(), 0, (), ()], [0, 0, 0, 0]];;
 gap> S:=ReesZeroMatrixSemigroup(DihedralGroup(IsPermGroup, 8), mat);
-&lt;Rees 0-matrix semigroup 4x2 over Group([ (1,2,3,4), (2,4) ])>
-</Example>
+<Rees 0-matrix semigroup 4x2 over Group([ (1,2,3,4), (2,4) ])>
+]]></Example>
     </Description>
   </ManSection>
 
@@ -134,62 +134,74 @@ gap> S:=ReesZeroMatrixSemigroup(DihedralGroup(IsPermGroup, 8), mat);
 
       The usage and returned value of <C>ReesZeroMatrixSubsemigroup</C> is
       analogous when <A>R</A> is a Rees 0-matrix semigroup. 
-      <Example>
+      <Example><![CDATA[
 gap> G:=CyclicGroup(IsPermGroup, 1007);;
 gap> mat:=[[(), 0, 0], [0, (), 0], [0, 0, ()], 
 > [(), (), ()], [0, 0, ()]];;
 gap> R:=ReesZeroMatrixSemigroup(G, mat);
-&lt;Rees 0-matrix semigroup 3x5 over 
-  &lt;permutation group of size 1007 with 1 generators>>
+<Rees 0-matrix semigroup 3x5 over 
+  <permutation group of size 1007 with 1 generators>>
 gap> ReesZeroMatrixSubsemigroup(R, [1,3], G, [1..5]);
-&lt;Rees 0-matrix semigroup 2x5 over 
-  &lt;permutation group of size 1007 with 1 generators>>
-</Example>
+<Rees 0-matrix semigroup 2x5 over 
+  <permutation group of size 1007 with 1 generators>>
+]]></Example>
     </Description>
   </ManSection>
   
   <ManSection>
     <Attr Name="IsomorphismReesMatrixSemigroup" Arg="S"/>
+    <Attr Name="IsomorphismReesZeroMatrixSemigroup" Arg="S"/>
     <Returns>An isomorphism.</Returns>
     <Description>
-      Every finite simple semigroup is isomorphic to a
-      Rees matrix semigroup over a group, and every finite 0-simple semigroup
-      is isomorphic to a Rees 0-matrix semigroup over a group.<P/>
+      Every finite simple semigroup is isomorphic to a Rees matrix semigroup
+      over a group, and every finite 0-simple semigroup is isomorphic to a Rees
+      0-matrix semigroup over a group.
+      <P/>
 
       If the argument <A>S</A> is a simple semigroup, then
       <C>IsomorphismReesMatrixSemigroup</C> returns an isomorphism to a Rees
-      matrix semigroup over a group.  If the argument is a 0-simple semigroup,
-      then an isomorphism to a Rees 0-matrix semigroup over a group is returned.<P/>
-  
-      See <Ref Prop="IsSimpleSemigroup"/> and <Ref Prop="IsZeroSimpleSemigroup"/>.
-      <Example>
-gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ), 
-> Transformation( [ 3, 4, 3, 4, 4 ] ), 
-> Transformation( [ 3, 4, 3, 4, 3 ] ),  
-> Transformation( [ 4, 3, 3, 4, 4 ] ));;
+      matrix semigroup over a group. If <A>S</A> is not simple, then
+      <C>IsomorphismReesMatrixSemigroup</C> returns an error.
+      <P/>
+      
+      If the argument <A>S</A> is a 0-simple semigroup, then
+      <C>IsomorphismReesZeroMatrixSemigroup</C> returns an isomorphism to a
+      Rees 0-matrix semigroup over a group. If <A>S</A> is not 0-simple, then
+      <C>IsomorphismReesMatrixSemigroup</C> returns an error.
+      <P/>
+      
+      See <Ref Prop="IsSimpleSemigroup"/> and 
+      <Ref Prop="IsZeroSimpleSemigroup"/>.
+      <Example><![CDATA[
+gap> S := Semigroup(Transformation([2, 1, 1, 2, 1]), 
+>                   Transformation([3, 4, 3, 4, 4]), 
+>                   Transformation([3, 4, 3, 4, 3]),  
+>                   Transformation([4, 3, 3, 4, 4]));;
 gap> IsSimpleSemigroup(S);
 true
 gap> Range(IsomorphismReesMatrixSemigroup(S));
-&lt;Rees matrix semigroup 4x2 over Group([ (1,2) ])>
-gap> mat:=[[(), 0, 0], [0, (), 0], [0, 0, ()]];;
-gap> R:=ReesZeroMatrixSemigroup(Group((1,2,4,5,6)), mat);
-&lt;Rees 0-matrix semigroup 3x3 over Group([ (1,2,4,5,6) ])>
-gap> U:=ReesZeroMatrixSubsemigroup(R, [1,2], Group(()), [2,3]);
-&lt;subsemigroup of 3x3 Rees 0-matrix semigroup with 4 generators>
+<Rees matrix semigroup 4x2 over Group([ (1,2) ])>
+gap> mat := [[(), 0, 0], 
+>            [0, (), 0], 
+>            [0, 0, ()]];;
+gap> R := ReesZeroMatrixSemigroup(Group((1,2,4,5,6)), mat);
+<Rees 0-matrix semigroup 3x3 over Group([ (1,2,4,5,6) ])>
+gap> U := ReesZeroMatrixSubsemigroup(R, [1, 2], Group(()), [2, 3]);
+<subsemigroup of 3x3 Rees 0-matrix semigroup with 4 generators>
 gap> IsZeroSimpleSemigroup(U);
 false
-gap> U:=ReesZeroMatrixSubsemigroup(R, [2,3], Group(()), [2,3]);
-&lt;subsemigroup of 3x3 Rees 0-matrix semigroup with 3 generators>
+gap> U := ReesZeroMatrixSubsemigroup(R, [2, 3], Group(()), [2, 3]);
+<subsemigroup of 3x3 Rees 0-matrix semigroup with 3 generators>
 gap> IsZeroSimpleSemigroup(U);
 true
 gap> Rows(U); Columns(U);
 [ 2, 3 ]
 [ 2, 3 ]
-gap> V:=Range(IsomorphismReesMatrixSemigroup(U));
-&lt;Rees 0-matrix semigroup 2x2 over Group(())>
+gap> V := Range(IsomorphismReesZeroMatrixSemigroup(U));
+<Rees 0-matrix semigroup 2x2 over Group(())>
 gap> Rows(V); Columns(V); 
 [ 1, 2 ]
-[ 1, 2 ]</Example>
+[ 1, 2 ]]]></Example>
     </Description>
   </ManSection>
 
@@ -201,17 +213,17 @@ gap> Rows(V); Columns(V);
     Every element of a Rees matrix semigroup belongs to the category
     <C>IsReesMatrixSemigroupElement</C>, and every element of a Rees 0-matrix
     semigroup belongs to the category <C>IsReesZeroMatrixSemigroupElement</C>.
-    <Example>
+    <Example><![CDATA[
 gap> G:=Group((1,2,3));;
 gap> mat:=[ [ (), (1,3,2) ], [ (1,3,2), () ] ];;
 gap> R:=ReesMatrixSemigroup(G, mat);
-&lt;Rees matrix semigroup 2x2 over Group([ (1,2,3) ])>
+<Rees matrix semigroup 2x2 over Group([ (1,2,3) ])>
 gap> GeneratorsOfSemigroup(R);
 [ (1,(1,2,3),1), (2,(),2) ]
 gap> IsReesMatrixSemigroupElement(last[1]);
 true
 gap> IsReesZeroMatrixSemigroupElement(last2[1]);
-false</Example>
+false]]></Example>
     </Description>
   </ManSection>
 
@@ -238,15 +250,15 @@ false</Example>
       recovered from <C>y</C> using <C>y[1]</C>, <C>y[2]</C>, and <C>y[3]</C>,
       respectively.<P/>
 
-      <Example>
+      <Example><![CDATA[
 gap> G:=Group((1,2,3));;
 gap> mat:=[ [ 0, () ], [ (1,3,2), (1,3,2) ] ];;
 gap> R:=ReesZeroMatrixSemigroup(G, mat);
-&lt;Rees 0-matrix semigroup 2x2 over Group([ (1,2,3) ])>
+<Rees 0-matrix semigroup 2x2 over Group([ (1,2,3) ])>
 gap> ReesZeroMatrixSemigroupElement(R, 1, (1,2,3), 2);
 (1,(1,2,3),2)
 gap> MultiplicativeZero(R);
-0</Example>
+0]]></Example>
   </Description>
   </ManSection>
 
@@ -262,20 +274,20 @@ gap> MultiplicativeZero(R);
     Note that a subsemigroup of a Rees matrix semigroup is not necessarily a
     Rees matrix semigroup.  
    
-    <Example>
+    <Example><![CDATA[
 gap> G:=DihedralGroup(32);;
 gap> mat:=List([1..2], x-> List([1..10], x-> Random(G)));;
 gap> R:=ReesMatrixSemigroup(G, mat);
-&lt;Rees matrix semigroup 10x2 over &lt;pc group of size 32 with 
+<Rees matrix semigroup 10x2 over <pc group of size 32 with 
  5 generators>>
 gap> S:=Semigroup(GeneratorsOfSemigroup(R));      
-&lt;subsemigroup of 10x2 Rees matrix semigroup with 14 generators>
+<subsemigroup of 10x2 Rees matrix semigroup with 14 generators>
 gap> IsReesMatrixSubsemigroup(S); 
 true
 gap> S:=Semigroup(GeneratorsOfSemigroup(R)[1]);
-&lt;subsemigroup of 10x2 Rees matrix semigroup with 1 generator>
+<subsemigroup of 10x2 Rees matrix semigroup with 1 generator>
 gap> IsReesMatrixSubsemigroup(S);
-true</Example> 
+true]]></Example> 
     </Description>
   </ManSection>
 
@@ -307,25 +319,25 @@ true</Example>
       if it is isomorphic to a Rees 0-matrix semigroup over a group; again this
       isomorphism can be found by using <Ref Attr="IsomorphismReesMatrixSemigroup"/>.
 
-<Example>
+<Example><![CDATA[
 gap> G:=PSL(2,5);;
 gap> mat:=[ [ 0, (), 0, (2,6,3,5,4) ], 
 > [ (), 0, (), 0 ], [ 0, 0, 0, () ] ];;
 gap> R:=ReesZeroMatrixSemigroup(G, mat);
-&lt;Rees 0-matrix semigroup 4x3 over Group([ (3,5)(4,6), (1,2,5)
+<Rees 0-matrix semigroup 4x3 over Group([ (3,5)(4,6), (1,2,5)
 (3,4,6) ])>
 gap> IsReesZeroMatrixSemigroup(R);
 true
 gap> U:=ReesZeroMatrixSubsemigroup(R, [1..3], Group(()), [1..2]);
-&lt;subsemigroup of 4x3 Rees 0-matrix semigroup with 4 generators>
+<subsemigroup of 4x3 Rees 0-matrix semigroup with 4 generators>
 gap> IsReesZeroMatrixSemigroup(U);
 true
 gap> V:=Semigroup(GeneratorsOfSemigroup(U));
-&lt;subsemigroup of 4x3 Rees 0-matrix semigroup with 4 generators>
+<subsemigroup of 4x3 Rees 0-matrix semigroup with 4 generators>
 gap> IsReesZeroMatrixSemigroup(V);
 true
 gap> S:=Semigroup(Transformation([1,1]), Transformation([1,2]));
-&lt;commutative transformation monoid on 2 pts with 1 generator>
+<commutative transformation monoid of degree 2 with 1 generator>
 gap> IsSimpleSemigroup(S);
 false
 gap> mat:=[[0, One(S), 0, One(S)], [One(S), 0, One(S), 0], 
@@ -333,17 +345,17 @@ gap> mat:=[[0, One(S), 0, One(S)], [One(S), 0, One(S), 0],
 gap> R:=ReesZeroMatrixSemigroup(S, mat);;
 gap> U:=ReesZeroMatrixSubsemigroup(R, [1..3], 
 > Semigroup(Transformation([1,1])), [1..2]);
-&lt;subsemigroup of 4x3 Rees 0-matrix semigroup with 6 generators>
+<subsemigroup of 4x3 Rees 0-matrix semigroup with 6 generators>
 gap> V:=Semigroup(GeneratorsOfSemigroup(U));
-&lt;subsemigroup of 4x3 Rees 0-matrix semigroup with 6 generators>
+<subsemigroup of 4x3 Rees 0-matrix semigroup with 6 generators>
 gap> IsReesZeroMatrixSemigroup(V);
 true
 gap> T:=Semigroup(
 > ReesZeroMatrixSemigroupElement(R, 3, Transformation( [ 1, 1 ] ), 3), 
 > ReesZeroMatrixSemigroupElement(R, 2, Transformation( [ 1, 1 ] ), 2));
-&lt;subsemigroup of 4x3 Rees 0-matrix semigroup with 2 generators>
+<subsemigroup of 4x3 Rees 0-matrix semigroup with 2 generators>
 gap> IsReesZeroMatrixSemigroup(T);
-false</Example>
+false]]></Example>
   </Description>  
 </ManSection>
 
@@ -366,17 +378,18 @@ false</Example>
       a matrix. Such a subsemigroup <A>R</A> has a matrix if and
       only if it satisfies <Ref Attr="IsReesMatrixSemigroup"/> or <Ref
         Attr="IsReesZeroMatrixSemigroup"/>.
-      <Example>
+      <Example><![CDATA[
 gap> G:=AlternatingGroup(5);;
 gap> mat:=[[(), (), ()], [(), (), ()]];;
 gap> R:=ReesMatrixSemigroup(G, mat);
-&lt;Rees matrix semigroup 3x2 over Alt( [ 1 .. 5 ] )>
+<Rees matrix semigroup 3x2 over Alt( [ 1 .. 5 ] )>
 gap> Matrix(R); 
 [ [ (), (), () ], [ (), (), () ] ]
 gap> R:=ReesMatrixSubsemigroup(R, [1,2], Group(()), [2]);
-&lt;subsemigroup of 3x2 Rees matrix semigroup with 2 generators>
+<subsemigroup of 3x2 Rees matrix semigroup with 2 generators>
 gap> Matrix(R);
-[ [ (), (), () ], [ (), (), () ] ]</Example>
+[ [ (), (), () ], [ (), (), () ] ]
+]]></Example>
     </Description>
   </ManSection>
 
@@ -397,15 +410,16 @@ gap> Matrix(R);
       rows or columns. Such a subsemigroup <A>R</A> has rows and columns  if and
       only if it satisfies <Ref Attr="IsReesMatrixSemigroup"/> or <Ref
         Attr="IsReesZeroMatrixSemigroup"/>.
-    <Example>
+    <Example><![CDATA[
 gap> G:=Group((1,2,3));;                      
 gap> mat:=List([1..100], x-> List([1..200], x->Random(G)));;
 gap> R:=ReesZeroMatrixSemigroup(G, mat); 
-&lt;Rees 0-matrix semigroup 200x100 over Group([ (1,2,3) ])>
+<Rees 0-matrix semigroup 200x100 over Group([ (1,2,3) ])>
 gap> Rows(R);
 [ 1 .. 200 ]
 gap> Columns(R);
-[ 1 .. 100 ]</Example>
+[ 1 .. 100 ]
+]]></Example>
     </Description>
   </ManSection>
 
@@ -423,14 +437,15 @@ gap> Columns(R);
       an underlying semigroup. Such a subsemigroup <A>R</A> has an underlying
       semigroup if and only if it satisfies <Ref Attr="IsReesMatrixSemigroup"/>
       or <Ref Attr="IsReesZeroMatrixSemigroup"/>.
-    <Example>
+    <Example><![CDATA[
 gap> S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ), 
 > Transformation( [ 3, 4, 3, 4, 4 ] ), Transformation([ 3, 4, 3, 4, 3 ] ),
 > Transformation([ 4, 3, 3, 4, 4 ] ) );;
 gap> R:=Range(IsomorphismReesMatrixSemigroup(S));    
-&lt;Rees matrix semigroup 4x2 over Group([ (1,2) ])>
+<Rees matrix semigroup 4x2 over Group([ (1,2) ])>
 gap> UnderlyingSemigroup(R);
-Group([ (1,2) ])</Example>
+Group([ (1,2) ])
+]]></Example>
     </Description>
   </ManSection>
 
@@ -465,14 +480,14 @@ Group([ (1,2) ])</Example>
       quotient of the ideal generated by <A>D</A> by it maximal subideal. The
       associated Rees matrix semigroup of <A>D</A> is just the Rees 0-matrix
       semigroup isomorphic to the semigroup defined above.
-    <Log>
+    <Log><![CDATA[
 gap> S:=FullTransformationSemigroup(5);;
 gap> D:=GreensDClasses(S)[3];
 {Transformation( [ 1, 1, 1, 2, 3 ] )}
 gap> AssociatedReesMatrixSemigroupOfDClass(D);
-&lt;Rees 0-matrix semigroup 25x10 over Group([ (1,2)(3,5)(4,6), (1,3)
+<Rees 0-matrix semigroup 25x10 over Group([ (1,2)(3,5)(4,6), (1,3)
 (2,4)(5,6) ])>
-  </Log>
+]]></Log>
     </Description>
   </ManSection>
 </Section>

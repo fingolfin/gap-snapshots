@@ -1922,33 +1922,18 @@ ImfMatrixGroup(5,1,3)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">phi := IsomorphismPermGroup( G );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">P := Image( phi );</span>
 Group([ (1,7,6)(2,9)(4,5,10), (2,3,4,5)(6,9,8,7) ])
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DerivedSubgroup( P );</span>
-Group([ (1,2,10,9)(3,8)(4,5)(6,7), (1,6)(2,7,9,4)(3,8)(5,10), (1,9)
-(2,10)(3,6,8,5)(4,7) ])
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := DerivedSubgroup( P );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( D );</span>
 960
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPerfectGroup( D );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># We have found the solvable residuum of P,</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># now move the results back to the matrix group G.</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := PreImage( phi, D );</span>
-&lt;matrix group of size 960 with 3 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for m in GeneratorsOfGroup( R ) do PrintArray( m ); od;</span>
-[ [  -1,  -1,  -1,  -1,   2 ],
-  [   0,  -1,   0,   0,   0 ],
-  [   0,   0,   0,   1,   0 ],
-  [   0,   0,   1,   0,   0 ],
-  [  -1,  -1,   0,   0,   1 ] ]
-[ [   0,   0,  -1,   0,   0 ],
-  [   0,  -1,   0,   0,   0 ],
-  [   1,   0,   0,   0,   0 ],
-  [  -1,  -1,  -1,  -1,   2 ],
-  [   0,  -1,  -1,   0,   1 ] ]
-[ [  -1,  -1,  -1,  -1,   2 ],
-  [   0,   0,   0,  -1,   0 ],
-  [   0,   0,  -1,   0,   0 ],
-  [   0,   1,   0,   0,   0 ],
-  [   0,   0,  -1,  -1,   1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := PreImage( phi, D );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">StructureDescription(R);</span>
+"(C2 x C2 x C2 x C2) : A5"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdGroup(D)=IdGroup(R);</span>
+true
 </pre></div>
 
 <p><a id="X7CEDB6CE7BAC4518" name="X7CEDB6CE7BAC4518"></a></p>

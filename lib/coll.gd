@@ -1031,6 +1031,7 @@ end );
 ##  <#GAPDoc Label="Iterator">
 ##  <ManSection>
 ##  <Oper Name="Iterator" Arg='listorcoll'/>
+##  <Filt Name="IsStandardIterator" Arg='listorcoll'/>
 ##
 ##  <Description>
 ##  Iterators provide a possibility to loop over the elements of a
@@ -1098,6 +1099,11 @@ end );
 ##  from <M>C</M>, which provides a (partial) mapping from <M>C</M> to the
 ##  positive integers.
 ##  <P/>
+##  The filter <Ref Filt="IsStandardIterator"/> means that the iterator is
+##  implemented as a component object and has components <C>IsDoneIterator</C>
+##  and <C>NextIterator</C> which are bound to the methods of the operations of
+##  the same name for this iterator. 
+##  <!-- (This is used to avoid overhead when looping over such iterators.) -->
 ##  <!--  We wanted to admit an iterator as first argument of <C>Filtered</C>,-->
 ##  <!--  <C>First</C>, <C>ForAll</C>, <C>ForAny</C>, <C>Number</C>.-->
 ##  <!--  This is not yet implemented.-->
@@ -1123,6 +1129,7 @@ end );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
+DeclareFilter("IsStandardIterator");
 DeclareOperation( "Iterator", [ IsListOrCollection ] );
 
 
@@ -1292,6 +1299,14 @@ DeclareGlobalFunction( "TrivialIterator" );
 ##      of <A>iter</A> but behaves like <A>iter</A> w.r.t. the operations
 ##      <Ref Func="NextIterator"/> and <Ref Func="IsDoneIterator"/>.
 ##  </Item>
+##  <Mark><C>ViewObj</C> and <C>PrintObj</C></Mark>
+##  <Item>
+##      two functions that print what one wants to be printed when
+##      <C>View( <A>iter</A> )</C> or <C>Print( <A>item</A> )</C> is called
+##      (see&nbsp;<Ref Sect="View and Print"/>),
+##      if the <C>ViewObj</C> component is missing then the <C>PrintObj</C>
+##      method is used as a default.
+##  </Item>
 ##  </List>
 ##  Further (data) components may be contained in <A>record</A> which can be
 ##  used by these function.
@@ -1299,6 +1314,9 @@ DeclareGlobalFunction( "TrivialIterator" );
 ##  <Ref Func="IteratorByFunctions"/> does <E>not</E> make a shallow copy of
 ##  <A>record</A>, this record is changed in place
 ##  (see Section &nbsp;<Ref Sect="Creating Objects"/>).
+##  <P/>
+##  Iterators constructed with <Ref Func="IteratorByFunctions"/> are in the
+##  filter <Ref Filt="IsStandardIterator"/>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -1569,7 +1587,9 @@ DeclareAttribute( "RepresentativeSmallest", IsListOrCollection );
 ##  <Oper Name="Random" Arg='from, to' Label="for lower and upper bound"/>
 ##
 ##  <Description>
-##  <Index Subkey="of a list or collection">random element</Index>
+##  <!-- to get this on top of results for ?Random -->
+##  <Index Key="Random"><Ref Func="Random" 
+##                           Label="for a list or collection"/></Index> 
 ##  <Ref Oper="Random" Label="for a list or collection"/> returns a
 ##  (pseudo-)random element of the list or collection <A>listorcoll</A>.
 ##  <P/>
@@ -1581,7 +1601,7 @@ DeclareAttribute( "RepresentativeSmallest", IsListOrCollection );
 ##  The distribution of elements returned by
 ##  <Ref Oper="Random" Label="for a list or collection"/> depends
 ##  on the argument.
-##  For a list, all elements are equally likely.
+##  For a list the distribution is uniform (all elements are equally likely).
 ##  The same holds usually for finite collections that are
 ##  not lists.
 ##  For infinite collections some reasonable distribution is used.
@@ -1590,19 +1610,24 @@ DeclareAttribute( "RepresentativeSmallest", IsListOrCollection );
 ##  which distribution is being used.
 ##  <P/>
 ##  For some collections ensuring a reasonable distribution can be
-##  difficult and require substantial runtime.
-##  If speed at the cost of equal distribution is desired,
+##  difficult and require substantial runtime (for example for large
+##  finite groups). If speed is more important than a guaranteed
+##  distribution, 
 ##  the operation <Ref Func="PseudoRandom"/> should be used instead.
 ##  <P/>
 ##  Note that <Ref Oper="Random" Label="for a list or collection"/>
 ##  is of course <E>not</E> an attribute.
 ##  <P/>
 ##  <Example><![CDATA[
-##  gap> Random(Rationals);
-##  4
+##  gap> Random([1..6]);
+##  1
+##  gap> Random(1, 2^100);
+##  866227015645295902682304086250
 ##  gap> g:= Group( (1,2,3) );;  Random( g );  Random( g );
 ##  (1,3,2)
-##  ()
+##  (1,2,3)
+##  gap> Random(Rationals);
+##  -2
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -1841,7 +1866,7 @@ DeclareGlobalFunction( "EnumeratorOfSubset" );
 ##  <Description>
 ##  <Ref Func="EnumeratorByFunctions" Label="for a domain and a record"/>
 ##  returns an immutable, dense, and duplicate-free list <M>enum</M> for
-##  which <Ref Func="IsBound" Label="for a list position"/>,
+##  which <Ref Func="IsBound" Label="for a list index"/>,
 ##  element access via <Ref Func="\[\]"/>,
 ##  <Ref Func="Length"/>, and <Ref Func="Position"/>
 ##  are computed via prescribed functions.
@@ -1877,7 +1902,7 @@ DeclareGlobalFunction( "EnumeratorOfSubset" );
 ##  If the first argument is a domain <A>D</A> then <A>enum</A> lists the
 ##  elements of <A>D</A> (in general <A>enum</A> is <E>not</E> sorted),
 ##  and methods for <Ref Attr="Length"/>,
-##  <Ref Func="IsBound" Label="for a list position"/>,
+##  <Ref Func="IsBound" Label="for a list index"/>,
 ##  and <Ref Func="PrintObj"/> may use <A>D</A>.
 ##  <!-- is this really true for Length?-->
 ##  <P/>
@@ -2741,10 +2766,10 @@ DeclareOperation( "ForAnyOp", [ IsListOrCollection, IsFunction ] );
 ##
 ##  <#GAPDoc Label="ListX">
 ##  <ManSection>
-##  <Oper Name="ListX" Arg='arg1, arg2, ... argn, func'/>
+##  <Func Name="ListX" Arg='arg1, arg2, ... argn, func'/>
 ##
 ##  <Description>
-##  <Ref Oper="ListX"/> returns a new list constructed from the arguments.
+##  <Ref Func="ListX"/> returns a new list constructed from the arguments.
 ##  <P/>
 ##  Each of the arguments <A>arg1</A>, <A>arg2</A>, <M>\ldots</M> <A>argn</A>
 ##  must be one of the following:
@@ -2832,11 +2857,11 @@ DeclareGlobalFunction( "ListX" );
 ##
 ##  <#GAPDoc Label="SetX">
 ##  <ManSection>
-##  <Oper Name="SetX" Arg='arg1, arg2, ... func'/>
+##  <Func Name="SetX" Arg='arg1, arg2, ... func'/>
 ##
 ##  <Description>
-##  The only difference between <Ref Oper="SetX"/> and <Ref Oper="ListX"/>
-##  is that the result list of <Ref Oper="SetX"/> is strictly sorted.
+##  The only difference between <Ref Func="SetX"/> and <Ref Func="ListX"/>
+##  is that the result list of <Ref Func="SetX"/> is strictly sorted.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -2850,11 +2875,11 @@ DeclareGlobalFunction( "SetX" );
 ##
 ##  <#GAPDoc Label="SumX">
 ##  <ManSection>
-##  <Oper Name="SumX" Arg='arg1, arg2, ... func'/>
+##  <Func Name="SumX" Arg='arg1, arg2, ... func'/>
 ##
 ##  <Description>
-##  <Ref Oper="SumX"/> returns the sum of the elements in the list obtained
-##  by <Ref Oper="ListX"/> when this is called with the same arguments.
+##  <Ref Func="SumX"/> returns the sum of the elements in the list obtained
+##  by <Ref Func="ListX"/> when this is called with the same arguments.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -2868,11 +2893,11 @@ DeclareGlobalFunction( "SumX" );
 ##
 ##  <#GAPDoc Label="ProductX">
 ##  <ManSection>
-##  <Oper Name="ProductX" Arg='arg1, arg2, ... func'/>
+##  <Func Name="ProductX" Arg='arg1, arg2, ... func'/>
 ##
 ##  <Description>
-##  <Ref Oper="ProductX"/> returns the product of the elements in the list
-##  obtained by <Ref Oper="ListX"/> when this is called with the same
+##  <Ref Func="ProductX"/> returns the product of the elements in the list
+##  obtained by <Ref Func="ListX"/> when this is called with the same
 ##  arguments.
 ##  </Description>
 ##  </ManSection>
@@ -2887,10 +2912,10 @@ DeclareGlobalFunction( "ProductX" );
 ##
 ##  <#GAPDoc Label="Perform">
 ##  <ManSection>
-##  <Oper Name="Perform" Arg='list, func'/>
+##  <Func Name="Perform" Arg='list, func'/>
 ##
 ##  <Description>
-##  <Ref Oper="Perform"/> applies the function <A>func</A> to every element
+##  <Ref Func="Perform"/> applies the function <A>func</A> to every element
 ##  of the list <A>list</A>, discarding any return values.
 ##  It does not return a value.
 ##  <P/>

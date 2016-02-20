@@ -113,8 +113,9 @@ Unbind(ErrorInner);
 BIND_GLOBAL("ErrorInner",
         function( arg )
     local   context, mayReturnVoid,  mayReturnObj,  lateMessage,  earlyMessage,  
-            x,  prompt,  res, errorLVars, justQuit, printThisStatement;
+            x,  prompt,  res, errorLVars, justQuit, printThisStatement, timeout;
 
+    timeout := STOP_TIMEOUT();
 	context := arg[1].context;
     if not IsLVarsBag(context) then
         PrintTo("*errout*", "ErrorInner:   option context must be a local variables bag\n");
@@ -248,6 +249,9 @@ BIND_GLOBAL("ErrorInner",
         fi;
         JUMP_TO_CATCH(3);
     fi;
+    if timeout <> fail then
+       RESUME_TIMEOUT(timeout);
+    fi;
     if Length(res) > 0 then
         return res[1];
     else
@@ -266,3 +270,11 @@ BIND_GLOBAL("Error",
                                arg);
 end);
 
+BIND_GLOBAL("ErrorNoReturn",
+       function ( arg )
+    ErrorInner( rec(
+         context := ParentLVars( GetCurrentLVars(  ) ),
+         mayReturnVoid := false, mayReturnObj := false,
+         lateMessage := "type 'quit;' to quit to outer loop",
+         printThisStatement := false), arg);
+end);

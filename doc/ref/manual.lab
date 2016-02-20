@@ -54,9 +54,10 @@
 \makelabel{ref:Information about a function}{5.1}{X870553EF8605792F}
 \makelabel{ref:Calling  a  function  with  a  list  argument  that  is interpreted as several
 arguments}{5.2}{X851B58408520700D}
-\makelabel{ref:Functions that do nothing}{5.3}{X7EB0A85F7D128BE0}
-\makelabel{ref:Function Types}{5.4}{X80FE39D27CE3DE1B}
-\makelabel{ref:Naming Conventions}{5.5}{X81F732457F7BC851}
+\makelabel{ref:Calling a function with a time limit}{5.3}{X7B3D856B7DCAEB8F}
+\makelabel{ref:Functions that do nothing}{5.4}{X7EB0A85F7D128BE0}
+\makelabel{ref:Function Types}{5.5}{X80FE39D27CE3DE1B}
+\makelabel{ref:Naming Conventions}{5.6}{X81F732457F7BC851}
 \makelabel{ref:Main Loop and Break Loop}{6}{X7DB71A2A841CADA5}
 \makelabel{ref:Main Loop}{6.1}{X81667F568237B232}
 \makelabel{ref:Special Rules for Input Lines}{6.2}{X866092F281910B74}
@@ -88,10 +89,13 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Assertions}{7.5}{X86425F067FC63A4C}
 \makelabel{ref:Timing}{7.6}{X792BA9A67E64CDED}
 \makelabel{ref:Profiling}{7.7}{X7FDF923D7D2937A1}
-\makelabel{ref:An Example of Profiling}{7.7.10}{X7940BCF2812C6186}
+\makelabel{ref:Function Profiling}{7.7.1}{X7939F6F182FDA5F1}
+\makelabel{ref:An Example of Function Profiling}{7.7.11}{X7C5CE32579891120}
+\makelabel{ref:Line By Line Profiling}{7.7.12}{X812F9CE0817110EA}
+\makelabel{ref:Line by Line profiling example}{7.7.13}{X7E9C65B17B8EF993}
 \makelabel{ref:Information about the version used}{7.8}{X7EE874867C0BEEDD}
 \makelabel{ref:Test Files}{7.9}{X801051CC86594630}
-\makelabel{ref:Starting and stopping test}{7.9.2}{X8213757B7ACC76E6}
+\makelabel{ref:Starting and stopping test}{7.9.1}{X8213757B7ACC76E6}
 \makelabel{ref:Debugging Recursion}{7.10}{X85FF55448787CCA0}
 \makelabel{ref:Global Memory Information}{7.11}{X85679F17791D9B63}
 \makelabel{ref:Options Stack}{8}{X7FD84061873F72A2}
@@ -293,14 +297,15 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Strings As Lists}{27.1.3}{X7B1B45C587A72F96}
 \makelabel{ref:Printing Strings}{27.1.4}{X7EA6CA7486D7E9DD}
 \makelabel{ref:Special Characters}{27.2}{X82E5F5AB818F32DB}
-\makelabel{ref:Internally Represented Strings}{27.3}{X82AEC07487C45ECD}
-\makelabel{ref:Recognizing Characters}{27.4}{X82F980A17FE84AA4}
-\makelabel{ref:Comparisons of Strings}{27.5}{X8127954B79B8A0DA}
-\makelabel{ref:Operations to Produce or Manipulate Strings}{27.6}{X7E72717A82A309F5}
-\makelabel{ref:Character Conversion}{27.7}{X844BDC8578A3B508}
-\makelabel{ref:Operations to Evaluate Strings}{27.8}{X78D9BD857F890C0A}
-\makelabel{ref:Calendar Arithmetic}{27.9}{X78F20AA1804D524F}
-\makelabel{ref:Obtaining LaTeX Representations of Objects}{27.10}{X78024C8087F3E07F}
+\makelabel{ref:Triple Quoted Strings}{27.3}{X7E70384E7D0B7083}
+\makelabel{ref:Internally Represented Strings}{27.4}{X82AEC07487C45ECD}
+\makelabel{ref:Recognizing Characters}{27.5}{X82F980A17FE84AA4}
+\makelabel{ref:Comparisons of Strings}{27.6}{X8127954B79B8A0DA}
+\makelabel{ref:Operations to Produce or Manipulate Strings}{27.7}{X7E72717A82A309F5}
+\makelabel{ref:Character Conversion}{27.8}{X844BDC8578A3B508}
+\makelabel{ref:Operations to Evaluate Strings}{27.9}{X78D9BD857F890C0A}
+\makelabel{ref:Calendar Arithmetic}{27.10}{X78F20AA1804D524F}
+\makelabel{ref:Obtaining LaTeX Representations of Objects}{27.11}{X78024C8087F3E07F}
 \makelabel{ref:Dictionaries and General Hash Tables}{28}{X867203C5877489A2}
 \makelabel{ref:Using Dictionaries}{28.1}{X81560C4083E27955}
 \makelabel{ref:Dictionaries}{28.2}{X7B571EA282AF70D7}
@@ -670,7 +675,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Ring}{56.1.2}{X820B172A860A5B1A}
 \makelabel{ref:DefaultRing}{56.1.3}{X83AFFCC77DE6ABDA}
 \makelabel{ref:ClosureRing}{56.1.8}{X819B0AFE79C78C34}
-\makelabel{ref:Ideals in Rings}{56.2}{X782EC7877DA864C9}
+\makelabel{ref:Ideals of Rings}{56.2}{X8776C3F97A731E70}
 \makelabel{ref:Rings With One}{56.3}{X790DD00586F9B8B8}
 \makelabel{ref:RingWithOne}{56.3.2}{X80942A318417366E}
 \makelabel{ref:Properties of Rings}{56.4}{X797F5869874BDBFB}
@@ -681,6 +686,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:GcdRepresentation}{56.7.3}{X7ABB91EF838075EF}
 \makelabel{ref:Lcm}{56.7.6}{X7ABA92057DD6C7AF}
 \makelabel{ref:Homomorphisms of Rings}{56.8}{X7B13484581169439}
+\makelabel{ref:Small Rings}{56.9}{X81D526A57B375AAD}
 \makelabel{ref:Modules}{57}{X8183A6857B0C3633}
 \makelabel{ref:Generating modules}{57.1}{X87A33EFD7CC179C1}
 \makelabel{ref:Submodules}{57.2}{X7934FAE97B6D2AD8}
@@ -723,7 +729,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Constructing Algebras by Structure Constants}{62.4}{X7E8F45547CC07CE5}
 \makelabel{ref:Some Special Algebras}{62.5}{X79B7C3078112E7E1}
 \makelabel{ref:Subalgebras}{62.6}{X7DF5989886BE611E}
-\makelabel{ref:Ideals}{62.7}{X83629803819C4A6F}
+\makelabel{ref:Ideals of Algebras}{62.7}{X81EE8C1F7D7A7CF8}
 \makelabel{ref:Categories and Properties of Algebras}{62.8}{X7DC95D6982C9D7B0}
 \makelabel{ref:Attributes and Operations for Algebras}{62.9}{X7E9273E47CF38CF1}
 \makelabel{ref:Homomorphisms of Algebras}{62.10}{X7E94B857847F95C1}
@@ -910,6 +916,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Normal Forms of Integer Matrices – Name Changes}{77.3}{X79676CD27EF0F096}
 \makelabel{ref:Miscellaneous Name Changes or Removed Names}{77.4}{X7F6A6CBC7C9E91E5}
 \makelabel{ref:The former .gaprc file}{77.5}{X7F2FF72A7AD60E0C}
+\makelabel{ref:Properties of semigroups}{77.6}{X78274024827F306D}
 \makelabel{ref:Method Selection}{78}{X8058CC8187162644}
 \makelabel{ref:Operations and Methods}{78.1}{X7AEED9AB824CD4DA}
 \makelabel{ref:Method Installation}{78.2}{X795EE8257848B438}
@@ -1097,8 +1104,8 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:NamesSystemGVars}{4.9.9}{X7E604AF579A7BC92}
 \makelabel{ref:NamesUserGVars}{4.9.10}{X870169447AF490D8}
 \makelabel{ref:TemporaryGlobalVarName}{4.9.11}{X798433307E62DCBA}
-\makelabel{ref:functions with a variable number of arguments}{4.11.1}{X80B93A9C7E0A57F4}
-\makelabel{ref:arg special function argument}{4.11.1}{X80B93A9C7E0A57F4}
+\makelabel{ref:functions with a variable number of arguments, calling}{4.11.1}{X80B93A9C7E0A57F4}
+\makelabel{ref:arg special function argument, calling with}{4.11.1}{X80B93A9C7E0A57F4}
 \makelabel{ref:equality test}{4.12}{X7A274A1F8553B7E6}
 \makelabel{ref:inequality test}{4.12}{X7A274A1F8553B7E6}
 \makelabel{ref:smaller test}{4.12}{X7A274A1F8553B7E6}
@@ -1176,13 +1183,19 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:EndlineFunc}{5.1.5}{X7FF7643781D2C194}
 \makelabel{ref:PageSource}{5.1.6}{X845A929B83D46E01}
 \makelabel{ref:CallFuncList}{5.2.1}{X7CF4DDB97D65AE52}
-\makelabel{ref:ReturnTrue}{5.3.1}{X7DB422A2876CCC4D}
-\makelabel{ref:ReturnFalse}{5.3.2}{X7C131FB17D7518FC}
-\makelabel{ref:ReturnFail}{5.3.3}{X7A0994DE7C258E55}
-\makelabel{ref:IdFunc}{5.3.4}{X810325697BDEF899}
-\makelabel{ref:IsFunction}{5.4.1}{X85E40340806C2B8C}
-\makelabel{ref:IsOperation}{5.4.2}{X874C7C6D8650D648}
-\makelabel{ref:FunctionsFamily}{5.4.3}{X87838FE885A9AAF9}
+\makelabel{ref:Timeouts}{5.3}{X7B3D856B7DCAEB8F}
+\makelabel{ref:CallWithTimeout}{5.3.1}{X782F88AC7B6DC4F9}
+\makelabel{ref:CallWithTimeoutList}{5.3.1}{X782F88AC7B6DC4F9}
+\makelabel{ref:GAPInfo.TimeoutsSupported}{5.3.2}{X781D10C77D11A03C}
+\makelabel{ref:ReturnTrue}{5.4.1}{X7DB422A2876CCC4D}
+\makelabel{ref:ReturnFalse}{5.4.2}{X7C131FB17D7518FC}
+\makelabel{ref:ReturnFail}{5.4.3}{X7A0994DE7C258E55}
+\makelabel{ref:ReturnNothing}{5.4.4}{X818EA8C47B46A634}
+\makelabel{ref:ReturnFirst}{5.4.5}{X8788D7D780FCE169}
+\makelabel{ref:IdFunc}{5.4.6}{X810325697BDEF899}
+\makelabel{ref:IsFunction}{5.5.1}{X85E40340806C2B8C}
+\makelabel{ref:IsOperation}{5.5.2}{X874C7C6D8650D648}
+\makelabel{ref:FunctionsFamily}{5.5.3}{X87838FE885A9AAF9}
 \makelabel{ref:read eval print loop}{6.1}{X81667F568237B232}
 \makelabel{ref:loop read eval print}{6.1}{X81667F568237B232}
 \makelabel{ref:prompt}{6.1}{X81667F568237B232}
@@ -1212,16 +1225,20 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:DownEnv}{6.5.1}{X79E66DA2875303B0}
 \makelabel{ref:UpEnv}{6.5.1}{X79E66DA2875303B0}
 \makelabel{ref:Error}{6.6.1}{X7E7AD8D87EBA1A08}
-\makelabel{ref:ErrorCount}{6.6.2}{X86A11BCC7FECEEA4}
+\makelabel{ref:ErrorNoReturn}{6.6.2}{X7A5C000D7E4984DD}
+\makelabel{ref:ErrorCount}{6.6.3}{X86A11BCC7FECEEA4}
 \makelabel{ref:quit in emergency}{6.7}{X83704B1080FD9B40}
 \makelabel{ref:exit}{6.7}{X83704B1080FD9B40}
 \makelabel{ref:at exit functions}{6.7}{X83704B1080FD9B40}
 \makelabel{ref:saving on exit}{6.7}{X83704B1080FD9B40}
 \makelabel{ref:QUIT}{6.7.1}{X7ECC75048583853B}
 \makelabel{ref:QUIT emergency quit}{6.7.1}{X7ECC75048583853B}
-\makelabel{ref:InstallAtExit}{6.7.2}{X7A2C380986F46FEE}
-\makelabel{ref:QUITTING}{6.7.2}{X7A2C380986F46FEE}
-\makelabel{ref:SaveOnExitFile}{6.7.3}{X843C07A4869EAA1D}
+\makelabel{ref:GAPEXITCODE}{6.7.2}{X7F5DDF5A80CFE6C2}
+\makelabel{ref:QUITGAP}{6.7.3}{X7B56D486842496DB}
+\makelabel{ref:FORCEQUITGAP}{6.7.4}{X85804CF082AFF6AE}
+\makelabel{ref:InstallAtExit}{6.7.5}{X7A2C380986F46FEE}
+\makelabel{ref:QUITTING}{6.7.5}{X7A2C380986F46FEE}
+\makelabel{ref:SaveOnExitFile}{6.7.6}{X843C07A4869EAA1D}
 \makelabel{ref:ReadlineInitLine}{6.9.1}{X7C38F9E0783D9442}
 \makelabel{ref:SaveCommandLineHistory}{6.9.3}{X7C1F4D04861C1197}
 \makelabel{ref:ReadCommandLineHistory}{6.9.3}{X7C1F4D04861C1197}
@@ -1243,9 +1260,12 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:ApplicableMethodTypes}{7.2.1}{X80848FF486BD6F9F}
 \makelabel{ref:TraceMethods (for operations)}{7.3.1}{X80B044017C9E4137}
 \makelabel{ref:TraceMethods (for a list of operations)}{7.3.1}{X80B044017C9E4137}
-\makelabel{ref:UntraceMethods (for operations)}{7.3.2}{X7EB04D387C53E4C1}
-\makelabel{ref:UntraceMethods (for a list of operations)}{7.3.2}{X7EB04D387C53E4C1}
-\makelabel{ref:TraceImmediateMethods}{7.3.3}{X81078D3387A38E31}
+\makelabel{ref:TraceAllMethods}{7.3.2}{X7D34CADB813A4AF1}
+\makelabel{ref:UntraceMethods (for operations)}{7.3.3}{X7EB04D387C53E4C1}
+\makelabel{ref:UntraceMethods (for a list of operations)}{7.3.3}{X7EB04D387C53E4C1}
+\makelabel{ref:UntraceAllMethods}{7.3.4}{X7B3018AA82D55949}
+\makelabel{ref:TraceImmediateMethods}{7.3.5}{X81078D3387A38E31}
+\makelabel{ref:UntraceImmediateMethods}{7.3.5}{X81078D3387A38E31}
 \makelabel{ref:NewInfoClass}{7.4.1}{X7AA1A1CF79F20790}
 \makelabel{ref:DeclareInfoClass}{7.4.2}{X7B3709C584B3DA1E}
 \makelabel{ref:SetInfoLevel}{7.4.3}{X7A43B9E68765EE9E}
@@ -1262,23 +1282,29 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Runtimes}{7.6.1}{X80355C9282B35673}
 \makelabel{ref:Runtime}{7.6.2}{X7E32B27F81870D24}
 \makelabel{ref:time}{7.6.3}{X7C0F91F982189624}
-\makelabel{ref:ProfileGlobalFunctions}{7.7.1}{X79D6CB927BBEB940}
-\makelabel{ref:ProfileOperations}{7.7.2}{X7C893F68841B990B}
-\makelabel{ref:ProfileOperationsAndMethods}{7.7.3}{X79D41E977DCA2BEE}
-\makelabel{ref:ProfileFunctions}{7.7.4}{X81E8A8627C34FD3B}
-\makelabel{ref:UnprofileFunctions}{7.7.5}{X79D394EC7BE8D008}
-\makelabel{ref:ProfileMethods}{7.7.6}{X787AC3BE7F991344}
-\makelabel{ref:UnprofileMethods}{7.7.7}{X87A05F977F033693}
-\makelabel{ref:DisplayProfile}{7.7.8}{X80FEA6A08775A48E}
-\makelabel{ref:GAPInfo.ProfileThreshold}{7.7.8}{X80FEA6A08775A48E}
-\makelabel{ref:ClearProfile}{7.7.9}{X7DAF9AB9793AE203}
-\makelabel{ref:DisplayCacheStats}{7.7.11}{X83D8A42B7BB92F5B}
-\makelabel{ref:ClearCacheStats}{7.7.12}{X79C58704838232CC}
+\makelabel{ref:ProfileGlobalFunctions}{7.7.2}{X79D6CB927BBEB940}
+\makelabel{ref:ProfileOperations}{7.7.3}{X7C893F68841B990B}
+\makelabel{ref:ProfileOperationsAndMethods}{7.7.4}{X79D41E977DCA2BEE}
+\makelabel{ref:ProfileFunctions}{7.7.5}{X81E8A8627C34FD3B}
+\makelabel{ref:UnprofileFunctions}{7.7.6}{X79D394EC7BE8D008}
+\makelabel{ref:ProfileMethods}{7.7.7}{X787AC3BE7F991344}
+\makelabel{ref:UnprofileMethods}{7.7.8}{X87A05F977F033693}
+\makelabel{ref:DisplayProfile}{7.7.9}{X80FEA6A08775A48E}
+\makelabel{ref:GAPInfo.ProfileThreshold}{7.7.9}{X80FEA6A08775A48E}
+\makelabel{ref:ClearProfile}{7.7.10}{X7DAF9AB9793AE203}
+\makelabel{ref:ProfileLineByLine}{7.7.14}{X86557887796F66FA}
+\makelabel{ref:CoverageLineByLine}{7.7.15}{X87CC48807DB4C008}
+\makelabel{ref:UnprofileLineByLine}{7.7.16}{X7C5DED9C7CC77504}
+\makelabel{ref:UncoverageLineByLine}{7.7.17}{X7B705B2D8670A9C5}
+\makelabel{ref:ActivateProfileColour}{7.7.18}{X8015CD3D7F97B08C}
+\makelabel{ref:IsLineByLineProfileActive}{7.7.19}{X7823C83D79B36D3B}
+\makelabel{ref:DisplayCacheStats}{7.7.20}{X83D8A42B7BB92F5B}
+\makelabel{ref:ClearCacheStats}{7.7.21}{X79C58704838232CC}
 \makelabel{ref:GAPInfo.Version}{7.8}{X7EE874867C0BEEDD}
-\makelabel{ref:ReadTest}{7.9.1}{X7DBA18E38405A147}
-\makelabel{ref:STARTTEST}{7.9.2}{X8213757B7ACC76E6}
-\makelabel{ref:STOPTEST}{7.9.2}{X8213757B7ACC76E6}
-\makelabel{ref:Test}{7.9.3}{X87712F9D8732193C}
+\makelabel{ref:STARTTEST}{7.9.1}{X8213757B7ACC76E6}
+\makelabel{ref:STOPTEST}{7.9.1}{X8213757B7ACC76E6}
+\makelabel{ref:Test}{7.9.2}{X87712F9D8732193C}
+\makelabel{ref:TestDirectory}{7.9.3}{X87AF67528799481F}
 \makelabel{ref:SetRecursionTrapInterval}{7.10.1}{X7D8968FC7E24A4E5}
 \makelabel{ref:GasmanStatistics}{7.11.1}{X836977DE80416F3D}
 \makelabel{ref:GasmanMessageStatus}{7.11.2}{X85327FA5872E0356}
@@ -1338,14 +1364,13 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:UNIXSelect}{10.2.3}{X87BC257A78F96828}
 \makelabel{ref:Read (for streams)}{10.3.1}{X7A5DC83D7E295568}
 \makelabel{ref:ReadAsFunction (for streams)}{10.3.2}{X7D62F2877F0E45A7}
-\makelabel{ref:ReadTest (for streams)}{10.3.3}{X7D1702FE7C7530EB}
-\makelabel{ref:ReadByte}{10.3.4}{X79E1E6A57AE58BB8}
-\makelabel{ref:ReadLine}{10.3.5}{X7D2CA44C7D110C4F}
-\makelabel{ref:ReadAll}{10.3.6}{X85C603D7867430D0}
-\makelabel{ref:IsEndOfStream}{10.3.7}{X81D4FB097F631A79}
-\makelabel{ref:PositionStream}{10.3.8}{X7B646FA3860521D1}
-\makelabel{ref:RewindStream}{10.3.9}{X7A777E1186EB330B}
-\makelabel{ref:SeekPositionStream}{10.3.10}{X7A60AD8C7E0D0507}
+\makelabel{ref:ReadByte}{10.3.3}{X79E1E6A57AE58BB8}
+\makelabel{ref:ReadLine}{10.3.4}{X7D2CA44C7D110C4F}
+\makelabel{ref:ReadAll}{10.3.5}{X85C603D7867430D0}
+\makelabel{ref:IsEndOfStream}{10.3.6}{X81D4FB097F631A79}
+\makelabel{ref:PositionStream}{10.3.7}{X7B646FA3860521D1}
+\makelabel{ref:RewindStream}{10.3.8}{X7A777E1186EB330B}
+\makelabel{ref:SeekPositionStream}{10.3.9}{X7A60AD8C7E0D0507}
 \makelabel{ref:WriteByte}{10.4.1}{X7D37C7A07E9C319C}
 \makelabel{ref:WriteLine}{10.4.2}{X79FA85498596CC99}
 \makelabel{ref:WriteAll}{10.4.3}{X78C113917936058D}
@@ -1391,8 +1416,9 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:StructuralCopy}{12.7.2}{X7C1E70587EBDD2CB}
 \makelabel{ref:SetName}{12.8.1}{X85D6D47B83BD02A1}
 \makelabel{ref:Name}{12.8.2}{X7F14EF9D81432113}
-\makelabel{ref:IsInternallyConsistent}{12.8.3}{X7F6C5C3287E8B816}
-\makelabel{ref:MemoryUsage}{12.8.4}{X7F4D216B7DF7BE9D}
+\makelabel{ref:InfoText}{12.8.3}{X871562FD7F982C12}
+\makelabel{ref:IsInternallyConsistent}{12.8.4}{X7F6C5C3287E8B816}
+\makelabel{ref:MemoryUsage}{12.8.5}{X7F4D216B7DF7BE9D}
 \makelabel{ref:FamilyObj}{13.1.1}{X7CF70EAC84284919}
 \makelabel{ref:and for filters}{13.2}{X84EFA4C07D4277BB}
 \makelabel{ref:RankFilter}{13.2.1}{X82E62B997C05E05E}
@@ -1485,8 +1511,8 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:CheckDigitUPC}{14.6.1}{X82BABA8F868BD425}
 \makelabel{ref:CheckDigitTestFunction}{14.6.2}{X85F1A6A5870485B9}
 \makelabel{ref:IsRandomSource}{14.7.1}{X82E31A697E389F1D}
-\makelabel{ref:Random (for a list)}{14.7.2}{X7C51AAF881EBFE16}
-\makelabel{ref:Random (for a range of integers)}{14.7.2}{X7C51AAF881EBFE16}
+\makelabel{ref:Random (for random source and list)}{14.7.2}{X821004F286282D49}
+\makelabel{ref:Random (for random source and two integers)}{14.7.2}{X821004F286282D49}
 \makelabel{ref:State}{14.7.3}{X819E3E3080297347}
 \makelabel{ref:Reset}{14.7.3}{X819E3E3080297347}
 \makelabel{ref:Init}{14.7.3}{X819E3E3080297347}
@@ -1724,7 +1750,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Exp2}{19.2.1}{X87B6780178314628}
 \makelabel{ref:Exp10}{19.2.1}{X87B6780178314628}
 \makelabel{ref:Expm1}{19.2.1}{X87B6780178314628}
-\makelabel{ref:Cuberoot}{19.2.1}{X87B6780178314628}
+\makelabel{ref:CubeRoot}{19.2.1}{X87B6780178314628}
 \makelabel{ref:Square}{19.2.1}{X87B6780178314628}
 \makelabel{ref:Hypothenuse}{19.2.1}{X87B6780178314628}
 \makelabel{ref:Ceil}{19.2.1}{X87B6780178314628}
@@ -1733,7 +1759,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Trunc}{19.2.1}{X87B6780178314628}
 \makelabel{ref:Frac}{19.2.1}{X87B6780178314628}
 \makelabel{ref:SignFloat}{19.2.1}{X87B6780178314628}
-\makelabel{ref:Argument}{19.2.1}{X87B6780178314628}
+\makelabel{ref:Argument (for complex numbers)}{19.2.1}{X87B6780178314628}
 \makelabel{ref:Erf}{19.2.1}{X87B6780178314628}
 \makelabel{ref:Zeta}{19.2.1}{X87B6780178314628}
 \makelabel{ref:Gamma}{19.2.1}{X87B6780178314628}
@@ -1791,19 +1817,23 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:list unbind operation}{21.2}{X7B202D147A5C2884}
 \makelabel{ref:accessing list elements}{21.3}{X7921047F83F5FA28}
 \makelabel{ref:list element access}{21.3}{X7921047F83F5FA28}
+\makelabel{ref:multiple indices}{21.3}{X7921047F83F5FA28}
 \makelabel{ref:sublist}{21.3}{X7921047F83F5FA28}
 \makelabel{ref:sublist access}{21.3}{X7921047F83F5FA28}
 \makelabel{ref:sublist operation}{21.3}{X7921047F83F5FA28}
 \makelabel{ref:assignment to a list}{21.4}{X8611EF768210625B}
 \makelabel{ref:list element assignment}{21.4}{X8611EF768210625B}
+\makelabel{ref:multiple indices assignment}{21.4}{X8611EF768210625B}
 \makelabel{ref:sublist assignment}{21.4}{X8611EF768210625B}
 \makelabel{ref:sublist assignment operation}{21.4}{X8611EF768210625B}
 \makelabel{ref:Add}{21.4.2}{X795EC9D67E34DAB0}
 \makelabel{ref:Remove}{21.4.3}{X7E98B11B79BA9167}
 \makelabel{ref:CopyListEntries}{21.4.4}{X79D7E96F80A2D7C0}
 \makelabel{ref:Append}{21.4.5}{X79E31DB27C82D6E1}
-\makelabel{ref:IsBound (for a list position)}{21.5.1}{X876EAD64820B2405}
+\makelabel{ref:IsBound (for a list index)}{21.5.1}{X79EC565A7DCEC938}
+\makelabel{ref:IsBound (for multiple indices)}{21.5.1}{X79EC565A7DCEC938}
 \makelabel{ref:Unbind (unbind a list entry)}{21.5.2}{X78B72FDF7BD63C0B}
+\makelabel{ref:Unbind (for multiple indices)}{21.5.2}{X78B72FDF7BD63C0B}
 \makelabel{ref:ShallowCopy for lists}{21.7}{X7ED7C0738495556F}
 \makelabel{ref:StructuralCopy for lists}{21.7}{X7ED7C0738495556F}
 \makelabel{ref:in for lists}{21.8.1}{X7B914A287F88ED0A}
@@ -1841,7 +1871,6 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:PositionNot}{21.16.10}{X865EF45D87ED1384}
 \makelabel{ref:PositionNonZero}{21.16.11}{X7F42E5AD87EC9D5A}
 \makelabel{ref:PositionSublist}{21.16.12}{X87A8C62A867D6DA4}
-\makelabel{ref:PositionFirstComponent}{21.16.13}{X8132A2F5823F0CC0}
 \makelabel{ref:IsMatchingSublist}{21.17.1}{X83F8EC7C7BF27EFC}
 \makelabel{ref:IsDuplicateFree}{21.17.2}{X7FA892828252BB3B}
 \makelabel{ref:IsDuplicateFreeList}{21.17.2}{X7FA892828252BB3B}
@@ -2143,64 +2172,68 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:flush character}{27.2}{X82E5F5AB818F32DB}
 \makelabel{ref:octal character codes}{27.2}{X82E5F5AB818F32DB}
 \makelabel{ref:escaping non-special characters}{27.2}{X82E5F5AB818F32DB}
-\makelabel{ref:convert to a string}{27.3}{X82AEC07487C45ECD}
-\makelabel{ref:IsStringRep}{27.3.1}{X7A17EDF8785C9F58}
-\makelabel{ref:ConvertToStringRep}{27.3.2}{X7CE2415F7FEC5809}
-\makelabel{ref:CopyToStringRep}{27.3.3}{X7FFC464683CC8023}
-\makelabel{ref:IsEmptyString}{27.3.4}{X7D944D507CBB24CD}
-\makelabel{ref:EmptyString}{27.3.5}{X836078DC829A8221}
-\makelabel{ref:ShrinkAllocationString}{27.3.5}{X836078DC829A8221}
-\makelabel{ref:CharsFamily}{27.3.6}{X7DA671FC7F490C16}
-\makelabel{ref:IsDigitChar}{27.4.1}{X78566FD57B95ECBE}
-\makelabel{ref:IsLowerAlphaChar}{27.4.2}{X854114A97BAFEAEA}
-\makelabel{ref:IsUpperAlphaChar}{27.4.3}{X87B1A13D81353AD8}
-\makelabel{ref:IsAlphaChar}{27.4.4}{X84634DF67A431D26}
-\makelabel{ref:strings equality of}{27.5.1}{X79538F138286739A}
-\makelabel{ref:strings inequality of}{27.5.1}{X79538F138286739A}
-\makelabel{ref:strings lexicographic ordering of}{27.5.2}{X8129E3A785F60093}
-\makelabel{ref:DisplayString}{27.6.1}{X792FB3A1849FD739}
-\makelabel{ref:DEFAULTDISPLAYSTRING}{27.6.2}{X8482132779EA7A23}
-\makelabel{ref:ViewString}{27.6.3}{X7803FBCA79DB5529}
-\makelabel{ref:DEFAULTVIEWSTRING}{27.6.4}{X7BBDF9D383595425}
-\makelabel{ref:PrintString}{27.6.5}{X7B3CC87285DEC23D}
-\makelabel{ref:String}{27.6.6}{X81FB5BE27903EC32}
-\makelabel{ref:StripLineBreakCharacters}{27.6.7}{X86AACCE987F74FA5}
-\makelabel{ref:HexStringInt}{27.6.8}{X865FBB7E788017DD}
-\makelabel{ref:StringPP}{27.6.9}{X7BB1059185AB4F84}
-\makelabel{ref:WordAlp}{27.6.10}{X79C8280A853D8FA9}
-\makelabel{ref:LowercaseString}{27.6.11}{X798A0F35852ABDAD}
-\makelabel{ref:SplitString}{27.6.12}{X86E897D486DCFEAB}
-\makelabel{ref:ReplacedString}{27.6.13}{X864F0A9078D4DE0E}
-\makelabel{ref:NormalizeWhitespace}{27.6.14}{X806379367A53D171}
-\makelabel{ref:NormalizedWhitespace}{27.6.15}{X8685DE9386E57771}
-\makelabel{ref:RemoveCharacters}{27.6.16}{X86EBB6EB829723E4}
-\makelabel{ref:JoinStringsWithSeparator}{27.6.17}{X84624FEB825EC4B5}
-\makelabel{ref:Chomp}{27.6.18}{X79F8FFC5876D854A}
-\makelabel{ref:NumbersString}{27.6.19}{X7848A9D878FD59BB}
-\makelabel{ref:StringNumbers}{27.6.20}{X787EAB117816578E}
-\makelabel{ref:IntChar}{27.7.1}{X826D95D680F87D23}
-\makelabel{ref:CharInt}{27.7.2}{X87B6C1AF7E4A6639}
-\makelabel{ref:SIntChar}{27.7.3}{X8159CE81798DDA76}
-\makelabel{ref:CharSInt}{27.7.4}{X78E6611A829DDA3E}
-\makelabel{ref:Int (for strings)}{27.8.1}{X7B6D118184F692A0}
-\makelabel{ref:Rat (for strings)}{27.8.1}{X7B6D118184F692A0}
-\makelabel{ref:IntHexString}{27.8.1}{X7B6D118184F692A0}
-\makelabel{ref:evaluation strings}{27.8.1}{X7B6D118184F692A0}
-\makelabel{ref:Ordinal}{27.8.2}{X7C0C29C87CBA97B7}
-\makelabel{ref:EvalString}{27.8.3}{X7DE4CCD285440659}
-\makelabel{ref:CrcString}{27.8.4}{X7D4B9D7A7995C55D}
-\makelabel{ref:DaysInYear}{27.9.1}{X87BA46787FF000E8}
-\makelabel{ref:DaysInMonth}{27.9.2}{X8791B0B386D59ADB}
-\makelabel{ref:DMYDay}{27.9.3}{X7CED84C07CD5E2CF}
-\makelabel{ref:DayDMY}{27.9.4}{X7A79DEE07A41B8EF}
-\makelabel{ref:WeekDay}{27.9.5}{X87D03FC0809DB6EC}
-\makelabel{ref:StringDate}{27.9.6}{X7C74C33784CDED6C}
-\makelabel{ref:HMSMSec}{27.9.7}{X84A6A2637FB35A32}
-\makelabel{ref:SecHMSM}{27.9.8}{X879461D77C81100B}
-\makelabel{ref:StringTime}{27.9.9}{X802469C47F886A59}
-\makelabel{ref:SecondsDMYhms}{27.9.10}{X870A71D47B0E936E}
-\makelabel{ref:DMYhmsSeconds}{27.9.11}{X78AF8EA887532B5B}
-\makelabel{ref:LaTeX for GAP objects}{27.10}{X78024C8087F3E07F}
+\makelabel{ref:convert to a string}{27.4}{X82AEC07487C45ECD}
+\makelabel{ref:IsStringRep}{27.4.1}{X7A17EDF8785C9F58}
+\makelabel{ref:ConvertToStringRep}{27.4.2}{X7CE2415F7FEC5809}
+\makelabel{ref:CopyToStringRep}{27.4.3}{X7FFC464683CC8023}
+\makelabel{ref:IsEmptyString}{27.4.4}{X7D944D507CBB24CD}
+\makelabel{ref:EmptyString}{27.4.5}{X836078DC829A8221}
+\makelabel{ref:ShrinkAllocationString}{27.4.5}{X836078DC829A8221}
+\makelabel{ref:CharsFamily}{27.4.6}{X7DA671FC7F490C16}
+\makelabel{ref:IsDigitChar}{27.5.1}{X78566FD57B95ECBE}
+\makelabel{ref:IsLowerAlphaChar}{27.5.2}{X854114A97BAFEAEA}
+\makelabel{ref:IsUpperAlphaChar}{27.5.3}{X87B1A13D81353AD8}
+\makelabel{ref:IsAlphaChar}{27.5.4}{X84634DF67A431D26}
+\makelabel{ref:strings equality of}{27.6.1}{X79538F138286739A}
+\makelabel{ref:strings inequality of}{27.6.1}{X79538F138286739A}
+\makelabel{ref:strings lexicographic ordering of}{27.6.2}{X8129E3A785F60093}
+\makelabel{ref:DisplayString}{27.7.1}{X792FB3A1849FD739}
+\makelabel{ref:DEFAULTDISPLAYSTRING}{27.7.2}{X8482132779EA7A23}
+\makelabel{ref:ViewString}{27.7.3}{X7803FBCA79DB5529}
+\makelabel{ref:DEFAULTVIEWSTRING}{27.7.4}{X7BBDF9D383595425}
+\makelabel{ref:PrintString}{27.7.5}{X7B3CC87285DEC23D}
+\makelabel{ref:String}{27.7.6}{X81FB5BE27903EC32}
+\makelabel{ref:StripLineBreakCharacters}{27.7.7}{X86AACCE987F74FA5}
+\makelabel{ref:HexStringInt}{27.7.8}{X865FBB7E788017DD}
+\makelabel{ref:StringPP}{27.7.9}{X7BB1059185AB4F84}
+\makelabel{ref:WordAlp}{27.7.10}{X79C8280A853D8FA9}
+\makelabel{ref:LowercaseString}{27.7.11}{X798A0F35852ABDAD}
+\makelabel{ref:SplitString}{27.7.12}{X86E897D486DCFEAB}
+\makelabel{ref:ReplacedString}{27.7.13}{X864F0A9078D4DE0E}
+\makelabel{ref:NormalizeWhitespace}{27.7.14}{X806379367A53D171}
+\makelabel{ref:NormalizedWhitespace}{27.7.15}{X8685DE9386E57771}
+\makelabel{ref:RemoveCharacters}{27.7.16}{X86EBB6EB829723E4}
+\makelabel{ref:JoinStringsWithSeparator}{27.7.17}{X84624FEB825EC4B5}
+\makelabel{ref:Chomp}{27.7.18}{X79F8FFC5876D854A}
+\makelabel{ref:StartsWith}{27.7.19}{X855820848179CC28}
+\makelabel{ref:EndsWith}{27.7.19}{X855820848179CC28}
+\makelabel{ref:Prefix}{27.7.19}{X855820848179CC28}
+\makelabel{ref:Suffix}{27.7.19}{X855820848179CC28}
+\makelabel{ref:NumbersString}{27.7.20}{X7848A9D878FD59BB}
+\makelabel{ref:StringNumbers}{27.7.21}{X787EAB117816578E}
+\makelabel{ref:IntChar}{27.8.1}{X826D95D680F87D23}
+\makelabel{ref:CharInt}{27.8.2}{X87B6C1AF7E4A6639}
+\makelabel{ref:SIntChar}{27.8.3}{X8159CE81798DDA76}
+\makelabel{ref:CharSInt}{27.8.4}{X78E6611A829DDA3E}
+\makelabel{ref:Int (for strings)}{27.9.1}{X7B6D118184F692A0}
+\makelabel{ref:Rat (for strings)}{27.9.1}{X7B6D118184F692A0}
+\makelabel{ref:IntHexString}{27.9.1}{X7B6D118184F692A0}
+\makelabel{ref:evaluation strings}{27.9.1}{X7B6D118184F692A0}
+\makelabel{ref:Ordinal}{27.9.2}{X7C0C29C87CBA97B7}
+\makelabel{ref:EvalString}{27.9.3}{X7DE4CCD285440659}
+\makelabel{ref:CrcString}{27.9.4}{X7D4B9D7A7995C55D}
+\makelabel{ref:DaysInYear}{27.10.1}{X87BA46787FF000E8}
+\makelabel{ref:DaysInMonth}{27.10.2}{X8791B0B386D59ADB}
+\makelabel{ref:DMYDay}{27.10.3}{X7CED84C07CD5E2CF}
+\makelabel{ref:DayDMY}{27.10.4}{X7A79DEE07A41B8EF}
+\makelabel{ref:WeekDay}{27.10.5}{X87D03FC0809DB6EC}
+\makelabel{ref:StringDate}{27.10.6}{X7C74C33784CDED6C}
+\makelabel{ref:HMSMSec}{27.10.7}{X84A6A2637FB35A32}
+\makelabel{ref:SecHMSM}{27.10.8}{X879461D77C81100B}
+\makelabel{ref:StringTime}{27.10.9}{X802469C47F886A59}
+\makelabel{ref:SecondsDMYhms}{27.10.10}{X870A71D47B0E936E}
+\makelabel{ref:DMYhmsSeconds}{27.10.11}{X78AF8EA887532B5B}
+\makelabel{ref:LaTeX for GAP objects}{27.11}{X78024C8087F3E07F}
 \makelabel{ref:NewDictionary}{28.2.1}{X7E78E3E983A5C895}
 \makelabel{ref:DictionaryByPosition}{28.3.1}{X865D5BE1830A448D}
 \makelabel{ref:IsDictionary}{28.3.2}{X87F7247E784021C2}
@@ -2285,11 +2318,12 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:in operation for}{30.6}{X82D39CF980FDBFFA}
 \makelabel{ref:Random (for a list or collection)}{30.7.1}{X7FF906E57D6936F8}
 \makelabel{ref:Random (for lower and upper bound)}{30.7.1}{X7FF906E57D6936F8}
-\makelabel{ref:random element of a list or collection}{30.7.1}{X7FF906E57D6936F8}
+\makelabel{ref:Random}{30.7.1}{X7FF906E57D6936F8}
 \makelabel{ref:PseudoRandom}{30.7.2}{X811B5BD47DC5356B}
 \makelabel{ref:RandomList}{30.7.3}{X7EBA01EB83BC65A9}
 \makelabel{ref:random seed}{30.7.3}{X7EBA01EB83BC65A9}
 \makelabel{ref:Iterator}{30.8.1}{X83ADF8287ED0668E}
+\makelabel{ref:IsStandardIterator}{30.8.1}{X83ADF8287ED0668E}
 \makelabel{ref:IteratorSorted}{30.8.2}{X8688C20B828FC129}
 \makelabel{ref:IsIterator}{30.8.3}{X87168A827E5B28E4}
 \makelabel{ref:IsDoneIterator}{30.8.4}{X8055FC557B5D899E}
@@ -3218,11 +3252,12 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:IndicesStabChain}{43.10.7}{X7AC8F165875906DE}
 \makelabel{ref:ListStabChain}{43.10.8}{X7CF607BC82C2C202}
 \makelabel{ref:ElementsStabChain}{43.10.9}{X7F40E52D7B0438BF}
-\makelabel{ref:InverseRepresentative}{43.10.10}{X861062AE87ACF340}
-\makelabel{ref:SiftedPermutation}{43.10.11}{X79D2248C8787EAF2}
-\makelabel{ref:MinimalElementCosetStabChain}{43.10.12}{X7B870C217D0B9997}
-\makelabel{ref:LargestElementStabChain}{43.10.13}{X87435B7884D9B353}
-\makelabel{ref:ApproximateSuborbitsStabilizerPermGroup}{43.10.14}{X809B2C3B7C5F77AB}
+\makelabel{ref:IteratorStabChain}{43.10.10}{X780875477CD2A57D}
+\makelabel{ref:InverseRepresentative}{43.10.11}{X861062AE87ACF340}
+\makelabel{ref:SiftedPermutation}{43.10.12}{X79D2248C8787EAF2}
+\makelabel{ref:MinimalElementCosetStabChain}{43.10.13}{X7B870C217D0B9997}
+\makelabel{ref:LargestElementStabChain}{43.10.14}{X87435B7884D9B353}
+\makelabel{ref:ApproximateSuborbitsStabilizerPermGroup}{43.10.15}{X809B2C3B7C5F77AB}
 \makelabel{ref:CopyStabChain}{43.11.1}{X86B31E6A81AE5FCB}
 \makelabel{ref:CopyOptionsDefaults}{43.11.2}{X7E167E557B567C6A}
 \makelabel{ref:ChangeStabChain}{43.11.3}{X87FF64AB87BFC779}
@@ -3418,7 +3453,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:ModuleOfExtension}{46.8.7}{X7EAC6B8B7ABEEB86}
 \makelabel{ref:CompatiblePairs}{46.8.8}{X824F2B2E7C11ABAF}
 \makelabel{ref:ExtensionRepresentatives}{46.8.9}{X854FFEF187C4AAB9}
-\makelabel{ref:SplitExtensions}{46.8.10}{X7958281D801DC9FF}
+\makelabel{ref:SplitExtension (with specified homomorphism)}{46.8.10}{X84E2DA897FAAF6D8}
 \makelabel{ref:CodePcgs}{46.9.1}{X79948F1D7D4FF8D9}
 \makelabel{ref:CodePcGroup}{46.9.2}{X8041C2D88721EEA9}
 \makelabel{ref:PcGroupCode}{46.9.3}{X826BFDA07A707C54}
@@ -3786,6 +3821,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:ReesMatrixSubsemigroup}{51.9.2}{X78D2A48C87FC8E38}
 \makelabel{ref:ReesZeroMatrixSubsemigroup}{51.9.2}{X78D2A48C87FC8E38}
 \makelabel{ref:IsomorphismReesMatrixSemigroup}{51.9.3}{X7964B5C97FB9C07D}
+\makelabel{ref:IsomorphismReesZeroMatrixSemigroup}{51.9.3}{X7964B5C97FB9C07D}
 \makelabel{ref:IsReesMatrixSemigroupElement}{51.9.4}{X7F6B852B81488C86}
 \makelabel{ref:IsReesZeroMatrixSemigroupElement}{51.9.4}{X7F6B852B81488C86}
 \makelabel{ref:ReesMatrixSemigroupElement}{51.9.5}{X7A0DE1F28470295E}
@@ -4108,6 +4144,13 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:RingHomomorphismByImages}{56.8.2}{X78C1016284F08026}
 \makelabel{ref:RingHomomorphismByImagesNC}{56.8.3}{X7D01646A7CCBEDBB}
 \makelabel{ref:NaturalHomomorphismByIdeal}{56.8.4}{X83D53D98809EC461}
+\makelabel{ref:SmallRing}{56.9.1}{X7E86DCB7812DF04C}
+\makelabel{ref:NumberSmallRings}{56.9.2}{X7F2EE9AF83DCE641}
+\makelabel{ref:Subrings}{56.9.3}{X8070D20B86148929}
+\makelabel{ref:Ideals}{56.9.4}{X83629803819C4A6F}
+\makelabel{ref:DirectSum}{56.9.5}{X82AD6F187B550060}
+\makelabel{ref:DirectSumOp}{56.9.5}{X82AD6F187B550060}
+\makelabel{ref:RingByStructureConstants}{56.9.6}{X7E7B1B727EA434CF}
 \makelabel{ref:IsLeftOperatorAdditiveGroup}{57.1.1}{X7C62FE5282E9C505}
 \makelabel{ref:IsLeftModule}{57.1.2}{X7ED323027B291BDF}
 \makelabel{ref:GeneratorsOfLeftOperatorAdditiveGroup}{57.1.3}{X7F76B1FD84775025}
@@ -4208,6 +4251,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Frobenius automorphism}{59.4.1}{X8758E4AB7D0A1955}
 \makelabel{ref:Image for Frobenius automorphisms}{59.4.1}{X8758E4AB7D0A1955}
 \makelabel{ref:ConwayPolynomial}{59.5.1}{X7C2425A786F09054}
+\makelabel{ref:InfoText (for Conway polynomials)}{59.5.1}{X7C2425A786F09054}
 \makelabel{ref:IsCheapConwayPolynomial}{59.5.2}{X78A7C1247E129AD9}
 \makelabel{ref:RandomPrimitivePolynomial}{59.5.3}{X7ECC593583E68A6C}
 \makelabel{ref:ViewObj (for a ffe)}{59.6.1}{X80DAAA5E7C79C94C}
@@ -4675,7 +4719,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:QuotientPolynomialsExtRep}{66.23.3}{X87E5EB8985AF04CD}
 \makelabel{ref:RationalFunctionByExtRepWithCancellation}{66.24.1}{X878A1AC87B492E3D}
 \makelabel{ref:TryGcdCancelExtRepPolynomials}{66.24.2}{X7BFB55887A153003}
-\makelabel{ref:HeuristicCancelPolynomials}{66.24.3}{X81CC7D9B819A9332}
+\makelabel{ref:HeuristicCancelPolynomialsExtRep}{66.24.3}{X8477D7337C4A98AB}
 \makelabel{ref:AlgebraicExtension}{67.1.1}{X7CDA90537D2BAC8A}
 \makelabel{ref:IsAlgebraicExtension}{67.1.2}{X811F10217F12B3F9}
 \makelabel{ref:Operations for algebraic elements}{67.2}{X819C7E6F78817F1E}
@@ -4896,7 +4940,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:ClassParameters}{71.9.7}{X8333E8038308947E}
 \makelabel{ref:CharacterParameters}{71.9.7}{X8333E8038308947E}
 \makelabel{ref:Identifier (for character tables)}{71.9.8}{X79C40EE97890202F}
-\makelabel{ref:InfoText}{71.9.9}{X871562FD7F982C12}
+\makelabel{ref:InfoText (for character tables)}{71.9.9}{X7932C35180C80953}
 \makelabel{ref:InverseClasses}{71.9.10}{X7919E2897BE8234A}
 \makelabel{ref:RealClasses}{71.9.11}{X87FF547981456932}
 \makelabel{ref:classes real}{71.9.11}{X87FF547981456932}
@@ -5274,7 +5318,9 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:NormedVectors}{77.4}{X7F6A6CBC7C9E91E5}
 \makelabel{ref:MutableIdentityMat}{77.4}{X7F6A6CBC7C9E91E5}
 \makelabel{ref:MutableNullMat}{77.4}{X7F6A6CBC7C9E91E5}
+\makelabel{ref:PositionFirstComponent}{77.4}{X7F6A6CBC7C9E91E5}
 \makelabel{ref:InfoObsolete}{77.4.1}{X87348614848EAD64}
+\makelabel{ref:IsSemilatticeAsSemigroup}{77.6.1}{X7BF9F1BE87F0636D}
 \makelabel{ref:operation}{78}{X8058CC8187162644}
 \makelabel{ref:method}{78}{X8058CC8187162644}
 \makelabel{ref:InstallMethod}{78.2.1}{X837EFDAB7BEF290B}
@@ -5312,6 +5358,7 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:DeclareGlobalVariable}{79.18.8}{X8324B5DE8300E0F2}
 \makelabel{ref:InstallValue}{79.18.9}{X7A23F09886E936D2}
 \makelabel{ref:InstallFlushableValue}{79.18.9}{X7A23F09886E936D2}
+\makelabel{ref:InstallFlushableValueFromFunction}{79.18.9}{X7A23F09886E936D2}
 \makelabel{ref:DeclareSynonym}{79.18.10}{X851654DA87616207}
 \makelabel{ref:DeclareSynonymAttr}{79.18.10}{X851654DA87616207}
 \makelabel{ref:FlushCaches}{79.18.11}{X87A4316C818B3DE3}

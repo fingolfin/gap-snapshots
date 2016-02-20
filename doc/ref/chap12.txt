@@ -236,7 +236,7 @@
   
   [1X12.6-3 Immutable[101X
   
-  [29X[2XImmutable[102X( [3Xobj[103X ) [32X operation
+  [29X[2XImmutable[102X( [3Xobj[103X ) [32X function
   
   [33X[0;0Yreturns an immutable structural copy (see [2XStructuralCopy[102X ([14X12.7-2[114X)) of [3Xobj[103X in
   which  the  subobjects are immutable [13Xcopies[113X of the subobjects of [3Xobj[103X. If [3Xobj[103X
@@ -399,12 +399,12 @@
   
   [33X[0;0YThere are a number of general operations which can be applied, in principle,
   to  any  object  in  [5XGAP[105X. Some of these are documented elsewhere –see [2XString[102X
-  ([14X27.6-6[114X),  [2XPrintObj[102X  ([14X6.3-5[114X) and [2XDisplay[102X ([14X6.3-6[114X). Others are mainly somewhat
+  ([14X27.7-6[114X),  [2XPrintObj[102X  ([14X6.3-5[114X) and [2XDisplay[102X ([14X6.3-6[114X). Others are mainly somewhat
   technical.[133X
   
   [1X12.8-1 SetName[101X
   
-  [29X[2XSetName[102X( [3Xobj[103X, [3Xname[103X ) [32X function
+  [29X[2XSetName[102X( [3Xobj[103X, [3Xname[103X ) [32X operation
   
   [33X[0;0Yfor a suitable object [3Xobj[103X sets that object to have name [3Xname[103X (a string).[133X
   
@@ -429,7 +429,14 @@
     [4X[28X"Z[x,y]"[128X[104X
   [4X[32X[104X
   
-  [1X12.8-3 IsInternallyConsistent[101X
+  [1X12.8-3 InfoText[101X
+  
+  [29X[2XInfoText[102X( [3Xobj[103X ) [32X attribute
+  
+  [33X[0;0Yis  a  mutable  string  with  information  about the object [3Xobj[103X. There is no
+  default method to create an info text.[133X
+  
+  [1X12.8-4 IsInternallyConsistent[101X
   
   [29X[2XIsInternallyConsistent[102X( [3Xobj[103X ) [32X operation
   
@@ -442,7 +449,7 @@
   
   [33X[0;0Y(Note that [2XIsInternallyConsistent[102X is not an attribute.)[133X
   
-  [1X12.8-4 MemoryUsage[101X
+  [1X12.8-5 MemoryUsage[101X
   
   [29X[2XMemoryUsage[102X( [3Xobj[103X ) [32X operation
   

@@ -72,7 +72,7 @@
 <h5>17.1-1 Rationals</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Rationals</code></td><td class="tdright">( global variable )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRationals</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRationals</code>( <var class="Arg">obj</var> )</td><td class="tdright">( filter )</td></tr></table></div>
 <p><code class="func">Rationals</code> is the field <span class="SimpleMath">\(ℚ\)</span> of rational integers, as a set of cyclotomic numbers, see Chapter <a href="chap18_mj.html#X7DFC03C187DE4841"><span class="RefLink">18</span></a> for basic operations, Functions for the field <code class="func">Rationals</code> can be found in the chapters <a href="chap58_mj.html#X80A8E676814A19FD"><span class="RefLink">58</span></a> and <a href="chap60_mj.html#X80510B5880521FDC"><span class="RefLink">60</span></a>.</p>
 
 <p><code class="func">IsRationals</code> returns <code class="keyw">true</code> for a prime field that consists of cyclotomic numbers –for example the <strong class="pkg">GAP</strong> object <code class="func">Rationals</code>– and <code class="keyw">false</code> for all other <strong class="pkg">GAP</strong> objects.</p>
@@ -169,7 +169,7 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Rat</code>( <var class="Arg">elm</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p><code class="func">Rat</code> returns a rational number <var class="Arg">rat</var> whose meaning depends on the type of <var class="Arg">elm</var>.</p>
 
-<p>If <var class="Arg">elm</var> is a string consisting of digits <code class="code">'0'</code>, <code class="code">'1'</code>, <span class="SimpleMath">\(\ldots\)</span>, <code class="code">'9'</code> and <code class="code">'-'</code> (at the first position), <code class="code">'/'</code> and the decimal dot <code class="code">'.'</code> then <var class="Arg">rat</var> is the rational described by this string. The operation <code class="func">String</code> (<a href="chap27_mj.html#X81FB5BE27903EC32"><span class="RefLink">27.6-6</span></a>) can be used to compute a string for rational numbers, in fact for all cyclotomics.</p>
+<p>If <var class="Arg">elm</var> is a string consisting of digits <code class="code">'0'</code>, <code class="code">'1'</code>, <span class="SimpleMath">\(\ldots\)</span>, <code class="code">'9'</code> and <code class="code">'-'</code> (at the first position), <code class="code">'/'</code> and the decimal dot <code class="code">'.'</code> then <var class="Arg">rat</var> is the rational described by this string. The operation <code class="func">String</code> (<a href="chap27_mj.html#X81FB5BE27903EC32"><span class="RefLink">27.7-6</span></a>) can be used to compute a string for rational numbers, in fact for all cyclotomics.</p>
 
 
 <div class="example"><pre>

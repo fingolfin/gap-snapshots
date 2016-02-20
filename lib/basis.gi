@@ -675,9 +675,12 @@ InstallGlobalFunction( "InstallHandlingByNiceBasis",
     filter:= ValueGlobal( name );
 
     # Install the detection of the filter.
-    entry:= First( NiceBasisFiltersInfo,
-                   x -> IsIdenticalObj( filter, x[1] ) );
-    Add( entry, record.detect );
+    atomic readwrite NiceBasisFiltersInfo do
+      entry:= First( NiceBasisFiltersInfo,
+                     x -> IsIdenticalObj( filter, x[1] ) );
+      Add( entry, record.detect );
+    od;
+    
     InstallTrueMethod( IsHandledByNiceBasis, filter );
     filter:= IsFreeLeftModule and filter;
 
@@ -707,14 +710,16 @@ InstallGlobalFunction( "CheckForHandlingByNiceBasis",
     function( F, gens, V, zero )
     local triple, value;
     if not IsHandledByNiceBasis( V ) then
-      for triple in NiceBasisFiltersInfo do
-        value:= triple[3]( F, gens, V, zero );
-        if value = true then
-          SetFilterObj( V, triple[1] );
-          return;
-        elif value = fail then
-          return;
-        fi;
+      atomic readonly NiceBasisFiltersInfo do
+        for triple in NiceBasisFiltersInfo do
+          value:= triple[3]( F, gens, V, zero );
+          if value = true then
+            SetFilterObj( V, triple[1] );
+            return;
+          elif value = fail then
+            return;
+          fi;
+        od;
       od;
     fi;
 end );
@@ -876,10 +881,10 @@ InstallHandlingByNiceBasis( "IsSpaceOfRationalFunctions", rec(
 
       # For the zero row vector, catch the case of empty `monomials' list.
       if IsEmpty( monomials ) then
-        info.zerovector := [ zero ];
+        info.zerovector := `[ zero ];
       else
-        info.zerovector := ListWithIdenticalEntries( Length( monomials ),
-                                                     zero );
+        info.zerovector := `ListWithIdenticalEntries( Length( monomials ),
+                                                      zero );
       fi;
 
       return info;
@@ -1157,7 +1162,7 @@ InstallMethod( NiceFreeLeftModule,
     local gens;
 
     gens:= GeneratorsOfLeftModule( V );
-    if IsEmpty( gens ) then
+    if IsEmpty( gens ) or ForAll( gens, IsZero ) then
       return LeftModuleByGenerators( LeftActingDomain( V ), [],
                           NiceVector( V, Zero( V ) ) );
     else
@@ -1252,6 +1257,8 @@ InstallMethod( \in,
     a:= NiceVector( V, v );
     if a = fail then
       return false;
+    elif IsZero(a) then
+      return true;
     else
       return a in W and v = UglyVector( V, a );
     fi;
@@ -1479,4 +1486,3 @@ InstallMethod( IsCanonicalBasis,
 #############################################################################
 ##
 #E
-

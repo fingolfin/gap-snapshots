@@ -464,7 +464,7 @@
   
   [1X23.7-1 ValuePol[101X
   
-  [29X[2XValuePol[102X( [3Xcoeff[103X, [3Xx[103X ) [32X function
+  [29X[2XValuePol[102X( [3Xcoeff[103X, [3Xx[103X ) [32X operation
   
   [33X[0;0YLet  [3Xcoeff[103X  be  the  coefficients list of a univariate polynomial [22Xf[122X, and [3Xx[103X a
   ring element. Then [2XValuePol[102X returns the value [22Xf([3Xx[103X)[122X.[133X

@@ -221,7 +221,7 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap66_mj.html#X878A1AC87B492E3D">66.24-1 RationalFunctionByExtRepWithCancellation</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap66_mj.html#X7BFB55887A153003">66.24-2 TryGcdCancelExtRepPolynomials</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap66_mj.html#X81CC7D9B819A9332">66.24-3 HeuristicCancelPolynomials</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap66_mj.html#X8477D7337C4A98AB">66.24-3 HeuristicCancelPolynomialsExtRep</a></span>
 </div></div>
 </div>
 
@@ -799,7 +799,7 @@ Z(5)^2
 
 <h5>66.6-4 LeadingMonomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeadingMonomial</code>( <var class="Arg">pol</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeadingMonomial</code>( <var class="Arg">pol</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>returns the leading monomial (with respect to the ordering given by <code class="func">MonomialExtGrlexLess</code> (<a href="chap66_mj.html#X7A30E10B820311D1"><span class="RefLink">66.17-14</span></a>)) of the polynomial <var class="Arg">pol</var> as a list containing indeterminate numbers and exponents.</p>
 
 
@@ -990,7 +990,7 @@ x^2+1
 
 <h5>66.11-1 PrimitivePolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrimitivePolynomial</code>( <var class="Arg">f</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrimitivePolynomial</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>takes a polynomial <var class="Arg">f</var> with rational coefficients and computes a new polynomial with integral coefficients, obtained by multiplying with the Lcm of the denominators of the coefficients and casting out the content (the Gcd of the coefficients). The operation returns a list [<var class="Arg">newpol</var>,<var class="Arg">coeff</var>] with rational <var class="Arg">coeff</var> such that <code class="code"><var class="Arg">coeff</var>*<var class="Arg">newpol</var>=<var class="Arg">f</var></code>.</p>
 
 <p><a id="X7A73A3877EB73566" name="X7A73A3877EB73566"></a></p>
@@ -1004,7 +1004,7 @@ x^2+1
 
 <h5>66.11-3 GaloisType</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisType</code>( <var class="Arg">f</var>[, <var class="Arg">cand</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisType</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>Let <var class="Arg">f</var> be an irreducible polynomial with rational coefficients. This function returns the type of Gal(<var class="Arg">f</var>) (considered as a transitive permutation group of the roots of <var class="Arg">f</var>). It returns a number <var class="Arg">i</var> if Gal(<var class="Arg">f</var>) is permutation isomorphic to <code class="code">TransitiveGroup(<var class="Arg">n</var>,<var class="Arg">i</var>)</code> where <var class="Arg">n</var> is the degree of <var class="Arg">f</var>.</p>
 
 <p>Identification is performed by factoring appropriate Galois resolvents as proposed in <a href="chapBib_mj.html#biBMS85">[SM85]</a>. This function is provided for rational polynomials of degree up to 15. However, in some cases the required calculations become unfeasibly large.</p>
@@ -1103,7 +1103,7 @@ x^2
 
 <h5>66.13-3 IndeterminateNumberOfLaurentPolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndeterminateNumberOfLaurentPolynomial</code>( <var class="Arg">pol</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndeterminateNumberOfLaurentPolynomial</code>( <var class="Arg">pol</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>Is a synonym for <code class="func">IndeterminateNumberOfUnivariateRationalFunction</code> (<a href="chap66_mj.html#X816C8D797C804380"><span class="RefLink">66.1-2</span></a>).</p>
 
 <p><a id="X7C1708D27F97B05F" name="X7C1708D27F97B05F"></a></p>
@@ -1322,7 +1322,7 @@ true
 
 <h5>66.17-2 LeadingMonomialOfPolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeadingMonomialOfPolynomial</code>( <var class="Arg">pol</var>, <var class="Arg">ord</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeadingMonomialOfPolynomial</code>( <var class="Arg">pol</var>, <var class="Arg">ord</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>returns the leading monomial (with respect to the ordering <var class="Arg">ord</var>) of the polynomial <var class="Arg">pol</var>.</p>
 
 
@@ -1345,7 +1345,7 @@ y^3
 
 <h5>66.17-3 LeadingTermOfPolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeadingTermOfPolynomial</code>( <var class="Arg">pol</var>, <var class="Arg">ord</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeadingTermOfPolynomial</code>( <var class="Arg">pol</var>, <var class="Arg">ord</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>returns the leading term (with respect to the ordering <var class="Arg">ord</var>) of the polynomial <var class="Arg">pol</var>, i.e. the product of leading coefficient and leading monomial.</p>
 
 <p><a id="X798E707D86141087" name="X798E707D86141087"></a></p>
@@ -1522,7 +1522,7 @@ function( a, b ) ... end
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroebnerBasis</code>( <var class="Arg">L</var>, <var class="Arg">O</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroebnerBasis</code>( <var class="Arg">I</var>, <var class="Arg">O</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroebnerBasisNC</code>( <var class="Arg">L</var>, <var class="Arg">O</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroebnerBasisNC</code>( <var class="Arg">L</var>, <var class="Arg">O</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Let <var class="Arg">O</var> be a monomial ordering and <var class="Arg">L</var> be a list of polynomials that generate an ideal <var class="Arg">I</var>. This operation returns a Groebner basis of <var class="Arg">I</var> with respect to the ordering <var class="Arg">O</var>.</p>
 
 <p><code class="func">GroebnerBasisNC</code> works like <code class="func">GroebnerBasis</code> with the only distinction that the first argument has to be a list of polynomials and that no test is performed to check whether the ordering is defined for all occuring variables.</p>
@@ -1810,11 +1810,11 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TryGcdCancelExtRepPolynomials</code>( <var class="Arg">fam</var>, <var class="Arg">a</var>, <var class="Arg">b</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Let <var class="Arg">a</var> and <var class="Arg">b</var> be the external representations of two polynomials. This function tries to cancel common factors between the corresponding polynomials and returns a list <span class="SimpleMath">\([ a', b' ]\)</span> of external representations of cancelled polynomials. As there is no proper multivariate GCD cancellation is not guaranteed to be optimal.</p>
 
-<p><a id="X81CC7D9B819A9332" name="X81CC7D9B819A9332"></a></p>
+<p><a id="X8477D7337C4A98AB" name="X8477D7337C4A98AB"></a></p>
 
-<h5>66.24-3 HeuristicCancelPolynomials</h5>
+<h5>66.24-3 HeuristicCancelPolynomialsExtRep</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HeuristicCancelPolynomials</code>( <var class="Arg">fam</var>, <var class="Arg">ext1</var>, <var class="Arg">ext2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HeuristicCancelPolynomialsExtRep</code>( <var class="Arg">fam</var>, <var class="Arg">ext1</var>, <var class="Arg">ext2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>is called by <code class="func">TryGcdCancelExtRepPolynomials</code> (<a href="chap66_mj.html#X7BFB55887A153003"><span class="RefLink">66.24-2</span></a>) to perform the actual work. It will return either <code class="keyw">fail</code> or a new list of of external representations of cancelled polynomials. The cancellation performed is not necessarily optimal.</p>
 
 

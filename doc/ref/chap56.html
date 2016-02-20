@@ -38,7 +38,7 @@
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap56.html#X8350500B8576F833">56.1-9 Quotient</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap56.html#X782EC7877DA864C9">56.2 <span class="Heading">Ideals in Rings</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap56.html#X8776C3F97A731E70">56.2 <span class="Heading">Ideals of Rings</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap56.html#X7C486A7C821D79F0">56.2-1 TwoSidedIdeal</a></span>
@@ -123,6 +123,16 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap56.html#X7D01646A7CCBEDBB">56.8-3 RingHomomorphismByImagesNC</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap56.html#X83D53D98809EC461">56.8-4 NaturalHomomorphismByIdeal</a></span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap56.html#X81D526A57B375AAD">56.9 <span class="Heading">Small Rings</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap56.html#X7E86DCB7812DF04C">56.9-1 SmallRing</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap56.html#X7F2EE9AF83DCE641">56.9-2 NumberSmallRings</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap56.html#X8070D20B86148929">56.9-3 Subrings</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap56.html#X83629803819C4A6F">56.9-4 Ideals</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap56.html#X82AD6F187B550060">56.9-5 DirectSum</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap56.html#X7E7B1B727EA434CF">56.9-6 RingByStructureConstants</a></span>
+</div></div>
 </div>
 
 <h3>56 <span class="Heading">Rings</span></h3>
@@ -143,7 +153,7 @@
 
 <h5>56.1-1 IsRing</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRing</code>( <var class="Arg">R</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRing</code>( <var class="Arg">R</var> )</td><td class="tdright">( filter )</td></tr></table></div>
 <p>A <em>ring</em> in <strong class="pkg">GAP</strong> is an additive group (see <code class="func">IsAdditiveGroup</code> (<a href="chap55.html#X7B8FBD9082CE271B"><span class="RefLink">55.1-6</span></a>)) that is also a magma (see <code class="func">IsMagma</code> (<a href="chap35.html#X87D3F38B7EAB13FA"><span class="RefLink">35.1-1</span></a>)), such that addition <code class="code">+</code> and multiplication <code class="code">*</code> are distributive, see <code class="func">IsDistributive</code> (<a href="chap56.html#X86716D4F7B968604"><span class="RefLink">56.4-5</span></a>).</p>
 
 <p>The multiplication need <em>not</em> be associative (see <code class="func">IsAssociative</code> (<a href="chap35.html#X7C83B5A47FD18FB7"><span class="RefLink">35.4-7</span></a>)). For example, a Lie algebra (see <a href="chap64.html#X78559D4C800AF58A"><span class="RefLink">64</span></a>) is regarded as a ring in <strong class="pkg">GAP</strong>.</p>
@@ -276,9 +286,9 @@ fail
 2
 </pre></div>
 
-<p><a id="X782EC7877DA864C9" name="X782EC7877DA864C9"></a></p>
+<p><a id="X8776C3F97A731E70" name="X8776C3F97A731E70"></a></p>
 
-<h4>56.2 <span class="Heading">Ideals in Rings</span></h4>
+<h4>56.2 <span class="Heading">Ideals of Rings</span></h4>
 
 <p>A <em>left ideal</em> in a ring <span class="SimpleMath">R</span> is a subring of <span class="SimpleMath">R</span> that is closed under multiplication with elements of <span class="SimpleMath">R</span> from the left.</p>
 
@@ -456,7 +466,7 @@ true
 
 <h5>56.3-1 IsRingWithOne</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRingWithOne</code>( <var class="Arg">R</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRingWithOne</code>( <var class="Arg">R</var> )</td><td class="tdright">( filter )</td></tr></table></div>
 <p>A <em>ring-with-one</em> in <strong class="pkg">GAP</strong> is a ring (see <code class="func">IsRing</code> (<a href="chap56.html#X80FD843C8221DAC9"><span class="RefLink">56.1-1</span></a>)) that is also a magma-with-one (see <code class="func">IsMagmaWithOne</code> (<a href="chap35.html#X86071DE7835F1C7C"><span class="RefLink">35.1-2</span></a>)).</p>
 
 <p>Note that the identity and the zero of a ring-with-one need <em>not</em> be distinct. This means that a ring that consists only of its zero element can be regarded as a ring-with-one.</p>
@@ -1020,6 +1030,103 @@ The Gcd is 6
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalHomomorphismByIdeal</code>( <var class="Arg">R</var>, <var class="Arg">I</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>is the homomorphism of rings provided by the natural projection map of <var class="Arg">R</var> onto the quotient ring <var class="Arg">R</var>/<var class="Arg">I</var>. This map can be used to take pre-images in the original ring from elements in the quotient.</p>
+
+<p><a id="X81D526A57B375AAD" name="X81D526A57B375AAD"></a></p>
+
+<h4>56.9 <span class="Heading">Small Rings</span></h4>
+
+<p><strong class="pkg">GAP</strong> contains a library of small (order up to 15) rings.</p>
+
+<p><a id="X7E86DCB7812DF04C" name="X7E86DCB7812DF04C"></a></p>
+
+<h5>56.9-1 SmallRing</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallRing</code>( <var class="Arg">s</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>returns the <span class="SimpleMath">n</span>-th ring of order <span class="SimpleMath">s</span> from a library of rings of small order (up to isomorphism).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=SmallRing(8,37);</span>
+&lt;ring with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ShowMultiplicationTable(R);                 </span>
+*     | 0*a   c     b     b+c   a     a+c   a+b   a+b+c
+------+------------------------------------------------
+0*a   | 0*a   0*a   0*a   0*a   0*a   0*a   0*a   0*a  
+c     | 0*a   0*a   0*a   0*a   0*a   0*a   0*a   0*a  
+b     | 0*a   0*a   0*a   0*a   b     b     b     b    
+b+c   | 0*a   0*a   0*a   0*a   b     b     b     b    
+a     | 0*a   c     b     b+c   a+b   a+b+c a     a+c  
+a+c   | 0*a   c     b     b+c   a+b   a+b+c a     a+c  
+a+b   | 0*a   c     b     b+c   a     a+c   a+b   a+b+c
+a+b+c | 0*a   c     b     b+c   a     a+c   a+b   a+b+c
+</pre></div>
+
+<p><a id="X7F2EE9AF83DCE641" name="X7F2EE9AF83DCE641"></a></p>
+
+<h5>56.9-2 NumberSmallRings</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NumberSmallRings</code>( <var class="Arg">s</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>returns the number of (nonisomorphic) rings of order <span class="SimpleMath">s</span> stored in the library of small rings.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List([1..15],NumberSmallRings);</span>
+[ 1, 2, 2, 11, 2, 4, 2, 52, 11, 4, 2, 22, 2, 4, 4 ]
+</pre></div>
+
+<p><a id="X8070D20B86148929" name="X8070D20B86148929"></a></p>
+
+<h5>56.9-3 Subrings</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Subrings</code>( <var class="Arg">R</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>for a finite ring <var class="Arg">R</var> this function returns a list of all subrings of <var class="Arg">R</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Subrings(SmallRing(8,37));     </span>
+[ &lt;ring with 1 generators&gt;, &lt;ring with 1 generators&gt;, 
+  &lt;ring with 1 generators&gt;, &lt;ring with 1 generators&gt;, 
+  &lt;ring with 1 generators&gt;, &lt;ring with 1 generators&gt;, 
+  &lt;ring with 2 generators&gt;, &lt;ring with 2 generators&gt;, 
+  &lt;ring with 2 generators&gt;, &lt;ring with 2 generators&gt;, 
+  &lt;ring with 3 generators&gt; ]
+</pre></div>
+
+<p><a id="X83629803819C4A6F" name="X83629803819C4A6F"></a></p>
+
+<h5>56.9-4 Ideals</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Ideals</code>( <var class="Arg">R</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>for a finite ring <var class="Arg">R</var> this function returns a list of all ideals of <var class="Arg">R</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Ideals(SmallRing(8,37));</span>
+[ &lt;ring with 1 generators&gt;, &lt;ring with 1 generators&gt;, 
+  &lt;ring with 1 generators&gt;, &lt;ring with 2 generators&gt;, 
+  &lt;ring with 3 generators&gt; ]
+</pre></div>
+
+<p><a id="X82AD6F187B550060" name="X82AD6F187B550060"></a></p>
+
+<h5>56.9-5 DirectSum</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectSum</code>( <var class="Arg">R{</var>, <var class="Arg">S}</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectSumOp</code>( <var class="Arg">list</var>, <var class="Arg">expl</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>These functions construct the direct sum of the rings given as arguments. <code class="code">DirectSum</code> takes an arbitrary positive number of arguments and calls the operation <code class="code">DirectSumOp</code>, which takes exactly two arguments, namely a nonempty list of rings and one of these rings. (This somewhat strange syntax allows the method selection to choose a reasonable method for special cases.)</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DirectSum(SmallRing(5,1),SmallRing(5,1));</span>
+&lt;ring with 2 generators&gt;
+</pre></div>
+
+<p><a id="X7E7B1B727EA434CF" name="X7E7B1B727EA434CF"></a></p>
+
+<h5>56.9-6 RingByStructureConstants</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RingByStructureConstants</code>( <var class="Arg">moduli</var>, <var class="Arg">sctable</var>[, <var class="Arg">nameinfo</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>returns a ring <span class="SimpleMath">R</span> whose additive group is described by the list <var class="Arg">moduli</var>, with multiplication defined by the structure constants table <var class="Arg">sctable</var>. The optional argument <var class="Arg">nameinfo</var> can be used to prescribe names for the elements of the canonical generators of <span class="SimpleMath">R</span>; it can be either a string <var class="Arg">name</var> (then <var class="Arg">name</var><code class="code">1</code>, <var class="Arg">name</var><code class="code">2</code> etc. are chosen) or a list of strings which are then chosen.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap55.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap57.html">[Next Chapter]</a>&nbsp;  </div>

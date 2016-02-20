@@ -177,10 +177,10 @@ BIND_GLOBAL( "CopyToStringRep", COPY_TO_STRING_REP );
 ##
 ##  <#GAPDoc Label="CharsFamily">
 ##  <ManSection>
-##  <Var Name="CharsFamily"/>
+##  <Fam Name="CharsFamily"/>
 ##
 ##  <Description>
-##  Each character lies in the family <Ref Var="CharsFamily"/>,
+##  Each character lies in the family <Ref Fam="CharsFamily"/>,
 ##  each nonempty string lies in the collections family of this family.
 ##  Note the subtle differences between the empty list <C>[]</C> and the
 ##  empty string <C>""</C> when both are printed.
@@ -238,6 +238,7 @@ BIND_GLOBAL( "TYPES_STRING",
           # T_STRING_SSORT +IMMUTABLE
           ]);
 
+MakeReadOnlyObj( TYPES_STRING );
 
 #############################################################################
 ##
@@ -286,7 +287,8 @@ BIND_GLOBAL( "TYPES_STRING",
 ##  <#/GAPDoc>
 ##
 BIND_GLOBAL( "TNUM_EMPTY_STRING",
-             [ TNUM_OBJ_INT( "" ), TNUM_OBJ_INT( Immutable( "" ) ) ] );
+    Immutable( [ TNUM_OBJ_INT( "" ), TNUM_OBJ_INT( Immutable( "" ) ) ] ) );
+
 
 BIND_GLOBAL( "IsEmptyString",
     obj ->     IsString( obj )

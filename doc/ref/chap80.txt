@@ -111,7 +111,7 @@
   
   [33X[0;0YThis  time  we decide to enter a non-default family predicate in the call to
   [2XInstallMethod[102X  ([14X78.2-1[114X). We could just leave it out as in the previous call;
-  this  would  yield  the  default  value,  the function [2XReturnTrue[102X ([14X5.3-1[114X) of
+  this  would  yield  the  default  value,  the function [2XReturnTrue[102X ([14X5.4-1[114X) of
   arbitrary many arguments which always returns [9Xtrue[109X. However, then the method
   might  be  called  in  some  cases of inconsistent input (for example matrix
   groups  in  different characteristics) that ought to fall through the method
@@ -714,7 +714,7 @@
     [4X[25Xgap>[125X [27Xa*b;[127X[104X
     [4X[28X[ 2, 3 ][128X[104X
     [4X[25Xgap>[125X [27Xs:=Semigroup(a,b);[127X[104X
-    [4X[28X<semigroup with 2 generators>[128X[104X
+    [4X[28X<commutative semigroup with 2 generators>[128X[104X
     [4X[25Xgap>[125X [27XSize(s);[127X[104X
     [4X[28X3[128X[104X
   [4X[32X[104X

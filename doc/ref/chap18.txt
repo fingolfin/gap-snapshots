@@ -18,7 +18,7 @@
   
   [1X18.1-1 E[101X
   
-  [29X[2XE[102X( [3Xn[103X ) [32X function
+  [29X[2XE[102X( [3Xn[103X ) [32X operation
   
   [33X[0;0Y[2XE[102X  returns  the  primitive [3Xn[103X-th root of unity [22Xe_n = exp(2π i/n)[122X. Cyclotomics
   are  usually  entered as sums of roots of unity, with rational coefficients,
@@ -123,7 +123,7 @@
   
   [1X18.1-5 Int[101X
   
-  [29X[2XInt[102X( [3Xcyc[103X ) [32X function
+  [29X[2XInt[102X( [3Xcyc[103X ) [32X method
   
   [33X[0;0YThe  operation  [2XInt[102X  can  be  used  to  find a cyclotomic integer near to an
   arbitrary cyclotomic, by applying [2XInt[102X ([14X14.2-3[114X) to the coefficients.[133X

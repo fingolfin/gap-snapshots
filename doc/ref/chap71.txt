@@ -475,7 +475,7 @@
   
   [1X71.4-3 NearlyCharacterTablesFamily[101X
   
-  [29X[2XNearlyCharacterTablesFamily[102X[32X global variable
+  [29X[2XNearlyCharacterTablesFamily[102X[32X family
   
   [33X[0;0YEvery character table like object lies in this family (see [14X13.1[114X).[133X
   
@@ -1128,7 +1128,7 @@
   
   [1X71.9-9 InfoText[101X
   
-  [29X[2XInfoText[102X( [3Xtbl[103X ) [32X attribute
+  [29X[2XInfoText[102X( [3Xtbl[103X ) [32X method
   
   [33X[0;0Yis a mutable string with information about the character table [3Xtbl[103X. There is
   no default method to create an info text.[133X
@@ -1649,7 +1649,7 @@
   
   [29X[2XIsInternallyConsistent[102X( [3Xtbl[103X ) [32X method
   
-  [33X[0;0YFor  an [13Xordinary[113X character table [3Xtbl[103X, [2XIsInternallyConsistent[102X ([14X12.8-3[114X) checks
+  [33X[0;0YFor  an [13Xordinary[113X character table [3Xtbl[103X, [2XIsInternallyConsistent[102X ([14X12.8-4[114X) checks
   the consistency of the following attribute values (if stored).[133X
   
   [30X    [33X[0;6Y[2XSize[102X  ([14X30.4-6[114X),  [2XSizesCentralizers[102X ([14X71.9-2[114X), and [2XSizesConjugacyClasses[102X
@@ -2264,12 +2264,15 @@
   is  no  subgroup  in  which  its  reduction  has  a  linear constituent with
   multiplicity one.[133X
   
+  [33X[0;0YIf  the option [3Xunitary[103X is given, [5XGAP[105X tries, at extra cost, to find a unitary
+  representation (and will issue an error if it cannot do so).[133X
+  
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xa5:= AlternatingGroup( 5 );[127X[104X
     [4X[28XAlt( [ 1 .. 5 ] )[128X[104X
     [4X[25Xgap>[125X [27Xchar:= First( Irr( a5 ), x -> x[1] = 4 );[127X[104X
     [4X[28XCharacter( CharacterTable( Alt( [ 1 .. 5 ] ) ), [ 4, 0, 1, -1, -1 ] )[128X[104X
-    [4X[25Xgap>[125X [27Xhom:=IrreducibleRepresentationsDixon( a5, char );;[127X[104X
+    [4X[25Xgap>[125X [27Xhom:=IrreducibleRepresentationsDixon( a5, char: unitary );;[127X[104X
     [4X[25Xgap>[125X [27XOrder( a5.1*a5.2 ) = Order( Image( hom, a5.1 )*Image( hom, a5.2 ) );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27Xreps:= List( ConjugacyClasses( a5 ), Representative );;[127X[104X
@@ -3214,18 +3217,18 @@
     [4X[28X  Character( CharacterTable( S4 ), [ 3, 1, -1, 0, -1 ] ), [128X[104X
     [4X[28X  Character( CharacterTable( S4 ), [ 1, 1, 1, 1, 1 ] ) ][128X[104X
     [4X[25Xgap>[125X [27Xkernel:= KernelOfCharacter( irr[3] );[127X[104X
-    [4X[28XGroup([ (1,2)(3,4), (1,4)(2,3) ])[128X[104X
+    [4X[28XGroup([ (1,2)(3,4), (1,3)(2,4) ])[128X[104X
     [4X[25Xgap>[125X [27XHasNormalSubgroupClassesInfo( tbl );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XNormalSubgroupClassesInfo( tbl );[127X[104X
-    [4X[28Xrec( nsg := [ Group([ (1,2)(3,4), (1,4)(2,3) ]) ], [128X[104X
+    [4X[28Xrec( nsg := [ Group([ (1,2)(3,4), (1,3)(2,4) ]) ],[128X[104X
     [4X[28X  nsgclasses := [ [ 1, 3 ] ], nsgfactors := [  ] )[128X[104X
     [4X[25Xgap>[125X [27XClassPositionsOfNormalSubgroup( tbl, kernel );[127X[104X
     [4X[28X[ 1, 3 ][128X[104X
     [4X[25Xgap>[125X [27XFactorGroupNormalSubgroupClasses( tbl, [ 1, 3 ] );[127X[104X
     [4X[28XGroup([ f1, f2 ])[128X[104X
     [4X[25Xgap>[125X [27XNormalSubgroupClassesInfo( tbl );[127X[104X
-    [4X[28Xrec( nsg := [ Group([ (1,2)(3,4), (1,4)(2,3) ]) ], [128X[104X
+    [4X[28Xrec( nsg := [ Group([ (1,2)(3,4), (1,3)(2,4) ]) ],[128X[104X
     [4X[28X  nsgclasses := [ [ 1, 3 ] ], nsgfactors := [ Group([ f1, f2 ]) ] )[128X[104X
   [4X[32X[104X
   

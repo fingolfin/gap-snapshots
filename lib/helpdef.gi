@@ -18,66 +18,6 @@
   
 ################ ???????????????????????????? ###############################
 
-# this doesn't seem to do something sensible, outdated? (FL)
-#############################################################################
-##
-#F  HELP_TEST_EXAMPLES( <book>, <chapter> ) . . . . . . . . test the examples
-##
-HELP_TEST_EXAMPLES\?\?\? := function( book, chapter )
-    local   info,  chap,  filename,  stream,  examples,  test,  line,
-            size;
-
-    # get the chapter info
-    info := HELP_BOOK_INFO(book);
-    chap := HELP_CHAPTER_INFO( book, chapter );
-    if chap = fail  then
-        return;
-    fi;
-
-    # open the stream and read in the help
-    filename := Filename( info.directories, info.filenames[chapter] );
-    stream := InputTextFile(filename);
-
-    # search for examples
-    examples := false;
-    test := "";
-    repeat
-        line := ReadLine(stream);
-        if line <> fail  then
-
-            # example environment
-            if MATCH_BEGIN(line,"\\beginexample")  then
-                examples := true;
-            elif MATCH_BEGIN(line,"\\endexample")  then
-                examples := false;
-            fi;
-
-            # store the lines
-            if examples and not MATCH_BEGIN(line,"\\beginexample")  then
-                if Length(line) < 5  then
-                    Print( "* ", line );
-                elif line[5] <> '#'  then
-                    line := line{[5..Length(line)]};
-                    Append( test, line );
-                fi;
-            fi;
-        fi;
-    until IsEndOfStream(stream);
-    CloseStream(stream);
-
-    # now do the test
-    stream := InputTextString( test );
-
-    size := SizeScreen();
-    SizeScreen( [ 72, ] );
-    RANDOM_SEED(1);
-
-    ReadTest(stream);
-
-    SizeScreen(size);
-
-end;
-################ ?????????????end???????????? ###############################
 
 #############################################################################
 ##  
@@ -167,6 +107,8 @@ end);
 ##  the default ReadSix function for books in gapmacro format
 ##  (need to parse a text file in this case, this function still
 ##  looks pretty long winded)
+atomic HELP_REGION do
+
 HELP_BOOK_HANDLER.default.ReadSix := function(stream)
   local   fname,  readNumber, pos,  n,  c,  s,  x,  f,  line,  subline,  
           entries,  c1,  c2,  i,  name,  num,  s1,  sec,  s2,  j,  x1,  
@@ -333,6 +275,8 @@ HELP_BOOK_HANDLER.default.ReadSix := function(stream)
   res.directories := Directory(fname{[1..Length(fname)-10]});  
   return res;
 end;
+
+od;
 
 ##  here are more functions which are used by the `default' handler
 ##  functions (see their use below).
@@ -558,6 +502,8 @@ end);
 
 # now the handlers
 
+atomic HELP_REGION do
+
 HELP_BOOK_HANDLER.default.ShowChapters := function( book )
   local   info,  chap,  i;
   
@@ -757,3 +703,4 @@ HELP_BOOK_HANDLER.default.HelpData := function(book, entrynr, type)
   return fail;
 end;
 
+od;

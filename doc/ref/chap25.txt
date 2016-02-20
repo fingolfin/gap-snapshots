@@ -368,7 +368,7 @@
   
   [1X25.4-1 Decomposition[101X
   
-  [29X[2XDecomposition[102X( [3XA[103X, [3XB[103X, [3Xdepth[103X ) [32X function
+  [29X[2XDecomposition[102X( [3XA[103X, [3XB[103X, [3Xdepth[103X ) [32X operation
   
   [33X[0;0YFor  a  [22Xm  ×  n[122X matrix [3XA[103X of cyclotomics that has rank [22Xm ≤ n[122X, and a list [3XB[103X of
   cyclotomic  vectors,  each of length [22Xn[122X, [2XDecomposition[102X tries to find integral

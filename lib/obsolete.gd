@@ -479,8 +479,30 @@ DeclareObsoleteSynonym( "MutableIdentityMat", "IdentityMat", "4.8" );
 ##
 DeclareObsoleteSynonym( "MutableNullMat", "NullMat", "4.8" );
 
-
-
+#############################################################################
+##
+#F  IsSemilatticeAsSemigroup( <S> ) is the semigroup <S> a semilattice
+##
+##  <#GAPDoc Label="IsSemilatticeAsSemigroup">
+##  <ManSection>
+##  <Prop Name="IsSemilatticeAsSemigroup" Arg='S'/>
+##
+##  <Description>
+##    <C>IsSemilatticeAsSemigroup</C> returns <K>true</K> if the semigroup
+##    <A>S</A> is a semilattice and <K>false</K> if it is not. <P/>
+##
+##    A semigroup is a <E>semilattice</E> if it is commutative and every
+##    element is an idempotent. The idempotents of an inverse semigroup form a
+##    semilattice.
+##
+##    This is identical to <Ref Prop="IsSemilattice" BookName = "Semigroups"/> #
+##    and is present in &GAP;&nbsp;4.8 #  only for the sake of compatibility with
+##    beta-releases.  #  It should <E>not</E> be used in new code.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareSynonymAttr( "IsSemilatticeAsSemigroup", IsSemilattice );
 
 #############################################################################
 ##
@@ -490,6 +512,33 @@ DeclareObsoleteSynonym( "MutableNullMat", "NullMat", "4.8" );
 ##
 BindGlobal( "CreateCompletionFiles", function()
   Print("CreateCompletionFiles: Completion files are no longer supported by GAP.\n");
+end);
+
+
+#############################################################################
+##
+#O  PositionFirstComponent( <list>, <obj> )
+##
+## Removed due to being incompletely documented and its available methods
+## behaving inconsistently. Use PositionSorted or Position instead.
+##
+## Deprecated in GAP >= 4.8
+##
+DeclareOperation("PositionFirstComponent",[IsList,IsObject]);
+
+#############################################################################
+##
+#O  ReadTest 
+##
+##  `ReadTest' is superseded by more robust and flexible `Test'. Since the
+##  former is still used in some packages, for backwards compatibility we
+##  replace it by the call of `Test' with comparison up to whitespaces.
+##
+BindGlobal( "ReadTest", function( fn )
+  Print("#I  ReadTest is no longer supported. Please use more robust and flexible\n",
+        "#I  Test. For backwards compatibility, ReadTest(<filename>) is replaced\n",
+        "#I  by Test( <filename>, rec( compareFunction := \"uptowhitespace\" ))\n");
+  Test( fn, rec( compareFunction := "uptowhitespace" ));
 end);
 
 #############################################################################

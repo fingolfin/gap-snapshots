@@ -642,7 +642,6 @@ InstallMethod(MaximalAbelianQuotient,
 #T so we do not attempt to set the `IsAbelian' flag for it.
 end );
 
-
 #############################################################################
 ##
 #M  CompositionSeries( <G> )  . . . . . . . . . . . composition series of <G>
@@ -691,6 +690,10 @@ function( grp )
     return series;
 
 end );
+
+InstallMethod( CompositionSeries,
+    "for simple group", true, [IsGroup and IsSimpleGroup], 100,
+    S->[S,TrivialSubgroup(S)]);
 
 
 #############################################################################
@@ -2107,12 +2110,31 @@ end);
 InstallMethod( FactorGroupNC, "generic method for two groups", IsIdenticalObj,
     [ IsGroup, IsGroup ],
 function( G, N )
-local hom,F;
+local hom,F,new;
   hom:=NaturalHomomorphismByNormalSubgroupNC( G, N );
   F:=ImagesSource(hom);
-  SetNaturalHomomorphism(F,hom);
+  if not IsBound(F!.nathom) then
+    F!.nathom:=hom;
+  else
+    # avoid cached homomorphisms
+    new:=Group(GeneratorsOfGroup(F),One(F));
+    hom:=hom*GroupHomomorphismByImagesNC(F,new,
+      GeneratorsOfGroup(F),GeneratorsOfGroup(F));
+    F:=new;
+    F!.nathom:=hom;
+  fi;
   return F;
 end );
+
+InstallMethod( NaturalHomomorphism, "for a group with natural homomorphism stored",
+    [ IsGroup ],
+function(G)
+  if IsBound(G!.nathom) then
+    return G!.nathom;
+  else
+    Error("no natural homomorphism stored");
+  fi;
+end);
 
 InstallOtherMethod( \/,
     "generic method for two groups",
@@ -4430,6 +4452,7 @@ InstallMethod( KnowsHowToDecompose,
 ##
 InstallGlobalFunction(HasAbelianFactorGroup,function(G,N)
 local gen;
+  Assert(2,IsNormal(G,N) and IsSubgroup(G,N));
   gen:=Filtered(GeneratorsOfGroup(G),i->not i in N);
   return ForAll([1..Length(gen)],
                 i->ForAll([1..i-1],j->Comm(gen[i],gen[j]) in N));
@@ -4437,9 +4460,10 @@ end);
 
 #############################################################################
 ##
-#M  HasSolvableFactorGroup(<G>,<N>)   test whether G/N is abelian
+#M  HasSolvableFactorGroup(<G>,<N>)   test whether G/N is solvable
 ##
 InstallGlobalFunction(HasSolvableFactorGroup,function(G,N)
+  Assert(2,IsNormal(G,N) and IsSubgroup(G,N));
   return ForAny(DerivedSeriesOfGroup(G),x->IsSubset(N,x));
 end);
 

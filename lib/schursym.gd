@@ -75,7 +75,9 @@
 ##  group where the preimage of an adjacent transposition <M>(i,i+1)</M> has
 ##  order 4, -1 gives a group where the preimage of an adjacent transposition
 ##  <M>(i,i+1)</M> has order 2.  If no <A>sign</A> is specified, +1 is used by
-##  default.  If no <A>p</A> is specified, 3 is used by default. </Description>
+##  default.  If no <A>p</A> is specified, 3 is used by default.
+##  (Note that the convention of which cover is labelled as +1 is
+##  inconsistent in the literature.)</Description>
 ##
 ##  </ManSection>
 ##
@@ -99,6 +101,8 @@ DeclareGlobalFunction( "BasicSpinRepresentationOfSymmetricGroup" );
 ##  -1 gives a group where the preimage of an adjacent transposition
 ##  <M>(i,i+1)</M> has order 2.  If no <A>sign</A> is specified, +1 is used by
 ##  default.  If no <A>p</A> is specified, 3 is used by default.
+##  (Note that the convention of which cover is labelled as +1 is
+##  inconsistent in the literature.)
 ##
 ##  For <M><A>n</A> \leq 3</M>, the symmetric group is its own Schur cover and
 ##  <A>sign</A> is ignored. For <M><A>p</A> = 2</M>, there is no faithful,
@@ -130,7 +134,7 @@ DeclareOperation("SchurCoverOfSymmetricGroup",[IsPosInt,IsInt,IsInt]);
 ##  faithful, completely reducible matrix group in characteristic <A>p</A>
 ##  (<M>p \neq 2</M>) for <M>n \geq 4</M>.
 ##
-##  For <M>n \geq 3</M>, the symmetric group is its own Schur cover so
+##  For <M>n \leq 3</M>, the alternating group is its own Schur cover, and
 ##  <K>fail</K> is returned. For <M>p = 2</M>, there is no faithful, completely
 ##  reducible representation of the double cover, so <K>fail</K> is returned.
 ##

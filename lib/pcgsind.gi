@@ -1692,4 +1692,32 @@ end );
 
 #############################################################################
 ##
+#M  IndicesEANormalSteps( <ipcgs> )
+##
+InstallMethod(IndicesEANormalSteps,"inherit from parent",true,
+  [IsInducedPcgs and HasParentPcgs],0,
+function(pcgs)
+local l,i,p,ind,a,b,d;
+  p:=ParentPcgs(pcgs);
+  if not HasIndicesEANormalSteps(p) then
+    TryNextMethod();
+  fi;
+  d:=pcgs!.depthsInParent;
+  ind:=[];
+  a:=1;
+  for i in IndicesEANormalSteps(p) do
+    b:=First([a..Length(d)],x->d[x]>=i);
+    if b<>fail then
+      if not b in ind then
+	Add(ind,b);
+      fi;
+      a:=b;
+    fi;
+  od;
+  Add(ind,Length(pcgs)+1);
+  return ind;
+end);
+
+#############################################################################
+##
 #E  pcgsind.gi 	. . . . . . . . . . . . . . . . . . . . . . . . . . ends here

@@ -38,7 +38,7 @@
   
   [1X58.1-2 IsField[101X
   
-  [29X[2XIsField[102X( [3XD[103X ) [32X property
+  [29X[2XIsField[102X( [3XD[103X ) [32X filter
   
   [33X[0;0YA   [13Xfield[113X  is  a  commutative  division  ring  (see [2XIsDivisionRing[102X  ([14X58.1-1[114X)
   and [2XIsCommutative[102X ([14X35.4-9[114X)).[133X
@@ -295,7 +295,7 @@
   
   [1X58.3-2 MinimalPolynomial[101X
   
-  [29X[2XMinimalPolynomial[102X( [3XF[103X, [3Xz[103X[, [3Xind[103X] ) [32X function
+  [29X[2XMinimalPolynomial[102X( [3XF[103X, [3Xz[103X[, [3Xind[103X] ) [32X operation
   
   [33X[0;0Yreturns the minimal polynomial of [3Xz[103X over the field [3XF[103X. This is a generator of
   the  ideal in [22X[3XF[103X[x][122X of all polynomials which vanish on [3Xz[103X. (This definition is

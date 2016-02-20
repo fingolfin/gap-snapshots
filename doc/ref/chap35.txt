@@ -183,7 +183,7 @@
     [4X[25Xgap>[125X [27XIsMagmaWithZeroAdjoined(S);[127X[104X
     [4X[28Xfalse[128X[104X
     [4X[25Xgap>[125X [27XM:=MagmaWithZeroAdjoined(S);[127X[104X
-    [4X[28X<<transformation semigroup on 3 pts with 2 generators>[128X[104X
+    [4X[28X<<transformation semigroup of degree 3 with 2 generators>[128X[104X
     [4X[28X  with 0 adjoined>[128X[104X
     [4X[25Xgap>[125X [27XIsMagmaWithZeroAdjoined(M);[127X[104X
     [4X[28Xtrue[128X[104X
@@ -192,9 +192,9 @@
   [1X35.2-13 InjectionZeroMagma[101X
   
   [29X[2XInjectionZeroMagma[102X( [3XM[103X ) [32X attribute
-  [29X[2XMagmaWithZeroAdjoined[102X( [3XM[103X ) [32X operation
+  [29X[2XMagmaWithZeroAdjoined[102X( [3XM[103X ) [32X attribute
   
-  [33X[0;0Y[10XInjectionZeroMagma[110X  returns  an  embedding from the magma [3XM[103X into a new magma
+  [33X[0;0Y[2XInjectionZeroMagma[102X  returns  an  embedding from the magma [3XM[103X into a new magma
   formed  from [3XM[103X by adjoining a single new element which is the multiplicative
   zero  of the resulting magma. The elements of the new magma form a family of
   elements  in the category [2XIsMultiplicativeElementWithZero[102X ([14X31.14-12[114X) and the
@@ -211,7 +211,8 @@
     [4X[25Xgap>[125X [27XMultiplicativeZero(S);[127X[104X
     [4X[28XTransformation( [ 7, 7, 7, 7, 7, 7, 7 ] )[128X[104X
     [4X[25Xgap>[125X [27XT:=MagmaWithZeroAdjoined(S);[127X[104X
-    [4X[28X<<transformation monoid on 7 pts with 2 generators> with 0 adjoined>[128X[104X
+    [4X[28X<<transformation monoid of degree 7 with 2 generators>[128X[104X
+    [4X[28X  with 0 adjoined>[128X[104X
     [4X[25Xgap>[125X [27Xmap:=UnderlyingInjectionZeroMagma(T);;[127X[104X
     [4X[25Xgap>[125X [27Xx:=Transformation( [ 7, 7, 7, 3, 7, 3, 7 ] );;[127X[104X
     [4X[25Xgap>[125X [27Xx^map;[127X[104X
@@ -234,10 +235,11 @@
     [4X[25Xgap>[125X [27XMultiplicativeZero(S);[127X[104X
     [4X[28XTransformation( [ 8, 8, 8, 8, 8, 8, 8, 8 ] )[128X[104X
     [4X[25Xgap>[125X [27XT:=MagmaWithZeroAdjoined(S);[127X[104X
-    [4X[28X<<transformation monoid on 8 pts with 2 generators> with 0 adjoined>[128X[104X
+    [4X[28X<<transformation monoid of degree 8 with 2 generators>[128X[104X
+    [4X[28X  with 0 adjoined>[128X[104X
     [4X[25Xgap>[125X [27XUnderlyingInjectionZeroMagma(T);[127X[104X
-    [4X[28XMappingByFunction( <transformation monoid on 8 pts with 2 generators>[128X[104X
-    [4X[28X , <<transformation monoid on 8 pts with 2 generators>[128X[104X
+    [4X[28XMappingByFunction( <transformation monoid of degree 8 with 2 [128X[104X
+    [4X[28X generators>, <<transformation monoid of degree 8 with 2 generators>[128X[104X
     [4X[28X  with 0 adjoined>, function( elt ) ... end, function( x ) ... end )[128X[104X
   [4X[32X[104X
   
@@ -488,12 +490,12 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS:=Semigroup( Transformation( [ 1, 1, 1 ] ), [127X[104X
     [4X[25X>[125X [27XTransformation( [ 2, 3, 1 ] ) );[127X[104X
-    [4X[28X<transformation semigroup on 3 pts with 2 generators>[128X[104X
+    [4X[28X<transformation semigroup of degree 3 with 2 generators>[128X[104X
     [4X[25Xgap>[125X [27XMultiplicativeZero(S);[127X[104X
     [4X[28Xfail[128X[104X
     [4X[25Xgap>[125X [27XS:=Semigroup( Transformation( [ 1, 1, 1 ] ), [127X[104X
     [4X[25X>[125X [27XTransformation( [ 1, 3, 2 ] ) );[127X[104X
-    [4X[28X<transformation semigroup on 3 pts with 2 generators>[128X[104X
+    [4X[28X<transformation semigroup of degree 3 with 2 generators>[128X[104X
     [4X[25Xgap>[125X [27XMultiplicativeZero(S);[127X[104X
     [4X[28XTransformation( [ 1, 1, 1 ] )[128X[104X
   [4X[32X[104X

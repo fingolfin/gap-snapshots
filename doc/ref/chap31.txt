@@ -336,7 +336,7 @@
   
   [29X[2XParent[102X( [3XD[103X ) [32X function
   [29X[2XSetParent[102X( [3XD[103X, [3XP[103X ) [32X operation
-  [29X[2XHasParent[102X( [3XD[103X ) [32X function
+  [29X[2XHasParent[102X( [3XD[103X ) [32X filter
   
   [33X[0;0YIt  is possible to assign to a domain [3XD[103X one other domain [3XP[103X containing [3XD[103X as a
   subset,  in order to exploit this subset relation between [3XD[103X and [3XP[103X. Note that
@@ -1136,8 +1136,8 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS:=Semigroup(Transformation( [ 1, 1, 1 ] ));;[127X[104X
     [4X[25Xgap>[125X [27XM:=MagmaWithZeroAdjoined(S);[127X[104X
-    [4X[28X<<commutative transformation semigroup on 3 pts with 1 generator>[128X[104X
-    [4X[28Xwith 0 adjoined>[128X[104X
+    [4X[28X<<commutative transformation semigroup of degree 3 with 1 generator>[128X[104X
+    [4X[28X  with 0 adjoined>[128X[104X
     [4X[25Xgap>[125X [27Xx:=Representative(M);[127X[104X
     [4X[28X<semigroup with 0 adjoined elt: Transformation( [ 1, 1, 1 ] )>[128X[104X
     [4X[25Xgap>[125X [27XIsMultiplicativeElementWithZero(x);[127X[104X

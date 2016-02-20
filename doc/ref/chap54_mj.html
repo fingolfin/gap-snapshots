@@ -248,17 +248,17 @@
 
 <h5>54.2-2 PartialPermOp</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartialPermOp</code>( <var class="Arg">obj</var>, <var class="Arg">list</var>[, <var class="Arg">func</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartialPermOpNC</code>( <var class="Arg">obj</var>, <var class="Arg">list</var>[, <var class="Arg">func</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartialPermOp</code>( <var class="Arg">obj</var>, <var class="Arg">list</var>[, <var class="Arg">func</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartialPermOpNC</code>( <var class="Arg">obj</var>, <var class="Arg">list</var>[, <var class="Arg">func</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: A partial permutation or <code class="keyw">fail</code>.</p>
 
-<p><code class="code">PartialPermOp</code> returns the partial permutation that corresponds to the action of the object <var class="Arg">obj</var> on the domain or list <var class="Arg">list</var> via the function <var class="Arg">func</var>. If the optional third argument <var class="Arg">func</var> is not specified, then the action <code class="func">OnPoints</code> (<a href="chap41_mj.html#X7FE417DD837987B4"><span class="RefLink">41.2-1</span></a>) is used by default. Note that the returned partial permutation refers to the positions in <var class="Arg">list</var> even if <var class="Arg">list</var> itself consists of integers.</p>
+<p><code class="func">PartialPermOp</code> returns the partial permutation that corresponds to the action of the object <var class="Arg">obj</var> on the domain or list <var class="Arg">list</var> via the function <var class="Arg">func</var>. If the optional third argument <var class="Arg">func</var> is not specified, then the action <code class="func">OnPoints</code> (<a href="chap41_mj.html#X7FE417DD837987B4"><span class="RefLink">41.2-1</span></a>) is used by default. Note that the returned partial permutation refers to the positions in <var class="Arg">list</var> even if <var class="Arg">list</var> itself consists of integers.</p>
 
 <p>This function is the analogue in the context of partial permutations of <code class="func">Permutation</code> (<a href="../../doc/ref/chap41_mj.html#X7807A33381DCAB26"><span class="RefLink">Reference: Permutation</span></a>) or <code class="func">TransformationOp</code> (<a href="chap53_mj.html#X7C2A3FC9782F2099"><span class="RefLink">53.2-5</span></a>).</p>
 
 <p>If <var class="Arg">obj</var> does not map the elements of <var class="Arg">list</var> injectively, then <code class="keyw">fail</code> is returned.</p>
 
-<p><code class="code">PartialPermOpNC</code> does not check that <var class="Arg">obj</var> maps elements of <var class="Arg">list</var> injectively or that a partial permutation is defined by the action of <var class="Arg">obj</var> on <var class="Arg">list</var> via <var class="Arg">func</var>. This function should be used only with caution, in situations where it is guaranteed that the arguments have the required properties.</p>
+<p><code class="func">PartialPermOpNC</code> does not check that <var class="Arg">obj</var> maps elements of <var class="Arg">list</var> injectively or that a partial permutation is defined by the action of <var class="Arg">obj</var> on <var class="Arg">list</var> via <var class="Arg">func</var>. This function should be used only with caution, in situations where it is guaranteed that the arguments have the required properties.</p>
 
 
 <div class="example"><pre>
@@ -327,14 +327,14 @@ fail
 
 <h5>54.2-5 MeetOfPartialPerms</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MeetOfPartialPerms</code>( <var class="Arg">arg</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MeetOfPartialPerms</code>( <var class="Arg">arg</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Returns: A partial permutation.</p>
 
 <p>The meet of partial permutations <var class="Arg">f</var> and <var class="Arg">g</var> is just the meet, or infimum, of <var class="Arg">f</var> and <var class="Arg">g</var> under the natural partial ordering of partial permutations. In other words, the meet is the greatest partial permuation which is a restriction of both <var class="Arg">f</var> and <var class="Arg">g</var>.</p>
 
 <p>Note that unlike the join of partial permutations, the meet always exists.</p>
 
-<p><code class="code">MeetOfPartialPerms</code> returns the meet of the partial permutations in its argument. The argument <var class="Arg">arg</var> can be a partial permutation collection or a number of partial permutations.</p>
+<p><code class="func">MeetOfPartialPerms</code> returns the meet of the partial permutations in its argument. The argument <var class="Arg">arg</var> can be a partial permutation collection or a number of partial permutations.</p>
 
 
 <div class="example"><pre>
@@ -368,9 +368,9 @@ fail
 
 <h5>54.2-7 <span class="Heading">RandomPartialPerm</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomPartialPerm</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomPartialPerm</code>( <var class="Arg">set</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomPartialPerm</code>( <var class="Arg">dom</var>, <var class="Arg">img</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomPartialPerm</code>( <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomPartialPerm</code>( <var class="Arg">set</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomPartialPerm</code>( <var class="Arg">dom</var>, <var class="Arg">img</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Returns: A random partial permutation.</p>
 
 <p>In its first form, <code class="code">RandomPartialPerm</code> returns a randomly chosen partial permutation where points in the domain and image are bounded above by the positive integer <var class="Arg">n</var>.</p>
@@ -456,8 +456,8 @@ fail
 
 <h5>54.3-4 DomainOfPartialPerm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DomainOfPartialPerm</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DomainOfPartialPermCollection</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DomainOfPartialPerm</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DomainOfPartialPermCollection</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>Returns: A set of positive integers (maybe empty).</p>
 
 <p>The <em>domain</em> of a partial permutation <var class="Arg">f</var> is the set of positive integers where <var class="Arg">f</var> is defined.</p>
@@ -482,8 +482,8 @@ fail
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=SymmetricInverseSemigroup(5);                                </span>
-&lt;symmetric inverse semigroup on 5 pts&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseSemigroup(5);                                </span>
+&lt;symmetric inverse monoid of degree 5&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ImageOfPartialPermCollection(GeneratorsOfInverseSemigroup(S));</span>
 [ 1, 2, 3, 4, 5 ]</pre></div>
 
@@ -491,7 +491,7 @@ fail
 
 <h5>54.3-6 ImageListOfPartialPerm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImageListOfPartialPerm</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImageListOfPartialPerm</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>Returns: The list of images of a partial permutation.</p>
 
 <p>The <em>image list</em> of a partial permutation <var class="Arg">f</var> is the list of images of the elements of the domain <var class="Arg">f</var> where <code class="code">ImageListOfPartialPerm(<var class="Arg">f</var>)[i]=DomainOfPartialPerm(<var class="Arg">f</var>)[i]^<var class="Arg">f</var></code> for any <code class="code">i</code> in the range from <code class="code">1</code> to the rank of <var class="Arg">f</var>.</p>
@@ -523,8 +523,8 @@ fail
 
 <h5>54.3-8 FixedPointsOfPartialPerm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FixedPointsOfPartialPerm</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FixedPointsOfPartialPerm</code>( <var class="Arg">coll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FixedPointsOfPartialPerm</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FixedPointsOfPartialPerm</code>( <var class="Arg">coll</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Returns: A set of positive integers.</p>
 
 <p><code class="code">FixedPointsOfPartialPerm</code> returns the set of points <code class="code">i</code> in the domain of the partial permutation <var class="Arg">f</var> such that <code class="code">i^<var class="Arg">f</var>=i</code>.</p>
@@ -533,12 +533,11 @@ fail
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPerm( </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 1, 2, 3, 5, 6, 8, 10, 11, 14, 17, 20, 21, 22, 24, 25, 26, 32 ], </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 30, 20, 29, 24, 9, 14, 26, 5, 25, 15, 11, 6, 35, 2, 10, 19, 23 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := PartialPerm( [ 1, 2, 3, 6, 7 ], [ 1, 3, 4, 7, 5 ] );</span>
+[2,3,4][6,7,5](1)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FixedPointsOfPartialPerm(f);</span>
-[  ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPerm([1..10]);;</span>
+[ 1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := PartialPerm([1 .. 10]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FixedPointsOfPartialPerm(f);</span>
 [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]</pre></div>
 
@@ -546,8 +545,8 @@ fail
 
 <h5>54.3-9 MovedPoints</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MovedPoints</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MovedPoints</code>( <var class="Arg">coll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MovedPoints</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MovedPoints</code>( <var class="Arg">coll</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Returns: A set of positive integers.</p>
 
 <p><code class="code">MovedPoints</code> returns the set of points <code class="code">i</code> in the domain of the partial permutation <var class="Arg">f</var> such that <code class="code">i^<var class="Arg">f</var>&lt;&gt;i</code>.</p>
@@ -556,25 +555,21 @@ fail
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPerm( </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 1, 2, 3, 5, 6, 8, 10, 11, 14, 17, 20, 21, 22, 24, 25, 26, 32 ], </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 30, 20, 29, 24, 9, 14, 26, 5, 25, 15, 11, 6, 35, 2, 10, 19, 23 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := PartialPerm( [ 1, 2, 3, 4 ], [ 5, 7, 1, 6 ] );</span>
+[2,7][3,1,5][4,6]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MovedPoints(f);</span>
+[ 1, 2, 3, 4 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FixedPointsOfPartialPerm(f);</span>
 [  ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MovedPoints(f);</span>
-[ 1, 2, 3, 5, 6, 8, 10, 11, 14, 17, 20, 21, 22, 24, 25, 26, 32 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPerm([1..10]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FixedPointsOfPartialPerm(f);</span>
-[ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MovedPoints(f);</span>
-[  ]</pre></div>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FixedPointsOfPartialPerm(PartialPerm([1 .. 4]));</span>
+[ 1, 2, 3, 4 ]</pre></div>
 
 <p><a id="X7FAF969C84CDC742" name="X7FAF969C84CDC742"></a></p>
 
 <h5>54.3-10 NrFixedPoints</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrFixedPoints</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrFixedPoints</code>( <var class="Arg">coll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrFixedPoints</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrFixedPoints</code>( <var class="Arg">coll</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Returns: A positive integer.</p>
 
 <p><code class="code">NrFixedPoints</code> returns the number of points <code class="code">i</code> in the domain of the partial permutation <var class="Arg">f</var> such that <code class="code">i^<var class="Arg">f</var>=i</code>.</p>
@@ -583,21 +578,19 @@ fail
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPerm( </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 1, 2, 3, 5, 6, 8, 10, 11, 14, 17, 20, 21, 22, 24, 25, 26, 32 ], </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 30, 20, 29, 24, 9, 14, 26, 5, 25, 15, 11, 6, 35, 2, 10, 19, 23 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := PartialPerm( [ 1, 2, 3, 4, 5 ], [ 3, 2, 4, 6, 1 ] );</span>
+[5,1,3,4,6](2)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrFixedPoints(f);</span>
-0
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPerm([1..10]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrFixedPoints(f);</span>
+1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrFixedPoints(PartialPerm([1 .. 10]));</span>
 10</pre></div>
 
 <p><a id="X81F5C64E7DAD27A7" name="X81F5C64E7DAD27A7"></a></p>
 
 <h5>54.3-11 NrMovedPoints</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrMovedPoints</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrMovedPoints</code>( <var class="Arg">coll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrMovedPoints</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrMovedPoints</code>( <var class="Arg">coll</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Returns: A positive integer.</p>
 
 <p><code class="code">NrMovedPoints</code> returns the number of points <code class="code">i</code> in the domain of the partial permutation <var class="Arg">f</var> such that <code class="code">i^<var class="Arg">f</var>&lt;&gt;i</code>.</p>
@@ -606,21 +599,19 @@ fail
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPerm( </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 1, 2, 3, 5, 6, 8, 10, 11, 14, 17, 20, 21, 22, 24, 25, 26, 32 ], </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 30, 20, 29, 24, 9, 14, 26, 5, 25, 15, 11, 6, 35, 2, 10, 19, 23 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := PartialPerm( [ 1, 2, 3, 4, 5, 7, 8 ], [ 4, 5, 6, 7, 1, 3, 2 ] );</span>
+[8,2,5,1,4,7,3,6]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrMovedPoints(f);</span>
-17
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPerm([1..10]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrMovedPoints(f);</span>
+7
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NrMovedPoints(PartialPerm([1 .. 4]));</span>
 0</pre></div>
 
 <p><a id="X84A49C977E1E29AA" name="X84A49C977E1E29AA"></a></p>
 
 <h5>54.3-12 SmallestMovedPoint</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestMovedPoint</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestMovedPoint</code>( <var class="Arg">coll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestMovedPoint</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestMovedPoint</code>( <var class="Arg">coll</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Returns: A positive integer or <code class="keyw">infinity</code>.</p>
 
 <p><code class="code">SmallestMovedPoint</code> returns the smallest positive integer <code class="code">i</code> such that <code class="code">i^<var class="Arg">f</var>&lt;&gt;i</code> if such an <code class="code">i</code> exists. If <var class="Arg">f</var> is an identity partial permutation, then <code class="keyw">infinity</code> is returned.</p>
@@ -629,23 +620,19 @@ fail
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPerm( </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 1, 2, 3, 5, 6, 8, 10, 11, 14, 17, 20, 21, 22, 24, 25, 26, 32 ], </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 30, 20, 29, 24, 9, 14, 26, 5, 25, 15, 11, 6, 35, 2, 10, 19, 23 ] );</span>
-[1,30][3,29][8,14,25,10,26,19][17,15][21,6,9][22,35][32,23]
-(2,20,11,5,24)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := PartialPerm( [ 1, 3 ], [ 4, 3 ] );</span>
+[1,4](3)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallestMovedPoint(f);</span>
 1
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPerm([1..10]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallestMovedPoint(f);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallestMovedPoint(PartialPerm([1 .. 10]));</span>
 infinity</pre></div>
 
 <p><a id="X7D4290A785ABC86D" name="X7D4290A785ABC86D"></a></p>
 
 <h5>54.3-13 LargestMovedPoint</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestMovedPoint</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestMovedPoint</code>( <var class="Arg">coll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestMovedPoint</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestMovedPoint</code>( <var class="Arg">coll</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Returns: A positive integer or <code class="keyw">infinity</code>.</p>
 
 <p><code class="code">LargestMovedPoint</code> returns the largest positive integers <code class="code">i</code> such that <code class="code">i^<var class="Arg">f</var>&lt;&gt;i</code> if such an <code class="code">i</code> exists. If <var class="Arg">f</var> is the identity partial permutation, then <code class="code">0</code> is returned.</p>
@@ -654,23 +641,19 @@ infinity</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPerm( </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 1, 2, 3, 5, 6, 8, 10, 11, 14, 17, 20, 21, 22, 24, 25, 26, 32 ], </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 30, 20, 29, 24, 9, 14, 26, 5, 25, 15, 11, 6, 35, 2, 10, 19, 23 ] );</span>
-[1,30][3,29][8,14,25,10,26,19][17,15][21,6,9][22,35][32,23]
-(2,20,11,5,24)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := PartialPerm( [ 1, 3, 4, 5 ], [ 5, 1, 6, 4 ] );</span>
+[3,1,5,4,6]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LargestMovedPoint(f);</span>
-32
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPerm([1..10]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LargestMovedPoint(f);</span>
+5
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LargestMovedPoint(PartialPerm([1 .. 10]));</span>
 0</pre></div>
 
 <p><a id="X85280F1A7B1014BA" name="X85280F1A7B1014BA"></a></p>
 
 <h5>54.3-14 SmallestImageOfMovedPoint</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestImageOfMovedPoint</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestImageOfMovedPoint</code>( <var class="Arg">coll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestImageOfMovedPoint</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestImageOfMovedPoint</code>( <var class="Arg">coll</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Returns: A positive integer or <code class="keyw">infinity</code>.</p>
 
 <p><code class="code">SmallestImageOfMovedPoint</code> returns the smallest positive integer <code class="code">i^<var class="Arg">f</var></code> such that <code class="code">i^<var class="Arg">f</var>&lt;&gt;i</code> if such an <code class="code">i</code> exists. If <var class="Arg">f</var> is the identity partial permutation, then <code class="keyw">infinity</code> is returned.</p>
@@ -679,14 +662,15 @@ infinity</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=SymmetricInverseSemigroup(5);</span>
-&lt;symmetric inverse semigroup on 5 pts&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseSemigroup(5);</span>
+&lt;symmetric inverse monoid of degree 5&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallestImageOfMovedPoint(S);</span>
 1
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(PartialPerm([10..100], [10..100]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(PartialPerm([10 .. 100], [10 .. 100]));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallestImageOfMovedPoint(S);</span>
 infinity
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPerm( [ 1, 2, 3, 6 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := PartialPerm( [ 1, 2, 3, 6 ] );</span>
+[4,6](1)(2)(3)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SmallestImageOfMovedPoint(f);</span>
 6</pre></div>
 
@@ -694,8 +678,8 @@ infinity
 
 <h5>54.3-15 LargestImageOfMovedPoint</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestImageOfMovedPoint</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestImageOfMovedPoint</code>( <var class="Arg">coll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestImageOfMovedPoint</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestImageOfMovedPoint</code>( <var class="Arg">coll</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Returns: A positive integer.</p>
 
 <p><code class="code">LargestImageOfMovedPoint</code> returns the largest positive integer <code class="code">i^<var class="Arg">f</var></code> such that <code class="code">i^<var class="Arg">f</var>&lt;&gt;i</code> if such an <code class="code">i</code> exists. If <var class="Arg">f</var> is an identity partial permutation, then <code class="code">0</code> is returned.</p>
@@ -704,14 +688,14 @@ infinity
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=SymmetricInverseSemigroup(5);</span>
-&lt;symmetric inverse semigroup on 5 pts&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseSemigroup(5);</span>
+&lt;symmetric inverse monoid of degree 5&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LargestImageOfMovedPoint(S);</span>
 5
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(PartialPerm([10..100], [10..100]));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(PartialPerm([10 .. 100], [10 .. 100]));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LargestImageOfMovedPoint(S);</span>
 0
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPerm( [ 1, 2, 3, 6 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := PartialPerm( [ 1, 2, 3, 6 ] );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LargestImageOfMovedPoint(f);</span>
 6</pre></div>
 
@@ -793,7 +777,9 @@ true</pre></div>
 <h5>54.3-20 ComponentRepsOfPartialPerm</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComponentRepsOfPartialPerm</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p><code class="code">ComponentRepsOfPartialPerm</code> returns the representatives, in the following sense, of the components of the partial permutation <var class="Arg">f</var>. For every <code class="code">i</code> in the domain of <var class="Arg">f</var> there exists a representative <code class="code">j</code> and a positive integer <code class="code">k</code> such that <code class="code">i^(<var class="Arg">f</var>^k)=j</code>. Unlike transformations, there is exactly one representative for every component of <var class="Arg">f</var>. <code class="code">ComponentRepsOfPartialPerm</code> returns the least number of representatives.</p>
+<p>Returns: A list of positive integers.</p>
+
+<p><code class="code">ComponentRepsOfPartialPerm</code> returns the representatives, in the following sense, of the components of the partial permutation <var class="Arg">f</var>. Every component of <var class="Arg">f</var> contains a unique element in the domain but not the image of <var class="Arg">f</var>; this element is called the <em>representative</em> of the component. If <code class="code">i</code> is a representative of a component of <var class="Arg">f</var>, then for every <code class="code">j</code><span class="SimpleMath">\(\not=\)</span><code class="code">i</code> in the component of <code class="code">i</code>, there exists a positive integer <code class="code">k</code> such that <code class="code">i ^ (<var class="Arg">f</var> ^ k) = j</code>. Unlike transformations, there is exactly one representative for every component of <var class="Arg">f</var>. <code class="code">ComponentRepsOfPartialPerm</code> returns the least number of representatives.</p>
 
 
 <div class="example"><pre> 
@@ -866,9 +852,9 @@ true</pre></div>
 
 <h5>54.4-1 AsPartialPerm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsPartialPerm</code>( <var class="Arg">f</var>, <var class="Arg">set</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsPartialPerm</code>( <var class="Arg">f</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsPartialPerm</code>( <var class="Arg">f</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsPartialPerm</code>( <var class="Arg">f</var>, <var class="Arg">set</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsPartialPerm</code>( <var class="Arg">f</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsPartialPerm</code>( <var class="Arg">f</var>, <var class="Arg">n</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Returns: A partial permutation.</p>
 
 <p>A permutation <var class="Arg">f</var> defines a partial permutation when it is restricted to any finite set of positive integers. <code class="code">AsPartialPerm</code> can be used to obtain this partial permutation.</p>
@@ -906,9 +892,9 @@ true</pre></div>
 
 <h5>54.4-2 AsPartialPerm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsPartialPerm</code>( <var class="Arg">f</var>, <var class="Arg">set</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsPartialPerm</code>( <var class="Arg">f</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsPartialPerm</code>( <var class="Arg">f</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsPartialPerm</code>( <var class="Arg">f</var>, <var class="Arg">set</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsPartialPerm</code>( <var class="Arg">f</var>, <var class="Arg">n</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsPartialPerm</code>( <var class="Arg">f</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Returns: A partial permutation or <code class="keyw">fail</code>.</p>
 
 <p>A transformation <var class="Arg">f</var> defines a partial permutation when it is restricted to a set of positive integers where it is injective. <code class="code">AsPartialPerm</code> can be used to obtain this partial permutation.</p>
@@ -983,11 +969,11 @@ fail</pre></div>
 
 </dd>
 <dt><strong class="Mark"><code class="code"><var class="Arg">f</var> / <var class="Arg">g</var></code></strong></dt>
-<dd><p>returns <code class="code"><var class="Arg">f</var>*<var class="Arg">g</var>^-1</code> when <var class="Arg">f</var> is a partial permutation and <var class="Arg">g</var> is a permutation or partial permutation. This operation requires essentially the same number of steps as multiplying partial permutations, which is approximately half that required to first invert <var class="Arg">g</var> and then take the produce with <var class="Arg">f</var>.</p>
+<dd><p>returns <code class="code"><var class="Arg">f</var>*<var class="Arg">g</var>^-1</code> when <var class="Arg">f</var> is a partial permutation and <var class="Arg">g</var> is a permutation or partial permutation. This operation requires essentially the same number of steps as multiplying partial permutations, which is approximately half that required to first invert <var class="Arg">g</var> and then take the product with <var class="Arg">f</var>.</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">LQUO(<var class="Arg">g</var>, <var class="Arg">f</var>)</code></strong></dt>
-<dd><p>returns <code class="code"><var class="Arg">g</var>^-1*<var class="Arg">f</var></code> when <var class="Arg">f</var> is a partial permutation and <var class="Arg">g</var> is a permutation or partial permutation. This operation requires essentially the same number of steps as multiplying partial permutations, which is approximately half that required to first invert <var class="Arg">g</var> and then take the produce with <var class="Arg">f</var>.</p>
+<dd><p>returns <code class="code"><var class="Arg">g</var>^-1*<var class="Arg">f</var></code> when <var class="Arg">f</var> is a partial permutation and <var class="Arg">g</var> is a permutation or partial permutation. This operation requires essentially the same number of steps as multiplying partial permutations, which is approximately half that required to first invert <var class="Arg">g</var> and then take the product with <var class="Arg">f</var>.</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code"><var class="Arg">f</var> &lt; <var class="Arg">g</var></code></strong></dt>
@@ -1134,7 +1120,7 @@ false</pre></div>
 
 <h5>54.5-6 TrimPartialPerm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TrimPartialPerm</code>( <var class="Arg">f</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TrimPartialPerm</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: Nothing.</p>
 
 <p>It can happen that the internal representation of a partial permutation uses more memory than necessary. For example, by composing a partial permutation with codegree less than 65536 with a partial permutation with codegree greater than 65535. It is possible that the resulting partial permutation <var class="Arg">f</var> has its codegree and images stored as 32-bit integers, while none of its image points exceeds 65536. The purpose of this function is to change the internal representation of such an <var class="Arg">f</var> from using 32-bit to using 16-bit integers.</p>
@@ -1164,7 +1150,7 @@ false</pre></div>
 
 <div class="example"><pre>&lt;partial perm on r pts with degree m, codegree n&gt;</pre></div>
 
-<p>where the degree and codegree are <code class="code">m</code> and <code class="code">n</code>, respectively. The idea is to abbreviated the display of partial permutations defined on many points. The default value for the <code class="code">PartialPermDisplayLimit</code> is <code class="code">100</code>.</p>
+<p>where the degree and codegree are <code class="code">m</code> and <code class="code">n</code>, respectively. The idea is to abbreviate the display of partial permutations defined on many points. The default value for the <code class="code">PartialPermDisplayLimit</code> is <code class="code">100</code>.</p>
 
 <p>If the rank of <code class="code">f</code> does not exceed the value of <code class="code">PartialPermDisplayLimit</code>, then how <code class="code">f</code> is displayed depends on the value of the user preference <code class="code">NotationForPartialPerms</code> except in the case that <code class="code">f</code> is the empty partial permutation or an identity partial permutation.</p>
 
@@ -1191,10 +1177,8 @@ false</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPerm( </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 16, 17, 18, 19 ],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 3, 12, 14, 4, 11, 18, 17, 2, 9, 5, 15, 8, 20, 10, 19 ]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrettyPrintPP(f);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := PartialPerm([ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 16, 17, 18, 19 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 3, 12, 14, 4, 11, 18, 17, 2, 9, 5, 15, 8, 20, 10, 19 ]);</span>
 [1,3,14][16,8,2,12,15](4)(5,11)[6,18,10,9][7,17,20](19)</pre></div>
 
 <p>This option is the most compact way to display a partial permutation and is the default value of the user preference <code class="code">NotationForPartialPerms</code>.</p>
@@ -1248,7 +1232,7 @@ PartialPerm(
 
 <h4>54.7 <span class="Heading">Semigroups and inverse semigroups of partial permutations</span></h4>
 
-<p>As mentioned at the start of the chapter, every inverse semigroup is isomorphic to a semigroup of partial permutations, and in this section we describe the functions in <strong class="pkg">GAP</strong> specific to partial perms semigroups. For more information about semigroups and inverse semigroups see Chapter <a href="chap51_mj.html#X8665D8737FDD5B10"><span class="RefLink">51</span></a>.</p>
+<p>As mentioned at the start of the chapter, every inverse semigroup is isomorphic to a semigroup of partial permutations, and in this section we describe the functions in <strong class="pkg">GAP</strong> specific to partial permutation semigroups. For more information about semigroups and inverse semigroups see Chapter <a href="chap51_mj.html#X8665D8737FDD5B10"><span class="RefLink">51</span></a>.</p>
 
 <p>The <strong class="pkg">Semigroups</strong> package contains many additional functions and methods for computing with semigroups of partial permutations. In particular, <strong class="pkg">Semigroups</strong> contains more efficient methods than those available in the <strong class="pkg">GAP</strong> library (and in many cases more efficient than any other software) for creating semigroups of transformations, calculating their Green's classes, size, elements, group of units, minimal ideal, small generating sets, testing membership, finding the inverses of a regular element, factorizing elements over the generators, and more.</p>
 
@@ -1258,8 +1242,8 @@ PartialPerm(
 
 <h5>54.7-1 IsPartialPermSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPartialPermSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPartialPermMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPartialPermSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPartialPermMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">( filter )</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>A <em>partial perm semigroup</em> is simply a semigroup consisting of partial permutations, which may or may not be an inverse semigroup. An object <var class="Arg">obj</var> in <strong class="pkg">GAP</strong> is a partial perm semigroup if and only if it satisfies <code class="func">IsSemigroup</code> (<a href="chap51_mj.html#X7B412E5B8543E9B7"><span class="RefLink">51.1-1</span></a>) and <code class="func">IsPartialPermCollection</code> (<a href="chap54_mj.html#X8262A827790DD1CC"><span class="RefLink">54.1-2</span></a>).</p>
@@ -1270,9 +1254,9 @@ PartialPerm(
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPerm( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(f, One(f));</span>
-&lt;commutative partial perm monoid on 9 pts with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := PartialPerm( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(f, One(f));</span>
+&lt;commutative partial perm monoid of rank 9 with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonoid(S);</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsPartialPermMonoid(S);</span>
@@ -1299,10 +1283,10 @@ true</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup( PartialPerm( [ 1, 2 ], [ 10000, 3 ] ) );</span>
-&lt;commutative partial perm semigroup on 2 pts with 1 generator&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup( PartialPerm( [ 1, 5 ], [ 10000, 3 ] ) );</span>
+&lt;commutative partial perm semigroup of rank 2 with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DegreeOfPartialPermSemigroup(S);</span>
-2
+5
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CodegreeOfPartialPermSemigroup(S);</span>
 10000
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RankOfPartialPermSemigroup(S);</span>
@@ -1324,10 +1308,12 @@ true</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=SymmetricInverseSemigroup(5);</span>
-&lt;symmetric inverse semigroup on 5 pts&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := SymmetricInverseSemigroup(5);</span>
+&lt;symmetric inverse monoid of degree 5&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
-1546</pre></div>
+1546
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GeneratorsOfInverseMonoid(S);</span>
+[ (1,2,3,4,5), (1,2)(3)(4)(5), [5,4,3,2,1] ]</pre></div>
 
 <p><a id="X7C8AEA50834060DD" name="X7C8AEA50834060DD"></a></p>
 
@@ -1343,13 +1329,13 @@ true</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup( AsPartialPerm((1,3,4,2), 5), AsPartialPerm((1,3,5), 5),</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(AsPartialPerm((1, 3, 4, 2), 5), AsPartialPerm((1, 3, 5), 5),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm( [ 1, 2, 3, 4 ] ) );</span>
-&lt;partial perm semigroup on 5 pts with 3 generators&gt;
+&lt;partial perm semigroup of rank 5 with 3 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSymmetricInverseSemigroup(S);</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S;</span>
-&lt;symmetric inverse semigroup on 5 pts&gt;</pre></div>
+&lt;symmetric inverse monoid of degree 5&gt;</pre></div>
 
 <p><a id="X7EA51F087CF7621F" name="X7EA51F087CF7621F"></a></p>
 
@@ -1367,9 +1353,9 @@ true
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=InverseSemigroup([ PartialPerm( [ 1, 3 ], [ 1, 3 ] ),</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup([ PartialPerm( [ 1, 3 ], [ 1, 3 ] ),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm( [ 1, 2 ], [ 3, 2 ] ) ] );</span>
-&lt;inverse partial perm semigroup on 3 pts with 2 generators&gt;
+&lt;inverse partial perm semigroup of rank 3 with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
 11
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NaturalPartialOrder(S);</span>
@@ -1384,8 +1370,8 @@ false</pre></div>
 
 <h5>54.7-6 IsomorphismPartialPermMonoid</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismPartialPermMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismPartialPermSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismPartialPermMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismPartialPermSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>Returns: An isomorphism.</p>
 
 <p><code class="code">IsomorphismPartialPermSemigroup(<var class="Arg">S</var>)</code> returns an isomorphism from the inverse semigroup or group <var class="Arg">S</var> to an inverse semigroup of partial permutations.</p>
@@ -1405,36 +1391,35 @@ false</pre></div>
 
 </dd>
 <dt><strong class="Mark">Transformation semigroups</strong></dt>
-<dd><p>If <var class="Arg">S</var> is a transformation semigroup satisfying <code class="func">IsInverseMonoid</code> (<a href="chap51_mj.html#X83F1529479D56665"><span class="RefLink">51.4-8</span></a>), then <code class="code">IsomorphismPartialPermMonoid</code> returns an isomorphism from <var class="Arg">S</var> to an inverse monoid of partial permutations on a subset of <code class="code">[1..DegreeOfTransformationSemigroup(<var class="Arg">S</var>)]</code>.</p>
+<dd><p>If <var class="Arg">S</var> is a transformation semigroup satisfying <code class="func">IsInverseMonoid</code> (<a href="chap51_mj.html#X83F1529479D56665"><span class="RefLink">51.4-8</span></a>), then <code class="code">IsomorphismPartialPermMonoid</code> returns an isomorphism from <var class="Arg">S</var> to an inverse monoid of partial permutations on a subset of <code class="code">[1 .. DegreeOfTransformationSemigroup(<var class="Arg">S</var>)]</code>.</p>
 
 </dd>
 </dl>
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=InverseSemigroup( </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup( </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm( [ 1, 2, 3, 4, 5 ], [ 4, 2, 3, 1, 5 ] ),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm( [ 1, 2, 4, 5 ], [ 3, 1, 4, 2 ] ) );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMonoid(S); </span>
 false
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso:=IsomorphismPartialPermMonoid(S);</span>
-MappingByFunction( &lt;inverse partial perm semigroup on 5 pts
- with 2 generators&gt;, &lt;inverse partial perm monoid on 5 pts
- with 2 generators&gt;, function( object ) ... end, function( object ) ..\
-. end )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismPartialPermMonoid(S);</span>
+MappingByFunction( &lt;inverse partial perm semigroup of rank 5 with 2 
+ generators&gt;, &lt;inverse partial perm monoid of rank 5 with 2 
+ generators&gt;, function( object ) ... end, function( object ) ... end )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
 508
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(Range(iso));</span>
 508
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G:=Group((1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8), (1,4)(2,6)(3,7)(5,8));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := Group((1,2)(3,8)(4,6)(5,7), (1,3,4,7)(2,5,6,8), (1,4)(2,6)(3,7)(5,8));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismPartialPermSemigroup(G);</span>
 MappingByFunction( Group([ (1,2)(3,8)(4,6)(5,7), (1,3,4,7)
-(2,5,6,8), (1,4)(2,6)(3,7)(5,8) ]), &lt;inverse partial perm semigroup 
-on 8 pts
- with 3 generators&gt;, function( p ) ... end, function( f ) ... end )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation( [ 2, 5, 1, 7, 3, 7, 7 ] ), </span>
+(2,5,6,8), (1,4)(2,6)(3,7)
+(5,8) ]), &lt;inverse partial perm semigroup of rank 8 with 3 generators&gt;
+ , function( p ) ... end, function( f ) ... end )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation( [ 2, 5, 1, 7, 3, 7, 7 ] ), </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 6, 5, 7, 2, 1, 7 ] ) );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso:=IsomorphismPartialPermMonoid(S);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MultiplicativeNeutralElement(S)^iso;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismPartialPermMonoid(S);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MultiplicativeNeutralElement(S) ^ iso;</span>
 &lt;identity partial perm on [ 1, 2, 3, 5, 6, 7 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">One(Range(iso));</span>
 &lt;identity partial perm on [ 1, 2, 3, 5, 6, 7 ]&gt;

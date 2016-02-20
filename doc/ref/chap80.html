@@ -138,7 +138,7 @@ InParentFOA( "Normalizer", IsGroup, IsObject, NewAttribute );
 DeclareOperation( "NormalizerOp", [IsGroup, IsObject] );
 </pre></div>
 
-<p>This time we decide to enter a non-default family predicate in the call to <code class="func">InstallMethod</code> (<a href="chap78.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>). We could just leave it out as in the previous call; this would yield the default value, the function <code class="func">ReturnTrue</code> (<a href="chap5.html#X7DB422A2876CCC4D"><span class="RefLink">5.3-1</span></a>) of arbitrary many arguments which always returns <code class="keyw">true</code>. However, then the method might be called in some cases of inconsistent input (for example matrix groups in different characteristics) that ought to fall through the method selection to raise an error.</p>
+<p>This time we decide to enter a non-default family predicate in the call to <code class="func">InstallMethod</code> (<a href="chap78.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>). We could just leave it out as in the previous call; this would yield the default value, the function <code class="func">ReturnTrue</code> (<a href="chap5.html#X7DB422A2876CCC4D"><span class="RefLink">5.4-1</span></a>) of arbitrary many arguments which always returns <code class="keyw">true</code>. However, then the method might be called in some cases of inconsistent input (for example matrix groups in different characteristics) that ought to fall through the method selection to raise an error.</p>
 
 <p>In our situation, we want the second group to be a subgroup of the first, so necessarily both must have the same family and we can use <code class="func">IsIdenticalObj</code> (<a href="chap12.html#X7961183378DFB902"><span class="RefLink">12.5-1</span></a>) as family predicate.</p>
 
@@ -568,7 +568,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a*b;</span>
 [ 2, 3 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=Semigroup(a,b);</span>
-&lt;semigroup with 2 generators&gt;
+&lt;commutative semigroup with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(s);</span>
 3
 </pre></div>

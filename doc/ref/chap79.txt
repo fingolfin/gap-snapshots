@@ -234,7 +234,7 @@
   [33X[0;0YFirst,  since  families  are used to describe relations between arguments of
   operations  in  the  method  selection  mechanism  (see Chapter [14X78[114X, and also
   Chapter [14X13[114X),   one   has  to  prescribe  such  a  relation  in  each  method
-  installation (see [14X78.2[114X); usual relations are [2XReturnTrue[102X ([14X5.3-1[114X) (which means
+  installation (see [14X78.2[114X); usual relations are [2XReturnTrue[102X ([14X5.4-1[114X) (which means
   that  any  relation  of  the actual arguments is admissible), [2XIsIdenticalObj[102X
   ([14X12.5-1[114X)  (which  means  that  there  are two arguments that lie in the same
   family),  and  [10XIsCollsElms[110X  (which  means  that there are two arguments, the
@@ -798,7 +798,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xiter:= Iterator( Integers );[127X[104X
-    [4X[28X<iterator>[128X[104X
+    [4X[28X<iterator of Integers at 0>[128X[104X
     [4X[25Xgap>[125X [27XPrint( iter!.NextIterator, "\n" );[127X[104X
     [4X[28Xfunction ( iter )[128X[104X
     [4X[28X    iter!.counter := iter!.counter + 1;[128X[104X
@@ -961,8 +961,8 @@
   
   [1X79.16-1 ExtRepOfObj[101X
   
-  [29X[2XExtRepOfObj[102X( [3Xobj[103X ) [32X function
-  [29X[2XObjByExtRep[102X( [3Xfam[103X, [3Xdata[103X ) [32X function
+  [29X[2XExtRepOfObj[102X( [3Xobj[103X ) [32X operation
+  [29X[2XObjByExtRep[102X( [3Xfam[103X, [3Xdata[103X ) [32X operation
   
   [33X[0;0Y[2XExtRepOfObj[102X  returns  the  external  representation  of  its  argument,  and
   [2XObjByExtRep[102X   returns  an  object  in  the  family  [3Xfam[103X  that  has  external
@@ -1201,18 +1201,21 @@
   argument  [3Xdescription[103X  is  entered then this must be a string that describes
   the  meaning  of the global variable. [2XDeclareGlobalVariable[102X shall be used in
   the  declaration part of the respective package (see [14X79.19[114X), values can then
-  be   assigned   to   the   new   variable  with  [2XInstallValue[102X  ([14X79.18-9[114X)  or
-  [2XInstallFlushableValue[102X   ([14X79.18-9[114X),   in   the  implementation  part  (again,
-  see [14X79.19[114X).[133X
+  be   assigned   to   the   new   variable   with   [2XInstallValue[102X   ([14X79.18-9[114X),
+  [2XInstallFlushableValue[102X    ([14X79.18-9[114X)    or   [2XInstallFlushableValueFromFunction[102X
+  ([14X79.18-9[114X), in the implementation part (again, see [14X79.19[114X).[133X
   
   [1X79.18-9 InstallValue[101X
   
   [29X[2XInstallValue[102X( [3Xgvar[103X, [3Xvalue[103X ) [32X function
   [29X[2XInstallFlushableValue[102X( [3Xgvar[103X, [3Xvalue[103X ) [32X function
+  [29X[2XInstallFlushableValueFromFunction[102X( [3Xgvar[103X, [3Xfunc[103X ) [32X function
   
   [33X[0;0Y[2XInstallValue[102X   assigns   the  value  [3Xvalue[103X  to  the  global  variable  [3Xgvar[103X.
   [2XInstallFlushableValue[102X does the same but additionally provides that each call
-  of [2XFlushCaches[102X ([14X79.18-11[114X) will assign a structural copy of [3Xvalue[103X to [3Xgvar[103X.[133X
+  of  [2XFlushCaches[102X  ([14X79.18-11[114X)  will assign a structural copy of [3Xvalue[103X to [3Xgvar[103X.
+  [2XInstallFlushableValueFromFunction[102X instead assigns the result of [3Xfunc[103X to [3Xgvar[103X
+  ([3Xfunc[103X is re-evaluated for each invocation of [2XFlushCaches[102X ([14X79.18-11[114X)[133X
   
   [33X[0;0Y[2XInstallValue[102X  does  [13Xnot[113X  work  if  [3Xvalue[103X  is  an  [21Ximmediate object[121X, i.e., an
   internally  represented small integer or finite field element. It also fails
@@ -1260,7 +1263,8 @@
   
   [33X[0;0Y[2XFlushCaches[102X  resets the value of each global variable that has been declared
   with  [2XDeclareGlobalVariable[102X  ([14X79.18-8[114X)  and  for which the initial value has
-  been set with [2XInstallFlushableValue[102X ([14X79.18-9[114X) to this initial value.[133X
+  been       set       with       [2XInstallFlushableValue[102X      ([14X79.18-9[114X)      or
+  [2XInstallFlushableValueFromFunction[102X ([14X79.18-9[114X) to this initial value.[133X
   
   [33X[0;0Y[2XFlushCaches[102X  should  be used only for debugging purposes, since the involved
   global  variables  include  for  example  lists that store finite fields and

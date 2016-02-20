@@ -237,7 +237,7 @@
   
   [1X32.3-3 IsMapping[101X
   
-  [29X[2XIsMapping[102X( [3Xmap[103X ) [32X property
+  [29X[2XIsMapping[102X( [3Xmap[103X ) [32X filter
   
   [33X[0;0YA  [13Xmapping[113X  [3Xmap[103X is a general mapping that assigns to each element [10Xelm[110X of its
   source a unique element [10XImage( [3Xmap[103X[10X, elm )[110X of its range.[133X
@@ -588,7 +588,7 @@
   
   [1X32.8-1 IsMagmaHomomorphism[101X
   
-  [29X[2XIsMagmaHomomorphism[102X( [3Xmapp[103X ) [32X property
+  [29X[2XIsMagmaHomomorphism[102X( [3Xmapp[103X ) [32X filter
   
   [33X[0;0YA  [13Xmagma  homomorphism[113X  is  a  total  single  valued  mapping which respects
   multiplication.[133X
@@ -651,8 +651,8 @@
   
   [1X32.9-4 IsGroupGeneralMapping[101X
   
-  [29X[2XIsGroupGeneralMapping[102X( [3Xmapp[103X ) [32X property
-  [29X[2XIsGroupHomomorphism[102X( [3Xmapp[103X ) [32X property
+  [29X[2XIsGroupGeneralMapping[102X( [3Xmapp[103X ) [32X filter
+  [29X[2XIsGroupHomomorphism[102X( [3Xmapp[103X ) [32X filter
   
   [33X[0;0YA  [13Xgroup  general  mapping[113X  is  a  mapping which respects multiplication and
   inverses.   If  it  is  total  and  single  valued  it  is  called  a  [13Xgroup
@@ -726,8 +726,8 @@
   
   [1X32.10-4 IsAdditiveGroupGeneralMapping[101X
   
-  [29X[2XIsAdditiveGroupGeneralMapping[102X( [3Xmapp[103X ) [32X property
-  [29X[2XIsAdditiveGroupHomomorphism[102X( [3Xmapp[103X ) [32X property
+  [29X[2XIsAdditiveGroupGeneralMapping[102X( [3Xmapp[103X ) [32X filter
+  [29X[2XIsAdditiveGroupHomomorphism[102X( [3Xmapp[103X ) [32X filter
   
   [33X[0;0Y[2XIsAdditiveGroupGeneralMapping[102X  specifies  whether  a  general  mapping  [3Xmapp[103X
   respects  addition  (see  [2XRespectsAddition[102X  ([14X32.10-1[114X)) and respects additive
@@ -775,8 +775,8 @@
   
   [1X32.11-2 IsLeftModuleGeneralMapping[101X
   
-  [29X[2XIsLeftModuleGeneralMapping[102X( [3Xmapp[103X ) [32X property
-  [29X[2XIsLeftModuleHomomorphism[102X( [3Xmapp[103X ) [32X property
+  [29X[2XIsLeftModuleGeneralMapping[102X( [3Xmapp[103X ) [32X filter
+  [29X[2XIsLeftModuleHomomorphism[102X( [3Xmapp[103X ) [32X filter
   
   [33X[0;0Y[2XIsLeftModuleGeneralMapping[102X   specifies   whether   a  general  mapping  [3Xmapp[103X
   satisfies  the property [2XIsAdditiveGroupGeneralMapping[102X ([14X32.10-4[114X) and respects
@@ -802,8 +802,8 @@
   
   [1X32.12-1 IsRingGeneralMapping[101X
   
-  [29X[2XIsRingGeneralMapping[102X( [3Xmapp[103X ) [32X property
-  [29X[2XIsRingHomomorphism[102X( [3Xmapp[103X ) [32X property
+  [29X[2XIsRingGeneralMapping[102X( [3Xmapp[103X ) [32X filter
+  [29X[2XIsRingHomomorphism[102X( [3Xmapp[103X ) [32X filter
   
   [33X[0;0Y[2XIsRingGeneralMapping[102X  specifies whether a general mapping [3Xmapp[103X satisfies the
   property [2XIsAdditiveGroupGeneralMapping[102X ([14X32.10-4[114X) and respects multiplication
@@ -814,13 +814,13 @@
   
   [1X32.12-2 IsRingWithOneGeneralMapping[101X
   
-  [29X[2XIsRingWithOneGeneralMapping[102X( [3Xmapp[103X ) [32X property
-  [29X[2XIsRingWithOneHomomorphism[102X( [3Xmapp[103X ) [32X property
+  [29X[2XIsRingWithOneGeneralMapping[102X( [3Xmapp[103X ) [32X filter
+  [29X[2XIsRingWithOneHomomorphism[102X( [3Xmapp[103X ) [32X filter
   
   [1X32.12-3 IsAlgebraGeneralMapping[101X
   
-  [29X[2XIsAlgebraGeneralMapping[102X( [3Xmapp[103X ) [32X property
-  [29X[2XIsAlgebraHomomorphism[102X( [3Xmapp[103X ) [32X property
+  [29X[2XIsAlgebraGeneralMapping[102X( [3Xmapp[103X ) [32X filter
+  [29X[2XIsAlgebraHomomorphism[102X( [3Xmapp[103X ) [32X filter
   
   [33X[0;0Y[2XIsAlgebraGeneralMapping[102X  specifies  whether a general mapping [3Xmapp[103X satisfies
   both      properties     [2XIsRingGeneralMapping[102X     ([14X32.12-1[114X)     and     (see
@@ -831,8 +831,8 @@
   
   [1X32.12-4 IsAlgebraWithOneGeneralMapping[101X
   
-  [29X[2XIsAlgebraWithOneGeneralMapping[102X( [3Xmapp[103X ) [32X property
-  [29X[2XIsAlgebraWithOneHomomorphism[102X( [3Xmapp[103X ) [32X property
+  [29X[2XIsAlgebraWithOneGeneralMapping[102X( [3Xmapp[103X ) [32X filter
+  [29X[2XIsAlgebraWithOneHomomorphism[102X( [3Xmapp[103X ) [32X filter
   
   [33X[0;0Y[2XIsAlgebraWithOneGeneralMapping[102X  specifies  whether  a  general  mapping [3Xmapp[103X
   satisfies  both properties [2XIsAlgebraGeneralMapping[102X ([14X32.12-3[114X) and [2XRespectsOne[102X

@@ -286,9 +286,9 @@ InstallMethod( StabChainOptions, true, [ IsPermGroup ], 0,
 ##
 #V  DefaultStabChainOptions . . . . . .  options record for stabilizer chains
 ##
-InstallValue( DefaultStabChainOptions,rec( reduced := true,
+InstallValue( DefaultStabChainOptions, AtomicRecord(rec( reduced := true,
                                  random := 1000,
-                                tryPcgs := true ));
+                                tryPcgs := true )));
 
 #############################################################################
 ##
@@ -463,12 +463,14 @@ InstallGlobalFunction( AddGeneratorsExtendSchreierTree, function( S, new )
             old,  ald,  # genlabels before extension
             len,        # initial length of the orbit of <S>
             img,        # image during orbit algorithm
+            newlabs,    # selected labels
             i,  j;      # loop variable
 
     # Put in the new labels.
     old := BlistList( [ 1 .. Length( S.labels ) ], S.genlabels );
     old[ 1 ] := true;
     ald := StructuralCopy( old );
+    newlabs := [];
     for gen  in new  do
         pos := Position( S.labels, gen );
         if pos = fail  then
@@ -476,8 +478,10 @@ InstallGlobalFunction( AddGeneratorsExtendSchreierTree, function( S, new )
             Add( old, false );
             Add( ald, true );
             Add( S.genlabels, Length( S.labels ) );
+            Add( newlabs, Length(S.labels));            
         elif not ald[ pos ]  then
             Add( S.genlabels, pos );
+            Add( newlabs, pos);            
         fi;
         if     IsBound( S.generators )
            and pos <> 1 and not gen in S.generators  then
@@ -486,47 +490,82 @@ InstallGlobalFunction( AddGeneratorsExtendSchreierTree, function( S, new )
     od;
                           
     # Extend the orbit and the transversal with the new labels.
-    len := Length( S.orbit );
-    i := 1;
+#    len := Length( S.orbit );
+ #   i := 1;
+    
+    
+    
+    #
+    # New kernel functions take over from the GAP code in comments here.
+    # the speedup is considerable. 
+    #
+    
+    # move tests outside loops as much as possible
+    Assert(1,newlabs = Filtered(S.genlabels, j->not old[j]));
     
     if IsBound( S.cycles )  then
-        while i <= Length( S.orbit )  do
-            for j  in S.genlabels  do
+        AGESTC(S.orbit, newlabs, S.cycles, S.labels, S.translabels, S.transversal, S.genlabels);
+        
+        # for i in [1..len] do
+        #     for j in newlabs do
+        #         img := S.orbit[ i ] / S.labels[ j ];
+        #         if IsBound( S.translabels[ img ] )  then
+        #             S.cycles[i] := true;
+        #         else
+        #             S.translabels[ img ] := j;
+        #             S.transversal[ img ] := S.labels[ j ];
+        #             Add( S.orbit, img );
+        #             Add( S.cycles, false);
+                    
+        #         fi;
+        #     od;
+        # od;
+        
                 
-                # Use new labels for old points, all labels for new points.
-                if i > len  or  not old[ j ]  then
-                    img := S.orbit[ i ] / S.labels[ j ];
-                    if IsBound( S.translabels[ img ] )  then
-                        S.cycles[ i ] := true;
-                    else
-                        S.translabels[ img ] := j;
-                        S.transversal[ img ] := S.labels[ j ];
-                        Add( S.orbit, img );
-                        Add( S.cycles, false );
-                    fi;
-                fi;
-                
-            od;
-            i := i + 1;
-        od;
+        # while i <= Length( S.orbit )  do
+        #     for j  in S.genlabels  do
+        #         img := S.orbit[ i ] / S.labels[ j ];
+        #         if  IsBound( S.translabels[ img ] )  then
+        #             S.cycles[i] := true;
+        #         else
+        #             S.translabels[ img ] := j;
+        #             S.transversal[ img ] := S.labels[ j ];
+        #             Add( S.orbit, img );
+        #             Add( S.cycles, false);
+                    
+        #         fi;
+        #     od;
+        #     i := i + 1;
+        # od;
         
     else
-        while i <= Length( S.orbit )  do
-            for j  in S.genlabels  do
+
+        AGEST(S.orbit, newlabs,  S.labels, S.translabels, S.transversal, S.genlabels);
+        
+        # for i in [1..len] do
+        #     for j in newlabs do
+        #         img := S.orbit[ i ] / S.labels[ j ];
+        #         if not IsBound( S.translabels[ img ] )  then
+        #             S.translabels[ img ] := j;
+        #             S.transversal[ img ] := S.labels[ j ];
+        #             Add( S.orbit, img );
+        #         fi;
+        #     od;
+        # od;
+        
                 
-                # Use new labels for old points, all labels for new points.
-                if i > len  or  not old[ j ]  then
-                    img := S.orbit[ i ] / S.labels[ j ];
-                    if not IsBound( S.translabels[ img ] )  then
-                        S.translabels[ img ] := j;
-                        S.transversal[ img ] := S.labels[ j ];
-                        Add( S.orbit, img );
-                    fi;
-                fi;
-                
-            od;
-            i := i + 1;
-        od;
+        # while i <= Length( S.orbit )  do
+        #     for j  in S.genlabels  do
+        #         img := S.orbit[ i ] / S.labels[ j ];
+        #             if not IsBound( S.translabels[ img ] )  then
+        #                 S.translabels[ img ] := j;
+        #                 S.transversal[ img ] := S.labels[ j ];
+        #                 Add( S.orbit, img );
+        #             fi;
+        #         od;
+        #     i := i + 1;
+        # od;
+
     fi;
 end );
 
@@ -1681,6 +1720,79 @@ InstallGlobalFunction(ElementsStabChain,function ( S )
 
    # return the result
    return elms;
+end);
+
+#############################################################################
+##
+#F  IteratorStabChain(<S>)
+##
+InstallGlobalFunction( NextIterator_StabChain,
+function(iter)
+    local l, re;
+
+    if iter!.state = 0 then
+        if Length(iter!.pos) = 0 then 
+            iter!.state := 2;
+        else
+            iter!.state := 1;
+        fi;
+        return ();
+    elif iter!.state = 1 then
+        l := Length(iter!.stack);
+        # Identity is special cased since we only want to
+        # produce a new element when NextIter is called
+        while (l > 0) and iter!.pos[l] = Length(iter!.stack[l].orbit) do
+            l := l - 1;
+        od;
+
+        # Advance, and check whether we have exhausted all group
+        # elements
+        iter!.pos[l] := iter!.pos[l] + 1;
+
+        if l = Length(iter!.stack) and (iter!.pos = iter!.epos) then
+            iter!.state := 2;
+        fi;
+
+        # Now we first find the correct representative for
+        # this element
+        re := InverseRepresentative(iter!.stack[l], iter!.stack[l].orbit[iter!.pos[l]]);
+        if l = 1 then
+            iter!.rep[l] := re^(-1);
+        else
+            iter!.rep[l] := LeftQuotient( re, iter!.rep[l-1]);
+        fi;
+        l := l + 1;
+        while l <= Length(iter!.stack) do
+            iter!.rep[l] := iter!.rep[l-1];
+            iter!.pos[l] := 1;
+            l := l + 1;
+        od;
+        return iter!.rep[l-1];
+    fi;
+end);
+
+InstallGlobalFunction(IteratorStabChain,
+function(S)
+    local r,lstack;
+
+    lstack := ListStabChain(S);
+    Remove(lstack);
+    r := rec (
+          stack := lstack
+        , pos := List(lstack, x -> 1)
+        , epos := List(lstack, x -> Length(x.orbit))
+        , rep := List(lstack, x -> ())
+        , state := 0
+        , NextIterator := NextIterator_StabChain
+        , IsDoneIterator := iter -> (iter!.state = 2)
+        , ShallowCopy := iter -> rec( stack := iter!.stack
+	                            , pos := ShallowCopy(iter!.pos)
+                                    , epos := iter!.epos
+                                    , rep := ShallowCopy(iter!.rep)
+                                    , state := iter!.state
+				    )
+    );
+    return IteratorByFunctions(r);
 end);
 
 InstallMethod( ViewObj,"stabilizer chain records", true,

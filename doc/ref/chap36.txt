@@ -133,7 +133,7 @@
   
   [1X36.2-1 \=[101X
   
-  [29X[2X\=[102X( [3Xw1[103X, [3Xw2[103X ) [32X function
+  [29X[2X\=[102X( [3Xw1[103X, [3Xw2[103X ) [32X operation
   
   [33X[0;0YTwo words are equal if and only if they are words over the same alphabet and
   with  equal external representations (see [14X36.5[114X and [14X37.7[114X). For nonassociative
@@ -142,7 +142,7 @@
   
   [1X36.2-2 \<[101X
   
-  [29X[2X\<[102X( [3Xw1[103X, [3Xw2[103X ) [32X function
+  [29X[2X\<[102X( [3Xw1[103X, [3Xw2[103X ) [32X operation
   
   [33X[0;0YWords   are   ordered  according  to  their  external  representation.  More
   precisely,  two  words  can  be  compared  if  they  are words over the same

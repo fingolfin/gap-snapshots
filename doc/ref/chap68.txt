@@ -32,7 +32,7 @@
   
   [1X68.1-1 PurePadicNumberFamily[101X
   
-  [29X[2XPurePadicNumberFamily[102X( [3Xp[103X, [3Xprecision[103X ) [32X operation
+  [29X[2XPurePadicNumberFamily[102X( [3Xp[103X, [3Xprecision[103X ) [32X function
   
   [33X[0;0Yreturns  the  family  of pure [22Xp[122X-adic numbers over the prime [3Xp[103X with [3Xprecision[103X
   [21Xdigits[121X.  That  is to say, the approximate value will differ from the correct
@@ -40,7 +40,7 @@
   
   [1X68.1-2 PadicNumber[101X
   
-  [29X[2XPadicNumber[102X( [3Xfam[103X, [3Xrat[103X ) [32X function
+  [29X[2XPadicNumber[102X( [3Xfam[103X, [3Xrat[103X ) [32X operation
   
   [33X[0;0Yreturns  the  element  of the [22Xp[122X-adic number family [3Xfam[103X that approximates the
   rational number [3Xrat[103X.[133X

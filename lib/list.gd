@@ -139,14 +139,16 @@ DeclareAttributeKernel( "Length", IsList, LENGTH );
 #############################################################################
 ##
 #O  IsBound( <list>[<pos>] )  . . . . . . . . test for an element from a list
+#O  IsBound( <list>[<ix1>,<ix2>,...] )  . . . . . . . . test for an element from a list
 ##
 ##  <#GAPDoc Label="IsBound_list">
 ##  <ManSection>
-##  <Oper Name="IsBound" Arg='list[n]' Label="for a list position"/>
+##  <Oper Name="IsBound" Arg='list[n]' Label="for a list index"/>
+##  <Oper Name="IsBound" Arg='list[ix1,ix2,...]' Label="for multiple indices"/>
 ##
 ##  <Description>
-##  <Ref Func="IsBound" Label="for a list position"/> returns <K>true</K>
-##  if the list <A>list</A> has a element at the position <A>n</A>,
+##  <Ref Func="IsBound" Label="for a list index"/> returns <K>true</K>
+##  if the list <A>list</A> has a element at index <A>n</A>,
 ##  and <K>false</K> otherwise.
 ##  <A>list</A> must evaluate to a list, otherwise an error is signalled.
 ##  <P/>
@@ -159,12 +161,15 @@ DeclareAttributeKernel( "Length", IsList, LENGTH );
 ##  gap> IsBound( l[101] );
 ##  false
 ##  ]]></Example>
+##
+##  <C>IsBound(<A>list</A>[<A>ix1</A>,<A>ix2</A>,...]</C> is a short-hand for  
+##  <C>IsBound(<A>list</A>[[<A>ix1</A>,<A>ix2</A>,...]]</C>   
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
 DeclareOperationKernel( "IsBound[]",
-    [ IsList, IS_INT ],
+    [ IsList, IsObject ],
     ISB_LIST );
 
 
@@ -173,7 +178,7 @@ DeclareOperationKernel( "IsBound[]",
 #o  <list>[<pos>] . . . . . . . . . . . . . . . select an element from a list
 ##
 DeclareOperationKernel( "[]",
-    [ IsList, IS_INT ],
+    [ IsList, IsObject ],
     ELM_LIST );
 
 
@@ -202,15 +207,16 @@ DeclareOperationKernel( "Elm0List",
 ##  <#GAPDoc Label="Unbind_list">
 ##  <ManSection>
 ##  <Oper Name="Unbind" Arg='list[n]' Label="unbind a list entry"/>
+##  <Oper Name="Unbind" Arg='list[ix1,ix2,...]' Label="for multiple indices"/>
 ##
 ##  <Description>
-##  <Ref Func="Unbind" Label="unbind a list entry"/> deletes the element at
-##  the position <A>n</A> in the mutable list <A>list</A>.  That is, after
+##  <Ref Func="Unbind" Label="unbind a list entry"/> deletes the element with index
+##  <A>n</A> in the mutable list <A>list</A>.  That is, after
 ##  execution of <Ref Func="Unbind" Label="unbind a list entry"/>,
-##  <A>list</A> no longer has an assigned value at the position <A>n</A>.
+##  <A>list</A> no longer has an assigned value with index <A>n</A>.
 ##  Thus <Ref Func="Unbind" Label="unbind a list entry"/> can be used to
 ##  produce holes in a list.
-##  Note that it is not an error to unbind a nonexisting list element.
+##  Note that it is not an error to unbind a nonexistant list element.
 ##  <A>list</A> must evaluate to a list, otherwise an error is signalled.
 ##  <P/>
 ##  <Example><![CDATA[
@@ -221,20 +227,22 @@ DeclareOperationKernel( "Elm0List",
 ##  [ , 2,,,, 7,,,, 11 ]
 ##  ]]></Example>
 ##  <P/>
-##  Note that <Ref Func="IsBound" Label="for a list position"/> and
+##  Note that <Ref Func="IsBound" Label="for a list index"/> and
 ##  <Ref Func="Unbind" Label="unbind a list entry"/> are special
 ##  in that they do not evaluate their argument,
-##  otherwise <Ref Func="IsBound" Label="for a list position"/>
+##  otherwise <Ref Func="IsBound" Label="for a list index"/>
 ##  would always signal an error when it is supposed to return <K>false</K>
 ##  and there would be no way to tell
 ##  <Ref Func="Unbind" Label="unbind a list entry"/>
 ##  which component to remove.
+##  <C>Unbind(<A>list</A>[<A>ix1</A>,<A>ix2</A>,...]</C> is a short-hand for  
+##  <C>Unbind(<A>list</A>[[<A>ix1</A>,<A>ix2</A>,...]]</C>   
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
 DeclareOperationKernel( "Unbind[]",
-    [ IsList and IsMutable, IS_INT ],
+    [ IsList and IsMutable, IsObject ],
     UNB_LIST );
 
 
@@ -243,7 +251,7 @@ DeclareOperationKernel( "Unbind[]",
 #o  <list>[<pos>] := <obj>
 ##
 DeclareOperationKernel( "[]:=",
-    [ IsList and IsMutable, IS_INT, IsObject ],
+    [ IsList and IsMutable, IsObject, IsObject ],
     ASS_LIST );
 
 
@@ -937,26 +945,6 @@ DeclareOperation( "PositionBound", [ IsList ] );
 ##  <#/GAPDoc>
 ##
 DeclareOperation( "PositionSublist", [ IsList,IsList,IS_INT ] );
-
-
-#############################################################################
-##
-#O  PositionFirstComponent( <list>, <obj> )
-##
-##  <#GAPDoc Label="PositionFirstComponent">
-##  <ManSection>
-##  <Oper Name="PositionFirstComponent" Arg='list, obj'/>
-##
-##  <Description>
-##  returns the index <A>i</A> in <A>list</A> such that
-##  <A>list</A><C>[</C><A>i</A><C>][1] = </C><A>obj</A>
-##  or the  place where such an entry should be added
-##  (cf. <Ref Oper="PositionSorted"/>).
-##  </Description>
-##  </ManSection>
-##  <#/GAPDoc>
-##
-DeclareOperation("PositionFirstComponent",[IsList,IsObject]);
 
 
 #############################################################################
@@ -1676,23 +1664,6 @@ DeclareOperation( "SortParallel",
 
 #############################################################################
 ##
-#F  LengthComparison( <list1>, <list2> )
-##
-##  <ManSection>
-##  <Func Name="LengthComparison" Arg='list1, list2'/>
-##
-##  <Description>
-##  This function returns <K>true</K> if the length of <A>list1</A>
-##  is smaller than the length of <A>list2</A>.
-##  It can be used to sort according to length of lists.
-##  </Description>
-##  </ManSection>
-##
-DeclareGlobalFunction("LengthComparison");
-
-
-#############################################################################
-##
 #F  Maximum( <obj1>, <obj2> ... ) . . . . . . . . . . . .  maximum of objects
 #F  Maximum( <list> )
 ##
@@ -1803,7 +1774,6 @@ DeclareOperation( "MaximumList", [ IsList, IsObject ] );
 
 DeclareOperation( "MinimumList", [ IsList ] );
 DeclareOperation( "MinimumList", [ IsList, IsObject ] );
-
 
 #############################################################################
 ##

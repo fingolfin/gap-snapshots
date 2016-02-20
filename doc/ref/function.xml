@@ -42,6 +42,17 @@ several arguments</Heading>
 
 </Section>
 
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<Section Label="Calling a function with a time limit">
+<Heading>Calling a function with a time limit</Heading>
+
+
+<#Include Label="CallWithTimeout">
+<#Include Label="GAPInfo.TimeoutsSupported">
+</Section>
+
+
+
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Section Label="Functions that do nothing">
@@ -56,6 +67,8 @@ So <Ref Func="ReturnTrue"/> is often used as family predicate in
 <#Include Label="ReturnTrue">
 <#Include Label="ReturnFalse">
 <#Include Label="ReturnFail">
+<#Include Label="ReturnNothing">
+<#Include Label="ReturnFirst">
 <#Include Label="IdFunc">
 
 </Section>
@@ -176,5 +189,3 @@ there is one operation <Ref Oper="Zero"/> instead of two operations
 </Section>
 
 </Chapter>
-
-

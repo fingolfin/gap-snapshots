@@ -584,6 +584,23 @@ local e,S,i,p;
   return e;
 end);
 
+#############################################################################
+##
+#M  Iterator( <G> ) . . . . . . . . . . . . . . iterator of permutation group
+##
+InstallMethod( Iterator,
+    "for a trivial permutation group",
+    [ IsPermGroup and IsTrivial ],
+function(G)
+    return IteratorList([()]);
+end);
+
+InstallMethod( Iterator,
+    "for a permutation group",
+    [ IsPermGroup ],
+function(G)
+    return IteratorStabChain(StabChain(G));
+end);
 
 #############################################################################
 ##
@@ -736,8 +753,6 @@ BindGlobal("DoClosurePrmGp",function( G, gens, options )
     return C;
 end );
 
-BindGlobal("PG_EMPTY_OPT",rec());
-
 InstallOtherMethod( ClosureGroup,"permgroup, elements, options",
     true,
     [ IsPermGroup, IsList and IsPermCollection, IsRecord ], 0,
@@ -752,13 +767,13 @@ end );
 InstallMethod( ClosureGroup, "permgroup, element",true,
   [ IsPermGroup, IsPerm ], 0,
 function( G, g )
-  return DoClosurePrmGp( G, [ g ], PG_EMPTY_OPT );
+  return DoClosurePrmGp( G, [ g ], rec() );
 end );
 
 InstallMethod( ClosureGroup, "permgroup, elements",true,
         [ IsPermGroup, IsList and IsPermCollection ], 0,
 function( G, gens )
-  return DoClosurePrmGp( G, gens, PG_EMPTY_OPT );
+  return DoClosurePrmGp( G, gens, rec() );
 end );
 
 InstallOtherMethod( ClosureGroup, "permgroup, element, options",true,
@@ -1746,12 +1761,15 @@ local gens, one, dom,DoBlocks,pool,subo;
     return bl;
   end;
 
-    one:= One( g );
+  one:= One( g );
   gens:= Filtered( GeneratorsOfGroup(g), i -> i <> one );
   if Length(gens)=0 then return []; fi;
   subo:=ApproximateSuborbitsStabilizerPermGroup(g,
           Minimum(List(gens,SmallestMovedPoint)));
   dom:=Union(subo);
+  if not IsTransitive(g,dom) then
+    Error("AllBlocks, must be transitive");
+  fi;
   pool:=[];
   return DoBlocks(subo[1]);
 end);

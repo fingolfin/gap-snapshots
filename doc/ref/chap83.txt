@@ -78,7 +78,7 @@
         using a pager.[133X
   
   [30X    [33X[0;6Y[2XBrowseProfile[102X ([14XBrowse: BrowseProfile[114X) shows profiling results (similar
-        to  [2XDisplayProfile[102X  ([14X7.7-8[114X))  and  allows  one to navigate through the
+        to  [2XDisplayProfile[102X  ([14X7.7-9[114X))  and  allows  one to navigate through the
         files  that  contain  the  implementations  of the functions that were
         actually used, using a pager.[133X
   

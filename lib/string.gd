@@ -613,7 +613,6 @@ DeclareGlobalFunction( "JoinStringsWithSeparator" );
 ##  <#GAPDoc Label="Chomp">
 ##  <ManSection>
 ##  <Func Name="Chomp" Arg='str'/>
-##
 ##  <Description>
 ##  Like the similarly named Perl function, <Ref Func="Chomp"/> removes a
 ##  trailing newline character (or carriage-return line-feed couplet) from a
@@ -657,6 +656,27 @@ DeclareGlobalFunction( "JoinStringsWithSeparator" );
 ##  <#/GAPDoc>
 ##
 DeclareGlobalFunction( "Chomp" );
+
+#############################################################################
+##
+#F  StartsWith( <string>, <prefix> ) . . . does <string> start with <prefix>?
+#F  EndsWith( <string>, <suffix> ) . . . . . does <string> end with <suffix>?
+##
+##  <#GAPDoc Label="StartsWith">
+##  <ManSection>
+##  <Func Name="StartsWith" Arg='string, prefix'/>
+##  <Func Name="EndsWith" Arg='string, suffix'/>
+##
+##  <Description>
+##  <Index>Prefix</Index>
+##  <Index>Suffix</Index>
+##  Determines whether a string starts or ends with another string.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction( "StartsWith" );
+DeclareGlobalFunction( "EndsWith" );
 
 
 #############################################################################
@@ -742,9 +762,33 @@ DeclareGlobalFunction("ReadCSV");
 ##
 DeclareGlobalFunction("PrintCSV");
 
+#############################################################################
+##
+#F  LaTeXTable(<filename>, <list> )
+##
+##  <#GAPDoc Label="LaTeXTable">
+##  <ManSection>
+##  <Func Name="LaTeXTable" Arg='filename, list'/>
+##
+##  <Description>
+##  This function prints a list of records with entries named fieldNR as a
+##  LaTeX table. The first row specifies the print format for the column as
+##  a combination of letters from:
+##  RLC: alignment
+##  M: Math mode
+##  MN: Math mode but names, characters are put into mbox
+##  F: Number displayed in factored form
+##  P: Minipage environment (25mm per default)
+##  B: This column is used to indicate background color of a row.
+##  If the option rows is given, alternating rows are colored grey.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction("LaTeXTable");
+
 BindGlobal("BHINT", "\>\<");
 
 #############################################################################
 ##
 #E
-

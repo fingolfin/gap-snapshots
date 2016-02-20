@@ -57,7 +57,7 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap21_mj.html#X7963C8E17EFF86DB">21.5 <span class="Heading">IsBound and Unbind for Lists</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X876EAD64820B2405">21.5-1 IsBound</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X79EC565A7DCEC938">21.5-1 IsBound</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X78B72FDF7BD63C0B">21.5-2 Unbind</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap21_mj.html#X7DD65BEA7EDB0CD7">21.6 <span class="Heading">Identical Lists</span></a>
@@ -139,7 +139,6 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X865EF45D87ED1384">21.16-10 PositionNot</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X7F42E5AD87EC9D5A">21.16-11 PositionNonZero</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X87A8C62A867D6DA4">21.16-12 PositionSublist</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21_mj.html#X8132A2F5823F0CC0">21.16-13 PositionFirstComponent</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap21_mj.html#X7865747A7CCF5812">21.17 <span class="Heading">Properties and Attributes for Lists</span></a>
 </span>
@@ -355,27 +354,29 @@ false
 
 <p>The basic operations for lists are element access (see <a href="chap21_mj.html#X7921047F83F5FA28"><span class="RefLink">21.3</span></a>), assignment of elements to a list (see <a href="chap21_mj.html#X8611EF768210625B"><span class="RefLink">21.4</span></a>), fetching the length of a list (see <code class="func">Length</code> (<a href="chap21_mj.html#X780769238600AFD1"><span class="RefLink">21.17-5</span></a>)), the test for a hole at a given position, and unbinding an element at a given position (see <a href="chap21_mj.html#X7963C8E17EFF86DB"><span class="RefLink">21.5</span></a>).</p>
 
-<p>The term basic operation means that each other list operation can be formulated in terms of the basic operations. (But note that usually a more efficient method than this one is implemented.)</p>
+<p>The term basic operation means that each other list operation can be formulated in terms of the basic operations. (But note that often a more efficient method than this one is implemented.)</p>
 
 <p>Any <strong class="pkg">GAP</strong> object <var class="Arg">list</var> in the category <code class="func">IsList</code> (<a href="chap21_mj.html#X7C4CC4EA8299701E"><span class="RefLink">21.1-1</span></a>) is regarded as a list, and if methods for the basic list operations are installed for <var class="Arg">list</var> then <var class="Arg">list</var> can be used also for the other list operations.</p>
 
-<p>For internally represented lists, kernel methods are provided for the basic list operations. For other lists, it is possible to install appropriate methods for these operations. This permits the implementation of lists that do not need to store all list elements (see also <a href="chap21_mj.html#X7EA3ACE27E43D174"><span class="RefLink">21.23</span></a>); for example, the elements might be described by an algorithm, such as the elements list of a group. For this reduction of space requirements, however, a price in access time may have to be paid (see <code class="func">ConstantTimeAccessList</code> (<a href="chap21_mj.html#X7B55FB967CDEF468"><span class="RefLink">21.17-6</span></a>)).</p>
+<p>For internally represented lists, kernel methods are provided for the basic list operations with positive integer indices. For other lists or other indices, it is possible to install appropriate methods for these operations. This permits the implementation of lists that do not need to store all list elements (see also <a href="chap21_mj.html#X7EA3ACE27E43D174"><span class="RefLink">21.23</span></a>); for example, the elements might be described by an algorithm, such as the elements list of a group. For this reduction of space requirements, however, a price in access time may have to be paid (see <code class="func">ConstantTimeAccessList</code> (<a href="chap21_mj.html#X7B55FB967CDEF468"><span class="RefLink">21.17-6</span></a>)).</p>
 
 <p><a id="X8297BBCD79642BE6" name="X8297BBCD79642BE6"></a></p>
 
 <h5>21.2-1 \[\]</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \[\]</code>( <var class="Arg">list</var>, <var class="Arg">pos</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBound\[\]</code>( <var class="Arg">list</var>, <var class="Arg">pos</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \[\]\:\=</code>( <var class="Arg">list</var>, <var class="Arg">pos</var>, <var class="Arg">val</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unbind\[\]</code>( <var class="Arg">list</var>, <var class="Arg">pos</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>These operations implement element access, test for element boundedness, list element assignment, and removal of the element at position <var class="Arg">pos</var>. In all cases, the index <var class="Arg">pos</var> must be a positive integer.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \[\]</code>( <var class="Arg">list</var>, <var class="Arg">ix</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBound\[\]</code>( <var class="Arg">list</var>, <var class="Arg">ix</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \[\]\:\=</code>( <var class="Arg">list</var>, <var class="Arg">pos</var>, <var class="Arg">ix</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unbind\[\]</code>( <var class="Arg">list</var>, <var class="Arg">ix</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<p>These operations implement element access, test for element boundedness, list element assignment, and removal of the element with index <var class="Arg">ix</var>.</p>
 
 <p>Note that the special characters <code class="code">[</code>, <code class="code">]</code>, <code class="code">:</code>, and <code class="code">=</code> must be escaped with a backslash <code class="code">\</code> (see <a href="chap4_mj.html#X7E90E6607F4E4943"><span class="RefLink">4.3</span></a>); so <code class="func">\[\]</code> denotes the operation for element access in a list, whereas <code class="code">[]</code> denotes an empty list. (Maybe the variable names involving special characters look strange, but nevertheless they are quite suggestive.)</p>
 
-<p><code class="code">\[\]( <var class="Arg">list</var>, <var class="Arg">pos</var> )</code> is equivalent to <code class="code"><var class="Arg">list</var>[ <var class="Arg">pos</var> ]</code>, which clearly will usually be preferred; the former is useful mainly if one wants to access the operation itself, for example if one wants to install a method for element access in a special kind of lists.</p>
+<p><code class="code">\[\]( <var class="Arg">list</var>, <var class="Arg">ix</var> )</code> is equivalent to <code class="code"><var class="Arg">list</var>[ <var class="Arg">ix</var> ]</code>, which clearly will usually be preferred; the former is useful mainly if one wants to access the operation itself, for example if one wants to install a method for element access in a special kind of lists.</p>
 
-<p>Similarly, <code class="func">IsBound\[\]</code> is used explicitly mainly in method installations. In other situations, one can simply call <code class="func">IsBound</code> (<a href="chap21_mj.html#X876EAD64820B2405"><span class="RefLink">21.5-1</span></a>), which then delegates to <code class="func">IsBound\[\]</code> if the first argument is a list, and to <code class="func">IsBound\.</code> (<a href="chap29_mj.html#X7821AC097821AC09"><span class="RefLink">29.7-3</span></a>) if the first argument is a record.</p>
+<p>The syntax <code class="code"><var class="Arg">list</var>[ <var class="Arg">ix1</var>, <var class="Arg">ix2</var>,.... <var class="Arg">ixn</var> ]</code>, with two or more indices is treated as a shorthand for <code class="code"><var class="Arg">list</var>[[ <var class="Arg">ix1</var>, <var class="Arg">ix2</var>,.... <var class="Arg">ixn</var>]]</code> This is intended to provide a nicer syntax for accessing elements of matrices and tensors.</p>
+
+<p>Similarly, <code class="func">IsBound\[\]</code> is used explicitly mainly in method installations. In other situations, one can simply call <code class="func">IsBound</code> (<a href="chap21_mj.html#X79EC565A7DCEC938"><span class="RefLink">21.5-1</span></a>), which then delegates to <code class="func">IsBound\[\]</code> if the first argument is a list, and to <code class="func">IsBound\.</code> (<a href="chap29_mj.html#X7821AC097821AC09"><span class="RefLink">29.7-3</span></a>) if the first argument is a record.</p>
 
 <p>Analogous statements hold for <code class="func">\[\]\:\=</code> and <code class="func">Unbind\[\]</code>.</p>
 
@@ -383,9 +384,9 @@ false
 
 <h4>21.3 <span class="Heading">List Elements</span></h4>
 
-<p><code class="code"><var class="Arg">list</var>[ <var class="Arg">pos</var> ]</code></p>
+<p><code class="code"><var class="Arg">list</var>[ <var class="Arg">ix</var> ]</code></p>
 
-<p>The above construct evaluates to the <var class="Arg">pos</var>-th element of the list <var class="Arg">list</var>, where <var class="Arg">pos</var> must be a positive integer. List indexing is done with origin 1, i.e., the first element of the list is the element at position 1.</p>
+<p>The above construct evaluates to the element of the list <var class="Arg">list</var> with index <var class="Arg">ix</var>. For built-in list types and collections, indexing is done with origin 1, i.e., the first element of the list is the element with index 1.</p>
 
 
 <div class="example"><pre>
@@ -395,11 +396,15 @@ false
 13
 </pre></div>
 
-<p>If <var class="Arg">list</var> is not a list, or <var class="Arg">pos</var> does not evaluate to a positive integer, or <code class="code"><var class="Arg">list</var>[<var class="Arg">pos</var>]</code> is unbound an error is signalled.</p>
+<p>If <var class="Arg">list</var> is not a built-in list, or <var class="Arg">ix</var> does not evaluate to a positive integer, method selection is invoked to try and find a way of indexing <var class="Arg">list</var> with index <var class="Arg">ix</var>. If this fails, or the selected method finds that <code class="code"><var class="Arg">list</var>[<var class="Arg">ix</var>]</code> is unbound, an error is signalled.</p>
+
+<p><code class="code"><var class="Arg">list</var>[ <var class="Arg">ix1</var>,<var class="Arg">ix2</var>,...]</code></p>
+
+<p>is a short-hand for <code class="code"><var class="Arg">list</var>[[<var class="Arg">ix1</var>,<var class="Arg">ix2</var>,...]]</code></p>
 
 <p><code class="code"><var class="Arg">list</var>{ <var class="Arg">poss</var> }</code></p>
 
-<p>The above construct evaluates to a new list <var class="Arg">new</var> whose first element is <code class="code"><var class="Arg">list</var>[<var class="Arg">poss</var>[1]]</code>, whose second element is <code class="code"><var class="Arg">list</var>[<var class="Arg">poss</var>[2]]</code>, and so on. <var class="Arg">poss</var> must be a dense list of positive integers. However, it does not need to be sorted and may contain duplicate elements. If for any <span class="SimpleMath">\(i\)</span>, <code class="code"><var class="Arg">list</var>[ <var class="Arg">poss</var>[</code><span class="SimpleMath">\(i\)</span><code class="code">] ]</code> is unbound, an error is signalled.</p>
+<p>The above construct evaluates to a new list <var class="Arg">new</var> whose first element is <code class="code"><var class="Arg">list</var>[<var class="Arg">poss</var>[1]]</code>, whose second element is <code class="code"><var class="Arg">list</var>[<var class="Arg">poss</var>[2]]</code>, and so on. However, it does not need to be sorted and may contain duplicate elements. If for any <span class="SimpleMath">\(i\)</span>, <code class="code"><var class="Arg">list</var>[ <var class="Arg">poss</var>[</code><span class="SimpleMath">\(i\)</span><code class="code">] ]</code> is unbound, an error is signalled.</p>
 
 
 <div class="example"><pre>
@@ -468,9 +473,9 @@ end;
 
 <h4>21.4 <span class="Heading">List Assignment</span></h4>
 
-<p><code class="code"><var class="Arg">list</var>[ <var class="Arg">pos</var> ] := <var class="Arg">object</var>;</code></p>
+<p><code class="code"><var class="Arg">list</var>[ <var class="Arg">ix</var> ] := <var class="Arg">object</var>;</code></p>
 
-<p>The list element assignment assigns the object <var class="Arg">object</var>, which can be of any type, to the list entry at the position <var class="Arg">pos</var>, which must be a positive integer, in the mutable (see <a href="chap12_mj.html#X7F0C119682196D65"><span class="RefLink">12.6</span></a>) list <var class="Arg">list</var>. That means that accessing the <var class="Arg">pos</var>-th element of the list <var class="Arg">list</var> will return <var class="Arg">object</var> after this assignment.</p>
+<p>The list element assignment assigns the object <var class="Arg">object</var>, which can be of any type, to the list with index <var class="Arg">ix</var>, in the mutable (see <a href="chap12_mj.html#X7F0C119682196D65"><span class="RefLink">12.6</span></a>) list <var class="Arg">list</var>. That means that accessing the <var class="Arg">ix</var>-th element of the list <var class="Arg">list</var> will return <var class="Arg">object</var> after this assignment.</p>
 
 
 <div class="example"><pre>
@@ -483,7 +488,7 @@ end;
 [ 3, [ 4, 5, 6 ], 10 ]
 </pre></div>
 
-<p>If the index <var class="Arg">pos</var> is larger than the length of the list <var class="Arg">list</var> (see <code class="func">Length</code> (<a href="chap21_mj.html#X780769238600AFD1"><span class="RefLink">21.17-5</span></a>)), the list is automatically enlarged to make room for the new element. Note that it is possible to generate lists with holes that way.</p>
+<p>If the index <var class="Arg">ix</var> is an integer larger than the length of the list <var class="Arg">list</var> (see <code class="func">Length</code> (<a href="chap21_mj.html#X780769238600AFD1"><span class="RefLink">21.17-5</span></a>)), the list is automatically enlarged to make room for the new element. Note that it is possible to generate lists with holes that way.</p>
 
 
 <div class="example"><pre>
@@ -498,6 +503,10 @@ end;
 <p>Note that assigning to a list changes the list, thus this list must be mutable (see <a href="chap12_mj.html#X7F0C119682196D65"><span class="RefLink">12.6</span></a>). See <a href="chap21_mj.html#X7DD65BEA7EDB0CD7"><span class="RefLink">21.6</span></a> for subtleties of changing lists.</p>
 
 <p>If <var class="Arg">list</var> does not evaluate to a list, <var class="Arg">pos</var> does not evaluate to a positive integer or <var class="Arg">object</var> is a call to a function which does not return a value (for example <code class="code">Print</code>) an error is signalled.</p>
+
+<p><code class="code"><var class="Arg">list</var>[ <var class="Arg">ix1</var>,<var class="Arg">ix2</var>,...] := <var class="Arg">obj</var></code></p>
+
+<p>is a short-hand for <code class="code"><var class="Arg">list</var>[[<var class="Arg">ix1</var>,<var class="Arg">ix2</var>,...]] := <var class="Arg">obj</var></code>.</p>
 
 <p><code class="code"><var class="Arg">list</var>{ <var class="Arg">poss</var> } := <var class="Arg">objects</var>;</code></p>
 
@@ -636,12 +645,13 @@ end;
 
 <h4>21.5 <span class="Heading">IsBound and Unbind for Lists</span></h4>
 
-<p><a id="X876EAD64820B2405" name="X876EAD64820B2405"></a></p>
+<p><a id="X79EC565A7DCEC938" name="X79EC565A7DCEC938"></a></p>
 
 <h5>21.5-1 IsBound</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBound</code>( <var class="Arg">list</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<p><code class="func">IsBound</code> returns <code class="keyw">true</code> if the list <var class="Arg">list</var> has a element at the position <var class="Arg">n</var>, and <code class="keyw">false</code> otherwise. <var class="Arg">list</var> must evaluate to a list, otherwise an error is signalled.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBound</code>( <var class="Arg">list</var>[, <var class="Arg">ix1</var>, <var class="Arg">ix2</var>, <var class="Arg">...</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<p><code class="func">IsBound</code> returns <code class="keyw">true</code> if the list <var class="Arg">list</var> has a element at index <var class="Arg">n</var>, and <code class="keyw">false</code> otherwise. <var class="Arg">list</var> must evaluate to a list, otherwise an error is signalled.</p>
 
 
 <div class="example"><pre>
@@ -654,12 +664,15 @@ false
 false
 </pre></div>
 
+<p><code class="code">IsBound(<var class="Arg">list</var>[<var class="Arg">ix1</var>,<var class="Arg">ix2</var>,...]</code> is a short-hand for <code class="code">IsBound(<var class="Arg">list</var>[[<var class="Arg">ix1</var>,<var class="Arg">ix2</var>,...]]</code></p>
+
 <p><a id="X78B72FDF7BD63C0B" name="X78B72FDF7BD63C0B"></a></p>
 
 <h5>21.5-2 Unbind</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unbind</code>( <var class="Arg">list</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<p><code class="func">Unbind</code> deletes the element at the position <var class="Arg">n</var> in the mutable list <var class="Arg">list</var>. That is, after execution of <code class="func">Unbind</code>, <var class="Arg">list</var> no longer has an assigned value at the position <var class="Arg">n</var>. Thus <code class="func">Unbind</code> can be used to produce holes in a list. Note that it is not an error to unbind a nonexisting list element. <var class="Arg">list</var> must evaluate to a list, otherwise an error is signalled.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unbind</code>( <var class="Arg">list</var>[, <var class="Arg">ix1</var>, <var class="Arg">ix2</var>, <var class="Arg">...</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<p><code class="func">Unbind</code> deletes the element with index <var class="Arg">n</var> in the mutable list <var class="Arg">list</var>. That is, after execution of <code class="func">Unbind</code>, <var class="Arg">list</var> no longer has an assigned value with index <var class="Arg">n</var>. Thus <code class="func">Unbind</code> can be used to produce holes in a list. Note that it is not an error to unbind a nonexistant list element. <var class="Arg">list</var> must evaluate to a list, otherwise an error is signalled.</p>
 
 
 <div class="example"><pre>
@@ -670,7 +683,7 @@ false
 [ , 2,,,, 7,,,, 11 ]
 </pre></div>
 
-<p>Note that <code class="func">IsBound</code> (<a href="chap21_mj.html#X876EAD64820B2405"><span class="RefLink">21.5-1</span></a>) and <code class="func">Unbind</code> are special in that they do not evaluate their argument, otherwise <code class="func">IsBound</code> (<a href="chap21_mj.html#X876EAD64820B2405"><span class="RefLink">21.5-1</span></a>) would always signal an error when it is supposed to return <code class="keyw">false</code> and there would be no way to tell <code class="func">Unbind</code> which component to remove.</p>
+<p>Note that <code class="func">IsBound</code> (<a href="chap21_mj.html#X79EC565A7DCEC938"><span class="RefLink">21.5-1</span></a>) and <code class="func">Unbind</code> are special in that they do not evaluate their argument, otherwise <code class="func">IsBound</code> (<a href="chap21_mj.html#X79EC565A7DCEC938"><span class="RefLink">21.5-1</span></a>) would always signal an error when it is supposed to return <code class="keyw">false</code> and there would be no way to tell <code class="func">Unbind</code> which component to remove. <code class="code">Unbind(<var class="Arg">list</var>[<var class="Arg">ix1</var>,<var class="Arg">ix2</var>,...]</code> is a short-hand for <code class="code">Unbind(<var class="Arg">list</var>[[<var class="Arg">ix1</var>,<var class="Arg">ix2</var>,...]]</code></p>
 
 <p><a id="X7DD65BEA7EDB0CD7" name="X7DD65BEA7EDB0CD7"></a></p>
 
@@ -898,7 +911,7 @@ false
 
 <p>The function <code class="func">ShrinkAllocationPlist</code> gives back to <strong class="pkg">GAP</strong>'s memory manager the physical memory which is allocated for the plain list <var class="Arg">l</var> but not needed by the current number of entries.</p>
 
-<p>Note that there are similar functions <code class="func">EmptyString</code> (<a href="chap27_mj.html#X836078DC829A8221"><span class="RefLink">27.3-5</span></a>) and <code class="func">ShrinkAllocationString</code> (<a href="chap27_mj.html#X836078DC829A8221"><span class="RefLink">27.3-5</span></a>) for strings instead of plain lists.</p>
+<p>Note that there are similar functions <code class="func">EmptyString</code> (<a href="chap27_mj.html#X836078DC829A8221"><span class="RefLink">27.4-5</span></a>) and <code class="func">ShrinkAllocationString</code> (<a href="chap27_mj.html#X836078DC829A8221"><span class="RefLink">27.4-5</span></a>) for strings instead of plain lists.</p>
 
 
 <div class="example"><pre>
@@ -1589,13 +1602,6 @@ fail
 
 <p>To determine whether <var class="Arg">sub</var> matches <var class="Arg">list</var> at a particular position, use <code class="func">IsMatchingSublist</code> (<a href="chap21_mj.html#X83F8EC7C7BF27EFC"><span class="RefLink">21.17-1</span></a>) instead.</p>
 
-<p><a id="X8132A2F5823F0CC0" name="X8132A2F5823F0CC0"></a></p>
-
-<h5>21.16-13 PositionFirstComponent</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionFirstComponent</code>( <var class="Arg">list</var>, <var class="Arg">obj</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>returns the index <var class="Arg">i</var> in <var class="Arg">list</var> such that <var class="Arg">list</var><code class="code">[</code><var class="Arg">i</var><code class="code">][1] = </code><var class="Arg">obj</var> or the place where such an entry should be added (cf. <code class="func">PositionSorted</code> (<a href="chap21_mj.html#X7A122E848464E534"><span class="RefLink">21.16-5</span></a>)).</p>
-
 <p><a id="X7865747A7CCF5812" name="X7865747A7CCF5812"></a></p>
 
 <h4>21.17 <span class="Heading">Properties and Attributes for Lists</span></h4>
@@ -2088,7 +2094,7 @@ false
 
 <h5>21.20-11 Perform</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Perform</code>( <var class="Arg">list</var>, <var class="Arg">func</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Perform</code>( <var class="Arg">list</var>, <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p><code class="func">Perform</code> applies the function <var class="Arg">func</var> to every element of the list <var class="Arg">list</var>, discarding any return values. It does not return a value.</p>
 
 
@@ -2227,7 +2233,7 @@ false
 <h5>21.20-19 List</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; List</code>( <var class="Arg">list</var>[, <var class="Arg">func</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<p>This function returns a new mutable list <code class="code">new</code> of the same length as the list <var class="Arg">list</var> (which may have holes). The entry <code class="code">new[i]</code> is unbound if <code class="code"><var class="Arg">list</var>[i]</code> is unbound. Otherwise <code class="code">new[i] = <var class="Arg">func</var>(<var class="Arg">list</var>[i])</code>. If the argument <var class="Arg">func</var> is omitted, its default is <code class="func">IdFunc</code> (<a href="chap5_mj.html#X810325697BDEF899"><span class="RefLink">5.3-4</span></a>), so this function does the same as <code class="func">ShallowCopy</code> (<a href="chap12_mj.html#X846BC7107C352031"><span class="RefLink">12.7-1</span></a>) (see also <a href="chap21_mj.html#X7ED7C0738495556F"><span class="RefLink">21.7</span></a>).</p>
+<p>This function returns a new mutable list <code class="code">new</code> of the same length as the list <var class="Arg">list</var> (which may have holes). The entry <code class="code">new[i]</code> is unbound if <code class="code"><var class="Arg">list</var>[i]</code> is unbound. Otherwise <code class="code">new[i] = <var class="Arg">func</var>(<var class="Arg">list</var>[i])</code>. If the argument <var class="Arg">func</var> is omitted, its default is <code class="func">IdFunc</code> (<a href="chap5_mj.html#X810325697BDEF899"><span class="RefLink">5.4-6</span></a>), so this function does the same as <code class="func">ShallowCopy</code> (<a href="chap12_mj.html#X846BC7107C352031"><span class="RefLink">12.7-1</span></a>) (see also <a href="chap21_mj.html#X7ED7C0738495556F"><span class="RefLink">21.7</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -2451,7 +2457,7 @@ true
 
 <h5>21.21-1 ListX</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ListX</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">...</var>, <var class="Arg">argn</var>, <var class="Arg">func</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ListX</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">...</var>, <var class="Arg">argn</var>, <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p><code class="func">ListX</code> returns a new list constructed from the arguments.</p>
 
 <p>Each of the arguments <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <span class="SimpleMath">\(\ldots\)</span> <var class="Arg">argn</var> must be one of the following:</p>
@@ -2519,21 +2525,21 @@ od;
 
 <h5>21.21-2 SetX</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetX</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">...</var>, <var class="Arg">func</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetX</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">...</var>, <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>The only difference between <code class="func">SetX</code> and <code class="func">ListX</code> (<a href="chap21_mj.html#X8258477D7F72171B"><span class="RefLink">21.21-1</span></a>) is that the result list of <code class="func">SetX</code> is strictly sorted.</p>
 
 <p><a id="X82B1411E7FBE925F" name="X82B1411E7FBE925F"></a></p>
 
 <h5>21.21-3 SumX</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SumX</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">...</var>, <var class="Arg">func</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SumX</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">...</var>, <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p><code class="func">SumX</code> returns the sum of the elements in the list obtained by <code class="func">ListX</code> (<a href="chap21_mj.html#X8258477D7F72171B"><span class="RefLink">21.21-1</span></a>) when this is called with the same arguments.</p>
 
 <p><a id="X7FB318B47D8783DA" name="X7FB318B47D8783DA"></a></p>
 
 <h5>21.21-4 ProductX</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProductX</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">...</var>, <var class="Arg">func</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProductX</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">...</var>, <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p><code class="func">ProductX</code> returns the product of the elements in the list obtained by <code class="func">ListX</code> (<a href="chap21_mj.html#X8258477D7F72171B"><span class="RefLink">21.21-1</span></a>) when this is called with the same arguments.</p>
 
 <p><a id="X79596BDE7CAF8491" name="X79596BDE7CAF8491"></a></p>

@@ -270,7 +270,7 @@
   
   [1X41.2-14 Permuted[101X
   
-  [29X[2XPermuted[102X( [3Xlist[103X, [3Xperm[103X ) [32X function
+  [29X[2XPermuted[102X( [3Xlist[103X, [3Xperm[103X ) [32X method
   
   [33X[0;0YThe  following  example  demonstrates  [2XPermuted[102X  ([14X21.20-18[114X)  being  used  to
   implement a permutation action on a domain:[133X
@@ -489,7 +489,7 @@
   
   [1X41.5-3 OrbitStabilizerAlgorithm[101X
   
-  [29X[2XOrbitStabilizerAlgorithm[102X( [3XG[103X, [3XOmega[103X, [3Xblist[103X, [3Xgens[103X, [3Xacts[103X, [3Xpntact[103X ) [32X function
+  [29X[2XOrbitStabilizerAlgorithm[102X( [3XG[103X, [3XOmega[103X, [3Xblist[103X, [3Xgens[103X, [3Xacts[103X, [3Xpntact[103X ) [32X operation
   
   [33X[0;0YThis  operation should not be called by a user. It is documented however for
   purposes  to  extend or maintain the group actions package (the word [21Xpackage[121X
@@ -526,7 +526,7 @@
   
   [1X41.6-1 RepresentativeAction[101X
   
-  [29X[2XRepresentativeAction[102X( [3XG[103X[, [3XOmega[103X], [3Xd[103X, [3Xe[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
+  [29X[2XRepresentativeAction[102X( [3XG[103X[, [3XOmega[103X], [3Xd[103X, [3Xe[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X function
   
   [33X[0;0Ycomputes an element of [3XG[103X that maps [3Xd[103X to [3Xe[103X under the given action and returns
   [9Xfail[109X if no such element exists.[133X
@@ -569,9 +569,9 @@
   
   [1X41.7-1 [33X[0;0YActionHomomorphism[133X[101X
   
-  [29X[2XActionHomomorphism[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X][, [3X"surjective"[103X] ) [32X operation
-  [29X[2XActionHomomorphism[102X( [3Xxset[103X[, [3X"surjective"[103X] ) [32X attribute
-  [29X[2XActionHomomorphism[102X( [3Xaction[103X ) [32X attribute
+  [29X[2XActionHomomorphism[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X][, [3X"surjective"[103X] ) [32X function
+  [29X[2XActionHomomorphism[102X( [3Xxset[103X[, [3X"surjective"[103X] ) [32X function
+  [29X[2XActionHomomorphism[102X( [3Xaction[103X ) [32X function
   
   [33X[0;0Ycomputes  a  homomorphism  from [3XG[103X into the symmetric group on [22X|[3XOmega[103X|[122X points
   that gives the permutation action of [3XG[103X on [3XOmega[103X.[133X
@@ -613,8 +613,8 @@
   
   [1X41.7-2 Action[101X
   
-  [29X[2XAction[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
-  [29X[2XAction[102X( [3Xxset[103X ) [32X attribute
+  [29X[2XAction[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X function
+  [29X[2XAction[102X( [3Xxset[103X ) [32X function
   
   [33X[0;0Yreturns  the image group of [2XActionHomomorphism[102X ([14X41.7-1[114X) called with the same
   parameters.[133X
@@ -692,9 +692,8 @@
     [4X[28X15[128X[104X
     [4X[25Xgap>[125X [27XFactorCosetAction(g,u);[127X[104X
     [4X[28X<action epimorphism>[128X[104X
-    [4X[25Xgap>[125X [27XRange(last);[127X[104X
-    [4X[28XGroup([ (1,9,13,10,4)(2,8,14,11,5)(3,7,15,12,6), [128X[104X
-    [4X[28X  (1,7)(2,8)(3,9)(5,6)(10,11)(14,15) ])[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(Range(last));[127X[104X
+    [4X[28X"S5"[128X[104X
   [4X[32X[104X
   
   [1X41.8-2 RegularActionHomomorphism[101X
@@ -772,7 +771,7 @@
   
   [1X41.9-2 PermutationCycle[101X
   
-  [29X[2XPermutationCycle[102X( [3Xg[103X, [3XOmega[103X, [3Xpnt[103X[, [3Xact[103X] ) [32X operation
+  [29X[2XPermutationCycle[102X( [3Xg[103X, [3XOmega[103X, [3Xpnt[103X[, [3Xact[103X] ) [32X function
   
   [33X[0;0Ycomputes  the  permutation that represents the cycle of [3Xpnt[103X under the action
   of the element [3Xg[103X.[133X

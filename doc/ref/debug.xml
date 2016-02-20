@@ -83,7 +83,9 @@ afterwards.
 <Heading>Tracing Methods</Heading>
 
 <#Include Label="TraceMethods">
+<#Include Label="TraceAllMethods">
 <#Include Label="UntraceMethods">
+<#Include Label="UntraceAllMethods">
 <#Include Label="TraceImmediateMethods">
 
 </Section>
@@ -236,7 +238,7 @@ redirected.
 </ManSection>
 
 <ManSection>
-<Var Name="InfoWarning"/>
+<InfoClass Name="InfoWarning"/>
 
 <Description>
 is an info class to which general warnings are sent at level 1,
@@ -400,6 +402,16 @@ In the read-eval-print loop,
 Profiling of code can be used to determine in which parts of a program
 how much time has been spent and how much memory has been allocated
 during runtime.
+
+GAP has two different methods of profiling. GAP can either profile by
+function, or line-by-line. Line by line profiling is currently only
+used for code coverage, while function profiling tracks memory and time
+usage.
+
+<Subsection Label="FunctionProfiling">
+<Heading>Function Profiling</Heading>
+
+This section describes how to profiling at the function level.
 The idea is that
 <List>
 <Item>
@@ -438,7 +450,7 @@ together with all their methods, respectively,
 and for showing profile information about these functions.
 <P/>
 Note that &GAP; will perform more slowly when profiling than when not.
-
+</Subsection>
 <#Include Label="ProfileGlobalFunctions">
 <#Include Label="ProfileOperations">
 <#Include Label="ProfileOperationsAndMethods">
@@ -451,12 +463,11 @@ Note that &GAP; will perform more slowly when profiling than when not.
 <#Include Label="DisplayProfile">
 <#Include Label="ClearProfile">
 
-
 <!-- The source of the following subsection is not stored in lib/profile.g
      because the GAP output has to be adjusted from time to time,
      and this is easier if there is no indentation. -->
 <Subsection Label="subsect:profiling_example">
-<Heading>An Example of Profiling</Heading>
+<Heading>An Example of Function Profiling</Heading>
 
 Let us suppose we want to get information about the computation of the
 conjugacy classes of a certain permutation group.
@@ -632,6 +643,77 @@ gap> DisplayProfile( [ StabChainOp, Centralizer ] );
 <!-- extend this example by changing the thresholds, and call ClearProfile -->
 
 </Subsection>
+<Subsection Label="linebylineprofiling">
+<Heading>Line By Line Profiling</Heading>
+Line By Line profiling tracks which lines have been executed in a piece
+of GAP code. Built into GAP are the methods necessary to generate profiles,
+the resulting profiles can be displayed with the 'profiling' package.
+</Subsection> 
+
+<Subsection Label="subsect:linebylineprofexample">
+<Heading>Line by Line profiling example</Heading>
+There are two kinds of profiles GAP can build:
+
+<List>
+  <Item> Coverage : This records which lines of code are executed</Item>
+  <Item> Timing : This records how much time is spend executing each line of code </Item>
+</List>
+
+A timing profile provides more information, but will take longer to generate
+and parse.
+
+A timing profile is generated using the functions <Ref Func="ProfileLineByLine"/>
+and <Ref Func="UnprofileLineByLine"/>, as follows:
+
+<Log><![CDATA[
+gap> ProfileLineByLine("output.gz");
+gap> Size(AlternatingGroup(10)); ; # Execute some GAP code you want to profile
+gap> UnprofileLineByLine();
+]]></Log>
+
+For code coverage, use instead the functions <Ref Func="CoverageLineByLine"/>
+and <Ref Func="UncoverageLineByLine"/>.
+
+The profiler will only record lines which are read and executed while
+the profiler is running. If you want to perform code coverage or profile
+GAP's library, then you can use the GAP command  line option '--cover filename.gz',
+which executes  <Ref Func="CoverageLineByLine"/> before GAP starts. Similarly
+the option '--prof filename.gz' executes <Ref Func="ProfileLineByLine"/> before
+GAP starts.
+
+
+The profiler is designed for high performance, because of this, there are some
+limitations which users should be aware of:
+
+<List>
+  <Item> By default the profiler records the wall-clock time which has passed,
+    rather than the CPU time taken (because it is lower overhead), so any time
+    taken writing commands will be charged to the last GAP statement which was
+    executed. Therefore it is better to write a function which starts profiling,
+    executes your code, and then stops profiling.
+  </Item>
+  <Item>
+    If you end the filename with ".gz", the resulting file will automatically
+    be compressed. This is highly recommended!
+  </Item>
+  <Item>
+    The profiler can only track GAP code which occurs in a function -- this
+    is most obvious when looking at code coverage examples, which will appear
+    to miss lines of code in files not in a function.
+  </Item>
+</List>
+
+Profiles are transformed into a human-readable form with
+'profiling' package, for example with the 'OutputAnnotatedCodeCoverageFiles' function.
+
+</Subsection>
+
+<#Include Label="ProfileLineByLine">
+<#Include Label="CoverageLineByLine">
+<#Include Label="UnprofileLineByLine">
+<#Include Label="UncoverageLineByLine">
+<#Include Label="ActivateProfileColour">
+<#Include Label="IsLineByLineProfileActive">
 
 
 <#Include Label="DisplayCacheStats">
@@ -668,7 +750,6 @@ Test files are used to check that &GAP; produces correct results in
 certain computations. A selection of test files for the library can be
 found in the <F>tst</F> directory of the &GAP; distribution.
 
-<#Include Label="ReadTest">
 <#Include Label="StartStopTest">
 
 <#Include Label="[1]{testinstall.g}">
@@ -683,11 +764,11 @@ gaussian.tst               0             10
 [ further lines deleted ]
 ]]></Log>
 
-<#Include Label="[1]{testall.g}">
+<#Include Label="[1]{teststandard.g}">
 <P/>
 
 <#Include Label="Test">
-
+<#Include Label="TestDirectory">
 </Section>
 
 
@@ -828,4 +909,3 @@ facilities to access information from <C>GASMAN</C> from &GAP; programs.
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <!-- %% -->
 <!-- %E -->
-

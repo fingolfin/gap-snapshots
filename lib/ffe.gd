@@ -226,7 +226,6 @@ DeclareCategoryCollections( "IsFFE" );
 DeclareCategoryCollections( "IsFFECollection" );
 DeclareCategoryCollections( "IsFFECollColl" );
 
-
 #############################################################################
 ##
 #C  IsLexOrderedFFE(<ffe>)
@@ -282,6 +281,7 @@ DeclareCategory("IsLogOrderedFFE", IsFFE);
 InstallTrueMethod(IsLogOrderedFFE, IsFFE and IsInternalRep);
 
 
+
 #############################################################################
 ##
 #C  IsFFEFamily
@@ -323,7 +323,7 @@ DeclareGlobalFunction( "FFEFamily" );
 ##  </ManSection>
 ##
 BIND_GLOBAL( "FAMS_FFE_LARGE", [ [], [] ] );
-
+ShareSpecialObj( FAMS_FFE_LARGE );
 
 #############################################################################
 ##
@@ -342,7 +342,6 @@ BIND_GLOBAL( "FAMS_FFE_LARGE", [ [], [] ] );
 ##
 DeclareGlobalVariable( "GALOIS_FIELDS",
     "list of lists, GALOIS_FIELDS[p][n] = GF(p^n) if bound" );
-
 
 #############################################################################
 ##
@@ -469,9 +468,9 @@ DeclareSynonym( "GF", GaloisField );
 ##
 ##  <#GAPDoc Label="DegreeFFE">
 ##  <ManSection>
-##  <Oper Name="DegreeFFE" Arg='z' Label="for a FFE"/>
-##  <Oper Name="DegreeFFE" Arg='vec' Label="for a vector of FFEs"/>
-##  <Oper Name="DegreeFFE" Arg='mat' Label="for a matrix of FFEs"/>
+##  <Attr Name="DegreeFFE" Arg='z' Label="for a FFE"/>
+##  <Meth Name="DegreeFFE" Arg='vec' Label="for a vector of FFEs"/>
+##  <Meth Name="DegreeFFE" Arg='mat' Label="for a matrix of FFEs"/>
 ##
 ##  <Description>
 ##  <Ref Func="DegreeFFE" Label="for a FFE"/> returns the degree of the
@@ -652,6 +651,25 @@ DeclareOperation( "IntVecFFE", [ IsRowVector and IsFFECollection ] );
 ##
 DeclareAttribute( "AsInternalFFE", IsFFE);
 
+
+#############################################################################
+##
+#O  RootFFE( <z>, <k> )
+##
+##  <#GAPDoc Label="RootFFE">
+##  <ManSection>
+##  <Oper Name="RootFFE" Arg='z, k'/>
+##
+##  <Description>
+##  <Ref Func="RootFFE"/> returns a finite field element 
+##  <A>r</A> whose <A>k</A>-th power is <A>z</A>. If no such element exists
+##  then
+##  <K>fail</K> is returned.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareOperation( "RootFFE", [ IsFFE, IsObject ] );
 
 
 #############################################################################

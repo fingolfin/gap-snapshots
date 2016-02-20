@@ -79,6 +79,12 @@ end;
 
 #############################################################################
 ##
+#F  MakeLiteral(<obj>) . . . . . . make the argument a literal and return it.
+##
+
+MakeLiteral := MakeImmutable;
+#############################################################################
+##
 #F  Ignore( <arg> ) . . . . . . . . . . . . ignore but evaluate the arguments
 ##
 #T  1996/08/07 M.Schönert 'Ignore' should be in the kernel
@@ -331,9 +337,7 @@ CallAndInstallPostRestore( function()
        ( IS_STRING(GAPInfo.NeedKernelVersion) and
          GAPInfo.KernelVersion <> GAPInfo.NeedKernelVersion ) then
       Print( "\n\n",
-        "You are running a GAP kernel which does not fit with the library.\n",
-        "Probably you forgot to apply the kernel part or the library part\n",
-        "of a bugfix?\n\n" );
+        "You are running a GAP kernel which does not fit with the library.\n\n" );
 
       # Get the number parts of the two version numbers.
       # (Version numbers are defined in "ext:Version Numbers".)
@@ -361,20 +365,10 @@ CallAndInstallPostRestore( function()
 
       if haveint > needint then
         # kernel newer
-        Print( "You only installed a new kernel.\n",
-               "You must also install the most recent library bugfix,\n",
-               "this is fix", have[1], "r", have[2], "n", have[3],
-               ".zoo (or .zip) or newer.\n\n" );
+        Print( "The GAP kernel is newer than the library.\n\n" );
       else
         # kernel older
-        Print( "If you are using Windows, make sure you installed the file\n",
-               "wbin", need[1], "r", need[2], "n", need[3],
-               ".zoo (or .zip),\n",
-               "Macintosh users make sure the file\n",
-               "bin", need[1], "r", need[2], "n", need[3],
-               "-PPC.sit (or -68k.sit) is installed,\n",
-               "Unix users please recompile.\n\n" );
-#T can't we give an architecture dependent message here?
+        Print( "The GAP kernel is older than the library. Perhaps you forgot to recompile?\n\n" );
       fi;
       Error( "Update to correct kernel version!\n\n" );
     fi;
@@ -629,19 +623,11 @@ BindGlobal( "ShowKernelInformation", function()
       Print( suffix );
     end;
 
-    sysdate:= GAPInfo.Date;
-    if sysdate = "today" and IsBoundGlobal( "IO_stat" ) then
-      # In the case of the development version, show the compilation date.
-      fun:= ValueGlobal( "IO_stat" );
-      fun:= fun( GAPInfo.SystemCommandLine[1] );
-      if fun <> fail then
-        sysdate:= NormalizedWhitespace(StringDate( QuoInt( fun.mtime, 86400 )));
-      fi;
-    fi;
+    sysdate:= GAPInfo.BuildDateTime;
 
     if IsBound(GAPInfo.shortbanner) then
-        Print("This is GAP ", GAPInfo.Version, " of ",
-              sysdate, " (", GAPInfo.Architecture);
+        Print("This is GAP ", GAPInfo.Version, " of ", sysdate,
+        " (", GAPInfo.Architecture);
         if "gmpints" in LoadedModules() then
             Print("+gmp");
         fi;
@@ -659,8 +645,8 @@ BindGlobal( "ShowKernelInformation", function()
       else
         btop := "*********"; vert := "*"; bbot := btop;
       fi;
-      Print( " ",btop,"   GAP, Version ", GAPInfo.Version, " of ",
-             sysdate, " (free software, GPL)\n",
+      Print( " ",btop,"   GAP ", GAPInfo.BuildVersion,
+             " of ", sysdate, "\n",
              " ",vert,"  GAP  ",vert,"   http://www.gap-system.org\n",
              " ",bbot,"   Architecture: ", GAPInfo.Architecture, "\n" );
       # For each library, print the name.
@@ -766,7 +752,6 @@ ReadLib( "helpview.gi"  );
 IMPLICATIONS:=IMPLICATIONS{[Length(IMPLICATIONS),Length(IMPLICATIONS)-1..1]};
 # allow type determination of IMPLICATIONS without using it
 TypeObj(IMPLICATIONS[1]);
-HIDDEN_IMPS:=HIDDEN_IMPS{[Length(HIDDEN_IMPS),Length(HIDDEN_IMPS)-1..1]};
 #T shouldn't this better be at the end of reading the library?
 #T and what about implications installed in packages?
 #T (put later installations to the front?)

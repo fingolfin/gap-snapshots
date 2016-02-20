@@ -263,15 +263,16 @@ gap> keys:=SortedList( GAPInfo.Keywords );; l:=Length( keys );;
 gap> arr:= List( [ 0 .. Int( l/4 )-1 ], i-> keys{ 4*i + [ 1 .. 4 ] } );;
 gap> if l mod 4 <> 0 then Add( arr, keys{[ 4*Int(l/4) + 1 .. l ]} ); fi;
 gap> Length( keys ); PrintArray( arr );
-32
+35
 [ [         Assert,           Info,        IsBound,           QUIT ],
-  [  TryNextMethod,         Unbind,            and,          break ],
-  [       continue,             do,           elif,           else ],
-  [            end,          false,             fi,            for ],
-  [       function,             if,             in,          local ],
-  [            mod,            not,             od,             or ],
-  [           quit,            rec,         repeat,         return ],
-  [           then,           true,          until,          while ] ]
+  [  TryNextMethod,         Unbind,            and,         atomic ],
+  [          break,       continue,             do,           elif ],
+  [           else,            end,          false,             fi ],
+  [            for,       function,             if,             in ],
+  [          local,            mod,            not,             od ],
+  [             or,           quit,       readonly,      readwrite ],
+  [            rec,         repeat,         return,           then ],
+  [           true,          until,          while ] ]
 ]]></Example>
 <P/>
 Note that (almost) all keywords are written in lowercase and that they
@@ -292,7 +293,10 @@ assigned to other variables or passed to functions. These keywords are
 <Ref Func="IsBound" Label="for a global variable"/>,
 <Ref Func="Unbind" Label="unbind a variable"/>, 
 <Ref Func="Info"/> and <Ref Func="TryNextMethod"/>.
-
+<P/>
+Keywords <C>atomic</C>, <C>readonly</C>, <C>readwrite</C> are not used
+at the moment. They are reserved for the future version of GAP to prevent
+their accidental use as identifiers.
 </Section>
 
 
@@ -773,14 +777,17 @@ or to a component of a record (see Chapter&nbsp;<Ref Chap="Records"/>)
 In any case &GAP; tests whether the value is a function.
 If it is not, &GAP; signals an error.
 <P/>
-<Index Subkey="with a variable number of arguments">functions</Index>
-<Index Key="arg" Subkey="special function argument"><C>arg</C></Index>
+<Index Subkey="with a variable number of arguments, calling">functions</Index>
+<Index Key="arg" Subkey="special function argument, calling with"><C>arg</C></Index>
 Next &GAP; checks that the number of actual arguments <A>arg-expr</A>s agrees
 with the number of <E>formal arguments</E> as given in the function definition.
 If they do not agree &GAP; signals an error.
-An exception is the case when there is exactly one formal argument
-with the name <C>arg</C>, in which case any number of actual arguments is
-allowed (see&nbsp;<Ref Sect="Function"/> for examples).
+An exception is the case when the function has a variable length argument list,
+which is denoted by adding <C>...</C> after the final argument.
+In this case there must be at least as many
+actual arguments as there are formal arguments <E>before the
+final argument</E> and can be any larger number
+(see&nbsp;<Ref Sect="Function"/> for examples).
 <P/>
 Now &GAP; allocates for each formal argument and for each <E>formal local</E>
 (that is, the identifiers in the <K>local</K> declaration) a new variable.
@@ -796,8 +803,9 @@ variable corresponding  to  the second  formal argument, and  so on.
 However, &GAP; does not make any guarantee about the order in which the
 arguments are evaluated. They might be evaluated left to right, right to
 left, or in any other order, but each argument is evaluated once. An
-exception again occurs if the function has only one formal argument with
-the name <C>arg</C>. In this case the values of all the actual arguments are
+exception again occurs if the last formal argument has
+the name <C>arg</C>. In this case the values of all the actual
+arguments not assigned to the other formal parameters are
 stored in  a list and this  list is assigned to the  new variable
 corresponding to the formal argument <C>arg</C>.
 <P/>
@@ -1609,7 +1617,7 @@ gap> for x in g do
 > break;
 > fi; od;
 gap> x;
-(1,4,3)(2,6,5)
+(1,5,2)(3,4,6)
 ]]></Example>
 <P/>
 It is an error to use this statement other than inside a loop.
@@ -1728,12 +1736,14 @@ only needs about <C>Log(<A>n</A>)</C> steps.
 <Index Subkey="with a variable number of arguments">functions</Index>
 <Index Key="arg" Subkey="special function argument"><C>arg</C></Index>
 As noted in Section&nbsp;<Ref Sect="Function Calls"/>,
-the case where a function is
-defined with exactly one formal argument with the name <C>arg</C>, is special.
+the case where a function's last argument is followed by <C>...</C> is special.
 It provides a way of defining  a  function  with  a  variable  number  of
-arguments; the values of all the actual arguments are stored  in  a  list
-and this list is assigned to the new variable corresponding to the formal
-argument <C>arg</C>. There are  two  typical  scenarios  for  wanting  such  a
+arguments. The values of the actual arguments are computed and the
+first ones are assigned to the new variables corresponding to the
+formal arguments before the last argument, if any. The values of all the
+remaining actual arguments are stored  in  a  list
+and this list is assigned to the new variable corresponding to the final formal
+argument. There are  two  typical  scenarios  for  wanting  such  a
 possibility:  having  optional  arguments  and  having  any   number   of
 arguments.
 <P/>
@@ -1742,14 +1752,12 @@ The  following  example  shows  one  way  that  the  function
 <Q>optional argument</Q> scenario.
 <P/>
 <Example><![CDATA[
-gap> position := function ( arg )    
->     local list, obj, pos;
->     list := arg[1];
->     obj  := arg[2];
->     if 2 = Length(arg) then
+gap> position := function ( list, obj, arg... )    
+>     local pos;
+>     if 0 = Length(arg) then
 >       pos := 0;
 >     else
->       pos := arg[3];
+>       pos := arg[1];
 >     fi;
 >     repeat
 >       pos := pos + 1;
@@ -1759,7 +1767,7 @@ gap> position := function ( arg )
 >     until list[pos] = obj;
 >     return pos;
 >    end;
-function( arg ) ... end
+function( list, obj, arg... ) ... end
 gap> position([1, 4, 2], 4);
 2
 gap> position([1, 4, 2], 3);
@@ -1772,15 +1780,15 @@ The following  example  demonstrates  the  <Q>any  number  of  arguments</Q>
 scenario.
 <P/>
 <Example><![CDATA[
-gap> sum := function ( arg )
+gap> sum := function ( l... )
 >     local total, x;
 >     total := 0;
->     for x in arg do
+>     for x in l do
 >       total := total + x;
 >     od;
 >     return total;
 >    end;
-function( arg ) ... end
+function( l... ) ... end
 gap> sum(1, 2, 3);
 6
 gap> sum(1, 2, 3, 4);
@@ -1793,13 +1801,18 @@ The user should compare the above with the  &GAP; function <Ref Func="Sum"/>
 which, for example, may take a list argument and optionally
 an initial element (which zero should the sum of an empty list return?).
 <P/>
-Note that if a function <A>f</A> is defined as above with the single formal
-argument <C>arg</C> then <C>NumberArgumentsFunction(<A>f</A>)</C> returns
-<M>-1</M> (see&nbsp;<Ref Func="NumberArgumentsFunction"/>).
+GAP will also special case a function with a single argument with the name
+<C>arg</C> as function with a variable length list of arguments, as if the
+user had written <C>arg...</C>.
 <P/>
-The argument <C>arg</C> when used as the single argument name of some function
-<A>f</A> tells &GAP; that when it encounters <A>f</A> that it should form  a  list
-out of the arguments of <A>f</A>.
+Note that if a function <A>f</A> is defined as above
+then <C>NumberArgumentsFunction(<A>f</A>)</C> returns
+minus the number of formal arguments (including the final argument)
+(see&nbsp;<Ref Func="NumberArgumentsFunction"/>).
+<P/>
+Using the <C>...</C> notation on a function <A>f</A> with only a single
+named argument tells &GAP; that when it encounters <A>f</A> that it should
+form a list out of the arguments of <A>f</A>.
 What if one wishes to do the <Q>opposite</Q>:
 tell &GAP; that a list should be <Q>unwrapped</Q> and passed as several
 arguments to a function.
@@ -2256,4 +2269,3 @@ the part may occur arbitrarily often, or possibly be missing.
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <!-- %% -->
 <!-- %E -->
-

@@ -68,8 +68,9 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X85D6D47B83BD02A1">12.8-1 SetName</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X7F14EF9D81432113">12.8-2 Name</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X7F6C5C3287E8B816">12.8-3 IsInternallyConsistent</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X7F4D216B7DF7BE9D">12.8-4 MemoryUsage</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X871562FD7F982C12">12.8-3 InfoText</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X7F6C5C3287E8B816">12.8-4 IsInternallyConsistent</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12_mj.html#X7F4D216B7DF7BE9D">12.8-5 MemoryUsage</a></span>
 </div></div>
 </div>
 
@@ -232,7 +233,7 @@ true
 
 <h5>12.6-3 Immutable</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Immutable</code>( <var class="Arg">obj</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Immutable</code>( <var class="Arg">obj</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>returns an immutable structural copy (see <code class="func">StructuralCopy</code> (<a href="chap12_mj.html#X7C1E70587EBDD2CB"><span class="RefLink">12.7-2</span></a>)) of <var class="Arg">obj</var> in which the subobjects are immutable <em>copies</em> of the subobjects of <var class="Arg">obj</var>. If <var class="Arg">obj</var> is immutable then <code class="func">Immutable</code> returns <var class="Arg">obj</var> itself.</p>
 
 <p><strong class="pkg">GAP</strong> will complain with an error if one tries to change an immutable object.</p>
@@ -321,13 +322,13 @@ true
 
 <h4>12.8 <span class="Heading">Other Operations Applicable to any Object</span></h4>
 
-<p>There are a number of general operations which can be applied, in principle, to any object in <strong class="pkg">GAP</strong>. Some of these are documented elsewhere –see <code class="func">String</code> (<a href="chap27_mj.html#X81FB5BE27903EC32"><span class="RefLink">27.6-6</span></a>), <code class="func">PrintObj</code> (<a href="chap6_mj.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>) and <code class="func">Display</code> (<a href="chap6_mj.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>). Others are mainly somewhat technical.</p>
+<p>There are a number of general operations which can be applied, in principle, to any object in <strong class="pkg">GAP</strong>. Some of these are documented elsewhere –see <code class="func">String</code> (<a href="chap27_mj.html#X81FB5BE27903EC32"><span class="RefLink">27.7-6</span></a>), <code class="func">PrintObj</code> (<a href="chap6_mj.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>) and <code class="func">Display</code> (<a href="chap6_mj.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>). Others are mainly somewhat technical.</p>
 
 <p><a id="X85D6D47B83BD02A1" name="X85D6D47B83BD02A1"></a></p>
 
 <h5>12.8-1 SetName</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetName</code>( <var class="Arg">obj</var>, <var class="Arg">name</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetName</code>( <var class="Arg">obj</var>, <var class="Arg">name</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>for a suitable object <var class="Arg">obj</var> sets that object to have name <var class="Arg">name</var> (a string).</p>
 
 <p><a id="X7F14EF9D81432113" name="X7F14EF9D81432113"></a></p>
@@ -350,9 +351,16 @@ Z[x,y]
 "Z[x,y]"
 </pre></div>
 
+<p><a id="X871562FD7F982C12" name="X871562FD7F982C12"></a></p>
+
+<h5>12.8-3 InfoText</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoText</code>( <var class="Arg">obj</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<p>is a mutable string with information about the object <var class="Arg">obj</var>. There is no default method to create an info text.</p>
+
 <p><a id="X7F6C5C3287E8B816" name="X7F6C5C3287E8B816"></a></p>
 
-<h5>12.8-3 IsInternallyConsistent</h5>
+<h5>12.8-4 IsInternallyConsistent</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInternallyConsistent</code>( <var class="Arg">obj</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>For debugging purposes, it may be useful to check the consistency of an object <var class="Arg">obj</var> that is composed from other (composed) objects.</p>
@@ -363,7 +371,7 @@ Z[x,y]
 
 <p><a id="X7F4D216B7DF7BE9D" name="X7F4D216B7DF7BE9D"></a></p>
 
-<h5>12.8-4 MemoryUsage</h5>
+<h5>12.8-5 MemoryUsage</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MemoryUsage</code>( <var class="Arg">obj</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>returns the amount of memory in bytes used by the object <var class="Arg">obj</var> and its subobjects. Note that in general, objects can reference each other in very difficult ways such that determining the memory usage is a recursive procedure. In particular, computing the memory usage of a complicated structure itself uses some additional memory, which is however no longer used after completion of this operation. This procedure descends into lists and records, positional and component objects, however it does not take into account the type and family objects! For functions, it only takes the memory usage of the function body, not of the local context the function was created in, although the function keeps a reference to that as well!</p>

@@ -47,8 +47,8 @@ DeclareInfoClass("InfoGlobal");
 ##  escapes
 ##
 
-IdentifierLetters := 
-  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_@";
+IdentifierLetters := MakeImmutable(
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_@" );
 
 #############################################################################
 ##
@@ -57,8 +57,8 @@ IdentifierLetters :=
 
 InstallGlobalFunction( IsValidIdentifier, function(str)
     return ForAll(str, c -> c in IdentifierLetters) and
-           ForAny(str, c -> not (c in "0123456789") and
-           not str in ALL_KEYWORDS() );
+           ForAny(str, c -> not (c in "0123456789")) and
+           not str in ALL_KEYWORDS();
 end);
 
 #############################################################################
@@ -266,7 +266,7 @@ InstallGlobalFunction( TemporaryGlobalVarName,
 end );
 
 
-HIDDEN_GVARS:=[];
+BindThreadLocal("HIDDEN_GVARS",[]);
 
 InstallGlobalFunction(HideGlobalVariables,function(arg)
 local p,i;

@@ -165,7 +165,7 @@ Transformation( [ 2, 3, 4, 1 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b:= Transformation( [ 2, 2, 3, 4 ] );</span>
 Transformation( [ 2, 2 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:= Semigroup(a, b);</span>
-&lt;transformation semigroup on 4 pts with 2 generators&gt;
+&lt;transformation semigroup of degree 4 with 2 generators&gt;
 </pre></div>
 
 <p><a id="X8678D40878CC09A1" name="X8678D40878CC09A1"></a></p>
@@ -181,7 +181,7 @@ Transformation( [ 2, 2 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a:=GeneratorsOfSemigroup(s)[1];</span>
 Transformation( [ 2, 3, 4, 1 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t:=Subsemigroup(s,[a]);</span>
-&lt;commutative transformation semigroup on 4 pts with 1 generator&gt;
+&lt;commutative transformation semigroup of degree 4 with 1 generator&gt;
 </pre></div>
 
 <p><a id="X782B7BDD8252581C" name="X782B7BDD8252581C"></a></p>
@@ -331,7 +331,7 @@ Group( [ f1, f2 ] )*f1*f2^-1*f2^-1^-1
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SemigroupByMultiplicationTable([[1,2,3],[2,3,1],[3,1,2]]);</span>
-&lt;semigroup with 3 generators&gt;
+&lt;semigroup of size 3, with 3 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SemigroupByMultiplicationTable([[1,2,3],[2,3,1],[3,2,1]]);</span>
 fail
 </pre></div>
@@ -430,7 +430,7 @@ fail
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MonoidByMultiplicationTable([[1,2,3],[2,3,1],[3,1,2]]);</span>
-&lt;monoid with 3 generators&gt;
+&lt;monoid of size 3, with 3 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MonoidByMultiplicationTable([[1,2,3],[2,3,1],[1,3,2]]);</span>
 fail
 </pre></div>
@@ -454,12 +454,12 @@ fail
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=InverseSemigroup(</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ) );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPerm( [ 1, 2, 3, 4, 5, 8, 10 ], </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := PartialPerm( [ 1, 2, 3, 4, 5, 8, 10 ], </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 7, 1, 4, 3, 2, 6, 5 ] );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=InverseSemigroup(S, f, Idempotents(SymmetricInverseSemigroup(5)));</span>
-&lt;inverse partial perm semigroup on 10 pts with 34 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseSemigroup(S, f, Idempotents(SymmetricInverseSemigroup(5)));</span>
+&lt;inverse partial perm semigroup of rank 10 with 34 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
 1233</pre></div>
 
@@ -478,12 +478,12 @@ fail
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=InverseMonoid(</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseMonoid(</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">PartialPerm( [ 1, 2, 3, 6, 8, 10 ], [ 2, 6, 7, 9, 1, 5 ] ) );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=PartialPerm( [ 1, 2, 3, 4, 5, 8, 10 ], </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := PartialPerm( [ 1, 2, 3, 4, 5, 8, 10 ], </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">[ 7, 1, 4, 3, 2, 6, 5 ] );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=InverseMonoid(S, f, Idempotents(SymmetricInverseSemigroup(5)));</span>
-&lt;inverse partial perm monoid on 10 pts with 35 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := InverseMonoid(S, f, Idempotents(SymmetricInverseSemigroup(5)));</span>
+&lt;inverse partial perm monoid of rank 10 with 35 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(S);</span>
 1243</pre></div>
 
@@ -761,24 +761,24 @@ true</pre></div>
 
 <h5>51.8-2 IsGreensRelation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensRelation</code>( <var class="Arg">bin-relation</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensRRelation</code>( <var class="Arg">equiv-relation</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensLRelation</code>( <var class="Arg">equiv-relation</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensJRelation</code>( <var class="Arg">equiv-relation</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensHRelation</code>( <var class="Arg">equiv-relation</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensDRelation</code>( <var class="Arg">equiv-relation</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensRelation</code>( <var class="Arg">bin-relation</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensRRelation</code>( <var class="Arg">equiv-relation</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensLRelation</code>( <var class="Arg">equiv-relation</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensJRelation</code>( <var class="Arg">equiv-relation</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensHRelation</code>( <var class="Arg">equiv-relation</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensDRelation</code>( <var class="Arg">equiv-relation</var> )</td><td class="tdright">( filter )</td></tr></table></div>
 <p>Categories for the Green's relations.</p>
 
 <p><a id="X82A11A087AFB3EB0" name="X82A11A087AFB3EB0"></a></p>
 
 <h5>51.8-3 IsGreensClass</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensClass</code>( <var class="Arg">equiv-class</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensRClass</code>( <var class="Arg">equiv-class</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensLClass</code>( <var class="Arg">equiv-class</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensJClass</code>( <var class="Arg">equiv-class</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensHClass</code>( <var class="Arg">equiv-class</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensDClass</code>( <var class="Arg">equiv-class</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensClass</code>( <var class="Arg">equiv-class</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensRClass</code>( <var class="Arg">equiv-class</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensLClass</code>( <var class="Arg">equiv-class</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensJClass</code>( <var class="Arg">equiv-class</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensHClass</code>( <var class="Arg">equiv-class</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGreensDClass</code>( <var class="Arg">equiv-class</var> )</td><td class="tdright">( filter )</td></tr></table></div>
 <p>return <code class="keyw">true</code> if the equivalence class <var class="Arg">equiv-class</var> is a Green's class of any type, or of <span class="SimpleMath">\(R\)</span>, <span class="SimpleMath">\(L\)</span>, <span class="SimpleMath">\(J\)</span>, <span class="SimpleMath">\(H\)</span>, <span class="SimpleMath">\(D\)</span> type, respectively, or <code class="keyw">false</code> otherwise.</p>
 
 <p><a id="X7AA204C8850F9070" name="X7AA204C8850F9070"></a></p>
@@ -885,7 +885,7 @@ true</pre></div>
 
 <p>It is not necessarily the case that a simple subsemigroups of Rees matrix semigroups satisfies <code class="func">IsReesMatrixSemigroup</code> (<a href="chap51_mj.html#X780BB78A79275244"><span class="RefLink">51.9-7</span></a>). A Rees matrix semigroup is simple if and only if its underlying semigroup is simple. A finite semigroup is simple if and only if it is isomorphic to a Rees matrix semigroup over a group; this isomorphism can be obtained explicitly using <code class="func">IsomorphismReesMatrixSemigroup</code> (<a href="chap51_mj.html#X7964B5C97FB9C07D"><span class="RefLink">51.9-3</span></a>).</p>
 
-<p>Similarly, 0-simple subsemigroups of Rees 0-matrix semigroups do not have to satisfy <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="chap51_mj.html#X780BB78A79275244"><span class="RefLink">51.9-7</span></a>). A Rees 0-matrix semigroup with more than 2 elements is 0-simple if and only if every row and every column of its matrix contains a non-zero entry, and its underlying semigroup is simple. A finite semigroup is 0-simple if and only if it is isomorphic to a Rees 0-matrix semigroup over a group; again this isomorphism can be found by using <code class="func">IsomorphismReesMatrixSemigroup</code> (<a href="chap51_mj.html#X7964B5C97FB9C07D"><span class="RefLink">51.9-3</span></a>).</p>
+<p>Similarly, 0-simple subsemigroups of Rees 0-matrix semigroups do not have to satisfy <code class="func">IsReesZeroMatrixSemigroup</code> (<a href="chap51_mj.html#X780BB78A79275244"><span class="RefLink">51.9-7</span></a>). A Rees 0-matrix semigroup with more than 2 elements is 0-simple if and only if every row and every column of its matrix contains a non-zero entry, and its underlying semigroup is simple. A finite semigroup is 0-simple if and only if it is isomorphic to a Rees 0-matrix semigroup over a group; again this isomorphism can be found by using <code class="func">IsomorphismReesZeroMatrixSemigroup</code> (<a href="chap51_mj.html#X7964B5C97FB9C07D"><span class="RefLink">51.9-3</span></a>).</p>
 
 <p>Elements of a Rees matrix or 0-matrix semigroup belong to the categories <code class="func">IsReesMatrixSemigroupElement</code> (<a href="chap51_mj.html#X7F6B852B81488C86"><span class="RefLink">51.9-4</span></a>) and <code class="func">IsReesZeroMatrixSemigroupElement</code> (<a href="chap51_mj.html#X7F6B852B81488C86"><span class="RefLink">51.9-4</span></a>), respectively. Such elements can be created directly using the functions <code class="func">ReesMatrixSemigroupElement</code> (<a href="chap51_mj.html#X7A0DE1F28470295E"><span class="RefLink">51.9-5</span></a>) and <code class="func">ReesZeroMatrixSemigroupElement</code> (<a href="chap51_mj.html#X7A0DE1F28470295E"><span class="RefLink">51.9-5</span></a>).</p>
 
@@ -945,39 +945,44 @@ true</pre></div>
 <h5>51.9-3 IsomorphismReesMatrixSemigroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismReesMatrixSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismReesZeroMatrixSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>Returns: An isomorphism.</p>
 
 <p>Every finite simple semigroup is isomorphic to a Rees matrix semigroup over a group, and every finite 0-simple semigroup is isomorphic to a Rees 0-matrix semigroup over a group.</p>
 
-<p>If the argument <var class="Arg">S</var> is a simple semigroup, then <code class="code">IsomorphismReesMatrixSemigroup</code> returns an isomorphism to a Rees matrix semigroup over a group. If the argument is a 0-simple semigroup, then an isomorphism to a Rees 0-matrix semigroup over a group is returned.</p>
+<p>If the argument <var class="Arg">S</var> is a simple semigroup, then <code class="code">IsomorphismReesMatrixSemigroup</code> returns an isomorphism to a Rees matrix semigroup over a group. If <var class="Arg">S</var> is not simple, then <code class="code">IsomorphismReesMatrixSemigroup</code> returns an error.</p>
+
+<p>If the argument <var class="Arg">S</var> is a 0-simple semigroup, then <code class="code">IsomorphismReesZeroMatrixSemigroup</code> returns an isomorphism to a Rees 0-matrix semigroup over a group. If <var class="Arg">S</var> is not 0-simple, then <code class="code">IsomorphismReesMatrixSemigroup</code> returns an error.</p>
 
 <p>See <code class="func">IsSimpleSemigroup</code> (<a href="chap51_mj.html#X836F4692839F4874"><span class="RefLink">51.4-4</span></a>) and <code class="func">IsZeroSimpleSemigroup</code> (<a href="chap51_mj.html#X8193A60F839C064E"><span class="RefLink">51.4-5</span></a>).</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation( [ 2, 1, 1, 2, 1 ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 4, 3, 4, 4 ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 4, 3, 4, 3 ] ),  </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 4, 3, 3, 4, 4 ] ));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(Transformation([2, 1, 1, 2, 1]), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 4, 3, 4, 4]), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([3, 4, 3, 4, 3]),  </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  Transformation([4, 3, 3, 4, 4]));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSimpleSemigroup(S);</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Range(IsomorphismReesMatrixSemigroup(S));</span>
 &lt;Rees matrix semigroup 4x2 over Group([ (1,2) ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat:=[[(), 0, 0], [0, (), 0], [0, 0, ()]];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ReesZeroMatrixSemigroup(Group((1,2,4,5,6)), mat);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat := [[(), 0, 0], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           [0, (), 0], </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">           [0, 0, ()]];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R := ReesZeroMatrixSemigroup(Group((1,2,4,5,6)), mat);</span>
 &lt;Rees 0-matrix semigroup 3x3 over Group([ (1,2,4,5,6) ])&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U:=ReesZeroMatrixSubsemigroup(R, [1,2], Group(()), [2,3]);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U := ReesZeroMatrixSubsemigroup(R, [1, 2], Group(()), [2, 3]);</span>
 &lt;subsemigroup of 3x3 Rees 0-matrix semigroup with 4 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroSimpleSemigroup(U);</span>
 false
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U:=ReesZeroMatrixSubsemigroup(R, [2,3], Group(()), [2,3]);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">U := ReesZeroMatrixSubsemigroup(R, [2, 3], Group(()), [2, 3]);</span>
 &lt;subsemigroup of 3x3 Rees 0-matrix semigroup with 3 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsZeroSimpleSemigroup(U);</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Rows(U); Columns(U);</span>
 [ 2, 3 ]
 [ 2, 3 ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V:=Range(IsomorphismReesMatrixSemigroup(U));</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V := Range(IsomorphismReesZeroMatrixSemigroup(U));</span>
 &lt;Rees 0-matrix semigroup 2x2 over Group(())&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Rows(V); Columns(V); </span>
 [ 1, 2 ]
@@ -1092,7 +1097,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsReesZeroMatrixSemigroup(V);</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(Transformation([1,1]), Transformation([1,2]));</span>
-&lt;commutative transformation monoid on 2 pts with 1 generator&gt;
+&lt;commutative transformation monoid of degree 2 with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSimpleSemigroup(S);</span>
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat:=[[0, One(S), 0, One(S)], [One(S), 0, One(S), 0], </span>
@@ -1136,7 +1141,8 @@ false</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=ReesMatrixSubsemigroup(R, [1,2], Group(()), [2]);</span>
 &lt;subsemigroup of 3x2 Rees matrix semigroup with 2 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Matrix(R);</span>
-[ [ (), (), () ], [ (), (), () ] ]</pre></div>
+[ [ (), (), () ], [ (), (), () ] ]
+</pre></div>
 
 <p><a id="X82FC5D6980C66AC4" name="X82FC5D6980C66AC4"></a></p>
 
@@ -1161,7 +1167,8 @@ false</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Rows(R);</span>
 [ 1 .. 200 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Columns(R);</span>
-[ 1 .. 100 ]</pre></div>
+[ 1 .. 100 ]
+</pre></div>
 
 <p><a id="X7D9719F887AFCF8F" name="X7D9719F887AFCF8F"></a></p>
 
@@ -1183,7 +1190,8 @@ false</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=Range(IsomorphismReesMatrixSemigroup(S));    </span>
 &lt;Rees matrix semigroup 4x2 over Group([ (1,2) ])&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UnderlyingSemigroup(R);</span>
-Group([ (1,2) ])</pre></div>
+Group([ (1,2) ])
+</pre></div>
 
 <p><a id="X7D1D9A0382064B8F" name="X7D1D9A0382064B8F"></a></p>
 
@@ -1213,7 +1221,7 @@ Group([ (1,2) ])</pre></div>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssociatedReesMatrixSemigroupOfDClass(D);</span>
 &lt;Rees 0-matrix semigroup 25x10 over Group([ (1,2)(3,5)(4,6), (1,3)
 (2,4)(5,6) ])&gt;
-  </pre></div>
+</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap50_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap52_mj.html">[Next Chapter]</a>&nbsp;  </div>

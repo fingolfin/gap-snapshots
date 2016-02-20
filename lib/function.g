@@ -81,7 +81,7 @@ DeclareCategoryKernel( "IsOperation",
 ##
 ##  <#GAPDoc Label="FunctionsFamily">
 ##  <ManSection>
-##  <Var Name="FunctionsFamily"/>
+##  <Fam Name="FunctionsFamily"/>
 ##
 ##  <Description>
 ##  is the family of all functions.
@@ -129,7 +129,7 @@ BIND_GLOBAL( "TYPE_OPERATION",
 ##
 ##  <#GAPDoc Label="NameFunction">
 ##  <ManSection>
-##  <Func Name="NameFunction" Arg='func'/>
+##  <Oper Name="NameFunction" Arg='func'/>
 ##
 ##  <Description>
 ##  returns the name of a function. For operations, this is the name used in
@@ -186,12 +186,13 @@ DeclareOperationKernel( "SetNameFunction", [IS_OBJECT, IS_STRING], SET_NAME_FUNC
 ##
 ##  <#GAPDoc Label="NumberArgumentsFunction">
 ##  <ManSection>
-##  <Func Name="NumberArgumentsFunction" Arg='func'/>
+##  <Oper Name="NumberArgumentsFunction" Arg='func'/>
 ##
 ##  <Description>
 ##  returns the number of arguments the function <A>func</A> accepts.
-##  For functions that use <C>arg</C> to take a variable number of arguments,
-##  as well as for operations, -1 is returned.
+##  -1 is returned for all operations.
+##  For functions that use <C>...</C> or <C>arg</C> to take a variable number of
+##  arguments, the number returned is -1 times the total number of parameters.
 ##  For attributes, 1 is returned.
 ##  <P/>
 ##  <Example><![CDATA[
@@ -203,6 +204,8 @@ DeclareOperationKernel( "SetNameFunction", [IS_OBJECT, IS_STRING], SET_NAME_FUNC
 ##  3
 ##  gap> NumberArgumentsFunction(Sum);
 ##  -1
+##  gap> NumberArgumentsFunction(function(a, x...) return 1; end);
+##  -2
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -217,7 +220,7 @@ DeclareOperationKernel( "NumberArgumentsFunction", [IS_OBJECT], NARG_FUNC );
 ##
 ##  <#GAPDoc Label="NamesLocalVariablesFunction">
 ##  <ManSection>
-##  <Func Name="NamesLocalVariablesFunction" Arg='func'/>
+##  <Oper Name="NamesLocalVariablesFunction" Arg='func'/>
 ##
 ##  <Description>
 ##  returns a mutable list of strings;
@@ -311,6 +314,7 @@ BIND_GLOBAL( "FilenameFunc", FILENAME_FUNC );
 BIND_GLOBAL( "StartlineFunc", STARTLINE_FUNC );
 BIND_GLOBAL( "EndlineFunc", ENDLINE_FUNC );
 
+
 #############################################################################
 ##
 #F  CallFuncList( <func>, <args> )  . . . . . . . . . . . . . call a function
@@ -359,14 +363,14 @@ BIND_GLOBAL( "EndlineFunc", ENDLINE_FUNC );
 ##  >     CallFuncList( Print, arg );
 ##  >     Print( "\n" );
 ##  >    end;
-##  function( arg ) ... end
+##  function( arg... ) ... end
 ##  gap> PrintNumberFromDigits( 1, 9, 7, 3, 2 );
 ##  19732
 ##  gap> PrintDigits := function ( arg )
 ##  >     Print( arg );
 ##  >     Print( "\n" );
 ##  >    end;
-##  function( arg ) ... end
+##  function( arg... ) ... end
 ##  gap> PrintDigits( 1, 9, 7, 3, 2 );
 ##  [ 1, 9, 7, 3, 2 ]
 ##  ]]></Example>
@@ -394,7 +398,7 @@ DeclareOperationKernel( "CallFuncList", [IS_OBJECT, IS_LIST], CALL_FUNC_LIST );
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> f:=ReturnTrue;  
-##  function( arg ) ... end
+##  function( arg... ) ... end
 ##  gap> f();  
 ##  true
 ##  gap> f(42);
@@ -421,7 +425,7 @@ BIND_GLOBAL( "ReturnTrue", RETURN_TRUE );
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> f:=ReturnFalse;  
-##  function( arg ) ... end
+##  function( arg... ) ... end
 ##  gap> f();  
 ##  false
 ##  gap> f("any_string");
@@ -448,7 +452,7 @@ BIND_GLOBAL( "ReturnFalse", RETURN_FALSE );
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> oops:=ReturnFail;  
-##  function( arg ) ... end
+##  function( arg... ) ... end
 ##  gap> oops();  
 ##  fail
 ##  gap> oops(-42);  
@@ -460,6 +464,58 @@ BIND_GLOBAL( "ReturnFalse", RETURN_FALSE );
 ##
 BIND_GLOBAL( "ReturnFail", RETURN_FAIL );
 
+#############################################################################
+##
+#F  ReturnNothing( ... ) . . . . . . . . . . . . . . . . . . 
+##
+##  <#GAPDoc Label="ReturnNothing">
+##  <ManSection>
+##  <Func Name="ReturnNothing" Arg='...'/>
+##
+##  <Description>
+##  This function takes any number of arguments,
+##  and always returns nothing.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> n:=ReturnNothing;
+##  function( object... ) ... end
+##  gap> n();
+##  gap> n(-42);
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+BIND_GLOBAL( "ReturnNothing", RETURN_NOTHING );
+
+#############################################################################
+##
+#F  ReturnFirst( ... ) . . . . . . . . . . . . . . . . . . 
+##
+##  <#GAPDoc Label="ReturnFirst">
+##  <ManSection>
+##  <Func Name="ReturnFirst" Arg='...'/>
+##
+##  <Description>
+##  This function takes one or more arguments, and always returns
+##  the first argument. <Ref Func="IdFunc"/> behaves similarly, but only
+##  accepts a single argument.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> f:=ReturnFirst;
+##  function( object... ) ... end
+##  gap> f(1);
+##  1
+##  gap> f(2,3,4);
+##  2
+##  gap> f();
+##  Error, RETURN_FIRST requires one or more arguments
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+BIND_GLOBAL( "ReturnFirst", RETURN_FIRST );
 
 #############################################################################
 ##
@@ -470,7 +526,8 @@ BIND_GLOBAL( "ReturnFail", RETURN_FAIL );
 ##  <Func Name="IdFunc" Arg='obj'/>
 ##
 ##  <Description>
-##  returns <A>obj</A>.
+##  returns <A>obj</A>. <Ref Func="ReturnFirst"/> is similar, but accepts
+##  one or more arguments, returning only the first.
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> id:=IdFunc;  
@@ -497,20 +554,49 @@ BIND_GLOBAL( "IdFunc", ID_FUNC );
 ##
 InstallMethod( ViewObj, "for a function", true, [IsFunction], 0,
         function ( func )
-    local nams, narg, i;
+    local  locks, nams, narg, i, isvarg;
+    isvarg := false;
+    locks := LOCKS_FUNC(func);
+    if locks <> fail then
+        Print("atomic ");
+    fi;
     Print("function( ");
     nams := NAMS_FUNC(func);
     narg := NARG_FUNC(func);
-    if nams = fail then
-        Print( "<",narg," unnamed arguments>" );
-    elif narg = -1 then
-        Print("arg");
-    elif narg > 0 then
-        Print(nams[1]);
-        for i in [2..narg] do
-            Print(", ",nams[i]);
-        od;
+    if narg < 0 then
+        isvarg := true;
+        narg := -narg;
     fi;
+    if narg = 1 and nams <> fail and nams[1] = "arg" then
+        isvarg := true;
+    fi;
+    if narg <> 0 then
+        if nams = fail then
+            Print( "<",narg," unnamed arguments>" );
+        else
+            if locks <> fail then
+                if locks[1] = '\001' then
+                    Print("readonly ");
+                elif locks[1] = '\002' then
+                    Print("readwrite ");
+                fi;
+            fi;
+            Print(nams[1]);
+            for i in [2..narg] do
+                if locks <> fail then
+                    if locks[i] = '\001' then
+                        Print("readonly ");
+                    elif locks[i] = '\002' then
+                        Print("readwrite ");
+                    fi;
+                fi;
+                Print(", ",nams[i]);
+            od;
+        fi;
+        if isvarg then
+            Print("...");
+        fi;
+    fi;    
     Print(" ) ... end");
 end);
 
@@ -521,12 +607,14 @@ BIND_GLOBAL( "PRINT_OPERATION",    function ( op )
     class := "Operation";
     if IS_IDENTICAL_OBJ(op,IS_OBJECT) then
         class := "Filter";
-    elif op in CONSTRUCTORS then
+    elif IS_CONSTRUCTOR(op) then
         class := "Constructor";
     elif IsFilter(op) then
         class := "Filter";
         flags := TRUES_FLAGS(FLAGS_FILTER(op));
-        types := INFO_FILTERS{flags};
+	atomic readonly FILTER_REGION do
+            types := INFO_FILTERS{flags};
+	od;
         catok := true;
         repok := true;
         propok := true;
@@ -568,4 +656,3 @@ InstallMethod( ViewObj,
 #############################################################################
 ##
 #E
-

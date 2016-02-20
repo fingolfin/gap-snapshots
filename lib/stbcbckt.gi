@@ -2481,6 +2481,23 @@ dom, et, ft, Pr, rbase, BF, Q, data,lc;
         E := First( GeneratorsOfGroup( E ), gen -> Order( gen ) <> 1 );
         F := First( GeneratorsOfGroup( F ), gen -> Order( gen ) <> 1 );
         return RepOpElmTuplesPermGroup( true, G, [ E ], [ F ], L, R );
+    elif IsAbelian(E) and IsCyclic(F) then
+      # special case of cyclic groups
+      if not IsCyclic(F) then return fail;fi;
+      if Length( arg ) > 3  then
+	  L := arg[ 4 ];  R := arg[ 5 ];
+      else
+	  L := TrivialSubgroup( G );  R := L;
+      fi;
+      E:=MinimalGeneratingSet(E)[1];
+      F:=MinimalGeneratingSet(F)[1];
+      Q:=Order(E);
+      for pos in Filtered([1..Q],x->Gcd(x,Q)=1) do
+        found:=RepOpElmTuplesPermGroup( true, G, [ E ], [ F^pos ], L, R );
+	if found<>fail then return found;fi;
+      od;
+      return fail;
+      Error("hier");
     fi;
     # `Suborbits' uses all points. (AH, 7/17/02)
     mpG:=MovedPoints(GeneratorsOfGroup(G));
@@ -2680,7 +2697,7 @@ Eh, Lh, Nh,G0;
       and not IsNormal(G,E) do
 
       orb:=ShallowCopy(Orbits(P,Omega));
-      Sort(orb,LengthComparison);
+      SortBy(orb,Length);
       i:=1;
       while i<=Length(orb) and Length(orb[i])=1 do
 	Omega:=Difference(Omega,orb[i]);

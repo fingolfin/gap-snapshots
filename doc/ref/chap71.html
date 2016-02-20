@@ -89,7 +89,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X8333E8038308947E">71.9-7 <span class="Heading">Class Parameters and Character Parameters</span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X79C40EE97890202F">71.9-8 Identifier</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X871562FD7F982C12">71.9-9 InfoText</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X7932C35180C80953">71.9-9 InfoText</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X7919E2897BE8234A">71.9-10 InverseClasses</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X87FF547981456932">71.9-11 RealClasses</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X7ABB007C799F7C49">71.9-12 ClassOrbit</a></span>
@@ -491,7 +491,7 @@ false
 
 <h5>71.4-3 NearlyCharacterTablesFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NearlyCharacterTablesFamily</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NearlyCharacterTablesFamily</code></td><td class="tdright">( family )</td></tr></table></div>
 <p>Every character table like object lies in this family (see <a href="chap13.html#X846063757EC05986"><span class="RefLink">13.1</span></a>).</p>
 
 <p><a id="X829C4B6E83998F40" name="X829C4B6E83998F40"></a></p>
@@ -1026,11 +1026,11 @@ Group([ (4,5) ])
 "CT8mod2"
 </pre></div>
 
-<p><a id="X871562FD7F982C12" name="X871562FD7F982C12"></a></p>
+<p><a id="X7932C35180C80953" name="X7932C35180C80953"></a></p>
 
 <h5>71.9-9 InfoText</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoText</code>( <var class="Arg">tbl</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoText</code>( <var class="Arg">tbl</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>is a mutable string with information about the character table <var class="Arg">tbl</var>. There is no default method to create an info text.</p>
 
 <p>This attribute is used mainly for library tables (see the manual of the <strong class="pkg">GAP</strong> Character Table Library). Usual parts of the information are the origin of the table, tests it has passed (<code class="code">1.o.r.</code> for the test of orthogonality, <code class="code">pow[<var class="Arg">p</var>]</code> for the construction of the <var class="Arg">p</var>-th power map, <code class="code">DEC</code> for the decomposition of ordinary into Brauer characters, <code class="code">TENS</code> for the decomposition of tensor products of irreducibles), and choices made without loss of generality.</p>
@@ -1515,7 +1515,7 @@ BrauerTable( "L3(2)", 2 )
 <h5>71.12-2 IsInternallyConsistent</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInternallyConsistent</code>( <var class="Arg">tbl</var> )</td><td class="tdright">( method )</td></tr></table></div>
-<p>For an <em>ordinary</em> character table <var class="Arg">tbl</var>, <code class="func">IsInternallyConsistent</code> (<a href="chap12.html#X7F6C5C3287E8B816"><span class="RefLink">12.8-3</span></a>) checks the consistency of the following attribute values (if stored).</p>
+<p>For an <em>ordinary</em> character table <var class="Arg">tbl</var>, <code class="func">IsInternallyConsistent</code> (<a href="chap12.html#X7F6C5C3287E8B816"><span class="RefLink">12.8-4</span></a>) checks the consistency of the following attribute values (if stored).</p>
 
 
 <ul>
@@ -2031,13 +2031,15 @@ true
 
 <p>Note that this method might fail if for an irreducible representation there is no subgroup in which its reduction has a linear constituent with multiplicity one.</p>
 
+<p>If the option <var class="Arg">unitary</var> is given, <strong class="pkg">GAP</strong> tries, at extra cost, to find a unitary representation (and will issue an error if it cannot do so).</p>
+
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a5:= AlternatingGroup( 5 );</span>
 Alt( [ 1 .. 5 ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">char:= First( Irr( a5 ), x -&gt; x[1] = 4 );</span>
 Character( CharacterTable( Alt( [ 1 .. 5 ] ) ), [ 4, 0, 1, -1, -1 ] )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hom:=IrreducibleRepresentationsDixon( a5, char );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hom:=IrreducibleRepresentationsDixon( a5, char: unitary );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order( a5.1*a5.2 ) = Order( Image( hom, a5.1 )*Image( hom, a5.2 ) );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">reps:= List( ConjugacyClasses( a5 ), Representative );;</span>
@@ -2798,18 +2800,18 @@ CharacterTable( S4 )
   Character( CharacterTable( S4 ), [ 3, 1, -1, 0, -1 ] ), 
   Character( CharacterTable( S4 ), [ 1, 1, 1, 1, 1 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">kernel:= KernelOfCharacter( irr[3] );</span>
-Group([ (1,2)(3,4), (1,4)(2,3) ])
+Group([ (1,2)(3,4), (1,3)(2,4) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HasNormalSubgroupClassesInfo( tbl );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NormalSubgroupClassesInfo( tbl );</span>
-rec( nsg := [ Group([ (1,2)(3,4), (1,4)(2,3) ]) ], 
+rec( nsg := [ Group([ (1,2)(3,4), (1,3)(2,4) ]) ],
   nsgclasses := [ [ 1, 3 ] ], nsgfactors := [  ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ClassPositionsOfNormalSubgroup( tbl, kernel );</span>
 [ 1, 3 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FactorGroupNormalSubgroupClasses( tbl, [ 1, 3 ] );</span>
 Group([ f1, f2 ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NormalSubgroupClassesInfo( tbl );</span>
-rec( nsg := [ Group([ (1,2)(3,4), (1,4)(2,3) ]) ], 
+rec( nsg := [ Group([ (1,2)(3,4), (1,3)(2,4) ]) ],
   nsgclasses := [ [ 1, 3 ] ], nsgfactors := [ Group([ f1, f2 ]) ] )
 </pre></div>
 

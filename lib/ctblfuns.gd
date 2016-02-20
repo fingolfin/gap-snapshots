@@ -547,29 +547,29 @@ DeclareAttribute( "ValuesOfClassFunction", IsClassFunction );
 ##  Character( S4, [ 8, 0, 8, -1, 0 ] )
 ##  gap> lin:= LinearCharacters( DerivedSubgroup( g ) );
 ##  [ Character( CharacterTable( Alt( [ 1 .. 4 ] ) ), [ 1, 1, 1, 1 ] ), 
-##    Character( CharacterTable( Alt( [ 1 .. 4 ] ) ), 
-##      [ 1, 1, E(3)^2, E(3) ] ), 
-##    Character( CharacterTable( Alt( [ 1 .. 4 ] ) ), 
-##      [ 1, 1, E(3), E(3)^2 ] ) ]
+##    Character( CharacterTable( Alt( [ 1 .. 4 ] ) ),
+##    [ 1, 1, E(3), E(3)^2 ] ),
+##    Character( CharacterTable( Alt( [ 1 .. 4 ] ) ),
+##    [ 1, 1, E(3)^2, E(3) ] ) ]
 ##  gap> List( lin, chi -> chi ^ (1,2) );
 ##  [ Character( CharacterTable( Alt( [ 1 .. 4 ] ) ), [ 1, 1, 1, 1 ] ), 
-##    Character( CharacterTable( Alt( [ 1 .. 4 ] ) ), 
-##      [ 1, 1, E(3), E(3)^2 ] ), 
-##    Character( CharacterTable( Alt( [ 1 .. 4 ] ) ), 
-##      [ 1, 1, E(3)^2, E(3) ] ) ]
+##    Character( CharacterTable( Alt( [ 1 .. 4 ] ) ),
+##    [ 1, 1, E(3)^2, E(3) ] ),
+##    Character( CharacterTable( Alt( [ 1 .. 4 ] ) ),
+##    [ 1, 1, E(3), E(3)^2 ] ) ]
 ##  gap> Orbit( GaloisGroup( CF(3) ), lin[2] );
-##  [ Character( CharacterTable( Alt( [ 1 .. 4 ] ) ), 
-##      [ 1, 1, E(3)^2, E(3) ] ), 
-##    Character( CharacterTable( Alt( [ 1 .. 4 ] ) ), 
-##      [ 1, 1, E(3), E(3)^2 ] ) ]
+##  [ Character( CharacterTable( Alt( [ 1 .. 4 ] ) ),
+##    [ 1, 1, E(3), E(3)^2 ] ),
+##    Character( CharacterTable( Alt( [ 1 .. 4 ] ) ),
+##    [ 1, 1, E(3)^2, E(3) ] ) ]
 ##  gap> lin[1]^g;
 ##  Character( S4, [ 2, 0, 2, 2, 0 ] )
 ##  gap> (1,2,3)^lin[2];
-##  E(3)^2
+##  E(3)
 ##  ]]></Example>
 ##
 ##  <ManSection>
-##  <Func Name="Characteristic" Arg='chi' Label="for a class function"/>
+##  <Attr Name="Characteristic" Arg='chi' Label="for a class function"/>
 ##
 ##  <Description>
 ##  The <E>characteristic</E> of class functions is zero,
@@ -594,9 +594,9 @@ DeclareAttribute( "ValuesOfClassFunction", IsClassFunction );
 ##  </ManSection>
 ##
 ##  <ManSection>
-##  <Func Name="ComplexConjugate" Arg='chi' Label="for a class function"/>
-##  <Func Name="GaloisCyc" Arg='chi, k' Label="for a class function"/>
-##  <Func Name="Permuted" Arg='chi, pi' Label="for a class function"/>
+##  <Attr Name="ComplexConjugate" Arg='chi' Label="for a class function"/>
+##  <Oper Name="GaloisCyc" Arg='chi, k' Label="for a class function"/>
+##  <Meth Name="Permuted" Arg='chi, pi' Label="for a class function"/>
 ##
 ##  <Description>
 ##  The operations
@@ -611,20 +611,20 @@ DeclareAttribute( "ValuesOfClassFunction", IsClassFunction );
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> ComplexConjugate( lin[2] );
-##  Character( CharacterTable( Alt( [ 1 .. 4 ] ) ), [ 1, 1, E(3), E(3)^2 
-##   ] )
+##  Character( CharacterTable( Alt( [ 1 .. 4 ] ) ),
+##   [ 1, 1, E(3)^2, E(3) ] )
 ##  gap> GaloisCyc( lin[2], 5 );
-##  Character( CharacterTable( Alt( [ 1 .. 4 ] ) ), [ 1, 1, E(3), E(3)^2 
-##   ] )
+##  Character( CharacterTable( Alt( [ 1 .. 4 ] ) ),
+##   [ 1, 1, E(3)^2, E(3) ] )
 ##  gap> Permuted( lin[2], (2,3,4) );
-##  ClassFunction( CharacterTable( Alt( [ 1 .. 4 ] ) ), 
-##  [ 1, E(3), 1, E(3)^2 ] )
+##  ClassFunction( CharacterTable( Alt( [ 1 .. 4 ] ) ),
+##   [ 1, E(3)^2, 1, E(3) ] )
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <P/>
 ##  <ManSection>
-##  <Func Name="Order" Arg='chi' Label="for a class function"/>
+##  <Attr Name="Order" Arg='chi' Label="for a class function"/>
 ##
 ##  <Description>
 ##  By definition of <Ref Func="Order"/> for arbitrary monoid elements,
@@ -1345,8 +1345,8 @@ DeclareOperation( "Norm", [ IsOrdinaryTable, IsHomogeneousList ] );
 ##  <Example><![CDATA[
 ##  gap> List( Irr( S4 ), CentreOfCharacter );
 ##  [ Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]), Group(()), 
-##    Group([ (1,2)(3,4), (1,3)(2,4) ]), Group(()), 
-##    Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]) ]
+##    Group([ (1,2)(3,4), (1,4)(2,3) ]), Group(()), Group([ (), (1,2), (1,
+##     2)(3,4), (1,2,3), (1,2,3,4) ]) ]
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -1500,7 +1500,7 @@ DeclareOperation( "InertiaSubgroup",
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> List( Irr( S4 ), KernelOfCharacter );
-##  [ Alt( [ 1 .. 4 ] ), Group(()), Group([ (1,2)(3,4), (1,3)(2,4) ]), 
+##  [ Alt( [ 1 .. 4 ] ), Group(()), Group([ (1,2)(3,4), (1,4)(2,3) ]),
 ##    Group(()), Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]) ]
 ##  ]]></Example>
 ##  </Description>

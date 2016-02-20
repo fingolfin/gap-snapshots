@@ -176,7 +176,13 @@
   of  the  method  is  printed.  The  second form has the same effect for each
   operation from the list [3Xoprs[103X of operations.[133X
   
-  [1X7.3-2 UntraceMethods[101X
+  [1X7.3-2 TraceAllMethods[101X
+  
+  [29X[2XTraceAllMethods[102X(  ) [32X function
+  
+  [33X[0;0YInvokes [10XTraceMethods[110X for all operations.[133X
+  
+  [1X7.3-3 UntraceMethods[101X
   
   [29X[2XUntraceMethods[102X( [3Xopr1[103X, [3Xopr2[103X, [3X...[103X ) [32X function
   [29X[2XUntraceMethods[102X( [3Xoprs[103X ) [32X function
@@ -188,7 +194,7 @@
     [4X[25Xgap>[125X [27XTraceMethods( [ Size ] );[127X[104X
     [4X[25Xgap>[125X [27Xg:= Group( (1,2,3), (1,2) );;[127X[104X
     [4X[25Xgap>[125X [27XSize( g );[127X[104X
-    [4X[28X#I  Size: for a permutation group[128X[104X
+    [4X[28X#I  Size: for a permutation group at /gap5/lib/grpperm.gi:487[128X[104X
     [4X[28X#I  Setter(Size): system setter[128X[104X
     [4X[28X#I  Size: system getter[128X[104X
     [4X[28X#I  Size: system getter[128X[104X
@@ -196,16 +202,24 @@
     [4X[25Xgap>[125X [27XUntraceMethods( [ Size ] );[127X[104X
   [4X[32X[104X
   
-  [1X7.3-3 TraceImmediateMethods[101X
+  [1X7.3-4 UntraceAllMethods[101X
   
-  [29X[2XTraceImmediateMethods[102X( [3Xflag[103X ) [32X function
+  [29X[2XUntraceAllMethods[102X(  ) [32X function
   
-  [33X[0;0YIf  [3Xflag[103X is true, tracing for all immediate methods is turned on. If [3Xflag[103X is
-  false  it  is  turned off. (There is no facility to trace [13Xspecific[113X immediate
-  methods.)[133X
+  [33X[0;0YEquivalent to calling [10XUntraceMethods[110X for all operations.[133X
+  
+  [1X7.3-5 TraceImmediateMethods[101X
+  
+  [29X[2XTraceImmediateMethods[102X( [[3Xflag[103X] ) [32X function
+  [29X[2XUntraceImmediateMethods[102X(  ) [32X function
+  
+  [33X[0;0Y[2XTraceImmediateMethods[102X  enables  tracing for all immediate methods if [3Xflag[103X is
+  either     [9Xtrue[109X,     or    not    present.    [2XUntraceImmediateMethods[102X,    or
+  [2XTraceImmediateMethods[102X  with [3Xflag[103X equal [9Xfalse[109X turns tracing off. (There is no
+  facility to trace [13Xspecific[113X immediate methods.)[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XTraceImmediateMethods( true );[127X[104X
+    [4X[25Xgap>[125X [27XTraceImmediateMethods( );[127X[104X
     [4X[25Xgap>[125X [27Xg:= Group( (1,2,3), (1,2) );;[127X[104X
     [4X[28X#I  immediate: Size[128X[104X
     [4X[28X#I  immediate: IsCyclic[128X[104X
@@ -221,7 +235,7 @@
     [4X[28X#I  immediate: IsPerfectGroup[128X[104X
     [4X[28X#I  immediate: IsEmpty[128X[104X
     [4X[28X6[128X[104X
-    [4X[25Xgap>[125X [27XTraceImmediateMethods( false );[127X[104X
+    [4X[25Xgap>[125X [27XUntraceImmediateMethods( );[127X[104X
     [4X[25Xgap>[125X [27XUntraceMethods( [ Size ] );[127X[104X
   [4X[32X[104X
   
@@ -360,7 +374,7 @@
   
   [1X7.4-7 InfoWarning[101X
   
-  [29X[2XInfoWarning[102X[32X global variable
+  [29X[2XInfoWarning[102X[32X info class
   
   [33X[0;0Yis an info class to which general warnings are sent at level 1, which is its
   default level. More specialised warnings are shown via calls of [2XInfo[102X ([14X7.4-5[114X)
@@ -466,8 +480,8 @@
   the  same as the value of the [10Xuser_time[110X component given by [2XRuntimes[102X ([14X7.6-1[114X),
   as explained above.[133X
   
-  [33X[0;0YSee [2XStringTime[102X ([14X27.9-9[114X) for a translation from milliseconds into hour/minute
-  format.[133X
+  [33X[0;0YSee   [2XStringTime[102X   ([14X27.10-9[114X)   for  a  translation  from  milliseconds  into
+  hour/minute format.[133X
   
   [1X7.6-3 time[101X
   
@@ -480,7 +494,15 @@
   
   [33X[0;0YProfiling  of  code can be used to determine in which parts of a program how
   much  time  has  been  spent  and  how much memory has been allocated during
-  runtime. The idea is that[133X
+  runtime.  GAP has two different methods of profiling. GAP can either profile
+  by  function, or line-by-line. Line by line profiling is currently only used
+  for code coverage, while function profiling tracks memory and time usage.[133X
+  
+  
+  [1X7.7-1 [33X[0;0YFunction Profiling[133X[101X
+  
+  [33X[0;0YThis  section  describes how to profiling at the function level. The idea is
+  that[133X
   
   [30X    [33X[0;6Yfirst   one   switches  on  profiling  for  those  [5XGAP[105X  functions  the
         performance of which one wants to check,[133X
@@ -491,25 +513,25 @@
         computations,[133X
   
   [30X    [33X[0;6Ythen   one  runs  more  computations  (perhaps  clearing  all  profile
-        information before, see [2XClearProfile[102X ([14X7.7-9[114X)),[133X
+        information before, see [2XClearProfile[102X ([14X7.7-10[114X)),[133X
   
   [30X    [33X[0;6Yand finally one switches off profiling.[133X
   
   [33X[0;0YFor  switching  on  and  off  profiling,  [5XGAP[105X  supports  entering  a list of
-  functions  (see  [2XProfileFunctions[102X  ([14X7.7-4[114X), [2XUnprofileFunctions[102X ([14X7.7-5[114X)) or a
+  functions  (see  [2XProfileFunctions[102X  ([14X7.7-5[114X), [2XUnprofileFunctions[102X ([14X7.7-6[114X)) or a
   list  of  operations  whose  methods  shall  be (un)profiled ([2XProfileMethods[102X
-  ([14X7.7-6[114X),  [2XUnprofileMethods[102X  ([14X7.7-7[114X)), and [2XDisplayProfile[102X ([14X7.7-8[114X) can be used
+  ([14X7.7-7[114X),  [2XUnprofileMethods[102X  ([14X7.7-8[114X)), and [2XDisplayProfile[102X ([14X7.7-9[114X) can be used
   to show profile information about functions in a given list.[133X
   
-  [33X[0;0YBesides  these  functions, [2XProfileGlobalFunctions[102X ([14X7.7-1[114X), [2XProfileOperations[102X
-  ([14X7.7-2[114X),  and  [2XProfileOperationsAndMethods[102X ([14X7.7-3[114X) can be used for switching
+  [33X[0;0YBesides  these  functions, [2XProfileGlobalFunctions[102X ([14X7.7-2[114X), [2XProfileOperations[102X
+  ([14X7.7-3[114X),  and  [2XProfileOperationsAndMethods[102X ([14X7.7-4[114X) can be used for switching
   on  or  off  profiling  for [13Xall[113X global functions, operations, and operations
   together  with  all  their  methods,  respectively,  and for showing profile
   information about these functions.[133X
   
   [33X[0;0YNote that [5XGAP[105X will perform more slowly when profiling than when not.[133X
   
-  [1X7.7-1 ProfileGlobalFunctions[101X
+  [1X7.7-2 ProfileGlobalFunctions[101X
   
   [29X[2XProfileGlobalFunctions[102X( [[3Xbool[103X] ) [32X function
   
@@ -521,9 +543,9 @@
   profiling off.[133X
   
   [33X[0;0YWhen  [2XProfileGlobalFunctions[102X is called without argument, profile information
-  for all global functions is displayed, see [2XDisplayProfile[102X ([14X7.7-8[114X).[133X
+  for all global functions is displayed, see [2XDisplayProfile[102X ([14X7.7-9[114X).[133X
   
-  [1X7.7-2 ProfileOperations[101X
+  [1X7.7-3 ProfileOperations[101X
   
   [29X[2XProfileOperations[102X( [[3Xbool[103X] ) [32X function
   
@@ -534,9 +556,9 @@
   the profiling off.[133X
   
   [33X[0;0YWhen  [2XProfileOperations[102X  is called without argument, profile information for
-  all operations is displayed (see [2XDisplayProfile[102X ([14X7.7-8[114X)).[133X
+  all operations is displayed (see [2XDisplayProfile[102X ([14X7.7-9[114X)).[133X
   
-  [1X7.7-3 ProfileOperationsAndMethods[101X
+  [1X7.7-4 ProfileOperationsAndMethods[101X
   
   [29X[2XProfileOperationsAndMethods[102X( [[3Xbool[103X] ) [32X function
   
@@ -548,30 +570,30 @@
   
   [33X[0;0YWhen   [2XProfileOperationsAndMethods[102X   is  called  without  argument,  profile
   information   for   all   operations   and   their   methods  is  displayed,
-  see [2XDisplayProfile[102X ([14X7.7-8[114X).[133X
+  see [2XDisplayProfile[102X ([14X7.7-9[114X).[133X
   
-  [1X7.7-4 ProfileFunctions[101X
+  [1X7.7-5 ProfileFunctions[101X
   
   [29X[2XProfileFunctions[102X( [3Xfuncs[103X ) [32X function
   
   [33X[0;0Ystarts   profiling  for  all  function  in  the  list  [3Xfuncs[103X.  You  can  use
-  [2XProfileGlobalFunctions[102X  ([14X7.7-1[114X)  to  turn  profiling  on  for  all  globally
+  [2XProfileGlobalFunctions[102X  ([14X7.7-2[114X)  to  turn  profiling  on  for  all  globally
   declared functions simultaneously.[133X
   
-  [1X7.7-5 UnprofileFunctions[101X
+  [1X7.7-6 UnprofileFunctions[101X
   
   [29X[2XUnprofileFunctions[102X( [3Xfuncs[103X ) [32X function
   
   [33X[0;0Ystops  profiling for all function in the list [3Xfuncs[103X. Recorded information is
   still kept, so you can display it even after turning the profiling off.[133X
   
-  [1X7.7-6 ProfileMethods[101X
+  [1X7.7-7 ProfileMethods[101X
   
   [29X[2XProfileMethods[102X( [3Xops[103X ) [32X function
   
   [33X[0;0Ystarts profiling of the methods for all operations in the list [3Xops[103X.[133X
   
-  [1X7.7-7 UnprofileMethods[101X
+  [1X7.7-8 UnprofileMethods[101X
   
   [29X[2XUnprofileMethods[102X( [3Xops[103X ) [32X function
   
@@ -579,7 +601,7 @@
   information  is  still  kept,  so  you can display it even after turning the
   profiling off.[133X
   
-  [1X7.7-8 DisplayProfile[101X
+  [1X7.7-9 DisplayProfile[101X
   
   [29X[2XDisplayProfile[102X( [[3Xfunctions[103X, ][[3Xmincount[103X, [3Xmintime[103X] ) [32X function
   [29X[2XGAPInfo.ProfileThreshold[102X[32X global variable
@@ -620,14 +642,14 @@
   [33X[0;0YAn  interactive  variant  of  [2XDisplayProfile[102X  is  the function [2XBrowseProfile[102X
   ([14XBrowse: BrowseProfile[114X) that is provided by the [5XGAP[105X package [5XBrowse[105X.[133X
   
-  [1X7.7-9 ClearProfile[101X
+  [1X7.7-10 ClearProfile[101X
   
   [29X[2XClearProfile[102X(  ) [32X function
   
   [33X[0;0Yclears all stored profile information.[133X
   
   
-  [1X7.7-10 [33X[0;0YAn Example of Profiling[133X[101X
+  [1X7.7-11 [33X[0;0YAn Example of Function Profiling[133X[101X
   
   [33X[0;0YLet  us  suppose  we  want  to  get information about the computation of the
   conjugacy  classes of a certain permutation group. For that, first we create
@@ -645,7 +667,7 @@
   [4X[32X[104X
   
   [33X[0;0YNow  the  profile  information is available. We can list the information for
-  all profiled functions with [2XDisplayProfile[102X ([14X7.7-8[114X).[133X
+  all profiled functions with [2XDisplayProfile[102X ([14X7.7-9[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XDisplayProfile();[127X[104X
@@ -698,7 +720,7 @@
   [4X[32X[104X
   
   [33X[0;0YWe  can  restrict  the  list to global functions with [2XProfileGlobalFunctions[102X
-  ([14X7.7-1[114X).[133X
+  ([14X7.7-2[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XProfileGlobalFunctions();[127X[104X
@@ -727,7 +749,7 @@
     [4X[28X            2048             23319                    TOTAL                 [128X[104X
   [4X[32X[104X
   
-  [33X[0;0YWe can restrict the list to operations with [2XProfileOperations[102X ([14X7.7-2[114X).[133X
+  [33X[0;0YWe can restrict the list to operations with [2XProfileOperations[102X ([14X7.7-3[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XProfileOperations();[127X[104X
@@ -750,7 +772,7 @@
   [4X[32X[104X
   
   [33X[0;0YWe   can   restrict   the   list   to  operations  and  their  methods  with
-  [2XProfileOperationsAndMethods[102X ([14X7.7-3[114X).[133X
+  [2XProfileOperationsAndMethods[102X ([14X7.7-4[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XProfileOperationsAndMethods();[127X[104X
@@ -783,7 +805,7 @@
   [4X[32X[104X
   
   [33X[0;0YFinally,  we  can  restrict  the  list  to  explicitly  given functions with
-  [2XDisplayProfile[102X ([14X7.7-8[114X), by entering the list of functions as an argument.[133X
+  [2XDisplayProfile[102X ([14X7.7-9[114X), by entering the list of functions as an argument.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XDisplayProfile( [ StabChainOp, Centralizer ] );[127X[104X
@@ -794,13 +816,136 @@
     [4X[28X            2048             23319                    TOTAL                 [128X[104X
   [4X[32X[104X
   
-  [1X7.7-11 DisplayCacheStats[101X
+  
+  [1X7.7-12 [33X[0;0YLine By Line Profiling[133X[101X
+  
+  [33X[0;0YLine  By  Line profiling tracks which lines have been executed in a piece of
+  GAP code. Built into GAP are the methods necessary to generate profiles, the
+  resulting profiles can be displayed with the 'profiling' package.[133X
+  
+  
+  [1X7.7-13 [33X[0;0YLine by Line profiling example[133X[101X
+  
+  [33X[0;0YThere are two kinds of profiles GAP can build:[133X
+  
+  [30X    [33X[0;6YCoverage : This records which lines of code are executed[133X
+  
+  [30X    [33X[0;6YTiming  :  This  records how much time is spend executing each line of
+        code[133X
+  
+  [33X[0;0YA timing profile provides more information, but will take longer to generate
+  and   parse.   A   timing   profile   is   generated   using  the  functions
+  [2XProfileLineByLine[102X ([14X7.7-14[114X) and [2XUnprofileLineByLine[102X ([14X7.7-16[114X), as follows:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XProfileLineByLine("output.gz");[127X[104X
+    [4X[25Xgap>[125X [27XSize(AlternatingGroup(10)); ; # Execute some GAP code you want to profile[127X[104X
+    [4X[25Xgap>[125X [27XUnprofileLineByLine();[127X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YFor code coverage, use instead the functions [2XCoverageLineByLine[102X ([14X7.7-15[114X) and
+  [2XUncoverageLineByLine[102X ([14X7.7-17[114X). The profiler will only record lines which are
+  read and executed while the profiler is running. If you want to perform code
+  coverage  or  profile  GAP's  library, then you can use the GAP command line
+  option  '--cover  filename.gz',  which  executes [2XCoverageLineByLine[102X ([14X7.7-15[114X)
+  before  GAP  starts.  Similarly  the  option  '--prof  filename.gz' executes
+  [2XProfileLineByLine[102X  ([14X7.7-14[114X)  before GAP starts. The profiler is designed for
+  high  performance,  because  of this, there are some limitations which users
+  should be aware of:[133X
+  
+  [30X    [33X[0;6YBy  default the profiler records the wall-clock time which has passed,
+        rather  than the CPU time taken (because it is lower overhead), so any
+        time  taken writing commands will be charged to the last GAP statement
+        which  was  executed. Therefore it is better to write a function which
+        starts profiling, executes your code, and then stops profiling.[133X
+  
+  [30X    [33X[0;6YIf   you  end  the  filename  with  ".gz",  the  resulting  file  will
+        automatically be compressed. This is highly recommended![133X
+  
+  [30X    [33X[0;6YThe  profiler  can  only  track GAP code which occurs in a function --
+        this  is  most  obvious  when looking at code coverage examples, which
+        will appear to miss lines of code in files not in a function.[133X
+  
+  [33X[0;0YProfiles  are  transformed  into  a  human-readable  form  with  'profiling'
+  package, for example with the 'OutputAnnotatedCodeCoverageFiles' function.[133X
+  
+  [1X7.7-14 ProfileLineByLine[101X
+  
+  [29X[2XProfileLineByLine[102X( [3Xfilename[103X[, [3Xoptions[103X] ) [32X function
+  
+  [33X[0;0Y[2XProfileLineByLine[102X  begins GAP recording profiling data to the file [3Xfilename[103X.
+  This  file will get *very* large very quickly. This file is compressed using
+  gzip  to  reduce  its  size.  [3Xoptions[103X  is an optional dictionary, which sets
+  various configuration options. These are[133X
+  
+  [8Xcoverage[108X
+        [33X[0;6YBoolean  (defaults  to  false).  If  this is enabled, only information
+        about  which  lines  are read and executed is stored. Enabling this is
+        the  same  as  calling [2XCoverageLineByLine[102X ([14X7.7-15[114X). Using this ignores
+        all other options.[133X
+  
+  [8XjustStat[108X
+        [33X[0;6YBoolean  (defaults to false). This switches profiling to only consider
+        entire  statements,  rather  than parts of statements. In general this
+        will provide a courser profile, but produce smaller files.[133X
+  
+  [8XwallTime[108X
+        [33X[0;6YBoolean  (defaults  to  true).  Sets  if time should be measured using
+        wall-clock  time  or  CPU  time.  (measuring  wall-clock time is lower
+        overhead).[133X
+  
+  [8Xresolution[108X
+        [33X[0;6YInteger  (defaults  to  0).  How  frequently (in nanoseconds) to check
+        which  line  is  being  executed.  Setting  this  to  a non-zero value
+        improves  performance  and  produces  smaller  traces,  at the cost of
+        accuracy.  Setting  this to a non-zero value will also make the number
+        of  executions  per  statement become inaccurance. However,i profiling
+        will still accurately record which statements are executed at all.[133X
+  
+  [1X7.7-15 CoverageLineByLine[101X
+  
+  [29X[2XCoverageLineByLine[102X( [3Xfilename[103X ) [32X function
+  
+  [33X[0;0Y[2XCoverageLineByLine[102X  begins GAP recording code coverage to the file [3Xfilename[103X.
+  This is equivalent to calling [2XProfileLineByLine[102X ([14X7.7-14[114X) with coverage=true.[133X
+  
+  [1X7.7-16 UnprofileLineByLine[101X
+  
+  [29X[2XUnprofileLineByLine[102X(  ) [32X function
+  
+  [33X[0;0YStops profiling which was previously started with [2XProfileLineByLine[102X ([14X7.7-14[114X)
+  or [2XCoverageLineByLine[102X ([14X7.7-15[114X).[133X
+  
+  [1X7.7-17 UncoverageLineByLine[101X
+  
+  [29X[2XUncoverageLineByLine[102X(  ) [32X function
+  
+  [33X[0;0YStops profiling which was previously started with [2XProfileLineByLine[102X ([14X7.7-14[114X)
+  or [2XCoverageLineByLine[102X ([14X7.7-15[114X).[133X
+  
+  [1X7.7-18 ActivateProfileColour[101X
+  
+  [29X[2XActivateProfileColour[102X(  ) [32X function
+  
+  [33X[0;0YCalled  with argument [9Xtrue[109X, [2XActivateProfileColour[102X makes GAP colour functions
+  when  printing  them  to show which lines have been executed while profiling
+  was  active  via  [2XProfileLineByLine[102X  ([14X7.7-14[114X)  at  any  time during this GAP
+  session. Passing [9Xfalse[109X disables this behaviour.[133X
+  
+  [1X7.7-19 IsLineByLineProfileActive[101X
+  
+  [29X[2XIsLineByLineProfileActive[102X(  ) [32X function
+  
+  [33X[0;0Y[2XIsLineByLineProfileActive[102X  returns  if  line-by-line  profiling is currently
+  activated.[133X
+  
+  [1X7.7-20 DisplayCacheStats[101X
   
   [29X[2XDisplayCacheStats[102X(  ) [32X function
   
   [33X[0;0Ydisplays statistics about the different caches used by the method selection.[133X
   
-  [1X7.7-12 ClearCacheStats[101X
+  [1X7.7-21 ClearCacheStats[101X
   
   [29X[2XClearCacheStats[102X(  ) [32X function
   
@@ -829,36 +974,18 @@
   computations.  A selection of test files for the library can be found in the
   [11Xtst[111X directory of the [5XGAP[105X distribution.[133X
   
-  [1X7.9-1 ReadTest[101X
   
-  [29X[2XReadTest[102X( [3Xstring[103X ) [32X operation
-  
-  [33X[0;0Yreads  the test file with name [3Xstring[103X. The test file should contain lines of
-  [5XGAP[105X  input  and  corresponding  output. The input lines start with the [10Xgap> [110X
-  prompt  (or  with  the [10X> [110X prompt if commands exceed one line). The output is
-  exactly  as  would  result  from  typing in the input interactively to a [5XGAP[105X
-  session (on a screen with 80 characters per line).[133X
-  
-  [33X[0;0YOptionally,  [2XSTART_TEST[102X  ([14X7.9-2[114X)  and  [2XSTOP_TEST[102X  ([14X7.9-2[114X) may be used in the
-  beginning  and  end  of test files to reinitialize the caches and the global
-  random  number  generator in order to be independent of the reading order of
-  several  test files. Furthermore, [2XSTART_TEST[102X ([14X7.9-2[114X) increases the assertion
-  level   for   the   time  of  the  test,  and  [2XSTOP_TEST[102X  ([14X7.9-2[114X)  sets  the
-  proportionality factor that is used to output a [21X[5XGAP[105Xstone[121X speed ranking after
-  the file has been completely processed.[133X
-  
-  
-  [1X7.9-2 [33X[0;0YStarting and stopping test[133X[101X
+  [1X7.9-1 [33X[0;0YStarting and stopping test[133X[101X
   
   [29X[2XSTART_TEST[102X( [3Xid[103X ) [32X function
   [29X[2XSTOP_TEST[102X( [3Xfile[103X, [3Xfac[103X ) [32X function
   
   [33X[0;0Y[2XSTART_TEST[102X  and  [2XSTOP_TEST[102X may be optionally used in files that are read via
-  [2XReadTest[102X ([14X7.9-1[114X). If used, [2XSTART_TEST[102X reinitialize the caches and the global
+  [2XTest[102X  ([14X7.9-2[114X).  If  used,  [2XSTART_TEST[102X reinitialize the caches and the global
   random  number generator, in order to be independent of the reading order of
   several test files. Furthermore, the assertion level (see [2XAssert[102X ([14X7.5-3[114X)) is
-  set  to [22X2[122X by [2XSTART_TEST[102X and set back to the previous value in the subsequent
-  [2XSTOP_TEST[102X call.[133X
+  set to [22X2[122X (if it was lower before) by [2XSTART_TEST[102X and set back to the previous
+  value in the subsequent [2XSTOP_TEST[102X call.[133X
   
   [33X[0;0YTo use these options, a test file should be started with a line[133X
   
@@ -881,7 +1008,7 @@
   as produced by the test file [11Xtst/combinat.tst[111X.[133X
   
   [33X[0;0YNote  that  the  functions  in  [11Xtst/testutil.g[111X temporarily replace [2XSTOP_TEST[102X
-  before they call [2XReadTest[102X ([14X7.9-1[114X).[133X
+  before they call [2XTest[102X ([14X7.9-2[114X).[133X
   
   [33X[0;0YIf you want to run a quick test of your [5XGAP[105X installation (though this is not
   required),  you  can  read  in  a  test  script  that  exercises  some [5XGAP[105X's
@@ -891,9 +1018,9 @@
     [4X[25Xgap>[125X [27XRead( Filename( DirectoriesLibrary( "tst" ), "testinstall.g" ) );[127X[104X
   [4X[32X[104X
   
-  [33X[0;0YThe  test  requires  about  750MB  of memory and runs about one minute on an
-  Intel  Core  2  Duo / 2.53 GHz machine. You will get a large number of lines
-  with output about the progress of the tests.[133X
+  [33X[0;0YThe test requires up to 1 GB of memory and runs about one minute on an Intel
+  Core  2  Duo  /  2.53 GHz machine. You will get a large number of lines with
+  output about the progress of the tests.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[28Xtest file         GAP4stones     time(msec)[128X[104X
@@ -906,18 +1033,18 @@
   [4X[32X[104X
   
   [33X[0;0YIf you want to run a more advanced check (this is not required and make take
-  up  to  an  hour),  you  can read [11Xtestall.g[111X which is an extended test script
+  up to an hour), you can read [11Xteststandard.g[111X which is an extended test script
   performing all tests from the [11Xtst[111X directory.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XRead( Filename( DirectoriesLibrary( "tst" ), "testall.g" ) );[127X[104X
+    [4X[25Xgap>[125X [27XRead( Filename( DirectoriesLibrary( "tst" ), "teststandard.g" ) );[127X[104X
   [4X[32X[104X
   
-  [33X[0;0YThe  test requires about 750MB of memory and runs about one hour on an Intel
+  [33X[0;0YThe  test  requires up to 1 GB of memory and runs about one hour on an Intel
   Core  2  Duo  /  2.53  GHz  machine,  and  produces an output similar to the
   [11Xtestinstall.g[111X test.[133X
   
-  [1X7.9-3 Test[101X
+  [1X7.9-2 Test[101X
   
   [29X[2XTest[102X( [3Xfname[103X[, [3Xoptrec[103X] ) [32X function
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
@@ -1054,6 +1181,44 @@
     [4X[28X| gap> a := 13+29;[128X[104X
     [4X[28X| 42[128X[104X
   [4X[32X[104X
+  
+  [1X7.9-3 TestDirectory[101X
+  
+  [29X[2XTestDirectory[102X( [3Xinlist[103X[, [3Xoptrec[103X] ) [32X function
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YThe argument [3Xinlist[103X must be either a single filename or directory name, or a
+  list  of  filenames  and  directories.  The function [2XTestDirectory[102X will take
+  create  a  list  of  files  to  be tested by taking any files in [3Xinlist[103X, and
+  recursively  searching  any  directories in [3Xinlist[103X for files ending in [10X.tst[110X.
+  Each  of  these  files  is  then  run  through [2XTest[102X ([14X7.9-2[114X), and the results
+  printed, and [9Xtrue[109X returned if all tests passed.[133X
+  
+  [33X[0;0YIf  the optional argument [3Xoptrec[103X is given it must be a record. The following
+  components  of [3Xoptrec[103X are recognized and can change the default behaviour of
+  [2XTestDirectory[102X:[133X
+  
+  [8X[10XtestOptions[110X[108X
+        [33X[0;6YA  record  which  will  be  passed  on  as the second argument of [2XTest[102X
+        ([14X7.9-2[114X) if present.[133X
+  
+  [8X[10XearlyStop[110X[108X
+        [33X[0;6YIf [9Xtrue[109X, stop as soon as any [2XTest[102X ([14X7.9-2[114X) fails (defaults to [9Xfalse[109X).[133X
+  
+  [8X[10XshowProgress[110X[108X
+        [33X[0;6YPrint information about how tests are progressing (defaults to [9Xtrue[109X).[133X
+  
+  [8X[10XexitGAP[110X[108X
+        [33X[0;6YRather than returning [9Xtrue[109X or [9Xfalse[109X, exit GAP with the return value of
+        GAP set to success or fail, depending on if all tests passed (defaults
+        to [9Xfalse[109X).[133X
+  
+  [8X[10XstonesLimit[110X[108X
+        [33X[0;6YOnly  try  tests  which take less than [10XstonesLimit[110X stones (defaults to
+        infinity)[133X
+  
+  [8X[10XrenormaliseStones[110X[108X
+        [33X[0;6YRe-normalise the stones number given in every tst files's 'STOP_TEST'[133X
   
   
   [1X7.10 [33X[0;0YDebugging Recursion[133X[101X

@@ -62,14 +62,18 @@
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7E7AD8D87EBA1A08">6.6-1 Error</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X86A11BCC7FECEEA4">6.6-2 ErrorCount</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A5C000D7E4984DD">6.6-2 ErrorNoReturn</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X86A11BCC7FECEEA4">6.6-3 ErrorCount</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X83704B1080FD9B40">6.7 <span class="Heading">Leaving GAP</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7ECC75048583853B">6.7-1 QUIT</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A2C380986F46FEE">6.7-2 InstallAtExit</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X843C07A4869EAA1D">6.7-3 SaveOnExitFile</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F5DDF5A80CFE6C2">6.7-2 GAP_EXIT_CODE</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7B56D486842496DB">6.7-3 QUIT_GAP</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X85804CF082AFF6AE">6.7-4 FORCE_QUIT_GAP</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7A2C380986F46FEE">6.7-5 InstallAtExit</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X843C07A4869EAA1D">6.7-6 SaveOnExitFile</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X82234FD181899530">6.8 <span class="Heading">Line Editing</span></a>
 </span>
@@ -191,7 +195,7 @@ re continued on the next line."
 
 <p><strong class="pkg">GAP</strong> has three different operations to display or print objects: <code class="func">Display</code> (<a href="chap6.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>), <code class="func">ViewObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>) and <code class="func">PrintObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>), and these three have different purposes as follows. The first, <code class="func">Display</code> (<a href="chap6.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>), should print the object to the standard output in a human-readable relatively complete and verbose form. The second, <code class="func">ViewObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>), should print the object to the standard output in a short and concise form, it is used in the main read-eval-print loop to display the resulting object of a computation. The third, <code class="func">PrintObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>), should print the object to the standard output in a complete form which is <strong class="pkg">GAP</strong>-readable if at all possible, such that reading the output into <strong class="pkg">GAP</strong> produces an object which is equal to the original one.</p>
 
-<p>All three operations have corresponding operations which do not print anything to standard output but return the output as a string. These are <code class="func">DisplayString</code> (<a href="chap27.html#X792FB3A1849FD739"><span class="RefLink">27.6-1</span></a>), <code class="func">ViewString</code> (<a href="chap27.html#X7803FBCA79DB5529"><span class="RefLink">27.6-3</span></a>) and <code class="func">PrintString</code> (<a href="chap27.html#X7B3CC87285DEC23D"><span class="RefLink">27.6-5</span></a>) (corresponding to <code class="func">PrintObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>)). Additionally, there is <code class="func">String</code> (<a href="chap27.html#X81FB5BE27903EC32"><span class="RefLink">27.6-6</span></a>) which is very similar to <code class="func">PrintString</code> (<a href="chap27.html#X7B3CC87285DEC23D"><span class="RefLink">27.6-5</span></a>) but does not insert control characters for line breaks.</p>
+<p>All three operations have corresponding operations which do not print anything to standard output but return the output as a string. These are <code class="func">DisplayString</code> (<a href="chap27.html#X792FB3A1849FD739"><span class="RefLink">27.7-1</span></a>), <code class="func">ViewString</code> (<a href="chap27.html#X7803FBCA79DB5529"><span class="RefLink">27.7-3</span></a>) and <code class="func">PrintString</code> (<a href="chap27.html#X7B3CC87285DEC23D"><span class="RefLink">27.7-5</span></a>) (corresponding to <code class="func">PrintObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>)). Additionally, there is <code class="func">String</code> (<a href="chap27.html#X81FB5BE27903EC32"><span class="RefLink">27.7-6</span></a>) which is very similar to <code class="func">PrintString</code> (<a href="chap27.html#X7B3CC87285DEC23D"><span class="RefLink">27.7-5</span></a>) but does not insert control characters for line breaks.</p>
 
 <p>For implementation convenience it is allowed that some of these operations have methods which delegate to some other of these operations. However, the rules for this are that a method may only delegate to another operation which appears further down in the following table:</p>
 
@@ -206,16 +210,16 @@ re continued on the next line."
 <td class="tdcenter"><code class="func">PrintObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>)</td>
 </tr>
 <tr>
-<td class="tdcenter"><code class="func">DisplayString</code> (<a href="chap27.html#X792FB3A1849FD739"><span class="RefLink">27.6-1</span></a>)</td>
+<td class="tdcenter"><code class="func">DisplayString</code> (<a href="chap27.html#X792FB3A1849FD739"><span class="RefLink">27.7-1</span></a>)</td>
 </tr>
 <tr>
-<td class="tdcenter"><code class="func">ViewString</code> (<a href="chap27.html#X7803FBCA79DB5529"><span class="RefLink">27.6-3</span></a>)</td>
+<td class="tdcenter"><code class="func">ViewString</code> (<a href="chap27.html#X7803FBCA79DB5529"><span class="RefLink">27.7-3</span></a>)</td>
 </tr>
 <tr>
-<td class="tdcenter"><code class="func">PrintString</code> (<a href="chap27.html#X7B3CC87285DEC23D"><span class="RefLink">27.6-5</span></a>)</td>
+<td class="tdcenter"><code class="func">PrintString</code> (<a href="chap27.html#X7B3CC87285DEC23D"><span class="RefLink">27.7-5</span></a>)</td>
 </tr>
 <tr>
-<td class="tdcenter"><code class="func">String</code> (<a href="chap27.html#X81FB5BE27903EC32"><span class="RefLink">27.6-6</span></a>)</td>
+<td class="tdcenter"><code class="func">String</code> (<a href="chap27.html#X81FB5BE27903EC32"><span class="RefLink">27.7-6</span></a>)</td>
 </tr>
 </table><br /><p>&nbsp;</p><br />
 </div>
@@ -232,22 +236,22 @@ re continued on the next line."
 
 
 <ul>
-<li><p>A method for <code class="func">DisplayString</code> (<a href="chap27.html#X792FB3A1849FD739"><span class="RefLink">27.6-1</span></a>) which returns the constant value of the global variable <code class="func">DEFAULTDISPLAYSTRING</code> (<a href="chap27.html#X8482132779EA7A23"><span class="RefLink">27.6-2</span></a>).</p>
+<li><p>A method for <code class="func">DisplayString</code> (<a href="chap27.html#X792FB3A1849FD739"><span class="RefLink">27.7-1</span></a>) which returns the constant value of the global variable <code class="func">DEFAULTDISPLAYSTRING</code> (<a href="chap27.html#X8482132779EA7A23"><span class="RefLink">27.7-2</span></a>).</p>
 
 </li>
-<li><p>A method for <code class="func">ViewString</code> (<a href="chap27.html#X7803FBCA79DB5529"><span class="RefLink">27.6-3</span></a>) which returns the constant value of the global variable <code class="func">DEFAULTVIEWSTRING</code> (<a href="chap27.html#X7BBDF9D383595425"><span class="RefLink">27.6-4</span></a>).</p>
+<li><p>A method for <code class="func">ViewString</code> (<a href="chap27.html#X7803FBCA79DB5529"><span class="RefLink">27.7-3</span></a>) which returns the constant value of the global variable <code class="func">DEFAULTVIEWSTRING</code> (<a href="chap27.html#X7BBDF9D383595425"><span class="RefLink">27.7-4</span></a>).</p>
 
 </li>
-<li><p>A method for <code class="func">Display</code> (<a href="chap6.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) which first calls <code class="func">DisplayString</code> (<a href="chap27.html#X792FB3A1849FD739"><span class="RefLink">27.6-1</span></a>) and prints the result, if it is a different object than <code class="func">DEFAULTDISPLAYSTRING</code> (<a href="chap27.html#X8482132779EA7A23"><span class="RefLink">27.6-2</span></a>). Otherwise the method delegates to <code class="func">PrintObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>).</p>
+<li><p>A method for <code class="func">Display</code> (<a href="chap6.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) which first calls <code class="func">DisplayString</code> (<a href="chap27.html#X792FB3A1849FD739"><span class="RefLink">27.7-1</span></a>) and prints the result, if it is a different object than <code class="func">DEFAULTDISPLAYSTRING</code> (<a href="chap27.html#X8482132779EA7A23"><span class="RefLink">27.7-2</span></a>). Otherwise the method delegates to <code class="func">PrintObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>).</p>
 
 </li>
-<li><p>A method for <code class="func">ViewObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>) which first calls <code class="func">ViewString</code> (<a href="chap27.html#X7803FBCA79DB5529"><span class="RefLink">27.6-3</span></a>) and prints the result, if it is a different object than <code class="func">DEFAULTVIEWSTRING</code> (<a href="chap27.html#X7BBDF9D383595425"><span class="RefLink">27.6-4</span></a>). Otherwise the method delegates to <code class="func">PrintObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>).</p>
+<li><p>A method for <code class="func">ViewObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>) which first calls <code class="func">ViewString</code> (<a href="chap27.html#X7803FBCA79DB5529"><span class="RefLink">27.7-3</span></a>) and prints the result, if it is a different object than <code class="func">DEFAULTVIEWSTRING</code> (<a href="chap27.html#X7BBDF9D383595425"><span class="RefLink">27.7-4</span></a>). Otherwise the method delegates to <code class="func">PrintObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>).</p>
 
 </li>
-<li><p>A method for <code class="func">PrintObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>) which prints the result of <code class="func">PrintString</code> (<a href="chap27.html#X7B3CC87285DEC23D"><span class="RefLink">27.6-5</span></a>).</p>
+<li><p>A method for <code class="func">PrintObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>) which prints the result of <code class="func">PrintString</code> (<a href="chap27.html#X7B3CC87285DEC23D"><span class="RefLink">27.7-5</span></a>).</p>
 
 </li>
-<li><p>A method for <code class="func">PrintString</code> (<a href="chap27.html#X7B3CC87285DEC23D"><span class="RefLink">27.6-5</span></a>) which returns the result of <code class="func">String</code> (<a href="chap27.html#X81FB5BE27903EC32"><span class="RefLink">27.6-6</span></a>)</p>
+<li><p>A method for <code class="func">PrintString</code> (<a href="chap27.html#X7B3CC87285DEC23D"><span class="RefLink">27.7-5</span></a>) which returns the result of <code class="func">String</code> (<a href="chap27.html#X81FB5BE27903EC32"><span class="RefLink">27.7-6</span></a>)</p>
 
 </li>
 </ul>
@@ -257,19 +261,19 @@ re continued on the next line."
 
 <p>This subsection describes what methods for printing and viewing one should implement for new <strong class="pkg">GAP</strong> objects.</p>
 
-<p>One should at the very least install a <code class="func">String</code> (<a href="chap27.html#X81FB5BE27903EC32"><span class="RefLink">27.6-6</span></a>) method to allow printing. Using the standard delegations this enables a limited form of viewing, displaying and printing.</p>
+<p>One should at the very least install a <code class="func">String</code> (<a href="chap27.html#X81FB5BE27903EC32"><span class="RefLink">27.7-6</span></a>) method to allow printing. Using the standard delegations this enables a limited form of viewing, displaying and printing.</p>
 
-<p>If, for larger objects, nicer line breaks are needed, one should install a separate <code class="func">PrintString</code> (<a href="chap27.html#X7B3CC87285DEC23D"><span class="RefLink">27.6-5</span></a>) method which puts in positions for good line breaks using the control characters <code class="code">\&lt;</code> (ASCII 1) and <code class="code">\&gt;</code> (ASCII 2).</p>
+<p>If, for larger objects, nicer line breaks are needed, one should install a separate <code class="func">PrintString</code> (<a href="chap27.html#X7B3CC87285DEC23D"><span class="RefLink">27.7-5</span></a>) method which puts in positions for good line breaks using the control characters <code class="code">\&lt;</code> (ASCII 1) and <code class="code">\&gt;</code> (ASCII 2).</p>
 
 <p>If, for even larger objects, output performance and memory usage matters, one should install a separate <code class="func">PrintObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>) method.</p>
 
-<p>One should usually install a <code class="func">ViewString</code> (<a href="chap27.html#X7803FBCA79DB5529"><span class="RefLink">27.6-3</span></a>) method, unless the above <code class="func">String</code> (<a href="chap27.html#X81FB5BE27903EC32"><span class="RefLink">27.6-6</span></a>) method is good enough for <code class="func">ViewObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>) purposes. Performance and memory should never matter here, so it is usually unnecessary to install a separate <code class="func">ViewObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>) method.</p>
+<p>One should usually install a <code class="func">ViewString</code> (<a href="chap27.html#X7803FBCA79DB5529"><span class="RefLink">27.7-3</span></a>) method, unless the above <code class="func">String</code> (<a href="chap27.html#X81FB5BE27903EC32"><span class="RefLink">27.7-6</span></a>) method is good enough for <code class="func">ViewObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>) purposes. Performance and memory should never matter here, so it is usually unnecessary to install a separate <code class="func">ViewObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>) method.</p>
 
-<p>If the type of object calls for it one should install a <code class="func">DisplayString</code> (<a href="chap27.html#X792FB3A1849FD739"><span class="RefLink">27.6-1</span></a>) method. This is the case if a human readable verbose form is required.</p>
+<p>If the type of object calls for it one should install a <code class="func">DisplayString</code> (<a href="chap27.html#X792FB3A1849FD739"><span class="RefLink">27.7-1</span></a>) method. This is the case if a human readable verbose form is required.</p>
 
 <p>If the performance and memory usage for <code class="func">Display</code> (<a href="chap6.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) matters, one should install a separate <code class="func">Display</code> (<a href="chap6.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) method.</p>
 
-<p>Note that if only a <code class="func">String</code> (<a href="chap27.html#X81FB5BE27903EC32"><span class="RefLink">27.6-6</span></a>) method is installed, then <code class="func">ViewObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>) works and <code class="func">ViewString</code> (<a href="chap27.html#X7803FBCA79DB5529"><span class="RefLink">27.6-3</span></a>) returns <code class="func">DEFAULTVIEWSTRING</code> (<a href="chap27.html#X7BBDF9D383595425"><span class="RefLink">27.6-4</span></a>). Likewise, <code class="func">Display</code> (<a href="chap6.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) works and <code class="func">DisplayString</code> (<a href="chap27.html#X792FB3A1849FD739"><span class="RefLink">27.6-1</span></a>) returns <code class="func">DEFAULTDISPLAYSTRING</code> (<a href="chap27.html#X8482132779EA7A23"><span class="RefLink">27.6-2</span></a>). If you want to avoid this then install methods for these operations as well.</p>
+<p>Note that if only a <code class="func">String</code> (<a href="chap27.html#X81FB5BE27903EC32"><span class="RefLink">27.7-6</span></a>) method is installed, then <code class="func">ViewObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>) works and <code class="func">ViewString</code> (<a href="chap27.html#X7803FBCA79DB5529"><span class="RefLink">27.7-3</span></a>) returns <code class="func">DEFAULTVIEWSTRING</code> (<a href="chap27.html#X7BBDF9D383595425"><span class="RefLink">27.7-4</span></a>). Likewise, <code class="func">Display</code> (<a href="chap6.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) works and <code class="func">DisplayString</code> (<a href="chap27.html#X792FB3A1849FD739"><span class="RefLink">27.7-1</span></a>) returns <code class="func">DEFAULTDISPLAYSTRING</code> (<a href="chap27.html#X8482132779EA7A23"><span class="RefLink">27.7-2</span></a>). If you want to avoid this then install methods for these operations as well.</p>
 
 <p><a id="X851902C583B84CDC" name="X851902C583B84CDC"></a></p>
 
@@ -436,7 +440,7 @@ you can replace &lt;divisor&gt; via 'return &lt;divisor&gt;;' to continue
 
 <h5>6.4-3 OnBreak</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnBreak</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnBreak</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
 <p>By default, when a break loop is entered, <strong class="pkg">GAP</strong> prints a trace of the innermost 5 commands currently being executed. This behaviour can be configured by changing the value of the global variable <code class="func">OnBreak</code>. When a break loop is entered, the value of <code class="func">OnBreak</code> is checked. If it is a function, then it is called with no arguments. By default, the value of <code class="func">OnBreak</code> is <code class="func">Where</code> (<a href="chap6.html#X7A7FFA2B7C1EF5A3"><span class="RefLink">6.4-5</span></a>).</p>
 
 
@@ -480,7 +484,7 @@ you can 'return;' to continue
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">     OnBreak := ENTBOnBreak;</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">     Error();</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">   end;</span>
-function( arg ) ... end
+function( arg... ) ... end
 </pre></div>
 
 <p>Here is a somewhat trivial demonstration of the use of <code class="code">ErrorNoTraceBack</code>.</p>
@@ -519,7 +523,7 @@ you can 'return;' to continue
 
 <h5>6.4-4 OnBreakMessage</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnBreakMessage</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnBreakMessage</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
 <p>When a break loop is entered by a call to <code class="func">Error</code> (<a href="chap6.html#X7E7AD8D87EBA1A08"><span class="RefLink">6.6-1</span></a>) the message after the "<code class="code">Entering break read-eval-print loop ...</code>" line is produced by the function <code class="code">OnBreakMessage</code>, which just like <code class="func">OnBreak</code> (<a href="chap6.html#X82EBF01181C3C859"><span class="RefLink">6.4-3</span></a>) is a user-configurable global variable that is a <em>function</em> with <em>no arguments</em>.</p>
 
 
@@ -686,11 +690,18 @@ you can 'return;' to continue
 <h5>6.6-1 Error</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Error</code>( <var class="Arg">messages</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p><code class="func">Error</code> signals an error from within a function. First the messages <var class="Arg">messages</var> are printed, this is done exactly as if <code class="func">Print</code> (<a href="chap6.html#X7AFA64D97A1F39A3"><span class="RefLink">6.3-4</span></a>) (see <a href="chap6.html#X8074A8387C9DB9A8"><span class="RefLink">6.3</span></a>) were called with these arguments. Then a break loop (see <a href="chap6.html#X8593B49F8705B486"><span class="RefLink">6.4</span></a>) is entered, unless the standard error output is not connected to a terminal. You can leave this break loop with <code class="code">return;</code> to continue execution with the statement following the call to <code class="func">Error</code>.</p>
+<p><code class="func">Error</code> signals an error from within a function. First the messages <var class="Arg">messages</var> are printed, this is done exactly as if <code class="func">Print</code> (<a href="chap6.html#X7AFA64D97A1F39A3"><span class="RefLink">6.3-4</span></a>) (see <a href="chap6.html#X8074A8387C9DB9A8"><span class="RefLink">6.3</span></a>) were called with these arguments. Then a break loop (see <a href="chap6.html#X8593B49F8705B486"><span class="RefLink">6.4</span></a>) is entered, unless the standard error output is not connected to a terminal. You can leave this break loop with <code class="code">return;</code> to continue execution with the statement following the call to <code class="func">Error</code>. <code class="func">ErrorNoReturn</code> (<a href="chap6.html#X7A5C000D7E4984DD"><span class="RefLink">6.6-2</span></a>) operates identically to <code class="func">Error</code>, except it does not allow using <code class="code">return;</code> to continue execution.</p>
+
+<p><a id="X7A5C000D7E4984DD" name="X7A5C000D7E4984DD"></a></p>
+
+<h5>6.6-2 ErrorNoReturn</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ErrorNoReturn</code>( <var class="Arg">messages</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p><code class="func">ErrorNoReturn</code> signals an error from within a function. First the messages <var class="Arg">messages</var> are printed, this is done exactly as if <code class="func">Print</code> (<a href="chap6.html#X7AFA64D97A1F39A3"><span class="RefLink">6.3-4</span></a>) (see <a href="chap6.html#X8074A8387C9DB9A8"><span class="RefLink">6.3</span></a>) were called with these arguments. Then a break loop (see <a href="chap6.html#X8593B49F8705B486"><span class="RefLink">6.4</span></a>) is entered, unless the standard error output is not connected to a terminal. This break loop can only be exited with <code class="code">quit;</code>. The function differs from <code class="func">Error</code> (<a href="chap6.html#X7E7AD8D87EBA1A08"><span class="RefLink">6.6-1</span></a>) by not allowing execution to continue.</p>
 
 <p><a id="X86A11BCC7FECEEA4" name="X86A11BCC7FECEEA4"></a></p>
 
-<h5>6.6-2 ErrorCount</h5>
+<h5>6.6-3 ErrorCount</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ErrorCount</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
 <p><code class="func">ErrorCount</code> returns a count of the number of errors (including user interruptions) which have occurred in the <strong class="pkg">GAP</strong> session so far. This count is reduced modulo <span class="SimpleMath">2^28</span> on <span class="SimpleMath">32</span> bit systems, <span class="SimpleMath">2^60</span> on <span class="SimpleMath">64</span> bit systems. The count is incremented by each error, even if <strong class="pkg">GAP</strong> was started with the <code class="code">-T</code> option to disable the break loop.</p>
@@ -708,9 +719,30 @@ you can 'return;' to continue
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QUIT</code></td><td class="tdright">( global variable )</td></tr></table></div>
 <p>An emergency way to leave <strong class="pkg">GAP</strong> is to enter <code class="keyw">QUIT</code> at any <code class="code">gap&gt;</code> or <code class="code">brk&gt;</code> or <code class="code">brk_<var class="Arg">nn</var>&gt;</code> prompt.</p>
 
+<p><a id="X7F5DDF5A80CFE6C2" name="X7F5DDF5A80CFE6C2"></a></p>
+
+<h5>6.7-2 GAP_EXIT_CODE</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GAP_EXIT_CODE</code>( <var class="Arg">ret</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<p>A <code class="code">GAP_EXIT_CODE</code> sets the return value which will be used when <strong class="pkg">GAP</strong> exits. This may be an integer, or a boolean (where <code class="keyw">true</code> is interpreted as 0, and <code class="keyw">false</code> is interpreted as 1.</p>
+
+<p><a id="X7B56D486842496DB" name="X7B56D486842496DB"></a></p>
+
+<h5>6.7-3 QUIT_GAP</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QUIT_GAP</code>( [<var class="Arg">ret</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>A <code class="code">QUIT_GAP</code> acts similarly to the keyword <code class="code">quit</code>. It exits <strong class="pkg">GAP</strong> cleanly, calling any function installed using <code class="code">InstallAtExit</code>. The optional argument will be passed to <code class="code">GAP_EXIT_CODE</code>.</p>
+
+<p><a id="X85804CF082AFF6AE" name="X85804CF082AFF6AE"></a></p>
+
+<h5>6.7-4 FORCE_QUIT_GAP</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FORCE_QUIT_GAP</code>( [<var class="Arg">ret</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<p>A <code class="code">FORCE_QUIT_GAP</code> is similar to <code class="code">QUIT_GAP</code>, except it ignores any functions installed with <code class="code">InstallAtExit</code>, or any other functions normally run at GAP exit, and exits GAP immediately. The optional argument will be passed to <code class="code">GAP_EXIT_CODE</code>.</p>
+
 <p><a id="X7A2C380986F46FEE" name="X7A2C380986F46FEE"></a></p>
 
-<h5>6.7-2 InstallAtExit</h5>
+<h5>6.7-5 InstallAtExit</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallAtExit</code>( <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QUITTING</code></td><td class="tdright">( global variable )</td></tr></table></div>
@@ -727,7 +759,7 @@ bye
 
 <p><a id="X843C07A4869EAA1D" name="X843C07A4869EAA1D"></a></p>
 
-<h5>6.7-3 SaveOnExitFile</h5>
+<h5>6.7-6 SaveOnExitFile</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SaveOnExitFile</code></td><td class="tdright">( global variable )</td></tr></table></div>
 <p>If, when <strong class="pkg">GAP</strong> is exiting due to a <code class="keyw">quit</code> or end-of-file (i.e. not due to a <code class="keyw">QUIT</code>) the variable <code class="func">SaveOnExitFile</code> is bound to a string value, then the system will try to save the workspace to that file.</p>

@@ -10,6 +10,12 @@
 ##  This file contains the methods for files and directories.
 ##
 
+Unbind(InfoTempDirectories);
+
+DeclareInfoClass("InfoTempDirectories");
+SetInfoLevel(InfoTempDirectories,1);
+
+
 
 #############################################################################
 ##
@@ -135,14 +141,16 @@ end );
 ##
 BindGlobal("MakeExternalFilename",
   function(name)
-    local path;
+    local path, prefix;
     if ARCH_IS_WINDOWS() then
-        if name{[1..10]} = "/cygdrive/" then
-            path := Concatenation("C:",name{[12..Length(name)]});
-            path[1] := name[11];
+        prefix := First( [ "/proc/cygdrive/", "/cygdrive/" ], s -> StartsWith( name, s ) );
+        if prefix <> fail then
+            path := Concatenation("C:",name{[Length(prefix)+2..Length(name)]});
+            path[1] := name[Length(prefix)+1]; # drive name
             return ReplacedString(path,"/","\\");
+        else
+            return ReplacedString(name,"/","\\");
         fi;
-        return ReplacedString(name,"/","\\");
     else
         return name;
     fi;
@@ -207,26 +215,6 @@ function ( name )
         Error( "file \"", name, "\" must exist and be readable" );
     fi;
 end );
-
-
-#############################################################################
-##
-#M  ReadTest( <filename> )  . . . . . . . . . . . . . . . .  read a test file
-##
-InstallMethod( ReadTest,
-    "string",
-    [ IsString ],
-    function( name )
-    local oldvalue, result, breakOnError;
-	breakOnError := BreakOnError;
-	BreakOnError := false;
-    oldvalue:= SizeScreen();
-    SizeScreen( [ 80 ] );
-    result:= READ_TEST( USER_HOME_EXPAND( name ) );  
-    SizeScreen( oldvalue );
-    BreakOnError := breakOnError;
-    return result;
-    end );
 
 
 #############################################################################
@@ -329,11 +317,11 @@ local a,h,d;
 	      "ÐœÐ¾Ð¸ Ð”Ð¾ÐºÑƒÐ¼ÐµÐ½Ñ‚Ñ‹", #ru
 	      ],x->LowercaseString(x) in d);
     if a<>fail then
-      if h[Length(h)]<>'/' then Add(h,'/');fi;
+      if h[Length(h)]<>'/' then
+        h := Concatenation(h,"/");
+      fi;
       return Directory(Concatenation(h,a));
     else
-      Info(InfoWarning,1,"Foreign Localization of Windows\n",
-	"Need name of 'My Documents' folder",d);
       return Directory(StringHOMEPath());
     fi;
   else
@@ -353,11 +341,11 @@ local a,h,d;
 	      "Î•Ï€Î¹Ï†Î¬Î½ÎµÎ¹Î± ÎµÏÎ³Î±ÏƒÎ¯Î±Ï‚", #gr
 	     ],x->LowercaseString(x) in d);
     if a<>fail then
-      if h[Length(h)]<>'/' then Add(h,'/');fi;
+      if h[Length(h)]<>'/' then
+        h := Concatenation(h,"/");
+      fi;
       return Directory(Concatenation(h,a));
     else
-      Info(InfoWarning,1,"Foreign Localization of Windows\n",
-	"Need name of 'Desktop' folder",d);
       return Directory(StringHOMEPath());
     fi;
   else
@@ -368,7 +356,9 @@ local a,h,d;
 	      "Escritorio", #es
 	     ],x->LowercaseString(x) in d);
     if a<>fail then
-      if h[Length(h)]<>'/' then Add(h,'/');fi;
+      if h[Length(h)]<>'/' then
+        h := Concatenation(h,"/");
+      fi;
       return Directory(Concatenation(h,a));
     else
       return Directory(h);
@@ -415,4 +405,3 @@ InstallGlobalFunction(RemoveDirectoryRecursively,
 #############################################################################
 ##
 #E
-

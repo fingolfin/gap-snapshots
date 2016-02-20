@@ -36,6 +36,10 @@
 #include        "lists.h"               /* generic lists                   */
 #include        "string.h"              /* strings                         */
 
+#include	"code.h"		/* coder                           */
+#include	"thread.h"		/* threads			   */
+#include	"tls.h"			/* thread-local storage		   */
+
 
 /****************************************************************************
 **
@@ -66,21 +70,21 @@ Obj Fail;
 
 /****************************************************************************
 **
-*V  SFail  . . . . . . . . . . . . . . . . . . . . . . . . . . superfail value
+*V  SuPeRfail  . . . . . . . . . . . . . . . . . . . . . . .  superfail value
 **
-**  'SFail' is an ``superfail'' object which is used to indicate failure if
+**  'SuPeRfail' is an ``superfail'' object which is used to indicate failure if
 **  `fail' itself is a sensible response. This is used when having GAP read
 **  a file line-by-line via a library function (demo.g)
 */
-Obj SFail;
+Obj SuPeRfail;
 
 
 /****************************************************************************
 **
 
-*F  TypeBool( <bool> )  . . . . . . . . . . . . . . . kind of a boolean value
+*F  TypeBool( <bool> )  . . . . . . . . . . . . . . . type of a boolean value
 **
-**  'TypeBool' returns the kind of boolean values.
+**  'TypeBool' returns the type of boolean values.
 **
 **  'TypeBool' is the function in 'TypeObjFuncs' for boolean values.
 */
@@ -111,7 +115,7 @@ void PrintBool (
     else if ( bool == Fail ) {
         Pr( "fail", 0L, 0L );
     }
-    else if ( bool == SFail ) {
+    else if ( bool == SuPeRfail ) {
         Pr( "SuPeRfail", 0L, 0L );
     }
     else {
@@ -390,7 +394,7 @@ static Int InitKernel (
     InitHandlerFunc( ReturnFail2, "src/bool.c:ReturnFail2" );
     InitHandlerFunc( ReturnFail3, "src/bool.c:ReturnFail3" );
 
-    /* install the kind function                                           */
+    /* install the type function                                           */
     ImportGVarFromLibrary( "TYPE_BOOL", &TYPE_BOOL );
     TypeObjFuncs[ T_BOOL ] = TypeBool;
 
@@ -398,7 +402,7 @@ static Int InitKernel (
     InitGlobalBag( &True,  "src/bool.c:TRUE"  );
     InitGlobalBag( &False, "src/bool.c:FALSE" );
     InitGlobalBag( &Fail,  "src/bool.c:FAIL"  );
-    InitGlobalBag( &SFail,  "src/bool.c:SFAIL"  );
+    InitGlobalBag( &SuPeRfail,  "src/bool.c:SUPERFAIL"  );
 
     /* install the saving functions                                       */
     SaveObjFuncs[ T_BOOL ] = SaveBool;
@@ -442,27 +446,27 @@ static Int InitLibrary (
     MakeReadOnlyGVar(gvar);
 
     /* `SuPeRfail' ditto                       */
-    SFail  = NewBag( T_BOOL, 0L );
+    SuPeRfail  = NewBag( T_BOOL, 0L );
     gvar = GVarName( "SuPeRfail" );
-    AssGVar( gvar, SFail );
+    AssGVar( gvar, SuPeRfail );
     MakeReadOnlyGVar(gvar);
 
     /* make and install the 'RETURN_TRUE' function                         */
-    tmp = NewFunctionC( "RETURN_TRUE", -1L, "args", ReturnTrue1 );
+    tmp = NewFunctionC( "RETURN_TRUE", -1L, "arg", ReturnTrue1 );
     HDLR_FUNC( tmp, 1 ) = ReturnTrue1;
     HDLR_FUNC( tmp, 2 ) = ReturnTrue2;
     HDLR_FUNC( tmp, 3 ) = ReturnTrue3;
     AssGVar( GVarName("RETURN_TRUE"), tmp );
 
     /* make and install the 'RETURN_FALSE' function                        */
-    tmp = NewFunctionC("RETURN_FALSE",-1L,"args",ReturnFalse1);
+    tmp = NewFunctionC("RETURN_FALSE",-1L,"arg",ReturnFalse1);
     HDLR_FUNC( tmp, 1 ) = ReturnFalse1;
     HDLR_FUNC( tmp, 2 ) = ReturnFalse2;
     HDLR_FUNC( tmp, 3 ) = ReturnFalse3;
     AssGVar( GVarName( "RETURN_FALSE" ), tmp );
 
     /* make and install the 'RETURN_FAIL' function                        */
-    tmp = NewFunctionC("RETURN_FAIL", -1L, "args", ReturnFail1);
+    tmp = NewFunctionC("RETURN_FAIL", -1L, "arg", ReturnFail1);
     HDLR_FUNC( tmp, 1 ) = ReturnFail1;
     HDLR_FUNC( tmp, 2 ) = ReturnFail2;
     HDLR_FUNC( tmp, 3 ) = ReturnFail3;
@@ -494,7 +498,6 @@ static StructInitInfo module = {
 
 StructInitInfo * InitInfoBool ( void )
 {
-    FillInVersion( &module );
     return &module;
 }
 

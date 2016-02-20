@@ -74,7 +74,7 @@ DeclareAttribute( "AsNearRing", IsNearRingElementCollection );
 ##
 ##  <#GAPDoc Label="IsRing">
 ##  <ManSection>
-##  <Prop Name="IsRing" Arg='R'/>
+##  <Filt Name="IsRing" Arg='R'/>
 ##
 ##  <Description>
 ##  A <E>ring</E> in &GAP; is an additive group
@@ -101,7 +101,7 @@ DeclareSynonymAttr( "IsRing",
 ##
 ##  <#GAPDoc Label="IsRingWithOne">
 ##  <ManSection>
-##  <Prop Name="IsRingWithOne" Arg='R'/>
+##  <Filt Name="IsRingWithOne" Arg='R'/>
 ##
 ##  <Description>
 ##  A <E>ring-with-one</E> in &GAP; is a ring (see&nbsp;<Ref Func="IsRing"/>)
@@ -706,6 +706,15 @@ InstallFactorMaintenance( IsZeroSquaredRing,
 ##  </ManSection>
 ##
 DeclareProperty( "IsZeroMultiplicationRing", IsRing );
+
+# FIXME: the following implication is correct, but triggers a bug in
+# the Sophus package. Until that is fixed, we disable it. To reproduce
+# the bug, load Sophus, and enter this command:
+#   f:= FullMatrixAlgebra( Rationals, 2 );
+# If the bug is still present, this will trigger an error due to
+# LeftActingDomain being called on an object which does not (yet)
+# have LeftActingDomain set.
+#InstallTrueMethod( IsZeroMultiplicationRing, IsRing and IsTrivial );
 
 InstallTrueMethod( IsZeroSquaredRing, IsRing and IsZeroMultiplicationRing );
 InstallTrueMethod( IsAssociative, IsRing and IsZeroMultiplicationRing );

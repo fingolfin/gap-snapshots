@@ -103,6 +103,9 @@
   In  this  case  [2XLastSystemError[102X ([14X9.1-1[114X) can be used to get information about
   the error.[133X
   
+  [33X[0;0YA  warning  message  is  given  if  more than 1000 temporary directories are
+  created in any [5XGAP[105X session.[133X
+  
   [1X9.3-4 DirectoryCurrent[101X
   
   [29X[2XDirectoryCurrent[102X(  ) [32X function
@@ -158,27 +161,27 @@
   
   [1X9.3-8 DirectoryDesktop[101X
   
-  [29X[2XDirectoryDesktop[102X(  ) [32X operation
+  [29X[2XDirectoryDesktop[102X(  ) [32X function
   
   [33X[0;0Yreturns  a  directory  object  for the users desktop directory as defined on
   many  modern  operating  systems.  The  function  is  intended  to provide a
   cross-platform  interface  to  a  directory that is easily accessible by the
   user.  Under  Unix  systems  (including  Mac  OS X) this will be the [10XDesktop[110X
   directory  in  the  users  home  directory  if it exists, and the users home
-  directory  otherwise. Under Windows it will the the users [10XDesktop[110X folder (or
-  the appropriate name under different languages).[133X
+  directory  otherwise. Under Windows it will the users [10XDesktop[110X folder (or the
+  appropriate name under different languages).[133X
   
   [1X9.3-9 DirectoryHome[101X
   
-  [29X[2XDirectoryHome[102X(  ) [32X operation
+  [29X[2XDirectoryHome[102X(  ) [32X function
   
   [33X[0;0Yreturns  a  directory  object  for  the  users  home directory, defined as a
   directory  in which the user will typically have full read and write access.
   The  function  is  intended  to  provide  a  cross-platform  interface  to a
   directory  that  is  easily  accessible  by  the  user.  Under  Unix systems
   (including  Mac  OS  X)  this  will  be the usual user home directory. Under
-  Windows  it  will the the users [10XMy Documents[110X folder (or the appropriate name
-  under different languages).[133X
+  Windows it will the users [10XMy Documents[110X folder (or the appropriate name under
+  different languages).[133X
   
   
   [1X9.4 [33X[0;0YFile Names[133X[101X
@@ -264,9 +267,9 @@
   
   [1X9.6-1 IsExistingFile[101X
   
-  [29X[2XIsExistingFile[102X( [3Xname-file[103X ) [32X function
+  [29X[2XIsExistingFile[102X( [3Xfilename[103X ) [32X function
   
-  [33X[0;0Y[2XIsExistingFile[102X returns [9Xtrue[109X if a file with the filename [3Xname-file[103X exists and
+  [33X[0;0Y[2XIsExistingFile[102X  returns [9Xtrue[109X if a file with the filename [3Xfilename[103X exists and
   can be seen by the [5XGAP[105X process. Otherwise [9Xfalse[109X is returned.[133X
   
   [4X[32X  Example  [32X[104X
@@ -282,9 +285,9 @@
   
   [1X9.6-2 IsReadableFile[101X
   
-  [29X[2XIsReadableFile[102X( [3Xname-file[103X ) [32X function
+  [29X[2XIsReadableFile[102X( [3Xfilename[103X ) [32X function
   
-  [33X[0;0Y[2XIsReadableFile[102X returns [9Xtrue[109X if a file with the filename [3Xname-file[103X exists [13Xand[113X
+  [33X[0;0Y[2XIsReadableFile[102X  returns [9Xtrue[109X if a file with the filename [3Xfilename[103X exists [13Xand[113X
   the  [5XGAP[105X  process has read permissions for the file, or [9Xfalse[109X if this is not
   the case.[133X
   
@@ -299,9 +302,9 @@
   
   [1X9.6-3 IsWritableFile[101X
   
-  [29X[2XIsWritableFile[102X( [3Xname-file[103X ) [32X function
+  [29X[2XIsWritableFile[102X( [3Xfilename[103X ) [32X function
   
-  [33X[0;0Y[2XIsWritableFile[102X returns [9Xtrue[109X if a file with the filename [3Xname-file[103X exists [13Xand[113X
+  [33X[0;0Y[2XIsWritableFile[102X  returns [9Xtrue[109X if a file with the filename [3Xfilename[103X exists [13Xand[113X
   the  [5XGAP[105X process has write permissions for the file, or [9Xfalse[109X if this is not
   the case.[133X
   
@@ -312,9 +315,9 @@
   
   [1X9.6-4 IsExecutableFile[101X
   
-  [29X[2XIsExecutableFile[102X( [3Xname-file[103X ) [32X function
+  [29X[2XIsExecutableFile[102X( [3Xfilename[103X ) [32X function
   
-  [33X[0;0Y[2XIsExecutableFile[102X  returns  [9Xtrue[109X if a file with the filename [3Xname-file[103X exists
+  [33X[0;0Y[2XIsExecutableFile[102X  returns  [9Xtrue[109X  if a file with the filename [3Xfilename[103X exists
   [13Xand[113X  the  [5XGAP[105X process has execute permissions for the file, or [9Xfalse[109X if this
   is  not  the  case.  Note  that  execute permissions do not imply that it is
   possible to execute the file, e.g., it may only be executable on a different
@@ -327,9 +330,9 @@
   
   [1X9.6-5 IsDirectoryPath[101X
   
-  [29X[2XIsDirectoryPath[102X( [3Xname-file[103X ) [32X function
+  [29X[2XIsDirectoryPath[102X( [3Xfilename[103X ) [32X function
   
-  [33X[0;0Y[2XIsDirectoryPath[102X  returns [9Xtrue[109X if the file with the filename [3Xname-file[103X exists
+  [33X[0;0Y[2XIsDirectoryPath[102X  returns  [9Xtrue[109X if the file with the filename [3Xfilename[103X exists
   [13Xand[113X  is  a  directory, and [9Xfalse[109X otherwise. Note that this function does not
   check  if  the [5XGAP[105X process actually has write or execute permissions for the
   directory.  You  can  use  [2XIsWritableFile[102X  ([14X9.6-3[114X),  resp.  [2XIsExecutableFile[102X
@@ -340,12 +343,12 @@
   
   [1X9.7-1 Read[101X
   
-  [29X[2XRead[102X( [3Xname-file[103X ) [32X operation
+  [29X[2XRead[102X( [3Xfilename[103X ) [32X operation
   
-  [33X[0;0Yreads  the  input  from  the file with the filename [3Xname-file[103X, which must be
+  [33X[0;0Yreads  the  input  from  the  file with the filename [3Xfilename[103X, which must be
   given as a string.[133X
   
-  [33X[0;0Y[2XRead[102X  first  opens the file [3Xname-file[103X. If the file does not exist, or if [5XGAP[105X
+  [33X[0;0Y[2XRead[102X  first  opens  the file [3Xfilename[103X. If the file does not exist, or if [5XGAP[105X
   cannot open it, e.g., because of access restrictions, an error is signalled.[133X
   
   [33X[0;0YThen  the  contents  of the file are read and evaluated, but the results are
@@ -371,9 +374,9 @@
   
   [1X9.7-2 ReadAsFunction[101X
   
-  [29X[2XReadAsFunction[102X( [3Xname-file[103X ) [32X operation
+  [29X[2XReadAsFunction[102X( [3Xfilename[103X ) [32X operation
   
-  [33X[0;0Yreads  the  file  with  filename  [3Xname-file[103X  as  a function and returns this
+  [33X[0;0Yreads  the  file  with  filename  [3Xfilename[103X  as  a  function and returns this
   function.[133X
   
   [33X[0;0Y[13XExample[113X[133X
@@ -401,15 +404,15 @@
   
   [1X9.7-3 [33X[0;0YPrintTo and AppendTo[133X[101X
   
-  [29X[2XPrintTo[102X( [3Xname-file[103X[, [3Xobj1[103X, [3X...[103X] ) [32X function
-  [29X[2XAppendTo[102X( [3Xname-file[103X[, [3Xobj1[103X, [3X...[103X] ) [32X function
+  [29X[2XPrintTo[102X( [3Xfilename[103X[, [3Xobj1[103X, [3X...[103X] ) [32X function
+  [29X[2XAppendTo[102X( [3Xfilename[103X[, [3Xobj1[103X, [3X...[103X] ) [32X function
   
   [33X[0;0Y[2XPrintTo[102X  works  like  [2XPrint[102X ([14X6.3-4[114X), except that the arguments [3Xobj1[103X, [22X...[122X (if
-  present)  are  printed  to  the  file with the name [3Xname-file[103X instead of the
+  present)  are  printed  to  the  file  with the name [3Xfilename[103X instead of the
   standard  output.  This file must of course be writable by [5XGAP[105X. Otherwise an
   error  is  signalled. Note that [2XPrintTo[102X will [13Xoverwrite[113X the previous contents
   of  this  file  if  it already existed; in particular, [2XPrintTo[102X with just the
-  [3Xname-file[103X argument empties that file.[133X
+  [3Xfilename[103X argument empties that file.[133X
   
   [33X[0;0Y[2XAppendTo[102X  works  like [2XPrintTo[102X, except that the output does not overwrite the
   previous contents of the file, but is appended to the file.[133X
@@ -423,27 +426,27 @@
   
   [1X9.7-4 [33X[0;0YLogTo[133X[101X
   
-  [29X[2XLogTo[102X( [3Xname-file[103X ) [32X operation
+  [29X[2XLogTo[102X( [3Xfilename[103X ) [32X operation
   [29X[2XLogTo[102X(  ) [32X operation
   
-  [33X[0;0YCalling  [2XLogTo[102X  with a string [3Xname-file[103X causes the subsequent interaction to
-  be  logged  to the file with the name [3Xname-file[103X, i.e., everything you see on
-  your  terminal  will  also  appear in this file. ([2XLogTo[102X ([14X10.4-5[114X) may also be
-  used  to  log  to  a  stream.)  This file must of course be writable by [5XGAP[105X,
-  otherwise an error is signalled. Note that [2XLogTo[102X will overwrite the previous
-  contents of this file if it already existed.[133X
+  [33X[0;0YCalling [2XLogTo[102X with a string [3Xfilename[103X causes the subsequent interaction to be
+  logged  to the file with the name [3Xfilename[103X, i.e., everything you see on your
+  terminal  will also appear in this file. ([2XLogTo[102X ([14X10.4-5[114X) may also be used to
+  log  to a stream.) This file must of course be writable by [5XGAP[105X, otherwise an
+  error  is signalled. Note that [2XLogTo[102X will overwrite the previous contents of
+  this file if it already existed.[133X
   
   [33X[0;0YCalled without arguments, [2XLogTo[102X stops logging to a file or stream.[133X
   
   
   [1X9.7-5 [33X[0;0YInputLogTo[133X[101X
   
-  [29X[2XInputLogTo[102X( [3Xname-file[103X ) [32X operation
+  [29X[2XInputLogTo[102X( [3Xfilename[103X ) [32X operation
   [29X[2XInputLogTo[102X(  ) [32X operation
   
-  [33X[0;0YCalling [2XInputLogTo[102X with a string [3Xname-file[103X causes the subsequent input to be
-  logged  to  the  file  with the name [3Xname-file[103X, i.e., everything you type on
-  your  terminal will also appear in this file. Note that [2XInputLogTo[102X and [2XLogTo[102X
+  [33X[0;0YCalling  [2XInputLogTo[102X with a string [3Xfilename[103X causes the subsequent input to be
+  logged to the file with the name [3Xfilename[103X, i.e., everything you type on your
+  terminal  will  also  appear  in  this  file. Note that [2XInputLogTo[102X and [2XLogTo[102X
   ([14X9.7-4[114X)  cannot  be  used  at the same time while [2XInputLogTo[102X and [2XOutputLogTo[102X
   ([14X9.7-6[114X)  can.  Note  that [2XInputLogTo[102X will overwrite the previous contents of
   this file if it already existed.[133X
@@ -453,13 +456,13 @@
   
   [1X9.7-6 [33X[0;0YOutputLogTo[133X[101X
   
-  [29X[2XOutputLogTo[102X( [3Xname-file[103X ) [32X operation
+  [29X[2XOutputLogTo[102X( [3Xfilename[103X ) [32X operation
   [29X[2XOutputLogTo[102X(  ) [32X operation
   
-  [33X[0;0YCalling  [2XOutputLogTo[102X with a string [3Xname-file[103X causes the subsequent output to
-  be  logged  to the file with the name [3Xname-file[103X, i.e., everything [5XGAP[105X prints
-  on  your  terminal  will also appear in this file. Note that [2XOutputLogTo[102X and
-  [2XLogTo[102X  ([14X9.7-4[114X)  cannot be used at the same time while [2XInputLogTo[102X ([14X9.7-5[114X) and
+  [33X[0;0YCalling  [2XOutputLogTo[102X  with a string [3Xfilename[103X causes the subsequent output to
+  be logged to the file with the name [3Xfilename[103X, i.e., everything [5XGAP[105X prints on
+  your terminal will also appear in this file. Note that [2XOutputLogTo[102X and [2XLogTo[102X
+  ([14X9.7-4[114X)  cannot  be  used  at  the  same  time  while [2XInputLogTo[102X ([14X9.7-5[114X) and
   [2XOutputLogTo[102X  can. Note that [2XOutputLogTo[102X will overwrite the previous contents
   of this file if it already existed.[133X
   
@@ -467,14 +470,14 @@
   
   [1X9.7-7 CrcFile[101X
   
-  [29X[2XCrcFile[102X( [3Xname-file[103X ) [32X function
+  [29X[2XCrcFile[102X( [3Xfilename[103X ) [32X function
   
   [33X[0;0YCRC  (cyclic  redundancy  check)  numbers  provide a certain method of doing
   checksums. They are used by [5XGAP[105X to check whether files have changed.[133X
   
-  [33X[0;0Y[2XCrcFile[102X  computes  a checksum value for the file with filename [3Xname-file[103X and
+  [33X[0;0Y[2XCrcFile[102X  computes  a  checksum value for the file with filename [3Xfilename[103X and
   returns  this  value  as  an  integer. The function returns [9Xfail[109X if a system
-  error  occurred, say, for example, if [3Xname-file[103X does not exist. In this case
+  error  occurred,  say, for example, if [3Xfilename[103X does not exist. In this case
   the  function  [2XLastSystemError[102X  ([14X9.1-1[114X) can be used to get information about
   the error.[133X
   
@@ -485,17 +488,17 @@
   
   [1X9.7-8 RemoveFile[101X
   
-  [29X[2XRemoveFile[102X( [3Xname-file[103X ) [32X function
+  [29X[2XRemoveFile[102X( [3Xfilename[103X ) [32X function
   
-  [33X[0;0Ywill  remove  the  file  with filename [3Xname-file[103X and returns [9Xtrue[109X in case of
+  [33X[0;0Ywill  remove  the  file  with  filename [3Xfilename[103X and returns [9Xtrue[109X in case of
   success.  The function returns [9Xfail[109X if a system error occurred, for example,
-  if  your permissions do not allow the removal of [3Xname-file[103X. In this case the
+  if  your  permissions do not allow the removal of [3Xfilename[103X. In this case the
   function  [2XLastSystemError[102X  ([14X9.1-1[114X)  can be used to get information about the
   error.[133X
   
   [1X9.7-9 Reread[101X
   
-  [29X[2XReread[102X( [3Xname-file[103X ) [32X function
+  [29X[2XReread[102X( [3Xfilename[103X ) [32X function
   [29X[2XREREADING[102X[32X global variable
   
   [33X[0;0YIn  general,  it is not possible to read the same [5XGAP[105X library file twice, or
@@ -504,10 +507,10 @@
   added to global tables.[133X
   
   [33X[0;0YA  partial  solution to this problem is provided by the function [2XReread[102X (and
-  related  functions  [10XRereadLib[110X  etc.).  [10XReread(  [3Xname-file[103X[10X  )[110X sets the global
-  variable  [2XREREADING[102X  to  [9Xtrue[109X,  reads  the  file named by [3Xname-file[103X and then
-  resets [2XREREADING[102X. Various system functions behave differently when [2XREREADING[102X
-  is  set  to [9Xtrue[109X. In particular, assignment to read-only global variables is
+  related  functions  [10XRereadLib[110X  etc.).  [10XReread(  [3Xfilename[103X[10X  )[110X  sets the global
+  variable [2XREREADING[102X to [9Xtrue[109X, reads the file named by [3Xfilename[103X and then resets
+  [2XREREADING[102X. Various system functions behave differently when [2XREREADING[102X is set
+  to  [9Xtrue[109X.  In  particular,  assignment  to  read-only  global  variables  is
   permitted, calls to [2XNewRepresentation[102X ([14X79.2-1[114X) and [2XNewInfoClass[102X ([14X7.4-1[114X) with
   parameters  identical  to  those of an existing representation or info class
   will  return  the  existing object, and methods installed with [2XInstallMethod[102X

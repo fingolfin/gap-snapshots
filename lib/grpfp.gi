@@ -4326,7 +4326,7 @@ local Fgens,	# generators of F
       u,	# trial generating set's group
       pimgs,	# possible images
       val,	# its value
-      i,	# loop
+      i,j,	# loop
       ma,
       h;	# epis
 
@@ -4416,7 +4416,7 @@ local Fgens,	# generators of F
   od;
 
   val:=Product(pimgs,i->Sum(i,Size));
-  Info(InfoMorph,2,List(pimgs,Length)," possibilities, Value: ",val);
+  Info(InfoMorph,1,List(pimgs,Length)," possibilities, Value: ",val);
 
   if ValueOption("findall")=false then
     h:=MorClassLoop(G,pimgs, rec(gens:=Fgens,to:=G,from:=F,
@@ -4428,7 +4428,7 @@ local Fgens,	# generators of F
 				free:=FreeGeneratorsOfFpGroup(F),
 				rels:=List(RelatorsOfFpGroup(F),i->[i,1])),13);
   fi;
-  Info(InfoMorph,2,"Found ",Length(h)," maps, test kernels");
+  Info(InfoMorph,1,"Found ",Length(h)," maps, test kernels");
   imgos:=[];
   cl:=[];
   u:=[];
@@ -4437,10 +4437,23 @@ local Fgens,	# generators of F
     imgo:=Concatenation(imgo,MorFroWords(imgo));
     imgo:=List(imgo,Order);
     sel:=Filtered([1..Length(imgos)],i->imgos[i]=imgo);
-    if not KernelOfMultiplicativeGeneralMapping(i) in u{sel} then
-      Add(u,KernelOfMultiplicativeGeneralMapping(i));
+    if Length(sel)=0 then
       Add(imgos,imgo);
       Add(cl,i);
+    else
+      for j in sel do
+	if not IsBound(u[j]) then
+	  u[j]:=KernelOfMultiplicativeGeneralMapping(cl[j]);
+	fi;
+      od;
+      
+      e:=KernelOfMultiplicativeGeneralMapping(i);
+      if not ForAny(u{sel},x->IsSubset(e,x)) then
+	Add(imgos,imgo);
+	Add(cl,i);
+	u[Length(cl)]:=e;
+      fi;
+
     fi;
   od;
 
@@ -4871,7 +4884,7 @@ end);
 InstallMethod(FpElementNFFunction,true,[IsElementOfFpGroupFamily],0,
 # default reduction -- 
 function(fam)
-local iso,k,id;
+local iso,k,id,f;
   # first try whether the group is ``small''
   iso:=FPFaithHom(fam);
   if iso<>fail and Size(Image(iso))<50000 then
@@ -4879,7 +4892,9 @@ local iso,k,id;
     return w->UnderlyingElement(Factorization(k,Image(iso,ElementOfFpGroup(fam,w))));
   fi;
   iso:=IsomorphismFpMonoidGeneratorsFirst(CollectionsFamily(fam)!.wholeGroup);
-  k:=ReducedConfluentRewritingSystem(Image(iso));
+  f:=FreeMonoidOfFpMonoid(Range(iso));
+  k:=ReducedConfluentRewritingSystem(Range(iso),
+	BasicWreathProductOrdering(f,GeneratorsOfMonoid(f)));
   id:=UnderlyingElement(Image(iso,One(fam)));
   return w->MonwordToGroupword(UnderlyingElement(One(fam)),
 	       ReducedForm(k,GroupwordToMonword(id,w)));

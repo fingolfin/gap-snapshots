@@ -381,10 +381,15 @@ local so,fp,isofp,rels,mapi;
   # relators in the generators on the genimages and take the normal closure.
   so:=Source(map);
   mapi:=MappingGeneratorsImages(map);
-  isofp:=IsomorphismFpGroupByGeneratorsNC(so,mapi[1],"F");
-  fp:=Range(isofp);
-  rels:=RelatorsOfFpGroup(fp);
-  rels:=List(rels,i->MappedWord(i,FreeGeneratorsOfFpGroup(fp),mapi[2]));
+  if Length(GeneratorsOfGroup(so))=0 
+    or ForAll(GeneratorsOfGroup(so),x->IsOne(UnderlyingElement(x))) then
+    rels:=ShallowCopy(mapi[2]);
+  else
+    isofp:=IsomorphismFpGroupByGeneratorsNC(so,mapi[1],"F");
+    fp:=Range(isofp);
+    rels:=RelatorsOfFpGroup(fp);
+    rels:=List(rels,i->MappedWord(i,FreeGeneratorsOfFpGroup(fp),mapi[2]));
+  fi;
   return NormalClosure(Range(map),SubgroupNC(Range(map),rels));
 end);
 
@@ -773,6 +778,7 @@ local aug,w,p,pres,f,fam,opt;
   fi;
 
   TzOptions(pres).printLevel:=InfoLevel(InfoFpGroup); 
+  #Error("hier");
   TzGoGo(pres); # cleanup
 
   # new free group
@@ -796,7 +802,9 @@ local aug,w,p,pres,f,fam,opt;
 
   # write the homomorphism in terms of the image's free generators
   # (so preimages are cheap)
-  f:=GroupHomomorphismByImagesNC(u,f,w,GeneratorsOfGroup(f));
+  # this object cannot test whether is is a proper mapping, so skip
+  # safety assertions that could be triggered by the construction process
+  f:=GroupHomomorphismByImagesNC(u,f,w,GeneratorsOfGroup(f):noassert);
   # but give it `aug' as coset table, so we will use rewriting for images
   SetCosetTableFpHom(f,aug);
 
@@ -846,7 +854,7 @@ local aug,w,p,pres,f,fam;
   aug.primaryImages:=GeneratorsOfGroup(f);
   SecondaryImagesAugmentedCosetTable(aug);
 
-  f:=GroupHomomorphismByImagesNC(u,f,gens,GeneratorsOfGroup(f));
+  f:=GroupHomomorphismByImagesNC(u,f,gens,GeneratorsOfGroup(f):noassert);
 
   # tell f, that `aug' can be used as its coset table
   SetCosetTableFpHom(f,aug);
@@ -1004,7 +1012,7 @@ InstallMethod(MaximalAbelianQuotient,"whole fp group",
 function(f)
 local m,s,g,i,j,rel,gen,img,fin,hom,gens;
 
-  # since f is the full group, exponent susm are in respect to its
+  # since f is the full group, exponent sums are with respect to its
   # generators.
   m:=List(RelatorsOfFpGroup(f),w->ExponentSums(w));
 

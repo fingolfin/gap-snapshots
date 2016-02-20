@@ -79,10 +79,10 @@
   name of the getter.[133X
   
   [33X[0;0YAs  a  (not  typical) example, note that the [5XGAP[105X function [2XRandom[102X ([14XReference:
-  Random  Sources[114X),  although  it takes only one argument, is of course [13Xnot[113X an
-  attribute,  because  otherwise  the first random element of a group would be
-  stored  by  the setter and returned over and over again by the system getter
-  every time [2XRandom[102X ([14XReference: Random Sources[114X) is called in the sequel.[133X
+  Random[114X), although it takes only one argument, is of course [13Xnot[113X an attribute,
+  because otherwise the first random element of a group would be stored by the
+  setter  and  returned  over  and  over again by the system getter every time
+  [2XRandom[102X ([14XReference: Random[114X) is called in the sequel.[133X
   
   [33X[0;0YThere  is  a  general  important rule about attributes: [13XOnce the value of an
   attribute for an object has been set, it cannot be reset, i.e., it cannot be

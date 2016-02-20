@@ -276,7 +276,7 @@ process_gap_file () {
   if [ $comp_mode = "comp_static" ]; then
     gap_compile_id=Init_${name}
     if [ $comp_static_root_relative = "yes" ]; then
-	gap_compile_in=${gap_dir}/$input;
+        gap_compile_in=${gap_dir}/$input;
         gap_compile_name=GAPROOT/$input;
     fi
   else
@@ -323,7 +323,7 @@ while [ $# -gt 0 ]; do
 
     -d|--dynamic)         comp_mode="comp_dyna";;
 
-    -C|--create-c)	  comp_howfar="c_code";;
+    -C|--create-c)        comp_howfar="c_code";;
 
     -o|--output)          shift; output="$1";;
   
@@ -342,9 +342,7 @@ while [ $# -gt 0 ]; do
                           fi;;
 
     -ffast-list-funcs)   # echo "$0: option $1 is not currently allowed, ignoring it";;
-
-			    
-			   if [ "X${gap_options}" = "X" ]; then
+                          if [ "X${gap_options}" = "X" ]; then
                               gap_options="-U FAST_LIST_FUNCS"
                           else
                               gap_options="${gap_options},FAST_LIST_FUNCS"
@@ -416,7 +414,7 @@ make_compstat () {
 
     for name in ${names}; do
         echo "extern StructInitInfo * Init__${name} ( void );" \
-						         >> ${gactmp}/$$compstat.c
+                                                         >> ${gactmp}/$$compstat.c
     done
 
     echo     "InitInfoFunc CompInitFuncs [] = {"         >> ${gactmp}/$$compstat.c
@@ -483,7 +481,7 @@ for input in ${inputs}; do
 
         *.o) # look over '.o' source files
             name=`basename ${input} .o`
-	    process_o_file $name $input;;
+            process_o_file $name $input;;
         esac
     done
 

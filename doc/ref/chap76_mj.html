@@ -61,7 +61,7 @@
 
 <h3>76 <span class="Heading">Using GAP Packages</span></h3>
 
-<p>The functionality of <strong class="pkg">GAP</strong> can be extended by loading <strong class="pkg">GAP</strong> packages. <strong class="pkg">GAP</strong> distribution already contains all currently redistributed with <strong class="pkg">GAP</strong> packages in the <code class="file">gap4r7/pkg</code> directory.</p>
+<p>The functionality of <strong class="pkg">GAP</strong> can be extended by loading <strong class="pkg">GAP</strong> packages. <strong class="pkg">GAP</strong> distribution already contains all currently redistributed with <strong class="pkg">GAP</strong> packages in the <code class="file">gap4r8/pkg</code> directory.</p>
 
 <p><strong class="pkg">GAP</strong> packages are written by (groups of) <strong class="pkg">GAP</strong> users which may not be members of the <strong class="pkg">GAP</strong> developer team. The responsibility and copyright of a <strong class="pkg">GAP</strong> package remains with the original author(s).</p>
 
@@ -92,7 +92,20 @@
 <h5>76.2-1 LoadPackage</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoadPackage</code>( <var class="Arg">name</var>[, <var class="Arg">version</var>][, <var class="Arg">banner</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<p>loads the <strong class="pkg">GAP</strong> package with name <var class="Arg">name</var>. If the optional version string <var class="Arg">version</var> is given, the package will only be loaded in a version number at least as large as <var class="Arg">version</var>, or equal to <var class="Arg">version</var> if its first character is <code class="code">=</code> (see <code class="func">CompareVersionNumbers</code> (<a href="chap76_mj.html#X787DFEB383545A49"><span class="RefLink">76.3-6</span></a>)). The argument <var class="Arg">name</var> is case insensitive.</p>
+<p>loads the <strong class="pkg">GAP</strong> package with name <var class="Arg">name</var>.</p>
+
+<p>As an example, the following loads the <strong class="pkg">GAP</strong> package <strong class="pkg">SONATA</strong> (case insensitive) which provides methods for the construction and analysis of finite nearrings:</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage("sonata");</span>
+... some more lines with package banner(s) ...
+true
+</pre></div>
+
+<p>The package name may be appropriately abbreviated. For example, <code class="code">LoadPackage("semi");</code> will load the <strong class="pkg">Semigroups</strong> package, and <code class="code">LoadPackage("d");</code> will load the <strong class="pkg">DESIGN</strong> package. If the abbreviation can not be uniquely completed, further suggestions will be offered.</p>
+
+<p>If the optional version string <var class="Arg">version</var> is given, the package will only be loaded in a version number at least as large as <var class="Arg">version</var>, or equal to <var class="Arg">version</var> if its first character is <code class="code">=</code> (see <code class="func">CompareVersionNumbers</code> (<a href="chap76_mj.html#X787DFEB383545A49"><span class="RefLink">76.3-6</span></a>)). The argument <var class="Arg">name</var> is case insensitive.</p>
 
 <p><code class="func">LoadPackage</code> will return <code class="keyw">true</code> if the package has been successfully loaded and will return <code class="keyw">fail</code> if the package could not be loaded. The latter may be the case if the package is not installed, if necessary binaries have not been compiled, or if the version number of the available version is too small. If the package cannot be loaded, <code class="func">TestPackageAvailability</code> (<a href="chap76_mj.html#X8580DF257E4D7046"><span class="RefLink">76.3-2</span></a>) can be used to find the reasons. Also, <code class="func">DisplayPackageLoadingLog</code> (<a href="chap76_mj.html#X7D162DDF813D2BBA"><span class="RefLink">76.2-4</span></a>) can be used to find out more about the failure reasons. To see the problems directly, one can change the verbosity using the user preference <code class="code">InfoPackageLoadingLevel</code>, see <code class="func">InfoPackageLoading</code> (<a href="chap76_mj.html#X7D162DDF813D2BBA"><span class="RefLink">76.2-4</span></a>) for details.</p>
 

@@ -30,8 +30,9 @@ InstallMethod( FamiliesOfGeneralMappingsAndRanges,
     "for a family (return empty list)",
     true,
     [ IsFamily ], 0,
-    Fam -> WeakPointerObj( [] ) );
-
+    function(fam)
+  return LockAndMigrateObj(WeakPointerObj( [] ), GENERAL_MAPPING_REGION);
+end);
 
 #############################################################################
 ##
@@ -41,6 +42,7 @@ InstallGlobalFunction( GeneralMappingsFamily, function( FS, FR )
 
     local info, i, len, entry, Fam,first,test;
 
+  atomic readwrite GENERAL_MAPPING_REGION do
     # Check whether this family was already constructed.
     info:= FamiliesOfGeneralMappingsAndRanges( FS );
     len:= LengthWPObj( info );
@@ -89,6 +91,7 @@ InstallGlobalFunction( GeneralMappingsFamily, function( FS, FR )
 
     # Return the family.
     return Fam;
+  od;
 end );
 
 
@@ -513,57 +516,63 @@ InstallGlobalFunction( CompositionMapping, function ( arg )
 end );
 
 
-#############################################################################
-##
-#M  IsInjective( <map> )  . . . . . for gen. mapp. with known inv. gen. mapp.
-#M  IsSingleValued( <map> ) . . . . for gen. mapp. with known inv. gen. mapp.
-#M  IsSurjective( <map> ) . . . . . for gen. mapp. with known inv. gen. mapp.
-#M  IsTotal( <map> )  . . . . . . . for gen. mapp. with known inv. gen. mapp.
-##
-InstallImmediateMethod( IsInjective,
-    IsGeneralMapping and HasInverseGeneralMapping, 0,
-    function( map )
-    map:= InverseGeneralMapping( map );
-    if HasIsSingleValued( map ) then
-      return IsSingleValued( map );
-    else
-      TryNextMethod();
-    fi;
-    end );
-
-InstallImmediateMethod( IsSingleValued,
-    IsGeneralMapping and HasInverseGeneralMapping, 0,
-    function( map )
-    map:= InverseGeneralMapping( map );
-    if HasIsInjective( map ) then
-      return IsInjective( map );
-    else
-      TryNextMethod();
-    fi;
-    end );
-
-InstallImmediateMethod( IsSurjective,
-    IsGeneralMapping and HasInverseGeneralMapping, 0,
-    function( map )
-    map:= InverseGeneralMapping( map );
-    if HasIsTotal( map ) then
-      return IsTotal( map );
-    else
-      TryNextMethod();
-    fi;
-    end );
-
-InstallImmediateMethod( IsTotal,
-    IsGeneralMapping and HasInverseGeneralMapping, 0,
-    function( map )
-    map:= InverseGeneralMapping( map );
-    if HasIsSurjective( map ) then
-      return IsSurjective( map );
-    else
-      TryNextMethod();
-    fi;
-    end );
-
+# Temporarily disabled -- See #569
+# Currently some group homomrophisms construct inverse maps that are really
+# restricted inverses (i.e. defined only on the image). Together with these
+# immediate methods this can cause wrong indications of IsSurjective etc.
+# for these maps. While this needs to be fixed in the future properly, the
+# immediate methods are temporarily disabled to avoid this error having
+# further effects.
+# #############################################################################
+# ##
+# #M  IsInjective( <map> )  . . . . . for gen. mapp. with known inv. gen. mapp.
+# #M  IsSingleValued( <map> ) . . . . for gen. mapp. with known inv. gen. mapp.
+# #M  IsSurjective( <map> ) . . . . . for gen. mapp. with known inv. gen. mapp.
+# #M  IsTotal( <map> )  . . . . . . . for gen. mapp. with known inv. gen. mapp.
+# ##
+# InstallImmediateMethod( IsInjective,
+#     IsGeneralMapping and HasInverseGeneralMapping, 0,
+#     function( map )
+#     map:= InverseGeneralMapping( map );
+#     if HasIsSingleValued( map ) then
+#       return IsSingleValued( map );
+#     else
+#       TryNextMethod();
+#     fi;
+#     end );
+# 
+# InstallImmediateMethod( IsSingleValued,
+#     IsGeneralMapping and HasInverseGeneralMapping, 0,
+#     function( map )
+#     map:= InverseGeneralMapping( map );
+#     if HasIsInjective( map ) then
+#       return IsInjective( map );
+#     else
+#       TryNextMethod();
+#     fi;
+#     end );
+# 
+# InstallImmediateMethod( IsSurjective,
+#     IsGeneralMapping and HasInverseGeneralMapping, 0,
+#     function( map )
+#     map:= InverseGeneralMapping( map );
+#     if HasIsTotal( map ) then
+#       return IsTotal( map );
+#     else
+#       TryNextMethod();
+#     fi;
+#     end );
+# 
+# InstallImmediateMethod( IsTotal,
+#     IsGeneralMapping and HasInverseGeneralMapping, 0,
+#     function( map )
+#     map:= InverseGeneralMapping( map );
+#     if HasIsSurjective( map ) then
+#       return IsSurjective( map );
+#     else
+#       TryNextMethod();
+#     fi;
+#     end );
 
 #############################################################################
 ##

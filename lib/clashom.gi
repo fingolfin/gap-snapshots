@@ -4,12 +4,12 @@
 ##
 ##
 #Y  (C) 1999 School Math and Comp. Sci., University of St Andrews, Scotland
-#Y  Copyright (C) 2002 The GAP Group
+#Y  Copyright (C) 2002,2013 The GAP Group
 ##
 ##  This file contains functions that compute the conjugacy classes of a
 ##  finite group by homomorphic images.
 ##  Literature: A.H: Conjugacy classes in finite permutation groups via
-##  homomorphic images, MathComp, to appear.
+##  homomorphic images, MathComp
 ##
 
 
@@ -36,9 +36,15 @@ local H,hom,d,cl;
     return fail;
   fi;
 
-  cl:=ConjugacyClasses(Source(hom));
-  cl:=List(cl,x->Image(hom,Representative(x)));
-  cl:=ConjugacyClassesByRandomSearch(G:seed:=cl);
+  cl:=ClassesProjectiveImage(hom);
+  if HasConjugacyClasses(G) then
+    cl:=ConjugacyClasses(G); # will have been set
+  elif G=Image(hom) then
+    cl:=ConjugacyClasses(Image(hom)); # will have been set
+  else
+    Info(InfoWarning,1,"Weird class storage");
+    return fail;
+  fi;
   return cl;
 end);
 
@@ -2331,8 +2337,8 @@ local r,	#radical
       else
 	new:=LiftClassesEANonsolvGeneral(G,mpcgs,i,hom,pcisom,solvtriv,fran);
       fi;
-      Assert(3,ForAll(new,x->x[6]
-        =Size(Group(Concatenation(x[2],DenominatorOfModuloPcgs(mpcgs))))));
+      #Assert(3,ForAll(new,x->x[6]
+      #  =Size(Group(Concatenation(x[2],DenominatorOfModuloPcgs(mpcgs))))));
 
 #if ForAny(new,x->x[2]<>TFMakeInducedPcgsModulo(pcgs,x[2],nran)) then Error("HUH6");fi;
 #Print(List(new,x->List(x[2],y->DepthOfPcElement(pcgs,y))),"\n");

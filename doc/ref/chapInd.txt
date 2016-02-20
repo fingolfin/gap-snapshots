@@ -56,7 +56,7 @@
   [2X\/[102X (for a free semigroup and a list of pairs of elements)  52.2-1
   [2X\/[102X (for a free monoid and a list of pairs of elements)  52.5-1
   [10X\/[110X, for a transformation and a permutation  53.4
-  [2X\<[102X (for two strings)  27.5-2
+  [2X\<[102X (for two strings)  27.6-2
   [2X\<[102X  31.11-1
   [2X\<[102X (for nonassociative words)  36.2-2
   [2X\<[102X (for associative words)  37.3-2
@@ -64,7 +64,7 @@
   [2X\<[102X (for pcwords)  46.2-1
   [2X\<[102X (for two elements in a f.p. group)  47.3-2
   [10X\<[110X, for transformations  53.4
-  [2X\=[102X (for two strings)  27.5-1
+  [2X\=[102X (for two strings)  27.6-1
   [2X\=[102X  31.11-1
   [2X\=[102X (for nonassociative words)  36.2-1
   [2X\=[102X (for associative words)  37.3-1
@@ -139,6 +139,7 @@
   [2XActionHomomorphism[102X (for an action image)  41.7-1
   [2XActionHomomorphism[102X (for an external set)  41.7-1
   actions  41.2
+  [2XActivateProfileColour[102X  7.7-18
   [2XActorOfExternalSet[102X  41.12-15
   [2XAdd[102X  21.4-2
   add, an element to a set  21.19-4
@@ -216,13 +217,13 @@
   [2XApplicableMethodTypes[102X  7.2-1
   [2XApply[102X  21.20-10
   [2XApplySimpleReflection[102X  64.7-4
-  [2XApproximateSuborbitsStabilizerPermGroup[102X  43.10-14
+  [2XApproximateSuborbitsStabilizerPermGroup[102X  43.10-15
   [2XARCH_IS_MAC_OS_X[102X  3.4-2
   [2XARCH_IS_UNIX[102X  3.4-1
   [2XARCH_IS_WINDOWS[102X  3.4-3
-  [10Xarg[110X, special function argument  4.11-1
   [10Xarg[110X, special function argument  4.23
-  [2XArgument[102X  19.2-1
+  [10Xarg[110X, special function argument, calling with  4.11-1
+  [2XArgument[102X (for complex numbers)  19.2-1
   arithmetic operators, precedence  4.13
   [2XArithmeticElementCreator[102X  80.9-1
   [2XArrangements[102X  16.2-4
@@ -370,6 +371,8 @@
   browsing the previous section browsed  2.2
   [22Xc_N[122X (irrational value)  18.4-1
   [2XCallFuncList[102X  5.2-1
+  [2XCallWithTimeout[102X  5.3-1
+  [2XCallWithTimeoutList[102X  5.3-1
   [2XCanComputeIndex[102X  39.25-5
   [2XCanComputeIsSubset[102X  39.25-6
   [2XCanComputeSize[102X  39.25-3
@@ -453,9 +456,9 @@
   [2XCharacterTableWithSortedClasses[102X  71.21-3
   [2XCharacterTableWithStoredGroup[102X  71.6-4
   [2XCharacterTableWreathSymmetric[102X  71.20-5
-  [2XCharInt[102X  27.7-2
-  [2XCharsFamily[102X  27.3-6
-  [2XCharSInt[102X  27.7-4
+  [2XCharInt[102X  27.8-2
+  [2XCharsFamily[102X  27.4-6
+  [2XCharSInt[102X  27.8-4
   [2XCheckDigitISBN[102X  14.6-1
   [2XCheckDigitISBN13[102X  14.6-1
   [2XCheckDigitPostalMoneyOrder[102X  14.6-1
@@ -471,7 +474,7 @@
   [2XChiefSeriesUnderAction[102X  39.17-3
   Chinese remainder  14.3-9
   [2XChineseRem[102X  14.3-9
-  [2XChomp[102X  27.6-18
+  [2XChomp[102X  27.7-18
   [2XCite[102X  76.3-15
   [2XCIUnivPols[102X  66.1-5
   class function  72.1-1
@@ -516,8 +519,8 @@
   [2XClassStructureCharTable[102X  71.12-8
   [2XClassTypesTom[102X  70.7-4
   [2XCleanedTailPcElement[102X  45.5-11
-  [2XClearCacheStats[102X  7.7-12
-  [2XClearProfile[102X  7.7-9
+  [2XClearCacheStats[102X  7.7-21
+  [2XClearProfile[102X  7.7-10
   clone, an object  12.7
   [2XCloseMutableBasis[102X  61.8-6
   [2XCloseStream[102X  10.2-1
@@ -667,7 +670,7 @@
   [9Xcontinue[109X statement  4.22
   [2XContinuedFractionApproximationOfRoot[102X  15.6-2
   [2XContinuedFractionExpansionOfRoot[102X  15.6-1
-  convert, to a string  27.3
+  convert, to a string  27.4
   [2XConvertToBlistRep[102X  22.5-1
   [2XConvertToCharacterTable[102X  71.3-5
   [2XConvertToCharacterTableNC[102X  71.3-5
@@ -676,7 +679,7 @@
   [2XConvertToMatrixRepNC[102X (for a list (and a field))  24.14-2
   [2XConvertToMatrixRepNC[102X (for a list (and a prime power))  24.14-2
   [2XConvertToRangeRep[102X  21.22-2
-  [2XConvertToStringRep[102X  27.3-2
+  [2XConvertToStringRep[102X  27.4-2
   [2XConvertToTableOfMarks[102X  70.6-5
   [2XConvertToVectorRep[102X (for a list (and a field))  23.3-1
   [2XConvertToVectorRep[102X (for a list (and a prime power))  23.3-1
@@ -689,7 +692,7 @@
   [2XCopyListEntries[102X  21.4-4
   [2XCopyOptionsDefaults[102X  43.11-2
   [2XCopyStabChain[102X  43.11-1
-  [2XCopyToStringRep[102X  27.3-3
+  [2XCopyToStringRep[102X  27.4-3
   [2XCore[102X  39.11-2
   [2XCorrespondingGeneratorsByModuloPcgs[102X  45.9-6
   [2XCos[102X  19.2-1
@@ -707,12 +710,13 @@
   [2XCosh[102X  19.2-1
   [2XCot[102X  19.2-1
   [2XCoth[102X  19.2-1
+  [2XCoverageLineByLine[102X  7.7-15
   [2XCrcFile[102X  9.7-7
-  [2XCrcString[102X  27.8-4
+  [2XCrcString[102X  27.9-4
   [2XCrystGroupDefaultAction[102X  44.7-1
   [2XCsc[102X  19.2-1
   [2XCsch[102X  19.2-1
-  [2XCuberoot[102X  19.2-1
+  [2XCubeRoot[102X  19.2-1
   [2XCycle[102X  41.9-3
   [2XCycleIndex[102X (for a permutation and an action domain)  41.9-7
   [2XCycleIndex[102X (for a permutation group and an action domain)  41.9-7
@@ -737,9 +741,9 @@
   Darstellungsgruppe, see EpimorphismSchurCover  39.24
   data type, unknown  74.
   [2XDataType[102X  13.9-2
-  [2XDayDMY[102X  27.9-4
-  [2XDaysInMonth[102X  27.9-2
-  [2XDaysInYear[102X  27.9-1
+  [2XDayDMY[102X  27.10-4
+  [2XDaysInMonth[102X  27.10-2
+  [2XDaysInYear[102X  27.10-1
   DEC  25.4
   [2XDeclareAttribute[102X  79.18-3
   [10XDeclareAttribute[110X, example  80.5
@@ -772,7 +776,7 @@
   [2XDecompositionInt[102X  25.4-5
   [2XDecompositionMatrix[102X  71.11-4
   [2XDecreased[102X  72.10-7
-  [2XDEFAULTDISPLAYSTRING[102X  27.6-2
+  [2XDEFAULTDISPLAYSTRING[102X  27.7-2
   [2XDefaultField[102X (for cyclotomics)  18.1-16
   [2XDefaultField[102X (for a list of generators)  58.1-4
   [2XDefaultField[102X (for several generators)  58.1-4
@@ -786,7 +790,7 @@
   [2XDefaultRing[102X (for finite field elements)  59.3-1
   [2XDefaultRingByGenerators[102X  56.1-5
   [2XDefaultStabChainOptions[102X  43.8-3
-  [2XDEFAULTVIEWSTRING[102X  27.6-4
+  [2XDEFAULTVIEWSTRING[102X  27.7-4
   [2XDefiningPolynomial[102X  58.2-7
   [2XDefiningQuotientHomomorphism[102X  47.13-4
   [2XDegreeFFE[102X (for a FFE)  59.2-1
@@ -860,11 +864,13 @@
   [2XDirectoryTemporary[102X  9.3-3
   [2XDirectProduct[102X  49.1-1
   [2XDirectProductOp[102X  49.1-1
+  [2XDirectSum[102X  56.9-5
   [2XDirectSumDecomposition[102X (for Lie algebras)  62.9-18
   [2XDirectSumOfAlgebraModules[102X (for a list of Lie algebra modules)  62.11-23
   [2XDirectSumOfAlgebraModules[102X (for two Lie algebra modules)  62.11-23
   [2XDirectSumOfAlgebras[102X (for a list of algebras)  62.9-14
   [2XDirectSumOfAlgebras[102X (for two algebras)  62.9-14
+  [2XDirectSumOp[102X  56.9-5
   disable automatic loading  76.2
   [2XDisableAttributeValueStoring[102X  13.6-5
   [2XDiscriminant[102X  66.6-6
@@ -873,7 +879,7 @@
   [2XDisplay[102X (for a table of marks)  70.4-3
   [2XDisplay[102X (for a character table)  71.13-3
   [2XDisplay[102X (for class functions)  72.5-3
-  [2XDisplayCacheStats[102X  7.7-11
+  [2XDisplayCacheStats[102X  7.7-20
   [2XDisplayCompositionSeries[102X  39.17-6
   [2XDisplayEggBoxOfDClass[102X  51.8-7
   [2XDisplayImfInvariants[102X  50.12-2
@@ -882,8 +888,8 @@
   [2XDisplayOptions[102X  71.13-4
   [2XDisplayOptionsStack[102X  8.1-6
   [2XDisplayPackageLoadingLog[102X  76.2-4
-  [2XDisplayProfile[102X  7.7-8
-  [2XDisplayString[102X  27.6-1
+  [2XDisplayProfile[102X  7.7-9
+  [2XDisplayString[102X  27.7-1
   [2XDistancePerms[102X  42.2-2
   [2XDistancesDistributionMatFFEVecFFE[102X  23.6-4
   [2XDistancesDistributionVecFFEsVecFFE[102X  23.6-3
@@ -899,8 +905,8 @@
   [2XDixonRecord[102X  71.17-1
   [2XDixonSplit[102X  71.17-4
   [2XDixontinI[102X  71.17-3
-  [2XDMYDay[102X  27.9-3
-  [2XDMYhmsSeconds[102X  27.9-11
+  [2XDMYDay[102X  27.10-3
+  [2XDMYhmsSeconds[102X  27.10-11
   [2XDnLattice[102X  72.10-8
   [2XDnLatticeIterative[102X  72.10-9
   [9Xdo[109X  4.20
@@ -993,11 +999,12 @@
   [2XEmptyPlist[102X  21.9-1
   [2XEmptySCTable[102X  62.4-3
   [2XEmptyStabChain[102X  43.11-7
-  [2XEmptyString[102X  27.3-5
+  [2XEmptyString[102X  27.4-5
   [2XEnableAttributeValueStoring[102X  13.6-6
   [9Xend[109X  4.23
   [2XEnd[102X  61.10-6
   [2XEndlineFunc[102X  5.1-5
+  [2XEndsWith[102X  27.7-19
   [2XEnumerator[102X  30.3-2
   [2XEnumeratorByBasis[102X  61.6-5
   [2XEnumeratorByFunctions[102X (for a domain and a record)  30.3-4
@@ -1043,7 +1050,8 @@
   [2XER[102X  18.4-2
   [2XErf[102X  19.2-1
   [2XError[102X  6.6-1
-  [2XErrorCount[102X  6.6-2
+  [2XErrorCount[102X  6.6-3
+  [2XErrorNoReturn[102X  6.6-2
   [10XErrorNoTraceBack[110X  6.4-3
   errors, syntax  6.1
   [2XES[102X  18.4-3
@@ -1059,9 +1067,9 @@
   [2XEulerianFunctionByTom[102X  70.9-9
   [2XEV[102X  18.4-3
   [2XEvalStraightLineProgElm[102X  37.9-4
-  [2XEvalString[102X  27.8-3
+  [2XEvalString[102X  27.9-3
   evaluation  4.7
-  evaluation, strings  27.8-1
+  evaluation, strings  27.9-1
   [2XEW[102X  18.4-3
   [2XEX[102X  18.4-3
   [2XExactSizeConsiderFunction[102X  39.21-5
@@ -1174,6 +1182,7 @@
   [9Xfor[109X loop  4.20
   [2XForAll[102X  21.20-23
   [2XForAny[102X  21.20-24
+  [2XFORCE_QUIT_GAP[102X  6.7-4
   [2XFpElmComparisonMethod[102X  47.3-3
   [2XFpGroupPresentation[102X  48.1-4
   [2XFpGrpMonSmgOfFpGrpMonSmgElement[102X  52.1-7
@@ -1247,9 +1256,9 @@
   functions, definition by arrow notation  4.23
   functions, definition of  4.23
   functions, recursive  4.23
-  functions, with a variable number of arguments  4.11-1
   functions, with a variable number of arguments  4.23
-  [2XFunctionsFamily[102X  5.4-3
+  functions, with a variable number of arguments, calling  4.11-1
+  [2XFunctionsFamily[102X  5.5-3
   [2XFusionCharTableTom[102X  70.11-1
   [2XFusionConjugacyClasses[102X (for a homomorphism)  73.3-1
   [2XFusionConjugacyClasses[102X (for two character tables)  73.3-1
@@ -1281,12 +1290,14 @@
   [2XGammaL[102X  50.2-9
   [11Xgap.ini[111X  3.2-1
   [2XGap3CatalogueIdGroup[102X  50.7-7
+  [2XGAP_EXIT_CODE[102X  6.7-2
   [2XGAPInfo[102X  3.5-1
   [10XGAPInfo.Architecture[110X  76.3-5
   [10XGAPInfo.CommandLineOptions[110X  3.1
   [10XGAPInfo.Keywords[110X  4.5
-  [2XGAPInfo.ProfileThreshold[102X  7.7-8
+  [2XGAPInfo.ProfileThreshold[102X  7.7-9
   [10XGAPInfo.RootPaths[110X  9.2
+  [2XGAPInfo.TimeoutsSupported[102X  5.3-2
   [10XGAPInfo.UserGapRoot[110X  9.2
   [10XGAPInfo.Version[110X  7.8
   [2XGapInputPcGroup[102X  46.6-1
@@ -1445,10 +1456,10 @@
   Hermite normal form  77.3
   [2XHermiteNormalFormIntegerMat[102X  25.2-4
   [2XHermiteNormalFormIntegerMatTransform[102X  25.2-5
-  [2XHeuristicCancelPolynomials[102X  66.24-3
-  [2XHexStringInt[102X  27.6-8
+  [2XHeuristicCancelPolynomialsExtRep[102X  66.24-3
+  [2XHexStringInt[102X  27.7-8
   [2XHighestWeightModule[102X  64.14-5
-  [2XHMSMSec[102X  27.9-7
+  [2XHMSMSec[102X  27.10-7
   [2XHom[102X  61.10-5
   [2XHomeEnumerator[102X  41.12-5
   [2XHomomorphismQuotientSemigroup[102X  51.7-2
@@ -1459,6 +1470,7 @@
   [2XIdeal[102X  56.2-1
   [2XIdealByGenerators[102X  56.2-4
   [2XIdealNC[102X  56.2-2
+  [2XIdeals[102X  56.9-4
   [2XIdempotent[102X  53.2-4
   [2XIdempotents[102X  35.4-6
   [2XIdempotentsTom[102X  70.7-8
@@ -1473,7 +1485,7 @@
   [2XIdentityMapping[102X  32.2-9
   [2XIdentityMat[102X  24.5-1
   [2XIdentityTransformation[102X  53.2-8
-  [2XIdFunc[102X  5.3-4
+  [2XIdFunc[102X  5.4-6
   [2XIdGap3SolvableGroup[102X  50.7-7
   [2XIdGroup[102X  50.7-5
   [2XIdSmallGroup[102X  50.7-5
@@ -1584,7 +1596,9 @@
   [2XInfoPackageLoading[102X  76.2-4
   [2XInfoPcSubgroup[102X  39.21-6
   [2XInfoPoly[102X  66.5-8
-  [2XInfoText[102X  71.9-9
+  [2XInfoText[102X  12.8-3
+  [2XInfoText[102X (for character tables)  71.9-9
+  [10XInfoText[110X, (for Conway polynomials)  59.5-1
   [2XInfoTom[102X  70.6-1
   [2XInfoWarning[102X  7.4-7
   [2XInit[102X  14.7-3
@@ -1606,11 +1620,12 @@
   [2XInputTextString[102X  10.7-1
   [2XInputTextUser[102X  10.6-1
   [2XInsertTrivialStabilizer[102X  43.11-8
-  [2XInstallAtExit[102X  6.7-2
+  [2XInstallAtExit[102X  6.7-5
   [2XInstallCharReadHookFunc[102X  10.10-1
   [2XInstalledPackageVersion[102X  76.3-3
   [2XInstallFactorMaintenance[102X  31.13-5
   [2XInstallFlushableValue[102X  79.18-9
+  [2XInstallFlushableValueFromFunction[102X  79.18-9
   [2XInstallGlobalFunction[102X  79.18-7
   [2XInstallHandlingByNiceBasis[102X  61.12-1
   [2XInstallImmediateMethod[102X  78.6-1
@@ -1623,9 +1638,9 @@
   [2XInstallValue[102X  79.18-9
   [2XInt[102X  14.2-3
   [2XInt[102X (for a cyclotomic)  18.1-5
-  [2XInt[102X (for strings)  27.8-1
+  [2XInt[102X (for strings)  27.9-1
   [2XInt[102X (for a FFE)  59.2-3
-  [2XIntChar[102X  27.7-1
+  [2XIntChar[102X  27.8-1
   integer part of a quotient  14.3-1
   [2XIntegers[102X (global variable)  14.1-1
   [2XIntegralizedMat[102X  25.4-4
@@ -1650,7 +1665,7 @@
   [2XIntFFE[102X  59.2-3
   [2XIntFFESymm[102X (for a FFE)  59.2-4
   [2XIntFFESymm[102X (for a vector of FFEs)  59.2-4
-  [2XIntHexString[102X  27.8-1
+  [2XIntHexString[102X  27.9-1
   [2XIntScalarProducts[102X  73.5-15
   [2XIntVecFFE[102X  59.2-5
   [2XInvariantBilinearForm[102X  44.5-1
@@ -1675,7 +1690,7 @@
   [2XInverseMutable[102X  31.10-8
   [2XInverseOfTransformation[102X  53.5-13
   [2XInverseOp[102X  31.10-8
-  [2XInverseRepresentative[102X  43.10-10
+  [2XInverseRepresentative[102X  43.10-11
   [2XInverseSameMutability[102X  31.10-8
   [2XInverseSemigroup[102X  51.3-1
   [2XInverseSM[102X  31.10-8
@@ -1730,7 +1745,7 @@
   [2XIsAlgebraWithOneHomomorphism[102X  32.12-4
   [2XIsAlmostSimple[102X (for a character table)  71.8-5
   [2XIsAlmostSimpleGroup[102X  39.15-11
-  [2XIsAlphaChar[102X  27.4-4
+  [2XIsAlphaChar[102X  27.5-4
   [2XIsAlternatingGroup[102X  43.4-3
   [2XIsAnticommutative[102X  56.4-6
   [2XIsAntisymmetricBinaryRelation[102X  33.2-4
@@ -1761,7 +1776,8 @@
   [2XIsBlistRep[102X  22.5-1
   IsBlockMatrixRep  24.17
   [2XIsBool[102X  20.1-1
-  [2XIsBound[102X (for a list position)  21.5-1
+  [2XIsBound[102X (for a list index)  21.5-1
+  [2XIsBound[102X (for multiple indices)  21.5-1
   [2XIsBound[102X (for a record component)  29.6-1
   [2XIsBound[102X (for a global variable)  4.8-1
   [2XIsBound\.[102X  29.7-3
@@ -1827,7 +1843,7 @@
   [2XIsDenseList[102X  21.1-2
   [2XIsDiagonalMat[102X  24.4-8
   [2XIsDictionary[102X  28.3-2
-  [2XIsDigitChar[102X  27.4-1
+  [2XIsDigitChar[102X  27.5-1
   [2XIsDirectory[102X  9.3-1
   [2XIsDirectoryPath[102X  9.6-5
   [2XIsDirectProductElement[102X  32.1-1
@@ -1852,8 +1868,8 @@
   [2XIsElementOfMagmaRingModuloRelationsFamily[102X  65.4-2
   [2XIsElementOfMagmaRingModuloSpanOfZeroFamily[102X  65.5-1
   [2XIsEmpty[102X  30.4-1
-  [2XIsEmptyString[102X  27.3-4
-  [2XIsEndOfStream[102X  10.3-7
+  [2XIsEmptyString[102X  27.4-4
+  [2XIsEndOfStream[102X  10.3-6
   [2XIsEndoGeneralMapping[102X  32.13-3
   [10XIsEndoGeneralMapping[110X, same as IsBinaryRelation  33.
   [2XIsEqualSet[102X  21.19-2
@@ -1911,7 +1927,7 @@
   [2XIsFullSubgroupGLorSLRespectingSesquilinearForm[102X  44.5-4
   [2XIsFullTransformationMonoid[102X  53.7-4
   [2XIsFullTransformationSemigroup[102X  53.7-4
-  [2XIsFunction[102X  5.4-1
+  [2XIsFunction[102X  5.5-1
   [2XIsFunctionField[102X  66.15-9
   [2XIsGAPRandomSource[102X  14.7-4
   [2XIsGaussianIntegers[102X  60.5-2
@@ -1977,7 +1993,7 @@
   [2XIsIntegralBasis[102X  61.7-2
   [2XIsIntegralCyclotomic[102X  18.1-4
   [2XIsIntegralRing[102X  56.4-1
-  [2XIsInternallyConsistent[102X  12.8-3
+  [2XIsInternallyConsistent[102X  12.8-4
   [2XIsInternallyConsistent[102X (for tables of marks)  70.9-1
   [2XIsInternallyConsistent[102X (for character tables)  71.12-2
   [2XIsInverseMonoid[102X  51.4-8
@@ -2018,12 +2034,13 @@
   [2XIsLieSolvable[102X  64.5-3
   [2XIsLinearMapping[102X  32.11-3
   [2XIsLinearMappingsModule[102X  61.10-9
+  [2XIsLineByLineProfileActive[102X  7.7-19
   [2XIsList[102X  21.1-1
   [2XIsListDefault[102X  21.12-3
   [2XIsListOrCollection[102X  30.3-1
   [2XIsLogOrderedFFE[102X  59.1-3
   [2XIsLookupDictionary[102X  28.3-3
-  [2XIsLowerAlphaChar[102X  27.4-2
+  [2XIsLowerAlphaChar[102X  27.5-2
   [2XIsLowerTriangularMat[102X  24.4-10
   [2XIsMagma[102X  35.1-1
   [2XIsMagmaHomomorphism[102X  32.8-1
@@ -2116,6 +2133,7 @@
   [2XIsomorphismPermGroup[102X (for Imf matrix groups)  50.12-5
   [2XIsomorphismPermGroupImfGroup[102X  50.12-6
   [2XIsomorphismReesMatrixSemigroup[102X  51.9-3
+  [2XIsomorphismReesZeroMatrixSemigroup[102X  51.9-3
   [2XIsomorphismRefinedPcGroup[102X  46.4-8
   [10XIsomorphism[3XRep[103X[10X[3XStruct[103X[10X[110X  31.5
   isomorphisms, find all  40.9-1
@@ -2129,7 +2147,7 @@
   [2XIsomorphismTypeInfoFiniteSimpleGroup[102X (for a group)  39.15-12
   [2XIsomorphismTypeInfoFiniteSimpleGroup[102X (for a character table)  71.8-5
   [2XIsOne[102X  31.10-5
-  [2XIsOperation[102X  5.4-2
+  [2XIsOperation[102X  5.5-2
   [2XIsOrdering[102X  34.1-1
   [2XIsOrderingOnFamilyOfAssocWords[102X  34.4-1
   [2XIsOrdinaryMatrix[102X  24.2-2
@@ -2272,6 +2290,7 @@
   [2XIsSemigroup[102X  51.1-1
   [2XIsSemigroupCongruence[102X  51.6-1
   [2XIsSemigroupIdeal[102X  51.5-3
+  [2XIsSemilatticeAsSemigroup[102X  77.6-1
   [2XIsSemiRegular[102X (for a group, an action domain, etc.)  41.10-4
   [2XIsSemiRegular[102X (for an external set)  41.10-4
   [2XIsSet[102X  21.17-4
@@ -2292,11 +2311,12 @@
   [2XIsSPGeneralMapping[102X  32.14-1
   [2XIsSporadicSimple[102X (for a character table)  71.8-5
   [2XIsSSortedList[102X  21.17-4
+  [2XIsStandardIterator[102X  30.8-1
   [2XIsStraightLineProgElm[102X  37.9-1
   [2XIsStraightLineProgram[102X  37.8-1
   [2XIsStream[102X  10.1-1
   [2XIsString[102X  27.1-2
-  [2XIsStringRep[102X  27.3-1
+  [2XIsStringRep[102X  27.4-1
   [10XIs[3XStruct[103X[10X[110X  31.6
   [2XIsSubgroup[102X  39.3-5
   [2XIsSubgroupFpGroup[102X  47.1-1
@@ -2355,7 +2375,7 @@
   [2XIsUnivariatePolynomialRing[102X  66.16-2
   [2XIsUnivariateRationalFunction[102X  66.4-6
   [2XIsUnknown[102X  74.1-3
-  [2XIsUpperAlphaChar[102X  27.4-3
+  [2XIsUpperAlphaChar[102X  27.5-3
   [2XIsUpperTriangularMat[102X  24.4-9
   [2XIsValidIdentifier[102X  4.6-1
   [2XIsVector[102X  31.14-14
@@ -2401,6 +2421,7 @@
   [2XIteratorOfPartitions[102X  16.2-19
   [2XIteratorOfTuples[102X  16.2-10
   [2XIteratorSorted[102X  30.8-2
+  [2XIteratorStabChain[102X  43.10-10
   [22Xj_N[122X (irrational value)  18.4-4
   [2XJacobi[102X  15.4-1
   [2XJenningsLieAlgebra[102X  64.8-4
@@ -2408,7 +2429,7 @@
   [2XJoinEquivalenceRelations[102X  33.6-3
   [2XJoinOfIdempotentPartialPermsNC[102X  54.2-4
   [2XJoinOfPartialPerms[102X  54.2-4
-  [2XJoinStringsWithSeparator[102X  27.6-17
+  [2XJoinStringsWithSeparator[102X  27.7-17
   [2XJordanDecomposition[102X  24.13-2
   [22Xk_N[122X (irrational value)  18.4-4
   [2XKappaPerp[102X  64.9-4
@@ -2437,7 +2458,7 @@
   larger test  4.12
   [2XLargerQuotientBySubgroupAbelianization[102X  47.14-7
   [2XLargestElementGroup[102X  39.22-2
-  [2XLargestElementStabChain[102X  43.10-13
+  [2XLargestElementStabChain[102X  43.10-14
   [2XLargestImageOfMovedPoint[102X (for a transformation coll)  53.5-10
   [2XLargestImageOfMovedPoint[102X (for a transformation)  53.5-10
   [2XLargestImageOfMovedPoint[102X (for a partial permutation coll)  54.3-15
@@ -2453,7 +2474,7 @@
   [10Xlast2[110X  6.1
   [10Xlast3[110X  6.1
   [2XLastSystemError[102X  9.1-1
-  LaTeX, for GAP objects  27.10
+  LaTeX, for GAP objects  27.11
   LaTeX, for a decomposition matrix  71.11-4
   LaTeX, for permutation characters  72.13
   LaTeX, for the result of a straight line program  37.8-5
@@ -2613,7 +2634,7 @@
   loop over range  4.20
   loops, leaving  4.21
   loops, restarting  4.22
-  [2XLowercaseString[102X  27.6-11
+  [2XLowercaseString[102X  27.7-11
   [2XLowerCentralSeriesOfGroup[102X  39.17-11
   [2XLowIndexSubgroupsFpGroup[102X  47.10-1
   [2XLowIndexSubgroupsFpGroupIterator[102X  47.10-1
@@ -2679,10 +2700,10 @@
   [2XMeetEquivalenceRelations[102X  33.6-3
   [2XMeetMaps[102X  73.5-8
   [2XMeetOfPartialPerms[102X  54.2-5
-  [2XMemoryUsage[102X  12.8-4
+  [2XMemoryUsage[102X  12.8-5
   method  78.
   [2XMid[102X  19.2-4
-  [2XMinimalElementCosetStabChain[102X  43.10-12
+  [2XMinimalElementCosetStabChain[102X  43.10-13
   [2XMinimalGeneratingSet[102X  39.22-3
   [10XMinimalGeneratingSet[110X, for groups with pcgs  45.16
   [2XMinimalNonmonomialGroup[102X  75.5-2
@@ -2785,6 +2806,8 @@
   [2XMTX.ProperSubmoduleBasis[102X  69.7-2
   [2XMTX.SubGModule[102X  69.7-1
   [2XMTX.SubmoduleGModule[102X  69.7-1
+  multiple indices  21.3
+  multiple indices, assignment  21.4
   multiplication  4.13
   multiplication, matrices  24.3
   multiplication, matrix and matrix list  24.3
@@ -2898,7 +2921,7 @@
   [2XNormalFormIntMat[102X  25.2-9
   [2XNormalIntersection[102X  39.11-5
   [2XNormalizedElementOfMagmaRingModuloRelations[102X  65.4-3
-  [2XNormalizedWhitespace[102X  27.6-15
+  [2XNormalizedWhitespace[102X  27.7-15
   normalizer  39.11
   [2XNormalizer[102X (for a group and a group element)  39.11-1
   [2XNormalizer[102X (for two groups)  39.11-1
@@ -2906,7 +2929,7 @@
   [2XNormalizerInGLnZBravaisGroup[102X  44.6-14
   [2XNormalizersTom[102X  70.9-4
   [2XNormalizerTom[102X  70.9-4
-  [2XNormalizeWhitespace[102X  27.6-14
+  [2XNormalizeWhitespace[102X  27.7-14
   [2XNormalSeriesByPcgs[102X  45.11-18
   [2XNormalSubgroupClasses[102X  71.23-3
   [2XNormalSubgroupClassesInfo[102X  71.23-1
@@ -2974,7 +2997,8 @@
   [2XNumberPerfectGroups[102X  50.8-4
   [2XNumberPerfectLibraryGroups[102X  50.8-5
   [2XNumberSmallGroups[102X  50.7-4
-  [2XNumbersString[102X  27.6-19
+  [2XNumberSmallRings[102X  56.9-2
+  [2XNumbersString[102X  27.7-20
   [2XNumberSyllables[102X  37.5-1
   [2XNumberTransformation[102X  53.2-6
   numerator, of a rational  17.2-4
@@ -3092,7 +3116,7 @@
   [2XOrderOfRewritingSystem[102X  38.1-3
   [2XOrdersClassRepresentatives[102X  71.9-1
   [2XOrdersTom[102X  70.7-2
-  [2XOrdinal[102X  27.8-2
+  [2XOrdinal[102X  27.9-2
   ordinary character  72.8-1
   [2XOrdinaryCharacterTable[102X (for a character table)  71.8-4
   [2XOrdinaryCharacterTable[102X (for a group)  71.8-4
@@ -3223,7 +3247,7 @@
   [2XPosition[102X  21.16-1
   [2XPositionBound[102X  21.16-9
   [2XPositionCanonical[102X  21.16-3
-  [2XPositionFirstComponent[102X  21.16-13
+  [10XPositionFirstComponent[110X  77.4
   [2XPositionNonZero[102X  21.16-11
   [2XPositionNot[102X  21.16-10
   [2XPositionNthOccurrence[102X  21.16-4
@@ -3234,7 +3258,7 @@
   [2XPositionSorted[102X  21.16-5
   [10XPositionSortedOp[110X  21.16-5
   [2XPositionsProperty[102X  21.16-8
-  [2XPositionStream[102X  10.3-8
+  [2XPositionStream[102X  10.3-7
   [2XPositionSublist[102X  21.16-12
   [2XPositionWord[102X  37.4-4
   positive number  4.13
@@ -3263,6 +3287,7 @@
   precedence  4.13
   precedence test, for permutations  42.2-1
   [2XPrecisionFloat[102X  19.2-3
+  Prefix  27.7-19
   [2XPrefrattiniSubgroup[102X  39.12-7
   [10XPrefrattiniSubgroup[110X, for groups with pcgs  45.16
   [2XPreImage[102X (set of preimages of a collection under a general mapping)  32.5-6
@@ -3330,7 +3355,7 @@
   [2XPrintObj[102X (for a table of marks)  70.4-2
   [2XPrintObj[102X (for a character table)  71.13-2
   [2XPrintObj[102X (for class functions)  72.5-2
-  [2XPrintString[102X  27.6-5
+  [2XPrintString[102X  27.7-5
   [2XPrintTo[102X (for streams)  10.4-4
   [2XPrintTo[102X  9.7-3
   [2XProbabilityShapes[102X  66.11-4
@@ -3346,11 +3371,12 @@
   [2XProductOfStraightLinePrograms[102X  37.8-13
   [2XProductSpace[102X  62.9-3
   [2XProductX[102X  21.21-4
-  [2XProfileFunctions[102X  7.7-4
-  [2XProfileGlobalFunctions[102X  7.7-1
-  [2XProfileMethods[102X  7.7-6
-  [2XProfileOperations[102X  7.7-2
-  [2XProfileOperationsAndMethods[102X  7.7-3
+  [2XProfileFunctions[102X  7.7-5
+  [2XProfileGlobalFunctions[102X  7.7-2
+  [2XProfileLineByLine[102X  7.7-14
+  [2XProfileMethods[102X  7.7-7
+  [2XProfileOperations[102X  7.7-3
+  [2XProfileOperationsAndMethods[102X  7.7-4
   [2XProjectedInducedPcgs[102X  45.10-2
   [2XProjectedPcElement[102X  45.10-1
   [2XProjection[102X (for a domain and a positive integer)  32.2-11
@@ -3397,7 +3423,8 @@
   [2XQUIT[102X  6.7-1
   [9XQUIT[109X, emergency quit  6.7-1
   quit, in emergency  6.7
-  [2XQUITTING[102X  6.7-2
+  [2XQUIT_GAP[102X  6.7-3
+  [2XQUITTING[102X  6.7-5
   [2XQuoInt[102X  14.3-1
   [2XQuotient[102X  56.1-9
   quotient, for finitely presented groups  47.2-1
@@ -3423,12 +3450,12 @@
   [2XRadicalGroup[102X  39.12-9
   [2XRadicalOfAlgebra[102X  62.9-16
   [2XRandom[102X (for integers)  14.2-12
-  [2XRandom[102X (for a list)  14.7-2
-  [2XRandom[102X (for a range of integers)  14.7-2
+  [2XRandom[102X (for random source and list)  14.7-2
+  [2XRandom[102X (for random source and two integers)  14.7-2
   [2XRandom[102X (for rationals)  17.2-7
+  [2XRandom[102X  30.7-1
   [2XRandom[102X (for a list or collection)  30.7-1
   [2XRandom[102X (for lower and upper bound)  30.7-1
-  random element, of a list or collection  30.7-1
   random seed  30.7-3
   [2XRandomBinaryRelationOnPoints[102X  33.3-2
   [2XRandomInvertibleMat[102X  24.6-2
@@ -3457,7 +3484,7 @@
   [2XRankPGroup[102X  39.15-22
   [2XRat[102X  17.2-6
   [2XRat[102X (for floats)  19.2-8
-  [2XRat[102X (for strings)  27.8-1
+  [2XRat[102X (for strings)  27.9-1
   [2XRationalClass[102X  39.10-6
   [2XRationalClasses[102X  39.10-7
   [2XRationalFunctionByExtRep[102X  66.22-1
@@ -3470,19 +3497,17 @@
   [2XRead[102X (for streams)  10.3-1
   [2XRead[102X  9.7-1
   read eval print loop  6.1
-  [2XReadAll[102X  10.3-6
+  [2XReadAll[102X  10.3-5
   [2XReadAllLine[102X  10.8-3
   [2XReadAsFunction[102X (for streams)  10.3-2
   [2XReadAsFunction[102X  9.7-2
-  [2XReadByte[102X  10.3-4
+  [2XReadByte[102X  10.3-3
   [2XReadCommandLineHistory[102X  6.9-3
   [2XReadCSV[102X  10.11-1
-  [2XReadLine[102X  10.3-5
+  [2XReadLine[102X  10.3-4
   [10XReadlineInitLine[110X  6.9-1
   [2XReadPackage[102X  76.3-1
   [10XReadPkg[110X  77.2
-  [2XReadTest[102X (for streams)  10.3-3
-  [2XReadTest[102X  7.9-1
   [2XRealClasses[102X  71.9-11
   [2XRealizableBrauerCharacters[102X  72.15-4
   [2XRealPart[102X  18.5-2
@@ -3555,14 +3580,14 @@
   [2XRemInt[102X  14.3-3
   [2XRemove[102X  21.4-3
   remove, an element from a set  21.19-5
-  [2XRemoveCharacters[102X  27.6-16
+  [2XRemoveCharacters[102X  27.7-16
   [2XRemoveFile[102X  9.7-8
   [2XRemoveOuterCoeffs[102X  23.5-4
   [2XRemoveRelator[102X  48.5-4
   [2XRemoveSet[102X  21.19-5
   [2XRemoveStabChain[102X  43.11-6
   [9Xrepeat[109X loop  4.19
-  [2XReplacedString[102X  27.6-13
+  [2XReplacedString[102X  27.7-13
   representation, as a sum of two squares  15.7-1
   [2XRepresentationsOfObject[102X  13.4-1
   [2XRepresentative[102X  30.4-7
@@ -3616,12 +3641,14 @@
   [9Xreturn[109X, no value  4.24
   [9Xreturn[109X, with value  4.24
   return from break loop  6.4-2
-  [2XReturnFail[102X  5.3-3
-  [2XReturnFalse[102X  5.3-2
-  [2XReturnTrue[102X  5.3-1
+  [2XReturnFail[102X  5.4-3
+  [2XReturnFalse[102X  5.4-2
+  [2XReturnFirst[102X  5.4-5
+  [2XReturnNothing[102X  5.4-4
+  [2XReturnTrue[102X  5.4-1
   [2XReversed[102X  21.20-7
   [2XReverseNaturalPartialOrder[102X  54.7-5
-  [2XRewindStream[102X  10.3-9
+  [2XRewindStream[102X  10.3-8
   [2XRewriteWord[102X  47.9-4
   right cosets  39.7
   [2XRightActingAlgebra[102X  62.11-12
@@ -3643,6 +3670,7 @@
   [2XRing[102X (for a collection)  56.1-2
   [2XRing[102X (for ring elements)  56.1-2
   [2XRingByGenerators[102X  56.1-4
+  [2XRingByStructureConstants[102X  56.9-6
   [2XRingGeneralMappingByImages[102X  56.8-1
   [2XRingHomomorphismByImages[102X  56.8-2
   [2XRingHomomorphismByImagesNC[102X  56.8-3
@@ -3676,7 +3704,7 @@
   [2XSameBlock[102X  71.11-2
   save  3.3-1
   [2XSaveCommandLineHistory[102X  6.9-3
-  [2XSaveOnExitFile[102X  6.7-3
+  [2XSaveOnExitFile[102X  6.7-6
   [2XSaveWorkspace[102X  3.3-1
   saving on exit  6.7
   [2XScalarProduct[102X (for characters)  72.8-5
@@ -3688,10 +3716,10 @@
   scope  4.8
   [2XSec[102X  19.2-1
   [2XSech[102X  19.2-1
-  [2XSecHMSM[102X  27.9-8
+  [2XSecHMSM[102X  27.10-8
   secondary subgroup generators  48.10-1
-  [2XSecondsDMYhms[102X  27.9-10
-  [2XSeekPositionStream[102X  10.3-10
+  [2XSecondsDMYhms[102X  27.10-10
+  [2XSeekPositionStream[102X  10.3-9
   [2XSemidirectProduct[102X (for a group of automorphisms and a group)  49.2-1
   [2XSemidirectProduct[102X (for acting group, action, and a group)  49.2-1
   [2XSemiEchelonBasis[102X  61.9-8
@@ -3767,11 +3795,11 @@
   [2XShowPackageVariables[102X  76.3-13
   [2XShowUserPreferences[102X  3.2-3
   [2XShrinkAllocationPlist[102X  21.9-1
-  [2XShrinkAllocationString[102X  27.3-5
+  [2XShrinkAllocationString[102X  27.4-5
   [2XShrinkRowVector[102X  23.5-3
   [2XShuffle[102X  21.20-8
   [2XSiftedPcElement[102X  45.5-8
-  [2XSiftedPermutation[102X  43.10-11
+  [2XSiftedPermutation[102X  43.10-12
   [2XSiftedVector[102X  61.9-12
   [2XSigma[102X  15.5-1
   [2XSigmaL[102X  50.2-10
@@ -3794,7 +3822,7 @@
   singlequote character  27.2
   singlequotes  27.1
   [2XSinh[102X  19.2-1
-  [2XSIntChar[102X  27.7-3
+  [2XSIntChar[102X  27.8-3
   [2XSize[102X  30.4-6
   [2XSize[102X (for a character table)  71.8-5
   [10XSize[110X, for groups with pcgs  45.16
@@ -3839,6 +3867,7 @@
   [2XSmallGroup[102X (for a pair [ order, index ])  50.7-1
   [2XSmallGroup[102X (for group order and index)  50.7-1
   [2XSmallGroupsInformation[102X  50.7-8
+  [2XSmallRing[102X  56.9-1
   [2XSmallSimpleGroup[102X  39.15-15
   Smith normal form  77.3
   [2XSmithNormalFormIntegerMat[102X  25.2-6
@@ -3906,9 +3935,9 @@
   [2XSpecialSemilinearGroup[102X  50.2-10
   [2XSpecialUnitaryGroup[102X  50.2-4
   [2XSplitCharacters[102X  71.17-7
+  [2XSplitExtension[102X (with specified homomorphism)  46.8-10
   [2XSplitExtension[102X  46.8-6
-  [2XSplitExtensions[102X  46.8-10
-  [2XSplitString[102X  27.6-12
+  [2XSplitString[102X  27.7-12
   [2XSplittingField[102X  66.4-13
   Spreadsheet  10.11
   [2XSQ[102X (synonym of SolvableQuotient)  47.14-5
@@ -3934,14 +3963,15 @@
   [2XStandardizeTable[102X  47.7-2
   [2XStandardWreathProduct[102X  49.4-1
   [2XStarCyc[102X  18.5-3
-  [2XSTART_TEST[102X  7.9-2
+  [2XSTART_TEST[102X  7.9-1
   [2XStartlineFunc[102X  5.1-5
+  [2XStartsWith[102X  27.7-19
   [2XState[102X  14.7-3
   Stirling number of the first kind  16.1-5
   Stirling number of the second kind  16.1-6
   [2XStirling1[102X  16.1-5
   [2XStirling2[102X  16.1-6
-  [2XSTOP_TEST[102X  7.9-2
+  [2XSTOP_TEST[102X  7.9-1
   [2XStoredGroebnerBasis[102X  66.18-3
   [2XStoreFusion[102X  73.3-4
   [2XStraightLineProgElm[102X  37.9-2
@@ -3955,17 +3985,17 @@
   [2XStretchImportantSLPElement[102X  37.9-5
   strictly sorted list  21.17-4
   [2XString[102X (for a cyclotomic)  18.1-6
-  [2XString[102X  27.6-6
-  [2XStringDate[102X  27.9-6
+  [2XString[102X  27.7-6
+  [2XStringDate[102X  27.10-6
   [2XStringFactorizationWord[102X  47.2-4
-  [2XStringNumbers[102X  27.6-20
+  [2XStringNumbers[102X  27.7-21
   [2XStringOfResultOfStraightLineProgram[102X  37.8-6
-  [2XStringPP[102X  27.6-9
-  strings, equality of  27.5-1
-  strings, inequality of  27.5-1
-  strings, lexicographic ordering of  27.5-2
-  [2XStringTime[102X  27.9-9
-  [2XStripLineBreakCharacters[102X  27.6-7
+  [2XStringPP[102X  27.7-9
+  strings, equality of  27.6-1
+  strings, inequality of  27.6-1
+  strings, lexicographic ordering of  27.6-2
+  [2XStringTime[102X  27.10-9
+  [2XStripLineBreakCharacters[102X  27.7-7
   [2XStrongGeneratorsStabChain[102X  43.10-4
   [2XStronglyConnectedComponents[102X  33.4-5
   [3XStruct[103X  31.3
@@ -4033,6 +4063,7 @@
   [2XSubnormalSeries[102X  39.17-4
   [2XSubring[102X  56.1-7
   [2XSubringNC[102X  56.1-7
+  [2XSubrings[102X  56.9-3
   [2XSubringWithOne[102X  56.3-5
   [2XSubringWithOneNC[102X  56.3-5
   [2XSubsemigroup[102X  51.1-3
@@ -4063,6 +4094,7 @@
   [2XSubtractSet[102X  21.19-8
   [2XSubword[102X  37.4-3
   [2XSuccessors[102X  33.2-9
+  Suffix  27.7-19
   [2XSum[102X  21.20-26
   [2XSumFactorizationFunctionPcgs[102X  45.12-1
   [2XSumIntersectionMat[102X  24.11-4
@@ -4125,12 +4157,13 @@
   [2XTensorProductGModule[102X  69.2-2
   [2XTensorProductOfAlgebraModules[102X (for a list of algebra modules)  64.15-1
   [2XTensorProductOfAlgebraModules[102X (for two algebra modules)  64.15-1
-  [2XTest[102X  7.9-3
+  [2XTest[102X  7.9-2
   test, for a primitive root  15.3-4
   test, for a rational  17.2-1
   test, for records  29.1-1
   test, for set equality  21.19-2
   [2XTestConsistencyMaps[102X  73.5-12
+  [2XTestDirectory[102X  7.9-3
   tester  13.6
   [2XTester[102X  13.6-1
   [2XTestHomogeneous[102X  75.3-1
@@ -4160,11 +4193,13 @@
   [10XThreeGroup[110X library  50.7
   [2XTietzeWordAbstractWord[102X  48.3-1
   [2Xtime[102X  7.6-3
+  Timeouts  5.3
   [2XTrace[102X (of a matrix)  24.4-3
   [2XTrace[102X (for a field element)  58.3-5
   [2XTrace[102X (for a matrix)  58.3-5
+  [2XTraceAllMethods[102X  7.3-2
   [2XTracedCosetFpGroup[102X  47.6-2
-  [2XTraceImmediateMethods[102X  7.3-3
+  [2XTraceImmediateMethods[102X  7.3-5
   [2XTraceMat[102X  24.4-3
   [2XTraceMethods[102X (for a list of operations)  7.3-1
   [2XTraceMethods[102X (for operations)  7.3-1
@@ -4267,6 +4302,7 @@
   [2XTzSubstituteCyclicJoins[102X  48.8-2
   [22Xu_N[122X (irrational value)  18.4-3
   [2XUglyVector[102X  61.11-2
+  [2XUnbind[102X (for multiple indices)  21.5-2
   [2XUnbind[102X (unbind a list entry)  21.5-2
   [2XUnbind[102X (unbind a record component)  29.6-2
   [2XUnbind[102X (unbind a variable)  4.8-2
@@ -4274,6 +4310,7 @@
   [2XUnbind\[\][102X  21.2-1
   [2XUnbindElmWPObj[102X  86.2-1
   [2XUnbindGlobal[102X  4.9-6
+  [2XUncoverageLineByLine[102X  7.7-17
   [2XUnderlyingCharacteristic[102X (for a character table)  71.9-5
   [2XUnderlyingCharacteristic[102X (for a character)  71.9-5
   [2XUnderlyingCharacterTable[102X  72.2-1
@@ -4318,11 +4355,14 @@
   [2XUnknown[102X  74.1-1
   [2XUnloadSmallGroupsData[102X  50.7-9
   [2XUnorderedTuples[102X  16.2-6
-  [2XUnprofileFunctions[102X  7.7-5
-  [2XUnprofileMethods[102X  7.7-7
+  [2XUnprofileFunctions[102X  7.7-6
+  [2XUnprofileLineByLine[102X  7.7-16
+  [2XUnprofileMethods[102X  7.7-8
   [9Xuntil[109X  4.19
-  [2XUntraceMethods[102X (for a list of operations)  7.3-2
-  [2XUntraceMethods[102X (for operations)  7.3-2
+  [2XUntraceAllMethods[102X  7.3-4
+  [2XUntraceImmediateMethods[102X  7.3-5
+  [2XUntraceMethods[102X (for a list of operations)  7.3-3
+  [2XUntraceMethods[102X (for operations)  7.3-3
   [2XUpdateMap[102X  73.5-7
   [2XUpEnv[102X  6.5-1
   [2XUpperCentralSeriesOfGroup[102X  39.17-12
@@ -4354,7 +4394,7 @@
   [2XViewObj[102X (for a table of marks)  70.4-1
   [2XViewObj[102X (for a character table)  71.13-1
   [2XViewObj[102X (for class functions)  72.5-1
-  [2XViewString[102X  27.6-3
+  [2XViewString[102X  27.7-3
   [10Xvim[110X  6.11
   virtual character  72.8-2
   virtual characters  72.
@@ -4364,7 +4404,7 @@
   [2XWeakPointerObj[102X  86.1-1
   web sites, for GAP  1.5
   [2XWedgeGModule[102X  69.2-3
-  [2XWeekDay[102X  27.9-5
+  [2XWeekDay[102X  27.10-5
   [2XWeightLexOrdering[102X  34.4-8
   [2XWeightOfGenerators[102X  34.4-10
   [2XWeightsTom[102X  70.7-12
@@ -4373,7 +4413,7 @@
   [2XWeylOrbitIterator[102X  64.7-7
   [2XWhere[102X  6.4-5
   [9Xwhile[109X loop  4.18
-  [2XWordAlp[102X  27.6-10
+  [2XWordAlp[102X  27.7-10
   words, in generators  39.5
   Wreath product embedding  49.4-4
   [2XWreathProduct[102X  49.4-1

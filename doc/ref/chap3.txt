@@ -407,7 +407,7 @@
   read,  not  all  [5XGAP[105X  functions  may  be  called in the file. Assignments of
   numbers,  lists,  and  records  are  admissible  as  well  as calls to basic
   functions  such  as  [2XConcatenation[102X  ([14X21.20-1[114X)  and  [2XJoinStringsWithSeparator[102X
-  ([14X27.6-17[114X).[133X
+  ([14X27.7-17[114X).[133X
   
   [33X[0;0YNote  that  the  file  [11Xgap.ini[111X  is  read  also  when  [5XGAP[105X  is started with a
   workspace.[133X

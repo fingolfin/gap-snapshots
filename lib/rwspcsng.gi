@@ -762,14 +762,46 @@ SingleCollector_MakeAvector := function( sc )
 end;
 
 SingleCollector_MakeInverses := function( sc )
-    local   n,  gn,  id,  i;
+    local   n,  gn,  id,  i,invhint,j,ih,av;
 
     # start at the bottom
     n  := sc![SCP_NUMBER_RWS_GENERATORS];
     gn := sc![SCP_RWS_GENERATORS];
     id := One(sc![SCP_UNDERLYING_FAMILY]);
+    invhint:=ValueOption("inversehints");
     for i  in [ n, n-1 .. 1 ]  do
-        sc![SCP_INVERSES][i] := SingleCollector_Solution( sc, gn[i], id );
+      if invhint<>fail then
+	ih:=[];
+	for j in [1..Length(invhint[i])] do
+	  if invhint[i][j]<>0 then
+	    Add(ih,j);
+	    Add(ih,invhint[i][j]);
+	  fi;
+	od;
+	ih:=AssocWord(sc![SCP_DEFAULT_TYPE],ih); # claimed inverse
+	# test that the inverses work. This can be abysmally slow for larger
+	# primes.
+	if AssertionLevel()>0 then
+	  av:=ExponentSums(gn[i],1,sc![SCP_NUMBER_RWS_GENERATORS]);
+	  CollectWord(sc,av,ih);
+	  if ForAny(av,x->not IsZero(x)) then 
+	    Error("failed inverse hint");
+	    ih:=fail;
+	  fi;
+	fi;
+      else
+	ih:=fail;
+      fi;
+      if ih<>fail then
+	#if ih<>SingleCollector_Solution( sc, gn[i], id ) then
+	#  Error("ugh!");
+	#else
+	#  Print("inversehint worked\n");
+	#fi;
+	sc![SCP_INVERSES][i] := ih;
+      else
+	sc![SCP_INVERSES][i] := SingleCollector_Solution( sc, gn[i], id );
+      fi;
     od;
 end;
 
@@ -933,7 +965,7 @@ function( efam, gens, orders )
     # construct a single collector as list object
     sc := [];
 
-    # we need the the family
+    # we need the family
     sc[SCP_UNDERLYING_FAMILY] := efam;
 
     # and the relative orders
@@ -989,18 +1021,6 @@ function( efam, gens, orders )
 
     # and the rhs of the conjugates
     sc[SCP_CONJUGATES] := List( sc[SCP_RWS_GENERATORS], x -> [] );
-
-    # add the various stacks
-    sc[SCP_NW_STACK]   := [];
-    sc[SCP_LW_STACK]   := [];
-    sc[SCP_PW_STACK]   := [];
-    sc[SCP_EW_STACK]   := [];
-    sc[SCP_GE_STACK]   := [];
-    sc[SCP_CW_VECTOR]  := "";
-    sc[SCP_CW2_VECTOR] := "";
-
-    # and the maximal stack size
-    sc[SCP_MAX_STACK_SIZE] := 256;
 
     # convert into a list object and set number of bits
     type := NewType( fam, IsSingleCollectorRep and bits and IsFinite
@@ -1141,7 +1161,7 @@ ShallowCopy_SingleCollector := function( sc )
     # construct new single collector as list object
     copy := [];
 
-    # we need the the family
+    # we need the family
     copy[SCP_UNDERLYING_FAMILY] := sc![SCP_UNDERLYING_FAMILY];
 
     # and the relative orders
@@ -1168,18 +1188,6 @@ ShallowCopy_SingleCollector := function( sc )
     if IsBound(sc![SCP_AVECTOR])  then
         copy[SCP_AVECTOR] := ShallowCopy(sc![SCP_AVECTOR]);
     fi;
-
-    # add the various stacks
-    copy[SCP_NW_STACK]   := [];
-    copy[SCP_LW_STACK]   := [];
-    copy[SCP_PW_STACK]   := [];
-    copy[SCP_EW_STACK]   := [];
-    copy[SCP_GE_STACK]   := [];
-    copy[SCP_CW_VECTOR]  := "";
-    copy[SCP_CW2_VECTOR] := "";
-
-    # and the maximal stack size
-    copy[SCP_MAX_STACK_SIZE] := sc![SCP_MAX_STACK_SIZE];
 
     # and the collector to use
     copy[SCP_COLLECTOR] := sc![SCP_COLLECTOR];

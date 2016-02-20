@@ -174,14 +174,14 @@ a^6*b^2
 
 <h5>52.1-1 IsSubsemigroupFpSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubsemigroupFpSemigroup</code>( <var class="Arg">t</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubsemigroupFpSemigroup</code>( <var class="Arg">t</var> )</td><td class="tdright">( filter )</td></tr></table></div>
 <p>true if <var class="Arg">t</var> is a finitely presented semigroup or a subsemigroup of a finitely presented semigroup (generally speaking, such a subsemigroup can be constructed with <code class="code">Semigroup(<var class="Arg">gens</var>)</code>, where <var class="Arg">gens</var> is a list of elements of a finitely presented semigroup).</p>
 
 <p><a id="X82128D4D83ACA683" name="X82128D4D83ACA683"></a></p>
 
 <h5>52.1-2 IsSubmonoidFpMonoid</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubmonoidFpMonoid</code>( <var class="Arg">t</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubmonoidFpMonoid</code>( <var class="Arg">t</var> )</td><td class="tdright">( filter )</td></tr></table></div>
 <p>true if <var class="Arg">t</var> is a finitely presented monoid or a submonoid of a finitely presented monoid (generally speaking, such a semigroup can be constructed with <code class="code">Monoid(<var class="Arg">gens</var>)</code>, where <var class="Arg">gens</var> is a list of elements of a finitely presented monoid).</p>
 
 <p>A submonoid of a monoid has the same identity as the monoid.</p>
@@ -190,14 +190,14 @@ a^6*b^2
 
 <h5>52.1-3 IsFpSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFpSemigroup</code>( <var class="Arg">s</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFpSemigroup</code>( <var class="Arg">s</var> )</td><td class="tdright">( filter )</td></tr></table></div>
 <p>is a synonym for <code class="code">IsSubsemigroupFpSemigroup(<var class="Arg">s</var>)</code> and <code class="code">IsWholeFamily(<var class="Arg">s</var>)</code> (this is because a subsemigroup of a finitely presented semigroup is not necessarily finitely presented).</p>
 
 <p><a id="X7C2BA01D86087D11" name="X7C2BA01D86087D11"></a></p>
 
 <h5>52.1-4 IsFpMonoid</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFpMonoid</code>( <var class="Arg">m</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFpMonoid</code>( <var class="Arg">m</var> )</td><td class="tdright">( filter )</td></tr></table></div>
 <p>is a synonym for <code class="code">IsSubmonoidFpMonoid(<var class="Arg">m</var>)</code> and <code class="code">IsWholeFamily(<var class="Arg">m</var>)</code> (this is because a submonoid of a finitely presented monoid is not necessarily finitely presented).</p>
 
 <p><a id="X81ABBE997A4C19B7" name="X81ABBE997A4C19B7"></a></p>
@@ -230,7 +230,7 @@ a^6*b^2
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsFpSemigroup( s );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t := Semigroup( [ GeneratorsOfSemigroup( s )[ 1 ] ]);</span>
-&lt;semigroup with 1 generator&gt;
+&lt;commutative semigroup with 1 generator&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubsemigroupFpSemigroup( t );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsElementOfFpSemigroup( GeneratorsOfSemigroup( t )[ 1 ] );</span>
@@ -469,8 +469,8 @@ Rewriting System for Semigroup( [ a, b ] ) with rules
 
 <h5>52.6-3 <span class="Heading">KnuthBendixRewritingSystem</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KnuthBendixRewritingSystem</code>( <var class="Arg">s</var>, <var class="Arg">wordord</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KnuthBendixRewritingSystem</code>( <var class="Arg">m</var>, <var class="Arg">wordord</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KnuthBendixRewritingSystem</code>( <var class="Arg">s</var>, <var class="Arg">wordord</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KnuthBendixRewritingSystem</code>( <var class="Arg">m</var>, <var class="Arg">wordord</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>in the first form, for a semigroup <var class="Arg">s</var> and a reduction ordering for the underlying free semigroup, it returns the Knuth-Bendix rewriting system of the finitely presented semigroup <var class="Arg">s</var> using the reduction ordering <var class="Arg">wordord</var>. In the second form, for a monoid <var class="Arg">m</var> and a reduction ordering for the underlying free monoid, it returns the Knuth-Bendix rewriting system of the finitely presented monoid <var class="Arg">m</var> using the reduction ordering <var class="Arg">wordord</var>.</p>
 
 <p><a id="X7966343587A04AFF" name="X7966343587A04AFF"></a></p>

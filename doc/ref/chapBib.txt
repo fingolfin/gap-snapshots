@@ -476,6 +476,9 @@
   [[20XSco73[120X]  [16XScott,  L.  L.[116X,  [17XModular  permutation representations[117X, [18XTrans. Amer.
   Math. Soc.[118X, [19X175[119X (1973), 101–121.
   
+  [[20XSer03[120X] [16XSeress, Á.[116X, [17XPermutation Group Algorithms[117X, Cambridge University Press
+  (2003).
+  
   [[20XSho92[120X]  [16XShort,  M.  W.[116X,  [17XThe primitive soluble permutation groups of degree
   less  than  256[117X, Springer-Verlag, Lecture Notes in Mathematics, [19X1519[119X, Berlin
   (1992), x+145 pages.
