@@ -239,7 +239,7 @@
   the positions in [3Xlist[103X even if [3Xlist[103X itself consists of integers.[133X
   
   [33X[0;0YThis  function  is  the  analogue  in  the  context  of  transformations  of
-  [2XPermutation[102X ([14XReference: Permutation[114X).[133X
+  [2XPermutation[102X ([14XReference: Permutation (for a group, an action domain, etc.)[114X).[133X
   
   [33X[0;0YIf [3Xobj[103X does not map elements of [3Xlist[103X into [3Xlist[103X, then [9Xfail[109X is returned.[133X
   
@@ -592,7 +592,7 @@
   
   [1X53.5-1 DegreeOfTransformation[101X
   
-  [29X[2XDegreeOfTransformation[102X( [3Xf[103X ) [32X attribute
+  [29X[2XDegreeOfTransformation[102X( [3Xf[103X ) [32X function
   [29X[2XDegreeOfTransformationCollection[102X( [3Xcoll[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10YA positive integer.[133X
   
@@ -677,8 +677,8 @@
   
   [1X53.5-5 MovedPoints[101X
   
-  [29X[2XMovedPoints[102X( [3Xf[103X ) [32X operation
-  [29X[2XMovedPoints[102X( [3Xcoll[103X ) [32X operation
+  [29X[2XMovedPoints[102X( [3Xf[103X ) [32X attribute
+  [29X[2XMovedPoints[102X( [3Xcoll[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10YA set of positive integers.[133X
   
   [33X[0;0YWhen  the  argument  is  a  transformation,  [10XMovedPoints[110X  returns the set of
@@ -831,7 +831,7 @@
   
   [1X53.5-11 FlatKernelOfTransformation[101X
   
-  [29X[2XFlatKernelOfTransformation[102X( [3Xf[103X[, [3Xn[103X] ) [32X function
+  [29X[2XFlatKernelOfTransformation[102X( [3Xf[103X[, [3Xn[103X] ) [32X attribute
   [6XReturns:[106X  [33X[0;10YThe flat kernel of a transformation.[133X
   
   [33X[0;0YIf  the kernel classes of the transformation [3Xf[103X on [10X[1..[3Xn[103X[10X][110X are [22XK_1, dots, K_r[122X,
@@ -1044,7 +1044,7 @@
   
   [1X53.5-21 CycleTransformationInt[101X
   
-  [29X[2XCycleTransformationInt[102X( [3Xf[103X, [3Xn[103X ) [32X attribute
+  [29X[2XCycleTransformationInt[102X( [3Xf[103X, [3Xn[103X ) [32X operation
   [6XReturns:[106X  [33X[0;10YA list of positive integers.[133X
   
   [33X[0;0YIf   [3Xf[103X   is   a   transformation   and   [3Xn[103X   is  a  positive  integer,  then
@@ -1091,7 +1091,7 @@
   
   [1X53.5-23 TrimTransformation[101X
   
-  [29X[2XTrimTransformation[102X( [3Xf[103X[, [3Xn[103X] ) [32X function
+  [29X[2XTrimTransformation[102X( [3Xf[103X[, [3Xn[103X] ) [32X operation
   [6XReturns:[106X  [33X[0;10YNothing.[133X
   
   [33X[0;0YIt can happen that the internal representation of a transformation uses more
@@ -1207,8 +1207,8 @@
   
   [1X53.7-1 IsTransformationSemigroup[101X
   
-  [29X[2XIsTransformationSemigroup[102X( [3Xobj[103X ) [32X property
-  [29X[2XIsTransformationMonoid[102X( [3Xobj[103X ) [32X property
+  [29X[2XIsTransformationSemigroup[102X( [3Xobj[103X ) [32X Synonym
+  [29X[2XIsTransformationMonoid[102X( [3Xobj[103X ) [32X Synonym
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA   [13Xtransformation   semigroup[113X   is   simply   a   semigroup  consisting  of
@@ -1370,7 +1370,7 @@
   
   [1X53.7-6 AntiIsomorphismTransformationSemigroup[101X
   
-  [29X[2XAntiIsomorphismTransformationSemigroup[102X( [3XS[103X ) [32X operation
+  [29X[2XAntiIsomorphismTransformationSemigroup[102X( [3XS[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10YAn anti-isomorphism.[133X
   
   [33X[0;0YIf  [3XS[103X is a semigroup, then [10XAntiIsomorphismTransformationSemigroup[110X returns an

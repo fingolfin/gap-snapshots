@@ -243,7 +243,8 @@
   refers to the positions in [3Xlist[103X even if [3Xlist[103X itself consists of integers.[133X
   
   [33X[0;0YThis  function  is  the  analogue  in the context of partial permutations of
-  [2XPermutation[102X ([14XReference: Permutation[114X) or [2XTransformationOp[102X ([14X53.2-5[114X).[133X
+  [2XPermutation[102X  ([14XReference:  Permutation (for a group, an action domain, etc.)[114X)
+  or [2XTransformationOp[102X ([14X53.2-5[114X).[133X
   
   [33X[0;0YIf [3Xobj[103X does not map the elements of [3Xlist[103X injectively, then [9Xfail[109X is returned.[133X
   
@@ -409,7 +410,7 @@
   
   [1X54.3-1 DegreeOfPartialPerm[101X
   
-  [29X[2XDegreeOfPartialPerm[102X( [3Xf[103X ) [32X attribute
+  [29X[2XDegreeOfPartialPerm[102X( [3Xf[103X ) [32X function
   [29X[2XDegreeOfPartialPermCollection[102X( [3Xcoll[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10YA non-negative integer.[133X
   
@@ -428,7 +429,7 @@
   
   [1X54.3-2 CodegreeOfPartialPerm[101X
   
-  [29X[2XCodegreeOfPartialPerm[102X( [3Xf[103X ) [32X attribute
+  [29X[2XCodegreeOfPartialPerm[102X( [3Xf[103X ) [32X function
   [29X[2XCodegreeOfPartialPermCollection[102X( [3Xcoll[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10YA non-negative integer.[133X
   
@@ -447,7 +448,7 @@
   
   [1X54.3-3 RankOfPartialPerm[101X
   
-  [29X[2XRankOfPartialPerm[102X( [3Xf[103X ) [32X attribute
+  [29X[2XRankOfPartialPerm[102X( [3Xf[103X ) [32X function
   [29X[2XRankOfPartialPermCollection[102X( [3Xcoll[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10YA non-negative integer.[133X
   
@@ -487,7 +488,7 @@
   
   [1X54.3-5 ImageOfPartialPermCollection[101X
   
-  [29X[2XImageOfPartialPermCollection[102X( [3Xcoll[103X ) [32X operation
+  [29X[2XImageOfPartialPermCollection[102X( [3Xcoll[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10YA set of positive integers (maybe empty).[133X
   
   [33X[0;0YThe  [13Ximage[113X  of  a  partial  permutation  collection [3Xcoll[103X is the union of the

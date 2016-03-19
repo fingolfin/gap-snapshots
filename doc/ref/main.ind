@@ -258,7 +258,7 @@
     \subitem for complex numbers, \hyperpage{241}
   \item arithmetic operators
     \subitem precedence, \hyperpage{58}
-  \item \texttt  {ArithmeticElementCreator}, \hyperpage{1255}
+  \item \texttt  {ArithmeticElementCreator}, \hyperpage{1256}
   \item \texttt  {Arrangements}, \hyperpage{209}
   \item arrow notation for functions, \hyperpage{68}
   \item \texttt  {AsAlgebra}, \hyperpage{934}
@@ -356,7 +356,7 @@
   \item backspace character, \hyperpage{355}
   \item Backtrace
     \subitem GAP3 name for Where, \hyperpage{89}
-  \item \texttt{BANNER}, \hyperpage{1215}
+  \item \texttt{BANNER}, \hyperpage{1216}
   \item \texttt  {BaseFixedSpace}, \hyperpage{325}
   \item \texttt  {BaseIntersectionIntMats}, \hyperpage{340}
   \item \texttt  {BaseIntMat}, \hyperpage{340}
@@ -462,7 +462,7 @@
     \subitem for various objects, \hyperpage{287}
   \item \texttt  {CategoriesOfObject}, \hyperpage{168}
   \item \texttt  {CategoryCollections}, \hyperpage{385}
-  \item \texttt  {CategoryFamily}, \hyperpage{1224}
+  \item \texttt  {CategoryFamily}, \hyperpage{1225}
   \item \texttt  {Ceil}, \hyperpage{241}
   \item \texttt  {Center}, \hyperpage{464}
   \item center, \hyperpage{464}
@@ -867,29 +867,29 @@
   \item DEC, \hyperpage{344}
   \item DeclareAttribute
     \subitem \texttt{DeclareAttribute
-      \subsubitem example}, \hyperpage{1254}
-  \item \texttt  {DeclareAttribute}, \hyperpage{1242}
+      \subsubitem example}, \hyperpage{1255}
+  \item \texttt  {DeclareAttribute}, \hyperpage{1243}
   \item \texttt{DeclareAttribute}
-    \subitem example, \hyperpage{1249}
-  \item \texttt{DeclareAutoPackage}, \hyperpage{1215}
+    \subitem example, \hyperpage{1250}
+  \item \texttt{DeclareAutoPackage}, \hyperpage{1216}
   \item \texttt  {DeclareAutoreadableVariables}, \hyperpage{1210}
-  \item \texttt  {DeclareCategory}, \hyperpage{1241}
-  \item \texttt  {DeclareFilter}, \hyperpage{1242}
-  \item \texttt  {DeclareGlobalFunction}, \hyperpage{1242}
-  \item \texttt  {DeclareGlobalVariable}, \hyperpage{1243}
+  \item \texttt  {DeclareCategory}, \hyperpage{1242}
+  \item \texttt  {DeclareFilter}, \hyperpage{1243}
+  \item \texttt  {DeclareGlobalFunction}, \hyperpage{1243}
+  \item \texttt  {DeclareGlobalVariable}, \hyperpage{1244}
   \item \texttt  {DeclareHandlingByNiceBasis}, \hyperpage{919}
   \item \texttt  {DeclareInfoClass}, \hyperpage{106}
-  \item \texttt  {DeclareOperation}, \hyperpage{1242}
-  \item \texttt{DeclarePackage}, \hyperpage{1215}
-  \item \texttt{DeclarePackageAutoDocumentation}, \hyperpage{1215}
-  \item \texttt{DeclarePackageDocumentation}, \hyperpage{1215}
-  \item \texttt  {DeclareProperty}, \hyperpage{1242}
-  \item \texttt  {DeclareRepresentation}, \hyperpage{1241}
+  \item \texttt  {DeclareOperation}, \hyperpage{1243}
+  \item \texttt{DeclarePackage}, \hyperpage{1216}
+  \item \texttt{DeclarePackageAutoDocumentation}, \hyperpage{1216}
+  \item \texttt{DeclarePackageDocumentation}, \hyperpage{1216}
+  \item \texttt  {DeclareProperty}, \hyperpage{1243}
+  \item \texttt  {DeclareRepresentation}, \hyperpage{1242}
   \item \texttt{DeclareRepresentation}
-    \subitem belongs to implementation part, \hyperpage{1244}
-    \subitem example, \hyperpage{1250}
-  \item \texttt  {DeclareSynonym}, \hyperpage{1243}
-  \item \texttt  {DeclareSynonymAttr}, \hyperpage{1243}
+    \subitem belongs to implementation part, \hyperpage{1245}
+    \subitem example, \hyperpage{1251}
+  \item \texttt  {DeclareSynonym}, \hyperpage{1244}
+  \item \texttt  {DeclareSynonymAttr}, \hyperpage{1244}
   \item \texttt  {DeclareUserPreference}, \hyperpage{40}
   \item \texttt  {DecodeTree}, \hyperpage{712}
   \item decompose
@@ -944,7 +944,7 @@
   \item \texttt  {DenominatorRat}, \hyperpage{222}
   \item \texttt  {DenseHashTable}, \hyperpage{375}
   \item \texttt  {DenseIntKey}, \hyperpage{375}
-  \item deprecated, \hyperpage{1214}
+  \item deprecated, \hyperpage{1215}
   \item \texttt  {DepthOfPcElement}, \hyperpage{632}
   \item \texttt  {DepthOfUpperTriangularMatrix}, \hyperpage{332}
   \item \texttt  {Derangements}, \hyperpage{212}
@@ -1046,7 +1046,7 @@
   \item \texttt  {DnLatticeIterative}, \hyperpage{1149}
   \item \texttt{do}, \hyperpage{63}
   \item document formats
-    \subitem for help books, \hyperpage{1290}
+    \subitem for help books, \hyperpage{1291}
   \item document formats (text, dvi, ps, pdf, HTML), \hyperpage{29}
   \item \texttt  {Domain}, \hyperpage{408}
   \item \texttt  {DomainByGenerators}, \hyperpage{408}
@@ -1124,8 +1124,8 @@
   \item \texttt{elif}, \hyperpage{60}
   \item \texttt  {EliminatedWord}, \hyperpage{478}
   \item \texttt  {EliminationOrdering}, \hyperpage{1017}
-  \item ElmWPObj, \hyperpage{1300}
-  \item \texttt  {ElmWPObj}, \hyperpage{1300}
+  \item ElmWPObj, \hyperpage{1301}
+  \item \texttt  {ElmWPObj}, \hyperpage{1301}
   \item \texttt{else}, \hyperpage{60}
   \item \texttt  {EM}, \hyperpage{231}
   \item \texttt{emacs}, \hyperpage{99}
@@ -1271,13 +1271,13 @@
     \subitem for an external set, \hyperpage{591}
   \item \texttt  {ExternalSet}, \hyperpage{589}
   \item \texttt{ExternalSet}
-    \subitem computing orbits, \hyperpage{1295}
+    \subitem computing orbits, \hyperpage{1296}
   \item \texttt  {ExternalSubset}, \hyperpage{590}
   \item \texttt  {Extract}, \hyperpage{1144}
   \item \texttt  {ExtraspecialGroup}, \hyperpage{727}
   \item \texttt  {ExtRepDenominatorRatFun}, \hyperpage{1022}
   \item \texttt  {ExtRepNumeratorRatFun}, \hyperpage{1022}
-  \item \texttt  {ExtRepOfObj}, \hyperpage{1239}
+  \item \texttt  {ExtRepOfObj}, \hyperpage{1240}
     \subitem for a cyclotomic, \hyperpage{227}
   \item \texttt  {ExtRepPolynomialRatFun}, \hyperpage{1022}
   \item \texttt  {EY}, \hyperpage{230}
@@ -1349,8 +1349,8 @@
   \item \texttt  {Float}, \hyperpage{243}
   \item \texttt  {Floor}, \hyperpage{241}
   \item flush character, \hyperpage{355}
-  \item \texttt  {FlushCaches}, \hyperpage{1244}
-  \item FOA triples, \hyperpage{1293}
+  \item \texttt  {FlushCaches}, \hyperpage{1245}
+  \item FOA triples, \hyperpage{1294}
   \item \texttt{for} loop, \hyperpage{63}
   \item \texttt  {ForAll}, \hyperpage{290}
   \item \texttt  {ForAny}, \hyperpage{290}
@@ -1440,7 +1440,7 @@
 		\hyperpage{1013}
     \subitem for an integral ring and a rank (and an exclusion list), 
 		\hyperpage{1013}
-  \item \texttt{FunctionOperation}, \hyperpage{1214}
+  \item \texttt{FunctionOperation}, \hyperpage{1215}
   \item functions
     \subitem as in mathematics, \hyperpage{424}
     \subitem as in programming language, \hyperpage{70}
@@ -1466,7 +1466,7 @@
   \indexspace
 
   \item $G$-sets, \hyperpage{588}
-    \subitem computing orbits, \hyperpage{1295}
+    \subitem computing orbits, \hyperpage{1296}
   \item $g_N$ (irrational value), \hyperpage{229}
   \item \texttt{gac}, \hyperpage{1210}
   \item \texttt  {GaloisCyc}
@@ -1505,7 +1505,7 @@
   \item \texttt  {GapInputSCTable}, \hyperpage{925}
   \item \texttt  {GAPKB{\textunderscore }REW}, \hyperpage{791}
   \item \texttt{GAPTCENUM}, \hyperpage{672}
-  \item \texttt  {GasmanLimits}, \hyperpage{125}
+  \item \texttt  {GasmanLimits}, \hyperpage{126}
   \item \texttt  {GasmanMessageStatus}, \hyperpage{125}
   \item \texttt  {GasmanStatistics}, \hyperpage{125}
   \item Gaussian algorithm, \hyperpage{323}
@@ -1524,7 +1524,7 @@
   \item \texttt  {GeneralisedEigenspaces}, \hyperpage{326}
   \item \texttt  {GeneralisedEigenvalues}, \hyperpage{325}
   \item generalized characters, \hyperpage{1122}
-  \item generalized conjugation technique, \hyperpage{1303}
+  \item generalized conjugation technique, \hyperpage{1304}
   \item \texttt  {GeneralizedEigenspaces}, \hyperpage{326}
   \item \texttt  {GeneralizedEigenvalues}, \hyperpage{325}
   \item \texttt  {GeneralLinearGroup}
@@ -1631,7 +1631,7 @@
     \subitem operations syntax, \hyperpage{571}
   \item group algebra, \hyperpage{986}
   \item group characters, \hyperpage{1122}
-  \item group operations, \hyperpage{572}, \hyperpage{1214}
+  \item group operations, \hyperpage{572}, \hyperpage{1215}
   \item group ring, \hyperpage{986}
   \item \texttt  {GroupByGenerators}, \hyperpage{497}
     \subitem with explicitly specified identity element, 
@@ -1672,13 +1672,13 @@
   \item \texttt  {HasseDiagramBinaryRelation}, \hyperpage{446}
   \item \texttt  {HeadPcElementByNumber}, \hyperpage{633}
   \item \texttt  {HEL}\discretionary {-}{}{}\texttt  {P{\textunderscore }}\discretionary {-}{}{}\texttt  {A}\discretionary {-}{}{}\texttt  {D}\discretionary {-}{}{}\texttt  {D{\textunderscore }}\discretionary {-}{}{}\texttt  {BOOK}, 
-		\hyperpage{1289}
-  \item \texttt  {HEL}\discretionary {-}{}{}\texttt  {P{\textunderscore }}\discretionary {-}{}{}\texttt  {R}\discretionary {-}{}{}\texttt  {E}\discretionary {-}{}{}\texttt  {M}\discretionary {-}{}{}\texttt  {O}\discretionary {-}{}{}\texttt  {V}\discretionary {-}{}{}\texttt  {E{\textunderscore }}\discretionary {-}{}{}\texttt  {BOOK}, 
 		\hyperpage{1290}
+  \item \texttt  {HEL}\discretionary {-}{}{}\texttt  {P{\textunderscore }}\discretionary {-}{}{}\texttt  {R}\discretionary {-}{}{}\texttt  {E}\discretionary {-}{}{}\texttt  {M}\discretionary {-}{}{}\texttt  {O}\discretionary {-}{}{}\texttt  {V}\discretionary {-}{}{}\texttt  {E{\textunderscore }}\discretionary {-}{}{}\texttt  {BOOK}, 
+		\hyperpage{1291}
   \item \texttt  {HEL}\discretionary {-}{}{}\texttt  {P{\textunderscore }}\discretionary {-}{}{}\texttt  {V}\discretionary {-}{}{}\texttt  {I}\discretionary {-}{}{}\texttt  {E}\discretionary {-}{}{}\texttt  {W}\discretionary {-}{}{}\texttt  {E}\discretionary {-}{}{}\texttt  {R{\textunderscore }}\discretionary {-}{}{}\texttt  {INFO}, 
-		\hyperpage{1292}
+		\hyperpage{1293}
   \item \texttt  {HenselBound}, \hyperpage{1009}
-  \item Hermite normal form, \hyperpage{1215}
+  \item Hermite normal form, \hyperpage{1216}
   \item \texttt  {HermiteNormalFormIntegerMat}, \hyperpage{342}
   \item \texttt  {Hermite}\discretionary {-}{}{}\texttt  {Normal}\discretionary {-}{}{}\texttt  {Form}\discretionary {-}{}{}\texttt  {Integer}\discretionary {-}{}{}\texttt  {Mat}\discretionary {-}{}{}\texttt  {Transform}, 
 		\hyperpage{342}
@@ -1849,7 +1849,7 @@
   \item \texttt  {InfoMatrix}, \hyperpage{314}
   \item \texttt  {InfoMonomial}, \hyperpage{1195}
   \item \texttt  {InfoNumtheor}, \hyperpage{195}
-  \item \texttt  {InfoObsolete}, \hyperpage{1215}
+  \item \texttt  {InfoObsolete}, \hyperpage{1216}
   \item \texttt  {InfoOptions}, \hyperpage{128}
   \item \texttt  {InfoPackageLoading}, \hyperpage{1206}
   \item \texttt  {InfoPcSubgroup}, \hyperpage{544}
@@ -1869,7 +1869,7 @@
   \item \texttt  {InnerAutomorphism}, \hyperpage{561}
   \item \texttt  {InnerAutomorphismNC}, \hyperpage{561}
   \item \texttt  {InnerAutomorphismsAutomorphismGroup}, \hyperpage{564}
-  \item \texttt  {InParentFOA}, \hyperpage{1294}
+  \item \texttt  {InParentFOA}, \hyperpage{1295}
   \item \texttt  {InputFromUser}, \hyperpage{148}
   \item \texttt  {InputLogTo}
     \subitem for a filename, \hyperpage{137}
@@ -1885,18 +1885,18 @@
   \item \texttt  {InstallCharReadHookFunc}, \hyperpage{151}
   \item \texttt  {InstalledPackageVersion}, \hyperpage{1208}
   \item \texttt  {InstallFactorMaintenance}, \hyperpage{417}
-  \item \texttt  {InstallFlushableValue}, \hyperpage{1243}
-  \item \texttt  {InstallFlushableValueFromFunction}, \hyperpage{1243}
-  \item \texttt  {InstallGlobalFunction}, \hyperpage{1242}
+  \item \texttt  {InstallFlushableValue}, \hyperpage{1244}
+  \item \texttt  {InstallFlushableValueFromFunction}, \hyperpage{1244}
+  \item \texttt  {InstallGlobalFunction}, \hyperpage{1243}
   \item \texttt  {InstallHandlingByNiceBasis}, \hyperpage{919}
-  \item \texttt  {InstallImmediateMethod}, \hyperpage{1221}
+  \item \texttt  {InstallImmediateMethod}, \hyperpage{1222}
   \item \texttt  {InstallIsomorphismMaintenance}, \hyperpage{417}
-  \item \texttt  {InstallMethod}, \hyperpage{1219}
-  \item \texttt  {InstallOtherMethod}, \hyperpage{1219}
+  \item \texttt  {InstallMethod}, \hyperpage{1220}
+  \item \texttt  {InstallOtherMethod}, \hyperpage{1220}
   \item \texttt{InstallReadlineMacro}, \hyperpage{97}
   \item \texttt  {InstallSubsetMaintenance}, \hyperpage{416}
-  \item \texttt  {InstallTrueMethod}, \hyperpage{1222}
-  \item \texttt  {InstallValue}, \hyperpage{1243}
+  \item \texttt  {InstallTrueMethod}, \hyperpage{1223}
+  \item \texttt  {InstallValue}, \hyperpage{1244}
   \item \texttt  {Int}, \hyperpage{178}
     \subitem for a cyclotomic, \hyperpage{225}
     \subitem for a FFE, \hyperpage{885}
@@ -2036,7 +2036,7 @@
   \item \texttt  {IsAssocWord}, \hyperpage{474}
   \item \texttt  {IsAssocWordWithInverse}, \hyperpage{474}
   \item \texttt  {IsAssocWordWithOne}, \hyperpage{474}
-  \item \texttt{IsAttributeStoringRep}, \hyperpage{1250}
+  \item \texttt{IsAttributeStoringRep}, \hyperpage{1251}
   \item \texttt  {IsAutomorphismGroup}, \hyperpage{563}
   \item \texttt  {IsBasicWreathLessThanOrEqual}, \hyperpage{476}
   \item \texttt  {IsBasicWreathProductOrdering}, \hyperpage{455}
@@ -2064,7 +2064,7 @@
   \item \texttt  {IsBound\texttt  {\char 92\relax }.}, \hyperpage{383}
   \item \texttt  {IsBound\texttt  {\char 92\relax }[\texttt  {\char 92\relax }]}, 
 		\hyperpage{251}
-  \item \texttt  {IsBoundElmWPObj}, \hyperpage{1300}
+  \item \texttt  {IsBoundElmWPObj}, \hyperpage{1301}
   \item \texttt  {IsBoundGlobal}, \hyperpage{52}
   \item \texttt  {IsBrauerTable}, \hyperpage{1074}
   \item \texttt  {IsBravaisGroup}, \hyperpage{626}
@@ -2100,7 +2100,7 @@
   \item \texttt  {IsCommutativeElement}, \hyperpage{422}
   \item \texttt  {IsCommutativeElementCollColl}, \hyperpage{422}
   \item \texttt  {IsCommutativeElementCollection}, \hyperpage{422}
-  \item \texttt{IsComponentObjectRep}, \hyperpage{1250}
+  \item \texttt{IsComponentObjectRep}, \hyperpage{1251}
   \item \texttt  {IsCompositionMappingRep}, \hyperpage{426}
   \item \texttt  {IsConfluent}
     \subitem for a rewriting system, \hyperpage{491}
@@ -2466,7 +2466,7 @@
   \item \texttt  {IsOutputStream}, \hyperpage{140}
   \item \texttt  {IsOutputTextNone}, \hyperpage{140}
   \item \texttt  {IsOutputTextStream}, \hyperpage{140}
-  \item \texttt  {IsPackageMarkedForLoading}, \hyperpage{1209}
+  \item \texttt  {IsPackageMarkedForLoading}, \hyperpage{1210}
   \item \texttt  {IsPadicExtensionNumber}, \hyperpage{1032}
   \item \texttt  {IsPadicExtensionNumberFamily}, \hyperpage{1032}
   \item \texttt  {IsParentPcgsFamilyPcgs}, \hyperpage{652}
@@ -2608,7 +2608,7 @@
   \item \texttt  {IsSemigroup}, \hyperpage{762}
   \item \texttt  {IsSemigroupCongruence}, \hyperpage{772}
   \item \texttt  {IsSemigroupIdeal}, \hyperpage{772}
-  \item \texttt  {IsSemilatticeAsSemigroup}, \hyperpage{1216}
+  \item \texttt  {IsSemilatticeAsSemigroup}, \hyperpage{1217}
   \item \texttt  {IsSemiRegular}
     \subitem for a group, an action domain, etc., \hyperpage{586}
     \subitem for an external set, \hyperpage{586}
@@ -2778,7 +2778,7 @@
   \item \texttt  {Kernel}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Multiplicative}\discretionary {-}{}{}\texttt  {General}\discretionary {-}{}{}\texttt  {Mapping}, 
 		\hyperpage{435}
   \item \texttt  {KernelOfTransformation}, \hyperpage{807}
-  \item \texttt  {KeyDependentOperation}, \hyperpage{1293}
+  \item \texttt  {KeyDependentOperation}, \hyperpage{1294}
   \item \texttt  {KillingMatrix}, \hyperpage{974}
   \item \texttt  {KnownAttributesOfObject}, \hyperpage{170}
   \item \texttt  {KnownPropertiesOfObject}, \hyperpage{174}
@@ -2871,14 +2871,14 @@
   \item \texttt{LeftQuotient}
     \subitem for words, \hyperpage{476}
   \item \texttt  {LeftShiftRowVector}, \hyperpage{309}
-  \item legacy, \hyperpage{1214}
+  \item legacy, \hyperpage{1215}
   \item \texttt  {Legendre}, \hyperpage{199}
   \item \texttt  {Length}, \hyperpage{277}
     \subitem for a associative word, \hyperpage{477}
   \item length
     \subitem of a word, \hyperpage{477}
   \item \texttt  {LengthsTom}, \hyperpage{1053}
-  \item \texttt  {LengthWPObj}, \hyperpage{1300}
+  \item \texttt  {LengthWPObj}, \hyperpage{1301}
   \item \texttt  {LenstraBase}, \hyperpage{897}
   \item \texttt  {LessThanFunction}, \hyperpage{452}
   \item \texttt  {LessThanOrEqualFunction}, \hyperpage{452}
@@ -3076,12 +3076,12 @@
     \subitem for a list, \hyperpage{286}
     \subitem for various objects, \hyperpage{286}
   \item \texttt  {MaximumList}, \hyperpage{287}
-  \item meet strategy, \hyperpage{1310}
+  \item meet strategy, \hyperpage{1311}
   \item \texttt  {MeetEquivalenceRelations}, \hyperpage{448}
   \item \texttt  {MeetMaps}, \hyperpage{1179}
   \item \texttt  {MeetOfPartialPerms}, \hyperpage{822}
   \item \texttt  {MemoryUsage}, \hyperpage{163}
-  \item method, \hyperpage{1218}
+  \item method, \hyperpage{1219}
   \item \texttt  {Mid}, \hyperpage{241}
   \item \texttt  {MinimalElementCosetStabChain}, \hyperpage{613}
   \item \texttt  {MinimalGeneratingSet}, \hyperpage{545}
@@ -3140,7 +3140,7 @@
   \item \texttt  {MonomialGrevlexOrdering}, \hyperpage{1016}
   \item \texttt  {MonomialGrlexOrdering}, \hyperpage{1016}
   \item \texttt  {MonomialLexOrdering}, \hyperpage{1015}
-  \item \texttt{MonomialTotalDegreeLess}, \hyperpage{1215}
+  \item \texttt{MonomialTotalDegreeLess}, \hyperpage{1216}
   \item monomorphisms
     \subitem find all, \hyperpage{567}
   \item \texttt  {MorClassLoop}, \hyperpage{567}
@@ -3229,8 +3229,8 @@
   \item \texttt  {Mutable}\discretionary {-}{}{}\texttt  {Basis}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Ideal}\discretionary {-}{}{}\texttt  {In}\discretionary {-}{}{}\texttt  {Nonassociative}\discretionary {-}{}{}\texttt  {Algebra}, 
 		\hyperpage{936}
   \item \texttt  {MutableBasisOfNonassociativeAlgebra}, \hyperpage{936}
-  \item \texttt{MutableIdentityMat}, \hyperpage{1215}
-  \item \texttt{MutableNullMat}, \hyperpage{1215}
+  \item \texttt{MutableIdentityMat}, \hyperpage{1216}
+  \item \texttt{MutableNullMat}, \hyperpage{1216}
 
   \indexspace
 
@@ -3240,7 +3240,7 @@
   \item \texttt  {NamesFilter}, \hyperpage{166}
   \item \texttt  {NamesGVars}, \hyperpage{53}
   \item \texttt  {NamesLocalVariablesFunction}, \hyperpage{71}
-  \item \texttt  {NamesOfComponents}, \hyperpage{1231}
+  \item \texttt  {NamesOfComponents}, \hyperpage{1232}
   \item \texttt  {NamesOfFusionSources}, \hyperpage{1172}
   \item namespace, \hyperpage{49}, \hyperpage{51}
   \item \texttt  {NamesSystemGVars}, \hyperpage{54}
@@ -3274,24 +3274,24 @@
   \item \texttt  {NegativeRootVectors}, \hyperpage{967}
   \item \texttt  {NestingDepthA}, \hyperpage{265}
   \item \texttt  {NestingDepthM}, \hyperpage{265}
-  \item \texttt  {NewAttribute}, \hyperpage{1225}
+  \item \texttt  {NewAttribute}, \hyperpage{1226}
   \item \texttt{NewAttribute}
-    \subitem example, \hyperpage{1249}
-  \item \texttt  {NewCategory}, \hyperpage{1224}
-  \item \texttt  {NewConstructor}, \hyperpage{1227}
+    \subitem example, \hyperpage{1250}
+  \item \texttt  {NewCategory}, \hyperpage{1225}
+  \item \texttt  {NewConstructor}, \hyperpage{1228}
   \item \texttt  {NewDictionary}, \hyperpage{373}
-  \item \texttt  {NewFamily}, \hyperpage{1228}
-  \item \texttt  {NewFilter}, \hyperpage{1226}
+  \item \texttt  {NewFamily}, \hyperpage{1229}
+  \item \texttt  {NewFilter}, \hyperpage{1227}
   \item \texttt  {NewFloat}, \hyperpage{243}
   \item \texttt  {NewInfoClass}, \hyperpage{106}
   \item newline, \hyperpage{47}
   \item \texttt  {NewmanInfinityCriterion}, \hyperpage{688}
-  \item \texttt  {NewOperation}, \hyperpage{1227}
-  \item \texttt  {NewProperty}, \hyperpage{1226}
-  \item \texttt  {NewRepresentation}, \hyperpage{1225}
+  \item \texttt  {NewOperation}, \hyperpage{1228}
+  \item \texttt  {NewProperty}, \hyperpage{1227}
+  \item \texttt  {NewRepresentation}, \hyperpage{1226}
   \item \texttt{NewRepresentation}
-    \subitem example, \hyperpage{1250}
-  \item \texttt  {NewType}, \hyperpage{1229}
+    \subitem example, \hyperpage{1251}
+  \item \texttt  {NewType}, \hyperpage{1230}
   \item \texttt  {NextIterator}, \hyperpage{398}
   \item \texttt  {NextPrimeInt}, \hyperpage{186}
   \item \texttt  {NF}, \hyperpage{893}
@@ -3338,7 +3338,7 @@
   \item \texttt  {NormalSubgroups}, \hyperpage{537}
   \item \texttt  {NormedRowVector}, \hyperpage{306}
   \item \texttt  {NormedRowVectors}, \hyperpage{914}
-  \item \texttt{NormedVectors}, \hyperpage{1215}
+  \item \texttt{NormedVectors}, \hyperpage{1216}
   \item \texttt{not}, \hyperpage{247}
   \item \texttt  {NrArrangements}, \hyperpage{209}
   \item \texttt  {NrBasisVectors}, \hyperpage{909}
@@ -3415,11 +3415,11 @@
 
   \indexspace
 
-  \item \texttt  {ObjByExtRep}, \hyperpage{1239}
+  \item \texttt  {ObjByExtRep}, \hyperpage{1240}
     \subitem for creating a UEALattice element, \hyperpage{982}
-  \item \texttt  {Objectify}, \hyperpage{1229}
-  \item \texttt  {ObjectifyWithAttributes}, \hyperpage{1229}
-  \item obsolete, \hyperpage{1214}
+  \item \texttt  {Objectify}, \hyperpage{1230}
+  \item \texttt  {ObjectifyWithAttributes}, \hyperpage{1230}
+  \item obsolete, \hyperpage{1215}
   \item \texttt  {OCOneCocycles}, \hyperpage{548}
   \item octal character codes, \hyperpage{355}
   \item \texttt  {OctaveAlgebra}, \hyperpage{927}
@@ -3476,12 +3476,12 @@
   \item \texttt  {OnTuplesTuples}, \hyperpage{574}
   \item \texttt{PCore}
     \subitem see PCore, \hyperpage{515}
-  \item \texttt{Operation}, \hyperpage{1214}
-  \item operation, \hyperpage{1218}
+  \item \texttt{Operation}, \hyperpage{1215}
+  \item operation, \hyperpage{1219}
   \item \texttt  {OperationAlgebraHomomorphism}
     \subitem action on a free left module, \hyperpage{943}
     \subitem action w.r.t. a basis of the module, \hyperpage{943}
-  \item \texttt{OperationHomomorphism}, \hyperpage{1214}
+  \item \texttt{OperationHomomorphism}, \hyperpage{1215}
   \item operations
     \subitem for booleans, \hyperpage{246}
   \item Operations for algebraic elements, \hyperpage{1027}
@@ -3498,7 +3498,7 @@
   \item \texttt{or}, \hyperpage{246}
   \item \texttt  {Orbit}, \hyperpage{576}
   \item \texttt  {OrbitFusions}, \hyperpage{1175}
-  \item \texttt  {OrbitishFO}, \hyperpage{1297}
+  \item \texttt  {OrbitishFO}, \hyperpage{1298}
   \item \texttt  {OrbitLength}, \hyperpage{578}
   \item \texttt  {OrbitLengths}
     \subitem for a group, a set of seeds, etc., \hyperpage{578}
@@ -3512,11 +3512,11 @@
     \subitem attribute, \hyperpage{577}
     \subitem operation, \hyperpage{577}
   \item \texttt{Orbits}
-    \subitem as attributes for external sets, \hyperpage{1295}
+    \subitem as attributes for external sets, \hyperpage{1296}
   \item \texttt  {OrbitsDomain}
     \subitem for a group and an action domain, \hyperpage{577}
     \subitem of an external set, \hyperpage{577}
-  \item \texttt  {OrbitsishOperation}, \hyperpage{1296}
+  \item \texttt  {OrbitsishOperation}, \hyperpage{1297}
   \item \texttt  {OrbitsPerms}, \hyperpage{601}
   \item \texttt  {OrbitStabChain}, \hyperpage{612}
   \item \texttt  {OrbitStabilizer}, \hyperpage{578}
@@ -3528,7 +3528,7 @@
     \subitem of a list, collection or domain, \hyperpage{392}
     \subitem of the prime residue group, \hyperpage{196}
   \item ordered partitions
-    \subitem internal representation, \hyperpage{1304}
+    \subitem internal representation, \hyperpage{1305}
   \item \texttt  {OrderedPartitions}, \hyperpage{214}
   \item ordering
     \subitem booleans, \hyperpage{246}
@@ -3562,7 +3562,7 @@
   \item \texttt  {OutputTextString}, \hyperpage{149}
   \item \texttt  {OutputTextUser}, \hyperpage{148}
   \item \texttt  {Overlaps}, \hyperpage{241}
-  \item overload, \hyperpage{1222}
+  \item overload, \hyperpage{1223}
 
   \indexspace
 
@@ -3697,7 +3697,7 @@
   \item \texttt  {Position}, \hyperpage{271}
   \item \texttt  {PositionBound}, \hyperpage{274}
   \item \texttt  {PositionCanonical}, \hyperpage{272}
-  \item \texttt{PositionFirstComponent}, \hyperpage{1215}
+  \item \texttt{PositionFirstComponent}, \hyperpage{1216}
   \item \texttt  {PositionNonZero}, \hyperpage{275}
   \item \texttt  {PositionNot}, \hyperpage{274}
   \item \texttt  {PositionNthOccurrence}, \hyperpage{272}
@@ -3890,7 +3890,7 @@
   \item quadratic residue, \hyperpage{198, 199}
   \item \texttt  {QuaternionAlgebra}, \hyperpage{926}
   \item \texttt  {QuaternionGroup}, \hyperpage{727}
-  \item \texttt{QUIET}, \hyperpage{1215}
+  \item \texttt{QUIET}, \hyperpage{1216}
   \item \texttt  {QUIT}, \hyperpage{92}
   \item \texttt{QUIT}
     \subitem emergency quit, \hyperpage{92}
@@ -3990,7 +3990,7 @@
   \item \texttt  {ReadLine}, \hyperpage{142}
   \item \texttt{ReadlineInitLine}, \hyperpage{96}
   \item \texttt  {ReadPackage}, \hyperpage{1207}
-  \item \texttt{ReadPkg}, \hyperpage{1215}
+  \item \texttt{ReadPkg}, \hyperpage{1216}
   \item \texttt  {RealClasses}, \hyperpage{1087}
   \item \texttt  {RealizableBrauerCharacters}, \hyperpage{1163}
   \item \texttt  {RealPart}, \hyperpage{233}
@@ -4009,7 +4009,7 @@
   \item record unbind
     \subitem operation, \hyperpage{383}
   \item recursion, \hyperpage{66}
-  \item \texttt  {RedispatchOnCondition}, \hyperpage{1221}
+  \item \texttt  {RedispatchOnCondition}, \hyperpage{1222}
   \item redisplay a help section, \hyperpage{29}
   \item redisplay with next help viewer, \hyperpage{29}
   \item \texttt  {ReduceCoeffs}, \hyperpage{312}
@@ -4088,7 +4088,7 @@
     \subitem of a list or collection, \hyperpage{393}
   \item \texttt  {RepresentativeAction}, \hyperpage{580}
   \item \texttt  {RepresentativeLinearOperation}, \hyperpage{945}
-  \item \texttt{RepresentativeOperation}, \hyperpage{1214}
+  \item \texttt{RepresentativeOperation}, \hyperpage{1215}
   \item \texttt  {RepresentativesContainedRightCosets}, \hyperpage{510}
   \item \texttt  {RepresentativesFusions}, \hyperpage{1175}
   \item \texttt  {RepresentativeSmallest}, \hyperpage{393}
@@ -4101,13 +4101,13 @@
   \item \texttt  {RepresentativeTom}, \hyperpage{1064}
   \item \texttt  {RepresentativeTomByGenerators}, \hyperpage{1064}
   \item \texttt  {RepresentativeTomByGeneratorsNC}, \hyperpage{1064}
-  \item \texttt{RequirePackage}, \hyperpage{1215}
+  \item \texttt{RequirePackage}, \hyperpage{1216}
   \item \texttt  {Reread}, \hyperpage{138}
   \item \texttt  {REREADING}, \hyperpage{138}
   \item \texttt  {RereadPackage}, \hyperpage{1207}
-  \item \texttt{RereadPkg}, \hyperpage{1215}
+  \item \texttt{RereadPkg}, \hyperpage{1216}
   \item \texttt  {Reset}, \hyperpage{193}
-  \item \texttt  {ResetFilterObj}, \hyperpage{1227}
+  \item \texttt  {ResetFilterObj}, \hyperpage{1228}
   \item \texttt  {ResetOptionsStack}, \hyperpage{128}
   \item residue
     \subitem quadratic, \hyperpage{198, 199}
@@ -4259,9 +4259,9 @@
   \item \texttt  {SetCrystGroupDefaultAction}, \hyperpage{627}
   \item \texttt  {SetCyclotomicsLimit}, \hyperpage{236}
   \item \texttt  {SetDefaultInfoOutput}, \hyperpage{108}
-  \item \texttt  {SetElmWPObj}, \hyperpage{1300}
+  \item \texttt  {SetElmWPObj}, \hyperpage{1301}
   \item \texttt  {SetEntrySCTable}, \hyperpage{925}
-  \item \texttt  {SetFilterObj}, \hyperpage{1226}
+  \item \texttt  {SetFilterObj}, \hyperpage{1227}
   \item \texttt  {SetFloats}, \hyperpage{243}
   \item \texttt  {SetGasmanMessageStatus}, \hyperpage{125}
   \item \texttt  {SetHelpViewer}, \hyperpage{30}
@@ -4275,7 +4275,7 @@
   \item \texttt  {SetParent}, \hyperpage{406}
   \item \texttt  {SetPower}, \hyperpage{655}
   \item \texttt  {SetPrintFormattingStatus}, \hyperpage{146}
-  \item \texttt  {SetRecursionTrapInterval}, \hyperpage{123}
+  \item \texttt  {SetRecursionTrapInterval}, \hyperpage{124}
   \item \texttt  {SetReducedMultiplication}, \hyperpage{668}
   \item Sets, \hyperpage{249}
   \item sets, \hyperpage{279}
@@ -4389,7 +4389,7 @@
   \item \texttt  {SmallGroupsInformation}, \hyperpage{742}
   \item \texttt  {SmallRing}, \hyperpage{865}
   \item \texttt  {SmallSimpleGroup}, \hyperpage{526}
-  \item Smith normal form, \hyperpage{1215}
+  \item Smith normal form, \hyperpage{1216}
   \item \texttt  {SmithNormalFormIntegerMat}, \hyperpage{342}
   \item \texttt  {SmithNormalFormIntegerMatTransforms}, \hyperpage{342}
   \item \texttt  {SMTX.AbsoluteIrreducibilityTest}, \hyperpage{1042}
@@ -4732,6 +4732,7 @@
     \subitem for a character, \hyperpage{1200}
     \subitem for a group, \hyperpage{1200}
   \item \texttt  {TestMonomialUseLattice}, \hyperpage{1199}
+  \item \texttt  {TestPackage}, \hyperpage{1208}
   \item \texttt  {TestPackageAvailability}, \hyperpage{1207}
   \item \texttt  {TestPerm1}, \hyperpage{1159}
   \item \texttt  {TestPerm2}, \hyperpage{1159}
@@ -4824,7 +4825,7 @@
   \item \texttt  {Trunc}, \hyperpage{241}
   \item \texttt  {TryCosetTableInWholeGroup}, \hyperpage{675}
   \item \texttt  {TryGcdCancelExtRepPolynomials}, \hyperpage{1025}
-  \item \texttt  {TryNextMethod}, \hyperpage{1220}
+  \item \texttt  {TryNextMethod}, \hyperpage{1221}
   \item tuple stabilizer, \hyperpage{578}
   \item \texttt  {Tuples}, \hyperpage{210}
   \item \texttt  {TwoClosure}, \hyperpage{616}
@@ -4884,7 +4885,7 @@
   \item \texttt  {Unbind\texttt  {\char 92\relax }.}, \hyperpage{383}
   \item \texttt  {Unbind\texttt  {\char 92\relax }[\texttt  {\char 92\relax }]}, 
 		\hyperpage{252}
-  \item \texttt  {UnbindElmWPObj}, \hyperpage{1300}
+  \item \texttt  {UnbindElmWPObj}, \hyperpage{1301}
   \item \texttt  {UnbindGlobal}, \hyperpage{53}
   \item \texttt  {UncoverageLineByLine}, \hyperpage{117}
   \item \texttt  {UnderlyingCharacteristic}
@@ -5000,7 +5001,7 @@
   \indexspace
 
   \item $w_N$ (irrational value), \hyperpage{230}
-  \item \texttt  {WeakPointerObj}, \hyperpage{1299}
+  \item \texttt  {WeakPointerObj}, \hyperpage{1300}
   \item web sites
     \subitem for GAP, \hyperpage{27}
   \item \texttt  {WedgeGModule}, \hyperpage{1034}

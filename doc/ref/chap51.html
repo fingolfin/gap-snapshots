@@ -142,7 +142,7 @@
 
 <h5>51.1-1 IsSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemigroup</code>( <var class="Arg">D</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemigroup</code>( <var class="Arg">D</var> )</td><td class="tdright">( synonym )</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the object <var class="Arg">D</var> is a semigroup. A <em>semigroup</em> is a magma (see <a href="chap35.html#X873E502F7D21C39C"><span class="RefLink">35</span></a>) with associative multiplication.</p>
 
 <p><a id="X7F55D28F819B2817" name="X7F55D28F819B2817"></a></p>
@@ -341,7 +341,7 @@ fail
 
 <h5>51.2-1 IsMonoid</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMonoid</code>( <var class="Arg">D</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMonoid</code>( <var class="Arg">D</var> )</td><td class="tdright">( synonym )</td></tr></table></div>
 <p>A <em>monoid</em> is a magma-with-one (see <a href="chap35.html#X873E502F7D21C39C"><span class="RefLink">35</span></a>) with associative multiplication.</p>
 
 <p><a id="X7F95328B7C7E49EA" name="X7F95328B7C7E49EA"></a></p>
@@ -636,7 +636,7 @@ true
 <h5>51.4-8 IsInverseSemigroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInverseSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInverseMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInverseMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">( category )</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>A semigroup is an <em>inverse semigroup</em> if every element <code class="code">x</code> has a unique semigroup inverse, that is, a unique element <code class="code">y</code> such that <code class="code">x*y*x=x</code> and <code class="code">y*x*y=y</code>.</p>
@@ -1037,8 +1037,8 @@ false</pre></div>
 
 <h5>51.9-6 IsReesMatrixSubsemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsReesMatrixSubsemigroup</code>( <var class="Arg">R</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsReesZeroMatrixSubsemigroup</code>( <var class="Arg">R</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsReesMatrixSubsemigroup</code>( <var class="Arg">R</var> )</td><td class="tdright">( synonym )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsReesZeroMatrixSubsemigroup</code>( <var class="Arg">R</var> )</td><td class="tdright">( synonym )</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>Every semigroup consisting of elements of a Rees matrix semigroup satisfies the property <code class="func">IsReesMatrixSubsemigroup</code> and every semigroup of Rees 0-matrix semigroup elements satisfies <code class="func">IsReesZeroMatrixSubsemigroup</code>.</p>

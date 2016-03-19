@@ -255,7 +255,7 @@ Transformation( [ 2, 4, 2, 6, 6, 7, 8, 2, 10, 10, 11, 8 ] )
 
 <p><code class="func">TransformationOp</code> returns the transformation that corresponds to the action of the object <var class="Arg">obj</var> on the domain or list <var class="Arg">list</var> via the function <var class="Arg">func</var>. If the optional third argument <var class="Arg">func</var> is not specified, then the action <code class="func">OnPoints</code> (<a href="chap41.html#X7FE417DD837987B4"><span class="RefLink">41.2-1</span></a>) is used by default. Note that the returned transformation refers to the positions in <var class="Arg">list</var> even if <var class="Arg">list</var> itself consists of integers.</p>
 
-<p>This function is the analogue in the context of transformations of <code class="func">Permutation</code> (<a href="../../doc/ref/chap41.html#X7807A33381DCAB26"><span class="RefLink">Reference: Permutation</span></a>).</p>
+<p>This function is the analogue in the context of transformations of <code class="func">Permutation</code> (<a href="../../doc/ref/chap41.html#X7807A33381DCAB26"><span class="RefLink">Reference: Permutation (for a group, an action domain, etc.)</span></a>).</p>
 
 <p>If <var class="Arg">obj</var> does not map elements of <var class="Arg">list</var> into <var class="Arg">list</var>, then <code class="keyw">fail</code> is returned.</p>
 
@@ -595,7 +595,7 @@ true
 
 <h5>53.5-1 DegreeOfTransformation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeOfTransformation</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeOfTransformation</code>( <var class="Arg">f</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeOfTransformationCollection</code>( <var class="Arg">coll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>Returns: A positive integer.</p>
 
@@ -678,8 +678,8 @@ true
 
 <h5>53.5-5 MovedPoints</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MovedPoints</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MovedPoints</code>( <var class="Arg">coll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MovedPoints</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MovedPoints</code>( <var class="Arg">coll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>Returns: A set of positive integers.</p>
 
 <p>When the argument is a transformation, <code class="code">MovedPoints</code> returns the set of positive integers <code class="code">i</code> such that <code class="code">i^<var class="Arg">f</var>&lt;&gt;i</code>. <code class="code">MovedPoints</code> returns the set of points moved by some element of the collection of transformations <var class="Arg">coll</var>.</p>
@@ -825,7 +825,7 @@ infinity
 
 <h5>53.5-11 FlatKernelOfTransformation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FlatKernelOfTransformation</code>( <var class="Arg">f</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FlatKernelOfTransformation</code>( <var class="Arg">f</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>Returns: The flat kernel of a transformation.</p>
 
 <p>If the kernel classes of the transformation <var class="Arg">f</var> on <code class="code">[1..<var class="Arg">n</var>]</code> are <span class="SimpleMath">K_1, dots, K_r</span>, then <code class="code">FlatKernelOfTransformation</code> returns a list <code class="code">L</code> such that <code class="code">L[i]=j</code> for all <code class="code">i</code> in <span class="SimpleMath">K_j</span>. For a given transformation and positive integer <var class="Arg">n</var>, there is a unique such list.</p>
@@ -1039,7 +1039,7 @@ Transformation( [ 6, 12, 11, 1, 7, 6, 2, 8, 4, 7, 5, 12 ] )
 
 <h5>53.5-21 CycleTransformationInt</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CycleTransformationInt</code>( <var class="Arg">f</var>, <var class="Arg">n</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CycleTransformationInt</code>( <var class="Arg">f</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: A list of positive integers.</p>
 
 <p>If <var class="Arg">f</var> is a transformation and <var class="Arg">n</var> is a positive integer, then <code class="code">CycleTransformationInt</code> returns the cycle of the component of <var class="Arg">f</var> containing <var class="Arg">n</var>.</p>
@@ -1088,7 +1088,7 @@ true
 
 <h5>53.5-23 TrimTransformation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TrimTransformation</code>( <var class="Arg">f</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TrimTransformation</code>( <var class="Arg">f</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: Nothing.</p>
 
 <p>It can happen that the internal representation of a transformation uses more memory than necessary. For example, this can happen when composing transformations where it is possible that the resulting transformation <var class="Arg">f</var> has belongs to <code class="code">IsTrans4Rep</code> and has its images stored as 32-bit integers, while none of its moved points exceeds 65536. The purpose of <code class="code">TrimTransformation</code> is to change the internal representation of such an <var class="Arg">f</var> to remove the trailing fixed points.</p>
@@ -1173,8 +1173,8 @@ Transformation( [ 3, 8, 12, 1, 11, 9, 9, 4, 10, 5, 10, 6 ] )
 
 <h5>53.7-1 IsTransformationSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransformationSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransformationMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransformationSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">( synonym )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransformationMonoid</code>( <var class="Arg">obj</var> )</td><td class="tdright">( synonym )</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>A <em>transformation semigroup</em> is simply a semigroup consisting of transformations. An object <var class="Arg">obj</var> is a transformation semigroup in <strong class="pkg">GAP</strong> if it satisfies <code class="func">IsSemigroup</code> (<a href="chap51.html#X7B412E5B8543E9B7"><span class="RefLink">51.1-1</span></a>) and <code class="func">IsTransformationCollection</code> (<a href="chap53.html#X7A6747CE85F2E6EA"><span class="RefLink">53.1-2</span></a>).</p>
@@ -1320,7 +1320,7 @@ MappingByFunction( Group([ (1,2,3) ]), &lt;commutative transformation
 
 <h5>53.7-6 AntiIsomorphismTransformationSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AntiIsomorphismTransformationSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AntiIsomorphismTransformationSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>Returns: An anti-isomorphism.</p>
 
 <p>If <var class="Arg">S</var> is a semigroup, then <code class="code">AntiIsomorphismTransformationSemigroup</code> returns an anti-isomorphism from <var class="Arg">S</var> to a transformation semigroup. At present, the degree of the resulting transformation semigroup equals the size of <var class="Arg">S</var> plus <span class="SimpleMath">1</span>, and, consequently, this function is of limited use.</p>

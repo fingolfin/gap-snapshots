@@ -9,7 +9,7 @@
   
   [1X51.1-1 IsSemigroup[101X
   
-  [29X[2XIsSemigroup[102X( [3XD[103X ) [32X property
+  [29X[2XIsSemigroup[102X( [3XD[103X ) [32X Synonym
   
   [33X[0;0Yreturns [9Xtrue[109X if the object [3XD[103X is a semigroup. A [13Xsemigroup[113X is a magma (see [14X35[114X)
   with associative multiplication.[133X
@@ -226,7 +226,7 @@
   
   [1X51.2-1 IsMonoid[101X
   
-  [29X[2XIsMonoid[102X( [3XD[103X ) [32X property
+  [29X[2XIsMonoid[102X( [3XD[103X ) [32X Synonym
   
   [33X[0;0YA [13Xmonoid[113X is a magma-with-one (see [14X35[114X) with associative multiplication.[133X
   
@@ -553,7 +553,7 @@
   [1X51.4-8 IsInverseSemigroup[101X
   
   [29X[2XIsInverseSemigroup[102X( [3XS[103X ) [32X property
-  [29X[2XIsInverseMonoid[102X( [3XS[103X ) [32X property
+  [29X[2XIsInverseMonoid[102X( [3XS[103X ) [32X Category
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YA  semigroup  is  an  [13Xinverse  semigroup[113X  if  every  element  [10Xx[110X has a unique
@@ -1052,8 +1052,8 @@
   
   [1X51.9-6 IsReesMatrixSubsemigroup[101X
   
-  [29X[2XIsReesMatrixSubsemigroup[102X( [3XR[103X ) [32X property
-  [29X[2XIsReesZeroMatrixSubsemigroup[102X( [3XR[103X ) [32X property
+  [29X[2XIsReesMatrixSubsemigroup[102X( [3XR[103X ) [32X Synonym
+  [29X[2XIsReesZeroMatrixSubsemigroup[102X( [3XR[103X ) [32X Synonym
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YEvery  semigroup consisting of elements of a Rees matrix semigroup satisfies

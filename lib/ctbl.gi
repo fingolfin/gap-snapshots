@@ -1071,6 +1071,7 @@ InstallMethod( OrdinaryCharacterTable,
     # Store the attribute values of the interface.
     SetUnderlyingGroup( tbl, G );
     SetUnderlyingCharacteristic( tbl, 0 );
+    IsFinite(G);
     ccl:= ConjugacyClasses( G );
     idpos:= First( [ 1 .. Length( ccl ) ],
                    i -> Order( Representative( ccl[i] ) ) = 1 );
@@ -2515,7 +2516,8 @@ InstallMethod( Identifier,
     function( tbl )
 
     # Construct an identifier that is unique in the current session.
-    tbl:= Concatenation( "CT", String( ATOMIC_ADDITION( LARGEST_IDENTIFIER_NUMBER, 1, 1 ) ) );
+    LARGEST_IDENTIFIER_NUMBER[1]:= LARGEST_IDENTIFIER_NUMBER[1] + 1;
+    tbl:= Concatenation( "CT", String( LARGEST_IDENTIFIER_NUMBER[1] ) );
     ConvertToStringRep( tbl );
     return tbl;
     end );
@@ -5056,7 +5058,6 @@ InstallValue( CharacterTableDisplayDefaults, rec(
         StringEntryData := CharacterTableDisplayStringEntryDataDefault,
         Legend          := CharacterTableDisplayLegendDefault,
     ) ) );
-MakeThreadLocal("CharacterTableDisplayDefaults");
 
 #############################################################################
 ##

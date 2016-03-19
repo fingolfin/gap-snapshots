@@ -20,7 +20,7 @@
   
   [1X33.1-1 IsBinaryRelation[101X
   
-  [29X[2XIsBinaryRelation[102X( [3XR[103X ) [32X Category
+  [29X[2XIsBinaryRelation[102X( [3XR[103X ) [32X property
   
   [33X[0;0Yis  exactly  the  same category as (i.e. a synonym for) [2XIsEndoGeneralMapping[102X
   ([14X32.13-3[114X).[133X

@@ -331,7 +331,7 @@
   [2XBestSplittingMatrix[102X  71.17-5
   [2XBiAlgebraModule[102X  62.11-6
   [2XBiAlgebraModuleByGenerators[102X  62.11-3
-  [2XBibEntry[102X  76.3-14
+  [2XBibEntry[102X  76.3-15
   [2XBilinearFormMat[102X  64.6-13
   binary relation  33.
   [2XBinaryRelationByElements[102X  33.1-2
@@ -475,7 +475,7 @@
   Chinese remainder  14.3-9
   [2XChineseRem[102X  14.3-9
   [2XChomp[102X  27.7-18
-  [2XCite[102X  76.3-15
+  [2XCite[102X  76.3-16
   [2XCIUnivPols[102X  66.1-5
   class function  72.1-1
   class function objects  72.1-1
@@ -581,7 +581,7 @@
   [2XCommutatorSubgroup[102X  39.12-2
   [2XCompacted[102X  21.20-2
   [2XCompanionMat[102X  24.13-5
-  [2XCompareVersionNumbers[102X  76.3-6
+  [2XCompareVersionNumbers[102X  76.3-7
   comparison, fp semigroup elements  52.3-1
   comparison, operation  31.11-1
   comparison, rational functions  66.3
@@ -749,7 +749,7 @@
   [10XDeclareAttribute[110X, example  80.5
   [10XDeclareAttribute!example[110X  80.8-3
   [10XDeclareAutoPackage[110X  77.2
-  [2XDeclareAutoreadableVariables[102X  76.3-8
+  [2XDeclareAutoreadableVariables[102X  76.3-9
   [2XDeclareCategory[102X  79.18-1
   [2XDeclareFilter[102X  79.18-5
   [2XDeclareGlobalFunction[102X  79.18-7
@@ -853,8 +853,8 @@
   [2XDimensionsLoewyFactors[102X  39.17-15
   [2XDimensionsMat[102X  24.4-1
   [2XDirectoriesLibrary[102X  9.3-5
-  [2XDirectoriesPackageLibrary[102X  76.3-4
-  [2XDirectoriesPackagePrograms[102X  76.3-5
+  [2XDirectoriesPackageLibrary[102X  76.3-5
+  [2XDirectoriesPackagePrograms[102X  76.3-6
   [2XDirectoriesSystemPrograms[102X  9.3-6
   [2XDirectory[102X  9.3-2
   [2XDirectoryContents[102X  9.3-7
@@ -1271,7 +1271,7 @@
   [22XG[122X-sets  41.12
   [22XG[122X-sets, computing orbits  85.3
   [22Xg_N[122X (irrational value)  18.4-1
-  [10Xgac[110X  76.3-9
+  [10Xgac[110X  76.3-10
   [2XGaloisCyc[102X (for a cyclotomic)  18.5-1
   [2XGaloisCyc[102X (for a list of cyclotomics)  18.5-1
   [2XGaloisCyc[102X (for a class function)  72.4-2
@@ -1292,7 +1292,7 @@
   [2XGap3CatalogueIdGroup[102X  50.7-7
   [2XGAP_EXIT_CODE[102X  6.7-2
   [2XGAPInfo[102X  3.5-1
-  [10XGAPInfo.Architecture[110X  76.3-5
+  [10XGAPInfo.Architecture[110X  76.3-6
   [10XGAPInfo.CommandLineOptions[110X  3.1
   [10XGAPInfo.Keywords[110X  4.5
   [2XGAPInfo.ProfileThreshold[102X  7.7-9
@@ -1622,7 +1622,7 @@
   [2XInsertTrivialStabilizer[102X  43.11-8
   [2XInstallAtExit[102X  6.7-5
   [2XInstallCharReadHookFunc[102X  10.10-1
-  [2XInstalledPackageVersion[102X  76.3-3
+  [2XInstalledPackageVersion[102X  76.3-4
   [2XInstallFactorMaintenance[102X  31.13-5
   [2XInstallFlushableValue[102X  79.18-9
   [2XInstallFlushableValueFromFunction[102X  79.18-9
@@ -2155,7 +2155,7 @@
   [2XIsOutputStream[102X  10.1-6
   [2XIsOutputTextNone[102X  10.1-8
   [2XIsOutputTextStream[102X  10.1-7
-  [2XIsPackageMarkedForLoading[102X  76.3-7
+  [2XIsPackageMarkedForLoading[102X  76.3-8
   [2XIsPadicExtensionNumber[102X  68.2-3
   [2XIsPadicExtensionNumberFamily[102X  68.2-4
   [2XIsParentPcgsFamilyPcgs[102X  46.1-4
@@ -2601,7 +2601,7 @@
   LLL algorithm, for virtual characters  72.10-4
   [2XLLLReducedBasis[102X  25.5-1
   [2XLLLReducedGramMat[102X  25.5-2
-  [2XLoadDynamicModule[102X  76.3-10
+  [2XLoadDynamicModule[102X  76.3-11
   [2XLoadPackage[102X  76.2-1
   [9Xlocal[109X  4.23
   [2XLog[102X  19.2-1
@@ -3139,7 +3139,7 @@
   [2XPACKAGE_ERROR[102X  76.2-4
   [2XPACKAGE_INFO[102X  76.2-4
   [2XPACKAGE_WARNING[102X  76.2-4
-  [2XPackageVariablesInfo[102X  76.3-13
+  [2XPackageVariablesInfo[102X  76.3-14
   [2XPadicCoefficients[102X  25.4-3
   [2XPadicExtensionNumberFamily[102X  68.2-1
   [2XPadicNumber[102X (for pure padics)  68.1-2
@@ -3792,7 +3792,7 @@
   [2XShowMethods[102X  7.1-4
   [2XShowMultiplicationTable[102X  55.4-2
   [2XShowOtherMethods[102X  7.1-5
-  [2XShowPackageVariables[102X  76.3-13
+  [2XShowPackageVariables[102X  76.3-14
   [2XShowUserPreferences[102X  3.2-3
   [2XShrinkAllocationPlist[102X  21.9-1
   [2XShrinkAllocationString[102X  27.4-5
@@ -4176,6 +4176,7 @@
   [2XTestMonomialQuick[102X (for a character)  75.4-4
   [2XTestMonomialQuick[102X (for a group)  75.4-4
   [2XTestMonomialUseLattice[102X  75.4-2
+  [2XTestPackage[102X  76.3-3
   [2XTestPackageAvailability[102X  76.3-2
   [2XTestPerm1[102X  72.14-2
   [2XTestPerm2[102X  72.14-2
@@ -4374,7 +4375,7 @@
   [2XUseSubsetRelation[102X  31.13-1
   utilities for editing GAP files  6.11
   [22Xv_N[122X (irrational value)  18.4-3
-  [2XValidatePackageInfo[102X  76.3-12
+  [2XValidatePackageInfo[102X  76.3-13
   [2XValuation[102X  68.1-3
   [2XValue[102X (for a univariate rat. function, a value (and a one))  66.7-1
   [2XValue[102X (for rat. function, a list of indeterminates, a value (and a one))  66.7-1

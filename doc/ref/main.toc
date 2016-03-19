@@ -196,11 +196,11 @@
 \contentsline {subsection}{\numberline {7.9.2}\leavevmode {\color {Chapter }Test}}{120}{subsection.7.9.2}
 \contentsline {subsection}{\numberline {7.9.3}\leavevmode {\color {Chapter }TestDirectory}}{122}{subsection.7.9.3}
 \contentsline {section}{\numberline {7.10}\leavevmode {\color {Chapter }Debugging Recursion}}{123}{section.7.10}
-\contentsline {subsection}{\numberline {7.10.1}\leavevmode {\color {Chapter }SetRecursionTrapInterval}}{123}{subsection.7.10.1}
-\contentsline {section}{\numberline {7.11}\leavevmode {\color {Chapter }Global Memory Information}}{124}{section.7.11}
+\contentsline {subsection}{\numberline {7.10.1}\leavevmode {\color {Chapter }SetRecursionTrapInterval}}{124}{subsection.7.10.1}
+\contentsline {section}{\numberline {7.11}\leavevmode {\color {Chapter }Global Memory Information}}{125}{section.7.11}
 \contentsline {subsection}{\numberline {7.11.1}\leavevmode {\color {Chapter }GasmanStatistics}}{125}{subsection.7.11.1}
 \contentsline {subsection}{\numberline {7.11.2}\leavevmode {\color {Chapter }GasmanMessageStatus}}{125}{subsection.7.11.2}
-\contentsline {subsection}{\numberline {7.11.3}\leavevmode {\color {Chapter }GasmanLimits}}{125}{subsection.7.11.3}
+\contentsline {subsection}{\numberline {7.11.3}\leavevmode {\color {Chapter }GasmanLimits}}{126}{subsection.7.11.3}
 \contentsline {chapter}{\numberline {8}\leavevmode {\color {Chapter }Options Stack}}{127}{chapter.8}
 \contentsline {section}{\numberline {8.1}\leavevmode {\color {Chapter }Functions Dealing with the Options Stack}}{127}{section.8.1}
 \contentsline {subsection}{\numberline {8.1.1}\leavevmode {\color {Chapter }PushOptions}}{127}{subsection.8.1.1}
@@ -3527,154 +3527,155 @@
 \contentsline {section}{\numberline {76.3}\leavevmode {\color {Chapter }Functions for GAP Packages}}{1207}{section.76.3}
 \contentsline {subsection}{\numberline {76.3.1}\leavevmode {\color {Chapter }ReadPackage}}{1207}{subsection.76.3.1}
 \contentsline {subsection}{\numberline {76.3.2}\leavevmode {\color {Chapter }TestPackageAvailability}}{1207}{subsection.76.3.2}
-\contentsline {subsection}{\numberline {76.3.3}\leavevmode {\color {Chapter }InstalledPackageVersion}}{1208}{subsection.76.3.3}
-\contentsline {subsection}{\numberline {76.3.4}\leavevmode {\color {Chapter }DirectoriesPackageLibrary}}{1208}{subsection.76.3.4}
-\contentsline {subsection}{\numberline {76.3.5}\leavevmode {\color {Chapter }DirectoriesPackagePrograms}}{1209}{subsection.76.3.5}
-\contentsline {subsection}{\numberline {76.3.6}\leavevmode {\color {Chapter }CompareVersionNumbers}}{1209}{subsection.76.3.6}
-\contentsline {subsection}{\numberline {76.3.7}\leavevmode {\color {Chapter }IsPackageMarkedForLoading}}{1209}{subsection.76.3.7}
-\contentsline {subsection}{\numberline {76.3.8}\leavevmode {\color {Chapter }DeclareAutoreadableVariables}}{1210}{subsection.76.3.8}
-\contentsline {subsection}{\numberline {76.3.9}\leavevmode {\color {Chapter }Kernel modules in \textsf {GAP} packages}}{1210}{subsection.76.3.9}
-\contentsline {subsection}{\numberline {76.3.10}\leavevmode {\color {Chapter }LoadDynamicModule}}{1210}{subsection.76.3.10}
-\contentsline {subsection}{\numberline {76.3.11}\leavevmode {\color {Chapter }The PackageInfo.g File}}{1211}{subsection.76.3.11}
-\contentsline {subsection}{\numberline {76.3.12}\leavevmode {\color {Chapter }ValidatePackageInfo}}{1211}{subsection.76.3.12}
-\contentsline {subsection}{\numberline {76.3.13}\leavevmode {\color {Chapter }ShowPackageVariables}}{1211}{subsection.76.3.13}
-\contentsline {subsection}{\numberline {76.3.14}\leavevmode {\color {Chapter }BibEntry}}{1212}{subsection.76.3.14}
-\contentsline {subsection}{\numberline {76.3.15}\leavevmode {\color {Chapter }Cite}}{1213}{subsection.76.3.15}
-\contentsline {chapter}{\numberline {77}\leavevmode {\color {Chapter }Replaced and Removed Command Names}}{1214}{chapter.77}
-\contentsline {section}{\numberline {77.1}\leavevmode {\color {Chapter }Group Actions {\textendash } Name Changes}}{1214}{section.77.1}
-\contentsline {section}{\numberline {77.2}\leavevmode {\color {Chapter }Package Interface {\textendash } Obsolete Functions and Name Changes}}{1215}{section.77.2}
-\contentsline {section}{\numberline {77.3}\leavevmode {\color {Chapter }Normal Forms of Integer Matrices {\textendash } Name Changes}}{1215}{section.77.3}
-\contentsline {section}{\numberline {77.4}\leavevmode {\color {Chapter }Miscellaneous Name Changes or Removed Names}}{1215}{section.77.4}
-\contentsline {subsection}{\numberline {77.4.1}\leavevmode {\color {Chapter }InfoObsolete}}{1215}{subsection.77.4.1}
-\contentsline {section}{\numberline {77.5}\leavevmode {\color {Chapter }The former .gaprc file}}{1216}{section.77.5}
-\contentsline {section}{\numberline {77.6}\leavevmode {\color {Chapter }Properties of semigroups}}{1216}{section.77.6}
-\contentsline {subsection}{\numberline {77.6.1}\leavevmode {\color {Chapter }IsSemilatticeAsSemigroup}}{1216}{subsection.77.6.1}
-\contentsline {chapter}{\numberline {78}\leavevmode {\color {Chapter }Method Selection}}{1218}{chapter.78}
-\contentsline {section}{\numberline {78.1}\leavevmode {\color {Chapter }Operations and Methods}}{1218}{section.78.1}
-\contentsline {section}{\numberline {78.2}\leavevmode {\color {Chapter }Method Installation}}{1218}{section.78.2}
-\contentsline {subsection}{\numberline {78.2.1}\leavevmode {\color {Chapter }InstallMethod}}{1219}{subsection.78.2.1}
-\contentsline {subsection}{\numberline {78.2.2}\leavevmode {\color {Chapter }InstallOtherMethod}}{1219}{subsection.78.2.2}
-\contentsline {section}{\numberline {78.3}\leavevmode {\color {Chapter }Applicable Methods and Method Selection}}{1219}{section.78.3}
-\contentsline {section}{\numberline {78.4}\leavevmode {\color {Chapter }Partial Methods}}{1220}{section.78.4}
-\contentsline {subsection}{\numberline {78.4.1}\leavevmode {\color {Chapter }TryNextMethod}}{1220}{subsection.78.4.1}
-\contentsline {section}{\numberline {78.5}\leavevmode {\color {Chapter }Redispatching}}{1220}{section.78.5}
-\contentsline {subsection}{\numberline {78.5.1}\leavevmode {\color {Chapter }RedispatchOnCondition}}{1221}{subsection.78.5.1}
-\contentsline {section}{\numberline {78.6}\leavevmode {\color {Chapter }Immediate Methods}}{1221}{section.78.6}
-\contentsline {subsection}{\numberline {78.6.1}\leavevmode {\color {Chapter }InstallImmediateMethod}}{1221}{subsection.78.6.1}
-\contentsline {section}{\numberline {78.7}\leavevmode {\color {Chapter }Logical Implications}}{1222}{section.78.7}
-\contentsline {subsection}{\numberline {78.7.1}\leavevmode {\color {Chapter }InstallTrueMethod}}{1222}{subsection.78.7.1}
-\contentsline {section}{\numberline {78.8}\leavevmode {\color {Chapter }Operations and Mathematical Terms}}{1222}{section.78.8}
-\contentsline {chapter}{\numberline {79}\leavevmode {\color {Chapter }Creating New Objects}}{1224}{chapter.79}
-\contentsline {section}{\numberline {79.1}\leavevmode {\color {Chapter }Creating Categories}}{1224}{section.79.1}
-\contentsline {subsection}{\numberline {79.1.1}\leavevmode {\color {Chapter }NewCategory}}{1224}{subsection.79.1.1}
-\contentsline {subsection}{\numberline {79.1.2}\leavevmode {\color {Chapter }CategoryFamily}}{1224}{subsection.79.1.2}
-\contentsline {section}{\numberline {79.2}\leavevmode {\color {Chapter }Creating Representations}}{1225}{section.79.2}
-\contentsline {subsection}{\numberline {79.2.1}\leavevmode {\color {Chapter }NewRepresentation}}{1225}{subsection.79.2.1}
-\contentsline {section}{\numberline {79.3}\leavevmode {\color {Chapter }Creating Attributes and Properties}}{1225}{section.79.3}
-\contentsline {subsection}{\numberline {79.3.1}\leavevmode {\color {Chapter }NewAttribute}}{1225}{subsection.79.3.1}
-\contentsline {subsection}{\numberline {79.3.2}\leavevmode {\color {Chapter }NewProperty}}{1226}{subsection.79.3.2}
-\contentsline {section}{\numberline {79.4}\leavevmode {\color {Chapter }Creating Other Filters}}{1226}{section.79.4}
-\contentsline {subsection}{\numberline {79.4.1}\leavevmode {\color {Chapter }NewFilter}}{1226}{subsection.79.4.1}
-\contentsline {subsection}{\numberline {79.4.2}\leavevmode {\color {Chapter }SetFilterObj}}{1226}{subsection.79.4.2}
-\contentsline {subsection}{\numberline {79.4.3}\leavevmode {\color {Chapter }ResetFilterObj}}{1227}{subsection.79.4.3}
-\contentsline {section}{\numberline {79.5}\leavevmode {\color {Chapter }Creating Operations}}{1227}{section.79.5}
-\contentsline {subsection}{\numberline {79.5.1}\leavevmode {\color {Chapter }NewOperation}}{1227}{subsection.79.5.1}
-\contentsline {section}{\numberline {79.6}\leavevmode {\color {Chapter }Creating Constructors}}{1227}{section.79.6}
-\contentsline {subsection}{\numberline {79.6.1}\leavevmode {\color {Chapter }NewConstructor}}{1227}{subsection.79.6.1}
-\contentsline {section}{\numberline {79.7}\leavevmode {\color {Chapter }Creating Families}}{1227}{section.79.7}
-\contentsline {subsection}{\numberline {79.7.1}\leavevmode {\color {Chapter }NewFamily}}{1228}{subsection.79.7.1}
-\contentsline {section}{\numberline {79.8}\leavevmode {\color {Chapter }Creating Types}}{1229}{section.79.8}
-\contentsline {subsection}{\numberline {79.8.1}\leavevmode {\color {Chapter }NewType}}{1229}{subsection.79.8.1}
-\contentsline {section}{\numberline {79.9}\leavevmode {\color {Chapter }Creating Objects}}{1229}{section.79.9}
-\contentsline {subsection}{\numberline {79.9.1}\leavevmode {\color {Chapter }Objectify}}{1229}{subsection.79.9.1}
-\contentsline {subsection}{\numberline {79.9.2}\leavevmode {\color {Chapter }ObjectifyWithAttributes}}{1229}{subsection.79.9.2}
-\contentsline {section}{\numberline {79.10}\leavevmode {\color {Chapter }Component Objects}}{1230}{section.79.10}
-\contentsline {subsection}{\numberline {79.10.1}\leavevmode {\color {Chapter }NamesOfComponents}}{1231}{subsection.79.10.1}
-\contentsline {section}{\numberline {79.11}\leavevmode {\color {Chapter }Positional Objects}}{1231}{section.79.11}
-\contentsline {section}{\numberline {79.12}\leavevmode {\color {Chapter }Implementing New List Objects}}{1233}{section.79.12}
-\contentsline {section}{\numberline {79.13}\leavevmode {\color {Chapter }Example {\textendash } Constructing Enumerators}}{1233}{section.79.13}
-\contentsline {section}{\numberline {79.14}\leavevmode {\color {Chapter }Example {\textendash } Constructing Iterators}}{1236}{section.79.14}
-\contentsline {section}{\numberline {79.15}\leavevmode {\color {Chapter }Arithmetic Issues in the Implementation of New Kinds of Lists}}{1237}{section.79.15}
-\contentsline {section}{\numberline {79.16}\leavevmode {\color {Chapter }External Representation}}{1238}{section.79.16}
-\contentsline {subsection}{\numberline {79.16.1}\leavevmode {\color {Chapter }ExtRepOfObj}}{1239}{subsection.79.16.1}
-\contentsline {section}{\numberline {79.17}\leavevmode {\color {Chapter }Mutability and Copying}}{1239}{section.79.17}
-\contentsline {section}{\numberline {79.18}\leavevmode {\color {Chapter }Global Variables in the Library}}{1241}{section.79.18}
-\contentsline {subsection}{\numberline {79.18.1}\leavevmode {\color {Chapter }DeclareCategory}}{1241}{subsection.79.18.1}
-\contentsline {subsection}{\numberline {79.18.2}\leavevmode {\color {Chapter }DeclareRepresentation}}{1241}{subsection.79.18.2}
-\contentsline {subsection}{\numberline {79.18.3}\leavevmode {\color {Chapter }DeclareAttribute}}{1242}{subsection.79.18.3}
-\contentsline {subsection}{\numberline {79.18.4}\leavevmode {\color {Chapter }DeclareProperty}}{1242}{subsection.79.18.4}
-\contentsline {subsection}{\numberline {79.18.5}\leavevmode {\color {Chapter }DeclareFilter}}{1242}{subsection.79.18.5}
-\contentsline {subsection}{\numberline {79.18.6}\leavevmode {\color {Chapter }DeclareOperation}}{1242}{subsection.79.18.6}
-\contentsline {subsection}{\numberline {79.18.7}\leavevmode {\color {Chapter }DeclareGlobalFunction}}{1242}{subsection.79.18.7}
-\contentsline {subsection}{\numberline {79.18.8}\leavevmode {\color {Chapter }DeclareGlobalVariable}}{1243}{subsection.79.18.8}
-\contentsline {subsection}{\numberline {79.18.9}\leavevmode {\color {Chapter }InstallValue}}{1243}{subsection.79.18.9}
-\contentsline {subsection}{\numberline {79.18.10}\leavevmode {\color {Chapter }DeclareSynonym}}{1243}{subsection.79.18.10}
-\contentsline {subsection}{\numberline {79.18.11}\leavevmode {\color {Chapter }FlushCaches}}{1244}{subsection.79.18.11}
-\contentsline {section}{\numberline {79.19}\leavevmode {\color {Chapter }Declaration and Implementation Part}}{1244}{section.79.19}
-\contentsline {chapter}{\numberline {80}\leavevmode {\color {Chapter }Examples of Extending the System}}{1246}{chapter.80}
-\contentsline {section}{\numberline {80.1}\leavevmode {\color {Chapter }Addition of a Method}}{1246}{section.80.1}
-\contentsline {section}{\numberline {80.2}\leavevmode {\color {Chapter }Extending the Range of Definition of an Existing Operation}}{1248}{section.80.2}
-\contentsline {section}{\numberline {80.3}\leavevmode {\color {Chapter }Enforcing Property Tests}}{1248}{section.80.3}
-\contentsline {section}{\numberline {80.4}\leavevmode {\color {Chapter }Adding a new Operation}}{1249}{section.80.4}
-\contentsline {section}{\numberline {80.5}\leavevmode {\color {Chapter }Adding a new Attribute}}{1249}{section.80.5}
-\contentsline {section}{\numberline {80.6}\leavevmode {\color {Chapter }Adding a new Representation}}{1250}{section.80.6}
-\contentsline {section}{\numberline {80.7}\leavevmode {\color {Chapter }Components versus Attributes}}{1252}{section.80.7}
-\contentsline {section}{\numberline {80.8}\leavevmode {\color {Chapter }Adding new Concepts}}{1252}{section.80.8}
-\contentsline {subsection}{\numberline {80.8.1}\leavevmode {\color {Chapter }Example: M-groups}}{1253}{subsection.80.8.1}
-\contentsline {subsection}{\numberline {80.8.2}\leavevmode {\color {Chapter }Example: Groups with a word length}}{1254}{subsection.80.8.2}
-\contentsline {subsection}{\numberline {80.8.3}\leavevmode {\color {Chapter }Example: Groups with a decomposition as semidirect product}}{1254}{subsection.80.8.3}
-\contentsline {section}{\numberline {80.9}\leavevmode {\color {Chapter }Creating Own Arithmetic Objects}}{1255}{section.80.9}
-\contentsline {subsection}{\numberline {80.9.1}\leavevmode {\color {Chapter }ArithmeticElementCreator}}{1255}{subsection.80.9.1}
-\contentsline {subsection}{\numberline {80.9.2}\leavevmode {\color {Chapter }Example: ArithmeticElementCreator}}{1256}{subsection.80.9.2}
-\contentsline {chapter}{\numberline {81}\leavevmode {\color {Chapter }An Example {\textendash } Residue Class Rings}}{1258}{chapter.81}
-\contentsline {section}{\numberline {81.1}\leavevmode {\color {Chapter }A First Attempt to Implement Elements of Residue Class Rings}}{1258}{section.81.1}
-\contentsline {section}{\numberline {81.2}\leavevmode {\color {Chapter }Why Proceed in a Different Way?}}{1259}{section.81.2}
-\contentsline {section}{\numberline {81.3}\leavevmode {\color {Chapter }A Second Attempt to Implement Elements of Residue Class Rings}}{1260}{section.81.3}
-\contentsline {section}{\numberline {81.4}\leavevmode {\color {Chapter }Compatibility of Residue Class Rings with Prime Fields}}{1271}{section.81.4}
-\contentsline {section}{\numberline {81.5}\leavevmode {\color {Chapter }Further Improvements in Implementing Residue Class Rings}}{1277}{section.81.5}
-\contentsline {chapter}{\numberline {82}\leavevmode {\color {Chapter }An Example {\textendash } Designing Arithmetic Operations}}{1279}{chapter.82}
-\contentsline {section}{\numberline {82.1}\leavevmode {\color {Chapter }New Arithmetic Operations vs. New Objects}}{1279}{section.82.1}
-\contentsline {section}{\numberline {82.2}\leavevmode {\color {Chapter }Designing new Multiplicative Objects}}{1280}{section.82.2}
-\contentsline {chapter}{\numberline {83}\leavevmode {\color {Chapter }Library Files}}{1286}{chapter.83}
-\contentsline {section}{\numberline {83.1}\leavevmode {\color {Chapter }File Types}}{1286}{section.83.1}
-\contentsline {section}{\numberline {83.2}\leavevmode {\color {Chapter }Finding Implementations in the Library}}{1286}{section.83.2}
-\contentsline {section}{\numberline {83.3}\leavevmode {\color {Chapter }Undocumented Variables}}{1287}{section.83.3}
-\contentsline {chapter}{\numberline {84}\leavevmode {\color {Chapter }Interface to the GAP Help System}}{1289}{chapter.84}
-\contentsline {section}{\numberline {84.1}\leavevmode {\color {Chapter }Installing and Removing a Help Book}}{1289}{section.84.1}
-\contentsline {subsection}{\numberline {84.1.1}\leavevmode {\color {Chapter }HELP{\textunderscore }ADD{\textunderscore }BOOK}}{1289}{subsection.84.1.1}
-\contentsline {subsection}{\numberline {84.1.2}\leavevmode {\color {Chapter }HELP{\textunderscore }REMOVE{\textunderscore }BOOK}}{1290}{subsection.84.1.2}
-\contentsline {section}{\numberline {84.2}\leavevmode {\color {Chapter }The manual.six File}}{1290}{section.84.2}
-\contentsline {section}{\numberline {84.3}\leavevmode {\color {Chapter }The Help Book Handler}}{1290}{section.84.3}
-\contentsline {section}{\numberline {84.4}\leavevmode {\color {Chapter }Introducing new Viewer for the Online Help}}{1292}{section.84.4}
-\contentsline {subsection}{\numberline {84.4.1}\leavevmode {\color {Chapter }HELP{\textunderscore }VIEWER{\textunderscore }INFO}}{1292}{subsection.84.4.1}
-\contentsline {chapter}{\numberline {85}\leavevmode {\color {Chapter }Function-Operation-Attribute Triples}}{1293}{chapter.85}
-\contentsline {section}{\numberline {85.1}\leavevmode {\color {Chapter }Key Dependent Operations}}{1293}{section.85.1}
-\contentsline {subsection}{\numberline {85.1.1}\leavevmode {\color {Chapter }KeyDependentOperation}}{1293}{subsection.85.1.1}
-\contentsline {section}{\numberline {85.2}\leavevmode {\color {Chapter }In Parent Attributes}}{1294}{section.85.2}
-\contentsline {subsection}{\numberline {85.2.1}\leavevmode {\color {Chapter }InParentFOA}}{1294}{subsection.85.2.1}
-\contentsline {section}{\numberline {85.3}\leavevmode {\color {Chapter }Operation Functions}}{1295}{section.85.3}
-\contentsline {subsection}{\numberline {85.3.1}\leavevmode {\color {Chapter }OrbitsishOperation}}{1296}{subsection.85.3.1}
-\contentsline {subsection}{\numberline {85.3.2}\leavevmode {\color {Chapter }OrbitishFO}}{1297}{subsection.85.3.2}
-\contentsline {subsection}{\numberline {85.3.3}\leavevmode {\color {Chapter }Example: Orbit and OrbitOp}}{1297}{subsection.85.3.3}
-\contentsline {chapter}{\numberline {86}\leavevmode {\color {Chapter }Weak Pointers}}{1299}{chapter.86}
-\contentsline {section}{\numberline {86.1}\leavevmode {\color {Chapter }Weak Pointer Objects}}{1299}{section.86.1}
-\contentsline {subsection}{\numberline {86.1.1}\leavevmode {\color {Chapter }WeakPointerObj}}{1299}{subsection.86.1.1}
-\contentsline {section}{\numberline {86.2}\leavevmode {\color {Chapter }Low Level Access Functions for Weak Pointer Objects}}{1300}{section.86.2}
-\contentsline {subsection}{\numberline {86.2.1}\leavevmode {\color {Chapter }SetElmWPObj}}{1300}{subsection.86.2.1}
-\contentsline {section}{\numberline {86.3}\leavevmode {\color {Chapter }Accessing Weak Pointer Objects as Lists}}{1301}{section.86.3}
-\contentsline {section}{\numberline {86.4}\leavevmode {\color {Chapter }Copying Weak Pointer Objects}}{1301}{section.86.4}
-\contentsline {section}{\numberline {86.5}\leavevmode {\color {Chapter }The GASMAN Interface for Weak Pointer Objects}}{1302}{section.86.5}
-\contentsline {chapter}{\numberline {87}\leavevmode {\color {Chapter }More about Stabilizer Chains}}{1303}{chapter.87}
-\contentsline {section}{\numberline {87.1}\leavevmode {\color {Chapter }Generalized Conjugation Technique}}{1303}{section.87.1}
-\contentsline {section}{\numberline {87.2}\leavevmode {\color {Chapter }The General Backtrack Algorithm with Ordered Partitions}}{1304}{section.87.2}
-\contentsline {subsection}{\numberline {87.2.1}\leavevmode {\color {Chapter }Internal representation of ordered partitions}}{1304}{subsection.87.2.1}
-\contentsline {subsection}{\numberline {87.2.2}\leavevmode {\color {Chapter }Functions for setting up an R-base}}{1305}{subsection.87.2.2}
-\contentsline {subsection}{\numberline {87.2.3}\leavevmode {\color {Chapter }Refinement functions for the backtrack search}}{1308}{subsection.87.2.3}
-\contentsline {subsection}{\numberline {87.2.4}\leavevmode {\color {Chapter }Functions for meeting ordered partitions}}{1310}{subsection.87.2.4}
-\contentsline {subsection}{\numberline {87.2.5}\leavevmode {\color {Chapter }Avoiding multiplication of permutations}}{1311}{subsection.87.2.5}
-\contentsline {section}{\numberline {87.3}\leavevmode {\color {Chapter }Stabilizer Chains for Automorphisms Acting on Enumerators}}{1312}{section.87.3}
-\contentsline {subsection}{\numberline {87.3.1}\leavevmode {\color {Chapter }An operation domain for automorphisms}}{1312}{subsection.87.3.1}
-\contentsline {subsection}{\numberline {87.3.2}\leavevmode {\color {Chapter }Enumerators for cosets of characteristic factors}}{1313}{subsection.87.3.2}
-\contentsline {subsection}{\numberline {87.3.3}\leavevmode {\color {Chapter }Making automorphisms act on such enumerators}}{1314}{subsection.87.3.3}
-\contentsline {chapter}{References}{1326}{chapter*.3}
-\contentsline {chapter}{Index}{1327}{section*.4}
+\contentsline {subsection}{\numberline {76.3.3}\leavevmode {\color {Chapter }TestPackage}}{1208}{subsection.76.3.3}
+\contentsline {subsection}{\numberline {76.3.4}\leavevmode {\color {Chapter }InstalledPackageVersion}}{1208}{subsection.76.3.4}
+\contentsline {subsection}{\numberline {76.3.5}\leavevmode {\color {Chapter }DirectoriesPackageLibrary}}{1208}{subsection.76.3.5}
+\contentsline {subsection}{\numberline {76.3.6}\leavevmode {\color {Chapter }DirectoriesPackagePrograms}}{1209}{subsection.76.3.6}
+\contentsline {subsection}{\numberline {76.3.7}\leavevmode {\color {Chapter }CompareVersionNumbers}}{1209}{subsection.76.3.7}
+\contentsline {subsection}{\numberline {76.3.8}\leavevmode {\color {Chapter }IsPackageMarkedForLoading}}{1210}{subsection.76.3.8}
+\contentsline {subsection}{\numberline {76.3.9}\leavevmode {\color {Chapter }DeclareAutoreadableVariables}}{1210}{subsection.76.3.9}
+\contentsline {subsection}{\numberline {76.3.10}\leavevmode {\color {Chapter }Kernel modules in \textsf {GAP} packages}}{1210}{subsection.76.3.10}
+\contentsline {subsection}{\numberline {76.3.11}\leavevmode {\color {Chapter }LoadDynamicModule}}{1210}{subsection.76.3.11}
+\contentsline {subsection}{\numberline {76.3.12}\leavevmode {\color {Chapter }The PackageInfo.g File}}{1211}{subsection.76.3.12}
+\contentsline {subsection}{\numberline {76.3.13}\leavevmode {\color {Chapter }ValidatePackageInfo}}{1211}{subsection.76.3.13}
+\contentsline {subsection}{\numberline {76.3.14}\leavevmode {\color {Chapter }ShowPackageVariables}}{1211}{subsection.76.3.14}
+\contentsline {subsection}{\numberline {76.3.15}\leavevmode {\color {Chapter }BibEntry}}{1212}{subsection.76.3.15}
+\contentsline {subsection}{\numberline {76.3.16}\leavevmode {\color {Chapter }Cite}}{1213}{subsection.76.3.16}
+\contentsline {chapter}{\numberline {77}\leavevmode {\color {Chapter }Replaced and Removed Command Names}}{1215}{chapter.77}
+\contentsline {section}{\numberline {77.1}\leavevmode {\color {Chapter }Group Actions {\textendash } Name Changes}}{1215}{section.77.1}
+\contentsline {section}{\numberline {77.2}\leavevmode {\color {Chapter }Package Interface {\textendash } Obsolete Functions and Name Changes}}{1216}{section.77.2}
+\contentsline {section}{\numberline {77.3}\leavevmode {\color {Chapter }Normal Forms of Integer Matrices {\textendash } Name Changes}}{1216}{section.77.3}
+\contentsline {section}{\numberline {77.4}\leavevmode {\color {Chapter }Miscellaneous Name Changes or Removed Names}}{1216}{section.77.4}
+\contentsline {subsection}{\numberline {77.4.1}\leavevmode {\color {Chapter }InfoObsolete}}{1216}{subsection.77.4.1}
+\contentsline {section}{\numberline {77.5}\leavevmode {\color {Chapter }The former .gaprc file}}{1217}{section.77.5}
+\contentsline {section}{\numberline {77.6}\leavevmode {\color {Chapter }Semigroup properties}}{1217}{section.77.6}
+\contentsline {subsection}{\numberline {77.6.1}\leavevmode {\color {Chapter }IsSemilatticeAsSemigroup}}{1217}{subsection.77.6.1}
+\contentsline {chapter}{\numberline {78}\leavevmode {\color {Chapter }Method Selection}}{1219}{chapter.78}
+\contentsline {section}{\numberline {78.1}\leavevmode {\color {Chapter }Operations and Methods}}{1219}{section.78.1}
+\contentsline {section}{\numberline {78.2}\leavevmode {\color {Chapter }Method Installation}}{1219}{section.78.2}
+\contentsline {subsection}{\numberline {78.2.1}\leavevmode {\color {Chapter }InstallMethod}}{1220}{subsection.78.2.1}
+\contentsline {subsection}{\numberline {78.2.2}\leavevmode {\color {Chapter }InstallOtherMethod}}{1220}{subsection.78.2.2}
+\contentsline {section}{\numberline {78.3}\leavevmode {\color {Chapter }Applicable Methods and Method Selection}}{1220}{section.78.3}
+\contentsline {section}{\numberline {78.4}\leavevmode {\color {Chapter }Partial Methods}}{1221}{section.78.4}
+\contentsline {subsection}{\numberline {78.4.1}\leavevmode {\color {Chapter }TryNextMethod}}{1221}{subsection.78.4.1}
+\contentsline {section}{\numberline {78.5}\leavevmode {\color {Chapter }Redispatching}}{1221}{section.78.5}
+\contentsline {subsection}{\numberline {78.5.1}\leavevmode {\color {Chapter }RedispatchOnCondition}}{1222}{subsection.78.5.1}
+\contentsline {section}{\numberline {78.6}\leavevmode {\color {Chapter }Immediate Methods}}{1222}{section.78.6}
+\contentsline {subsection}{\numberline {78.6.1}\leavevmode {\color {Chapter }InstallImmediateMethod}}{1222}{subsection.78.6.1}
+\contentsline {section}{\numberline {78.7}\leavevmode {\color {Chapter }Logical Implications}}{1223}{section.78.7}
+\contentsline {subsection}{\numberline {78.7.1}\leavevmode {\color {Chapter }InstallTrueMethod}}{1223}{subsection.78.7.1}
+\contentsline {section}{\numberline {78.8}\leavevmode {\color {Chapter }Operations and Mathematical Terms}}{1223}{section.78.8}
+\contentsline {chapter}{\numberline {79}\leavevmode {\color {Chapter }Creating New Objects}}{1225}{chapter.79}
+\contentsline {section}{\numberline {79.1}\leavevmode {\color {Chapter }Creating Categories}}{1225}{section.79.1}
+\contentsline {subsection}{\numberline {79.1.1}\leavevmode {\color {Chapter }NewCategory}}{1225}{subsection.79.1.1}
+\contentsline {subsection}{\numberline {79.1.2}\leavevmode {\color {Chapter }CategoryFamily}}{1225}{subsection.79.1.2}
+\contentsline {section}{\numberline {79.2}\leavevmode {\color {Chapter }Creating Representations}}{1226}{section.79.2}
+\contentsline {subsection}{\numberline {79.2.1}\leavevmode {\color {Chapter }NewRepresentation}}{1226}{subsection.79.2.1}
+\contentsline {section}{\numberline {79.3}\leavevmode {\color {Chapter }Creating Attributes and Properties}}{1226}{section.79.3}
+\contentsline {subsection}{\numberline {79.3.1}\leavevmode {\color {Chapter }NewAttribute}}{1226}{subsection.79.3.1}
+\contentsline {subsection}{\numberline {79.3.2}\leavevmode {\color {Chapter }NewProperty}}{1227}{subsection.79.3.2}
+\contentsline {section}{\numberline {79.4}\leavevmode {\color {Chapter }Creating Other Filters}}{1227}{section.79.4}
+\contentsline {subsection}{\numberline {79.4.1}\leavevmode {\color {Chapter }NewFilter}}{1227}{subsection.79.4.1}
+\contentsline {subsection}{\numberline {79.4.2}\leavevmode {\color {Chapter }SetFilterObj}}{1227}{subsection.79.4.2}
+\contentsline {subsection}{\numberline {79.4.3}\leavevmode {\color {Chapter }ResetFilterObj}}{1228}{subsection.79.4.3}
+\contentsline {section}{\numberline {79.5}\leavevmode {\color {Chapter }Creating Operations}}{1228}{section.79.5}
+\contentsline {subsection}{\numberline {79.5.1}\leavevmode {\color {Chapter }NewOperation}}{1228}{subsection.79.5.1}
+\contentsline {section}{\numberline {79.6}\leavevmode {\color {Chapter }Creating Constructors}}{1228}{section.79.6}
+\contentsline {subsection}{\numberline {79.6.1}\leavevmode {\color {Chapter }NewConstructor}}{1228}{subsection.79.6.1}
+\contentsline {section}{\numberline {79.7}\leavevmode {\color {Chapter }Creating Families}}{1228}{section.79.7}
+\contentsline {subsection}{\numberline {79.7.1}\leavevmode {\color {Chapter }NewFamily}}{1229}{subsection.79.7.1}
+\contentsline {section}{\numberline {79.8}\leavevmode {\color {Chapter }Creating Types}}{1230}{section.79.8}
+\contentsline {subsection}{\numberline {79.8.1}\leavevmode {\color {Chapter }NewType}}{1230}{subsection.79.8.1}
+\contentsline {section}{\numberline {79.9}\leavevmode {\color {Chapter }Creating Objects}}{1230}{section.79.9}
+\contentsline {subsection}{\numberline {79.9.1}\leavevmode {\color {Chapter }Objectify}}{1230}{subsection.79.9.1}
+\contentsline {subsection}{\numberline {79.9.2}\leavevmode {\color {Chapter }ObjectifyWithAttributes}}{1230}{subsection.79.9.2}
+\contentsline {section}{\numberline {79.10}\leavevmode {\color {Chapter }Component Objects}}{1231}{section.79.10}
+\contentsline {subsection}{\numberline {79.10.1}\leavevmode {\color {Chapter }NamesOfComponents}}{1232}{subsection.79.10.1}
+\contentsline {section}{\numberline {79.11}\leavevmode {\color {Chapter }Positional Objects}}{1232}{section.79.11}
+\contentsline {section}{\numberline {79.12}\leavevmode {\color {Chapter }Implementing New List Objects}}{1234}{section.79.12}
+\contentsline {section}{\numberline {79.13}\leavevmode {\color {Chapter }Example {\textendash } Constructing Enumerators}}{1234}{section.79.13}
+\contentsline {section}{\numberline {79.14}\leavevmode {\color {Chapter }Example {\textendash } Constructing Iterators}}{1237}{section.79.14}
+\contentsline {section}{\numberline {79.15}\leavevmode {\color {Chapter }Arithmetic Issues in the Implementation of New Kinds of Lists}}{1238}{section.79.15}
+\contentsline {section}{\numberline {79.16}\leavevmode {\color {Chapter }External Representation}}{1239}{section.79.16}
+\contentsline {subsection}{\numberline {79.16.1}\leavevmode {\color {Chapter }ExtRepOfObj}}{1240}{subsection.79.16.1}
+\contentsline {section}{\numberline {79.17}\leavevmode {\color {Chapter }Mutability and Copying}}{1240}{section.79.17}
+\contentsline {section}{\numberline {79.18}\leavevmode {\color {Chapter }Global Variables in the Library}}{1242}{section.79.18}
+\contentsline {subsection}{\numberline {79.18.1}\leavevmode {\color {Chapter }DeclareCategory}}{1242}{subsection.79.18.1}
+\contentsline {subsection}{\numberline {79.18.2}\leavevmode {\color {Chapter }DeclareRepresentation}}{1242}{subsection.79.18.2}
+\contentsline {subsection}{\numberline {79.18.3}\leavevmode {\color {Chapter }DeclareAttribute}}{1243}{subsection.79.18.3}
+\contentsline {subsection}{\numberline {79.18.4}\leavevmode {\color {Chapter }DeclareProperty}}{1243}{subsection.79.18.4}
+\contentsline {subsection}{\numberline {79.18.5}\leavevmode {\color {Chapter }DeclareFilter}}{1243}{subsection.79.18.5}
+\contentsline {subsection}{\numberline {79.18.6}\leavevmode {\color {Chapter }DeclareOperation}}{1243}{subsection.79.18.6}
+\contentsline {subsection}{\numberline {79.18.7}\leavevmode {\color {Chapter }DeclareGlobalFunction}}{1243}{subsection.79.18.7}
+\contentsline {subsection}{\numberline {79.18.8}\leavevmode {\color {Chapter }DeclareGlobalVariable}}{1244}{subsection.79.18.8}
+\contentsline {subsection}{\numberline {79.18.9}\leavevmode {\color {Chapter }InstallValue}}{1244}{subsection.79.18.9}
+\contentsline {subsection}{\numberline {79.18.10}\leavevmode {\color {Chapter }DeclareSynonym}}{1244}{subsection.79.18.10}
+\contentsline {subsection}{\numberline {79.18.11}\leavevmode {\color {Chapter }FlushCaches}}{1245}{subsection.79.18.11}
+\contentsline {section}{\numberline {79.19}\leavevmode {\color {Chapter }Declaration and Implementation Part}}{1245}{section.79.19}
+\contentsline {chapter}{\numberline {80}\leavevmode {\color {Chapter }Examples of Extending the System}}{1247}{chapter.80}
+\contentsline {section}{\numberline {80.1}\leavevmode {\color {Chapter }Addition of a Method}}{1247}{section.80.1}
+\contentsline {section}{\numberline {80.2}\leavevmode {\color {Chapter }Extending the Range of Definition of an Existing Operation}}{1249}{section.80.2}
+\contentsline {section}{\numberline {80.3}\leavevmode {\color {Chapter }Enforcing Property Tests}}{1249}{section.80.3}
+\contentsline {section}{\numberline {80.4}\leavevmode {\color {Chapter }Adding a new Operation}}{1250}{section.80.4}
+\contentsline {section}{\numberline {80.5}\leavevmode {\color {Chapter }Adding a new Attribute}}{1250}{section.80.5}
+\contentsline {section}{\numberline {80.6}\leavevmode {\color {Chapter }Adding a new Representation}}{1251}{section.80.6}
+\contentsline {section}{\numberline {80.7}\leavevmode {\color {Chapter }Components versus Attributes}}{1253}{section.80.7}
+\contentsline {section}{\numberline {80.8}\leavevmode {\color {Chapter }Adding new Concepts}}{1253}{section.80.8}
+\contentsline {subsection}{\numberline {80.8.1}\leavevmode {\color {Chapter }Example: M-groups}}{1254}{subsection.80.8.1}
+\contentsline {subsection}{\numberline {80.8.2}\leavevmode {\color {Chapter }Example: Groups with a word length}}{1255}{subsection.80.8.2}
+\contentsline {subsection}{\numberline {80.8.3}\leavevmode {\color {Chapter }Example: Groups with a decomposition as semidirect product}}{1255}{subsection.80.8.3}
+\contentsline {section}{\numberline {80.9}\leavevmode {\color {Chapter }Creating Own Arithmetic Objects}}{1256}{section.80.9}
+\contentsline {subsection}{\numberline {80.9.1}\leavevmode {\color {Chapter }ArithmeticElementCreator}}{1256}{subsection.80.9.1}
+\contentsline {subsection}{\numberline {80.9.2}\leavevmode {\color {Chapter }Example: ArithmeticElementCreator}}{1257}{subsection.80.9.2}
+\contentsline {chapter}{\numberline {81}\leavevmode {\color {Chapter }An Example {\textendash } Residue Class Rings}}{1259}{chapter.81}
+\contentsline {section}{\numberline {81.1}\leavevmode {\color {Chapter }A First Attempt to Implement Elements of Residue Class Rings}}{1259}{section.81.1}
+\contentsline {section}{\numberline {81.2}\leavevmode {\color {Chapter }Why Proceed in a Different Way?}}{1260}{section.81.2}
+\contentsline {section}{\numberline {81.3}\leavevmode {\color {Chapter }A Second Attempt to Implement Elements of Residue Class Rings}}{1261}{section.81.3}
+\contentsline {section}{\numberline {81.4}\leavevmode {\color {Chapter }Compatibility of Residue Class Rings with Prime Fields}}{1272}{section.81.4}
+\contentsline {section}{\numberline {81.5}\leavevmode {\color {Chapter }Further Improvements in Implementing Residue Class Rings}}{1278}{section.81.5}
+\contentsline {chapter}{\numberline {82}\leavevmode {\color {Chapter }An Example {\textendash } Designing Arithmetic Operations}}{1280}{chapter.82}
+\contentsline {section}{\numberline {82.1}\leavevmode {\color {Chapter }New Arithmetic Operations vs. New Objects}}{1280}{section.82.1}
+\contentsline {section}{\numberline {82.2}\leavevmode {\color {Chapter }Designing new Multiplicative Objects}}{1281}{section.82.2}
+\contentsline {chapter}{\numberline {83}\leavevmode {\color {Chapter }Library Files}}{1287}{chapter.83}
+\contentsline {section}{\numberline {83.1}\leavevmode {\color {Chapter }File Types}}{1287}{section.83.1}
+\contentsline {section}{\numberline {83.2}\leavevmode {\color {Chapter }Finding Implementations in the Library}}{1287}{section.83.2}
+\contentsline {section}{\numberline {83.3}\leavevmode {\color {Chapter }Undocumented Variables}}{1288}{section.83.3}
+\contentsline {chapter}{\numberline {84}\leavevmode {\color {Chapter }Interface to the GAP Help System}}{1290}{chapter.84}
+\contentsline {section}{\numberline {84.1}\leavevmode {\color {Chapter }Installing and Removing a Help Book}}{1290}{section.84.1}
+\contentsline {subsection}{\numberline {84.1.1}\leavevmode {\color {Chapter }HELP{\textunderscore }ADD{\textunderscore }BOOK}}{1290}{subsection.84.1.1}
+\contentsline {subsection}{\numberline {84.1.2}\leavevmode {\color {Chapter }HELP{\textunderscore }REMOVE{\textunderscore }BOOK}}{1291}{subsection.84.1.2}
+\contentsline {section}{\numberline {84.2}\leavevmode {\color {Chapter }The manual.six File}}{1291}{section.84.2}
+\contentsline {section}{\numberline {84.3}\leavevmode {\color {Chapter }The Help Book Handler}}{1291}{section.84.3}
+\contentsline {section}{\numberline {84.4}\leavevmode {\color {Chapter }Introducing new Viewer for the Online Help}}{1293}{section.84.4}
+\contentsline {subsection}{\numberline {84.4.1}\leavevmode {\color {Chapter }HELP{\textunderscore }VIEWER{\textunderscore }INFO}}{1293}{subsection.84.4.1}
+\contentsline {chapter}{\numberline {85}\leavevmode {\color {Chapter }Function-Operation-Attribute Triples}}{1294}{chapter.85}
+\contentsline {section}{\numberline {85.1}\leavevmode {\color {Chapter }Key Dependent Operations}}{1294}{section.85.1}
+\contentsline {subsection}{\numberline {85.1.1}\leavevmode {\color {Chapter }KeyDependentOperation}}{1294}{subsection.85.1.1}
+\contentsline {section}{\numberline {85.2}\leavevmode {\color {Chapter }In Parent Attributes}}{1295}{section.85.2}
+\contentsline {subsection}{\numberline {85.2.1}\leavevmode {\color {Chapter }InParentFOA}}{1295}{subsection.85.2.1}
+\contentsline {section}{\numberline {85.3}\leavevmode {\color {Chapter }Operation Functions}}{1296}{section.85.3}
+\contentsline {subsection}{\numberline {85.3.1}\leavevmode {\color {Chapter }OrbitsishOperation}}{1297}{subsection.85.3.1}
+\contentsline {subsection}{\numberline {85.3.2}\leavevmode {\color {Chapter }OrbitishFO}}{1298}{subsection.85.3.2}
+\contentsline {subsection}{\numberline {85.3.3}\leavevmode {\color {Chapter }Example: Orbit and OrbitOp}}{1298}{subsection.85.3.3}
+\contentsline {chapter}{\numberline {86}\leavevmode {\color {Chapter }Weak Pointers}}{1300}{chapter.86}
+\contentsline {section}{\numberline {86.1}\leavevmode {\color {Chapter }Weak Pointer Objects}}{1300}{section.86.1}
+\contentsline {subsection}{\numberline {86.1.1}\leavevmode {\color {Chapter }WeakPointerObj}}{1300}{subsection.86.1.1}
+\contentsline {section}{\numberline {86.2}\leavevmode {\color {Chapter }Low Level Access Functions for Weak Pointer Objects}}{1301}{section.86.2}
+\contentsline {subsection}{\numberline {86.2.1}\leavevmode {\color {Chapter }SetElmWPObj}}{1301}{subsection.86.2.1}
+\contentsline {section}{\numberline {86.3}\leavevmode {\color {Chapter }Accessing Weak Pointer Objects as Lists}}{1302}{section.86.3}
+\contentsline {section}{\numberline {86.4}\leavevmode {\color {Chapter }Copying Weak Pointer Objects}}{1302}{section.86.4}
+\contentsline {section}{\numberline {86.5}\leavevmode {\color {Chapter }The GASMAN Interface for Weak Pointer Objects}}{1303}{section.86.5}
+\contentsline {chapter}{\numberline {87}\leavevmode {\color {Chapter }More about Stabilizer Chains}}{1304}{chapter.87}
+\contentsline {section}{\numberline {87.1}\leavevmode {\color {Chapter }Generalized Conjugation Technique}}{1304}{section.87.1}
+\contentsline {section}{\numberline {87.2}\leavevmode {\color {Chapter }The General Backtrack Algorithm with Ordered Partitions}}{1305}{section.87.2}
+\contentsline {subsection}{\numberline {87.2.1}\leavevmode {\color {Chapter }Internal representation of ordered partitions}}{1305}{subsection.87.2.1}
+\contentsline {subsection}{\numberline {87.2.2}\leavevmode {\color {Chapter }Functions for setting up an R-base}}{1306}{subsection.87.2.2}
+\contentsline {subsection}{\numberline {87.2.3}\leavevmode {\color {Chapter }Refinement functions for the backtrack search}}{1309}{subsection.87.2.3}
+\contentsline {subsection}{\numberline {87.2.4}\leavevmode {\color {Chapter }Functions for meeting ordered partitions}}{1311}{subsection.87.2.4}
+\contentsline {subsection}{\numberline {87.2.5}\leavevmode {\color {Chapter }Avoiding multiplication of permutations}}{1312}{subsection.87.2.5}
+\contentsline {section}{\numberline {87.3}\leavevmode {\color {Chapter }Stabilizer Chains for Automorphisms Acting on Enumerators}}{1313}{section.87.3}
+\contentsline {subsection}{\numberline {87.3.1}\leavevmode {\color {Chapter }An operation domain for automorphisms}}{1313}{subsection.87.3.1}
+\contentsline {subsection}{\numberline {87.3.2}\leavevmode {\color {Chapter }Enumerators for cosets of characteristic factors}}{1314}{subsection.87.3.2}
+\contentsline {subsection}{\numberline {87.3.3}\leavevmode {\color {Chapter }Making automorphisms act on such enumerators}}{1315}{subsection.87.3.3}
+\contentsline {chapter}{References}{1327}{chapter*.3}
+\contentsline {chapter}{Index}{1328}{section*.4}

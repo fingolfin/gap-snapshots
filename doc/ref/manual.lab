@@ -908,15 +908,15 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:Installing a GAP Package}{76.1}{X82473E4B8756C6CD}
 \makelabel{ref:Loading a GAP Package}{76.2}{X825CBC5B86F8F811}
 \makelabel{ref:Functions for GAP Packages}{76.3}{X7C6CE28B7E142804}
-\makelabel{ref:Kernel modules in GAP packages}{76.3.9}{X79EF67107E40A130}
-\makelabel{ref:The PackageInfo.g File}{76.3.11}{X85C8DE357EE424D8}
+\makelabel{ref:Kernel modules in GAP packages}{76.3.10}{X79EF67107E40A130}
+\makelabel{ref:The PackageInfo.g File}{76.3.12}{X85C8DE357EE424D8}
 \makelabel{ref:Replaced and Removed Command Names}{77}{X78C85ED17F00DCC1}
 \makelabel{ref:Group Actions – Name Changes}{77.1}{X7AA51AC9870D2360}
 \makelabel{ref:Package Interface – Obsolete Functions and Name Changes}{77.2}{X831734077B00CB3B}
 \makelabel{ref:Normal Forms of Integer Matrices – Name Changes}{77.3}{X79676CD27EF0F096}
 \makelabel{ref:Miscellaneous Name Changes or Removed Names}{77.4}{X7F6A6CBC7C9E91E5}
 \makelabel{ref:The former .gaprc file}{77.5}{X7F2FF72A7AD60E0C}
-\makelabel{ref:Properties of semigroups}{77.6}{X78274024827F306D}
+\makelabel{ref:Semigroup properties}{77.6}{X7C89E03285799F40}
 \makelabel{ref:Method Selection}{78}{X8058CC8187162644}
 \makelabel{ref:Operations and Methods}{78.1}{X7AEED9AB824CD4DA}
 \makelabel{ref:Method Installation}{78.2}{X795EE8257848B438}
@@ -5281,20 +5281,21 @@ arguments}{5.2}{X851B58408520700D}
 \makelabel{ref:ReadPackage}{76.3.1}{X870954577B27DCAB}
 \makelabel{ref:RereadPackage}{76.3.1}{X870954577B27DCAB}
 \makelabel{ref:TestPackageAvailability}{76.3.2}{X8580DF257E4D7046}
-\makelabel{ref:InstalledPackageVersion}{76.3.3}{X7B79FEE57DBDBD71}
-\makelabel{ref:DirectoriesPackageLibrary}{76.3.4}{X807D835C7B032D4E}
-\makelabel{ref:DirectoriesPackagePrograms}{76.3.5}{X794508E5811D3BC9}
-\makelabel{ref:GAPInfo.Architecture}{76.3.5}{X794508E5811D3BC9}
-\makelabel{ref:CompareVersionNumbers}{76.3.6}{X787DFEB383545A49}
-\makelabel{ref:IsPackageMarkedForLoading}{76.3.7}{X8067348B836BAF37}
-\makelabel{ref:DeclareAutoreadableVariables}{76.3.8}{X8495E5327D563AC3}
-\makelabel{ref:gac}{76.3.9}{X79EF67107E40A130}
-\makelabel{ref:LoadDynamicModule}{76.3.10}{X7C99782886B18C77}
-\makelabel{ref:ValidatePackageInfo}{76.3.12}{X79767C2482FF6F55}
-\makelabel{ref:ShowPackageVariables}{76.3.13}{X7D34AC3287611B15}
-\makelabel{ref:PackageVariablesInfo}{76.3.13}{X7D34AC3287611B15}
-\makelabel{ref:BibEntry}{76.3.14}{X79EA4BD37940AD25}
-\makelabel{ref:Cite}{76.3.15}{X79637D9A7B1AD7F7}
+\makelabel{ref:TestPackage}{76.3.3}{X866ADD4E814A54F0}
+\makelabel{ref:InstalledPackageVersion}{76.3.4}{X7B79FEE57DBDBD71}
+\makelabel{ref:DirectoriesPackageLibrary}{76.3.5}{X807D835C7B032D4E}
+\makelabel{ref:DirectoriesPackagePrograms}{76.3.6}{X794508E5811D3BC9}
+\makelabel{ref:GAPInfo.Architecture}{76.3.6}{X794508E5811D3BC9}
+\makelabel{ref:CompareVersionNumbers}{76.3.7}{X787DFEB383545A49}
+\makelabel{ref:IsPackageMarkedForLoading}{76.3.8}{X8067348B836BAF37}
+\makelabel{ref:DeclareAutoreadableVariables}{76.3.9}{X8495E5327D563AC3}
+\makelabel{ref:gac}{76.3.10}{X79EF67107E40A130}
+\makelabel{ref:LoadDynamicModule}{76.3.11}{X7C99782886B18C77}
+\makelabel{ref:ValidatePackageInfo}{76.3.13}{X79767C2482FF6F55}
+\makelabel{ref:ShowPackageVariables}{76.3.14}{X7D34AC3287611B15}
+\makelabel{ref:PackageVariablesInfo}{76.3.14}{X7D34AC3287611B15}
+\makelabel{ref:BibEntry}{76.3.15}{X79EA4BD37940AD25}
+\makelabel{ref:Cite}{76.3.16}{X79637D9A7B1AD7F7}
 \makelabel{ref:obsolete}{77}{X78C85ED17F00DCC1}
 \makelabel{ref:deprecated}{77}{X78C85ED17F00DCC1}
 \makelabel{ref:legacy}{77}{X78C85ED17F00DCC1}

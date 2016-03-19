@@ -219,3 +219,60 @@
         collection  of  functions  for  computing  with  crossed  modules  and
         Cat1-algebras and morphisms of these structures.[133X
   
+  
+  [1X2.2 [33X[0;0Y[5XGAP[105X[101X[1X 4.8.3 (March 2016)[133X[101X
+  
+  
+  [1X2.2-1 [33X[0;0YChanges in the core [5XGAP[105X[101X[1X system introduced in [5XGAP[105X[101X[1X 4.8.3[133X[101X
+  
+  [33X[0;0YNew features:[133X
+  
+  [30X    [33X[0;6YNew  function  [2XTestPackage[102X  ([14XReference:  TestPackage[114X)  to run standard
+        tests  (if  available) for a single package in the current [5XGAP[105X session
+        (also  callable  via  [10Xmake  testpackage PKGNAME=pkgname[110X to run package
+        tests in the same settings that are used for testing [5XGAP[105X releases).[133X
+  
+  [33X[0;0YImproved and extended functionality:[133X
+  
+  [30X    [33X[0;6Y[2XTestDirectory[102X  ([14XReference:  TestDirectory[114X) now prints a special status
+        message  to  indicate  the outcome of the test (this is convenient for
+        automated  testing).  If  necessary, this message may be suppressed by
+        using the option [10XsuppressStatusMessage[110X[133X
+  
+  [30X    [33X[0;6YImproved output of tracing methods (which may be invoked, for example,
+        with   [2XTraceAllMethods[102X  ([14XReference:  TraceAllMethods[114X))  by  displaying
+        filename and line number in some more cases.[133X
+  
+  [33X[0;0YChanged functionality:[133X
+  
+  [30X    [33X[0;6YFixed  some  inconsistencies  in  the usage of [2XIsGeneratorsOfSemigroup[102X
+        ([14XReference: IsGeneratorsOfSemigroup[114X).[133X
+  
+  [33X[0;0YFixed bugs that could lead to incorrect results:[133X
+  
+  [30X    [33X[0;6YFallback  methods  for conjugacy classes, that were never intended for
+        infinite  groups,  now  use  [2XIsFinite[102X  ([14XReference: IsFinite[114X) filter to
+        prevent  them  being  called  for  infinite groups. [Reported by Gabor
+        Horvath][133X
+  
+  [33X[0;0YFixed bugs that could lead to break loops:[133X
+  
+  [30X    [33X[0;6YCalculating  stabiliser  for the alternating group caused a break loop
+        in the case when it defers to the corresponding symmetric group.[133X
+  
+  [30X    [33X[0;6YIt   was  not  possible  to  use  [2XDotFileLatticeSubgroups[102X  ([14XReference:
+        DotFileLatticeSubgroups[114X)  for  a  trivial  group.  [Reported by Sergio
+        Siccha][133X
+  
+  [30X    [33X[0;6YA   break   loop   while   computing   [2XAutomorphismGroup[102X   ([14XReference:
+        AutomorphismGroup[114X)  for  [10XTransitiveGroup(12,269)[110X.  [Reported  by Ignat
+        Soroko][133X
+  
+  [30X    [33X[0;6YA  break loop while computing conjugacy classes of [10XPSL(6,4)[110X. [Reported
+        by Martin Macaj][133X
+  
+  [33X[0;0YOther fixed bugs:[133X
+  
+  [30X    [33X[0;6YFix  for  using  Firefox  as  a default help viewer with [2XSetHelpViewer[102X
+        ([14XReference: SetHelpViewer[114X). [Reported by Tom McDonough][133X
+  

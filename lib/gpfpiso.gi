@@ -438,7 +438,7 @@ function(g,str,N)
     SetKernelOfMultiplicativeGeneralMapping(hom,N);
   fi;
 
-  hom!.decompinfo:=`di;
+  hom!.decompinfo:=di;
   SetIsWordDecompHomomorphism(hom,true);
   return hom;
 end);
@@ -561,10 +561,15 @@ local fpq, qgens, qreps, fpqg, rels, pcgs, p, f, qimg, idx, nimg, decomp,
     Add(rels,MappedWord(i,fpqg,qimg)/decomp(MappedWord(i,fpqg,qreps)));
   od;
   fp:=f/rels;
+  if HasGeneratorsOfGroup(N) then 
+    di:=GeneratorsOfGroup(N);
+  else
+    di:=[];
+  fi;
   hom2:=GroupHomomorphismByImagesNC(G,fp,
-	 Concatenation(Concatenation(qreps,pcgs),GeneratorsOfGroup(N)),
+	 Concatenation(Concatenation(qreps,pcgs),di),
 	 Concatenation(GeneratorsOfGroup(fp),
-	 List(GeneratorsOfGroup(N),x->One(fp))):noassert);
+	 List(di,x->One(fp))):noassert);
 
   # build decompositioninfo
   di:=rec(gens:=Concatenation(qreps,pcgs),fp:=fp,source:=G);
@@ -586,7 +591,7 @@ local fpq, qgens, qreps, fpqg, rels, pcgs, p, f, qimg, idx, nimg, decomp,
     di.dec:=[elm->MappedWord(Image(hom,elm),fpqg,qimg),decomp];
   fi;
 
-  hom2!.decompinfo:=`di;
+  hom2!.decompinfo:=di;
   SetIsWordDecompHomomorphism(hom2,true);
 
   SetIsSurjective(hom2,true);
@@ -608,7 +613,7 @@ local di, hom;
       # this homomorphism is just to store decomposition information and is
       # not declared total, so an assertion test will fail
       hom:=GroupHomomorphismByImagesNC(k,di.fp,cgens,GeneratorsOfGroup(di.fp):noassert);
-      hom!.decompinfo:=`di;
+      hom!.decompinfo:=di;
       if HasIsSurjective(h) and IsSurjective(h) 
 	and HasKernelOfMultiplicativeGeneralMapping(h)
 	and m=KernelOfMultiplicativeGeneralMapping(h) then

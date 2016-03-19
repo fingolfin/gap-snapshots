@@ -42,7 +42,7 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap77_mj.html#X7F2FF72A7AD60E0C">77.5 <span class="Heading">The former .gaprc file</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap77_mj.html#X78274024827F306D">77.6 <span class="Heading">Properties of semigroups</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap77_mj.html#X7C89E03285799F40">77.6 <span class="Heading">Semigroup properties</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap77_mj.html#X7BF9F1BE87F0636D">77.6-1 IsSemilatticeAsSemigroup</a></span>
@@ -97,7 +97,7 @@
 
 <p>With <strong class="pkg">GAP</strong> 4.4 the package interface was changed. Thereby some functions became obsolete and the names of some others were made more consistent.</p>
 
-<p>The following functions are no longer needed: <code class="code">DeclarePackage</code>, <code class="code">DeclareAutoPackage</code>, <code class="code">DeclarePackageDocumentation</code> and <code class="code">DeclarePackageAutoDocumentation</code>. They are substituted by entries in the packages' <code class="file">PackageInfo.g</code> files, see <a href="chap76_mj.html#X85C8DE357EE424D8"><span class="RefLink">76.3-11</span></a>.</p>
+<p>The following functions are no longer needed: <code class="code">DeclarePackage</code>, <code class="code">DeclareAutoPackage</code>, <code class="code">DeclarePackageDocumentation</code> and <code class="code">DeclarePackageAutoDocumentation</code>. They are substituted by entries in the packages' <code class="file">PackageInfo.g</code> files, see <a href="chap76_mj.html#X85C8DE357EE424D8"><span class="RefLink">76.3-12</span></a>.</p>
 
 <p>Furthermore, the global variable <code class="code">PACKAGES_VERSIONS</code> is no longer needed, since this information is now contained in the <code class="code">GAPInfo.PackagesInfo</code> record (see <a href="chap3_mj.html#X8354754E7935F935"><span class="RefLink">3.5-1</span></a>). The global variable <code class="code">Revisions</code> is also no longer needed, since the function <code class="code">DisplayRevision</code> was made obsolete in <strong class="pkg">GAP</strong> 4.5.</p>
 
@@ -186,9 +186,9 @@
 
 <p>To migrate from the old setup to the new one introduced with <strong class="pkg">GAP</strong> 4.5, first have a look at the function <code class="func">WriteGapIniFile</code> (<a href="chap3_mj.html#X7B0AD104839B6C3C"><span class="RefLink">3.2-3</span></a>). Many users will find that all or most of what was set in the old <code class="file">~/.gaprc</code> file can now be done via the user preferences in a <code class="file">gap.ini</code> file. If you had code for new functions or abbreviations in your old <code class="file">~/.gaprc</code> file or you were reading additional files, then move this into the file <code class="file">gaprc</code> (without the leading dot, same name for all operating systems) in the directory <code class="code">GAPInfo.UserGapRoot</code>.</p>
 
-<p><a id="X78274024827F306D" name="X78274024827F306D"></a></p>
+<p><a id="X7C89E03285799F40" name="X7C89E03285799F40"></a></p>
 
-<h4>77.6 <span class="Heading">Properties of semigroups</span></h4>
+<h4>77.6 <span class="Heading">Semigroup properties</span></h4>
 
 <p>Until Version 4.8 of <strong class="pkg">GAP</strong> there was inconsistent use of the following properties of semigroups: <code class="code">IsGroupAsSemigroup</code>, <code class="code">IsMonoidAsSemigroup</code>, and <code class="code">IsSemilatticeAsSemigroup</code>. <code class="code">IsGroupAsSemigroup</code> was true for semigroups that mathematically defined a group, and for semigroups in the category <code class="func">IsGroup</code> (<a href="chap39_mj.html#X7939B3177BBD61E4"><span class="RefLink">39.2-7</span></a>); <code class="code">IsMonoidAsSemigroup</code> was true for semigroups that mathematically defined monoids, but did not belong to the category <code class="func">IsMonoid</code> (<a href="chap51_mj.html#X861C523483C6248C"><span class="RefLink">51.2-1</span></a>); and <code class="code">IsSemilatticeAsSemigroup</code> was simply a property of semigroups, there is no category <code class="code">IsSemilattice</code>.</p>
 
@@ -201,7 +201,7 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemilatticeAsSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">( property )</td></tr></table></div>
 <p><code class="code">IsSemilatticeAsSemigroup</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is a semilattice and <code class="keyw">false</code> if it is not.</p>
 
-<p>A semigroup is a <em>semilattice</em> if it is commutative and every element is an idempotent. The idempotents of an inverse semigroup form a semilattice. This is identical to <code class="func">IsSemilattice</code> (<a href="../../pkg/semigroups-2.7.2/doc/chap4_mj.html#X833D24AE7C900B85"><span class="RefLink">Semigroups: IsSemilattice</span></a>) # and is present in <strong class="pkg">GAP</strong> 4.8 # only for the sake of compatibility with beta-releases. # It should <em>not</em> be used in new code.</p>
+<p>A semigroup is a <em>semilattice</em> if it is commutative and every element is an idempotent. The idempotents of an inverse semigroup form a semilattice. This is identical to <code class="func">IsSemilattice</code> (<a href="../../pkg/semigroups-2.7.4/doc/chap4_mj.html#X833D24AE7C900B85"><span class="RefLink">Semigroups: IsSemilattice</span></a>) # and is present in <strong class="pkg">GAP</strong> 4.8 # only for the sake of compatibility with beta-releases. # It should <em>not</em> be used in new code.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap76_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap78_mj.html">[Next Chapter]</a>&nbsp;  </div>

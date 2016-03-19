@@ -574,7 +574,9 @@
   [29X[2XActionHomomorphism[102X( [3Xaction[103X ) [32X function
   
   [33X[0;0Ycomputes  a  homomorphism  from [3XG[103X into the symmetric group on [22X|[3XOmega[103X|[122X points
-  that gives the permutation action of [3XG[103X on [3XOmega[103X.[133X
+  that  gives  the  permutation  action  of  [3XG[103X  on [3XOmega[103X. (In particular, this
+  homomorphism  is a permutation equivalence, that is the permutation image of
+  a group element is given by the positions of points in [3XOmega[103X.)[133X
   
   [33X[0;0YBy   default   the   homomorphism  returned  by  [2XActionHomomorphism[102X  is  not
   necessarily  surjective  (its  [2XRange[102X  ([14X32.3-7[114X)  value  is the full symmetric

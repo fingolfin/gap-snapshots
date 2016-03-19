@@ -957,10 +957,10 @@
   
   [33X[0;0YThe  global  variable  [10XGAPInfo.Version[110X  (see  [2XGAPInfo[102X  ([14X3.5-1[114X)) contains the
   version number of the version of [5XGAP[105X. Its value can be checked other version
-  number using [2XCompareVersionNumbers[102X ([14X76.3-6[114X).[133X
+  number using [2XCompareVersionNumbers[102X ([14X76.3-7[114X).[133X
   
   [33X[0;0YTo  produce  sample  citations  for the used version of [5XGAP[105X or for a package
-  available in this [5XGAP[105X installation, use [2XCite[102X ([14X76.3-15[114X).[133X
+  available in this [5XGAP[105X installation, use [2XCite[102X ([14X76.3-16[114X).[133X
   
   [33X[0;0YIf  you  wish  to  report  a  problem to [5XGAP[105X Support or [5XGAP[105X Forum, it may be
   useful  to  not  only  report  the version used, but also to include the [5XGAP[105X
@@ -1208,6 +1208,11 @@
   [8X[10XshowProgress[110X[108X
         [33X[0;6YPrint information about how tests are progressing (defaults to [9Xtrue[109X).[133X
   
+  [8X[10XsuppressStatusMessage[110X[108X
+        [33X[0;6Ysuppress  displaying  status messages [10X#I Errors detected while testing[110X
+        and  [10X#I  No  errors detected while testing[110X after the test (defaults to
+        [9Xfalse[109X).[133X
+  
   [8X[10XexitGAP[110X[108X
         [33X[0;6YRather than returning [9Xtrue[109X or [9Xfalse[109X, exit GAP with the return value of
         GAP set to success or fail, depending on if all tests passed (defaults
@@ -1219,6 +1224,9 @@
   
   [8X[10XrenormaliseStones[110X[108X
         [33X[0;6YRe-normalise the stones number given in every tst files's 'STOP_TEST'[133X
+  
+  [33X[0;0YSee  also [2XTestPackage[102X ([14X76.3-3[114X) for the information on running standard tests
+  for [5XGAP[105X packages.[133X
   
   
   [1X7.10 [33X[0;0YDebugging Recursion[133X[101X

@@ -254,7 +254,7 @@
 
 <p><code class="func">PartialPermOp</code> returns the partial permutation that corresponds to the action of the object <var class="Arg">obj</var> on the domain or list <var class="Arg">list</var> via the function <var class="Arg">func</var>. If the optional third argument <var class="Arg">func</var> is not specified, then the action <code class="func">OnPoints</code> (<a href="chap41_mj.html#X7FE417DD837987B4"><span class="RefLink">41.2-1</span></a>) is used by default. Note that the returned partial permutation refers to the positions in <var class="Arg">list</var> even if <var class="Arg">list</var> itself consists of integers.</p>
 
-<p>This function is the analogue in the context of partial permutations of <code class="func">Permutation</code> (<a href="../../doc/ref/chap41_mj.html#X7807A33381DCAB26"><span class="RefLink">Reference: Permutation</span></a>) or <code class="func">TransformationOp</code> (<a href="chap53_mj.html#X7C2A3FC9782F2099"><span class="RefLink">53.2-5</span></a>).</p>
+<p>This function is the analogue in the context of partial permutations of <code class="func">Permutation</code> (<a href="../../doc/ref/chap41_mj.html#X7807A33381DCAB26"><span class="RefLink">Reference: Permutation (for a group, an action domain, etc.)</span></a>) or <code class="func">TransformationOp</code> (<a href="chap53_mj.html#X7C2A3FC9782F2099"><span class="RefLink">53.2-5</span></a>).</p>
 
 <p>If <var class="Arg">obj</var> does not map the elements of <var class="Arg">list</var> injectively, then <code class="keyw">fail</code> is returned.</p>
 
@@ -399,7 +399,7 @@ fail
 
 <h5>54.3-1 DegreeOfPartialPerm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeOfPartialPerm</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeOfPartialPerm</code>( <var class="Arg">f</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeOfPartialPermCollection</code>( <var class="Arg">coll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>Returns: A non-negative integer.</p>
 
@@ -418,7 +418,7 @@ fail
 
 <h5>54.3-2 CodegreeOfPartialPerm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CodegreeOfPartialPerm</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CodegreeOfPartialPerm</code>( <var class="Arg">f</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CodegreeOfPartialPermCollection</code>( <var class="Arg">coll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>Returns: A non-negative integer.</p>
 
@@ -437,7 +437,7 @@ fail
 
 <h5>54.3-3 RankOfPartialPerm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankOfPartialPerm</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankOfPartialPerm</code>( <var class="Arg">f</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankOfPartialPermCollection</code>( <var class="Arg">coll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>Returns: A non-negative integer.</p>
 
@@ -475,7 +475,7 @@ fail
 
 <h5>54.3-5 ImageOfPartialPermCollection</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImageOfPartialPermCollection</code>( <var class="Arg">coll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImageOfPartialPermCollection</code>( <var class="Arg">coll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>Returns: A set of positive integers (maybe empty).</p>
 
 <p>The <em>image</em> of a partial permutation collection <var class="Arg">coll</var> is the union of the images of its elements.</p>

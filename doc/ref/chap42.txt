@@ -284,7 +284,7 @@
   
   [1X42.5-5 AsPermutation[101X
   
-  [29X[2XAsPermutation[102X( [3Xf[103X ) [32X operation
+  [29X[2XAsPermutation[102X( [3Xf[103X ) [32X attribute
   [6XReturns:[106X  [33X[0;10YA permutation or [9Xfail[109X.[133X
   
   [33X[0;0YPartial   permutations   and   transformations   which  define  permutations

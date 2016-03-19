@@ -351,7 +351,7 @@
         print an error message and will abort.[133X
   
   [33X[0;0YAdditional options, [10X-C[110X, [10X-U[110X, [10X-P[110X, [10X-W[110X, [10X-p[110X and [10X-z[110X are used internally by the [5Xgac[105X
-  script (see [14X76.3-9[114X) and/or on specific operating systems.[133X
+  script (see [14X76.3-10[114X) and/or on specific operating systems.[133X
   
   
   [1X3.2 [33X[0;0YThe gap.ini and gaprc files[133X[101X

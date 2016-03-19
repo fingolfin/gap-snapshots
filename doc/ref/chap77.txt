@@ -53,7 +53,7 @@
   [33X[0;0YThe    following   functions   are   no   longer   needed:   [10XDeclarePackage[110X,
   [10XDeclareAutoPackage[110X,              [10XDeclarePackageDocumentation[110X             and
   [10XDeclarePackageAutoDocumentation[110X.  They  are  substituted  by  entries in the
-  packages' [11XPackageInfo.g[111X files, see [14X76.3-11[114X.[133X
+  packages' [11XPackageInfo.g[111X files, see [14X76.3-12[114X.[133X
   
   [33X[0;0YFurthermore,  the  global  variable  [10XPACKAGES_VERSIONS[110X  is no longer needed,
   since  this  information is now contained in the [10XGAPInfo.PackagesInfo[110X record
@@ -144,7 +144,7 @@
   [10XGAPInfo.UserGapRoot[110X.[133X
   
   
-  [1X77.6 [33X[0;0YProperties of semigroups[133X[101X
+  [1X77.6 [33X[0;0YSemigroup properties[133X[101X
   
   [33X[0;0YUntil  Version  4.8  of  [5XGAP[105X  there  was  inconsistent  use of the following
   properties   of  semigroups:  [10XIsGroupAsSemigroup[110X,  [10XIsMonoidAsSemigroup[110X,  and

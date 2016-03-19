@@ -946,9 +946,9 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 
 <h4>7.8 <span class="Heading">Information about the version used</span></h4>
 
-<p>The global variable <code class="code">GAPInfo.Version</code> (see <code class="func">GAPInfo</code> (<a href="chap3.html#X8354754E7935F935"><span class="RefLink">3.5-1</span></a>)) contains the version number of the version of <strong class="pkg">GAP</strong>. Its value can be checked other version number using <code class="func">CompareVersionNumbers</code> (<a href="chap76.html#X787DFEB383545A49"><span class="RefLink">76.3-6</span></a>).</p>
+<p>The global variable <code class="code">GAPInfo.Version</code> (see <code class="func">GAPInfo</code> (<a href="chap3.html#X8354754E7935F935"><span class="RefLink">3.5-1</span></a>)) contains the version number of the version of <strong class="pkg">GAP</strong>. Its value can be checked other version number using <code class="func">CompareVersionNumbers</code> (<a href="chap76.html#X787DFEB383545A49"><span class="RefLink">76.3-7</span></a>).</p>
 
-<p>To produce sample citations for the used version of <strong class="pkg">GAP</strong> or for a package available in this <strong class="pkg">GAP</strong> installation, use <code class="func">Cite</code> (<a href="chap76.html#X79637D9A7B1AD7F7"><span class="RefLink">76.3-15</span></a>).</p>
+<p>To produce sample citations for the used version of <strong class="pkg">GAP</strong> or for a package available in this <strong class="pkg">GAP</strong> installation, use <code class="func">Cite</code> (<a href="chap76.html#X79637D9A7B1AD7F7"><span class="RefLink">76.3-16</span></a>).</p>
 
 <p>If you wish to report a problem to <strong class="pkg">GAP</strong> Support or <strong class="pkg">GAP</strong> Forum, it may be useful to not only report the version used, but also to include the <strong class="pkg">GAP</strong> banner displays the information about the architecture for which the <strong class="pkg">GAP</strong> binary is built, used libraries and loaded packages.</p>
 
@@ -1151,6 +1151,10 @@ true
 <dd><p>Print information about how tests are progressing (defaults to <code class="keyw">true</code>).</p>
 
 </dd>
+<dt><strong class="Mark"><code class="code">suppressStatusMessage</code></strong></dt>
+<dd><p>suppress displaying status messages <code class="code">#I Errors detected while testing</code> and <code class="code">#I No errors detected while testing</code> after the test (defaults to <code class="keyw">false</code>).</p>
+
+</dd>
 <dt><strong class="Mark"><code class="code">exitGAP</code></strong></dt>
 <dd><p>Rather than returning <code class="keyw">true</code> or <code class="keyw">false</code>, exit GAP with the return value of GAP set to success or fail, depending on if all tests passed (defaults to <code class="keyw">false</code>).</p>
 
@@ -1164,6 +1168,8 @@ true
 
 </dd>
 </dl>
+<p>See also <code class="func">TestPackage</code> (<a href="chap76.html#X866ADD4E814A54F0"><span class="RefLink">76.3-3</span></a>) for the information on running standard tests for <strong class="pkg">GAP</strong> packages.</p>
+
 <p><a id="X85FF55448787CCA0" name="X85FF55448787CCA0"></a></p>
 
 <h4>7.10 <span class="Heading">Debugging Recursion</span></h4>

@@ -64,15 +64,15 @@ BindGlobal("InstallMonomialOrdering",function(ord,ordfun,idxord,
 	  # for each variable give its index position.
 	  return idxord(a,b,List([1..Maximum(idx)],i->Position(idx,i)));
 	end);
-      neword!.idxarrangement:=`idx;
-      neword!.type:=`type;
+      neword!.idxarrangement:=idx;
+      neword!.type:=type;
       SetOccuringVariableIndices(neword,ov);
       return neword;
     else
       nam:=Concatenation(ordname,"()");
       neword:=MakeMonomialOrdering(nam,ordfun);
-      neword!.idxarrangement:=`idx;
-      neword!.type:=`type;
+      neword!.idxarrangement:=idx;
+      neword!.type:=type;
       SetOccuringVariableIndices(neword,ov);
       return neword;
     fi;
@@ -966,12 +966,12 @@ local li, lj, lcm, a, b, k;
   return false;
 end);
 
-BindGlobal("GAPGBASIS",`rec(
+BindGlobal("GAPGBASIS",rec(
   name:="naive GAP version of Buchberger's algorithm",
   GroebnerBasis:=function(elms,order)
   local orderext, bas, baslte, fam, t, B, i, j, s;
     orderext:=MonomialExtrepComparisonFun(order);
-    bas:=ShallowCopy(elms);
+    bas:=Filtered(elms,x->not IsZero(x));
     baslte:=List(bas,ExtRepPolynomialRatFun);
     fam:=FamilyObj(bas[1]);
     baslte:=List(baslte,i->i[LeadingMonomialPosExtRep(fam,i,orderext)]);
