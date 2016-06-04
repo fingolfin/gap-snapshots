@@ -2838,6 +2838,26 @@ gap> ExternalSubset(extS);
 
 #############################################################################
 #
+#  Changes 4.8.3 -> 4.8.4
+
+#2016/04/14 (Chris Jefferson)
+gap> a := "abc";
+"abc"
+gap> b := "def";
+"def"
+gap> IsSortedList(a);
+true
+gap> IsSortedList(b);
+true
+gap> c := Concatenation(b,a);
+"defabc"
+gap> HasIsSortedList(c);
+false
+gap> IsSortedList(c);
+false
+
+#############################################################################
+#
 # Tests requiring loading some packages must be performed at the end.
 # Do not put tests that do not need any packages below this line.
 #
@@ -2855,7 +2875,7 @@ gap> if LoadPackage("tomlib", false) <> fail then
 # Tests requiring CTblLib
 
 # 2005/08/29 (TB)
-gap> LoadPackage("ctbllib", "=0.0");
+gap> LoadPackage("ctbllib", "=0.0",false);
 fail
 
 ##  Bug 18 for fix 4
@@ -3018,6 +3038,49 @@ gap> IsAlternatingGroup(g);
 true
 gap> Size(Stabilizer(g, [ [1,2], [3,4] ], OnSetsSets));
 4
+
+#2016/3/16 (AH, issue #675)
+gap> G:=Group((1,2,3,4));;Factorization(G,Elements(G)[1]);
+<identity ...>
+
+#2016/5/2 (MP)
+gap> S := FullTransformationMonoid(2);;
+gap> D := GreensDClassOfElement(S, IdentityTransformation);;
+gap> Intersection(D, []);
+[  ]
+gap> Intersection([], D);
+[  ]
+
+#2016/04/29 (FL, bug reported on support list)
+gap> Collected(List([1..200], i-> RandomPrimitivePolynomial(2,2)));
+[ [ x_1^2+x_1+Z(2)^0, 200 ] ]
+
+#another bug, detected when fixing the previous one (FL)
+gap> RandomPrimitivePolynomial(2,2,100);
+x_100^2+x_100+Z(2)^0
+
+#and a third bug (FL)
+gap> RandomPrimitivePolynomial(2,1);
+x_1+Z(2)^0
+gap> RandomPrimitivePolynomial(2,1,13);
+x_13+Z(2)^0
+
+#2016/04/27 (FL, bug reported on support list)
+gap> l := [1,,,5];;
+gap> Remove(l);
+5
+gap> [l, Length(l)];
+[ [ 1 ], 1 ]
+gap> l := [,,,"x"];;
+gap> Remove(l);
+"x"
+gap> [l, Length(l)];
+[ [  ], 0 ]
+gap> l := [1,2,,[],"x"];;
+gap> Remove(l);
+"x"
+gap> [l, Length(l)];
+[ [ 1, 2,, [  ] ], 4 ]
 
 #############################################################################
 gap> STOP_TEST( "bugfix.tst", 831990000);

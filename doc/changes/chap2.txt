@@ -276,3 +276,73 @@
   [30X    [33X[0;6YFix  for  using  Firefox  as  a default help viewer with [2XSetHelpViewer[102X
         ([14XReference: SetHelpViewer[114X). [Reported by Tom McDonough][133X
   
+  
+  [1X2.3 [33X[0;0Y[5XGAP[105X[101X[1X 4.8.4 (June 2016)[133X[101X
+  
+  
+  [1X2.3-1 [33X[0;0YChanges in the core [5XGAP[105X[101X[1X system introduced in [5XGAP[105X[101X[1X 4.8.4[133X[101X
+  
+  [33X[0;0YNew features:[133X
+  
+  [30X    [33X[0;6YThe [5XGAP[105X distribution now includes [11Xbin/BuildPackages.sh[111X, a script which
+        can  be started from the [11Xpkg[111X directory via [10X../bin/BuildPackages.sh[110X and
+        will  attempt  to  build as many packages as possible. It replaces the
+        [11XInstPackages.sh[111X  script  which  was not a part of the [5XGAP[105X distribution
+        and  had  to  be  downloaded  separately from the [5XGAP[105X website. The new
+        script  is  more  robust  and  simplifies  adding  new  packages  with
+        binaries,  as  it  requires no adjustments if the new package supports
+        the standard [10X./configure; make[110X build procedure.[133X
+  
+  [33X[0;0YImproved and extended functionality:[133X
+  
+  [30X    [33X[0;6Y[2XSimpleGroup[102X  ([14XReference:  SimpleGroup[114X)  now  produces more informative
+        error message in the case when [2XAtlasGroup[102X ([14XAtlasRep: AtlasGroup[114X) could
+        not load the requested group.[133X
+  
+  [30X    [33X[0;6YAn   info  message  with  the  suggestion  to  use  [2XInfoPackageLoading[102X
+        ([14XReference: InfoPackageLoading[114X) will now be displayed when [2XLoadPackage[102X
+        ([14XReference:  LoadPackage[114X)  returns [9Xfail[109X (unless [5XGAP[105X is started with [10X-b[110X
+        option).[133X
+  
+  [30X    [33X[0;6YThe  build system will now enable C++ support in GMP only if a working
+        C++ compiler is detected.[133X
+  
+  [30X    [33X[0;6YMore  checks  were  added when embedding coefficient rings or rational
+        numbers into polynomial rings in order to forbid adding polynomials in
+        different characteristic.[133X
+  
+  [33X[0;0YFixed bugs that could lead to crashes:[133X
+  
+  [30X    [33X[0;6YFixed  the  crash  in  [10X--cover[110X  mode when reading files with more than
+        65,536 lines.[133X
+  
+  [33X[0;0YFixed bugs that could lead to incorrect results:[133X
+  
+  [30X    [33X[0;6YFixed  an  error in the code for partial permutations that occurred on
+        big-endian systems. [Reported by Bill Allombert][133X
+  
+  [30X    [33X[0;6YFixed  the  kernel  method  for  [2XRemove[102X  ([14XReference:  Remove[114X) with one
+        argument,  which failed to reduce the length of a list to the position
+        of the last bound entry. [Reported by Peter Schauenburg][133X
+  
+  [33X[0;0YFixed bugs that could lead to break loops:[133X
+  
+  [30X    [33X[0;6YFixed   the   break   loop   while   using  [2XFactorization[102X  ([14XReference:
+        factorization[114X)  on  permutation  groups by removing some old code that
+        relied  on  further  caching  in  [10XFactorization[110X.  [Reported by Grahame
+        Erskine][133X
+  
+  [30X    [33X[0;6YFixed  a  problem  with  computation of maximal subgroups in an almost
+        simple group. [Reported by Ramon Esteban Romero][133X
+  
+  [30X    [33X[0;6YAdded  missing  methods  for  [2XIntersection2[102X ([14XReference: Intersection2[114X)
+        when one of the arguments is an empty list. [Reported by Wilf Wilson][133X
+  
+  [33X[0;0YOther fixed bugs:[133X
+  
+  [30X    [33X[0;6YFixed    several   bugs   in   [2XRandomPrimitivePolynomial[102X   ([14XReference:
+        RandomPrimitivePolynomial[114X). [Reported by Nusa Zidaric][133X
+  
+  [30X    [33X[0;6YFixed  several  problems with [2XRandom[102X ([14XReference: Random[114X) on long lists
+        in 64-bit GAP installations.[133X
+  

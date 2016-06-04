@@ -244,7 +244,7 @@ fail
 
 <h5>45.2-3 CanEasilyComputePcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanEasilyComputePcgs</code>( <var class="Arg">grp</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanEasilyComputePcgs</code>( <var class="Arg">grp</var> )</td><td class="tdright">( filter )</td></tr></table></div>
 <p>This filter indicates whether it is possible to compute a pcgs for <var class="Arg">grp</var> cheaply. Clearly, <var class="Arg">grp</var> must be polycyclic in this case. However, not for every polycyclic group there is a method to compute a pcgs at low costs. This filter is used in the method selection mainly. Note that this filter may change its value from <code class="keyw">false</code> to <code class="keyw">true</code>.</p>
 
 
@@ -391,7 +391,7 @@ true
 
 <h5>45.5-6 PcElementByExponents</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcElementByExponents</code>( <var class="Arg">pcgs</var>, <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcElementByExponents</code>( <var class="Arg">pcgs</var>, <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcElementByExponentsNC</code>( <var class="Arg">pcgs</var>[, <var class="Arg">basisind</var>], <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>returns the element corresponding to the exponent vector <var class="Arg">list</var> with respect to <var class="Arg">pcgs</var>. The exponents in <var class="Arg">list</var> must be in the range of permissible exponents for <var class="Arg">pcgs</var>. <em>It is not guaranteed that <code class="func">PcElementByExponents</code> will reduce the exponents modulo the relative orders</em>. (You should use the operation <code class="func">LinearCombinationPcgs</code> (<a href="chap45_mj.html#X7F8BD7A87DB3933A"><span class="RefLink">45.5-7</span></a>) for this purpose.) The <code class="code">NC</code> version does not check that the lengths of the lists fit together and does not check the exponent range.</p>
 
@@ -401,7 +401,7 @@ true
 
 <h5>45.5-7 LinearCombinationPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LinearCombinationPcgs</code>( <var class="Arg">pcgs</var>, <var class="Arg">list</var>[, <var class="Arg">one</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LinearCombinationPcgs</code>( <var class="Arg">pcgs</var>, <var class="Arg">list</var>[, <var class="Arg">one</var>] )</td><td class="tdright">( function )</td></tr></table></div>
 <p>returns the product <span class="SimpleMath">\(\prod_i \textit{pcgs}[i]^{{\textit{list}[i]}}\)</span>. In contrast to <code class="func">PcElementByExponents</code> (<a href="chap45_mj.html#X87AF746B8328F5D0"><span class="RefLink">45.5-6</span></a>) this permits negative exponents. <var class="Arg">pcgs</var> might be a list of group elements. In this case, an appropriate identity element <var class="Arg">one</var> must be given. <var class="Arg">list</var> can be empty.</p>
 
 

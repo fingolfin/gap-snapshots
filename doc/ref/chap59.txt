@@ -293,8 +293,8 @@
   
   [1X59.3-1 DefaultField[101X
   
-  [29X[2XDefaultField[102X( [3Xlist[103X ) [32X method
-  [29X[2XDefaultRing[102X( [3Xlist[103X ) [32X method
+  [29X[2XDefaultField[102X( [3Xlist[103X ) [32X function
+  [29X[2XDefaultRing[102X( [3Xlist[103X ) [32X function
   
   [33X[0;0Y[2XDefaultField[102X and [2XDefaultRing[102X for finite field elements are defined to return
   the [13Xsmallest[113X field containing the given elements.[133X

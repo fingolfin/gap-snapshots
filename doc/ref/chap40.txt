@@ -617,7 +617,7 @@
   
   [1X40.7-6 InducedAutomorphism[101X
   
-  [29X[2XInducedAutomorphism[102X( [3Xepi[103X, [3Xaut[103X ) [32X operation
+  [29X[2XInducedAutomorphism[102X( [3Xepi[103X, [3Xaut[103X ) [32X function
   
   [33X[0;0YLet  [3Xaut[103X be an automorphism of a group [22XG[122X and [3Xepi[103X be a homomorphism from [22XG[122X to
   a group [22XH[122X such that the kernel of [3Xepi[103X is fixed under [3Xaut[103X. Let [22XU[122X be the image
@@ -729,9 +729,9 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XAllHomomorphismClasses(SymmetricGroup(4),SymmetricGroup(3)); [127X[104X
-    [4X[28X[ [ (1,3,4,2), (1,2,4) ] -> [ (), () ], [128X[104X
-    [4X[28X  [ (1,3,4,2), (1,2,4) ] -> [ (1,2), () ], [128X[104X
-    [4X[28X  [ (1,3,4,2), (1,2,4) ] -> [ (2,3), (1,2,3) ] ][128X[104X
+    [4X[28X[ [ (1,3,4,2), (1,3,4) ] -> [ (), () ], [128X[104X
+    [4X[28X  [ (1,3,4,2), (1,3,4) ] -> [ (1,2), () ], [128X[104X
+    [4X[28X  [ (1,3,4,2), (1,3,4) ] -> [ (2,3), (1,2,3) ] ][128X[104X
   [4X[32X[104X
   
   [1X40.9-3 AllHomomorphisms[101X
@@ -780,7 +780,7 @@
     [4X[25Xgap>[125X [27Xh:=Group((1,2,3),(1,2));[127X[104X
     [4X[28XGroup([ (1,2,3), (1,2) ])[128X[104X
     [4X[25Xgap>[125X [27Xquo:=GQuotients(g,h);[127X[104X
-    [4X[28X[ [ (1,2,4,3), (1,2,3) ] -> [ (2,3), (1,2,3) ] ][128X[104X
+    [4X[28X[ [ (1,3,2,4), (1,3,2) ] -> [ (2,3), (1,2,3) ] ][128X[104X
   [4X[32X[104X
   
   [1X40.9-5 IsomorphicSubgroups[101X

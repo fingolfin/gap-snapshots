@@ -584,7 +584,7 @@ Group([ (1,2,3,4), (1,3)(2,4), (2,4) ])
 
 <h5>40.7-6 InducedAutomorphism</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InducedAutomorphism</code>( <var class="Arg">epi</var>, <var class="Arg">aut</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InducedAutomorphism</code>( <var class="Arg">epi</var>, <var class="Arg">aut</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Let <var class="Arg">aut</var> be an automorphism of a group <span class="SimpleMath">G</span> and <var class="Arg">epi</var> be a homomorphism from <span class="SimpleMath">G</span> to a group <span class="SimpleMath">H</span> such that the kernel of <var class="Arg">epi</var> is fixed under <var class="Arg">aut</var>. Let <span class="SimpleMath">U</span> be the image of <var class="Arg">epi</var>. This command returns the automorphism of <span class="SimpleMath">U</span> induced by <var class="Arg">aut</var> via <var class="Arg">epi</var>, that is, the automorphism of <span class="SimpleMath">U</span> which maps <span class="SimpleMath">g</span><code class="code">^<var class="Arg">epi</var></code> to <code class="code">(</code><span class="SimpleMath">g</span><code class="code">^<var class="Arg">aut</var>)^<var class="Arg">epi</var></code>, for <span class="SimpleMath">g ∈ G</span>.</p>
 
 
@@ -668,9 +668,9 @@ fail
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AllHomomorphismClasses(SymmetricGroup(4),SymmetricGroup(3)); </span>
-[ [ (1,3,4,2), (1,2,4) ] -&gt; [ (), () ], 
-  [ (1,3,4,2), (1,2,4) ] -&gt; [ (1,2), () ], 
-  [ (1,3,4,2), (1,2,4) ] -&gt; [ (2,3), (1,2,3) ] ]
+[ [ (1,3,4,2), (1,3,4) ] -&gt; [ (), () ], 
+  [ (1,3,4,2), (1,3,4) ] -&gt; [ (1,2), () ], 
+  [ (1,3,4,2), (1,3,4) ] -&gt; [ (2,3), (1,2,3) ] ]
 </pre></div>
 
 <p><a id="X791D12B7845610CE" name="X791D12B7845610CE"></a></p>
@@ -715,7 +715,7 @@ Group([ (1,2,3,4), (1,2) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h:=Group((1,2,3),(1,2));</span>
 Group([ (1,2,3), (1,2) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">quo:=GQuotients(g,h);</span>
-[ [ (1,2,4,3), (1,2,3) ] -&gt; [ (2,3), (1,2,3) ] ]
+[ [ (1,3,2,4), (1,3,2) ] -&gt; [ (2,3), (1,2,3) ] ]
 </pre></div>
 
 <p><a id="X83B417BE7C508DC4" name="X83B417BE7C508DC4"></a></p>

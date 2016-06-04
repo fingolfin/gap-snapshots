@@ -1573,7 +1573,7 @@ Group([ (1,2)(3,4), (1,4)(2,3) ])
 
 <h5>39.12-12 PRump</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PRump</code>( <var class="Arg">G</var>, <var class="Arg">p</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PRump</code>( <var class="Arg">G</var>, <var class="Arg">p</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>For a prime <span class="SimpleMath">p</span>, the <em><var class="Arg">p</var>-rump</em> of a group <var class="Arg">G</var> is the subgroup <span class="SimpleMath"><var class="Arg">G</var>' <var class="Arg">G</var>^<var class="Arg">p</var></span>.</p>
 
 <p><em>@example missing!@</em></p>
@@ -2096,14 +2096,14 @@ PSL(3,4)
 
 <h5>39.15-23 IsPSolvable</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPSolvable</code>( <var class="Arg">G</var>, <var class="Arg">p</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPSolvable</code>( <var class="Arg">G</var>, <var class="Arg">p</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>A finite group is <span class="SimpleMath">p</span>-solvable if every chief factor either has order not divisible by <span class="SimpleMath">p</span>, or is solvable.</p>
 
 <p><a id="X87415A8485FCF510" name="X87415A8485FCF510"></a></p>
 
 <h5>39.15-24 IsPNilpotent</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPNilpotent</code>( <var class="Arg">G</var>, <var class="Arg">p</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPNilpotent</code>( <var class="Arg">G</var>, <var class="Arg">p</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>A group is <span class="SimpleMath">p</span>-nilpotent if it possesses a normal <span class="SimpleMath">p</span>-complement.</p>
 
 <p><a id="X7F8264FA796B2B7D" name="X7F8264FA796B2B7D"></a></p>
@@ -2219,7 +2219,7 @@ PSL(3,4)
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s:=SubnormalSeries(g,Group((1,2)(3,4)));</span>
-[ Group([ (1,2,3,4), (1,2) ]), Group([ (1,2)(3,4), (1,4)(2,3) ]),
+[ Group([ (1,2,3,4), (1,2) ]), Group([ (1,2)(3,4), (1,3)(2,4) ]), 
   Group([ (1,2)(3,4) ]) ]
 </pre></div>
 
@@ -2446,7 +2446,7 @@ Group([ f1 ])
 
 <h5>39.18-5 HasAbelianFactorGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasAbelianFactorGroup</code>( <var class="Arg">G</var>, <var class="Arg">N</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasAbelianFactorGroup</code>( <var class="Arg">G</var>, <var class="Arg">N</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>tests whether <var class="Arg">G</var> <span class="SimpleMath">/</span> <var class="Arg">N</var> is abelian (without explicitly constructing the factor group and without testing whether <var class="Arg">N</var> is in fact a normal subgroup).</p>
 
 
@@ -2461,7 +2461,7 @@ true
 
 <h5>39.18-6 HasElementaryAbelianFactorGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasElementaryAbelianFactorGroup</code>( <var class="Arg">G</var>, <var class="Arg">N</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasElementaryAbelianFactorGroup</code>( <var class="Arg">G</var>, <var class="Arg">N</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>tests whether <var class="Arg">G</var> <span class="SimpleMath">/</span> <var class="Arg">N</var> is elementary abelian (without explicitly constructing the factor group and without testing whether <var class="Arg">N</var> is in fact a normal subgroup).</p>
 
 <p><a id="X822A3AB27919BC1E" name="X822A3AB27919BC1E"></a></p>

@@ -69,7 +69,7 @@
   
   [1X25.1-5 BaseIntersectionIntMats[101X
   
-  [29X[2XBaseIntersectionIntMats[102X( [3Xm[103X, [3Xn[103X ) [32X attribute
+  [29X[2XBaseIntersectionIntMats[102X( [3Xm[103X, [3Xn[103X ) [32X operation
   
   [33X[0;0YIf  [3Xm[103X and [3Xn[103X are matrices with integral entries, this function returns a list
   of vectors that forms a basis of the intersection of the integral row spaces
@@ -85,7 +85,7 @@
   
   [1X25.1-6 ComplementIntMat[101X
   
-  [29X[2XComplementIntMat[102X( [3Xfull[103X, [3Xsub[103X ) [32X attribute
+  [29X[2XComplementIntMat[102X( [3Xfull[103X, [3Xsub[103X ) [32X operation
   
   [33X[0;0YLet  [3Xfull[103X  be  a list of integer vectors generating an integral row module [22XM[122X
   and  [3Xsub[103X  a  list  of  vectors  defining  a  submodule [22XS[122X of [22XM[122X. This function
@@ -216,7 +216,7 @@
   
   [1X25.2-8 DiagonalizeIntMat[101X
   
-  [29X[2XDiagonalizeIntMat[102X( [3Xmat[103X ) [32X operation
+  [29X[2XDiagonalizeIntMat[102X( [3Xmat[103X ) [32X function
   
   [33X[0;0YThis  function  changes  [3Xmat[103X  to its SNF. (The result is the same as that of
   [2XSmithNormalFormIntegerMat[102X  ([14X25.2-6[114X),  but  [3Xmat[103X  will be modified, thus using
@@ -243,7 +243,7 @@
   
   [1X25.2-9 NormalFormIntMat[101X
   
-  [29X[2XNormalFormIntMat[102X( [3Xmat[103X, [3Xoptions[103X ) [32X operation
+  [29X[2XNormalFormIntMat[102X( [3Xmat[103X, [3Xoptions[103X ) [32X function
   
   [33X[0;0YThis  general  operation for computation of various Normal Forms is probably
   the most efficient.[133X
@@ -320,7 +320,7 @@
   
   [1X25.3-1 DeterminantIntMat[101X
   
-  [29X[2XDeterminantIntMat[102X( [3Xmat[103X ) [32X operation
+  [29X[2XDeterminantIntMat[102X( [3Xmat[103X ) [32X function
   
   [33X[0;0YComputes  the  determinant  of  an integer matrix using the same strategy as
   [2XNormalFormIntMat[102X  ([14X25.2-9[114X).  This  method  is faster in general for matrices

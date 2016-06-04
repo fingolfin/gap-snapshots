@@ -1,45 +1,45 @@
 \begin{theindex}
 
-  \item \textsf{GAP} binary distributions, \hyperpage{31}
-  \item \textsf{GAP} compiler (no longer recommended), \hyperpage{31}
+  \item \textsf{GAP} binary distributions, \hyperpage{32}
+  \item \textsf{GAP} compiler (no longer recommended), \hyperpage{32}
   \item \textsf{GAP}{\nobreakspace}3 compatibility mode (withdrawn), 
-		\hyperpage{31}
-  \item \textsf{GMP support}, \hyperpage{27}
-  \item \textsf{MathJax support}, \hyperpage{33}
-  \item \textsf{readline} support, \hyperpage{32}
+		\hyperpage{32}
+  \item \textsf{GMP support}, \hyperpage{28}
+  \item \textsf{MathJax support}, \hyperpage{34}
+  \item \textsf{readline} support, \hyperpage{33}
 
   \indexspace
 
-  \item Bugfixes and packages archives (withdrawn), \hyperpage{31}
+  \item Bugfixes and packages archives (withdrawn), \hyperpage{32}
 
   \indexspace
 
-  \item Completion files (withdrawn), \hyperpage{31}
+  \item Completion files (withdrawn), \hyperpage{32}
 
   \indexspace
 
-  \item Data libraries, \hyperpage{28}
+  \item Data libraries, \hyperpage{29}
 
   \indexspace
 
-  \item Floats, \hyperpage{28}
+  \item Floats, \hyperpage{29}
 
   \indexspace
 
-  \item Namespaces, \hyperpage{34}
+  \item Namespaces, \hyperpage{35}
 
   \indexspace
 
-  \item Packages under Windows, \hyperpage{38}
-  \item Packages, new, \hyperpage{9}, \hyperpage{15}
-  \item Packages, upgraded, \hyperpage{15}
+  \item Packages under Windows, \hyperpage{39}
+  \item Packages, new, \hyperpage{9}, \hyperpage{16}
+  \item Packages, upgraded, \hyperpage{16}
 
   \indexspace
 
-  \item \texttt{tools} archive, \hyperpage{31}
+  \item \texttt{tools} archive, \hyperpage{32}
 
   \indexspace
 
-  \item User interface customisation, \hyperpage{32}
+  \item User interface customisation, \hyperpage{33}
 
 \end{theindex}

@@ -148,7 +148,7 @@
 
 <h5>25.1-5 BaseIntersectionIntMats</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseIntersectionIntMats</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseIntersectionIntMats</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>If <var class="Arg">m</var> and <var class="Arg">n</var> are matrices with integral entries, this function returns a list of vectors that forms a basis of the intersection of the integral row spaces of <var class="Arg">m</var> and <var class="Arg">n</var>.</p>
 
 
@@ -164,7 +164,7 @@
 
 <h5>25.1-6 ComplementIntMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComplementIntMat</code>( <var class="Arg">full</var>, <var class="Arg">sub</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComplementIntMat</code>( <var class="Arg">full</var>, <var class="Arg">sub</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Let <var class="Arg">full</var> be a list of integer vectors generating an integral row module <span class="SimpleMath">\(M\)</span> and <var class="Arg">sub</var> a list of vectors defining a submodule <span class="SimpleMath">\(S\)</span> of <span class="SimpleMath">\(M\)</span>. This function computes a free basis for <span class="SimpleMath">\(M\)</span> that extends <span class="SimpleMath">\(S\)</span>. I.e., if the dimension of <span class="SimpleMath">\(S\)</span> is <span class="SimpleMath">\(n\)</span> it determines a basis <span class="SimpleMath">\(B = \{ b_1, \ldots, b_m \}\)</span> for <span class="SimpleMath">\(M\)</span>, as well as <span class="SimpleMath">\(n\)</span> integers <span class="SimpleMath">\(x_i\)</span> such that the <span class="SimpleMath">\(n\)</span> vectors <span class="SimpleMath">\(s_i:= x_i \cdot b_i\)</span> form a basis for <span class="SimpleMath">\(S\)</span>.</p>
 
 <p>It returns a record with the following components:</p>
@@ -290,7 +290,7 @@ true
 
 <h5>25.2-8 DiagonalizeIntMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DiagonalizeIntMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DiagonalizeIntMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>This function changes <var class="Arg">mat</var> to its SNF. (The result is the same as that of <code class="func">SmithNormalFormIntegerMat</code> (<a href="chap25_mj.html#X87089FEC7FBEEA8F"><span class="RefLink">25.2-6</span></a>), but <var class="Arg">mat</var> will be modified, thus using less memory.) If <var class="Arg">mat</var> is immutable an error will be triggered.</p>
 
 
@@ -317,7 +317,7 @@ true
 
 <h5>25.2-9 NormalFormIntMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NormalFormIntMat</code>( <var class="Arg">mat</var>, <var class="Arg">options</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NormalFormIntMat</code>( <var class="Arg">mat</var>, <var class="Arg">options</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>This general operation for computation of various Normal Forms is probably the most efficient.</p>
 
 <p>Options bit values:</p>
@@ -397,7 +397,7 @@ rec( colC := [ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ],
 
 <h5>25.3-1 DeterminantIntMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeterminantIntMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeterminantIntMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Computes the determinant of an integer matrix using the same strategy as <code class="func">NormalFormIntMat</code> (<a href="chap25_mj.html#X81FB746E82BE6CDA"><span class="RefLink">25.2-9</span></a>). This method is faster in general for matrices greater than <span class="SimpleMath">\(20 \times 20\)</span> but quite a lot slower for smaller matrices. It therefore passes the work to the more general <code class="func">DeterminantMat</code> (<a href="chap24_mj.html#X83045F6F82C180E1"><span class="RefLink">24.4-4</span></a>) for these smaller matrices.</p>
 
 <p><a id="X79F2EFEC7C3EA80C" name="X79F2EFEC7C3EA80C"></a></p>

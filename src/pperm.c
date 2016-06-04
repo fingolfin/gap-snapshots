@@ -2246,7 +2246,7 @@ Obj PrintPPerm4(Obj self, Obj f){
   
   deg=DEG_PPERM4(f);
   if(deg==0) Pr("<empty partial perm>", 0L, 0L);
-  n=MAX(deg, CODEG_PPERM2(f));
+  n=MAX(deg, CODEG_PPERM4(f));
   ResizeTmpPPerm(n);
   ptseen=(UInt4*)(ADDR_OBJ(TmpPPerm));
   for(i=0;i<n;i++) ptseen[i]=0; 
@@ -4451,7 +4451,7 @@ Obj QuoPPerm22(Obj f, Obj g){
       }
     }
   }
-  CODEG_PPERM2(quo)=codeg;
+  CODEG_PPERM4(quo)=codeg;
   return quo;
 }
 

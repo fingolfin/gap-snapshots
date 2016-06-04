@@ -454,7 +454,7 @@
   
   [1X48.3-1 TietzeWordAbstractWord[101X
   
-  [29X[2XTietzeWordAbstractWord[102X( [3Xword[103X, [3Xfgens[103X ) [32X function
+  [29X[2XTietzeWordAbstractWord[102X( [3Xword[103X, [3Xfgens[103X ) [32X operation
   
   [33X[0;0Yassumes  [3Xfgens[103X  to  be  a  list  of  free group generators and [3Xword[103X to be an
   abstract  word  in these generators. It converts [3Xword[103X into a Tietze word, i.

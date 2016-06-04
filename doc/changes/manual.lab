@@ -9,6 +9,8 @@
 \makelabel{changes:New and updated packages since GAP 4.7.8}{2.1.2}{X7907F66D7C726E9D}
 \makelabel{changes:GAP 4.8.3 (March 2016)}{2.2}{X87956276873C1BB4}
 \makelabel{changes:Changes in the core GAP system introduced in GAP 4.8.3}{2.2.1}{X788939AF7ADE4BB2}
+\makelabel{changes:GAP 4.8.4 (June 2016)}{2.3}{X85F7B6F17D29A589}
+\makelabel{changes:Changes in the core GAP system introduced in GAP 4.8.4}{2.3.1}{X816F70F5782C0939}
 \makelabel{changes:Changes between GAP 4.6 and GAP 4.7}{3}{X871220D17E7EE651}
 \makelabel{changes:GAP 4.7.2 (December 2013)}{3.1}{X78594AB2871B379E}
 \makelabel{changes:Changes in the core GAP system introduced in GAP 4.7}{3.1.1}{X8346E4677FA78976}

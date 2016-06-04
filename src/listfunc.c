@@ -232,8 +232,10 @@ Obj            RemPlist (
     }
     removed = ELM_PLIST(list, pos);
     SET_ELM_PLIST(list, pos, (Obj)0L);
-    SET_LEN_PLIST(list, pos-1);
-    if ( pos == 1 ) {
+    pos--;
+    while ( 1 <= pos && ELM_PLIST( list, pos ) == 0 ) { pos--; }
+    SET_LEN_PLIST(list, pos);
+    if ( pos == 0 ) {
       RetypeBag(list, T_PLIST_EMPTY);
     }
     if (4*pos*sizeof(Obj) < 3*SIZE_BAG(list))
@@ -302,6 +304,7 @@ Obj             FuncAPPEND_LIST_INTR (
         len2 = GET_LEN_STRING(list2);
         GROW_STRING(list1, len1 + len2);
         SET_LEN_STRING(list1, len1 + len2);
+        CLEAR_FILTS_LIST(list1);
         memmove( (void *)(CHARS_STRING(list1) + len1), 
                 (void *)CHARS_STRING(list2), len2 + 1);
         /* ensure trailing zero */

@@ -789,20 +789,20 @@
   
   [1X41.9-3 Cycle[101X
   
-  [29X[2XCycle[102X( [3Xg[103X, [3XOmega[103X, [3Xpnt[103X[, [3Xact[103X] ) [32X operation
+  [29X[2XCycle[102X( [3Xg[103X, [3XOmega[103X, [3Xpnt[103X[, [3Xact[103X] ) [32X function
   
   [33X[0;0Yreturns  a  list  of  the points in the cycle of [3Xpnt[103X under the action of the
   element [3Xg[103X.[133X
   
   [1X41.9-4 CycleLength[101X
   
-  [29X[2XCycleLength[102X( [3Xg[103X, [3XOmega[103X, [3Xpnt[103X[, [3Xact[103X] ) [32X operation
+  [29X[2XCycleLength[102X( [3Xg[103X, [3XOmega[103X, [3Xpnt[103X[, [3Xact[103X] ) [32X function
   
   [33X[0;0Yreturns the length of the cycle of [3Xpnt[103X under the action of the element [3Xg[103X.[133X
   
   [1X41.9-5 Cycles[101X
   
-  [29X[2XCycles[102X( [3Xg[103X, [3XOmega[103X[, [3Xact[103X] ) [32X operation
+  [29X[2XCycles[102X( [3Xg[103X, [3XOmega[103X[, [3Xact[103X] ) [32X function
   
   [33X[0;0Yreturns  a  list  of  the  cycles  (as lists of points) of the action of the
   element [3Xg[103X.[133X

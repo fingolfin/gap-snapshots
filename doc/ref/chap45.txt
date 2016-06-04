@@ -97,7 +97,7 @@
   
   [1X45.2-3 CanEasilyComputePcgs[101X
   
-  [29X[2XCanEasilyComputePcgs[102X( [3Xgrp[103X ) [32X function
+  [29X[2XCanEasilyComputePcgs[102X( [3Xgrp[103X ) [32X filter
   
   [33X[0;0YThis  filter  indicates  whether  it  is  possible to compute a pcgs for [3Xgrp[103X
   cheaply.  Clearly,  [3Xgrp[103X  must  be  polycyclic in this case. However, not for
@@ -238,7 +238,7 @@
   
   [1X45.5-6 PcElementByExponents[101X
   
-  [29X[2XPcElementByExponents[102X( [3Xpcgs[103X, [3Xlist[103X ) [32X operation
+  [29X[2XPcElementByExponents[102X( [3Xpcgs[103X, [3Xlist[103X ) [32X function
   [29X[2XPcElementByExponentsNC[102X( [3Xpcgs[103X[, [3Xbasisind[103X], [3Xlist[103X ) [32X operation
   
   [33X[0;0Yreturns  the  element corresponding to the exponent vector [3Xlist[103X with respect
@@ -254,7 +254,7 @@
   
   [1X45.5-7 LinearCombinationPcgs[101X
   
-  [29X[2XLinearCombinationPcgs[102X( [3Xpcgs[103X, [3Xlist[103X[, [3Xone[103X] ) [32X operation
+  [29X[2XLinearCombinationPcgs[102X( [3Xpcgs[103X, [3Xlist[103X[, [3Xone[103X] ) [32X function
   
   [33X[0;0Yreturns    the    product    [22X∏_i    [3Xpcgs[103X[i]^{[3Xlist[103X[i]}[122X.    In   contrast   to
   [2XPcElementByExponents[102X ([14X45.5-6[114X) this permits negative exponents. [3Xpcgs[103X might be

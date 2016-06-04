@@ -2907,7 +2907,7 @@ DeclareOperation( "IsCharacteristicSubgroup", [IsGroup,IsGroup] );
 ##
 ##  <#GAPDoc Label="IsPNilpotent">
 ##  <ManSection>
-##  <Func Name="IsPNilpotent" Arg='G, p'/>
+##  <Oper Name="IsPNilpotent" Arg='G, p'/>
 ##
 ##  <Description>
 ##  A group is <M>p</M>-nilpotent if it possesses a normal <M>p</M>-complement.
@@ -2924,7 +2924,7 @@ KeyDependentOperation( "IsPNilpotent", IsGroup, IsPosInt, "prime" );
 ##
 ##  <#GAPDoc Label="IsPSolvable">
 ##  <ManSection>
-##  <Func Name="IsPSolvable" Arg='G, p'/>
+##  <Oper Name="IsPSolvable" Arg='G, p'/>
 ##
 ##  <Description>
 ##  A finite group is <M>p</M>-solvable if every chief factor either has
@@ -3126,7 +3126,7 @@ KeyDependentOperation( "PCentralSeries", IsGroup, IsPosInt, "prime" );
 ##
 ##  <#GAPDoc Label="PRump">
 ##  <ManSection>
-##  <Func Name="PRump" Arg='G, p'/>
+##  <Oper Name="PRump" Arg='G, p'/>
 ##
 ##  <Description>
 ##  For a prime <M>p</M>, the <E><A>p</A>-rump</E> of a group <A>G</A> is
@@ -3179,7 +3179,7 @@ KeyDependentOperation( "PCore", IsGroup, IsPosInt, "prime" );
 ##  <M>V \geq </M><A>U</A>. If <A>U</A> is subnormal, <M>V =</M> <A>U</A>.
 ##  <Example><![CDATA[
 ##  gap> s:=SubnormalSeries(g,Group((1,2)(3,4)));
-##  [ Group([ (1,2,3,4), (1,2) ]), Group([ (1,2)(3,4), (1,4)(2,3) ]),
+##  [ Group([ (1,2,3,4), (1,2) ]), Group([ (1,2)(3,4), (1,3)(2,4) ]), 
 ##    Group([ (1,2)(3,4) ]) ]
 ##  ]]></Example>
 ##  </Description>
@@ -4027,8 +4027,8 @@ DeclareAttribute( "IsomorphismFpGroup", IsGroup );
 ##
 ##  <#GAPDoc Label="IsomorphismFpGroupByGenerators">
 ##  <ManSection>
-##  <Attr Name="IsomorphismFpGroupByGenerators" Arg='G,gens[,string]'/>
-##  <Attr Name="IsomorphismFpGroupByGeneratorsNC" Arg='G,gens,string'/>
+##  <Func Name="IsomorphismFpGroupByGenerators" Arg='G,gens[,string]'/>
+##  <Oper Name="IsomorphismFpGroupByGeneratorsNC" Arg='G,gens,string'/>
 ##
 ##  <Description>
 ##  returns an isomorphism from a finite group <A>G</A>
@@ -4048,7 +4048,8 @@ DeclareAttribute( "IsomorphismFpGroup", IsGroup );
 ##  gap> fp := Image( iso );
 ##  <fp group of size 120 on the generators [ F1, F2 ]>
 ##  gap> RelatorsOfFpGroup( fp );
-##  [ F1^2, F2^5, (F2^-1*F1)^4, (F2^-1*F1*F2*F1)^3, (F2^2*F1*F2^-2*F1)^2 ]
+##  [ F1^2, F2^5, (F2^-1*F1)^4, (F2*F1*F2^-1*F1)^3, (F2*F1*F2^-2*F1*F2)^2 
+##   ]
 ##  ]]></Example>
 ##  <P/>
 ##  The main task of the function
@@ -4075,9 +4076,9 @@ DeclareAttribute( "IsomorphismFpGroup", IsGroup );
 ##    (1,12)(2,11)(3,6)(4,8)(5,9)(7,10) ])
 ##  gap> gens := GeneratorsOfGroup( M12 );;
 ##  gap> iso := IsomorphismFpGroupByGenerators( M12, gens );;
-##  #I  the image group has 3 gens and 23 rels of total length 628
+##  #I  the image group has 3 gens and 20 rels of total length 497
 ##  gap> iso := IsomorphismFpGroupByGenerators( M12, gens );;
-##  #I  the image group has 3 gens and 23 rels of total length 569
+##  #I  the image group has 3 gens and 19 rels of total length 493
 ##  ]]></Example>
 ##  <P/>
 ##  Also in the case of a permutation group <A>G</A>, the function
@@ -4126,7 +4127,7 @@ DeclareAttribute( "IsomorphismFpGroup", IsGroup );
 ##  #I  the image group has 3 gens and 11 rels of total length 92
 ##  gap> iso := IsomorphismFpGroupByGenerators( M12, gens : 
 ##  >                                           method := "fast" );;
-##  #I  the image group has 3 gens and 150 rels of total length 3336
+##  #I  the image group has 3 gens and 151 rels of total length 3658
 ##  ]]></Example>
 ##  <P/>
 ##  Though the option <C>method := "regular"</C> is only checked in the case
@@ -4148,7 +4149,7 @@ DeclareAttribute( "IsomorphismFpGroup", IsGroup );
 ##    [ [ 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 0 ], 
 ##        [ 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1 ] ] ]
 ##  gap> iso := IsomorphismFpGroupByGenerators( G, gens );;
-##  #I  the image group has 2 gens and 10 rels of total length 126
+##  #I  the image group has 2 gens and 11 rels of total length 150
 ##  gap> iso := IsomorphismFpGroupByGenerators( G, gens : 
 ##  >                                           method := "regular");;
 ##  #I  the image group has 2 gens and 6 rels of total length 56
@@ -4264,7 +4265,7 @@ DeclareGlobalFunction( "PowerMapOfGroupWithInvariants" );
 ##
 ##  <#GAPDoc Label="HasAbelianFactorGroup">
 ##  <ManSection>
-##  <Oper Name="HasAbelianFactorGroup" Arg='G, N'/>
+##  <Func Name="HasAbelianFactorGroup" Arg='G, N'/>
 ##
 ##  <Description>
 ##  tests whether <A>G</A> <M>/</M> <A>N</A> is abelian
@@ -4307,7 +4308,7 @@ DeclareGlobalFunction("HasSolvableFactorGroup");
 ##
 ##  <#GAPDoc Label="HasElementaryAbelianFactorGroup">
 ##  <ManSection>
-##  <Oper Name="HasElementaryAbelianFactorGroup" Arg='G, N'/>
+##  <Func Name="HasElementaryAbelianFactorGroup" Arg='G, N'/>
 ##
 ##  <Description>
 ##  tests whether <A>G</A> <M>/</M> <A>N</A> is elementary abelian
