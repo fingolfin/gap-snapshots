@@ -45,6 +45,12 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X816F70F5782C0939">2.3-1 <span class="Heading">Changes in the core <strong class="pkg">GAP</strong> system introduced in <strong class="pkg">GAP</strong> 4.8.4</span></a>
 </span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X84E1F4618181F6A3">2.4 <span class="Heading"><strong class="pkg">GAP</strong> 4.8.5 (September 2016)</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X861F03FC7C8079C0">2.4-1 <span class="Heading">Changes in the core <strong class="pkg">GAP</strong> system introduced in <strong class="pkg">GAP</strong> 4.8.5</span></a>
+</span>
+</div></div>
 </div>
 
 <h3>2 <span class="Heading">Changes between <strong class="pkg">GAP</strong> 4.7 and <strong class="pkg">GAP</strong> 4.8</span></h3>
@@ -348,6 +354,50 @@ function( a, b, c, x... ) ... end;
 
 </li>
 <li><p>Fixed several problems with <code class="func">Random</code> (<a href="../../doc/ref/chap30_mj.html#X7FF906E57D6936F8"><span class="RefLink">Reference: Random</span></a>) on long lists in 64-bit GAP installations.</p>
+
+</li>
+</ul>
+<p><a id="X84E1F4618181F6A3" name="X84E1F4618181F6A3"></a></p>
+
+<h4>2.4 <span class="Heading"><strong class="pkg">GAP</strong> 4.8.5 (September 2016)</span></h4>
+
+<p><a id="X861F03FC7C8079C0" name="X861F03FC7C8079C0"></a></p>
+
+<h5>2.4-1 <span class="Heading">Changes in the core <strong class="pkg">GAP</strong> system introduced in <strong class="pkg">GAP</strong> 4.8.5</span></h5>
+
+<p>Improved and extended functionality:</p>
+
+
+<ul>
+<li><p>The error messages produced when an unexpected <code class="keyw">fail</code> is returned were made more clear by explicitly telling that the result should not be boolean or <code class="keyw">fail</code> (before it only said "not a boolean").</p>
+
+</li>
+<li><p>For consistency, both <code class="func">NrTransitiveGroups</code> (<a href="../../doc/ref/chap50_mj.html#X871C27427F11B123"><span class="RefLink">Reference: NrTransitiveGroups</span></a>) and <code class="func">TransitiveGroup</code> (<a href="../../doc/ref/chap50_mj.html#X7F062EC17EB8287D"><span class="RefLink">Reference: TransitiveGroup</span></a>) now disallow the transitive group of degree 1.</p>
+
+</li>
+</ul>
+<p>Fixed bugs that could lead to incorrect results:</p>
+
+
+<ul>
+<li><p>A bug in the code for algebraic field extensions over non-prime fields that may cause, for example, a list of all elements of the extension not being a duplicate-free. [Reported by Huta Gana]</p>
+
+</li>
+<li><p>So far, <code class="func">FileString</code> (<a href="../../pkg/GAPDoc-1.5.1/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: FileString</span></a>) only wrote files of sizes less than 2G and did not indicate an error in case of larger strings. Now strings of any length can be written, and in the case of a failure the corresponding system error is shown.</p>
+
+</li>
+</ul>
+<p>Fixed bugs that could lead to break loops:</p>
+
+
+<ul>
+<li><p><code class="func">NaturalHomomorphismByIdeal</code> (<a href="../../doc/ref/chap56_mj.html#X83D53D98809EC461"><span class="RefLink">Reference: NaturalHomomorphismByIdeal</span></a>) was not reducing monomials before forming a quotient ring, causing a break loop on some inputs. [Reported by Dmytro Savchuk]</p>
+
+</li>
+<li><p>A bug in <code class="func">DefaultInfoHandler</code> (<a href="../../doc/ref/chap7_mj.html#X7A06511778457311"><span class="RefLink">Reference: DefaultInfoHandler</span></a>) caused a break loop on startup with the setting <code class="code">SetUserPreference( "InfoPackageLoadingLevel", 4 )</code>`. [Reported by Mathieu Dutour]</p>
+
+</li>
+<li><p>The <code class="func">Iterator</code> (<a href="../../doc/ref/chap30_mj.html#X83ADF8287ED0668E"><span class="RefLink">Reference: Iterator</span></a>) for permutation groups was broken when the <code class="func">StabChainMutable</code> (<a href="../../doc/ref/chap43_mj.html#X80B5CF78829495C2"><span class="RefLink">Reference: StabChainMutable (for a group)</span></a>) of the group was not reduced, which can reasonably happen as the result of various algorithms.</p>
 
 </li>
 </ul>

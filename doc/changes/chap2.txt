@@ -346,3 +346,45 @@
   [30X    [33X[0;6YFixed  several  problems with [2XRandom[102X ([14XReference: Random[114X) on long lists
         in 64-bit GAP installations.[133X
   
+  
+  [1X2.4 [33X[0;0Y[5XGAP[105X[101X[1X 4.8.5 (September 2016)[133X[101X
+  
+  
+  [1X2.4-1 [33X[0;0YChanges in the core [5XGAP[105X[101X[1X system introduced in [5XGAP[105X[101X[1X 4.8.5[133X[101X
+  
+  [33X[0;0YImproved and extended functionality:[133X
+  
+  [30X    [33X[0;6YThe  error  messages produced when an unexpected [9Xfail[109X is returned were
+        made  more  clear  by explicitly telling that the result should not be
+        boolean or [9Xfail[109X (before it only said [21Xnot a boolean[121X).[133X
+  
+  [30X    [33X[0;6YFor      consistency,      both     [2XNrTransitiveGroups[102X     ([14XReference:
+        NrTransitiveGroups[114X)  and  [2XTransitiveGroup[102X ([14XReference: TransitiveGroup[114X)
+        now disallow the transitive group of degree 1.[133X
+  
+  [33X[0;0YFixed bugs that could lead to incorrect results:[133X
+  
+  [30X    [33X[0;6YA bug in the code for algebraic field extensions over non-prime fields
+        that  may  cause, for example, a list of all elements of the extension
+        not being a duplicate-free. [Reported by Huta Gana][133X
+  
+  [30X    [33X[0;6YSo far, [2XFileString[102X ([14XGAPDoc: FileString[114X) only wrote files of sizes less
+        than  2G  and did not indicate an error in case of larger strings. Now
+        strings of any length can be written, and in the case of a failure the
+        corresponding system error is shown.[133X
+  
+  [33X[0;0YFixed bugs that could lead to break loops:[133X
+  
+  [30X    [33X[0;6Y[2XNaturalHomomorphismByIdeal[102X ([14XReference: NaturalHomomorphismByIdeal[114X) was
+        not reducing monomials before forming a quotient ring, causing a break
+        loop on some inputs. [Reported by Dmytro Savchuk][133X
+  
+  [30X    [33X[0;6YA  bug  in [2XDefaultInfoHandler[102X ([14XReference: DefaultInfoHandler[114X) caused a
+        break   loop   on   startup   with   the   setting  [10XSetUserPreference(
+        "InfoPackageLoadingLevel", 4 )[110X`. [Reported by Mathieu Dutour][133X
+  
+  [30X    [33X[0;6YThe  [2XIterator[102X  ([14XReference: Iterator[114X) for permutation groups was broken
+        when  the [2XStabChainMutable[102X ([14XReference: StabChainMutable (for a group)[114X)
+        of  the  group  was  not  reduced,  which can reasonably happen as the
+        result of various algorithms.[133X
+  
