@@ -2147,15 +2147,15 @@
 \contentsline {subsection}{\numberline {50.1.5}\leavevmode {\color {Chapter }FreeAbelianGroup}}{727}{subsection.50.1.5}
 \contentsline {subsection}{\numberline {50.1.6}\leavevmode {\color {Chapter }DihedralGroup}}{727}{subsection.50.1.6}
 \contentsline {subsection}{\numberline {50.1.7}\leavevmode {\color {Chapter }QuaternionGroup}}{727}{subsection.50.1.7}
-\contentsline {subsection}{\numberline {50.1.8}\leavevmode {\color {Chapter }ExtraspecialGroup}}{727}{subsection.50.1.8}
+\contentsline {subsection}{\numberline {50.1.8}\leavevmode {\color {Chapter }ExtraspecialGroup}}{728}{subsection.50.1.8}
 \contentsline {subsection}{\numberline {50.1.9}\leavevmode {\color {Chapter }AlternatingGroup}}{728}{subsection.50.1.9}
 \contentsline {subsection}{\numberline {50.1.10}\leavevmode {\color {Chapter }SymmetricGroup}}{728}{subsection.50.1.10}
-\contentsline {subsection}{\numberline {50.1.11}\leavevmode {\color {Chapter }MathieuGroup}}{728}{subsection.50.1.11}
+\contentsline {subsection}{\numberline {50.1.11}\leavevmode {\color {Chapter }MathieuGroup}}{729}{subsection.50.1.11}
 \contentsline {subsection}{\numberline {50.1.12}\leavevmode {\color {Chapter }SuzukiGroup}}{729}{subsection.50.1.12}
 \contentsline {subsection}{\numberline {50.1.13}\leavevmode {\color {Chapter }ReeGroup}}{729}{subsection.50.1.13}
 \contentsline {section}{\numberline {50.2}\leavevmode {\color {Chapter }Classical Groups}}{729}{section.50.2}
 \contentsline {subsection}{\numberline {50.2.1}\leavevmode {\color {Chapter }GeneralLinearGroup}}{730}{subsection.50.2.1}
-\contentsline {subsection}{\numberline {50.2.2}\leavevmode {\color {Chapter }SpecialLinearGroup}}{730}{subsection.50.2.2}
+\contentsline {subsection}{\numberline {50.2.2}\leavevmode {\color {Chapter }SpecialLinearGroup}}{731}{subsection.50.2.2}
 \contentsline {subsection}{\numberline {50.2.3}\leavevmode {\color {Chapter }GeneralUnitaryGroup}}{731}{subsection.50.2.3}
 \contentsline {subsection}{\numberline {50.2.4}\leavevmode {\color {Chapter }SpecialUnitaryGroup}}{731}{subsection.50.2.4}
 \contentsline {subsection}{\numberline {50.2.5}\leavevmode {\color {Chapter }SymplecticGroup}}{732}{subsection.50.2.5}
@@ -2163,7 +2163,7 @@
 \contentsline {subsection}{\numberline {50.2.7}\leavevmode {\color {Chapter }SpecialOrthogonalGroup}}{732}{subsection.50.2.7}
 \contentsline {subsection}{\numberline {50.2.8}\leavevmode {\color {Chapter }Omega (construct an orthogonal group)}}{733}{subsection.50.2.8}
 \contentsline {subsection}{\numberline {50.2.9}\leavevmode {\color {Chapter }GeneralSemilinearGroup}}{733}{subsection.50.2.9}
-\contentsline {subsection}{\numberline {50.2.10}\leavevmode {\color {Chapter }SpecialSemilinearGroup}}{733}{subsection.50.2.10}
+\contentsline {subsection}{\numberline {50.2.10}\leavevmode {\color {Chapter }SpecialSemilinearGroup}}{734}{subsection.50.2.10}
 \contentsline {subsection}{\numberline {50.2.11}\leavevmode {\color {Chapter }ProjectiveGeneralLinearGroup}}{734}{subsection.50.2.11}
 \contentsline {subsection}{\numberline {50.2.12}\leavevmode {\color {Chapter }ProjectiveSpecialLinearGroup}}{734}{subsection.50.2.12}
 \contentsline {subsection}{\numberline {50.2.13}\leavevmode {\color {Chapter }ProjectiveGeneralUnitaryGroup}}{734}{subsection.50.2.13}
@@ -2179,19 +2179,19 @@
 \contentsline {subsection}{\numberline {50.6.2}\leavevmode {\color {Chapter }NrTransitiveGroups}}{738}{subsection.50.6.2}
 \contentsline {subsection}{\numberline {50.6.3}\leavevmode {\color {Chapter }TransitiveIdentification}}{739}{subsection.50.6.3}
 \contentsline {section}{\numberline {50.7}\leavevmode {\color {Chapter }Small Groups}}{739}{section.50.7}
-\contentsline {subsection}{\numberline {50.7.1}\leavevmode {\color {Chapter }SmallGroup (for group order and index)}}{740}{subsection.50.7.1}
+\contentsline {subsection}{\numberline {50.7.1}\leavevmode {\color {Chapter }SmallGroup (for group order and index)}}{741}{subsection.50.7.1}
 \contentsline {subsection}{\numberline {50.7.2}\leavevmode {\color {Chapter }AllSmallGroups}}{741}{subsection.50.7.2}
 \contentsline {subsection}{\numberline {50.7.3}\leavevmode {\color {Chapter }OneSmallGroup}}{741}{subsection.50.7.3}
 \contentsline {subsection}{\numberline {50.7.4}\leavevmode {\color {Chapter }NumberSmallGroups}}{741}{subsection.50.7.4}
 \contentsline {subsection}{\numberline {50.7.5}\leavevmode {\color {Chapter }IdSmallGroup}}{741}{subsection.50.7.5}
-\contentsline {subsection}{\numberline {50.7.6}\leavevmode {\color {Chapter }IdsOfAllSmallGroups}}{741}{subsection.50.7.6}
+\contentsline {subsection}{\numberline {50.7.6}\leavevmode {\color {Chapter }IdsOfAllSmallGroups}}{742}{subsection.50.7.6}
 \contentsline {subsection}{\numberline {50.7.7}\leavevmode {\color {Chapter }IdGap3SolvableGroup}}{742}{subsection.50.7.7}
 \contentsline {subsection}{\numberline {50.7.8}\leavevmode {\color {Chapter }SmallGroupsInformation}}{742}{subsection.50.7.8}
 \contentsline {subsection}{\numberline {50.7.9}\leavevmode {\color {Chapter }UnloadSmallGroupsData}}{742}{subsection.50.7.9}
 \contentsline {section}{\numberline {50.8}\leavevmode {\color {Chapter }Finite Perfect Groups}}{743}{section.50.8}
 \contentsline {subsection}{\numberline {50.8.1}\leavevmode {\color {Chapter }SizesPerfectGroups}}{744}{subsection.50.8.1}
 \contentsline {subsection}{\numberline {50.8.2}\leavevmode {\color {Chapter }PerfectGroup}}{744}{subsection.50.8.2}
-\contentsline {subsection}{\numberline {50.8.3}\leavevmode {\color {Chapter }PerfectIdentification}}{744}{subsection.50.8.3}
+\contentsline {subsection}{\numberline {50.8.3}\leavevmode {\color {Chapter }PerfectIdentification}}{745}{subsection.50.8.3}
 \contentsline {subsection}{\numberline {50.8.4}\leavevmode {\color {Chapter }NumberPerfectGroups}}{745}{subsection.50.8.4}
 \contentsline {subsection}{\numberline {50.8.5}\leavevmode {\color {Chapter }NumberPerfectLibraryGroups}}{745}{subsection.50.8.5}
 \contentsline {subsection}{\numberline {50.8.6}\leavevmode {\color {Chapter }SizeNumbersPerfectGroups}}{745}{subsection.50.8.6}

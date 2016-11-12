@@ -56,7 +56,8 @@
   [29X[2XTrivialGroup[102X( [[3Xfilter[103X] ) [32X function
   
   [33X[0;0Yconstructs  a  trivial  group in the category given by the filter [3Xfilter[103X. If
-  [3Xfilter[103X is not given it defaults to [2XIsPcGroup[102X ([14X46.3-1[114X).[133X
+  [3Xfilter[103X  is not given it defaults to [2XIsPcGroup[102X ([14X46.3-1[114X). For more information
+  on possible values of [3Xfilt[103X see section ([14X50.1[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XTrivialGroup();[127X[104X
@@ -70,7 +71,8 @@
   [29X[2XCyclicGroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function
   
   [33X[0;0Yconstructs  the  cyclic  group of size [3Xn[103X in the category given by the filter
-  [3Xfilt[103X. If [3Xfilt[103X is not given it defaults to [2XIsPcGroup[102X ([14X46.3-1[114X).[133X
+  [3Xfilt[103X.  If  [3Xfilt[103X  is  not  given  it defaults to [2XIsPcGroup[102X ([14X46.3-1[114X). For more
+  information on possible values of [3Xfilt[103X see section ([14X50.1[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XCyclicGroup(12);[127X[104X
@@ -95,7 +97,8 @@
   is  of isomorphism type [22XC_{[3Xints[103X[1]} × C_{[3Xints[103X[2]} × ... × C_{[3Xints[103X[n]}[122X, where
   [3Xints[103X  must  be a list of positive integers. If [3Xfilt[103X is not given it defaults
   to [2XIsPcGroup[102X ([14X46.3-1[114X). The generators of the group returned are the elements
-  corresponding to the integers in [3Xints[103X.[133X
+  corresponding  to  the  integers  in  [3Xints[103X. For more information on possible
+  values of [3Xfilt[103X see section ([14X50.1[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XAbelianGroup([1,2,3]);[127X[104X
@@ -107,7 +110,8 @@
   [29X[2XElementaryAbelianGroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function
   
   [33X[0;0Yconstructs  the  elementary abelian group of size [3Xn[103X in the category given by
-  the filter [3Xfilt[103X. If [3Xfilt[103X is not given it defaults to [2XIsPcGroup[102X ([14X46.3-1[114X).[133X
+  the filter [3Xfilt[103X. If [3Xfilt[103X is not given it defaults to [2XIsPcGroup[102X ([14X46.3-1[114X). For
+  more information on possible values of [3Xfilt[103X see section ([14X50.1[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XElementaryAbelianGroup(8192);[127X[104X
@@ -119,7 +123,8 @@
   [29X[2XFreeAbelianGroup[102X( [[3Xfilt[103X, ][3Xrank[103X ) [32X function
   
   [33X[0;0Yconstructs  the  free  abelian  group of rank [3Xn[103X in the category given by the
-  filter [3Xfilt[103X. If [3Xfilt[103X is not given it defaults to [2XIsFpGroup[102X ([14X47.1-2[114X).[133X
+  filter  [3Xfilt[103X.  If  [3Xfilt[103X  is not given it defaults to [2XIsFpGroup[102X ([14X47.1-2[114X). For
+  more information on possible values of [3Xfilt[103X see section ([14X50.1[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XFreeAbelianGroup(4);[127X[104X
@@ -131,11 +136,14 @@
   [29X[2XDihedralGroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function
   
   [33X[0;0Yconstructs  the dihedral group of size [3Xn[103X in the category given by the filter
-  [3Xfilt[103X. If [3Xfilt[103X is not given it defaults to [2XIsPcGroup[102X ([14X46.3-1[114X).[133X
+  [3Xfilt[103X.  If  [3Xfilt[103X  is  not  given  it defaults to [2XIsPcGroup[102X ([14X46.3-1[114X). For more
+  information on possible values of [3Xfilt[103X see section ([14X50.1[114X).[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XDihedralGroup(10);[127X[104X
-    [4X[28X<pc group of size 10 with 2 generators>[128X[104X
+    [4X[25Xgap>[125X [27XDihedralGroup(8);[127X[104X
+    [4X[28X<pc group of size 8 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XDihedralGroup( IsPermGroup, 8 );[127X[104X
+    [4X[28XGroup([ (1,2,3,4), (2,4) ])[128X[104X
   [4X[32X[104X
   
   [1X50.1-7 QuaternionGroup[101X
@@ -145,9 +153,10 @@
   
   [33X[0;0Yconstructs the generalized quaternion group (or dicyclic group) of size [3Xn[103X in
   the  category  given by the filter [3Xfilt[103X. Here, [3Xn[103X is a multiple of 4. If [3Xfilt[103X
-  is  not  given it defaults to [2XIsPcGroup[102X ([14X46.3-1[114X). Methods are also available
-  for  permutation  and matrix groups (of minimal degree and minimal dimension
-  in coprime characteristic).[133X
+  is  not  given  it  defaults  to [2XIsPcGroup[102X ([14X46.3-1[114X). For more information on
+  possible  values  of [3Xfilt[103X see section ([14X50.1[114X). Methods are also available for
+  permutation  and  matrix  groups (of minimal degree and minimal dimension in
+  coprime characteristic).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XQuaternionGroup(32);[127X[104X
@@ -168,7 +177,8 @@
   (either  [22Xp[122X  or  [22Xp^2[122X) or one of [10X'+'[110X, [10X"+"[110X, [10X'-'[110X, [10X"-"[110X. For [22Xp = 2[122X, only the above
   plus or minus signs are admissible.[133X
   
-  [33X[0;0YIf [3Xfilt[103X is not given it defaults to [2XIsPcGroup[102X ([14X46.3-1[114X).[133X
+  [33X[0;0YIf [3Xfilt[103X is not given it defaults to [2XIsPcGroup[102X ([14X46.3-1[114X). For more information
+  on possible values of [3Xfilt[103X see section ([14X50.1[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XExtraspecialGroup( 27, 3 );[127X[104X
@@ -186,9 +196,10 @@
   [29X[2XAlternatingGroup[102X( [[3Xfilt[103X, ][3Xdom[103X ) [32X function
   
   [33X[0;0Yconstructs  the alternating group of degree [3Xdeg[103X in the category given by the
-  filter  [3Xfilt[103X.  If  [3Xfilt[103X is not given it defaults to [2XIsPermGroup[102X ([14X43.1-1[114X). In
-  the  second  version,  the  function constructs the alternating group on the
-  points given in the set [3Xdom[103X which must be a set of positive integers.[133X
+  filter  [3Xfilt[103X.  If [3Xfilt[103X is not given it defaults to [2XIsPermGroup[102X ([14X43.1-1[114X). For
+  more  information  on  possible  values  of  [3Xfilt[103X see section ([14X50.1[114X). In the
+  second  version, the function constructs the alternating group on the points
+  given in the set [3Xdom[103X which must be a set of positive integers.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XAlternatingGroup(5);[127X[104X
@@ -202,9 +213,10 @@
   [29X[2XSymmetricGroup[102X( [[3Xfilt[103X, ][3Xdom[103X ) [32X function
   
   [33X[0;0Yconstructs  the  symmetric  group of degree [3Xdeg[103X in the category given by the
-  filter  [3Xfilt[103X.  If  [3Xfilt[103X is not given it defaults to [2XIsPermGroup[102X ([14X43.1-1[114X). In
-  the  second  version,  the  function  constructs  the symmetric group on the
-  points given in the set [3Xdom[103X which must be a set of positive integers.[133X
+  filter  [3Xfilt[103X.  If [3Xfilt[103X is not given it defaults to [2XIsPermGroup[102X ([14X43.1-1[114X). For
+  more  information  on  possible  values  of  [3Xfilt[103X see section ([14X50.1[114X). In the
+  second  version,  the  function constructs the symmetric group on the points
+  given in the set [3Xdom[103X which must be a set of positive integers.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XSymmetricGroup(10);[127X[104X
@@ -220,7 +232,8 @@
   
   [33X[0;0Yconstructs  the  Mathieu group of degree [3Xdegree[103X in the category given by the
   filter [3Xfilt[103X, where [3Xdegree[103X must be in the set [22X{ 9, 10, 11, 12, 21, 22, 23, 24
-  }[122X. If [3Xfilt[103X is not given it defaults to [2XIsPermGroup[102X ([14X43.1-1[114X).[133X
+  }[122X.  If  [3Xfilt[103X  is  not  given  it  defaults to [2XIsPermGroup[102X ([14X43.1-1[114X). For more
+  information on possible values of [3Xfilt[103X see section ([14X50.1[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XMathieuGroup( 11 );[127X[104X
@@ -236,7 +249,8 @@
   with [3Xq[103X elements, where [3Xq[103X is a non-square power of [22X2[122X.[133X
   
   [33X[0;0YIf [3Xfilt[103X is not given it defaults to [2XIsMatrixGroup[102X ([14X44.1-1[114X), and the returned
-  group is the Suzuki group itself.[133X
+  group is the Suzuki group itself. For more information on possible values of
+  [3Xfilt[103X see section ([14X50.1[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XSuzukiGroup( 32 );[127X[104X
@@ -253,7 +267,8 @@
   
   [33X[0;0YIf  [3Xfilt[103X  is  not  given  it  defaults  to  [2XIsMatrixGroup[102X  ([14X44.1-1[114X)  and the
   generating  matrices  are  based  on [KLM01].  (No  particular  choice  of a
-  generating set is guaranteed.)[133X
+  generating  set  is  guaranteed.) For more information on possible values of
+  [3Xfilt[103X see section ([14X50.1[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XReeGroup( 27 );[127X[104X

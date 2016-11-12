@@ -201,7 +201,7 @@
 <h5>50.1-1 TrivialGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TrivialGroup</code>( [<var class="Arg">filter</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<p>constructs a trivial group in the category given by the filter <var class="Arg">filter</var>. If <var class="Arg">filter</var> is not given it defaults to <code class="func">IsPcGroup</code> (<a href="chap46_mj.html#X7D1F506D7830B1D9"><span class="RefLink">46.3-1</span></a>).</p>
+<p>constructs a trivial group in the category given by the filter <var class="Arg">filter</var>. If <var class="Arg">filter</var> is not given it defaults to <code class="func">IsPcGroup</code> (<a href="chap46_mj.html#X7D1F506D7830B1D9"><span class="RefLink">46.3-1</span></a>). For more information on possible values of <var class="Arg">filt</var> see section (<a href="chap50_mj.html#X839981CC7D9B671B"><span class="RefLink">50.1</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -216,7 +216,7 @@ Group(())
 <h5>50.1-2 CyclicGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CyclicGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>constructs the cyclic group of size <var class="Arg">n</var> in the category given by the filter <var class="Arg">filt</var>. If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsPcGroup</code> (<a href="chap46_mj.html#X7D1F506D7830B1D9"><span class="RefLink">46.3-1</span></a>).</p>
+<p>constructs the cyclic group of size <var class="Arg">n</var> in the category given by the filter <var class="Arg">filt</var>. If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsPcGroup</code> (<a href="chap46_mj.html#X7D1F506D7830B1D9"><span class="RefLink">46.3-1</span></a>). For more information on possible values of <var class="Arg">filt</var> see section (<a href="chap50_mj.html#X839981CC7D9B671B"><span class="RefLink">50.1</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -239,7 +239,7 @@ GF(2)
 <h5>50.1-3 AbelianGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AbelianGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">ints</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>constructs an abelian group in the category given by the filter <var class="Arg">filt</var> which is of isomorphism type <span class="SimpleMath">\(C_{{\textit{ints}[1]}} \times C_{{\textit{ints}[2]}} \times \ldots \times C_{{\textit{ints}[n]}}\)</span>, where <var class="Arg">ints</var> must be a list of positive integers. If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsPcGroup</code> (<a href="chap46_mj.html#X7D1F506D7830B1D9"><span class="RefLink">46.3-1</span></a>). The generators of the group returned are the elements corresponding to the integers in <var class="Arg">ints</var>.</p>
+<p>constructs an abelian group in the category given by the filter <var class="Arg">filt</var> which is of isomorphism type <span class="SimpleMath">\(C_{{\textit{ints}[1]}} \times C_{{\textit{ints}[2]}} \times \ldots \times C_{{\textit{ints}[n]}}\)</span>, where <var class="Arg">ints</var> must be a list of positive integers. If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsPcGroup</code> (<a href="chap46_mj.html#X7D1F506D7830B1D9"><span class="RefLink">46.3-1</span></a>). The generators of the group returned are the elements corresponding to the integers in <var class="Arg">ints</var>. For more information on possible values of <var class="Arg">filt</var> see section (<a href="chap50_mj.html#X839981CC7D9B671B"><span class="RefLink">50.1</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -252,7 +252,7 @@ GF(2)
 <h5>50.1-4 ElementaryAbelianGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementaryAbelianGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>constructs the elementary abelian group of size <var class="Arg">n</var> in the category given by the filter <var class="Arg">filt</var>. If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsPcGroup</code> (<a href="chap46_mj.html#X7D1F506D7830B1D9"><span class="RefLink">46.3-1</span></a>).</p>
+<p>constructs the elementary abelian group of size <var class="Arg">n</var> in the category given by the filter <var class="Arg">filt</var>. If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsPcGroup</code> (<a href="chap46_mj.html#X7D1F506D7830B1D9"><span class="RefLink">46.3-1</span></a>). For more information on possible values of <var class="Arg">filt</var> see section (<a href="chap50_mj.html#X839981CC7D9B671B"><span class="RefLink">50.1</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -265,7 +265,7 @@ GF(2)
 <h5>50.1-5 FreeAbelianGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeAbelianGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">rank</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>constructs the free abelian group of rank <var class="Arg">n</var> in the category given by the filter <var class="Arg">filt</var>. If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsFpGroup</code> (<a href="chap47_mj.html#X850B9DF17D90C3A2"><span class="RefLink">47.1-2</span></a>).</p>
+<p>constructs the free abelian group of rank <var class="Arg">n</var> in the category given by the filter <var class="Arg">filt</var>. If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsFpGroup</code> (<a href="chap47_mj.html#X850B9DF17D90C3A2"><span class="RefLink">47.1-2</span></a>). For more information on possible values of <var class="Arg">filt</var> see section (<a href="chap50_mj.html#X839981CC7D9B671B"><span class="RefLink">50.1</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -278,12 +278,14 @@ GF(2)
 <h5>50.1-6 DihedralGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DihedralGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>constructs the dihedral group of size <var class="Arg">n</var> in the category given by the filter <var class="Arg">filt</var>. If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsPcGroup</code> (<a href="chap46_mj.html#X7D1F506D7830B1D9"><span class="RefLink">46.3-1</span></a>).</p>
+<p>constructs the dihedral group of size <var class="Arg">n</var> in the category given by the filter <var class="Arg">filt</var>. If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsPcGroup</code> (<a href="chap46_mj.html#X7D1F506D7830B1D9"><span class="RefLink">46.3-1</span></a>). For more information on possible values of <var class="Arg">filt</var> see section (<a href="chap50_mj.html#X839981CC7D9B671B"><span class="RefLink">50.1</span></a>).</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DihedralGroup(10);</span>
-&lt;pc group of size 10 with 2 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DihedralGroup(8);</span>
+&lt;pc group of size 8 with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DihedralGroup( IsPermGroup, 8 );</span>
+Group([ (1,2,3,4), (2,4) ])
 </pre></div>
 
 <p><a id="X87865686856910E4" name="X87865686856910E4"></a></p>
@@ -292,7 +294,7 @@ GF(2)
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuaternionGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DicyclicGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>constructs the generalized quaternion group (or dicyclic group) of size <var class="Arg">n</var> in the category given by the filter <var class="Arg">filt</var>. Here, <var class="Arg">n</var> is a multiple of 4. If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsPcGroup</code> (<a href="chap46_mj.html#X7D1F506D7830B1D9"><span class="RefLink">46.3-1</span></a>). Methods are also available for permutation and matrix groups (of minimal degree and minimal dimension in coprime characteristic).</p>
+<p>constructs the generalized quaternion group (or dicyclic group) of size <var class="Arg">n</var> in the category given by the filter <var class="Arg">filt</var>. Here, <var class="Arg">n</var> is a multiple of 4. If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsPcGroup</code> (<a href="chap46_mj.html#X7D1F506D7830B1D9"><span class="RefLink">46.3-1</span></a>). For more information on possible values of <var class="Arg">filt</var> see section (<a href="chap50_mj.html#X839981CC7D9B671B"><span class="RefLink">50.1</span></a>). Methods are also available for permutation and matrix groups (of minimal degree and minimal dimension in coprime characteristic).</p>
 
 
 <div class="example"><pre>
@@ -311,7 +313,7 @@ Group([ [ [ 0, 1 ], [ -1, 0 ] ], [ [ E(16), 0 ], [ 0, -E(16)^7 ] ] ])
 
 <p>If <span class="SimpleMath">\(p\)</span> is odd then admissible values of <var class="Arg">exp</var> are the exponent of the group (either <span class="SimpleMath">\(p\)</span> or <span class="SimpleMath">\(p^2\)</span>) or one of <code class="code">'+'</code>, <code class="code">"+"</code>, <code class="code">'-'</code>, <code class="code">"-"</code>. For <span class="SimpleMath">\(p = 2\)</span>, only the above plus or minus signs are admissible.</p>
 
-<p>If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsPcGroup</code> (<a href="chap46_mj.html#X7D1F506D7830B1D9"><span class="RefLink">46.3-1</span></a>).</p>
+<p>If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsPcGroup</code> (<a href="chap46_mj.html#X7D1F506D7830B1D9"><span class="RefLink">46.3-1</span></a>). For more information on possible values of <var class="Arg">filt</var> see section (<a href="chap50_mj.html#X839981CC7D9B671B"><span class="RefLink">50.1</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -329,7 +331,7 @@ Group([ [ [ 0, 1 ], [ -1, 0 ] ], [ [ E(16), 0 ], [ 0, -E(16)^7 ] ] ])
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AlternatingGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">deg</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AlternatingGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">dom</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>constructs the alternating group of degree <var class="Arg">deg</var> in the category given by the filter <var class="Arg">filt</var>. If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsPermGroup</code> (<a href="chap43_mj.html#X7879877482F59676"><span class="RefLink">43.1-1</span></a>). In the second version, the function constructs the alternating group on the points given in the set <var class="Arg">dom</var> which must be a set of positive integers.</p>
+<p>constructs the alternating group of degree <var class="Arg">deg</var> in the category given by the filter <var class="Arg">filt</var>. If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsPermGroup</code> (<a href="chap43_mj.html#X7879877482F59676"><span class="RefLink">43.1-1</span></a>). For more information on possible values of <var class="Arg">filt</var> see section (<a href="chap50_mj.html#X839981CC7D9B671B"><span class="RefLink">50.1</span></a>). In the second version, the function constructs the alternating group on the points given in the set <var class="Arg">dom</var> which must be a set of positive integers.</p>
 
 
 <div class="example"><pre>
@@ -343,7 +345,7 @@ Alt( [ 1 .. 5 ] )
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SymmetricGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">deg</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SymmetricGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">dom</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>constructs the symmetric group of degree <var class="Arg">deg</var> in the category given by the filter <var class="Arg">filt</var>. If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsPermGroup</code> (<a href="chap43_mj.html#X7879877482F59676"><span class="RefLink">43.1-1</span></a>). In the second version, the function constructs the symmetric group on the points given in the set <var class="Arg">dom</var> which must be a set of positive integers.</p>
+<p>constructs the symmetric group of degree <var class="Arg">deg</var> in the category given by the filter <var class="Arg">filt</var>. If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsPermGroup</code> (<a href="chap43_mj.html#X7879877482F59676"><span class="RefLink">43.1-1</span></a>). For more information on possible values of <var class="Arg">filt</var> see section (<a href="chap50_mj.html#X839981CC7D9B671B"><span class="RefLink">50.1</span></a>). In the second version, the function constructs the symmetric group on the points given in the set <var class="Arg">dom</var> which must be a set of positive integers.</p>
 
 
 <div class="example"><pre>
@@ -358,7 +360,7 @@ Sym( [ 1 .. 10 ] )
 <h5>50.1-11 MathieuGroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MathieuGroup</code>( [<var class="Arg">filt</var>, ]<var class="Arg">degree</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>constructs the Mathieu group of degree <var class="Arg">degree</var> in the category given by the filter <var class="Arg">filt</var>, where <var class="Arg">degree</var> must be in the set <span class="SimpleMath">\(\{ 9, 10, 11, 12, 21, 22, 23, 24 \}\)</span>. If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsPermGroup</code> (<a href="chap43_mj.html#X7879877482F59676"><span class="RefLink">43.1-1</span></a>).</p>
+<p>constructs the Mathieu group of degree <var class="Arg">degree</var> in the category given by the filter <var class="Arg">filt</var>, where <var class="Arg">degree</var> must be in the set <span class="SimpleMath">\(\{ 9, 10, 11, 12, 21, 22, 23, 24 \}\)</span>. If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsPermGroup</code> (<a href="chap43_mj.html#X7879877482F59676"><span class="RefLink">43.1-1</span></a>). For more information on possible values of <var class="Arg">filt</var> see section (<a href="chap50_mj.html#X839981CC7D9B671B"><span class="RefLink">50.1</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -374,7 +376,7 @@ Group([ (1,2,3,4,5,6,7,8,9,10,11), (3,7,11,8)(4,10,5,6) ])
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sz</code>( [<var class="Arg">filt</var>, ]<var class="Arg">q</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Constructs a group isomorphic to the Suzuki group Sz( <var class="Arg">q</var> ) over the field with <var class="Arg">q</var> elements, where <var class="Arg">q</var> is a non-square power of <span class="SimpleMath">\(2\)</span>.</p>
 
-<p>If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsMatrixGroup</code> (<a href="chap44_mj.html#X7E6093FF85F1C3A1"><span class="RefLink">44.1-1</span></a>), and the returned group is the Suzuki group itself.</p>
+<p>If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsMatrixGroup</code> (<a href="chap44_mj.html#X7E6093FF85F1C3A1"><span class="RefLink">44.1-1</span></a>), and the returned group is the Suzuki group itself. For more information on possible values of <var class="Arg">filt</var> see section (<a href="chap50_mj.html#X839981CC7D9B671B"><span class="RefLink">50.1</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -390,7 +392,7 @@ Sz(32)
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Ree</code>( [<var class="Arg">filt</var>, ]<var class="Arg">q</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Constructs a group isomorphic to the Ree group <span class="SimpleMath">\(^2G_2(q)\)</span> where <span class="SimpleMath">\(q = 3^{{1+2m}}\)</span> for <span class="SimpleMath">\(m\)</span> a non-negative integer.</p>
 
-<p>If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsMatrixGroup</code> (<a href="chap44_mj.html#X7E6093FF85F1C3A1"><span class="RefLink">44.1-1</span></a>) and the generating matrices are based on <a href="chapBib_mj.html#biBKLM01">[KLM01]</a>. (No particular choice of a generating set is guaranteed.)</p>
+<p>If <var class="Arg">filt</var> is not given it defaults to <code class="func">IsMatrixGroup</code> (<a href="chap44_mj.html#X7E6093FF85F1C3A1"><span class="RefLink">44.1-1</span></a>) and the generating matrices are based on <a href="chapBib_mj.html#biBKLM01">[KLM01]</a>. (No particular choice of a generating set is guaranteed.) For more information on possible values of <var class="Arg">filt</var> see section (<a href="chap50_mj.html#X839981CC7D9B671B"><span class="RefLink">50.1</span></a>).</p>
 
 
 <div class="example"><pre>

@@ -51,6 +51,12 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X861F03FC7C8079C0">2.4-1 <span class="Heading">Changes in the core <strong class="pkg">GAP</strong> system introduced in <strong class="pkg">GAP</strong> 4.8.5</span></a>
 </span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X7B6C9EFD7DF68823">2.5 <span class="Heading"><strong class="pkg">GAP</strong> 4.8.6 (November 2016)</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7F8F96E78174E8CB">2.5-1 <span class="Heading">Changes in the core <strong class="pkg">GAP</strong> system introduced in <strong class="pkg">GAP</strong> 4.8.6</span></a>
+</span>
+</div></div>
 </div>
 
 <h3>2 <span class="Heading">Changes between <strong class="pkg">GAP</strong> 4.7 and <strong class="pkg">GAP</strong> 4.8</span></h3>
@@ -398,6 +404,22 @@ function( a, b, c, x... ) ... end;
 
 </li>
 <li><p>The <code class="func">Iterator</code> (<a href="../../doc/ref/chap30_mj.html#X83ADF8287ED0668E"><span class="RefLink">Reference: Iterator</span></a>) for permutation groups was broken when the <code class="func">StabChainMutable</code> (<a href="../../doc/ref/chap43_mj.html#X80B5CF78829495C2"><span class="RefLink">Reference: StabChainMutable (for a group)</span></a>) of the group was not reduced, which can reasonably happen as the result of various algorithms.</p>
+
+</li>
+</ul>
+<p><a id="X7B6C9EFD7DF68823" name="X7B6C9EFD7DF68823"></a></p>
+
+<h4>2.5 <span class="Heading"><strong class="pkg">GAP</strong> 4.8.6 (November 2016)</span></h4>
+
+<p><a id="X7F8F96E78174E8CB" name="X7F8F96E78174E8CB"></a></p>
+
+<h5>2.5-1 <span class="Heading">Changes in the core <strong class="pkg">GAP</strong> system introduced in <strong class="pkg">GAP</strong> 4.8.6</span></h5>
+
+<p>Fixed bugs that could lead to break loops:</p>
+
+
+<ul>
+<li><p>Fixed regression in the <strong class="pkg">GAP</strong> kernel code introduced in <strong class="pkg">GAP</strong> 4.8.5 and breaking <code class="func">StringFile</code> (<a href="../../pkg/GAPDoc-1.5.1/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: StringFile</span></a>) ability to work with compressed files. [Reported by Bill Allombert]</p>
 
 </li>
 </ul>

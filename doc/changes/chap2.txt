@@ -388,3 +388,15 @@
         of  the  group  was  not  reduced,  which can reasonably happen as the
         result of various algorithms.[133X
   
+  
+  [1X2.5 [33X[0;0Y[5XGAP[105X[101X[1X 4.8.6 (November 2016)[133X[101X
+  
+  
+  [1X2.5-1 [33X[0;0YChanges in the core [5XGAP[105X[101X[1X system introduced in [5XGAP[105X[101X[1X 4.8.6[133X[101X
+  
+  [33X[0;0YFixed bugs that could lead to break loops:[133X
+  
+  [30X    [33X[0;6YFixed  regression  in  the [5XGAP[105X kernel code introduced in [5XGAP[105X 4.8.5 and
+        breaking   [2XStringFile[102X   ([14XGAPDoc:  StringFile[114X)  ability  to  work  with
+        compressed files. [Reported by Bill Allombert][133X
+  

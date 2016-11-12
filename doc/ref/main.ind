@@ -1274,7 +1274,7 @@
     \subitem computing orbits, \hyperpage{1296}
   \item \texttt  {ExternalSubset}, \hyperpage{590}
   \item \texttt  {Extract}, \hyperpage{1144}
-  \item \texttt  {ExtraspecialGroup}, \hyperpage{727}
+  \item \texttt  {ExtraspecialGroup}, \hyperpage{728}
   \item \texttt  {ExtRepDenominatorRatFun}, \hyperpage{1022}
   \item \texttt  {ExtRepNumeratorRatFun}, \hyperpage{1022}
   \item \texttt  {ExtRepOfObj}, \hyperpage{1240}
@@ -1721,7 +1721,7 @@
   \item \texttt  {IdGap3SolvableGroup}, \hyperpage{742}
   \item \texttt  {IdGroup}, \hyperpage{741}
   \item \texttt  {IdSmallGroup}, \hyperpage{741}
-  \item \texttt  {IdsOfAllSmallGroups}, \hyperpage{741}
+  \item \texttt  {IdsOfAllSmallGroups}, \hyperpage{742}
   \item \texttt{if} statement, \hyperpage{60}
   \item \texttt  {Image}
     \subitem set of images of a collection under a mapping, 
@@ -3047,7 +3047,7 @@
   \item \texttt  {MarksTom}, \hyperpage{1052}
   \item \texttt  {MatAlgebra}, \hyperpage{927}
   \item \texttt  {MatClassMultCoeffsCharTable}, \hyperpage{1098}
-  \item \texttt  {MathieuGroup}, \hyperpage{728}
+  \item \texttt  {MathieuGroup}, \hyperpage{729}
   \item \texttt  {MatLieAlgebra}, \hyperpage{960}
   \item matrices
     \subitem commutator, \hyperpage{317}
@@ -3349,13 +3349,13 @@
     \subitem for a character table, \hyperpage{1082}
   \item \texttt  {NrConjugacyClassesGL}, \hyperpage{735}
   \item \texttt  {NrConjugacyClassesGU}, \hyperpage{735}
-  \item \texttt  {NrConjugacyClassesPGL}, \hyperpage{735}
+  \item \texttt  {NrConjugacyClassesPGL}, \hyperpage{736}
   \item \texttt  {NrConjugacyClassesPGU}, \hyperpage{736}
   \item \texttt  {NrConjugacyClassesPSL}, \hyperpage{736}
   \item \texttt  {NrConjugacyClassesPSU}, \hyperpage{736}
-  \item \texttt  {NrConjugacyClassesSL}, \hyperpage{735}
+  \item \texttt  {NrConjugacyClassesSL}, \hyperpage{736}
   \item \texttt  {NrConjugacyClassesSLIsogeneous}, \hyperpage{736}
-  \item \texttt  {NrConjugacyClassesSU}, \hyperpage{735}
+  \item \texttt  {NrConjugacyClassesSU}, \hyperpage{736}
   \item \texttt  {NrConjugacyClassesSUIsogeneous}, \hyperpage{736}
   \item \texttt  {NrDerangements}, \hyperpage{212}
   \item \texttt  {NrFixedPoints}
@@ -3445,15 +3445,15 @@
   \item \texttt  {OneImmutable}, \hyperpage{408}
   \item \texttt  {OneIrreducibleSolvableGroup}, \hyperpage{752}
   \item \texttt{One\mbox{\texttt{\mdseries\slshape Library}}Group}, 
-		\hyperpage{737}
+		\hyperpage{738}
   \item \texttt  {OneMutable}, \hyperpage{409}
   \item \texttt  {OneOfPcgs}, \hyperpage{631}
   \item \texttt  {OneOp}, \hyperpage{409}
-  \item \texttt{OnePrimitiveGroup}, \hyperpage{737}
+  \item \texttt{OnePrimitiveGroup}, \hyperpage{738}
   \item \texttt  {OneSameMutability}, \hyperpage{409}
   \item \texttt  {OneSM}, \hyperpage{409}
   \item \texttt  {OneSmallGroup}, \hyperpage{741}
-  \item \texttt{OneTransitiveGroup}, \hyperpage{737}
+  \item \texttt{OneTransitiveGroup}, \hyperpage{738}
   \item \texttt  {OnIndeterminates}
     \subitem as a permutation action, \hyperpage{575}
   \item \texttt  {OnLeftInverse}, \hyperpage{573}
@@ -3635,7 +3635,7 @@
   \item \texttt  {PerfectGroup}
     \subitem for a pair [ order, index ], \hyperpage{744}
     \subitem for group order (and index), \hyperpage{744}
-  \item \texttt  {PerfectIdentification}, \hyperpage{744}
+  \item \texttt  {PerfectIdentification}, \hyperpage{745}
   \item \texttt  {PerfectResiduum}, \hyperpage{518}
   \item \texttt  {Perform}, \hyperpage{285}
   \item \texttt  {Permanent}, \hyperpage{218}
@@ -4312,7 +4312,7 @@
   \item \texttt  {SiftedPermutation}, \hyperpage{613}
   \item \texttt  {SiftedVector}, \hyperpage{914}
   \item \texttt  {Sigma}, \hyperpage{201}
-  \item \texttt  {SigmaL}, \hyperpage{733}
+  \item \texttt  {SigmaL}, \hyperpage{734}
   \item sign
     \subitem of an integer, \hyperpage{179}
   \item \texttt  {SignFloat}, \hyperpage{241}
@@ -4352,7 +4352,7 @@
   \item \texttt  {SizeStabChain}, \hyperpage{612}
   \item \texttt  {SL}
     \subitem for dimension and a field size, \hyperpage{731}
-    \subitem for dimension and a ring, \hyperpage{730}
+    \subitem for dimension and a ring, \hyperpage{731}
   \item \texttt  {SlotUsagePattern}, \hyperpage{487}
   \item smaller
     \subitem associative words, \hyperpage{476}
@@ -4384,8 +4384,8 @@
   \item \texttt  {SmallestRootInt}, \hyperpage{180}
   \item \texttt  {SmallGeneratingSet}, \hyperpage{545}
   \item \texttt  {SmallGroup}
-    \subitem for a pair [ order, index ], \hyperpage{740}
-    \subitem for group order and index, \hyperpage{740}
+    \subitem for a pair [ order, index ], \hyperpage{741}
+    \subitem for group order and index, \hyperpage{741}
   \item \texttt  {SmallGroupsInformation}, \hyperpage{742}
   \item \texttt  {SmallRing}, \hyperpage{865}
   \item \texttt  {SmallSimpleGroup}, \hyperpage{526}
@@ -4452,13 +4452,13 @@
   \item \texttt  {SparseIntKey}, \hyperpage{375}
   \item special character sequences, \hyperpage{354}
   \item \texttt  {SpecialLinearGroup}
-    \subitem for dimension and a field size, \hyperpage{730}
-    \subitem for dimension and a ring, \hyperpage{730}
+    \subitem for dimension and a field size, \hyperpage{731}
+    \subitem for dimension and a ring, \hyperpage{731}
   \item \texttt  {SpecialOrthogonalGroup}, \hyperpage{732}
   \item \texttt  {SpecialPcgs}
     \subitem for a group, \hyperpage{646}
     \subitem for a pcgs, \hyperpage{646}
-  \item \texttt  {SpecialSemilinearGroup}, \hyperpage{733}
+  \item \texttt  {SpecialSemilinearGroup}, \hyperpage{734}
   \item \texttt  {SpecialUnitaryGroup}, \hyperpage{731}
   \item \texttt  {SplitCharacters}, \hyperpage{1108}
   \item \texttt  {SplitExtension}, \hyperpage{660}
