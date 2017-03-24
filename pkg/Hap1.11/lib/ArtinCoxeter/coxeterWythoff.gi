@@ -105,6 +105,8 @@ od;
 od;
 od;
 
+#Print(NonEssentialSets,"\n");
+
 ##############################################################
 CoxeterDiagramIsEssential:=function(T);
 if Length(T)=Length(Vertices) then return true; fi;
@@ -323,7 +325,7 @@ if n=0 then return 1; fi;
 if
 EltsWP[g] in WPev  then return 1;
 #EltsWP[g] in EvenStabGroup(n,AbsInt(k))  then return 1;
-else return -1; fi;
+else return -1; fi;  #THIS IS WRONG - VERY WRONG! FIX IT ASAP!
 end;
 ###############################################################
 

@@ -2,10 +2,6 @@
 ##
 #W  nicestab.gi             AutPGrp package                      Bettina Eick
 ##
-#H  @(#)$Id: nicestab.gi,v 1.7 2005/01/06 12:47:06 gap Exp $
-##
-Revision.("autpgrp/gap/nicestab_gi") :=
-    "@(#)$Id: nicestab.gi,v 1.7 2005/01/06 12:47:06 gap Exp $";
 
 #############################################################################
 ##
@@ -43,7 +39,7 @@ TryPermOperation := function( A )
     # now we compute it
     base := IdentityMat( r, GF(p) );
     V    := GF(p)^r;               
-    norm := NormedVectors( V );    
+    norm := NormedRowVectors( V );    
     f    := function( pt, a ) return NormedRowVector( pt * a ); end;
     M    := Group( A.glOper, base );
     iso  := ActionHomomorphism( M, norm, f );

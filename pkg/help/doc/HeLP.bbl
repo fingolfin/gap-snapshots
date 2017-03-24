@@ -20,6 +20,14 @@ V.~A. Bovdi and M.~Hertweck.
 \newblock Zassenhaus conjecture for central extensions of {$S_5$}.
 \newblock {\em J. Group Theory}, 11(1):63--74, 2008.
 
+\bibitem[BHK{\etalchar{+}}16]{BaHeKoMaSi}
+A.~B\"achle, A.~Herman, A.~Konovalov, L.~Margolis, and G.~Singh.
+\newblock The status of the zassenhaus conjecture for small groups.
+\newblock {\em Submitted}, 2016.
+\newblock 10 pages,
+  \href{https://arxiv.org/abs/1609.00042}{\nolinkurl{arXiv:1609.00042
+  [math.RA]}}.
+
 \bibitem[BIR{\etalchar{+}}]{Normaliz}
 W.~Bruns, B.~Ichim, T.~R\"omer, R.~Sieg, and C.~S\"oger.
 \newblock Normaliz. algorithms for rational cones and affine monoids.
@@ -71,14 +79,23 @@ A.~B{\"a}chle and L.~Margolis.
   \href{http://arxiv.org/abs/1507.08174}{\nolinkurl{arXiv:1507.08174
   [math.RT]}}.
 
-\bibitem[BM16]{BaMa4prI}
+\bibitem[BM16a]{BaMa4prI}
 A.~B\"achle and L.~Margolis.
 \newblock On the {P}rime {G}raph {Q}uestion for {I}ntegral {G}roup {R}ings of
   4-primary groups {I}.
-\newblock {\em Preprint,
+\newblock {\em Submitted}, 2016.
+\newblock 33 pages,
   \href{http://arxiv.org/abs/1601.05689}{\nolinkurl{arXiv:1601.05689
-  [math.RT]}}}, 2016.
-\newblock 33 pages.
+  [math.RT]}}.
+
+\bibitem[BM16b]{BaMa4prII}
+A.~B\"achle and L.~Margolis.
+\newblock On the {P}rime {G}raph {Q}uestion for {I}ntegral {G}roup {R}ings of
+  4-primary groups {II}.
+\newblock {\em Submitted}, 2016.
+\newblock 17 pages,
+  \href{https://arxiv.org/abs/1606.01506}{\nolinkurl{arXiv:1606.01506
+  [math.RT]}}.
 
 \bibitem[CL65]{CohnLivingstone}
 J.~A. Cohn and D.~Livingstone.
@@ -167,6 +184,14 @@ I.S. Luthar and I.B.S. Passi.
 \newblock Zassenhaus conjecture for {$A_5$}.
 \newblock {\em Proc. Indian Acad. Sci. Math. Sci.}, 99(1):1--5, 1989.
 
+\bibitem[MdRS16]{FermatMersenne}
+L.~Margolis, {\'A}.~del R{\'{\i}}o, and M.~Serrano.
+\newblock Zassenhaus conjecture on torsion units holds for psl(2,$p$) with $p$
+  a fermat or mersenne prime.
+\newblock {\em Submitted}, pages 32 pages,
+  \href{https://arxiv.org/abs/1608.05797}{\nolinkurl{arXiv:1608.05797
+  [math.RA]}}, 2016.
+
 \bibitem[MRSW87]{MRSW}
 Z.~Marciniak, J.~Ritter, S.~Sehgal, and A.~Weiss.
 \newblock Torsion units in integral group rings of some metabelian groups.
@@ -196,11 +221,6 @@ B.~Srinivasan.
 \newblock On the modular characters of the special linear group
   {$SL(2,\,p^{n})$}.
 \newblock {\em Proc. London Math. Soc. (3)}, 14:101--114, 1964.
-
-\bibitem[SW86]{SehgalWeiss}
-S.~K. Sehgal and A.~Weiss.
-\newblock Torsion units in integral group rings of some metabelian groups.
-\newblock {\em J. Algebra}, 103(2):490--499, 1986.
 
 \bibitem[tt]{4ti2}
 4~ti~2~team.

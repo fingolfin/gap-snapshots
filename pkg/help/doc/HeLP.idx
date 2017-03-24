@@ -1,23 +1,27 @@
-\indexentry{\textsf{HeLP}|hyperpage}{5}
 \indexentry{HeLPZC@\texttt  {HeLP{\textunderscore }ZC}|hyperpage}{6}
 \indexentry{HeLPPQ@\texttt  {HeLP{\textunderscore }PQ}|hyperpage}{9}
 \indexentry{HeLPWithGivenOrder@\texttt  {HeLP{\textunderscore }WithGivenOrder}|hyperpage}{12}
 \indexentry{HeLPWithGivenOrderAndPA@\texttt  {HeL}\discretionary {-}{}{}\texttt  {P{\textunderscore }}\discretionary {-}{}{}\texttt  {With}\discretionary {-}{}{}\texttt  {Given}\discretionary {-}{}{}\texttt  {Order}\discretionary {-}{}{}\texttt  {AndPA}|hyperpage}{14}
-\indexentry{HeLPWithGivenOrderAndPAAndSpecificSystem@\texttt  {HeL}\discretionary {-}{}{}\texttt  {P{\textunderscore }}\discretionary {-}{}{}\texttt  {With}\discretionary {-}{}{}\texttt  {Given}\discretionary {-}{}{}\texttt  {Order}\discretionary {-}{}{}\texttt  {And}\discretionary {-}{}{}\texttt  {P}\discretionary {-}{}{}\texttt  {A}\discretionary {-}{}{}\texttt  {And}\discretionary {-}{}{}\texttt  {Specific}\discretionary {-}{}{}\texttt  {System}|hyperpage}{15}
-\indexentry{HeLPWithGivenOrderSConstant@\texttt  {HeL}\discretionary {-}{}{}\texttt  {P{\textunderscore }}\discretionary {-}{}{}\texttt  {With}\discretionary {-}{}{}\texttt  {Given}\discretionary {-}{}{}\texttt  {Order}\discretionary {-}{}{}\texttt  {S}\discretionary {-}{}{}\texttt  {Constant}|hyperpage}{16}
-\indexentry{HeLPAddGaloisCharacterSums@\texttt  {HeL}\discretionary {-}{}{}\texttt  {P{\textunderscore }}\discretionary {-}{}{}\texttt  {Add}\discretionary {-}{}{}\texttt  {Galois}\discretionary {-}{}{}\texttt  {Character}\discretionary {-}{}{}\texttt  {Sums}|hyperpage}{17}
+\indexentry{HeLPWithGivenOrderAllTables@\texttt  {HeL}\discretionary {-}{}{}\texttt  {P{\textunderscore }}\discretionary {-}{}{}\texttt  {With}\discretionary {-}{}{}\texttt  {Given}\discretionary {-}{}{}\texttt  {Order}\discretionary {-}{}{}\texttt  {All}\discretionary {-}{}{}\texttt  {Tables}|hyperpage}{15}
+\indexentry{HeLPWithGivenOrderAndPAAllTables@\texttt  {HeL}\discretionary {-}{}{}\texttt  {P{\textunderscore }}\discretionary {-}{}{}\texttt  {With}\discretionary {-}{}{}\texttt  {Given}\discretionary {-}{}{}\texttt  {Order}\discretionary {-}{}{}\texttt  {And}\discretionary {-}{}{}\texttt  {P}\discretionary {-}{}{}\texttt  {A}\discretionary {-}{}{}\texttt  {All}\discretionary {-}{}{}\texttt  {Tables}|hyperpage}{16}
+\indexentry{HeLPWithGivenOrderAndPAAndSpecificSystem@\texttt  {HeL}\discretionary {-}{}{}\texttt  {P{\textunderscore }}\discretionary {-}{}{}\texttt  {With}\discretionary {-}{}{}\texttt  {Given}\discretionary {-}{}{}\texttt  {Order}\discretionary {-}{}{}\texttt  {And}\discretionary {-}{}{}\texttt  {P}\discretionary {-}{}{}\texttt  {A}\discretionary {-}{}{}\texttt  {And}\discretionary {-}{}{}\texttt  {Specific}\discretionary {-}{}{}\texttt  {System}|hyperpage}{16}
+\indexentry{HeLPWithGivenOrderSConstant@\texttt  {HeL}\discretionary {-}{}{}\texttt  {P{\textunderscore }}\discretionary {-}{}{}\texttt  {With}\discretionary {-}{}{}\texttt  {Given}\discretionary {-}{}{}\texttt  {Order}\discretionary {-}{}{}\texttt  {S}\discretionary {-}{}{}\texttt  {Constant}|hyperpage}{17}
+\indexentry{HeLPAddGaloisCharacterSums@\texttt  {HeL}\discretionary {-}{}{}\texttt  {P{\textunderscore }}\discretionary {-}{}{}\texttt  {Add}\discretionary {-}{}{}\texttt  {Galois}\discretionary {-}{}{}\texttt  {Character}\discretionary {-}{}{}\texttt  {Sums}|hyperpage}{18}
 \indexentry{HeLPAllOrders@\texttt  {HeLP{\textunderscore }AllOrders}|hyperpage}{18}
-\indexentry{HeLPAllOrdersPQ@\texttt  {HeLP{\textunderscore }AllOrdersPQ}|hyperpage}{18}
+\indexentry{HeLPAllOrdersPQ@\texttt  {HeLP{\textunderscore }AllOrdersPQ}|hyperpage}{19}
 \indexentry{HeLPChangeCharKeepSols@\texttt  {HeL}\discretionary {-}{}{}\texttt  {P{\textunderscore }}\discretionary {-}{}{}\texttt  {Change}\discretionary {-}{}{}\texttt  {Char}\discretionary {-}{}{}\texttt  {Keep}\discretionary {-}{}{}\texttt  {Sols}|hyperpage}{19}
-\indexentry{HeLPReset@\texttt  {HeLP{\textunderscore }Reset}|hyperpage}{20}
-\indexentry{HeLPSolver@\texttt  {HeLP{\textunderscore }Solver}|hyperpage}{20}
+\indexentry{HeLPReset@\texttt  {HeLP{\textunderscore }Reset}|hyperpage}{21}
+\indexentry{HeLPSolver@\texttt  {HeLP{\textunderscore }Solver}|hyperpage}{21}
 \indexentry{HeLPUseRedund@\texttt  {HeLP{\textunderscore }UseRedund}|hyperpage}{21}
 \indexentry{HeLPChange4ti2Precision@\texttt  {HeL}\discretionary {-}{}{}\texttt  {P{\textunderscore }}\discretionary {-}{}{}\texttt  {Change4ti2}\discretionary {-}{}{}\texttt  {Precision}|hyperpage}{21}
 \indexentry{HeLPVertices@\texttt  {HeLP{\textunderscore }Vertices}|hyperpage}{22}
-\indexentry{HeLPVerifySolution@\texttt  {HeLP{\textunderscore }VerifySolution}|hyperpage}{22}
+\indexentry{HeLPVerifySolution@\texttt  {HeLP{\textunderscore }VerifySolution}|hyperpage}{23}
 \indexentry{HeLPFindAndVerifySolution@\texttt  {HeL}\discretionary {-}{}{}\texttt  {P{\textunderscore }}\discretionary {-}{}{}\texttt  {Find}\discretionary {-}{}{}\texttt  {And}\discretionary {-}{}{}\texttt  {Verify}\discretionary {-}{}{}\texttt  {Solution}|hyperpage}{23}
-\indexentry{HeLPPossiblePartialAugmentationsOfPowers@\texttt  {HeL}\discretionary {-}{}{}\texttt  {P{\textunderscore }}\discretionary {-}{}{}\texttt  {Possible}\discretionary {-}{}{}\texttt  {Partial}\discretionary {-}{}{}\texttt  {Augmentations}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Powers}|hyperpage}{23}
-\indexentry{HeLPWagnerTest@\texttt  {HeLP{\textunderscore }WagnerTest}|hyperpage}{24}
-\indexentry{HeLPPrintSolution@\texttt  {HeLP{\textunderscore }PrintSolution}|hyperpage}{25}
-\indexentry{HeLPMultiplicitiesOfEigenvalues@\texttt  {HeL}\discretionary {-}{}{}\texttt  {P{\textunderscore }}\discretionary {-}{}{}\texttt  {Multiplicities}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Eigenvalues}|hyperpage}{26}
-\indexentry{HeLPCharacterValue@\texttt  {HeLP{\textunderscore }CharacterValue}|hyperpage}{26}
+\indexentry{HeLPPossiblePartialAugmentationsOfPowers@\texttt  {HeL}\discretionary {-}{}{}\texttt  {P{\textunderscore }}\discretionary {-}{}{}\texttt  {Possible}\discretionary {-}{}{}\texttt  {Partial}\discretionary {-}{}{}\texttt  {Augmentations}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Powers}|hyperpage}{24}
+\indexentry{HeLPWriteTrivialSolution@\texttt  {HeL}\discretionary {-}{}{}\texttt  {P{\textunderscore }}\discretionary {-}{}{}\texttt  {Write}\discretionary {-}{}{}\texttt  {Trivial}\discretionary {-}{}{}\texttt  {Solution}|hyperpage}{24}
+\indexentry{HeLPWagnerTest@\texttt  {HeLP{\textunderscore }WagnerTest}|hyperpage}{25}
+\indexentry{HeLPAutomorphismOrbits@\texttt  {HeL}\discretionary {-}{}{}\texttt  {P{\textunderscore }}\discretionary {-}{}{}\texttt  {Automorphism}\discretionary {-}{}{}\texttt  {Orbits}|hyperpage}{26}
+\indexentry{HeLPPrintSolution@\texttt  {HeLP{\textunderscore }PrintSolution}|hyperpage}{26}
+\indexentry{HeLPMultiplicitiesOfEigenvalues@\texttt  {HeL}\discretionary {-}{}{}\texttt  {P{\textunderscore }}\discretionary {-}{}{}\texttt  {Multiplicities}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Eigenvalues}|hyperpage}{27}
+\indexentry{HeLPCharacterValue@\texttt  {HeLP{\textunderscore }CharacterValue}|hyperpage}{28}
+\indexentry{HeLPIsZCKnown@\texttt  {HeLP{\textunderscore }IsZCKnown}|hyperpage}{28}

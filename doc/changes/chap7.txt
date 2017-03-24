@@ -45,7 +45,7 @@
   
   [30X    [33X[0;6YFor large scale Groebner Basis computations there also is an interface
         to     the    Singular    system    available    in    the    [5XSingular[105X
-        ([7Xhttp://www.gap-system.org/Packages/singular.html[107X)     package.    (M.
+        ([7Xhttps://www.gap-system.org/Packages/singular.html[107X)    package.    (M.
         Costantini and W. de Graaf)[133X
   
   [30X    [33X[0;6YNew  methods  for factorizing polynomials over algebraic extensions of
@@ -53,7 +53,7 @@
   
   [30X    [33X[0;6YFor  more  functionality to compute with algebraic number fields there
         is   an   interface  to  the  Kant  system  available  in  the  [5XAlnuth[105X
-        ([7Xhttp://www.gap-system.org/Packages/alnuth.html[107X)  package. (B. Assmann
+        ([7Xhttps://www.gap-system.org/Packages/alnuth.html[107X) package. (B. Assmann
         and B. Eick)[133X
   
   [30X    [33X[0;6YA  new  functionality  to  compute  the  minimal normal subgroups of a
@@ -86,25 +86,25 @@
   [33X[0;0YThe following new Packages have been accepted.[133X
   
   [30X    [33X[0;6Y[5XAlnuth[105X:  Algebraic  Number Theory and an interface to the Kant system.
-        ([7Xhttp://www.gap-system.org/Packages/alnuth.html[107X)  By B. Assmann and B.
+        ([7Xhttps://www.gap-system.org/Packages/alnuth.html[107X) By B. Assmann and B.
         Eick.[133X
   
   [30X    [33X[0;6Y[5XLAGUNA[105X:  Computing  with  Lie  Algebras  and  Units of Group Algebras.
-        ([7Xhttp://www.gap-system.org/Packages/laguna.html[107X)   By   V.  Bovdi,  A.
+        ([7Xhttps://www.gap-system.org/Packages/laguna.html[107X)   By  V.  Bovdi,  A.
         Konovalov, R. Rossmanith, C. Schneider.[133X
   
   [30X    [33X[0;6Y[5XNQ[105X:       The       ANU       Nilpotent       Quotient      Algorithm.
-        ([7Xhttp://www.gap-system.org/Packages/nq.html[107X) By W. Nickel.[133X
+        ([7Xhttps://www.gap-system.org/Packages/nq.html[107X) By W. Nickel.[133X
   
   [30X    [33X[0;6Y[5XKBMAG[105X:       Knuth-Bendix       for      Monoids      and      Groups.
-        ([7Xhttp://www.gap-system.org/Packages/kbmag.html[107X) By D. Holt.[133X
+        ([7Xhttps://www.gap-system.org/Packages/kbmag.html[107X) By D. Holt.[133X
   
   [30X    [33X[0;6Y[5XPolycyclic[105X:       Computation       with       polycyclic      groups.
-        ([7Xhttp://www.gap-system.org/Packages/polycyclic.html[107X) By B. Eick and W.
-        Nickel.[133X
+        ([7Xhttps://www.gap-system.org/Packages/polycyclic.html[107X)  By  B. Eick and
+        W. Nickel.[133X
   
   [30X    [33X[0;6Y[5XQuaGroup[105X:    Computing    with    Quantized    Enveloping    Algebras.
-        ([7Xhttp://www.gap-system.org/Packages/quagroup.html[107X) By W. de Graaf.[133X
+        ([7Xhttps://www.gap-system.org/Packages/quagroup.html[107X) By W. de Graaf.[133X
   
   
   [1X7.1-3 [33X[0;0YPerformance Enhancements[133X[101X
@@ -243,7 +243,7 @@
   
   [33X[0;0YDetails  of  these  changes  can be found in the document [21XMigrating to GAP 4[121X
   available          at          the          [5XGAP[105X         website,         see
-  [7Xhttp://www.gap-system.org/Gap3/migratedoc.pdf[107X.[133X
+  [7Xhttps://www.gap-system.org/Gap3/migratedoc.pdf[107X.[133X
   
   [33X[0;0YIt is perhaps worth mentioning a few points here.[133X
   
@@ -295,6 +295,6 @@
   
   [30X    [33X[0;6YThe  library  of crystallographic groups which was present in [5XGAP[105X 3 is
         now       part       of       a       [5XGAP[105X 4      package      [5XCrystCat[105X
-        ([7Xhttp://www.gap-system.org/Packages/crystcat.html[107X) by V. Felsch and F.
-        Gähler.[133X
+        ([7Xhttps://www.gap-system.org/Packages/crystcat.html[107X)  by  V. Felsch and
+        F. Gähler.[133X
   

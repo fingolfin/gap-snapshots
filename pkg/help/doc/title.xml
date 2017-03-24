@@ -9,7 +9,7 @@
     Hertweck-Luthar-Passi method.
   </Subtitle>
   <Version>
-    3.0
+    3.1
   </Version>
   <Author>
     Andreas Bächle<Alt Only="LaTeX"><Br/></Alt>
@@ -27,21 +27,21 @@ Belgium<Br/>
   <Author>
     Leo Margolis<Alt Only="LaTeX"><Br/></Alt>
 <Address>
-Institut für Algebra und Zahlentheorie<Br/>
-Universität Stuttgart<Br/>
-Pfaffenwaldring 57<Br/>
-D-70569 Stuttgart<Br/>
-Germany<Br/>
+Departamento de Matemáticas<Br/>
+Facultad de Matemáticas<Br/>
+Universidad de Murcia<Br/>
+Murcia 30100<Br/>
+Spain<Br/>
 </Address>
 <Email>Leo.Margolis@mathematik.uni-stuttgart.de</Email>
 <Homepage>http://www.igt.uni-stuttgart.de/LstDiffgeo/Margolis/</Homepage>
 
   </Author>
   <Date>
-    03/03/2016
+    12/01/2017
   </Date>
   <Copyright>
-    &copyright; 2016 by Andreas Bächle and Leo Margolis<P/>
+    &copyright; 2017 by Andreas Bächle and Leo Margolis<P/>
 
 This package is free software and may be distributed under the terms and conditions of the
 GNU Public License Version 2.

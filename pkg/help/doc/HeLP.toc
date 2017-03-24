@@ -8,48 +8,55 @@
 \contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Checks for specific orders}}{12}{section.3.1}
 \contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }HeLP{\textunderscore }WithGivenOrder}}{12}{subsection.3.1.1}
 \contentsline {subsection}{\numberline {3.1.2}\leavevmode {\color {Chapter }HeLP{\textunderscore }WithGivenOrderAndPA}}{14}{subsection.3.1.2}
-\contentsline {subsection}{\numberline {3.1.3}\leavevmode {\color {Chapter }HeLP{\textunderscore }WithGivenOrderAndPAAndSpecificSystem}}{15}{subsection.3.1.3}
-\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }Checks for specific orders with s-constant characters}}{16}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }HeLP{\textunderscore }WithGivenOrderSConstant}}{16}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}\leavevmode {\color {Chapter }HeLP{\textunderscore }AddGaloisCharacterSums}}{17}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.1.3}\leavevmode {\color {Chapter }HeLP{\textunderscore }WithGivenOrderAllTables}}{15}{subsection.3.1.3}
+\contentsline {subsection}{\numberline {3.1.4}\leavevmode {\color {Chapter }HeLP{\textunderscore }WithGivenOrderAndPAAllTables}}{16}{subsection.3.1.4}
+\contentsline {subsection}{\numberline {3.1.5}\leavevmode {\color {Chapter }HeLP{\textunderscore }WithGivenOrderAndPAAndSpecificSystem}}{16}{subsection.3.1.5}
+\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }Checks for specific orders with s-constant characters}}{17}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }HeLP{\textunderscore }WithGivenOrderSConstant}}{17}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}\leavevmode {\color {Chapter }HeLP{\textunderscore }AddGaloisCharacterSums}}{18}{subsection.3.2.2}
 \contentsline {section}{\numberline {3.3}\leavevmode {\color {Chapter }Checks for all orders}}{18}{section.3.3}
 \contentsline {subsection}{\numberline {3.3.1}\leavevmode {\color {Chapter }HeLP{\textunderscore }AllOrders}}{18}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}\leavevmode {\color {Chapter }HeLP{\textunderscore }AllOrdersPQ}}{18}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.2}\leavevmode {\color {Chapter }HeLP{\textunderscore }AllOrdersPQ}}{19}{subsection.3.3.2}
 \contentsline {section}{\numberline {3.4}\leavevmode {\color {Chapter }Changing the used Character Table}}{19}{section.3.4}
 \contentsline {subsection}{\numberline {3.4.1}\leavevmode {\color {Chapter }HeLP{\textunderscore }ChangeCharKeepSols}}{19}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}\leavevmode {\color {Chapter }HeLP{\textunderscore }Reset}}{20}{subsection.3.4.2}
-\contentsline {section}{\numberline {3.5}\leavevmode {\color {Chapter }Influencing how the Systems of Inequalities are solved}}{20}{section.3.5}
-\contentsline {subsection}{\numberline {3.5.1}\leavevmode {\color {Chapter }HeLP{\textunderscore }Solver}}{20}{subsection.3.5.1}
+\contentsline {subsection}{\numberline {3.4.2}\leavevmode {\color {Chapter }HeLP{\textunderscore }Reset}}{21}{subsection.3.4.2}
+\contentsline {section}{\numberline {3.5}\leavevmode {\color {Chapter }Influencing how the Systems of Inequalities are solved}}{21}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}\leavevmode {\color {Chapter }HeLP{\textunderscore }Solver}}{21}{subsection.3.5.1}
 \contentsline {subsection}{\numberline {3.5.2}\leavevmode {\color {Chapter }HeLP{\textunderscore }UseRedund}}{21}{subsection.3.5.2}
 \contentsline {subsection}{\numberline {3.5.3}\leavevmode {\color {Chapter }HeLP{\textunderscore }Change4ti2Precision}}{21}{subsection.3.5.3}
 \contentsline {subsection}{\numberline {3.5.4}\leavevmode {\color {Chapter }HeLP{\textunderscore }Vertices}}{22}{subsection.3.5.4}
-\contentsline {section}{\numberline {3.6}\leavevmode {\color {Chapter }Checking solutions, calculating and checking solutions}}{22}{section.3.6}
-\contentsline {subsection}{\numberline {3.6.1}\leavevmode {\color {Chapter }HeLP{\textunderscore }VerifySolution}}{22}{subsection.3.6.1}
+\contentsline {section}{\numberline {3.6}\leavevmode {\color {Chapter }Checking solutions, calculating and checking solutions}}{23}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}\leavevmode {\color {Chapter }HeLP{\textunderscore }VerifySolution}}{23}{subsection.3.6.1}
 \contentsline {subsection}{\numberline {3.6.2}\leavevmode {\color {Chapter }HeLP{\textunderscore }FindAndVerifySolution}}{23}{subsection.3.6.2}
-\contentsline {subsection}{\numberline {3.6.3}\leavevmode {\color {Chapter }HeLP{\textunderscore }PossiblePartialAugmentationsOfPowers}}{23}{subsection.3.6.3}
-\contentsline {section}{\numberline {3.7}\leavevmode {\color {Chapter }The Wagner test}}{24}{section.3.7}
-\contentsline {subsection}{\numberline {3.7.1}\leavevmode {\color {Chapter }HeLP{\textunderscore }WagnerTest}}{24}{subsection.3.7.1}
-\contentsline {section}{\numberline {3.8}\leavevmode {\color {Chapter }Output}}{25}{section.3.8}
-\contentsline {subsection}{\numberline {3.8.1}\leavevmode {\color {Chapter }HeLP{\textunderscore }PrintSolution}}{25}{subsection.3.8.1}
-\contentsline {section}{\numberline {3.9}\leavevmode {\color {Chapter }Eigenvalue multiplicities and character values}}{26}{section.3.9}
-\contentsline {subsection}{\numberline {3.9.1}\leavevmode {\color {Chapter }HeLP{\textunderscore }MultiplicitiesOfEigenvalues}}{26}{subsection.3.9.1}
-\contentsline {subsection}{\numberline {3.9.2}\leavevmode {\color {Chapter }HeLP{\textunderscore }CharacterValue}}{26}{subsection.3.9.2}
-\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Extended examples}}{27}{chapter.4}
-\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }The Character Table Library}}{27}{section.4.1}
-\contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }The behavior of the variable HeLP sol}}{28}{section.4.2}
-\contentsline {section}{\numberline {4.3}\leavevmode {\color {Chapter }Saving time}}{29}{section.4.3}
-\contentsline {section}{\numberline {4.4}\leavevmode {\color {Chapter }Using InfoLevels}}{32}{section.4.4}
-\contentsline {section}{\numberline {4.5}\leavevmode {\color {Chapter }Non-standard characters}}{33}{section.4.5}
-\contentsline {section}{\numberline {4.6}\leavevmode {\color {Chapter }A complete example: (PQ) for the MacLaughlin simple group}}{35}{section.4.6}
-\contentsline {chapter}{\numberline {5}\leavevmode {\color {Chapter }Background}}{37}{chapter.5}
-\contentsline {section}{\numberline {5.1}\leavevmode {\color {Chapter }The Zassenhaus Conjecture and the Prime Graph Question}}{37}{section.5.1}
-\contentsline {section}{\numberline {5.2}\leavevmode {\color {Chapter }Partial augmentations and the structure of HeLP sol}}{37}{section.5.2}
-\contentsline {section}{\numberline {5.3}\leavevmode {\color {Chapter }The HeLP equations}}{38}{section.5.3}
-\contentsline {section}{\numberline {5.4}\leavevmode {\color {Chapter }The Wagner test}}{39}{section.5.4}
-\contentsline {section}{\numberline {5.5}\leavevmode {\color {Chapter }s-constant (and (s,t)-constant) characters}}{39}{section.5.5}
-\contentsline {section}{\numberline {5.6}\leavevmode {\color {Chapter }Known results about (ZC) and (PQ)}}{40}{section.5.6}
-\contentsline {chapter}{\numberline {6}\leavevmode {\color {Chapter }Remarks on technical problems and the implementation}}{41}{chapter.6}
-\contentsline {section}{\numberline {6.1}\leavevmode {\color {Chapter }Making the HeLP-package run}}{41}{section.6.1}
-\contentsline {section}{\numberline {6.2}\leavevmode {\color {Chapter }How much 4ti2 and normaliz is really there?}}{43}{section.6.2}
-\contentsline {chapter}{References}{46}{chapter*.4}
-\contentsline {chapter}{Index}{47}{section*.5}
+\contentsline {subsection}{\numberline {3.6.3}\leavevmode {\color {Chapter }HeLP{\textunderscore }PossiblePartialAugmentationsOfPowers}}{24}{subsection.3.6.3}
+\contentsline {subsection}{\numberline {3.6.4}\leavevmode {\color {Chapter }HeLP{\textunderscore }WriteTrivialSolution}}{24}{subsection.3.6.4}
+\contentsline {section}{\numberline {3.7}\leavevmode {\color {Chapter }The Wagner test}}{25}{section.3.7}
+\contentsline {subsection}{\numberline {3.7.1}\leavevmode {\color {Chapter }HeLP{\textunderscore }WagnerTest}}{25}{subsection.3.7.1}
+\contentsline {section}{\numberline {3.8}\leavevmode {\color {Chapter }Action of the automorphism group}}{26}{section.3.8}
+\contentsline {subsection}{\numberline {3.8.1}\leavevmode {\color {Chapter }HeLP{\textunderscore }AutomorphismOrbits}}{26}{subsection.3.8.1}
+\contentsline {section}{\numberline {3.9}\leavevmode {\color {Chapter }Output}}{26}{section.3.9}
+\contentsline {subsection}{\numberline {3.9.1}\leavevmode {\color {Chapter }HeLP{\textunderscore }PrintSolution}}{26}{subsection.3.9.1}
+\contentsline {section}{\numberline {3.10}\leavevmode {\color {Chapter }Eigenvalue multiplicities and character values}}{27}{section.3.10}
+\contentsline {subsection}{\numberline {3.10.1}\leavevmode {\color {Chapter }HeLP{\textunderscore }MultiplicitiesOfEigenvalues}}{27}{subsection.3.10.1}
+\contentsline {subsection}{\numberline {3.10.2}\leavevmode {\color {Chapter }HeLP{\textunderscore }CharacterValue}}{28}{subsection.3.10.2}
+\contentsline {section}{\numberline {3.11}\leavevmode {\color {Chapter }Check whether Zassenhaus Conjecture is known from theoretical results}}{28}{section.3.11}
+\contentsline {subsection}{\numberline {3.11.1}\leavevmode {\color {Chapter }HeLP{\textunderscore }IsZCKnown}}{28}{subsection.3.11.1}
+\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Extended examples}}{29}{chapter.4}
+\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }The Character Table Library}}{29}{section.4.1}
+\contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }The behavior of the variable HeLP sol}}{30}{section.4.2}
+\contentsline {section}{\numberline {4.3}\leavevmode {\color {Chapter }Saving time}}{31}{section.4.3}
+\contentsline {section}{\numberline {4.4}\leavevmode {\color {Chapter }Using InfoLevels}}{34}{section.4.4}
+\contentsline {section}{\numberline {4.5}\leavevmode {\color {Chapter }Non-standard characters}}{35}{section.4.5}
+\contentsline {section}{\numberline {4.6}\leavevmode {\color {Chapter }A complete example: (PQ) for the MacLaughlin simple group}}{37}{section.4.6}
+\contentsline {chapter}{\numberline {5}\leavevmode {\color {Chapter }Background}}{39}{chapter.5}
+\contentsline {section}{\numberline {5.1}\leavevmode {\color {Chapter }The Zassenhaus Conjecture and the Prime Graph Question}}{39}{section.5.1}
+\contentsline {section}{\numberline {5.2}\leavevmode {\color {Chapter }Partial augmentations and the structure of HeLP sol}}{39}{section.5.2}
+\contentsline {section}{\numberline {5.3}\leavevmode {\color {Chapter }The HeLP equations}}{40}{section.5.3}
+\contentsline {section}{\numberline {5.4}\leavevmode {\color {Chapter }The Wagner test}}{41}{section.5.4}
+\contentsline {section}{\numberline {5.5}\leavevmode {\color {Chapter }s-constant characters}}{41}{section.5.5}
+\contentsline {section}{\numberline {5.6}\leavevmode {\color {Chapter }Known results about the Zassenhaus Conjecture and the Prime Graph Question}}{42}{section.5.6}
+\contentsline {chapter}{\numberline {6}\leavevmode {\color {Chapter }Remarks on technical problems and the implementation}}{43}{chapter.6}
+\contentsline {section}{\numberline {6.1}\leavevmode {\color {Chapter }Making the HeLP-package run}}{43}{section.6.1}
+\contentsline {section}{\numberline {6.2}\leavevmode {\color {Chapter }How much 4ti2 and normaliz is really there?}}{45}{section.6.2}
+\contentsline {chapter}{References}{48}{chapter*.4}
+\contentsline {chapter}{Index}{49}{section*.5}

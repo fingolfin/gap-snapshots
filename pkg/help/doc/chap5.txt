@@ -178,7 +178,7 @@
   [CL65].[133X
   
   
-  [1X5.5 [33X[0;0Ys-constant (and (s,t)-constant) characters[133X[101X
+  [1X5.5 [33X[0;0Ys-constant characters[133X[101X
   
   [33X[0;0YIf  one  is  interested  in  units of mixed order [23Xs*t[123X for two primes [23Xs[123X and [23Xt[123X
   (e.g.  if  one  studies  the  Prime Graph Question) an idea to make the HeLP
@@ -203,7 +203,8 @@
   yet part of this package.[133X
   
   
-  [1X5.6 [33X[0;0YKnown results about (ZC) and (PQ)[133X[101X
+  [1X5.6  [33X[0;0YKnown  results  about  the  Zassenhaus  Conjecture  and the Prime Graph[101X
+  [1XQuestion[133X[101X
   
   [33X[0;0YAt  the  moment  as  this  documentation  was  written,  to  the best of our
   knowledge,   the   following  results  were  available  for  the  Zassenhaus
@@ -228,19 +229,17 @@
   [30X    [33X[0;6YFrobenius  groups  whose  order  is divisible by at most two different
         primes [JM00],[133X
   
-  [30X    [33X[0;6YGroups  [23XX  \rtimes  A[123X,  where [23XX[123X is abelian, [23XA[123X elementary abelian and [23XA[123X
-        acts faithfully and irreducibly on [23XX[123X [SW86],[133X
-  
   [30X    [33X[0;6YGroups  [23XX \rtimes A[123X, where [23XX[123X and [23XA[123X are abelian and [23XA[123X is of prime order
         [23Xp[123X  such  that  [23Xp[123X  is  smaller then any prime divisor of the order of [23XX[123X
         [MRSW87],[133X
   
-  [30X    [33X[0;6YAll groups of order up to 71 [HK06],[133X
+  [30X    [33X[0;6YAll groups of order up to 143 [BHKMS16],[133X
   
   [30X    [33X[0;6YThe   non-abelian  simple  groups  [23XA_5[123X  [LP89],  [23XA_6  \simeq  PSL(2,9)[123X
         [Her08c],  [23XPSL(2,7)[123X, [23XPSL(2,11)[123X, [23XPSL(2,13)[123X [Her07], [23XPSL(2,8)[123X, [23XPSL(2,17)[123X
-        [KK15]  [Gil13],  [23XPSL(2,19)[123X,  [23XPSL(2,23)[123X  [BM14] and some extensions of
-        these groups.[133X
+        [KK15]  [Gil13],  [23XPSL(2,19)[123X,  [23XPSL(2,23)[123X  [BM14], [23XPSL(2,25)[123X, [23XPSL(2,31)[123X,
+        [23XPSL(2,32)[123X  [BM16b]  and  some extensions of these groups. Also for all
+        [23XPSL(2,p)[123X where [23Xp[123X is a fermat or a Mersenne prime [MRS16].[133X
   
   [33X[0;0YFor  the Prime Graph Question the following strong reduction was obtained in
   [KK15]:[133X
@@ -256,7 +255,7 @@
   [30X    [33X[0;6YSolvable groups [Kim06],[133X
   
   [30X    [33X[0;6YGroups  whose  socle  is isomorphic to a group [23XPSL(2,p)[123X or [23XPSL(2,p^2)[123X,
-        where [23Xp[123X denotes a prime, [Her07], [BM16].[133X
+        where [23Xp[123X denotes a prime, [Her07], [BM16a].[133X
   
   [30X    [33X[0;6YHalf  of the sporadic simple groups and their automorphism groups; for
         an overview see [KK15],[133X
@@ -270,5 +269,5 @@
         reduction result above.)[133X
   
   [30X    [33X[0;6YMany  almost  simple groups whose order is divisible by four different
-        primes [BM16][133X
+        primes [BM16a][BM16b].[133X
   

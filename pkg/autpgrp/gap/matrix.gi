@@ -2,10 +2,6 @@
 ##
 #W  matrix.gi               AutPGrp package                      Bettina Eick
 ##
-#H  @(#)$Id: matrix.gi,v 1.3 2003/08/18 12:10:28 gap Exp $
-##
-Revision.("autpgrp/gap/matrix_gi") :=
-    "@(#)$Id: matrix.gi,v 1.3 2003/08/18 12:10:28 gap Exp $";
 
 #############################################################################
 ##
@@ -61,7 +57,7 @@ StabilizingMatrixGroup := function( bases, d, p  )
         # Construct the generators.
         if p = 2 then
             if n >= 2 then
-                mat := MutableIdentityMat(d, field);
+                mat := IdentityMat(d, field);
                 mat[l+1][l+n] := One( field );
                 mat[l+1][l+1] := Zero( field );
                 for j in [ 2 .. n ] do 
@@ -70,17 +66,17 @@ StabilizingMatrixGroup := function( bases, d, p  )
                 od;
                 Add( mats, mat );
  
-                mat := MutableIdentityMat(d, field);
+                mat := IdentityMat(d, field);
                 mat[l+1][l+2] := One( field );
                 Add( mats, mat );
             fi;
         else
-            mat := MutableIdentityMat(d, field);
+            mat := IdentityMat(d, field);
             mat[l+1][l+1] := PrimitiveRoot( field );
             Add( mats, mat );
 
             if n >= 2 then
-                mat := MutableIdentityMat(d, field);
+                mat := IdentityMat(d, field);
                 mat[l+1][l+1] := -One( field );
                 mat[l+1][l+n] := One( field );
                 for j in [ 2 .. n ] do 
@@ -92,7 +88,7 @@ StabilizingMatrixGroup := function( bases, d, p  )
         fi;
         l := l + n;
         if l < d then
-            mat := MutableIdentityMat(d, field);
+            mat := IdentityMat(d, field);
             mat[l][l+1] := One( field );
             Add( mats, mat );
         fi;

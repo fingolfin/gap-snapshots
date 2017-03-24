@@ -400,3 +400,37 @@
         breaking   [2XStringFile[102X   ([14XGAPDoc:  StringFile[114X)  ability  to  work  with
         compressed files. [Reported by Bill Allombert][133X
   
+  
+  [1X2.6 [33X[0;0Y[5XGAP[105X[101X[1X 4.8.7 (March 2017)[133X[101X
+  
+  
+  [1X2.6-1 [33X[0;0YChanges in the core [5XGAP[105X[101X[1X system introduced in [5XGAP[105X[101X[1X 4.8.7[133X[101X
+  
+  [33X[0;0YFixed bugs that could lead to incorrect results:[133X
+  
+  [30X    [33X[0;6YFixed  a regression from [5XGAP[105X 4.7.6 when reading compressed files after
+        a  workspace  is loaded. Before the fix, if [5XGAP[105X is started with the [10X-L[110X
+        option  (load  workspace), using [2XReadLine[102X ([14XReference: ReadLine[114X) on the
+        input   stream   for  a  compressed  file  returned  by  [2XInputTextFile[102X
+        ([14XReference:   InputTextFile[114X)   only   returned  the  first  character.
+        [Reported by Bill Allombert][133X
+  
+  [33X[0;0YOther fixed bugs:[133X
+  
+  [30X    [33X[0;6YFixed  compiler warning occurring when [5XGAP[105X is compiled with gcc 6.2.0.
+        [Reported by Bill Allombert][133X
+  
+  
+  [1X2.6-2 [33X[0;0YNew and updated packages since [5XGAP[105X[101X[1X 4.8.6[133X[101X
+  
+  [33X[0;0YThis  release  contains  updated  versions  of  19  packages  from [5XGAP[105X 4.8.6
+  distribution.  Additionally,  the  following  package has been added for the
+  redistribution with [5XGAP[105X:[133X
+  
+  [30X    [33X[0;6Y[5Xlpres[105X package (author: René Hartung, maintainer: Laurent Bartholdi) to
+        work  with  L-presented  groups,  namely  groups  given  by  a  finite
+        generating  set  and  a  possibly  infinite  set of relations given as
+        iterates   of  finitely  many  seed  relations  by  a  finite  set  of
+        endomorphisms. The package implements nilpotent quotient, Todd-Coxeter
+        and Reidemeister-Schreier algorithms for such groups.[133X
+  

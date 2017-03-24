@@ -88,7 +88,7 @@
   [30X    [33X[0;6Yor  are  not bound (these orders were not checked as they don't divide
         the exponent of the group).[133X
   
-  [33X[0;0YThe function [2XHeLP_PrintSolution[102X ([14X3.8-1[114X) can be used to display the result in
+  [33X[0;0YThe function [2XHeLP_PrintSolution[102X ([14X3.9-1[114X) can be used to display the result in
   a pretty way.[133X
   
   [4X[32X  Example  [32X[104X
@@ -323,5 +323,5 @@
   available  in GAP at the moment. The fact that there are no torsion units of
   order 10 and 15 was proved in [Her07], Proposition 6.7. See also the example
   in  Section  [14X4.5[114X.  The  other critical orders were handled in a more general
-  context in [BM16].[133X
+  context in [BM16a].[133X
   

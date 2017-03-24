@@ -444,7 +444,7 @@ on conjugacy classes of elements with an order dividing the order of the unit in
 </Section>
 
 
-<Section Label="Chapter_Extended_examples_Section_A_complete_example:_(PQ)_for_the_MacLaughlin_simple_group">
+<Section Label="Chapter_Extended_examples_Section_A_complete_example_PQ_for_the_MacLaughlin_simple_group">
 <Heading>A complete example: (PQ) for the MacLaughlin simple group</Heading>
 
 This section gives a demonstration of many functions of the package. The goal is to verify the Prime Graph

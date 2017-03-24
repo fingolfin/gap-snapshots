@@ -91,7 +91,7 @@ If this does not help to get HeLP running, please feel more than welcome to cont
 </Section>
 
 
-<Section Label="Chapter_Remarks_on_technical_problems_and_the_implementation_Section_How_much_4ti2_and_normaliz_is_really_there?">
+<Section Label="Chapter_Remarks_on_technical_problems_and_the_implementation_Section_How_much_4ti2_and_normaliz_is_really_there">
 <Heading>How much 4ti2 and normaliz is really there?</Heading>
 
 The reason, why the programs 4ti2 and normaliz are used in this package, is basically that they can solve systems

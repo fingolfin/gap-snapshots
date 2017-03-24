@@ -196,11 +196,11 @@
 \contentsline {subsection}{\numberline {7.9.2}\leavevmode {\color {Chapter }Test}}{120}{subsection.7.9.2}
 \contentsline {subsection}{\numberline {7.9.3}\leavevmode {\color {Chapter }TestDirectory}}{122}{subsection.7.9.3}
 \contentsline {section}{\numberline {7.10}\leavevmode {\color {Chapter }Debugging Recursion}}{123}{section.7.10}
-\contentsline {subsection}{\numberline {7.10.1}\leavevmode {\color {Chapter }SetRecursionTrapInterval}}{124}{subsection.7.10.1}
-\contentsline {section}{\numberline {7.11}\leavevmode {\color {Chapter }Global Memory Information}}{125}{section.7.11}
+\contentsline {subsection}{\numberline {7.10.1}\leavevmode {\color {Chapter }SetRecursionTrapInterval}}{123}{subsection.7.10.1}
+\contentsline {section}{\numberline {7.11}\leavevmode {\color {Chapter }Global Memory Information}}{124}{section.7.11}
 \contentsline {subsection}{\numberline {7.11.1}\leavevmode {\color {Chapter }GasmanStatistics}}{125}{subsection.7.11.1}
 \contentsline {subsection}{\numberline {7.11.2}\leavevmode {\color {Chapter }GasmanMessageStatus}}{125}{subsection.7.11.2}
-\contentsline {subsection}{\numberline {7.11.3}\leavevmode {\color {Chapter }GasmanLimits}}{126}{subsection.7.11.3}
+\contentsline {subsection}{\numberline {7.11.3}\leavevmode {\color {Chapter }GasmanLimits}}{125}{subsection.7.11.3}
 \contentsline {chapter}{\numberline {8}\leavevmode {\color {Chapter }Options Stack}}{127}{chapter.8}
 \contentsline {section}{\numberline {8.1}\leavevmode {\color {Chapter }Functions Dealing with the Options Stack}}{127}{section.8.1}
 \contentsline {subsection}{\numberline {8.1.1}\leavevmode {\color {Chapter }PushOptions}}{127}{subsection.8.1.1}
@@ -875,7 +875,7 @@
 \contentsline {subsection}{\numberline {27.4.1}\leavevmode {\color {Chapter }IsStringRep}}{356}{subsection.27.4.1}
 \contentsline {subsection}{\numberline {27.4.2}\leavevmode {\color {Chapter }ConvertToStringRep}}{356}{subsection.27.4.2}
 \contentsline {subsection}{\numberline {27.4.3}\leavevmode {\color {Chapter }CopyToStringRep}}{356}{subsection.27.4.3}
-\contentsline {subsection}{\numberline {27.4.4}\leavevmode {\color {Chapter }IsEmptyString}}{357}{subsection.27.4.4}
+\contentsline {subsection}{\numberline {27.4.4}\leavevmode {\color {Chapter }IsEmptyString}}{356}{subsection.27.4.4}
 \contentsline {subsection}{\numberline {27.4.5}\leavevmode {\color {Chapter }EmptyString}}{357}{subsection.27.4.5}
 \contentsline {subsection}{\numberline {27.4.6}\leavevmode {\color {Chapter }CharsFamily}}{357}{subsection.27.4.6}
 \contentsline {section}{\numberline {27.5}\leavevmode {\color {Chapter }Recognizing Characters}}{358}{section.27.5}
@@ -889,7 +889,7 @@
 \contentsline {section}{\numberline {27.7}\leavevmode {\color {Chapter }Operations to Produce or Manipulate Strings}}{359}{section.27.7}
 \contentsline {subsection}{\numberline {27.7.1}\leavevmode {\color {Chapter }DisplayString}}{359}{subsection.27.7.1}
 \contentsline {subsection}{\numberline {27.7.2}\leavevmode {\color {Chapter }DEFAULTDISPLAYSTRING}}{359}{subsection.27.7.2}
-\contentsline {subsection}{\numberline {27.7.3}\leavevmode {\color {Chapter }ViewString}}{360}{subsection.27.7.3}
+\contentsline {subsection}{\numberline {27.7.3}\leavevmode {\color {Chapter }ViewString}}{359}{subsection.27.7.3}
 \contentsline {subsection}{\numberline {27.7.4}\leavevmode {\color {Chapter }DEFAULTVIEWSTRING}}{360}{subsection.27.7.4}
 \contentsline {subsection}{\numberline {27.7.5}\leavevmode {\color {Chapter }PrintString}}{360}{subsection.27.7.5}
 \contentsline {subsection}{\numberline {27.7.6}\leavevmode {\color {Chapter }String}}{360}{subsection.27.7.6}
@@ -904,26 +904,26 @@
 \contentsline {subsection}{\numberline {27.7.15}\leavevmode {\color {Chapter }NormalizedWhitespace}}{363}{subsection.27.7.15}
 \contentsline {subsection}{\numberline {27.7.16}\leavevmode {\color {Chapter }RemoveCharacters}}{363}{subsection.27.7.16}
 \contentsline {subsection}{\numberline {27.7.17}\leavevmode {\color {Chapter }JoinStringsWithSeparator}}{363}{subsection.27.7.17}
-\contentsline {subsection}{\numberline {27.7.18}\leavevmode {\color {Chapter }Chomp}}{364}{subsection.27.7.18}
+\contentsline {subsection}{\numberline {27.7.18}\leavevmode {\color {Chapter }Chomp}}{363}{subsection.27.7.18}
 \contentsline {subsection}{\numberline {27.7.19}\leavevmode {\color {Chapter }StartsWith}}{364}{subsection.27.7.19}
 \contentsline {subsection}{\numberline {27.7.20}\leavevmode {\color {Chapter }NumbersString}}{364}{subsection.27.7.20}
-\contentsline {subsection}{\numberline {27.7.21}\leavevmode {\color {Chapter }StringNumbers}}{365}{subsection.27.7.21}
+\contentsline {subsection}{\numberline {27.7.21}\leavevmode {\color {Chapter }StringNumbers}}{364}{subsection.27.7.21}
 \contentsline {section}{\numberline {27.8}\leavevmode {\color {Chapter }Character Conversion}}{365}{section.27.8}
 \contentsline {subsection}{\numberline {27.8.1}\leavevmode {\color {Chapter }IntChar}}{365}{subsection.27.8.1}
 \contentsline {subsection}{\numberline {27.8.2}\leavevmode {\color {Chapter }CharInt}}{365}{subsection.27.8.2}
 \contentsline {subsection}{\numberline {27.8.3}\leavevmode {\color {Chapter }SIntChar}}{365}{subsection.27.8.3}
-\contentsline {subsection}{\numberline {27.8.4}\leavevmode {\color {Chapter }CharSInt}}{366}{subsection.27.8.4}
+\contentsline {subsection}{\numberline {27.8.4}\leavevmode {\color {Chapter }CharSInt}}{365}{subsection.27.8.4}
 \contentsline {section}{\numberline {27.9}\leavevmode {\color {Chapter }Operations to Evaluate Strings}}{366}{section.27.9}
 \contentsline {subsection}{\numberline {27.9.1}\leavevmode {\color {Chapter }Int (for strings)}}{366}{subsection.27.9.1}
 \contentsline {subsection}{\numberline {27.9.2}\leavevmode {\color {Chapter }Ordinal}}{367}{subsection.27.9.2}
 \contentsline {subsection}{\numberline {27.9.3}\leavevmode {\color {Chapter }EvalString}}{367}{subsection.27.9.3}
-\contentsline {subsection}{\numberline {27.9.4}\leavevmode {\color {Chapter }CrcString}}{368}{subsection.27.9.4}
+\contentsline {subsection}{\numberline {27.9.4}\leavevmode {\color {Chapter }CrcString}}{367}{subsection.27.9.4}
 \contentsline {section}{\numberline {27.10}\leavevmode {\color {Chapter }Calendar Arithmetic}}{368}{section.27.10}
 \contentsline {subsection}{\numberline {27.10.1}\leavevmode {\color {Chapter }DaysInYear}}{368}{subsection.27.10.1}
 \contentsline {subsection}{\numberline {27.10.2}\leavevmode {\color {Chapter }DaysInMonth}}{368}{subsection.27.10.2}
 \contentsline {subsection}{\numberline {27.10.3}\leavevmode {\color {Chapter }DMYDay}}{368}{subsection.27.10.3}
 \contentsline {subsection}{\numberline {27.10.4}\leavevmode {\color {Chapter }DayDMY}}{368}{subsection.27.10.4}
-\contentsline {subsection}{\numberline {27.10.5}\leavevmode {\color {Chapter }WeekDay}}{369}{subsection.27.10.5}
+\contentsline {subsection}{\numberline {27.10.5}\leavevmode {\color {Chapter }WeekDay}}{368}{subsection.27.10.5}
 \contentsline {subsection}{\numberline {27.10.6}\leavevmode {\color {Chapter }StringDate}}{369}{subsection.27.10.6}
 \contentsline {subsection}{\numberline {27.10.7}\leavevmode {\color {Chapter }HMSMSec}}{369}{subsection.27.10.7}
 \contentsline {subsection}{\numberline {27.10.8}\leavevmode {\color {Chapter }SecHMSM}}{369}{subsection.27.10.8}
@@ -1413,7 +1413,7 @@
 \contentsline {subsection}{\numberline {39.6.1}\leavevmode {\color {Chapter }StructureDescription}}{505}{subsection.39.6.1}
 \contentsline {section}{\numberline {39.7}\leavevmode {\color {Chapter }Cosets}}{507}{section.39.7}
 \contentsline {subsection}{\numberline {39.7.1}\leavevmode {\color {Chapter }RightCoset}}{507}{subsection.39.7.1}
-\contentsline {subsection}{\numberline {39.7.2}\leavevmode {\color {Chapter }RightCosets}}{508}{subsection.39.7.2}
+\contentsline {subsection}{\numberline {39.7.2}\leavevmode {\color {Chapter }RightCosets}}{507}{subsection.39.7.2}
 \contentsline {subsection}{\numberline {39.7.3}\leavevmode {\color {Chapter }CanonicalRightCosetElement}}{508}{subsection.39.7.3}
 \contentsline {subsection}{\numberline {39.7.4}\leavevmode {\color {Chapter }IsRightCoset}}{508}{subsection.39.7.4}
 \contentsline {subsection}{\numberline {39.7.5}\leavevmode {\color {Chapter }CosetDecomposition}}{508}{subsection.39.7.5}
@@ -1489,7 +1489,7 @@
 \contentsline {subsection}{\numberline {39.15.18}\leavevmode {\color {Chapter }IsSubsetLocallyFiniteGroup}}{527}{subsection.39.15.18}
 \contentsline {subsection}{\numberline {39.15.19}\leavevmode {\color {Chapter }IsPGroup}}{527}{subsection.39.15.19}
 \contentsline {subsection}{\numberline {39.15.20}\leavevmode {\color {Chapter }PrimePGroup}}{527}{subsection.39.15.20}
-\contentsline {subsection}{\numberline {39.15.21}\leavevmode {\color {Chapter }PClassPGroup}}{528}{subsection.39.15.21}
+\contentsline {subsection}{\numberline {39.15.21}\leavevmode {\color {Chapter }PClassPGroup}}{527}{subsection.39.15.21}
 \contentsline {subsection}{\numberline {39.15.22}\leavevmode {\color {Chapter }RankPGroup}}{528}{subsection.39.15.22}
 \contentsline {subsection}{\numberline {39.15.23}\leavevmode {\color {Chapter }IsPSolvable}}{528}{subsection.39.15.23}
 \contentsline {subsection}{\numberline {39.15.24}\leavevmode {\color {Chapter }IsPNilpotent}}{528}{subsection.39.15.24}
@@ -1498,12 +1498,12 @@
 \contentsline {subsection}{\numberline {39.16.2}\leavevmode {\color {Chapter }Exponent}}{529}{subsection.39.16.2}
 \contentsline {subsection}{\numberline {39.16.3}\leavevmode {\color {Chapter }EulerianFunction}}{529}{subsection.39.16.3}
 \contentsline {section}{\numberline {39.17}\leavevmode {\color {Chapter }Subgroup Series}}{529}{section.39.17}
-\contentsline {subsection}{\numberline {39.17.1}\leavevmode {\color {Chapter }ChiefSeries}}{530}{subsection.39.17.1}
+\contentsline {subsection}{\numberline {39.17.1}\leavevmode {\color {Chapter }ChiefSeries}}{529}{subsection.39.17.1}
 \contentsline {subsection}{\numberline {39.17.2}\leavevmode {\color {Chapter }ChiefSeriesThrough}}{530}{subsection.39.17.2}
 \contentsline {subsection}{\numberline {39.17.3}\leavevmode {\color {Chapter }ChiefSeriesUnderAction}}{530}{subsection.39.17.3}
 \contentsline {subsection}{\numberline {39.17.4}\leavevmode {\color {Chapter }SubnormalSeries}}{530}{subsection.39.17.4}
 \contentsline {subsection}{\numberline {39.17.5}\leavevmode {\color {Chapter }CompositionSeries}}{530}{subsection.39.17.5}
-\contentsline {subsection}{\numberline {39.17.6}\leavevmode {\color {Chapter }DisplayCompositionSeries}}{531}{subsection.39.17.6}
+\contentsline {subsection}{\numberline {39.17.6}\leavevmode {\color {Chapter }DisplayCompositionSeries}}{530}{subsection.39.17.6}
 \contentsline {subsection}{\numberline {39.17.7}\leavevmode {\color {Chapter }DerivedSeriesOfGroup}}{531}{subsection.39.17.7}
 \contentsline {subsection}{\numberline {39.17.8}\leavevmode {\color {Chapter }DerivedLength}}{531}{subsection.39.17.8}
 \contentsline {subsection}{\numberline {39.17.9}\leavevmode {\color {Chapter }ElementaryAbelianSeries}}{531}{subsection.39.17.9}
@@ -1511,7 +1511,7 @@
 \contentsline {subsection}{\numberline {39.17.11}\leavevmode {\color {Chapter }LowerCentralSeriesOfGroup}}{532}{subsection.39.17.11}
 \contentsline {subsection}{\numberline {39.17.12}\leavevmode {\color {Chapter }UpperCentralSeriesOfGroup}}{532}{subsection.39.17.12}
 \contentsline {subsection}{\numberline {39.17.13}\leavevmode {\color {Chapter }PCentralSeries}}{532}{subsection.39.17.13}
-\contentsline {subsection}{\numberline {39.17.14}\leavevmode {\color {Chapter }JenningsSeries}}{533}{subsection.39.17.14}
+\contentsline {subsection}{\numberline {39.17.14}\leavevmode {\color {Chapter }JenningsSeries}}{532}{subsection.39.17.14}
 \contentsline {subsection}{\numberline {39.17.15}\leavevmode {\color {Chapter }DimensionsLoewyFactors}}{533}{subsection.39.17.15}
 \contentsline {subsection}{\numberline {39.17.16}\leavevmode {\color {Chapter }AscendingChain}}{533}{subsection.39.17.16}
 \contentsline {subsection}{\numberline {39.17.17}\leavevmode {\color {Chapter }IntermediateGroup}}{533}{subsection.39.17.17}
@@ -1520,7 +1520,7 @@
 \contentsline {subsection}{\numberline {39.18.1}\leavevmode {\color {Chapter }NaturalHomomorphismByNormalSubgroup}}{534}{subsection.39.18.1}
 \contentsline {subsection}{\numberline {39.18.2}\leavevmode {\color {Chapter }FactorGroup}}{534}{subsection.39.18.2}
 \contentsline {subsection}{\numberline {39.18.3}\leavevmode {\color {Chapter }CommutatorFactorGroup}}{534}{subsection.39.18.3}
-\contentsline {subsection}{\numberline {39.18.4}\leavevmode {\color {Chapter }MaximalAbelianQuotient}}{535}{subsection.39.18.4}
+\contentsline {subsection}{\numberline {39.18.4}\leavevmode {\color {Chapter }MaximalAbelianQuotient}}{534}{subsection.39.18.4}
 \contentsline {subsection}{\numberline {39.18.5}\leavevmode {\color {Chapter }HasAbelianFactorGroup}}{535}{subsection.39.18.5}
 \contentsline {subsection}{\numberline {39.18.6}\leavevmode {\color {Chapter }HasElementaryAbelianFactorGroup}}{535}{subsection.39.18.6}
 \contentsline {subsection}{\numberline {39.18.7}\leavevmode {\color {Chapter }CentralizerModulo}}{535}{subsection.39.18.7}
@@ -1529,59 +1529,59 @@
 \contentsline {subsection}{\numberline {39.19.2}\leavevmode {\color {Chapter }IsConjugacyClassSubgroupsRep}}{536}{subsection.39.19.2}
 \contentsline {subsection}{\numberline {39.19.3}\leavevmode {\color {Chapter }ConjugacyClassesSubgroups}}{536}{subsection.39.19.3}
 \contentsline {subsection}{\numberline {39.19.4}\leavevmode {\color {Chapter }ConjugacyClassesMaximalSubgroups}}{536}{subsection.39.19.4}
-\contentsline {subsection}{\numberline {39.19.5}\leavevmode {\color {Chapter }AllSubgroups}}{537}{subsection.39.19.5}
+\contentsline {subsection}{\numberline {39.19.5}\leavevmode {\color {Chapter }AllSubgroups}}{536}{subsection.39.19.5}
 \contentsline {subsection}{\numberline {39.19.6}\leavevmode {\color {Chapter }MaximalSubgroupClassReps}}{537}{subsection.39.19.6}
 \contentsline {subsection}{\numberline {39.19.7}\leavevmode {\color {Chapter }MaximalSubgroups}}{537}{subsection.39.19.7}
 \contentsline {subsection}{\numberline {39.19.8}\leavevmode {\color {Chapter }NormalSubgroups}}{537}{subsection.39.19.8}
-\contentsline {subsection}{\numberline {39.19.9}\leavevmode {\color {Chapter }MaximalNormalSubgroups}}{538}{subsection.39.19.9}
-\contentsline {subsection}{\numberline {39.19.10}\leavevmode {\color {Chapter }MinimalNormalSubgroups}}{538}{subsection.39.19.10}
+\contentsline {subsection}{\numberline {39.19.9}\leavevmode {\color {Chapter }MaximalNormalSubgroups}}{537}{subsection.39.19.9}
+\contentsline {subsection}{\numberline {39.19.10}\leavevmode {\color {Chapter }MinimalNormalSubgroups}}{537}{subsection.39.19.10}
 \contentsline {section}{\numberline {39.20}\leavevmode {\color {Chapter }Subgroup Lattice}}{538}{section.39.20}
 \contentsline {subsection}{\numberline {39.20.1}\leavevmode {\color {Chapter }LatticeSubgroups}}{538}{subsection.39.20.1}
 \contentsline {subsection}{\numberline {39.20.2}\leavevmode {\color {Chapter }ClassElementLattice}}{538}{subsection.39.20.2}
-\contentsline {subsection}{\numberline {39.20.3}\leavevmode {\color {Chapter }DotFileLatticeSubgroups}}{539}{subsection.39.20.3}
+\contentsline {subsection}{\numberline {39.20.3}\leavevmode {\color {Chapter }DotFileLatticeSubgroups}}{538}{subsection.39.20.3}
 \contentsline {subsection}{\numberline {39.20.4}\leavevmode {\color {Chapter }MaximalSubgroupsLattice}}{539}{subsection.39.20.4}
-\contentsline {subsection}{\numberline {39.20.5}\leavevmode {\color {Chapter }MinimalSupergroupsLattice}}{540}{subsection.39.20.5}
+\contentsline {subsection}{\numberline {39.20.5}\leavevmode {\color {Chapter }MinimalSupergroupsLattice}}{539}{subsection.39.20.5}
 \contentsline {subsection}{\numberline {39.20.6}\leavevmode {\color {Chapter }RepresentativesPerfectSubgroups}}{540}{subsection.39.20.6}
-\contentsline {subsection}{\numberline {39.20.7}\leavevmode {\color {Chapter }ConjugacyClassesPerfectSubgroups}}{541}{subsection.39.20.7}
-\contentsline {subsection}{\numberline {39.20.8}\leavevmode {\color {Chapter }Zuppos}}{541}{subsection.39.20.8}
+\contentsline {subsection}{\numberline {39.20.7}\leavevmode {\color {Chapter }ConjugacyClassesPerfectSubgroups}}{540}{subsection.39.20.7}
+\contentsline {subsection}{\numberline {39.20.8}\leavevmode {\color {Chapter }Zuppos}}{540}{subsection.39.20.8}
 \contentsline {subsection}{\numberline {39.20.9}\leavevmode {\color {Chapter }InfoLattice}}{541}{subsection.39.20.9}
 \contentsline {section}{\numberline {39.21}\leavevmode {\color {Chapter }Specific Methods for Subgroup Lattice Computations}}{541}{section.39.21}
 \contentsline {subsection}{\numberline {39.21.1}\leavevmode {\color {Chapter }LatticeByCyclicExtension}}{541}{subsection.39.21.1}
-\contentsline {subsection}{\numberline {39.21.2}\leavevmode {\color {Chapter }InvariantSubgroupsElementaryAbelianGroup}}{542}{subsection.39.21.2}
+\contentsline {subsection}{\numberline {39.21.2}\leavevmode {\color {Chapter }InvariantSubgroupsElementaryAbelianGroup}}{541}{subsection.39.21.2}
 \contentsline {subsection}{\numberline {39.21.3}\leavevmode {\color {Chapter }SubgroupsSolvableGroup}}{542}{subsection.39.21.3}
 \contentsline {subsection}{\numberline {39.21.4}\leavevmode {\color {Chapter }SizeConsiderFunction}}{543}{subsection.39.21.4}
-\contentsline {subsection}{\numberline {39.21.5}\leavevmode {\color {Chapter }ExactSizeConsiderFunction}}{544}{subsection.39.21.5}
+\contentsline {subsection}{\numberline {39.21.5}\leavevmode {\color {Chapter }ExactSizeConsiderFunction}}{543}{subsection.39.21.5}
 \contentsline {subsection}{\numberline {39.21.6}\leavevmode {\color {Chapter }InfoPcSubgroup}}{544}{subsection.39.21.6}
 \contentsline {section}{\numberline {39.22}\leavevmode {\color {Chapter }Special Generating Sets}}{544}{section.39.22}
 \contentsline {subsection}{\numberline {39.22.1}\leavevmode {\color {Chapter }GeneratorsSmallest}}{544}{subsection.39.22.1}
-\contentsline {subsection}{\numberline {39.22.2}\leavevmode {\color {Chapter }LargestElementGroup}}{545}{subsection.39.22.2}
-\contentsline {subsection}{\numberline {39.22.3}\leavevmode {\color {Chapter }MinimalGeneratingSet}}{545}{subsection.39.22.3}
+\contentsline {subsection}{\numberline {39.22.2}\leavevmode {\color {Chapter }LargestElementGroup}}{544}{subsection.39.22.2}
+\contentsline {subsection}{\numberline {39.22.3}\leavevmode {\color {Chapter }MinimalGeneratingSet}}{544}{subsection.39.22.3}
 \contentsline {subsection}{\numberline {39.22.4}\leavevmode {\color {Chapter }SmallGeneratingSet}}{545}{subsection.39.22.4}
 \contentsline {subsection}{\numberline {39.22.5}\leavevmode {\color {Chapter }IndependentGeneratorsOfAbelianGroup}}{545}{subsection.39.22.5}
-\contentsline {subsection}{\numberline {39.22.6}\leavevmode {\color {Chapter }IndependentGeneratorExponents}}{546}{subsection.39.22.6}
+\contentsline {subsection}{\numberline {39.22.6}\leavevmode {\color {Chapter }IndependentGeneratorExponents}}{545}{subsection.39.22.6}
 \contentsline {section}{\numberline {39.23}\leavevmode {\color {Chapter }1-Cohomology}}{546}{section.39.23}
 \contentsline {subsection}{\numberline {39.23.1}\leavevmode {\color {Chapter }OneCocycles}}{546}{subsection.39.23.1}
-\contentsline {subsection}{\numberline {39.23.2}\leavevmode {\color {Chapter }OneCoboundaries}}{547}{subsection.39.23.2}
+\contentsline {subsection}{\numberline {39.23.2}\leavevmode {\color {Chapter }OneCoboundaries}}{546}{subsection.39.23.2}
 \contentsline {subsection}{\numberline {39.23.3}\leavevmode {\color {Chapter }OCOneCocycles}}{548}{subsection.39.23.3}
 \contentsline {subsection}{\numberline {39.23.4}\leavevmode {\color {Chapter }ComplementClassesRepresentativesEA}}{548}{subsection.39.23.4}
-\contentsline {subsection}{\numberline {39.23.5}\leavevmode {\color {Chapter }InfoCoh}}{549}{subsection.39.23.5}
-\contentsline {section}{\numberline {39.24}\leavevmode {\color {Chapter }Schur Covers and Multipliers}}{549}{section.39.24}
-\contentsline {subsection}{\numberline {39.24.1}\leavevmode {\color {Chapter }EpimorphismSchurCover}}{549}{subsection.39.24.1}
+\contentsline {subsection}{\numberline {39.23.5}\leavevmode {\color {Chapter }InfoCoh}}{548}{subsection.39.23.5}
+\contentsline {section}{\numberline {39.24}\leavevmode {\color {Chapter }Schur Covers and Multipliers}}{548}{section.39.24}
+\contentsline {subsection}{\numberline {39.24.1}\leavevmode {\color {Chapter }EpimorphismSchurCover}}{548}{subsection.39.24.1}
 \contentsline {subsection}{\numberline {39.24.2}\leavevmode {\color {Chapter }SchurCover}}{549}{subsection.39.24.2}
 \contentsline {subsection}{\numberline {39.24.3}\leavevmode {\color {Chapter }AbelianInvariantsMultiplier}}{549}{subsection.39.24.3}
 \contentsline {subsection}{\numberline {39.24.4}\leavevmode {\color {Chapter }Epicentre}}{550}{subsection.39.24.4}
 \contentsline {subsection}{\numberline {39.24.5}\leavevmode {\color {Chapter }NonabelianExteriorSquare}}{550}{subsection.39.24.5}
 \contentsline {subsection}{\numberline {39.24.6}\leavevmode {\color {Chapter }EpimorphismNonabelianExteriorSquare}}{550}{subsection.39.24.6}
 \contentsline {subsection}{\numberline {39.24.7}\leavevmode {\color {Chapter }IsCentralFactor}}{550}{subsection.39.24.7}
-\contentsline {subsection}{\numberline {39.24.8}\leavevmode {\color {Chapter }Covering groups of symmetric groups}}{551}{subsection.39.24.8}
+\contentsline {subsection}{\numberline {39.24.8}\leavevmode {\color {Chapter }Covering groups of symmetric groups}}{550}{subsection.39.24.8}
 \contentsline {subsection}{\numberline {39.24.9}\leavevmode {\color {Chapter }BasicSpinRepresentationOfSymmetricGroup}}{551}{subsection.39.24.9}
-\contentsline {subsection}{\numberline {39.24.10}\leavevmode {\color {Chapter }SchurCoverOfSymmetricGroup}}{552}{subsection.39.24.10}
-\contentsline {subsection}{\numberline {39.24.11}\leavevmode {\color {Chapter }DoubleCoverOfAlternatingGroup}}{552}{subsection.39.24.11}
+\contentsline {subsection}{\numberline {39.24.10}\leavevmode {\color {Chapter }SchurCoverOfSymmetricGroup}}{551}{subsection.39.24.10}
+\contentsline {subsection}{\numberline {39.24.11}\leavevmode {\color {Chapter }DoubleCoverOfAlternatingGroup}}{551}{subsection.39.24.11}
 \contentsline {section}{\numberline {39.25}\leavevmode {\color {Chapter }Tests for the Availability of Methods}}{552}{section.39.25}
 \contentsline {subsection}{\numberline {39.25.1}\leavevmode {\color {Chapter }CanEasilyTestMembership}}{552}{subsection.39.25.1}
-\contentsline {subsection}{\numberline {39.25.2}\leavevmode {\color {Chapter }CanEasilyComputeWithIndependentGensAbelianGroup}}{553}{subsection.39.25.2}
-\contentsline {subsection}{\numberline {39.25.3}\leavevmode {\color {Chapter }CanComputeSize}}{553}{subsection.39.25.3}
-\contentsline {subsection}{\numberline {39.25.4}\leavevmode {\color {Chapter }CanComputeSizeAnySubgroup}}{553}{subsection.39.25.4}
+\contentsline {subsection}{\numberline {39.25.2}\leavevmode {\color {Chapter }CanEasilyComputeWithIndependentGensAbelianGroup}}{552}{subsection.39.25.2}
+\contentsline {subsection}{\numberline {39.25.3}\leavevmode {\color {Chapter }CanComputeSize}}{552}{subsection.39.25.3}
+\contentsline {subsection}{\numberline {39.25.4}\leavevmode {\color {Chapter }CanComputeSizeAnySubgroup}}{552}{subsection.39.25.4}
 \contentsline {subsection}{\numberline {39.25.5}\leavevmode {\color {Chapter }CanComputeIndex}}{553}{subsection.39.25.5}
 \contentsline {subsection}{\numberline {39.25.6}\leavevmode {\color {Chapter }CanComputeIsSubset}}{553}{subsection.39.25.6}
 \contentsline {subsection}{\numberline {39.25.7}\leavevmode {\color {Chapter }KnowsHowToDecompose}}{553}{subsection.39.25.7}
@@ -2399,14 +2399,14 @@
 \contentsline {subsection}{\numberline {54.2.7}\leavevmode {\color {Chapter }RandomPartialPerm}}{823}{subsection.54.2.7}
 \contentsline {section}{\numberline {54.3}\leavevmode {\color {Chapter }Attributes for partial permutations}}{823}{section.54.3}
 \contentsline {subsection}{\numberline {54.3.1}\leavevmode {\color {Chapter }DegreeOfPartialPerm}}{823}{subsection.54.3.1}
-\contentsline {subsection}{\numberline {54.3.2}\leavevmode {\color {Chapter }CodegreeOfPartialPerm}}{823}{subsection.54.3.2}
+\contentsline {subsection}{\numberline {54.3.2}\leavevmode {\color {Chapter }CodegreeOfPartialPerm}}{824}{subsection.54.3.2}
 \contentsline {subsection}{\numberline {54.3.3}\leavevmode {\color {Chapter }RankOfPartialPerm}}{824}{subsection.54.3.3}
 \contentsline {subsection}{\numberline {54.3.4}\leavevmode {\color {Chapter }DomainOfPartialPerm}}{824}{subsection.54.3.4}
 \contentsline {subsection}{\numberline {54.3.5}\leavevmode {\color {Chapter }ImageOfPartialPermCollection}}{824}{subsection.54.3.5}
 \contentsline {subsection}{\numberline {54.3.6}\leavevmode {\color {Chapter }ImageListOfPartialPerm}}{825}{subsection.54.3.6}
 \contentsline {subsection}{\numberline {54.3.7}\leavevmode {\color {Chapter }ImageSetOfPartialPerm}}{825}{subsection.54.3.7}
 \contentsline {subsection}{\numberline {54.3.8}\leavevmode {\color {Chapter }FixedPointsOfPartialPerm (for a partial perm)}}{825}{subsection.54.3.8}
-\contentsline {subsection}{\numberline {54.3.9}\leavevmode {\color {Chapter }MovedPoints (for a partial perm)}}{825}{subsection.54.3.9}
+\contentsline {subsection}{\numberline {54.3.9}\leavevmode {\color {Chapter }MovedPoints (for a partial perm)}}{826}{subsection.54.3.9}
 \contentsline {subsection}{\numberline {54.3.10}\leavevmode {\color {Chapter }NrFixedPoints (for a partial perm)}}{826}{subsection.54.3.10}
 \contentsline {subsection}{\numberline {54.3.11}\leavevmode {\color {Chapter }NrMovedPoints (for a partial perm)}}{826}{subsection.54.3.11}
 \contentsline {subsection}{\numberline {54.3.12}\leavevmode {\color {Chapter }SmallestMovedPoint (for a partial perm)}}{827}{subsection.54.3.12}
@@ -2417,27 +2417,27 @@
 \contentsline {subsection}{\numberline {54.3.17}\leavevmode {\color {Chapter }SmallestIdempotentPower (for a partial perm)}}{829}{subsection.54.3.17}
 \contentsline {subsection}{\numberline {54.3.18}\leavevmode {\color {Chapter }ComponentsOfPartialPerm}}{829}{subsection.54.3.18}
 \contentsline {subsection}{\numberline {54.3.19}\leavevmode {\color {Chapter }NrComponentsOfPartialPerm}}{829}{subsection.54.3.19}
-\contentsline {subsection}{\numberline {54.3.20}\leavevmode {\color {Chapter }ComponentRepsOfPartialPerm}}{829}{subsection.54.3.20}
+\contentsline {subsection}{\numberline {54.3.20}\leavevmode {\color {Chapter }ComponentRepsOfPartialPerm}}{830}{subsection.54.3.20}
 \contentsline {subsection}{\numberline {54.3.21}\leavevmode {\color {Chapter }LeftOne (for a partial perm)}}{830}{subsection.54.3.21}
 \contentsline {subsection}{\numberline {54.3.22}\leavevmode {\color {Chapter }One (for a partial perm)}}{830}{subsection.54.3.22}
-\contentsline {subsection}{\numberline {54.3.23}\leavevmode {\color {Chapter }Zero (for a partial perm)}}{830}{subsection.54.3.23}
+\contentsline {subsection}{\numberline {54.3.23}\leavevmode {\color {Chapter }Zero (for a partial perm)}}{831}{subsection.54.3.23}
 \contentsline {section}{\numberline {54.4}\leavevmode {\color {Chapter }Changing the representation of a partial permutation}}{831}{section.54.4}
 \contentsline {subsection}{\numberline {54.4.1}\leavevmode {\color {Chapter }AsPartialPerm (for a permutation and a set of positive integers)}}{831}{subsection.54.4.1}
-\contentsline {subsection}{\numberline {54.4.2}\leavevmode {\color {Chapter }AsPartialPerm (for a transformation and a set of positive integer)}}{831}{subsection.54.4.2}
-\contentsline {section}{\numberline {54.5}\leavevmode {\color {Chapter }Operators and operations for partial permutations}}{832}{section.54.5}
+\contentsline {subsection}{\numberline {54.4.2}\leavevmode {\color {Chapter }AsPartialPerm (for a transformation and a set of positive integer)}}{832}{subsection.54.4.2}
+\contentsline {section}{\numberline {54.5}\leavevmode {\color {Chapter }Operators and operations for partial permutations}}{833}{section.54.5}
 \contentsline {subsection}{\numberline {54.5.1}\leavevmode {\color {Chapter }PermLeftQuoPartialPerm}}{833}{subsection.54.5.1}
 \contentsline {subsection}{\numberline {54.5.2}\leavevmode {\color {Chapter }PreImagePartialPerm}}{834}{subsection.54.5.2}
 \contentsline {subsection}{\numberline {54.5.3}\leavevmode {\color {Chapter }ComponentPartialPermInt}}{834}{subsection.54.5.3}
-\contentsline {subsection}{\numberline {54.5.4}\leavevmode {\color {Chapter }NaturalLeqPartialPerm}}{834}{subsection.54.5.4}
+\contentsline {subsection}{\numberline {54.5.4}\leavevmode {\color {Chapter }NaturalLeqPartialPerm}}{835}{subsection.54.5.4}
 \contentsline {subsection}{\numberline {54.5.5}\leavevmode {\color {Chapter }ShortLexLeqPartialPerm}}{835}{subsection.54.5.5}
-\contentsline {subsection}{\numberline {54.5.6}\leavevmode {\color {Chapter }TrimPartialPerm}}{835}{subsection.54.5.6}
+\contentsline {subsection}{\numberline {54.5.6}\leavevmode {\color {Chapter }TrimPartialPerm}}{836}{subsection.54.5.6}
 \contentsline {section}{\numberline {54.6}\leavevmode {\color {Chapter }Displaying partial permutations}}{836}{section.54.6}
-\contentsline {section}{\numberline {54.7}\leavevmode {\color {Chapter }Semigroups and inverse semigroups of partial permutations}}{837}{section.54.7}
+\contentsline {section}{\numberline {54.7}\leavevmode {\color {Chapter }Semigroups and inverse semigroups of partial permutations}}{838}{section.54.7}
 \contentsline {subsection}{\numberline {54.7.1}\leavevmode {\color {Chapter }IsPartialPermSemigroup}}{838}{subsection.54.7.1}
-\contentsline {subsection}{\numberline {54.7.2}\leavevmode {\color {Chapter }DegreeOfPartialPermSemigroup}}{838}{subsection.54.7.2}
+\contentsline {subsection}{\numberline {54.7.2}\leavevmode {\color {Chapter }DegreeOfPartialPermSemigroup}}{839}{subsection.54.7.2}
 \contentsline {subsection}{\numberline {54.7.3}\leavevmode {\color {Chapter }SymmetricInverseSemigroup}}{839}{subsection.54.7.3}
 \contentsline {subsection}{\numberline {54.7.4}\leavevmode {\color {Chapter }IsSymmetricInverseSemigroup}}{839}{subsection.54.7.4}
-\contentsline {subsection}{\numberline {54.7.5}\leavevmode {\color {Chapter }NaturalPartialOrder}}{839}{subsection.54.7.5}
+\contentsline {subsection}{\numberline {54.7.5}\leavevmode {\color {Chapter }NaturalPartialOrder}}{840}{subsection.54.7.5}
 \contentsline {subsection}{\numberline {54.7.6}\leavevmode {\color {Chapter }IsomorphismPartialPermMonoid}}{840}{subsection.54.7.6}
 \contentsline {chapter}{\numberline {55}\leavevmode {\color {Chapter }Additive Magmas}}{842}{chapter.55}
 \contentsline {section}{\numberline {55.1}\leavevmode {\color {Chapter }(Near-)Additive Magma Categories}}{842}{section.55.1}
@@ -3671,11 +3671,11 @@
 \contentsline {subsection}{\numberline {87.2.1}\leavevmode {\color {Chapter }Internal representation of ordered partitions}}{1305}{subsection.87.2.1}
 \contentsline {subsection}{\numberline {87.2.2}\leavevmode {\color {Chapter }Functions for setting up an R-base}}{1306}{subsection.87.2.2}
 \contentsline {subsection}{\numberline {87.2.3}\leavevmode {\color {Chapter }Refinement functions for the backtrack search}}{1309}{subsection.87.2.3}
-\contentsline {subsection}{\numberline {87.2.4}\leavevmode {\color {Chapter }Functions for meeting ordered partitions}}{1311}{subsection.87.2.4}
-\contentsline {subsection}{\numberline {87.2.5}\leavevmode {\color {Chapter }Avoiding multiplication of permutations}}{1312}{subsection.87.2.5}
+\contentsline {subsection}{\numberline {87.2.4}\leavevmode {\color {Chapter }Functions for meeting ordered partitions}}{1310}{subsection.87.2.4}
+\contentsline {subsection}{\numberline {87.2.5}\leavevmode {\color {Chapter }Avoiding multiplication of permutations}}{1311}{subsection.87.2.5}
 \contentsline {section}{\numberline {87.3}\leavevmode {\color {Chapter }Stabilizer Chains for Automorphisms Acting on Enumerators}}{1313}{section.87.3}
 \contentsline {subsection}{\numberline {87.3.1}\leavevmode {\color {Chapter }An operation domain for automorphisms}}{1313}{subsection.87.3.1}
 \contentsline {subsection}{\numberline {87.3.2}\leavevmode {\color {Chapter }Enumerators for cosets of characteristic factors}}{1314}{subsection.87.3.2}
 \contentsline {subsection}{\numberline {87.3.3}\leavevmode {\color {Chapter }Making automorphisms act on such enumerators}}{1315}{subsection.87.3.3}
-\contentsline {chapter}{References}{1327}{chapter*.3}
-\contentsline {chapter}{Index}{1328}{section*.4}
+\contentsline {chapter}{References}{1326}{chapter*.3}
+\contentsline {chapter}{Index}{1327}{section*.4}

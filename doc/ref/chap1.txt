@@ -151,7 +151,7 @@
   
   [33X[0;0YFurther details about [5XGAP[105X packages can be found in chapter [14X'Reference: Using
   GAP      Packages'[114X,      and      on      the      [5XGAP[105X     website     here:
-  [7Xhttp://www.gap-system.org/Packages/packages.html[107X.[133X
+  [7Xhttps://www.gap-system.org/Packages/packages.html[107X.[133X
   
   
   [1X1.2 [33X[0;0YAuthors and Maintainers[133X[101X
@@ -159,8 +159,8 @@
   [33X[0;0Y[5XGAP[105X  is  the  work of very many people, many of whom still maintain parts of
   the  system. A complete list of authors, and an approximation to the current
   list  of  maintainers  can  be  found  on  the  [5XGAP[105X  World  Wide Web site at
-  [7Xhttp://www.gap-system.org/Contacts/People/authors.html[107X                   and
-  [7Xhttp://www.gap-system.org/Contacts/People/modules.html[107X.   All  [5XGAP[105X  packages
+  [7Xhttps://www.gap-system.org/Contacts/People/authors.html[107X                  and
+  [7Xhttps://www.gap-system.org/Contacts/People/modules.html[107X.  All  [5XGAP[105X  packages
   have their own authors and maintainers. It should however be noted that some
   packages  provide  interfaces between [5XGAP[105X and an external program, a copy of
   which is included for convenience, and that, in these cases, we do not claim
@@ -195,7 +195,7 @@
   
   [1X1.4 [33X[0;0YCopyright and License[133X[101X
   
-  [33X[0;0YCopyright © (1987-2016) by the [5XGAP[105X Group,[133X
+  [33X[0;0YCopyright © (1987-2017) by the [5XGAP[105X Group,[133X
   
   [33X[0;0Yincorporating  the  Copyright  ©  1999,  2000  by School of Mathematical and
   Computational  Sciences,  University of St Andrews, North Haugh, St Andrews,
@@ -222,13 +222,13 @@
   please  cite  [5XGAP[105X,  just  as you would cite another paper that you used (see
   below  for sample citation). Also we would appreciate if you could inform us
   about   such   a   paper,   which  we  will  add  to  the  [5XGAP[105X  bibliography
-  ([7Xhttp://www.gap-system.org/Doc/Bib/bib.html[107X).[133X
+  ([7Xhttps://www.gap-system.org/Doc/Bib/bib.html[107X).[133X
   
   [33X[0;0YSpecifically, please refer to[133X
   
   [4X[32X[104X
     [4X[GAP] The GAP Group, GAP - Groups, Algorithms, and Programming,[104X
-    [4X      Version 4.8.6; 2016 (http://www.gap-system.org)[104X
+    [4X      Version 4.8.7; 2017 (https://www.gap-system.org)[104X
   [4X[32X[104X
   
   [33X[0;0YYou are permitted to modify and redistribute [5XGAP[105X, but you are not allowed to
@@ -274,7 +274,7 @@
   
   [33X[0;0YInformation about [5XGAP[105X is best obtained from the [5XGAP[105X website[133X
   
-  [33X[0;0Y[7Xhttp://www.gap-system.org[107X[133X
+  [33X[0;0Y[7Xhttps://www.gap-system.org[107X[133X
   
   [33X[0;0YThere you will find, amongst other things[133X
   
@@ -316,5 +316,5 @@
   
   [33X[0;0YThe GAP Group,[133X
   
-  [33X[0;0Y12-Nov-2016[133X
+  [33X[0;0Y24-Mar-2017[133X
   

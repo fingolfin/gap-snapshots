@@ -136,14 +136,14 @@
   
   [33X[0;0YFurther details about [5XGAP[105X packages can be found in chapter [14X'Reference: Using
   GAP      Packages'[114X,      and      on      the      [5XGAP[105X     website     here:
-  [7Xhttp://www.gap-system.org/Packages/packages.html[107X.[133X
+  [7Xhttps://www.gap-system.org/Packages/packages.html[107X.[133X
   
   
   [1X1.2 [33X[0;0YFurther Information about [5XGAP[105X[101X[1X[133X[101X
   
   [33X[0;0YInformation about [5XGAP[105X is best obtained from the [5XGAP[105X website[133X
   
-  [33X[0;0Y[7Xhttp://www.gap-system.org[107X[133X
+  [33X[0;0Y[7Xhttps://www.gap-system.org[107X[133X
   
   [33X[0;0YThere you will find, amongst other things[133X
   
@@ -185,5 +185,5 @@
   
   [33X[0;0YThe GAP Group,[133X
   
-  [33X[0;0Y12-Nov-2016[133X
+  [33X[0;0Y24-Mar-2017[133X
   

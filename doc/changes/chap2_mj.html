@@ -57,6 +57,14 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7F8F96E78174E8CB">2.5-1 <span class="Heading">Changes in the core <strong class="pkg">GAP</strong> system introduced in <strong class="pkg">GAP</strong> 4.8.6</span></a>
 </span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X80D572C87D430AC0">2.6 <span class="Heading"><strong class="pkg">GAP</strong> 4.8.7 (March 2017)</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X78FFE5EE85D89832">2.6-1 <span class="Heading">Changes in the core <strong class="pkg">GAP</strong> system introduced in <strong class="pkg">GAP</strong> 4.8.7</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X87C9B0CE83E84B92">2.6-2 <span class="Heading">New and updated packages since <strong class="pkg">GAP</strong> 4.8.6</span></a>
+</span>
+</div></div>
 </div>
 
 <h3>2 <span class="Heading">Changes between <strong class="pkg">GAP</strong> 4.7 and <strong class="pkg">GAP</strong> 4.8</span></h3>
@@ -420,6 +428,42 @@ function( a, b, c, x... ) ... end;
 
 <ul>
 <li><p>Fixed regression in the <strong class="pkg">GAP</strong> kernel code introduced in <strong class="pkg">GAP</strong> 4.8.5 and breaking <code class="func">StringFile</code> (<a href="../../pkg/GAPDoc-1.5.1/doc/chap6_mj.html#X7E14D32181FBC3C3"><span class="RefLink">GAPDoc: StringFile</span></a>) ability to work with compressed files. [Reported by Bill Allombert]</p>
+
+</li>
+</ul>
+<p><a id="X80D572C87D430AC0" name="X80D572C87D430AC0"></a></p>
+
+<h4>2.6 <span class="Heading"><strong class="pkg">GAP</strong> 4.8.7 (March 2017)</span></h4>
+
+<p><a id="X78FFE5EE85D89832" name="X78FFE5EE85D89832"></a></p>
+
+<h5>2.6-1 <span class="Heading">Changes in the core <strong class="pkg">GAP</strong> system introduced in <strong class="pkg">GAP</strong> 4.8.7</span></h5>
+
+<p>Fixed bugs that could lead to incorrect results:</p>
+
+
+<ul>
+<li><p>Fixed a regression from <strong class="pkg">GAP</strong> 4.7.6 when reading compressed files after a workspace is loaded. Before the fix, if <strong class="pkg">GAP</strong> is started with the <code class="code">-L</code> option (load workspace), using <code class="func">ReadLine</code> (<a href="../../doc/ref/chap10_mj.html#X7D2CA44C7D110C4F"><span class="RefLink">Reference: ReadLine</span></a>) on the input stream for a compressed file returned by <code class="func">InputTextFile</code> (<a href="../../doc/ref/chap10_mj.html#X8343D04981128784"><span class="RefLink">Reference: InputTextFile</span></a>) only returned the first character. [Reported by Bill Allombert]</p>
+
+</li>
+</ul>
+<p>Other fixed bugs:</p>
+
+
+<ul>
+<li><p>Fixed compiler warning occurring when <strong class="pkg">GAP</strong> is compiled with gcc 6.2.0. [Reported by Bill Allombert]</p>
+
+</li>
+</ul>
+<p><a id="X87C9B0CE83E84B92" name="X87C9B0CE83E84B92"></a></p>
+
+<h5>2.6-2 <span class="Heading">New and updated packages since <strong class="pkg">GAP</strong> 4.8.6</span></h5>
+
+<p>This release contains updated versions of 19 packages from <strong class="pkg">GAP</strong> 4.8.6 distribution. Additionally, the following package has been added for the redistribution with <strong class="pkg">GAP</strong>:</p>
+
+
+<ul>
+<li><p><strong class="pkg">lpres</strong> package (author: René Hartung, maintainer: Laurent Bartholdi) to work with L-presented groups, namely groups given by a finite generating set and a possibly infinite set of relations given as iterates of finitely many seed relations by a finite set of endomorphisms. The package implements nilpotent quotient, Todd-Coxeter and Reidemeister-Schreier algorithms for such groups.</p>
 
 </li>
 </ul>

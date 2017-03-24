@@ -129,16 +129,16 @@ In the case that <Math>u</Math> is of prime power order this is a result of J.A.
 </Section>
 
 
-<Section Label="Chapter_Background_Section_s-constant_(and_(s,t)-constant)_characters">
-<Heading>s-constant (and (s,t)-constant) characters</Heading>
+<Section Label="Chapter_Background_Section_s-constant_characters">
+<Heading>s-constant characters</Heading>
 
 If one is interested in units of mixed order <Math>s*t</Math> for two primes <Math>s</Math> and <Math>t</Math> (e.g. if one studies the Prime Graph Question) an idea to make the HeLP method more efficient was introduced by V. Bovdi and A. Konovalov in <Cite Key="BKHS"/>, page 4. Assume one has several conjugacy classes of elements of order <Math>s</Math>, and a character taking the same value on all of these classes. Then the coefficient of every of these conjugacy classes in the system of inequalities of this character, which is obtained via the HeLP method, is the same. Also the constant terms of the inequalities do not depend on the partial augmentations of elements of order <Math>s</Math>. Thus for such characters one can reduce the number of variables in the inequalities by replacing all the partial augmentations on classes of elements of order <Math>s</Math> by their sum. To obtain the formulas for the multiplicities of the HeLP method one does not need the partial augmentations of elements of order <Math>s</Math>. Characters having the above property are called <Math>s</Math>-constant. In this way the existence of elements of order <Math>s*t</Math> can be excluded in a quite efficient way without doing calculations for elements of order <Math>s</Math>. <P/>
 There is also the concept of <Math>(s,t)</Math>-constant characters, being constant on both, the conjugacy classes of elements of order <Math>s</Math> and on the conjugacy classes of elements of order <Math>t</Math>. The implementation of this is however not yet part of this package.
 </Section>
 
 
-<Section Label="Chapter_Background_Section_Known_results_about_(ZC)_and_(PQ)">
-<Heading>Known results about (ZC) and (PQ)</Heading>
+<Section Label="Chapter_Background_Section_Known_results_about_the_Zassenhaus_Conjecture_and_the_Prime_Graph_Question">
+<Heading>Known results about the Zassenhaus Conjecture and the Prime Graph Question</Heading>
 
 At the moment as this documentation was written, to the best of our knowledge, the following results were available for the Zassenhaus Conjecture and the Prime Graph Question: <P/>
 For the Zassenhaus Conjecture only the following reduction is available: <P/><P/>
@@ -158,16 +158,13 @@ Groups containing a normal Sylow subgroup with abelian complement <Cite Key="Her
 Frobenius groups whose order is divisible by at most two different primes <Cite Key="JuriaansMilies"/>,
 </Item>
 <Item>
-Groups <Math>X \rtimes A</Math>, where <Math>X</Math> is abelian, <Math>A</Math> elementary abelian and <Math>A</Math> acts faithfully and irreducibly on <Math>X</Math> <Cite Key="SehgalWeiss"/>,
-</Item>
-<Item>
 Groups <Math>X \rtimes A</Math>, where <Math>X</Math> and <Math>A</Math> are abelian and <Math>A</Math> is of prime order <Math>p</Math> such that <Math>p</Math> is smaller then any prime divisor of the order of <Math>X</Math> <Cite Key="MRSW"/>,
 </Item>
 <Item>
-All groups of order up to 71 <Cite Key="HoefertKimmerle"/>,
+All groups of order up to 143 <Cite Key="BaHeKoMaSi"/>,
 </Item>
 <Item>
-The non-abelian simple groups <Math>A_5</Math> <Cite Key="LP"/>, <Math>A_6 \simeq PSL(2,9)</Math> <Cite Key="HerA6"/>, <Math>PSL(2,7)</Math>, <Math>PSL(2,11)</Math>, <Math>PSL(2,13)</Math> <Cite Key="HertweckBrauer"/>, <Math>PSL(2,8)</Math>, <Math>PSL(2,17)</Math> <Cite Key="KonovalovKimmiStAndrews"/> <Cite Key="Gildea"/>, <Math>PSL(2,19)</Math>, <Math>PSL(2,23)</Math> <Cite Key="BaMaM10"/> and some extensions of these groups.
+The non-abelian simple groups <Math>A_5</Math> <Cite Key="LP"/>, <Math>A_6 \simeq PSL(2,9)</Math> <Cite Key="HerA6"/>, <Math>PSL(2,7)</Math>, <Math>PSL(2,11)</Math>, <Math>PSL(2,13)</Math> <Cite Key="HertweckBrauer"/>, <Math>PSL(2,8)</Math>, <Math>PSL(2,17)</Math> <Cite Key="KonovalovKimmiStAndrews"/> <Cite Key="Gildea"/>, <Math>PSL(2,19)</Math>, <Math>PSL(2,23)</Math> <Cite Key="BaMaM10"/>, <Math>PSL(2,25)</Math>, <Math>PSL(2,31)</Math>, <Math>PSL(2,32)</Math> <Cite Key="BaMa4prII"/> and some extensions of these groups. Also for all <Math>PSL(2,p)</Math> where <Math>p</Math> is a fermat or a Mersenne prime <Cite Key="FermatMersenne"/>.
 </Item>
 </List>
 For the Prime Graph Question the following strong reduction was obtained in <Cite Key="KonovalovKimmiStAndrews"/>: <P/>
@@ -190,7 +187,7 @@ Groups whose socle is isomorphic to an alternating group of degree at most 17, <
 Almost simple groups whose order is divisible by at most three different primes <Cite Key="KonovalovKimmiStAndrews"/> and <Cite Key="BaMaM10"/>. (This implies that it holds for all groups with an order divisible by at most three primes, using the reduction result above.)
 </Item>
 <Item>
-Many almost simple groups whose order is divisible by four different primes <Cite Key="BaMa4prI"/>
+Many almost simple groups whose order is divisible by four different primes <Cite Key="BaMa4prI"/><Cite Key="BaMa4prII"/>.
 </Item>
 </List>
 </Section>

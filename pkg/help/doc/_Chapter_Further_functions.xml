@@ -218,6 +218,54 @@ In the calls of <K>HeLP_WithGivenOrderAndPA</K> the function uses the following 
 </List>
 
 <ManSection>
+  <Func Arg="CharacterTable ord" Name="HeLP_WithGivenOrderAllTables" />
+ <Returns>List of admissible partial augmentations
+</Returns>
+ <Description>
+Calculates the admissible partial augmentations for elements of
+order <A>ord</A> using the given character table <A>CharacterTable</A>
+and all Brauer tables that can be obtained from it. <A>CharacterTable</A> can be
+an ordinary or a Brauer table. In any case, then given table will be used first to
+obtain a finite number of solutions (if the characteristic does not divide <A>ord</A>,
+otherwise the ordinary table will be used), with the other tables only checks will be performed to
+restrict the number of possible partial augmentations as much as possible. If certain Brauer
+tables are not avaialble, this will be printed if HeLP_Info is at least 1.
+This function only uses the constraints of the HeLP method, but does not apply
+the Wagner test <Ref Sect='Chapter_Background_Section_The_Wagner_test'/>.
+If the constraints allow only a finite number of solutions, these lists will
+be written in <K>HeLP_sol[ord]</K>.
+If for divisors <M>d</M> of <A>ord</A> solutions are already calculated and
+stored in <K>HeLP_sol[d]</K>, these will be used, otherwise the function <K>HeLP_WithGivenOrder</K>
+will first be applied to this order and the data given in the first argument.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="CharacterTable ord partaugs" Name="HeLP_WithGivenOrderAndPAAllTables" />
+ <Returns>List of admissible partial augmentations
+</Returns>
+ <Description>
+Calculates the admissible partial augmentations for elements of
+order <A>ord</A> using the given character table <A>CharacterTable</A>
+and all other tables that can be obtained from it. <A>CharacterTable</A> can be
+an ordinary or a Brauer table. In any case, then given table will be used first to
+obtain a finite number of solutions (if the characteristic does not divide <A>ord</A>,
+otherwise the ordinary table will be used), with the other tables only checks will be performed to
+restrict the number of possible partial augmentations as much as possible. If certain Brauer
+tables are not avaialble, this will be printed if HeLP_Info is at least 1.
+The function uses the partial augmentations for the powers <M>u^d</M> with <M>d</M>
+divisors of <M>k</M> different from <M>1</M> and <M>k</M> given in <A>partaugs</A>.
+Here, the <M>d</M>'s have to be in a descending order (i.e. the orders of the <Math>u^d</Math>'s
+are ascending).
+This function only uses the constraints of the HeLP method, but does not apply
+the Wagner test <Ref Sect='Chapter_Background_Section_The_Wagner_test'/>.
+Note that this function will not affect <K>HeLP_sol</K>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
   <Func Arg="list ord partaugs [b]" Name="HeLP_WithGivenOrderAndPAAndSpecificSystem" />
  <Returns>List of admissible partial augmentations
 </Returns>
@@ -281,7 +329,7 @@ gap> HeLP_WithGivenOrderAndPAAndSpecificSystem([[psi, 0], [psi, 2], [psi, 5]],
 When considering elements of order <Math>st</Math> (in absence of elements of this order in the group
 ; in particular when trying to prove (PQ)) and there are several conjugacy classes of
 elements of order <Math>s</Math>, it might be useful to consider <Math>s</Math>-constant characters
-(cf. Section <Ref Sect='Chapter_Background_Section_s-constant_(and_(s,t)-constant)_characters'/>)
+(cf. Section <Ref Sect='Chapter_Background_Section_s-constant_characters'/>)
 to reduce the computational complexity.
 <ManSection>
   <Func Arg="CharacterTable|ListOfClassFunctions s t" Name="HeLP_WithGivenOrderSConstant" />
@@ -655,7 +703,7 @@ The function takes "vertices", "novertices" and "default" as arguments. If you d
 </Section>
 
 
-<Section Label="Chapter_Further_functions_Section_Checking_solutions,_calculating_and_checking_solutions">
+<Section Label="Chapter_Further_functions_Section_Checking_solutions_calculating_and_checking_solutions">
 <Heading>Checking solutions, calculating and checking solutions</Heading>
 
 <ManSection>
@@ -755,6 +803,42 @@ gap> HeLP_WithGivenOrderAndPA(Irr(C){[2..20]},20,LP[1]);
 
 
 
+<ManSection>
+  <Func Arg="C k" Name="HeLP_WriteTrivialSolution" />
+ <Returns>Trivial solutions.
+</Returns>
+ <Description>
+Given a character table <A>C</A> and an order <A>k</A>, the function calculates the partial augmentations
+of units of order <Math>k</Math> that are rationally conjugate to group elements (note that they just coincide with the
+partial augmentations of group elements) and stores them in <K>HeLP_sol[k]</K>. If solutions of order <Math>k</Math> were
+already calculated, they are overwritten by this function, so this function can be used in particular if elements
+of order <Math>k</Math> are known to be rationally conjugate to group elements by theoretical results.
+ </Description>
+</ManSection>
+
+
+With the character tables that are currently available in GAP, the Zassenhaus Conjecture
+for elements of order <Math>4</Math> in <Math>\text{PSL}(2,49)</Math> cannot be solved. However it was proved in
+<Cite Key="HertweckBrauer"/> using the Brauer table modulo <Math>7</Math>.
+<Example><![CDATA[
+gap> C := CharacterTable("L2(49)");
+CharacterTable( "L2(49)" )
+gap> HeLP_WithGivenOrder(C, 4);
+#I  Number of solutions for elements of order 4: 14; stored in HeLP_sol[4].
+[ [ [ 1 ], [ -6, 7 ] ], [ [ 1 ], [ -5, 6 ] ], [ [ 1 ], [ -4, 5 ] ], 
+  [ [ 1 ], [ -3, 4 ] ], [ [ 1 ], [ -2, 3 ] ], [ [ 1 ], [ -1, 2 ] ], 
+  [ [ 1 ], [ 0, 1 ] ], [ [ 1 ], [ 1, 0 ] ], [ [ 1 ], [ 2, -1 ] ], 
+  [ [ 1 ], [ 3, -2 ] ], [ [ 1 ], [ 4, -3 ] ], [ [ 1 ], [ 5, -4 ] ], 
+  [ [ 1 ], [ 6, -5 ] ], [ [ 1 ], [ 7, -6 ] ] ]
+gap> C mod 7;
+fail
+gap> HeLP_WriteTrivialSolution(C, 4);;
+gap> HeLP_sol[4];
+[ [ [ 1 ], [ 0, 1 ] ] ]
+]]></Example>
+
+
+
 </Section>
 
 
@@ -839,6 +923,36 @@ gap> HeLP_WagnerTest(4);
   [ [ 0, 1, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1, 0 ] ] ]
 gap> HeLP_ZC(C);
 true
+]]></Example>
+
+
+
+</Section>
+
+
+<Section Label="Chapter_Further_functions_Section_Action_of_the_automorphism_group">
+<Heading>Action of the automorphism group</Heading>
+
+<ManSection>
+  <Func Arg="C, k [, list_paraug]" Name="HeLP_AutomorphismOrbits" />
+ <Returns>List of admissible partial augmentations
+</Returns>
+ <Description>
+For a list of possible partial augmentations, this function calculates representatives of each orbit of the action of the automorphism group of <Math>G</Math>
+on them. The first two mandatory arguments are an ordinary character table <A>C</A> (with an underlying group or ) and the order <A>k</A> for which the partial augmentations
+should be filtered with respect to the action of the automorphism group of <Math>G</Math>. If as third argument a lisrt of partial augmentations is given,
+then these will be used, otherwise the partial augmentations that are stored in <K>HeLP_sol[k]</K> are used.
+ </Description>
+</ManSection>
+
+
+<Example><![CDATA[
+gap> C := CharacterTable("A6");;
+gap> gap> HeLP_WithGivenOrder(C, 6);
+#I  Number of solutions for elements of order 6: 2; stored in HeLP_sol[6].
+[ [ [ 1 ], [ 0, 1 ], [ -2, 2, 1 ] ], [ [ 1 ], [ 1, 0 ], [ -2, 1, 2 ] ] ]
+gap> HeLP_AutomorphismOrbits(C, 6);
+[ [ [ 1 ], [ 0, 1 ], [ -2, 2, 1 ] ] ]
 ]]></Example>
 
 
@@ -947,6 +1061,42 @@ gap> HeLP_CharacterValue(chi, 6, [-2,2,1]);
 
 
 These eigenvalues were computed manually by M. Hertweck and may be found in <Cite Key="HerA6"/>.
+
+</Section>
+
+
+<Section Label="Chapter_Further_functions_Section_Check_whether_Zassenhaus_Conjecture_is_known_from_theoretical_results">
+<Heading>Check whether Zassenhaus Conjecture is known from theoretical results</Heading>
+
+<ManSection>
+  <Func Arg="G" Name="HeLP_IsZCKnown" />
+ <Returns><K>true</K> if (ZC) can be derived from theoretical results, <K>false</K> otherwise
+</Returns>
+ <Description>
+For the given group <A>G</A> this function applies five checks, namely it checks
+<List>
+<Item>
+if <Math>G</Math> is nilpotent
+</Item>
+<Item>
+if <Math>G</Math> has a normal Sylow subgroup with abelian complement,
+</Item>
+<Item>
+if <Math>G</Math> is cyclic-by-abelian
+</Item>
+<Item>
+if it is of the form <Math>X \rtimes A</Math>, where <Math>X</Math> and <Math>A</Math> are abelian and <Math>A</Math> is of prime order <Math>p</Math> such that <Math>p</Math> is smaller then any prime divisor of the order of <Math>X</Math>
+</Item>
+<Item>
+or if the order of <Math>G</Math> is smaller than <Math>144</Math>.
+<P/>
+In all these cases the Zassenhaus Conjecture is known. See <Ref Sect='Chapter_Background_Section_Known_results_about_the_Zassenhaus_Conjecture_and_the_Prime_Graph_Question'/> for references.
+This function is designed for solvable groups.
+</Item>
+</List>
+ </Description>
+</ManSection>
+
 
 </Section>
 

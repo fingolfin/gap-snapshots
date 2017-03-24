@@ -207,7 +207,48 @@
   
   [30X    [33X[0;6Y[9X[ 0, 0, 0, 0, 1, 0 ][109X for the element [22Xu^2[122X of order 6.[133X
   
-  [1X3.1-3 HeLP_WithGivenOrderAndPAAndSpecificSystem[101X
+  [1X3.1-3 HeLP_WithGivenOrderAllTables[101X
+  
+  [29X[2XHeLP_WithGivenOrderAllTables[102X( [3XCharacterTable[103X, [3Xord[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YList of admissible partial augmentations[133X
+  
+  [33X[0;0YCalculates  the  admissible  partial augmentations for elements of order [3Xord[103X
+  using  the  given  character table [3XCharacterTable[103X and all Brauer tables that
+  can  be  obtained  from  it.  [3XCharacterTable[103X  can be an ordinary or a Brauer
+  table.  In  any case, then given table will be used first to obtain a finite
+  number  of  solutions  (if the characteristic does not divide [3Xord[103X, otherwise
+  the  ordinary table will be used), with the other tables only checks will be
+  performed  to  restrict the number of possible partial augmentations as much
+  as  possible.  If  certain  Brauer  tables  are  not avaialble, this will be
+  printed  if HeLP_Info is at least 1. This function only uses the constraints
+  of  the  HeLP  method,  but  does  not  apply  the  Wagner  test [14X5.4[114X. If the
+  constraints  allow  only  a  finite number of solutions, these lists will be
+  written  in  [9XHeLP_sol[ord][109X.  If  for divisors [22Xd[122X of [3Xord[103X solutions are already
+  calculated  and  stored  in  [9XHeLP_sol[d][109X,  these will be used, otherwise the
+  function  [9XHeLP_WithGivenOrder[109X  will  first  be applied to this order and the
+  data given in the first argument.[133X
+  
+  [1X3.1-4 HeLP_WithGivenOrderAndPAAllTables[101X
+  
+  [29X[2XHeLP_WithGivenOrderAndPAAllTables[102X( [3XCharacterTable[103X, [3Xord[103X, [3Xpartaugs[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YList of admissible partial augmentations[133X
+  
+  [33X[0;0YCalculates  the  admissible  partial augmentations for elements of order [3Xord[103X
+  using the given character table [3XCharacterTable[103X and all other tables that can
+  be obtained from it. [3XCharacterTable[103X can be an ordinary or a Brauer table. In
+  any  case,  then given table will be used first to obtain a finite number of
+  solutions (if the characteristic does not divide [3Xord[103X, otherwise the ordinary
+  table  will be used), with the other tables only checks will be performed to
+  restrict  the  number of possible partial augmentations as much as possible.
+  If  certain  Brauer  tables  are  not  avaialble,  this  will  be printed if
+  HeLP_Info is at least 1. The function uses the partial augmentations for the
+  powers  [22Xu^d[122X  with  [22Xd[122X divisors of [22Xk[122X different from [22X1[122X and [22Xk[122X given in [3Xpartaugs[103X.
+  Here, the [22Xd[122X's have to be in a descending order (i.e. the orders of the [23Xu^d[123X's
+  are  ascending). This function only uses the constraints of the HeLP method,
+  but  does  not  apply  the Wagner test [14X5.4[114X. Note that this function will not
+  affect [9XHeLP_sol[109X.[133X
+  
+  [1X3.1-5 HeLP_WithGivenOrderAndPAAndSpecificSystem[101X
   
   [29X[2XHeLP_WithGivenOrderAndPAAndSpecificSystem[102X( [3Xlist[103X, [3Xord[103X, [3Xpartaugs[103X[, [3Xb[103X] ) [32X function
   [6XReturns:[106X  [33X[0;10YList of admissible partial augmentations[133X
@@ -710,6 +751,40 @@
     [4X[28X[  ][128X[104X
   [4X[32X[104X
   
+  [1X3.6-4 HeLP_WriteTrivialSolution[101X
+  
+  [29X[2XHeLP_WriteTrivialSolution[102X( [3XC[103X, [3Xk[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10YTrivial solutions.[133X
+  
+  [33X[0;0YGiven  a  character  table  [3XC[103X  and  an  order [3Xk[103X, the function calculates the
+  partial  augmentations  of units of order [23Xk[123X that are rationally conjugate to
+  group  elements (note that they just coincide with the partial augmentations
+  of  group  elements) and stores them in [9XHeLP_sol[k][109X. If solutions of order [23Xk[123X
+  were  already  calculated,  they  are  overwritten by this function, so this
+  function  can  be  used in particular if elements of order [23Xk[123X are known to be
+  rationally conjugate to group elements by theoretical results.[133X
+  
+  [33X[0;0YWith  the  character  tables  that  are  currently  available  in  GAP,  the
+  Zassenhaus  Conjecture for elements of order [23X4[123X in [23X\text{PSL}(2,49)[123X cannot be
+  solved. However it was proved in [Her07] using the Brauer table modulo [23X7[123X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XC := CharacterTable("L2(49)");[127X[104X
+    [4X[28XCharacterTable( "L2(49)" )[128X[104X
+    [4X[25Xgap>[125X [27XHeLP_WithGivenOrder(C, 4);[127X[104X
+    [4X[28X#I  Number of solutions for elements of order 4: 14; stored in HeLP_sol[4].[128X[104X
+    [4X[28X[ [ [ 1 ], [ -6, 7 ] ], [ [ 1 ], [ -5, 6 ] ], [ [ 1 ], [ -4, 5 ] ], [128X[104X
+    [4X[28X  [ [ 1 ], [ -3, 4 ] ], [ [ 1 ], [ -2, 3 ] ], [ [ 1 ], [ -1, 2 ] ], [128X[104X
+    [4X[28X  [ [ 1 ], [ 0, 1 ] ], [ [ 1 ], [ 1, 0 ] ], [ [ 1 ], [ 2, -1 ] ], [128X[104X
+    [4X[28X  [ [ 1 ], [ 3, -2 ] ], [ [ 1 ], [ 4, -3 ] ], [ [ 1 ], [ 5, -4 ] ], [128X[104X
+    [4X[28X  [ [ 1 ], [ 6, -5 ] ], [ [ 1 ], [ 7, -6 ] ] ][128X[104X
+    [4X[25Xgap>[125X [27XC mod 7;[127X[104X
+    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27XHeLP_WriteTrivialSolution(C, 4);;[127X[104X
+    [4X[25Xgap>[125X [27XHeLP_sol[4];[127X[104X
+    [4X[28X[ [ [ 1 ], [ 0, 1 ] ] ][128X[104X
+  [4X[32X[104X
+  
   
   [1X3.7 [33X[0;0YThe Wagner test[133X[101X
   
@@ -795,9 +870,35 @@
   [4X[32X[104X
   
   
-  [1X3.8 [33X[0;0YOutput[133X[101X
+  [1X3.8 [33X[0;0YAction of the automorphism group[133X[101X
   
-  [1X3.8-1 HeLP_PrintSolution[101X
+  [1X3.8-1 HeLP_AutomorphismOrbits[101X
+  
+  [29X[2XHeLP_AutomorphismOrbits[102X( [3XC[103X, [3Xk[103X[, [3Xlist_paraug[103X] ) [32X function
+  [6XReturns:[106X  [33X[0;10YList of admissible partial augmentations[133X
+  
+  [33X[0;0YFor  a  list  of  possible  partial  augmentations, this function calculates
+  representatives  of  each orbit of the action of the automorphism group of [23XG[123X
+  on them. The first two mandatory arguments are an ordinary character table [3XC[103X
+  (with  an  underlying  group  or  )  and  the  order [3Xk[103X for which the partial
+  augmentations  should  be  filtered  with  respect  to  the  action  of  the
+  automorphism   group  of  [23XG[123X.  If  as  third  argument  a  lisrt  of  partial
+  augmentations  is  given,  then  these  will  be used, otherwise the partial
+  augmentations that are stored in [9XHeLP_sol[k][109X are used.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XC := CharacterTable("A6");;[127X[104X
+    [4X[25Xgap>[125X [27Xgap> HeLP_WithGivenOrder(C, 6);[127X[104X
+    [4X[28X#I  Number of solutions for elements of order 6: 2; stored in HeLP_sol[6].[128X[104X
+    [4X[28X[ [ [ 1 ], [ 0, 1 ], [ -2, 2, 1 ] ], [ [ 1 ], [ 1, 0 ], [ -2, 1, 2 ] ] ][128X[104X
+    [4X[25Xgap>[125X [27XHeLP_AutomorphismOrbits(C, 6);[127X[104X
+    [4X[28X[ [ [ 1 ], [ 0, 1 ], [ -2, 2, 1 ] ] ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.9 [33X[0;0YOutput[133X[101X
+  
+  [1X3.9-1 HeLP_PrintSolution[101X
   
   [29X[2XHeLP_PrintSolution[102X( [[3Xk[103X] ) [32X function
   [6XReturns:[106X  [33X[0;10Ynothing[133X
@@ -847,9 +948,9 @@
   [4X[32X[104X
   
   
-  [1X3.9 [33X[0;0YEigenvalue multiplicities and character values[133X[101X
+  [1X3.10 [33X[0;0YEigenvalue multiplicities and character values[133X[101X
   
-  [1X3.9-1 HeLP_MultiplicitiesOfEigenvalues[101X
+  [1X3.10-1 HeLP_MultiplicitiesOfEigenvalues[101X
   
   [29X[2XHeLP_MultiplicitiesOfEigenvalues[102X( [3Xchi[103X, [3Xk[103X, [3Xparaugs[103X ) [32X function
   [6XReturns:[106X  [33X[0;10Ya list of multiplicities of eigenvalues[133X
@@ -859,7 +960,7 @@
   to  [3Xchi[103X  having  the  partial augmentations [3Xparaugs[103X for the elements [22Xu^d[122X for
   divisors [22Xd[122X different from [3Xk[103X.[133X
   
-  [1X3.9-2 HeLP_CharacterValue[101X
+  [1X3.10-2 HeLP_CharacterValue[101X
   
   [29X[2XHeLP_CharacterValue[102X( [3Xchi[103X, [3Xk[103X, [3Xparaug[103X ) [32X function
   [6XReturns:[106X  [33X[0;10Ythe character value [22Xchi(u)[122X[133X
@@ -885,4 +986,30 @@
   
   [33X[0;0YThese  eigenvalues were computed manually by M. Hertweck and may be found in
   [Her08c].[133X
+  
+  
+  [1X3.11 [33X[0;0YCheck whether Zassenhaus Conjecture is known from theoretical results[133X[101X
+  
+  [1X3.11-1 HeLP_IsZCKnown[101X
+  
+  [29X[2XHeLP_IsZCKnown[102X( [3XG[103X ) [32X function
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X  if  (ZC)  can  be  derived  from  theoretical results, [9Xfalse[109X
+            otherwise[133X
+  
+  [33X[0;0YFor the given group [3XG[103X this function applies five checks, namely it checks[133X
+  
+  [30X    [33X[0;6Yif [23XG[123X is nilpotent[133X
+  
+  [30X    [33X[0;6Yif [23XG[123X has a normal Sylow subgroup with abelian complement,[133X
+  
+  [30X    [33X[0;6Yif [23XG[123X is cyclic-by-abelian[133X
+  
+  [30X    [33X[0;6Yif  it  is of the form [23XX \rtimes A[123X, where [23XX[123X and [23XA[123X are abelian and [23XA[123X is
+        of  prime order [23Xp[123X such that [23Xp[123X is smaller then any prime divisor of the
+        order of [23XX[123X[133X
+  
+  [30X    [33X[0;6Yor if the order of [23XG[123X is smaller than [23X144[123X.[133X
+  
+        [33X[0;6YIn  all  these  cases  the Zassenhaus Conjecture is known. See [14X5.6[114X for
+        references. This function is designed for solvable groups.[133X
   

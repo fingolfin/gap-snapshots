@@ -4,45 +4,45 @@ The top-level auxiliary file: HeLP.aux
 The style file: alpha.bst
 Database file #1: HeLP.bib.bib
 Warning--there's a number but no volume in KonovalovMcL
-You've used 37 entries,
+You've used 39 entries,
             2543 wiz_defined-function locations,
-            820 strings with 10284 characters,
-and the built_in function-call counts, 14242 in all, are:
-= -- 1482
-> -- 562
-< -- 26
-+ -- 181
-- -- 176
-* -- 999
-:= -- 2308
-add.period$ -- 121
-call.type$ -- 37
-change.case$ -- 211
-chr.to.int$ -- 34
-cite$ -- 38
-duplicate$ -- 577
-empty$ -- 1073
-format.name$ -- 228
-if$ -- 2924
-int.to.chr$ -- 4
+            825 strings with 10843 characters,
+and the built_in function-call counts, 15960 in all, are:
+= -- 1664
+> -- 622
+< -- 27
++ -- 205
+- -- 198
+* -- 1136
+:= -- 2549
+add.period$ -- 129
+call.type$ -- 39
+change.case$ -- 227
+chr.to.int$ -- 35
+cite$ -- 40
+duplicate$ -- 622
+empty$ -- 1205
+format.name$ -- 251
+if$ -- 3296
+int.to.chr$ -- 5
 int.to.str$ -- 0
-missing$ -- 35
-newline$ -- 195
-num.names$ -- 111
-pop$ -- 177
+missing$ -- 37
+newline$ -- 207
+num.names$ -- 117
+pop$ -- 192
 preamble$ -- 1
-purify$ -- 250
+purify$ -- 268
 quote$ -- 0
-skip$ -- 487
+skip$ -- 535
 stack$ -- 0
-substring$ -- 904
-swap$ -- 90
-text.length$ -- 26
+substring$ -- 1178
+swap$ -- 111
+text.length$ -- 27
 text.prefix$ -- 16
 top$ -- 0
-type$ -- 288
+type$ -- 304
 warning$ -- 1
-while$ -- 148
-width$ -- 41
-write$ -- 491
+while$ -- 154
+width$ -- 43
+write$ -- 519
 (There was 1 warning)

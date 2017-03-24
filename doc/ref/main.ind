@@ -223,7 +223,7 @@
   \item \texttt{AllPrimitiveGroups}, \hyperpage{737}
   \item \texttt  {AllSmallGroups}, \hyperpage{741}
   \item \texttt  {AllSmallNonabelianSimpleGroups}, \hyperpage{526}
-  \item \texttt  {AllSubgroups}, \hyperpage{537}
+  \item \texttt  {AllSubgroups}, \hyperpage{536}
   \item \texttt{AllTransitiveGroups}, \hyperpage{737}
   \item \texttt  {Alpha}, \hyperpage{1195}
   \item \texttt  {AlternatingGroup}
@@ -287,11 +287,11 @@
     \subitem for a permutation and a positive integer, \hyperpage{831}
     \subitem for a permutation and a set of positive integers, 
 		\hyperpage{831}
-    \subitem for a transformation, \hyperpage{831}
+    \subitem for a transformation, \hyperpage{832}
     \subitem for a transformation and a positive integer, 
-		\hyperpage{831}
+		\hyperpage{832}
     \subitem for a transformation and a set of positive integer, 
-		\hyperpage{831}
+		\hyperpage{832}
   \item \texttt  {AsPermutation}, \hyperpage{599}
   \item \texttt  {AsPolynomial}, \hyperpage{999}
   \item \texttt  {AsRightIdeal}, \hyperpage{854}
@@ -428,15 +428,15 @@
   \item \texttt  {CallWithTimeoutList}, \hyperpage{73}
   \item \texttt  {CanComputeIndex}, \hyperpage{553}
   \item \texttt  {CanComputeIsSubset}, \hyperpage{553}
-  \item \texttt  {CanComputeSize}, \hyperpage{553}
-  \item \texttt  {CanComputeSizeAnySubgroup}, \hyperpage{553}
+  \item \texttt  {CanComputeSize}, \hyperpage{552}
+  \item \texttt  {CanComputeSizeAnySubgroup}, \hyperpage{552}
   \item candidates
     \subitem for permutation characters, \hyperpage{1154}
   \item \texttt  {CanEasilyCompareElements}, \hyperpage{413}
   \item \texttt  {CanEasilyCompareElementsFamily}, \hyperpage{413}
   \item \texttt  {CanEasilyComputePcgs}, \hyperpage{629}
   \item \texttt  {Can}\discretionary {-}{}{}\texttt  {Easily}\discretionary {-}{}{}\texttt  {Compute}\discretionary {-}{}{}\texttt  {With}\discretionary {-}{}{}\texttt  {Independent}\discretionary {-}{}{}\texttt  {Gens}\discretionary {-}{}{}\texttt  {Abelian}\discretionary {-}{}{}\texttt  {Group}, 
-		\hyperpage{553}
+		\hyperpage{552}
   \item \texttt  {CanEasilySortElements}, \hyperpage{413}
   \item \texttt  {CanEasilySortElementsFamily}, \hyperpage{413}
   \item \texttt  {CanEasilyTestMembership}, \hyperpage{552}
@@ -528,7 +528,7 @@
   \item \texttt  {CharacterTableWreathSymmetric}, \hyperpage{1113}
   \item \texttt  {CharInt}, \hyperpage{365}
   \item \texttt  {CharsFamily}, \hyperpage{357}
-  \item \texttt  {CharSInt}, \hyperpage{366}
+  \item \texttt  {CharSInt}, \hyperpage{365}
   \item \texttt  {CheckDigitISBN}, \hyperpage{191}
   \item \texttt  {CheckDigitISBN13}, \hyperpage{191}
   \item \texttt  {CheckDigitPostalMoneyOrder}, \hyperpage{191}
@@ -539,12 +539,12 @@
   \item \texttt  {CheckPermChar}, \hyperpage{1188}
   \item \texttt  {ChevalleyBasis}, \hyperpage{965}
   \item \texttt  {ChiefNormalSeriesByPcgs}, \hyperpage{643}
-  \item \texttt  {ChiefSeries}, \hyperpage{530}
+  \item \texttt  {ChiefSeries}, \hyperpage{529}
   \item \texttt  {ChiefSeriesThrough}, \hyperpage{530}
   \item \texttt  {ChiefSeriesUnderAction}, \hyperpage{530}
   \item Chinese remainder, \hyperpage{183}
   \item \texttt  {ChineseRem}, \hyperpage{183}
-  \item \texttt  {Chomp}, \hyperpage{364}
+  \item \texttt  {Chomp}, \hyperpage{363}
   \item \texttt  {Cite}, \hyperpage{1213}
   \item \texttt  {CIUnivPols}, \hyperpage{996}
   \item class function, \hyperpage{1124}
@@ -626,9 +626,9 @@
   \item \texttt  {Cocycles}
     \subitem for Lie algebra module, \hyperpage{979}
   \item cocycles, \hyperpage{546}
-  \item \texttt  {CodegreeOfPartialPerm}, \hyperpage{823}
-  \item \texttt  {CodegreeOfPartialPermCollection}, \hyperpage{823}
-  \item \texttt  {CodegreeOfPartialPermSemigroup}, \hyperpage{838}
+  \item \texttt  {CodegreeOfPartialPerm}, \hyperpage{824}
+  \item \texttt  {CodegreeOfPartialPermCollection}, \hyperpage{824}
+  \item \texttt  {CodegreeOfPartialPermSemigroup}, \hyperpage{839}
   \item \texttt  {CodePcGroup}, \hyperpage{663}
   \item \texttt  {CodePcgs}, \hyperpage{662}
   \item coefficient
@@ -692,7 +692,7 @@
     \subitem for a matrix, \hyperpage{927}
     \subitem for a vector, \hyperpage{927}
   \item \texttt  {ComponentPartialPermInt}, \hyperpage{834}
-  \item \texttt  {ComponentRepsOfPartialPerm}, \hyperpage{829}
+  \item \texttt  {ComponentRepsOfPartialPerm}, \hyperpage{830}
   \item \texttt  {ComponentRepsOfTransformation}, \hyperpage{810}
   \item \texttt  {ComponentsOfPartialPerm}, \hyperpage{829}
   \item \texttt  {ComponentsOfTransformation}, \hyperpage{809}
@@ -735,7 +735,7 @@
   \item \texttt  {ConjugacyClassesByOrbits}, \hyperpage{512}
   \item \texttt  {ConjugacyClassesByRandomSearch}, \hyperpage{512}
   \item \texttt  {ConjugacyClassesMaximalSubgroups}, \hyperpage{536}
-  \item \texttt  {ConjugacyClassesPerfectSubgroups}, \hyperpage{541}
+  \item \texttt  {ConjugacyClassesPerfectSubgroups}, \hyperpage{540}
   \item \texttt  {ConjugacyClassesSubgroups}, \hyperpage{536}
   \item \texttt  {ConjugacyClassSubgroups}, \hyperpage{535}
   \item conjugate
@@ -822,7 +822,7 @@
   \item \texttt  {Coth}, \hyperpage{240}
   \item \texttt  {CoverageLineByLine}, \hyperpage{117}
   \item \texttt  {CrcFile}, \hyperpage{137}
-  \item \texttt  {CrcString}, \hyperpage{368}
+  \item \texttt  {CrcString}, \hyperpage{367}
   \item \texttt  {CrystGroupDefaultAction}, \hyperpage{627}
   \item \texttt  {Csc}, \hyperpage{240}
   \item \texttt  {Csch}, \hyperpage{240}
@@ -857,7 +857,7 @@
 
   \item $d_N$ (irrational value), \hyperpage{229}
   \item Darstellungsgruppe
-    \subitem see EpimorphismSchurCover, \hyperpage{549}
+    \subitem see EpimorphismSchurCover, \hyperpage{548}
   \item data type
     \subitem unknown, \hyperpage{1191}
   \item \texttt  {DataType}, \hyperpage{176}
@@ -930,7 +930,7 @@
   \item \texttt  {DegreeOfLaurentPolynomial}, \hyperpage{1001}
   \item \texttt  {DegreeOfPartialPerm}, \hyperpage{823}
   \item \texttt  {DegreeOfPartialPermCollection}, \hyperpage{823}
-  \item \texttt  {DegreeOfPartialPermSemigroup}, \hyperpage{838}
+  \item \texttt  {DegreeOfPartialPermSemigroup}, \hyperpage{839}
   \item \texttt  {DegreeOfTransformation}, \hyperpage{803}
   \item \texttt  {DegreeOfTransformationCollection}, \hyperpage{803}
   \item \texttt  {DegreeOfTransformationSemigroup}, \hyperpage{814}
@@ -1013,7 +1013,7 @@
     \subitem for a table of marks, \hyperpage{1049}
     \subitem for class functions, \hyperpage{1130}
   \item \texttt  {DisplayCacheStats}, \hyperpage{118}
-  \item \texttt  {DisplayCompositionSeries}, \hyperpage{531}
+  \item \texttt  {DisplayCompositionSeries}, \hyperpage{530}
   \item \texttt  {DisplayEggBoxOfDClass}, \hyperpage{775}
   \item \texttt  {DisplayImfInvariants}, \hyperpage{755}
   \item \texttt  {DisplayInformationPerfectGroups}
@@ -1057,13 +1057,13 @@
     \subitem for a semisimple Lie algebra and a highest weight, 
 		\hyperpage{980}
   \item \texttt  {DominantWeights}, \hyperpage{980}
-  \item dot-file, \hyperpage{539}
-  \item \texttt  {DotFileLatticeSubgroups}, \hyperpage{539}
+  \item dot-file, \hyperpage{538}
+  \item \texttt  {DotFileLatticeSubgroups}, \hyperpage{538}
   \item \texttt  {DoubleCoset}, \hyperpage{509}
   \item \texttt  {DoubleCosetRepsAndSizes}, \hyperpage{510}
   \item \texttt  {DoubleCosets}, \hyperpage{510}
   \item \texttt  {DoubleCosetsNC}, \hyperpage{510}
-  \item \texttt  {DoubleCoverOfAlternatingGroup}, \hyperpage{552}
+  \item \texttt  {DoubleCoverOfAlternatingGroup}, \hyperpage{551}
   \item \texttt  {DoubleHashArraySize}, \hyperpage{376}
   \item doublequote character, \hyperpage{355}
   \item doublequotes, \hyperpage{352}
@@ -1173,7 +1173,7 @@
   \item \texttt  {EpimorphismQuotientSystem}, \hyperpage{684}
   \item epimorphisms
     \subitem find all, \hyperpage{566}
-  \item \texttt  {EpimorphismSchurCover}, \hyperpage{549}
+  \item \texttt  {EpimorphismSchurCover}, \hyperpage{548}
   \item \texttt  {EpimorphismSolvableQuotient}, \hyperpage{685}
   \item \texttt  {EqFloat}, \hyperpage{241}
   \item equality
@@ -1227,7 +1227,7 @@
     \subitem strings, \hyperpage{366}
   \item \texttt  {EW}, \hyperpage{230}
   \item \texttt  {EX}, \hyperpage{230}
-  \item \texttt  {ExactSizeConsiderFunction}, \hyperpage{544}
+  \item \texttt  {ExactSizeConsiderFunction}, \hyperpage{543}
   \item Excel, \hyperpage{152}
   \item \texttt  {Exec}, \hyperpage{155}
   \item execution, \hyperpage{59}
@@ -1505,7 +1505,7 @@
   \item \texttt  {GapInputSCTable}, \hyperpage{925}
   \item \texttt  {GAPKB{\textunderscore }REW}, \hyperpage{791}
   \item \texttt{GAPTCENUM}, \hyperpage{672}
-  \item \texttt  {GasmanLimits}, \hyperpage{126}
+  \item \texttt  {GasmanLimits}, \hyperpage{125}
   \item \texttt  {GasmanMessageStatus}, \hyperpage{125}
   \item \texttt  {GasmanStatistics}, \hyperpage{125}
   \item Gaussian algorithm, \hyperpage{323}
@@ -1603,7 +1603,7 @@
   \item \texttt  {GO}, \hyperpage{732}
   \item \texttt  {GQuotients}, \hyperpage{566}
   \item \texttt  {Grading}, \hyperpage{939}
-  \item graphviz, \hyperpage{539}
+  \item graphviz, \hyperpage{538}
   \item \texttt  {GreensDClasses}, \hyperpage{775}
   \item \texttt  {GreensDClassOfElement}, \hyperpage{775}
   \item \texttt  {GreensDRelation}, \hyperpage{774}
@@ -1771,7 +1771,7 @@
     \subitem for lists, \hyperpage{261}
     \subitem operation for, \hyperpage{395}
   \item \texttt  {IncreaseInterval}, \hyperpage{241}
-  \item \texttt  {IndependentGeneratorExponents}, \hyperpage{546}
+  \item \texttt  {IndependentGeneratorExponents}, \hyperpage{545}
   \item \texttt  {IndependentGeneratorsOfAbelianGroup}, \hyperpage{545}
   \item \texttt  {Indeterminate}
     \subitem for a family and a number, \hyperpage{994}
@@ -1838,7 +1838,7 @@
   \item \texttt  {InfoAttributes}, \hyperpage{172}
   \item \texttt  {InfoBckt}, \hyperpage{617}
   \item \texttt  {InfoCharacterTable}, \hyperpage{1075}
-  \item \texttt  {InfoCoh}, \hyperpage{549}
+  \item \texttt  {InfoCoh}, \hyperpage{548}
   \item \texttt  {InfoComplement}, \hyperpage{516}
   \item \texttt  {InfoCoset}, \hyperpage{511}
   \item \texttt  {InfoFpGroup}, \hyperpage{666}
@@ -1943,7 +1943,7 @@
   \item \texttt  {InvariantQuadraticForm}, \hyperpage{623}
   \item \texttt  {InvariantSesquilinearForm}, \hyperpage{623}
   \item \texttt  {Invariant}\discretionary {-}{}{}\texttt  {Subgroups}\discretionary {-}{}{}\texttt  {Elementary}\discretionary {-}{}{}\texttt  {Abelian}\discretionary {-}{}{}\texttt  {Group}, 
-		\hyperpage{542}
+		\hyperpage{541}
   \item Inverse
     \subitem group homomorphism, \hyperpage{557}
   \item \texttt  {Inverse}, \hyperpage{411}
@@ -2159,7 +2159,7 @@
   \item \texttt  {IsElement}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Magma}\discretionary {-}{}{}\texttt  {Ring}\discretionary {-}{}{}\texttt  {Modulo}\discretionary {-}{}{}\texttt  {Span}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Zero}\discretionary {-}{}{}\texttt  {Family}, 
 		\hyperpage{991}
   \item \texttt  {IsEmpty}, \hyperpage{391}
-  \item \texttt  {IsEmptyString}, \hyperpage{357}
+  \item \texttt  {IsEmptyString}, \hyperpage{356}
   \item \texttt  {IsEndOfStream}, \hyperpage{143}
   \item \texttt  {IsEndoGeneralMapping}, \hyperpage{439}
   \item \texttt{IsEndoGeneralMapping}
@@ -2758,7 +2758,7 @@
   \item $j_N$ (irrational value), \hyperpage{231}
   \item \texttt  {Jacobi}, \hyperpage{198}
   \item \texttt  {JenningsLieAlgebra}, \hyperpage{972}
-  \item \texttt  {JenningsSeries}, \hyperpage{533}
+  \item \texttt  {JenningsSeries}, \hyperpage{532}
   \item \texttt  {JoinEquivalenceRelations}, \hyperpage{448}
   \item \texttt  {JoinOfIdempotentPartialPermsNC}, \hyperpage{821}
   \item \texttt  {JoinOfPartialPerms}, \hyperpage{821}
@@ -2800,7 +2800,7 @@
   \item larger test, \hyperpage{56}
   \item \texttt  {Larger}\discretionary {-}{}{}\texttt  {Quotient}\discretionary {-}{}{}\texttt  {By}\discretionary {-}{}{}\texttt  {Subgroup}\discretionary {-}{}{}\texttt  {Abelianization}, 
 		\hyperpage{686}
-  \item \texttt  {LargestElementGroup}, \hyperpage{545}
+  \item \texttt  {LargestElementGroup}, \hyperpage{544}
   \item \texttt  {LargestElementStabChain}, \hyperpage{613}
   \item \texttt  {LargestImageOfMovedPoint}
     \subitem for a partial permutation, \hyperpage{828}
@@ -3061,11 +3061,11 @@
   \item \texttt  {MatrixOfAction}, \hyperpage{950}
   \item \texttt  {MatScalarProducts}, \hyperpage{1135}
   \item \texttt  {MatTom}, \hyperpage{1055}
-  \item \texttt  {MaximalAbelianQuotient}, \hyperpage{535}
+  \item \texttt  {MaximalAbelianQuotient}, \hyperpage{534}
   \item \texttt  {MaximalBlocks}
     \subitem for a group, an action domain, etc., \hyperpage{587}
     \subitem for an external set, \hyperpage{587}
-  \item \texttt  {MaximalNormalSubgroups}, \hyperpage{538}
+  \item \texttt  {MaximalNormalSubgroups}, \hyperpage{537}
   \item \texttt  {MaximalSubgroupClassReps}, \hyperpage{537}
   \item \texttt  {MaximalSubgroups}, \hyperpage{537}
   \item \texttt{MaximalSubgroups}
@@ -3084,17 +3084,17 @@
   \item method, \hyperpage{1219}
   \item \texttt  {Mid}, \hyperpage{241}
   \item \texttt  {MinimalElementCosetStabChain}, \hyperpage{613}
-  \item \texttt  {MinimalGeneratingSet}, \hyperpage{545}
+  \item \texttt  {MinimalGeneratingSet}, \hyperpage{544}
   \item \texttt{MinimalGeneratingSet}
     \subitem for groups with pcgs, \hyperpage{649}
   \item \texttt  {MinimalNonmonomialGroup}, \hyperpage{1202}
-  \item \texttt  {MinimalNormalSubgroups}, \hyperpage{538}
+  \item \texttt  {MinimalNormalSubgroups}, \hyperpage{537}
   \item \texttt  {MinimalPolynomial}, \hyperpage{1006}
     \subitem over a field, \hyperpage{879}
   \item \texttt{MinimalPolynomial}
     \subitem over a ring, \hyperpage{1006}
   \item \texttt  {MinimalStabChain}, \hyperpage{610}
-  \item \texttt  {MinimalSupergroupsLattice}, \hyperpage{540}
+  \item \texttt  {MinimalSupergroupsLattice}, \hyperpage{539}
   \item \texttt  {MinimalSupergroupsTom}, \hyperpage{1061}
   \item \texttt  {MinimizedBombieriNorm}, \hyperpage{1009}
   \item \texttt  {Minimum}
@@ -3147,8 +3147,8 @@
   \item \texttt  {MostFrequentGeneratorFpGroup}, \hyperpage{674}
   \item \texttt  {MovedPoints}
     \subitem for a list or collection of permutations, \hyperpage{596}
-    \subitem for a partial perm, \hyperpage{825}
-    \subitem for a partial perm coll, \hyperpage{825}
+    \subitem for a partial perm, \hyperpage{826}
+    \subitem for a partial perm coll, \hyperpage{826}
     \subitem for a permutation, \hyperpage{596}
     \subitem for a transformation, \hyperpage{805}
     \subitem for a transformation coll, \hyperpage{805}
@@ -3259,8 +3259,8 @@
   \item \texttt  {NaturalHomomorphismBySubspace}, \hyperpage{916}
   \item \texttt  {Natural}\discretionary {-}{}{}\texttt  {Homomorphism}\discretionary {-}{}{}\texttt  {Of}\discretionary {-}{}{}\texttt  {Lie}\discretionary {-}{}{}\texttt  {Algebra}\discretionary {-}{}{}\texttt  {From}\discretionary {-}{}{}\texttt  {Nilpotent}\discretionary {-}{}{}\texttt  {Group}, 
 		\hyperpage{973}
-  \item \texttt  {NaturalLeqPartialPerm}, \hyperpage{834}
-  \item \texttt  {NaturalPartialOrder}, \hyperpage{839}
+  \item \texttt  {NaturalLeqPartialPerm}, \hyperpage{835}
+  \item \texttt  {NaturalPartialOrder}, \hyperpage{840}
   \item \texttt  {NearAdditiveGroup}, \hyperpage{844}
   \item \texttt  {NearAdditiveGroupByGenerators}, \hyperpage{845}
   \item \texttt  {NearAdditiveMagma}, \hyperpage{844}
@@ -3427,7 +3427,7 @@
   \item \texttt  {OldGeneratorsOfPresentation}, \hyperpage{710}
   \item \texttt  {Omega}, \hyperpage{521}
     \subitem construct an orthogonal group, \hyperpage{733}
-  \item OmniGraffle, \hyperpage{539}
+  \item OmniGraffle, \hyperpage{538}
   \item \texttt  {ONanScottType}, \hyperpage{603}
   \item \texttt  {OnBreak}, \hyperpage{86}
   \item \texttt  {OnBreakMessage}, \hyperpage{88}
@@ -3435,7 +3435,7 @@
     \subitem for a partial perm, \hyperpage{830}
   \item one cohomology, \hyperpage{546}
   \item \texttt  {OneAttr}, \hyperpage{408}
-  \item \texttt  {OneCoboundaries}, \hyperpage{547}
+  \item \texttt  {OneCoboundaries}, \hyperpage{546}
   \item \texttt  {OneCocycles}
     \subitem for a group and a pcgs, \hyperpage{546}
     \subitem for generators and a group, \hyperpage{546}
@@ -3628,7 +3628,7 @@
   \item \texttt  {Pcgs{\textunderscore }}\discretionary {-}{}{}\texttt  {Orbit}\discretionary {-}{}{}\texttt  {Stabilizer}, 
 		\hyperpage{649}
   \item \texttt  {PcgsPCentralSeriesPGroup}, \hyperpage{642}
-  \item \texttt  {PClassPGroup}, \hyperpage{528}
+  \item \texttt  {PClassPGroup}, \hyperpage{527}
   \item \texttt  {PCore}, \hyperpage{515}
   \item \texttt  {PcSeries}, \hyperpage{631}
   \item perfect groups, \hyperpage{743}
@@ -3958,7 +3958,7 @@
   \item \texttt  {RankMat}, \hyperpage{323}
   \item \texttt  {RankOfPartialPerm}, \hyperpage{824}
   \item \texttt  {RankOfPartialPermCollection}, \hyperpage{824}
-  \item \texttt  {RankOfPartialPermSemigroup}, \hyperpage{838}
+  \item \texttt  {RankOfPartialPermSemigroup}, \hyperpage{839}
   \item \texttt  {RankOfTransformation}
     \subitem for a transformation and a list, \hyperpage{804}
     \subitem for a transformation and a positive integer, 
@@ -4142,7 +4142,7 @@
   \item \texttt  {ReturnNothing}, \hyperpage{75}
   \item \texttt  {ReturnTrue}, \hyperpage{74}
   \item \texttt  {Reversed}, \hyperpage{284}
-  \item \texttt  {ReverseNaturalPartialOrder}, \hyperpage{839}
+  \item \texttt  {ReverseNaturalPartialOrder}, \hyperpage{840}
   \item \texttt  {RewindStream}, \hyperpage{144}
   \item \texttt  {RewriteWord}, \hyperpage{677}
   \item right cosets, \hyperpage{507}
@@ -4151,8 +4151,8 @@
   \item \texttt  {RightAlgebraModule}, \hyperpage{947}
   \item \texttt  {RightAlgebraModuleByGenerators}, \hyperpage{946}
   \item \texttt  {RightCoset}, \hyperpage{507}
-  \item \texttt  {RightCosets}, \hyperpage{508}
-  \item \texttt  {RightCosetsNC}, \hyperpage{508}
+  \item \texttt  {RightCosets}, \hyperpage{507}
+  \item \texttt  {RightCosetsNC}, \hyperpage{507}
   \item \texttt  {RightDerivations}, \hyperpage{960}
   \item \texttt  {RightIdeal}, \hyperpage{851}
   \item \texttt  {RightIdealByGenerators}, \hyperpage{853}
@@ -4217,7 +4217,7 @@
     \subitem random, \hyperpage{605}
   \item Schur multiplier, \hyperpage{549}
   \item \texttt  {SchurCover}, \hyperpage{549}
-  \item \texttt  {SchurCoverOfSymmetricGroup}, \hyperpage{552}
+  \item \texttt  {SchurCoverOfSymmetricGroup}, \hyperpage{551}
   \item scope, \hyperpage{50}
   \item \texttt  {Sec}, \hyperpage{240}
   \item \texttt  {Sech}, \hyperpage{240}
@@ -4275,7 +4275,7 @@
   \item \texttt  {SetParent}, \hyperpage{406}
   \item \texttt  {SetPower}, \hyperpage{655}
   \item \texttt  {SetPrintFormattingStatus}, \hyperpage{146}
-  \item \texttt  {SetRecursionTrapInterval}, \hyperpage{124}
+  \item \texttt  {SetRecursionTrapInterval}, \hyperpage{123}
   \item \texttt  {SetReducedMultiplication}, \hyperpage{668}
   \item Sets, \hyperpage{249}
   \item sets, \hyperpage{279}
@@ -4524,7 +4524,7 @@
     \subitem for a cyclotomic, \hyperpage{225}
   \item \texttt  {StringDate}, \hyperpage{369}
   \item \texttt  {StringFactorizationWord}, \hyperpage{667}
-  \item \texttt  {StringNumbers}, \hyperpage{365}
+  \item \texttt  {StringNumbers}, \hyperpage{364}
   \item \texttt  {StringOfResultOfStraightLineProgram}, \hyperpage{485}
   \item \texttt  {StringPP}, \hyperpage{361}
   \item strings
@@ -4808,7 +4808,7 @@
   \item \texttt  {TriangulizedNullspaceMatDestructive}, \hyperpage{324}
   \item \texttt  {TriangulizeIntegerMat}, \hyperpage{341}
   \item \texttt  {TriangulizeMat}, \hyperpage{324}
-  \item \texttt  {TrimPartialPerm}, \hyperpage{835}
+  \item \texttt  {TrimPartialPerm}, \hyperpage{836}
   \item \texttt  {TrimTransformation}, \hyperpage{811}
   \item \texttt  {TrivialCharacter}
     \subitem for a character table, \hyperpage{1132}
@@ -4990,7 +4990,7 @@
     \subitem for a string, \hyperpage{353}
     \subitem for a table of marks, \hyperpage{1048}
     \subitem for class functions, \hyperpage{1130}
-  \item \texttt  {ViewString}, \hyperpage{360}
+  \item \texttt  {ViewString}, \hyperpage{359}
   \item \texttt{vim}, \hyperpage{99}
   \item virtual character, \hyperpage{1134}
   \item virtual characters, \hyperpage{1122}
@@ -5005,7 +5005,7 @@
   \item web sites
     \subitem for GAP, \hyperpage{27}
   \item \texttt  {WedgeGModule}, \hyperpage{1034}
-  \item \texttt  {WeekDay}, \hyperpage{369}
+  \item \texttt  {WeekDay}, \hyperpage{368}
   \item \texttt  {WeightLexOrdering}, \hyperpage{454}
   \item \texttt  {WeightOfGenerators}, \hyperpage{455}
   \item \texttt  {WeightsTom}, \hyperpage{1056}
@@ -5047,7 +5047,7 @@
     \subitem for prime and degree, \hyperpage{882}
   \item \texttt  {ZClassRepsQClass}, \hyperpage{626}
   \item \texttt  {Zero}, \hyperpage{409}
-    \subitem for a partial perm, \hyperpage{830}
+    \subitem for a partial perm, \hyperpage{831}
   \item \texttt  {ZeroAttr}, \hyperpage{409}
   \item \texttt  {ZeroCoefficient}, \hyperpage{989}
   \item \texttt  {ZeroCoefficientRatFun}, \hyperpage{1022}
@@ -5067,6 +5067,6 @@
   \item \texttt  {ZmodpZ}, \hyperpage{189}
   \item \texttt  {ZmodpZNC}, \hyperpage{189}
   \item \texttt  {ZumbroichBase}, \hyperpage{896}
-  \item \texttt  {Zuppos}, \hyperpage{541}
+  \item \texttt  {Zuppos}, \hyperpage{540}
 
 \end{theindex}

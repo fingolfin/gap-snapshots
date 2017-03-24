@@ -37,10 +37,10 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X7BA77C9F86ADD546">5.4 <span class="Heading">The Wagner test</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X811E2B358243C44F">5.5 <span class="Heading">s-constant (and (s,t)-constant) characters</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X85810FF37EB3F4B4">5.5 <span class="Heading">s-constant characters</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X811213427F4177C8">5.6 <span class="Heading">Known results about (ZC) and (PQ)</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X79BE759E7F35150E">5.6 <span class="Heading">Known results about the Zassenhaus Conjecture and the Prime Graph Question</span></a>
 </span>
 </div>
 </div>
@@ -127,17 +127,17 @@
 
 <p>Combining the Theorem with the HeLP-method may only give new insight, if <span class="SimpleMath">\(p^j\)</span> is a proper divisor of the order of <span class="SimpleMath">\(u\)</span>. Wagner did obtain this result for <span class="SimpleMath">\(s = 1\)</span>, when <span class="SimpleMath">\(\varepsilon_s(u) = 0\)</span> by the Berman-Higman Theorem. In the case that <span class="SimpleMath">\(u\)</span> is of prime power order this is a result of J.A. Cohn and D. Livingstone <a href="chapBib_mj.html#biBCohnLivingstone">[CL65]</a>.</p>
 
-<p><a id="X811E2B358243C44F" name="X811E2B358243C44F"></a></p>
+<p><a id="X85810FF37EB3F4B4" name="X85810FF37EB3F4B4"></a></p>
 
-<h4>5.5 <span class="Heading">s-constant (and (s,t)-constant) characters</span></h4>
+<h4>5.5 <span class="Heading">s-constant characters</span></h4>
 
 <p>If one is interested in units of mixed order <span class="SimpleMath">\(s*t\)</span> for two primes <span class="SimpleMath">\(s\)</span> and <span class="SimpleMath">\(t\)</span> (e.g. if one studies the Prime Graph Question) an idea to make the HeLP method more efficient was introduced by V. Bovdi and A. Konovalov in <a href="chapBib_mj.html#biBBKHS">[BK10]</a>, page 4. Assume one has several conjugacy classes of elements of order <span class="SimpleMath">\(s\)</span>, and a character taking the same value on all of these classes. Then the coefficient of every of these conjugacy classes in the system of inequalities of this character, which is obtained via the HeLP method, is the same. Also the constant terms of the inequalities do not depend on the partial augmentations of elements of order <span class="SimpleMath">\(s\)</span>. Thus for such characters one can reduce the number of variables in the inequalities by replacing all the partial augmentations on classes of elements of order <span class="SimpleMath">\(s\)</span> by their sum. To obtain the formulas for the multiplicities of the HeLP method one does not need the partial augmentations of elements of order <span class="SimpleMath">\(s\)</span>. Characters having the above property are called <span class="SimpleMath">\(s\)</span>-constant. In this way the existence of elements of order <span class="SimpleMath">\(s*t\)</span> can be excluded in a quite efficient way without doing calculations for elements of order <span class="SimpleMath">\(s\)</span>.</p>
 
 <p>There is also the concept of <span class="SimpleMath">\((s,t)\)</span>-constant characters, being constant on both, the conjugacy classes of elements of order <span class="SimpleMath">\(s\)</span> and on the conjugacy classes of elements of order <span class="SimpleMath">\(t\)</span>. The implementation of this is however not yet part of this package.</p>
 
-<p><a id="X811213427F4177C8" name="X811213427F4177C8"></a></p>
+<p><a id="X79BE759E7F35150E" name="X79BE759E7F35150E"></a></p>
 
-<h4>5.6 <span class="Heading">Known results about (ZC) and (PQ)</span></h4>
+<h4>5.6 <span class="Heading">Known results about the Zassenhaus Conjecture and the Prime Graph Question</span></h4>
 
 <p>At the moment as this documentation was written, to the best of our knowledge, the following results were available for the Zassenhaus Conjecture and the Prime Graph Question:</p>
 
@@ -161,16 +161,13 @@
 <li><p>Frobenius groups whose order is divisible by at most two different primes <a href="chapBib_mj.html#biBJuriaansMilies">[JM00]</a>,</p>
 
 </li>
-<li><p>Groups <span class="SimpleMath">\(X \rtimes A\)</span>, where <span class="SimpleMath">\(X\)</span> is abelian, <span class="SimpleMath">\(A\)</span> elementary abelian and <span class="SimpleMath">\(A\)</span> acts faithfully and irreducibly on <span class="SimpleMath">\(X\)</span> <a href="chapBib_mj.html#biBSehgalWeiss">[SW86]</a>,</p>
-
-</li>
 <li><p>Groups <span class="SimpleMath">\(X \rtimes A\)</span>, where <span class="SimpleMath">\(X\)</span> and <span class="SimpleMath">\(A\)</span> are abelian and <span class="SimpleMath">\(A\)</span> is of prime order <span class="SimpleMath">\(p\)</span> such that <span class="SimpleMath">\(p\)</span> is smaller then any prime divisor of the order of <span class="SimpleMath">\(X\)</span> <a href="chapBib_mj.html#biBMRSW">[MRSW87]</a>,</p>
 
 </li>
-<li><p>All groups of order up to 71 <a href="chapBib_mj.html#biBHoefertKimmerle">[HK06]</a>,</p>
+<li><p>All groups of order up to 143 <a href="chapBib_mj.html#biBBaHeKoMaSi">[BHKMS16]</a>,</p>
 
 </li>
-<li><p>The non-abelian simple groups <span class="SimpleMath">\(A_5\)</span> <a href="chapBib_mj.html#biBLP">[LP89]</a>, <span class="SimpleMath">\(A_6 \simeq PSL(2,9)\)</span> <a href="chapBib_mj.html#biBHerA6">[Her08c]</a>, <span class="SimpleMath">\(PSL(2,7)\)</span>, <span class="SimpleMath">\(PSL(2,11)\)</span>, <span class="SimpleMath">\(PSL(2,13)\)</span> <a href="chapBib_mj.html#biBHertweckBrauer">[Her07]</a>, <span class="SimpleMath">\(PSL(2,8)\)</span>, <span class="SimpleMath">\(PSL(2,17)\)</span> <a href="chapBib_mj.html#biBKonovalovKimmiStAndrews">[KK15]</a> <a href="chapBib_mj.html#biBGildea">[Gil13]</a>, <span class="SimpleMath">\(PSL(2,19)\)</span>, <span class="SimpleMath">\(PSL(2,23)\)</span> <a href="chapBib_mj.html#biBBaMaM10">[BM14]</a> and some extensions of these groups.</p>
+<li><p>The non-abelian simple groups <span class="SimpleMath">\(A_5\)</span> <a href="chapBib_mj.html#biBLP">[LP89]</a>, <span class="SimpleMath">\(A_6 \simeq PSL(2,9)\)</span> <a href="chapBib_mj.html#biBHerA6">[Her08c]</a>, <span class="SimpleMath">\(PSL(2,7)\)</span>, <span class="SimpleMath">\(PSL(2,11)\)</span>, <span class="SimpleMath">\(PSL(2,13)\)</span> <a href="chapBib_mj.html#biBHertweckBrauer">[Her07]</a>, <span class="SimpleMath">\(PSL(2,8)\)</span>, <span class="SimpleMath">\(PSL(2,17)\)</span> <a href="chapBib_mj.html#biBKonovalovKimmiStAndrews">[KK15]</a> <a href="chapBib_mj.html#biBGildea">[Gil13]</a>, <span class="SimpleMath">\(PSL(2,19)\)</span>, <span class="SimpleMath">\(PSL(2,23)\)</span> <a href="chapBib_mj.html#biBBaMaM10">[BM14]</a>, <span class="SimpleMath">\(PSL(2,25)\)</span>, <span class="SimpleMath">\(PSL(2,31)\)</span>, <span class="SimpleMath">\(PSL(2,32)\)</span> <a href="chapBib_mj.html#biBBaMa4prII">[BM16b]</a> and some extensions of these groups. Also for all <span class="SimpleMath">\(PSL(2,p)\)</span> where <span class="SimpleMath">\(p\)</span> is a fermat or a Mersenne prime <a href="chapBib_mj.html#biBFermatMersenne">[MRS16]</a>.</p>
 
 </li>
 </ul>
@@ -185,7 +182,7 @@
 <li><p>Solvable groups <a href="chapBib_mj.html#biBKimmiPQ">[Kim06]</a>,</p>
 
 </li>
-<li><p>Groups whose socle is isomorphic to a group <span class="SimpleMath">\(PSL(2,p)\)</span> or <span class="SimpleMath">\(PSL(2,p^2)\)</span>, where <span class="SimpleMath">\(p\)</span> denotes a prime, <a href="chapBib_mj.html#biBHertweckBrauer">[Her07]</a>, <a href="chapBib_mj.html#biBBaMa4prI">[BM16]</a>.</p>
+<li><p>Groups whose socle is isomorphic to a group <span class="SimpleMath">\(PSL(2,p)\)</span> or <span class="SimpleMath">\(PSL(2,p^2)\)</span>, where <span class="SimpleMath">\(p\)</span> denotes a prime, <a href="chapBib_mj.html#biBHertweckBrauer">[Her07]</a>, <a href="chapBib_mj.html#biBBaMa4prI">[BM16a]</a>.</p>
 
 </li>
 <li><p>Half of the sporadic simple groups and their automorphism groups; for an overview see <a href="chapBib_mj.html#biBKonovalovKimmiStAndrews">[KK15]</a>,</p>
@@ -197,7 +194,7 @@
 <li><p>Almost simple groups whose order is divisible by at most three different primes <a href="chapBib_mj.html#biBKonovalovKimmiStAndrews">[KK15]</a> and <a href="chapBib_mj.html#biBBaMaM10">[BM14]</a>. (This implies that it holds for all groups with an order divisible by at most three primes, using the reduction result above.)</p>
 
 </li>
-<li><p>Many almost simple groups whose order is divisible by four different primes <a href="chapBib_mj.html#biBBaMa4prI">[BM16]</a></p>
+<li><p>Many almost simple groups whose order is divisible by four different primes <a href="chapBib_mj.html#biBBaMa4prI">[BM16a]</a><a href="chapBib_mj.html#biBBaMa4prII">[BM16b]</a>.</p>
 
 </li>
 </ul>

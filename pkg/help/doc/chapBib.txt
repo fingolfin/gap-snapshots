@@ -10,15 +10,26 @@
   \href{http://arxiv.org/abs/1510.04598}{\nolinkurl{arXiv:1510.04598
   [math.RT]}}[118X (2015), ((11 pages)).
   
+  [[20XBHKMS16[120X]  [16XB\"achle,  A., Herman, A., Konovalov, A., Margolis, L. and Singh,
+  G.[116X,  [17XThe  status  of  the  Zassenhaus conjecture for small groups[117X, [18XSubmitted[118X
+  (2016),                              ((10                             pages,
+  \href{https://arxiv.org/abs/1609.00042}{\nolinkurl{arXiv:1609.00042
+  [math.RA]}})).
+  
   [[20XBM14[120X] [16XB\"achle, A. and Margolis, L.[116X, [17XRational conjugacy of torsion units in
   integral  group rings of non-solvable groups[117X, [18XAccepted in Proc. Edinb. Math.
   Soc.,       \href{http://arxiv.org/abs/1305.7419}{\nolinkurl{arXiv:1305.7419
   [math.RT]}}[118X (2014), ((22 pages)).
   
-  [[20XBM16[120X]  [16XB\"achle,  A.  and  Margolis,  L.[116X,  [17XOn  the Prime Graph Question for
-  Integral     Group     Rings    of    4-primary    groups    I[117X,    [18XPreprint,
+  [[20XBM16a[120X]  [16XB\"achle,  A.  and  Margolis,  L.[116X,  [17XOn the Prime Graph Question for
+  Integral  Group  Rings  of 4-primary groups I[117X, [18XSubmitted[118X (2016), ((33 pages,
   \href{http://arxiv.org/abs/1601.05689}{\nolinkurl{arXiv:1601.05689
-  [math.RT]}}[118X (2016), ((33 pages)).
+  [math.RT]}})).
+  
+  [[20XBM16b[120X]  [16XB\"achle,  A.  and  Margolis,  L.[116X,  [17XOn the Prime Graph Question for
+  Integral  Group  Rings of 4-primary groups II[117X, [18XSubmitted[118X (2016), ((17 pages,
+  \href{https://arxiv.org/abs/1606.01506}{\nolinkurl{arXiv:1606.01506
+  [math.RT]}})).
   
   [[20XBH08[120X]  [16XBovdi,  V.  A.  and  Hertweck, M.[116X, [17XZassenhaus conjecture for central
   extensions of S_5[117X, [18XJ. Group Theory[118X, [19X11[119X, 1 (2008), 63--74.
@@ -109,6 +120,12 @@
   in  integral  group  rings  of some metabelian groups. II[117X, [18XJournal of Number
   Theory[118X, [19X25[119X, 3 (1987), 340--352.
   
+  [[20XMRS16[120X]  [16XMargolis,  L.,  del  R{\'{\i}}o,  {.  and  Serrano,  M.[116X, [17XZassenhaus
+  Conjecture  on  torsion units holds for PSL(2,p) with p a Fermat or Mersenne
+  prime[117X,            [18XSubmitted[118X            (2016),           32           pages,
+  \href{https://arxiv.org/abs/1608.05797}{\nolinkurl{arXiv:1608.05797
+  [math.RA]}}.
+  
   [[20XSal11[120X]  [16XSalim,  M.[116X,  [17XKimmerle's conjecture for integral group rings of some
   alternating  groups[117X,  [18XActa  Math.  Acad.  Paedagog.  Nyh\'azi. (N.S.)[118X, [19X27[119X, 1
   (2011), 9--22.
@@ -119,9 +136,6 @@
   [[20XSeh93[120X]  [16XSehgal, S. K.[116X, [17XUnits in integral group rings[117X, Longman Scientific \&
   Technical,  Pitman  Monographs  and Surveys in Pure and Applied Mathematics,
   [19X69[119X, Harlow (1993), xii+357 pages.
-  
-  [[20XSW86[120X] [16XSehgal, S. K. and Weiss, A.[116X, [17XTorsion units in integral group rings of
-  some metabelian groups[117X, [18XJ. Algebra[118X, [19X103[119X, 2 (1986), 490--499.
   
   [[20XSri64[120X]  [16XSrinivasan,  B.[116X,  [17XOn  the  modular characters of the special linear
   group SL(2,p^n)[117X, [18XProc. London Math. Soc. (3)[118X, [19X14[119X (1964), 101--114.

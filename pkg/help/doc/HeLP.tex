@@ -98,8 +98,8 @@
 {\Huge \textbf{ Hertweck-Luthar-Passi method. \mbox{}}}\\
 \vfill
 
-{\Huge  3.0 \mbox{}}\\[1cm]
-{ 03/03/2016 \mbox{}}\\[1cm]
+{\Huge  3.1 \mbox{}}\\[1cm]
+{ 12/01/2017 \mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{ Andreas B{\"a}chle\\
     \mbox{}}}\\
@@ -128,11 +128,11 @@
     }  Email: \href{mailto://Leo.Margolis@mathematik.uni-stuttgart.de} {\texttt{Leo.Margolis@mathematik.uni-stuttgart.de}}\\
   Homepage: \href{http://www.igt.uni-stuttgart.de/LstDiffgeo/Margolis/} {\texttt{http://www.igt.uni-stuttgart.de/LstDiffgeo/Margolis/}}\\
   Address: \begin{minipage}[t]{8cm}\noindent
- Institut f{\"u}r Algebra und Zahlentheorie\\
- Universit{\"a}t Stuttgart\\
- Pfaffenwaldring 57\\
- D-70569 Stuttgart\\
- Germany\\
+ Departamento de Matem{\a'a}ticas\\
+ Facultad de Matem{\a'a}ticas\\
+ Universidad de Murcia\\
+ Murcia 30100\\
+ Spain\\
  \end{minipage}
 }\\
 \end{titlepage}
@@ -141,7 +141,7 @@
 {\small 
 \section*{Copyright}
 \logpage{[ 0, 0, 1 ]}
- {\copyright} 2016 by Andreas B{\"a}chle and Leo Margolis
+ {\copyright} 2017 by Andreas B{\"a}chle and Leo Margolis
 
  This package is free software and may be distributed under the terms and
 conditions of the GNU Public License Version 2. \mbox{}}\\[1cm]
@@ -165,7 +165,7 @@ and Number Theory. \mbox{}}\\[1cm]
 \tableofcontents
 \newpage
 
- \index{\textsf{HeLP}}     
+     
 \chapter{\textcolor{Chapter }{Introduction}}\label{Chapter_Introduction}
 \logpage{[ 1, 0, 0 ]}
 \hyperdef{L}{X7DFB63A97E67C0A1}{}
@@ -679,8 +679,53 @@ but does not apply the Wagner test \ref{Chapter_Background_Section_The_Wagner_te
 \end{itemize}
  
 
-\subsection{\textcolor{Chapter }{HeLP{\textunderscore}WithGivenOrderAndPAAndSpecificSystem}}
+\subsection{\textcolor{Chapter }{HeLP{\textunderscore}WithGivenOrderAllTables}}
 \logpage{[ 3, 1, 3 ]}\nobreak
+\hyperdef{L}{X8186F17681AF25F5}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{HeLP{\textunderscore}WithGivenOrderAllTables({\mdseries\slshape CharacterTable, ord})\index{HeLPWithGivenOrderAllTables@\texttt{HeL}\-\texttt{P{\textunderscore}}\-\texttt{With}\-\texttt{Given}\-\texttt{Order}\-\texttt{All}\-\texttt{Tables}}
+\label{HeLPWithGivenOrderAllTables}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+List of admissible partial augmentations 
+
+
+
+ Calculates the admissible partial augmentations for elements of order \mbox{\texttt{\mdseries\slshape ord}} using the given character table \mbox{\texttt{\mdseries\slshape CharacterTable}} and all Brauer tables that can be obtained from it. \mbox{\texttt{\mdseries\slshape CharacterTable}} can be an ordinary or a Brauer table. In any case, then given table will be
+used first to obtain a finite number of solutions (if the characteristic does
+not divide \mbox{\texttt{\mdseries\slshape ord}}, otherwise the ordinary table will be used), with the other tables only
+checks will be performed to restrict the number of possible partial
+augmentations as much as possible. If certain Brauer tables are not avaialble,
+this will be printed if HeLP{\textunderscore}Info is at least 1. This function
+only uses the constraints of the HeLP method, but does not apply the Wagner
+test \ref{Chapter_Background_Section_The_Wagner_test}. If the constraints allow only a finite number of solutions, these lists will
+be written in \texttt{HeLP{\textunderscore}sol[ord]}. If for divisors $d$ of \mbox{\texttt{\mdseries\slshape ord}} solutions are already calculated and stored in \texttt{HeLP{\textunderscore}sol[d]}, these will be used, otherwise the function \texttt{HeLP{\textunderscore}WithGivenOrder} will first be applied to this order and the data given in the first argument. }
+
+ 
+
+\subsection{\textcolor{Chapter }{HeLP{\textunderscore}WithGivenOrderAndPAAllTables}}
+\logpage{[ 3, 1, 4 ]}\nobreak
+\hyperdef{L}{X81063633815E39CE}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{HeLP{\textunderscore}WithGivenOrderAndPAAllTables({\mdseries\slshape CharacterTable, ord, partaugs})\index{HeLPWithGivenOrderAndPAAllTables@\texttt{HeL}\-\texttt{P{\textunderscore}}\-\texttt{With}\-\texttt{Given}\-\texttt{Order}\-\texttt{And}\-\texttt{P}\-\texttt{A}\-\texttt{All}\-\texttt{Tables}}
+\label{HeLPWithGivenOrderAndPAAllTables}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+List of admissible partial augmentations 
+
+
+
+ Calculates the admissible partial augmentations for elements of order \mbox{\texttt{\mdseries\slshape ord}} using the given character table \mbox{\texttt{\mdseries\slshape CharacterTable}} and all other tables that can be obtained from it. \mbox{\texttt{\mdseries\slshape CharacterTable}} can be an ordinary or a Brauer table. In any case, then given table will be
+used first to obtain a finite number of solutions (if the characteristic does
+not divide \mbox{\texttt{\mdseries\slshape ord}}, otherwise the ordinary table will be used), with the other tables only
+checks will be performed to restrict the number of possible partial
+augmentations as much as possible. If certain Brauer tables are not avaialble,
+this will be printed if HeLP{\textunderscore}Info is at least 1. The function
+uses the partial augmentations for the powers $u^d$ with $d$ divisors of $k$ different from $1$ and $k$ given in \mbox{\texttt{\mdseries\slshape partaugs}}. Here, the $d$'s have to be in a descending order (i.e. the orders of the $u^d$'s are ascending). This function only uses the constraints of the HeLP method,
+but does not apply the Wagner test \ref{Chapter_Background_Section_The_Wagner_test}. Note that this function will not affect \texttt{HeLP{\textunderscore}sol}. }
+
+ 
+
+\subsection{\textcolor{Chapter }{HeLP{\textunderscore}WithGivenOrderAndPAAndSpecificSystem}}
+\logpage{[ 3, 1, 5 ]}\nobreak
 \hyperdef{L}{X80D9773D86873CB2}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{HeLP{\textunderscore}WithGivenOrderAndPAAndSpecificSystem({\mdseries\slshape list, ord, partaugs[, b]})\index{HeLPWithGivenOrderAndPAAndSpecificSystem@\texttt{HeL}\-\texttt{P{\textunderscore}}\-\texttt{With}\-\texttt{Given}\-\texttt{Order}\-\texttt{And}\-\texttt{P}\-\texttt{A}\-\texttt{And}\-\texttt{Specific}\-\texttt{System}}
 \label{HeLPWithGivenOrderAndPAAndSpecificSystem}
@@ -734,7 +779,7 @@ but does not apply the Wagner test \ref{Chapter_Background_Section_The_Wagner_te
 \hyperdef{L}{X7FCD80AC87DD0460}{}
 {
   When considering elements of order $st$ (in absence of elements of this order in the group ; in particular when trying
-to prove (PQ)) and there are several conjugacy classes of elements of order $s$, it might be useful to consider $s$-constant characters (cf. Section \ref{Chapter_Background_Section_s-constant_(and_(s,t)-constant)_characters}) to reduce the computational complexity. 
+to prove (PQ)) and there are several conjugacy classes of elements of order $s$, it might be useful to consider $s$-constant characters (cf. Section \ref{Chapter_Background_Section_s-constant_characters}) to reduce the computational complexity. 
 
 \subsection{\textcolor{Chapter }{HeLP{\textunderscore}WithGivenOrderSConstant}}
 \logpage{[ 3, 2, 1 ]}\nobreak
@@ -1122,7 +1167,7 @@ what this means, don't worry. }
  }
 
  
-\section{\textcolor{Chapter }{Checking solutions, calculating and checking solutions}}\label{Chapter_Further_functions_Section_Checking_solutions,_calculating_and_checking_solutions}
+\section{\textcolor{Chapter }{Checking solutions, calculating and checking solutions}}\label{Chapter_Further_functions_Section_Checking_solutions_calculating_and_checking_solutions}
 \logpage{[ 3, 6, 0 ]}
 \hyperdef{L}{X7990EC037D6AE938}{}
 {
@@ -1225,6 +1270,41 @@ of some possibility is taking too long, one can check it using \texttt{HeLP{\tex
    for the powers: 0.
   [  ]
 \end{Verbatim}
+ 
+
+\subsection{\textcolor{Chapter }{HeLP{\textunderscore}WriteTrivialSolution}}
+\logpage{[ 3, 6, 4 ]}\nobreak
+\hyperdef{L}{X7E37E3767B7085B9}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{HeLP{\textunderscore}WriteTrivialSolution({\mdseries\slshape C, k})\index{HeLPWriteTrivialSolution@\texttt{HeL}\-\texttt{P{\textunderscore}}\-\texttt{Write}\-\texttt{Trivial}\-\texttt{Solution}}
+\label{HeLPWriteTrivialSolution}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+Trivial solutions. 
+
+
+
+ Given a character table \mbox{\texttt{\mdseries\slshape C}} and an order \mbox{\texttt{\mdseries\slshape k}}, the function calculates the partial augmentations of units of order $k$ that are rationally conjugate to group elements (note that they just coincide
+with the partial augmentations of group elements) and stores them in \texttt{HeLP{\textunderscore}sol[k]}. If solutions of order $k$ were already calculated, they are overwritten by this function, so this
+function can be used in particular if elements of order $k$ are known to be rationally conjugate to group elements by theoretical results. }
+
+ With the character tables that are currently available in GAP, the Zassenhaus
+Conjecture for elements of order $4$ in $\text{PSL}(2,49)$ cannot be solved. However it was proved in \cite{HertweckBrauer} using the Brauer table modulo $7$. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@C := CharacterTable("L2(49)");|
+  CharacterTable( "L2(49)" )
+  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(C, 4);|
+  #I  Number of solutions for elements of order 4: 14; stored in HeLP_sol[4].
+  [ [ [ 1 ], [ -6, 7 ] ], [ [ 1 ], [ -5, 6 ] ], [ [ 1 ], [ -4, 5 ] ], 
+    [ [ 1 ], [ -3, 4 ] ], [ [ 1 ], [ -2, 3 ] ], [ [ 1 ], [ -1, 2 ] ], 
+    [ [ 1 ], [ 0, 1 ] ], [ [ 1 ], [ 1, 0 ] ], [ [ 1 ], [ 2, -1 ] ], 
+    [ [ 1 ], [ 3, -2 ] ], [ [ 1 ], [ 4, -3 ] ], [ [ 1 ], [ 5, -4 ] ], 
+    [ [ 1 ], [ 6, -5 ] ], [ [ 1 ], [ 7, -6 ] ] ]
+  !gapprompt@gap>| !gapinput@C mod 7;|
+  fail
+  !gapprompt@gap>| !gapinput@HeLP_WriteTrivialSolution(C, 4);;|
+  !gapprompt@gap>| !gapinput@HeLP_sol[4];|
+  [ [ [ 1 ], [ 0, 1 ] ] ]
+\end{Verbatim}
  }
 
  
@@ -1311,14 +1391,48 @@ of order 8. Continuing the example:
  }
 
  
-\section{\textcolor{Chapter }{Output}}\label{Chapter_Further_functions_Section_Output}
+\section{\textcolor{Chapter }{Action of the automorphism group}}\label{Chapter_Further_functions_Section_Action_of_the_automorphism_group}
 \logpage{[ 3, 8, 0 ]}
+\hyperdef{L}{X7FCFA1227B958BC0}{}
+{
+  
+
+\subsection{\textcolor{Chapter }{HeLP{\textunderscore}AutomorphismOrbits}}
+\logpage{[ 3, 8, 1 ]}\nobreak
+\hyperdef{L}{X80E976FE781AC904}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{HeLP{\textunderscore}AutomorphismOrbits({\mdseries\slshape C, k[, list{\textunderscore}paraug]})\index{HeLPAutomorphismOrbits@\texttt{HeL}\-\texttt{P{\textunderscore}}\-\texttt{Automorphism}\-\texttt{Orbits}}
+\label{HeLPAutomorphismOrbits}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+List of admissible partial augmentations 
+
+
+
+ For a list of possible partial augmentations, this function calculates
+representatives of each orbit of the action of the automorphism group of $G$ on them. The first two mandatory arguments are an ordinary character table \mbox{\texttt{\mdseries\slshape C}} (with an underlying group or ) and the order \mbox{\texttt{\mdseries\slshape k}} for which the partial augmentations should be filtered with respect to the
+action of the automorphism group of $G$. If as third argument a lisrt of partial augmentations is given, then these
+will be used, otherwise the partial augmentations that are stored in \texttt{HeLP{\textunderscore}sol[k]} are used. }
+
+ 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@C := CharacterTable("A6");;|
+  !gapprompt@gap>| !gapinput@gap> HeLP_WithGivenOrder(C, 6);|
+  #I  Number of solutions for elements of order 6: 2; stored in HeLP_sol[6].
+  [ [ [ 1 ], [ 0, 1 ], [ -2, 2, 1 ] ], [ [ 1 ], [ 1, 0 ], [ -2, 1, 2 ] ] ]
+  !gapprompt@gap>| !gapinput@HeLP_AutomorphismOrbits(C, 6);|
+  [ [ [ 1 ], [ 0, 1 ], [ -2, 2, 1 ] ] ]
+\end{Verbatim}
+ }
+
+ 
+\section{\textcolor{Chapter }{Output}}\label{Chapter_Further_functions_Section_Output}
+\logpage{[ 3, 9, 0 ]}
 \hyperdef{L}{X84DD5181826CA1C2}{}
 {
   
 
 \subsection{\textcolor{Chapter }{HeLP{\textunderscore}PrintSolution}}
-\logpage{[ 3, 8, 1 ]}\nobreak
+\logpage{[ 3, 9, 1 ]}\nobreak
 \hyperdef{L}{X7A5CAEBD801EF192}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{HeLP{\textunderscore}PrintSolution({\mdseries\slshape [k]})\index{HeLPPrintSolution@\texttt{HeLP{\textunderscore}PrintSolution}}
 \label{HeLPPrintSolution}
@@ -1375,13 +1489,13 @@ information on all orders for which there are already informations. }
 
  
 \section{\textcolor{Chapter }{Eigenvalue multiplicities and character values}}\label{Chapter_Further_functions_Section_Eigenvalue_multiplicities_and_character_values}
-\logpage{[ 3, 9, 0 ]}
+\logpage{[ 3, 10, 0 ]}
 \hyperdef{L}{X7F88D4667910126A}{}
 {
   
 
 \subsection{\textcolor{Chapter }{HeLP{\textunderscore}MultiplicitiesOfEigenvalues}}
-\logpage{[ 3, 9, 1 ]}\nobreak
+\logpage{[ 3, 10, 1 ]}\nobreak
 \hyperdef{L}{X86601BE281C7B8B6}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{HeLP{\textunderscore}MultiplicitiesOfEigenvalues({\mdseries\slshape chi, k, paraugs})\index{HeLPMultiplicitiesOfEigenvalues@\texttt{HeL}\-\texttt{P{\textunderscore}}\-\texttt{Multiplicities}\-\texttt{Of}\-\texttt{Eigenvalues}}
 \label{HeLPMultiplicitiesOfEigenvalues}
@@ -1396,7 +1510,7 @@ a list of multiplicities of eigenvalues
  
 
 \subsection{\textcolor{Chapter }{HeLP{\textunderscore}CharacterValue}}
-\logpage{[ 3, 9, 2 ]}\nobreak
+\logpage{[ 3, 10, 2 ]}\nobreak
 \hyperdef{L}{X7C4C37B681A5BC7D}{}
 {\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{HeLP{\textunderscore}CharacterValue({\mdseries\slshape chi, k, paraug})\index{HeLPCharacterValue@\texttt{HeLP{\textunderscore}CharacterValue}}
 \label{HeLPCharacterValue}
@@ -1425,6 +1539,38 @@ the character value $chi(u)$
   1
 \end{Verbatim}
  These eigenvalues were computed manually by M. Hertweck and may be found in \cite{HerA6}. }
+
+ 
+\section{\textcolor{Chapter }{Check whether Zassenhaus Conjecture is known from theoretical results}}\label{Chapter_Further_functions_Section_Check_whether_Zassenhaus_Conjecture_is_known_from_theoretical_results}
+\logpage{[ 3, 11, 0 ]}
+\hyperdef{L}{X828D02D784AF3DFF}{}
+{
+  
+
+\subsection{\textcolor{Chapter }{HeLP{\textunderscore}IsZCKnown}}
+\logpage{[ 3, 11, 1 ]}\nobreak
+\hyperdef{L}{X80E52D94801193C4}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{HeLP{\textunderscore}IsZCKnown({\mdseries\slshape G})\index{HeLPIsZCKnown@\texttt{HeLP{\textunderscore}IsZCKnown}}
+\label{HeLPIsZCKnown}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+\texttt{true} if (ZC) can be derived from theoretical results, \texttt{false} otherwise 
+
+
+
+ For the given group \mbox{\texttt{\mdseries\slshape G}} this function applies five checks, namely it checks 
+\begin{itemize}
+\item  if $G$ is nilpotent 
+\item  if $G$ has a normal Sylow subgroup with abelian complement, 
+\item  if $G$ is cyclic-by-abelian 
+\item  if it is of the form $X \rtimes A$, where $X$ and $A$ are abelian and $A$ is of prime order $p$ such that $p$ is smaller then any prime divisor of the order of $X$ 
+\item  or if the order of $G$ is smaller than $144$. 
+
+ In all these cases the Zassenhaus Conjecture is known. See \ref{Chapter_Background_Section_Known_results_about_the_Zassenhaus_Conjecture_and_the_Prime_Graph_Question} for references. This function is designed for solvable groups. 
+\end{itemize}
+ }
+
+ }
 
  }
 
@@ -1860,7 +2006,7 @@ conjugacy classes of elements with an order dividing the order of the unit in
 question. That is why this class function \texttt{chi} can be used in this setting. }
 
  
-\section{\textcolor{Chapter }{A complete example: (PQ) for the MacLaughlin simple group}}\label{Chapter_Extended_examples_Section_A_complete_example:_(PQ)_for_the_MacLaughlin_simple_group}
+\section{\textcolor{Chapter }{A complete example: (PQ) for the MacLaughlin simple group}}\label{Chapter_Extended_examples_Section_A_complete_example_PQ_for_the_MacLaughlin_simple_group}
 \logpage{[ 4, 6, 0 ]}
 \hyperdef{L}{X879DC8C287C41B09}{}
 {
@@ -2054,9 +2200,9 @@ HeLP-method on a computer. We included it into the functions \texttt{HeLP{\textu
  Combining the Theorem with the HeLP-method may only give new insight, if $p^j$ is a proper divisor of the order of $u$. Wagner did obtain this result for $s = 1$, when $\varepsilon_s(u) = 0$ by the Berman-Higman Theorem. In the case that $u$ is of prime power order this is a result of J.A. Cohn and D. Livingstone \cite{CohnLivingstone}. }
 
  
-\section{\textcolor{Chapter }{s-constant (and (s,t)-constant) characters}}\label{Chapter_Background_Section_s-constant_(and_(s,t)-constant)_characters}
+\section{\textcolor{Chapter }{s-constant characters}}\label{Chapter_Background_Section_s-constant_characters}
 \logpage{[ 5, 5, 0 ]}
-\hyperdef{L}{X811E2B358243C44F}{}
+\hyperdef{L}{X85810FF37EB3F4B4}{}
 {
   If one is interested in units of mixed order $s*t$ for two primes $s$ and $t$ (e.g. if one studies the Prime Graph Question) an idea to make the HeLP method
 more efficient was introduced by V. Bovdi and A. Konovalov in \cite{BKHS}, page 4. Assume one has several conjugacy classes of elements of order $s$, and a character taking the same value on all of these classes. Then the
@@ -2073,9 +2219,9 @@ elements of order $s$.
 elements of order $s$ and on the conjugacy classes of elements of order $t$. The implementation of this is however not yet part of this package. }
 
  
-\section{\textcolor{Chapter }{Known results about (ZC) and (PQ)}}\label{Chapter_Background_Section_Known_results_about_(ZC)_and_(PQ)}
+\section{\textcolor{Chapter }{Known results about the Zassenhaus Conjecture and the Prime Graph Question}}\label{Chapter_Background_Section_Known_results_about_the_Zassenhaus_Conjecture_and_the_Prime_Graph_Question}
 \logpage{[ 5, 6, 0 ]}
-\hyperdef{L}{X811213427F4177C8}{}
+\hyperdef{L}{X79BE759E7F35150E}{}
 {
   At the moment as this documentation was written, to the best of our knowledge,
 the following results were available for the Zassenhaus Conjecture and the
@@ -2093,10 +2239,9 @@ Prime Graph Question:
 \item  Cyclic-By-Abelian groups \cite{CyclicByAbelian}, 
 \item  Groups containing a normal Sylow subgroup with abelian complement \cite{HertweckColloq}, 
 \item  Frobenius groups whose order is divisible by at most two different primes \cite{JuriaansMilies}, 
-\item  Groups $X \rtimes A$, where $X$ is abelian, $A$ elementary abelian and $A$ acts faithfully and irreducibly on $X$ \cite{SehgalWeiss}, 
 \item  Groups $X \rtimes A$, where $X$ and $A$ are abelian and $A$ is of prime order $p$ such that $p$ is smaller then any prime divisor of the order of $X$ \cite{MRSW}, 
-\item  All groups of order up to 71 \cite{HoefertKimmerle}, 
-\item  The non-abelian simple groups $A_5$ \cite{LP}, $A_6 \simeq PSL(2,9)$ \cite{HerA6}, $PSL(2,7)$, $PSL(2,11)$, $PSL(2,13)$ \cite{HertweckBrauer}, $PSL(2,8)$, $PSL(2,17)$ \cite{KonovalovKimmiStAndrews} \cite{Gildea}, $PSL(2,19)$, $PSL(2,23)$ \cite{BaMaM10} and some extensions of these groups. 
+\item  All groups of order up to 143 \cite{BaHeKoMaSi}, 
+\item  The non-abelian simple groups $A_5$ \cite{LP}, $A_6 \simeq PSL(2,9)$ \cite{HerA6}, $PSL(2,7)$, $PSL(2,11)$, $PSL(2,13)$ \cite{HertweckBrauer}, $PSL(2,8)$, $PSL(2,17)$ \cite{KonovalovKimmiStAndrews} \cite{Gildea}, $PSL(2,19)$, $PSL(2,23)$ \cite{BaMaM10}, $PSL(2,25)$, $PSL(2,31)$, $PSL(2,32)$ \cite{BaMa4prII} and some extensions of these groups. Also for all $PSL(2,p)$ where $p$ is a fermat or a Mersenne prime \cite{FermatMersenne}. 
 \end{itemize}
  For the Prime Graph Question the following strong reduction was obtained in \cite{KonovalovKimmiStAndrews}: 
 
@@ -2113,7 +2258,7 @@ overview see \cite{KonovalovKimmiStAndrews},
 \item  Almost simple groups whose order is divisible by at most three different
 primes \cite{KonovalovKimmiStAndrews} and \cite{BaMaM10}. (This implies that it holds for all groups with an order divisible by at
 most three primes, using the reduction result above.) 
-\item  Many almost simple groups whose order is divisible by four different primes \cite{BaMa4prI} 
+\item  Many almost simple groups whose order is divisible by four different primes \cite{BaMa4prI}\cite{BaMa4prII}. 
 \end{itemize}
  }
 
@@ -2212,7 +2357,7 @@ contact one of the maintainers of the package.
  }
 
  
-\section{\textcolor{Chapter }{How much 4ti2 and normaliz is really there?}}\label{Chapter_Remarks_on_technical_problems_and_the_implementation_Section_How_much_4ti2_and_normaliz_is_really_there?}
+\section{\textcolor{Chapter }{How much 4ti2 and normaliz is really there?}}\label{Chapter_Remarks_on_technical_problems_and_the_implementation_Section_How_much_4ti2_and_normaliz_is_really_there}
 \logpage{[ 6, 2, 0 ]}
 \hyperdef{L}{X85FD09B67E460537}{}
 {
@@ -2247,6 +2392,8 @@ package. We will be happy to help. }
 
 \printindex
 
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \newpage
 \immediate\write\pagenrlog{["End"], \arabic{page}];}
 \immediate\closeout\pagenrlog

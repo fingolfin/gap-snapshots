@@ -311,7 +311,7 @@
         [7Xhttp://www-groups.mcs.st-and.ac.uk/~neunhoef/Computer/Software/Gap/bob.html[107X.[133X
   
   [30X    [33X[0;6YThe  [5XGAP[105X  installer  for  Windows  provided  by  Alexander  Konovalov:
-        [7Xhttp://www.gap-system.org/ukrgap/wininst/[107X.[133X
+        [7Xhttps://www.gap-system.org/ukrgap/wininst/[107X.[133X
   
   [33X[0;0YIn the near future, we also hope to have a binary distribution for Mac OS X.[133X
   

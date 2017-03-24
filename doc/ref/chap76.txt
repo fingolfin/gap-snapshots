@@ -15,8 +15,8 @@
   [33X[0;0YAll [5XGAP[105X users who develop new code are invited to share the results of their
   efforts  with  other  [5XGAP[105X  users  by  making  the code and its documentation
   available in form of a package. Information how to do this is available from
-  the [5XGAP[105X Web pages ([7Xhttp://www.gap-system.org[107X) and in the [5XGAP[105X package [5XExample[105X
-  (see     [7Xhttp://www.gap-system.org/Packages/example.html[107X).     There     are
+  the  [5XGAP[105X  Web  pages  ([7Xhttps://www.gap-system.org[107X)  and  in  the [5XGAP[105X package
+  [5XExample[105X  (see  [7Xhttps://www.gap-system.org/Packages/example.html[107X).  There are
   possibilities  to  get  a  package  distributed  together with [5XGAP[105X and it is
   possible to submit a package to a formal refereeing process.[133X
   
@@ -636,7 +636,7 @@
     [4X[28X<entry id="GAP4.5"><misc>[128X[104X
     [4X[28X  <title><C>GAP</C> &ndash; <C>G</C>roups, <C>A</C>lgorithms,[128X[104X
     [4X[28X         and <C>P</C>rogramming, <C>V</C>ersion 4.5.1</title>[128X[104X
-    [4X[28X  <howpublished><URL>http://www.gap-system.org</URL></howpublished>[128X[104X
+    [4X[28X  <howpublished><URL>https://www.gap-system.org</URL></howpublished>[128X[104X
     [4X[28X  <key>GAP</key>[128X[104X
     [4X[28X  <keywords>groups; *; gap; manual</keywords>[128X[104X
     [4X[28X  <other type="organization">The GAP <C>G</C>roup</other>[128X[104X
@@ -647,8 +647,8 @@
     [4X[28X  title =            {{GAP}   {\textendash}   {G}roups,   {A}lgorithms,  and[128X[104X
     [4X[28X                      {P}rogramming, {V}ersion 4.5.1},[128X[104X
     [4X[28X  organization =     {The GAP {G}roup},[128X[104X
-    [4X[28X  howpublished =     {\href                      {http://www.gap-system.org}[128X[104X
-    [4X[28X                      {\texttt{http://www.gap-system.org}}},[128X[104X
+    [4X[28X  howpublished =     {\href                      {https://www.gap-system.org}[128X[104X
+    [4X[28X                      {\texttt{https://www.gap-system.org}}},[128X[104X
     [4X[28X  key =              {GAP},[128X[104X
     [4X[28X  keywords =         {groups; *; gap; manual}[128X[104X
     [4X[28X}[128X[104X

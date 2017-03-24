@@ -21,7 +21,7 @@
   [33X[0;0Y[5XGAP[105X for UNIX will distinguish between upper and lower case options.[133X
   
   [33X[0;0YAs  described  in the [5XGAP[105X installation instructions (see the [11XINSTALL[111X file in
-  the  [5XGAP[105X  root directory, or at [7Xhttp://www.gap-system.org/Download/INSTALL[107X),
+  the  [5XGAP[105X root directory, or at [7Xhttps://www.gap-system.org/Download/INSTALL[107X),
   usually  you  will not execute [5XGAP[105X directly. Instead you will call a (shell)
   script, with the name [10Xgap[110X, which in turn executes [5XGAP[105X. This script sets some
   options which are necessary to make [5XGAP[105X work on your system. This means that

@@ -2,10 +2,6 @@
 ##
 #W  hybridst.gi              AutPGrp package                     Bettina Eick
 ##
-#H  @(#)$Id: hybrstab.gi,v 1.10 2009/03/09 07:26:55 gap Exp $
-##
-Revision.("autpgrp/gap/hybridst_gi") :=
-    "@(#)$Id: hybrstab.gi,v 1.10 2009/03/09 07:26:55 gap Exp $";
 
 #############################################################################
 ##
@@ -148,7 +144,7 @@ end;
 ##
 PcgsOrbitStabilizer := function( A, oper, pt, fpt, info )
     local pcgs, rels, stabl, srels, trans, trels, orbit, i, y, j, p, l, s, 
-          k, t, h, g;
+          k, t, h, g, dict;
 
     pcgs := A.agAutos;
     rels := A.agOrder;
@@ -168,6 +164,8 @@ PcgsOrbitStabilizer := function( A, oper, pt, fpt, info )
     trans := [];
     trels := [];
     orbit := [pt];
+    dict := NewDictionary( pt, true );
+    AddDictionary( dict, pt, 1 );
 
     # Start constructing orbit.
     i := Length( pcgs );
@@ -177,13 +175,13 @@ PcgsOrbitStabilizer := function( A, oper, pt, fpt, info )
             Add( srels, rels[i] );
         else
             y := fpt( pt, oper[i], info );
-            j := Position( orbit, y );
+            j := LookupDictionary( dict, y );
             if IsBool( j ) then
     
                 # enlarge transversal
                 Add( trans, pcgs[i] );
                 Add( trels, rels[i] );
-    
+
                 # enlarge orbit
                 p := rels[i];
                 l := Length( orbit );
@@ -193,6 +191,7 @@ PcgsOrbitStabilizer := function( A, oper, pt, fpt, info )
                     t := s + l;
                     for h  in [ 1 .. l ]  do
                         orbit[h + t] := fpt( orbit[h + s], oper[i], info );
+                        AddDictionary( dict, orbit[h + t], h + t );
                     od;
            	        s := t;
                 od;
@@ -222,6 +221,8 @@ end;
 ##
 #F BlockPosition( orbit, pt )
 ##
+## unused here, but polycyclic is using it, so keep this here
+## until polycyclic is updated
 BlockPosition := function( orbit, pt )
     local h, j;
     for j in [1..Length(orbit)] do
@@ -237,7 +238,7 @@ end;
 ##
 BlockOrbitStabilizer := function( B, oper, os, fpt, info )
     local bl, l, li, orbit, trans, stabl, pstab, mats, auts, ords, pers,
-          k, pt, i, y, j, new, get, aut, g, per, s;
+          k, pt, i, y, j, new, get, aut, g, per, s, dict, r, stabGrp;
 
     # the block and limit for orbit length
     bl := os.orbit;
@@ -246,6 +247,10 @@ BlockOrbitStabilizer := function( B, oper, os, fpt, info )
 
     # set up orbit, transversal and stab
     orbit := [ bl ];
+    dict := NewDictionary( bl[1], true );
+    for j in [1..l] do
+        AddDictionary( dict, bl[j], [1,j] );
+    od;
     trans := [ [] ];
     stabl := [];
     pstab := [];
@@ -253,23 +258,28 @@ BlockOrbitStabilizer := function( B, oper, os, fpt, info )
     # get acting elements
     auts := B.glAutos;
     ords := List( auts, Order );
+    stabGrp := Group( () );
     if IsBound( B.glOper ) then pers := B.glOper; fi;
 
     # loop
     k := 1;
     while k <= Length( orbit ) do
+        if k mod 10000 = 0 then
+            Info( InfoAutGrp, 5, "      orbit pos ", k, " of ",Length(orbit));
+        fi;
         pt := orbit[k][1];
         for i in [ 1..Length(oper) ] do
 
             # compute the image of a point
             y := fpt( pt, oper[i], info );
-            j := BlockPosition( orbit, y );
+            j := LookupDictionary( dict, y );
             if IsBool( j ) then
 
                 # enlarge orbit and transversal
                 new := List( [1..l], x -> true );
                 for s in [1..l] do
                     new[s] := fpt( orbit[k][s], oper[i], info );
+                    AddDictionary( dict, new[s], [Length(orbit)+1, s] );
                 od;
                 Add( orbit, new );
                 get := Concatenation( trans[k], [i] );
@@ -286,23 +296,32 @@ BlockOrbitStabilizer := function( B, oper, os, fpt, info )
                     g := OSTransversalInverse(j[2], os.trans, os.trels, B.one);
                     aut := PGMult( aut, g );
                 fi;
-                Add( stabl, aut );
 
                 # add permutations if known
                 if IsBound( B.glOper ) then
-                    Add( pstab, Transform( get, pers, () ) );
+                    g := Transform( get, pers, () );
+                    if not g in stabGrp then
+                        stabGrp := ClosureGroup( stabGrp, g );
+                        Add( pstab, g );
+                        Add( stabl, aut );
+                    fi;
+                else
+                    Add( stabl, aut );
                 fi;
             fi;
         od;
-        if Length( orbit ) > li then
-            return rec( stabl := [], pstab := [], length := B.glOrder );
+        if Length( orbit ) * Size(stabGrp) > li then
+            # orbit is going to be the whole domain, and the
+            # stabilizer cannot get any larger, so we are done
+            return rec( stabl := stabl, pstab := pstab,
+                        length := B.glOrder / Size(stabGrp) );
         else
             k := k + 1;
         fi;
     od;
 
     return rec( stabl := stabl, pstab := pstab, 
-                length := Length(orbit), trans := trans );
+                length := Length(orbit) );
 end;
 
 #############################################################################
