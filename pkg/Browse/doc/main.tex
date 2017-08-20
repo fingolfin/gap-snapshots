@@ -95,8 +95,8 @@
 
 \hypersetup{pdftitle=\textsf{Browse}}
 \markright{\scriptsize \mbox{}\hfill \textsf{Browse} \hfill\mbox{}}
-{\Huge ( Version 1.8.6 ) \mbox{}}\\[1cm]
-{August 2014\mbox{}}\\[1cm]
+{\Huge ( Version 1.8.7 ) \mbox{}}\\[1cm]
+{July 2017\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{ Thomas Breuer   \mbox{}}}\\
 {\Large \textbf{ Frank L{\"u}beck   \mbox{}}}\\
@@ -116,7 +116,7 @@
 {\small 
 \section*{Copyright}
 \logpage{[ 0, 0, 1 ]}
- {\copyright} 2006-2014 by Thomas Breuer and Frank L{\"u}beck 
+ {\copyright} 2006-2017 by Thomas Breuer and Frank L{\"u}beck 
 
   This package may be distributed under the terms and conditions of the GNU
 Public License Version 3 or later, see \href{http://www.gnu.org/licenses} {\texttt{http://www.gnu.org/licenses}}. \mbox{}}\\[1cm]
@@ -172,7 +172,7 @@ collections, several games,\index{game} and an interface for demos.
  
 \subsection{\textcolor{Chapter }{The \texttt{ncurses} interface}}\label{ssec:ov_ncurses}
 \logpage{[ 1, 2, 1 ]}
-\hyperdef{L}{X7BAF855C87FE1F06}{}
+\hyperdef{L}{X87A6D24784C21E54}{}
 {
   Chapter \ref{ch:curses} describes \textsf{GAP}'s interface to the \texttt{ncurses} \texttt{C}-library. The imported \texttt{C}-functions are shortly explained, but for further details we refer to the
 documentation of that library. There are also a few utility functions on \textsf{GAP} level, such as \texttt{NCurses.SetTerm} (\ref{NCurses.SetTerm}), which simplify the use of the library. 
@@ -184,7 +184,7 @@ documentation of that library. There are also a few utility functions on \textsf
  
 \subsection{\textcolor{Chapter }{Applications of \texttt{ncurses}}}\label{ssec:ov_ncappl}
 \logpage{[ 1, 2, 2 ]}
-\hyperdef{L}{X84F5140B82CBE86D}{}
+\hyperdef{L}{X80C054D881502061}{}
 {
  In Chapter \ref{ch:util} we describe some interactive applications of the \texttt{ncurses} interface. For example, there is \texttt{NCurses.Select} (\ref{NCurses.Select}) for asking a user to choose one or several of a given list of items. There is
 also a demo function \texttt{NCurses.Demo} (\ref{NCurses.Demo}) which we use to demonstrate features of the \textsf{Browse} package, but it may be interesting for other kinds of demos as well. }
@@ -205,7 +205,7 @@ and more. }
  
 \subsection{\textcolor{Chapter }{Applications of the generic function \texttt{NCurses.BrowseGeneric}}}\label{ssec:ov_browseappl}
 \logpage{[ 1, 2, 4 ]}
-\hyperdef{L}{X81C36C4B7ABC99A0}{}
+\hyperdef{L}{X7A0055DE7A2C5DC9}{}
 {
   In Chapter \ref{ch:appl} we describe several applications which are using the generic \texttt{NCurses.BrowseGeneric} (\ref{NCurses.BrowseGeneric}) interface introduced before. They are provided as prototype applications and
 so we include some implementation remarks in their documentation. 
@@ -225,12 +225,12 @@ puzzles and to solve puzzles). }
  
 \section{\textcolor{Chapter }{User preferences provided by the \textsf{Browse} package}}\label{sec:pkg_userprefs}
 \logpage{[ 1, 3, 0 ]}
-\hyperdef{L}{X82216D7A8636AEAD}{}
+\hyperdef{L}{X825F23FF825334B4}{}
 {
   See \texttt{SetUserPreference} (\textbf{Reference: SetUserPreference}) for \textsf{GAP}'s user preferences mechanism, and \texttt{BrowseUserPreferences} (\ref{BrowseUserPreferences}) for viewing and modifying user preferences. 
 \subsection{\textcolor{Chapter }{The user preference \texttt{EnableMouseEvents}}}\label{subsec:EnableMouseEvents}
 \logpage{[ 1, 3, 1 ]}
-\hyperdef{L}{X81518A3583A457DF}{}
+\hyperdef{L}{X859EAEDA850D3B02}{}
 {
   This user preference defines whether mouse events are enabled by default in
 visual mode (value \texttt{true}) or not (value \texttt{false}, this is the default). During the \textsf{GAP} session, the value can be changed using \texttt{NCurses.UseMouse} (\ref{NCurses.UseMouse}). Inside browse applications based on \texttt{NCurses.BrowseGeneric} (\ref{NCurses.BrowseGeneric}) or \texttt{NCurses.Select} (\ref{NCurses.Select}), the value can be toggled usually by hitting the \textsc{M} key. }
@@ -238,7 +238,7 @@ visual mode (value \texttt{true}) or not (value \texttt{false}, this is the defa
  
 \subsection{\textcolor{Chapter }{The user preference \texttt{SelectHelpMatches}}}\label{subsec:SelectHelpMatches}
 \logpage{[ 1, 3, 2 ]}
-\hyperdef{L}{X7F6062478043DCD7}{}
+\hyperdef{L}{X7D242D4286EAB00A}{}
 {
   In the case that the \textsf{GAP} help system finds multiple matches, \texttt{true} (the default) means that the user can choose one entry from a list that is
 shown via \texttt{NCurses.Select} (\ref{NCurses.Select}), and \texttt{false} means that the matches are just shown in a pager. }
@@ -246,7 +246,7 @@ shown via \texttt{NCurses.Select} (\ref{NCurses.Select}), and \texttt{false} mea
  
 \subsection{\textcolor{Chapter }{The user preference \texttt{SelectPackageName}}}\label{subsec:SelectPackageName}
 \logpage{[ 1, 3, 3 ]}
-\hyperdef{L}{X7DAD10F07CE2651E}{}
+\hyperdef{L}{X7BC3B5827A4B09C3}{}
 {
   In the case that \texttt{LoadPackage} (\textbf{Reference: LoadPackage}) is called with a prefix of some package names, \texttt{true} (the default) means that the user can choose one matching entry, and \texttt{false} means that the matches are just printed. }
 
@@ -257,7 +257,7 @@ shown via \texttt{NCurses.Select} (\ref{NCurses.Select}), and \texttt{false} mea
  
 \chapter{\textcolor{Chapter }{Interface to the \texttt{ncurses} Library}}\label{ch:curses}
 \logpage{[ 2, 0, 0 ]}
-\hyperdef{L}{X7D56AC1386FF15C4}{}
+\hyperdef{L}{X7E049B1185A56B30}{}
 {
   In this chapter we describe the \textsf{GAP} interface to the \textsf{GNU} \texttt{curses}/\texttt{ncurses} \texttt{C}-library. This library contains routines to manipulate the contents of
 terminal windows. It allows one to write programs which should work on a wide
@@ -269,7 +269,7 @@ applications using the \texttt{ncurses} functionality. If you are only intereste
  Detailed documentation of the \texttt{ncurses} library is probably available in your operating system (try \texttt{man ncurses}) and from the web (see for example \cite{NCursesWeb}). Here, we only give short reminders about the functions provided in the \textsf{GAP} interface and explain how to use the \textsf{GAP} functions. 
 \section{\textcolor{Chapter }{The \texttt{ncurses} Library}}\label{sec:cursesC}
 \logpage{[ 2, 1, 0 ]}
-\hyperdef{L}{X82F844F68017DF5A}{}
+\hyperdef{L}{X85DE9B75837BA65B}{}
 {
  In this section we list the functions from the GNU \texttt{ncurses} library and its \texttt{panel} extension which are made available in \textsf{GAP} via the \textsf{Browse} package. See the following section \ref{sec:cursesGAP} for explanations how to use these functions from within \textsf{GAP}. 
 
@@ -506,7 +506,7 @@ changing the others.
  
 \subsection{\textcolor{Chapter }{Low level \texttt{ncurses} mouse support}}\label{ssec:ncursesMouse}
 \logpage{[ 2, 1, 8 ]}
-\hyperdef{L}{X83B93F1D8282F589}{}
+\hyperdef{L}{X86675F5F791FEFEF}{}
 {
   Many \texttt{xterm} based terminals support mouse events. The recognition of mouse events by the \texttt{ncurses} input queue can be switched on and off. If switched on and a mouse event
 occurs, then \texttt{NCurses.wgetch} gets \texttt{NCurses.keys.MOUSE} if the \texttt{keypad} flag is \texttt{true} (see \ref{ssec:ncursesInput}). If this is read one must call \texttt{NCurses.getmouse} which reads further characters from the input queue and interprets them as
@@ -540,7 +540,7 @@ terminals. These can be called as \texttt{NCurses.IsStdinATty()} or \texttt{NCur
  
 \section{\textcolor{Chapter }{The \texttt{ncurses} \textsf{GAP} functions}}\label{sec:cursesGAP}
 \logpage{[ 2, 2, 0 ]}
-\hyperdef{L}{X7EE0C6557B8190AA}{}
+\hyperdef{L}{X864A5C1C7F181B4B}{}
 {
  The functions of the \texttt{ncurses} library are used within \textsf{GAP} very similarly to their \texttt{C} equivalents. The functions are available as components of a record \texttt{NCurses} with the name of the \texttt{C} function (e.g., \texttt{NCurses.newwin}). 
 
@@ -568,14 +568,14 @@ see \texttt{NCurses.PutLine} (\ref{NCurses.PutLine}) and \texttt{NCurses.IsAttri
 \subsection{\textcolor{Chapter }{NCurses.ColorAttr}}
 \logpage{[ 2, 2, 1 ]}\nobreak
 \hyperdef{L}{X83ADB4E37C105B8C}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.ColorAttr({\mdseries\slshape fgcolor, bgcolor})\index{NCurses.ColorAttr@\texttt{NCurses.ColorAttr}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.ColorAttr({\mdseries\slshape fgcolor, bgcolor})\index{NCurses.ColorAttr@\texttt{NCurses.ColorAttr}}
 \label{NCurses.ColorAttr}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
 an attribute for setting the foreground and background color to be used on a
 terminal window (it is a \textsf{GAP} integer).
 
-\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.attrs.has{\textunderscore}colors\index{NCurses.attrs.hascolors@\texttt{NCurses.attrs.has{\textunderscore}colors}}
+\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.attrs.has{\textunderscore}colors\index{NCurses.attrs.hascolors@\texttt{NCurses.attrs.has{\textunderscore}colors}}
 \label{NCurses.attrs.hascolors}
 }\hfill{\scriptsize (global variable)}}\\
 
@@ -612,7 +612,7 @@ color of the terminal use \texttt{-1} as \mbox{\texttt{\mdseries\slshape bgcolor
 \subsection{\textcolor{Chapter }{NCurses.SetTerm}}
 \logpage{[ 2, 2, 2 ]}\nobreak
 \hyperdef{L}{X879D81B37A0A4E8F}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.SetTerm({\mdseries\slshape [record]})\index{NCurses.SetTerm@\texttt{NCurses.SetTerm}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.SetTerm({\mdseries\slshape [record]})\index{NCurses.SetTerm@\texttt{NCurses.SetTerm}}
 \label{NCurses.SetTerm}
 }\hfill{\scriptsize (function)}}\\
 
@@ -628,7 +628,7 @@ true, scrollok := false, keypad := true)}. (This is a useful setting for many ap
 \subsection{\textcolor{Chapter }{NCurses.IsAttributeLine}}
 \logpage{[ 2, 2, 3 ]}\nobreak
 \hyperdef{L}{X81D1FC927C455AEB}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.IsAttributeLine({\mdseries\slshape obj})\index{NCurses.IsAttributeLine@\texttt{NCurses.IsAttributeLine}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.IsAttributeLine({\mdseries\slshape obj})\index{NCurses.IsAttributeLine@\texttt{NCurses.IsAttributeLine}}
 \label{NCurses.IsAttributeLine}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -674,7 +674,7 @@ prepending a \texttt{NCurses.attrs.STANDOUT} attribute.
 \subsection{\textcolor{Chapter }{NCurses.ConcatenationAttributeLines}}
 \logpage{[ 2, 2, 4 ]}\nobreak
 \hyperdef{L}{X8372F0C57816A29E}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.ConcatenationAttributeLines({\mdseries\slshape lines[, keep]})\index{NCurses.ConcatenationAttributeLines@\texttt{NCurses.ConcatenationAttributeLines}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.ConcatenationAttributeLines({\mdseries\slshape lines[, keep]})\index{NCurses.ConcatenationAttributeLines@\texttt{NCurses.ConcatenationAttributeLines}}
 \label{NCurses.ConcatenationAttributeLines}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -707,7 +707,7 @@ reset to \texttt{NCurses.attrs.NORMAL} between the entries of \mbox{\texttt{\mds
 \subsection{\textcolor{Chapter }{NCurses.RepeatedAttributeLine}}
 \logpage{[ 2, 2, 5 ]}\nobreak
 \hyperdef{L}{X7D2EB0BF82C4F25C}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.RepeatedAttributeLine({\mdseries\slshape line, width})\index{NCurses.RepeatedAttributeLine@\texttt{NCurses.RepeatedAttributeLine}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.RepeatedAttributeLine({\mdseries\slshape line, width})\index{NCurses.RepeatedAttributeLine@\texttt{NCurses.RepeatedAttributeLine}}
 \label{NCurses.RepeatedAttributeLine}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -731,7 +731,7 @@ reset to \texttt{NCurses.attrs.NORMAL} between the entries of \mbox{\texttt{\mds
 \subsection{\textcolor{Chapter }{NCurses.PutLine}}
 \logpage{[ 2, 2, 6 ]}\nobreak
 \hyperdef{L}{X83FFD5047ADE716E}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.PutLine({\mdseries\slshape win, y, x, lines[, skip]})\index{NCurses.PutLine@\texttt{NCurses.PutLine}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.PutLine({\mdseries\slshape win, y, x, lines[, skip]})\index{NCurses.PutLine@\texttt{NCurses.PutLine}}
 \label{NCurses.PutLine}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -750,7 +750,7 @@ attributes are). }
 \subsection{\textcolor{Chapter }{NCurses.WidthAttributeLine}}
 \logpage{[ 2, 2, 7 ]}\nobreak
 \hyperdef{L}{X82C53ACD805EE0C3}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.WidthAttributeLine({\mdseries\slshape line})\index{NCurses.WidthAttributeLine@\texttt{NCurses.WidthAttributeLine}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.WidthAttributeLine({\mdseries\slshape line})\index{NCurses.WidthAttributeLine@\texttt{NCurses.WidthAttributeLine}}
 \label{NCurses.WidthAttributeLine}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -775,7 +775,7 @@ number of displayed characters in an attribute line.
 \subsection{\textcolor{Chapter }{NCurses.Grid}}
 \logpage{[ 2, 2, 8 ]}\nobreak
 \hyperdef{L}{X790715F683BF1E66}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.Grid({\mdseries\slshape win, trow, brow, lcol, rcol, rowinds, colinds})\index{NCurses.Grid@\texttt{NCurses.Grid}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.Grid({\mdseries\slshape win, trow, brow, lcol, rcol, rowinds, colinds})\index{NCurses.Grid@\texttt{NCurses.Grid}}
 \label{NCurses.Grid}
 }\hfill{\scriptsize (function)}}\\
 
@@ -802,7 +802,7 @@ right column, and lists of row and column numbers where lines should be drawn.
 \subsection{\textcolor{Chapter }{NCurses.WBorder}}
 \logpage{[ 2, 2, 9 ]}\nobreak
 \hyperdef{L}{X82B801587B37D571}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.WBorder({\mdseries\slshape win[, chars]})\index{NCurses.WBorder@\texttt{NCurses.WBorder}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.WBorder({\mdseries\slshape win[, chars]})\index{NCurses.WBorder@\texttt{NCurses.WBorder}}
 \label{NCurses.WBorder}
 }\hfill{\scriptsize (function)}}\\
 
@@ -814,15 +814,15 @@ corners. If \mbox{\texttt{\mdseries\slshape chars}} contains just one character 
 
  
 \subsection{\textcolor{Chapter }{Mouse support in \texttt{ncurses} applications}}\logpage{[ 2, 2, 10 ]}
-\hyperdef{L}{X7DDFB32D78090334}{}
+\hyperdef{L}{X799C033A7AB582D7}{}
 {
-\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.UseMouse({\mdseries\slshape on})\index{NCurses.UseMouse@\texttt{NCurses.UseMouse}}
+\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.UseMouse({\mdseries\slshape on})\index{NCurses.UseMouse@\texttt{NCurses.UseMouse}}
 \label{NCurses.UseMouse}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
 a record
 
-\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.GetMouseEvent({\mdseries\slshape })\index{NCurses.GetMouseEvent@\texttt{NCurses.GetMouseEvent}}
+\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.GetMouseEvent({\mdseries\slshape })\index{NCurses.GetMouseEvent@\texttt{NCurses.GetMouseEvent}}
 \label{NCurses.GetMouseEvent}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -831,7 +831,7 @@ a list of records
 
 
  \texttt{ncurses} allows on some terminals (\texttt{xterm} and related) to catch mouse events. In principle a subset of events can be
-catched, see \texttt{mousemask} in \ref{ssec:ncursesMouse}. But this does not seem to work well with proper subsets of possible events
+caught, see \texttt{mousemask} in \ref{ssec:ncursesMouse}. But this does not seem to work well with proper subsets of possible events
 (probably due to intermediate processes X, window manager, terminal
 application, ...). Therefore we suggest to catch either all or no mouse events
 in applications. 
@@ -850,23 +850,23 @@ any). Each of these records has components \texttt{.win}, the corresponding wind
 to switch mouse usage on and off while your application is running. Some users
 may not like to give mouse control to your application, for example the
 standard cut and paste functionality cannot be used while mouse events are
-catched. }
+caught. }
 
  
 
 \subsection{\textcolor{Chapter }{NCurses.SaveWin}}
 \logpage{[ 2, 2, 11 ]}\nobreak
 \hyperdef{L}{X85FB1D7878A322EB}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.SaveWin({\mdseries\slshape win})\index{NCurses.SaveWin@\texttt{NCurses.SaveWin}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.SaveWin({\mdseries\slshape win})\index{NCurses.SaveWin@\texttt{NCurses.SaveWin}}
 \label{NCurses.SaveWin}
 }\hfill{\scriptsize (function)}}\\
-\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.StringsSaveWin({\mdseries\slshape cont})\index{NCurses.StringsSaveWin@\texttt{NCurses.StringsSaveWin}}
+\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.StringsSaveWin({\mdseries\slshape cont})\index{NCurses.StringsSaveWin@\texttt{NCurses.StringsSaveWin}}
 \label{NCurses.StringsSaveWin}
 }\hfill{\scriptsize (function)}}\\
-\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.RestoreWin({\mdseries\slshape win, cont})\index{NCurses.RestoreWin@\texttt{NCurses.RestoreWin}}
+\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.RestoreWin({\mdseries\slshape win, cont})\index{NCurses.RestoreWin@\texttt{NCurses.RestoreWin}}
 \label{NCurses.RestoreWin}
 }\hfill{\scriptsize (function)}}\\
-\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.ShowSaveWin({\mdseries\slshape cont})\index{NCurses.ShowSaveWin@\texttt{NCurses.ShowSaveWin}}
+\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.ShowSaveWin({\mdseries\slshape cont})\index{NCurses.ShowSaveWin@\texttt{NCurses.ShowSaveWin}}
 \label{NCurses.ShowSaveWin}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -892,13 +892,13 @@ attributes. You can view the result with \texttt{NCurses.Pager} (\ref{NCurses.Pa
  
 \chapter{\textcolor{Chapter }{Utilities using \texttt{ncurses}}}\label{ch:util}
 \logpage{[ 3, 0, 0 ]}
-\hyperdef{L}{X7A9DB80B819B6343}{}
+\hyperdef{L}{X7F3A63788200AB4F}{}
 {
   In this chapter we describe the usage of some example applications of the \texttt{ncurses} interface provided by the \textsf{Browse} package. They may be of interest by themselves, or they may be used as utility
 functions within larger applications. 
 \section{\textcolor{Chapter }{\texttt{ncurses} utilities}}\label{sect:ncurses_utils}
 \logpage{[ 3, 1, 0 ]}
-\hyperdef{L}{X84798B3080F49AD1}{}
+\hyperdef{L}{X84E621798148857D}{}
 {
   If you call the functions \texttt{NCurses.Alert} (\ref{NCurses.Alert}), \texttt{NCurses.Select} (\ref{NCurses.Select}), \texttt{NCurses.GetLineFromUser} (\ref{NCurses.GetLineFromUser}), or \texttt{NCurses.Pager} (\ref{NCurses.Pager}) from another \texttt{ncurses} application in visual mode, you should refresh the windows that are still
 open, by calling \texttt{NCurses.update{\textunderscore}panels} and \texttt{NCurses.doupdate} afterwards, see Section \ref{ssec:ncursesPan} and \ref{ssec:ncursesWin}. Also, if the cursor shall be hidden after that, you should call \texttt{curs{\textunderscore}set} with argument \texttt{0}, see Section \ref{ssec:ncursesTermset}, since the cursor is automatically made visible in \texttt{NCurses.endwin}. 
@@ -906,7 +906,7 @@ open, by calling \texttt{NCurses.update{\textunderscore}panels} and \texttt{NCur
 \subsection{\textcolor{Chapter }{NCurses.Alert}}
 \logpage{[ 3, 1, 1 ]}\nobreak
 \hyperdef{L}{X83E95B4A83BC473E}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.Alert({\mdseries\slshape messages, timeout[, attrs]})\index{NCurses.Alert@\texttt{NCurses.Alert}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.Alert({\mdseries\slshape messages, timeout[, attrs]})\index{NCurses.Alert@\texttt{NCurses.Alert}}
 \label{NCurses.Alert}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -942,7 +942,7 @@ of \texttt{NCurses.attrs} (see Section{\nobreakspace}\ref{ssec:ncursesAttrs}) or
 \subsection{\textcolor{Chapter }{NCurses.Select}}
 \logpage{[ 3, 1, 2 ]}\nobreak
 \hyperdef{L}{X833D321E86528981}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.Select({\mdseries\slshape poss[, single[, none]]})\index{NCurses.Select@\texttt{NCurses.Select}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.Select({\mdseries\slshape poss[, single[, none]]})\index{NCurses.Select@\texttt{NCurses.Select}}
 \label{NCurses.Select}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -1010,7 +1010,7 @@ moved to an entry, and (if \texttt{single} is \texttt{false}) the selection of a
 \subsection{\textcolor{Chapter }{NCurses.GetLineFromUser}}
 \logpage{[ 3, 1, 3 ]}\nobreak
 \hyperdef{L}{X837EFD8A842257EA}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.GetLineFromUser({\mdseries\slshape pre})\index{NCurses.GetLineFromUser@\texttt{NCurses.GetLineFromUser}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.GetLineFromUser({\mdseries\slshape pre})\index{NCurses.GetLineFromUser@\texttt{NCurses.GetLineFromUser}}
 \label{NCurses.GetLineFromUser}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -1049,7 +1049,7 @@ empty string.
 \subsection{\textcolor{Chapter }{NCurses.Pager}}
 \logpage{[ 3, 1, 4 ]}\nobreak
 \hyperdef{L}{X87E1B2787F588CC0}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.Pager({\mdseries\slshape lines[, border[, ly, lx, y, x]]})\index{NCurses.Pager@\texttt{NCurses.Pager}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.Pager({\mdseries\slshape lines[, border[, ly, lx, y, x]]})\index{NCurses.Pager@\texttt{NCurses.Pager}}
 \label{NCurses.Pager}
 }\hfill{\scriptsize (function)}}\\
 
@@ -1111,7 +1111,7 @@ loading the \textsf{Browse} package, \texttt{NCurses.Select} (\ref{NCurses.Selec
 \subsection{\textcolor{Chapter }{NCurses.Demo}}
 \logpage{[ 3, 2, 1 ]}\nobreak
 \hyperdef{L}{X8681359F8064597B}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.Demo({\mdseries\slshape [inputs]})\index{NCurses.Demo@\texttt{NCurses.Demo}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.Demo({\mdseries\slshape [inputs]})\index{NCurses.Demo@\texttt{NCurses.Demo}}
 \label{NCurses.Demo}
 }\hfill{\scriptsize (function)}}\\
 
@@ -1137,7 +1137,7 @@ recommended to use a screen with at least $80$ columns and at least $37$ rows. }
  
 \chapter{\textcolor{Chapter }{Browsing Tables in \textsf{GAP} using \texttt{ncurses} {\textendash}The User Interface}}\label{chap:browse-user}
 \logpage{[ 4, 0, 0 ]}
-\hyperdef{L}{X7AA6D49E848E9BBF}{}
+\hyperdef{L}{X877E60DE7F53FDEC}{}
 {
   As stated in Section{\nobreakspace}\ref{sec:intro}, one aim of the \textsf{Browse} package is to provide tools for the quite usual task to show a two-dimensional
 array or certain rows and columns of it on a character screen in a formatted
@@ -1152,9 +1152,26 @@ labels can be used for a fourth table, the \emph{corner table}\index{corner tabl
 footer are not separated into columns. So the shown window has the following
 structure. 
 
-   \begin{center} \begin{tabular}{|c|c|} \hline \multicolumn{2}{|c|}{header} \\
-\hline corner & column labels \\ \hline & \\ row & main \\ labels & table \\ &
-\\ \hline \multicolumn{2}{|c|}{footer} \\ \hline \end{tabular} \end{center}   
+  
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\multicolumn{2}{|c|}{header} \\
+\hline
+corner & column labels \\
+\hline
+ & \\
+row & main \\
+labels &  table \\
+ & \\
+\hline
+\multicolumn{2}{|c|}{footer} \\
+\hline
+\end{tabular}
+\end{center}
+
+  
 
  If not the whole tables fit into the window then only subranges of rows and
 columns of the main table are shown, together with the corresponding row and
@@ -1177,7 +1194,7 @@ applications, see Chapter{\nobreakspace}\ref{chap:browse-prg}.
  Examples of browse table applications are shown in Chapter{\nobreakspace}\ref{ch:appl}.  
 \section{\textcolor{Chapter }{Features Supported by the Function \texttt{NCurses.BrowseGeneric} }}\label{sec:features}
 \logpage{[ 4, 1, 0 ]}
-\hyperdef{L}{X8788DC587ABF8106}{}
+\hyperdef{L}{X869EDB308717F199}{}
 {
   Standard applications of the function \texttt{NCurses.BrowseGeneric} (\ref{NCurses.BrowseGeneric}) have the following functionality. Other applications may provide only a
 subset, or add further functionality, see Chapters{\nobreakspace}\ref{chap:browse-prg} and{\nobreakspace}\ref{ch:appl}. 
@@ -1274,14 +1291,14 @@ value to the component \texttt{dynamic.Return} of the browse table.
   
 \section{\textcolor{Chapter }{Data Structures used by \texttt{NCurses.BrowseGeneric}}}\label{sec:browsebasicdata}
 \logpage{[ 4, 2, 0 ]}
-\hyperdef{L}{X7D8250FE86F509BF}{}
+\hyperdef{L}{X82689212794DA877}{}
 {
   
 
 \subsection{\textcolor{Chapter }{BrowseData.IsBrowseTableCellData}}
 \logpage{[ 4, 2, 1 ]}\nobreak
 \hyperdef{L}{X82157A2684969A5F}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseData.IsBrowseTableCellData({\mdseries\slshape obj})\index{BrowseData.IsBrowseTableCellData@\texttt{BrowseData.IsBrowseTableCellData}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseData.IsBrowseTableCellData({\mdseries\slshape obj})\index{BrowseData.IsBrowseTableCellData@\texttt{BrowseData.IsBrowseTableCellData}}
 \label{BrowseData.IsBrowseTableCellData}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -1320,7 +1337,7 @@ individual cell.)
 \subsection{\textcolor{Chapter }{BrowseData.BlockEntry}}
 \logpage{[ 4, 2, 2 ]}\nobreak
 \hyperdef{L}{X7CA598A77A70C3B3}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseData.BlockEntry({\mdseries\slshape tablecelldata, height, width})\index{BrowseData.BlockEntry@\texttt{BrowseData.BlockEntry}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseData.BlockEntry({\mdseries\slshape tablecelldata, height, width})\index{BrowseData.BlockEntry@\texttt{BrowseData.BlockEntry}}
 \label{BrowseData.BlockEntry}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -1348,7 +1365,7 @@ desired numbers of rows and columns, according to the alignment prescribed by \m
 \subsection{\textcolor{Chapter }{BrowseData.IsBrowseTable}}
 \logpage{[ 4, 2, 3 ]}\nobreak
 \hyperdef{L}{X81007E2F8552523B}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseData.IsBrowseTable({\mdseries\slshape obj})\index{BrowseData.IsBrowseTable@\texttt{BrowseData.IsBrowseTable}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseData.IsBrowseTable({\mdseries\slshape obj})\index{BrowseData.IsBrowseTable@\texttt{BrowseData.IsBrowseTable}}
 \label{BrowseData.IsBrowseTable}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -1527,14 +1544,14 @@ attribute is switched on with an explicit \texttt{true}.
   
 \section{\textcolor{Chapter }{The Function \texttt{NCurses.BrowseGeneric}}}\label{sec:browsegeneric}
 \logpage{[ 4, 3, 0 ]}
-\hyperdef{L}{X7C654A2A87FBC354}{}
+\hyperdef{L}{X8135D3C2806D8F92}{}
 {
   
 
 \subsection{\textcolor{Chapter }{NCurses.BrowseGeneric}}
 \logpage{[ 4, 3, 1 ]}\nobreak
 \hyperdef{L}{X85FC163D87FAFD12}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.BrowseGeneric({\mdseries\slshape t[, arec]})\index{NCurses.BrowseGeneric@\texttt{NCurses.BrowseGeneric}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.BrowseGeneric({\mdseries\slshape t[, arec]})\index{NCurses.BrowseGeneric@\texttt{NCurses.BrowseGeneric}}
 \label{NCurses.BrowseGeneric}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -1563,7 +1580,7 @@ a large enough screen.) Thus one should check for \texttt{fail} results of progr
   
 \chapter{\textcolor{Chapter }{Browsing Tables in \textsf{GAP} using \texttt{ncurses} {\textendash}The Programming Interface}}\label{chap:browse-prg}
 \logpage{[ 5, 0, 0 ]}
-\hyperdef{L}{X85D5419281A436B7}{}
+\hyperdef{L}{X82DDDC1783B4CA30}{}
 {
   This chapter describes some aspects of the internals of the browse table
 handling. The relevant objects are \emph{action functions} that implement the individual navigation steps (see Section{\nobreakspace}\ref{sec:actions}), \emph{modes} that describe the sets of available navigation steps in given situations (see
@@ -1688,7 +1705,7 @@ user to perform some actions and then to return to the previous status. }
 \subsection{\textcolor{Chapter }{BrowseData}}
 \logpage{[ 5, 4, 1 ]}\nobreak
 \hyperdef{L}{X86E80E578085F137}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseData\index{BrowseData@\texttt{BrowseData}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseData\index{BrowseData@\texttt{BrowseData}}
 \label{BrowseData}
 }\hfill{\scriptsize (global variable)}}\\
 
@@ -1845,7 +1862,7 @@ reached, the default is \texttt{false}).
 \subsection{\textcolor{Chapter }{BrowseData.SetReplay}}
 \logpage{[ 5, 4, 2 ]}\nobreak
 \hyperdef{L}{X791FB5BA7A9951F4}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseData.SetReplay({\mdseries\slshape data})\index{BrowseData.SetReplay@\texttt{BrowseData.SetReplay}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseData.SetReplay({\mdseries\slshape data})\index{BrowseData.SetReplay@\texttt{BrowseData.SetReplay}}
 \label{BrowseData.SetReplay}
 }\hfill{\scriptsize (function)}}\\
 
@@ -1870,7 +1887,7 @@ their input in \texttt{BrowseData.defaults.dynamic.replay}.
 \subsection{\textcolor{Chapter }{BrowseData.AlertWithReplay}}
 \logpage{[ 5, 4, 3 ]}\nobreak
 \hyperdef{L}{X7DAB32B785E59350}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseData.AlertWithReplay({\mdseries\slshape t, messages[, attrs]})\index{BrowseData.AlertWithReplay@\texttt{BrowseData.AlertWithReplay}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseData.AlertWithReplay({\mdseries\slshape t, messages[, attrs]})\index{BrowseData.AlertWithReplay@\texttt{BrowseData.AlertWithReplay}}
 \label{BrowseData.AlertWithReplay}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -1894,7 +1911,7 @@ replay record (in the replay case). }
 \subsection{\textcolor{Chapter }{BrowseData.actions.ShowHelp}}
 \logpage{[ 5, 4, 4 ]}\nobreak
 \hyperdef{L}{X82A4238B79F06271}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseData.actions.ShowHelp\index{BrowseData.actions.ShowHelp@\texttt{BrowseData.actions.ShowHelp}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseData.actions.ShowHelp\index{BrowseData.actions.ShowHelp@\texttt{BrowseData.actions.ShowHelp}}
 \label{BrowseData.actions.ShowHelp}
 }\hfill{\scriptsize (global variable)}}\\
 
@@ -1926,7 +1943,7 @@ and their meaning in the current mode of a browse table. The function \texttt{Br
 \subsection{\textcolor{Chapter }{BrowseData.actions.SaveWindow}}
 \logpage{[ 5, 4, 5 ]}\nobreak
 \hyperdef{L}{X872AE7387885B0AD}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseData.actions.SaveWindow\index{BrowseData.actions.SaveWindow@\texttt{BrowseData.actions.SaveWindow}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseData.actions.SaveWindow\index{BrowseData.actions.SaveWindow@\texttt{BrowseData.actions.SaveWindow}}
 \label{BrowseData.actions.SaveWindow}
 }\hfill{\scriptsize (global variable)}}\\
 
@@ -1940,10 +1957,10 @@ the argument is saved in this variable, using \texttt{NCurses.SaveWin} (\ref{NCu
 \subsection{\textcolor{Chapter }{BrowseData.actions.QuitMode}}
 \logpage{[ 5, 4, 6 ]}\nobreak
 \hyperdef{L}{X860DA4007E23716E}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseData.actions.QuitMode\index{BrowseData.actions.QuitMode@\texttt{BrowseData.actions.QuitMode}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseData.actions.QuitMode\index{BrowseData.actions.QuitMode@\texttt{BrowseData.actions.QuitMode}}
 \label{BrowseData.actions.QuitMode}
 }\hfill{\scriptsize (global variable)}}\\
-\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseData.actions.QuitTable\index{BrowseData.actions.QuitTable@\texttt{BrowseData.actions.QuitTable}}
+\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseData.actions.QuitTable\index{BrowseData.actions.QuitTable@\texttt{BrowseData.actions.QuitTable}}
 \label{BrowseData.actions.QuitTable}
 }\hfill{\scriptsize (global variable)}}\\
 
@@ -1962,7 +1979,7 @@ Section \ref{sec:applications}). }
 \subsection{\textcolor{Chapter }{BrowseData.actions.Error}}
 \logpage{[ 5, 4, 7 ]}\nobreak
 \hyperdef{L}{X8728E4B6856EAEC0}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseData.actions.Error\index{BrowseData.actions.Error@\texttt{BrowseData.actions.Error}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseData.actions.Error\index{BrowseData.actions.Error@\texttt{BrowseData.actions.Error}}
 \label{BrowseData.actions.Error}
 }\hfill{\scriptsize (global variable)}}\\
 
@@ -1977,7 +1994,7 @@ application. The recommended user input for this action is the \textsc{E} key. }
  
 \chapter{\textcolor{Chapter }{Examples of Applications based on \texttt{NCurses.BrowseGeneric} }}\label{ch:appl}
 \logpage{[ 6, 0, 0 ]}
-\hyperdef{L}{X7A5CF821873B48BF}{}
+\hyperdef{L}{X78D4F8EA79405AF9}{}
 {
   This chapter introduces the operation \texttt{Browse} (\ref{Browse}) and lists several examples how the function \texttt{NCurses.BrowseGeneric} (\ref{NCurses.BrowseGeneric}) can be utilized for rendering \textsf{GAP} related data or for playing games. Each section describes the relevant \textsf{GAP} functions and briefly sketches the technical aspects of the implementation;
 more details can be found in the \textsf{GAP} files, in the \texttt{app} directory of the package. 
@@ -1989,14 +2006,14 @@ described in Chapter \ref{chap:browse-prg}.
  The \textsf{GAP} examples in this chapter use the ``replay'' feature of \texttt{NCurses.BrowseGeneric} (\ref{NCurses.BrowseGeneric}), see Section \ref{sec:features}. This means that the \texttt{NCurses.BrowseGeneric} (\ref{NCurses.BrowseGeneric}) based function is called between two calls of \texttt{BrowseData.SetReplay} (\ref{BrowseData.SetReplay}). If you want to paste these examples into the \textsf{GAP} session with the mouse then do not paste the final \texttt{BrowseData.SetReplay} (\ref{BrowseData.SetReplay}) call, since \texttt{NCurses.BrowseGeneric} (\ref{NCurses.BrowseGeneric}) would regard the additional input as a user interrupt. 
 \section{\textcolor{Chapter }{The Operation \texttt{Browse}}}\label{sec:browseoper}
 \logpage{[ 6, 1, 0 ]}
-\hyperdef{L}{X839D076C819557AB}{}
+\hyperdef{L}{X813F90F7815AB5B3}{}
 {
   
 
 \subsection{\textcolor{Chapter }{Browse}}
 \logpage{[ 6, 1, 1 ]}\nobreak
 \hyperdef{L}{X7FDD696B7DD54A6E}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Browse({\mdseries\slshape obj[, arec]})\index{Browse@\texttt{Browse}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{Browse({\mdseries\slshape obj[, arec]})\index{Browse@\texttt{Browse}}
 \label{Browse}
 }\hfill{\scriptsize (operation)}}\\
 
@@ -2024,7 +2041,7 @@ class rings of the rational integers, see \texttt{Browse} (\ref{Browse:for a lis
 \subsection{\textcolor{Chapter }{NCurses.BrowseDenseList}}
 \logpage{[ 6, 2, 1 ]}\nobreak
 \hyperdef{L}{X8295F85D87118C83}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{NCurses.BrowseDenseList({\mdseries\slshape list, arec})\index{NCurses.BrowseDenseList@\texttt{NCurses.BrowseDenseList}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{NCurses.BrowseDenseList({\mdseries\slshape list, arec})\index{NCurses.BrowseDenseList@\texttt{NCurses.BrowseDenseList}}
 \label{NCurses.BrowseDenseList}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -2053,7 +2070,7 @@ its argument. The default is the operation \texttt{String} (\textbf{Reference: S
 \subsection{\textcolor{Chapter }{Browse (for a list of lists)}}
 \logpage{[ 6, 2, 2 ]}\nobreak
 \hyperdef{L}{X7AD78A0B7BEDBB20}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Browse({\mdseries\slshape list})\index{Browse@\texttt{Browse}!for a list of lists}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{Browse({\mdseries\slshape list})\index{Browse@\texttt{Browse}!for a list of lists}
 \label{Browse:for a list of lists}
 }\hfill{\scriptsize (method)}}\\
 \textbf{\indent Returns:\ }
@@ -2105,7 +2122,7 @@ searching and sorting are provided etc.
 \subsection{\textcolor{Chapter }{Browse (for character tables)}}
 \logpage{[ 6, 3, 1 ]}\nobreak
 \hyperdef{L}{X870C744182073CF6}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Browse({\mdseries\slshape tbl[, options]})\index{Browse@\texttt{Browse}!for character tables}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{Browse({\mdseries\slshape tbl[, options]})\index{Browse@\texttt{Browse}!for character tables}
 \label{Browse:for character tables}
 }\hfill{\scriptsize (method)}}\\
 
@@ -2179,7 +2196,7 @@ of the column in question).
 \subsection{\textcolor{Chapter }{BrowseDecompositionMatrix}}
 \logpage{[ 6, 3, 2 ]}\nobreak
 \hyperdef{L}{X7D80A56D853C9655}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseDecompositionMatrix({\mdseries\slshape modtbl[, b][, options]})\index{BrowseDecompositionMatrix@\texttt{BrowseDecompositionMatrix}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseDecompositionMatrix({\mdseries\slshape modtbl[, b][, options]})\index{BrowseDecompositionMatrix@\texttt{BrowseDecompositionMatrix}}
 \label{BrowseDecompositionMatrix}
 }\hfill{\scriptsize (function)}}\\
 
@@ -2228,7 +2245,7 @@ Section{\nobreakspace}\ref{sec:ctbldisp}, but with a much simpler implementation
 \subsection{\textcolor{Chapter }{Browse (for tables of marks)}}
 \logpage{[ 6, 4, 1 ]}\nobreak
 \hyperdef{L}{X7F4BD9C580BBBAA4}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Browse({\mdseries\slshape tom[, options]})\index{Browse@\texttt{Browse}!for tables of marks}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{Browse({\mdseries\slshape tom[, options]})\index{Browse@\texttt{Browse}!for tables of marks}
 \label{Browse:for tables of marks}
 }\hfill{\scriptsize (method)}}\\
 
@@ -2275,17 +2292,17 @@ group with identifier \texttt{"O8+(2)"}, with $11171$ rows and columns, can be s
  
 \section{\textcolor{Chapter }{Table of Contents of \textsf{AtlasRep}}}\label{sec:atlasdisp}
 \logpage{[ 6, 5, 0 ]}
-\hyperdef{L}{X7CEB55CD838537EB}{}
+\hyperdef{L}{X80370827793813FD}{}
 {
   The \textsf{GAP} package \textsf{AtlasRep} (see{\nobreakspace}\cite{AtlasRep}) is an interface to a database of representations and related data. The table
 of contents of this database can be displayed via the function \texttt{DisplayAtlasInfo} (\textbf{AtlasRep: DisplayAtlasInfo}) of this package. The \textsf{Browse} package provides an alternative based on the function \texttt{NCurses.BrowseGeneric} (\ref{NCurses.BrowseGeneric}); one can scroll, search, and fetch data for later use. 
 \subsection{\textcolor{Chapter }{BrowseAtlasInfo}}\logpage{[ 6, 5, 1 ]}
 \hyperdef{L}{X8411AF928194C5AB}{}
 {
-\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseAtlasInfo({\mdseries\slshape [listofnames, ]["contents", sources, ][...]})\index{BrowseAtlasInfo@\texttt{BrowseAtlasInfo}!overview of groups}
+\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseAtlasInfo({\mdseries\slshape [listofnames, ]["contents", sources, ][...]})\index{BrowseAtlasInfo@\texttt{BrowseAtlasInfo}!overview of groups}
 \label{BrowseAtlasInfo:overview of groups}
 }\hfill{\scriptsize (function)}}\\
-\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseAtlasInfo({\mdseries\slshape gapname[, std][, ...]})\index{BrowseAtlasInfo@\texttt{BrowseAtlasInfo}!overview for one group}
+\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseAtlasInfo({\mdseries\slshape gapname[, std][, ...]})\index{BrowseAtlasInfo@\texttt{BrowseAtlasInfo}!overview for one group}
 \label{BrowseAtlasInfo:overview for one group}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -2372,7 +2389,7 @@ input is the \textsc{Y} key.
  
 \section{\textcolor{Chapter }{Access to \textsf{GAP} Manuals{\textendash}a Variant}}\label{sec:manualdisp}
 \logpage{[ 6, 6, 0 ]}
-\hyperdef{L}{X81E6DDC17B7E2CF8}{}
+\hyperdef{L}{X7CF999297B331E01}{}
 {
   A \textsf{Browse} adapted way to access several manuals is to show the hierarchy of books,
 chapters, sections, and subsections as collapsible category rows, and to
@@ -2385,7 +2402,7 @@ the screen, and as an example with several category levels.
 \subsection{\textcolor{Chapter }{BrowseGapManuals}}
 \logpage{[ 6, 6, 1 ]}\nobreak
 \hyperdef{L}{X7D79DF9181A15EDF}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseGapManuals({\mdseries\slshape [start]})\index{BrowseGapManuals@\texttt{BrowseGapManuals}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseGapManuals({\mdseries\slshape [start]})\index{BrowseGapManuals@\texttt{BrowseGapManuals}}
 \label{BrowseGapManuals}
 }\hfill{\scriptsize (function)}}\\
 
@@ -2471,24 +2488,27 @@ only the \emph{first} of several function definitions.)
  }
 
  
-\section{\textcolor{Chapter }{Overview of the \textsf{GAP} Bibliography}}\label{sec:gapbibl}
+\section{\textcolor{Chapter }{Overview of Bibliographies}}\label{sec:gapbibl}
 \logpage{[ 6, 7, 0 ]}
-\hyperdef{L}{X7EAE9E8281728C44}{}
+\hyperdef{L}{X846751CC7F54F51D}{}
 {
-  The \textsf{GAP} documentation contains a bibliography of \textsf{GAP} related publications, see{\nobreakspace}\cite{GAPBibliography}. \textsf{Browse} provides access to this information in \textsf{GAP} via the function \texttt{BrowseBibliography} (\ref{BrowseBibliography}), using the standard facilities of the function \texttt{NCurses.BrowseGeneric} (\ref{NCurses.BrowseGeneric}), i.{\nobreakspace}e., one can scroll in the list, search for entries, sort by
-year, sort and categorize by authors etc. 
+  The function \texttt{BrowseBibliography} (\ref{BrowseBibliography}) can be used to turn the contents of bibliography files in BibTeX or BibXMLext
+format (see  (\textbf{GAPDoc: The BibXMLext Format})) into a Browse table, such that one can scroll in the list, search for
+entries, sort by year, sort and categorize by authors etc. 
 
- The \textsf{Browse} package contains a (perhaps outdated) version of this bibliography. One can
+ The default bibliography used by \texttt{BrowseBibliography} (\ref{BrowseBibliography}) is the bibliography of \textsf{GAP} related publications, see{\nobreakspace}\cite{GAPBibliography}. The \textsf{Browse} package contains a (perhaps outdated) version of this bibliography. One can
 get an updated version as follows. 
 
  \texttt{wget -N http://www.gap-system.org/Doc/Bib/gap-publishednicer.bib} 
+
+ The columns of the Browse table that is shown by \texttt{BrowseBibliography} (\ref{BrowseBibliography}) can be customized, two examples for that are given by the functions \texttt{BrowseBibliographySporadicSimple} (\textbf{AtlasRep: BrowseBibliographySporadicSimple}) and \texttt{BrowseBibliographyGapPackages} (\ref{BrowseBibliographyGapPackages}). 
 
  The function \texttt{BrowseMSC} (\ref{BrowseMSC}) shows an overview of the AMS Mathematics Subject Classification codes. 
 
 \subsection{\textcolor{Chapter }{BrowseBibliography}}
 \logpage{[ 6, 7, 1 ]}\nobreak
 \hyperdef{L}{X7F0FE4CC7F46ABF3}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseBibliography({\mdseries\slshape [bibfiles]})\index{BrowseBibliography@\texttt{BrowseBibliography}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseBibliography({\mdseries\slshape [bibfiles]})\index{BrowseBibliography@\texttt{BrowseBibliography}}
 \label{BrowseBibliography}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -2595,10 +2615,41 @@ source files.
 
  
 
-\subsection{\textcolor{Chapter }{BrowseMSC}}
+\subsection{\textcolor{Chapter }{BrowseBibliographyGapPackages}}
 \logpage{[ 6, 7, 2 ]}\nobreak
+\hyperdef{L}{X7E4B5E277D08987B}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseBibliographyGapPackages({\mdseries\slshape })\index{BrowseBibliographyGapPackages@\texttt{BrowseBibliographyGapPackages}}
+\label{BrowseBibliographyGapPackages}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+ a record as returned by \texttt{BrowseBibliography} (\ref{BrowseBibliography}). 
+
+
+
+ This function collects the information from the \texttt{*.bib} and \texttt{*bib.xml} files in those subdirectories of installed \textsf{GAP} packages which contain the package documentation, and shows it in a Browse
+table, using the function \texttt{BrowseBibliography} (\ref{BrowseBibliography}). 
+
+ \emph{This function is experimental.} The result is not really satisfactory, for the following reasons. 
+
+ 
+\begin{itemize}
+\item  Duplicate entries may occur, due to subtle differences in various source
+files. 
+\item  The source files may contain more than what is actually cited in the package
+manuals. 
+\item  It may happen that some \texttt{*.bib} or \texttt{*bib.xml} file is accidentally distributed with the package but is not intended to serve
+as package bibliography. 
+\item  The heuristics for rewriting {\LaTeX} code is of course not perfect; thus strange symbols may occur in the Browse
+table. 
+\end{itemize}
+ }
+
+ 
+
+\subsection{\textcolor{Chapter }{BrowseMSC}}
+\logpage{[ 6, 7, 3 ]}\nobreak
 \hyperdef{L}{X81F1558678ACDB4A}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseMSC({\mdseries\slshape })\index{BrowseMSC@\texttt{BrowseMSC}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseMSC({\mdseries\slshape })\index{BrowseMSC@\texttt{BrowseMSC}}
 \label{BrowseMSC}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -2616,7 +2667,7 @@ descriptions. }
  
 \section{\textcolor{Chapter }{Profiling \textsf{GAP} functions{\textendash}a Variant}}\label{sec:profiledisp}
 \logpage{[ 6, 8, 0 ]}
-\hyperdef{L}{X78AB965980D7F85E}{}
+\hyperdef{L}{X837BDF547FF0EA31}{}
 {
   A \textsf{Browse} adapted way to evaluate profiling results is to show the overview that is
 printed by the \textsf{GAP} function \texttt{DisplayProfile} (\textbf{Reference: DisplayProfile}) in a \textsf{Browse} table, which allows one to sort the profiled functions according to the
@@ -2626,7 +2677,7 @@ one is interested in.
 \subsection{\textcolor{Chapter }{BrowseProfile}}
 \logpage{[ 6, 8, 1 ]}\nobreak
 \hyperdef{L}{X7B42091982DE7AE7}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseProfile({\mdseries\slshape [functions, ][mincount, mintime]})\index{BrowseProfile@\texttt{BrowseProfile}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseProfile({\mdseries\slshape [functions, ][mincount, mintime]})\index{BrowseProfile@\texttt{BrowseProfile}}
 \label{BrowseProfile}
 }\hfill{\scriptsize (function)}}\\
 
@@ -2682,14 +2733,14 @@ parameters.
  
 \section{\textcolor{Chapter }{Variables defined in \textsf{GAP} packages{\textendash}a Variant}}\label{sec:pkgvardisp}
 \logpage{[ 6, 9, 0 ]}
-\hyperdef{L}{X7ACBE4FD7ED75EA7}{}
+\hyperdef{L}{X87B30F7387C0E531}{}
 {
   A \textsf{Browse} adapted way to list the variables that are defined in a \textsf{GAP} package is to show the overview that is printed by the \textsf{GAP} function \texttt{ShowPackageVariables} (\textbf{Reference: ShowPackageVariables}) in a \textsf{Browse} table. 
 
 \subsection{\textcolor{Chapter }{BrowsePackageVariables}}
 \logpage{[ 6, 9, 1 ]}\nobreak
 \hyperdef{L}{X8030B1688335783D}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowsePackageVariables({\mdseries\slshape pkgname[, version][, arec]})\index{BrowsePackageVariables@\texttt{BrowsePackageVariables}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowsePackageVariables({\mdseries\slshape pkgname[, version][, arec]})\index{BrowsePackageVariables@\texttt{BrowsePackageVariables}}
 \label{BrowsePackageVariables}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -2702,7 +2753,7 @@ output, respectively.
 
  Alternatively, the second argument can be the output \texttt{info} of \texttt{PackageVariablesInfo} (\textbf{Reference: PackageVariablesInfo}) for the package in question, instead of the version number. 
 
- \texttt{BrowsePackageVariables} opens a Browse table that shows the global variables that become bound and the
+ \texttt{BrowsePackageVariables} opens a browse table that shows the global variables that become bound and the
 methods that become installed when \textsf{GAP} loads the package \mbox{\texttt{\mdseries\slshape pkgname}}. 
 
  The table is categorized by the kinds of variables (new or redeclared
@@ -2738,7 +2789,7 @@ gets loaded when \texttt{BrowsePackageVariables} is called. This is not the case
 \subsection{\textcolor{Chapter }{BrowseUserPreferences}}
 \logpage{[ 6, 10, 1 ]}\nobreak
 \hyperdef{L}{X7A7B712E7A06449F}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseUserPreferences({\mdseries\slshape package1, package2, ...})\index{BrowseUserPreferences@\texttt{BrowseUserPreferences}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseUserPreferences({\mdseries\slshape package1, package2, ...})\index{BrowseUserPreferences@\texttt{BrowseUserPreferences}}
 \label{BrowseUserPreferences}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -2749,7 +2800,9 @@ gets loaded when \texttt{BrowsePackageVariables} is called. This is not the case
  The arguments are the same as for \texttt{ShowUserPreferences} (\textbf{Reference: ShowUserPreferences}), that is, calling the function with no argument yields an overview of all
 known user preferences, and if one or more strings \mbox{\texttt{\mdseries\slshape package1}}, $\ldots$ are given then only the user preferences for these packages are shown. 
 
- \texttt{BrowseUserPreferences} opens a Browse table with the following columns: 
+ \texttt{BrowseUserPreferences} opens a browse table with the following columns: 
+
+ 
 \begin{description}
 \item[{``Package''}]  contains the names of the \textsf{GAP} packages to which the user preferences belong, 
 \item[{``Pref. names''}]  contains the names of the user preferences, and 
@@ -2762,8 +2815,28 @@ question can be edited. If a list of admissible values is known then this
 means that one can choose from this list via \texttt{NCurses.Select} (\ref{NCurses.Select}), otherwise one can enter the desired value as text. 
 
  The values of the user preferences are not changed before one closes the
-Browse table. When the table is left and if one has changed at least one
+browse table. When the table is left and if one has changed at least one
 value, one is asked whether the changes shall be applied. 
+
+ 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@d:= [ NCurses.keys.DOWN ];;  |
+  !gapprompt@gap>| !gapinput@c:= [ NCurses.keys.ENTER ];; |
+  !gapprompt@gap>| !gapinput@BrowseData.SetReplay( Concatenation(|
+  !gapprompt@>| !gapinput@       "/PackagesToLoad",  # enter a search string,|
+  !gapprompt@>| !gapinput@       c,                  # start the search,|
+  !gapprompt@>| !gapinput@       c,                  # edit the entry (a list of choices),|
+  !gapprompt@>| !gapinput@       " ", d,             # toggle the first four values,|
+  !gapprompt@>| !gapinput@       " ", d,             #|
+  !gapprompt@>| !gapinput@       " ", d,             #|
+  !gapprompt@>| !gapinput@       " ", d,             #|
+  !gapprompt@>| !gapinput@       c,                  # submit the values,|
+  !gapprompt@>| !gapinput@       "Q",                # quit the table,|
+  !gapprompt@>| !gapinput@       c ) );              # choose "cancel": do not apply the changes.|
+  !gapprompt@gap>| !gapinput@BrowseUserPreferences();|
+  !gapprompt@gap>| !gapinput@BrowseData.SetReplay( false );|
+\end{Verbatim}
+ 
 
  The code can be found in the file \texttt{app/userpref.g} of the package. }
 
@@ -2772,7 +2845,7 @@ value, one is asked whether the changes shall be applied.
  
 \section{\textcolor{Chapter }{Overview of \textsf{GAP} Data}}\label{sec:datadisp}
 \logpage{[ 6, 11, 0 ]}
-\hyperdef{L}{X80B8A3C48751E87B}{}
+\hyperdef{L}{X86C730A07855238D}{}
 {
   The \textsf{GAP} system contains several data collections such as libraries of groups and
 character tables. Clearly the function \texttt{NCurses.BrowseGeneric} (\ref{NCurses.BrowseGeneric}) can be used to visualize interesting information about such data collections,
@@ -2783,7 +2856,7 @@ create such overviews is given by \texttt{BrowseTableFromDatabaseIdEnumerator} (
 \subsection{\textcolor{Chapter }{BrowseGapData}}
 \logpage{[ 6, 11, 1 ]}\nobreak
 \hyperdef{L}{X850C786C87A4877B}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseGapData({\mdseries\slshape })\index{BrowseGapData@\texttt{BrowseGapData}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseGapData({\mdseries\slshape })\index{BrowseGapData@\texttt{BrowseGapData}}
 \label{BrowseGapData}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -2807,7 +2880,6 @@ create such overviews is given by \texttt{BrowseTableFromDatabaseIdEnumerator} (
 \item  \index{BrowseGapPackages@\texttt{BrowseGapPackages}!see BrowseGapData} the installed \textsf{GAP} packages (calls \texttt{BrowseGapPackages()}), 
 \item  \textsf{GAP}'s user preferences (see Section{\nobreakspace}\ref{sec:userpref}), 
 \item  the contents of the \textsf{TomLib} package \cite{TomLib} (only if this package is loaded, see Section{\nobreakspace}\ref{sect:tomlibinfo}), 
-\item  \textsf{GAP}'s Library of Transitive Groups (see Section{\nobreakspace}\ref{sect:transgrps}). 
 \end{itemize}
  
 
@@ -2854,7 +2926,7 @@ selected.
 \subsection{\textcolor{Chapter }{BrowseGapDataAdd}}
 \logpage{[ 6, 11, 2 ]}\nobreak
 \hyperdef{L}{X7FC24FCE7A0C6058}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseGapDataAdd({\mdseries\slshape title, call, ret, documentation})\index{BrowseGapDataAdd@\texttt{BrowseGapDataAdd}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseGapDataAdd({\mdseries\slshape title, call, ret, documentation})\index{BrowseGapDataAdd@\texttt{BrowseGapDataAdd}}
 \label{BrowseGapDataAdd}
 }\hfill{\scriptsize (function)}}\\
 
@@ -2877,7 +2949,7 @@ other vertices correspond to category rows.
 \subsection{\textcolor{Chapter }{BrowseDirectory}}
 \logpage{[ 6, 12, 1 ]}\nobreak
 \hyperdef{L}{X859682DE8397261E}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseDirectory({\mdseries\slshape [startpath]})\index{BrowseDirectory@\texttt{BrowseDirectory}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseDirectory({\mdseries\slshape [dir]})\index{BrowseDirectory@\texttt{BrowseDirectory}}
 \label{BrowseDirectory}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -2886,8 +2958,8 @@ other vertices correspond to category rows.
 
 
  If no argument is given then the contents of the current directory is shown,
-see \texttt{DirectoryCurrent} (\textbf{Reference: DirectoryCurrent}). If a string \mbox{\texttt{\mdseries\slshape startpath}} is given as the only argument then it is understood as a directory path, in
-the sense of \texttt{Directory} (\textbf{Reference: Directory}), and the contents of this directory is shown. 
+see \texttt{DirectoryCurrent} (\textbf{Reference: DirectoryCurrent}). If a directory object \mbox{\texttt{\mdseries\slshape dir}} (see \texttt{Directory} (\textbf{Reference: Directory})) is given as the only argument then the contents of this directory is shown;
+alternatively, \mbox{\texttt{\mdseries\slshape dir}} may also be a string which is then understood as a directory path. 
 
  The full functionality of the function \texttt{NCurses.BrowseGeneric} (\ref{NCurses.BrowseGeneric}) is available. 
 
@@ -2899,7 +2971,7 @@ the sense of \texttt{Directory} (\textbf{Reference: Directory}), and the content
   !gapprompt@>| !gapinput@       "X",                                  # expand all categories|
   !gapprompt@>| !gapinput@       "/filetree", [ NCurses.keys.ENTER ],  # search for "filetree"|
   !gapprompt@>| !gapinput@       n, "Q" ) );                           # and quit|
-  !gapprompt@gap>| !gapinput@dir:= Filename( DirectoriesPackageLibrary( "Browse", "" ), "" );;|
+  !gapprompt@gap>| !gapinput@dir:= DirectoriesPackageLibrary( "Browse", "" )[1];;|
   !gapprompt@gap>| !gapinput@if IsBound( BrowseDirectory ) then|
   !gapprompt@>| !gapinput@     BrowseDirectory( dir );|
   !gapprompt@>| !gapinput@   fi;|
@@ -2966,7 +3038,7 @@ $ $\\
 \subsection{\textcolor{Chapter }{BrowsePuzzle}}
 \logpage{[ 6, 13, 1 ]}\nobreak
 \hyperdef{L}{X7EF5FCBD7DAFFAF3}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowsePuzzle({\mdseries\slshape [m, n[, pi]]})\index{BrowsePuzzle@\texttt{BrowsePuzzle}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowsePuzzle({\mdseries\slshape [m, n[, pi]]})\index{BrowsePuzzle@\texttt{BrowsePuzzle}}
 \label{BrowsePuzzle}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -3014,31 +3086,50 @@ in this application.
   \index{game!Peg Solitaire} \index{solitaire game} Peg solitaire is a board game for one player. The game board consists of
 several holes some of which contain pegs. In each step of the game, one peg is
 moved horizontally or vertically to an empty hole at distance two, by jumping
-over a neighboring peg which is then removed from the board.   \begin{center} \begin{tabular}{ccccccc} \cline{3-5} & &
+over a neighboring peg which is then removed from the board. 
+
+
+\begin{center}
+\begin{tabular}{ccccccc}
+\cline{3-5}
+   &   & \multicolumn{1}{|c}{$\circ$} & \multicolumn{1}{|c}{$\circ$} &
+\multicolumn{1}{|c|}{$\circ$} &   &   \\
+\cline{3-5}
+   &   & \multicolumn{1}{|c}{$\circ$} & \multicolumn{1}{|c}{$\circ$} &
+\multicolumn{1}{|c|}{$\circ$} &   &   \\
+\hline
 \multicolumn{1}{|c}{$\circ$} & \multicolumn{1}{|c}{$\circ$} &
-\multicolumn{1}{|c|}{$\circ$} & & \\ \cline{3-5} & &
-\multicolumn{1}{|c}{$\circ$} & \multicolumn{1}{|c}{$\circ$} &
-\multicolumn{1}{|c|}{$\circ$} & & \\ \hline \multicolumn{1}{|c}{$\circ$} &
 \multicolumn{1}{|c}{$\circ$} & \multicolumn{1}{|c}{$\circ$} &
 \multicolumn{1}{|c}{$\circ$} & \multicolumn{1}{|c}{$\circ$} &
-\multicolumn{1}{|c}{$\circ$} & \multicolumn{1}{|c|}{$\circ$} \\ \hline
+\multicolumn{1}{|c|}{$\circ$} \\
+\hline
 \multicolumn{1}{|c}{$\circ$} & \multicolumn{1}{|c}{$\circ$} &
 \multicolumn{1}{|c}{$\circ$} & \multicolumn{1}{|c}{ } &
 \multicolumn{1}{|c}{$\circ$} & \multicolumn{1}{|c}{$\circ$} &
-\multicolumn{1}{|c|}{$\circ$} \\ \hline \multicolumn{1}{|c}{$\circ$} &
+\multicolumn{1}{|c|}{$\circ$} \\
+\hline
 \multicolumn{1}{|c}{$\circ$} & \multicolumn{1}{|c}{$\circ$} &
 \multicolumn{1}{|c}{$\circ$} & \multicolumn{1}{|c}{$\circ$} &
-\multicolumn{1}{|c}{$\circ$} & \multicolumn{1}{|c|}{$\circ$} \\ \hline & &
 \multicolumn{1}{|c}{$\circ$} & \multicolumn{1}{|c}{$\circ$} &
-\multicolumn{1}{|c|}{$\circ$} & & \\ \cline{3-5} & &
-\multicolumn{1}{|c}{$\circ$} & \multicolumn{1}{|c}{$\circ$} &
-\multicolumn{1}{|c|}{$\circ$} & & \\ \cline{3-5} \end{tabular} \end{center}     We consider the game that in the beginning, exactly one hole is empty, and in
+\multicolumn{1}{|c|}{$\circ$} \\
+\hline
+   &   & \multicolumn{1}{|c}{$\circ$} & \multicolumn{1}{|c}{$\circ$} &
+\multicolumn{1}{|c|}{$\circ$} &   &   \\
+\cline{3-5}
+   &   & \multicolumn{1}{|c}{$\circ$} & \multicolumn{1}{|c}{$\circ$} &
+\multicolumn{1}{|c|}{$\circ$} &   &   \\
+\cline{3-5}
+\end{tabular}
+\end{center}
+
+
+   We consider the game that in the beginning, exactly one hole is empty, and in
 the end, exactly one peg is left. 
 
 \subsection{\textcolor{Chapter }{PegSolitaire}}
 \logpage{[ 6, 14, 1 ]}\nobreak
 \hyperdef{L}{X82C8691380FCB674}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{PegSolitaire({\mdseries\slshape [format, ][nrholes, ][twoModes]})\index{PegSolitaire@\texttt{PegSolitaire}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{PegSolitaire({\mdseries\slshape [format, ][nrholes, ][twoModes]})\index{PegSolitaire@\texttt{PegSolitaire}}
 \label{PegSolitaire}
 }\hfill{\scriptsize (function)}}\\
 
@@ -3095,28 +3186,50 @@ in this application.
 \hyperdef{L}{X862CB73B7E0BE170}{}
 {
   \index{game!Rubik's Cube} We visualize the transformations of Rubik's magic cube in a model that is
-given by ``unfolding'' the faces and numbering them as follows.   \begin{center} \begin{tabular}{cccccccccccc} \cline{4-6} & & &
-\multicolumn{1}{|c}{1} & \multicolumn{1}{c}{2} & \multicolumn{1}{c|}{3} & & &
-& & & \\ & & & \multicolumn{1}{|c}{4} & \multicolumn{1}{c}{top} &
-\multicolumn{1}{c|}{5} & & & & & & \\ & & & \multicolumn{1}{|c}{6} &
-\multicolumn{1}{c}{7} & \multicolumn{1}{c|}{8} & & & & & & \\ \hline
-\multicolumn{1}{|c}{9} & \multicolumn{1}{c}{10} & \multicolumn{1}{c}{11} &
-\multicolumn{1}{|c}{17} & \multicolumn{1}{c}{18} & \multicolumn{1}{c}{19} &
-\multicolumn{1}{|c}{25} & \multicolumn{1}{c}{26} & \multicolumn{1}{c}{27} &
-\multicolumn{1}{|c}{33} & \multicolumn{1}{c}{34} & \multicolumn{1}{c|}{35} \\
-\multicolumn{1}{|c}{12} & \multicolumn{1}{c}{left} & \multicolumn{1}{c}{13} &
-\multicolumn{1}{|c}{20} & \multicolumn{1}{c}{front} & \multicolumn{1}{c}{21} &
-\multicolumn{1}{|c}{28} & \multicolumn{1}{c}{right} & \multicolumn{1}{c}{29} &
-\multicolumn{1}{|c}{36} & \multicolumn{1}{c}{back} & \multicolumn{1}{c|}{37}
-\\ \multicolumn{1}{|c}{14} & \multicolumn{1}{c}{15} & \multicolumn{1}{c}{16} &
-\multicolumn{1}{|c}{22} & \multicolumn{1}{c}{23} & \multicolumn{1}{c}{24} &
-\multicolumn{1}{|c}{30} & \multicolumn{1}{c}{31} & \multicolumn{1}{c}{32} &
-\multicolumn{1}{|c}{38} & \multicolumn{1}{c}{39} & \multicolumn{1}{c|}{40} \\
-\hline & & & \multicolumn{1}{|c}{41} & \multicolumn{1}{c}{42} &
-\multicolumn{1}{c|}{43} & & & & & & \\ & & & \multicolumn{1}{|c}{44} &
-\multicolumn{1}{c}{down} & \multicolumn{1}{c|}{45} & & & & & & \\ & & &
-\multicolumn{1}{|c}{46} & \multicolumn{1}{c}{47} & \multicolumn{1}{c|}{48} & &
-& & & & \\ \cline{4-6} \end{tabular} \end{center}     Clockwise turns of the six layers (top, left, front, right, back, and down)
+given by ``unfolding'' the faces and numbering them as follows. 
+
+
+\begin{center}
+\begin{tabular}{cccccccccccc}
+\cline{4-6}
+ & & & \multicolumn{1}{|c}{1} & \multicolumn{1}{c}{2} &
+\multicolumn{1}{c|}{3} & & & & & & \\
+ & & & \multicolumn{1}{|c}{4} & \multicolumn{1}{c}{top} &
+\multicolumn{1}{c|}{5} & & & & & & \\
+ & & & \multicolumn{1}{|c}{6} & \multicolumn{1}{c}{7} &
+\multicolumn{1}{c|}{8} & & & & & & \\
+\hline
+\multicolumn{1}{|c}{9} & \multicolumn{1}{c}{10} &
+\multicolumn{1}{c}{11} & \multicolumn{1}{|c}{17} &
+\multicolumn{1}{c}{18} & \multicolumn{1}{c}{19} &
+\multicolumn{1}{|c}{25} & \multicolumn{1}{c}{26} &
+\multicolumn{1}{c}{27} & \multicolumn{1}{|c}{33} &
+\multicolumn{1}{c}{34} & \multicolumn{1}{c|}{35} \\
+\multicolumn{1}{|c}{12} & \multicolumn{1}{c}{left} &
+\multicolumn{1}{c}{13} & \multicolumn{1}{|c}{20} &
+\multicolumn{1}{c}{front} & \multicolumn{1}{c}{21} &
+\multicolumn{1}{|c}{28} & \multicolumn{1}{c}{right} &
+\multicolumn{1}{c}{29} & \multicolumn{1}{|c}{36} &
+\multicolumn{1}{c}{back} & \multicolumn{1}{c|}{37} \\
+\multicolumn{1}{|c}{14} & \multicolumn{1}{c}{15} &
+\multicolumn{1}{c}{16} & \multicolumn{1}{|c}{22} &
+\multicolumn{1}{c}{23} & \multicolumn{1}{c}{24} &
+\multicolumn{1}{|c}{30} & \multicolumn{1}{c}{31} &
+\multicolumn{1}{c}{32} & \multicolumn{1}{|c}{38} &
+\multicolumn{1}{c}{39} & \multicolumn{1}{c|}{40} \\
+\hline
+ & & & \multicolumn{1}{|c}{41} & \multicolumn{1}{c}{42} &
+\multicolumn{1}{c|}{43} & & & & & & \\
+ & & & \multicolumn{1}{|c}{44} & \multicolumn{1}{c}{down} &
+\multicolumn{1}{c|}{45} & & & & & & \\
+ & & & \multicolumn{1}{|c}{46} & \multicolumn{1}{c}{47} &
+\multicolumn{1}{c|}{48} & & & & & & \\
+\cline{4-6}
+\end{tabular}
+\end{center}
+
+
+   Clockwise turns of the six layers (top, left, front, right, back, and down)
 are represented by the following permutations. 
 
  
@@ -3136,7 +3249,7 @@ announcements of \textsf{GAP}{\nobreakspace}3 releases. For a \textsf{GAP}{\nobr
 \subsection{\textcolor{Chapter }{BrowseRubiksCube}}
 \logpage{[ 6, 15, 1 ]}\nobreak
 \hyperdef{L}{X8100659E81FFE9A2}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseRubiksCube({\mdseries\slshape [format, ][pi]})\index{BrowseRubiksCube@\texttt{BrowseRubiksCube}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseRubiksCube({\mdseries\slshape [format, ][pi]})\index{BrowseRubiksCube@\texttt{BrowseRubiksCube}}
 \label{BrowseRubiksCube}
 }\hfill{\scriptsize (function)}}\\
 
@@ -3146,7 +3259,7 @@ announcements of \textsf{GAP}{\nobreakspace}3 releases. For a \textsf{GAP}{\nobr
  If the argument \mbox{\texttt{\mdseries\slshape format}} is one of the strings \texttt{"small"} or \texttt{"large"} then small or large cells are shown, the default is \texttt{"small"}. 
 
  The argument \mbox{\texttt{\mdseries\slshape pi}} is the initial permutation of the faces, the default is a random permutation
-in the cube group, see{\nobreakspace} (\textbf{Reference: Random Sources}). 
+in the cube group, see{\nobreakspace} (\textbf{Reference: Random}). 
 
  Supported user inputs are the keys \textsc{t}, \textsc{l}, \textsc{f}, \textsc{r}, \textsc{b}, and \textsc{d} for clockwise turns of the six layers, and the corresponding capital letters
 for counter-clockwise turns. If the terminal supports colors, according to the
@@ -3202,13 +3315,23 @@ in this application.
   \index{game!Changing Sides} We consider a $5$ by $5$ board of squares filled with two types of stones, as follows. The square in
 the middle is left empty. 
 
-  \begin{center} \begin{tabular}{|c|c|c|c|c|} \hline
-\rule[-6pt]{0pt}{18pt}$\times$&$\times$&$\times$&$\times$&$\times$\\ \hline
-\rule[-6pt]{0pt}{18pt}$\circ$&$\times$&$\times$&$\times$&$\times$\\ \hline
-\rule[-6pt]{0pt}{18pt}$\circ$&$\circ$&&$\times$&$\times$\\ \hline
-\rule[-6pt]{0pt}{18pt}$\circ$&$\circ$&$\circ$&$\circ$&$\times$\\ \hline
-\rule[-6pt]{0pt}{18pt}$\circ$&$\circ$&$\circ$&$\circ$&$\circ$\\ \hline
-\end{tabular} \end{center}    
+ 
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\rule[-6pt]{0pt}{18pt}$\times$&$\times$&$\times$&$\times$&$\times$\\
+\hline
+\rule[-6pt]{0pt}{18pt}$\circ$&$\times$&$\times$&$\times$&$\times$\\
+\hline
+\rule[-6pt]{0pt}{18pt}$\circ$&$\circ$&&$\times$&$\times$\\
+\hline
+\rule[-6pt]{0pt}{18pt}$\circ$&$\circ$&$\circ$&$\circ$&$\times$\\
+\hline
+\rule[-6pt]{0pt}{18pt}$\circ$&$\circ$&$\circ$&$\circ$&$\circ$\\
+\hline
+\end{tabular}
+\end{center}
+   
 
  The aim of the game is to exchange the two types of stones via a sequence of
 single steps that move one stone to the empty position on the board. Only
@@ -3219,7 +3342,7 @@ those moves are allowed that increase or decrease one coordinate by $2$ and incr
 \subsection{\textcolor{Chapter }{BrowseChangeSides}}
 \logpage{[ 6, 16, 1 ]}\nobreak
 \hyperdef{L}{X7FCFC5858584F46E}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseChangeSides({\mdseries\slshape })\index{BrowseChangeSides@\texttt{BrowseChangeSides}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseChangeSides({\mdseries\slshape })\index{BrowseChangeSides@\texttt{BrowseChangeSides}}
 \label{BrowseChangeSides}
 }\hfill{\scriptsize (function)}}\\
 
@@ -3258,22 +3381,44 @@ in this application.
 \hyperdef{L}{X7DDE46668321B5E9}{}
 {
   \index{game!Sudoku} We consider a $9$ by $9$ board of squares. Some squares are initially filled with numbers from $1$ to $9$. The aim of the game is to fill the empty squares in such a way that each
-row, each column, and each of the marked $3$ by $3$ subsquares contains all numbers from $1$ to $9$. A \emph{proper Sudoku game} is defined as one with a unique solution. Here is an example.    \begin{center} \setlength{\unitlength}{1.8ex} \begin{picture}(18,18)
+row, each column, and each of the marked $3$ by $3$ subsquares contains all numbers from $1$ to $9$. A \emph{proper Sudoku game} is defined as one with a unique solution. Here is an example.   
+
+
+\begin{center}
+\setlength{\unitlength}{1.8ex}
+\begin{picture}(18,18)
 \multiput(0,0)(2,0){10}{\line(0,1){18}}
-\multiput(0,0)(0,2){10}{\line(1,0){18}} \linethickness{0.3ex}
-\multiput(0,0)(6,0){4}{\line(0,1){18}} \multiput(0,0)(0,6){4}{\line(1,0){18}}
-\put(13,17){\makebox(0,0){$5$}} \put( 3,15){\makebox(0,0){$1$}} \put(
-5,15){\makebox(0,0){$5$}} \put( 7,15){\makebox(0,0){$4$}}
-\put(11,15){\makebox(0,0){$6$}} \put(15,15){\makebox(0,0){$2$}} \put(
-1,13){\makebox(0,0){$9$}} \put( 9,13){\makebox(0,0){$5$}}
-\put(13,13){\makebox(0,0){$3$}} \put( 1,11){\makebox(0,0){$6$}} \put(
-5,11){\makebox(0,0){$4$}} \put( 7, 9){\makebox(0,0){$8$}} \put( 1,
-7){\makebox(0,0){$8$}} \put( 7, 7){\makebox(0,0){$9$}} \put(15,
-7){\makebox(0,0){$5$}} \put(17, 7){\makebox(0,0){$3$}} \put(11,
-5){\makebox(0,0){$5$}} \put( 3, 3){\makebox(0,0){$4$}} \put(11,
-3){\makebox(0,0){$7$}} \put(17, 3){\makebox(0,0){$2$}} \put( 5,
-1){\makebox(0,0){$9$}} \put( 7, 1){\makebox(0,0){$1$}} \put(13,
-1){\makebox(0,0){$8$}} \end{picture} \end{center}   The \textsf{Browse} package contains functions to create, play and solve these games. There are
+\multiput(0,0)(0,2){10}{\line(1,0){18}}
+\linethickness{0.3ex}
+\multiput(0,0)(6,0){4}{\line(0,1){18}}
+\multiput(0,0)(0,6){4}{\line(1,0){18}}
+\put(13,17){\makebox(0,0){$5$}}
+\put( 3,15){\makebox(0,0){$1$}}
+\put( 5,15){\makebox(0,0){$5$}}
+\put( 7,15){\makebox(0,0){$4$}}
+\put(11,15){\makebox(0,0){$6$}}
+\put(15,15){\makebox(0,0){$2$}}
+\put( 1,13){\makebox(0,0){$9$}}
+\put( 9,13){\makebox(0,0){$5$}}
+\put(13,13){\makebox(0,0){$3$}}
+\put( 1,11){\makebox(0,0){$6$}}
+\put( 5,11){\makebox(0,0){$4$}}
+\put( 7, 9){\makebox(0,0){$8$}}
+\put( 1, 7){\makebox(0,0){$8$}}
+\put( 7, 7){\makebox(0,0){$9$}}
+\put(15, 7){\makebox(0,0){$5$}}
+\put(17, 7){\makebox(0,0){$3$}}
+\put(11, 5){\makebox(0,0){$5$}}
+\put( 3, 3){\makebox(0,0){$4$}}
+\put(11, 3){\makebox(0,0){$7$}}
+\put(17, 3){\makebox(0,0){$2$}}
+\put( 5, 1){\makebox(0,0){$9$}}
+\put( 7, 1){\makebox(0,0){$1$}}
+\put(13, 1){\makebox(0,0){$8$}}
+\end{picture}
+\end{center}
+
+  The \textsf{Browse} package contains functions to create, play and solve these games. There are
 basic command line functions for this, which we describe first, and there is a
 user interface \texttt{PlaySudoku} (\ref{PlaySudoku}) which is implemented using the generic browse functionality described in
 Chapter \ref{chap:browse-user}. 
@@ -3281,7 +3426,7 @@ Chapter \ref{chap:browse-user}.
 \subsection{\textcolor{Chapter }{Sudoku.Init}}
 \logpage{[ 6, 17, 1 ]}\nobreak
 \hyperdef{L}{X789D3D4C818F4BC2}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Sudoku.Init({\mdseries\slshape [arg]})\index{Sudoku.Init@\texttt{Sudoku.Init}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{Sudoku.Init({\mdseries\slshape [arg]})\index{Sudoku.Init@\texttt{Sudoku.Init}}
 \label{Sudoku.Init}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -3317,10 +3462,10 @@ concatenation of the rows of the matrix (so, a list of integers and holes).
 \subsection{\textcolor{Chapter }{Sudoku.Place}}
 \logpage{[ 6, 17, 2 ]}\nobreak
 \hyperdef{L}{X86A5C6CE79DD67EE}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Sudoku.Place({\mdseries\slshape game, i, n})\index{Sudoku.Place@\texttt{Sudoku.Place}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{Sudoku.Place({\mdseries\slshape game, i, n})\index{Sudoku.Place@\texttt{Sudoku.Place}}
 \label{Sudoku.Place}
 }\hfill{\scriptsize (function)}}\\
-\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Sudoku.Remove({\mdseries\slshape game, i})\index{Sudoku.Remove@\texttt{Sudoku.Remove}}
+\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{Sudoku.Remove({\mdseries\slshape game, i})\index{Sudoku.Remove@\texttt{Sudoku.Remove}}
 \label{Sudoku.Remove}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -3352,7 +3497,7 @@ The changed \mbox{\texttt{\mdseries\slshape game}}.
 \subsection{\textcolor{Chapter }{Sudoku.RandomGame}}
 \logpage{[ 6, 17, 3 ]}\nobreak
 \hyperdef{L}{X8401B31A879F9F9F}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Sudoku.RandomGame({\mdseries\slshape [seed]})\index{Sudoku.RandomGame@\texttt{Sudoku.RandomGame}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{Sudoku.RandomGame({\mdseries\slshape [seed]})\index{Sudoku.RandomGame@\texttt{Sudoku.RandomGame}}
 \label{Sudoku.RandomGame}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -3382,7 +3527,7 @@ given entry the puzzle does no longer have a unique solution.
 \subsection{\textcolor{Chapter }{Sudoku.SimpleDisplay}}
 \logpage{[ 6, 17, 4 ]}\nobreak
 \hyperdef{L}{X86917AC57C25A68F}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Sudoku.SimpleDisplay({\mdseries\slshape game})\index{Sudoku.SimpleDisplay@\texttt{Sudoku.SimpleDisplay}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{Sudoku.SimpleDisplay({\mdseries\slshape game})\index{Sudoku.SimpleDisplay@\texttt{Sudoku.SimpleDisplay}}
 \label{Sudoku.SimpleDisplay}
 }\hfill{\scriptsize (function)}}\\
 
@@ -3413,7 +3558,7 @@ given entry the puzzle does no longer have a unique solution.
 \subsection{\textcolor{Chapter }{Sudoku.DisplayString}}
 \logpage{[ 6, 17, 5 ]}\nobreak
 \hyperdef{L}{X81F98C6C7C8415AB}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Sudoku.DisplayString({\mdseries\slshape game})\index{Sudoku.DisplayString@\texttt{Sudoku.DisplayString}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{Sudoku.DisplayString({\mdseries\slshape game})\index{Sudoku.DisplayString@\texttt{Sudoku.DisplayString}}
 \label{Sudoku.DisplayString}
 }\hfill{\scriptsize (function)}}\\
 
@@ -3453,7 +3598,7 @@ given entry the puzzle does no longer have a unique solution.
 \subsection{\textcolor{Chapter }{Sudoku.OneSolution}}
 \logpage{[ 6, 17, 6 ]}\nobreak
 \hyperdef{L}{X7C73C6D08293B3B8}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Sudoku.OneSolution({\mdseries\slshape game})\index{Sudoku.OneSolution@\texttt{Sudoku.OneSolution}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{Sudoku.OneSolution({\mdseries\slshape game})\index{Sudoku.OneSolution@\texttt{Sudoku.OneSolution}}
 \label{Sudoku.OneSolution}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -3487,7 +3632,7 @@ then \texttt{fail} is returned.
 \subsection{\textcolor{Chapter }{Sudoku.UniqueSolution}}
 \logpage{[ 6, 17, 7 ]}\nobreak
 \hyperdef{L}{X865DDBDC7E16217F}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Sudoku.UniqueSolution({\mdseries\slshape game})\index{Sudoku.UniqueSolution@\texttt{Sudoku.UniqueSolution}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{Sudoku.UniqueSolution({\mdseries\slshape game})\index{Sudoku.UniqueSolution@\texttt{Sudoku.UniqueSolution}}
 \label{Sudoku.UniqueSolution}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -3522,7 +3667,7 @@ A completed Sudoku board that solves \mbox{\texttt{\mdseries\slshape game}}, or 
 \subsection{\textcolor{Chapter }{PlaySudoku}}
 \logpage{[ 6, 17, 8 ]}\nobreak
 \hyperdef{L}{X7D19224478E86BB4}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{PlaySudoku({\mdseries\slshape [arg]})\index{PlaySudoku@\texttt{PlaySudoku}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{PlaySudoku({\mdseries\slshape [arg]})\index{PlaySudoku@\texttt{PlaySudoku}}
 \label{PlaySudoku}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -3566,10 +3711,10 @@ in this application.
 \subsection{\textcolor{Chapter }{Sudoku.HTMLGame}}
 \logpage{[ 6, 17, 9 ]}\nobreak
 \hyperdef{L}{X804D66D67B908F30}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Sudoku.HTMLGame({\mdseries\slshape game})\index{Sudoku.HTMLGame@\texttt{Sudoku.HTMLGame}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{Sudoku.HTMLGame({\mdseries\slshape game})\index{Sudoku.HTMLGame@\texttt{Sudoku.HTMLGame}}
 \label{Sudoku.HTMLGame}
 }\hfill{\scriptsize (function)}}\\
-\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{Sudoku.LaTeXGame({\mdseries\slshape game})\index{Sudoku.LaTeXGame@\texttt{Sudoku.LaTeXGame}}
+\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{Sudoku.LaTeXGame({\mdseries\slshape game})\index{Sudoku.LaTeXGame@\texttt{Sudoku.LaTeXGame}}
 \label{Sudoku.LaTeXGame}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -3582,6 +3727,75 @@ functions return code for including the current status of the board into a
 webpage or a {\LaTeX} document. }
 
  }
+
+ 
+\section{\textcolor{Chapter }{Utility for \textsf{GAP} Demos}}\label{sec:rldemo}
+\logpage{[ 6, 18, 0 ]}
+\hyperdef{L}{X7BCE1AE37EFCE91D}{}
+{
+  This application can be used with \textsf{GAP} if the user interface has \texttt{readline} support. The purpose is to simplify the typing during a demonstration of \textsf{GAP} commands. 
+
+ The file format to specify \textsf{GAP} code for a demonstration is very simple: it contains blocks of lines with \textsf{GAP} input, separated by lines starting with a \texttt{\%} character. Comments in such a file can be added to one or several lines
+starting with \texttt{\%}. Here is the content of an example file \texttt{demo.demo}: 
+
+ 
+\begin{verbatim}  
+  % Add comments after a % character at the beginning of a line.
+  % A comment can have several lines.
+  % Here is a multi-line input block:
+  g := MathieuGroup(11);;
+  cl := ConjugacyClasses(g);
+  % Calling a help page
+  ?MathieuGroup
+  % The next line contains a comment in the GAP session:
+  a := 12;; b := 13;; # assign two numbers
+  %
+  a*b;
+  %
+\end{verbatim}
+ A demonstration can be loaded into a \textsf{GAP} session with the command 
+
+\subsection{\textcolor{Chapter }{LoadDemoFile}}
+\logpage{[ 6, 18, 1 ]}\nobreak
+\hyperdef{L}{X80F418C5835C62BA}{}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{LoadDemoFile({\mdseries\slshape demoname, demofile[, singleline]})\index{LoadDemoFile@\texttt{LoadDemoFile}}
+\label{LoadDemoFile}
+}\hfill{\scriptsize (function)}}\\
+\textbf{\indent Returns:\ }
+Nothing.
+
+
+
+ This function loads a demo file in the format described above. The argument \mbox{\texttt{\mdseries\slshape demoname}} is a string containing a name for the demo, and \mbox{\texttt{\mdseries\slshape demofile}} is the file name containing the demo. 
+
+ If the optional argument \mbox{\texttt{\mdseries\slshape singleline}} is given and its value is \texttt{true}, the demo behaves differently with respect to input blocks that span several
+lines. By default full blocks are treated as a single input line for \texttt{readline} (maybe spanning several physical lines in the terminal). If \mbox{\texttt{\mdseries\slshape singleline}} is \texttt{true} then all input lines of a block except the last one are sent to \textsf{GAP} and are evaluated automatically before the last line of the block is
+displayed. 
+\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
+  !gapprompt@gap>| !gapinput@dirs := DirectoriesPackageLibrary("Browse");;|
+  !gapprompt@gap>| !gapinput@demofile := Filename(dirs, "../app/demo.demo");;|
+  !gapprompt@gap>| !gapinput@LoadDemoFile("My first demo", demofile);|
+  !gapprompt@gap>| !gapinput@LoadDemoFile("My first demo (single lines)", demofile, true);|
+\end{Verbatim}
+ }
+
+ Many demos can be loaded at the same time. They are used with the \textsc{PageDown} and \textsc{PageUp} keys. 
+
+ The \textsc{PageUp} key leads to a (Browse) menu which allows one to choose a demo to start (if
+several are loaded), to stop a demo or to move to another position in the
+current demo (e.g., to go back to a previous point or to skip part of a demo). 
+
+ The next input block of the current demo is copied into the current input line
+of the \textsf{GAP} session by pressing the \textsc{PageDown} key. This line is not yet sent to \textsf{GAP}, use the \textsc{Return} key if you want to evaluate the input. (You can also still edit the input line
+before evaluation.) 
+
+ So, in the simplest case a demo can be done by just pressing \textsc{PageDown} and \textsc{Return} in turns. But it is always possible to type extra input during a demo by hand
+or to change the input lines from the demo file before evaluation. It is no
+problem if commands are interrupted by \textsc{Ctrl-C}. During a demo you are in a normal \textsf{GAP} session, this application only saves you some typing. The input lines from the
+demo are put into the history of the session as if they were typed by hand. 
+
+ Try it yourself with the two demos loaded in the example. This also shows the
+different behaviour between default and single line mode. }
 
  }
 
@@ -3608,10 +3822,10 @@ contents of databases, using \texttt{BrowseTableFromDatabaseIdEnumerator} (\ref{
  Contrary to the individual interfaces to the \textsf{GAP} manuals (see Section \ref{sec:manualdisp}), the \textsf{GAP} bibliography (see Section \ref{sec:gapbibl}), and the overviews of \textsf{GAP} packages, \textsf{GAP} methods, and Conway polynomials available in \textsf{GAP} (see Section \ref{sec:datadisp}), the approach that will be described here assumes a special way to access
 database entries. Thus it depends on the structure of a given database whether
 the tools described here are useful, or whether an individual interface fits
-better. Perhaps the examples shown in Sections \ref{sect:dbidenumxpl} and \ref{sect:transgrps} give an impression what is possible.  
+better. Perhaps the example shown in Section \ref{sect:dbidenumxpl} gives an impression what is possible.  
 \section{\textcolor{Chapter }{\textsf{GAP} Objects for Database Handling}}\label{sect:dbobjects}
 \logpage{[ "A", 1, 0 ]}
-\hyperdef{L}{X86DA1A0082C465DD}{}
+\hyperdef{L}{X7A0B84C37CB9DFA3}{}
 {
   
 \subsection{\textcolor{Chapter }{Database Id Enumerators}}\label{subsect:dbidenum}
@@ -3766,7 +3980,7 @@ enumerator gets extended.
 \subsection{\textcolor{Chapter }{DatabaseIdEnumerator}}
 \logpage{[ "A", 1, 4 ]}\nobreak
 \hyperdef{L}{X7AE32F217CF16EDF}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DatabaseIdEnumerator({\mdseries\slshape arec})\index{DatabaseIdEnumerator@\texttt{DatabaseIdEnumerator}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{DatabaseIdEnumerator({\mdseries\slshape arec})\index{DatabaseIdEnumerator@\texttt{DatabaseIdEnumerator}}
 \label{DatabaseIdEnumerator}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -3786,7 +4000,7 @@ enumerator, so these components (see \ref{subsect:attr-browse-comp}) are support
 \subsection{\textcolor{Chapter }{DatabaseAttributeAdd}}
 \logpage{[ "A", 1, 5 ]}\nobreak
 \hyperdef{L}{X8573522782D939FE}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DatabaseAttributeAdd({\mdseries\slshape dbidenum, arec})\index{DatabaseAttributeAdd@\texttt{DatabaseAttributeAdd}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{DatabaseAttributeAdd({\mdseries\slshape dbidenum, arec})\index{DatabaseAttributeAdd@\texttt{DatabaseAttributeAdd}}
 \label{DatabaseAttributeAdd}
 }\hfill{\scriptsize (function)}}\\
 
@@ -3798,7 +4012,7 @@ enumerator, so these components (see \ref{subsect:attr-browse-comp}) are support
 \subsection{\textcolor{Chapter }{DatabaseAttributeValueDefault}}
 \logpage{[ "A", 1, 6 ]}\nobreak
 \hyperdef{L}{X7C8DB23E79567A60}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DatabaseAttributeValueDefault({\mdseries\slshape attr, id})\index{DatabaseAttributeValueDefault@\texttt{DatabaseAttributeValueDefault}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{DatabaseAttributeValueDefault({\mdseries\slshape attr, id})\index{DatabaseAttributeValueDefault@\texttt{DatabaseAttributeValueDefault}}
 \label{DatabaseAttributeValueDefault}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -3827,7 +4041,7 @@ entered as the component \texttt{attributeValue} of such an attribute. }
 \subsection{\textcolor{Chapter }{DatabaseIdEnumeratorUpdate}}
 \logpage{[ "A", 1, 7 ]}\nobreak
 \hyperdef{L}{X80A909727E3C8311}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DatabaseIdEnumeratorUpdate({\mdseries\slshape dbidenum})\index{DatabaseIdEnumeratorUpdate@\texttt{DatabaseIdEnumeratorUpdate}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{DatabaseIdEnumeratorUpdate({\mdseries\slshape dbidenum})\index{DatabaseIdEnumeratorUpdate@\texttt{DatabaseIdEnumeratorUpdate}}
 \label{DatabaseIdEnumeratorUpdate}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -3848,7 +4062,7 @@ entered as the component \texttt{attributeValue} of such an attribute. }
 \subsection{\textcolor{Chapter }{DatabaseAttributeCompute}}
 \logpage{[ "A", 1, 8 ]}\nobreak
 \hyperdef{L}{X812075CE7A01EA04}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DatabaseAttributeCompute({\mdseries\slshape dbidenum, attridentifier[, what]})\index{DatabaseAttributeCompute@\texttt{DatabaseAttributeCompute}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{DatabaseAttributeCompute({\mdseries\slshape dbidenum, attridentifier[, what]})\index{DatabaseAttributeCompute@\texttt{DatabaseAttributeCompute}}
 \label{DatabaseAttributeCompute}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -3874,7 +4088,7 @@ with \texttt{identifier} value \mbox{\texttt{\mdseries\slshape attridentifier}},
 \subsection{\textcolor{Chapter }{DatabaseAttributeSetData}}
 \logpage{[ "A", 1, 9 ]}\nobreak
 \hyperdef{L}{X87A8B19C82E9FF0B}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{DatabaseAttributeSetData({\mdseries\slshape dbidenum, attridentifier, version, data})\index{DatabaseAttributeSetData@\texttt{DatabaseAttributeSetData}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{DatabaseAttributeSetData({\mdseries\slshape dbidenum, attridentifier, version, data})\index{DatabaseAttributeSetData@\texttt{DatabaseAttributeSetData}}
 \label{DatabaseAttributeSetData}
 }\hfill{\scriptsize (function)}}\\
 
@@ -3931,7 +4145,7 @@ or turned into individual category rows, depending on the \texttt{sortParameters
 \subsection{\textcolor{Chapter }{BrowseTableFromDatabaseIdEnumerator}}
 \logpage{[ "A", 2, 2 ]}\nobreak
 \hyperdef{L}{X7F25A3E586653911}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseTableFromDatabaseIdEnumerator({\mdseries\slshape dbidenum, labelids, columnids[, header[, footer[, choice]]]})\index{BrowseTableFromDatabaseIdEnumerator@\texttt{BrowseTableFromDatabaseIdEnumerator}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseTableFromDatabaseIdEnumerator({\mdseries\slshape dbidenum, labelids, columnids[, header[, footer[, choice]]]})\index{BrowseTableFromDatabaseIdEnumerator@\texttt{BrowseTableFromDatabaseIdEnumerator}}
 \label{BrowseTableFromDatabaseIdEnumerator}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }
@@ -4292,166 +4506,16 @@ variable \texttt{n}, and then calling \texttt{DatabaseIdEnumeratorUpdate} (\ref{
  }
 
   
-\section{\textcolor{Chapter }{Example: An Overview of the \textsf{GAP} Library of Transitive Groups }}\label{sect:transgrps}
-\logpage{[ "A", 4, 0 ]}
-\hyperdef{L}{X858E7FC37DCAA719}{}
-{
-  The example shown in this section deals with \textsf{GAP}'s Library of Transitive Permutation Groups, see  (\textbf{Reference: Transitive Permutation Groups}). Section \ref{BrowseTransitiveGroupsInfo} introduces a browse table application for viewing information about the
-contents of this library, which is based on database attributes. Section \ref{TransitiveGroupsData.AllTransitiveGroups} introduces functions based on database attributes that can be used to select
-groups from the library. Finally, Section \ref{TransitiveGroupsData} describes how these two functionalities are implemented. 
-
-\subsection{\textcolor{Chapter }{BrowseTransitiveGroupsInfo}}
-\logpage{[ "A", 4, 1 ]}\nobreak
-\hyperdef{L}{X832846F486391385}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseTransitiveGroupsInfo({\mdseries\slshape [arec]})\index{BrowseTransitiveGroupsInfo@\texttt{BrowseTransitiveGroupsInfo}}
-\label{BrowseTransitiveGroupsInfo}
-}\hfill{\scriptsize (function)}}\\
-\textbf{\indent Returns:\ }
- the list of ``clicked'' groups. 
-
-
-
- This function shows the contents of the \textsf{GAP} Library of Transitive Permutation Groups in a browse table. 
-
- The table rows correspond to the groups. If no argument is given then the
-columns of the table contain information about the degree of the permutation
-representation, group order, names for the group, primitivity, transitivity,
-and sign. Otherwise, the argument \mbox{\texttt{\mdseries\slshape arec}} must be a record; the component \texttt{choice} of \mbox{\texttt{\mdseries\slshape arec}} can be used to prescribe columns, the value of this component must then be a
-list of strings that are \texttt{identifier} values of database attributes (see \ref{subsect:dbattr}) for the \texttt{IdEnumerator} component of \texttt{TransitiveGroupsData} (\ref{TransitiveGroupsData}), see Section \ref{subsect:transdbattr} for examples. 
-
- The return value is the list of transitive groups whose table rows have been ``clicked'' in visual mode. 
-
- The full functionality of the function \texttt{NCurses.BrowseGeneric} (\ref{NCurses.BrowseGeneric}) is available. 
-
- 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@c:= [ NCurses.keys.ENTER ];;|
-  !gapprompt@gap>| !gapinput@BrowseData.SetReplay( Concatenation(|
-  !gapprompt@>| !gapinput@       "scrrrr/5", c,     # search for transitivity 5,|
-  !gapprompt@>| !gapinput@       "nn", c,           # go to the third occurrence, click on it,|
-  !gapprompt@>| !gapinput@       "Q" ) );;          # and quit the browse table|
-  !gapprompt@gap>| !gapinput@BrowseTransitiveGroupsInfo();|
-  [ M(12) ]
-  !gapprompt@gap>| !gapinput@BrowseData.SetReplay( false );|
-\end{Verbatim}
- }
-
- 
-
-\subsection{\textcolor{Chapter }{TransitiveGroupsData.AllTransitiveGroups}}
-\logpage{[ "A", 4, 2 ]}\nobreak
-\hyperdef{L}{X7FA5513D84EE81AB}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{TransitiveGroupsData.AllTransitiveGroups({\mdseries\slshape fun, res[, ...]})\index{TransitiveGroupsData.AllTransitiveGroups@\texttt{Transitive}\-\texttt{Groups}\-\texttt{Data.}\-\texttt{All}\-\texttt{Transitive}\-\texttt{Groups}}
-\label{TransitiveGroupsData.AllTransitiveGroups}
-}\hfill{\scriptsize (function)}}\\
-\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{TransitiveGroupsData.OneTransitiveGroup({\mdseries\slshape fun, res[, ...]})\index{TransitiveGroupsData.OneTransitiveGroup@\texttt{Transitive}\-\texttt{Groups}\-\texttt{Data.}\-\texttt{One}\-\texttt{Transitive}\-\texttt{Group}}
-\label{TransitiveGroupsData.OneTransitiveGroup}
-}\hfill{\scriptsize (function)}}\\
-\textbf{\indent Returns:\ }
- the list of groups from the \textsf{GAP} Library of Transitive Permutation Groups with the given properties, or one
-such group, or \texttt{fail}. 
-
-
-
- These functions are analogues of \texttt{AllTransitiveGroups} (\textbf{Reference: AllTransitiveGroups}) and \texttt{OneTransitiveGroup} (\textbf{Reference: OneTransitiveGroup}). The only difference is that they are based on the database attributes that
-are defined in \texttt{TransitiveGroupsData} (\ref{TransitiveGroupsData}). 
-
- Besides those \textsf{GAP} attributes such as \texttt{Size} (\textbf{Reference: Size}) and \texttt{IsPrimitive} (\textbf{Reference: IsPrimitive}) for which special support is provided in \texttt{AllTransitiveGroups} (\textbf{Reference: AllTransitiveGroups}) and \texttt{OneTransitiveGroup} (\textbf{Reference: OneTransitiveGroup}), database attributes are defined for some other \textsf{GAP} properties, see \ref{subsect:transdbattr}. One could speed up \texttt{TransitiveGroupsData.AllTransitiveGroups} for given conditions by adding further precomputed database attributes. 
-
- After defining a database attribute, it is automatically used in calls to \texttt{TransitiveGroupsData.AllTransitiveGroups}. In order to make the values appear in the table shown by \texttt{BrowseTransitiveGroupsInfo} (\ref{BrowseTransitiveGroupsInfo}), one has to enter an argument record that contains the name of the database
-attributes in its \texttt{choice} list. 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@TransitiveGroupsData.AllTransitiveGroups(|
-  !gapprompt@>| !gapinput@     NrMovedPoints, [ 5 .. 28 ],|
-  !gapprompt@>| !gapinput@     IsSimpleGroup, true, IsAbelian, true );|
-  [ C(5) = 5, C(7) = 7, C(11)=11, C(13)=13, C(17)=17, C(19)=19, C(23) ]
-\end{Verbatim}
- }
-
- 
-
-\subsection{\textcolor{Chapter }{TransitiveGroupsData}}
-\logpage{[ "A", 4, 3 ]}\nobreak
-\hyperdef{L}{X7AC030827D5CDE03}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{TransitiveGroupsData\index{TransitiveGroupsData@\texttt{TransitiveGroupsData}}
-\label{TransitiveGroupsData}
-}\hfill{\scriptsize (global variable)}}\\
-
-
- This is a record that contains the data needed by \texttt{BrowseTransitiveGroupsInfo} (\ref{BrowseTransitiveGroupsInfo}), \texttt{TransitiveGroupsData.AllTransitiveGroups} (\ref{TransitiveGroupsData.AllTransitiveGroups}), and \texttt{TransitiveGroupsData.OneTransitiveGroup} (\ref{TransitiveGroupsData.OneTransitiveGroup}). The component \texttt{IdEnumerator} contains a database id enumerator (see \ref{subsect:dbidenum}) for the \textsf{GAP} Library of Transitive Permutation Groups. 
-
- Note that although \texttt{NrTransitiveGroups} (\textbf{Reference: NrTransitiveGroups}) returns \texttt{1} when it is called with the argument \texttt{1}, \texttt{TransitiveGroup} (\textbf{Reference: TransitiveGroup}) runs into an error when it is called with first argument equal to \texttt{1}, and the degree \texttt{1} is explicitly excluded from results of \texttt{AllTransitiveGroups} (\textbf{Reference: AllTransitiveGroups}) and \texttt{OneTransitiveGroup} (\textbf{Reference: OneTransitiveGroup}). For the sake of consistency with this inconsistency in the \textsf{GAP} Library of Transitive Permutation Groups, we exclude the degree \texttt{1} from \texttt{TransitiveGroupsData}. (Those who want to include this degree can change the value of \texttt{TransitiveGroupsData.MinimalDegree} from its default value \texttt{2} to \texttt{1} in the file \texttt{app/transbrowse.g} of the package.) }
-
- 
-\subsection{\textcolor{Chapter }{Additional Database Attributes for Transitive Groups}}\label{subsect:transdbattr}
-\logpage{[ "A", 4, 4 ]}
-\hyperdef{L}{X83E9FAAE85F80223}{}
-{
-  Database attributes for the following \textsf{GAP} properties are defined in \texttt{TransitiveGroupsData} (\ref{TransitiveGroupsData}): \texttt{IsAbelian} (\textbf{Reference: IsAbelian}), \texttt{IsPerfectGroup} (\textbf{Reference: IsPerfectGroup}), \texttt{IsSimpleGroup} (\textbf{Reference: IsSimpleGroup}), and \texttt{IsSolvableGroup} (\textbf{Reference: IsSolvableGroup}). The values of these database attributes are precomputed and stored in the
-file \texttt{app/transdbattr.g} of the package. 
-
- So the above \textsf{GAP} properties have special support as conditions in \texttt{TransitiveGroupsData.AllTransitiveGroups} (\ref{TransitiveGroupsData.AllTransitiveGroups}) and \texttt{TransitiveGroupsData.OneTransitiveGroup} (\ref{TransitiveGroupsData.OneTransitiveGroup}), contrary to \texttt{AllTransitiveGroups} (\textbf{Reference: AllTransitiveGroups}) and \texttt{OneTransitiveGroup} (\textbf{Reference: OneTransitiveGroup}). In practice, the difference is that the former functions need not construct
-and check those transitive groups that do not have the properties in question. 
-
- These database attributes can also be used as columns in the Browse table
-shown by \texttt{BrowseTransitiveGroupsInfo} (\ref{BrowseTransitiveGroupsInfo}), for example as follows. 
-
- 
-\begin{Verbatim}[commandchars=@|E,fontsize=\small,frame=single,label=Example]
-  @gapprompt|gap>E @gapinput|n:= [ 14, 14, 14 ];;  # ``do nothing'' input (means timeout)E
-  @gapprompt|gap>E @gapinput|BrowseData.SetReplay( Concatenation(E
-  @gapprompt|>E @gapinput|       "scrrrsc", n, n,        # categorize by solvability infoE
-  @gapprompt|>E @gapinput|       "!", n,                 # resetE
-  @gapprompt|>E @gapinput|       "scrrrrsc", n, n,       # categorize by abelianity infoE
-  @gapprompt|>E @gapinput|       "Q" ) );;               # quit the browse tableE
-  @gapprompt|gap>E @gapinput|BrowseTransitiveGroupsInfo( rec( choice:= [ "degree", "size",E
-  @gapprompt|>E @gapinput|     "names", "IsSolvableGroup", "IsAbelian", "IsPerfectGroup",E
-  @gapprompt|>E @gapinput|     "IsSimpleGroup" ] ) );;E
-  @gapprompt|gap>E @gapinput|BrowseData.SetReplay( false );E
-\end{Verbatim}
- 
-
- The data in the file \texttt{app/transdbattr.g} are lists of Booleans, which are encoded as strings via \texttt{HexStringBlistEncode}, and these strings can be decoded with \texttt{BlistStringDecode}. Note that most of the groups in the library are not abelian, not perfect,
-not simple, but solvable. Therefore in fact the inverse values of the
-solvability info are actually stored {\textendash}this yields a shorter
-string. 
-
- 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@TransitiveGroupsData.MinimalDegree;|
-  2
-  !gapprompt@gap>| !gapinput@attrs:= TransitiveGroupsData.IdEnumerator.attributes;;|
-  !gapprompt@gap>| !gapinput@oldlen:= SizeScreen();;  SizeScreen( [ 60 ] );;|
-  !gapprompt@gap>| !gapinput@HexStringBlistEncode( attrs.IsAbelian.data );|
-  "D88400040Es0503s0480s040406s252010s0720s0C3EsF30803s7A040\
-  5s8B20s1302s0740E0sFFsFFsFFsFFsFFsFFsFFsFFsFFsFFsFFsFFs40C\
-  0s1910s0B1AsFFs2B18sE74040sFFsFF"
-  !gapprompt@gap>| !gapinput@SizeScreen( oldlen );;|
-\end{Verbatim}
- 
-
- Removing the \texttt{datafile} component from the four database attributes would yield the situation that
-attribute values must be computed at runtime. Computing the values for all
-groups in the library {\textendash}for example by categorizing the Browse
-table by one of the columns that correspond to these database
-attributes{\textendash} will require several seconds. Note that if we assume
-that the information about solvability is already known, the test for \texttt{IsPerfectGroup} (\textbf{Reference: IsPerfectGroup}) is needed only for the few nonsolvable groups in the library but each such
-test is expensive; on the other hand, each test for \texttt{IsAbelian} (\textbf{Reference: IsAbelian}) is cheap but such tests are needed for the many solvable groups in the
-library, in particular these groups must be constructed for the tests. }
-
- }
-
-  
 \section{\textcolor{Chapter }{Example: An Overview of the \textsf{GAP} Library of Tables of Marks }}\label{sect:tomlibinfo}
-\logpage{[ "A", 5, 0 ]}
-\hyperdef{L}{X831C7F817C6C4AA0}{}
+\logpage{[ "A", 4, 0 ]}
+\hyperdef{L}{X8628EF6981A524B3}{}
 {
   The example shown in this section deals with \textsf{GAP}'s Library of Tables of Marks (the \textsf{TomLib} package \cite{TomLib}). 
 
 \subsection{\textcolor{Chapter }{BrowseTomLibInfo}}
-\logpage{[ "A", 5, 1 ]}\nobreak
+\logpage{[ "A", 4, 1 ]}\nobreak
 \hyperdef{L}{X844D143980A0E20D}{}
-{\noindent\textcolor{FuncColor}{$\triangleright$\ \ \texttt{BrowseTomLibInfo({\mdseries\slshape })\index{BrowseTomLibInfo@\texttt{BrowseTomLibInfo}}
+{\noindent\textcolor{FuncColor}{$\triangleright$\enspace\texttt{BrowseTomLibInfo({\mdseries\slshape })\index{BrowseTomLibInfo@\texttt{BrowseTomLibInfo}}
 \label{BrowseTomLibInfo}
 }\hfill{\scriptsize (function)}}\\
 \textbf{\indent Returns:\ }

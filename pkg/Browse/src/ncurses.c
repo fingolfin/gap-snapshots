@@ -8,7 +8,7 @@
 **
 */
 
-#define VERSION "1.8.6"
+#define VERSION "1.8.7"
 
 const char * Revision_ncurses_c =
    "VERSION";
@@ -16,11 +16,6 @@ const char * Revision_ncurses_c =
 /* read GAP source header files with a combined header file */
 
 #include        "src/compiled.h"          /* GAP headers                */
-#include        "src/string.h"            /* need GAP strings           */
-#include        "src/bool.h"              /* and booleans               */
-#include        "src/plist.h"             /* and plain lists            */
-#include        "src/records.h"
-#include        "src/precord.h"           /* and plain records          */
 #include        <stdio.h>
 #include        <unistd.h>
 #include        <stdlib.h>                /* for getenv and co          */
@@ -780,7 +775,7 @@ Obj WGetch(Obj self, Obj num) {
     win = stdscr;
   c = getch();
   if (c != ERR)
-    return INTOBJ_INT(c);
+    return INTOBJ_INT(c == 127 ? KEY_BACKSPACE : c);
   else
     return False;
 }

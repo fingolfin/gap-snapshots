@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (ref) - Chapter 87: More about Stabilizer Chains</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -441,7 +441,7 @@ return PartitionBacktrack( G,
 
 <h4>87.3 <span class="Heading">Stabilizer Chains for Automorphisms Acting on Enumerators</span></h4>
 
-<p>This section describes a way of representing the automorphism group of a group as permutation group, following <a href="chapBib_mj.html#biBSims97">[ACM]</a>. The code however is not yet included in the <strong class="pkg">GAP</strong> library.</p>
+<p>This section describes a way of representing the automorphism group of a group as permutation group, following <a href="chapBib_mj.html#biBSims97">[Sim97]</a>. The code however is not yet included in the <strong class="pkg">GAP</strong> library.</p>
 
 <p>In this section we present an example in which objects we already know (namely, automorphisms of solvable groups) are equipped with the permutation-like operations <code class="code">^</code> and <code class="code">/</code> for action on positive integers. To achieve this, we must define a new type of objects which behave like permutations but are represented as automorphisms acting on an enumerator. Our goal is to generalize the Schreier-Sims algorithm for construction of a stabilizer chain to groups of such new automorphisms.</p>
 

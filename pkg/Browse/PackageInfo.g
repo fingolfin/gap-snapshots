@@ -1,9 +1,9 @@
 SetPackageInfo( rec(
 PackageName := "Browse",
-Version := "1.8.6",
-Date := "15/08/2014",
+Version := "1.8.7",
+Date := "21/07/2017",
 Subtitle := "browsing applications and ncurses interface",
-ArchiveURL := "http://www.math.rwth-aachen.de/~Browse/Browse-1.8.6",
+ArchiveURL := "http://www.math.rwth-aachen.de/~Browse/Browse-1.8.7",
 ArchiveFormats := ".tar.bz2",
 Persons := [
   rec(
@@ -47,8 +47,8 @@ PackageDoc := [
 )
 ],
 Dependencies := rec(
-  GAP := "4.6",  # because of UserPreference( "Pager" )
-  NeededOtherPackages := [ ["GAPDoc", ">= 1.4"], ],
+  GAP := "4.8.2",  # because of partially variadic functions
+  NeededOtherPackages := [ ["GAPDoc", ">= 1.6"], ], # more robust treatment of entries in *.bib files
   SuggestedOtherPackages := [ ["AtlasRep",">=1.5"], [ "IO", ">=2.2" ] ],
   ExternalConditions := ["C-compiler", "ncurses development library"]
 ),

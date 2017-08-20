@@ -4,16 +4,8 @@
 ##
 #Y  Copyright (C)  2006,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
-
-
-#############################################################################
+##  Note that this file gets read only if the IO package will be loaded.
 ##
-##  If the IO package is not installed then an error message is avoided
-##  via the following assignment.
-##
-if not IsBound( IO_stat ) then
-  IO_stat:= "dummy";
-fi;
 
 
 #############################################################################
@@ -38,15 +30,19 @@ end;
 ##
 #F  BrowseData.DirectoryTree( <startpath>, <filename>, <inoknown> )
 ##
-##  This function is called by `BrowseDirectory'
-##  The return value is a list [ name, files, [ entry1, ..., entryn ] ],
-##  where entryi is a list of the same structure or a string (denoting a
-##  file name that is not a directory)
+##  This function is called by `BrowseDirectory'.
+##  The return value is a list [ name, files, [ entry_1, ..., entry_n ] ],
+##  where entry_i is a list of the same structure or a string (denoting a
+##  file name that is not a directory).
 ##
 BrowseData.DirectoryTree:= function( startpath, filename, inoknown )
     local startfile, ino, files, nondirs, dirs, startdir, file;
 
-    startfile:= Filename( Directory( startpath ), filename );
+    if IsDirectory( startpath ) then
+      startfile:= Filename( startpath, filename );
+    else
+      startfile:= Filename( Directory( startpath ), filename );
+    fi;
     if not IsExistingFile( startfile ) then
       return fail;
     elif IsDirectoryPath( startfile ) then
@@ -75,21 +71,17 @@ BrowseData.DirectoryTree:= function( startpath, filename, inoknown )
         fi;
       od;
       return [ filename, nondirs,
-               List( dirs, x -> BrowseData.DirectoryTree( startfile, x,
+               List( dirs, x -> BrowseData.DirectoryTree( startdir, x,
                                     ShallowCopy( inoknown ) ) ) ];
     else
       return filename;
     fi;
 end;
 
-if IsString( IO_stat ) then
-  Unbind( IO_stat );
-fi;
-
 
 #############################################################################
 ##
-#F  BrowseDirectory( [<startpath>] )
+#F  BrowseDirectory( [<dir>] )
 ##
 ##  <#GAPDoc Label="Filetree_section">
 ##  <Section Label="sec:filetree">
@@ -104,7 +96,7 @@ fi;
 ##  to category rows.
 ##
 ##  <ManSection>
-##  <Func Name="BrowseDirectory" Arg="[startpath]"/>
+##  <Func Name="BrowseDirectory" Arg="[dir]"/>
 ##
 ##  <Returns>
 ##  a list of the <Q>clicked</Q> filenames.
@@ -113,10 +105,12 @@ fi;
 ##  <Description>
 ##  If no argument is given then the contents of the current directory is
 ##  shown, see <Ref Func="DirectoryCurrent" BookName="ref"/>.
-##  If a string <A>startpath</A> is given as the only argument then it is
-##  understood as a directory path,
-##  in the sense of <Ref Oper="Directory" BookName="ref"/>,
-##  and the contents of this directory is shown.
+##  If a directory object <A>dir</A>
+##  (see <Ref Oper="Directory" BookName="ref"/>)
+##  is given as the only argument then the contents of this directory is
+##  shown;
+##  alternatively, <A>dir</A> may also be a string which is then understood
+##  as a directory path.
 ##  <P/>
 ##  The full functionality of the function
 ##  <Ref Func="NCurses.BrowseGeneric"/> is available.
@@ -128,7 +122,7 @@ fi;
 ##  >        "X",                                  # expand all categories
 ##  >        "/filetree", [ NCurses.keys.ENTER ],  # search for "filetree"
 ##  >        n, "Q" ) );                           # and quit
-##  gap> dir:= Filename( DirectoriesPackageLibrary( "Browse", "" ), "" );;
+##  gap> dir:= DirectoriesPackageLibrary( "Browse", "" )[1];;
 ##  gap> if IsBound( BrowseDirectory ) then
 ##  >      BrowseDirectory( dir );
 ##  >    fi;
@@ -169,21 +163,29 @@ fi;
 ##  <#/GAPDoc>
 ##
 BindGlobal( "BrowseDirectory", function( arg )
-    local startpath, data, width, cats, files, paths, hidden, i, maxdepth,
-          sep, evaltree, show, modes, mode, isCollapsedRow, sel_action,
-          collapse;
+    local dir, startpath, data, width, cats, files, paths, hidden, i,
+          maxdepth, sep, evaltree, show, modes, mode, isCollapsedRow,
+          sel_action, collapse;
 
     if   Length( arg ) = 0 then
-      startpath:= ".";
+      dir:= ".";
     elif Length( arg ) = 1 then
-      startpath:= arg[1];
+      dir:= arg[1];
     else
-      Error( "usage: BrowseDirectory( [<startpath>] )" );
+      Error( "usage: BrowseDirectory( [<dir>] )" );
     fi;
 
-    data:= BrowseData.DirectoryTree( startpath, "", [] );
+    if IsDirectory( dir ) then
+      startpath:= Filename( dir, "" );
+    elif IsString( dir ) then
+      startpath:= dir;
+    else
+      Error( "<dir> must be either a directory object or a string" );
+    fi;
+
+    data:= BrowseData.DirectoryTree( dir, "", [] );
     if data = fail then
-      Error( "<startpath> does not describe a readable directory" );
+      Error( "<dir> does not describe a readable directory" );
     fi;
 
     width:= NCurses.getmaxyx( 0 )[2];

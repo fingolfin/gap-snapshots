@@ -54,8 +54,7 @@
   from the marks [22Xm_ij[122X via the formula[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yc_ij = ( m_ij m_j1 ) / ( m_i1 m_jj )[133X[124X[133X
-  
+  [24X[33X[0;6Yc_ij = ( m_ij m_j1 ) / ( m_i1 m_jj )[133X[124X
   
   [33X[0;0Y.[133X
   
@@ -265,17 +264,17 @@
   
   [33X[0;0YAn  interactive  variant  of  [2XDisplay[102X ([14X6.3-6[114X) is the [2XBrowse[102X ([14XBrowse: Browse[114X)
   method  for  tables of marks that is provided by the [5XGAP[105X package [5XBrowse[105X, see
-  [2XBrowse[102X ([14XBrowse: Browse (for tables of marks)[114X).[133X
+  [2XBrowse[102X ([14XBrowse: Browse for tables of marks[114X).[133X
   
   [33X[0;0YThe  optional  second argument [3Xarec[103X of [2XDisplay[102X ([14X6.3-6[114X) can be used to change
   the  default  style  for displaying a table of marks. [3Xarec[103X must be a record,
   its relevant components are the following.[133X
   
-  [8X[10Xclasses[110X[108X
+  [8X[10Xclasses[110X[8X[108X
         [33X[0;6Ya  list  of  class  numbers to select only the rows and columns of the
         matrix that correspond to this list for printing,[133X
   
-  [8X[10Xform[110X[108X
+  [8X[10Xform[110X[8X[108X
         [33X[0;6Yone  of the strings [10X"subgroups"[110X, [10X"supergroups"[110X; in the former case, at
         position [22X(i,j)[122X of the matrix the number of conjugates of [22XH_j[122X contained
         in  [22XH_i[122X  is  printed,  and  in  the latter case, at position [22X(i,j)[122X the
@@ -1215,10 +1214,10 @@
   [33X[0;0YThe  optional  argument [3Xoptions[103X must be a record that may have the following
   components.[133X
   
-  [8X[10Xfusionmap[110X[108X
+  [8X[10Xfusionmap[110X[8X[108X
         [33X[0;6Ya parametrized map which is an approximation of the desired map,[133X
   
-  [8X[10Xquick[110X[108X
+  [8X[10Xquick[110X[8X[108X
         [33X[0;6Ya  Boolean;  if [9Xtrue[109X then as soon as only one possibility remains this
         possibility is returned immediately; the default value is [9Xfalse[109X.[133X
   

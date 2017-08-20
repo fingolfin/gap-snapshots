@@ -23,7 +23,7 @@ gap> START_TEST( "Input file: test.tst" );
 gap> oldinterval:= BrowseData.defaults.dynamic.replayDefaults.replayInterval;;
 gap> BrowseData.defaults.dynamic.replayDefaults.replayInterval:= 1;;
 
-##  doc/../lib/ncurses.gi (815-828)
+##  doc/../lib/ncurses.gi (856-869)
 gap> win := NCurses.newwin(0,0,0,0);; pan := NCurses.new_panel(win);;
 gap> defc := NCurses.defaultColors;;
 gap> NCurses.wmove(win, 0, 0);;
@@ -37,7 +37,7 @@ gap> if NCurses.IsStdoutATty() then
 >      NCurses.endwin();; NCurses.del_panel(pan);; NCurses.delwin(win);;
 >    fi;
 
-##  doc/../lib/ncurses.gi (79-89)
+##  doc/../lib/ncurses.gi (120-130)
 gap> NCurses.IsAttributeLine( "abc" );
 true
 gap> NCurses.IsAttributeLine( [ "abc", "def" ] );
@@ -48,7 +48,7 @@ gap> NCurses.IsAttributeLine( "" );  NCurses.IsAttributeLine( [] );
 true
 false
 
-##  doc/../lib/ncurses.gi (152-165)
+##  doc/../lib/ncurses.gi (193-206)
 gap> plain_str:= "hello";;
 gap> with_attr:= [ NCurses.attrs.BOLD, "bold" ];;
 gap> NCurses.ConcatenationAttributeLines( [ plain_str, plain_str ] );
@@ -62,20 +62,20 @@ gap> NCurses.ConcatenationAttributeLines( [ with_attr, with_attr ] );
 gap> NCurses.ConcatenationAttributeLines( [ with_attr, with_attr ], true );
 [ 2097152, "bold", 2097152, "bold" ]
 
-##  doc/../lib/ncurses.gi (277-282)
+##  doc/../lib/ncurses.gi (318-323)
 gap> NCurses.RepeatedAttributeLine( "12345", 23 );
 "12345123451234512345123"
 gap> NCurses.RepeatedAttributeLine( [ NCurses.attrs.BOLD, "12345" ], 13 );
 [ 2097152, "12345", 0, 2097152, "12345", 0, 2097152, "123" ]
 
-##  doc/../lib/ncurses.gi (1048-1054)
+##  doc/../lib/ncurses.gi (1089-1095)
 gap> NCurses.WidthAttributeLine( "abcde" );
 5
 gap> NCurses.WidthAttributeLine( [ NCurses.attrs.BOLD, "abc",
 >        NCurses.attrs.NORMAL, "de" ] );
 5
 
-##  doc/../lib/ncurses.gi (2861-2868)
+##  doc/../lib/ncurses.gi (3202-3209)
 gap> NCurses.Alert( "Hello world!", 1000 );
 fail
 gap> NCurses.Alert( [ "Hello world!",
@@ -96,7 +96,7 @@ true
 gap> BrowseData.IsBrowseTableCellData( [] );
 true
 
-##  doc/../lib/browse.gi (1997-2003)
+##  doc/../lib/browse.gi (1994-2000)
 gap> BrowseData.BlockEntry( "abc", 3, 5 );
 [ "     ", "  abc", "     " ]
 gap> BrowseData.BlockEntry( rec( rows:= [ "ab", "cd" ],
@@ -185,7 +185,7 @@ gap> xpl4:= rec(
 gap> BrowseData.IsBrowseTable( xpl4 );
 true
 
-##  doc/../lib/browse.gi (5418-5429)
+##  doc/../lib/browse.gi (5420-5431)
 gap> xpl1.work.ShowHelp:= BrowseData.ShowHelpPager;;
 gap> BrowseData.SetReplay( "?Q" );
 gap> Unbind( xpl1.dynamic );
@@ -237,7 +237,7 @@ gap> if TestPackageAvailability( "CTblLib" ) = true then
 >      BrowseData.SetReplay( false );
 > fi;
 
-##  doc/../app/ctbldisp.g (678-690)
+##  doc/../app/ctbldisp.g (685-697)
 gap> BrowseData.SetReplay( Concatenation(
 >         # select the first entry
 >         "se",
@@ -268,7 +268,7 @@ gap> if TestPackageAvailability( "TomLib" ) = true then
 >      BrowseData.SetReplay( false );
 >    fi;
 
-##  doc/../app/atlasbrowse.g (510-539)
+##  doc/../app/atlasbrowse.g (524-553)
 gap> d:= [ NCurses.keys.DOWN ];;  r:= [ NCurses.keys.RIGHT ];;
 gap> c:= [ NCurses.keys.ENTER ];;
 gap> BrowseData.SetReplay( Concatenation(
@@ -311,10 +311,10 @@ gap> BrowseData.SetReplay( Concatenation(
 gap> BrowseGapManuals( "inline/collapsed" );
 gap> BrowseData.SetReplay( false );
 
-##  doc/../app/gapbibl.g (356-358)
+##  doc/../app/gapbibl.g (364-366)
 gap> file:= Filename( DirectoriesLibrary( "doc" ), "manualbib.xml" );;
 
-##  doc/../app/gapbibl.g (396-408)
+##  doc/../app/gapbibl.g (404-416)
 gap> # sort and categorize by year, scroll down, expand a category row
 gap> BrowseData.SetReplay( "scrrscsedddddxdddddQ" );
 gap> BrowseBibliography();;
@@ -345,7 +345,24 @@ gap> BrowseData.SetReplay( Concatenation(
 gap> BrowseProfile();
 gap> BrowseData.SetReplay( false );
 
-##  doc/../app/gapdata.g (139-151)
+##  doc/../app/userpref.g (254-270)
+gap> d:= [ NCurses.keys.DOWN ];;  
+gap> c:= [ NCurses.keys.ENTER ];; 
+gap> BrowseData.SetReplay( Concatenation(
+>        "/PackagesToLoad",  # enter a search string,
+>        c,                  # start the search,
+>        c,                  # edit the entry (a list of choices),
+>        " ", d,             # toggle the first four values,
+>        " ", d,             #
+>        " ", d,             #
+>        " ", d,             #
+>        c,                  # submit the values,
+>        "Q",                # quit the table,
+>        c ) );              # choose "cancel": do not apply the changes.
+gap> BrowseUserPreferences();
+gap> BrowseData.SetReplay( false );
+
+##  doc/../app/gapdata.g (135-147)
 gap> n:= [ 14, 14, 14 ];;  # ``do nothing''
 gap> # open the overview of Conway polynomials
 gap> BrowseData.SetReplay( Concatenation( "/Conway Polynomials",
@@ -358,14 +375,14 @@ gap> BrowseData.SetReplay( Concatenation( "/GAP Packages",
 gap> BrowseGapData();;
 gap> BrowseData.SetReplay( false );
 
-##  doc/../app/filetree.g (124-136)
+##  doc/../app/filetree.g (118-130)
 gap> n:= [ 14, 14, 14 ];;  # ``do nothing''
 gap> BrowseData.SetReplay( Concatenation(
 >        "q",                                  # leave the selection
 >        "X",                                  # expand all categories
 >        "/filetree", [ NCurses.keys.ENTER ],  # search for "filetree"
 >        n, "Q" ) );                           # and quit
-gap> dir:= Filename( DirectoriesPackageLibrary( "Browse", "" ), "" );;
+gap> dir:= DirectoriesPackageLibrary( "Browse", "" )[1];;
 gap> if IsBound( BrowseDirectory ) then
 >      BrowseDirectory( dir );
 >    fi;
@@ -472,6 +489,12 @@ gap> Sudoku.SimpleDisplay(sol);
 281|695|437
 546|387|192
 379|124|865
+
+##  doc/../app/rldemo.g (55-60)
+gap> dirs := DirectoriesPackageLibrary("Browse");;
+gap> demofile := Filename(dirs, "../app/demo.demo");;
+gap> LoadDemoFile("My first demo", demofile);
+gap> LoadDemoFile("My first demo (single lines)", demofile, true);
 
 ##  doc/brdbattr.xml (89-95)
 gap> n:= 100;;
@@ -749,45 +772,6 @@ gap> BrowseData.SetReplay( sample_session );
 gap> NCurses.BrowseGeneric( t4 );
 gap> BrowseData.SetReplay( false );
 gap> Unbind( t4.dynamic.replay );
-
-##  doc/../app/transbrowse.g (488-497)
-gap> c:= [ NCurses.keys.ENTER ];;
-gap> BrowseData.SetReplay( Concatenation(
->        "scrrrr/5", c,     # search for transitivity 5,
->        "nn", c,           # go to the third occurrence, click on it,
->        "Q" ) );;          # and quit the browse table
-gap> BrowseTransitiveGroupsInfo();
-[ M(12) ]
-gap> BrowseData.SetReplay( false );
-
-##  doc/../app/transbrowse.g (605-610)
-gap> TransitiveGroupsData.AllTransitiveGroups(
->      NrMovedPoints, [ 5 .. 28 ],
->      IsSimpleGroup, true, IsAbelian, true );
-[ C(5) = 5, C(7) = 7, C(11)=11, C(13)=13, C(17)=17, C(19)=19, C(23) ]
-
-##  doc/../app/transdbattr.g (36-47)
-gap> n:= [ 14, 14, 14 ];;  # ``do nothing'' input (means timeout)
-gap> BrowseData.SetReplay( Concatenation(
->        "scrrrsc", n, n,        # categorize by solvability info
->        "!", n,                 # reset
->        "scrrrrsc", n, n,       # categorize by abelianity info
->        "Q" ) );;               # quit the browse table
-gap> BrowseTransitiveGroupsInfo( rec( choice:= [ "degree", "size",
->      "names", "IsSolvableGroup", "IsAbelian", "IsPerfectGroup",
->      "IsSimpleGroup" ] ) );;
-gap> BrowseData.SetReplay( false );
-
-##  doc/../app/transdbattr.g (57-67)
-gap> TransitiveGroupsData.MinimalDegree;
-2
-gap> attrs:= TransitiveGroupsData.IdEnumerator.attributes;;
-gap> oldlen:= SizeScreen();;  SizeScreen( [ 60 ] );;
-gap> HexStringBlistEncode( attrs.IsAbelian.data );
-"D88400040Es0503s0480s040406s252010s0720s0C3EsF30803s7A040\
-5s8B20s1302s0740E0sFFsFFsFFsFFsFFsFFsFFsFFsFFsFFsFFsFFs40C\
-0s1910s0B1AsFFs2B18sE74040sFFsFF"
-gap> SizeScreen( oldlen );;
 
 ##  doc/../app/tmdbattr.g (51-76)
 gap> c:= [ NCurses.keys.ENTER ];;

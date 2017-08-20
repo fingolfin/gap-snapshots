@@ -294,10 +294,9 @@
   [30X    [33X[0;6YFixed  requirements  in  a  method to multiply a list and an algebraic
         element. [Reported by Sebastian Gutsche][133X
   
-  [30X    [33X[0;6YFixed  a  bug  in [2XNaturalCharacter[102X ([14XReference: NaturalCharacter (for a
-        group)[114X)  entering  a  break  loop  when being called on a homomorphism
-        whose  image  is  not  a  permutation  group.  [Reported  by Sebastian
-        Gutsche][133X
+  [30X    [33X[0;6YFixed  a  bug  in  [2XNaturalCharacter[102X ([14XReference: NaturalCharacter for a
+        group[114X) entering a break loop when being called on a homomorphism whose
+        image is not a permutation group. [Reported by Sebastian Gutsche][133X
   
   [30X    [33X[0;6YFixed     a     bug     in     [2XExponentsConjugateLayer[102X     ([14XReference:
         ExponentsConjugateLayer[114X)  which occured, for example, in some calls of
@@ -325,8 +324,8 @@
   
   [33X[0;0YImproved functionality:[133X
   
-  [30X    [33X[0;6Y[2XTraceMethods[102X    ([14XReference:   TraceMethods   (for   operations)[114X)   and
-        [2XUntraceMethods[102X ([14XReference: UntraceMethods (for operations)[114X) now better
+  [30X    [33X[0;6Y[2XTraceMethods[102X    ([14XReference:    TraceMethods    for   operations[114X)   and
+        [2XUntraceMethods[102X  ([14XReference:  UntraceMethods for operations[114X) now better
         check  their  arguments  and provide a sensible error message if being
         called  without arguments. Also, both variants of calling them are now
         documented.[133X

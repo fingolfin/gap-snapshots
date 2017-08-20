@@ -5,7 +5,7 @@
   in  Chapters [14X5[114X  and [14X6[114X:  the  groups  [10Xs8[110X  and  [10Xa8[110X in Section [14X5.1[114X are domains,
   likewise the field [10Xf[110X and the vector space [10Xv[110X in Section [14X6.1[114X are domains. They
   were  constructed  by  functions  such  as  [2XGroup[102X ([14XReference: Groups[114X) and [2XGF[102X
-  ([14XReference:  GF  (for field size)[114X), and they could be passed as arguments to
+  ([14XReference:  GF  for  field  size[114X), and they could be passed as arguments to
   other  functions  such  as  [2XDerivedSubgroup[102X ([14XReference: DerivedSubgroup[114X) and
   [2XDimension[102X ([14XReference: Dimension[114X).[133X
   

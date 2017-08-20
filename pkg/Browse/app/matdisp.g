@@ -225,7 +225,7 @@ InstallMethod( Browse,
     if IsZmodnZObj( m[1][1] ) then
       NCurses.BrowseDenseList( List( m, r -> List( r, i -> i![1] ) ),
           rec( header:= [ Concatenation( "matrix over Integers mod ",
-                              String( DataType( TypeObj( m[1][1] ) ) ) ),
+                              String( Characteristic( m[1][1] ) ) ),
                           "" ],
                convertEntry:= NCurses.ReplaceZeroByDot,
              ) );
@@ -293,7 +293,7 @@ InstallMethod( Browse,
 
     NCurses.BrowseDenseList( List( m, r -> List( r, i -> i![1] ) ),
         rec( header:= [ Concatenation( "matrix over Integers mod ",
-                            String( DataType( TypeObj( m[1][1] ) ) ) ),
+                            String( Characteristic( m[1][1] ) ) ),
                         "" ],
              convertEntry:= NCurses.ReplaceZeroByDot,
            ) );

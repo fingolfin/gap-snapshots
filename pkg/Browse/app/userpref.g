@@ -219,8 +219,9 @@ end;
 ##  and if one or more strings <A>package1</A>, <M>\ldots</M> are given
 ##  then only the user preferences for these packages are shown.
 ##  <P/>
-##  <Ref Func="BrowseUserPreferences"/> opens a Browse table with the
+##  <Ref Func="BrowseUserPreferences"/> opens a browse table with the
 ##  following columns:
+##  <P/>
 ##  <List>
 ##  <Mark><Q>Package</Q></Mark>
 ##  <Item>
@@ -246,9 +247,27 @@ end;
 ##  otherwise one can enter the desired value as text.
 ##  <P/>
 ##  The values of the user preferences are not changed before one closes the
-##  Browse table.
+##  browse table.
 ##  When the table is left and if one has changed at least one value,
 ##  one is asked whether the changes shall be applied.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> d:= [ NCurses.keys.DOWN ];;  
+##  gap> c:= [ NCurses.keys.ENTER ];; 
+##  gap> BrowseData.SetReplay( Concatenation(
+##  >        "/PackagesToLoad",  # enter a search string,
+##  >        c,                  # start the search,
+##  >        c,                  # edit the entry (a list of choices),
+##  >        " ", d,             # toggle the first four values,
+##  >        " ", d,             #
+##  >        " ", d,             #
+##  >        " ", d,             #
+##  >        c,                  # submit the values,
+##  >        "Q",                # quit the table,
+##  >        c ) );              # choose "cancel": do not apply the changes.
+##  gap> BrowseUserPreferences();
+##  gap> BrowseData.SetReplay( false );
+##  ]]></Example>
 ##  <P/>
 ##  The code can be found in the file <F>app/userpref.g</F> of the package.
 ##  </Description>
@@ -344,8 +363,7 @@ BindGlobal( "BrowseUserPreferences", function( arg )
       helplines:= [ "edit the current entry" ],
       action:= function( t )
       local i, names, data, currentvalues, newvalues, admissible, values,
-            pref, index, prefs, n, j, header, ncols, hint, win, pan, results,
-            val;
+            pref, index, defaults, j, results, val;
 
       if t.dynamic.selectedEntry <> [ 0, 0 ] then
         i:= t.dynamic.indexRow[ t.dynamic.selectedEntry[1] ] / 2;
@@ -373,6 +391,8 @@ BindGlobal( "BrowseUserPreferences", function( arg )
             border:= NCurses.attrs.BOLD,
             align:= "c",
             size:= "fit",
+            replay:= t.dynamic.replay,
+            log:= t.dynamic.log,
           );
           if preflist[i][5][1] <> fail then
             if pref.single then
@@ -382,7 +402,13 @@ BindGlobal( "BrowseUserPreferences", function( arg )
                                   x -> Position( admissible, x ) );
             fi;
           fi;
+          if IsBound( t.dynamic.statuspanel ) then
+            NCurses.hide_panel( t.dynamic.statuspanel );
+          fi;
           index:= NCurses.Select( pref );
+          if IsBound( t.dynamic.statuspanel ) then
+            NCurses.show_panel( t.dynamic.statuspanel );
+          fi;
           if index <> false then
             if pref.single then
               newvalues:= [ admissible[ index ] ];
@@ -392,47 +418,27 @@ BindGlobal( "BrowseUserPreferences", function( arg )
           fi;
         else
           # Let the user edit the values.
-          prefs:= [];
-          n:= 3;
-          for j in [ 1 .. Length( names ) ] do
-            pref:= rec( prefix:= Concatenation( names[j], ": " ),
-                        suffix:= "",
-                        begin:= [ n + 2, 4 ],
-                        ncols:= winwidth - 10,
-                      );
-            if IsStringRep( currentvalues[j] ) then
-              pref.default:= Concatenation( "\"",
-                  ReplacedString( currentvalues[j], "\"", "\\\"" ), "\"" );
-            elif currentvalues[j] <> fail then
-              pref.default:= String( currentvalues[j], 0 );
+          defaults:= ShallowCopy( preflist[i][5] );
+          for j in [ 1 .. Length( defaults ) ] do
+            if IsStringRep( defaults[j] ) then
+              defaults[j]:= Concatenation( "\"",
+                  ReplacedString( defaults[j], "\"", "\\\"" ), "\"" );
+            elif defaults[j] <> fail then
+              defaults[j]:= String( defaults[j], 0 );
             fi;
-            Add( prefs, pref );
-            n:= n + 3;
           od;
 
-          header:= [ NCurses.attrs.BOLD, "Edit user preferences",
-                     NCurses.attrs.NORMAL ];
-          if Length( currentvalues ) = 1 then
-            hint:= [ NCurses.attrs.BOLD,
-                     " [ <Return> done, <Esc> cancel, <F1> help ] ",
-                     NCurses.attrs.NORMAL ];
-          else
-            hint:= [ NCurses.attrs.BOLD,
-              " [ <Tab> move focus, <Return> done, <Esc> cancel, <F1> help ] ",
-                     NCurses.attrs.NORMAL ];
+          if IsBound( t.dynamic.statuspanel ) then
+            NCurses.hide_panel( t.dynamic.statuspanel );
           fi;
-          ncols:= winwidth - 6;
-          win:= NCurses.newwin( n+2, ncols, 2, 3 );
-          pan:= NCurses.new_panel( win );
-          NCurses.wattrset( win, NCurses.attrs.BOLD );
-          NCurses.wborder( win, 0 );
-          NCurses.wattrset( win, NCurses.attrs.NORMAL );
-          NCurses.PutLine( win, 1, 2, header );
-          NCurses.PutLine( win, n+1,
-            Int( ( ncols - NCurses.WidthAttributeLine( hint ) ) / 2 ), hint );
-          results:= NCurses.EditFields( win, prefs );
-          NCurses.del_panel( pan);
-          NCurses.delwin( win);
+
+          results:= NCurses.EditFieldsDefault(
+                        "Edit user preferences",
+                        List( preflist[i][2], x -> Concatenation( x, ":" ) ),
+                        defaults,
+                        winwidth,
+                        t.dynamic.replay,
+                        t.dynamic.log );
 
           if results <> fail then
             # Evaluate the strings and change the values as desired.
@@ -462,8 +468,12 @@ BindGlobal( "BrowseUserPreferences", function( arg )
             fi;
           fi;
 
+          if IsBound( t.dynamic.statuspanel ) then
+            NCurses.show_panel( t.dynamic.statuspanel );
+          fi;
           NCurses.update_panels();
           NCurses.doupdate();
+
         fi;
 
         if newvalues <> currentvalues then
@@ -544,6 +554,9 @@ BindGlobal( "BrowseUserPreferences", function( arg )
         items[3]:= "save and store values in the gap.ini file";
       fi;
 
+      if IsBound( table.dynamic.statuspanel ) then
+        NCurses.hide_panel( table.dynamic.statuspanel );
+      fi;
       index:= NCurses.Select( rec(
                 items:= items,
                 single:= true,
@@ -551,7 +564,12 @@ BindGlobal( "BrowseUserPreferences", function( arg )
                 border:= NCurses.attrs.BOLD,
                 align:= "c",
                 size:= "fit",
+                replay:= table.dynamic.replay,
+                log:= table.dynamic.log,
               ) );
+      if IsBound( table.dynamic.statuspanel ) then
+        NCurses.show_panel( table.dynamic.statuspanel );
+      fi;
       if index >= 2 then
         for entry in preflist do
           if entry[4] <> entry[5] then

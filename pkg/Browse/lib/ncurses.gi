@@ -44,6 +44,47 @@ if IsBound(NCurses) then
 
 #############################################################################
 ##
+#F  NCurses.IsBackspace( <c> )
+##
+##  <c> must be an integer.
+##  On some systems, the code 127 corresponds to the backspace key
+##  but 'NCurses.keys.BACKSPACE' does not.
+##
+NCurses.IsBackspace:= c -> c in [NCurses.keys.BACKSPACE, IntChar(''), 127];
+
+
+#############################################################################
+##
+#F  NCurses.GetCharacterWithReplay( <win>, <replay>, <log> )
+##
+##  This function does not deal with mouse events!
+##
+NCurses.GetCharacterWithReplay:= function( win, replay, log )
+    local c, currlog;
+
+    if replay = fail or BrowseData.IsDoneReplay( replay ) then
+      c:= NCurses.wgetch( win );
+    else
+      currlog:= replay.logs[ replay.pointer ];
+      c:= currlog.steps[ currlog.position ];
+      if IsChar( c ) then
+        c:= IntChar( c );
+      fi;
+      currlog.position:= currlog.position + 1;
+      if not currlog.quiet then
+        NCurses.napms( currlog.replayInterval );
+      fi;
+    fi;
+    if log <> fail and ( replay = fail or 1 < replay.pointer ) then
+      Add( log, c );
+    fi;
+
+    return c;
+end;
+
+
+#############################################################################
+##
 #F  NCurses.IsAttributeLine( <obj> )
 ##
 ##  <#GAPDoc Label="IsAttributeLine_man">
@@ -541,7 +582,7 @@ NCurses.mouseEvents := [ "BUTTON1_PRESSED", "BUTTON1_RELEASED",
 ##  <Returns>a list of records</Returns>
 ##  <Description>
 ##  <C>ncurses</C> allows  on some  terminals (<C>xterm</C> and  related) to
-##  catch mouse events. In principle a subset of events  can be catched, see
+##  catch mouse events.  In principle a subset of events  can be caught, see
 ##  <C>mousemask</C>  in <Ref  Subsect="ssec:ncursesMouse"/>. But  this does
 ##  not seem to  work well with proper subsets of  possible events (probably
 ##  due to  intermediate processes X, window  manager, terminal application,
@@ -579,7 +620,7 @@ NCurses.mouseEvents := [ "BUTTON1_PRESSED", "BUTTON1_RELEASED",
 ##  your application. Allow the user to  switch mouse usage on and off while
 ##  your  application is  running. Some  users may  not like  to give  mouse
 ##  control  to your  application, for  example the  standard cut  and paste
-##  functionality cannot be used while mouse events are catched.
+##  functionality cannot be used while mouse events are caught.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -1302,7 +1343,7 @@ NCurses.GetLineFromUser := function( arec )
       if pos > max then
         pos := pos - 1;
       fi;
-    elif c in [NCurses.keys.BACKSPACE, IntChar('')] then
+    elif NCurses.IsBackspace( c ) then
       if pos > 1 then
         pos := pos - 1;
         RemoveElmList(res, pos);
@@ -1347,11 +1388,26 @@ end;
 ##  <RETURN> stops the cycle and transfers the changed values,
 ##  <ESC> stops the cycle without transfering the changed values.
 ##
+##  If <arecs> is a record then it must have the component 'fields'.
+##  Optional components are 'replay' and 'log', which are used in some
+##  applications based on 'NCurses.BrowseGeneric'.
+##
 NCurses.EditFields := function( win, arecs )
-    local results, i, yx, curs, field, createfield, fillfield, b, helppage,
-          arec, res, max, pos, firstvisible, ins, c;
+    local replay, log, results, i, yx, curs, field, createfield, fillfield,
+          b, helppage, arec, res, max, pos, firstvisible, ins, c;
 
     # Initializations.
+    replay:= fail;
+    log:= fail;
+    if IsRecord( arecs ) then
+      if IsBound( arecs.replay ) then
+        replay:= arecs.replay;
+      fi;
+      if IsBound( arecs.log ) then
+        log:= arecs.log;
+      fi;
+      arecs:= arecs.fields;
+    fi;
     results:= List( arecs, x -> "" );
     for i in [ 1 .. Length( arecs ) ] do
       if not IsRecord( arecs[i] ) then
@@ -1509,7 +1565,7 @@ NCurses.EditFields := function( win, arecs )
         NCurses.doupdate();
 
         # Get a character and adjust the data.
-        c:= NCurses.wgetch( arec.win );
+        c:= NCurses.GetCharacterWithReplay( arec.win, replay, log );
         if c = NCurses.keys.RIGHT then
           if pos <= Length( res ) then
             pos:= pos + 1;
@@ -1538,7 +1594,7 @@ NCurses.EditFields := function( win, arecs )
           if firstvisible < 1 then
             firstvisible:= 1;
           fi;
-        elif c in [ NCurses.keys.BACKSPACE, IntChar('') ] then
+        elif NCurses.IsBackspace( c ) then
           if pos > 1 then
             pos:= pos - 1;
             RemoveElmList( res, pos );
@@ -1616,6 +1672,276 @@ NCurses.EditFields := function( win, arecs )
 ##    NCurses.doupdate();
 
     return results;
+end;
+
+
+#############################################################################
+##
+#F  NCurses.EditFieldsDefault( <title>, <labels>, <defaults>, <winwidth>,
+#F                             <replay>, <log> )
+##
+##  This function is a wrapper for 'NCurses.EditFields'.
+##  It returns the result of this function.
+##
+##  It is crucial that 'NCurses.update_panels()' and 'NCurses.doupdate()'
+##  are not called at the end of this function,
+##  because otherwise the error messages from a subsequent validation
+##  (as in 'BrowseUserPreferences') would become visible
+##  in visual mode.
+##
+NCurses.EditFieldsDefault:= function( title, labels, defaults, winwidth,
+                                      replay, log )
+    local fields, n, j, header, hint, ncols, win, pan, result;
+
+    fields:= [];
+    n:= 3;
+    for j in [ 1 .. Length( labels ) ] do
+      fields[j]:= rec( prefix:= labels[j],
+                       suffix:= "",
+                       default:= String( defaults[j], 0 ),
+                       begin:= [ n + 2, 4 ],
+                       ncols:= winwidth - 10,
+                     );
+      n:= n + 3;
+    od;
+
+    header:= [ NCurses.attrs.BOLD, title, NCurses.attrs.NORMAL ];
+    if Length( defaults ) = 1 then
+      hint:= [ NCurses.attrs.BOLD,
+               " [ <Return> done, <Esc> cancel, <F1> help ] ",
+               NCurses.attrs.NORMAL ];
+    else
+      hint:= [ NCurses.attrs.BOLD,
+        " [ <Tab> move focus, <Return> done, <Esc> cancel, <F1> help ] ",
+               NCurses.attrs.NORMAL ];
+    fi;
+    ncols:= winwidth - 6;
+    win:= NCurses.newwin( n+2, ncols, 2, 3 );
+    pan:= NCurses.new_panel( win );
+    NCurses.wattrset( win, NCurses.attrs.BOLD );
+    NCurses.wborder( win, 0 );
+    NCurses.wattrset( win, NCurses.attrs.NORMAL );
+    NCurses.PutLine( win, 1, 2, header );
+    NCurses.PutLine( win, n+1,
+      Int( ( ncols - NCurses.WidthAttributeLine( hint ) ) / 2 ), hint );
+    result:= NCurses.EditFields( win, rec( fields:= fields,
+                                           replay:= replay,
+                                           log:= log ) );
+    NCurses.del_panel( pan );
+    NCurses.delwin( win );
+
+## If this was called from visual mode, one should now say:  
+##    NCurses.update_panels();
+##    NCurses.doupdate();
+
+    return result;
+end;
+
+
+#############################################################################
+##
+#F  NCurses.EditTable( <arec> )
+##
+##  <arec> must be a record with the following components.
+##  - 'list'
+##      the list of records to be edited,
+##  - 'title'
+##      a string, used as the title of the dialog windows,
+##  - 'choices'
+##      optional, a list of records from which one can choose,
+##  - 'rectodisp'
+##      a function that takes a record from 'list' and returns a string
+##      that is shown in the table, in order to show the current choices,
+##  - 'mapping'
+##      a list of pairs `[ component, label ]' such that 'component' is the
+##      name of a component in the entries in 'list', and 'label' is the
+##      label shown in the edit box for the record.
+##
+##  Optional components are 'replay' and 'log', which are used inside
+##  'NCurses.Select' and 'NCurses.EditFields'.
+##
+##  The function admits a rudimentary editing of 'list', that is, one can
+##  - delete entries,
+##  - edit those components of entries that occur in 'mapping',
+##  - add new entries to 'list', either by choosing them from 'choices'
+##    or by entering an entry by hand; in the latter case, this affects only
+##    the components that occur in 'mapping'.
+##
+##  Note:
+##  - 'list' and its entries are changed in place.
+##  - It is not possible to reorder the entries in 'list'.
+##  - Only strings are supported as values of the record components;
+##    more precisely, any component value will be converted to a string on
+##    editing the record.
+##
+##  The function returns 'true' if something was edited,
+##  and 'false' if not.
+##
+NCurses.EditTable:= function( arec )
+    local replay, log, choices, index, available, new, entry, r, defaults, i;
+
+    replay:= fail;
+    log:= fail;
+    if IsBound( arec.replay ) then
+      replay:= arec.replay;
+    fi;
+    if IsBound( arec.log ) then
+      log:= arec.log;
+    fi;
+
+    if 0 < Length( arec.list ) then
+      # Let the user choose an action.
+      choices:= rec(
+        header:= "Please choose an action.",
+        items:= [ "Add new entries", "Edit an entry", "Delete entries" ],
+        single:= true,
+        none:= true,
+        border:= NCurses.attrs.BOLD,
+        align:= "c",
+        size:= "fit",
+        replay:= replay,
+        log:= log,
+      );
+      index:= NCurses.Select( choices );
+      if index = false then
+        return false;
+      fi;
+    else
+      # The only possible action is to add an entry.
+      index:= 1;
+    fi;
+
+    if   index = 1 then
+      # Add new entries
+      if IsBound( arec.choices ) then
+        # Let the user choose one or more entries from this list.
+        available:= Filtered( arec.choices, r -> not r in arec.list );
+        choices:= Concatenation( [ "create new entry" ],
+                                 List( available, arec.rectodisp ) );
+        choices:= rec(
+          header:= "Please choose entries to be added.",
+          items:= choices,
+          single:= false,
+          none:= true,
+          border:= NCurses.attrs.BOLD,
+          align:= "c",
+          size:= "fit",
+          replay:= replay,
+          log:= log,
+        );
+        index:= NCurses.Select( choices );
+        if index = [] then
+          return false;
+        fi;
+
+        # Extend the list.
+        if 1 in index then
+          new:= true;
+          index:= index{ [ 2 .. Length( index ) ] } - 1;
+        else
+          new:= false;
+          index:= index - 1;
+        fi;
+        Append( arec.list, available{ index } );
+      else
+        # Create a new entry.
+        new:= true;
+      fi;
+
+      # Let the user create a new entry if wanted.
+      if new then
+        entry:= NCurses.EditFieldsDefault( arec.title,
+                  List( arec.mapping, x -> Concatenation( x[2], ": " ) ),
+                  List( arec.mapping, x -> "" ),
+                  NCurses.getmaxyx( 0 )[2],
+                  replay,
+                  log );
+        NCurses.update_panels();
+        NCurses.doupdate();
+        if entry <> fail then
+          r:= rec();
+          for i in [ 1 .. Length( arec.mapping ) ] do
+            r.( arec.mapping[i][1] ):= entry[i];
+          od;
+          Add( arec.list, r );
+        fi;
+      fi;
+
+    elif index = 2 then
+      # Edit an entry:
+      if 1 < Length( arec.list ) then
+        # Let the user choose one entry from the current list.
+        choices:= rec(
+          header:= "Please choose an entry to be edited.",
+          items:= List( arec.list, arec.rectodisp ),
+          single:= true,
+          none:= true,
+          border:= NCurses.attrs.BOLD,
+          align:= "c",
+          size:= "fit",
+          replay:= replay,
+          log:= log,
+        );
+        index:= NCurses.Select( choices );
+        if index = false then
+          return false;
+        fi;
+      else
+        # There is no choice.
+        index:= 1;
+      fi;
+
+      # Let the user edit this entry.
+      r:= arec.list[ index ];
+      defaults:= [];
+      for i in [ 1 .. Length( arec.mapping ) ] do
+        if IsBound( r.( arec.mapping[i][1] ) ) then
+          defaults[i]:= r.( arec.mapping[i][1] );
+        else
+          defaults[i]:= "";
+        fi;
+      od;
+      entry:= NCurses.EditFieldsDefault( arec.title,
+                List( arec.mapping, x -> Concatenation( x[2], ": " ) ),
+                defaults,
+                NCurses.getmaxyx( 0 )[2],
+                replay,
+                log );
+      NCurses.update_panels();
+      NCurses.doupdate();
+      if entry <> fail then
+        # The user did not cancel.
+        for i in [ 1 .. Length( arec.mapping ) ] do
+          r.( arec.mapping[i][1] ):= entry[i];
+        od;
+      fi;
+
+    else
+      # Delete entries:
+      # Let the user choose one or more entries from the current list.
+      choices:= rec(
+        header:= "Please choose entries to be deleted.",
+        items:= List( arec.list, arec.rectodisp ),
+        single:= false,
+        none:= true,
+        border:= NCurses.attrs.BOLD,
+        align:= "c",
+        size:= "fit",
+        replay:= replay,
+        log:= log,
+      );
+      index:= NCurses.Select( choices );
+      if index = false then
+        return false;
+      fi;
+
+      # Delete the entries in question.
+      arec.list:= arec.list{ Difference( [ 1 .. Length( arec.list ) ],
+                                         index ) };
+    fi;
+
+    # Probably there was a change.
+    return true;
 end;
 
 
@@ -2191,8 +2517,8 @@ NCurses.Select := function(arg)
   local r, t, labels, len, mwin, winparas, mpan, size, offitems, offitemsv,
         start, b, max, ind, sel, pos, draw, c, a, helppage,
         searchString, searchParameters, filterParameters, isvisible,
-        nrvisible, jumpto, digits, buttondown, resetjump, str, pos2, move,
-        onsubmit, cand, candlen, i,
+        nrvisible, jumpto, cand, digits, replay, log, currlog, buttondown,
+        resetjump, str, pos2, move, onsubmit, candlen, i,
         data, event, pressdata, diff, newpos;
 
   # If we know that there will be no chance to show anything
@@ -2449,7 +2775,19 @@ NCurses.Select := function(arg)
                          [ 1 .. Length( r.items ) ] );
   nrvisible:= Length( r.items );
   jumpto:= "[";
+  cand:= "";
   digits:= List( "0123456789", IntChar );
+
+  if IsBound( r.replay ) then
+    replay:= r.replay;
+  else
+    replay:= fail;
+  fi;
+  if IsBound( r.log ) then
+    log:= r.log;
+  else
+    log:= fail;
+  fi;
 
   # the loop to (re)draw the window
   draw := function()
@@ -2527,7 +2865,7 @@ NCurses.Select := function(arg)
     NCurses.update_panels();
     NCurses.doupdate();
     resetjump:= true;
-    c := NCurses.wgetch(mwin);
+    c:= NCurses.GetCharacterWithReplay( mwin, replay, log );
     if c in [ IntChar( 'q' ), IntChar( 'Q' ), 27 ]
        and r.single and r.none then
       r.RESULT := false;
@@ -2690,31 +3028,34 @@ NCurses.Select := function(arg)
     elif c in [ IntChar( '!' ) ] then
       isvisible:= BlistList( [ 1 .. Length( r.items ) ],
                              [ 1 .. Length( r.items ) ] );
-    elif c in digits or c in [NCurses.keys.BACKSPACE, IntChar('')] then
-      if c in digits then
-        # If the input corresponds to a label in the list
-        # then extend the prefix and jump to the first matching line.
-        cand:= Concatenation( jumpto, String( Position( digits, c ) - 1 ) );
-        candlen:= Length( cand );
-      else
-        # If the user had entered as least one digit then delete the last digit
-        # from the buffer, and jump to the first matching line.
-        candlen:= Length( jumpto );
-        if 1 < candlen then
-          Unbind( jumpto[ candlen ] );
-          candlen:= candlen - 1;
+    elif c in digits or NCurses.IsBackspace( c ) then
+      # Entering or removing numbers is supported only in 'single' mode.
+      if r.single then
+        if c in digits then
+          # If the input corresponds to a label in the list
+          # then extend the prefix and jump to the first matching line.
+          cand:= Concatenation( jumpto, String( Position( digits, c ) - 1 ) );
+          candlen:= Length( cand );
+        else
+          # If the user had entered as least one digit then delete the last
+          # digit from the buffer, and jump to the first matching line.
+          candlen:= Length( jumpto );
+          if 1 < candlen then
+            Unbind( jumpto[ candlen ] );
+            candlen:= candlen - 1;
+          fi;
         fi;
+        for i in [ 1 .. Length( r.items ) ] do
+          if isvisible[i]
+             and candlen <= Length( labels[i] )
+             and labels[i]{ [ 1 .. candlen ] } = cand then
+            jumpto:= cand;
+            pos:= i;
+            break;
+          fi;
+        od;
+        resetjump:= false;
       fi;
-      for i in [ 1 .. Length( r.items ) ] do
-        if isvisible[i]
-           and candlen <= Length( labels[i] )
-           and labels[i]{ [ 1 .. candlen ] } = cand then
-          jumpto:= cand;
-          pos:= i;
-          break;
-        fi;
-      od;
-      resetjump:= false;
     elif c in [ NCurses.keys.F1, IntChar('h') ]
          and not IsBound(r.thisishelp) then 
       NCurses.Pager(rec( lines := helppage,

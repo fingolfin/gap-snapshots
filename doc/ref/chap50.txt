@@ -955,8 +955,8 @@
   E. A. O'Brien. A survey on this topic and an account of the history of group
   constructions  can  be found in [BEO02]. Further detailed information on the
   construction  of  this  library  is  available in [New77], [O'B90], [O'B91],
-  [BE99a],  [BE99b],  [BE01],  [BEO01],  [EO99a],  [EO99b],  [NOV04], [Gir03],
-  [DE05],  [OV05].  The  Small Groups library incorporates the [5XGAP[105X 3 libraries
+  [BE99a],  [BE99b],  [BE01],  [BEO01],  [EO99a],  [EO99b], [NOVL04], [Gir03],
+  [DE05],  [OVL05].  The Small Groups library incorporates the [5XGAP[105X 3 libraries
   [10XTwoGroup[110X and [10XThreeGroup[110X. The data from these libraries was directly included
   into  the  Small  Groups  library, and the ordering there was preserved. The
   Small  Groups library replaces the Gap 3 library of solvable groups of order
@@ -1385,7 +1385,7 @@
   essentially of a list of the composition factors working from the top of the
   group  downwards;  hence  it  always starts with the name of [22XQ[122X itself. (This
   convention  is  the most convenient in our context, but it is different from
-  that  adopted in the ATLAS [CCNPW85], for example, where composition factors
+  that  adopted  in the ATLAS [CCN+85], for example, where composition factors
   are  listed  in the reverse order. For example, we denote a group isomorphic
   to [22XSL(2,5)[122X by [22XA_5 2^1[122X rather than [22X2.A_5[122X.)[133X
   
@@ -1475,7 +1475,7 @@
   [33X[0;0Y[5XGAP[105X contains a library of primitive permutation groups which includes, up to
   permutation   isomorphism  (i.e.,  up  to  conjugacy  in  the  corresponding
   symmetric  group),  all  primitive  permutation  groups  of  degree  [22X< 2500[122X,
-  calculated in [Ron05], in particular,[133X
+  calculated in [RD05], in particular,[133X
   
   [30X    [33X[0;6Ythe  primitive  permutation  groups  up  to  degree 50,  calculated by
         C. Sims,[133X
@@ -1493,12 +1493,12 @@
         [EH03].[133X
   
   [30X    [33X[0;6YThe  primitive groups of affine type of degree up to [22X999[122X as calculated
-        in [RU03].[133X
+        in [RDU03].[133X
   
   [33X[0;0YNot  all groups are named, those which do have names use ATLAS notation. Not
   all names are necessary unique![133X
   
-  [33X[0;0YThe  list  given  in  [Ron05] is believed to be complete, correcting various
+  [33X[0;0YThe  list  given  in  [RD05]  is believed to be complete, correcting various
   omissions in [DM88], [Sho92] and [The97].[133X
   
   [33X[0;0YIn  detail,  we  guarantee  the  following  properties  for this and further
@@ -1646,7 +1646,7 @@
   
   [29X[2XPRIMITIVE_INDICES_MAGMA[102X[32X global variable
   
-  [33X[0;0YThe  system [5XMagma[105X also provides a list of primitive groups (see [RU03]). For
+  [33X[0;0YThe system [5XMagma[105X also provides a list of primitive groups (see [RDU03]). For
   historical  reasons, its indexing up to degree 999 differs from the one used
   by  [5XGAP[105X.  The  variable  [2XPRIMITIVE_INDICES_MAGMA[102X  can be used to obtain this
   correspondence.    The    magma    index    number    of   the   [5XGAP[105X   group
@@ -1767,7 +1767,7 @@
   for  us.  Her  main  contribution  to this library, however, is that she has
   determined  and  computed  the  [22Xℚ[122X-class  representatives  of  the  groups of
   non-prime dimensions between 12 and 24 and the groups of dimensions 25 to 31
-  (see [PN95], [NP95], [Neb95], [Neb96]).[133X
+  (see [PN95], [NP95b], [Neb95], [Neb96]).[133X
   
   [33X[0;0YThe  library  has  been  brought  into  [5XGAP[105X format by Volkmar Felsch. He has
   applied  several  [5XGAP[105X  routines  to  check  certain consistency of the data.
@@ -1962,22 +1962,22 @@
   [33X[0;0YIn  the  description  of  the  isomorphism types the following notations are
   used:[133X
   
-  [8X[22XA[122X [10Xx[110X [22XB[122X [108X
+  [8X[22XA[122X [10Xx[110X[8X [22XB[122X [108X
         [33X[0;6Ydenotes a direct product of a group [22XA[122X by a group [22XB[122X,[133X
   
-  [8X[22XA[122X [10Xsubd[110X [22XB[122X [108X
+  [8X[22XA[122X [10Xsubd[110X[8X [22XB[122X [108X
         [33X[0;6Ydenotes a subdirect product of [22XA[122X by [22XB[122X,[133X
   
-  [8X[22XA[122X [10XY[110X [22XB[122X [108X
+  [8X[22XA[122X [10XY[110X[8X [22XB[122X [108X
         [33X[0;6Ydenotes a central product of [22XA[122X by [22XB[122X,[133X
   
-  [8X[22XA[122X [10Xwr[110X [22XB[122X [108X
+  [8X[22XA[122X [10Xwr[110X[8X [22XB[122X [108X
         [33X[0;6Ydenotes a wreath product of [22XA[122X by [22XB[122X,[133X
   
-  [8X[22XA[122X[10X:[110X[22XB[122X [108X
+  [8X[22XA[122X[10X:[110X[8X[22XB[122X [108X
         [33X[0;6Ydenotes a split extension of [22XA[122X by [22XB[122X,[133X
   
-  [8X[22XA[122X[10X.[110X[22XB[122X [108X
+  [8X[22XA[122X[10X.[110X[8X[22XB[122X [108X
         [33X[0;6Ydenotes just an extension of [22XA[122X by [22XB[122X (split or nonsplit).[133X
   
   [33X[0;0YThe groups involved are[133X
@@ -2040,27 +2040,27 @@
   
   [33X[0;0YThe resulting record contains six or seven components:[133X
   
-  [8X[10Xsize[110X [108X
+  [8X[10Xsize[110X[8X [108X
         [33X[0;6Ythe size of any representative group [3XG[103X,[133X
   
-  [8X[10XisSolvable[110X [108X
+  [8X[10XisSolvable[110X[8X [108X
         [33X[0;6Yis [9Xtrue[109X if [3XG[103X is solvable,[133X
   
-  [8X[10XisomorphismType[110X [108X
+  [8X[10XisomorphismType[110X[8X [108X
         [33X[0;6Ya  text  string  describing  the  isomorphism  type  of [3XG[103X (in the same
         notation as used by the function [10XDisplayImfInvariants[110X above),[133X
   
-  [8X[10XelementaryDivisors[110X [108X
+  [8X[10XelementaryDivisors[110X[8X [108X
         [33X[0;6Ythe  elementary  divisors of the associated Gram matrix [3XF[103X (in the same
         format as the result of the function [2XElementaryDivisorsMat[102X ([14X24.9-1[114X),[133X
   
-  [8X[10XminimalNorm[110X [108X
+  [8X[10XminimalNorm[110X[8X [108X
         [33X[0;6Ythe norm of the associated short vectors,[133X
   
-  [8X[10XsizesOrbitsShortVectors[110X [108X
+  [8X[10XsizesOrbitsShortVectors[110X[8X [108X
         [33X[0;6Ythe sizes of the orbits of short vectors under [3XF[103X,[133X
   
-  [8X[10XmaximalQClass[110X [108X
+  [8X[10XmaximalQClass[110X[8X [108X
         [33X[0;6Ythe  [22Xℚ[122X-class number of an i.m.f. group in [22XGL_n(ℚ)[122X that contains [3XG[103X as a
         subgroup  (only  in  case  that  not [3XG[103X itself is an i.m.f. subgroup of
         [22XGL_n(ℚ)[122X).[133X
@@ -2141,10 +2141,10 @@
   [10XsizesOrbitsShortVectors[110X   and,   if   [22XG[122X  is  not  a  rational  i.m.f. group,
   [10XmaximalQClass[110X. Moreover, it has the two components[133X
   
-  [8X[10Xform[110X[108X
+  [8X[10Xform[110X[8X[108X
         [33X[0;6Ythe associated Gram matrix [22XF[122X, and[133X
   
-  [8X[10XrepsOrbitsShortVectors[110X[108X
+  [8X[10XrepsOrbitsShortVectors[110X[8X[108X
         [33X[0;6Yrepresentatives of the orbits of short vectors under [22XF[122X.[133X
   
   [33X[0;0YThe  last  one  of  these  components  will  be  required  by  the  function

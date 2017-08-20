@@ -199,13 +199,13 @@
   
   [33X[0;0YThe following components are provided in [10XBrowseData.defaults.work[110X.[133X
   
-  [8X[10XwindowParameters[110X[108X
+  [8X[10XwindowParameters[110X[8X[108X
         [33X[0;6Yis  a  list  of  four  nonnegative integers, denoting the arguments of
         [10XNCurses.newwin[110X  for  the  window  in  which  the browse table shall be
         shown. The default is [10X[ 0, 0, 0, 0 ][110X, i. e., the window for the browse
         table is the full screen.[133X
   
-  [8X[10Xminyx[110X[108X
+  [8X[10Xminyx[110X[8X[108X
         [33X[0;6Yis  a  list  of  length  two,  the  entries must be either nonnegative
         integers,  denoting  the  minimal  number of rows and columns that are
         required  by  the  browse  table, or unary functions that return these
@@ -222,13 +222,13 @@
         called, not after later changes of the screen size in a running browse
         table application.[133X
   
-  [8X[10Xalign[110X[108X
+  [8X[10Xalign[110X[8X[108X
         [33X[0;6Yis  a substring of [10X"bclt"[110X, which describes the alignment of the browse
         table  in  the window. The meaning and the default are the same as for
         [2XBrowseData.IsBrowseTableCellData[102X  ([14X4.2-1[114X). (Of course this is relevant
         only if the table is smaller than the window.)[133X
   
-  [8X[10XheaderLength[110X[108X
+  [8X[10XheaderLength[110X[8X[108X
         [33X[0;6Ydescribes  the  lengths  of  the headers in the modes for which [10Xheader[110X
         functions  are  provided.  The value is a record whose component names
         are  names  of  modes and the corresponding components are nonnegative
@@ -236,10 +236,10 @@
         or  bound  to  a  list,  missing  values  are computed by calls to the
         corresponding [10Xheader[110X function as soon as they are needed.[133X
   
-  [8X[10XfooterLength[110X[108X
+  [8X[10XfooterLength[110X[8X[108X
         [33X[0;6Ycorresponds to [10Xfooter[110X in the same way as [10XheaderLength[110X to [10Xheader[110X.[133X
   
-  [8X[10XMain[110X[108X
+  [8X[10XMain[110X[8X[108X
         [33X[0;6Yif  bound  to  a  function  then  this function can be used to compute
         missing  values  for  the  component  [10Xmain[110X;  this  way  one  can avoid
         computing/storing  all [10Xmain[110X values at the same time. The access to the
@@ -252,7 +252,7 @@
         can   be  bound,  see  below  in  the  description  of  the  component
         [10XcacheEntries[110X.)[133X
   
-  [8X[10XcacheEntries[110X[108X
+  [8X[10XcacheEntries[110X[8X[108X
         [33X[0;6Ydescribes  whether  formatted  values  of  the entries in the matrices
         given by the components [10Xcorner[110X, [10XlabelsCol[110X, [10XlabelsRow[110X, [10Xmain[110X, and of the
         corresponding  row  and  column  separators  shall  be  stored  in the
@@ -260,7 +260,7 @@
         and  [10XmainFormatted[110X. The value must be a Boolean, the default is [9Xfalse[109X;
         it should be set to [9Xtrue[109X only if the tables are reasonably small.[133X
   
-  [8X[10XcornerFormatted[110X[108X
+  [8X[10XcornerFormatted[110X[8X[108X
         [33X[0;6Yis  a  list  of lists of formatted entries corresponding to the [10Xcorner[110X
         component.  Each  entry  is  either  an  attribute  line  or a list of
         attribute  lines  (with  the same number of displayed characters), the
@@ -269,36 +269,36 @@
         only  if the component [10XcacheEntries[110X has the value [9Xtrue[109X. The default is
         an empty list.[133X
   
-  [8X[10XlabelsColFormatted[110X[108X
+  [8X[10XlabelsColFormatted[110X[8X[108X
         [33X[0;6Ycorresponds to [10XlabelsCol[110X in the same way as [10XcornerFormatted[110X to [10Xcorner[110X.[133X
   
-  [8X[10XlabelsRowFormatted[110X[108X
+  [8X[10XlabelsRowFormatted[110X[8X[108X
         [33X[0;6Ycorresponds to [10XlabelsRow[110X in the same way as [10XcornerFormatted[110X to [10Xcorner[110X.[133X
   
-  [8X[10XmainFormatted[110X[108X
+  [8X[10XmainFormatted[110X[8X[108X
         [33X[0;6Ycorresponds to [10Xmain[110X in the same way as [10XcornerFormatted[110X to [10Xcorner[110X.[133X
   
-  [8X[10Xm0[110X[108X
+  [8X[10Xm0[110X[8X[108X
         [33X[0;6Yis  the  maximal  number  of  rows in the column labels table. If this
         value  is not bound then it is computed from the components [10Xcorner[110X and
         [10XlabelsCol[110X.[133X
   
-  [8X[10Xn0[110X[108X
+  [8X[10Xn0[110X[8X[108X
         [33X[0;6Yis the maximal number of columns in [10Xcorner[110X and [10XlabelsRow[110X.[133X
   
-  [8X[10Xm[110X[108X
+  [8X[10Xm[110X[8X[108X
         [33X[0;6Yis  the  maximal number of rows in [10XlabelsRow[110X and [10Xmain[110X. This value [13Xmust[113X
         be  set  in  advance  if  the values of [10Xmain[110X are computed using a [10XMain[110X
         function,  and  if  the  number of rows in [10Xmain[110X is larger than that in
         [10XlabelsRow[110X.[133X
   
-  [8X[10Xn[110X[108X
+  [8X[10Xn[110X[8X[108X
         [33X[0;6Yis  the  maximal  number  of columns in [10XlabelsCol[110X and [10Xmain[110X. This value
         [13Xmust[113X be set in advance if the values of [10Xmain[110X are computed using a [10XMain[110X
         function,  and if the number of columns in [10Xmain[110X is larger than that in
         [10XlabelsCol[110X.[133X
   
-  [8X[10XheightLabelsCol[110X[108X
+  [8X[10XheightLabelsCol[110X[8X[108X
         [33X[0;6Yis  a list of [22X2[122X [10Xm0[110X[22X+ 1[122X nonnegative integers, the entry at position [22Xi[122X is
         the  maximal  height of the entries in the [22Xi[122X-th row of [10XcornerFormatted[110X
         and  [10XlabelsColFormatted[110X.  Values  that  are  not bound are computed on
@@ -308,56 +308,56 @@
         formatted  table  entries are computed just for computing their size.)
         The default is an empty list.[133X
   
-  [8X[10XwidthLabelsRow[110X[108X
+  [8X[10XwidthLabelsRow[110X[8X[108X
         [33X[0;6Yis  the  corresponding  list  of  [22X2[122X [10Xn0[110X[22X+ 1[122X maximal widths of entries in
         [10XcornerFormatted[110X and [10XlabelsRowFormatted[110X.[133X
   
-  [8X[10XheightRow[110X[108X
+  [8X[10XheightRow[110X[8X[108X
         [33X[0;6Yis  the  corresponding  list  of  [22X2[122X [10Xm[110X[22X+ 1[122X maximal heights of entries in
         [10XlabelsRowFormatted[110X and [10XmainFormatted[110X.[133X
   
-  [8X[10XwidthCol[110X[108X
+  [8X[10XwidthCol[110X[8X[108X
         [33X[0;6Yis  the  corresponding  list  of  [22X2[122X  [10Xn[110X[22X+ 1[122X maximal widths of entries in
         [10XlabelsColFormatted[110X and [10XmainFormatted[110X.[133X
   
-  [8X[10XemptyCell[110X[108X
+  [8X[10XemptyCell[110X[8X[108X
         [33X[0;6Yis  a  table  cell  data  object to be used as the default for unbound
         positions in the four matrices. The default is the empty list.[133X
   
-  [8X[10XsepCategories[110X[108X
+  [8X[10XsepCategories[110X[8X[108X
         [33X[0;6Yis  an  attribute  line  to  be  used  repeatedly as a separator below
         expanded category rows. The default is the string [10X"-"[110X.[133X
   
-  [8X[10XstartCollapsedCategory[110X[108X
+  [8X[10XstartCollapsedCategory[110X[8X[108X
         [33X[0;6Yis  a  list  of attribute lines to be used as prefixes of unhidden but
         collapsed  category rows. For category rows of level [22Xi[122X, the last bound
         entry  before  the [22X(i+1)[122X-th position is used. The default is a list of
         length  one,  the entry is the boldface variant of the string [10X"> "[110X, so
         collapsed category rows on different levels are treated equally.[133X
   
-  [8X[10XstartExpandedCategory[110X[108X
+  [8X[10XstartExpandedCategory[110X[8X[108X
         [33X[0;6Yis  a  list  of  attribute  lines  to  be used as prefixes of expanded
         category rows, analogously to [10XstartCollapsedCategory[110X. The default is a
         list of length one, the entry is the boldface variant of the string [10X"*
         "[110X, so expanded category rows on different levels are treated equally.[133X
   
-  [8X[10XstartSelect[110X[108X
+  [8X[10XstartSelect[110X[8X[108X
         [33X[0;6Yis  an  attribute  line  to be used as a prefix of each attribute line
         that  belongs  to  a  selected  cell.  The  default  is  to switch the
         attribute [10XNCurses.attrs.STANDOUT[110X on, see Section [14X2.1-7[114X.[133X
   
-  [8X[10XClick[110X[108X
+  [8X[10XClick[110X[8X[108X
         [33X[0;6Yis  a record whose component names are names of available modes of the
         browse  table.  The  values  are  unary functions that take the browse
         table  as  their  argument.  If  the  action [10XClick[110X is available in the
         current  mode and the corresponding input is entered then the function
         in the relevant component of the [10XClick[110X record is called.[133X
   
-  [8X[10XavailableModes[110X[108X
+  [8X[10XavailableModes[110X[8X[108X
         [33X[0;6Yis a list whose entries are the mode records that can be used when one
         navigates through the browse table, see Section [14X5.2[114X.[133X
   
-  [8X[10XSpecialGrid[110X[108X
+  [8X[10XSpecialGrid[110X[8X[108X
         [33X[0;6Yis a function that takes a browse table and a record as its arguments.
         It  is  called  by [10XBrowseData.ShowTables[110X after the current contents of
         the window has been computed, and it is intended to draw an individual
@@ -369,12 +369,12 @@
   
   [33X[0;0YThe following components are provided in [10XBrowseData.defaults.dynamic[110X.[133X
   
-  [8X[10Xchanged[110X[108X
+  [8X[10Xchanged[110X[8X[108X
         [33X[0;6Yis  a  Boolean that must be set to [9Xtrue[109X by action functions whenever a
         refresh of the window is necessary; it is automatically reset to [9Xfalse[109X
         after the refresh.[133X
   
-  [8X[10XindexRow[110X[108X
+  [8X[10XindexRow[110X[8X[108X
         [33X[0;6Yis  a  list of positive integers. The entry [22Xk[122X at position [22Xi[122X means that
         the [22Xk[122X-th row in the [10XmainFormatted[110X table is shown as the [22Xi[122X-th row. Note
         that  depending on the current status of the browse table, the rows of
@@ -387,17 +387,17 @@
         1,  2,  ...,  m  ][122X,  where  [22Xm[122X  is  the number of rows in [10XmainFormatted[110X
         (including the separator rows, so [22Xm[122X is always odd).[133X
   
-  [8X[10XindexCol[110X[108X
+  [8X[10XindexCol[110X[8X[108X
         [33X[0;6Yis the analogous list of positive integers that refers to columns.[133X
   
-  [8X[10Xtopleft[110X[108X
+  [8X[10Xtopleft[110X[8X[108X
         [33X[0;6Yis  a  list  of  four  positive  integers denoting the current topleft
         position  of  the  main table. The value [22X[ i, j, k, l ][122X means that the
         topleft entry is indexed by the [22Xi[122X-th entry in [10XindexRow[110X, the [22Xj[122X-th entry
         in [10XindexCol[110X, and the [22Xk[122X-th row and [22Xl[122X-th column inside the corresponding
         cell. The default is [22X[ 1, 1, 1, 1 ][122X.[133X
   
-  [8X[10XisCollapsedRow[110X[108X
+  [8X[10XisCollapsedRow[110X[8X[108X
         [33X[0;6Yis  a  list  of Booleans, of the same length as the [10XindexRow[110X value. If
         the  entry  at  position  [22Xi[122X is [9Xtrue[109X then the [22Xi[122X-th row is currently not
         shown  because  it  belongs to a collapsed category row. It is assumed
@@ -405,92 +405,92 @@
         value  at the subsequent odd position. The default is that all entries
         are [9Xfalse[109X.[133X
   
-  [8X[10XisCollapsedCol[110X[108X
+  [8X[10XisCollapsedCol[110X[8X[108X
         [33X[0;6Yis the corresponding list for [10XindexCol[110X.[133X
   
-  [8X[10XisRejectedRow[110X[108X
+  [8X[10XisRejectedRow[110X[8X[108X
         [33X[0;6Yis  a  list  of  Booleans. If the entry at position [22Xi[122X is [9Xtrue[109X then the
         [22Xi[122X-th  row is currently not shown because it does not match the current
         filtering  of  the table. Defaults, length, and hide convention are as
         for [10XisCollapsedRow[110X.[133X
   
-  [8X[10XisRejectedCol[110X[108X
+  [8X[10XisRejectedCol[110X[8X[108X
         [33X[0;6Yis the corresponding list for [10XindexCol[110X.[133X
   
-  [8X[10XisRejectedLabelsRow[110X[108X
+  [8X[10XisRejectedLabelsRow[110X[8X[108X
         [33X[0;6Yis  a  list  of  Booleans. If the entry at position [22Xi[122X is [9Xtrue[109X then the
         [22Xi[122X-th column of row labels is currently not shown.[133X
   
-  [8X[10XisRejectedLabelsCol[110X[108X
+  [8X[10XisRejectedLabelsCol[110X[8X[108X
         [33X[0;6Yis the corresponding list for the column labels.[133X
   
-  [8X[10XactiveModes[110X[108X
+  [8X[10XactiveModes[110X[8X[108X
         [33X[0;6Yis  a  list  of  mode records that are contained in the [10XavailableModes[110X
         list  of  the  [10Xwork[110X component of the browse table. The current mode is
         the  last  entry in this list. The default depends on the application,
         [10XBrowseData.defaults[110X  prescribes the list containing only the mode with
         [10Xname[110X component [10X"browse"[110X.[133X
   
-  [8X[10XselectedEntry[110X[108X
+  [8X[10XselectedEntry[110X[8X[108X
         [33X[0;6Yis  a  list  [22X[  i,  j  ][122X. If [22Xi = j = 0[122X then no table cell is selected,
         otherwise  [22Xi[122X  and [22Xj[122X are the row and column index of the selected cell.
         (Note that [22Xi[122X and [22Xj[122X are always even.) The default is [22X[ 0, 0 ][122X.[133X
   
-  [8X[10XselectedCategory[110X[108X
+  [8X[10XselectedCategory[110X[8X[108X
         [33X[0;6Yis  a  list  [22X[  i, l ][122X. If [22Xi = l = 0[122X then no category row is selected,
         otherwise  [22Xi[122X  and  [22Xl[122X  are  the row index and the level of the selected
         category row. (Note that [22Xi[122X is always even.) The default is [22X[ 0, 0 ][122X.[133X
   
-  [8X[10XsearchString[110X[108X
+  [8X[10XsearchString[110X[8X[108X
         [33X[0;6Yis  the  last string for which the user has searched in the table. The
         default is the empty string.[133X
   
-  [8X[10XsearchParameters[110X[108X
+  [8X[10XsearchParameters[110X[8X[108X
         [33X[0;6Yis   a   list   of  parameters  that  are  modified  by  the  function
         [10XBrowseData.SearchStringWithStartParameters[110X.    If   one   sets   these
         parameters  in  a  search  then  these values hold also for subsequent
         searches.  So  it  may  make sense to set the parameters to personally
         preferred ones.[133X
   
-  [8X[10XsortFunctionForColumnsDefault[110X[108X
+  [8X[10XsortFunctionForColumnsDefault[110X[8X[108X
         [33X[0;6Yis  a  function  with two arguments used to compare two entries in the
         same  column  of  the  main  table  (or  two category row values). The
         default  is  the  operation  [10X\<[110X.  (Note  that  this default may be not
         meaningful if some of the rows or columns contain strings representing
         numbers.)[133X
   
-  [8X[10XsortFunctionForRowsDefault[110X[108X
+  [8X[10XsortFunctionForRowsDefault[110X[8X[108X
         [33X[0;6Yis the analogous function for comparing two entries in the same row of
         the main table.[133X
   
-  [8X[10XsortFunctionsForRows[110X[108X
+  [8X[10XsortFunctionsForRows[110X[8X[108X
         [33X[0;6Yis  a list of comparison functions, if the [22Xi[122X-th entry is bound then it
         replaces the [10XsortFunctionForRowsDefault[110X value when the table is sorted
         w.r.t. the [22Xi[122X-th row.[133X
   
-  [8X[10XsortFunctionsForColumns[110X[108X
+  [8X[10XsortFunctionsForColumns[110X[8X[108X
         [33X[0;6Yis  the  analogous  list  of  functions for the case that the table is
         sorted w.r.t. columns.[133X
   
-  [8X[10XsortParametersForRowsDefault[110X[108X
+  [8X[10XsortParametersForRowsDefault[110X[8X[108X
         [33X[0;6Yis  a  list of parameters for sorting the main table w.r.t. entries in
         given rows, e. g., whether one wants to sort ascending or descending.[133X
   
-  [8X[10XsortParametersForColumnsDefault[110X[108X
+  [8X[10XsortParametersForColumnsDefault[110X[8X[108X
         [33X[0;6Yis  the analogous list of parameters for sorting w.r.t. given columns.
         In  addition  to  the  parameters for rows, also parameters concerning
         category  rows are available, e. g., whether the data columns that are
         transformed into category rows shall be hidden afterwards or not.[133X
   
-  [8X[10XsortParametersForRows[110X[108X
+  [8X[10XsortParametersForRows[110X[8X[108X
         [33X[0;6Yis  a list that contains ar position [22Xi[122X, if bound, a list of parameters
         that  shall  replace  those  in  [10XsortParametersForRowsDefault[110X when the
         table is sorted w.r.t. the [22Xi[122X-th row.[133X
   
-  [8X[10XsortParametersForColumns[110X[108X
+  [8X[10XsortParametersForColumns[110X[8X[108X
         [33X[0;6Yis the analogous list of parameters lists for sorting w.r.t. columns.[133X
   
-  [8X[10Xcategories[110X[108X
+  [8X[10Xcategories[110X[8X[108X
         [33X[0;6Ydescribes  the  current category rows. The value is a list [22X[ l_1, l_2,
         l_3  ][122X  where  [22Xl_1[122X is a [13Xsorted[113X list [22X[ i_1, i_2, ..., i_k ][122X of positive
         integers,  [22Xl_2[122X  is a list of length [22Xk[122X where the [22Xj[122X-th entry is a record
@@ -510,7 +510,7 @@
         property  is  [13Xnot[113X  checked.)  Category  rows  are  computed  with  the
         [10XCategoryValues[110X function in the [10Xwork[110X component of the browse table.[133X
   
-  [8X[10Xlog[110X[108X
+  [8X[10Xlog[110X[8X[108X
         [33X[0;6Ydescribes  the  session log which is currently written. The value is a
         list of positive integers, representing the user inputs in the current
         session.  When  [5XGAP[105X  returns  from  a  call  to  [2XNCurses.BrowseGeneric[102X
@@ -525,7 +525,7 @@
         applications  where  the  user does not get access to the browse table
         itself.)[133X
   
-  [8X[10Xreplay[110X[108X
+  [8X[10Xreplay[110X[8X[108X
         [33X[0;6Ydescribes  the non-interactive input for the current browse table. The
         value  is  a record with the components [10Xlogs[110X (a dense list of records,
         the  default  is  an  empty list) and [10Xpointer[110X (a positive integer, the

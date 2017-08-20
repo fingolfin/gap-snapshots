@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (ref) - Chapter 47: Finitely Presented Groups</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -35,7 +35,7 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap47_mj.html#X7D55E56E790F85FD">47.2 <span class="Heading">Creating Finitely Presented Groups</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap47_mj.html#X7EF4179E78BC7313">47.2-1 \/</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap47_mj.html#X7EF4179E78BC7313"><code>47.2-1 \/</code></a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap47_mj.html#X7CE0FA5F8695241E">47.2-2 FactorGroupFpGroupByRels</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap47_mj.html#X7B3D290B87B6EFE4">47.2-3 ParseRelators</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap47_mj.html#X85EAA789848B528E">47.2-4 StringFactorizationWord</a></span>
@@ -43,8 +43,8 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap47_mj.html#X84D693EC872DAA55">47.3 <span class="Heading">Comparison of Elements of Finitely Presented Groups</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap47_mj.html#X797D29628203CBD6">47.3-1 \=</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap47_mj.html#X7B350C718573B8DF">47.3-2 \&lt;</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap47_mj.html#X797D29628203CBD6"><code>47.3-1 \=</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap47_mj.html#X7B350C718573B8DF"><code>47.3-2 \&lt;</code></a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap47_mj.html#X87512CF485CC4128">47.3-3 FpElmComparisonMethod</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap47_mj.html#X82CB9EC982CDAEAC">47.3-4 SetReducedMultiplication</a></span>
 </div></div>
@@ -260,7 +260,7 @@ false
 
 <p><a id="X7EF4179E78BC7313" name="X7EF4179E78BC7313"></a></p>
 
-<h5>47.2-1 \/</h5>
+<h5><code>47.2-1 \/</code></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \/</code>( <var class="Arg">F</var>, <var class="Arg">rels</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>creates a finitely presented group given by the presentation <span class="SimpleMath">\(\langle gens \mid \textit{rels} \rangle\)</span> where <span class="SimpleMath">\(gens\)</span> are the free generators of the free group <var class="Arg">F</var>. Note that relations are entered as <em>relators</em>, i.e., as words in the generators of the free group. To enter an equation use the quotient operator, i.e., for the relation <span class="SimpleMath">\(a^b = ab\)</span> one has to enter <span class="SimpleMath">\(a^b / (a b)\)</span>.</p>
@@ -319,7 +319,7 @@ false
 
 <p><a id="X797D29628203CBD6" name="X797D29628203CBD6"></a></p>
 
-<h5>47.3-1 \=</h5>
+<h5><code>47.3-1 \=</code></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \=</code>( <var class="Arg">a</var>, <var class="Arg">b</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Two elements of a finitely presented group are equal if they are equal in this group. Nevertheless they may be represented as different words in the generators. Because of the fundamental problems mentioned in the introduction to this chapter such a test may take very long and cannot be guaranteed to finish.</p>
@@ -332,7 +332,7 @@ false
 
 <p><a id="X7B350C718573B8DF" name="X7B350C718573B8DF"></a></p>
 
-<h5>47.3-2 \&lt;</h5>
+<h5><code>47.3-2 \&lt;</code></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \&lt;</code>( <var class="Arg">a</var>, <var class="Arg">b</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Compared with equality testing, problems get even worse when trying to compute a total ordering on the elements of a finitely presented group. As any ordering that is guaranteed to be reproducible in different runs of <strong class="pkg">GAP</strong> or even with different groups given by syntactically equal presentations would be prohibitively expensive to implement, the ordering of elements is depending on a method chosen by <strong class="pkg">GAP</strong> and not guaranteed to stay the same when repeating the construction of an FpGroup. The only guarantee given for the <code class="code">&lt;</code> ordering for such elements is that it will stay the same for one family during its lifetime. The attribute <code class="func">FpElmComparisonMethod</code> (<a href="chap47_mj.html#X87512CF485CC4128"><span class="RefLink">47.3-3</span></a>) is used to obtain a comparison function for a family of FpGroup elements.</p>

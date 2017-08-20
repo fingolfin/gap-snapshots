@@ -267,7 +267,7 @@
   [33X[0;0YThe  Reduced  Reidemeister-Schreier  algorithm  is  a  modification  of  the
   Reidemeister-Schreier  algorithm of George Havas [Hav74]. It was proposed by
   Joachim  Neubüser  and  first  implemented  in  1986  by Andrea Lucchini and
-  Volkmar  Felsch  in  the  SPAS system [SPAS]. Like the Reidemeister-Schreier
+  Volkmar  Felsch  in  the SPAS system [SPA89]. Like the Reidemeister-Schreier
   algorithm  of  George Havas, it needs only the presentation of [3XG[103X and a coset
   table of [3XH[103X in [3XG[103X to construct a presentation of [3XH[103X.[133X
   
@@ -1568,7 +1568,7 @@
   
   [33X[0;0YThe following Tietze options are recognized by [5XGAP[105X:[133X
   
-  [8X[10Xprotected[110X:[108X
+  [8X[10Xprotected[110X[8X:[108X
         [33X[0;6YThe  first [10Xprotected[110X generators in a presentation [3XP[103X are protected from
         being  eliminated  by  the Tietze transformations functions. There are
         only  two exceptions: The option [10Xprotected[110X is ignored by the functions
@@ -1576,7 +1576,7 @@
         specify the generator to be eliminated. The default value of [10Xprotected[110X
         is 0.[133X
   
-  [8X[10XeliminationsLimit[110X:[108X
+  [8X[10XeliminationsLimit[110X[8X:[108X
         [33X[0;6YWhenever the elimination phase of the [2XTzGo[102X ([14X48.6-1[114X) command is entered
         for a presentation [3XP[103X, then it will eliminate at most [10XeliminationsLimit[110X
         generators  (except  for  further  ones  which  have  turned out to be
@@ -1585,7 +1585,7 @@
         ignored  by  the  [2XTzEliminate[102X  ([14X48.7-1[114X)  command. The default value of
         [10XeliminationsLimit[110X is 100.[133X
   
-  [8X[10XexpandLimit[110X:[108X
+  [8X[10XexpandLimit[110X[8X:[108X
         [33X[0;6YWhenever  the routine for eliminating more than 1 generators is called
         for  a  presentation  [3XP[103X  by  the  [2XTzEliminate[102X  ([14X48.7-1[114X) command or the
         elimination  phase  of  the  [2XTzGo[102X  ([14X48.6-1[114X) command, then it saves the
@@ -1597,7 +1597,7 @@
         break  criterion  for  the [2XTzGo[102X ([14X48.6-1[114X) command. The default value of
         [10XexpandLimit[110X is 150.[133X
   
-  [8X[10XgeneratorsLimit[110X:[108X
+  [8X[10XgeneratorsLimit[110X[8X:[108X
         [33X[0;6YWhenever the elimination phase of the [2XTzGo[102X ([14X48.6-1[114X) command is entered
         for a presentation [3XP[103X with [22Xn[122X generators, then it will eliminate at most
         [22Xn -[122X[10XgeneratorsLimit[110X generators (except for generators which turn out to
@@ -1605,20 +1605,20 @@
         break  criterion  for  the [2XTzGo[102X ([14X48.6-1[114X) command. The default value of
         [10XgeneratorsLimit[110X is 0.[133X
   
-  [8X[10XlengthLimit[110X:[108X
+  [8X[10XlengthLimit[110X[8X:[108X
         [33X[0;6YThe Tietze transformation commands will never eliminate a generator of
         a  presentation  [3XP[103X,  if  they  cannot exclude the possibility that the
         resulting  total  length  of the relators exceeds the maximal [5XGAP[105X list
         length  of  [22X2^31-1[122X or the value of the option [10XlengthLimit[110X. The default
         value of [10XlengthLimit[110X is [22X2^31-1[122X.[133X
   
-  [8X[10XloopLimit[110X:[108X
+  [8X[10XloopLimit[110X[8X:[108X
         [33X[0;6YWhenever  the  [2XTzGo[102X  ([14X48.6-1[114X)  command is called for a presentation [3XP[103X,
         then it will loop over at most [10XloopLimit[110X of its basic steps. Hence you
         may  use  the  [10XloopLimit[110X  parameter  as a break criterion for the [2XTzGo[102X
         ([14X48.6-1[114X) command. The default value of [10XloopLimit[110X is [2Xinfinity[102X ([14X18.2-1[114X).[133X
   
-  [8X[10XprintLevel[110X:[108X
+  [8X[10XprintLevel[110X[8X:[108X
         [33X[0;6YWhenever  Tietze transformation commands are called for a presentation
         [3XP[103X  with  [10XprintLevel[110X  [22X=  0[122X, they will not provide any output except for
         error  messages.  If [10XprintLevel[110X [22X= 1[122X, they will display some reasonable
@@ -1628,7 +1628,7 @@
         Finally,  if [10XprintLevel[110X [22X= 3[122X, various messages on internal details will
         be added. The default value of [10XprintLevel[110X is 1.[133X
   
-  [8X[10XsaveLimit[110X:[108X
+  [8X[10XsaveLimit[110X[8X:[108X
         [33X[0;6YWhenever the [2XTzSearch[102X ([14X48.7-2[114X) command has finished its main loop over
         all  relators  of a presentation [3XP[103X, then it checks whether during this
         loop  the  total  length  of the relators has been reduced by at least
@@ -1638,7 +1638,7 @@
         command  and, in particular, for the search phase of the [2XTzGo[102X ([14X48.6-1[114X)
         command. The default value of [10XsaveLimit[110X is 10.[133X
   
-  [8X[10XsearchSimultaneous[110X:[108X
+  [8X[10XsearchSimultaneous[110X[8X:[108X
         [33X[0;6YWhenever  the  [2XTzSearch[102X ([14X48.7-2[114X) or the [2XTzSearchEqual[102X ([14X48.7-3[114X) command
         is  called  for  a  presentation [3XP[103X, then it is allowed to handle up to
         [10XsearchSimultaneous[110X  short relators simultaneously (see the description

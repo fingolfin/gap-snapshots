@@ -154,6 +154,13 @@ InstallMethod( Browse,
     end );
 
 
+InstallOtherMethod( Browse,
+    [ "IsNearlyCharacterTable", "IsList" ],
+    function( tbl, chars )
+    Browse( tbl, rec( chars:= chars ) );
+    end );
+
+
 InstallMethod( Browse,
     [ "IsNearlyCharacterTable", "IsRecord" ],
     function( tbl, options )

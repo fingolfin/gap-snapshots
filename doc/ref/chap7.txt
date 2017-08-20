@@ -432,17 +432,17 @@
   integer  is  the cpu time (processor time) in milliseconds spent by [5XGAP[105X in a
   certain status:[133X
   
-  [8X[10Xuser_time[110X[108X
+  [8X[10Xuser_time[110X[8X[108X
         [33X[0;6Ycpu time spent with [5XGAP[105X functions (without child processes).[133X
   
-  [8X[10Xsystem_time[110X[108X
+  [8X[10Xsystem_time[110X[8X[108X
         [33X[0;6Ycpu  time  spent  in  system  calls,  e.g.,  file  access ([9Xfail[109X if not
         available).[133X
   
-  [8X[10Xuser_time_children[110X[108X
+  [8X[10Xuser_time_children[110X[8X[108X
         [33X[0;6Ycpu time spent in child processes ([9Xfail[109X if not available).[133X
   
-  [8X[10Xsystem_time_children[110X[108X
+  [8X[10Xsystem_time_children[110X[8X[108X
         [33X[0;6Ycpu  time  spent  in  system  calls  by  child  processes ([9Xfail[109X if not
         available).[133X
   
@@ -1074,14 +1074,14 @@
   components  of [3Xoptrec[103X are recognized and can change the default behaviour of
   [2XTest[102X:[133X
   
-  [8X[10XignoreComments[110X[108X
+  [8X[10XignoreComments[110X[8X[108X
         [33X[0;6YIf  set to [9Xfalse[109X then no lines in [3Xfname[103X are ignored as explained above
         (default is [9Xtrue[109X).[133X
   
-  [8X[10Xwidth[110X[108X
+  [8X[10Xwidth[110X[8X[108X
         [33X[0;6YThe screen width used for the new output (default is [10X80[110X).[133X
   
-  [8X[10XcompareFunction[110X[108X
+  [8X[10XcompareFunction[110X[8X[108X
         [33X[0;6YThis  must  be  a  function  that gets two strings as input, the newly
         generated  and  the stored output of some [5XGAP[105X input. The function must
         return  [9Xtrue[109X  or [9Xfalse[109X, indicating if the strings should be considered
@@ -1091,24 +1091,24 @@
         all  white  space.  And  [10X"uptonl"[110X  compares  the string up to trailing
         newline characters.[133X
   
-  [8X[10XreportDiff[110X[108X
+  [8X[10XreportDiff[110X[8X[108X
         [33X[0;6YA  function  that  gets  six arguments and reports a difference in the
         output:  the  [5XGAP[105X  input, the expected [5XGAP[105X output, the newly generated
         output,  the  name  of  tested file, the line number of the input, the
         time  to  run  the  input. (The default is demonstrated in the example
         below.)[133X
   
-  [8X[10XrewriteToFile[110X[108X
+  [8X[10XrewriteToFile[110X[8X[108X
         [33X[0;6YIf  this is bound to a string it is considered as a file name and that
         file is written with the same input and comment lines as [3Xfname[103X but the
         output substituted by the newly generated version (default is [9Xfalse[109X).[133X
   
-  [8X[10XwriteTimings[110X[108X
+  [8X[10XwriteTimings[110X[8X[108X
         [33X[0;6YIf  this  is  bound  to a string it is considered as a file name, that
         file  is  written  and  contains  timing information for each input in
         [3Xfname[103X.[133X
   
-  [8X[10XcompareTimings[110X[108X
+  [8X[10XcompareTimings[110X[8X[108X
         [33X[0;6YIf  this  is  bound  to a string it is considered as name of a file to
         which  timing  information  was  stored via [10XwriteTimings[110X in a previous
         call. The new timings are compared to the stored ones. By default only
@@ -1118,20 +1118,20 @@
         [10X[timingfile, threshold, percentage][110X to this component. (The default of
         [10XcompareTimings[110X is [9Xfalse[109X.)[133X
   
-  [8X[10XreportTimeDiff[110X[108X
+  [8X[10XreportTimeDiff[110X[8X[108X
         [33X[0;6YThis  component  can  be  used  to  overwrite  the default function to
         display  timing  differences.  It must be a function with 5 arguments:
         [5XGAP[105X input, name of test file, line number, stored time, new time.[133X
   
-  [8X[10XignoreSTOP_TEST[110X[108X
+  [8X[10XignoreSTOP_TEST[110X[8X[108X
         [33X[0;6YBy  default set to [9Xtrue[109X, in that case the output of [5XGAP[105X input starting
         with [10X"STOP_TEST"[110X is not checked.[133X
   
-  [8X[10XshowProgress[110X[108X
+  [8X[10XshowProgress[110X[8X[108X
         [33X[0;6YIf  this  is  [9Xtrue[109X  then [5XGAP[105X prints position information and the input
         line before it is processed (default is [9Xfalse[109X).[133X
   
-  [8X[10XsubsWindowsLineBreaks[110X[108X
+  [8X[10XsubsWindowsLineBreaks[110X[8X[108X
         [33X[0;6YIf  this  is  [9Xtrue[109X  then [5XGAP[105X substitutes DOS/Windows style line breaks
         "\r\n"  by  UNIX  style  line breaks "\n" after reading the test file.
         (default is [9Xtrue[109X).[133X
@@ -1198,31 +1198,31 @@
   components  of [3Xoptrec[103X are recognized and can change the default behaviour of
   [2XTestDirectory[102X:[133X
   
-  [8X[10XtestOptions[110X[108X
+  [8X[10XtestOptions[110X[8X[108X
         [33X[0;6YA  record  which  will  be  passed  on  as the second argument of [2XTest[102X
         ([14X7.9-2[114X) if present.[133X
   
-  [8X[10XearlyStop[110X[108X
+  [8X[10XearlyStop[110X[8X[108X
         [33X[0;6YIf [9Xtrue[109X, stop as soon as any [2XTest[102X ([14X7.9-2[114X) fails (defaults to [9Xfalse[109X).[133X
   
-  [8X[10XshowProgress[110X[108X
+  [8X[10XshowProgress[110X[8X[108X
         [33X[0;6YPrint information about how tests are progressing (defaults to [9Xtrue[109X).[133X
   
-  [8X[10XsuppressStatusMessage[110X[108X
+  [8X[10XsuppressStatusMessage[110X[8X[108X
         [33X[0;6Ysuppress  displaying  status messages [10X#I Errors detected while testing[110X
         and  [10X#I  No  errors detected while testing[110X after the test (defaults to
         [9Xfalse[109X).[133X
   
-  [8X[10XexitGAP[110X[108X
+  [8X[10XexitGAP[110X[8X[108X
         [33X[0;6YRather than returning [9Xtrue[109X or [9Xfalse[109X, exit GAP with the return value of
         GAP set to success or fail, depending on if all tests passed (defaults
         to [9Xfalse[109X).[133X
   
-  [8X[10XstonesLimit[110X[108X
+  [8X[10XstonesLimit[110X[8X[108X
         [33X[0;6YOnly  try  tests  which take less than [10XstonesLimit[110X stones (defaults to
         infinity)[133X
   
-  [8X[10XrenormaliseStones[110X[108X
+  [8X[10XrenormaliseStones[110X[8X[108X
         [33X[0;6YRe-normalise the stones number given in every tst files's 'STOP_TEST'[133X
   
   [33X[0;0YSee  also [2XTestPackage[102X ([14X76.3-3[114X) for the information on running standard tests

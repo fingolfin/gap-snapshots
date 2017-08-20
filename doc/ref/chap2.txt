@@ -155,7 +155,7 @@
   [10XSetUserPreference(  "HelpViewers",  [  ...  ]  );[110X  (the  list  in the second
   argument containing the viewers you want) in your [11Xgap.ini[111X file (see [14X3.2[114X).[133X
   
-  [8X[10X"screen"[110X[108X
+  [8X[10X"screen"[110X[8X[108X
         [33X[0;6YThis  is  the  default setting. The help is shown in text format using
         the  [2XPager[102X  ([14X2.4-1[114X)  command.  Hint:  Text  versions  of  manuals  are
         formatted  assuming that your terminal displays at least 80 characters
@@ -166,38 +166,38 @@
         far,  since  we  do  not  yet  use  many special characters which such
         terminals could not display).[133X
   
-  [8X[10X"firefox"[110X, [10X"chrome"[110X, [10X"mozilla"[110X, [10X"netscape"[110X, [10X"konqueror"[110X[108X
+  [8X[10X"firefox"[110X[8X, [10X"chrome"[110X[8X, [10X"mozilla"[110X[8X, [10X"netscape"[110X[8X, [10X"konqueror"[110X[8X[108X
         [33X[0;6YIf  a  book  is  available  in  HTML  format  this  is shown using the
         corresponding web browser. How well this works, for example by using a
         running  instance  of  this  browser, depends on your particular start
         script  of  this  browser.  (Note, that for some old books the browser
         must be configured to use symbol fonts.)[133X
   
-  [8X[10X"browser"[110X[108X
+  [8X[10X"browser"[110X[8X[108X
         [33X[0;6Y(for  MS  Windows)  If  a book is available in HTML format, it will be
         opened  using  the  Windows  default  application  (typically,  a  web
         browser).[133X
   
-  [8X[10X"links2"[110X, [10X"w3m"[110X, [10X"lynx"[110X[108X
+  [8X[10X"links2"[110X[8X, [10X"w3m"[110X[8X, [10X"lynx"[110X[8X[108X
         [33X[0;6YIf  a  book  is  available in HTML format this is shown using the text
         based   [10X"links2"[110X   (in  graphics  mode),  [10Xw3m[110X  or  [10Xlynx[110X  web  browser,
         respectively, inside the terminal running [5XGAP[105X. (Formulae in some older
         books which use symbol fonts may be unreadable.)[133X
   
-  [8X[10X"mac default browser"[110X, [10X"browser"[110X, [10X"safari"[110X, [10X"firefox"[110X[108X
+  [8X[10X"mac default browser"[110X[8X, [10X"browser"[110X[8X, [10X"safari"[110X[8X, [10X"firefox"[110X[8X[108X
         [33X[0;6Y(for  Mac OS X) If a book is available in HTML format this is shown in
         a   web   browser.   The   options  [10X"safari"[110X  and  [10X"firefox"[110X  use  the
         corresponding  browsers. The other two options use the program default
         browser  (which  can  be set in Safari's preferences, in the "General"
         tab).[133X
   
-  [8X[10X"xpdf"[110X[108X
+  [8X[10X"xpdf"[110X[8X[108X
         [33X[0;6Y(on  X-windows  systems)  If  a  book is available in pdf format it is
         shown  with  the onscreen viewer program [10Xxpdf[110X (which must be installed
         on  your  system).  This  is  a nice program, once it is running it is
         reused by [5XGAP[105X for the next displays of help sections.[133X
   
-  [8X[10X"acroread"[110X[108X
+  [8X[10X"acroread"[110X[8X[108X
         [33X[0;6YIf  a  book  is  available in pdf format it is shown with the onscreen
         viewer program [10Xacroread[110X (which must be available on your system). This
         program  does  not allow remote commands or startup with a given page.
@@ -206,7 +206,7 @@
         this viewer assumes that the [10Xacroread[110X window still exists. When you go
         to another book a new acroread window is launched.[133X
   
-  [8X[10X"pdf viewer"[110X, [10X"skim"[110X, [10X"preview"[110X, [10X"adobe reader"[110X[108X
+  [8X[10X"pdf viewer"[110X[8X, [10X"skim"[110X[8X, [10X"preview"[110X[8X, [10X"adobe reader"[110X[8X[108X
         [33X[0;6Y(for Mac OS X) If a book is available in pdf format this is shown in a
         pdf  viewer.  The options [10X"skim"[110X, [10X"preview"[110X and [10X"adobe reader"[110X use the
         corresponding  viewers. The other two options use the pdf viewer which
@@ -219,7 +219,7 @@
         The  pdf  viewer  [10X"Skim"[110X is open source software, it can be downloaded
         from [11Xhttp://skim-app.sourceforge.net/[111X.[133X
   
-  [8X[10X"less"[110X or [10X"more"[110X[108X
+  [8X[10X"less"[110X[8X or [10X"more"[110X[8X[108X
         [33X[0;6YThis  is  the  same  as [10X"screen"[110X but additionally the user preferences
         [10X"Pager"[110X  and  [10X""PagerOptions"[110X  are  set,  see the section [14X2.4[114X for more
         details.[133X
@@ -275,17 +275,17 @@
   
   [33X[0;0YIn case 3. currently the following additional components are used:[133X
   
-  [8X[10Xformatted[110X[108X
+  [8X[10Xformatted[110X[8X[108X
         [33X[0;6Ycan  be  [9Xfalse[109X or [9Xtrue[109X. If set to [9Xtrue[109X the builtin pager tries to show
         the  text  exactly  as  it  is  given  (avoiding  [5XGAP[105X's automatic line
         breaking),[133X
   
-  [8X[10Xstart[110X[108X
+  [8X[10Xstart[110X[8X[108X
         [33X[0;6Ymust  be  a positive integer. This is interpreted as the number of the
         first  line  shown by the pager (one may see the beginning of the text
         via back scrolling).[133X
   
-  [8X[10XexitAtEnd[110X[108X
+  [8X[10XexitAtEnd[110X[8X[108X
         [33X[0;6Ycan  be [9Xfalse[109X or [9Xtrue[109X. If set to [9Xtrue[109X (the default), the builtin pager
         is  terminated  as  soon  as  the  end of the list is shown; otherwise
         entering the [12Xq[112X key is necessary in order to return from the pager.[133X

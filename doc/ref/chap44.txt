@@ -253,12 +253,12 @@
   
   [33X[0;0Y[22Xq[122X   is   defined   relative  to  an  invariant  symmetric  bilinear  form  [22Xf[122X
   (see [2XInvariantBilinearForm[102X  ([14X44.5-1[114X)),  via  the equation [22Xq(λ x + μ y) = λ^2
-  q(x)  +  λ  μ  f(x,y)  +  μ^2  q(y)[122X,  see  [CCNPW85,  Chapter  3.4]. If [22Xf[122X is
-  represented   by  the  matrix  [22XF[122X  then  this  implies  [22XF  =  Q  +  Q^tr[122X.  In
-  characteristic different from [22X2[122X, we have [22Xq(x) = f(x,x)/2[122X, so [22XQ[122X can be chosen
-  as the strictly upper triangular part of [22XF[122X plus half of the diagonal part of
-  [22XF[122X.  In characteristic [22X2[122X, [22XF[122X does not determine [22XQ[122X but still [22XQ[122X can be chosen as
-  an upper (or lower) triangular matrix.[133X
+  q(x) + λ μ f(x,y) + μ^2 q(y)[122X, see [CCN+85, Chapter 3.4]. If [22Xf[122X is represented
+  by  the matrix [22XF[122X then this implies [22XF = Q + Q^tr[122X. In characteristic different
+  from  [22X2[122X,  we  have [22Xq(x) = f(x,x)/2[122X, so [22XQ[122X can be chosen as the strictly upper
+  triangular  part of [22XF[122X plus half of the diagonal part of [22XF[122X. In characteristic
+  [22X2[122X,  [22XF[122X  does not determine [22XQ[122X but still [22XQ[122X can be chosen as an upper (or lower)
+  triangular matrix.[133X
   
   [33X[0;0YWhenever the [2XInvariantQuadraticForm[102X value is set in a matrix group then also
   the [2XInvariantBilinearForm[102X ([14X44.5-1[114X) value can be accessed, and the two values

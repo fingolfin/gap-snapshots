@@ -12,19 +12,19 @@
   Then  [22XG[122X  has  a  finite  presentation  on  the generators [22Xg_1, ..., g_n[122X with
   relations of the following form.[133X
   
-        [22Xg_i^{r_i}[122X          =   [22Xg_{i+1}^a(i,i,i+1) ⋯ g_n^a(i,i,n)[122X
-                               for [22X1 ≤ i ≤ n[122X and [22Xi ∈ I[122X          
-        [22Xg_i^{-1} g_j g_i[122X   =   [22Xg_{i+1}^a(i,j,i+1) ⋯ g_n^a(i,j,n)[122X
-                               for [22X1 ≤ i < j ≤ n[122X                
+        [22Xg_i^{r_i}[122X          =   [22Xg_{i+1}^a(i,i,i+1) ⋯ g_n^a(i,i,n)[122X   
+                               for [22X1 ≤ i ≤ n[122X and [22Xi ∈ I[122X             
+        [22Xg_i^{-1} g_j g_i[122X   =   [22Xg_{i+1}^a(i,j,i+1) ⋯ g_n^a(i,j,n)[122X   
+                               for [22X1 ≤ i < j ≤ n[122X                   
   
   [33X[0;0YFor infinite groups we need additionally[133X
   
-        [22Xg_i^{-1} g_j^{-1} g_i[122X   =   [22Xg_{i+1}^b(i,j,i+1) ⋯ g_n^b(i,j,n)[122X  
-                                    for [22X1 ≤ i < j ≤ n[122X and [22Xj not ∈ I[122X    
-        [22Xg_i g_j g_i^{-1}[122X        =   [22Xg_{i+1}^c(i,j,i+1) ⋯ g_n^c(i,j,n)[122X  
-                                    for [22X1 ≤ i < j ≤ n[122X and [22Xi not ∈ I[122X    
-        [22Xg_i g_j^{-1} g_i^{-1}[122X   =   [22Xg_{i+1}^d(i,j,i+1) ⋯ g_n^d(i,j,n)[122X  
-                                    for [22X1 ≤ i < j ≤ n[122X and [22Xi, j, not ∈ I[122X
+        [22Xg_i^{-1} g_j^{-1} g_i[122X   =   [22Xg_{i+1}^b(i,j,i+1) ⋯ g_n^b(i,j,n)[122X     
+                                    for [22X1 ≤ i < j ≤ n[122X and [22Xj not ∈ I[122X       
+        [22Xg_i g_j g_i^{-1}[122X        =   [22Xg_{i+1}^c(i,j,i+1) ⋯ g_n^c(i,j,n)[122X     
+                                    for [22X1 ≤ i < j ≤ n[122X and [22Xi not ∈ I[122X       
+        [22Xg_i g_j^{-1} g_i^{-1}[122X   =   [22Xg_{i+1}^d(i,j,i+1) ⋯ g_n^d(i,j,n)[122X     
+                                    for [22X1 ≤ i < j ≤ n[122X and [22Xi, j, not ∈ I[122X   
   
   [33X[0;0YHere  the  right hand sides are assumed to be words in normal form; that is,
   for  [22Xk  ∈  I[122X  we  have  for  all exponents [22X0 ≤ a(i,j,k), b(i,j,k), c(i,j,k),

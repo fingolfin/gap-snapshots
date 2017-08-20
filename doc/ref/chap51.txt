@@ -810,8 +810,9 @@
   multiplication defined by[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Y(i, s, j)(k, t, l)=(i,s\cdot p_{j,k}\cdot t, l).[133X [124X[133X
+  [24X[33X[0;6Y(i, s, j)(k, t, l)=(i,s\cdot p_{j,k}\cdot t, l).[133X
   
+  [124X
   
   [33X[0;0YRees  0-matrix  semigroups  are defined as follows. If [22XI[122X, [22XJ[122X, [22XS[122X, and [22XP[122X are as
   above  and  [22X0[122X  denotes  a new element, then the [13XRees 0-matrix semigroup[113X with
@@ -819,8 +820,9 @@
   defined by[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Y(i, s, j)(k, t, l)=(i, s\cdot p_{j,k}\cdot t, l)[133X [124X[133X
+  [24X[33X[0;6Y(i, s, j)(k, t, l)=(i, s\cdot p_{j,k}\cdot t, l)[133X
   
+  [124X
   
   [33X[0;0Ywhen [22Xp_j,k[122X is not [22X0[122X and [22X0[122X if [22Xp_j,k[122X is 0.[133X
   

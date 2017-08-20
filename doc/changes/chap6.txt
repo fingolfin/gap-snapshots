@@ -481,7 +481,7 @@
   [30X    [33X[0;6YUp  to  now,  the  method  installed  for  testing  the  membership of
         rationals  in  the field of rationals via [2XIsRat[102X ([14XReference: IsRat[114X) was
         not  called;  instead  a  more  general  method  was  used that called
-        [2XConductor[102X  ([14XReference: Conductor (for a cyclotomic)[114X) and thus was much
+        [2XConductor[102X  ([14XReference:  Conductor  for a cyclotomic[114X) and thus was much
         slower.  Now  the  special  method  has been ranked up by changing the
         requirements in the method installation.[133X
   
@@ -897,7 +897,7 @@
   [30X    [33X[0;6YThe manual guarantees that a conjugator automorphism has a conjugating
         element in the group if possible. This was not guaranteed.[133X
   
-  [30X    [33X[0;6Y[2XStabChain[102X  ([14XReference:  StabChain  (for  a  group (and a record))[114X) for
+  [30X    [33X[0;6Y[2XStabChain[102X  ([14XReference:  StabChain  for  a  group  (and  a record)[114X) for
         symmetric  groups  gave a wrong result if fixed points were prescribed
         for base.[133X
   
@@ -1049,7 +1049,7 @@
   [30X    [33X[0;6YThe  function [2XCharacterTableRegular[102X ([14XReference: CharacterTableRegular[114X)
         is documented now.[133X
   
-  [30X    [33X[0;6YThe function [2XScalarProduct[102X ([14XReference: ScalarProduct (for characters)[114X)
+  [30X    [33X[0;6YThe  function  [2XScalarProduct[102X ([14XReference: ScalarProduct for characters[114X)
         now accepts also Brauer characters as arguments.[133X
   
   [30X    [33X[0;6YThe  function  [2XQuaternionAlgebra[102X  ([14XReference:  QuaternionAlgebra[114X)  now
@@ -1253,8 +1253,8 @@
         is fixed. [Reported by Alexander Hulpke][133X
   
   [30X    [33X[0;6YThe   variant   of   the   function   [2XStraightLineProgram[102X  ([14XReference:
-        StraightLineProgram   (for   a  list  of  lines  (and  the  number  of
-        generators))[114X) that takes a string as its first argument returned wrong
+        StraightLineProgram   for   a   list  of  lines  (and  the  number  of
+        generators)[114X)  that takes a string as its first argument returned wrong
         results if the last character of this string was a closing bracket.[133X
   
   [30X    [33X[0;6YThe  code  for  central series in a permutation group used too tight a

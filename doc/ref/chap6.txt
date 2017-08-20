@@ -909,7 +909,7 @@
   [33X[0;0YThe  next  commands  delete  or  kill  text.  The  last  killed  text can be
   reinserted, possibly at a different position, with the [21Xyank[121X command [12XCtrl-Y[112X.[133X
   
-  [8X[12XCtrl-H[112X or [3Xdel[103X[108X
+  [8X[12XCtrl-H[112X or [3Xdel[103X[8X[108X
         [33X[0;6Ydelete the character left of the cursor.[133X
   
   [8X[12XCtrl-D[112X[108X
@@ -987,7 +987,7 @@
   [8X[12XCtrl-U[112X[108X
         [33X[0;6Yexecute the next line editing command 4 times.[133X
   
-  [8X[12XEsc-[112X[10Xnum[110X[108X
+  [8X[12XEsc-[112X[10Xnum[110X[8X[108X
         [33X[0;6Yexecute the next line editing command [10Xnum[110X times.[133X
   
   [8X[12XEsc-Ctrl-L[112X[108X
@@ -1130,30 +1130,30 @@
   
   [33X[0;0YThe result of such a function must be a list which can have various forms:[133X
   
-  [8X[10X[str][110X[108X
+  [8X[10X[str][110X[8X[108X
         [33X[0;6Ywith a string [10Xstr[110X. In this case the text [10Xstr[110X is inserted at the cursor
         position.[133X
   
-  [8X[10X[kill, begin, end][110X[108X
+  [8X[10X[kill, begin, end][110X[8X[108X
         [33X[0;6Ywhere  [10Xkill[110X  is  [9Xtrue[109X  or [9Xfalse[109X and [10Xbegin[110X and [10Xend[110X are positions on the
         input  line.  This  removes the text from the lower position to before
         the  higher  position. If [10Xkill[110X is [9Xtrue[109X the text is killed, i.e. put in
         the kill ring for later yanking.[133X
   
-  [8X[10X[begin, end, str][110X[108X
+  [8X[10X[begin, end, str][110X[8X[108X
         [33X[0;6Ywhere  [10Xbegin[110X  and  [10Xend[110X  are  positions  on the input line and [10Xstr[110X is a
         string. Then the text from position [10Xbegin[110X to before [10Xend[110X is substituted
         by [10Xstr[110X.[133X
   
-  [8X[10X[1, lstr][110X[108X
+  [8X[10X[1, lstr][110X[8X[108X
         [33X[0;6Ywhere [10Xlstr[110X is a list of strings. Then these strings are displayed like
         a list of possible completions. The input line is not changed.[133X
   
-  [8X[10X[2, chars][110X[108X
+  [8X[10X[2, chars][110X[8X[108X
         [33X[0;6Ywhere  [10Xchars[110X  is  a  string. The characters from [10Xchars[110X are used as the
         next characters from the input. (At most 512 characters are possible.)[133X
   
-  [8X[10X[100][110X[108X
+  [8X[10X[100][110X[8X[108X
         [33X[0;6YThis rings the bell as configured in the terminal.[133X
   
   [33X[0;0YIn the first three cases the result list can contain a position as a further

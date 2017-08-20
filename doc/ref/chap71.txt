@@ -66,8 +66,7 @@
   [22XG[122X given by[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Y[ χ, ψ ] = ( ∑_{g ∈ G} χ(g) ψ(g^{-1}) ) / |G|[133X[124X[133X
-  
+  [24X[33X[0;6Y[ χ, ψ ] = ( ∑_{g ∈ G} χ(g) ψ(g^{-1}) ) / |G|[133X[124X
   
   [33X[0;0Ycan be written as[133X
   
@@ -659,13 +658,13 @@
   components describe additional information for the class identification. The
   following components are supported.[133X
   
-  [8X[10Xnatchar[110X [108X
+  [8X[10Xnatchar[110X[8X [108X
         [33X[0;6Yif  [22XG[122X  is  a  permutation group or matrix group then the value of this
         component  is  regarded as the list of values of the natural character
         (see [2XNaturalCharacter[102X  ([14X72.7-2[114X))  of [3XG[103X, w.r.t. the ordering of classes
         in [3Xtbl[103X,[133X
   
-  [8X[10Xbijection[110X [108X
+  [8X[10Xbijection[110X[8X [108X
         [33X[0;6Ya  list  describing  a partial bijection; the [22Xi[122X-th entry, if bound, is
         the position of the [22Xi[122X-th conjugacy class of [3Xtbl[103X in the list [3Xccl[103X.[133X
   
@@ -698,20 +697,20 @@
   
   [33X[0;0YThe following infix operators are defined for character tables.[133X
   
-  [8X[10X[3Xtbl1[103X[10X * [3Xtbl2[103X[10X[110X[108X
+  [8X[10X[3Xtbl1[103X[8X[10X * [3Xtbl2[103X[8X[10X[110X[8X[108X
         [33X[0;6Ythe      direct      product      of      two     character     tables
         (see [2XCharacterTableDirectProduct[102X ([14X71.20-1[114X)),[133X
   
-  [8X[10X[3Xtbl[103X[10X / [3Xlist[103X[10X[110X[108X
+  [8X[10X[3Xtbl[103X[8X[10X / [3Xlist[103X[8X[10X[110X[8X[108X
         [33X[0;6Ythe  table  of  the factor group modulo the normal subgroup spanned by
         the   classes   in   the   list   [3Xlist[103X  (see [2XCharacterTableFactorGroup[102X
         ([14X71.20-3[114X)),[133X
   
-  [8X[10X[3Xtbl[103X[10X mod [3Xp[103X[10X[110X[108X
+  [8X[10X[3Xtbl[103X[8X[10X mod [3Xp[103X[8X[10X[110X[8X[108X
         [33X[0;6Ythe  [3Xp[103X-modular  Brauer  character  table corresponding to the ordinary
         character table [3Xtbl[103X (see [2XBrauerTable[102X ([14X71.3-2[114X)),[133X
   
-  [8X[10X[3Xtbl[103X[10X.[3Xname[103X[10X[110X[108X
+  [8X[10X[3Xtbl[103X[8X[10X.[3Xname[103X[8X[10X[110X[8X[108X
         [33X[0;6Ythe  position  of  the  class  with  name  [3Xname[103X in [3Xtbl[103X (see [2XClassNames[102X
         ([14X71.9-6[114X)).[133X
   
@@ -1063,7 +1062,7 @@
   
   [33X[0;0YWhen  [2XClassNames[102X  is  called with two arguments, the second being the string
   [10X"ATLAS"[110X,  the  class names returned obey the convention used in the [5XAtlas[105X of
-  Finite  Groups  [CCNPW85,  Chapter  7,  Section  5]. If one is interested in
+  Finite  Groups  [CCN+85,  Chapter  7,  Section  5].  If one is interested in
   [21Xrelative[121X class names of almost simple [5XAtlas[105X groups, one can use the function
   [2XAtlasClassNames[102X ([14XAtlasRep: AtlasClassNames[114X).[133X
   
@@ -1408,23 +1407,23 @@
   [33X[0;0YFor  an  ordinary  character table [3Xordtbl[103X and a prime integer [3Xp[103X, [2XPrimeBlocks[102X
   returns a record with the following components.[133X
   
-  [8X[10Xblock[110X[108X
+  [8X[10Xblock[110X[8X[108X
         [33X[0;6Ya  list,  the  value  [22Xj[122X  at position [22Xi[122X means that the [22Xi[122X-th irreducible
         character of [3Xordtbl[103X lies in the [22Xj[122X-th [3Xp[103X-block of [3Xordtbl[103X,[133X
   
-  [8X[10Xdefect[110X[108X
+  [8X[10Xdefect[110X[8X[108X
         [33X[0;6Ya list containing at position [22Xi[122X the defect of the [22Xi[122X-th block,[133X
   
-  [8X[10Xheight[110X[108X
+  [8X[10Xheight[110X[8X[108X
         [33X[0;6Ya  list  containing  at  position [22Xi[122X the height of the [22Xi[122X-th irreducible
         character of [3Xordtbl[103X in its block,[133X
   
-  [8X[10Xrelevant[110X[108X
+  [8X[10Xrelevant[110X[8X[108X
         [33X[0;6Ya  list  of  class  positions  such that only the restriction to these
         classes need be checked for deciding whether two characters lie in the
         same block, and[133X
   
-  [8X[10Xcentralcharacter[110X[108X
+  [8X[10Xcentralcharacter[110X[8X[108X
         [33X[0;6Ya  list  containing at position [22Xi[122X a list whose values at the positions
         stored in the component [10Xrelevant[110X are the values of a central character
         in the [22Xi[122X-th block.[133X
@@ -1491,33 +1490,33 @@
   (mutable)  records,  the  [22Xi[122X-th  entry  containing information about the [22Xi[122X-th
   block. Each record has the following components.[133X
   
-  [8X[10Xdefect[110X[108X
+  [8X[10Xdefect[110X[8X[108X
         [33X[0;6Ythe defect of the block,[133X
   
-  [8X[10Xordchars[110X[108X
+  [8X[10Xordchars[110X[8X[108X
         [33X[0;6Ythe  list  of  positions of the ordinary characters that belong to the
         block, relative to [10XIrr( OrdinaryCharacterTable( [3Xmodtbl[103X[10X ) )[110X,[133X
   
-  [8X[10Xmodchars[110X[108X
+  [8X[10Xmodchars[110X[8X[108X
         [33X[0;6Ythe  list  of  positions  of  the Brauer characters that belong to the
         block, relative to [10XIBr( [3Xmodtbl[103X[10X )[110X.[133X
   
   [33X[0;0YOptional components are[133X
   
-  [8X[10Xbasicset[110X[108X
+  [8X[10Xbasicset[110X[8X[108X
         [33X[0;6Ya  list  of  positions  of  ordinary  characters  in  the  block whose
         restriction  to  [3Xmodtbl[103X is maximally linearly independent, relative to
         [10XIrr( OrdinaryCharacterTable( [3Xmodtbl[103X[10X ) )[110X,[133X
   
-  [8X[10Xdecmat[110X[108X
+  [8X[10Xdecmat[110X[8X[108X
         [33X[0;6Ythe decomposition matrix of the block, it is stored automatically when
         [2XDecompositionMatrix[102X ([14X71.11-4[114X) is called for the block,[133X
   
-  [8X[10Xdecinv[110X[108X
+  [8X[10Xdecinv[110X[8X[108X
         [33X[0;6Yinverse  of  the  decomposition matrix of the block, restricted to the
         ordinary characters described by [10Xbasicset[110X,[133X
   
-  [8X[10Xbrauertree[110X[108X
+  [8X[10Xbrauertree[110X[8X[108X
         [33X[0;6Ya  list  that describes the Brauer tree of the block, in the case that
         the block is of defect [22X1[122X.[133X
   
@@ -1590,7 +1589,7 @@
   from the information in [3Xmodtbl[103X.[133X
   
   [33X[0;0YFor  those  character  tables  from the [5XGAP[105X table library that belong to the
-  [5XAtlas[105X   of   Finite  Groups [CCNPW85],  [2XAtlasLabelsOfIrreducibles[102X  ([14XCTblLib:
+  [5XAtlas[105X   of   Finite   Groups [CCN+85],  [2XAtlasLabelsOfIrreducibles[102X  ([14XCTblLib:
   AtlasLabelsOfIrreducibles[114X)  constructs  character labels that are compatible
   with  those  used in the [5XAtlas[105X (see [14X'CTblLib: Atlas Tables'[114X in the manual of
   the [5XGAP[105X Character Table Library).[133X
@@ -1787,17 +1786,14 @@
   [22XK_j[122X into class sums:[133X
   
   
-        [33X[1;6Y[24X[33X[0;0YK_i K_j = ∑_k c_ijk K_k .[133X[124X[133X
-  
+  [24X[33X[0;6YK_i K_j = ∑_k c_ijk K_k .[133X[124X
   
   [33X[0;0YGiven  the  character table of a finite group [22XG[122X, whose classes are [22XC_1, ...,
   C_r[122X  with  representatives  [22Xg_i  ∈ C_i[122X, the class multiplication coefficient
   [22Xc_ijk[122X can be computed with the following formula:[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yc_ijk = |C_i| ⋅ |C_j| / |G| ⋅ ∑_{χ ∈ Irr(G)} χ(g_i) χ(g_j) χ(g_k^{-1})
-        / χ(1).[133X[124X[133X
-  
+  [24X[33X[0;6Yc_ijk = |C_i| ⋅ |C_j| / |G| ⋅ ∑_{χ ∈ Irr(G)} χ(g_i) χ(g_j) χ(g_k^{-1}) / χ(1).[133X[124X
   
   [33X[0;0YOn  the  other  hand  the knowledge of the class multiplication coefficients
   admits    the    computation   of   the   irreducible   characters   of   [22XG[122X,
@@ -1820,9 +1816,7 @@
   [33X[0;0Y[22Xn(C_1, C_2, ..., C_n)[122X is computed using the formula[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yn(C_1, C_2, ..., C_n) = |C_1| |C_2| ⋯ |C_n| / |G| ⋅ ∑_{χ ∈ Irr(G)}
-        χ(g_1) χ(g_2) ⋯ χ(g_n) / χ(1)^{n-2} .[133X[124X[133X
-  
+  [24X[33X[0;6Yn(C_1, C_2, ..., C_n) = |C_1| |C_2| ⋯ |C_n| / |G| ⋅ ∑_{χ ∈ Irr(G)} χ(g_1) χ(g_2) ⋯ χ(g_n) / χ(1)^{n-2} .[133X[124X
   
   [1X71.12-9 MatClassMultCoeffsCharTable[101X
   
@@ -1888,7 +1882,7 @@
   
   [33X[0;0YAn  interactive  variant  of  [2XDisplay[102X ([14X6.3-6[114X) is the [2XBrowse[102X ([14XBrowse: Browse[114X)
   method  for character tables that is provided by the [5XGAP[105X package [5XBrowse[105X, see
-  [2XBrowse[102X ([14XBrowse: Browse (for character tables)[114X).[133X
+  [2XBrowse[102X ([14XBrowse: Browse for character tables[114X).[133X
   
   [33X[0;0Y[2XDisplay[102X  ([14X6.3-6[114X)  shows  certain  characters  (by  default  all  irreducible
   characters)  of  [3Xtbl[103X,  together  with  the  orders  of  the  centralizers in
@@ -1922,7 +1916,7 @@
   the   occurring   symbols   with  their  actual  values.  Occasionally  this
   identification   is  supplemented  by  a  quadratic  representation  of  the
   irrationality (see [2XQuadratic[102X ([14X18.5-4[114X)) together with the corresponding [5XAtlas[105X
-  notation (see [CCNPW85]).[133X
+  notation (see [CCN+85]).[133X
   
   [33X[0;0YThis  default  style can be changed by prescribing a record [3Xarec[103X of options,
   which can be given[133X
@@ -1942,54 +1936,54 @@
   
   [33X[0;0YThe following components of [3Xarec[103X are supported.[133X
   
-  [8X[10Xcentralizers[110X[108X
+  [8X[10Xcentralizers[110X[8X[108X
         [33X[0;6Y[9Xfalse[109X  to  suppress the printing of the orders of the centralizers, or
         the string [10X"ATLAS"[110X to force the printing of non-factorized centralizer
         orders  in  a  style  similar  to  that  used  in  the [5XAtlas[105X of Finite
-        Groups [CCNPW85],[133X
+        Groups [CCN+85],[133X
   
-  [8X[10Xchars[110X[108X
+  [8X[10Xchars[110X[8X[108X
         [33X[0;6Yan  integer  or  a  list  of  integers  to  select  a  sublist  of the
         irreducible characters of [3Xtbl[103X, or a list of characters of [3Xtbl[103X (in this
         case the letter [10X"X"[110X is replaced by [10X"Y"[110X),[133X
   
-  [8X[10Xclasses[110X[108X
+  [8X[10Xclasses[110X[8X[108X
         [33X[0;6Yan integer or a list of integers to select a sublist of the classes of
         [3Xtbl[103X,[133X
   
-  [8X[10Xindicator[110X[108X
+  [8X[10Xindicator[110X[8X[108X
         [33X[0;6Y[9Xtrue[109X  enables  the printing of the second Frobenius Schur indicator, a
         list  of integers enables the printing of the corresponding indicators
         (see [2XIndicator[102X ([14X71.12-5[114X)),[133X
   
-  [8X[10Xletter[110X[108X
+  [8X[10Xletter[110X[8X[108X
         [33X[0;6Ya  single  capital  letter  (e. g. [10X"P"[110X  for permutation characters) to
         replace the default [10X"X"[110X in character names,[133X
   
-  [8X[10Xpowermap[110X[108X
+  [8X[10Xpowermap[110X[8X[108X
         [33X[0;6Yan  integer  or a list of integers to select a subset of the available
         power  maps,  [9Xfalse[109X  to  suppress  the  printing of power maps, or the
         string  [10X"ATLAS"[110X to force a printing of class names and power maps in a
-        style similar to that used in the [5XAtlas[105X of Finite Groups [CCNPW85],[133X
+        style similar to that used in the [5XAtlas[105X of Finite Groups [CCN+85],[133X
   
-  [8X[10XDisplay[110X[108X
+  [8X[10XDisplay[110X[8X[108X
         [33X[0;6Ythe  function  that  is actually called in order to display the table;
         the  arguments are the table and the optional record, whose components
         can be used inside the [10XDisplay[110X function,[133X
   
-  [8X[10XStringEntry[110X[108X
+  [8X[10XStringEntry[110X[8X[108X
         [33X[0;6Ya  function  that  takes either a character value or a character value
         and  the  return value of [10XStringEntryData[110X (see below), and returns the
         string  that  is  actually  displayed;  it is called for all character
         values  to  be  displayed, and also for the displayed indicator values
         (see above),[133X
   
-  [8X[10XStringEntryData[110X[108X
+  [8X[10XStringEntryData[110X[8X[108X
         [33X[0;6Ya  unary  function  that  is  called once with argument [3Xtbl[103X before the
         character  values  are displayed; it returns an object that is used as
         second argument of the function [10XStringEntry[110X,[133X
   
-  [8X[10XLegend[110X[108X
+  [8X[10XLegend[110X[8X[108X
         [33X[0;6Ya  function  that  takes the result of the [10XStringEntryData[110X call as its
         only  argument,  after  the  character  table  has been displayed; the
         return  value  is  a  string  that  describes  the symbols used in the
@@ -2472,22 +2466,22 @@
   irreducible  characters  of a group. Some entries, however, may be useful to
   know about when using the algorithm interactively, see [14X71.19[114X.[133X
   
-  [8X[10Xgroup[110X[108X
+  [8X[10Xgroup[110X[8X[108X
         [33X[0;6Ythe group [22XG[122X of which the character table is to be computed,[133X
   
-  [8X[10XconjugacyClasses[110X[108X
+  [8X[10XconjugacyClasses[110X[8X[108X
         [33X[0;6Yclasses  of [22XG[122X (all characters stored in the Dixon record correspond to
         this arrangement of classes),[133X
   
-  [8X[10Xirreducibles[110X[108X
+  [8X[10Xirreducibles[110X[8X[108X
         [33X[0;6Ythe  already  known  irreducible  characters  (given as lists of their
         values on the conjugacy classes),[133X
   
-  [8X[10XcharacterTable[110X[108X
+  [8X[10XcharacterTable[110X[8X[108X
         [33X[0;6Ythe  [2XCharacterTable[102X  ([14X71.3-1[114X) value of [22XG[122X (whose irreducible characters
         are not yet known),[133X
   
-  [8X[10XClassElement( [3XD[103X[10X, [3Xel[103X[10X )[110X[108X
+  [8X[10XClassElement( [3XD[103X[8X[10X, [3Xel[103X[8X[10X )[110X[8X[108X
         [33X[0;6Ya function that returns the number of the class of [22XG[122X that contains the
         element [3Xel[103X.[133X
   
@@ -2738,7 +2732,7 @@
   structure  [22X2.G.2[122X  with  a  central  subgroup  [22XZ[122X of order [22X2[122X or [22X4[122X and a normal
   subgroup  [22XN[122X  of index [22X2[122X that contains [22XZ[122X then [2XCharacterTableIsoclinic[102X returns
   the  table of the isoclinic group in the sense of the [5XAtlas[105X of Finite Groups
-  [CCNPW85,  Chapter  6,  Section 7]. If [22XN[122X is not uniquely determined then the
+  [CCN+85,  Chapter  6,  Section  7]. If [22XN[122X is not uniquely determined then the
   positions  of the classes forming [22XN[122X must be entered as list [3Xclasses[103X. If [22XZ[122X is
   not  unique  inside [22XN[122X then the positions of the classes in [22XZ[122X must be entered
   as list [3Xcentre[103X; If [22XZ[122X has order [22X2[122X then [3Xcentre[103X can be also the position of the
@@ -3117,15 +3111,15 @@
   
   [33X[0;0Y[2XFamiliesOfRows[102X returns a record with the components[133X
   
-  [8X[10Xfamreps[110X[108X
+  [8X[10Xfamreps[110X[8X[108X
         [33X[0;6Ythe list of representatives for each family,[133X
   
-  [8X[10Xpermutations[110X[108X
+  [8X[10Xpermutations[110X[8X[108X
         [33X[0;6Ythe  list  that contains at position [22Xi[122X a list of permutations that map
         the  members  of  the  family  with  representative [10Xfamreps[110X[22X[i][122X to that
         representative,[133X
   
-  [8X[10Xfamilies[110X[108X
+  [8X[10Xfamilies[110X[8X[108X
         [33X[0;6Ythe  list that contains at position [22Xi[122X the list of positions of members
         of  the  family of representative [10Xfamreps[110X[22X[i][122X; (for the element [3Xmaps[103X[22X[i][122X
         the only member of the family will get the number [10XLength( [3Xmat[103X[10X ) + [110X[22Xi[122X).[133X
@@ -3151,14 +3145,14 @@
   record with components to store normal subgroups, the corresponding lists of
   conjugacy classes, and (if necessary) the factor groups, namely[133X
   
-  [8X[10Xnsg[110X[108X
+  [8X[10Xnsg[110X[8X[108X
         [33X[0;6Ylist of normal subgroups of [22XG[122X, may be incomplete,[133X
   
-  [8X[10Xnsgclasses[110X[108X
+  [8X[10Xnsgclasses[110X[8X[108X
         [33X[0;6Yat  position  [22Xi[122X,  the  list  of  positions of conjugacy classes of [3Xtbl[103X
         forming the [22Xi[122X-th entry of the [10Xnsg[110X component,[133X
   
-  [8X[10Xnsgfactors[110X[108X
+  [8X[10Xnsgfactors[110X[8X[108X
         [33X[0;6Yat position [22Xi[122X, if bound, the factor group modulo the [22Xi[122X-th entry of the
         [10Xnsg[110X component.[133X
   

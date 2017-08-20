@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (ref) - Chapter 45: Polycyclic Groups</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -100,7 +100,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap45_mj.html#X868207D77D09D915">45.9-2 IsModuloPcgs</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap45_mj.html#X8027CC9878031D74">45.9-3 NumeratorOfModuloPcgs</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap45_mj.html#X87DBE2797D51B2F1">45.9-4 DenominatorOfModuloPcgs</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap45_mj.html#X7E923519832F2D08">45.9-5 \mod</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap45_mj.html#X7E923519832F2D08"><code>45.9-5 \mod</code></a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap45_mj.html#X876A41F97FBA7754">45.9-6 CorrespondingGeneratorsByModuloPcgs</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap45_mj.html#X8480852A7D49BC3F">45.9-7 CanonicalPcgsByGeneratorsWithImages</a></span>
 </div></div>
@@ -688,7 +688,7 @@ Pcgs([ (4,5) ])
 
 <p><a id="X7E923519832F2D08" name="X7E923519832F2D08"></a></p>
 
-<h5>45.9-5 \mod</h5>
+<h5><code>45.9-5 \mod</code></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \mod</code>( <var class="Arg">P</var>, <var class="Arg">I</var> )</td><td class="tdright">( method )</td></tr></table></div>
 <p>Modulo Pcgs can also be built from compatible induced pcgs. Let <span class="SimpleMath">\(G\)</span> be a group with pcgs <var class="Arg">P</var> and let <var class="Arg">I</var> be an induced pcgs of a normal subgroup <span class="SimpleMath">\(N\)</span> of <span class="SimpleMath">\(G\)</span>. (Respectively: <var class="Arg">P</var> and <var class="Arg">I</var> are both induced with respect to the <em>same</em> Pcgs.) Then we can compute a modulo pcgs of <span class="SimpleMath">\(G\)</span> mod <span class="SimpleMath">\(N\)</span> by</p>

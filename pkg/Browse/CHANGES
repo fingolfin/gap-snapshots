@@ -1,6 +1,25 @@
 
         Main CHANGES between versions of the Browse package
 
+1.8.7
+  - Removed the example application 'BrowseTransitiveGroupsInfo',
+    because of changes in the underlying library of transitive groups.
+  - Added the new application 'BrowseBibliographyGapPackages'.
+    (This is experimental, strange *.bib files in package distributions
+    may cause error messages.)
+  - Added a new application that facilitates demos of GAP code, see
+    '?Browse: Utility for GAP Demos' for details.
+  - The input code 127 is assumed to denote the backspace key also if
+    'NCurses.keys.BACKSPACE' has a different value, which apparently happens
+    for some Mac operating systems; up to now, entering backspace had no
+    effect with such systems.
+    [This bug had been reported and analyzed by Max Horn.]
+  - 'NCurses.Select' now supports the replay and log features of
+    'NCurses.BrowseGeneric'.
+    Note that meanwhile several applications call 'NCurses.Select',
+    now we can provide examples for them that are processed automatically,
+    and debugging is easier.
+
 1.8.6
   - 'NCurses.EditFields' now deals with long input strings by scrolling
     horizontally.
@@ -11,7 +30,7 @@
     concept.
     If AtlasRep 1.5 or older is going to be loaded in the current GAP
     session then the file 'app/atlasbrowse_old.g' is read, which yields the
-    old behaviour. 
+    old behaviour.
     If AtlasRep 1.6 or newer is going to be loaded then the file
     'app/atlasbrowse.g' is read.
   - Symbolic values are now supported in selections that are offered by
@@ -28,7 +47,7 @@
 1.8.5
   - "Further improvement" of the Ctrl-M issue from 1.8.4.
   - Fixed two problems with non-breakable spaces in gap-publishednicer.bib.
-  
+
 1.8.4
   - Fixed the handling of the 'version' component of database attributes;
     before the fix, it was possible that an attribute was regarded as
@@ -52,7 +71,7 @@
   - Avoid some compiler warnings with 'gcc -Wall' for gcc >= 4.6 (by
     wrapping the macro wattr_get in a function).
   - Changed encoding of Makefile.in to UTF-8 and setting LANG and LC_ALL to
-    "C" ./configure script (this is workaround to some problems with 'sed' 
+    "C" ./configure script (this is workaround to some problems with 'sed'
     on newer OS X systems).
   - Fixed 'BrowseGapMethods', 'BrowsePackageVariables', and 'BrowseProfile':
     Up to now, the attempt to show the code of a function in a pager

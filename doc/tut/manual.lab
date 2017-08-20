@@ -3,10 +3,10 @@
 \makelabel{tut:Copyright}{}{X81488B807F2A1CF1}
 \makelabel{tut:Table of Contents}{}{X8537FEB07AF2BEC8}
 \makelabel{tut:Preface}{1}{X874E1D45845007FE}
-\makelabel{tut:The GAP System}{1.1}{X869E3CF37EC69123}
-\makelabel{tut:Further Information about GAP}{1.2}{X7B488D2E8492AB6A}
-\makelabel{tut:A First Session with GAP}{2}{X7E1648BF8446FBC2}
-\makelabel{tut:Starting and Leaving GAP}{2.1}{X7B5258097F48EFB6}
+\makelabel{tut:The GAP System}{1.1}{X863F306C7D32F4B0}
+\makelabel{tut:Further Information about GAP}{1.2}{X7BF552C07E2F8F7C}
+\makelabel{tut:A First Session with GAP}{2}{X7A3C7AE07D6848E3}
+\makelabel{tut:Starting and Leaving GAP}{2.1}{X84063FD486665C97}
 \makelabel{tut:Loading Source Code from a File}{2.2}{X7B8D5EC27E33AF6D}
 \makelabel{tut:The Read Evaluate Print Loop}{2.3}{X7C7388A683D15599}
 \makelabel{tut:Constants and Operators}{2.4}{X86CA8242832F5F71}
@@ -60,11 +60,11 @@
 \makelabel{tut:Bibliography}{Bib}{X7A6F98FD85F02BFE}
 \makelabel{tut:References}{Bib}{X7A6F98FD85F02BFE}
 \makelabel{tut:Index}{Ind}{X83A0356F839C696F}
-\makelabel{tut:starting GAP}{2.1}{X7B5258097F48EFB6}
-\makelabel{tut:leaving GAP}{2.1}{X7B5258097F48EFB6}
-\makelabel{tut:quit}{2.1}{X7B5258097F48EFB6}
-\makelabel{tut:whitespace}{2.1}{X7B5258097F48EFB6}
-\makelabel{tut:comments}{2.1}{X7B5258097F48EFB6}
+\makelabel{tut:starting GAP}{2.1}{X84063FD486665C97}
+\makelabel{tut:leaving GAP}{2.1}{X84063FD486665C97}
+\makelabel{tut:quit}{2.1}{X84063FD486665C97}
+\makelabel{tut:whitespace}{2.1}{X84063FD486665C97}
+\makelabel{tut:comments}{2.1}{X84063FD486665C97}
 \makelabel{tut:loading source code from a file}{2.2}{X7B8D5EC27E33AF6D}
 \makelabel{tut:reading source code from a file}{2.2}{X7B8D5EC27E33AF6D}
 \makelabel{tut:Read}{2.2}{X7B8D5EC27E33AF6D}

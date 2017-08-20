@@ -80,19 +80,19 @@
   [33X[0;0Y[5XGAP[105X  represents  an  ordered  partition  as  a  record  with  the  following
   components.[133X
   
-  [8X[10Xpoints[110X[108X
+  [8X[10Xpoints[110X[8X[108X
         [33X[0;6Ya  list of all points contained in the partition, such that the points
         of each cell from lie consecutively,[133X
   
-  [8X[10Xcellno[110X[108X
+  [8X[10Xcellno[110X[8X[108X
         [33X[0;6Ya  list  whose  [3Xi[103Xth entry is the number of the cell which contains the
         point [3Xi[103X,[133X
   
-  [8X[10Xfirsts[110X[108X
+  [8X[10Xfirsts[110X[8X[108X
         [33X[0;6Ya  list such that [10Xpoints[firsts[[3Xj[103X[10X]][110X is the first point in [10Xpoints[110X which
         is in cell [3Xj[103X,[133X
   
-  [8X[10Xlengths[110X[108X
+  [8X[10Xlengths[110X[8X[108X
         [33X[0;6Ya list of the cell lengths.[133X
   
   [33X[0;0YSome  of  the information is redundant, e.g., the [10Xlengths[110X could also be read
@@ -140,47 +140,47 @@
   the whole story: Here are the record components from which an R-base is made
   up:[133X
   
-  [8X[10Xdomain[110X[108X
+  [8X[10Xdomain[110X[8X[108X
         [33X[0;6Ythe set [22XΩ[122X on which the group [22XG[122X operates[133X
   
-  [8X[10Xbase[110X[108X
+  [8X[10Xbase[110X[8X[108X
         [33X[0;6Ythe sequence [22X(a_1, ..., a_r)[122X of base points[133X
   
-  [8X[10Xpartition[110X[108X
+  [8X[10Xpartition[110X[8X[108X
         [33X[0;6Yan ordered partition, initially [22XΠ_0[122X, this will be refined to [22XΠ_1, ...,
         Π_r[122X during the backtrack algorithm[133X
   
-  [8X[10Xwhere[110X[108X
+  [8X[10Xwhere[110X[8X[108X
         [33X[0;6Ya list such that [22Xa_i[122X lies in cell number [10Xwhere[110X[22X[i][122X of [22XΠ_i[122X[133X
   
-  [8X[10Xrfm[110X[108X
+  [8X[10Xrfm[110X[8X[108X
         [33X[0;6Ya  list  whose  [22Xi[122Xth  entry  is a list of refinements which take [22XΣ_i[122X to
         [22XΣ_{i+1}[122X; the structure of a refinement is described below[133X
   
-  [8X[10Xchain[110X[108X
+  [8X[10Xchain[110X[8X[108X
         [33X[0;6Ya (copy of a) stabilizer chain for [22XG[122X (not if [22XG[122X is a symmetric group)[133X
   
-  [8X[10Xfix[110X[108X
+  [8X[10Xfix[110X[8X[108X
         [33X[0;6Yonly  if  [22XG[122X  is  a  symmetric  group:  a  list  whose [22Xi[122X entry contains
         [10XFixcells( [110X[22XΠ_i[122X[10X )[110X[133X
   
-  [8X[10Xlevel[110X[108X
+  [8X[10Xlevel[110X[8X[108X
         [33X[0;6Yinitially  equal  to  [10Xchain[110X,  this  will  be changed to chains for the
         stabilizers  [22XG_{a_1  ...  a_i}[122X  for [22Xi = 1, ..., r[122X during the backtrack
         algorithm;  if [22XG[122X is a symmetric group, only the number of moved points
         is stored for each stabilizer[133X
   
-  [8X[10Xlev[110X[108X
+  [8X[10Xlev[110X[8X[108X
         [33X[0;6Ya  list  whose  [22Xi[122Xth  entry  remembers  the  [10Xlevel[110X entry for [22XG_{a_1 ...
         a_{i-1}}[122X[133X
   
-  [8X[10Xlevel2[110X, [10Xlev2[110X[108X
+  [8X[10Xlevel2[110X[8X, [10Xlev2[110X[8X[108X
         [33X[0;6Ya  similar  construction  for  a  second  group  (used in intersection
         calculations),  [9Xfalse[109X  otherwise. This second group [22XH[122X activated if the
         R-base is constructed as [10XEmptyRBase( [110X[22X[ G, H ], Ω, Π_0[122X[10X )[110X (if [22XG = H[122X, [5XGAP[105X
         sets [10Xlevel2 = [110X[9Xtrue[109X instead).[133X
   
-  [8X[10XnextLevel[110X[108X
+  [8X[10XnextLevel[110X[8X[108X
         [33X[0;6Ythis is described below[133X
   
   [33X[0;0YAs  our  guiding  example,  we  present  code  for  the function [2XCentralizer[102X
@@ -340,26 +340,26 @@
   as we did above for the R-base black box [22XR[122X. Most of the components change as
   [5XGAP[105X walks up and down the levels of the search tree.[133X
   
-  [8X[10Xdata[110X[108X
+  [8X[10Xdata[110X[8X[108X
         [33X[0;6Ythis will be mentioned below[133X
   
-  [8X[10Xdepth[110X[108X
+  [8X[10Xdepth[110X[8X[108X
         [33X[0;6Ythe level [22Xi[122X in the search tree of the current node [22XΣ_i[122X[133X
   
-  [8X[10Xbimg[110X[108X
+  [8X[10Xbimg[110X[8X[108X
         [33X[0;6Ya list of images of the points in [22XR[122X[10X.base[110X[133X
   
-  [8X[10Xpartition[110X[108X
+  [8X[10Xpartition[110X[8X[108X
         [33X[0;6Ythe partition [22XΣ_i[122X of the current node[133X
   
-  [8X[10Xlevel[110X[108X
+  [8X[10Xlevel[110X[8X[108X
         [33X[0;6Ythe stabilizer chain [22XR[122X[10X.lev[110X[22X[i][122X at the current level[133X
   
-  [8X[10Xperm[110X[108X
+  [8X[10Xperm[110X[8X[108X
         [33X[0;6Ya permutation mapping [10XFixcells[110X[22X( Π_i )[122X to [10XFixcells[110X[22X( Σ_i )[122X; this implies
         mapping [22X(a_1, ..., a_i)[122X to [22X(b_1, ..., b_i)[122X[133X
   
-  [8X[10Xlevel2[110X, [10Xperm2[110X[108X
+  [8X[10Xlevel2[110X[8X, [10Xperm2[110X[8X[108X
         [33X[0;6Ya   similar  construction  for  the  second  stabilizer  chain,  [9Xfalse[109X
         otherwise (and [9Xtrue[109X if [22XR[122X[10X.level2 = [110X[9Xtrue[109X)[133X
   
@@ -571,7 +571,7 @@
   [1X87.3 [33X[0;0YStabilizer Chains for Automorphisms Acting on Enumerators[133X[101X
   
   [33X[0;0YThis  section  describes  a  way of representing the automorphism group of a
-  group  as  permutation  group,  following [ACM]. The code however is not yet
+  group  as  permutation group, following [Sim97]. The code however is not yet
   included in the [5XGAP[105X library.[133X
   
   [33X[0;0YIn  this  section  we  present  an  example in which objects we already know

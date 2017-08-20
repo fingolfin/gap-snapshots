@@ -88,8 +88,9 @@
   product are:[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Ydom(fg)=(im(f)\cap dom(g))f^-1 and im(fg)=(im(f)\cap dom(g))g[133X [124X[133X
+  [24X[33X[0;6Ydom(fg)=(im(f)\cap dom(g))f^-1 and im(fg)=(im(f)\cap dom(g))g[133X
   
+  [124X
   
   [33X[0;0YA  partial  permutation  is  an idempotent if and only if it is the identity
   function on its domain. The products [10Xf*f^-1[110X and [10Xf^-1*f[110X are just the identity
@@ -243,8 +244,8 @@
   refers to the positions in [3Xlist[103X even if [3Xlist[103X itself consists of integers.[133X
   
   [33X[0;0YThis  function  is  the  analogue  in the context of partial permutations of
-  [2XPermutation[102X  ([14XReference:  Permutation (for a group, an action domain, etc.)[114X)
-  or [2XTransformationOp[102X ([14X53.2-5[114X).[133X
+  [2XPermutation[102X  ([14XReference: Permutation for a group, an action domain, etc.[114X) or
+  [2XTransformationOp[102X ([14X53.2-5[114X).[133X
   
   [33X[0;0YIf [3Xobj[103X does not map the elements of [3Xlist[103X injectively, then [9Xfail[109X is returned.[133X
   
@@ -986,52 +987,52 @@
   
   [1X54.5 [33X[0;0YOperators and operations for partial permutations[133X[101X
   
-  [8X[10X[3Xf[103X[10X ^ -1[110X[108X
+  [8X[10X[3Xf[103X[8X[10X ^ -1[110X[8X[108X
         [33X[0;6Yreturns the inverse of the partial permutation [3Xf[103X.[133X
   
-  [8X[10X[3Xi[103X[10X ^ [3Xf[103X[10X[110X[108X
+  [8X[10X[3Xi[103X[8X[10X ^ [3Xf[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns  the  image  of  the  positive  integer  [3Xi[103X  under  the partial
         permutation [3Xf[103X if it is defined and [10X0[110X if it is not.[133X
   
-  [8X[10X[3Xi[103X[10X / [3Xf[103X[10X[110X[108X
+  [8X[10X[3Xi[103X[8X[10X / [3Xf[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns  the  preimage  of  the  positive  integer [3Xi[103X under the partial
         permutation  [3Xf[103X  if  it  is  defined  and [10X0[110X if it is not. Note that the
         inverse of [3Xf[103X is not calculated to find the preimage of [3Xi[103X.[133X
   
-  [8X[10X[3Xf[103X[10X ^ [3Xg[103X[10X[110X[108X
+  [8X[10X[3Xf[103X[8X[10X ^ [3Xg[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns  [10X[3Xg[103X[10X^-1*[3Xf[103X[10X*[3Xg[103X[10X[110X  when  [3Xf[103X  is  a  partial  permutation  and  [3Xg[103X  is  a
         permutation  or  partial permutation; see [2X\^[102X ([14X31.12-1[114X). This operation
         requires  essentially  the same number of steps as multiplying partial
         permutations,  which  is  around  one  third  as many as inverting and
         multiplying twice.[133X
   
-  [8X[10X[3Xf[103X[10X * [3Xg[103X[10X[110X[108X
+  [8X[10X[3Xf[103X[8X[10X * [3Xg[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns  the  composition  of  [3Xf[103X  and  [3Xg[103X  when  [3Xf[103X  and  [3Xg[103X  are partial
         permutations  or  permutations.  The  product  of  a permutation and a
         partial permutation is returned as a partial permutation.[133X
   
-  [8X[10X[3Xf[103X[10X / [3Xg[103X[10X[110X[108X
+  [8X[10X[3Xf[103X[8X[10X / [3Xg[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns  [10X[3Xf[103X[10X*[3Xg[103X[10X^-1[110X when [3Xf[103X is a partial permutation and [3Xg[103X is a permutation
         or  partial  permutation. This operation requires essentially the same
         number   of  steps  as  multiplying  partial  permutations,  which  is
         approximately  half  that required to first invert [3Xg[103X and then take the
         product with [3Xf[103X.[133X
   
-  [8X[10XLQUO([3Xg[103X[10X, [3Xf[103X[10X)[110X[108X
+  [8X[10XLQUO([3Xg[103X[8X[10X, [3Xf[103X[8X[10X)[110X[8X[108X
         [33X[0;6Yreturns  [10X[3Xg[103X[10X^-1*[3Xf[103X[10X[110X when [3Xf[103X is a partial permutation and [3Xg[103X is a permutation
         or  partial  permutation. This operation requires essentially the same
         number   of  steps  as  multiplying  partial  permutations,  which  is
         approximately  half  that required to first invert [3Xg[103X and then take the
         product with [3Xf[103X.[133X
   
-  [8X[10X[3Xf[103X[10X < [3Xg[103X[10X[110X[108X
+  [8X[10X[3Xf[103X[8X[10X < [3Xg[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns  [9Xtrue[109X if the image of [3Xf[103X on the range from 1 to the degree of [3Xf[103X
         is lexicographically less than the corresponding image for [3Xg[103X and [9Xfalse[109X
         if    it    is    not.    See   [2XNaturalLeqPartialPerm[102X   ([14X54.5-4[114X)   and
         [2XShortLexLeqPartialPerm[102X  ([14X54.5-5[114X)  for  additional  orders  for partial
         permutations.[133X
   
-  [8X[10X[3Xf[103X[10X = [3Xg[103X[10X[110X[108X
+  [8X[10X[3Xf[103X[8X[10X = [3Xg[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns   [9Xtrue[109X  if  the  partial  permutation  [3Xf[103X  equals  the  partial
         permutation [3Xg[103X and returns [9Xfalse[109X if it does not.[133X
   

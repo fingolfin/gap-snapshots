@@ -143,18 +143,18 @@
   
   [33X[0;0YThe components of the result are[133X
   
-  [8X[10XisHomogeneous[110X[108X
+  [8X[10XisHomogeneous[110X[8X[108X
         [33X[0;6Y[9Xtrue[109X or [9Xfalse[109X,[133X
   
-  [8X[10Xcomment[110X[108X
+  [8X[10Xcomment[110X[8X[108X
         [33X[0;6Ya  string  telling  a  reason  for  the  value  of  the  [10XisHomogeneous[110X
         component,[133X
   
-  [8X[10Xcharacter[110X[108X
+  [8X[10Xcharacter[110X[8X[108X
         [33X[0;6Yirreducible   constituent  of  the  restriction,  only  bound  if  the
         restriction had to be checked,[133X
   
-  [8X[10Xmultiplicity[110X[108X
+  [8X[10Xmultiplicity[110X[8X[108X
         [33X[0;6Ymultiplicity of the [10Xcharacter[110X component in the restriction of [3Xchi[103X.[133X
   
   [4X[32X  Example  [32X[104X
@@ -371,11 +371,11 @@
   particular that no computations of character tables are involved. The return
   value is a record with components[133X
   
-  [8X[10XisMonomial[110X[108X
+  [8X[10XisMonomial[110X[8X[108X
         [33X[0;6Yeither  [9Xtrue[109X  or  [9Xfalse[109X  or  the  string  [10X"?"[110X,  depending  on  whether
         (non)monomiality could be proved, and[133X
   
-  [8X[10Xcomment[110X[108X
+  [8X[10Xcomment[110X[8X[108X
         [33X[0;6Ya string telling the reason for the value of the [10XisMonomial[110X component.[133X
   
   [33X[0;0YA group [3XG[103X is proved to be monomial by [2XTestMonomialQuick[102X if [3XG[103X is nilpotent or

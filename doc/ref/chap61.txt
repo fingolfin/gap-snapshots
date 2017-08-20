@@ -1163,7 +1163,7 @@
   
   [33X[0;0Y[3Xrecord[103X must be a record with the following components.[133X
   
-  [8X[10Xdetect[110X [108X
+  [8X[10Xdetect[110X[8X [108X
         [33X[0;6Ya  function  of  four arguments [22XR[122X, [22Xl[122X, [22XV[122X, and [22Xz[122X, where [22XV[122X is a free left
         module over the ring [22XR[122X with generators the list or collection [22Xl[122X, and [22Xz[122X
         is  either  the  zero  element of [22XV[122X or [9Xfalse[109X (then [22Xl[122X is nonempty); the
@@ -1171,15 +1171,15 @@
         otherwise;  the  return value may also be [9Xfail[109X, which indicates that [22XV[122X
         is [13Xnot[113X to be handled via the mechanism of nice bases at all,[133X
   
-  [8X[10XNiceFreeLeftModuleInfo[110X [108X
+  [8X[10XNiceFreeLeftModuleInfo[110X[8X [108X
         [33X[0;6Ythe [10XNiceFreeLeftModuleInfo[110X method for left modules in [22Xf[122X,[133X
   
-  [8X[10XNiceVector[110X [108X
+  [8X[10XNiceVector[110X[8X [108X
         [33X[0;6Ythe  [10XNiceVector[110X  method  for  left modules [22XV[122X in [22Xf[122X; called with [22XV[122X and a
         vector  [22Xv ∈ V[122X, this function returns the nice vector [22Xr[122X associated with
         [22Xv[122X, and[133X
   
-  [8X[10XUglyVector[110X[108X
+  [8X[10XUglyVector[110X[8X[108X
         [33X[0;6Ythe [2XUglyVector[102X ([14X61.11-2[114X) method for left modules [22XV[122X in [22Xf[122X; called with [22XV[122X
         and  a  vector  [22Xr[122X  in the [10XNiceFreeLeftModule[110X value of [22XV[122X, this function
         returns the vector [22Xv ∈ V[122X to which [22Xr[122X is associated.[133X

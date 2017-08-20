@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (ref) - Chapter 25: Integral matrices and lattices</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -479,7 +479,7 @@ p^{{i+1}} b_{{i+1}} + \left( \sum_{{j = 0}}^i p^j x_j \right) A = b.
 <h5>25.5-1 LLLReducedBasis</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LLLReducedBasis</code>( [<var class="Arg">L</var>, ]<var class="Arg">vectors</var>[, <var class="Arg">y</var>][, <var class="Arg">"linearcomb"</var>][, <var class="Arg">lllout</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<p>provides an implementation of the <em>LLL algorithm</em> by Lenstra, Lenstra and Lovász (see <a href="chapBib_mj.html#biBLLL82">[LLL82]</a>, <a href="chapBib_mj.html#biBPoh87">[Poh87]</a>). The implementation follows the description in <a href="chapBib_mj.html#biBCoh93">[Coh93, p. 94f.]</a>.</p>
+<p>provides an implementation of the <em>LLL algorithm</em> by Lenstra, Lenstra and Lovász (see <a href="chapBib_mj.html#biBLLL82">[LLJL82]</a>, <a href="chapBib_mj.html#biBPoh87">[Poh87]</a>). The implementation follows the description in <a href="chapBib_mj.html#biBCoh93">[Coh93, p. 94f.]</a>.</p>
 
 <p><code class="func">LLLReducedBasis</code> returns a record whose component <code class="code">basis</code> is a list of LLL reduced linearly independent vectors spanning the same lattice as the list <var class="Arg">vectors</var>. <var class="Arg">L</var> must be a lattice, with scalar product of the vectors <var class="Arg">v</var> and <var class="Arg">w</var> given by <code class="code">ScalarProduct( <var class="Arg">L</var>, <var class="Arg">v</var>, <var class="Arg">w</var> )</code>. If no lattice is specified then the scalar product of vectors given by <code class="code">ScalarProduct( <var class="Arg">v</var>, <var class="Arg">w</var> )</code> is used.</p>
 
@@ -511,7 +511,7 @@ rec( B := [ 5, 36/5, 12, 50/3 ],
 <h5>25.5-2 LLLReducedGramMat</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LLLReducedGramMat</code>( <var class="Arg">G</var>[, <var class="Arg">y</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<p><code class="func">LLLReducedGramMat</code> provides an implementation of the <em>LLL algorithm</em> by Lenstra, Lenstra and Lovász (see <a href="chapBib_mj.html#biBLLL82">[LLL82]</a>, <a href="chapBib_mj.html#biBPoh87">[Poh87]</a>). The implementation follows the description in <a href="chapBib_mj.html#biBCoh93">[Coh93, p. 94f.]</a>.</p>
+<p><code class="func">LLLReducedGramMat</code> provides an implementation of the <em>LLL algorithm</em> by Lenstra, Lenstra and Lovász (see <a href="chapBib_mj.html#biBLLL82">[LLJL82]</a>, <a href="chapBib_mj.html#biBPoh87">[Poh87]</a>). The implementation follows the description in <a href="chapBib_mj.html#biBCoh93">[Coh93, p. 94f.]</a>.</p>
 
 <p>Let <var class="Arg">G</var> the Gram matrix of the vectors <span class="SimpleMath">\((b_1, b_2, \ldots, b_n)\)</span>; this means <var class="Arg">G</var> is either a square symmetric matrix or lower triangular matrix (only the entries in the lower triangular half are used by the program).</p>
 

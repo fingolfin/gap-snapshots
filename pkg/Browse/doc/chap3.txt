@@ -75,50 +75,50 @@
   [33X[0;0YMore  details  can  be  given to the function by giving a record as argument
   [3Xposs[103X. It can have the following components:[133X
   
-  [8X[10Xitems[110X[108X
+  [8X[10Xitems[110X[8X[108X
         [33X[0;6YThe list of attribute lines as described above.[133X
   
-  [8X[10Xsingle[110X[108X
+  [8X[10Xsingle[110X[8X[108X
         [33X[0;6YBoolean with the same meaning as the optional argument [3Xsingle[103X.[133X
   
-  [8X[10Xnone[110X[108X
+  [8X[10Xnone[110X[8X[108X
         [33X[0;6YBoolean with the same meaning as the optional argument [3Xnone[103X.[133X
   
-  [8X[10Xsize[110X[108X
+  [8X[10Xsize[110X[8X[108X
         [33X[0;6YThe  size of the window like the first two arguments of [10XNCurses.newwin[110X
         (default  is  [10X[0,  0][110X,  as big as possible), or the string [10X"fit"[110X which
         means the smallest possible window.[133X
   
-  [8X[10Xalign[110X[108X
+  [8X[10Xalign[110X[8X[108X
         [33X[0;6YA  substring of [10X"bclt"[110X, which describes the alignment of the window in
         the  terminal.  The  meaning  and  the  default  are  the  same as for
         [2XBrowseData.IsBrowseTableCellData[102X ([14X4.2-1[114X).[133X
   
-  [8X[10Xbegin[110X[108X
+  [8X[10Xbegin[110X[8X[108X
         [33X[0;6YTop-left  corner  of  the  window  like  the  last  two  arguments  of
         [10XNCurses.newwin[110X (default is [10X[0, 0][110X, top-left of the screen). This value
         has priority over the [10Xalign[110X component.[133X
   
-  [8X[10Xattribute[110X[108X
+  [8X[10Xattribute[110X[8X[108X
         [33X[0;6YAn   attribute  used  for  the  display  of  the  window  (default  is
         [10XNCurses.attrs.NORMAL[110X).[133X
   
-  [8X[10Xborder[110X[108X
+  [8X[10Xborder[110X[8X[108X
         [33X[0;6YIf  the  window  should  be  displayed  with a border then set to [9Xtrue[109X
         (default  is  [9Xfalse[109X)  or to an integer representing attributes such as
         the  components  of  [10XNCurses.attrs[110X  (see  Section [14X2.1-7[114X) or the return
         value  of [2XNCurses.ColorAttr[102X ([14X2.2-1[114X); these attributes are used for the
         border of the box. The default is [10XNCurses.attrs.NORMAL[110X.[133X
   
-  [8X[10Xheader[110X[108X
+  [8X[10Xheader[110X[8X[108X
         [33X[0;6YAn  attribute  line  used  as  header line (the default depends on the
         settings of [10Xsingle[110X and [10Xnone[110X).[133X
   
-  [8X[10Xhint[110X[108X
+  [8X[10Xhint[110X[8X[108X
         [33X[0;6YAn  attribute  line  used  as hint in the last line of the window (the
         default depends on the settings of [10Xsingle[110X and [10Xnone[110X).[133X
   
-  [8X[10XonSubmitFunction[110X[108X
+  [8X[10XonSubmitFunction[110X[8X[108X
         [33X[0;6YA  function  that  is  called when the user submits the selection; the
         argument for this call is the current value of the record [3Xposs[103X. If the
         function returns [9Xtrue[109X then the selected entries are returned as usual,
@@ -169,17 +169,17 @@
   whose value is the string described above. The following optional components
   of this record are supported.[133X
   
-  [8X[10Xwindow[110X[108X
+  [8X[10Xwindow[110X[8X[108X
         [33X[0;6YThe  window  with  the input field is created relative to this window,
         the default is [22X0[122X.[133X
   
-  [8X[10Xbegin[110X[108X
+  [8X[10Xbegin[110X[8X[108X
         [33X[0;6YThis  is  a  list with the coordinates of the upper left corner of the
         window  with  the input field, relative to the window described by the
         [10Xwindow[110X  component; the default is [10X[ y-4, 2 ][110X, where [10Xy[110X is the height of
         this window.[133X
   
-  [8X[10Xdefault[110X[108X
+  [8X[10Xdefault[110X[8X[108X
         [33X[0;6YThis  string  appears as result when the window is opened, the default
         is an empty string.[133X
   
@@ -197,31 +197,31 @@
   ([14X2.2-3[114X))  or  a  string (the lines are separated by newline characters) or a
   record. In case of a record the following components are recognized:[133X
   
-  [8X[10Xlines[110X[108X
+  [8X[10Xlines[110X[8X[108X
         [33X[0;6YThe list of attribute lines or a string as described above.[133X
   
-  [8X[10Xstart[110X[108X
+  [8X[10Xstart[110X[8X[108X
         [33X[0;6YLine number to start the display.[133X
   
-  [8X[10Xsize[110X[108X
+  [8X[10Xsize[110X[8X[108X
         [33X[0;6YThe  size  [10X[ly,  lx][110X  of  the  window  like the first two arguments of
         [10XNCurses.newwin[110X (default is [10X[0, 0][110X, as big as possible).[133X
   
-  [8X[10Xbegin[110X[108X
+  [8X[10Xbegin[110X[8X[108X
         [33X[0;6YTop-left  corner  [10X[y,  x][110X of the window like the last two arguments of
         [10XNCurses.newwin[110X (default is [10X[0, 0][110X, top-left of the screen).[133X
   
-  [8X[10Xattribute[110X[108X
+  [8X[10Xattribute[110X[8X[108X
         [33X[0;6YAn   attribute  used  for  the  display  of  the  window  (default  is
         [10XNCurses.attrs.NORMAL[110X).[133X
   
-  [8X[10Xborder[110X[108X
+  [8X[10Xborder[110X[8X[108X
         [33X[0;6YEither  one  of  [9Xtrue[109X/[9Xfalse[109X to show the pager window with or without a
         standard  border.  Or  it  can  be  string  with  eight,  two  or  one
         characters,   giving   characters   to  be  used  for  a  border,  see
         [2XNCurses.WBorder[102X ([14X2.2-9[114X).[133X
   
-  [8X[10Xhint[110X[108X
+  [8X[10Xhint[110X[8X[108X
         [33X[0;6YA text for usage info in the last line of the window.[133X
   
   [33X[0;0YAs  an  abbreviation the information from [10Xborder[110X, [10Xsize[110X and [10Xbegin[110X can also be

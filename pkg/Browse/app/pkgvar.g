@@ -39,7 +39,7 @@
 ##  <Ref Func="PackageVariablesInfo" BookName="ref"/> for the package in
 ##  question, instead of the version number.
 ##  <P/>
-##  <Ref Func="BrowsePackageVariables"/> opens a Browse table that shows the
+##  <Ref Func="BrowsePackageVariables"/> opens a browse table that shows the
 ##  global variables that become bound and the methods that become installed
 ##  when &GAP; loads the package <A>pkgname</A>.
 ##  <P/>
@@ -161,8 +161,12 @@ BindGlobal( "BrowsePackageVariables", function( arg )
     private:= not IsBound( arec.showPrivate )
               or arec.showPrivate <> false;
 
+    # Make sure that 'namewidth' is positive.
     filenamewidth:= 20;
     namewidth:= SizeScreen()[1] - filenamewidth - 4 - 5 - 6;
+    if namewidth < 20 then
+      namewidth:= 20;
+    fi;
 
     for entry in info do
       if entry[1] in show then

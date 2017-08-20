@@ -20,21 +20,22 @@
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5.html">[Next Chapter]</a>&nbsp;  </div>
 
-<p><a id="X7AA6D49E848E9BBF" name="X7AA6D49E848E9BBF"></a></p>
-<div class="ChapSects"><a href="chap4.html#X7AA6D49E848E9BBF">4 <span class="Heading">Browsing Tables in <strong class="pkg">GAP</strong> using <code class="code">ncurses</code>
+<p id="mathjaxlink" class="pcenter"><a href="chap4_mj.html">[MathJax on]</a></p>
+<p><a id="X877E60DE7F53FDEC" name="X877E60DE7F53FDEC"></a></p>
+<div class="ChapSects"><a href="chap4.html#X877E60DE7F53FDEC">4 <span class="Heading">Browsing Tables in <strong class="pkg">GAP</strong> using <code class="code">ncurses</code>
 –The User Interface</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X8788DC587ABF8106">4.1 <span class="Heading">Features Supported by the Function <code class="code">NCurses.BrowseGeneric</code>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X869EDB308717F199">4.1 <span class="Heading">Features Supported by the Function <code class="code">NCurses.BrowseGeneric</code>
 </span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X7D8250FE86F509BF">4.2 <span class="Heading">Data Structures used by <code class="code">NCurses.BrowseGeneric</code></span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X82689212794DA877">4.2 <span class="Heading">Data Structures used by <code class="code">NCurses.BrowseGeneric</code></span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X82157A2684969A5F">4.2-1 BrowseData.IsBrowseTableCellData</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7CA598A77A70C3B3">4.2-2 BrowseData.BlockEntry</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X81007E2F8552523B">4.2-3 BrowseData.IsBrowseTable</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X7C654A2A87FBC354">4.3 <span class="Heading">The Function <code class="code">NCurses.BrowseGeneric</code></span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X8135D3C2806D8F92">4.3 <span class="Heading">The Function <code class="code">NCurses.BrowseGeneric</code></span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X85FC163D87FAFD12">4.3-1 NCurses.BrowseGeneric</a></span>
@@ -54,18 +55,18 @@
 
 <p>The current chapter describes the user interface for <em>standard applications</em> of this kind, i. e., those applications for which one just has to collect the data to be shown in a record –which we call a <em>browse table</em>– without need for additional <strong class="pkg">GAP</strong> programming.</p>
 
-<p>Section <a href="chap4.html#X8788DC587ABF8106"><span class="RefLink">4.1</span></a> gives an overview of the features available in standard browse table applications, and Section <a href="chap4.html#X7D8250FE86F509BF"><span class="RefLink">4.2</span></a> describes the data structures used in browse tables. Finally, Section <a href="chap4.html#X7C654A2A87FBC354"><span class="RefLink">4.3</span></a> introduces the function <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>), which is the generic function for showing browse table in visual mode.</p>
+<p>Section <a href="chap4.html#X869EDB308717F199"><span class="RefLink">4.1</span></a> gives an overview of the features available in standard browse table applications, and Section <a href="chap4.html#X82689212794DA877"><span class="RefLink">4.2</span></a> describes the data structures used in browse tables. Finally, Section <a href="chap4.html#X8135D3C2806D8F92"><span class="RefLink">4.3</span></a> introduces the function <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>), which is the generic function for showing browse table in visual mode.</p>
 
-<p>For technical details needed to extend these applications and to build other applications, see Chapter <a href="chap5.html#X85D5419281A436B7"><span class="RefLink">5</span></a>.</p>
+<p>For technical details needed to extend these applications and to build other applications, see Chapter <a href="chap5.html#X82DDDC1783B4CA30"><span class="RefLink">5</span></a>.</p>
 
-<p>Examples of browse table applications are shown in Chapter <a href="chap6.html#X7A5CF821873B48BF"><span class="RefLink">6</span></a>.</p>
+<p>Examples of browse table applications are shown in Chapter <a href="chap6.html#X78D4F8EA79405AF9"><span class="RefLink">6</span></a>.</p>
 
-<p><a id="X8788DC587ABF8106" name="X8788DC587ABF8106"></a></p>
+<p><a id="X869EDB308717F199" name="X869EDB308717F199"></a></p>
 
 <h4>4.1 <span class="Heading">Features Supported by the Function <code class="code">NCurses.BrowseGeneric</code>
 </span></h4>
 
-<p>Standard applications of the function <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>) have the following functionality. Other applications may provide only a subset, or add further functionality, see Chapters <a href="chap5.html#X85D5419281A436B7"><span class="RefLink">5</span></a> and <a href="chap6.html#X7A5CF821873B48BF"><span class="RefLink">6</span></a>.</p>
+<p>Standard applications of the function <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>) have the following functionality. Other applications may provide only a subset, or add further functionality, see Chapters <a href="chap5.html#X82DDDC1783B4CA30"><span class="RefLink">5</span></a> and <a href="chap6.html#X78D4F8EA79405AF9"><span class="RefLink">6</span></a>.</p>
 
 
 <dl>
@@ -127,7 +128,7 @@
 
 <dl>
 <dt><strong class="Mark">Clicking:</strong></dt>
-<dd><p>One possible action is to "click" a selected cell, row, or column, by hitting the <strong class="button">Enter</strong> key. It depends on the application what the effect is. A typical situation is that a corresponding <strong class="pkg">GAP</strong> object is added to the list of return values of <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>). Again it depends on the application what this <strong class="pkg">GAP</strong> object is. In order to use this feature, one has to provide a record whose components are <strong class="pkg">GAP</strong> functions, see Section <a href="chap5.html#X86E80E578085F137"><span class="RefLink">5.4-1</span></a> for details. If mouse events are enabled (see <code class="func">NCurses.UseMouse</code> (<a href="chap2.html#X7DDFB32D78090334"><span class="RefLink">2.2-10</span></a>)) then also mouse clicks can be used as an alternative to hitting the <strong class="button">Enter</strong> key.</p>
+<dd><p>One possible action is to "click" a selected cell, row, or column, by hitting the <strong class="button">Enter</strong> key. It depends on the application what the effect is. A typical situation is that a corresponding <strong class="pkg">GAP</strong> object is added to the list of return values of <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>). Again it depends on the application what this <strong class="pkg">GAP</strong> object is. In order to use this feature, one has to provide a record whose components are <strong class="pkg">GAP</strong> functions, see Section <a href="chap5.html#X86E80E578085F137"><span class="RefLink">5.4-1</span></a> for details. If mouse events are enabled (see <code class="func">NCurses.UseMouse</code> (<a href="chap2.html#X799C033A7AB582D7"><span class="RefLink">2.2-10</span></a>)) then also mouse clicks can be used as an alternative to hitting the <strong class="button">Enter</strong> key.</p>
 
 </dd>
 <dt><strong class="Mark">Return Value:</strong></dt>
@@ -135,7 +136,7 @@
 
 </dd>
 </dl>
-<p><a id="X7D8250FE86F509BF" name="X7D8250FE86F509BF"></a></p>
+<p><a id="X82689212794DA877" name="X82689212794DA877"></a></p>
 
 <h4>4.2 <span class="Heading">Data Structures used by <code class="code">NCurses.BrowseGeneric</code></span></h4>
 
@@ -341,7 +342,7 @@ true
 true
 </pre></div>
 
-<p><a id="X7C654A2A87FBC354" name="X7C654A2A87FBC354"></a></p>
+<p><a id="X8135D3C2806D8F92" name="X8135D3C2806D8F92"></a></p>
 
 <h4>4.3 <span class="Heading">The Function <code class="code">NCurses.BrowseGeneric</code></span></h4>
 
@@ -360,7 +361,7 @@ true
 
 <p>When the window or the screen is too small for the browse table, according to its component <code class="code">work.minyx</code>, the table will not be shown in visual mode, and <code class="keyw">fail</code> is returned. (This holds also if there would be no return value of the call in a large enough screen.) Thus one should check for <code class="keyw">fail</code> results of programmatic calls of <code class="func">NCurses.BrowseGeneric</code>, and one should better not admit <code class="keyw">fail</code> as a regular return value.</p>
 
-<p>Most likely, <code class="func">NCurses.BrowseGeneric</code> will not be called on the command line, but the browse table <var class="Arg">t</var> will be composed by a suitable function which then calls <code class="func">NCurses.BrowseGeneric</code>, see the examples in Chapter <a href="chap6.html#X7A5CF821873B48BF"><span class="RefLink">6</span></a>.</p>
+<p>Most likely, <code class="func">NCurses.BrowseGeneric</code> will not be called on the command line, but the browse table <var class="Arg">t</var> will be composed by a suitable function which then calls <code class="func">NCurses.BrowseGeneric</code>, see the examples in Chapter <a href="chap6.html#X78D4F8EA79405AF9"><span class="RefLink">6</span></a>.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5.html">[Next Chapter]</a>&nbsp;  </div>

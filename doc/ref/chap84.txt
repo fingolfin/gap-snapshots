@@ -101,8 +101,7 @@
   [33X[0;0YAs you can see by the above two examples, the name for a document format can
   be anything, but it should be in some way meaningful.[133X
   
-  [8X
-  [10XReadSix( [3Xstream[103X[10X )[110X[108X
+  [8X [10XReadSix( [3Xstream[103X[8X[10X )[110X[8X[108X
         [33X[0;6YFor an input text stream [3Xstream[103X to a [11Xmanual.six[111X file, this must return
         a  record  [3Xinfo[103X  which  has  at  least  the  following two components:
         [10Xbookname[110X  which  is  the  short identifying name of the help book, and
@@ -127,15 +126,15 @@
           [4X[25Xgap>[125X [27Xstream := InputTextFile( file );;[127X[104X
         [4X[32X[104X
   
-  [8X[10XShowChapters( [3Xinfo[103X[10X )[110X [108X
+  [8X[10XShowChapters( [3Xinfo[103X[8X[10X )[110X[8X [108X
         [33X[0;6YThis  must  return  a text string or list of text lines which contains
         the chapter headers of the book [3Xinfo[103X[10X.bookname[110X.[133X
   
-  [8X[10XShowSection( [3Xinfo[103X[10X )[110X [108X
+  [8X[10XShowSection( [3Xinfo[103X[8X[10X )[110X[8X [108X
         [33X[0;6YThis  must  return  a text string or list of text lines which contains
         the section (and chapter) headers of the book [3Xinfo[103X[10X.bookname[110X.[133X
   
-  [8X[10XSearchMatches( [3Xinfo[103X[10X, [3Xtopic[103X[10X, [3Xfrombegin[103X[10X )[110X [108X
+  [8X[10XSearchMatches( [3Xinfo[103X[8X[10X, [3Xtopic[103X[8X[10X, [3Xfrombegin[103X[8X[10X )[110X[8X [108X
         [33X[0;6YThis  function  must  return  a  list  of  indices of [3Xinfo[103X[10X.entries[110X for
         entries which match the search string [3Xtopic[103X. If [3Xfrombegin[103X is [9Xtrue[109X then
         those  parts  of  [3Xtopic[103X  which  are  separated  by  spaces  should  be
@@ -146,25 +145,25 @@
         two  entries  [10X[exact,  match][110X  where  [10Xexact[110X is the list of indices for
         exact matches and [10Xmatch[110X a list of indices of the remaining matches.[133X
   
-  [8X[10XMatchPrevChap( [3Xinfo[103X[10X, [3Xi[103X[10X )[110X [108X
+  [8X[10XMatchPrevChap( [3Xinfo[103X[8X[10X, [3Xi[103X[8X[10X )[110X[8X [108X
         [33X[0;6YThis  should  return the match [[3Xinfo[103X, [10Xj[110X] which points to the beginning
         of  the  chapter  containing  match  [[3Xinfo[103X,  [3Xi[103X],  respectively  to the
         beginning  of  the  previous  chapter  if  [[3Xinfo[103X,  [3Xi[103X]  is  already the
         beginning of a chapter. (Corresponds to [10X?<<[110X.)[133X
   
-  [8X[10XMatchNextChap( [3Xinfo[103X[10X, [3Xi[103X[10X )[110X [108X
+  [8X[10XMatchNextChap( [3Xinfo[103X[8X[10X, [3Xi[103X[8X[10X )[110X[8X [108X
         [33X[0;6YLike  the previous function except that it should return the match for
         the beginning of the next chapter. (Corresponds to [10X?>>[110X.)[133X
   
-  [8X[10XMatchPrev( [3Xinfo[103X[10X, [3Xi[103X[10X )[110X [108X
+  [8X[10XMatchPrev( [3Xinfo[103X[8X[10X, [3Xi[103X[8X[10X )[110X[8X [108X
         [33X[0;6YThis should return the previous section (or appropriate portion of the
         document). (Corresponds to [10X?<[110X.)[133X
   
-  [8X[10XMatchNext( [3Xinfo[103X[10X, [3Xi[103X[10X )[110X [108X
+  [8X[10XMatchNext( [3Xinfo[103X[8X[10X, [3Xi[103X[8X[10X )[110X[8X [108X
         [33X[0;6YLike  the  previous  function  except  that  it should return the next
         section (or appropriate portion of the document). (Corresponds to [10X?>[110X.)[133X
   
-  [8X[10XHelpData( [3Xinfo[103X[10X, [3Xi[103X[10X, [3Xtype[103X[10X )[110X [108X
+  [8X[10XHelpData( [3Xinfo[103X[8X[10X, [3Xi[103X[8X[10X, [3Xtype[103X[8X[10X )[110X[8X [108X
         [33X[0;6YThis returns for match [[3Xinfo[103X, [3Xi[103X] some data whose format depends on the
         string  [3Xtype[103X,  or  [9Xfail[109X if these data are not available. The values of
         [3Xtype[103X  which  currently  must  be  handled and the corresponding result
@@ -173,25 +172,24 @@
   [33X[0;0YThe   [10XHELP_BOOK_HANDLER.[3Xmyownformat[103X[10X.HelpData[110X  function  must  recognize  the
   following values of the [3Xtype[103X argument.[133X
   
-  [8X
-  [10X"text"[110X [108X
+  [8X [10X"text"[110X[8X [108X
         [33X[0;6YThis  must return a corresponding text string in a format which can be
         fed into the [10XPager[110X, see [2XPager[102X ([14X2.4-1[114X).[133X
   
-  [8X[10X"url"[110X [108X
+  [8X[10X"url"[110X[8X [108X
         [33X[0;6YIf  the  help book is available in HTML format this must return an URL
         as  a  string (Probably a [10Xfile://[110X URL containing a label for the exact
         start position in that file). Otherwise it returns [9Xfail[109X.[133X
   
-  [8X[10X"dvi"[110X [108X
+  [8X[10X"dvi"[110X[8X [108X
         [33X[0;6YIf  the help book is available in dvi-format this must return a record
         of  form  [10Xrec(  file  :=  [3Xfilename[103X[10X, page := [3Xpagenumber[103X[10X )[110X. Otherwise it
         returns [9Xfail[109X.[133X
   
-  [8X[10X"pdf"[110X [108X
+  [8X[10X"pdf"[110X[8X [108X
         [33X[0;6YSame as case [10X"dvi"[110X, but for the corresponding pdf-file.[133X
   
-  [8X[10X"secnr"[110X [108X
+  [8X[10X"secnr"[110X[8X [108X
         [33X[0;6YThis  must  return  a  pair  like  [10X[[3,3,1],  "3.3.1"][110X which gives the
         section  number  as  chapter number, section number, subsection number
         triple  and  a  corresponding string (a chapter itself is encoded like

@@ -19,9 +19,10 @@
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
 
-<p><a id="X7D56AC1386FF15C4" name="X7D56AC1386FF15C4"></a></p>
-<div class="ChapSects"><a href="chap2.html#X7D56AC1386FF15C4">2 <span class="Heading">Interface to the <code class="code">ncurses</code> Library</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X82F844F68017DF5A">2.1 <span class="Heading">The <code class="code">ncurses</code> Library</span></a>
+<p id="mathjaxlink" class="pcenter"><a href="chap2_mj.html">[MathJax on]</a></p>
+<p><a id="X7E049B1185A56B30" name="X7E049B1185A56B30"></a></p>
+<div class="ChapSects"><a href="chap2.html#X7E049B1185A56B30">2 <span class="Heading">Interface to the <code class="code">ncurses</code> Library</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X85DE9B75837BA65B">2.1 <span class="Heading">The <code class="code">ncurses</code> Library</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8499A3A384BF1F2D">2.1-1 <span class="Heading">Setting the terminal</span></a>
@@ -38,12 +39,12 @@
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X793D897483674294">2.1-7 <span class="Heading">Text attributes and colors</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X83B93F1D8282F589">2.1-8 <span class="Heading">Low level <code class="code">ncurses</code> mouse support</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X86675F5F791FEFEF">2.1-8 <span class="Heading">Low level <code class="code">ncurses</code> mouse support</span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X83897BF984211EFD">2.1-9 <span class="Heading">Miscellaneous function</span></a>
 </span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7EE0C6557B8190AA">2.2 <span class="Heading">The <code class="code">ncurses</code> <strong class="pkg">GAP</strong>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X864A5C1C7F181B4B">2.2 <span class="Heading">The <code class="code">ncurses</code> <strong class="pkg">GAP</strong>
 functions</span></a>
 </span>
 <div class="ContSSBlock">
@@ -56,7 +57,7 @@ functions</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X82C53ACD805EE0C3">2.2-7 NCurses.WidthAttributeLine</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X790715F683BF1E66">2.2-8 NCurses.Grid</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X82B801587B37D571">2.2-9 NCurses.WBorder</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7DDFB32D78090334">2.2-10 <span class="Heading">Mouse support in <code class="code">ncurses</code> applications</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X799C033A7AB582D7">2.2-10 <span class="Heading">Mouse support in <code class="code">ncurses</code> applications</span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X85FB1D7878A322EB">2.2-11 NCurses.SaveWin</a></span>
 </div></div>
@@ -70,11 +71,11 @@ functions</span></a>
 
 <p>Detailed documentation of the <code class="code">ncurses</code> library is probably available in your operating system (try <code class="code">man ncurses</code>) and from the web (see for example <a href="chapBib.html#biBNCursesWeb">[NCu]</a>). Here, we only give short reminders about the functions provided in the <strong class="pkg">GAP</strong> interface and explain how to use the <strong class="pkg">GAP</strong> functions.</p>
 
-<p><a id="X82F844F68017DF5A" name="X82F844F68017DF5A"></a></p>
+<p><a id="X85DE9B75837BA65B" name="X85DE9B75837BA65B"></a></p>
 
 <h4>2.1 <span class="Heading">The <code class="code">ncurses</code> Library</span></h4>
 
-<p>In this section we list the functions from the GNU <code class="code">ncurses</code> library and its <code class="code">panel</code> extension which are made available in <strong class="pkg">GAP</strong> via the <strong class="pkg">Browse</strong> package. See the following section <a href="chap2.html#X7EE0C6557B8190AA"><span class="RefLink">2.2</span></a> for explanations how to use these functions from within <strong class="pkg">GAP</strong>.</p>
+<p>In this section we list the functions from the GNU <code class="code">ncurses</code> library and its <code class="code">panel</code> extension which are made available in <strong class="pkg">GAP</strong> via the <strong class="pkg">Browse</strong> package. See the following section <a href="chap2.html#X864A5C1C7F181B4B"><span class="RefLink">2.2</span></a> for explanations how to use these functions from within <strong class="pkg">GAP</strong>.</p>
 
 <p>The basic objects to manipulate are called <em>windows</em>, they correspond to rectangular regions of the terminal screen. Windows can overlap but <code class="code">ncurses</code> cannot handle this for the display. Therefore windows can be wrapped in <em>panels</em>, they provide a display depth for windows and it is possible to move panels to the top and bottom of the display or to hide a panel.</p>
 
@@ -518,11 +519,11 @@ functions</span></a>
 
 </dd>
 </dl>
-<p><a id="X83B93F1D8282F589" name="X83B93F1D8282F589"></a></p>
+<p><a id="X86675F5F791FEFEF" name="X86675F5F791FEFEF"></a></p>
 
 <h5>2.1-8 <span class="Heading">Low level <code class="code">ncurses</code> mouse support</span></h5>
 
-<p>Many <code class="code">xterm</code> based terminals support mouse events. The recognition of mouse events by the <code class="code">ncurses</code> input queue can be switched on and off. If switched on and a mouse event occurs, then <code class="code">NCurses.wgetch</code> gets <code class="code">NCurses.keys.MOUSE</code> if the <code class="code">keypad</code> flag is <code class="keyw">true</code> (see <a href="chap2.html#X7F23F5F48650A78B"><span class="RefLink">2.1-4</span></a>). If this is read one must call <code class="code">NCurses.getmouse</code> which reads further characters from the input queue and interprets them as details on the mouse event. In most cases the function <code class="func">NCurses.GetMouseEvent</code> (<a href="chap2.html#X7DDFB32D78090334"><span class="RefLink">2.2-10</span></a>) can be used in applications (it calls <code class="code">NCurses.getmouse</code>). The following low level functions are available as components of the record <code class="code">NCurses</code>.</p>
+<p>Many <code class="code">xterm</code> based terminals support mouse events. The recognition of mouse events by the <code class="code">ncurses</code> input queue can be switched on and off. If switched on and a mouse event occurs, then <code class="code">NCurses.wgetch</code> gets <code class="code">NCurses.keys.MOUSE</code> if the <code class="code">keypad</code> flag is <code class="keyw">true</code> (see <a href="chap2.html#X7F23F5F48650A78B"><span class="RefLink">2.1-4</span></a>). If this is read one must call <code class="code">NCurses.getmouse</code> which reads further characters from the input queue and interprets them as details on the mouse event. In most cases the function <code class="func">NCurses.GetMouseEvent</code> (<a href="chap2.html#X799C033A7AB582D7"><span class="RefLink">2.2-10</span></a>) can be used in applications (it calls <code class="code">NCurses.getmouse</code>). The following low level functions are available as components of the record <code class="code">NCurses</code>.</p>
 
 <p>The names of mouse events which may be possible are stored in the list <code class="code">NCurses.mouseEvents</code>, which starts <code class="code">[</code> <code class="code">"BUTTON1_PRESSED",</code> <code class="code">"BUTTON1_RELEASED",</code> <code class="code">"BUTTON1_CLICKED",</code> <code class="code">"BUTTON1_DOUBLE_CLICKED",</code> <code class="code">"BUTTON1_TRIPLE_CLICKED",</code> <code class="code">...</code> and contains the same for buttons number 2 to 5 and a few other events.</p>
 
@@ -530,7 +531,7 @@ functions</span></a>
 <dl>
 <dt><strong class="Mark">
 <code class="code">mousemask(intlist)</code></strong></dt>
-<dd><p>The argument <var class="Arg">intlist</var> is a list of integers specifying mouse events. An entry <code class="code">i</code> refers to the event described in <code class="code">NCurses.mouseEvents[i+1]</code>. It returns a record with components <code class="code">.new</code> (for the current setting) and <code class="code">.old</code> (for the previous setting) which are again lists of integers with the same meaning. Note that <code class="code">.new</code> may be different from <var class="Arg">intlist</var>, it is always the empty list if the terminal does not support mouse events. In applications use <code class="func">NCurses.UseMouse</code> (<a href="chap2.html#X7DDFB32D78090334"><span class="RefLink">2.2-10</span></a>) instead of this low level function.</p>
+<dd><p>The argument <var class="Arg">intlist</var> is a list of integers specifying mouse events. An entry <code class="code">i</code> refers to the event described in <code class="code">NCurses.mouseEvents[i+1]</code>. It returns a record with components <code class="code">.new</code> (for the current setting) and <code class="code">.old</code> (for the previous setting) which are again lists of integers with the same meaning. Note that <code class="code">.new</code> may be different from <var class="Arg">intlist</var>, it is always the empty list if the terminal does not support mouse events. In applications use <code class="func">NCurses.UseMouse</code> (<a href="chap2.html#X799C033A7AB582D7"><span class="RefLink">2.2-10</span></a>) instead of this low level function.</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -557,7 +558,7 @@ functions</span></a>
 
 <p>Furthermore, there a two utilities which can be useful for scripts and testing, namely a check if standard input or standard output are connected to terminals. These can be called as <code class="code">NCurses.IsStdinATty()</code> or <code class="code">NCurses.IsStdoutATty()</code>, respectively.</p>
 
-<p><a id="X7EE0C6557B8190AA" name="X7EE0C6557B8190AA"></a></p>
+<p><a id="X864A5C1C7F181B4B" name="X864A5C1C7F181B4B"></a></p>
 
 <h4>2.2 <span class="Heading">The <code class="code">ncurses</code> <strong class="pkg">GAP</strong>
 functions</span></h4>
@@ -749,7 +750,7 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.WBorder</code>( <var class="Arg">win</var>[, <var class="Arg">chars</var>] )</td><td class="tdright">( function )</td></tr></table></div>
 <p>This is a convenient interface to the <code class="code">ncurses</code> function <code class="code">wborder</code>. It draws a border around the window <var class="Arg">win</var>. If no second argument is given the default line drawing characters are used, see <a href="chap2.html#X8091936586CCD248"><span class="RefLink">2.1-6</span></a>. Otherwise, <var class="Arg">chars</var> must be a list of <strong class="pkg">GAP</strong> characters or integers specifying characters, possibly with attributes. If <var class="Arg">chars</var> has length 8 the characters are used for the left/right/top/bottom sides and top-left/top-right/bottom-left/bottom-right corners. If <var class="Arg">chars</var> contains 2 characters the first is used for the sides and the second for all corners. If <var class="Arg">chars</var> contains just one character it is used for all sides including the corners.</p>
 
-<p><a id="X7DDFB32D78090334" name="X7DDFB32D78090334"></a></p>
+<p><a id="X799C033A7AB582D7" name="X799C033A7AB582D7"></a></p>
 
 <h5>2.2-10 <span class="Heading">Mouse support in <code class="code">ncurses</code> applications</span></h5>
 
@@ -759,13 +760,13 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.GetMouseEvent</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Returns: a list of records</p>
 
-<p><code class="code">ncurses</code> allows on some terminals (<code class="code">xterm</code> and related) to catch mouse events. In principle a subset of events can be catched, see <code class="code">mousemask</code> in <a href="chap2.html#X83B93F1D8282F589"><span class="RefLink">2.1-8</span></a>. But this does not seem to work well with proper subsets of possible events (probably due to intermediate processes X, window manager, terminal application, ...). Therefore we suggest to catch either all or no mouse events in applications.</p>
+<p><code class="code">ncurses</code> allows on some terminals (<code class="code">xterm</code> and related) to catch mouse events. In principle a subset of events can be caught, see <code class="code">mousemask</code> in <a href="chap2.html#X86675F5F791FEFEF"><span class="RefLink">2.1-8</span></a>. But this does not seem to work well with proper subsets of possible events (probably due to intermediate processes X, window manager, terminal application, ...). Therefore we suggest to catch either all or no mouse events in applications.</p>
 
 <p>This can be done with <code class="func">NCurses.UseMouse</code> with argument <code class="keyw">true</code> to switch on the recognition of mouse events and <code class="keyw">false</code> to switch it off. The function returns a record with components <code class="code">.new</code> and <code class="code">.old</code> which are both set to the status <code class="keyw">true</code> or <code class="keyw">false</code> from after and before the call, respectively. (There does not seem to be a possibility to get the current status without calling <code class="func">NCurses.UseMouse</code>.) If you call the function with argument <code class="keyw">true</code> and the <code class="code">.new</code> component of the result is <code class="keyw">false</code>, then the terminal does not support mouse events.</p>
 
-<p>When the recognition of mouse events is switched on and a mouse event occurs then the key <code class="code">NCurses.keys.MOUSE</code> is found in the input queue, see <code class="code">wgetch</code> in <a href="chap2.html#X7F23F5F48650A78B"><span class="RefLink">2.1-4</span></a>. If this key is read the low level function <code class="code">NCurses.getmouse</code> must be called to fetch further details about the event from the input queue, see <a href="chap2.html#X83B93F1D8282F589"><span class="RefLink">2.1-8</span></a>. In many cases this can be done by calling the function <code class="func">NCurses.GetMouseEvent</code> which also generates additional information. The return value is a list of records, one for each panel over which the event occured, these panels sorted from top to bottom (so, often you will just need the first entry if there is any). Each of these records has components <code class="code">.win</code>, the corresponding window of the panel, <code class="code">.y</code> and <code class="code">.x</code>, the relative coordinates in window <code class="code">.win</code> where the event occured, and <code class="code">.event</code>, which is bound to one of the strings in <code class="code">NCurses.mouseEvents</code> which describes the event.</p>
+<p>When the recognition of mouse events is switched on and a mouse event occurs then the key <code class="code">NCurses.keys.MOUSE</code> is found in the input queue, see <code class="code">wgetch</code> in <a href="chap2.html#X7F23F5F48650A78B"><span class="RefLink">2.1-4</span></a>. If this key is read the low level function <code class="code">NCurses.getmouse</code> must be called to fetch further details about the event from the input queue, see <a href="chap2.html#X86675F5F791FEFEF"><span class="RefLink">2.1-8</span></a>. In many cases this can be done by calling the function <code class="func">NCurses.GetMouseEvent</code> which also generates additional information. The return value is a list of records, one for each panel over which the event occured, these panels sorted from top to bottom (so, often you will just need the first entry if there is any). Each of these records has components <code class="code">.win</code>, the corresponding window of the panel, <code class="code">.y</code> and <code class="code">.x</code>, the relative coordinates in window <code class="code">.win</code> where the event occured, and <code class="code">.event</code>, which is bound to one of the strings in <code class="code">NCurses.mouseEvents</code> which describes the event.</p>
 
-<p><em>Suggestion:</em> Always make the use of the mouse optional in your application. Allow the user to switch mouse usage on and off while your application is running. Some users may not like to give mouse control to your application, for example the standard cut and paste functionality cannot be used while mouse events are catched.</p>
+<p><em>Suggestion:</em> Always make the use of the mouse optional in your application. Allow the user to switch mouse usage on and off while your application is running. Some users may not like to give mouse control to your application, for example the standard cut and paste functionality cannot be used while mouse events are caught.</p>
 
 <p><a id="X85FB1D7878A322EB" name="X85FB1D7878A322EB"></a></p>
 

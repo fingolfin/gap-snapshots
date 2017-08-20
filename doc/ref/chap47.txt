@@ -19,8 +19,7 @@
   free generators. So for example to create the group[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Y⟨ a, b ∣ a^2, b^3, (a b)^5 ⟩[133X[124X[133X
-  
+  [24X[33X[0;6Y⟨ a, b ∣ a^2, b^3, (a b)^5 ⟩[133X[124X
   
   [33X[0;0Yyou can use the following commands:[133X
   
@@ -502,18 +501,18 @@
   
   [33X[0;0YThe expected parameters are[133X
   
-  [8X[3Xfgens[103X[108X
+  [8X[3Xfgens[103X[8X[108X
         [33X[0;6Ygenerators of the free group [3XF[103X[133X
   
-  [8X[3Xgrels[103X[108X
+  [8X[3Xgrels[103X[8X[108X
         [33X[0;6Yrelators as words in [3XF[103X[133X
   
-  [8X[3Xfsgens[103X[108X
+  [8X[3Xfsgens[103X[8X[108X
         [33X[0;6Ysubgroup generators as words in [3XF[103X.[133X
   
   [33X[0;0Y[2XCosetTableFromGensAndRels[102X processes two options (see chapter [14X8[114X):[133X
   
-  [8X[10Xmax[110X[108X
+  [8X[10Xmax[110X[8X[108X
         [33X[0;6YThe  limit  of  the number of cosets to be defined. If the enumeration
         does not finish with this number of cosets, an error is raised and the
         user  is asked whether she wants to continue. The default value is the
@@ -521,7 +520,7 @@
         algorithm  the  actual  limit used can be a bit higher than the number
         given.)[133X
   
-  [8X[10Xsilent[110X[108X
+  [8X[10Xsilent[110X[8X[108X
         [33X[0;6YIf  set to [9Xtrue[109X the algorithm will not raise the error mentioned under
         option  [10Xmax[110X  but  silently  return  [9Xfail[109X.  This  can  be  useful if an
         enumeration is only wanted unless it becomes too big.[133X
@@ -935,14 +934,14 @@
   [2XIsomorphismFpGroupByGenerators[102X  supports  the option [10Xmethod[110X that can be used
   to modify the strategy. The option [10Xmethod[110X may take the following values.[133X
   
-  [8X[10Xmethod := "regular"[110X[108X
+  [8X[10Xmethod := "regular"[110X[8X[108X
         [33X[0;6YThis  may  be  specified  for groups of small size, up to [22X10^5[122X say. It
         implies  that the function first constructs a regular representation [3XR[103X
         of  [3XG[103X and then a presentation of [3XR[103X. In general, this presentation will
         be  much  more concise than the default one, but the price is the time
         needed for the construction of [3XR[103X.[133X
   
-  [8X[10Xmethod := [ "regular", bound ][110X[108X
+  [8X[10Xmethod := [ "regular", bound ][110X[8X[108X
         [33X[0;6YThis  is a refinement of the previous possibility. In this case, [10Xbound[110X
         should  be  an  integer,  and  if so the method [10X"regular"[110X as described
         above  is applied to the largest stabilizer in the stabilizer chain of
@@ -950,7 +949,7 @@
         algorithm  is used to work through the chain from that subgroup to the
         top.[133X
   
-  [8X[10Xmethod := "fast"[110X[108X
+  [8X[10Xmethod := "fast"[110X[8X[108X
         [33X[0;6YThis  chooses  an  alternative  method  which essentially is a kind of
         multi-stage  algorithm  for  a stabilizer chain of [3XG[103X but does not make
         any attempt do reduce the number of relators as it is done in Cannon's
@@ -958,7 +957,7 @@
         faster  than the default method, but the total length of the resulting
         presentation may be huge.[133X
   
-  [8X[10Xmethod := "default"[110X[108X
+  [8X[10Xmethod := "default"[110X[8X[108X
         [33X[0;6YThis  simply means that the default method shall be used, which is the
         case if the option [10Xmethod[110X is not given a value.[133X
   

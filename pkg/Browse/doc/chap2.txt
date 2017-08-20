@@ -47,71 +47,67 @@
   [33X[0;0YWe  first  list  flags  for  setting  the basic behavior of a terminal. With
   [10Xsavetty[110X/[10Xresetty[110X a setting can be stored and recovered.[133X
   
-  [8X[10Xsavetty()[110X[108X
+  [8X[10Xsavetty()[110X[8X[108X
         [33X[0;6YThis stores the current setting of the terminal in a buffer.[133X
   
-  [8X[10Xresetty()[110X[108X
+  [8X[10Xresetty()[110X[8X[108X
         [33X[0;6YThis  resets  the  terminal  to  what  was  stored in the last call to
         [10Xsavetty[110X.[133X
   
-  [8X
-  [10Xcbreak()/nocbreak()[110X[108X
+  [8X [10Xcbreak()/nocbreak()[110X[8X[108X
         [33X[0;6YIn  [10Xcbreak[110X  mode  each  input  character  from  a terminal is directly
         forwarded to the application (but see [10Xkeypad[110X). With [10Xnocbreak[110X this only
         happens after a newline or return is typed.[133X
   
-  [8X[10Xkeypad(win, bool)[110X[108X
+  [8X[10Xkeypad(win, bool)[110X[8X[108X
         [33X[0;6YIf  set  to [9Xtrue[109X some special input like arrow or function keys can be
         read  as single characters from the input (such keys actually generate
         certain sequences of characters), see also [14X2.1-4[114X. (The [3Xwin[103X argument is
         irrelevant.)[133X
   
-  [8X
-  [10Xecho()[110X/[10Xnoecho()[110X[108X
+  [8X [10Xecho()[110X[8X/[10Xnoecho()[110X[8X[108X
         [33X[0;6YThis  determines  if  input characters are automatically echoed by the
         terminal at the current cursor position.[133X
   
-  [8X[10Xcurs_set(vis)[110X[108X
+  [8X[10Xcurs_set(vis)[110X[8X[108X
         [33X[0;6YThis determines the visibility of the cursor. The argument [3Xvis[103X=0 makes
         the  cursor  invisible.  With [3Xvis[103X=1 it becomes visible; some terminals
         allow also higher levels of visibility.[133X
   
-  [8X[10Xwtimeout(win, delay)[110X[108X
+  [8X[10Xwtimeout(win, delay)[110X[8X[108X
         [33X[0;6YHere [3Xdelay[103X determines a timeout in milliseconds for reading characters
         from  the  input of a window. Negative values mean infinity, that is a
         blocking read.[133X
   
-  [8X
-  [10Xnl()[110X/[10Xnonl()[110X[108X
+  [8X [10Xnl()[110X[8X/[10Xnonl()[110X[8X[108X
         [33X[0;6YWith  [10Xnl[110X  a return on input is translated to a newline character and a
         newline on output is interpreted as return and linefeed.[133X
   
-  [8X[10Xintrflush(win, bool)[110X[108X
+  [8X[10Xintrflush(win, bool)[110X[8X[108X
         [33X[0;6YThis  flag  determines  if  after  an  interrupt pending output to the
         terminal is flushed. (The [3Xwin[103X argument is irrelevant.)[133X
   
-  [8X[10Xidlok(win, bool)[110X[108X
+  [8X[10Xidlok(win, bool)[110X[8X[108X
         [33X[0;6YWith  [9Xtrue[109X  the  library  tries  to  use  a  hardware  line  insertion
         functionality (in particular for scrolling).[133X
   
-  [8X[10Xscrollok(win, bool)[110X[108X
+  [8X[10Xscrollok(win, bool)[110X[8X[108X
         [33X[0;6YIf  set  to [9Xtrue[109X moving the cursor down from the last line of a window
         causes scrolling of the whole window, otherwise nothing happens.[133X
   
-  [8X[10Xleaveok(win, bool)[110X[108X
+  [8X[10Xleaveok(win, bool)[110X[8X[108X
         [33X[0;6YIf  set  to  [9Xtrue[109X  a  refresh  of  the window leaves the cursor at its
         current location, otherwise this is not guaranteed.[133X
   
-  [8X[10Xclearok(win, bool)[110X[108X
+  [8X[10Xclearok(win, bool)[110X[8X[108X
         [33X[0;6YIf  set  to  [9Xtrue[109X the next refresh of the window will clear the screen
         completely and redraw everything.[133X
   
-  [8X[10Ximmedok(win, bool)[110X[108X
+  [8X[10Ximmedok(win, bool)[110X[8X[108X
         [33X[0;6YIf  set to [9Xtrue[109X all changes of the window will automatically also call
         a [10Xwrefresh[110X.[133X
   
-  [8X
-  [10Xraw()[110X/[10Xnoraw()[110X[108X
+  [8X [10Xraw()[110X[8X/[10Xnoraw()[110X[8X[108X
         [33X[0;6YSimilar  to  [10Xcbreak[110X, usually not needed (see the [10Xncurses[110X documentation
         for details).[133X
   
@@ -127,45 +123,45 @@
   [33X[0;0YFor functions which involve coordinates recall that the upper left corner of
   the screen or internally of any window has the coordinates (0,0).[133X
   
-  [8X[10Xnewwin(nlines, ncols, y, x)[110X[108X
+  [8X[10Xnewwin(nlines, ncols, y, x)[110X[8X[108X
         [33X[0;6YThis  creates a new window whose upper left corner has the coordinates
         ([3Xy[103X,[3Xx[103X) on the screen and has [3Xnlines[103X lines and [3Xncols[103X columns, if this is
         possible.  The  arguments  [3Xnlines[103X  and  [3Xncols[103X  can be zero, then their
         maximal possible values are assumed.[133X
   
-  [8X[10Xdelwin(win)[110X[108X
+  [8X[10Xdelwin(win)[110X[8X[108X
         [33X[0;6YDeletes a window.[133X
   
-  [8X[10Xmvwin(win, y, x)[110X[108X
+  [8X[10Xmvwin(win, y, x)[110X[8X[108X
         [33X[0;6YMoves the upper left corner of the window to the given coordinates, if
         the  window  still  fits  on  the  screen.  With panels don't use this
         function, but use [10Xmove_panel[110X mentioned below.[133X
   
-  [8X[10Xwrefresh(win)[110X[108X
+  [8X[10Xwrefresh(win)[110X[8X[108X
         [33X[0;6YWriting  to a window only changes some internal buffers, this function
         copies the window content to the actual display screen. You don't need
         this  function  if  you wrap your windows in panels, use [10Xupdate_panels[110X
         and [10Xdoupdate[110X instead.[133X
   
-  [8X[10Xdoupdate()[110X[108X
+  [8X[10Xdoupdate()[110X[8X[108X
         [33X[0;6YUse  this function to update the content of your display screen to the
         current  content of all windows. If your terminal is not yet in visual
         mode this function changes to visual mode.[133X
   
-  [8X[10Xendwin()[110X[108X
+  [8X[10Xendwin()[110X[8X[108X
         [33X[0;6YUse  this function to leave the visual mode of your terminal. (Remark:
         If  you  use this function while not in visual mode the cursor will be
         moved  to  the  line  where  the visual mode was started last time. To
         avoid this use [10Xisendwin[110X first.)[133X
   
-  [8X[10Xisendwin()[110X[108X
+  [8X[10Xisendwin()[110X[8X[108X
         [33X[0;6YReturns [9Xtrue[109X if called while not in visual mode and [9Xfalse[109X otherwise[133X
   
-  [8X[10Xgetbegyx(win)[110X[108X
+  [8X[10Xgetbegyx(win)[110X[8X[108X
         [33X[0;6YGet  the  coordinates  of  the  upper  left  corner of a window on the
         screen.[133X
   
-  [8X[10Xgetmaxyx(win)[110X[108X
+  [8X[10Xgetmaxyx(win)[110X[8X[108X
         [33X[0;6YGet the number of lines and columns of a window.[133X
   
   
@@ -175,31 +171,28 @@
   the   display.   Don't   forget  to  delete  a  panel  before  deleting  the
   corresponding window.[133X
   
-  [8X[10Xnew_panel(win)[110X[108X
+  [8X[10Xnew_panel(win)[110X[8X[108X
         [33X[0;6YCreate a panel for a window.[133X
   
-  [8X[10Xdel_panel(pan)[110X[108X
+  [8X[10Xdel_panel(pan)[110X[8X[108X
         [33X[0;6YDelete a panel.[133X
   
-  [8X[10Xupdate_panels()[110X[108X
+  [8X[10Xupdate_panels()[110X[8X[108X
         [33X[0;6YUse  this  function  to copy changes of windows and panels to a screen
         buffer. Then call [10Xdoupdate()[110X to update the display screen.[133X
   
-  [8X[10Xmove_panel(pan, y, x)[110X[108X
+  [8X[10Xmove_panel(pan, y, x)[110X[8X[108X
         [33X[0;6YMove top left corner of a panel wrapped window to coordinates ([3Xy[103X,[3Xx[103X) if
         possible.[133X
   
-  [8X
-  [10Xhide_panel(pan)[110X/[10Xshow_panel(pan)[110X[108X
+  [8X [10Xhide_panel(pan)[110X[8X/[10Xshow_panel(pan)[110X[8X[108X
         [33X[0;6YHide  or  show,  respectively,  the  content of a panel on the display
         screen.[133X
   
-  [8X
-  [10Xtop_panel(pan)[110X/[10Xbottom_panel(pan)[110X[108X
+  [8X [10Xtop_panel(pan)[110X[8X/[10Xbottom_panel(pan)[110X[8X[108X
         [33X[0;6YMove a panel to the top or bottom of all panels, respectively.[133X
   
-  [8X
-  [10Xpanel_below(pan)[110X/[10Xpanel_above(pan)[110X[108X
+  [8X [10Xpanel_below(pan)[110X[8X/[10Xpanel_above(pan)[110X[8X[108X
         [33X[0;6YReturn  the panel directly below or above the given one, respectively.
         With argument [10X0[110X the top or bottom panel are returned, respectively. If
         argument  is  the  bottom  or  top  panel, respectively, then [9Xfalse[109X is
@@ -212,7 +205,7 @@
   of [10Xcbreak[110X, [10Xkeypad[110X, [10Xecho[110X, [10Xwtimeout[110X and [10Xcurs_set[110X to your needs, see [14X2.1-1[114X. The
   basic functions are as follows.[133X
   
-  [8X[10Xwgetch(win)[110X[108X
+  [8X[10Xwgetch(win)[110X[8X[108X
         [33X[0;6YReads one character from user input (returned as integer). If [10Xwtimeout[110X
         was set with a positive [3Xdelay[103X then the function returns [9Xfalse[109X if there
         was  no input for [3Xdelay[103X milliseconds. Note that in [10Xnocbreak[110X mode typed
@@ -221,7 +214,7 @@
         characters; the keys are explained below. (Note that there is only one
         input queue for all windows.)[133X
   
-  [8X[10Xungetch(char)[110X[108X
+  [8X[10Xungetch(char)[110X[8X[108X
         [33X[0;6YPuts back the character [3Xchar[103X on the input queue.[133X
   
   [33X[0;0YSome  terminals allow one to read special keys like one character, we import
@@ -229,38 +222,38 @@
   characters  by  comparing  with  the  components of the record [10XNCurses.keys[110X,
   these are[133X
   
-  [8X[10XUP[110X/[10XDOWN[110X/[10XLEFT[110X/[10XRIGHT[110X[108X
+  [8X[10XUP[110X[8X/[10XDOWN[110X[8X/[10XLEFT[110X[8X/[10XRIGHT[110X[8X[108X
         [33X[0;6Ythe arrow keys[133X
   
-  [8X[10XPPAGE[110X/[10XNPAGE[110X[108X
+  [8X[10XPPAGE[110X[8X/[10XNPAGE[110X[8X[108X
         [33X[0;6Ythe page up and page down keys[133X
   
-  [8X[10XHOME[110X/[10XEND[110X[108X
+  [8X[10XHOME[110X[8X/[10XEND[110X[8X[108X
         [33X[0;6Ythe home and end keys[133X
   
-  [8X[10XBACKSPACE[110X/[10XDC[110X[108X
+  [8X[10XBACKSPACE[110X[8X/[10XDC[110X[8X[108X
         [33X[0;6Ythe backspace and delete keys[133X
   
-  [8X[10XIC[110X[108X
+  [8X[10XIC[110X[8X[108X
         [33X[0;6Ythe insert key[133X
   
-  [8X[10XENTER[110X[108X
+  [8X[10XENTER[110X[8X[108X
         [33X[0;6Ythe enter key[133X
   
-  [8X[10XF1[110X/[10XF2[110X/../[10XF24[110X[108X
+  [8X[10XF1[110X[8X/[10XF2[110X[8X/../[10XF24[110X[8X[108X
         [33X[0;6Ythe function keys[133X
   
-  [8X[10XMOUSE[110X[108X
+  [8X[10XMOUSE[110X[8X[108X
         [33X[0;6Ya pseudo key to detect mouse events[133X
   
-  [8X[10XA1[110X/[10XA3[110X/[10XB2[110X/[10XC1[110X/[10XC3[110X[108X
+  [8X[10XA1[110X[8X/[10XA3[110X[8X/[10XB2[110X[8X/[10XC1[110X[8X/[10XC3[110X[8X[108X
         [33X[0;6Ythe keys around the arrow keys on a num pad[133X
   
   [33X[0;0YIt can happen that on a specific keyboard there is no key for some of these.
   Also,  not all terminals can interpret all of these keys. You can check this
   with the function[133X
   
-  [8X[10Xhas_key(key)[110X[108X
+  [8X[10Xhas_key(key)[110X[8X[108X
         [33X[0;6YChecks if the special key [3Xkey[103X is recognized by the terminal.[133X
   
   
@@ -272,57 +265,57 @@
   subsection  is for the first aspect. Possible attributes are explained below
   in [14X2.1-7[114X.[133X
   
-  [8X[10Xwmove(win, y, x)[110X[108X
+  [8X[10Xwmove(win, y, x)[110X[8X[108X
         [33X[0;6YMoves  the  cursor  to position ([3Xy[103X,[3Xx[103X), recall that the coordinates are
         zero based, (0,0) being the top left corner.[133X
   
-  [8X[10Xwaddnstr(win, str, len)[110X[108X
+  [8X[10Xwaddnstr(win, str, len)[110X[8X[108X
         [33X[0;6YWrites  the  string [3Xstr[103X to the window starting from the current cursor
         position.  Writes  at  most  [3Xlen[103X characters. At end of line the cursor
         moves  to  the  beginning of next line. The behavior at the end of the
         window depends on the setting of [10Xscrollok[110X, see [14X2.1-1[114X.[133X
   
-  [8X[10Xwaddch(win, char)[110X[108X
+  [8X[10Xwaddch(win, char)[110X[8X[108X
         [33X[0;6YWrites  a  character  to the window at the current cursor position and
         moves  the  cursor  on. The character [3Xchar[103X is given as integer and can
         include attribute information.[133X
   
-  [8X[10Xwborder(win, charlist)[110X[108X
+  [8X[10Xwborder(win, charlist)[110X[8X[108X
         [33X[0;6YDraws a border around the window. If [3Xcharlist[103X is a plain list of eight
         [5XGAP[105X  characters  these  are  taken for left/right/top/bottom sides and
         top-left/top-right/bottom-left/bottom-right corners. Otherwise default
         characters  are  used.  (See  [2XNCurses.WBorder[102X  ([14X2.2-9[114X) for a more user
         friendly interface.)[133X
   
-  [8X[10Xwvline(win, char, len)[110X[108X
+  [8X[10Xwvline(win, char, len)[110X[8X[108X
         [33X[0;6YWrites  a  vertical line of length [3Xlen[103X (or as long as fitting into the
         window) starting from the current cursor position to the bottom, using
         the character [3Xchar[103X. If [3Xchar[103X=[10X0[110X the default character is used.[133X
   
-  [8X[10Xwhline(win, char, len)[110X[108X
+  [8X[10Xwhline(win, char, len)[110X[8X[108X
         [33X[0;6YSame  as  [10Xwvline[110X  but  for  horizontal  lines starting from the cursor
         position to the right.[133X
   
-  [8X[10Xwerase(win)[110X[108X
+  [8X[10Xwerase(win)[110X[8X[108X
         [33X[0;6YDeletes all characters in the window.[133X
   
-  [8X[10Xwclear(win)[110X[108X
+  [8X[10Xwclear(win)[110X[8X[108X
         [33X[0;6YLike [10Xwerase[110X, but also calls [10Xclearok[110X.[133X
   
-  [8X[10Xwclrtobot(win)[110X[108X
+  [8X[10Xwclrtobot(win)[110X[8X[108X
         [33X[0;6YDeletes all characters from cursor position to the right and bottom.[133X
   
-  [8X[10Xwclrtoeol(win)[110X[108X
+  [8X[10Xwclrtoeol(win)[110X[8X[108X
         [33X[0;6YDeletes all characters from cursor position to end of line.[133X
   
-  [8X[10Xwinch(win)[110X[108X
+  [8X[10Xwinch(win)[110X[8X[108X
         [33X[0;6YReturns  the  character  at  current  cursor  position, as integer and
         including color and attribute information.[133X
   
-  [8X[10Xgetyx(win)[110X[108X
+  [8X[10Xgetyx(win)[110X[8X[108X
         [33X[0;6YReturns the current cursor position.[133X
   
-  [8X[10Xwaddstr(win, str)[110X[108X
+  [8X[10Xwaddstr(win, str)[110X[8X[108X
         [33X[0;6YDelegates to [10Xwaddnstr(win, str, Length(str))[110X.[133X
   
   
@@ -333,61 +326,61 @@
   [10XNCurses.lineDraw[110X.  On  some  terminals  these are nicely displayed as proper
   lines (on others they are simulated by ASCII characters). These are:[133X
   
-  [8X[10XBLOCK[110X[108X
+  [8X[10XBLOCK[110X[8X[108X
         [33X[0;6Ysolid block[133X
   
-  [8X[10XBOARD[110X[108X
+  [8X[10XBOARD[110X[8X[108X
         [33X[0;6Yboard of squares[133X
   
-  [8X[10XBTEE/LTEE/RTEE/TTEE[110X[108X
+  [8X[10XBTEE/LTEE/RTEE/TTEE[110X[8X[108X
         [33X[0;6Ybottom/left/right/top tee[133X
   
-  [8X[10XBULLET[110X[108X
+  [8X[10XBULLET[110X[8X[108X
         [33X[0;6Ybullet[133X
   
-  [8X[10XCKBOARD[110X[108X
+  [8X[10XCKBOARD[110X[8X[108X
         [33X[0;6Ychecker board[133X
   
-  [8X[10XDARROW/LARROW/RARROW/UARROW[110X[108X
+  [8X[10XDARROW/LARROW/RARROW/UARROW[110X[8X[108X
         [33X[0;6Ydown/left/right/up arrow[133X
   
-  [8X[10XDEGREE[110X[108X
+  [8X[10XDEGREE[110X[8X[108X
         [33X[0;6Ydegree symbol[133X
   
-  [8X[10XDIAMOND[110X[108X
+  [8X[10XDIAMOND[110X[8X[108X
         [33X[0;6Ydiamond[133X
   
-  [8X[10XGEQUAL[110X[108X
+  [8X[10XGEQUAL[110X[8X[108X
         [33X[0;6Ygreater than or equal[133X
   
-  [8X[10XHLINE/VLINE[110X[108X
+  [8X[10XHLINE/VLINE[110X[8X[108X
         [33X[0;6Yhorizontal/vertical line[133X
   
-  [8X[10XLANTERN[110X[108X
+  [8X[10XLANTERN[110X[8X[108X
         [33X[0;6Ylantern symbol[133X
   
-  [8X[10XLEQUAL[110X[108X
+  [8X[10XLEQUAL[110X[8X[108X
         [33X[0;6Yless than or equal[133X
   
-  [8X[10XLLCORNER/LRCORNER/ULCORNER/URCORNER[110X[108X
+  [8X[10XLLCORNER/LRCORNER/ULCORNER/URCORNER[110X[8X[108X
         [33X[0;6Ylower left/lower right/upper left/upper right corner[133X
   
-  [8X[10XNEQUAL[110X[108X
+  [8X[10XNEQUAL[110X[8X[108X
         [33X[0;6Ynot equal[133X
   
-  [8X[10XPI[110X[108X
+  [8X[10XPI[110X[8X[108X
         [33X[0;6Yletter pi[133X
   
-  [8X[10XPLMINUS[110X[108X
+  [8X[10XPLMINUS[110X[8X[108X
         [33X[0;6Yplus-minus[133X
   
-  [8X[10XPLUS[110X[108X
+  [8X[10XPLUS[110X[8X[108X
         [33X[0;6Ycrossing lines like a plus[133X
   
-  [8X[10XS1/S3/S7/S9[110X[108X
+  [8X[10XS1/S3/S7/S9[110X[8X[108X
         [33X[0;6Yscan line 1/3/7/9[133X
   
-  [8X[10XSTERLING[110X[108X
+  [8X[10XSTERLING[110X[8X[108X
         [33X[0;6Ypound sterling[133X
   
   
@@ -399,26 +392,26 @@
   in [14X'Reference:  Attributes'[114X.)  The  available  attributes  are stored in the
   record [10XNCurses.attrs[110X, they are[133X
   
-  [8X[10XNORMAL[110X[108X
+  [8X[10XNORMAL[110X[8X[108X
         [33X[0;6Ynormal display with no extra attributes.[133X
   
-  [8X[10XSTANDOUT[110X[108X
+  [8X[10XSTANDOUT[110X[8X[108X
         [33X[0;6Ydisplays text in the best highlighting mode of the terminal.[133X
   
-  [8X[10XUNDERLINE[110X[108X
+  [8X[10XUNDERLINE[110X[8X[108X
         [33X[0;6Yunderlines the text.[133X
   
-  [8X[10XREVERSE[110X[108X
+  [8X[10XREVERSE[110X[8X[108X
         [33X[0;6Ydisplay  in  reverse video by exchanging the foreground and background
         color.[133X
   
-  [8X[10XBLINK[110X[108X
+  [8X[10XBLINK[110X[8X[108X
         [33X[0;6Ydisplays the text blinking.[133X
   
-  [8X[10XDIM[110X[108X
+  [8X[10XDIM[110X[8X[108X
         [33X[0;6Ydisplays the text half bright.[133X
   
-  [8X[10XBOLD[110X[108X
+  [8X[10XBOLD[110X[8X[108X
         [33X[0;6Ydisplays the text in a bold font.[133X
   
   [33X[0;0YNote  that  not  all  of these work with all types of terminals, or some may
@@ -431,25 +424,24 @@
   
   [33X[0;0YThe library functions for setting attributes are:[133X
   
-  [8X[10Xwattrset(win, attr)[110X[108X
+  [8X[10Xwattrset(win, attr)[110X[8X[108X
         [33X[0;6YThis  sets  the  default  (combined)  attributes for a window which is
         added  to  all characters written to it; using [10XNCurses.attrs.NORMAL[110X as
         attribute is a reset.[133X
   
-  [8X
-  [10Xwattron(win, attr)[110X/[10Xwattroff(win, attr)[110X[108X
+  [8X [10Xwattron(win, attr)[110X[8X/[10Xwattroff(win, attr)[110X[8X[108X
         [33X[0;6YThis  sets  or  unsets  one  or  some default attributes of the window
         without changing the others.[133X
   
-  [8X[10Xwattr_get(win)[110X[108X
+  [8X[10Xwattr_get(win)[110X[8X[108X
         [33X[0;6YThis returns the current default attribute and default color pair of a
         window.[133X
   
-  [8X[10Xwbkgdset(win, attr)[110X[108X
+  [8X[10Xwbkgdset(win, attr)[110X[8X[108X
         [33X[0;6YThis  is  similar to [10Xwattrset[110X but you can also add a character to [3Xattr[103X
         which is used as default instead of blanks.[133X
   
-  [8X[10Xwbkgd(win, attr)[110X[108X
+  [8X[10Xwbkgd(win, attr)[110X[8X[108X
         [33X[0;6YThis  function changes the attributes for all characters in the window
         to [3Xattr[103X, also used for further characters written to that window.[133X
   
@@ -471,8 +463,7 @@
   [10X"BUTTON1_CLICKED",[110X  [10X"BUTTON1_DOUBLE_CLICKED",[110X  [10X"BUTTON1_TRIPLE_CLICKED",[110X [10X...[110X
   and contains the same for buttons number 2 to 5 and a few other events.[133X
   
-  [8X
-  [10Xmousemask(intlist)[110X[108X
+  [8X [10Xmousemask(intlist)[110X[8X[108X
         [33X[0;6YThe argument [3Xintlist[103X is a list of integers specifying mouse events. An
         entry  [10Xi[110X refers to the event described in [10XNCurses.mouseEvents[i+1][110X. It
         returns  a  record  with components [10X.new[110X (for the current setting) and
@@ -482,21 +473,18 @@
         In  applications  use  [2XNCurses.UseMouse[102X  ([14X2.2-10[114X)  instead of this low
         level function.[133X
   
-  [8X
-  [10Xgetmouse()[110X[108X
+  [8X [10Xgetmouse()[110X[8X[108X
         [33X[0;6YThis  function must be called after a key [10XNCurses.keys.MOUSE[110X was read.
         It returns a list with three entries [10X[y, x, intlist][110X where [10Xy[110X and [10Xx[110X are
         the  coordinates  of  the character cell where the mouse event occured
         and  [10Xintlist[110X describes the event, it should have length one and refers
         to a position in [10XNCurses.mouseEvents[110X.[133X
   
-  [8X
-  [10Xwenclose(win, y, x)[110X[108X
+  [8X [10Xwenclose(win, y, x)[110X[8X[108X
         [33X[0;6YThis  functions  returns  [9Xtrue[109X  if  the screen position [3Xy[103X, [3Xx[103X is within
         window [3Xwin[103X and [9Xfalse[109X otherwise.[133X
   
-  [8X
-  [10Xmouseinterval(t)[110X[108X
+  [8X [10Xmouseinterval(t)[110X[8X[108X
         [33X[0;6YSets  the time to recognize a press and release of a mouse button as a
         click  to [3Xt[103X milliseconds. (Note that this may have no effect because a
         window manager may catch this.)[133X
@@ -766,7 +754,7 @@
   [6XReturns:[106X  [33X[0;10Ya list of records[133X
   
   [33X[0;0Y[10Xncurses[110X  allows on some terminals ([10Xxterm[110X and related) to catch mouse events.
-  In  principle a subset of events can be catched, see [10Xmousemask[110X in [14X2.1-8[114X. But
+  In  principle  a subset of events can be caught, see [10Xmousemask[110X in [14X2.1-8[114X. But
   this  does  not  seem  to  work  well with proper subsets of possible events
   (probably   due  to  intermediate  processes  X,  window  manager,  terminal
   application,  ...).  Therefore  we  suggest  to catch either all or no mouse
@@ -799,7 +787,7 @@
   Allow  the  user  to switch mouse usage on and off while your application is
   running.  Some users may not like to give mouse control to your application,
   for  example  the  standard cut and paste functionality cannot be used while
-  mouse events are catched.[133X
+  mouse events are caught.[133X
   
   [1X2.2-11 NCurses.SaveWin[101X
   

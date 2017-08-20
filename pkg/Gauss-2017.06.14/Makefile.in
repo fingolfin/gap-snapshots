@@ -1,0 +1,60 @@
+#
+# makefile for the Gauss package                             Mohamed Barakat
+#                                                              Simon Görtzen
+#                                                            Max Neunhoeffer
+#
+#  This file is free software, see license information at the end.
+#
+
+# Inspired  by the makefile prototype for the EDIM package of Frank Lübeck
+
+CONFIGNAME=@CONFIGNAME@
+
+GAPINCL=-I$(GAPPATH)/src -I$(GAPPATH)/bin/@GAPARCH@
+
+PKGROOT=$(shell pwd)
+
+GAP=$(PKGROOT)/../../bin/gap-$(CONFIGNAME).sh
+
+.PHONY: default bindir static doc clean distclean docclean test
+
+default: bindir bin/@GAPARCH@/gauss.so 
+
+# this target creates a bin-directory
+bindir:
+	mkdir -p bin/@GAPARCH@
+	
+static:
+	(cd $(GAPPATH)/bin/@GAPARCH@; \
+	./gac -o gap-static -p "-DGAUSSSTATIC" -P "-static" \
+	../../pkg/Gauss/src/gauss.c)
+
+doc:
+	gap makedoc.g
+	
+clean: 
+	rm -rf bin/@GAPARCH@ Makefile Makefile-$(CONFIGNAME) *~
+
+distclean:
+	rm -rf bin Makefile Makefile-*
+
+docclean:
+	(cd doc; ./clean)
+	
+test: doc
+	gap -b maketest.g
+
+##
+##  This program is free software; you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation; version 2 of the License.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License
+##  along with this program; if not, write to the Free Software
+##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+##

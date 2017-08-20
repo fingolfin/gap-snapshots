@@ -1217,11 +1217,11 @@
   [33X[0;0YOur  aim  is  to  generalize  the basic arithmetic of simple row vectors and
   matrices, so we first summarize the situations that shall be covered.[133X
   
-            │ scl   vec   mat
-        ────┼────   ───     
-        scl │       (L)   (L)
-        vec │ (R)   (I)   (I)
-        mat │ (R)   (R)   (R)
+            │ scl   vec   mat   
+        ────┼────   ───   ───  
+        scl │       (L)   (L)   
+        vec │ (R)   (I)   (I)   
+        mat │ (R)   (R)   (R)   
   
   [33X[0;0YThis  means  for  example  that  the product of a scalar (scl) with a vector
   (vec)  or  a  matrix  (mat)  is computed according to (L). Note that this is

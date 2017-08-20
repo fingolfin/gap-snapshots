@@ -382,17 +382,17 @@
   [29X[2XEH[102X( [3XN[103X ) [32X function
   
   [33X[0;0YFor  a  positive  integer  [3XN[103X,  let  [22Xz  =[122X  [10XE([110X[3XN[103X[10X)[110X [22X= exp(2 π i/[3XN[103X)[122X. The following
-  so-called  [13Xatomic irrationalities[113X (see [CCNPW85, Chapter 7, Section 10]) can
+  so-called  [13Xatomic  irrationalities[113X (see [CCN+85, Chapter 7, Section 10]) can
   be  entered  using  functions.  (Note  that  the  values  are  not necessary
   irrational.)[133X
   
-        [10XEB([110X[3XN[103X[10X)[110X   =   [22Xb_[3XN[103X[122X   =   [22X( ∑_{j = 1}^{[3XN[103X-1} z^{j^2} ) / 2[122X   ,   [22X[3XN[103X ≡ 1 mod 2[122X
-        [10XEC([110X[3XN[103X[10X)[110X   =   [22Xc_[3XN[103X[122X   =   [22X( ∑_{j = 1}^{[3XN[103X-1} z^{j^3} ) / 3[122X   ,   [22X[3XN[103X ≡ 1 mod 3[122X
-        [10XED([110X[3XN[103X[10X)[110X   =   [22Xd_[3XN[103X[122X   =   [22X( ∑_{j = 1}^{[3XN[103X-1} z^{j^4} ) / 4[122X   ,   [22X[3XN[103X ≡ 1 mod 4[122X
-        [10XEE([110X[3XN[103X[10X)[110X   =   [22Xe_[3XN[103X[122X   =   [22X( ∑_{j = 1}^{[3XN[103X-1} z^{j^5} ) / 5[122X   ,   [22X[3XN[103X ≡ 1 mod 5[122X
-        [10XEF([110X[3XN[103X[10X)[110X   =   [22Xf_[3XN[103X[122X   =   [22X( ∑_{j = 1}^{[3XN[103X-1} z^{j^6} ) / 6[122X   ,   [22X[3XN[103X ≡ 1 mod 6[122X
-        [10XEG([110X[3XN[103X[10X)[110X   =   [22Xg_[3XN[103X[122X   =   [22X( ∑_{j = 1}^{[3XN[103X-1} z^{j^7} ) / 7[122X   ,   [22X[3XN[103X ≡ 1 mod 7[122X
-        [10XEH([110X[3XN[103X[10X)[110X   =   [22Xh_[3XN[103X[122X   =   [22X( ∑_{j = 1}^{[3XN[103X-1} z^{j^8} ) / 8[122X   ,   [22X[3XN[103X ≡ 1 mod 8[122X
+        [10XEB([110X[3XN[103X[10X)[110X   =   [22Xb_[3XN[103X[122X   =   [22X( ∑_{j = 1}^{[3XN[103X-1} z^{j^2} ) / 2[122X   ,   [22X[3XN[103X ≡ 1 mod 2[122X   
+        [10XEC([110X[3XN[103X[10X)[110X   =   [22Xc_[3XN[103X[122X   =   [22X( ∑_{j = 1}^{[3XN[103X-1} z^{j^3} ) / 3[122X   ,   [22X[3XN[103X ≡ 1 mod 3[122X   
+        [10XED([110X[3XN[103X[10X)[110X   =   [22Xd_[3XN[103X[122X   =   [22X( ∑_{j = 1}^{[3XN[103X-1} z^{j^4} ) / 4[122X   ,   [22X[3XN[103X ≡ 1 mod 4[122X   
+        [10XEE([110X[3XN[103X[10X)[110X   =   [22Xe_[3XN[103X[122X   =   [22X( ∑_{j = 1}^{[3XN[103X-1} z^{j^5} ) / 5[122X   ,   [22X[3XN[103X ≡ 1 mod 5[122X   
+        [10XEF([110X[3XN[103X[10X)[110X   =   [22Xf_[3XN[103X[122X   =   [22X( ∑_{j = 1}^{[3XN[103X-1} z^{j^6} ) / 6[122X   ,   [22X[3XN[103X ≡ 1 mod 6[122X   
+        [10XEG([110X[3XN[103X[10X)[110X   =   [22Xg_[3XN[103X[122X   =   [22X( ∑_{j = 1}^{[3XN[103X-1} z^{j^7} ) / 7[122X   ,   [22X[3XN[103X ≡ 1 mod 7[122X   
+        [10XEH([110X[3XN[103X[10X)[110X   =   [22Xh_[3XN[103X[122X   =   [22X( ∑_{j = 1}^{[3XN[103X-1} z^{j^8} ) / 8[122X   ,   [22X[3XN[103X ≡ 1 mod 8[122X   
   
   [33X[0;0Y(Note that in [10XEC([110X[3XN[103X[10X)[110X, [22X...[122X, [10XEH([110X[3XN[103X[10X)[110X, [3XN[103X must be a prime.)[133X
   
@@ -419,8 +419,8 @@
   
   [33X[0;0YFrom a theorem of Gauss we know that [22Xb_[3XN[103X =[122X[133X
   
-        [22X(-1 + sqrt{[3XN[103X}) / 2[122X     if   [22X[3XN[103X ≡ 1 mod 4[122X 
-        [22X(-1 + i sqrt{[3XN[103X}) / 2[122X   if   [22X[3XN[103X ≡ -1 mod 4[122X
+        [22X(-1 + sqrt{[3XN[103X}) / 2[122X     if   [22X[3XN[103X ≡ 1 mod 4[122X    
+        [22X(-1 + i sqrt{[3XN[103X}) / 2[122X   if   [22X[3XN[103X ≡ -1 mod 4[122X   
   
   [33X[0;0YSo [22Xsqrt{[3XN[103X}[122X can be computed from [22Xb_[3XN[103X[122X, see [2XEB[102X ([14X18.4-1[114X).[133X
   
@@ -445,18 +445,17 @@
   multiplicative order exactly [22Xk[122X modulo [3XN[103X, chosen in the order of preference[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Y1, -1, 2, -2, 3, -3, 4, -4, ... .[133X[124X[133X
-  
+  [24X[33X[0;6Y1, -1, 2, -2, 3, -3, 4, -4, ... .[133X[124X
   
   [33X[0;0YWe define (with [22Xz = exp(2 π i/[3XN[103X)[122X)[133X
   
-        [10XEY([110X[3XN[103X[10X)[110X   =   [22Xy_[3XN[103X[122X   =   [22Xz + z^n[122X                                 [22X(n = [3XN[103X_2)[122X
-        [10XEX([110X[3XN[103X[10X)[110X   =   [22Xx_[3XN[103X[122X   =   [22Xz + z^n + z^{n^2}[122X                       [22X(n = [3XN[103X_3)[122X
-        [10XEW[110X([3XN[103X[10X)[110X   =   [22Xw_[3XN[103X[122X   =   [22Xz + z^n + z^{n^2} + z^{n^3}[122X             [22X(n = [3XN[103X_4)[122X
-        [10XEV([110X[3XN[103X[10X)[110X   =   [22Xv_[3XN[103X[122X   =   [22Xz + z^n + z^{n^2} + z^{n^3} + z^{n^4}[122X   [22X(n = [3XN[103X_5)[122X
-        [10XEU([110X[3XN[103X[10X)[110X   =   [22Xu_[3XN[103X[122X   =   [22Xz + z^n + z^{n^2} + ... + z^{n^5}[122X       [22X(n = [3XN[103X_6)[122X
-        [10XET([110X[3XN[103X[10X)[110X   =   [22Xt_[3XN[103X[122X   =   [22Xz + z^n + z^{n^2} + ... + z^{n^6}[122X       [22X(n = [3XN[103X_7)[122X
-        [10XES([110X[3XN[103X[10X)[110X   =   [22Xs_[3XN[103X[122X   =   [22Xz + z^n + z^{n^2} + ... + z^{n^7}[122X       [22X(n = [3XN[103X_8)[122X
+        [10XEY([110X[3XN[103X[10X)[110X   =   [22Xy_[3XN[103X[122X   =   [22Xz + z^n[122X                                 [22X(n = [3XN[103X_2)[122X   
+        [10XEX([110X[3XN[103X[10X)[110X   =   [22Xx_[3XN[103X[122X   =   [22Xz + z^n + z^{n^2}[122X                       [22X(n = [3XN[103X_3)[122X   
+        [10XEW[110X([3XN[103X[10X)[110X   =   [22Xw_[3XN[103X[122X   =   [22Xz + z^n + z^{n^2} + z^{n^3}[122X             [22X(n = [3XN[103X_4)[122X   
+        [10XEV([110X[3XN[103X[10X)[110X   =   [22Xv_[3XN[103X[122X   =   [22Xz + z^n + z^{n^2} + z^{n^3} + z^{n^4}[122X   [22X(n = [3XN[103X_5)[122X   
+        [10XEU([110X[3XN[103X[10X)[110X   =   [22Xu_[3XN[103X[122X   =   [22Xz + z^n + z^{n^2} + ... + z^{n^5}[122X       [22X(n = [3XN[103X_6)[122X   
+        [10XET([110X[3XN[103X[10X)[110X   =   [22Xt_[3XN[103X[122X   =   [22Xz + z^n + z^{n^2} + ... + z^{n^6}[122X       [22X(n = [3XN[103X_7)[122X   
+        [10XES([110X[3XN[103X[10X)[110X   =   [22Xs_[3XN[103X[122X   =   [22Xz + z^n + z^{n^2} + ... + z^{n^7}[122X       [22X(n = [3XN[103X_8)[122X   
   
   [33X[0;0YFor the two-argument versions of the functions, see Section [2XNK[102X ([14X18.4-5[114X).[133X
   
@@ -478,10 +477,10 @@
   
   [33X[0;0YLet [3XN[103X be an integer, [3XN[103X [22X> 2[122X. We define (with [22Xz = exp(2 π i/[3XN[103X)[122X)[133X
   
-        [10XEM([110X[3XN[103X[10X)[110X   =   [22Xm_[3XN[103X[122X   =   [22Xz - z^n[122X                       [22X(n = [3XN[103X_2)[122X
-        [10XEL([110X[3XN[103X[10X)[110X   =   [22Xl_[3XN[103X[122X   =   [22Xz - z^n + z^{n^2} - z^{n^3}[122X   [22X(n = [3XN[103X_4)[122X
-        [10XEK([110X[3XN[103X[10X)[110X   =   [22Xk_[3XN[103X[122X   =   [22Xz - z^n + ... - z^{n^5}[122X       [22X(n = [3XN[103X_6)[122X
-        [10XEJ([110X[3XN[103X[10X)[110X   =   [22Xj_[3XN[103X[122X   =   [22Xz - z^n + ... - z^{n^7}[122X       [22X(n = [3XN[103X_8)[122X
+        [10XEM([110X[3XN[103X[10X)[110X   =   [22Xm_[3XN[103X[122X   =   [22Xz - z^n[122X                       [22X(n = [3XN[103X_2)[122X   
+        [10XEL([110X[3XN[103X[10X)[110X   =   [22Xl_[3XN[103X[122X   =   [22Xz - z^n + z^{n^2} - z^{n^3}[122X   [22X(n = [3XN[103X_4)[122X   
+        [10XEK([110X[3XN[103X[10X)[110X   =   [22Xk_[3XN[103X[122X   =   [22Xz - z^n + ... - z^{n^5}[122X       [22X(n = [3XN[103X_6)[122X   
+        [10XEJ([110X[3XN[103X[10X)[110X   =   [22Xj_[3XN[103X[122X   =   [22Xz - z^n + ... - z^{n^7}[122X       [22X(n = [3XN[103X_8)[122X   
   
   [33X[0;0YFor the two-argument versions of the functions, see Section [2XNK[102X ([14X18.4-5[114X).[133X
   
@@ -499,17 +498,15 @@
   [33X[0;0YThe algebraic numbers[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yy_[3XN[103X^' = y_[3XN[103X^(1), y_[3XN[103X^'' = y_[3XN[103X^(2), ..., x_[3XN[103X^', x_[3XN[103X^'', ..., j_[3XN[103X^',
-        j_[3XN[103X^'', ...[133X[124X[133X
-  
+  [24X[33X[0;6Yy_[3XN[103X^' = y_[3XN[103X^(1), y_[3XN[103X^'' = y_[3XN[103X^(2), ..., x_[3XN[103X^', x_[3XN[103X^'', ..., j_[3XN[103X^', j_[3XN[103X^'', ...[133X[124X
   
   [33X[0;0Yare  obtained on replacing [22X[3XN[103X_[3Xk[103X[122X in the definitions in the sections [14X18.4-3[114X and
   [14X18.4-4[114X by [22X[3XN[103X_[3Xk[103X^', [3XN[103X_[3Xk[103X^'', ...[122X; they can be entered as[133X
   
-        [10XEY([110X[3XN[103X,[3Xd[103X[10X)[110X    =    [22Xy_[3XN[103X^([3Xd[103X)[122X
-        [10XEX([110X[3XN[103X,[3Xd[103X[10X)[110X    =    [22Xx_[3XN[103X^([3Xd[103X)[122X
-                  [22X...[122X          
-        [10XEJ([110X[3XN[103X,[3Xd[103X[10X)[110X    =    [22Xj_[3XN[103X^([3Xd[103X)[122X
+        [10XEY([110X[3XN[103X,[3Xd[103X[10X)[110X    =    [22Xy_[3XN[103X^([3Xd[103X)[122X   
+        [10XEX([110X[3XN[103X,[3Xd[103X[10X)[110X    =    [22Xx_[3XN[103X^([3Xd[103X)[122X   
+                  [22X...[122X             
+        [10XEJ([110X[3XN[103X,[3Xd[103X[10X)[110X    =    [22Xj_[3XN[103X^([3Xd[103X)[122X   
   
   [1X18.4-6 AtlasIrrationality[101X
   
@@ -518,14 +515,14 @@
   [33X[0;0YLet  [3Xirratname[103X  be  a  string that describes an irrational value as a linear
   combination  in  terms  of  the  atomic  irrationalities  introduced  in the
   sections [14X18.4-1[114X, [14X18.4-2[114X, [14X18.4-3[114X, [14X18.4-4[114X. These irrational values are defined
-  in [CCNPW85, Chapter 6, Section 10], and the following description is mainly
+  in  [CCN+85, Chapter 6, Section 10], and the following description is mainly
   copied  from  there.  If  [22Xq_N[122X  is  such  a  value (e.g. [22Xy_24^''[122X) then linear
   combinations  of  algebraic  conjugates  of  [22Xq_N[122X  are  abbreviated as in the
   following examples:[133X
   
-        [10X2qN+3&5-4&7+&9[110X   means   [22X2 q_N + 3 q_N^{*5} - 4 q_N^{*7} + q_N^{*9}[122X            
-        [10X4qN&3&5&7-3&4[110X    means   [22X4 (q_N + q_N^{*3} + q_N^{*5} + q_N^{*7}) - 3 q_N^{*11}[122X
-        [10X4qN*3&5+&7[110X       means   [22X4 (q_N^{*3} + q_N^{*5}) + q_N^{*7}[122X                    
+        [10X2qN+3&5-4&7+&9[110X   means   [22X2 q_N + 3 q_N^{*5} - 4 q_N^{*7} + q_N^{*9}[122X               
+        [10X4qN&3&5&7-3&4[110X    means   [22X4 (q_N + q_N^{*3} + q_N^{*5} + q_N^{*7}) - 3 q_N^{*11}[122X   
+        [10X4qN*3&5+&7[110X       means   [22X4 (q_N^{*3} + q_N^{*5}) + q_N^{*7}[122X                       
   
   [33X[0;0YTo  explain the [21Xampersand[121X syntax in general we remark that [21X&k[121X is interpreted
   as  [22Xq_N^{*k}[122X, where [22Xq_N[122X is the most recently named atomic irrationality, and
@@ -670,7 +667,7 @@
   [33X[0;0Y[2XGaloisMat[102X  returns  a  record  with  the  components  [10Xmat[110X,  [10Xgaloisfams[110X,  and
   [10Xgenerators[110X.[133X
   
-  [8X[10Xmat[110X[108X
+  [8X[10Xmat[110X[8X[108X
         [33X[0;6Ya  list with initial segment being the rows of [3Xmat[103X ([13Xnot[113X shallow copies
         of  these  rows); the list consists of full orbits under the action of
         the Galois group of the entries of [3Xmat[103X defined above. The last rows in
@@ -678,31 +675,31 @@
         complete  the  orbits; so if the orbits were already complete, [3Xmat[103X and
         [10Xmat[110X have identical rows.[133X
   
-  [8X[10Xgaloisfams[110X[108X
+  [8X[10Xgaloisfams[110X[8X[108X
         [33X[0;6Ya  list that has the same length as the [10Xmat[110X component, its entries are
         either 1, 0, -1, or lists.[133X
   
-        [8X[10Xgaloisfams[i] = 1[110X[108X
+        [8X[10Xgaloisfams[i] = 1[110X[8X[108X
               [33X[0;12Ymeans  that [10Xmat[i][110X consists of rationals, i.e., [10X[ mat[i] ][110X forms
               an orbit;[133X
   
-        [8X[10Xgaloisfams[i] = -1[110X[108X
+        [8X[10Xgaloisfams[i] = -1[110X[8X[108X
               [33X[0;12Ymeans  that  [10Xmat[i][110X  contains unknowns (see Chapter [14X74[114X); in this
               case  [10X[  mat[i]  ][110X  is regarded as an orbit, too, even if [10Xmat[i][110X
               contains irrational entries;[133X
   
-        [8X[10Xgaloisfams[i] = [110X[22X[ l_1, l_2 ][122X[108X
+        [8X[10Xgaloisfams[i] = [110X[8X[22X[ l_1, l_2 ][122X[108X
               [33X[0;12Y(a  list) means that [10Xmat[i][110X is the first element of its orbit in
               [10Xmat[110X,  [22Xl_1[122X  is the list of positions of rows that form the orbit,
               and  [22Xl_2[122X  is  the list of corresponding Galois automorphisms (as
               exponents,  not  as  functions);  so  we have [10Xmat[110X[22X[ l_1[j] ][k] =[122X
               [10XGaloisCyc( mat[110X[22X[i][k], l_2[j][122X[10X )[110X;[133X
   
-        [8X[10Xgaloisfams[i] = 0[110X[108X
+        [8X[10Xgaloisfams[i] = 0[110X[8X[108X
               [33X[0;12Ymeans  that  [10Xmat[i][110X  is an element of a nontrivial orbit but not
               the first element of it.[133X
   
-  [8X[10Xgenerators[110X[108X
+  [8X[10Xgenerators[110X[8X[108X
         [33X[0;6Ya  list of permutations generating the permutation group corresponding
         to the action of the Galois group on the rows of [10Xmat[110X.[133X
   

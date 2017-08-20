@@ -19,9 +19,10 @@
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4.html">[Next Chapter]</a>&nbsp;  </div>
 
-<p><a id="X7A9DB80B819B6343" name="X7A9DB80B819B6343"></a></p>
-<div class="ChapSects"><a href="chap3.html#X7A9DB80B819B6343">3 <span class="Heading">Utilities using <code class="code">ncurses</code></span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X84798B3080F49AD1">3.1 <span class="Heading"><code class="code">ncurses</code> utilities</span></a>
+<p id="mathjaxlink" class="pcenter"><a href="chap3_mj.html">[MathJax on]</a></p>
+<p><a id="X7F3A63788200AB4F" name="X7F3A63788200AB4F"></a></p>
+<div class="ChapSects"><a href="chap3.html#X7F3A63788200AB4F">3 <span class="Heading">Utilities using <code class="code">ncurses</code></span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X84E621798148857D">3.1 <span class="Heading"><code class="code">ncurses</code> utilities</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X83E95B4A83BC473E">3.1-1 NCurses.Alert</a></span>
@@ -44,7 +45,7 @@
 
 <p>In this chapter we describe the usage of some example applications of the <code class="code">ncurses</code> interface provided by the <strong class="pkg">Browse</strong> package. They may be of interest by themselves, or they may be used as utility functions within larger applications.</p>
 
-<p><a id="X84798B3080F49AD1" name="X84798B3080F49AD1"></a></p>
+<p><a id="X84E621798148857D" name="X84E621798148857D"></a></p>
 
 <h4>3.1 <span class="Heading"><code class="code">ncurses</code> utilities</span></h4>
 
@@ -63,7 +64,7 @@
 
 <p>If <var class="Arg">timeout</var> is zero then the box is closed after any user input, and the integer corresponding to the entered key is returned. If <var class="Arg">timeout</var> is a positive number <span class="SimpleMath">n</span>, say, then the box is closed after <span class="SimpleMath">n</span> milliseconds, and <code class="keyw">fail</code> is returned.</p>
 
-<p>If <code class="code">timeout</code> is zero and mouse events are enabled (see <code class="func">NCurses.UseMouse</code> (<a href="chap2.html#X7DDFB32D78090334"><span class="RefLink">2.2-10</span></a>)) then the box can be moved inside the window via mouse events.</p>
+<p>If <code class="code">timeout</code> is zero and mouse events are enabled (see <code class="func">NCurses.UseMouse</code> (<a href="chap2.html#X799C033A7AB582D7"><span class="RefLink">2.2-10</span></a>)) then the box can be moved inside the window via mouse events.</p>
 
 <p>If the optional argument <var class="Arg">attrs</var> is given, it must be an integer representing attributes such as the components of <code class="code">NCurses.attrs</code> (see Section <a href="chap2.html#X793D897483674294"><span class="RefLink">2.1-7</span></a>) or the return value of <code class="func">NCurses.ColorAttr</code> (<a href="chap2.html#X83ADB4E37C105B8C"><span class="RefLink">2.2-1</span></a>); these attributes are used for the border of the box. The default is <code class="code">NCurses.attrs.NORMAL</code>.</p>
 
@@ -139,7 +140,7 @@ fail
 
 </dd>
 </dl>
-<p>If mouse events are enabled (see <code class="func">NCurses.UseMouse</code> (<a href="chap2.html#X7DDFB32D78090334"><span class="RefLink">2.2-10</span></a>)) then the window can be moved on the screen via mouse events, the focus can be moved to an entry, and (if <code class="code">single</code> is <code class="keyw">false</code>) the selection of an entry can be toggled.</p>
+<p>If mouse events are enabled (see <code class="func">NCurses.UseMouse</code> (<a href="chap2.html#X799C033A7AB582D7"><span class="RefLink">2.2-10</span></a>)) then the window can be moved on the screen via mouse events, the focus can be moved to an entry, and (if <code class="code">single</code> is <code class="keyw">false</code>) the selection of an entry can be toggled.</p>
 
 
 <div class="example"><pre>

@@ -3,10 +3,10 @@
                                      [1X[5XBrowse[105X[101X
   
   
-                               ( Version 1.8.6 )
+                               ( Version 1.8.7 )
   
   
-                                  August 2014
+                                   July 2017
   
   
                                  Thomas Breuer
@@ -24,7 +24,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2006-2014 by Thomas Breuer and Frank Lübeck[133X
+  [33X[0;0Y© 2006-2017 by Thomas Breuer and Frank Lübeck[133X
   
   [33X[0;0YThis  package  may  be distributed under the terms and conditions of the GNU
   Public License Version 3 or later, see [7Xhttp://www.gnu.org/licenses[107X.[133X
@@ -114,9 +114,10 @@
       6.5-1 [33X[0;0YBrowseAtlasInfo[133X
     6.6 [33X[0;0YAccess to [5XGAP[105X Manuals–a Variant[133X
       6.6-1 BrowseGapManuals
-    6.7 [33X[0;0YOverview of the [5XGAP[105X Bibliography[133X
+    6.7 [33X[0;0YOverview of Bibliographies[133X
       6.7-1 BrowseBibliography
-      6.7-2 BrowseMSC
+      6.7-2 BrowseBibliographyGapPackages
+      6.7-3 BrowseMSC
     6.8 [33X[0;0YProfiling [5XGAP[105X functions–a Variant[133X
       6.8-1 BrowseProfile
     6.9 [33X[0;0YVariables defined in [5XGAP[105X packages–a Variant[133X
@@ -146,6 +147,8 @@
       6.17-7 Sudoku.UniqueSolution
       6.17-8 PlaySudoku
       6.17-9 Sudoku.HTMLGame
+    6.18 [33X[0;0YUtility for [5XGAP[105X Demos[133X
+      6.18-1 LoadDemoFile
   A [33X[0;0YSome Tools for Database Handling[133X
     A.1 [33X[0;0Y[5XGAP[105X Objects for Database Handling[133X
       A.1-1 [33X[0;0YDatabase Id Enumerators[133X
@@ -161,13 +164,8 @@
       A.2-1 [33X[0;0YBrowse Relevant Components of Database Attributes[133X
       A.2-2 BrowseTableFromDatabaseIdEnumerator
     A.3 [33X[0;0YExample: Database Id Enumerators and Database Attributes[133X
-    A.4 [33X[0;0YExample: An Overview of the [5XGAP[105X Library of Transitive Groups[133X
-      A.4-1 BrowseTransitiveGroupsInfo
-      A.4-2 TransitiveGroupsData.AllTransitiveGroups
-      A.4-3 TransitiveGroupsData
-      A.4-4 [33X[0;0YAdditional Database Attributes for Transitive Groups[133X
-    A.5 [33X[0;0YExample: An Overview of the [5XGAP[105X Library of Tables of Marks[133X
-      A.5-1 BrowseTomLibInfo
+    A.4 [33X[0;0YExample: An Overview of the [5XGAP[105X Library of Tables of Marks[133X
+      A.4-1 BrowseTomLibInfo
   
   
   [32X

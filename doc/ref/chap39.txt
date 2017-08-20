@@ -946,15 +946,15 @@
   [33X[0;0Y[2XConjugacyClasses[102X  supports  the following options that can be used to modify
   this strategy:[133X
   
-  [8X[10Xrandom[110X[108X
+  [8X[10Xrandom[110X[8X[108X
         [33X[0;6YThe     classes     are     computed    by    random    search.    See
         [2XConjugacyClassesByRandomSearch[102X ([14X39.10-3[114X) below.[133X
   
-  [8X[10Xaction[110X[108X
+  [8X[10Xaction[110X[8X[108X
         [33X[0;6YThe   classes   are   computed   by   action   of  [3XG[103X  on  itself.  See
         [2XConjugacyClassesByOrbits[102X ([14X39.10-4[114X) below.[133X
   
-  [8X[10Xnoaction[110X[108X
+  [8X[10Xnoaction[110X[8X[108X
         [33X[0;6YEven  for  small groups [2XConjugacyClassesByOrbits[102X ([14X39.10-4[114X) is not used
         as  a  default.  This can be useful if the elements of the group use a
         lot of memory.[133X
@@ -1662,66 +1662,66 @@
   [33X[0;0Y(If  different  characterizations  of  [3XG[103X  are  possible only one is given by
   [10Xseries[110X and [10Xparameter[110X, while [10Xname[110X may give several names.)[133X
   
-  [8X[10X"A"[110X[108X
+  [8X[10X"A"[110X[8X[108X
         [33X[0;6YAlternating groups, [10Xparameter[110X gives the natural degree.[133X
   
-  [8X[10X"L"[110X[108X
+  [8X[10X"L"[110X[8X[108X
         [33X[0;6YLinear  groups  (Chevalley  type [22XA[122X), [10Xparameter[110X is a list [22X[ n, q ][122X that
         indicates [22XL(n,q)[122X.[133X
   
-  [8X[10X"2A"[110X[108X
+  [8X[10X"2A"[110X[8X[108X
         [33X[0;6YTwisted  Chevalley  type  [22X^2A[122X,  [10Xparameter[110X  is  a  list  [22X[  n, q ][122X that
         indicates [22X^2A(n,q)[122X.[133X
   
-  [8X[10X"B"[110X[108X
+  [8X[10X"B"[110X[8X[108X
         [33X[0;6YChevalley type [22XB[122X, [10Xparameter[110X is a list [22X[n, q ][122X that indicates [22XB(n,q)[122X.[133X
   
-  [8X[10X"2B"[110X[108X
+  [8X[10X"2B"[110X[8X[108X
         [33X[0;6YTwisted  Chevalley  type  [22X^2B[122X,  [10Xparameter[110X  is a value [22Xq[122X that indicates
         [22X^2B(2,q)[122X.[133X
   
-  [8X[10X"C"[110X[108X
+  [8X[10X"C"[110X[8X[108X
         [33X[0;6YChevalley type [22XC[122X, [10Xparameter[110X is a list [22X[ n, q ][122X that indicates [22XC(n,q)[122X.[133X
   
-  [8X[10X"D"[110X[108X
+  [8X[10X"D"[110X[8X[108X
         [33X[0;6YChevalley type [22XD[122X, [10Xparameter[110X is a list [22X[ n, q ][122X that indicates [22XD(n,q)[122X.[133X
   
-  [8X[10X"2D"[110X[108X
+  [8X[10X"2D"[110X[8X[108X
         [33X[0;6YTwisted  Chevalley  type  [22X^2D[122X,  [10Xparameter[110X  is  a  list  [22X[  n, q ][122X that
         indicates [22X^2D(n,q)[122X.[133X
   
-  [8X[10X"3D"[110X[108X
+  [8X[10X"3D"[110X[8X[108X
         [33X[0;6YTwisted  Chevalley  type  [22X^3D[122X,  [10Xparameter[110X  is a value [22Xq[122X that indicates
         [22X^3D(4,q)[122X.[133X
   
-  [8X[10X"E"[110X[108X
+  [8X[10X"E"[110X[8X[108X
         [33X[0;6YExceptional  Chevalley  type  [22XE[122X,  [10Xparameter[110X  is  a  list [22X[ n, q ][122X that
         indicates [22XE_n(q)[122X. The value of [3Xn[103X is 6, 7, or 8.[133X
   
-  [8X[10X"2E"[110X[108X
+  [8X[10X"2E"[110X[8X[108X
         [33X[0;6YTwisted  exceptional  Chevalley  type [22XE_6[122X, [10Xparameter[110X is a value [22Xq[122X that
         indicates [22X^2E_6(q)[122X.[133X
   
-  [8X[10X"F"[110X[108X
+  [8X[10X"F"[110X[8X[108X
         [33X[0;6YExceptional  Chevalley  type  [22XF[122X, [10Xparameter[110X is a value [22Xq[122X that indicates
         [22XF(4,q)[122X.[133X
   
-  [8X[10X"2F"[110X[108X
+  [8X[10X"2F"[110X[8X[108X
         [33X[0;6YTwisted  exceptional  Chevalley  type [22X^2F[122X (Ree groups), [10Xparameter[110X is a
         value [22Xq[122X that indicates [22X^2F(4,q)[122X.[133X
   
-  [8X[10X"G"[110X[108X
+  [8X[10X"G"[110X[8X[108X
         [33X[0;6YExceptional  Chevalley  type  [22XG[122X, [10Xparameter[110X is a value [22Xq[122X that indicates
         [22XG(2,q)[122X.[133X
   
-  [8X[10X"2G"[110X[108X
+  [8X[10X"2G"[110X[8X[108X
         [33X[0;6YTwisted  exceptional  Chevalley  type [22X^2G[122X (Ree groups), [10Xparameter[110X is a
         value [22Xq[122X that indicates [22X^2G(2,q)[122X.[133X
   
-  [8X[10X"Spor"[110X[108X
+  [8X[10X"Spor"[110X[8X[108X
         [33X[0;6YSporadic simple groups, [10Xname[110X gives the name.[133X
   
-  [8X[10X"Z"[110X[108X
+  [8X[10X"Z"[110X[8X[108X
         [33X[0;6YCyclic groups of prime size, [10Xparameter[110X gives the size.[133X
   
   [33X[0;0YAn  equal  sign  in  the  name denotes different naming schemes for the same
@@ -2748,7 +2748,7 @@
   on  the  subgroups  computed.  The  following  record  components of [3Xopt[103X are
   recognized and have the following effects:[133X
   
-  [8X[10Xactions[110X[108X
+  [8X[10Xactions[110X[8X[108X
         [33X[0;6Ymust  be a list of automorphisms of [3XG[103X. If given, only groups which are
         invariant  under  all  these automorphisms are computed. The algorithm
         must  know  the  normalizer  in  [3XG[103X  of  the group generated by [10Xactions[110X
@@ -2756,11 +2756,11 @@
         [3Xactions[103X).  This  can  be  given  in the component [10Xfuncnorm[110X and will be
         computed if this component is not given.[133X
   
-  [8X[10Xnormal[110X[108X
+  [8X[10Xnormal[110X[8X[108X
         [33X[0;6Yif  set  to  [9Xtrue[109X  only normal subgroups are guaranteed to be returned
         (though some of the returned subgroups might still be not normal).[133X
   
-  [8X[10Xconsider[110X[108X
+  [8X[10Xconsider[110X[8X[108X
         [33X[0;6Ya function to restrict the groups computed. This must be a function of
         five  parameters,  [22XC[122X, [22XA[122X, [22XN[122X, [22XB[122X, [22XM[122X, that are interpreted as follows: The
         arguments are subgroups of a factor [22XF[122X of [3XG[103X in the relation [22XF ≥ C > A >
@@ -2781,16 +2781,16 @@
         factor  group  [22XF = [3XG[103X/H[122X. Therefore the [10Xconsider[110X function may not relate
         the parameter groups to [3XG[103X.[133X
   
-  [8X[10Xretnorm[110X[108X
+  [8X[10Xretnorm[110X[8X[108X
         [33X[0;6Yif  set to [9Xtrue[109X the function not only returns a list [10Xsubs[110X of subgroups
         but also a corresponding list [10Xnorms[110X of normalizers in the form [10X[ subs,
         norms ][110X.[133X
   
-  [8X[10Xseries[110X[108X
+  [8X[10Xseries[110X[8X[108X
         [33X[0;6Yis  an  elementary  abelian  series  of  [3XG[103X  which will be used for the
         computation.[133X
   
-  [8X[10Xgroups[110X[108X
+  [8X[10Xgroups[110X[8X[108X
         [33X[0;6Yis  a  list of groups to seed the calculation. Only subgroups of these
         groups are constructed.[133X
   
@@ -2966,18 +2966,14 @@
   Then the group of 1-cocycles [22XZ^1( G/M, M )[122X is defined as[133X
   
   
-        [33X[1;6Y[24X[33X[0;0YZ^1(G/M, M) = { γ: G/M → M ∣ ∀ g_1, g_2 ∈ G : γ(g_1 M ⋅ g_2 M ) =
-        γ(g_1 M)^{g_2} ⋅ γ(g_2 M) }[133X[124X[133X
-  
+  [24X[33X[0;6YZ^1(G/M, M) = { γ: G/M → M ∣ ∀ g_1, g_2 ∈ G : γ(g_1 M ⋅ g_2 M ) = γ(g_1 M)^{g_2} ⋅ γ(g_2 M) }[133X[124X
   
   [33X[0;0Yand is a [22XGF(p)[122X-vector space.[133X
   
   [33X[0;0YThe group of 1-coboundaries [22XB^1( G/M, M )[122X is defined as[133X
   
   
-        [33X[1;6Y[24X[33X[0;0YB^1(G/M, M) = { γ : G/M → M ∣ ∃ m ∈ M ∀ g ∈ G : γ(gM) = (m^{-1})^g ⋅ m
-        }[133X[124X[133X
-  
+  [24X[33X[0;6YB^1(G/M, M) = { γ : G/M → M ∣ ∃ m ∈ M ∀ g ∈ G : γ(gM) = (m^{-1})^g ⋅ m }[133X[124X
   
   [33X[0;0YIt also is a [22XGF(p)[122X-vector space.[133X
   
@@ -3015,26 +3011,26 @@
   [33X[0;0YThe  operations  [2XOneCocycles[102X  ([14X39.23-1[114X)  and [2XOneCoboundaries[102X return a record
   with (at least) the components:[133X
   
-  [8X[10Xgenerators[110X[108X
+  [8X[10Xgenerators[110X[8X[108X
         [33X[0;6YIs a list of representatives for a generating set of [3XG[103X/[3XM[103X. Cocycles are
         represented with respect to these generators.[133X
   
-  [8X[10XoneCocycles[110X[108X
+  [8X[10XoneCocycles[110X[8X[108X
         [33X[0;6YA  space  of row vectors over GF([22Xp[122X), representing [22XZ^1[122X. The vectors are
         represented in dimension [22Xa ⋅ b[122X where [22Xa[122X is the length of [10Xgenerators[110X and
         [22Xp^b[122X the size of [3XM[103X.[133X
   
-  [8X[10XoneCoboundaries[110X[108X
+  [8X[10XoneCoboundaries[110X[8X[108X
         [33X[0;6YA space of row vectors that represents [22XB^1[122X.[133X
   
-  [8X[10XcocycleToList[110X[108X
+  [8X[10XcocycleToList[110X[8X[108X
         [33X[0;6Yis  a function to convert a cocycle (a row vector in [10XoneCocycles[110X) to a
         corresponding list of elements of [3XM[103X.[133X
   
-  [8X[10XlistToCocycle[110X[108X
+  [8X[10XlistToCocycle[110X[8X[108X
         [33X[0;6Yis a function to convert a list of elements of [3XM[103X to a cocycle.[133X
   
-  [8X[10XisSplitExtension[110X[108X
+  [8X[10XisSplitExtension[110X[8X[108X
         [33X[0;6Yindicates  whether  [3XG[103X splits over [3XM[103X. The following components are only
         bound  if  the  extension  splits. Note that if [3XM[103X is given by a modulo
         pcgs  all  subgroups  are  given  as  subgroups  of  [3XG[103X  by  generators
@@ -3043,15 +3039,15 @@
         denominator  will  give  the  full  preimage  of the complement in the
         factor group.[133X
   
-  [8X[10Xcomplement[110X[108X
+  [8X[10Xcomplement[110X[8X[108X
         [33X[0;6YOne complement to [3XM[103X in [3XG[103X.[133X
   
-  [8X[10XcocycleToComplement( cyc )[110X[108X
+  [8X[10XcocycleToComplement( cyc )[110X[8X[108X
         [33X[0;6Yis  a  function  that takes a cocycle from [10XoneCocycles[110X and returns the
         corresponding  complement  to  [3XM[103X  in  [3XG[103X  (with  respect  to  the fixed
         complement [10Xcomplement[110X).[133X
   
-  [8X[10XcomplementToCocycle([3XU[103X[10X)[110X[108X
+  [8X[10XcomplementToCocycle([3XU[103X[8X[10X)[110X[8X[108X
         [33X[0;6Yis  a  function  that takes a complement and returns the corresponding
         cocycle.[133X
   

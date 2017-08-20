@@ -56,7 +56,7 @@
 \contentsline {section}{\numberline {5.3}\leavevmode {\color {Chapter }Browse Applications}}{38}{section.5.3}
 \contentsline {section}{\numberline {5.4}\leavevmode {\color {Chapter }Predefined Browse Functionalities}}{39}{section.5.4}
 \contentsline {subsection}{\numberline {5.4.1}\leavevmode {\color {Chapter }BrowseData}}{39}{subsection.5.4.1}
-\contentsline {subsection}{\numberline {5.4.2}\leavevmode {\color {Chapter }BrowseData.SetReplay}}{45}{subsection.5.4.2}
+\contentsline {subsection}{\numberline {5.4.2}\leavevmode {\color {Chapter }BrowseData.SetReplay}}{44}{subsection.5.4.2}
 \contentsline {subsection}{\numberline {5.4.3}\leavevmode {\color {Chapter }BrowseData.AlertWithReplay}}{45}{subsection.5.4.3}
 \contentsline {subsection}{\numberline {5.4.4}\leavevmode {\color {Chapter }BrowseData.actions.ShowHelp}}{45}{subsection.5.4.4}
 \contentsline {subsection}{\numberline {5.4.5}\leavevmode {\color {Chapter }BrowseData.actions.SaveWindow}}{46}{subsection.5.4.5}
@@ -77,59 +77,57 @@
 \contentsline {subsection}{\numberline {6.5.1}\leavevmode {\color {Chapter }BrowseAtlasInfo}}{52}{subsection.6.5.1}
 \contentsline {section}{\numberline {6.6}\leavevmode {\color {Chapter }Access to \textsf {GAP} Manuals{\textendash }a Variant}}{54}{section.6.6}
 \contentsline {subsection}{\numberline {6.6.1}\leavevmode {\color {Chapter }BrowseGapManuals}}{54}{subsection.6.6.1}
-\contentsline {section}{\numberline {6.7}\leavevmode {\color {Chapter }Overview of the \textsf {GAP} Bibliography}}{55}{section.6.7}
-\contentsline {subsection}{\numberline {6.7.1}\leavevmode {\color {Chapter }BrowseBibliography}}{55}{subsection.6.7.1}
-\contentsline {subsection}{\numberline {6.7.2}\leavevmode {\color {Chapter }BrowseMSC}}{58}{subsection.6.7.2}
-\contentsline {section}{\numberline {6.8}\leavevmode {\color {Chapter }Profiling \textsf {GAP} functions{\textendash }a Variant}}{58}{section.6.8}
-\contentsline {subsection}{\numberline {6.8.1}\leavevmode {\color {Chapter }BrowseProfile}}{58}{subsection.6.8.1}
-\contentsline {section}{\numberline {6.9}\leavevmode {\color {Chapter }Variables defined in \textsf {GAP} packages{\textendash }a Variant}}{59}{section.6.9}
+\contentsline {section}{\numberline {6.7}\leavevmode {\color {Chapter }Overview of Bibliographies}}{55}{section.6.7}
+\contentsline {subsection}{\numberline {6.7.1}\leavevmode {\color {Chapter }BrowseBibliography}}{56}{subsection.6.7.1}
+\contentsline {subsection}{\numberline {6.7.2}\leavevmode {\color {Chapter }BrowseBibliographyGapPackages}}{58}{subsection.6.7.2}
+\contentsline {subsection}{\numberline {6.7.3}\leavevmode {\color {Chapter }BrowseMSC}}{59}{subsection.6.7.3}
+\contentsline {section}{\numberline {6.8}\leavevmode {\color {Chapter }Profiling \textsf {GAP} functions{\textendash }a Variant}}{59}{section.6.8}
+\contentsline {subsection}{\numberline {6.8.1}\leavevmode {\color {Chapter }BrowseProfile}}{59}{subsection.6.8.1}
+\contentsline {section}{\numberline {6.9}\leavevmode {\color {Chapter }Variables defined in \textsf {GAP} packages{\textendash }a Variant}}{60}{section.6.9}
 \contentsline {subsection}{\numberline {6.9.1}\leavevmode {\color {Chapter }BrowsePackageVariables}}{60}{subsection.6.9.1}
-\contentsline {section}{\numberline {6.10}\leavevmode {\color {Chapter }Configuring User preferences{\textendash }a Variant}}{60}{section.6.10}
-\contentsline {subsection}{\numberline {6.10.1}\leavevmode {\color {Chapter }BrowseUserPreferences}}{60}{subsection.6.10.1}
-\contentsline {section}{\numberline {6.11}\leavevmode {\color {Chapter }Overview of \textsf {GAP} Data}}{61}{section.6.11}
-\contentsline {subsection}{\numberline {6.11.1}\leavevmode {\color {Chapter }BrowseGapData}}{61}{subsection.6.11.1}
-\contentsline {subsection}{\numberline {6.11.2}\leavevmode {\color {Chapter }BrowseGapDataAdd}}{63}{subsection.6.11.2}
-\contentsline {section}{\numberline {6.12}\leavevmode {\color {Chapter }Navigating in a Directory Tree}}{63}{section.6.12}
-\contentsline {subsection}{\numberline {6.12.1}\leavevmode {\color {Chapter }BrowseDirectory}}{63}{subsection.6.12.1}
-\contentsline {section}{\numberline {6.13}\leavevmode {\color {Chapter }A Puzzle}}{64}{section.6.13}
-\contentsline {subsection}{\numberline {6.13.1}\leavevmode {\color {Chapter }BrowsePuzzle}}{64}{subsection.6.13.1}
-\contentsline {section}{\numberline {6.14}\leavevmode {\color {Chapter }Peg Solitaire}}{65}{section.6.14}
-\contentsline {subsection}{\numberline {6.14.1}\leavevmode {\color {Chapter }PegSolitaire}}{65}{subsection.6.14.1}
-\contentsline {section}{\numberline {6.15}\leavevmode {\color {Chapter }Rubik's Cube}}{66}{section.6.15}
-\contentsline {subsection}{\numberline {6.15.1}\leavevmode {\color {Chapter }BrowseRubiksCube}}{67}{subsection.6.15.1}
-\contentsline {section}{\numberline {6.16}\leavevmode {\color {Chapter }Changing Sides}}{68}{section.6.16}
-\contentsline {subsection}{\numberline {6.16.1}\leavevmode {\color {Chapter }BrowseChangeSides}}{68}{subsection.6.16.1}
+\contentsline {section}{\numberline {6.10}\leavevmode {\color {Chapter }Configuring User preferences{\textendash }a Variant}}{61}{section.6.10}
+\contentsline {subsection}{\numberline {6.10.1}\leavevmode {\color {Chapter }BrowseUserPreferences}}{61}{subsection.6.10.1}
+\contentsline {section}{\numberline {6.11}\leavevmode {\color {Chapter }Overview of \textsf {GAP} Data}}{62}{section.6.11}
+\contentsline {subsection}{\numberline {6.11.1}\leavevmode {\color {Chapter }BrowseGapData}}{62}{subsection.6.11.1}
+\contentsline {subsection}{\numberline {6.11.2}\leavevmode {\color {Chapter }BrowseGapDataAdd}}{64}{subsection.6.11.2}
+\contentsline {section}{\numberline {6.12}\leavevmode {\color {Chapter }Navigating in a Directory Tree}}{64}{section.6.12}
+\contentsline {subsection}{\numberline {6.12.1}\leavevmode {\color {Chapter }BrowseDirectory}}{64}{subsection.6.12.1}
+\contentsline {section}{\numberline {6.13}\leavevmode {\color {Chapter }A Puzzle}}{65}{section.6.13}
+\contentsline {subsection}{\numberline {6.13.1}\leavevmode {\color {Chapter }BrowsePuzzle}}{65}{subsection.6.13.1}
+\contentsline {section}{\numberline {6.14}\leavevmode {\color {Chapter }Peg Solitaire}}{66}{section.6.14}
+\contentsline {subsection}{\numberline {6.14.1}\leavevmode {\color {Chapter }PegSolitaire}}{66}{subsection.6.14.1}
+\contentsline {section}{\numberline {6.15}\leavevmode {\color {Chapter }Rubik's Cube}}{67}{section.6.15}
+\contentsline {subsection}{\numberline {6.15.1}\leavevmode {\color {Chapter }BrowseRubiksCube}}{68}{subsection.6.15.1}
+\contentsline {section}{\numberline {6.16}\leavevmode {\color {Chapter }Changing Sides}}{69}{section.6.16}
+\contentsline {subsection}{\numberline {6.16.1}\leavevmode {\color {Chapter }BrowseChangeSides}}{69}{subsection.6.16.1}
 \contentsline {section}{\numberline {6.17}\leavevmode {\color {Chapter }Sudoku}}{69}{section.6.17}
-\contentsline {subsection}{\numberline {6.17.1}\leavevmode {\color {Chapter }Sudoku.Init}}{69}{subsection.6.17.1}
+\contentsline {subsection}{\numberline {6.17.1}\leavevmode {\color {Chapter }Sudoku.Init}}{70}{subsection.6.17.1}
 \contentsline {subsection}{\numberline {6.17.2}\leavevmode {\color {Chapter }Sudoku.Place}}{70}{subsection.6.17.2}
-\contentsline {subsection}{\numberline {6.17.3}\leavevmode {\color {Chapter }Sudoku.RandomGame}}{70}{subsection.6.17.3}
-\contentsline {subsection}{\numberline {6.17.4}\leavevmode {\color {Chapter }Sudoku.SimpleDisplay}}{70}{subsection.6.17.4}
-\contentsline {subsection}{\numberline {6.17.5}\leavevmode {\color {Chapter }Sudoku.DisplayString}}{71}{subsection.6.17.5}
-\contentsline {subsection}{\numberline {6.17.6}\leavevmode {\color {Chapter }Sudoku.OneSolution}}{71}{subsection.6.17.6}
-\contentsline {subsection}{\numberline {6.17.7}\leavevmode {\color {Chapter }Sudoku.UniqueSolution}}{72}{subsection.6.17.7}
-\contentsline {subsection}{\numberline {6.17.8}\leavevmode {\color {Chapter }PlaySudoku}}{72}{subsection.6.17.8}
-\contentsline {subsection}{\numberline {6.17.9}\leavevmode {\color {Chapter }Sudoku.HTMLGame}}{73}{subsection.6.17.9}
-\contentsline {chapter}{\numberline {A}\leavevmode {\color {Chapter }Some Tools for Database Handling}}{74}{appendix.A}
-\contentsline {section}{\numberline {A.1}\leavevmode {\color {Chapter }\textsf {GAP} Objects for Database Handling}}{74}{section.A.1}
-\contentsline {subsection}{\numberline {A.1.1}\leavevmode {\color {Chapter }Database Id Enumerators}}{74}{subsection.A.1.1}
-\contentsline {subsection}{\numberline {A.1.2}\leavevmode {\color {Chapter }Database Attributes}}{75}{subsection.A.1.2}
-\contentsline {subsection}{\numberline {A.1.3}\leavevmode {\color {Chapter }How to Deal with Database Id Enumerators and Database Attributes}}{78}{subsection.A.1.3}
-\contentsline {subsection}{\numberline {A.1.4}\leavevmode {\color {Chapter }DatabaseIdEnumerator}}{78}{subsection.A.1.4}
-\contentsline {subsection}{\numberline {A.1.5}\leavevmode {\color {Chapter }DatabaseAttributeAdd}}{78}{subsection.A.1.5}
-\contentsline {subsection}{\numberline {A.1.6}\leavevmode {\color {Chapter }DatabaseAttributeValueDefault}}{79}{subsection.A.1.6}
-\contentsline {subsection}{\numberline {A.1.7}\leavevmode {\color {Chapter }DatabaseIdEnumeratorUpdate}}{79}{subsection.A.1.7}
-\contentsline {subsection}{\numberline {A.1.8}\leavevmode {\color {Chapter }DatabaseAttributeCompute}}{79}{subsection.A.1.8}
-\contentsline {subsection}{\numberline {A.1.9}\leavevmode {\color {Chapter }DatabaseAttributeSetData}}{80}{subsection.A.1.9}
-\contentsline {section}{\numberline {A.2}\leavevmode {\color {Chapter }Using Database Attributes for Browse Tables}}{80}{section.A.2}
-\contentsline {subsection}{\numberline {A.2.1}\leavevmode {\color {Chapter }Browse Relevant Components of Database Attributes}}{80}{subsection.A.2.1}
-\contentsline {subsection}{\numberline {A.2.2}\leavevmode {\color {Chapter }BrowseTableFromDatabaseIdEnumerator}}{81}{subsection.A.2.2}
-\contentsline {section}{\numberline {A.3}\leavevmode {\color {Chapter }Example: Database Id Enumerators and Database Attributes}}{82}{section.A.3}
-\contentsline {section}{\numberline {A.4}\leavevmode {\color {Chapter }Example: An Overview of the \textsf {GAP} Library of Transitive Groups }}{88}{section.A.4}
-\contentsline {subsection}{\numberline {A.4.1}\leavevmode {\color {Chapter }BrowseTransitiveGroupsInfo}}{88}{subsection.A.4.1}
-\contentsline {subsection}{\numberline {A.4.2}\leavevmode {\color {Chapter }TransitiveGroupsData.AllTransitiveGroups}}{89}{subsection.A.4.2}
-\contentsline {subsection}{\numberline {A.4.3}\leavevmode {\color {Chapter }TransitiveGroupsData}}{90}{subsection.A.4.3}
-\contentsline {subsection}{\numberline {A.4.4}\leavevmode {\color {Chapter }Additional Database Attributes for Transitive Groups}}{90}{subsection.A.4.4}
-\contentsline {section}{\numberline {A.5}\leavevmode {\color {Chapter }Example: An Overview of the \textsf {GAP} Library of Tables of Marks }}{91}{section.A.5}
-\contentsline {subsection}{\numberline {A.5.1}\leavevmode {\color {Chapter }BrowseTomLibInfo}}{91}{subsection.A.5.1}
-\contentsline {chapter}{References}{94}{appendix*.3}
-\contentsline {chapter}{Index}{95}{section*.4}
+\contentsline {subsection}{\numberline {6.17.3}\leavevmode {\color {Chapter }Sudoku.RandomGame}}{71}{subsection.6.17.3}
+\contentsline {subsection}{\numberline {6.17.4}\leavevmode {\color {Chapter }Sudoku.SimpleDisplay}}{71}{subsection.6.17.4}
+\contentsline {subsection}{\numberline {6.17.5}\leavevmode {\color {Chapter }Sudoku.DisplayString}}{72}{subsection.6.17.5}
+\contentsline {subsection}{\numberline {6.17.6}\leavevmode {\color {Chapter }Sudoku.OneSolution}}{72}{subsection.6.17.6}
+\contentsline {subsection}{\numberline {6.17.7}\leavevmode {\color {Chapter }Sudoku.UniqueSolution}}{73}{subsection.6.17.7}
+\contentsline {subsection}{\numberline {6.17.8}\leavevmode {\color {Chapter }PlaySudoku}}{73}{subsection.6.17.8}
+\contentsline {subsection}{\numberline {6.17.9}\leavevmode {\color {Chapter }Sudoku.HTMLGame}}{74}{subsection.6.17.9}
+\contentsline {section}{\numberline {6.18}\leavevmode {\color {Chapter }Utility for \textsf {GAP} Demos}}{74}{section.6.18}
+\contentsline {subsection}{\numberline {6.18.1}\leavevmode {\color {Chapter }LoadDemoFile}}{75}{subsection.6.18.1}
+\contentsline {chapter}{\numberline {A}\leavevmode {\color {Chapter }Some Tools for Database Handling}}{76}{appendix.A}
+\contentsline {section}{\numberline {A.1}\leavevmode {\color {Chapter }\textsf {GAP} Objects for Database Handling}}{76}{section.A.1}
+\contentsline {subsection}{\numberline {A.1.1}\leavevmode {\color {Chapter }Database Id Enumerators}}{76}{subsection.A.1.1}
+\contentsline {subsection}{\numberline {A.1.2}\leavevmode {\color {Chapter }Database Attributes}}{77}{subsection.A.1.2}
+\contentsline {subsection}{\numberline {A.1.3}\leavevmode {\color {Chapter }How to Deal with Database Id Enumerators and Database Attributes}}{80}{subsection.A.1.3}
+\contentsline {subsection}{\numberline {A.1.4}\leavevmode {\color {Chapter }DatabaseIdEnumerator}}{80}{subsection.A.1.4}
+\contentsline {subsection}{\numberline {A.1.5}\leavevmode {\color {Chapter }DatabaseAttributeAdd}}{80}{subsection.A.1.5}
+\contentsline {subsection}{\numberline {A.1.6}\leavevmode {\color {Chapter }DatabaseAttributeValueDefault}}{81}{subsection.A.1.6}
+\contentsline {subsection}{\numberline {A.1.7}\leavevmode {\color {Chapter }DatabaseIdEnumeratorUpdate}}{81}{subsection.A.1.7}
+\contentsline {subsection}{\numberline {A.1.8}\leavevmode {\color {Chapter }DatabaseAttributeCompute}}{81}{subsection.A.1.8}
+\contentsline {subsection}{\numberline {A.1.9}\leavevmode {\color {Chapter }DatabaseAttributeSetData}}{82}{subsection.A.1.9}
+\contentsline {section}{\numberline {A.2}\leavevmode {\color {Chapter }Using Database Attributes for Browse Tables}}{82}{section.A.2}
+\contentsline {subsection}{\numberline {A.2.1}\leavevmode {\color {Chapter }Browse Relevant Components of Database Attributes}}{82}{subsection.A.2.1}
+\contentsline {subsection}{\numberline {A.2.2}\leavevmode {\color {Chapter }BrowseTableFromDatabaseIdEnumerator}}{83}{subsection.A.2.2}
+\contentsline {section}{\numberline {A.3}\leavevmode {\color {Chapter }Example: Database Id Enumerators and Database Attributes}}{84}{section.A.3}
+\contentsline {section}{\numberline {A.4}\leavevmode {\color {Chapter }Example: An Overview of the \textsf {GAP} Library of Tables of Marks }}{90}{section.A.4}
+\contentsline {subsection}{\numberline {A.4.1}\leavevmode {\color {Chapter }BrowseTomLibInfo}}{90}{subsection.A.4.1}
+\contentsline {chapter}{References}{93}{appendix*.3}
+\contentsline {chapter}{Index}{94}{section*.4}

@@ -164,72 +164,49 @@
   digit (from [10X0[110X to [10X7[110X) there must be two more such digits. The meaning is given
   in the following list[133X
   
-  [8X[10X\n[110X[108X
+  [8X[10X\n[110X[8X[108X
         [33X[0;6Y[13Xnewline  character[113X.  This  is  the  character  that,  at least on UNIX
         systems, separates lines in a text file. Printing of this character in
         a string has the effect of moving the cursor down one line and back to
         the beginning of the line.[133X
   
-  [8X
-  
-  
-  [10X\"[110X[108X
+  [8X [10X\"[110X[8X[108X
         [33X[0;6Y[13Xdoublequote  character[113X.  Inside a string a doublequote must be escaped
         by  the  backslash,  because it is otherwise interpreted as end of the
         string.[133X
   
-  [8X
-  
-  
-  [10X\'[110X[108X
+  [8X [10X\'[110X[8X[108X
         [33X[0;6Y[13Xsinglequote  character[113X.  Inside a character a singlequote must escaped
         by  the  backslash,  because it is otherwise interpreted as end of the
         character.[133X
   
-  [8X
-  
-  
-  [10X\\[110X[108X
+  [8X [10X\\[110X[8X[108X
         [33X[0;6Y[13Xbackslash  character[113X.  Inside  a string a backslash must be escaped by
         another  backslash,  because  it  is  otherwise  interpreted  as first
         character of an escape sequence.[133X
   
-  [8X
-  
-  
-  [10X\b[110X[108X
+  [8X [10X\b[110X[8X[108X
         [33X[0;6Y[13Xbackspace character[113X. Printing this character should have the effect of
         moving  the  cursor  back  one  character.  Whether it works or not is
         system dependent and should not be relied upon.[133X
   
-  [8X
-  
-  
-  [10X\r[110X[108X
+  [8X [10X\r[110X[8X[108X
         [33X[0;6Y[13Xcarriage  return  character[113X.  Printing  this character should have the
         effect  of  moving  the cursor back to the beginning of the same line.
         Whether this works or not is again system dependent.[133X
   
-  [8X
-  
-  
-  [10X\c[110X[108X
+  [8X [10X\c[110X[8X[108X
         [33X[0;6Y[13Xflush  character[113X.  This  character  is  not printed. Its purpose is to
         flush  the  output  queue.  Usually  [5XGAP[105X waits until it sees a [10Xnewline[110X
         before  it  prints a string. If you want to display a string that does
         not include this character use [10X\c[110X.[133X
   
-  [8X
-  
-  
-  [10X\XYZ[110X[108X
+  [8X [10X\XYZ[110X[8X[108X
         [33X[0;6Ywith  [10XX[110X,  [10XY[110X, [10XZ[110X three octal digits. This is translated to the character
         corresponding to the number [10XX * 64 + Y * 8 + Z modulo 256[110X. This can be
         used to specify and store arbitrary binary data as a string in [5XGAP[105X.[133X
   
-  [8X
-  
-  other[108X
+  [8X other[108X
         [33X[0;6YFor any other character the backslash is simply ignored.[133X
   
   [33X[0;0YAgain,  if  the  line  is displayed as result of an evaluation, those escape

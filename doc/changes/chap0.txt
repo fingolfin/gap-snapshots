@@ -3,7 +3,7 @@
                       [1XGAP - Changes from Earlier Versions[101X
   
   
-                           Release 4.8.7, 24-Mar-2017
+                           Release 4.8.8, 20-Aug-2017
   
   
                                  The GAP Group
@@ -54,6 +54,9 @@
     2.6 [33X[0;0Y[5XGAP[105X 4.8.7 (March 2017)[133X
       2.6-1 [33X[0;0YChanges in the core [5XGAP[105X system introduced in [5XGAP[105X 4.8.7[133X
       2.6-2 [33X[0;0YNew and updated packages since [5XGAP[105X 4.8.6[133X
+    2.7 [33X[0;0Y[5XGAP[105X 4.8.8 (August 2017)[133X
+      2.7-1 [33X[0;0YChanges in the core [5XGAP[105X system introduced in [5XGAP[105X 4.8.8[133X
+      2.7-2 [33X[0;0YNew and updated packages since [5XGAP[105X 4.8.7[133X
   3 [33X[0;0YChanges between [5XGAP[105X 4.6 and [5XGAP[105X 4.7[133X
     3.1 [33X[0;0Y[5XGAP[105X 4.7.2 (December 2013)[133X
       3.1-1 [33X[0;0YChanges in the core [5XGAP[105X system introduced in [5XGAP[105X 4.7[133X

@@ -37,12 +37,12 @@
   
   [33X[0;0YHere are some examples of such name changes.[133X
   
-        [13XOLD[113X                     │ [13XNOW USE[113X                      
-        ────────────────────────┼─  
-        [10XOperation[110X               │ [2XAction[102X ([14X41.7-2[114X)              
-        [10XRepresentativeOperation[110X │ [2XRepresentativeAction[102X ([14X41.6-1[114X)
-        [10XOperationHomomorphism[110X   │ [2XActionHomomorphism[102X ([14X41.7-1[114X)  
-        [10XFunctionOperation[110X       │ [2XFunctionAction[102X ([14X41.12-4[114X)     
+        [13XOLD[113X                     │ [13XNOW USE[113X                         
+        ────────────────────────┼──────────────────────────────  
+        [10XOperation[110X               │ [2XAction[102X ([14X41.7-2[114X)                 
+        [10XRepresentativeOperation[110X │ [2XRepresentativeAction[102X ([14X41.6-1[114X)   
+        [10XOperationHomomorphism[110X   │ [2XActionHomomorphism[102X ([14X41.7-1[114X)     
+        [10XFunctionOperation[110X       │ [2XFunctionAction[102X ([14X41.12-4[114X)        
   
   
   [1X77.2 [33X[0;0YPackage Interface – Obsolete Functions and Name Changes[133X[101X
@@ -62,11 +62,11 @@
   
   [33X[0;0YThe following function names were changed.[133X
   
-        [13XOLD[113X            │ [13XNOW USE[113X               
-        ───────────────┼─  
-        [10XRequirePackage[110X │ [2XLoadPackage[102X ([14X76.2-1[114X)  
-        [10XReadPkg[110X        │ [2XReadPackage[102X ([14X76.3-1[114X)  
-        [10XRereadPkg[110X      │ [2XRereadPackage[102X ([14X76.3-1[114X)
+        [13XOLD[113X            │ [13XNOW USE[113X                  
+        ───────────────┼───────────────────────  
+        [10XRequirePackage[110X │ [2XLoadPackage[102X ([14X76.2-1[114X)     
+        [10XReadPkg[110X        │ [2XReadPackage[102X ([14X76.3-1[114X)     
+        [10XRereadPkg[110X      │ [2XRereadPackage[102X ([14X76.3-1[114X)   
   
   
   [1X77.3 [33X[0;0YNormal Forms of Integer Matrices – Name Changes[133X[101X
@@ -88,12 +88,12 @@
   
   [33X[0;0YHere are some further name changes.[133X
   
-        [13XOLD[113X                     │ [13XNOW USE[113X                        
-        ────────────────────────┼─  
-        [10XMonomialTotalDegreeLess[110X │ [2XMonomialExtGrlexLess[102X ([14X66.17-14[114X)
-        [10XNormedVectors[110X           │ [2XNormedRowVectors[102X ([14X61.9-11[114X)     
-        [10XMutableIdentityMat[110X      │ [2XIdentityMat[102X ([14X24.5-1[114X)           
-        [10XMutableNullMat[110X          │ [2XNullMat[102X ([14X24.5-2[114X)               
+        [13XOLD[113X                     │ [13XNOW USE[113X                           
+        ────────────────────────┼────────────────────────────────  
+        [10XMonomialTotalDegreeLess[110X │ [2XMonomialExtGrlexLess[102X ([14X66.17-14[114X)   
+        [10XNormedVectors[110X           │ [2XNormedRowVectors[102X ([14X61.9-11[114X)        
+        [10XMutableIdentityMat[110X      │ [2XIdentityMat[102X ([14X24.5-1[114X)              
+        [10XMutableNullMat[110X          │ [2XNullMat[102X ([14X24.5-2[114X)                  
   
   [33X[0;0YThe  operation  [10XPositionFirstComponent[110X  has  been  deprecated in GAP 4.8 and
   later  due  to  issues with its documentation and implementation. Instead of

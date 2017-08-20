@@ -3,73 +3,76 @@
 \makelabel{changes:Copyright}{}{X81488B807F2A1CF1}
 \makelabel{changes:Table of Contents}{}{X8537FEB07AF2BEC8}
 \makelabel{changes:Preface}{1}{X874E1D45845007FE}
-\makelabel{changes:Changes between GAP 4.7 and GAP 4.8}{2}{X85866CB686970968}
-\makelabel{changes:GAP 4.8.2 (February 2016)}{2.1}{X806F52968428CE43}
-\makelabel{changes:Changes in the core GAP system introduced in GAP 4.8}{2.1.1}{X7A4D15BE8463B72F}
-\makelabel{changes:New and updated packages since GAP 4.7.8}{2.1.2}{X7907F66D7C726E9D}
-\makelabel{changes:GAP 4.8.3 (March 2016)}{2.2}{X87956276873C1BB4}
-\makelabel{changes:Changes in the core GAP system introduced in GAP 4.8.3}{2.2.1}{X788939AF7ADE4BB2}
-\makelabel{changes:GAP 4.8.4 (June 2016)}{2.3}{X85F7B6F17D29A589}
-\makelabel{changes:Changes in the core GAP system introduced in GAP 4.8.4}{2.3.1}{X816F70F5782C0939}
-\makelabel{changes:GAP 4.8.5 (September 2016)}{2.4}{X84E1F4618181F6A3}
-\makelabel{changes:Changes in the core GAP system introduced in GAP 4.8.5}{2.4.1}{X861F03FC7C8079C0}
-\makelabel{changes:GAP 4.8.6 (November 2016)}{2.5}{X7B6C9EFD7DF68823}
-\makelabel{changes:Changes in the core GAP system introduced in GAP 4.8.6}{2.5.1}{X7F8F96E78174E8CB}
-\makelabel{changes:GAP 4.8.7 (March 2017)}{2.6}{X80D572C87D430AC0}
-\makelabel{changes:Changes in the core GAP system introduced in GAP 4.8.7}{2.6.1}{X78FFE5EE85D89832}
-\makelabel{changes:New and updated packages since GAP 4.8.6}{2.6.2}{X87C9B0CE83E84B92}
-\makelabel{changes:Changes between GAP 4.6 and GAP 4.7}{3}{X871220D17E7EE651}
-\makelabel{changes:GAP 4.7.2 (December 2013)}{3.1}{X78594AB2871B379E}
-\makelabel{changes:Changes in the core GAP system introduced in GAP 4.7}{3.1.1}{X8346E4677FA78976}
-\makelabel{changes:New and updated packages since GAP 4.6.5}{3.1.2}{X7EF0C705829B5D2B}
-\makelabel{changes:GAP 4.7.3 (February 2014)}{3.2}{X79782A077CCDDD27}
-\makelabel{changes:GAP 4.7.4 (February 2014)}{3.3}{X80C83AF67E5E6C7F}
-\makelabel{changes:GAP 4.7.5 (May 2014)}{3.4}{X864C03527D410BF8}
-\makelabel{changes:GAP 4.7.6 (November 2014)}{3.5}{X79E45BD2790B76BB}
-\makelabel{changes:GAP 4.7.7 (February 2015)}{3.6}{X86AF9F587D98F31F}
-\makelabel{changes:GAP 4.7.8 (June 2015)}{3.7}{X7EB1879587C27876}
-\makelabel{changes:Changes between GAP 4.5 and GAP 4.6}{4}{X8175857F79C8AD8E}
-\makelabel{changes:GAP 4.6.2 (February 2013)}{4.1}{X837BB2577D478E55}
-\makelabel{changes:Changes in the core GAP system introduced in GAP 4.6}{4.1.1}{X8436976E7E7ED84B}
-\makelabel{changes:New and updated packages since GAP 4.5.4}{4.1.2}{X79A4DFE97A230E6D}
-\makelabel{changes:GAP 4.6.3 (March 2013)}{4.2}{X7C2A78667F08A971}
-\makelabel{changes:GAP 4.6.4 (April 2013)}{4.3}{X82859C4083F0D7B9}
-\makelabel{changes:GAP 4.6.5 (July 2013)}{4.4}{X7F7F29B27BF76872}
-\makelabel{changes:Changes between GAP 4.4 and GAP 4.5}{5}{X837AADDA7EA9A541}
-\makelabel{changes:Changes in the core GAP system introduced in GAP 4.5}{5.1}{X7DA602757C152B0C}
+\makelabel{changes:Changes between GAP 4.7 and GAP 4.8}{2}{X78E4871E83067AB2}
+\makelabel{changes:GAP 4.8.2 (February 2016)}{2.1}{X79FD32317A501139}
+\makelabel{changes:Changes in the core GAP system introduced in GAP 4.8}{2.1.1}{X809328727BE7E536}
+\makelabel{changes:New and updated packages since GAP 4.7.8}{2.1.2}{X82C1E2C67F40F08E}
+\makelabel{changes:GAP 4.8.3 (March 2016)}{2.2}{X7A20BE707ADF7026}
+\makelabel{changes:Changes in the core GAP system introduced in GAP 4.8.3}{2.2.1}{X879A200E81946C6F}
+\makelabel{changes:GAP 4.8.4 (June 2016)}{2.3}{X7B972D037B89F4F7}
+\makelabel{changes:Changes in the core GAP system introduced in GAP 4.8.4}{2.3.1}{X7E7C695481D3E9AF}
+\makelabel{changes:GAP 4.8.5 (September 2016)}{2.4}{X7878A4097FDB663D}
+\makelabel{changes:Changes in the core GAP system introduced in GAP 4.8.5}{2.4.1}{X790C1A5D81C9B334}
+\makelabel{changes:GAP 4.8.6 (November 2016)}{2.5}{X82FEFE5A7B7EF603}
+\makelabel{changes:Changes in the core GAP system introduced in GAP 4.8.6}{2.5.1}{X809C8F4681E75C99}
+\makelabel{changes:GAP 4.8.7 (March 2017)}{2.6}{X7D60AECE7957C682}
+\makelabel{changes:Changes in the core GAP system introduced in GAP 4.8.7}{2.6.1}{X87ECFC4F81FD0602}
+\makelabel{changes:New and updated packages since GAP 4.8.6}{2.6.2}{X7C0FA46587A3CEFB}
+\makelabel{changes:GAP 4.8.8 (August 2017)}{2.7}{X822D0A3E85F800B3}
+\makelabel{changes:Changes in the core GAP system introduced in GAP 4.8.8}{2.7.1}{X7EE70D9681685719}
+\makelabel{changes:New and updated packages since GAP 4.8.7}{2.7.2}{X7B7FD76C7D5787DF}
+\makelabel{changes:Changes between GAP 4.6 and GAP 4.7}{3}{X7C361B5F862188D4}
+\makelabel{changes:GAP 4.7.2 (December 2013)}{3.1}{X81CB2A15826D4AFB}
+\makelabel{changes:Changes in the core GAP system introduced in GAP 4.7}{3.1.1}{X7998D9AB780EC4DE}
+\makelabel{changes:New and updated packages since GAP 4.6.5}{3.1.2}{X8536D3AE87C31A56}
+\makelabel{changes:GAP 4.7.3 (February 2014)}{3.2}{X80EA4AA07A9A4A4D}
+\makelabel{changes:GAP 4.7.4 (February 2014)}{3.3}{X795A5A517CDC5C91}
+\makelabel{changes:GAP 4.7.5 (May 2014)}{3.4}{X80E231E67E972DB5}
+\makelabel{changes:GAP 4.7.6 (November 2014)}{3.5}{X80763B757AC31C33}
+\makelabel{changes:GAP 4.7.7 (February 2015)}{3.6}{X7F3DFFFF86F3B1F0}
+\makelabel{changes:GAP 4.7.8 (June 2015)}{3.7}{X80D11C6780BB54A2}
+\makelabel{changes:Changes between GAP 4.5 and GAP 4.6}{4}{X809ACE9A7DB63A3B}
+\makelabel{changes:GAP 4.6.2 (February 2013)}{4.1}{X7AE9D2F086E11238}
+\makelabel{changes:Changes in the core GAP system introduced in GAP 4.6}{4.1.1}{X7EE8AAA27E920B1E}
+\makelabel{changes:New and updated packages since GAP 4.5.4}{4.1.2}{X8262CB4279E9D374}
+\makelabel{changes:GAP 4.6.3 (March 2013)}{4.2}{X819FA4607D642A92}
+\makelabel{changes:GAP 4.6.4 (April 2013)}{4.3}{X7F304046877CF484}
+\makelabel{changes:GAP 4.6.5 (July 2013)}{4.4}{X811FB2407ED4AB5D}
+\makelabel{changes:Changes between GAP 4.4 and GAP 4.5}{5}{X84D336197CBC3777}
+\makelabel{changes:Changes in the core GAP system introduced in GAP 4.5}{5.1}{X87783FB985375B5F}
 \makelabel{changes:Improved functionality}{5.1.1}{X84FC44718386FA1A}
 \makelabel{changes:Changes in distribution formats}{5.1.2}{X7E24E9DE7CADD1B7}
 \makelabel{changes:Improvements to the user interface}{5.1.3}{X80AB8641792E74C9}
 \makelabel{changes:Better documentation}{5.1.4}{X81318FC0873923C3}
-\makelabel{changes:Packages in GAP 4.5}{5.2}{X85D796968453CFBF}
+\makelabel{changes:Packages in GAP 4.5}{5.2}{X7CD19B647C39B3F7}
 \makelabel{changes:Interface between the core system and packages}{5.2.1}{X7E8089C881AB6BA1}
-\makelabel{changes:New and updated packages since GAP 4.4.12}{5.2.2}{X81A313117C30EC28}
-\makelabel{changes:GAP 4.5.5 (July 2012)}{5.3}{X83D3FC7781921387}
-\makelabel{changes:GAP 4.5.6 (September 2012)}{5.4}{X79311F9185A267DB}
-\makelabel{changes:GAP 4.5.7 (December 2012)}{5.5}{X81528B5F78B996D2}
-\makelabel{changes:Overview of updates for GAP 4.4}{6}{X78AE465E7AA00F25}
-\makelabel{changes:GAP 4.4 Bugfix 2 (April 2004)}{6.1}{X82AB84287ED2B8FF}
-\makelabel{changes:GAP 4.4 Bugfix 3 (May 2004)}{6.2}{X8208E7F578754467}
-\makelabel{changes:GAP 4.4 Bugfix 4 (December 2004)}{6.3}{X87A965F97E6E6BD0}
-\makelabel{changes:GAP 4.4 Update 5 (May 2005)}{6.4}{X80221EDA877CC106}
-\makelabel{changes:GAP 4.4 Update 6 (September 2005)}{6.5}{X80F9D3E07DD59BD9}
-\makelabel{changes:GAP 4.4 Update 7 (March 2006)}{6.6}{X7B8B22C77DC970F8}
-\makelabel{changes:GAP 4.4 Update 8 (September 2006)}{6.7}{X7B61699179F631E0}
-\makelabel{changes:GAP 4.4 Update 9 (November 2006)}{6.8}{X81B223647C9BD9B9}
-\makelabel{changes:GAP 4.4 Update 10 (October 2007)}{6.9}{X7BB4EC1F7B130FD5}
-\makelabel{changes:GAP 4.4 Update 11 (December 2008)}{6.10}{X7E4C6820809F2384}
-\makelabel{changes:GAP 4.4 Update 12 (December 2008)}{6.11}{X7F5BBE877AAA4BEE}
+\makelabel{changes:New and updated packages since GAP 4.4.12}{5.2.2}{X7D1ECE3D8403AC6F}
+\makelabel{changes:GAP 4.5.5 (July 2012)}{5.3}{X7DB3678580B402F1}
+\makelabel{changes:GAP 4.5.6 (September 2012)}{5.4}{X85A84FF97CCEAA08}
+\makelabel{changes:GAP 4.5.7 (December 2012)}{5.5}{X78C0EBF8860AF110}
+\makelabel{changes:Overview of updates for GAP 4.4}{6}{X7DB66F7D823C6D3E}
+\makelabel{changes:GAP 4.4 Bugfix 2 (April 2004)}{6.1}{X814A860E7B203FCF}
+\makelabel{changes:GAP 4.4 Bugfix 3 (May 2004)}{6.2}{X7C4492557E1EA74C}
+\makelabel{changes:GAP 4.4 Bugfix 4 (December 2004)}{6.3}{X78844C2C83310762}
+\makelabel{changes:GAP 4.4 Update 5 (May 2005)}{6.4}{X7E6E6B7A7F6616CC}
+\makelabel{changes:GAP 4.4 Update 6 (September 2005)}{6.5}{X784D15477A825A78}
+\makelabel{changes:GAP 4.4 Update 7 (March 2006)}{6.6}{X786A20E17B11DAFD}
+\makelabel{changes:GAP 4.4 Update 8 (September 2006)}{6.7}{X83D5AF3679B8F685}
+\makelabel{changes:GAP 4.4 Update 9 (November 2006)}{6.8}{X7E9F0AB1807D6B64}
+\makelabel{changes:GAP 4.4 Update 10 (October 2007)}{6.9}{X8499C5CA7CD76125}
+\makelabel{changes:GAP 4.4 Update 11 (December 2008)}{6.10}{X86F8AE877C7699E1}
+\makelabel{changes:GAP 4.4 Update 12 (December 2008)}{6.11}{X87EF7820794F3C59}
 \makelabel{changes:Changes from Earlier Versions}{7}{X7F5DE9997CF43125}
-\makelabel{changes:Changes between GAP 4.3 and GAP 4.4}{7.1}{X7DBACE2286A43A31}
+\makelabel{changes:Changes between GAP 4.3 and GAP 4.4}{7.1}{X84747575872E4F81}
 \makelabel{changes:Potentially Incompatible Changes}{7.1.1}{X7C5AC61F824086D6}
 \makelabel{changes:New Packages}{7.1.2}{X7D9702E3815BE9FB}
 \makelabel{changes:Performance Enhancements}{7.1.3}{X7DA8709A850E772D}
 \makelabel{changes:New Programming and User Features}{7.1.4}{X83E1A0D87D3D1EAF}
 \makelabel{changes:Earlier Changes}{7.2}{X8205C966783E6F37}
 \makelabel{changes:Index}{Ind}{X83A0356F839C696F}
-\makelabel{changes:Packages, new}{2.1.2}{X7907F66D7C726E9D}
-\makelabel{changes:Packages, new}{3.1.2}{X7EF0C705829B5D2B}
-\makelabel{changes:Packages, upgraded}{3.1.2}{X7EF0C705829B5D2B}
+\makelabel{changes:Packages, new}{2.1.2}{X82C1E2C67F40F08E}
+\makelabel{changes:Packages, new}{3.1.2}{X8536D3AE87C31A56}
+\makelabel{changes:Packages, upgraded}{3.1.2}{X8536D3AE87C31A56}
 \makelabel{changes:GMP support}{5.1.1}{X84FC44718386FA1A}
 \makelabel{changes:Floats}{5.1.1}{X84FC44718386FA1A}
 \makelabel{changes:Data libraries}{5.1.1}{X84FC44718386FA1A}
@@ -83,4 +86,4 @@
 \makelabel{changes:User interface customisation}{5.1.3}{X80AB8641792E74C9}
 \makelabel{changes:MathJax support}{5.1.4}{X81318FC0873923C3}
 \makelabel{changes:Namespaces}{5.2.1}{X7E8089C881AB6BA1}
-\makelabel{changes:Packages under Windows}{5.2.2}{X81A313117C30EC28}
+\makelabel{changes:Packages under Windows}{5.2.2}{X7D1ECE3D8403AC6F}

@@ -566,24 +566,24 @@
   [33X[0;0YThe  output  can be customized using the optional record [3Xarec[103X, the following
   components of this record are supported.[133X
   
-  [8X[10Xshow[110X[108X
+  [8X[10Xshow[110X[8X[108X
         [33X[0;6Ya  list  of strings describing those kinds of variables which shall be
         shown,  such as [10X"new global functions"[110X; the default are all kinds that
         appear in the package,[133X
   
-  [8X[10XshowDocumented[110X[108X
+  [8X[10XshowDocumented[110X[8X[108X
         [33X[0;6Y[9Xtrue[109X  (the  default) if documented variables shall be shown, and [9Xfalse[109X
         otherwise,[133X
   
-  [8X[10XshowUndocumented[110X[108X
+  [8X[10XshowUndocumented[110X[8X[108X
         [33X[0;6Y[9Xtrue[109X (the default) if undocumented variables shall be shown, and [9Xfalse[109X
         otherwise,[133X
   
-  [8X[10XshowPrivate[110X[108X
+  [8X[10XshowPrivate[110X[8X[108X
         [33X[0;6Y[9Xtrue[109X  (the  default)  if  variables from the package's name space (see
         Section [14X4.10[114X) shall be shown, and [9Xfalse[109X otherwise,[133X
   
-  [8X[10XDisplay[110X[108X
+  [8X[10XDisplay[110X[8X[108X
         [33X[0;6Ya function that takes a string and shows it on the screen; the default
         is [2XPrint[102X ([14X6.3-4[114X), another useful value is [2XPager[102X ([14X2.4-1[114X).[133X
   

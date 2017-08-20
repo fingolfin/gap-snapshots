@@ -138,10 +138,10 @@
   </author>
   <title><C>TomLib</C>,
          The <Wrap Name="Package">GAP</Wrap> Library of Tables of Marks,
-         <C>V</C>ersion 1.2.1</title>
+         <C>V</C>ersion 1.2.4</title>
   <howpublished><URL>http://schmidt.nuigalway.ie/tomlib/tomlib</URL></howpublished>
-  <month>Jan</month>
-  <year>2011</year>
+  <month>Nov</month>
+  <year>2013</year>
   <note>GAP package</note>
   <keywords>table of marks; Burnside matrix; subgroup lattice; finite simple groups; Moebius function; Euler function</keywords>
 </misc></entry>

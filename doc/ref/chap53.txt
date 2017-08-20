@@ -239,7 +239,7 @@
   the positions in [3Xlist[103X even if [3Xlist[103X itself consists of integers.[133X
   
   [33X[0;0YThis  function  is  the  analogue  in  the  context  of  transformations  of
-  [2XPermutation[102X ([14XReference: Permutation (for a group, an action domain, etc.)[114X).[133X
+  [2XPermutation[102X ([14XReference: Permutation for a group, an action domain, etc.[114X).[133X
   
   [33X[0;0YIf [3Xobj[103X does not map elements of [3Xlist[103X into [3Xlist[103X, then [9Xfail[109X is returned.[133X
   
@@ -462,39 +462,39 @@
   
   [1X53.4 [33X[0;0YOperators for transformations[133X[101X
   
-  [8X[10X[3Xi[103X[10X ^ [3Xf[103X[10X[110X[108X
+  [8X[10X[3Xi[103X[8X[10X ^ [3Xf[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns  the  image of the positive integer [3Xi[103X under the transformation
         [3Xf[103X.[133X
   
-  [8X[10X[3Xf[103X[10X ^ [3Xg[103X[10X[110X[108X
+  [8X[10X[3Xf[103X[8X[10X ^ [3Xg[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns  [10X[3Xg[103X[10X^-1*[3Xf[103X[10X*[3Xg[103X[10X[110X when [3Xf[103X is a transformation and [3Xg[103X is a permutation [2X\^[102X
         ([14XReference: ^[114X). This operation requires essentially the same number of
         steps  as  multiplying  a  transformation  by  a permutation, which is
         approximately one third of the number required to first invert [3Xg[103X, take
         the produce with [3Xf[103X, and then the product with [3Xg[103X.[133X
   
-  [8X[10X[3Xf[103X[10X * [3Xg[103X[10X[110X[108X
+  [8X[10X[3Xf[103X[8X[10X * [3Xg[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns the composition of [3Xf[103X and [3Xg[103X when [3Xf[103X and [3Xg[103X are transformations or
         permutations.  The  product  of  a permutation and a transformation is
         returned as a transformation.[133X
   
-  [8X[10X[3Xf[103X[10X / [3Xg[103X[10X[110X[108X
+  [8X[10X[3Xf[103X[8X[10X / [3Xg[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns [10X[3Xf[103X[10X*[3Xg[103X[10X^-1[110X when [3Xf[103X is a transformation and [3Xg[103X is a permutation. This
         operation requires essentially the same number of steps as multiplying
         a  transformation  by  a  permutation, which is approximately half the
         number required to first invert [3Xg[103X and then take the produce with [3Xf[103X.[133X
   
-  [8X[10XLQUO([3Xg[103X[10X, [3Xf[103X[10X)[110X[108X
+  [8X[10XLQUO([3Xg[103X[8X[10X, [3Xf[103X[8X[10X)[110X[8X[108X
         [33X[0;6Yreturns [10X[3Xg[103X[10X^-1*[3Xf[103X[10X[110X when [3Xf[103X is a transformation and [3Xg[103X is a permutation. This
         operation  uses  essentially the same number of steps as multiplying a
         transformation  by  a  permutation,  which  is  approximately half the
         number required to first invert [3Xg[103X and then take the produce with [3Xf[103X.[133X
   
-  [8X[10X[3Xf[103X[10X < [3Xg[103X[10X[110X[108X
+  [8X[10X[3Xf[103X[8X[10X < [3Xg[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns [9Xtrue[109X if the image list of [3Xf[103X is lexicographically less than the
         image list of [3Xg[103X and [9Xfalse[109X if it is not.[133X
   
-  [8X[10X[3Xf[103X[10X = [3Xg[103X[10X[110X[108X
+  [8X[10X[3Xf[103X[8X[10X = [3Xg[103X[8X[10X[110X[8X[108X
         [33X[0;6Yreturns  [9Xtrue[109X  if the transformation [3Xf[103X equals the transformation [3Xg[103X and
         returns [9Xfalse[109X if it does not.[133X
   

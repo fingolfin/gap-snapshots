@@ -19,9 +19,10 @@
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapBib.html">[Next Chapter]</a>&nbsp;  </div>
 
+<p id="mathjaxlink" class="pcenter"><a href="chapA_mj.html">[MathJax on]</a></p>
 <p><a id="X85D4199E82A7DFA5" name="X85D4199E82A7DFA5"></a></p>
 <div class="ChapSects"><a href="chapA.html#X85D4199E82A7DFA5">A <span class="Heading">Some Tools for Database Handling</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X86DA1A0082C465DD">A.1 <span class="Heading"><strong class="pkg">GAP</strong> Objects for Database Handling</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X7A0B84C37CB9DFA3">A.1 <span class="Heading"><strong class="pkg">GAP</strong> Objects for Database Handling</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapA.html#X7999CF7F79ACA240">A.1-1 <span class="Heading">Database Id Enumerators</span></a>
@@ -48,21 +49,11 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X808BDD24857F3904">A.3 <span class="Heading">Example: Database Id Enumerators and Database Attributes</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X858E7FC37DCAA719">A.4 <span class="Heading">Example: An Overview of the <strong class="pkg">GAP</strong> Library of Transitive Groups
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X8628EF6981A524B3">A.4 <span class="Heading">Example: An Overview of the <strong class="pkg">GAP</strong> Library of Tables of Marks
 </span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapA.html#X832846F486391385">A.4-1 BrowseTransitiveGroupsInfo</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapA.html#X7FA5513D84EE81AB">A.4-2 TransitiveGroupsData.AllTransitiveGroups</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapA.html#X7AC030827D5CDE03">A.4-3 TransitiveGroupsData</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapA.html#X83E9FAAE85F80223">A.4-4 <span class="Heading">Additional Database Attributes for Transitive Groups</span></a>
-</span>
-</div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X831C7F817C6C4AA0">A.5 <span class="Heading">Example: An Overview of the <strong class="pkg">GAP</strong> Library of Tables of Marks
-</span></a>
-</span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapA.html#X844D143980A0E20D">A.5-1 BrowseTomLibInfo</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapA.html#X844D143980A0E20D">A.4-1 BrowseTomLibInfo</a></span>
 </div></div>
 </div>
 
@@ -81,9 +72,9 @@
 </ul>
 <p>The <strong class="pkg">GAP</strong> objects introduced for that are <em>database id enumerators</em> (see <a href="chapA.html#X7999CF7F79ACA240"><span class="RefLink">A.1-1</span></a>) and <em>database attributes</em> (see <a href="chapA.html#X7D2804F97EE18BA5"><span class="RefLink">A.1-2</span></a>).</p>
 
-<p>Contrary to the individual interfaces to the <strong class="pkg">GAP</strong> manuals (see Section <a href="chap6.html#X81E6DDC17B7E2CF8"><span class="RefLink">6.6</span></a>), the <strong class="pkg">GAP</strong> bibliography (see Section <a href="chap6.html#X7EAE9E8281728C44"><span class="RefLink">6.7</span></a>), and the overviews of <strong class="pkg">GAP</strong> packages, <strong class="pkg">GAP</strong> methods, and Conway polynomials available in <strong class="pkg">GAP</strong> (see Section <a href="chap6.html#X80B8A3C48751E87B"><span class="RefLink">6.11</span></a>), the approach that will be described here assumes a special way to access database entries. Thus it depends on the structure of a given database whether the tools described here are useful, or whether an individual interface fits better. Perhaps the examples shown in Sections <a href="chapA.html#X808BDD24857F3904"><span class="RefLink">A.3</span></a> and <a href="chapA.html#X858E7FC37DCAA719"><span class="RefLink">A.4</span></a> give an impression what is possible.</p>
+<p>Contrary to the individual interfaces to the <strong class="pkg">GAP</strong> manuals (see Section <a href="chap6.html#X7CF999297B331E01"><span class="RefLink">6.6</span></a>), the <strong class="pkg">GAP</strong> bibliography (see Section <a href="chap6.html#X846751CC7F54F51D"><span class="RefLink">6.7</span></a>), and the overviews of <strong class="pkg">GAP</strong> packages, <strong class="pkg">GAP</strong> methods, and Conway polynomials available in <strong class="pkg">GAP</strong> (see Section <a href="chap6.html#X86C730A07855238D"><span class="RefLink">6.11</span></a>), the approach that will be described here assumes a special way to access database entries. Thus it depends on the structure of a given database whether the tools described here are useful, or whether an individual interface fits better. Perhaps the example shown in Section <a href="chapA.html#X808BDD24857F3904"><span class="RefLink">A.3</span></a> gives an impression what is possible.</p>
 
-<p><a id="X86DA1A0082C465DD" name="X86DA1A0082C465DD"></a></p>
+<p><a id="X7A0B84C37CB9DFA3" name="X7A0B84C37CB9DFA3"></a></p>
 
 <h4>A.1 <span class="Heading"><strong class="pkg">GAP</strong> Objects for Database Handling</span></h4>
 
@@ -757,127 +748,21 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Unbind( t4.dynamic.replay );</span>
 </pre></div>
 
-<p><a id="X858E7FC37DCAA719" name="X858E7FC37DCAA719"></a></p>
+<p><a id="X8628EF6981A524B3" name="X8628EF6981A524B3"></a></p>
 
-<h4>A.4 <span class="Heading">Example: An Overview of the <strong class="pkg">GAP</strong> Library of Transitive Groups
+<h4>A.4 <span class="Heading">Example: An Overview of the <strong class="pkg">GAP</strong> Library of Tables of Marks
 </span></h4>
 
-<p>The example shown in this section deals with <strong class="pkg">GAP</strong>'s Library of Transitive Permutation Groups, see <a href="../../../doc/ref/chap50.html#X7FBB970F7D110FDB"><span class="RefLink">Reference: Transitive Permutation Groups</span></a>. Section <a href="chapA.html#X832846F486391385"><span class="RefLink">A.4-1</span></a> introduces a browse table application for viewing information about the contents of this library, which is based on database attributes. Section <a href="chapA.html#X7FA5513D84EE81AB"><span class="RefLink">A.4-2</span></a> introduces functions based on database attributes that can be used to select groups from the library. Finally, Section <a href="chapA.html#X7AC030827D5CDE03"><span class="RefLink">A.4-3</span></a> describes how these two functionalities are implemented.</p>
-
-<p><a id="X832846F486391385" name="X832846F486391385"></a></p>
-
-<h5>A.4-1 BrowseTransitiveGroupsInfo</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseTransitiveGroupsInfo</code>( [<var class="Arg">arec</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Returns: the list of "clicked" groups.</p>
-
-<p>This function shows the contents of the <strong class="pkg">GAP</strong> Library of Transitive Permutation Groups in a browse table.</p>
-
-<p>The table rows correspond to the groups. If no argument is given then the columns of the table contain information about the degree of the permutation representation, group order, names for the group, primitivity, transitivity, and sign. Otherwise, the argument <var class="Arg">arec</var> must be a record; the component <code class="code">choice</code> of <var class="Arg">arec</var> can be used to prescribe columns, the value of this component must then be a list of strings that are <code class="code">identifier</code> values of database attributes (see <a href="chapA.html#X7D2804F97EE18BA5"><span class="RefLink">A.1-2</span></a>) for the <code class="code">IdEnumerator</code> component of <code class="func">TransitiveGroupsData</code> (<a href="chapA.html#X7AC030827D5CDE03"><span class="RefLink">A.4-3</span></a>), see Section <a href="chapA.html#X83E9FAAE85F80223"><span class="RefLink">A.4-4</span></a> for examples.</p>
-
-<p>The return value is the list of transitive groups whose table rows have been "clicked" in visual mode.</p>
-
-<p>The full functionality of the function <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>) is available.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c:= [ NCurses.keys.ENTER ];;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BrowseData.SetReplay( Concatenation(</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "scrrrr/5", c,     # search for transitivity 5,</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "nn", c,           # go to the third occurrence, click on it,</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "Q" ) );;          # and quit the browse table</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BrowseTransitiveGroupsInfo();</span>
-[ M(12) ]
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BrowseData.SetReplay( false );</span>
-</pre></div>
-
-<p><a id="X7FA5513D84EE81AB" name="X7FA5513D84EE81AB"></a></p>
-
-<h5>A.4-2 TransitiveGroupsData.AllTransitiveGroups</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransitiveGroupsData.AllTransitiveGroups</code>( <var class="Arg">fun</var>, <var class="Arg">res</var>[, <var class="Arg">...</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransitiveGroupsData.OneTransitiveGroup</code>( <var class="Arg">fun</var>, <var class="Arg">res</var>[, <var class="Arg">...</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Returns: the list of groups from the <strong class="pkg">GAP</strong> Library of Transitive Permutation Groups with the given properties, or one such group, or <code class="keyw">fail</code>.</p>
-
-<p>These functions are analogues of <code class="func">AllTransitiveGroups</code> (<a href="../../../doc/ref/chap50.html#X82676ED5826E9E2E"><span class="RefLink">Reference: AllTransitiveGroups</span></a>) and <code class="func">OneTransitiveGroup</code> (<a href="../../../doc/ref/chap50.html#X82676ED5826E9E2E"><span class="RefLink">Reference: OneTransitiveGroup</span></a>). The only difference is that they are based on the database attributes that are defined in <code class="func">TransitiveGroupsData</code> (<a href="chapA.html#X7AC030827D5CDE03"><span class="RefLink">A.4-3</span></a>).</p>
-
-<p>Besides those <strong class="pkg">GAP</strong> attributes such as <code class="func">Size</code> (<a href="../../../doc/ref/chap30.html#X858ADA3B7A684421"><span class="RefLink">Reference: Size</span></a>) and <code class="func">IsPrimitive</code> (<a href="../../../doc/ref/chap41.html#X84C19AD68247B760"><span class="RefLink">Reference: IsPrimitive</span></a>) for which special support is provided in <code class="func">AllTransitiveGroups</code> (<a href="../../../doc/ref/chap50.html#X82676ED5826E9E2E"><span class="RefLink">Reference: AllTransitiveGroups</span></a>) and <code class="func">OneTransitiveGroup</code> (<a href="../../../doc/ref/chap50.html#X82676ED5826E9E2E"><span class="RefLink">Reference: OneTransitiveGroup</span></a>), database attributes are defined for some other <strong class="pkg">GAP</strong> properties, see <a href="chapA.html#X83E9FAAE85F80223"><span class="RefLink">A.4-4</span></a>. One could speed up <code class="func">TransitiveGroupsData.AllTransitiveGroups</code> for given conditions by adding further precomputed database attributes.</p>
-
-<p>After defining a database attribute, it is automatically used in calls to <code class="func">TransitiveGroupsData.AllTransitiveGroups</code>. In order to make the values appear in the table shown by <code class="func">BrowseTransitiveGroupsInfo</code> (<a href="chapA.html#X832846F486391385"><span class="RefLink">A.4-1</span></a>), one has to enter an argument record that contains the name of the database attributes in its <code class="code">choice</code> list.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TransitiveGroupsData.AllTransitiveGroups(</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">     NrMovedPoints, [ 5 .. 28 ],</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">     IsSimpleGroup, true, IsAbelian, true );</span>
-[ C(5) = 5, C(7) = 7, C(11)=11, C(13)=13, C(17)=17, C(19)=19, C(23) ]
-</pre></div>
-
-<p><a id="X7AC030827D5CDE03" name="X7AC030827D5CDE03"></a></p>
-
-<h5>A.4-3 TransitiveGroupsData</h5>
-
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransitiveGroupsData</code></td><td class="tdright">( global variable )</td></tr></table></div>
-<p>This is a record that contains the data needed by <code class="func">BrowseTransitiveGroupsInfo</code> (<a href="chapA.html#X832846F486391385"><span class="RefLink">A.4-1</span></a>), <code class="func">TransitiveGroupsData.AllTransitiveGroups</code> (<a href="chapA.html#X7FA5513D84EE81AB"><span class="RefLink">A.4-2</span></a>), and <code class="func">TransitiveGroupsData.OneTransitiveGroup</code> (<a href="chapA.html#X7FA5513D84EE81AB"><span class="RefLink">A.4-2</span></a>). The component <code class="code">IdEnumerator</code> contains a database id enumerator (see <a href="chapA.html#X7999CF7F79ACA240"><span class="RefLink">A.1-1</span></a>) for the <strong class="pkg">GAP</strong> Library of Transitive Permutation Groups.</p>
-
-<p>Note that although <code class="func">NrTransitiveGroups</code> (<a href="../../../doc/ref/chap50.html#X871C27427F11B123"><span class="RefLink">Reference: NrTransitiveGroups</span></a>) returns <code class="code">1</code> when it is called with the argument <code class="code">1</code>, <code class="func">TransitiveGroup</code> (<a href="../../../doc/ref/chap50.html#X7F062EC17EB8287D"><span class="RefLink">Reference: TransitiveGroup</span></a>) runs into an error when it is called with first argument equal to <code class="code">1</code>, and the degree <code class="code">1</code> is explicitly excluded from results of <code class="func">AllTransitiveGroups</code> (<a href="../../../doc/ref/chap50.html#X82676ED5826E9E2E"><span class="RefLink">Reference: AllTransitiveGroups</span></a>) and <code class="func">OneTransitiveGroup</code> (<a href="../../../doc/ref/chap50.html#X82676ED5826E9E2E"><span class="RefLink">Reference: OneTransitiveGroup</span></a>). For the sake of consistency with this inconsistency in the <strong class="pkg">GAP</strong> Library of Transitive Permutation Groups, we exclude the degree <code class="code">1</code> from <code class="func">TransitiveGroupsData</code>. (Those who want to include this degree can change the value of <code class="code">TransitiveGroupsData.MinimalDegree</code> from its default value <code class="code">2</code> to <code class="code">1</code> in the file <code class="file">app/transbrowse.g</code> of the package.)</p>
-
-<p><a id="X83E9FAAE85F80223" name="X83E9FAAE85F80223"></a></p>
-
-<h5>A.4-4 <span class="Heading">Additional Database Attributes for Transitive Groups</span></h5>
-
-<p>Database attributes for the following <strong class="pkg">GAP</strong> properties are defined in <code class="func">TransitiveGroupsData</code> (<a href="chapA.html#X7AC030827D5CDE03"><span class="RefLink">A.4-3</span></a>): <code class="func">IsAbelian</code> (<a href="../../../doc/ref/chap35.html#X830A4A4C795FBC2D"><span class="RefLink">Reference: IsAbelian</span></a>), <code class="func">IsPerfectGroup</code> (<a href="../../../doc/ref/chap39.html#X8755147280C84DBB"><span class="RefLink">Reference: IsPerfectGroup</span></a>), <code class="func">IsSimpleGroup</code> (<a href="../../../doc/ref/chap39.html#X7A6685D7819AEC32"><span class="RefLink">Reference: IsSimpleGroup</span></a>), and <code class="func">IsSolvableGroup</code> (<a href="../../../doc/ref/chap39.html#X809C78D5877D31DF"><span class="RefLink">Reference: IsSolvableGroup</span></a>). The values of these database attributes are precomputed and stored in the file <code class="file">app/transdbattr.g</code> of the package.</p>
-
-<p>So the above <strong class="pkg">GAP</strong> properties have special support as conditions in <code class="func">TransitiveGroupsData.AllTransitiveGroups</code> (<a href="chapA.html#X7FA5513D84EE81AB"><span class="RefLink">A.4-2</span></a>) and <code class="func">TransitiveGroupsData.OneTransitiveGroup</code> (<a href="chapA.html#X7FA5513D84EE81AB"><span class="RefLink">A.4-2</span></a>), contrary to <code class="func">AllTransitiveGroups</code> (<a href="../../../doc/ref/chap50.html#X82676ED5826E9E2E"><span class="RefLink">Reference: AllTransitiveGroups</span></a>) and <code class="func">OneTransitiveGroup</code> (<a href="../../../doc/ref/chap50.html#X82676ED5826E9E2E"><span class="RefLink">Reference: OneTransitiveGroup</span></a>). In practice, the difference is that the former functions need not construct and check those transitive groups that do not have the properties in question.</p>
-
-<p>These database attributes can also be used as columns in the Browse table shown by <code class="func">BrowseTransitiveGroupsInfo</code> (<a href="chapA.html#X832846F486391385"><span class="RefLink">A.4-1</span></a>), for example as follows.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:= [ 14, 14, 14 ];;  # ``do nothing'' input (means timeout)</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BrowseData.SetReplay( Concatenation(</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "scrrrsc", n, n,        # categorize by solvability info</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "!", n,                 # reset</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "scrrrrsc", n, n,       # categorize by abelianity info</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">       "Q" ) );;               # quit the browse table</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BrowseTransitiveGroupsInfo( rec( choice:= [ "degree", "size",</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">     "names", "IsSolvableGroup", "IsAbelian", "IsPerfectGroup",</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">     "IsSimpleGroup" ] ) );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">BrowseData.SetReplay( false );</span>
-</pre></div>
-
-<p>The data in the file <code class="file">app/transdbattr.g</code> are lists of Booleans, which are encoded as strings via <code class="code">HexStringBlistEncode</code>, and these strings can be decoded with <code class="code">BlistStringDecode</code>. Note that most of the groups in the library are not abelian, not perfect, not simple, but solvable. Therefore in fact the inverse values of the solvability info are actually stored –this yields a shorter string.</p>
-
-
-<div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TransitiveGroupsData.MinimalDegree;</span>
-2
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">attrs:= TransitiveGroupsData.IdEnumerator.attributes;;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">oldlen:= SizeScreen();;  SizeScreen( [ 60 ] );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HexStringBlistEncode( attrs.IsAbelian.data );</span>
-"D88400040Es0503s0480s040406s252010s0720s0C3EsF30803s7A040\
-5s8B20s1302s0740E0sFFsFFsFFsFFsFFsFFsFFsFFsFFsFFsFFsFFs40C\
-0s1910s0B1AsFFs2B18sE74040sFFsFF"
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SizeScreen( oldlen );;</span>
-</pre></div>
-
-<p>Removing the <code class="code">datafile</code> component from the four database attributes would yield the situation that attribute values must be computed at runtime. Computing the values for all groups in the library –for example by categorizing the Browse table by one of the columns that correspond to these database attributes– will require several seconds. Note that if we assume that the information about solvability is already known, the test for <code class="func">IsPerfectGroup</code> (<a href="../../../doc/ref/chap39.html#X8755147280C84DBB"><span class="RefLink">Reference: IsPerfectGroup</span></a>) is needed only for the few nonsolvable groups in the library but each such test is expensive; on the other hand, each test for <code class="func">IsAbelian</code> (<a href="../../../doc/ref/chap35.html#X830A4A4C795FBC2D"><span class="RefLink">Reference: IsAbelian</span></a>) is cheap but such tests are needed for the many solvable groups in the library, in particular these groups must be constructed for the tests.</p>
-
-<p><a id="X831C7F817C6C4AA0" name="X831C7F817C6C4AA0"></a></p>
-
-<h4>A.5 <span class="Heading">Example: An Overview of the <strong class="pkg">GAP</strong> Library of Tables of Marks
-</span></h4>
-
-<p>The example shown in this section deals with <strong class="pkg">GAP</strong>'s Library of Tables of Marks (the <strong class="pkg">TomLib</strong> package <a href="chapBib.html#biBTomLib">[NMP11]</a>).</p>
+<p>The example shown in this section deals with <strong class="pkg">GAP</strong>'s Library of Tables of Marks (the <strong class="pkg">TomLib</strong> package <a href="chapBib.html#biBTomLib">[NMP13]</a>).</p>
 
 <p><a id="X844D143980A0E20D" name="X844D143980A0E20D"></a></p>
 
-<h5>A.5-1 BrowseTomLibInfo</h5>
+<h5>A.4-1 BrowseTomLibInfo</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseTomLibInfo</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Returns: nothing.</p>
 
-<p>This function shows the contents of the <strong class="pkg">GAP</strong> Library of Tables of Marks (the <strong class="pkg">TomLib</strong> package, see <a href="chapBib.html#biBTomLib">[NMP11]</a>) in a browse table.</p>
+<p>This function shows the contents of the <strong class="pkg">GAP</strong> Library of Tables of Marks (the <strong class="pkg">TomLib</strong> package, see <a href="chapBib.html#biBTomLib">[NMP13]</a>) in a browse table.</p>
 
 <p>The first call may take substantial time (about <span class="SimpleMath">40</span> seconds), because the data files of the <strong class="pkg">TomLib</strong> package are evaluated. This could be improved by precomputing and caching the values. Another possibility would be to call <code class="func">BrowseTomLibInfo</code> once before creating a <strong class="pkg">GAP</strong> workspace. The subsequent calls are not expensive.</p>
 

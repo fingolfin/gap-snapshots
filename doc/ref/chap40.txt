@@ -665,7 +665,7 @@
   [10XSetNiceMonomorphism[110X (see [2XNiceMonomorphism[102X ([14X40.5-2[114X)).[133X
   
   [33X[0;0YAnother  nice  way  of  representing  automorphisms as permutations has been
-  described  in  [ACM].  It is not yet available in [5XGAP[105X, a description however
+  described  in [Sim97]. It is not yet available in [5XGAP[105X, a description however
   can be found in section  [14X87.3[114X.[133X
   
   [1X40.8-1 AssignNiceMonomorphismAutomorphismGroup[101X
@@ -827,43 +827,43 @@
   [33X[0;0Y[3Xrange[103X  is a group from which these elements are taken. The classes are given
   in a list [3Xclasses[103X which is a list of records with the following components.[133X
   
-  [8X[10Xclasses[110X[108X
+  [8X[10Xclasses[110X[8X[108X
         [33X[0;6Ylist of conjugacy classes[133X
   
-  [8X[10Xrepresentative[110X[108X
+  [8X[10Xrepresentative[110X[8X[108X
         [33X[0;6YOne element in the union of these classes[133X
   
-  [8X[10Xsize[110X[108X
+  [8X[10Xsize[110X[8X[108X
         [33X[0;6YThe sum of the sizes of these classes[133X
   
   [33X[0;0Y[3Xparams[103X is a record containing the following optional components.[133X
   
-  [8X[10Xgens[110X[108X
+  [8X[10Xgens[110X[8X[108X
         [33X[0;6Ygenerators  that  are to be mapped (for testing morphisms). The length
         of this list determines the length of element tuples considered.[133X
   
-  [8X[10Xfrom[110X[108X
+  [8X[10Xfrom[110X[8X[108X
         [33X[0;6Ya preimage group (that contains [10Xgens[110X)[133X
   
-  [8X[10Xto[110X[108X
+  [8X[10Xto[110X[8X[108X
         [33X[0;6Yimage group (which might be smaller than [10Xrange[110X)[133X
   
-  [8X[10Xfree[110X[108X
+  [8X[10Xfree[110X[8X[108X
         [33X[0;6Yfree generators, a list of the same length than the generators [10Xgens[110X.[133X
   
-  [8X[10Xrels[110X[108X
+  [8X[10Xrels[110X[8X[108X
         [33X[0;6Ysome  relations that hold among the generators [10Xgens[110X. They are given as
         a  list  [10X[  word,  order ][110X where [10Xword[110X is a word in the free generators
         [10Xfree[110X.[133X
   
-  [8X[10Xdom[110X[108X
+  [8X[10Xdom[110X[8X[108X
         [33X[0;6Ya  set  of  elements on which automorphisms act faithfully (used to do
         element tests in partial automorphism groups).[133X
   
-  [8X[10Xaut[110X[108X
+  [8X[10Xaut[110X[8X[108X
         [33X[0;6YSubgroup of already known automorphisms.[133X
   
-  [8X[10Xcondition[110X[108X
+  [8X[10Xcondition[110X[8X[108X
         [33X[0;6YA  function  that  will be applied to the homomorphism and must return
         [10Xtrue[110X for the homomorphism to be accepted.[133X
   

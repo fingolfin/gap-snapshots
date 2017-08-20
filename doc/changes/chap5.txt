@@ -177,8 +177,8 @@
         inclusion relationships.[133X
   
   [30X    [33X[0;6Y[2XCentreOfCharacter[102X       ([14XReference:       CentreOfCharacter[114X)       and
-        [2XClassPositionsOfCentre[102X   ([14XReference:   ClassPositionsOfCentre  (for  a
-        character)[114X)  called  for  a group character could return a perhaps too
+        [2XClassPositionsOfCentre[102X   ([14XReference:   ClassPositionsOfCentre   for  a
+        character[114X)  called  for  a  group character could return a perhaps too
         large result.[133X
   
   [30X    [33X[0;6Y[2XTrace[102X ([14XReference: Traces of field elements and matrices[114X) called for an
@@ -918,8 +918,8 @@
   [30X    [33X[0;6YFixed discarder function in lattice computation to distinguish general
         and zuppo discarder. [Reported by Leonard Soicher][133X
   
-  [30X    [33X[0;6YThe  [2XGL[102X  ([14XReference: GL (for dimension and a ring)[114X) and [2XSL[102X ([14XReference:
-        SL  (for  dimension and a ring)[114X) constructors did not correctly handle
+  [30X    [33X[0;6YThe  [2XGL[102X ([14XReference: GL for dimension and a ring[114X) and [2XSL[102X ([14XReference: SL
+        for  dimension  and  a  ring[114X)  constructors  did  not correctly handle
         [10XGL(filter,dim,ring)[110X.[133X
   
   [30X    [33X[0;6YThe names of two primitive groups of degree 64 were incorrect.[133X

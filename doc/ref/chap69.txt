@@ -30,15 +30,15 @@
   not  deal  with  [5XGAP[105X modules but essentially with lists of matrices. For the
   MeatAxe, a module is a record with components[133X
   
-  [8X[10Xgenerators[110X[108X
+  [8X[10Xgenerators[110X[8X[108X
         [33X[0;6YA  list  of  matrices  which  represent  a group operation on a finite
         dimensional row vector space.[133X
   
-  [8X[10Xdimension[110X[108X
+  [8X[10Xdimension[110X[8X[108X
         [33X[0;6YThe  dimension  of  the vector space (this is the common length of the
         row vectors (see [2XDimensionOfVectors[102X ([14X61.9-6[114X))).[133X
   
-  [8X[10Xfield[110X[108X
+  [8X[10Xfield[110X[8X[108X
         [33X[0;6YThe field over which the vector space is defined.[133X
   
   [33X[0;0YOnce a module has been created its entries may not be changed. A MeatAxe may
@@ -173,14 +173,14 @@
   is  a  record  corresponding  to  one  isomorphism  type  of  indecomposable
   components. The record has the following components.[133X
   
-  [8X[10Xindices[110X[108X
+  [8X[10Xindices[110X[8X[108X
         [33X[0;6Ythe  index  numbers  of  the  indecomposable  components,  as given by
         [2XMTX.Indecomposition[102X ([14X69.6-2[114X), that are in the homogeneous component,[133X
   
-  [8X[10Xcomponent[110X[108X
+  [8X[10Xcomponent[110X[8X[108X
         [33X[0;6Yone of the indecomposable components,[133X
   
-  [8X[10Ximages[110X[108X
+  [8X[10Ximages[110X[8X[108X
         [33X[0;6Ya  list  of  the  remaining indecomposable components, each given as a
         record  with  the  components  [10Xcomponent[110X  (the  component  itself) and
         [10Xisomorphism[110X (an isomorphism from the defining component to this one).[133X

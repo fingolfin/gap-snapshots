@@ -66,7 +66,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X870169447AF490D8">4.9-10 NamesUserGVars</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X798433307E62DCBA">4.9-11 TemporaryGlobalVarName</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X875BA7C58175DEFB">4.10 <span class="Heading">Namespaces for <strong class="pkg">GAP</strong> packages</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X7DF8774F7D542298">4.10 <span class="Heading">Namespaces for <strong class="pkg">GAP</strong> packages</span></a>
 </span>
 </div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X78C70489791FDF43">4.11 <span class="Heading">Function Calls</span></a>
@@ -266,7 +266,7 @@ ifi&lt;0thena:=-i;elsea:=i;fi;
 
 <h4>4.6 <span class="Heading">Identifiers</span></h4>
 
-<p>An <em>identifier</em> is used to refer to a variable (see <a href="chap4.html#X7A4C2D0E7E286B4F"><span class="RefLink">4.8</span></a>). An identifier usually consists of letters, digits, underscores <code class="code">_</code>, and "at"-characters <code class="code">@</code>, and must contain at least one non-digit. An identifier is terminated by the first character not in this class. Note that the "at"-character <code class="code">@</code> is used to implement namespaces, see Section <a href="chap4.html#X875BA7C58175DEFB"><span class="RefLink">4.10</span></a> for details.</p>
+<p>An <em>identifier</em> is used to refer to a variable (see <a href="chap4.html#X7A4C2D0E7E286B4F"><span class="RefLink">4.8</span></a>). An identifier usually consists of letters, digits, underscores <code class="code">_</code>, and "at"-characters <code class="code">@</code>, and must contain at least one non-digit. An identifier is terminated by the first character not in this class. Note that the "at"-character <code class="code">@</code> is used to implement namespaces, see Section <a href="chap4.html#X7DF8774F7D542298"><span class="RefLink">4.10</span></a> for details.</p>
 
 <p>Examples of valid identifiers are</p>
 
@@ -302,7 +302,7 @@ G\(2\,5\)
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsValidIdentifier</code>( <var class="Arg">str</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the string <var class="Arg">str</var> would form a valid identifier consisting of letters, digits and underscores; otherwise it returns <code class="keyw">false</code>. It does not check whether <var class="Arg">str</var> contains characters escaped by a backslash <code class="code">\</code>.</p>
 
-<p>Note that the "at"-character is used to implement namespaces for global variables in packages. See <a href="chap4.html#X875BA7C58175DEFB"><span class="RefLink">4.10</span></a> for details.</p>
+<p>Note that the "at"-character is used to implement namespaces for global variables in packages. See <a href="chap4.html#X7DF8774F7D542298"><span class="RefLink">4.10</span></a> for details.</p>
 
 <p><a id="X7BAFE9C1817253C6" name="X7BAFE9C1817253C6"></a></p>
 
@@ -387,7 +387,7 @@ end;
 
 <p>The vast majority of variables in <strong class="pkg">GAP</strong> are defined at the outer level (the global scope). They are used to access functions and other objects created either in the <strong class="pkg">GAP</strong> library or packages or in the user's code.</p>
 
-<p>Note that for packages there is a mechanism to implement package local namespaces on top of this global namespace. See Section <a href="chap4.html#X875BA7C58175DEFB"><span class="RefLink">4.10</span></a> for details.</p>
+<p>Note that for packages there is a mechanism to implement package local namespaces on top of this global namespace. See Section <a href="chap4.html#X7DF8774F7D542298"><span class="RefLink">4.10</span></a> for details.</p>
 
 <p>Certain special facilities are provided for manipulating global variables which are not available for other types of variable (such as local variables or function arguments).</p>
 
@@ -529,7 +529,7 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TemporaryGlobalVarName</code>( [<var class="Arg">prefix</var>] )</td><td class="tdright">( function )</td></tr></table></div>
 <p>returns a string that can be used as the name of a global variable that is not bound at the time when <code class="func">TemporaryGlobalVarName</code> is called. The optional argument <var class="Arg">prefix</var> can specify a string with which the name of the global variable starts.</p>
 
-<p><a id="X875BA7C58175DEFB" name="X875BA7C58175DEFB"></a></p>
+<p><a id="X7DF8774F7D542298" name="X7DF8774F7D542298"></a></p>
 
 <h4>4.10 <span class="Heading">Namespaces for <strong class="pkg">GAP</strong> packages</span></h4>
 

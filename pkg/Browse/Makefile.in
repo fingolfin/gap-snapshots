@@ -8,20 +8,16 @@ GAPINCL=-I$(GAPPATH)/src -I$(GAPPATH)/bin/@GAPARCH@
 
 PKGROOT=$(shell pwd)
 
-LOPTS=-lpanel -lncurses
+LOPTS=$(LDFLAGS) -lpanel -lncurses
 
 .PHONY: clean doc test
 
 default:  bin/@GAPARCH@/ncurses.so
 
-# this target creates a bin-directory
-bin/@GAPARCH@:
-	if test ! -d bin;  then mkdir bin;  fi
-	if test ! -d bin/@GAPARCH@;  then mkdir -p bin/@GAPARCH@;  fi
-
-bin/@GAPARCH@/ncurses.so: bin/@GAPARCH@ src/ncurses.c Makefile-$(CONFIGNAME)
-	$(GAPPATH)/bin/@GAPARCH@/gac -p "$(CFLAGS)" -d -o bin/@GAPARCH@/ncurses.so \
-        src/ncurses.c -L "${LOPTS}"
+bin/@GAPARCH@/ncurses.so: src/ncurses.c Makefile-$(CONFIGNAME)
+	mkdir -p bin/@GAPARCH@
+	$(GAPPATH)/bin/@GAPARCH@/gac -p "$(CFLAGS)" -d -o \
+	     bin/@GAPARCH@/ncurses.so src/ncurses.c -L "${LOPTS}"
 
 # just make it again when called with 'manual'
 ##  manual: doc/manual.six

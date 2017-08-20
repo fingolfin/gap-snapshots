@@ -264,11 +264,11 @@ BrowseData.AtlasInfoGroupTable:= function( conditions, log, replay, t )
 ##
 #F  BrowseData.AtlasInfoOverview( <gapnames>, <conditions>, <log>, <replay> )
 ##
-##  Part of the code is analogous to `AGR.DisplayAtlasInfoOverview'.
+##  Part of the code is analogous to `AGR.StringAtlasInfoOverview'.
 ##
 BrowseData.AtlasInfoOverview:= function( gapnames, conditions, log, replay )
-    local tocs, columns, type, choice, i, sel_action, header, modes, mode,
-          table;
+    local tocs, rep_rest_funs, only_if_rep, columns, len, type, choice, i,
+          sel_action, header, modes, mode, table;
 
     tocs:= AGR.TablesOfContents( conditions );
 
@@ -286,6 +286,13 @@ BrowseData.AtlasInfoOverview:= function( gapnames, conditions, log, replay )
       return [];
     fi;
 
+    # If 'conditions' restricts the representations then omit rows
+    # with empty representations part.
+    rep_rest_funs:= [ Characteristic, Dimension, Identifier, IsMatrixGroup,
+                      IsPermGroup, IsPrimitive, IsTransitive, NrMovedPoints,
+                      RankAction, Ring, Transitivity ];
+    only_if_rep:= ForAny( conditions, x -> x in rep_rest_funs );
+
     # Compute the data of the columns.
     columns:= [ [ "G", "l", List( gapnames, x -> [ x[1], false ] ) ] ];
     for type in AGR.DataTypes( "rep", "prg" ) do
@@ -296,13 +303,20 @@ BrowseData.AtlasInfoOverview:= function( gapnames, conditions, log, replay )
              List( gapnames,
                    n -> type[2].DisplayOverviewInfo[3](
                             Concatenation( [ n ], conditions ) ) ) ] );
+        if only_if_rep then
+          if type[3] = "rep" then
+            len:= Length( columns );
+          fi;
+        else
+          len:= Length( columns );
+        fi;
       fi;
     od;
 
     # Restrict the lists to the nonempty rows.
     choice:= [];
     for i in [ 1 .. Length( gapnames ) ] do
-      if ForAny( [ 2 .. Length( columns ) ],
+      if ForAny( [ 2 .. len ],
                  c -> columns[c][3][i][1] <> "" ) then
         Add( choice, i );
 
@@ -322,8 +336,8 @@ BrowseData.AtlasInfoOverview:= function( gapnames, conditions, log, replay )
       local name, tt;
 
       if t.dynamic.selectedEntry <> [ 0, 0 ] then
-        name:= gapnames[ t.dynamic.indexRow[
-                             t.dynamic.selectedEntry[1] ] / 2 ][1];
+        name:= gapnames[ choice[ t.dynamic.indexRow[
+                             t.dynamic.selectedEntry[1] ] / 2 ] ][1];
         tt:= BrowseData.AtlasInfoGroupTable(
                Concatenation( [ name ], conditions ),
                t.dynamic.log, t.dynamic.replay, t );

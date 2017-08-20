@@ -6,27 +6,35 @@
 ##
 ##  <#GAPDoc Label="Bibliography_section">
 ##  <Section Label="sec:gapbibl">
-##  <Heading>Overview of the &GAP; Bibliography</Heading>
+##  <Heading>Overview of Bibliographies</Heading>
 ##
-##  The &GAP; documentation contains a bibliography of &GAP; related
-##  publications, see&nbsp;<Cite Key="GAPBibliography"/>.
-##  &Browse; provides access to this information in &GAP;
-##  via the function <Ref Func="BrowseBibliography"/>,
-##  using the standard facilities of the function
-##  <Ref Func="NCurses.BrowseGeneric"/>, i.&nbsp;e.,
-##  one can scroll in the list, search for entries, sort by year,
+##  The function <Ref Func="BrowseBibliography"/> can be used to turn the
+##  contents of bibliography files in BibTeX or BibXMLext format
+##  (see <Ref Sect="The BibXMLext Format" BookName="gapdoc"/>)
+##  into a Browse table,
+##  such that one can scroll in the list, search for entries, sort by year,
 ##  sort and categorize by authors etc.
 ##  <P/>
+##  The default bibliography used by <Ref Func="BrowseBibliography"/> is the
+##  bibliography of &GAP; related publications,
+##  see&nbsp;<Cite Key="GAPBibliography"/>.
 ##  The &Browse; package contains a (perhaps outdated) version of this
 ##  bibliography.
 ##  One can get an updated version as follows.
 ##  <P/>
 ##  <C>wget -N http://www.gap-system.org/Doc/Bib/gap-publishednicer.bib</C>
 ##  <P/>
+##  The columns of the Browse table that is shown by
+##  <Ref Func="BrowseBibliography"/> can be customized,
+##  two examples for that are given by the functions
+##  <Ref Func="BrowseBibliographySporadicSimple" BookName="atlasrep"/>
+##  and <Ref Func="BrowseBibliographyGapPackages"/>.
+##  <P/>
 ##  The function <Ref Func="BrowseMSC"/> shows an overview of the
 ##  AMS Mathematics Subject Classification codes.
 ##
 ##  <#Include Label="BrowseBibliography">
+##  <#Include Label="BrowseBibliographyGapPackages">
 ##  <#Include Label="BrowseMSC">
 ##
 ##  </Section>
@@ -541,10 +549,10 @@ end );
 ##
 BindGlobal( "BrowseBibliography", function( arg )
     local columns, choice, fingerprint, sortKeyFunction, files, filesshort,
-          filecontents, header, extend_entries, entries, mapping, entities,
-          file, parse, r, result, identifier, ids, idenum, entry, id, pos,
-          authorswidth, l, titlewidth, journalwidth, mrclasswidth, modes,
-          newactions, showaction, mode, sel_action, table, ret;
+          filecontents, header, extend_entries, infocache, entries, mapping,
+          entities, file, parse, r, result, identifier, ids, idenum, entry,
+          id, pos, authorswidth, l, titlewidth, journalwidth, mrclasswidth,
+          modes, newactions, showaction, mode, sel_action, table, ret;
 
     # Get the arguments.
     columns:= [];
@@ -555,11 +563,12 @@ BindGlobal( "BrowseBibliography", function( arg )
     if   Length( arg ) = 0 then
       files:= [ Filename( DirectoriesPackageLibrary( "browse", "bibl" ),
                           "gap-publishednicer.bib" ) ];
+      filesshort:= [ BrowseData.StrippedPath( files[1] ) ];
       filecontents:= [ "gap-publishednicer.bib" ];
       header:= "GAP Bibliography";
     elif Length( arg ) = 1 and IsString( arg[1] ) then
       files:= arg;
-      filesshort:= [ BrowseData.StrippedPath( arg[1] ) ];
+      filesshort:= [ BrowseData.StrippedPath( files[1] ) ];
       filecontents:= filesshort;
       header:= files[1];
     elif Length( arg ) = 1 and IsList( arg[1] )
@@ -620,6 +629,11 @@ BindGlobal( "BrowseBibliography", function( arg )
       Add( entries, [ r, entry ] );
     end;
 
+    # Switch off GAPDoc info messages.
+    infocache:= List( [ InfoGAPDoc, InfoBibTools ],
+                      c -> rec( class:= c, oldlevel:= InfoLevel( c ) ) );
+    Perform( infocache, function( r ) SetInfoLevel( r.class, 0 ); end );
+
     # Parse the data files.
     entries:= [];
     mapping:= [];
@@ -660,6 +674,10 @@ BindGlobal( "BrowseBibliography", function( arg )
         fi;
       fi;
     od;
+
+    # Reset the changed GAPDoc info levels.
+    Perform( infocache,
+             function( r ) SetInfoLevel( r.class, r.oldlevel ); end );
 
     result:= rec( entries:= [],
                   strings:= [],
@@ -878,8 +896,8 @@ BindGlobal( "BrowseBibliography", function( arg )
         od;
         return rows;
         end,
-      viewValue:= value -> rec( rows:= List( value,
-          x -> BrowseData.ReplacedEntry( x, files, filesshort ) ),
+      viewValue:= value -> rec( rows:= DuplicateFreeList( List( value,
+          x -> BrowseData.ReplacedEntry( x, files, filesshort ) ) ),
                                 align:= "tl" ),
       categoryValue:= value -> List( value,
           x -> BrowseData.ReplacedEntry( x, files, filecontents ) ),
@@ -1008,6 +1026,104 @@ fi;
 
 #############################################################################
 ##
+#F  BrowseBibliographyGapPackages()
+##
+##  <#GAPDoc Label="BrowseBibliographyGapPackages">
+##  <ManSection>
+##  <Func Name="BrowseBibliographyGapPackages" Arg=""/>
+##
+##  <Returns>
+##  a record as returned by <Ref Func="BrowseBibliography"/>.
+##  </Returns>
+##
+##  <Description>
+##  This function collects the information from the <C>*.bib</C> and
+##  <C>*bib.xml</C> files in those subdirectories of installed &GAP; packages
+##  which contain the package documentation,
+##  and shows it in a Browse table, using the function
+##  <Ref Func="BrowseBibliography"/>.
+##  <P/>
+##  <E>This function is experimental.</E>
+##  The result is not really satisfactory, for the following reasons.
+##  <P/>
+##  <List>
+##  <Item>
+##    Duplicate entries may occur,
+##    due to subtle differences in various source files.
+##  </Item>
+##  <Item>
+##    The source files may contain more than what is actually cited
+##    in the package manuals.
+##  </Item>
+##  <Item>
+##    It may happen that some <C>*.bib</C> or <C>*bib.xml</C> file is
+##    accidentally distributed with the package but is not intended to serve
+##    as package bibliography.
+##  </Item>
+##  <Item>
+##    The heuristics for rewriting &LaTeX; code is of course not perfect;
+##    thus strange symbols may occur in the Browse table.
+##  </Item>
+##  </List>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+BindGlobal( "BrowseBibliographyGapPackages", function()
+    local info, name, r1, path, r2, subdir, pos, len, dir, file;
+
+    # Collect the '*.bib' and '*bib.xml' files from directories
+    # of installed packages.
+    info:= [];
+    for name in RecNames( GAPInfo.PackagesInfo ) do
+      # Run over the available versions of this package.
+      for r1 in GAPInfo.PackagesInfo.( name ) do
+        path:= r1.InstallationPath;
+        # Run over the documentation books.
+        for r2 in r1.PackageDoc do
+          subdir:= r2.PDFFile;
+          pos:= Positions( subdir, '/' );
+          len:= Length( pos );
+          if len <> 0 then
+            subdir:= subdir{ [ 1 .. pos[ len ] - 1 ] };
+            dir:= Concatenation( path, "/", subdir );
+            if IsDirectoryPath( dir ) then
+              dir:= Directory( dir );
+              # Run over the files in the directory for this book.
+              for file in Set( DirectoryContents( dir ) ) do
+                len:= Length( file );
+                if 7 < len and file{ [ len-6 .. len ] } = "bib.xml" then
+                  Add( info, [ name, Filename( dir, file ) ] );
+                elif 4 < len and file{ [ len-3 .. len ] } = ".bib" then
+                  # Omit files of the form '<name>.xml.bib',
+                  # they are assumed to be generated from '<name>.xml'.
+                  if not ( 8 < len and file{ [ len-7 .. len ] }
+                                       = ".xml.bib" ) then
+                    Add( info, [ name, Filename( dir, file ) ] );
+                  fi;
+                fi;
+              od;
+            fi;
+          fi;
+        od;
+      od;
+    od;
+
+    return BrowseBibliography( rec(
+      filesshort:= List( info, x -> Concatenation( x[1], ": ",
+                     Reversed( SplitString( x[2], "/" ) )[1] ) ),
+      filecontents:= List( info, x -> Concatenation( "Package ", x[1] ) ),
+      files:= List( info, x -> x[2] ),
+
+      header:= "Bibliography of Gap Packages",
+      choice:= [ "authors", "title", "year", "journal", "sourcefilename" ],
+      sortKeyFunction:= BrowseData.SortKeyFunctionBibRec,
+    ) );
+end );
+
+
+#############################################################################
+##
 ##  Add the Browse applications to the list shown by `BrowseGapData'.
 ##
 BrowseGapDataAdd( "AMS Math. Subject Classif.", BrowseMSC, false, "\
@@ -1016,8 +1132,14 @@ an overview of the current AMS Mathematics Subject Classification codes" );
 BrowseGapDataAdd( "GAP Bibliography", BrowseBibliography, true, "\
 an overview of GAP related publications, in a browse table \
 whose columns show authors, title, year, journal, and MSC code; \
-the return value is a record encoding the bibliography entries \
-of the clicked packages" );
+the return value is a record encoding the clicked bibliography entries" );
+
+BrowseGapDataAdd( "GAP Packages Bibliographies",
+    BrowseBibliographyGapPackages, true, "\
+the contents of the *bib and *bib.xml files of installed GAP packages, \
+shown in a browse table with columns for authors, title, year, journal, \
+and filename; \
+the return value is a record encoding the clicked bibliography entries" );
 
 
 #############################################################################

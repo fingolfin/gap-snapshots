@@ -32,16 +32,14 @@
   options  in  the  record  [10XGAPInfo.CommandLineOptions[110X  (see [2XGAPInfo[102X ([14X3.5-1[114X)),
   whose component names are the command line options (without the leading [10X-[110X).[133X
   
-  [8X
-  [10X-A[110X[108X
+  [8X [10X-A[110X[8X[108X
         [33X[0;6YBy  default,  some  needed  and  suggested  [5XGAP[105X  packages (see [14X76[114X) are
         loaded,  if  present, into the [5XGAP[105X session when it starts. This option
         disables  (actually  toggles) the loading of suggested packages, which
         can be useful for debugging or testing. The needed packages (and their
         needed packages, and so on) are loaded in any case.[133X
   
-  [8X
-  [10X-a [110X[3Xmemory[103X[108X
+  [8X [10X-a [110X[8X[3Xmemory[103X[8X[108X
         [33X[0;6YGASMAN,  the  storage manager of [5XGAP[105X uses [10Xsbrk[110X to get blocks of memory
         from  (certain)  operating  systems and it is required that subsequent
         calls  to  [10Xsbrk[110X produce adjacent blocks of memory in this case because
@@ -58,8 +56,7 @@
   
         [33X[0;6YThe option argument [3Xmemory[103X is specified as with the [10X-m[110X option.[133X
   
-  [8X
-  [10X-B [110X[3Xarchitecture[103X[108X
+  [8X [10X-B [110X[8X[3Xarchitecture[103X[8X[108X
         [33X[0;6YExecutable  binary files that form part of [5XGAP[105X or of a [5XGAP[105X package are
         kept  in a subdirectory of the [11Xbin[111X directory within the [5XGAP[105X or package
         root directory. The subdirectory name is determined from the operating
@@ -67,15 +64,13 @@
         installed.  Under  rare circumstances, it may be necessary to override
         this name, and this can be done using the [10X-B[110X option.[133X
   
-  [8X
-  [10X-b[110X[108X
+  [8X [10X-b[110X[8X[108X
         [33X[0;6Ytells  [5XGAP[105X  to  suppress  the  banner. That means that [5XGAP[105X immediately
         prints  the  prompt. This is useful when, after a while, you get tired
         of  the banner. This option can be repeated to enable the banner; each
         [10X-b[110X toggles the state of banner display.[133X
   
-  [8X
-  [10X-D[110X[108X
+  [8X [10X-D[110X[8X[108X
         [33X[0;6YThe  [10X-D[110X  option  tells  [5XGAP[105X to print short messages when it is reading
         files  or  loading modules. This option may be repeated to toggle this
         behavior on and off. The message,[133X
@@ -104,8 +99,7 @@
   
         [33X[0;6YObviously, this is a debugging option and most users will not need it.[133X
   
-  [8X
-  [10X-E[110X[108X
+  [8X [10X-E[110X[8X[108X
         [33X[0;6YIf  your  [5XGAP[105X  installation uses the [10Xreadline[110X library for command line
         editing  (see  [14X6.9[114X),  this  may  be  disabled by using [10X-E[110X option. This
         option may be repeated to toggle this behavior on and off. If your [5XGAP[105X
@@ -113,15 +107,13 @@
         [10XIsBound(GAPInfo.UseReadline);[110X  if  this is the case), this option will
         have no effect at all.[133X
   
-  [8X
-  [10X-e[110X[108X
+  [8X [10X-e[110X[8X[108X
         [33X[0;6Ytells  [5XGAP[105X  not to quit when receiving a [12XCtrl-D[112X on an empty input line
         (see [14X6.4-1[114X).  This  option should not be used when the input is a file
         or  pipe.  This  option may be repeated to toggle this behavior on and
         off.[133X
   
-  [8X
-  [10X-f[110X[108X
+  [8X [10X-f[110X[8X[108X
         [33X[0;6Ytells [5XGAP[105X to enable the line editing and history (see [14X6.8[114X).[133X
   
         [33X[0;6YIn general line editing will be enabled if the input is connected to a
@@ -130,8 +122,7 @@
         detection  fails.  Try  using  [10X-f[110X in this case to enable line editing.
         This option does not toggle; you must use [10X-n[110X to disable line editing.[133X
   
-  [8X
-  [10X-g[110X[108X
+  [8X [10X-g[110X[8X[108X
         [33X[0;6Ytells  [5XGAP[105X  to print a message every time a full garbage collection is
         performed.[133X
   
@@ -144,8 +135,7 @@
         reclaimed  by it, and that 734 kilobytes from a total allocated memory
         of 4096 kilobytes are available afterwards.[133X
   
-  [8X
-  [10X-g -g[110X[108X
+  [8X [10X-g -g[110X[8X[108X
         [33X[0;6YIf  you  give  the  option  [10X-g[110X twice, [5XGAP[105X prints a information message
         every  time  a  partial  or  full garbage collection is performed. The
         message,[133X
@@ -159,19 +149,16 @@
         from  a  total  allocated  memory  of  4096  kilobytes  are  available
         afterwards.[133X
   
-  [8X
-  [10X-h[110X[108X
+  [8X [10X-h[110X[8X[108X
         [33X[0;6Ytells  [5XGAP[105X to print a summary of all available options ([10X-h[110X is mnemonic
         for [21Xhelp[121X). [5XGAP[105X exits after printing the summary, all other options are
         ignored.[133X
   
-  [8X
-  [10X-i [110X[3Xfilename[103X[108X
+  [8X [10X-i [110X[8X[3Xfilename[103X[8X[108X
         [33X[0;6Ychanges the name of the init file from the default [11Xinit.g[111X to [3Xfilename[103X.
         (Usually not needed.)[133X
   
-  [8X 
-  [10X-K [110X[3Xmemory[103X[108X
+  [8X [10X-K [110X[8X[3Xmemory[103X[8X[108X
         [33X[0;6Yis  like  the  [10X-o[110X option. But while the latter actually allocates more
         memory  if  the  system  allows  it and then prints a warning inside a
         break  loop  the [10X-K[110X options tells [5XGAP[105X not even to try to allocate more
@@ -179,12 +166,10 @@
         default  is  that  this  feature  is  switched off. You have to set it
         explicitly when you want to enable it.[133X
   
-  [8X
-  [10X-L [110X[3Xfilename[103X[108X
+  [8X [10X-L [110X[8X[3Xfilename[103X[8X[108X
         [33X[0;6YThe option [10X-L[110X tells [5XGAP[105X to load a saved workspace. See section [14X3.3[114X.[133X
   
-  [8X
-  [10X-l [110X[3Xpath_list[103X[108X
+  [8X [10X-l [110X[8X[3Xpath_list[103X[8X[108X
         [33X[0;6Ycan be used to set or modify [5XGAP[105X's list of root directories (see [14X9.2[114X).
         The  default  if  no  [10X-l [110X option is given is the current directory [11X./[111X.
         This  option  can  be used several times. Depending on the [10X-r[110X option a
@@ -222,13 +207,11 @@
         not  ignore  this  warning.  You  should leave [5XGAP[105X and start it again,
         specifying the correct root path using the [10X-l[110X option.[133X
   
-  [8X
-  [10X-M[110X[108X
+  [8X [10X-M[110X[8X[108X
         [33X[0;6Ytells  [5XGAP[105X  not to check for, nor to use, compiled versions of library
         files. This option may be repeated to toggle this behavior on and off.[133X
   
-  [8X
-  [10X-m [110X[3Xmemory[103X[108X
+  [8X [10X-m [110X[8X[3Xmemory[103X[8X[108X
         [33X[0;6Ytells  [5XGAP[105X  to  allocate  [3Xmemory[103X  bytes  at  startup time. If the last
         character  of  [3Xmemory[103X  is [10Xk[110X or [10XK[110X it is taken as kilobytes, if the last
         character  is  [10Xm[110X or [10XM[110X [3Xmemory[103X is taken as megabytes and if it is [10Xg[110X or [10XG[110X
@@ -239,8 +222,7 @@
         allocates more memory than is physically available, it will spend most
         of the time paging.[133X
   
-  [8X
-  [10X-n[110X[108X
+  [8X [10X-n[110X[8X[108X
         [33X[0;6Ytells [5XGAP[105X to disable the line editing and history (see [14X6.8[114X).[133X
   
         [33X[0;6YYou  may  want  to do this if the command line editing is incompatible
@@ -250,15 +232,13 @@
         once  by  [5XGAP[105X.  This option does not toggle; you must use [10X-f[110X to enable
         line editing.[133X
   
-  [8X
-  [10X-O[110X[108X
+  [8X [10X-O[110X[8X[108X
         [33X[0;6Ydisables  loading  obsolete variables (see Chapter [14X77[114X). This option is
         used  mainly  for  testing purposes, for example in order to make sure
         that a [5XGAP[105X package or one's own [5XGAP[105X code does not rely on the obsolete
         variables.[133X
   
-  [8X
-  [10X-o [110X[3Xmemory[103X[108X
+  [8X [10X-o [110X[8X[3Xmemory[103X[8X[108X
         [33X[0;6Ytells  [5XGAP[105X to allocate at most [3Xmemory[103X bytes without asking. The option
         argument [3Xmemory[103X is specified as with the [10X-m[110X option.[133X
   
@@ -267,29 +247,25 @@
         enter  [10Xreturn;[110X  which  implicitly  doubles  the amount given with this
         option.[133X
   
-  [8X
-  [10X-q[110X[108X
+  [8X [10X-q[110X[8X[108X
         [33X[0;6Ytells [5XGAP[105X to be quiet. This means that [5XGAP[105X displays neither the banner
         nor the prompt [10Xgap>[110X. This is useful if you want to run [5XGAP[105X as a filter
         with input and output redirection and want to avoid the banner and the
         prompts  appearing  in the output file. This option may be repeated to
         disable quiet mode; each [10X-q[110X toggles quiet mode.[133X
   
-  [8X
-  [10X-R[110X[108X
+  [8X [10X-R[110X[8X[108X
         [33X[0;6YThe  option  [10X-R[110X  tells  [5XGAP[105X  not  to load a saved workspace previously
         specified via the [10X-L[110X option. This option does not toggle.[133X
   
-  [8X
-  [10X-r[110X[108X
+  [8X [10X-r[110X[8X[108X
         [33X[0;6YThe  option  [10X-r[110X  tells  [5XGAP[105X  to ignore any user specific configuration
         files.    In    particular,   the   user   specific   root   directory
         [10XGAPInfo.UserGapRoot[110X  is  not  added to the [5XGAP[105X root directories and so
         [11Xgap.ini[111X  and  [11Xgaprc[111X  files that may be contained in that directory are
         not read, see [14X3.2[114X. Multiple [10X-r[110X options toggle this behaviour.[133X
   
-  [8X
-  [10X-s [110X[3Xmemory[103X[108X
+  [8X [10X-s [110X[8X[3Xmemory[103X[8X[108X
         [33X[0;6YWith  this  option  [5XGAP[105X  does  not  use  [10Xsbrk[110X  to  get memory from the
         operating  system.  Instead it uses [10Xmmap[110X, [10Xmalloc[110X or some other command
         for the amount given with this option to allocate space for the [10XGASMAN[110X
@@ -303,21 +279,18 @@
   
         [33X[0;6YThe option argument [3Xmemory[103X is specified as with the [10X-m[110X option.[133X
   
-  [8X
-  [10X-T[110X[108X
+  [8X [10X-T[110X[8X[108X
         [33X[0;6Ysuppresses the usual break loop behaviour of [5XGAP[105X. With this option [5XGAP[105X
         behaves as if the user [9Xquit[109X immediately from every break loop. This is
         intended  for automated testing of [5XGAP[105X. This option may be repeated to
         toggle this behavior on and off.[133X
   
-  [8X
-  [10X-X[110X[108X
+  [8X [10X-X[110X[8X[108X
         [33X[0;6Ytells  [5XGAP[105X  to  do  a  consistency  check  of the library file and the
         corresponding  compiled  module when loading the compiled module. This
         option may be repeated to toggle this behavior on and off.[133X
   
-  [8X
-  [10X-x [110X[3Xlength[103X[108X
+  [8X [10X-x [110X[8X[3Xlength[103X[8X[108X
         [33X[0;6YWith  this  option  you can tell [5XGAP[105X how long lines are. [5XGAP[105X uses this
         value  to  decide when to split long lines. After starting [5XGAP[105X you may
         use [2XSizeScreen[102X ([14X6.12-1[114X) to alter the line length.[133X
@@ -328,8 +301,7 @@
         font,  or  redirect  the output to a printer, you may want to increase
         this value.[133X
   
-  [8X
-  [10X-y [110X[3Xlength[103X[108X
+  [8X [10X-y [110X[8X[3Xlength[103X[8X[108X
         [33X[0;6YWith  this option you can tell [5XGAP[105X how many lines your screen has. [5XGAP[105X
         uses  this  value  to  decide  after how many lines of on-line help it
         should  wait.  After  starting  [5XGAP[105X you may use [2XSizeScreen[102X ([14X6.12-1[114X) to
@@ -341,8 +313,7 @@
         font,  or  redirect  the output to a printer, you may want to increase
         this value.[133X
   
-  [8X
-  [3Xfilename[103X ...[108X
+  [8X [3Xfilename[103X[8X ...[108X
         [33X[0;6YFurther arguments are taken as filenames of files that are read by [5XGAP[105X
         during  startup, after the system and private init files are read, but
         before the first prompt is printed. The files are read in the order in
@@ -525,16 +496,16 @@
   [33X[0;0YThe  argument  [3Xrecord[103X  of  [2XDeclareUserPreference[102X  must  be a record with the
   following components.[133X
   
-  [8X[10Xname[110X[108X
+  [8X[10Xname[110X[8X[108X
         [33X[0;6Ya  string or a list of strings, the latter meaning several preferences
         which belong together,[133X
   
-  [8X[10Xdescription[110X[108X
+  [8X[10Xdescription[110X[8X[108X
         [33X[0;6Ya  list  of  strings describing the preference(s), one string for each
         paragraph;  if  several  preferences  are  declared  together then the
         description refers to all of them,[133X
   
-  [8X[10Xdefault[110X[108X
+  [8X[10Xdefault[110X[8X[108X
         [33X[0;6Ythe  default  value that is used, or a function without arguments that
         computes  this  default  value;  if  several  preferences are declared
         together  then the value of this component must be the list of default
@@ -542,30 +513,30 @@
   
   [33X[0;0YThe following components of [3Xrecord[103X are optional.[133X
   
-  [8X[10Xcheck[110X[108X
+  [8X[10Xcheck[110X[8X[108X
         [33X[0;6Ya  function that takes a value as its argument and returns either [9Xtrue[109X
         or  [9Xfalse[109X, depending on whether the given value is admissible for this
         preference;  if  several  preferences  are  declared together then the
         number  of arguments of the function must equal the length of the [10Xname[110X
         list,[133X
   
-  [8X[10Xvalues[110X[108X
+  [8X[10Xvalues[110X[8X[108X
         [33X[0;6Ythe  list  of  admissible values, or a function without arguments that
         returns this list,[133X
   
-  [8X[10Xmulti[110X[108X
+  [8X[10Xmulti[110X[8X[108X
         [33X[0;6Y[9Xtrue[109X or [9Xfalse[109X, depending on whether one may choose several values from
         the  given  list  or  just one; needed (and useful only) if the [10Xvalues[110X
         component is present,[133X
   
-  [8X[10Xpackage[110X[108X
+  [8X[10Xpackage[110X[8X[108X
         [33X[0;6Ythe  name  of  the [5XGAP[105X package to which the preference is assigned; if
         the  declaration  happens  inside  a file that belongs to this package
         then    the    value    of   this   component   is   computed,   using
         [10XGAPInfo.PackageCurrent[110X;  otherwise,  the  default value for [10Xpackage[110X is
         [10X"GAP"[110X,[133X
   
-  [8X[10XomitFromGapIniFile[110X[108X
+  [8X[10XomitFromGapIniFile[110X[8X[108X
         [33X[0;6Yif  the  value  is  [9Xtrue[109X  then  this  user  preference  is  ignored by
         [2XWriteGapIniFile[102X ([14X3.2-3[114X).[133X
   
@@ -694,30 +665,30 @@
   behaviour.  It  must  be  a  record  from which the following components are
   recognized:[133X
   
-  [8X[10XMarkupStdPrompt[110X[108X
+  [8X[10XMarkupStdPrompt[110X[8X[108X
         [33X[0;6Ya  string  or  no  argument function returning a string containing the
         escape sequence used for the main prompt [10Xgap> [110X.[133X
   
-  [8X[10XMarkupContPrompt[110X[108X
+  [8X[10XMarkupContPrompt[110X[8X[108X
         [33X[0;6Ya  string  or  no  argument function returning a string containing the
         escape sequence used for the continuation prompt [10X> [110X.[133X
   
-  [8X[10XMarkupBrkPrompt[110X[108X
+  [8X[10XMarkupBrkPrompt[110X[8X[108X
         [33X[0;6Ya  string  or  no  argument function returning a string containing the
         escape sequence used for the break prompt [10Xbrk...> [110X.[133X
   
-  [8X[10XMarkupInput[110X[108X
+  [8X[10XMarkupInput[110X[8X[108X
         [33X[0;6Ya  string  or  no  argument function returning a string containing the
         escape sequence used for user input.[133X
   
-  [8X[10XTextPrompt[110X[108X
+  [8X[10XTextPrompt[110X[8X[108X
         [33X[0;6Ya  no  argument  function  returning  the  string with the text of the
         prompt,  but without any escape sequences. The current standard prompt
         is  returned by [10XCPROMPT()[110X. But note that changing the standard prompts
         makes  the  automatic  removal  of prompts from input lines impossible
         (see [14X6.2[114X).[133X
   
-  [8X[10XPrePrompt[110X[108X
+  [8X[10XPrePrompt[110X[8X[108X
         [33X[0;6Ya function called before printing a prompt.[133X
   
   [33X[0;0YHere is an example.[133X

@@ -1231,8 +1231,7 @@
   [33X[0;0YLet [10Xrems[110X be the set of nonzero class functions obtained by subtraction of[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Y∑_χ ( [[3Xreducibles[103X[i], χ] / [χ, χ] ) ⋅ χ[133X[124X[133X
-  
+  [24X[33X[0;6Y∑_χ ( [[3Xreducibles[103X[i], χ] / [χ, χ] ) ⋅ χ[133X[124X
   
   [33X[0;0Yfrom  [22X[3Xreducibles[103X[i][122X,  where  the summation runs over [3Xconstituents[103X and [22X[χ, ψ][122X
   denotes  the  scalar  product  of [22XG[122X-class functions. Let [10Xirrs[110X be the list of
@@ -1316,15 +1315,15 @@
   
   [33X[0;0YOptional arguments of [2XLLL[102X are[133X
   
-  [8X[3Xy[103X[108X
+  [8X[3Xy[103X[8X[108X
         [33X[0;6Ycontrols   the   sensitivity  of  the  algorithm,  see [2XLLLReducedBasis[102X
         ([14X25.5-1[114X),[133X
   
-  [8X[3X"sort"[103X[108X
+  [8X[3X"sort"[103X[8X[108X
         [33X[0;6Y[2XLLL[102X  sorts  [3Xcharacters[103X  and  the  [10Xremainders[110X  component  of the result
         according to the degrees,[133X
   
-  [8X[3X"linearcomb"[103X[108X
+  [8X[3X"linearcomb"[103X[8X[108X
         [33X[0;6Ythe  returned  record  contains  components [10Xirreddecomp[110X and [10Xreddecomp[110X,
         which  are decomposition matrices of [10Xirreducibles[110X and [10Xremainders[110X, with
         respect to [3Xcharacters[103X.[133X
@@ -1416,12 +1415,12 @@
   [33X[0;0Y[2XOrthogonalEmbeddingsSpecialDimension[102X  returns  a  record  with the following
   components.[133X
   
-  [8X[10Xirreducibles[110X[108X
+  [8X[10Xirreducibles[110X[8X[108X
         [33X[0;6Ya  list  of  found  irreducibles,  the  intersection  of  all lists of
         irreducibles   found   by   [2XDecreased[102X   ([14X72.10-7[114X),  for  all  possible
         embeddings, and[133X
   
-  [8X[10Xremainders[110X[108X
+  [8X[10Xremainders[110X[8X[108X
         [33X[0;6Ya list of remaining reducible virtual characters.[133X
   
   [4X[32X  Example  [32X[104X
@@ -1505,13 +1504,13 @@
   characters  corresponding  to  the  arguments  exists;  otherwise  [2XDecreased[102X
   returns a record with the following components.[133X
   
-  [8X[10Xirreducibles[110X[108X
+  [8X[10Xirreducibles[110X[8X[108X
         [33X[0;6Ythe list of found irreducible characters,[133X
   
-  [8X[10Xremainders[110X[108X
+  [8X[10Xremainders[110X[8X[108X
         [33X[0;6Ythe remaining reducible characters, and[133X
   
-  [8X[10Xmatrix[110X[108X
+  [8X[10Xmatrix[110X[8X[108X
         [33X[0;6Ythe   decomposition   matrix  of  the  characters  in  the  [10Xremainders[110X
         component.[133X
   
@@ -1565,13 +1564,13 @@
   
   [33X[0;0Y[2XDnLattice[102X returns a record with components[133X
   
-  [8X[10Xirreducibles[110X[108X
+  [8X[10Xirreducibles[110X[8X[108X
         [33X[0;6Ythe list of found irreducible characters,[133X
   
-  [8X[10Xremainders[110X[108X
+  [8X[10Xremainders[110X[8X[108X
         [33X[0;6Ythe list of remaining reducible virtual characters, and[133X
   
-  [8X[10Xgram[110X[108X
+  [8X[10Xgram[110X[8X[108X
         [33X[0;6Ythe Gram matrix of the vectors in [10Xremainders[110X.[133X
   
   [33X[0;0YThe  [10Xremainders[110X  list is transformed in such a way that the [10Xgram[110X matrix is a
@@ -1649,8 +1648,7 @@
   the symmetric group [22XS_n[122X of degree [22Xn[122X is defined by[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yχ^[λ](g) = ( ∑_{ρ ∈ S_n} λ(ρ) ∏_{k=1}^n χ(g^k)^{a_k(ρ)} ) / n! ,[133X[124X[133X
-  
+  [24X[33X[0;6Yχ^[λ](g) = ( ∑_{ρ ∈ S_n} λ(ρ) ∏_{k=1}^n χ(g^k)^{a_k(ρ)} ) / n! ,[133X[124X
   
   [33X[0;0Ywhere [22Xa_k(ρ)[122X is the number of cycles of length [22Xk[122X in [22Xρ[122X.[133X
   
@@ -1838,35 +1836,35 @@
   [33X[0;0Y[2XMolienSeriesInfo[102X  returns  a  record  that  describes  the rational function
   [3Xratfun[103X as a Molien series. The components of this record are[133X
   
-  [8X[10Xnumer[110X[108X
+  [8X[10Xnumer[110X[8X[108X
         [33X[0;6Ynumerator  of  [3Xratfun[103X (in general a multiple of the numerator one gets
         by [2XNumeratorOfRationalFunction[102X ([14X66.4-2[114X)),[133X
   
-  [8X[10Xdenom[110X[108X
+  [8X[10Xdenom[110X[8X[108X
         [33X[0;6Ydenominator  of  [3Xratfun[103X  (in general a multiple of the denominator one
         gets by [2XNumeratorOfRationalFunction[102X ([14X66.4-2[114X)),[133X
   
-  [8X[10Xratfun[110X[108X
+  [8X[10Xratfun[110X[8X[108X
         [33X[0;6Ythe rational function [3Xratfun[103X itself,[133X
   
-  [8X[10Xnumerstring[110X[108X
+  [8X[10Xnumerstring[110X[8X[108X
         [33X[0;6Ystring corresponding to the polynomial [10Xnumer[110X, expressed in terms of [10Xz[110X,[133X
   
-  [8X[10Xdenomstring[110X[108X
+  [8X[10Xdenomstring[110X[8X[108X
         [33X[0;6Ystring corresponding to the polynomial [10Xdenom[110X, expressed in terms of [10Xz[110X,[133X
   
-  [8X[10Xdenominfo[110X[108X
+  [8X[10Xdenominfo[110X[8X[108X
         [33X[0;6Ya list of the form [22X[ [ r_1, k_1 ], ..., [ r_n, k_n ] ][122X such that [10Xdenom[110X
         is [22X∏_{i = 1}^n (1-z^{r_i})^{k_i}[122X.[133X
   
-  [8X[10Xsummands[110X[108X
+  [8X[10Xsummands[110X[8X[108X
         [33X[0;6Ya  list  of  records,  each  with  the  components  [10Xnumer[110X,  [10Xr[110X,  and [10Xk[110X,
         describing the summand [10Xnumer[110X[22X/ (1-z^r)^k[122X,[133X
   
-  [8X[10Xsize[110X[108X
+  [8X[10Xsize[110X[8X[108X
         [33X[0;6Ythe order of the underlying matrix group,[133X
   
-  [8X[10Xdegree[110X[108X
+  [8X[10Xdegree[110X[8X[108X
         [33X[0;6Ythe degree of the underlying matrix representation.[133X
   
   [4X[32X  Example  [32X[104X
@@ -1985,25 +1983,25 @@
   permutation  characters.  [2XPermCharInfo[102X  returns  a record with the following
   components.[133X
   
-  [8X[10Xcontained[110X:[108X
+  [8X[10Xcontained[110X[8X:[108X
         [33X[0;6Ya list containing, for each character [22Xψ = (1_U)^G[122X in [3Xpermchars[103X, a list
         containing  at position [22Xi[122X the number [22Xψ[i] |U| /[122X [10XSizesCentralizers( [110X[3Xtbl[103X[10X
         )[110X[22X[i][122X,  which  equals  the  number  of  those  elements  of  [22XU[122X that are
         contained in class [22Xi[122X of [3Xtbl[103X,[133X
   
-  [8X[10Xbound[110X:[108X
+  [8X[10Xbound[110X[8X:[108X
         [33X[0;6Ya list containing, for each character [22Xψ = (1_U)^G[122X in [3Xpermchars[103X, a list
         containing at position [22Xi[122X the number [22X|U| / gcd( |U|,[122X [10XSizesCentralizers(
         [3Xtbl[103X[10X )[110X[22X[i] )[122X, which divides the class length in [22XU[122X of an element in class
         [22Xi[122X of [3Xtbl[103X,[133X
   
-  [8X[10Xdisplay[110X:[108X
+  [8X[10Xdisplay[110X[8X:[108X
         [33X[0;6Ya  record  that  can  be used as second argument of [2XDisplay[102X ([14X6.3-6[114X) to
         display  each permutation character in [3Xpermchars[103X and the corresponding
         components  [10Xcontained[110X  and [10Xbound[110X, for those classes where at least one
         character of [3Xpermchars[103X is nonzero,[133X
   
-  [8X[10XATLAS[110X:[108X
+  [8X[10XATLAS[110X[8X:[108X
         [33X[0;6Ya  list  of  strings  describing  the decomposition of the permutation
         characters  in [3Xpermchars[103X into the irreducible characters of [3Xtbl[103X, given
         in   an   [5XAtlas[105X-like   notation.   This  means  that  the  irreducible

@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (ref) - Chapter 7: Debugging and Profiling Facilities</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -56,7 +56,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7A43B9E68765EE9E">7.4-3 SetInfoLevel</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7B2ADC37783104B9">7.4-4 InfoLevel</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X864E4B6886E2697D">7.4-5 Info</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7A06511778457311">7.4-6 <span class="Heading">Customizing <code class="func">Info</code> (<a href="chap7_mj.html#X864E4B6886E2697D"><span class="RefLink">7.4-5</span></a>) statements</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X877BD99A82CB2643">7.4-6 <span class="Heading">Customizing <code class="func">Info</code> (<a href="chap7_mj.html#X864E4B6886E2697D"><span class="RefLink">7.4-5</span></a>) statements</span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7_mj.html#X7A28F77C82D6A3E0">7.4-7 InfoWarning</a></span>
 </div></div>
@@ -368,7 +368,7 @@ you can 'return;' to continue
 
 <p>By default, they are viewed, preceded by the string <code class="code">"#I "</code> and followed by a newline. Otherwise the third and subsequent arguments are not evaluated. (The latter can save substantial time when displaying difficult results.)</p>
 
-<p>The behaviour can be customized with <code class="func">SetInfoHandler</code> (<a href="chap7_mj.html#X7A06511778457311"><span class="RefLink">7.4-6</span></a>).</p>
+<p>The behaviour can be customized with <code class="func">SetInfoHandler</code> (<a href="chap7_mj.html#X877BD99A82CB2643"><span class="RefLink">7.4-6</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -404,7 +404,7 @@ you can 'return;' to continue
 1
 </pre></div>
 
-<p><a id="X7A06511778457311" name="X7A06511778457311"></a></p>
+<p><a id="X877BD99A82CB2643" name="X877BD99A82CB2643"></a></p>
 
 <h5>7.4-6 <span class="Heading">Customizing <code class="func">Info</code> (<a href="chap7_mj.html#X864E4B6886E2697D"><span class="RefLink">7.4-5</span></a>) statements</span></h5>
 
@@ -648,7 +648,7 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 
 <p>At the end of the list, two lines are printed that show the total time used and the total memory allocated by the profiled functions not shown in the list (label <code class="code">OTHER</code>) and by all profiled functions (label <code class="code">TOTAL</code>), respectively.</p>
 
-<p>An interactive variant of <code class="func">DisplayProfile</code> is the function <code class="func">BrowseProfile</code> (<a href="../../pkg/Browse/doc/chap6.html#X7B42091982DE7AE7"><span class="RefLink">Browse: BrowseProfile</span></a>) that is provided by the <strong class="pkg">GAP</strong> package <strong class="pkg">Browse</strong>.</p>
+<p>An interactive variant of <code class="func">DisplayProfile</code> is the function <code class="func">BrowseProfile</code> (<a href="../../pkg/Browse/doc/chap6_mj.html#X7B42091982DE7AE7"><span class="RefLink">Browse: BrowseProfile</span></a>) that is provided by the <strong class="pkg">GAP</strong> package <strong class="pkg">Browse</strong>.</p>
 
 <p><a id="X7DAF9AB9793AE203" name="X7DAF9AB9793AE203"></a></p>
 

@@ -263,16 +263,14 @@
   [33X[0;0YThen the basis is[133X
   
   
-        [33X[1;6Y[24X[33X[0;0YB_{n,m} = ⨂_{p ∈ P} ⨂_{k = μ_p}^{ν_p-1} { e_{p^{k+1}}^j }_{j ∈
-        J_{k,p}}[133X[124X[133X
-  
+  [24X[33X[0;6YB_{n,m} = ⨂_{p ∈ P} ⨂_{k = μ_p}^{ν_p-1} { e_{p^{k+1}}^j }_{j ∈ J_{k,p}}[133X[124X
   
   [33X[0;0Ywhere [22XJ_{k,p} =[122X[133X
   
-        [22X{ 0 }[122X                        ;   [22Xk = 0, p = 2[122X
-        [22X{ 0, 1 }[122X                     ;   [22Xk > 0, p = 2[122X
-        [22X{ 1, ..., p-1 }[122X              ;   [22Xk = 0, p ≠ 2[122X
-        [22X{ -(p-1)/2, ..., (p-1)/2 }[122X   ;   [22Xk > 0, p ≠ 2[122X
+        [22X{ 0 }[122X                        ;   [22Xk = 0, p = 2[122X   
+        [22X{ 0, 1 }[122X                     ;   [22Xk > 0, p = 2[122X   
+        [22X{ 1, ..., p-1 }[122X              ;   [22Xk = 0, p ≠ 2[122X   
+        [22X{ -(p-1)/2, ..., (p-1)/2 }[122X   ;   [22Xk > 0, p ≠ 2[122X   
   
   [33X[0;0Y[22XB_{n,1}[122X  is equal to the basis of [22Xℚ_n[122X over the rationals which is introduced
   in [Zum89]. Also the conversion of arbitrary sums of roots of unity into its

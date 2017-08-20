@@ -41,12 +41,12 @@
   flexible.  For  example  we can call the operation [2XOrbitsDomain[102X ([14X41.4-3[114X) for
   the orbits of the group [3XG[103X on the domain [3XOmega[103X in the following ways:[133X
   
-  [8X[10XOrbitsDomain[110X[22X( G, Ω[, μ] )[122X[108X
+  [8X[10XOrbitsDomain[110X[8X[22X( G, Ω[, μ] )[122X[108X
         [33X[0;6YThe  acting  function  [22Xμ[122X is optional. If it is not given, the built-in
         action  [2XOnPoints[102X  ([14X41.2-1[114X)  (which  defines  an  action  via the caret
         operator [10X^[110X) is used as a default.[133X
   
-  [8X[10XOrbitsDomain[110X[22X( G, Ω, gens, acts[, μ] )[122X[108X
+  [8X[10XOrbitsDomain[110X[8X[22X( G, Ω, gens, acts[, μ] )[122X[108X
         [33X[0;6YThis  second version of [2XOrbitsDomain[102X ([14X41.4-3[114X) permits one to implement
         an  action  induced  by a homomorphism: If the group [22XH[122X acts on [22XΩ[122X via [22Xμ[122X
         and  [22Xφ  :  G → H[122X is a homomorphism, [22XG[122X acts on [22XΩ[122X via the induced action
@@ -65,7 +65,7 @@
         homomorphism  and  the  results  are  unpredictable if this is not the
         case.[133X
   
-  [8X[10XOrbitsDomain[110X[22X( extset )[122X[108X
+  [8X[10XOrbitsDomain[110X[8X[22X( extset )[122X[108X
         [33X[0;6YA  third  variant is to call the operation with an external set, which
         then  provides  [22XG[122X,  [22XΩ[122X and [22Xμ[122X. You will find more about external sets in
         Section [14X41.12[114X.[133X
@@ -834,8 +834,7 @@
   [33X[0;0YThe [13Xcycle index[113X of a permutation [3Xg[103X acting on [3XOmega[103X is defined as[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yz([3Xg[103X) = s_1^{c_1} s_2^{c_2} ⋯ s_n^{c_n}[133X[124X[133X
-  
+  [24X[33X[0;6Yz([3Xg[103X) = s_1^{c_1} s_2^{c_2} ⋯ s_n^{c_n}[133X[124X
   
   [33X[0;0Ywhere  [22Xc_k[122X is the number of [22Xk[122X-cycles in the cycle decomposition of [3Xg[103X and the
   [22Xs_i[122X are indeterminates.[133X
@@ -843,8 +842,7 @@
   [33X[0;0YThe [13Xcycle index[113X of a group [3XG[103X is defined as[133X
   
   
-        [33X[1;6Y[24X[33X[0;0YZ([3XG[103X) = ( ∑_{g ∈ [3XG[103X} z(g) ) / |[3XG[103X| .[133X[124X[133X
-  
+  [24X[33X[0;6YZ([3XG[103X) = ( ∑_{g ∈ [3XG[103X} z(g) ) / |[3XG[103X| .[133X[124X
   
   [33X[0;0YThe indeterminates used by [2XCycleIndex[102X are the indeterminates [22X1[122X to [22Xn[122X over the
   rationals (see [2XIndeterminate[102X ([14X66.1-1[114X)).[133X

@@ -1234,8 +1234,7 @@
   a module [22XV[122X over a Lie algebra [22XL[122X is an [22Xs[122X-linear map[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yc: L × ⋯ × L → V ,[133X[124X[133X
-  
+  [24X[33X[0;6Yc: L × ⋯ × L → V ,[133X[124X
   
   [33X[0;0Ywith  [22Xs[122X  factors  [22XL[122X,  that  is  skew-symmetric  (meaning  that if any of the
   arguments are interchanged, [22Xc[122X changes to [22X-c[122X).[133X
@@ -1248,8 +1247,7 @@
   those lists consists of entries of the form[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Y[ [ i_1, i_2, ..., i_s ], λ^j_{i_1, ..., i_s} ][133X[124X[133X
-  
+  [24X[33X[0;6Y[ [ i_1, i_2, ..., i_s ], λ^j_{i_1, ..., i_s} ][133X[124X
   
   [33X[0;0Ywhere  the  coefficient  on  the second position is non-zero. (We only store
   those entries for which this coefficient is non-zero.) It follows that every
@@ -1478,24 +1476,22 @@
   Chevalley basis. Also we set[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yx_α^(n) = {x_α^n over n!}, y_α^(n) = {y_α^n over n!} .[133X[124X[133X
-  
+  [24X[33X[0;6Yx_α^(n) = {x_α^n over n!}, y_α^(n) = {y_α^n over n!} .[133X[124X
   
   [33X[0;0YFurthermore,  let  [22Xα_1,  ...,  α_s[122X  denote  the  positive  roots  of  [22XR[122X. For
   multi-indices  [22XN  =  (n_1, ..., n_s)[122X, [22XM = (m_1, ..., m_s)[122X and [22XK = (k_1, ...,
   k_s)[122X (where [22Xn_i, m_i, k_i ≥ 0[122X) set[133X
   
-        [22Xx^N[122X   =   [22Xx_{α_1}^(n_1) ⋯ x_{α_s}^(n_s)[122X,     
-        [22Xy^M[122X   =   [22Xy_{α_1}^(m_1) ⋯ y_{α_s}^(m_s)[122X,     
-        [22Xh^K[122X   =   [22X{h_1 choose k_1} ⋯ {h_l choose k_l}[122X
+        [22Xx^N[122X   =   [22Xx_{α_1}^(n_1) ⋯ x_{α_s}^(n_s)[122X,        
+        [22Xy^M[122X   =   [22Xy_{α_1}^(m_1) ⋯ y_{α_s}^(m_s)[122X,        
+        [22Xh^K[122X   =   [22X{h_1 choose k_1} ⋯ {h_l choose k_l}[122X   
   
   [33X[0;0YThen  by a theorem of Kostant, the [22Xx_α^(n)[122X and [22Xy_α^(n)[122X generate a subring of
   the  universal  enveloping  algebra [22XU(L)[122X spanned (as a free [22XZ[122X-module) by the
   elements[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yy^M h^K x^N[133X[124X[133X
-  
+  [24X[33X[0;6Yy^M h^K x^N[133X[124X
   
   [33X[0;0Y(see, e.g., [Hum72] or [Hum78, Section 26]) So by the Poincare-Birkhoff-Witt
   theorem  this  subring  is  a  lattice in [22XU(L)[122X. Furthermore, this lattice is
@@ -1527,14 +1523,12 @@
   Cartan elements. They are printed as [10X( hi/1 )[110X, which means[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Y{h_i choose 1}.[133X[124X[133X
-  
+  [24X[33X[0;6Y{h_i choose 1}.[133X[124X
   
   [33X[0;0YIn general the printed form [10X( hi/ k )[110X means[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Y{h_i choose k}.[133X[124X[133X
-  
+  [24X[33X[0;6Y{h_i choose k}.[133X[124X
   
   [33X[0;0YAlso [22Xy_i^(m)[122X is printed as [10Xyi^(m)[110X, which means that entering [10Xyi^m[110X at the [5XGAP[105X
   prompt results in the output [10Xm!*yi^(m)[110X.[133X

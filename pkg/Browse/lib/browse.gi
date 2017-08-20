@@ -1313,7 +1313,7 @@ BrowseData.GetPatternEditParameters:= function( arg )
           if pos > max then
             pos:= pos - 1;
           fi;
-        elif c in [ NCurses.keys.BACKSPACE, IntChar( '' ) ] then
+        elif NCurses.IsBackspace( c ) then
           if pos > 1 then
             pos:= pos - 1;
             RemoveElmList( res, pos );
@@ -1895,10 +1895,7 @@ end;
 ##
 #F  BrowseData.BottomOrRight( <t>, <direction> )
 ##
-##  Let <t> be a browse table,
-##  <cell> be the number of the current topmost/leftmost position on the
-##  screen,
-##  <from> be the topmost/leftmost visible character in this cell,
+##  Let <t> be a browse table
 ##  and <direction> be `"vert"' or `"horz"' if we are interested in vertical
 ##  or horizontal orientation.
 ##
@@ -2786,6 +2783,7 @@ BrowseData.ScrollCellUpOrLeft := function( t, direction )
         fi;
       fi;
 
+#T curr and from are not bound if start is fail!
       BrowseData.SetTopOrLeft( t, direction, curr, from );
     fi;
 
@@ -4787,7 +4785,7 @@ BrowseData.SortAndCategorizeTableByColumn:= function( t, column, isexpanded )
         # Keep the order of categories in the old table.
         # (But note that the rows inside these categories are sorted
         # as in the unsorted table.)
-        # extend the category rows and the row distribution.
+        # Extend the category rows and the row distribution.
         for entry in Reversed( hlcatsanddata ) do
           if entry[1] = "cat" then
             # Add the higher level category row.
@@ -4845,11 +4843,15 @@ BrowseData.actions.SortAndCategorizeTable := rec(
   action := function( t )
     BrowseData.SortAndCategorizeTableByColumn( t,
                  t.dynamic.selectedEntry[2], false );
+
+    # Leave the mode where a column is selected.
     Unbind( t.dynamic.activeModes[ Length( t.dynamic.activeModes ) ] );
     t.dynamic.selectedEntry:= [ 0, 0 ];
     t.dynamic.selectedCategory:= [ 0, 0 ];
     t.dynamic.topleft{ [ 2, 4 ] }:= [ 1, 1 ];
-#T assumes that select col. mode shall be left!
+
+    # Move the focus to a visible row or category.
+    BrowseData.MoveFocusToSelectedCellOrCategory( t );
   end );
 
 
@@ -6928,7 +6930,7 @@ BrowseData.SetActions := function( arg )
                      x -> IsInt( x ) or x in NCurses.mouseEvents ) and
              IsString( entry[2] ) and
              ForAll( entry, x -> 0 < Length( x ) ) then
-          if NCurses.keys.BACKSPACE in entry[1] or
+          if ForAny( entry[1], NCurses.IsBackspace ) or
              NCurses.keys.DC in entry[1] then
             Error( "<Backspace> and <Delete> are not allowed inputs" );
           fi;
@@ -7634,7 +7636,7 @@ NCurses.BrowseGeneric:= function( arg )
       c:= BrowseData.GetCharacter( t );
 
       # Deal with `fail' and backspace/delete.
-      if c = NCurses.keys.BACKSPACE or c = NCurses.keys.DC then
+      if NCurses.IsBackspace( c ) or c = NCurses.keys.DC then
         # Remove the backspace/delete character and the previous one.
         len:= Length( userinput );
         if 0 < len then

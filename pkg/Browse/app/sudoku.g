@@ -5,7 +5,7 @@
 #Y  Copyright (C) 2006-2007, Lehrstuhl D für Mathematik, RWTH Aachen, Germany
 ##
 ##  This file contains functions to generate and solve Sudoku puzzles. This
-##  can be used by command line function or via a Browse table interface.
+##  can be used by command line function or via a browse table interface.
 ##
 
 ##  <#GAPDoc Label="Sudoku_section">

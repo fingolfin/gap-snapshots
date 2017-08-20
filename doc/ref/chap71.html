@@ -22,7 +22,7 @@
 <p id="mathjaxlink" class="pcenter"><a href="chap71_mj.html">[MathJax on]</a></p>
 <p><a id="X7B7A9EE881E01C10" name="X7B7A9EE881E01C10"></a></p>
 <div class="ChapSects"><a href="chap71.html#X7B7A9EE881E01C10">71 <span class="Heading">Character Tables</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap71.html#X7D9C08FE81AE1102">71.1 <span class="Heading">Some Remarks about Character Theory in <strong class="pkg">GAP</strong></span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap71.html#X7B9FCBBC7B95F91B">71.1 <span class="Heading">Some Remarks about Character Theory in <strong class="pkg">GAP</strong></span></a>
 </span>
 </div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap71.html#X7F8AB7CB7A46002F">71.2 <span class="Heading">History of Character Theory Stuff in GAP</span></a>
@@ -232,7 +232,7 @@
 true
 </pre></div>
 
-<p><a id="X7D9C08FE81AE1102" name="X7D9C08FE81AE1102"></a></p>
+<p><a id="X7B9FCBBC7B95F91B" name="X7B9FCBBC7B95F91B"></a></p>
 
 <h4>71.1 <span class="Heading">Some Remarks about Character Theory in <strong class="pkg">GAP</strong></span></h4>
 
@@ -980,7 +980,7 @@ Group([ (4,5) ])
 
 <p>The position of the class with name <var class="Arg">name</var> in <var class="Arg">tbl</var> can be accessed as <code class="code"><var class="Arg">tbl</var>.<var class="Arg">name</var></code>.</p>
 
-<p>When <code class="func">ClassNames</code> is called with two arguments, the second being the string <code class="code">"ATLAS"</code>, the class names returned obey the convention used in the <strong class="pkg">Atlas</strong> of Finite Groups <a href="chapBib.html#biBCCN85">[CCNPW85, Chapter 7, Section 5]</a>. If one is interested in "relative" class names of almost simple <strong class="pkg">Atlas</strong> groups, one can use the function <code class="func">AtlasClassNames</code> (<a href="../../pkg/atlasrep/doc/chap3.html#X78166D1D7D18EFBF"><span class="RefLink">AtlasRep: AtlasClassNames</span></a>).</p>
+<p>When <code class="func">ClassNames</code> is called with two arguments, the second being the string <code class="code">"ATLAS"</code>, the class names returned obey the convention used in the <strong class="pkg">Atlas</strong> of Finite Groups <a href="chapBib.html#biBCCN85">[CCN+85, Chapter 7, Section 5]</a>. If one is interested in "relative" class names of almost simple <strong class="pkg">Atlas</strong> groups, one can use the function <code class="func">AtlasClassNames</code> (<a href="../../pkg/atlasrep/doc/chap3.html#X78166D1D7D18EFBF"><span class="RefLink">AtlasRep: AtlasClassNames</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -1459,7 +1459,7 @@ BrauerTable( "L3(2)", 2 )
 
 <p>If the component <code class="code">decmat</code> is bound in <var class="Arg">options</var> then it must be the decomposition matrix in question, in this case the matrix is not computed from the information in <var class="Arg">modtbl</var>.</p>
 
-<p>For those character tables from the <strong class="pkg">GAP</strong> table library that belong to the <strong class="pkg">Atlas</strong> of Finite Groups <a href="chapBib.html#biBCCN85">[CCNPW85]</a>, <code class="func">AtlasLabelsOfIrreducibles</code> (<a href="../../pkg/ctbllib/doc/chap4.html#X7ADC9DC980CF0685"><span class="RefLink">CTblLib: AtlasLabelsOfIrreducibles</span></a>) constructs character labels that are compatible with those used in the <strong class="pkg">Atlas</strong> (see <a href="../../pkg/ctbllib/doc/chap4.html#X81FE89697EAAB1EA"><span class="RefLink">CTblLib: Atlas Tables</span></a> in the manual of the <strong class="pkg">GAP</strong> Character Table Library).</p>
+<p>For those character tables from the <strong class="pkg">GAP</strong> table library that belong to the <strong class="pkg">Atlas</strong> of Finite Groups <a href="chapBib.html#biBCCN85">[CCN+85]</a>, <code class="func">AtlasLabelsOfIrreducibles</code> (<a href="../../pkg/ctbllib/doc/chap4.html#X7ADC9DC980CF0685"><span class="RefLink">CTblLib: AtlasLabelsOfIrreducibles</span></a>) constructs character labels that are compatible with those used in the <strong class="pkg">Atlas</strong> (see <a href="../../pkg/ctbllib/doc/chap4.html#X81FE89697EAAB1EA"><span class="RefLink">CTblLib: Atlas Tables</span></a> in the manual of the <strong class="pkg">GAP</strong> Character Table Library).</p>
 
 
 <div class="example"><pre>
@@ -1508,7 +1508,7 @@ BrauerTable( "L3(2)", 2 )
 <h5>71.12-1 Index</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Index</code>( <var class="Arg">tbl</var>, <var class="Arg">subtbl</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>For two character tables <var class="Arg">tbl</var> and <var class="Arg">subtbl</var>, <code class="func">Index</code> returns the quotient of the <code class="func">Size</code> (<a href="chap71.html#X81EFD9FE804AC6EE"><span class="RefLink">71.8-5</span></a>) values of <var class="Arg">tbl</var> and <var class="Arg">subtbl</var>. The containment of the underlying groups of <var class="Arg">subtbl</var> and <var class="Arg">tbl</var> is <em>not</em> checked; so the distinction between <code class="func">Index</code> (<a href="chap39.html#X86DC933779B1CABD"><span class="RefLink">39.3-2</span></a>) and <code class="func">IndexNC</code> (<a href="chap39.html#X86DC933779B1CABD"><span class="RefLink">39.3-2</span></a>) is not made for character tables.</p>
+<p>For two character tables <var class="Arg">tbl</var> and <var class="Arg">subtbl</var>, <code class="func">Index</code> returns the quotient of the <code class="func">Size</code> (<a href="chap71.html#X81EFD9FE804AC6EE"><span class="RefLink">71.8-5</span></a>) values of <var class="Arg">tbl</var> and <var class="Arg">subtbl</var>. The containment of the underlying groups of <var class="Arg">subtbl</var> and <var class="Arg">tbl</var> is <em>not</em> checked; so the distinction between <code class="func">Index</code> (<a href="chap39.html#X842AD37E79CE953E"><span class="RefLink">39.3-2</span></a>) and <code class="func">IndexNC</code> (<a href="chap39.html#X842AD37E79CE953E"><span class="RefLink">39.3-2</span></a>) is not made for character tables.</p>
 
 <p><a id="X8123650E817926FC" name="X8123650E817926FC"></a></p>
 
@@ -1713,9 +1713,9 @@ rec( number := 21, type := "D8" )
 
 <p>The default <code class="func">Display</code> (<a href="chap6.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) method prepares the data in <var class="Arg">tbl</var> for a columnwise output. The number of columns printed at one time depends on the actual line length, which can be accessed and changed by the function <code class="func">SizeScreen</code> (<a href="chap6.html#X8723E0A1837894F3"><span class="RefLink">6.12-1</span></a>).</p>
 
-<p>An interesting variant of <code class="func">Display</code> (<a href="chap6.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) is the function <code class="func">PageDisplay</code> (<a href="../../pkg/GAPDoc-1.5.1/doc/chap6.html#X7BB6731F7E3AAA98"><span class="RefLink">GAPDoc: PageDisplay</span></a>). Convenient ways to print the <code class="func">Display</code> (<a href="chap6.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) format to a file are given by the function <code class="func">PrintTo1</code> (<a href="../../pkg/GAPDoc-1.5.1/doc/chap6.html#X8603B90C7C3F0AB1"><span class="RefLink">GAPDoc: PrintTo1</span></a>) or by using <code class="func">PageDisplay</code> (<a href="../../pkg/GAPDoc-1.5.1/doc/chap6.html#X7BB6731F7E3AAA98"><span class="RefLink">GAPDoc: PageDisplay</span></a>) and the facilities of the pager used, cf. <code class="func">Pager</code> (<a href="chap2.html#X7ED03E41792C3840"><span class="RefLink">2.4-1</span></a>).</p>
+<p>An interesting variant of <code class="func">Display</code> (<a href="chap6.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) is the function <code class="func">PageDisplay</code> (<a href="../../pkg/GAPDoc-1.6/doc/chap6.html#X7BB6731F7E3AAA98"><span class="RefLink">GAPDoc: PageDisplay</span></a>). Convenient ways to print the <code class="func">Display</code> (<a href="chap6.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) format to a file are given by the function <code class="func">PrintTo1</code> (<a href="../../pkg/GAPDoc-1.6/doc/chap6.html#X8603B90C7C3F0AB1"><span class="RefLink">GAPDoc: PrintTo1</span></a>) or by using <code class="func">PageDisplay</code> (<a href="../../pkg/GAPDoc-1.6/doc/chap6.html#X7BB6731F7E3AAA98"><span class="RefLink">GAPDoc: PageDisplay</span></a>) and the facilities of the pager used, cf. <code class="func">Pager</code> (<a href="chap2.html#X7ED03E41792C3840"><span class="RefLink">2.4-1</span></a>).</p>
 
-<p>An interactive variant of <code class="func">Display</code> (<a href="chap6.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) is the <code class="func">Browse</code> (<a href="../../pkg/Browse/doc/chap6.html#X7FDD696B7DD54A6E"><span class="RefLink">Browse: Browse</span></a>) method for character tables that is provided by the <strong class="pkg">GAP</strong> package <strong class="pkg">Browse</strong>, see <code class="func">Browse</code> (<a href="../../pkg/Browse/doc/chap6.html#X870C744182073CF6"><span class="RefLink">Browse: Browse (for character tables)</span></a>).</p>
+<p>An interactive variant of <code class="func">Display</code> (<a href="chap6.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) is the <code class="func">Browse</code> (<a href="../../pkg/Browse/doc/chap6.html#X7FDD696B7DD54A6E"><span class="RefLink">Browse: Browse</span></a>) method for character tables that is provided by the <strong class="pkg">GAP</strong> package <strong class="pkg">Browse</strong>, see <code class="func">Browse</code> (<a href="../../pkg/Browse/doc/chap6.html#X870C744182073CF6"><span class="RefLink">Browse: Browse for character tables</span></a>).</p>
 
 <p><code class="func">Display</code> (<a href="chap6.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) shows certain characters (by default all irreducible characters) of <var class="Arg">tbl</var>, together with the orders of the centralizers in factorized form and the available power maps (see <code class="func">ComputedPowerMaps</code> (<a href="chap73.html#X781FAA497E3B4D1A"><span class="RefLink">73.1-1</span></a>)). The <var class="Arg">n</var>-th displayed character is given the name <code class="code">X.<var class="Arg">n</var></code>.</p>
 
@@ -1731,7 +1731,7 @@ rec( number := 21, type := "D8" )
 
 <p>Once a name for an irrational value is found, it is used all over the printed table. Moreover the complex conjugate (see <code class="func">ComplexConjugate</code> (<a href="chap18.html#X7BE001A0811CD599"><span class="RefLink">18.5-2</span></a>), <code class="func">GaloisCyc</code> (<a href="chap18.html#X79EE9097783128C4"><span class="RefLink">18.5-1</span></a>)) and the star of an irrationality (see <code class="func">StarCyc</code> (<a href="chap18.html#X7E361C057E97CA66"><span class="RefLink">18.5-3</span></a>)) are represented by that very name preceded by a <code class="code">/</code> and a <code class="code">*</code>, respectively.</p>
 
-<p>The printed character table is then followed by a legend, a list identifying the occurring symbols with their actual values. Occasionally this identification is supplemented by a quadratic representation of the irrationality (see <code class="func">Quadratic</code> (<a href="chap18.html#X84438F867B0CC299"><span class="RefLink">18.5-4</span></a>)) together with the corresponding <strong class="pkg">Atlas</strong> notation (see <a href="chapBib.html#biBCCN85">[CCNPW85]</a>).</p>
+<p>The printed character table is then followed by a legend, a list identifying the occurring symbols with their actual values. Occasionally this identification is supplemented by a quadratic representation of the irrationality (see <code class="func">Quadratic</code> (<a href="chap18.html#X84438F867B0CC299"><span class="RefLink">18.5-4</span></a>)) together with the corresponding <strong class="pkg">Atlas</strong> notation (see <a href="chapBib.html#biBCCN85">[CCN+85]</a>).</p>
 
 <p>This default style can be changed by prescribing a record <var class="Arg">arec</var> of options, which can be given</p>
 
@@ -1756,7 +1756,7 @@ rec( number := 21, type := "D8" )
 
 <dl>
 <dt><strong class="Mark"><code class="code">centralizers</code></strong></dt>
-<dd><p><code class="keyw">false</code> to suppress the printing of the orders of the centralizers, or the string <code class="code">"ATLAS"</code> to force the printing of non-factorized centralizer orders in a style similar to that used in the <strong class="pkg">Atlas</strong> of Finite Groups <a href="chapBib.html#biBCCN85">[CCNPW85]</a>,</p>
+<dd><p><code class="keyw">false</code> to suppress the printing of the orders of the centralizers, or the string <code class="code">"ATLAS"</code> to force the printing of non-factorized centralizer orders in a style similar to that used in the <strong class="pkg">Atlas</strong> of Finite Groups <a href="chapBib.html#biBCCN85">[CCN+85]</a>,</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">chars</code></strong></dt>
@@ -1776,7 +1776,7 @@ rec( number := 21, type := "D8" )
 
 </dd>
 <dt><strong class="Mark"><code class="code">powermap</code></strong></dt>
-<dd><p>an integer or a list of integers to select a subset of the available power maps, <code class="keyw">false</code> to suppress the printing of power maps, or the string <code class="code">"ATLAS"</code> to force a printing of class names and power maps in a style similar to that used in the <strong class="pkg">Atlas</strong> of Finite Groups <a href="chapBib.html#biBCCN85">[CCNPW85]</a>,</p>
+<dd><p>an integer or a list of integers to select a subset of the available power maps, <code class="keyw">false</code> to suppress the printing of power maps, or the string <code class="code">"ATLAS"</code> to force a printing of class names and power maps in a style similar to that used in the <strong class="pkg">Atlas</strong> of Finite Groups <a href="chapBib.html#biBCCN85">[CCN+85]</a>,</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">Display</code></strong></dt>
@@ -2414,7 +2414,7 @@ X.3     1  1  1
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CharacterTableIsoclinic</code>( <var class="Arg">tbl</var>[, <var class="Arg">classes</var>][, <var class="Arg">centre</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SourceOfIsoclinicTable</code>( <var class="Arg">tbl</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<p>If <var class="Arg">tbl</var> is the (ordinary or modular) character table of a group with the structure <span class="SimpleMath">2.G.2</span> with a central subgroup <span class="SimpleMath">Z</span> of order <span class="SimpleMath">2</span> or <span class="SimpleMath">4</span> and a normal subgroup <span class="SimpleMath">N</span> of index <span class="SimpleMath">2</span> that contains <span class="SimpleMath">Z</span> then <code class="func">CharacterTableIsoclinic</code> returns the table of the isoclinic group in the sense of the <strong class="pkg">Atlas</strong> of Finite Groups <a href="chapBib.html#biBCCN85">[CCNPW85, Chapter 6, Section 7]</a>. If <span class="SimpleMath">N</span> is not uniquely determined then the positions of the classes forming <span class="SimpleMath">N</span> must be entered as list <var class="Arg">classes</var>. If <span class="SimpleMath">Z</span> is not unique inside <span class="SimpleMath">N</span> then the positions of the classes in <span class="SimpleMath">Z</span> must be entered as list <var class="Arg">centre</var>; If <span class="SimpleMath">Z</span> has order <span class="SimpleMath">2</span> then <var class="Arg">centre</var> can be also the position of the involution in <span class="SimpleMath">Z</span>.</p>
+<p>If <var class="Arg">tbl</var> is the (ordinary or modular) character table of a group with the structure <span class="SimpleMath">2.G.2</span> with a central subgroup <span class="SimpleMath">Z</span> of order <span class="SimpleMath">2</span> or <span class="SimpleMath">4</span> and a normal subgroup <span class="SimpleMath">N</span> of index <span class="SimpleMath">2</span> that contains <span class="SimpleMath">Z</span> then <code class="func">CharacterTableIsoclinic</code> returns the table of the isoclinic group in the sense of the <strong class="pkg">Atlas</strong> of Finite Groups <a href="chapBib.html#biBCCN85">[CCN+85, Chapter 6, Section 7]</a>. If <span class="SimpleMath">N</span> is not uniquely determined then the positions of the classes forming <span class="SimpleMath">N</span> must be entered as list <var class="Arg">classes</var>. If <span class="SimpleMath">Z</span> is not unique inside <span class="SimpleMath">N</span> then the positions of the classes in <span class="SimpleMath">Z</span> must be entered as list <var class="Arg">centre</var>; If <span class="SimpleMath">Z</span> has order <span class="SimpleMath">2</span> then <var class="Arg">centre</var> can be also the position of the involution in <span class="SimpleMath">Z</span>.</p>
 
 <p>Note that also if <var class="Arg">tbl</var> is a Brauer table then <var class="Arg">classes</var> and <var class="Arg">centre</var> denote class numbers w.r.t. the <em>ordinary</em> character table.</p>
 

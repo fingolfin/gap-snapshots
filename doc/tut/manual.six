@@ -11,20 +11,20 @@ entries :=
       1, 5, "preface", "X874E1D45845007FE" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YThe \033[5XGAP\033[105X\033[101X\027\033[1X\027 S\
-ystem\033[133X\033[101X", "1.1", [ 1, 1, 0 ], 25, 5, "the gap\027\027 system",
-      "X869E3CF37EC69123" ], 
+ystem\033[133X\033[101X", "1.1", [ 1, 1, 0 ], 25, 5, "the gap system", 
+      "X863F306C7D32F4B0" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YFurther Information about \033[5XGAP\033[105X\\
 033[101X\027\033[1X\027\033[133X\033[101X", "1.2", [ 1, 2, 0 ], 141, 7, 
-      "further information about gap\027\027", "X7B488D2E8492AB6A" ], 
+      "further information about gap", "X7BF552C07E2F8F7C" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YA First Session with \033[5XGAP\033[105X\033[101X\
 \027\033[1X\027\033[133X\033[101X", "2", [ 2, 0, 0 ], 1, 8, 
-      "a first session with gap\027\027", "X7E1648BF8446FBC2" ], 
+      "a first session with gap", "X7A3C7AE07D6848E3" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YStarting and Leaving \033[5XGAP\033[105X\033[101X\
 \027\033[1X\027\033[133X\033[101X", "2.1", [ 2, 1, 0 ], 41, 8, 
-      "starting and leaving gap\027\027", "X7B5258097F48EFB6" ], 
+      "starting and leaving gap", "X84063FD486665C97" ], 
   [ 
       "\033[1X\033[33X\033[0;-2YLoading Source Code from a File\033[133X\033[101X\
 ", "2.2", [ 2, 2, 0 ], 90, 9, "loading source code from a file", 
@@ -161,14 +161,14 @@ ras\033[133X\033[101X", "6.3", [ 6, 3, 0 ], 538, 65,
       "X7A6F98FD85F02BFE" ], 
   [ "Index", "ind", [ "Ind", 0, 0 ], 1, 78, "index", "X83A0356F839C696F" ], 
   [ "starting \033[5XGAP\033[105X", "2.1", [ 2, 1, 0 ], 41, 8, 
-      "starting gap", "X7B5258097F48EFB6" ], 
+      "starting gap", "X84063FD486665C97" ], 
   [ "leaving \033[5XGAP\033[105X", "2.1", [ 2, 1, 0 ], 41, 8, "leaving gap", 
-      "X7B5258097F48EFB6" ], 
+      "X84063FD486665C97" ], 
   [ "\033[9Xquit\033[109X", "2.1", [ 2, 1, 0 ], 41, 8, "quit", 
-      "X7B5258097F48EFB6" ], 
+      "X84063FD486665C97" ], 
   [ "whitespace", "2.1", [ 2, 1, 0 ], 41, 8, "whitespace", 
-      "X7B5258097F48EFB6" ], 
-  [ "comments", "2.1", [ 2, 1, 0 ], 41, 8, "comments", "X7B5258097F48EFB6" ], 
+      "X84063FD486665C97" ], 
+  [ "comments", "2.1", [ 2, 1, 0 ], 41, 8, "comments", "X84063FD486665C97" ], 
   [ "loading source code from a file", "2.2", [ 2, 2, 0 ], 90, 9, 
       "loading source code from a file", "X7B8D5EC27E33AF6D" ], 
   [ "reading source code from a file", "2.2", [ 2, 2, 0 ], 90, 9, 

@@ -36,8 +36,8 @@ database entries.
 Thus it depends on the structure of a given database
 whether the tools described here are useful,
 or whether an individual interface fits better.
-Perhaps the examples shown in Sections <Ref Sect="sect:dbidenumxpl"/>
-and <Ref Sect="sect:transgrps"/> give an impression what is possible.
+Perhaps the example shown in Section <Ref Sect="sect:dbidenumxpl"/>
+gives an impression what is possible.
 
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
@@ -498,30 +498,6 @@ gap> NCurses.BrowseGeneric( t4 );
 gap> BrowseData.SetReplay( false );
 gap> Unbind( t4.dynamic.replay );
 </Example>
-
-</Section>
-
-<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
-<Section Label="sect:transgrps">
-<Heading>Example: An Overview of the &GAP; Library of Transitive Groups
-</Heading>
-
-The example shown in this section deals with &GAP;'s Library of
-Transitive Permutation Groups,
-see <Ref Sect="Transitive Permutation Groups" BookName="Ref"/>.
-Section <Ref Subsect="BrowseTransitiveGroupsInfo"/> introduces a browse table
-application for viewing information about the contents of this library,
-which is based on database attributes.
-Section <Ref Subsect="TransitiveGroupsData.AllTransitiveGroups"/> introduces
-functions based on database attributes that can be used to select groups
-from the library.
-Finally, Section <Ref Subsect="TransitiveGroupsData"/> describes
-how these two functionalities are implemented.
-
-<#Include Label="BrowseTransitiveGroupsInfo_man">
-<#Include Label="TransitiveGroupsData.SelectTransitiveGroups_man">
-<#Include Label="TransitiveGroupsData_man">
-<#Include Label="transdbattr_man">
 
 </Section>
 

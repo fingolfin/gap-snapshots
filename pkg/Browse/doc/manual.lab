@@ -5,16 +5,16 @@
 \makelabel{browse:Introduction and Overview}{1}{X794AAAFB7FFAA46C}
 \makelabel{browse:Introduction}{1.1}{X7DFB63A97E67C0A1}
 \makelabel{browse:Overview}{1.2}{X8389AD927B74BA4A}
-\makelabel{browse:The ncurses interface}{1.2.1}{X7BAF855C87FE1F06}
-\makelabel{browse:Applications of ncurses}{1.2.2}{X84F5140B82CBE86D}
+\makelabel{browse:The ncurses interface}{1.2.1}{X87A6D24784C21E54}
+\makelabel{browse:Applications of ncurses}{1.2.2}{X80C054D881502061}
 \makelabel{browse:The interface to browse two-dimensional arrays}{1.2.3}{X7CF47ACC83A95689}
-\makelabel{browse:Applications of the generic function NCurses.BrowseGeneric}{1.2.4}{X81C36C4B7ABC99A0}
-\makelabel{browse:User preferences provided by the Browse package}{1.3}{X82216D7A8636AEAD}
-\makelabel{browse:The user preference EnableMouseEvents}{1.3.1}{X81518A3583A457DF}
-\makelabel{browse:The user preference SelectHelpMatches}{1.3.2}{X7F6062478043DCD7}
-\makelabel{browse:The user preference SelectPackageName}{1.3.3}{X7DAD10F07CE2651E}
-\makelabel{browse:Interface to the ncurses Library}{2}{X7D56AC1386FF15C4}
-\makelabel{browse:The ncurses Library}{2.1}{X82F844F68017DF5A}
+\makelabel{browse:Applications of the generic function NCurses.BrowseGeneric}{1.2.4}{X7A0055DE7A2C5DC9}
+\makelabel{browse:User preferences provided by the Browse package}{1.3}{X825F23FF825334B4}
+\makelabel{browse:The user preference EnableMouseEvents}{1.3.1}{X859EAEDA850D3B02}
+\makelabel{browse:The user preference SelectHelpMatches}{1.3.2}{X7D242D4286EAB00A}
+\makelabel{browse:The user preference SelectPackageName}{1.3.3}{X7BC3B5827A4B09C3}
+\makelabel{browse:Interface to the ncurses Library}{2}{X7E049B1185A56B30}
+\makelabel{browse:The ncurses Library}{2.1}{X85DE9B75837BA65B}
 \makelabel{browse:Setting the terminal}{2.1.1}{X8499A3A384BF1F2D}
 \makelabel{browse:Manipulating windows}{2.1.2}{X800D5B6381F0356F}
 \makelabel{browse:Manipulating panels}{2.1.3}{X7D541BDE7BB8BED5}
@@ -22,61 +22,60 @@
 \makelabel{browse:Writing to windows}{2.1.5}{X7FD4E558816B3146}
 \makelabel{browse:Line drawing characters}{2.1.6}{X8091936586CCD248}
 \makelabel{browse:Text attributes and colors}{2.1.7}{X793D897483674294}
-\makelabel{browse:Low level ncurses mouse support}{2.1.8}{X83B93F1D8282F589}
+\makelabel{browse:Low level ncurses mouse support}{2.1.8}{X86675F5F791FEFEF}
 \makelabel{browse:Miscellaneous function}{2.1.9}{X83897BF984211EFD}
-\makelabel{browse:The ncurses GAP functions}{2.2}{X7EE0C6557B8190AA}
-\makelabel{browse:Mouse support in ncurses applications}{2.2.10}{X7DDFB32D78090334}
-\makelabel{browse:Utilities using ncurses}{3}{X7A9DB80B819B6343}
-\makelabel{browse:ncurses utilities}{3.1}{X84798B3080F49AD1}
+\makelabel{browse:The ncurses GAP functions}{2.2}{X864A5C1C7F181B4B}
+\makelabel{browse:Mouse support in ncurses applications}{2.2.10}{X799C033A7AB582D7}
+\makelabel{browse:Utilities using ncurses}{3}{X7F3A63788200AB4F}
+\makelabel{browse:ncurses utilities}{3.1}{X84E621798148857D}
 \makelabel{browse:Selection of help matches}{3.1.5}{X7D5685767D4FCD8E}
 \makelabel{browse:Selection of package names}{3.1.6}{X867BB82985D7953A}
 \makelabel{browse:A Demo Function}{3.2}{X7EF34E0E7FBD3A3B}
-\makelabel{browse:Browsing Tables in GAP using ncurses –The User Interface}{4}{X7AA6D49E848E9BBF}
-\makelabel{browse:Features Supported by the Function NCurses.BrowseGeneric}{4.1}{X8788DC587ABF8106}
-\makelabel{browse:Data Structures used by NCurses.BrowseGeneric}{4.2}{X7D8250FE86F509BF}
-\makelabel{browse:The Function NCurses.BrowseGeneric}{4.3}{X7C654A2A87FBC354}
-\makelabel{browse:Browsing Tables in GAP using ncurses –The Programming Interface}{5}{X85D5419281A436B7}
+\makelabel{browse:Browsing Tables in GAP using ncurses –The User Interface}{4}{X877E60DE7F53FDEC}
+\makelabel{browse:Features Supported by the Function NCurses.BrowseGeneric}{4.1}{X869EDB308717F199}
+\makelabel{browse:Data Structures used by NCurses.BrowseGeneric}{4.2}{X82689212794DA877}
+\makelabel{browse:The Function NCurses.BrowseGeneric}{4.3}{X8135D3C2806D8F92}
+\makelabel{browse:Browsing Tables in GAP using ncurses –The Programming Interface}{5}{X82DDDC1783B4CA30}
 \makelabel{browse:Navigation Steps in Browse Tables}{5.1}{X853E01C778A73ECB}
 \makelabel{browse:Modes in Browse Tables}{5.2}{X83290BB6864B2DD0}
 \makelabel{browse:Browse Applications}{5.3}{X7A4014DB84D16406}
 \makelabel{browse:Predefined Browse Functionalities}{5.4}{X831DD0D58052AD57}
-\makelabel{browse:Examples of Applications based on NCurses.BrowseGeneric}{6}{X7A5CF821873B48BF}
-\makelabel{browse:The Operation Browse}{6.1}{X839D076C819557AB}
+\makelabel{browse:Examples of Applications based on NCurses.BrowseGeneric}{6}{X78D4F8EA79405AF9}
+\makelabel{browse:The Operation Browse}{6.1}{X813F90F7815AB5B3}
 \makelabel{browse:Matrix Display}{6.2}{X7F6EE19480D10E2B}
 \makelabel{browse:Character Table Display}{6.3}{X8720923F7FDE5223}
 \makelabel{browse:Table of Marks Display}{6.4}{X80E9A03780DE8891}
-\makelabel{browse:Table of Contents of AtlasRep}{6.5}{X7CEB55CD838537EB}
+\makelabel{browse:Table of Contents of AtlasRep}{6.5}{X80370827793813FD}
 \makelabel{browse:BrowseAtlasInfo}{6.5.1}{X8411AF928194C5AB}
-\makelabel{browse:Access to GAP Manuals–a Variant}{6.6}{X81E6DDC17B7E2CF8}
-\makelabel{browse:Overview of the GAP Bibliography}{6.7}{X7EAE9E8281728C44}
-\makelabel{browse:Profiling GAP functions–a Variant}{6.8}{X78AB965980D7F85E}
-\makelabel{browse:Variables defined in GAP packages–a Variant}{6.9}{X7ACBE4FD7ED75EA7}
+\makelabel{browse:Access to GAP Manuals–a Variant}{6.6}{X7CF999297B331E01}
+\makelabel{browse:Overview of Bibliographies}{6.7}{X846751CC7F54F51D}
+\makelabel{browse:Profiling GAP functions–a Variant}{6.8}{X837BDF547FF0EA31}
+\makelabel{browse:Variables defined in GAP packages–a Variant}{6.9}{X87B30F7387C0E531}
 \makelabel{browse:Configuring User preferences–a Variant}{6.10}{X7CD025147D528741}
-\makelabel{browse:Overview of GAP Data}{6.11}{X80B8A3C48751E87B}
+\makelabel{browse:Overview of GAP Data}{6.11}{X86C730A07855238D}
 \makelabel{browse:Navigating in a Directory Tree}{6.12}{X7E3FDA927E62D963}
 \makelabel{browse:A Puzzle}{6.13}{X7FAE33037D09CC4E}
 \makelabel{browse:Peg Solitaire}{6.14}{X7FFF943D78A403C9}
 \makelabel{browse:Rubik's Cube}{6.15}{X862CB73B7E0BE170}
 \makelabel{browse:Changing Sides}{6.16}{X7ADD618186541123}
 \makelabel{browse:Sudoku}{6.17}{X7DDE46668321B5E9}
+\makelabel{browse:Utility for GAP Demos}{6.18}{X7BCE1AE37EFCE91D}
 \makelabel{browse:Some Tools for Database Handling}{A}{X85D4199E82A7DFA5}
-\makelabel{browse:GAP Objects for Database Handling}{A.1}{X86DA1A0082C465DD}
+\makelabel{browse:GAP Objects for Database Handling}{A.1}{X7A0B84C37CB9DFA3}
 \makelabel{browse:Database Id Enumerators}{A.1.1}{X7999CF7F79ACA240}
 \makelabel{browse:Database Attributes}{A.1.2}{X7D2804F97EE18BA5}
 \makelabel{browse:How to Deal with Database Id Enumerators and Database Attributes}{A.1.3}{X7B3913E28493563F}
 \makelabel{browse:Using Database Attributes for Browse Tables}{A.2}{X80E9CFA17EE7817A}
 \makelabel{browse:Browse Relevant Components of Database Attributes}{A.2.1}{X7A2DD7827CBBD735}
 \makelabel{browse:Example: Database Id Enumerators and Database Attributes}{A.3}{X808BDD24857F3904}
-\makelabel{browse:Example: An Overview of the GAP Library of Transitive Groups}{A.4}{X858E7FC37DCAA719}
-\makelabel{browse:Additional Database Attributes for Transitive Groups}{A.4.4}{X83E9FAAE85F80223}
-\makelabel{browse:Example: An Overview of the GAP Library of Tables of Marks}{A.5}{X831C7F817C6C4AA0}
+\makelabel{browse:Example: An Overview of the GAP Library of Tables of Marks}{A.4}{X8628EF6981A524B3}
 \makelabel{browse:Bibliography}{Bib}{X7A6F98FD85F02BFE}
 \makelabel{browse:References}{Bib}{X7A6F98FD85F02BFE}
 \makelabel{browse:Index}{Ind}{X83A0356F839C696F}
 \makelabel{browse:visual mode}{1.1}{X7DFB63A97E67C0A1}
 \makelabel{browse:colors as text attributes}{1.1}{X7DFB63A97E67C0A1}
 \makelabel{browse:game}{1.1}{X7DFB63A97E67C0A1}
-\makelabel{browse:attribute line}{1.2.1}{X7BAF855C87FE1F06}
+\makelabel{browse:attribute line}{1.2.1}{X87A6D24784C21E54}
 \makelabel{browse:savetty}{2.1.1}{X8499A3A384BF1F2D}
 \makelabel{browse:resetty}{2.1.1}{X8499A3A384BF1F2D}
 \makelabel{browse:cbreak}{2.1.1}{X8499A3A384BF1F2D}
@@ -141,10 +140,10 @@
 \makelabel{browse:wattrget}{2.1.7}{X793D897483674294}
 \makelabel{browse:wbkgdset}{2.1.7}{X793D897483674294}
 \makelabel{browse:wbkgd}{2.1.7}{X793D897483674294}
-\makelabel{browse:mousemask}{2.1.8}{X83B93F1D8282F589}
-\makelabel{browse:getmouse}{2.1.8}{X83B93F1D8282F589}
-\makelabel{browse:wenclose}{2.1.8}{X83B93F1D8282F589}
-\makelabel{browse:mouseinterval}{2.1.8}{X83B93F1D8282F589}
+\makelabel{browse:mousemask}{2.1.8}{X86675F5F791FEFEF}
+\makelabel{browse:getmouse}{2.1.8}{X86675F5F791FEFEF}
+\makelabel{browse:wenclose}{2.1.8}{X86675F5F791FEFEF}
+\makelabel{browse:mouseinterval}{2.1.8}{X86675F5F791FEFEF}
 \makelabel{browse:mnap}{2.1.9}{X83897BF984211EFD}
 \makelabel{browse:IsStdinATty}{2.1.9}{X83897BF984211EFD}
 \makelabel{browse:IsStdoutATty}{2.1.9}{X83897BF984211EFD}
@@ -160,8 +159,8 @@
 \makelabel{browse:displayed characters}{2.2.7}{X82C53ACD805EE0C3}
 \makelabel{browse:NCurses.Grid}{2.2.8}{X790715F683BF1E66}
 \makelabel{browse:NCurses.WBorder}{2.2.9}{X82B801587B37D571}
-\makelabel{browse:NCurses.UseMouse}{2.2.10}{X7DDFB32D78090334}
-\makelabel{browse:NCurses.GetMouseEvent}{2.2.10}{X7DDFB32D78090334}
+\makelabel{browse:NCurses.UseMouse}{2.2.10}{X799C033A7AB582D7}
+\makelabel{browse:NCurses.GetMouseEvent}{2.2.10}{X799C033A7AB582D7}
 \makelabel{browse:NCurses.SaveWin}{2.2.11}{X85FB1D7878A322EB}
 \makelabel{browse:NCurses.StringsSaveWin}{2.2.11}{X85FB1D7878A322EB}
 \makelabel{browse:NCurses.RestoreWin}{2.2.11}{X85FB1D7878A322EB}
@@ -175,28 +174,28 @@
 \makelabel{browse:NCurses.GetLineFromUser}{3.1.3}{X837EFD8A842257EA}
 \makelabel{browse:NCurses.Pager}{3.1.4}{X87E1B2787F588CC0}
 \makelabel{browse:NCurses.Demo}{3.2.1}{X8681359F8064597B}
-\makelabel{browse:main table of a browse table}{4}{X7AA6D49E848E9BBF}
-\makelabel{browse:row labels of a browse table}{4}{X7AA6D49E848E9BBF}
-\makelabel{browse:column labels of a browse table}{4}{X7AA6D49E848E9BBF}
-\makelabel{browse:corner table of a browse table}{4}{X7AA6D49E848E9BBF}
-\makelabel{browse:header of a browse table}{4}{X7AA6D49E848E9BBF}
-\makelabel{browse:footer of a browse table}{4}{X7AA6D49E848E9BBF}
-\makelabel{browse:scrolling in a browse table}{4.1}{X8788DC587ABF8106}
-\makelabel{browse:mouse events}{4.1}{X8788DC587ABF8106}
-\makelabel{browse:selecting entries of a browse table}{4.1}{X8788DC587ABF8106}
-\makelabel{browse:searching in a browse table}{4.1}{X8788DC587ABF8106}
-\makelabel{browse:sorting a browse table}{4.1}{X8788DC587ABF8106}
-\makelabel{browse:categorizing a browse table}{4.1}{X8788DC587ABF8106}
-\makelabel{browse:collapsed category row}{4.1}{X8788DC587ABF8106}
-\makelabel{browse:expanded category row}{4.1}{X8788DC587ABF8106}
-\makelabel{browse:filtering a browse table}{4.1}{X8788DC587ABF8106}
-\makelabel{browse:help window for a browse table}{4.1}{X8788DC587ABF8106}
-\makelabel{browse:log of a browse table session}{4.1}{X8788DC587ABF8106}
-\makelabel{browse:BrowseData.log}{4.1}{X8788DC587ABF8106}
-\makelabel{browse:replay of a browse table session}{4.1}{X8788DC587ABF8106}
-\makelabel{browse:click on an entry of a browse table}{4.1}{X8788DC587ABF8106}
-\makelabel{browse:mouse events}{4.1}{X8788DC587ABF8106}
-\makelabel{browse:return value of a browse table session}{4.1}{X8788DC587ABF8106}
+\makelabel{browse:main table of a browse table}{4}{X877E60DE7F53FDEC}
+\makelabel{browse:row labels of a browse table}{4}{X877E60DE7F53FDEC}
+\makelabel{browse:column labels of a browse table}{4}{X877E60DE7F53FDEC}
+\makelabel{browse:corner table of a browse table}{4}{X877E60DE7F53FDEC}
+\makelabel{browse:header of a browse table}{4}{X877E60DE7F53FDEC}
+\makelabel{browse:footer of a browse table}{4}{X877E60DE7F53FDEC}
+\makelabel{browse:scrolling in a browse table}{4.1}{X869EDB308717F199}
+\makelabel{browse:mouse events}{4.1}{X869EDB308717F199}
+\makelabel{browse:selecting entries of a browse table}{4.1}{X869EDB308717F199}
+\makelabel{browse:searching in a browse table}{4.1}{X869EDB308717F199}
+\makelabel{browse:sorting a browse table}{4.1}{X869EDB308717F199}
+\makelabel{browse:categorizing a browse table}{4.1}{X869EDB308717F199}
+\makelabel{browse:collapsed category row}{4.1}{X869EDB308717F199}
+\makelabel{browse:expanded category row}{4.1}{X869EDB308717F199}
+\makelabel{browse:filtering a browse table}{4.1}{X869EDB308717F199}
+\makelabel{browse:help window for a browse table}{4.1}{X869EDB308717F199}
+\makelabel{browse:log of a browse table session}{4.1}{X869EDB308717F199}
+\makelabel{browse:BrowseData.log}{4.1}{X869EDB308717F199}
+\makelabel{browse:replay of a browse table session}{4.1}{X869EDB308717F199}
+\makelabel{browse:click on an entry of a browse table}{4.1}{X869EDB308717F199}
+\makelabel{browse:mouse events}{4.1}{X869EDB308717F199}
+\makelabel{browse:return value of a browse table session}{4.1}{X869EDB308717F199}
 \makelabel{browse:BrowseData.IsBrowseTableCellData}{4.2.1}{X82157A2684969A5F}
 \makelabel{browse:BrowseData.BlockEntry}{4.2.2}{X7CA598A77A70C3B3}
 \makelabel{browse:BrowseData.IsBrowseTable}{4.2.3}{X81007E2F8552523B}
@@ -228,15 +227,16 @@
 \makelabel{browse:BrowseData.actions.Error}{5.4.7}{X8728E4B6856EAEC0}
 \makelabel{browse:Browse}{6.1.1}{X7FDD696B7DD54A6E}
 \makelabel{browse:NCurses.BrowseDenseList}{6.2.1}{X8295F85D87118C83}
-\makelabel{browse:Browse (for a list of lists)}{6.2.2}{X7AD78A0B7BEDBB20}
-\makelabel{browse:Browse (for character tables)}{6.3.1}{X870C744182073CF6}
+\makelabel{browse:Browse for a list of lists}{6.2.2}{X7AD78A0B7BEDBB20}
+\makelabel{browse:Browse for character tables}{6.3.1}{X870C744182073CF6}
 \makelabel{browse:BrowseDecompositionMatrix}{6.3.2}{X7D80A56D853C9655}
-\makelabel{browse:Browse (for tables of marks)}{6.4.1}{X7F4BD9C580BBBAA4}
-\makelabel{browse:BrowseAtlasInfo (overview of groups)}{6.5.1}{X8411AF928194C5AB}
-\makelabel{browse:BrowseAtlasInfo (overview for one group)}{6.5.1}{X8411AF928194C5AB}
+\makelabel{browse:Browse for tables of marks}{6.4.1}{X7F4BD9C580BBBAA4}
+\makelabel{browse:BrowseAtlasInfo overview of groups}{6.5.1}{X8411AF928194C5AB}
+\makelabel{browse:BrowseAtlasInfo overview for one group}{6.5.1}{X8411AF928194C5AB}
 \makelabel{browse:BrowseGapManuals}{6.6.1}{X7D79DF9181A15EDF}
 \makelabel{browse:BrowseBibliography}{6.7.1}{X7F0FE4CC7F46ABF3}
-\makelabel{browse:BrowseMSC}{6.7.2}{X81F1558678ACDB4A}
+\makelabel{browse:BrowseBibliographyGapPackages}{6.7.2}{X7E4B5E277D08987B}
+\makelabel{browse:BrowseMSC}{6.7.3}{X81F1558678ACDB4A}
 \makelabel{browse:BrowseProfile}{6.8.1}{X7B42091982DE7AE7}
 \makelabel{browse:BrowsePackageVariables}{6.9.1}{X8030B1688335783D}
 \makelabel{browse:BrowseUserPreferences}{6.10.1}{X7A7B712E7A06449F}
@@ -268,6 +268,7 @@
 \makelabel{browse:PlaySudoku}{6.17.8}{X7D19224478E86BB4}
 \makelabel{browse:Sudoku.HTMLGame}{6.17.9}{X804D66D67B908F30}
 \makelabel{browse:Sudoku.LaTeXGame}{6.17.9}{X804D66D67B908F30}
+\makelabel{browse:LoadDemoFile}{6.18.1}{X80F418C5835C62BA}
 \makelabel{browse:DatabaseIdEnumerator}{A.1.4}{X7AE32F217CF16EDF}
 \makelabel{browse:DatabaseAttributeAdd}{A.1.5}{X8573522782D939FE}
 \makelabel{browse:DatabaseAttributeValueDefault}{A.1.6}{X7C8DB23E79567A60}
@@ -275,8 +276,4 @@
 \makelabel{browse:DatabaseAttributeCompute}{A.1.8}{X812075CE7A01EA04}
 \makelabel{browse:DatabaseAttributeSetData}{A.1.9}{X87A8B19C82E9FF0B}
 \makelabel{browse:BrowseTableFromDatabaseIdEnumerator}{A.2.2}{X7F25A3E586653911}
-\makelabel{browse:BrowseTransitiveGroupsInfo}{A.4.1}{X832846F486391385}
-\makelabel{browse:TransitiveGroupsData.AllTransitiveGroups}{A.4.2}{X7FA5513D84EE81AB}
-\makelabel{browse:TransitiveGroupsData.OneTransitiveGroup}{A.4.2}{X7FA5513D84EE81AB}
-\makelabel{browse:TransitiveGroupsData}{A.4.3}{X7AC030827D5CDE03}
-\makelabel{browse:BrowseTomLibInfo}{A.5.1}{X844D143980A0E20D}
+\makelabel{browse:BrowseTomLibInfo}{A.4.1}{X844D143980A0E20D}

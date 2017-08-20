@@ -1,3 +1,7 @@
+
+#T  In BrowseGapDataAdd, no 'ret' argument is necessary if
+#T  CALL_WITH_CATCH is used!
+
 #############################################################################
 ##
 #W  brutils.g             GAP 4 package `Browse'                Thomas Breuer
@@ -295,7 +299,7 @@ end;
 BrowseData.ReallyFormatParagraph:= function( arg )
     local max, flush, result, line, linelen, rest, offset;
 
-    if Length( arg ) = 1 or not IsInt( arg[2] ) then
+    if Length( arg ) = 1 or not IsPosInt( arg[2] ) then
       max:= 78;
     else
       max:= arg[2];
@@ -461,23 +465,35 @@ end;
 ##
 #F  BrowseData.SortKeyFunctionBibRec( <record> )
 ##
-#T  document what it is intended for!
+##  This function can be used as the value of the 'sortKeyFunction' component
+##  of a record that is the argument of a call to 'BrowseBibliography'.
+##
+##  It is used this way by AtlasRep's 'BrowseBibliographySporadicSimple' and
+##  by MFER's 'BrowseBibliographyPermReprSporadicSimple'.
+##
+##  The idea is to sort/identify bibliography entries by
+##  1. the list of authors
+##     (case insensitive, using ASCII versions of the names as returned by
+##     'BrowseData.SimplifiedString'),
+##  2. the year,
+##  3. if applicable the additional distinguishing letter in the label
+##     (such that [XY05a] precedes [XY05b]),
+##  4. the title
+##     (case insensitive, after the normalization of whitespace).
 ##
 BrowseData.SortKeyFunctionBibRec:= function( r )
     local key;
 
     key:= [];
     if IsBound( r.authorAsList ) then
-  #     Add( key,  List( r.authorAsList, a -> LowercaseString( a[1] ) ) );
       Add( key,  List( r.authorAsList, a -> ( a[1] ) ) );
     elif IsBound( r.editorAsList ) then
-  #     Add( key,  List( r.editorAsList, a -> LowercaseString( a[1] ) ) );
       Add( key,  List( r.editorAsList, a -> ( a[1] ) ) );
     else
       Add( key, [ "zzz" ] );
     fi;
-key[1]:= List( key[1], x -> LowercaseString( BrowseData.SimplifiedString( x ) ) );
-#T why??
+    key[1]:= List( key[1],
+               x -> LowercaseString( BrowseData.SimplifiedString( x ) ) );
     if IsBound( r.year ) then
       Add( key, r.year );
     else

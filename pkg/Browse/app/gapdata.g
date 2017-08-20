@@ -2,7 +2,7 @@
 ##
 #W  gapdata.g             GAP 4 package `browse'                Thomas Breuer
 ##
-#Y  Copyright (C)  2007,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  Copyright (C)  2007,  Lehrstuhl D für Mathematik,   RWTH Aachen,  Germany
 ##
 
 
@@ -89,10 +89,6 @@
 ##      the contents of the <Package>TomLib</Package> package
 ##      <Cite Key="TomLib"/> (only if this package is loaded,
 ##      see Section&nbsp;<Ref Sect="sect:tomlibinfo"/>),
-##  </Item>
-##  <Item>
-##      &GAP;'s Library of Transitive Groups
-##      (see Section&nbsp;<Ref Sect="sect:transgrps"/>).
 ##  </Item>
 ##  </List>
 ##  <P/>

@@ -22,17 +22,17 @@
   [33X[0;0YThe  [5XGAP[105X  library consists of the following types of files, distinguished by
   their suffixes:[133X
   
-  [8X[10X.g[110X [108X
+  [8X[10X.g[110X[8X [108X
         [33X[0;6YFiles  which  contain  parts of the [21Xinner workings[121X of [5XGAP[105X. These files
         usually   do   not  contain  mathematical  functionality,  except  for
         providing links to kernel functions.[133X
   
-  [8X[10X.gd[110X [108X
+  [8X[10X.gd[110X[8X [108X
         [33X[0;6YDeclaration files. These files contain declarations of all categories,
         attributes, operations, and global functions. These files also contain
         the operation definitions in comments.[133X
   
-  [8X[10X.gi[110X [108X
+  [8X[10X.gi[110X[8X [108X
         [33X[0;6YImplementation files. These files contain all installations of methods
         and global functions. Usually declarations of representations are also
         considered to be part of the implementation and are therefore found in

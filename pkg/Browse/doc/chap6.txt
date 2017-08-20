@@ -63,13 +63,13 @@
   
   [33X[0;0YThe following components of [3Xarec[103X are supported.[133X
   
-  [8X[10Xheader[110X[108X
+  [8X[10Xheader[110X[8X[108X
         [33X[0;6YIf bound, the value must be a valid value of the [10Xwork.header[110X component
         of  a browse table, see [2XBrowseData.IsBrowseTable[102X ([14X4.2-3[114X); for example,
         the  value  can  be  a list of strings. If this component is not bound
         then the browse table has no header.[133X
   
-  [8X[10XconvertEntry[110X[108X
+  [8X[10XconvertEntry[110X[8X[108X
         [33X[0;6YIf  bound,  the  value  must be a unary function that returns a string
         describing   its   argument.  The  default  is  the  operation  [2XString[102X
         ([14XReference:      String[114X).      Another      possible      value     is
@@ -78,12 +78,12 @@
         returns the [2XString[102X ([14XReference: String[114X) value otherwise. For each entry
         in a row of [3Xlist[103X, the [10XconvertEntry[110X value is shown in the browse table.[133X
   
-  [8X[10XlabelsRow[110X[108X
+  [8X[10XlabelsRow[110X[8X[108X
         [33X[0;6YIf  bound,  the  value  must  be a list of row label rows for [3Xlist[103X, as
         described  in Section [2XBrowseData.IsBrowseTable[102X ([14X4.2-3[114X). The default is
         [10X[ [ "1" ], [ "2" ], ... ][110X.[133X
   
-  [8X[10XlabelsCol[110X[108X
+  [8X[10XlabelsCol[110X[8X[108X
         [33X[0;6YIf  bound,  the value must be a list of column label rows for [3Xlist[103X, as
         described  in Section [2XBrowseData.IsBrowseTable[102X ([14X4.2-3[114X). The default is
         [10X[ [ "1", "2", ... ] ][110X.[133X
@@ -313,7 +313,7 @@
   
   [1X6.5 [33X[0;0YTable of Contents of [5XAtlasRep[105X[101X[1X[133X[101X
   
-  [33X[0;0YThe  [5XGAP[105X  package  [5XAtlasRep[105X (see [WPNBB07]) is an interface to a database of
+  [33X[0;0YThe  [5XGAP[105X  package  [5XAtlasRep[105X  (see [WPN+07]) is an interface to a database of
   representations and related data. The table of contents of this database can
   be  displayed via the function [2XDisplayAtlasInfo[102X ([14XAtlasRep: DisplayAtlasInfo[114X)
   of  this  package.  The  [5XBrowse[105X package provides an alternative based on the
@@ -527,20 +527,26 @@
   [33X[0;0YThe code can be found in the file [11Xapp/manual.g[111X of the package.[133X
   
   
-  [1X6.7 [33X[0;0YOverview of the [5XGAP[105X[101X[1X Bibliography[133X[101X
+  [1X6.7 [33X[0;0YOverview of Bibliographies[133X[101X
   
-  [33X[0;0YThe  [5XGAP[105X  documentation contains a bibliography of [5XGAP[105X related publications,
-  see [GAP].  [5XBrowse[105X  provides  access  to  this  information  in  [5XGAP[105X via the
-  function  [2XBrowseBibliography[102X  ([14X6.7-1[114X),  using the standard facilities of the
-  function  [2XNCurses.BrowseGeneric[102X  ([14X4.3-1[114X), i. e., one can scroll in the list,
-  search for entries, sort by year, sort and categorize by authors etc.[133X
+  [33X[0;0YThe  function [2XBrowseBibliography[102X ([14X6.7-1[114X) can be used to turn the contents of
+  bibliography files in BibTeX or BibXMLext format (see [14X'GAPDoc: The BibXMLext
+  Format'[114X)  into  a Browse table, such that one can scroll in the list, search
+  for entries, sort by year, sort and categorize by authors etc.[133X
   
-  [33X[0;0YThe   [5XBrowse[105X   package   contains  a  (perhaps  outdated)  version  of  this
-  bibliography. One can get an updated version as follows.[133X
+  [33X[0;0YThe   default   bibliography  used  by  [2XBrowseBibliography[102X  ([14X6.7-1[114X)  is  the
+  bibliography  of  [5XGAP[105X  related  publications,  see [GAP]. The [5XBrowse[105X package
+  contains  a  (perhaps outdated) version of this bibliography. One can get an
+  updated version as follows.[133X
   
   [33X[0;0Y[10Xwget -N http://www.gap-system.org/Doc/Bib/gap-publishednicer.bib[110X[133X
   
-  [33X[0;0YThe  function  [2XBrowseMSC[102X  ([14X6.7-2[114X)  shows  an overview of the AMS Mathematics
+  [33X[0;0YThe  columns of the Browse table that is shown by [2XBrowseBibliography[102X ([14X6.7-1[114X)
+  can  be  customized,  two  examples  for  that  are  given  by the functions
+  [2XBrowseBibliographySporadicSimple[102X                                  ([14XAtlasRep:
+  BrowseBibliographySporadicSimple[114X) and [2XBrowseBibliographyGapPackages[102X ([14X6.7-2[114X).[133X
+  
+  [33X[0;0YThe  function  [2XBrowseMSC[102X  ([14X6.7-3[114X)  shows  an overview of the AMS Mathematics
   Subject Classification codes.[133X
   
   [1X6.7-1 BrowseBibliography[101X
@@ -657,26 +663,26 @@
   [33X[0;0YThe  browse  table can be customized by entering a record as the argument of
   [2XBrowseBibliography[102X, with the following supported components.[133X
   
-  [8X[10Xfiles[110X[108X
+  [8X[10Xfiles[110X[8X[108X
         [33X[0;6Ya nonempty list of filenames containing the data to be shown; there is
         no default for this component.[133X
   
-  [8X[10Xfilesshort[110X[108X
+  [8X[10Xfilesshort[110X[8X[108X
         [33X[0;6Ya  list  of  the  same  length as the [10Xfiles[110X component, the entries are
         strings  which  are  shown in the [10X"sourcefilename"[110X column of the table
         (if this column is present); the default is the list of filenames.[133X
   
-  [8X[10Xfilecontents[110X[108X
+  [8X[10Xfilecontents[110X[8X[108X
         [33X[0;6Ya  list  of  the  same  length as the [10Xfiles[110X component, the entries are
         strings  which  are  shown  as  category  values  when  the  table  is
         categorized by the [10X"sourcefilename"[110X column; the default is the list of
         filenames.[133X
   
-  [8X[10Xheader[110X[108X
+  [8X[10Xheader[110X[8X[108X
         [33X[0;6Yis  the  constant part of the header shown above the browse table, the
         default is the first filename.[133X
   
-  [8X[10Xcolumns[110X[108X
+  [8X[10Xcolumns[110X[8X[108X
         [33X[0;6Yis  a  list  of  records  that  are  valid  as  the second argument of
         [2XDatabaseAttributeAdd[102X  ([14XA.1-5[114X),  where the first argument is a database
         id  enumerator  created  from the bibliography entries in the files in
@@ -691,26 +697,52 @@
         described  below.  Columns  showing authors, title, year, journal, MSC
         code, and filename are predefined and need not be listed here.[133X
   
-  [8X[10Xchoice[110X[108X
+  [8X[10Xchoice[110X[8X[108X
         [33X[0;6Ya  list of strings denoting the [10Xidentifier[110X components of those columns
         that shall actually be shown in the table, the default is [10X[ "authors",
         "title", "year", "journal", "mrclass" ][110X.[133X
   
-  [8X[10Xfingerprint[110X[108X
+  [8X[10Xfingerprint[110X[8X[108X
         [33X[0;6Ya  list  of  strings  denoting  component  names of the entries of the
         database  id enumerator that is constructed from the data (see above);
         two  data  records  are  regarded  as  equal  if  the  values of these
         components   are   equal;   the  default  is  [10X[  "mrnumber",  "title",
         "authorAsList", "editorAsList", "author" ][110X.[133X
   
-  [8X[10XsortKeyFunction[110X[108X
+  [8X[10XsortKeyFunction[110X[8X[108X
         [33X[0;6Yeither  [9Xfail[109X  or  a  function  that  takes  a  record  as  returned by
         [2XRecBibXMLEntry[102X  ([14XGAPDoc:  RecBibXMLEntry[114X)  and  returns a list that is
         used  for comparing and thus sorting the records; the default is [9Xfail[109X,
         which  means that the rows of the table appear in the same ordering as
         in the source files.[133X
   
-  [1X6.7-2 BrowseMSC[101X
+  [1X6.7-2 BrowseBibliographyGapPackages[101X
+  
+  [29X[2XBrowseBibliographyGapPackages[102X(  ) [32X function
+  [6XReturns:[106X  [33X[0;10Ya record as returned by [2XBrowseBibliography[102X ([14X6.7-1[114X).[133X
+  
+  [33X[0;0YThis  function collects the information from the [10X*.bib[110X and [10X*bib.xml[110X files in
+  those  subdirectories  of  installed  [5XGAP[105X packages which contain the package
+  documentation,   and  shows  it  in  a  Browse  table,  using  the  function
+  [2XBrowseBibliography[102X ([14X6.7-1[114X).[133X
+  
+  [33X[0;0Y[13XThis  function  is  experimental.[113X The result is not really satisfactory, for
+  the following reasons.[133X
+  
+  [30X    [33X[0;6YDuplicate  entries  may  occur,  due  to subtle differences in various
+        source files.[133X
+  
+  [30X    [33X[0;6YThe  source  files may contain more than what is actually cited in the
+        package manuals.[133X
+  
+  [30X    [33X[0;6YIt  may  happen  that  some  [10X*.bib[110X  or  [10X*bib.xml[110X  file is accidentally
+        distributed  with  the package but is not intended to serve as package
+        bibliography.[133X
+  
+  [30X    [33X[0;6YThe heuristics for rewriting LaTeX code is of course not perfect; thus
+        strange symbols may occur in the Browse table.[133X
+  
+  [1X6.7-3 BrowseMSC[101X
   
   [29X[2XBrowseMSC[102X(  ) [32X function
   [6XReturns:[106X  [33X[0;10Ynothing.[133X
@@ -814,7 +846,7 @@
   [2XPackageVariablesInfo[102X  ([14XReference:  PackageVariablesInfo[114X)  for the package in
   question, instead of the version number.[133X
   
-  [33X[0;0Y[2XBrowsePackageVariables[102X  opens a Browse table that shows the global variables
+  [33X[0;0Y[2XBrowsePackageVariables[102X  opens a browse table that shows the global variables
   that  become  bound and the methods that become installed when [5XGAP[105X loads the
   package [3Xpkgname[103X.[133X
   
@@ -866,7 +898,7 @@
   [3Xpackage1[103X,  [22X...[122X  are  given then only the user preferences for these packages
   are shown.[133X
   
-  [33X[0;0Y[2XBrowseUserPreferences[102X opens a Browse table with the following columns:[133X
+  [33X[0;0Y[2XBrowseUserPreferences[102X opens a browse table with the following columns:[133X
   
   [8X[21XPackage[121X[108X
         [33X[0;6Ycontains  the  names of the [5XGAP[105X packages to which the user preferences
@@ -886,8 +918,26 @@
   ([14X3.1-2[114X), otherwise one can enter the desired value as text.[133X
   
   [33X[0;0YThe  values  of  the  user preferences are not changed before one closes the
-  Browse  table.  When  the  table is left and if one has changed at least one
+  browse  table.  When  the  table is left and if one has changed at least one
   value, one is asked whether the changes shall be applied.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xd:= [ NCurses.keys.DOWN ];;  [127X[104X
+    [4X[25Xgap>[125X [27Xc:= [ NCurses.keys.ENTER ];; [127X[104X
+    [4X[25Xgap>[125X [27XBrowseData.SetReplay( Concatenation([127X[104X
+    [4X[25X>[125X [27X       "/PackagesToLoad",  # enter a search string,[127X[104X
+    [4X[25X>[125X [27X       c,                  # start the search,[127X[104X
+    [4X[25X>[125X [27X       c,                  # edit the entry (a list of choices),[127X[104X
+    [4X[25X>[125X [27X       " ", d,             # toggle the first four values,[127X[104X
+    [4X[25X>[125X [27X       " ", d,             #[127X[104X
+    [4X[25X>[125X [27X       " ", d,             #[127X[104X
+    [4X[25X>[125X [27X       " ", d,             #[127X[104X
+    [4X[25X>[125X [27X       c,                  # submit the values,[127X[104X
+    [4X[25X>[125X [27X       "Q",                # quit the table,[127X[104X
+    [4X[25X>[125X [27X       c ) );              # choose "cancel": do not apply the changes.[127X[104X
+    [4X[25Xgap>[125X [27XBrowseUserPreferences();[127X[104X
+    [4X[25Xgap>[125X [27XBrowseData.SetReplay( false );[127X[104X
+  [4X[32X[104X
   
   [33X[0;0YThe code can be found in the file [11Xapp/userpref.g[111X of the package.[133X
   
@@ -918,10 +968,10 @@
   [33X[0;0YThe [5XBrowse[105X package provides overviews of[133X
   
   [30X    [33X[0;6Ythe   current   AMS  Mathematics  Subject  Classification  codes  (see
-        [2XBrowseMSC[102X ([14X6.7-2[114X)),[133X
+        [2XBrowseMSC[102X ([14X6.7-3[114X)),[133X
   
-  [30X    [33X[0;6Ythe  contents  of the [5XAtlasRep[105X package [WPNBB07] (only if this package
-        is loaded, see Section [14X6.5[114X),[133X
+  [30X    [33X[0;6Ythe contents of the [5XAtlasRep[105X package [WPN+07] (only if this package is
+        loaded, see Section [14X6.5[114X),[133X
   
   [30X    [33X[0;6Ythe Conway polynomials in [5XGAP[105X (calls [10XBrowseConwayPolynomials()[110X),[133X
   
@@ -938,22 +988,20 @@
   
   [30X    [33X[0;6Y[5XGAP[105X's user preferences (see Section [14X6.10[114X),[133X
   
-  [30X    [33X[0;6Ythe  contents  of  the [5XTomLib[105X package [NMP11] (only if this package is
-        loaded, see Section [14XA.5[114X),[133X
-  
-  [30X    [33X[0;6Y[5XGAP[105X's Library of Transitive Groups (see Section [14XA.4[114X).[133X
+  [30X    [33X[0;6Ythe  contents  of  the [5XTomLib[105X package [NMP13] (only if this package is
+        loaded, see Section [14XA.4[114X),[133X
   
   [33X[0;0YOther   [5XGAP[105X   packages   may   add   more   overviews,  using  the  function
   [2XBrowseGapDataAdd[102X ([14X6.11-2[114X). For example, there are overviews of[133X
   
-  [30X    [33X[0;6Ythe  bibliographies in the [5XATLAS[105X of Finite Groups [CCNPW85] and in the
+  [30X    [33X[0;6Ythe  bibliographies  in the [5XATLAS[105X of Finite Groups [CCN+85] and in the
         [5XATLAS[105X       of       Brauer       Characters       [JLPW95]       (see
         [2XBrowseBibliographySporadicSimple[102X                            ([14XAtlasRep:
         BrowseBibliographySporadicSimple[114X)),[133X
   
   [30X    [33X[0;6Yatomic  irrationalities that occur in character tables in the [5XATLAS[105X of
-        Finite  Groups  [CCNPW85]  or  the [5XATLAS[105X of Brauer Characters [JLPW95]
-        (see        Section        [2XBrowseCommonIrrationalities[102X       ([14XCTblLib:
+        Finite Groups [CCN+85] or the [5XATLAS[105X of Brauer Characters [JLPW95] (see
+        Section              [2XBrowseCommonIrrationalities[102X             ([14XCTblLib:
         BrowseCommonIrrationalities[114X)),[133X
   
   [30X    [33X[0;6Ythe  differences  between  the versions of the character table data in
@@ -1022,14 +1070,14 @@
   
   [1X6.12-1 BrowseDirectory[101X
   
-  [29X[2XBrowseDirectory[102X( [[3Xstartpath[103X] ) [32X function
+  [29X[2XBrowseDirectory[102X( [[3Xdir[103X] ) [32X function
   [6XReturns:[106X  [33X[0;10Ya list of the [21Xclicked[121X filenames.[133X
   
   [33X[0;0YIf no argument is given then the contents of the current directory is shown,
-  see [2XDirectoryCurrent[102X ([14XReference: DirectoryCurrent[114X). If a string [3Xstartpath[103X is
-  given as the only argument then it is understood as a directory path, in the
-  sense  of  [2XDirectory[102X  ([14XReference:  Directory[114X),  and  the  contents  of  this
-  directory is shown.[133X
+  see  [2XDirectoryCurrent[102X  ([14XReference:  DirectoryCurrent[114X). If a directory object
+  [3Xdir[103X  (see  [2XDirectory[102X  ([14XReference:  Directory[114X)) is given as the only argument
+  then the contents of this directory is shown; alternatively, [3Xdir[103X may also be
+  a string which is then understood as a directory path.[133X
   
   [33X[0;0YThe  full  functionality  of  the  function [2XNCurses.BrowseGeneric[102X ([14X4.3-1[114X) is
   available.[133X
@@ -1041,7 +1089,7 @@
     [4X[25X>[125X [27X       "X",                                  # expand all categories[127X[104X
     [4X[25X>[125X [27X       "/filetree", [ NCurses.keys.ENTER ],  # search for "filetree"[127X[104X
     [4X[25X>[125X [27X       n, "Q" ) );                           # and quit[127X[104X
-    [4X[25Xgap>[125X [27Xdir:= Filename( DirectoriesPackageLibrary( "Browse", "" ), "" );;[127X[104X
+    [4X[25Xgap>[125X [27Xdir:= DirectoriesPackageLibrary( "Browse", "" )[1];;[127X[104X
     [4X[25Xgap>[125X [27Xif IsBound( BrowseDirectory ) then[127X[104X
     [4X[25X>[125X [27X     BrowseDirectory( dir );[127X[104X
     [4X[25X>[125X [27X   fi;[127X[104X
@@ -1266,7 +1314,7 @@
   or large cells are shown, the default is [10X"small"[110X.[133X
   
   [33X[0;0YThe  argument  [3Xpi[103X  is the initial permutation of the faces, the default is a
-  random permutation in the cube group, see [14X'Reference: Random Sources'[114X.[133X
+  random permutation in the cube group, see [14X'Reference: Random'[114X.[133X
   
   [33X[0;0YSupported  user inputs are the keys [12Xt[112X, [12Xl[112X, [12Xf[112X, [12Xr[112X, [12Xb[112X, and [12Xd[112X for clockwise turns
   of   the   six   layers,   and   the   corresponding   capital  letters  for
@@ -1421,7 +1469,7 @@
   the  other  functions described below. There a several possibilities for the
   argument [3Xarg[103X.[133X
   
-  [8X[3Xarg[103X is a string[108X
+  [8X[3Xarg[103X[8X is a string[108X
         [33X[0;6YThe  entries  of  a Sudoku board are numbered row-wise from 1 to 81. A
         board  is encoded as a string as follows. If one of the numbers 1 to 9
         is  in  entry  [22Xi[122X  then the corresponding digit character is written in
@@ -1431,13 +1479,13 @@
         inserted  in  the string (for example to mark line ends). Such strings
         can be used for [3Xarg[103X.[133X
   
-  [8X[3Xarg[103X is a matrix[108X
+  [8X[3Xarg[103X[8X is a matrix[108X
         [33X[0;6YA  Sudoku board can also be encoded as a 9 by 9-matrix, that is a list
         of  9 lists of length 9, whose (i,j)-th entry is the (i,j)-th entry of
         the  board  as  integer if it is not empty. Empty entries of the board
         correspond to unbound entries in the matrix.[133X
   
-  [8X[3Xarg[103X is a list of integers[108X
+  [8X[3Xarg[103X[8X is a list of integers[108X
         [33X[0;6YInstead of the matrix just described the argument can also be given by
         the  concatenation  of  the rows of the matrix (so, a list of integers
         and holes).[133X
@@ -1664,4 +1712,78 @@
   [33X[0;0YThe  argument of these functions is a record describing a Sudoku game. These
   functions  return  code for including the current status of the board into a
   webpage or a LaTeX document.[133X
+  
+  
+  [1X6.18 [33X[0;0YUtility for [5XGAP[105X[101X[1X Demos[133X[101X
+  
+  [33X[0;0YThis  application  can  be  used with [5XGAP[105X if the user interface has [10Xreadline[110X
+  support. The purpose is to simplify the typing during a demonstration of [5XGAP[105X
+  commands.[133X
+  
+  [33X[0;0YThe  file  format to specify [5XGAP[105X code for a demonstration is very simple: it
+  contains  blocks of lines with [5XGAP[105X input, separated by lines starting with a
+  [10X%[110X  character.  Comments  in such a file can be added to one or several lines
+  starting with [10X%[110X. Here is the content of an example file [11Xdemo.demo[111X:[133X
+  
+  % Add comments after a % character at the beginning of a line.
+  % A comment can have several lines.
+  % Here is a multi-line input block:
+  g := MathieuGroup(11);;
+  cl := ConjugacyClasses(g);
+  % Calling a help page
+  ?MathieuGroup
+  % The next line contains a comment in the GAP session:
+  a := 12;; b := 13;; # assign two numbers
+  %
+  a*b;
+  %
+  
+  [33X[0;0YA demonstration can be loaded into a [5XGAP[105X session with the command[133X
+  
+  [1X6.18-1 LoadDemoFile[101X
+  
+  [29X[2XLoadDemoFile[102X( [3Xdemoname[103X, [3Xdemofile[103X[, [3Xsingleline[103X] ) [32X function
+  [6XReturns:[106X  [33X[0;10YNothing.[133X
+  
+  [33X[0;0YThis  function loads a demo file in the format described above. The argument
+  [3Xdemoname[103X  is  a  string  containing a name for the demo, and [3Xdemofile[103X is the
+  file name containing the demo.[133X
+  
+  [33X[0;0YIf the optional argument [3Xsingleline[103X is given and its value is [9Xtrue[109X, the demo
+  behaves differently with respect to input blocks that span several lines. By
+  default  full  blocks are treated as a single input line for [10Xreadline[110X (maybe
+  spanning several physical lines in the terminal). If [3Xsingleline[103X is [9Xtrue[109X then
+  all  input  lines  of  a  block  except the last one are sent to [5XGAP[105X and are
+  evaluated automatically before the last line of the block is displayed.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xdirs := DirectoriesPackageLibrary("Browse");;[127X[104X
+    [4X[25Xgap>[125X [27Xdemofile := Filename(dirs, "../app/demo.demo");;[127X[104X
+    [4X[25Xgap>[125X [27XLoadDemoFile("My first demo", demofile);[127X[104X
+    [4X[25Xgap>[125X [27XLoadDemoFile("My first demo (single lines)", demofile, true);[127X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YMany  demos  can be loaded at the same time. They are used with the [12XPageDown[112X
+  and [12XPageUp[112X keys.[133X
+  
+  [33X[0;0YThe [12XPageUp[112X key leads to a (Browse) menu which allows one to choose a demo to
+  start (if several are loaded), to stop a demo or to move to another position
+  in the current demo (e.g., to go back to a previous point or to skip part of
+  a demo).[133X
+  
+  [33X[0;0YThe  next  input  block of the current demo is copied into the current input
+  line  of  the [5XGAP[105X session by pressing the [12XPageDown[112X key. This line is not yet
+  sent  to [5XGAP[105X, use the [12XReturn[112X key if you want to evaluate the input. (You can
+  also still edit the input line before evaluation.)[133X
+  
+  [33X[0;0YSo,  in  the  simplest case a demo can be done by just pressing [12XPageDown[112X and
+  [12XReturn[112X in turns. But it is always possible to type extra input during a demo
+  by  hand  or to change the input lines from the demo file before evaluation.
+  It  is  no  problem if commands are interrupted by [12XCtrl-C[112X. During a demo you
+  are  in  a  normal [5XGAP[105X session, this application only saves you some typing.
+  The  input lines from the demo are put into the history of the session as if
+  they were typed by hand.[133X
+  
+  [33X[0;0YTry  it  yourself  with the two demos loaded in the example. This also shows
+  the different behaviour between default and single line mode.[133X
   

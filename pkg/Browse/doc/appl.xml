@@ -72,5 +72,7 @@ as a user interrupt.
 
 <#Include Label="Sudoku_section">
 
+<#Include Label="rldemo_section">
+
 </Chapter>
 

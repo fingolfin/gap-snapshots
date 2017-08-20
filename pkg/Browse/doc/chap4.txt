@@ -289,14 +289,14 @@
   supported  components (of [10Xwork[110X as well as of [10Xdynamic[110X) and for the meaning of
   the term [21Xmode[121X, see Section [14X5.2[114X.[133X
   
-  [8X[10Xmain[110X[108X
+  [8X[10Xmain[110X[8X[108X
         [33X[0;6Yis  the  list of lists of table cell data objects that form the matrix
         to  be  shown. There is no default for this component. (It is possible
         to  compute  the  entries  of  the  main  table  on  demand,  see  the
         description of the component [10XMain[110X in Section [14X5.4-1[114X. In this situation,
         the value of the component [10Xmain[110X can be an empty list.)[133X
   
-  [8X[10Xheader[110X[108X
+  [8X[10Xheader[110X[8X[108X
         [33X[0;6Ydescribes  a  header  that shall be shown above the column labels. The
         value  is  either  a  list  of  attribute  lines  ([21Xstatic header[121X) or a
         function  or  a  record  whose  component names are names of available
@@ -307,28 +307,28 @@
         these lines depends at most on the mode. The default is an empty list,
         i. e., there is no header.[133X
   
-  [8X[10Xfooter[110X[108X
+  [8X[10Xfooter[110X[8X[108X
         [33X[0;6Ydescribes  a  footer that shall be shown below the table. The value is
         analogous  to  that  of  [10Xfooter[110X.  The default is an empty list, i. e.,
         there is no footer.[133X
   
-  [8X[10XlabelsRow[110X[108X
+  [8X[10XlabelsRow[110X[8X[108X
         [33X[0;6Yis  a  list  of  row  label rows, each being a list of table cell data
         objects.  These  rows  are  shown  to  the left of the main table. The
         default is an empty list, i. e., there are no row labels.[133X
   
-  [8X[10XlabelsCol[110X[108X
+  [8X[10XlabelsCol[110X[8X[108X
         [33X[0;6Yis  a list of column information rows, each being a list of table cell
         data  objects.  These  rows  are shown between the header and the main
         table.  The  default  is  an  empty  list,  i. e., there are no column
         labels.[133X
   
-  [8X[10Xcorner[110X[108X
+  [8X[10Xcorner[110X[8X[108X
         [33X[0;6Yis  a list of lists of table cell data objects that are printed in the
         upper  left  corner,  i. e.,  to the left of the column label rows and
         above the row label columns. The default is an empty list.[133X
   
-  [8X[10XsepRow[110X[108X
+  [8X[10XsepRow[110X[8X[108X
         [33X[0;6Ydescribes the separators above and below rows of the main table and of
         the  row labels table. The value is either an attribute line or a (not
         necessarily  dense)  list  of  attribute  lines.  In  the former case,
@@ -340,19 +340,19 @@
         below  the [22Xi[122X-th table row. The default is an empty string, which means
         that there are no row separators.[133X
   
-  [8X[10XsepCol[110X[108X
+  [8X[10XsepCol[110X[8X[108X
         [33X[0;6Ydescribes  the  separators  in front of and behind columns of the main
         table  and  of  the  column  labels  table. The format of the value is
         analogous to that of the component [10XsepRow[110X; the default is the string [10X"
         "[110X (whitespace of width one).[133X
   
-  [8X[10XsepLabelsCol[110X[108X
+  [8X[10XsepLabelsCol[110X[8X[108X
         [33X[0;6Ydescribes  the  separators  above  and below rows of the column labels
         table  and  of the corner table, analogously to [10XsepRow[110X. The default is
         an   empty  string,  which  means  that  there  are  no  column  label
         separators.[133X
   
-  [8X[10XsepLabelsRow[110X[108X
+  [8X[10XsepLabelsRow[110X[8X[108X
         [33X[0;6Ydescribes  the  separators  in  front of and behind columns of the row
         labels  table  and  of  the  corner  table, analogously to [10XsepCol[110X. The
         default is an empty string.[133X

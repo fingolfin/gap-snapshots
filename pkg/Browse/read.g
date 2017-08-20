@@ -32,6 +32,10 @@ ReadPackage("browse", "app/solitair.g");
 ReadPackage("browse", "app/sudoku.g");
 ReadPackage("browse", "app/pkgvar.g");
 ReadPackage("browse", "app/gapdata.g");
+# this app only works with 'readline' 
+if IsBound(GAPInfo.UseReadline) and GAPInfo.UseReadline = true then
+  ReadPackage("browse", "app/rldemo.g");
+fi;
 
 # applications called by `BrowseGapData'
 ReadPackage("browse", "app/conwaypols.g");

@@ -172,14 +172,14 @@
   
   [33X[0;0YLet [3Xrecord[103X be a record with at least the following components.[133X
   
-  [8X[10XElementNumber[110X[108X
+  [8X[10XElementNumber[110X[8X[108X
         [33X[0;6Ya  function taking two arguments [3Xenum[103X and [3Xpos[103X, which returns [10X[3Xenum[103X[10X[ [3Xpos[103X[10X
         ][110X  (see [14X21.2[114X);  it  can be assumed that the argument [3Xpos[103X is a positive
         integer,  but [3Xpos[103X may be larger than the length of [3Xenum[103X (in which case
         an  error  must  be signalled); note that the result must be immutable
         since [3Xenum[103X itself is immutable,[133X
   
-  [8X[10XNumberElement[110X[108X
+  [8X[10XNumberElement[110X[8X[108X
         [33X[0;6Ya  function taking two arguments [3Xenum[103X and [3Xelm[103X, which returns [10XPosition(
         [3Xenum[103X[10X, [3Xelm[103X[10X )[110X (see [2XPosition[102X ([14X21.16-1[114X)); it cannot be assumed that [3Xelm[103X is
         really contained in [3Xenum[103X (and [9Xfail[109X must be returned if not); note that
@@ -200,32 +200,32 @@
   collections  family  of  any element in [3Xenum[103X. In this case, additionally the
   following component in [3Xrecord[103X is needed.[133X
   
-  [8X[10XLength[110X[108X
+  [8X[10XLength[110X[8X[108X
         [33X[0;6Ya  function taking the argument [3Xenum[103X, which returns the length of [3Xenum[103X
         (see [2XLength[102X ([14X21.17-5[114X)).[133X
   
   [33X[0;0YThe following components are optional; they are used if they are present but
   default methods are installed for the case that they are missing.[133X
   
-  [8X[10XIsBound\[\][110X[108X
+  [8X[10XIsBound\[\][110X[8X[108X
         [33X[0;6Ya  function  taking  two  arguments [3Xenum[103X and [3Xk[103X, which returns [10XIsBound(
         [3Xenum[103X[10X[  [3Xk[103X[10X  ]  )[110X  (see [14X21.2[114X);  if  this component is missing then [2XLength[102X
         ([14X21.17-5[114X) is used for computing the result,[133X
   
-  [8X[10XMembership[110X[108X
+  [8X[10XMembership[110X[8X[108X
         [33X[0;6Ya  function  taking  two arguments [3Xelm[103X and [3Xenum[103X, which returns [9Xtrue[109X is
         [3Xelm[103X  is  an  element  of [3Xenum[103X, and [9Xfalse[109X otherwise (see [14X21.2[114X); if this
         component  is  missing  then  [10XNumberElement[110X  is used for computing the
         result,[133X
   
-  [8X[10XAsList[110X[108X
+  [8X[10XAsList[110X[8X[108X
         [33X[0;6Ya  function  taking  one  argument [3Xenum[103X, which returns a list with the
         property that the access to each of its elements will take roughly the
         same  time  (see [2XIsConstantTimeAccessList[102X ([14X21.1-6[114X)); if this component
         is missing then [2XConstantTimeAccessList[102X ([14X21.17-6[114X) is used for computing
         the result,[133X
   
-  [8X[10XViewObj[110X and [10XPrintObj[110X[108X
+  [8X[10XViewObj[110X[8X and [10XPrintObj[110X[8X[108X
         [33X[0;6Ytwo  functions that print what one wants to be printed when [10XView( [3Xenum[103X[10X
         )[110X  or  [10XPrint(  [3Xenum[103X[10X )[110X is called (see [14X6.3[114X), if the [10XViewObj[110X component is
         missing then the [10XPrintObj[110X method is used as a default.[133X
@@ -948,22 +948,22 @@
   
   [33X[0;0YLet [3Xrecord[103X be a record with at least the following components.[133X
   
-  [8X[10XNextIterator[110X[108X
+  [8X[10XNextIterator[110X[8X[108X
         [33X[0;6Ya function taking one argument [3Xiter[103X, which returns the next element of
         [3Xiter[103X (see [2XNextIterator[102X ([14X30.8-5[114X)); for that, the components of [3Xiter[103X are
         changed,[133X
   
-  [8X[10XIsDoneIterator[110X[108X
+  [8X[10XIsDoneIterator[110X[8X[108X
         [33X[0;6Ya  function taking one argument [3Xiter[103X, which returns the [2XIsDoneIterator[102X
         ([14X30.8-4[114X) value of [3Xiter[103X,[133X
   
-  [8X[10XShallowCopy[110X[108X
+  [8X[10XShallowCopy[110X[8X[108X
         [33X[0;6Ya  function taking one argument [3Xiter[103X, which returns a record for which
         [2XIteratorByFunctions[102X  can  be  called in order to create a new iterator
         that  is  independent  of  [3Xiter[103X  but  behaves  like  [3Xiter[103X  w.r.t.  the
         operations [2XNextIterator[102X ([14X30.8-5[114X) and [2XIsDoneIterator[102X ([14X30.8-4[114X).[133X
   
-  [8X[10XViewObj[110X and [10XPrintObj[110X[108X
+  [8X[10XViewObj[110X[8X and [10XPrintObj[110X[8X[108X
         [33X[0;6Ytwo  functions that print what one wants to be printed when [10XView( [3Xiter[103X[10X
         )[110X  or  [10XPrint(  [3Xitem[103X[10X )[110X is called (see [14X6.3[114X), if the [10XViewObj[110X component is
         missing then the [10XPrintObj[110X method is used as a default.[133X

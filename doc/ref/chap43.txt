@@ -243,7 +243,7 @@
   [8X5[108X
         [33X[0;6YTwisted wreath product (TW)[133X
   
-  [33X[0;0YSee  [EH]  for correspondence to other labellings used in the literature. As
+  [33X[0;0YSee [EH01] for correspondence to other labellings used in the literature. As
   it can contain letters, the type is returned as a string.[133X
   
   [33X[0;0YIf  [3XG[103X  is  not a permutation group or does not act primitively on the points
@@ -529,7 +529,7 @@
   all  of  them  can  be  given in the global variable [2XDefaultStabChainOptions[102X
   ([14X43.8-3[114X). The following options are supported.[133X
   
-  [8X[10Xbase[110X (default an empty list)[108X
+  [8X[10Xbase[110X[8X (default an empty list)[108X
         [33X[0;6YA  list  of points, through which the resulting stabilizer chain shall
         run. For the base [22XB[122X of the resulting stabilizer chain [3XS[103X this means the
         following.  If  the  [10Xreduced[110X  component  of [3Xoptions[103X is [9Xtrue[109X then those
@@ -539,7 +539,7 @@
         ignored.  If  a  stabilizer  chain  for  [3XG[103X  is  already known then the
         stabilizer chain is computed via a base change.[133X
   
-  [8X[10XknownBase[110X (no default value)[108X
+  [8X[10XknownBase[110X[8X (no default value)[108X
         [33X[0;6YA  list  of  points  which is known to be a base for the group. Such a
         known  base  makes  it easier to test whether a permutation given as a
         word  in  terms  of  a  set  of  generators  is the identity, since it
@@ -551,7 +551,7 @@
         component,  you  may specify a known base [10XknownBase[110X and a desired base
         [10Xbase[110X independently.[133X
   
-  [8X[10Xreduced[110X (default [9Xtrue[109X)[108X
+  [8X[10Xreduced[110X[8X (default [9Xtrue[109X)[108X
         [33X[0;6YIf this is [9Xtrue[109X the resulting stabilizer chain [3XS[103X is reduced, i.e., the
         case  [22XG^(i)  =  G^(i+1)[122X does not occur. Setting [10Xreduced[110X to [9Xfalse[109X makes
         sense only if the component [10Xbase[110X (see above) is also set; in this case
@@ -559,7 +559,7 @@
         trivial  basic orbits. Note that if [10Xbase[110X is just an initial segment of
         [22XB[122X, the basic orbits of the points in [22XB ∖[122X[10Xbase[110X are always nontrivial.[133X
   
-  [8X[10XtryPcgs[110X (default [9Xtrue[109X)[108X
+  [8X[10XtryPcgs[110X[8X (default [9Xtrue[109X)[108X
         [33X[0;6YIf  this  is [9Xtrue[109X and either the degree is at most [22X100[122X or the group is
         known  to  be  solvable,  [5XGAP[105X  will first try to construct a pcgs (see
         Chapter [14X45[114X)  for  [3XG[103X  which  will  succeed  and  implicitly construct a
@@ -568,22 +568,19 @@
         comparatively fast, even if it fails, and it can save a lot of time if
         [3XG[103X is solvable.[133X
   
-  [8X[10Xrandom[110X (default [10X1000[110X)[108X
+  [8X[10Xrandom[110X[8X (default [10X1000[110X[8X)[108X
         [33X[0;6YIf  the  value  is less than [22X1000[122X, the resulting chain is correct with
         probability  at  least [10Xrandom[110X[22X/ 1000[122X. The [10Xrandom[110X option is explained in
         more detail in [14X43.7[114X.[133X
   
-  [8X[10Xsize[110X (default [10XSize([3XG[103X[10X)[110X if this is known,
-          i.e., if [10XHasSize([3XG[103X[10X)[110X is [9Xtrue[109X)[108X
+  [8X[10Xsize[110X[8X (default [10XSize([3XG[103X[8X[10X)[110X[8X if this is known, i.e., if [10XHasSize([3XG[103X[8X[10X)[110X[8X is [9Xtrue[109X)[108X
         [33X[0;6YIf  this component is present, its value is assumed to be the order of
         the   group   [3XG[103X.  This  information  can  be  used  to  prove  that  a
         non-deterministically constructed stabilizer chain is correct. In this
         case,  [5XGAP[105X  does  a  non-deterministic  construction until the size is
         correct.[133X
   
-  [8X[10Xlimit[110X (default [10XSize(Parent([3XG[103X[10X))[110X or
-           [10XStabChainOptions(Parent([3XG[103X[10X)).limit[110X
-           if it is present)[108X
+  [8X[10Xlimit[110X[8X (default [10XSize(Parent([3XG[103X[8X[10X))[110X[8X or [10XStabChainOptions(Parent([3XG[103X[8X[10X)).limit[110X[8X if it is present)[108X
         [33X[0;6YIf  this component is present, it must be greater than or equal to the
         order  of  [3XG[103X. The stabilizer chain construction stops if size [10Xlimit[110X is
         reached.[133X
@@ -639,10 +636,10 @@
   [13Xnever  print  a stabilizer chain![113X (Unless you want to exercise the scrolling
   capabilities of your terminal.)[133X
   
-  [8X[10Xidentity[110X [108X
+  [8X[10Xidentity[110X[8X [108X
         [33X[0;6Ythe identity element of the current stabilizer.[133X
   
-  [8X[10Xlabels[110X [108X
+  [8X[10Xlabels[110X[8X [108X
         [33X[0;6Ya  list of permutations which contains labels for the Schreier tree of
         the  current stabilizer, i.e., it contains elements for the factorized
         inverse  transversal.  The  first  entry  in  this  list is always the
@@ -651,35 +648,35 @@
         stabilizer  of  the  chain;  thus  the  [10Xlabels[110X  of a stabilizer do not
         necessarily all lie in the this stabilizer (but see [10Xgenlabels[110X below).[133X
   
-  [8X[10Xgenlabels[110X [108X
+  [8X[10Xgenlabels[110X[8X [108X
         [33X[0;6Ya  list  of  integers  indexing some of the permutations in the [10Xlabels[110X
         component.  The [10Xlabels[110X addressed in this way form a generating set for
         the  current stabilizer. If the [10Xgenlabels[110X component is empty, the rest
         of  the  stabilizer  chain represents the trivial subgroup, and can be
         ignored, e.g., when calculating the size.[133X
   
-  [8X[10Xgenerators[110X [108X
+  [8X[10Xgenerators[110X[8X [108X
         [33X[0;6Ya  list  of  generators  for  the  current  stabilizer. Usually, it is
         [10Xlabels{ genlabels }[110X.[133X
   
-  [8X[10Xorbit[110X [108X
+  [8X[10Xorbit[110X[8X [108X
         [33X[0;6Ythe  vertices  of  the  Schreier  tree,  which  form  the  basic orbit
         [22Xb_i^{G^(i)}[122X,  ordered  in such a way that the base point [22Xb_i[122X is in the
         first position in the orbit.[133X
   
-  [8X[10Xtransversal[110X[108X
+  [8X[10Xtransversal[110X[8X[108X
         [33X[0;6YThe  factorized  inverse transversal found during the orbit algorithm.
         The  element  [22Xg[122X stored at [10Xtransversal[110X[22X[i][122X will map [22Xi[122X to another point [22Xj[122X
         that  in  the  Schreier  tree is closer to the base point. By iterated
         application  ([10Xtransversal[110X[22X[j][122X  and  so on) eventually the base point is
         reached and an element that maps [22Xi[122X to the base point found as product.[133X
   
-  [8X[10Xtranslabels[110X[108X
+  [8X[10Xtranslabels[110X[8X[108X
         [33X[0;6YAn  index  list  such  that [10Xtransversal[110X[22X[j] =[122X [10Xlabels[110X[22X[[122X [10Xtranslabels[110X[22X[j] ][122X.
         This list takes up comparatively little memory and is used to speed up
         base changes.[133X
   
-  [8X[10Xstabilizer[110X [108X
+  [8X[10Xstabilizer[110X[8X [108X
         [33X[0;6YIf the current stabilizer is not yet the trivial group, the stabilizer
         chain  continues  with the stabilizer of the current base point, which
         is  again  represented  as  a record with components [10Xlabels[110X, [10Xidentity[110X,
@@ -862,10 +859,10 @@
   [33X[0;0Ychanges  or reduces a stabilizer chain [3XS[103X to be adapted to the base [3Xbase[103X. The
   optional argument [3Xreduced[103X is interpreted as follows.[133X
   
-  [8X[10Xreduced = [110X[9Xfalse[109X : [108X
+  [8X[10Xreduced = [110X[8X[9Xfalse[109X : [108X
         [33X[0;6Ychange the stabilizer chain, do not reduce it,[133X
   
-  [8X[10Xreduced = [110X[9Xtrue[109X : [108X
+  [8X[10Xreduced = [110X[8X[9Xtrue[109X : [108X
         [33X[0;6Ychange the stabilizer chain, reduce it.[133X
   
   [1X43.11-4 ExtendStabChain[101X

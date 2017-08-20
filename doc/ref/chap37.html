@@ -38,8 +38,8 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap37.html#X8405BECB7AC4EB61">37.3 <span class="Heading">Comparison of Associative Words</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap37.html#X8206153078E97B90">37.3-1 \=</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap37.html#X7BB12B9D7F990899">37.3-2 \&lt;</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap37.html#X8206153078E97B90"><code>37.3-1 \=</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap37.html#X7BB12B9D7F990899"><code>37.3-2 \&lt;</code></a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap37.html#X805C519682B0A7ED">37.3-3 IsShortLexLessThanOrEqual</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap37.html#X84875E08847B39E1">37.3-4 IsBasicWreathLessThanOrEqual</a></span>
 </div></div>
@@ -217,7 +217,7 @@ varn:=GeneratorsOfGroup(G)[n];
 
 <p><a id="X8206153078E97B90" name="X8206153078E97B90"></a></p>
 
-<h5>37.3-1 \=</h5>
+<h5><code>37.3-1 \=</code></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \=</code>( <var class="Arg">w1</var>, <var class="Arg">w2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Two associative words are equal if they are words over the same alphabet and if they are sequences of the same letters. This is equivalent to saying that the external representations of the words are equal, see <a href="chap37.html#X7934D3D5797102EC"><span class="RefLink">37.7</span></a> and <a href="chap36.html#X852C815F85DBE4BD"><span class="RefLink">36.2</span></a>.</p>
@@ -245,7 +245,7 @@ false
 
 <p><a id="X7BB12B9D7F990899" name="X7BB12B9D7F990899"></a></p>
 
-<h5>37.3-2 \&lt;</h5>
+<h5><code>37.3-2 \&lt;</code></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \&lt;</code>( <var class="Arg">w1</var>, <var class="Arg">w2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>The ordering of associative words is defined by length and lexicography (this ordering is called <em>short-lex</em> ordering), that is, shorter words are smaller than longer words, and words of the same length are compared w.r.t. the lexicographical ordering induced by the ordering of generators. Generators are sorted according to the order in which they were created. If the generators are invertible then each generator <var class="Arg">g</var> is larger than its inverse <var class="Arg">g</var><code class="code">^-1</code>, and <var class="Arg">g</var><code class="code">^-1</code> is larger than every generator that is smaller than <var class="Arg">g</var>.</p>

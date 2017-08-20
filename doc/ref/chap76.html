@@ -45,7 +45,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X787DFEB383545A49">76.3-7 CompareVersionNumbers</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X8067348B836BAF37">76.3-8 IsPackageMarkedForLoading</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X8495E5327D563AC3">76.3-9 DeclareAutoreadableVariables</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X79EF67107E40A130">76.3-10 <span class="Heading">Kernel modules in <strong class="pkg">GAP</strong> packages</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X85672DDD7D34D5F0">76.3-10 <span class="Heading">Kernel modules in <strong class="pkg">GAP</strong> packages</span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X7C99782886B18C77">76.3-11 LoadDynamicModule</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap76.html#X85C8DE357EE424D8">76.3-12 <span class="Heading">The PackageInfo.g File</span></a>
@@ -201,7 +201,7 @@ true
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadPackage</code>( [<var class="Arg">name</var>, ]<var class="Arg">file</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RereadPackage</code>( [<var class="Arg">name</var>, ]<var class="Arg">file</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Called with two strings <var class="Arg">name</var> and <var class="Arg">file</var>, <code class="func">ReadPackage</code> reads the file <var class="Arg">file</var> of the <strong class="pkg">GAP</strong> package <var class="Arg">name</var>, where <var class="Arg">file</var> is given as a path relative to the home directory of <var class="Arg">name</var>. Note that <var class="Arg">file</var> is read in the namespace of the package, see Section <a href="chap4.html#X875BA7C58175DEFB"><span class="RefLink">4.10</span></a> for details.</p>
+<p>Called with two strings <var class="Arg">name</var> and <var class="Arg">file</var>, <code class="func">ReadPackage</code> reads the file <var class="Arg">file</var> of the <strong class="pkg">GAP</strong> package <var class="Arg">name</var>, where <var class="Arg">file</var> is given as a path relative to the home directory of <var class="Arg">name</var>. Note that <var class="Arg">file</var> is read in the namespace of the package, see Section <a href="chap4.html#X7DF8774F7D542298"><span class="RefLink">4.10</span></a> for details.</p>
 
 <p>If only one argument <var class="Arg">file</var> is given, this should be the path of a file relative to the <code class="file">pkg</code> subdirectory of <strong class="pkg">GAP</strong> root paths (see <a href="chap9.html#X7A4973627A5DB27D"><span class="RefLink">9.2</span></a>). Note that in this case, the package name is assumed to be equal to the first part of <var class="Arg">file</var>, <em>so the one argument form is not recommended</em>.</p>
 
@@ -328,7 +328,7 @@ make testpackage PKGNAME=pkgname
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareAutoreadableVariables</code>( <var class="Arg">pkgname</var>, <var class="Arg">filename</var>, <var class="Arg">varlist</var> )</td><td class="tdright">( function )</td></tr></table></div>
 <p>Let <var class="Arg">pkgname</var> be the name of a package, let <var class="Arg">filename</var> be the name of a file relative to the home directory of this package, and let <var class="Arg">varlist</var> be a list of strings that are the names of global variables which get bound when the file is read. <code class="func">DeclareAutoreadableVariables</code> notifies the names in <var class="Arg">varlist</var> such that the first attempt to access one of the variables causes the file to be read.</p>
 
-<p><a id="X79EF67107E40A130" name="X79EF67107E40A130"></a></p>
+<p><a id="X85672DDD7D34D5F0" name="X85672DDD7D34D5F0"></a></p>
 
 <h5>76.3-10 <span class="Heading">Kernel modules in <strong class="pkg">GAP</strong> packages</span></h5>
 
@@ -421,7 +421,7 @@ you can 'return;' to continue
 
 </dd>
 <dt><strong class="Mark"><code class="code">showPrivate</code></strong></dt>
-<dd><p><code class="keyw">true</code> (the default) if variables from the package's name space (see Section <a href="chap4.html#X875BA7C58175DEFB"><span class="RefLink">4.10</span></a>) shall be shown, and <code class="keyw">false</code> otherwise,</p>
+<dd><p><code class="keyw">true</code> (the default) if variables from the package's name space (see Section <a href="chap4.html#X7DF8774F7D542298"><span class="RefLink">4.10</span></a>) shall be shown, and <code class="keyw">false</code> otherwise,</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">Display</code></strong></dt>
@@ -436,7 +436,7 @@ you can 'return;' to continue
 <h5>76.3-15 BibEntry</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BibEntry</code>( <var class="Arg">pkgname</var>[, <var class="Arg">key</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Returns: a string in BibXMLext format (see <a href="../../pkg/GAPDoc-1.5.1/doc/chap7.html#X7FB8F6BD80D859D1"><span class="RefLink">GAPDoc: The BibXMLext Format</span></a>) that can be used for referencing the <strong class="pkg">GAP</strong> system or a <strong class="pkg">GAP</strong> package.</p>
+<p>Returns: a string in BibXMLext format (see <a href="../../pkg/GAPDoc-1.6/doc/chap7.html#X7FB8F6BD80D859D1"><span class="RefLink">GAPDoc: The BibXMLext Format</span></a>) that can be used for referencing the <strong class="pkg">GAP</strong> system or a <strong class="pkg">GAP</strong> package.</p>
 
 <p>If the argument <var class="Arg">pkgname</var> is the string <code class="code">"GAP"</code>, the function returns an entry for the current version of <strong class="pkg">GAP</strong>.</p>
 
@@ -446,9 +446,9 @@ you can 'return;' to continue
 
 <p>In each of the above cases, an optional argument <var class="Arg">key</var> can be given, a string which is then used as the key of the BibTeX entry instead of the default key that is generated from the system/package name and the version number.</p>
 
-<p><code class="func">BibEntry</code> requires the functions <code class="func">FormatParagraph</code> (<a href="../../pkg/GAPDoc-1.5.1/doc/chap6.html#X812058CE7C8E9022"><span class="RefLink">GAPDoc: FormatParagraph</span></a>) and <code class="func">NormalizedNameAndKey</code> (<a href="../../pkg/GAPDoc-1.5.1/doc/chap7.html#X7C9F0C337A0A0FF0"><span class="RefLink">GAPDoc: NormalizedNameAndKey</span></a>) from the <strong class="pkg">GAP</strong> package <strong class="pkg">GAPDoc</strong>.</p>
+<p><code class="func">BibEntry</code> requires the functions <code class="func">FormatParagraph</code> (<a href="../../pkg/GAPDoc-1.6/doc/chap6.html#X812058CE7C8E9022"><span class="RefLink">GAPDoc: FormatParagraph</span></a>) and <code class="func">NormalizedNameAndKey</code> (<a href="../../pkg/GAPDoc-1.6/doc/chap7.html#X7C9F0C337A0A0FF0"><span class="RefLink">GAPDoc: NormalizedNameAndKey</span></a>) from the <strong class="pkg">GAP</strong> package <strong class="pkg">GAPDoc</strong>.</p>
 
-<p>The functions <code class="func">ParseBibXMLextString</code> (<a href="../../pkg/GAPDoc-1.5.1/doc/chap7.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextString</span></a>) and <code class="func">StringBibXMLEntry</code> (<a href="../../pkg/GAPDoc-1.5.1/doc/chap7.html#X790A295680F7CD24"><span class="RefLink">GAPDoc: StringBibXMLEntry</span></a>) can be used to create for example a BibTeX entry from the return value, as follows.</p>
+<p>The functions <code class="func">ParseBibXMLextString</code> (<a href="../../pkg/GAPDoc-1.6/doc/chap7.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextString</span></a>) and <code class="func">StringBibXMLEntry</code> (<a href="../../pkg/GAPDoc-1.6/doc/chap7.html#X790A295680F7CD24"><span class="RefLink">GAPDoc: StringBibXMLEntry</span></a>) can be used to create for example a BibTeX entry from the return value, as follows.</p>
 
 
 <div class="example"><pre>

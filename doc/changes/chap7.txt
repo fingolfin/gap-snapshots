@@ -23,8 +23,8 @@
   [30X    [33X[0;6YDivision  rings  (see  [2XIsDivisionRing[102X ([14XReference: IsDivisionRing[114X)) are
         now implemented as [2XIsRingWithOne[102X ([14XReference: IsRingWithOne[114X).[133X
   
-  [30X    [33X[0;6Y[2XDirectSumOfAlgebras[102X    ([14XReference:    DirectSumOfAlgebras   (for   two
-        algebras)[114X): [22Xp[122X-th power maps are compatible with the input now.[133X
+  [30X    [33X[0;6Y[2XDirectSumOfAlgebras[102X ([14XReference: DirectSumOfAlgebras for two algebras[114X):
+        [22Xp[122X-th power maps are compatible with the input now.[133X
   
   [30X    [33X[0;6YThe print order for polynomials has been changed.[133X
   
@@ -132,9 +132,9 @@
         improved.  Homomorphisms  from free groups into permutation groups now
         give substantially shorter words for preimages.[133X
   
-  [30X    [33X[0;6YThe  membership  test  in  [2XSP[102X  ([14XReference: Sp (for dimension and field
-        size)[114X)  and  [2XSU[102X  ([14XReference:  SU[114X)  groups  has been improved using the
-        invariant forms underlying these groups.[133X
+  [30X    [33X[0;6YThe membership test in [2XSP[102X ([14XReference: Sp for dimension and field size[114X)
+        and  [2XSU[102X  ([14XReference:  SU[114X) groups has been improved using the invariant
+        forms underlying these groups.[133X
   
   [30X    [33X[0;6YAn  improvement for the cyclic extension method for the computation of
         subgroup lattices has been implemented.[133X

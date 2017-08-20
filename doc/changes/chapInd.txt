@@ -2,23 +2,22 @@
   
   [1XIndex[101X
   
-  Bugfixes and packages archives (withdrawn)  5.1-2
-  Completion files (withdrawn)  5.1-1
-  Data libraries  5.1-1
-  Floats  5.1-1
-  [5XGAP[105X binary distributions  5.1-2
-  [5XGAP[105X compiler (no longer recommended)  5.1-1
-  [5XGAP[105X 3 compatibility mode (withdrawn)  5.1-1
-  [5XGMP support[105X  5.1-1
-  [5XMathJax support[105X  5.1-4
-  Namespaces  5.2-1
-  Packages under Windows  5.2-2
-  Packages, new  2.1-2
-  Packages, new  3.1-2
-  Packages, upgraded  3.1-2
-  [5Xreadline[105X support  5.1-3
-  [11Xtools[111X archive  5.1-2
-  User interface customisation  5.1-3
+  Bugfixes and packages archives (withdrawn) 5.1-2 
+  Completion files (withdrawn) 5.1-1 
+  Data libraries 5.1-1 
+  Floats 5.1-1 
+  [5XGAP[105X binary distributions 5.1-2 
+  [5XGAP[105X compiler (no longer recommended) 5.1-1 
+  [5XGAP[105X 3 compatibility mode (withdrawn) 5.1-1 
+  [5XGMP support[105X 5.1-1 
+  [5XMathJax support[105X 5.1-4 
+  Namespaces 5.2-1 
+  Packages under Windows 5.2-2 
+  Packages, new 2.1-2  3.1-2 
+  Packages, upgraded 3.1-2 
+  [5Xreadline[105X support 5.1-3 
+  [11Xtools[111X archive 5.1-2 
+  User interface customisation 5.1-3 
   
   
   -------------------------------------------------------

@@ -26,13 +26,12 @@ files:= [
     "../app/pkgvar.g",
     "../app/profile.g",
     "../app/puzzle.g",
+    "../app/rldemo.g",
     "../app/rubik.g",
     "../app/solitair.g",
     "../app/sudoku.g",
     "../app/tmdbattr.g",
     "../app/tomdisp.g",
-    "../app/transbrowse.g",
-    "../app/transdbattr.g",
     "../app/userpref.g",
     "../lib/brdbattr.gd",
     "../lib/browse.gd",
@@ -62,7 +61,7 @@ if bibfile = fail then
 fi;
 Exec( Concatenation( "cp ", bibfile, " ", pathtodoc ) );
 
-tree := MakeGAPDocDoc( pathtodoc, main, files, bookname, pathtoroot );;
+MakeGAPDocDoc( pathtodoc, main, files, bookname, pathtoroot, "MathJax" );;
 
 # Remove GAP's current 'manualbib.xml'.
 Exec( Concatenation( "rm ", pathtodoc, "/", "manualbib.xml" ) );

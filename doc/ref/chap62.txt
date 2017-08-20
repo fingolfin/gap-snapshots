@@ -196,9 +196,7 @@
   v_k[122X. Let [22Xa = [ a_1, ..., a_n ][122X and [22Xb = [ b_1, ..., b_n ][122X. Then[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Y( ∑_i a_i v_i ) ( ∑_j b_j v_j ) = ∑_{i,j} a_i b_j ( v_i v_j ) = ∑_k (
-        ∑_j ( ∑_i a_i m_ijk ) b_j ) v_k = ∑_k ( a M_k b^tr ) v_k.[133X[124X[133X
-  
+  [24X[33X[0;6Y( ∑_i a_i v_i ) ( ∑_j b_j v_j ) = ∑_{i,j} a_i b_j ( v_i v_j ) = ∑_k ( ∑_j ( ∑_i a_i m_ijk ) b_j ) v_k = ∑_k ( a M_k b^tr ) v_k.[133X[124X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XA:= QuaternionAlgebra( Rationals );;[127X[104X
@@ -394,9 +392,7 @@
   ComplexificationQuat([3Xv[103X[10X * [3XM[103X[10X)[110X, since[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yv M = v_1 M_1 + v_2 j M_1 + v_1 M_2 j + v_2 j M_2 j = ( v_1 M_1 - v_2
-        overline{M_2} ) + ( v_1 M_2 + v_2 overline{M_1} ) j.[133X[124X[133X
-  
+  [24X[33X[0;6Yv M = v_1 M_1 + v_2 j M_1 + v_1 M_2 j + v_2 j M_2 j = ( v_1 M_1 - v_2 overline{M_2} ) + ( v_1 M_2 + v_2 overline{M_1} ) j.[133X[124X
   
   [1X62.5-3 OctaveAlgebra[101X
   
@@ -1129,18 +1125,18 @@
   A_{g+h}[122X  for  [22Xg,  h  ∈  G[122X.  In  [5XGAP[105X 4  a  [13Xgrading[113X  of an algebra is a record
   containing the following components.[133X
   
-  [8X[10Xsource[110X[108X
+  [8X[10Xsource[110X[8X[108X
         [33X[0;6Ythe Abelian group over which the algebra is graded.[133X
   
-  [8X[10Xhom_components[110X[108X
+  [8X[10Xhom_components[110X[8X[108X
         [33X[0;6Ya function assigning to each element from the source a subspace of the
         algebra.[133X
   
-  [8X[10Xmin_degree[110X[108X
+  [8X[10Xmin_degree[110X[8X[108X
         [33X[0;6Yin  the case where the algebra is graded over the integers this is the
         minimum number for which [10Xhom_components[110X returns a nonzero subspace.[133X
   
-  [8X[10Xmax_degree[110X[108X
+  [8X[10Xmax_degree[110X[8X[108X
         [33X[0;6Yis analogous to [10Xmin_degree[110X.[133X
   
   [33X[0;0YWe  note  that  there  are  no  methods to compute a grading of an arbitrary
@@ -1155,7 +1151,7 @@
   non-polynomial  in the dimension of [22XL[122X. To handle efficiently this situation,
   an optional component can be used:[133X
   
-  [8X[10Xnon_zero_hom_components[110X[108X
+  [8X[10Xnon_zero_hom_components[110X[8X[108X
         [33X[0;6Ythe  subset  of  [10Xsource[110X  for  which  [10Xhom_components[110X  returns a nonzero
         subspace.[133X
   

@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (tut) - Chapter 8: Operations and Methods</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -159,7 +159,7 @@ Error, no 1st choice method found for `Size' on 1 arguments called from
 
 <p>Since <strong class="pkg">GAP</strong> lets you know what it already knows about an object, it is only natural that it also lets you know what methods it considers applicable for a certain method, and in what order it will try them (in case <code class="code">TryNextMethod()</code> occurs). <code class="code">ApplicableMethod( <var class="Arg">opr</var>, [ arg_1, arg_2, ... ] )</code> returns the first applicable method for the call <code class="code"><var class="Arg">opr</var>( arg_1, arg_2, ... )</code>. More generally, <code class="code">ApplicableMethod( <var class="Arg">opr</var>, [ ... ], 0, <var class="Arg">nr</var> )</code> returns the <var class="Arg">nr</var>th applicable method (i.e., the one that would be chosen after <span class="SimpleMath">\(\textit{nr}-1\)</span> calls of <code class="code">TryNextMethod</code>) and if <var class="Arg">nr</var><code class="code"> = "all"</code>, the sorted list of all applicable methods is returned. For details, see <a href="../../doc/ref/chap78_mj.html#X851FC6387CA2B241"><span class="RefLink">Reference: Applicable Methods and Method Selection</span></a>.</p>
 
-<p>If you want to see which methods are chosen for certain operations while <strong class="pkg">GAP</strong> code is being executed, you can call the function <code class="func">TraceMethods</code> (<a href="../../doc/ref/chap7_mj.html#X80B044017C9E4137"><span class="RefLink">Reference: TraceMethods (for a list of operations)</span></a>) with a list of these operations as arguments.</p>
+<p>If you want to see which methods are chosen for certain operations while <strong class="pkg">GAP</strong> code is being executed, you can call the function <code class="func">TraceMethods</code> (<a href="../../doc/ref/chap7_mj.html#X80B044017C9E4137"><span class="RefLink">Reference: TraceMethods for a list of operations</span></a>) with a list of these operations as arguments.</p>
 
 
 <div class="example"><pre>
