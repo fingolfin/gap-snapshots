@@ -19,6 +19,7 @@
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Next Chapter]</a>&nbsp;  </div>
 
+<p id="mathjaxlink" class="pcenter"><a href="chap0_mj.html">[MathJax on]</a></p>
 <p><a id="X7D2C85EC87DD46E5" name="X7D2C85EC87DD46E5"></a></p>
 <div class="pcenter">
 
@@ -28,25 +29,29 @@
 <h2>Finite Incidence Geometry</h2>
 
 <p>
-      1.3</p>
+      1.4</p>
 
-<p>2015
+<p>23-Nov-2017
 </p>
 
 </div>
 <p><b>John Bamberg, Anton Betten, Philippe Cara, Jan De Beule, Michel Lavrauw, Max Neunhoeffer.
+    
+    
 	</b>
+<br />Email: <span class="URL"><a href="mailto:support@fining.org">support@fining.org</a></span>
+<br />Homepage: <span class="URL"><a href="http://www.fining.org">http://www.fining.org</a></span>
 </p>
 
 <p><a id="X81488B807F2A1CF1" name="X81488B807F2A1CF1"></a></p>
 <h3>Copyright</h3>
-<p>© 2015 by the authors</p>
+<p>© 2014-2017 by the authors</p>
 
 <p>This package may be distributed under the terms and conditions of the GNU Public License Version 2 or higher.</p>
 
-<p>The development group of <strong class="pkg">FinInG</strong> welcomes contact with users. In case you have obtained the package as a deposited package part of archive during the installation of GAP, we call on your beneficence to register at <span class="URL"><a href="http://cage.ugent.be/fining">http://cage.ugent.be/fining</a></span> when you use <strong class="pkg">FinInG</strong>.</p>
+<p>The development group of <strong class="pkg">FinInG</strong> welcomes contact with users. In case you have obtained the package as a deposited package part of archive during the installation of GAP, we call on your beneficence to register at <span class="URL"><a href="http:/www.fining.org">http:/www.fining.org</a></span> when you use <strong class="pkg">FinInG</strong>, or to tell us by sending an e-mail to <span class="URL"><a href="mailto:council@fining.org">council@fining.org</a></span>.</p>
 
-<p>Please tell us about the use of <strong class="pkg">FinInG</strong> in your research or teaching. We are very interested in results obtained using <strong class="pkg">FinInG</strong> and we might refer to your work in the future. If your work is published, we ask you to cite <strong class="pkg">FinInG</strong> like a journal article or book. We provide the necessary BibTex and LaTeX code in Section <a href="chap1.html#X82542E7A783E6C96"><span class="RefLink">1.2</span></a>.</p>
+<p>Please also tell us about the use of <strong class="pkg">FinInG</strong> in your research or teaching. We are very interested in results obtained using <strong class="pkg">FinInG</strong> and we might refer to your work in the future. If your work is published, we ask you to cite <strong class="pkg">FinInG</strong> like a journal article or book. We provide the necessary BibTex and LaTeX code in Section <a href="chap1.html#X837E428E80B6049C"><span class="RefLink">1.2</span></a>.</p>
 
 <p><a id="X82A988D47DFAFCFA" name="X82A988D47DFAFCFA"></a></p>
 <h3>Acknowledgements</h3>
@@ -56,7 +61,7 @@
 
 <p>Jan De Beule and Michel Lavrauw have been supported by the Research Foundation Flanders -- Belgium (FWO), and John Bamberg has been supported by a Marie Curie grant and an ARC grant during almost the whole development phase of <strong class="pkg">FinInG</strong>. The authors are grateful for this support.</p>
 
-<p>John Bamberg, Philippe Cara and Jan De Beule have spent several weeks in Vicenza while developing <strong class="pkg">FinInG</strong>. We acknowledge the hospitality of Michel Lavrauw and Corrado Zanella. Our stays in Vicenza were always fruitful and very enjoyable. During or daily morning and afternoon coffee breaks, we discussed several topics, while enjoying coffee in <em>Caffe Pigaffeta</em>, <span class="URL"><a href="http://www.caffepigafetta.it">http://www.caffepigafetta.it</a></span>. Although one cannot acknowledge everybody, such as the bakery who provided us with the sandwiches, we acknowledge very much the hospitality of Carla and Luigi, who introduced us to many different kinds of coffees from all over the world.</p>
+<p>John Bamberg, Philippe Cara and Jan De Beule have spent several weeks in Vicenza while developing <strong class="pkg">FinInG</strong>. We acknowledge the hospitality of Michel Lavrauw and Corrado Zanella. Our stays in Vicenza were always fruitful and very enjoyable. During or daily morning and afternoon coffee breaks, we discussed several topics, while enjoying coffee in <em>Caffe Pigaffeta</em>, <span class="URL"><a href="http://www.caffepigafetta.com">http://www.caffepigafetta.com</a></span>. Although one cannot acknowledge everybody, such as the bakery who provided us with the sandwiches, we acknowledge very much the hospitality of Carla and Luigi, who introduced us to many different kinds of coffees from all over the world.</p>
 
 <p><a id="X8537FEB07AF2BEC8" name="X8537FEB07AF2BEC8"></a></p>
 
@@ -67,15 +72,22 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X873C99678745ABAF">1.1 <span class="Heading">Philosophy</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X82542E7A783E6C96">1.2 <span class="Heading">How to cite <strong class="pkg">FinInG</strong></span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X837E428E80B6049C">1.2 <span class="Heading">How to cite <strong class="pkg">FinInG</strong></span></a>
 </span>
 </div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X87B5A1377BCABBD6">1.3 <span class="Heading">Overview of this manual</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7C6601ED8252C24F">1.4 <span class="Heading">Installing <strong class="pkg">FinInG</strong></span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7EEBA9577BA68BA6">1.4 <span class="Heading">Getting and installing <strong class="pkg">FinInG</strong></span></a>
 </span>
-</div>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X7F499E8A79509971">1.4-1 <span class="Heading">Installation procedure under UNIX like systems</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X83A6C48E806EC0E9">1.4-2 <span class="Heading">Compiling packages</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap1.html#X78F15DAE873084A5">1.4-3 <span class="Heading">Updating <strong class="pkg">FinInG</strong></span></a>
+</span>
+</div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X83BC24CC831A2542">1.5 <span class="Heading">The Development Team</span></a>
 </span>
 </div>
@@ -118,7 +130,7 @@
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X869EB94D841AE028">2.3-4 <span class="Heading">Embedding in a subspace</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7FE8E4BF7E700E65">2.3-5 <span class="Heading">subgeometries</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7FE8E4BF7E700E65">2.3-5 <span class="Heading">Subgeometries</span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X838BBDD97FA03FD0">2.3-6 <span class="Heading">Embedding by field reduction</span></a>
 </span>
@@ -126,7 +138,7 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X855C8E6D819EB975">2.4 <span class="Heading">Some geometrical objects</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X86D62CF17931E455">2.4-1 <span class="Heading">Spreads of <span class="SimpleMath">W(5,3)</span></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8475841778D3BEEC">2.4-1 <span class="Heading">Spreads of <span class="SimpleMath">W(5,3)</span></span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X81F516D07E8165B9">2.4-2 <span class="Heading">Distance-6 spread of the split Cayley hexagon</span></a>
 </span>
@@ -136,11 +148,11 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X79623B9E7D5816B3">2.5-1 <span class="Heading">The split Cayley hexagon</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X86C5CC2B78B349CC">2.5-2 <span class="Heading">An (apartment of) a building of type <span class="SimpleMath">E_6</span></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X8528558E87DE72C5">2.5-2 <span class="Heading">An (apartment of) a building of type <span class="SimpleMath">E_6</span></span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X85572D5782665476">2.5-3 <span class="Heading">A rank 4 geometry for <span class="SimpleMath">PSL(2,11)</span></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B783473852C7899">2.5-3 <span class="Heading">A rank 4 geometry for <span class="SimpleMath">PSL(2,11)</span></span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X787388FA7DABA2D6">2.5-4 <span class="Heading">The Ree-Tits octagon of order <span class="SimpleMath">[2,4]</span> as coset geometry</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X80128FF17BB62C83">2.5-4 <span class="Heading">The Ree-Tits octagon of order <span class="SimpleMath">[2,4]</span> as coset geometry</span></a>
 </span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7BA462527B2777BC">2.6 <span class="Heading">Elation generalised quadrangles</span></a>
@@ -165,7 +177,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X81F7D8FA82A55561">3.1-1 IsIncidenceStructure</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X78C74BE87E050E84">3.1-2 IsIncidenceGeometry</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7C3258887C8DF5C1">3.1-3 IncidenceStructure</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7EB285F379512585">3.1-4 <span class="Heading">Main categories in <code class="code">IsIncidenceGeometry</code></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7B0347E2863C1E8C">3.1-4 <span class="Heading">Main categories in <code class="code">IsIncidenceGeometry</code></span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X87FFB1648575FFF2">3.1-5 <span class="Heading">Examples of categories of incidence geometries</span></a>
 </span>
@@ -226,7 +238,7 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X84D77D437B5F3716">3.6 <span class="Heading">Lie geometries</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X85D26CF97A70B761">3.6-1 <span class="Heading">Main categories in <code class="code">IsLieGeometry</code></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7D012B9F86E63702">3.6-1 <span class="Heading">Main categories in <code class="code">IsLieGeometry</code></span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8606750A8586DF8D">3.6-2 AmbientSpace</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7D544D7985A4572D">3.6-3 UnderlyingVectorSpace</a></span>
@@ -238,8 +250,8 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X82E9593B8074AECB">3.7-1 VectorSpaceToElement</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X810D4D6D87069697">3.7-2 UnderlyingObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X87BDB89B7AAFE8AD">3.7-3 \in</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8365B36785DACE78">3.7-4 <span class="Heading">More short names for <code class="file">ElementsIncidentWithElementOfIncidenceStructure</code></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X87BDB89B7AAFE8AD"><code>3.7-3 \in</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X814C3AC27E49AD5B">3.7-4 <span class="Heading">More short names for <code class="file">ElementsIncidentWithElementOfIncidenceStructure</code></span></a>
 </span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7A9EBF9782671634">3.8 <span class="Heading">Changing the ambient geometry of elements of a Lie geometry</span></a>
@@ -291,7 +303,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7FFA08DA85C5251C">4.3-1 ShadowOfElement</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7E86E6417871730C">4.3-2 ShadowOfFlag</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X81A8365A7FE68447">4.3-3 ElementsIncidentWithElementOfIncidenceStructure</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7D12E3A28364CC84">4.3-4 <span class="Heading">Short names for <code class="file">ElementsIncidentWithElementOfIncidenceStructure</code></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7E29C31D7CB5DB23">4.3-4 <span class="Heading">Short names for <code class="file">ElementsIncidentWithElementOfIncidenceStructure</code></span></a>
 </span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X799F3A2A86F82E5B">4.4 <span class="Heading">Enumerating subspaces of a projective space</span></a>
@@ -341,8 +353,7 @@ projective spaces</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7FE527AB81C2B675">5.3-6 ProjectiveSpaceIsomorphism</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X84F59A2687C62763">5.3-7 Order</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7ACE9995784DF6A3">5.4 <span class="Heading">The groups <span class="SimpleMath">PΓL</span>, 
-<span class="SimpleMath">PGL</span>, and <span class="SimpleMath">PSL</span> in <strong class="pkg">FinInG</strong>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X78E99D9086D64FD9">5.4 <span class="Heading">The groups PΓL, PGL, and PSL in <strong class="pkg">FinInG</strong>
 </span></a>
 </span>
 <div class="ContSSBlock">
@@ -367,7 +378,7 @@ projective spaces</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7AAD7DDD7E19595E">5.7 <span class="Heading">Basic action of projective group elements</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7D21FB1A7D21FB1A">5.7-1 \^</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7D21FB1A7D21FB1A"><code>5.7-1 \^</code></a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7EBA895D7A501CE0">5.8 <span class="Heading">Projective group actions</span></a>
 </span>
@@ -488,7 +499,7 @@ spaces</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7FFA08DA85C5251C">7.6-1 ShadowOfElement</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X81A8365A7FE68447">7.6-2 ElementsIncidentWithElementOfIncidenceStructure</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7ADF374F8347F527">7.7 <span class="Heading">Projective Orthogonal/Unitary/Symplectic groups in <strong class="pkg">FinInG</strong></span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7988AF9978E75E37">7.7 <span class="Heading">Projective Orthogonal/Unitary/Symplectic groups in <strong class="pkg">FinInG</strong></span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X857C261585038CB8">7.7-1 SpecialIsometryGroup</a></span>
@@ -514,6 +525,7 @@ spaces</span></a>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7CF168A0818C553D">8.1-1 FiningOrbit</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X827CD5727A7DA4A3">8.1-2 FiningOrbits</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X822D1CFF7DDC11D7">8.1-3 FiningOrbitsDomain</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7EAB52F67B3A0003">8.2 <span class="Heading">Stabilisers</span></a>
 </span>
@@ -521,6 +533,9 @@ spaces</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X83B7F30F81A0BCE3">8.2-1 FiningStabiliser</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X854826AC7DA9FB6B">8.2-2 FiningStabiliserOrb</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7929900F79B6000C">8.2-3 FiningSetwiseStabiliser</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7A625B4D7992EEBC">8.2-4 StabiliserGroupOfSubspace</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7F50965D7B9C1BC5">8.2-5 ProjectiveStabiliserGroupOfSubspace</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X81B7F825830CD669">8.2-6 SpecialProjectiveStabiliserGroupOfSubspace</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7B449F3B7F23A30A">8.3 <span class="Heading">Actions and nice monomorphisms revisited</span></a>
 </span>
@@ -628,7 +643,7 @@ spaces</span></a>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X857976B679B8EC30">10.5-1 NaturalEmbeddingBySubspace</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X82510EF078F0806E">10.5-2 NaturalEmbeddingBySubField</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7823BA95797898CE">10.5-3 <span class="Heading"> Embedding of polar spaces by field reduction</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7823BA95797898CE">10.5-3 <span class="Heading">Embedding of polar spaces by field reduction</span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7D2D9AD287532FDB">10.5-4 NaturalEmbeddingByFieldReduction</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7D2D9AD287532FDB">10.5-5 NaturalEmbeddingByFieldReduction</a></span>
@@ -653,7 +668,7 @@ spaces</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X8606750A8586DF8D">11.1-3 AmbientSpace</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X86605DF87C562635">11.1-4 PointsOfAlgebraicVariety</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X83ADF8287ED0668E">11.1-5 Iterator</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X87BDB89B7AAFE8AD">11.1-6 \in</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X87BDB89B7AAFE8AD"><code>11.1-6 \in</code></a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap11.html#X79EC6F8381337C08">11.2 <span class="Heading">Projective Varieties</span></a>
 </span>
@@ -681,7 +696,7 @@ spaces</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X829F76BB80BD55DB">11.5-2 Range</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7CFAB0157BFB1806">11.5-3 ImageElm</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X8781348F7F5796A0">11.5-4 ImagesSet</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7D21FB1A7D21FB1A">11.5-5 \^</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7D21FB1A7D21FB1A"><code>11.5-5 \^</code></a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap11.html#X81374CC57CA01150">11.6 <span class="Heading">Segre Varieties</span></a>
 </span>
@@ -713,12 +728,12 @@ spaces</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X8141DFFF7B352E2D">12.1-1 IsGeneralisedPolygon</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X82EE78CF7A65376F">12.1-2 <span class="Heading">Subcategories in <code class="code">IsGeneralisedPolygon</code></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X832E75AE7CCC5BB2">12.1-2 <span class="Heading">Subcategories in <code class="code">IsGeneralisedPolygon</code></span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X86C124B3804C7569">12.1-3 IsWeakGeneralisedPolygon</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X872678307DF4603D">12.1-4 <span class="Heading">Subcategories in <code class="code">IsProjectivePlaneCategory</code></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X8540C04887CF8824">12.1-4 <span class="Heading">Subcategories in <code class="code">IsProjectivePlaneCategory</code></span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X78C1E64E86803511">12.1-5 <span class="Heading">Subcategories in <code class="code">IsGeneralisedQuadrangle</code></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X7CF10DAE7847939D">12.1-5 <span class="Heading">Subcategories in <code class="code">IsGeneralisedQuadrangle</code></span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X7A2ABB0B818E25C5">12.1-6 IsClassicalGeneralisedHexagon</a></span>
 </div></div>
@@ -767,7 +782,7 @@ spaces</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X82E9593B8074AECB">12.5-5 VectorSpaceToElement</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X7809B7C183FA7213">12.5-6 ObjectToElement</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X810D4D6D87069697">12.5-7 UnderlyingObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X87BDB89B7AAFE8AD">12.5-8 \in</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X87BDB89B7AAFE8AD"><code>12.5-8 \in</code></a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X7B1380878358938C">12.5-9 <span class="Heading">Span and meet of elements</span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap12.html#X83FF6FA0790D5747">12.5-10 CollineationGroup</a></span>
@@ -819,8 +834,8 @@ spaces</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X82DA90817A70103A">13.1-9 RandomChamber</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7FEFCB907CAAA9B1">13.1-10 IsFlagTransitiveGeometry</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7C0E5EDD806CE4C1">13.1-11 OnCosetGeometryElement</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7D21FB1A7D21FB1A">13.1-12 \^</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7D21FB1A7D21FB1A">13.1-13 \^</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7D21FB1A7D21FB1A"><code>13.1-12 \^</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7D21FB1A7D21FB1A"><code>13.1-13 \^</code></a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7F74FD648751B7E6">13.1-14 IsFirmGeometry</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X7F8A17357F9FFA00">13.1-15 IsThickGeometry</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X830213C3843A1BA2">13.1-16 IsThinGeometry</a></span>
@@ -852,7 +867,7 @@ spaces</span></a>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap13.html#X79F882017FEFE4DE">13.3-4 DrawDiagramWithNeato</a></span>
 </div></div>
 </div>
-<div class="ContChap"><a href="chapA.html#X86AA009B8756CA64">A <span class="Heading">The structure of <strong class="pkg">FinInG</strong> </span></a>
+<div class="ContChap"><a href="chapA.html#X7F3345C884CD0268">A <span class="Heading">The structure of <strong class="pkg">FinInG</strong> </span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X84D6D0EC7989CF5E">A.1 <span class="Heading">The different components</span></a>
 </span>
 </div>
@@ -868,14 +883,14 @@ spaces</span></a>
 </span>
 </div>
 </div>
-<div class="ContChap"><a href="chapB.html#X7D0FACF8814D5125">B <span class="Heading">The finite classical groups in <strong class="pkg">FinInG</strong> </span></a>
+<div class="ContChap"><a href="chapB.html#X866C644987E43DF8">B <span class="Heading">The finite classical groups in <strong class="pkg">FinInG</strong> </span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapB.html#X7F297E2B7D98DC76">B.1 <span class="Heading">Standard forms used to produce the finite classical groups.</span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapB.html#X80010BA38266701F">B.1-1 CanonicalGramMatrix</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapB.html#X83A532A17828B887">B.1-2 CanonicalQuadraticForm</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapB.html#X86B815D586461783">B.2 <span class="Heading">Direct commands to construct the projective classical groups in <strong class="pkg">FinInG</strong></span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapB.html#X7D9E27E986AEB973">B.2 <span class="Heading">Direct commands to construct the projective classical groups in <strong class="pkg">FinInG</strong></span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chapB.html#X7DB7788C7E3DE820">B.2-1 SOdesargues</a></span>

@@ -41,7 +41,7 @@
   
   [1X40.1-1 GroupHomomorphismByImages[101X
   
-  [29X[2XGroupHomomorphismByImages[102X( [3XG[103X, [3XH[103X[[, [3Xgens[103X], [3Ximgs[103X] ) [32X function
+  [33X[1;0Y[29X[2XGroupHomomorphismByImages[102X( [3XG[103X, [3XH[103X[[, [3Xgens[103X], [3Ximgs[103X] ) [32X function[133X
   
   [33X[0;0Y[2XGroupHomomorphismByImages[102X  returns  the group homomorphism with source [3XG[103X and
   range  [3XH[103X  that is defined by mapping the list [3Xgens[103X of generators of [3XG[103X to the
@@ -64,7 +64,7 @@
   
   [1X40.1-2 GroupHomomorphismByImagesNC[101X
   
-  [29X[2XGroupHomomorphismByImagesNC[102X( [3XG[103X, [3XH[103X[[, [3Xgens[103X], [3Ximgs[103X] ) [32X operation
+  [33X[1;0Y[29X[2XGroupHomomorphismByImagesNC[102X( [3XG[103X, [3XH[103X[[, [3Xgens[103X], [3Ximgs[103X] ) [32X operation[133X
   
   [33X[0;0Y[2XGroupHomomorphismByImagesNC[102X       creates       a       homomorphism      as
   [2XGroupHomomorphismByImages[102X  ([14X40.1-1[114X)  does,  however it does not test whether
@@ -97,10 +97,10 @@
   
   [1X40.1-3 GroupGeneralMappingByImages[101X
   
-  [29X[2XGroupGeneralMappingByImages[102X( [3XG[103X, [3XH[103X, [3Xgens[103X, [3Ximgs[103X ) [32X operation
-  [29X[2XGroupGeneralMappingByImages[102X( [3XG[103X, [3Xgens[103X, [3Ximgs[103X ) [32X operation
-  [29X[2XGroupGeneralMappingByImagesNC[102X( [3XG[103X, [3XH[103X, [3Xgens[103X, [3Ximgs[103X ) [32X operation
-  [29X[2XGroupGeneralMappingByImagesNC[102X( [3XG[103X, [3Xgens[103X, [3Ximgs[103X ) [32X operation
+  [33X[1;0Y[29X[2XGroupGeneralMappingByImages[102X( [3XG[103X, [3XH[103X, [3Xgens[103X, [3Ximgs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGroupGeneralMappingByImages[102X( [3XG[103X, [3Xgens[103X, [3Ximgs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGroupGeneralMappingByImagesNC[102X( [3XG[103X, [3XH[103X, [3Xgens[103X, [3Ximgs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGroupGeneralMappingByImagesNC[102X( [3XG[103X, [3Xgens[103X, [3Ximgs[103X ) [32X operation[133X
   
   [33X[0;0Yreturns a general mapping defined by extending the mapping from [3Xgens[103X to [3Ximgs[103X
   homomorphically.  If  the  range  [3XH[103X  is  not  given the mapping will be made
@@ -119,8 +119,8 @@
   
   [1X40.1-4 [33X[0;0YGroupHomomorphismByFunction[133X[101X
   
-  [29X[2XGroupHomomorphismByFunction[102X( [3XS[103X, [3XR[103X, [3Xfun[103X[, [3Xinvfun[103X] ) [32X function
-  [29X[2XGroupHomomorphismByFunction[102X( [3XS[103X, [3XR[103X, [3Xfun[103X, [3Xfalse[103X, [3Xprefun[103X ) [32X function
+  [33X[1;0Y[29X[2XGroupHomomorphismByFunction[102X( [3XS[103X, [3XR[103X, [3Xfun[103X[, [3Xinvfun[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XGroupHomomorphismByFunction[102X( [3XS[103X, [3XR[103X, [3Xfun[103X, [3Xfalse[103X, [3Xprefun[103X ) [32X function[133X
   
   [33X[0;0Y[2XGroupHomomorphismByFunction[102X  returns  a group homomorphism [10Xhom[110X with source [3XS[103X
   and  range  [3XR[103X, such that each element [10Xs[110X of [3XS[103X is mapped to the element [3Xfun[103X[10X( s
@@ -154,7 +154,7 @@
   
   [1X40.1-5 AsGroupGeneralMappingByImages[101X
   
-  [29X[2XAsGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAsGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X attribute[133X
   
   [33X[0;0YIf [3Xmap[103X is a mapping from one group to another this attribute returns a group
   general  mapping  that  which  implements  the  same abstract mapping. (Some
@@ -323,7 +323,7 @@
   
   [1X40.3-5 ImagesSmallestGenerators[101X
   
-  [29X[2XImagesSmallestGenerators[102X( [3Xmap[103X ) [32X attribute
+  [33X[1;0Y[29X[2XImagesSmallestGenerators[102X( [3Xmap[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns the list of images of [10XGeneratorsSmallest(Source([3Xmap[103X[10X))[110X. This list can
   be  used  to  compare  group  homomorphisms.  (The standard comparison is to
@@ -383,7 +383,7 @@
   
   [1X40.5-1 IsHandledByNiceMonomorphism[101X
   
-  [29X[2XIsHandledByNiceMonomorphism[102X( [3Xobj[103X ) [32X property
+  [33X[1;0Y[29X[2XIsHandledByNiceMonomorphism[102X( [3Xobj[103X ) [32X property[133X
   
   [33X[0;0YIf   this   property   is  [9Xtrue[109X,  high-valued  methods  that  translate  all
   calculations  in  [3Xobj[103X in the image under the [2XNiceMonomorphism[102X ([14X40.5-2[114X) value
@@ -391,7 +391,7 @@
   
   [1X40.5-2 NiceMonomorphism[101X
   
-  [29X[2XNiceMonomorphism[102X( [3Xobj[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNiceMonomorphism[102X( [3Xobj[103X ) [32X attribute[133X
   
   [33X[0;0Yis  a  homomorphism that is defined (at least) on the whole of [3Xobj[103X and whose
   restriction  to  [3Xobj[103X is injective. The concrete morphism (and also the image
@@ -399,7 +399,7 @@
   
   [1X40.5-3 NiceObject[101X
   
-  [29X[2XNiceObject[102X( [3Xobj[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNiceObject[102X( [3Xobj[103X ) [32X attribute[133X
   
   [33X[0;0YThe  [2XNiceObject[102X value of [3Xobj[103X is the image of [3Xobj[103X under the mapping stored as
   the value of [2XNiceMonomorphism[102X ([14X40.5-2[114X) for [3Xobj[103X.[133X
@@ -420,7 +420,7 @@
   
   [1X40.5-4 IsCanonicalNiceMonomorphism[101X
   
-  [29X[2XIsCanonicalNiceMonomorphism[102X( [3Xnhom[103X ) [32X property
+  [33X[1;0Y[29X[2XIsCanonicalNiceMonomorphism[102X( [3Xnhom[103X ) [32X property[133X
   
   [33X[0;0YA  nice monomorphism (see [2XNiceMonomorphism[102X ([14X40.5-2[114X) [3Xnhom[103X is canonical if the
   image  set  will  only  depend  on  the set of group elements but not on the
@@ -439,7 +439,7 @@
   
   [1X40.6-1 ConjugatorIsomorphism[101X
   
-  [29X[2XConjugatorIsomorphism[102X( [3XG[103X, [3Xg[103X ) [32X operation
+  [33X[1;0Y[29X[2XConjugatorIsomorphism[102X( [3XG[103X, [3Xg[103X ) [32X operation[133X
   
   [33X[0;0YLet  [3XG[103X be a group, and [3Xg[103X an element in the same family as the elements of [3XG[103X.
   [2XConjugatorIsomorphism[102X  returns  the isomorphism from [3XG[103X to [10X[3XG[103X[10X^[3Xg[103X[10X[110X defined by [22Xh ↦
@@ -450,8 +450,8 @@
   
   [1X40.6-2 ConjugatorAutomorphism[101X
   
-  [29X[2XConjugatorAutomorphism[102X( [3XG[103X, [3Xg[103X ) [32X function
-  [29X[2XConjugatorAutomorphismNC[102X( [3XG[103X, [3Xg[103X ) [32X operation
+  [33X[1;0Y[29X[2XConjugatorAutomorphism[102X( [3XG[103X, [3Xg[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XConjugatorAutomorphismNC[102X( [3XG[103X, [3Xg[103X ) [32X operation[133X
   
   [33X[0;0YLet  [3XG[103X  be a group, and [3Xg[103X an element in the same family as the elements of [3XG[103X
   such that [3Xg[103X normalizes [3XG[103X. [2XConjugatorAutomorphism[102X returns the automorphism of
@@ -467,8 +467,8 @@
   
   [1X40.6-3 InnerAutomorphism[101X
   
-  [29X[2XInnerAutomorphism[102X( [3XG[103X, [3Xg[103X ) [32X function
-  [29X[2XInnerAutomorphismNC[102X( [3XG[103X, [3Xg[103X ) [32X operation
+  [33X[1;0Y[29X[2XInnerAutomorphism[102X( [3XG[103X, [3Xg[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XInnerAutomorphismNC[102X( [3XG[103X, [3Xg[103X ) [32X operation[133X
   
   [33X[0;0YLet [3XG[103X be a group, and [22X[3Xg[103X ∈ [3XG[103X[122X. [2XInnerAutomorphism[102X returns the automorphism of [3XG[103X
   defined by [22Xh ↦ h^[3Xg[103X[122X for all [22Xh ∈ [3XG[103X[122X.[133X
@@ -483,9 +483,9 @@
   
   [1X40.6-4 IsConjugatorIsomorphism[101X
   
-  [29X[2XIsConjugatorIsomorphism[102X( [3Xhom[103X ) [32X property
-  [29X[2XIsConjugatorAutomorphism[102X( [3Xhom[103X ) [32X property
-  [29X[2XIsInnerAutomorphism[102X( [3Xhom[103X ) [32X property
+  [33X[1;0Y[29X[2XIsConjugatorIsomorphism[102X( [3Xhom[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsConjugatorAutomorphism[102X( [3Xhom[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsInnerAutomorphism[102X( [3Xhom[103X ) [32X property[133X
   
   [33X[0;0YLet [3Xhom[103X be a group general mapping (see [2XIsGroupGeneralMapping[102X ([14X32.9-4[114X)) with
   source  [22XG[122X,  say.  [2XIsConjugatorIsomorphism[102X  returns [9Xtrue[109X if [3Xhom[103X is induced by
@@ -511,7 +511,7 @@
   
   [1X40.6-5 ConjugatorOfConjugatorIsomorphism[101X
   
-  [29X[2XConjugatorOfConjugatorIsomorphism[102X( [3Xhom[103X ) [32X attribute
+  [33X[1;0Y[29X[2XConjugatorOfConjugatorIsomorphism[102X( [3Xhom[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a  conjugator  isomorphism  [3Xhom[103X  (see [2XConjugatorIsomorphism[102X  ([14X40.6-1[114X)),
   [2XConjugatorOfConjugatorIsomorphism[102X  returns  an  element  [22Xg[122X such that mapping
@@ -545,7 +545,7 @@
   
   [1X40.7-1 AutomorphismGroup[101X
   
-  [29X[2XAutomorphismGroup[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAutomorphismGroup[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns the full automorphism group of the group [3XG[103X. The automorphisms act on
   [3XG[103X   by  the  caret  operator  [10X^[110X.  The  automorphism  group  often  stores  a
@@ -567,7 +567,7 @@
   
   [1X40.7-2 IsGroupOfAutomorphisms[101X
   
-  [29X[2XIsGroupOfAutomorphisms[102X( [3XG[103X ) [32X property
+  [33X[1;0Y[29X[2XIsGroupOfAutomorphisms[102X( [3XG[103X ) [32X property[133X
   
   [33X[0;0Yindicates  whether  [3XG[103X consists of automorphisms of another group [22XH[122X, say. The
   group  [22XH[122X  can  be  obtained  from  [3XG[103X  via  the  attribute [2XAutomorphismDomain[102X
@@ -575,13 +575,13 @@
   
   [1X40.7-3 AutomorphismDomain[101X
   
-  [29X[2XAutomorphismDomain[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAutomorphismDomain[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0YIf [3XG[103X consists of automorphisms of [22XH[122X, this attribute returns [22XH[122X.[133X
   
   [1X40.7-4 IsAutomorphismGroup[101X
   
-  [29X[2XIsAutomorphismGroup[102X( [3XG[103X ) [32X property
+  [33X[1;0Y[29X[2XIsAutomorphismGroup[102X( [3XG[103X ) [32X property[133X
   
   [33X[0;0Yindicates  whether [3XG[103X is the full automorphism group of another group [22XH[122X, this
   group is given as [2XAutomorphismDomain[102X ([14X40.7-3[114X) value of [3XG[103X.[133X
@@ -604,7 +604,7 @@
   
   [1X40.7-5 InnerAutomorphismsAutomorphismGroup[101X
   
-  [29X[2XInnerAutomorphismsAutomorphismGroup[102X( [3Xautgroup[103X ) [32X attribute
+  [33X[1;0Y[29X[2XInnerAutomorphismsAutomorphismGroup[102X( [3Xautgroup[103X ) [32X attribute[133X
   
   [33X[0;0YFor  an  automorphism  group  [3Xautgroup[103X  of a group this attribute stores the
   subgroup  of  inner  automorphisms (automorphisms induced by conjugation) of
@@ -617,7 +617,7 @@
   
   [1X40.7-6 InducedAutomorphism[101X
   
-  [29X[2XInducedAutomorphism[102X( [3Xepi[103X, [3Xaut[103X ) [32X function
+  [33X[1;0Y[29X[2XInducedAutomorphism[102X( [3Xepi[103X, [3Xaut[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xaut[103X be an automorphism of a group [22XG[122X and [3Xepi[103X be a homomorphism from [22XG[122X to
   a group [22XH[122X such that the kernel of [3Xepi[103X is fixed under [3Xaut[103X. Let [22XU[122X be the image
@@ -670,7 +670,7 @@
   
   [1X40.8-1 AssignNiceMonomorphismAutomorphismGroup[101X
   
-  [29X[2XAssignNiceMonomorphismAutomorphismGroup[102X( [3Xautgrp[103X, [3Xgroup[103X ) [32X function
+  [33X[1;0Y[29X[2XAssignNiceMonomorphismAutomorphismGroup[102X( [3Xautgrp[103X, [3Xgroup[103X ) [32X function[133X
   
   [33X[0;0Ycomputes  a  nice monomorphism for [3Xautgroup[103X acting on [3Xgroup[103X and stores it as
   [2XNiceMonomorphism[102X ([14X40.5-2[114X) value of [3Xautgrp[103X.[133X
@@ -687,7 +687,7 @@
   
   [1X40.8-2 NiceMonomorphismAutomGroup[101X
   
-  [29X[2XNiceMonomorphismAutomGroup[102X( [3Xautgrp[103X, [3Xelms[103X, [3Xelmsgens[103X ) [32X function
+  [33X[1;0Y[29X[2XNiceMonomorphismAutomGroup[102X( [3Xautgrp[103X, [3Xelms[103X, [3Xelmsgens[103X ) [32X function[133X
   
   [33X[0;0YThis  function  creates a monomorphism for an automorphism group [3Xautgrp[103X of a
   group  by  permuting  the group elements in the list [3Xelms[103X. This list must be
@@ -700,7 +700,7 @@
   
   [1X40.9-1 IsomorphismGroups[101X
   
-  [29X[2XIsomorphismGroups[102X( [3XG[103X, [3XH[103X ) [32X function
+  [33X[1;0Y[29X[2XIsomorphismGroups[102X( [3XG[103X, [3XH[103X ) [32X function[133X
   
   [33X[0;0Ycomputes  an  isomorphism  between the groups [3XG[103X and [3XH[103X if they are isomorphic
   and returns [9Xfail[109X otherwise.[133X
@@ -722,7 +722,7 @@
   
   [1X40.9-2 AllHomomorphismClasses[101X
   
-  [29X[2XAllHomomorphismClasses[102X( [3XG[103X, [3XH[103X ) [32X function
+  [33X[1;0Y[29X[2XAllHomomorphismClasses[102X( [3XG[103X, [3XH[103X ) [32X function[133X
   
   [33X[0;0YFor  two  groups  [3XG[103X  and  [3XH[103X,  this  function  returns representatives of all
   homomorphisms [22X[3XG[103X to [3XH[103X[122X up to [3XH[103X-conjugacy.[133X
@@ -736,9 +736,9 @@
   
   [1X40.9-3 AllHomomorphisms[101X
   
-  [29X[2XAllHomomorphisms[102X( [3XG[103X, [3XH[103X ) [32X function
-  [29X[2XAllEndomorphisms[102X( [3XG[103X ) [32X function
-  [29X[2XAllAutomorphisms[102X( [3XG[103X ) [32X function
+  [33X[1;0Y[29X[2XAllHomomorphisms[102X( [3XG[103X, [3XH[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XAllEndomorphisms[102X( [3XG[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XAllAutomorphisms[102X( [3XG[103X ) [32X function[133X
   
   [33X[0;0YFor  two  groups  [3XG[103X  and  [3XH[103X, this function returns all homomorphisms [22X[3XG[103X to [3XH[103X[122X.
   Since  this number will grow quickly, [2XAllHomomorphismClasses[102X ([14X40.9-2[114X) should
@@ -761,7 +761,7 @@
   
   [1X40.9-4 GQuotients[101X
   
-  [29X[2XGQuotients[102X( [3XF[103X, [3XG[103X ) [32X operation
+  [33X[1;0Y[29X[2XGQuotients[102X( [3XF[103X, [3XG[103X ) [32X operation[133X
   
   [33X[0;0Ycomputes  all  epimorphisms  from  [3XF[103X  onto  [3XG[103X up to automorphisms of [3XG[103X. This
   classifies all factor groups of [3XF[103X which are isomorphic to [3XG[103X.[133X
@@ -785,7 +785,7 @@
   
   [1X40.9-5 IsomorphicSubgroups[101X
   
-  [29X[2XIsomorphicSubgroups[102X( [3XG[103X, [3XH[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsomorphicSubgroups[102X( [3XG[103X, [3XH[103X ) [32X operation[133X
   
   [33X[0;0Ycomputes  all  monomorphisms  from  [3XH[103X  into [3XG[103X up to [3XG[103X-conjugacy of the image
   groups. This classifies all [3XG[103X-classes of subgroups of [3XG[103X which are isomorphic
@@ -815,7 +815,7 @@
   
   [1X40.9-6 MorClassLoop[101X
   
-  [29X[2XMorClassLoop[102X( [3Xrange[103X, [3Xclasses[103X, [3Xparams[103X, [3Xaction[103X ) [32X function
+  [33X[1;0Y[29X[2XMorClassLoop[102X( [3Xrange[103X, [3Xclasses[103X, [3Xparams[103X, [3Xaction[103X ) [32X function[133X
   
   [33X[0;0YThis  function loops over element tuples taken from [3Xclasses[103X and checks these
   for  properties  such  as generating a given group, or fulfilling relations.
@@ -900,7 +900,7 @@
   
   [1X40.10-1 IsGroupGeneralMappingByImages[101X
   
-  [29X[2XIsGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation[133X
   
   [33X[0;0YRepresentation  for  mappings  from one group to another that are defined by
   extending  a  mapping of group generators homomorphically. Instead of record
@@ -909,7 +909,7 @@
   
   [1X40.10-2 MappingGeneratorsImages[101X
   
-  [29X[2XMappingGeneratorsImages[102X( [3Xmap[103X ) [32X attribute
+  [33X[1;0Y[29X[2XMappingGeneratorsImages[102X( [3Xmap[103X ) [32X attribute[133X
   
   [33X[0;0YThis  attribute contains a list of length 2, the first entry being a list of
   generators of the source of [3Xmap[103X and the second entry a list of their images.
@@ -918,66 +918,66 @@
   
   [1X40.10-3 IsGroupGeneralMappingByAsGroupGeneralMappingByImages[101X
   
-  [29X[2XIsGroupGeneralMappingByAsGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsGroupGeneralMappingByAsGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation[133X
   
   [33X[0;0YRepresentation     for     mappings     that     delegate    work    on    a
   [2XGroupHomomorphismByImages[102X ([14X40.1-1[114X).[133X
   
   [1X40.10-4 IsPreimagesByAsGroupGeneralMappingByImages[101X
   
-  [29X[2XIsPreimagesByAsGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsPreimagesByAsGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation[133X
   
   [33X[0;0YRepresentation  for  mappings  that delegate work for preimages to a mapping
   created with [2XGroupHomomorphismByImages[102X ([14X40.1-1[114X).[133X
   
   [1X40.10-5 IsPermGroupGeneralMapping[101X
   
-  [29X[2XIsPermGroupGeneralMapping[102X( [3Xmap[103X ) [32X Representation
-  [29X[2XIsPermGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation
-  [29X[2XIsPermGroupHomomorphism[102X( [3Xmap[103X ) [32X Representation
-  [29X[2XIsPermGroupHomomorphismByImages[102X( [3Xmap[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsPermGroupGeneralMapping[102X( [3Xmap[103X ) [32X Representation[133X
+  [33X[1;0Y[29X[2XIsPermGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation[133X
+  [33X[1;0Y[29X[2XIsPermGroupHomomorphism[102X( [3Xmap[103X ) [32X Representation[133X
+  [33X[1;0Y[29X[2XIsPermGroupHomomorphismByImages[102X( [3Xmap[103X ) [32X Representation[133X
   
   [33X[0;0Yare the representations for mappings that map from a perm group[133X
   
   [1X40.10-6 IsToPermGroupGeneralMappingByImages[101X
   
-  [29X[2XIsToPermGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation
-  [29X[2XIsToPermGroupHomomorphismByImages[102X( [3Xmap[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsToPermGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation[133X
+  [33X[1;0Y[29X[2XIsToPermGroupHomomorphismByImages[102X( [3Xmap[103X ) [32X Representation[133X
   
   [33X[0;0Yis the representation for mappings that map to a perm group[133X
   
   [1X40.10-7 IsGroupGeneralMappingByPcgs[101X
   
-  [29X[2XIsGroupGeneralMappingByPcgs[102X( [3Xmap[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsGroupGeneralMappingByPcgs[102X( [3Xmap[103X ) [32X Representation[133X
   
   [33X[0;0Yis  the  representations for mappings that map a pcgs to images and thus may
   use exponents to decompose generators.[133X
   
   [1X40.10-8 IsPcGroupGeneralMappingByImages[101X
   
-  [29X[2XIsPcGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation
-  [29X[2XIsPcGroupHomomorphismByImages[102X( [3Xmap[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsPcGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation[133X
+  [33X[1;0Y[29X[2XIsPcGroupHomomorphismByImages[102X( [3Xmap[103X ) [32X Representation[133X
   
   [33X[0;0Yis the representation for mappings from a pc group[133X
   
   [1X40.10-9 IsToPcGroupGeneralMappingByImages[101X
   
-  [29X[2XIsToPcGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation
-  [29X[2XIsToPcGroupHomomorphismByImages[102X( [3Xmap[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsToPcGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation[133X
+  [33X[1;0Y[29X[2XIsToPcGroupHomomorphismByImages[102X( [3Xmap[103X ) [32X Representation[133X
   
   [33X[0;0Yis the representation for mappings to a pc group[133X
   
   [1X40.10-10 IsFromFpGroupGeneralMappingByImages[101X
   
-  [29X[2XIsFromFpGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation
-  [29X[2XIsFromFpGroupHomomorphismByImages[102X( [3Xmap[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsFromFpGroupGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation[133X
+  [33X[1;0Y[29X[2XIsFromFpGroupHomomorphismByImages[102X( [3Xmap[103X ) [32X Representation[133X
   
   [33X[0;0Yis the representation of mappings from an fp group.[133X
   
   [1X40.10-11 IsFromFpGroupStdGensGeneralMappingByImages[101X
   
-  [29X[2XIsFromFpGroupStdGensGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation
-  [29X[2XIsFromFpGroupStdGensHomomorphismByImages[102X( [3Xmap[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsFromFpGroupStdGensGeneralMappingByImages[102X( [3Xmap[103X ) [32X Representation[133X
+  [33X[1;0Y[29X[2XIsFromFpGroupStdGensHomomorphismByImages[102X( [3Xmap[103X ) [32X Representation[133X
   
   [33X[0;0Yis the representation of total mappings from an fp group that give images of
   the standard generators.[133X

@@ -32,7 +32,7 @@
   
   [1X9.1-1 LastSystemError[101X
   
-  [29X[2XLastSystemError[102X(  ) [32X function
+  [33X[1;0Y[29X[2XLastSystemError[102X(  ) [32X function[133X
   
   [33X[0;0Y[2XLastSystemError[102X  returns  a record describing the last system error that has
   occurred.  This  record  contains  at least the component [10Xmessage[110X which is a
@@ -69,13 +69,13 @@
   
   [1X9.3-1 IsDirectory[101X
   
-  [29X[2XIsDirectory[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsDirectory[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0Y[2XIsDirectory[102X is a category of directories.[133X
   
   [1X9.3-2 Directory[101X
   
-  [29X[2XDirectory[102X( [3Xstring[103X ) [32X operation
+  [33X[1;0Y[29X[2XDirectory[102X( [3Xstring[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  a directory object for the string [3Xstring[103X. [2XDirectory[102X understands [10X"."[110X
   for  [21Xcurrent  directory[121X, that is, the directory in which [5XGAP[105X was started. It
@@ -91,7 +91,7 @@
   
   [1X9.3-3 DirectoryTemporary[101X
   
-  [29X[2XDirectoryTemporary[102X(  ) [32X function
+  [33X[1;0Y[29X[2XDirectoryTemporary[102X(  ) [32X function[133X
   
   [33X[0;0Yreturns  a  directory  object  in the category [2XIsDirectory[102X ([14X9.3-1[114X) for a [13Xnew[113X
   temporary  directory.  This  is  guaranteed  to  be  newly created and empty
@@ -108,13 +108,13 @@
   
   [1X9.3-4 DirectoryCurrent[101X
   
-  [29X[2XDirectoryCurrent[102X(  ) [32X function
+  [33X[1;0Y[29X[2XDirectoryCurrent[102X(  ) [32X function[133X
   
   [33X[0;0Yreturns the directory object for the current directory.[133X
   
   [1X9.3-5 DirectoriesLibrary[101X
   
-  [29X[2XDirectoriesLibrary[102X( [[3Xname[103X] ) [32X function
+  [33X[1;0Y[29X[2XDirectoriesLibrary[102X( [[3Xname[103X] ) [32X function[133X
   
   [33X[0;0Y[2XDirectoriesLibrary[102X returns the directory objects for the [5XGAP[105X library [3Xname[103X as
   a list. [3Xname[103X must be one of [10X"lib"[110X (the default), [10X"doc"[110X, [10X"tst"[110X, and so on.[133X
@@ -138,7 +138,7 @@
   
   [1X9.3-6 DirectoriesSystemPrograms[101X
   
-  [29X[2XDirectoriesSystemPrograms[102X(  ) [32X function
+  [33X[1;0Y[29X[2XDirectoriesSystemPrograms[102X(  ) [32X function[133X
   
   [33X[0;0Y[2XDirectoriesSystemPrograms[102X  returns  the  directory  objects  for the list of
   directories  where  the  system  programs reside, as a list. Under UNIX this
@@ -146,7 +146,7 @@
   
   [1X9.3-7 DirectoryContents[101X
   
-  [29X[2XDirectoryContents[102X( [3Xdir[103X ) [32X function
+  [33X[1;0Y[29X[2XDirectoryContents[102X( [3Xdir[103X ) [32X function[133X
   
   [33X[0;0YThis function returns a list of filenames/directory names that reside in the
   directory  [3Xdir[103X.  The argument [3Xdir[103X can either be given as a string indicating
@@ -161,7 +161,7 @@
   
   [1X9.3-8 DirectoryDesktop[101X
   
-  [29X[2XDirectoryDesktop[102X(  ) [32X function
+  [33X[1;0Y[29X[2XDirectoryDesktop[102X(  ) [32X function[133X
   
   [33X[0;0Yreturns  a  directory  object  for the users desktop directory as defined on
   many  modern  operating  systems.  The  function  is  intended  to provide a
@@ -173,7 +173,7 @@
   
   [1X9.3-9 DirectoryHome[101X
   
-  [29X[2XDirectoryHome[102X(  ) [32X function
+  [33X[1;0Y[29X[2XDirectoryHome[102X(  ) [32X function[133X
   
   [33X[0;0Yreturns  a  directory  object  for  the  users  home directory, defined as a
   directory  in which the user will typically have full read and write access.
@@ -189,8 +189,8 @@
   
   [1X9.4-1 [33X[0;0YFilename[133X[101X
   
-  [29X[2XFilename[102X( [3Xdir[103X, [3Xname[103X ) [32X operation
-  [29X[2XFilename[102X( [3Xlist-of-dirs[103X, [3Xname[103X ) [32X operation
+  [33X[1;0Y[29X[2XFilename[102X( [3Xdir[103X, [3Xname[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XFilename[102X( [3Xlist-of-dirs[103X, [3Xname[103X ) [32X operation[133X
   
   [33X[0;0YIf  the  first  argument  is  a  directory  object [3Xdir[103X, [2XFilename[102X returns the
   (system  dependent)  filename as a string for the file with name [3Xname[103X in the
@@ -267,7 +267,7 @@
   
   [1X9.6-1 IsExistingFile[101X
   
-  [29X[2XIsExistingFile[102X( [3Xfilename[103X ) [32X function
+  [33X[1;0Y[29X[2XIsExistingFile[102X( [3Xfilename[103X ) [32X function[133X
   
   [33X[0;0Y[2XIsExistingFile[102X  returns [9Xtrue[109X if a file with the filename [3Xfilename[103X exists and
   can be seen by the [5XGAP[105X process. Otherwise [9Xfalse[109X is returned.[133X
@@ -285,7 +285,7 @@
   
   [1X9.6-2 IsReadableFile[101X
   
-  [29X[2XIsReadableFile[102X( [3Xfilename[103X ) [32X function
+  [33X[1;0Y[29X[2XIsReadableFile[102X( [3Xfilename[103X ) [32X function[133X
   
   [33X[0;0Y[2XIsReadableFile[102X  returns [9Xtrue[109X if a file with the filename [3Xfilename[103X exists [13Xand[113X
   the  [5XGAP[105X  process has read permissions for the file, or [9Xfalse[109X if this is not
@@ -302,7 +302,7 @@
   
   [1X9.6-3 IsWritableFile[101X
   
-  [29X[2XIsWritableFile[102X( [3Xfilename[103X ) [32X function
+  [33X[1;0Y[29X[2XIsWritableFile[102X( [3Xfilename[103X ) [32X function[133X
   
   [33X[0;0Y[2XIsWritableFile[102X  returns [9Xtrue[109X if a file with the filename [3Xfilename[103X exists [13Xand[113X
   the  [5XGAP[105X process has write permissions for the file, or [9Xfalse[109X if this is not
@@ -315,7 +315,7 @@
   
   [1X9.6-4 IsExecutableFile[101X
   
-  [29X[2XIsExecutableFile[102X( [3Xfilename[103X ) [32X function
+  [33X[1;0Y[29X[2XIsExecutableFile[102X( [3Xfilename[103X ) [32X function[133X
   
   [33X[0;0Y[2XIsExecutableFile[102X  returns  [9Xtrue[109X  if a file with the filename [3Xfilename[103X exists
   [13Xand[113X  the  [5XGAP[105X process has execute permissions for the file, or [9Xfalse[109X if this
@@ -330,7 +330,7 @@
   
   [1X9.6-5 IsDirectoryPath[101X
   
-  [29X[2XIsDirectoryPath[102X( [3Xfilename[103X ) [32X function
+  [33X[1;0Y[29X[2XIsDirectoryPath[102X( [3Xfilename[103X ) [32X function[133X
   
   [33X[0;0Y[2XIsDirectoryPath[102X  returns  [9Xtrue[109X if the file with the filename [3Xfilename[103X exists
   [13Xand[113X  is  a  directory, and [9Xfalse[109X otherwise. Note that this function does not
@@ -343,7 +343,7 @@
   
   [1X9.7-1 Read[101X
   
-  [29X[2XRead[102X( [3Xfilename[103X ) [32X operation
+  [33X[1;0Y[29X[2XRead[102X( [3Xfilename[103X ) [32X operation[133X
   
   [33X[0;0Yreads  the  input  from  the  file with the filename [3Xfilename[103X, which must be
   given as a string.[133X
@@ -374,7 +374,7 @@
   
   [1X9.7-2 ReadAsFunction[101X
   
-  [29X[2XReadAsFunction[102X( [3Xfilename[103X ) [32X operation
+  [33X[1;0Y[29X[2XReadAsFunction[102X( [3Xfilename[103X ) [32X operation[133X
   
   [33X[0;0Yreads  the  file  with  filename  [3Xfilename[103X  as  a  function and returns this
   function.[133X
@@ -404,8 +404,8 @@
   
   [1X9.7-3 [33X[0;0YPrintTo and AppendTo[133X[101X
   
-  [29X[2XPrintTo[102X( [3Xfilename[103X[, [3Xobj1[103X, [3X...[103X] ) [32X function
-  [29X[2XAppendTo[102X( [3Xfilename[103X[, [3Xobj1[103X, [3X...[103X] ) [32X function
+  [33X[1;0Y[29X[2XPrintTo[102X( [3Xfilename[103X[, [3Xobj1[103X, [3X...[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XAppendTo[102X( [3Xfilename[103X[, [3Xobj1[103X, [3X...[103X] ) [32X function[133X
   
   [33X[0;0Y[2XPrintTo[102X  works  like  [2XPrint[102X ([14X6.3-4[114X), except that the arguments [3Xobj1[103X, [22X...[122X (if
   present)  are  printed  to  the  file  with the name [3Xfilename[103X instead of the
@@ -426,8 +426,8 @@
   
   [1X9.7-4 [33X[0;0YLogTo[133X[101X
   
-  [29X[2XLogTo[102X( [3Xfilename[103X ) [32X operation
-  [29X[2XLogTo[102X(  ) [32X operation
+  [33X[1;0Y[29X[2XLogTo[102X( [3Xfilename[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XLogTo[102X(  ) [32X operation[133X
   
   [33X[0;0YCalling [2XLogTo[102X with a string [3Xfilename[103X causes the subsequent interaction to be
   logged  to the file with the name [3Xfilename[103X, i.e., everything you see on your
@@ -441,8 +441,8 @@
   
   [1X9.7-5 [33X[0;0YInputLogTo[133X[101X
   
-  [29X[2XInputLogTo[102X( [3Xfilename[103X ) [32X operation
-  [29X[2XInputLogTo[102X(  ) [32X operation
+  [33X[1;0Y[29X[2XInputLogTo[102X( [3Xfilename[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XInputLogTo[102X(  ) [32X operation[133X
   
   [33X[0;0YCalling  [2XInputLogTo[102X with a string [3Xfilename[103X causes the subsequent input to be
   logged to the file with the name [3Xfilename[103X, i.e., everything you type on your
@@ -456,8 +456,8 @@
   
   [1X9.7-6 [33X[0;0YOutputLogTo[133X[101X
   
-  [29X[2XOutputLogTo[102X( [3Xfilename[103X ) [32X operation
-  [29X[2XOutputLogTo[102X(  ) [32X operation
+  [33X[1;0Y[29X[2XOutputLogTo[102X( [3Xfilename[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XOutputLogTo[102X(  ) [32X operation[133X
   
   [33X[0;0YCalling  [2XOutputLogTo[102X  with a string [3Xfilename[103X causes the subsequent output to
   be logged to the file with the name [3Xfilename[103X, i.e., everything [5XGAP[105X prints on
@@ -470,7 +470,7 @@
   
   [1X9.7-7 CrcFile[101X
   
-  [29X[2XCrcFile[102X( [3Xfilename[103X ) [32X function
+  [33X[1;0Y[29X[2XCrcFile[102X( [3Xfilename[103X ) [32X function[133X
   
   [33X[0;0YCRC  (cyclic  redundancy  check)  numbers  provide a certain method of doing
   checksums. They are used by [5XGAP[105X to check whether files have changed.[133X
@@ -488,7 +488,7 @@
   
   [1X9.7-8 RemoveFile[101X
   
-  [29X[2XRemoveFile[102X( [3Xfilename[103X ) [32X function
+  [33X[1;0Y[29X[2XRemoveFile[102X( [3Xfilename[103X ) [32X function[133X
   
   [33X[0;0Ywill  remove  the  file  with  filename [3Xfilename[103X and returns [9Xtrue[109X in case of
   success.  The function returns [9Xfail[109X if a system error occurred, for example,
@@ -498,8 +498,8 @@
   
   [1X9.7-9 Reread[101X
   
-  [29X[2XReread[102X( [3Xfilename[103X ) [32X function
-  [29X[2XREREADING[102X[32X global variable
+  [33X[1;0Y[29X[2XReread[102X( [3Xfilename[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XREREADING[102X[32X global variable[133X
   
   [33X[0;0YIn  general,  it is not possible to read the same [5XGAP[105X library file twice, or
   to  read  a  compiled  version  after reading a [5XGAP[105X version, because crucial

@@ -8,13 +8,14 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2014	Colorado State University, Fort Collins
+##  Copyright 2017	Colorado State University
+##                  Sabancı Üniversitesi
 ##					Università degli Studi di Padova
-##					Universeit Gent
+##					Universiteit Gent
 ##					University of St. Andrews
-##					University of Western Australia, Perth
+##					University of Western Australia
 ##                  Vrije Universiteit Brussel
-##                 
+##
 ##
 ##  Declaration stuff for Lie geometries.
 ##
@@ -145,6 +146,8 @@ DeclareOperation( "Span", [IsElementOfLieGeometry, IsEmptySubspace]);
 DeclareOperation( "Span", [IsEmptySubspace, IsLieGeometry]);
 DeclareOperation( "Span", [IsLieGeometry, IsEmptySubspace]);
 DeclareOperation( "Span", [IsEmptySubspace, IsEmptySubspace]);
+
+DeclareOperation( "Span", [ IsList ]); #moved here on 27/5/16
 
 DeclareOperation( "Meet", [IsEmptySubspace, IsElementOfLieGeometry]);
 DeclareOperation( "Meet", [IsElementOfLieGeometry, IsEmptySubspace]);

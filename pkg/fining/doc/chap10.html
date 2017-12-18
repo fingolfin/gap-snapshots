@@ -19,6 +19,7 @@
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap9.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap11.html">[Next Chapter]</a>&nbsp;  </div>
 
+<p id="mathjaxlink" class="pcenter"><a href="chap10_mj.html">[MathJax on]</a></p>
 <p><a id="X876240A479A5717C" name="X876240A479A5717C"></a></p>
 <div class="ChapSects"><a href="chap10.html#X876240A479A5717C">10 <span class="Heading">Geometry Morphisms</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X850559BF7886E0D2">10.1 <span class="Heading">Geometry morphisms in FinInG</span></a>
@@ -57,7 +58,7 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X857976B679B8EC30">10.5-1 NaturalEmbeddingBySubspace</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X82510EF078F0806E">10.5-2 NaturalEmbeddingBySubField</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7823BA95797898CE">10.5-3 <span class="Heading"> Embedding of polar spaces by field reduction</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7823BA95797898CE">10.5-3 <span class="Heading">Embedding of polar spaces by field reduction</span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7D2D9AD287532FDB">10.5-4 NaturalEmbeddingByFieldReduction</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7D2D9AD287532FDB">10.5-5 NaturalEmbeddingByFieldReduction</a></span>
@@ -219,14 +220,14 @@ MappingByFunction( PGammaO(7,8), &lt;projective collineation group of size
 
 <h4>10.3 <span class="Heading">Klein correspondence and derived dualities</span></h4>
 
-<p>The Klein correspondence is a well known geometry morphism from the lines of <span class="SimpleMath">PG(3,q)</span> to the points of a hyperbolic quadric in <span class="SimpleMath">PG(5,q)</span>. This morphism and some derived morphisms are provided in <strong class="pkg">FinInG</strong>. The bare essential of the Klein corresondence is the so-called Plücker map.</p>
+<p>The Klein correspondence is a well known geometry morphism from the lines of PG(3,q) to the points of a hyperbolic quadric in PG(5,q). This morphism and some derived morphisms are provided in <strong class="pkg">FinInG</strong>. The bare essential of the Klein corresondence is the so-called Plücker map.</p>
 
 <p><a id="X7C8E719883F407BB" name="X7C8E719883F407BB"></a></p>
 
 <h5>10.3-1 PluckerCoordinates</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PluckerCoordinates</code>( <var class="Arg">line</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<p>This operation takes a line of <span class="SimpleMath">PG(3,q)</span> as argument. It returns the plucker coordinates of the argument as list of finite field elements. The retured list can be used in operations as <code class="file">VectorSpaceToElement</code>, and represents a point of the hyperbolic quadric in <span class="SimpleMath">PG(5,q)</span> with equation X<sub>0</sub>X<sub>5</sub>+X<sub>1</sub>X<sub>4</sub>+X<sub>2</sub>X<sub>3</sub> = 0</p>
+<p>This operation takes a line of PG(3,q) as argument. It returns the plucker coordinates of the argument as list of finite field elements. The retured list can be used in operations as <code class="file">VectorSpaceToElement</code>, and represents a point of the hyperbolic quadric in PG(5,q) with equation X<sub>0</sub>X<sub>5</sub>+X<sub>1</sub>X<sub>4</sub>+X<sub>2</sub>X<sub>3</sub> = 0</p>
 
 
 <div class="example"><pre>
@@ -263,7 +264,7 @@ ProjectiveSpace(3, 169)
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KleinCorrespondence</code>( <var class="Arg">q</var>, <var class="Arg">boolean</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: a geometry morphism</p>
 
-<p>The argument <var class="Arg">f</var> is a finite field, the argument <var class="Arg">q</var> is a prime power. The first an the third version use <code class="keyw">true</code> as value for <var class="Arg">boolean</var>. When using <code class="keyw">true</code> as value for the boolean, the intertwiner is computed. This variant of the operation <code class="file">KleinCorrespondence</code> has always as ambient geometry of its range the hyperbolic quadric Q<sup>+</sup>(5,q) with equation X<sub>0</sub>X<sub>5</sub>+X<sub>1</sub>X<sub>4</sub>+X<sub>2</sub>X<sub>3</sub> = 0 The returned geometry morphism has the lines of <span class="SimpleMath">PG(3,q)</span> as source and the points of Q<sup>-</sup>(5,q) as range.</p>
+<p>The argument <var class="Arg">f</var> is a finite field, the argument <var class="Arg">q</var> is a prime power. The first an the third version use <code class="keyw">true</code> as value for <var class="Arg">boolean</var>. When using <code class="keyw">true</code> as value for the boolean, the intertwiner is computed. This variant of the operation <code class="file">KleinCorrespondence</code> has always as ambient geometry of its range the hyperbolic quadric Q<sup>+</sup>(5,q) with equation X<sub>0</sub>X<sub>5</sub>+X<sub>1</sub>X<sub>4</sub>+X<sub>2</sub>X<sub>3</sub> = 0 The returned geometry morphism has the lines of PG(3,q) as source and the points of Q<sup>+</sup>(5,q) as range.</p>
 
 
 <div class="example"><pre>
@@ -293,7 +294,7 @@ Q+(5, 9): x_1*x_6+x_2*x_5+x_3*x_4=0
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KleinCorrespondence</code>( <var class="Arg">quadric</var>, <var class="Arg">boolean</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: a geometry morphism</p>
 
-<p>The argument <var class="Arg">quadric</var> is a hyperbolic quadric in a 5 dimensional projective space. If <var class="Arg">boolean</var> is <code class="keyw">true</code> or not given, this operation returns the geometry morphism equipped with an intertwiner. The returned geometry morphism has the lines of <span class="SimpleMath">PG(3,q)</span> as source and the points of Q<sup>+</sup>(5,q) as range.</p>
+<p>The argument <var class="Arg">quadric</var> is a hyperbolic quadric in a 5 dimensional projective space. If <var class="Arg">boolean</var> is <code class="keyw">true</code> or not given, this operation returns the geometry morphism equipped with an intertwiner. The returned geometry morphism has the lines of PG(3,q) as source and the points of Q<sup>+</sup>(5,q) as range.</p>
 
 
 <div class="example"><pre>
@@ -335,7 +336,7 @@ ProjectiveSpace(3, 13)
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KleinCorrespondenceExtended</code>( <var class="Arg">quadric</var>, <var class="Arg">boolean</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: a geometry morphism</p>
 
-<p>The argument <var class="Arg">quadric</var> is a hyperbolic quadric in a 5 dimensional projective space. If <var class="Arg">boolean</var> is <code class="keyw">true</code> or not given, this operation returns the geometry morphism equipped with an intertwiner. The returned geometry morphism has all the elements of <span class="SimpleMath">PG(3,q)</span> as source (not just the lines) and the elements of Q<sup>+</sup>(5,q) as range, hence this operation is a kind of extension of <code class="file">KleinCorrespondence</code>.</p>
+<p>The argument <var class="Arg">quadric</var> is a hyperbolic quadric in a 5 dimensional projective space. If <var class="Arg">boolean</var> is <code class="keyw">true</code> or not given, this operation returns the geometry morphism equipped with an intertwiner. The returned geometry morphism has all the elements of PG(3,q) as source (not just the lines) and the elements of Q<sup>+</sup>(5,q) as range, hence this operation is a kind of extension of <code class="file">KleinCorrespondence</code>.</p>
 
 
 <div class="example"><pre>
@@ -365,7 +366,7 @@ fail
 
 </pre></div>
 
-<p>It is well known that the classical generalised quadrangles <span class="SimpleMath">W(3,q)</span> and <span class="SimpleMath">Q(4,q)</span> are dual incidence structures, the same holds for the classical generalised quadrangles Q<sup>-</sup>(5,q) and H(3,q<sup>2</sup>). Essentially, these dual dualities are based on the Klein correspondence, and are implemented through the operation <code class="file">NaturalDuality</code>, this operation will return a geometry morphism with <code class="code">ElementsOfIncidenceStructure(gq1)</code> as source and <code class="code">ElementsOfIncidenceStructure(gq2)</code> as range, in other words, it is a geometry morphism from all the elements of <var class="Arg">gq1</var> onto all the elements of <var class="Arg">gq2</var>, preserving the incidence, and swapping the types.</p>
+<p>It is well known that the classical generalised quadrangles W(3,q) and Q(4,q) are dual incidence structures, the same holds for the classical generalised quadrangles Q<sup>+</sup>(5,q) and H(3,q<sup>2</sup>). Essentially, these dual dualities are based on the Klein correspondence, and are implemented through the operation <code class="file">NaturalDuality</code>, this operation will return a geometry morphism with <code class="code">ElementsOfIncidenceStructure(gq1)</code> as source and <code class="code">ElementsOfIncidenceStructure(gq2)</code> as range, in other words, it is a geometry morphism from all the elements of <var class="Arg">gq1</var> onto all the elements of <var class="Arg">gq2</var>, preserving the incidence, and swapping the types.</p>
 
 <p><a id="X8472EBA584544B51" name="X8472EBA584544B51"></a></p>
 
@@ -377,9 +378,9 @@ fail
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalDuality</code>( <var class="Arg">gq</var>, <var class="Arg">boolean</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: a geometry morphism</p>
 
-<p>The operation allows the construction of the duality between <span class="SimpleMath">W(3,q)</span> and <span class="SimpleMath">Q(4,q)</span>, respectively Q<sup>-</sup>(5,q), or H(3,q<sup>2</sup>), in two directions. It is checked if the arguments are appropriate, i.e. the right type of generalised quadrangle(s). The first version requires two arguments: either the symplectic or parabolic quadrangle, in any order, and defined by any suitable bilinear/quadratic and bilinear form; or the elliptic or hermitian quadrangle (in dimension <span class="SimpleMath">3</span>), in any order, and defined by any suitable bilinear/quadratic and hermitian form. In all cases the generalised quadrangles may be the standard one provided by the package <strong class="pkg">FinInG</strong>.</p>
+<p>The operation allows the construction of the duality between W(3,q) and Q(4,q), respectively Q<sup>+</sup>(5,q), in two directions. It is checked if the arguments are appropriate, i.e. the right type of generalised quadrangle(s). The first version requires two arguments: either the symplectic or parabolic quadrangle, in any order, and defined by any suitable bilinear/quadratic and bilinear form; or the elliptic or hermitian quadrangle (in dimension <span class="SimpleMath">3</span>), in any order, and defined by any suitable bilinear/quadratic and hermitian form. In all cases the generalised quadrangles may be the standard one provided by the package <strong class="pkg">FinInG</strong>.</p>
 
-<p>The third version requires only one argument, either <span class="SimpleMath">W(3,q)</span>, <span class="SimpleMath">Q(4,q)</span>, Q<sup>-</sup>(5,q), or H(3,q<sup>2</sup>), standard or user specified using an appropriate bilinear, quadratic or hermitian form. The range of the returned geometry morphism will be the set of all elements of a suitable generalised quadrangle, in standard form.</p>
+<p>The third version requires only one argument, either W(3,q), Q(4,q), Q<sup>+</sup>(5,q), or H(3,q<sup>2</sup>), standard or user specified using an appropriate bilinear, quadratic or hermitian form. The range of the returned geometry morphism will be the set of all elements of a suitable generalised quadrangle, in standard form.</p>
 
 <p>The first and third version without a boolean as argument will, if possible return a geometry morphism equipped with an intertwiner. Using the boolean argument <var class="Arg">false</var> will return a geometry morphism that is not equipped with an intertwiner.</p>
 
@@ -424,7 +425,7 @@ MappingByFunction( PDeltaO-(6,5), &lt;projective collineation group of size
 
 </pre></div>
 
-<p>The combination of the isomorphism of the GQs <span class="SimpleMath">W(3,q)</span>, <span class="SimpleMath">Q(4,q)</span> when <span class="SimpleMath">q</span> is even and the duality between the same GQs, yields a duality from each of these GQs itself. The operation <code class="file">SelfDuality</code> implements this combination.</p>
+<p>The combination of the isomorphism of the GQs W(3,q), Q(4,q) when <span class="SimpleMath">q</span> is even and the duality between the same GQs, yields a duality from each of these GQs itself. The operation <code class="file">SelfDuality</code> implements this combination.</p>
 
 <p><a id="X7954DA578247B06F" name="X7954DA578247B06F"></a></p>
 
@@ -520,7 +521,7 @@ ProjectiveSpace(3, 3)
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingBySubField</code>( <var class="Arg">geom1</var>, <var class="Arg">geom2</var>, <var class="Arg">boolean</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: a geometry morphism</p>
 
-<p>The arguments <var class="Arg">geom1</var> and <var class="Arg">geom2</var> are projective spaces of the same dimension. This function returns a geometry morphism representing the natural embedding of <var class="Arg">geom1</var> into <var class="Arg">geom2</var> as a subfield geometry. The geometry morphism also comes equipped with an intertwiner (see <code class="func">Intertwiner</code> (<a href="chap10.html#X86E0B2117DD536D2"><span class="RefLink">10.1-2</span></a>)). The optional third argument <var class="Arg">boolean</var> can take either <code class="code">true</code> or <code class="code">false</code> as input, and then our operation will or will not compute the intertwiner accordingly. The default (when calling the operation with two arguments) is set to <code class="code">true</code>. Note that the source of the intertwiner is the projectivity group of <var class="Arg">geom1</var> and its range is a subgroup of the projectivity group of <var class="Arg">geom2</var>. Here is a simple example where the geometry morphism embeds <span class="SimpleMath">PG(2,3)</span> into <span class="SimpleMath">PG(2,9)</span>.</p>
+<p>The arguments <var class="Arg">geom1</var> and <var class="Arg">geom2</var> are projective spaces of the same dimension. This function returns a geometry morphism representing the natural embedding of <var class="Arg">geom1</var> into <var class="Arg">geom2</var> as a subfield geometry. The geometry morphism also comes equipped with an intertwiner (see <code class="func">Intertwiner</code> (<a href="chap10.html#X86E0B2117DD536D2"><span class="RefLink">10.1-2</span></a>)). The optional third argument <var class="Arg">boolean</var> can take either <code class="code">true</code> or <code class="code">false</code> as input, and then our operation will or will not compute the intertwiner accordingly. The default (when calling the operation with two arguments) is set to <code class="code">true</code>. Note that the source of the intertwiner is the projectivity group of <var class="Arg">geom1</var> and its range is a subgroup of the projectivity group of <var class="Arg">geom2</var>. Here is a simple example where the geometry morphism embeds PG(2,3) into PG(2,9) .</p>
 
 
 <div class="example"><pre>
@@ -576,7 +577,7 @@ fail
 
 <h5>10.4-3 <span class="Heading"> Embedding of projective spaces by field reduction</span></h5>
 
-<p>We briefly describe the mathematics behind field reduction. For more details we refer to <a href="chapBib.html#biBLaVa">[LV13]</a>. Consider the fields <span class="SimpleMath">K=GF(q)</span> and L=GF(q<sup>t</sup>). The field <span class="SimpleMath">L</span> is a <span class="SimpleMath">t</span>-dimensional vector space over <span class="SimpleMath">K</span>. Hence, with respect to a chosen basis <span class="SimpleMath">B</span> for <span class="SimpleMath">L</span> as a <span class="SimpleMath">K</span>-vectorspace, the bijection between the vectorspaces V(n,q<sup>t</sup>) and <span class="SimpleMath">V(tn,q)</span> can be implemented. Consider the projective space PG(n-1,q<sup>t</sup>). The elements are represented by subspaces of V(n,q<sup>t</sup>). Clearly, a <span class="SimpleMath">k</span> dimensional subspace of V(n,q<sup>t</sup>) is also a <span class="SimpleMath">kn</span>-dimensional subspace of the <span class="SimpleMath">V(nt,q)</span>. This induces an embedding from PG(n-1,q<sup>t</sup>) into <span class="SimpleMath">PG(nt-1,q)</span>. The embedding will be determined by the chosen basis of <span class="SimpleMath">L</span> as a vector space over <span class="SimpleMath">GF(q)</span>.</p>
+<p>We briefly describe the mathematics behind field reduction. For more details we refer to <a href="chapBib.html#biBLaVa">[LVdV13]</a>. Consider the fields GF(q) and GF(q<sup>t</sup>). The field GF(q<sup>t</sup>) is a <span class="SimpleMath">t</span>-dimensional vector space over GF(q). Hence, with respect to a chosen basis <span class="SimpleMath">B</span> for GF(q<sup>t</sup>) as a GF(q)-vectorspace, the bijection between the vectorspaces V(n,q<sup>t</sup>) and <span class="SimpleMath">V(tn,q)</span> can be implemented. Consider the projective space PG(n-1,q<sup>t</sup>). The elements are represented by subspaces of V(n,q<sup>t</sup>). Clearly, a <span class="SimpleMath">k</span> dimensional subspace of V(n,q<sup>t</sup>) is also a <span class="SimpleMath">kn</span>-dimensional subspace of <span class="SimpleMath">V(nt,q)</span>. This induces an embedding from PG(n-1,q<sup>t</sup>) into PG(nt-1,q). The embedding will be determined by the chosen basis of GF(q<sup>t</sup>) as a vector space over GF(q)</p>
 
 <p><a id="X7F84986879DD952A" name="X7F84986879DD952A"></a></p>
 
@@ -585,7 +586,7 @@ fail
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BlownUpSubspaceOfProjectiveSpace</code>( <var class="Arg">B</var>, <var class="Arg">subspace</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: a subspace of a projective space</p>
 
-<p>Let <var class="Arg">B</var> be a basis for the field L=GF(q<sup>t</sup>) as <span class="SimpleMath">GF(q)</span> vector space, and let <var class="Arg">subspace</var> be a <span class="SimpleMath">k-1</span>-dimensional subspace of PG(n-1,q<sup>t</sup>) represented by a <span class="SimpleMath">k</span>-dimensional subspace <span class="SimpleMath">S</span> of V(n,q<sup>t</sup>). This operation returns the <span class="SimpleMath">kt-1</span>-dimensional subspace of <span class="SimpleMath">PG(nt-1,q)</span> represented by blowing up <span class="SimpleMath">S</span> with respect to the base <var class="Arg">B</var>. This operation relies on the <strong class="pkg">GAP</strong> operation <code class="file">BlownUpMat</code>. In the example, the effect of chosen a different basis is shown.</p>
+<p>Let <var class="Arg">B</var> be a basis for the field GF(q<sup>t</sup>) as GF(q) vector space, and let <var class="Arg">subspace</var> be a <span class="SimpleMath">k-1</span>-dimensional subspace of PG(n-1,q<sup>t</sup>) represented by a <span class="SimpleMath">k</span>-dimensional subspace <span class="SimpleMath">S</span> of V(n,q<sup>t</sup>). This operation returns the <span class="SimpleMath">kt-1</span>-dimensional subspace of PG(nt-1,q) represented by blowing up <span class="SimpleMath">S</span> with respect to the base <var class="Arg">B</var>. This operation relies on the <strong class="pkg">GAP</strong> operation <code class="file">BlownUpMat</code>. In the example, the effect of choosing a different basis is shown.</p>
 
 
 <div class="example"><pre>
@@ -618,9 +619,9 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">geom1</var>, <var class="Arg">geom2</var>, <var class="Arg">B</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: a geometry morphism</p>
 
-<p>This operation comes in four flavours. For the first flavour, the argument <var class="Arg">geom1</var> is a projective space over a field L=GF(q<sup>t</sup>). The argument <var class="Arg">f2</var> is a subfield <span class="SimpleMath">K=GF(q)</span> of <span class="SimpleMath">L</span>. The argument <span class="SimpleMath">B</span> is a basis for <span class="SimpleMath">L</span> as a <span class="SimpleMath">K</span>-vectorspace. When this argument is not given, a basis for <span class="SimpleMath">L</span> over <span class="SimpleMath">K</span> is computed using <code class="file">Basis(AsVectorSpace(K,L))</code>. It is checked whether <var class="Arg">f2</var> is a subfield of the basefield of <var class="Arg">geom1</var>. The third and fourth flavour are comparable, where now <span class="SimpleMath">K</span> is found as the basefield of <var class="Arg">geom2</var>. In fact the arguments <var class="Arg">geom1</var> and <var class="Arg">geom2</var> are the projective spaces PG(r-1,q<sup>t</sup>) and PG(rt-1,q) respectively. As in the previous flavours, the argument <var class="Arg">B</var> is optional.</p>
+<p>This operation comes in four flavours. For the first flavour, the argument <var class="Arg">geom1</var> is a projective space over a field GF(q<sup>t</sup>). The argument <var class="Arg">f2</var> is a subfield GF(q) of GF(q<sup>t</sup>). The argument <span class="SimpleMath">B</span> is a basis for GF(q<sup>t</sup>) as a GF(q)-vectorspace. When this argument is not given, a basis for GF(q<sup>t</sup>) over GF(q) is computed using <code class="file">Basis(AsVectorSpace(GF(q),GF(q^t)))</code>. It is checked whether <var class="Arg">f2</var> is a subfield of the basefield of <var class="Arg">geom1</var>. The third and fourth flavour are comparable, where now GF(q) is found as the basefield of <var class="Arg">geom2</var>. In fact the arguments <var class="Arg">geom1</var> and <var class="Arg">geom2</var> are the projective spaces PG(n-1,q<sup>t</sup>) and PG(nt-1,q) respectively. As in the previous flavours, the argument <var class="Arg">B</var> is optional.</p>
 
-<p>An intertwiner is always available for this geometry morphism, and has source the homography group of <var class="Arg">geom1</var> and as range a subgroup of the homography group of <var class="Arg">geom2</var> (or the projective space of the appropriate dimension over <var class="Arg">f2</var>. Notice in the example below the difference of a factor 2 in the orders of the group, which comes of course from restricing the homomorphism to the homography group, which differes a factor 2 from the collineation group of the projective line, that has an extra automorphism of order two, corresponding with the Frobenius automorphism.</p>
+<p>An intertwiner is always available for this geometry morphism, and has source the homography group of <var class="Arg">geom1</var> and as range a subgroup of the homography group of <var class="Arg">geom2</var> (or the projective space of the appropriate dimension over <var class="Arg">f2</var>. Notice in the example below the difference of a factor 2 in the orders of the group, which comes of course from restricing the homomorphism to the homography group, which differs a factor 2 from the collineation group of the projective line, that has an extra automorphism of order two, corresponding with the Frobenius automorphism.</p>
 
 
 <div class="example"><pre>
@@ -763,18 +764,18 @@ ProjectiveSpace(6, 4)
 </tr>
 <tr>
 <td class="tdleft"><span class="SimpleMath">W(2n-1,q)</span></td>
-<td class="tdleft">H(2n-1,q<sup>2</sup>)</td>
+<td class="tdleft">H(2n-1,q<sup>a</sup>)</td>
 <td class="tdleft">--</td>
 </tr>
 <tr>
 <td class="tdleft">H(d,q<sup>2</sup>)</td>
 <td class="tdleft">H(d,q<sup>2r</sup>)</td>
-<td class="tdleft">r odd</td>
+<td class="tdleft"><span class="SimpleMath">r</span> odd</td>
 </tr>
 <tr>
 <td class="tdleft">O<sup>ε</sup>(d,q)</td>
 <td class="tdleft">H(d,q<sup>2</sup>)</td>
-<td class="tdleft">q odd</td>
+<td class="tdleft"><span class="SimpleMath">q</span> odd</td>
 </tr>
 <tr>
 <td class="tdleft">O<sup>ε</sup>(d,q)</td>
@@ -814,11 +815,19 @@ Q-(3, 2)
 
 <p><a id="X7823BA95797898CE" name="X7823BA95797898CE"></a></p>
 
-<h5>10.5-3 <span class="Heading"> Embedding of polar spaces by field reduction</span></h5>
+<h5>10.5-3 <span class="Heading">Embedding of polar spaces by field reduction</span></h5>
 
-<p>Field reduction for polar spaces is somewhat more involved than for projective spaces, and we give a brief description. Let <span class="SimpleMath">P</span> be a polar space over a field GF(q<sup>t</sup>) and let <span class="SimpleMath">K=GF(q)</span>. Let <span class="SimpleMath">f</span> be the form on the <span class="SimpleMath">r</span> dimensional vector space <span class="SimpleMath">V</span> over <span class="SimpleMath">L</span> determining <span class="SimpleMath">P</span>. Consider the trace map <span class="SimpleMath">T:</span> GF(q<sup>t</sup>) → GF(q): x → x<sup>q<sup>t</sup></sup> + x<sup>q<sup>t-1</sup></sup> + … x. Define for any <span class="SimpleMath">α ∈ L</span> the map T<sub>α</sub>: GF(q<sup>t</sup>)→ GF(q): x → T(α x). Consider the <span class="SimpleMath">rt</span> dimensional vector space <span class="SimpleMath">W</span> over <span class="SimpleMath">K</span>. There is a bijective map Φ from <span class="SimpleMath">V</span> to <span class="SimpleMath">W</span> and T<sub>α</sub> • f • Φ <sup>-1</sup> defines a quadratic or sesquilinear form (depending on <span class="SimpleMath">α</span>, and <span class="SimpleMath">f</span> being quadratic or sesquilinear) acting on <span class="SimpleMath">W</span>, and hence, if not singular or degenerate, inducing a polar space <span class="SimpleMath">S</span> over the finite field <span class="SimpleMath">GF(q)</span>. An element of <span class="SimpleMath">P</span> can be mapped onto an element of <span class="SimpleMath">S</span> by simply blowing up <span class="SimpleMath">P</span> using field reduction for projective spaces. So the resulting polar space <span class="SimpleMath">W</span> is dependent on the original form <span class="SimpleMath">f</span>, the parameter <span class="SimpleMath">α</span> and the blowing up of elements by field reduction, the latter being dependent on the basis of <span class="SimpleMath">L</span> as a <span class="SimpleMath">K</span> vector space. <strong class="pkg">FinInG</strong> provides two approaches. The first approach starts from <span class="SimpleMath">P</span> and the parameters <span class="SimpleMath">K</span>, <span class="SimpleMath">α</span> and a basis for <span class="SimpleMath">L</span> as <span class="SimpleMath">K</span> vector space. Then the resulting form T<sub>α</sub> • f • Φ <sup>-1</sup> is determined, and the associated polar space <span class="SimpleMath">W</span> will be the range of the embedding. Note that the resulting polar space will not necessarily be canonical. The second approach starts from two given polar spaces <span class="SimpleMath">P</span> and <span class="SimpleMath">S</span>. Based on this input, it is determined wheter an embedding based on the above described principle is possible, and the necessary parameters are computed. The resulting embedding is a geometry morhpism from <span class="SimpleMath">P</span> to <span class="SimpleMath">S</span>. Note that the polar spaces used as an argument may be freely chosen and are not required to be in the canonical form.</p>
+<p>Field reduction for polar spaces is somewhat more involved than for projective spaces, and we give a brief description. Let <span class="SimpleMath">L</span> be the field GF(q<sup>t</sup>) and let <span class="SimpleMath">K</span> be the field GF(q) Let <span class="SimpleMath">P</span> be a polar space over a field <span class="SimpleMath">L</span>. Let <span class="SimpleMath">f</span> be the form on the <span class="SimpleMath">r</span> dimensional vector space <span class="SimpleMath">V</span> over <span class="SimpleMath">L</span> determining <span class="SimpleMath">P</span>. Consider the trace map</p>
 
-<p>Fo the embeddings by field reduction of polar spaces, including conditions on the parameter <span class="SimpleMath">α</span>, we refer to <a href="chapBib.html#biBGill">[Gil08]</a> and <a href="chapBib.html#biBLaVa">[LV13]</a>. The possible embeddings are listed in the following table.</p>
+<p><span class="SimpleMath">T: L → K: x ↦</span> x<sup>q<sup>t</sup></sup> + x<sup>q<sup>t-1</sup></sup> + … + x.</p>
+
+<p>Define for any <span class="SimpleMath">α ∈ L</span> the map</p>
+
+<p>T<sub>α</sub>: L: → K: x<span class="SimpleMath">↦</span> T<sub>α</sub> = T(α x).</p>
+
+<p>Consider the <span class="SimpleMath">rt</span> dimensional vector space <span class="SimpleMath">W</span> over <span class="SimpleMath">K</span>. There is a bijective map Φ: <span class="SimpleMath">V → W</span> and T<sub>α</sub> • f • Φ <sup>-1</sup> defines a quadratic or sesquilinear form (depending on <span class="SimpleMath">α</span>, and <span class="SimpleMath">f</span> being quadratic or sesquilinear) acting on <span class="SimpleMath">W</span>, and hence, if not singular or degenerate, inducing a polar space <span class="SimpleMath">S</span> over the finite field <span class="SimpleMath">GF(q)</span>. An element of <span class="SimpleMath">P</span> can be mapped onto an element of <span class="SimpleMath">S</span> by simply blowing up <span class="SimpleMath">P</span> using field reduction for projective spaces. So the resulting polar space <span class="SimpleMath">S</span> is dependent on the original form <span class="SimpleMath">f</span>, the parameter <span class="SimpleMath">α</span> and the blowing up of elements by field reduction, the latter being dependent on the basis of <span class="SimpleMath">L</span> as a <span class="SimpleMath">K</span> vector space. <strong class="pkg">FinInG</strong> provides two approaches. The first approach starts from <span class="SimpleMath">P</span> and the parameters <span class="SimpleMath">K</span>, <span class="SimpleMath">α</span> and a basis for <span class="SimpleMath">L</span> as <span class="SimpleMath">K</span> vector space. Then the resulting form T<sub>α</sub> • f • Φ <sup>-1</sup> is determined, and the associated polar space <span class="SimpleMath">S</span> will be the range of the embedding. Note that the resulting polar space will not necessarily be canonical. The second approach starts from two given polar spaces <span class="SimpleMath">P</span> and <span class="SimpleMath">S</span>. Based on this input, it is determined wheter an embedding based on the above described principle is possible, and the necessary parameters are computed. The resulting embedding is a geometry morhpism from <span class="SimpleMath">P</span> to <span class="SimpleMath">S</span>. Note that the polar spaces used as an argument may be freely chosen and are not required to be in the canonical form.</p>
+
+<p>For more information on the embeddings by field reduction of polar spaces, including conditions on the parameter <span class="SimpleMath">α</span>, we refer to <a href="chapBib.html#biBGill">[Gil08]</a> and <a href="chapBib.html#biBLaVa">[LVdV13]</a>. The possible embeddings are listed in the following table.</p>
 
 <div class="pcenter"><table class="GAPDocTable">
 <caption class="GAPDocTable"><b>Table: </b>Field reduction of polar spaces</caption>
@@ -844,43 +853,43 @@ Q-(3, 2)
 </tr>
 <tr>
 <td class="tdleft">Q(2n,q<sup>2a+1</sup>)</td>
-<td class="tdleft">Q((2a+1)(2n+1)-1,q)</td>
-<td class="tdleft">q odd</td>
+<td class="tdleft"><span class="SimpleMath">Q((2a+1)(2n+1)-1,q)</span></td>
+<td class="tdleft"><span class="SimpleMath">q</span> odd</td>
 </tr>
 <tr>
 <td class="tdleft">Q(2n,q<sup>2a</sup>)</td>
-<td class="tdleft">Q<sup>-</sup>(2a(2n+1)-1,q)</td>
-<td class="tdleft">q=1 mod 4</td>
+<td class="tdleft"><span class="SimpleMath">Q(2a(2n+1)-1,q)</span></td>
+<td class="tdleft">q ≡ 1 mod 4</td>
 </tr>
 <tr>
 <td class="tdleft">Q(2n,q<sup>4a+2</sup>)</td>
-<td class="tdleft">Q<sup>+</sup>((4a+2)(2n+1)-1,q)</td>
-<td class="tdleft">q=3 mod 4</td>
+<td class="tdleft"><span class="SimpleMath">Q((4a+2)(2n+1)-1,q)</span></td>
+<td class="tdleft">q ≡ 3 mod 4</td>
 </tr>
 <tr>
 <td class="tdleft">Q(2n,q<sup>4a</sup>)</td>
 <td class="tdleft">Q<sup>-</sup>(4a(2n+1)-1,q)</td>
-<td class="tdleft">q=3 mod 4</td>
+<td class="tdleft">q ≡ 3 mod 4</td>
 </tr>
 <tr>
 <td class="tdleft">H(n,q<sup>2a+1</sup>)</td>
-<td class="tdleft"><span class="SimpleMath">H((n+1)(2a+1)-1,q)</span></td>
-<td class="tdleft">q square</td>
+<td class="tdleft"><span class="SimpleMath">H((2a+1)(n+1)-1,q)</span></td>
+<td class="tdleft"><span class="SimpleMath">q</span> square</td>
 </tr>
 <tr>
 <td class="tdleft">H(n,q<sup>2a</sup>)</td>
 <td class="tdleft"><span class="SimpleMath">W(2a(n+1)-1,q)</span></td>
-<td class="tdleft">q even</td>
+<td class="tdleft"><span class="SimpleMath">q</span> even</td>
 </tr>
 <tr>
 <td class="tdleft">H(2n,q<sup>2a</sup>)</td>
 <td class="tdleft">Q<sup>-</sup>(2a(2n+1)-1,q)</td>
-<td class="tdleft">q odd</td>
+<td class="tdleft"><span class="SimpleMath">q</span> odd</td>
 </tr>
 <tr>
 <td class="tdleft">H(2n+1,q<sup>2a</sup>)</td>
 <td class="tdleft">Q<sup>+</sup>(2a(2n+2)-1,q)</td>
-<td class="tdleft">q odd</td>
+<td class="tdleft"><span class="SimpleMath">q</span> odd</td>
 </tr>
 </table><br /><p>&nbsp;</p><br />
 </div>
@@ -897,7 +906,7 @@ Q-(3, 2)
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbeddingByFieldReduction</code>( <var class="Arg">ps1</var>, <var class="Arg">f2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: a geometry morphism</p>
 
-<p><var class="Arg">ps1</var> is a polar space over a field extension <span class="SimpleMath">L</span> of <var class="Arg">f2</var>, <var class="Arg">basis</var> is a basis for <span class="SimpleMath">L</span> over <var class="Arg">f2</var>, <var class="Arg">alpha</var> is a non-zero element of <span class="SimpleMath">L</span>. The version of <code class="file">NaturalEmbeddingByFieldReduction</code> implements the first approach as explained in <a href="chap10.html#X7823BA95797898CE"><span class="RefLink">10.5-3</span></a>. When no argument <var class="Arg">basis</var> is given, a basis for <span class="SimpleMath">L</span> over <var class="Arg">f2</var> is computed using <code class="file">Basis(AsVectorSpace(K,L))</code>. When no argument <var class="Arg">alpha</var> is given, <code class="file">One(f2)</code> is used as value for <var class="Arg">alpha</var>. When <var class="Arg">bool</var> is true or not given, an intertwiner is computed, when <var class="Arg">bool</var> is <var class="Arg">false</var>, no intertwiner is computed. This intertwiner has as its domain the <strong class="button">isometry group</strong> of <var class="Arg">ps1</var>. The user may wish that the intertwiner is not computed when embedding large polar spaces. The default (when calling the operation with two arguments) is set to <code class="code">true</code>. In the first example, we construct a spread of maximal subspaces (solids) in a 7 dimensional symplectic space. We compute a subgroup of its stabilizer group using the intertwiner. In the second example, we construct a linear blocking set of the symplectic generalised quadrangle over <span class="SimpleMath">GF(9)</span>.</p>
+<p><var class="Arg">ps1</var> is a polar space over a field extension <span class="SimpleMath">L</span> of <var class="Arg">f2</var>, <var class="Arg">basis</var> is a basis for <span class="SimpleMath">L</span> over <var class="Arg">f2</var>, <var class="Arg">alpha</var> is a non-zero element of <span class="SimpleMath">L</span>. The version of <code class="file">NaturalEmbeddingByFieldReduction</code> implements the first approach as explained in <a href="chap10.html#X7823BA95797898CE"><span class="RefLink">10.5-3</span></a>. When no argument <var class="Arg">basis</var> is given, a basis for <span class="SimpleMath">L</span> over <var class="Arg">f2</var> is computed using <code class="file">Basis(AsVectorSpace(K,L))</code>. When no argument <var class="Arg">alpha</var> is given, <code class="file">One(f2)</code> is used as value for <var class="Arg">alpha</var>. When <var class="Arg">bool</var> is true or not given, an intertwiner is computed, when <var class="Arg">bool</var> is <var class="Arg">false</var>, no intertwiner is computed. This intertwiner has as its domain the <strong class="button">isometry group</strong> of <var class="Arg">ps1</var>. The user may wish that the intertwiner is not computed when embedding large polar spaces. The default (when calling the operation with two arguments) is set to <code class="code">true</code>. In the first example, we construct a spread of maximal subspaces (solids) in a 7 dimensional symplectic space. We compute a subgroup of its stabilizer group using the intertwiner. In the second example, we construct a linear blocking set of the symplectic generalised quadrangle over GF(9) .</p>
 
 
 <div class="example"><pre>

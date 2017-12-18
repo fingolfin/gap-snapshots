@@ -112,7 +112,7 @@
   
   [1X52.1-1 IsSubsemigroupFpSemigroup[101X
   
-  [29X[2XIsSubsemigroupFpSemigroup[102X( [3Xt[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsSubsemigroupFpSemigroup[102X( [3Xt[103X ) [32X filter[133X
   
   [33X[0;0Ytrue  if [3Xt[103X is a finitely presented semigroup or a subsemigroup of a finitely
   presented   semigroup  (generally  speaking,  such  a  subsemigroup  can  be
@@ -121,7 +121,7 @@
   
   [1X52.1-2 IsSubmonoidFpMonoid[101X
   
-  [29X[2XIsSubmonoidFpMonoid[102X( [3Xt[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsSubmonoidFpMonoid[102X( [3Xt[103X ) [32X filter[133X
   
   [33X[0;0Ytrue  if  [3Xt[103X  is  a  finitely  presented  monoid or a submonoid of a finitely
   presented  monoid  (generally  speaking, such a semigroup can be constructed
@@ -132,7 +132,7 @@
   
   [1X52.1-3 IsFpSemigroup[101X
   
-  [29X[2XIsFpSemigroup[102X( [3Xs[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsFpSemigroup[102X( [3Xs[103X ) [32X filter[133X
   
   [33X[0;0Yis  a synonym for [10XIsSubsemigroupFpSemigroup([3Xs[103X[10X)[110X and [10XIsWholeFamily([3Xs[103X[10X)[110X (this is
   because  a subsemigroup of a finitely presented semigroup is not necessarily
@@ -140,7 +140,7 @@
   
   [1X52.1-4 IsFpMonoid[101X
   
-  [29X[2XIsFpMonoid[102X( [3Xm[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsFpMonoid[102X( [3Xm[103X ) [32X filter[133X
   
   [33X[0;0Yis  a  synonym  for  [10XIsSubmonoidFpMonoid([3Xm[103X[10X)[110X  and  [10XIsWholeFamily([3Xm[103X[10X)[110X  (this is
   because  a  submonoid  of  a  finitely  presented  monoid is not necessarily
@@ -148,19 +148,19 @@
   
   [1X52.1-5 IsElementOfFpSemigroup[101X
   
-  [29X[2XIsElementOfFpSemigroup[102X( [3Xelm[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsElementOfFpSemigroup[102X( [3Xelm[103X ) [32X Category[133X
   
   [33X[0;0Yreturns true if [3Xelm[103X is an element of a finitely presented semigroup.[133X
   
   [1X52.1-6 IsElementOfFpMonoid[101X
   
-  [29X[2XIsElementOfFpMonoid[102X( [3Xelm[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsElementOfFpMonoid[102X( [3Xelm[103X ) [32X Category[133X
   
   [33X[0;0Yreturns true if [3Xelm[103X is an element of a finitely presented monoid.[133X
   
   [1X52.1-7 FpGrpMonSmgOfFpGrpMonSmgElement[101X
   
-  [29X[2XFpGrpMonSmgOfFpGrpMonSmgElement[102X( [3Xelm[103X ) [32X operation
+  [33X[1;0Y[29X[2XFpGrpMonSmgOfFpGrpMonSmgElement[102X( [3Xelm[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  finitely  presented  group,  monoid  or semigroup to which [3Xelm[103X
   belongs[133X
@@ -185,7 +185,7 @@
   
   [1X52.2-1 \/[101X
   
-  [29X[2X\/[102X( [3XF[103X, [3Xrels[103X ) [32X method
+  [33X[1;0Y[29X[2X\/[102X( [3XF[103X, [3Xrels[103X ) [32X method[133X
   
   [33X[0;0Ycreates  a  finitely  presented semigroup given by the presentation [22X⟨ gens ∣
   [3Xrels[103X  ⟩[122X  where  [22Xgens[122X  are  the  generators  of the free semigroup [3XF[103X, and the
@@ -203,7 +203,7 @@
   
   [1X52.2-2 FactorFreeSemigroupByRelations[101X
   
-  [29X[2XFactorFreeSemigroupByRelations[102X( [3Xf[103X, [3Xrels[103X ) [32X function
+  [33X[1;0Y[29X[2XFactorFreeSemigroupByRelations[102X( [3Xf[103X, [3Xrels[103X ) [32X function[133X
   
   [33X[0;0Yfor a free semigroup [3Xf[103X and [3Xrels[103X is a list of pairs of elements of [3Xf[103X. Returns
   the  finitely  presented  semigroup  which is the quotient of [3Xf[103X by the least
@@ -217,7 +217,7 @@
   
   [1X52.2-3 IsomorphismFpSemigroup[101X
   
-  [29X[2XIsomorphismFpSemigroup[102X( [3Xs[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIsomorphismFpSemigroup[102X( [3Xs[103X ) [32X attribute[133X
   
   [33X[0;0Yfor  a  semigroup  [3Xs[103X  returns  an isomorphism from [3Xs[103X to a finitely presented
   semigroup[133X
@@ -241,7 +241,7 @@
   
   [1X52.3-1 \=[101X
   
-  [29X[2X\=[102X( [3Xa[103X, [3Xb[103X ) [32X method
+  [33X[1;0Y[29X[2X\=[102X( [3Xa[103X, [3Xb[103X ) [32X method[133X
   
   [33X[0;0YTwo  elements  [3Xa[103X,  [3Xb[103X of a finitely presented semigroup are equal if they are
   equal  in  the  semigroup. Nevertheless they may be represented as different
@@ -257,7 +257,7 @@
   
   [1X52.4-1 UnderlyingElement[101X
   
-  [29X[2XUnderlyingElement[102X( [3Xelm[103X ) [32X operation
+  [33X[1;0Y[29X[2XUnderlyingElement[102X( [3Xelm[103X ) [32X operation[133X
   
   [33X[0;0Yfor  an  element  [3Xelm[103X of a finitely presented semigroup, it returns the word
   from the free semigroup that is used as a representative for [3Xelm[103X.[133X
@@ -280,7 +280,7 @@
   
   [1X52.4-2 ElementOfFpSemigroup[101X
   
-  [29X[2XElementOfFpSemigroup[102X( [3Xfam[103X, [3Xw[103X ) [32X operation
+  [33X[1;0Y[29X[2XElementOfFpSemigroup[102X( [3Xfam[103X, [3Xw[103X ) [32X operation[133X
   
   [33X[0;0Yfor  a family [3Xfam[103X of elements of a finitely presented semigroup and a word [3Xw[103X
   in  the  free  generators underlying this finitely presented semigroup, this
@@ -299,7 +299,7 @@
   
   [1X52.4-3 FreeSemigroupOfFpSemigroup[101X
   
-  [29X[2XFreeSemigroupOfFpSemigroup[102X( [3Xs[103X ) [32X attribute
+  [33X[1;0Y[29X[2XFreeSemigroupOfFpSemigroup[102X( [3Xs[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the  underlying free semigroup for the finitely presented semigroup
   [3Xs[103X, ie, the free semigroup over which [3Xs[103X is defined as a quotient (this is the
@@ -308,14 +308,14 @@
   
   [1X52.4-4 FreeGeneratorsOfFpSemigroup[101X
   
-  [29X[2XFreeGeneratorsOfFpSemigroup[102X( [3Xs[103X ) [32X attribute
+  [33X[1;0Y[29X[2XFreeGeneratorsOfFpSemigroup[102X( [3Xs[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the  underlying  free generators corresponding to the generators of
   the finitely presented semigroup [3Xs[103X.[133X
   
   [1X52.4-5 RelationsOfFpSemigroup[101X
   
-  [29X[2XRelationsOfFpSemigroup[102X( [3Xs[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRelationsOfFpSemigroup[102X( [3Xs[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the  relations  of  the  finitely presented semigroup [3Xs[103X as pairs of
   words in the free generators provided by [10XFreeGeneratorsOfFpSemigroup([3Xs[103X[10X)[110X.[133X
@@ -347,7 +347,7 @@
   
   [1X52.5-1 \/[101X
   
-  [29X[2X\/[102X( [3XF[103X, [3Xrels[103X ) [32X method
+  [33X[1;0Y[29X[2X\/[102X( [3XF[103X, [3Xrels[103X ) [32X method[133X
   
   [33X[0;0Ycreates  a finitely presented monoid given by the monoid presentation [22X⟨ [3Xgens[103X
   ∣  [3Xrels[103X  ⟩[122X  where  [3Xgens[103X  are  the  generators  of the free monoid [3XF[103X, and the
@@ -381,7 +381,7 @@
   
   [1X52.6-1 ReducedConfluentRewritingSystem[101X
   
-  [29X[2XReducedConfluentRewritingSystem[102X( [3XS[103X[, [3Xordering[103X] ) [32X attribute
+  [33X[1;0Y[29X[2XReducedConfluentRewritingSystem[102X( [3XS[103X[, [3Xordering[103X] ) [32X attribute[133X
   
   [33X[0;0Yreturns  a  reduced  confluent  rewriting  system  of the finitely presented
   semigroup  or  monoid [3XS[103X with respect to the reduction ordering [3Xordering[103X (see
@@ -437,8 +437,8 @@
   
   [1X52.6-2 KB_REW[101X
   
-  [29X[2XKB_REW[102X[32X global variable
-  [29X[2XGAPKB_REW[102X[32X global variable
+  [33X[1;0Y[29X[2XKB_REW[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XGAPKB_REW[102X[32X global variable[133X
   
   [33X[0;0Y[10XKB_REW[110X  is  a global record variable whose components contain functions used
   for Knuth-Bendix. By default [10XKB_REW[110X is assigned to [10XGAPKB_REW[110X, which contains
@@ -447,8 +447,8 @@
   
   [1X52.6-3 [33X[0;0YKnuthBendixRewritingSystem[133X[101X
   
-  [29X[2XKnuthBendixRewritingSystem[102X( [3Xs[103X, [3Xwordord[103X ) [32X operation
-  [29X[2XKnuthBendixRewritingSystem[102X( [3Xm[103X, [3Xwordord[103X ) [32X operation
+  [33X[1;0Y[29X[2XKnuthBendixRewritingSystem[102X( [3Xs[103X, [3Xwordord[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XKnuthBendixRewritingSystem[102X( [3Xm[103X, [3Xwordord[103X ) [32X operation[133X
   
   [33X[0;0Yin  the  first  form,  for  a  semigroup  [3Xs[103X and a reduction ordering for the
   underlying  free  semigroup, it returns the Knuth-Bendix rewriting system of
@@ -459,25 +459,25 @@
   
   [1X52.6-4 SemigroupOfRewritingSystem[101X
   
-  [29X[2XSemigroupOfRewritingSystem[102X( [3Xrws[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSemigroupOfRewritingSystem[102X( [3Xrws[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns the semigroup over which [3Xrws[103X is a rewriting system[133X
   
   [1X52.6-5 MonoidOfRewritingSystem[101X
   
-  [29X[2XMonoidOfRewritingSystem[102X( [3Xrws[103X ) [32X attribute
+  [33X[1;0Y[29X[2XMonoidOfRewritingSystem[102X( [3Xrws[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns the monoid over which [3Xrws[103X is a rewriting system[133X
   
   [1X52.6-6 FreeSemigroupOfRewritingSystem[101X
   
-  [29X[2XFreeSemigroupOfRewritingSystem[102X( [3Xrws[103X ) [32X attribute
+  [33X[1;0Y[29X[2XFreeSemigroupOfRewritingSystem[102X( [3Xrws[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns the free semigroup over which [3Xrws[103X is a rewriting system[133X
   
   [1X52.6-7 FreeMonoidOfRewritingSystem[101X
   
-  [29X[2XFreeMonoidOfRewritingSystem[102X( [3Xrws[103X ) [32X attribute
+  [33X[1;0Y[29X[2XFreeMonoidOfRewritingSystem[102X( [3Xrws[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns the free monoid over which [3Xrws[103X is a rewriting system[133X
   
@@ -519,7 +519,7 @@
   
   [1X52.7-1 CosetTableOfFpSemigroup[101X
   
-  [29X[2XCosetTableOfFpSemigroup[102X( [3Xr[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCosetTableOfFpSemigroup[102X( [3Xr[103X ) [32X attribute[133X
   
   [33X[0;0Y[3Xr[103X  is  a  right congruence of an fp-semigroup [3XS[103X. This attribute is the coset
   table  of FP semigroup [3XS[103X on a right congruence [3Xr[103X. Given a right congruence [3Xr[103X

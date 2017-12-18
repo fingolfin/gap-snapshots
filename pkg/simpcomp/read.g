@@ -15,7 +15,7 @@ MailOnError:=false
 ));
 MakeReadWriteGlobal("SCSettings");
 
-SCIntFunc.Version:="2.1.6";
+SCIntFunc.Version:="2.1.7";
 
 InstallGlobalFunction(SCInfoLevel,
 function(level)

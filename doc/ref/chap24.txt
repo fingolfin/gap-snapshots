@@ -25,7 +25,7 @@
   
   [1X24.1-1 InfoMatrix[101X
   
-  [29X[2XInfoMatrix[102X[32X info class
+  [33X[1;0Y[29X[2XInfoMatrix[102X[32X info class[133X
   
   [33X[0;0YThe info class for matrix operations is [2XInfoMatrix[102X.[133X
   
@@ -34,7 +34,7 @@
   
   [1X24.2-1 IsMatrix[101X
   
-  [29X[2XIsMatrix[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsMatrix[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YA  [13Xmatrix[113X  is  a list of lists of equal length whose entries lie in a common
   ring.[133X
@@ -68,7 +68,7 @@
   
   [1X24.2-2 IsOrdinaryMatrix[101X
   
-  [29X[2XIsOrdinaryMatrix[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsOrdinaryMatrix[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YAn  [13Xordinary  matrix[113X is a matrix whose multiplication is the ordinary matrix
   multiplication.[133X
@@ -86,7 +86,7 @@
   
   [1X24.2-3 IsLieMatrix[101X
   
-  [29X[2XIsLieMatrix[102X( [3Xmat[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsLieMatrix[102X( [3Xmat[103X ) [32X Category[133X
   
   [33X[0;0YA  [13XLie  matrix[113X is a matrix whose multiplication is given by the Lie bracket.
   (Note  that  a matrix with ordinary matrix multiplication is in the category
@@ -286,7 +286,7 @@
   
   [1X24.4-1 DimensionsMat[101X
   
-  [29X[2XDimensionsMat[102X( [3Xmat[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDimensionsMat[102X( [3Xmat[103X ) [32X attribute[133X
   
   [33X[0;0Yis  a list of length 2, the first being the number of rows, the second being
   the number of columns of the matrix [3Xmat[103X. If [3Xmat[103X is malformed, that is, it is
@@ -301,7 +301,7 @@
   
   [1X24.4-2 DefaultFieldOfMatrix[101X
   
-  [29X[2XDefaultFieldOfMatrix[102X( [3Xmat[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDefaultFieldOfMatrix[102X( [3Xmat[103X ) [32X attribute[133X
   
   [33X[0;0YFor   a  matrix  [3Xmat[103X,  [2XDefaultFieldOfMatrix[102X  returns  either  a  field  (not
   necessarily the smallest one) containing all entries of [3Xmat[103X, or [9Xfail[109X.[133X
@@ -317,8 +317,8 @@
   
   [1X24.4-3 TraceMat[101X
   
-  [29X[2XTraceMat[102X( [3Xmat[103X ) [32X operation
-  [29X[2XTrace[102X( [3Xmat[103X ) [32X attribute
+  [33X[1;0Y[29X[2XTraceMat[102X( [3Xmat[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XTrace[102X( [3Xmat[103X ) [32X attribute[133X
   
   [33X[0;0YThe trace of a square matrix is the sum of its diagonal entries.[133X
   
@@ -329,8 +329,8 @@
   
   [1X24.4-4 DeterminantMat[101X
   
-  [29X[2XDeterminantMat[102X( [3Xmat[103X ) [32X attribute
-  [29X[2XDeterminant[102X( [3Xmat[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDeterminantMat[102X( [3Xmat[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XDeterminant[102X( [3Xmat[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns the determinant of the square matrix [3Xmat[103X.[133X
   
@@ -340,7 +340,7 @@
   
   [1X24.4-5 DeterminantMatDestructive[101X
   
-  [29X[2XDeterminantMatDestructive[102X( [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XDeterminantMatDestructive[102X( [3Xmat[103X ) [32X operation[133X
   
   [33X[0;0YDoes  the  same  as [2XDeterminantMat[102X ([14X24.4-4[114X), with the difference that it may
   destroy its argument. The matrix [3Xmat[103X must be mutable.[133X
@@ -357,14 +357,14 @@
   
   [1X24.4-6 DeterminantMatDivFree[101X
   
-  [29X[2XDeterminantMatDivFree[102X( [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XDeterminantMatDivFree[102X( [3Xmat[103X ) [32X operation[133X
   
   [33X[0;0Yreturns the determinant of a square matrix [3Xmat[103X over an arbitrary commutative
   ring with one using the division free method of Mahajan and Vinay [MV97].[133X
   
   [1X24.4-7 IsMonomialMatrix[101X
   
-  [29X[2XIsMonomialMatrix[102X( [3Xmat[103X ) [32X property
+  [33X[1;0Y[29X[2XIsMonomialMatrix[102X( [3Xmat[103X ) [32X property[133X
   
   [33X[0;0YA  matrix  is  monomial  if  and only if it has exactly one nonzero entry in
   every row and every column.[133X
@@ -376,21 +376,21 @@
   
   [1X24.4-8 IsDiagonalMat[101X
   
-  [29X[2XIsDiagonalMat[102X( [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsDiagonalMat[102X( [3Xmat[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  true  if  mat  has  only  zero entries off the main diagonal, false
   otherwise.[133X
   
   [1X24.4-9 IsUpperTriangularMat[101X
   
-  [29X[2XIsUpperTriangularMat[102X( [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsUpperTriangularMat[102X( [3Xmat[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  true  if  mat  has only zero entries below the main diagonal, false
   otherwise.[133X
   
   [1X24.4-10 IsLowerTriangularMat[101X
   
-  [29X[2XIsLowerTriangularMat[102X( [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsLowerTriangularMat[102X( [3Xmat[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  true  if  mat  has only zero entries below the main diagonal, false
   otherwise.[133X
@@ -400,7 +400,7 @@
   
   [1X24.5-1 IdentityMat[101X
   
-  [29X[2XIdentityMat[102X( [3Xm[103X[, [3XR[103X] ) [32X function
+  [33X[1;0Y[29X[2XIdentityMat[102X( [3Xm[103X[, [3XR[103X] ) [32X function[133X
   
   [33X[0;0Yreturns  a  (mutable)  [3Xm[103X[22X×[122X[3Xm[103X identity matrix over the ring given by [3XR[103X. Here, [3XR[103X
   can be either a ring, or an element of a ring. By default, an integer matrix
@@ -418,7 +418,7 @@
   
   [1X24.5-2 NullMat[101X
   
-  [29X[2XNullMat[102X( [3Xm[103X, [3Xn[103X[, [3XR[103X] ) [32X function
+  [33X[1;0Y[29X[2XNullMat[102X( [3Xm[103X, [3Xn[103X[, [3XR[103X] ) [32X function[133X
   
   [33X[0;0Yreturns a (mutable) [3Xm[103X[22X×[122X[3Xn[103X null matrix over the ring given by by [3XR[103X. Here, [3XR[103X can
   be  either a ring, or an element of a ring. By default, an integer matrix is
@@ -436,7 +436,7 @@
   
   [1X24.5-3 EmptyMatrix[101X
   
-  [29X[2XEmptyMatrix[102X( [3Xchar[103X ) [32X function
+  [33X[1;0Y[29X[2XEmptyMatrix[102X( [3Xchar[103X ) [32X function[133X
   
   [33X[0;0Yis an empty (ordinary) matrix in characteristic [3Xchar[103X that can be added to or
   multiplied  with empty lists (representing zero-dimensional row vectors). It
@@ -451,7 +451,7 @@
   
   [1X24.5-4 DiagonalMat[101X
   
-  [29X[2XDiagonalMat[102X( [3Xvector[103X ) [32X function
+  [33X[1;0Y[29X[2XDiagonalMat[102X( [3Xvector[103X ) [32X function[133X
   
   [33X[0;0Yreturns a diagonal matrix [3Xmat[103X with the diagonal entries given by [3Xvector[103X.[133X
   
@@ -462,7 +462,7 @@
   
   [1X24.5-5 PermutationMat[101X
   
-  [29X[2XPermutationMat[102X( [3Xperm[103X, [3Xdim[103X[, [3XF[103X] ) [32X function
+  [33X[1;0Y[29X[2XPermutationMat[102X( [3Xperm[103X, [3Xdim[103X[, [3XF[103X] ) [32X function[133X
   
   [33X[0;0Yreturns  a  matrix  in  dimension  [3Xdim[103X  over  the field given by [3XF[103X (i.e. the
   smallest  field  containing the element [3XF[103X or [3XF[103X itself if it is a field) that
@@ -476,11 +476,11 @@
   
   [1X24.5-6 TransposedMatImmutable[101X
   
-  [29X[2XTransposedMatImmutable[102X( [3Xmat[103X ) [32X attribute
-  [29X[2XTransposedMatAttr[102X( [3Xmat[103X ) [32X attribute
-  [29X[2XTransposedMat[102X( [3Xmat[103X ) [32X attribute
-  [29X[2XTransposedMatMutable[102X( [3Xmat[103X ) [32X operation
-  [29X[2XTransposedMatOp[102X( [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XTransposedMatImmutable[102X( [3Xmat[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTransposedMatAttr[102X( [3Xmat[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTransposedMat[102X( [3Xmat[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTransposedMatMutable[102X( [3Xmat[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XTransposedMatOp[102X( [3Xmat[103X ) [32X operation[133X
   
   [33X[0;0YThese  functions all return the transposed of the matrix [3Xmat[103X, i.e., a matrix
   [3Xtrans[103X such that [10X[3Xtrans[103X[10X[[3Xi[103X[10X][[3Xk[103X[10X] = [3Xmat[103X[10X[[3Xk[103X[10X][[3Xi[103X[10X][110X holds.[133X
@@ -496,7 +496,7 @@
   
   [1X24.5-7 TransposedMatDestructive[101X
   
-  [29X[2XTransposedMatDestructive[102X( [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XTransposedMatDestructive[102X( [3Xmat[103X ) [32X operation[133X
   
   [33X[0;0YIf  [3Xmat[103X is a mutable matrix, then the transposed is computed by swapping the
   entries  in  [3Xmat[103X.  In  this  way  [3Xmat[103X  gets  changed. In all other cases the
@@ -514,7 +514,7 @@
   
   [1X24.5-8 KroneckerProduct[101X
   
-  [29X[2XKroneckerProduct[102X( [3Xmat1[103X, [3Xmat2[103X ) [32X operation
+  [33X[1;0Y[29X[2XKroneckerProduct[102X( [3Xmat1[103X, [3Xmat2[103X ) [32X operation[133X
   
   [33X[0;0YThe  Kronecker product of two matrices is the matrix obtained when replacing
   each entry [3Xa[103X of [3Xmat1[103X by the product [10X[3Xa[103X[10X*[3Xmat2[103X[10X[110X in one matrix.[133X
@@ -526,7 +526,7 @@
   
   [1X24.5-9 ReflectionMat[101X
   
-  [29X[2XReflectionMat[102X( [3Xcoeffs[103X[, [3Xconj[103X][, [3Xroot[103X] ) [32X function
+  [33X[1;0Y[29X[2XReflectionMat[102X( [3Xcoeffs[103X[, [3Xconj[103X][, [3Xroot[103X] ) [32X function[133X
   
   [33X[0;0YLet  [3Xcoeffs[103X  be  a  row  vector.  [2XReflectionMat[102X  returns  the  matrix of the
   reflection in this vector.[133X
@@ -556,7 +556,7 @@
   
   [1X24.5-10 PrintArray[101X
   
-  [29X[2XPrintArray[102X( [3Xarray[103X ) [32X function
+  [33X[1;0Y[29X[2XPrintArray[102X( [3Xarray[103X ) [32X function[133X
   
   [33X[0;0Ypretty-prints the array [3Xarray[103X.[133X
   
@@ -565,7 +565,7 @@
   
   [1X24.6-1 RandomMat[101X
   
-  [29X[2XRandomMat[102X( [3Xm[103X, [3Xn[103X[, [3XR[103X] ) [32X function
+  [33X[1;0Y[29X[2XRandomMat[102X( [3Xm[103X, [3Xn[103X[, [3XR[103X] ) [32X function[133X
   
   [33X[0;0Y[2XRandomMat[102X returns a new mutable random matrix with [3Xm[103X rows and [3Xn[103X columns with
   elements taken from the ring [3XR[103X, which defaults to [2XIntegers[102X ([14X14[114X).[133X
@@ -577,7 +577,7 @@
   
   [1X24.6-2 RandomInvertibleMat[101X
   
-  [29X[2XRandomInvertibleMat[102X( [3Xm[103X[, [3XR[103X] ) [32X function
+  [33X[1;0Y[29X[2XRandomInvertibleMat[102X( [3Xm[103X[, [3XR[103X] ) [32X function[133X
   
   [33X[0;0Y[2XRandomInvertibleMat[102X  returns  a  new mutable invertible random matrix with [3Xm[103X
   rows  and  columns  with  elements  taken from the ring [3XR[103X, which defaults to
@@ -594,7 +594,7 @@
   
   [1X24.6-3 RandomUnimodularMat[101X
   
-  [29X[2XRandomUnimodularMat[102X( [3Xm[103X ) [32X function
+  [33X[1;0Y[29X[2XRandomUnimodularMat[102X( [3Xm[103X ) [32X function[133X
   
   [33X[0;0Yreturns  a  new  random  mutable  [3Xm[103X[22X×[122X[3Xm[103X  matrix  with  integer entries that is
   invertible over the integers.[133X
@@ -611,7 +611,7 @@
   
   [1X24.7-1 RankMat[101X
   
-  [29X[2XRankMat[102X( [3Xmat[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRankMat[102X( [3Xmat[103X ) [32X attribute[133X
   
   [33X[0;0YIf  [3Xmat[103X is a matrix whose rows span a free module over the ring generated by
   the  matrix entries and their inverses then [2XRankMat[102X returns the dimension of
@@ -628,8 +628,8 @@
   
   [1X24.7-2 TriangulizedMat[101X
   
-  [29X[2XTriangulizedMat[102X( [3Xmat[103X ) [32X operation
-  [29X[2XRREF[102X( [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XTriangulizedMat[102X( [3Xmat[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRREF[102X( [3Xmat[103X ) [32X operation[133X
   
   [33X[0;0YComputes  an  upper  triangular  form  of  the  matrix  [3Xmat[103X via the Gaussian
   Algorithm.  It  returns a immutable matrix in upper triangular form. This is
@@ -638,7 +638,7 @@
   
   [1X24.7-3 TriangulizeMat[101X
   
-  [29X[2XTriangulizeMat[102X( [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XTriangulizeMat[102X( [3Xmat[103X ) [32X operation[133X
   
   [33X[0;0YApplies  the  Gaussian  Algorithm  to the mutable matrix [3Xmat[103X and changes [3Xmat[103X
   such  that  it  is in upper triangular normal form (sometimes called [21XHermite
@@ -658,8 +658,8 @@
   
   [1X24.7-4 NullspaceMat[101X
   
-  [29X[2XNullspaceMat[102X( [3Xmat[103X ) [32X attribute
-  [29X[2XTriangulizedNullspaceMat[102X( [3Xmat[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNullspaceMat[102X( [3Xmat[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTriangulizedNullspaceMat[102X( [3Xmat[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  a  list  of  row  vectors  that form a basis of the vector space of
   solutions to the equation [10X[3Xvec[103X[10X*[3Xmat[103X[10X=0[110X. The result is an immutable matrix. This
@@ -670,8 +670,8 @@
   
   [1X24.7-5 NullspaceMatDestructive[101X
   
-  [29X[2XNullspaceMatDestructive[102X( [3Xmat[103X ) [32X operation
-  [29X[2XTriangulizedNullspaceMatDestructive[102X( [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XNullspaceMatDestructive[102X( [3Xmat[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XTriangulizedNullspaceMatDestructive[102X( [3Xmat[103X ) [32X operation[133X
   
   [33X[0;0YThis  function  does  the same as [2XNullspaceMat[102X ([14X24.7-4[114X). However, the latter
   function  makes  a  copy  of [3Xmat[103X to avoid having to change it. This function
@@ -694,14 +694,14 @@
   
   [1X24.7-6 SolutionMat[101X
   
-  [29X[2XSolutionMat[102X( [3Xmat[103X, [3Xvec[103X ) [32X operation
+  [33X[1;0Y[29X[2XSolutionMat[102X( [3Xmat[103X, [3Xvec[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  a row vector [3Xx[103X that is a solution of the equation [10X[3Xx[103X[10X * [3Xmat[103X[10X = [3Xvec[103X[10X[110X. It
   returns [9Xfail[109X if no such vector exists.[133X
   
   [1X24.7-7 SolutionMatDestructive[101X
   
-  [29X[2XSolutionMatDestructive[102X( [3Xmat[103X, [3Xvec[103X ) [32X operation
+  [33X[1;0Y[29X[2XSolutionMatDestructive[102X( [3Xmat[103X, [3Xvec[103X ) [32X operation[133X
   
   [33X[0;0YDoes  the  same  as  [10XSolutionMat(  [3Xmat[103X[10X, [3Xvec[103X[10X )[110X except that it may destroy the
   matrix [3Xmat[103X and the vector [3Xvec[103X. The matrix [3Xmat[103X must be mutable.[133X
@@ -722,7 +722,7 @@
   
   [1X24.7-8 BaseFixedSpace[101X
   
-  [29X[2XBaseFixedSpace[102X( [3Xmats[103X ) [32X function
+  [33X[1;0Y[29X[2XBaseFixedSpace[102X( [3Xmats[103X ) [32X function[133X
   
   [33X[0;0Y[2XBaseFixedSpace[102X  returns a list of row vectors that form a base of the vector
   space  [22XV[122X  such  that  [22Xv  M = v[122X for all [22Xv[122X in [22XV[122X and all matrices [22XM[122X in the list
@@ -739,33 +739,33 @@
   
   [1X24.8-1 GeneralisedEigenvalues[101X
   
-  [29X[2XGeneralisedEigenvalues[102X( [3XF[103X, [3XA[103X ) [32X operation
-  [29X[2XGeneralizedEigenvalues[102X( [3XF[103X, [3XA[103X ) [32X operation
+  [33X[1;0Y[29X[2XGeneralisedEigenvalues[102X( [3XF[103X, [3XA[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGeneralizedEigenvalues[102X( [3XF[103X, [3XA[103X ) [32X operation[133X
   
   [33X[0;0YThe generalised eigenvalues of the matrix [3XA[103X over the field [3XF[103X.[133X
   
   [1X24.8-2 GeneralisedEigenspaces[101X
   
-  [29X[2XGeneralisedEigenspaces[102X( [3XF[103X, [3XA[103X ) [32X operation
-  [29X[2XGeneralizedEigenspaces[102X( [3XF[103X, [3XA[103X ) [32X operation
+  [33X[1;0Y[29X[2XGeneralisedEigenspaces[102X( [3XF[103X, [3XA[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGeneralizedEigenspaces[102X( [3XF[103X, [3XA[103X ) [32X operation[133X
   
   [33X[0;0YThe generalised eigenspaces of the matrix [3XA[103X over the field [3XF[103X.[133X
   
   [1X24.8-3 Eigenvalues[101X
   
-  [29X[2XEigenvalues[102X( [3XF[103X, [3XA[103X ) [32X operation
+  [33X[1;0Y[29X[2XEigenvalues[102X( [3XF[103X, [3XA[103X ) [32X operation[133X
   
   [33X[0;0YThe eigenvalues of the matrix [3XA[103X over the field [3XF[103X.[133X
   
   [1X24.8-4 Eigenspaces[101X
   
-  [29X[2XEigenspaces[102X( [3XF[103X, [3XA[103X ) [32X operation
+  [33X[1;0Y[29X[2XEigenspaces[102X( [3XF[103X, [3XA[103X ) [32X operation[133X
   
   [33X[0;0YThe eigenspaces of the matrix [3XA[103X over the field [3XF[103X.[133X
   
   [1X24.8-5 Eigenvectors[101X
   
-  [29X[2XEigenvectors[102X( [3XF[103X, [3XA[103X ) [32X operation
+  [33X[1;0Y[29X[2XEigenvectors[102X( [3XF[103X, [3XA[103X ) [32X operation[133X
   
   [33X[0;0YThe eigenvectors of the matrix [3XA[103X over the field [3XF[103X.[133X
   
@@ -776,8 +776,8 @@
   
   [1X24.9-1 ElementaryDivisorsMat[101X
   
-  [29X[2XElementaryDivisorsMat[102X( [[3Xring[103X, ][3Xmat[103X ) [32X operation
-  [29X[2XElementaryDivisorsMatDestructive[102X( [3Xring[103X, [3Xmat[103X ) [32X function
+  [33X[1;0Y[29X[2XElementaryDivisorsMat[102X( [[3Xring[103X, ][3Xmat[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XElementaryDivisorsMatDestructive[102X( [3Xring[103X, [3Xmat[103X ) [32X function[133X
   
   [33X[0;0Yreturns  a  list  of  the  elementary divisors, i.e., the unique [22Xd[122X with [22Xd[i][122X
   divides  [22Xd[i+1][122X and [3Xmat[103X is equivalent to a diagonal matrix with the elements
@@ -811,8 +811,8 @@
   
   [1X24.9-2 ElementaryDivisorsTransformationsMat[101X
   
-  [29X[2XElementaryDivisorsTransformationsMat[102X( [[3Xring[103X, ][3Xmat[103X ) [32X operation
-  [29X[2XElementaryDivisorsTransformationsMatDestructive[102X( [3Xring[103X, [3Xmat[103X ) [32X function
+  [33X[1;0Y[29X[2XElementaryDivisorsTransformationsMat[102X( [[3Xring[103X, ][3Xmat[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XElementaryDivisorsTransformationsMatDestructive[102X( [3Xring[103X, [3Xmat[103X ) [32X function[133X
   
   [33X[0;0Y[10XElementaryDivisorsTransformations[110X,   in   addition  to  the  tasks  done  by
   [10XElementaryDivisorsMat[110X,  also  calculates transforming matrices. It returns a
@@ -870,7 +870,7 @@
   
   [1X24.9-3 DiagonalizeMat[101X
   
-  [29X[2XDiagonalizeMat[102X( [3Xring[103X, [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XDiagonalizeMat[102X( [3Xring[103X, [3Xmat[103X ) [32X operation[133X
   
   [33X[0;0Ybrings  the  mutable  matrix  [3Xmat[103X,  considered  as  a matrix over [3Xring[103X, into
   diagonal form by elementary row and column operations.[133X
@@ -886,7 +886,7 @@
   
   [1X24.10-1 SemiEchelonMat[101X
   
-  [29X[2XSemiEchelonMat[102X( [3Xmat[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSemiEchelonMat[102X( [3Xmat[103X ) [32X attribute[133X
   
   [33X[0;0YA matrix over a field [22XF[122X is in semi-echelon form if the first nonzero element
   in  each row is the identity of [22XF[122X, and all values exactly below these pivots
@@ -906,7 +906,7 @@
   
   [1X24.10-2 SemiEchelonMatDestructive[101X
   
-  [29X[2XSemiEchelonMatDestructive[102X( [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XSemiEchelonMatDestructive[102X( [3Xmat[103X ) [32X operation[133X
   
   [33X[0;0YThis  does  the  same  as  [10XSemiEchelonMat(  [3Xmat[103X[10X  )[110X,  except that it may (and
   probably will) destroy the matrix [3Xmat[103X.[133X
@@ -921,7 +921,7 @@
   
   [1X24.10-3 SemiEchelonMatTransformation[101X
   
-  [29X[2XSemiEchelonMatTransformation[102X( [3Xmat[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSemiEchelonMatTransformation[102X( [3Xmat[103X ) [32X attribute[133X
   
   [33X[0;0Ydoes the same as [2XSemiEchelonMat[102X ([14X24.10-1[114X) but additionally stores the linear
   transformation  [22XT[122X  performed on the matrix. The additional components of the
@@ -942,7 +942,7 @@
   
   [1X24.10-4 SemiEchelonMats[101X
   
-  [29X[2XSemiEchelonMats[102X( [3Xmats[103X ) [32X operation
+  [33X[1;0Y[29X[2XSemiEchelonMats[102X( [3Xmats[103X ) [32X operation[133X
   
   [33X[0;0YA list of matrices over a field [22XF[122X is in semi-echelon form if the list of row
   vectors   obtained   on   concatenating   the  rows  of  each  matrix  is  a
@@ -962,7 +962,7 @@
   
   [1X24.10-5 SemiEchelonMatsDestructive[101X
   
-  [29X[2XSemiEchelonMatsDestructive[102X( [3Xmats[103X ) [32X operation
+  [33X[1;0Y[29X[2XSemiEchelonMatsDestructive[102X( [3Xmats[103X ) [32X operation[133X
   
   [33X[0;0YDoes  the  same as [10XSemiEchelonmats[110X, except that it may destroy its argument.
   Therefore the argument must be a list of matrices that re mutable.[133X
@@ -974,14 +974,14 @@
   
   [1X24.11-1 BaseMat[101X
   
-  [29X[2XBaseMat[102X( [3Xmat[103X ) [32X attribute
+  [33X[1;0Y[29X[2XBaseMat[102X( [3Xmat[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  a  basis for the row space generated by the rows of [3Xmat[103X in the form
   of an immutable matrix.[133X
   
   [1X24.11-2 BaseMatDestructive[101X
   
-  [29X[2XBaseMatDestructive[102X( [3Xmat[103X ) [32X operation
+  [33X[1;0Y[29X[2XBaseMatDestructive[102X( [3Xmat[103X ) [32X operation[133X
   
   [33X[0;0YDoes  the same as [2XBaseMat[102X ([14X24.11-1[114X), with the difference that it may destroy
   the matrix [3Xmat[103X. The matrix [3Xmat[103X must be mutable.[133X
@@ -999,7 +999,7 @@
   
   [1X24.11-3 BaseOrthogonalSpaceMat[101X
   
-  [29X[2XBaseOrthogonalSpaceMat[102X( [3Xmat[103X ) [32X attribute
+  [33X[1;0Y[29X[2XBaseOrthogonalSpaceMat[102X( [3Xmat[103X ) [32X attribute[133X
   
   [33X[0;0YLet  [22XV[122X  be  the  row space generated by the rows of [3Xmat[103X (over any field that
   contains  all entries of [3Xmat[103X). [10XBaseOrthogonalSpaceMat( [3Xmat[103X[10X )[110X computes a base
@@ -1009,7 +1009,7 @@
   
   [1X24.11-4 SumIntersectionMat[101X
   
-  [29X[2XSumIntersectionMat[102X( [3XM1[103X, [3XM2[103X ) [32X operation
+  [33X[1;0Y[29X[2XSumIntersectionMat[102X( [3XM1[103X, [3XM2[103X ) [32X operation[133X
   
   [33X[0;0Yperforms  Zassenhaus'  algorithm  to  compute  bases  for  the  sum  and the
   intersection of spaces generated by the rows of the matrices [3XM1[103X, [3XM2[103X.[133X
@@ -1025,7 +1025,7 @@
   
   [1X24.11-5 BaseSteinitzVectors[101X
   
-  [29X[2XBaseSteinitzVectors[102X( [3Xbas[103X, [3Xmat[103X ) [32X function
+  [33X[1;0Y[29X[2XBaseSteinitzVectors[102X( [3Xbas[103X, [3Xmat[103X ) [32X function[133X
   
   [33X[0;0Yfind vectors extending mat to a basis spanning the span of [3Xbas[103X. Both [3Xbas[103X and
   [3Xmat[103X  must  be  matrices  of  full  (row)  rank. It returns a record with the
@@ -1061,7 +1061,7 @@
   
   [1X24.12-1 DiagonalOfMat[101X
   
-  [29X[2XDiagonalOfMat[102X( [3Xmat[103X ) [32X function
+  [33X[1;0Y[29X[2XDiagonalOfMat[102X( [3Xmat[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the diagonal of the matrix [3Xmat[103X. If [3Xmat[103X is not a square matrix, then
   the  result has the same length as the rows of [3Xmat[103X, and is padded with zeros
@@ -1074,7 +1074,7 @@
   
   [1X24.12-2 UpperSubdiagonal[101X
   
-  [29X[2XUpperSubdiagonal[102X( [3Xmat[103X, [3Xpos[103X ) [32X operation
+  [33X[1;0Y[29X[2XUpperSubdiagonal[102X( [3Xmat[103X, [3Xpos[103X ) [32X operation[133X
   
   [33X[0;0Yreturns a mutable list containing the entries of the [3Xpos[103Xth upper subdiagonal
   of [3Xmat[103X.[133X
@@ -1086,7 +1086,7 @@
   
   [1X24.12-3 DepthOfUpperTriangularMatrix[101X
   
-  [29X[2XDepthOfUpperTriangularMatrix[102X( [3Xmat[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDepthOfUpperTriangularMatrix[102X( [3Xmat[103X ) [32X attribute[133X
   
   [33X[0;0YIf [3Xmat[103X is an upper triangular matrix this attribute returns the index of the
   first nonzero diagonal.[133X
@@ -1103,7 +1103,7 @@
   
   [1X24.13-1 CharacteristicPolynomial[101X
   
-  [29X[2XCharacteristicPolynomial[102X( [[3XF[103X, [3XE[103X, ][3Xmat[103X[, [3Xind[103X] ) [32X attribute
+  [33X[1;0Y[29X[2XCharacteristicPolynomial[102X( [[3XF[103X, [3XE[103X, ][3Xmat[103X[, [3Xind[103X] ) [32X attribute[133X
   
   [33X[0;0YFor a square matrix [3Xmat[103X, [2XCharacteristicPolynomial[102X returns the [13Xcharacteristic
   polynomial[113X   of   [3Xmat[103X,  that  is,  the  [2XStandardAssociate[102X  ([14X56.5-5[114X)  of  the
@@ -1149,7 +1149,7 @@
   
   [1X24.13-2 JordanDecomposition[101X
   
-  [29X[2XJordanDecomposition[102X( [3Xmat[103X ) [32X attribute
+  [33X[1;0Y[29X[2XJordanDecomposition[102X( [3Xmat[103X ) [32X attribute[133X
   
   [33X[0;0Y[10XJordanDecomposition( [3Xmat [103X[10X )[110X returns a list [10X[S,N][110X such that [10XS[110X is a semisimple
   matrix and [10XN[110X is nilpotent. Furthermore, [10XS[110X and [10XN[110X commute and [10X[3Xmat[103X[10X=S+N[110X.[133X
@@ -1163,7 +1163,7 @@
   
   [1X24.13-3 BlownUpMat[101X
   
-  [29X[2XBlownUpMat[102X( [3XB[103X, [3Xmat[103X ) [32X function
+  [33X[1;0Y[29X[2XBlownUpMat[102X( [3XB[103X, [3Xmat[103X ) [32X function[133X
   
   [33X[0;0YLet  [3XB[103X be a basis of a field extension [22XF / K[122X, and [3Xmat[103X a matrix whose entries
   are all in [22XF[122X. (This is not checked.) [2XBlownUpMat[102X returns a matrix over [22XK[122X that
@@ -1182,7 +1182,7 @@
   
   [1X24.13-4 BlownUpVector[101X
   
-  [29X[2XBlownUpVector[102X( [3XB[103X, [3Xvector[103X ) [32X function
+  [33X[1;0Y[29X[2XBlownUpVector[102X( [3XB[103X, [3Xvector[103X ) [32X function[133X
   
   [33X[0;0YLet  [3XB[103X  be a basis of a field extension [22XF / K[122X, and [3Xvector[103X a row vector whose
   entries  are  all  in  [22XF[122X.  [2XBlownUpVector[102X returns a row vector over [22XK[122X that is
@@ -1208,7 +1208,7 @@
   
   [1X24.13-5 CompanionMat[101X
   
-  [29X[2XCompanionMat[102X( [3Xpoly[103X ) [32X function
+  [33X[1;0Y[29X[2XCompanionMat[102X( [3Xpoly[103X ) [32X function[133X
   
   [33X[0;0Ycomputes  a companion matrix of the polynomial [3Xpoly[103X. This matrix has [3Xpoly[103X as
   its minimal polynomial.[133X
@@ -1305,7 +1305,7 @@
   
   [1X24.14-1 ImmutableMatrix[101X
   
-  [29X[2XImmutableMatrix[102X( [3Xfield[103X, [3Xmatrix[103X[, [3Xchange[103X] ) [32X operation
+  [33X[1;0Y[29X[2XImmutableMatrix[102X( [3Xfield[103X, [3Xmatrix[103X[, [3Xchange[103X] ) [32X operation[133X
   
   [33X[0;0Yreturns  an  immutable  matrix  equal  to  [3Xmatrix[103X  which  is  in the optimal
   (concerning  space  and  runtime)  representation  for matrices defined over
@@ -1322,10 +1322,10 @@
   
   [1X24.14-2 ConvertToMatrixRep[101X
   
-  [29X[2XConvertToMatrixRep[102X( [3Xlist[103X[, [3Xfield[103X] ) [32X function
-  [29X[2XConvertToMatrixRep[102X( [3Xlist[103X[, [3Xfieldsize[103X] ) [32X function
-  [29X[2XConvertToMatrixRepNC[102X( [3Xlist[103X[, [3Xfield[103X] ) [32X function
-  [29X[2XConvertToMatrixRepNC[102X( [3Xlist[103X[, [3Xfieldsize[103X] ) [32X function
+  [33X[1;0Y[29X[2XConvertToMatrixRep[102X( [3Xlist[103X[, [3Xfield[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XConvertToMatrixRep[102X( [3Xlist[103X[, [3Xfieldsize[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XConvertToMatrixRepNC[102X( [3Xlist[103X[, [3Xfield[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XConvertToMatrixRepNC[102X( [3Xlist[103X[, [3Xfieldsize[103X] ) [32X function[133X
   
   [33X[0;0YThis  function is more technical version of [2XImmutableMatrix[102X ([14X24.14-1[114X), which
   will  never  copy a matrix (or any rows of it) but may fail if it encounters
@@ -1356,7 +1356,7 @@
   
   [1X24.14-3 ProjectiveOrder[101X
   
-  [29X[2XProjectiveOrder[102X( [3Xmat[103X ) [32X attribute
+  [33X[1;0Y[29X[2XProjectiveOrder[102X( [3Xmat[103X ) [32X attribute[133X
   
   [33X[0;0YReturns  an  integer  n and a finite field element e such that [3XA[103X^n = eI. [3Xmat[103X
   must be a matrix defined over a finite field.[133X
@@ -1368,7 +1368,7 @@
   
   [1X24.14-4 SimultaneousEigenvalues[101X
   
-  [29X[2XSimultaneousEigenvalues[102X( [3Xmatlist[103X, [3Xexpo[103X ) [32X function
+  [33X[1;0Y[29X[2XSimultaneousEigenvalues[102X( [3Xmatlist[103X, [3Xexpo[103X ) [32X function[133X
   
   [33X[0;0YThe  matrices  in  [3Xmatlist[103X  must  be  matrices  over GF([3Xq[103X) for some prime [3Xq[103X.
   Together,  they  must generate an abelian p-group of exponent [3Xexpo[103X. Then the
@@ -1389,7 +1389,7 @@
   
   [1X24.15-1 InverseMatMod[101X
   
-  [29X[2XInverseMatMod[102X( [3Xmat[103X, [3Xobj[103X ) [32X operation
+  [33X[1;0Y[29X[2XInverseMatMod[102X( [3Xmat[103X, [3Xobj[103X ) [32X operation[133X
   
   [33X[0;0YFor  a square matrix [3Xmat[103X, [2XInverseMatMod[102X returns a matrix [3Xinv[103X such that [10X[3Xinv[103X[10X *
   [3Xmat[103X[10X[110X is congruent to the identity matrix modulo [3Xobj[103X, if such a matrix exists,
@@ -1404,7 +1404,7 @@
   
   [1X24.15-2 NullspaceModQ[101X
   
-  [29X[2XNullspaceModQ[102X( [3XE[103X, [3Xq[103X ) [32X function
+  [33X[1;0Y[29X[2XNullspaceModQ[102X( [3XE[103X, [3Xq[103X ) [32X function[133X
   
   [33X[0;0Y[3XE[103X  must  be  a  matrix  of  integers and [3Xq[103X a prime power. Then [2XNullspaceModQ[102X
   returns  the  set  of  all  vectors  of  integers  modulo [3Xq[103X, which solve the
@@ -1438,14 +1438,14 @@
   
   [1X24.16-1 PROD_GF2MAT_GF2MAT_SIMPLE[101X
   
-  [29X[2XPROD_GF2MAT_GF2MAT_SIMPLE[102X( [3Xm1[103X, [3Xm2[103X ) [32X function
+  [33X[1;0Y[29X[2XPROD_GF2MAT_GF2MAT_SIMPLE[102X( [3Xm1[103X, [3Xm2[103X ) [32X function[133X
   
   [33X[0;0YThis   function   performs  the  standard  unblocked  and  ungreased  matrix
   multiplication for matrices of any size.[133X
   
   [1X24.16-2 PROD_GF2MAT_GF2MAT_ADVANCED[101X
   
-  [29X[2XPROD_GF2MAT_GF2MAT_ADVANCED[102X( [3Xm1[103X, [3Xm2[103X, [3Xg[103X, [3Xb[103X ) [32X function
+  [33X[1;0Y[29X[2XPROD_GF2MAT_GF2MAT_ADVANCED[102X( [3Xm1[103X, [3Xm2[103X, [3Xg[103X, [3Xb[103X ) [32X function[133X
   
   [33X[0;0YThis  function  computes  the product of [3Xm1[103X and [3Xm2[103X, which must be compressed
   matrices over GF(2) of compatible dimensions, using level [3Xg[103X grease and level
@@ -1460,14 +1460,14 @@
   
   [1X24.17-1 AsBlockMatrix[101X
   
-  [29X[2XAsBlockMatrix[102X( [3Xm[103X, [3Xnrb[103X, [3Xncb[103X ) [32X function
+  [33X[1;0Y[29X[2XAsBlockMatrix[102X( [3Xm[103X, [3Xnrb[103X, [3Xncb[103X ) [32X function[133X
   
   [33X[0;0Yreturns  a  block  matrix with [3Xnrb[103X row blocks and [3Xncb[103X column blocks which is
   equal to the ordinary matrix [3Xm[103X.[133X
   
   [1X24.17-2 BlockMatrix[101X
   
-  [29X[2XBlockMatrix[102X( [3Xblocks[103X, [3Xnrb[103X, [3Xncb[103X[, [3Xrpb[103X, [3Xcpb[103X, [3Xzero[103X] ) [32X function
+  [33X[1;0Y[29X[2XBlockMatrix[102X( [3Xblocks[103X, [3Xnrb[103X, [3Xncb[103X[, [3Xrpb[103X, [3Xcpb[103X, [3Xzero[103X] ) [32X function[133X
   
   [33X[0;0Y[2XBlockMatrix[102X  returns  an  immutable  matrix  in  the  sparse  representation
   [10XIsBlockMatrixRep[110X.  The  nonzero  blocks  are described by the list [3Xblocks[103X of
@@ -1498,7 +1498,7 @@
   
   [1X24.17-3 MatrixByBlockMatrix[101X
   
-  [29X[2XMatrixByBlockMatrix[102X( [3Xblockmat[103X ) [32X attribute
+  [33X[1;0Y[29X[2XMatrixByBlockMatrix[102X( [3Xblockmat[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns a plain ordinary matrix that is equal to the block matrix [3Xblockmat[103X.[133X
   

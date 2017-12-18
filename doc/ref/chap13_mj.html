@@ -111,7 +111,7 @@
 
 <h5>13.1-1 FamilyObj</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FamilyObj</code>( <var class="Arg">obj</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FamilyObj</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the family of the object <var class="Arg">obj</var>.</p>
 
 <p>The family of the object <var class="Arg">obj</var> is itself an object, its family is <code class="code">FamilyOfFamilies</code>.</p>
@@ -150,21 +150,21 @@
 
 <h5>13.2-1 RankFilter</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankFilter</code>( <var class="Arg">filt</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankFilter</code>( <var class="Arg">filt</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For simple filters, an <em>incremental rank</em> is defined when the filter is created, see the sections about the creation of filters: <a href="chap79_mj.html#X78DD5C237960B40B"><span class="RefLink">79.1</span></a>, <a href="chap79_mj.html#X7858E2848048F99D"><span class="RefLink">79.2</span></a>, <a href="chap79_mj.html#X7A38E7E87CCCEDD1"><span class="RefLink">79.3</span></a>, <a href="chap79_mj.html#X80B191247B4287FC"><span class="RefLink">79.4</span></a>. For an arbitrary filter, its rank is given by the sum of the incremental ranks of the <em>involved</em> simple filters; in addition to the implied filters, these are also the required filters of attributes (again see the sections about the creation of filters). In other words, for the purpose of computing the rank and <em>only</em> for this purpose, attribute testers are treated as if they would imply the requirements of their attributes.</p>
 
 <p><a id="X7A78ECC67E2C9D78" name="X7A78ECC67E2C9D78"></a></p>
 
 <h5>13.2-2 NamesFilter</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NamesFilter</code>( <var class="Arg">filt</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NamesFilter</code>( <var class="Arg">filt</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">NamesFilter</code> returns a list of names of the <em>implied</em> simple filters of the filter <var class="Arg">filt</var>, these are all those simple filters <code class="code">imp</code> such that every object in <var class="Arg">filt</var> also lies in <code class="code">imp</code>. For implications between filters, see <code class="func">ShowImpliedFilters</code> (<a href="chap13_mj.html#X7F9568A67F3840DE"><span class="RefLink">13.2-3</span></a>) as well as sections <a href="chap78_mj.html#X7FB5016E83DB4349"><span class="RefLink">78.7</span></a>, <a href="chap79_mj.html#X78DD5C237960B40B"><span class="RefLink">79.1</span></a>, <a href="chap79_mj.html#X7858E2848048F99D"><span class="RefLink">79.2</span></a>, <a href="chap79_mj.html#X7A38E7E87CCCEDD1"><span class="RefLink">79.3</span></a>.</p>
 
 <p><a id="X7F9568A67F3840DE" name="X7F9568A67F3840DE"></a></p>
 
 <h5>13.2-3 ShowImpliedFilters</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShowImpliedFilters</code>( <var class="Arg">filter</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShowImpliedFilters</code>( <var class="Arg">filter</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Displays information about the filters that may be implied by <var class="Arg">filter</var>. They are given by their names. <code class="code">ShowImpliedFilters</code> first displays the names of all filters that are unconditionally implied by <var class="Arg">filter</var>. It then displays implications that require further filters to be present (indicating by <code class="code">+</code> the required further filters). The function displays only first-level implications, implications that follow in turn are not displayed (though <strong class="pkg">GAP</strong> will do these).</p>
 
 
@@ -256,7 +256,7 @@ May imply with:
 
 <h5>13.3-1 CategoriesOfObject</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CategoriesOfObject</code>( <var class="Arg">object</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CategoriesOfObject</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a list of the names of the categories in which <var class="Arg">object</var> lies.</p>
 
 
@@ -301,7 +301,7 @@ May imply with:
 
 <h5>13.4-1 RepresentationsOfObject</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RepresentationsOfObject</code>( <var class="Arg">object</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RepresentationsOfObject</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a list of the names of the representations <var class="Arg">object</var> has.</p>
 
 
@@ -337,7 +337,7 @@ May imply with:
 
 <h5>13.5-1 KnownAttributesOfObject</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KnownAttributesOfObject</code>( <var class="Arg">object</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KnownAttributesOfObject</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a list of the names of the attributes whose values are known for <var class="Arg">object</var>.</p>
 
 
@@ -362,14 +362,14 @@ May imply with:
 
 <h5>13.6-1 Tester</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Tester</code>( <var class="Arg">attr</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Tester</code>( <var class="Arg">attr</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For an attribute <var class="Arg">attr</var>, <code class="code">Tester(<var class="Arg">attr</var>)</code> is a filter (see <a href="chap13_mj.html#X84EFA4C07D4277BB"><span class="RefLink">13.2</span></a>) that returns <code class="keyw">true</code> or <code class="keyw">false</code>, depending on whether or not the value of <var class="Arg">attr</var> for the object is known. For example, <code class="code">Tester( Size )( <var class="Arg">obj</var> )</code> is <code class="keyw">true</code> if the size of the object <var class="Arg">obj</var> is known.</p>
 
 <p><a id="X7FD8952C841D2B1F" name="X7FD8952C841D2B1F"></a></p>
 
 <h5>13.6-2 Setter</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Setter</code>( <var class="Arg">attr</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Setter</code>( <var class="Arg">attr</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For an attribute <var class="Arg">attr</var>, <code class="code">Setter(<var class="Arg">attr</var>)</code> is called automatically when the attribute value has been computed for the first time. One can also call the setter explicitly, for example, <code class="code">Setter( Size )( <var class="Arg">obj</var>, <var class="Arg">val</var> )</code> sets <var class="Arg">val</var> as size of the object <var class="Arg">obj</var> if the size was not yet known.</p>
 
 <p>For each attribute <var class="Arg">attr</var> that is declared with <code class="func">DeclareAttribute</code> (<a href="chap79_mj.html#X7A00FC8A7A677A56"><span class="RefLink">79.18-3</span></a>) resp. <code class="func">DeclareProperty</code> (<a href="chap79_mj.html#X7F4602F082682A04"><span class="RefLink">79.18-4</span></a>) (see <a href="chap79_mj.html#X87E29BA57C8208A4"><span class="RefLink">79.18</span></a>), tester and setter are automatically made accessible by the names <code class="code">Has<var class="Arg">attr</var></code> and <code class="code">Set<var class="Arg">attr</var></code>, respectively. For example, the tester for <code class="func">Size</code> (<a href="chap30_mj.html#X858ADA3B7A684421"><span class="RefLink">30.4-6</span></a>) is called <code class="code">HasSize</code>, and the setter is called <code class="code">SetSize</code>.</p>
@@ -418,7 +418,7 @@ you can type 'return true;' to set all components true
 
 <h5>13.6-3 AttributeValueNotSet</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AttributeValueNotSet</code>( <var class="Arg">attr</var>, <var class="Arg">obj</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AttributeValueNotSet</code>( <var class="Arg">attr</var>, <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>If the value of the attribute <var class="Arg">attr</var> is already stored for <var class="Arg">obj</var>, <code class="code">AttributeValueNotSet</code> simply returns this value. Otherwise the value of <code class="code"><var class="Arg">attr</var>( <var class="Arg">obj</var> )</code> is computed and returned <em>without storing it</em> in <var class="Arg">obj</var>. This can be useful when "large" attribute values (such as element lists) are needed only once and shall not be stored in the object.</p>
 
 
@@ -439,21 +439,21 @@ false
 
 <h5>13.6-4 InfoAttributes</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoAttributes</code></td><td class="tdright">( info class )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoAttributes</code></td><td class="tdright">(&nbsp;info class&nbsp;)</td></tr></table></div>
 <p>This info class (together with <code class="func">InfoWarning</code> (<a href="chap7_mj.html#X7A28F77C82D6A3E0"><span class="RefLink">7.4-7</span></a>) is used for messages about attribute storing being disabled (at level 2) or enabled (level 3). It may be used in the future for other messages concerning changes to attribute behaviour.</p>
 
 <p><a id="X7851E2DB79656DB0" name="X7851E2DB79656DB0"></a></p>
 
 <h5>13.6-5 DisableAttributeValueStoring</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DisableAttributeValueStoring</code>( <var class="Arg">attr</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DisableAttributeValueStoring</code>( <var class="Arg">attr</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>disables the usual call of <code class="code">Setter( <var class="Arg">attr</var> )</code> when a method for <var class="Arg">attr</var> returns a value. In consequence the values will never be stored. Note that <var class="Arg">attr</var> must be an attribute and <em>not</em> a property.</p>
 
 <p><a id="X7E5DACBE7A9A9AD1" name="X7E5DACBE7A9A9AD1"></a></p>
 
 <h5>13.6-6 EnableAttributeValueStoring</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EnableAttributeValueStoring</code>( <var class="Arg">attr</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EnableAttributeValueStoring</code>( <var class="Arg">attr</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>enables the usual call of <code class="code">Setter( <var class="Arg">attr</var> )</code> when a method for <var class="Arg">attr</var> returns a value. In consequence the values may be stored. This will usually have no effect unless <code class="code">DisableAttributeValueStoring</code> has previously been used for <var class="Arg">attr</var>. Note that <var class="Arg">attr</var> must be an attribute and <em>not</em> a property.</p>
 
 
@@ -506,14 +506,14 @@ Group([ (1,2,3,4,5), (1,2,3) ])
 
 <h5>13.7-1 KnownPropertiesOfObject</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KnownPropertiesOfObject</code>( <var class="Arg">object</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KnownPropertiesOfObject</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a list of the names of the properties whose values are known for <var class="Arg">object</var>.</p>
 
 <p><a id="X86711BC77B62EB02" name="X86711BC77B62EB02"></a></p>
 
 <h5>13.7-2 KnownTruePropertiesOfObject</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KnownTruePropertiesOfObject</code>( <var class="Arg">object</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KnownTruePropertiesOfObject</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a list of the names of the properties known to be <code class="keyw">true</code> for <var class="Arg">object</var>.</p>
 
 
@@ -577,7 +577,7 @@ Group([ (1,2,3,4,5), (1,2,3) ])
 
 <h5>13.9-1 TypeObj</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TypeObj</code>( <var class="Arg">obj</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TypeObj</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the type of the object <var class="Arg">obj</var>.</p>
 
 <p>The type of an object is itself an object.</p>
@@ -588,7 +588,7 @@ Group([ (1,2,3,4,5), (1,2,3) ])
 
 <h5>13.9-2 DataType</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DataType</code>( <var class="Arg">type</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DataType</code>( <var class="Arg">type</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>The last part of the type, defining data, has not been mentioned before and seems to be of minor importance. It can be used, e.g., for cosets <span class="SimpleMath">\(U g\)</span> of a group <span class="SimpleMath">\(U\)</span>, where the type of each coset may contain the group <span class="SimpleMath">\(U\)</span> as defining data. As a consequence, two such cosets mod <span class="SimpleMath">\(U\)</span> and <span class="SimpleMath">\(V\)</span> can have the same type only if <span class="SimpleMath">\(U = V\)</span>. The defining data of the type <var class="Arg">type</var> can be accessed via <code class="func">DataType</code>.</p>
 
 

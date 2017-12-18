@@ -48,7 +48,7 @@
   
   [1X32.1-1 IsDirectProductElement[101X
   
-  [29X[2XIsDirectProductElement[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsDirectProductElement[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0Y[2XIsDirectProductElement[102X is a subcategory of the meet of [2XIsDenseList[102X ([14X21.1-2[114X),
   [2XIsMultiplicativeElementWithInverse[102X  ([14X31.14-13[114X), [2XIsAdditiveElementWithInverse[102X
@@ -71,7 +71,7 @@
   
   [1X32.2-1 GeneralMappingByElements[101X
   
-  [29X[2XGeneralMappingByElements[102X( [3XS[103X, [3XR[103X, [3Xelms[103X ) [32X function
+  [33X[1;0Y[29X[2XGeneralMappingByElements[102X( [3XS[103X, [3XR[103X, [3Xelms[103X ) [32X function[133X
   
   [33X[0;0Yis  the  general  mapping  with  source  [3XS[103X  and range [3XR[103X, and with underlying
   relation consisting of the collection [3Xelms[103X of direct product elements.[133X
@@ -79,8 +79,8 @@
   
   [1X32.2-2 [33X[0;0YMappingByFunction[133X[101X
   
-  [29X[2XMappingByFunction[102X( [3XS[103X, [3XR[103X, [3Xfun[103X[, [3Xinvfun[103X] ) [32X function
-  [29X[2XMappingByFunction[102X( [3XS[103X, [3XR[103X, [3Xfun[103X, [3Xfalse[103X, [3Xprefun[103X ) [32X function
+  [33X[1;0Y[29X[2XMappingByFunction[102X( [3XS[103X, [3XR[103X, [3Xfun[103X[, [3Xinvfun[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XMappingByFunction[102X( [3XS[103X, [3XR[103X, [3Xfun[103X, [3Xfalse[103X, [3Xprefun[103X ) [32X function[133X
   
   [33X[0;0Y[2XMappingByFunction[102X returns a mapping [10Xmap[110X with source [3XS[103X and range [3XR[103X, such that
   each  element  [22Xs[122X  of [3XS[103X is mapped to the element [3Xfun[103X[22X( s )[122X, where [3Xfun[103X is a [5XGAP[105X
@@ -99,7 +99,7 @@
   
   [1X32.2-3 InverseGeneralMapping[101X
   
-  [29X[2XInverseGeneralMapping[102X( [3Xmap[103X ) [32X attribute
+  [33X[1;0Y[29X[2XInverseGeneralMapping[102X( [3Xmap[103X ) [32X attribute[133X
   
   [33X[0;0YThe  [13Xinverse general mapping[113X of a general mapping [3Xmap[103X is the general mapping
   whose  underlying relation (see [2XUnderlyingRelation[102X ([14X32.3-9[114X)) contains a pair
@@ -114,7 +114,7 @@
   
   [1X32.2-4 CompositionMapping[101X
   
-  [29X[2XCompositionMapping[102X( [3Xmap1[103X, [3Xmap2[103X, [3X...[103X ) [32X function
+  [33X[1;0Y[29X[2XCompositionMapping[102X( [3Xmap1[103X, [3Xmap2[103X, [3X...[103X ) [32X function[133X
   
   [33X[0;0Y[2XCompositionMapping[102X  allows one to compose arbitrarily many general mappings,
   and delegates each step to [2XCompositionMapping2[102X ([14X32.2-5[114X).[133X
@@ -135,8 +135,8 @@
   
   [1X32.2-5 CompositionMapping2[101X
   
-  [29X[2XCompositionMapping2[102X( [3Xmap2[103X, [3Xmap1[103X ) [32X operation
-  [29X[2XCompositionMapping2General[102X( [3Xmap2[103X, [3Xmap1[103X ) [32X function
+  [33X[1;0Y[29X[2XCompositionMapping2[102X( [3Xmap2[103X, [3Xmap1[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XCompositionMapping2General[102X( [3Xmap2[103X, [3Xmap1[103X ) [32X function[133X
   
   [33X[0;0Y[2XCompositionMapping2[102X  returns  the  composition of [3Xmap2[103X and [3Xmap1[103X, this is the
   general  mapping  that  maps  an element first under [3Xmap1[103X, and then maps the
@@ -150,7 +150,7 @@
   
   [1X32.2-6 IsCompositionMappingRep[101X
   
-  [29X[2XIsCompositionMappingRep[102X( [3Xmap[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsCompositionMappingRep[102X( [3Xmap[103X ) [32X Representation[133X
   
   [33X[0;0YMappings  in  this representation are stored as composition of two mappings,
   (pre)images  of elements are computed in a two-step process. The constituent
@@ -159,7 +159,7 @@
   
   [1X32.2-7 ConstituentsCompositionMapping[101X
   
-  [29X[2XConstituentsCompositionMapping[102X( [3Xmap[103X ) [32X function
+  [33X[1;0Y[29X[2XConstituentsCompositionMapping[102X( [3Xmap[103X ) [32X function[133X
   
   [33X[0;0YIf  [3Xmap[103X  is stored in the representation [2XIsCompositionMappingRep[102X ([14X32.2-6[114X) as
   composition  of  two  mappings  [3Xmap1[103X and [3Xmap2[103X, this function returns the two
@@ -167,7 +167,7 @@
   
   [1X32.2-8 ZeroMapping[101X
   
-  [29X[2XZeroMapping[102X( [3XS[103X, [3XR[103X ) [32X operation
+  [33X[1;0Y[29X[2XZeroMapping[102X( [3XS[103X, [3XR[103X ) [32X operation[133X
   
   [33X[0;0YA  zero  mapping  is  a  total general mapping that maps each element of its
   source to the zero element of its range.[133X
@@ -176,7 +176,7 @@
   
   [1X32.2-9 IdentityMapping[101X
   
-  [29X[2XIdentityMapping[102X( [3XD[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIdentityMapping[102X( [3XD[103X ) [32X attribute[133X
   
   [33X[0;0Yis  the  bijective  mapping with source and range equal to the collection [3XD[103X,
   which maps each element of [3XD[103X to itself.[133X
@@ -184,8 +184,8 @@
   
   [1X32.2-10 [33X[0;0YEmbedding[133X[101X
   
-  [29X[2XEmbedding[102X( [3XS[103X, [3XT[103X ) [32X operation
-  [29X[2XEmbedding[102X( [3XS[103X, [3Xi[103X ) [32X operation
+  [33X[1;0Y[29X[2XEmbedding[102X( [3XS[103X, [3XT[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XEmbedding[102X( [3XS[103X, [3Xi[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  embedding  of  the  domain [3XS[103X in the domain [3XT[103X, or in the second
   form,  some domain indexed by the positive integer [3Xi[103X. The precise natures of
@@ -197,9 +197,9 @@
   
   [1X32.2-11 [33X[0;0YProjection[133X[101X
   
-  [29X[2XProjection[102X( [3XS[103X, [3XT[103X ) [32X operation
-  [29X[2XProjection[102X( [3XS[103X, [3Xi[103X ) [32X operation
-  [29X[2XProjection[102X( [3XS[103X ) [32X operation
+  [33X[1;0Y[29X[2XProjection[102X( [3XS[103X, [3XT[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XProjection[102X( [3XS[103X, [3Xi[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XProjection[102X( [3XS[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  projection of the domain [3XS[103X onto the domain [3XT[103X, or in the second
   form,  some  domain  indexed by the positive integer [3Xi[103X, or in the third form
@@ -210,7 +210,7 @@
   
   [1X32.2-12 RestrictedMapping[101X
   
-  [29X[2XRestrictedMapping[102X( [3Xmap[103X, [3Xsubdom[103X ) [32X operation
+  [33X[1;0Y[29X[2XRestrictedMapping[102X( [3Xmap[103X, [3Xsubdom[103X ) [32X operation[133X
   
   [33X[0;0YIf  [3Xsubdom[103X  is  a  subdomain  of the source of the general mapping [3Xmap[103X, this
   operation returns the restriction of [3Xmap[103X to [3Xsubdom[103X.[133X
@@ -220,14 +220,14 @@
   
   [1X32.3-1 IsTotal[101X
   
-  [29X[2XIsTotal[102X( [3Xmap[103X ) [32X property
+  [33X[1;0Y[29X[2XIsTotal[102X( [3Xmap[103X ) [32X property[133X
   
   [33X[0;0Yis  [9Xtrue[109X  if  each  element  in  the source [22XS[122X of the general mapping [3Xmap[103X has
   images, i.e., [22Xs^[3Xmap[103X ≠ ∅[122X for all [22Xs ∈ S[122X, and [9Xfalse[109X otherwise.[133X
   
   [1X32.3-2 IsSingleValued[101X
   
-  [29X[2XIsSingleValued[102X( [3Xmap[103X ) [32X property
+  [33X[1;0Y[29X[2XIsSingleValued[102X( [3Xmap[103X ) [32X property[133X
   
   [33X[0;0Yis  [9Xtrue[109X  if  each element in the source [22XS[122X of the general mapping [3Xmap[103X has at
   most one image, i.e., [22X|s^[3Xmap[103X| ≤ 1[122X for all [22Xs ∈ S[122X, and [9Xfalse[109X otherwise.[133X
@@ -237,7 +237,7 @@
   
   [1X32.3-3 IsMapping[101X
   
-  [29X[2XIsMapping[102X( [3Xmap[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsMapping[102X( [3Xmap[103X ) [32X filter[133X
   
   [33X[0;0YA  [13Xmapping[113X  [3Xmap[103X is a general mapping that assigns to each element [10Xelm[110X of its
   source a unique element [10XImage( [3Xmap[103X[10X, elm )[110X of its range.[133X
@@ -247,7 +247,7 @@
   
   [1X32.3-4 IsInjective[101X
   
-  [29X[2XIsInjective[102X( [3Xmap[103X ) [32X property
+  [33X[1;0Y[29X[2XIsInjective[102X( [3Xmap[103X ) [32X property[133X
   
   [33X[0;0Yis  [9Xtrue[109X  if the images of different elements in the source [22XS[122X of the general
   mapping  [3Xmap[103X  are disjoint, i.e., [22Xx^[3Xmap[103X ∩ y^[3Xmap[103X = ∅[122X for [22Xx ≠ y ∈ S[122X, and [9Xfalse[109X
@@ -258,7 +258,7 @@
   
   [1X32.3-5 IsSurjective[101X
   
-  [29X[2XIsSurjective[102X( [3Xmap[103X ) [32X property
+  [33X[1;0Y[29X[2XIsSurjective[102X( [3Xmap[103X ) [32X property[133X
   
   [33X[0;0Yis  [9Xtrue[109X  if  each  element  in  the  range [22XR[122X of the general mapping [3Xmap[103X has
   preimages  in the source [22XS[122X of [3Xmap[103X, i.e., [22X{ s ∈ S ∣ x ∈ s^[3Xmap[103X } ≠ ∅[122X for all [22Xx
@@ -266,7 +266,7 @@
   
   [1X32.3-6 IsBijective[101X
   
-  [29X[2XIsBijective[102X( [3Xmap[103X ) [32X property
+  [33X[1;0Y[29X[2XIsBijective[102X( [3Xmap[103X ) [32X property[133X
   
   [33X[0;0YA  general  mapping  [3Xmap[103X  is [13Xbijective[113X if and only if it is an injective and
   surjective    mapping   (see [2XIsMapping[102X   ([14X32.3-3[114X),   [2XIsInjective[102X   ([14X32.3-4[114X),
@@ -274,19 +274,19 @@
   
   [1X32.3-7 Range[101X
   
-  [29X[2XRange[102X( [3Xmap[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRange[102X( [3Xmap[103X ) [32X attribute[133X
   
   [33X[0;0YThe range of a general mapping.[133X
   
   [1X32.3-8 Source[101X
   
-  [29X[2XSource[102X( [3Xmap[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSource[102X( [3Xmap[103X ) [32X attribute[133X
   
   [33X[0;0YThe source of a general mapping.[133X
   
   [1X32.3-9 UnderlyingRelation[101X
   
-  [29X[2XUnderlyingRelation[102X( [3Xmap[103X ) [32X attribute
+  [33X[1;0Y[29X[2XUnderlyingRelation[102X( [3Xmap[103X ) [32X attribute[133X
   
   [33X[0;0YThe  [13Xunderlying  relation[113X  of  a  general mapping [3Xmap[103X is the domain of pairs
   [22X(s,r)[122X,  with [22Xs[122X in the source and [22Xr[122X in the range of [3Xmap[103X (see [2XSource[102X ([14X32.3-8[114X),
@@ -297,7 +297,7 @@
   
   [1X32.3-10 UnderlyingGeneralMapping[101X
   
-  [29X[2XUnderlyingGeneralMapping[102X( [3Xmap[103X ) [32X attribute
+  [33X[1;0Y[29X[2XUnderlyingGeneralMapping[102X( [3Xmap[103X ) [32X attribute[133X
   
   [33X[0;0Yattribute for underlying relations of general mappings[133X
   
@@ -306,7 +306,7 @@
   
   [1X32.4-1 ImagesSource[101X
   
-  [29X[2XImagesSource[102X( [3Xmap[103X ) [32X attribute
+  [33X[1;0Y[29X[2XImagesSource[102X( [3Xmap[103X ) [32X attribute[133X
   
   [33X[0;0Yis the set of images of the source of the general mapping [3Xmap[103X.[133X
   
@@ -315,7 +315,7 @@
   
   [1X32.4-2 ImagesRepresentative[101X
   
-  [29X[2XImagesRepresentative[102X( [3Xmap[103X, [3Xelm[103X ) [32X operation
+  [33X[1;0Y[29X[2XImagesRepresentative[102X( [3Xmap[103X, [3Xelm[103X ) [32X operation[133X
   
   [33X[0;0YIf  [3Xelm[103X  is  an  element  of  the  source  of  the  general mapping [3Xmap[103X then
   [2XImagesRepresentative[102X returns either a representative of the set of images of
@@ -326,7 +326,7 @@
   
   [1X32.4-3 ImagesElm[101X
   
-  [29X[2XImagesElm[102X( [3Xmap[103X, [3Xelm[103X ) [32X operation
+  [33X[1;0Y[29X[2XImagesElm[102X( [3Xmap[103X, [3Xelm[103X ) [32X operation[133X
   
   [33X[0;0YIf [3Xelm[103X is an element of the source of the general mapping [3Xmap[103X then [2XImagesElm[102X
   returns the set of all images of [3Xelm[103X under [3Xmap[103X.[133X
@@ -335,7 +335,7 @@
   
   [1X32.4-4 ImagesSet[101X
   
-  [29X[2XImagesSet[102X( [3Xmap[103X, [3Xelms[103X ) [32X operation
+  [33X[1;0Y[29X[2XImagesSet[102X( [3Xmap[103X, [3Xelms[103X ) [32X operation[133X
   
   [33X[0;0YIf  [3Xelms[103X is a subset of the source of the general mapping [3Xmap[103X then [2XImagesSet[102X
   returns the set of all images of [3Xelms[103X under [3Xmap[103X.[133X
@@ -345,7 +345,7 @@
   
   [1X32.4-5 ImageElm[101X
   
-  [29X[2XImageElm[102X( [3Xmap[103X, [3Xelm[103X ) [32X operation
+  [33X[1;0Y[29X[2XImageElm[102X( [3Xmap[103X, [3Xelm[103X ) [32X operation[133X
   
   [33X[0;0YIf  [3Xelm[103X  is  an element of the source of the total and single-valued mapping
   [3Xmap[103X then [2XImageElm[102X returns the unique image of [3Xelm[103X under [3Xmap[103X.[133X
@@ -355,9 +355,9 @@
   
   [1X32.4-6 [33X[0;0YImage[133X[101X
   
-  [29X[2XImage[102X( [3Xmap[103X ) [32X function
-  [29X[2XImage[102X( [3Xmap[103X, [3Xelm[103X ) [32X function
-  [29X[2XImage[102X( [3Xmap[103X, [3Xcoll[103X ) [32X function
+  [33X[1;0Y[29X[2XImage[102X( [3Xmap[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XImage[102X( [3Xmap[103X, [3Xelm[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XImage[102X( [3Xmap[103X, [3Xcoll[103X ) [32X function[133X
   
   [33X[0;0Y[10XImage(  [3Xmap[103X[10X  )[110X  is the [13Ximage[113X of the general mapping [3Xmap[103X, i.e., the subset of
   elements  of  the range of [3Xmap[103X that are actually values of [3Xmap[103X. [13XNote[113X that in
@@ -386,9 +386,9 @@
   
   [1X32.4-7 [33X[0;0YImages[133X[101X
   
-  [29X[2XImages[102X( [3Xmap[103X ) [32X function
-  [29X[2XImages[102X( [3Xmap[103X, [3Xelm[103X ) [32X function
-  [29X[2XImages[102X( [3Xmap[103X, [3Xcoll[103X ) [32X function
+  [33X[1;0Y[29X[2XImages[102X( [3Xmap[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XImages[102X( [3Xmap[103X, [3Xelm[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XImages[102X( [3Xmap[103X, [3Xcoll[103X ) [32X function[133X
   
   [33X[0;0Y[10XImages(  [3Xmap[103X[10X  )[110X is the [13Ximage[113X of the general mapping [3Xmap[103X, i.e., the subset of
   elements of the range of [3Xmap[103X that are actually values of [3Xmap[103X.[133X
@@ -415,7 +415,7 @@
   
   [1X32.5-1 PreImagesRange[101X
   
-  [29X[2XPreImagesRange[102X( [3Xmap[103X ) [32X attribute
+  [33X[1;0Y[29X[2XPreImagesRange[102X( [3Xmap[103X ) [32X attribute[133X
   
   [33X[0;0Yis the set of preimages of the range of the general mapping [3Xmap[103X.[133X
   
@@ -424,7 +424,7 @@
   
   [1X32.5-2 PreImagesElm[101X
   
-  [29X[2XPreImagesElm[102X( [3Xmap[103X, [3Xelm[103X ) [32X operation
+  [33X[1;0Y[29X[2XPreImagesElm[102X( [3Xmap[103X, [3Xelm[103X ) [32X operation[133X
   
   [33X[0;0YIf  [3Xelm[103X  is  an  element  of  the  range  of  the  general  mapping [3Xmap[103X then
   [2XPreImagesElm[102X returns the set of all preimages of [3Xelm[103X under [3Xmap[103X.[133X
@@ -433,7 +433,7 @@
   
   [1X32.5-3 PreImageElm[101X
   
-  [29X[2XPreImageElm[102X( [3Xmap[103X, [3Xelm[103X ) [32X operation
+  [33X[1;0Y[29X[2XPreImageElm[102X( [3Xmap[103X, [3Xelm[103X ) [32X operation[133X
   
   [33X[0;0YIf  [3Xelm[103X  is  an element of the range of the injective and surjective general
   mapping [3Xmap[103X then [2XPreImageElm[102X returns the unique preimage of [3Xelm[103X under [3Xmap[103X.[133X
@@ -442,7 +442,7 @@
   
   [1X32.5-4 PreImagesRepresentative[101X
   
-  [29X[2XPreImagesRepresentative[102X( [3Xmap[103X, [3Xelm[103X ) [32X operation
+  [33X[1;0Y[29X[2XPreImagesRepresentative[102X( [3Xmap[103X, [3Xelm[103X ) [32X operation[133X
   
   [33X[0;0YIf  [3Xelm[103X  is  an  element  of  the  range  of  the  general  mapping [3Xmap[103X then
   [2XPreImagesRepresentative[102X  returns  either  a  representative  of  the  set of
@@ -453,7 +453,7 @@
   
   [1X32.5-5 PreImagesSet[101X
   
-  [29X[2XPreImagesSet[102X( [3Xmap[103X, [3Xelms[103X ) [32X operation
+  [33X[1;0Y[29X[2XPreImagesSet[102X( [3Xmap[103X, [3Xelms[103X ) [32X operation[133X
   
   [33X[0;0YIf  [3Xelms[103X  is  a  subset  of  the  range  of  the  general  mapping  [3Xmap[103X then
   [2XPreImagesSet[102X returns the set of all preimages of [3Xelms[103X under [3Xmap[103X.[133X
@@ -463,9 +463,9 @@
   
   [1X32.5-6 [33X[0;0YPreImage[133X[101X
   
-  [29X[2XPreImage[102X( [3Xmap[103X ) [32X function
-  [29X[2XPreImage[102X( [3Xmap[103X, [3Xelm[103X ) [32X function
-  [29X[2XPreImage[102X( [3Xmap[103X, [3Xcoll[103X ) [32X function
+  [33X[1;0Y[29X[2XPreImage[102X( [3Xmap[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPreImage[102X( [3Xmap[103X, [3Xelm[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPreImage[102X( [3Xmap[103X, [3Xcoll[103X ) [32X function[133X
   
   [33X[0;0Y[10XPreImage( [3Xmap[103X[10X )[110X is the preimage of the general mapping [3Xmap[103X, i.e., the subset
   of  elements  of the source of [3Xmap[103X that actually have values under [3Xmap[103X. Note
@@ -493,9 +493,9 @@
   
   [1X32.5-7 [33X[0;0YPreImages[133X[101X
   
-  [29X[2XPreImages[102X( [3Xmap[103X ) [32X function
-  [29X[2XPreImages[102X( [3Xmap[103X, [3Xelm[103X ) [32X function
-  [29X[2XPreImages[102X( [3Xmap[103X, [3Xcoll[103X ) [32X function
+  [33X[1;0Y[29X[2XPreImages[102X( [3Xmap[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPreImages[102X( [3Xmap[103X, [3Xelm[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPreImages[102X( [3Xmap[103X, [3Xcoll[103X ) [32X function[133X
   
   [33X[0;0Y[10XPreImages(  [3Xmap[103X[10X  )[110X  is  the  preimage  of the general mapping [3Xmap[103X, i.e., the
   subset of elements of the source of [3Xmap[103X that have actually values under [3Xmap[103X.[133X
@@ -588,21 +588,21 @@
   
   [1X32.8-1 IsMagmaHomomorphism[101X
   
-  [29X[2XIsMagmaHomomorphism[102X( [3Xmapp[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsMagmaHomomorphism[102X( [3Xmapp[103X ) [32X filter[133X
   
   [33X[0;0YA  [13Xmagma  homomorphism[113X  is  a  total  single  valued  mapping which respects
   multiplication.[133X
   
   [1X32.8-2 MagmaHomomorphismByFunctionNC[101X
   
-  [29X[2XMagmaHomomorphismByFunctionNC[102X( [3XG[103X, [3XH[103X, [3Xfn[103X ) [32X function
+  [33X[1;0Y[29X[2XMagmaHomomorphismByFunctionNC[102X( [3XG[103X, [3XH[103X, [3Xfn[103X ) [32X function[133X
   
   [33X[0;0YCreates  the  homomorphism  from  [3XG[103X  to  [3XH[103X  without  checking  that  [3Xfn[103X is a
   homomorphism.[133X
   
   [1X32.8-3 NaturalHomomorphismByGenerators[101X
   
-  [29X[2XNaturalHomomorphismByGenerators[102X( [3Xf[103X, [3Xs[103X ) [32X operation
+  [33X[1;0Y[29X[2XNaturalHomomorphismByGenerators[102X( [3Xf[103X, [3Xs[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  a  mapping from the magma [3Xf[103X with [22Xn[122X generators to the magma [3Xs[103X with [22Xn[122X
   generators, which maps the [22Xi[122X-th generator of [3Xf[103X to the [22Xi[122X-th generator of [3Xs[103X.[133X
@@ -612,7 +612,7 @@
   
   [1X32.9-1 RespectsMultiplication[101X
   
-  [29X[2XRespectsMultiplication[102X( [3Xmapp[103X ) [32X property
+  [33X[1;0Y[29X[2XRespectsMultiplication[102X( [3Xmapp[103X ) [32X property[133X
   
   [33X[0;0YLet  [3Xmapp[103X  be  a general mapping with underlying relation [22XF ⊆ S × R[122X, where [22XS[122X
   and   [22XR[122X   are   the  source  and  the  range  of  [3Xmapp[103X,  respectively.  Then
@@ -626,7 +626,7 @@
   
   [1X32.9-2 RespectsOne[101X
   
-  [29X[2XRespectsOne[102X( [3Xmapp[103X ) [32X property
+  [33X[1;0Y[29X[2XRespectsOne[102X( [3Xmapp[103X ) [32X property[133X
   
   [33X[0;0YLet  [3Xmapp[103X  be  a general mapping with underlying relation [22XF ⊆ [3XS[103X × [3XR[103X[122X, where [3XS[103X
   and  [3XR[103X  are the source and the range of [3Xmapp[103X, respectively. Then [2XRespectsOne[102X
@@ -638,7 +638,7 @@
   
   [1X32.9-3 RespectsInverses[101X
   
-  [29X[2XRespectsInverses[102X( [3Xmapp[103X ) [32X property
+  [33X[1;0Y[29X[2XRespectsInverses[102X( [3Xmapp[103X ) [32X property[133X
   
   [33X[0;0YLet  [3Xmapp[103X  be  a general mapping with underlying relation [22XF ⊆ [3XS[103X × [3XR[103X[122X, where [3XS[103X
   and   [3XR[103X   are   the  source  and  the  range  of  [3Xmapp[103X,  respectively.  Then
@@ -651,8 +651,8 @@
   
   [1X32.9-4 IsGroupGeneralMapping[101X
   
-  [29X[2XIsGroupGeneralMapping[102X( [3Xmapp[103X ) [32X filter
-  [29X[2XIsGroupHomomorphism[102X( [3Xmapp[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsGroupGeneralMapping[102X( [3Xmapp[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsGroupHomomorphism[102X( [3Xmapp[103X ) [32X filter[133X
   
   [33X[0;0YA  [13Xgroup  general  mapping[113X  is  a  mapping which respects multiplication and
   inverses.   If  it  is  total  and  single  valued  it  is  called  a  [13Xgroup
@@ -662,7 +662,7 @@
   
   [1X32.9-5 KernelOfMultiplicativeGeneralMapping[101X
   
-  [29X[2XKernelOfMultiplicativeGeneralMapping[102X( [3Xmapp[103X ) [32X attribute
+  [33X[1;0Y[29X[2XKernelOfMultiplicativeGeneralMapping[102X( [3Xmapp[103X ) [32X attribute[133X
   
   [33X[0;0YLet  [3Xmapp[103X  be  a  general mapping. Then [2XKernelOfMultiplicativeGeneralMapping[102X
   returns the set of all elements in the source of [3Xmapp[103X that have the identity
@@ -673,7 +673,7 @@
   
   [1X32.9-6 CoKernelOfMultiplicativeGeneralMapping[101X
   
-  [29X[2XCoKernelOfMultiplicativeGeneralMapping[102X( [3Xmapp[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCoKernelOfMultiplicativeGeneralMapping[102X( [3Xmapp[103X ) [32X attribute[133X
   
   [33X[0;0YLet  [3Xmapp[103X  be a general mapping. Then [2XCoKernelOfMultiplicativeGeneralMapping[102X
   returns  the set of all elements in the range of [3Xmapp[103X that have the identity
@@ -687,7 +687,7 @@
   
   [1X32.10-1 RespectsAddition[101X
   
-  [29X[2XRespectsAddition[102X( [3Xmapp[103X ) [32X property
+  [33X[1;0Y[29X[2XRespectsAddition[102X( [3Xmapp[103X ) [32X property[133X
   
   [33X[0;0YLet  [3Xmapp[103X  be  a general mapping with underlying relation [22XF ⊆ S × R[122X, where [22XS[122X
   and   [22XR[122X   are   the  source  and  the  range  of  [3Xmapp[103X,  respectively.  Then
@@ -700,7 +700,7 @@
   
   [1X32.10-2 RespectsAdditiveInverses[101X
   
-  [29X[2XRespectsAdditiveInverses[102X( [3Xmapp[103X ) [32X property
+  [33X[1;0Y[29X[2XRespectsAdditiveInverses[102X( [3Xmapp[103X ) [32X property[133X
   
   [33X[0;0YLet  [3Xmapp[103X  be  a general mapping with underlying relation [22XF ⊆ S × R[122X, where [22XS[122X
   and   [22XR[122X   are   the  source  and  the  range  of  [3Xmapp[103X,  respectively.  Then
@@ -714,7 +714,7 @@
   
   [1X32.10-3 RespectsZero[101X
   
-  [29X[2XRespectsZero[102X( [3Xmapp[103X ) [32X property
+  [33X[1;0Y[29X[2XRespectsZero[102X( [3Xmapp[103X ) [32X property[133X
   
   [33X[0;0YLet  [3Xmapp[103X  be  a general mapping with underlying relation [22XF ⊆ [3XS[103X × [3XR[103X[122X, where [3XS[103X
   and  [3XR[103X are the source and the range of [3Xmapp[103X, respectively. Then [2XRespectsZero[102X
@@ -726,8 +726,8 @@
   
   [1X32.10-4 IsAdditiveGroupGeneralMapping[101X
   
-  [29X[2XIsAdditiveGroupGeneralMapping[102X( [3Xmapp[103X ) [32X filter
-  [29X[2XIsAdditiveGroupHomomorphism[102X( [3Xmapp[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsAdditiveGroupGeneralMapping[102X( [3Xmapp[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsAdditiveGroupHomomorphism[102X( [3Xmapp[103X ) [32X filter[133X
   
   [33X[0;0Y[2XIsAdditiveGroupGeneralMapping[102X  specifies  whether  a  general  mapping  [3Xmapp[103X
   respects  addition  (see  [2XRespectsAddition[102X  ([14X32.10-1[114X)) and respects additive
@@ -738,7 +738,7 @@
   
   [1X32.10-5 KernelOfAdditiveGeneralMapping[101X
   
-  [29X[2XKernelOfAdditiveGeneralMapping[102X( [3Xmapp[103X ) [32X attribute
+  [33X[1;0Y[29X[2XKernelOfAdditiveGeneralMapping[102X( [3Xmapp[103X ) [32X attribute[133X
   
   [33X[0;0YLet  [3Xmapp[103X  be a general mapping. Then [2XKernelOfAdditiveGeneralMapping[102X returns
   the  set  of  all  elements  in the source of [3Xmapp[103X that have the zero of the
@@ -746,7 +746,7 @@
   
   [1X32.10-6 CoKernelOfAdditiveGeneralMapping[101X
   
-  [29X[2XCoKernelOfAdditiveGeneralMapping[102X( [3Xmapp[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCoKernelOfAdditiveGeneralMapping[102X( [3Xmapp[103X ) [32X attribute[133X
   
   [33X[0;0YLet [3Xmapp[103X be a general mapping. Then [2XCoKernelOfAdditiveGeneralMapping[102X returns
   the  set  of  all  elements  in  the range of [3Xmapp[103X that have the zero of the
@@ -760,7 +760,7 @@
   
   [1X32.11-1 RespectsScalarMultiplication[101X
   
-  [29X[2XRespectsScalarMultiplication[102X( [3Xmapp[103X ) [32X property
+  [33X[1;0Y[29X[2XRespectsScalarMultiplication[102X( [3Xmapp[103X ) [32X property[133X
   
   [33X[0;0YLet  [3Xmapp[103X  be a general mapping, with underlying relation [22XF ⊆ S × R[122X, where [22XS[122X
   and   [22XR[122X   are   the  source  and  the  range  of  [3Xmapp[103X,  respectively.  Then
@@ -775,8 +775,8 @@
   
   [1X32.11-2 IsLeftModuleGeneralMapping[101X
   
-  [29X[2XIsLeftModuleGeneralMapping[102X( [3Xmapp[103X ) [32X filter
-  [29X[2XIsLeftModuleHomomorphism[102X( [3Xmapp[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsLeftModuleGeneralMapping[102X( [3Xmapp[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsLeftModuleHomomorphism[102X( [3Xmapp[103X ) [32X filter[133X
   
   [33X[0;0Y[2XIsLeftModuleGeneralMapping[102X   specifies   whether   a  general  mapping  [3Xmapp[103X
   satisfies  the property [2XIsAdditiveGroupGeneralMapping[102X ([14X32.10-4[114X) and respects
@@ -787,7 +787,7 @@
   
   [1X32.11-3 IsLinearMapping[101X
   
-  [29X[2XIsLinearMapping[102X( [3XF[103X, [3Xmapp[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsLinearMapping[102X( [3XF[103X, [3Xmapp[103X ) [32X operation[133X
   
   [33X[0;0YFor  a  field  [3XF[103X and a general mapping [3Xmapp[103X, [2XIsLinearMapping[102X returns [9Xtrue[109X if
   [3Xmapp[103X is an [3XF[103X-linear mapping, and [9Xfalse[109X otherwise.[133X
@@ -802,8 +802,8 @@
   
   [1X32.12-1 IsRingGeneralMapping[101X
   
-  [29X[2XIsRingGeneralMapping[102X( [3Xmapp[103X ) [32X filter
-  [29X[2XIsRingHomomorphism[102X( [3Xmapp[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsRingGeneralMapping[102X( [3Xmapp[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsRingHomomorphism[102X( [3Xmapp[103X ) [32X filter[133X
   
   [33X[0;0Y[2XIsRingGeneralMapping[102X  specifies whether a general mapping [3Xmapp[103X satisfies the
   property [2XIsAdditiveGroupGeneralMapping[102X ([14X32.10-4[114X) and respects multiplication
@@ -814,13 +814,13 @@
   
   [1X32.12-2 IsRingWithOneGeneralMapping[101X
   
-  [29X[2XIsRingWithOneGeneralMapping[102X( [3Xmapp[103X ) [32X filter
-  [29X[2XIsRingWithOneHomomorphism[102X( [3Xmapp[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsRingWithOneGeneralMapping[102X( [3Xmapp[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsRingWithOneHomomorphism[102X( [3Xmapp[103X ) [32X filter[133X
   
   [1X32.12-3 IsAlgebraGeneralMapping[101X
   
-  [29X[2XIsAlgebraGeneralMapping[102X( [3Xmapp[103X ) [32X filter
-  [29X[2XIsAlgebraHomomorphism[102X( [3Xmapp[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsAlgebraGeneralMapping[102X( [3Xmapp[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsAlgebraHomomorphism[102X( [3Xmapp[103X ) [32X filter[133X
   
   [33X[0;0Y[2XIsAlgebraGeneralMapping[102X  specifies  whether a general mapping [3Xmapp[103X satisfies
   both      properties     [2XIsRingGeneralMapping[102X     ([14X32.12-1[114X)     and     (see
@@ -831,8 +831,8 @@
   
   [1X32.12-4 IsAlgebraWithOneGeneralMapping[101X
   
-  [29X[2XIsAlgebraWithOneGeneralMapping[102X( [3Xmapp[103X ) [32X filter
-  [29X[2XIsAlgebraWithOneHomomorphism[102X( [3Xmapp[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsAlgebraWithOneGeneralMapping[102X( [3Xmapp[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsAlgebraWithOneHomomorphism[102X( [3Xmapp[103X ) [32X filter[133X
   
   [33X[0;0Y[2XIsAlgebraWithOneGeneralMapping[102X  specifies  whether  a  general  mapping [3Xmapp[103X
   satisfies  both properties [2XIsAlgebraGeneralMapping[102X ([14X32.12-3[114X) and [2XRespectsOne[102X
@@ -843,7 +843,7 @@
   
   [1X32.12-5 IsFieldHomomorphism[101X
   
-  [29X[2XIsFieldHomomorphism[102X( [3Xmapp[103X ) [32X property
+  [33X[1;0Y[29X[2XIsFieldHomomorphism[102X( [3Xmapp[103X ) [32X property[133X
   
   [33X[0;0YA  general  mapping  is  a  field  homomorphism  if and only if it is a ring
   homomorphism with source a field.[133X
@@ -853,7 +853,7 @@
   
   [1X32.13-1 IsGeneralMapping[101X
   
-  [29X[2XIsGeneralMapping[102X( [3Xmap[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsGeneralMapping[102X( [3Xmap[103X ) [32X Category[133X
   
   [33X[0;0YEach  general  mapping lies in the category [2XIsGeneralMapping[102X. It implies the
   categories       [2XIsMultiplicativeElementWithInverse[102X      ([14X31.14-13[114X)      and
@@ -862,7 +862,7 @@
   
   [1X32.13-2 IsConstantTimeAccessGeneralMapping[101X
   
-  [29X[2XIsConstantTimeAccessGeneralMapping[102X( [3Xmap[103X ) [32X property
+  [33X[1;0Y[29X[2XIsConstantTimeAccessGeneralMapping[102X( [3Xmap[103X ) [32X property[133X
   
   [33X[0;0Yis  [9Xtrue[109X  if  the  underlying  relation of the general mapping [3Xmap[103X knows its
   [2XAsList[102X ([14X30.3-8[114X) value, and [9Xfalse[109X otherwise.[133X
@@ -872,7 +872,7 @@
   
   [1X32.13-3 IsEndoGeneralMapping[101X
   
-  [29X[2XIsEndoGeneralMapping[102X( [3Xobj[103X ) [32X property
+  [33X[1;0Y[29X[2XIsEndoGeneralMapping[102X( [3Xobj[103X ) [32X property[133X
   
   [33X[0;0YIf a general mapping has this property then its source and range are equal.[133X
   
@@ -946,32 +946,32 @@
   
   [1X32.14-1 IsSPGeneralMapping[101X
   
-  [29X[2XIsSPGeneralMapping[102X( [3Xmap[103X ) [32X Category
-  [29X[2XIsNonSPGeneralMapping[102X( [3Xmap[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsSPGeneralMapping[102X( [3Xmap[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsNonSPGeneralMapping[102X( [3Xmap[103X ) [32X Category[133X
   
   [1X32.14-2 IsGeneralMappingFamily[101X
   
-  [29X[2XIsGeneralMappingFamily[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsGeneralMappingFamily[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YThe family category of the category of general mappings.[133X
   
   [1X32.14-3 FamilyRange[101X
   
-  [29X[2XFamilyRange[102X( [3XFam[103X ) [32X attribute
+  [33X[1;0Y[29X[2XFamilyRange[102X( [3XFam[103X ) [32X attribute[133X
   
   [33X[0;0Yis the elements family of the family of the range of each general mapping in
   the family [3XFam[103X.[133X
   
   [1X32.14-4 FamilySource[101X
   
-  [29X[2XFamilySource[102X( [3XFam[103X ) [32X attribute
+  [33X[1;0Y[29X[2XFamilySource[102X( [3XFam[103X ) [32X attribute[133X
   
   [33X[0;0Yis  the  elements family of the family of the source of each general mapping
   in the family [3XFam[103X.[133X
   
   [1X32.14-5 FamiliesOfGeneralMappingsAndRanges[101X
   
-  [29X[2XFamiliesOfGeneralMappingsAndRanges[102X( [3XFam[103X ) [32X attribute
+  [33X[1;0Y[29X[2XFamiliesOfGeneralMappingsAndRanges[102X( [3XFam[103X ) [32X attribute[133X
   
   [33X[0;0Yis  a list that stores at the odd positions the families of general mappings
   with  source in the family [3XFam[103X, at the even positions the families of ranges
@@ -979,14 +979,14 @@
   
   [1X32.14-6 GeneralMappingsFamily[101X
   
-  [29X[2XGeneralMappingsFamily[102X( [3Xsourcefam[103X, [3Xrangefam[103X ) [32X function
+  [33X[1;0Y[29X[2XGeneralMappingsFamily[102X( [3Xsourcefam[103X, [3Xrangefam[103X ) [32X function[133X
   
   [33X[0;0YAll general mappings with same source family [3XFS[103X and same range family [3XFR[103X lie
   in the family [10XGeneralMappingsFamily( [3XFS[103X[10X, [3XFR[103X[10X )[110X.[133X
   
   [1X32.14-7 TypeOfDefaultGeneralMapping[101X
   
-  [29X[2XTypeOfDefaultGeneralMapping[102X( [3Xsource[103X, [3Xrange[103X, [3Xfilter[103X ) [32X function
+  [33X[1;0Y[29X[2XTypeOfDefaultGeneralMapping[102X( [3Xsource[103X, [3Xrange[103X, [3Xfilter[103X ) [32X function[133X
   
   [33X[0;0Yis  the  type of mappings with [10XIsDefaultGeneralMappingRep[110X with source [3Xsource[103X
   and range [3Xrange[103X and additional categories [3Xfilter[103X.[133X

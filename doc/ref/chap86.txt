@@ -30,7 +30,7 @@
   
   [1X86.1-1 WeakPointerObj[101X
   
-  [29X[2XWeakPointerObj[102X( [3Xlist[103X ) [32X function
+  [33X[1;0Y[29X[2XWeakPointerObj[102X( [3Xlist[103X ) [32X function[133X
   
   [33X[0;0Y[2XWeakPointerObj[102X  returns  a  weak  pointer  object  which  contains  the same
   subobjects as the list [3Xlist[103X, that is it returns a [13Xshallow[113X weak copy of [3Xlist[103X.[133X
@@ -85,11 +85,11 @@
   
   [1X86.2-1 SetElmWPObj[101X
   
-  [29X[2XSetElmWPObj[102X( [3Xwp[103X, [3Xpos[103X, [3Xval[103X ) [32X function
-  [29X[2XUnbindElmWPObj[102X( [3Xwp[103X, [3Xpos[103X ) [32X function
-  [29X[2XElmWPObj[102X( [3Xwp[103X, [3Xpos[103X ) [32X function
-  [29X[2XIsBoundElmWPObj[102X( [3Xwp[103X, [3Xpos[103X ) [32X function
-  [29X[2XLengthWPObj[102X( [3Xwp[103X ) [32X function
+  [33X[1;0Y[29X[2XSetElmWPObj[102X( [3Xwp[103X, [3Xpos[103X, [3Xval[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XUnbindElmWPObj[102X( [3Xwp[103X, [3Xpos[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XElmWPObj[102X( [3Xwp[103X, [3Xpos[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XIsBoundElmWPObj[102X( [3Xwp[103X, [3Xpos[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XLengthWPObj[102X( [3Xwp[103X ) [32X function[133X
   
   [33X[0;0YThe  functions  [2XSetElmWPObj[102X  and  [2XUnbindElmWPObj[102X set and unbind entries in a
   weak pointer object.[133X

@@ -50,9 +50,9 @@
   
   [1X37.1-1 IsAssocWord[101X
   
-  [29X[2XIsAssocWord[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsAssocWordWithOne[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsAssocWordWithInverse[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsAssocWord[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsAssocWordWithOne[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsAssocWordWithInverse[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0Y[2XIsAssocWord[102X  is  the  category  of  associative  words  in  free semigroups,
   [2XIsAssocWordWithOne[102X  is  the  category  of  associative words in free monoids
@@ -71,10 +71,10 @@
   
   [1X37.2-1 [33X[0;0YFreeGroup[133X[101X
   
-  [29X[2XFreeGroup[102X( [[3Xwfilt[103X, ][3Xrank[103X[, [3Xname[103X] ) [32X function
-  [29X[2XFreeGroup[102X( [[3Xwfilt[103X, ][3Xname1[103X, [3Xname2[103X, [3X...[103X ) [32X function
-  [29X[2XFreeGroup[102X( [[3Xwfilt[103X, ][3Xnames[103X ) [32X function
-  [29X[2XFreeGroup[102X( [[3Xwfilt[103X, ][3Xinfinity[103X, [3Xname[103X, [3Xinit[103X ) [32X function
+  [33X[1;0Y[29X[2XFreeGroup[102X( [[3Xwfilt[103X, ][3Xrank[103X[, [3Xname[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XFreeGroup[102X( [[3Xwfilt[103X, ][3Xname1[103X, [3Xname2[103X, [3X...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFreeGroup[102X( [[3Xwfilt[103X, ][3Xnames[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFreeGroup[102X( [[3Xwfilt[103X, ][3Xinfinity[103X, [3Xname[103X, [3Xinit[103X ) [32X function[133X
   
   [33X[0;0YCalled  with a positive integer [3Xrank[103X, [2XFreeGroup[102X returns a free group on [3Xrank[103X
   generators.  If  the optional argument [3Xname[103X is given then the generators are
@@ -105,7 +105,7 @@
   
   [1X37.2-2 IsFreeGroup[101X
   
-  [29X[2XIsFreeGroup[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsFreeGroup[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YAny  group consisting of elements in [2XIsAssocWordWithInverse[102X ([14X37.1-1[114X) lies in
   the  filter [2XIsFreeGroup[102X; this holds in particular for any group created with
@@ -115,7 +115,7 @@
   
   [1X37.2-3 AssignGeneratorVariables[101X
   
-  [29X[2XAssignGeneratorVariables[102X( [3XG[103X ) [32X operation
+  [33X[1;0Y[29X[2XAssignGeneratorVariables[102X( [3XG[103X ) [32X operation[133X
   
   [33X[0;0YIf  [3XG[103X is a group, whose generators are represented by symbols (for example a
   free  group, a finitely presented group or a pc group) this function assigns
@@ -145,7 +145,7 @@
   
   [1X37.3-1 \=[101X
   
-  [29X[2X\=[102X( [3Xw1[103X, [3Xw2[103X ) [32X operation
+  [33X[1;0Y[29X[2X\=[102X( [3Xw1[103X, [3Xw2[103X ) [32X operation[133X
   
   [33X[0;0YTwo associative words are equal if they are words over the same alphabet and
   if they are sequences of the same letters. This is equivalent to saying that
@@ -174,7 +174,7 @@
   
   [1X37.3-2 \<[101X
   
-  [29X[2X\<[102X( [3Xw1[103X, [3Xw2[103X ) [32X operation
+  [33X[1;0Y[29X[2X\<[102X( [3Xw1[103X, [3Xw2[103X ) [32X operation[133X
   
   [33X[0;0YThe  ordering  of  associative  words  is defined by length and lexicography
   (this  ordering  is  called  [13Xshort-lex[113X ordering), that is, shorter words are
@@ -199,7 +199,7 @@
   
   [1X37.3-3 IsShortLexLessThanOrEqual[101X
   
-  [29X[2XIsShortLexLessThanOrEqual[102X( [3Xu[103X, [3Xv[103X ) [32X function
+  [33X[1;0Y[29X[2XIsShortLexLessThanOrEqual[102X( [3Xu[103X, [3Xv[103X ) [32X function[133X
   
   [33X[0;0Yreturns  [10XIsLessThanOrEqualUnder([3Xord[103X[10X,  [3Xu[103X[10X,  [3Xv[103X[10X)[110X  where  [3Xord[103X  is  the short less
   ordering  for  the  family  of [3Xu[103X and [3Xv[103X. (This is here for compatibility with
@@ -207,7 +207,7 @@
   
   [1X37.3-4 IsBasicWreathLessThanOrEqual[101X
   
-  [29X[2XIsBasicWreathLessThanOrEqual[102X( [3Xu[103X, [3Xv[103X ) [32X function
+  [33X[1;0Y[29X[2XIsBasicWreathLessThanOrEqual[102X( [3Xu[103X, [3Xv[103X ) [32X function[133X
   
   [33X[0;0Yreturns  [10XIsLessThanOrEqualUnder([3Xord[103X[10X,  [3Xu[103X[10X,  [3Xv[103X[10X)[110X  where  [3Xord[103X is the basic wreath
   product  ordering for the family of [3Xu[103X and [3Xv[103X. (This is here for compatibility
@@ -233,7 +233,7 @@
   
   [1X37.4-1 Length[101X
   
-  [29X[2XLength[102X( [3Xw[103X ) [32X attribute
+  [33X[1;0Y[29X[2XLength[102X( [3Xw[103X ) [32X attribute[133X
   
   [33X[0;0YFor an associative word [3Xw[103X, [2XLength[102X returns the number of letters in [3Xw[103X.[133X
   
@@ -249,7 +249,7 @@
   
   [1X37.4-2 ExponentSumWord[101X
   
-  [29X[2XExponentSumWord[102X( [3Xw[103X, [3Xgen[103X ) [32X operation
+  [33X[1;0Y[29X[2XExponentSumWord[102X( [3Xw[103X, [3Xgen[103X ) [32X operation[133X
   
   [33X[0;0YFor  an  associative word [3Xw[103X and a generator [3Xgen[103X, [2XExponentSumWord[102X returns the
   number  of  times  [3Xgen[103X  appears  in  [3Xw[103X minus the number of times its inverse
@@ -268,7 +268,7 @@
   
   [1X37.4-3 Subword[101X
   
-  [29X[2XSubword[102X( [3Xw[103X, [3Xfrom[103X, [3Xto[103X ) [32X operation
+  [33X[1;0Y[29X[2XSubword[102X( [3Xw[103X, [3Xfrom[103X, [3Xto[103X ) [32X operation[133X
   
   [33X[0;0YFor  an  associative  word  [3Xw[103X and two positive integers [3Xfrom[103X and [3Xto[103X, [2XSubword[102X
   returns  the  subword of [3Xw[103X that begins at position [3Xfrom[103X and ends at position
@@ -282,7 +282,7 @@
   
   [1X37.4-4 PositionWord[101X
   
-  [29X[2XPositionWord[102X( [3Xw[103X, [3Xsub[103X, [3Xfrom[103X ) [32X operation
+  [33X[1;0Y[29X[2XPositionWord[102X( [3Xw[103X, [3Xsub[103X, [3Xfrom[103X ) [32X operation[133X
   
   [33X[0;0YLet   [3Xw[103X  and  [3Xsub[103X  be  associative  words,  and  [3Xfrom[103X  a  positive  integer.
   [2XPositionWord[102X  returns  the  position  of  the  first  occurrence of [3Xsub[103X as a
@@ -312,8 +312,8 @@
   
   [1X37.4-5 [33X[0;0YSubstitutedWord[133X[101X
   
-  [29X[2XSubstitutedWord[102X( [3Xw[103X, [3Xfrom[103X, [3Xto[103X, [3Xby[103X ) [32X operation
-  [29X[2XSubstitutedWord[102X( [3Xw[103X, [3Xsub[103X, [3Xfrom[103X, [3Xby[103X ) [32X operation
+  [33X[1;0Y[29X[2XSubstitutedWord[102X( [3Xw[103X, [3Xfrom[103X, [3Xto[103X, [3Xby[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSubstitutedWord[102X( [3Xw[103X, [3Xsub[103X, [3Xfrom[103X, [3Xby[103X ) [32X operation[133X
   
   [33X[0;0YLet [3Xw[103X be an associative word.[133X
   
@@ -341,7 +341,7 @@
   
   [1X37.4-6 EliminatedWord[101X
   
-  [29X[2XEliminatedWord[102X( [3Xw[103X, [3Xgen[103X, [3Xby[103X ) [32X operation
+  [33X[1;0Y[29X[2XEliminatedWord[102X( [3Xw[103X, [3Xgen[103X, [3Xby[103X ) [32X operation[133X
   
   [33X[0;0YFor  an  associative  word  [3Xw[103X,  a generator [3Xgen[103X, and an associative word [3Xby[103X,
   [2XEliminatedWord[102X  returns  the  associative  word  obtained  by replacing each
@@ -364,27 +364,27 @@
   
   [1X37.5-1 NumberSyllables[101X
   
-  [29X[2XNumberSyllables[102X( [3Xw[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNumberSyllables[102X( [3Xw[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XNumberSyllables[102X returns the number of syllables of the associative word [3Xw[103X.[133X
   
   [1X37.5-2 ExponentSyllable[101X
   
-  [29X[2XExponentSyllable[102X( [3Xw[103X, [3Xi[103X ) [32X operation
+  [33X[1;0Y[29X[2XExponentSyllable[102X( [3Xw[103X, [3Xi[103X ) [32X operation[133X
   
   [33X[0;0Y[2XExponentSyllable[102X   returns   the  exponent  of  the  [3Xi[103X-th  syllable  of  the
   associative word [3Xw[103X.[133X
   
   [1X37.5-3 GeneratorSyllable[101X
   
-  [29X[2XGeneratorSyllable[102X( [3Xw[103X, [3Xi[103X ) [32X operation
+  [33X[1;0Y[29X[2XGeneratorSyllable[102X( [3Xw[103X, [3Xi[103X ) [32X operation[133X
   
   [33X[0;0Y[2XGeneratorSyllable[102X  returns  the  number of the generator that is involved in
   the [3Xi[103X-th syllable of the associative word [3Xw[103X.[133X
   
   [1X37.5-4 SubSyllables[101X
   
-  [29X[2XSubSyllables[102X( [3Xw[103X, [3Xfrom[103X, [3Xto[103X ) [32X operation
+  [33X[1;0Y[29X[2XSubSyllables[102X( [3Xw[103X, [3Xfrom[103X, [3Xto[103X ) [32X operation[133X
   
   [33X[0;0Y[2XSubSyllables[102X  returns the subword of the associative word [3Xw[103X that consists of
   the  syllables from positions [3Xfrom[103X to [3Xto[103X, where [3Xfrom[103X and [3Xto[103X must be positive
@@ -424,7 +424,7 @@
   
   [1X37.6-1 IsLetterAssocWordRep[101X
   
-  [29X[2XIsLetterAssocWordRep[102X( [3Xobj[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsLetterAssocWordRep[102X( [3Xobj[103X ) [32X Representation[133X
   
   [33X[0;0YA  word in letter representation stores a list of generator/inverses numbers
   (as  given  by [2XLetterRepAssocWord[102X ([14X37.6-8[114X)). Letter access is fast, syllable
@@ -432,7 +432,7 @@
   
   [1X37.6-2 IsLetterWordsFamily[101X
   
-  [29X[2XIsLetterWordsFamily[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsLetterWordsFamily[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YA letter word family stores words by default in letter form.[133X
   
@@ -444,8 +444,8 @@
   
   [1X37.6-3 IsBLetterAssocWordRep[101X
   
-  [29X[2XIsBLetterAssocWordRep[102X( [3Xobj[103X ) [32X Representation
-  [29X[2XIsWLetterAssocWordRep[102X( [3Xobj[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsBLetterAssocWordRep[102X( [3Xobj[103X ) [32X Representation[133X
+  [33X[1;0Y[29X[2XIsWLetterAssocWordRep[102X( [3Xobj[103X ) [32X Representation[133X
   
   [33X[0;0Ythese  two  subrepresentations  of  [2XIsLetterAssocWordRep[102X  ([14X37.6-1[114X)  indicate
   whether  the word is stored as a list of bytes (in a string) or as a list of
@@ -453,15 +453,15 @@
   
   [1X37.6-4 IsBLetterWordsFamily[101X
   
-  [29X[2XIsBLetterWordsFamily[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsWLetterWordsFamily[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsBLetterWordsFamily[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsWLetterWordsFamily[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YThese  two subcategories of [2XIsLetterWordsFamily[102X ([14X37.6-2[114X) specify the type of
   letter representation to be used.[133X
   
   [1X37.6-5 IsSyllableAssocWordRep[101X
   
-  [29X[2XIsSyllableAssocWordRep[102X( [3Xobj[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsSyllableAssocWordRep[102X( [3Xobj[103X ) [32X Representation[133X
   
   [33X[0;0YA word in syllable representation stores generator/exponents pairs (as given
   by [2XExtRepOfObj[102X ([14X79.16-1[114X). Syllable access is fast, letter access is slow for
@@ -469,7 +469,7 @@
   
   [1X37.6-6 IsSyllableWordsFamily[101X
   
-  [29X[2XIsSyllableWordsFamily[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsSyllableWordsFamily[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YA  syllable  word family stores words by default in syllable form. There are
   also  different  versions  of  syllable  representations,  which  compress a
@@ -478,9 +478,9 @@
   
   [1X37.6-7 Is16BitsFamily[101X
   
-  [29X[2XIs16BitsFamily[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIs32BitsFamily[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsInfBitsFamily[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIs16BitsFamily[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIs32BitsFamily[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsInfBitsFamily[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YRegardless  of the internal representation used, it is possible to convert a
   word  in  a  list  of  numbers in letter or syllable representation and vice
@@ -488,7 +488,7 @@
   
   [1X37.6-8 LetterRepAssocWord[101X
   
-  [29X[2XLetterRepAssocWord[102X( [3Xw[103X[, [3Xgens[103X] ) [32X operation
+  [33X[1;0Y[29X[2XLetterRepAssocWord[102X( [3Xw[103X[, [3Xgens[103X] ) [32X operation[133X
   
   [33X[0;0YThe  [13Xletter  representation[113X  of an associated word is as a list of integers,
   each  entry  corresponding  to a group generator. Inverses of the generators
@@ -505,7 +505,7 @@
   
   [1X37.6-9 AssocWordByLetterRep[101X
   
-  [29X[2XAssocWordByLetterRep[102X( [3XFam[103X, [3Xlrep[103X[, [3Xgens[103X] ) [32X operation
+  [33X[1;0Y[29X[2XAssocWordByLetterRep[102X( [3XFam[103X, [3Xlrep[103X[, [3Xgens[103X] ) [32X operation[133X
   
   [33X[0;0Ytakes  a  letter  representation  [3Xlrep[103X (see [2XLetterRepAssocWord[102X ([14X37.6-8[114X)) and
   returns  an  associative  word  in  family  [3Xfam[103X corresponding to this letter
@@ -600,17 +600,17 @@
   
   [1X37.8-1 IsStraightLineProgram[101X
   
-  [29X[2XIsStraightLineProgram[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsStraightLineProgram[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YEach    straight    line    program    in   [5XGAP[105X   lies   in   the   category
   [2XIsStraightLineProgram[102X.[133X
   
   [1X37.8-2 StraightLineProgram[101X
   
-  [29X[2XStraightLineProgram[102X( [3Xlines[103X[, [3Xnrgens[103X] ) [32X function
-  [29X[2XStraightLineProgram[102X( [3Xstring[103X, [3Xgens[103X ) [32X function
-  [29X[2XStraightLineProgramNC[102X( [3Xlines[103X[, [3Xnrgens[103X] ) [32X function
-  [29X[2XStraightLineProgramNC[102X( [3Xstring[103X, [3Xgens[103X ) [32X function
+  [33X[1;0Y[29X[2XStraightLineProgram[102X( [3Xlines[103X[, [3Xnrgens[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XStraightLineProgram[102X( [3Xstring[103X, [3Xgens[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XStraightLineProgramNC[102X( [3Xlines[103X[, [3Xnrgens[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XStraightLineProgramNC[102X( [3Xstring[103X, [3Xgens[103X ) [32X function[133X
   
   [33X[0;0YIn  the  first  form,  [3Xlines[103X  must  be a list of lists that defines a unique
   straight  line  program  (see [2XIsStraightLineProgram[102X  ([14X37.8-1[114X)); in this case
@@ -635,7 +635,7 @@
   
   [1X37.8-3 LinesOfStraightLineProgram[101X
   
-  [29X[2XLinesOfStraightLineProgram[102X( [3Xprog[103X ) [32X attribute
+  [33X[1;0Y[29X[2XLinesOfStraightLineProgram[102X( [3Xprog[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a  straight  line  program [3Xprog[103X, [2XLinesOfStraightLineProgram[102X returns the
   list  of program lines. There is no default method to compute these lines if
@@ -643,7 +643,7 @@
   
   [1X37.8-4 NrInputsOfStraightLineProgram[101X
   
-  [29X[2XNrInputsOfStraightLineProgram[102X( [3Xprog[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNrInputsOfStraightLineProgram[102X( [3Xprog[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a straight line program [3Xprog[103X, [2XNrInputsOfStraightLineProgram[102X returns the
   number of generators that are needed as input.[133X
@@ -657,7 +657,7 @@
   
   [1X37.8-5 ResultOfStraightLineProgram[101X
   
-  [29X[2XResultOfStraightLineProgram[102X( [3Xprog[103X, [3Xgens[103X ) [32X operation
+  [33X[1;0Y[29X[2XResultOfStraightLineProgram[102X( [3Xprog[103X, [3Xgens[103X ) [32X operation[133X
   
   [33X[0;0Y[2XResultOfStraightLineProgram[102X    evaluates    the    straight   line   program
   (see [2XIsStraightLineProgram[102X  ([14X37.8-1[114X)) [3Xprog[103X at the group elements in the list
@@ -746,7 +746,7 @@
   
   [1X37.8-6 StringOfResultOfStraightLineProgram[101X
   
-  [29X[2XStringOfResultOfStraightLineProgram[102X( [3Xprog[103X, [3Xgensnames[103X[, [3X"LaTeX"[103X] ) [32X function
+  [33X[1;0Y[29X[2XStringOfResultOfStraightLineProgram[102X( [3Xprog[103X, [3Xgensnames[103X[, [3X"LaTeX"[103X] ) [32X function[133X
   
   [33X[0;0Y[2XStringOfResultOfStraightLineProgram[102X  returns  a  string  that  describes the
   result  of  the  straight  line program (see [2XIsStraightLineProgram[102X ([14X37.8-1[114X))
@@ -768,7 +768,7 @@
   
   [1X37.8-7 CompositionOfStraightLinePrograms[101X
   
-  [29X[2XCompositionOfStraightLinePrograms[102X( [3Xprog2[103X, [3Xprog1[103X ) [32X function
+  [33X[1;0Y[29X[2XCompositionOfStraightLinePrograms[102X( [3Xprog2[103X, [3Xprog1[103X ) [32X function[133X
   
   [33X[0;0YFor      two     straight     line     programs     [3Xprog1[103X     and     [3Xprog2[103X,
   [2XCompositionOfStraightLinePrograms[102X  returns a straight line program [3Xprog[103X with
@@ -797,7 +797,7 @@
   
   [1X37.8-8 IntegratedStraightLineProgram[101X
   
-  [29X[2XIntegratedStraightLineProgram[102X( [3Xlistofprogs[103X ) [32X function
+  [33X[1;0Y[29X[2XIntegratedStraightLineProgram[102X( [3Xlistofprogs[103X ) [32X function[133X
   
   [33X[0;0YFor  a  nonempty  dense list [3Xlistofprogs[103X of straight line programs that have
   the   same  number  [22Xn[122X,  say,  of  inputs  (see [2XNrInputsOfStraightLineProgram[102X
@@ -826,7 +826,7 @@
   
   [1X37.8-9 RestrictOutputsOfSLP[101X
   
-  [29X[2XRestrictOutputsOfSLP[102X( [3Xslp[103X, [3Xk[103X ) [32X function
+  [33X[1;0Y[29X[2XRestrictOutputsOfSLP[102X( [3Xslp[103X, [3Xk[103X ) [32X function[133X
   
   [33X[0;0Y[3Xslp[103X  must  be  a  straight  line  program  returning a tuple of values. This
   function  returns  a new slp that calculates only those outputs specified by
@@ -841,7 +841,7 @@
   
   [1X37.8-10 IntermediateResultOfSLP[101X
   
-  [29X[2XIntermediateResultOfSLP[102X( [3Xslp[103X, [3Xk[103X ) [32X function
+  [33X[1;0Y[29X[2XIntermediateResultOfSLP[102X( [3Xslp[103X, [3Xk[103X ) [32X function[133X
   
   [33X[0;0YReturns a new slp that calculates only the value of slot [3Xk[103X at the end of [3Xslp[103X
   doing only what is necessary. slp is either an slp or a pair where the first
@@ -853,7 +853,7 @@
   
   [1X37.8-11 IntermediateResultOfSLPWithoutOverwrite[101X
   
-  [29X[2XIntermediateResultOfSLPWithoutOverwrite[102X( [3Xslp[103X, [3Xk[103X ) [32X function
+  [33X[1;0Y[29X[2XIntermediateResultOfSLPWithoutOverwrite[102X( [3Xslp[103X, [3Xk[103X ) [32X function[133X
   
   [33X[0;0YReturns a new slp that calculates only the value of slot [3Xk[103X, which must be an
   integer.  Note  that  [3Xslp[103X  must  not  overwrite slots but only append!!! Use
@@ -863,7 +863,7 @@
   
   [1X37.8-12 IntermediateResultsOfSLPWithoutOverwrite[101X
   
-  [29X[2XIntermediateResultsOfSLPWithoutOverwrite[102X( [3Xslp[103X, [3Xk[103X ) [32X function
+  [33X[1;0Y[29X[2XIntermediateResultsOfSLPWithoutOverwrite[102X( [3Xslp[103X, [3Xk[103X ) [32X function[133X
   
   [33X[0;0YReturns  a  new slp that calculates only the value of slots contained in the
   list  k.  Note  that  [3Xslp[103X  must  not  overwrite slots but only append!!! Use
@@ -873,7 +873,7 @@
   
   [1X37.8-13 ProductOfStraightLinePrograms[101X
   
-  [29X[2XProductOfStraightLinePrograms[102X( [3Xs1[103X, [3Xs2[103X ) [32X function
+  [33X[1;0Y[29X[2XProductOfStraightLinePrograms[102X( [3Xs1[103X, [3Xs2[103X ) [32X function[133X
   
   [33X[0;0Y[3Xs1[103X and [3Xs2[103X must be two slps that return a single element with the same number
   of  inputs.  This function constructs an slp that returns the product of the
@@ -881,7 +881,7 @@
   
   [1X37.8-14 SlotUsagePattern[101X
   
-  [29X[2XSlotUsagePattern[102X( [3Xs[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSlotUsagePattern[102X( [3Xs[103X ) [32X attribute[133X
   
   [33X[0;0YAnalyses  the  straight  line  program [3Xs[103X for more efficient evaluation. This
   means  in particular two things, when this attribute is known: First of all,
@@ -919,7 +919,7 @@
   
   [1X37.9-1 IsStraightLineProgElm[101X
   
-  [29X[2XIsStraightLineProgElm[102X( [3Xobj[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsStraightLineProgElm[102X( [3Xobj[103X ) [32X Representation[133X
   
   [33X[0;0YA  straight  line  program  element  is  a  group  element given (for memory
   reasons)  as  a  straight  line  program. Straight line program elements are
@@ -928,13 +928,13 @@
   
   [1X37.9-2 StraightLineProgElm[101X
   
-  [29X[2XStraightLineProgElm[102X( [3Xseed[103X, [3Xprog[103X ) [32X function
+  [33X[1;0Y[29X[2XStraightLineProgElm[102X( [3Xseed[103X, [3Xprog[103X ) [32X function[133X
   
   [33X[0;0YCreates a straight line program element for seed [3Xseed[103X and program [3Xprog[103X.[133X
   
   [1X37.9-3 StraightLineProgGens[101X
   
-  [29X[2XStraightLineProgGens[102X( [3Xgens[103X[, [3Xbase[103X] ) [32X function
+  [33X[1;0Y[29X[2XStraightLineProgGens[102X( [3Xgens[103X[, [3Xbase[103X] ) [32X function[133X
   
   [33X[0;0Yreturns  a  set  of  straight  line  program  elements  corresponding to the
   generators  in [3Xgens[103X. If [3Xgens[103X is a set of permutations then [3Xbase[103X can be given
@@ -943,13 +943,13 @@
   
   [1X37.9-4 EvalStraightLineProgElm[101X
   
-  [29X[2XEvalStraightLineProgElm[102X( [3Xslpel[103X ) [32X function
+  [33X[1;0Y[29X[2XEvalStraightLineProgElm[102X( [3Xslpel[103X ) [32X function[133X
   
   [33X[0;0Yevaluates a straight line program element [3Xslpel[103X from its seeds.[133X
   
   [1X37.9-5 StretchImportantSLPElement[101X
   
-  [29X[2XStretchImportantSLPElement[102X( [3Xelm[103X ) [32X operation
+  [33X[1;0Y[29X[2XStretchImportantSLPElement[102X( [3Xelm[103X ) [32X operation[133X
   
   [33X[0;0YIf [3Xelm[103X is a straight line program element whose straight line representation
   is very long, this operation changes the representation of [3Xelm[103X to a straight

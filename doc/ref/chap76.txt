@@ -56,7 +56,7 @@
   
   [1X76.2-1 LoadPackage[101X
   
-  [29X[2XLoadPackage[102X( [3Xname[103X[, [3Xversion[103X][, [3Xbanner[103X] ) [32X function
+  [33X[1;0Y[29X[2XLoadPackage[102X( [3Xname[103X[, [3Xversion[103X][, [3Xbanner[103X] ) [32X function[133X
   
   [33X[0;0Yloads the [5XGAP[105X package with name [3Xname[103X.[133X
   
@@ -143,7 +143,7 @@
   
   [1X76.2-2 SetPackagePath[101X
   
-  [29X[2XSetPackagePath[102X( [3Xpkgname[103X, [3Xpkgpath[103X ) [32X function
+  [33X[1;0Y[29X[2XSetPackagePath[102X( [3Xpkgname[103X, [3Xpkgpath[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xpkgname[103X  and  [3Xpkgpath[103X be strings denoting the name of a [5XGAP[105X package and
   the path to a directory where a version of this package can be found (i. e.,
@@ -162,7 +162,7 @@
   
   [1X76.2-3 ExtendRootDirectories[101X
   
-  [29X[2XExtendRootDirectories[102X( [3Xpaths[103X ) [32X function
+  [33X[1;0Y[29X[2XExtendRootDirectories[102X( [3Xpaths[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xpaths[103X  be  a  list  of  strings  that denote paths to intended [5XGAP[105X root
   directories  (see  [14X9.2[114X). The function [2XExtendRootDirectories[102X adds these paths
@@ -178,13 +178,13 @@
   
   [1X76.2-4 DisplayPackageLoadingLog[101X
   
-  [29X[2XDisplayPackageLoadingLog[102X( [[3Xseverity[103X] ) [32X function
-  [29X[2XInfoPackageLoading[102X[32X info class
-  [29X[2XPACKAGE_ERROR[102X[32X global variable
-  [29X[2XPACKAGE_WARNING[102X[32X global variable
-  [29X[2XPACKAGE_INFO[102X[32X global variable
-  [29X[2XPACKAGE_DEBUG[102X[32X global variable
-  [29X[2XLogPackageLoadingMessage[102X( [3Xseverity[103X, [3Xmessage[103X[, [3Xname[103X] ) [32X function
+  [33X[1;0Y[29X[2XDisplayPackageLoadingLog[102X( [[3Xseverity[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XInfoPackageLoading[102X[32X info class[133X
+  [33X[1;0Y[29X[2XPACKAGE_ERROR[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XPACKAGE_WARNING[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XPACKAGE_INFO[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XPACKAGE_DEBUG[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XLogPackageLoadingMessage[102X( [3Xseverity[103X, [3Xmessage[103X[, [3Xname[103X] ) [32X function[133X
   
   [33X[0;0YWhenever  [5XGAP[105X  considers  loading a package, log messages are collected in a
   global  list. The messages for the current [5XGAP[105X session can be displayed with
@@ -250,8 +250,8 @@
   
   [1X76.3-1 ReadPackage[101X
   
-  [29X[2XReadPackage[102X( [[3Xname[103X, ][3Xfile[103X ) [32X function
-  [29X[2XRereadPackage[102X( [[3Xname[103X, ][3Xfile[103X ) [32X function
+  [33X[1;0Y[29X[2XReadPackage[102X( [[3Xname[103X, ][3Xfile[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XRereadPackage[102X( [[3Xname[103X, ][3Xfile[103X ) [32X function[133X
   
   [33X[0;0YCalled  with  two  strings [3Xname[103X and [3Xfile[103X, [2XReadPackage[102X reads the file [3Xfile[103X of
   the  [5XGAP[105X  package  [3Xname[103X,  where [3Xfile[103X is given as a path relative to the home
@@ -280,7 +280,7 @@
   
   [1X76.3-2 TestPackageAvailability[101X
   
-  [29X[2XTestPackageAvailability[102X( [3Xname[103X[, [3Xversion[103X][, [3Xcheckall[103X] ) [32X function
+  [33X[1;0Y[29X[2XTestPackageAvailability[102X( [3Xname[103X[, [3Xversion[103X][, [3Xcheckall[103X] ) [32X function[133X
   
   [33X[0;0YFor  strings  [3Xname[103X  and [3Xversion[103X, this function tests whether the [5XGAP[105X package
   [3Xname[103X  is  available  for  loading  in a version that is at least [3Xversion[103X, or
@@ -308,7 +308,7 @@
   
   [1X76.3-3 TestPackage[101X
   
-  [29X[2XTestPackage[102X( [3Xpkgname[103X ) [32X function
+  [33X[1;0Y[29X[2XTestPackage[102X( [3Xpkgname[103X ) [32X function[133X
   
   [33X[0;0YIt  is  recommended  that  a  [5XGAP[105X  package  specifies a standard test in its
   [11XPackageInfo.g[111X  file.  If [3Xpkgname[103X is a string with the name of a [5XGAP[105X package,
@@ -335,7 +335,7 @@
   
   [1X76.3-4 InstalledPackageVersion[101X
   
-  [29X[2XInstalledPackageVersion[102X( [3Xname[103X ) [32X function
+  [33X[1;0Y[29X[2XInstalledPackageVersion[102X( [3Xname[103X ) [32X function[133X
   
   [33X[0;0YIf   the   [5XGAP[105X   package  with  name  [3Xname[103X  has  already  been  loaded  then
   [2XInstalledPackageVersion[102X  returns  the  string denoting the version number of
@@ -350,7 +350,7 @@
   
   [1X76.3-5 DirectoriesPackageLibrary[101X
   
-  [29X[2XDirectoriesPackageLibrary[102X( [3Xname[103X[, [3Xpath[103X] ) [32X function
+  [33X[1;0Y[29X[2XDirectoriesPackageLibrary[102X( [3Xname[103X[, [3Xpath[103X] ) [32X function[133X
   
   [33X[0;0Ytakes  the  string  [3Xname[103X,  a  name  of  a [5XGAP[105X package, and returns a list of
   directory   objects  for  those  sub-directory/ies  containing  the  library
@@ -394,7 +394,7 @@
   
   [1X76.3-6 DirectoriesPackagePrograms[101X
   
-  [29X[2XDirectoriesPackagePrograms[102X( [3Xname[103X ) [32X function
+  [33X[1;0Y[29X[2XDirectoriesPackagePrograms[102X( [3Xname[103X ) [32X function[133X
   
   [33X[0;0Yreturns  a  list of the [10Xbin/[110X[3Xarchitecture[103X subdirectories of all packages [3Xname[103X
   where  [3Xarchitecture[103X is the architecture on which [5XGAP[105X has been compiled (this
@@ -421,7 +421,7 @@
   
   [1X76.3-7 CompareVersionNumbers[101X
   
-  [29X[2XCompareVersionNumbers[102X( [3Xsupplied[103X, [3Xrequired[103X[, [3X"equal"[103X] ) [32X function
+  [33X[1;0Y[29X[2XCompareVersionNumbers[102X( [3Xsupplied[103X, [3Xrequired[103X[, [3X"equal"[103X] ) [32X function[133X
   
   [33X[0;0YA  version  number is a string which contains nonnegative integers separated
   by  non-numeric  characters.  Examples  of  valid  version  numbers  are for
@@ -439,7 +439,7 @@
   
   [1X76.3-8 IsPackageMarkedForLoading[101X
   
-  [29X[2XIsPackageMarkedForLoading[102X( [3Xname[103X, [3Xversion[103X ) [32X function
+  [33X[1;0Y[29X[2XIsPackageMarkedForLoading[102X( [3Xname[103X, [3Xversion[103X ) [32X function[133X
   
   [33X[0;0YThis  function  can  be  used  in  the code of a package [22XA[122X, say, for testing
   whether  the  package  [3Xname[103X  in  version  [3Xversion[103X  will  be loaded after the
@@ -450,7 +450,7 @@
   
   [1X76.3-9 DeclareAutoreadableVariables[101X
   
-  [29X[2XDeclareAutoreadableVariables[102X( [3Xpkgname[103X, [3Xfilename[103X, [3Xvarlist[103X ) [32X function
+  [33X[1;0Y[29X[2XDeclareAutoreadableVariables[102X( [3Xpkgname[103X, [3Xfilename[103X, [3Xvarlist[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xpkgname[103X  be  the  name of a package, let [3Xfilename[103X be the name of a file
   relative to the home directory of this package, and let [3Xvarlist[103X be a list of
@@ -480,7 +480,7 @@
   
   [1X76.3-11 LoadDynamicModule[101X
   
-  [29X[2XLoadDynamicModule[102X( [3Xfilename[103X[, [3Xcrc[103X] ) [32X function
+  [33X[1;0Y[29X[2XLoadDynamicModule[102X( [3Xfilename[103X[, [3Xcrc[103X] ) [32X function[133X
   
   [33X[0;0YTo load a compiled file, the command [2XLoadDynamicModule[102X is used. This command
   loads  [3Xfilename[103X  as  module.  If  given, the CRC checksum [3Xcrc[103X must match the
@@ -515,7 +515,7 @@
   
   [1X76.3-13 ValidatePackageInfo[101X
   
-  [29X[2XValidatePackageInfo[102X( [3Xinfo[103X ) [32X function
+  [33X[1;0Y[29X[2XValidatePackageInfo[102X( [3Xinfo[103X ) [32X function[133X
   
   [33X[0;0YThis  function  is  intended to support package authors who create or modify
   [11XPackageInfo.g[111X  files. (It is [13Xnot[113X called when these files are read during the
@@ -537,8 +537,8 @@
   
   [1X76.3-14 ShowPackageVariables[101X
   
-  [29X[2XShowPackageVariables[102X( [3Xpkgname[103X[, [3Xversion[103X][, [3Xarec[103X] ) [32X function
-  [29X[2XPackageVariablesInfo[102X( [3Xpkgname[103X, [3Xversion[103X ) [32X function
+  [33X[1;0Y[29X[2XShowPackageVariables[102X( [3Xpkgname[103X[, [3Xversion[103X][, [3Xarec[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XPackageVariablesInfo[102X( [3Xpkgname[103X, [3Xversion[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xpkgname[103X  be  the  name  of  a  [5XGAP[105X  package.  If the package [3Xpkgname[103X is
   available  but  not  yet  loaded  then [2XShowPackageVariables[102X prints a list of
@@ -601,7 +601,7 @@
   
   [1X76.3-15 BibEntry[101X
   
-  [29X[2XBibEntry[102X( [3Xpkgname[103X[, [3Xkey[103X] ) [32X function
+  [33X[1;0Y[29X[2XBibEntry[102X( [3Xpkgname[103X[, [3Xkey[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ya  string in BibXMLext format (see [14X'GAPDoc: The BibXMLext Format'[114X)
             that can be used for referencing the [5XGAP[105X system or a [5XGAP[105X package.[133X
   
@@ -656,7 +656,7 @@
   
   [1X76.3-16 Cite[101X
   
-  [29X[2XCite[102X( [[3Xpkgname[103X[, [3Xkey[103X]] ) [32X function
+  [33X[1;0Y[29X[2XCite[102X( [[3Xpkgname[103X[, [3Xkey[103X]] ) [32X function[133X
   
   [33X[0;0YUsed  with  no  arguments  or  with  argument [10X"GAP"[110X (case-insensitive), [2XCite[102X
   displays  instructions  on  citing  the  version  of [5XGAP[105X that is being used.

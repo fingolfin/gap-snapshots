@@ -6,18 +6,16 @@
 ##                                                              Jan De Beule
 ##                                                             Philippe Cara
 ##                                                            Michel Lavrauw
-##                                                                 Maska Law
 ##                                                           Max Neunhoeffer
-##                                                            Michael Pauley
-##                                                             Sven Reichard
 ##
-##  Copyright 2011	Colorado State University, Fort Collins
+##  Copyright 2017	Colorado State University
+##                  Sabancı Üniversitesi
 ##					Università degli Studi di Padova
-##					Universeit Gent
+##					Universiteit Gent
 ##					University of St. Andrews
-##					University of Western Australia, Perth
+##					University of Western Australia
 ##                  Vrije Universiteit Brussel
-##                 
+##
 ##
 ##  Declaration stuff for enumerators of elements of polar spaces
 ##
@@ -35,7 +33,7 @@
 
 DeclareGlobalFunction( "PositionNonZeroFromRight" );
 DeclareGlobalFunction( "FG_pos" );
-DeclareGlobalFunction( "FG_div" );
+#DeclareGlobalFunction( "FG_div" );
 DeclareGlobalFunction( "FG_ffenumber" );
 #DeclareGlobalFunction( "FG_unrank_GFQ" ); #never used
 #DeclareGlobalFunction( "FG_rank_GFQ" ); #never used

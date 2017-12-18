@@ -182,7 +182,7 @@
 
 <h5>24.1-1 InfoMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoMatrix</code></td><td class="tdright">( info class )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoMatrix</code></td><td class="tdright">(&nbsp;info class&nbsp;)</td></tr></table></div>
 <p>The info class for matrix operations is <code class="func">InfoMatrix</code>.</p>
 
 <p><a id="X866E55A58164FAED" name="X866E55A58164FAED"></a></p>
@@ -193,7 +193,7 @@
 
 <h5>24.2-1 IsMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>A <em>matrix</em> is a list of lists of equal length whose entries lie in a common ring.</p>
 
 <p>Note that matrices may have different multiplications, besides the usual matrix product there is for example the Lie product. So there are categories such as <code class="func">IsOrdinaryMatrix</code> (<a href="chap24_mj.html#X7CF42B8A845BC6A9"><span class="RefLink">24.2-2</span></a>) and <code class="func">IsLieMatrix</code> (<a href="chap24_mj.html#X86EC33E17DD12D0E"><span class="RefLink">24.2-3</span></a>) that describe the matrix multiplication. One can form the product of two matrices only if they support the same multiplication.</p>
@@ -222,7 +222,7 @@ false
 
 <h5>24.2-2 IsOrdinaryMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsOrdinaryMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsOrdinaryMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>An <em>ordinary matrix</em> is a matrix whose multiplication is the ordinary matrix multiplication.</p>
 
 <p>Each matrix in internal representation is in the category <code class="func">IsOrdinaryMatrix</code>, and arithmetic operations with objects in <code class="func">IsOrdinaryMatrix</code> produce again matrices in <code class="func">IsOrdinaryMatrix</code>.</p>
@@ -233,7 +233,7 @@ false
 
 <h5>24.2-3 IsLieMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLieMatrix</code>( <var class="Arg">mat</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLieMatrix</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>A <em>Lie matrix</em> is a matrix whose multiplication is given by the Lie bracket. (Note that a matrix with ordinary matrix multiplication is in the category <code class="func">IsOrdinaryMatrix</code> (<a href="chap24_mj.html#X7CF42B8A845BC6A9"><span class="RefLink">24.2-2</span></a>).)</p>
 
 <p>Each matrix created by <code class="func">LieObject</code> (<a href="chap64_mj.html#X87F121978775AF48"><span class="RefLink">64.1-1</span></a>) is in the category <code class="func">IsLieMatrix</code>, and arithmetic operations with objects in <code class="func">IsLieMatrix</code> produce again matrices in <code class="func">IsLieMatrix</code>.</p>
@@ -364,7 +364,7 @@ false
 
 <h5>24.4-1 DimensionsMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DimensionsMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DimensionsMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is a list of length 2, the first being the number of rows, the second being the number of columns of the matrix <var class="Arg">mat</var>. If <var class="Arg">mat</var> is malformed, that is, it is not a <code class="func">IsRectangularTable</code> (<a href="chap21_mj.html#X79581E0387F7F7A9"><span class="RefLink">21.1-5</span></a>), returns <code class="keyw">fail</code>.</p>
 
 
@@ -379,7 +379,7 @@ fail
 
 <h5>24.4-2 DefaultFieldOfMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DefaultFieldOfMatrix</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DefaultFieldOfMatrix</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>For a matrix <var class="Arg">mat</var>, <code class="func">DefaultFieldOfMatrix</code> returns either a field (not necessarily the smallest one) containing all entries of <var class="Arg">mat</var>, or <code class="keyw">fail</code>.</p>
 
 <p>If <var class="Arg">mat</var> is a matrix of finite field elements or a matrix of cyclotomics, <code class="func">DefaultFieldOfMatrix</code> returns the default field generated by the matrix entries (see <a href="chap59_mj.html#X81B54A8378734C33"><span class="RefLink">59.3</span></a> and <a href="chap18_mj.html#X79E25C3085AA568F"><span class="RefLink">18.1</span></a>).</p>
@@ -394,8 +394,8 @@ GF(2^6)
 
 <h5>24.4-3 TraceMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TraceMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Trace</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TraceMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Trace</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The trace of a square matrix is the sum of its diagonal entries.</p>
 
 
@@ -408,8 +408,8 @@ GF(2^6)
 
 <h5>24.4-4 DeterminantMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeterminantMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Determinant</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeterminantMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Determinant</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the determinant of the square matrix <var class="Arg">mat</var>.</p>
 
 <p>These methods assume implicitly that <var class="Arg">mat</var> is defined over an integral domain whose quotient field is implemented in <strong class="pkg">GAP</strong>. For matrices defined over an arbitrary commutative ring with one see <code class="func">DeterminantMatDivFree</code> (<a href="chap24_mj.html#X7EEA7E7A7F6BE6F3"><span class="RefLink">24.4-6</span></a>).</p>
@@ -418,7 +418,7 @@ GF(2^6)
 
 <h5>24.4-5 DeterminantMatDestructive</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeterminantMatDestructive</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeterminantMatDestructive</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Does the same as <code class="func">DeterminantMat</code> (<a href="chap24_mj.html#X83045F6F82C180E1"><span class="RefLink">24.4-4</span></a>), with the difference that it may destroy its argument. The matrix <var class="Arg">mat</var> must be mutable.</p>
 
 
@@ -436,14 +436,14 @@ GF(2^6)
 
 <h5>24.4-6 DeterminantMatDivFree</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeterminantMatDivFree</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeterminantMatDivFree</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the determinant of a square matrix <var class="Arg">mat</var> over an arbitrary commutative ring with one using the division free method of Mahajan and Vinay <a href="chapBib_mj.html#biBMV97">[MV97]</a>.</p>
 
 <p><a id="X848B80437CE65FF3" name="X848B80437CE65FF3"></a></p>
 
 <h5>24.4-7 IsMonomialMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMonomialMatrix</code>( <var class="Arg">mat</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMonomialMatrix</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>A matrix is monomial if and only if it has exactly one nonzero entry in every row and every column.</p>
 
 
@@ -456,21 +456,21 @@ true
 
 <h5>24.4-8 IsDiagonalMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDiagonalMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDiagonalMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns true if mat has only zero entries off the main diagonal, false otherwise.</p>
 
 <p><a id="X7ECFBD9F8664982B" name="X7ECFBD9F8664982B"></a></p>
 
 <h5>24.4-9 IsUpperTriangularMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUpperTriangularMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUpperTriangularMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns true if mat has only zero entries below the main diagonal, false otherwise.</p>
 
 <p><a id="X81671CFD7CFE4819" name="X81671CFD7CFE4819"></a></p>
 
 <h5>24.4-10 IsLowerTriangularMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLowerTriangularMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLowerTriangularMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns true if mat has only zero entries below the main diagonal, false otherwise.</p>
 
 <p><a id="X823FB2398697B957" name="X823FB2398697B957"></a></p>
@@ -481,7 +481,7 @@ true
 
 <h5>24.5-1 IdentityMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdentityMat</code>( <var class="Arg">m</var>[, <var class="Arg">R</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdentityMat</code>( <var class="Arg">m</var>[, <var class="Arg">R</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a (mutable) <var class="Arg">m</var><span class="SimpleMath">\(\times\)</span><var class="Arg">m</var> identity matrix over the ring given by <var class="Arg">R</var>. Here, <var class="Arg">R</var> can be either a ring, or an element of a ring. By default, an integer matrix is created.</p>
 
 
@@ -499,7 +499,7 @@ true
 
 <h5>24.5-2 NullMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NullMat</code>( <var class="Arg">m</var>, <var class="Arg">n</var>[, <var class="Arg">R</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NullMat</code>( <var class="Arg">m</var>, <var class="Arg">n</var>[, <var class="Arg">R</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a (mutable) <var class="Arg">m</var><span class="SimpleMath">\(\times\)</span><var class="Arg">n</var> null matrix over the ring given by by <var class="Arg">R</var>. Here, <var class="Arg">R</var> can be either a ring, or an element of a ring. By default, an integer matrix is created.</p>
 
 
@@ -517,7 +517,7 @@ true
 
 <h5>24.5-3 EmptyMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EmptyMatrix</code>( <var class="Arg">char</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EmptyMatrix</code>( <var class="Arg">char</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is an empty (ordinary) matrix in characteristic <var class="Arg">char</var> that can be added to or multiplied with empty lists (representing zero-dimensional row vectors). It also acts (via the operation <code class="func">\^</code> (<a href="chap31_mj.html#X8481C9B97B214C23"><span class="RefLink">31.12-1</span></a>)) on empty lists.</p>
 
 
@@ -532,7 +532,7 @@ EmptyMatrix( 5 )
 
 <h5>24.5-4 DiagonalMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DiagonalMat</code>( <var class="Arg">vector</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DiagonalMat</code>( <var class="Arg">vector</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a diagonal matrix <var class="Arg">mat</var> with the diagonal entries given by <var class="Arg">vector</var>.</p>
 
 
@@ -545,7 +545,7 @@ EmptyMatrix( 5 )
 
 <h5>24.5-5 PermutationMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermutationMat</code>( <var class="Arg">perm</var>, <var class="Arg">dim</var>[, <var class="Arg">F</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermutationMat</code>( <var class="Arg">perm</var>, <var class="Arg">dim</var>[, <var class="Arg">F</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a matrix in dimension <var class="Arg">dim</var> over the field given by <var class="Arg">F</var> (i.e. the smallest field containing the element <var class="Arg">F</var> or <var class="Arg">F</var> itself if it is a field) that represents the permutation <var class="Arg">perm</var> acting by permuting the basis vectors as it permutes points.</p>
 
 
@@ -558,11 +558,11 @@ EmptyMatrix( 5 )
 
 <h5>24.5-6 TransposedMatImmutable</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransposedMatImmutable</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransposedMatAttr</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransposedMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransposedMatMutable</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransposedMatOp</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransposedMatImmutable</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransposedMatAttr</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransposedMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransposedMatMutable</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransposedMatOp</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>These functions all return the transposed of the matrix <var class="Arg">mat</var>, i.e., a matrix <var class="Arg">trans</var> such that <code class="code"><var class="Arg">trans</var>[<var class="Arg">i</var>][<var class="Arg">k</var>] = <var class="Arg">mat</var>[<var class="Arg">k</var>][<var class="Arg">i</var>]</code> holds.</p>
 
 <p>They differ only w.r.t. the mutability of the result.</p>
@@ -575,7 +575,7 @@ EmptyMatrix( 5 )
 
 <h5>24.5-7 TransposedMatDestructive</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransposedMatDestructive</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransposedMatDestructive</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">mat</var> is a mutable matrix, then the transposed is computed by swapping the entries in <var class="Arg">mat</var>. In this way <var class="Arg">mat</var> gets changed. In all other cases the transposed is computed by <code class="func">TransposedMat</code> (<a href="chap24_mj.html#X7C52A38C79C36C35"><span class="RefLink">24.5-6</span></a>).</p>
 
 
@@ -593,7 +593,7 @@ EmptyMatrix( 5 )
 
 <h5>24.5-8 KroneckerProduct</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KroneckerProduct</code>( <var class="Arg">mat1</var>, <var class="Arg">mat2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KroneckerProduct</code>( <var class="Arg">mat1</var>, <var class="Arg">mat2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>The Kronecker product of two matrices is the matrix obtained when replacing each entry <var class="Arg">a</var> of <var class="Arg">mat1</var> by the product <code class="code"><var class="Arg">a</var>*<var class="Arg">mat2</var></code> in one matrix.</p>
 
 
@@ -606,7 +606,7 @@ EmptyMatrix( 5 )
 
 <h5>24.5-9 ReflectionMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReflectionMat</code>( <var class="Arg">coeffs</var>[, <var class="Arg">conj</var>][, <var class="Arg">root</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReflectionMat</code>( <var class="Arg">coeffs</var>[, <var class="Arg">conj</var>][, <var class="Arg">root</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">coeffs</var> be a row vector. <code class="func">ReflectionMat</code> returns the matrix of the reflection in this vector.</p>
 
 <p>More precisely, if <var class="Arg">coeffs</var> is the coefficients list of a vector <span class="SimpleMath">\(v\)</span> w.r.t. a basis <span class="SimpleMath">\(B\)</span> (see <code class="func">Basis</code> (<a href="chap61_mj.html#X837BE54C80DE368E"><span class="RefLink">61.5-2</span></a>)), say, then the returned matrix describes the reflection in <span class="SimpleMath">\(v\)</span> w.r.t. <span class="SimpleMath">\(B\)</span> as a map on a row space, with action from the right.</p>
@@ -630,7 +630,7 @@ M = I_n +
 
 <h5>24.5-10 PrintArray</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrintArray</code>( <var class="Arg">array</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrintArray</code>( <var class="Arg">array</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>pretty-prints the array <var class="Arg">array</var>.</p>
 
 <p><a id="X79CC5F568252D341" name="X79CC5F568252D341"></a></p>
@@ -641,7 +641,7 @@ M = I_n +
 
 <h5>24.6-1 RandomMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMat</code>( <var class="Arg">m</var>, <var class="Arg">n</var>[, <var class="Arg">R</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMat</code>( <var class="Arg">m</var>, <var class="Arg">n</var>[, <var class="Arg">R</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">RandomMat</code> returns a new mutable random matrix with <var class="Arg">m</var> rows and <var class="Arg">n</var> columns with elements taken from the ring <var class="Arg">R</var>, which defaults to <code class="func">Integers</code> (<a href="chap14_mj.html#X853DF11B80068ED5"><span class="RefLink">14</span></a>).</p>
 
 
@@ -654,7 +654,7 @@ M = I_n +
 
 <h5>24.6-2 RandomInvertibleMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomInvertibleMat</code>( <var class="Arg">m</var>[, <var class="Arg">R</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomInvertibleMat</code>( <var class="Arg">m</var>[, <var class="Arg">R</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">RandomInvertibleMat</code> returns a new mutable invertible random matrix with <var class="Arg">m</var> rows and columns with elements taken from the ring <var class="Arg">R</var>, which defaults to <code class="func">Integers</code> (<a href="chap14_mj.html#X853DF11B80068ED5"><span class="RefLink">14</span></a>).</p>
 
 
@@ -671,7 +671,7 @@ M = I_n +
 
 <h5>24.6-3 RandomUnimodularMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomUnimodularMat</code>( <var class="Arg">m</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomUnimodularMat</code>( <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a new random mutable <var class="Arg">m</var><span class="SimpleMath">\(\times\)</span><var class="Arg">m</var> matrix with integer entries that is invertible over the integers.</p>
 
 
@@ -690,7 +690,7 @@ M = I_n +
 
 <h5>24.7-1 RankMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">mat</var> is a matrix whose rows span a free module over the ring generated by the matrix entries and their inverses then <code class="func">RankMat</code> returns the dimension of this free module. Otherwise <code class="keyw">fail</code> is returned.</p>
 
 <p>Note that <code class="func">RankMat</code> may perform a Gaussian elimination. For large rational matrices this may take very long, because the entries may become very large.</p>
@@ -706,15 +706,15 @@ M = I_n +
 
 <h5>24.7-2 TriangulizedMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TriangulizedMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RREF</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TriangulizedMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RREF</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Computes an upper triangular form of the matrix <var class="Arg">mat</var> via the Gaussian Algorithm. It returns a immutable matrix in upper triangular form. This is sometimes also called "Hermite normal form" or "Reduced Row Echelon Form". <code class="code">RREF</code> is a synonym for <code class="code">TriangulizedMat</code>.</p>
 
 <p><a id="X8384CA8E7B3850D3" name="X8384CA8E7B3850D3"></a></p>
 
 <h5>24.7-3 TriangulizeMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TriangulizeMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TriangulizeMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Applies the Gaussian Algorithm to the mutable matrix <var class="Arg">mat</var> and changes <var class="Arg">mat</var> such that it is in upper triangular normal form (sometimes called "Hermite normal form" or "Reduced Row Echelon Form").</p>
 
 
@@ -734,8 +734,8 @@ M = I_n +
 
 <h5>24.7-4 NullspaceMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NullspaceMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TriangulizedNullspaceMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NullspaceMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TriangulizedNullspaceMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a list of row vectors that form a basis of the vector space of solutions to the equation <code class="code"><var class="Arg">vec</var>*<var class="Arg">mat</var>=0</code>. The result is an immutable matrix. This basis is not guaranteed to be in any specific form.</p>
 
 <p>The variant <code class="func">TriangulizedNullspaceMat</code> returns a basis of the nullspace in triangulized form as is often needed for algorithms.</p>
@@ -744,8 +744,8 @@ M = I_n +
 
 <h5>24.7-5 NullspaceMatDestructive</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NullspaceMatDestructive</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TriangulizedNullspaceMatDestructive</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NullspaceMatDestructive</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TriangulizedNullspaceMatDestructive</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>This function does the same as <code class="func">NullspaceMat</code> (<a href="chap24_mj.html#X7DA0D5887DB12DC4"><span class="RefLink">24.7-4</span></a>). However, the latter function makes a copy of <var class="Arg">mat</var> to avoid having to change it. This function does not do that; it returns the nullspace and may destroy <var class="Arg">mat</var>; this saves a lot of memory in case <var class="Arg">mat</var> is big. The matrix <var class="Arg">mat</var> must be mutable.</p>
 
 <p>The variant <code class="func">TriangulizedNullspaceMatDestructive</code> returns a basis of the nullspace in triangulized form. It may destroy the matrix <var class="Arg">mat</var>.</p>
@@ -766,14 +766,14 @@ M = I_n +
 
 <h5>24.7-6 SolutionMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SolutionMat</code>( <var class="Arg">mat</var>, <var class="Arg">vec</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SolutionMat</code>( <var class="Arg">mat</var>, <var class="Arg">vec</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a row vector <var class="Arg">x</var> that is a solution of the equation <code class="code"><var class="Arg">x</var> * <var class="Arg">mat</var> = <var class="Arg">vec</var></code>. It returns <code class="keyw">fail</code> if no such vector exists.</p>
 
 <p><a id="X7A7880D27CE7C1FE" name="X7A7880D27CE7C1FE"></a></p>
 
 <h5>24.7-7 SolutionMatDestructive</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SolutionMatDestructive</code>( <var class="Arg">mat</var>, <var class="Arg">vec</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SolutionMatDestructive</code>( <var class="Arg">mat</var>, <var class="Arg">vec</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Does the same as <code class="code">SolutionMat( <var class="Arg">mat</var>, <var class="Arg">vec</var> )</code> except that it may destroy the matrix <var class="Arg">mat</var> and the vector <var class="Arg">vec</var>. The matrix <var class="Arg">mat</var> must be mutable.</p>
 
 
@@ -795,7 +795,7 @@ M = I_n +
 
 <h5>24.7-8 BaseFixedSpace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseFixedSpace</code>( <var class="Arg">mats</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseFixedSpace</code>( <var class="Arg">mats</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">BaseFixedSpace</code> returns a list of row vectors that form a base of the vector space <span class="SimpleMath">\(V\)</span> such that <span class="SimpleMath">\(v M = v\)</span> for all <span class="SimpleMath">\(v\)</span> in <span class="SimpleMath">\(V\)</span> and all matrices <span class="SimpleMath">\(M\)</span> in the list <var class="Arg">mats</var>. (This is the common eigenspace of all matrices in <var class="Arg">mats</var> for the eigenvalue 1.)</p>
 
 
@@ -812,37 +812,37 @@ M = I_n +
 
 <h5>24.8-1 GeneralisedEigenvalues</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneralisedEigenvalues</code>( <var class="Arg">F</var>, <var class="Arg">A</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneralizedEigenvalues</code>( <var class="Arg">F</var>, <var class="Arg">A</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneralisedEigenvalues</code>( <var class="Arg">F</var>, <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneralizedEigenvalues</code>( <var class="Arg">F</var>, <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>The generalised eigenvalues of the matrix <var class="Arg">A</var> over the field <var class="Arg">F</var>.</p>
 
 <p><a id="X845CA0457D65876D" name="X845CA0457D65876D"></a></p>
 
 <h5>24.8-2 GeneralisedEigenspaces</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneralisedEigenspaces</code>( <var class="Arg">F</var>, <var class="Arg">A</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneralizedEigenspaces</code>( <var class="Arg">F</var>, <var class="Arg">A</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneralisedEigenspaces</code>( <var class="Arg">F</var>, <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneralizedEigenspaces</code>( <var class="Arg">F</var>, <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>The generalised eigenspaces of the matrix <var class="Arg">A</var> over the field <var class="Arg">F</var>.</p>
 
 <p><a id="X8413C6FB7CEE9D59" name="X8413C6FB7CEE9D59"></a></p>
 
 <h5>24.8-3 Eigenvalues</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Eigenvalues</code>( <var class="Arg">F</var>, <var class="Arg">A</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Eigenvalues</code>( <var class="Arg">F</var>, <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>The eigenvalues of the matrix <var class="Arg">A</var> over the field <var class="Arg">F</var>.</p>
 
 <p><a id="X7A6B047281B52FD7" name="X7A6B047281B52FD7"></a></p>
 
 <h5>24.8-4 Eigenspaces</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Eigenspaces</code>( <var class="Arg">F</var>, <var class="Arg">A</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Eigenspaces</code>( <var class="Arg">F</var>, <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>The eigenspaces of the matrix <var class="Arg">A</var> over the field <var class="Arg">F</var>.</p>
 
 <p><a id="X8506584579D4EA18" name="X8506584579D4EA18"></a></p>
 
 <h5>24.8-5 Eigenvectors</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Eigenvectors</code>( <var class="Arg">F</var>, <var class="Arg">A</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Eigenvectors</code>( <var class="Arg">F</var>, <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>The eigenvectors of the matrix <var class="Arg">A</var> over the field <var class="Arg">F</var>.</p>
 
 <p><a id="X7E5405D085661B29" name="X7E5405D085661B29"></a></p>
@@ -855,8 +855,8 @@ M = I_n +
 
 <h5>24.9-1 ElementaryDivisorsMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementaryDivisorsMat</code>( [<var class="Arg">ring</var>, ]<var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementaryDivisorsMatDestructive</code>( <var class="Arg">ring</var>, <var class="Arg">mat</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementaryDivisorsMat</code>( [<var class="Arg">ring</var>, ]<var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementaryDivisorsMatDestructive</code>( <var class="Arg">ring</var>, <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a list of the elementary divisors, i.e., the unique <span class="SimpleMath">\(d\)</span> with <span class="SimpleMath">\(d[i]\)</span> divides <span class="SimpleMath">\(d[i+1]\)</span> and <var class="Arg">mat</var> is equivalent to a diagonal matrix with the elements <span class="SimpleMath">\(d[i]\)</span> on the diagonal. The operations are performed over the euclidean ring <var class="Arg">ring</var>, which must contain all matrix entries. For compatibility reasons it can be omitted and defaults to the <code class="func">DefaultRing</code> (<a href="chap56_mj.html#X83AFFCC77DE6ABDA"><span class="RefLink">56.1-3</span></a>) of the matrix entries.</p>
 
 <p>The function <code class="func">ElementaryDivisorsMatDestructive</code> produces the same result but in the process may destroy the contents of <var class="Arg">mat</var>.</p>
@@ -886,8 +886,8 @@ M = I_n +
 
 <h5>24.9-2 ElementaryDivisorsTransformationsMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementaryDivisorsTransformationsMat</code>( [<var class="Arg">ring</var>, ]<var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementaryDivisorsTransformationsMatDestructive</code>( <var class="Arg">ring</var>, <var class="Arg">mat</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementaryDivisorsTransformationsMat</code>( [<var class="Arg">ring</var>, ]<var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementaryDivisorsTransformationsMatDestructive</code>( <var class="Arg">ring</var>, <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="code">ElementaryDivisorsTransformations</code>, in addition to the tasks done by <code class="code">ElementaryDivisorsMat</code>, also calculates transforming matrices. It returns a record with components <code class="code">normal</code> (a matrix <span class="SimpleMath">\(S\)</span>), <code class="code">rowtrans</code> (a matrix <span class="SimpleMath">\(P\)</span>), and <code class="code">coltrans</code> (a matrix <span class="SimpleMath">\(Q\)</span>) such that <span class="SimpleMath">\(P A Q = S\)</span>. The operations are performed over the euclidean ring <var class="Arg">ring</var>, which must contain all matrix entries. For compatibility reasons it can be omitted and defaults to the <code class="func">DefaultRing</code> (<a href="chap56_mj.html#X83AFFCC77DE6ABDA"><span class="RefLink">56.1-3</span></a>) of the matrix entries.</p>
 
 <p>The function <code class="func">ElementaryDivisorsTransformationsMatDestructive</code> produces the same result but in the process destroys the contents of <var class="Arg">mat</var>.</p>
@@ -940,7 +940,7 @@ rec( coltrans := [ [ 0, 0, 0, 0, 0, 0, 1/6*x^2-7/9*x-1/18, -3*x^3-x^2-x-1 ],
 
 <h5>24.9-3 DiagonalizeMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DiagonalizeMat</code>( <var class="Arg">ring</var>, <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DiagonalizeMat</code>( <var class="Arg">ring</var>, <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>brings the mutable matrix <var class="Arg">mat</var>, considered as a matrix over <var class="Arg">ring</var>, into diagonal form by elementary row and column operations.</p>
 
 
@@ -958,7 +958,7 @@ rec( coltrans := [ [ 0, 0, 0, 0, 0, 0, 1/6*x^2-7/9*x-1/18, -3*x^3-x^2-x-1 ],
 
 <h5>24.10-1 SemiEchelonMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemiEchelonMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemiEchelonMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>A matrix over a field <span class="SimpleMath">\(F\)</span> is in semi-echelon form if the first nonzero element in each row is the identity of <span class="SimpleMath">\(F\)</span>, and all values exactly below these pivots are the zero of <span class="SimpleMath">\(F\)</span>.</p>
 
 <p><code class="func">SemiEchelonMat</code> returns a record that contains information about a semi-echelonized form of the matrix <var class="Arg">mat</var>.</p>
@@ -980,7 +980,7 @@ rec( coltrans := [ [ 0, 0, 0, 0, 0, 0, 1/6*x^2-7/9*x-1/18, -3*x^3-x^2-x-1 ],
 
 <h5>24.10-2 SemiEchelonMatDestructive</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemiEchelonMatDestructive</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemiEchelonMatDestructive</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>This does the same as <code class="code">SemiEchelonMat( <var class="Arg">mat</var> )</code>, except that it may (and probably will) destroy the matrix <var class="Arg">mat</var>.</p>
 
 
@@ -996,7 +996,7 @@ rec( heads := [ 1, 2, 0 ], vectors := [ [ 1, 2, 3 ], [ 0, 1, 2 ] ] )
 
 <h5>24.10-3 SemiEchelonMatTransformation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemiEchelonMatTransformation</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemiEchelonMatTransformation</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>does the same as <code class="func">SemiEchelonMat</code> (<a href="chap24_mj.html#X7D5D6BD07B7E981B"><span class="RefLink">24.10-1</span></a>) but additionally stores the linear transformation <span class="SimpleMath">\(T\)</span> performed on the matrix. The additional components of the result are</p>
 
 
@@ -1021,7 +1021,7 @@ rec( coeffs := [ [ 1, 0 ], [ 0, 1 ] ], heads := [ 1, 0, 2 ],
 
 <h5>24.10-4 SemiEchelonMats</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemiEchelonMats</code>( <var class="Arg">mats</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemiEchelonMats</code>( <var class="Arg">mats</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>A list of matrices over a field <span class="SimpleMath">\(F\)</span> is in semi-echelon form if the list of row vectors obtained on concatenating the rows of each matrix is a semi-echelonized matrix (see <code class="func">SemiEchelonMat</code> (<a href="chap24_mj.html#X7D5D6BD07B7E981B"><span class="RefLink">24.10-1</span></a>)).</p>
 
 <p><code class="func">SemiEchelonMats</code> returns a record that contains information about a semi-echelonized form of the list <var class="Arg">mats</var> of matrices.</p>
@@ -1043,7 +1043,7 @@ rec( coeffs := [ [ 1, 0 ], [ 0, 1 ] ], heads := [ 1, 0, 2 ],
 
 <h5>24.10-5 SemiEchelonMatsDestructive</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemiEchelonMatsDestructive</code>( <var class="Arg">mats</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemiEchelonMatsDestructive</code>( <var class="Arg">mats</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Does the same as <code class="code">SemiEchelonmats</code>, except that it may destroy its argument. Therefore the argument must be a list of matrices that re mutable.</p>
 
 <p><a id="X86B0D4A886BC0C6E" name="X86B0D4A886BC0C6E"></a></p>
@@ -1056,14 +1056,14 @@ rec( coeffs := [ [ 1, 0 ], [ 0, 1 ] ], heads := [ 1, 0, 2 ],
 
 <h5>24.11-1 BaseMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a basis for the row space generated by the rows of <var class="Arg">mat</var> in the form of an immutable matrix.</p>
 
 <p><a id="X78B094597E382A5F" name="X78B094597E382A5F"></a></p>
 
 <h5>24.11-2 BaseMatDestructive</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseMatDestructive</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseMatDestructive</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Does the same as <code class="func">BaseMat</code> (<a href="chap24_mj.html#X7AD6B5F5794D9E46"><span class="RefLink">24.11-1</span></a>), with the difference that it may destroy the matrix <var class="Arg">mat</var>. The matrix <var class="Arg">mat</var> must be mutable.</p>
 
 
@@ -1082,7 +1082,7 @@ rec( coeffs := [ [ 1, 0 ], [ 0, 1 ] ], heads := [ 1, 0, 2 ],
 
 <h5>24.11-3 BaseOrthogonalSpaceMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseOrthogonalSpaceMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseOrthogonalSpaceMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <span class="SimpleMath">\(V\)</span> be the row space generated by the rows of <var class="Arg">mat</var> (over any field that contains all entries of <var class="Arg">mat</var>). <code class="code">BaseOrthogonalSpaceMat( <var class="Arg">mat</var> )</code> computes a base of the orthogonal space of <span class="SimpleMath">\(V\)</span>.</p>
 
 <p>The rows of <var class="Arg">mat</var> need not be linearly independent.</p>
@@ -1091,7 +1091,7 @@ rec( coeffs := [ [ 1, 0 ], [ 0, 1 ] ], heads := [ 1, 0, 2 ],
 
 <h5>24.11-4 SumIntersectionMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SumIntersectionMat</code>( <var class="Arg">M1</var>, <var class="Arg">M2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SumIntersectionMat</code>( <var class="Arg">M1</var>, <var class="Arg">M2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>performs Zassenhaus' algorithm to compute bases for the sum and the intersection of spaces generated by the rows of the matrices <var class="Arg">M1</var>, <var class="Arg">M2</var>.</p>
 
 <p>returns a list of length 2, at first position a base of the sum, at second position a base of the intersection. Both bases are in semi-echelon form (see <a href="chap24_mj.html#X7CA6B51D7AE3172B"><span class="RefLink">24.10</span></a>).</p>
@@ -1106,7 +1106,7 @@ rec( coeffs := [ [ 1, 0 ], [ 0, 1 ] ], heads := [ 1, 0, 2 ],
 
 <h5>24.11-5 BaseSteinitzVectors</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseSteinitzVectors</code>( <var class="Arg">bas</var>, <var class="Arg">mat</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseSteinitzVectors</code>( <var class="Arg">bas</var>, <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>find vectors extending mat to a basis spanning the span of <var class="Arg">bas</var>. Both <var class="Arg">bas</var> and <var class="Arg">mat</var> must be matrices of full (row) rank. It returns a record with the following components:</p>
 
 
@@ -1144,7 +1144,7 @@ rec( factorspace := [ [ 0, 1, 15/13 ], [ 0, 0, 1 ] ],
 
 <h5>24.12-1 DiagonalOfMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DiagonalOfMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DiagonalOfMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the diagonal of the matrix <var class="Arg">mat</var>. If <var class="Arg">mat</var> is not a square matrix, then the result has the same length as the rows of <var class="Arg">mat</var>, and is padded with zeros if <var class="Arg">mat</var> has fewer rows than columns.</p>
 
 
@@ -1157,7 +1157,7 @@ rec( factorspace := [ [ 0, 1, 15/13 ], [ 0, 0, 1 ] ],
 
 <h5>24.12-2 UpperSubdiagonal</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UpperSubdiagonal</code>( <var class="Arg">mat</var>, <var class="Arg">pos</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UpperSubdiagonal</code>( <var class="Arg">mat</var>, <var class="Arg">pos</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a mutable list containing the entries of the <var class="Arg">pos</var>th upper subdiagonal of <var class="Arg">mat</var>.</p>
 
 
@@ -1170,7 +1170,7 @@ rec( factorspace := [ [ 0, 1, 15/13 ], [ 0, 0, 1 ] ],
 
 <h5>24.12-3 DepthOfUpperTriangularMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DepthOfUpperTriangularMatrix</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DepthOfUpperTriangularMatrix</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">mat</var> is an upper triangular matrix this attribute returns the index of the first nonzero diagonal.</p>
 
 
@@ -1189,7 +1189,7 @@ rec( factorspace := [ [ 0, 1, 15/13 ], [ 0, 0, 1 ] ],
 
 <h5>24.13-1 CharacteristicPolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CharacteristicPolynomial</code>( [<var class="Arg">F</var>, <var class="Arg">E</var>, ]<var class="Arg">mat</var>[, <var class="Arg">ind</var>] )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CharacteristicPolynomial</code>( [<var class="Arg">F</var>, <var class="Arg">E</var>, ]<var class="Arg">mat</var>[, <var class="Arg">ind</var>] )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>For a square matrix <var class="Arg">mat</var>, <code class="func">CharacteristicPolynomial</code> returns the <em>characteristic polynomial</em> of <var class="Arg">mat</var>, that is, the <code class="func">StandardAssociate</code> (<a href="chap56_mj.html#X7B1A9A4C7C59FB36"><span class="RefLink">56.5-5</span></a>) of the determinant of the matrix <span class="SimpleMath">\(\textit{mat} - X \cdot I\)</span>, where <span class="SimpleMath">\(X\)</span> is an indeterminate and <span class="SimpleMath">\(I\)</span> is the appropriate identity matrix.</p>
 
 <p>If fields <var class="Arg">F</var> and <var class="Arg">E</var> are given, then <var class="Arg">F</var> must be a subfield of <var class="Arg">E</var>, and <var class="Arg">mat</var> must have entries in <var class="Arg">E</var>. Then <code class="func">CharacteristicPolynomial</code> returns the characteristic polynomial of the <var class="Arg">F</var>-linear mapping induced by <var class="Arg">mat</var> on the underlying <var class="Arg">E</var>-vector space of <var class="Arg">mat</var>. In this case, the characteristic polynomial is computed using <code class="func">BlownUpMat</code> (<a href="chap24_mj.html#X85923C107A4569D0"><span class="RefLink">24.13-3</span></a>) for the field extension of <span class="SimpleMath">\(E/F\)</span> generated by the default field. Thus, if <span class="SimpleMath">\(F = E\)</span>, the result is the same as for the one argument version.</p>
@@ -1220,7 +1220,7 @@ x^4+2*x^2+1
 
 <h5>24.13-2 JordanDecomposition</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JordanDecomposition</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JordanDecomposition</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p><code class="code">JordanDecomposition( <var class="Arg">mat </var> )</code> returns a list <code class="code">[S,N]</code> such that <code class="code">S</code> is a semisimple matrix and <code class="code">N</code> is nilpotent. Furthermore, <code class="code">S</code> and <code class="code">N</code> commute and <code class="code"><var class="Arg">mat</var>=S+N</code>.</p>
 
 
@@ -1235,7 +1235,7 @@ x^4+2*x^2+1
 
 <h5>24.13-3 BlownUpMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BlownUpMat</code>( <var class="Arg">B</var>, <var class="Arg">mat</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BlownUpMat</code>( <var class="Arg">B</var>, <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">B</var> be a basis of a field extension <span class="SimpleMath">\(F / K\)</span>, and <var class="Arg">mat</var> a matrix whose entries are all in <span class="SimpleMath">\(F\)</span>. (This is not checked.) <code class="func">BlownUpMat</code> returns a matrix over <span class="SimpleMath">\(K\)</span> that is obtained by replacing each entry of <var class="Arg">mat</var> by its regular representation w.r.t. <var class="Arg">B</var>.</p>
 
 <p>More precisely, regard <var class="Arg">mat</var> as the matrix of a linear transformation on the row space <span class="SimpleMath">\(F^n\)</span> w.r.t. the <span class="SimpleMath">\(F\)</span>-basis with vectors <span class="SimpleMath">\((v_1, ldots, v_n)\)</span>, say, and suppose that the basis <var class="Arg">B</var> consists of the vectors <span class="SimpleMath">\((b_1, \ldots, b_m)\)</span>; then the returned matrix is the matrix of the linear transformation on the row space <span class="SimpleMath">\(K^{mn}\)</span> w.r.t. the <span class="SimpleMath">\(K\)</span>-basis whose vectors are <span class="SimpleMath">\((b_1 v_1, \ldots b_m v_1, \ldots, b_m v_n)\)</span>.</p>
@@ -1246,7 +1246,7 @@ x^4+2*x^2+1
 
 <h5>24.13-4 BlownUpVector</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BlownUpVector</code>( <var class="Arg">B</var>, <var class="Arg">vector</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BlownUpVector</code>( <var class="Arg">B</var>, <var class="Arg">vector</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">B</var> be a basis of a field extension <span class="SimpleMath">\(F / K\)</span>, and <var class="Arg">vector</var> a row vector whose entries are all in <span class="SimpleMath">\(F\)</span>. <code class="func">BlownUpVector</code> returns a row vector over <span class="SimpleMath">\(K\)</span> that is obtained by replacing each entry of <var class="Arg">vector</var> by its coefficients w.r.t. <var class="Arg">B</var>.</p>
 
 <p>So <code class="func">BlownUpVector</code> and <code class="func">BlownUpMat</code> (<a href="chap24_mj.html#X85923C107A4569D0"><span class="RefLink">24.13-3</span></a>) are compatible in the sense that for a matrix <var class="Arg">mat</var> over <span class="SimpleMath">\(F\)</span>, <code class="code">BlownUpVector( <var class="Arg">B</var>, <var class="Arg">mat</var> * <var class="Arg">vector</var> )</code> is equal to <code class="code">BlownUpMat( <var class="Arg">B</var>, <var class="Arg">mat</var> ) * BlownUpVector( <var class="Arg">B</var>, <var class="Arg">vector</var> )</code>.</p>
@@ -1270,7 +1270,7 @@ true
 
 <h5>24.13-5 CompanionMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompanionMat</code>( <var class="Arg">poly</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompanionMat</code>( <var class="Arg">poly</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>computes a companion matrix of the polynomial <var class="Arg">poly</var>. This matrix has <var class="Arg">poly</var> as its minimal polynomial.</p>
 
 <p><a id="X873822B6830CE367" name="X873822B6830CE367"></a></p>
@@ -1348,7 +1348,7 @@ fail
 
 <h5>24.14-1 ImmutableMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImmutableMatrix</code>( <var class="Arg">field</var>, <var class="Arg">matrix</var>[, <var class="Arg">change</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImmutableMatrix</code>( <var class="Arg">field</var>, <var class="Arg">matrix</var>[, <var class="Arg">change</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns an immutable matrix equal to <var class="Arg">matrix</var> which is in the optimal (concerning space and runtime) representation for matrices defined over <var class="Arg">field</var>. This means that matrices obtained by several calls of <code class="func">ImmutableMatrix</code> for the same <var class="Arg">field</var> are compatible for fast arithmetic without need for field conversion.</p>
 
 <p>The input matrix <var class="Arg">matrix</var> or its rows might change the representation, however the result of <code class="func">ImmutableMatrix</code> is not necessarily <em>identical</em> to <var class="Arg">matrix</var> if a conversion is not possible.</p>
@@ -1359,10 +1359,10 @@ fail
 
 <h5>24.14-2 ConvertToMatrixRep</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToMatrixRep</code>( <var class="Arg">list</var>[, <var class="Arg">field</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToMatrixRep</code>( <var class="Arg">list</var>[, <var class="Arg">fieldsize</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToMatrixRepNC</code>( <var class="Arg">list</var>[, <var class="Arg">field</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToMatrixRepNC</code>( <var class="Arg">list</var>[, <var class="Arg">fieldsize</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToMatrixRep</code>( <var class="Arg">list</var>[, <var class="Arg">field</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToMatrixRep</code>( <var class="Arg">list</var>[, <var class="Arg">fieldsize</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToMatrixRepNC</code>( <var class="Arg">list</var>[, <var class="Arg">field</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToMatrixRepNC</code>( <var class="Arg">list</var>[, <var class="Arg">fieldsize</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function is more technical version of <code class="func">ImmutableMatrix</code> (<a href="chap24_mj.html#X7DED2522828B6C30"><span class="RefLink">24.14-1</span></a>), which will never copy a matrix (or any rows of it) but may fail if it encounters rows locked in the wrong representation, or various other more technical problems. Most users should use <code class="func">ImmutableMatrix</code> (<a href="chap24_mj.html#X7DED2522828B6C30"><span class="RefLink">24.14-1</span></a>) instead. The NC versions of the function do less checking of the argument and may cause unpredictable results or crashes if given unsuitable arguments. Called with one argument <var class="Arg">list</var>, <code class="func">ConvertToMatrixRep</code> converts <var class="Arg">list</var> to an internal matrix representation if possible.</p>
 
 <p>Called with a list <var class="Arg">list</var> and a finite field <var class="Arg">field</var>, <code class="func">ConvertToMatrixRep</code> converts <var class="Arg">list</var> to an internal matrix representation appropriate for a matrix over <var class="Arg">field</var>.</p>
@@ -1379,7 +1379,7 @@ fail
 
 <h5>24.14-3 ProjectiveOrder</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectiveOrder</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectiveOrder</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns an integer n and a finite field element e such that <var class="Arg">A</var>^n = eI. <var class="Arg">mat</var> must be a matrix defined over a finite field.</p>
 
 
@@ -1392,7 +1392,7 @@ fail
 
 <h5>24.14-4 SimultaneousEigenvalues</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimultaneousEigenvalues</code>( <var class="Arg">matlist</var>, <var class="Arg">expo</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimultaneousEigenvalues</code>( <var class="Arg">matlist</var>, <var class="Arg">expo</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>The matrices in <var class="Arg">matlist</var> must be matrices over GF(<var class="Arg">q</var>) for some prime <var class="Arg">q</var>. Together, they must generate an abelian p-group of exponent <var class="Arg">expo</var>. Then the eigenvalues of <var class="Arg">mat</var> in the splitting field <code class="code">GF(<var class="Arg">q</var>^<var class="Arg">r</var>)</code> for some <var class="Arg">r</var> are powers of an element <span class="SimpleMath">\(\xi\)</span> in the splitting field, which is of order <var class="Arg">expo</var>. <code class="func">SimultaneousEigenvalues</code> returns a matrix of integers mod <var class="Arg">expo</var>, say <span class="SimpleMath">\((a_{{i,j}})\)</span>, such that the power <span class="SimpleMath">\(\xi^{{a_{{i,j}}}}\)</span> is an eigenvalue of the <var class="Arg">i</var>-th matrix in <var class="Arg">matlist</var> and the eigenspaces of the different matrices to the eigenvalues <span class="SimpleMath">\(\xi^{{a_{{i,j}}}}\)</span> for fixed <var class="Arg">j</var> are equal.</p>
 
 <p><a id="X8593A5337D3B2C70" name="X8593A5337D3B2C70"></a></p>
@@ -1405,7 +1405,7 @@ fail
 
 <h5>24.15-1 InverseMatMod</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseMatMod</code>( <var class="Arg">mat</var>, <var class="Arg">obj</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseMatMod</code>( <var class="Arg">mat</var>, <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>For a square matrix <var class="Arg">mat</var>, <code class="func">InverseMatMod</code> returns a matrix <var class="Arg">inv</var> such that <code class="code"><var class="Arg">inv</var> * <var class="Arg">mat</var></code> is congruent to the identity matrix modulo <var class="Arg">obj</var>, if such a matrix exists, and <code class="keyw">fail</code> otherwise.</p>
 
 
@@ -1420,7 +1420,7 @@ fail
 
 <h5>24.15-2 NullspaceModQ</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NullspaceModQ</code>( <var class="Arg">E</var>, <var class="Arg">q</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NullspaceModQ</code>( <var class="Arg">E</var>, <var class="Arg">q</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><var class="Arg">E</var> must be a matrix of integers and <var class="Arg">q</var> a prime power. Then <code class="func">NullspaceModQ</code> returns the set of all vectors of integers modulo <var class="Arg">q</var>, which solve the homogeneous equation system given by <var class="Arg">E</var> modulo <var class="Arg">q</var>.</p>
 
 
@@ -1443,14 +1443,14 @@ fail
 
 <h5>24.16-1 PROD_GF2MAT_GF2MAT_SIMPLE</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PROD_GF2MAT_GF2MAT_SIMPLE</code>( <var class="Arg">m1</var>, <var class="Arg">m2</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PROD_GF2MAT_GF2MAT_SIMPLE</code>( <var class="Arg">m1</var>, <var class="Arg">m2</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function performs the standard unblocked and ungreased matrix multiplication for matrices of any size.</p>
 
 <p><a id="X81965B7D7F45E088" name="X81965B7D7F45E088"></a></p>
 
 <h5>24.16-2 PROD_GF2MAT_GF2MAT_ADVANCED</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PROD_GF2MAT_GF2MAT_ADVANCED</code>( <var class="Arg">m1</var>, <var class="Arg">m2</var>, <var class="Arg">g</var>, <var class="Arg">b</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PROD_GF2MAT_GF2MAT_ADVANCED</code>( <var class="Arg">m1</var>, <var class="Arg">m2</var>, <var class="Arg">g</var>, <var class="Arg">b</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function computes the product of <var class="Arg">m1</var> and <var class="Arg">m2</var>, which must be compressed matrices over GF(2) of compatible dimensions, using level <var class="Arg">g</var> grease and level <var class="Arg">b</var> blocking.</p>
 
 <p><a id="X7F8A71F38201A250" name="X7F8A71F38201A250"></a></p>
@@ -1463,14 +1463,14 @@ fail
 
 <h5>24.17-1 AsBlockMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsBlockMatrix</code>( <var class="Arg">m</var>, <var class="Arg">nrb</var>, <var class="Arg">ncb</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsBlockMatrix</code>( <var class="Arg">m</var>, <var class="Arg">nrb</var>, <var class="Arg">ncb</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a block matrix with <var class="Arg">nrb</var> row blocks and <var class="Arg">ncb</var> column blocks which is equal to the ordinary matrix <var class="Arg">m</var>.</p>
 
 <p><a id="X8633538685551E7A" name="X8633538685551E7A"></a></p>
 
 <h5>24.17-2 BlockMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BlockMatrix</code>( <var class="Arg">blocks</var>, <var class="Arg">nrb</var>, <var class="Arg">ncb</var>[, <var class="Arg">rpb</var>, <var class="Arg">cpb</var>, <var class="Arg">zero</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BlockMatrix</code>( <var class="Arg">blocks</var>, <var class="Arg">nrb</var>, <var class="Arg">ncb</var>[, <var class="Arg">rpb</var>, <var class="Arg">cpb</var>, <var class="Arg">zero</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">BlockMatrix</code> returns an immutable matrix in the sparse representation <code class="code">IsBlockMatrixRep</code>. The nonzero blocks are described by the list <var class="Arg">blocks</var> of triples <span class="SimpleMath">\([ \textit{i}, \textit{j}, M(i,j) ]\)</span> each consisting of a matrix <span class="SimpleMath">\(M(i,j)\)</span> and its block coordinates in the block matrix to be constructed. All matrices <span class="SimpleMath">\(M(i,j)\)</span> must have the same dimensions. As usual the first coordinate specifies the row and the second one the column. The resulting matrix has <var class="Arg">nrb</var> row blocks and <var class="Arg">ncb</var> column blocks.</p>
 
 <p>If <var class="Arg">blocks</var> is empty (i.e., if the matrix is a zero matrix) then the dimensions of the blocks must be entered as <var class="Arg">rpb</var> and <var class="Arg">cpb</var>, and the zero element as <var class="Arg">zero</var>.</p>
@@ -1494,7 +1494,7 @@ fail
 
 <h5>24.17-3 MatrixByBlockMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MatrixByBlockMatrix</code>( <var class="Arg">blockmat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MatrixByBlockMatrix</code>( <var class="Arg">blockmat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a plain ordinary matrix that is equal to the block matrix <var class="Arg">blockmat</var>.</p>
 
 

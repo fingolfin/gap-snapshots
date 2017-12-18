@@ -75,37 +75,37 @@
 
 <h5>38.1-1 IsRewritingSystem</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRewritingSystem</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRewritingSystem</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>This is the category in which all rewriting systems lie.</p>
 
 <p><a id="X833EAA8C86356F42" name="X833EAA8C86356F42"></a></p>
 
 <h5>38.1-2 Rules</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Rules</code>( <var class="Arg">rws</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Rules</code>( <var class="Arg">rws</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The rules comprising the rewriting system. Note that these may change through the life of the rewriting system, however they will always be a set of defining relations of the algebra described by the rewriting system.</p>
 
 <p><a id="X7C38C2EF817F9E0A" name="X7C38C2EF817F9E0A"></a></p>
 
 <h5>38.1-3 OrderOfRewritingSystem</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrderOfRewritingSystem</code>( <var class="Arg">rws</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrderingOfRewritingSystem</code>( <var class="Arg">rws</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrderOfRewritingSystem</code>( <var class="Arg">rws</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrderingOfRewritingSystem</code>( <var class="Arg">rws</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>return the ordering of the rewriting system <var class="Arg">rws</var>.</p>
 
 <p><a id="X8340EB2280DE6CCC" name="X8340EB2280DE6CCC"></a></p>
 
 <h5>38.1-4 ReducedForm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedForm</code>( <var class="Arg">rws</var>, <var class="Arg">u</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedForm</code>( <var class="Arg">rws</var>, <var class="Arg">u</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Given an element <var class="Arg">u</var> in the free (or term) algebra <span class="SimpleMath">T</span> over which <var class="Arg">rws</var> is defined, rewrite <var class="Arg">u</var> by successive applications of the rules of <var class="Arg">rws</var> until no further rewriting is possible, and return the resulting element of <span class="SimpleMath">T</span>.</p>
 
 <p><a id="X8006790B86328CE8" name="X8006790B86328CE8"></a></p>
 
 <h5>38.1-5 <span class="Heading">IsConfluent</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConfluent</code>( <var class="Arg">rws</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConfluent</code>( <var class="Arg">A</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConfluent</code>( <var class="Arg">rws</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConfluent</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>For a rewriting system <var class="Arg">rws</var>, <code class="func">IsConfluent</code> returns <code class="keyw">true</code> if and only if <var class="Arg">rws</var> is confluent. A rewriting system is <em>confluent</em> if, for every two words <span class="SimpleMath">u</span> and <span class="SimpleMath">v</span> in the free algebra <span class="SimpleMath">T</span> which represent the same element of the algebra <span class="SimpleMath">A</span> defined by <var class="Arg">rws</var>, <code class="code">ReducedForm( <var class="Arg">rws</var>, </code><span class="SimpleMath">u</span> <code class="code">) = ReducedForm( <var class="Arg">rws</var>, </code><span class="SimpleMath">v</span><code class="code">)</code> as words in the free algebra <span class="SimpleMath">T</span>. This element is the <em>unique normal form</em> of the element represented by <span class="SimpleMath">u</span>.</p>
 
 <p>For an algebra <var class="Arg">A</var> with a canonical rewriting system associated with it, <code class="func">IsConfluent</code> checks whether that rewriting system is confluent.</p>
@@ -116,49 +116,49 @@
 
 <h5>38.1-6 ConfluentRws</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConfluentRws</code>( <var class="Arg">rws</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConfluentRws</code>( <var class="Arg">rws</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Return a new rewriting system defining the same algebra as <var class="Arg">rws</var> which is confluent.</p>
 
 <p><a id="X8134689C7B576946" name="X8134689C7B576946"></a></p>
 
 <h5>38.1-7 IsReduced</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsReduced</code>( <var class="Arg">rws</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsReduced</code>( <var class="Arg">rws</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>A rewriting system is reduced if for each rule <span class="SimpleMath">(l, r)</span>, <span class="SimpleMath">l</span> and <span class="SimpleMath">r</span> are both reduced.</p>
 
 <p><a id="X864C82FD7FBA31A6" name="X864C82FD7FBA31A6"></a></p>
 
 <h5>38.1-8 ReduceRules</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReduceRules</code>( <var class="Arg">rws</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReduceRules</code>( <var class="Arg">rws</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Reduce rules and remove redundant rules to make <var class="Arg">rws</var> reduced.</p>
 
 <p><a id="X81E6B5CB789A7C3A" name="X81E6B5CB789A7C3A"></a></p>
 
 <h5>38.1-9 AddRule</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddRule</code>( <var class="Arg">rws</var>, <var class="Arg">rule</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddRule</code>( <var class="Arg">rws</var>, <var class="Arg">rule</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Add <var class="Arg">rule</var> to a rewriting system <var class="Arg">rws</var>.</p>
 
 <p><a id="X7FA0B54D7C533DDC" name="X7FA0B54D7C533DDC"></a></p>
 
 <h5>38.1-10 AddRuleReduced</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddRuleReduced</code>( <var class="Arg">rws</var>, <var class="Arg">rule</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddRuleReduced</code>( <var class="Arg">rws</var>, <var class="Arg">rule</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Add <var class="Arg">rule</var> to rewriting system <var class="Arg">rws</var>. Performs a reduction operation on the resulting system, so that if <var class="Arg">rws</var> is reduced it will remain reduced.</p>
 
 <p><a id="X7BD6299E85561DC3" name="X7BD6299E85561DC3"></a></p>
 
 <h5>38.1-11 MakeConfluent</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MakeConfluent</code>( <var class="Arg">rws</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MakeConfluent</code>( <var class="Arg">rws</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Add rules (and perhaps reduce) in order to make <var class="Arg">rws</var> confluent</p>
 
 <p><a id="X795DC25886007DFE" name="X795DC25886007DFE"></a></p>
 
 <h5>38.1-12 GeneratorsOfRws</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsOfRws</code>( <var class="Arg">rws</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsOfRws</code>( <var class="Arg">rws</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns the list of generators of the rewriting system <var class="Arg">rws</var>.</p>
 
 <p><a id="X81B812C778CB1E4E" name="X81B812C778CB1E4E"></a></p>
@@ -171,19 +171,19 @@
 
 <h5>38.2-1 ReducedProduct</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedProduct</code>( <var class="Arg">rws</var>, <var class="Arg">u</var>, <var class="Arg">v</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedSum</code>( <var class="Arg">rws</var>, <var class="Arg">left</var>, <var class="Arg">right</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedOne</code>( <var class="Arg">rws</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedAdditiveInverse</code>( <var class="Arg">rws</var>, <var class="Arg">obj</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedComm</code>( <var class="Arg">rws</var>, <var class="Arg">left</var>, <var class="Arg">right</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedConjugate</code>( <var class="Arg">rws</var>, <var class="Arg">left</var>, <var class="Arg">right</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedDifference</code>( <var class="Arg">rws</var>, <var class="Arg">left</var>, <var class="Arg">right</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedInverse</code>( <var class="Arg">rws</var>, <var class="Arg">obj</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedLeftQuotient</code>( <var class="Arg">rws</var>, <var class="Arg">left</var>, <var class="Arg">right</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedPower</code>( <var class="Arg">rws</var>, <var class="Arg">obj</var>, <var class="Arg">pow</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedQuotient</code>( <var class="Arg">rws</var>, <var class="Arg">left</var>, <var class="Arg">right</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedScalarProduct</code>( <var class="Arg">rws</var>, <var class="Arg">left</var>, <var class="Arg">right</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedZero</code>( <var class="Arg">rws</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedProduct</code>( <var class="Arg">rws</var>, <var class="Arg">u</var>, <var class="Arg">v</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedSum</code>( <var class="Arg">rws</var>, <var class="Arg">left</var>, <var class="Arg">right</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedOne</code>( <var class="Arg">rws</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedAdditiveInverse</code>( <var class="Arg">rws</var>, <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedComm</code>( <var class="Arg">rws</var>, <var class="Arg">left</var>, <var class="Arg">right</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedConjugate</code>( <var class="Arg">rws</var>, <var class="Arg">left</var>, <var class="Arg">right</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedDifference</code>( <var class="Arg">rws</var>, <var class="Arg">left</var>, <var class="Arg">right</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedInverse</code>( <var class="Arg">rws</var>, <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedLeftQuotient</code>( <var class="Arg">rws</var>, <var class="Arg">left</var>, <var class="Arg">right</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedPower</code>( <var class="Arg">rws</var>, <var class="Arg">obj</var>, <var class="Arg">pow</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedQuotient</code>( <var class="Arg">rws</var>, <var class="Arg">left</var>, <var class="Arg">right</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedScalarProduct</code>( <var class="Arg">rws</var>, <var class="Arg">left</var>, <var class="Arg">right</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedZero</code>( <var class="Arg">rws</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>The result of <code class="func">ReducedProduct</code> is <span class="SimpleMath">w</span> where <span class="SimpleMath">[w]</span> equals [<var class="Arg">u</var>][<var class="Arg">v</var>] in <span class="SimpleMath">A</span> and <span class="SimpleMath">w</span> is in reduced form.</p>
 
 <p>The remaining operations are defined similarly when they are defined (as determined by the signature of the term algebra).</p>
@@ -196,12 +196,12 @@
 
 <h5>38.3-1 IsBuiltFromAdditiveMagmaWithInverses</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBuiltFromAdditiveMagmaWithInverses</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBuiltFromMagma</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBuiltFromMagmaWithOne</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBuiltFromMagmaWithInverses</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBuiltFromSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBuiltFromGroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBuiltFromAdditiveMagmaWithInverses</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBuiltFromMagma</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBuiltFromMagmaWithOne</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBuiltFromMagmaWithInverses</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBuiltFromSemigroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBuiltFromGroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>These properties may be used to identify the type of term algebra over which the rewriting system is defined.</p>
 
 <p><a id="X7F8B7848851784DF" name="X7F8B7848851784DF"></a></p>

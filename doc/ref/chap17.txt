@@ -32,8 +32,8 @@
   
   [1X17.1-1 Rationals[101X
   
-  [29X[2XRationals[102X[32X global variable
-  [29X[2XIsRationals[102X( [3Xobj[103X ) [32X filter
+  [33X[1;0Y[29X[2XRationals[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XIsRationals[102X( [3Xobj[103X ) [32X filter[133X
   
   [33X[0;0Y[2XRationals[102X  is  the  field  [22Xℚ[122X  of  rational  integers, as a set of cyclotomic
   numbers,  see  Chapter [14X18[114X  for  basic  operations,  Functions  for the field
@@ -54,7 +54,7 @@
   
   [1X17.2-1 IsRat[101X
   
-  [29X[2XIsRat[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsRat[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YEvery  rational number lies in the category [2XIsRat[102X, which is a subcategory of
   [2XIsCyc[102X ([14X18.1-3[114X).[133X
@@ -72,19 +72,19 @@
   
   [1X17.2-2 IsPosRat[101X
   
-  [29X[2XIsPosRat[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsPosRat[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YEvery positive rational number lies in the category [2XIsPosRat[102X.[133X
   
   [1X17.2-3 IsNegRat[101X
   
-  [29X[2XIsNegRat[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsNegRat[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YEvery negative rational number lies in the category [2XIsNegRat[102X.[133X
   
   [1X17.2-4 NumeratorRat[101X
   
-  [29X[2XNumeratorRat[102X( [3Xrat[103X ) [32X function
+  [33X[1;0Y[29X[2XNumeratorRat[102X( [3Xrat[103X ) [32X function[133X
   
   [33X[0;0Y[2XNumeratorRat[102X  returns  the  numerator  of  the  rational  [3Xrat[103X.  Because  the
   numerator holds the sign of the rational it may be any integer. Integers are
@@ -105,7 +105,7 @@
   
   [1X17.2-5 DenominatorRat[101X
   
-  [29X[2XDenominatorRat[102X( [3Xrat[103X ) [32X function
+  [33X[1;0Y[29X[2XDenominatorRat[102X( [3Xrat[103X ) [32X function[133X
   
   [33X[0;0Y[2XDenominatorRat[102X  returns  the  denominator  of  the rational [3Xrat[103X. Because the
   numerator  holds  the  sign  of  the  rational  the  denominator is always a
@@ -127,7 +127,7 @@
   
   [1X17.2-6 Rat[101X
   
-  [29X[2XRat[102X( [3Xelm[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRat[102X( [3Xelm[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XRat[102X returns a rational number [3Xrat[103X whose meaning depends on the type of [3Xelm[103X.[133X
   
@@ -146,7 +146,7 @@
   
   [1X17.2-7 Random[101X
   
-  [29X[2XRandom[102X( [3XRationals[103X ) [32X operation
+  [33X[1;0Y[29X[2XRandom[102X( [3XRationals[103X ) [32X operation[133X
   
   [33X[0;0Y[2XRandom[102X  for rationals returns pseudo random rationals which are the quotient
   of two random integers. See the description of [2XRandom[102X ([14X14.2-12[114X) for details.

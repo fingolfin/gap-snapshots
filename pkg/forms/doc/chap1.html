@@ -31,7 +31,10 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X8416D2657E7831A1">1.3 <span class="Heading">How to read this manual</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7FFDC142827888CA">1.4 <span class="Heading">Release notes</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7B1A58BA78CC28FF">1.4 <span class="Heading">Web resources</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap1.html#X7FFDC142827888CA">1.5 <span class="Heading">Release notes</span></a>
 </span>
 </div>
 </div>
@@ -68,15 +71,33 @@
 
 <p>We have tried to make this manual pleasant to read for the general reader. So it is inevitable that we will use Greek symbols and simple mathematical formulas. To make these visible in the HTML version of this documentation, you may have to change the default character set of your browser to UTF-8.</p>
 
+<p><a id="X7B1A58BA78CC28FF" name="X7B1A58BA78CC28FF"></a></p>
+
+<h4>1.4 <span class="Heading">Web resources</span></h4>
+
+
+<ul>
+<li><p>Find <strong class="pkg">Forms</strong> on the Packages section of the GAP-website: <span class="URL"><a href="http://www.gap-system.org/Packages/forms.html">http://www.gap-system.org/Packages/forms.html</a></span>.</p>
+
+</li>
+<li><p>Find <strong class="pkg">Forms</strong> on its homepage: <span class="URL"><a href="http://cage.ugent.be/geometry/forms.php">http://cage.ugent.be/geometry/forms.php</a></span>.</p>
+
+</li>
+<li><p>Report bugs, questions and issues on the <strong class="pkg">Forms</strong> issue tracker: <span class="URL"><a href="https://bitbucket.org/jdebeule/forms/issues">https://bitbucket.org/jdebeule/forms/issues</a></span></p>
+
+</li>
+</ul>
 <p><a id="X7FFDC142827888CA" name="X7FFDC142827888CA"></a></p>
 
-<h4>1.4 <span class="Heading">Release notes</span></h4>
+<h4>1.5 <span class="Heading">Release notes</span></h4>
 
 <p>Version 1.2.1 of <strong class="pkg">Forms</strong> contains some changed and extra functionality with relation to trivial forms. The changed and new functionality is described completely in Section <a href="chap4.html#X836A21687A685839"><span class="RefLink">4.9</span></a>. We gratefully acknowledge the useful feedback of Alice Niemeyer.</p>
 
 <p>In version 1.2.2 of <strong class="pkg">Forms</strong> a minor bug, pointed out by John Bamberg, in the code of <code class="file">IsTotallyIsotropicSubspace</code> is repaired. On the occasion of the release of the first beta versions of GAP4r5, we changed the names of some global functions such that a name clash becomes unlikely. Version 1.2.2 of <strong class="pkg">Forms</strong> is compatible with GAP4r4 and GAP4r5.</p>
 
 <p>Version 1.2.3 contains a new operation <code class="file">TypeOfForm</code>. Together with this addition, some parts of the documentation, especially concerning degenerate and singular forms, have been edited. A bug found in the methods for <code class="file">\^</code> applicable on a pair of vectors and a hermitian form, and a pair of matrices and a hermitian form has been fixed. A series of test files is now included in the tst directory. Alexander Konovalov pointed out the the init.g and read.g files had windows line breaks, this is also fixed. Finally, the documentation has been recompiled with the MathJax option.</p>
+
+<p>Max Horn pointed out that we still used the deprecated GAP_ROOT_PATHS. This has been changed now into GAPInfo.RootPaths in version 1.2.4. More tests have been added to reach a better code coverage. Due to these tests, a bug in one of the methods for <code class="code">EvaluateForm</code> was discovered and fixed. Alexander Konovalov noted that we used the deprecated <code class="file">ReadTest</code> in our test files. This has been changed to <code class="file">Test</code>. Finally some LaTeX issues were resolved in the documentation.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2.html">[Next Chapter]</a>&nbsp;  </div>

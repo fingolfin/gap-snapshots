@@ -466,3 +466,10 @@
   distribution. Additionally, the [5XGpd[105X package (author: Chris Wensley) has been
   renamed to [5XGroupoids[105X.[133X
   
+  
+  [1X2.8 [33X[0;0Y[5XGAP[105X[101X[1X 4.8.9 (December 2017)[133X[101X
+  
+  [33X[0;0YThis  release  contains  updated  versions  of  56  packages  from [5XGAP[105X 4.8.8
+  distribution.  The  core part of the [5XGAP[105X system in this release is identical
+  to the one from the [5XGAP[105X 4.8.8 release.[133X
+  

@@ -42,7 +42,7 @@
 
 <h5>11.1-1 Process</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Process</code>( <var class="Arg">dir</var>, <var class="Arg">prg</var>, <var class="Arg">stream-in</var>, <var class="Arg">stream-out</var>, <var class="Arg">options</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Process</code>( <var class="Arg">dir</var>, <var class="Arg">prg</var>, <var class="Arg">stream-in</var>, <var class="Arg">stream-out</var>, <var class="Arg">options</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">Process</code> runs a new process and returns when the process terminates. It returns the return value of the process if the operating system supports such a concept.</p>
 
 <p>The first argument <var class="Arg">dir</var> is a directory object (see <a href="chap9.html#X85030B35865A1080"><span class="RefLink">9.3</span></a>) which will be the current directory (in the usual UNIX or MSDOS sense) when the program is run. This will only matter if the program accesses files (including running other programs) via relative path names. In particular, it has nothing to do with finding the binary to run.</p>
@@ -110,7 +110,7 @@ Fri Jul 11 09:04:23 MET DST 1997
 
 <h5>11.1-2 Exec</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Exec</code>( <var class="Arg">cmd</var>, <var class="Arg">option1</var>, <var class="Arg">...</var>, <var class="Arg">optionN</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Exec</code>( <var class="Arg">cmd</var>, <var class="Arg">option1</var>, <var class="Arg">...</var>, <var class="Arg">optionN</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">Exec</code> runs a shell in the current directory to execute the command given by the string <var class="Arg">cmd</var> with options <var class="Arg">option1</var>, ..., <var class="Arg">optionN</var>.</p>
 
 

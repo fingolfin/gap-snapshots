@@ -119,21 +119,21 @@ false
 
 <h5>65.1-1 FreeMagmaRing</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeMagmaRing</code>( <var class="Arg">R</var>, <var class="Arg">M</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeMagmaRing</code>( <var class="Arg">R</var>, <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is a free magma ring over the ring <var class="Arg">R</var>, free on the magma <var class="Arg">M</var>.</p>
 
 <p><a id="X86D2CA90847C091B" name="X86D2CA90847C091B"></a></p>
 
 <h5>65.1-2 GroupRing</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupRing</code>( <var class="Arg">R</var>, <var class="Arg">G</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupRing</code>( <var class="Arg">R</var>, <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is the group ring of the group <var class="Arg">G</var>, over the ring <var class="Arg">R</var>.</p>
 
 <p><a id="X7A24B95C8210BD09" name="X7A24B95C8210BD09"></a></p>
 
 <h5>65.1-3 IsFreeMagmaRing</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeMagmaRing</code>( <var class="Arg">D</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeMagmaRing</code>( <var class="Arg">D</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>A domain lies in the category <code class="func">IsFreeMagmaRing</code> if it has been constructed as a free magma ring. In particular, if <var class="Arg">D</var> lies in this category then the operations <code class="func">LeftActingDomain</code> (<a href="chap57.html#X86F070E0807DC34E"><span class="RefLink">57.1-11</span></a>) and <code class="func">UnderlyingMagma</code> (<a href="chap65.html#X848D60417DFF7947"><span class="RefLink">65.1-6</span></a>) are applicable to <var class="Arg">D</var>, and yield the ring <span class="SimpleMath">R</span> and the magma <span class="SimpleMath">M</span> such that <var class="Arg">D</var> is the magma ring <span class="SimpleMath">RM</span>.</p>
 
 <p>So being a magma ring in <strong class="pkg">GAP</strong> includes the knowledge of the ring and the magma. Note that a magma ring <span class="SimpleMath">RM</span> may abstractly be generated as a magma ring by a magma different from the underlying magma <span class="SimpleMath">M</span>. For example, the group ring of the dihedral group of order <span class="SimpleMath">8</span> over the field with <span class="SimpleMath">3</span> elements is also spanned by a quaternion group of order <span class="SimpleMath">8</span> over the same field.</p>
@@ -166,28 +166,28 @@ false
 
 <h5>65.1-4 IsFreeMagmaRingWithOne</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeMagmaRingWithOne</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeMagmaRingWithOne</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p><code class="func">IsFreeMagmaRingWithOne</code> is just a synonym for the meet of <code class="func">IsFreeMagmaRing</code> (<a href="chap65.html#X7A24B95C8210BD09"><span class="RefLink">65.1-3</span></a>) and <code class="func">IsMagmaWithOne</code> (<a href="chap35.html#X86071DE7835F1C7C"><span class="RefLink">35.1-2</span></a>).</p>
 
 <p><a id="X82C63644805EB1EE" name="X82C63644805EB1EE"></a></p>
 
 <h5>65.1-5 IsGroupRing</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGroupRing</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGroupRing</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>A <em>group ring</em> is a magma ring where the underlying magma is a group.</p>
 
 <p><a id="X848D60417DFF7947" name="X848D60417DFF7947"></a></p>
 
 <h5>65.1-6 UnderlyingMagma</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingMagma</code>( <var class="Arg">RM</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingMagma</code>( <var class="Arg">RM</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>stores the underlying magma of a free magma ring.</p>
 
 <p><a id="X7B21DB3E7CD80983" name="X7B21DB3E7CD80983"></a></p>
 
 <h5>65.1-7 AugmentationIdeal</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AugmentationIdeal</code>( <var class="Arg">RG</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AugmentationIdeal</code>( <var class="Arg">RG</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is the augmentation ideal of the group ring <var class="Arg">RG</var>, i.e., the kernel of the trivial representation of <var class="Arg">RG</var>.</p>
 
 <p><a id="X8402D3897F2C5955" name="X8402D3897F2C5955"></a></p>
@@ -202,7 +202,7 @@ false
 
 <h5>65.2-1 IsMagmaRingObjDefaultRep</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMagmaRingObjDefaultRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">( representation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMagmaRingObjDefaultRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;representation&nbsp;)</td></tr></table></div>
 <p>The default representation of a magma ring element is a list of length 2, at first position the zero coefficient, at second position a list with the coefficients at the even positions, and the magma elements at the odd positions, with the ordering as defined for the magma elements.</p>
 
 <p>It is assumed that arithmetic operations on magma rings produce only normalized elements.</p>
@@ -211,36 +211,36 @@ false
 
 <h5>65.2-2 IsElementOfFreeMagmaRing</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsElementOfFreeMagmaRing</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsElementOfFreeMagmaRingCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsElementOfFreeMagmaRing</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsElementOfFreeMagmaRingCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>The category of elements of a free magma ring (See <code class="func">IsFreeMagmaRing</code> (<a href="chap65.html#X7A24B95C8210BD09"><span class="RefLink">65.1-3</span></a>)).</p>
 
 <p><a id="X869768AF7B444BF8" name="X869768AF7B444BF8"></a></p>
 
 <h5>65.2-3 IsElementOfFreeMagmaRingFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsElementOfFreeMagmaRingFamily</code>( <var class="Arg">Fam</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsElementOfFreeMagmaRingFamily</code>( <var class="Arg">Fam</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Elements of families in this category have trivial normalisation, i.e., efficient methods for <code class="code">\=</code> and <code class="code">\&lt;</code>.</p>
 
 <p><a id="X843D1D8578C33513" name="X843D1D8578C33513"></a></p>
 
 <h5>65.2-4 CoefficientsAndMagmaElements</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoefficientsAndMagmaElements</code>( <var class="Arg">elm</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoefficientsAndMagmaElements</code>( <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is a list that contains at the odd positions the magma elements, and at the even positions their coefficients in the element <var class="Arg">elm</var>.</p>
 
 <p><a id="X78C3DB417E353390" name="X78C3DB417E353390"></a></p>
 
 <h5>65.2-5 ZeroCoefficient</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZeroCoefficient</code>( <var class="Arg">elm</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZeroCoefficient</code>( <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>For an element <var class="Arg">elm</var> of a magma ring (modulo relations) <span class="SimpleMath">RM</span>, <code class="func">ZeroCoefficient</code> returns the zero element of the coefficient ring <span class="SimpleMath">R</span>.</p>
 
 <p><a id="X8671DE0A81BEEFB0" name="X8671DE0A81BEEFB0"></a></p>
 
 <h5>65.2-6 ElementOfMagmaRing</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementOfMagmaRing</code>( <var class="Arg">Fam</var>, <var class="Arg">zerocoeff</var>, <var class="Arg">coeffs</var>, <var class="Arg">mgmelms</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementOfMagmaRing</code>( <var class="Arg">Fam</var>, <var class="Arg">zerocoeff</var>, <var class="Arg">coeffs</var>, <var class="Arg">mgmelms</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">ElementOfMagmaRing</code> returns the element <span class="SimpleMath">∑_{i = 1}^n c_i m_i'</span>, where <span class="SimpleMath"><var class="Arg">coeffs</var> = [ c_1, c_2, ..., c_n ]</span> is a list of coefficients, <span class="SimpleMath"><var class="Arg">mgmelms</var> = [ m_1, m_2, ..., m_n ]</span> is a list of magma elements, and <span class="SimpleMath">m_i'</span> is the image of <span class="SimpleMath">m_i</span> under an embedding of a magma containing <span class="SimpleMath">m_i</span> into a magma ring whose elements lie in the family <var class="Arg">Fam</var>. <var class="Arg">zerocoeff</var> must be the zero of the coefficient ring containing the <span class="SimpleMath">c_i</span>.</p>
 
 <p><a id="X80366F1480ACD8DF" name="X80366F1480ACD8DF"></a></p>
@@ -290,22 +290,22 @@ true
 
 <h5>65.4-1 IsElementOfMagmaRingModuloRelations</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsElementOfMagmaRingModuloRelations</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsElementOfMagmaRingModuloRelationsCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsElementOfMagmaRingModuloRelations</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsElementOfMagmaRingModuloRelationsCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>This category is used, e. g., for elements of free Lie algebras.</p>
 
 <p><a id="X875BEB1A840FFAA4" name="X875BEB1A840FFAA4"></a></p>
 
 <h5>65.4-2 IsElementOfMagmaRingModuloRelationsFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsElementOfMagmaRingModuloRelationsFamily</code>( <var class="Arg">Fam</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsElementOfMagmaRingModuloRelationsFamily</code>( <var class="Arg">Fam</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>The family category for the category <code class="func">IsElementOfMagmaRingModuloRelations</code> (<a href="chap65.html#X869D54847E881848"><span class="RefLink">65.4-1</span></a>).</p>
 
 <p><a id="X85956ED27FA6AC68" name="X85956ED27FA6AC68"></a></p>
 
 <h5>65.4-3 NormalizedElementOfMagmaRingModuloRelations</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NormalizedElementOfMagmaRingModuloRelations</code>( <var class="Arg">F</var>, <var class="Arg">descr</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NormalizedElementOfMagmaRingModuloRelations</code>( <var class="Arg">F</var>, <var class="Arg">descr</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">F</var> be a family of magma ring elements modulo relations, and <var class="Arg">descr</var> the description of an element in a magma ring modulo relations. <code class="func">NormalizedElementOfMagmaRingModuloRelations</code> returns a description of the same element, but normalized w.r.t. the relations. So two elements are equal if and only if the result of <code class="func">NormalizedElementOfMagmaRingModuloRelations</code> is equal for their internal data, that is, <code class="func">CoefficientsAndMagmaElements</code> (<a href="chap65.html#X843D1D8578C33513"><span class="RefLink">65.2-4</span></a>) will return the same for the corresponding two elements.</p>
 
 <p><code class="func">NormalizedElementOfMagmaRingModuloRelations</code> is allowed to return <var class="Arg">descr</var> itself, it need not make a copy. This is the case for example in the case of free magma rings.</p>
@@ -314,7 +314,7 @@ true
 
 <h5>65.4-4 IsMagmaRingModuloRelations</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMagmaRingModuloRelations</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMagmaRingModuloRelations</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>A <strong class="pkg">GAP</strong> object lies in the category <code class="func">IsMagmaRingModuloRelations</code> if it has been constructed as a magma ring modulo relations. Each element of such a ring has a unique normal form, so <code class="func">CoefficientsAndMagmaElements</code> (<a href="chap65.html#X843D1D8578C33513"><span class="RefLink">65.2-4</span></a>) is well-defined for it.</p>
 
 <p>This category is not inherited to factor structures, which are in general best described as finitely presented algebras, see Chapter <a href="chap63.html#X85A22A8286596D02"><span class="RefLink">63</span></a>.</p>
@@ -327,21 +327,21 @@ true
 
 <h5>65.5-1 IsElementOfMagmaRingModuloSpanOfZeroFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsElementOfMagmaRingModuloSpanOfZeroFamily</code>( <var class="Arg">Fam</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsElementOfMagmaRingModuloSpanOfZeroFamily</code>( <var class="Arg">Fam</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>We need this for the normalization method, which takes a family as first argument.</p>
 
 <p><a id="X872713EE84DA9B72" name="X872713EE84DA9B72"></a></p>
 
 <h5>65.5-2 IsMagmaRingModuloSpanOfZero</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMagmaRingModuloSpanOfZero</code>( <var class="Arg">RM</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMagmaRingModuloSpanOfZero</code>( <var class="Arg">RM</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>The category of magma rings modulo the span of a zero element.</p>
 
 <p><a id="X7A7F880D7D7D3722" name="X7A7F880D7D7D3722"></a></p>
 
 <h5>65.5-3 MagmaRingModuloSpanOfZero</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MagmaRingModuloSpanOfZero</code>( <var class="Arg">R</var>, <var class="Arg">M</var>, <var class="Arg">z</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MagmaRingModuloSpanOfZero</code>( <var class="Arg">R</var>, <var class="Arg">M</var>, <var class="Arg">z</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">R</var> be a ring, <var class="Arg">M</var> a magma, and <var class="Arg">z</var> an element of <var class="Arg">M</var> with the property that <span class="SimpleMath"><var class="Arg">z</var> * m = <var class="Arg">z</var></span> holds for all <span class="SimpleMath">m ∈ M</span>. The element <var class="Arg">z</var> could be called a "zero element" of <var class="Arg">M</var>, but note that in general <var class="Arg">z</var> cannot be obtained as <code class="code">Zero( </code><span class="SimpleMath">m</span><code class="code"> )</code> for each <span class="SimpleMath">m ∈ M</span>, so this situation does not match the definition of <code class="func">Zero</code> (<a href="chap31.html#X8040AC7A79FFC442"><span class="RefLink">31.10-3</span></a>).</p>
 
 <p><code class="func">MagmaRingModuloSpanOfZero</code> returns the magma ring <span class="SimpleMath"><var class="Arg">R</var><var class="Arg">M</var></span> modulo the relation given by the identification of <var class="Arg">z</var> with zero. This is an example of a magma ring modulo relations, see <a href="chap65.html#X81B002EE799B5E77"><span class="RefLink">65.4</span></a>.</p>

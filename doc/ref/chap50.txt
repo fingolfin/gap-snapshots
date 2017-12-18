@@ -53,7 +53,7 @@
   
   [1X50.1-1 TrivialGroup[101X
   
-  [29X[2XTrivialGroup[102X( [[3Xfilter[103X] ) [32X function
+  [33X[1;0Y[29X[2XTrivialGroup[102X( [[3Xfilter[103X] ) [32X function[133X
   
   [33X[0;0Yconstructs  a  trivial  group in the category given by the filter [3Xfilter[103X. If
   [3Xfilter[103X  is not given it defaults to [2XIsPcGroup[102X ([14X46.3-1[114X). For more information
@@ -68,7 +68,7 @@
   
   [1X50.1-2 CyclicGroup[101X
   
-  [29X[2XCyclicGroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XCyclicGroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function[133X
   
   [33X[0;0Yconstructs  the  cyclic  group of size [3Xn[103X in the category given by the filter
   [3Xfilt[103X.  If  [3Xfilt[103X  is  not  given  it defaults to [2XIsPcGroup[102X ([14X46.3-1[114X). For more
@@ -91,7 +91,7 @@
   
   [1X50.1-3 AbelianGroup[101X
   
-  [29X[2XAbelianGroup[102X( [[3Xfilt[103X, ][3Xints[103X ) [32X function
+  [33X[1;0Y[29X[2XAbelianGroup[102X( [[3Xfilt[103X, ][3Xints[103X ) [32X function[133X
   
   [33X[0;0Yconstructs  an  abelian group in the category given by the filter [3Xfilt[103X which
   is  of isomorphism type [22XC_{[3Xints[103X[1]} × C_{[3Xints[103X[2]} × ... × C_{[3Xints[103X[n]}[122X, where
@@ -107,7 +107,7 @@
   
   [1X50.1-4 ElementaryAbelianGroup[101X
   
-  [29X[2XElementaryAbelianGroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XElementaryAbelianGroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function[133X
   
   [33X[0;0Yconstructs  the  elementary abelian group of size [3Xn[103X in the category given by
   the filter [3Xfilt[103X. If [3Xfilt[103X is not given it defaults to [2XIsPcGroup[102X ([14X46.3-1[114X). For
@@ -120,7 +120,7 @@
   
   [1X50.1-5 FreeAbelianGroup[101X
   
-  [29X[2XFreeAbelianGroup[102X( [[3Xfilt[103X, ][3Xrank[103X ) [32X function
+  [33X[1;0Y[29X[2XFreeAbelianGroup[102X( [[3Xfilt[103X, ][3Xrank[103X ) [32X function[133X
   
   [33X[0;0Yconstructs  the  free  abelian  group of rank [3Xn[103X in the category given by the
   filter  [3Xfilt[103X.  If  [3Xfilt[103X  is not given it defaults to [2XIsFpGroup[102X ([14X47.1-2[114X). For
@@ -133,7 +133,7 @@
   
   [1X50.1-6 DihedralGroup[101X
   
-  [29X[2XDihedralGroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XDihedralGroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function[133X
   
   [33X[0;0Yconstructs  the dihedral group of size [3Xn[103X in the category given by the filter
   [3Xfilt[103X.  If  [3Xfilt[103X  is  not  given  it defaults to [2XIsPcGroup[102X ([14X46.3-1[114X). For more
@@ -148,8 +148,8 @@
   
   [1X50.1-7 QuaternionGroup[101X
   
-  [29X[2XQuaternionGroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function
-  [29X[2XDicyclicGroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XQuaternionGroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XDicyclicGroup[102X( [[3Xfilt[103X, ][3Xn[103X ) [32X function[133X
   
   [33X[0;0Yconstructs the generalized quaternion group (or dicyclic group) of size [3Xn[103X in
   the  category  given by the filter [3Xfilt[103X. Here, [3Xn[103X is a multiple of 4. If [3Xfilt[103X
@@ -167,7 +167,7 @@
   
   [1X50.1-8 ExtraspecialGroup[101X
   
-  [29X[2XExtraspecialGroup[102X( [[3Xfilt[103X, ][3Xorder[103X, [3Xexp[103X ) [32X function
+  [33X[1;0Y[29X[2XExtraspecialGroup[102X( [[3Xfilt[103X, ][3Xorder[103X, [3Xexp[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xorder[103X  be  of  the  form [22Xp^{2n+1}[122X, for a prime integer [22Xp[122X and a positive
   integer  [22Xn[122X.  [2XExtraspecialGroup[102X returns the extraspecial group of order [3Xorder[103X
@@ -192,8 +192,8 @@
   
   [1X50.1-9 [33X[0;0YAlternatingGroup[133X[101X
   
-  [29X[2XAlternatingGroup[102X( [[3Xfilt[103X, ][3Xdeg[103X ) [32X function
-  [29X[2XAlternatingGroup[102X( [[3Xfilt[103X, ][3Xdom[103X ) [32X function
+  [33X[1;0Y[29X[2XAlternatingGroup[102X( [[3Xfilt[103X, ][3Xdeg[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XAlternatingGroup[102X( [[3Xfilt[103X, ][3Xdom[103X ) [32X function[133X
   
   [33X[0;0Yconstructs  the alternating group of degree [3Xdeg[103X in the category given by the
   filter  [3Xfilt[103X.  If [3Xfilt[103X is not given it defaults to [2XIsPermGroup[102X ([14X43.1-1[114X). For
@@ -209,8 +209,8 @@
   
   [1X50.1-10 [33X[0;0YSymmetricGroup[133X[101X
   
-  [29X[2XSymmetricGroup[102X( [[3Xfilt[103X, ][3Xdeg[103X ) [32X function
-  [29X[2XSymmetricGroup[102X( [[3Xfilt[103X, ][3Xdom[103X ) [32X function
+  [33X[1;0Y[29X[2XSymmetricGroup[102X( [[3Xfilt[103X, ][3Xdeg[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSymmetricGroup[102X( [[3Xfilt[103X, ][3Xdom[103X ) [32X function[133X
   
   [33X[0;0Yconstructs  the  symmetric  group of degree [3Xdeg[103X in the category given by the
   filter  [3Xfilt[103X.  If [3Xfilt[103X is not given it defaults to [2XIsPermGroup[102X ([14X43.1-1[114X). For
@@ -228,7 +228,7 @@
   
   [1X50.1-11 MathieuGroup[101X
   
-  [29X[2XMathieuGroup[102X( [[3Xfilt[103X, ][3Xdegree[103X ) [32X function
+  [33X[1;0Y[29X[2XMathieuGroup[102X( [[3Xfilt[103X, ][3Xdegree[103X ) [32X function[133X
   
   [33X[0;0Yconstructs  the  Mathieu group of degree [3Xdegree[103X in the category given by the
   filter [3Xfilt[103X, where [3Xdegree[103X must be in the set [22X{ 9, 10, 11, 12, 21, 22, 23, 24
@@ -242,8 +242,8 @@
   
   [1X50.1-12 SuzukiGroup[101X
   
-  [29X[2XSuzukiGroup[102X( [[3Xfilt[103X, ][3Xq[103X ) [32X function
-  [29X[2XSz[102X( [[3Xfilt[103X, ][3Xq[103X ) [32X function
+  [33X[1;0Y[29X[2XSuzukiGroup[102X( [[3Xfilt[103X, ][3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSz[102X( [[3Xfilt[103X, ][3Xq[103X ) [32X function[133X
   
   [33X[0;0YConstructs  a  group  isomorphic  to the Suzuki group Sz( [3Xq[103X ) over the field
   with [3Xq[103X elements, where [3Xq[103X is a non-square power of [22X2[122X.[133X
@@ -259,8 +259,8 @@
   
   [1X50.1-13 ReeGroup[101X
   
-  [29X[2XReeGroup[102X( [[3Xfilt[103X, ][3Xq[103X ) [32X function
-  [29X[2XRee[102X( [[3Xfilt[103X, ][3Xq[103X ) [32X function
+  [33X[1;0Y[29X[2XReeGroup[102X( [[3Xfilt[103X, ][3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XRee[102X( [[3Xfilt[103X, ][3Xq[103X ) [32X function[133X
   
   [33X[0;0YConstructs  a  group isomorphic to the Ree group [22X^2G_2(q)[122X where [22Xq = 3^{1+2m}[122X
   for [22Xm[122X a non-negative integer.[133X
@@ -309,10 +309,10 @@
   
   [1X50.2-1 [33X[0;0YGeneralLinearGroup[133X[101X
   
-  [29X[2XGeneralLinearGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3XR[103X ) [32X function
-  [29X[2XGL[102X( [[3Xfilt[103X, ][3Xd[103X, [3XR[103X ) [32X function
-  [29X[2XGeneralLinearGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
-  [29X[2XGL[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
+  [33X[1;0Y[29X[2XGeneralLinearGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3XR[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGL[102X( [[3Xfilt[103X, ][3Xd[103X, [3XR[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGeneralLinearGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGL[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
   
   [33X[0;0YThe first two forms construct a group isomorphic to the general linear group
   GL( [3Xd[103X, [3XR[103X ) of all [22X[3Xd[103X × [3Xd[103X[122X matrices that are invertible over the ring [3XR[103X, in the
@@ -355,10 +355,10 @@
   
   [1X50.2-2 [33X[0;0YSpecialLinearGroup[133X[101X
   
-  [29X[2XSpecialLinearGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3XR[103X ) [32X function
-  [29X[2XSL[102X( [[3Xfilt[103X, ][3Xd[103X, [3XR[103X ) [32X function
-  [29X[2XSpecialLinearGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
-  [29X[2XSL[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
+  [33X[1;0Y[29X[2XSpecialLinearGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3XR[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSL[102X( [[3Xfilt[103X, ][3Xd[103X, [3XR[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSpecialLinearGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSL[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
   
   [33X[0;0YThe first two forms construct a group isomorphic to the special linear group
   SL(  [3Xd[103X, [3XR[103X ) of all those [22X[3Xd[103X × [3Xd[103X[122X matrices over the ring [3XR[103X whose determinant is
@@ -385,8 +385,8 @@
   
   [1X50.2-3 GeneralUnitaryGroup[101X
   
-  [29X[2XGeneralUnitaryGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
-  [29X[2XGU[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
+  [33X[1;0Y[29X[2XGeneralUnitaryGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGU[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
   
   [33X[0;0Yconstructs  a  group  isomorphic  to the general unitary group GU( [3Xd[103X, [3Xq[103X ) of
   those  [22X[3Xd[103X  × [3Xd[103X[122X matrices over the field with [22X[3Xq[103X^2[122X elements that respect a fixed
@@ -402,8 +402,8 @@
   
   [1X50.2-4 SpecialUnitaryGroup[101X
   
-  [29X[2XSpecialUnitaryGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
-  [29X[2XSU[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
+  [33X[1;0Y[29X[2XSpecialUnitaryGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSU[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
   
   [33X[0;0Yconstructs a group isomorphic to the special unitary group GU([3Xd[103X, [3Xq[103X) of those
   [22X[3Xd[103X  ×  [3Xd[103X[122X  matrices  over the field with [22X[3Xq[103X^2[122X elements whose determinant is the
@@ -421,12 +421,12 @@
   
   [1X50.2-5 [33X[0;0YSymplecticGroup[133X[101X
   
-  [29X[2XSymplecticGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
-  [29X[2XSymplecticGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xring[103X ) [32X function
-  [29X[2XSp[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
-  [29X[2XSp[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xring[103X ) [32X function
-  [29X[2XSP[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
-  [29X[2XSP[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xring[103X ) [32X function
+  [33X[1;0Y[29X[2XSymplecticGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSymplecticGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xring[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSp[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSp[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xring[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSP[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSP[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xring[103X ) [32X function[133X
   
   [33X[0;0Yconstructs  a group isomorphic to the symplectic group Sp( [3Xd[103X, [3Xq[103X ) of those [22X[3Xd[103X
   ×  [3Xd[103X[122X  matrices  over  the field with [3Xq[103X elements (respectively the ring [3Xring[103X)
@@ -450,8 +450,8 @@
   
   [1X50.2-6 GeneralOrthogonalGroup[101X
   
-  [29X[2XGeneralOrthogonalGroup[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X function
-  [29X[2XGO[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X function
+  [33X[1;0Y[29X[2XGeneralOrthogonalGroup[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGO[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
   
   [33X[0;0Yconstructs  a group isomorphic to the general orthogonal group GO( [3Xe[103X, [3Xd[103X, [3Xq[103X )
   of  those  [22X[3Xd[103X  ×  [3Xd[103X[122X  matrices  over  the field with [3Xq[103X elements that respect a
@@ -468,8 +468,8 @@
   
   [1X50.2-7 SpecialOrthogonalGroup[101X
   
-  [29X[2XSpecialOrthogonalGroup[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X function
-  [29X[2XSO[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X function
+  [33X[1;0Y[29X[2XSpecialOrthogonalGroup[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSO[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
   
   [33X[0;0Y[2XSpecialOrthogonalGroup[102X  returns a group isomorphic to the special orthogonal
   group  SO(  [3Xe[103X,  [3Xd[103X,  [3Xq[103X  ), which is the subgroup of all those matrices in the
@@ -493,7 +493,7 @@
   
   [1X50.2-8 Omega[101X
   
-  [29X[2XOmega[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X operation
+  [33X[1;0Y[29X[2XOmega[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X operation[133X
   
   [33X[0;0Yconstructs  a  group  isomorphic  to  the  group [22XΩ[122X( [3Xe[103X, [3Xd[103X, [3Xq[103X ) of those [22X[3Xd[103X × [3Xd[103X[122X
   matrices  over  the  field  with  [3Xq[103X  elements  that  respect  a non-singular
@@ -522,8 +522,8 @@
   
   [1X50.2-9 GeneralSemilinearGroup[101X
   
-  [29X[2XGeneralSemilinearGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
-  [29X[2XGammaL[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
+  [33X[1;0Y[29X[2XGeneralSemilinearGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGammaL[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
   
   [33X[0;0Y[2XGeneralSemilinearGroup[102X  returns a group isomorphic to the general semilinear
   group [22XΓ[122XL( [3Xd[103X, [3Xq[103X ) of semilinear mappings of the vector space [10XGF( [110X[3Xq[103X[10X )^[110X[3Xd[103X.[133X
@@ -534,8 +534,8 @@
   
   [1X50.2-10 SpecialSemilinearGroup[101X
   
-  [29X[2XSpecialSemilinearGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
-  [29X[2XSigmaL[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
+  [33X[1;0Y[29X[2XSpecialSemilinearGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSigmaL[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
   
   [33X[0;0Y[2XSpecialSemilinearGroup[102X  returns a group isomorphic to the special semilinear
   group  [22XΣ[122XL( [3Xd[103X, [3Xq[103X ) of those semilinear mappings of the vector space [10XGF( [110X[3Xq[103X[10X )^[110X[3Xd[103X
@@ -547,8 +547,8 @@
   
   [1X50.2-11 ProjectiveGeneralLinearGroup[101X
   
-  [29X[2XProjectiveGeneralLinearGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
-  [29X[2XPGL[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
+  [33X[1;0Y[29X[2XProjectiveGeneralLinearGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPGL[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
   
   [33X[0;0Yconstructs a group isomorphic to the projective general linear group PGL( [3Xd[103X,
   [3Xq[103X  )  of  those  [22X[3Xd[103X  ×  [3Xd[103X[122X matrices over the field with [3Xq[103X elements, modulo the
@@ -559,8 +559,8 @@
   
   [1X50.2-12 ProjectiveSpecialLinearGroup[101X
   
-  [29X[2XProjectiveSpecialLinearGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
-  [29X[2XPSL[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
+  [33X[1;0Y[29X[2XProjectiveSpecialLinearGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPSL[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
   
   [33X[0;0Yconstructs a group isomorphic to the projective special linear group PSL( [3Xd[103X,
   [3Xq[103X ) of those [22X[3Xd[103X × [3Xd[103X[122X matrices over the field with [3Xq[103X elements whose determinant
@@ -572,8 +572,8 @@
   
   [1X50.2-13 ProjectiveGeneralUnitaryGroup[101X
   
-  [29X[2XProjectiveGeneralUnitaryGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
-  [29X[2XPGU[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
+  [33X[1;0Y[29X[2XProjectiveGeneralUnitaryGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPGU[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
   
   [33X[0;0Yconstructs  a  group isomorphic to the projective general unitary group PGU(
   [3Xd[103X, [3Xq[103X ) of those [22X[3Xd[103X × [3Xd[103X[122X matrices over the field with [22X[3Xq[103X^2[122X elements that respect
@@ -585,8 +585,8 @@
   
   [1X50.2-14 ProjectiveSpecialUnitaryGroup[101X
   
-  [29X[2XProjectiveSpecialUnitaryGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
-  [29X[2XPSU[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
+  [33X[1;0Y[29X[2XProjectiveSpecialUnitaryGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPSU[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
   
   [33X[0;0Yconstructs  a  group isomorphic to the projective special unitary group PSU(
   [3Xd[103X, [3Xq[103X ) of those [22X[3Xd[103X × [3Xd[103X[122X matrices over the field with [22X[3Xq[103X^2[122X elements that respect
@@ -598,9 +598,9 @@
   
   [1X50.2-15 ProjectiveSymplecticGroup[101X
   
-  [29X[2XProjectiveSymplecticGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
-  [29X[2XPSP[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
-  [29X[2XPSp[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function
+  [33X[1;0Y[29X[2XProjectiveSymplecticGroup[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPSP[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPSp[102X( [[3Xfilt[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
   
   [33X[0;0Yconstructs a group isomorphic to the projective symplectic group PSp([3Xd[103X,[3Xq[103X) of
   those  [22X[3Xd[103X  ×  [3Xd[103X[122X  matrices over the field with [3Xq[103X elements that respect a fixed
@@ -612,8 +612,8 @@
   
   [1X50.2-16 ProjectiveOmega[101X
   
-  [29X[2XProjectiveOmega[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X function
-  [29X[2XPOmega[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X function
+  [33X[1;0Y[29X[2XProjectiveOmega[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPOmega[102X( [[3Xfilt[103X, ][[3Xe[103X, ][3Xd[103X, [3Xq[103X ) [32X function[133X
   
   [33X[0;0Yconstructs a group isomorphic to the projective group P[22XΩ[122X( [3Xe[103X, [3Xd[103X, [3Xq[103X ) of [22XΩ[122X( [3Xe[103X,
   [3Xd[103X, [3Xq[103X ), modulo the centre (see [2XOmega[102X ([14X50.2-8[114X)), in the category given by the
@@ -643,16 +643,16 @@
   
   [1X50.3-1 NrConjugacyClassesGL[101X
   
-  [29X[2XNrConjugacyClassesGL[102X( [3Xn[103X, [3Xq[103X ) [32X function
-  [29X[2XNrConjugacyClassesGU[102X( [3Xn[103X, [3Xq[103X ) [32X function
-  [29X[2XNrConjugacyClassesSL[102X( [3Xn[103X, [3Xq[103X ) [32X function
-  [29X[2XNrConjugacyClassesSU[102X( [3Xn[103X, [3Xq[103X ) [32X function
-  [29X[2XNrConjugacyClassesPGL[102X( [3Xn[103X, [3Xq[103X ) [32X function
-  [29X[2XNrConjugacyClassesPGU[102X( [3Xn[103X, [3Xq[103X ) [32X function
-  [29X[2XNrConjugacyClassesPSL[102X( [3Xn[103X, [3Xq[103X ) [32X function
-  [29X[2XNrConjugacyClassesPSU[102X( [3Xn[103X, [3Xq[103X ) [32X function
-  [29X[2XNrConjugacyClassesSLIsogeneous[102X( [3Xn[103X, [3Xq[103X, [3Xf[103X ) [32X function
-  [29X[2XNrConjugacyClassesSUIsogeneous[102X( [3Xn[103X, [3Xq[103X, [3Xf[103X ) [32X function
+  [33X[1;0Y[29X[2XNrConjugacyClassesGL[102X( [3Xn[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XNrConjugacyClassesGU[102X( [3Xn[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XNrConjugacyClassesSL[102X( [3Xn[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XNrConjugacyClassesSU[102X( [3Xn[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XNrConjugacyClassesPGL[102X( [3Xn[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XNrConjugacyClassesPGU[102X( [3Xn[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XNrConjugacyClassesPSL[102X( [3Xn[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XNrConjugacyClassesPSU[102X( [3Xn[103X, [3Xq[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XNrConjugacyClassesSLIsogeneous[102X( [3Xn[103X, [3Xq[103X, [3Xf[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XNrConjugacyClassesSUIsogeneous[102X( [3Xn[103X, [3Xq[103X, [3Xf[103X ) [32X function[133X
   
   [33X[0;0YThe  first of these functions compute for given positive integer [3Xn[103X and prime
   power  [3Xq[103X the number of conjugacy classes in the classical groups GL( [3Xn[103X, [3Xq[103X ),
@@ -818,7 +818,7 @@
   
   [1X50.6-1 TransitiveGroup[101X
   
-  [29X[2XTransitiveGroup[102X( [3Xdeg[103X, [3Xnr[103X ) [32X function
+  [33X[1;0Y[29X[2XTransitiveGroup[102X( [3Xdeg[103X, [3Xnr[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the  [3Xnr[103X-th  transitive group of degree [3Xdeg[103X. Both [3Xdeg[103X and [3Xnr[103X must be
   positive  integers.  The  transitive  groups of equal degree are sorted with
@@ -828,7 +828,7 @@
   
   [1X50.6-2 NrTransitiveGroups[101X
   
-  [29X[2XNrTransitiveGroups[102X( [3Xdeg[103X ) [32X function
+  [33X[1;0Y[29X[2XNrTransitiveGroups[102X( [3Xdeg[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the number of transitive groups of degree [3Xdeg[103X stored in the library
   of  transitive  groups. The function returns [9Xfail[109X if [3Xdeg[103X is beyond the range
@@ -845,7 +845,7 @@
   
   [1X50.6-3 TransitiveIdentification[101X
   
-  [29X[2XTransitiveIdentification[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XTransitiveIdentification[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0YLet  [3XG[103X  be  a  permutation  group,  acting transitively on a set of up to 30
   points. Then [2XTransitiveIdentification[102X will return the position of this group
@@ -965,8 +965,8 @@
   
   [1X50.7-1 SmallGroup[101X
   
-  [29X[2XSmallGroup[102X( [3Xorder[103X, [3Xi[103X ) [32X function
-  [29X[2XSmallGroup[102X( [3Xpair[103X ) [32X function
+  [33X[1;0Y[29X[2XSmallGroup[102X( [3Xorder[103X, [3Xi[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSmallGroup[102X( [3Xpair[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the  [3Xi[103X-th  group  of  order [3Xorder[103X in the catalogue. If the group is
   solvable,  it  will  be  given as a PcGroup; otherwise it will be given as a
@@ -975,7 +975,7 @@
   
   [1X50.7-2 AllSmallGroups[101X
   
-  [29X[2XAllSmallGroups[102X( [3Xarg[103X ) [32X function
+  [33X[1;0Y[29X[2XAllSmallGroups[102X( [3Xarg[103X ) [32X function[133X
   
   [33X[0;0Yreturns  all groups with certain properties as specified by [3Xarg[103X. If [3Xarg[103X is a
   number  [22Xn[122X,  then  this  function returns all groups of order [22Xn[122X. However, the
@@ -996,28 +996,28 @@
   
   [1X50.7-3 OneSmallGroup[101X
   
-  [29X[2XOneSmallGroup[102X( [3Xarg[103X ) [32X function
+  [33X[1;0Y[29X[2XOneSmallGroup[102X( [3Xarg[103X ) [32X function[133X
   
   [33X[0;0Yreturns one group with certain properties as specified by [3Xarg[103X. The permitted
   arguments are those supported by [2XAllSmallGroups[102X ([14X50.7-2[114X).[133X
   
   [1X50.7-4 NumberSmallGroups[101X
   
-  [29X[2XNumberSmallGroups[102X( [3Xorder[103X ) [32X function
+  [33X[1;0Y[29X[2XNumberSmallGroups[102X( [3Xorder[103X ) [32X function[133X
   
   [33X[0;0Yreturns the number of groups of order [3Xorder[103X.[133X
   
   [1X50.7-5 IdSmallGroup[101X
   
-  [29X[2XIdSmallGroup[102X( [3XG[103X ) [32X attribute
-  [29X[2XIdGroup[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIdSmallGroup[102X( [3XG[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIdGroup[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the  library  number  of  [3XG[103X;  that  is, the function returns a pair
   [10X[[3Xorder[103X[10X, [3Xi[103X[10X][110X where [3XG[103X is isomorphic to [10XSmallGroup( [3Xorder[103X[10X, [3Xi[103X[10X )[110X.[133X
   
   [1X50.7-6 IdsOfAllSmallGroups[101X
   
-  [29X[2XIdsOfAllSmallGroups[102X( [3Xarg[103X ) [32X function
+  [33X[1;0Y[29X[2XIdsOfAllSmallGroups[102X( [3Xarg[103X ) [32X function[133X
   
   [33X[0;0Ysimilar  to  [10XAllSmallGroups[110X  but  returns  ids  instead  of groups. This may
   prevent workspace overflows, if a large number of groups are expected in the
@@ -1025,8 +1025,8 @@
   
   [1X50.7-7 IdGap3SolvableGroup[101X
   
-  [29X[2XIdGap3SolvableGroup[102X( [3XG[103X ) [32X attribute
-  [29X[2XGap3CatalogueIdGroup[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIdGap3SolvableGroup[102X( [3XG[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XGap3CatalogueIdGroup[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns the catalogue number of [3XG[103X in the [5XGAP[105X 3 catalogue of solvable groups;
   that is, the function returns a pair [10X[[3Xorder[103X[10X, [3Xi[103X[10X][110X meaning that [3XG[103X is isomorphic
@@ -1034,13 +1034,13 @@
   
   [1X50.7-8 SmallGroupsInformation[101X
   
-  [29X[2XSmallGroupsInformation[102X( [3Xorder[103X ) [32X function
+  [33X[1;0Y[29X[2XSmallGroupsInformation[102X( [3Xorder[103X ) [32X function[133X
   
   [33X[0;0Yprints information on the groups of the specified order.[133X
   
   [1X50.7-9 UnloadSmallGroupsData[101X
   
-  [29X[2XUnloadSmallGroupsData[102X(  ) [32X function
+  [33X[1;0Y[29X[2XUnloadSmallGroupsData[102X(  ) [32X function[133X
   
   [33X[0;0Y[5XGAP[105X loads all necessary data from the library automatically, but it does not
   delete  the  data  from  the  workspace  again.  Usually,  this  will be not
@@ -1158,7 +1158,7 @@
   
   [1X50.8-1 SizesPerfectGroups[101X
   
-  [29X[2XSizesPerfectGroups[102X(  ) [32X function
+  [33X[1;0Y[29X[2XSizesPerfectGroups[102X(  ) [32X function[133X
   
   [33X[0;0YThis  is  the  ordered list of all numbers up to [22X10^6[122X that occur as sizes of
   perfect groups. One can iterate over the perfect groups library with:[133X
@@ -1174,8 +1174,8 @@
   
   [1X50.8-2 [33X[0;0YPerfectGroup[133X[101X
   
-  [29X[2XPerfectGroup[102X( [[3Xfilt[103X, ][3Xsize[103X[, [3Xn[103X] ) [32X function
-  [29X[2XPerfectGroup[102X( [[3Xfilt[103X, ][3Xsizenumberpair[103X ) [32X function
+  [33X[1;0Y[29X[2XPerfectGroup[102X( [[3Xfilt[103X, ][3Xsize[103X[, [3Xn[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XPerfectGroup[102X( [[3Xfilt[103X, ][3Xsizenumberpair[103X ) [32X function[133X
   
   [33X[0;0Yreturns  a  group  which is isomorphic to the library group specified by the
   size  number  [10X[  [3Xsize[103X[10X,  [3Xn[103X[10X  ][110X  or  by  the two separate arguments [3Xsize[103X and [3Xn[103X,
@@ -1195,7 +1195,7 @@
   
   [1X50.8-3 PerfectIdentification[101X
   
-  [29X[2XPerfectIdentification[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XPerfectIdentification[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0YThis  attribute  is  set  for  all  groups  obtained from the perfect groups
   library  and  has  the  value  [10X[[3Xsize[103X[10X,[3Xnr[103X[10X][110X if the group is obtained with these
@@ -1203,7 +1203,7 @@
   
   [1X50.8-4 NumberPerfectGroups[101X
   
-  [29X[2XNumberPerfectGroups[102X( [3Xsize[103X ) [32X function
+  [33X[1;0Y[29X[2XNumberPerfectGroups[102X( [3Xsize[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the  number  of non-isomorphic perfect groups of size [3Xsize[103X for each
   positive  integer  [3Xsize[103X  up to [22X10^6[122X except for the eight sizes listed at the
@@ -1212,7 +1212,7 @@
   
   [1X50.8-5 NumberPerfectLibraryGroups[101X
   
-  [29X[2XNumberPerfectLibraryGroups[102X( [3Xsize[103X ) [32X function
+  [33X[1;0Y[29X[2XNumberPerfectLibraryGroups[102X( [3Xsize[103X ) [32X function[133X
   
   [33X[0;0Yreturns the number of perfect groups of size [3Xsize[103X which are available in the
   library of finite perfect groups. (The purpose of the function is to provide
@@ -1220,7 +1220,7 @@
   
   [1X50.8-6 SizeNumbersPerfectGroups[101X
   
-  [29X[2XSizeNumbersPerfectGroups[102X( [3Xfactor1[103X, [3Xfactor2[103X, [3X...[103X ) [32X function
+  [33X[1;0Y[29X[2XSizeNumbersPerfectGroups[102X( [3Xfactor1[103X, [3Xfactor2[103X, [3X...[103X ) [32X function[133X
   
   [33X[0;0Y[2XSizeNumbersPerfectGroups[102X returns a list of pairs, each entry consisting of a
   group  order and the number of those groups in the library of perfect groups
@@ -1275,8 +1275,8 @@
   
   [1X50.8-7 [33X[0;0YDisplayInformationPerfectGroups[133X[101X
   
-  [29X[2XDisplayInformationPerfectGroups[102X( [3Xsize[103X[, [3Xn[103X] ) [32X function
-  [29X[2XDisplayInformationPerfectGroups[102X( [3Xsizenumberpair[103X ) [32X function
+  [33X[1;0Y[29X[2XDisplayInformationPerfectGroups[102X( [3Xsize[103X[, [3Xn[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XDisplayInformationPerfectGroups[102X( [3Xsizenumberpair[103X ) [32X function[133X
   
   [33X[0;0Y[2XDisplayInformationPerfectGroups[102X  displays  some invariants of the [3Xn[103X-th group
   of order [3Xsize[103X from the perfect groups library.[133X
@@ -1533,7 +1533,7 @@
   
   [1X50.9-1 PrimitiveGroup[101X
   
-  [29X[2XPrimitiveGroup[102X( [3Xdeg[103X, [3Xnr[103X ) [32X function
+  [33X[1;0Y[29X[2XPrimitiveGroup[102X( [3Xdeg[103X, [3Xnr[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the  primitive  permutation group of degree [3Xdeg[103X with number [3Xnr[103X from
   the list.[133X
@@ -1544,7 +1544,7 @@
   
   [1X50.9-2 NrPrimitiveGroups[101X
   
-  [29X[2XNrPrimitiveGroups[102X( [3Xdeg[103X ) [32X function
+  [33X[1;0Y[29X[2XNrPrimitiveGroups[102X( [3Xdeg[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the  number  of  primitive  permutation groups of degree [3Xdeg[103X in the
   library.[133X
@@ -1564,14 +1564,14 @@
   
   [1X50.9-3 PrimitiveGroupsIterator[101X
   
-  [29X[2XPrimitiveGroupsIterator[102X( [3Xattr1[103X, [3Xval1[103X, [3Xattr2[103X, [3Xval2[103X, [3X...[103X ) [32X function
+  [33X[1;0Y[29X[2XPrimitiveGroupsIterator[102X( [3Xattr1[103X, [3Xval1[103X, [3Xattr2[103X, [3Xval2[103X, [3X...[103X ) [32X function[133X
   
   [33X[0;0Yreturns  an  iterator  through [10XAllPrimitiveGroups([3Xattr1[103X[10X,[3Xval1[103X[10X,[3Xattr2[103X[10X,[3Xval2[103X[10X,...)[110X
   without creating all these groups at the same time.[133X
   
   [1X50.9-4 COHORTS_PRIMITIVE_GROUPS[101X
   
-  [29X[2XCOHORTS_PRIMITIVE_GROUPS[102X[32X global variable
+  [33X[1;0Y[29X[2XCOHORTS_PRIMITIVE_GROUPS[102X[32X global variable[133X
   
   [33X[0;0YIn  [DM88]  the  primitive  groups  are sorted in [21Xcohorts[121X according to their
   socle.  For  each  degree,  the variable [2XCOHORTS_PRIMITIVE_GROUPS[102X contains a
@@ -1602,7 +1602,7 @@
   
   [1X50.10-1 PrimitiveIdentification[101X
   
-  [29X[2XPrimitiveIdentification[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XPrimitiveIdentification[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a  primitive permutation group for which an [22XS_n[122X-conjugate exists in the
   library  of  primitive permutation groups (see [14X50.9[114X), this attribute returns
@@ -1623,7 +1623,7 @@
   
   [1X50.10-2 SimsNo[101X
   
-  [29X[2XSimsNo[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSimsNo[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0YIf  [3XG[103X is a primitive group obtained by [2XPrimitiveGroup[102X ([14X50.9-1[114X) (respectively
   one  of  the  selection functions) this attribute contains the number of the
@@ -1644,7 +1644,7 @@
   
   [1X50.10-3 PRIMITIVE_INDICES_MAGMA[101X
   
-  [29X[2XPRIMITIVE_INDICES_MAGMA[102X[32X global variable
+  [33X[1;0Y[29X[2XPRIMITIVE_INDICES_MAGMA[102X[32X global variable[133X
   
   [33X[0;0YThe system [5XMagma[105X also provides a list of primitive groups (see [RDU03]). For
   historical  reasons, its indexing up to degree 999 differs from the one used
@@ -1666,7 +1666,7 @@
   
   [1X50.11-1 IrreducibleSolvableGroupMS[101X
   
-  [29X[2XIrreducibleSolvableGroupMS[102X( [3Xn[103X, [3Xp[103X, [3Xi[103X ) [32X function
+  [33X[1;0Y[29X[2XIrreducibleSolvableGroupMS[102X( [3Xn[103X, [3Xp[103X, [3Xi[103X ) [32X function[133X
   
   [33X[0;0YThis  function  returns  a  representative  of  the  [3Xi[103X-th conjugacy class of
   irreducible solvable subgroup of GL([3Xn[103X, [3Xp[103X), where [3Xn[103X is an integer [22X> 1[122X, [3Xp[103X is a
@@ -1687,14 +1687,14 @@
   
   [1X50.11-2 NumberIrreducibleSolvableGroups[101X
   
-  [29X[2XNumberIrreducibleSolvableGroups[102X( [3Xn[103X, [3Xp[103X ) [32X function
+  [33X[1;0Y[29X[2XNumberIrreducibleSolvableGroups[102X( [3Xn[103X, [3Xp[103X ) [32X function[133X
   
   [33X[0;0YThis  function  returns  the  number  of  conjugacy  classes  of irreducible
   solvable subgroup of GL([3Xn[103X, [3Xp[103X).[133X
   
   [1X50.11-3 AllIrreducibleSolvableGroups[101X
   
-  [29X[2XAllIrreducibleSolvableGroups[102X( [3Xfunc1[103X, [3Xval1[103X, [3Xfunc2[103X, [3Xval2[103X, [3X...[103X ) [32X function
+  [33X[1;0Y[29X[2XAllIrreducibleSolvableGroups[102X( [3Xfunc1[103X, [3Xval1[103X, [3Xfunc2[103X, [3Xval2[103X, [3X...[103X ) [32X function[133X
   
   [33X[0;0YThis  function returns a list of conjugacy class representatives [22XG[122X of matrix
   groups  over  a  prime  field  such that [22Xf(G) = v[122X or [22Xf(G) ∈ v[122X, for all pairs
@@ -1707,7 +1707,7 @@
   
   [1X50.11-4 OneIrreducibleSolvableGroup[101X
   
-  [29X[2XOneIrreducibleSolvableGroup[102X( [3Xfunc1[103X, [3Xval1[103X, [3Xfunc2[103X, [3Xval2[103X, [3X...[103X ) [32X function
+  [33X[1;0Y[29X[2XOneIrreducibleSolvableGroup[102X( [3Xfunc1[103X, [3Xval1[103X, [3Xfunc2[103X, [3Xval2[103X, [3X...[103X ) [32X function[133X
   
   [33X[0;0YThis function returns one solvable subgroup [22XG[122X of a matrix group over a prime
   field  such that [22Xf(G) = v[122X or [22Xf(G) ∈ v[122X, for all pairs [22X(f,v)[122X in ([3Xfunc1[103X, [3Xval1[103X),
@@ -1720,7 +1720,7 @@
   
   [1X50.11-5 PrimitiveIndexIrreducibleSolvableGroup[101X
   
-  [29X[2XPrimitiveIndexIrreducibleSolvableGroup[102X[32X global variable
+  [33X[1;0Y[29X[2XPrimitiveIndexIrreducibleSolvableGroup[102X[32X global variable[133X
   
   [33X[0;0YThis  variable  provides  a  way  to get from irreducible solvable groups to
   primitive groups and vice versa. For the group [22XG[122X = [10XIrreducibleSolvableGroup(
@@ -1733,7 +1733,7 @@
   
   [1X50.11-6 IrreducibleSolvableGroup[101X
   
-  [29X[2XIrreducibleSolvableGroup[102X( [3Xn[103X, [3Xp[103X, [3Xi[103X ) [32X function
+  [33X[1;0Y[29X[2XIrreducibleSolvableGroup[102X( [3Xn[103X, [3Xp[103X, [3Xi[103X ) [32X function[133X
   
   [33X[0;0YThis  function  is  obsolete,  because  for  [3Xn[103X  [22X= 2[122X, [3Xp[103X [22X= 13[122X, two groups were
   missing  from  the underlying database. It has been replaced by the function
@@ -1860,9 +1860,9 @@
   
   [1X50.12-1 ImfNumberQQClasses[101X
   
-  [29X[2XImfNumberQQClasses[102X( [3Xdim[103X ) [32X function
-  [29X[2XImfNumberQClasses[102X( [3Xdim[103X ) [32X function
-  [29X[2XImfNumberZClasses[102X( [3Xdim[103X, [3Xq[103X ) [32X function
+  [33X[1;0Y[29X[2XImfNumberQQClasses[102X( [3Xdim[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XImfNumberQClasses[102X( [3Xdim[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XImfNumberZClasses[102X( [3Xdim[103X, [3Xq[103X ) [32X function[133X
   
   [33X[0;0Y[10XImfNumberQQClasses[110X   returns   the   number   [22Xq_1([122X[3Xdim[103X[22X)[122X   of   [22Xℚ[122X-classes   of
   i.m.f. rational  matrix groups of dimension [3Xdim[103X. Valid values of [3Xdim[103X are all
@@ -1888,7 +1888,7 @@
   
   [1X50.12-2 DisplayImfInvariants[101X
   
-  [29X[2XDisplayImfInvariants[102X( [3Xdim[103X, [3Xq[103X[, [3Xz[103X] ) [32X function
+  [33X[1;0Y[29X[2XDisplayImfInvariants[102X( [3Xdim[103X, [3Xq[103X[, [3Xz[103X] ) [32X function[133X
   
   [33X[0;0Y[2XDisplayImfInvariants[102X displays the following [22Xℤ[122X-class invariants of the groups
   in  the [3Xz[103X-th [22Xℤ[122X-class in the [3Xq[103X-th [22Xℚ[122X-class of i.m.f. integral matrix groups of
@@ -2027,7 +2027,7 @@
   
   [1X50.12-3 ImfInvariants[101X
   
-  [29X[2XImfInvariants[102X( [3Xdim[103X, [3Xq[103X[, [3Xz[103X] ) [32X function
+  [33X[1;0Y[29X[2XImfInvariants[102X( [3Xdim[103X, [3Xq[103X[, [3Xz[103X] ) [32X function[133X
   
   [33X[0;0Y[2XImfInvariants[102X returns a record which provides some [22Xℤ[122X-class invariants of the
   groups  in  the  [3Xz[103X-th  [22Xℤ[122X-class in the [3Xq[103X-th [22Xℚ[122X-class of i.m.f. integral matrix
@@ -2103,7 +2103,7 @@
   
   [1X50.12-4 ImfMatrixGroup[101X
   
-  [29X[2XImfMatrixGroup[102X( [3Xdim[103X, [3Xq[103X[, [3Xz[103X] ) [32X function
+  [33X[1;0Y[29X[2XImfMatrixGroup[102X( [3Xdim[103X, [3Xq[103X[, [3Xz[103X] ) [32X function[133X
   
   [33X[0;0Y[2XImfMatrixGroup[102X  is  the  essential extraction function of this library (note
   that  its  name has been changed from [10XImfMatGroup[110X in [5XGAP[105X 3 to [2XImfMatrixGroup[102X
@@ -2181,7 +2181,7 @@
   
   [1X50.12-5 IsomorphismPermGroup[101X
   
-  [29X[2XIsomorphismPermGroup[102X( [3XG[103X ) [32X method
+  [33X[1;0Y[29X[2XIsomorphismPermGroup[102X( [3XG[103X ) [32X method[133X
   
   [33X[0;0Yreturns an isomorphism, [22Xφ[122X say, from the given i.m.f. integral matrix group [22XG[122X
   to  a permutation group [22XP := φ(G)[122X acting on a minimal orbit, [22XS[122X say, of short
@@ -2230,7 +2230,7 @@
   
   [1X50.12-6 IsomorphismPermGroupImfGroup[101X
   
-  [29X[2XIsomorphismPermGroupImfGroup[102X( [3XG[103X, [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XIsomorphismPermGroupImfGroup[102X( [3XG[103X, [3Xn[103X ) [32X function[133X
   
   [33X[0;0Y[2XIsomorphismPermGroupImfGroup[102X  returns  an isomorphism, [22Xφ[122X say, from the given
   i.m.f. integral  matrix  group [3XG[103X to a permutation group [22XP[122X acting on the [3Xn[103X-th

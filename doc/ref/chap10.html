@@ -132,63 +132,63 @@
 
 <h5>10.1-1 IsStream</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsStream</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsStream</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Streams are <strong class="pkg">GAP</strong> objects and all open streams, input, output, text and binary, lie in this category.</p>
 
 <p><a id="X7FE4096F8497B7F2" name="X7FE4096F8497B7F2"></a></p>
 
 <h5>10.1-2 IsClosedStream</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsClosedStream</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsClosedStream</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>When a stream is closed, its type changes to lie in <code class="func">IsClosedStream</code>. This category is used to install methods that trap accesses to closed streams.</p>
 
 <p><a id="X7FB4391283847C3A" name="X7FB4391283847C3A"></a></p>
 
 <h5>10.1-3 IsInputStream</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInputStream</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInputStream</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>All input streams lie in this category, and support input operations such as <code class="func">ReadByte</code> (<a href="chap10.html#X79E1E6A57AE58BB8"><span class="RefLink">10.3-3</span></a>) (see <a href="chap10.html#X7D1D33A587BFD93D"><span class="RefLink">10.3</span></a>)</p>
 
 <p><a id="X7C8956BB7FE2A89C" name="X7C8956BB7FE2A89C"></a></p>
 
 <h5>10.1-4 IsInputTextStream</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInputTextStream</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInputTextStream</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>All <em>text</em> input streams lie in this category. They translate new-line characters read.</p>
 
 <p><a id="X7DCD6ADC86CF2472" name="X7DCD6ADC86CF2472"></a></p>
 
 <h5>10.1-5 IsInputTextNone</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInputTextNone</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInputTextNone</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>It is convenient to use a category to distinguish dummy streams (see <a href="chap10.html#X8724699C7D67BA47"><span class="RefLink">10.9</span></a>) from others. Other distinctions are usually made using representations</p>
 
 <p><a id="X7D357CA07E7B1E78" name="X7D357CA07E7B1E78"></a></p>
 
 <h5>10.1-6 IsOutputStream</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsOutputStream</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsOutputStream</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>All output streams lie in this category and support basic operations such as <code class="func">WriteByte</code> (<a href="chap10.html#X7D37C7A07E9C319C"><span class="RefLink">10.4-1</span></a>) (see Section <a href="chap10.html#X7F454EB286947C85"><span class="RefLink">10.4</span></a>).</p>
 
 <p><a id="X8248B8A4844CB8AB" name="X8248B8A4844CB8AB"></a></p>
 
 <h5>10.1-7 IsOutputTextStream</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsOutputTextStream</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsOutputTextStream</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>All <em>text</em> output streams lie in this category and translate new-line characters on output.</p>
 
 <p><a id="X7C89CDD47E33E741" name="X7C89CDD47E33E741"></a></p>
 
 <h5>10.1-8 IsOutputTextNone</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsOutputTextNone</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsOutputTextNone</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>It is convenient to use a category to distinguish dummy streams (see <a href="chap10.html#X8724699C7D67BA47"><span class="RefLink">10.9</span></a>) from others. Other distinctions are usually made using representations</p>
 
 <p><a id="X7F0F9DD47DE16DAB" name="X7F0F9DD47DE16DAB"></a></p>
 
 <h5>10.1-9 StreamsFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StreamsFamily</code></td><td class="tdright">( family )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StreamsFamily</code></td><td class="tdright">(&nbsp;family&nbsp;)</td></tr></table></div>
 <p>All streams lie in the <code class="func">StreamsFamily</code>.</p>
 
 <p><a id="X8461F4DF7FC20C4B" name="X8461F4DF7FC20C4B"></a></p>
@@ -199,7 +199,7 @@
 
 <h5>10.2-1 CloseStream</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CloseStream</code>( <var class="Arg">stream</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CloseStream</code>( <var class="Arg">stream</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>In order to preserve system resources and to flush output streams every stream should be closed as soon as it is no longer used using <code class="func">CloseStream</code>.</p>
 
 <p>It is an error to try to read characters from or write characters to a closed stream. Closing a stream tells the <strong class="pkg">GAP</strong> kernel and/or the operating system kernel that the file is no longer needed. This may be necessary because the <strong class="pkg">GAP</strong> kernel and/or the operating system may impose a limit on how many streams may be open simultaneously.</p>
@@ -208,14 +208,14 @@
 
 <h5>10.2-2 FileDescriptorOfStream</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FileDescriptorOfStream</code>( <var class="Arg">stream</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FileDescriptorOfStream</code>( <var class="Arg">stream</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the UNIX file descriptor of the underlying file. This is mainly useful for the <code class="func">UNIXSelect</code> (<a href="chap10.html#X87BC257A78F96828"><span class="RefLink">10.2-3</span></a>) function call. This is as of now only available on UNIX-like operating systems and only for streams to local processes and local files.</p>
 
 <p><a id="X87BC257A78F96828" name="X87BC257A78F96828"></a></p>
 
 <h5>10.2-3 UNIXSelect</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UNIXSelect</code>( <var class="Arg">inlist</var>, <var class="Arg">outlist</var>, <var class="Arg">exclist</var>, <var class="Arg">timeoutsec</var>, <var class="Arg">timeoutusec</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UNIXSelect</code>( <var class="Arg">inlist</var>, <var class="Arg">outlist</var>, <var class="Arg">exclist</var>, <var class="Arg">timeoutsec</var>, <var class="Arg">timeoutusec</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>makes the UNIX C-library function <code class="code">select</code> accessible from <strong class="pkg">GAP</strong> for streams. The functionality is as described in the man page (see UNIX file descriptors (integers) for streams. They can be obtained via <code class="func">FileDescriptorOfStream</code> (<a href="chap10.html#X7F0459287E717456"><span class="RefLink">10.2-2</span></a>) for streams to local processes and to local files. The argument <var class="Arg">timeoutsec</var> is a timeout in seconds as in the <code class="code">struct timeval</code> on the C level. The argument <var class="Arg">timeoutusec</var> is analogously in microseconds. The total timeout is the sum of both. If one of those timeout arguments is not a small integer then no timeout is applicable (<code class="keyw">fail</code> is allowed for the timeout arguments).</p>
 
 <p>The return value is the number of streams that are ready, this may be 0 if a timeout was specified. All file descriptors in the three lists that are not yet ready are replaced by <code class="keyw">fail</code> in this function. So the lists are changed!</p>
@@ -236,14 +236,14 @@
 
 <h5>10.3-1 Read</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Read</code>( <var class="Arg">input-text-stream</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Read</code>( <var class="Arg">input-text-stream</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>reads the input-text-stream as input until <code class="code">end-of-stream</code> occurs. See <a href="chap9.html#X81A0A4FF842B039B"><span class="RefLink">9.7</span></a> for details.</p>
 
 <p><a id="X7D62F2877F0E45A7" name="X7D62F2877F0E45A7"></a></p>
 
 <h5>10.3-2 ReadAsFunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadAsFunction</code>( <var class="Arg">input-text-stream</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadAsFunction</code>( <var class="Arg">input-text-stream</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>reads the input-text-stream as function and returns this function. See <a href="chap9.html#X81A0A4FF842B039B"><span class="RefLink">9.7</span></a> for details.</p>
 
 
@@ -266,7 +266,7 @@
 
 <h5>10.3-3 ReadByte</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadByte</code>( <var class="Arg">input-stream</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadByte</code>( <var class="Arg">input-stream</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">ReadByte</code> returns one character (returned as integer) from the input stream <var class="Arg">input-stream</var>. <code class="func">ReadByte</code> returns <code class="keyw">fail</code> if there is no character available, in particular if it is at the end of a file.</p>
 
 <p>If <var class="Arg">input-stream</var> is the input stream of a input/output process, <code class="func">ReadByte</code> may also return <code class="keyw">fail</code> if no byte is currently available.</p>
@@ -279,7 +279,7 @@
 
 <h5>10.3-4 ReadLine</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadLine</code>( <var class="Arg">input-stream</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadLine</code>( <var class="Arg">input-stream</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">ReadLine</code> returns one line (returned as string <em>with</em> the newline) from the input stream <var class="Arg">input-stream</var>. <code class="func">ReadLine</code> reads in the input until a newline is read or the end-of-stream is encountered.</p>
 
 <p>If <var class="Arg">input-stream</var> is the input stream of a input/output process, <code class="func">ReadLine</code> may also return <code class="keyw">fail</code> or return an incomplete line if the other process has not yet written any more. It will always wait (block) for at least one byte to be available, but will then return as much input as is available, up to a limit of one line</p>
@@ -290,7 +290,7 @@
 
 <h5>10.3-5 ReadAll</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadAll</code>( <var class="Arg">input-stream</var>[, <var class="Arg">limit</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadAll</code>( <var class="Arg">input-stream</var>[, <var class="Arg">limit</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">ReadAll</code> returns all characters as string from the input stream <var class="Arg">stream-in</var>. It waits (blocks) until at least one character is available from the stream, or until there is evidence that no characters will ever be available again. This last indicates that the stream is at end-of-stream. Otherwise, it reads as much input as it can from the stream without blocking further and returns it to the user. If the stream is already at end of file, so that no bytes are available, <code class="keyw">fail</code> is returned. In the case of a file stream connected to a normal file (not a pseudo-tty or named pipe or similar), all the bytes should be immediately available and this function will read the remainder of the file.</p>
 
 <p>With a second argument, at most <var class="Arg">limit</var> bytes will be returned. Depending on the stream a bounded number of additional bytes may have been read into an internal buffer.</p>
@@ -323,14 +323,14 @@ fail
 
 <h5>10.3-6 IsEndOfStream</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEndOfStream</code>( <var class="Arg">input-stream</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEndOfStream</code>( <var class="Arg">input-stream</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">IsEndOfStream</code> returns <code class="keyw">true</code> if the input stream is at <em>end-of-stream</em>, and <code class="keyw">false</code> otherwise. Note that <code class="func">IsEndOfStream</code> might return <code class="keyw">false</code> even if the next <code class="func">ReadByte</code> (<a href="chap10.html#X79E1E6A57AE58BB8"><span class="RefLink">10.3-3</span></a>) fails.</p>
 
 <p><a id="X7B646FA3860521D1" name="X7B646FA3860521D1"></a></p>
 
 <h5>10.3-7 PositionStream</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionStream</code>( <var class="Arg">input-stream</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionStream</code>( <var class="Arg">input-stream</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Some input streams, such as string streams and file streams attached to disk files, support a form of random access by way of the operations <code class="func">PositionStream</code>, <code class="func">SeekPositionStream</code> (<a href="chap10.html#X7A60AD8C7E0D0507"><span class="RefLink">10.3-9</span></a>) and <code class="func">RewindStream</code> (<a href="chap10.html#X7A777E1186EB330B"><span class="RefLink">10.3-8</span></a>). <code class="func">PositionStream</code> returns a non-negative integer denoting the current position in the stream (usually the number of characters <em>before</em> the next one to be read.</p>
 
 <p>If this is not possible, for example for an input stream attached to standard input (normally the keyboard), then <code class="keyw">fail</code> is returned</p>
@@ -339,7 +339,7 @@ fail
 
 <h5>10.3-8 RewindStream</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RewindStream</code>( <var class="Arg">input-stream</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RewindStream</code>( <var class="Arg">input-stream</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">RewindStream</code> attempts to return an input stream to its starting condition, so that all the same characters can be read again. It returns <code class="keyw">true</code> if the rewind succeeds and <code class="keyw">fail</code> otherwise</p>
 
 <p>A default method implements RewindStream using <code class="func">SeekPositionStream</code> (<a href="chap10.html#X7A60AD8C7E0D0507"><span class="RefLink">10.3-9</span></a>).</p>
@@ -348,7 +348,7 @@ fail
 
 <h5>10.3-9 SeekPositionStream</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SeekPositionStream</code>( <var class="Arg">input-stream</var>, <var class="Arg">pos</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SeekPositionStream</code>( <var class="Arg">input-stream</var>, <var class="Arg">pos</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">SeekPositionStream</code> attempts to rewind or wind forward an input stream to the specified position. This is not possible for all streams. It returns <code class="keyw">true</code> if the seek is successful and <code class="keyw">fail</code> otherwise.</p>
 
 <p><a id="X7F454EB286947C85" name="X7F454EB286947C85"></a></p>
@@ -359,7 +359,7 @@ fail
 
 <h5>10.4-1 WriteByte</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WriteByte</code>( <var class="Arg">output-stream</var>, <var class="Arg">byte</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WriteByte</code>( <var class="Arg">output-stream</var>, <var class="Arg">byte</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>writes the next character (given as <em>integer</em>) to the output stream <var class="Arg">output-stream</var>. The function returns <code class="keyw">true</code> if the write succeeds and <code class="keyw">fail</code> otherwise.</p>
 
 <p><code class="func">WriteByte</code> is the basic operation for output streams. If a <code class="func">WriteByte</code> method is installed for a user-defined type of stream, then all the other output stream operations will work (although possibly not at peak efficiency).</p>
@@ -368,7 +368,7 @@ fail
 
 <h5>10.4-2 WriteLine</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WriteLine</code>( <var class="Arg">output-stream</var>, <var class="Arg">string</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WriteLine</code>( <var class="Arg">output-stream</var>, <var class="Arg">string</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>appends <var class="Arg">string</var> to <var class="Arg">output-stream</var>. A final newline is written. The function returns <code class="keyw">true</code> if the write succeeds and <code class="keyw">fail</code> otherwise.</p>
 
 <p>A default method is installed which implements <code class="func">WriteLine</code> by repeated calls to <code class="func">WriteByte</code> (<a href="chap10.html#X7D37C7A07E9C319C"><span class="RefLink">10.4-1</span></a>).</p>
@@ -377,7 +377,7 @@ fail
 
 <h5>10.4-3 WriteAll</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WriteAll</code>( <var class="Arg">output-stream</var>, <var class="Arg">string</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WriteAll</code>( <var class="Arg">output-stream</var>, <var class="Arg">string</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>appends <var class="Arg">string</var> to <var class="Arg">output-stream</var>. No final newline is written. The function returns <code class="keyw">true</code> if the write succeeds and <code class="keyw">fail</code> otherwise. It will block as long as necessary for the write operation to complete (for example for a child process to clear its input buffer )</p>
 
 <p>A default method is installed which implements <code class="func">WriteAll</code> by repeated calls to <code class="func">WriteByte</code> (<a href="chap10.html#X7D37C7A07E9C319C"><span class="RefLink">10.4-1</span></a>).</p>
@@ -403,8 +403,8 @@ You
 
 <h5>10.4-4 <span class="Heading">PrintTo and AppendTo (for streams)</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrintTo</code>( <var class="Arg">output-stream</var>, <var class="Arg">arg1</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AppendTo</code>( <var class="Arg">output-stream</var>, <var class="Arg">arg1</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrintTo</code>( <var class="Arg">output-stream</var>, <var class="Arg">arg1</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AppendTo</code>( <var class="Arg">output-stream</var>, <var class="Arg">arg1</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>These functions work like <code class="func">Print</code> (<a href="chap6.html#X7AFA64D97A1F39A3"><span class="RefLink">6.3-4</span></a>), except that the output is appended to the output stream <var class="Arg">output-stream</var>.</p>
 
 
@@ -420,29 +420,29 @@ You
 
 <h5>10.4-5 LogTo</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LogTo</code>( <var class="Arg">stream</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LogTo</code>( <var class="Arg">stream</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>causes the subsequent interaction to be logged to the output stream <var class="Arg">stream</var>. It works in precisely the same way as it does for files (see <code class="func">LogTo</code> (<a href="chap9.html#X79813A6686894960"><span class="RefLink">9.7-4</span></a>)).</p>
 
 <p><a id="X7B843516796B2A18" name="X7B843516796B2A18"></a></p>
 
 <h5>10.4-6 InputLogTo</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputLogTo</code>( <var class="Arg">stream</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputLogTo</code>( <var class="Arg">stream</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>causes the subsequent input to be logged to the output stream <var class="Arg">stream</var>. It works just like it does for files (see <code class="func">InputLogTo</code> (<a href="chap9.html#X7CAB119378B075B7"><span class="RefLink">9.7-5</span></a>)).</p>
 
 <p><a id="X834A6DD17B0E2062" name="X834A6DD17B0E2062"></a></p>
 
 <h5>10.4-7 OutputLogTo</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OutputLogTo</code>( <var class="Arg">stream</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OutputLogTo</code>( <var class="Arg">stream</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>causes the subsequent output to be logged to the output stream <var class="Arg">stream</var>. It works just like it does for files (see <code class="func">OutputLogTo</code> (<a href="chap9.html#X7A5591D87EAFA6CC"><span class="RefLink">9.7-6</span></a>)).</p>
 
 <p><a id="X8663FCD57E8BC390" name="X8663FCD57E8BC390"></a></p>
 
 <h5>10.4-8 SetPrintFormattingStatus</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetPrintFormattingStatus</code>( <var class="Arg">stream</var>, <var class="Arg">newstatus</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrintFormattingStatus</code>( <var class="Arg">stream</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetPrintFormattingStatus</code>( <var class="Arg">stream</var>, <var class="Arg">newstatus</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrintFormattingStatus</code>( <var class="Arg">stream</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>When text is being sent to an output text stream via <code class="func">PrintTo</code> (<a href="chap9.html#X86956C577FFEE1F9"><span class="RefLink">9.7-3</span></a>), <code class="func">AppendTo</code> (<a href="chap9.html#X86956C577FFEE1F9"><span class="RefLink">9.7-3</span></a>), <code class="func">LogTo</code> (<a href="chap10.html#X7BF4E44C7D51E085"><span class="RefLink">10.4-5</span></a>), etc., it is by default formatted just as it would be were it being printed to the screen. Thus, it is broken into lines of reasonable length at (where possible) sensible places, lines containing elements of lists or records are indented, and so forth. This is appropriate if the output is eventually to be viewed by a human, and harmless if it to passed as input to <strong class="pkg">GAP</strong>, but may be unhelpful if the output is to be passed as input to another program. It is possible to turn off this behaviour for a stream using the <code class="func">SetPrintFormattingStatus</code> operation, and to test whether it is on or off using <code class="func">PrintFormattingStatus</code>.</p>
 
 <p><code class="func">SetPrintFormattingStatus</code> sets whether output sent to the output stream <var class="Arg">stream</var> via <code class="func">PrintTo</code> (<a href="chap9.html#X86956C577FFEE1F9"><span class="RefLink">9.7-3</span></a>), <code class="func">AppendTo</code> (<a href="chap9.html#X86956C577FFEE1F9"><span class="RefLink">9.7-3</span></a>), etc. will be formatted with line breaks and indentation. If the second argument <var class="Arg">newstatus</var> is <code class="keyw">true</code> then output will be so formatted, and if <code class="keyw">false</code> then it will not. If the stream is not a text stream, only <code class="keyw">false</code> is allowed.</p>
@@ -485,14 +485,14 @@ You
 
 <h5>10.5-1 InputTextFile</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputTextFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputTextFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="code">InputTextFile( <var class="Arg">filename</var> )</code> returns an input stream in the category <code class="func">IsInputTextStream</code> (<a href="chap10.html#X7C8956BB7FE2A89C"><span class="RefLink">10.1-4</span></a>) that delivers the characters from the file <var class="Arg">filename</var>.</p>
 
 <p><a id="X83F53291822B7126" name="X83F53291822B7126"></a></p>
 
 <h5>10.5-2 OutputTextFile</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OutputTextFile</code>( <var class="Arg">filename</var>, <var class="Arg">append</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OutputTextFile</code>( <var class="Arg">filename</var>, <var class="Arg">append</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="code">OutputTextFile( <var class="Arg">filename</var>, <var class="Arg">append</var> )</code> returns an output stream in the category <code class="code">IsOutputTextFile</code> that writes received characters to the file <var class="Arg">filename</var>. If <var class="Arg">append</var> is <code class="keyw">false</code>, then the file is emptied first, otherwise received characters are added at the end of the file.</p>
 
 
@@ -533,21 +533,21 @@ AppendLine
 
 <h5>10.6-1 InputTextUser</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputTextUser</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputTextUser</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns an input text stream which delivers characters typed by the user (or from the standard input device if it has been redirected). In normal circumstances, characters are delivered one by one as they are typed, without waiting until the end of a line. No prompts are printed.</p>
 
 <p><a id="X83E5FC9487766297" name="X83E5FC9487766297"></a></p>
 
 <h5>10.6-2 OutputTextUser</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OutputTextUser</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OutputTextUser</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns an output stream which delivers characters to the user's display (or the standard output device if it has been redirected). Each character is delivered immediately it is written, without waiting for a full line of output. Text written in this way is <em>not</em> written to the session log (see <code class="func">LogTo</code> (<a href="chap9.html#X79813A6686894960"><span class="RefLink">9.7-4</span></a>)).</p>
 
 <p><a id="X7DAF5B7085F4F893" name="X7DAF5B7085F4F893"></a></p>
 
 <h5>10.6-3 InputFromUser</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputFromUser</code>( <var class="Arg">arg</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputFromUser</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>prints the <var class="Arg">arg</var> as a prompt, then waits until a text is typed by the user (or from the standard input device if it has been redirected). This text must be a <em>single</em> expression, followed by one <em>enter</em>. This is evaluated (see <code class="func">EvalString</code> (<a href="chap27.html#X7DE4CCD285440659"><span class="RefLink">27.9-3</span></a>)) and the result is returned.</p>
 
 <p><a id="X8028E1D87CE2F059" name="X8028E1D87CE2F059"></a></p>
@@ -560,14 +560,14 @@ AppendLine
 
 <h5>10.7-1 InputTextString</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputTextString</code>( <var class="Arg">string</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputTextString</code>( <var class="Arg">string</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="code">InputTextString( <var class="Arg">string</var> )</code> returns an input stream that delivers the characters from the string <var class="Arg">string</var>. The <var class="Arg">string</var> is not changed when reading characters from it and changing the <var class="Arg">string</var> after the call to <code class="func">InputTextString</code> has no influence on the input stream.</p>
 
 <p><a id="X7FEDA5167979B74D" name="X7FEDA5167979B74D"></a></p>
 
 <h5>10.7-2 OutputTextString</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OutputTextString</code>( <var class="Arg">list</var>, <var class="Arg">append</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OutputTextString</code>( <var class="Arg">list</var>, <var class="Arg">append</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns an output stream that puts all received characters into the list <var class="Arg">list</var>. If <var class="Arg">append</var> is <code class="keyw">false</code>, then the list is emptied first, otherwise received characters are added at the end of the list.</p>
 
 
@@ -606,14 +606,14 @@ AppendLine
 
 <h5>10.8-1 IsInputOutputStream</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInputOutputStream</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInputOutputStream</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p><code class="func">IsInputOutputStream</code> is the Category of Input-Output Streams; it returns <code class="keyw">true</code> if the <var class="Arg">obj</var> is an input-output stream and <code class="keyw">false</code> otherwise.</p>
 
 <p><a id="X820799A3824684AC" name="X820799A3824684AC"></a></p>
 
 <h5>10.8-2 InputOutputLocalProcess</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputOutputLocalProcess</code>( <var class="Arg">dir</var>, <var class="Arg">executable</var>, <var class="Arg">args</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputOutputLocalProcess</code>( <var class="Arg">dir</var>, <var class="Arg">executable</var>, <var class="Arg">args</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>starts up a slave process, whose executable file is <var class="Arg">executable</var>, with "command line" arguments <var class="Arg">args</var> in the directory <var class="Arg">dir</var>. (Suitable choices for <var class="Arg">dir</var> are <code class="code">DirectoryCurrent()</code> or <code class="code">DirectoryTemporary()</code> (see Section <a href="chap9.html#X85030B35865A1080"><span class="RefLink">9.3</span></a>); <code class="code">DirectoryTemporary()</code> may be a good choice when <var class="Arg">executable</var> generates output files that it doesn't itself remove afterwards.) <code class="func">InputOutputLocalProcess</code> returns an InputOutputStream object. Bytes written to this stream are received by the slave process as if typed at a terminal on standard input. Bytes written to standard output by the slave process can be read from the stream.</p>
 
 <p>When the stream is closed, the signal SIGTERM is delivered to the child process, which is expected to exit.</p>
@@ -648,7 +648,7 @@ true
 
 <h5>10.8-3 ReadAllLine</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadAllLine</code>( <var class="Arg">iostream</var>[, <var class="Arg">nofail</var>][, <var class="Arg">IsAllLine</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadAllLine</code>( <var class="Arg">iostream</var>[, <var class="Arg">nofail</var>][, <var class="Arg">IsAllLine</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>For an input/output stream <var class="Arg">iostream</var> <code class="func">ReadAllLine</code> reads until a newline character if any input is found or returns <code class="keyw">fail</code> if no input is found, i.e. if any input is found <code class="func">ReadAllLine</code> is non-blocking.</p>
 
 <p>If the argument <var class="Arg">nofail</var> (which must be <code class="keyw">false</code> or <code class="keyw">true</code>) is provided and it is set to <code class="keyw">true</code> then <code class="func">ReadAllLine</code> will wait, if necessary, for input and never return <code class="keyw">fail</code>.</p>
@@ -674,14 +674,14 @@ line -&gt; 0 &lt; Length(line) and line[Length(line)] = '\n'
 
 <h5>10.9-1 InputTextNone</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputTextNone</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputTextNone</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a dummy input text stream, which delivers no characters, i.e., it is always at end of stream. Its main use is for calls to <code class="func">Process</code> (<a href="chap11.html#X7B09033178D1107A"><span class="RefLink">11.1-1</span></a>) when the started program does not read anything.</p>
 
 <p><a id="X7CC5C1FC81715E38" name="X7CC5C1FC81715E38"></a></p>
 
 <h5>10.9-2 OutputTextNone</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OutputTextNone</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OutputTextNone</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a dummy output stream, which discards all received characters. Its main use is for calls to <code class="func">Process</code> (<a href="chap11.html#X7B09033178D1107A"><span class="RefLink">11.1-1</span></a>) when the started program does not write anything.</p>
 
 <p><a id="X7CB5832F8721ADF3" name="X7CB5832F8721ADF3"></a></p>
@@ -700,7 +700,7 @@ line -&gt; 0 &lt; Length(line) and line[Length(line)] = '\n'
 
 <h5>10.10-1 InstallCharReadHookFunc</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallCharReadHookFunc</code>( <var class="Arg">stream</var>, <var class="Arg">mode</var>, <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallCharReadHookFunc</code>( <var class="Arg">stream</var>, <var class="Arg">mode</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>installs the function <var class="Arg">func</var> as a handler function for the stream <var class="Arg">stream</var>. The argument <var class="Arg">mode</var> decides, for what operations on the stream this function is installed. <var class="Arg">mode</var> must be a string, in which a letter <code class="code">r</code> means "read", <code class="code">w</code> means "write" and <code class="code">x</code> means "exception", according to the <code class="code">select</code> function call in the UNIX C-library (see <code class="code">man select</code> and <code class="func">UNIXSelect</code> (<a href="chap10.html#X87BC257A78F96828"><span class="RefLink">10.2-3</span></a>)). More than one letter is allowed in <var class="Arg">mode</var>. As described above the function is called in a situation when <strong class="pkg">GAP</strong> is reading a character from the keyboard. Handler functions should not use much time to complete.</p>
 
 <p>This functionality does not work on the Macintosh architecture and only works if the operating system has a <code class="code">select</code> function.</p>
@@ -709,7 +709,7 @@ line -&gt; 0 &lt; Length(line) and line[Length(line)] = '\n'
 
 <h5>10.10-2 UnInstallCharReadHookFunc</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnInstallCharReadHookFunc</code>( <var class="Arg">stream</var>, <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnInstallCharReadHookFunc</code>( <var class="Arg">stream</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>uninstalls the function <var class="Arg">func</var> as a handler function for the stream <var class="Arg">stream</var>. All instances are deinstalled, regardless of the mode of operation (read, write, exception).</p>
 
 <p>This functionality does not work on the Macintosh architecture and only works if the operating system has a <code class="code">select</code> function.</p>
@@ -726,14 +726,14 @@ line -&gt; 0 &lt; Length(line) and line[Length(line)] = '\n'
 
 <h5>10.11-1 ReadCSV</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadCSV</code>( <var class="Arg">filename</var>[, <var class="Arg">nohead</var>][, <var class="Arg">separator</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadCSV</code>( <var class="Arg">filename</var>[, <var class="Arg">nohead</var>][, <var class="Arg">separator</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function reads in a spreadsheet, saved in CSV format (<em>c</em>omma <em>s</em>eparated <em>v</em>alues) and returns its entries as a list of records. The entries of the first line of the spreadsheet are used to denote the names of the record components. Blanks will be translated into underscore characters. If the parameter <var class="Arg">nohead</var> is given as <code class="keyw">true</code>, instead the record components will be called <code class="code">fieldn</code>. Each subsequent line will create one record. If given, <var class="Arg">separator</var> is the character used to separate fields. Otherwise it defaults to a comma.</p>
 
 <p><a id="X8779DAC585E05A47" name="X8779DAC585E05A47"></a></p>
 
 <h5>10.11-2 PrintCSV</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrintCSV</code>( <var class="Arg">filename</var>, <var class="Arg">list</var>[, <var class="Arg">fields</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrintCSV</code>( <var class="Arg">filename</var>, <var class="Arg">list</var>[, <var class="Arg">fields</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function prints a list of records as a spreadsheet in CSV format (which can be read in for example into Excel). The names of the record components will be printed as entries in the first line. If the argument <var class="Arg">fields</var> is given only the record fields listed in this list will be printed and they will be printed in the same arrangement as given in this list. If the option noheader is set to true the line with the record field names will not be printed.</p>
 
 

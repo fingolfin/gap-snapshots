@@ -109,14 +109,14 @@
   
   [1X4.2 [33X[0;0YSubspaces of projective spaces[133X[101X
   
-  [33X[0;0YThe  elements  of a projective space [22XPG(n,q)[122X are the subspaces of a suitable
-  dimension.  The  empty  subspace,  also  called  the  trivial  subspace, has
-  dimension  [22X-1[122X and corresponds to the zero dimensional vector subspace of the
-  underlying  vector  space  of  [22XPG(n,q)[122X, and is hence represented by the zero
-  vector  of  length [22Xn+1[122X over the underlying field [22XGF(q)[122X. The trivial subspace
-  and  the  whole projective space are mathematically considered as a subspace
-  of  the  projective geometry, but not as elements of the incidence geometry,
-  and    hence    do    in    [5XFinInG[105X    [12Xnot[112X    belong    to    the    category
+  [33X[0;0YThe  elements  of  a  projective  space [22XmathrmPG(n,q)[122X are the subspaces of a
+  suitable  dimension.  The  empty subspace, also called the trivial subspace,
+  has  dimension [22X-1[122X and corresponds to the zero dimensional vector subspace of
+  the  underlying  vector space of [22XmathrmPG(n,q)[122X , and is hence represented by
+  the  zero  vector  of length [22Xn+1[122X over the underlying field [22XmathrmGF(q)[122X . The
+  trivial   subspace   and  the  whole  projective  space  are  mathematically
+  considered  as a subspace of the projective geometry, but not as elements of
+  the  incidence  geometry,  and hence do in [5XFinInG[105X [12Xnot[112X belong to the category
   [10XIsSubspaceOfProjectiveSpace[110X.[133X
   
   [1X4.2-1 VectorSpaceToElement[101X
@@ -125,7 +125,7 @@
   [6XReturns:[106X  [33X[0;10Yan element[133X
   
   [33X[0;0Y[3Xgeo[103X is a projective space, and [3Xv[103X is either a row vector (for points) or an [22Xm
-  x  n[122X matrix (for an [22X(m-1)[122X-subspace of projective space of dimension [22Xn-1[122X). In
+  ×  n[122X matrix (for an [22X(m-1)[122X-subspace of projective space of dimension [22Xn-1[122X). In
   the case that [3Xv[103X is a matrix, the rows represent generators for the subspace.
   An  exceptional  case  is when [3Xv[103X is a zero-vector, in which case the trivial
   subspace is returned.[133X

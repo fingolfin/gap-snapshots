@@ -153,9 +153,9 @@ a*b*c^-1*b*c*b^-1
 
 <h5>37.1-1 IsAssocWord</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAssocWord</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAssocWordWithOne</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAssocWordWithInverse</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAssocWord</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAssocWordWithOne</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAssocWordWithInverse</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p><code class="func">IsAssocWord</code> is the category of associative words in free semigroups, <code class="func">IsAssocWordWithOne</code> is the category of associative words in free monoids (which admit the operation <code class="func">One</code> (<a href="chap31_mj.html#X8046262384895B2A"><span class="RefLink">31.10-2</span></a>) to compute an identity), <code class="func">IsAssocWordWithInverse</code> is the category of associative words in free groups (which have an inverse). See <code class="func">IsWord</code> (<a href="chap36_mj.html#X843F5C3A82239398"><span class="RefLink">36.1-1</span></a>) for more general categories of words.</p>
 
 <p><a id="X82E7EA7F7FD31EC3" name="X82E7EA7F7FD31EC3"></a></p>
@@ -168,10 +168,10 @@ a*b*c^-1*b*c*b^-1
 
 <h5>37.2-1 <span class="Heading">FreeGroup</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeGroup</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">rank</var>[, <var class="Arg">name</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeGroup</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">name1</var>, <var class="Arg">name2</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeGroup</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">names</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeGroup</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">infinity</var>, <var class="Arg">name</var>, <var class="Arg">init</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeGroup</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">rank</var>[, <var class="Arg">name</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeGroup</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">name1</var>, <var class="Arg">name2</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeGroup</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">names</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeGroup</code>( [<var class="Arg">wfilt</var>, ]<var class="Arg">infinity</var>, <var class="Arg">name</var>, <var class="Arg">init</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Called with a positive integer <var class="Arg">rank</var>, <code class="func">FreeGroup</code> returns a free group on <var class="Arg">rank</var> generators. If the optional argument <var class="Arg">name</var> is given then the generators are printed as <var class="Arg">name</var><code class="code">1</code>, <var class="Arg">name</var><code class="code">2</code> etc., that is, each name is the concatenation of the string <var class="Arg">name</var> and an integer from <code class="code">1</code> to <var class="Arg">range</var>. The default for <var class="Arg">name</var> is the string <code class="code">"f"</code>.</p>
 
 <p>Called in the second form, <code class="func">FreeGroup</code> returns a free group on as many generators as arguments, printed as <var class="Arg">name1</var>, <var class="Arg">name2</var> etc.</p>
@@ -188,7 +188,7 @@ a*b*c^-1*b*c*b^-1
 
 <h5>37.2-2 IsFreeGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeGroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeGroup</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Any group consisting of elements in <code class="func">IsAssocWordWithInverse</code> (<a href="chap37_mj.html#X7FA8DA728773BA89"><span class="RefLink">37.1-1</span></a>) lies in the filter <code class="func">IsFreeGroup</code>; this holds in particular for any group created with <code class="func">FreeGroup</code> (<a href="chap37_mj.html#X8215999E835290F0"><span class="RefLink">37.2-1</span></a>), or any subgroup of such a group.</p>
 
 <p>Also see Chapter <a href="chap47_mj.html#X7AA982637E90B35A"><span class="RefLink">47</span></a>.</p>
@@ -197,7 +197,7 @@ a*b*c^-1*b*c*b^-1
 
 <h5>37.2-3 AssignGeneratorVariables</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AssignGeneratorVariables</code>( <var class="Arg">G</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AssignGeneratorVariables</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">G</var> is a group, whose generators are represented by symbols (for example a free group, a finitely presented group or a pc group) this function assigns these generators to global variables with the same names.</p>
 
 <p>The aim of this function is to make it easy in interactive use to work with (for example) a free group. It is a shorthand for a sequence of assignments of the form</p>
@@ -222,7 +222,7 @@ varn:=GeneratorsOfGroup(G)[n];
 
 <h5><code>37.3-1 \=</code></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \=</code>( <var class="Arg">w1</var>, <var class="Arg">w2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \=</code>( <var class="Arg">w1</var>, <var class="Arg">w2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Two associative words are equal if they are words over the same alphabet and if they are sequences of the same letters. This is equivalent to saying that the external representations of the words are equal, see <a href="chap37_mj.html#X7934D3D5797102EC"><span class="RefLink">37.7</span></a> and <a href="chap36_mj.html#X852C815F85DBE4BD"><span class="RefLink">36.2</span></a>.</p>
 
 <p>There is no "universal" empty word, every alphabet (that is, every family of words) has its own empty word.</p>
@@ -250,7 +250,7 @@ false
 
 <h5><code>37.3-2 \&lt;</code></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \&lt;</code>( <var class="Arg">w1</var>, <var class="Arg">w2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \&lt;</code>( <var class="Arg">w1</var>, <var class="Arg">w2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>The ordering of associative words is defined by length and lexicography (this ordering is called <em>short-lex</em> ordering), that is, shorter words are smaller than longer words, and words of the same length are compared w.r.t. the lexicographical ordering induced by the ordering of generators. Generators are sorted according to the order in which they were created. If the generators are invertible then each generator <var class="Arg">g</var> is larger than its inverse <var class="Arg">g</var><code class="code">^-1</code>, and <var class="Arg">g</var><code class="code">^-1</code> is larger than every generator that is smaller than <var class="Arg">g</var>.</p>
 
 
@@ -270,14 +270,14 @@ true
 
 <h5>37.3-3 IsShortLexLessThanOrEqual</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsShortLexLessThanOrEqual</code>( <var class="Arg">u</var>, <var class="Arg">v</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsShortLexLessThanOrEqual</code>( <var class="Arg">u</var>, <var class="Arg">v</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns <code class="code">IsLessThanOrEqualUnder(<var class="Arg">ord</var>, <var class="Arg">u</var>, <var class="Arg">v</var>)</code> where <var class="Arg">ord</var> is the short less ordering for the family of <var class="Arg">u</var> and <var class="Arg">v</var>. (This is here for compatibility with <strong class="pkg">GAP</strong> 4.2.)</p>
 
 <p><a id="X84875E08847B39E1" name="X84875E08847B39E1"></a></p>
 
 <h5>37.3-4 IsBasicWreathLessThanOrEqual</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBasicWreathLessThanOrEqual</code>( <var class="Arg">u</var>, <var class="Arg">v</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBasicWreathLessThanOrEqual</code>( <var class="Arg">u</var>, <var class="Arg">v</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns <code class="code">IsLessThanOrEqualUnder(<var class="Arg">ord</var>, <var class="Arg">u</var>, <var class="Arg">v</var>)</code> where <var class="Arg">ord</var> is the basic wreath product ordering for the family of <var class="Arg">u</var> and <var class="Arg">v</var>. (This is here for compatibility with <strong class="pkg">GAP</strong> 4.2.)</p>
 
 <p><a id="X79AF6C757A3547BD" name="X79AF6C757A3547BD"></a></p>
@@ -294,7 +294,7 @@ true
 
 <h5>37.4-1 Length</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Length</code>( <var class="Arg">w</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Length</code>( <var class="Arg">w</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>For an associative word <var class="Arg">w</var>, <code class="func">Length</code> returns the number of letters in <var class="Arg">w</var>.</p>
 
 
@@ -312,7 +312,7 @@ a^5*b*a^2*b^-4*a
 
 <h5>37.4-2 ExponentSumWord</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExponentSumWord</code>( <var class="Arg">w</var>, <var class="Arg">gen</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExponentSumWord</code>( <var class="Arg">w</var>, <var class="Arg">gen</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>For an associative word <var class="Arg">w</var> and a generator <var class="Arg">gen</var>, <code class="func">ExponentSumWord</code> returns the number of times <var class="Arg">gen</var> appears in <var class="Arg">w</var> minus the number of times its inverse appears in <var class="Arg">w</var>. If both <var class="Arg">gen</var> and its inverse do not occur in <var class="Arg">w</var> then <span class="SimpleMath">\(0\)</span> is returned. <var class="Arg">gen</var> may also be the inverse of a generator.</p>
 
 
@@ -330,7 +330,7 @@ a^5*b*a^2*b^-4*a
 
 <h5>37.4-3 Subword</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Subword</code>( <var class="Arg">w</var>, <var class="Arg">from</var>, <var class="Arg">to</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Subword</code>( <var class="Arg">w</var>, <var class="Arg">from</var>, <var class="Arg">to</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>For an associative word <var class="Arg">w</var> and two positive integers <var class="Arg">from</var> and <var class="Arg">to</var>, <code class="func">Subword</code> returns the subword of <var class="Arg">w</var> that begins at position <var class="Arg">from</var> and ends at position <var class="Arg">to</var>. Indexing is done with origin 1.</p>
 
 
@@ -344,7 +344,7 @@ a^3*b*a
 
 <h5>37.4-4 PositionWord</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionWord</code>( <var class="Arg">w</var>, <var class="Arg">sub</var>, <var class="Arg">from</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionWord</code>( <var class="Arg">w</var>, <var class="Arg">sub</var>, <var class="Arg">from</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">w</var> and <var class="Arg">sub</var> be associative words, and <var class="Arg">from</var> a positive integer. <code class="func">PositionWord</code> returns the position of the first occurrence of <var class="Arg">sub</var> as a subword of <var class="Arg">w</var>, starting at position <var class="Arg">from</var>. If there is no such occurrence, <code class="keyw">fail</code> is returned. Indexing is done with origin 1.</p>
 
 <p>In other words, <code class="code">PositionWord( <var class="Arg">w</var>, <var class="Arg">sub</var>, <var class="Arg">from</var> )</code> is the smallest integer <span class="SimpleMath">\(i\)</span> larger than or equal to <var class="Arg">from</var> such that <code class="code">Subword( <var class="Arg">w</var>, </code><span class="SimpleMath">\(i\)</span><code class="code">,</code> <span class="SimpleMath">\(i\)</span><code class="code">+Length( <var class="Arg">sub</var> )-1 ) =</code> <var class="Arg">sub</var>, see <code class="func">Subword</code> (<a href="chap37_mj.html#X82CC92C17AF6FFA0"><span class="RefLink">37.4-3</span></a>).</p>
@@ -370,8 +370,8 @@ fail
 
 <h5>37.4-5 <span class="Heading">SubstitutedWord</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubstitutedWord</code>( <var class="Arg">w</var>, <var class="Arg">from</var>, <var class="Arg">to</var>, <var class="Arg">by</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubstitutedWord</code>( <var class="Arg">w</var>, <var class="Arg">sub</var>, <var class="Arg">from</var>, <var class="Arg">by</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubstitutedWord</code>( <var class="Arg">w</var>, <var class="Arg">from</var>, <var class="Arg">to</var>, <var class="Arg">by</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubstitutedWord</code>( <var class="Arg">w</var>, <var class="Arg">sub</var>, <var class="Arg">from</var>, <var class="Arg">by</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">w</var> be an associative word.</p>
 
 <p>In the first form, <code class="func">SubstitutedWord</code> returns the associative word obtained by replacing the subword of <var class="Arg">w</var> that begins at position <var class="Arg">from</var> and ends at position <var class="Arg">to</var> by the associative word <var class="Arg">by</var>. <var class="Arg">from</var> and <var class="Arg">to</var> must be positive integers, indexing is done with origin 1. In other words, <code class="code">SubstitutedWord( <var class="Arg">w</var>, <var class="Arg">from</var>, <var class="Arg">to</var>, <var class="Arg">by</var> )</code> is the product of the three words <code class="code">Subword( <var class="Arg">w</var>, 1, <var class="Arg">from</var>-1 )</code>, <var class="Arg">by</var>, and <code class="code">Subword( <var class="Arg">w</var>, <var class="Arg">to</var>+1, Length( <var class="Arg">w</var> ) )</code>, see <code class="func">Subword</code> (<a href="chap37_mj.html#X82CC92C17AF6FFA0"><span class="RefLink">37.4-3</span></a>).</p>
@@ -393,7 +393,7 @@ fail
 
 <h5>37.4-6 EliminatedWord</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EliminatedWord</code>( <var class="Arg">w</var>, <var class="Arg">gen</var>, <var class="Arg">by</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EliminatedWord</code>( <var class="Arg">w</var>, <var class="Arg">gen</var>, <var class="Arg">by</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>For an associative word <var class="Arg">w</var>, a generator <var class="Arg">gen</var>, and an associative word <var class="Arg">by</var>, <code class="func">EliminatedWord</code> returns the associative word obtained by replacing each occurrence of <var class="Arg">gen</var> in <var class="Arg">w</var> by <var class="Arg">by</var>.</p>
 
 
@@ -414,28 +414,28 @@ b^-11
 
 <h5>37.5-1 NumberSyllables</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NumberSyllables</code>( <var class="Arg">w</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NumberSyllables</code>( <var class="Arg">w</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p><code class="func">NumberSyllables</code> returns the number of syllables of the associative word <var class="Arg">w</var>.</p>
 
 <p><a id="X7E91575F848F4526" name="X7E91575F848F4526"></a></p>
 
 <h5>37.5-2 ExponentSyllable</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExponentSyllable</code>( <var class="Arg">w</var>, <var class="Arg">i</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExponentSyllable</code>( <var class="Arg">w</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">ExponentSyllable</code> returns the exponent of the <var class="Arg">i</var>-th syllable of the associative word <var class="Arg">w</var>.</p>
 
 <p><a id="X7F2A8CFD811C73B1" name="X7F2A8CFD811C73B1"></a></p>
 
 <h5>37.5-3 GeneratorSyllable</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorSyllable</code>( <var class="Arg">w</var>, <var class="Arg">i</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorSyllable</code>( <var class="Arg">w</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">GeneratorSyllable</code> returns the number of the generator that is involved in the <var class="Arg">i</var>-th syllable of the associative word <var class="Arg">w</var>.</p>
 
 <p><a id="X7B4F7A167E844FA5" name="X7B4F7A167E844FA5"></a></p>
 
 <h5>37.5-4 SubSyllables</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubSyllables</code>( <var class="Arg">w</var>, <var class="Arg">from</var>, <var class="Arg">to</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubSyllables</code>( <var class="Arg">w</var>, <var class="Arg">from</var>, <var class="Arg">to</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">SubSyllables</code> returns the subword of the associative word <var class="Arg">w</var> that consists of the syllables from positions <var class="Arg">from</var> to <var class="Arg">to</var>, where <var class="Arg">from</var> and <var class="Arg">to</var> must be positive integers, and indexing is done with origin 1.</p>
 
 
@@ -463,14 +463,14 @@ b*a^2
 
 <h5>37.6-1 IsLetterAssocWordRep</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLetterAssocWordRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">( representation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLetterAssocWordRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;representation&nbsp;)</td></tr></table></div>
 <p>A word in letter representation stores a list of generator/inverses numbers (as given by <code class="func">LetterRepAssocWord</code> (<a href="chap37_mj.html#X7BD7647C7B088389"><span class="RefLink">37.6-8</span></a>)). Letter access is fast, syllable access is slow for such words.</p>
 
 <p><a id="X7E36F7897D82417F" name="X7E36F7897D82417F"></a></p>
 
 <h5>37.6-2 IsLetterWordsFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLetterWordsFamily</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLetterWordsFamily</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>A letter word family stores words by default in letter form.</p>
 
 <p>Internally, there are letter representations that use integers (4 Byte) to represent a generator and letter representations that use single bytes to represent a character. The latter are more memory efficient, but can only be used if there are less than 128 generators (in which case they are used by default).</p>
@@ -479,46 +479,46 @@ b*a^2
 
 <h5>37.6-3 IsBLetterAssocWordRep</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBLetterAssocWordRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">( representation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWLetterAssocWordRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">( representation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBLetterAssocWordRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;representation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWLetterAssocWordRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;representation&nbsp;)</td></tr></table></div>
 <p>these two subrepresentations of <code class="func">IsLetterAssocWordRep</code> (<a href="chap37_mj.html#X7E3612247B3E241B"><span class="RefLink">37.6-1</span></a>) indicate whether the word is stored as a list of bytes (in a string) or as a list of integers).</p>
 
 <p><a id="X8719E7F27CDA1995" name="X8719E7F27CDA1995"></a></p>
 
 <h5>37.6-4 IsBLetterWordsFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBLetterWordsFamily</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWLetterWordsFamily</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBLetterWordsFamily</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWLetterWordsFamily</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>These two subcategories of <code class="func">IsLetterWordsFamily</code> (<a href="chap37_mj.html#X7E36F7897D82417F"><span class="RefLink">37.6-2</span></a>) specify the type of letter representation to be used.</p>
 
 <p><a id="X7886F8BD83CD8081" name="X7886F8BD83CD8081"></a></p>
 
 <h5>37.6-5 IsSyllableAssocWordRep</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSyllableAssocWordRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">( representation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSyllableAssocWordRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;representation&nbsp;)</td></tr></table></div>
 <p>A word in syllable representation stores generator/exponents pairs (as given by <code class="func">ExtRepOfObj</code> (<a href="chap79_mj.html#X8542B32A8206118C"><span class="RefLink">79.16-1</span></a>). Syllable access is fast, letter access is slow for such words.</p>
 
 <p><a id="X7869716C84EA9D81" name="X7869716C84EA9D81"></a></p>
 
 <h5>37.6-6 IsSyllableWordsFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSyllableWordsFamily</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSyllableWordsFamily</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>A syllable word family stores words by default in syllable form. There are also different versions of syllable representations, which compress a generator exponent pair in 8, 16 or 32 bits or use a pair of integers. Internal mechanisms try to make this as memory efficient as possible.</p>
 
 <p><a id="X83F669828481FC32" name="X83F669828481FC32"></a></p>
 
 <h5>37.6-7 Is16BitsFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Is16BitsFamily</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Is32BitsFamily</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInfBitsFamily</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Is16BitsFamily</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Is32BitsFamily</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInfBitsFamily</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Regardless of the internal representation used, it is possible to convert a word in a list of numbers in letter or syllable representation and vice versa.</p>
 
 <p><a id="X7BD7647C7B088389" name="X7BD7647C7B088389"></a></p>
 
 <h5>37.6-8 LetterRepAssocWord</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LetterRepAssocWord</code>( <var class="Arg">w</var>[, <var class="Arg">gens</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LetterRepAssocWord</code>( <var class="Arg">w</var>[, <var class="Arg">gens</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>The <em>letter representation</em> of an associated word is as a list of integers, each entry corresponding to a group generator. Inverses of the generators are represented by negative numbers. The generator numbers are as associated to the family.</p>
 
 <p>This operation returns the letter representation of the associative word <var class="Arg">w</var>.</p>
@@ -531,7 +531,7 @@ b*a^2
 
 <h5>37.6-9 AssocWordByLetterRep</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AssocWordByLetterRep</code>( <var class="Arg">Fam</var>, <var class="Arg">lrep</var>[, <var class="Arg">gens</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AssocWordByLetterRep</code>( <var class="Arg">Fam</var>, <var class="Arg">lrep</var>[, <var class="Arg">gens</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>takes a letter representation <var class="Arg">lrep</var> (see <code class="func">LetterRepAssocWord</code> (<a href="chap37_mj.html#X7BD7647C7B088389"><span class="RefLink">37.6-8</span></a>)) and returns an associative word in family <var class="Arg">fam</var> corresponding to this letter representation.</p>
 
 <p>If <var class="Arg">gens</var> is given, the numbers in the letter representation correspond to <var class="Arg">gens</var>.</p>
@@ -597,17 +597,17 @@ a^5*b^-7*a^3*b^4*a^-2
 
 <h5>37.8-1 IsStraightLineProgram</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsStraightLineProgram</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsStraightLineProgram</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Each straight line program in <strong class="pkg">GAP</strong> lies in the category <code class="func">IsStraightLineProgram</code>.</p>
 
 <p><a id="X7AECA57280DA3195" name="X7AECA57280DA3195"></a></p>
 
 <h5>37.8-2 StraightLineProgram</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StraightLineProgram</code>( <var class="Arg">lines</var>[, <var class="Arg">nrgens</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StraightLineProgram</code>( <var class="Arg">string</var>, <var class="Arg">gens</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StraightLineProgramNC</code>( <var class="Arg">lines</var>[, <var class="Arg">nrgens</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StraightLineProgramNC</code>( <var class="Arg">string</var>, <var class="Arg">gens</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StraightLineProgram</code>( <var class="Arg">lines</var>[, <var class="Arg">nrgens</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StraightLineProgram</code>( <var class="Arg">string</var>, <var class="Arg">gens</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StraightLineProgramNC</code>( <var class="Arg">lines</var>[, <var class="Arg">nrgens</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StraightLineProgramNC</code>( <var class="Arg">string</var>, <var class="Arg">gens</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>In the first form, <var class="Arg">lines</var> must be a list of lists that defines a unique straight line program (see <code class="func">IsStraightLineProgram</code> (<a href="chap37_mj.html#X7F69FF3F7C6694CB"><span class="RefLink">37.8-1</span></a>)); in this case <code class="func">StraightLineProgram</code> returns this program, otherwise an error is signalled. The optional argument <var class="Arg">nrgens</var> specifies the number of input generators of the program; if a line of form 1. (that is, a list of integers) occurs in <var class="Arg">lines</var> except in the last position, this number is not determined by <var class="Arg">lines</var> and therefore <em>must</em> be specified by the argument <var class="Arg">nrgens</var>; if not then <code class="func">StraightLineProgram</code> returns <code class="keyw">fail</code>.</p>
 
 <p>In the second form, <var class="Arg">string</var> must be a string describing an arithmetic expression in terms of the strings in the list <var class="Arg">gens</var>, where multiplication is denoted by concatenation, powering is denoted by <code class="code">^</code>, and round brackets <code class="code">(</code>, <code class="code">)</code> may be used. Each entry in <var class="Arg">gens</var> must consist only of uppercase or lowercase letters (i.e., letters in <code class="func">IsAlphaChar</code> (<a href="chap27_mj.html#X84634DF67A431D26"><span class="RefLink">27.5-4</span></a>)) such that no entry is an initial part of another one. Called with this input, <code class="func">StraightLineProgram</code> returns a straight line program that evaluates to the word corresponding to <var class="Arg">string</var> when called with generators corresponding to <var class="Arg">gens</var>.</p>
@@ -618,14 +618,14 @@ a^5*b^-7*a^3*b^4*a^-2
 
 <h5>37.8-3 LinesOfStraightLineProgram</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LinesOfStraightLineProgram</code>( <var class="Arg">prog</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LinesOfStraightLineProgram</code>( <var class="Arg">prog</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>For a straight line program <var class="Arg">prog</var>, <code class="func">LinesOfStraightLineProgram</code> returns the list of program lines. There is no default method to compute these lines if they are not stored.</p>
 
 <p><a id="X820A592881D57802" name="X820A592881D57802"></a></p>
 
 <h5>37.8-4 NrInputsOfStraightLineProgram</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrInputsOfStraightLineProgram</code>( <var class="Arg">prog</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrInputsOfStraightLineProgram</code>( <var class="Arg">prog</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>For a straight line program <var class="Arg">prog</var>, <code class="func">NrInputsOfStraightLineProgram</code> returns the number of generators that are needed as input.</p>
 
 <p>If a line of form 1. (that is, a list of integers) occurs in the lines of <var class="Arg">prog</var> except the last line then the number of generators is not determined by the lines, and must be set in the construction of the straight line program (see <code class="func">StraightLineProgram</code> (<a href="chap37_mj.html#X7AECA57280DA3195"><span class="RefLink">37.8-2</span></a>)). So if <var class="Arg">prog</var> contains a line of form 1. other than the last line and does <em>not</em> store the number of generators then <code class="func">NrInputsOfStraightLineProgram</code> signals an error.</p>
@@ -634,7 +634,7 @@ a^5*b^-7*a^3*b^4*a^-2
 
 <h5>37.8-5 ResultOfStraightLineProgram</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResultOfStraightLineProgram</code>( <var class="Arg">prog</var>, <var class="Arg">gens</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResultOfStraightLineProgram</code>( <var class="Arg">prog</var>, <var class="Arg">gens</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">ResultOfStraightLineProgram</code> evaluates the straight line program (see <code class="func">IsStraightLineProgram</code> (<a href="chap37_mj.html#X7F69FF3F7C6694CB"><span class="RefLink">37.8-1</span></a>)) <var class="Arg">prog</var> at the group elements in the list <var class="Arg">gens</var>.</p>
 
 <p>The <em>result</em> of a straight line program with lines <span class="SimpleMath">\(p_1, p_2, \ldots, p_k\)</span> when applied to <var class="Arg">gens</var> is defined as follows.</p>
@@ -717,7 +717,7 @@ true
 
 <h5>37.8-6 StringOfResultOfStraightLineProgram</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StringOfResultOfStraightLineProgram</code>( <var class="Arg">prog</var>, <var class="Arg">gensnames</var>[, <var class="Arg">"LaTeX"</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StringOfResultOfStraightLineProgram</code>( <var class="Arg">prog</var>, <var class="Arg">gensnames</var>[, <var class="Arg">"LaTeX"</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">StringOfResultOfStraightLineProgram</code> returns a string that describes the result of the straight line program (see <code class="func">IsStraightLineProgram</code> (<a href="chap37_mj.html#X7F69FF3F7C6694CB"><span class="RefLink">37.8-1</span></a>)) <var class="Arg">prog</var> as word(s) in terms of the strings in the list <var class="Arg">gensnames</var>. If the result of <var class="Arg">prog</var> is a single element then the return value of <code class="func">StringOfResultOfStraightLineProgram</code> is a string consisting of the entries of <var class="Arg">gensnames</var>, opening and closing brackets <code class="code">(</code> and <code class="code">)</code>, and powering by integers via <code class="code">^</code>. If the result of <var class="Arg">prog</var> is a list of elements then the return value of <code class="func">StringOfResultOfStraightLineProgram</code> is a comma separated concatenation of the strings of the single elements, enclosed in square brackets <code class="code">[</code>, <code class="code">]</code>.</p>
 
 
@@ -733,7 +733,7 @@ true
 
 <h5>37.8-7 CompositionOfStraightLinePrograms</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompositionOfStraightLinePrograms</code>( <var class="Arg">prog2</var>, <var class="Arg">prog1</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompositionOfStraightLinePrograms</code>( <var class="Arg">prog2</var>, <var class="Arg">prog1</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For two straight line programs <var class="Arg">prog1</var> and <var class="Arg">prog2</var>, <code class="func">CompositionOfStraightLinePrograms</code> returns a straight line program <var class="Arg">prog</var> with the properties that <var class="Arg">prog1</var> and <var class="Arg">prog</var> have the same number of inputs, and the result of <var class="Arg">prog</var> when applied to given generators <var class="Arg">gens</var> equals the result of <var class="Arg">prog2</var> when this is applied to the output of <var class="Arg">prog1</var> applied to <var class="Arg">gens</var>.</p>
 
 <p>(Of course the number of outputs of <var class="Arg">prog1</var> must be the same as the number of inputs of <var class="Arg">prog2</var>.)</p>
@@ -759,7 +759,7 @@ true
 
 <h5>37.8-8 IntegratedStraightLineProgram</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntegratedStraightLineProgram</code>( <var class="Arg">listofprogs</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntegratedStraightLineProgram</code>( <var class="Arg">listofprogs</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For a nonempty dense list <var class="Arg">listofprogs</var> of straight line programs that have the same number <span class="SimpleMath">\(n\)</span>, say, of inputs (see <code class="func">NrInputsOfStraightLineProgram</code> (<a href="chap37_mj.html#X820A592881D57802"><span class="RefLink">37.8-4</span></a>)) and for which the results (see <code class="func">ResultOfStraightLineProgram</code> (<a href="chap37_mj.html#X7847D32B863E822F"><span class="RefLink">37.8-5</span></a>)) are single elements (i.e., <em>not</em> lists of elements), <code class="func">IntegratedStraightLineProgram</code> returns a straight line program <var class="Arg">prog</var> with <span class="SimpleMath">\(n\)</span> inputs such that for each <span class="SimpleMath">\(n\)</span>-tuple <var class="Arg">gens</var> of generators, <code class="code">ResultOfStraightLineProgram( <var class="Arg">prog</var>, <var class="Arg">gens</var> )</code> is equal to the list <code class="code">List( <var class="Arg">listofprogs</var>, <var class="Arg">p</var> -&gt; ResultOfStraightLineProgram( <var class="Arg">p</var>, <var class="Arg">gens</var> )</code>.</p>
 
 
@@ -783,42 +783,42 @@ true
 
 <h5>37.8-9 RestrictOutputsOfSLP</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RestrictOutputsOfSLP</code>( <var class="Arg">slp</var>, <var class="Arg">k</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RestrictOutputsOfSLP</code>( <var class="Arg">slp</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><var class="Arg">slp</var> must be a straight line program returning a tuple of values. This function returns a new slp that calculates only those outputs specified by <var class="Arg">k</var>. The argument <var class="Arg">k</var> may be an integer or a list of integers. If <var class="Arg">k</var> is an integer, the resulting slp calculates only the result with that number in the original output tuple. If <var class="Arg">k</var> is a list of integers, the resulting slp calculates those results with indices <var class="Arg">k</var> in the original output tuple. In both cases the resulting slp does only what is necessary. Obviously, the slp must have a line with enough expressions (lists) for the supplied <var class="Arg">k</var> as its last line. <var class="Arg">slp</var> is either an slp or a pair where the first entry are the lines of the slp and the second is the number of inputs.</p>
 
 <p><a id="X7EF202F17DCA5D1C" name="X7EF202F17DCA5D1C"></a></p>
 
 <h5>37.8-10 IntermediateResultOfSLP</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntermediateResultOfSLP</code>( <var class="Arg">slp</var>, <var class="Arg">k</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntermediateResultOfSLP</code>( <var class="Arg">slp</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns a new slp that calculates only the value of slot <var class="Arg">k</var> at the end of <var class="Arg">slp</var> doing only what is necessary. slp is either an slp or a pair where the first entry are the lines of the slp and the second is the number of inputs. Note that this assumes a general SLP with possible overwriting. If you know that your SLP does not overwrite slots, please use <code class="func">IntermediateResultOfSLPWithoutOverwrite</code> (<a href="chap37_mj.html#X8085CF79856B2889"><span class="RefLink">37.8-11</span></a>), which is much faster in this case.</p>
 
 <p><a id="X8085CF79856B2889" name="X8085CF79856B2889"></a></p>
 
 <h5>37.8-11 IntermediateResultOfSLPWithoutOverwrite</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntermediateResultOfSLPWithoutOverwrite</code>( <var class="Arg">slp</var>, <var class="Arg">k</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntermediateResultOfSLPWithoutOverwrite</code>( <var class="Arg">slp</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns a new slp that calculates only the value of slot <var class="Arg">k</var>, which must be an integer. Note that <var class="Arg">slp</var> must not overwrite slots but only append!!! Use <code class="func">IntermediateResultOfSLP</code> (<a href="chap37_mj.html#X7EF202F17DCA5D1C"><span class="RefLink">37.8-10</span></a>) in the other case! <var class="Arg">slp</var> is either an slp or a pair where the first entry is the lines of the slp and the second is the number of inputs.</p>
 
 <p><a id="X873244F37FAA717A" name="X873244F37FAA717A"></a></p>
 
 <h5>37.8-12 IntermediateResultsOfSLPWithoutOverwrite</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntermediateResultsOfSLPWithoutOverwrite</code>( <var class="Arg">slp</var>, <var class="Arg">k</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntermediateResultsOfSLPWithoutOverwrite</code>( <var class="Arg">slp</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns a new slp that calculates only the value of slots contained in the list k. Note that <var class="Arg">slp</var> must not overwrite slots but only append!!! Use <code class="func">IntermediateResultOfSLP</code> (<a href="chap37_mj.html#X7EF202F17DCA5D1C"><span class="RefLink">37.8-10</span></a>) in the other case! <var class="Arg">slp</var> is either a slp or a pair where the first entry is the lines of the slp and the second is the number of inputs.</p>
 
 <p><a id="X837101F982C35035" name="X837101F982C35035"></a></p>
 
 <h5>37.8-13 ProductOfStraightLinePrograms</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProductOfStraightLinePrograms</code>( <var class="Arg">s1</var>, <var class="Arg">s2</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProductOfStraightLinePrograms</code>( <var class="Arg">s1</var>, <var class="Arg">s2</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><var class="Arg">s1</var> and <var class="Arg">s2</var> must be two slps that return a single element with the same number of inputs. This function constructs an slp that returns the product of the two results the slps <var class="Arg">s1</var> and <var class="Arg">s2</var> would produce with the same input.</p>
 
 <p><a id="X84C83CE98194FD03" name="X84C83CE98194FD03"></a></p>
 
 <h5>37.8-14 SlotUsagePattern</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SlotUsagePattern</code>( <var class="Arg">s</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SlotUsagePattern</code>( <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Analyses the straight line program <var class="Arg">s</var> for more efficient evaluation. This means in particular two things, when this attribute is known: First of all, intermediate results which are not actually needed later on are not computed at all, and once an intermediate result is used for the last time in this SLP, it is discarded. The latter leads to the fact that the evaluation of the SLP needs less memory.</p>
 
 <p><a id="X8188799182D82A92" name="X8188799182D82A92"></a></p>
@@ -841,35 +841,35 @@ true
 
 <h5>37.9-1 IsStraightLineProgElm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsStraightLineProgElm</code>( <var class="Arg">obj</var> )</td><td class="tdright">( representation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsStraightLineProgElm</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;representation&nbsp;)</td></tr></table></div>
 <p>A straight line program element is a group element given (for memory reasons) as a straight line program. Straight line program elements are positional objects, the first component is a record with a component <code class="code">seeds</code>, the second component the straight line program.</p>
 
 <p><a id="X78889E5B7E1B3BFF" name="X78889E5B7E1B3BFF"></a></p>
 
 <h5>37.9-2 StraightLineProgElm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StraightLineProgElm</code>( <var class="Arg">seed</var>, <var class="Arg">prog</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StraightLineProgElm</code>( <var class="Arg">seed</var>, <var class="Arg">prog</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Creates a straight line program element for seed <var class="Arg">seed</var> and program <var class="Arg">prog</var>.</p>
 
 <p><a id="X81BC263A7E45E775" name="X81BC263A7E45E775"></a></p>
 
 <h5>37.9-3 StraightLineProgGens</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StraightLineProgGens</code>( <var class="Arg">gens</var>[, <var class="Arg">base</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StraightLineProgGens</code>( <var class="Arg">gens</var>[, <var class="Arg">base</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a set of straight line program elements corresponding to the generators in <var class="Arg">gens</var>. If <var class="Arg">gens</var> is a set of permutations then <var class="Arg">base</var> can be given which must be a base for the group generated by <var class="Arg">gens</var>. (Such a base will be used to speed up equality tests.)</p>
 
 <p><a id="X7BEAE8AC809B27DC" name="X7BEAE8AC809B27DC"></a></p>
 
 <h5>37.9-4 EvalStraightLineProgElm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EvalStraightLineProgElm</code>( <var class="Arg">slpel</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EvalStraightLineProgElm</code>( <var class="Arg">slpel</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>evaluates a straight line program element <var class="Arg">slpel</var> from its seeds.</p>
 
 <p><a id="X7D85D1DF84DC68E3" name="X7D85D1DF84DC68E3"></a></p>
 
 <h5>37.9-5 StretchImportantSLPElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StretchImportantSLPElement</code>( <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StretchImportantSLPElement</code>( <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">elm</var> is a straight line program element whose straight line representation is very long, this operation changes the representation of <var class="Arg">elm</var> to a straight line program element, equal to <var class="Arg">elm</var>, whose seed contains the evaluation of <var class="Arg">elm</var> and whose straight line program has length 1.</p>
 
 <p>For other objects nothing happens.</p>

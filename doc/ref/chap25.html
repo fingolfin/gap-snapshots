@@ -84,7 +84,7 @@
 
 <h5>25.1-1 NullspaceIntMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NullspaceIntMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NullspaceIntMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">mat</var> is a matrix with integral entries, this function returns a list of vectors that forms a basis of the integral nullspace of <var class="Arg">mat</var>, i.e., of those vectors in the nullspace of <var class="Arg">mat</var> that have integral entries.</p>
 
 
@@ -100,7 +100,7 @@
 
 <h5>25.1-2 SolutionIntMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SolutionIntMat</code>( <var class="Arg">mat</var>, <var class="Arg">vec</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SolutionIntMat</code>( <var class="Arg">mat</var>, <var class="Arg">vec</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">mat</var> is a matrix with integral entries and <var class="Arg">vec</var> a vector with integral entries, this function returns a vector <span class="SimpleMath">x</span> with integer entries that is a solution of the equation <span class="SimpleMath">x</span> <code class="code">* <var class="Arg">mat</var> = <var class="Arg">vec</var></code>. It returns <code class="keyw">fail</code> if no such vector exists.</p>
 
 
@@ -116,7 +116,7 @@
 
 <h5>25.1-3 SolutionNullspaceIntMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SolutionNullspaceIntMat</code>( <var class="Arg">mat</var>, <var class="Arg">vec</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SolutionNullspaceIntMat</code>( <var class="Arg">mat</var>, <var class="Arg">vec</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>This function returns a list of length two, its first entry being the result of a call to <code class="func">SolutionIntMat</code> (<a href="chap25.html#X7D749F317DBD1E69"><span class="RefLink">25.1-2</span></a>) with same arguments, the second the result of <code class="func">NullspaceIntMat</code> (<a href="chap25.html#X792315717F5B0294"><span class="RefLink">25.1-1</span></a>) applied to the matrix <var class="Arg">mat</var>. The calculation is performed faster than if two separate calls would be used.</p>
 
 
@@ -131,7 +131,7 @@
 
 <h5>25.1-4 BaseIntMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseIntMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseIntMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">mat</var> is a matrix with integral entries, this function returns a list of vectors that forms a basis of the integral row space of <var class="Arg">mat</var>, i.e. of the set of integral linear combinations of the rows of <var class="Arg">mat</var>.</p>
 
 
@@ -145,7 +145,7 @@
 
 <h5>25.1-5 BaseIntersectionIntMats</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseIntersectionIntMats</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BaseIntersectionIntMats</code>( <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">m</var> and <var class="Arg">n</var> are matrices with integral entries, this function returns a list of vectors that forms a basis of the intersection of the integral row spaces of <var class="Arg">m</var> and <var class="Arg">n</var>.</p>
 
 
@@ -161,7 +161,7 @@
 
 <h5>25.1-6 ComplementIntMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComplementIntMat</code>( <var class="Arg">full</var>, <var class="Arg">sub</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComplementIntMat</code>( <var class="Arg">full</var>, <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">full</var> be a list of integer vectors generating an integral row module <span class="SimpleMath">M</span> and <var class="Arg">sub</var> a list of vectors defining a submodule <span class="SimpleMath">S</span> of <span class="SimpleMath">M</span>. This function computes a free basis for <span class="SimpleMath">M</span> that extends <span class="SimpleMath">S</span>. I.e., if the dimension of <span class="SimpleMath">S</span> is <span class="SimpleMath">n</span> it determines a basis <span class="SimpleMath">B = { b_1, ..., b_m }</span> for <span class="SimpleMath">M</span>, as well as <span class="SimpleMath">n</span> integers <span class="SimpleMath">x_i</span> such that the <span class="SimpleMath">n</span> vectors <span class="SimpleMath">s_i:= x_i ⋅ b_i</span> form a basis for <span class="SimpleMath">S</span>.</p>
 
 <p>It returns a record with the following components:</p>
@@ -206,21 +206,21 @@ rec( complement := [ [ 0, 0, 1 ] ], moduli := [ 1, 3 ],
 
 <h5>25.2-1 TriangulizedIntegerMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TriangulizedIntegerMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TriangulizedIntegerMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Computes an upper triangular form of a matrix with integer entries. It returns a immutable matrix in upper triangular form.</p>
 
 <p><a id="X7DBE174E8625AFA5" name="X7DBE174E8625AFA5"></a></p>
 
 <h5>25.2-2 TriangulizedIntegerMatTransform</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TriangulizedIntegerMatTransform</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TriangulizedIntegerMatTransform</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Computes an upper triangular form of a matrix with integer entries. It returns a record with a component <code class="code">normal</code> (an immutable matrix in upper triangular form) and a component <code class="code">rowtrans</code> that gives the transformations done to the original matrix to bring it into upper triangular form.</p>
 
 <p><a id="X78CD40A687FE2311" name="X78CD40A687FE2311"></a></p>
 
 <h5>25.2-3 TriangulizeIntegerMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TriangulizeIntegerMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TriangulizeIntegerMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Changes <var class="Arg">mat</var> to be in upper triangular form. (The result is the same as that of <code class="func">TriangulizedIntegerMat</code> (<a href="chap25.html#X783CEC847D81F22A"><span class="RefLink">25.2-1</span></a>), but <var class="Arg">mat</var> will be modified, thus using less memory.) If <var class="Arg">mat</var> is immutable an error will be triggered.</p>
 
 
@@ -244,14 +244,14 @@ true
 
 <h5>25.2-4 HermiteNormalFormIntegerMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HermiteNormalFormIntegerMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HermiteNormalFormIntegerMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>This operation computes the Hermite normal form of a matrix <var class="Arg">mat</var> with integer entries. It returns a immutable matrix in HNF.</p>
 
 <p><a id="X7FDA78F979574ACC" name="X7FDA78F979574ACC"></a></p>
 
 <h5>25.2-5 HermiteNormalFormIntegerMatTransform</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HermiteNormalFormIntegerMatTransform</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HermiteNormalFormIntegerMatTransform</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>This operation computes the Hermite normal form of a matrix <var class="Arg">mat</var> with integer entries. It returns a record with components <code class="code">normal</code> (a matrix <span class="SimpleMath">H</span>) and <code class="code">rowtrans</code> (a matrix <span class="SimpleMath">Q</span>) such that <span class="SimpleMath">Q A = H</span>.</p>
 
 
@@ -273,21 +273,21 @@ true
 
 <h5>25.2-6 SmithNormalFormIntegerMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmithNormalFormIntegerMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmithNormalFormIntegerMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>This operation computes the Smith normal form of a matrix <var class="Arg">mat</var> with integer entries. It returns a new immutable matrix in the Smith normal form.</p>
 
 <p><a id="X839C1F9E87273A93" name="X839C1F9E87273A93"></a></p>
 
 <h5>25.2-7 SmithNormalFormIntegerMatTransforms</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmithNormalFormIntegerMatTransforms</code>( <var class="Arg">mat</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmithNormalFormIntegerMatTransforms</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>This operation computes the Smith normal form of a matrix <var class="Arg">mat</var> with integer entries. It returns a record with components <code class="code">normal</code> (a matrix <span class="SimpleMath">S</span>), <code class="code">rowtrans</code> (a matrix <span class="SimpleMath">P</span>), and <code class="code">coltrans</code> (a matrix <span class="SimpleMath">Q</span>) such that <span class="SimpleMath">P A Q = S</span>.</p>
 
 <p><a id="X80EF38737F6D61DB" name="X80EF38737F6D61DB"></a></p>
 
 <h5>25.2-8 DiagonalizeIntMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DiagonalizeIntMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DiagonalizeIntMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function changes <var class="Arg">mat</var> to its SNF. (The result is the same as that of <code class="func">SmithNormalFormIntegerMat</code> (<a href="chap25.html#X87089FEC7FBEEA8F"><span class="RefLink">25.2-6</span></a>), but <var class="Arg">mat</var> will be modified, thus using less memory.) If <var class="Arg">mat</var> is immutable an error will be triggered.</p>
 
 
@@ -314,7 +314,7 @@ true
 
 <h5>25.2-9 NormalFormIntMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NormalFormIntMat</code>( <var class="Arg">mat</var>, <var class="Arg">options</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NormalFormIntMat</code>( <var class="Arg">mat</var>, <var class="Arg">options</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This general operation for computation of various Normal Forms is probably the most efficient.</p>
 
 <p>Options bit values:</p>
@@ -377,7 +377,7 @@ rec( colC := [ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ],
 
 <h5>25.2-10 AbelianInvariantsOfList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AbelianInvariantsOfList</code>( <var class="Arg">list</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AbelianInvariantsOfList</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Given a list of nonnegative integers, this routine returns a sorted list containing the prime power factors of the positive entries in the original list, as well as all zeroes of the original list.</p>
 
 
@@ -394,7 +394,7 @@ rec( colC := [ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ],
 
 <h5>25.3-1 DeterminantIntMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeterminantIntMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeterminantIntMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Computes the determinant of an integer matrix using the same strategy as <code class="func">NormalFormIntMat</code> (<a href="chap25.html#X81FB746E82BE6CDA"><span class="RefLink">25.2-9</span></a>). This method is faster in general for matrices greater than <span class="SimpleMath">20 × 20</span> but quite a lot slower for smaller matrices. It therefore passes the work to the more general <code class="func">DeterminantMat</code> (<a href="chap24.html#X83045F6F82C180E1"><span class="RefLink">24.4-4</span></a>) for these smaller matrices.</p>
 
 <p><a id="X79F2EFEC7C3EA80C" name="X79F2EFEC7C3EA80C"></a></p>
@@ -421,7 +421,7 @@ rec( colC := [ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ],
 
 <h5>25.4-1 Decomposition</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Decomposition</code>( <var class="Arg">A</var>, <var class="Arg">B</var>, <var class="Arg">depth</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Decomposition</code>( <var class="Arg">A</var>, <var class="Arg">B</var>, <var class="Arg">depth</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>For a <span class="SimpleMath">m × n</span> matrix <var class="Arg">A</var> of cyclotomics that has rank <span class="SimpleMath">m ≤ n</span>, and a list <var class="Arg">B</var> of cyclotomic vectors, each of length <span class="SimpleMath">n</span>, <code class="func">Decomposition</code> tries to find integral solutions of the linear equation systems <code class="code"><var class="Arg">x</var> * <var class="Arg">A</var> = <var class="Arg">B</var>[i]</code>, by computing the <span class="SimpleMath">p</span>-adic series of hypothetical solutions.</p>
 
 <p><code class="code">Decomposition( <var class="Arg">A</var>, <var class="Arg">B</var>, <var class="Arg">depth</var> )</code>, where <var class="Arg">depth</var> is a nonnegative integer, computes for each vector <code class="code"><var class="Arg">B</var>[i]</code> the initial part <span class="SimpleMath">∑_{k = 0}^<var class="Arg">depth</var> x_k p^k</span>, with all <span class="SimpleMath">x_k</span> vectors of integers with entries bounded by <span class="SimpleMath">± (p-1)/2</span>. The prime <span class="SimpleMath">p</span> is set to 83 first; if the reduction of <var class="Arg">A</var> modulo <span class="SimpleMath">p</span> is singular, the next prime is chosen automatically.</p>
@@ -436,21 +436,21 @@ rec( colC := [ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ],
 
 <h5>25.4-2 LinearIndependentColumns</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LinearIndependentColumns</code>( <var class="Arg">mat</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LinearIndependentColumns</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Called with a matrix <var class="Arg">mat</var>, <code class="code">LinearIndependentColumns</code> returns a maximal list of column positions such that the restriction of <var class="Arg">mat</var> to these columns has the same rank as <var class="Arg">mat</var>.</p>
 
 <p><a id="X8285776B7DD86925" name="X8285776B7DD86925"></a></p>
 
 <h5>25.4-3 PadicCoefficients</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PadicCoefficients</code>( <var class="Arg">A</var>, <var class="Arg">Amodpinv</var>, <var class="Arg">b</var>, <var class="Arg">prime</var>, <var class="Arg">depth</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PadicCoefficients</code>( <var class="Arg">A</var>, <var class="Arg">Amodpinv</var>, <var class="Arg">b</var>, <var class="Arg">prime</var>, <var class="Arg">depth</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">A</var> be an integral matrix, <var class="Arg">prime</var> a prime integer, <var class="Arg">Amodpinv</var> an inverse of <var class="Arg">A</var> modulo <var class="Arg">prime</var>, <var class="Arg">b</var> an integral vector, and <var class="Arg">depth</var> a nonnegative integer. <code class="func">PadicCoefficients</code> returns the list <span class="SimpleMath">[ x_0, x_1, ..., x_l, b_{l+1} ]</span> describing the <var class="Arg">prime</var>-adic approximation of <var class="Arg">b</var> (see above), where <span class="SimpleMath">l = <var class="Arg">depth</var></span> or <span class="SimpleMath">l</span> is minimal with the property that <span class="SimpleMath">b_{l+1} = 0</span>.</p>
 
 <p><a id="X7F5C619B7A9C3EB9" name="X7F5C619B7A9C3EB9"></a></p>
 
 <h5>25.4-4 IntegralizedMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntegralizedMat</code>( <var class="Arg">A</var>[, <var class="Arg">inforec</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntegralizedMat</code>( <var class="Arg">A</var>[, <var class="Arg">inforec</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">IntegralizedMat</code> returns, for a matrix <var class="Arg">A</var> of cyclotomics, a record <code class="code">intmat</code> with components <code class="code">mat</code> and <code class="code">inforec</code>. Each family of algebraic conjugate columns of <var class="Arg">A</var> is encoded in a set of columns of the rational matrix <code class="code">intmat.mat</code> by replacing cyclotomics in <var class="Arg">A</var> by their coefficients w.r.t. an integral basis. <code class="code">intmat.inforec</code> is a record containing the information how to encode the columns.</p>
 
 <p>If the only argument is <var class="Arg">A</var>, the value of the component <code class="code">inforec</code> is computed that can be entered as second argument <var class="Arg">inforec</var> in a later call of <code class="func">IntegralizedMat</code> with a matrix <var class="Arg">B</var> that shall be encoded compatibly with <var class="Arg">A</var>.</p>
@@ -459,7 +459,7 @@ rec( colC := [ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ],
 
 <h5>25.4-5 DecompositionInt</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DecompositionInt</code>( <var class="Arg">A</var>, <var class="Arg">B</var>, <var class="Arg">depth</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DecompositionInt</code>( <var class="Arg">A</var>, <var class="Arg">B</var>, <var class="Arg">depth</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">DecompositionInt</code> does the same as <code class="func">Decomposition</code> (<a href="chap25.html#X7911A60384C511AB"><span class="RefLink">25.4-1</span></a>), except that <var class="Arg">A</var> and <var class="Arg">B</var> must be integral matrices, and <var class="Arg">depth</var> must be a nonnegative integer.</p>
 
 <p><a id="X839C6ABE829355F4" name="X839C6ABE829355F4"></a></p>
@@ -470,7 +470,7 @@ rec( colC := [ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ],
 
 <h5>25.5-1 LLLReducedBasis</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LLLReducedBasis</code>( [<var class="Arg">L</var>, ]<var class="Arg">vectors</var>[, <var class="Arg">y</var>][, <var class="Arg">"linearcomb"</var>][, <var class="Arg">lllout</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LLLReducedBasis</code>( [<var class="Arg">L</var>, ]<var class="Arg">vectors</var>[, <var class="Arg">y</var>][, <var class="Arg">"linearcomb"</var>][, <var class="Arg">lllout</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>provides an implementation of the <em>LLL algorithm</em> by Lenstra, Lenstra and Lovász (see <a href="chapBib.html#biBLLL82">[LLJL82]</a>, <a href="chapBib.html#biBPoh87">[Poh87]</a>). The implementation follows the description in <a href="chapBib.html#biBCoh93">[Coh93, p. 94f.]</a>.</p>
 
 <p><code class="func">LLLReducedBasis</code> returns a record whose component <code class="code">basis</code> is a list of LLL reduced linearly independent vectors spanning the same lattice as the list <var class="Arg">vectors</var>. <var class="Arg">L</var> must be a lattice, with scalar product of the vectors <var class="Arg">v</var> and <var class="Arg">w</var> given by <code class="code">ScalarProduct( <var class="Arg">L</var>, <var class="Arg">v</var>, <var class="Arg">w</var> )</code>. If no lattice is specified then the scalar product of vectors given by <code class="code">ScalarProduct( <var class="Arg">v</var>, <var class="Arg">w</var> )</code> is used.</p>
@@ -502,7 +502,7 @@ rec( B := [ 5, 36/5, 12, 50/3 ],
 
 <h5>25.5-2 LLLReducedGramMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LLLReducedGramMat</code>( <var class="Arg">G</var>[, <var class="Arg">y</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LLLReducedGramMat</code>( <var class="Arg">G</var>[, <var class="Arg">y</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">LLLReducedGramMat</code> provides an implementation of the <em>LLL algorithm</em> by Lenstra, Lenstra and Lovász (see <a href="chapBib.html#biBLLL82">[LLJL82]</a>, <a href="chapBib.html#biBPoh87">[Poh87]</a>). The implementation follows the description in <a href="chapBib.html#biBCoh93">[Coh93, p. 94f.]</a>.</p>
 
 <p>Let <var class="Arg">G</var> the Gram matrix of the vectors <span class="SimpleMath">(b_1, b_2, ..., b_n)</span>; this means <var class="Arg">G</var> is either a square symmetric matrix or lower triangular matrix (only the entries in the lower triangular half are used by the program).</p>
@@ -539,7 +539,7 @@ rec( B := [ 4, 4, 75/16, 168/25, 32/7 ],
 
 <h5>25.6-1 OrthogonalEmbeddings</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrthogonalEmbeddings</code>( <var class="Arg">gram</var>[, <var class="Arg">"positive"</var>][, <var class="Arg">maxdim</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrthogonalEmbeddings</code>( <var class="Arg">gram</var>[, <var class="Arg">"positive"</var>][, <var class="Arg">maxdim</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>computes all possible orthogonal embeddings of a lattice given by its Gram matrix <var class="Arg">gram</var>, which must be a regular symmetric matrix of integers. In other words, all integral solutions <span class="SimpleMath">X</span> of the equation <span class="SimpleMath">X^tr ⋅ X =</span><var class="Arg">gram</var> are calculated. The implementation follows the description in <a href="chapBib.html#biBPle90">[Ple95]</a>.</p>
 
 <p>Usually there are many solutions <span class="SimpleMath">X</span> but all their rows belong to a small set of vectors, so <code class="func">OrthogonalEmbeddings</code> returns the solutions encoded by a record with the following components.</p>
@@ -583,7 +583,7 @@ rec( norms := [ 1, 1, 1, 1/2, 1/2, 1/2, 1/2, 1/2, 1/2 ],
 
 <h5>25.6-2 ShortestVectors</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShortestVectors</code>( <var class="Arg">G</var>, <var class="Arg">m</var>[, <var class="Arg">"positive"</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShortestVectors</code>( <var class="Arg">G</var>, <var class="Arg">m</var>[, <var class="Arg">"positive"</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">G</var> be a regular matrix of a symmetric bilinear form, and <var class="Arg">m</var> a nonnegative integer. <code class="func">ShortestVectors</code> computes the vectors <span class="SimpleMath">x</span> that satisfy <span class="SimpleMath">x ⋅ <var class="Arg">G</var> ⋅ x^tr ≤ <var class="Arg">m</var></span>, and returns a record describing these vectors. The result record has the components</p>
 
 

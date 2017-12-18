@@ -64,7 +64,7 @@
   
   [1X64.1-1 LieObject[101X
   
-  [29X[2XLieObject[102X( [3Xobj[103X ) [32X attribute
+  [33X[1;0Y[29X[2XLieObject[102X( [3Xobj[103X ) [32X attribute[133X
   
   [33X[0;0YLet  [3Xobj[103X  be  a ring element. Then [10XLieObject( [3Xobj[103X[10X )[110X is the corresponding Lie
   object.  If  [3Xobj[103X  lies  in  the  family [10XF[110X, then [10XLieObject( [3Xobj[103X[10X )[110X lies in the
@@ -82,10 +82,10 @@
   
   [1X64.1-2 IsLieObject[101X
   
-  [29X[2XIsLieObject[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsLieObjectCollection[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsRestrictedLieObject[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsRestrictedLieObjectCollection[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsLieObject[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsLieObjectCollection[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsRestrictedLieObject[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsRestrictedLieObjectCollection[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YAn object lies in [2XIsLieObject[102X if and only if it lies in a family constructed
   by [2XLieFamily[102X ([14X64.1-3[114X).[133X
@@ -102,7 +102,7 @@
   
   [1X64.1-3 LieFamily[101X
   
-  [29X[2XLieFamily[102X( [3XFam[103X ) [32X attribute
+  [33X[1;0Y[29X[2XLieFamily[102X( [3XFam[103X ) [32X attribute[133X
   
   [33X[0;0Yis  a family [10XF[110X in bijection with the family [3XFam[103X, but with the Lie bracket as
   infix multiplication. That is, for [10Xx[110X, [10Xy[110X in [3XFam[103X, the product of the images in
@@ -115,14 +115,14 @@
   
   [1X64.1-4 UnderlyingFamily[101X
   
-  [29X[2XUnderlyingFamily[102X( [3XFam[103X ) [32X attribute
+  [33X[1;0Y[29X[2XUnderlyingFamily[102X( [3XFam[103X ) [32X attribute[133X
   
   [33X[0;0YIf  [3XFam[103X is a Lie family then [10XUnderlyingFamily( [3XFam[103X[10X )[110X is a family [10XF[110X such that
   [10X[3XFam[103X[10X = LieFamily( F )[110X.[133X
   
   [1X64.1-5 UnderlyingRingElement[101X
   
-  [29X[2XUnderlyingRingElement[102X( [3Xobj[103X ) [32X attribute
+  [33X[1;0Y[29X[2XUnderlyingRingElement[102X( [3Xobj[103X ) [32X attribute[133X
   
   [33X[0;0YLet  [3Xobj[103X  be  a  Lie  object  constructed  from  a ring element [10Xr[110X by calling
   [10XLieObject( r )[110X. Then [10XUnderlyingRingElement( [3Xobj[103X[10X )[110X returns the ring element [10Xr[110X
@@ -149,7 +149,7 @@
   
   [1X64.2-1 LieAlgebraByStructureConstants[101X
   
-  [29X[2XLieAlgebraByStructureConstants[102X( [3XR[103X, [3Xsct[103X[, [3Xnameinfo[103X] ) [32X function
+  [33X[1;0Y[29X[2XLieAlgebraByStructureConstants[102X( [3XR[103X, [3Xsct[103X[, [3Xnameinfo[103X] ) [32X function[133X
   
   [33X[0;0Y[2XLieAlgebraByStructureConstants[102X  does the same as [2XAlgebraByStructureConstants[102X
   ([14X62.4-1[114X),  and  has the same meaning of arguments, except that the result is
@@ -167,7 +167,7 @@
   
   [1X64.2-2 RestrictedLieAlgebraByStructureConstants[101X
   
-  [29X[2XRestrictedLieAlgebraByStructureConstants[102X( [3XR[103X, [3Xsct[103X[, [3Xnameinfo[103X], [3Xpmapping[103X ) [32X function
+  [33X[1;0Y[29X[2XRestrictedLieAlgebraByStructureConstants[102X( [3XR[103X, [3Xsct[103X[, [3Xnameinfo[103X], [3Xpmapping[103X ) [32X function[133X
   
   [33X[0;0Y[2XRestrictedLieAlgebraByStructureConstants[102X      does      the      same     as
   [2XLieAlgebraByStructureConstants[102X  ([14X64.2-1[114X),  and  has  the same meaning of all
@@ -198,8 +198,8 @@
   
   [1X64.2-3 LieAlgebra[101X
   
-  [29X[2XLieAlgebra[102X( [3XL[103X ) [32X function
-  [29X[2XLieAlgebra[102X( [3XF[103X, [3Xgens[103X[, [3Xzero[103X][, [3X"basis"[103X] ) [32X function
+  [33X[1;0Y[29X[2XLieAlgebra[102X( [3XL[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XLieAlgebra[102X( [3XF[103X, [3Xgens[103X[, [3Xzero[103X][, [3X"basis"[103X] ) [32X function[133X
   
   [33X[0;0YFor  an associative algebra [3XL[103X, [10XLieAlgebra( [3XL[103X[10X )[110X is the Lie algebra isomorphic
   to [3XL[103X as a vector space but with the Lie bracket as product.[133X
@@ -237,8 +237,8 @@
   
   [1X64.2-4 FreeLieAlgebra[101X
   
-  [29X[2XFreeLieAlgebra[102X( [3XR[103X, [3Xrank[103X[, [3Xname[103X] ) [32X function
-  [29X[2XFreeLieAlgebra[102X( [3XR[103X, [3Xname1[103X, [3Xname2[103X, [3X...[103X ) [32X function
+  [33X[1;0Y[29X[2XFreeLieAlgebra[102X( [3XR[103X, [3Xrank[103X[, [3Xname[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XFreeLieAlgebra[102X( [3XR[103X, [3Xname1[103X, [3Xname2[103X, [3X...[103X ) [32X function[133X
   
   [33X[0;0YReturns  a free Lie algebra of rank [3Xrank[103X over the ring [3XR[103X. [10XFreeLieAlgebra( [3XR[103X[10X,
   [3Xname1[103X[10X,  [3Xname2[103X[10X,...)[110X  returns  a free Lie algebra over [3XR[103X with generators named
@@ -255,9 +255,9 @@
   
   [1X64.2-5 FullMatrixLieAlgebra[101X
   
-  [29X[2XFullMatrixLieAlgebra[102X( [3XR[103X, [3Xn[103X ) [32X function
-  [29X[2XMatrixLieAlgebra[102X( [3XR[103X, [3Xn[103X ) [32X function
-  [29X[2XMatLieAlgebra[102X( [3XR[103X, [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XFullMatrixLieAlgebra[102X( [3XR[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XMatrixLieAlgebra[102X( [3XR[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XMatLieAlgebra[102X( [3XR[103X, [3Xn[103X ) [32X function[133X
   
   [33X[0;0Yis  the  full  matrix  Lie  algebra of [22X[3Xn[103X × [3Xn[103X[122X matrices over the ring [3XR[103X, for a
   nonnegative integer [3Xn[103X.[133X
@@ -269,9 +269,9 @@
   
   [1X64.2-6 RightDerivations[101X
   
-  [29X[2XRightDerivations[102X( [3XB[103X ) [32X attribute
-  [29X[2XLeftDerivations[102X( [3XB[103X ) [32X attribute
-  [29X[2XDerivations[102X( [3XB[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRightDerivations[102X( [3XB[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XLeftDerivations[102X( [3XB[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XDerivations[102X( [3XB[103X ) [32X attribute[133X
   
   [33X[0;0YThese  functions  all  return  the  matrix Lie algebra of derivations of the
   algebra [22XA[122X with basis [3XB[103X.[133X
@@ -297,7 +297,7 @@
   
   [1X64.2-7 SimpleLieAlgebra[101X
   
-  [29X[2XSimpleLieAlgebra[102X( [3Xtype[103X, [3Xn[103X, [3XF[103X ) [32X function
+  [33X[1;0Y[29X[2XSimpleLieAlgebra[102X( [3Xtype[103X, [3Xn[103X, [3XF[103X ) [32X function[133X
   
   [33X[0;0YThis  function constructs the simple Lie algebra of type given by the string
   [3Xtype[103X  and  rank [3Xn[103X over the field [3XF[103X. The string [3Xtype[103X must be one of [10X"A"[110X, [10X"B"[110X,
@@ -340,8 +340,8 @@
   
   [1X64.3-1 LieCentre[101X
   
-  [29X[2XLieCentre[102X( [3XL[103X ) [32X attribute
-  [29X[2XLieCenter[102X( [3XL[103X ) [32X attribute
+  [33X[1;0Y[29X[2XLieCentre[102X( [3XL[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XLieCenter[102X( [3XL[103X ) [32X attribute[133X
   
   [33X[0;0YThe  [13XLie[113X  centre  of the Lie algebra [3XL[103X is the kernel of the adjoint mapping,
   that is, the set [22X{ a ∈ L : ∀ x ∈ L: a x = 0 }[122X.[133X
@@ -360,7 +360,7 @@
   
   [1X64.3-2 LieCentralizer[101X
   
-  [29X[2XLieCentralizer[102X( [3XL[103X, [3XS[103X ) [32X operation
+  [33X[1;0Y[29X[2XLieCentralizer[102X( [3XL[103X, [3XS[103X ) [32X operation[133X
   
   [33X[0;0Yis the annihilator of [3XS[103X in the Lie algebra [3XL[103X, that is, the set [22X{ a ∈ L : ∀ s
   ∈ S: a*s = 0 }[122X. Here [3XS[103X may be a subspace or a subalgebra of [3XL[103X.[133X
@@ -375,7 +375,7 @@
   
   [1X64.3-3 LieNormalizer[101X
   
-  [29X[2XLieNormalizer[102X( [3XL[103X, [3XU[103X ) [32X operation
+  [33X[1;0Y[29X[2XLieNormalizer[102X( [3XL[103X, [3XU[103X ) [32X operation[133X
   
   [33X[0;0Yis  the  normalizer of the subspace [3XU[103X in the Lie algebra [3XL[103X, that is, the set
   [22XN_L(U) = { x ∈ L : [x,U] ⊂ U }[122X.[133X
@@ -390,7 +390,7 @@
   
   [1X64.3-4 LieDerivedSubalgebra[101X
   
-  [29X[2XLieDerivedSubalgebra[102X( [3XL[103X ) [32X attribute
+  [33X[1;0Y[29X[2XLieDerivedSubalgebra[102X( [3XL[103X ) [32X attribute[133X
   
   [33X[0;0Yis the (Lie) derived subalgebra of the Lie algebra [3XL[103X.[133X
   
@@ -403,7 +403,7 @@
   
   [1X64.3-5 LieNilRadical[101X
   
-  [29X[2XLieNilRadical[102X( [3XL[103X ) [32X attribute
+  [33X[1;0Y[29X[2XLieNilRadical[102X( [3XL[103X ) [32X attribute[133X
   
   [33X[0;0YThis function calculates the (Lie) nil radical of the Lie algebra [3XL[103X.[133X
   
@@ -417,7 +417,7 @@
   
   [1X64.3-6 LieSolvableRadical[101X
   
-  [29X[2XLieSolvableRadical[102X( [3XL[103X ) [32X attribute
+  [33X[1;0Y[29X[2XLieSolvableRadical[102X( [3XL[103X ) [32X attribute[133X
   
   [33X[0;0YReturns the (Lie) solvable radical of the Lie algebra [3XL[103X.[133X
   
@@ -430,7 +430,7 @@
   
   [1X64.3-7 CartanSubalgebra[101X
   
-  [29X[2XCartanSubalgebra[102X( [3XL[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCartanSubalgebra[102X( [3XL[103X ) [32X attribute[133X
   
   [33X[0;0YA  Cartan subalgebra of a Lie algebra [3XL[103X is defined as a nilpotent subalgebra
   of [3XL[103X equal to its own Lie normalizer in [3XL[103X.[133X
@@ -446,7 +446,7 @@
   
   [1X64.4-1 LieDerivedSeries[101X
   
-  [29X[2XLieDerivedSeries[102X( [3XL[103X ) [32X attribute
+  [33X[1;0Y[29X[2XLieDerivedSeries[102X( [3XL[103X ) [32X attribute[133X
   
   [33X[0;0Yis the (Lie) derived series of the Lie algebra [3XL[103X.[133X
   
@@ -461,7 +461,7 @@
   
   [1X64.4-2 LieLowerCentralSeries[101X
   
-  [29X[2XLieLowerCentralSeries[102X( [3XL[103X ) [32X attribute
+  [33X[1;0Y[29X[2XLieLowerCentralSeries[102X( [3XL[103X ) [32X attribute[133X
   
   [33X[0;0Yis the (Lie) lower central series of the Lie algebra [3XL[103X.[133X
   
@@ -475,7 +475,7 @@
   
   [1X64.4-3 LieUpperCentralSeries[101X
   
-  [29X[2XLieUpperCentralSeries[102X( [3XL[103X ) [32X attribute
+  [33X[1;0Y[29X[2XLieUpperCentralSeries[102X( [3XL[103X ) [32X attribute[133X
   
   [33X[0;0Yis the (Lie) upper central series of the Lie algebra [3XL[103X.[133X
   
@@ -493,7 +493,7 @@
   
   [1X64.5-1 IsLieAbelian[101X
   
-  [29X[2XIsLieAbelian[102X( [3XL[103X ) [32X property
+  [33X[1;0Y[29X[2XIsLieAbelian[102X( [3XL[103X ) [32X property[133X
   
   [33X[0;0Yreturns  [9Xtrue[109X  if [3XL[103X is a Lie algebra such that each product of elements in [3XL[103X
   is zero, and [9Xfalse[109X otherwise.[133X
@@ -508,7 +508,7 @@
   
   [1X64.5-2 IsLieNilpotent[101X
   
-  [29X[2XIsLieNilpotent[102X( [3XL[103X ) [32X property
+  [33X[1;0Y[29X[2XIsLieNilpotent[102X( [3XL[103X ) [32X property[133X
   
   [33X[0;0YA  Lie  algebra  [3XL[103X  is  defined  to  be (Lie) [13Xnilpotent[113X when its (Lie) lower
   central series reaches the trivial subalgebra.[133X
@@ -523,7 +523,7 @@
   
   [1X64.5-3 IsLieSolvable[101X
   
-  [29X[2XIsLieSolvable[102X( [3XL[103X ) [32X property
+  [33X[1;0Y[29X[2XIsLieSolvable[102X( [3XL[103X ) [32X property[133X
   
   [33X[0;0YA  Lie  algebra  [3XL[103X  is  defined  to be (Lie) [13Xsolvable[113X when its (Lie) derived
   series reaches the trivial subalgebra.[133X
@@ -544,7 +544,7 @@
   
   [1X64.6-1 SemiSimpleType[101X
   
-  [29X[2XSemiSimpleType[102X( [3XL[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSemiSimpleType[102X( [3XL[103X ) [32X attribute[133X
   
   [33X[0;0YLet  [3XL[103X  be  a  semisimple  Lie  algebra,  i.e.,  a  direct sum of simple Lie
   algebras.  Then  [2XSemiSimpleType[102X  returns  the  type  of  [3XL[103X,  i.e.,  a string
@@ -562,7 +562,7 @@
   
   [1X64.6-2 ChevalleyBasis[101X
   
-  [29X[2XChevalleyBasis[102X( [3XL[103X ) [32X attribute
+  [33X[1;0Y[29X[2XChevalleyBasis[102X( [3XL[103X ) [32X attribute[133X
   
   [33X[0;0YHere [3XL[103X must be a semisimple Lie algebra with a split Cartan subalgebra. Then
   [10XChevalleyBasis([3XL[103X[10X)[110X  returns  a  list  consisting  of three sublists. Together
@@ -580,13 +580,13 @@
   
   [1X64.6-3 IsRootSystem[101X
   
-  [29X[2XIsRootSystem[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsRootSystem[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YCategory of root systems.[133X
   
   [1X64.6-4 IsRootSystemFromLieAlgebra[101X
   
-  [29X[2XIsRootSystemFromLieAlgebra[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsRootSystemFromLieAlgebra[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YCategory  of  root  systems  that  come from (semisimple) Lie algebras. They
   often   have  special  attributes  such  as  [2XUnderlyingLieAlgebra[102X  ([14X64.6-6[114X),
@@ -595,7 +595,7 @@
   
   [1X64.6-5 RootSystem[101X
   
-  [29X[2XRootSystem[102X( [3XL[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRootSystem[102X( [3XL[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XRootSystem[102X calculates the root system of the semisimple Lie algebra [3XL[103X with a
   split Cartan subalgebra.[133X
@@ -613,26 +613,26 @@
   
   [1X64.6-6 UnderlyingLieAlgebra[101X
   
-  [29X[2XUnderlyingLieAlgebra[102X( [3XR[103X ) [32X attribute
+  [33X[1;0Y[29X[2XUnderlyingLieAlgebra[102X( [3XR[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a root system [3XR[103X coming from a semisimple Lie algebra [10XL[110X, returns the Lie
   algebra [10XL[110X.[133X
   
   [1X64.6-7 PositiveRoots[101X
   
-  [29X[2XPositiveRoots[102X( [3XR[103X ) [32X attribute
+  [33X[1;0Y[29X[2XPositiveRoots[102X( [3XR[103X ) [32X attribute[133X
   
   [33X[0;0YThe list of positive roots of the root system [3XR[103X.[133X
   
   [1X64.6-8 NegativeRoots[101X
   
-  [29X[2XNegativeRoots[102X( [3XR[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNegativeRoots[102X( [3XR[103X ) [32X attribute[133X
   
   [33X[0;0YThe list of negative roots of the root system [3XR[103X.[133X
   
   [1X64.6-9 PositiveRootVectors[101X
   
-  [29X[2XPositiveRootVectors[102X( [3XR[103X ) [32X attribute
+  [33X[1;0Y[29X[2XPositiveRootVectors[102X( [3XR[103X ) [32X attribute[133X
   
   [33X[0;0YA  list  of positive root vectors of the root system [3XR[103X that comes from a Lie
   algebra  [10XL[110X.  This  is  a  list in bijection with the list [10XPositiveRoots( L )[110X
@@ -641,7 +641,7 @@
   
   [1X64.6-10 NegativeRootVectors[101X
   
-  [29X[2XNegativeRootVectors[102X( [3XR[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNegativeRootVectors[102X( [3XR[103X ) [32X attribute[133X
   
   [33X[0;0YA  list  of negative root vectors of the root system [3XR[103X that comes from a Lie
   algebra  [10XL[110X.  This  is  a  list in bijection with the list [10XNegativeRoots( L )[110X
@@ -650,20 +650,20 @@
   
   [1X64.6-11 SimpleSystem[101X
   
-  [29X[2XSimpleSystem[102X( [3XR[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSimpleSystem[102X( [3XR[103X ) [32X attribute[133X
   
   [33X[0;0YA list of simple roots of the root system [3XR[103X.[133X
   
   [1X64.6-12 CartanMatrix[101X
   
-  [29X[2XCartanMatrix[102X( [3XR[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCartanMatrix[102X( [3XR[103X ) [32X attribute[133X
   
   [33X[0;0YThe  Cartan  matrix  of  the  root system [3XR[103X, relative to the simple roots in
   [10XSimpleSystem( [3XR[103X[10X )[110X (see [2XSimpleSystem[102X ([14X64.6-11[114X)).[133X
   
   [1X64.6-13 BilinearFormMat[101X
   
-  [29X[2XBilinearFormMat[102X( [3XR[103X ) [32X attribute
+  [33X[1;0Y[29X[2XBilinearFormMat[102X( [3XR[103X ) [32X attribute[133X
   
   [33X[0;0YThe  matrix  of  the  bilinear  form of the root system [3XR[103X. If we denote this
   matrix  by [22XB[122X, then we have [22XB(i,j) = (α_i, α_j)[122X, where the [22Xα_i[122X are the simple
@@ -671,7 +671,7 @@
   
   [1X64.6-14 CanonicalGenerators[101X
   
-  [29X[2XCanonicalGenerators[102X( [3XR[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCanonicalGenerators[102X( [3XR[103X ) [32X attribute[133X
   
   [33X[0;0YHere  [3XR[103X  must  be a root system coming from a semisimple Lie algebra [10XL[110X. This
   function returns [22X3l[122X generators of [3XL[103X, [22Xx_1, ..., x_l, y_1, ..., y_l, h_1, ...,
@@ -728,14 +728,14 @@
   
   [1X64.7-1 IsWeylGroup[101X
   
-  [29X[2XIsWeylGroup[102X( [3XG[103X ) [32X property
+  [33X[1;0Y[29X[2XIsWeylGroup[102X( [3XG[103X ) [32X property[133X
   
   [33X[0;0YA  Weyl  group  is  a  group  generated  by  reflections, with the attribute
   [2XSparseCartanMatrix[102X ([14X64.7-2[114X) set.[133X
   
   [1X64.7-2 SparseCartanMatrix[101X
   
-  [29X[2XSparseCartanMatrix[102X( [3XW[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSparseCartanMatrix[102X( [3XW[103X ) [32X attribute[133X
   
   [33X[0;0YThis is a sparse form of the Cartan matrix of the corresponding root system.
   If we denote the Cartan matrix by [10XC[110X, then the sparse Cartan matrix of [3XW[103X is a
@@ -745,7 +745,7 @@
   
   [1X64.7-3 WeylGroup[101X
   
-  [29X[2XWeylGroup[102X( [3XR[103X ) [32X attribute
+  [33X[1;0Y[29X[2XWeylGroup[102X( [3XR[103X ) [32X attribute[133X
   
   [33X[0;0YThe  Weyl  group  of  the  root  system  [3XR[103X.  It  is  generated by the simple
   reflections.  A simple reflection is represented by a matrix, and the result
@@ -769,7 +769,7 @@
   
   [1X64.7-4 ApplySimpleReflection[101X
   
-  [29X[2XApplySimpleReflection[102X( [3XSC[103X, [3Xi[103X, [3Xwt[103X ) [32X operation
+  [33X[1;0Y[29X[2XApplySimpleReflection[102X( [3XSC[103X, [3Xi[103X, [3Xwt[103X ) [32X operation[133X
   
   [33X[0;0YHere  [3XSC[103X  is the sparse Cartan matrix of a Weyl group. This function applies
   the [3Xi[103X-th simple reflection to the weight [3Xwt[103X, thus changing [3Xwt[103X.[133X
@@ -786,7 +786,7 @@
   
   [1X64.7-5 LongestWeylWordPerm[101X
   
-  [29X[2XLongestWeylWordPerm[102X( [3XW[103X ) [32X attribute
+  [33X[1;0Y[29X[2XLongestWeylWordPerm[102X( [3XW[103X ) [32X attribute[133X
   
   [33X[0;0YLet  [22Xg_0[122X be the longest element in the Weyl group [3XW[103X, and let [22X{ α_1, ..., α_l
   }[122X  be a simple system of the corresponding root system. Then [22Xg_0[122X maps [22Xα_i[122X to
@@ -802,8 +802,8 @@
   
   [1X64.7-6 ConjugateDominantWeight[101X
   
-  [29X[2XConjugateDominantWeight[102X( [3XW[103X, [3Xwt[103X ) [32X operation
-  [29X[2XConjugateDominantWeightWithWord[102X( [3XW[103X, [3Xwt[103X ) [32X operation
+  [33X[1;0Y[29X[2XConjugateDominantWeight[102X( [3XW[103X, [3Xwt[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XConjugateDominantWeightWithWord[102X( [3XW[103X, [3Xwt[103X ) [32X operation[133X
   
   [33X[0;0YHere  [3XW[103X  is  a  Weyl  group  and  [3Xwt[103X  a  weight  (i.e., a list of integers).
   [2XConjugateDominantWeight[102X  returns  the unique dominant weight conjugate to [3Xwt[103X
@@ -832,7 +832,7 @@
   
   [1X64.7-7 WeylOrbitIterator[101X
   
-  [29X[2XWeylOrbitIterator[102X( [3XW[103X, [3Xwt[103X ) [32X operation
+  [33X[1;0Y[29X[2XWeylOrbitIterator[102X( [3XW[103X, [3Xwt[103X ) [32X operation[133X
   
   [33X[0;0YReturns  an  iterator for the orbit of the weight [3Xwt[103X under the action of the
   Weyl group [3XW[103X.[133X
@@ -871,7 +871,7 @@
   
   [1X64.8-1 IsRestrictedLieAlgebra[101X
   
-  [29X[2XIsRestrictedLieAlgebra[102X( [3XL[103X ) [32X property
+  [33X[1;0Y[29X[2XIsRestrictedLieAlgebra[102X( [3XL[103X ) [32X property[133X
   
   [33X[0;0YTest whether [3XL[103X is restricted.[133X
   
@@ -888,7 +888,7 @@
   
   [1X64.8-2 PthPowerImages[101X
   
-  [29X[2XPthPowerImages[102X( [3XB[103X ) [32X attribute
+  [33X[1;0Y[29X[2XPthPowerImages[102X( [3XB[103X ) [32X attribute[133X
   
   [33X[0;0YHere  [3XB[103X  is  a  basis of a restricted Lie algebra. This function returns the
   list of the images of the basis vectors of [3XB[103X under the [22Xp[122X-map.[133X
@@ -905,9 +905,9 @@
   
   [1X64.8-3 PthPowerImage[101X
   
-  [29X[2XPthPowerImage[102X( [3XB[103X, [3Xx[103X ) [32X operation
-  [29X[2XPthPowerImage[102X( [3Xx[103X ) [32X operation
-  [29X[2XPthPowerImage[102X( [3Xx[103X, [3Xn[103X ) [32X operation
+  [33X[1;0Y[29X[2XPthPowerImage[102X( [3XB[103X, [3Xx[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPthPowerImage[102X( [3Xx[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPthPowerImage[102X( [3Xx[103X, [3Xn[103X ) [32X operation[133X
   
   [33X[0;0YThis function computes the image of an element [3Xx[103X of a restricted Lie algebra
   under its [22Xp[122X-map.[133X
@@ -943,7 +943,7 @@
   
   [1X64.8-4 JenningsLieAlgebra[101X
   
-  [29X[2XJenningsLieAlgebra[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XJenningsLieAlgebra[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0YLet  [3XG[103X  be  a nontrivial [22Xp[122X-group, and let [22X[3XG[103X = G_1 ⊃ G_2 ⊃ ⋯ ⊃ G_m = 1[122X be its
   Jennings  series  (see [2XJenningsSeries[102X  ([14X39.17-14[114X)). Then the quotients [22XG_i /
@@ -957,7 +957,7 @@
   
   [1X64.8-5 PCentralLieAlgebra[101X
   
-  [29X[2XPCentralLieAlgebra[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XPCentralLieAlgebra[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0YHere  [3XG[103X  is  a  nontrivial [22Xp[122X-group. [10XPCentralLieAlgebra( [3XG[103X[10X )[110X does the same as
   [2XJenningsLieAlgebra[102X ([14X64.8-4[114X) except that the [22Xp[122X-central series is used instead
@@ -984,7 +984,7 @@
   
   [1X64.8-6 NaturalHomomorphismOfLieAlgebraFromNilpotentGroup[101X
   
-  [29X[2XNaturalHomomorphismOfLieAlgebraFromNilpotentGroup[102X( [3XL[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNaturalHomomorphismOfLieAlgebraFromNilpotentGroup[102X( [3XL[103X ) [32X attribute[133X
   
   [33X[0;0YThis  is an attribute of Lie algebras created by [2XJenningsLieAlgebra[102X ([14X64.8-4[114X)
   or  [2XPCentralLieAlgebra[102X  ([14X64.8-5[114X).  Then  [3XL[103X is the direct sum of quotients of
@@ -1004,7 +1004,7 @@
   
   [1X64.9-1 AdjointMatrix[101X
   
-  [29X[2XAdjointMatrix[102X( [3XB[103X, [3Xx[103X ) [32X operation
+  [33X[1;0Y[29X[2XAdjointMatrix[102X( [3XB[103X, [3Xx[103X ) [32X operation[133X
   
   [33X[0;0Yis  the  matrix  of  the  adjoint representation of the element [3Xx[103X w.r.t. the
   basis [3XB[103X. The adjoint map is the left multiplication by [3Xx[103X. The [22Xi[122X-th column of
@@ -1019,7 +1019,7 @@
   
   [1X64.9-2 AdjointAssociativeAlgebra[101X
   
-  [29X[2XAdjointAssociativeAlgebra[102X( [3XL[103X, [3XK[103X ) [32X operation
+  [33X[1;0Y[29X[2XAdjointAssociativeAlgebra[102X( [3XL[103X, [3XK[103X ) [32X operation[133X
   
   [33X[0;0Yis  the associative matrix algebra (with 1) generated by the matrices of the
   adjoint representation of the subalgebra [3XK[103X on the Lie algebra [3XL[103X.[133X
@@ -1034,7 +1034,7 @@
   
   [1X64.9-3 KillingMatrix[101X
   
-  [29X[2XKillingMatrix[102X( [3XB[103X ) [32X attribute
+  [33X[1;0Y[29X[2XKillingMatrix[102X( [3XB[103X ) [32X attribute[133X
   
   [33X[0;0Yis  the  matrix of the Killing form [22Xκ[122X with respect to the basis [3XB[103X, i.e., the
   matrix [22X( κ( b_i, b_j ) )[122X where [22Xb_1, b_2, ...[122X are the basis vectors of [3XB[103X.[133X
@@ -1047,7 +1047,7 @@
   
   [1X64.9-4 KappaPerp[101X
   
-  [29X[2XKappaPerp[102X( [3XL[103X, [3XU[103X ) [32X operation
+  [33X[1;0Y[29X[2XKappaPerp[102X( [3XL[103X, [3XU[103X ) [32X operation[133X
   
   [33X[0;0Yis  the  orthogonal  complement  of the subspace [3XU[103X of the Lie algebra [3XL[103X with
   respect  to the Killing form [22Xκ[122X, that is, the set [22XU^{perp} = { x ∈ L; κ( x, y
@@ -1066,7 +1066,7 @@
   
   [1X64.9-5 IsNilpotentElement[101X
   
-  [29X[2XIsNilpotentElement[102X( [3XL[103X, [3Xx[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsNilpotentElement[102X( [3XL[103X, [3Xx[103X ) [32X operation[133X
   
   [33X[0;0Y[3Xx[103X is nilpotent in [3XL[103X if its adjoint matrix is a nilpotent matrix.[133X
   
@@ -1078,7 +1078,7 @@
   
   [1X64.9-6 NonNilpotentElement[101X
   
-  [29X[2XNonNilpotentElement[102X( [3XL[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNonNilpotentElement[102X( [3XL[103X ) [32X attribute[133X
   
   [33X[0;0YA  non-nilpotent element of a Lie algebra [3XL[103X is an element [22Xx[122X such that ad[22Xx[122X is
   not  nilpotent. If [3XL[103X is not nilpotent, then by Engel's theorem non-nilpotent
@@ -1095,7 +1095,7 @@
   
   [1X64.9-7 FindSl2[101X
   
-  [29X[2XFindSl2[102X( [3XL[103X, [3Xx[103X ) [32X function
+  [33X[1;0Y[29X[2XFindSl2[102X( [3XL[103X, [3Xx[103X ) [32X function[133X
   
   [33X[0;0YThis  function  tries  to  find  a  subalgebra [22XS[122X of the Lie algebra [3XL[103X with [22XS[122X
   isomorphic  to  [22Xsl_2[122X and such that the nilpotent element [3Xx[103X of [3XL[103X is contained
@@ -1116,7 +1116,7 @@
   
   [1X64.10-1 UniversalEnvelopingAlgebra[101X
   
-  [29X[2XUniversalEnvelopingAlgebra[102X( [3XL[103X[, [3XB[103X] ) [32X attribute
+  [33X[1;0Y[29X[2XUniversalEnvelopingAlgebra[102X( [3XL[103X[, [3XB[103X] ) [32X attribute[133X
   
   [33X[0;0YReturns  the universal enveloping algebra of the Lie algebra [3XL[103X. The elements
   of this algebra are written on a Poincare-Birkhoff-Witt basis.[133X
@@ -1169,7 +1169,7 @@
   
   [1X64.11-1 FpLieAlgebraByCartanMatrix[101X
   
-  [29X[2XFpLieAlgebraByCartanMatrix[102X( [3XC[103X ) [32X function
+  [33X[1;0Y[29X[2XFpLieAlgebraByCartanMatrix[102X( [3XC[103X ) [32X function[133X
   
   [33X[0;0YHere  [3XC[103X must be a Cartan matrix. The function returns the finitely-presented
   Lie  algebra  over  the  field  of  rational  numbers defined by this Cartan
@@ -1189,7 +1189,7 @@
   
   [1X64.11-2 NilpotentQuotientOfFpLieAlgebra[101X
   
-  [29X[2XNilpotentQuotientOfFpLieAlgebra[102X( [3XFpL[103X, [3Xmax[103X[, [3Xweights[103X] ) [32X function
+  [33X[1;0Y[29X[2XNilpotentQuotientOfFpLieAlgebra[102X( [3XFpL[103X, [3Xmax[103X[, [3Xweights[103X] ) [32X function[133X
   
   [33X[0;0YHere  [3XFpL[103X  is a finitely presented Lie algebra. Let [22XK[122X be the quotient of [3XFpL[103X
   by the [3Xmax[103X+1-th term of its lower central series. This function calculates a
@@ -1273,14 +1273,14 @@
   
   [1X64.12-1 IsCochain[101X
   
-  [29X[2XIsCochain[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsCochainCollection[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsCochain[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsCochainCollection[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YCategories of cochains and of collections of cochains.[133X
   
   [1X64.12-2 Cochain[101X
   
-  [29X[2XCochain[102X( [3XV[103X, [3Xs[103X, [3Xobj[103X ) [32X operation
+  [33X[1;0Y[29X[2XCochain[102X( [3XV[103X, [3Xs[103X, [3Xobj[103X ) [32X operation[133X
   
   [33X[0;0YConstructs  a  [3Xs[103X-cochain  given  by the data in [3Xobj[103X, with respect to the Lie
   algebra module [3XV[103X. If [3Xs[103X is non-zero, then [3Xobj[103X must be a list.[133X
@@ -1305,7 +1305,7 @@
   
   [1X64.12-3 CochainSpace[101X
   
-  [29X[2XCochainSpace[102X( [3XV[103X, [3Xs[103X ) [32X operation
+  [33X[1;0Y[29X[2XCochainSpace[102X( [3XV[103X, [3Xs[103X ) [32X operation[133X
   
   [33X[0;0YReturns the space of all [3Xs[103X-cochains with respect to [3XV[103X.[133X
   
@@ -1323,7 +1323,7 @@
   
   [1X64.12-4 ValueCochain[101X
   
-  [29X[2XValueCochain[102X( [3Xc[103X, [3Xy1[103X, [3Xy2[103X, [3X...[103X, [3Xys[103X ) [32X function
+  [33X[1;0Y[29X[2XValueCochain[102X( [3Xc[103X, [3Xy1[103X, [3Xy2[103X, [3X...[103X, [3Xys[103X ) [32X function[133X
   
   [33X[0;0YHere [3Xc[103X is an [10Xs[110X-cochain. This function returns the value of [3Xc[103X when applied to
   the  [10Xs[110X  elements  [3Xy1[103X to [3Xys[103X (that lie in the Lie algebra acting on the module
@@ -1342,7 +1342,7 @@
   
   [1X64.12-5 LieCoboundaryOperator[101X
   
-  [29X[2XLieCoboundaryOperator[102X( [3Xc[103X ) [32X function
+  [33X[1;0Y[29X[2XLieCoboundaryOperator[102X( [3Xc[103X ) [32X function[133X
   
   [33X[0;0YThis  is  a  function that takes an [10Xs[110X-cochain [3Xc[103X, and returns an [10Xs+1[110X-cochain.
   The coboundary operator is applied.[133X
@@ -1360,7 +1360,7 @@
   
   [1X64.12-6 Cocycles[101X
   
-  [29X[2XCocycles[102X( [3XV[103X, [3Xs[103X ) [32X operation
+  [33X[1;0Y[29X[2XCocycles[102X( [3XV[103X, [3Xs[103X ) [32X operation[133X
   
   [33X[0;0Yis  the  space  of  all [3Xs[103X-cocycles with respect to the Lie algebra module [3XV[103X.
   That  is  the kernel of the coboundary operator when restricted to the space
@@ -1368,7 +1368,7 @@
   
   [1X64.12-7 Coboundaries[101X
   
-  [29X[2XCoboundaries[102X( [3XV[103X, [3Xs[103X ) [32X operation
+  [33X[1;0Y[29X[2XCoboundaries[102X( [3XV[103X, [3Xs[103X ) [32X operation[133X
   
   [33X[0;0Yis the space of all [3Xs[103X-coboundaries with respect to the Lie algebra module [3XV[103X.
   That  is  the image of the coboundary operator, when applied to the space of
@@ -1402,7 +1402,7 @@
   
   [1X64.13-1 DominantWeights[101X
   
-  [29X[2XDominantWeights[102X( [3XR[103X, [3Xmaxw[103X ) [32X operation
+  [33X[1;0Y[29X[2XDominantWeights[102X( [3XR[103X, [3Xmaxw[103X ) [32X operation[133X
   
   [33X[0;0YReturns  a  list  consisting  of  two lists. The first of these contains the
   dominant  weights  (written  on  the  basis  of  fundamental weights) of the
@@ -1414,8 +1414,8 @@
   
   [1X64.13-2 DominantCharacter[101X
   
-  [29X[2XDominantCharacter[102X( [3XL[103X, [3Xmaxw[103X ) [32X operation
-  [29X[2XDominantCharacter[102X( [3XR[103X, [3Xmaxw[103X ) [32X operation
+  [33X[1;0Y[29X[2XDominantCharacter[102X( [3XL[103X, [3Xmaxw[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XDominantCharacter[102X( [3XR[103X, [3Xmaxw[103X ) [32X operation[133X
   
   [33X[0;0YFor  a  highest weight [3Xmaxw[103X and a semisimple Lie algebra [3XL[103X, this returns the
   dominant  weights  of  the highest-weight module over [3XL[103X, with highest weight
@@ -1428,7 +1428,7 @@
   
   [1X64.13-3 DecomposeTensorProduct[101X
   
-  [29X[2XDecomposeTensorProduct[102X( [3XL[103X, [3Xw1[103X, [3Xw2[103X ) [32X operation
+  [33X[1;0Y[29X[2XDecomposeTensorProduct[102X( [3XL[103X, [3Xw1[103X, [3Xw2[103X ) [32X operation[133X
   
   [33X[0;0YHere  [3XL[103X is a semisimple Lie algebra and [3Xw1[103X, [3Xw2[103X are dominant weights. Let [22XV_i[122X
   be  the irreducible highest-weight module over [3XL[103X with highest weight [22Xw_i[122X for
@@ -1443,7 +1443,7 @@
   
   [1X64.13-4 DimensionOfHighestWeightModule[101X
   
-  [29X[2XDimensionOfHighestWeightModule[102X( [3XL[103X, [3Xw[103X ) [32X operation
+  [33X[1;0Y[29X[2XDimensionOfHighestWeightModule[102X( [3XL[103X, [3Xw[103X ) [32X operation[133X
   
   [33X[0;0YHere  [3XL[103X  is a semisimple Lie algebra, and [3Xw[103X a dominant weight. This function
   returns  the  dimension  of  the  highest-weight  module over [3XL[103X with highest
@@ -1503,16 +1503,16 @@
   
   [1X64.14-1 IsUEALatticeElement[101X
   
-  [29X[2XIsUEALatticeElement[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsUEALatticeElementCollection[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsUEALatticeElementFamily[102X( [3Xfam[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsUEALatticeElement[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsUEALatticeElementCollection[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsUEALatticeElementFamily[102X( [3Xfam[103X ) [32X Category[133X
   
   [33X[0;0Yis  the  category  of  elements  of  an  admissible lattice in the universal
   enveloping algebra of a semisimple Lie algebra [10XL[110X.[133X
   
   [1X64.14-2 LatticeGeneratorsInUEA[101X
   
-  [29X[2XLatticeGeneratorsInUEA[102X( [3XL[103X ) [32X attribute
+  [33X[1;0Y[29X[2XLatticeGeneratorsInUEA[102X( [3XL[103X ) [32X attribute[133X
   
   [33X[0;0YHere  [3XL[103X  must be a semisimple Lie algebra of characteristic [22X0[122X. This function
   returns  a  list  of  generators  of  an admissible lattice in the universal
@@ -1540,7 +1540,7 @@
   
   [1X64.14-3 ObjByExtRep[101X
   
-  [29X[2XObjByExtRep[102X( [3XF[103X, [3Xdescr[103X ) [32X method
+  [33X[1;0Y[29X[2XObjByExtRep[102X( [3XF[103X, [3Xdescr[103X ) [32X method[133X
   
   [33X[0;0YAn UEALattice element is represented by a list of the form [10X[ m1, c1, m2, c2,
   ...  ][110X,  where  the  [10Xc1[110X,  [10Xc2[110X  etc. are coefficients, and the [10Xm1[110X, [10Xm2[110X etc. are
@@ -1577,9 +1577,9 @@
   
   [1X64.14-4 IsWeightRepElement[101X
   
-  [29X[2XIsWeightRepElement[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsWeightRepElementCollection[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsWeightRepElementFamily[102X( [3Xfam[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsWeightRepElement[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsWeightRepElementCollection[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsWeightRepElementFamily[102X( [3Xfam[103X ) [32X Category[133X
   
   [33X[0;0YIs   a   category  of  vectors,  that  is  used  to  construct  elements  of
   highest-weight modules (by [2XHighestWeightModule[102X ([14X64.14-5[114X)).[133X
@@ -1600,7 +1600,7 @@
   
   [1X64.14-5 HighestWeightModule[101X
   
-  [29X[2XHighestWeightModule[102X( [3XL[103X, [3Xwt[103X ) [32X operation
+  [33X[1;0Y[29X[2XHighestWeightModule[102X( [3XL[103X, [3Xwt[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  highest weight module with highest weight [3Xwt[103X of the semisimple
   Lie algebra [3XL[103X of characteristic [22X0[122X.[133X
@@ -1638,8 +1638,8 @@
   
   [1X64.15-1 TensorProductOfAlgebraModules[101X
   
-  [29X[2XTensorProductOfAlgebraModules[102X( [3Xlist[103X ) [32X operation
-  [29X[2XTensorProductOfAlgebraModules[102X( [3XV[103X, [3XW[103X ) [32X operation
+  [33X[1;0Y[29X[2XTensorProductOfAlgebraModules[102X( [3Xlist[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XTensorProductOfAlgebraModules[102X( [3XV[103X, [3XW[103X ) [32X operation[133X
   
   [33X[0;0YHere  the  elements  of  [3Xlist[103X must be algebra modules. The tensor product is
   returned  as  an  algebra module. The two-argument version works in the same
@@ -1662,7 +1662,7 @@
   
   [1X64.15-2 ExteriorPowerOfAlgebraModule[101X
   
-  [29X[2XExteriorPowerOfAlgebraModule[102X( [3XV[103X, [3Xk[103X ) [32X operation
+  [33X[1;0Y[29X[2XExteriorPowerOfAlgebraModule[102X( [3XV[103X, [3Xk[103X ) [32X operation[133X
   
   [33X[0;0YHere  [3XV[103X must be an algebra module, defined over a Lie algebra. This function
   returns the [3Xk[103X-th exterior power of [3XV[103X as an algebra module.[133X
@@ -1681,7 +1681,7 @@
   
   [1X64.15-3 SymmetricPowerOfAlgebraModule[101X
   
-  [29X[2XSymmetricPowerOfAlgebraModule[102X( [3XV[103X, [3Xk[103X ) [32X operation
+  [33X[1;0Y[29X[2XSymmetricPowerOfAlgebraModule[102X( [3XV[103X, [3Xk[103X ) [32X operation[133X
   
   [33X[0;0YHere  [3XV[103X  must be an algebra module. This function returns the [3Xk[103X-th symmetric
   power of [3XV[103X (as an algebra module).[133X

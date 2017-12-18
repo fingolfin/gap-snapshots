@@ -93,7 +93,7 @@
 
 <h5>75.1-1 InfoMonomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoMonomial</code></td><td class="tdright">( info class )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoMonomial</code></td><td class="tdright">(&nbsp;info class&nbsp;)</td></tr></table></div>
 <p>Most of the functions described in this chapter print some (hopefully useful) <em>information</em> if the info level of the info class <code class="func">InfoMonomial</code> is at least <span class="SimpleMath">1</span>, see <a href="chap7.html#X7A9C902479CB6F7C"><span class="RefLink">7.4</span></a> for details.</p>
 
 <p><a id="X842D10BC7CA9C2DE" name="X842D10BC7CA9C2DE"></a></p>
@@ -104,22 +104,22 @@
 
 <h5>75.2-1 Alpha</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Alpha</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Alpha</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>For a group <var class="Arg">G</var>, <code class="func">Alpha</code> returns a list whose <span class="SimpleMath">i</span>-th entry is the maximal derived length of groups <span class="SimpleMath"><var class="Arg">G</var> / ker(χ)</span> for <span class="SimpleMath">χ ∈ Irr(<var class="Arg">G</var>)</span> with <span class="SimpleMath">χ(1)</span> at most the <span class="SimpleMath">i</span>-th irreducible degree of <var class="Arg">G</var>.</p>
 
 <p><a id="X82C33CF282FC5A73" name="X82C33CF282FC5A73"></a></p>
 
 <h5>75.2-2 Delta</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Delta</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Delta</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>For a group <var class="Arg">G</var>, <code class="func">Delta</code> returns the list <span class="SimpleMath">[ 1, alp[2] - alp[1], ..., alp[<var class="Arg">n</var>] - alp[<var class="Arg">n</var>-1] ]</span>, where <span class="SimpleMath">alp =</span><code class="code">Alpha( <var class="Arg">G</var> )</code> (see <code class="func">Alpha</code> (<a href="chap75.html#X86A900897819E5AC"><span class="RefLink">75.2-1</span></a>)).</p>
 
 <p><a id="X7D0D26267A9D37DD" name="X7D0D26267A9D37DD"></a></p>
 
 <h5>75.2-3 <span class="Heading">IsBergerCondition</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBergerCondition</code>( <var class="Arg">G</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBergerCondition</code>( <var class="Arg">chi</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBergerCondition</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBergerCondition</code>( <var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Called with an irreducible character <var class="Arg">chi</var> of a group <span class="SimpleMath">G</span>, <code class="func">IsBergerCondition</code> returns <code class="keyw">true</code> if <var class="Arg">chi</var> satisfies <span class="SimpleMath">M' ≤ ker(χ)</span> for every normal subgroup <span class="SimpleMath">M</span> of <span class="SimpleMath">G</span> with the property that <span class="SimpleMath">M ≤ ker(ψ)</span> holds for all <span class="SimpleMath">ψ ∈ Irr(G)</span> with <span class="SimpleMath">ψ(1) &lt; χ(1)</span>, and <code class="keyw">false</code> otherwise.</p>
 
 <p>Called with a group <var class="Arg">G</var>, <code class="func">IsBergerCondition</code> returns <code class="keyw">true</code> if all irreducible characters of <var class="Arg">G</var> satisfy the inequality above, and <code class="keyw">false</code> otherwise.</p>
@@ -156,7 +156,7 @@ false
 
 <h5>75.3-1 TestHomogeneous</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestHomogeneous</code>( <var class="Arg">chi</var>, <var class="Arg">N</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestHomogeneous</code>( <var class="Arg">chi</var>, <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For a group character <var class="Arg">chi</var> of the group <span class="SimpleMath">G</span>, say, and a normal subgroup <var class="Arg">N</var> of <span class="SimpleMath">G</span>, <code class="func">TestHomogeneous</code> returns a record with information whether the restriction of <var class="Arg">chi</var> to <var class="Arg">N</var> is homogeneous, i.e., is a multiple of an irreducible character.</p>
 
 <p><var class="Arg">N</var> may be given also as list of conjugacy class positions w.r.t. the character table of <span class="SimpleMath">G</span>.</p>
@@ -206,7 +206,7 @@ rec( comment := "restricts irreducibly", isHomogeneous := true )
 
 <h5>75.3-2 IsPrimitiveCharacter</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPrimitiveCharacter</code>( <var class="Arg">chi</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPrimitiveCharacter</code>( <var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>For a character <var class="Arg">chi</var> of the group <span class="SimpleMath">G</span>, say, <code class="func">IsPrimitiveCharacter</code> returns <code class="keyw">true</code> if <var class="Arg">chi</var> is not induced from any proper subgroup, and <code class="keyw">false</code> otherwise.</p>
 
 
@@ -221,8 +221,8 @@ false
 
 <h5>75.3-3 TestQuasiPrimitive</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestQuasiPrimitive</code>( <var class="Arg">chi</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsQuasiPrimitive</code>( <var class="Arg">chi</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestQuasiPrimitive</code>( <var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsQuasiPrimitive</code>( <var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p><code class="func">TestQuasiPrimitive</code> returns a record with information about quasiprimitivity of the group character <var class="Arg">chi</var>, i.e., whether <var class="Arg">chi</var> restricts homogeneously to every normal subgroup of its group. The result record contains at least the components <code class="code">isQuasiPrimitive</code> (with value either <code class="keyw">true</code> or <code class="keyw">false</code>) and <code class="code">comment</code> (a string telling a reason for the value of the component <code class="code">isQuasiPrimitive</code>). If <var class="Arg">chi</var> is not quasiprimitive then there is additionally a component <code class="code">character</code>, with value an irreducible constituent of a nonhomogeneous restriction of <var class="Arg">chi</var>.</p>
 
 <p><code class="func">IsQuasiPrimitive</code> returns <code class="keyw">true</code> or <code class="keyw">false</code>, depending on whether the character <var class="Arg">chi</var> is quasiprimitive.</p>
@@ -250,8 +250,8 @@ rec( character := Character( CharacterTable( Group(
 
 <h5>75.3-4 TestInducedFromNormalSubgroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestInducedFromNormalSubgroup</code>( <var class="Arg">chi</var>[, <var class="Arg">N</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInducedFromNormalSubgroup</code>( <var class="Arg">chi</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestInducedFromNormalSubgroup</code>( <var class="Arg">chi</var>[, <var class="Arg">N</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInducedFromNormalSubgroup</code>( <var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p><code class="func">TestInducedFromNormalSubgroup</code> returns a record with information whether the irreducible character <var class="Arg">chi</var> of the group <span class="SimpleMath">G</span>, say, is induced from a proper normal subgroup of <span class="SimpleMath">G</span>. If the second argument <var class="Arg">N</var> is present, which must be a normal subgroup of <span class="SimpleMath">G</span> or the list of class positions of a normal subgroup of <span class="SimpleMath">G</span>, it is checked whether <var class="Arg">chi</var> is induced from <var class="Arg">N</var>.</p>
 
 <p>The result contains always the components <code class="code">isInduced</code> (either <code class="keyw">true</code> or <code class="keyw">false</code>) and <code class="code">comment</code> (a string telling a reason for the value of the component <code class="code">isInduced</code>). In the <code class="keyw">true</code> case there is a component <code class="code">character</code> which contains a character of a maximal normal subgroup from which <var class="Arg">chi</var> is induced.</p>
@@ -283,10 +283,10 @@ rec( character := Character( CharacterTable( Group(
 
 <h5>75.4-1 <span class="Heading">TestMonomial</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestMonomial</code>( <var class="Arg">chi</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestMonomial</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestMonomial</code>( <var class="Arg">chi</var>, <var class="Arg">uselattice</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestMonomial</code>( <var class="Arg">G</var>, <var class="Arg">uselattice</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestMonomial</code>( <var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestMonomial</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestMonomial</code>( <var class="Arg">chi</var>, <var class="Arg">uselattice</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestMonomial</code>( <var class="Arg">G</var>, <var class="Arg">uselattice</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Called with a group character <var class="Arg">chi</var> of a group <var class="Arg">G</var>, <code class="func">TestMonomial</code> returns a record containing information about monomiality of the group <var class="Arg">G</var> or the group character <var class="Arg">chi</var>, respectively.</p>
 
 <p>If <code class="func">TestMonomial</code> proves the character <var class="Arg">chi</var> to be monomial then the result contains components <code class="code">isMonomial</code> (with value <code class="keyw">true</code>), <code class="code">comment</code> (a string telling a reason for monomiality), and if it was necessary to compute a linear character from which <var class="Arg">chi</var> is induced, also a component <code class="code">character</code>.</p>
@@ -310,14 +310,14 @@ rec( comment := "list Delta( G ) contains entry &gt; 1",
 
 <h5>75.4-2 TestMonomialUseLattice</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestMonomialUseLattice</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestMonomialUseLattice</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
 <p>This global variable controls for which groups the operation <code class="func">TestMonomial</code> (<a href="chap75.html#X84EB92B57DAF5C93"><span class="RefLink">75.4-1</span></a>) may compute the subgroup lattice. The value can be set to a positive integer or <code class="func">infinity</code> (<a href="chap18.html#X8511B8DF83324C27"><span class="RefLink">18.2-1</span></a>), the default is <span class="SimpleMath">1000</span>.</p>
 
 <p><a id="X8261B5AA7BCFFCC2" name="X8261B5AA7BCFFCC2"></a></p>
 
 <h5>75.4-3 IsMonomialNumber</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMonomialNumber</code>( <var class="Arg">n</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMonomialNumber</code>( <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>For a positive integer <var class="Arg">n</var>, <code class="func">IsMonomialNumber</code> returns <code class="keyw">true</code> if every solvable group of order <var class="Arg">n</var> is monomial, and <code class="keyw">false</code> otherwise. One can also use <code class="code">IsMonomial</code> instead.</p>
 
 <p>Let <span class="SimpleMath">ν_p(n)</span> denote the multiplicity of the prime <span class="SimpleMath">p</span> as factor of <span class="SimpleMath">n</span>, and <span class="SimpleMath">ord(p,q)</span> the multiplicative order of <span class="SimpleMath">p mod q</span>.</p>
@@ -359,8 +359,8 @@ rec( comment := "list Delta( G ) contains entry &gt; 1",
 
 <h5>75.4-4 <span class="Heading">TestMonomialQuick</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestMonomialQuick</code>( <var class="Arg">chi</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestMonomialQuick</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestMonomialQuick</code>( <var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestMonomialQuick</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p><code class="func">TestMonomialQuick</code> does some cheap tests whether the irreducible character <var class="Arg">chi</var> or the group <var class="Arg">G</var>, respectively, is monomial. Here "cheap" means in particular that no computations of character tables are involved. The return value is a record with components</p>
 
 
@@ -392,10 +392,10 @@ rec( comment := "no decision by cheap tests", isMonomial := "?" )
 
 <h5>75.4-5 <span class="Heading">TestSubnormallyMonomial</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestSubnormallyMonomial</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestSubnormallyMonomial</code>( <var class="Arg">chi</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubnormallyMonomial</code>( <var class="Arg">G</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubnormallyMonomial</code>( <var class="Arg">chi</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestSubnormallyMonomial</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestSubnormallyMonomial</code>( <var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubnormallyMonomial</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubnormallyMonomial</code>( <var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>A character of the group <span class="SimpleMath">G</span> is called <em>subnormally monomial</em> (SM for short) if it is induced from a linear character of a subnormal subgroup of <span class="SimpleMath">G</span>. A group <span class="SimpleMath">G</span> is called SM if all its irreducible characters are SM.</p>
 
 <p><code class="func">TestSubnormallyMonomial</code> returns a record with information whether the group <var class="Arg">G</var> or the irreducible character <var class="Arg">chi</var> of <var class="Arg">G</var> is SM.</p>
@@ -422,12 +422,12 @@ rec( comment := "all irreducibles checked",
 
 <h5>75.4-6 <span class="Heading">TestRelativelySM</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestRelativelySM</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestRelativelySM</code>( <var class="Arg">chi</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestRelativelySM</code>( <var class="Arg">G</var>, <var class="Arg">N</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestRelativelySM</code>( <var class="Arg">chi</var>, <var class="Arg">N</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRelativelySM</code>( <var class="Arg">G</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRelativelySM</code>( <var class="Arg">chi</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestRelativelySM</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestRelativelySM</code>( <var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestRelativelySM</code>( <var class="Arg">G</var>, <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestRelativelySM</code>( <var class="Arg">chi</var>, <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRelativelySM</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRelativelySM</code>( <var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>In the first two cases, <code class="func">TestRelativelySM</code> returns a record with information whether the argument, which must be a SM group <var class="Arg">G</var> or an irreducible character <var class="Arg">chi</var> of a SM group <span class="SimpleMath">G</span>, is relatively SM with respect to every normal subgroup of <var class="Arg">G</var>.</p>
 
 <p>In the second two cases, a normal subgroup <var class="Arg">N</var> of <var class="Arg">G</var> is the second argument. Here <code class="func">TestRelativelySM</code> returns a record with information whether the first argument is relatively SM with respect to <var class="Arg">N</var>, i.e, whether there is a subnormal subgroup <span class="SimpleMath">H</span> of <span class="SimpleMath">G</span> that contains <var class="Arg">N</var> such that the character <var class="Arg">chi</var> resp. every irreducible character of <span class="SimpleMath">G</span> is induced from a character <span class="SimpleMath">ψ</span> of <span class="SimpleMath">H</span> such that the restriction of <span class="SimpleMath">ψ</span> to <var class="Arg">N</var> is irreducible.</p>
@@ -456,7 +456,7 @@ oup", isRelativelySM := true )
 
 <h5>75.5-1 IsMinimalNonmonomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMinimalNonmonomial</code>( <var class="Arg">G</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMinimalNonmonomial</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>A group <var class="Arg">G</var> is called <em>minimal nonmonomial</em> if it is nonmonomial, and all proper subgroups and factor groups are monomial.</p>
 
 
@@ -470,7 +470,7 @@ false
 
 <h5>75.5-2 MinimalNonmonomialGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalNonmonomialGroup</code>( <var class="Arg">p</var>, <var class="Arg">factsize</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalNonmonomialGroup</code>( <var class="Arg">p</var>, <var class="Arg">factsize</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is a solvable minimal nonmonomial group described by the parameters <var class="Arg">factsize</var> and <var class="Arg">p</var> if such a group exists, and <code class="keyw">false</code> otherwise.</p>
 
 <p>Suppose that the required group <span class="SimpleMath">K</span> exists. Then <var class="Arg">factsize</var> is the size of the Fitting factor <span class="SimpleMath">K / F(K)</span>, and this value is 4, 8, an odd prime, twice an odd prime, or four times an odd prime. In the case that <var class="Arg">factsize</var> is twice an odd prime, the centre <span class="SimpleMath">Z(K)</span> is cyclic of order <span class="SimpleMath">2^{<var class="Arg">p</var>+1}</span>. In all other cases <var class="Arg">p</var> is the (unique) prime that divides the order of <span class="SimpleMath">F(K)</span>.</p>

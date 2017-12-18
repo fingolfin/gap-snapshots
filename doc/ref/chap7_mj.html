@@ -162,35 +162,35 @@ you can 'return;' to continue
 
 <h5>7.1-1 ShowArguments</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShowArguments</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShowArguments</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function is only available within a break loop caused by a "No Method Found"-error. It prints as a list the arguments of the operation call for which no method was found.</p>
 
 <p><a id="X834BD9928773DCC1" name="X834BD9928773DCC1"></a></p>
 
 <h5>7.1-2 ShowArgument</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShowArgument</code>( <var class="Arg">nr</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShowArgument</code>( <var class="Arg">nr</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function is only available within a break loop caused by a "No Method Found"-error. It prints the <var class="Arg">nr</var>-th arguments of the operation call for which no method was found. <code class="func">ShowArgument</code> needs exactly one argument which is an integer between 0 and the number of arguments the operation was called with.</p>
 
 <p><a id="X7D25D904800D5CBA" name="X7D25D904800D5CBA"></a></p>
 
 <h5>7.1-3 ShowDetails</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShowDetails</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShowDetails</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function is only available within a break loop caused by a "No Method Found"-error. It prints the details of this error: The operation, the number of arguments, a flag which indicates whether the operation is being traced, a flag which indicates whether the operation is a constructor method, and the number of methods that refused to apply by calling <code class="func">TryNextMethod</code> (<a href="chap78_mj.html#X7EED949B83046A7F"><span class="RefLink">78.4-1</span></a>). The last number is called <code class="code">Choice</code> and is printed as an ordinal. So if exactly <span class="SimpleMath">\(k\)</span> methods were found but called <code class="func">TryNextMethod</code> (<a href="chap78_mj.html#X7EED949B83046A7F"><span class="RefLink">78.4-1</span></a>) and there were no more methods it says <code class="code">Choice: </code><span class="SimpleMath">\(k\)</span><code class="code">th</code>.</p>
 
 <p><a id="X7F6996CA872478B8" name="X7F6996CA872478B8"></a></p>
 
 <h5>7.1-4 ShowMethods</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShowMethods</code>( [<var class="Arg">verbosity</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShowMethods</code>( [<var class="Arg">verbosity</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function is only available within a break loop caused by a "No Method Found"-error. It prints an overview about the installed methods for those arguments the operation was called with (using <a href="chap7_mj.html#X7FDA1D4B87BD25A8"><span class="RefLink">7.2</span></a>. The verbosity can be controlled by the optional integer parameter <var class="Arg">verbosity</var>. The default is 2, which lists all applicable methods. With verbosity 1 <code class="func">ShowMethods</code> only shows the number of installed methods and the methods matching, which can only be those that were already called but refused to work by calling <code class="func">TryNextMethod</code> (<a href="chap78_mj.html#X7EED949B83046A7F"><span class="RefLink">78.4-1</span></a>). With verbosity 3 not only all installed methods but also the reasons why they do not match are displayed.</p>
 
 <p><a id="X7E5E2E7B85029E34" name="X7E5E2E7B85029E34"></a></p>
 
 <h5>7.1-5 ShowOtherMethods</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShowOtherMethods</code>( [<var class="Arg">verbosity</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShowOtherMethods</code>( [<var class="Arg">verbosity</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function is only available within a break loop caused by a "No Method Found"-error. It prints an overview about the installed methods for a different number of arguments than the number of arguments the operation was called with (using <a href="chap7_mj.html#X7FDA1D4B87BD25A8"><span class="RefLink">7.2</span></a>. The verbosity can be controlled by the optional integer parameter <var class="Arg">verbosity</var>. The default is 1 which lists only the number of applicable methods. With verbosity 2 <code class="func">ShowOtherMethods</code> lists all installed methods and with verbosity 3 also the reasons, why they are not applicable. Calling <code class="func">ShowOtherMethods</code> with verbosity 3 in this function will normally not make any sense, because the different numbers of arguments are simulated by supplying the corresponding number of ones, for which normally no reasonable methods will be installed.</p>
 
 <p><a id="X7FDA1D4B87BD25A8" name="X7FDA1D4B87BD25A8"></a></p>
@@ -201,8 +201,8 @@ you can 'return;' to continue
 
 <h5>7.2-1 ApplicableMethod</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ApplicableMethod</code>( <var class="Arg">opr</var>, <var class="Arg">args</var>[, <var class="Arg">printlevel</var>[, <var class="Arg">nr</var>]] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ApplicableMethodTypes</code>( <var class="Arg">opr</var>, <var class="Arg">args</var>[, <var class="Arg">printlevel</var>[, <var class="Arg">nr</var>]] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ApplicableMethod</code>( <var class="Arg">opr</var>, <var class="Arg">args</var>[, <var class="Arg">printlevel</var>[, <var class="Arg">nr</var>]] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ApplicableMethodTypes</code>( <var class="Arg">opr</var>, <var class="Arg">args</var>[, <var class="Arg">printlevel</var>[, <var class="Arg">nr</var>]] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Called with two arguments, <code class="func">ApplicableMethod</code> returns the method of highest rank that is applicable for the operation <var class="Arg">opr</var> with the arguments in the list <var class="Arg">args</var>. The default <var class="Arg">printlevel</var> is <code class="code">0</code>. If no method is applicable then <code class="keyw">fail</code> is returned.</p>
 
 <p>If a positive integer is given as the fourth argument <var class="Arg">nr</var> then <code class="func">ApplicableMethod</code> returns the <var class="Arg">nr</var>-th applicable method for the operation <var class="Arg">opr</var> with the arguments in the list <var class="Arg">args</var>, where the methods are ordered according to descending rank. If less than <var class="Arg">nr</var> methods are applicable then <code class="keyw">fail</code> is returned.</p>
@@ -252,23 +252,23 @@ you can 'return;' to continue
 
 <h5>7.3-1 TraceMethods</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TraceMethods</code>( <var class="Arg">opr1</var>, <var class="Arg">opr2</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TraceMethods</code>( <var class="Arg">oprs</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TraceMethods</code>( <var class="Arg">opr1</var>, <var class="Arg">opr2</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TraceMethods</code>( <var class="Arg">oprs</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>After the call of <code class="code">TraceMethods</code>, whenever a method of one of the operations <var class="Arg">opr1</var>, <var class="Arg">opr2</var>, ... is called, the information string used in the installation of the method is printed. The second form has the same effect for each operation from the list <var class="Arg">oprs</var> of operations.</p>
 
 <p><a id="X7D34CADB813A4AF1" name="X7D34CADB813A4AF1"></a></p>
 
 <h5>7.3-2 TraceAllMethods</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TraceAllMethods</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TraceAllMethods</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Invokes <code class="code">TraceMethods</code> for all operations.</p>
 
 <p><a id="X7EB04D387C53E4C1" name="X7EB04D387C53E4C1"></a></p>
 
 <h5>7.3-3 UntraceMethods</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UntraceMethods</code>( <var class="Arg">opr1</var>, <var class="Arg">opr2</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UntraceMethods</code>( <var class="Arg">oprs</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UntraceMethods</code>( <var class="Arg">opr1</var>, <var class="Arg">opr2</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UntraceMethods</code>( <var class="Arg">oprs</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>turns the tracing off for all operations <var class="Arg">opr1</var>, <var class="Arg">opr2</var>, ... or in the second form, for all operations in the list <var class="Arg">oprs</var>.</p>
 
 
@@ -288,15 +288,15 @@ you can 'return;' to continue
 
 <h5>7.3-4 UntraceAllMethods</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UntraceAllMethods</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UntraceAllMethods</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Equivalent to calling <code class="code">UntraceMethods</code> for all operations.</p>
 
 <p><a id="X81078D3387A38E31" name="X81078D3387A38E31"></a></p>
 
 <h5>7.3-5 TraceImmediateMethods</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TraceImmediateMethods</code>( [<var class="Arg">flag</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UntraceImmediateMethods</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TraceImmediateMethods</code>( [<var class="Arg">flag</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UntraceImmediateMethods</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">TraceImmediateMethods</code> enables tracing for all immediate methods if <var class="Arg">flag</var> is either <code class="keyw">true</code>, or not present. <code class="func">UntraceImmediateMethods</code>, or <code class="func">TraceImmediateMethods</code> with <var class="Arg">flag</var> equal <code class="keyw">false</code> turns tracing off. (There is no facility to trace <em>specific</em> immediate methods.)</p>
 
 
@@ -335,35 +335,35 @@ you can 'return;' to continue
 
 <h5>7.4-1 NewInfoClass</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewInfoClass</code>( <var class="Arg">name</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewInfoClass</code>( <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>creates a new info class with name <var class="Arg">name</var>.</p>
 
 <p><a id="X7B3709C584B3DA1E" name="X7B3709C584B3DA1E"></a></p>
 
 <h5>7.4-2 DeclareInfoClass</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareInfoClass</code>( <var class="Arg">name</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareInfoClass</code>( <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>creates a new info class with name <var class="Arg">name</var> and binds it to the global variable <var class="Arg">name</var>. The variable must previously be writable, and is made readonly by this function.</p>
 
 <p><a id="X7A43B9E68765EE9E" name="X7A43B9E68765EE9E"></a></p>
 
 <h5>7.4-3 SetInfoLevel</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetInfoLevel</code>( <var class="Arg">infoclass</var>, <var class="Arg">level</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetInfoLevel</code>( <var class="Arg">infoclass</var>, <var class="Arg">level</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Sets the info level for <var class="Arg">infoclass</var> to <var class="Arg">level</var>.</p>
 
 <p><a id="X7B2ADC37783104B9" name="X7B2ADC37783104B9"></a></p>
 
 <h5>7.4-4 InfoLevel</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoLevel</code>( <var class="Arg">infoclass</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoLevel</code>( <var class="Arg">infoclass</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the info level of <var class="Arg">infoclass</var>.</p>
 
 <p><a id="X864E4B6886E2697D" name="X864E4B6886E2697D"></a></p>
 
 <h5>7.4-5 Info</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Info</code>( <var class="Arg">infoclass</var>, <var class="Arg">level</var>, <var class="Arg">info</var>[, <var class="Arg">moreinfo</var>, <var class="Arg">...</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Info</code>( <var class="Arg">infoclass</var>, <var class="Arg">level</var>, <var class="Arg">info</var>[, <var class="Arg">moreinfo</var>, <var class="Arg">...</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>If the info level of <var class="Arg">infoclass</var> is at least <var class="Arg">level</var> the remaining arguments, <var class="Arg">info</var> and possibly <var class="Arg">moreinfo</var> and so on, are evaluated. (Technically, <code class="func">Info</code> is a keyword and not a function.)</p>
 
 <p>By default, they are viewed, preceded by the string <code class="code">"#I "</code> and followed by a newline. Otherwise the third and subsequent arguments are not evaluated. (The latter can save substantial time when displaying difficult results.)</p>
@@ -408,9 +408,9 @@ you can 'return;' to continue
 
 <h5>7.4-6 <span class="Heading">Customizing <code class="func">Info</code> (<a href="chap7_mj.html#X864E4B6886E2697D"><span class="RefLink">7.4-5</span></a>) statements</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetInfoHandler</code>( <var class="Arg">infoclass</var>, <var class="Arg">handler</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetInfoOutput</code>( <var class="Arg">infoclass</var>, <var class="Arg">out</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetDefaultInfoOutput</code>( <var class="Arg">out</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetInfoHandler</code>( <var class="Arg">infoclass</var>, <var class="Arg">handler</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetInfoOutput</code>( <var class="Arg">infoclass</var>, <var class="Arg">out</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetDefaultInfoOutput</code>( <var class="Arg">out</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: nothing</p>
 
 <p>This allows to customize what happens in an <code class="code">Info(<var class="Arg">infoclass</var>, <var class="Arg">level</var>, ...)</code> statement.</p>
@@ -429,7 +429,7 @@ you can 'return;' to continue
 
 <h5>7.4-7 InfoWarning</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoWarning</code></td><td class="tdright">( info class )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoWarning</code></td><td class="tdright">(&nbsp;info class&nbsp;)</td></tr></table></div>
 <p>is an info class to which general warnings are sent at level 1, which is its default level. More specialised warnings are shown via calls of <code class="func">Info</code> (<a href="chap7_mj.html#X864E4B6886E2697D"><span class="RefLink">7.4-5</span></a>) at <code class="func">InfoWarning</code> level 2, e.g. information about the autoloading of <strong class="pkg">GAP</strong> packages and the initial line matched when displaying an on-line help topic.</p>
 
 <p><a id="X86425F067FC63A4C" name="X86425F067FC63A4C"></a></p>
@@ -442,21 +442,21 @@ you can 'return;' to continue
 
 <h5>7.5-1 SetAssertionLevel</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetAssertionLevel</code>( <var class="Arg">lev</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetAssertionLevel</code>( <var class="Arg">lev</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>assigns the global assertion level to <var class="Arg">lev</var>. By default it is zero.</p>
 
 <p><a id="X876C83707F13A0FD" name="X876C83707F13A0FD"></a></p>
 
 <h5>7.5-2 AssertionLevel</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AssertionLevel</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AssertionLevel</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the current assertion level.</p>
 
 <p><a id="X830E443284780FB9" name="X830E443284780FB9"></a></p>
 
 <h5>7.5-3 Assert</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Assert</code>( <var class="Arg">lev</var>, <var class="Arg">cond</var>[, <var class="Arg">message</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Assert</code>( <var class="Arg">lev</var>, <var class="Arg">cond</var>[, <var class="Arg">message</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>With two arguments, if the global assertion level is at least <var class="Arg">lev</var>, condition <var class="Arg">cond</var> is tested and if it does not return <code class="keyw">true</code> an error is raised. Thus <code class="code">Assert(lev, <var class="Arg">cond</var>)</code> is equivalent to the code</p>
 
 
@@ -478,7 +478,7 @@ fi;
 
 <h5>7.6-1 Runtimes</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Runtimes</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Runtimes</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">Runtimes</code> returns a record with components bound to integers or <code class="keyw">fail</code>. Each integer is the cpu time (processor time) in milliseconds spent by <strong class="pkg">GAP</strong> in a certain status:</p>
 
 
@@ -529,7 +529,7 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 
 <h5>7.6-2 Runtime</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Runtime</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Runtime</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">Runtime</code> returns the time spent by <strong class="pkg">GAP</strong> in milliseconds as an integer. It is the same as the value of the <code class="code">user_time</code> component given by <code class="func">Runtimes</code> (<a href="chap7_mj.html#X80355C9282B35673"><span class="RefLink">7.6-1</span></a>), as explained above.</p>
 
 <p>See <code class="func">StringTime</code> (<a href="chap27_mj.html#X802469C47F886A59"><span class="RefLink">27.10-9</span></a>) for a translation from milliseconds into hour/minute format.</p>
@@ -538,7 +538,7 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 
 <h5>7.6-3 time</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; time</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; time</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
 <p>In the read-eval-print loop, <code class="func">time</code> stores the time the last command took.</p>
 
 <p><a id="X7FDF923D7D2937A1" name="X7FDF923D7D2937A1"></a></p>
@@ -581,7 +581,7 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 
 <h5>7.7-2 ProfileGlobalFunctions</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProfileGlobalFunctions</code>( [<var class="Arg">bool</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProfileGlobalFunctions</code>( [<var class="Arg">bool</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Called with argument <code class="keyw">true</code>, <code class="func">ProfileGlobalFunctions</code> starts profiling of all functions that have been declared via <code class="func">DeclareGlobalFunction</code> (<a href="chap79_mj.html#X834A8CC587A609BE"><span class="RefLink">79.18-7</span></a>). Old profile information for all these functions is cleared. A function call with the argument <code class="keyw">false</code> stops profiling of all these functions. Recorded information is still kept, so you can display it even after turning the profiling off.</p>
 
 <p>When <code class="func">ProfileGlobalFunctions</code> is called without argument, profile information for all global functions is displayed, see <code class="func">DisplayProfile</code> (<a href="chap7_mj.html#X80FEA6A08775A48E"><span class="RefLink">7.7-9</span></a>).</p>
@@ -590,7 +590,7 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 
 <h5>7.7-3 ProfileOperations</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProfileOperations</code>( [<var class="Arg">bool</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProfileOperations</code>( [<var class="Arg">bool</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Called with argument <code class="keyw">true</code>, <code class="func">ProfileOperations</code> starts profiling of all operations. Old profile information for all operations is cleared. A function call with the argument <code class="keyw">false</code> stops profiling of all operations. Recorded information is still kept, so you can display it even after turning the profiling off.</p>
 
 <p>When <code class="func">ProfileOperations</code> is called without argument, profile information for all operations is displayed (see <code class="func">DisplayProfile</code> (<a href="chap7_mj.html#X80FEA6A08775A48E"><span class="RefLink">7.7-9</span></a>)).</p>
@@ -599,7 +599,7 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 
 <h5>7.7-4 ProfileOperationsAndMethods</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProfileOperationsAndMethods</code>( [<var class="Arg">bool</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProfileOperationsAndMethods</code>( [<var class="Arg">bool</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Called with argument <code class="keyw">true</code>, <code class="func">ProfileOperationsAndMethods</code> starts profiling of all operations and their methods. Old profile information for these functions is cleared. A function call with the argument <code class="keyw">false</code> stops profiling of all operations and their methods. Recorded information is still kept, so you can display it even after turning the profiling off.</p>
 
 <p>When <code class="func">ProfileOperationsAndMethods</code> is called without argument, profile information for all operations and their methods is displayed, see <code class="func">DisplayProfile</code> (<a href="chap7_mj.html#X80FEA6A08775A48E"><span class="RefLink">7.7-9</span></a>).</p>
@@ -608,36 +608,36 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 
 <h5>7.7-5 ProfileFunctions</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProfileFunctions</code>( <var class="Arg">funcs</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProfileFunctions</code>( <var class="Arg">funcs</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>starts profiling for all function in the list <var class="Arg">funcs</var>. You can use <code class="func">ProfileGlobalFunctions</code> (<a href="chap7_mj.html#X79D6CB927BBEB940"><span class="RefLink">7.7-2</span></a>) to turn profiling on for all globally declared functions simultaneously.</p>
 
 <p><a id="X79D394EC7BE8D008" name="X79D394EC7BE8D008"></a></p>
 
 <h5>7.7-6 UnprofileFunctions</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnprofileFunctions</code>( <var class="Arg">funcs</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnprofileFunctions</code>( <var class="Arg">funcs</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>stops profiling for all function in the list <var class="Arg">funcs</var>. Recorded information is still kept, so you can display it even after turning the profiling off.</p>
 
 <p><a id="X787AC3BE7F991344" name="X787AC3BE7F991344"></a></p>
 
 <h5>7.7-7 ProfileMethods</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProfileMethods</code>( <var class="Arg">ops</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProfileMethods</code>( <var class="Arg">ops</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>starts profiling of the methods for all operations in the list <var class="Arg">ops</var>.</p>
 
 <p><a id="X87A05F977F033693" name="X87A05F977F033693"></a></p>
 
 <h5>7.7-8 UnprofileMethods</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnprofileMethods</code>( <var class="Arg">ops</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnprofileMethods</code>( <var class="Arg">ops</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>stops profiling of the methods for all operations in the list <var class="Arg">ops</var>. Recorded information is still kept, so you can display it even after turning the profiling off.</p>
 
 <p><a id="X80FEA6A08775A48E" name="X80FEA6A08775A48E"></a></p>
 
 <h5>7.7-9 DisplayProfile</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DisplayProfile</code>( [<var class="Arg">functions</var>, ][<var class="Arg">mincount</var>, <var class="Arg">mintime</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GAPInfo.ProfileThreshold</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DisplayProfile</code>( [<var class="Arg">functions</var>, ][<var class="Arg">mincount</var>, <var class="Arg">mintime</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GAPInfo.ProfileThreshold</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
 <p>Called without arguments, <code class="func">DisplayProfile</code> displays the profile information for profiled operations, methods and functions. If an argument <var class="Arg">functions</var> is given, only profile information for the functions in the list <var class="Arg">functions</var> is shown. If two integer values <var class="Arg">mincount</var>, <var class="Arg">mintime</var> are given as arguments then the output is restricted to those functions that were called at least <var class="Arg">mincount</var> times or for which the total time spent (see below) was at least <var class="Arg">mintime</var> milliseconds. The defaults for <var class="Arg">mincount</var> and <var class="Arg">mintime</var> are the entries of the list stored in the global variable <code class="func">GAPInfo.ProfileThreshold</code>.</p>
 
 <p>The default value of <code class="func">GAPInfo.ProfileThreshold</code> is <code class="code">[ 10000, 30 ]</code>.</p>
@@ -654,7 +654,7 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 
 <h5>7.7-10 ClearProfile</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ClearProfile</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ClearProfile</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>clears all stored profile information.</p>
 
 <p><a id="X7C5CE32579891120" name="X7C5CE32579891120"></a></p>
@@ -874,7 +874,7 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 
 <h5>7.7-14 ProfileLineByLine</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProfileLineByLine</code>( <var class="Arg">filename</var>[, <var class="Arg">options</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProfileLineByLine</code>( <var class="Arg">filename</var>[, <var class="Arg">options</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">ProfileLineByLine</code> begins GAP recording profiling data to the file <var class="Arg">filename</var>. This file will get *very* large very quickly. This file is compressed using gzip to reduce its size. <var class="Arg">options</var> is an optional dictionary, which sets various configuration options. These are</p>
 
 
@@ -900,49 +900,49 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 
 <h5>7.7-15 CoverageLineByLine</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoverageLineByLine</code>( <var class="Arg">filename</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoverageLineByLine</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">CoverageLineByLine</code> begins GAP recording code coverage to the file <var class="Arg">filename</var>. This is equivalent to calling <code class="func">ProfileLineByLine</code> (<a href="chap7_mj.html#X86557887796F66FA"><span class="RefLink">7.7-14</span></a>) with coverage=true.</p>
 
 <p><a id="X7C5DED9C7CC77504" name="X7C5DED9C7CC77504"></a></p>
 
 <h5>7.7-16 UnprofileLineByLine</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnprofileLineByLine</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnprofileLineByLine</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Stops profiling which was previously started with <code class="func">ProfileLineByLine</code> (<a href="chap7_mj.html#X86557887796F66FA"><span class="RefLink">7.7-14</span></a>) or <code class="func">CoverageLineByLine</code> (<a href="chap7_mj.html#X87CC48807DB4C008"><span class="RefLink">7.7-15</span></a>).</p>
 
 <p><a id="X7B705B2D8670A9C5" name="X7B705B2D8670A9C5"></a></p>
 
 <h5>7.7-17 UncoverageLineByLine</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UncoverageLineByLine</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UncoverageLineByLine</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Stops profiling which was previously started with <code class="func">ProfileLineByLine</code> (<a href="chap7_mj.html#X86557887796F66FA"><span class="RefLink">7.7-14</span></a>) or <code class="func">CoverageLineByLine</code> (<a href="chap7_mj.html#X87CC48807DB4C008"><span class="RefLink">7.7-15</span></a>).</p>
 
 <p><a id="X8015CD3D7F97B08C" name="X8015CD3D7F97B08C"></a></p>
 
 <h5>7.7-18 ActivateProfileColour</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActivateProfileColour</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActivateProfileColour</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Called with argument <code class="keyw">true</code>, <code class="func">ActivateProfileColour</code> makes GAP colour functions when printing them to show which lines have been executed while profiling was active via <code class="func">ProfileLineByLine</code> (<a href="chap7_mj.html#X86557887796F66FA"><span class="RefLink">7.7-14</span></a>) at any time during this GAP session. Passing <code class="keyw">false</code> disables this behaviour.</p>
 
 <p><a id="X7823C83D79B36D3B" name="X7823C83D79B36D3B"></a></p>
 
 <h5>7.7-19 IsLineByLineProfileActive</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLineByLineProfileActive</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLineByLineProfileActive</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">IsLineByLineProfileActive</code> returns if line-by-line profiling is currently activated.</p>
 
 <p><a id="X83D8A42B7BB92F5B" name="X83D8A42B7BB92F5B"></a></p>
 
 <h5>7.7-20 DisplayCacheStats</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DisplayCacheStats</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DisplayCacheStats</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>displays statistics about the different caches used by the method selection.</p>
 
 <p><a id="X79C58704838232CC" name="X79C58704838232CC"></a></p>
 
 <h5>7.7-21 ClearCacheStats</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ClearCacheStats</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ClearCacheStats</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>clears all statistics about the different caches used by the method selection.</p>
 
 <p><a id="X7EE874867C0BEEDD" name="X7EE874867C0BEEDD"></a></p>
@@ -965,8 +965,8 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 
 <h5>7.9-1 <span class="Heading">Starting and stopping test</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; START_TEST</code>( <var class="Arg">id</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; STOP_TEST</code>( <var class="Arg">file</var>, <var class="Arg">fac</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; START_TEST</code>( <var class="Arg">id</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; STOP_TEST</code>( <var class="Arg">file</var>, <var class="Arg">fac</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">START_TEST</code> and <code class="func">STOP_TEST</code> may be optionally used in files that are read via <code class="func">Test</code> (<a href="chap7_mj.html#X87712F9D8732193C"><span class="RefLink">7.9-2</span></a>). If used, <code class="func">START_TEST</code> reinitialize the caches and the global random number generator, in order to be independent of the reading order of several test files. Furthermore, the assertion level (see <code class="func">Assert</code> (<a href="chap7_mj.html#X830E443284780FB9"><span class="RefLink">7.5-3</span></a>)) is set to <span class="SimpleMath">\(2\)</span> (if it was lower before) by <code class="func">START_TEST</code> and set back to the previous value in the subsequent <code class="func">STOP_TEST</code> call.</p>
 
 <p>To use these options, a test file should be started with a line</p>
@@ -1022,7 +1022,7 @@ gaussian.tst               0             10
 
 <h5>7.9-2 Test</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Test</code>( <var class="Arg">fname</var>[, <var class="Arg">optrec</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Test</code>( <var class="Arg">fname</var>[, <var class="Arg">optrec</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>The argument <var class="Arg">fname</var> must be the name of a file or an open input stream. The content of this file or stream should contain <strong class="pkg">GAP</strong> input and output. The function <code class="func">Test</code> runs the input lines, compares the actual output with the output stored in <var class="Arg">fname</var> and reports differences. With an optional record as argument <var class="Arg">optrec</var> details of this process can be adjusted.</p>
@@ -1133,7 +1133,7 @@ true
 
 <h5>7.9-3 TestDirectory</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestDirectory</code>( <var class="Arg">inlist</var>[, <var class="Arg">optrec</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestDirectory</code>( <var class="Arg">inlist</var>[, <var class="Arg">optrec</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>The argument <var class="Arg">inlist</var> must be either a single filename or directory name, or a list of filenames and directories. The function <code class="func">TestDirectory</code> will take create a list of files to be tested by taking any files in <var class="Arg">inlist</var>, and recursively searching any directories in <var class="Arg">inlist</var> for files ending in <code class="code">.tst</code>. Each of these files is then run through <code class="func">Test</code> (<a href="chap7_mj.html#X87712F9D8732193C"><span class="RefLink">7.9-2</span></a>), and the results printed, and <code class="keyw">true</code> returned if all tests passed.</p>
@@ -1227,7 +1227,7 @@ you may 'return;' to continue
 
 <h5>7.10-1 SetRecursionTrapInterval</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetRecursionTrapInterval</code>( <var class="Arg">interval</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetRecursionTrapInterval</code>( <var class="Arg">interval</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><var class="Arg">interval</var> must be a non-negative small integer (between 0 and <span class="SimpleMath">\(2^{28}\)</span>). An <var class="Arg">interval</var> of 0 suppresses the monitoring of recursion altogether. In this case excessive recursion may cause <strong class="pkg">GAP</strong> to crash.</p>
 
 
@@ -1286,7 +1286,7 @@ Segmentation fault
 
 <h5>7.11-1 GasmanStatistics</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GasmanStatistics</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GasmanStatistics</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">GasmanStatistics</code> returns a record containing some information from the garbage collection mechanism. The record may contain up to four components: <code class="code">full</code>, <code class="code">partial</code>, <code class="code">npartial</code>, and <code class="code">nfull</code>.</p>
 
 <p>The <code class="code">full</code> component will be present if a full garbage collection has taken place since <strong class="pkg">GAP</strong> started. It contains information about the most recent full garbage collection. It is a record, with six components: <code class="code">livebags</code> contains the number of bags which survived the garbage collection; <code class="code">livekb</code> contains the total number of kilobytes occupied by those bags; <code class="code">deadbags</code> contains the total number of bags which were reclaimed by that garbage collection and all the partial garbage collections preceding it, since the previous full garbage collection; <code class="code">deadkb</code> contains the total number of kilobytes occupied by those bags; <code class="code">freekb</code> reports the total number of kilobytes available in the <strong class="pkg">GAP</strong> workspace for new objects and <code class="code">totalkb</code> the actual size of the workspace.</p>
@@ -1301,8 +1301,8 @@ Segmentation fault
 
 <h5>7.11-2 GasmanMessageStatus</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GasmanMessageStatus</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetGasmanMessageStatus</code>( <var class="Arg">stat</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GasmanMessageStatus</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetGasmanMessageStatus</code>( <var class="Arg">stat</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">GasmanMessageStatus</code> returns one of the strings <code class="code">"none"</code>, <code class="code">"full"</code>, or <code class="code">"all"</code>, depending on whether the garbage collector is currently set to print messages on no collections, full collections only, or all collections, respectively.</p>
 
 <p>Calling <code class="func">SetGasmanMessageStatus</code> with the argument <var class="Arg">stat</var>, which should be one of the three strings mentioned above, sets the garbage collector messaging level.</p>
@@ -1311,7 +1311,7 @@ Segmentation fault
 
 <h5>7.11-3 GasmanLimits</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GasmanLimits</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GasmanLimits</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">GasmanLimits</code> returns a record with three components: <code class="code">min</code> is the minimum workspace size as set by the <code class="code">-m</code> command line option in kilobytes. The workspace size will never be reduced below this by the garbage collector. <code class="code">max</code> is the maximum workspace size, as set by the '-o' command line option, also in kilobytes. If the workspace would need to grow past this point, <strong class="pkg">GAP</strong> will enter a break loop to warn the user. A value of 0 indicates no limit. <code class="code">kill</code> is the absolute maximum, set by the <code class="code">-K</code> command line option. The workspace will never be allowed to grow past this limit.</p>
 
 

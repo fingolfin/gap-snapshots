@@ -10,7 +10,7 @@
   
   [1X22.1-1 IsBlist[101X
   
-  [29X[2XIsBlist[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsBlist[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YA  boolean  list  ([21Xblist[121X) is a list that has no holes and contains only [9Xtrue[109X
   and  [9Xfalse[109X.  Boolean  lists can be represented in an efficient compact form,
@@ -43,7 +43,7 @@
   
   [1X22.2-1 BlistList[101X
   
-  [29X[2XBlistList[102X( [3Xlist[103X, [3Xsub[103X ) [32X function
+  [33X[1;0Y[29X[2XBlistList[102X( [3Xlist[103X, [3Xsub[103X ) [32X function[133X
   
   [33X[0;0Yreturns  a  new boolean list that describes the list [3Xsub[103X as a sublist of the
   dense  list [3Xlist[103X. That is [2XBlistList[102X returns a boolean list [22Xblist[122X of the same
@@ -67,7 +67,7 @@
   
   [1X22.2-2 ListBlist[101X
   
-  [29X[2XListBlist[102X( [3Xlist[103X, [3Xblist[103X ) [32X function
+  [33X[1;0Y[29X[2XListBlist[102X( [3Xlist[103X, [3Xblist[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the  sublist  [22Xsub[122X  of  the  list  [3Xlist[103X,  which  must have no holes,
   represented  by  the  boolean list [3Xblist[103X, which must have the same length as
@@ -87,7 +87,7 @@
   
   [1X22.2-3 SizeBlist[101X
   
-  [29X[2XSizeBlist[102X( [3Xblist[103X ) [32X function
+  [33X[1;0Y[29X[2XSizeBlist[102X( [3Xblist[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the number of entries of the boolean list [3Xblist[103X that are [9Xtrue[109X. This
   is the size of the subset represented by the boolean list [3Xblist[103X.[133X
@@ -99,7 +99,7 @@
   
   [1X22.2-4 IsSubsetBlist[101X
   
-  [29X[2XIsSubsetBlist[102X( [3Xblist1[103X, [3Xblist2[103X ) [32X function
+  [33X[1;0Y[29X[2XIsSubsetBlist[102X( [3Xblist1[103X, [3Xblist2[103X ) [32X function[133X
   
   [33X[0;0Yreturns  [9Xtrue[109X  if  the  boolean  list [3Xblist2[103X is a subset of the boolean list
   [3Xblist1[103X,  which  must  have  equal  length,  and [9Xfalse[109X otherwise. [3Xblist2[103X is a
@@ -121,8 +121,8 @@
   
   [1X22.3-1 [33X[0;0YUnionBlist[133X[101X
   
-  [29X[2XUnionBlist[102X( [3Xblist1[103X, [3Xblist2[103X[, [3X...[103X] ) [32X function
-  [29X[2XUnionBlist[102X( [3Xlist[103X ) [32X function
+  [33X[1;0Y[29X[2XUnionBlist[102X( [3Xblist1[103X, [3Xblist2[103X[, [3X...[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XUnionBlist[102X( [3Xlist[103X ) [32X function[133X
   
   [33X[0;0YIn  the first form [2XUnionBlist[102X returns the union of the boolean lists [3Xblist1[103X,
   [3Xblist2[103X,  etc., which must have equal length. The [13Xunion[113X is a new boolean list
@@ -134,8 +134,8 @@
   
   [1X22.3-2 [33X[0;0YIntersectionBlist[133X[101X
   
-  [29X[2XIntersectionBlist[102X( [3Xblist1[103X, [3Xblist2[103X[, [3X...[103X] ) [32X function
-  [29X[2XIntersectionBlist[102X( [3Xlist[103X ) [32X function
+  [33X[1;0Y[29X[2XIntersectionBlist[102X( [3Xblist1[103X, [3Xblist2[103X[, [3X...[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XIntersectionBlist[102X( [3Xlist[103X ) [32X function[133X
   
   [33X[0;0YIn  the first form [2XIntersectionBlist[102X returns the intersection of the boolean
   lists  [3Xblist1[103X,  [3Xblist2[103X, etc., which must have equal length. The [13Xintersection[113X
@@ -148,7 +148,7 @@
   
   [1X22.3-3 DifferenceBlist[101X
   
-  [29X[2XDifferenceBlist[102X( [3Xblist1[103X, [3Xblist2[103X ) [32X function
+  [33X[1;0Y[29X[2XDifferenceBlist[102X( [3Xblist1[103X, [3Xblist2[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the  asymmetric  set difference of the two boolean lists [3Xblist1[103X and
   [3Xblist2[103X, which must have equal length. The [13Xasymmetric set difference[113X is a new
@@ -171,7 +171,7 @@
   
   [1X22.4-1 UniteBlist[101X
   
-  [29X[2XUniteBlist[102X( [3Xblist1[103X, [3Xblist2[103X ) [32X function
+  [33X[1;0Y[29X[2XUniteBlist[102X( [3Xblist1[103X, [3Xblist2[103X ) [32X function[133X
   
   [33X[0;0Y[2XUniteBlist[102X  unites  the  boolean  list  [3Xblist1[103X with the boolean list [3Xblist2[103X,
   which  must  have the same length. This is equivalent to assigning [3Xblist1[103X[22X[i]
@@ -192,14 +192,14 @@
   
   [1X22.4-2 UniteBlistList[101X
   
-  [29X[2XUniteBlistList[102X( [3Xlist[103X, [3Xblist[103X, [3Xsub[103X ) [32X function
+  [33X[1;0Y[29X[2XUniteBlistList[102X( [3Xlist[103X, [3Xblist[103X, [3Xsub[103X ) [32X function[133X
   
   [33X[0;0Yworks  like  [10XUniteBlist([3Xblist[103X[10X,BlistList([3Xlist[103X[10X,[3Xsub[103X[10X))[110X. As no intermediate blist
   is created, the performance is better than the separate function calls.[133X
   
   [1X22.4-3 IntersectBlist[101X
   
-  [29X[2XIntersectBlist[102X( [3Xblist1[103X, [3Xblist2[103X ) [32X function
+  [33X[1;0Y[29X[2XIntersectBlist[102X( [3Xblist1[103X, [3Xblist2[103X ) [32X function[133X
   
   [33X[0;0Yintersects  the boolean list [3Xblist1[103X with the boolean list [3Xblist2[103X, which must
   have  the same length. This is equivalent to assigning [3Xblist1[103X[22X[i]:=[122X [3Xblist1[103X[22X[i][122X
@@ -220,7 +220,7 @@
   
   [1X22.4-4 SubtractBlist[101X
   
-  [29X[2XSubtractBlist[102X( [3Xblist1[103X, [3Xblist2[103X ) [32X function
+  [33X[1;0Y[29X[2XSubtractBlist[102X( [3Xblist1[103X, [3Xblist2[103X ) [32X function[133X
   
   [33X[0;0Ysubtracts  the  boolean list [3Xblist2[103X from the boolean list [3Xblist1[103X, which must
   have equal length. This is equivalent to assigning [3Xblist1[103X[22X[i]:=[122X [3Xblist1[103X[22X[i][122X [9Xand[109X
@@ -279,8 +279,8 @@
   
   [1X22.5-1 IsBlistRep[101X
   
-  [29X[2XIsBlistRep[102X( [3Xobj[103X ) [32X Representation
-  [29X[2XConvertToBlistRep[102X( [3Xblist[103X ) [32X function
+  [33X[1;0Y[29X[2XIsBlistRep[102X( [3Xobj[103X ) [32X Representation[133X
+  [33X[1;0Y[29X[2XConvertToBlistRep[102X( [3Xblist[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YThe  first  function  is  a  filter that returns [9Xtrue[109X if the object [3Xobj[103X is a

@@ -8,13 +8,14 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2016	Colorado State University, Fort Collins
+##  Copyright 2017	Colorado State University
+##                  Sabancı Üniversitesi
 ##					Università degli Studi di Padova
-##					Universeit Gent
+##					Universiteit Gent
 ##					University of St. Andrews
-##					University of Western Australia, Perth
+##					University of Western Australia
 ##                  Vrije Universiteit Brussel
-##                 
+##
 ##
 ##  Implementation stuff for enumerators of elements of polar spaces
 ##
@@ -22,8 +23,6 @@
 ##  15/2/2016: We acknowledge Max Horn for sorting out and solving a problem
 ##  with some AsList methods, causing a problem with orb 4.7.5.
 #############################################################################
-
-Print(", enumerators\c");
 
 #############################################################################
 # The enumerator functionality is quite technical. We need many tiny and less
@@ -67,10 +66,10 @@ InstallGlobalFunction( FG_pos,
 #F  FG_div(	a, b )
 # a,b: integers
 ##
-InstallGlobalFunction( FG_div,
-	function(a, b)
-		return (a - (a mod b)) / b;
-	end );
+#InstallGlobalFunction( FG_div,
+#	function(a, b)
+#		return (a - (a mod b)) / b;
+#	end );
 
 #############################################################################
 #F  FG_ffenumber( q, a )
@@ -422,8 +421,8 @@ InstallGlobalFunction( FG_N1_unrank,
   y := FG_nb_pts_N1(n - 1, q);
   l := x * y;
   if a < l then
-     i := FG_div(a, y);    
-     j := a mod y;
+     i := QuoInt(a, y);    
+     j := RemInt(a,y);
      FG_S_unrank(q, v, offset + (n - 1) * 2, 1, i);
      FG_N1_unrank(q, v, offset, n - 1, j);
      return;
@@ -434,8 +433,8 @@ InstallGlobalFunction( FG_N1_unrank,
   l := x * y;
 
   if a < l then
-     i := FG_div(a, y);
-     j := a mod y;
+     i := QuoInt(a, y);
+     j := RemInt(a, y);
      FG_N1_unrank(q, v, offset + (n - 1) * 2, 1, i);
      FG_S_unrank(q, v, offset, n - 1, j);
      return;
@@ -447,10 +446,10 @@ InstallGlobalFunction( FG_N1_unrank,
   yz := y * z;
   l := x * yz;
   if a < l then
-     i := FG_div(a, yz);
-     j1 := a mod yz;
-     j := FG_div(j1, z);
-     k := j1 mod z;
+     i := QuoInt(a, yz);
+     j1 := RemInt(a,yz);
+     j := QuoInt(j1, z);
+     k := RemInt(j1, z);
      FG_N1_unrank(q, v, offset + (n - 1) * 2, 1, i);
      alpha := FG_ffenumber(q,2+j);  
      v[offset + 2 * (n - 1)] := alpha * v[offset + 2 * (n - 1)];
@@ -493,8 +492,8 @@ InstallGlobalFunction( FG_S_unrank,
   y := FG_nb_pts_S(n - 1, q);
   l := x * y;
   if a < l then 
-     i := FG_div(a, y);
-     j := a mod y;
+     i := QuoInt(a, y);
+     j := RemInt(a, y);
      FG_S_unrank(q, v, offset + (n - 1) * 2, 1, i);
      FG_S_unrank(q, v, offset, n - 1, j);
      return;
@@ -504,8 +503,8 @@ InstallGlobalFunction( FG_S_unrank,
   y := FG_nb_pts_N1(n - 1, q);
   l := x * y;
   if a < l then
-     i := FG_div(a, y);
-     j := a mod y;
+     i := QuoInt(a, y);
+     j := RemInt(a, y);
      FG_N_unrank(q, v, offset + (n - 1) * 2, 1, i);
      FG_N1_unrank(q, v, offset, n - 1, j);
      alpha := v[offset + 2 * (n - 1)] * v[offset + 2 * (n - 1) + 1];
@@ -555,8 +554,8 @@ InstallGlobalFunction( FG_Sbar_unrank,
   y := FG_nb_pts_S(n - 1, q);
   l := x * y;
   if a < l then
-     i := FG_div(a, y);
-     j := a mod y; 
+     i := QuoInt(a, y);
+     j := RemInt(a, y);
      FG_Sbar_unrank(q, v, offset + (n - 1) * 2, 1, i);
      FG_S_unrank(q, v, offset, n - 1, j);
      return;
@@ -566,8 +565,8 @@ InstallGlobalFunction( FG_Sbar_unrank,
   y := FG_nb_pts_N1(n - 1, q);
   l := x * y;
   if a < l then
-     i := FG_div(a, y);
-     j := a mod y;
+     i := QuoInt(a, y);
+     j := RemInt(a, y);
      FG_Nbar_unrank(q, v, offset + (n - 1) * 2, 1, i);
      FG_N1_unrank(q, v, offset, n - 1, j);
      alpha := v[offset + 2 * (n - 1)] * v[offset + 2 * (n - 1) + 1];
@@ -613,8 +612,8 @@ InstallGlobalFunction( FG_N_unrank,
      y := q - 1;
      l := x * y;
      if a < l then
-        i := FG_div(a, y);
-        j := a mod y;
+        i := QuoInt(a, y);
+        j := RemInt(a, y);
         v[offset + 0] := FG_ffenumber(q,1+j); 
         v[offset + 1] := FG_ffenumber(q,1+i);
         return;
@@ -625,8 +624,8 @@ InstallGlobalFunction( FG_N_unrank,
   y := FG_nb_pts_N(n - 1, q);
   l := x * y;
   if a < l then
-     i := FG_div(a, y);
-     j := a mod y;
+     i := QuoInt(a, y);
+     j := RemInt(a, y);
      FG_S_unrank(q, v, offset + (n - 1) * 2, 1, i);
      FG_N_unrank(q, v, offset, n - 1, j);
   return;
@@ -636,8 +635,8 @@ InstallGlobalFunction( FG_N_unrank,
   y := FG_nb_pts_S(n - 1, q);
   l := x * y;
   if a < l then
-     i := FG_div(a, y);
-     j := a mod y;
+     i := QuoInt(a, y);
+     j := RemInt(a, y);
      FG_N_unrank(q, v, offset + 2 * (n - 1), 1, i);
      FG_S_unrank(q, v, offset, n - 1, j);
      return;
@@ -649,10 +648,10 @@ InstallGlobalFunction( FG_N_unrank,
   yz := y * z;
   l := x * yz;
   if a < l then
-     i := FG_div(a, yz);
-     j1 := a mod yz;
-     j := FG_div(j1, z);
-     k := j1 mod z;
+     i := QuoInt(a, yz);
+     j1 := RemInt(a, yz);
+     j := QuoInt(j1, z);
+     k := RemInt(j1, z);
      FG_N_unrank(q, v, offset + (n - 1) * 2, 1, i);
      FG_N1_unrank(q, v, offset, n - 1, k);
      alpha := w;  
@@ -693,8 +692,8 @@ InstallGlobalFunction( FG_herm_N_unrank,
   nb := FG_herm_nb_pts_N(n - 1, q);
 
   if a < A * nb then
-    coset := FG_div(a, nb);
-	rk1 := a mod nb;
+    coset := QuoInt(a, nb);
+	rk1 := RemInt(a, nb);
     FG_herm_N_unrank(q, v, offset, n - 1, rk1);
 
     if coset = 0 then
@@ -702,8 +701,8 @@ InstallGlobalFunction( FG_herm_N_unrank,
     else
       coset := coset - 1;
       val := FG_evaluate_hermitian_form(q, v, offset, n - 1);
-      coset0 := FG_div(coset, q + 1);
-      rk0 := coset mod (q + 1); # here was coset mod q + 1 (i.e., without parenthesis), which is wrong, Anton 7/15/11
+      coset0 := QuoInt(coset, q + 1);
+      rk0 := RemInt(coset, q + 1); # here was coset mod q + 1 (i.e., without parenthesis), which is wrong, Anton 7/15/11
       m_val := - val;
       log := FG_log_beta(q, m_val);
       if coset0 >= log then
@@ -714,8 +713,8 @@ InstallGlobalFunction( FG_herm_N_unrank,
   else
     a := a - A * nb;
 	nb := FG_herm_nb_pts_S(n - 1, q);
-    rk1 := a mod nb;
-    coset := FG_div(a, nb);
+    rk1 := RemInt(a, nb);
+    coset := QuoInt(a, nb);
     FG_herm_S_unrank(q, v, offset, n - 1, rk1);
     v[offset + n - 1] := FG_alpha_power(q, coset);
   fi;
@@ -779,8 +778,8 @@ InstallGlobalFunction( FG_herm_S_unrank,
   fi;
   nb := FG_herm_nb_pts_N(n - 1, q);
   if rk < (q + 1) * nb then
-    coset := FG_div(rk, nb);
-    rk1 := rk mod nb;
+    coset := QuoInt(rk, nb);
+    rk1 := RemInt(rk, nb);
     FG_herm_N_unrank(q, v, offset, n - 1, rk1);
     val := FG_evaluate_hermitian_form(q, v, offset, n - 1);
     m_val := - val;
@@ -850,10 +849,10 @@ InstallGlobalFunction( FG_herm_N1_unrank,
     A := (q + 1) * (q - 2) * nb;
     if rk < A then
       nb1 := (q - 2) * nb;
-      coset1 := FG_div(rk, nb1);
-      rk1 := rk mod nb1;
-      coset2 := FG_div(rk1, nb);
-      rk2 := rk1 mod nb;
+      coset1 := QuoInt(rk, nb1);
+      rk1 := RemInt(rk, nb1);
+      coset2 := QuoInt(rk1, nb);
+      rk2 := RemInt(rk1, nb);
       FG_herm_N1_unrank(q, v, offset, n - 1, rk2);
       val := FG_evaluate_hermitian_form(q, v, offset, n - 1);
       coset2 := coset2 + 1;
@@ -868,8 +867,8 @@ InstallGlobalFunction( FG_herm_N1_unrank,
 	else
       rk := rk - A;
       nb := FG_herm_nb_pts_S(n - 1, q);
-      coset := FG_div(rk, nb);
-      rk1 := rk mod nb;
+      coset := QuoInt(rk, nb);
+      rk1 := RemInt(rk, nb);
       FG_herm_S_unrank(q, v, offset, n - 1, rk1);
       v[offset + n - 1] := FG_norm_one_element(q, coset);
     fi;
@@ -1333,8 +1332,8 @@ InstallGlobalFunction( QminusElementNumber,
     fi;
     a2 := a2 - x;
     x := FG_nb_pts_N1(n, q); 
-    b := FG_div(a2, x);
-    c := a2 mod x;
+    b := QuoInt(a2, x);
+    c := RemInt(a2, x);
     if IsZero(b) then
        x1 := one;
 	 x2 := zero;
@@ -1832,7 +1831,7 @@ InstallGlobalFunction( FG_enum_orthogonal,
            ## of the l-th j-space incident with the k-th (j-1)-space
            ## of vars2ps2. So we must first decompose n as n=(k-1)ressize+l.
 
-              l := n mod ressize;
+              l := RemInt(n, ressize);
               if l = 0 then l := ressize; fi;  
               k := (n-l) / ressize + 1;    
               v := enum2[k]^em;   
@@ -1913,7 +1912,7 @@ InstallGlobalFunction( FG_enum_hermitian,
               l := n - Size(enum2) * ressize;
               return enumextra[l]^em;
            else
-              l := n mod ressize;
+              l := RemInt(n, ressize);
               if l = 0 then l := ressize; fi;  
               k := (n-l) / ressize + 1;    
               v := enum2[k]^em;                     

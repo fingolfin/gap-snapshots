@@ -268,7 +268,7 @@
   
   [1X4.6-1 IsValidIdentifier[101X
   
-  [29X[2XIsValidIdentifier[102X( [3Xstr[103X ) [32X function
+  [33X[1;0Y[29X[2XIsValidIdentifier[102X( [3Xstr[103X ) [32X function[133X
   
   [33X[0;0Yreturns  [9Xtrue[109X  if the string [3Xstr[103X would form a valid identifier consisting of
   letters,  digits  and  underscores;  otherwise it returns [9Xfalse[109X. It does not
@@ -389,7 +389,7 @@
   
   [1X4.8-1 IsBound[101X
   
-  [29X[2XIsBound[102X( [3Xident[103X ) [32X function
+  [33X[1;0Y[29X[2XIsBound[102X( [3Xident[103X ) [32X function[133X
   
   [33X[0;0Y[2XIsBound[102X  returns  [9Xtrue[109X  if  the  variable [3Xident[103X points to a value, and [9Xfalse[109X
   otherwise.[133X
@@ -399,7 +399,7 @@
   
   [1X4.8-2 Unbind[101X
   
-  [29X[2XUnbind[102X( [3Xident[103X ) [32X function
+  [33X[1;0Y[29X[2XUnbind[102X( [3Xident[103X ) [32X function[133X
   
   [33X[0;0Ydeletes  the identifier [3Xident[103X. If there is no other variable pointing to the
   same  value  as  [3Xident[103X  was,  this value will be removed by the next garbage
@@ -440,14 +440,14 @@
   
   [1X4.9-1 IsReadOnlyGlobal[101X
   
-  [29X[2XIsReadOnlyGlobal[102X( [3Xname[103X ) [32X function
+  [33X[1;0Y[29X[2XIsReadOnlyGlobal[102X( [3Xname[103X ) [32X function[133X
   
   [33X[0;0Yreturns  [9Xtrue[109X  if  the global variable named by the string [3Xname[103X is read-only
   and [9Xfalse[109X otherwise (the default).[133X
   
   [1X4.9-2 MakeReadOnlyGlobal[101X
   
-  [29X[2XMakeReadOnlyGlobal[102X( [3Xname[103X ) [32X function
+  [33X[1;0Y[29X[2XMakeReadOnlyGlobal[102X( [3Xname[103X ) [32X function[133X
   
   [33X[0;0Ymarks the global variable named by the string [3Xname[103X as read-only.[133X
   
@@ -456,7 +456,7 @@
   
   [1X4.9-3 MakeReadWriteGlobal[101X
   
-  [29X[2XMakeReadWriteGlobal[102X( [3Xname[103X ) [32X function
+  [33X[1;0Y[29X[2XMakeReadWriteGlobal[102X( [3Xname[103X ) [32X function[133X
   
   [33X[0;0Ymarks the global variable named by the string [3Xname[103X as read-write.[133X
   
@@ -488,21 +488,21 @@
   
   [1X4.9-4 ValueGlobal[101X
   
-  [29X[2XValueGlobal[102X( [3Xname[103X ) [32X function
+  [33X[1;0Y[29X[2XValueGlobal[102X( [3Xname[103X ) [32X function[133X
   
   [33X[0;0Yreturns the value currently bound to the global variable named by the string
   [3Xname[103X. An error is raised if no value is currently bound.[133X
   
   [1X4.9-5 IsBoundGlobal[101X
   
-  [29X[2XIsBoundGlobal[102X( [3Xname[103X ) [32X function
+  [33X[1;0Y[29X[2XIsBoundGlobal[102X( [3Xname[103X ) [32X function[133X
   
   [33X[0;0Yreturns  [9Xtrue[109X if a value currently bound to the global variable named by the
   string [3Xname[103X and [9Xfalse[109X otherwise.[133X
   
   [1X4.9-6 UnbindGlobal[101X
   
-  [29X[2XUnbindGlobal[102X( [3Xname[103X ) [32X function
+  [33X[1;0Y[29X[2XUnbindGlobal[102X( [3Xname[103X ) [32X function[133X
   
   [33X[0;0Yremoves any value currently bound to the global variable named by the string
   [3Xname[103X. Nothing is returned.[133X
@@ -512,7 +512,7 @@
   
   [1X4.9-7 BindGlobal[101X
   
-  [29X[2XBindGlobal[102X( [3Xname[103X, [3Xval[103X ) [32X function
+  [33X[1;0Y[29X[2XBindGlobal[102X( [3Xname[103X, [3Xval[103X ) [32X function[133X
   
   [33X[0;0Ysets the global variable named by the string [3Xname[103X to the value [3Xval[103X, provided
   it  is  writable,  and  makes  it  read-only. If [3Xname[103X already had a value, a
@@ -546,7 +546,7 @@
   
   [1X4.9-8 NamesGVars[101X
   
-  [29X[2XNamesGVars[102X(  ) [32X function
+  [33X[1;0Y[29X[2XNamesGVars[102X(  ) [32X function[133X
   
   [33X[0;0YThis function returns an immutable (see [14X12.6[114X) sorted (see [14X21.19[114X) list of all
   the  global  variable  names  known  to  the  system. This includes names of
@@ -556,21 +556,21 @@
   
   [1X4.9-9 NamesSystemGVars[101X
   
-  [29X[2XNamesSystemGVars[102X(  ) [32X function
+  [33X[1;0Y[29X[2XNamesSystemGVars[102X(  ) [32X function[133X
   
   [33X[0;0YThis  function  returns  an immutable sorted list of all the global variable
   names created by the [5XGAP[105X library when [5XGAP[105X was started.[133X
   
   [1X4.9-10 NamesUserGVars[101X
   
-  [29X[2XNamesUserGVars[102X(  ) [32X function
+  [33X[1;0Y[29X[2XNamesUserGVars[102X(  ) [32X function[133X
   
   [33X[0;0YThis  function returns an immutable sorted list of the global variable names
   created since the library was read, to which a value is currently bound.[133X
   
   [1X4.9-11 TemporaryGlobalVarName[101X
   
-  [29X[2XTemporaryGlobalVarName[102X( [[3Xprefix[103X] ) [32X function
+  [33X[1;0Y[29X[2XTemporaryGlobalVarName[102X( [[3Xprefix[103X] ) [32X function[133X
   
   [33X[0;0Yreturns  a  string that can be used as the name of a global variable that is
   not  bound  at  the time when [2XTemporaryGlobalVarName[102X is called. The optional

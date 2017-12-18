@@ -299,7 +299,7 @@ G\(2\,5\)
 
 <h5>4.6-1 IsValidIdentifier</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsValidIdentifier</code>( <var class="Arg">str</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsValidIdentifier</code>( <var class="Arg">str</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the string <var class="Arg">str</var> would form a valid identifier consisting of letters, digits and underscores; otherwise it returns <code class="keyw">false</code>. It does not check whether <var class="Arg">str</var> contains characters escaped by a backslash <code class="code">\</code>.</p>
 
 <p>Note that the "at"-character is used to implement namespaces for global variables in packages. See <a href="chap4.html#X7DF8774F7D542298"><span class="RefLink">4.10</span></a> for details.</p>
@@ -367,7 +367,7 @@ end;
 
 <h5>4.8-1 IsBound</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBound</code>( <var class="Arg">ident</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBound</code>( <var class="Arg">ident</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">IsBound</code> returns <code class="keyw">true</code> if the variable <var class="Arg">ident</var> points to a value, and <code class="keyw">false</code> otherwise.</p>
 
 <p>For records and lists <code class="func">IsBound</code> can be used to check whether components or entries, respectively, are bound (see Chapters <a href="chap29.html#X7AA1073C7E943DD7"><span class="RefLink">29</span></a> and <a href="chap21.html#X7B256AE5780F140A"><span class="RefLink">21</span></a>).</p>
@@ -376,7 +376,7 @@ end;
 
 <h5>4.8-2 Unbind</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unbind</code>( <var class="Arg">ident</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unbind</code>( <var class="Arg">ident</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>deletes the identifier <var class="Arg">ident</var>. If there is no other variable pointing to the same value as <var class="Arg">ident</var> was, this value will be removed by the next garbage collection. Therefore <code class="func">Unbind</code> can be used to get rid of unwanted large objects.</p>
 
 <p>For records and lists <code class="func">Unbind</code> can be used to delete components or entries, respectively (see Chapters <a href="chap29.html#X7AA1073C7E943DD7"><span class="RefLink">29</span></a> and <a href="chap21.html#X7B256AE5780F140A"><span class="RefLink">21</span></a>).</p>
@@ -401,14 +401,14 @@ end;
 
 <h5>4.9-1 IsReadOnlyGlobal</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsReadOnlyGlobal</code>( <var class="Arg">name</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsReadOnlyGlobal</code>( <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the global variable named by the string <var class="Arg">name</var> is read-only and <code class="keyw">false</code> otherwise (the default).</p>
 
 <p><a id="X850CE44478254F27" name="X850CE44478254F27"></a></p>
 
 <h5>4.9-2 MakeReadOnlyGlobal</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MakeReadOnlyGlobal</code>( <var class="Arg">name</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MakeReadOnlyGlobal</code>( <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>marks the global variable named by the string <var class="Arg">name</var> as read-only.</p>
 
 <p>A warning is given if <var class="Arg">name</var> has no value bound to it or if it is already read-only.</p>
@@ -417,7 +417,7 @@ end;
 
 <h5>4.9-3 MakeReadWriteGlobal</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MakeReadWriteGlobal</code>( <var class="Arg">name</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MakeReadWriteGlobal</code>( <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>marks the global variable named by the string <var class="Arg">name</var> as read-write.</p>
 
 <p>A warning is given if <var class="Arg">name</var> is already read-write.</p>
@@ -451,21 +451,21 @@ false
 
 <h5>4.9-4 ValueGlobal</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ValueGlobal</code>( <var class="Arg">name</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ValueGlobal</code>( <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the value currently bound to the global variable named by the string <var class="Arg">name</var>. An error is raised if no value is currently bound.</p>
 
 <p><a id="X823D4BC378395B32" name="X823D4BC378395B32"></a></p>
 
 <h5>4.9-5 IsBoundGlobal</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundGlobal</code>( <var class="Arg">name</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundGlobal</code>( <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if a value currently bound to the global variable named by the string <var class="Arg">name</var> and <code class="keyw">false</code> otherwise.</p>
 
 <p><a id="X829A5F0E811F77D3" name="X829A5F0E811F77D3"></a></p>
 
 <h5>4.9-6 UnbindGlobal</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnbindGlobal</code>( <var class="Arg">name</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnbindGlobal</code>( <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>removes any value currently bound to the global variable named by the string <var class="Arg">name</var>. Nothing is returned.</p>
 
 <p>A warning is given if <var class="Arg">name</var> was not bound. The global variable named by <var class="Arg">name</var> must be writable, otherwise an error is raised.</p>
@@ -474,7 +474,7 @@ false
 
 <h5>4.9-7 BindGlobal</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BindGlobal</code>( <var class="Arg">name</var>, <var class="Arg">val</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BindGlobal</code>( <var class="Arg">name</var>, <var class="Arg">val</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>sets the global variable named by the string <var class="Arg">name</var> to the value <var class="Arg">val</var>, provided it is writable, and makes it read-only. If <var class="Arg">name</var> already had a value, a warning message is printed.</p>
 
 <p>This is intended to be the normal way to create and set "official" global variables (such as operations and filters).</p>
@@ -505,28 +505,28 @@ true
 
 <h5>4.9-8 NamesGVars</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NamesGVars</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NamesGVars</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function returns an immutable (see <a href="chap12.html#X7F0C119682196D65"><span class="RefLink">12.6</span></a>) sorted (see <a href="chap21.html#X80ABC25582343910"><span class="RefLink">21.19</span></a>) list of all the global variable names known to the system. This includes names of variables which were bound but have now been unbound and some other names which have never been bound but have become known to the system by various routes.</p>
 
 <p><a id="X7E604AF579A7BC92" name="X7E604AF579A7BC92"></a></p>
 
 <h5>4.9-9 NamesSystemGVars</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NamesSystemGVars</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NamesSystemGVars</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function returns an immutable sorted list of all the global variable names created by the <strong class="pkg">GAP</strong> library when <strong class="pkg">GAP</strong> was started.</p>
 
 <p><a id="X870169447AF490D8" name="X870169447AF490D8"></a></p>
 
 <h5>4.9-10 NamesUserGVars</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NamesUserGVars</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NamesUserGVars</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function returns an immutable sorted list of the global variable names created since the library was read, to which a value is currently bound.</p>
 
 <p><a id="X798433307E62DCBA" name="X798433307E62DCBA"></a></p>
 
 <h5>4.9-11 TemporaryGlobalVarName</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TemporaryGlobalVarName</code>( [<var class="Arg">prefix</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TemporaryGlobalVarName</code>( [<var class="Arg">prefix</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a string that can be used as the name of a global variable that is not bound at the time when <code class="func">TemporaryGlobalVarName</code> is called. The optional argument <var class="Arg">prefix</var> can specify a string with which the name of the global variable starts.</p>
 
 <p><a id="X7DF8774F7D542298" name="X7DF8774F7D542298"></a></p>

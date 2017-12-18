@@ -34,63 +34,63 @@
   
   [1X10.1-1 IsStream[101X
   
-  [29X[2XIsStream[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsStream[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YStreams  are  [5XGAP[105X  objects  and  all  open  streams, input, output, text and
   binary, lie in this category.[133X
   
   [1X10.1-2 IsClosedStream[101X
   
-  [29X[2XIsClosedStream[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsClosedStream[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YWhen  a  stream  is  closed, its type changes to lie in [2XIsClosedStream[102X. This
   category is used to install methods that trap accesses to closed streams.[133X
   
   [1X10.1-3 IsInputStream[101X
   
-  [29X[2XIsInputStream[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsInputStream[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YAll input streams lie in this category, and support input operations such as
   [2XReadByte[102X ([14X10.3-3[114X) (see [14X10.3[114X)[133X
   
   [1X10.1-4 IsInputTextStream[101X
   
-  [29X[2XIsInputTextStream[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsInputTextStream[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YAll  [13Xtext[113X  input  streams  lie  in  this  category.  They translate new-line
   characters read.[133X
   
   [1X10.1-5 IsInputTextNone[101X
   
-  [29X[2XIsInputTextNone[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsInputTextNone[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YIt  is  convenient to use a category to distinguish dummy streams (see [14X10.9[114X)
   from others. Other distinctions are usually made using representations[133X
   
   [1X10.1-6 IsOutputStream[101X
   
-  [29X[2XIsOutputStream[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsOutputStream[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YAll output streams lie in this category and support basic operations such as
   [2XWriteByte[102X ([14X10.4-1[114X) (see Section [14X10.4[114X).[133X
   
   [1X10.1-7 IsOutputTextStream[101X
   
-  [29X[2XIsOutputTextStream[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsOutputTextStream[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YAll  [13Xtext[113X  output  streams  lie  in  this  category  and  translate new-line
   characters on output.[133X
   
   [1X10.1-8 IsOutputTextNone[101X
   
-  [29X[2XIsOutputTextNone[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsOutputTextNone[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YIt  is  convenient to use a category to distinguish dummy streams (see [14X10.9[114X)
   from others. Other distinctions are usually made using representations[133X
   
   [1X10.1-9 StreamsFamily[101X
   
-  [29X[2XStreamsFamily[102X[32X family
+  [33X[1;0Y[29X[2XStreamsFamily[102X[32X family[133X
   
   [33X[0;0YAll streams lie in the [2XStreamsFamily[102X.[133X
   
@@ -99,7 +99,7 @@
   
   [1X10.2-1 CloseStream[101X
   
-  [29X[2XCloseStream[102X( [3Xstream[103X ) [32X operation
+  [33X[1;0Y[29X[2XCloseStream[102X( [3Xstream[103X ) [32X operation[133X
   
   [33X[0;0YIn  order  to  preserve  system  resources and to flush output streams every
   stream should be closed as soon as it is no longer used using [2XCloseStream[102X.[133X
@@ -112,7 +112,7 @@
   
   [1X10.2-2 FileDescriptorOfStream[101X
   
-  [29X[2XFileDescriptorOfStream[102X( [3Xstream[103X ) [32X operation
+  [33X[1;0Y[29X[2XFileDescriptorOfStream[102X( [3Xstream[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  UNIX  file  descriptor  of the underlying file. This is mainly
   useful  for  the  [2XUNIXSelect[102X  ([14X10.2-3[114X) function call. This is as of now only
@@ -121,7 +121,7 @@
   
   [1X10.2-3 UNIXSelect[101X
   
-  [29X[2XUNIXSelect[102X( [3Xinlist[103X, [3Xoutlist[103X, [3Xexclist[103X, [3Xtimeoutsec[103X, [3Xtimeoutusec[103X ) [32X function
+  [33X[1;0Y[29X[2XUNIXSelect[102X( [3Xinlist[103X, [3Xoutlist[103X, [3Xexclist[103X, [3Xtimeoutsec[103X, [3Xtimeoutusec[103X ) [32X function[133X
   
   [33X[0;0Ymakes  the  UNIX  C-library function [10Xselect[110X accessible from [5XGAP[105X for streams.
   The functionality is as described in the man page (see UNIX file descriptors
@@ -158,14 +158,14 @@
   
   [1X10.3-1 Read[101X
   
-  [29X[2XRead[102X( [3Xinput-text-stream[103X ) [32X operation
+  [33X[1;0Y[29X[2XRead[102X( [3Xinput-text-stream[103X ) [32X operation[133X
   
   [33X[0;0Yreads the input-text-stream as input until [10Xend-of-stream[110X occurs. See [14X9.7[114X for
   details.[133X
   
   [1X10.3-2 ReadAsFunction[101X
   
-  [29X[2XReadAsFunction[102X( [3Xinput-text-stream[103X ) [32X operation
+  [33X[1;0Y[29X[2XReadAsFunction[102X( [3Xinput-text-stream[103X ) [32X operation[133X
   
   [33X[0;0Yreads  the  input-text-stream as function and returns this function. See [14X9.7[114X
   for details.[133X
@@ -187,7 +187,7 @@
   
   [1X10.3-3 ReadByte[101X
   
-  [29X[2XReadByte[102X( [3Xinput-stream[103X ) [32X operation
+  [33X[1;0Y[29X[2XReadByte[102X( [3Xinput-stream[103X ) [32X operation[133X
   
   [33X[0;0Y[2XReadByte[102X  returns  one character (returned as integer) from the input stream
   [3Xinput-stream[103X.  [2XReadByte[102X  returns [9Xfail[109X if there is no character available, in
@@ -207,7 +207,7 @@
   
   [1X10.3-4 ReadLine[101X
   
-  [29X[2XReadLine[102X( [3Xinput-stream[103X ) [32X operation
+  [33X[1;0Y[29X[2XReadLine[102X( [3Xinput-stream[103X ) [32X operation[133X
   
   [33X[0;0Y[2XReadLine[102X  returns  one  line  (returned as string [13Xwith[113X the newline) from the
   input  stream  [3Xinput-stream[103X.  [2XReadLine[102X reads in the input until a newline is
@@ -226,7 +226,7 @@
   
   [1X10.3-5 ReadAll[101X
   
-  [29X[2XReadAll[102X( [3Xinput-stream[103X[, [3Xlimit[103X] ) [32X operation
+  [33X[1;0Y[29X[2XReadAll[102X( [3Xinput-stream[103X[, [3Xlimit[103X] ) [32X operation[133X
   
   [33X[0;0Y[2XReadAll[102X returns all characters as string from the input stream [3Xstream-in[103X. It
   waits (blocks) until at least one character is available from the stream, or
@@ -270,7 +270,7 @@
   
   [1X10.3-6 IsEndOfStream[101X
   
-  [29X[2XIsEndOfStream[102X( [3Xinput-stream[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsEndOfStream[102X( [3Xinput-stream[103X ) [32X operation[133X
   
   [33X[0;0Y[2XIsEndOfStream[102X  returns  [9Xtrue[109X  if  the  input stream is at [13Xend-of-stream[113X, and
   [9Xfalse[109X otherwise. Note that [2XIsEndOfStream[102X might return [9Xfalse[109X even if the next
@@ -278,7 +278,7 @@
   
   [1X10.3-7 PositionStream[101X
   
-  [29X[2XPositionStream[102X( [3Xinput-stream[103X ) [32X operation
+  [33X[1;0Y[29X[2XPositionStream[102X( [3Xinput-stream[103X ) [32X operation[133X
   
   [33X[0;0YSome input streams, such as string streams and file streams attached to disk
   files,   support   a  form  of  random  access  by  way  of  the  operations
@@ -292,7 +292,7 @@
   
   [1X10.3-8 RewindStream[101X
   
-  [29X[2XRewindStream[102X( [3Xinput-stream[103X ) [32X operation
+  [33X[1;0Y[29X[2XRewindStream[102X( [3Xinput-stream[103X ) [32X operation[133X
   
   [33X[0;0Y[2XRewindStream[102X  attempts  to return an input stream to its starting condition,
   so  that  all  the same characters can be read again. It returns [9Xtrue[109X if the
@@ -302,7 +302,7 @@
   
   [1X10.3-9 SeekPositionStream[101X
   
-  [29X[2XSeekPositionStream[102X( [3Xinput-stream[103X, [3Xpos[103X ) [32X operation
+  [33X[1;0Y[29X[2XSeekPositionStream[102X( [3Xinput-stream[103X, [3Xpos[103X ) [32X operation[133X
   
   [33X[0;0Y[2XSeekPositionStream[102X attempts to rewind or wind forward an input stream to the
   specified position. This is not possible for all streams. It returns [9Xtrue[109X if
@@ -313,7 +313,7 @@
   
   [1X10.4-1 WriteByte[101X
   
-  [29X[2XWriteByte[102X( [3Xoutput-stream[103X, [3Xbyte[103X ) [32X operation
+  [33X[1;0Y[29X[2XWriteByte[102X( [3Xoutput-stream[103X, [3Xbyte[103X ) [32X operation[133X
   
   [33X[0;0Ywrites   the  next  character  (given  as  [13Xinteger[113X)  to  the  output  stream
   [3Xoutput-stream[103X.  The  function  returns  [9Xtrue[109X  if the write succeeds and [9Xfail[109X
@@ -325,7 +325,7 @@
   
   [1X10.4-2 WriteLine[101X
   
-  [29X[2XWriteLine[102X( [3Xoutput-stream[103X, [3Xstring[103X ) [32X operation
+  [33X[1;0Y[29X[2XWriteLine[102X( [3Xoutput-stream[103X, [3Xstring[103X ) [32X operation[133X
   
   [33X[0;0Yappends  [3Xstring[103X  to  [3Xoutput-stream[103X. A final newline is written. The function
   returns [9Xtrue[109X if the write succeeds and [9Xfail[109X otherwise.[133X
@@ -335,7 +335,7 @@
   
   [1X10.4-3 WriteAll[101X
   
-  [29X[2XWriteAll[102X( [3Xoutput-stream[103X, [3Xstring[103X ) [32X operation
+  [33X[1;0Y[29X[2XWriteAll[102X( [3Xoutput-stream[103X, [3Xstring[103X ) [32X operation[133X
   
   [33X[0;0Yappends  [3Xstring[103X  to [3Xoutput-stream[103X. No final newline is written. The function
   returns [9Xtrue[109X if the write succeeds and [9Xfail[109X otherwise. It will block as long
@@ -366,8 +366,8 @@
   
   [1X10.4-4 [33X[0;0YPrintTo and AppendTo (for streams)[133X[101X
   
-  [29X[2XPrintTo[102X( [3Xoutput-stream[103X, [3Xarg1[103X, [3X...[103X ) [32X function
-  [29X[2XAppendTo[102X( [3Xoutput-stream[103X, [3Xarg1[103X, [3X...[103X ) [32X function
+  [33X[1;0Y[29X[2XPrintTo[102X( [3Xoutput-stream[103X, [3Xarg1[103X, [3X...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XAppendTo[102X( [3Xoutput-stream[103X, [3Xarg1[103X, [3X...[103X ) [32X function[133X
   
   [33X[0;0YThese  functions work like [2XPrint[102X ([14X6.3-4[114X), except that the output is appended
   to the output stream [3Xoutput-stream[103X.[133X
@@ -382,29 +382,29 @@
   
   [1X10.4-5 LogTo[101X
   
-  [29X[2XLogTo[102X( [3Xstream[103X ) [32X operation
+  [33X[1;0Y[29X[2XLogTo[102X( [3Xstream[103X ) [32X operation[133X
   
   [33X[0;0Ycauses  the subsequent interaction to be logged to the output stream [3Xstream[103X.
   It works in precisely the same way as it does for files (see [2XLogTo[102X ([14X9.7-4[114X)).[133X
   
   [1X10.4-6 InputLogTo[101X
   
-  [29X[2XInputLogTo[102X( [3Xstream[103X ) [32X operation
+  [33X[1;0Y[29X[2XInputLogTo[102X( [3Xstream[103X ) [32X operation[133X
   
   [33X[0;0Ycauses  the  subsequent  input  to be logged to the output stream [3Xstream[103X. It
   works just like it does for files (see [2XInputLogTo[102X ([14X9.7-5[114X)).[133X
   
   [1X10.4-7 OutputLogTo[101X
   
-  [29X[2XOutputLogTo[102X( [3Xstream[103X ) [32X operation
+  [33X[1;0Y[29X[2XOutputLogTo[102X( [3Xstream[103X ) [32X operation[133X
   
   [33X[0;0Ycauses  the  subsequent  output to be logged to the output stream [3Xstream[103X. It
   works just like it does for files (see [2XOutputLogTo[102X ([14X9.7-6[114X)).[133X
   
   [1X10.4-8 SetPrintFormattingStatus[101X
   
-  [29X[2XSetPrintFormattingStatus[102X( [3Xstream[103X, [3Xnewstatus[103X ) [32X operation
-  [29X[2XPrintFormattingStatus[102X( [3Xstream[103X ) [32X operation
+  [33X[1;0Y[29X[2XSetPrintFormattingStatus[102X( [3Xstream[103X, [3Xnewstatus[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPrintFormattingStatus[102X( [3Xstream[103X ) [32X operation[133X
   
   [33X[0;0YWhen  text  is  being  sent  to  an  output text stream via [2XPrintTo[102X ([14X9.7-3[114X),
   [2XAppendTo[102X  ([14X9.7-3[114X),  [2XLogTo[102X ([14X10.4-5[114X), etc., it is by default formatted just as
@@ -468,7 +468,7 @@
   
   [1X10.5-1 InputTextFile[101X
   
-  [29X[2XInputTextFile[102X( [3Xfilename[103X ) [32X operation
+  [33X[1;0Y[29X[2XInputTextFile[102X( [3Xfilename[103X ) [32X operation[133X
   
   [33X[0;0Y[10XInputTextFile(   [3Xfilename[103X[10X   )[110X  returns  an  input  stream  in  the  category
   [2XIsInputTextStream[102X  ([14X10.1-4[114X)  that  delivers  the  characters  from  the file
@@ -476,7 +476,7 @@
   
   [1X10.5-2 OutputTextFile[101X
   
-  [29X[2XOutputTextFile[102X( [3Xfilename[103X, [3Xappend[103X ) [32X operation
+  [33X[1;0Y[29X[2XOutputTextFile[102X( [3Xfilename[103X, [3Xappend[103X ) [32X operation[133X
   
   [33X[0;0Y[10XOutputTextFile(  [3Xfilename[103X[10X, [3Xappend[103X[10X )[110X returns an output stream in the category
   [10XIsOutputTextFile[110X  that  writes  received characters to the file [3Xfilename[103X. If
@@ -519,7 +519,7 @@
   
   [1X10.6-1 InputTextUser[101X
   
-  [29X[2XInputTextUser[102X(  ) [32X function
+  [33X[1;0Y[29X[2XInputTextUser[102X(  ) [32X function[133X
   
   [33X[0;0Yreturns an input text stream which delivers characters typed by the user (or
   from  the  standard  input  device  if  it  has  been redirected). In normal
@@ -528,7 +528,7 @@
   
   [1X10.6-2 OutputTextUser[101X
   
-  [29X[2XOutputTextUser[102X(  ) [32X function
+  [33X[1;0Y[29X[2XOutputTextUser[102X(  ) [32X function[133X
   
   [33X[0;0Yreturns an output stream which delivers characters to the user's display (or
   the  standard  output  device  if it has been redirected). Each character is
@@ -538,7 +538,7 @@
   
   [1X10.6-3 InputFromUser[101X
   
-  [29X[2XInputFromUser[102X( [3Xarg[103X ) [32X function
+  [33X[1;0Y[29X[2XInputFromUser[102X( [3Xarg[103X ) [32X function[133X
   
   [33X[0;0Yprints the [3Xarg[103X as a prompt, then waits until a text is typed by the user (or
   from the standard input device if it has been redirected). This text must be
@@ -555,7 +555,7 @@
   
   [1X10.7-1 InputTextString[101X
   
-  [29X[2XInputTextString[102X( [3Xstring[103X ) [32X operation
+  [33X[1;0Y[29X[2XInputTextString[102X( [3Xstring[103X ) [32X operation[133X
   
   [33X[0;0Y[10XInputTextString(  [3Xstring[103X[10X  )[110X  returns  an  input  stream  that  delivers  the
   characters  from  the  string [3Xstring[103X. The [3Xstring[103X is not changed when reading
@@ -564,7 +564,7 @@
   
   [1X10.7-2 OutputTextString[101X
   
-  [29X[2XOutputTextString[102X( [3Xlist[103X, [3Xappend[103X ) [32X operation
+  [33X[1;0Y[29X[2XOutputTextString[102X( [3Xlist[103X, [3Xappend[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  an  output  stream  that puts all received characters into the list
   [3Xlist[103X. If [3Xappend[103X is [9Xfalse[109X, then the list is emptied first, otherwise received
@@ -612,14 +612,14 @@
   
   [1X10.8-1 IsInputOutputStream[101X
   
-  [29X[2XIsInputOutputStream[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsInputOutputStream[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0Y[2XIsInputOutputStream[102X is the Category of Input-Output Streams; it returns [9Xtrue[109X
   if the [3Xobj[103X is an input-output stream and [9Xfalse[109X otherwise.[133X
   
   [1X10.8-2 InputOutputLocalProcess[101X
   
-  [29X[2XInputOutputLocalProcess[102X( [3Xdir[103X, [3Xexecutable[103X, [3Xargs[103X ) [32X function
+  [33X[1;0Y[29X[2XInputOutputLocalProcess[102X( [3Xdir[103X, [3Xexecutable[103X, [3Xargs[103X ) [32X function[133X
   
   [33X[0;0Ystarts up a slave process, whose executable file is [3Xexecutable[103X, with [21Xcommand
   line[121X  arguments  [3Xargs[103X  in  the  directory [3Xdir[103X. (Suitable choices for [3Xdir[103X are
@@ -661,7 +661,7 @@
   
   [1X10.8-3 ReadAllLine[101X
   
-  [29X[2XReadAllLine[102X( [3Xiostream[103X[, [3Xnofail[103X][, [3XIsAllLine[103X] ) [32X operation
+  [33X[1;0Y[29X[2XReadAllLine[102X( [3Xiostream[103X[, [3Xnofail[103X][, [3XIsAllLine[103X] ) [32X operation[133X
   
   [33X[0;0YFor  an  input/output  stream  [3Xiostream[103X  [2XReadAllLine[102X  reads  until a newline
   character  if  any  input  is  found  or  returns [9Xfail[109X if no input is found,
@@ -696,7 +696,7 @@
   
   [1X10.9-1 InputTextNone[101X
   
-  [29X[2XInputTextNone[102X(  ) [32X function
+  [33X[1;0Y[29X[2XInputTextNone[102X(  ) [32X function[133X
   
   [33X[0;0Yreturns a dummy input text stream, which delivers no characters, i.e., it is
   always  at end of stream. Its main use is for calls to [2XProcess[102X ([14X11.1-1[114X) when
@@ -704,7 +704,7 @@
   
   [1X10.9-2 OutputTextNone[101X
   
-  [29X[2XOutputTextNone[102X(  ) [32X function
+  [33X[1;0Y[29X[2XOutputTextNone[102X(  ) [32X function[133X
   
   [33X[0;0Yreturns  a  dummy output stream, which discards all received characters. Its
   main  use is for calls to [2XProcess[102X ([14X11.1-1[114X) when the started program does not
@@ -737,7 +737,7 @@
   
   [1X10.10-1 InstallCharReadHookFunc[101X
   
-  [29X[2XInstallCharReadHookFunc[102X( [3Xstream[103X, [3Xmode[103X, [3Xfunc[103X ) [32X function
+  [33X[1;0Y[29X[2XInstallCharReadHookFunc[102X( [3Xstream[103X, [3Xmode[103X, [3Xfunc[103X ) [32X function[133X
   
   [33X[0;0Yinstalls  the function [3Xfunc[103X as a handler function for the stream [3Xstream[103X. The
   argument  [3Xmode[103X  decides,  for what operations on the stream this function is
@@ -753,7 +753,7 @@
   
   [1X10.10-2 UnInstallCharReadHookFunc[101X
   
-  [29X[2XUnInstallCharReadHookFunc[102X( [3Xstream[103X, [3Xfunc[103X ) [32X function
+  [33X[1;0Y[29X[2XUnInstallCharReadHookFunc[102X( [3Xstream[103X, [3Xfunc[103X ) [32X function[133X
   
   [33X[0;0Yuninstalls  the  function  [3Xfunc[103X as a handler function for the stream [3Xstream[103X.
   All  instances  are  deinstalled, regardless of the mode of operation (read,
@@ -777,7 +777,7 @@
   
   [1X10.11-1 ReadCSV[101X
   
-  [29X[2XReadCSV[102X( [3Xfilename[103X[, [3Xnohead[103X][, [3Xseparator[103X] ) [32X function
+  [33X[1;0Y[29X[2XReadCSV[102X( [3Xfilename[103X[, [3Xnohead[103X][, [3Xseparator[103X] ) [32X function[133X
   
   [33X[0;0YThis  function  reads in a spreadsheet, saved in CSV format ([13Xc[113Xomma [13Xs[113Xeparated
   [13Xv[113Xalues)  and  returns  its  entries as a list of records. The entries of the
@@ -790,7 +790,7 @@
   
   [1X10.11-2 PrintCSV[101X
   
-  [29X[2XPrintCSV[102X( [3Xfilename[103X, [3Xlist[103X[, [3Xfields[103X] ) [32X function
+  [33X[1;0Y[29X[2XPrintCSV[102X( [3Xfilename[103X, [3Xlist[103X[, [3Xfields[103X] ) [32X function[133X
   
   [33X[0;0YThis function prints a list of records as a spreadsheet in CSV format (which
   can  be  read in for example into Excel). The names of the record components

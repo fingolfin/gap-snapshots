@@ -81,7 +81,7 @@ several arguments</span></a>
 
 <h5>5.1-1 NameFunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NameFunction</code>( <var class="Arg">func</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NameFunction</code>( <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the name of a function. For operations, this is the name used in their declaration. For functions, this is the variable name they were first assigned to. (For some internal functions, this might be a name <em>different</em> from the name that is documented.) If no such name exists, the string <code class="code">"unknown"</code> is returned.</p>
 
 
@@ -104,7 +104,7 @@ several arguments</span></a>
 
 <h5>5.1-2 NumberArgumentsFunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NumberArgumentsFunction</code>( <var class="Arg">func</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NumberArgumentsFunction</code>( <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the number of arguments the function <var class="Arg">func</var> accepts. -1 is returned for all operations. For functions that use <code class="code">...</code> or <code class="code">arg</code> to take a variable number of arguments, the number returned is -1 times the total number of parameters. For attributes, 1 is returned.</p>
 
 
@@ -125,7 +125,7 @@ several arguments</span></a>
 
 <h5>5.1-3 NamesLocalVariablesFunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NamesLocalVariablesFunction</code>( <var class="Arg">func</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NamesLocalVariablesFunction</code>( <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a mutable list of strings; the first entries are the names of the arguments of the function <var class="Arg">func</var>, in the same order as they were entered in the definition of <var class="Arg">func</var>, and the remaining ones are the local variables as given in the <code class="keyw">local</code> statement in <var class="Arg">func</var>. (The number of arguments can be computed with <code class="func">NumberArgumentsFunction</code> (<a href="chap5_mj.html#X877F03F77FD74C98"><span class="RefLink">5.1-2</span></a>).)</p>
 
 
@@ -142,7 +142,7 @@ fail
 
 <h5>5.1-4 FilenameFunc</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FilenameFunc</code>( <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FilenameFunc</code>( <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For a function <var class="Arg">func</var>, <code class="func">FilenameFunc</code> returns either <code class="keyw">fail</code> or the absolute path of the file from which <var class="Arg">func</var> has been read. The return value <code class="keyw">fail</code> occurs if <var class="Arg">func</var> is a compiled function or an operation. For functions that have been entered interactively, the string <code class="code">"*stdin*"</code> is returned, see Section <a href="chap9_mj.html#X85EC7D9087C481B0"><span class="RefLink">9.5</span></a>.</p>
 
 
@@ -162,8 +162,8 @@ fail
 
 <h5>5.1-5 StartlineFunc</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StartlineFunc</code>( <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EndlineFunc</code>( <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StartlineFunc</code>( <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EndlineFunc</code>( <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">func</var> be a function. If <code class="func">FilenameFunc</code> (<a href="chap5_mj.html#X80E108C57F90FAA3"><span class="RefLink">5.1-4</span></a>) returns <code class="keyw">fail</code> for <var class="Arg">func</var> then also <code class="func">StartlineFunc</code> returns <code class="keyw">fail</code>. If <code class="func">FilenameFunc</code> (<a href="chap5_mj.html#X80E108C57F90FAA3"><span class="RefLink">5.1-4</span></a>) returns a filename for <var class="Arg">func</var> then <code class="func">StartlineFunc</code> returns the line number in this file where the definition of <var class="Arg">func</var> starts.</p>
 
 <p><code class="func">EndlineFunc</code> behaves similarly and returns the line number in this file where the definition of <var class="Arg">func</var> ends.</p>
@@ -183,7 +183,7 @@ fail
 
 <h5>5.1-6 PageSource</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PageSource</code>( <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PageSource</code>( <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This shows the file containing the source code of the function or method <var class="Arg">func</var> in a pager (see <code class="func">Pager</code> (<a href="chap2_mj.html#X7ED03E41792C3840"><span class="RefLink">2.4-1</span></a>)). The display starts at a line shortly before the code of <var class="Arg">func</var>.</p>
 
 <p>This function works if <code class="code">FilenameFunc(<var class="Arg">func</var>)</code> returns the name of a proper file. In that case this filename and the position of the function definition are also printed. Otherwise the function indicates that the source is not available (for example this happens for functions which are implemented in the <strong class="pkg">GAP</strong> C-kernel).</p>
@@ -199,7 +199,7 @@ several arguments</span></h4>
 
 <h5>5.2-1 CallFuncList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CallFuncList</code>( <var class="Arg">func</var>, <var class="Arg">args</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CallFuncList</code>( <var class="Arg">func</var>, <var class="Arg">args</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the result, when calling function <var class="Arg">func</var> with the arguments given in the list <var class="Arg">args</var>, i.e. <var class="Arg">args</var> is "unwrapped" so that <var class="Arg">args</var> appears as several arguments to <var class="Arg">func</var>.</p>
 
 
@@ -249,8 +249,8 @@ function( arg... ) ... end
 
 <h5>5.3-1 CallWithTimeout</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CallWithTimeout</code>( <var class="Arg">timeout</var>, <var class="Arg">func</var>, <var class="Arg">.....</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CallWithTimeoutList</code>( <var class="Arg">timeout</var>, <var class="Arg">func</var>, <var class="Arg">arglist</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CallWithTimeout</code>( <var class="Arg">timeout</var>, <var class="Arg">func</var>, <var class="Arg">.....</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CallWithTimeoutList</code>( <var class="Arg">timeout</var>, <var class="Arg">func</var>, <var class="Arg">arglist</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="code">CallWithTimeout</code> and <code class="code">CallWithTimeoutList</code> support calling a function with a limit on the CPU time it can consume.</p>
 
 <p>This functionality may not be available on all systems and you should check <code class="func">GAPInfo.TimeoutsSupported</code> (<a href="chap5_mj.html#X781D10C77D11A03C"><span class="RefLink">5.3-2</span></a>) before using this functionality.</p>
@@ -275,7 +275,7 @@ function( arg... ) ... end
 
 <h5>5.3-2 GAPInfo.TimeoutsSupported</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GAPInfo.TimeoutsSupported</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GAPInfo.TimeoutsSupported</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
 <p>tests whether this installation of <strong class="pkg">GAP</strong> supports the timeout functionality of <code class="func">CallWithTimeout</code> (<a href="chap5_mj.html#X782F88AC7B6DC4F9"><span class="RefLink">5.3-1</span></a>) and related functions.</p>
 
 <p><a id="X7EB0A85F7D128BE0" name="X7EB0A85F7D128BE0"></a></p>
@@ -288,7 +288,7 @@ function( arg... ) ... end
 
 <h5>5.4-1 ReturnTrue</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReturnTrue</code>( <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReturnTrue</code>( <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function takes any number of arguments, and always returns <code class="keyw">true</code>.</p>
 
 
@@ -305,7 +305,7 @@ true
 
 <h5>5.4-2 ReturnFalse</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReturnFalse</code>( <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReturnFalse</code>( <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function takes any number of arguments, and always returns <code class="keyw">false</code>.</p>
 
 
@@ -322,7 +322,7 @@ false
 
 <h5>5.4-3 ReturnFail</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReturnFail</code>( <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReturnFail</code>( <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function takes any number of arguments, and always returns <code class="keyw">fail</code>.</p>
 
 
@@ -339,7 +339,7 @@ fail
 
 <h5>5.4-4 ReturnNothing</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReturnNothing</code>( <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReturnNothing</code>( <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function takes any number of arguments, and always returns nothing.</p>
 
 
@@ -354,7 +354,7 @@ function( object... ) ... end
 
 <h5>5.4-5 ReturnFirst</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReturnFirst</code>( <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReturnFirst</code>( <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function takes one or more arguments, and always returns the first argument. <code class="func">IdFunc</code> (<a href="chap5_mj.html#X810325697BDEF899"><span class="RefLink">5.4-6</span></a>) behaves similarly, but only accepts a single argument.</p>
 
 
@@ -373,7 +373,7 @@ Error, RETURN_FIRST requires one or more arguments
 
 <h5>5.4-6 IdFunc</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdFunc</code>( <var class="Arg">obj</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdFunc</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns <var class="Arg">obj</var>. <code class="func">ReturnFirst</code> (<a href="chap5_mj.html#X8788D7D780FCE169"><span class="RefLink">5.4-5</span></a>) is similar, but accepts one or more arguments, returning only the first.</p>
 
 
@@ -400,7 +400,7 @@ false
 
 <h5>5.5-1 IsFunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFunction</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFunction</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>is the category of functions.</p>
 
 
@@ -419,7 +419,7 @@ false
 
 <h5>5.5-2 IsOperation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsOperation</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsOperation</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>is the category of operations. Every operation is a function, but not vice versa.</p>
 
 
@@ -440,7 +440,7 @@ false
 
 <h5>5.5-3 FunctionsFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FunctionsFamily</code></td><td class="tdright">( family )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FunctionsFamily</code></td><td class="tdright">(&nbsp;family&nbsp;)</td></tr></table></div>
 <p>is the family of all functions.</p>
 
 <p><a id="X81F732457F7BC851" name="X81F732457F7BC851"></a></p>

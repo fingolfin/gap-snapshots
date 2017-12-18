@@ -140,7 +140,7 @@
 
 <h5>79.1-1 NewCategory</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewCategory</code>( <var class="Arg">name</var>, <var class="Arg">super</var>[, <var class="Arg">rank</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewCategory</code>( <var class="Arg">name</var>, <var class="Arg">super</var>[, <var class="Arg">rank</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">NewCategory</code> returns a new category <var class="Arg">cat</var> that has the name <var class="Arg">name</var> and is contained in the filter <var class="Arg">super</var>, see <a href="chap13.html#X84EFA4C07D4277BB"><span class="RefLink">13.2</span></a>. This means that every object in <var class="Arg">cat</var> lies automatically also in <var class="Arg">super</var>. We say also that <var class="Arg">super</var> is an implied filter of <var class="Arg">cat</var>.</p>
 
 <p>For example, if one wants to create a category of group elements then <var class="Arg">super</var> should be <code class="func">IsMultiplicativeElementWithInverse</code> (<a href="chap31.html#X7FDB14E57814FA3B"><span class="RefLink">31.14-13</span></a>) or a subcategory of it. If no specific supercategory of <var class="Arg">cat</var> is known, <var class="Arg">super</var> may be <code class="func">IsObject</code> (<a href="chap12.html#X7B130AC98415CAFB"><span class="RefLink">12.1-1</span></a>).</p>
@@ -151,7 +151,7 @@
 
 <h5>79.1-2 CategoryFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CategoryFamily</code>( <var class="Arg">cat</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CategoryFamily</code>( <var class="Arg">cat</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For a category <var class="Arg">cat</var>, <code class="func">CategoryFamily</code> returns the <em>family category</em> of <var class="Arg">cat</var>. This is a category in which all families lie that know from their creation that all their elements are in the category <var class="Arg">cat</var>, see <a href="chap79.html#X8401A9367E8CAA37"><span class="RefLink">79.7</span></a>.</p>
 
 <p>For example, a family of associative words is in the category <code class="code">CategoryFamily( IsAssocWord )</code>, and one can distinguish such a family from others by this category. So it is possible to install methods for operations that require one argument to be a family of associative words.</p>
@@ -168,7 +168,7 @@
 
 <h5>79.2-1 NewRepresentation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewRepresentation</code>( <var class="Arg">name</var>, <var class="Arg">super</var>, <var class="Arg">slots</var>[, <var class="Arg">req</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewRepresentation</code>( <var class="Arg">name</var>, <var class="Arg">super</var>, <var class="Arg">slots</var>[, <var class="Arg">req</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">NewRepresentation</code> returns a new representation <var class="Arg">rep</var> that has the name <var class="Arg">name</var> and is a subrepresentation of the representation <var class="Arg">super</var>. This means that every object in <var class="Arg">rep</var> lies automatically also in <var class="Arg">super</var>. We say also that <var class="Arg">super</var> is an implied filter of <var class="Arg">rep</var>.</p>
 
 <p>Each representation in <strong class="pkg">GAP</strong> is a subrepresentation of exactly one of the four representations <code class="code">IsInternalRep</code>, <code class="code">IsDataObjectRep</code>, <code class="code">IsComponentObjectRep</code>, <code class="code">IsPositionalObjectRep</code>. The data describing objects in the former two can be accessed only via <strong class="pkg">GAP</strong> kernel functions, the data describing objects in the latter two is accessible also in library functions, see <a href="chap79.html#X866E223484649E5A"><span class="RefLink">79.10</span></a> and <a href="chap79.html#X834893D07FAA6FD2"><span class="RefLink">79.11</span></a> for the details.</p>
@@ -193,7 +193,7 @@
 
 <h5>79.3-1 NewAttribute</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewAttribute</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>[, <var class="Arg">"mutable"</var>][, <var class="Arg">rank</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewAttribute</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>[, <var class="Arg">"mutable"</var>][, <var class="Arg">rank</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">NewAttribute</code> returns a new attribute getter with name <var class="Arg">name</var> that is applicable to objects with the property <var class="Arg">filter</var>.</p>
 
 <p>Contrary to the situation with categories and representations, the tester of the new attribute does <em>not</em> imply <var class="Arg">filter</var>. This is exactly because of the possibility to install methods that do not require <var class="Arg">filter</var>.</p>
@@ -210,7 +210,7 @@
 
 <h5>79.3-2 NewProperty</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewProperty</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>[, <var class="Arg">rank</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewProperty</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>[, <var class="Arg">rank</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">NewProperty</code> returns a new property <var class="Arg">prop</var> with name <var class="Arg">name</var> (see also <a href="chap13.html#X871597447BB998A1"><span class="RefLink">13.7</span></a>). The filter <var class="Arg">filter</var> describes the involved filters of <var class="Arg">prop</var>. As in the case of attributes, <var class="Arg">filter</var> is not implied by <var class="Arg">prop</var>.</p>
 
 <p>The optional third argument <var class="Arg">rank</var> denotes the incremental rank (see <a href="chap13.html#X84EFA4C07D4277BB"><span class="RefLink">13.2</span></a>) of the property <var class="Arg">prop</var> itself, i.e. <em>not</em> of its tester; the default value is 1.</p>
@@ -225,7 +225,7 @@
 
 <h5>79.4-1 NewFilter</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewFilter</code>( <var class="Arg">name</var>[, <var class="Arg">rank</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewFilter</code>( <var class="Arg">name</var>[, <var class="Arg">rank</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">NewFilter</code> returns a simple filter with name <var class="Arg">name</var> (see <a href="chap13.html#X7997705185C7E720"><span class="RefLink">13.8</span></a>). The optional second argument <var class="Arg">rank</var> denotes the incremental rank (see <a href="chap13.html#X84EFA4C07D4277BB"><span class="RefLink">13.2</span></a>) of the filter, the default value is 1.</p>
 
 <p>The default value of the new simple filter for each object is <code class="keyw">false</code>.</p>
@@ -234,14 +234,14 @@
 
 <h5>79.4-2 SetFilterObj</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetFilterObj</code>( <var class="Arg">obj</var>, <var class="Arg">filter</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetFilterObj</code>( <var class="Arg">obj</var>, <var class="Arg">filter</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">SetFilterObj</code> sets the value of <var class="Arg">filter</var> (and of all filters implied by <var class="Arg">filter</var>) for <var class="Arg">obj</var> to <code class="keyw">true</code>,</p>
 
 <p><a id="X8117FD03870FB02E" name="X8117FD03870FB02E"></a></p>
 
 <h5>79.4-3 ResetFilterObj</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResetFilterObj</code>( <var class="Arg">obj</var>, <var class="Arg">filter</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ResetFilterObj</code>( <var class="Arg">obj</var>, <var class="Arg">filter</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">ResetFilterObj</code> sets the value of <var class="Arg">filter</var> for <var class="Arg">obj</var> to <code class="keyw">false</code>. (Implied filters of <var class="Arg">filt</var> are not touched. This might create inconsistent situations if applied carelessly).</p>
 
 <p><a id="X79F32D71839CD196" name="X79F32D71839CD196"></a></p>
@@ -252,7 +252,7 @@
 
 <h5>79.5-1 NewOperation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewOperation</code>( <var class="Arg">name</var>, <var class="Arg">args-filts</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewOperation</code>( <var class="Arg">name</var>, <var class="Arg">args-filts</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">NewOperation</code> returns an operation <var class="Arg">opr</var> with name <var class="Arg">name</var>. The list <var class="Arg">args-filts</var> describes requirements about the arguments of <var class="Arg">opr</var>, namely the number of arguments must be equal to the length of <var class="Arg">args-filts</var>, and the <span class="SimpleMath">i</span>-th argument must lie in the filter <var class="Arg">args-filts</var><span class="SimpleMath">[i]</span>.</p>
 
 <p>Each method that is installed for <var class="Arg">opr</var> via <code class="func">InstallMethod</code> (<a href="chap78.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>) must require that the <span class="SimpleMath">i</span>-th argument lies in the filter <var class="Arg">args-filts</var><span class="SimpleMath">[i]</span>.</p>
@@ -267,7 +267,7 @@
 
 <h5>79.6-1 NewConstructor</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewConstructor</code>( <var class="Arg">name</var>, <var class="Arg">args-filts</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewConstructor</code>( <var class="Arg">name</var>, <var class="Arg">args-filts</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">NewConstructor</code> returns a constructor <var class="Arg">cons</var> with name <var class="Arg">name</var>. The list <var class="Arg">args-filts</var> describes requirements about the arguments of <var class="Arg">constr</var>, namely the number of arguments must be equal to the length of <var class="Arg">args-filts</var>, and the <span class="SimpleMath">i</span>-th argument must lie in the filter <var class="Arg">args-filts</var><span class="SimpleMath">[i]</span>. Additionally a constructor expects the first argument to be a filter to then select a method to construct an object.</p>
 
 <p>Each method that is installed for <var class="Arg">cons</var> via <code class="func">InstallMethod</code> (<a href="chap78.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>) must require that the <span class="SimpleMath">i</span>-th argument lies in the filter <var class="Arg">args-filts</var><span class="SimpleMath">[i]</span>.</p>
@@ -296,7 +296,7 @@
 
 <h5>79.7-1 NewFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewFamily</code>( <var class="Arg">name</var>[, <var class="Arg">req</var>[, <var class="Arg">imp</var>[, <var class="Arg">famfilter</var>]]] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewFamily</code>( <var class="Arg">name</var>[, <var class="Arg">req</var>[, <var class="Arg">imp</var>[, <var class="Arg">famfilter</var>]]] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">NewFamily</code> returns a new family <var class="Arg">fam</var> with name <var class="Arg">name</var>. The argument <var class="Arg">req</var>, if present, is a filter of which <var class="Arg">fam</var> shall be a subset. If one tries to create an object in <var class="Arg">fam</var> that does not lie in the filter <var class="Arg">req</var>, an error message is printed. Also the argument <var class="Arg">imp</var>, if present, is a filter of which <var class="Arg">fam</var> shall be a subset. Any object that is created in the family <var class="Arg">fam</var> will lie automatically in the filter <var class="Arg">imp</var>.</p>
 
 <p>The filter <var class="Arg">famfilter</var>, if given, specifies a filter that will hold for the family <var class="Arg">fam</var> (not for objects in <var class="Arg">fam</var>).</p>
@@ -311,7 +311,7 @@
 
 <h5>79.8-1 NewType</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewType</code>( <var class="Arg">family</var>, <var class="Arg">filter</var>[, <var class="Arg">data</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewType</code>( <var class="Arg">family</var>, <var class="Arg">filter</var>[, <var class="Arg">data</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">NewType</code> returns the type given by the family <var class="Arg">family</var> and the filter <var class="Arg">filter</var>. The optional third argument <var class="Arg">data</var> is any object that denotes defining data of the desired type.</p>
 
 <p>For examples where <code class="func">NewType</code> is used, see <a href="chap79.html#X866E223484649E5A"><span class="RefLink">79.10</span></a>, <a href="chap79.html#X834893D07FAA6FD2"><span class="RefLink">79.11</span></a>, and the example in Chapter <a href="chap81.html#X8125CC6A87409887"><span class="RefLink">81</span></a>.</p>
@@ -324,7 +324,7 @@
 
 <h5>79.9-1 Objectify</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Objectify</code>( <var class="Arg">type</var>, <var class="Arg">data</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Objectify</code>( <var class="Arg">type</var>, <var class="Arg">data</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>New objects are created by <code class="func">Objectify</code>. <var class="Arg">data</var> is a list or a record, and <var class="Arg">type</var> is the type that the desired object shall have. <code class="func">Objectify</code> turns <var class="Arg">data</var> into an object with type <var class="Arg">type</var>. That is, <var class="Arg">data</var> is changed, and afterwards it will not be a list or a record unless <var class="Arg">type</var> is of type list resp. record.</p>
 
 <p>If <var class="Arg">data</var> is a list then <code class="func">Objectify</code> turns it into a positional object, if <var class="Arg">data</var> is a record then <code class="func">Objectify</code> turns it into a component object (for examples, see <a href="chap79.html#X866E223484649E5A"><span class="RefLink">79.10</span></a> and <a href="chap79.html#X834893D07FAA6FD2"><span class="RefLink">79.11</span></a>).</p>
@@ -337,7 +337,7 @@
 
 <h5>79.9-2 ObjectifyWithAttributes</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ObjectifyWithAttributes</code>( <var class="Arg">obj</var>, <var class="Arg">type</var>, <var class="Arg">attr1</var>, <var class="Arg">val1</var>, <var class="Arg">attr2</var>, <var class="Arg">val2</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ObjectifyWithAttributes</code>( <var class="Arg">obj</var>, <var class="Arg">type</var>, <var class="Arg">attr1</var>, <var class="Arg">val1</var>, <var class="Arg">attr2</var>, <var class="Arg">val2</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Attribute assignments will change the type of an object. If you create many objects, code of the form</p>
 
 
@@ -417,7 +417,7 @@ InstallMethod( NextIterator,
 
 <h5>79.10-1 NamesOfComponents</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NamesOfComponents</code>( <var class="Arg">comobj</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NamesOfComponents</code>( <var class="Arg">comobj</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For a component object <var class="Arg">comobj</var>, <code class="func">NamesOfComponents</code> returns a list of strings, which are the names of components currently bound in <var class="Arg">comobj</var>.</p>
 
 <p>For a record <var class="Arg">comobj</var>, <code class="func">NamesOfComponents</code> returns the result of <code class="func">RecNames</code> (<a href="chap29.html#X837F1E1F866FB1A0"><span class="RefLink">29.1-2</span></a>).</p>
@@ -725,8 +725,8 @@ end
 
 <h5>79.16-1 ExtRepOfObj</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtRepOfObj</code>( <var class="Arg">obj</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ObjByExtRep</code>( <var class="Arg">fam</var>, <var class="Arg">data</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtRepOfObj</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ObjByExtRep</code>( <var class="Arg">fam</var>, <var class="Arg">data</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">ExtRepOfObj</code> returns the external representation of its argument, and <code class="func">ObjByExtRep</code> returns an object in the family <var class="Arg">fam</var> that has external representation <var class="Arg">data</var>.</p>
 
 <p>Of course, <code class="code">ObjByExtRep( FamilyObj( <var class="Arg">obj</var> ), ExtRepOfObj( <var class="Arg">obj</var> ) )</code> must be equal to <var class="Arg">obj</var> w.r.t. the operation <code class="func">\=</code> (<a href="chap31.html#X7EF67D047F03CA6F"><span class="RefLink">31.11-1</span></a>). But it is <em>not</em> required that equal objects have equal external representations.</p>
@@ -852,50 +852,50 @@ false
 
 <h5>79.18-1 DeclareCategory</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareCategory</code>( <var class="Arg">name</var>, <var class="Arg">super</var>[, <var class="Arg">rank</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareCategory</code>( <var class="Arg">name</var>, <var class="Arg">super</var>[, <var class="Arg">rank</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>does the same as <code class="func">NewCategory</code> (<a href="chap79.html#X87F68F887B44DBBD"><span class="RefLink">79.1-1</span></a>) and additionally makes the variable <var class="Arg">name</var> read-only.</p>
 
 <p><a id="X7C81FB2682AE54CD" name="X7C81FB2682AE54CD"></a></p>
 
 <h5>79.18-2 DeclareRepresentation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareRepresentation</code>( <var class="Arg">name</var>, <var class="Arg">super</var>, <var class="Arg">slots</var>[, <var class="Arg">req</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareRepresentation</code>( <var class="Arg">name</var>, <var class="Arg">super</var>, <var class="Arg">slots</var>[, <var class="Arg">req</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>does the same as <code class="func">NewRepresentation</code> (<a href="chap79.html#X7CC8106F809E15CF"><span class="RefLink">79.2-1</span></a>) and additionally makes the variable <var class="Arg">name</var> read-only.</p>
 
 <p><a id="X7A00FC8A7A677A56" name="X7A00FC8A7A677A56"></a></p>
 
 <h5>79.18-3 DeclareAttribute</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareAttribute</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>[, <var class="Arg">"mutable"</var>][, <var class="Arg">rank</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareAttribute</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>[, <var class="Arg">"mutable"</var>][, <var class="Arg">rank</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>does the same as <code class="func">NewAttribute</code> (<a href="chap79.html#X7B9654807858A3B0"><span class="RefLink">79.3-1</span></a>), additionally makes the variable <var class="Arg">name</var> read-only and also binds read-only global variables with names <code class="code">Has<var class="Arg">name</var></code> and <code class="code">Set<var class="Arg">name</var></code> for the tester and setter of the attribute (see Section <a href="chap13.html#X79DE5208877AE42A"><span class="RefLink">13.6</span></a>).</p>
 
 <p><a id="X7F4602F082682A04" name="X7F4602F082682A04"></a></p>
 
 <h5>79.18-4 DeclareProperty</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareProperty</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>[, <var class="Arg">rank</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareProperty</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>[, <var class="Arg">rank</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>does the same as <code class="func">NewProperty</code> (<a href="chap79.html#X7F2D6FD979FE23DD"><span class="RefLink">79.3-2</span></a>), additionally makes the variable <var class="Arg">name</var> read-only and also binds read-only global variables with names <code class="code">Has<var class="Arg">name</var></code> and <code class="code">Set<var class="Arg">name</var></code> for the tester and setter of the property (see Section <a href="chap13.html#X79DE5208877AE42A"><span class="RefLink">13.6</span></a>).</p>
 
 <p><a id="X846EA18A7D36626C" name="X846EA18A7D36626C"></a></p>
 
 <h5>79.18-5 DeclareFilter</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareFilter</code>( <var class="Arg">name</var>[, <var class="Arg">rank</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareFilter</code>( <var class="Arg">name</var>[, <var class="Arg">rank</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>does the same as <code class="func">NewFilter</code> (<a href="chap79.html#X821635DA7821ED74"><span class="RefLink">79.4-1</span></a>) and additionally makes the variable <var class="Arg">name</var> read-only.</p>
 
 <p><a id="X843F48137B899BC3" name="X843F48137B899BC3"></a></p>
 
 <h5>79.18-6 DeclareOperation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareOperation</code>( <var class="Arg">name</var>, <var class="Arg">filters</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareOperation</code>( <var class="Arg">name</var>, <var class="Arg">filters</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>does the same as <code class="func">NewOperation</code> (<a href="chap79.html#X85A9E019795B79D6"><span class="RefLink">79.5-1</span></a>) and additionally makes the variable <var class="Arg">name</var> read-only.</p>
 
 <p><a id="X834A8CC587A609BE" name="X834A8CC587A609BE"></a></p>
 
 <h5>79.18-7 DeclareGlobalFunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareGlobalFunction</code>( <var class="Arg">name</var>, <var class="Arg">info</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallGlobalFunction</code>( <var class="Arg">oper</var>, <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareGlobalFunction</code>( <var class="Arg">name</var>, <var class="Arg">info</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallGlobalFunction</code>( <var class="Arg">oper</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">DeclareGlobalFunction</code> <strong class="pkg">GAP</strong> functions that are not operations and that are intended to be called by users should be notified to <strong class="pkg">GAP</strong> in the declaration part of the respective package (see Section <a href="chap79.html#X7837CA9A83D93B38"><span class="RefLink">79.19</span></a>) via <code class="func">DeclareGlobalFunction</code>, which returns a function that serves as a place holder for the function that will be installed later, and that will print an error message if it is called. See also <code class="func">DeclareSynonym</code> (<a href="chap79.html#X851654DA87616207"><span class="RefLink">79.18-10</span></a>).</p>
 
 <p>A global function declared with <code class="func">DeclareGlobalFunction</code> can be given its value <var class="Arg">func</var> via <code class="func">InstallGlobalFunction</code>; <var class="Arg">gvar</var> is the global variable (or a string denoting its name) named with the <var class="Arg">name</var> argument of the call to <code class="func">DeclareGlobalFunction</code>. For example, a declaration like</p>
@@ -916,16 +916,16 @@ InstallGlobalFunction( SumOfTwoCubes, function(x, y) return x^3 + y^3; end);
 
 <h5>79.18-8 DeclareGlobalVariable</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareGlobalVariable</code>( <var class="Arg">name</var>[, <var class="Arg">description</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareGlobalVariable</code>( <var class="Arg">name</var>[, <var class="Arg">description</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For global variables that are <em>not</em> functions, instead of using <code class="func">BindGlobal</code> (<a href="chap4.html#X7D39D3E17CF49F5B"><span class="RefLink">4.9-7</span></a>) one can also declare the variable with <code class="func">DeclareGlobalVariable</code> which creates a new global variable named by the string <var class="Arg">name</var>. If the second argument <var class="Arg">description</var> is entered then this must be a string that describes the meaning of the global variable. <code class="func">DeclareGlobalVariable</code> shall be used in the declaration part of the respective package (see <a href="chap79.html#X7837CA9A83D93B38"><span class="RefLink">79.19</span></a>), values can then be assigned to the new variable with <code class="func">InstallValue</code> (<a href="chap79.html#X7A23F09886E936D2"><span class="RefLink">79.18-9</span></a>), <code class="func">InstallFlushableValue</code> (<a href="chap79.html#X7A23F09886E936D2"><span class="RefLink">79.18-9</span></a>) or <code class="func">InstallFlushableValueFromFunction</code> (<a href="chap79.html#X7A23F09886E936D2"><span class="RefLink">79.18-9</span></a>), in the implementation part (again, see <a href="chap79.html#X7837CA9A83D93B38"><span class="RefLink">79.19</span></a>).</p>
 
 <p><a id="X7A23F09886E936D2" name="X7A23F09886E936D2"></a></p>
 
 <h5>79.18-9 InstallValue</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallValue</code>( <var class="Arg">gvar</var>, <var class="Arg">value</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallFlushableValue</code>( <var class="Arg">gvar</var>, <var class="Arg">value</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallFlushableValueFromFunction</code>( <var class="Arg">gvar</var>, <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallValue</code>( <var class="Arg">gvar</var>, <var class="Arg">value</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallFlushableValue</code>( <var class="Arg">gvar</var>, <var class="Arg">value</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallFlushableValueFromFunction</code>( <var class="Arg">gvar</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">InstallValue</code> assigns the value <var class="Arg">value</var> to the global variable <var class="Arg">gvar</var>. <code class="func">InstallFlushableValue</code> does the same but additionally provides that each call of <code class="func">FlushCaches</code> (<a href="chap79.html#X87A4316C818B3DE3"><span class="RefLink">79.18-11</span></a>) will assign a structural copy of <var class="Arg">value</var> to <var class="Arg">gvar</var>. <code class="func">InstallFlushableValueFromFunction</code> instead assigns the result of <var class="Arg">func</var> to <var class="Arg">gvar</var> (<var class="Arg">func</var> is re-evaluated for each invocation of <code class="func">FlushCaches</code> (<a href="chap79.html#X87A4316C818B3DE3"><span class="RefLink">79.18-11</span></a>)</p>
 
 <p><code class="func">InstallValue</code> does <em>not</em> work if <var class="Arg">value</var> is an "immediate object", i.e., an internally represented small integer or finite field element. It also fails for booleans. Furthermore, <code class="func">InstallFlushableValue</code> works only if <var class="Arg">value</var> is a list or a record. (Note that <code class="func">InstallFlushableValue</code> makes sense only for <em>mutable</em> global variables.)</p>
@@ -934,8 +934,8 @@ InstallGlobalFunction( SumOfTwoCubes, function(x, y) return x^3 + y^3; end);
 
 <h5>79.18-10 DeclareSynonym</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareSynonym</code>( <var class="Arg">name</var>, <var class="Arg">value</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareSynonymAttr</code>( <var class="Arg">name</var>, <var class="Arg">value</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareSynonym</code>( <var class="Arg">name</var>, <var class="Arg">value</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareSynonymAttr</code>( <var class="Arg">name</var>, <var class="Arg">value</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">DeclareSynonym</code> assigns the string <var class="Arg">name</var> to a global variable as a synonym for <var class="Arg">value</var>. Two typical intended usages are to declare an "and-filter", e.g.</p>
 
 
@@ -966,7 +966,7 @@ DeclareSynonymAttr( "GeneratorsOfField", GeneratorsOfDivisionRing );
 
 <h5>79.18-11 FlushCaches</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FlushCaches</code>(  )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FlushCaches</code>(  )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">FlushCaches</code> resets the value of each global variable that has been declared with <code class="func">DeclareGlobalVariable</code> (<a href="chap79.html#X8324B5DE8300E0F2"><span class="RefLink">79.18-8</span></a>) and for which the initial value has been set with <code class="func">InstallFlushableValue</code> (<a href="chap79.html#X7A23F09886E936D2"><span class="RefLink">79.18-9</span></a>) or <code class="func">InstallFlushableValueFromFunction</code> (<a href="chap79.html#X7A23F09886E936D2"><span class="RefLink">79.18-9</span></a>) to this initial value.</p>
 
 <p><code class="func">FlushCaches</code> should be used only for debugging purposes, since the involved global variables include for example lists that store finite fields and cyclotomic fields used in the current <strong class="pkg">GAP</strong> session, in order to avoid that these fields are constructed anew in each call to <code class="func">GF</code> (<a href="chap59.html#X8592DBB086A8A9BE"><span class="RefLink">59.3-2</span></a>) and <code class="func">CF</code> (<a href="chap60.html#X80D21D80850EFA4B"><span class="RefLink">60.1-1</span></a>).</p>

@@ -6,8 +6,8 @@
   
   [1X61.1-1 IsLeftVectorSpace[101X
   
-  [29X[2XIsLeftVectorSpace[102X( [3XV[103X ) [32X Category
-  [29X[2XIsVectorSpace[102X( [3XV[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsLeftVectorSpace[102X( [3XV[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsVectorSpace[102X( [3XV[103X ) [32X Category[133X
   
   [33X[0;0YA  [13Xvector space[113X in [5XGAP[105X is a free left module (see [2XIsFreeLeftModule[102X ([14X57.3-1[114X))
   over a division ring (see Chapter [14X58[114X).[133X
@@ -26,7 +26,7 @@
   
   [1X61.2-1 VectorSpace[101X
   
-  [29X[2XVectorSpace[102X( [3XF[103X, [3Xgens[103X[, [3Xzero[103X][, [3X"basis"[103X] ) [32X function
+  [33X[1;0Y[29X[2XVectorSpace[102X( [3XF[103X, [3Xgens[103X[, [3Xzero[103X][, [3X"basis"[103X] ) [32X function[133X
   
   [33X[0;0YFor  a  field  [3XF[103X  and  a collection [3Xgens[103X of vectors, [2XVectorSpace[102X returns the
   [3XF[103X-vector space spanned by the elements in [3Xgens[103X.[133X
@@ -45,8 +45,8 @@
   
   [1X61.2-2 Subspace[101X
   
-  [29X[2XSubspace[102X( [3XV[103X, [3Xgens[103X[, [3X"basis"[103X] ) [32X function
-  [29X[2XSubspaceNC[102X( [3XV[103X, [3Xgens[103X[, [3X"basis"[103X] ) [32X function
+  [33X[1;0Y[29X[2XSubspace[102X( [3XV[103X, [3Xgens[103X[, [3X"basis"[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XSubspaceNC[102X( [3XV[103X, [3Xgens[103X[, [3X"basis"[103X] ) [32X function[133X
   
   [33X[0;0YFor an [22XF[122X-vector space [3XV[103X and a list or collection [3Xgens[103X that is a subset of [3XV[103X,
   [2XSubspace[102X  returns  the [22XF[122X-vector space spanned by [3Xgens[103X; if [3Xgens[103X is empty then
@@ -69,7 +69,7 @@
   
   [1X61.2-3 AsVectorSpace[101X
   
-  [29X[2XAsVectorSpace[102X( [3XF[103X, [3XD[103X ) [32X operation
+  [33X[1;0Y[29X[2XAsVectorSpace[102X( [3XF[103X, [3XD[103X ) [32X operation[133X
   
   [33X[0;0YLet  [3XF[103X  be  a  division  ring  and  [3XD[103X a domain. If the elements in [3XD[103X form an
   [3XF[103X-vector  space  then  [2XAsVectorSpace[102X  returns this [3XF[103X-vector space, otherwise
@@ -95,7 +95,7 @@
   
   [1X61.2-4 AsSubspace[101X
   
-  [29X[2XAsSubspace[102X( [3XV[103X, [3XU[103X ) [32X operation
+  [33X[1;0Y[29X[2XAsSubspace[102X( [3XV[103X, [3XU[103X ) [32X operation[133X
   
   [33X[0;0YLet  [3XV[103X  be an [22XF[122X-vector space, and [3XU[103X a collection. If [3XU[103X is a subset of [3XV[103X such
   that  the  elements of [3XU[103X form an [22XF[122X-vector space then [2XAsSubspace[102X returns this
@@ -118,8 +118,8 @@
   
   [1X61.3-1 GeneratorsOfLeftVectorSpace[101X
   
-  [29X[2XGeneratorsOfLeftVectorSpace[102X( [3XV[103X ) [32X attribute
-  [29X[2XGeneratorsOfVectorSpace[102X( [3XV[103X ) [32X attribute
+  [33X[1;0Y[29X[2XGeneratorsOfLeftVectorSpace[102X( [3XV[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XGeneratorsOfVectorSpace[102X( [3XV[103X ) [32X attribute[133X
   
   [33X[0;0YFor  an  [22XF[122X-vector  space  [3XV[103X,  [2XGeneratorsOfLeftVectorSpace[102X  returns a list of
   vectors in [3XV[103X that generate [3XV[103X as an [22XF[122X-vector space.[133X
@@ -131,7 +131,7 @@
   
   [1X61.3-2 TrivialSubspace[101X
   
-  [29X[2XTrivialSubspace[102X( [3XV[103X ) [32X attribute
+  [33X[1;0Y[29X[2XTrivialSubspace[102X( [3XV[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a  vector  space  [3XV[103X,  [2XTrivialSubspace[102X  returns  the  subspace of [3XV[103X that
   consists of the zero vector in [3XV[103X.[133X
@@ -149,7 +149,7 @@
   
   [1X61.4-1 Subspaces[101X
   
-  [29X[2XSubspaces[102X( [3XV[103X[, [3Xk[103X] ) [32X attribute
+  [33X[1;0Y[29X[2XSubspaces[102X( [3XV[103X[, [3Xk[103X] ) [32X attribute[133X
   
   [33X[0;0YCalled  with  a  finite  vector space [3Xv[103X, [2XSubspaces[102X returns the domain of all
   subspaces of [3XV[103X.[133X
@@ -162,7 +162,7 @@
   
   [1X61.4-2 IsSubspacesVectorSpace[101X
   
-  [29X[2XIsSubspacesVectorSpace[102X( [3XD[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsSubspacesVectorSpace[102X( [3XD[103X ) [32X Category[133X
   
   [33X[0;0YThe  domain  of all subspaces of a (finite) vector space or of all subspaces
   of  fixed  dimension,  as  returned  by  [2XSubspaces[102X  ([14X61.4-1[114X)  (see [2XSubspaces[102X
@@ -238,7 +238,7 @@
   
   [1X61.5-1 IsBasis[101X
   
-  [29X[2XIsBasis[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsBasis[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YIn [5XGAP[105X, a [13Xbasis[113X of a free left module is an object that knows how to compute
   coefficients w.r.t. its basis vectors (see [2XCoefficients[102X ([14X61.6-3[114X)). Bases are
@@ -260,8 +260,8 @@
   
   [1X61.5-2 Basis[101X
   
-  [29X[2XBasis[102X( [3XV[103X[, [3Xvectors[103X] ) [32X attribute
-  [29X[2XBasisNC[102X( [3XV[103X, [3Xvectors[103X ) [32X operation
+  [33X[1;0Y[29X[2XBasis[102X( [3XV[103X[, [3Xvectors[103X] ) [32X attribute[133X
+  [33X[1;0Y[29X[2XBasisNC[102X( [3XV[103X, [3Xvectors[103X ) [32X operation[133X
   
   [33X[0;0YCalled  with  a  free left [22XF[122X-module [3XV[103X as the only argument, [2XBasis[102X returns an
   [22XF[122X-basis of [3XV[103X whose vectors are not further specified.[133X
@@ -294,7 +294,7 @@
   
   [1X61.5-3 CanonicalBasis[101X
   
-  [29X[2XCanonicalBasis[102X( [3XV[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCanonicalBasis[102X( [3XV[103X ) [32X attribute[133X
   
   [33X[0;0YIf the vector space [3XV[103X supports a [13Xcanonical basis[113X then [2XCanonicalBasis[102X returns
   this basis, otherwise [9Xfail[109X is returned.[133X
@@ -326,8 +326,8 @@
   
   [1X61.5-4 RelativeBasis[101X
   
-  [29X[2XRelativeBasis[102X( [3XB[103X, [3Xvectors[103X ) [32X operation
-  [29X[2XRelativeBasisNC[102X( [3XB[103X, [3Xvectors[103X ) [32X operation
+  [33X[1;0Y[29X[2XRelativeBasis[102X( [3XB[103X, [3Xvectors[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRelativeBasisNC[102X( [3XB[103X, [3Xvectors[103X ) [32X operation[133X
   
   [33X[0;0YA  relative  basis  is  a basis of the free left module [3XV[103X that delegates the
   computation  of  coefficients  etc.  to  another basis of [3XV[103X via a basechange
@@ -347,7 +347,7 @@
   
   [1X61.6-1 BasisVectors[101X
   
-  [29X[2XBasisVectors[102X( [3XB[103X ) [32X attribute
+  [33X[1;0Y[29X[2XBasisVectors[102X( [3XB[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a  vector space basis [3XB[103X, [10XBasisVectors[110X returns the list of basis vectors
   of  [3XB[103X.  The  lists  [3XB[103X  and  [10XBasisVectors( [3XB[103X[10X )[110X are equal; the main purpose of
@@ -363,7 +363,7 @@
   
   [1X61.6-2 UnderlyingLeftModule[101X
   
-  [29X[2XUnderlyingLeftModule[102X( [3XB[103X ) [32X attribute
+  [33X[1;0Y[29X[2XUnderlyingLeftModule[102X( [3XB[103X ) [32X attribute[133X
   
   [33X[0;0YFor a basis [3XB[103X of a free left module [22XV[122X, say, [2XUnderlyingLeftModule[102X returns [22XV[122X.[133X
   
@@ -381,7 +381,7 @@
   
   [1X61.6-3 Coefficients[101X
   
-  [29X[2XCoefficients[102X( [3XB[103X, [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2XCoefficients[102X( [3XB[103X, [3Xv[103X ) [32X operation[133X
   
   [33X[0;0YLet [22XV[122X be the underlying left module of the basis [3XB[103X, and [3Xv[103X a vector such that
   the  family  of  [3Xv[103X  is  the  elements  family  of  the  family  of  [22XV[122X.  Then
@@ -399,7 +399,7 @@
   
   [1X61.6-4 LinearCombination[101X
   
-  [29X[2XLinearCombination[102X( [3XB[103X, [3Xcoeff[103X ) [32X operation
+  [33X[1;0Y[29X[2XLinearCombination[102X( [3XB[103X, [3Xcoeff[103X ) [32X operation[133X
   
   [33X[0;0YIf  [3XB[103X  is  a  basis  object  (see [2XIsBasis[102X ([14X61.5-1[114X)) or a homogeneous list of
   length   [22Xn[122X,   say,   and   [3Xcoeff[103X  is  a  row  vector  of  the  same  length,
@@ -416,7 +416,7 @@
   
   [1X61.6-5 EnumeratorByBasis[101X
   
-  [29X[2XEnumeratorByBasis[102X( [3XB[103X ) [32X attribute
+  [33X[1;0Y[29X[2XEnumeratorByBasis[102X( [3XB[103X ) [32X attribute[133X
   
   [33X[0;0YFor   a  basis  [3XB[103X  of  the  free  left  [22XF[122X-module  [22XV[122X  of  dimension  [22Xn[122X,  say,
   [10XEnumeratorByBasis[110X returns an enumerator that loops over the elements of [22XV[122X as
@@ -439,7 +439,7 @@
   
   [1X61.6-6 IteratorByBasis[101X
   
-  [29X[2XIteratorByBasis[102X( [3XB[103X ) [32X operation
+  [33X[1;0Y[29X[2XIteratorByBasis[102X( [3XB[103X ) [32X operation[133X
   
   [33X[0;0YFor   a  basis  [3XB[103X  of  the  free  left  [22XF[122X-module  [22XV[122X  of  dimension  [22Xn[122X,  say,
   [10XIteratorByBasis[110X  returns  an  iterator  that loops over the elements of [22XV[122X as
@@ -469,7 +469,7 @@
   
   [1X61.7-1 IsCanonicalBasis[101X
   
-  [29X[2XIsCanonicalBasis[102X( [3XB[103X ) [32X property
+  [33X[1;0Y[29X[2XIsCanonicalBasis[102X( [3XB[103X ) [32X property[133X
   
   [33X[0;0YIf  the  underlying  free  left module [22XV[122X of the basis [3XB[103X supports a canonical
   basis  (see [2XCanonicalBasis[102X ([14X61.5-3[114X)) then [2XIsCanonicalBasis[102X returns [9Xtrue[109X if [3XB[103X
@@ -477,7 +477,7 @@
   
   [1X61.7-2 IsIntegralBasis[101X
   
-  [29X[2XIsIntegralBasis[102X( [3XB[103X ) [32X property
+  [33X[1;0Y[29X[2XIsIntegralBasis[102X( [3XB[103X ) [32X property[133X
   
   [33X[0;0YLet  [3XB[103X be an [22XS[122X-basis of a [13Xfield[113X [22XF[122X, say, for a subfield [22XS[122X of [22XF[122X, and let [22XR[122X and
   [22XM[122X   be   the   rings  of  algebraic  integers  in  [22XS[122X  and  [22XF[122X,  respectively.
@@ -486,7 +486,7 @@
   
   [1X61.7-3 IsNormalBasis[101X
   
-  [29X[2XIsNormalBasis[102X( [3XB[103X ) [32X property
+  [33X[1;0Y[29X[2XIsNormalBasis[102X( [3XB[103X ) [32X property[133X
   
   [33X[0;0YLet  [3XB[103X be an [22XS[122X-basis of a [13Xfield[113X [22XF[122X, say, for a subfield [22XS[122X of [22XF[122X. [10XIsNormalBasis[110X
   returns  [9Xtrue[109X  if  [3XB[103X  is  invariant  under the Galois group (see [2XGaloisGroup[102X
@@ -553,13 +553,13 @@
   
   [1X61.8-1 IsMutableBasis[101X
   
-  [29X[2XIsMutableBasis[102X( [3XMB[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsMutableBasis[102X( [3XMB[103X ) [32X Category[133X
   
   [33X[0;0YEvery mutable basis lies in the category [10XIsMutableBasis[110X.[133X
   
   [1X61.8-2 MutableBasis[101X
   
-  [29X[2XMutableBasis[102X( [3XR[103X, [3Xvectors[103X[, [3Xzero[103X] ) [32X operation
+  [33X[1;0Y[29X[2XMutableBasis[102X( [3XR[103X, [3Xvectors[103X[, [3Xzero[103X] ) [32X operation[133X
   
   [33X[0;0Y[10XMutableBasis[110X  returns a mutable basis for the [3XR[103X-free module generated by the
   vectors  in  the list [3Xvectors[103X. The optional argument [3Xzero[103X is the zero vector
@@ -575,7 +575,7 @@
   
   [1X61.8-3 NrBasisVectors[101X
   
-  [29X[2XNrBasisVectors[102X( [3XMB[103X ) [32X operation
+  [33X[1;0Y[29X[2XNrBasisVectors[102X( [3XMB[103X ) [32X operation[133X
   
   [33X[0;0YFor  a  mutable basis [3XMB[103X, [10XNrBasisVectors[110X returns the current number of basis
   vectors  of [3XMB[103X. Note that this operation is [13Xnot[113X an attribute, as it makes no
@@ -590,7 +590,7 @@
   
   [1X61.8-4 ImmutableBasis[101X
   
-  [29X[2XImmutableBasis[102X( [3XMB[103X[, [3XV[103X] ) [32X operation
+  [33X[1;0Y[29X[2XImmutableBasis[102X( [3XMB[103X[, [3XV[103X] ) [32X operation[133X
   
   [33X[0;0Y[2XImmutableBasis[102X  returns  the  immutable  basis  [22XB[122X,  say, with the same basis
   vectors as in the mutable basis [3XMB[103X.[133X
@@ -612,7 +612,7 @@
   
   [1X61.8-5 IsContainedInSpan[101X
   
-  [29X[2XIsContainedInSpan[102X( [3XMB[103X, [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsContainedInSpan[102X( [3XMB[103X, [3Xv[103X ) [32X operation[133X
   
   [33X[0;0YFor  a  mutable  basis  [3XMB[103X over the coefficient ring [22XR[122X, say, and a vector [3Xv[103X,
   [10XIsContainedInSpan[110X  returns [9Xtrue[109X is [3Xv[103X lies in the [22XR[122X-span of the current basis
@@ -620,7 +620,7 @@
   
   [1X61.8-6 CloseMutableBasis[101X
   
-  [29X[2XCloseMutableBasis[102X( [3XMB[103X, [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2XCloseMutableBasis[102X( [3XMB[103X, [3Xv[103X ) [32X operation[133X
   
   [33X[0;0YFor  a  mutable  basis  [3XMB[103X over the coefficient ring [22XR[122X, say, and a vector [3Xv[103X,
   [10XCloseMutableBasis[110X changes [3XMB[103X such that afterwards it describes the [22XR[122X-span of
@@ -649,21 +649,21 @@
   
   [1X61.9-1 IsRowSpace[101X
   
-  [29X[2XIsRowSpace[102X( [3XV[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsRowSpace[102X( [3XV[103X ) [32X filter[133X
   
   [33X[0;0YA  [13Xrow  space[113X  in  [5XGAP[105X  is  a vector space that consists of row vectors (see
   Chapter [14X23[114X).[133X
   
   [1X61.9-2 IsMatrixSpace[101X
   
-  [29X[2XIsMatrixSpace[102X( [3XV[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsMatrixSpace[102X( [3XV[103X ) [32X filter[133X
   
   [33X[0;0YA  [13Xmatrix  space[113X  in  [5XGAP[105X  is  a vector space that consists of matrices (see
   Chapter [14X24[114X).[133X
   
   [1X61.9-3 IsGaussianSpace[101X
   
-  [29X[2XIsGaussianSpace[102X( [3XV[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsGaussianSpace[102X( [3XV[103X ) [32X filter[133X
   
   [33X[0;0YThe  filter  [2XIsGaussianSpace[102X  (see [14X13.2[114X)  for  the row space (see [2XIsRowSpace[102X
   ([14X61.9-1[114X))  or  matrix space (see [2XIsMatrixSpace[102X ([14X61.9-2[114X)) [3XV[103X over the field [22XF[122X,
@@ -688,8 +688,8 @@
   
   [1X61.9-4 FullRowSpace[101X
   
-  [29X[2XFullRowSpace[102X( [3XF[103X, [3Xn[103X ) [32X function
-  [29X[2X\^[102X( [3XF[103X, [3Xn[103X ) [32X method
+  [33X[1;0Y[29X[2XFullRowSpace[102X( [3XF[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2X\^[102X( [3XF[103X, [3Xn[103X ) [32X method[133X
   
   [33X[0;0YFor a field [3XF[103X and a nonnegative integer [3Xn[103X, [2XFullRowSpace[102X returns the [3XF[103X-vector
   space  that consists of all row vectors (see [2XIsRowVector[102X ([14X23.1-1[114X)) of length
@@ -706,8 +706,8 @@
   
   [1X61.9-5 FullMatrixSpace[101X
   
-  [29X[2XFullMatrixSpace[102X( [3XF[103X, [3Xm[103X, [3Xn[103X ) [32X function
-  [29X[2X\^[102X( [3XF[103X, [3Xdims[103X ) [32X method
+  [33X[1;0Y[29X[2XFullMatrixSpace[102X( [3XF[103X, [3Xm[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2X\^[102X( [3XF[103X, [3Xdims[103X ) [32X method[133X
   
   [33X[0;0YFor a field [3XF[103X and two positive integers [3Xm[103X and [3Xn[103X, [2XFullMatrixSpace[102X returns the
   [3XF[103X-vector  space that consists of all [3Xm[103X by [3Xn[103X matrices (see [2XIsMatrix[102X ([14X24.2-1[114X))
@@ -727,7 +727,7 @@
   
   [1X61.9-6 DimensionOfVectors[101X
   
-  [29X[2XDimensionOfVectors[102X( [3XM[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDimensionOfVectors[102X( [3XM[103X ) [32X attribute[133X
   
   [33X[0;0YFor a left module [3XM[103X that consists of row vectors (see [2XIsRowModule[102X ([14X57.3-6[114X)),
   [2XDimensionOfVectors[102X  returns the common length of all row vectors in [3XM[103X. For a
@@ -744,7 +744,7 @@
   
   [1X61.9-7 IsSemiEchelonized[101X
   
-  [29X[2XIsSemiEchelonized[102X( [3XB[103X ) [32X property
+  [33X[1;0Y[29X[2XIsSemiEchelonized[102X( [3XB[103X ) [32X property[133X
   
   [33X[0;0YLet   [3XB[103X   be   a   basis   of   a  Gaussian  row  or  matrix  space  [22XV[122X,  say
   (see [2XIsGaussianSpace[102X ([14X61.9-3[114X)) over the field [22XF[122X.[133X
@@ -770,8 +770,8 @@
   
   [1X61.9-8 SemiEchelonBasis[101X
   
-  [29X[2XSemiEchelonBasis[102X( [3XV[103X[, [3Xvectors[103X] ) [32X attribute
-  [29X[2XSemiEchelonBasisNC[102X( [3XV[103X, [3Xvectors[103X ) [32X operation
+  [33X[1;0Y[29X[2XSemiEchelonBasis[102X( [3XV[103X[, [3Xvectors[103X] ) [32X attribute[133X
+  [33X[1;0Y[29X[2XSemiEchelonBasisNC[102X( [3XV[103X, [3Xvectors[103X ) [32X operation[133X
   
   [33X[0;0YLet  [3XV[103X  be  a  Gaussian  row  or  matrix  vector  space  over  the  field  [22XF[122X
   (see [2XIsGaussianSpace[102X ([14X61.9-3[114X), [2XIsRowSpace[102X ([14X61.9-1[114X), [2XIsMatrixSpace[102X ([14X61.9-2[114X)).[133X
@@ -807,7 +807,7 @@
   
   [1X61.9-9 IsCanonicalBasisFullRowModule[101X
   
-  [29X[2XIsCanonicalBasisFullRowModule[102X( [3XB[103X ) [32X property
+  [33X[1;0Y[29X[2XIsCanonicalBasisFullRowModule[102X( [3XB[103X ) [32X property[133X
   
   [33X[0;0Y[2XIsCanonicalBasisFullRowModule[102X  returns  [9Xtrue[109X  if  [3XB[103X  is  the canonical basis
   (see [2XIsCanonicalBasis[102X  ([14X61.7-1[114X))  of  a full row module (see [2XIsFullRowModule[102X
@@ -821,7 +821,7 @@
   
   [1X61.9-10 IsCanonicalBasisFullMatrixModule[101X
   
-  [29X[2XIsCanonicalBasisFullMatrixModule[102X( [3XB[103X ) [32X property
+  [33X[1;0Y[29X[2XIsCanonicalBasisFullMatrixModule[102X( [3XB[103X ) [32X property[133X
   
   [33X[0;0Y[2XIsCanonicalBasisFullMatrixModule[102X  returns  [9Xtrue[109X  if [3XB[103X is the canonical basis
   (see [2XIsCanonicalBasis[102X     ([14X61.7-1[114X))     of     a    full    matrix    module
@@ -834,7 +834,7 @@
   
   [1X61.9-11 NormedRowVectors[101X
   
-  [29X[2XNormedRowVectors[102X( [3XV[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNormedRowVectors[102X( [3XV[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a finite Gaussian row space [3XV[103X (see [2XIsRowSpace[102X ([14X61.9-1[114X), [2XIsGaussianSpace[102X
   ([14X61.9-3[114X)),  [2XNormedRowVectors[102X  returns  a  list of those nonzero vectors in [3XV[103X
@@ -854,7 +854,7 @@
   
   [1X61.9-12 SiftedVector[101X
   
-  [29X[2XSiftedVector[102X( [3XB[103X, [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2XSiftedVector[102X( [3XB[103X, [3Xv[103X ) [32X operation[133X
   
   [33X[0;0YLet  [3XB[103X  be  a  semi-echelonized  basis (see [2XIsSemiEchelonized[102X ([14X61.9-7[114X)) of a
   Gaussian  row  or matrix space [22XV[122X (see [2XIsGaussianSpace[102X ([14X61.9-3[114X)), and [3Xv[103X a row
@@ -886,7 +886,7 @@
   
   [1X61.10-1 LeftModuleGeneralMappingByImages[101X
   
-  [29X[2XLeftModuleGeneralMappingByImages[102X( [3XV[103X, [3XW[103X, [3Xgens[103X, [3Ximgs[103X ) [32X operation
+  [33X[1;0Y[29X[2XLeftModuleGeneralMappingByImages[102X( [3XV[103X, [3XW[103X, [3Xgens[103X, [3Ximgs[103X ) [32X operation[133X
   
   [33X[0;0YLet [3XV[103X and [3XW[103X be two left modules over the same left acting domain [22XR[122X, say, and
   [3Xgens[103X  and  [3Ximgs[103X  lists  (of  the  same  length)  of  elements  in  [3XV[103X  and [3XW[103X,
@@ -910,8 +910,8 @@
   
   [1X61.10-2 LeftModuleHomomorphismByImages[101X
   
-  [29X[2XLeftModuleHomomorphismByImages[102X( [3XV[103X, [3XW[103X, [3Xgens[103X, [3Ximgs[103X ) [32X function
-  [29X[2XLeftModuleHomomorphismByImagesNC[102X( [3XV[103X, [3XW[103X, [3Xgens[103X, [3Ximgs[103X ) [32X operation
+  [33X[1;0Y[29X[2XLeftModuleHomomorphismByImages[102X( [3XV[103X, [3XW[103X, [3Xgens[103X, [3Ximgs[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XLeftModuleHomomorphismByImagesNC[102X( [3XV[103X, [3XW[103X, [3Xgens[103X, [3Ximgs[103X ) [32X operation[133X
   
   [33X[0;0YLet [3XV[103X and [3XW[103X be two left modules over the same left acting domain [22XR[122X, say, and
   [3Xgens[103X  and  [3Ximgs[103X  lists  (of  the  same  length)  of  elements  in  [3XV[103X  and [3XW[103X,
@@ -940,7 +940,7 @@
   
   [1X61.10-3 LeftModuleHomomorphismByMatrix[101X
   
-  [29X[2XLeftModuleHomomorphismByMatrix[102X( [3XBS[103X, [3Xmatrix[103X, [3XBR[103X ) [32X operation
+  [33X[1;0Y[29X[2XLeftModuleHomomorphismByMatrix[102X( [3XBS[103X, [3Xmatrix[103X, [3XBR[103X ) [32X operation[133X
   
   [33X[0;0YLet  [3XBS[103X  and  [3XBR[103X  be  bases  of  the  left  [22XR[122X-modules [22XV[122X and [22XW[122X, respectively.
   [2XLeftModuleHomomorphismByMatrix[102X returns the [22XR[122X-linear mapping from [22XV[122X to [22XW[122X that
@@ -959,7 +959,7 @@
   
   [1X61.10-4 NaturalHomomorphismBySubspace[101X
   
-  [29X[2XNaturalHomomorphismBySubspace[102X( [3XV[103X, [3XW[103X ) [32X operation
+  [33X[1;0Y[29X[2XNaturalHomomorphismBySubspace[102X( [3XV[103X, [3XW[103X ) [32X operation[133X
   
   [33X[0;0YFor an [22XR[122X-vector space [3XV[103X and a subspace [3XW[103X of [3XV[103X, [2XNaturalHomomorphismBySubspace[102X
   returns  the  [22XR[122X-linear  mapping that is the natural projection of [3XV[103X onto the
@@ -974,7 +974,7 @@
   
   [1X61.10-5 Hom[101X
   
-  [29X[2XHom[102X( [3XF[103X, [3XV[103X, [3XW[103X ) [32X operation
+  [33X[1;0Y[29X[2XHom[102X( [3XF[103X, [3XV[103X, [3XW[103X ) [32X operation[133X
   
   [33X[0;0YFor  a  field  [3XF[103X  and  two  vector  spaces  [3XV[103X  and [3XW[103X that can be regarded as
   [3XF[103X-modules (see [2XAsLeftModule[102X ([14X57.1-5[114X)), [2XHom[102X returns the [3XF[103X-vector space of all
@@ -992,7 +992,7 @@
   
   [1X61.10-6 End[101X
   
-  [29X[2XEnd[102X( [3XF[103X, [3XV[103X ) [32X operation
+  [33X[1;0Y[29X[2XEnd[102X( [3XF[103X, [3XV[103X ) [32X operation[133X
   
   [33X[0;0YFor  a  field  [3XF[103X  and  a  vector space [3XV[103X that can be regarded as an [3XF[103X-module
   (see [2XAsLeftModule[102X  ([14X57.1-5[114X)),  [2XEnd[102X  returns  the  [3XF[103X-algebra  of all [3XF[103X-linear
@@ -1007,7 +1007,7 @@
   
   [1X61.10-7 IsFullHomModule[101X
   
-  [29X[2XIsFullHomModule[102X( [3XM[103X ) [32X property
+  [33X[1;0Y[29X[2XIsFullHomModule[102X( [3XM[103X ) [32X property[133X
   
   [33X[0;0YA  [13Xfull  hom  module[113X  is  a module of all [22XR[122X-linear mappings between two left
   [22XR[122X-modules.  The  function  [2XHom[102X ([14X61.10-5[114X) can be used to construct a full hom
@@ -1023,7 +1023,7 @@
   
   [1X61.10-8 IsPseudoCanonicalBasisFullHomModule[101X
   
-  [29X[2XIsPseudoCanonicalBasisFullHomModule[102X( [3XB[103X ) [32X property
+  [33X[1;0Y[29X[2XIsPseudoCanonicalBasisFullHomModule[102X( [3XB[103X ) [32X property[133X
   
   [33X[0;0YA  basis  of  a  full  hom  module  is  called pseudo canonical basis if the
   matrices  of  its  basis vectors w.r.t. the stored bases of source and range
@@ -1039,7 +1039,7 @@
   
   [1X61.10-9 IsLinearMappingsModule[101X
   
-  [29X[2XIsLinearMappingsModule[102X( [3XV[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsLinearMappingsModule[102X( [3XV[103X ) [32X filter[133X
   
   [33X[0;0YIf  an  [22XF[122X-vector  space  [3XV[103X is in the filter [2XIsLinearMappingsModule[102X then this
   expresses  that [3XV[103X consists of linear mappings, and that [3XV[103X is handled via the
@@ -1079,7 +1079,7 @@
   
   [1X61.11-1 NiceFreeLeftModule[101X
   
-  [29X[2XNiceFreeLeftModule[102X( [3XV[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNiceFreeLeftModule[102X( [3XV[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a  free  left module [3XV[103X that is handled via the mechanism of nice bases,
   this attribute stores the associated free left module to which the tasks are
@@ -1087,8 +1087,8 @@
   
   [1X61.11-2 NiceVector[101X
   
-  [29X[2XNiceVector[102X( [3XV[103X, [3Xv[103X ) [32X operation
-  [29X[2XUglyVector[102X( [3XV[103X, [3Xr[103X ) [32X operation
+  [33X[1;0Y[29X[2XNiceVector[102X( [3XV[103X, [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XUglyVector[102X( [3XV[103X, [3Xr[103X ) [32X operation[133X
   
   [33X[0;0Y[2XNiceVector[102X and [2XUglyVector[102X provide the linear bijection between the free left
   module [3XV[103X and [10X[3XW[103X[10X:= NiceFreeLeftModule( [3XV[103X[10X )[110X.[133X
@@ -1108,7 +1108,7 @@
   
   [1X61.11-3 NiceFreeLeftModuleInfo[101X
   
-  [29X[2XNiceFreeLeftModuleInfo[102X( [3XV[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNiceFreeLeftModuleInfo[102X( [3XV[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a  free  left module [3XV[103X that is handled via the mechanism of nice bases,
   this  operation  has to provide the necessary information (if any) for calls
@@ -1116,7 +1116,7 @@
   
   [1X61.11-4 NiceBasis[101X
   
-  [29X[2XNiceBasis[102X( [3XB[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNiceBasis[102X( [3XB[103X ) [32X attribute[133X
   
   [33X[0;0YLet  [3XB[103X be a basis of a free left module [3XV[103X that is handled via nice bases. If
   [3XB[103X  has  no  basis  vectors stored at the time of the first call to [10XNiceBasis[110X
@@ -1134,7 +1134,7 @@
   
   [1X61.11-5 IsBasisByNiceBasis[101X
   
-  [29X[2XIsBasisByNiceBasis[102X( [3XB[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsBasisByNiceBasis[102X( [3XB[103X ) [32X Category[133X
   
   [33X[0;0YThis  filter  indicates  that  the  basis  [3XB[103X  delegates  tasks  such  as the
   computation  of  coefficients  (see [2XCoefficients[102X  ([14X61.6-3[114X)) to a basis of an
@@ -1142,7 +1142,7 @@
   
   [1X61.11-6 IsHandledByNiceBasis[101X
   
-  [29X[2XIsHandledByNiceBasis[102X( [3XM[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsHandledByNiceBasis[102X( [3XM[103X ) [32X Category[133X
   
   [33X[0;0YFor  a  free  left module [3XM[103X in this category, essentially all operations are
   performed using a [21Xnicer[121X free left module, which is usually a row module.[133X
@@ -1152,8 +1152,8 @@
   
   [1X61.12-1 DeclareHandlingByNiceBasis[101X
   
-  [29X[2XDeclareHandlingByNiceBasis[102X( [3Xname[103X, [3Xinfo[103X ) [32X function
-  [29X[2XInstallHandlingByNiceBasis[102X( [3Xname[103X, [3Xrecord[103X ) [32X function
+  [33X[1;0Y[29X[2XDeclareHandlingByNiceBasis[102X( [3Xname[103X, [3Xinfo[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XInstallHandlingByNiceBasis[102X( [3Xname[103X, [3Xrecord[103X ) [32X function[133X
   
   [33X[0;0YThese  functions  are used to implement a new kind of free left modules that
   shall be handled via the mechanism of nice bases (see [14X61.11[114X).[133X
@@ -1194,7 +1194,7 @@
   
   [1X61.12-2 NiceBasisFiltersInfo[101X
   
-  [29X[2XNiceBasisFiltersInfo[102X[32X global variable
+  [33X[1;0Y[29X[2XNiceBasisFiltersInfo[102X[32X global variable[133X
   
   [33X[0;0YAn overview of all kinds of vector spaces that are currently handled by nice
   bases  is  given  by  the global list [10XNiceBasisFiltersInfo[110X. Examples of such
@@ -1204,7 +1204,7 @@
   
   [1X61.12-3 CheckForHandlingByNiceBasis[101X
   
-  [29X[2XCheckForHandlingByNiceBasis[102X( [3XR[103X, [3Xgens[103X, [3XM[103X, [3Xzero[103X ) [32X function
+  [33X[1;0Y[29X[2XCheckForHandlingByNiceBasis[102X( [3XR[103X, [3Xgens[103X, [3XM[103X, [3Xzero[103X ) [32X function[133X
   
   [33X[0;0YWhenever   a   free   left  module  is  constructed  for  which  the  filter
   [10XIsHandledByNiceBasis[110X  may  be  useful, [10XCheckForHandlingByNiceBasis[110X should be

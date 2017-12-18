@@ -108,30 +108,30 @@
 
 <h5>33.1-1 IsBinaryRelation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBinaryRelation</code>( <var class="Arg">R</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBinaryRelation</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>is exactly the same category as (i.e. a synonym for) <code class="func">IsEndoGeneralMapping</code> (<a href="chap32_mj.html#X81CFF5F87BBEA8AD"><span class="RefLink">32.13-3</span></a>).</p>
 
 <p><a id="X7A1D8EEF8034B0B5" name="X7A1D8EEF8034B0B5"></a></p>
 
 <h5>33.1-2 BinaryRelationByElements</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BinaryRelationByElements</code>( <var class="Arg">domain</var>, <var class="Arg">elms</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BinaryRelationByElements</code>( <var class="Arg">domain</var>, <var class="Arg">elms</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is the binary relation on <var class="Arg">domain</var> and with underlying relation consisting of the tuples collection <var class="Arg">elms</var>. This construction is similar to <code class="func">GeneralMappingByElements</code> (<a href="chap32_mj.html#X79D0D2F07A14D039"><span class="RefLink">32.2-1</span></a>) where the source and range are the same set.</p>
 
 <p><a id="X81878EEF873B34D5" name="X81878EEF873B34D5"></a></p>
 
 <h5>33.1-3 <span class="Heading">IdentityBinaryRelation</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdentityBinaryRelation</code>( <var class="Arg">degree</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdentityBinaryRelation</code>( <var class="Arg">domain</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdentityBinaryRelation</code>( <var class="Arg">degree</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdentityBinaryRelation</code>( <var class="Arg">domain</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is the binary relation which consists of diagonal pairs, i.e., pairs of the form <span class="SimpleMath">\((x,x)\)</span>. In the first form if a positive integer <var class="Arg">degree</var> is given then the domain is the set of the integers <span class="SimpleMath">\(\{ 1, \ldots, \textit{degree} \}\)</span>. In the second form, the objects <span class="SimpleMath">\(x\)</span> are from the domain <var class="Arg">domain</var>.</p>
 
 <p><a id="X80DDCDD387BA23F2" name="X80DDCDD387BA23F2"></a></p>
 
 <h5>33.1-4 EmptyBinaryRelation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EmptyBinaryRelation</code>( <var class="Arg">degree</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EmptyBinaryRelation</code>( <var class="Arg">domain</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EmptyBinaryRelation</code>( <var class="Arg">degree</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EmptyBinaryRelation</code>( <var class="Arg">domain</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is the relation with <var class="Arg">R</var> empty. In the first form of the command with <var class="Arg">degree</var> an integer, the domain is the set of points <span class="SimpleMath">\(\{ 1, \ldots, \textit{degree} \}\)</span>. In the second form, the domain is that given by the argument <var class="Arg">domain</var>.</p>
 
 <p><a id="X7899E59181C46EBB" name="X7899E59181C46EBB"></a></p>
@@ -142,7 +142,7 @@
 
 <h5>33.2-1 IsReflexiveBinaryRelation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsReflexiveBinaryRelation</code>( <var class="Arg">R</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsReflexiveBinaryRelation</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the binary relation <var class="Arg">R</var> is reflexive, and <code class="keyw">false</code> otherwise.</p>
 
 <p>A binary relation <span class="SimpleMath">\(R\)</span> (as a set of pairs) on a set <span class="SimpleMath">\(X\)</span> is <em>reflexive</em> if for all <span class="SimpleMath">\(x \in X\)</span>, <span class="SimpleMath">\((x,x) \in R\)</span>. Alternatively, <span class="SimpleMath">\(R\)</span> as a mapping is reflexive if for all <span class="SimpleMath">\(x \in X\)</span>, <span class="SimpleMath">\(x\)</span> is an element of the image set <span class="SimpleMath">\(R(x)\)</span>.</p>
@@ -153,7 +153,7 @@
 
 <h5>33.2-2 IsSymmetricBinaryRelation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSymmetricBinaryRelation</code>( <var class="Arg">R</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSymmetricBinaryRelation</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the binary relation <var class="Arg">R</var> is symmetric, and <code class="keyw">false</code> otherwise.</p>
 
 <p>A binary relation <span class="SimpleMath">\(R\)</span> (as a set of pairs) on a set <span class="SimpleMath">\(X\)</span> is <em>symmetric</em> if <span class="SimpleMath">\((x,y) \in R\)</span> then <span class="SimpleMath">\((y,x) \in R\)</span>. Alternatively, <span class="SimpleMath">\(R\)</span> as a mapping is symmetric if for all <span class="SimpleMath">\(x \in X\)</span>, the preimage set of <span class="SimpleMath">\(x\)</span> under <span class="SimpleMath">\(R\)</span> equals the image set <span class="SimpleMath">\(R(x)\)</span>.</p>
@@ -162,7 +162,7 @@
 
 <h5>33.2-3 IsTransitiveBinaryRelation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransitiveBinaryRelation</code>( <var class="Arg">R</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransitiveBinaryRelation</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the binary relation <var class="Arg">R</var> is transitive, and <code class="keyw">false</code> otherwise.</p>
 
 <p>A binary relation <var class="Arg">R</var> (as a set of pairs) on a set <span class="SimpleMath">\(X\)</span> is <em>transitive</em> if <span class="SimpleMath">\((x,y), (y,z) \in R\)</span> implies <span class="SimpleMath">\((x,z) \in R\)</span>. Alternatively, <span class="SimpleMath">\(R\)</span> as a mapping is transitive if for all <span class="SimpleMath">\(x \in X\)</span>, the image set <span class="SimpleMath">\(R(R(x))\)</span> of the image set <span class="SimpleMath">\(R(x)\)</span> of <span class="SimpleMath">\(x\)</span> is a subset of <span class="SimpleMath">\(R(x)\)</span>.</p>
@@ -171,7 +171,7 @@
 
 <h5>33.2-4 IsAntisymmetricBinaryRelation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAntisymmetricBinaryRelation</code>( <var class="Arg">rel</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAntisymmetricBinaryRelation</code>( <var class="Arg">rel</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the binary relation <var class="Arg">rel</var> is antisymmetric, and <code class="keyw">false</code> otherwise.</p>
 
 <p>A binary relation <var class="Arg">R</var> (as a set of pairs) on a set <span class="SimpleMath">\(X\)</span> is <em>antisymmetric</em> if <span class="SimpleMath">\((x,y), (y,x) \in R\)</span> implies <span class="SimpleMath">\(x = y\)</span>. Alternatively, <span class="SimpleMath">\(R\)</span> as a mapping is antisymmetric if for all <span class="SimpleMath">\(x \in X\)</span>, the intersection of the preimage set of <span class="SimpleMath">\(x\)</span> under <span class="SimpleMath">\(R\)</span> and the image set <span class="SimpleMath">\(R(x)\)</span> is <span class="SimpleMath">\(\{ x \}\)</span>.</p>
@@ -180,7 +180,7 @@
 
 <h5>33.2-5 IsPreOrderBinaryRelation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPreOrderBinaryRelation</code>( <var class="Arg">rel</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPreOrderBinaryRelation</code>( <var class="Arg">rel</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the binary relation <var class="Arg">rel</var> is a preorder, and <code class="keyw">false</code> otherwise.</p>
 
 <p>A <em>preorder</em> is a binary relation that is both reflexive and transitive.</p>
@@ -189,7 +189,7 @@
 
 <h5>33.2-6 IsPartialOrderBinaryRelation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPartialOrderBinaryRelation</code>( <var class="Arg">rel</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPartialOrderBinaryRelation</code>( <var class="Arg">rel</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the binary relation <var class="Arg">rel</var> is a partial order, and <code class="keyw">false</code> otherwise.</p>
 
 <p>A <em>partial order</em> is a preorder which is also antisymmetric.</p>
@@ -198,14 +198,14 @@
 
 <h5>33.2-7 IsHasseDiagram</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsHasseDiagram</code>( <var class="Arg">rel</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsHasseDiagram</code>( <var class="Arg">rel</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the binary relation <var class="Arg">rel</var> is a Hasse Diagram of a partial order, i.e., was computed via <code class="func">HasseDiagramBinaryRelation</code> (<a href="chap33_mj.html#X79672B3A7BCB6991"><span class="RefLink">33.4-4</span></a>).</p>
 
 <p><a id="X82D6CB4B7CCE9E25" name="X82D6CB4B7CCE9E25"></a></p>
 
 <h5>33.2-8 IsEquivalenceRelation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEquivalenceRelation</code>( <var class="Arg">R</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEquivalenceRelation</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the binary relation <var class="Arg">R</var> is an equivalence relation, and <code class="keyw">false</code> otherwise.</p>
 
 <p>Recall, that a relation <var class="Arg">R</var> is an <em>equivalence relation</em> if it is symmetric, transitive, and reflexive.</p>
@@ -214,7 +214,7 @@
 
 <h5>33.2-9 Successors</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Successors</code>( <var class="Arg">R</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Successors</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the list of images of a binary relation <var class="Arg">R</var>. If the underlying domain of the relation is not <span class="SimpleMath">\(\{ 1, \ldots, n \}\)</span>, for some positive integer <span class="SimpleMath">\(n\)</span>, then an error is signalled.</p>
 
 <p>The returned value of <code class="func">Successors</code> is a list of lists where the lists are ordered as the elements according to the sorted order of the underlying set of <var class="Arg">R</var>. Each list consists of the images of the element whose index is the same as the list with the underlying set in sorted order.</p>
@@ -225,14 +225,14 @@
 
 <h5>33.2-10 DegreeOfBinaryRelation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeOfBinaryRelation</code>( <var class="Arg">R</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeOfBinaryRelation</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the size of the underlying domain of the binary relation <var class="Arg">R</var>. This is most natural when working with a binary relation on points.</p>
 
 <p><a id="X8278E4457C3C3A0D" name="X8278E4457C3C3A0D"></a></p>
 
 <h5>33.2-11 PartialOrderOfHasseDiagram</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartialOrderOfHasseDiagram</code>( <var class="Arg">HD</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartialOrderOfHasseDiagram</code>( <var class="Arg">HD</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is the partial order associated with the Hasse Diagram <var class="Arg">HD</var> i.e. the partial order generated by the reflexive and transitive closure of <var class="Arg">HD</var>.</p>
 
 <p><a id="X78032F927F078E19" name="X78032F927F078E19"></a></p>
@@ -245,24 +245,24 @@
 
 <h5>33.3-1 BinaryRelationOnPoints</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BinaryRelationOnPoints</code>( <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BinaryRelationOnPointsNC</code>( <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BinaryRelationOnPoints</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BinaryRelationOnPointsNC</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Given a list of <span class="SimpleMath">\(n\)</span> lists, each containing elements from the set <span class="SimpleMath">\(\{ 1, \ldots, n \}\)</span>, this function constructs a binary relation such that <span class="SimpleMath">\(1\)</span> is related to <var class="Arg">list</var><code class="code">[1]</code>, <span class="SimpleMath">\(2\)</span> to <var class="Arg">list</var><code class="code">[2]</code> and so on. The first version checks whether the list supplied is valid. The the <code class="code">NC</code> version skips this check.</p>
 
 <p><a id="X7D9323C283867515" name="X7D9323C283867515"></a></p>
 
 <h5>33.3-2 RandomBinaryRelationOnPoints</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomBinaryRelationOnPoints</code>( <var class="Arg">degree</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomBinaryRelationOnPoints</code>( <var class="Arg">degree</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>creates a relation on points with degree <var class="Arg">degree</var>.</p>
 
 <p><a id="X8315C7A47CEB6BB3" name="X8315C7A47CEB6BB3"></a></p>
 
 <h5>33.3-3 <span class="Heading">AsBinaryRelationOnPoints</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsBinaryRelationOnPoints</code>( <var class="Arg">trans</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsBinaryRelationOnPoints</code>( <var class="Arg">perm</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsBinaryRelationOnPoints</code>( <var class="Arg">rel</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsBinaryRelationOnPoints</code>( <var class="Arg">trans</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsBinaryRelationOnPoints</code>( <var class="Arg">perm</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsBinaryRelationOnPoints</code>( <var class="Arg">rel</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>return the relation on points represented by general relation <var class="Arg">rel</var>, transformation <var class="Arg">trans</var> or permutation <var class="Arg">perm</var>. If <var class="Arg">rel</var> is already a binary relation on points then <var class="Arg">rel</var> is returned.</p>
 
 <p>Transformations and permutations are special general endomorphic mappings and have a natural representation as a binary relation on points.</p>
@@ -277,21 +277,21 @@
 
 <h5>33.4-1 ReflexiveClosureBinaryRelation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReflexiveClosureBinaryRelation</code>( <var class="Arg">R</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReflexiveClosureBinaryRelation</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>is the smallest binary relation containing the binary relation <var class="Arg">R</var> which is reflexive. This closure inherits the properties symmetric and transitive from <var class="Arg">R</var>. E.g., if <var class="Arg">R</var> is symmetric then its reflexive closure is also.</p>
 
 <p><a id="X820811E9785A7274" name="X820811E9785A7274"></a></p>
 
 <h5>33.4-2 SymmetricClosureBinaryRelation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SymmetricClosureBinaryRelation</code>( <var class="Arg">R</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SymmetricClosureBinaryRelation</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>is the smallest binary relation containing the binary relation <var class="Arg">R</var> which is symmetric. This closure inherits the properties reflexive and transitive from <var class="Arg">R</var>. E.g., if <var class="Arg">R</var> is reflexive then its symmetric closure is also.</p>
 
 <p><a id="X853BFAD9858DCDF7" name="X853BFAD9858DCDF7"></a></p>
 
 <h5>33.4-3 TransitiveClosureBinaryRelation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransitiveClosureBinaryRelation</code>( <var class="Arg">rel</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TransitiveClosureBinaryRelation</code>( <var class="Arg">rel</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>is the smallest binary relation containing the binary relation <var class="Arg">R</var> which is transitive. This closure inherits the properties reflexive and symmetric from <var class="Arg">R</var>. E.g., if <var class="Arg">R</var> is symmetric then its transitive closure is also.</p>
 
 <p><code class="func">TransitiveClosureBinaryRelation</code> is a modified version of the Floyd-Warshall method of solving the all-pairs shortest-paths problem on a directed graph. Its asymptotic runtime is <span class="SimpleMath">\(O(n^3)\)</span> where <span class="SimpleMath">\(n\)</span> is the size of the vertex set. It only assumes there is an arbitrary (but fixed) ordering of the vertex set.</p>
@@ -300,21 +300,21 @@
 
 <h5>33.4-4 HasseDiagramBinaryRelation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasseDiagramBinaryRelation</code>( <var class="Arg">partial-order</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasseDiagramBinaryRelation</code>( <var class="Arg">partial-order</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>is the smallest relation contained in the partial order <var class="Arg">partial-order</var> whose reflexive and transitive closure is equal to <var class="Arg">partial-order</var>.</p>
 
 <p><a id="X85C22B3D812957C0" name="X85C22B3D812957C0"></a></p>
 
 <h5>33.4-5 StronglyConnectedComponents</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StronglyConnectedComponents</code>( <var class="Arg">R</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StronglyConnectedComponents</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns an equivalence relation on the vertices of the binary relation <var class="Arg">R</var>.</p>
 
 <p><a id="X86AAE6027A3AEF72" name="X86AAE6027A3AEF72"></a></p>
 
 <h5>33.4-6 PartialOrderByOrderingFunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartialOrderByOrderingFunction</code>( <var class="Arg">dom</var>, <var class="Arg">orderfunc</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PartialOrderByOrderingFunction</code>( <var class="Arg">dom</var>, <var class="Arg">orderfunc</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>constructs a partial order whose elements are from the domain <var class="Arg">dom</var> and are ordered using the ordering function <var class="Arg">orderfunc</var>. The ordering function must be a binary function returning a boolean value. If the ordering function does not describe a partial order then <code class="keyw">fail</code> is returned.</p>
 
 <p><a id="X7DAA67338458BB64" name="X7DAA67338458BB64"></a></p>
@@ -329,8 +329,8 @@
 
 <h5>33.5-1 EquivalenceRelationByPartition</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceRelationByPartition</code>( <var class="Arg">domain</var>, <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceRelationByPartitionNC</code>( <var class="Arg">domain</var>, <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceRelationByPartition</code>( <var class="Arg">domain</var>, <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceRelationByPartitionNC</code>( <var class="Arg">domain</var>, <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>constructs the equivalence relation over the set <var class="Arg">domain</var> which induces the partition represented by <var class="Arg">list</var>. This representation includes only the non-trivial blocks (or equivalent classes). <var class="Arg">list</var> is a list of lists, each of these lists contain elements of <var class="Arg">domain</var> and are pairwise mutually exclusive.</p>
 
 <p>The list of lists do not need to be in any order nor do the elements in the blocks (see <code class="func">EquivalenceRelationPartition</code> (<a href="chap33_mj.html#X877389B683DD8F1A"><span class="RefLink">33.6-1</span></a>)). a list of elements of <var class="Arg">domain</var> The partition <var class="Arg">list</var> is a list of lists, each of these is a list of elements of <var class="Arg">domain</var> that makes up a block (or equivalent class). The <var class="Arg">domain</var> is the domain over which the relation is defined, and <var class="Arg">list</var> is a list of lists, each of these is a list of elements of <var class="Arg">domain</var> which are related to each other. <var class="Arg">list</var> need only contain the nontrivial blocks and singletons will be ignored. The <code class="code">NC</code> version will not check to see if the lists are pairwise mutually exclusive or that they contain only elements of the domain.</p>
@@ -339,15 +339,15 @@
 
 <h5>33.5-2 EquivalenceRelationByRelation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceRelationByRelation</code>( <var class="Arg">rel</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceRelationByRelation</code>( <var class="Arg">rel</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the smallest equivalence relation containing the binary relation <var class="Arg">rel</var>.</p>
 
 <p><a id="X7B70215E7E3F9CA4" name="X7B70215E7E3F9CA4"></a></p>
 
 <h5>33.5-3 EquivalenceRelationByPairs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceRelationByPairs</code>( <var class="Arg">D</var>, <var class="Arg">elms</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceRelationByPairsNC</code>( <var class="Arg">D</var>, <var class="Arg">elms</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceRelationByPairs</code>( <var class="Arg">D</var>, <var class="Arg">elms</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceRelationByPairsNC</code>( <var class="Arg">D</var>, <var class="Arg">elms</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>return the smallest equivalence relation on the domain <var class="Arg">D</var> such that every pair in <var class="Arg">elms</var> is in the relation.</p>
 
 <p>In the <code class="code">NC</code> form, it is not checked that <var class="Arg">elms</var> are in the domain <var class="Arg">D</var>.</p>
@@ -356,7 +356,7 @@
 
 <h5>33.5-4 EquivalenceRelationByProperty</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceRelationByProperty</code>( <var class="Arg">domain</var>, <var class="Arg">property</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceRelationByProperty</code>( <var class="Arg">domain</var>, <var class="Arg">property</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>creates an equivalence relation on <var class="Arg">domain</var> whose only defining datum is that of having the property <var class="Arg">property</var>.</p>
 
 <p><a id="X85A2A8E27AF52769" name="X85A2A8E27AF52769"></a></p>
@@ -367,22 +367,22 @@
 
 <h5>33.6-1 EquivalenceRelationPartition</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceRelationPartition</code>( <var class="Arg">equiv</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceRelationPartition</code>( <var class="Arg">equiv</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a list of lists of elements of the underlying set of the equivalence relation <var class="Arg">equiv</var>. The lists are precisely the nonsingleton equivalence classes of the equivalence. This allows us to describe "small" equivalences on infinite sets.</p>
 
 <p><a id="X79DC914C82D7903B" name="X79DC914C82D7903B"></a></p>
 
 <h5>33.6-2 GeneratorsOfEquivalenceRelationPartition</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsOfEquivalenceRelationPartition</code>( <var class="Arg">equiv</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsOfEquivalenceRelationPartition</code>( <var class="Arg">equiv</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is a set of generating pairs for the equivalence relation <var class="Arg">equiv</var>. This set is not unique. The equivalence <var class="Arg">equiv</var> is the smallest equivalence relation over the underlying set which contains the generating pairs.</p>
 
 <p><a id="X82BE360381476D92" name="X82BE360381476D92"></a></p>
 
 <h5>33.6-3 JoinEquivalenceRelations</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JoinEquivalenceRelations</code>( <var class="Arg">equiv1</var>, <var class="Arg">equiv2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MeetEquivalenceRelations</code>( <var class="Arg">equiv1</var>, <var class="Arg">equiv2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JoinEquivalenceRelations</code>( <var class="Arg">equiv1</var>, <var class="Arg">equiv2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MeetEquivalenceRelations</code>( <var class="Arg">equiv1</var>, <var class="Arg">equiv2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">JoinEquivalenceRelations</code> returns the smallest equivalence relation containing both the equivalence relations <var class="Arg">equiv1</var> and <var class="Arg">equiv2</var>.</p>
 
 <p><code class="func">MeetEquivalenceRelations</code> returns the intersection of the two equivalence relations <var class="Arg">equiv1</var> and <var class="Arg">equiv2</var>.</p>
@@ -395,7 +395,7 @@
 
 <h5>33.7-1 IsEquivalenceClass</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEquivalenceClass</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEquivalenceClass</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the object <var class="Arg">obj</var> is an equivalence class, and <code class="keyw">false</code> otherwise.</p>
 
 <p>An <em>equivalence class</em> is a collection of elements which are mutually related to each other in the associated equivalence relation. Note, this is a special category of objects and not just a list of elements.</p>
@@ -404,22 +404,22 @@
 
 <h5>33.7-2 EquivalenceClassRelation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceClassRelation</code>( <var class="Arg">C</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceClassRelation</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the equivalence relation of which <var class="Arg">C</var> is a class.</p>
 
 <p><a id="X879439897EF4D728" name="X879439897EF4D728"></a></p>
 
 <h5>33.7-3 EquivalenceClasses</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceClasses</code>( <var class="Arg">rel</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceClasses</code>( <var class="Arg">rel</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a list of all equivalence classes of the equivalence relation <var class="Arg">rel</var>. Note that it is possible for different methods to yield the list in different orders, so that for two equivalence relations <span class="SimpleMath">\(c1\)</span> and <span class="SimpleMath">\(c2\)</span> we may have <span class="SimpleMath">\(c1 = c2\)</span> without having <code class="code">EquivalenceClasses</code><span class="SimpleMath">\(( c1 ) = \)</span><code class="code">EquivalenceClasses</code><span class="SimpleMath">\(( c2 )\)</span>.</p>
 
 <p><a id="X7BB985BA7FD7A82E" name="X7BB985BA7FD7A82E"></a></p>
 
 <h5>33.7-4 EquivalenceClassOfElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceClassOfElement</code>( <var class="Arg">rel</var>, <var class="Arg">elt</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceClassOfElementNC</code>( <var class="Arg">rel</var>, <var class="Arg">elt</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceClassOfElement</code>( <var class="Arg">rel</var>, <var class="Arg">elt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceClassOfElementNC</code>( <var class="Arg">rel</var>, <var class="Arg">elt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>return the equivalence class of <var class="Arg">elt</var> in the binary relation <var class="Arg">rel</var>, where <var class="Arg">elt</var> is an element (i.e. a pair) of the domain of <var class="Arg">rel</var>. In the <code class="code">NC</code> form, it is not checked that <var class="Arg">elt</var> is in the domain over which <var class="Arg">rel</var> is defined.</p>
 
 

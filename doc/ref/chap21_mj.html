@@ -258,7 +258,7 @@
 
 <h5>21.1-1 IsList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsList</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsList</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>tests whether <var class="Arg">obj</var> is a list.</p>
 
 
@@ -272,7 +272,7 @@ false
 
 <h5>21.1-2 IsDenseList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDenseList</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDenseList</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>A list is <em>dense</em> if it has no holes, i.e., contains an element at every position up to the length. It is absolutely legal to have lists with holes. They are created by leaving the entry between the commas empty. Holes at the end of a list are ignored. Lists with holes are sometimes convenient when the list represents a mapping from a finite, but not consecutive, subset of the positive integers.</p>
 
 
@@ -301,7 +301,7 @@ you can 'return;' after assigning a value to continue
 
 <h5>21.1-3 IsHomogeneousList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsHomogeneousList</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsHomogeneousList</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if <var class="Arg">obj</var> is a list and it is homogeneous, and <code class="keyw">false</code> otherwise.</p>
 
 <p>A <em>homogeneous</em> list is a dense list whose elements lie in the same family (see <a href="chap13_mj.html#X846063757EC05986"><span class="RefLink">13.1</span></a>). The empty list is homogeneous but not a collection (see <a href="chap30_mj.html#X8050A8037984E5B6"><span class="RefLink">30</span></a>), a nonempty homogeneous list is also a collection.</p>
@@ -319,7 +319,7 @@ false
 
 <h5>21.1-4 IsTable</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTable</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTable</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>A <em>table</em> is a nonempty list of homogeneous lists which lie in the same family. Typical examples of tables are matrices (see <a href="chap24_mj.html#X812CCAB278643A59"><span class="RefLink">24</span></a>).</p>
 
 
@@ -336,14 +336,14 @@ false
 
 <h5>21.1-5 IsRectangularTable</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRectangularTable</code>( <var class="Arg">list</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRectangularTable</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>A list lies in <code class="code">IsRectangularTable</code> when it is nonempty and its elements are all homogeneous lists of the same family and the same length.</p>
 
 <p><a id="X7C84E16A85C99C8C" name="X7C84E16A85C99C8C"></a></p>
 
 <h5>21.1-6 IsConstantTimeAccessList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConstantTimeAccessList</code>( <var class="Arg">list</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConstantTimeAccessList</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>This category indicates whether the access to each element of the list <var class="Arg">list</var> will take roughly the same time. This is implied for example by <code class="code">IsList and IsInternalRep</code>, so all strings, Boolean lists, ranges, and internally represented plain lists are in this category.</p>
 
 <p>But also other enumerators (see <a href="chap21_mj.html#X7EA3ACE27E43D174"><span class="RefLink">21.23</span></a>) can lie in this category if they guarantee constant time access to their elements.</p>
@@ -364,10 +364,10 @@ false
 
 <h5><code>21.2-1 \[\]</code></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \[\]</code>( <var class="Arg">list</var>, <var class="Arg">ix</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBound\[\]</code>( <var class="Arg">list</var>, <var class="Arg">ix</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \[\]\:\=</code>( <var class="Arg">list</var>, <var class="Arg">pos</var>, <var class="Arg">ix</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unbind\[\]</code>( <var class="Arg">list</var>, <var class="Arg">ix</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \[\]</code>( <var class="Arg">list</var>, <var class="Arg">ix</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBound\[\]</code>( <var class="Arg">list</var>, <var class="Arg">ix</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \[\]\:\=</code>( <var class="Arg">list</var>, <var class="Arg">pos</var>, <var class="Arg">ix</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unbind\[\]</code>( <var class="Arg">list</var>, <var class="Arg">ix</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>These operations implement element access, test for element boundedness, list element assignment, and removal of the element with index <var class="Arg">ix</var>.</p>
 
 <p>Note that the special characters <code class="code">[</code>, <code class="code">]</code>, <code class="code">:</code>, and <code class="code">=</code> must be escaped with a backslash <code class="code">\</code> (see <a href="chap4_mj.html#X7E90E6607F4E4943"><span class="RefLink">4.3</span></a>); so <code class="func">\[\]</code> denotes the operation for element access in a list, whereas <code class="code">[]</code> denotes an empty list. (Maybe the variable names involving special characters look strange, but nevertheless they are quite suggestive.)</p>
@@ -466,7 +466,7 @@ end;
 
 <h5><code>21.3-1 \{\}</code></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \{\}</code>( <var class="Arg">list</var>, <var class="Arg">poss</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \{\}</code>( <var class="Arg">list</var>, <var class="Arg">poss</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>This operation implements <em>sublist access</em>. For any list, the default method is to loop over the entries in the list <var class="Arg">poss</var>, and to delegate to the element access operation. (For the somewhat strange variable name, cf. <a href="chap21_mj.html#X7B202D147A5C2884"><span class="RefLink">21.2</span></a>.)</p>
 
 <p><a id="X8611EF768210625B" name="X8611EF768210625B"></a></p>
@@ -574,14 +574,14 @@ end;
 
 <h5><code>21.4-1 \{\}\:\=</code></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \{\}\:\=</code>( <var class="Arg">list</var>, <var class="Arg">poss</var>, <var class="Arg">val</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \{\}\:\=</code>( <var class="Arg">list</var>, <var class="Arg">poss</var>, <var class="Arg">val</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>This operation implements sublist assignment. For any list, the default method is to loop over the entries in the list <var class="Arg">poss</var>, and to delegate to the element assignment operation. (For the somewhat strange variable name, cf. <a href="chap21_mj.html#X7B202D147A5C2884"><span class="RefLink">21.2</span></a>.)</p>
 
 <p><a id="X795EC9D67E34DAB0" name="X795EC9D67E34DAB0"></a></p>
 
 <h5>21.4-2 Add</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Add</code>( <var class="Arg">list</var>, <var class="Arg">obj</var>[, <var class="Arg">pos</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Add</code>( <var class="Arg">list</var>, <var class="Arg">obj</var>[, <var class="Arg">pos</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>adds the element <var class="Arg">obj</var> to the mutable list <var class="Arg">list</var>. The two argument version adds <var class="Arg">obj</var> at the end of <var class="Arg">list</var>, i.e., it is equivalent to the assignment <code class="code"><var class="Arg">list</var>[ Length(<var class="Arg">list</var>) + 1 ] := <var class="Arg">obj</var></code>, see <a href="chap21_mj.html#X8611EF768210625B"><span class="RefLink">21.4</span></a>.</p>
 
 <p>The three argument version adds <var class="Arg">obj</var> in position <var class="Arg">pos</var>, moving all later elements of the list (if any) up by one position. Any holes at or after position <var class="Arg">pos</var> are also moved up by one position, and new holes are created before <var class="Arg">pos</var> if they are needed.</p>
@@ -592,7 +592,7 @@ end;
 
 <h5>21.4-3 Remove</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Remove</code>( <var class="Arg">list</var>[, <var class="Arg">pos</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Remove</code>( <var class="Arg">list</var>[, <var class="Arg">pos</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>removes an element from <var class="Arg">list</var>. The one argument form removes the last element. The two argument form removes the element in position <var class="Arg">pos</var>, moving all subsequent elements down one position. Any holes after position <var class="Arg">pos</var> are also moved down by one position.</p>
 
 <p>The one argument form always returns the removed element. In this case <var class="Arg">list</var> must be non-empty.</p>
@@ -619,7 +619,7 @@ end;
 
 <h5>21.4-4 CopyListEntries</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CopyListEntries</code>( <var class="Arg">fromlst</var>, <var class="Arg">fromind</var>, <var class="Arg">fromstep</var>, <var class="Arg">tolst</var>, <var class="Arg">toind</var>, <var class="Arg">tostep</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CopyListEntries</code>( <var class="Arg">fromlst</var>, <var class="Arg">fromind</var>, <var class="Arg">fromstep</var>, <var class="Arg">tolst</var>, <var class="Arg">toind</var>, <var class="Arg">tostep</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function copies <var class="Arg">n</var> elements from <var class="Arg">fromlst</var>, starting at position <var class="Arg">fromind</var> and incrementing the position by <var class="Arg">fromstep</var> each time, into <var class="Arg">tolst</var> starting at position <var class="Arg">toind</var> and incrementing the position by <var class="Arg">tostep</var> each time. <var class="Arg">fromlst</var> and <var class="Arg">tolst</var> must be plain lists. <var class="Arg">fromstep</var> and/or <var class="Arg">tostep</var> can be negative. Unbound positions of <var class="Arg">fromlst</var> are simply copied to <var class="Arg">tolst</var>.</p>
 
 <p><code class="func">CopyListEntries</code> is used in methods for the operations <code class="func">Add</code> (<a href="chap21_mj.html#X795EC9D67E34DAB0"><span class="RefLink">21.4-2</span></a>) and <code class="func">Remove</code> (<a href="chap21_mj.html#X7E98B11B79BA9167"><span class="RefLink">21.4-3</span></a>).</p>
@@ -628,7 +628,7 @@ end;
 
 <h5>21.4-5 Append</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Append</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Append</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>adds the elements of the list <var class="Arg">list2</var> to the end of the mutable list <var class="Arg">list1</var>, see <a href="chap21_mj.html#X8611EF768210625B"><span class="RefLink">21.4</span></a>. <var class="Arg">list2</var> may contain holes, in which case the corresponding entries in <var class="Arg">list1</var> will be left unbound. <code class="func">Append</code> returns nothing, it is only called for its side effect.</p>
 
 <p>Note that <code class="func">Append</code> changes its first argument, while <code class="func">Concatenation</code> (<a href="chap21_mj.html#X840C55A77D1BB2E1"><span class="RefLink">21.20-1</span></a>) creates a new list and leaves its arguments unchanged.</p>
@@ -649,8 +649,8 @@ end;
 
 <h5>21.5-1 IsBound</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBound</code>( <var class="Arg">list</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBound</code>( <var class="Arg">list</var>[, <var class="Arg">ix1</var>, <var class="Arg">ix2</var>, <var class="Arg">...</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBound</code>( <var class="Arg">list</var>[, <var class="Arg">n</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBound</code>( <var class="Arg">list</var>[, <var class="Arg">ix1</var>, <var class="Arg">ix2</var>, <var class="Arg">...</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">IsBound</code> returns <code class="keyw">true</code> if the list <var class="Arg">list</var> has a element at index <var class="Arg">n</var>, and <code class="keyw">false</code> otherwise. <var class="Arg">list</var> must evaluate to a list, otherwise an error is signalled.</p>
 
 
@@ -670,8 +670,8 @@ false
 
 <h5>21.5-2 Unbind</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unbind</code>( <var class="Arg">list</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unbind</code>( <var class="Arg">list</var>[, <var class="Arg">ix1</var>, <var class="Arg">ix2</var>, <var class="Arg">...</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unbind</code>( <var class="Arg">list</var>[, <var class="Arg">n</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unbind</code>( <var class="Arg">list</var>[, <var class="Arg">ix1</var>, <var class="Arg">ix2</var>, <var class="Arg">...</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">Unbind</code> deletes the element with index <var class="Arg">n</var> in the mutable list <var class="Arg">list</var>. That is, after execution of <code class="func">Unbind</code>, <var class="Arg">list</var> no longer has an assigned value with index <var class="Arg">n</var>. Thus <code class="func">Unbind</code> can be used to produce holes in a list. Note that it is not an error to unbind a nonexistant list element. <var class="Arg">list</var> must evaluate to a list, otherwise an error is signalled.</p>
 
 
@@ -862,7 +862,7 @@ false
 
 <h5><code>21.8-1 \in</code></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \in</code>( <var class="Arg">obj</var>, <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \in</code>( <var class="Arg">obj</var>, <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>This function call or the infix variant <var class="Arg">obj</var> <code class="keyw">in</code> <var class="Arg">list</var> tests whether there is a positive integer <span class="SimpleMath">\(i\)</span> such that <var class="Arg">list</var><span class="SimpleMath">\([i] =\)</span> <var class="Arg">obj</var> holds.</p>
 
 <p>If the list <var class="Arg">list</var> knows that it is strictly sorted (see <code class="func">IsSSortedList</code> (<a href="chap21_mj.html#X80CDAF45782E8DCB"><span class="RefLink">21.17-4</span></a>)), the membership test is much quicker, because a binary search can be used instead of the linear search used for arbitrary lists, see <code class="func">\in</code> (<a href="chap21_mj.html#X7B16AD597CB12305"><span class="RefLink">21.19-1</span></a>).</p>
@@ -901,10 +901,10 @@ false
 
 <h5>21.9-1 EmptyPlist</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EmptyPlist</code>( <var class="Arg">len</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EmptyPlist</code>( <var class="Arg">len</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: a plain list</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShrinkAllocationPlist</code>( <var class="Arg">l</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShrinkAllocationPlist</code>( <var class="Arg">l</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: nothing</p>
 
 <p>The function <code class="func">EmptyPlist</code> returns an empty plain list which has enough memory allocated for <var class="Arg">len</var> entries. This can be useful for creating and filling a plain list with a known number of entries.</p>
@@ -994,7 +994,7 @@ true
 
 <h5>21.12-1 IsGeneralizedRowVector</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGeneralizedRowVector</code>( <var class="Arg">list</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGeneralizedRowVector</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>For a list <var class="Arg">list</var>, the value <code class="keyw">true</code> for <code class="func">IsGeneralizedRowVector</code> indicates that the additive arithmetic behaviour of <var class="Arg">list</var> is as defined in <a href="chap21_mj.html#X7E6A1F66781BE923"><span class="RefLink">21.13</span></a>, and that the attribute <code class="func">NestingDepthA</code> (<a href="chap21_mj.html#X8428E77B86722D52"><span class="RefLink">21.12-4</span></a>) will return a nonzero value when called with <var class="Arg">list</var>.</p>
 
 
@@ -1012,7 +1012,7 @@ true
 
 <h5>21.12-2 IsMultiplicativeGeneralizedRowVector</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMultiplicativeGeneralizedRowVector</code>( <var class="Arg">list</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMultiplicativeGeneralizedRowVector</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>For a list <var class="Arg">list</var>, the value <code class="keyw">true</code> for <code class="func">IsMultiplicativeGeneralizedRowVector</code> indicates that the multiplicative arithmetic behaviour of <var class="Arg">list</var> is as defined in <a href="chap21_mj.html#X782ED7F27D8C7FC1"><span class="RefLink">21.14</span></a>, and that the attribute <code class="func">NestingDepthM</code> (<a href="chap21_mj.html#X84B383B97FD986CD"><span class="RefLink">21.12-5</span></a>) will return a nonzero value when called with <var class="Arg">list</var>.</p>
 
 
@@ -1031,7 +1031,7 @@ true
 
 <h5>21.12-3 IsListDefault</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsListDefault</code>( <var class="Arg">list</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsListDefault</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>For a list <var class="Arg">list</var>, <code class="func">IsListDefault</code> indicates that the default methods for arithmetic operations of lists, such as pointwise addition and multiplication as inner product or matrix product, shall be applicable to <var class="Arg">list</var>.</p>
 
 <p><code class="func">IsListDefault</code> implies <code class="func">IsGeneralizedRowVector</code> (<a href="chap21_mj.html#X87ABCEE9809585A0"><span class="RefLink">21.12-1</span></a>) and <code class="func">IsMultiplicativeGeneralizedRowVector</code> (<a href="chap21_mj.html#X7FBCA5B58308C158"><span class="RefLink">21.12-2</span></a>).</p>
@@ -1053,14 +1053,14 @@ false
 
 <h5>21.12-4 NestingDepthA</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NestingDepthA</code>( <var class="Arg">obj</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NestingDepthA</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>For a <strong class="pkg">GAP</strong> object <var class="Arg">obj</var>, <code class="func">NestingDepthA</code> returns the <em>additive nesting depth</em> of <var class="Arg">obj</var>. This is defined recursively as the integer <span class="SimpleMath">\(0\)</span> if <var class="Arg">obj</var> is not in <code class="func">IsGeneralizedRowVector</code> (<a href="chap21_mj.html#X87ABCEE9809585A0"><span class="RefLink">21.12-1</span></a>), as the integer <span class="SimpleMath">\(1\)</span> if <var class="Arg">obj</var> is an empty list in <code class="func">IsGeneralizedRowVector</code> (<a href="chap21_mj.html#X87ABCEE9809585A0"><span class="RefLink">21.12-1</span></a>), and as <span class="SimpleMath">\(1\)</span> plus the additive nesting depth of the first bound entry in <var class="Arg">obj</var> otherwise.</p>
 
 <p><a id="X84B383B97FD986CD" name="X84B383B97FD986CD"></a></p>
 
 <h5>21.12-5 NestingDepthM</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NestingDepthM</code>( <var class="Arg">obj</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NestingDepthM</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>For a <strong class="pkg">GAP</strong> object <var class="Arg">obj</var>, <code class="func">NestingDepthM</code> returns the <em>multiplicative nesting depth</em> of <var class="Arg">obj</var>. This is defined recursively as the integer <span class="SimpleMath">\(0\)</span> if <var class="Arg">obj</var> is not in <code class="func">IsMultiplicativeGeneralizedRowVector</code> (<a href="chap21_mj.html#X7FBCA5B58308C158"><span class="RefLink">21.12-2</span></a>), as the integer <span class="SimpleMath">\(1\)</span> if <var class="Arg">obj</var> is an empty list in <code class="func">IsMultiplicativeGeneralizedRowVector</code> (<a href="chap21_mj.html#X7FBCA5B58308C158"><span class="RefLink">21.12-2</span></a>), and as <span class="SimpleMath">\(1\)</span> plus the multiplicative nesting depth of the first bound entry in <var class="Arg">obj</var> otherwise.</p>
 
 
@@ -1368,7 +1368,7 @@ true
 
 <h5>21.15-1 ListWithIdenticalEntries</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ListWithIdenticalEntries</code>( <var class="Arg">n</var>, <var class="Arg">obj</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ListWithIdenticalEntries</code>( <var class="Arg">n</var>, <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is a list <var class="Arg">list</var> of length <var class="Arg">n</var> that has the object <var class="Arg">obj</var> stored at each of the positions from <code class="code">1</code> to <var class="Arg">n</var>. Note that all elements of <var class="Arg">lists</var> are identical, see <a href="chap21_mj.html#X7DD65BEA7EDB0CD7"><span class="RefLink">21.6</span></a>.</p>
 
 
@@ -1385,7 +1385,7 @@ true
 
 <h5>21.16-1 Position</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Position</code>( <var class="Arg">list</var>, <var class="Arg">obj</var>[, <var class="Arg">from</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Position</code>( <var class="Arg">list</var>, <var class="Arg">obj</var>[, <var class="Arg">from</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the position of the first occurrence <var class="Arg">obj</var> in <var class="Arg">list</var>, or <code class="keyw">fail</code> if <var class="Arg">obj</var> is not contained in <var class="Arg">list</var>. If a starting index <var class="Arg">from</var> is given, it returns the position of the first occurrence starting the search <em>after</em> position <var class="Arg">from</var>.</p>
 
 <p>Each call to the two argument version is translated into a call of the three argument version, with third argument the integer zero <code class="code">0</code>. (Methods for the two argument version must be installed as methods for the version with three arguments, the third being described by <code class="code">IsZeroCyc</code>.)</p>
@@ -1406,8 +1406,8 @@ fail
 
 <h5>21.16-2 Positions</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Positions</code>( <var class="Arg">list</var>, <var class="Arg">obj</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionsOp</code>( <var class="Arg">list</var>, <var class="Arg">obj</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Positions</code>( <var class="Arg">list</var>, <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionsOp</code>( <var class="Arg">list</var>, <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the positions of <em>all</em> occurrences of <var class="Arg">obj</var> in <var class="Arg">list</var>.</p>
 
 
@@ -1422,7 +1422,7 @@ fail
 
 <h5>21.16-3 PositionCanonical</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionCanonical</code>( <var class="Arg">list</var>, <var class="Arg">obj</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionCanonical</code>( <var class="Arg">list</var>, <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the position of the canonical associate of <var class="Arg">obj</var> in <var class="Arg">list</var>. The definition of this associate depends on <var class="Arg">list</var>. For internally represented lists it is defined as the element itself (and <code class="func">PositionCanonical</code> thus defaults to <code class="func">Position</code> (<a href="chap21_mj.html#X79975EC6783B4293"><span class="RefLink">21.16-1</span></a>), but for example for certain enumerators (see <a href="chap21_mj.html#X7EA3ACE27E43D174"><span class="RefLink">21.23</span></a>) other canonical associates can be defined.</p>
 
 <p>For example <code class="func">RightTransversal</code> (<a href="chap39_mj.html#X85C65D06822E716F"><span class="RefLink">39.8-1</span></a>) defines the canonical associate to be the element in the transversal defining the same coset of a subgroup in a group.</p>
@@ -1442,7 +1442,7 @@ fail
 
 <h5>21.16-4 PositionNthOccurrence</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionNthOccurrence</code>( <var class="Arg">list</var>, <var class="Arg">obj</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionNthOccurrence</code>( <var class="Arg">list</var>, <var class="Arg">obj</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the position of the <var class="Arg">n</var>-th occurrence of <var class="Arg">obj</var> in <var class="Arg">list</var> and returns <code class="keyw">fail</code> if <var class="Arg">obj</var> does not occur <var class="Arg">n</var> times.</p>
 
 
@@ -1461,7 +1461,7 @@ fail
 
 <h5>21.16-5 PositionSorted</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionSorted</code>( <var class="Arg">list</var>, <var class="Arg">elm</var>[, <var class="Arg">func</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionSorted</code>( <var class="Arg">list</var>, <var class="Arg">elm</var>[, <var class="Arg">func</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Called with two arguments, <code class="func">PositionSorted</code> returns the position of the element <var class="Arg">elm</var> in the sorted list <var class="Arg">list</var>.</p>
 
 <p>Called with three arguments, <code class="func">PositionSorted</code> returns the position of the element <var class="Arg">elm</var> in the list <var class="Arg">list</var>, which must be sorted with respect to <var class="Arg">func</var>. <var class="Arg">func</var> must be a function of two arguments that returns <code class="keyw">true</code> if the first argument is less than the second argument, and <code class="keyw">false</code> otherwise.</p>
@@ -1490,7 +1490,7 @@ fail
 
 <h5>21.16-6 PositionSet</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionSet</code>( <var class="Arg">list</var>, <var class="Arg">obj</var>[, <var class="Arg">func</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionSet</code>( <var class="Arg">list</var>, <var class="Arg">obj</var>[, <var class="Arg">func</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">PositionSet</code> is a slight variation of <code class="func">PositionSorted</code> (<a href="chap21_mj.html#X7A122E848464E534"><span class="RefLink">21.16-5</span></a>). The only difference to <code class="func">PositionSorted</code> (<a href="chap21_mj.html#X7A122E848464E534"><span class="RefLink">21.16-5</span></a>) is that <code class="func">PositionSet</code> returns <code class="keyw">fail</code> if <var class="Arg">obj</var> is not in <var class="Arg">list</var>.</p>
 
 
@@ -1511,7 +1511,7 @@ fail
 
 <h5>21.16-7 PositionProperty</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionProperty</code>( <var class="Arg">list</var>, <var class="Arg">func</var>[, <var class="Arg">from</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionProperty</code>( <var class="Arg">list</var>, <var class="Arg">func</var>[, <var class="Arg">from</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the position of the first entry in the list <var class="Arg">list</var> for which the property tester function <var class="Arg">func</var> returns <code class="keyw">true</code>, or <code class="keyw">fail</code> if no such entry exists. If a starting index <var class="Arg">from</var> is given, it returns the position of the first entry satisfying <var class="Arg">func</var>, starting the search <em>after</em> position <var class="Arg">from</var>.</p>
 
 
@@ -1529,7 +1529,7 @@ fail
 
 <h5>21.16-8 PositionsProperty</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionsProperty</code>( <var class="Arg">list</var>, <var class="Arg">func</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionsProperty</code>( <var class="Arg">list</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the list of all those positions in the dense list <var class="Arg">list</var> for which the property tester function <var class="Arg">func</var> returns <code class="keyw">true</code>.</p>
 
 
@@ -1547,7 +1547,7 @@ fail
 
 <h5>21.16-9 PositionBound</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionBound</code>( <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionBound</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the first index for which an element is bound in the list <var class="Arg">list</var>. For the empty list it returns <code class="keyw">fail</code>.</p>
 
 
@@ -1562,7 +1562,7 @@ fail
 
 <h5>21.16-10 PositionNot</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionNot</code>( <var class="Arg">list</var>, <var class="Arg">val</var>[, <var class="Arg">from</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionNot</code>( <var class="Arg">list</var>, <var class="Arg">val</var>[, <var class="Arg">from</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>For a list <var class="Arg">list</var> and an object <var class="Arg">val</var>, <code class="func">PositionNot</code> returns the smallest nonnegative integer <span class="SimpleMath">\(n\)</span> such that <span class="SimpleMath">\(\textit{list}[n]\)</span> is either unbound or not equal to <var class="Arg">val</var>. If a starting index <var class="Arg">from</var> is given, it returns the first position with this property starting the search <em>after</em> position <var class="Arg">from</var>.</p>
 
 
@@ -1578,7 +1578,7 @@ fail
 
 <h5>21.16-11 PositionNonZero</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionNonZero</code>( <var class="Arg">vec</var>[, <var class="Arg">from</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionNonZero</code>( <var class="Arg">vec</var>[, <var class="Arg">from</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>For a row vector <var class="Arg">vec</var>, <code class="func">PositionNonZero</code> returns the position of the first non-zero element of <var class="Arg">vec</var>, or <code class="code">Length(</code> <var class="Arg">vec</var> <code class="code">)+1</code> if all entries of <var class="Arg">vec</var> are zero.</p>
 
 <p>If a starting index <var class="Arg">from</var> is given, it returns the position of the first occurrence starting the search <em>after</em> position <var class="Arg">from</var>.</p>
@@ -1597,7 +1597,7 @@ fail
 
 <h5>21.16-12 PositionSublist</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionSublist</code>( <var class="Arg">list</var>, <var class="Arg">sub</var>[, <var class="Arg">from</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionSublist</code>( <var class="Arg">list</var>, <var class="Arg">sub</var>[, <var class="Arg">from</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the smallest index in the list <var class="Arg">list</var> at which a sublist equal to <var class="Arg">sub</var> starts. If <var class="Arg">sub</var> does not occur the operation returns <code class="keyw">fail</code>. The version with given <var class="Arg">from</var> starts searching <em>after</em> position <var class="Arg">from</var>.</p>
 
 <p>To determine whether <var class="Arg">sub</var> matches <var class="Arg">list</var> at a particular position, use <code class="func">IsMatchingSublist</code> (<a href="chap21_mj.html#X83F8EC7C7BF27EFC"><span class="RefLink">21.17-1</span></a>) instead.</p>
@@ -1626,7 +1626,7 @@ false
 
 <h5>21.17-1 IsMatchingSublist</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatchingSublist</code>( <var class="Arg">list</var>, <var class="Arg">sub</var>[, <var class="Arg">at</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatchingSublist</code>( <var class="Arg">list</var>, <var class="Arg">sub</var>[, <var class="Arg">at</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if <var class="Arg">sub</var> matches a sublist of <var class="Arg">list</var> from position <code class="code">1</code> (or position <var class="Arg">at</var>, in the case of three arguments), or <code class="keyw">false</code>, otherwise. If <var class="Arg">sub</var> is empty <code class="keyw">true</code> is returned. If <var class="Arg">list</var> is empty but <var class="Arg">sub</var> is non-empty <code class="keyw">false</code> is returned.</p>
 
 <p>If you actually want to know whether there is an <var class="Arg">at</var> for which <code class="code">IsMatchingSublist( <var class="Arg">list</var>, <var class="Arg">sub</var>, <var class="Arg">at</var> )</code> is true, use a construction like <code class="code">PositionSublist( <var class="Arg">list</var>, <var class="Arg">sub</var> ) &lt;&gt; fail</code> instead (see <code class="func">PositionSublist</code> (<a href="chap21_mj.html#X87A8C62A867D6DA4"><span class="RefLink">21.16-12</span></a>)); it's more efficient.</p>
@@ -1635,8 +1635,8 @@ false
 
 <h5>21.17-2 IsDuplicateFree</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDuplicateFree</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDuplicateFreeList</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDuplicateFree</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDuplicateFreeList</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p><code class="func">IsDuplicateFree</code> returns <code class="keyw">true</code> if <var class="Arg">obj</var> is both a list or collection, and it is duplicate free; otherwise it returns <code class="keyw">false</code>. <code class="func">IsDuplicateFreeList</code> is a synonym for <code class="code">IsDuplicateFree and IsList</code>.</p>
 
 <p>A list is <em>duplicate free</em> if it is dense and does not contain equal entries in different positions. Every domain (see <a href="chap12_mj.html#X7BAF69417BB925F6"><span class="RefLink">12.4</span></a>) is duplicate free.</p>
@@ -1647,7 +1647,7 @@ false
 
 <h5>21.17-3 IsSortedList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSortedList</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSortedList</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if <var class="Arg">obj</var> is a list and it is sorted, and <code class="keyw">false</code> otherwise.</p>
 
 <p>A list <var class="Arg">list</var> is <em>sorted</em> if it is dense (see <code class="func">IsDenseList</code> (<a href="chap21_mj.html#X870AA9D8798C93DD"><span class="RefLink">21.1-2</span></a>)) and satisfies the relation <span class="SimpleMath">\(\textit{list}[i] \leq \textit{list}[j]\)</span> whenever <span class="SimpleMath">\(i &lt; j\)</span>. Note that a sorted list is not necessarily duplicate free (see <code class="func">IsDuplicateFree</code> (<a href="chap21_mj.html#X7FA892828252BB3B"><span class="RefLink">21.17-2</span></a>) and <code class="func">IsSSortedList</code> (<a href="chap21_mj.html#X80CDAF45782E8DCB"><span class="RefLink">21.17-4</span></a>)).</p>
@@ -1662,8 +1662,8 @@ false
 
 <h5>21.17-4 IsSSortedList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSSortedList</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSet</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSSortedList</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSet</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if <var class="Arg">obj</var> is a list and it is strictly sorted, and <code class="keyw">false</code> otherwise. <code class="func">IsSSortedList</code> is short for "is strictly sorted list"; <code class="func">IsSet</code> is just a synonym for <code class="func">IsSSortedList</code>.</p>
 
 <p>A list <var class="Arg">list</var> is <em>strictly sorted</em> if it is sorted (see <code class="func">IsSortedList</code> (<a href="chap21_mj.html#X7BAA9B0E81D4A884"><span class="RefLink">21.17-3</span></a>)) and satisfies the relation <span class="SimpleMath">\(\textit{list}[i] &lt; \textit{list}[j]\)</span> whenever <span class="SimpleMath">\(i &lt; j\)</span>. In particular, such lists are duplicate free (see <code class="func">IsDuplicateFree</code> (<a href="chap21_mj.html#X7FA892828252BB3B"><span class="RefLink">21.17-2</span></a>)).</p>
@@ -1676,14 +1676,14 @@ false
 
 <h5>21.17-5 Length</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Length</code>( <var class="Arg">list</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Length</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the <em>length</em> of the list <var class="Arg">list</var>, which is defined to be the index of the last bound entry in <var class="Arg">list</var>.</p>
 
 <p><a id="X7B55FB967CDEF468" name="X7B55FB967CDEF468"></a></p>
 
 <h5>21.17-6 ConstantTimeAccessList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConstantTimeAccessList</code>( <var class="Arg">list</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConstantTimeAccessList</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p><code class="func">ConstantTimeAccessList</code> returns an immutable list containing the same elements as the list <var class="Arg">list</var> (which may have holes) in the same order. If <var class="Arg">list</var> is already a constant time access list, <code class="func">ConstantTimeAccessList</code> returns an immutable copy of <var class="Arg">list</var> directly. Otherwise it puts all elements and holes of <var class="Arg">list</var> into a new list and makes that list immutable.</p>
 
 <p><a id="X83E558E37D1B44D4" name="X83E558E37D1B44D4"></a></p>
@@ -1694,8 +1694,8 @@ false
 
 <h5>21.18-1 Sort</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sort</code>( <var class="Arg">list</var>[, <var class="Arg">func</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SortBy</code>( <var class="Arg">list</var>, <var class="Arg">func</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sort</code>( <var class="Arg">list</var>[, <var class="Arg">func</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SortBy</code>( <var class="Arg">list</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">Sort</code> sorts the list <var class="Arg">list</var> in increasing order. In the one argument form <code class="func">Sort</code> uses the operator <code class="code">&lt;</code> to compare the elements. (If the list is not homogeneous it is the users responsibility to ensure that <code class="code">&lt;</code> is defined for all element pairs, see <a href="chap31_mj.html#X7B3BC7BA7BB2646D"><span class="RefLink">31.11</span></a>) In the two argument form <code class="func">Sort</code> uses the function <var class="Arg">func</var> to compare elements. <var class="Arg">func</var> must be a function taking two arguments that returns <code class="keyw">true</code> if the first is regarded as strictly smaller than the second, and <code class="keyw">false</code> otherwise.</p>
 
 <p>Note that, in cases where it is applicable, <code class="func">SortBy</code> is likely to be more efficient.</p>
@@ -1725,7 +1725,7 @@ false
 
 <h5>21.18-2 SortParallel</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SortParallel</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var>[, <var class="Arg">func</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SortParallel</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var>[, <var class="Arg">func</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>sorts the list <var class="Arg">list1</var> in increasing order just as <code class="func">Sort</code> (<a href="chap21_mj.html#X7FE4975F8166884D"><span class="RefLink">21.18-1</span></a>) does. In parallel it applies the same exchanges that are necessary to sort <var class="Arg">list1</var> to the list <var class="Arg">list2</var>, which must of course have at least as many elements as <var class="Arg">list1</var> does.</p>
 
 
@@ -1745,7 +1745,7 @@ false
 
 <h5>21.18-3 Sortex</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sortex</code>( <var class="Arg">list</var>[, <var class="Arg">func</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sortex</code>( <var class="Arg">list</var>[, <var class="Arg">func</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>sorts the list <var class="Arg">list</var> and returns a permutation that can be applied to <var class="Arg">list</var> to obtain the sorted list. The one argument form sorts via the operator <code class="code">&lt;</code>, the two argument form sorts w.r.t. the function <var class="Arg">func</var>. (If the list is not homogeneous it is the user's responsibility to ensure that <code class="code">&lt;</code> is defined for all element pairs, see <a href="chap31_mj.html#X7B3BC7BA7BB2646D"><span class="RefLink">31.11</span></a>)</p>
 
 <p><code class="func">Permuted</code> (<a href="chap21_mj.html#X7B5A19098406347A"><span class="RefLink">21.20-18</span></a>) allows you to rearrange a list according to a given permutation.</p>
@@ -1766,7 +1766,7 @@ false
 
 <h5>21.18-4 SortingPerm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SortingPerm</code>( <var class="Arg">list</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SortingPerm</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p><code class="func">SortingPerm</code> returns the same as <code class="func">Sortex</code> (<a href="chap21_mj.html#X87287FCA81E2B06A"><span class="RefLink">21.18-3</span></a>) but does <em>not</em> change the argument.</p>
 
 
@@ -1807,14 +1807,14 @@ false
 
 <h5><code>21.19-1 \in</code></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \in</code>( <var class="Arg">obj</var>, <var class="Arg">list</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \in</code>( <var class="Arg">obj</var>, <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <p>For a list <var class="Arg">list</var> that stores that it is strictly sorted, the test with <code class="func">\in</code> whether the object <var class="Arg">obj</var> is an entry of <var class="Arg">list</var> uses binary search. This test can be entered also with the infix notation <var class="Arg">obj</var> <code class="keyw">in</code> <var class="Arg">list</var>.</p>
 
 <p><a id="X7B4C0FEE7CDF6F2A" name="X7B4C0FEE7CDF6F2A"></a></p>
 
 <h5>21.19-2 IsEqualSet</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEqualSet</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEqualSet</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>tests whether <var class="Arg">list1</var> and <var class="Arg">list2</var> are equal <em>when viewed as sets</em>, that is if every element of <var class="Arg">list1</var> is an element of <var class="Arg">list2</var> and vice versa. Either argument of <code class="func">IsEqualSet</code> may also be a list that is not a proper set, in which case <code class="func">Set</code> (<a href="chap30_mj.html#X7E399AC97FD98217"><span class="RefLink">30.3-7</span></a>) is applied to it first.</p>
 
 <p>If both lists are proper sets then they are of course equal if and only if they are also equal as lists. Thus <code class="code">IsEqualSet( <var class="Arg">list1</var>, <var class="Arg">list2</var> )</code> is equivalent to <code class="code">Set( <var class="Arg">list1</var> ) = Set( <var class="Arg">list2</var> )</code> (see <code class="func">Set</code> (<a href="chap30_mj.html#X7E399AC97FD98217"><span class="RefLink">30.3-7</span></a>)), but the former is more efficient.</p>
@@ -1831,14 +1831,14 @@ false
 
 <h5>21.19-3 IsSubsetSet</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubsetSet</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubsetSet</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>tests whether every element of <var class="Arg">list2</var> is contained in <var class="Arg">list1</var>. Either argument of <code class="func">IsSubsetSet</code> may also be a list that is not a proper set, in which case <code class="func">Set</code> (<a href="chap30_mj.html#X7E399AC97FD98217"><span class="RefLink">30.3-7</span></a>) is applied to it first.</p>
 
 <p><a id="X832C23CC7FCD8892" name="X832C23CC7FCD8892"></a></p>
 
 <h5>21.19-4 AddSet</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddSet</code>( <var class="Arg">set</var>, <var class="Arg">obj</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddSet</code>( <var class="Arg">set</var>, <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>adds the element <var class="Arg">obj</var> to the proper set <var class="Arg">set</var>. If <var class="Arg">obj</var> is already contained in <var class="Arg">set</var> then <var class="Arg">set</var> is not changed. Otherwise <var class="Arg">obj</var> is inserted at the correct position such that <var class="Arg">set</var> is again a proper set afterwards.</p>
 
 <p>Note that <var class="Arg">obj</var> must be in the same family as each element of <var class="Arg">set</var>.</p>
@@ -1858,7 +1858,7 @@ false
 
 <h5>21.19-5 RemoveSet</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RemoveSet</code>( <var class="Arg">set</var>, <var class="Arg">obj</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RemoveSet</code>( <var class="Arg">set</var>, <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>removes the element <var class="Arg">obj</var> from the proper set <var class="Arg">set</var>. If <var class="Arg">obj</var> is not contained in <var class="Arg">set</var> then <var class="Arg">set</var> is not changed. If <var class="Arg">obj</var> is an element of <var class="Arg">set</var> it is removed and all the following elements in the list are moved one position forward.</p>
 
 
@@ -1874,7 +1874,7 @@ false
 
 <h5>21.19-6 UniteSet</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UniteSet</code>( <var class="Arg">set</var>, <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UniteSet</code>( <var class="Arg">set</var>, <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>unites the proper set <var class="Arg">set</var> with <var class="Arg">list</var>. This is equivalent to adding all elements of <var class="Arg">list</var> to <var class="Arg">set</var> (see <code class="func">AddSet</code> (<a href="chap21_mj.html#X832C23CC7FCD8892"><span class="RefLink">21.19-4</span></a>)).</p>
 
 
@@ -1890,7 +1890,7 @@ false
 
 <h5>21.19-7 IntersectSet</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntersectSet</code>( <var class="Arg">set</var>, <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntersectSet</code>( <var class="Arg">set</var>, <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>intersects the proper set <var class="Arg">set</var> with <var class="Arg">list</var>. This is equivalent to removing from <var class="Arg">set</var> all elements of <var class="Arg">set</var> that are not contained in <var class="Arg">list</var>.</p>
 
 
@@ -1906,7 +1906,7 @@ false
 
 <h5>21.19-8 SubtractSet</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubtractSet</code>( <var class="Arg">set</var>, <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubtractSet</code>( <var class="Arg">set</var>, <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>subtracts <var class="Arg">list</var> from the proper set <var class="Arg">set</var>. This is equivalent to removing from <var class="Arg">set</var> all elements of <var class="Arg">list</var>.</p>
 
 
@@ -1928,8 +1928,8 @@ false
 
 <h5>21.20-1 Concatenation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Concatenation</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Concatenation</code>( <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Concatenation</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Concatenation</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>In the first form <code class="func">Concatenation</code> returns the concatenation of the lists <var class="Arg">list1</var>, <var class="Arg">list2</var>, etc. The <em>concatenation</em> is the list that begins with the elements of <var class="Arg">list1</var>, followed by the elements of <var class="Arg">list2</var>, and so on. Each list may also contain holes, in which case the concatenation also contains holes at the corresponding positions.</p>
 
 <p>In the second form <var class="Arg">list</var> must be a dense list of lists <var class="Arg">list1</var>, <var class="Arg">list2</var>, etc., and <code class="func">Concatenation</code> returns the concatenation of those lists.</p>
@@ -1952,7 +1952,7 @@ false
 
 <h5>21.20-2 Compacted</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Compacted</code>( <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Compacted</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a new mutable list that contains the elements of <var class="Arg">list</var> in the same order but omitting the holes.</p>
 
 
@@ -1965,7 +1965,7 @@ false
 
 <h5>21.20-3 Collected</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Collected</code>( <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Collected</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a new list <var class="Arg">new</var> that contains for each element <var class="Arg">elm</var> of the list <var class="Arg">list</var> a list of length two, the first element of this is <var class="Arg">elm</var> itself and the second element is the number of times <var class="Arg">elm</var> appears in <var class="Arg">list</var>. The order of those pairs in <var class="Arg">new</var> corresponds to the ordering of the elements elm, so that the result is sorted.</p>
 
 <p>For all pairs of elements in <var class="Arg">list</var> the comparison via <code class="code">&lt;</code> must be defined.</p>
@@ -1984,8 +1984,8 @@ false
 
 <h5>21.20-4 DuplicateFreeList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DuplicateFreeList</code>( <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unique</code>( <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DuplicateFreeList</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unique</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a new mutable list whose entries are the elements of the list <var class="Arg">list</var> with duplicates removed. <code class="func">DuplicateFreeList</code> only uses the <code class="code">=</code> comparison and will not sort the result. Therefore <code class="func">DuplicateFreeList</code> can be used even if the elements of <var class="Arg">list</var> do not lie in the same family. Otherwise, if <var class="Arg">list</var> contains objects that can be compared with <code class="func">\&lt;</code> (<a href="chap31_mj.html#X7EF67D047F03CA6F"><span class="RefLink">31.11-1</span></a>) then it is much more efficient to use <code class="func">Set</code> (<a href="chap30_mj.html#X7E399AC97FD98217"><span class="RefLink">30.3-7</span></a>) instead of <code class="func">DuplicateFreeList</code>.</p>
 
 <p><code class="func">Unique</code> is a synonym for <code class="func">DuplicateFreeList</code>.</p>
@@ -2001,14 +2001,14 @@ false
 
 <h5>21.20-5 AsDuplicateFreeList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsDuplicateFreeList</code>( <var class="Arg">list</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsDuplicateFreeList</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the same result as <code class="func">DuplicateFreeList</code> (<a href="chap21_mj.html#X8727F2928467C2F9"><span class="RefLink">21.20-4</span></a>), except that the result is immutable.</p>
 
 <p><a id="X7FA272D984EF82ED" name="X7FA272D984EF82ED"></a></p>
 
 <h5>21.20-6 Flat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Flat</code>( <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Flat</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the list of all elements that are contained in the list <var class="Arg">list</var> or its sublists. That is, <code class="func">Flat</code> first makes a new empty list <var class="Arg">new</var>. Then it loops over the elements <var class="Arg">elm</var> of <var class="Arg">list</var>. If <var class="Arg">elm</var> is not a list it is added to <var class="Arg">new</var>, otherwise <code class="func">Flat</code> appends <code class="code">Flat( <var class="Arg">elm</var> )</code> to <var class="Arg">new</var>.</p>
 
 
@@ -2032,7 +2032,7 @@ false
 
 <h5>21.20-7 Reversed</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Reversed</code>( <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Reversed</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a new mutable list, containing the elements of the dense list <var class="Arg">list</var> in reversed order.</p>
 
 <p>The argument list is unchanged. The result list is a new list, that is not identical to any other list. The elements of that list however are identical to the corresponding elements of the argument list (see <a href="chap21_mj.html#X7DD65BEA7EDB0CD7"><span class="RefLink">21.6</span></a>).</p>
@@ -2049,7 +2049,7 @@ false
 
 <h5>21.20-8 Shuffle</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Shuffle</code>( <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Shuffle</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>The argument <var class="Arg">list</var> must be a dense mutable list. This operation permutes the entries of <var class="Arg">list</var> randomly (in place), and returns <var class="Arg">list</var>.</p>
 
 
@@ -2072,14 +2072,14 @@ false
 
 <h5>21.20-9 IsLexicographicallyLess</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLexicographicallyLess</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLexicographicallyLess</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">list1</var> and <var class="Arg">list2</var> be two dense, but not necessarily homogeneous lists (see <code class="func">IsDenseList</code> (<a href="chap21_mj.html#X870AA9D8798C93DD"><span class="RefLink">21.1-2</span></a>), <code class="func">IsHomogeneousList</code> (<a href="chap21_mj.html#X7C71596C82B6EF35"><span class="RefLink">21.1-3</span></a>)), such that for each <span class="SimpleMath">\(i\)</span>, the entries in both lists at position <span class="SimpleMath">\(i\)</span> can be compared via <code class="code">&lt;</code>. <code class="func">IsLexicographicallyLess</code> returns <code class="keyw">true</code> if <var class="Arg">list1</var> is smaller than <var class="Arg">list2</var> w.r.t. lexicographical ordering, and <code class="keyw">false</code> otherwise.</p>
 
 <p><a id="X8075FBDE7B81B4C8" name="X8075FBDE7B81B4C8"></a></p>
 
 <h5>21.20-10 Apply</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Apply</code>( <var class="Arg">list</var>, <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Apply</code>( <var class="Arg">list</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">Apply</code> applies the function <var class="Arg">func</var> to every element of the dense and mutable list <var class="Arg">list</var>, and replaces each element entry by the corresponding return value.</p>
 
 <p><code class="func">Apply</code> changes its argument. The nondestructive counterpart of <code class="func">Apply</code> is <code class="func">List</code> (<a href="chap30_mj.html#X7F12F40E87F3C3A7"><span class="RefLink">30.3-5</span></a>).</p>
@@ -2094,7 +2094,7 @@ false
 
 <h5>21.20-11 Perform</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Perform</code>( <var class="Arg">list</var>, <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Perform</code>( <var class="Arg">list</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">Perform</code> applies the function <var class="Arg">func</var> to every element of the list <var class="Arg">list</var>, discarding any return values. It does not return a value.</p>
 
 
@@ -2109,7 +2109,7 @@ false
 
 <h5>21.20-12 PermListList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermListList</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermListList</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a permutation <span class="SimpleMath">\(p\)</span> of <code class="code">[ 1 .. Length( <var class="Arg">list1</var> ) ]</code> such that <var class="Arg">list1</var><span class="SimpleMath">\([i\)</span><code class="code">^</code><span class="SimpleMath">\(p] =\)</span> <var class="Arg">list2</var><span class="SimpleMath">\([i]\)</span>. It returns <code class="keyw">fail</code> if there is no such permutation.</p>
 
 
@@ -2126,8 +2126,8 @@ false
 
 <h5>21.20-13 <span class="Heading">Maximum</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Maximum</code>( <var class="Arg">obj1</var>, <var class="Arg">obj2</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Maximum</code>( <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Maximum</code>( <var class="Arg">obj1</var>, <var class="Arg">obj2</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Maximum</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>In the first form <code class="func">Maximum</code> returns the <em>maximum</em> of its arguments, i.e., one argument <var class="Arg">obj</var> for which <span class="SimpleMath">\(\textit{obj} \geq \textit{obj1}\)</span>, <span class="SimpleMath">\(\textit{obj} \geq \textit{obj2}\)</span> etc.</p>
 
 <p>In the second form <code class="func">Maximum</code> takes a homogeneous list <var class="Arg">list</var> and returns the maximum of the elements in this list.</p>
@@ -2147,8 +2147,8 @@ false
 
 <h5>21.20-14 <span class="Heading">Minimum</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Minimum</code>( <var class="Arg">obj1</var>, <var class="Arg">obj2</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Minimum</code>( <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Minimum</code>( <var class="Arg">obj1</var>, <var class="Arg">obj2</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Minimum</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>In the first form <code class="func">Minimum</code> returns the <em>minimum</em> of its arguments, i.e., one argument <var class="Arg">obj</var> for which <span class="SimpleMath">\(\textit{obj} \leq \textit{obj1}\)</span>, <span class="SimpleMath">\(\textit{obj} \leq \textit{obj2}\)</span> etc.</p>
 
 <p>In the second form <code class="func">Minimum</code> takes a homogeneous list <var class="Arg">list</var> and returns the minimum of the elements in this list.</p>
@@ -2169,8 +2169,8 @@ false
 
 <h5>21.20-15 <span class="Heading">MaximumList and MinimumList</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MaximumList</code>( <var class="Arg">list</var>[, <var class="Arg">seed</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimumList</code>( <var class="Arg">list</var>[, <var class="Arg">seed</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MaximumList</code>( <var class="Arg">list</var>[, <var class="Arg">seed</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimumList</code>( <var class="Arg">list</var>[, <var class="Arg">seed</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>return the maximum resp. the minimum of the elements in the list <var class="Arg">list</var>. They are the operations called by <code class="func">Maximum</code> (<a href="chap21_mj.html#X82CE0DE8828E4303"><span class="RefLink">21.20-13</span></a>) resp. <code class="func">Minimum</code> (<a href="chap21_mj.html#X82F133EC7F89665F"><span class="RefLink">21.20-14</span></a>). Methods can be installed for special kinds of lists. For example, there are special methods to compute the maximum resp. the minimum of a range (see <a href="chap21_mj.html#X79596BDE7CAF8491"><span class="RefLink">21.22</span></a>).</p>
 
 <p>If a second argument <var class="Arg">seed</var> is supplied, then the result is the maximum resp. minimum of the union of <var class="Arg">list</var> and <var class="Arg">seed</var>. In this manner, the operations may be applied to empty lists.</p>
@@ -2179,8 +2179,8 @@ false
 
 <h5>21.20-16 <span class="Heading">Cartesian</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cartesian</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cartesian</code>( <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cartesian</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cartesian</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>In the first form <code class="func">Cartesian</code> returns the cartesian product of the lists <var class="Arg">list1</var>, <var class="Arg">list2</var>, etc.</p>
 
 <p>In the second form <var class="Arg">list</var> must be a list of lists <var class="Arg">list1</var>, <var class="Arg">list2</var>, etc., and <code class="func">Cartesian</code> returns the cartesian product of those lists.</p>
@@ -2205,8 +2205,8 @@ false
 
 <h5>21.20-17 <span class="Heading">IteratorOfCartesianProduct</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorOfCartesianProduct</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorOfCartesianProduct</code>( <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorOfCartesianProduct</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorOfCartesianProduct</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>In the first form <code class="func">IteratorOfCartesianProduct</code> returns an iterator (see <a href="chap30_mj.html#X85A3F00985453F95"><span class="RefLink">30.8</span></a>) of all elements of the cartesian product (see <code class="func">Cartesian</code> (<a href="chap21_mj.html#X7E1593B979BDF2CD"><span class="RefLink">21.20-16</span></a>)) of the lists <var class="Arg">list1</var>, <var class="Arg">list2</var>, etc.</p>
 
 <p>In the second form <var class="Arg">list</var> must be a list of lists <var class="Arg">list1</var>, <var class="Arg">list2</var>, etc., and <code class="func">IteratorOfCartesianProduct</code> returns an iterator of the cartesian product of those lists.</p>
@@ -2217,7 +2217,7 @@ false
 
 <h5>21.20-18 Permuted</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Permuted</code>( <var class="Arg">list</var>, <var class="Arg">perm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Permuted</code>( <var class="Arg">list</var>, <var class="Arg">perm</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a new list <var class="Arg">new</var> that contains the elements of the list <var class="Arg">list</var> permuted according to the permutation <var class="Arg">perm</var>. That is <code class="code"><var class="Arg">new</var>[<var class="Arg">i</var>^<var class="Arg">perm</var>] = <var class="Arg">list</var>[<var class="Arg">i</var>]</code>.</p>
 
 <p><code class="func">Sortex</code> (<a href="chap21_mj.html#X87287FCA81E2B06A"><span class="RefLink">21.18-3</span></a>) allows you to compute a permutation that must be applied to a list in order to get the sorted list.</p>
@@ -2232,7 +2232,7 @@ false
 
 <h5>21.20-19 List</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; List</code>( <var class="Arg">list</var>[, <var class="Arg">func</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; List</code>( <var class="Arg">list</var>[, <var class="Arg">func</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function returns a new mutable list <code class="code">new</code> of the same length as the list <var class="Arg">list</var> (which may have holes). The entry <code class="code">new[i]</code> is unbound if <code class="code"><var class="Arg">list</var>[i]</code> is unbound. Otherwise <code class="code">new[i] = <var class="Arg">func</var>(<var class="Arg">list</var>[i])</code>. If the argument <var class="Arg">func</var> is omitted, its default is <code class="func">IdFunc</code> (<a href="chap5_mj.html#X810325697BDEF899"><span class="RefLink">5.4-6</span></a>), so this function does the same as <code class="func">ShallowCopy</code> (<a href="chap12_mj.html#X846BC7107C352031"><span class="RefLink">12.7-1</span></a>) (see also <a href="chap21_mj.html#X7ED7C0738495556F"><span class="RefLink">21.7</span></a>).</p>
 
 
@@ -2251,7 +2251,7 @@ false
 
 <h5>21.20-20 Filtered</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Filtered</code>( <var class="Arg">listorcoll</var>, <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Filtered</code>( <var class="Arg">listorcoll</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a new list that contains those elements of the list or collection <var class="Arg">listorcoll</var> (see <a href="chap30_mj.html#X8050A8037984E5B6"><span class="RefLink">30</span></a>), respectively, for which the unary function <var class="Arg">func</var> returns <code class="keyw">true</code>.</p>
 
 <p>If the first argument is a list, the order of the elements in the result is the same as the order of the corresponding elements of this list. If an element for which <var class="Arg">func</var> returns <code class="keyw">true</code> appears several times in the list it will also appear the same number of times in the result. The argument list may contain holes, they are ignored by <code class="func">Filtered</code>.</p>
@@ -2279,7 +2279,7 @@ false
 
 <h5>21.20-21 Number</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Number</code>( <var class="Arg">listorcoll</var>[, <var class="Arg">func</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Number</code>( <var class="Arg">listorcoll</var>[, <var class="Arg">func</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Called with a list <var class="Arg">listorcoll</var>, <code class="func">Number</code> returns the number of bound entries in this list. For dense lists <code class="func">Number</code>, <code class="func">Length</code> (<a href="chap21_mj.html#X780769238600AFD1"><span class="RefLink">21.17-5</span></a>), and <code class="func">Size</code> (<a href="chap30_mj.html#X858ADA3B7A684421"><span class="RefLink">30.4-6</span></a>) return the same value; for lists with holes <code class="func">Number</code> returns the number of bound entries, <code class="func">Length</code> (<a href="chap21_mj.html#X780769238600AFD1"><span class="RefLink">21.17-5</span></a>) returns the largest index of a bound entry, and <code class="func">Size</code> (<a href="chap30_mj.html#X858ADA3B7A684421"><span class="RefLink">30.4-6</span></a>) signals an error.</p>
 
 <p>Called with two arguments, a list or collection <var class="Arg">listorcoll</var> and a unary function <var class="Arg">func</var>, <code class="func">Number</code> returns the number of elements of <var class="Arg">listorcoll</var> for which <var class="Arg">func</var> returns <code class="keyw">true</code>. If an element for which <var class="Arg">func</var> returns <code class="keyw">true</code> appears several times in <var class="Arg">listorcoll</var> it will also be counted the same number of times.</p>
@@ -2309,7 +2309,7 @@ false
 
 <h5>21.20-22 First</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; First</code>( <var class="Arg">list</var>, <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; First</code>( <var class="Arg">list</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">First</code> returns the first element of the list <var class="Arg">list</var> for which the unary function <var class="Arg">func</var> returns <code class="keyw">true</code>. <var class="Arg">list</var> may contain holes. <var class="Arg">func</var> must return either <code class="keyw">true</code> or <code class="keyw">false</code> for each element of <var class="Arg">list</var>, otherwise an error is signalled. If <var class="Arg">func</var> returns <code class="keyw">false</code> for all elements of <var class="Arg">list</var> then <code class="func">First</code> returns <code class="keyw">fail</code>.</p>
 
 <p><code class="func">PositionProperty</code> (<a href="chap21_mj.html#X7E6C763A82C6153B"><span class="RefLink">21.16-7</span></a>) allows you to find the position of the first element in a list that satisfies a certain property.</p>
@@ -2331,7 +2331,7 @@ fail
 
 <h5>21.20-23 ForAll</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ForAll</code>( <var class="Arg">listorcoll</var>, <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ForAll</code>( <var class="Arg">listorcoll</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>tests whether the unary function <var class="Arg">func</var> returns <code class="keyw">true</code> for all elements in the list or collection <var class="Arg">listorcoll</var>.</p>
 
 
@@ -2350,7 +2350,7 @@ false
 
 <h5>21.20-24 ForAny</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ForAny</code>( <var class="Arg">listorcoll</var>, <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ForAny</code>( <var class="Arg">listorcoll</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>tests whether the unary function <var class="Arg">func</var> returns <code class="keyw">true</code> for at least one element in the list or collection <var class="Arg">listorcoll</var>.</p>
 
 
@@ -2371,7 +2371,7 @@ true
 
 <h5>21.20-25 Product</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Product</code>( <var class="Arg">listorcoll</var>[, <var class="Arg">func</var>][, <var class="Arg">init</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Product</code>( <var class="Arg">listorcoll</var>[, <var class="Arg">func</var>][, <var class="Arg">init</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Called with one argument, a dense list or collection <var class="Arg">listorcoll</var>, <code class="func">Product</code> returns the product of the elements of <var class="Arg">listorcoll</var> (see <a href="chap30_mj.html#X8050A8037984E5B6"><span class="RefLink">30</span></a>).</p>
 
 <p>Called with a dense list or collection <var class="Arg">listorcoll</var> and a function <var class="Arg">func</var>, which must be a function taking one argument, <code class="func">Product</code> applies the function <var class="Arg">func</var> to the elements of <var class="Arg">listorcoll</var>, and returns the product of the results. In either case <code class="func">Product</code> returns <code class="code">1</code> if the first argument is empty.</p>
@@ -2398,7 +2398,7 @@ true
 
 <h5>21.20-26 Sum</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sum</code>( <var class="Arg">listorcoll</var>[, <var class="Arg">func</var>][, <var class="Arg">init</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sum</code>( <var class="Arg">listorcoll</var>[, <var class="Arg">func</var>][, <var class="Arg">init</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Called with one argument, a dense list or collection <var class="Arg">listorcoll</var>, <code class="func">Sum</code> returns the sum of the elements of <var class="Arg">listorcoll</var> (see <a href="chap30_mj.html#X8050A8037984E5B6"><span class="RefLink">30</span></a>).</p>
 
 <p>Called with a dense list or collection <var class="Arg">listorcoll</var> and a function <var class="Arg">func</var>, which must be a function taking one argument, <code class="func">Sum</code> applies the function <var class="Arg">func</var> to the elements of <var class="Arg">listorcoll</var>, and returns the sum of the results. In either case <code class="func">Sum</code> returns <code class="code">0</code> if the first argument is empty.</p>
@@ -2425,7 +2425,7 @@ true
 
 <h5>21.20-27 Iterated</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Iterated</code>( <var class="Arg">list</var>, <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Iterated</code>( <var class="Arg">list</var>, <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the result of the iterated application of the function <var class="Arg">f</var>, which must take two arguments, to the elements of the list <var class="Arg">list</var>. More precisely, if <var class="Arg">list</var> has length <span class="SimpleMath">\(n\)</span> then <code class="func">Iterated</code> returns the result of the following application, <span class="SimpleMath">\(\textit{f}( \ldots \textit{f}( \textit{f}( \textit{list}[1], \textit{list}[2] ), \textit{list}[3] ), \ldots, \textit{list}[n] )\)</span>.</p>
 
 
@@ -2438,7 +2438,7 @@ true
 
 <h5>21.20-28 ListN</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ListN</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var>, <var class="Arg">...</var>, <var class="Arg">listn</var>, <var class="Arg">f</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ListN</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var>, <var class="Arg">...</var>, <var class="Arg">listn</var>, <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>applies the <span class="SimpleMath">\(n\)</span>-argument function <var class="Arg">f</var> to the lists. That is, <code class="func">ListN</code> returns the list whose <span class="SimpleMath">\(i\)</span>-th entry is <span class="SimpleMath">\(\textit{f}(\textit{list1}[i], \textit{list2}[i], \ldots, \textit{listn}[i])\)</span>.</p>
 
 
@@ -2457,7 +2457,7 @@ true
 
 <h5>21.21-1 ListX</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ListX</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">...</var>, <var class="Arg">argn</var>, <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ListX</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">...</var>, <var class="Arg">argn</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">ListX</code> returns a new list constructed from the arguments.</p>
 
 <p>Each of the arguments <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <span class="SimpleMath">\(\ldots\)</span> <var class="Arg">argn</var> must be one of the following:</p>
@@ -2525,21 +2525,21 @@ od;
 
 <h5>21.21-2 SetX</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetX</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">...</var>, <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetX</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">...</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>The only difference between <code class="func">SetX</code> and <code class="func">ListX</code> (<a href="chap21_mj.html#X8258477D7F72171B"><span class="RefLink">21.21-1</span></a>) is that the result list of <code class="func">SetX</code> is strictly sorted.</p>
 
 <p><a id="X82B1411E7FBE925F" name="X82B1411E7FBE925F"></a></p>
 
 <h5>21.21-3 SumX</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SumX</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">...</var>, <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SumX</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">...</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">SumX</code> returns the sum of the elements in the list obtained by <code class="func">ListX</code> (<a href="chap21_mj.html#X8258477D7F72171B"><span class="RefLink">21.21-1</span></a>) when this is called with the same arguments.</p>
 
 <p><a id="X7FB318B47D8783DA" name="X7FB318B47D8783DA"></a></p>
 
 <h5>21.21-4 ProductX</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProductX</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">...</var>, <var class="Arg">func</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProductX</code>( <var class="Arg">arg1</var>, <var class="Arg">arg2</var>, <var class="Arg">...</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">ProductX</code> returns the product of the elements in the list obtained by <code class="func">ListX</code> (<a href="chap21_mj.html#X8258477D7F72171B"><span class="RefLink">21.21-1</span></a>) when this is called with the same arguments.</p>
 
 <p><a id="X79596BDE7CAF8491" name="X79596BDE7CAF8491"></a></p>
@@ -2608,7 +2608,7 @@ Error, Range: &lt;last&gt;-&lt;first&gt; (31) must be divisible by &lt;inc&gt; (
 
 <h5>21.22-1 IsRange</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRange</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRange</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>tests if the object <var class="Arg">obj</var> is a range, i.e. is a dense list of integers that is also a range (see <a href="chap21_mj.html#X79596BDE7CAF8491"><span class="RefLink">21.22</span></a> for a definition of "range").</p>
 
 
@@ -2628,7 +2628,7 @@ true
 
 <h5>21.22-2 ConvertToRangeRep</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToRangeRep</code>( <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToRangeRep</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For some lists the <strong class="pkg">GAP</strong> kernel knows that they are in fact ranges. Those lists are represented internally in a compact way instead of the ordinary way.</p>
 
 <p>If <var class="Arg">list</var> is a range then <code class="func">ConvertToRangeRep</code> changes the representation of <var class="Arg">list</var> to this compact representation.</p>
@@ -2675,7 +2675,7 @@ true
 
 <h5>21.23-1 IsQuickPositionList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsQuickPositionList</code>( <var class="Arg">list</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsQuickPositionList</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p>This filter indicates that a position test in <var class="Arg">list</var> is quicker than about 5 or 6 element comparisons for "smaller". If this is the case it can be beneficial to use <code class="func">Position</code> (<a href="chap21_mj.html#X79975EC6783B4293"><span class="RefLink">21.16-1</span></a>) in <var class="Arg">list</var> and a bit list than ordered lists to represent subsets of <var class="Arg">list</var>.</p>
 
 

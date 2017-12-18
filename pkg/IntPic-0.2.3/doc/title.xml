@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    IntPic
+  </Title>
+  <Subtitle>
+    A package for drawing integers
+  </Subtitle>
+  <Version>
+    0.2.3
+  </Version>
+  <Author>
+    Manuel Delgado<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Departamento de Matemática - Faculdade de Ciências<Br/>
+Porto<Br/>
+Portugal<Br/>
+</Address>
+<Email>mdelgado@fc.up.pt</Email>
+<Homepage>http://www.fc.up.pt/cmup/mdelgado/</Homepage>
+
+  </Author>
+  <Date>
+    14 September 2017
+  </Date>
+  </TitlePage>

@@ -12,7 +12,7 @@
   
   [1X23.1-1 IsRowVector[101X
   
-  [29X[2XIsRowVector[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsRowVector[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YA  [13Xrow  vector[113X  is  a  vector  (see [2XIsVector[102X  ([14X31.14-14[114X))  that  is  also  a
   homogeneous list of odd additive nesting depth (see [14X21.12[114X). Typical examples
@@ -159,7 +159,7 @@
   
   [1X23.2-1 NormedRowVector[101X
   
-  [29X[2XNormedRowVector[102X( [3Xv[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNormedRowVector[102X( [3Xv[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  a  scalar  multiple [10X[3Xw[103X[10X = [3Xc[103X[10X * [3Xv[103X[10X[110X of the row vector [3Xv[103X with the property
   that  the  first  nonzero  entry of [3Xw[103X is an identity element in the sense of
@@ -189,10 +189,10 @@
   
   [1X23.3-1 [33X[0;0YConvertToVectorRep[133X[101X
   
-  [29X[2XConvertToVectorRep[102X( [3Xlist[103X[, [3Xfield[103X] ) [32X function
-  [29X[2XConvertToVectorRep[102X( [3Xlist[103X[, [3Xfieldsize[103X] ) [32X function
-  [29X[2XConvertToVectorRepNC[102X( [3Xlist[103X[, [3Xfield[103X] ) [32X function
-  [29X[2XConvertToVectorRepNC[102X( [3Xlist[103X[, [3Xfieldsize[103X] ) [32X function
+  [33X[1;0Y[29X[2XConvertToVectorRep[102X( [3Xlist[103X[, [3Xfield[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XConvertToVectorRep[102X( [3Xlist[103X[, [3Xfieldsize[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XConvertToVectorRepNC[102X( [3Xlist[103X[, [3Xfield[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XConvertToVectorRepNC[102X( [3Xlist[103X[, [3Xfieldsize[103X] ) [32X function[133X
   
   [33X[0;0YCalled  with  one  argument  [3Xlist[103X,  [2XConvertToVectorRep[102X  converts  [3Xlist[103X to an
   internal row vector representation if possible.[133X
@@ -250,7 +250,7 @@
   
   [1X23.3-2 NumberFFVector[101X
   
-  [29X[2XNumberFFVector[102X( [3Xvec[103X, [3Xsz[103X ) [32X operation
+  [33X[1;0Y[29X[2XNumberFFVector[102X( [3Xvec[103X, [3Xsz[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  an  integer  that gives the position of the finite field row vector
   [3Xvec[103X in the sorted list of all row vectors over the field with [3Xsz[103X elements in
@@ -272,7 +272,7 @@
   
   [1X23.4-1 AddRowVector[101X
   
-  [29X[2XAddRowVector[102X( [3Xdst[103X, [3Xsrc[103X[, [3Xmul[103X[, [3Xfrom[103X, [3Xto[103X]] ) [32X operation
+  [33X[1;0Y[29X[2XAddRowVector[102X( [3Xdst[103X, [3Xsrc[103X[, [3Xmul[103X[, [3Xfrom[103X, [3Xto[103X]] ) [32X operation[133X
   
   [33X[0;0YAdds  the  product  of  [3Xsrc[103X and [3Xmul[103X to [3Xdst[103X, changing [3Xdst[103X. If [3Xfrom[103X and [3Xto[103X are
   given then only the index range [10X[ [3Xfrom[103X[10X .. [3Xto[103X[10X ][110X is guaranteed to be affected.
@@ -283,7 +283,7 @@
   
   [1X23.4-2 AddCoeffs[101X
   
-  [29X[2XAddCoeffs[102X( [3Xlist1[103X[, [3Xposs1[103X], [3Xlist2[103X[, [3Xposs2[103X[, [3Xmul[103X]] ) [32X operation
+  [33X[1;0Y[29X[2XAddCoeffs[102X( [3Xlist1[103X[, [3Xposs1[103X], [3Xlist2[103X[, [3Xposs2[103X[, [3Xmul[103X]] ) [32X operation[133X
   
   [33X[0;0Y[2XAddCoeffs[102X adds the entries of [3Xlist2[103X[10X{[110X[3Xposs2[103X[10X}[110X, multiplied by the scalar [3Xmul[103X, to
   [3Xlist1[103X[10X{[110X[3Xposs1[103X[10X}[110X.  Unbound entries in [3Xlist1[103X are assumed to be zero. The position
@@ -307,7 +307,7 @@
   
   [1X23.4-3 MultRowVector[101X
   
-  [29X[2XMultRowVector[102X( [3Xlist1[103X[, [3Xposs1[103X, [3Xlist2[103X, [3Xposs2[103X], [3Xmul[103X ) [32X operation
+  [33X[1;0Y[29X[2XMultRowVector[102X( [3Xlist1[103X[, [3Xposs1[103X, [3Xlist2[103X, [3Xposs2[103X], [3Xmul[103X ) [32X operation[133X
   
   [33X[0;0YThe  five  argument  version  of  this operation replaces [3Xlist1[103X[10X[[110X[3Xposs1[103X[10X[[110X[22Xi[122X[10X]][110X by
   [10X[3Xmul[103X[10X*[3Xlist2[103X[10X[[3Xposs2[103X[10X[[110X[22Xi[122X[10X]][110X for [22Xi[122X between [22X1[122X and [10XLength( [3Xposs1[103X[10X )[110X.[133X
@@ -317,7 +317,7 @@
   
   [1X23.4-4 CoeffsMod[101X
   
-  [29X[2XCoeffsMod[102X( [3Xlist1[103X[, [3Xlen1[103X], [3Xmodulus[103X ) [32X operation
+  [33X[1;0Y[29X[2XCoeffsMod[102X( [3Xlist1[103X[, [3Xlen1[103X], [3Xmodulus[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  coefficient  list  obtained  by  reducing the entries in [3Xlist1[103X
   modulo  [3Xmodulus[103X.  After  reducing  it  shrinks  the  list to remove trailing
@@ -336,21 +336,21 @@
   
   [1X23.5-1 LeftShiftRowVector[101X
   
-  [29X[2XLeftShiftRowVector[102X( [3Xlist[103X, [3Xshift[103X ) [32X operation
+  [33X[1;0Y[29X[2XLeftShiftRowVector[102X( [3Xlist[103X, [3Xshift[103X ) [32X operation[133X
   
   [33X[0;0Ychanges  [3Xlist[103X  by  assigning  [3Xlist[103X[22X[i][122X[10X:=  [110X[3Xlist[103X[22X[i+[3Xshift[103X][122X and removing the last
   [3Xshift[103X entries of the result.[133X
   
   [1X23.5-2 RightShiftRowVector[101X
   
-  [29X[2XRightShiftRowVector[102X( [3Xlist[103X, [3Xshift[103X, [3Xfill[103X ) [32X operation
+  [33X[1;0Y[29X[2XRightShiftRowVector[102X( [3Xlist[103X, [3Xshift[103X, [3Xfill[103X ) [32X operation[133X
   
   [33X[0;0Ychanges  [3Xlist[103X  by  assigning [3Xlist[103X[22X[i+[3Xshift[103X][122X[10X:= [110X[3Xlist[103X[22X[i][122X and filling each of the
   [3Xshift[103X first entries with [3Xfill[103X.[133X
   
   [1X23.5-3 ShrinkRowVector[101X
   
-  [29X[2XShrinkRowVector[102X( [3Xlist[103X ) [32X operation
+  [33X[1;0Y[29X[2XShrinkRowVector[102X( [3Xlist[103X ) [32X operation[133X
   
   [33X[0;0Yremoves trailing zeroes from the list [3Xlist[103X.[133X
   
@@ -361,7 +361,7 @@
   
   [1X23.5-4 RemoveOuterCoeffs[101X
   
-  [29X[2XRemoveOuterCoeffs[102X( [3Xlist[103X, [3Xcoef[103X ) [32X operation
+  [33X[1;0Y[29X[2XRemoveOuterCoeffs[102X( [3Xlist[103X, [3Xcoef[103X ) [32X operation[133X
   
   [33X[0;0Yremoves  [3Xcoef[103X at the beginning and at the end of [3Xlist[103X and returns the number
   of elements removed at the beginning.[133X
@@ -381,14 +381,14 @@
   
   [1X23.6-1 WeightVecFFE[101X
   
-  [29X[2XWeightVecFFE[102X( [3Xvec[103X ) [32X operation
+  [33X[1;0Y[29X[2XWeightVecFFE[102X( [3Xvec[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  weight  of  the  finite  field  vector [3Xvec[103X, i.e. the number of
   nonzero entries.[133X
   
   [1X23.6-2 DistanceVecFFE[101X
   
-  [29X[2XDistanceVecFFE[102X( [3Xvec1[103X, [3Xvec2[103X ) [32X operation
+  [33X[1;0Y[29X[2XDistanceVecFFE[102X( [3Xvec1[103X, [3Xvec2[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the distance between the two vectors [3Xvec1[103X and [3Xvec2[103X, which must have
   the  same length and whose elements must lie in a common field. The distance
@@ -396,7 +396,7 @@
   
   [1X23.6-3 DistancesDistributionVecFFEsVecFFE[101X
   
-  [29X[2XDistancesDistributionVecFFEsVecFFE[102X( [3Xvecs[103X, [3Xvec[103X ) [32X operation
+  [33X[1;0Y[29X[2XDistancesDistributionVecFFEsVecFFE[102X( [3Xvecs[103X, [3Xvec[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  distances distribution of the vector [3Xvec[103X to the vectors in the
   list  [3Xvecs[103X. All vectors must have the same length, and all elements must lie
@@ -406,7 +406,7 @@
   
   [1X23.6-4 DistancesDistributionMatFFEVecFFE[101X
   
-  [29X[2XDistancesDistributionMatFFEVecFFE[102X( [3Xmat[103X, [3XF[103X, [3Xvec[103X ) [32X operation
+  [33X[1;0Y[29X[2XDistancesDistributionMatFFEVecFFE[102X( [3Xmat[103X, [3XF[103X, [3Xvec[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  distances distribution of the vector [3Xvec[103X to the vectors in the
   vector  space  generated by the rows of the matrix [3Xmat[103X over the finite field
@@ -418,8 +418,8 @@
   
   [1X23.6-5 AClosestVectorCombinationsMatFFEVecFFE[101X
   
-  [29X[2XAClosestVectorCombinationsMatFFEVecFFE[102X( [3Xmat[103X, [3Xf[103X, [3Xvec[103X, [3Xl[103X, [3Xstop[103X ) [32X operation
-  [29X[2XAClosestVectorCombinationsMatFFEVecFFECoords[102X( [3Xmat[103X, [3Xf[103X, [3Xvec[103X, [3Xl[103X, [3Xstop[103X ) [32X operation
+  [33X[1;0Y[29X[2XAClosestVectorCombinationsMatFFEVecFFE[102X( [3Xmat[103X, [3Xf[103X, [3Xvec[103X, [3Xl[103X, [3Xstop[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAClosestVectorCombinationsMatFFEVecFFECoords[102X( [3Xmat[103X, [3Xf[103X, [3Xvec[103X, [3Xl[103X, [3Xstop[103X ) [32X operation[133X
   
   [33X[0;0YThese  functions run through the [3Xf[103X-linear combinations of the vectors in the
   rows of the matrix [3Xmat[103X that can be written as linear combinations of exactly
@@ -437,7 +437,7 @@
   
   [1X23.6-6 CosetLeadersMatFFE[101X
   
-  [29X[2XCosetLeadersMatFFE[102X( [3Xmat[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XCosetLeadersMatFFE[102X( [3Xmat[103X, [3Xf[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  a  list  of  representatives  of minimal weight for the cosets of a
   code.  [3Xmat[103X must be a [13Xcheck matrix[113X for the code, the code is defined over the
@@ -464,7 +464,7 @@
   
   [1X23.7-1 ValuePol[101X
   
-  [29X[2XValuePol[102X( [3Xcoeff[103X, [3Xx[103X ) [32X operation
+  [33X[1;0Y[29X[2XValuePol[102X( [3Xcoeff[103X, [3Xx[103X ) [32X operation[133X
   
   [33X[0;0YLet  [3Xcoeff[103X  be  the  coefficients list of a univariate polynomial [22Xf[122X, and [3Xx[103X a
   ring element. Then [2XValuePol[102X returns the value [22Xf([3Xx[103X)[122X.[133X
@@ -479,7 +479,7 @@
   
   [1X23.7-2 ProductCoeffs[101X
   
-  [29X[2XProductCoeffs[102X( [3Xlist1[103X[, [3Xlen1[103X], [3Xlist2[103X[, [3Xlen2[103X] ) [32X operation
+  [33X[1;0Y[29X[2XProductCoeffs[102X( [3Xlist1[103X[, [3Xlen1[103X], [3Xlist2[103X[, [3Xlen2[103X] ) [32X operation[133X
   
   [33X[0;0YLet [22Xp1[122X (and [22Xp2[122X) be polynomials given by the first [3Xlen1[103X ([3Xlen2[103X) entries of the
   coefficient  list  [3Xlist2[103X ([3Xlist2[103X). If [3Xlen1[103X and [3Xlen2[103X are omitted, they default
@@ -493,7 +493,7 @@
   
   [1X23.7-3 ReduceCoeffs[101X
   
-  [29X[2XReduceCoeffs[102X( [3Xlist1[103X[, [3Xlen1[103X], [3Xlist2[103X[, [3Xlen2[103X] ) [32X operation
+  [33X[1;0Y[29X[2XReduceCoeffs[102X( [3Xlist1[103X[, [3Xlen1[103X], [3Xlist2[103X[, [3Xlen2[103X] ) [32X operation[133X
   
   [33X[0;0YLet [22Xp1[122X (and [22Xp2[122X) be polynomials given by the first [3Xlen1[103X ([3Xlen2[103X) entries of the
   coefficient  list  [3Xlist1[103X ([3Xlist2[103X). If [3Xlen1[103X and [3Xlen2[103X are omitted, they default
@@ -512,7 +512,7 @@
   
   [1X23.7-4 ReduceCoeffsMod[101X
   
-  [29X[2XReduceCoeffsMod[102X( [3Xlist1[103X[, [3Xlen1[103X], [3Xlist2[103X[, [3Xlen2[103X], [3Xmodulus[103X ) [32X operation
+  [33X[1;0Y[29X[2XReduceCoeffsMod[102X( [3Xlist1[103X[, [3Xlen1[103X], [3Xlist2[103X[, [3Xlen2[103X], [3Xmodulus[103X ) [32X operation[133X
   
   [33X[0;0YLet [22Xp1[122X (and [22Xp2[122X) be polynomials given by the first [3Xlen1[103X ([3Xlen2[103X) entries of the
   coefficient  list  [3Xlist1[103X ([3Xlist2[103X). If [3Xlen1[103X and [3Xlen2[103X are omitted, they default
@@ -532,7 +532,7 @@
   
   [1X23.7-5 PowerModCoeffs[101X
   
-  [29X[2XPowerModCoeffs[102X( [3Xlist1[103X[, [3Xlen1[103X], [3Xexp[103X, [3Xlist2[103X[, [3Xlen2[103X] ) [32X operation
+  [33X[1;0Y[29X[2XPowerModCoeffs[102X( [3Xlist1[103X[, [3Xlen1[103X], [3Xexp[103X, [3Xlist2[103X[, [3Xlen2[103X] ) [32X operation[133X
   
   [33X[0;0YLet  [22Xp1[122X and [22Xp2[122X be polynomials whose coefficients are given by the first [3Xlen1[103X
   resp.  [3Xlen2[103X  entries of the lists [3Xlist1[103X and [3Xlist2[103X, respectively. If [3Xlen1[103X and
@@ -549,7 +549,7 @@
   
   [1X23.7-6 ShiftedCoeffs[101X
   
-  [29X[2XShiftedCoeffs[102X( [3Xlist[103X, [3Xshift[103X ) [32X operation
+  [33X[1;0Y[29X[2XShiftedCoeffs[102X( [3Xlist[103X, [3Xshift[103X ) [32X operation[133X
   
   [33X[0;0Yproduces  a  new  coefficient  list  [10Xnew[110X obtained by the rule [10Xnew[i+[3Xshift[103X[10X]:=
   [3Xlist[103X[10X[i][110X and filling initial holes by the appropriate zero.[133X

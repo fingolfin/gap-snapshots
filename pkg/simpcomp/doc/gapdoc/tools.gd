@@ -26,13 +26,13 @@
 ## true
 ## gap&gt; c:=SCBdCrossPolytope(3);;
 ## gap&gt; SCReduceComplex(c); 
-## #I  round 0, move: [ [ 4, 6 ], [ 1, 2 ] ]
+## #I  round 0, move: [ [ 4, 5 ], [ 1, 2 ] ]
 ## F: [ 6, 12, 8 ]
-## #I  round 1, move: [ [ 6 ], [ 1, 2, 3 ] ]
+## #I  round 1, move: [ [ 5 ], [ 1, 2, 3 ] ]
 ## F: [ 5, 9, 6 ]
 ## #I  round 1
 ## Reduced complex, F: [ 5, 9, 6 ]
-## #I  round 2, move: [ [ 4 ], [ 1, 2, 5 ] ]
+## #I  round 2, move: [ [ 3 ], [ 1, 2, 6 ] ]
 ## F: [ 4, 6, 4 ]
 ## #I  round 2
 ## Reduced complex, F: [ 4, 6, 4 ]

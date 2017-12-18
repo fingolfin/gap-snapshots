@@ -43,7 +43,7 @@
   
   [1X7.1-1 ShowArguments[101X
   
-  [29X[2XShowArguments[102X(  ) [32X function
+  [33X[1;0Y[29X[2XShowArguments[102X(  ) [32X function[133X
   
   [33X[0;0YThis  function  is  only available within a break loop caused by a [21XNo Method
   Found[121X-error.  It  prints  as  a list the arguments of the operation call for
@@ -51,7 +51,7 @@
   
   [1X7.1-2 ShowArgument[101X
   
-  [29X[2XShowArgument[102X( [3Xnr[103X ) [32X function
+  [33X[1;0Y[29X[2XShowArgument[102X( [3Xnr[103X ) [32X function[133X
   
   [33X[0;0YThis  function  is  only available within a break loop caused by a [21XNo Method
   Found[121X-error.  It  prints the [3Xnr[103X-th arguments of the operation call for which
@@ -60,7 +60,7 @@
   
   [1X7.1-3 ShowDetails[101X
   
-  [29X[2XShowDetails[102X(  ) [32X function
+  [33X[1;0Y[29X[2XShowDetails[102X(  ) [32X function[133X
   
   [33X[0;0YThis  function  is  only available within a break loop caused by a [21XNo Method
   Found[121X-error.  It prints the details of this error: The operation, the number
@@ -73,7 +73,7 @@
   
   [1X7.1-4 ShowMethods[101X
   
-  [29X[2XShowMethods[102X( [[3Xverbosity[103X] ) [32X function
+  [33X[1;0Y[29X[2XShowMethods[102X( [[3Xverbosity[103X] ) [32X function[133X
   
   [33X[0;0YThis  function  is  only available within a break loop caused by a [21XNo Method
   Found[121X-error.  It  prints  an  overview about the installed methods for those
@@ -87,7 +87,7 @@
   
   [1X7.1-5 ShowOtherMethods[101X
   
-  [29X[2XShowOtherMethods[102X( [[3Xverbosity[103X] ) [32X function
+  [33X[1;0Y[29X[2XShowOtherMethods[102X( [[3Xverbosity[103X] ) [32X function[133X
   
   [33X[0;0YThis  function  is  only available within a break loop caused by a [21XNo Method
   Found[121X-error.  It  prints  an  overview  about  the  installed  methods for a
@@ -106,8 +106,8 @@
   
   [1X7.2-1 ApplicableMethod[101X
   
-  [29X[2XApplicableMethod[102X( [3Xopr[103X, [3Xargs[103X[, [3Xprintlevel[103X[, [3Xnr[103X]] ) [32X function
-  [29X[2XApplicableMethodTypes[102X( [3Xopr[103X, [3Xargs[103X[, [3Xprintlevel[103X[, [3Xnr[103X]] ) [32X function
+  [33X[1;0Y[29X[2XApplicableMethod[102X( [3Xopr[103X, [3Xargs[103X[, [3Xprintlevel[103X[, [3Xnr[103X]] ) [32X function[133X
+  [33X[1;0Y[29X[2XApplicableMethodTypes[102X( [3Xopr[103X, [3Xargs[103X[, [3Xprintlevel[103X[, [3Xnr[103X]] ) [32X function[133X
   
   [33X[0;0YCalled  with  two  arguments, [2XApplicableMethod[102X returns the method of highest
   rank that is applicable for the operation [3Xopr[103X with the arguments in the list
@@ -168,8 +168,8 @@
   
   [1X7.3-1 TraceMethods[101X
   
-  [29X[2XTraceMethods[102X( [3Xopr1[103X, [3Xopr2[103X, [3X...[103X ) [32X function
-  [29X[2XTraceMethods[102X( [3Xoprs[103X ) [32X function
+  [33X[1;0Y[29X[2XTraceMethods[102X( [3Xopr1[103X, [3Xopr2[103X, [3X...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XTraceMethods[102X( [3Xoprs[103X ) [32X function[133X
   
   [33X[0;0YAfter  the  call of [10XTraceMethods[110X, whenever a method of one of the operations
   [3Xopr1[103X,  [3Xopr2[103X,  ... is called, the information string used in the installation
@@ -178,14 +178,14 @@
   
   [1X7.3-2 TraceAllMethods[101X
   
-  [29X[2XTraceAllMethods[102X(  ) [32X function
+  [33X[1;0Y[29X[2XTraceAllMethods[102X(  ) [32X function[133X
   
   [33X[0;0YInvokes [10XTraceMethods[110X for all operations.[133X
   
   [1X7.3-3 UntraceMethods[101X
   
-  [29X[2XUntraceMethods[102X( [3Xopr1[103X, [3Xopr2[103X, [3X...[103X ) [32X function
-  [29X[2XUntraceMethods[102X( [3Xoprs[103X ) [32X function
+  [33X[1;0Y[29X[2XUntraceMethods[102X( [3Xopr1[103X, [3Xopr2[103X, [3X...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XUntraceMethods[102X( [3Xoprs[103X ) [32X function[133X
   
   [33X[0;0Yturns  the  tracing  off for all operations [3Xopr1[103X, [3Xopr2[103X, ... or in the second
   form, for all operations in the list [3Xoprs[103X.[133X
@@ -204,14 +204,14 @@
   
   [1X7.3-4 UntraceAllMethods[101X
   
-  [29X[2XUntraceAllMethods[102X(  ) [32X function
+  [33X[1;0Y[29X[2XUntraceAllMethods[102X(  ) [32X function[133X
   
   [33X[0;0YEquivalent to calling [10XUntraceMethods[110X for all operations.[133X
   
   [1X7.3-5 TraceImmediateMethods[101X
   
-  [29X[2XTraceImmediateMethods[102X( [[3Xflag[103X] ) [32X function
-  [29X[2XUntraceImmediateMethods[102X(  ) [32X function
+  [33X[1;0Y[29X[2XTraceImmediateMethods[102X( [[3Xflag[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XUntraceImmediateMethods[102X(  ) [32X function[133X
   
   [33X[0;0Y[2XTraceImmediateMethods[102X  enables  tracing for all immediate methods if [3Xflag[103X is
   either     [9Xtrue[109X,     or    not    present.    [2XUntraceImmediateMethods[102X,    or
@@ -263,13 +263,13 @@
   
   [1X7.4-1 NewInfoClass[101X
   
-  [29X[2XNewInfoClass[102X( [3Xname[103X ) [32X operation
+  [33X[1;0Y[29X[2XNewInfoClass[102X( [3Xname[103X ) [32X operation[133X
   
   [33X[0;0Ycreates a new info class with name [3Xname[103X.[133X
   
   [1X7.4-2 DeclareInfoClass[101X
   
-  [29X[2XDeclareInfoClass[102X( [3Xname[103X ) [32X function
+  [33X[1;0Y[29X[2XDeclareInfoClass[102X( [3Xname[103X ) [32X function[133X
   
   [33X[0;0Ycreates  a new info class with name [3Xname[103X and binds it to the global variable
   [3Xname[103X. The variable must previously be writable, and is made readonly by this
@@ -277,19 +277,19 @@
   
   [1X7.4-3 SetInfoLevel[101X
   
-  [29X[2XSetInfoLevel[102X( [3Xinfoclass[103X, [3Xlevel[103X ) [32X operation
+  [33X[1;0Y[29X[2XSetInfoLevel[102X( [3Xinfoclass[103X, [3Xlevel[103X ) [32X operation[133X
   
   [33X[0;0YSets the info level for [3Xinfoclass[103X to [3Xlevel[103X.[133X
   
   [1X7.4-4 InfoLevel[101X
   
-  [29X[2XInfoLevel[102X( [3Xinfoclass[103X ) [32X operation
+  [33X[1;0Y[29X[2XInfoLevel[102X( [3Xinfoclass[103X ) [32X operation[133X
   
   [33X[0;0Yreturns the info level of [3Xinfoclass[103X.[133X
   
   [1X7.4-5 Info[101X
   
-  [29X[2XInfo[102X( [3Xinfoclass[103X, [3Xlevel[103X, [3Xinfo[103X[, [3Xmoreinfo[103X, [3X...[103X] ) [32X function
+  [33X[1;0Y[29X[2XInfo[102X( [3Xinfoclass[103X, [3Xlevel[103X, [3Xinfo[103X[, [3Xmoreinfo[103X, [3X...[103X] ) [32X function[133X
   
   [33X[0;0YIf  the  info  level of [3Xinfoclass[103X is at least [3Xlevel[103X the remaining arguments,
   [3Xinfo[103X and possibly [3Xmoreinfo[103X and so on, are evaluated. (Technically, [2XInfo[102X is a
@@ -342,9 +342,9 @@
   
   [1X7.4-6 [33X[0;0YCustomizing [2XInfo[102X[101X[1X ([14X7.4-5[114X) statements[133X[101X
   
-  [29X[2XSetInfoHandler[102X( [3Xinfoclass[103X, [3Xhandler[103X ) [32X function
-  [29X[2XSetInfoOutput[102X( [3Xinfoclass[103X, [3Xout[103X ) [32X function
-  [29X[2XSetDefaultInfoOutput[102X( [3Xout[103X ) [32X function
+  [33X[1;0Y[29X[2XSetInfoHandler[102X( [3Xinfoclass[103X, [3Xhandler[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSetInfoOutput[102X( [3Xinfoclass[103X, [3Xout[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSetDefaultInfoOutput[102X( [3Xout[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThis  allows  to  customize  what  happens in an [10XInfo([3Xinfoclass[103X[10X, [3Xlevel[103X[10X, ...)[110X
@@ -374,7 +374,7 @@
   
   [1X7.4-7 InfoWarning[101X
   
-  [29X[2XInfoWarning[102X[32X info class
+  [33X[1;0Y[29X[2XInfoWarning[102X[32X info class[133X
   
   [33X[0;0Yis an info class to which general warnings are sent at level 1, which is its
   default level. More specialised warnings are shown via calls of [2XInfo[102X ([14X7.4-5[114X)
@@ -390,19 +390,19 @@
   
   [1X7.5-1 SetAssertionLevel[101X
   
-  [29X[2XSetAssertionLevel[102X( [3Xlev[103X ) [32X function
+  [33X[1;0Y[29X[2XSetAssertionLevel[102X( [3Xlev[103X ) [32X function[133X
   
   [33X[0;0Yassigns the global assertion level to [3Xlev[103X. By default it is zero.[133X
   
   [1X7.5-2 AssertionLevel[101X
   
-  [29X[2XAssertionLevel[102X(  ) [32X function
+  [33X[1;0Y[29X[2XAssertionLevel[102X(  ) [32X function[133X
   
   [33X[0;0Yreturns the current assertion level.[133X
   
   [1X7.5-3 Assert[101X
   
-  [29X[2XAssert[102X( [3Xlev[103X, [3Xcond[103X[, [3Xmessage[103X] ) [32X function
+  [33X[1;0Y[29X[2XAssert[102X( [3Xlev[103X, [3Xcond[103X[, [3Xmessage[103X] ) [32X function[133X
   
   [33X[0;0YWith two arguments, if the global assertion level is at least [3Xlev[103X, condition
   [3Xcond[103X  is  tested  and  if  it  does not return [9Xtrue[109X an error is raised. Thus
@@ -426,7 +426,7 @@
   
   [1X7.6-1 Runtimes[101X
   
-  [29X[2XRuntimes[102X(  ) [32X function
+  [33X[1;0Y[29X[2XRuntimes[102X(  ) [32X function[133X
   
   [33X[0;0Y[2XRuntimes[102X  returns  a  record with components bound to integers or [9Xfail[109X. Each
   integer  is  the cpu time (processor time) in milliseconds spent by [5XGAP[105X in a
@@ -474,7 +474,7 @@
   
   [1X7.6-2 Runtime[101X
   
-  [29X[2XRuntime[102X(  ) [32X function
+  [33X[1;0Y[29X[2XRuntime[102X(  ) [32X function[133X
   
   [33X[0;0Y[2XRuntime[102X  returns  the time spent by [5XGAP[105X in milliseconds as an integer. It is
   the  same as the value of the [10Xuser_time[110X component given by [2XRuntimes[102X ([14X7.6-1[114X),
@@ -485,7 +485,7 @@
   
   [1X7.6-3 time[101X
   
-  [29X[2Xtime[102X[32X global variable
+  [33X[1;0Y[29X[2Xtime[102X[32X global variable[133X
   
   [33X[0;0YIn the read-eval-print loop, [2Xtime[102X stores the time the last command took.[133X
   
@@ -533,7 +533,7 @@
   
   [1X7.7-2 ProfileGlobalFunctions[101X
   
-  [29X[2XProfileGlobalFunctions[102X( [[3Xbool[103X] ) [32X function
+  [33X[1;0Y[29X[2XProfileGlobalFunctions[102X( [[3Xbool[103X] ) [32X function[133X
   
   [33X[0;0YCalled  with  argument  [9Xtrue[109X, [2XProfileGlobalFunctions[102X starts profiling of all
   functions  that  have been declared via [2XDeclareGlobalFunction[102X ([14X79.18-7[114X). Old
@@ -547,7 +547,7 @@
   
   [1X7.7-3 ProfileOperations[101X
   
-  [29X[2XProfileOperations[102X( [[3Xbool[103X] ) [32X function
+  [33X[1;0Y[29X[2XProfileOperations[102X( [[3Xbool[103X] ) [32X function[133X
   
   [33X[0;0YCalled  with  argument  [9Xtrue[109X,  [2XProfileOperations[102X  starts  profiling  of  all
   operations.  Old  profile  information  for  all  operations  is  cleared. A
@@ -560,7 +560,7 @@
   
   [1X7.7-4 ProfileOperationsAndMethods[101X
   
-  [29X[2XProfileOperationsAndMethods[102X( [[3Xbool[103X] ) [32X function
+  [33X[1;0Y[29X[2XProfileOperationsAndMethods[102X( [[3Xbool[103X] ) [32X function[133X
   
   [33X[0;0YCalled  with  argument [9Xtrue[109X, [2XProfileOperationsAndMethods[102X starts profiling of
   all  operations  and  their  methods.  Old  profile  information  for  these
@@ -574,7 +574,7 @@
   
   [1X7.7-5 ProfileFunctions[101X
   
-  [29X[2XProfileFunctions[102X( [3Xfuncs[103X ) [32X function
+  [33X[1;0Y[29X[2XProfileFunctions[102X( [3Xfuncs[103X ) [32X function[133X
   
   [33X[0;0Ystarts   profiling  for  all  function  in  the  list  [3Xfuncs[103X.  You  can  use
   [2XProfileGlobalFunctions[102X  ([14X7.7-2[114X)  to  turn  profiling  on  for  all  globally
@@ -582,20 +582,20 @@
   
   [1X7.7-6 UnprofileFunctions[101X
   
-  [29X[2XUnprofileFunctions[102X( [3Xfuncs[103X ) [32X function
+  [33X[1;0Y[29X[2XUnprofileFunctions[102X( [3Xfuncs[103X ) [32X function[133X
   
   [33X[0;0Ystops  profiling for all function in the list [3Xfuncs[103X. Recorded information is
   still kept, so you can display it even after turning the profiling off.[133X
   
   [1X7.7-7 ProfileMethods[101X
   
-  [29X[2XProfileMethods[102X( [3Xops[103X ) [32X function
+  [33X[1;0Y[29X[2XProfileMethods[102X( [3Xops[103X ) [32X function[133X
   
   [33X[0;0Ystarts profiling of the methods for all operations in the list [3Xops[103X.[133X
   
   [1X7.7-8 UnprofileMethods[101X
   
-  [29X[2XUnprofileMethods[102X( [3Xops[103X ) [32X function
+  [33X[1;0Y[29X[2XUnprofileMethods[102X( [3Xops[103X ) [32X function[133X
   
   [33X[0;0Ystops  profiling of the methods for all operations in the list [3Xops[103X. Recorded
   information  is  still  kept,  so  you can display it even after turning the
@@ -603,8 +603,8 @@
   
   [1X7.7-9 DisplayProfile[101X
   
-  [29X[2XDisplayProfile[102X( [[3Xfunctions[103X, ][[3Xmincount[103X, [3Xmintime[103X] ) [32X function
-  [29X[2XGAPInfo.ProfileThreshold[102X[32X global variable
+  [33X[1;0Y[29X[2XDisplayProfile[102X( [[3Xfunctions[103X, ][[3Xmincount[103X, [3Xmintime[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XGAPInfo.ProfileThreshold[102X[32X global variable[133X
   
   [33X[0;0YCalled  without  arguments,  [2XDisplayProfile[102X displays the profile information
   for  profiled operations, methods and functions. If an argument [3Xfunctions[103X is
@@ -644,7 +644,7 @@
   
   [1X7.7-10 ClearProfile[101X
   
-  [29X[2XClearProfile[102X(  ) [32X function
+  [33X[1;0Y[29X[2XClearProfile[102X(  ) [32X function[133X
   
   [33X[0;0Yclears all stored profile information.[133X
   
@@ -871,7 +871,7 @@
   
   [1X7.7-14 ProfileLineByLine[101X
   
-  [29X[2XProfileLineByLine[102X( [3Xfilename[103X[, [3Xoptions[103X] ) [32X function
+  [33X[1;0Y[29X[2XProfileLineByLine[102X( [3Xfilename[103X[, [3Xoptions[103X] ) [32X function[133X
   
   [33X[0;0Y[2XProfileLineByLine[102X  begins GAP recording profiling data to the file [3Xfilename[103X.
   This  file will get *very* large very quickly. This file is compressed using
@@ -904,28 +904,28 @@
   
   [1X7.7-15 CoverageLineByLine[101X
   
-  [29X[2XCoverageLineByLine[102X( [3Xfilename[103X ) [32X function
+  [33X[1;0Y[29X[2XCoverageLineByLine[102X( [3Xfilename[103X ) [32X function[133X
   
   [33X[0;0Y[2XCoverageLineByLine[102X  begins GAP recording code coverage to the file [3Xfilename[103X.
   This is equivalent to calling [2XProfileLineByLine[102X ([14X7.7-14[114X) with coverage=true.[133X
   
   [1X7.7-16 UnprofileLineByLine[101X
   
-  [29X[2XUnprofileLineByLine[102X(  ) [32X function
+  [33X[1;0Y[29X[2XUnprofileLineByLine[102X(  ) [32X function[133X
   
   [33X[0;0YStops profiling which was previously started with [2XProfileLineByLine[102X ([14X7.7-14[114X)
   or [2XCoverageLineByLine[102X ([14X7.7-15[114X).[133X
   
   [1X7.7-17 UncoverageLineByLine[101X
   
-  [29X[2XUncoverageLineByLine[102X(  ) [32X function
+  [33X[1;0Y[29X[2XUncoverageLineByLine[102X(  ) [32X function[133X
   
   [33X[0;0YStops profiling which was previously started with [2XProfileLineByLine[102X ([14X7.7-14[114X)
   or [2XCoverageLineByLine[102X ([14X7.7-15[114X).[133X
   
   [1X7.7-18 ActivateProfileColour[101X
   
-  [29X[2XActivateProfileColour[102X(  ) [32X function
+  [33X[1;0Y[29X[2XActivateProfileColour[102X(  ) [32X function[133X
   
   [33X[0;0YCalled  with argument [9Xtrue[109X, [2XActivateProfileColour[102X makes GAP colour functions
   when  printing  them  to show which lines have been executed while profiling
@@ -934,20 +934,20 @@
   
   [1X7.7-19 IsLineByLineProfileActive[101X
   
-  [29X[2XIsLineByLineProfileActive[102X(  ) [32X function
+  [33X[1;0Y[29X[2XIsLineByLineProfileActive[102X(  ) [32X function[133X
   
   [33X[0;0Y[2XIsLineByLineProfileActive[102X  returns  if  line-by-line  profiling is currently
   activated.[133X
   
   [1X7.7-20 DisplayCacheStats[101X
   
-  [29X[2XDisplayCacheStats[102X(  ) [32X function
+  [33X[1;0Y[29X[2XDisplayCacheStats[102X(  ) [32X function[133X
   
   [33X[0;0Ydisplays statistics about the different caches used by the method selection.[133X
   
   [1X7.7-21 ClearCacheStats[101X
   
-  [29X[2XClearCacheStats[102X(  ) [32X function
+  [33X[1;0Y[29X[2XClearCacheStats[102X(  ) [32X function[133X
   
   [33X[0;0Yclears  all  statistics  about  the  different  caches  used  by  the method
   selection.[133X
@@ -977,8 +977,8 @@
   
   [1X7.9-1 [33X[0;0YStarting and stopping test[133X[101X
   
-  [29X[2XSTART_TEST[102X( [3Xid[103X ) [32X function
-  [29X[2XSTOP_TEST[102X( [3Xfile[103X, [3Xfac[103X ) [32X function
+  [33X[1;0Y[29X[2XSTART_TEST[102X( [3Xid[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSTOP_TEST[102X( [3Xfile[103X, [3Xfac[103X ) [32X function[133X
   
   [33X[0;0Y[2XSTART_TEST[102X  and  [2XSTOP_TEST[102X may be optionally used in files that are read via
   [2XTest[102X  ([14X7.9-2[114X).  If  used,  [2XSTART_TEST[102X reinitialize the caches and the global
@@ -1046,7 +1046,7 @@
   
   [1X7.9-2 Test[101X
   
-  [29X[2XTest[102X( [3Xfname[103X[, [3Xoptrec[103X] ) [32X function
+  [33X[1;0Y[29X[2XTest[102X( [3Xfname[103X[, [3Xoptrec[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThe  argument  [3Xfname[103X must be the name of a file or an open input stream. The
@@ -1184,7 +1184,7 @@
   
   [1X7.9-3 TestDirectory[101X
   
-  [29X[2XTestDirectory[102X( [3Xinlist[103X[, [3Xoptrec[103X] ) [32X function
+  [33X[1;0Y[29X[2XTestDirectory[102X( [3Xinlist[103X[, [3Xoptrec[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThe argument [3Xinlist[103X must be either a single filename or directory name, or a
@@ -1281,7 +1281,7 @@
   
   [1X7.10-1 SetRecursionTrapInterval[101X
   
-  [29X[2XSetRecursionTrapInterval[102X( [3Xinterval[103X ) [32X function
+  [33X[1;0Y[29X[2XSetRecursionTrapInterval[102X( [3Xinterval[103X ) [32X function[133X
   
   [33X[0;0Y[3Xinterval[103X  must  be  a  non-negative  small  integer (between 0 and [22X2^28[122X). An
   [3Xinterval[103X  of  0  suppresses  the monitoring of recursion altogether. In this
@@ -1345,7 +1345,7 @@
   
   [1X7.11-1 GasmanStatistics[101X
   
-  [29X[2XGasmanStatistics[102X(  ) [32X function
+  [33X[1;0Y[29X[2XGasmanStatistics[102X(  ) [32X function[133X
   
   [33X[0;0Y[2XGasmanStatistics[102X  returns  a  record  containing  some  information from the
   garbage  collection mechanism. The record may contain up to four components:
@@ -1381,8 +1381,8 @@
   
   [1X7.11-2 GasmanMessageStatus[101X
   
-  [29X[2XGasmanMessageStatus[102X(  ) [32X function
-  [29X[2XSetGasmanMessageStatus[102X( [3Xstat[103X ) [32X function
+  [33X[1;0Y[29X[2XGasmanMessageStatus[102X(  ) [32X function[133X
+  [33X[1;0Y[29X[2XSetGasmanMessageStatus[102X( [3Xstat[103X ) [32X function[133X
   
   [33X[0;0Y[2XGasmanMessageStatus[102X  returns  one  of  the strings [10X"none"[110X, [10X"full"[110X, or [10X"all"[110X,
   depending  on  whether  the  garbage  collector  is  currently  set to print
@@ -1395,7 +1395,7 @@
   
   [1X7.11-3 GasmanLimits[101X
   
-  [29X[2XGasmanLimits[102X(  ) [32X function
+  [33X[1;0Y[29X[2XGasmanLimits[102X(  ) [32X function[133X
   
   [33X[0;0Y[2XGasmanLimits[102X  returns  a  record  with  three components: [10Xmin[110X is the minimum
   workspace  size  as  set  by  the  [10X-m[110X  command line option in kilobytes. The

@@ -19,6 +19,7 @@
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8.html">[Next Chapter]</a>&nbsp;  </div>
 
+<p id="mathjaxlink" class="pcenter"><a href="chap7_mj.html">[MathJax on]</a></p>
 <p><a id="X7F96B1327C022A28" name="X7F96B1327C022A28"></a></p>
 <div class="ChapSects"><a href="chap7.html#X7F96B1327C022A28">7 <span class="Heading">Finite Classical Polar Spaces</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7F96B1327C022A28">7.1 <span class="Heading">Finite Classical Polar Spaces</span></a>
@@ -80,7 +81,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X7FFA08DA85C5251C">7.6-1 ShadowOfElement</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X81A8365A7FE68447">7.6-2 ElementsIncidentWithElementOfIncidenceStructure</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7ADF374F8347F527">7.7 <span class="Heading">Projective Orthogonal/Unitary/Symplectic groups in <strong class="pkg">FinInG</strong></span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap7.html#X7988AF9978E75E37">7.7 <span class="Heading">Projective Orthogonal/Unitary/Symplectic groups in <strong class="pkg">FinInG</strong></span></a>
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap7.html#X857C261585038CB8">7.7-1 SpecialIsometryGroup</a></span>
@@ -124,9 +125,9 @@
 
 <p>The underlying vector space and matrix group are to our advantage in the treatment of classical polar spaces. We refer the reader to <a href="chapBib.html#biBHirschfeldThas">[HT91]</a> and <a href="chapBib.html#biBCameron">[Cam00b]</a> for the necessary background theory (if it is not otherwise provided), and we follow the approach of <a href="chapBib.html#biBCameron">[Cam00b]</a> to introduce all different flavours.</p>
 
-<p>Consider the projective space <span class="SimpleMath">PG(n,q)</span> with underlying vector space <span class="SimpleMath">V(n+1,q)</span>. Consider a non-degenerate sesquilinear form <span class="SimpleMath">f</span>. Then <span class="SimpleMath">f</span> is Hermitian, alternating or symmetric. When the characteristic of the field is odd, respectively even, a symmetric bilinear form is called orthogonal, respectively, pseudo. We do not consider the pseudo case, so we suppose that <span class="SimpleMath">f</span> is Hermitian, symplectic or orthogonal. The classical polar space associated with <span class="SimpleMath">f</span> is the incidence geometry whose elements are of the subspaces of <span class="SimpleMath">PG(n,q)</span> whose underlying vector subspace is totally isotropic with relation to <span class="SimpleMath">f</span>. We call a polar space <em>Hermitian</em>, respectively, <em>symplectic</em>, <em>orthogonal</em>, if the underlying sesquilinear form is Hermitian, respectively, symplectic, orthogonal.</p>
+<p>Consider the projective space PG(n,q) with underlying vector space <span class="SimpleMath">V(n+1,q)</span>. Consider a non-degenerate sesquilinear form <span class="SimpleMath">f</span>. Then <span class="SimpleMath">f</span> is Hermitian, alternating or symmetric. When the characteristic of the field is odd, respectively even, a symmetric bilinear form is called orthogonal, respectively, pseudo. We do not consider the pseudo case, so we suppose that <span class="SimpleMath">f</span> is Hermitian, symplectic or orthogonal. The classical polar space associated with <span class="SimpleMath">f</span> is the incidence geometry whose elements are of the subspaces of PG(n,q) whose underlying vector subspace is totally isotropic with relation to <span class="SimpleMath">f</span>. We call a polar space <em>Hermitian</em>, respectively, <em>symplectic</em>, <em>orthogonal</em>, if the underlying sesquilinear form is Hermitian, respectively, symplectic, orthogonal.</p>
 
-<p>Symmetric bilinear forms have completely different geometric properties in even characteristic than in odd characteristic. On the other hand, polar spaces geometrically comparable to orthogonal polar spaces in odd characteristic, do exist in even characteristic. The algebraic background is now established by quadratic forms on a vector space instead of bilinear forms. Consider a non-singular quadratic form <span class="SimpleMath">q</span> on a vector space <span class="SimpleMath">V(n+1,q)</span>. The classical polar space associated with <span class="SimpleMath">f</span> is the incidence geometry whose elements are the subspaces of <span class="SimpleMath">PG(n,q)</span> whose underlying vector subspace is totally singular with relation to <span class="SimpleMath">q</span>. The connection with orthogonal polar spaces in odd characteristic is clear, since in odd characteristic, quadratic forms and symmetric bilinear forms are equivalent. Therefore, we call polar spaces with an underlying quadratic form in even characteristic also <em>orthogonal</em> polar spaces.</p>
+<p>Symmetric bilinear forms have completely different geometric properties in even characteristic than in odd characteristic. On the other hand, polar spaces geometrically comparable to orthogonal polar spaces in odd characteristic, do exist in even characteristic. The algebraic background is now established by quadratic forms on a vector space instead of bilinear forms. Consider a non-singular quadratic form <span class="SimpleMath">q</span> on a vector space <span class="SimpleMath">V(n+1,q)</span>. The classical polar space associated with <span class="SimpleMath">f</span> is the incidence geometry whose elements are the subspaces of PG(n,q) whose underlying vector subspace is totally singular with relation to <span class="SimpleMath">q</span>. The connection with orthogonal polar spaces in odd characteristic is clear, since in odd characteristic, quadratic forms and symmetric bilinear forms are equivalent. Therefore, we call polar spaces with an underlying quadratic form in even characteristic also <em>orthogonal</em> polar spaces.</p>
 
 <p><a id="X863BC8E57C98A471" name="X863BC8E57C98A471"></a></p>
 
@@ -197,11 +198,19 @@ true
 
 <p>To introduce the classification of polar spaces, we use the classification of the underlying forms in similarity classes. We follow mostly the approach and terminology of <a href="chapBib.html#biBKleidmanLiebeck">[KL90]</a>, as we did in the manual of the package <strong class="pkg">Forms</strong>.</p>
 
-<p>Consider a vector space <span class="SimpleMath">V=V(n+1,q)</span> and a sesquilinear form <span class="SimpleMath">f</span> on <span class="SimpleMath">V</span>. The pair <span class="SimpleMath">(V,f)</span> is called a formed space. Consider now two formed spaces <span class="SimpleMath">(V,f)</span> and <span class="SimpleMath">(V,f')</span>, where <span class="SimpleMath">f</span> and <span class="SimpleMath">f'</span> are two sesquilinear forms on <span class="SimpleMath">V</span>. A non-singular linear map φ from <span class="SimpleMath">V</span> to itself induces a <em>similarity</em> of the formed space <span class="SimpleMath">(V,f)</span> to the formed space <span class="SimpleMath">(V,f')</span> if and only if f(v,w) = λ (f'(φ(v),φ(w))), for all vectors <span class="SimpleMath">v,w</span> some non-zero λ in <span class="SimpleMath">GF(q)</span>. Up to similarity, there is only one class of non-degenerate Hermitian forms, and one class of non-degenerate symplectic forms on a given vector space <span class="SimpleMath">V</span>. For symmetric bilinear forms in odd characteristic, the number of similarity classes depends on the dimension of <span class="SimpleMath">V</span>. In odd dimension, there is only one similarity class, and non-degenerate forms in this class are called parabolic (bilinear) forms. In even dimension, there are two similarity classes, and non-degenerate forms are either elliptic (bilinear) forms or hyperbolic (bilinear) forms.</p>
+<p>Consider a vector space <span class="SimpleMath">V=V(n+1,q)</span> and a sesquilinear form <span class="SimpleMath">f</span> on <span class="SimpleMath">V</span>. The pair <span class="SimpleMath">(V,f)</span> is called a formed space. Consider now two formed spaces <span class="SimpleMath">(V,f)</span> and <span class="SimpleMath">(V,f')</span>, where <span class="SimpleMath">f</span> and <span class="SimpleMath">f'</span> are two sesquilinear forms on <span class="SimpleMath">V</span>. A non-singular linear map φ from <span class="SimpleMath">V</span> to itself induces a <em>similarity</em> of the formed space <span class="SimpleMath">(V,f)</span> to the formed space <span class="SimpleMath">(V,f')</span> if and only if</p>
 
-<p>Consider now a vector space <span class="SimpleMath">V</span> and a quadratic form <span class="SimpleMath">q</span> on <span class="SimpleMath">V</span>. The pair <span class="SimpleMath">(V,q)</span> is called a formed space. Consider now two formed spaces <span class="SimpleMath">(V,q)</span> and <span class="SimpleMath">(V,q')</span>, where <span class="SimpleMath">q</span> and <span class="SimpleMath">q'</span> are two quadratic forms on <span class="SimpleMath">V</span>. A non-degenerate linear map φ from <span class="SimpleMath">V</span> to itself induces a <em>similarity</em> of the formed space <span class="SimpleMath">(V,q)</span> to the formed space <span class="SimpleMath">(V,q')</span> if and only if f(v) = λ (f'(φ(v))), for all vectors <span class="SimpleMath">v</span> some non-zero λ in <span class="SimpleMath">GF(q)</span>. For quadratic forms in even characteristic, the number of similarity classes depends on the dimension of <span class="SimpleMath">V</span>. In odd dimension, there is only one similarity class, and non-degenerate forms in this class are called parabolic (bilinear) forms. In even dimension, there are two similarity classes, and non-degenerate forms are either elliptic (bilinear) forms or hyperbolic (bilinear) forms.</p>
+<p class="pcenter">f(v,w) = λ (f'(φ(v),φ(w))),</p>
 
-<p>If φ induces a similarity of a formed vector space such that λ=1, then the similarity is called an <em>isometry</em> of the formed vector space. In almost all cases, each similarity class contains exactly one isometry class. Only the orthogonal sesquilinear forms (in odd characteristic) have two isometry classes. Consequently, if an isometry exists between formed vector spaces, they are called <em>isometric</em>. Projectively, a formed vector space becomes a classical polar space embedded in a projective space. Obviously, forms in the same similarity class determine exactly the same classical polar space. Conversely, it is well known that a classical polar space determines a form up to a constant factor, i.e. it determines a similarity class of forms. In <strong class="pkg">FinInG</strong>, the word <em>canonical</em> is used in the mathematical sense, i.e. a classical polar space is <em>canonical</em> if its determining form belongs to a fixed similarity class. A classical polar space is called <em>standard</em> if its determining form is the fixed representative of the canonical similarity class. Hence a <em>standard</em> classical polar space is always a <em>canonical</em> classical polar space, a canonical polar space is determined by a standard form up to a constant factor. In the following table, we summerise the above information on polar spaces, together with the standard forms that are chosen in <strong class="pkg">FinInG</strong>. Note that <span class="SimpleMath">Tr</span> refers to the absolute Trace.</p>
+<p>for all vectors <span class="SimpleMath">v,w</span> and some non-zero λ in <span class="SimpleMath">GF(q)</span>. Up to similarity, there is only one class of non-degenerate Hermitian forms, and one class of non-degenerate symplectic forms on a given vector space <span class="SimpleMath">V</span>. For symmetric bilinear forms in odd characteristic, the number of similarity classes depends on the dimension of <span class="SimpleMath">V</span>. In odd dimension, there is only one similarity class, and non-degenerate forms in this class are called parabolic (bilinear) forms. In even dimension, there are two similarity classes, and non-degenerate forms are either elliptic (bilinear) forms or hyperbolic (bilinear) forms.</p>
+
+<p>Consider now a vector space <span class="SimpleMath">V</span> and a quadratic form <span class="SimpleMath">q</span> on <span class="SimpleMath">V</span>. The pair <span class="SimpleMath">(V,q)</span> is called a formed space. Consider now two formed spaces <span class="SimpleMath">(V,q)</span> and <span class="SimpleMath">(V,q')</span>, where <span class="SimpleMath">q</span> and <span class="SimpleMath">q'</span> are two quadratic forms on <span class="SimpleMath">V</span>. A non-degenerate linear map φ from <span class="SimpleMath">V</span> to itself induces a <em>similarity</em> of the formed space <span class="SimpleMath">(V,q)</span> to the formed space <span class="SimpleMath">(V,q')</span> if and only if</p>
+
+<p class="pcenter">q(v) = λ (q'(φ(v))),</p>
+
+<p>for all vectors <span class="SimpleMath">v</span> and some non-zero λ in <span class="SimpleMath">GF(q)</span>. For quadratic forms in even characteristic, the number of similarity classes depends on the dimension of <span class="SimpleMath">V</span>. In odd dimension, there is only one similarity class, and non-degenerate forms in this class are called parabolic (bilinear) forms. In even dimension, there are two similarity classes, and non-degenerate forms are either elliptic (bilinear) forms or hyperbolic (bilinear) forms.</p>
+
+<p>If φ induces a similarity of a formed vector space such that <span class="SimpleMath">λ = 1</span>, then the similarity is called an <em>isometry</em> of the formed vector space. In almost all cases, each similarity class contains exactly one isometry class. Only the orthogonal sesquilinear forms (in odd characteristic) have two isometry classes. Consequently, if an isometry exists between formed vector spaces, they are called <em>isometric</em>. Projectively, a formed vector space becomes a classical polar space embedded in a projective space. Obviously, forms in the same similarity class determine exactly the same classical polar space. Conversely, it is well known that a classical polar space determines a form up to a constant factor, i.e. it determines a similarity class of forms. In <strong class="pkg">FinInG</strong>, the word <em>canonical</em> is used in the mathematical sense, i.e. a classical polar space is <em>canonical</em> if its determining form belongs to a fixed similarity class. A classical polar space is called <em>standard</em> if its determining form is the fixed representative of the canonical similarity class. Hence a <em>standard</em> classical polar space is always a <em>canonical</em> classical polar space, a canonical polar space is determined by a standard form up to a constant factor. In the following table, we summerise the above information on polar spaces, together with the standard forms that are chosen in <strong class="pkg">FinInG</strong>. Note that Tr refers to the absolute trace map from GF(q) to GF(p).</p>
 
 <div class="pcenter"><table class="GAPDocTable">
 <caption class="GAPDocTable"><b>Table: </b>finite classical polar spaces</caption>
@@ -214,19 +223,19 @@ true
 <tr>
 <td class="tdleft">hermitian polar space</td>
 <td class="tdleft">X<sub>0</sub><sup>q+1</sup> + X<sub>1</sub><sup>q+1</sup> ... + X<sub>n</sub><sup>q+1</sup></td>
-<td class="tdleft">odd and even</td>
-<td class="tdleft">odd and even</td>
+<td class="tdleft">odd or even</td>
+<td class="tdleft">odd or even</td>
 </tr>
 <tr>
 <td class="tdleft">symplectic space</td>
 <td class="tdleft">X<sub>0</sub> Y<sub>1</sub> - X<sub>1</sub>Y<sub>0</sub> + ... + X<sub>n-1</sub>Y<sub>n</sub> - X<sub>n</sub>Y<sub>n-1</sub></td>
-<td class="tdleft">odd and even</td>
+<td class="tdleft">odd or even</td>
 <td class="tdleft">odd</td>
 </tr>
 <tr>
 <td class="tdleft">hyperbolic quadric</td>
 <td class="tdleft">X<sub>0</sub> X<sub>1</sub> + ... + X<sub>n-1</sub>X<sub>n</sub></td>
-<td class="tdleft">p ≡ 3 mod 4 and p even</td>
+<td class="tdleft">p ≡ 3 mod 4 or p=2</td>
 <td class="tdleft">odd</td>
 </tr>
 <tr>
@@ -238,7 +247,7 @@ true
 <tr>
 <td class="tdleft">parabolic quadric</td>
 <td class="tdleft">X<sub>0</sub><sup>2</sup> + X<sub>1</sub> X<sub>2</sub> + ... + X<sub>n-1</sub>X<sub>n</sub></td>
-<td class="tdleft">p ≡ 1,3 mod 8 and p even</td>
+<td class="tdleft">p ≡ 1,3 mod 8 or <span class="SimpleMath">p=2</span></td>
 <td class="tdleft">even</td>
 </tr>
 <tr>
@@ -255,8 +264,8 @@ true
 </tr>
 <tr>
 <td class="tdleft">elliptic quadric</td>
-<td class="tdleft">X<sub>0</sub><sup>2</sup> + tX<sub>1</sub><sup>2</sup> + X<sub>2</sub> X<sub>3</sub> + ... + X<sub>n-1</sub>X<sub>n</sub> , <span class="SimpleMath">t</span> a primitive element of <span class="SimpleMath">GF(p)</span></td>
-<td class="tdleft">odd</td>
+<td class="tdleft">X<sub>0</sub><sup>2</sup> + tX<sub>1</sub><sup>2</sup> + X<sub>2</sub> X<sub>3</sub> + ... + X<sub>n-1</sub>X<sub>n</sub>, <span class="SimpleMath">t</span> a primitive element of GF(p)</td>
+<td class="tdleft">p ≡ 1 mod 4</td>
 <td class="tdleft">odd</td>
 </tr>
 <tr>
@@ -268,7 +277,7 @@ true
 </table><br /><p>&nbsp;</p><br />
 </div>
 
-<p>We refer to Appendix <a href="chapB.html#X7D0FACF8814D5125"><span class="RefLink">B</span></a> for information on the operations that construct gram matrices that are used to obtain the above standard forms.</p>
+<p>We refer to Appendix <a href="chapB.html#X866C644987E43DF8"><span class="RefLink">B</span></a> for information on the operations that construct gram matrices that are used to obtain the above standard forms.</p>
 
 <p>The <strong class="pkg">FinInG</strong> provides a wealth of flexibility in constructing polar spaces. The user may choose a particular quadratic or sesquilinear form, but may also chose to construct polars spaces that have one of the above mentioned forms as underlying form. Furthermore, <strong class="pkg">FinInG</strong> will detect when necessary if the user-constructed polar space is canonical. This mechanism gives the user complete flexibility while avoiding unnecessary computations when, for example, constructing the collineation group of a user-defined polar space.</p>
 
@@ -987,11 +996,15 @@ true
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ps := HyperbolicQuadric(5,3);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi := Random( Planes(ps) );;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau := Random( Planes(ps) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ps := HyperbolicQuadric(5,3);</span>
+Q+(5, 3)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">pi := Random( Planes(ps) );</span>
+&lt;a plane in Q+(5, 3)&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tau := Random( Planes(ps) );</span>
+&lt;a plane in Q+(5, 3)&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Meet(pi,tau);</span>
 &lt;a point in Q+(5, 3)&gt;
+
 </pre></div>
 
 <p>Note: the above example will return different answers depending on the two planes chosen at random.</p>
@@ -1238,9 +1251,38 @@ Q+(7, 7): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+x_8^2=0
 
 
 <div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ps := HyperbolicQuadric(11,2);</span>
+Q+(11, 2)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">vec := [[Z(2)^0,0*Z(2),0*Z(2),0*Z(2),0*Z(2),Z(2)^0,0*Z(2),Z(2)^0,Z(2)^0,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">0*Z(2),0*Z(2),0*Z(2)],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[0*Z(2),Z(2)^0,0*Z(2),0*Z(2),0*Z(2),Z(2)^0,Z(2)^0,Z(2)^0,Z(2)^0,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">0*Z(2),Z(2)^0,Z(2)^0],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[0*Z(2),0*Z(2),Z(2)^0,0*Z(2),0*Z(2),Z(2)^0,0*Z(2),Z(2)^0,0*Z(2),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">0*Z(2),0*Z(2),Z(2)^0],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[0*Z(2),0*Z(2),0*Z(2),Z(2)^0,0*Z(2),Z(2)^0,0*Z(2),Z(2)^0,0*Z(2),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">0*Z(2),Z(2)^0,0*Z(2)],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">[0*Z(2),0*Z(2),0*Z(2),0*Z(2),Z(2)^0,Z(2)^0,0*Z(2),0*Z(2),0*Z(2),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">Z(2)^0,Z(2)^0,Z(2)^0]];</span>
+[ [ Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, Z(2)^0, 
+      0*Z(2), 0*Z(2), 0*Z(2) ], 
+  [ 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, Z(2)^0, Z(2)^0, 
+      0*Z(2), Z(2)^0, Z(2)^0 ], 
+  [ 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), 
+      0*Z(2), 0*Z(2), Z(2)^0 ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), Z(2)^0, 0*Z(2), 
+      0*Z(2), Z(2)^0, 0*Z(2) ], 
+  [ 0*Z(2), 0*Z(2), 0*Z(2), 0*Z(2), Z(2)^0, Z(2)^0, 0*Z(2), 0*Z(2), 0*Z(2), 
+      Z(2)^0, Z(2)^0, Z(2)^0 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">subspace := VectorSpaceToElement(ps,vec);</span>
+&lt;a proj. 4-space in Q+(11, 2)&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">els := ElementsIncidentWithElementOfIncidenceStructure(subspace,6);</span>
+&lt;shadow proj. subspaces of dim. 5 in Q+(11, 2)&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(els);</span>
+[ &lt;a proj. 5-space in Q+(11, 2)&gt;, &lt;a proj. 5-space in Q+(11, 2)&gt; ]
+
 </pre></div>
 
-<p><a id="X7ADF374F8347F527" name="X7ADF374F8347F527"></a></p>
+<p><a id="X7988AF9978E75E37" name="X7988AF9978E75E37"></a></p>
 
 <h4>7.7 <span class="Heading">Projective Orthogonal/Unitary/Symplectic groups in <strong class="pkg">FinInG</strong></span></h4>
 
@@ -1248,18 +1290,13 @@ Q+(7, 7): x_1^2+x_2^2+x_3^2+x_4^2+x_5^2+x_6^2+x_7^2+x_8^2=0
 
 <p>Let <span class="SimpleMath">(V,f)</span> and <span class="SimpleMath">(W,g)</span> be two formed vector spaces over the same field <span class="SimpleMath">F</span>, where both <span class="SimpleMath">f</span> and <span class="SimpleMath">g</span> are sesquilinear forms. Suppose that φ is a linear map from <span class="SimpleMath">V</span> to <span class="SimpleMath">W</span>. The map φ is an <em>isometry</em> from the formed space <span class="SimpleMath">(V,f)</span> to the formed space <span class="SimpleMath">(W,g)</span> if for all <span class="SimpleMath">v,w</span> in <span class="SimpleMath">V</span> we have</p>
 
-<p class="pcenter">
-
-f(v,w) = f'(φ(v),φ(w))</p>
+<p class="pcenter">f(v,w) = f'(φ(v),φ(w)).</p>
 
 <p>The map φ is a <em>similarity</em> from the formed space <span class="SimpleMath">(V,f)</span> to the formed space <span class="SimpleMath">(W,g)</span> if for all <span class="SimpleMath">v,w</span> in <span class="SimpleMath">V</span> we have</p>
 
-<p class="pcenter">
+<p class="pcenter">f(v,w) = λ (f'(φ(v),φ(w)))</p>
 
-f(v,w) = λ (f'(φ(v),φ(w)))
-</p>
-
-<p>for some non-zero λ in <span class="SimpleMath">F</span>. Finally, the map φ. is a <em>semi-similarity</em> from the formed space <span class="SimpleMath">(V,f)</span> to the formed space <span class="SimpleMath">(W,g)</span> if for all <span class="SimpleMath">v,w</span> in <span class="SimpleMath">V</span> we have</p>
+<p>for some non-zero λ in <span class="SimpleMath">F</span>. Finally, the map φ is a <em>semi-similarity</em> from the formed space <span class="SimpleMath">(V,f)</span> to the formed space <span class="SimpleMath">(W,g)</span> if for all <span class="SimpleMath">v,w</span> in <span class="SimpleMath">V</span> we have</p>
 
 <p class="pcenter">f(v,w) = λ f'(φ(v),φ(w))<SUP>α</SUP></p>
 
@@ -1267,26 +1304,21 @@ f(v,w) = λ (f'(φ(v),φ(w)))
 
 <p>Let <span class="SimpleMath">(V,f)</span> and <span class="SimpleMath">(W,g)</span> be two formed vector spaces over the same field <span class="SimpleMath">F</span>, where both <span class="SimpleMath">f</span> and <span class="SimpleMath">g</span> are quadratic forms. Suppose that φ is a linear map from <span class="SimpleMath">V</span> to <span class="SimpleMath">W</span>. The map φ is an <em>isometry</em> from the formed space <span class="SimpleMath">(V,f)</span> to the formed space <span class="SimpleMath">(W,g)</span> if for all <span class="SimpleMath">v,w</span> in <span class="SimpleMath">V</span> we have</p>
 
-<p class="pcenter">
-
-f(v) = f'(φ(v)).</p>
+<p class="pcenter">f(v) = f'(φ(v)).</p>
 
 <p>The map φ is a <em>similarity</em> from the formed space <span class="SimpleMath">(V,f)</span> to a formed space <span class="SimpleMath">(W,g)</span> if for all <span class="SimpleMath">v,w</span> in <span class="SimpleMath">V</span> we have</p>
 
-<p class="pcenter">
+<p class="pcenter">f(v) = \lambda f'(\phi(v))</p>
 
-f(v) = λ (f'(φ(v)))
-</p>
+<p class="pcenter">f(v) = λ (f'(φ(v)))</p>
 
-<p>for some non-zero λ in <span class="SimpleMath">F</span>. Finally, the map φ. is a <em>semi-similarity</em> from the formed space <span class="SimpleMath">(V,f)</span> to the formed space <span class="SimpleMath">(W,g)</span> if for all <span class="SimpleMath">v,w</span> in <span class="SimpleMath">V</span> we have</p>
+<p>for some non-zero λ in <span class="SimpleMath">F</span>. Finally, the map φ is a <em>semi-similarity</em> from the formed space <span class="SimpleMath">(V,f)</span> to the formed space <span class="SimpleMath">(W,g)</span> if for all <span class="SimpleMath">v,w</span> in <span class="SimpleMath">V</span> we have</p>
 
-<p class="pcenter">
-f(v) = λ f'(φ(v))<SUP>α</SUP>
-</p>
+<p class="pcenter">f(v) = λ f'(φ(v))<SUP>α</SUP></p>
 
 <p>for some non-zero λ in <span class="SimpleMath">F</span> and a field automorphism α of <span class="SimpleMath">F</span>.</p>
 
-<p>Collineations of classical polar spaces are induced by semi-similarities of the underlying formed vector space, and vice versa, analoguously by factoring out scalar matrices. The only exceptions are the two-dimensional unitary groups where the the full semi-similarity group can contain elements of its centre that are not scalars. In <strong class="pkg">FinInG</strong>, the subgroups corresponding with similarities and isometries are also implemented, including a <em>special</em> variant, corresponding with the matrices having determinant one. We use a consistent terminology, where isometries, similarities, respectively, of the polar space, correspond with isometries, similarities, respectively, of the underlying formed vector space. Special isometries of a polar space are induced by isometries of the formed vector space that have a matrix with determinant one. If <span class="SimpleMath">P</span> is a polar space with special isometry group, isometry group, similarity group, collineation group, respectively, <span class="SimpleMath">SI</span>, <span class="SimpleMath">I</span>, <span class="SimpleMath">G</span>, Γ, respectively, then clearly SI ≤ I ≤ G ≤ Γ. Equalities can occur in certain cases, and will, as we will see in the following overview.</p>
+<p>Collineations of classical polar spaces are induced by semi-similarities of the underlying formed vector space, and vice versa, analoguously by factoring out scalar matrices. The only exceptions are the two-dimensional unitary groups where the the full semi-similarity group can contain elements of its centre that are not scalars. In <strong class="pkg">FinInG</strong>, the subgroups corresponding with similarities and isometries are also implemented, including a <em>special</em> variant, corresponding with the matrices having determinant one. We use a consistent terminology, where isometries, similarities, respectively, of the polar space, correspond with isometries, similarities, respectively, of the underlying formed vector space. Special isometries of a polar space are induced by isometries of the formed vector space that have a matrix with determinant one. If <span class="SimpleMath">P</span> is a polar space with special isometry group, isometry group, similarity group, collineation group, respectively, <span class="SimpleMath">S</span>, <span class="SimpleMath">I</span>, <span class="SimpleMath">G</span>, Γ, respectively, then clearly S ≤ I ≤ G ≤ Γ. Equalities can occur in certain cases, and will, as we will see in the following overview.</p>
 
 <div class="pcenter"><table class="GAPDocTable">
 <caption class="GAPDocTable"><b>Table: </b>projective finite classical groups</caption>
@@ -1300,26 +1332,26 @@ f(v) = λ f'(φ(v))<SUP>α</SUP>
 </tr>
 <tr>
 <td class="tdleft">special isometry</td>
-<td class="tdleft"><span class="SimpleMath">PSp(d,q)</span></td>
-<td class="tdleft"><span class="SimpleMath">PSO(1,d,q)</span></td>
-<td class="tdleft"><span class="SimpleMath">PSO(-1,d,q)</span></td>
-<td class="tdleft"><span class="SimpleMath">PSO(0,d,q)</span></td>
+<td class="tdleft">PSp(d,q)</td>
+<td class="tdleft">PSO(1,d,q)</td>
+<td class="tdleft">PSO(-1,d,q)</td>
+<td class="tdleft">PSO(0,d,q)</td>
 <td class="tdleft">PSU(d,q<sup>2</sup>)</td>
 </tr>
 <tr>
 <td class="tdleft">isometry</td>
-<td class="tdleft"><span class="SimpleMath">PSp(d,q)</span></td>
-<td class="tdleft"><span class="SimpleMath">PGO(1,d,q)</span></td>
-<td class="tdleft"><span class="SimpleMath">PGO(-1,d,q)</span></td>
-<td class="tdleft"><span class="SimpleMath">PGO(0,d,q)</span></td>
+<td class="tdleft">PSp(d,q)</td>
+<td class="tdleft">PGO(1,d,q)</td>
+<td class="tdleft">PGO(-1,d,q)</td>
+<td class="tdleft">PGO(0,d,q)</td>
 <td class="tdleft">PGU(d,q<sup>2</sup>)</td>
 </tr>
 <tr>
 <td class="tdleft">similarity</td>
-<td class="tdleft"><span class="SimpleMath">PGSp(d,q)</span></td>
+<td class="tdleft">PGSp(d,q)</td>
 <td class="tdleft">PΔO<sup>+</sup>(d,q)</td>
 <td class="tdleft">PΔO<sup>-</sup>(d,q)</td>
-<td class="tdleft"><span class="SimpleMath">PGO(0,d,q)</span></td>
+<td class="tdleft">PGO(0,d,q)</td>
 <td class="tdleft">PGU(d,q<sup>2</sup>)</td>
 </tr>
 <tr>

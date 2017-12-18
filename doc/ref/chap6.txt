@@ -259,7 +259,7 @@
   
   [1X6.3-3 View[101X
   
-  [29X[2XView[102X( [3Xobj1[103X, [3Xobj2...[103X ) [32X function
+  [33X[1;0Y[29X[2XView[102X( [3Xobj1[103X, [3Xobj2...[103X ) [32X function[133X
   
   [33X[0;0Y[2XView[102X  shows  the  objects [3Xobj1[103X, [3Xobj2[103X... etc. [13Xin a short form[113X on the standard
   output  by  calling  the  [2XViewObj[102X ([14X6.3-5[114X) operation on each of them. [2XView[102X is
@@ -269,7 +269,7 @@
   
   [1X6.3-4 Print[101X
   
-  [29X[2XPrint[102X( [3Xobj1[103X, [3Xobj2[103X, [3X...[103X ) [32X function
+  [33X[1;0Y[29X[2XPrint[102X( [3Xobj1[103X, [3Xobj2[103X, [3X...[103X ) [32X function[133X
   
   [33X[0;0YAlso  [2XPrint[102X shows the objects [3Xobj1[103X, [3Xobj2[103X... etc. on the standard output. The
   difference compared to [2XView[102X ([14X6.3-3[114X) is in general that the shown form is not
@@ -312,8 +312,8 @@
   
   [1X6.3-5 ViewObj[101X
   
-  [29X[2XViewObj[102X( [3Xobj[103X ) [32X operation
-  [29X[2XPrintObj[102X( [3Xobj[103X ) [32X operation
+  [33X[1;0Y[29X[2XViewObj[102X( [3Xobj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPrintObj[102X( [3Xobj[103X ) [32X operation[133X
   
   [33X[0;0YThe  functions  [2XView[102X  ([14X6.3-3[114X) and [2XPrint[102X ([14X6.3-4[114X) actually call the operations
   [2XViewObj[102X and [2XPrintObj[102X, respectively, for each argument. By installing special
@@ -330,7 +330,7 @@
   
   [1X6.3-6 Display[101X
   
-  [29X[2XDisplay[102X( [3Xobj[103X ) [32X operation
+  [33X[1;0Y[29X[2XDisplay[102X( [3Xobj[103X ) [32X operation[133X
   
   [33X[0;0YDisplays  the object [3Xobj[103X in a nice, formatted way which is easy to read (but
   might  be  difficult for machines to understand). The actual format used for
@@ -367,7 +367,7 @@
   
   [1X6.3-7 SetNameObject[101X
   
-  [29X[2XSetNameObject[102X( [3Xo[103X, [3Xs[103X ) [32X function
+  [33X[1;0Y[29X[2XSetNameObject[102X( [3Xo[103X, [3Xs[103X ) [32X function[133X
   
   [33X[0;0Y[2XSetNameObject[102X  sets  the  string  [3Xs[103X  as  display  name  for  object  [3Xo[103X in an
   interactive  session. When applying [2XView[102X ([14X6.3-3[114X) to object [3Xo[103X, for example in
@@ -471,7 +471,7 @@
   
   [1X6.4-3 OnBreak[101X
   
-  [29X[2XOnBreak[102X(  ) [32X function
+  [33X[1;0Y[29X[2XOnBreak[102X(  ) [32X function[133X
   
   [33X[0;0YBy  default,  when  a  break  loop  is  entered,  [5XGAP[105X  prints a trace of the
   innermost  5  commands  currently  being  executed.  This  behaviour  can be
@@ -565,7 +565,7 @@
   
   [1X6.4-4 OnBreakMessage[101X
   
-  [29X[2XOnBreakMessage[102X(  ) [32X function
+  [33X[1;0Y[29X[2XOnBreakMessage[102X(  ) [32X function[133X
   
   [33X[0;0YWhen  a  break  loop is entered by a call to [2XError[102X ([14X6.6-1[114X) the message after
   the [21X[10XEntering break read-eval-print loop ...[110X[121X line is produced by the function
@@ -610,7 +610,7 @@
   
   [1X6.4-5 Where[101X
   
-  [29X[2XWhere[102X( [3Xnr[103X ) [32X function
+  [33X[1;0Y[29X[2XWhere[102X( [3Xnr[103X ) [32X function[133X
   
   [33X[0;0Yshows the last [3Xnr[103X commands on the execution stack during whose execution the
   error  occurred.  If not given, [3Xnr[103X defaults to 5. (Assume, for the following
@@ -668,8 +668,8 @@
   
   [1X6.5-1 [33X[0;0YDownEnv and UpEnv[133X[101X
   
-  [29X[2XDownEnv[102X( [3Xnr[103X ) [32X function
-  [29X[2XUpEnv[102X( [3Xnr[103X ) [32X function
+  [33X[1;0Y[29X[2XDownEnv[102X( [3Xnr[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XUpEnv[102X( [3Xnr[103X ) [32X function[133X
   
   [33X[0;0Y[2XDownEnv[102X  moves  down  [3Xnr[103X  steps in the environment and allows one to inspect
   variables  on  this  level; if [3Xnr[103X is negative it steps up in the environment
@@ -760,7 +760,7 @@
   
   [1X6.6-1 Error[101X
   
-  [29X[2XError[102X( [3Xmessages[103X, [3X...[103X ) [32X function
+  [33X[1;0Y[29X[2XError[102X( [3Xmessages[103X, [3X...[103X ) [32X function[133X
   
   [33X[0;0Y[2XError[102X  signals  an error from within a function. First the messages [3Xmessages[103X
   are  printed, this is done exactly as if [2XPrint[102X ([14X6.3-4[114X) (see [14X6.3[114X) were called
@@ -772,7 +772,7 @@
   
   [1X6.6-2 ErrorNoReturn[101X
   
-  [29X[2XErrorNoReturn[102X( [3Xmessages[103X, [3X...[103X ) [32X function
+  [33X[1;0Y[29X[2XErrorNoReturn[102X( [3Xmessages[103X, [3X...[103X ) [32X function[133X
   
   [33X[0;0Y[2XErrorNoReturn[102X  signals  an  error from within a function. First the messages
   [3Xmessages[103X  are  printed,  this  is done exactly as if [2XPrint[102X ([14X6.3-4[114X) (see [14X6.3[114X)
@@ -783,7 +783,7 @@
   
   [1X6.6-3 ErrorCount[101X
   
-  [29X[2XErrorCount[102X(  ) [32X function
+  [33X[1;0Y[29X[2XErrorCount[102X(  ) [32X function[133X
   
   [33X[0;0Y[2XErrorCount[102X  returns  a  count  of  the  number  of  errors  (including  user
   interruptions)  which have occurred in the [5XGAP[105X session so far. This count is
@@ -800,14 +800,14 @@
   
   [1X6.7-1 QUIT[101X
   
-  [29X[2XQUIT[102X[32X global variable
+  [33X[1;0Y[29X[2XQUIT[102X[32X global variable[133X
   
   [33X[0;0YAn  emergency  way  to  leave  [5XGAP[105X  is  to enter [9XQUIT[109X at any [10Xgap>[110X or [10Xbrk>[110X or
   [10Xbrk_[3Xnn[103X[10X>[110X prompt.[133X
   
   [1X6.7-2 GAP_EXIT_CODE[101X
   
-  [29X[2XGAP_EXIT_CODE[102X( [3Xret[103X ) [32X function
+  [33X[1;0Y[29X[2XGAP_EXIT_CODE[102X( [3Xret[103X ) [32X function[133X
   
   [33X[0;0YA  [10XGAP_EXIT_CODE[110X  sets  the  return value which will be used when [5XGAP[105X exits.
   This  may  be  an integer, or a boolean (where [9Xtrue[109X is interpreted as 0, and
@@ -815,7 +815,7 @@
   
   [1X6.7-3 QUIT_GAP[101X
   
-  [29X[2XQUIT_GAP[102X( [[3Xret[103X] ) [32X function
+  [33X[1;0Y[29X[2XQUIT_GAP[102X( [[3Xret[103X] ) [32X function[133X
   
   [33X[0;0YA [10XQUIT_GAP[110X acts similarly to the keyword [10Xquit[110X. It exits [5XGAP[105X cleanly, calling
   any  function  installed  using [10XInstallAtExit[110X. The optional argument will be
@@ -823,7 +823,7 @@
   
   [1X6.7-4 FORCE_QUIT_GAP[101X
   
-  [29X[2XFORCE_QUIT_GAP[102X( [[3Xret[103X] ) [32X function
+  [33X[1;0Y[29X[2XFORCE_QUIT_GAP[102X( [[3Xret[103X] ) [32X function[133X
   
   [33X[0;0YA  [10XFORCE_QUIT_GAP[110X  is  similar  to [10XQUIT_GAP[110X, except it ignores any functions
   installed  with  [10XInstallAtExit[110X,  or  any other functions normally run at GAP
@@ -832,8 +832,8 @@
   
   [1X6.7-5 InstallAtExit[101X
   
-  [29X[2XInstallAtExit[102X( [3Xfunc[103X ) [32X function
-  [29X[2XQUITTING[102X[32X global variable
+  [33X[1;0Y[29X[2XInstallAtExit[102X( [3Xfunc[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XQUITTING[102X[32X global variable[133X
   
   [33X[0;0YBefore  actually  terminating,  [5XGAP[105X will call (with no arguments) all of the
   functions  that  have  been  installed  using [10XInstallAtExit[110X. These typically
@@ -855,7 +855,7 @@
   
   [1X6.7-6 SaveOnExitFile[101X
   
-  [29X[2XSaveOnExitFile[102X[32X global variable
+  [33X[1;0Y[29X[2XSaveOnExitFile[102X[32X global variable[133X
   
   [33X[0;0YIf,  when  [5XGAP[105X  is  exiting  due to a [9Xquit[109X or end-of-file (i.e. not due to a
   [9XQUIT[109X)  the  variable  [2XSaveOnExitFile[102X  is  bound  to a string value, then the
@@ -1089,10 +1089,10 @@
   
   [1X6.9-3 SaveCommandLineHistory[101X
   
-  [29X[2XSaveCommandLineHistory[102X( [[3Xfname[103X, ][[3Xapp[103X] ) [32X function
+  [33X[1;0Y[29X[2XSaveCommandLineHistory[102X( [[3Xfname[103X, ][[3Xapp[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Y[9Xfail[109X or number of saved lines[133X
   
-  [29X[2XReadCommandLineHistory[102X( [[3Xfname[103X] ) [32X function
+  [33X[1;0Y[29X[2XReadCommandLineHistory[102X( [[3Xfname[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Y[9Xfail[109X or number of added lines[133X
   
   [33X[0;0YThe  first  command  saves the lines in the command line history to the file
@@ -1209,7 +1209,7 @@
   
   [1X6.10-1 Edit[101X
   
-  [29X[2XEdit[102X( [3Xfilename[103X ) [32X function
+  [33X[1;0Y[29X[2XEdit[102X( [3Xfilename[103X ) [32X function[133X
   
   [33X[0;0Y[2XEdit[102X  starts  an  editor with the file whose filename is given by the string
   [3Xfilename[103X, and reads the file back into [5XGAP[105X when you exit the editor again.[133X
@@ -1273,7 +1273,7 @@
   
   [1X6.12-1 SizeScreen[101X
   
-  [29X[2XSizeScreen[102X( [[3Xsz[103X] ) [32X function
+  [33X[1;0Y[29X[2XSizeScreen[102X( [[3Xsz[103X] ) [32X function[133X
   
   [33X[0;0YCalled  with  no  arguments,  [2XSizeScreen[102X returns the size of the screen as a
   list  with  two entries. The first is the length of each line, the second is
@@ -1304,7 +1304,7 @@
   
   [1X6.13-1 TeachingMode[101X
   
-  [29X[2XTeachingMode[102X( [[3Xswitch[103X] ) [32X function
+  [33X[1;0Y[29X[2XTeachingMode[102X( [[3Xswitch[103X] ) [32X function[133X
   
   [33X[0;0YWhen called with a boolean argument [3Xswitch[103X, this function will turn teaching
   mode respectively on or off.[133X

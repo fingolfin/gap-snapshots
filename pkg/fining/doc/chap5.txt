@@ -9,49 +9,50 @@
   of  a given [22Xn+1[122X-dimensional vector space over a given field [22XGF(q)[122X is denoted
   by  [22XGL(n+1,q)[122X.  This is a matrix group consisting of all non-singular square
   [22Xn+1[122X-dimensional matrices over [22XGF(q)[122X. The group of all semilinear maps of the
-  vector  space  [22XV(n,q)[122X  is  obtained as the semidirect product of [22XGL(n,q)[122X and
-  [22XAut(GF(q))[122X,  and  is  denoted  by  [22XΓ L(n+1,q)[122X. Each semilinear map induces a
+  vector space [22XV(n+1,q)[122X is obtained as the semidirect product of [22XGL(n+1,q)[122X and
+  [22XAut(GF(q))[122X,  and  is  denoted  by  [22XΓL(n+1,q)[122X.  Each semilinear map induces a
   collineation of [22XPG(n,q)[122X. The Fundamental theorem of Projective Geometry also
-  guarantees  that  the converse holds. Note also that [22XΓ L(n+1,q)[122X does not act
+  guarantees  that  the  converse holds. Note also that [22XΓL(n+1,q)[122X does not act
   faithfully  on  the  projective  points, and the kernel of its action is the
-  group  of scalar matrices, [22XSc(n+1,q)[122X. So the group [22XPΓ L(n+1,q)[122X is defined as
-  the group [22XΓ L(n+1,q) / Sc(n+1,q)[122X, and [22XPGL(n+1,q) = GL(n+1,q) / Sc(n+1,q)[122X. An
-  element  of the group [22XPGL(n+1,q)[122X is also called a [13Xprojectivity[113X or [13Xhomography[113X
-  of  [22XPG(n,q)[122X,  and  the  group [22XPGL(n+1,q)[122X is called the [13Xprojectivity group[113X or
-  [13Xhomography  group[113X  of  [22XPG(n,q)[122X.  An  element  of  [22XPΓ  L(n+1,q)[122X  is  called a
-  [13Xcollineation[113X  of [22XPG(n,q)[122X and the group [22XPΓ L(n+1,q)[122X is the [13Xcollineation group[113X
-  of [22XPG(n,q)[122X.[133X
+  group  of  scalar matrices, [22XSc(n+1,q)[122X. So the group [22XPΓL(n+1,q)[122X is defined as
+  the  group  [22XΓL(n+1,q)  / Sc(n+1,q)[122X , and the group [22XPGL(n+1,q)[122X as [22XGL(n+1,q) /
+  Sc(n+1,q)[122X . An element of the group [22XPGL(n+1,q)[122X is also called a [13Xprojectivity[113X
+  or   [13Xhomography[113X   of  [22XPG(n,q)[122X,  and  the  group  [22XPGL(n+1,q)[122X  is  called  the
+  [13Xprojectivity  group[113X or [13Xhomography group[113X of [22XPG(n,q)[122X. An element of [22XPΓL(n+1,q)[122X
+  is  called  a  [13Xcollineation[113X  of  [22XPG(n,q)[122X  and  the  group  [22XPΓL(n+1,q)[122X is the
+  [13Xcollineation group[113X of [22XPG(n,q)[122X.[133X
   
   [33X[0;0YAs  usual, we also consider the special linear group [22XSL(n+1,q)[122X, which is the
   subgroup of [22XGL(n+1,q)[122X of all matrices having determinant one. Its projective
-  variant,  i.e.  [22XPSL(n+1,q)  =  SL(n+1,q)  /  Sc(n+1,q)[122X is called the [13Xspecial
-  homography group[113X or [13Xspecial projectivity group[113X of [22XPG(n,q)[122X.[133X
+  variant,  i.e.  [22XPSL(n+1,q)[122X is defined as [22XSL(n+1,q) / (SL(n+1,q) ∩ Sc(n+1,q))[122X
+  and  is called the [13Xspecial homography group[113X or [13Xspecial projectivity group[113X of
+  [22XPG(n,q)[122X.[133X
   
   [33X[0;0YConsider the projective space [22XPG(n,q)[122X. As described in Chapter [14X4[114X, a point of
   [22XPG(n,q)[122X  is represented by a row vector. A [22Xk[122X-dimensional subspace of [22XPG(n,q)[122X
   is  represented by a generating set of [22Xk+1[122X points, and as such, by a [22X(k+1) ×
   (n+1)[122X  matrix.  The  convention  in  [5XFinInG[105X  is  that  a collineation [22Xϕ[122X with
-  underlying  matrix  [22XA[122X  and  field  automorphism [22Xθ[122X maps that projective point
+  underlying  matrix  [22XA[122X  and  field  automorphism  [22Xθ[122X maps the projective point
   represented  by  row  vector  [22X(x_0,  x_1,  ..., x_n)[122X to the projective point
   represented  by  row  vector [22X(y_0,y_1,...,y_n) = ((x_0, x_1, ..., x_n) A)^θ[122X.
   This  convention  determines  completely  the action of collineations on all
   elements  of  a  projective  space,  and  it follows that the product of two
   collineations  [22Xϕ_1,ϕ_2[122X  with  respective  underlying  matrices  [22XA_1,A_2[122X  and
   respective  underlying  field automorphisms [22Xθ_1,θ_2[122X is the collineation with
-  underlying  matrix  [22XA_1  ⋅ A_2^θ_1^-1}[122X and underlying field automorphism [22Xθ_1
+  underlying matrix [22XA_1 ⋅ (A_2^(θ_1^-1))[122X and underlying field automorphism [22Xθ_1
   θ_2[122X .[133X
   
   [33X[0;0YA [13Xcorrelation[113X of the projective space [22XPG(n,q)[122X is a collineation from [22XPG(n,q)[122X
   to  its  dual. A projectivity from [22XPG(n,q)[122X to its dual is sometimes called a
   [13Xreciprocity[113X.  The  [13Xstandard duality[113X of the projective space [22XPG(n,q)[122X maps any
   point  [22Xv[122X  with coordinates [22X(x_0,x_1,...,x_n)[122X on the hyperplane with equation
-  [22Xx_0X_0  +  x_1X_1 + ⋯ + x_nX_n[122X. The standard duality acts as an automorphism
-  on  [22XPΓ  L(n+1,q)[122X  by  mapping the underlying matrix of a collineation to its
+  [22Xx_0X_0  + x_1X_1 + ⋯ + x_nX_n[122X . The standard duality acts as an automorphism
+  on  [22XPΓL(n+1,q)[122X  by  mapping  the  underlying matrix of a collineation to its
   inverse  transpose  matrix.  (Recall that the frobenius automorphism and the
   standard  duality commute.) The convention in [5XFinInG[105X is that a correlation [22Xϕ[122X
   with underlying matrix [22XA[122X and field automorphism [22Xθ[122X maps that projective point
   represented  by row vector [22X(x_0, x_1, ..., x_n)[122X to the projective hyperplane
-  represented  by  row vector [22X(y_0,y_1,...,y_n) = ((x_0, x_1, ..., x_n) A)^θ.[122X,
+  represented  by row vector [22X(y_0,y_1,...,y_n) = ((x_0, x_1, ..., x_n) A)^θ.[122X ,
   i.e.   [22X(y_0,y_1,...,y_n)  =  ((x_0,  x_1,  ...,  x_n)  A)^θ.[122X  are  the  dual
   coordinates of the hyperplane.[133X
   
@@ -65,13 +66,13 @@
   correlations and collineations on all elements of a projective space, and it
   follows  that  the  product  of two elements of the correlation-collineation
   group  [22Xϕ_1,ϕ_2[122X  with  respective  underlying  matrices  [22XA_1,A_2[122X,  respective
-  underlying field automorphisms [22Xθ_1,θ_2[122X, and respective underlying projective
-  space  isomorphisms  (standard  duality  or  identity  map)  [22Xδ_1,δ_2[122X, is the
-  element  of  the  correlation-collineation  group with underlying matrix [22XA_1
-  (A_2^θ_1^-1})^δ_1[122X,  underlying  field  automorphism [22Xθ_1 θ_2[122X , and underlying
-  projective  space  automorphism  [22Xδ_1  δ_2.[122X  , where the action of [22Xδ_1[122X on the
-  matrix  [22XA_2[122X  is  defined  as  the  transpose  inverse if [22Xδ_1[122X is the standard
-  duality, and as the identity if [22Xδ_1[122X is the identity.[133X
+  underlying   field   automorphisms   [22Xθ_1,θ_2[122X  ,  and  respective  underlying
+  projective  space  isomorphisms (standard duality or identity map) [22Xδ_1,δ_2[122X ,
+  is  the element of the correlation-collineation group with underlying matrix
+  [22XA_1  ⋅  (A_2^(θ_1^-1))^δ_1[122X  ,  underlying  field  automorphism [22Xθ_1 θ_2[122X , and
+  underlying  projective  space automorphism [22Xδ_1 δ_2[122X , where the action of [22Xδ_1[122X
+  on  a  matrix  is  defined  as  taking  the  transpose inverse if [22Xδ_1[122X is the
+  standard duality, and as the identity map if [22Xδ_1[122X is the identity.[133X
   
   [33X[0;0YAction  functions  for  collineations and correlations on the subspaces of a
   projective space are described in detail in Section [14X5.8[114X[133X
@@ -175,7 +176,7 @@
   
   [29X[2XIsCollineation[102X[32X Property
   
-  [33X[0;0Y[10XIsCollineation[110X  is  property. All elements of [22XPΓ L(n+1,q)[122X are collineations,
+  [33X[0;0Y[10XIsCollineation[110X  is  property.  All elements of [22XPΓL(n+1,q)[122X are collineations,
   and   therefore   all   elements   belonging   to   [10XIsProjGrpElWithFrob[110X  are
   collineations.  But  also  a  projectivity  is a collineation, as well as an
   element  belonging  to  [10XIsProjGrpElWithFrobWithPSIsom[110X  with projective space
@@ -206,7 +207,7 @@
   
   [33X[0;0Y[10XIsStrictlySemilinear[110X  is a property that checks whether a given collineation
   has  a  nontrivial  underlying field automorphisms, i.e. whether the element
-  belongs  to  [22XPΓ  L(n+1,q)[122X, but not to [22XPGL(n+1,q)[122X. If [10XIsStrictlySemilinear[110X is
+  belongs  to  [22XPΓL(n+1,q)[122X,  but  not to [22XPGL(n+1,q)[122X. If [10XIsStrictlySemilinear[110X is
   applied  to a an element belonging to [10XIsProjGrpElWithFrobWithPSIsom[110X, then it
   verifies  whether  the  underlying  field automorphism is different from the
   identity,  and whether the projective space isomorphism equals the identity.
@@ -627,7 +628,7 @@
   [6XReturns:[106X  [33X[0;10Ythe group of collineations of geom[133X
   
   [33X[0;0YLet  [3Xgeom[103X  be the projective space [22XPG(n,q)[122X. This operation returns the group
-  of collineations [22XΓ L(n+1,q)[122X of the projective space [22XPG(n,q)[122X. If [22XGF(q)[122X has no
+  of collineations [22XPΓL(n+1,q)[122X of the projective space [22XPG(n,q)[122X. If [22XGF(q)[122X has no
   non-trivial  field automorphisms, i.e. when [22Xq[122X is prime, the group [22XPGL(n+1,q)[122X
   is the full collineation group and will be returned.[133X
   
@@ -815,11 +816,12 @@
   
   [33X[0;0YConsider  a point [22Xp[122X with row vector [22X(x_0, x_1, ..., x_n)[122X, and a collineation
   or  correlation  [22Xϕ[122X with underlying matrix [22XA[122X and field automorphism [22Xθ[122X. Define
-  the  row  vector [22X(y_0,y_1,...,y_n) = ((x_0, x_1, ..., x_n) A)^θ[122X. When [22Xϕ[122X is a
-  collineation, [22Xp^ϕ[122X is the point with underlying row vector [22X(y_0,y_1,...,y_n)[122X.
-  When  [22Xϕ[122X  is a correlation, is a hyperplane of [22XPG(n,q)[122X with equation [22Xy_0X_0 +
-  y_1X_1 + ... + y_nX_n[122X. The action of collineations or correlations on points
-  determines the action on subspaces of arbitrary dimension completely.[133X
+  the  row vector [22X(y_0,y_1,...,y_n) = ((x_0, x_1, ..., x_n) A)^θ[122X . When [22Xϕ[122X is a
+  collineation,  [22Xp^ϕ[122X is the point with underlying row vector [22X(y_0,y_1,...,y_n)[122X
+  .  When  [22Xϕ[122X  is  a  correlation, [22Xp^ϕ[122X is a hyperplane of [22XPG(n,q)[122X with equation
+  [22Xy_0X_0 + y_1X_1 + ... + y_nX_n[122X . The action of collineations or correlations
+  on  points  determines  the  action  on  subspaces  of  arbitrary  dimension
+  completely.[133X
   
   [1X5.8-1 OnProjSubspaces[101X
   
@@ -943,24 +945,31 @@
   
   [1X5.9 [33X[0;0YSpecial subgroups of the projectivity group[133X[101X
   
-  [33X[0;0YA  [13Xtransvection[113X of the vector space [22XV=V(n+1,F)[122X is a linear map [22Xτ[122X from [22XV[122X to [22XV[122X
-  with  matrix  [22XM[122X  such  that  [22Xrk(M-I)=1[122X  and  [22X(M-I)^2=0[122X. Different equivalent
-  definitions are found in the literature, here we followed [Cam00a]. Choosing
-  a basis [22Xe_1,...,e_n,e_n+1[122X such that [22Xe_1,...,e_n[122X generates the kernel of [22XM-I[122X,
-  it follows that [22XM[122X equals[133X
+  [33X[0;0YA  [13Xtransvection[113X  of  the vector space [22XV=V(n+1,F)[122X is a linear map [22Xτ[122X from [22XV[122X to
+  itself with matrix [22XM[122X such that the rank of [22XM-I[122X equals 1 (where [22XI[122X denotes the
+  [22X(n+1)  ×  (n+1)[122X  identity  matrix),  and  [22X(M-I)^2=0[122X  .  Different equivalent
+  definitions  are  found  in  the literature, here we followed [Cam00a]. Note
+  that  what  follows  is true for arbitrary fields [22XF[122X, but we will restrict to
+  finite  fields.  Choosing  a  basis  [22Xe_1,...,e_n,e_n+1[122X such that [22Xe_1,...,e_n[122X
+  generates the kernel of [22XM-I[122X, it follows that [22XM[122X equals[133X
+  
+  
+  [24X[33X[0;6Ymatrix display not possible in text mode.[133X
+  
+  [124X
   
   [33X[0;0YIt  is  also  a  well  known  fact that all transvections generate the group
-  [22XSL(n+1,F)[122X.  A  transvection gives rise to a projectivity of [22XPG(n,F)[122X, we call
+  [22XSL(n+1,q)[122X.  A  transvection gives rise to a projectivity of [22XPG(n,q)[122X, we call
   such an element an [13Xelation[113X, and it is a projectivity [22Xϕ[122X fixing a hyperplane [22XH[122X
   pointwise,  and such that there exists exactly one point [22Xp ∈ H[122X such that all
   hyperplanes through [22Xp[122X are stabilized. The hyperplane [22XH[122X is called the [13Xaxis[113X of
   [22Xϕ[122X,  and  the  point  [22Xp[122X  is  called  the [13Xcentre[113X of [22Xϕ[122X. As a transvection is an
-  element  of  [22XSL(n,F)[122X,  an  elation  is an element of [22XPSL(n,F)[122X. An elation is
+  element  of [22XSL(n+1,q)[122X, an elation is an element of [22XPSL(n+1,q)[122X. An elation is
   completely  determind  by its axis and the image of one point (not contained
   in  the  axis).  The  group  of  elations  with  a given axis and centre, is
-  isomorphic  with the additive group of [22XF[122X. Finally, the group of all elations
-  with  a  given  axis  [22XH[122X, acts regularly on the points of [22XPG(n,F) ∖ H[122X, and is
-  isomorphic with the additive group of the vectorspace [22XV(n,F)[122X.[133X
+  isomorphic  with  the  additive  group  of  [22XGF(q)[122X. Finally, the group of all
+  elations  with a given axis [22XH[122X, acts regularly on the points of [22XPG(n,q) ∖ H[122X ,
+  and is isomorphic with the additive group of the vectorspace [22XV(n+1,q)[122X.[133X
   
   [1X5.9-1 ElationOfProjectiveSpace[101X
   

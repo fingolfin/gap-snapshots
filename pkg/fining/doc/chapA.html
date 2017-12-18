@@ -19,8 +19,9 @@
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap13.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapB.html">[Next Chapter]</a>&nbsp;  </div>
 
-<p><a id="X86AA009B8756CA64" name="X86AA009B8756CA64"></a></p>
-<div class="ChapSects"><a href="chapA.html#X86AA009B8756CA64">A <span class="Heading">The structure of <strong class="pkg">FinInG</strong> </span></a>
+<p id="mathjaxlink" class="pcenter"><a href="chapA_mj.html">[MathJax on]</a></p>
+<p><a id="X7F3345C884CD0268" name="X7F3345C884CD0268"></a></p>
+<div class="ChapSects"><a href="chapA.html#X7F3345C884CD0268">A <span class="Heading">The structure of <strong class="pkg">FinInG</strong> </span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chapA.html#X84D6D0EC7989CF5E">A.1 <span class="Heading">The different components</span></a>
 </span>
 </div>
@@ -43,17 +44,7 @@
 
 <h4>A.1 <span class="Heading">The different components</span></h4>
 
-<p>Loading <strong class="pkg">FinInG</strong> shows the following message:</p>
-
-
-<div class="example"><pre>
----------------------------------------------------------------------
-loading: geometry, liegeometry, group, projectivespace, correlations, 
-polarspace/morphisms, enumerators, diagram, varieties, affinespace/affinegroup, 
-gpolygons
-</pre></div>
-
-<p>The different components are listed and refer to the corresponding filenames. So <em>component</em> refers to <em>component.gd</em> and <em>component.gi</em>. When When <em>component1/component2</em> is displayed, Both <em>component1.gi</em> and <em>component2.gi</em> depend on the declarations in both <em>component1.gd</em> and <em>component2.gd</em>. In other cases, <em>component_n</em> is only dependent on its own declarations and the ones before.</p>
+<p><strong class="pkg">FinInG</strong> consists of the following components: geometry, liegeometry, group, projectivespace, correlations, polarspace/morphisms, enumerators, diagram, varieties, affinespace/affinegroup, gpolygons, and orbits-stabilisers. Each of these components corresponds with a <em>component.gd</em> and <em>component.gi</em> file. The file <em>component.gi</em> will be dependent on <em>component.gd</em> and all previously loaded <em>.gd</em> files, <em>component1/component2</em> means that both <em>component1.gi</em> and <em>component2.gi</em> depend on the declarations in both <em>component1.gd</em> and <em>component2.gd</em>.</p>
 
 <p><a id="X83E153B784E17E05" name="X83E153B784E17E05"></a></p>
 
@@ -142,6 +133,7 @@ O: Span: [IsElementOfLieGeometry, IsEmptySubspace]
 O: Span: [IsEmptySubspace, IsLieGeometry]
 O: Span: [IsLieGeometry, IsEmptySubspace]
 O: Span: [IsEmptySubspace, IsEmptySubspace]
+O: Span: [IsList]
 O: Meet: [IsEmptySubspace, IsElementOfLieGeometry]
 O: Meet: [IsElementOfLieGeometry, IsEmptySubspace]
 O: Meet: [IsEmptySubspace, IsLieGeometry]
@@ -167,6 +159,7 @@ O: CollineationOfProjectiveSpace: [IsList, IsField]
 O: CollineationOfProjectiveSpace: [IsList, IsMapping, IsField]
 O: CollineationOfProjectiveSpace: [IsProjectiveSpace, IsMatrix]
 O: CollineationOfProjectiveSpace: [IsProjectiveSpace, IsMatrix, IsMapping]
+O: CollineationOfProjectiveSpace: [IsProjectiveSpace, IsMapping]
 O: Collineation: [IsProjectiveSpace, IsMatrix]
 O: Collineation: [IsProjectiveSpace, IsMatrix, IsMapping]
 O: ProjectiveSemilinearMap: [IsList, IsMapping, IsField]
@@ -209,7 +202,6 @@ O: RandomSubspace: [IsProjectiveSpace]
 O: Span: [IsProjectiveSpace, IsSubspaceOfProjectiveSpace]
 O: Span: [IsSubspaceOfProjectiveSpace, IsProjectiveSpace]
 O: Span: [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsBool]
-O: Span: [IsList]
 O: Span: [IsList, IsBool]
 O: Meet: [IsSubspaceOfProjectiveSpace, IsProjectiveSpace]
 O: Meet: [IsProjectiveSpace, IsSubspaceOfProjectiveSpace]
@@ -222,6 +214,8 @@ O: ProjectiveElationGroup: [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveS
 O: ProjectiveElationGroup: [IsSubspaceOfProjectiveSpace]
 O: HomologyOfProjectiveSpace: [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace,  IsSubspaceOfProjectiveSpace ] 
 O: ProjectiveHomologyGroup: [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace]
+O: SingerCycleMat: [IsInt, IsInt]
+O: SingerCycleCollineation: [IsInt, IsInt]
 
 correlations.gd: operations
 
@@ -765,7 +759,6 @@ enumerators.gi: global functions
 
 F: PositionNonZeroFromRight
 F: FG_pos
-F: FG_div
 F: FG_ffenumber
 F: FG_alpha_power
 F: FG_log_alpha
@@ -994,6 +987,7 @@ M: ProjElsWithFrob, [IsList, IsField],
 M: ProjElsWithFrob, [IsList],
 M: CollineationOfProjectiveSpace, [ IsMatrix and IsFFECollColl, IsField],
 M: CollineationOfProjectiveSpace, InstallMethod(CollineationOfProjectiveSpace,[IsProjectiveSpace,IsMatrix],
+M: CollineationOfProjectiveSpace, InstallMethod(CollineationOfProjectiveSpace,[IsProjectiveSpace,IsMapping],
 M: CollineationOfProjectiveSpace, InstallMethod(CollineationOfProjectiveSpace,[IsProjectiveSpace,IsMatrix,IsMapping],
 M: Collineation, InstallMethod(Collineation,[IsProjectiveSpace,IsMatrix],
 M: Collineation, InstallMethod(Collineation,[IsProjectiveSpace,IsMatrix,IsMapping],
@@ -1124,7 +1118,7 @@ M: Size, [IsSubspacesOfProjectiveSpace and IsSubspacesOfProjectiveSpaceRep],
 M: \in, [IsElementOfIncidenceStructure, IsElementsOfIncidenceStructure], 1*SUM_FLAGS+3,
 M: \in, [IsElementOfIncidenceStructure, IsAllElementsOfIncidenceStructure], 1*SUM_FLAGS+3,
 M: VectorSpaceToElement, [IsProjectiveSpace, IsCMatRep],
-M: VectorSpaceToElement, [IsProjectiveSpace, IsPlistRep],
+M: VectorSpaceToElement, [IsProjectiveSpace, IsPlistRep and IsMatrix],
 M: VectorSpaceToElement, [IsProjectiveSpace, IsGF2MatrixRep],
 M: VectorSpaceToElement, [IsProjectiveSpace, Is8BitMatrixRep],
 M: VectorSpaceToElement, [IsProjectiveSpace, IsCVecRep],
@@ -1154,7 +1148,6 @@ M: Iterator, [IsSubspacesOfProjectiveSpace],
 M: FlagOfIncidenceStructure, [ IsProjectiveSpace, IsSubspaceOfProjectiveSpaceCollection ],
 M: FlagOfIncidenceStructure, [ IsProjectiveSpace, IsList and IsEmpty ],
 M: UnderlyingVectorSpace, [ IsFlagOfProjectiveSpace and IsFlagOfIncidenceStructureRep ],
-M: ViewObj, [ IsFlagOfProjectiveSpace and IsFlagOfIncidenceStructureRep ],
 M: PrintObj, [ IsFlagOfProjectiveSpace and IsFlagOfIncidenceStructureRep ],
 M: Display, [ IsFlagOfProjectiveSpace and IsFlagOfIncidenceStructureRep ],
 M: ShadowOfFlag, [IsProjectiveSpace, IsFlagOfProjectiveSpace, IsPosInt],
@@ -1190,6 +1183,8 @@ M: ProjectiveElationGroup, [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjective
 M: ProjectiveElationGroup, [ IsSubspaceOfProjectiveSpace ],
 M: HomologyOfProjectiveSpace, [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ],
 M: ProjectiveHomologyGroup, [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ],
+M: SingerCycleMat, InstallMethod(SingerCycleMat,[IsInt,IsInt],
+M: SingerCycleCollineation, InstallMethod(SingerCycleCollineation,[IsInt,IsInt],
 M: IncidenceGraph, [ IsProjectiveSpace ],
 
 correlations.gi: methods
@@ -1362,11 +1357,11 @@ M: TypesOfElementsOfIncidenceStructure, [ IsClassicalPolarSpace and IsClassicalP
 M: TypesOfElementsOfIncidenceStructurePlural, [IsClassicalPolarSpace],
 M: Order, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
 M: RepresentativesOfElements, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],
-M: \QUO, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep, IsSubspaceOfClassicalPolarSpace],
+M: QUO, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep, IsSubspaceOfClassicalPolarSpace],
 M: Size, [IsSubspacesOfClassicalPolarSpace],
 M: VectorSpaceToElement, [IsClassicalPolarSpace, IsCMatRep],
 M: VectorSpaceToElement, [IsClassicalPolarSpace, IsCVecRep],
-M: VectorSpaceToElement, [IsClassicalPolarSpace, IsPlistRep],
+M: VectorSpaceToElement, [IsClassicalPolarSpace, IsPlistRep and IsMatrix],
 M: VectorSpaceToElement, [IsClassicalPolarSpace, IsGF2MatrixRep],
 M: VectorSpaceToElement, [IsClassicalPolarSpace, Is8BitMatrixRep],
 M: VectorSpaceToElement, [IsClassicalPolarSpace, IsRowVector],
@@ -1474,7 +1469,7 @@ M: NaturalEmbeddingBySubfield, [ IsClassicalPolarSpace, IsClassicalPolarSpace, I
 M: NaturalEmbeddingBySubfield, [ IsClassicalPolarSpace, IsClassicalPolarSpace ],
 M: NaturalProjectionBySubspace, [ IsProjectiveSpace, IsSubspaceOfProjectiveSpace ],
 M: NaturalProjectionBySubspaceNC, [ IsProjectiveSpace, IsSubspaceOfProjectiveSpace ],
-M: \QUO, [ IsProjectiveSpace and IsProjectiveSpaceRep, IsSubspaceOfProjectiveSpace],
+M: QUO, [ IsProjectiveSpace and IsProjectiveSpaceRep, IsSubspaceOfProjectiveSpace],
 M: NaturalProjectionBySubspace, [ IsClassicalPolarSpace, IsSubspaceOfClassicalPolarSpace ],
 M: NaturalProjectionBySubspaceNC, [ IsClassicalPolarSpace, IsSubspaceOfClassicalPolarSpace ],
 M: PluckerCoordinates, [ IsMatrix ],
@@ -1706,7 +1701,7 @@ M: Wrap, [IsAffineSpace, IsPosInt, IsObject],
 M: ViewObj, [ IsSubspacesOfAffineSpace and IsSubspacesOfAffineSpaceRep ],
 M: PrintObj, [ IsSubspacesOfAffineSpace and IsAllSubspacesOfProjectiveSpaceRep ],
 M: Display, [ IsSubspaceOfAffineSpace ],
-M: AffineSubspace, [IsAffineSpace, IsRowVector, IsPlistRep],
+M: AffineSubspace, [IsAffineSpace, IsRowVector, IsPlistRep and IsMatrix],
 M: AffineSubspace, [IsAffineSpace, IsRowVector],
 M: AffineSubspace, [IsAffineSpace, IsCVecRep],
 M: AffineSubspace, [IsAffineSpace, IsRowVector, Is8BitMatrixRep],
@@ -1824,7 +1819,7 @@ M: IncidenceGraph, [ IsClassicalGeneralisedHexagon and IsGeneralisedPolygonRep ]
 M: VectorSpaceToElement, [ IsClassicalGeneralisedHexagon, IsCVecRep],
 M: VectorSpaceToElement, [ IsClassicalGeneralisedHexagon, IsRowVector ],
 M: VectorSpaceToElement, [ IsClassicalGeneralisedHexagon, Is8BitVectorRep ],
-M: VectorSpaceToElement, [ IsClassicalGeneralisedHexagon, IsPlistRep],
+M: VectorSpaceToElement, [ IsClassicalGeneralisedHexagon, IsPlistRep and IsMatrix],
 M: VectorSpaceToElement, [ IsClassicalGeneralisedHexagon, IsGF2MatrixRep],
 M: VectorSpaceToElement, [ IsClassicalGeneralisedHexagon, Is8BitMatrixRep],
 M: VectorSpaceToElement, [ IsClassicalGeneralisedHexagon, IsCMatRep],
@@ -1880,6 +1875,7 @@ M: FiningOrbit, [ IsProjectiveGroupWithFrob, IsSubspaceOfAffineSpace ],
 M: FiningOrbit, [ IsProjectiveGroupWithFrob, CategoryCollections(IsElementOfIncidenceStructure), IsFunction],
 M: FiningOrbit, [ IsProjectiveGroupWithFrob, CategoryCollections(IsElementOfIncidenceStructure) ],
 M: FiningOrbits, [ IsGroup, IsHomogeneousList, IsFunction],
+M: FiningOrbitsDomain, [ IsGroup, IsElementsOfIncidenceGeometry, IsFunction ],
 M: FiningOrbits, [ IsProjectiveGroupWithFrob, IsSubspaceOfProjectiveSpaceCollection and IsHomogeneousList ],
 M: FiningOrbits, [ IsProjectiveGroupWithFrob, IsSubspaceOfAffineSpaceCollection and IsHomogeneousList ],
 M: FiningOrbits, [ IsProjectiveGroupWithFrob, IsSubspacesOfProjectiveSpace ],
@@ -1898,6 +1894,9 @@ M: FiningSetwiseStabiliser, [IsProjectiveGroupWithFrob, IsSubspaceOfAffineSpaceC
 M: FiningStabiliserPerm, InstallMethod(FiningStabiliserPerm,[IsProjectiveGroupWithFrob,IsElementOfIncidenceStructure],
 M: FiningStabiliserPerm2, [IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure],
 M: FixedSubspaces, [IsProjectiveGroupWithFrob, IsProjectiveSpace],
+M: ProjectiveStabiliserGroupOfSubspace, [IsSubspaceOfProjectiveSpace],
+M: StabiliserGroupOfSubspace, [IsSubspaceOfProjectiveSpace],
+M: SpecialProjectiveStabiliserGroupOfSubspace, [IsSubspaceOfProjectiveSpace],
 
  
 </pre></div>

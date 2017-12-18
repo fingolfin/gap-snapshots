@@ -33,19 +33,7 @@ W.~Bruns, B.~Ichim, T.~R\"omer, R.~Sieg, and C.~S\"oger.
 \newblock Normaliz. algorithms for rational cones and affine monoids.
 \newblock Available at \url{http://normaliz.uos.de}.
 
-\bibitem[BJK11]{BJK}
-V.~A. Bovdi, E.~Jespers, and A.~B. Konovalov.
-\newblock Torsion units in integral group rings of {J}anko simple groups.
-\newblock {\em Math. Comp.}, 80(273):593--615, 2011.
-
-\bibitem[BK07a]{KonovalovM11}
-V.~A. Bovdi and A.~B. Konovalov.
-\newblock Integral group ring of the first {M}athieu simple group.
-\newblock In {\em Groups {S}t. {A}ndrews 2005. {V}ol. 1}, volume 339 of {\em
-  London Math. Soc. Lecture Note Ser.}, pages 237--245. Cambridge Univ. Press,
-  Cambridge, 2007.
-
-\bibitem[BK07b]{KonovalovMcL}
+\bibitem[BK07]{KonovalovMcL}
 V.~A. Bovdi and A.~B. Konovalov.
 \newblock Integral group ring of the {M}c{L}aughlin simple group.
 \newblock {\em Algebra Discrete Math.}, (2):43--53, 2007.
@@ -54,12 +42,6 @@ V.~A. Bovdi and A.~B. Konovalov.
 V.~A. Bovdi and A.~B. Konovalov.
 \newblock Torsion units in integral group ring of {H}igman-{S}ims simple group.
 \newblock {\em Studia Sci. Math. Hungar.}, 47(1):1--11, 2010.
-
-\bibitem[BKL08]{KonovalovM22}
-V.~A. Bovdi, A.~B. Konovalov, and S.~Linton.
-\newblock Torsion units in integral group ring of the {M}athieu simple group
-  {${\rm M}_{22}$}.
-\newblock {\em LMS J. Comput. Math.}, 11:28--39, 2008.
 
 \bibitem[BM14]{BaMaM10}
 A.~B\"achle and L.~Margolis.

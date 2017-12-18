@@ -18,7 +18,7 @@
   cosets have a nonempty intersection.[133X
   
   [33X[0;0YWe  now  use  the  above observation to define an incidence structure from a
-  group  [22XG[122X together with a set of subgroups [22X{G_1,G_2,...,G_n}[122X. The type set is
+  group [22XG[122X together with a set of subgroups [22X{G_1,G_2,...,G_n}[122X . The type set is
   [22X{1,2,...,n}[122X.  By definition the elements of type [22Xi[122X are the (right) cosets of
   the  subgroup [22XG_i[122X. Two cosets are incident if and only if their intersection
   is  not  empty.  This  is  an incidence structure which is not necessarily a

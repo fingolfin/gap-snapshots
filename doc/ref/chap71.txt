@@ -229,9 +229,9 @@
   
   [1X71.3-1 [33X[0;0YCharacterTable[133X[101X
   
-  [29X[2XCharacterTable[102X( [3XG[103X[, [3Xp[103X] ) [32X operation
-  [29X[2XCharacterTable[102X( [3Xordtbl[103X, [3Xp[103X ) [32X operation
-  [29X[2XCharacterTable[102X( [3Xname[103X[, [3Xparam[103X] ) [32X operation
+  [33X[1;0Y[29X[2XCharacterTable[102X( [3XG[103X[, [3Xp[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XCharacterTable[102X( [3Xordtbl[103X, [3Xp[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XCharacterTable[102X( [3Xname[103X[, [3Xparam[103X] ) [32X operation[133X
   
   [33X[0;0YCalled    with    a    group   [3XG[103X,   [2XCharacterTable[102X   calls   the   attribute
   [2XOrdinaryCharacterTable[102X  ([14X71.8-4[114X). Called with first argument a group [3XG[103X or an
@@ -279,10 +279,10 @@
   
   [1X71.3-2 [33X[0;0YBrauerTable[133X[101X
   
-  [29X[2XBrauerTable[102X( [3Xordtbl[103X, [3Xp[103X ) [32X operation
-  [29X[2XBrauerTable[102X( [3XG[103X, [3Xp[103X ) [32X operation
-  [29X[2XBrauerTableOp[102X( [3Xordtbl[103X, [3Xp[103X ) [32X operation
-  [29X[2XComputedBrauerTables[102X( [3Xordtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XBrauerTable[102X( [3Xordtbl[103X, [3Xp[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XBrauerTable[102X( [3XG[103X, [3Xp[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XBrauerTableOp[102X( [3Xordtbl[103X, [3Xp[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XComputedBrauerTables[102X( [3Xordtbl[103X ) [32X attribute[133X
   
   [33X[0;0YCalled  with  an  ordinary  character table [3Xordtbl[103X or a group [3XG[103X, [2XBrauerTable[102X
   returns  its  [3Xp[103X-modular  character  table if [5XGAP[105X can compute this table, and
@@ -305,7 +305,7 @@
   
   [1X71.3-3 CharacterTableRegular[101X
   
-  [29X[2XCharacterTableRegular[102X( [3Xtbl[103X, [3Xp[103X ) [32X function
+  [33X[1;0Y[29X[2XCharacterTableRegular[102X( [3Xtbl[103X, [3Xp[103X ) [32X function[133X
   
   [33X[0;0YFor   an   ordinary   character   table   [3Xtbl[103X   and   a   prime  integer  [3Xp[103X,
   [2XCharacterTableRegular[102X  returns  the  [21Xtable  head[121X  of  the  [3Xp[103X-modular  Brauer
@@ -346,7 +346,7 @@
   
   [1X71.3-4 SupportedCharacterTableInfo[101X
   
-  [29X[2XSupportedCharacterTableInfo[102X[32X global variable
+  [33X[1;0Y[29X[2XSupportedCharacterTableInfo[102X[32X global variable[133X
   
   [33X[0;0Y[2XSupportedCharacterTableInfo[102X  is  a  list  that  contains at position [22X3i-2[122X an
   attribute  getter function, at position [22X3i-1[122X the name of this attribute, and
@@ -368,8 +368,8 @@
   
   [1X71.3-5 ConvertToCharacterTable[101X
   
-  [29X[2XConvertToCharacterTable[102X( [3Xrecord[103X ) [32X function
-  [29X[2XConvertToCharacterTableNC[102X( [3Xrecord[103X ) [32X function
+  [33X[1;0Y[29X[2XConvertToCharacterTable[102X( [3Xrecord[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XConvertToCharacterTableNC[102X( [3Xrecord[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xrecord[103X  be  a  record.  [2XConvertToCharacterTable[102X  converts [3Xrecord[103X into a
   component  object  (see [14X79.10[114X) representing a character table. The values of
@@ -395,11 +395,11 @@
   
   [1X71.4-1 IsNearlyCharacterTable[101X
   
-  [29X[2XIsNearlyCharacterTable[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsCharacterTable[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsOrdinaryTable[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsBrauerTable[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsCharacterTableInProgress[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsNearlyCharacterTable[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsCharacterTable[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsOrdinaryTable[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsBrauerTable[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsCharacterTableInProgress[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YEvery   [21Xcharacter   table   like   object[121X   in  [5XGAP[105X  lies  in  the  category
   [2XIsNearlyCharacterTable[102X.  There  are four important subcategories, namely the
@@ -468,13 +468,13 @@
   
   [1X71.4-2 InfoCharacterTable[101X
   
-  [29X[2XInfoCharacterTable[102X[32X info class
+  [33X[1;0Y[29X[2XInfoCharacterTable[102X[32X info class[133X
   
   [33X[0;0Yis the info class (see [14X7.4[114X) for computations with character tables.[133X
   
   [1X71.4-3 NearlyCharacterTablesFamily[101X
   
-  [29X[2XNearlyCharacterTablesFamily[102X[32X family
+  [33X[1;0Y[29X[2XNearlyCharacterTablesFamily[102X[32X family[133X
   
   [33X[0;0YEvery character table like object lies in this family (see [14X13.1[114X).[133X
   
@@ -526,7 +526,7 @@
   
   [1X71.6-1 UnderlyingGroup[101X
   
-  [29X[2XUnderlyingGroup[102X( [3Xordtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XUnderlyingGroup[102X( [3Xordtbl[103X ) [32X attribute[133X
   
   [33X[0;0YFor  an  ordinary character table [3Xordtbl[103X of a finite group, the group can be
   stored as value of [2XUnderlyingGroup[102X.[133X
@@ -536,7 +536,7 @@
   
   [1X71.6-2 ConjugacyClasses[101X
   
-  [29X[2XConjugacyClasses[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XConjugacyClasses[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0YFor   a   character   table   [3Xtbl[103X   with   known  underlying  group  [22XG[122X,  the
   [2XConjugacyClasses[102X value of [3Xtbl[103X is a list of conjugacy classes of [22XG[122X. All those
@@ -567,7 +567,7 @@
   
   [1X71.6-3 IdentificationOfConjugacyClasses[101X
   
-  [29X[2XIdentificationOfConjugacyClasses[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIdentificationOfConjugacyClasses[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0YFor  an  ordinary  character  table  [3Xtbl[103X  with  known  underlying  group  [22XG[122X,
   [2XIdentificationOfConjugacyClasses[102X  returns  a  list of positive integers that
@@ -593,7 +593,7 @@
   
   [1X71.6-4 CharacterTableWithStoredGroup[101X
   
-  [29X[2XCharacterTableWithStoredGroup[102X( [3XG[103X, [3Xtbl[103X[, [3Xinfo[103X] ) [32X function
+  [33X[1;0Y[29X[2XCharacterTableWithStoredGroup[102X( [3XG[103X, [3Xtbl[103X[, [3Xinfo[103X] ) [32X function[133X
   
   [33X[0;0YLet  [3XG[103X  be  a  group and [3Xtbl[103X a character table of (a group isomorphic to) [3XG[103X,
   such  that  [3XG[103X  does  not  store  its  [2XOrdinaryCharacterTable[102X ([14X71.8-4[114X) value.
@@ -620,7 +620,7 @@
   
   [1X71.6-5 CompatibleConjugacyClasses[101X
   
-  [29X[2XCompatibleConjugacyClasses[102X( [[3XG[103X, [3Xccl[103X, ][3Xtbl[103X[, [3Xarec[103X] ) [32X operation
+  [33X[1;0Y[29X[2XCompatibleConjugacyClasses[102X( [[3XG[103X, [3Xccl[103X, ][3Xtbl[103X[, [3Xarec[103X] ) [32X operation[133X
   
   [33X[0;0YIf  the  arguments  [3XG[103X  and  [3Xccl[103X  are  present then [3Xccl[103X must be a list of the
   conjugacy classes of the group [3XG[103X, and [3Xtbl[103X the ordinary character table of [3XG[103X.
@@ -730,8 +730,8 @@
   
   [1X71.8-1 [33X[0;0YCharacterDegrees[133X[101X
   
-  [29X[2XCharacterDegrees[102X( [3XG[103X[, [3Xp[103X] ) [32X attribute
-  [29X[2XCharacterDegrees[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCharacterDegrees[102X( [3XG[103X[, [3Xp[103X] ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCharacterDegrees[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0YIn  the first form, [2XCharacterDegrees[102X returns a collected list of the degrees
   of the absolutely irreducible characters of the group [3XG[103X; the optional second
@@ -760,8 +760,8 @@
   
   [1X71.8-2 [33X[0;0YIrr[133X[101X
   
-  [29X[2XIrr[102X( [3XG[103X[, [3Xp[103X] ) [32X attribute
-  [29X[2XIrr[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIrr[102X( [3XG[103X[, [3Xp[103X] ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIrr[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0YCalled  with  a  group  [3XG[103X,  [2XIrr[102X  returns  the  irreducible characters of the
   ordinary  character table of [3XG[103X. Called with a group [3XG[103X and a prime integer [3Xp[103X,
@@ -823,8 +823,8 @@
   
   [1X71.8-3 [33X[0;0YLinearCharacters[133X[101X
   
-  [29X[2XLinearCharacters[102X( [3XG[103X[, [3Xp[103X] ) [32X attribute
-  [29X[2XLinearCharacters[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XLinearCharacters[102X( [3XG[103X[, [3Xp[103X] ) [32X attribute[133X
+  [33X[1;0Y[29X[2XLinearCharacters[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XLinearCharacters[102X  returns  the linear (i.e., degree [22X1[122X) characters in the [2XIrr[102X
   ([14X71.8-2[114X)  list  of  the group [3XG[103X or the character table [3Xtbl[103X, respectively. In
@@ -848,8 +848,8 @@
   
   [1X71.8-4 [33X[0;0YOrdinaryCharacterTable[133X[101X
   
-  [29X[2XOrdinaryCharacterTable[102X( [3XG[103X ) [32X attribute
-  [29X[2XOrdinaryCharacterTable[102X( [3Xmodtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XOrdinaryCharacterTable[102X( [3XG[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XOrdinaryCharacterTable[102X( [3Xmodtbl[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XOrdinaryCharacterTable[102X  returns  the ordinary character table of the group [3XG[103X
   or the Brauer character table [3Xmodtbl[103X, respectively.[133X
@@ -869,24 +869,24 @@
   
   [1X71.8-5 [33X[0;0YGroup Operations Applicable to Character Tables[133X[101X
   
-  [29X[2XAbelianInvariants[102X( [3Xtbl[103X ) [32X attribute
-  [29X[2XCommutatorLength[102X( [3Xtbl[103X ) [32X attribute
-  [29X[2XExponent[102X( [3Xtbl[103X ) [32X attribute
-  [29X[2XIsAbelian[102X( [3Xtbl[103X ) [32X property
-  [29X[2XIsAlmostSimple[102X( [3Xtbl[103X ) [32X property
-  [29X[2XIsCyclic[102X( [3Xtbl[103X ) [32X property
-  [29X[2XIsElementaryAbelian[102X( [3Xtbl[103X ) [32X property
-  [29X[2XIsFinite[102X( [3Xtbl[103X ) [32X property
-  [29X[2XIsMonomial[102X( [3Xtbl[103X ) [32X property
-  [29X[2XIsNilpotent[102X( [3Xtbl[103X ) [32X property
-  [29X[2XIsPerfect[102X( [3Xtbl[103X ) [32X property
-  [29X[2XIsSimple[102X( [3Xtbl[103X ) [32X property
-  [29X[2XIsSolvable[102X( [3Xtbl[103X ) [32X property
-  [29X[2XIsSporadicSimple[102X( [3Xtbl[103X ) [32X property
-  [29X[2XIsSupersolvable[102X( [3Xtbl[103X ) [32X property
-  [29X[2XIsomorphismTypeInfoFiniteSimpleGroup[102X( [3Xtbl[103X ) [32X attribute
-  [29X[2XNrConjugacyClasses[102X( [3Xtbl[103X ) [32X attribute
-  [29X[2XSize[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAbelianInvariants[102X( [3Xtbl[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCommutatorLength[102X( [3Xtbl[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XExponent[102X( [3Xtbl[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsAbelian[102X( [3Xtbl[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsAlmostSimple[102X( [3Xtbl[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsCyclic[102X( [3Xtbl[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsElementaryAbelian[102X( [3Xtbl[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsFinite[102X( [3Xtbl[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsMonomial[102X( [3Xtbl[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsNilpotent[102X( [3Xtbl[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsPerfect[102X( [3Xtbl[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsSimple[102X( [3Xtbl[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsSolvable[102X( [3Xtbl[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsSporadicSimple[102X( [3Xtbl[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsSupersolvable[102X( [3Xtbl[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsomorphismTypeInfoFiniteSimpleGroup[102X( [3Xtbl[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XNrConjugacyClasses[102X( [3Xtbl[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XSize[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0YThese  operations for groups are applicable to character tables and mean the
   same  for  a character table as for its underlying group; see Chapter [14X39[114X for
@@ -961,7 +961,7 @@
   
   [1X71.9-1 OrdersClassRepresentatives[101X
   
-  [29X[2XOrdersClassRepresentatives[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XOrdersClassRepresentatives[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0Yis a list of orders of representatives of conjugacy classes of the character
   table [3Xtbl[103X, in the same ordering as the conjugacy classes of [3Xtbl[103X.[133X
@@ -974,8 +974,8 @@
   
   [1X71.9-2 SizesCentralizers[101X
   
-  [29X[2XSizesCentralizers[102X( [3Xtbl[103X ) [32X attribute
-  [29X[2XSizesCentralisers[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSizesCentralizers[102X( [3Xtbl[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XSizesCentralisers[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0Yis  a  list  that  stores  at  position [22Xi[122X the size of the centralizer of any
   element in the [22Xi[122X-th conjugacy class of the character table [3Xtbl[103X.[133X
@@ -988,7 +988,7 @@
   
   [1X71.9-3 SizesConjugacyClasses[101X
   
-  [29X[2XSizesConjugacyClasses[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSizesConjugacyClasses[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0Yis  a list that stores at position [22Xi[122X the size of the [22Xi[122X-th conjugacy class of
   the character table [3Xtbl[103X.[133X
@@ -1001,7 +1001,7 @@
   
   [1X71.9-4 AutomorphismsOfTable[101X
   
-  [29X[2XAutomorphismsOfTable[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAutomorphismsOfTable[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0Yis  the  permutation group of all column permutations of the character table
   [3Xtbl[103X  that  leave the set of irreducibles and each power map of [3Xtbl[103X invariant
@@ -1020,8 +1020,8 @@
   
   [1X71.9-5 [33X[0;0YUnderlyingCharacteristic[133X[101X
   
-  [29X[2XUnderlyingCharacteristic[102X( [3Xtbl[103X ) [32X attribute
-  [29X[2XUnderlyingCharacteristic[102X( [3Xpsi[103X ) [32X attribute
+  [33X[1;0Y[29X[2XUnderlyingCharacteristic[102X( [3Xtbl[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XUnderlyingCharacteristic[102X( [3Xpsi[103X ) [32X attribute[133X
   
   [33X[0;0YFor an ordinary character table [3Xtbl[103X, the result is [10X0[110X, for a [22Xp[122X-modular Brauer
   table [3Xtbl[103X, it is [22Xp[122X. The underlying characteristic of a class function [3Xpsi[103X is
@@ -1045,8 +1045,8 @@
   
   [1X71.9-6 [33X[0;0YClass Names and Character Names[133X[101X
   
-  [29X[2XClassNames[102X( [3Xtbl[103X[, [3X"ATLAS"[103X] ) [32X attribute
-  [29X[2XCharacterNames[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XClassNames[102X( [3Xtbl[103X[, [3X"ATLAS"[103X] ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCharacterNames[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XClassNames[102X  and  [2XCharacterNames[102X  return  lists  of  strings,  one  for  each
   conjugacy  class  or  irreducible  character, respectively, of the character
@@ -1077,8 +1077,8 @@
   
   [1X71.9-7 [33X[0;0YClass Parameters and Character Parameters[133X[101X
   
-  [29X[2XClassParameters[102X( [3Xtbl[103X ) [32X attribute
-  [29X[2XCharacterParameters[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XClassParameters[102X( [3Xtbl[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XCharacterParameters[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0YThe  values  of  these  attributes are lists containing a parameter for each
   conjugacy  class  or  irreducible  character, respectively, of the character
@@ -1099,7 +1099,7 @@
   
   [1X71.9-8 Identifier[101X
   
-  [29X[2XIdentifier[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIdentifier[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0Yis  a  string  that  identifies  the  character table [3Xtbl[103X in the current [5XGAP[105X
   session.  It  is  used  mainly for class fusions into [3Xtbl[103X that are stored on
@@ -1127,7 +1127,7 @@
   
   [1X71.9-9 InfoText[101X
   
-  [29X[2XInfoText[102X( [3Xtbl[103X ) [32X method
+  [33X[1;0Y[29X[2XInfoText[102X( [3Xtbl[103X ) [32X method[133X
   
   [33X[0;0Yis a mutable string with information about the character table [3Xtbl[103X. There is
   no default method to create an info text.[133X
@@ -1146,7 +1146,7 @@
   
   [1X71.9-10 InverseClasses[101X
   
-  [29X[2XInverseClasses[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XInverseClasses[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a  character  table  [3Xtbl[103X,  [2XInverseClasses[102X returns the list mapping each
   conjugacy  class  to its inverse class. This list can be regarded as [22X(-1)[122X-st
@@ -1161,7 +1161,7 @@
   
   [1X71.9-11 RealClasses[101X
   
-  [29X[2XRealClasses[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRealClasses[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a  character table [3Xtbl[103X, [2XRealClasses[102X returns the strictly sorted list of
   positions of classes in [3Xtbl[103X that consist of real elements.[133X
@@ -1177,7 +1177,7 @@
   
   [1X71.9-12 ClassOrbit[101X
   
-  [29X[2XClassOrbit[102X( [3Xtbl[103X, [3Xcc[103X ) [32X operation
+  [33X[1;0Y[29X[2XClassOrbit[102X( [3Xtbl[103X, [3Xcc[103X ) [32X operation[133X
   
   [33X[0;0Yis  the  list of positions of those conjugacy classes of the character table
   [3Xtbl[103X  that  are  Galois  conjugate  to  the [3Xcc[103X-th class. That is, exactly the
@@ -1193,7 +1193,7 @@
   
   [1X71.9-13 ClassRoots[101X
   
-  [29X[2XClassRoots[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XClassRoots[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a character table [3Xtbl[103X, [2XClassRoots[102X returns a list containing at position
   [22Xi[122X the list of positions of the classes of all nontrivial [22Xp[122X-th roots, where [22Xp[122X
@@ -1220,9 +1220,9 @@
   
   [1X71.10-1 ClassPositionsOfNormalSubgroups[101X
   
-  [29X[2XClassPositionsOfNormalSubgroups[102X( [3Xordtbl[103X ) [32X attribute
-  [29X[2XClassPositionsOfMaximalNormalSubgroups[102X( [3Xordtbl[103X ) [32X attribute
-  [29X[2XClassPositionsOfMinimalNormalSubgroups[102X( [3Xordtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XClassPositionsOfNormalSubgroups[102X( [3Xordtbl[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XClassPositionsOfMaximalNormalSubgroups[102X( [3Xordtbl[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XClassPositionsOfMinimalNormalSubgroups[102X( [3Xordtbl[103X ) [32X attribute[133X
   
   [33X[0;0Ycorrespond  to  [2XNormalSubgroups[102X ([14X39.19-8[114X), [2XMaximalNormalSubgroups[102X ([14X39.19-9[114X),
   [2XMinimalNormalSubgroups[102X  ([14X39.19-10[114X)  for  the group of the ordinary character
@@ -1240,7 +1240,7 @@
   
   [1X71.10-2 ClassPositionsOfAgemo[101X
   
-  [29X[2XClassPositionsOfAgemo[102X( [3Xordtbl[103X, [3Xp[103X ) [32X operation
+  [33X[1;0Y[29X[2XClassPositionsOfAgemo[102X( [3Xordtbl[103X, [3Xp[103X ) [32X operation[133X
   
   [33X[0;0Ycorresponds to [2XAgemo[102X ([14X39.14-2[114X) for the group of the ordinary character table
   [3Xordtbl[103X.[133X
@@ -1253,8 +1253,8 @@
   
   [1X71.10-3 ClassPositionsOfCentre[101X
   
-  [29X[2XClassPositionsOfCentre[102X( [3Xordtbl[103X ) [32X attribute
-  [29X[2XClassPositionsOfCenter[102X( [3Xordtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XClassPositionsOfCentre[102X( [3Xordtbl[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XClassPositionsOfCenter[102X( [3Xordtbl[103X ) [32X attribute[133X
   
   [33X[0;0Ycorresponds to [2XCentre[102X ([14X35.4-5[114X) for the group of the ordinary character table
   [3Xordtbl[103X.[133X
@@ -1267,7 +1267,7 @@
   
   [1X71.10-4 ClassPositionsOfDirectProductDecompositions[101X
   
-  [29X[2XClassPositionsOfDirectProductDecompositions[102X( [3Xtbl[103X[, [3Xnclasses[103X] ) [32X attribute
+  [33X[1;0Y[29X[2XClassPositionsOfDirectProductDecompositions[102X( [3Xtbl[103X[, [3Xnclasses[103X] ) [32X attribute[133X
   
   [33X[0;0YLet [3Xtbl[103X be the ordinary character table of the group [22XG[122X, say. Called with the
   only  argument  [3Xtbl[103X, [2XClassPositionsOfDirectProductDecompositions[102X returns the
@@ -1281,7 +1281,7 @@
   
   [1X71.10-5 ClassPositionsOfDerivedSubgroup[101X
   
-  [29X[2XClassPositionsOfDerivedSubgroup[102X( [3Xordtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XClassPositionsOfDerivedSubgroup[102X( [3Xordtbl[103X ) [32X attribute[133X
   
   [33X[0;0Ycorresponds  to  [2XDerivedSubgroup[102X  ([14X39.12-3[114X)  for  the  group of the ordinary
   character table [3Xordtbl[103X.[133X
@@ -1294,7 +1294,7 @@
   
   [1X71.10-6 ClassPositionsOfElementaryAbelianSeries[101X
   
-  [29X[2XClassPositionsOfElementaryAbelianSeries[102X( [3Xordtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XClassPositionsOfElementaryAbelianSeries[102X( [3Xordtbl[103X ) [32X attribute[133X
   
   [33X[0;0Ycorresponds  to  [2XElementaryAbelianSeries[102X  ([14X39.17-9[114X)  for  the  group  of the
   ordinary character table [3Xordtbl[103X.[133X
@@ -1310,7 +1310,7 @@
   
   [1X71.10-7 ClassPositionsOfFittingSubgroup[101X
   
-  [29X[2XClassPositionsOfFittingSubgroup[102X( [3Xordtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XClassPositionsOfFittingSubgroup[102X( [3Xordtbl[103X ) [32X attribute[133X
   
   [33X[0;0Ycorresponds  to  [2XFittingSubgroup[102X  ([14X39.12-5[114X)  for  the  group of the ordinary
   character table [3Xordtbl[103X.[133X
@@ -1323,7 +1323,7 @@
   
   [1X71.10-8 ClassPositionsOfLowerCentralSeries[101X
   
-  [29X[2XClassPositionsOfLowerCentralSeries[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XClassPositionsOfLowerCentralSeries[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0Ycorresponds  to  [2XLowerCentralSeriesOfGroup[102X  ([14X39.17-11[114X)  for the group of the
   ordinary character table [3Xordtbl[103X.[133X
@@ -1339,7 +1339,7 @@
   
   [1X71.10-9 ClassPositionsOfUpperCentralSeries[101X
   
-  [29X[2XClassPositionsOfUpperCentralSeries[102X( [3Xordtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XClassPositionsOfUpperCentralSeries[102X( [3Xordtbl[103X ) [32X attribute[133X
   
   [33X[0;0Ycorresponds  to  [2XUpperCentralSeriesOfGroup[102X  ([14X39.17-12[114X)  for the group of the
   ordinary character table [3Xordtbl[103X.[133X
@@ -1355,7 +1355,7 @@
   
   [1X71.10-10 ClassPositionsOfSupersolvableResiduum[101X
   
-  [29X[2XClassPositionsOfSupersolvableResiduum[102X( [3Xordtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XClassPositionsOfSupersolvableResiduum[102X( [3Xordtbl[103X ) [32X attribute[133X
   
   [33X[0;0Ycorresponds  to  [2XSupersolvableResiduum[102X  ([14X39.12-11[114X)  for  the  group  of  the
   ordinary character table [3Xordtbl[103X.[133X
@@ -1368,7 +1368,7 @@
   
   [1X71.10-11 ClassPositionsOfPCore[101X
   
-  [29X[2XClassPositionsOfPCore[102X( [3Xordtbl[103X, [3Xp[103X ) [32X operation
+  [33X[1;0Y[29X[2XClassPositionsOfPCore[102X( [3Xordtbl[103X, [3Xp[103X ) [32X operation[133X
   
   [33X[0;0Ycorresponds to [2XPCore[102X ([14X39.11-3[114X) for the group of the ordinary character table
   [3Xordtbl[103X.[133X
@@ -1383,7 +1383,7 @@
   
   [1X71.10-12 ClassPositionsOfNormalClosure[101X
   
-  [29X[2XClassPositionsOfNormalClosure[102X( [3Xordtbl[103X, [3Xclasses[103X ) [32X operation
+  [33X[1;0Y[29X[2XClassPositionsOfNormalClosure[102X( [3Xordtbl[103X, [3Xclasses[103X ) [32X operation[133X
   
   [33X[0;0Yis the sorted list of the positions of all conjugacy classes of the ordinary
   character  table  [3Xordtbl[103X  that  form  the  normal closure (see [2XNormalClosure[102X
@@ -1400,9 +1400,9 @@
   
   [1X71.11-1 PrimeBlocks[101X
   
-  [29X[2XPrimeBlocks[102X( [3Xordtbl[103X, [3Xp[103X ) [32X operation
-  [29X[2XPrimeBlocksOp[102X( [3Xordtbl[103X, [3Xp[103X ) [32X operation
-  [29X[2XComputedPrimeBlockss[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XPrimeBlocks[102X( [3Xordtbl[103X, [3Xp[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPrimeBlocksOp[102X( [3Xordtbl[103X, [3Xp[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XComputedPrimeBlockss[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0YFor  an  ordinary  character table [3Xordtbl[103X and a prime integer [3Xp[103X, [2XPrimeBlocks[102X
   returns a record with the following components.[133X
@@ -1463,7 +1463,7 @@
   
   [1X71.11-2 SameBlock[101X
   
-  [29X[2XSameBlock[102X( [3Xp[103X, [3Xomega1[103X, [3Xomega2[103X, [3Xrelevant[103X ) [32X function
+  [33X[1;0Y[29X[2XSameBlock[102X( [3Xp[103X, [3Xomega1[103X, [3Xomega2[103X, [3Xrelevant[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xp[103X  be  a prime integer, [3Xomega1[103X and [3Xomega2[103X be two central characters (or
   their  values  lists)  of  a  character  table,  and  [3Xrelevant[103X  be a list of
@@ -1484,7 +1484,7 @@
   
   [1X71.11-3 BlocksInfo[101X
   
-  [29X[2XBlocksInfo[102X( [3Xmodtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XBlocksInfo[102X( [3Xmodtbl[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a  Brauer  character table [3Xmodtbl[103X, the value of [2XBlocksInfo[102X is a list of
   (mutable)  records,  the  [22Xi[122X-th  entry  containing information about the [22Xi[122X-th
@@ -1532,7 +1532,7 @@
   
   [1X71.11-4 DecompositionMatrix[101X
   
-  [29X[2XDecompositionMatrix[102X( [3Xmodtbl[103X[, [3Xblocknr[103X] ) [32X operation
+  [33X[1;0Y[29X[2XDecompositionMatrix[102X( [3Xmodtbl[103X[, [3Xblocknr[103X] ) [32X operation[133X
   
   [33X[0;0YLet [3Xmodtbl[103X be a Brauer character table.[133X
   
@@ -1568,7 +1568,7 @@
   
   [1X71.11-5 LaTeXStringDecompositionMatrix[101X
   
-  [29X[2XLaTeXStringDecompositionMatrix[102X( [3Xmodtbl[103X[, [3Xblocknr[103X][, [3Xoptions[103X] ) [32X function
+  [33X[1;0Y[29X[2XLaTeXStringDecompositionMatrix[102X( [3Xmodtbl[103X[, [3Xblocknr[103X][, [3Xoptions[103X] ) [32X function[133X
   
   [33X[0;0Yis  a  string  that  contains  LaTeX  code  to  print a decomposition matrix
   (see [2XDecompositionMatrix[102X ([14X71.11-4[114X)) nicely.[133X
@@ -1637,7 +1637,7 @@
   
   [1X71.12-1 Index[101X
   
-  [29X[2XIndex[102X( [3Xtbl[103X, [3Xsubtbl[103X ) [32X operation
+  [33X[1;0Y[29X[2XIndex[102X( [3Xtbl[103X, [3Xsubtbl[103X ) [32X operation[133X
   
   [33X[0;0YFor  two  character tables [3Xtbl[103X and [3Xsubtbl[103X, [2XIndex[102X returns the quotient of the
   [2XSize[102X  ([14X71.8-5[114X)  values  of [3Xtbl[103X and [3Xsubtbl[103X. The containment of the underlying
@@ -1646,7 +1646,7 @@
   
   [1X71.12-2 IsInternallyConsistent[101X
   
-  [29X[2XIsInternallyConsistent[102X( [3Xtbl[103X ) [32X method
+  [33X[1;0Y[29X[2XIsInternallyConsistent[102X( [3Xtbl[103X ) [32X method[133X
   
   [33X[0;0YFor  an [13Xordinary[113X character table [3Xtbl[103X, [2XIsInternallyConsistent[102X ([14X12.8-4[114X) checks
   the consistency of the following attribute values (if stored).[133X
@@ -1680,12 +1680,12 @@
   
   [1X71.12-3 IsPSolvableCharacterTable[101X
   
-  [29X[2XIsPSolvableCharacterTable[102X( [3Xtbl[103X, [3Xp[103X ) [32X operation
-  [29X[2XIsPSolubleCharacterTable[102X( [3Xtbl[103X, [3Xp[103X ) [32X operation
-  [29X[2XIsPSolvableCharacterTableOp[102X( [3Xtbl[103X, [3Xp[103X ) [32X operation
-  [29X[2XIsPSolubleCharacterTableOp[102X( [3Xtbl[103X, [3Xp[103X ) [32X operation
-  [29X[2XComputedIsPSolvableCharacterTables[102X( [3Xtbl[103X ) [32X attribute
-  [29X[2XComputedIsPSolubleCharacterTables[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIsPSolvableCharacterTable[102X( [3Xtbl[103X, [3Xp[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsPSolubleCharacterTable[102X( [3Xtbl[103X, [3Xp[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsPSolvableCharacterTableOp[102X( [3Xtbl[103X, [3Xp[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsPSolubleCharacterTableOp[102X( [3Xtbl[103X, [3Xp[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XComputedIsPSolvableCharacterTables[102X( [3Xtbl[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XComputedIsPSolubleCharacterTables[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XIsPSolvableCharacterTable[102X  for  the ordinary character table [3Xtbl[103X corresponds
   to  [2XIsPSolvable[102X  ([14X39.15-23[114X)  for  the group of [3Xtbl[103X, [3Xp[103X must be either a prime
@@ -1705,7 +1705,7 @@
   
   [1X71.12-4 IsClassFusionOfNormalSubgroup[101X
   
-  [29X[2XIsClassFusionOfNormalSubgroup[102X( [3Xsubtbl[103X, [3Xfus[103X, [3Xtbl[103X ) [32X function
+  [33X[1;0Y[29X[2XIsClassFusionOfNormalSubgroup[102X( [3Xsubtbl[103X, [3Xfus[103X, [3Xtbl[103X ) [32X function[133X
   
   [33X[0;0YFor  two  ordinary  character  tables  [3Xtbl[103X  and  [3Xsubtbl[103X of a group [22XG[122X and its
   subgroup  [22XU[122X,  say,  and  a  list [3Xfus[103X of positive integers that describes the
@@ -1723,9 +1723,9 @@
   
   [1X71.12-5 Indicator[101X
   
-  [29X[2XIndicator[102X( [3Xtbl[103X[, [3Xcharacters[103X], [3Xn[103X ) [32X operation
-  [29X[2XIndicatorOp[102X( [3Xtbl[103X, [3Xcharacters[103X, [3Xn[103X ) [32X operation
-  [29X[2XComputedIndicators[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIndicator[102X( [3Xtbl[103X[, [3Xcharacters[103X], [3Xn[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIndicatorOp[102X( [3Xtbl[103X, [3Xcharacters[103X, [3Xn[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XComputedIndicators[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0YIf  [3Xtbl[103X  is  an  ordinary character table then [2XIndicator[102X returns the list of
   [3Xn[103X-th  Frobenius-Schur  indicators  of the characters in the list [3Xcharacters[103X;
@@ -1749,7 +1749,7 @@
   
   [1X71.12-6 NrPolyhedralSubgroups[101X
   
-  [29X[2XNrPolyhedralSubgroups[102X( [3Xtbl[103X, [3Xc1[103X, [3Xc2[103X, [3Xc3[103X ) [32X function
+  [33X[1;0Y[29X[2XNrPolyhedralSubgroups[102X( [3Xtbl[103X, [3Xc1[103X, [3Xc2[103X, [3Xc3[103X ) [32X function[133X
   
   [33X[0;0Yreturns the number and isomorphism type of polyhedral subgroups of the group
   with  ordinary  character  table  [3Xtbl[103X which are generated by an element [22Xg[122X of
@@ -1772,7 +1772,7 @@
   
   [1X71.12-7 ClassMultiplicationCoefficient[101X
   
-  [29X[2XClassMultiplicationCoefficient[102X( [3Xtbl[103X, [3Xi[103X, [3Xj[103X, [3Xk[103X ) [32X operation
+  [33X[1;0Y[29X[2XClassMultiplicationCoefficient[102X( [3Xtbl[103X, [3Xi[103X, [3Xj[103X, [3Xk[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  class multiplication coefficient of the classes [3Xi[103X, [3Xj[103X, and [3Xk[103X of
   the group [22XG[122X with ordinary character table [3Xtbl[103X.[133X
@@ -1801,7 +1801,7 @@
   
   [1X71.12-8 ClassStructureCharTable[101X
   
-  [29X[2XClassStructureCharTable[102X( [3Xtbl[103X, [3Xclasses[103X ) [32X function
+  [33X[1;0Y[29X[2XClassStructureCharTable[102X( [3Xtbl[103X, [3Xclasses[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the  so-called  class structure of the classes in the list [3Xclasses[103X,
   for the character table [3Xtbl[103X of the group [22XG[122X. The length of [3Xclasses[103X must be at
@@ -1820,7 +1820,7 @@
   
   [1X71.12-9 MatClassMultCoeffsCharTable[101X
   
-  [29X[2XMatClassMultCoeffsCharTable[102X( [3Xtbl[103X, [3Xi[103X ) [32X function
+  [33X[1;0Y[29X[2XMatClassMultCoeffsCharTable[102X( [3Xtbl[103X, [3Xi[103X ) [32X function[133X
   
   [33X[0;0YFor   an   ordinary   character   table   [3Xtbl[103X   and   a  class  position  [3Xi[103X,
   [10XMatClassMultCoeffsCharTable[110X  returns the matrix [22X[ a_ijk ]_{j,k}[122X of structure
@@ -1844,7 +1844,7 @@
   
   [1X71.13-1 ViewObj[101X
   
-  [29X[2XViewObj[102X( [3Xtbl[103X ) [32X method
+  [33X[1;0Y[29X[2XViewObj[102X( [3Xtbl[103X ) [32X method[133X
   
   [33X[0;0YThe  default [2XViewObj[102X ([14X6.3-5[114X) method for ordinary character tables prints the
   string   [10X"CharacterTable"[110X,   followed   by  the  identifier  (see [2XIdentifier[102X
@@ -1855,7 +1855,7 @@
   
   [1X71.13-2 PrintObj[101X
   
-  [29X[2XPrintObj[102X( [3Xtbl[103X ) [32X method
+  [33X[1;0Y[29X[2XPrintObj[102X( [3Xtbl[103X ) [32X method[133X
   
   [33X[0;0YThe  default  [2XPrintObj[102X  ([14X6.3-5[114X) method for character tables does the same as
   [2XViewObj[102X  ([14X6.3-5[114X), except that [2XPrintObj[102X ([14X6.3-5[114X) is used for the group instead
@@ -1863,7 +1863,7 @@
   
   [1X71.13-3 Display[101X
   
-  [29X[2XDisplay[102X( [3Xtbl[103X ) [32X method
+  [33X[1;0Y[29X[2XDisplay[102X( [3Xtbl[103X ) [32X method[133X
   
   [33X[0;0YThere are various ways to customize the [2XDisplay[102X ([14X6.3-6[114X) output for character
   tables.  First  we  describe  the  default  behaviour, alternatives are then
@@ -1992,7 +1992,7 @@
   
   [1X71.13-4 DisplayOptions[101X
   
-  [29X[2XDisplayOptions[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDisplayOptions[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0YThere  is  no  default  method  to compute a value, one can set a value with
   [10XSetDisplayOptions[110X.[133X
@@ -2052,7 +2052,7 @@
   
   [1X71.13-5 PrintCharacterTable[101X
   
-  [29X[2XPrintCharacterTable[102X( [3Xtbl[103X, [3Xvarname[103X ) [32X function
+  [33X[1;0Y[29X[2XPrintCharacterTable[102X( [3Xtbl[103X, [3Xvarname[103X ) [32X function[133X
   
   [33X[0;0YLet   [3Xtbl[103X   be   a   nearly   character   table,   and   [3Xvarname[103X  a  string.
   [2XPrintCharacterTable[102X   prints   those  values  of  the  supported  attributes
@@ -2115,7 +2115,7 @@
   
   [1X71.14-1 IrrDixonSchneider[101X
   
-  [29X[2XIrrDixonSchneider[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIrrDixonSchneider[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Ycomputes  the  irreducible  characters  of  the  finite  group  [3XG[103X, using the
   Dixon-Schneider   method  (see [14X71.16[114X).  It  calls  [2XDixonInit[102X  ([14X71.17-2[114X)  and
@@ -2124,7 +2124,7 @@
   
   [1X71.14-2 IrrConlon[101X
   
-  [29X[2XIrrConlon[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIrrConlon[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a  finite  solvable  group  [3XG[103X,  [2XIrrConlon[102X  returns  a  list  of certain
   irreducible  characters  of  [3XG[103X,  among  those all irreducibles that have the
@@ -2138,7 +2138,7 @@
   
   [1X71.14-3 IrrBaumClausen[101X
   
-  [29X[2XIrrBaumClausen[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIrrBaumClausen[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XIrrBaumClausen[102X returns the absolutely irreducible ordinary characters of the
   factor  group  of the finite solvable group [3XG[103X by the derived subgroup of its
@@ -2181,7 +2181,7 @@
   
   [1X71.14-4 IrreducibleRepresentations[101X
   
-  [29X[2XIrreducibleRepresentations[102X( [3XG[103X[, [3XF[103X] ) [32X attribute
+  [33X[1;0Y[29X[2XIrreducibleRepresentations[102X( [3XG[103X[, [3XF[103X] ) [32X attribute[133X
   
   [33X[0;0YCalled  with  a  finite  group  [3XG[103X  and a field [3XF[103X, [2XIrreducibleRepresentations[102X
   returns  a list of representatives of the irreducible matrix representations
@@ -2237,7 +2237,7 @@
   
   [1X71.14-5 IrreducibleRepresentationsDixon[101X
   
-  [29X[2XIrreducibleRepresentationsDixon[102X( [3XG[103X[, [3Xchi[103X] ) [32X function
+  [33X[1;0Y[29X[2XIrreducibleRepresentationsDixon[102X( [3XG[103X[, [3Xchi[103X] ) [32X function[133X
   
   [33X[0;0YCalled   with  one  argument,  a  group  [3XG[103X,  [2XIrreducibleRepresentationsDixon[102X
   computes  (representatives  of)  all irreducible complex representations for
@@ -2283,7 +2283,7 @@
   
   [1X71.15-1 IrreducibleModules[101X
   
-  [29X[2XIrreducibleModules[102X( [3XG[103X, [3XF[103X, [3Xdim[103X ) [32X operation
+  [33X[1;0Y[29X[2XIrreducibleModules[102X( [3XG[103X, [3XF[103X, [3Xdim[103X ) [32X operation[133X
   
   [33X[0;0Yreturns a list of length 2. The first entry is a generating system of [3XG[103X. The
   second  entry  is a list of all irreducible modules of [3XG[103X over the field [3XF[103X in
@@ -2291,9 +2291,9 @@
   
   [1X71.15-2 AbsolutelyIrreducibleModules[101X
   
-  [29X[2XAbsolutelyIrreducibleModules[102X( [3XG[103X, [3XF[103X, [3Xdim[103X ) [32X operation
-  [29X[2XAbsoluteIrreducibleModules[102X( [3XG[103X, [3XF[103X, [3Xdim[103X ) [32X operation
-  [29X[2XAbsolutIrreducibleModules[102X( [3XG[103X, [3XF[103X, [3Xdim[103X ) [32X operation
+  [33X[1;0Y[29X[2XAbsolutelyIrreducibleModules[102X( [3XG[103X, [3XF[103X, [3Xdim[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAbsoluteIrreducibleModules[102X( [3XG[103X, [3XF[103X, [3Xdim[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAbsolutIrreducibleModules[102X( [3XG[103X, [3XF[103X, [3Xdim[103X ) [32X operation[133X
   
   [33X[0;0Yreturns a list of length 2. The first entry is a generating system of [3XG[103X. The
   second  entry  is  a  list of all absolute irreducible modules of [3XG[103X over the
@@ -2302,7 +2302,7 @@
   
   [1X71.15-3 RegularModule[101X
   
-  [29X[2XRegularModule[102X( [3XG[103X, [3XF[103X ) [32X operation
+  [33X[1;0Y[29X[2XRegularModule[102X( [3XG[103X, [3XF[103X ) [32X operation[133X
   
   [33X[0;0Yreturns a list of length 2. The first entry is a generating system of [3XG[103X. The
   second  entry  is  the regular module of [3XG[103X over [3XF[103X, given as a MeatAxe module
@@ -2365,7 +2365,7 @@
   
   [1X71.17-1 DixonRecord[101X
   
-  [29X[2XDixonRecord[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDixonRecord[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0YThe  [2XDixonRecord[102X  of  a  group  contains information used by the routines to
   compute   the   irreducible  characters  and  related  information  via  the
@@ -2377,7 +2377,7 @@
   
   [1X71.17-2 DixonInit[101X
   
-  [29X[2XDixonInit[102X( [3XG[103X ) [32X function
+  [33X[1;0Y[29X[2XDixonInit[102X( [3XG[103X ) [32X function[133X
   
   [33X[0;0YThis   function   does  all  the  initializations  for  the  Dixon-Schneider
   algorithm.  This  includes  calculation  of  conjugacy  classes, power maps,
@@ -2387,7 +2387,7 @@
   
   [1X71.17-3 DixontinI[101X
   
-  [29X[2XDixontinI[102X( [3XD[103X ) [32X function
+  [33X[1;0Y[29X[2XDixontinI[102X( [3XD[103X ) [32X function[133X
   
   [33X[0;0YThis  function  ends  a Dixon-Schneider calculation. It sorts the characters
   according  to the degree and unbinds components in the Dixon record that are
@@ -2395,7 +2395,7 @@
   
   [1X71.17-4 DixonSplit[101X
   
-  [29X[2XDixonSplit[102X( [3XD[103X ) [32X function
+  [33X[1;0Y[29X[2XDixonSplit[102X( [3XD[103X ) [32X function[133X
   
   [33X[0;0YThis  function performs one splitting step in the Dixon-Schneider algorithm.
   It  selects  a  class,  computes  the (partial) class sum matrix, uses it to
@@ -2410,7 +2410,7 @@
   
   [1X71.17-5 BestSplittingMatrix[101X
   
-  [29X[2XBestSplittingMatrix[102X( [3XD[103X ) [32X function
+  [33X[1;0Y[29X[2XBestSplittingMatrix[102X( [3XD[103X ) [32X function[133X
   
   [33X[0;0Yreturns the number of the class sum matrix that is assumed to yield the best
   (cost/earning  ration) split. This matrix then will be the next one computed
@@ -2423,7 +2423,7 @@
   
   [1X71.17-6 DxIncludeIrreducibles[101X
   
-  [29X[2XDxIncludeIrreducibles[102X( [3XD[103X, [3Xnew[103X[, [3Xnewmod[103X] ) [32X function
+  [33X[1;0Y[29X[2XDxIncludeIrreducibles[102X( [3XD[103X, [3Xnew[103X[, [3Xnewmod[103X] ) [32X function[133X
   
   [33X[0;0YThis  function  takes  a list of irreducible characters [3Xnew[103X, each given as a
   list of values (corresponding to the class arrangement in [3XD[103X), and adds these
@@ -2439,7 +2439,7 @@
   
   [1X71.17-7 SplitCharacters[101X
   
-  [29X[2XSplitCharacters[102X( [3XD[103X, [3Xlist[103X ) [32X function
+  [33X[1;0Y[29X[2XSplitCharacters[102X( [3XD[103X, [3Xlist[103X ) [32X function[133X
   
   [33X[0;0YThis  routine  decomposes  the  characters  given  in  [3Xlist[103X according to the
   character  spaces found up to this point. By applying this routine to tensor
@@ -2450,7 +2450,7 @@
   
   [1X71.17-8 IsDxLargeGroup[101X
   
-  [29X[2XIsDxLargeGroup[102X( [3XG[103X ) [32X function
+  [33X[1;0Y[29X[2XIsDxLargeGroup[102X( [3XG[103X ) [32X function[133X
   
   [33X[0;0Yreturns  [9Xtrue[109X  if the order of the group [3XG[103X is smaller than the current value
   of   the   global   variable  [10XDXLARGEGROUPORDER[110X,  and  [9Xfalse[109X  otherwise.  In
@@ -2632,7 +2632,7 @@
   
   [1X71.20-1 CharacterTableDirectProduct[101X
   
-  [29X[2XCharacterTableDirectProduct[102X( [3Xtbl1[103X, [3Xtbl2[103X ) [32X operation
+  [33X[1;0Y[29X[2XCharacterTableDirectProduct[102X( [3Xtbl1[103X, [3Xtbl2[103X ) [32X operation[133X
   
   [33X[0;0Yis the table of the direct product of the character tables [3Xtbl1[103X and [3Xtbl2[103X.[133X
   
@@ -2682,7 +2682,7 @@
   
   [1X71.20-2 FactorsOfDirectProduct[101X
   
-  [29X[2XFactorsOfDirectProduct[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XFactorsOfDirectProduct[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0YFor   an   ordinary   character   table   that   has  been  constructed  via
   [2XCharacterTableDirectProduct[102X  ([14X71.20-1[114X),  the value of [2XFactorsOfDirectProduct[102X
@@ -2693,7 +2693,7 @@
   
   [1X71.20-3 CharacterTableFactorGroup[101X
   
-  [29X[2XCharacterTableFactorGroup[102X( [3Xtbl[103X, [3Xclasses[103X ) [32X operation
+  [33X[1;0Y[29X[2XCharacterTableFactorGroup[102X( [3Xtbl[103X, [3Xclasses[103X ) [32X operation[133X
   
   [33X[0;0Yis  the  character table of the factor group of the ordinary character table
   [3Xtbl[103X  by  the  normal closure of the classes whose positions are contained in
@@ -2725,8 +2725,8 @@
   
   [1X71.20-4 CharacterTableIsoclinic[101X
   
-  [29X[2XCharacterTableIsoclinic[102X( [3Xtbl[103X[, [3Xclasses[103X][, [3Xcentre[103X] ) [32X operation
-  [29X[2XSourceOfIsoclinicTable[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCharacterTableIsoclinic[102X( [3Xtbl[103X[, [3Xclasses[103X][, [3Xcentre[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XSourceOfIsoclinicTable[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0YIf  [3Xtbl[103X  is  the  (ordinary  or modular) character table of a group with the
   structure  [22X2.G.2[122X  with  a  central  subgroup  [22XZ[122X of order [22X2[122X or [22X4[122X and a normal
@@ -2774,7 +2774,7 @@
   
   [1X71.20-5 CharacterTableWreathSymmetric[101X
   
-  [29X[2XCharacterTableWreathSymmetric[102X( [3Xtbl[103X, [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XCharacterTableWreathSymmetric[102X( [3Xtbl[103X, [3Xn[103X ) [32X function[133X
   
   [33X[0;0Yreturns the character table of the wreath product of a group [22XG[122X with the full
   symmetric group on [3Xn[103X points, where [3Xtbl[103X is the character table of [22XG[122X.[133X
@@ -2820,7 +2820,7 @@
   
   [1X71.21-1 CharacterTableWithSortedCharacters[101X
   
-  [29X[2XCharacterTableWithSortedCharacters[102X( [3Xtbl[103X[, [3Xperm[103X] ) [32X operation
+  [33X[1;0Y[29X[2XCharacterTableWithSortedCharacters[102X( [3Xtbl[103X[, [3Xperm[103X] ) [32X operation[133X
   
   [33X[0;0Yis  a  character  table  that differs from [3Xtbl[103X only by the succession of its
   irreducible  characters.  This  affects  the  values  of  the attributes [2XIrr[102X
@@ -2837,7 +2837,7 @@
   
   [1X71.21-2 SortedCharacters[101X
   
-  [29X[2XSortedCharacters[102X( [3Xtbl[103X, [3Xchars[103X[, [3Xflag[103X] ) [32X operation
+  [33X[1;0Y[29X[2XSortedCharacters[102X( [3Xtbl[103X, [3Xchars[103X[, [3Xflag[103X] ) [32X operation[133X
   
   [33X[0;0Yis a list containing the characters [3Xchars[103X, ordered as specified by the other
   arguments.[133X
@@ -2856,7 +2856,7 @@
   
   [1X71.21-3 CharacterTableWithSortedClasses[101X
   
-  [29X[2XCharacterTableWithSortedClasses[102X( [3Xtbl[103X[, [3Xflag[103X] ) [32X operation
+  [33X[1;0Y[29X[2XCharacterTableWithSortedClasses[102X( [3Xtbl[103X[, [3Xflag[103X] ) [32X operation[133X
   
   [33X[0;0Yis  a  character table obtained by permutation of the classes of [3Xtbl[103X. If the
   second  argument  [3Xflag[103X  is the string [10X"centralizers"[110X then the classes of the
@@ -2876,9 +2876,9 @@
   
   [1X71.21-4 SortedCharacterTable[101X
   
-  [29X[2XSortedCharacterTable[102X( [3Xtbl[103X, [3Xkernel[103X ) [32X function
-  [29X[2XSortedCharacterTable[102X( [3Xtbl[103X, [3Xnormalseries[103X ) [32X function
-  [29X[2XSortedCharacterTable[102X( [3Xtbl[103X, [3Xfacttbl[103X, [3Xkernel[103X ) [32X function
+  [33X[1;0Y[29X[2XSortedCharacterTable[102X( [3Xtbl[103X, [3Xkernel[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSortedCharacterTable[102X( [3Xtbl[103X, [3Xnormalseries[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSortedCharacterTable[102X( [3Xtbl[103X, [3Xfacttbl[103X, [3Xkernel[103X ) [32X function[133X
   
   [33X[0;0Yis  a  character  table  obtained  on  permutation  of  the  classes and the
   irreducibles characters of [3Xtbl[103X.[133X
@@ -2919,7 +2919,7 @@
   
   [1X71.21-5 ClassPermutation[101X
   
-  [29X[2XClassPermutation[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XClassPermutation[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0Yis  a  permutation  [22Xπ[122X of classes of the character table [3Xtbl[103X. If it is stored
   then class fusions into [3Xtbl[103X that are stored on other tables must be followed
@@ -2991,7 +2991,7 @@
   
   [1X71.22-1 MatrixAutomorphisms[101X
   
-  [29X[2XMatrixAutomorphisms[102X( [3Xmat[103X[, [3Xmaps[103X, [3Xsubgroup[103X] ) [32X operation
+  [33X[1;0Y[29X[2XMatrixAutomorphisms[102X( [3Xmat[103X[, [3Xmaps[103X, [3Xsubgroup[103X] ) [32X operation[133X
   
   [33X[0;0YFor   a   matrix   [3Xmat[103X,  [2XMatrixAutomorphisms[102X  returns  the  group  of  those
   permutations  of  the  columns  of  [3Xmat[103X  that  leave  the set of rows of [3Xmat[103X
@@ -3009,7 +3009,7 @@
   
   [1X71.22-2 TableAutomorphisms[101X
   
-  [29X[2XTableAutomorphisms[102X( [3Xtbl[103X, [3Xcharacters[103X[, [3Xinfo[103X] ) [32X operation
+  [33X[1;0Y[29X[2XTableAutomorphisms[102X( [3Xtbl[103X, [3Xcharacters[103X[, [3Xinfo[103X] ) [32X operation[133X
   
   [33X[0;0Y[2XTableAutomorphisms[102X   returns   the   permutation   group   of  those  matrix
   automorphisms  (see [2XMatrixAutomorphisms[102X  ([14X71.22-1[114X))  of  the list [3Xcharacters[103X
@@ -3047,7 +3047,7 @@
   
   [1X71.22-3 TransformingPermutations[101X
   
-  [29X[2XTransformingPermutations[102X( [3Xmat1[103X, [3Xmat2[103X ) [32X operation
+  [33X[1;0Y[29X[2XTransformingPermutations[102X( [3Xmat1[103X, [3Xmat2[103X ) [32X operation[133X
   
   [33X[0;0YLet [3Xmat1[103X and [3Xmat2[103X be matrices. [2XTransformingPermutations[102X tries to construct a
   permutation  [22Xπ[122X that transforms the set of rows of the matrix [3Xmat1[103X to the set
@@ -3065,7 +3065,7 @@
   
   [1X71.22-4 TransformingPermutationsCharacterTables[101X
   
-  [29X[2XTransformingPermutationsCharacterTables[102X( [3Xtbl1[103X, [3Xtbl2[103X ) [32X operation
+  [33X[1;0Y[29X[2XTransformingPermutationsCharacterTables[102X( [3Xtbl1[103X, [3Xtbl2[103X ) [32X operation[133X
   
   [33X[0;0YLet        [3Xtbl1[103X        and       [3Xtbl2[103X       be       character       tables.
   [2XTransformingPermutationsCharacterTables[102X  tries  to construct a permutation [22Xπ[122X
@@ -3102,7 +3102,7 @@
   
   [1X71.22-5 FamiliesOfRows[101X
   
-  [29X[2XFamiliesOfRows[102X( [3Xmat[103X, [3Xmaps[103X ) [32X function
+  [33X[1;0Y[29X[2XFamiliesOfRows[102X( [3Xmat[103X, [3Xmaps[103X ) [32X function[133X
   
   [33X[0;0Ydistributes  the  rows of the matrix [3Xmat[103X into families, as follows. Two rows
   of  [3Xmat[103X  belong to the same family if there is a permutation of columns that
@@ -3129,7 +3129,7 @@
   
   [1X71.23-1 NormalSubgroupClassesInfo[101X
   
-  [29X[2XNormalSubgroupClassesInfo[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNormalSubgroupClassesInfo[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0YLet  [3Xtbl[103X  be  the ordinary character table of the group [22XG[122X. Many computations
   for group characters of [22XG[122X involve computations in normal subgroups or factor
@@ -3172,14 +3172,14 @@
   
   [1X71.23-2 ClassPositionsOfNormalSubgroup[101X
   
-  [29X[2XClassPositionsOfNormalSubgroup[102X( [3Xtbl[103X, [3XN[103X ) [32X function
+  [33X[1;0Y[29X[2XClassPositionsOfNormalSubgroup[102X( [3Xtbl[103X, [3XN[103X ) [32X function[133X
   
   [33X[0;0Yis  the  list  of  positions of conjugacy classes of the character table [3Xtbl[103X
   that are contained in the normal subgroup [3XN[103X of the underlying group of [3Xtbl[103X.[133X
   
   [1X71.23-3 NormalSubgroupClasses[101X
   
-  [29X[2XNormalSubgroupClasses[102X( [3Xtbl[103X, [3Xclasses[103X ) [32X function
+  [33X[1;0Y[29X[2XNormalSubgroupClasses[102X( [3Xtbl[103X, [3Xclasses[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the  normal  subgroup  of  the  underlying  group [22XG[122X of the ordinary
   character  table  [3Xtbl[103X  that consists of those conjugacy classes of [3Xtbl[103X whose
@@ -3192,7 +3192,7 @@
   
   [1X71.23-4 FactorGroupNormalSubgroupClasses[101X
   
-  [29X[2XFactorGroupNormalSubgroupClasses[102X( [3Xtbl[103X, [3Xclasses[103X ) [32X function
+  [33X[1;0Y[29X[2XFactorGroupNormalSubgroupClasses[102X( [3Xtbl[103X, [3Xclasses[103X ) [32X function[133X
   
   [33X[0;0Yis  the  factor  group  of  the underlying group [22XG[122X of the ordinary character
   table  [3Xtbl[103X  modulo the normal subgroup of [22XG[122X that consists of those conjugacy

@@ -216,14 +216,14 @@
 
 <h5>45.2-1 Pcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Pcgs</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Pcgs</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a pcgs for the group <var class="Arg">G</var>. If <var class="Arg">grp</var> is not polycyclic it returns <code class="keyw">fail</code> <em>and this result is not stored as attribute value</em>, in particular in this case the filter <code class="code">HasPcgs</code> is <em>not</em> set for <var class="Arg">G</var>!</p>
 
 <p><a id="X8635E61A7DB73BA6" name="X8635E61A7DB73BA6"></a></p>
 
 <h5>45.2-2 IsPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPcgs</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPcgs</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>The category of pcgs.</p>
 
 
@@ -244,7 +244,7 @@ fail
 
 <h5>45.2-3 CanEasilyComputePcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanEasilyComputePcgs</code>( <var class="Arg">grp</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanEasilyComputePcgs</code>( <var class="Arg">grp</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p>This filter indicates whether it is possible to compute a pcgs for <var class="Arg">grp</var> cheaply. Clearly, <var class="Arg">grp</var> must be polycyclic in this case. However, not for every polycyclic group there is a method to compute a pcgs at low costs. This filter is used in the method selection mainly. Note that this filter may change its value from <code class="keyw">false</code> to <code class="keyw">true</code>.</p>
 
 
@@ -271,8 +271,8 @@ true
 
 <h5>45.3-1 PcgsByPcSequence</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcgsByPcSequence</code>( <var class="Arg">fam</var>, <var class="Arg">pcs</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcgsByPcSequenceNC</code>( <var class="Arg">fam</var>, <var class="Arg">pcs</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcgsByPcSequence</code>( <var class="Arg">fam</var>, <var class="Arg">pcs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcgsByPcSequenceNC</code>( <var class="Arg">fam</var>, <var class="Arg">pcs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>constructs a pcgs for the elements family <var class="Arg">fam</var> from the elements in the list <var class="Arg">pcs</var>. The elements must lie in the family <var class="Arg">fam</var>. <code class="func">PcgsByPcSequence</code> and its <code class="code">NC</code> variant will always create a new pcgs which is not induced by any other pcgs (cf. <code class="func">InducedPcgsByPcSequence</code> (<a href="chap45_mj.html#X83F6759184937F1B"><span class="RefLink">45.7-2</span></a>)).</p>
 
 
@@ -294,42 +294,42 @@ Pcgs([ (1,2), (1,2,3) ])
 
 <h5>45.4-1 RelativeOrders</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RelativeOrders</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RelativeOrders</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the list of relative orders of the pcgs <var class="Arg">pcgs</var>.</p>
 
 <p><a id="X80D526848427A5C6" name="X80D526848427A5C6"></a></p>
 
 <h5>45.4-2 IsFiniteOrdersPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFiniteOrdersPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFiniteOrdersPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>tests whether the relative orders of <var class="Arg">pcgs</var> are all finite.</p>
 
 <p><a id="X866C3A5382FF231A" name="X866C3A5382FF231A"></a></p>
 
 <h5>45.4-3 IsPrimeOrdersPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPrimeOrdersPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPrimeOrdersPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>tests whether the relative orders of <var class="Arg">pcgs</var> are prime numbers. Many algorithms require a pcgs to have this property. The operation <code class="func">IsomorphismRefinedPcGroup</code> (<a href="chap46_mj.html#X7E6226597DFE5F8F"><span class="RefLink">46.4-8</span></a>) can be of help here.</p>
 
 <p><a id="X827A7B097A959579" name="X827A7B097A959579"></a></p>
 
 <h5>45.4-4 PcSeries</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcSeries</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcSeries</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the subnormal series determined by <var class="Arg">pcgs</var>.</p>
 
 <p><a id="X7903702E8194EF29" name="X7903702E8194EF29"></a></p>
 
 <h5>45.4-5 GroupOfPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupOfPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupOfPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The group generated by <var class="Arg">pcgs</var>.</p>
 
 <p><a id="X878FB11887524E2C" name="X878FB11887524E2C"></a></p>
 
 <h5>45.4-6 OneOfPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OneOfPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OneOfPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The identity of the group generated by <var class="Arg">pcgs</var>.</p>
 
 
@@ -356,43 +356,43 @@ true
 
 <h5>45.5-1 RelativeOrderOfPcElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RelativeOrderOfPcElement</code>( <var class="Arg">pcgs</var>, <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RelativeOrderOfPcElement</code>( <var class="Arg">pcgs</var>, <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>The relative order of <var class="Arg">elm</var> with respect to the prime order pcgs <var class="Arg">pcgs</var>.</p>
 
 <p><a id="X78134914842E2F5F" name="X78134914842E2F5F"></a></p>
 
 <h5>45.5-2 ExponentOfPcElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExponentOfPcElement</code>( <var class="Arg">pcgs</var>, <var class="Arg">elm</var>, <var class="Arg">pos</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExponentOfPcElement</code>( <var class="Arg">pcgs</var>, <var class="Arg">elm</var>, <var class="Arg">pos</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the <var class="Arg">pos</var>-th exponent of <var class="Arg">elm</var> with respect to <var class="Arg">pcgs</var>.</p>
 
 <p><a id="X848DAEBF7DC448A5" name="X848DAEBF7DC448A5"></a></p>
 
 <h5>45.5-3 ExponentsOfPcElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExponentsOfPcElement</code>( <var class="Arg">pcgs</var>, <var class="Arg">elm</var>[, <var class="Arg">posran</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExponentsOfPcElement</code>( <var class="Arg">pcgs</var>, <var class="Arg">elm</var>[, <var class="Arg">posran</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the exponents of <var class="Arg">elm</var> with respect to <var class="Arg">pcgs</var>. The three argument version returns the exponents in the positions given in <var class="Arg">posran</var>.</p>
 
 <p><a id="X829BCB267CDBC5C0" name="X829BCB267CDBC5C0"></a></p>
 
 <h5>45.5-4 DepthOfPcElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DepthOfPcElement</code>( <var class="Arg">pcgs</var>, <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DepthOfPcElement</code>( <var class="Arg">pcgs</var>, <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the depth of the element <var class="Arg">elm</var> with respect to <var class="Arg">pcgs</var>.</p>
 
 <p><a id="X7D47966479EA2890" name="X7D47966479EA2890"></a></p>
 
 <h5>45.5-5 LeadingExponentOfPcElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeadingExponentOfPcElement</code>( <var class="Arg">pcgs</var>, <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeadingExponentOfPcElement</code>( <var class="Arg">pcgs</var>, <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the leading exponent of <var class="Arg">elm</var> with respect to <var class="Arg">pcgs</var>.</p>
 
 <p><a id="X87AF746B8328F5D0" name="X87AF746B8328F5D0"></a></p>
 
 <h5>45.5-6 PcElementByExponents</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcElementByExponents</code>( <var class="Arg">pcgs</var>, <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcElementByExponentsNC</code>( <var class="Arg">pcgs</var>[, <var class="Arg">basisind</var>], <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcElementByExponents</code>( <var class="Arg">pcgs</var>, <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcElementByExponentsNC</code>( <var class="Arg">pcgs</var>[, <var class="Arg">basisind</var>], <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the element corresponding to the exponent vector <var class="Arg">list</var> with respect to <var class="Arg">pcgs</var>. The exponents in <var class="Arg">list</var> must be in the range of permissible exponents for <var class="Arg">pcgs</var>. <em>It is not guaranteed that <code class="func">PcElementByExponents</code> will reduce the exponents modulo the relative orders</em>. (You should use the operation <code class="func">LinearCombinationPcgs</code> (<a href="chap45_mj.html#X7F8BD7A87DB3933A"><span class="RefLink">45.5-7</span></a>) for this purpose.) The <code class="code">NC</code> version does not check that the lengths of the lists fit together and does not check the exponent range.</p>
 
 <p>The three argument version gives exponents only w.r.t. the generators in <var class="Arg">pcgs</var> indexed by <var class="Arg">basisind</var>.</p>
@@ -401,7 +401,7 @@ true
 
 <h5>45.5-7 LinearCombinationPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LinearCombinationPcgs</code>( <var class="Arg">pcgs</var>, <var class="Arg">list</var>[, <var class="Arg">one</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LinearCombinationPcgs</code>( <var class="Arg">pcgs</var>, <var class="Arg">list</var>[, <var class="Arg">one</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the product <span class="SimpleMath">\(\prod_i \textit{pcgs}[i]^{{\textit{list}[i]}}\)</span>. In contrast to <code class="func">PcElementByExponents</code> (<a href="chap45_mj.html#X87AF746B8328F5D0"><span class="RefLink">45.5-6</span></a>) this permits negative exponents. <var class="Arg">pcgs</var> might be a list of group elements. In this case, an appropriate identity element <var class="Arg">one</var> must be given. <var class="Arg">list</var> can be empty.</p>
 
 
@@ -417,28 +417,28 @@ true
 
 <h5>45.5-8 SiftedPcElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SiftedPcElement</code>( <var class="Arg">pcgs</var>, <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SiftedPcElement</code>( <var class="Arg">pcgs</var>, <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>sifts <var class="Arg">elm</var> through <var class="Arg">pcgs</var>, reducing it if the depth is the same as the depth of one of the generators in <var class="Arg">pcgs</var>. Thus the identity is returned if <var class="Arg">elm</var> lies in the group generated by <var class="Arg">pcgs</var>. <var class="Arg">pcgs</var> must be an induced pcgs (see section <a href="chap45_mj.html#X80AC58657E04FE9B"><span class="RefLink">45.7</span></a>) and <var class="Arg">elm</var> must lie in the span of the parent of <var class="Arg">pcgs</var>.</p>
 
 <p><a id="X7B52ADE7878A749A" name="X7B52ADE7878A749A"></a></p>
 
 <h5>45.5-9 CanonicalPcElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalPcElement</code>( <var class="Arg">ipcgs</var>, <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalPcElement</code>( <var class="Arg">ipcgs</var>, <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>reduces <var class="Arg">elm</var> at the induces pcgs <var class="Arg">ipcgs</var> such that the exponents of the reduced result <var class="Arg">r</var> are zero at the depths for which there are generators in <var class="Arg">ipcgs</var>. Elements, whose quotient lies in the group generated by <var class="Arg">ipcgs</var> yield the same canonical element.</p>
 
 <p><a id="X7A94AA357DB2F86C" name="X7A94AA357DB2F86C"></a></p>
 
 <h5>45.5-10 ReducedPcElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedPcElement</code>( <var class="Arg">pcgs</var>, <var class="Arg">x</var>, <var class="Arg">y</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedPcElement</code>( <var class="Arg">pcgs</var>, <var class="Arg">x</var>, <var class="Arg">y</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>reduces the element <var class="Arg">x</var> by dividing off (from the left) a power of <var class="Arg">y</var> such that the leading coefficient of the result with respect to <var class="Arg">pcgs</var> becomes zero. The elements <var class="Arg">x</var> and <var class="Arg">y</var> therefore have to have the same depth.</p>
 
 <p><a id="X8702D76D8284CF3E" name="X8702D76D8284CF3E"></a></p>
 
 <h5>45.5-11 CleanedTailPcElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CleanedTailPcElement</code>( <var class="Arg">pcgs</var>, <var class="Arg">elm</var>, <var class="Arg">dep</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CleanedTailPcElement</code>( <var class="Arg">pcgs</var>, <var class="Arg">elm</var>, <var class="Arg">dep</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns an element in the span of <var class="Arg">pcgs</var> whose exponents for indices <span class="SimpleMath">\(1\)</span> to <span class="SimpleMath">\(\textit{dep}-1\)</span> with respect to <var class="Arg">pcgs</var> are the same as those of <var class="Arg">elm</var>, the remaining exponents are undefined. This can be used to obtain more "simple" elements if only representatives in a factor are required, see <a href="chap45_mj.html#X8294F5EF81B7ABA0"><span class="RefLink">45.9</span></a>.</p>
 
 <p>The difference to <code class="func">HeadPcElementByNumber</code> (<a href="chap45_mj.html#X830A0D037DBEAA97"><span class="RefLink">45.5-12</span></a>) is that this function is guaranteed to zero out trailing coefficients while <code class="func">CleanedTailPcElement</code> will only do this if it can be done cheaply.</p>
@@ -447,7 +447,7 @@ true
 
 <h5>45.5-12 HeadPcElementByNumber</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HeadPcElementByNumber</code>( <var class="Arg">pcgs</var>, <var class="Arg">elm</var>, <var class="Arg">dep</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HeadPcElementByNumber</code>( <var class="Arg">pcgs</var>, <var class="Arg">elm</var>, <var class="Arg">dep</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns an element in the span of <var class="Arg">pcgs</var> whose exponents for indices <span class="SimpleMath">\(1\)</span> to <var class="Arg">dep</var><span class="SimpleMath">\(-1\)</span> with respect to <var class="Arg">pcgs</var> are the same as those of <var class="Arg">elm</var>, the remaining exponents are zero. This can be used to obtain more "simple" elements if only representatives in a factor are required.</p>
 
 <p><a id="X7EF61EA4822870E7" name="X7EF61EA4822870E7"></a></p>
@@ -464,28 +464,28 @@ true
 
 <h5>45.6-1 ExponentsConjugateLayer</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExponentsConjugateLayer</code>( <var class="Arg">mpcgs</var>, <var class="Arg">elm</var>, <var class="Arg">e</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExponentsConjugateLayer</code>( <var class="Arg">mpcgs</var>, <var class="Arg">elm</var>, <var class="Arg">e</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Computes the exponents of <var class="Arg">elm</var><code class="code">^</code><var class="Arg">e</var> with respect to <var class="Arg">mpcgs</var>; <var class="Arg">elm</var> must be in the span of <var class="Arg">mpcgs</var>, <var class="Arg">e</var> a pc element in the span of the parent pcgs of <var class="Arg">mpcgs</var> and <var class="Arg">mpcgs</var> must be the modulo pcgs for an abelian layer. (This is the usual case when acting on a chief factor). In this case if <var class="Arg">mpcgs</var> is induced by the family pcgs (see section <a href="chap45_mj.html#X80AC58657E04FE9B"><span class="RefLink">45.7</span></a>), the exponents can be computed directly by looking up exponents without having to compute in the group and having to collect a potential tail.</p>
 
 <p><a id="X874F70697FE7B6DF" name="X874F70697FE7B6DF"></a></p>
 
 <h5>45.6-2 ExponentsOfRelativePower</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExponentsOfRelativePower</code>( <var class="Arg">pcgs</var>, <var class="Arg">i</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExponentsOfRelativePower</code>( <var class="Arg">pcgs</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>For <span class="SimpleMath">\(p = \textit{pcgs}[\textit{i}]\)</span> this function returns the exponent vector with respect to <var class="Arg">pcgs</var> of the element <span class="SimpleMath">\(p^e\)</span> where <span class="SimpleMath">\(e\)</span> is the relative order of <var class="Arg">p</var> in <var class="Arg">pcgs</var>. For the family pcgs or pcgs induced by it (see section <a href="chap45_mj.html#X80AC58657E04FE9B"><span class="RefLink">45.7</span></a>), this might be faster than computing the element and computing its exponent vector.</p>
 
 <p><a id="X78CAF32F864EF656" name="X78CAF32F864EF656"></a></p>
 
 <h5>45.6-3 ExponentsOfConjugate</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExponentsOfConjugate</code>( <var class="Arg">pcgs</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExponentsOfConjugate</code>( <var class="Arg">pcgs</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the exponents of <code class="code"><var class="Arg">pcgs</var>[<var class="Arg">i</var>]^<var class="Arg">pcgs</var>[<var class="Arg">j</var>]</code> with respect to <var class="Arg">pcgs</var>. For the family pcgs or pcgs induced by it (see section <a href="chap45_mj.html#X80AC58657E04FE9B"><span class="RefLink">45.7</span></a>), this might be faster than computing the element and computing its exponent vector.</p>
 
 <p><a id="X875689897DD0CAFC" name="X875689897DD0CAFC"></a></p>
 
 <h5>45.6-4 ExponentsOfCommutator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExponentsOfCommutator</code>( <var class="Arg">pcgs</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExponentsOfCommutator</code>( <var class="Arg">pcgs</var>, <var class="Arg">i</var>, <var class="Arg">j</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the exponents of the commutator <code class="code">Comm( </code><span class="SimpleMath">\(\textit{pcgs}[\textit{i}], \textit{pcgs}[\textit{j}]\)</span><code class="code"> )</code> with respect to <var class="Arg">pcgs</var>. For the family pcgs or pcgs induced by it, (see section <a href="chap45_mj.html#X80AC58657E04FE9B"><span class="RefLink">45.7</span></a>), this might be faster than computing the element and computing its exponent vector.</p>
 
 <p><a id="X80AC58657E04FE9B" name="X80AC58657E04FE9B"></a></p>
@@ -510,15 +510,15 @@ true
 
 <h5>45.7-1 IsInducedPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInducedPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInducedPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>The category of induced pcgs. This a subcategory of pcgs.</p>
 
 <p><a id="X83F6759184937F1B" name="X83F6759184937F1B"></a></p>
 
 <h5>45.7-2 InducedPcgsByPcSequence</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InducedPcgsByPcSequence</code>( <var class="Arg">pcgs</var>, <var class="Arg">pcs</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InducedPcgsByPcSequenceNC</code>( <var class="Arg">pcgs</var>, <var class="Arg">pcs</var>[, <var class="Arg">depths</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InducedPcgsByPcSequence</code>( <var class="Arg">pcgs</var>, <var class="Arg">pcs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InducedPcgsByPcSequenceNC</code>( <var class="Arg">pcgs</var>, <var class="Arg">pcs</var>[, <var class="Arg">depths</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">pcs</var> is a list of elements that form an induced pcgs with respect to <var class="Arg">pcgs</var> this operation returns an induced pcgs with these elements.</p>
 
 <p>In the third version, the depths of <var class="Arg">pcs</var> with respect to <var class="Arg">pcgs</var> can be given (they are computed anew otherwise).</p>
@@ -527,7 +527,7 @@ true
 
 <h5>45.7-3 ParentPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ParentPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ParentPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the pcgs by which <var class="Arg">pcgs</var> was induced. If <var class="Arg">pcgs</var> was not induced, it simply returns <var class="Arg">pcgs</var>.</p>
 
 
@@ -546,7 +546,7 @@ true
 
 <h5>45.7-4 InducedPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InducedPcgs</code>( <var class="Arg">pcgs</var>, <var class="Arg">grp</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InducedPcgs</code>( <var class="Arg">pcgs</var>, <var class="Arg">grp</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>computes a pcgs for <var class="Arg">grp</var> which is induced by <var class="Arg">pcgs</var>. If <var class="Arg">pcgs</var> has a parent pcgs, then the result is induced with respect to this parent pcgs.</p>
 
 <p><code class="func">InducedPcgs</code> is a wrapper function only. Therefore, methods for computing computing an induced pcgs should be installed for the operation <code class="code">InducedPcgsOp</code>.</p>
@@ -555,15 +555,15 @@ true
 
 <h5>45.7-5 InducedPcgsByGenerators</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InducedPcgsByGenerators</code>( <var class="Arg">pcgs</var>, <var class="Arg">gens</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InducedPcgsByGeneratorsNC</code>( <var class="Arg">pcgs</var>, <var class="Arg">gens</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InducedPcgsByGenerators</code>( <var class="Arg">pcgs</var>, <var class="Arg">gens</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InducedPcgsByGeneratorsNC</code>( <var class="Arg">pcgs</var>, <var class="Arg">gens</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns an induced pcgs with respect to <var class="Arg">pcgs</var> for the subgroup generated by <var class="Arg">gens</var>.</p>
 
 <p><a id="X7AF82BD079D811E5" name="X7AF82BD079D811E5"></a></p>
 
 <h5>45.7-6 InducedPcgsByPcSequenceAndGenerators</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InducedPcgsByPcSequenceAndGenerators</code>( <var class="Arg">pcgs</var>, <var class="Arg">ind</var>, <var class="Arg">gens</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InducedPcgsByPcSequenceAndGenerators</code>( <var class="Arg">pcgs</var>, <var class="Arg">ind</var>, <var class="Arg">gens</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns an induced pcgs with respect to <var class="Arg">pcgs</var> of the subgroup generated by <var class="Arg">ind</var> and <var class="Arg">gens</var>. Here <var class="Arg">ind</var> must be an induced pcgs with respect to <var class="Arg">pcgs</var> (or a list of group elements that form such an igs) and it will be used as initial sequence for the computation.</p>
 
 
@@ -579,21 +579,21 @@ Pcgs([ (1,2,3,4), (2,4,3), (1,4)(2,3), (1,3)(2,4) ])
 
 <h5>45.7-7 LeadCoeffsIGS</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeadCoeffsIGS</code>( <var class="Arg">igs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeadCoeffsIGS</code>( <var class="Arg">igs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>This attribute is used to store leading coefficients with respect to the parent pcgs. the <var class="Arg">i</var>-th entry –if bound– is the leading exponent of the element of <var class="Arg">igs</var> that has depth <var class="Arg">i</var> in the parent. (It cannot be assigned to a component in the object created by <code class="func">InducedPcgsByPcSequenceNC</code> (<a href="chap45_mj.html#X83F6759184937F1B"><span class="RefLink">45.7-2</span></a>) as the permutation group methods call it from within the postprocessing, before this postprocessing however no coefficients may be computed.)</p>
 
 <p><a id="X800287C680C5DEC3" name="X800287C680C5DEC3"></a></p>
 
 <h5>45.7-8 ExtendedPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtendedPcgs</code>( <var class="Arg">N</var>, <var class="Arg">gens</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtendedPcgs</code>( <var class="Arg">N</var>, <var class="Arg">gens</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>extends the pcgs <var class="Arg">N</var> (induced w.r.t. <var class="Arg">home</var>) to a new induced pcgs by prepending <var class="Arg">gens</var>. No checks are performed that this really yields an induced pcgs.</p>
 
 <p><a id="X817E16D67B31389B" name="X817E16D67B31389B"></a></p>
 
 <h5>45.7-9 SubgroupByPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubgroupByPcgs</code>( <var class="Arg">G</var>, <var class="Arg">pcgs</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubgroupByPcgs</code>( <var class="Arg">G</var>, <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a subgroup of <var class="Arg">G</var> generated by the elements of <var class="Arg">pcgs</var>.</p>
 
 <p><a id="X84068D2478C134C1" name="X84068D2478C134C1"></a></p>
@@ -606,14 +606,14 @@ Pcgs([ (1,2,3,4), (2,4,3), (1,4)(2,3), (1,3)(2,4) ])
 
 <h5>45.8-1 IsCanonicalPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCanonicalPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCanonicalPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>An induced pcgs is canonical if the matrix of the exponent vectors of the elements of <var class="Arg">pcgs</var> with respect to the <code class="func">ParentPcgs</code> (<a href="chap45_mj.html#X86308E80843BF9E5"><span class="RefLink">45.7-3</span></a>) value of <var class="Arg">pcgs</var> is in Hermite normal form (see <a href="chapBib_mj.html#biBSOGOS">[LNS84]</a>). While a subgroup can have various induced pcgs with respect to a parent pcgs a canonical pcgs is unique.</p>
 
 <p><a id="X816F6B4187032A10" name="X816F6B4187032A10"></a></p>
 
 <h5>45.8-2 CanonicalPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the canonical pcgs corresponding to the induced pcgs <var class="Arg">pcgs</var>.</p>
 
 
@@ -644,28 +644,28 @@ Pcgs([ (5,6,7), (1,3)(2,4) ])
 
 <h5>45.9-1 ModuloPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ModuloPcgs</code>( <var class="Arg">G</var>, <var class="Arg">N</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ModuloPcgs</code>( <var class="Arg">G</var>, <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a modulo pcgs for the factor <span class="SimpleMath">\(\textit{G}/\textit{N}\)</span> which must be solvable, which <var class="Arg">N</var> may be insolvable. <code class="func">ModuloPcgs</code> will return <em>a</em> pcgs for the factor, there is no guarantee that it will be "compatible" with any other pcgs. If this is required, the <code class="keyw">mod</code> operator must be used on induced pcgs, see <code class="func">\mod</code> (<a href="chap45_mj.html#X7E923519832F2D08"><span class="RefLink">45.9-5</span></a>).</p>
 
 <p><a id="X868207D77D09D915" name="X868207D77D09D915"></a></p>
 
 <h5>45.9-2 IsModuloPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsModuloPcgs</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsModuloPcgs</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>The category of modulo pcgs. Note that each pcgs is a modulo pcgs for the trivial subgroup.</p>
 
 <p><a id="X8027CC9878031D74" name="X8027CC9878031D74"></a></p>
 
 <h5>45.9-3 NumeratorOfModuloPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NumeratorOfModuloPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NumeratorOfModuloPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a generating set for the numerator of the modulo pcgs <var class="Arg">pcgs</var>.</p>
 
 <p><a id="X87DBE2797D51B2F1" name="X87DBE2797D51B2F1"></a></p>
 
 <h5>45.9-4 DenominatorOfModuloPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DenominatorOfModuloPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DenominatorOfModuloPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a generating set for the denominator of the modulo pcgs <var class="Arg">pcgs</var>.</p>
 
 
@@ -690,7 +690,7 @@ Pcgs([ (4,5) ])
 
 <h5><code>45.9-5 \mod</code></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \mod</code>( <var class="Arg">P</var>, <var class="Arg">I</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \mod</code>( <var class="Arg">P</var>, <var class="Arg">I</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <p>Modulo Pcgs can also be built from compatible induced pcgs. Let <span class="SimpleMath">\(G\)</span> be a group with pcgs <var class="Arg">P</var> and let <var class="Arg">I</var> be an induced pcgs of a normal subgroup <span class="SimpleMath">\(N\)</span> of <span class="SimpleMath">\(G\)</span>. (Respectively: <var class="Arg">P</var> and <var class="Arg">I</var> are both induced with respect to the <em>same</em> Pcgs.) Then we can compute a modulo pcgs of <span class="SimpleMath">\(G\)</span> mod <span class="SimpleMath">\(N\)</span> by</p>
 
 <p><var class="Arg">P</var> <code class="keyw">mod</code> <var class="Arg">I</var></p>
@@ -718,7 +718,7 @@ Pcgs([ (1,3)(2,4) ])
 
 <h5>45.9-6 CorrespondingGeneratorsByModuloPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CorrespondingGeneratorsByModuloPcgs</code>( <var class="Arg">mpcgs</var>, <var class="Arg">imgs</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CorrespondingGeneratorsByModuloPcgs</code>( <var class="Arg">mpcgs</var>, <var class="Arg">imgs</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">mpcgs</var> be a modulo pcgs for a factor of a group <span class="SimpleMath">\(G\)</span> and let <span class="SimpleMath">\(U\)</span> be a subgroup of <span class="SimpleMath">\(G\)</span> generated by <var class="Arg">imgs</var> such that <span class="SimpleMath">\(U\)</span> covers the factor for the modulo pcgs. Then this function computes elements in <span class="SimpleMath">\(U\)</span> corresponding to the generators of the modulo pcgs.</p>
 
 <p>Note that the computation of induced generating sets is not possible for some modulo pcgs.</p>
@@ -727,7 +727,7 @@ Pcgs([ (1,3)(2,4) ])
 
 <h5>45.9-7 CanonicalPcgsByGeneratorsWithImages</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalPcgsByGeneratorsWithImages</code>( <var class="Arg">pcgs</var>, <var class="Arg">gens</var>, <var class="Arg">imgs</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalPcgsByGeneratorsWithImages</code>( <var class="Arg">pcgs</var>, <var class="Arg">gens</var>, <var class="Arg">imgs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>computes a canonical, <var class="Arg">pcgs</var>-induced pcgs for the span of <var class="Arg">gens</var> and simultaneously does the same transformations on <var class="Arg">imgs</var>, preserving thus a correspondence between <var class="Arg">gens</var> and <var class="Arg">imgs</var>. This operation is used to represent homomorphisms from a pc group.</p>
 
 <p><a id="X8254C0F485F945BD" name="X8254C0F485F945BD"></a></p>
@@ -746,28 +746,28 @@ Pcgs([ (1,3)(2,4) ])
 
 <h5>45.10-1 ProjectedPcElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectedPcElement</code>( <var class="Arg">pcgs</var>, <var class="Arg">fpcgs</var>, <var class="Arg">elm</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectedPcElement</code>( <var class="Arg">pcgs</var>, <var class="Arg">fpcgs</var>, <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the image in <var class="Arg">H</var> of an element <var class="Arg">elm</var> of <var class="Arg">G</var>.</p>
 
 <p><a id="X82F39CCE7C928D3A" name="X82F39CCE7C928D3A"></a></p>
 
 <h5>45.10-2 ProjectedInducedPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectedInducedPcgs</code>( <var class="Arg">pcgs</var>, <var class="Arg">fpcgs</var>, <var class="Arg">ipcgs</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProjectedInducedPcgs</code>( <var class="Arg">pcgs</var>, <var class="Arg">fpcgs</var>, <var class="Arg">ipcgs</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><var class="Arg">ipcgs</var> must be an induced pcgs with respect to <var class="Arg">pcgs</var>. This operation returns an induced pcgs with respect to <var class="Arg">fpcgs</var> consisting of the nontrivial images of <var class="Arg">ipcgs</var>.</p>
 
 <p><a id="X816813A078B93A6B" name="X816813A078B93A6B"></a></p>
 
 <h5>45.10-3 LiftedPcElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LiftedPcElement</code>( <var class="Arg">pcgs</var>, <var class="Arg">fpcgs</var>, <var class="Arg">elm</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LiftedPcElement</code>( <var class="Arg">pcgs</var>, <var class="Arg">fpcgs</var>, <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a preimage in <var class="Arg">G</var> of an element <var class="Arg">elm</var> of <var class="Arg">H</var>.</p>
 
 <p><a id="X83C60F1587577D65" name="X83C60F1587577D65"></a></p>
 
 <h5>45.10-4 LiftedInducedPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LiftedInducedPcgs</code>( <var class="Arg">pcgs</var>, <var class="Arg">fpcgs</var>, <var class="Arg">ipcgs</var>, <var class="Arg">ker</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LiftedInducedPcgs</code>( <var class="Arg">pcgs</var>, <var class="Arg">fpcgs</var>, <var class="Arg">ipcgs</var>, <var class="Arg">ker</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><var class="Arg">ipcgs</var> must be an induced pcgs with respect to <var class="Arg">fpcgs</var>. This operation returns an induced pcgs with respect to <var class="Arg">pcgs</var> consisting of the preimages of <var class="Arg">ipcgs</var>, appended by the elements in <var class="Arg">ker</var> (assuming there is a bijection of <var class="Arg">pcgs</var> mod <var class="Arg">ker</var> to <var class="Arg">fpcgs</var>). <var class="Arg">ker</var> might be a simple element list.</p>
 
 <p><a id="X83FE235E7B208EC0" name="X83FE235E7B208EC0"></a></p>
@@ -782,22 +782,22 @@ Pcgs([ (1,3)(2,4) ])
 
 <h5>45.11-1 IsPcgsElementaryAbelianSeries</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPcgsElementaryAbelianSeries</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPcgsElementaryAbelianSeries</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the pcgs <var class="Arg">pcgs</var> refines an elementary abelian series. <code class="func">IndicesEANormalSteps</code> (<a href="chap45_mj.html#X7BCC1E2A80544CC7"><span class="RefLink">45.11-3</span></a>) then gives the indices in the Pcgs, at which the subgroups of this series start.</p>
 
 <p><a id="X863A20B57EA37BAC" name="X863A20B57EA37BAC"></a></p>
 
 <h5>45.11-2 PcgsElementaryAbelianSeries</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcgsElementaryAbelianSeries</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcgsElementaryAbelianSeries</code>( <var class="Arg">list</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcgsElementaryAbelianSeries</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcgsElementaryAbelianSeries</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>computes a pcgs for <var class="Arg">G</var> that refines an elementary abelian series. <code class="func">IndicesEANormalSteps</code> (<a href="chap45_mj.html#X7BCC1E2A80544CC7"><span class="RefLink">45.11-3</span></a>) gives the indices in the pcgs, at which the normal subgroups of this series start. The second variant returns a pcgs that runs through the normal subgroups in the list <var class="Arg">list</var>.</p>
 
 <p><a id="X7BCC1E2A80544CC7" name="X7BCC1E2A80544CC7"></a></p>
 
 <h5>45.11-3 IndicesEANormalSteps</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndicesEANormalSteps</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndicesEANormalSteps</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">pcgs</var> be a pcgs obtained as corresponding to a series of normal subgroups with elementary abelian factors (for example from calling <code class="func">PcgsElementaryAbelianSeries</code> (<a href="chap45_mj.html#X863A20B57EA37BAC"><span class="RefLink">45.11-2</span></a>)) Then <code class="func">IndicesEANormalSteps</code> returns a sorted list of integers, indicating the tails of <var class="Arg">pcgs</var> which generate these normal subgroup of <var class="Arg">G</var>. If <span class="SimpleMath">\(i\)</span> is an element of this list, <span class="SimpleMath">\((g_i, \ldots, g_n)\)</span> is a normal subgroup of <var class="Arg">G</var>. The list always starts with <span class="SimpleMath">\(1\)</span> and ends with <span class="SimpleMath">\(n+1\)</span>. (These indices form <em>one</em> series with elementary abelian subfactors, not necessarily the most refined one.)</p>
 
 <p>The attribute <code class="func">EANormalSeriesByPcgs</code> (<a href="chap45_mj.html#X7FCE308887F621FC"><span class="RefLink">45.11-4</span></a>) returns the actual series of subgroups.</p>
@@ -810,28 +810,28 @@ Pcgs([ (1,3)(2,4) ])
 
 <h5>45.11-4 EANormalSeriesByPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EANormalSeriesByPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EANormalSeriesByPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">pcgs</var> be a pcgs obtained as corresponding to a series of normal subgroups with elementary abelian factors (for example from calling <code class="func">PcgsElementaryAbelianSeries</code> (<a href="chap45_mj.html#X863A20B57EA37BAC"><span class="RefLink">45.11-2</span></a>)). This attribute returns the actual series of normal subgroups, corresponding to <code class="func">IndicesEANormalSteps</code> (<a href="chap45_mj.html#X7BCC1E2A80544CC7"><span class="RefLink">45.11-3</span></a>).</p>
 
 <p><a id="X79675266796D7254" name="X79675266796D7254"></a></p>
 
 <h5>45.11-5 IsPcgsCentralSeries</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPcgsCentralSeries</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPcgsCentralSeries</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the pcgs <var class="Arg">pcgs</var> refines an central elementary abelian series. <code class="func">IndicesCentralNormalSteps</code> (<a href="chap45_mj.html#X7FB73FEB7BED5BFA"><span class="RefLink">45.11-7</span></a>) then gives the indices in the pcgs, at which the subgroups of this series start.</p>
 
 <p><a id="X8187FCF483659E69" name="X8187FCF483659E69"></a></p>
 
 <h5>45.11-6 PcgsCentralSeries</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcgsCentralSeries</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcgsCentralSeries</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>computes a pcgs for <var class="Arg">G</var> that refines a central elementary abelian series. <code class="func">IndicesCentralNormalSteps</code> (<a href="chap45_mj.html#X7FB73FEB7BED5BFA"><span class="RefLink">45.11-7</span></a>) gives the indices in the pcgs, at which the normal subgroups of this series start.</p>
 
 <p><a id="X7FB73FEB7BED5BFA" name="X7FB73FEB7BED5BFA"></a></p>
 
 <h5>45.11-7 IndicesCentralNormalSteps</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndicesCentralNormalSteps</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndicesCentralNormalSteps</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">pcgs</var> be a pcgs obtained as corresponding to a series of normal subgroups with central elementary abelian factors (for example from calling <code class="func">PcgsCentralSeries</code> (<a href="chap45_mj.html#X8187FCF483659E69"><span class="RefLink">45.11-6</span></a>)). Then <code class="func">IndicesCentralNormalSteps</code> returns a sorted list of integers, indicating the tails of <var class="Arg">pcgs</var> which generate these normal subgroups of <var class="Arg">G</var>. If <span class="SimpleMath">\(i\)</span> is an element of this list, <span class="SimpleMath">\((g_i, \ldots, g_n)\)</span> is a normal subgroup of <var class="Arg">G</var>. The list always starts with <span class="SimpleMath">\(1\)</span> and ends with <span class="SimpleMath">\(n+1\)</span>. (These indices form <em>one</em> series with central elementary abelian subfactors, not necessarily the most refined one.)</p>
 
 <p>The attribute <code class="func">CentralNormalSeriesByPcgs</code> (<a href="chap45_mj.html#X82266ADA86B2A689"><span class="RefLink">45.11-8</span></a>) returns the actual series of subgroups.</p>
@@ -844,28 +844,28 @@ Pcgs([ (1,3)(2,4) ])
 
 <h5>45.11-8 CentralNormalSeriesByPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CentralNormalSeriesByPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CentralNormalSeriesByPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">pcgs</var> be a pcgs obtained as corresponding to a series of normal subgroups with central elementary abelian factors (for example from calling <code class="func">PcgsCentralSeries</code> (<a href="chap45_mj.html#X8187FCF483659E69"><span class="RefLink">45.11-6</span></a>)). This attribute returns the actual series of normal subgroups, corresponding to <code class="func">IndicesCentralNormalSteps</code> (<a href="chap45_mj.html#X7FB73FEB7BED5BFA"><span class="RefLink">45.11-7</span></a>).</p>
 
 <p><a id="X786E60AF7B61BF9E" name="X786E60AF7B61BF9E"></a></p>
 
 <h5>45.11-9 IsPcgsPCentralSeriesPGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPcgsPCentralSeriesPGroup</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPcgsPCentralSeriesPGroup</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the pcgs <var class="Arg">pcgs</var> refines a <span class="SimpleMath">\(p\)</span>-central elementary abelian series for a <span class="SimpleMath">\(p\)</span>-group. <code class="func">IndicesPCentralNormalStepsPGroup</code> (<a href="chap45_mj.html#X863968F08509E7D4"><span class="RefLink">45.11-11</span></a>) then gives the indices in the pcgs, at which the subgroups of this series start.</p>
 
 <p><a id="X86F19DBD7D346E7F" name="X86F19DBD7D346E7F"></a></p>
 
 <h5>45.11-10 PcgsPCentralSeriesPGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcgsPCentralSeriesPGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcgsPCentralSeriesPGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>computes a pcgs for the <span class="SimpleMath">\(p\)</span>-group <var class="Arg">G</var> that refines a <span class="SimpleMath">\(p\)</span>-central elementary abelian series. <code class="func">IndicesPCentralNormalStepsPGroup</code> (<a href="chap45_mj.html#X863968F08509E7D4"><span class="RefLink">45.11-11</span></a>) gives the indices in the pcgs, at which the normal subgroups of this series start.</p>
 
 <p><a id="X863968F08509E7D4" name="X863968F08509E7D4"></a></p>
 
 <h5>45.11-11 IndicesPCentralNormalStepsPGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndicesPCentralNormalStepsPGroup</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndicesPCentralNormalStepsPGroup</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">pcgs</var> be a pcgs obtained as corresponding to a series of normal subgroups with <span class="SimpleMath">\(p\)</span>-central elementary abelian factors (for example from calling <code class="func">PcgsPCentralSeriesPGroup</code> (<a href="chap45_mj.html#X86F19DBD7D346E7F"><span class="RefLink">45.11-10</span></a>)). Then <code class="func">IndicesPCentralNormalStepsPGroup</code> returns a sorted list of integers, indicating the tails of <var class="Arg">pcgs</var> which generate these normal subgroups of <var class="Arg">G</var>. If <span class="SimpleMath">\(i\)</span> is an element of this list, <span class="SimpleMath">\((g_i, \ldots, g_n)\)</span> is a normal subgroup of <var class="Arg">G</var>. The list always starts with <span class="SimpleMath">\(1\)</span> and ends with <span class="SimpleMath">\(n+1\)</span>. (These indices form <em>one</em> series with central elementary abelian subfactors, not necessarily the most refined one.)</p>
 
 <p>The attribute <code class="func">PCentralNormalSeriesByPcgsPGroup</code> (<a href="chap45_mj.html#X7A92C9EA7BAF60CA"><span class="RefLink">45.11-12</span></a>) returns the actual series of subgroups.</p>
@@ -878,28 +878,28 @@ Pcgs([ (1,3)(2,4) ])
 
 <h5>45.11-12 PCentralNormalSeriesByPcgsPGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PCentralNormalSeriesByPcgsPGroup</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PCentralNormalSeriesByPcgsPGroup</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">pcgs</var> be a pcgs obtained as corresponding to a series of normal subgroups with <span class="SimpleMath">\(p\)</span>-central elementary abelian factors (for example from calling <code class="func">PcgsPCentralSeriesPGroup</code> (<a href="chap45_mj.html#X86F19DBD7D346E7F"><span class="RefLink">45.11-10</span></a>)). This attribute returns the actual series of normal subgroups, corresponding to <code class="func">IndicesPCentralNormalStepsPGroup</code> (<a href="chap45_mj.html#X863968F08509E7D4"><span class="RefLink">45.11-11</span></a>).</p>
 
 <p><a id="X7EA5BC3B7FE9D98D" name="X7EA5BC3B7FE9D98D"></a></p>
 
 <h5>45.11-13 IsPcgsChiefSeries</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPcgsChiefSeries</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPcgsChiefSeries</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the pcgs <var class="Arg">pcgs</var> refines a chief series. <code class="func">IndicesChiefNormalSteps</code> (<a href="chap45_mj.html#X7C05E84A78CA405E"><span class="RefLink">45.11-15</span></a>) then gives the indices in the pcgs, at which the subgroups of this series start.</p>
 
 <p><a id="X7E7326947EAE4BC9" name="X7E7326947EAE4BC9"></a></p>
 
 <h5>45.11-14 PcgsChiefSeries</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcgsChiefSeries</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcgsChiefSeries</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>computes a pcgs for <var class="Arg">G</var> that refines a chief series. <code class="func">IndicesChiefNormalSteps</code> (<a href="chap45_mj.html#X7C05E84A78CA405E"><span class="RefLink">45.11-15</span></a>) gives the indices in the pcgs, at which the normal subgroups of this series start.</p>
 
 <p><a id="X7C05E84A78CA405E" name="X7C05E84A78CA405E"></a></p>
 
 <h5>45.11-15 IndicesChiefNormalSteps</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndicesChiefNormalSteps</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndicesChiefNormalSteps</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">pcgs</var> be a pcgs obtained as corresponding to a chief series for example from calling <code class="func">PcgsChiefSeries</code> (<a href="chap45_mj.html#X7E7326947EAE4BC9"><span class="RefLink">45.11-14</span></a>)). Then <code class="func">IndicesChiefNormalSteps</code> returns a sorted list of integers, indicating the tails of <var class="Arg">pcgs</var> which generate these normal subgroups of <var class="Arg">G</var>. If <span class="SimpleMath">\(i\)</span> is an element of this list, <span class="SimpleMath">\((g_i, \ldots, g_n)\)</span> is a normal subgroup of <var class="Arg">G</var>. The list always starts with <span class="SimpleMath">\(1\)</span> and ends with <span class="SimpleMath">\(n+1\)</span>. (These indices form <em>one</em> series with elementary abelian subfactors, not necessarily the most refined one.)</p>
 
 <p>The attribute <code class="func">ChiefNormalSeriesByPcgs</code> (<a href="chap45_mj.html#X83C5ABC587074B14"><span class="RefLink">45.11-16</span></a>) returns the actual series of subgroups.</p>
@@ -912,7 +912,7 @@ Pcgs([ (1,3)(2,4) ])
 
 <h5>45.11-16 ChiefNormalSeriesByPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChiefNormalSeriesByPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChiefNormalSeriesByPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">pcgs</var> be a pcgs obtained as corresponding to a chief series (for example from calling <code class="func">PcgsChiefSeries</code> (<a href="chap45_mj.html#X7E7326947EAE4BC9"><span class="RefLink">45.11-14</span></a>)). This attribute returns the actual series of normal subgroups, corresponding to <code class="func">IndicesChiefNormalSteps</code> (<a href="chap45_mj.html#X7C05E84A78CA405E"><span class="RefLink">45.11-15</span></a>).</p>
 
 
@@ -939,7 +939,7 @@ Pcgs([ (1,5)(2,6)(3,7)(4,8), (5,6,7,8), (5,7)(6,8),
 
 <h5>45.11-17 IndicesNormalSteps</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndicesNormalSteps</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndicesNormalSteps</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the indices of <em>all</em> steps in the pc series, which are normal in the group defined by the pcgs.</p>
 
 <p>(In general, this function yields a slower performance than the more specialized index functions for elementary abelian series etc.)</p>
@@ -948,7 +948,7 @@ Pcgs([ (1,5)(2,6)(3,7)(4,8), (5,6,7,8), (5,7)(6,8),
 
 <h5>45.11-18 NormalSeriesByPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NormalSeriesByPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NormalSeriesByPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the subgroups the pc series, which are normal in the group defined by the pcgs.</p>
 
 <p>(In general, this function yields a slower performance than the more specialized index functions for elementary abelian series etc.)</p>
@@ -961,7 +961,7 @@ Pcgs([ (1,5)(2,6)(3,7)(4,8), (5,6,7,8), (5,7)(6,8),
 
 <h5>45.12-1 SumFactorizationFunctionPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SumFactorizationFunctionPcgs</code>( <var class="Arg">parentpcgs</var>, <var class="Arg">n</var>, <var class="Arg">u</var>, <var class="Arg">kerpcgs</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SumFactorizationFunctionPcgs</code>( <var class="Arg">parentpcgs</var>, <var class="Arg">n</var>, <var class="Arg">u</var>, <var class="Arg">kerpcgs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>computes the sum and intersection of the lists <var class="Arg">n</var> and <var class="Arg">u</var> whose elements form modulo pcgs induced by <var class="Arg">parentpcgs</var> for two subgroups modulo a kernel given by <var class="Arg">kerpcgs</var>. If <var class="Arg">kerpcgs</var> is a tail if the <var class="Arg">parent-pcgs</var> it is sufficient to give the starting depth, this can be more efficient than to construct an explicit pcgs. The factor group modulo <var class="Arg">kerpcgs</var> generated by <var class="Arg">n</var> must be elementary abelian and normal under <var class="Arg">u</var>.</p>
 
 <p>The function returns a record with components</p>
@@ -1007,43 +1007,43 @@ Pcgs([ (1,5)(2,6)(3,7)(4,8), (5,6,7,8), (5,7)(6,8),
 
 <h5>45.13-1 IsSpecialPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSpecialPcgs</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSpecialPcgs</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>tests whether <var class="Arg">obj</var> is a special pcgs.</p>
 
 <p><a id="X827EB7767BACD023" name="X827EB7767BACD023"></a></p>
 
 <h5>45.13-2 <span class="Heading">SpecialPcgs</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SpecialPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SpecialPcgs</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SpecialPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SpecialPcgs</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>computes a special pcgs for the group defined by <var class="Arg">pcgs</var> or for <var class="Arg">G</var>.</p>
 
 <p><a id="X82DC7CE682140588" name="X82DC7CE682140588"></a></p>
 
 <h5>45.13-3 LGWeights</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LGWeights</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LGWeights</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the LGWeights of the special pcgs <var class="Arg">pcgs</var>.</p>
 
 <p><a id="X824645C97E347EEE" name="X824645C97E347EEE"></a></p>
 
 <h5>45.13-4 LGLayers</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LGLayers</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LGLayers</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the layers of the special pcgs <var class="Arg">pcgs</var>.</p>
 
 <p><a id="X7A655F4C7D9AE130" name="X7A655F4C7D9AE130"></a></p>
 
 <h5>45.13-5 LGFirst</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LGFirst</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LGFirst</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the first indices for each layer of the special pcgs <var class="Arg">pcgs</var>.</p>
 
 <p><a id="X7C3912F77B12C8B6" name="X7C3912F77B12C8B6"></a></p>
 
 <h5>45.13-6 LGLength</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LGLength</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LGLength</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the length of the LG-series of the group <var class="Arg">G</var>, if <var class="Arg">G</var> is solvable, and <code class="keyw">fail</code> otherwise.</p>
 
 
@@ -1078,14 +1078,14 @@ Pcgs([ f1, f2, f3, f4, f5, f6 ])
 
 <h5>45.13-7 IsInducedPcgsWrtSpecialPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInducedPcgsWrtSpecialPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInducedPcgsWrtSpecialPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>tests whether <var class="Arg">pcgs</var> is induced with respect to a special pcgs.</p>
 
 <p><a id="X7C14AE5C82FB0771" name="X7C14AE5C82FB0771"></a></p>
 
 <h5>45.13-8 InducedPcgsWrtSpecialPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InducedPcgsWrtSpecialPcgs</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InducedPcgsWrtSpecialPcgs</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>computes an induced pcgs with respect to the special pcgs of the parent of <var class="Arg">G</var>.</p>
 
 <p><code class="func">InducedPcgsWrtSpecialPcgs</code> will return a pcgs induced by <em>a</em> special pcgs (which might differ from the one you had in mind). If you need an induced pcgs compatible with a <em>given</em> special pcgs use <code class="func">InducedPcgs</code> (<a href="chap45_mj.html#X7F0EB20080590B23"><span class="RefLink">45.7-4</span></a>) for this special pcgs.</p>
@@ -1102,37 +1102,37 @@ Pcgs([ f1, f2, f3, f4, f5, f6 ])
 
 <h5>45.14-1 VectorSpaceByPcgsOfElementaryAbelianGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; VectorSpaceByPcgsOfElementaryAbelianGroup</code>( <var class="Arg">mpcgs</var>, <var class="Arg">fld</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; VectorSpaceByPcgsOfElementaryAbelianGroup</code>( <var class="Arg">mpcgs</var>, <var class="Arg">fld</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the vector space over <var class="Arg">fld</var> corresponding to the modulo pcgs <var class="Arg">mpcgs</var>. Note that <var class="Arg">mpcgs</var> has to define an elementary abelian <span class="SimpleMath">\(p\)</span>-group where <span class="SimpleMath">\(p\)</span> is the characteristic of <var class="Arg">fld</var>.</p>
 
 <p><a id="X81FC09DD7FC06C6E" name="X81FC09DD7FC06C6E"></a></p>
 
 <h5>45.14-2 LinearAction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LinearAction</code>( <var class="Arg">gens</var>, <var class="Arg">basisvectors</var>, <var class="Arg">linear</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LinearOperation</code>( <var class="Arg">gens</var>, <var class="Arg">basisvectors</var>, <var class="Arg">linear</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LinearAction</code>( <var class="Arg">gens</var>, <var class="Arg">basisvectors</var>, <var class="Arg">linear</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LinearOperation</code>( <var class="Arg">gens</var>, <var class="Arg">basisvectors</var>, <var class="Arg">linear</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a list of matrices, one for each element of <var class="Arg">gens</var>, which corresponds to the matrix action of the elements in <var class="Arg">gens</var> on the basis <var class="Arg">basisvectors</var> via <var class="Arg">linear</var>.</p>
 
 <p><a id="X7C2135B98732BBC3" name="X7C2135B98732BBC3"></a></p>
 
 <h5>45.14-3 LinearActionLayer</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LinearActionLayer</code>( <var class="Arg">G</var>, <var class="Arg">gens</var>, <var class="Arg">pcgs</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LinearOperationLayer</code>( <var class="Arg">G</var>, <var class="Arg">gens</var>, <var class="Arg">pcgs</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LinearActionLayer</code>( <var class="Arg">G</var>, <var class="Arg">gens</var>, <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LinearOperationLayer</code>( <var class="Arg">G</var>, <var class="Arg">gens</var>, <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a list of matrices, one for each element of <var class="Arg">gens</var>, which corresponds to the matrix action of <var class="Arg">G</var> on the vector space corresponding to the modulo pcgs <var class="Arg">pcgs</var>.</p>
 
 <p><a id="X79C2D6BF7DD69ED6" name="X79C2D6BF7DD69ED6"></a></p>
 
 <h5>45.14-4 AffineAction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AffineAction</code>( <var class="Arg">gens</var>, <var class="Arg">basisvectors</var>, <var class="Arg">linear</var>, <var class="Arg">transl</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AffineAction</code>( <var class="Arg">gens</var>, <var class="Arg">basisvectors</var>, <var class="Arg">linear</var>, <var class="Arg">transl</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>return a list of matrices, one for each element of <var class="Arg">gens</var>, which corresponds to the affine action of the elements in <var class="Arg">gens</var> on the basis <var class="Arg">basisvectors</var> via <var class="Arg">linear</var> with translation <var class="Arg">transl</var>.</p>
 
 <p><a id="X7E4CB1358524497B" name="X7E4CB1358524497B"></a></p>
 
 <h5>45.14-5 AffineActionLayer</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AffineActionLayer</code>( <var class="Arg">G</var>, <var class="Arg">gens</var>, <var class="Arg">pcgs</var>, <var class="Arg">transl</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AffineActionLayer</code>( <var class="Arg">G</var>, <var class="Arg">gens</var>, <var class="Arg">pcgs</var>, <var class="Arg">transl</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a list of matrices, one for each element of <var class="Arg">gens</var>, which corresponds to the affine action of <var class="Arg">G</var> on the vector space corresponding to the modulo pcgs <var class="Arg">pcgs</var> with translation <var class="Arg">transl</var>.</p>
 
 
@@ -1170,14 +1170,14 @@ Pcgs([ f6 ])
 
 <h5>45.15-1 StabilizerPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StabilizerPcgs</code>( <var class="Arg">pcgs</var>, <var class="Arg">pnt</var>[, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StabilizerPcgs</code>( <var class="Arg">pcgs</var>, <var class="Arg">pnt</var>[, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>computes the stabilizer in the group generated by <var class="Arg">pcgs</var> of the point <var class="Arg">pnt</var>. If given, <var class="Arg">acts</var> are elements by which <var class="Arg">pcgs</var> acts, <var class="Arg">act</var> is the acting function. This function returns a pcgs for the stabilizer which is induced by the <code class="code">ParentPcgs</code> of <var class="Arg">pcgs</var>, that is it is compatible with <var class="Arg">pcgs</var>.</p>
 
 <p><a id="X7A87E72F86813132" name="X7A87E72F86813132"></a></p>
 
 <h5>45.15-2 Pcgs_OrbitStabilizer</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Pcgs_OrbitStabilizer</code>( <var class="Arg">pcgs</var>, <var class="Arg">domain</var>, <var class="Arg">pnt</var>, <var class="Arg">oprs</var>, <var class="Arg">opr</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Pcgs_OrbitStabilizer</code>( <var class="Arg">pcgs</var>, <var class="Arg">domain</var>, <var class="Arg">pnt</var>, <var class="Arg">oprs</var>, <var class="Arg">opr</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>runs a solvable group orbit-stabilizer algorithm on <var class="Arg">pnt</var> with <var class="Arg">pcgs</var> acting via the images <var class="Arg">oprs</var> and the operation function <var class="Arg">opr</var>. The domain <var class="Arg">domain</var> can be used to speed up search, if it is not known, <code class="keyw">false</code> can be given instead. The function returns a record with components <code class="code">orbit</code>, <code class="code">stabpcgs</code> and <code class="code">lengths</code>, the latter indicating the lengths of the orbit whenever it got extended. This can be used to recompute transversal elements. This function should be used only inside algorithms when speed is essential.</p>
 
 <p><a id="X7A19DF1E7E841074" name="X7A19DF1E7E841074"></a></p>
@@ -1198,7 +1198,7 @@ Pcgs([ f6 ])
 
 <h5>45.17-1 ClassesSolvableGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ClassesSolvableGroup</code>( <var class="Arg">G</var>, <var class="Arg">mode</var>[, <var class="Arg">opt</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ClassesSolvableGroup</code>( <var class="Arg">G</var>, <var class="Arg">mode</var>[, <var class="Arg">opt</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>computes conjugacy classes and centralizers in solvable groups. <var class="Arg">G</var> is the acting group. <var class="Arg">mode</var> indicates the type of the calculation:</p>
 
 <p>0 Conjugacy classes</p>
@@ -1228,7 +1228,7 @@ Pcgs([ f6 ])
 
 <h5>45.17-2 CentralizerSizeLimitConsiderFunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CentralizerSizeLimitConsiderFunction</code>( <var class="Arg">sz</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CentralizerSizeLimitConsiderFunction</code>( <var class="Arg">sz</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a function (with arguments <code class="code">fhome</code>, <code class="code">rep</code>, <code class="code">cen</code>, <code class="code">K</code>, <code class="code">L</code>) that can be used in <code class="func">ClassesSolvableGroup</code> (<a href="chap45_mj.html#X79593F667A68A21D"><span class="RefLink">45.17-1</span></a>) as the <code class="code">consider</code> component of the options record. It will restrict the lifting to those classes, for which the size of the centralizer (in the factor) is at most <var class="Arg">sz</var>.</p>
 
 <p>See also <code class="func">SubgroupsSolvableGroup</code> (<a href="chap39_mj.html#X7AD7804A803910AC"><span class="RefLink">39.21-3</span></a>).</p>

@@ -32,7 +32,7 @@
   
   [1X44.1-1 IsMatrixGroup[101X
   
-  [29X[2XIsMatrixGroup[102X( [3Xgrp[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsMatrixGroup[102X( [3Xgrp[103X ) [32X Category[133X
   
   [33X[0;0YThe category of matrix groups.[133X
   
@@ -41,20 +41,20 @@
   
   [1X44.2-1 DimensionOfMatrixGroup[101X
   
-  [29X[2XDimensionOfMatrixGroup[102X( [3Xmat-grp[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDimensionOfMatrixGroup[102X( [3Xmat-grp[103X ) [32X attribute[133X
   
   [33X[0;0YThe dimension of the matrix group.[133X
   
   [1X44.2-2 DefaultFieldOfMatrixGroup[101X
   
-  [29X[2XDefaultFieldOfMatrixGroup[102X( [3Xmat-grp[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDefaultFieldOfMatrixGroup[102X( [3Xmat-grp[103X ) [32X attribute[133X
   
   [33X[0;0YIs a field containing all the matrix entries. It is not guaranteed to be the
   smallest field with this property.[133X
   
   [1X44.2-3 FieldOfMatrixGroup[101X
   
-  [29X[2XFieldOfMatrixGroup[102X( [3Xmatgrp[103X ) [32X attribute
+  [33X[1;0Y[29X[2XFieldOfMatrixGroup[102X( [3Xmatgrp[103X ) [32X attribute[133X
   
   [33X[0;0YThe  smallest field containing all the matrix entries of all elements of the
   matrix  group  [3Xmatgrp[103X.  As  the calculation of this can be hard, this should
@@ -70,7 +70,7 @@
   
   [1X44.2-4 TransposedMatrixGroup[101X
   
-  [29X[2XTransposedMatrixGroup[102X( [3Xmatgrp[103X ) [32X attribute
+  [33X[1;0Y[29X[2XTransposedMatrixGroup[102X( [3Xmatgrp[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the  transpose  of  the  matrix  group [3Xmatgrp[103X. The transpose of the
   transpose of [3Xmatgrp[103X is identical to [3Xmatgrp[103X.[133X
@@ -86,7 +86,7 @@
   
   [1X44.2-5 IsFFEMatrixGroup[101X
   
-  [29X[2XIsFFEMatrixGroup[102X( [3XG[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsFFEMatrixGroup[102X( [3XG[103X ) [32X Category[133X
   
   [33X[0;0Ytests whether all matrices in [3XG[103X have finite field element entries.[133X
   
@@ -102,7 +102,7 @@
   
   [1X44.3-1 ProjectiveActionOnFullSpace[101X
   
-  [29X[2XProjectiveActionOnFullSpace[102X( [3XG[103X, [3XF[103X, [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XProjectiveActionOnFullSpace[102X( [3XG[103X, [3XF[103X, [3Xn[103X ) [32X function[133X
   
   [33X[0;0YLet  [3XG[103X  be  a  group of [3Xn[103X by [3Xn[103X matrices over a field contained in the finite
   field  [3XF[103X.  [2XProjectiveActionOnFullSpace[102X  returns  the image of the projective
@@ -110,7 +110,7 @@
   
   [1X44.3-2 ProjectiveActionHomomorphismMatrixGroup[101X
   
-  [29X[2XProjectiveActionHomomorphismMatrixGroup[102X( [3XG[103X ) [32X function
+  [33X[1;0Y[29X[2XProjectiveActionHomomorphismMatrixGroup[102X( [3XG[103X ) [32X function[133X
   
   [33X[0;0Yreturns  an action homomorphism for a faithful projective action of [3XG[103X on the
   underlying  vector  space.  (Note: The action is not necessarily on the full
@@ -118,7 +118,7 @@
   
   [1X44.3-3 BlowUpIsomorphism[101X
   
-  [29X[2XBlowUpIsomorphism[102X( [3Xmatgrp[103X, [3XB[103X ) [32X function
+  [33X[1;0Y[29X[2XBlowUpIsomorphism[102X( [3Xmatgrp[103X, [3XB[103X ) [32X function[133X
   
   [33X[0;0YFor  a  matrix  group  [3Xmatgrp[103X and a basis [3XB[103X of a field extension [22XL / K[122X, say,
   such  that the entries of all matrices in [3Xmatgrp[103X lie in [22XL[122X, [2XBlowUpIsomorphism[102X
@@ -148,8 +148,8 @@
   
   [1X44.4-1 IsGeneralLinearGroup[101X
   
-  [29X[2XIsGeneralLinearGroup[102X( [3Xgrp[103X ) [32X property
-  [29X[2XIsGL[102X( [3Xgrp[103X ) [32X property
+  [33X[1;0Y[29X[2XIsGeneralLinearGroup[102X( [3Xgrp[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsGL[102X( [3Xgrp[103X ) [32X property[133X
   
   [33X[0;0YThe  General  Linear  group  is  the group of all invertible matrices over a
   ring. This property tests, whether a group is isomorphic to a General Linear
@@ -158,7 +158,7 @@
   
   [1X44.4-2 IsNaturalGL[101X
   
-  [29X[2XIsNaturalGL[102X( [3Xmatgrp[103X ) [32X property
+  [33X[1;0Y[29X[2XIsNaturalGL[102X( [3Xmatgrp[103X ) [32X property[133X
   
   [33X[0;0YThis  property  tests, whether a matrix group is the General Linear group in
   the  right  dimension over the (smallest) ring which contains all entries of
@@ -167,8 +167,8 @@
   
   [1X44.4-3 IsSpecialLinearGroup[101X
   
-  [29X[2XIsSpecialLinearGroup[102X( [3Xgrp[103X ) [32X property
-  [29X[2XIsSL[102X( [3Xgrp[103X ) [32X property
+  [33X[1;0Y[29X[2XIsSpecialLinearGroup[102X( [3Xgrp[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsSL[102X( [3Xgrp[103X ) [32X property[133X
   
   [33X[0;0YThe  Special  Linear  group  is  the group of all invertible matrices over a
   ring,  whose determinant is equal to 1. This property tests, whether a group
@@ -178,7 +178,7 @@
   
   [1X44.4-4 IsNaturalSL[101X
   
-  [29X[2XIsNaturalSL[102X( [3Xmatgrp[103X ) [32X property
+  [33X[1;0Y[29X[2XIsNaturalSL[102X( [3Xmatgrp[103X ) [32X property[133X
   
   [33X[0;0YThis  property  tests, whether a matrix group is the Special Linear group in
   the  right  dimension over the (smallest) ring which contains all entries of
@@ -192,7 +192,7 @@
   
   [1X44.4-5 IsSubgroupSL[101X
   
-  [29X[2XIsSubgroupSL[102X( [3Xmatgrp[103X ) [32X property
+  [33X[1;0Y[29X[2XIsSubgroupSL[102X( [3Xmatgrp[103X ) [32X property[133X
   
   [33X[0;0YThis  property  tests,  whether  a matrix group is a subgroup of the Special
   Linear  group in the right dimension over the (smallest) ring which contains
@@ -203,7 +203,7 @@
   
   [1X44.5-1 InvariantBilinearForm[101X
   
-  [29X[2XInvariantBilinearForm[102X( [3Xmatgrp[103X ) [32X attribute
+  [33X[1;0Y[29X[2XInvariantBilinearForm[102X( [3Xmatgrp[103X ) [32X attribute[133X
   
   [33X[0;0YThis  attribute describes a bilinear form that is invariant under the matrix
   group  [3Xmatgrp[103X. The form is given by a record with the component [10Xmatrix[110X which
@@ -212,7 +212,7 @@
   
   [1X44.5-2 IsFullSubgroupGLorSLRespectingBilinearForm[101X
   
-  [29X[2XIsFullSubgroupGLorSLRespectingBilinearForm[102X( [3Xmatgrp[103X ) [32X property
+  [33X[1;0Y[29X[2XIsFullSubgroupGLorSLRespectingBilinearForm[102X( [3Xmatgrp[103X ) [32X property[133X
   
   [33X[0;0YThis  property  tests, whether a matrix group [3Xmatgrp[103X is the full subgroup of
   GL  or  SL  (the  property  [2XIsSubgroupSL[102X  ([14X44.4-5[114X)  determines  which it is)
@@ -221,7 +221,7 @@
   
   [1X44.5-3 InvariantSesquilinearForm[101X
   
-  [29X[2XInvariantSesquilinearForm[102X( [3Xmatgrp[103X ) [32X attribute
+  [33X[1;0Y[29X[2XInvariantSesquilinearForm[102X( [3Xmatgrp[103X ) [32X attribute[133X
   
   [33X[0;0YThis  attribute  describes  a  sesquilinear form that is invariant under the
   matrix  group  [3Xmatgrp[103X  over  the field [22XF[122X with [22Xq^2[122X elements, say. The form is
@@ -233,7 +233,7 @@
   
   [1X44.5-4 IsFullSubgroupGLorSLRespectingSesquilinearForm[101X
   
-  [29X[2XIsFullSubgroupGLorSLRespectingSesquilinearForm[102X( [3Xmatgrp[103X ) [32X property
+  [33X[1;0Y[29X[2XIsFullSubgroupGLorSLRespectingSesquilinearForm[102X( [3Xmatgrp[103X ) [32X property[133X
   
   [33X[0;0YThis  property  tests, whether a matrix group [3Xmatgrp[103X is the full subgroup of
   GL  or  SL  (the  property  [2XIsSubgroupSL[102X  ([14X44.4-5[114X)  determines  which it is)
@@ -242,7 +242,7 @@
   
   [1X44.5-5 InvariantQuadraticForm[101X
   
-  [29X[2XInvariantQuadraticForm[102X( [3Xmatgrp[103X ) [32X attribute
+  [33X[1;0Y[29X[2XInvariantQuadraticForm[102X( [3Xmatgrp[103X ) [32X attribute[133X
   
   [33X[0;0YFor   a   matrix  group  [3Xmatgrp[103X,  [2XInvariantQuadraticForm[102X  returns  a  record
   containing  at  least  the  component  [10Xmatrix[110X whose value is a matrix [22XQ[122X. The
@@ -266,7 +266,7 @@
   
   [1X44.5-6 IsFullSubgroupGLorSLRespectingQuadraticForm[101X
   
-  [29X[2XIsFullSubgroupGLorSLRespectingQuadraticForm[102X( [3Xmatgrp[103X ) [32X property
+  [33X[1;0Y[29X[2XIsFullSubgroupGLorSLRespectingQuadraticForm[102X( [3Xmatgrp[103X ) [32X property[133X
   
   [33X[0;0YThis property tests, whether the matrix group [3Xmatgrp[103X is the full subgroup of
   GL  or  SL  (the  property  [2XIsSubgroupSL[102X  ([14X44.4-5[114X)  determines  which it is)
@@ -309,25 +309,25 @@
   
   [1X44.6-1 IsCyclotomicMatrixGroup[101X
   
-  [29X[2XIsCyclotomicMatrixGroup[102X( [3XG[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsCyclotomicMatrixGroup[102X( [3XG[103X ) [32X Category[133X
   
   [33X[0;0Ytests whether all matrices in [3XG[103X have cyclotomic entries.[133X
   
   [1X44.6-2 IsRationalMatrixGroup[101X
   
-  [29X[2XIsRationalMatrixGroup[102X( [3XG[103X ) [32X property
+  [33X[1;0Y[29X[2XIsRationalMatrixGroup[102X( [3XG[103X ) [32X property[133X
   
   [33X[0;0Ytests whether all matrices in [3XG[103X have rational entries.[133X
   
   [1X44.6-3 IsIntegerMatrixGroup[101X
   
-  [29X[2XIsIntegerMatrixGroup[102X( [3XG[103X ) [32X property
+  [33X[1;0Y[29X[2XIsIntegerMatrixGroup[102X( [3XG[103X ) [32X property[133X
   
   [33X[0;0Ytests whether all matrices in [3XG[103X have integer entries.[133X
   
   [1X44.6-4 IsNaturalGLnZ[101X
   
-  [29X[2XIsNaturalGLnZ[102X( [3XG[103X ) [32X property
+  [33X[1;0Y[29X[2XIsNaturalGLnZ[102X( [3XG[103X ) [32X property[133X
   
   [33X[0;0Ytests  whether  [3XG[103X  is [22XGL_n(ℤ)[122X in its natural representation by [22Xn × n[122X integer
   matrices. (The dimension [22Xn[122X will be read off the generating matrices.)[133X
@@ -339,7 +339,7 @@
   
   [1X44.6-5 IsNaturalSLnZ[101X
   
-  [29X[2XIsNaturalSLnZ[102X( [3XG[103X ) [32X property
+  [33X[1;0Y[29X[2XIsNaturalSLnZ[102X( [3XG[103X ) [32X property[133X
   
   [33X[0;0Ytests  whether  [3XG[103X  is [22XSL_n(ℤ)[122X in its natural representation by [22Xn × n[122X integer
   matrices. (The dimension [22Xn[122X will be read off the generating matrices.)[133X
@@ -351,7 +351,7 @@
   
   [1X44.6-6 InvariantLattice[101X
   
-  [29X[2XInvariantLattice[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XInvariantLattice[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns a matrix [22XB[122X, whose rows form a basis of a [22Xℤ[122X-lattice that is invariant
   under  the rational matrix group [3XG[103X acting from the right. It returns [9Xfail[109X if
@@ -360,7 +360,7 @@
   
   [1X44.6-7 NormalizerInGLnZ[101X
   
-  [29X[2XNormalizerInGLnZ[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNormalizerInGLnZ[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yis  an attribute used to store the normalizer of [3XG[103X in [22XGL_n(ℤ)[122X, where [3XG[103X is an
   integer  matrix  group of dimension [3Xn[103X. This attribute is used by [10XNormalizer(
@@ -368,7 +368,7 @@
   
   [1X44.6-8 CentralizerInGLnZ[101X
   
-  [29X[2XCentralizerInGLnZ[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCentralizerInGLnZ[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yis an attribute used to store the centralizer of [3XG[103X in [22XGL_n(ℤ)[122X, where [3XG[103X is an
   integer  matrix group of dimension [3Xn[103X. This attribute is used by [10XCentralizer(
@@ -376,7 +376,7 @@
   
   [1X44.6-9 ZClassRepsQClass[101X
   
-  [29X[2XZClassRepsQClass[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XZClassRepsQClass[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0YThe  conjugacy  class in [22XGL_n(ℚ)[122X of the finite integer matrix group [3XG[103X splits
   into  finitely  many  conjugacy  classes  in  [22XGL_n(ℤ)[122X. [10XZClassRepsQClass( [3XG[103X[10X )[110X
@@ -384,14 +384,14 @@
   
   [1X44.6-10 IsBravaisGroup[101X
   
-  [29X[2XIsBravaisGroup[102X( [3XG[103X ) [32X property
+  [33X[1;0Y[29X[2XIsBravaisGroup[102X( [3XG[103X ) [32X property[133X
   
   [33X[0;0Ytest   whether   [3XG[103X  coincides  with  its  Bravais  group  (see  [2XBravaisGroup[102X
   ([14X44.6-11[114X)).[133X
   
   [1X44.6-11 BravaisGroup[101X
   
-  [29X[2XBravaisGroup[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XBravaisGroup[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the  Bravais  group of a finite integer matrix group [3XG[103X. If [22XC[122X is the
   cone of positive definite quadratic forms [22XQ[122X invariant under [22Xg ↦ g Q g^tr[122X for
@@ -405,21 +405,21 @@
   
   [1X44.6-12 BravaisSubgroups[101X
   
-  [29X[2XBravaisSubgroups[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XBravaisSubgroups[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the  subgroups  of  the  Bravais  group  of [3XG[103X, which are themselves
   Bravais groups.[133X
   
   [1X44.6-13 BravaisSupergroups[101X
   
-  [29X[2XBravaisSupergroups[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XBravaisSupergroups[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns the subgroups of [22XGL_n(ℤ)[122X that contain the Bravais group of [3XG[103X and are
   Bravais groups themselves.[133X
   
   [1X44.6-14 NormalizerInGLnZBravaisGroup[101X
   
-  [29X[2XNormalizerInGLnZBravaisGroup[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNormalizerInGLnZBravaisGroup[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns the normalizer of the Bravais group of [3XG[103X in the appropriate [22XGL_n(ℤ)[122X.[133X
   
@@ -450,7 +450,7 @@
   
   [1X44.7-1 CrystGroupDefaultAction[101X
   
-  [29X[2XCrystGroupDefaultAction[102X[32X global variable
+  [33X[1;0Y[29X[2XCrystGroupDefaultAction[102X[32X global variable[133X
   
   [33X[0;0Ycan  have  either  of the two values [10XRightAction[110X and [10XLeftAction[110X. The initial
   value  is [10XRightAction[110X. For functions which have variants OnRight and OnLeft,
@@ -460,7 +460,7 @@
   
   [1X44.7-2 SetCrystGroupDefaultAction[101X
   
-  [29X[2XSetCrystGroupDefaultAction[102X( [3Xaction[103X ) [32X function
+  [33X[1;0Y[29X[2XSetCrystGroupDefaultAction[102X( [3Xaction[103X ) [32X function[133X
   
   [33X[0;0Yallows  one  to set the value of the global variable [2XCrystGroupDefaultAction[102X
   ([14X44.7-1[114X).  Only  the  arguments  [10XRightAction[110X  and  [10XLeftAction[110X  are  allowed.

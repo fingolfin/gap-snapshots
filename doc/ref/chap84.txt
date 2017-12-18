@@ -33,7 +33,7 @@
   
   [1X84.1-1 HELP_ADD_BOOK[101X
   
-  [29X[2XHELP_ADD_BOOK[102X( [3Xshort[103X, [3Xlong[103X, [3Xdir[103X ) [32X function
+  [33X[1;0Y[29X[2XHELP_ADD_BOOK[102X( [3Xshort[103X, [3Xlong[103X, [3Xdir[103X ) [32X function[133X
   
   [33X[0;0YThis  command  tells  [5XGAP[105X  that  in  directory [3Xdir[103X (given as either a string
   describing  the path relative to the [5XGAP[105X root directory [10XGAPInfo.RootPaths[1][110X
@@ -54,7 +54,7 @@
   
   [1X84.1-2 HELP_REMOVE_BOOK[101X
   
-  [29X[2XHELP_REMOVE_BOOK[102X( [3Xshort[103X ) [32X function
+  [33X[1;0Y[29X[2XHELP_REMOVE_BOOK[102X( [3Xshort[103X ) [32X function[133X
   
   [33X[0;0YThis  command tells [5XGAP[105X not to use the help book with identifying name [3Xshort[103X
   any more. The book can be re-installed using [2XHELP_ADD_BOOK[102X ([14X84.1-1[114X).[133X
@@ -203,7 +203,7 @@
   
   [1X84.4-1 HELP_VIEWER_INFO[101X
   
-  [29X[2XHELP_VIEWER_INFO[102X[32X global variable
+  [33X[1;0Y[29X[2XHELP_VIEWER_INFO[102X[32X global variable[133X
   
   [33X[0;0YThe  record  [2XHELP_VIEWER_INFO[102X  contains  one component for each help viewer.
   Each such component is a record with two components: [10X.type[110X and [10X.show[110X.[133X

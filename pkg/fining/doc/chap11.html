@@ -19,6 +19,7 @@
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap10.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap12.html">[Next Chapter]</a>&nbsp;  </div>
 
+<p id="mathjaxlink" class="pcenter"><a href="chap11_mj.html">[MathJax on]</a></p>
 <p><a id="X87EC44BF7F24486E" name="X87EC44BF7F24486E"></a></p>
 <div class="ChapSects"><a href="chap11.html#X87EC44BF7F24486E">11 <span class="Heading">Algebraic Varieties</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap11.html#X87EC44BF7F24486E">11.1 <span class="Heading">Algebraic Varieties</span></a>
@@ -29,7 +30,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X8606750A8586DF8D">11.1-3 AmbientSpace</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X86605DF87C562635">11.1-4 PointsOfAlgebraicVariety</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X83ADF8287ED0668E">11.1-5 Iterator</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X87BDB89B7AAFE8AD">11.1-6 \in</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X87BDB89B7AAFE8AD"><code>11.1-6 \in</code></a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap11.html#X79EC6F8381337C08">11.2 <span class="Heading">Projective Varieties</span></a>
 </span>
@@ -57,7 +58,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X829F76BB80BD55DB">11.5-2 Range</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7CFAB0157BFB1806">11.5-3 ImageElm</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X8781348F7F5796A0">11.5-4 ImagesSet</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7D21FB1A7D21FB1A">11.5-5 \^</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap11.html#X7D21FB1A7D21FB1A"><code>11.5-5 \^</code></a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap11.html#X81374CC57CA01150">11.6 <span class="Heading">Segre Varieties</span></a>
 </span>
@@ -196,7 +197,7 @@ Projective Variety in ProjectiveSpace(3, 9)
 
 <p><a id="X87BDB89B7AAFE8AD" name="X87BDB89B7AAFE8AD"></a></p>
 
-<h5>11.1-6 \in</h5>
+<h5><code>11.1-6 \in</code></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \in</code>( <var class="Arg">x</var>, <var class="Arg">var</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \in</code>( <var class="Arg">x</var>, <var class="Arg">pts</var> )</td><td class="tdright">( operation )</td></tr></table></div>
@@ -313,7 +314,7 @@ x_1^3+x_2^3+x_3^3+x_4^3+x_5^3+x_6^3
 <tr>
 <td class="tdleft">hyperbolic quadric</td>
 <td class="tdleft">X<sub>0</sub> X<sub>1</sub> + ... + X<sub>n-1</sub>X<sub>n</sub></td>
-<td class="tdleft">p ≡ 3 mod 4 and p even</td>
+<td class="tdleft">p ≡ 3 mod 4 or p=2</td>
 <td class="tdleft">odd</td>
 <td class="tdleft">"hyperbolic", "+", or "1"</td>
 </tr>
@@ -327,7 +328,7 @@ x_1^3+x_2^3+x_3^3+x_4^3+x_5^3+x_6^3
 <tr>
 <td class="tdleft">parabolic quadric</td>
 <td class="tdleft">X<sub>0</sub><sup>2</sup> + X<sub>1</sub> X<sub>2</sub> + ... + X<sub>n-1</sub>X<sub>n</sub></td>
-<td class="tdleft">p ≡ 1,3 mod 8 and p even</td>
+<td class="tdleft">p ≡ 1,3 mod 8 or <span class="SimpleMath">p=2</span></td>
 <td class="tdleft">even</td>
 <td class="tdleft">"parabolic", "o", or "0"</td>
 </tr>
@@ -347,8 +348,8 @@ x_1^3+x_2^3+x_3^3+x_4^3+x_5^3+x_6^3
 </tr>
 <tr>
 <td class="tdleft">elliptic quadric</td>
-<td class="tdleft">X<sub>0</sub><sup>2</sup> + tX<sub>1</sub><sup>2</sup> + X<sub>2</sub> X<sub>3</sub> + ... + X<sub>n-1</sub>X<sub>n</sub> , <span class="SimpleMath">t</span> a primitive element of <span class="SimpleMath">GF(p)</span></td>
-<td class="tdleft">odd</td>
+<td class="tdleft">X<sub>0</sub><sup>2</sup> + tX<sub>1</sub><sup>2</sup> + X<sub>2</sub> X<sub>3</sub> + ... + X<sub>n-1</sub>X<sub>n</sub>, <span class="SimpleMath">t</span> a primitive element of GF(p)</td>
+<td class="tdleft">p ≡ 1 mod 4</td>
 <td class="tdleft">odd</td>
 <td class="tdleft">"elliptic", "-", or "-1"</td>
 </tr>
@@ -545,7 +546,7 @@ Projective Variety in ProjectiveSpace(3, 25)
 
 <p><a id="X7D21FB1A7D21FB1A" name="X7D21FB1A7D21FB1A"></a></p>
 
-<h5>11.5-5 \^</h5>
+<h5><code>11.5-5 \^</code></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \^</code>( <var class="Arg">x</var>, <var class="Arg">gm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: the image of an element of the source under a geometry map</p>
@@ -752,6 +753,8 @@ Projective Variety in ProjectiveSpace(2, 5)
 <p>Returns: the source of a Grassmann map</p>
 
 <p>The argument <var class="Arg">gm</var> is a <code class="func">GrassmannMap</code> (<a href="chap11.html#X7C6ED0B284833878"><span class="RefLink">11.8-3</span></a>). This operation returns the set of subspaces of the projective space that was used to construct the <code class="func">GrassmannMap</code> (<a href="chap11.html#X7C6ED0B284833878"><span class="RefLink">11.8-3</span></a>).</p>
+
+<p>This is the chapter of the documentation describing generalised polygons. --&gt;</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap10.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap12.html">[Next Chapter]</a>&nbsp;  </div>

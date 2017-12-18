@@ -8,19 +8,18 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2014	Colorado State University, Fort Collins
+##  Copyright 2017	Colorado State University
+##                  Sabancı Üniversitesi
 ##					Università degli Studi di Padova
-##					Universeit Gent
+##					Universiteit Gent
 ##					University of St. Andrews
-##					University of Western Australia, Perth
+##					University of Western Australia
 ##                  Vrije Universiteit Brussel
-##                 
+##
 ##
 ##  Implementation stuff for Lie geometries.
 ##
 #############################################################################
-
-Print(", liegeometry\c");
 
 
 #############################################################################
@@ -784,6 +783,7 @@ InstallMethod( RandomSubspace,
 #############################################################################
 
 # Added 28/11/2011 jdb.
+# Repaired 21/6/16
 #############################################################################
 #O  ElementToElement( <geo>, <el> )
 # returns the element VectorSpaceToElement(<geo>,UnderlyingObject(<el>))
@@ -792,7 +792,7 @@ InstallMethod( ElementToElement,
 	"for a Lie geometry and an element of a Lie geometry",
 	[IsLieGeometry, IsElementOfLieGeometry],
 	function(ps,el)
-		return VectorSpaceToElement(ps,UnderlyingObject(el));
+		return VectorSpaceToElement(ps,Unpack(UnderlyingObject(el))); #here was a bug, there was no unpack, and there should be.
 	end );
 
 #############################################################################

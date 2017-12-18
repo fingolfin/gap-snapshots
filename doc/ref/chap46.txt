@@ -62,27 +62,27 @@
   
   [1X46.1-1 FamilyPcgs[101X
   
-  [29X[2XFamilyPcgs[102X( [3Xgrp[103X ) [32X attribute
+  [33X[1;0Y[29X[2XFamilyPcgs[102X( [3Xgrp[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  a  [21Xnatural[121X  pcgs  of  a  pc  group  [3Xgrp[103X (with respect to which pcgs
   operations as described in Chapter [14X45[114X are particularly efficient).[133X
   
   [1X46.1-2 IsFamilyPcgs[101X
   
-  [29X[2XIsFamilyPcgs[102X( [3Xpcgs[103X ) [32X property
+  [33X[1;0Y[29X[2XIsFamilyPcgs[102X( [3Xpcgs[103X ) [32X property[133X
   
   [33X[0;0Yspecifies whether the pcgs is a [2XFamilyPcgs[102X ([14X46.1-1[114X) of a pc group.[133X
   
   [1X46.1-3 InducedPcgsWrtFamilyPcgs[101X
   
-  [29X[2XInducedPcgsWrtFamilyPcgs[102X( [3Xgrp[103X ) [32X attribute
+  [33X[1;0Y[29X[2XInducedPcgsWrtFamilyPcgs[102X( [3Xgrp[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the  pcgs  which  induced  with  respect  to  a  family  pcgs  (see
   [2XIsParentPcgsFamilyPcgs[102X ([14X46.1-4[114X) for further details).[133X
   
   [1X46.1-4 IsParentPcgsFamilyPcgs[101X
   
-  [29X[2XIsParentPcgsFamilyPcgs[102X( [3Xpcgs[103X ) [32X property
+  [33X[1;0Y[29X[2XIsParentPcgsFamilyPcgs[102X( [3Xpcgs[103X ) [32X property[133X
   
   [33X[0;0YThis  property  indicates  that  the  pcgs [3Xpcgs[103X is induced with respect to a
   family pcgs.[133X
@@ -111,8 +111,8 @@
   
   [1X46.2-1 [33X[0;0YComparison of elements of pc groups[133X[101X
   
-  [29X[2X\=[102X( [3Xpcword1[103X, [3Xpcword2[103X ) [32X method
-  [29X[2X\<[102X( [3Xpcword1[103X, [3Xpcword2[103X ) [32X method
+  [33X[1;0Y[29X[2X\=[102X( [3Xpcword1[103X, [3Xpcword2[103X ) [32X method[133X
+  [33X[1;0Y[29X[2X\<[102X( [3Xpcword1[103X, [3Xpcword2[103X ) [32X method[133X
   
   [33X[0;0YThe  elements of a pc group [22XG[122X are always represented as words in normal form
   with  respect to the family pcgs of [22XG[122X. Thus it is straightforward to compare
@@ -123,8 +123,8 @@
   
   [1X46.2-2 [33X[0;0YArithmetic operations for elements of pc groups[133X[101X
   
-  [29X[2X\*[102X( [3Xpcword1[103X, [3Xpcword2[103X ) [32X method
-  [29X[2XInverse[102X( [3Xpcword[103X ) [32X attribute
+  [33X[1;0Y[29X[2X\*[102X( [3Xpcword1[103X, [3Xpcword2[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XInverse[102X( [3Xpcword[103X ) [32X attribute[133X
   
   [33X[0;0YHowever,  multiplication  and  inversion  of elements in pc groups is not as
   straightforward  as  in  arbitrary  finitely presented groups where a simple
@@ -155,7 +155,7 @@
   
   [1X46.3-1 IsPcGroup[101X
   
-  [29X[2XIsPcGroup[102X( [3XG[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsPcGroup[102X( [3XG[103X ) [32X Category[133X
   
   [33X[0;0Ytests whether [3XG[103X is a pc group.[133X
   
@@ -170,7 +170,7 @@
   
   [1X46.3-2 IsomorphismFpGroupByPcgs[101X
   
-  [29X[2XIsomorphismFpGroupByPcgs[102X( [3Xpcgs[103X, [3Xstr[103X ) [32X function
+  [33X[1;0Y[29X[2XIsomorphismFpGroupByPcgs[102X( [3Xpcgs[103X, [3Xstr[103X ) [32X function[133X
   
   [33X[0;0YIt  is  possible  to  convert  a pc group to a fp group in [5XGAP[105X. The function
   [2XIsomorphismFpGroupByPcgs[102X  computes the power-commutator presentation defined
@@ -230,7 +230,7 @@
   
   [1X46.4-1 PcGroupFpGroup[101X
   
-  [29X[2XPcGroupFpGroup[102X( [3XG[103X ) [32X function
+  [33X[1;0Y[29X[2XPcGroupFpGroup[102X( [3XG[103X ) [32X function[133X
   
   [33X[0;0Ycreates  a pc group [3XP[103X from an fp group (see Chapter [14X47[114X) [3XG[103X whose presentation
   is  polycyclic.  The  resulting  group [3XP[103X has generators corresponding to the
@@ -254,8 +254,8 @@
   
   [1X46.4-2 SingleCollector[101X
   
-  [29X[2XSingleCollector[102X( [3Xfgrp[103X, [3Xrelorders[103X ) [32X operation
-  [29X[2XCombinatorialCollector[102X( [3Xfgrp[103X, [3Xrelorders[103X ) [32X operation
+  [33X[1;0Y[29X[2XSingleCollector[102X( [3Xfgrp[103X, [3Xrelorders[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XCombinatorialCollector[102X( [3Xfgrp[103X, [3Xrelorders[103X ) [32X operation[133X
   
   [33X[0;0Yinitializes a single collector or a combinatorial collector, where [3Xfgrp[103X must
   be  a  free group and [3Xrelorders[103X must be a list of the relative orders of the
@@ -266,7 +266,7 @@
   
   [1X46.4-3 SetConjugate[101X
   
-  [29X[2XSetConjugate[102X( [3Xcoll[103X, [3Xj[103X, [3Xi[103X, [3Xw[103X ) [32X operation
+  [33X[1;0Y[29X[2XSetConjugate[102X( [3Xcoll[103X, [3Xj[103X, [3Xi[103X, [3Xw[103X ) [32X operation[133X
   
   [33X[0;0YLet  [22Xf_1,  ...,  f_n[122X  be  the generators of the underlying free group of the
   collector [3Xcoll[103X.[133X
@@ -276,7 +276,7 @@
   
   [1X46.4-4 SetCommutator[101X
   
-  [29X[2XSetCommutator[102X( [3Xcoll[103X, [3Xj[103X, [3Xi[103X, [3Xw[103X ) [32X operation
+  [33X[1;0Y[29X[2XSetCommutator[102X( [3Xcoll[103X, [3Xj[103X, [3Xi[103X, [3Xw[103X ) [32X operation[133X
   
   [33X[0;0YLet  [22Xf_1,  ...,  f_n[122X  be  the generators of the underlying free group of the
   collector [3Xcoll[103X.[133X
@@ -286,7 +286,7 @@
   
   [1X46.4-5 SetPower[101X
   
-  [29X[2XSetPower[102X( [3Xcoll[103X, [3Xi[103X, [3Xw[103X ) [32X operation
+  [33X[1;0Y[29X[2XSetPower[102X( [3Xcoll[103X, [3Xi[103X, [3Xw[103X ) [32X operation[133X
   
   [33X[0;0YLet  [22Xf_1,  ...,  f_n[122X  be  the generators of the underlying free group of the
   collector [3Xcoll[103X, and let [22Xr_i[122X be the corresponding relative orders.[133X
@@ -296,8 +296,8 @@
   
   [1X46.4-6 GroupByRws[101X
   
-  [29X[2XGroupByRws[102X( [3Xcoll[103X ) [32X operation
-  [29X[2XGroupByRwsNC[102X( [3Xcoll[103X ) [32X operation
+  [33X[1;0Y[29X[2XGroupByRws[102X( [3Xcoll[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGroupByRwsNC[102X( [3Xcoll[103X ) [32X operation[133X
   
   [33X[0;0Ycreates  a group from a rewriting system. In the first version it is checked
   whether  the  rewriting  system  is confluent, in the second version this is
@@ -305,7 +305,7 @@
   
   [1X46.4-7 IsConfluent[101X
   
-  [29X[2XIsConfluent[102X( [3XG[103X ) [32X property
+  [33X[1;0Y[29X[2XIsConfluent[102X( [3XG[103X ) [32X property[133X
   
   [33X[0;0Ychecks  whether  the  pc  group  [3XG[103X  has  been  built from a collector with a
   confluent power-commutator presentation.[133X
@@ -333,14 +333,14 @@
   
   [1X46.4-8 IsomorphismRefinedPcGroup[101X
   
-  [29X[2XIsomorphismRefinedPcGroup[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIsomorphismRefinedPcGroup[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  an isomorphism from [3XG[103X onto an isomorphic pc group whose family pcgs
   is a prime order pcgs.[133X
   
   [1X46.4-9 RefinedPcGroup[101X
   
-  [29X[2XRefinedPcGroup[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRefinedPcGroup[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns the range of the [2XIsomorphismRefinedPcGroup[102X ([14X46.4-8[114X) value of [3XG[103X.[133X
   
@@ -354,7 +354,7 @@
   
   [1X46.5-1 PcGroupWithPcgs[101X
   
-  [29X[2XPcGroupWithPcgs[102X( [3Xmpcgs[103X ) [32X attribute
+  [33X[1;0Y[29X[2XPcGroupWithPcgs[102X( [3Xmpcgs[103X ) [32X attribute[133X
   
   [33X[0;0Ycreates  a  new  pc  group [3XG[103X whose family pcgs is isomorphic to the (modulo)
   pcgs [3Xmpcgs[103X.[133X
@@ -387,7 +387,7 @@
   
   [1X46.5-2 IsomorphismPcGroup[101X
   
-  [29X[2XIsomorphismPcGroup[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIsomorphismPcGroup[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns an isomorphism from [3XG[103X onto an isomorphic pc group. The series chosen
   for  this  pc  representation  depends  on  the  method  chosen. [3XG[103X must be a
@@ -403,7 +403,7 @@
   
   [1X46.5-3 IsomorphismSpecialPcGroup[101X
   
-  [29X[2XIsomorphismSpecialPcGroup[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIsomorphismSpecialPcGroup[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  an isomorphism from [3XG[103X onto an isomorphic pc group whose family pcgs
   is  a special pcgs. (This can be beneficial to the runtime of calculations.)
@@ -419,7 +419,7 @@
   
   [1X46.6-1 GapInputPcGroup[101X
   
-  [29X[2XGapInputPcGroup[102X( [3Xgrp[103X, [3Xstring[103X ) [32X function
+  [33X[1;0Y[29X[2XGapInputPcGroup[102X( [3Xgrp[103X, [3Xstring[103X ) [32X function[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XG := SmallGroup( 24, 12 );[127X[104X
@@ -481,7 +481,7 @@
   
   [1X46.8-1 TwoCoboundaries[101X
   
-  [29X[2XTwoCoboundaries[102X( [3XG[103X, [3XM[103X ) [32X operation
+  [33X[1;0Y[29X[2XTwoCoboundaries[102X( [3XG[103X, [3XM[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  group of [22X2[122X-coboundaries of a pc group [3XG[103X by the [3XG[103X-module [3XM[103X. The
   generators  of  [3XM[103X must correspond to the [2XPcgs[102X ([14X45.2-1[114X) value of [3XG[103X. The group
@@ -489,7 +489,7 @@
   
   [1X46.8-2 TwoCocycles[101X
   
-  [29X[2XTwoCocycles[102X( [3XG[103X, [3XM[103X ) [32X operation
+  [33X[1;0Y[29X[2XTwoCocycles[102X( [3XG[103X, [3XM[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the [22X2[122X-cocycles of a pc group [3XG[103X by the [3XG[103X-module [3XM[103X. The generators of
   [3XM[103X  must  correspond to the [2XPcgs[102X ([14X45.2-1[114X) value of [3XG[103X. The operation returns a
@@ -498,7 +498,7 @@
   
   [1X46.8-3 TwoCohomology[101X
   
-  [29X[2XTwoCohomology[102X( [3XG[103X, [3XM[103X ) [32X operation
+  [33X[1;0Y[29X[2XTwoCohomology[102X( [3XG[103X, [3XM[103X ) [32X operation[133X
   
   [33X[0;0Yreturns a record defining the second cohomology group as factor space of the
   space of cocycles by the space of coboundaries. [3XG[103X must be a pc group and the
@@ -526,29 +526,29 @@
   
   [1X46.8-4 Extensions[101X
   
-  [29X[2XExtensions[102X( [3XG[103X, [3XM[103X ) [32X operation
+  [33X[1;0Y[29X[2XExtensions[102X( [3XG[103X, [3XM[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  all  extensions  of  [3XG[103X  by  the  [3XG[103X-module [3XM[103X up to equivalence as pc
   groups.[133X
   
   [1X46.8-5 Extension[101X
   
-  [29X[2XExtension[102X( [3XG[103X, [3XM[103X, [3Xc[103X ) [32X operation
-  [29X[2XExtensionNC[102X( [3XG[103X, [3XM[103X, [3Xc[103X ) [32X operation
+  [33X[1;0Y[29X[2XExtension[102X( [3XG[103X, [3XM[103X, [3Xc[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XExtensionNC[102X( [3XG[103X, [3XM[103X, [3Xc[103X ) [32X operation[133X
   
   [33X[0;0Yreturns the extension of [3XG[103X by the [3XG[103X-module [3XM[103X via the cocycle [3Xc[103X as pc groups.
   The [10XNC[110X version does not check the resulting group for consistence.[133X
   
   [1X46.8-6 SplitExtension[101X
   
-  [29X[2XSplitExtension[102X( [3XG[103X, [3XM[103X ) [32X operation
+  [33X[1;0Y[29X[2XSplitExtension[102X( [3XG[103X, [3XM[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the split extension of [3XG[103X by the [3XG[103X-module [3XM[103X. See also [2XSplitExtension[102X
   ([14X46.8-10[114X) for its 3-argument version.[133X
   
   [1X46.8-7 ModuleOfExtension[101X
   
-  [29X[2XModuleOfExtension[102X( [3XE[103X ) [32X attribute
+  [33X[1;0Y[29X[2XModuleOfExtension[102X( [3XE[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the module of an extension [3XE[103X of [3XG[103X by [3XM[103X. This is the normal subgroup
   of [3XE[103X which corresponds to [3XM[103X.[133X
@@ -581,7 +581,7 @@
   
   [1X46.8-8 CompatiblePairs[101X
   
-  [29X[2XCompatiblePairs[102X( [3XG[103X, [3XM[103X[, [3XD[103X] ) [32X function
+  [33X[1;0Y[29X[2XCompatiblePairs[102X( [3XG[103X, [3XM[103X[, [3XD[103X] ) [32X function[133X
   
   [33X[0;0Yreturns  the group of compatible pairs of the group [3XG[103X with the [3XG[103X-module [3XM[103X as
   subgroup of the direct product Aut([3XG[103X) [22X×[122X Aut([3XM[103X). Here Aut([3XM[103X) is considered as
@@ -591,7 +591,7 @@
   
   [1X46.8-9 ExtensionRepresentatives[101X
   
-  [29X[2XExtensionRepresentatives[102X( [3XG[103X, [3XM[103X, [3XP[103X ) [32X operation
+  [33X[1;0Y[29X[2XExtensionRepresentatives[102X( [3XG[103X, [3XM[103X, [3XP[103X ) [32X operation[133X
   
   [33X[0;0Yreturns all extensions of [3XG[103X by the [3XG[103X-module [3XM[103X up to equivalence under action
   of [3XP[103X where [3XP[103X has to be a subgroup of the group of compatible pairs of [3XG[103X with
@@ -625,7 +625,7 @@
   
   [1X46.8-10 SplitExtension[101X
   
-  [29X[2XSplitExtension[102X( [3XG[103X, [3Xaut[103X, [3XN[103X ) [32X operation
+  [33X[1;0Y[29X[2XSplitExtension[102X( [3XG[103X, [3Xaut[103X, [3XN[103X ) [32X operation[133X
   
   [33X[0;0Yreturns the split extensions of the pc group [3XG[103X by the pc group [3XN[103X. [3Xaut[103X should
   be a homomorphism from [3XG[103X into Aut([3XN[103X).[133X
@@ -670,7 +670,7 @@
   
   [1X46.9-1 CodePcgs[101X
   
-  [29X[2XCodePcgs[102X( [3Xpcgs[103X ) [32X function
+  [33X[1;0Y[29X[2XCodePcgs[102X( [3Xpcgs[103X ) [32X function[133X
   
   [33X[0;0Yreturns the code corresponding to [3Xpcgs[103X.[133X
   
@@ -683,7 +683,7 @@
   
   [1X46.9-2 CodePcGroup[101X
   
-  [29X[2XCodePcGroup[102X( [3XG[103X ) [32X function
+  [33X[1;0Y[29X[2XCodePcGroup[102X( [3XG[103X ) [32X function[133X
   
   [33X[0;0Yreturns the code for a pcgs of [3XG[103X.[133X
   
@@ -695,7 +695,7 @@
   
   [1X46.9-3 PcGroupCode[101X
   
-  [29X[2XPcGroupCode[102X( [3Xcode[103X, [3Xsize[103X ) [32X function
+  [33X[1;0Y[29X[2XPcGroupCode[102X( [3Xcode[103X, [3Xsize[103X ) [32X function[133X
   
   [33X[0;0Yreturns  a  pc  group  of size [3Xsize[103X corresponding to [3Xcode[103X. The argument [3Xcode[103X
   must  be a valid code for a pcgs, otherwise anything may happen. Valid codes
@@ -724,7 +724,7 @@
   
   [1X46.10-1 RandomIsomorphismTest[101X
   
-  [29X[2XRandomIsomorphismTest[102X( [3Xcoderecs[103X, [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XRandomIsomorphismTest[102X( [3Xcoderecs[103X, [3Xn[103X ) [32X function[133X
   
   [33X[0;0YThe  first argument is a list [3Xcoderecs[103X containing records describing groups,
   and the second argument is a non-negative integer [3Xn[103X.[133X

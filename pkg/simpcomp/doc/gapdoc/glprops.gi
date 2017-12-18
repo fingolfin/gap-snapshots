@@ -286,13 +286,13 @@
 ## <Meth Name="SCIsFlag" Arg="complex,k"/>
 ## <Returns><K>true</K> or <K>false</K> upon success, <K>fail</K> otherwise.</Returns>
 ## <Description>
-## Checks if <Arg>complex</Arg> is flag. A simplicial complex is a flag complex  if all edges of a potential face of the complex are in the complex, or equivalently if all of its minimal non-faces are edges (cf. <Cite Key="Frohmader08FaceVecFlagCompl" />). 
+## Checks if <Arg>complex</Arg> is flag. A connected simplicial complex of dimension at least one is a flag complex if all cliques in its 1-skeleton span a face of the complex (cf. <Cite Key="Frohmader08FaceVecFlagCompl" />). 
 ## <Example>
 ## gap&gt; SCLib.SearchByName("RP^2");   
 ## [ [ 3, "RP^2 (VT)" ], [ 635, "RP^2xS^1" ] ]
 ## gap&gt; rp2_6:=SCLib.Load(last[1][1]);;
 ## gap&gt; SCIsFlag(rp2_6);
-## true
+## false
 ## </Example>
 ## </Description>
 ## </ManSection>
@@ -684,7 +684,7 @@
 ## gap&gt; g:=SCAutomorphismGroupInternal(c);
 ## PrimitiveGroup(3,2) = S(3)
 ## gap&gt; List(g);
-## [ (), (1,2,3), (1,3,2), (2,3), (1,2), (1,3) ]
+## [ (), (1,3,2), (1,2,3), (2,3), (1,3), (1,2) ]
 ## gap&gt; StructureDescription(g);
 ## "S3"
 ## </Example>
@@ -1287,7 +1287,7 @@
 ## Group([ (1,3)(4,9)(5,8)(6,7), (1,9,8,7,6,5,4,3,2) ])
 ## gap&gt; SCIsInKd(c,1);
 ## #I  SCIsKStackedSphere: checking if complex is a 1-stacked sphere...
-## #I  SCIsKStackedSphere: try 1/50
+## #I  SCIsKStackedSphere: try 1/1
 ## #I  SCIsKStackedSphere: complex is a 1-stacked sphere.
 ## true
 ## </Example>

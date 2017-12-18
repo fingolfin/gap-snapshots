@@ -18,7 +18,7 @@
   
   [1X15.1-1 InfoNumtheor[101X
   
-  [29X[2XInfoNumtheor[102X[32X info class
+  [33X[1;0Y[29X[2XInfoNumtheor[102X[32X info class[133X
   
   [33X[0;0Y[2XInfoNumtheor[102X  is  the  info  class (see [14X7.4[114X) for the functions in the number
   theory chapter.[133X
@@ -28,7 +28,7 @@
   
   [1X15.2-1 PrimeResidues[101X
   
-  [29X[2XPrimeResidues[102X( [3Xm[103X ) [32X function
+  [33X[1;0Y[29X[2XPrimeResidues[102X( [3Xm[103X ) [32X function[133X
   
   [33X[0;0Y[2XPrimeResidues[102X returns the set of integers from the range [10X[ 0 .. Abs( [3Xm[103X[10X )-1 ][110X
   that are coprime to the integer [3Xm[103X.[133X
@@ -45,7 +45,7 @@
   
   [1X15.2-2 Phi[101X
   
-  [29X[2XPhi[102X( [3Xm[103X ) [32X operation
+  [33X[1;0Y[29X[2XPhi[102X( [3Xm[103X ) [32X operation[133X
   
   [33X[0;0Y[2XPhi[102X  returns  the  number  [22Xϕ([3Xm[103X)[122X  of positive integers less than the positive
   integer [3Xm[103X that are coprime to [3Xm[103X.[133X
@@ -64,7 +64,7 @@
   
   [1X15.2-3 Lambda[101X
   
-  [29X[2XLambda[102X( [3Xm[103X ) [32X operation
+  [33X[1;0Y[29X[2XLambda[102X( [3Xm[103X ) [32X operation[133X
   
   [33X[0;0Y[2XLambda[102X  returns  the exponent [22Xλ([3Xm[103X)[122X of the group of prime residues modulo the
   integer [3Xm[103X.[133X
@@ -92,7 +92,7 @@
   
   [1X15.2-4 GeneratorsPrimeResidues[101X
   
-  [29X[2XGeneratorsPrimeResidues[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XGeneratorsPrimeResidues[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xn[103X  be a positive integer. [2XGeneratorsPrimeResidues[102X returns a description
   of generators of the group of prime residues modulo [3Xn[103X. The return value is a
@@ -125,7 +125,7 @@
   
   [1X15.3-1 OrderMod[101X
   
-  [29X[2XOrderMod[102X( [3Xn[103X, [3Xm[103X ) [32X function
+  [33X[1;0Y[29X[2XOrderMod[102X( [3Xn[103X, [3Xm[103X ) [32X function[133X
   
   [33X[0;0Y[2XOrderMod[102X  returns  the  multiplicative  order  of  the  integer [3Xn[103X modulo the
   positive integer [3Xm[103X. If [3Xn[103X and [3Xm[103X are not coprime the order of [3Xn[103X is not defined
@@ -148,8 +148,8 @@
   
   [1X15.3-2 LogMod[101X
   
-  [29X[2XLogMod[102X( [3Xn[103X, [3Xr[103X, [3Xm[103X ) [32X function
-  [29X[2XLogModShanks[102X( [3Xn[103X, [3Xr[103X, [3Xm[103X ) [32X function
+  [33X[1;0Y[29X[2XLogMod[102X( [3Xn[103X, [3Xr[103X, [3Xm[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XLogModShanks[102X( [3Xn[103X, [3Xr[103X, [3Xm[103X ) [32X function[133X
   
   [33X[0;0Ycomputes  the discrete [3Xr[103X-logarithm of the integer [3Xn[103X modulo the integer [3Xm[103X. It
   returns  a  number  [3Xl[103X  such  that  [22X[3Xr[103X^[3Xl[103X  ≡  [3Xn[103X  mod [3Xm[103X[122X if such a number exists.
@@ -170,7 +170,7 @@
   
   [1X15.3-3 PrimitiveRootMod[101X
   
-  [29X[2XPrimitiveRootMod[102X( [3Xm[103X[, [3Xstart[103X] ) [32X function
+  [33X[1;0Y[29X[2XPrimitiveRootMod[102X( [3Xm[103X[, [3Xstart[103X] ) [32X function[133X
   
   [33X[0;0Y[2XPrimitiveRootMod[102X  returns  the  smallest  primitive root modulo the positive
   integer  [3Xm[103X and [9Xfail[109X if no such primitive root exists. If the optional second
@@ -193,7 +193,7 @@
   
   [1X15.3-4 IsPrimitiveRootMod[101X
   
-  [29X[2XIsPrimitiveRootMod[102X( [3Xr[103X, [3Xm[103X ) [32X function
+  [33X[1;0Y[29X[2XIsPrimitiveRootMod[102X( [3Xr[103X, [3Xm[103X ) [32X function[133X
   
   [33X[0;0Y[2XIsPrimitiveRootMod[102X  returns [9Xtrue[109X if the integer [3Xr[103X is a primitive root modulo
   the  positive  integer [3Xm[103X, and [9Xfalse[109X otherwise. If [3Xr[103X is less than 0 or larger
@@ -216,7 +216,7 @@
   
   [1X15.4-1 Jacobi[101X
   
-  [29X[2XJacobi[102X( [3Xn[103X, [3Xm[103X ) [32X function
+  [33X[1;0Y[29X[2XJacobi[102X( [3Xn[103X, [3Xm[103X ) [32X function[133X
   
   [33X[0;0Y[2XJacobi[102X  returns  the  value  of  the  [13XKronecker-Jacobi  symbol[113X [22XJ([3Xn[103X,[3Xm[103X)[122X of the
   integer [3Xn[103X modulo the integer [3Xm[103X. It is defined as follows:[133X
@@ -251,7 +251,7 @@
   
   [1X15.4-2 Legendre[101X
   
-  [29X[2XLegendre[102X( [3Xn[103X, [3Xm[103X ) [32X function
+  [33X[1;0Y[29X[2XLegendre[102X( [3Xn[103X, [3Xm[103X ) [32X function[133X
   
   [33X[0;0Y[2XLegendre[102X  returns  the  value of the [13XLegendre symbol[113X of the integer [3Xn[103X modulo
   the positive integer [3Xm[103X.[133X
@@ -284,7 +284,7 @@
   
   [1X15.4-3 RootMod[101X
   
-  [29X[2XRootMod[102X( [3Xn[103X[, [3Xk[103X], [3Xm[103X ) [32X function
+  [33X[1;0Y[29X[2XRootMod[102X( [3Xn[103X[, [3Xk[103X], [3Xm[103X ) [32X function[133X
   
   [33X[0;0Y[2XRootMod[102X  computes a [3Xk[103Xth root of the integer [3Xn[103X modulo the positive integer [3Xm[103X,
   i.e.,  a  [22Xr[122X  such that [22Xr^[3Xk[103X ≡ [3Xn[103X mod [3Xm[103X[122X. If no such root exists [2XRootMod[102X returns
@@ -313,7 +313,7 @@
   
   [1X15.4-4 RootsMod[101X
   
-  [29X[2XRootsMod[102X( [3Xn[103X[, [3Xk[103X], [3Xm[103X ) [32X function
+  [33X[1;0Y[29X[2XRootsMod[102X( [3Xn[103X[, [3Xk[103X], [3Xm[103X ) [32X function[133X
   
   [33X[0;0Y[2XRootsMod[102X  computes the set of [3Xk[103Xth roots of the integer [3Xn[103X modulo the positive
   integer  [3Xm[103X,  i.e.,  the  list  of all [22Xr[122X such that [22Xr^[3Xk[103X ≡ [3Xn[103X mod [3Xm[103X[122X. If only the
@@ -332,7 +332,7 @@
   
   [1X15.4-5 RootsUnityMod[101X
   
-  [29X[2XRootsUnityMod[102X( [[3Xk[103X, ][3Xm[103X ) [32X function
+  [33X[1;0Y[29X[2XRootsUnityMod[102X( [[3Xk[103X, ][3Xm[103X ) [32X function[133X
   
   [33X[0;0Y[2XRootsUnityMod[102X  returns  the  set  of [3Xk[103X-th roots of unity modulo the positive
   integer  [3Xm[103X,  i.e., the list of all solutions [22Xr[122X of [22Xr^[3Xk[103X ≡ [3Xn[103X mod [3Xm[103X[122X. If only the
@@ -361,7 +361,7 @@
   
   [1X15.5-1 Sigma[101X
   
-  [29X[2XSigma[102X( [3Xn[103X ) [32X operation
+  [33X[1;0Y[29X[2XSigma[102X( [3Xn[103X ) [32X operation[133X
   
   [33X[0;0Y[2XSigma[102X returns the sum of the positive divisors of the nonzero integer [3Xn[103X.[133X
   
@@ -396,7 +396,7 @@
   
   [1X15.5-2 Tau[101X
   
-  [29X[2XTau[102X( [3Xn[103X ) [32X operation
+  [33X[1;0Y[29X[2XTau[102X( [3Xn[103X ) [32X operation[133X
   
   [33X[0;0Y[2XTau[102X returns the number of the positive divisors of the nonzero integer [3Xn[103X.[133X
   
@@ -420,7 +420,7 @@
   
   [1X15.5-3 MoebiusMu[101X
   
-  [29X[2XMoebiusMu[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XMoebiusMu[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0Y[2XMoebiusMu[102X  computes  the value of Moebius inversion function for the nonzero
   integer  [3Xn[103X. This is 0 for integers which are not squarefree, i.e., which are
@@ -448,7 +448,7 @@
   
   [1X15.6-1 ContinuedFractionExpansionOfRoot[101X
   
-  [29X[2XContinuedFractionExpansionOfRoot[102X( [3Xf[103X, [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XContinuedFractionExpansionOfRoot[102X( [3Xf[103X, [3Xn[103X ) [32X function[133X
   
   [33X[0;0YThe  first  [3Xn[103X terms of the continued fraction expansion of the only positive
   real  root  of  the  polynomial  [3Xf[103X  with  integer  coefficients. The leading
@@ -473,7 +473,7 @@
   
   [1X15.6-2 ContinuedFractionApproximationOfRoot[101X
   
-  [29X[2XContinuedFractionApproximationOfRoot[102X( [3Xf[103X, [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XContinuedFractionApproximationOfRoot[102X( [3Xf[103X, [3Xn[103X ) [32X function[133X
   
   [33X[0;0YThe  [3Xn[103Xth  continued fraction approximation of the only positive real root of
   the  polynomial  [3Xf[103X  with  integer coefficients. The leading coefficient of [3Xf[103X
@@ -497,7 +497,7 @@
   
   [1X15.7-1 TwoSquares[101X
   
-  [29X[2XTwoSquares[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XTwoSquares[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0Y[2XTwoSquares[102X  returns  a  list  of two integers [22Xx ≤ y[122X such that the sum of the
   squares  of  [22Xx[122X  and [22Xy[122X is equal to the nonnegative integer [3Xn[103X, i.e., [22Xn = x^2 +

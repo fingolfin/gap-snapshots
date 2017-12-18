@@ -138,9 +138,9 @@
   
   [1X70.3-1 TableOfMarks[101X
   
-  [29X[2XTableOfMarks[102X( [3XG[103X ) [32X attribute
-  [29X[2XTableOfMarks[102X( [3Xstring[103X ) [32X attribute
-  [29X[2XTableOfMarks[102X( [3Xmatrix[103X ) [32X attribute
+  [33X[1;0Y[29X[2XTableOfMarks[102X( [3XG[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTableOfMarks[102X( [3Xstring[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTableOfMarks[102X( [3Xmatrix[103X ) [32X attribute[133X
   
   [33X[0;0YIn the first form, [3XG[103X must be a finite group, and [2XTableOfMarks[102X constructs the
   table of marks of [3XG[103X. This computation requires the knowledge of the complete
@@ -214,7 +214,7 @@
   
   [1X70.3-2 TableOfMarksByLattice[101X
   
-  [29X[2XTableOfMarksByLattice[102X( [3XG[103X ) [32X function
+  [33X[1;0Y[29X[2XTableOfMarksByLattice[102X( [3XG[103X ) [32X function[133X
   
   [33X[0;0Y[2XTableOfMarksByLattice[102X  computes  the  table of marks of the group [3XG[103X from the
   lattice  of  subgroups  of  [3XG[103X. This lattice is computed via [2XLatticeSubgroups[102X
@@ -225,7 +225,7 @@
   
   [1X70.3-3 LatticeSubgroupsByTom[101X
   
-  [29X[2XLatticeSubgroupsByTom[102X( [3XG[103X ) [32X function
+  [33X[1;0Y[29X[2XLatticeSubgroupsByTom[102X( [3XG[103X ) [32X function[133X
   
   [33X[0;0Y[2XLatticeSubgroupsByTom[102X  computes the lattice of subgroups of [3XG[103X from the table
   of marks of [3XG[103X, using [2XRepresentativeTom[102X ([14X70.10-4[114X).[133X
@@ -235,7 +235,7 @@
   
   [1X70.4-1 ViewObj[101X
   
-  [29X[2XViewObj[102X( [3Xtom[103X ) [32X method
+  [33X[1;0Y[29X[2XViewObj[102X( [3Xtom[103X ) [32X method[133X
   
   [33X[0;0YThe  default  [2XViewObj[102X  ([14X6.3-5[114X)  method for tables of marks prints the string
   [10X"TableOfMarks"[110X,  followed  by  –if  known–  the  identifier  (see [2XIdentifier[102X
@@ -245,7 +245,7 @@
   
   [1X70.4-2 PrintObj[101X
   
-  [29X[2XPrintObj[102X( [3Xtom[103X ) [32X method
+  [33X[1;0Y[29X[2XPrintObj[102X( [3Xtom[103X ) [32X method[133X
   
   [33X[0;0YThe  default  [2XPrintObj[102X  ([14X6.3-5[114X)  method for tables of marks does the same as
   [2XViewObj[102X  ([14X6.3-5[114X), except that [2XPrintObj[102X ([14X6.3-5[114X) is used for the group instead
@@ -253,7 +253,7 @@
   
   [1X70.4-3 Display[101X
   
-  [29X[2XDisplay[102X( [3Xtom[103X[, [3Xarec[103X] ) [32X method
+  [33X[1;0Y[29X[2XDisplay[102X( [3Xtom[103X[, [3Xarec[103X] ) [32X method[133X
   
   [33X[0;0YThe  default  [2XDisplay[102X  ([14X6.3-6[114X)  method  for  a table of marks [3Xtom[103X produces a
   formatted  output  of  the marks in [3Xtom[103X. Each line of output begins with the
@@ -329,7 +329,7 @@
   
   [1X70.5-1 SortedTom[101X
   
-  [29X[2XSortedTom[102X( [3Xtom[103X, [3Xperm[103X ) [32X operation
+  [33X[1;0Y[29X[2XSortedTom[102X( [3Xtom[103X, [3Xperm[103X ) [32X operation[133X
   
   [33X[0;0Y[2XSortedTom[102X  returns  a table of marks where the rows and columns of the table
   of marks [3Xtom[103X are reordered according to the permutation [3Xperm[103X.[133X
@@ -365,7 +365,7 @@
   
   [1X70.5-2 PermutationTom[101X
   
-  [29X[2XPermutationTom[102X( [3Xtom[103X ) [32X attribute
+  [33X[1;0Y[29X[2XPermutationTom[102X( [3Xtom[103X ) [32X attribute[133X
   
   [33X[0;0YFor the table of marks [3Xtom[103X of the group [22XG[122X stored as [2XUnderlyingGroup[102X ([14X70.7-7[114X)
   value of [3Xtom[103X, [2XPermutationTom[102X is a permutation [22Xπ[122X such that the [22Xi[122X-th conjugacy
@@ -397,25 +397,25 @@
   
   [1X70.6-1 InfoTom[101X
   
-  [29X[2XInfoTom[102X[32X info class
+  [33X[1;0Y[29X[2XInfoTom[102X[32X info class[133X
   
   [33X[0;0Yis the info class for computations concerning tables of marks.[133X
   
   [1X70.6-2 IsTableOfMarks[101X
   
-  [29X[2XIsTableOfMarks[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsTableOfMarks[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YEach table of marks belongs to this category.[133X
   
   [1X70.6-3 TableOfMarksFamily[101X
   
-  [29X[2XTableOfMarksFamily[102X[32X family
+  [33X[1;0Y[29X[2XTableOfMarksFamily[102X[32X family[133X
   
   [33X[0;0YEach table of marks belongs to this family.[133X
   
   [1X70.6-4 TableOfMarksComponents[101X
   
-  [29X[2XTableOfMarksComponents[102X[32X global variable
+  [33X[1;0Y[29X[2XTableOfMarksComponents[102X[32X global variable[133X
   
   [33X[0;0YThe  list  [2XTableOfMarksComponents[102X  is  used  when a table of marks object is
   created     from    a    record    via    [2XConvertToTableOfMarks[102X    ([14X70.6-5[114X).
@@ -424,7 +424,7 @@
   
   [1X70.6-5 ConvertToTableOfMarks[101X
   
-  [29X[2XConvertToTableOfMarks[102X( [3Xrecord[103X ) [32X function
+  [33X[1;0Y[29X[2XConvertToTableOfMarks[102X( [3Xrecord[103X ) [32X function[133X
   
   [33X[0;0Y[2XConvertToTableOfMarks[102X    converts    a    record    with   components   from
   [2XTableOfMarksComponents[102X  ([14X70.6-4[114X)  into  a  table  of  marks  object with the
@@ -443,8 +443,8 @@
   
   [1X70.7-1 MarksTom[101X
   
-  [29X[2XMarksTom[102X( [3Xtom[103X ) [32X attribute
-  [29X[2XSubsTom[102X( [3Xtom[103X ) [32X attribute
+  [33X[1;0Y[29X[2XMarksTom[102X( [3Xtom[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XSubsTom[102X( [3Xtom[103X ) [32X attribute[133X
   
   [33X[0;0YThe  matrix  of  marks  (see [14X70.1[114X)  of the table of marks [3Xtom[103X is stored in a
   compressed  form  where zeros are omitted, using the attributes [2XMarksTom[102X and
@@ -473,8 +473,8 @@
   
   [1X70.7-2 NrSubsTom[101X
   
-  [29X[2XNrSubsTom[102X( [3Xtom[103X ) [32X attribute
-  [29X[2XOrdersTom[102X( [3Xtom[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNrSubsTom[102X( [3Xtom[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XOrdersTom[102X( [3Xtom[103X ) [32X attribute[133X
   
   [33X[0;0YInstead  of  storing the marks (see [2XMarksTom[102X ([14X70.7-1[114X)) of the table of marks
   [3Xtom[103X  one  can  use  a  matrix which contains at position [22X(i,j)[122X the number of
@@ -499,7 +499,7 @@
   
   [1X70.7-3 LengthsTom[101X
   
-  [29X[2XLengthsTom[102X( [3Xtom[103X ) [32X attribute
+  [33X[1;0Y[29X[2XLengthsTom[102X( [3Xtom[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a  table  of marks [3Xtom[103X, [2XLengthsTom[102X returns a list of the lengths of the
   conjugacy classes of subgroups.[133X
@@ -511,7 +511,7 @@
   
   [1X70.7-4 ClassTypesTom[101X
   
-  [29X[2XClassTypesTom[102X( [3Xtom[103X ) [32X attribute
+  [33X[1;0Y[29X[2XClassTypesTom[102X( [3Xtom[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XClassTypesTom[102X distinguishes isomorphism types of the classes of subgroups of
   the  table of marks [3Xtom[103X as far as this is possible from the [2XSubsTom[102X ([14X70.7-1[114X)
@@ -533,7 +533,7 @@
   
   [1X70.7-5 ClassNamesTom[101X
   
-  [29X[2XClassNamesTom[102X( [3Xtom[103X ) [32X attribute
+  [33X[1;0Y[29X[2XClassNamesTom[102X( [3Xtom[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XClassNamesTom[102X   constructs  generic  names  for  the  conjugacy  classes  of
   subgroups of the table of marks [3Xtom[103X. In general, the generic name of a class
@@ -564,7 +564,7 @@
   
   [1X70.7-6 FusionsTom[101X
   
-  [29X[2XFusionsTom[102X( [3Xtom[103X ) [32X attribute
+  [33X[1;0Y[29X[2XFusionsTom[102X( [3Xtom[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a table of marks [3Xtom[103X, [2XFusionsTom[102X is a list of fusions into other tables
   of  marks.  Each  fusion  is a list of length two, the first entry being the
@@ -584,7 +584,7 @@
   
   [1X70.7-7 UnderlyingGroup[101X
   
-  [29X[2XUnderlyingGroup[102X( [3Xtom[103X ) [32X attribute
+  [33X[1;0Y[29X[2XUnderlyingGroup[102X( [3Xtom[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XUnderlyingGroup[102X  is used to access an underlying group that is stored on the
   table  of  marks  [3Xtom[103X.  There  is no default method to compute an underlying
@@ -597,8 +597,8 @@
   
   [1X70.7-8 IdempotentsTom[101X
   
-  [29X[2XIdempotentsTom[102X( [3Xtom[103X ) [32X attribute
-  [29X[2XIdempotentsTomInfo[102X( [3Xtom[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIdempotentsTom[102X( [3Xtom[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIdempotentsTomInfo[102X( [3Xtom[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XIdempotentsTom[102X  encodes  the  idempotents  of  the  integral  Burnside  ring
   described  by  the  table  of  marks  [3Xtom[103X.  The  return value is a list [22Xl[122X of
@@ -631,7 +631,7 @@
   
   [1X70.7-9 Identifier[101X
   
-  [29X[2XIdentifier[102X( [3Xtom[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIdentifier[102X( [3Xtom[103X ) [32X attribute[133X
   
   [33X[0;0YThe  identifier of a table of marks [3Xtom[103X is a string. It is used for printing
   the  table  of  marks  (see [14X70.4[114X)  and  in  fusions  between tables of marks
@@ -649,7 +649,7 @@
   
   [1X70.7-10 MatTom[101X
   
-  [29X[2XMatTom[102X( [3Xtom[103X ) [32X attribute
+  [33X[1;0Y[29X[2XMatTom[102X( [3Xtom[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XMatTom[102X  returns  the square matrix of marks (see [14X70.1[114X) of the table of marks
   [3Xtom[103X  which  is  stored  in  a  compressed form using the attributes [2XMarksTom[102X
@@ -667,7 +667,7 @@
   
   [1X70.7-11 MoebiusTom[101X
   
-  [29X[2XMoebiusTom[102X( [3Xtom[103X ) [32X attribute
+  [33X[1;0Y[29X[2XMoebiusTom[102X( [3Xtom[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XMoebiusTom[102X  computes  the  Möbius values both of the subgroup lattice of the
   group  [22XG[122X  with  table  of marks [3Xtom[103X and of the poset of conjugacy classes of
@@ -700,7 +700,7 @@
   
   [1X70.7-12 WeightsTom[101X
   
-  [29X[2XWeightsTom[102X( [3Xtom[103X ) [32X attribute
+  [33X[1;0Y[29X[2XWeightsTom[102X( [3Xtom[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XWeightsTom[102X  extracts  the  [13Xweights[113X  from  the  table of marks [3Xtom[103X, i.e., the
   diagonal  entries of the matrix of marks (see [2XMarksTom[102X ([14X70.7-1[114X)), indicating
@@ -731,11 +731,11 @@
   
   [1X70.8-1 IsAbelianTom[101X
   
-  [29X[2XIsAbelianTom[102X( [3Xtom[103X[, [3Xsub[103X] ) [32X property
-  [29X[2XIsCyclicTom[102X( [3Xtom[103X[, [3Xsub[103X] ) [32X property
-  [29X[2XIsNilpotentTom[102X( [3Xtom[103X[, [3Xsub[103X] ) [32X property
-  [29X[2XIsPerfectTom[102X( [3Xtom[103X[, [3Xsub[103X] ) [32X property
-  [29X[2XIsSolvableTom[102X( [3Xtom[103X[, [3Xsub[103X] ) [32X property
+  [33X[1;0Y[29X[2XIsAbelianTom[102X( [3Xtom[103X[, [3Xsub[103X] ) [32X property[133X
+  [33X[1;0Y[29X[2XIsCyclicTom[102X( [3Xtom[103X[, [3Xsub[103X] ) [32X property[133X
+  [33X[1;0Y[29X[2XIsNilpotentTom[102X( [3Xtom[103X[, [3Xsub[103X] ) [32X property[133X
+  [33X[1;0Y[29X[2XIsPerfectTom[102X( [3Xtom[103X[, [3Xsub[103X] ) [32X property[133X
+  [33X[1;0Y[29X[2XIsSolvableTom[102X( [3Xtom[103X[, [3Xsub[103X] ) [32X property[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xtom:= TableOfMarks( "A5" );;[127X[104X
@@ -759,7 +759,7 @@
   
   [1X70.9-1 IsInternallyConsistent[101X
   
-  [29X[2XIsInternallyConsistent[102X( [3Xtom[103X ) [32X method
+  [33X[1;0Y[29X[2XIsInternallyConsistent[102X( [3Xtom[103X ) [32X method[133X
   
   [33X[0;0YFor  a  table  of  marks  [3Xtom[103X,  [2XIsInternallyConsistent[102X decomposes all tensor
   products  of  rows  of [3Xtom[103X. It returns [9Xtrue[109X if all decomposition numbers are
@@ -768,8 +768,8 @@
   
   [1X70.9-2 DerivedSubgroupTom[101X
   
-  [29X[2XDerivedSubgroupTom[102X( [3Xtom[103X, [3Xsub[103X ) [32X operation
-  [29X[2XDerivedSubgroupsTom[102X( [3Xtom[103X ) [32X function
+  [33X[1;0Y[29X[2XDerivedSubgroupTom[102X( [3Xtom[103X, [3Xsub[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XDerivedSubgroupsTom[102X( [3Xtom[103X ) [32X function[133X
   
   [33X[0;0YFor  a  table  of  marks  [3Xtom[103X and a positive integer [3Xsub[103X, [2XDerivedSubgroupTom[102X
   returns either a positive integer [22Xi[122X or a list [22Xl[122X of positive integers. In the
@@ -786,8 +786,8 @@
   
   [1X70.9-3 DerivedSubgroupsTomPossible[101X
   
-  [29X[2XDerivedSubgroupsTomPossible[102X( [3Xtom[103X ) [32X attribute
-  [29X[2XDerivedSubgroupsTomUnique[102X( [3Xtom[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDerivedSubgroupsTomPossible[102X( [3Xtom[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XDerivedSubgroupsTomUnique[102X( [3Xtom[103X ) [32X attribute[133X
   
   [33X[0;0YLet   [3Xtom[103X   be   a   table   of   marks.   The   value   of   the  attribute
   [2XDerivedSubgroupsTomPossible[102X  is  a list in which the value at position [22Xi[122X –if
@@ -812,8 +812,8 @@
   
   [1X70.9-4 NormalizerTom[101X
   
-  [29X[2XNormalizerTom[102X( [3Xtom[103X, [3Xsub[103X ) [32X operation
-  [29X[2XNormalizersTom[102X( [3Xtom[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNormalizerTom[102X( [3Xtom[103X, [3Xsub[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XNormalizersTom[102X( [3Xtom[103X ) [32X attribute[133X
   
   [33X[0;0YLet [3Xtom[103X be the table of marks of a group [22XG[122X, say. [2XNormalizerTom[102X tries to find
   the  conjugacy  class of the normalizer [22XN[122X in [22XG[122X of a subgroup [22XU[122X in the [3Xsub[103X-th
@@ -844,7 +844,7 @@
   
   [1X70.9-5 ContainedTom[101X
   
-  [29X[2XContainedTom[102X( [3Xtom[103X, [3Xsub1[103X, [3Xsub2[103X ) [32X operation
+  [33X[1;0Y[29X[2XContainedTom[102X( [3Xtom[103X, [3Xsub1[103X, [3Xsub2[103X ) [32X operation[133X
   
   [33X[0;0Y[2XContainedTom[102X  returns  the number of subgroups in class [3Xsub1[103X of the table of
   marks [3Xtom[103X that are contained in one fixed member of the class [3Xsub2[103X.[133X
@@ -857,7 +857,7 @@
   
   [1X70.9-6 ContainingTom[101X
   
-  [29X[2XContainingTom[102X( [3Xtom[103X, [3Xsub1[103X, [3Xsub2[103X ) [32X operation
+  [33X[1;0Y[29X[2XContainingTom[102X( [3Xtom[103X, [3Xsub1[103X, [3Xsub2[103X ) [32X operation[133X
   
   [33X[0;0Y[2XContainingTom[102X  returns the number of subgroups in class [3Xsub2[103X of the table of
   marks [3Xtom[103X that contain one fixed member of the class [3Xsub1[103X.[133X
@@ -870,8 +870,8 @@
   
   [1X70.9-7 CyclicExtensionsTom[101X
   
-  [29X[2XCyclicExtensionsTom[102X( [3Xtom[103X, [3Xp[103X ) [32X operation
-  [29X[2XCyclicExtensionsTom[102X( [3Xtom[103X[, [3Xlist[103X] ) [32X attribute
+  [33X[1;0Y[29X[2XCyclicExtensionsTom[102X( [3Xtom[103X, [3Xp[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XCyclicExtensionsTom[102X( [3Xtom[103X[, [3Xlist[103X] ) [32X attribute[133X
   
   [33X[0;0YAccording  to  A. Dress [Dre69],  two  columns of the table of marks [3Xtom[103X are
   equal  modulo  the  prime  [3Xp[103X  if and only if the corresponding subgroups are
@@ -895,7 +895,7 @@
   
   [1X70.9-8 DecomposedFixedPointVector[101X
   
-  [29X[2XDecomposedFixedPointVector[102X( [3Xtom[103X, [3Xfix[103X ) [32X operation
+  [33X[1;0Y[29X[2XDecomposedFixedPointVector[102X( [3Xtom[103X, [3Xfix[103X ) [32X operation[133X
   
   [33X[0;0YLet  [3Xtom[103X  be the table of marks of the group [22XG[122X, say, and let [3Xfix[103X be a vector
   of  fixed point numbers w.r.t. an action of [22XG[122X, i.e., a vector which contains
@@ -920,7 +920,7 @@
   
   [1X70.9-9 EulerianFunctionByTom[101X
   
-  [29X[2XEulerianFunctionByTom[102X( [3Xtom[103X, [3Xn[103X[, [3Xsub[103X] ) [32X operation
+  [33X[1;0Y[29X[2XEulerianFunctionByTom[102X( [3Xtom[103X, [3Xn[103X[, [3Xsub[103X] ) [32X operation[133X
   
   [33X[0;0YCalled  with  two  arguments,  [2XEulerianFunctionByTom[102X  computes  the Eulerian
   function  (see [2XEulerianFunction[102X  ([14X39.16-3[114X)) of the underlying group [22XG[122X of the
@@ -943,7 +943,7 @@
   
   [1X70.9-10 IntersectionsTom[101X
   
-  [29X[2XIntersectionsTom[102X( [3Xtom[103X, [3Xsub1[103X, [3Xsub2[103X ) [32X operation
+  [33X[1;0Y[29X[2XIntersectionsTom[102X( [3Xtom[103X, [3Xsub1[103X, [3Xsub2[103X ) [32X operation[133X
   
   [33X[0;0YThe  intersections of the groups in the [3Xsub1[103X-th conjugacy class of subgroups
   of  the  table of marks [3Xtom[103X with the groups in the [3Xsub2[103X-th conjugacy classes
@@ -963,7 +963,7 @@
   
   [1X70.9-11 FactorGroupTom[101X
   
-  [29X[2XFactorGroupTom[102X( [3Xtom[103X, [3Xn[103X ) [32X operation
+  [33X[1;0Y[29X[2XFactorGroupTom[102X( [3Xtom[103X, [3Xn[103X ) [32X operation[133X
   
   [33X[0;0YFor a table of marks [3Xtom[103X of the group [22XG[122X, say, and the normal subgroup [22XN[122X of [22XG[122X
   corresponding  to the [3Xn[103X-th class of subgroups of [3Xtom[103X, [2XFactorGroupTom[102X returns
@@ -988,7 +988,7 @@
   
   [1X70.9-12 MaximalSubgroupsTom[101X
   
-  [29X[2XMaximalSubgroupsTom[102X( [3Xtom[103X[, [3Xsub[103X] ) [32X attribute
+  [33X[1;0Y[29X[2XMaximalSubgroupsTom[102X( [3Xtom[103X[, [3Xsub[103X] ) [32X attribute[133X
   
   [33X[0;0YCalled  with  a  table  of  marks [3Xtom[103X, [2XMaximalSubgroupsTom[102X returns a list of
   length  two,  the  first entry being the list of positions of the classes of
@@ -1007,7 +1007,7 @@
   
   [1X70.9-13 MinimalSupergroupsTom[101X
   
-  [29X[2XMinimalSupergroupsTom[102X( [3Xtom[103X, [3Xsub[103X ) [32X operation
+  [33X[1;0Y[29X[2XMinimalSupergroupsTom[102X( [3Xtom[103X, [3Xsub[103X ) [32X operation[133X
   
   [33X[0;0YFor  a  table  of  marks [3Xtom[103X, [2XMinimalSupergroupsTom[102X returns a list of length
   two,  the  first entry being the list of positions of the classes containing
@@ -1048,7 +1048,7 @@
   
   [1X70.10-1 GeneratorsSubgroupsTom[101X
   
-  [29X[2XGeneratorsSubgroupsTom[102X( [3Xtom[103X ) [32X attribute
+  [33X[1;0Y[29X[2XGeneratorsSubgroupsTom[102X( [3Xtom[103X ) [32X attribute[133X
   
   [33X[0;0YLet  [3Xtom[103X  be  a  table  of marks with [2XIsTableOfMarksWithGens[102X ([14X70.10-3[114X) value
   [9Xtrue[109X.  Then  [2XGeneratorsSubgroupsTom[102X  returns a list of length two, the first
@@ -1064,7 +1064,7 @@
   
   [1X70.10-2 StraightLineProgramsTom[101X
   
-  [29X[2XStraightLineProgramsTom[102X( [3Xtom[103X ) [32X attribute
+  [33X[1;0Y[29X[2XStraightLineProgramsTom[102X( [3Xtom[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a  table of marks [3Xtom[103X with [2XIsTableOfMarksWithGens[102X ([14X70.10-3[114X) value [9Xtrue[109X,
   [2XStraightLineProgramsTom[102X  returns a list that contains at position [22Xi[122X either a
@@ -1080,7 +1080,7 @@
   
   [1X70.10-3 IsTableOfMarksWithGens[101X
   
-  [29X[2XIsTableOfMarksWithGens[102X( [3Xtom[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsTableOfMarksWithGens[102X( [3Xtom[103X ) [32X filter[133X
   
   [33X[0;0YThis  filter  shall  express  the  union  of  the filters [10XIsTableOfMarks and
   HasStraightLineProgramsTom[110X and [10XIsTableOfMarks and HasGeneratorsSubgroupsTom[110X.
@@ -1135,9 +1135,9 @@
   
   [1X70.10-4 RepresentativeTom[101X
   
-  [29X[2XRepresentativeTom[102X( [3Xtom[103X, [3Xsub[103X ) [32X operation
-  [29X[2XRepresentativeTomByGenerators[102X( [3Xtom[103X, [3Xsub[103X, [3Xgens[103X ) [32X operation
-  [29X[2XRepresentativeTomByGeneratorsNC[102X( [3Xtom[103X, [3Xsub[103X, [3Xgens[103X ) [32X operation
+  [33X[1;0Y[29X[2XRepresentativeTom[102X( [3Xtom[103X, [3Xsub[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRepresentativeTomByGenerators[102X( [3Xtom[103X, [3Xsub[103X, [3Xgens[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRepresentativeTomByGeneratorsNC[102X( [3Xtom[103X, [3Xsub[103X, [3Xgens[103X ) [32X operation[133X
   
   [33X[0;0YLet  [3Xtom[103X  be  a  table  of marks with [2XIsTableOfMarksWithGens[102X ([14X70.10-3[114X) value
   [9Xtrue[109X, and [3Xsub[103X a positive integer. [2XRepresentativeTom[102X returns a representative
@@ -1180,8 +1180,8 @@
   
   [1X70.11-1 FusionCharTableTom[101X
   
-  [29X[2XFusionCharTableTom[102X( [3Xtbl[103X, [3Xtom[103X ) [32X operation
-  [29X[2XPossibleFusionsCharTableTom[102X( [3Xtbl[103X, [3Xtom[103X[, [3Xoptions[103X] ) [32X operation
+  [33X[1;0Y[29X[2XFusionCharTableTom[102X( [3Xtbl[103X, [3Xtom[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPossibleFusionsCharTableTom[102X( [3Xtbl[103X, [3Xtom[103X[, [3Xoptions[103X] ) [32X operation[133X
   
   [33X[0;0YLet  [3Xtbl[103X  be  the  ordinary character table of the group [22XG[122X, say, and [3Xtom[103X the
   table of marks of [22XG[122X. [2XFusionCharTableTom[102X determines the fusion of the classes
@@ -1229,8 +1229,8 @@
   
   [1X70.11-2 PermCharsTom[101X
   
-  [29X[2XPermCharsTom[102X( [3Xfus[103X, [3Xtom[103X ) [32X operation
-  [29X[2XPermCharsTom[102X( [3Xtbl[103X, [3Xtom[103X ) [32X operation
+  [33X[1;0Y[29X[2XPermCharsTom[102X( [3Xfus[103X, [3Xtom[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPermCharsTom[102X( [3Xtbl[103X, [3Xtom[103X ) [32X operation[133X
   
   [33X[0;0Y[2XPermCharsTom[102X  returns the list of transitive permutation characters from the
   table  of  marks [3Xtom[103X. In the first form, [3Xfus[103X must be the fusion map from the
@@ -1267,7 +1267,7 @@
   
   [1X70.12-1 TableOfMarksCyclic[101X
   
-  [29X[2XTableOfMarksCyclic[102X( [3Xn[103X ) [32X operation
+  [33X[1;0Y[29X[2XTableOfMarksCyclic[102X( [3Xn[103X ) [32X operation[133X
   
   [33X[0;0Y[2XTableOfMarksCyclic[102X  returns  the table of marks of the cyclic group of order
   [3Xn[103X.[133X
@@ -1286,7 +1286,7 @@
   
   [1X70.12-2 TableOfMarksDihedral[101X
   
-  [29X[2XTableOfMarksDihedral[102X( [3Xn[103X ) [32X operation
+  [33X[1;0Y[29X[2XTableOfMarksDihedral[102X( [3Xn[103X ) [32X operation[133X
   
   [33X[0;0Y[2XTableOfMarksDihedral[102X  returns  the  table  of marks of the dihedral group of
   order [3Xm[103X.[133X
@@ -1316,7 +1316,7 @@
   
   [1X70.12-3 TableOfMarksFrobenius[101X
   
-  [29X[2XTableOfMarksFrobenius[102X( [3Xp[103X, [3Xq[103X ) [32X operation
+  [33X[1;0Y[29X[2XTableOfMarksFrobenius[102X( [3Xp[103X, [3Xq[103X ) [32X operation[133X
   
   [33X[0;0Y[2XTableOfMarksFrobenius[102X  computes  the  table of marks of a Frobenius group of
   order [22Xp q[122X, where [22Xp[122X is a prime and [22Xq[122X divides [22Xp-1[122X.[133X

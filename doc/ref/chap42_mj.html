@@ -104,22 +104,22 @@
 
 <h5>42.1-1 IsPerm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPerm</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPerm</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Each <em>permutation</em> in <strong class="pkg">GAP</strong> lies in the category <code class="func">IsPerm</code>. Basic operations for permutations are <code class="func">LargestMovedPoint</code> (<a href="chap42_mj.html#X84AA603987C94AC0"><span class="RefLink">42.3-2</span></a>), multiplication of two permutations via <code class="code">*</code>, and exponentiation <code class="code">^</code> with first argument a positive integer <span class="SimpleMath">\(i\)</span> and second argument a permutation <span class="SimpleMath">\(\pi\)</span>, the result being the image <span class="SimpleMath">\(i^{\pi}\)</span> of the point <span class="SimpleMath">\(i\)</span> under <span class="SimpleMath">\(\pi\)</span>.</p>
 
 <p><a id="X82069E437D2DF9AA" name="X82069E437D2DF9AA"></a></p>
 
 <h5>42.1-2 IsPermCollection</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPermCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPermCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPermCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPermCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>are the categories for collections of permutations and collections of collections of permutations, respectively.</p>
 
 <p><a id="X819628B083B3939B" name="X819628B083B3939B"></a></p>
 
 <h5>42.1-3 PermutationsFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermutationsFamily</code></td><td class="tdright">( family )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermutationsFamily</code></td><td class="tdright">(&nbsp;family&nbsp;)</td></tr></table></div>
 <p>is the family of all permutations.</p>
 
 <p><a id="X7A21DE5779D21A6D" name="X7A21DE5779D21A6D"></a></p>
@@ -130,8 +130,8 @@
 
 <h5><code>42.2-1 \=</code></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \=</code>( <var class="Arg">p1</var>, <var class="Arg">p2</var> )</td><td class="tdright">( method )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \&lt;</code>( <var class="Arg">p1</var>, <var class="Arg">p2</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \=</code>( <var class="Arg">p1</var>, <var class="Arg">p2</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \&lt;</code>( <var class="Arg">p1</var>, <var class="Arg">p2</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <p>Two permutations are equal if they move the same points and all these points have the same images under both permutations.</p>
 
 <p>The permutation <var class="Arg">p1</var> is smaller than <var class="Arg">p2</var> if <var class="Arg">p1</var> <span class="SimpleMath">\(\neq\)</span> <var class="Arg">p2</var> and <span class="SimpleMath">\(i^{{\textit{p1}}} &lt; i^{{\textit{p2}}}\)</span>, where <span class="SimpleMath">\(i\)</span> is the smallest point with <span class="SimpleMath">\(i^{{\textit{p1}}} \neq i^{{\textit{p2}}}\)</span>. Therefore the identity permutation is the smallest permutation, see also Section <a href="chap31_mj.html#X7B3BC7BA7BB2646D"><span class="RefLink">31.11</span></a>.</p>
@@ -154,14 +154,14 @@ false
 
 <h5>42.2-2 DistancePerms</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DistancePerms</code>( <var class="Arg">perm1</var>, <var class="Arg">perm2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DistancePerms</code>( <var class="Arg">perm1</var>, <var class="Arg">perm2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the number of points for which <var class="Arg">perm1</var> and <var class="Arg">perm2</var> have different images. This should always produce the same result as <code class="code">NrMovePoints(<var class="Arg">perm1</var>/<var class="Arg">perm2</var>)</code> but some methods may be much faster than this form, since no new permutation needs to be created.</p>
 
 <p><a id="X83A917F67D45C7EA" name="X83A917F67D45C7EA"></a></p>
 
 <h5>42.2-3 SmallestGeneratorPerm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestGeneratorPerm</code>( <var class="Arg">perm</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestGeneratorPerm</code>( <var class="Arg">perm</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is the smallest permutation that generates the same cyclic group as the permutation <var class="Arg">perm</var>. This is very efficient, even when <var class="Arg">perm</var> has large order.</p>
 
 
@@ -178,32 +178,32 @@ false
 
 <h5>42.3-1 SmallestMovedPoint</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestMovedPoint</code>( <var class="Arg">perm</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestMovedPoint</code>( <var class="Arg">C</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestMovedPoint</code>( <var class="Arg">perm</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmallestMovedPoint</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is the smallest positive integer that is moved by <var class="Arg">perm</var> if such an integer exists, and <code class="func">infinity</code> (<a href="chap18_mj.html#X8511B8DF83324C27"><span class="RefLink">18.2-1</span></a>) if <var class="Arg">perm</var> is the identity. For <var class="Arg">C</var> a collection or list of permutations, the smallest value of <code class="func">SmallestMovedPoint</code> for the elements of <var class="Arg">C</var> is returned (and <code class="func">infinity</code> (<a href="chap18_mj.html#X8511B8DF83324C27"><span class="RefLink">18.2-1</span></a>) if <var class="Arg">C</var> is empty).</p>
 
 <p><a id="X84AA603987C94AC0" name="X84AA603987C94AC0"></a></p>
 
 <h5>42.3-2 LargestMovedPoint</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestMovedPoint</code>( <var class="Arg">perm</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestMovedPoint</code>( <var class="Arg">C</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestMovedPoint</code>( <var class="Arg">perm</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LargestMovedPoint</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>For a permutation <var class="Arg">perm</var>, this attribute contains the largest positive integer which is moved by <var class="Arg">perm</var> if such an integer exists, and <code class="code">0</code> if <var class="Arg">perm</var> is the identity. For <var class="Arg">C</var> a collection or list of permutations, the largest value of <code class="func">LargestMovedPoint</code> for the elements of <var class="Arg">C</var> is returned (and <code class="code">0</code> if <var class="Arg">C</var> is empty).</p>
 
 <p><a id="X85E61B9C7A6B0CCA" name="X85E61B9C7A6B0CCA"></a></p>
 
 <h5>42.3-3 MovedPoints</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MovedPoints</code>( <var class="Arg">perm</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MovedPoints</code>( <var class="Arg">C</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MovedPoints</code>( <var class="Arg">perm</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MovedPoints</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is the proper set of the positive integers moved by at least one permutation in the collection <var class="Arg">C</var>, respectively by the permutation <var class="Arg">perm</var>.</p>
 
 <p><a id="X85E7B1E28430F49E" name="X85E7B1E28430F49E"></a></p>
 
 <h5>42.3-4 NrMovedPoints</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrMovedPoints</code>( <var class="Arg">perm</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrMovedPoints</code>( <var class="Arg">C</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrMovedPoints</code>( <var class="Arg">perm</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NrMovedPoints</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is the number of positive integers that are moved by <var class="Arg">perm</var>, respectively by at least one element in the collection <var class="Arg">C</var>. (The actual moved points are returned by <code class="func">MovedPoints</code> (<a href="chap42_mj.html#X85E61B9C7A6B0CCA"><span class="RefLink">42.3-3</span></a>).)</p>
 
 
@@ -234,7 +234,7 @@ false
 
 <h5>42.4-1 SignPerm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SignPerm</code>( <var class="Arg">perm</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SignPerm</code>( <var class="Arg">perm</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The <em>sign</em> of a permutation <var class="Arg">perm</var> is defined as <span class="SimpleMath">\((-1)^k\)</span> where <span class="SimpleMath">\(k\)</span> is the number of cycles of <var class="Arg">perm</var> of even length.</p>
 
 <p>The sign is a homomorphism from the symmetric group onto the multiplicative group <span class="SimpleMath">\(\{ +1, -1 \}\)</span>, the kernel of which is the alternating group.</p>
@@ -243,7 +243,7 @@ false
 
 <h5>42.4-2 CycleStructurePerm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CycleStructurePerm</code>( <var class="Arg">perm</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CycleStructurePerm</code>( <var class="Arg">perm</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is the cycle structure (i.e. the numbers of cycles of different lengths) of the permutation <var class="Arg">perm</var>. This is encoded in a list <span class="SimpleMath">\(l\)</span> in the following form: The <span class="SimpleMath">\(i\)</span>-th entry of <span class="SimpleMath">\(l\)</span> contains the number of cycles of <var class="Arg">perm</var> of length <span class="SimpleMath">\(i+1\)</span>. If <var class="Arg">perm</var> contains no cycles of length <span class="SimpleMath">\(i+1\)</span> it is not bound. Cycles of length 1 are ignored.</p>
 
 
@@ -262,7 +262,7 @@ false
 
 <h5>42.5-1 ListPerm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ListPerm</code>( <var class="Arg">perm</var>[, <var class="Arg">length</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ListPerm</code>( <var class="Arg">perm</var>[, <var class="Arg">length</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is a list <span class="SimpleMath">\(l\)</span> that contains the images of the positive integers under the permutation <var class="Arg">perm</var>. That means that <span class="SimpleMath">\(l\)</span><code class="code">[</code><span class="SimpleMath">\(i\)</span><code class="code">]</code> <span class="SimpleMath">\(= i\)</span><code class="code">^</code><var class="Arg">perm</var>, where <span class="SimpleMath">\(i\)</span> lies between 1 and the largest point moved by <var class="Arg">perm</var> (see <code class="func">LargestMovedPoint</code> (<a href="chap42_mj.html#X84AA603987C94AC0"><span class="RefLink">42.3-2</span></a>)).</p>
 
 <p>An optional second argument specifies the length of the desired list.</p>
@@ -271,22 +271,22 @@ false
 
 <h5>42.5-2 PermList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermList</code>( <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermList</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is the permutation <span class="SimpleMath">\(\pi\)</span> that moves points as described by the list <var class="Arg">list</var>. That means that <span class="SimpleMath">\(i^{\pi} =\)</span> <var class="Arg">list</var><code class="code">[</code><span class="SimpleMath">\(i\)</span><code class="code">]</code> if <span class="SimpleMath">\(i\)</span> lies between <span class="SimpleMath">\(1\)</span> and the length of <var class="Arg">list</var>, and <span class="SimpleMath">\(i^{\pi} = i\)</span> if <span class="SimpleMath">\(i\)</span> is larger than the length of the list <var class="Arg">list</var>. <code class="func">PermList</code> will return <code class="keyw">fail</code> if <var class="Arg">list</var> does not define a permutation, i.e., if <var class="Arg">list</var> is not dense, or if <var class="Arg">list</var> contains a positive integer twice, or if <var class="Arg">list</var> contains an integer not in the range <code class="code">[ 1 .. Length( <var class="Arg">list</var> ) ]</code>. If <var class="Arg">list</var> contains non-integer entries an error is raised.</p>
 
 <p><a id="X8087DCC780B9656A" name="X8087DCC780B9656A"></a></p>
 
 <h5>42.5-3 MappingPermListList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MappingPermListList</code>( <var class="Arg">src</var>, <var class="Arg">dst</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MappingPermListList</code>( <var class="Arg">src</var>, <var class="Arg">dst</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">src</var> and <var class="Arg">dst</var> be lists of positive integers of the same length, such that neither may contain an element twice. <code class="func">MappingPermListList</code> returns a permutation <span class="SimpleMath">\(\pi\)</span> such that <var class="Arg">src</var><code class="code">[</code><span class="SimpleMath">\(i\)</span><code class="code">]^</code><span class="SimpleMath">\(\pi =\)</span> <var class="Arg">dst</var><code class="code">[</code><span class="SimpleMath">\(i\)</span><code class="code">]</code>. The permutation <span class="SimpleMath">\(\pi\)</span> fixes all points larger than the maximum of the entries in <var class="Arg">src</var> and <var class="Arg">dst</var>. If there are several such permutations, it is not specified which of them <code class="func">MappingPermListList</code> returns.</p>
 
 <p><a id="X7EF8388E7DA8E600" name="X7EF8388E7DA8E600"></a></p>
 
 <h5>42.5-4 RestrictedPerm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RestrictedPerm</code>( <var class="Arg">perm</var>, <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RestrictedPermNC</code>( <var class="Arg">perm</var>, <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RestrictedPerm</code>( <var class="Arg">perm</var>, <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RestrictedPermNC</code>( <var class="Arg">perm</var>, <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">RestrictedPerm</code> returns the new permutation that acts on the points in the list <var class="Arg">list</var> in the same way as the permutation <var class="Arg">perm</var>, and that fixes those points that are not in <var class="Arg">list</var>. The resulting permutation is stored internally of degree given by the maximal entry of <var class="Arg">list</var>. <var class="Arg">list</var> must be a list of positive integers such that for each <span class="SimpleMath">\(i\)</span> in <var class="Arg">list</var> the image <span class="SimpleMath">\(i\)</span><code class="code">^</code><var class="Arg">perm</var> is also in <var class="Arg">list</var>, i.e., <var class="Arg">list</var> must be the union of cycles of <var class="Arg">perm</var>.</p>
 
 <p><code class="func">RestrictedPermNC</code> does not check whether <var class="Arg">list</var> is a union of cycles.</p>
@@ -307,7 +307,7 @@ false
 
 <h5>42.5-5 AsPermutation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsPermutation</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsPermutation</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A permutation or <code class="keyw">fail</code>.</p>
 
 <p>Partial permutations and transformations which define permutations (mathematically) can be converted into <strong class="pkg">GAP</strong> permutations using <code class="code">AsPermutation</code>; see Chapters <a href="chap53_mj.html#X860026B880BCB2A5"><span class="RefLink">53</span></a> and <a href="chap54_mj.html#X7D6495F77B8A77BD"><span class="RefLink">54</span></a> for more details about transformations and partial permutations.</p>

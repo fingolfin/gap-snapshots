@@ -108,7 +108,7 @@ digraph filters {
 "IsProjGrpElWithFrobRep" [color = lightblue2];
 "IsProjGrpElWithFrobWithPSIsom" [color = lightblue2];
 "IsProjGrpElWithFrobWithPSIsomRep" [color = lightblue2];
-"IsProjectivePlane" [color = lightblue2];
+"IsProjectivePlaneCategory" [color = lightblue2];
 "IsProjectiveSpace" [color = lightblue2];
 "IsProjectiveSpaceIsomorphism" [color = lightblue2];
 "IsProjectiveSpaceRep" [color = lightblue2];
@@ -180,11 +180,11 @@ digraph filters {
 "IsLieGeometry" -> "IsClassicalPolarSpace";
 "IsLieGeometry" -> "IsProjectiveSpace";
 "IsIncidenceGeometry" -> "IsGeneralisedPolygon";
-"IsGeneralisedPolygon" -> "IsProjectivePlane";
+"IsGeneralisedPolygon" -> "IsProjectivePlaneCategory";
 "IsGeneralisedPolygon" -> "IsGeneralisedQuadrangle";
 "IsGeneralisedPolygon" -> "IsGeneralisedHexagon";
 "IsGeneralisedPolygon" -> "IsGeneralisedOctagon";
-"IsProjectivePlane" -> "IsDesarguesianPlane";
+"IsProjectivePlaneCategory" -> "IsDesarguesianPlane";
 "IsProjectiveSpace" -> "IsDesarguesianPlane";
 "IsGeneralisedQuadrangle" -> "IsClassicalGQ";
 "IsClassicalPolarSpace" -> "IsClassicalGQ";
@@ -225,7 +225,8 @@ digraph filters {
 "IsShadowElementsOfLieGeometryRep" -> "IsShadowSubspacesOfProjectiveSpaceRep";
 "IsSPGeneralMapping" -> "IsProjectiveSpaceIsomorphism";
 "IsProjectiveSpaceIsomorphism" -> "IsStandardDualityOfProjectiveSpace";
-"IsProjectiveSpaceIsomorphism" -> "IsIdentityMappingOfElementsOfProjectiveSpace";
+"IsProjectiveSpaceIsomorphism" -> "IsIdentityMappingOfElementsOfProjectiveSpac\
+e";
 "IsComponentObjectRep" -> "IsProjGrpElWithFrobWithPSIsom";
 "IsMultiplicativeElementWithInverse" -> "IsProjGrpElWithFrobWithPSIsom";
 "IsProjGrpElWithFrobWithPSIsom" -> "IsProjGrpElWithFrobWithPSIsomRep";
@@ -235,9 +236,11 @@ digraph filters {
 "IsSubspacesOfProjectiveSpace" -> "IsSubspacesOfClassicalPolarSpace";
 "IsSubspacesOfProjectiveSpaceRep" -> "IsSubspacesOfClassicalPolarSpaceRep";
 "IsAllSubspacesOfProjectiveSpace" -> "IsAllSubspacesOfClassicalPolarSpace";
-"IsAllSubspacesOfProjectiveSpaceRep" -> "IsAllSubspacesOfClassicalPolarSpaceRep";
+"IsAllSubspacesOfProjectiveSpaceRep" -> "IsAllSubspacesOfClassicalPolarSpaceRe\
+p";
 "IsShadowElementsOfLieGeometry" -> "IsShadowSubspacesOfClassicalPolarSpace";
-"IsShadowElementsOfLieGeometryRep" -> "IsShadowSubspacesOfClassicalPolarSpaceRep";
+"IsShadowElementsOfLieGeometryRep" -> "IsShadowSubspacesOfClassicalPolarSpaceR\
+ep";
 "IsFlagOfProjectiveSpace" -> "IsFlagOfClassicalPolarSpace";
 "IsMapping" -> "IsGeometryMorphism";
 "IsComponentObjectRep" -> "IsDiagram";

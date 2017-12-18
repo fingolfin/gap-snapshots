@@ -67,13 +67,14 @@ classicalpolfiles := ["cps_polarspaceform", "cps_example", "cps_symplectic", "cp
 						"cps_basefield", "cps_ishyperbolicquadric", "cps_isellipticquadric", "cps_isparabolicquadric", 
 						"cps_element1", "cps_emptysubspace", "cps_projdimension_element", "cps_elements", 
 						"cps_ambientspaceelps", "cps_coordinates", "cps_incident", "cps_span", "cps_typesubspace", "cps_shadowofelement",
-						"cps_specialisometry", "cps_isometry", "cps_similarity", "cps_collineation", 
+						"cps_elementsincidentwithelement", "cps_specialisometry", "cps_isometry", "cps_similarity", "cps_collineation",
 						 "cps_enumerator", "cps_iterator", "cps_aslist", "cps_polarityofps", "cps_iscollinear",
 						 "cps_tangentspace", "cps_pole" ];
 	   
 stab_orbsfiles := [ "stab_orbs_finingorbit1", "stab_orbs_finingorbit2", "stab_orbs_finingorbits1", "stab_orbs_example1", "stab_orbs_finingstabiliser", 
 					"stab_orbs_finingstabiliserorb", "stab_orbs_timing1", "stab_orbs_setwisegeneric", "stab_orbs_finingsetwisestabiliser", 
-					"stab_orbs_timing2", "stab_orbs_action1", "stab_orbs_behaviour1", "stab_orbs_behaviour2"];
+					"stab_orbs_timing2", "stab_orbs_action1", "stab_orbs_behaviour1", "stab_orbs_behaviour2", "stab_orbs_stabofsubspace",
+                    "stab_orbits_finingorbitsdomain"];
 
 affinefiles := [ "affine_affinespace", "affine_dimension", "affine_basefield", "affine_underlyingvs", "affine_ambientspace", "affine_subspaces",
 				 "affine_elements", "affine_short", "affine_incident", "affine_ambientspaceelas", "affine_basefieldelas", "affine_span", "affine_meet",
@@ -101,6 +102,9 @@ varieties_files := ["varieties_general", "varieties_polarspace", "varieties_vero
 diagramfiles := ["diagram_cosetgeom", "diagram_neumaier", "diagram_nearoctagon", "diagram_autiso", "diagram_autcor",
                     "diagram_random", "diagram_notFT", "diagram_firmthinthick", "diagram_connectedness", "diagram_flagmapping",
                     "diagram_residues"];
+                    
+subgeometriesfiles := ["subgeometries_canonical", "subgeometries_randomframe", "subgeometries_isframe", "subgeometries_underlyingstructures",
+                        "subgeometries_collineationfixingsubgeometry", "subgeometries_vectorspacetoelement", "subgeometries_extendelement" ];
 
 websitefiles := ["web_hyperoval24", "web_inumbersherm", "web_embedding", "web_spreads", "web_ovoidq63"];
 
@@ -111,7 +115,7 @@ groups_appfiles := ["groups_app_sodesargues", "groups_app_godesargues", "groups_
 
 exampledir := DirectoriesPackageLibrary("fining","tst")[1];
 
-files := [ "projgroups_underlyingmatrix", "projgroups_underlyingmatrix2" ];
+files := [ "subgeometries_extendelement" ];
 
 #initialize directorynames
 #exampledir = dir where .g files are located : ".../pkg/fining/examples/gap"
@@ -123,14 +127,27 @@ files := [ "projgroups_underlyingmatrix", "projgroups_underlyingmatrix2" ];
 gapstart := "gap4r7"; #might be different on your computer
 gap := Filename(Directory("/usr/bin/"),gapstart);
 
+#code below for gap4r8
+gapstart := "gap4r8"; #might be different on your computer
+#On El Capitan, /usr/bin is very hard protected to put own binaries/scripts in. Therefore it is placed in /usr/local/bin
+#On other systems, this might still be /usr/bin or something else. The following line might help
+#note that the output of Exec is not a string, so cut and paste the directory into the line after.
+Exec(Concatenation("which ",gapstart));
+
+gap := Filename(Directory("/usr/bin/"),gapstart);
+gap := Filename(Directory("/usr/local/bin"),gapstart); #el capitan
+
 homedir := DirectoryCurrent();
 exampledir := DirectoriesPackageLibrary("fining","examples/gap")[1]; 
 preambledir := DirectoriesPackageLibrary("fining","examples/")[1]; 
 outputdir := DirectoriesPackageLibrary("fining","examples/output")[1];
-paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[2,3]},";");
-args := JoinStringsWithSeparator(["-l",paths," -L fining.ws"," -o 4G"]," ");
+paths := JoinStringsWithSeparator(GAPInfo.RootPaths{[3,4]},";");
+#paths := JoinStringsWithSeparator("./","/opt/gap4r8");
+#args := JoinStringsWithSeparator(["-l",paths," -L fining.ws"," -o 4G"]," ");
+#args := JoinStringsWithSeparator([" -L fining.ws"," -o 4G"]," ");
 args := ["-l",paths,"-L","fining.ws","-o","4G"];
-
+#args := ["-L","fining.ws","-o","4G"];
+#args := ["-l \"./;/opt/gap4r8\" -L fining.ws -o 4G"];
 extension := ".out\";";
 cmddir := "dir \:\= DirectoriesPackageLibrary\(\"fining\"\,\"examples\/output\"\)\[1\]\;";
 
@@ -141,7 +158,7 @@ cmddir := "dir \:\= DirectoriesPackageLibrary\(\"fining\"\,\"examples\/output\"\
 #dir, just issue in the gap session that is running:
 
 for filename in files do
-  Print("Now converting file: ", filename, "\n");
+  Print("Now converting file: ", filename, ", \c");
   stream := InputOutputLocalProcess( homedir, gap, args);
   #cmd := Concatenation("file := \"",filename,".out\";");
   cmd := Concatenation("file := \"",filename,extension);
@@ -160,10 +177,16 @@ for filename in files do
   while cmd <> fail do
     WriteAll(stream,cmd);
     cmd := ReadLine(input_stream);
-    ReadAll(stream);
+    #ReadAll(stream);
   od;
-  #repeat until ReadAll(stream)=fail; #new since oct 2015.
+  repeat Print(".\c"); until ReadAll(stream)=fail; #new since oct 2015.
 od;
+
+  while cmd <> fail do
+    WriteAll(stream,cmd);
+    cmd := ReadLine(input_stream);
+  od;
+
 
 #create .include files
 #for the include files, some characters will be translated to suitable xml

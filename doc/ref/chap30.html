@@ -112,7 +112,7 @@
 
 <h5>30.1-1 IsCollection</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>tests whether an object is a collection.</p>
 
 <p>Some of the functions for lists and collections are described in the chapter about lists, mainly in Section <a href="chap21.html#X7DF510F7848CBBFD"><span class="RefLink">21.20</span></a>. In the current chapter, we describe those functions for which the "collection aspect" seems to be more important than the "list aspect".</p>
@@ -125,7 +125,7 @@
 
 <h5>30.2-1 CollectionsFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CollectionsFamily</code>( <var class="Arg">Fam</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CollectionsFamily</code>( <var class="Arg">Fam</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>For a family <var class="Arg">Fam</var>, <code class="func">CollectionsFamily</code> returns the family of all collections over <var class="Arg">Fam</var>, that is, of all dense lists and domains that consist of objects in <var class="Arg">Fam</var>.</p>
 
 <p>The <code class="func">NewFamily</code> (<a href="chap79.html#X7FB4123E7E22137D"><span class="RefLink">79.7-1</span></a>) call in the standard method of <code class="func">CollectionsFamily</code> is executed with second argument <code class="func">IsCollection</code> (<a href="chap30.html#X79C9FC7F86E2738C"><span class="RefLink">30.1-1</span></a>), since every object in the collections family must be a collection, and with third argument the collections categories of the involved categories in the implied filter of <var class="Arg">Fam</var>.</p>
@@ -136,14 +136,14 @@
 
 <h5>30.2-2 IsCollectionFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCollectionFamily</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCollectionFamily</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>is <code class="keyw">true</code> if <var class="Arg">Fam</var> is a family of collections, and <code class="keyw">false</code> otherwise.</p>
 
 <p><a id="X864BB3748546F63F" name="X864BB3748546F63F"></a></p>
 
 <h5>30.2-3 ElementsFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementsFamily</code>( <var class="Arg">Fam</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElementsFamily</code>( <var class="Arg">Fam</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">Fam</var> is a collections family (see <code class="func">IsCollectionFamily</code> (<a href="chap30.html#X856AC2DF7F7CBAAF"><span class="RefLink">30.2-2</span></a>)) then <code class="func">ElementsFamily</code> returns the family from which <var class="Arg">Fam</var> was created by <code class="func">CollectionsFamily</code> (<a href="chap30.html#X84E5A67E87D8DD66"><span class="RefLink">30.2-1</span></a>). The way a collections family is created, it always has its elements family stored. If <var class="Arg">Fam</var> is not a collections family then an error is signalled.</p>
 
 
@@ -165,7 +165,7 @@ false
 
 <h5>30.2-4 CategoryCollections</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CategoryCollections</code>( <var class="Arg">filter</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CategoryCollections</code>( <var class="Arg">filter</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">filter</var> be a filter that is <code class="keyw">true</code> for all elements of a family <var class="Arg">Fam</var>, by the construction of <var class="Arg">Fam</var>. Then <code class="func">CategoryCollections</code> returns the <em>collections category</em> of <var class="Arg">filter</var>. This is a category that is <code class="keyw">true</code> for all elements in <code class="code">CollectionsFamily( <var class="Arg">Fam</var> )</code>.</p>
 
 <p>For example, the construction of <code class="func">PermutationsFamily</code> (<a href="chap42.html#X819628B083B3939B"><span class="RefLink">42.1-3</span></a>) guarantees that each of its elements lies in the filter <code class="func">IsPerm</code> (<a href="chap42.html#X7AA69C6686FC49EA"><span class="RefLink">42.1-1</span></a>), and each collection of permutations (permutation group or dense list of permutations) lies in the category <code class="code">CategoryCollections( IsPerm )</code>. <code class="code">CategoryCollections( IsPerm )</code>. Note that this works only if the collections category is created <em>before</em> the collections family. So it is necessary to construct interesting collections categories immediately after the underlying category has been created.</p>
@@ -180,14 +180,14 @@ false
 
 <h5>30.3-1 IsListOrCollection</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsListOrCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsListOrCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Several functions are defined for both lists and collections, for example <code class="func">Intersection</code> (<a href="chap30.html#X851069107CACF98E"><span class="RefLink">30.5-2</span></a>), <code class="func">Iterator</code> (<a href="chap30.html#X83ADF8287ED0668E"><span class="RefLink">30.8-1</span></a>), and <code class="func">Random</code> (<a href="chap30.html#X7FF906E57D6936F8"><span class="RefLink">30.7-1</span></a>). <code class="func">IsListOrCollection</code> is a supercategory of <code class="func">IsList</code> (<a href="chap21.html#X7C4CC4EA8299701E"><span class="RefLink">21.1-1</span></a>) and <code class="func">IsCollection</code> (<a href="chap30.html#X79C9FC7F86E2738C"><span class="RefLink">30.1-1</span></a>) (that is, all lists and collections lie in this category), which is used to describe the arguments of functions such as the ones listed above.</p>
 
 <p><a id="X7EF8910F82B45EC7" name="X7EF8910F82B45EC7"></a></p>
 
 <h5>30.3-2 Enumerator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Enumerator</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Enumerator</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p><code class="func">Enumerator</code> returns an immutable list <span class="SimpleMath">enum</span>. If the argument is a list (which may contain holes), then <code class="code">Length( </code><span class="SimpleMath">enum</span><code class="code"> )</code> is the length of this list, and <span class="SimpleMath">enum</span> contains the elements (and holes) of this list in the same order. If the argument is a collection that is not a list, then <code class="code">Length( </code><span class="SimpleMath">enum</span><code class="code"> )</code> is the number of different elements of <var class="Arg">C</var>, and <span class="SimpleMath">enum</span> contains the different elements of the collection in an unspecified order, which may change for repeated calls of <code class="func">Enumerator</code>. <span class="SimpleMath">enum[pos]</span> may not execute in constant time (see <code class="func">IsConstantTimeAccessList</code> (<a href="chap21.html#X7C84E16A85C99C8C"><span class="RefLink">21.1-6</span></a>)), and the size of <span class="SimpleMath">enum</span> in memory is as small as is feasible.</p>
 
 <p>For lists, the default method is <code class="func">Immutable</code> (<a href="chap12.html#X7F0ABF2C870B0CBB"><span class="RefLink">12.6-3</span></a>). For collections that are not lists, there is no default method.</p>
@@ -196,7 +196,7 @@ false
 
 <h5>30.3-3 EnumeratorSorted</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EnumeratorSorted</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EnumeratorSorted</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p><code class="func">EnumeratorSorted</code> returns an immutable list <span class="SimpleMath">enum</span>. The argument must be a collection or a list <var class="Arg">listorcoll</var> which may contain holes but whose elements lie in the same family (see <a href="chap13.html#X846063757EC05986"><span class="RefLink">13.1</span></a>). <code class="code">Length( </code><span class="SimpleMath">enum</span><code class="code"> )</code> is the number of different elements of the argument, and <span class="SimpleMath">enum</span> contains the different elements in sorted order, w.r.t. <code class="code">&lt;</code>. <span class="SimpleMath">enum[pos]</span> may not execute in constant time (see <code class="func">IsConstantTimeAccessList</code> (<a href="chap21.html#X7C84E16A85C99C8C"><span class="RefLink">21.1-6</span></a>)), and the size of <span class="SimpleMath">enum</span> in memory is as small as is feasible.</p>
 
 
@@ -220,8 +220,8 @@ false
 
 <h5>30.3-4 EnumeratorByFunctions</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EnumeratorByFunctions</code>( <var class="Arg">D</var>, <var class="Arg">record</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EnumeratorByFunctions</code>( <var class="Arg">Fam</var>, <var class="Arg">record</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EnumeratorByFunctions</code>( <var class="Arg">D</var>, <var class="Arg">record</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EnumeratorByFunctions</code>( <var class="Arg">Fam</var>, <var class="Arg">record</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">EnumeratorByFunctions</code> returns an immutable, dense, and duplicate-free list <span class="SimpleMath">enum</span> for which <code class="func">IsBound</code> (<a href="chap21.html#X79EC565A7DCEC938"><span class="RefLink">21.5-1</span></a>), element access via <code class="func">\[\]</code> (<a href="chap21.html#X8297BBCD79642BE6"><span class="RefLink">21.2-1</span></a>), <code class="func">Length</code> (<a href="chap21.html#X780769238600AFD1"><span class="RefLink">21.17-5</span></a>), and <code class="func">Position</code> (<a href="chap21.html#X79975EC6783B4293"><span class="RefLink">21.16-1</span></a>) are computed via prescribed functions.</p>
 
 <p>Let <var class="Arg">record</var> be a record with at least the following components.</p>
@@ -281,7 +281,7 @@ false
 
 <h5>30.3-5 List</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; List</code>( <var class="Arg">C</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; List</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For a collection <var class="Arg">C</var> (see <a href="chap30.html#X8050A8037984E5B6"><span class="RefLink">30</span></a>) that is not a list, <code class="func">List</code> returns a new mutable list <var class="Arg">new</var> such that <code class="code">Length( <var class="Arg">new</var> )</code> is the number of different elements of <var class="Arg">C</var>, and <var class="Arg">new</var> contains the different elements of <var class="Arg">C</var> in an unspecified order which may change for repeated calls. <code class="code"><var class="Arg">new</var>[<var class="Arg">pos</var>]</code> executes in constant time (see <code class="func">IsConstantTimeAccessList</code> (<a href="chap21.html#X7C84E16A85C99C8C"><span class="RefLink">21.1-6</span></a>)), and the size of <var class="Arg">new</var> is proportional to its length. The generic method for this case is <code class="code">ShallowCopy( Enumerator( <var class="Arg">C</var> ) )</code>.</p>
 
 
@@ -300,7 +300,7 @@ true
 
 <h5>30.3-6 SortedList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SortedList</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SortedList</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">SortedList</code> returns a new mutable and dense list <var class="Arg">new</var>. The argument must be a collection or list <var class="Arg">listorcoll</var> which may contain holes but whose elements lie in the same family (see <a href="chap13.html#X846063757EC05986"><span class="RefLink">13.1</span></a>). <code class="code">Length( <var class="Arg">new</var> )</code> is the number of elements of <var class="Arg">listorcoll</var>, and <var class="Arg">new</var> contains the elements in sorted order, w.r.t. <code class="code">&lt;=</code>. <code class="code"><var class="Arg">new</var>[<var class="Arg">pos</var>]</code> executes in constant time (see <code class="func">IsConstantTimeAccessList</code> (<a href="chap21.html#X7C84E16A85C99C8C"><span class="RefLink">21.1-6</span></a>)), and the size of <var class="Arg">new</var> in memory is proportional to its length.</p>
 
 
@@ -319,8 +319,8 @@ true
 
 <h5>30.3-7 SSortedList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SSortedList</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Set</code>( <var class="Arg">C</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SSortedList</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Set</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">SSortedList</code> ("strictly sorted list") returns a new dense, mutable, and duplicate free list <var class="Arg">new</var>. The argument must be a collection or list <var class="Arg">listorcoll</var> which may contain holes but whose elements lie in the same family (see <a href="chap13.html#X846063757EC05986"><span class="RefLink">13.1</span></a>). <code class="code">Length( <var class="Arg">new</var> )</code> is the number of different elements of <var class="Arg">listorcoll</var>, and <var class="Arg">new</var> contains the different elements in strictly sorted order, w.r.t. <code class="func">\&lt;</code> (<a href="chap31.html#X7EF67D047F03CA6F"><span class="RefLink">31.11-1</span></a>). <code class="code"><var class="Arg">new</var>[<var class="Arg">pos</var>]</code> executes in constant time (see <code class="func">IsConstantTimeAccessList</code> (<a href="chap21.html#X7C84E16A85C99C8C"><span class="RefLink">21.1-6</span></a>)), and the size of <var class="Arg">new</var> in memory is proportional to its length.</p>
 
 <p><code class="func">Set</code> is simply a synonym for <code class="func">SSortedList</code>.</p>
@@ -341,7 +341,7 @@ true
 
 <h5>30.3-8 AsList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsList</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsList</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p><code class="func">AsList</code> returns a immutable list <var class="Arg">imm</var>. If the argument is a list (which may contain holes), then <code class="code">Length( <var class="Arg">imm</var> )</code> is the <code class="func">Length</code> (<a href="chap21.html#X780769238600AFD1"><span class="RefLink">21.17-5</span></a>) value of this list, and <var class="Arg">imm</var> contains the elements (and holes) of of the list in the same order. If the argument is a collection that is not a list, then <code class="code">Length( <var class="Arg">imm</var> )</code> is the number of different elements of this collection, and <var class="Arg">imm</var> contains the different elements of the collection in an unspecified order, which may change for repeated calls of <code class="func">AsList</code>. <code class="code"><var class="Arg">imm</var>[<var class="Arg">pos</var>]</code> executes in constant time (see <code class="func">IsConstantTimeAccessList</code> (<a href="chap21.html#X7C84E16A85C99C8C"><span class="RefLink">21.1-6</span></a>)), and the size of <var class="Arg">imm</var> in memory is proportional to its length.</p>
 
 <p>If you expect to do many element tests in the resulting list, it might be worth to use a sorted list instead, using <code class="func">AsSSortedList</code> (<a href="chap30.html#X856D927378C33548"><span class="RefLink">30.3-10</span></a>).</p>
@@ -362,7 +362,7 @@ true
 
 <h5>30.3-9 AsSortedList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsSortedList</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsSortedList</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p><code class="func">AsSortedList</code> returns a dense and immutable list <var class="Arg">imm</var>. The argument must be a collection or list <var class="Arg">listorcoll</var> which may contain holes but whose elements lie in the same family (see <a href="chap13.html#X846063757EC05986"><span class="RefLink">13.1</span></a>). <code class="code">Length( <var class="Arg">imm</var> )</code> is the number of elements of the argument, and <var class="Arg">imm</var> contains the elements in sorted order, w.r.t. <code class="code">&lt;=</code>. <code class="code"><var class="Arg">new</var>[<var class="Arg">pos</var>]</code> executes in constant time (see <code class="func">IsConstantTimeAccessList</code> (<a href="chap21.html#X7C84E16A85C99C8C"><span class="RefLink">21.1-6</span></a>)), and the size of <var class="Arg">imm</var> in memory is proportional to its length.</p>
 
 <p>The only difference to the operation <code class="func">SortedList</code> (<a href="chap30.html#X82CE157A7FAD8036"><span class="RefLink">30.3-6</span></a>) is that <code class="func">AsSortedList</code> returns an <em>immutable</em> list.</p>
@@ -383,8 +383,8 @@ false
 
 <h5>30.3-10 AsSSortedList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsSSortedList</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsSet</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsSSortedList</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsSet</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p><code class="func">AsSSortedList</code> ("as strictly sorted list") returns a dense, immutable, and duplicate free list <var class="Arg">imm</var>. The argument must be a collection or list <var class="Arg">listorcoll</var> which may contain holes but whose elements lie in the same family (see <a href="chap13.html#X846063757EC05986"><span class="RefLink">13.1</span></a>). <code class="code">Length( <var class="Arg">imm</var> )</code> is the number of different elements of <var class="Arg">listorcoll</var>, and <var class="Arg">imm</var> contains the different elements in strictly sorted order, w.r.t. <code class="func">\&lt;</code> (<a href="chap31.html#X7EF67D047F03CA6F"><span class="RefLink">31.11-1</span></a>). <code class="code"><var class="Arg">imm</var>[<var class="Arg">pos</var>]</code> executes in constant time (see <code class="func">IsConstantTimeAccessList</code> (<a href="chap21.html#X7C84E16A85C99C8C"><span class="RefLink">21.1-6</span></a>)), and the size of <var class="Arg">imm</var> in memory is proportional to its length.</p>
 
 <p>Because the comparisons required for sorting can be very expensive for some kinds of objects, you should use <code class="func">AsList</code> (<a href="chap30.html#X8289FCCC8274C89D"><span class="RefLink">30.3-8</span></a>) instead if you do not require the result to be sorted.</p>
@@ -411,7 +411,7 @@ true
 
 <h5>30.3-11 Elements</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Elements</code>( <var class="Arg">C</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Elements</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">Elements</code> does the same as <code class="func">AsSSortedList</code> (<a href="chap30.html#X856D927378C33548"><span class="RefLink">30.3-10</span></a>), that is, the return value is a strictly sorted list of the elements in the list or collection <var class="Arg">C</var>.</p>
 
 <p><code class="func">Elements</code> is only supported for backwards compatibility. In many situations, the sortedness of the "element list" for a collection is in fact not needed, and one can save a lot of time by asking for a list that is <em>not</em> necessarily sorted, using <code class="func">AsList</code> (<a href="chap30.html#X8289FCCC8274C89D"><span class="RefLink">30.3-8</span></a>). If one is really interested in the strictly sorted list of elements in <var class="Arg">C</var> then one should use <code class="func">AsSet</code> (<a href="chap30.html#X856D927378C33548"><span class="RefLink">30.3-10</span></a>) or <code class="func">AsSSortedList</code> (<a href="chap30.html#X856D927378C33548"><span class="RefLink">30.3-10</span></a>) instead.</p>
@@ -424,14 +424,14 @@ true
 
 <h5>30.4-1 IsEmpty</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEmpty</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEmpty</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p><code class="func">IsEmpty</code> returns <code class="keyw">true</code> if the collection or list <var class="Arg">listorcoll</var> is <em>empty</em> (that is it contains no elements), and <code class="keyw">false</code> otherwise.</p>
 
 <p><a id="X808A4061809A6E67" name="X808A4061809A6E67"></a></p>
 
 <h5>30.4-2 IsFinite</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFinite</code>( <var class="Arg">C</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFinite</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p><code class="func">IsFinite</code> returns <code class="keyw">true</code> if the collection <var class="Arg">C</var> is finite, and <code class="keyw">false</code> otherwise.</p>
 
 <p>The default method for <code class="func">IsFinite</code> checks the size (see <code class="func">Size</code> (<a href="chap30.html#X858ADA3B7A684421"><span class="RefLink">30.4-6</span></a>)) of <var class="Arg">C</var>.</p>
@@ -442,14 +442,14 @@ true
 
 <h5>30.4-3 IsTrivial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTrivial</code>( <var class="Arg">C</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTrivial</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p><code class="func">IsTrivial</code> returns <code class="keyw">true</code> if the collection <var class="Arg">C</var> consists of exactly one element.</p>
 
 <p><a id="X7F192373850B85B9" name="X7F192373850B85B9"></a></p>
 
 <h5>30.4-4 IsNonTrivial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNonTrivial</code>( <var class="Arg">C</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNonTrivial</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p><code class="func">IsNonTrivial</code> returns <code class="keyw">true</code> if the collection <var class="Arg">C</var> is empty or consists of at least two elements (see <code class="func">IsTrivial</code> (<a href="chap30.html#X7E3402D6799D3C24"><span class="RefLink">30.4-3</span></a>)).</p>
 
 
@@ -473,7 +473,7 @@ false
 
 <h5>30.4-5 IsWholeFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWholeFamily</code>( <var class="Arg">C</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWholeFamily</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p><code class="func">IsWholeFamily</code> returns <code class="keyw">true</code> if the collection <var class="Arg">C</var> contains the whole family (see <a href="chap13.html#X846063757EC05986"><span class="RefLink">13.1</span></a>) of its elements.</p>
 
 
@@ -494,7 +494,7 @@ true
 
 <h5>30.4-6 Size</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Size</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Size</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p><code class="func">Size</code> returns the size of the list or collection <var class="Arg">listorcoll</var>, which is either an integer or <code class="func">infinity</code> (<a href="chap18.html#X8511B8DF83324C27"><span class="RefLink">18.2-1</span></a>). If the argument is a list then the result is its length (see <code class="func">Length</code> (<a href="chap21.html#X780769238600AFD1"><span class="RefLink">21.17-5</span></a>)).</p>
 
 <p>The default method for <code class="func">Size</code> checks the length of an enumerator of <var class="Arg">listorcoll</var>.</p>
@@ -513,7 +513,7 @@ infinity
 
 <h5>30.4-7 Representative</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Representative</code>( <var class="Arg">C</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Representative</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p><code class="func">Representative</code> returns a <em>representative</em> of the collection <var class="Arg">C</var>.</p>
 
 <p>Note that <code class="func">Representative</code> is free in choosing a representative if there are several elements in <var class="Arg">C</var>. It is not even guaranteed that <code class="func">Representative</code> returns the same representative if it is called several times for one collection. The main difference between <code class="func">Representative</code> and <code class="func">Random</code> (<a href="chap30.html#X7FF906E57D6936F8"><span class="RefLink">30.7-1</span></a>) is that <code class="func">Representative</code> is free to choose a value that is cheap to compute, while <code class="func">Random</code> (<a href="chap30.html#X7FF906E57D6936F8"><span class="RefLink">30.7-1</span></a>) must make an effort to randomly distribute its answers.</p>
@@ -524,7 +524,7 @@ infinity
 
 <h5>30.4-8 RepresentativeSmallest</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RepresentativeSmallest</code>( <var class="Arg">C</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RepresentativeSmallest</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the smallest element in the collection <var class="Arg">C</var>, w.r.t. the ordering <code class="func">\&lt;</code> (<a href="chap31.html#X7EF67D047F03CA6F"><span class="RefLink">31.11-1</span></a>). While the operation defaults to comparing all elements, better methods are installed for some collections.</p>
 
 
@@ -545,7 +545,7 @@ infinity
 
 <h5>30.5-1 IsSubset</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubset</code>( <var class="Arg">C1</var>, <var class="Arg">C2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubset</code>( <var class="Arg">C1</var>, <var class="Arg">C2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">IsSubset</code> returns <code class="keyw">true</code> if <var class="Arg">C2</var>, which must be a collection, is a <em>subset</em> of <var class="Arg">C1</var>, which also must be a collection, and <code class="keyw">false</code> otherwise.</p>
 
 <p><var class="Arg">C2</var> is considered a subset of <var class="Arg">C1</var> if and only if each element of <var class="Arg">C2</var> is also an element of <var class="Arg">C1</var>. That is <code class="func">IsSubset</code> behaves as if implemented as <code class="code">IsSubsetSet( AsSSortedList( <var class="Arg">C1</var> ), AsSSortedList( <var class="Arg">C2</var> ) )</code>, except that it will also sometimes, but not always, work for infinite collections, and that it will usually work much faster than the above definition. Either argument may also be a proper set (see <a href="chap21.html#X80ABC25582343910"><span class="RefLink">21.19</span></a>).</p>
@@ -564,9 +564,9 @@ false
 
 <h5>30.5-2 <span class="Heading">Intersection</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Intersection</code>( <var class="Arg">C1</var>, <var class="Arg">C2</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Intersection</code>( <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Intersection2</code>( <var class="Arg">C1</var>, <var class="Arg">C2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Intersection</code>( <var class="Arg">C1</var>, <var class="Arg">C2</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Intersection</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Intersection2</code>( <var class="Arg">C1</var>, <var class="Arg">C2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>In the first form <code class="func">Intersection</code> returns the intersection of the collections <var class="Arg">C1</var>, <var class="Arg">C2</var>, etc. In the second form <var class="Arg">list</var> must be a <em>nonempty</em> list of collections and <code class="func">Intersection</code> returns the intersection of those collections. Each argument or element of <var class="Arg">list</var> respectively may also be a homogeneous list that is not a proper set, in which case <code class="func">Intersection</code> silently applies <code class="func">Set</code> (<a href="chap30.html#X7E399AC97FD98217"><span class="RefLink">30.3-7</span></a>) to it first.</p>
 
 <p>The result of <code class="func">Intersection</code> is the set of elements that lie in every of the collections <var class="Arg">C1</var>, <var class="Arg">C2</var>, etc. If the result is a list then it is mutable and new, i.e., not identical to any of <var class="Arg">C1</var>, <var class="Arg">C2</var>, etc.</p>
@@ -605,9 +605,9 @@ Group([ (1,5)(2,4) ])
 
 <h5>30.5-3 <span class="Heading">Union</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Union</code>( <var class="Arg">C1</var>, <var class="Arg">C2</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Union</code>( <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Union2</code>( <var class="Arg">C1</var>, <var class="Arg">C2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Union</code>( <var class="Arg">C1</var>, <var class="Arg">C2</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Union</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Union2</code>( <var class="Arg">C1</var>, <var class="Arg">C2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>In the first form <code class="func">Union</code> returns the union of the collections <var class="Arg">C1</var>, <var class="Arg">C2</var>, etc. In the second form <var class="Arg">list</var> must be a list of collections and <code class="func">Union</code> returns the union of those collections. Each argument or element of <var class="Arg">list</var> respectively may also be a homogeneous list that is not a proper set, in which case <code class="func">Union</code> silently applies <code class="func">Set</code> (<a href="chap30.html#X7E399AC97FD98217"><span class="RefLink">30.3-7</span></a>) to it first.</p>
 
 <p>The result of <code class="func">Union</code> is the set of elements that lie in any of the collections <var class="Arg">C1</var>, <var class="Arg">C2</var>, etc. If the result is a list then it is mutable and new, i.e., not identical to any of <var class="Arg">C1</var>, <var class="Arg">C2</var>, etc.</p>
@@ -632,7 +632,7 @@ Group([ (1,5)(2,4) ])
 
 <h5>30.5-4 Difference</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Difference</code>( <var class="Arg">C1</var>, <var class="Arg">C2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Difference</code>( <var class="Arg">C1</var>, <var class="Arg">C2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">Difference</code> returns the set difference of the collections <var class="Arg">C1</var> and <var class="Arg">C2</var>. Either argument may also be a homogeneous list that is not a proper set, in which case <code class="func">Difference</code> silently applies <code class="func">Set</code> (<a href="chap30.html#X7E399AC97FD98217"><span class="RefLink">30.3-7</span></a>) to it first.</p>
 
 <p>The result of <code class="func">Difference</code> is the set of elements that lie in <var class="Arg">C1</var> but not in <var class="Arg">C2</var>. Note that <var class="Arg">C2</var> need not be a subset of <var class="Arg">C1</var>. The elements of <var class="Arg">C2</var>, however, that are not elements of <var class="Arg">C1</var> play no role for the result. If the result is a list then it is mutable and new, i.e., not identical to <var class="Arg">C1</var> or <var class="Arg">C2</var>.</p>
@@ -651,7 +651,7 @@ Group([ (1,5)(2,4) ])
 
 <h5><code>30.6-1 \in</code></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \in</code>( <var class="Arg">obj</var>, <var class="Arg">C</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \in</code>( <var class="Arg">obj</var>, <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the object <var class="Arg">obj</var> lies in the collection <var class="Arg">C</var>, and <code class="keyw">false</code> otherwise.</p>
 
 <p>The infix version of the command</p>
@@ -684,8 +684,8 @@ false
 
 <h5>30.7-1 Random</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Random</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Random</code>( <var class="Arg">from</var>, <var class="Arg">to</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Random</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Random</code>( <var class="Arg">from</var>, <var class="Arg">to</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">Random</code> returns a (pseudo-)random element of the list or collection <var class="Arg">listorcoll</var>.</p>
 
 <p>As lists or ranges are restricted in length (<span class="SimpleMath">2^28-1</span> or <span class="SimpleMath">2^60-1</span> depending on your system), the second form returns a random integer in the range <var class="Arg">from</var> to <var class="Arg">to</var> (inclusive) for arbitrary integers <var class="Arg">from</var> and <var class="Arg">to</var>.</p>
@@ -715,14 +715,14 @@ false
 
 <h5>30.7-2 PseudoRandom</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PseudoRandom</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PseudoRandom</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">PseudoRandom</code> returns a pseudo random element of the list or collection <var class="Arg">listorcoll</var>, which can be roughly described as follows. For a list, <code class="func">PseudoRandom</code> returns the same as <code class="func">Random</code> (<a href="chap30.html#X7FF906E57D6936F8"><span class="RefLink">30.7-1</span></a>). For collections that are not lists, the elements returned by <code class="func">PseudoRandom</code> are <em>not</em> necessarily equally distributed, even for finite collections; the idea is that <code class="func">Random</code> (<a href="chap30.html#X7FF906E57D6936F8"><span class="RefLink">30.7-1</span></a>) returns elements according to a reasonable distribution, <code class="func">PseudoRandom</code> returns elements that are cheap to compute but need not satisfy this strong condition, and <code class="func">Representative</code> (<a href="chap30.html#X865507568182424E"><span class="RefLink">30.4-7</span></a>) returns arbitrary elements, probably the same element for each call.</p>
 
 <p><a id="X7EBA01EB83BC65A9" name="X7EBA01EB83BC65A9"></a></p>
 
 <h5>30.7-3 RandomList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomList</code>( <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomList</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For a dense list <var class="Arg">list</var>, <code class="func">RandomList</code> returns a (pseudo-)random element with equal distribution.</p>
 
 <p>This function uses the <code class="func">GlobalMersenneTwister</code> (<a href="chap14.html#X7F772E2686B35865"><span class="RefLink">14.7-4</span></a>) to produce the random elements (a source of high quality random numbers).</p>
@@ -735,8 +735,8 @@ false
 
 <h5>30.8-1 Iterator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Iterator</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsStandardIterator</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Iterator</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsStandardIterator</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p>Iterators provide a possibility to loop over the elements of a (countable) collection or list <var class="Arg">listorcoll</var>, without repetition. For many collections <span class="SimpleMath">C</span>, an iterator of <span class="SimpleMath">C</span> need not store all elements of <span class="SimpleMath">C</span>, for example it is possible to construct an iterator of some infinite domains, such as the field of rational numbers.</p>
 
 <p><code class="func">Iterator</code> returns a mutable <em>iterator</em> <span class="SimpleMath">iter</span> for its argument. If this argument is a list (which may contain holes), then <span class="SimpleMath">iter</span> iterates over the elements (but not the holes) of this list in the same order (see <code class="func">IteratorList</code> (<a href="chap30.html#X858A28667D137C4B"><span class="RefLink">30.8-6</span></a>) for details). If this argument is a collection but not a list then <span class="SimpleMath">iter</span> iterates over the elements of this collection in an unspecified order, which may change for repeated calls of <code class="func">Iterator</code>. Because iterators returned by <code class="func">Iterator</code> are mutable (see <a href="chap12.html#X7F0C119682196D65"><span class="RefLink">12.6</span></a>), each call of <code class="func">Iterator</code> for the same argument returns a <em>new</em> iterator. Therefore <code class="func">Iterator</code> is not an attribute (see <a href="chap13.html#X7C701DBF7BAE649A"><span class="RefLink">13.5</span></a>).</p>
@@ -774,7 +774,7 @@ false
 
 <h5>30.8-2 IteratorSorted</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorSorted</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorSorted</code>( <var class="Arg">listorcoll</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">IteratorSorted</code> returns a mutable iterator. The argument must be a collection or a list that is not necessarily dense but whose elements lie in the same family (see <a href="chap13.html#X846063757EC05986"><span class="RefLink">13.1</span></a>). It loops over the different elements in sorted order.</p>
 
 <p>For a collection <span class="SimpleMath">C</span> that is not a list, the generic method is <code class="code">IteratorList( EnumeratorSorted( </code><var class="Arg">C</var><code class="code"> ) )</code>.</p>
@@ -783,21 +783,21 @@ false
 
 <h5>30.8-3 IsIterator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIterator</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIterator</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Every iterator lies in the category <code class="code">IsIterator</code>.</p>
 
 <p><a id="X8055FC557B5D899E" name="X8055FC557B5D899E"></a></p>
 
 <h5>30.8-4 IsDoneIterator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDoneIterator</code>( <var class="Arg">iter</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDoneIterator</code>( <var class="Arg">iter</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">iter</var> is an iterator for the list or collection <span class="SimpleMath">C</span> then <code class="code">IsDoneIterator( <var class="Arg">iter</var> )</code> is <code class="keyw">true</code> if all elements of <span class="SimpleMath">C</span> have been returned already by <code class="code">NextIterator( <var class="Arg">iter</var> )</code>, and <code class="keyw">false</code> otherwise.</p>
 
 <p><a id="X879F62F77D1D1179" name="X879F62F77D1D1179"></a></p>
 
 <h5>30.8-5 NextIterator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NextIterator</code>( <var class="Arg">iter</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NextIterator</code>( <var class="Arg">iter</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">iter</var> be a mutable iterator for the list or collection <span class="SimpleMath">C</span>. If <code class="code">IsDoneIterator( <var class="Arg">iter</var> )</code> is <code class="keyw">false</code> then <code class="func">NextIterator</code> is applicable to <var class="Arg">iter</var>, and the result is the next element of <span class="SimpleMath">C</span>, according to the succession defined by <var class="Arg">iter</var>.</p>
 
 <p>If <code class="code">IsDoneIterator( <var class="Arg">iter</var> )</code> is <code class="keyw">true</code> then it is not defined what happens when <code class="func">NextIterator</code> is called for <var class="Arg">iter</var>; that is, it may happen that an error is signalled or that something meaningless is returned, or even that <strong class="pkg">GAP</strong> crashes.</p>
@@ -828,7 +828,7 @@ true
 
 <h5>30.8-6 IteratorList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorList</code>( <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorList</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">IteratorList</code> returns a new iterator that allows iteration over the elements of the list <var class="Arg">list</var> (which may have holes) in the same order.</p>
 
 <p>If <var class="Arg">list</var> is mutable then it is in principle possible to change <var class="Arg">list</var> after the call of <code class="func">IteratorList</code>. In this case all changes concerning positions that have not yet been reached in the iteration will also affect the iterator. For example, if <var class="Arg">list</var> is enlarged then the iterator will iterate also over the new elements at the end of the changed list.</p>
@@ -839,14 +839,14 @@ true
 
 <h5>30.8-7 TrivialIterator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TrivialIterator</code>( <var class="Arg">elm</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TrivialIterator</code>( <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is a mutable iterator for the collection <code class="code">[ <var class="Arg">elm</var> ]</code> that consists of exactly one element <var class="Arg">elm</var> (see <code class="func">IsTrivial</code> (<a href="chap30.html#X7E3402D6799D3C24"><span class="RefLink">30.4-3</span></a>)).</p>
 
 <p><a id="X82677D8F817D6701" name="X82677D8F817D6701"></a></p>
 
 <h5>30.8-8 IteratorByFunctions</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorByFunctions</code>( <var class="Arg">record</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IteratorByFunctions</code>( <var class="Arg">record</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">IteratorByFunctions</code> returns a (mutable) iterator <var class="Arg">iter</var> for which <code class="func">NextIterator</code> (<a href="chap30.html#X879F62F77D1D1179"><span class="RefLink">30.8-5</span></a>), <code class="func">IsDoneIterator</code> (<a href="chap30.html#X8055FC557B5D899E"><span class="RefLink">30.8-4</span></a>), and <code class="func">ShallowCopy</code> (<a href="chap12.html#X846BC7107C352031"><span class="RefLink">12.7-1</span></a>) are computed via prescribed functions.</p>
 
 <p>Let <var class="Arg">record</var> be a record with at least the following components.</p>

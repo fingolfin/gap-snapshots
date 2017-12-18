@@ -98,7 +98,7 @@
 ## Returns <K>true</K> when an email of the <Package>simpcomp</Package> email notification system is pending, <K>false</K> otherwise.
 ## <Example>
 ## gap&gt; SCMailIsPending();
-## true
+## false
 ## </Example>
 ## </Description>
 ## </ManSection>
@@ -142,13 +142,11 @@
 ## <Func Name="SCRunTest" Arg=""/>
 ## <Returns><K>true</K> upon success, <K>fail</K> otherwise.</Returns>
 ## <Description>
-## Test whether the package <Package>simpcomp</Package> is functional by calling <C>ReadTest("GAPROOT/pkg/simpcomp/tst/simpcomp.tst");</C>. The returned value of GAP4stones is a measure of your system performance and differs from system to system.
+## Test whether the package <Package>simpcomp</Package> is functional by calling <C>Test("GAPROOT/pkg/simpcomp/tst/simpcomp.tst",rec(compareFunction := "uptowhitespace"));</C>. The returned value of GAP4stones is a measure of your system performance and differs from system to system.
 ## <Example>
 ## gap&gt; SCRunTest();
-## Line 1220 : 
-## + simpcomp package test
-## Line 1221 : 
-## + GAP4stones: 67385
+## simpcomp package test
+## GAP4stones: 69463
 ## true
 ## </Example>
 ## </Description>

@@ -76,9 +76,9 @@
   
   [1X73.1-1 PowerMap[101X
   
-  [29X[2XPowerMap[102X( [3Xtbl[103X, [3Xn[103X[, [3Xclass[103X] ) [32X operation
-  [29X[2XPowerMapOp[102X( [3Xtbl[103X, [3Xn[103X[, [3Xclass[103X] ) [32X operation
-  [29X[2XComputedPowerMaps[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XPowerMap[102X( [3Xtbl[103X, [3Xn[103X[, [3Xclass[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XPowerMapOp[102X( [3Xtbl[103X, [3Xn[103X[, [3Xclass[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XComputedPowerMaps[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0YCalled  with  first  argument  a  character table [3Xtbl[103X and second argument an
   integer  [3Xn[103X,  [2XPowerMap[102X  returns  the  [3Xn[103X-th  power  map of [3Xtbl[103X. This is a list
@@ -114,7 +114,7 @@
   
   [1X73.1-2 PossiblePowerMaps[101X
   
-  [29X[2XPossiblePowerMaps[102X( [3Xtbl[103X, [3Xp[103X[, [3Xoptions[103X] ) [32X operation
+  [33X[1;0Y[29X[2XPossiblePowerMaps[102X( [3Xtbl[103X, [3Xp[103X[, [3Xoptions[103X] ) [32X operation[133X
   
   [33X[0;0YFor  the  ordinary  character  table  [3Xtbl[103X  of  the group [22XG[122X, say, and a prime
   integer  [3Xp[103X,  [2XPossiblePowerMaps[102X  returns  the  list of all maps that have the
@@ -200,7 +200,7 @@
   
   [1X73.1-3 ElementOrdersPowerMap[101X
   
-  [29X[2XElementOrdersPowerMap[102X( [3Xpowermap[103X ) [32X function
+  [33X[1;0Y[29X[2XElementOrdersPowerMap[102X( [3Xpowermap[103X ) [32X function[133X
   
   [33X[0;0YLet [3Xpowermap[103X be a nonempty list containing at position [22Xp[122X, if bound, the [22Xp[122X-th
   power  map  of  a  character table or group. [2XElementOrdersPowerMap[102X returns a
@@ -229,7 +229,7 @@
   
   [1X73.1-4 PowerMapByComposition[101X
   
-  [29X[2XPowerMapByComposition[102X( [3Xtbl[103X, [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XPowerMapByComposition[102X( [3Xtbl[103X, [3Xn[103X ) [32X function[133X
   
   [33X[0;0Y[3Xtbl[103X must be a nearly character table, and [3Xn[103X a positive integer. If the power
   maps  for  all  prime  divisors  of  [3Xn[103X  are  stored in the [2XComputedPowerMaps[102X
@@ -265,7 +265,7 @@
   
   [1X73.2-1 OrbitPowerMaps[101X
   
-  [29X[2XOrbitPowerMaps[102X( [3Xmap[103X, [3Xpermgrp[103X ) [32X function
+  [33X[1;0Y[29X[2XOrbitPowerMaps[102X( [3Xmap[103X, [3Xpermgrp[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the  orbit of the power map [3Xmap[103X under the action of the permutation
   group  [3Xpermgrp[103X  via  a  combination  of  [2XPermuted[102X  ([14X21.20-18[114X)  and  [2XOnPoints[102X
@@ -273,7 +273,7 @@
   
   [1X73.2-2 RepresentativesPowerMaps[101X
   
-  [29X[2XRepresentativesPowerMaps[102X( [3Xlistofmaps[103X, [3Xpermgrp[103X ) [32X function
+  [33X[1;0Y[29X[2XRepresentativesPowerMaps[102X( [3Xlistofmaps[103X, [3Xpermgrp[103X ) [32X function[133X
   
   [33X[0;0Yreturns  a  list  of  orbit  representatives  of  the power maps in the list
   [3Xlistofmaps[103X  under  the  action  of  the  permutation  group  [3Xpermgrp[103X  via  a
@@ -366,11 +366,11 @@
   
   [1X73.3-1 [33X[0;0YFusionConjugacyClasses[133X[101X
   
-  [29X[2XFusionConjugacyClasses[102X( [3Xtbl1[103X, [3Xtbl2[103X ) [32X operation
-  [29X[2XFusionConjugacyClasses[102X( [3XH[103X, [3XG[103X ) [32X operation
-  [29X[2XFusionConjugacyClasses[102X( [3Xhom[103X[, [3Xtbl1[103X, [3Xtbl2[103X] ) [32X operation
-  [29X[2XFusionConjugacyClassesOp[102X( [3Xtbl1[103X, [3Xtbl2[103X ) [32X operation
-  [29X[2XFusionConjugacyClassesOp[102X( [3Xhom[103X ) [32X attribute
+  [33X[1;0Y[29X[2XFusionConjugacyClasses[102X( [3Xtbl1[103X, [3Xtbl2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XFusionConjugacyClasses[102X( [3XH[103X, [3XG[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XFusionConjugacyClasses[102X( [3Xhom[103X[, [3Xtbl1[103X, [3Xtbl2[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XFusionConjugacyClassesOp[102X( [3Xtbl1[103X, [3Xtbl2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XFusionConjugacyClassesOp[102X( [3Xhom[103X ) [32X attribute[133X
   
   [33X[0;0YCalled  with  two  character  tables  [3Xtbl1[103X  and [3Xtbl2[103X, [2XFusionConjugacyClasses[102X
   returns  the  fusion  of conjugacy classes between [3Xtbl1[103X and [3Xtbl2[103X. (If one of
@@ -422,7 +422,7 @@
   
   [1X73.3-2 ComputedClassFusions[101X
   
-  [29X[2XComputedClassFusions[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XComputedClassFusions[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0YThe  class  fusions  from  the  character  table [3Xtbl[103X that have been computed
   already   by   [2XFusionConjugacyClasses[102X   ([14X73.3-1[114X)  or  explicitly  stored  by
@@ -467,7 +467,7 @@
   
   [1X73.3-3 GetFusionMap[101X
   
-  [29X[2XGetFusionMap[102X( [3Xsource[103X, [3Xdestination[103X[, [3Xspecification[103X] ) [32X function
+  [33X[1;0Y[29X[2XGetFusionMap[102X( [3Xsource[103X, [3Xdestination[103X[, [3Xspecification[103X] ) [32X function[133X
   
   [33X[0;0YFor  two  ordinary  character  tables  [3Xsource[103X  and [3Xdestination[103X, [2XGetFusionMap[102X
   checks  whether  the [2XComputedClassFusions[102X ([14X73.3-2[114X) list of [3Xsource[103X contains a
@@ -486,7 +486,7 @@
   
   [1X73.3-4 StoreFusion[101X
   
-  [29X[2XStoreFusion[102X( [3Xsource[103X, [3Xfusion[103X, [3Xdestination[103X ) [32X function
+  [33X[1;0Y[29X[2XStoreFusion[102X( [3Xsource[103X, [3Xfusion[103X, [3Xdestination[103X ) [32X function[133X
   
   [33X[0;0YFor  two  character  tables  [3Xsource[103X  and [3Xdestination[103X, [2XStoreFusion[102X stores the
   fusion  [3Xfusion[103X  from  [3Xsource[103X  to  [3Xdestination[103X  in  the  [2XComputedClassFusions[102X
@@ -520,7 +520,7 @@
   
   [1X73.3-5 NamesOfFusionSources[101X
   
-  [29X[2XNamesOfFusionSources[102X( [3Xtbl[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNamesOfFusionSources[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a  character  table  [3Xtbl[103X,  [2XNamesOfFusionSources[102X  returns  the  list  of
   identifiers  of all those character tables that are known to have fusions to
@@ -536,7 +536,7 @@
   
   [1X73.3-6 PossibleClassFusions[101X
   
-  [29X[2XPossibleClassFusions[102X( [3Xsubtbl[103X, [3Xtbl[103X[, [3Xoptions[103X] ) [32X operation
+  [33X[1;0Y[29X[2XPossibleClassFusions[102X( [3Xsubtbl[103X, [3Xtbl[103X[, [3Xoptions[103X] ) [32X operation[133X
   
   [33X[0;0YFor two ordinary character tables [3Xsubtbl[103X and [3Xtbl[103X of the groups [22XH[122X and [22XG[122X, say,
   [2XPossibleClassFusions[102X  returns  the  list of all maps that have the following
@@ -632,7 +632,7 @@
   
   [1X73.3-7 ConsiderStructureConstants[101X
   
-  [29X[2XConsiderStructureConstants[102X( [3Xsubtbl[103X, [3Xtbl[103X, [3Xfusions[103X, [3Xquick[103X ) [32X function
+  [33X[1;0Y[29X[2XConsiderStructureConstants[102X( [3Xsubtbl[103X, [3Xtbl[103X, [3Xfusions[103X, [3Xquick[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xsubtbl[103X  and  [3Xtbl[103X  be ordinary character tables and [3Xfusions[103X be a list of
   possible  class  fusions  from  [3Xsubtbl[103X  to  [3Xtbl[103X.  [2XConsiderStructureConstants[102X
@@ -663,7 +663,7 @@
   
   [1X73.4-1 OrbitFusions[101X
   
-  [29X[2XOrbitFusions[102X( [3Xsubtblautomorphisms[103X, [3Xfusionmap[103X, [3Xtblautomorphisms[103X ) [32X function
+  [33X[1;0Y[29X[2XOrbitFusions[102X( [3Xsubtblautomorphisms[103X, [3Xfusionmap[103X, [3Xtblautomorphisms[103X ) [32X function[133X
   
   [33X[0;0Yreturns the orbit of the class fusion map [3Xfusionmap[103X under the actions of the
   permutation groups [3Xsubtblautomorphisms[103X and [3Xtblautomorphisms[103X of automorphisms
@@ -671,7 +671,7 @@
   
   [1X73.4-2 RepresentativesFusions[101X
   
-  [29X[2XRepresentativesFusions[102X( [3Xsubtbl[103X, [3Xlistofmaps[103X, [3Xtbl[103X ) [32X function
+  [33X[1;0Y[29X[2XRepresentativesFusions[102X( [3Xsubtbl[103X, [3Xlistofmaps[103X, [3Xtbl[103X ) [32X function[133X
   
   [33X[0;0YLet [3Xlistofmaps[103X be a list of class fusions from the character table [3Xsubtbl[103X to
   the  character  table  [3Xtbl[103X.  [2XRepresentativesFusions[102X  returns a list of orbit
@@ -713,7 +713,7 @@
   
   [1X73.5-1 CompositionMaps[101X
   
-  [29X[2XCompositionMaps[102X( [3Xparamap2[103X, [3Xparamap1[103X[, [3Xclass[103X] ) [32X function
+  [33X[1;0Y[29X[2XCompositionMaps[102X( [3Xparamap2[103X, [3Xparamap1[103X[, [3Xclass[103X] ) [32X function[133X
   
   [33X[0;0YThe  composition  of  two parametrized maps [3Xparamap1[103X, [3Xparamap2[103X is defined as
   the  parametrized  map  [3Xcomp[103X  that  contains  all  compositions [22Xf_2 ∘ f_1[122X of
@@ -739,7 +739,7 @@
   
   [1X73.5-2 InverseMap[101X
   
-  [29X[2XInverseMap[102X( [3Xparamap[103X ) [32X function
+  [33X[1;0Y[29X[2XInverseMap[102X( [3Xparamap[103X ) [32X function[133X
   
   [33X[0;0YFor  a  parametrized  map [3Xparamap[103X, [2XInverseMap[102X returns a mutable parametrized
   map  whose  [22Xi[122X-th entry is unbound if [22Xi[122X is not in the image of [3Xparamap[103X, equal
@@ -771,7 +771,7 @@
   
   [1X73.5-3 ProjectionMap[101X
   
-  [29X[2XProjectionMap[102X( [3Xfusionmap[103X ) [32X function
+  [33X[1;0Y[29X[2XProjectionMap[102X( [3Xfusionmap[103X ) [32X function[133X
   
   [33X[0;0YFor  a  map  [3Xfusionmap[103X,  [2XProjectionMap[102X returns a parametrized map whose [22Xi[122X-th
   entry  is unbound if [22Xi[122X is not in the image of [3Xfusionmap[103X, and equal to [22Xj[122X if [22Xj[122X
@@ -788,7 +788,7 @@
   
   [1X73.5-4 Indirected[101X
   
-  [29X[2XIndirected[102X( [3Xcharacter[103X, [3Xparamap[103X ) [32X function
+  [33X[1;0Y[29X[2XIndirected[102X( [3Xcharacter[103X, [3Xparamap[103X ) [32X function[133X
   
   [33X[0;0YFor  a  map  [3Xcharacter[103X  and a parametrized map [3Xparamap[103X, [2XIndirected[102X returns a
   parametrized  map  whose  entry  at position [22Xi[122X is [3Xcharacter[103X[10X[ [110X[3Xparamap[103X[10X[[110X[22Xi[122X[10X] ][110X if
@@ -809,7 +809,7 @@
   
   [1X73.5-5 Parametrized[101X
   
-  [29X[2XParametrized[102X( [3Xlist[103X ) [32X function
+  [33X[1;0Y[29X[2XParametrized[102X( [3Xlist[103X ) [32X function[133X
   
   [33X[0;0YFor  a  list  [3Xlist[103X  of  (parametrized) maps of the same length, [2XParametrized[102X
   returns the smallest parametrized map containing all elements of [3Xlist[103X.[133X
@@ -824,7 +824,7 @@
   
   [1X73.5-6 ContainedMaps[101X
   
-  [29X[2XContainedMaps[102X( [3Xparamap[103X ) [32X function
+  [33X[1;0Y[29X[2XContainedMaps[102X( [3Xparamap[103X ) [32X function[133X
   
   [33X[0;0YFor  a  parametrized  map [3Xparamap[103X, [2XContainedMaps[102X returns the set of all maps
   contained in [3Xparamap[103X.[133X
@@ -841,7 +841,7 @@
   
   [1X73.5-7 UpdateMap[101X
   
-  [29X[2XUpdateMap[102X( [3Xcharacter[103X, [3Xparamap[103X, [3Xindirected[103X ) [32X function
+  [33X[1;0Y[29X[2XUpdateMap[102X( [3Xcharacter[103X, [3Xparamap[103X, [3Xindirected[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xcharacter[103X  be  a  map,  [3Xparamap[103X  a  parametrized  map, and [3Xindirected[103X a
   parametrized map that is contained in [10XCompositionMaps( [3Xcharacter[103X[10X, [3Xparamap[103X[10X )[110X.[133X
@@ -884,7 +884,7 @@
   
   [1X73.5-8 MeetMaps[101X
   
-  [29X[2XMeetMaps[102X( [3Xparamap1[103X, [3Xparamap2[103X ) [32X function
+  [33X[1;0Y[29X[2XMeetMaps[102X( [3Xparamap1[103X, [3Xparamap2[103X ) [32X function[133X
   
   [33X[0;0YFor  two  parametrized maps [3Xparamap1[103X and [3Xparamap2[103X, [2XMeetMaps[102X changes [3Xparamap1[103X
   such  that  the  image  of  class  [22Xi[122X  is the intersection of [3Xparamap1[103X[10X[[110X[22Xi[122X[10X][110X and
@@ -903,7 +903,7 @@
   
   [1X73.5-9 CommutativeDiagram[101X
   
-  [29X[2XCommutativeDiagram[102X( [3Xparamap1[103X, [3Xparamap2[103X, [3Xparamap3[103X, [3Xparamap4[103X[, [3Ximprovements[103X] ) [32X function
+  [33X[1;0Y[29X[2XCommutativeDiagram[102X( [3Xparamap1[103X, [3Xparamap2[103X, [3Xparamap3[103X, [3Xparamap4[103X[, [3Ximprovements[103X] ) [32X function[133X
   
   [33X[0;0YLet  [3Xparamap1[103X,  [3Xparamap2[103X,  [3Xparamap3[103X,  [3Xparamap4[103X be parametrized maps covering
   parametrized maps [22Xf_1[122X, [22Xf_2[122X, [22Xf_3[122X, [22Xf_4[122X with the property that [10XCompositionMaps[110X[22X(
@@ -943,7 +943,7 @@
   
   [1X73.5-10 CheckFixedPoints[101X
   
-  [29X[2XCheckFixedPoints[102X( [3Xinside1[103X, [3Xbetween[103X, [3Xinside2[103X ) [32X function
+  [33X[1;0Y[29X[2XCheckFixedPoints[102X( [3Xinside1[103X, [3Xbetween[103X, [3Xinside2[103X ) [32X function[133X
   
   [33X[0;0YLet [3Xinside1[103X, [3Xbetween[103X, [3Xinside2[103X be parametrized maps, where [3Xbetween[103X is assumed
   to  map  each  fixed  point  of [3Xinside1[103X (that is, [3Xinside1[103X[10X[[110X[22Xi[122X[10X] = [110X[3Xi[103X) to a fixed
@@ -969,7 +969,7 @@
   
   [1X73.5-11 TransferDiagram[101X
   
-  [29X[2XTransferDiagram[102X( [3Xinside1[103X, [3Xbetween[103X, [3Xinside2[103X[, [3Ximprovements[103X] ) [32X function
+  [33X[1;0Y[29X[2XTransferDiagram[102X( [3Xinside1[103X, [3Xbetween[103X, [3Xinside2[103X[, [3Ximprovements[103X] ) [32X function[133X
   
   [33X[0;0YLet  [3Xinside1[103X,  [3Xbetween[103X,  [3Xinside2[103X  be parametrized maps covering parametrized
   maps  [22Xm_1[122X,  [22Xf[122X, [22Xm_2[122X with the property that [10XCompositionMaps[110X[22X( m_2, f )[122X is equal
@@ -1016,7 +1016,7 @@
   
   [1X73.5-12 TestConsistencyMaps[101X
   
-  [29X[2XTestConsistencyMaps[102X( [3Xpowermap1[103X, [3Xfusionmap[103X, [3Xpowermap2[103X[, [3Xfusimp[103X] ) [32X function
+  [33X[1;0Y[29X[2XTestConsistencyMaps[102X( [3Xpowermap1[103X, [3Xfusionmap[103X, [3Xpowermap2[103X[, [3Xfusimp[103X] ) [32X function[133X
   
   [33X[0;0YLet  [3Xpowermap1[103X  and [3Xpowermap2[103X be lists of parametrized maps, and [3Xfusionmap[103X a
   parametrized  map,  such  that  for  each  [22Xi[122X,  the  [22Xi[122X-th entry in [3Xpowermap1[103X,
@@ -1056,7 +1056,7 @@
   
   [1X73.5-13 Indeterminateness[101X
   
-  [29X[2XIndeterminateness[102X( [3Xparamap[103X ) [32X function
+  [33X[1;0Y[29X[2XIndeterminateness[102X( [3Xparamap[103X ) [32X function[133X
   
   [33X[0;0YFor a parametrized map [3Xparamap[103X, [2XIndeterminateness[102X returns the number of maps
   contained  in  [3Xparamap[103X,  that is, the product of lengths of lists in [3Xparamap[103X
@@ -1069,7 +1069,7 @@
   
   [1X73.5-14 PrintAmbiguity[101X
   
-  [29X[2XPrintAmbiguity[102X( [3Xlist[103X, [3Xparamap[103X ) [32X function
+  [33X[1;0Y[29X[2XPrintAmbiguity[102X( [3Xlist[103X, [3Xparamap[103X ) [32X function[133X
   
   [33X[0;0YFor  each  map in the list [3Xlist[103X, [2XPrintAmbiguity[102X prints its position in [3Xlist[103X,
   the  indeterminateness  (see [2XIndeterminateness[102X ([14X73.5-13[114X)) of the composition
@@ -1087,11 +1087,11 @@
   
   [1X73.5-15 ContainedSpecialVectors[101X
   
-  [29X[2XContainedSpecialVectors[102X( [3Xtbl[103X, [3Xchars[103X, [3Xparacharacter[103X, [3Xfunc[103X ) [32X function
-  [29X[2XIntScalarProducts[102X( [3Xtbl[103X, [3Xchars[103X, [3Xcandidate[103X ) [32X function
-  [29X[2XNonnegIntScalarProducts[102X( [3Xtbl[103X, [3Xchars[103X, [3Xcandidate[103X ) [32X function
-  [29X[2XContainedPossibleVirtualCharacters[102X( [3Xtbl[103X, [3Xchars[103X, [3Xparacharacter[103X ) [32X function
-  [29X[2XContainedPossibleCharacters[102X( [3Xtbl[103X, [3Xchars[103X, [3Xparacharacter[103X ) [32X function
+  [33X[1;0Y[29X[2XContainedSpecialVectors[102X( [3Xtbl[103X, [3Xchars[103X, [3Xparacharacter[103X, [3Xfunc[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XIntScalarProducts[102X( [3Xtbl[103X, [3Xchars[103X, [3Xcandidate[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XNonnegIntScalarProducts[102X( [3Xtbl[103X, [3Xchars[103X, [3Xcandidate[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XContainedPossibleVirtualCharacters[102X( [3Xtbl[103X, [3Xchars[103X, [3Xparacharacter[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XContainedPossibleCharacters[102X( [3Xtbl[103X, [3Xchars[103X, [3Xparacharacter[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xtbl[103X be an ordinary character table, [3Xchars[103X a list of class functions (or
   values  lists), [3Xparacharacter[103X a parametrized class function of [3Xtbl[103X, and [3Xfunc[103X
@@ -1148,7 +1148,7 @@
   
   [1X73.5-16 CollapsedMat[101X
   
-  [29X[2XCollapsedMat[102X( [3Xmat[103X, [3Xmaps[103X ) [32X function
+  [33X[1;0Y[29X[2XCollapsedMat[102X( [3Xmat[103X, [3Xmaps[103X ) [32X function[133X
   
   [33X[0;0Yis a record with the components[133X
   
@@ -1173,8 +1173,8 @@
   
   [1X73.5-17 ContainedDecomposables[101X
   
-  [29X[2XContainedDecomposables[102X( [3Xconstituents[103X, [3Xmoduls[103X, [3Xparachar[103X, [3Xfunc[103X ) [32X function
-  [29X[2XContainedCharacters[102X( [3Xtbl[103X, [3Xconstituents[103X, [3Xparachar[103X ) [32X function
+  [33X[1;0Y[29X[2XContainedDecomposables[102X( [3Xconstituents[103X, [3Xmoduls[103X, [3Xparachar[103X, [3Xfunc[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XContainedCharacters[102X( [3Xtbl[103X, [3Xconstituents[103X, [3Xparachar[103X ) [32X function[133X
   
   [33X[0;0YFor these functions, let [3Xconstituents[103X be a list of [13Xrational[113X class functions,
   [3Xmoduls[103X  a  list of positive integers, [3Xparachar[103X a parametrized rational class
@@ -1240,7 +1240,7 @@
   
   [1X73.6-1 InitPowerMap[101X
   
-  [29X[2XInitPowerMap[102X( [3Xtbl[103X, [3Xprime[103X ) [32X function
+  [33X[1;0Y[29X[2XInitPowerMap[102X( [3Xtbl[103X, [3Xprime[103X ) [32X function[133X
   
   [33X[0;0YFor  an ordinary character table [3Xtbl[103X and a prime [3Xprime[103X, [2XInitPowerMap[102X returns
   a parametrized map that is a first approximation of the [3Xprime[103X-th powermap of
@@ -1268,7 +1268,7 @@
   
   [1X73.6-2 Congruences[101X
   
-  [29X[2XCongruences[102X( [3Xtbl[103X, [3Xchars[103X, [3Xapproxmap[103X, [3Xprime[103X, [3Xquick[103X ) [32X function
+  [33X[1;0Y[29X[2XCongruences[102X( [3Xtbl[103X, [3Xchars[103X, [3Xapproxmap[103X, [3Xprime[103X, [3Xquick[103X ) [32X function[133X
   
   [33X[0;0Y[2XCongruences[102X  replaces the entries of [3Xapproxmap[103X by improved values, according
   to condition 3. listed in the description of [2XPossiblePowerMaps[102X ([14X73.1-2[114X).[133X
@@ -1288,7 +1288,7 @@
   
   [1X73.6-3 ConsiderKernels[101X
   
-  [29X[2XConsiderKernels[102X( [3Xtbl[103X, [3Xchars[103X, [3Xapproxmap[103X, [3Xprime[103X, [3Xquick[103X ) [32X function
+  [33X[1;0Y[29X[2XConsiderKernels[102X( [3Xtbl[103X, [3Xchars[103X, [3Xapproxmap[103X, [3Xprime[103X, [3Xquick[103X ) [32X function[133X
   
   [33X[0;0Y[2XConsiderKernels[102X  replaces  the  entries  of  [3Xapproxmap[103X  by  improved values,
   according  to  condition  4. listed  in the description of [2XPossiblePowerMaps[102X
@@ -1310,7 +1310,7 @@
   
   [1X73.6-4 ConsiderSmallerPowerMaps[101X
   
-  [29X[2XConsiderSmallerPowerMaps[102X( [3Xtbl[103X, [3Xapproxmap[103X, [3Xprime[103X, [3Xquick[103X ) [32X function
+  [33X[1;0Y[29X[2XConsiderSmallerPowerMaps[102X( [3Xtbl[103X, [3Xapproxmap[103X, [3Xprime[103X, [3Xquick[103X ) [32X function[133X
   
   [33X[0;0Y[2XConsiderSmallerPowerMaps[102X  replaces  the  entries  of  [3Xapproxmap[103X  by improved
   values,   according   to   condition   5. listed   in   the  description  of
@@ -1336,7 +1336,7 @@
   
   [1X73.6-5 MinusCharacter[101X
   
-  [29X[2XMinusCharacter[102X( [3Xcharacter[103X, [3Xprimepowermap[103X, [3Xprime[103X ) [32X function
+  [33X[1;0Y[29X[2XMinusCharacter[102X( [3Xcharacter[103X, [3Xprimepowermap[103X, [3Xprime[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xcharacter[103X  be (the list of values of) a class function [22Xχ[122X, [3Xprime[103X a prime
   integer  [22Xp[122X, and [3Xprimepowermap[103X a parametrized map that is an approximation of
@@ -1363,7 +1363,7 @@
   
   [1X73.6-6 PowerMapsAllowedBySymmetrizations[101X
   
-  [29X[2XPowerMapsAllowedBySymmetrizations[102X( [3Xtbl[103X, [3Xsubchars[103X, [3Xchars[103X, [3Xapproxmap[103X, [3Xprime[103X, [3Xparameters[103X ) [32X function
+  [33X[1;0Y[29X[2XPowerMapsAllowedBySymmetrizations[102X( [3Xtbl[103X, [3Xsubchars[103X, [3Xchars[103X, [3Xapproxmap[103X, [3Xprime[103X, [3Xparameters[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xtbl[103X  be an ordinary character table, [3Xprime[103X a prime integer, [3Xapproxmap[103X a
   parametrized  map  that is an approximation of the [3Xprime[103X-th power map of [3Xtbl[103X
@@ -1424,7 +1424,7 @@
   
   [1X73.7-1 InitFusion[101X
   
-  [29X[2XInitFusion[102X( [3Xsubtbl[103X, [3Xtbl[103X ) [32X function
+  [33X[1;0Y[29X[2XInitFusion[102X( [3Xsubtbl[103X, [3Xtbl[103X ) [32X function[133X
   
   [33X[0;0YFor  two  ordinary  character  tables  [3Xsubtbl[103X  and [3Xtbl[103X, [2XInitFusion[102X returns a
   parametrized  map  that  is  a  first approximation of the class fusion from
@@ -1446,7 +1446,7 @@
   
   [1X73.7-2 CheckPermChar[101X
   
-  [29X[2XCheckPermChar[102X( [3Xsubtbl[103X, [3Xtbl[103X, [3Xapproxmap[103X, [3Xpermchar[103X ) [32X function
+  [33X[1;0Y[29X[2XCheckPermChar[102X( [3Xsubtbl[103X, [3Xtbl[103X, [3Xapproxmap[103X, [3Xpermchar[103X ) [32X function[133X
   
   [33X[0;0Y[2XCheckPermChar[102X  replaces  the  entries  of  the parametrized map [3Xapproxmap[103X by
   improved  values,  according  to  condition 3. listed  in the description of
@@ -1466,7 +1466,7 @@
   
   [1X73.7-3 ConsiderTableAutomorphisms[101X
   
-  [29X[2XConsiderTableAutomorphisms[102X( [3Xapproxmap[103X, [3Xgrp[103X ) [32X function
+  [33X[1;0Y[29X[2XConsiderTableAutomorphisms[102X( [3Xapproxmap[103X, [3Xgrp[103X ) [32X function[133X
   
   [33X[0;0Y[2XConsiderTableAutomorphisms[102X  replaces  the  entries  of  the parametrized map
   [3Xapproxmap[103X  by  improved  values,  according  to  condition 4. listed  in the
@@ -1490,7 +1490,7 @@
   
   [1X73.7-4 FusionsAllowedByRestrictions[101X
   
-  [29X[2XFusionsAllowedByRestrictions[102X( [3Xsubtbl[103X, [3Xtbl[103X, [3Xsubchars[103X, [3Xchars[103X, [3Xapproxmap[103X, [3Xparameters[103X ) [32X function
+  [33X[1;0Y[29X[2XFusionsAllowedByRestrictions[102X( [3Xsubtbl[103X, [3Xtbl[103X, [3Xsubchars[103X, [3Xchars[103X, [3Xapproxmap[103X, [3Xparameters[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xsubtbl[103X  and  [3Xtbl[103X  be  ordinary character tables, [3Xsubchars[103X and [3Xchars[103X two
   lists  of  (values  lists  of)  characters  of [3Xsubtbl[103X and [3Xtbl[103X, respectively,

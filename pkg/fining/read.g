@@ -8,7 +8,8 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2014	Colorado State University, Fort Collins
+##  Copyright 2017	Colorado State University, Fort Collins
+##					Sabancõ †niversitesi
 ##					Universitˆ degli Studi di Padova
 ##					Universeit Gent
 ##					University of St. Andrews
@@ -57,6 +58,3 @@ ReadPackage("fining","lib/affinegroup.gi");
 ReadPackage("fining","lib/gpolygons.gi");
 
 ReadPackage("fining","lib/orbits-stabilisers.gi"); # added 11/02/13 ml
-
-Print("\n");
-

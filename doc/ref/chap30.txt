@@ -18,7 +18,7 @@
   
   [1X30.1-1 IsCollection[101X
   
-  [29X[2XIsCollection[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsCollection[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0Ytests whether an object is a collection.[133X
   
@@ -32,7 +32,7 @@
   
   [1X30.2-1 CollectionsFamily[101X
   
-  [29X[2XCollectionsFamily[102X( [3XFam[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCollectionsFamily[102X( [3XFam[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a  family  [3XFam[103X, [2XCollectionsFamily[102X returns the family of all collections
   over [3XFam[103X, that is, of all dense lists and domains that consist of objects in
@@ -53,13 +53,13 @@
   
   [1X30.2-2 IsCollectionFamily[101X
   
-  [29X[2XIsCollectionFamily[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsCollectionFamily[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0Yis [9Xtrue[109X if [3XFam[103X is a family of collections, and [9Xfalse[109X otherwise.[133X
   
   [1X30.2-3 ElementsFamily[101X
   
-  [29X[2XElementsFamily[102X( [3XFam[103X ) [32X attribute
+  [33X[1;0Y[29X[2XElementsFamily[102X( [3XFam[103X ) [32X attribute[133X
   
   [33X[0;0YIf  [3XFam[103X  is  a  collections  family  (see [2XIsCollectionFamily[102X  ([14X30.2-2[114X)) then
   [2XElementsFamily[102X   returns   the   family   from  which  [3XFam[103X  was  created  by
@@ -83,7 +83,7 @@
   
   [1X30.2-4 CategoryCollections[101X
   
-  [29X[2XCategoryCollections[102X( [3Xfilter[103X ) [32X function
+  [33X[1;0Y[29X[2XCategoryCollections[102X( [3Xfilter[103X ) [32X function[133X
   
   [33X[0;0YLet [3Xfilter[103X be a filter that is [9Xtrue[109X for all elements of a family [3XFam[103X, by the
   construction  of  [3XFam[103X.  Then  [2XCategoryCollections[102X  returns  the  [13Xcollections
@@ -108,7 +108,7 @@
   
   [1X30.3-1 IsListOrCollection[101X
   
-  [29X[2XIsListOrCollection[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsListOrCollection[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YSeveral  functions  are  defined for both lists and collections, for example
   [2XIntersection[102X    ([14X30.5-2[114X),    [2XIterator[102X   ([14X30.8-1[114X),   and   [2XRandom[102X   ([14X30.7-1[114X).
@@ -118,7 +118,7 @@
   
   [1X30.3-2 Enumerator[101X
   
-  [29X[2XEnumerator[102X( [3Xlistorcoll[103X ) [32X attribute
+  [33X[1;0Y[29X[2XEnumerator[102X( [3Xlistorcoll[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XEnumerator[102X  returns an immutable list [22Xenum[122X. If the argument is a list (which
   may contain holes), then [10XLength( [110X[22Xenum[122X[10X )[110X is the length of this list, and [22Xenum[122X
@@ -135,7 +135,7 @@
   
   [1X30.3-3 EnumeratorSorted[101X
   
-  [29X[2XEnumeratorSorted[102X( [3Xlistorcoll[103X ) [32X attribute
+  [33X[1;0Y[29X[2XEnumeratorSorted[102X( [3Xlistorcoll[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XEnumeratorSorted[102X  returns  an  immutable  list  [22Xenum[122X. The argument must be a
   collection  or  a list [3Xlistorcoll[103X which may contain holes but whose elements
@@ -163,8 +163,8 @@
   
   [1X30.3-4 EnumeratorByFunctions[101X
   
-  [29X[2XEnumeratorByFunctions[102X( [3XD[103X, [3Xrecord[103X ) [32X function
-  [29X[2XEnumeratorByFunctions[102X( [3XFam[103X, [3Xrecord[103X ) [32X function
+  [33X[1;0Y[29X[2XEnumeratorByFunctions[102X( [3XD[103X, [3Xrecord[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XEnumeratorByFunctions[102X( [3XFam[103X, [3Xrecord[103X ) [32X function[133X
   
   [33X[0;0Y[2XEnumeratorByFunctions[102X  returns  an immutable, dense, and duplicate-free list
   [22Xenum[122X  for  which  [2XIsBound[102X ([14X21.5-1[114X), element access via [2X\[\][102X ([14X21.2-1[114X), [2XLength[102X
@@ -249,7 +249,7 @@
   
   [1X30.3-5 List[101X
   
-  [29X[2XList[102X( [3XC[103X ) [32X function
+  [33X[1;0Y[29X[2XList[102X( [3XC[103X ) [32X function[133X
   
   [33X[0;0YFor  a  collection [3XC[103X (see [14X30[114X) that is not a list, [2XList[102X returns a new mutable
   list  [3Xnew[103X  such that [10XLength( [3Xnew[103X[10X )[110X is the number of different elements of [3XC[103X,
@@ -272,7 +272,7 @@
   
   [1X30.3-6 SortedList[101X
   
-  [29X[2XSortedList[102X( [3Xlistorcoll[103X ) [32X operation
+  [33X[1;0Y[29X[2XSortedList[102X( [3Xlistorcoll[103X ) [32X operation[133X
   
   [33X[0;0Y[2XSortedList[102X  returns a new mutable and dense list [3Xnew[103X. The argument must be a
   collection or list [3Xlistorcoll[103X which may contain holes but whose elements lie
@@ -294,8 +294,8 @@
   
   [1X30.3-7 SSortedList[101X
   
-  [29X[2XSSortedList[102X( [3Xlistorcoll[103X ) [32X operation
-  [29X[2XSet[102X( [3XC[103X ) [32X operation
+  [33X[1;0Y[29X[2XSSortedList[102X( [3Xlistorcoll[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSet[102X( [3XC[103X ) [32X operation[133X
   
   [33X[0;0Y[2XSSortedList[102X  ([21Xstrictly  sorted  list[121X)  returns  a  new  dense,  mutable, and
   duplicate  free  list  [3Xnew[103X.  The  argument  must  be  a  collection  or list
@@ -320,7 +320,7 @@
   
   [1X30.3-8 AsList[101X
   
-  [29X[2XAsList[102X( [3Xlistorcoll[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAsList[102X( [3Xlistorcoll[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XAsList[102X  returns  a  immutable list [3Ximm[103X. If the argument is a list (which may
   contain  holes),  then  [10XLength(  [3Ximm[103X[10X )[110X is the [2XLength[102X ([14X21.17-5[114X) value of this
@@ -348,7 +348,7 @@
   
   [1X30.3-9 AsSortedList[101X
   
-  [29X[2XAsSortedList[102X( [3Xlistorcoll[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAsSortedList[102X( [3Xlistorcoll[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XAsSortedList[102X  returns a dense and immutable list [3Ximm[103X. The argument must be a
   collection or list [3Xlistorcoll[103X which may contain holes but whose elements lie
@@ -373,8 +373,8 @@
   
   [1X30.3-10 AsSSortedList[101X
   
-  [29X[2XAsSSortedList[102X( [3Xlistorcoll[103X ) [32X attribute
-  [29X[2XAsSet[102X( [3Xlistorcoll[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAsSSortedList[102X( [3Xlistorcoll[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XAsSet[102X( [3Xlistorcoll[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XAsSSortedList[102X  ([21Xas  strictly  sorted  list[121X)  returns a dense, immutable, and
   duplicate  free  list  [3Ximm[103X.  The  argument  must  be  a  collection  or list
@@ -413,7 +413,7 @@
   
   [1X30.3-11 Elements[101X
   
-  [29X[2XElements[102X( [3XC[103X ) [32X function
+  [33X[1;0Y[29X[2XElements[102X( [3XC[103X ) [32X function[133X
   
   [33X[0;0Y[2XElements[102X does the same as [2XAsSSortedList[102X ([14X30.3-10[114X), that is, the return value
   is a strictly sorted list of the elements in the list or collection [3XC[103X.[133X
@@ -430,14 +430,14 @@
   
   [1X30.4-1 IsEmpty[101X
   
-  [29X[2XIsEmpty[102X( [3Xlistorcoll[103X ) [32X property
+  [33X[1;0Y[29X[2XIsEmpty[102X( [3Xlistorcoll[103X ) [32X property[133X
   
   [33X[0;0Y[2XIsEmpty[102X  returns [9Xtrue[109X if the collection or list [3Xlistorcoll[103X is [13Xempty[113X (that is
   it contains no elements), and [9Xfalse[109X otherwise.[133X
   
   [1X30.4-2 IsFinite[101X
   
-  [29X[2XIsFinite[102X( [3XC[103X ) [32X property
+  [33X[1;0Y[29X[2XIsFinite[102X( [3XC[103X ) [32X property[133X
   
   [33X[0;0Y[2XIsFinite[102X returns [9Xtrue[109X if the collection [3XC[103X is finite, and [9Xfalse[109X otherwise.[133X
   
@@ -448,13 +448,13 @@
   
   [1X30.4-3 IsTrivial[101X
   
-  [29X[2XIsTrivial[102X( [3XC[103X ) [32X property
+  [33X[1;0Y[29X[2XIsTrivial[102X( [3XC[103X ) [32X property[133X
   
   [33X[0;0Y[2XIsTrivial[102X returns [9Xtrue[109X if the collection [3XC[103X consists of exactly one element.[133X
   
   [1X30.4-4 IsNonTrivial[101X
   
-  [29X[2XIsNonTrivial[102X( [3XC[103X ) [32X property
+  [33X[1;0Y[29X[2XIsNonTrivial[102X( [3XC[103X ) [32X property[133X
   
   [33X[0;0Y[2XIsNonTrivial[102X  returns  [9Xtrue[109X  if  the collection [3XC[103X is empty or consists of at
   least two elements (see [2XIsTrivial[102X ([14X30.4-3[114X)).[133X
@@ -477,7 +477,7 @@
   
   [1X30.4-5 IsWholeFamily[101X
   
-  [29X[2XIsWholeFamily[102X( [3XC[103X ) [32X property
+  [33X[1;0Y[29X[2XIsWholeFamily[102X( [3XC[103X ) [32X property[133X
   
   [33X[0;0Y[2XIsWholeFamily[102X  returns  [9Xtrue[109X  if  the collection [3XC[103X contains the whole family
   (see [14X13.1[114X) of its elements.[133X
@@ -497,7 +497,7 @@
   
   [1X30.4-6 Size[101X
   
-  [29X[2XSize[102X( [3Xlistorcoll[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSize[102X( [3Xlistorcoll[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XSize[102X  returns the size of the list or collection [3Xlistorcoll[103X, which is either
   an  integer  or [2Xinfinity[102X ([14X18.2-1[114X). If the argument is a list then the result
@@ -518,7 +518,7 @@
   
   [1X30.4-7 Representative[101X
   
-  [29X[2XRepresentative[102X( [3XC[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRepresentative[102X( [3XC[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XRepresentative[102X returns a [13Xrepresentative[113X of the collection [3XC[103X.[133X
   
@@ -536,7 +536,7 @@
   
   [1X30.4-8 RepresentativeSmallest[101X
   
-  [29X[2XRepresentativeSmallest[102X( [3XC[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRepresentativeSmallest[102X( [3XC[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the  smallest  element  in the collection [3XC[103X, w.r.t. the ordering [2X\<[102X
   ([14X31.11-1[114X).  While  the  operation defaults to comparing all elements, better
@@ -556,7 +556,7 @@
   
   [1X30.5-1 IsSubset[101X
   
-  [29X[2XIsSubset[102X( [3XC1[103X, [3XC2[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsSubset[102X( [3XC1[103X, [3XC2[103X ) [32X operation[133X
   
   [33X[0;0Y[2XIsSubset[102X  returns [9Xtrue[109X if [3XC2[103X, which must be a collection, is a [13Xsubset[113X of [3XC1[103X,
   which also must be a collection, and [9Xfalse[109X otherwise.[133X
@@ -580,9 +580,9 @@
   
   [1X30.5-2 [33X[0;0YIntersection[133X[101X
   
-  [29X[2XIntersection[102X( [3XC1[103X, [3XC2[103X, [3X...[103X ) [32X function
-  [29X[2XIntersection[102X( [3Xlist[103X ) [32X function
-  [29X[2XIntersection2[102X( [3XC1[103X, [3XC2[103X ) [32X operation
+  [33X[1;0Y[29X[2XIntersection[102X( [3XC1[103X, [3XC2[103X, [3X...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XIntersection[102X( [3Xlist[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XIntersection2[102X( [3XC1[103X, [3XC2[103X ) [32X operation[133X
   
   [33X[0;0YIn  the  first form [2XIntersection[102X returns the intersection of the collections
   [3XC1[103X,  [3XC2[103X, etc. In the second form [3Xlist[103X must be a [13Xnonempty[113X list of collections
@@ -630,9 +630,9 @@
   
   [1X30.5-3 [33X[0;0YUnion[133X[101X
   
-  [29X[2XUnion[102X( [3XC1[103X, [3XC2[103X, [3X...[103X ) [32X function
-  [29X[2XUnion[102X( [3Xlist[103X ) [32X function
-  [29X[2XUnion2[102X( [3XC1[103X, [3XC2[103X ) [32X operation
+  [33X[1;0Y[29X[2XUnion[102X( [3XC1[103X, [3XC2[103X, [3X...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XUnion[102X( [3Xlist[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XUnion2[102X( [3XC1[103X, [3XC2[103X ) [32X operation[133X
   
   [33X[0;0YIn the first form [2XUnion[102X returns the union of the collections [3XC1[103X, [3XC2[103X, etc. In
   the  second  form  [3Xlist[103X  must be a list of collections and [2XUnion[102X returns the
@@ -662,7 +662,7 @@
   
   [1X30.5-4 Difference[101X
   
-  [29X[2XDifference[102X( [3XC1[103X, [3XC2[103X ) [32X operation
+  [33X[1;0Y[29X[2XDifference[102X( [3XC1[103X, [3XC2[103X ) [32X operation[133X
   
   [33X[0;0Y[2XDifference[102X  returns  the set difference of the collections [3XC1[103X and [3XC2[103X. Either
   argument  may  also be a homogeneous list that is not a proper set, in which
@@ -683,7 +683,7 @@
   
   [1X30.6-1 \in[101X
   
-  [29X[2X\in[102X( [3Xobj[103X, [3XC[103X ) [32X operation
+  [33X[1;0Y[29X[2X\in[102X( [3Xobj[103X, [3XC[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  [9Xtrue[109X  if  the  object  [3Xobj[103X  lies  in  the  collection  [3XC[103X, and [9Xfalse[109X
   otherwise.[133X
@@ -720,8 +720,8 @@
   
   [1X30.7-1 Random[101X
   
-  [29X[2XRandom[102X( [3Xlistorcoll[103X ) [32X operation
-  [29X[2XRandom[102X( [3Xfrom[103X, [3Xto[103X ) [32X operation
+  [33X[1;0Y[29X[2XRandom[102X( [3Xlistorcoll[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRandom[102X( [3Xfrom[103X, [3Xto[103X ) [32X operation[133X
   
   [33X[0;0Y[2XRandom[102X   returns  a  (pseudo-)random  element  of  the  list  or  collection
   [3Xlistorcoll[103X.[133X
@@ -759,7 +759,7 @@
   
   [1X30.7-2 PseudoRandom[101X
   
-  [29X[2XPseudoRandom[102X( [3Xlistorcoll[103X ) [32X operation
+  [33X[1;0Y[29X[2XPseudoRandom[102X( [3Xlistorcoll[103X ) [32X operation[133X
   
   [33X[0;0Y[2XPseudoRandom[102X  returns  a  pseudo  random  element  of the list or collection
   [3Xlistorcoll[103X,  which  can  be  roughly  described  as  follows.  For  a  list,
@@ -773,7 +773,7 @@
   
   [1X30.7-3 RandomList[101X
   
-  [29X[2XRandomList[102X( [3Xlist[103X ) [32X function
+  [33X[1;0Y[29X[2XRandomList[102X( [3Xlist[103X ) [32X function[133X
   
   [33X[0;0YFor  a  dense  list  [3Xlist[103X, [2XRandomList[102X returns a (pseudo-)random element with
   equal distribution.[133X
@@ -786,8 +786,8 @@
   
   [1X30.8-1 Iterator[101X
   
-  [29X[2XIterator[102X( [3Xlistorcoll[103X ) [32X operation
-  [29X[2XIsStandardIterator[102X( [3Xlistorcoll[103X ) [32X filter
+  [33X[1;0Y[29X[2XIterator[102X( [3Xlistorcoll[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsStandardIterator[102X( [3Xlistorcoll[103X ) [32X filter[133X
   
   [33X[0;0YIterators  provide  a possibility to loop over the elements of a (countable)
   collection  or  list [3Xlistorcoll[103X, without repetition. For many collections [22XC[122X,
@@ -858,7 +858,7 @@
   
   [1X30.8-2 IteratorSorted[101X
   
-  [29X[2XIteratorSorted[102X( [3Xlistorcoll[103X ) [32X operation
+  [33X[1;0Y[29X[2XIteratorSorted[102X( [3Xlistorcoll[103X ) [32X operation[133X
   
   [33X[0;0Y[2XIteratorSorted[102X returns a mutable iterator. The argument must be a collection
   or  a  list that is not necessarily dense but whose elements lie in the same
@@ -869,13 +869,13 @@
   
   [1X30.8-3 IsIterator[101X
   
-  [29X[2XIsIterator[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsIterator[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YEvery iterator lies in the category [10XIsIterator[110X.[133X
   
   [1X30.8-4 IsDoneIterator[101X
   
-  [29X[2XIsDoneIterator[102X( [3Xiter[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsDoneIterator[102X( [3Xiter[103X ) [32X operation[133X
   
   [33X[0;0YIf  [3Xiter[103X  is  an  iterator for the list or collection [22XC[122X then [10XIsDoneIterator(
   [3Xiter[103X[10X  )[110X  is  [9Xtrue[109X  if  all  elements  of  [22XC[122X  have  been  returned already by
@@ -883,7 +883,7 @@
   
   [1X30.8-5 NextIterator[101X
   
-  [29X[2XNextIterator[102X( [3Xiter[103X ) [32X operation
+  [33X[1;0Y[29X[2XNextIterator[102X( [3Xiter[103X ) [32X operation[133X
   
   [33X[0;0YLet   [3Xiter[103X  be  a  mutable  iterator  for  the  list  or  collection  [22XC[122X.  If
   [10XIsDoneIterator( [3Xiter[103X[10X )[110X is [9Xfalse[109X then [2XNextIterator[102X is applicable to [3Xiter[103X, and
@@ -918,7 +918,7 @@
   
   [1X30.8-6 IteratorList[101X
   
-  [29X[2XIteratorList[102X( [3Xlist[103X ) [32X function
+  [33X[1;0Y[29X[2XIteratorList[102X( [3Xlist[103X ) [32X function[133X
   
   [33X[0;0Y[2XIteratorList[102X  returns a new iterator that allows iteration over the elements
   of the list [3Xlist[103X (which may have holes) in the same order.[133X
@@ -933,14 +933,14 @@
   
   [1X30.8-7 TrivialIterator[101X
   
-  [29X[2XTrivialIterator[102X( [3Xelm[103X ) [32X function
+  [33X[1;0Y[29X[2XTrivialIterator[102X( [3Xelm[103X ) [32X function[133X
   
   [33X[0;0Yis  a  mutable  iterator for the collection [10X[ [3Xelm[103X[10X ][110X that consists of exactly
   one element [3Xelm[103X (see [2XIsTrivial[102X ([14X30.4-3[114X)).[133X
   
   [1X30.8-8 IteratorByFunctions[101X
   
-  [29X[2XIteratorByFunctions[102X( [3Xrecord[103X ) [32X function
+  [33X[1;0Y[29X[2XIteratorByFunctions[102X( [3Xrecord[103X ) [32X function[133X
   
   [33X[0;0Y[2XIteratorByFunctions[102X returns a (mutable) iterator [3Xiter[103X for which [2XNextIterator[102X
   ([14X30.8-5[114X), [2XIsDoneIterator[102X ([14X30.8-4[114X), and [2XShallowCopy[102X ([14X12.7-1[114X) are computed via

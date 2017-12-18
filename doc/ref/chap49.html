@@ -83,8 +83,8 @@
 
 <h5>49.1-1 DirectProduct</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectProduct</code>( <var class="Arg">G</var>[, <var class="Arg">H</var>, <var class="Arg">...</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectProductOp</code>( <var class="Arg">list</var>, <var class="Arg">expl</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectProduct</code>( <var class="Arg">G</var>[, <var class="Arg">H</var>, <var class="Arg">...</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectProductOp</code>( <var class="Arg">list</var>, <var class="Arg">expl</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>These functions construct the direct product of the groups given as arguments. <code class="func">DirectProduct</code> takes an arbitrary positive number of arguments and calls the operation <code class="func">DirectProductOp</code>, which takes exactly two arguments, namely a nonempty list <var class="Arg">list</var> of groups and one of these groups, <var class="Arg">expl</var>. (This somewhat strange syntax allows the method selection to choose a reasonable method for special cases, e.g., if all groups are permutation groups or pc groups.)</p>
 
 <p><strong class="pkg">GAP</strong> will try to choose an efficient representation for the direct product. For example the direct product of permutation groups will be a permutation group again and the direct product of pc groups will be a pc group.</p>
@@ -119,8 +119,8 @@ Group([ (1,2,3), (1,2), (4,5,6), (4,5), (7,8,9), (7,8) ])
 
 <h5>49.2-1 <span class="Heading">SemidirectProduct</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemidirectProduct</code>( <var class="Arg">G</var>, <var class="Arg">alpha</var>, <var class="Arg">N</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemidirectProduct</code>( <var class="Arg">autgp</var>, <var class="Arg">N</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemidirectProduct</code>( <var class="Arg">G</var>, <var class="Arg">alpha</var>, <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemidirectProduct</code>( <var class="Arg">autgp</var>, <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>constructs the semidirect product of <var class="Arg">N</var> with <var class="Arg">G</var> acting via <var class="Arg">alpha</var>, which must be a homomorphism from <var class="Arg">G</var> into a group of automorphisms of <var class="Arg">N</var>.</p>
 
 <p>If <var class="Arg">N</var> is a group, <var class="Arg">alpha</var> must be a homomorphism from <var class="Arg">G</var> into a group of automorphisms of <var class="Arg">N</var>.</p>
@@ -213,7 +213,7 @@ true
 
 <h5>49.3-1 SubdirectProduct</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubdirectProduct</code>( <var class="Arg">G</var>, <var class="Arg">H</var>, <var class="Arg">Ghom</var>, <var class="Arg">Hhom</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubdirectProduct</code>( <var class="Arg">G</var>, <var class="Arg">H</var>, <var class="Arg">Ghom</var>, <var class="Arg">Hhom</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>constructs the subdirect product of <var class="Arg">G</var> and <var class="Arg">H</var> with respect to the epimorphisms <var class="Arg">Ghom</var> from <var class="Arg">G</var> onto a group <span class="SimpleMath">A</span> and <var class="Arg">Hhom</var> from <var class="Arg">H</var> onto the same group <span class="SimpleMath">A</span>.</p>
 
 <p>For a subdirect product <span class="SimpleMath">P</span>, calling <code class="func">Projection</code> (<a href="chap32.html#X8769E8DA80BC96C1"><span class="RefLink">32.2-11</span></a>) with <span class="SimpleMath">P</span> and <span class="SimpleMath">n</span> yields the projection on the <span class="SimpleMath">n</span>-th factor. (In general the factors do not embed into a subdirect product.)</p>
@@ -238,7 +238,7 @@ Group([ (1,2,3), (1,2)(4,5), (4,5,6) ])
 
 <h5>49.3-2 SubdirectProducts</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubdirectProducts</code>( <var class="Arg">G</var>, <var class="Arg">H</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubdirectProducts</code>( <var class="Arg">G</var>, <var class="Arg">H</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>this function computes all subdirect products of <var class="Arg">G</var> and <var class="Arg">H</var> up to conjugacy in the direct product of Parent(<var class="Arg">G</var>) and Parent(<var class="Arg">H</var>). The subdirect products are returned as subgroups of this direct product.</p>
 
 <p><a id="X7DF2AEBC8518FFA4" name="X7DF2AEBC8518FFA4"></a></p>
@@ -253,8 +253,8 @@ Group([ (1,2,3), (1,2)(4,5), (4,5,6) ])
 
 <h5>49.4-1 WreathProduct</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WreathProduct</code>( <var class="Arg">G</var>, <var class="Arg">H</var>[, <var class="Arg">hom</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StandardWreathProduct</code>( <var class="Arg">G</var>, <var class="Arg">H</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WreathProduct</code>( <var class="Arg">G</var>, <var class="Arg">H</var>[, <var class="Arg">hom</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StandardWreathProduct</code>( <var class="Arg">G</var>, <var class="Arg">H</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="code">WreathProduct</code> constructs the wreath product of the group <var class="Arg">G</var> with the group <var class="Arg">H</var>, acting as a permutation group.</p>
 
 <p>If a third argument <var class="Arg">hom</var> is given, it must be a homomorphism from <var class="Arg">H</var> into a permutation group, and the action of this group on its moved points is considered.</p>
@@ -291,7 +291,7 @@ Group([ (1,4,7)(2,5,8)(3,6,9) ])
 
 <h5>49.4-2 WreathProductImprimitiveAction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WreathProductImprimitiveAction</code>( <var class="Arg">G</var>, <var class="Arg">H</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WreathProductImprimitiveAction</code>( <var class="Arg">G</var>, <var class="Arg">H</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For two permutation groups <var class="Arg">G</var> and <var class="Arg">H</var>, this function constructs the wreath product of <var class="Arg">G</var> and <var class="Arg">H</var> in the imprimitive action. If <var class="Arg">G</var> acts on <span class="SimpleMath">l</span> points and <var class="Arg">H</var> on <span class="SimpleMath">m</span> points this action will be on <span class="SimpleMath">l ⋅ m</span> points, it will be imprimitive with <span class="SimpleMath">m</span> blocks of size <span class="SimpleMath">l</span> each.</p>
 
 <p>The operations <code class="func">Embedding</code> (<a href="chap32.html#X86452F8587CBAEA0"><span class="RefLink">32.2-10</span></a>) and <code class="func">Projection</code> (<a href="chap32.html#X8769E8DA80BC96C1"><span class="RefLink">32.2-11</span></a>) operate on this product as described for general wreath products.</p>
@@ -307,7 +307,7 @@ Group([ (1,4,7)(2,5,8)(3,6,9) ])
 
 <h5>49.4-3 WreathProductProductAction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WreathProductProductAction</code>( <var class="Arg">G</var>, <var class="Arg">H</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WreathProductProductAction</code>( <var class="Arg">G</var>, <var class="Arg">H</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For two permutation groups <var class="Arg">G</var> and <var class="Arg">H</var>, this function constructs the wreath product in product action. If <var class="Arg">G</var> acts on <span class="SimpleMath">l</span> points and <var class="Arg">H</var> on <span class="SimpleMath">m</span> points this action will be on <span class="SimpleMath">l^m</span> points.</p>
 
 <p>The operations <code class="func">Embedding</code> (<a href="chap32.html#X86452F8587CBAEA0"><span class="RefLink">32.2-10</span></a>) and <code class="func">Projection</code> (<a href="chap32.html#X8769E8DA80BC96C1"><span class="RefLink">32.2-11</span></a>) operate on this product as described for general wreath products.</p>
@@ -324,7 +324,7 @@ Group([ (1,4,7)(2,5,8)(3,6,9) ])
 
 <h5>49.4-4 KuKGenerators</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KuKGenerators</code>( <var class="Arg">G</var>, <var class="Arg">beta</var>, <var class="Arg">alpha</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KuKGenerators</code>( <var class="Arg">G</var>, <var class="Arg">beta</var>, <var class="Arg">alpha</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">beta</var> is a homomorphism from <var class="Arg">G</var> into a transitive permutation group, <span class="SimpleMath">U</span> the full preimage of the point stabilizer and <var class="Arg">alpha</var> a homomorphism defined on (a superset) of <span class="SimpleMath">U</span>, this function returns images of the generators of <var class="Arg">G</var> when mapping to the wreath product <span class="SimpleMath">(U <var class="Arg">alpha</var>) ≀ (<var class="Arg">G</var> <var class="Arg">beta</var>)</span>. (This is the Krasner-Kaloujnine embedding theorem.)</p>
 
 
@@ -350,8 +350,8 @@ Group([ (2,3,4), (1,2,4) ])
 
 <h5>49.5-1 <span class="Heading">FreeProduct</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeProduct</code>( <var class="Arg">G</var>[, <var class="Arg">H</var>, <var class="Arg">...</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeProduct</code>( <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeProduct</code>( <var class="Arg">G</var>[, <var class="Arg">H</var>, <var class="Arg">...</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeProduct</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>constructs a finitely presented group which is the free product of the groups given as arguments. If the group arguments are not finitely presented groups, then <code class="func">IsomorphismFpGroup</code> (<a href="chap47.html#X7F28268F850F454E"><span class="RefLink">47.11-1</span></a>) must be defined for them.</p>
 
 <p>The operation <code class="func">Embedding</code> (<a href="chap32.html#X86452F8587CBAEA0"><span class="RefLink">32.2-10</span></a>) operates on this product.</p>
@@ -378,14 +378,14 @@ Group([ (2,3,4), (1,2,4) ])
 
 <h5>49.6-1 Embedding</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Embedding</code>( <var class="Arg">P</var>, <var class="Arg">nr</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Embedding</code>( <var class="Arg">P</var>, <var class="Arg">nr</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the <var class="Arg">nr</var>-th embedding in the group product <var class="Arg">P</var>. The actual meaning of this embedding is described in the manual section for the appropriate product.</p>
 
 <p><a id="X86F275AC7C625626" name="X86F275AC7C625626"></a></p>
 
 <h5>49.6-2 Projection</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Projection</code>( <var class="Arg">P</var>, <var class="Arg">nr</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Projection</code>( <var class="Arg">P</var>, <var class="Arg">nr</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the (<var class="Arg">nr</var>-th) projection of the group product <var class="Arg">P</var>. The actual meaning of the projection returned is described in the manual section for the appropriate product.</p>
 
 

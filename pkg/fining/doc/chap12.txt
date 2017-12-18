@@ -99,12 +99,12 @@
   [33X[0;0Y[10XIsClassicalGeneralisedHexagon[110X     is     declared    as    subcategory    of
   [10XIsGeneralisedHexagon[110X  and [10XIsLieGeometry[110X. The so called classical generalised
   hexagons  are  the  hexagons  that  come from the triality of the hyperbolic
-  quadric  .  The  Split  Cayley  hexagon is embedded in the parabolic quadric
-  [22XQ(6,q)[122X,  or  [22XW(5,q)[122X  in even characteristic. The twisted triality hexagon is
-  embedded in the hyperbolic quadric . The construction of these hexagons in a
-  subcategory  of  [10XIsLieGeometry[110X  means  that  the  usual  operations  for Lie
-  geometries  become  applicable.  The  classical  generalised hexagons are in
-  detail discussed in Section [14X12.5[114X[133X
+  quadric  [22XQ^+(7,q)[122X.  The  Split  Cayley  hexagon is embedded in the parabolic
+  quadric  [22XQ(6,q)[122X,  or  [22XW(5,q)[122X  in  even  characteristic. The twisted triality
+  hexagon  is embedded in the hyperbolic quadric [22XQ^+(7,q)[122X. The construction of
+  these  hexagons  in  a  subcategory  of  [10XIsLieGeometry[110X  means that the usual
+  operations  for  Lie geometries become applicable. The classical generalised
+  hexagons are in detail discussed in Section [14X12.5[114X[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xgp := SplitCayleyHexagon(3);[127X[104X
@@ -575,7 +575,7 @@
   group  of  the  underlying  graph.  The timings after both [11XCollineationGroup[111X
   commands  are  wrong.  This is because [5XGRAPE[105X relies on an external binary to
   computed  the  automorphism  group of a graph. The generalised quadrangle in
-  this example is known as [22XT_2(O)^[122X.[133X
+  this example is known as [22XT_2^*(O)[122X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xq := 8;[127X[104X
@@ -1060,15 +1060,15 @@
   
   [1X12.5-1 [33X[0;0YTrialities of the hyperbolic quadric and generalised hexagons[133X[101X
   
-  [33X[0;0YConsider the hyperbolic quadric [22XQ+(7,q)[122X. This is a polar space of rank 4. It
-  is  well  known  that  its  generators  fall  into  two systems. Each system
+  [33X[0;0YConsider  the  hyperbolic quadric [22XQ^+(7,q)[122X. This is a polar space of rank 4.
+  It  is  well  known  that  its generators fall into two systems. Each system
   contains  exactly  [22X(q^3+q^2+q+1)(q^2+q+1)[122X  generators, which is equal to the
-  number  of  points  of  [22XQ+(7,q)[122X  . Generators from the same system meet each
+  number  of  points  of  [22XQ^+(7,q)[122X.  Generators from the same system meet each
   other  in an empty subspace or in a line, Generators from a different system
-  meet  each  other  in  a  point  of a plane. One defines the rank [22X4[122X geometry
-  [22XΩ(7,q)[122X as follows. The 0-points are the points of [22XQ+(7,q)[122X , the 1-points are
+  meet  each  other  in  a  point  or a plane. One defines the rank [22X4[122X geometry
+  [22XΩ(7,q)[122X as follows. The 0-points are the points of [22XQ^+(7,q)[122X, the 1-points are
   the  generators  of the first system, the 2-points are the generators of the
-  second system, and the lines are the lines of [22XQ+(7,q)[122X . The incidence is the
+  second system, and the lines are the lines of [22XQ^+(7,q)[122X. The incidence is the
   natural  incidence  of  the  underlying  projective space. Denote the set of
   [22Xi[122X-points as [22XP^(i)[122X , [22Xi=0,1,2[122X.[133X
   
@@ -1081,7 +1081,7 @@
   with  its image under the triality. Consequently, a line is absolute with if
   it is fixed by the triality.[133X
   
-  [33X[0;0YA  generalised  hexagon  might be obtained as geometry of absolute points of
+  [33X[0;0YA  generalised  hexagon can be constructed as geometry of absolute points of
   one kind and absolute lines with relation to a fixed triality. Note that not
   all  trialities  yield  (thick) generalised quadrangles. There are different
   types of trialities, for some of them the absolute geometry is degenerate.[133X
@@ -1093,26 +1093,19 @@
   0,  1  and 2 points are the same, each of the 1 and 2 points can be labelled
   the  same  way  as  the 0-points, which are effectively labelled by 8-tuples
   [22X(x_0,...,x_7)  ∈  V(8,q)=V[122X where each 8-tuples represents a projective point
-  of [22XQ+(7,q)[122X.[133X
+  of [22XQ^+(7,q)[122X.[133X
   
   [33X[0;0YConsider   the   hyperbolic   quadric   determined  by  the  quadratic  form
   [22XX_0X_4+X_1X_5+X_2X_6+X_3X_7[122X . Consider the trilinear map [22XT[122X,[133X
   
-  [33X[0;0Y[22XT(x,y,z)  =  |beginarrayccc  x_0 & x_1 & x_2 y_0 & y_1 & y_2 z_0 & z_1 & z_2
-  endarray|  +  |beginarrayccc x_4 & x_5 & x_6 y_4 & y_5 & y_6 z_4 & z_5 & z_6
-  endarray|   +   x_3(z_0y_4+z_1y_5+z_2y_6)   +   x_7(y_0z_4+y_1z_5+y_2z_6)  +
-  y_3(x_0z_4+x_1z_5+x_2z_6)        +        y_7(z_0x_4+z_1x_5+z_2x_6)        +
-  z_3(y_0x_4+y_1x_5+y_2x_6)   +   z_7(x_0y_4+x_1y_5+x_2y_6)   -   x_3y_3z_3  -
-  x_7y_7z_7[122X[133X
-  
-  [33X[0;0Y.[133X
+  [33X[0;0YDisplay of this formula is not possible in text mode[133X
   
   [33X[0;0YNow  a  pair  [22X(x,y) ∈ V × V[122X represents an incident 0-1 pair of points if and
   only  if  [22XT(x,y,z)[122X  vanishes in the variable [22Xz[122X, and similarly for any cyclic
   permutation  of the letters [22Xx,y,z[122X. So given a [22X1[122X-point [22Xy[122X, [22XT(x,y,z) = 0[122X, where
   [22Xz[122X  is a variable, and [22Xx[122X is an unknown, gives a set of equations representing
-  a  generator  of  [22XQ+(7,q)[122X, this the generator of [22XQ+(7,q)[122X represented by [22Xy[122X as
-  label of a [22X1[122X-point.[133X
+  a  generator  of [22XQ^+(7,q)[122X this is the generator of [22XQ^+(7,q)[122X represented by [22Xy[122X
+  as label of a [22X1[122X-point.[133X
   
   [33X[0;0YLet  [22Xσ[122X be an automorphism of [22XGF(q)[122X of order [22X3[122X, or the identity. Consider the
   map[133X
@@ -1123,26 +1116,27 @@
   
   [33X[0;0YThis  map  clearly  preserves  [22XT(x,y,z)[122X, so preserves the incidence, and has
   order  three,  so  it is a triality of [22XΩ(7,q)[122X. We call an element [22Xp[122X absolute
-  with  respect  to a triality [22Xτ[122X if and only if [22Xp I p^τ[122X . Consequently, a line
-  is  absolute  if  and only if it is fixed by the triality. Denote the set of
-  [22Xi[122X-points that are absolute with respect to the triality as [22XP_mathrmabs}^(i)[122X,
-  and set of absolute lines with respect to the triality as [22XL_mathrmabs}[122X. Then
-  a  famous  theorem  of  Tits  ([Tit59])  says that for the triality [22Xτ_σ[122X, the
-  point-line   geometry   [22XΓ^(i)   =  (P^(i)_mathrmabs},L_mathrmabs}),I)[122X  is  a
-  generalised  hexagon  of  order  [22X(|K|,|L|)[122X,  [22XK=GF(q)[122X  and  [22XL[122X the subfield of
-  invariant  elements  of [22XK[122X under the field automorphism [22Xσ[122X. Note that a finite
-  field  has  a  field  automorphism  of  order three if and only if its order
-  equals [22Xq^3[122X. So, for [22XK=GF(q)[122X and [22Xσ=1[122X, [22XΓ^(i)[122X is a generalised hexagon of order
-  [22Xq[122X,  which  is  called the [13Xsplit Cayley hexagon of order [22Xq[122X[113X, denoted [22XH(q)[122X. For
-  [22XK=GF(q^3)[122X,  and  [22Xσ[122X  a  non-trival  field automorphism of order [22X3[122X, [22XΓ^(i)[122X is a
+  with  respect to a triality [22Xτ[122X if and only if [22Xp mathrmI p^τ[122X . Consequently, a
+  line  is absolute if and only if it is fixed by the triality. Denote the set
+  of   [22Xi[122X-points   that   are   absolute   with  respect  to  the  triality  as
+  [22XP_mathrmabs}^(i)[122X  ,  and  the  set  of  absolute  lines  with respect to the
+  triality as [22XL_mathrmabs}[122X . Then a famous theorem of Tits ([Tit59]) says that
+  for    the    triality    [22Xτ_σ[122X,    the    point-line    geometry    [22XΓ^(i)   =
+  (P^(i)_mathrmabs},L_mathrmabs},mathrmI)[122X  is  a  generalised hexagon of order
+  [22X(|K|,|L|)[122X,  [22XK[122X  the field [22XGF(q)[122X and [22XL[122X the subfield of invariant elements of [22XK[122X
+  under  the  field  automorphism  [22Xσ[122X.  Note  that  a  finite field has a field
+  automorphism  of  order three if and only if its order equals [22Xq^3[122X. So, for [22XK[122X
+  equal  to [22XGF(q)[122X and [22Xσ=1[122X, [22XΓ^(i)[122X is a generalised hexagon of order [22Xq[122X, which is
+  called  the  [13Xsplit  Cayley  hexagon of order [22Xq[122X[113X, denoted [22XH(q)[122X. For [22XK[122X equal to
+  [22XGF(q^3)[122X,  and  [22Xσ[122X  a  non-trival  field  automorphism  of order [22X3[122X, [22XΓ^(i)[122X is a
   generalised  hexagon of order [22X(q^3,q)[122X , which is called the [13Xtwisted triality
   hexagon  of  order  [22X(q^3,q)[122X  [113X,  denoted  [22XT(q^3,q)[122X  .  Note  that for a given
-  triality, the hexagons [22XΓ^(i)[122X, [22Xi=0,1,2[122X are isomorphic. Consequently, [22XΓ^(0)[122X is
-  a  point-line  geometry  of which the point set, line set respectively, is a
-  subset  of  the  points, lines respectively of [22XQ+(7,q)[122X . Finally, we mention
+  triality,  the  hexagons [22XΓ^(i)[122X , [22Xi=0,1,2[122X are isomorphic. Consequently, [22XΓ^(0)[122X
+  is a point-line geometry of which the point set, line set respectively, is a
+  subset  of  the  points, lines respectively of [22XQ^+(7,q)[122X. Finally, we mention
   the  following  important  theorem,  which  was shown by Tits ([Tit59]): the
   split Cayley hexagon, obtained by the triliaty with [22Xσ=1[122X, is contained in the
-  hyperplane  with equation [22XX_3+X_7=0[122X, which intersects the hyperbolic quadric
+  hyperplane with equation [22XX_3+X_7=0[122X , which intersects the hyperbolic quadric
   in  the parabolic quadric [22XQ(6,q)[122X. The points of the split Cayley hexagon are
   the points of [22XQ(6,q)[122X.[133X
   
@@ -1424,9 +1418,9 @@
   base-point  [22Xp[122X  and  elation  group [22XG[122X, and [22XG[122X has order [22Xs^2t[122X. Let [22Xy[122X be a fixed
   point  of  [22XS[122X,  not collinear with [22Xp[122X. Denote the [22Xt+1[122X lines incident with [22Xp[122X as
   [22XL_i,  i=0  ...  t[122X  .  Define  for  each  line [22XL_i[122X the unique point-line pair
-  [22X(z_i,M_i)[122X  such  that  [22XL_i  I  z_i  I M_i I y[122X . Define the groups [22XS_i[122X as the
+  [22X(z_i,M_i)[122X  such  that  [22XL_i  I  z_i  I  M_i I y[122X. Define the groups [22XS_i[122X as the
   subgroups  of  [22XG[122X  fixing  the  lines [22XM_i[122X, and define the groups [22XS_i^*[122X as the
-  subgroups  of  [22XG[122X  fixing the point [22Xz_i[122X. Define the set [22XJ = {S_i: i=0 ... t}[122X,
+  subgroups  of [22XG[122X fixing the point [22Xz_i[122X . Define the set [22XJ = {S_i: i=0 ... t}[122X ,
   and  the  set  [22XJ^*  =  {S_i:  i=0 ... t}[122X . Since [22XS[122X is an elation generalised
   quadrangle,  [22XJ[122X  is  a  collection of [22Xt+1[122X subgroups of [22XG[122X of order [22Xs[122X, and each
   [22XS_i^*[122X contains has order [22Xst[122X and contains [22XS_i[122X as a subgroup. Furthermore, the
@@ -1444,7 +1438,7 @@
   Kantor  families  in  groups  was  to find examples of non-classical elation
   generalised quadrangles.[133X
   
-  [33X[0;0YGiven  a  group  [22XG[122X,  together  with  a  Kantor family [22X(J,J^*)[122X, a generalised
+  [33X[0;0YGiven  a  group  [22XG[122X,  together  with  a Kantor family [22X(J,J^*)[122X , a generalised
   quadrangle is defined as follows.[133X
   
   [33X[0;0YThe points are of three types:[133X
@@ -1453,7 +1447,7 @@
   
   [33X[0;0Y(ii) points of of type 2 are the right cosets [22XS^*g, s^* ∈ J^*[122X[133X
   
-  [33X[0;0Y(iii) the unique point of type (iii) is the symbol [22X(∞)[122X.[133X
+  [33X[0;0Y(iii) the unique point of type (iii) is the symbol [22X(∞)[122X .[133X
   
   [33X[0;0YThe lines are of two types:[133X
   
@@ -1810,9 +1804,10 @@
   anistropic for [22Xr ≠ t[122X.[133X
   
   [33X[0;0YDefine  [22XG  =  {(α,c,β):  α,β  ∈  GF(q)^2, c ∈ GF(q)}[122X , and define the binary
-  operator [22X×[122X as [22X(α,c,β) × (α',c',β') = (α + α',c+c'+β ⋅ α'^T,β + β')[122X. Then [22XG,×[122X
-  is  a group with center [22XZ(G)={(0,c,0): c ∈ GF(q)}[122X. Consider a q-clan [22XC={A_i:
-  i=1 ... q}[122X, define [22XK_i = A_i+A_i^T[122X. Now define the following subgroups of [22XG[122X[133X
+  operator  [22X×[122X  as  [22X(α,c,β) × (α',c',β') = (α + α',c+c'+β ⋅ α'^T,β + β')[122X . Then
+  [22XG,×[122X  is  a  group  with  center [22XZ(G)={(0,c,0): c ∈ GF(q)}[122X. Consider a q-clan
+  [22XC={A_i:  i=1  ...  q}[122X,  define  [22XK_i  =  A_i+A_i^T[122X.  Now define the following
+  subgroups of [22XG[122X[133X
   
   [33X[0;0Y[22XA(i)  =  {(α,α  A_t,α  K_t):  α ∈ GF(q)^2, i=1... q}[122X and [22XA(∞) = (0,0,γ): γ ∈
   GF(q)^2}[122X , and[133X
@@ -1954,7 +1949,7 @@
   [6XReturns:[106X  [33X[0;10YA BLT-set.[133X
   
   [33X[0;0YThe  BLT-set  is  a  set  of points of the parabolic quadric in [22XPG(4,q)[122X with
-  particular  equation  [22X2X_1x_5+2X_2X_4+w^(q+1)/2=0[122X,  where  [22Xw[122X  is a primitive
+  particular  equation  [22X2X_1x_5+2X_2X_4+w^(q+1)/2=0[122X  ,  where [22Xw[122X is a primitive
   element of the underlying field of [3Xclan[103X.[133X
   
   [4X[32X  Example  [32X[104X

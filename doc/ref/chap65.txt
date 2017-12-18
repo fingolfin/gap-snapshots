@@ -58,19 +58,19 @@
   
   [1X65.1-1 FreeMagmaRing[101X
   
-  [29X[2XFreeMagmaRing[102X( [3XR[103X, [3XM[103X ) [32X function
+  [33X[1;0Y[29X[2XFreeMagmaRing[102X( [3XR[103X, [3XM[103X ) [32X function[133X
   
   [33X[0;0Yis a free magma ring over the ring [3XR[103X, free on the magma [3XM[103X.[133X
   
   [1X65.1-2 GroupRing[101X
   
-  [29X[2XGroupRing[102X( [3XR[103X, [3XG[103X ) [32X function
+  [33X[1;0Y[29X[2XGroupRing[102X( [3XR[103X, [3XG[103X ) [32X function[133X
   
   [33X[0;0Yis the group ring of the group [3XG[103X, over the ring [3XR[103X.[133X
   
   [1X65.1-3 IsFreeMagmaRing[101X
   
-  [29X[2XIsFreeMagmaRing[102X( [3XD[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsFreeMagmaRing[102X( [3XD[103X ) [32X Category[133X
   
   [33X[0;0YA  domain lies in the category [2XIsFreeMagmaRing[102X if it has been constructed as
   a  free  magma  ring.  In  particular,  if  [3XD[103X lies in this category then the
@@ -109,26 +109,26 @@
   
   [1X65.1-4 IsFreeMagmaRingWithOne[101X
   
-  [29X[2XIsFreeMagmaRingWithOne[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsFreeMagmaRingWithOne[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0Y[2XIsFreeMagmaRingWithOne[102X  is  just  a  synonym for the meet of [2XIsFreeMagmaRing[102X
   ([14X65.1-3[114X) and [2XIsMagmaWithOne[102X ([14X35.1-2[114X).[133X
   
   [1X65.1-5 IsGroupRing[101X
   
-  [29X[2XIsGroupRing[102X( [3Xobj[103X ) [32X property
+  [33X[1;0Y[29X[2XIsGroupRing[102X( [3Xobj[103X ) [32X property[133X
   
   [33X[0;0YA [13Xgroup ring[113X is a magma ring where the underlying magma is a group.[133X
   
   [1X65.1-6 UnderlyingMagma[101X
   
-  [29X[2XUnderlyingMagma[102X( [3XRM[103X ) [32X attribute
+  [33X[1;0Y[29X[2XUnderlyingMagma[102X( [3XRM[103X ) [32X attribute[133X
   
   [33X[0;0Ystores the underlying magma of a free magma ring.[133X
   
   [1X65.1-7 AugmentationIdeal[101X
   
-  [29X[2XAugmentationIdeal[102X( [3XRG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAugmentationIdeal[102X( [3XRG[103X ) [32X attribute[133X
   
   [33X[0;0Yis  the  augmentation  ideal  of  the group ring [3XRG[103X, i.e., the kernel of the
   trivial representation of [3XRG[103X.[133X
@@ -149,7 +149,7 @@
   
   [1X65.2-1 IsMagmaRingObjDefaultRep[101X
   
-  [29X[2XIsMagmaRingObjDefaultRep[102X( [3Xobj[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsMagmaRingObjDefaultRep[102X( [3Xobj[103X ) [32X Representation[133X
   
   [33X[0;0YThe default representation of a magma ring element is a list of length 2, at
   first  position  the  zero  coefficient,  at second position a list with the
@@ -161,36 +161,36 @@
   
   [1X65.2-2 IsElementOfFreeMagmaRing[101X
   
-  [29X[2XIsElementOfFreeMagmaRing[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsElementOfFreeMagmaRingCollection[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsElementOfFreeMagmaRing[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsElementOfFreeMagmaRingCollection[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YThe  category  of  elements  of  a  free  magma  ring  (See  [2XIsFreeMagmaRing[102X
   ([14X65.1-3[114X)).[133X
   
   [1X65.2-3 IsElementOfFreeMagmaRingFamily[101X
   
-  [29X[2XIsElementOfFreeMagmaRingFamily[102X( [3XFam[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsElementOfFreeMagmaRingFamily[102X( [3XFam[103X ) [32X Category[133X
   
   [33X[0;0YElements  of  families  in  this  category have trivial normalisation, i.e.,
   efficient methods for [10X\=[110X and [10X\<[110X.[133X
   
   [1X65.2-4 CoefficientsAndMagmaElements[101X
   
-  [29X[2XCoefficientsAndMagmaElements[102X( [3Xelm[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCoefficientsAndMagmaElements[102X( [3Xelm[103X ) [32X attribute[133X
   
   [33X[0;0Yis  a list that contains at the odd positions the magma elements, and at the
   even positions their coefficients in the element [3Xelm[103X.[133X
   
   [1X65.2-5 ZeroCoefficient[101X
   
-  [29X[2XZeroCoefficient[102X( [3Xelm[103X ) [32X attribute
+  [33X[1;0Y[29X[2XZeroCoefficient[102X( [3Xelm[103X ) [32X attribute[133X
   
   [33X[0;0YFor  an  element  [3Xelm[103X of a magma ring (modulo relations) [22XRM[122X, [2XZeroCoefficient[102X
   returns the zero element of the coefficient ring [22XR[122X.[133X
   
   [1X65.2-6 ElementOfMagmaRing[101X
   
-  [29X[2XElementOfMagmaRing[102X( [3XFam[103X, [3Xzerocoeff[103X, [3Xcoeffs[103X, [3Xmgmelms[103X ) [32X operation
+  [33X[1;0Y[29X[2XElementOfMagmaRing[102X( [3XFam[103X, [3Xzerocoeff[103X, [3Xcoeffs[103X, [3Xmgmelms[103X ) [32X operation[133X
   
   [33X[0;0Y[2XElementOfMagmaRing[102X  returns the element [22X∑_{i = 1}^n c_i m_i'[122X, where [22X[3Xcoeffs[103X =
   [ c_1, c_2, ..., c_n ][122X is a list of coefficients, [22X[3Xmgmelms[103X = [ m_1, m_2, ...,
@@ -258,21 +258,21 @@
   
   [1X65.4-1 IsElementOfMagmaRingModuloRelations[101X
   
-  [29X[2XIsElementOfMagmaRingModuloRelations[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsElementOfMagmaRingModuloRelationsCollection[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsElementOfMagmaRingModuloRelations[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsElementOfMagmaRingModuloRelationsCollection[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YThis category is used, e. g., for elements of free Lie algebras.[133X
   
   [1X65.4-2 IsElementOfMagmaRingModuloRelationsFamily[101X
   
-  [29X[2XIsElementOfMagmaRingModuloRelationsFamily[102X( [3XFam[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsElementOfMagmaRingModuloRelationsFamily[102X( [3XFam[103X ) [32X Category[133X
   
   [33X[0;0YThe  family  category  for  the category [2XIsElementOfMagmaRingModuloRelations[102X
   ([14X65.4-1[114X).[133X
   
   [1X65.4-3 NormalizedElementOfMagmaRingModuloRelations[101X
   
-  [29X[2XNormalizedElementOfMagmaRingModuloRelations[102X( [3XF[103X, [3Xdescr[103X ) [32X operation
+  [33X[1;0Y[29X[2XNormalizedElementOfMagmaRingModuloRelations[102X( [3XF[103X, [3Xdescr[103X ) [32X operation[133X
   
   [33X[0;0YLet  [3XF[103X  be  a  family of magma ring elements modulo relations, and [3Xdescr[103X the
   description   of   an   element   in   a   magma   ring   modulo  relations.
@@ -288,7 +288,7 @@
   
   [1X65.4-4 IsMagmaRingModuloRelations[101X
   
-  [29X[2XIsMagmaRingModuloRelations[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsMagmaRingModuloRelations[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YA  [5XGAP[105X object lies in the category [2XIsMagmaRingModuloRelations[102X if it has been
   constructed  as  a  magma ring modulo relations. Each element of such a ring
@@ -303,20 +303,20 @@
   
   [1X65.5-1 IsElementOfMagmaRingModuloSpanOfZeroFamily[101X
   
-  [29X[2XIsElementOfMagmaRingModuloSpanOfZeroFamily[102X( [3XFam[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsElementOfMagmaRingModuloSpanOfZeroFamily[102X( [3XFam[103X ) [32X Category[133X
   
   [33X[0;0YWe  need  this  for  the normalization method, which takes a family as first
   argument.[133X
   
   [1X65.5-2 IsMagmaRingModuloSpanOfZero[101X
   
-  [29X[2XIsMagmaRingModuloSpanOfZero[102X( [3XRM[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsMagmaRingModuloSpanOfZero[102X( [3XRM[103X ) [32X Category[133X
   
   [33X[0;0YThe category of magma rings modulo the span of a zero element.[133X
   
   [1X65.5-3 MagmaRingModuloSpanOfZero[101X
   
-  [29X[2XMagmaRingModuloSpanOfZero[102X( [3XR[103X, [3XM[103X, [3Xz[103X ) [32X function
+  [33X[1;0Y[29X[2XMagmaRingModuloSpanOfZero[102X( [3XR[103X, [3XM[103X, [3Xz[103X ) [32X function[133X
   
   [33X[0;0YLet [3XR[103X be a ring, [3XM[103X a magma, and [3Xz[103X an element of [3XM[103X with the property that [22X[3Xz[103X *
   m  =  [3Xz[103X[122X holds for all [22Xm ∈ M[122X. The element [3Xz[103X could be called a [21Xzero element[121X of

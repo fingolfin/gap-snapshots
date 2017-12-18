@@ -16,7 +16,7 @@
   
   [1X20.1-1 IsBool[101X
   
-  [29X[2XIsBool[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsBool[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0Ytests whether [3Xobj[103X is [9Xtrue[109X, [9Xfalse[109X or [9Xfail[109X.[133X
   
@@ -32,7 +32,7 @@
   
   [1X20.2-1 fail[101X
   
-  [29X[2Xfail[102X[32X global variable
+  [33X[1;0Y[29X[2Xfail[102X[32X global variable[133X
   
   [33X[0;0YThe value [9Xfail[109X is used to indicate situations when an operation could not be
   performed  for  the  given  arguments, either because of shortcomings of the

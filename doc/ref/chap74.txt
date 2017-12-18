@@ -36,7 +36,7 @@
   
   [1X74.1-1 Unknown[101X
   
-  [29X[2XUnknown[102X( [[3Xn[103X] ) [32X operation
+  [33X[1;0Y[29X[2XUnknown[102X( [[3Xn[103X] ) [32X operation[133X
   
   [33X[0;0YCalled  without  argument,  [2XUnknown[102X  returns  a new unknown value, i.e., the
   first  one  that  is larger than all unknowns which exist in the current [5XGAP[105X
@@ -47,7 +47,7 @@
   
   [1X74.1-2 LargestUnknown[101X
   
-  [29X[2XLargestUnknown[102X[32X global variable
+  [33X[1;0Y[29X[2XLargestUnknown[102X[32X global variable[133X
   
   [33X[0;0Y[2XLargestUnknown[102X  is  the  largest  [3Xn[103X  that is used in any [10XUnknown( [3Xn[103X[10X )[110X in the
   current  [5XGAP[105X session. This is used in [2XUnknown[102X ([14X74.1-1[114X) which increments this
@@ -55,7 +55,7 @@
   
   [1X74.1-3 IsUnknown[101X
   
-  [29X[2XIsUnknown[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsUnknown[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0Yis the category of unknowns in [5XGAP[105X.[133X
   

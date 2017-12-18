@@ -103,7 +103,7 @@
   
   [1X41.2-1 OnPoints[101X
   
-  [29X[2XOnPoints[102X( [3Xpnt[103X, [3Xg[103X ) [32X function
+  [33X[1;0Y[29X[2XOnPoints[102X( [3Xpnt[103X, [3Xg[103X ) [32X function[133X
   
   [33X[0;0Yreturns  [10X[3Xpnt[103X[10X  ^  [3Xg[103X[10X[110X. This is for example the action of a permutation group on
   points, or the action of a group on its elements via conjugation. The action
@@ -112,7 +112,7 @@
   
   [1X41.2-2 OnRight[101X
   
-  [29X[2XOnRight[102X( [3Xpnt[103X, [3Xg[103X ) [32X function
+  [33X[1;0Y[29X[2XOnRight[102X( [3Xpnt[103X, [3Xg[103X ) [32X function[133X
   
   [33X[0;0Yreturns  [10X[3Xpnt[103X[10X  * [3Xg[103X[10X[110X. This is for example the action of a group on its elements
   via  right  multiplication,  or  the  action  of  a group on the cosets of a
@@ -121,7 +121,7 @@
   
   [1X41.2-3 OnLeftInverse[101X
   
-  [29X[2XOnLeftInverse[102X( [3Xpnt[103X, [3Xg[103X ) [32X function
+  [33X[1;0Y[29X[2XOnLeftInverse[102X( [3Xpnt[103X, [3Xg[103X ) [32X function[133X
   
   [33X[0;0Yreturns [22X[3Xg[103X^{-1}[122X [10X* [3Xpnt[103X[10X[110X. Forming the inverse is necessary to make this a proper
   action, as in [5XGAP[105X groups always act from the right.[133X
@@ -132,7 +132,7 @@
   
   [1X41.2-4 OnSets[101X
   
-  [29X[2XOnSets[102X( [3Xset[103X, [3Xg[103X ) [32X function
+  [33X[1;0Y[29X[2XOnSets[102X( [3Xset[103X, [3Xg[103X ) [32X function[133X
   
   [33X[0;0YLet [3Xset[103X be a proper set (see [14X21.19[114X). [2XOnSets[102X returns the proper set formed by
   the images of all points [22Xx[122X of [3Xset[103X via the action function [2XOnPoints[102X ([14X41.2-1[114X),
@@ -146,7 +146,7 @@
   
   [1X41.2-5 OnTuples[101X
   
-  [29X[2XOnTuples[102X( [3Xtup[103X, [3Xg[103X ) [32X function
+  [33X[1;0Y[29X[2XOnTuples[102X( [3Xtup[103X, [3Xg[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xtup[103X  be  a  list. [2XOnTuples[102X returns the list formed by the images of all
   points  [22Xx[122X of [3Xtup[103X via the action function [2XOnPoints[102X ([14X41.2-1[114X), applied to [22Xx[122X and
@@ -157,13 +157,13 @@
   
   [1X41.2-6 OnPairs[101X
   
-  [29X[2XOnPairs[102X( [3Xtup[103X, [3Xg[103X ) [32X function
+  [33X[1;0Y[29X[2XOnPairs[102X( [3Xtup[103X, [3Xg[103X ) [32X function[133X
   
   [33X[0;0Yis a special case of [2XOnTuples[102X ([14X41.2-5[114X) for lists [3Xtup[103X of length 2.[133X
   
   [1X41.2-7 OnSetsSets[101X
   
-  [29X[2XOnSetsSets[102X( [3Xset[103X, [3Xg[103X ) [32X function
+  [33X[1;0Y[29X[2XOnSetsSets[102X( [3Xset[103X, [3Xg[103X ) [32X function[133X
   
   [33X[0;0Yimplements  the  action  on sets of sets. For the special case that the sets
   are  pairwise  disjoint,  it is possible to use [2XOnSetsDisjointSets[102X ([14X41.2-8[114X).
@@ -172,7 +172,7 @@
   
   [1X41.2-8 OnSetsDisjointSets[101X
   
-  [29X[2XOnSetsDisjointSets[102X( [3Xset[103X, [3Xg[103X ) [32X function
+  [33X[1;0Y[29X[2XOnSetsDisjointSets[102X( [3Xset[103X, [3Xg[103X ) [32X function[133X
   
   [33X[0;0Yimplements the action on sets of pairwise disjoint sets (see also [2XOnSetsSets[102X
   ([14X41.2-7[114X)).  [3Xset[103X  must be a sorted list whose entries are again sorted lists,
@@ -180,21 +180,21 @@
   
   [1X41.2-9 OnSetsTuples[101X
   
-  [29X[2XOnSetsTuples[102X( [3Xset[103X, [3Xg[103X ) [32X function
+  [33X[1;0Y[29X[2XOnSetsTuples[102X( [3Xset[103X, [3Xg[103X ) [32X function[133X
   
   [33X[0;0Yimplements  the  action  on  sets  of  tuples.  [3Xset[103X  must  be a sorted list,
   otherwise an error is triggered (see [14X41.3[114X).[133X
   
   [1X41.2-10 OnTuplesSets[101X
   
-  [29X[2XOnTuplesSets[102X( [3Xset[103X, [3Xg[103X ) [32X function
+  [33X[1;0Y[29X[2XOnTuplesSets[102X( [3Xset[103X, [3Xg[103X ) [32X function[133X
   
   [33X[0;0Yimplements  the  action  on tuples of sets. [3Xset[103X must be a list whose entries
   are again sorted lists, otherwise an error is triggered (see [14X41.3[114X).[133X
   
   [1X41.2-11 OnTuplesTuples[101X
   
-  [29X[2XOnTuplesTuples[102X( [3Xset[103X, [3Xg[103X ) [32X function
+  [33X[1;0Y[29X[2XOnTuplesTuples[102X( [3Xset[103X, [3Xg[103X ) [32X function[133X
   
   [33X[0;0Yimplements the action on tuples of tuples.[133X
   
@@ -232,7 +232,7 @@
   
   [1X41.2-12 OnLines[101X
   
-  [29X[2XOnLines[102X( [3Xvec[103X, [3Xg[103X ) [32X function
+  [33X[1;0Y[29X[2XOnLines[102X( [3Xvec[103X, [3Xg[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xvec[103X  be a [13Xnormed[113X row vector, that is, its first nonzero entry is normed
   to  the  identity  of  the relevant field, see [2XNormedRowVector[102X ([14X23.2-1[114X). The
@@ -255,7 +255,7 @@
   
   [1X41.2-13 OnIndeterminates[101X
   
-  [29X[2XOnIndeterminates[102X( [3Xpoly[103X, [3Xperm[103X ) [32X function
+  [33X[1;0Y[29X[2XOnIndeterminates[102X( [3Xpoly[103X, [3Xperm[103X ) [32X function[133X
   
   [33X[0;0YA permutation [3Xperm[103X acts on the multivariate polynomial [3Xpoly[103X by permuting the
   indeterminates as it permutes points.[133X
@@ -270,7 +270,7 @@
   
   [1X41.2-14 Permuted[101X
   
-  [29X[2XPermuted[102X( [3Xlist[103X, [3Xperm[103X ) [32X method
+  [33X[1;0Y[29X[2XPermuted[102X( [3Xlist[103X, [3Xperm[103X ) [32X method[133X
   
   [33X[0;0YThe  following  example  demonstrates  [2XPermuted[102X  ([14X21.20-18[114X)  being  used  to
   implement a permutation action on a domain:[133X
@@ -285,8 +285,8 @@
   
   [1X41.2-15 OnSubspacesByCanonicalBasis[101X
   
-  [29X[2XOnSubspacesByCanonicalBasis[102X( [3Xbas[103X, [3Xmat[103X ) [32X function
-  [29X[2XOnSubspacesByCanonicalBasisConcatenations[102X( [3Xbasvec[103X, [3Xmat[103X ) [32X function
+  [33X[1;0Y[29X[2XOnSubspacesByCanonicalBasis[102X( [3Xbas[103X, [3Xmat[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XOnSubspacesByCanonicalBasisConcatenations[102X( [3Xbasvec[103X, [3Xmat[103X ) [32X function[133X
   
   [33X[0;0Yimplements  the  operation of a matrix group on subspaces of a vector space.
   [3Xbas[103X  must be a list of (linearly independent) vectors which forms a basis of
@@ -331,7 +331,7 @@
   
   [1X41.4-1 Orbit[101X
   
-  [29X[2XOrbit[102X( [3XG[103X[, [3XOmega[103X], [3Xpnt[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
+  [33X[1;0Y[29X[2XOrbit[102X( [3XG[103X[, [3XOmega[103X], [3Xpnt[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
   
   [33X[0;0YThe orbit of the point [3Xpnt[103X is the list of all images of [3Xpnt[103X under the action
   of  the  group  [3XG[103X  w.r.t. the action function [3Xact[103X or [2XOnPoints[102X ([14X41.2-1[114X) if no
@@ -356,8 +356,8 @@
   
   [1X41.4-2 Orbits[101X
   
-  [29X[2XOrbits[102X( [3XG[103X, [3Xseeds[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
-  [29X[2XOrbits[102X( [3Xxset[103X ) [32X attribute
+  [33X[1;0Y[29X[2XOrbits[102X( [3XG[103X, [3Xseeds[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XOrbits[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  a  duplicate-free list of the orbits of the elements in [3Xseeds[103X under
   the  action  [3Xact[103X  of  [3XG[103X  or under [2XOnPoints[102X ([14X41.2-1[114X) if no action function is
@@ -369,8 +369,8 @@
   
   [1X41.4-3 [33X[0;0YOrbitsDomain[133X[101X
   
-  [29X[2XOrbitsDomain[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
-  [29X[2XOrbitsDomain[102X( [3Xxset[103X ) [32X attribute
+  [33X[1;0Y[29X[2XOrbitsDomain[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XOrbitsDomain[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns a list of the orbits of [3XG[103X on the domain [3XOmega[103X (given as lists) under
   the action [3Xact[103X or under [2XOnPoints[102X ([14X41.2-1[114X) if no action function is given.[133X
@@ -404,7 +404,7 @@
   
   [1X41.4-4 OrbitLength[101X
   
-  [29X[2XOrbitLength[102X( [3XG[103X, [3XOmega[103X, [3Xpnt[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
+  [33X[1;0Y[29X[2XOrbitLength[102X( [3XG[103X, [3XOmega[103X, [3Xpnt[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
   
   [33X[0;0Ycomputes  the  length  of  the orbit of [3Xpnt[103X under the action function [3Xact[103X or
   [2XOnPoints[102X ([14X41.2-1[114X) if no action function is given.[133X
@@ -412,8 +412,8 @@
   
   [1X41.4-5 [33X[0;0YOrbitLengths[133X[101X
   
-  [29X[2XOrbitLengths[102X( [3XG[103X, [3Xseeds[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
-  [29X[2XOrbitLengths[102X( [3Xxset[103X ) [32X attribute
+  [33X[1;0Y[29X[2XOrbitLengths[102X( [3XG[103X, [3Xseeds[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XOrbitLengths[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0Ycomputes  the  lengths  of all the orbits of the elements in [3Xseeds[103X under the
   action [3Xact[103X of [3XG[103X.[133X
@@ -421,8 +421,8 @@
   
   [1X41.4-6 [33X[0;0YOrbitLengthsDomain[133X[101X
   
-  [29X[2XOrbitLengthsDomain[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
-  [29X[2XOrbitLengthsDomain[102X( [3Xxset[103X ) [32X attribute
+  [33X[1;0Y[29X[2XOrbitLengthsDomain[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XOrbitLengthsDomain[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0Ycomputes the lengths of all the orbits of [3XG[103X on [3XOmega[103X.[133X
   
@@ -445,7 +445,7 @@
   
   [1X41.5-1 OrbitStabilizer[101X
   
-  [29X[2XOrbitStabilizer[102X( [3XG[103X[, [3XOmega[103X], [3Xpnt[103X[, [3Xgens[103X, [3Xacts[103X], [3Xact[103X ) [32X operation
+  [33X[1;0Y[29X[2XOrbitStabilizer[102X( [3XG[103X[, [3XOmega[103X], [3Xpnt[103X[, [3Xgens[103X, [3Xacts[103X], [3Xact[103X ) [32X operation[133X
   
   [33X[0;0Ycomputes  the  orbit  and  the  stabilizer of [3Xpnt[103X simultaneously in a single
   orbit-stabilizer algorithm.[133X
@@ -454,7 +454,7 @@
   
   [1X41.5-2 Stabilizer[101X
   
-  [29X[2XStabilizer[102X( [3XG[103X[, [3XOmega[103X], [3Xpnt[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X function
+  [33X[1;0Y[29X[2XStabilizer[102X( [3XG[103X[, [3XOmega[103X], [3Xpnt[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X function[133X
   
   [33X[0;0Ycomputes the stabilizer in [3XG[103X of the point [3Xpnt[103X, that is the subgroup of those
   elements of [3XG[103X that fix [3Xpnt[103X. The stabilizer will have [3XG[103X as its parent.[133X
@@ -489,7 +489,7 @@
   
   [1X41.5-3 OrbitStabilizerAlgorithm[101X
   
-  [29X[2XOrbitStabilizerAlgorithm[102X( [3XG[103X, [3XOmega[103X, [3Xblist[103X, [3Xgens[103X, [3Xacts[103X, [3Xpntact[103X ) [32X operation
+  [33X[1;0Y[29X[2XOrbitStabilizerAlgorithm[102X( [3XG[103X, [3XOmega[103X, [3Xblist[103X, [3Xgens[103X, [3Xacts[103X, [3Xpntact[103X ) [32X operation[133X
   
   [33X[0;0YThis  operation should not be called by a user. It is documented however for
   purposes  to  extend or maintain the group actions package (the word [21Xpackage[121X
@@ -526,7 +526,7 @@
   
   [1X41.6-1 RepresentativeAction[101X
   
-  [29X[2XRepresentativeAction[102X( [3XG[103X[, [3XOmega[103X], [3Xd[103X, [3Xe[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X function
+  [33X[1;0Y[29X[2XRepresentativeAction[102X( [3XG[103X[, [3XOmega[103X], [3Xd[103X, [3Xe[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X function[133X
   
   [33X[0;0Ycomputes an element of [3XG[103X that maps [3Xd[103X to [3Xe[103X under the given action and returns
   [9Xfail[109X if no such element exists.[133X
@@ -569,9 +569,9 @@
   
   [1X41.7-1 [33X[0;0YActionHomomorphism[133X[101X
   
-  [29X[2XActionHomomorphism[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X][, [3X"surjective"[103X] ) [32X function
-  [29X[2XActionHomomorphism[102X( [3Xxset[103X[, [3X"surjective"[103X] ) [32X function
-  [29X[2XActionHomomorphism[102X( [3Xaction[103X ) [32X function
+  [33X[1;0Y[29X[2XActionHomomorphism[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X][, [3X"surjective"[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XActionHomomorphism[102X( [3Xxset[103X[, [3X"surjective"[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XActionHomomorphism[102X( [3Xaction[103X ) [32X function[133X
   
   [33X[0;0Ycomputes  a  homomorphism  from [3XG[103X into the symmetric group on [22X|[3XOmega[103X|[122X points
   that  gives  the  permutation  action  of  [3XG[103X  on [3XOmega[103X. (In particular, this
@@ -615,8 +615,8 @@
   
   [1X41.7-2 Action[101X
   
-  [29X[2XAction[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X function
-  [29X[2XAction[102X( [3Xxset[103X ) [32X function
+  [33X[1;0Y[29X[2XAction[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XAction[102X( [3Xxset[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the image group of [2XActionHomomorphism[102X ([14X41.7-1[114X) called with the same
   parameters.[133X
@@ -639,8 +639,8 @@
   
   [1X41.7-3 SparseActionHomomorphism[101X
   
-  [29X[2XSparseActionHomomorphism[102X( [3XG[103X, [3Xstart[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
-  [29X[2XSortedSparseActionHomomorphism[102X( [3XG[103X, [3Xstart[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
+  [33X[1;0Y[29X[2XSparseActionHomomorphism[102X( [3XG[103X, [3Xstart[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XSortedSparseActionHomomorphism[102X( [3XG[103X, [3Xstart[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
   
   [33X[0;0Y[2XSparseActionHomomorphism[102X    computes    the    action    homomorphism   (see
   [2XActionHomomorphism[102X ([14X41.7-1[114X)) with arguments [3XG[103X, [22XD[122X, and the optional arguments
@@ -683,7 +683,7 @@
   
   [1X41.8-1 FactorCosetAction[101X
   
-  [29X[2XFactorCosetAction[102X( [3XG[103X, [3XU[103X[, [3XN[103X] ) [32X operation
+  [33X[1;0Y[29X[2XFactorCosetAction[102X( [3XG[103X, [3XU[103X[, [3XN[103X] ) [32X operation[133X
   
   [33X[0;0YThis  command  computes the action of the group [3XG[103X on the right cosets of the
   subgroup  [3XU[103X. If a normal subgroup [3XN[103X of [3XG[103X is given, it is stored as kernel of
@@ -700,14 +700,14 @@
   
   [1X41.8-2 RegularActionHomomorphism[101X
   
-  [29X[2XRegularActionHomomorphism[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRegularActionHomomorphism[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns an isomorphism from [3XG[103X onto the regular permutation representation of
   [3XG[103X.[133X
   
   [1X41.8-3 AbelianSubfactorAction[101X
   
-  [29X[2XAbelianSubfactorAction[102X( [3XG[103X, [3XM[103X, [3XN[103X ) [32X operation
+  [33X[1;0Y[29X[2XAbelianSubfactorAction[102X( [3XG[103X, [3XM[103X, [3XN[103X ) [32X operation[133X
   
   [33X[0;0YLet  [3XG[103X  be a group and [22X[3XM[103X ≥ [3XN[103X[122X be subgroups of a common parent that are normal
   under  [3XG[103X,  such  that the subfactor [22X[3XM[103X/[3XN[103X[122X is elementary abelian. The operation
@@ -758,8 +758,8 @@
   
   [1X41.9-1 [33X[0;0YPermutation[133X[101X
   
-  [29X[2XPermutation[102X( [3Xg[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X function
-  [29X[2XPermutation[102X( [3Xg[103X, [3Xxset[103X ) [32X function
+  [33X[1;0Y[29X[2XPermutation[102X( [3Xg[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XPermutation[102X( [3Xg[103X, [3Xxset[103X ) [32X function[133X
   
   [33X[0;0Ycomputes  the  permutation  that  corresponds  to  the  action  of  [3Xg[103X on the
   permutation  domain  [3XOmega[103X  (a  list  of  objects  that are permuted). If an
@@ -773,7 +773,7 @@
   
   [1X41.9-2 PermutationCycle[101X
   
-  [29X[2XPermutationCycle[102X( [3Xg[103X, [3XOmega[103X, [3Xpnt[103X[, [3Xact[103X] ) [32X function
+  [33X[1;0Y[29X[2XPermutationCycle[102X( [3Xg[103X, [3XOmega[103X, [3Xpnt[103X[, [3Xact[103X] ) [32X function[133X
   
   [33X[0;0Ycomputes  the  permutation that represents the cycle of [3Xpnt[103X under the action
   of the element [3Xg[103X.[133X
@@ -789,27 +789,27 @@
   
   [1X41.9-3 Cycle[101X
   
-  [29X[2XCycle[102X( [3Xg[103X, [3XOmega[103X, [3Xpnt[103X[, [3Xact[103X] ) [32X function
+  [33X[1;0Y[29X[2XCycle[102X( [3Xg[103X, [3XOmega[103X, [3Xpnt[103X[, [3Xact[103X] ) [32X function[133X
   
   [33X[0;0Yreturns  a  list  of  the points in the cycle of [3Xpnt[103X under the action of the
   element [3Xg[103X.[133X
   
   [1X41.9-4 CycleLength[101X
   
-  [29X[2XCycleLength[102X( [3Xg[103X, [3XOmega[103X, [3Xpnt[103X[, [3Xact[103X] ) [32X function
+  [33X[1;0Y[29X[2XCycleLength[102X( [3Xg[103X, [3XOmega[103X, [3Xpnt[103X[, [3Xact[103X] ) [32X function[133X
   
   [33X[0;0Yreturns the length of the cycle of [3Xpnt[103X under the action of the element [3Xg[103X.[133X
   
   [1X41.9-5 Cycles[101X
   
-  [29X[2XCycles[102X( [3Xg[103X, [3XOmega[103X[, [3Xact[103X] ) [32X function
+  [33X[1;0Y[29X[2XCycles[102X( [3Xg[103X, [3XOmega[103X[, [3Xact[103X] ) [32X function[133X
   
   [33X[0;0Yreturns  a  list  of  the  cycles  (as lists of points) of the action of the
   element [3Xg[103X.[133X
   
   [1X41.9-6 CycleLengths[101X
   
-  [29X[2XCycleLengths[102X( [3Xg[103X, [3XOmega[103X[, [3Xact[103X] ) [32X operation
+  [33X[1;0Y[29X[2XCycleLengths[102X( [3Xg[103X, [3XOmega[103X[, [3Xact[103X] ) [32X operation[133X
   
   [33X[0;0Yreturns  the  lengths of all the cycles under the action of the element [3Xg[103X on
   [3XOmega[103X.[133X
@@ -828,8 +828,8 @@
   
   [1X41.9-7 [33X[0;0YCycleIndex[133X[101X
   
-  [29X[2XCycleIndex[102X( [3Xg[103X, [3XOmega[103X[, [3Xact[103X] ) [32X function
-  [29X[2XCycleIndex[102X( [3XG[103X, [3XOmega[103X[, [3Xact[103X] ) [32X function
+  [33X[1;0Y[29X[2XCycleIndex[102X( [3Xg[103X, [3XOmega[103X[, [3Xact[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XCycleIndex[102X( [3XG[103X, [3XOmega[103X[, [3Xact[103X] ) [32X function[133X
   
   [33X[0;0YThe [13Xcycle index[113X of a permutation [3Xg[103X acting on [3XOmega[103X is defined as[133X
   
@@ -860,9 +860,9 @@
   
   [1X41.10-1 [33X[0;0YIsTransitive[133X[101X
   
-  [29X[2XIsTransitive[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
-  [29X[2XIsTransitive[102X( [3XG[103X ) [32X property
-  [29X[2XIsTransitive[102X( [3Xxset[103X ) [32X property
+  [33X[1;0Y[29X[2XIsTransitive[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsTransitive[102X( [3XG[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsTransitive[102X( [3Xxset[103X ) [32X property[133X
   
   [33X[0;0Yreturns  [9Xtrue[109X if the action implied by the arguments is transitive, or [9Xfalse[109X
   otherwise.[133X
@@ -877,8 +877,8 @@
   
   [1X41.10-2 [33X[0;0YTransitivity[133X[101X
   
-  [29X[2XTransitivity[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
-  [29X[2XTransitivity[102X( [3Xxset[103X ) [32X attribute
+  [33X[1;0Y[29X[2XTransitivity[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XTransitivity[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the degree [22Xk[122X (a non-negative integer) of transitivity of the action
   implied by the arguments, i.e. the largest integer [22Xk[122X such that the action is
@@ -898,8 +898,8 @@
   
   [1X41.10-3 [33X[0;0YRankAction[133X[101X
   
-  [29X[2XRankAction[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
-  [29X[2XRankAction[102X( [3Xxset[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRankAction[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XRankAction[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the  rank  of a transitive action, i.e. the number of orbits of the
   point stabilizer.[133X
@@ -912,8 +912,8 @@
   
   [1X41.10-4 [33X[0;0YIsSemiRegular[133X[101X
   
-  [29X[2XIsSemiRegular[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
-  [29X[2XIsSemiRegular[102X( [3Xxset[103X ) [32X property
+  [33X[1;0Y[29X[2XIsSemiRegular[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsSemiRegular[102X( [3Xxset[103X ) [32X property[133X
   
   [33X[0;0Yreturns [9Xtrue[109X if the action implied by the arguments is semiregular, or [9Xfalse[109X
   otherwise.[133X
@@ -923,8 +923,8 @@
   
   [1X41.10-5 [33X[0;0YIsRegular[133X[101X
   
-  [29X[2XIsRegular[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
-  [29X[2XIsRegular[102X( [3Xxset[103X ) [32X property
+  [33X[1;0Y[29X[2XIsRegular[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsRegular[102X( [3Xxset[103X ) [32X property[133X
   
   [33X[0;0Yreturns  [9Xtrue[109X  if  the  action implied by the arguments is regular, or [9Xfalse[109X
   otherwise.[133X
@@ -943,8 +943,8 @@
   
   [1X41.10-6 [33X[0;0YEarns[133X[101X
   
-  [29X[2XEarns[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
-  [29X[2XEarns[102X( [3Xxset[103X ) [32X attribute
+  [33X[1;0Y[29X[2XEarns[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XEarns[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  a  list  of  the  elementary abelian regular (when acting on [3XOmega[103X)
   normal subgroups of [3XG[103X.[133X
@@ -954,8 +954,8 @@
   
   [1X41.10-7 [33X[0;0YIsPrimitive[133X[101X
   
-  [29X[2XIsPrimitive[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
-  [29X[2XIsPrimitive[102X( [3Xxset[103X ) [32X property
+  [33X[1;0Y[29X[2XIsPrimitive[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsPrimitive[102X( [3Xxset[103X ) [32X property[133X
   
   [33X[0;0Yreturns  [9Xtrue[109X  if the action implied by the arguments is primitive, or [9Xfalse[109X
   otherwise.[133X
@@ -978,8 +978,8 @@
   
   [1X41.11-1 [33X[0;0YBlocks[133X[101X
   
-  [29X[2XBlocks[102X( [3XG[103X, [3XOmega[103X[, [3Xseed[103X][, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
-  [29X[2XBlocks[102X( [3Xxset[103X[, [3Xseed[103X] ) [32X attribute
+  [33X[1;0Y[29X[2XBlocks[102X( [3XG[103X, [3XOmega[103X[, [3Xseed[103X][, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XBlocks[102X( [3Xxset[103X[, [3Xseed[103X] ) [32X attribute[133X
   
   [33X[0;0Ycomputes  a block system for the action. If [3Xseed[103X is not given and the action
   is  imprimitive, a minimal nontrivial block system will be found. If [3Xseed[103X is
@@ -1000,8 +1000,8 @@
   
   [1X41.11-2 [33X[0;0YMaximalBlocks[133X[101X
   
-  [29X[2XMaximalBlocks[102X( [3XG[103X, [3XOmega[103X[, [3Xseed[103X][, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
-  [29X[2XMaximalBlocks[102X( [3Xxset[103X[, [3Xseed[103X] ) [32X attribute
+  [33X[1;0Y[29X[2XMaximalBlocks[102X( [3XG[103X, [3XOmega[103X[, [3Xseed[103X][, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XMaximalBlocks[102X( [3Xxset[103X[, [3Xseed[103X] ) [32X attribute[133X
   
   [33X[0;0Yreturns  a  block  system  that  is  maximal  (i.e., blocks are maximal with
   respect  to  inclusion)  for  the  action of [3XG[103X on [3XOmega[103X. If [3Xseed[103X is given, a
@@ -1015,8 +1015,8 @@
   
   [1X41.11-3 [33X[0;0YRepresentativesMinimalBlocks[133X[101X
   
-  [29X[2XRepresentativesMinimalBlocks[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
-  [29X[2XRepresentativesMinimalBlocks[102X( [3Xxset[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRepresentativesMinimalBlocks[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XRepresentativesMinimalBlocks[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0Ycomputes  a  list  of  block representatives for all minimal (i.e blocks are
   minimal with respect to inclusion) nontrivial block systems for the action.[133X
@@ -1029,7 +1029,7 @@
   
   [1X41.11-4 AllBlocks[101X
   
-  [29X[2XAllBlocks[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAllBlocks[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Ycomputes  a  list  of representatives of all block systems for a permutation
   group [3XG[103X acting transitively on the points moved by the group.[133X
@@ -1090,7 +1090,7 @@
   
   [1X41.12-1 IsExternalSet[101X
   
-  [29X[2XIsExternalSet[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsExternalSet[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YAn  [13Xexternal  set[113X  specifies  a  group action [22Xμ: Ω × G ↦ Ω[122X of a group [22XG[122X on a
   domain [22XΩ[122X. The external set knows the group, the domain and the actual acting
@@ -1103,7 +1103,7 @@
   
   [1X41.12-2 ExternalSet[101X
   
-  [29X[2XExternalSet[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
+  [33X[1;0Y[29X[2XExternalSet[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
   
   [33X[0;0Ycreates  the  external  set  for  the action [3Xact[103X of [3XG[103X on [3XOmega[103X. [3XOmega[103X can be
   either  a  proper set, or a domain which is represented as described in [14X12.4[114X
@@ -1124,20 +1124,20 @@
   
   [1X41.12-3 ActingDomain[101X
   
-  [29X[2XActingDomain[102X( [3Xxset[103X ) [32X attribute
+  [33X[1;0Y[29X[2XActingDomain[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0YThis  attribute  returns  the  group  with  which  the external set [3Xxset[103X was
   defined.[133X
   
   [1X41.12-4 FunctionAction[101X
   
-  [29X[2XFunctionAction[102X( [3Xxset[103X ) [32X attribute
+  [33X[1;0Y[29X[2XFunctionAction[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0Yis the acting function with which the external set [3Xxset[103X was defined.[133X
   
   [1X41.12-5 HomeEnumerator[101X
   
-  [29X[2XHomeEnumerator[102X( [3Xxset[103X ) [32X attribute
+  [33X[1;0Y[29X[2XHomeEnumerator[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  an enumerator of the action domain with which the external set [3Xxset[103X
   was  defined.  For  external  subsets, this is in general different from the
@@ -1155,7 +1155,7 @@
   
   [1X41.12-6 IsExternalSubset[101X
   
-  [29X[2XIsExternalSubset[102X( [3Xobj[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsExternalSubset[102X( [3Xobj[103X ) [32X Representation[133X
   
   [33X[0;0YAn  external subset is the restriction of an external set to a subset of the
   domain  (which  must be invariant under the action). It is again an external
@@ -1163,20 +1163,20 @@
   
   [1X41.12-7 ExternalSubset[101X
   
-  [29X[2XExternalSubset[102X( [3XG[103X, [3Xxset[103X, [3Xstart[103X[, [3Xgens[103X, [3Xacts[103X], [3Xact[103X ) [32X operation
+  [33X[1;0Y[29X[2XExternalSubset[102X( [3XG[103X, [3Xxset[103X, [3Xstart[103X[, [3Xgens[103X, [3Xacts[103X], [3Xact[103X ) [32X operation[133X
   
   [33X[0;0Yconstructs  the external subset of [3Xxset[103X on the union of orbits of the points
   in [3Xstart[103X.[133X
   
   [1X41.12-8 IsExternalOrbit[101X
   
-  [29X[2XIsExternalOrbit[102X( [3Xobj[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsExternalOrbit[102X( [3Xobj[103X ) [32X Representation[133X
   
   [33X[0;0YAn external orbit is an external subset consisting of one orbit.[133X
   
   [1X41.12-9 ExternalOrbit[101X
   
-  [29X[2XExternalOrbit[102X( [3XG[103X, [3XOmega[103X, [3Xpnt[103X[, [3Xgens[103X, [3Xacts[103X], [3Xact[103X ) [32X operation
+  [33X[1;0Y[29X[2XExternalOrbit[102X( [3XG[103X, [3XOmega[103X, [3Xpnt[103X[, [3Xgens[103X, [3Xacts[103X], [3Xact[103X ) [32X operation[133X
   
   [33X[0;0Yconstructs  the  external  subset  on  the  orbit of [3Xpnt[103X. The [2XRepresentative[102X
   ([14X30.4-7[114X) value of this external set is [3Xpnt[103X.[133X
@@ -1188,7 +1188,7 @@
   
   [1X41.12-10 StabilizerOfExternalSet[101X
   
-  [29X[2XStabilizerOfExternalSet[102X( [3Xxset[103X ) [32X attribute
+  [33X[1;0Y[29X[2XStabilizerOfExternalSet[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0Ycomputes the stabilizer of the [2XRepresentative[102X ([14X30.4-7[114X) value of the external
   set [3Xxset[103X. The stabilizer will have the acting group of [3Xxset[103X as its parent.[133X
@@ -1203,8 +1203,8 @@
   
   [1X41.12-11 [33X[0;0YExternalOrbits[133X[101X
   
-  [29X[2XExternalOrbits[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
-  [29X[2XExternalOrbits[102X( [3Xxset[103X ) [32X attribute
+  [33X[1;0Y[29X[2XExternalOrbits[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XExternalOrbits[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0Ycomputes a list of external orbits that give the orbits of [3XG[103X.[133X
   
@@ -1216,8 +1216,8 @@
   
   [1X41.12-12 [33X[0;0YExternalOrbitsStabilizers[133X[101X
   
-  [29X[2XExternalOrbitsStabilizers[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation
-  [29X[2XExternalOrbitsStabilizers[102X( [3Xxset[103X ) [32X attribute
+  [33X[1;0Y[29X[2XExternalOrbitsStabilizers[102X( [3XG[103X, [3XOmega[103X[, [3Xgens[103X, [3Xacts[103X][, [3Xact[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XExternalOrbitsStabilizers[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0YIn  addition  to [2XExternalOrbits[102X ([14X41.12-11[114X), this operation also computes the
   stabilizers  of the representatives of the external orbits at the same time.
@@ -1235,7 +1235,7 @@
   
   [1X41.12-13 CanonicalRepresentativeOfExternalSet[101X
   
-  [29X[2XCanonicalRepresentativeOfExternalSet[102X( [3Xxset[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCanonicalRepresentativeOfExternalSet[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0YThe  canonical representative of an external set [3Xxset[103X may only depend on the
   defining  attributes  [3XG[103X,  [3XOmega[103X,  [3Xact[103X  of  [3Xxset[103X and (in the case of external
@@ -1246,7 +1246,7 @@
   
   [1X41.12-14 CanonicalRepresentativeDeterminatorOfExternalSet[101X
   
-  [29X[2XCanonicalRepresentativeDeterminatorOfExternalSet[102X( [3Xxset[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCanonicalRepresentativeDeterminatorOfExternalSet[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns a function that takes as its arguments the acting group and a point.
   This  function  returns  a  list of length 1 or 3, the first entry being the
@@ -1258,7 +1258,7 @@
   
   [1X41.12-15 ActorOfExternalSet[101X
   
-  [29X[2XActorOfExternalSet[102X( [3Xxset[103X ) [32X attribute
+  [33X[1;0Y[29X[2XActorOfExternalSet[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns       an      element      mapping      [10XRepresentative([3Xxset[103X[10X)[110X      to
   [10XCanonicalRepresentativeOfExternalSet([3Xxset[103X[10X)[110X under the given action.[133X
@@ -1276,7 +1276,7 @@
   
   [1X41.12-16 UnderlyingExternalSet[101X
   
-  [29X[2XUnderlyingExternalSet[102X( [3Xacthom[103X ) [32X attribute
+  [33X[1;0Y[29X[2XUnderlyingExternalSet[102X( [3Xacthom[103X ) [32X attribute[133X
   
   [33X[0;0YThe  underlying  set of an action homomorphism [3Xacthom[103X is the external set on
   which it was defined.[133X
@@ -1298,7 +1298,7 @@
   
   [1X41.12-17 SurjectiveActionHomomorphismAttr[101X
   
-  [29X[2XSurjectiveActionHomomorphismAttr[102X( [3Xxset[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSurjectiveActionHomomorphismAttr[102X( [3Xxset[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns   an  action  homomorphism  for  the  external  set  [3Xxset[103X  which  is
   surjective.  (As  the  [2XImage[102X  ([14X32.4-6[114X)  value of this homomorphism has to be

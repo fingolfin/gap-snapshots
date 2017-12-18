@@ -236,21 +236,21 @@ end;
 
 <h5>41.2-1 OnPoints</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnPoints</code>( <var class="Arg">pnt</var>, <var class="Arg">g</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnPoints</code>( <var class="Arg">pnt</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns <code class="code"><var class="Arg">pnt</var> ^ <var class="Arg">g</var></code>. This is for example the action of a permutation group on points, or the action of a group on its elements via conjugation. The action of a matrix group on vectors from the right is described by both <code class="func">OnPoints</code> and <code class="func">OnRight</code> (<a href="chap41_mj.html#X7960924D84B5B18F"><span class="RefLink">41.2-2</span></a>).</p>
 
 <p><a id="X7960924D84B5B18F" name="X7960924D84B5B18F"></a></p>
 
 <h5>41.2-2 OnRight</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnRight</code>( <var class="Arg">pnt</var>, <var class="Arg">g</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnRight</code>( <var class="Arg">pnt</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns <code class="code"><var class="Arg">pnt</var> * <var class="Arg">g</var></code>. This is for example the action of a group on its elements via right multiplication, or the action of a group on the cosets of a subgroup. The action of a matrix group on vectors from the right is described by both <code class="func">OnPoints</code> (<a href="chap41_mj.html#X7FE417DD837987B4"><span class="RefLink">41.2-1</span></a>) and <code class="func">OnRight</code>.</p>
 
 <p><a id="X832DF5327ECA0E44" name="X832DF5327ECA0E44"></a></p>
 
 <h5>41.2-3 OnLeftInverse</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnLeftInverse</code>( <var class="Arg">pnt</var>, <var class="Arg">g</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnLeftInverse</code>( <var class="Arg">pnt</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns <span class="SimpleMath">\(\textit{g}^{{-1}}\)</span> <code class="code">* <var class="Arg">pnt</var></code>. Forming the inverse is necessary to make this a proper action, as in <strong class="pkg">GAP</strong> groups always act from the right.</p>
 
 <p><code class="func">OnLeftInverse</code> is used for example in the representation of a right coset as an external set (see <a href="chap41_mj.html#X7FD3D2D2788709B7"><span class="RefLink">41.12</span></a>), that is, a right coset <span class="SimpleMath">\(Ug\)</span> is an external set for the group <span class="SimpleMath">\(U\)</span> acting on it via <code class="func">OnLeftInverse</code>.)</p>
@@ -259,7 +259,7 @@ end;
 
 <h5>41.2-4 OnSets</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnSets</code>( <var class="Arg">set</var>, <var class="Arg">g</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnSets</code>( <var class="Arg">set</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">set</var> be a proper set (see <a href="chap21_mj.html#X80ABC25582343910"><span class="RefLink">21.19</span></a>). <code class="func">OnSets</code> returns the proper set formed by the images of all points <span class="SimpleMath">\(x\)</span> of <var class="Arg">set</var> via the action function <code class="func">OnPoints</code> (<a href="chap41_mj.html#X7FE417DD837987B4"><span class="RefLink">41.2-1</span></a>), applied to <span class="SimpleMath">\(x\)</span> and <var class="Arg">g</var>.</p>
 
 <p><code class="func">OnSets</code> is for example used to compute the action of a permutation group on blocks.</p>
@@ -270,7 +270,7 @@ end;
 
 <h5>41.2-5 OnTuples</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnTuples</code>( <var class="Arg">tup</var>, <var class="Arg">g</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnTuples</code>( <var class="Arg">tup</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">tup</var> be a list. <code class="func">OnTuples</code> returns the list formed by the images of all points <span class="SimpleMath">\(x\)</span> of <var class="Arg">tup</var> via the action function <code class="func">OnPoints</code> (<a href="chap41_mj.html#X7FE417DD837987B4"><span class="RefLink">41.2-1</span></a>), applied to <span class="SimpleMath">\(x\)</span> and <var class="Arg">g</var>.</p>
 
 <p>(<code class="func">OnSets</code> (<a href="chap41_mj.html#X85AA04347CD117F9"><span class="RefLink">41.2-4</span></a>) is an action on lists that additionally sorts the entries of the result.)</p>
@@ -279,42 +279,42 @@ end;
 
 <h5>41.2-6 OnPairs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnPairs</code>( <var class="Arg">tup</var>, <var class="Arg">g</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnPairs</code>( <var class="Arg">tup</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is a special case of <code class="func">OnTuples</code> (<a href="chap41_mj.html#X832CC5F87EEA4A7E"><span class="RefLink">41.2-5</span></a>) for lists <var class="Arg">tup</var> of length 2.</p>
 
 <p><a id="X7C10492081D72376" name="X7C10492081D72376"></a></p>
 
 <h5>41.2-7 OnSetsSets</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnSetsSets</code>( <var class="Arg">set</var>, <var class="Arg">g</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnSetsSets</code>( <var class="Arg">set</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>implements the action on sets of sets. For the special case that the sets are pairwise disjoint, it is possible to use <code class="func">OnSetsDisjointSets</code> (<a href="chap41_mj.html#X7E23686E7A9D3A20"><span class="RefLink">41.2-8</span></a>). <var class="Arg">set</var> must be a sorted list whose entries are again sorted lists, otherwise an error is triggered (see <a href="chap41_mj.html#X82181CA07A5B2056"><span class="RefLink">41.3</span></a>).</p>
 
 <p><a id="X7E23686E7A9D3A20" name="X7E23686E7A9D3A20"></a></p>
 
 <h5>41.2-8 OnSetsDisjointSets</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnSetsDisjointSets</code>( <var class="Arg">set</var>, <var class="Arg">g</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnSetsDisjointSets</code>( <var class="Arg">set</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>implements the action on sets of pairwise disjoint sets (see also <code class="func">OnSetsSets</code> (<a href="chap41_mj.html#X7C10492081D72376"><span class="RefLink">41.2-7</span></a>)). <var class="Arg">set</var> must be a sorted list whose entries are again sorted lists, otherwise an error is triggered (see <a href="chap41_mj.html#X82181CA07A5B2056"><span class="RefLink">41.3</span></a>).</p>
 
 <p><a id="X7ADE244E819035FF" name="X7ADE244E819035FF"></a></p>
 
 <h5>41.2-9 OnSetsTuples</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnSetsTuples</code>( <var class="Arg">set</var>, <var class="Arg">g</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnSetsTuples</code>( <var class="Arg">set</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>implements the action on sets of tuples. <var class="Arg">set</var> must be a sorted list, otherwise an error is triggered (see <a href="chap41_mj.html#X82181CA07A5B2056"><span class="RefLink">41.3</span></a>).</p>
 
 <p><a id="X7FF556CD7E6739A9" name="X7FF556CD7E6739A9"></a></p>
 
 <h5>41.2-10 OnTuplesSets</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnTuplesSets</code>( <var class="Arg">set</var>, <var class="Arg">g</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnTuplesSets</code>( <var class="Arg">set</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>implements the action on tuples of sets. <var class="Arg">set</var> must be a list whose entries are again sorted lists, otherwise an error is triggered (see <a href="chap41_mj.html#X82181CA07A5B2056"><span class="RefLink">41.3</span></a>).</p>
 
 <p><a id="X844E902382EB4151" name="X844E902382EB4151"></a></p>
 
 <h5>41.2-11 OnTuplesTuples</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnTuplesTuples</code>( <var class="Arg">set</var>, <var class="Arg">g</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnTuplesTuples</code>( <var class="Arg">set</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>implements the action on tuples of tuples.</p>
 
 
@@ -354,7 +354,7 @@ end;
 
 <h5>41.2-12 OnLines</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnLines</code>( <var class="Arg">vec</var>, <var class="Arg">g</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnLines</code>( <var class="Arg">vec</var>, <var class="Arg">g</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">vec</var> be a <em>normed</em> row vector, that is, its first nonzero entry is normed to the identity of the relevant field, see <code class="func">NormedRowVector</code> (<a href="chap23_mj.html#X785DC60D8482695D"><span class="RefLink">23.2-1</span></a>). The function <code class="func">OnLines</code> returns the row vector obtained from first multiplying <var class="Arg">vec</var> from the right with <var class="Arg">g</var> (via <code class="func">OnRight</code> (<a href="chap41_mj.html#X7960924D84B5B18F"><span class="RefLink">41.2-2</span></a>)) and then normalizing the resulting row vector by scalar multiplication from the left.</p>
 
 <p>This action corresponds to the projective action of a matrix group on one-dimensional subspaces.</p>
@@ -373,7 +373,7 @@ Group([ (2,3,5,6), (1,2,4)(3,6,5) ])
 
 <h5>41.2-13 OnIndeterminates</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnIndeterminates</code>( <var class="Arg">poly</var>, <var class="Arg">perm</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnIndeterminates</code>( <var class="Arg">poly</var>, <var class="Arg">perm</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>A permutation <var class="Arg">perm</var> acts on the multivariate polynomial <var class="Arg">poly</var> by permuting the indeterminates as it permutes points.</p>
 
 
@@ -389,7 +389,7 @@ Group([ (1,2), (3,4) ])
 
 <h5>41.2-14 Permuted</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Permuted</code>( <var class="Arg">list</var>, <var class="Arg">perm</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Permuted</code>( <var class="Arg">list</var>, <var class="Arg">perm</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <p>The following example demonstrates <code class="func">Permuted</code> (<a href="chap21_mj.html#X7B5A19098406347A"><span class="RefLink">21.20-18</span></a>) being used to implement a permutation action on a domain:</p>
 
 
@@ -405,8 +405,8 @@ Group([ (1,2), (3,4) ])
 
 <h5>41.2-15 OnSubspacesByCanonicalBasis</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnSubspacesByCanonicalBasis</code>( <var class="Arg">bas</var>, <var class="Arg">mat</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnSubspacesByCanonicalBasisConcatenations</code>( <var class="Arg">basvec</var>, <var class="Arg">mat</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnSubspacesByCanonicalBasis</code>( <var class="Arg">bas</var>, <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnSubspacesByCanonicalBasisConcatenations</code>( <var class="Arg">basvec</var>, <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>implements the operation of a matrix group on subspaces of a vector space. <var class="Arg">bas</var> must be a list of (linearly independent) vectors which forms a basis of the subspace in Hermite normal form. <var class="Arg">mat</var> is an element of the acting matrix group. The function returns a mutable matrix which gives the basis of the image of the subspace in Hermite normal form. (In other words: it triangulizes the product of <var class="Arg">bas</var> with <var class="Arg">mat</var>.)</p>
 
 <p><var class="Arg">bas</var> must be given in Hermite normal form, otherwise an error is triggered (see <a href="chap41_mj.html#X82181CA07A5B2056"><span class="RefLink">41.3</span></a>).</p>
@@ -440,7 +440,7 @@ Error, Action not well-defined. See the manual section
 
 <h5>41.4-1 Orbit</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Orbit</code>( <var class="Arg">G</var>[, <var class="Arg">Omega</var>], <var class="Arg">pnt</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Orbit</code>( <var class="Arg">G</var>[, <var class="Arg">Omega</var>], <var class="Arg">pnt</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>The orbit of the point <var class="Arg">pnt</var> is the list of all images of <var class="Arg">pnt</var> under the action of the group <var class="Arg">G</var> w.r.t. the action function <var class="Arg">act</var> or <code class="func">OnPoints</code> (<a href="chap41_mj.html#X7FE417DD837987B4"><span class="RefLink">41.2-1</span></a>) if no action function is given.</p>
 
 <p>(Note that the arrangement of points in this list is not defined by the operation.)</p>
@@ -462,8 +462,8 @@ Error, Action not well-defined. See the manual section
 
 <h5>41.4-2 Orbits</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Orbits</code>( <var class="Arg">G</var>, <var class="Arg">seeds</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Orbits</code>( <var class="Arg">xset</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Orbits</code>( <var class="Arg">G</var>, <var class="Arg">seeds</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Orbits</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a duplicate-free list of the orbits of the elements in <var class="Arg">seeds</var> under the action <var class="Arg">act</var> of <var class="Arg">G</var> or under <code class="func">OnPoints</code> (<a href="chap41_mj.html#X7FE417DD837987B4"><span class="RefLink">41.2-1</span></a>) if no action function is given.</p>
 
 <p>(Note that the arrangement of orbits or of points within one orbit is not defined by the operation.)</p>
@@ -472,8 +472,8 @@ Error, Action not well-defined. See the manual section
 
 <h5>41.4-3 <span class="Heading">OrbitsDomain</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitsDomain</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitsDomain</code>( <var class="Arg">xset</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitsDomain</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitsDomain</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a list of the orbits of <var class="Arg">G</var> on the domain <var class="Arg">Omega</var> (given as lists) under the action <var class="Arg">act</var> or under <code class="func">OnPoints</code> (<a href="chap41_mj.html#X7FE417DD837987B4"><span class="RefLink">41.2-1</span></a>) if no action function is given.</p>
 
 <p>This operation is often faster than <code class="func">Orbits</code> (<a href="chap41_mj.html#X86BCAE17869BBEAA"><span class="RefLink">41.4-2</span></a>). The domain <var class="Arg">Omega</var> must be closed under the action of <var class="Arg">G</var>, otherwise an error can occur.</p>
@@ -506,23 +506,23 @@ Error, Action not well-defined. See the manual section
 
 <h5>41.4-4 OrbitLength</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitLength</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>, <var class="Arg">pnt</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitLength</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>, <var class="Arg">pnt</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>computes the length of the orbit of <var class="Arg">pnt</var> under the action function <var class="Arg">act</var> or <code class="func">OnPoints</code> (<a href="chap41_mj.html#X7FE417DD837987B4"><span class="RefLink">41.2-1</span></a>) if no action function is given.</p>
 
 <p><a id="X8032F73078DF2DDB" name="X8032F73078DF2DDB"></a></p>
 
 <h5>41.4-5 <span class="Heading">OrbitLengths</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitLengths</code>( <var class="Arg">G</var>, <var class="Arg">seeds</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitLengths</code>( <var class="Arg">xset</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitLengths</code>( <var class="Arg">G</var>, <var class="Arg">seeds</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitLengths</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>computes the lengths of all the orbits of the elements in <var class="Arg">seeds</var> under the action <var class="Arg">act</var> of <var class="Arg">G</var>.</p>
 
 <p><a id="X8520E2487F7E98AF" name="X8520E2487F7E98AF"></a></p>
 
 <h5>41.4-6 <span class="Heading">OrbitLengthsDomain</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitLengthsDomain</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitLengthsDomain</code>( <var class="Arg">xset</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitLengthsDomain</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitLengthsDomain</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>computes the lengths of all the orbits of <var class="Arg">G</var> on <var class="Arg">Omega</var>.</p>
 
 <p>This operation is often faster than <code class="func">OrbitLengths</code> (<a href="chap41_mj.html#X8032F73078DF2DDB"><span class="RefLink">41.4-5</span></a>). The domain <var class="Arg">Omega</var> must be closed under the action of <var class="Arg">G</var>, otherwise an error can occur.</p>
@@ -546,7 +546,7 @@ Error, Action not well-defined. See the manual section
 
 <h5>41.5-1 OrbitStabilizer</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitStabilizer</code>( <var class="Arg">G</var>[, <var class="Arg">Omega</var>], <var class="Arg">pnt</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>], <var class="Arg">act</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitStabilizer</code>( <var class="Arg">G</var>[, <var class="Arg">Omega</var>], <var class="Arg">pnt</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>], <var class="Arg">act</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>computes the orbit and the stabilizer of <var class="Arg">pnt</var> simultaneously in a single orbit-stabilizer algorithm.</p>
 
 <p>The stabilizer will have <var class="Arg">G</var> as its parent.</p>
@@ -555,7 +555,7 @@ Error, Action not well-defined. See the manual section
 
 <h5>41.5-2 Stabilizer</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Stabilizer</code>( <var class="Arg">G</var>[, <var class="Arg">Omega</var>], <var class="Arg">pnt</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Stabilizer</code>( <var class="Arg">G</var>[, <var class="Arg">Omega</var>], <var class="Arg">pnt</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>computes the stabilizer in <var class="Arg">G</var> of the point <var class="Arg">pnt</var>, that is the subgroup of those elements of <var class="Arg">G</var> that fix <var class="Arg">pnt</var>. The stabilizer will have <var class="Arg">G</var> as its parent.</p>
 
 
@@ -587,7 +587,7 @@ rec(
 
 <h5>41.5-3 OrbitStabilizerAlgorithm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitStabilizerAlgorithm</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>, <var class="Arg">blist</var>, <var class="Arg">gens</var>, <var class="Arg">acts</var>, <var class="Arg">pntact</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrbitStabilizerAlgorithm</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>, <var class="Arg">blist</var>, <var class="Arg">gens</var>, <var class="Arg">acts</var>, <var class="Arg">pntact</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>This operation should not be called by a user. It is documented however for purposes to extend or maintain the group actions package (the word "package" here refers to the <strong class="pkg">GAP</strong> functionality for group actions, not to a <strong class="pkg">GAP</strong> package).</p>
 
 <p><code class="func">OrbitStabilizerAlgorithm</code> performs an orbit stabilizer algorithm for the group <var class="Arg">G</var> acting with the generators <var class="Arg">gens</var> via the generator images <var class="Arg">gens</var> and the group action <var class="Arg">act</var> on the element <var class="Arg">pnt</var>. (For technical reasons <var class="Arg">pnt</var> and <var class="Arg">act</var> are put in one record with components <code class="code">pnt</code> and <code class="code">act</code> respectively.)</p>
@@ -606,7 +606,7 @@ rec(
 
 <h5>41.6-1 RepresentativeAction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RepresentativeAction</code>( <var class="Arg">G</var>[, <var class="Arg">Omega</var>], <var class="Arg">d</var>, <var class="Arg">e</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RepresentativeAction</code>( <var class="Arg">G</var>[, <var class="Arg">Omega</var>], <var class="Arg">d</var>, <var class="Arg">e</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>computes an element of <var class="Arg">G</var> that maps <var class="Arg">d</var> to <var class="Arg">e</var> under the given action and returns <code class="keyw">fail</code> if no such element exists.</p>
 
 
@@ -644,9 +644,9 @@ fail
 
 <h5>41.7-1 <span class="Heading">ActionHomomorphism</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActionHomomorphism</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>][, <var class="Arg">"surjective"</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActionHomomorphism</code>( <var class="Arg">xset</var>[, <var class="Arg">"surjective"</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActionHomomorphism</code>( <var class="Arg">action</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActionHomomorphism</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>][, <var class="Arg">"surjective"</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActionHomomorphism</code>( <var class="Arg">xset</var>[, <var class="Arg">"surjective"</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActionHomomorphism</code>( <var class="Arg">action</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>computes a homomorphism from <var class="Arg">G</var> into the symmetric group on <span class="SimpleMath">\(|\textit{Omega}|\)</span> points that gives the permutation action of <var class="Arg">G</var> on <var class="Arg">Omega</var>. (In particular, this homomorphism is a permutation equivalence, that is the permutation image of a group element is given by the positions of points in <var class="Arg">Omega</var>.)</p>
 
 <p>By default the homomorphism returned by <code class="func">ActionHomomorphism</code> is not necessarily surjective (its <code class="func">Range</code> (<a href="chap32_mj.html#X7B6FD7277CDE9FCB"><span class="RefLink">32.3-7</span></a>) value is the full symmetric group) to avoid unnecessary computation of the image. If the optional string argument <code class="code">"surjective"</code> is given, a surjective homomorphism is created.</p>
@@ -680,8 +680,8 @@ Group(
 
 <h5>41.7-2 Action</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Action</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Action</code>( <var class="Arg">xset</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Action</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Action</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the image group of <code class="func">ActionHomomorphism</code> (<a href="chap41_mj.html#X78E6A002835288A4"><span class="RefLink">41.7-1</span></a>) called with the same parameters.</p>
 
 <p>Note that (for compatibility reasons to be able to get the action homomorphism) this image group internally stores the action homomorphism. If <var class="Arg">G</var> or <var class="Arg">Omega</var> are extremely big, this can cause memory problems. In this case compute only generator images and form the image group yourself.</p>
@@ -701,8 +701,8 @@ Group([ (1,4,5)(2,3,6), (1,3)(2,4)(5,6) ])
 
 <h5>41.7-3 SparseActionHomomorphism</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SparseActionHomomorphism</code>( <var class="Arg">G</var>, <var class="Arg">start</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SortedSparseActionHomomorphism</code>( <var class="Arg">G</var>, <var class="Arg">start</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SparseActionHomomorphism</code>( <var class="Arg">G</var>, <var class="Arg">start</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SortedSparseActionHomomorphism</code>( <var class="Arg">G</var>, <var class="Arg">start</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">SparseActionHomomorphism</code> computes the action homomorphism (see <code class="func">ActionHomomorphism</code> (<a href="chap41_mj.html#X78E6A002835288A4"><span class="RefLink">41.7-1</span></a>)) with arguments <var class="Arg">G</var>, <span class="SimpleMath">\(D\)</span>, and the optional arguments given, where <span class="SimpleMath">\(D\)</span> is the union of the <var class="Arg">G</var>-orbits of all points in <var class="Arg">start</var>. In the <code class="func">Orbit</code> (<a href="chap41_mj.html#X80E0234E7BD79409"><span class="RefLink">41.4-1</span></a>) calls that are used to create <span class="SimpleMath">\(D\)</span>, again the optional arguments given are entered.)</p>
 
 <p>If <var class="Arg">G</var> acts on a very large domain not surjectively this may yield a permutation image of substantially smaller degree than by action on the whole domain.</p>
@@ -733,7 +733,7 @@ Group([ (1,2,3,4,5,6) ])
 
 <h5>41.8-1 FactorCosetAction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FactorCosetAction</code>( <var class="Arg">G</var>, <var class="Arg">U</var>[, <var class="Arg">N</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FactorCosetAction</code>( <var class="Arg">G</var>, <var class="Arg">U</var>[, <var class="Arg">N</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>This command computes the action of the group <var class="Arg">G</var> on the right cosets of the subgroup <var class="Arg">U</var>. If a normal subgroup <var class="Arg">N</var> of <var class="Arg">G</var> is given, it is stored as kernel of this action.</p>
 
 
@@ -750,14 +750,14 @@ Group([ (1,2,3,4,5,6) ])
 
 <h5>41.8-2 RegularActionHomomorphism</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RegularActionHomomorphism</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RegularActionHomomorphism</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns an isomorphism from <var class="Arg">G</var> onto the regular permutation representation of <var class="Arg">G</var>.</p>
 
 <p><a id="X835317A7847477D4" name="X835317A7847477D4"></a></p>
 
 <h5>41.8-3 AbelianSubfactorAction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AbelianSubfactorAction</code>( <var class="Arg">G</var>, <var class="Arg">M</var>, <var class="Arg">N</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AbelianSubfactorAction</code>( <var class="Arg">G</var>, <var class="Arg">M</var>, <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">G</var> be a group and <span class="SimpleMath">\(\textit{M} \geq \textit{N}\)</span> be subgroups of a common parent that are normal under <var class="Arg">G</var>, such that the subfactor <span class="SimpleMath">\(\textit{M}/\textit{N}\)</span> is elementary abelian. The operation <code class="func">AbelianSubfactorAction</code> returns a list <code class="code">[ <var class="Arg">phi</var>, <var class="Arg">alpha</var>, <var class="Arg">bas</var> ]</code> where <var class="Arg">bas</var> is a list of elements of <var class="Arg">M</var> which are representatives for a basis of <span class="SimpleMath">\(\textit{M}/\textit{N}\)</span>, <var class="Arg">alpha</var> is a map from <var class="Arg">M</var> into a <span class="SimpleMath">\(n\)</span>-dimensional row space over <span class="SimpleMath">\(GF(p)\)</span> where <span class="SimpleMath">\([\textit{M}:\textit{N}] = p^n\)</span> that is the natural homomorphism of <var class="Arg">M</var> by <var class="Arg">N</var> with the quotient represented as an additive group. Finally <var class="Arg">phi</var> is a homomorphism from <var class="Arg">G</var> into <span class="SimpleMath">\(GL_n(p)\)</span> that represents the action of <var class="Arg">G</var> on the factor <span class="SimpleMath">\(\textit{M}/\textit{N}\)</span>.</p>
 
 <p>Note: If only matrices for the action are needed, <code class="func">LinearActionLayer</code> (<a href="chap45_mj.html#X7C2135B98732BBC3"><span class="RefLink">45.14-3</span></a>) might be faster.</p>
@@ -800,8 +800,8 @@ false
 
 <h5>41.9-1 <span class="Heading">Permutation</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Permutation</code>( <var class="Arg">g</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Permutation</code>( <var class="Arg">g</var>, <var class="Arg">xset</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Permutation</code>( <var class="Arg">g</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Permutation</code>( <var class="Arg">g</var>, <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>computes the permutation that corresponds to the action of <var class="Arg">g</var> on the permutation domain <var class="Arg">Omega</var> (a list of objects that are permuted). If an external set <var class="Arg">xset</var> is given, the permutation domain is the <code class="func">HomeEnumerator</code> (<a href="chap41_mj.html#X86A0CC1479A5932A"><span class="RefLink">41.12-5</span></a>) value of this external set (see Section <a href="chap41_mj.html#X7FD3D2D2788709B7"><span class="RefLink">41.12</span></a>). Note that the points of the returned permutation refer to the positions in <var class="Arg">Omega</var>, even if <var class="Arg">Omega</var> itself consists of integers.</p>
 
 <p>If <var class="Arg">g</var> does not leave the domain invariant, or does not map the domain injectively then <code class="keyw">fail</code> is returned.</p>
@@ -810,7 +810,7 @@ false
 
 <h5>41.9-2 PermutationCycle</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermutationCycle</code>( <var class="Arg">g</var>, <var class="Arg">Omega</var>, <var class="Arg">pnt</var>[, <var class="Arg">act</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PermutationCycle</code>( <var class="Arg">g</var>, <var class="Arg">Omega</var>, <var class="Arg">pnt</var>[, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>computes the permutation that represents the cycle of <var class="Arg">pnt</var> under the action of the element <var class="Arg">g</var>.</p>
 
 
@@ -827,28 +827,28 @@ false
 
 <h5>41.9-3 Cycle</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cycle</code>( <var class="Arg">g</var>, <var class="Arg">Omega</var>, <var class="Arg">pnt</var>[, <var class="Arg">act</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cycle</code>( <var class="Arg">g</var>, <var class="Arg">Omega</var>, <var class="Arg">pnt</var>[, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a list of the points in the cycle of <var class="Arg">pnt</var> under the action of the element <var class="Arg">g</var>.</p>
 
 <p><a id="X7F559E897B333758" name="X7F559E897B333758"></a></p>
 
 <h5>41.9-4 CycleLength</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CycleLength</code>( <var class="Arg">g</var>, <var class="Arg">Omega</var>, <var class="Arg">pnt</var>[, <var class="Arg">act</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CycleLength</code>( <var class="Arg">g</var>, <var class="Arg">Omega</var>, <var class="Arg">pnt</var>[, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the length of the cycle of <var class="Arg">pnt</var> under the action of the element <var class="Arg">g</var>.</p>
 
 <p><a id="X7F3B387A7FD8AE5E" name="X7F3B387A7FD8AE5E"></a></p>
 
 <h5>41.9-5 Cycles</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cycles</code>( <var class="Arg">g</var>, <var class="Arg">Omega</var>[, <var class="Arg">act</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cycles</code>( <var class="Arg">g</var>, <var class="Arg">Omega</var>[, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a list of the cycles (as lists of points) of the action of the element <var class="Arg">g</var>.</p>
 
 <p><a id="X83040A6080C2C6C6" name="X83040A6080C2C6C6"></a></p>
 
 <h5>41.9-6 CycleLengths</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CycleLengths</code>( <var class="Arg">g</var>, <var class="Arg">Omega</var>[, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CycleLengths</code>( <var class="Arg">g</var>, <var class="Arg">Omega</var>[, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the lengths of all the cycles under the action of the element <var class="Arg">g</var> on <var class="Arg">Omega</var>.</p>
 
 
@@ -867,8 +867,8 @@ false
 
 <h5>41.9-7 <span class="Heading">CycleIndex</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CycleIndex</code>( <var class="Arg">g</var>, <var class="Arg">Omega</var>[, <var class="Arg">act</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CycleIndex</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">act</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CycleIndex</code>( <var class="Arg">g</var>, <var class="Arg">Omega</var>[, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CycleIndex</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>The <em>cycle index</em> of a permutation <var class="Arg">g</var> acting on <var class="Arg">Omega</var> is defined as</p>
 
 <p class="center">\[
@@ -901,9 +901,9 @@ S_4(6c) = 1/2[2^3]S(3)
 
 <h5>41.10-1 <span class="Heading">IsTransitive</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransitive</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransitive</code>( <var class="Arg">G</var> )</td><td class="tdright">( property )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransitive</code>( <var class="Arg">xset</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransitive</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransitive</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTransitive</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the action implied by the arguments is transitive, or <code class="keyw">false</code> otherwise.</p>
 
 <p>We say that a group <var class="Arg">G</var> acts <em>transitively</em> on a domain <span class="SimpleMath">\(D\)</span> if and only if for every pair of points <span class="SimpleMath">\(d, e \in D\)</span> there is an element <span class="SimpleMath">\(g\)</span> in <var class="Arg">G</var> such that <span class="SimpleMath">\(d^g = e\)</span>.</p>
@@ -914,8 +914,8 @@ S_4(6c) = 1/2[2^3]S(3)
 
 <h5>41.10-2 <span class="Heading">Transitivity</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Transitivity</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Transitivity</code>( <var class="Arg">xset</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Transitivity</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Transitivity</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the degree <span class="SimpleMath">\(k\)</span> (a non-negative integer) of transitivity of the action implied by the arguments, i.e. the largest integer <span class="SimpleMath">\(k\)</span> such that the action is <span class="SimpleMath">\(k\)</span>-transitive. If the action is not transitive <code class="code">0</code> is returned.</p>
 
 <p>An action is <em><span class="SimpleMath">\(k\)</span>-transitive</em> if every <span class="SimpleMath">\(k\)</span>-tuple of points can be mapped simultaneously to every other <span class="SimpleMath">\(k\)</span>-tuple.</p>
@@ -933,8 +933,8 @@ false
 
 <h5>41.10-3 <span class="Heading">RankAction</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankAction</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankAction</code>( <var class="Arg">xset</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankAction</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankAction</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the rank of a transitive action, i.e. the number of orbits of the point stabilizer.</p>
 
 
@@ -947,8 +947,8 @@ false
 
 <h5>41.10-4 <span class="Heading">IsSemiRegular</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemiRegular</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemiRegular</code>( <var class="Arg">xset</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemiRegular</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemiRegular</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the action implied by the arguments is semiregular, or <code class="keyw">false</code> otherwise.</p>
 
 <p>An action is <em>semiregular</em> is the stabilizer of each point is the identity.</p>
@@ -957,8 +957,8 @@ false
 
 <h5>41.10-5 <span class="Heading">IsRegular</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRegular</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRegular</code>( <var class="Arg">xset</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRegular</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRegular</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the action implied by the arguments is regular, or <code class="keyw">false</code> otherwise.</p>
 
 <p>An action is <em>regular</em> if it is both semiregular (see <code class="func">IsSemiRegular</code> (<a href="chap41_mj.html#X7B77040F8543CD6E"><span class="RefLink">41.10-4</span></a>)) and transitive (see <code class="func">IsTransitive</code> (<a href="chap41_mj.html#X79B15750851828CB"><span class="RefLink">41.10-1</span></a>)). In this case every point <var class="Arg">pnt</var> of <var class="Arg">Omega</var> defines a one-to-one correspondence between <var class="Arg">G</var> and <var class="Arg">Omega</var>.</p>
@@ -975,8 +975,8 @@ false
 
 <h5>41.10-6 <span class="Heading">Earns</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Earns</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Earns</code>( <var class="Arg">xset</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Earns</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Earns</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a list of the elementary abelian regular (when acting on <var class="Arg">Omega</var>) normal subgroups of <var class="Arg">G</var>.</p>
 
 <p>At the moment only methods for a primitive group <var class="Arg">G</var> are implemented.</p>
@@ -985,8 +985,8 @@ false
 
 <h5>41.10-7 <span class="Heading">IsPrimitive</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPrimitive</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPrimitive</code>( <var class="Arg">xset</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPrimitive</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPrimitive</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the action implied by the arguments is primitive, or <code class="keyw">false</code> otherwise.</p>
 
 <p>An action is <em>primitive</em> if it is transitive and the action admits no nontrivial block systems. See <a href="chap41_mj.html#X7E9D3D0B7A9A8572"><span class="RefLink">41.11</span></a>.</p>
@@ -1007,8 +1007,8 @@ true
 
 <h5>41.11-1 <span class="Heading">Blocks</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Blocks</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">seed</var>][, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Blocks</code>( <var class="Arg">xset</var>[, <var class="Arg">seed</var>] )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Blocks</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">seed</var>][, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Blocks</code>( <var class="Arg">xset</var>[, <var class="Arg">seed</var>] )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>computes a block system for the action. If <var class="Arg">seed</var> is not given and the action is imprimitive, a minimal nontrivial block system will be found. If <var class="Arg">seed</var> is given, a block system in which <var class="Arg">seed</var> is the subset of one block is computed. The action must be transitive.</p>
 
 
@@ -1027,8 +1027,8 @@ E(8)=2[x]2[x]2
 
 <h5>41.11-2 <span class="Heading">MaximalBlocks</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MaximalBlocks</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">seed</var>][, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MaximalBlocks</code>( <var class="Arg">xset</var>[, <var class="Arg">seed</var>] )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MaximalBlocks</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">seed</var>][, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MaximalBlocks</code>( <var class="Arg">xset</var>[, <var class="Arg">seed</var>] )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a block system that is maximal (i.e., blocks are maximal with respect to inclusion) for the action of <var class="Arg">G</var> on <var class="Arg">Omega</var>. If <var class="Arg">seed</var> is given, a block system is computed in which <var class="Arg">seed</var> is a subset of one block.</p>
 
 
@@ -1041,8 +1041,8 @@ E(8)=2[x]2[x]2
 
 <h5>41.11-3 <span class="Heading">RepresentativesMinimalBlocks</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RepresentativesMinimalBlocks</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RepresentativesMinimalBlocks</code>( <var class="Arg">xset</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RepresentativesMinimalBlocks</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RepresentativesMinimalBlocks</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>computes a list of block representatives for all minimal (i.e blocks are minimal with respect to inclusion) nontrivial block systems for the action.</p>
 
 
@@ -1056,7 +1056,7 @@ E(8)=2[x]2[x]2
 
 <h5>41.11-4 AllBlocks</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllBlocks</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AllBlocks</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>computes a list of representatives of all block systems for a permutation group <var class="Arg">G</var> acting transitively on the points moved by the group.</p>
 
 
@@ -1108,14 +1108,14 @@ Group([ (6,7), (5,6), (5,8), (2,3), (3,4)(5,7), (1,4),
 
 <h5>41.12-1 IsExternalSet</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsExternalSet</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsExternalSet</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>An <em>external set</em> specifies a group action <span class="SimpleMath">\(\mu: \Omega \times G \mapsto \Omega\)</span> of a group <span class="SimpleMath">\(G\)</span> on a domain <span class="SimpleMath">\(\Omega\)</span>. The external set knows the group, the domain and the actual acting function. Mathematically, an external set is the set <span class="SimpleMath">\(\Omega\)</span>, which is endowed with the action of a group <span class="SimpleMath">\(G\)</span> via the group action <span class="SimpleMath">\(\mu\)</span>. For this reason <strong class="pkg">GAP</strong> treats an external set as a domain whose elements are the elements of <span class="SimpleMath">\(\Omega\)</span>. An external set is always a union of orbits. Currently the domain <span class="SimpleMath">\(\Omega\)</span> must always be finite. If <span class="SimpleMath">\(\Omega\)</span> is not a list, an enumerator for <span class="SimpleMath">\(\Omega\)</span> is automatically chosen, see <code class="func">Enumerator</code> (<a href="chap30_mj.html#X7EF8910F82B45EC7"><span class="RefLink">30.3-2</span></a>).</p>
 
 <p><a id="X7C90F648793E47DD" name="X7C90F648793E47DD"></a></p>
 
 <h5>41.12-2 ExternalSet</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExternalSet</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExternalSet</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>creates the external set for the action <var class="Arg">act</var> of <var class="Arg">G</var> on <var class="Arg">Omega</var>. <var class="Arg">Omega</var> can be either a proper set, or a domain which is represented as described in <a href="chap12_mj.html#X7BAF69417BB925F6"><span class="RefLink">12.4</span></a> and <a href="chap30_mj.html#X8050A8037984E5B6"><span class="RefLink">30</span></a>, or (to use less memory but with a slower performance) an enumerator (see <code class="func">Enumerator</code> (<a href="chap30_mj.html#X7EF8910F82B45EC7"><span class="RefLink">30.3-2</span></a>) ) of this domain.</p>
 
 
@@ -1135,21 +1135,21 @@ Group([ (6,7), (5,6), (5,8), (2,3), (3,4)(5,7), (1,4),
 
 <h5>41.12-3 ActingDomain</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActingDomain</code>( <var class="Arg">xset</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActingDomain</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>This attribute returns the group with which the external set <var class="Arg">xset</var> was defined.</p>
 
 <p><a id="X86153CB087394DC1" name="X86153CB087394DC1"></a></p>
 
 <h5>41.12-4 FunctionAction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FunctionAction</code>( <var class="Arg">xset</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FunctionAction</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is the acting function with which the external set <var class="Arg">xset</var> was defined.</p>
 
 <p><a id="X86A0CC1479A5932A" name="X86A0CC1479A5932A"></a></p>
 
 <h5>41.12-5 HomeEnumerator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomeEnumerator</code>( <var class="Arg">xset</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HomeEnumerator</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns an enumerator of the action domain with which the external set <var class="Arg">xset</var> was defined. For external subsets, this is in general different from the <code class="func">Enumerator</code> (<a href="chap30_mj.html#X7EF8910F82B45EC7"><span class="RefLink">30.3-2</span></a>) value of <var class="Arg">xset</var>, which enumerates only the subset.</p>
 
 
@@ -1167,28 +1167,28 @@ true
 
 <h5>41.12-6 IsExternalSubset</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsExternalSubset</code>( <var class="Arg">obj</var> )</td><td class="tdright">( representation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsExternalSubset</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;representation&nbsp;)</td></tr></table></div>
 <p>An external subset is the restriction of an external set to a subset of the domain (which must be invariant under the action). It is again an external set.</p>
 
 <p><a id="X87D1EA1486D86233" name="X87D1EA1486D86233"></a></p>
 
 <h5>41.12-7 ExternalSubset</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExternalSubset</code>( <var class="Arg">G</var>, <var class="Arg">xset</var>, <var class="Arg">start</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>], <var class="Arg">act</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExternalSubset</code>( <var class="Arg">G</var>, <var class="Arg">xset</var>, <var class="Arg">start</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>], <var class="Arg">act</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>constructs the external subset of <var class="Arg">xset</var> on the union of orbits of the points in <var class="Arg">start</var>.</p>
 
 <p><a id="X7E081F568407317F" name="X7E081F568407317F"></a></p>
 
 <h5>41.12-8 IsExternalOrbit</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsExternalOrbit</code>( <var class="Arg">obj</var> )</td><td class="tdright">( representation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsExternalOrbit</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;representation&nbsp;)</td></tr></table></div>
 <p>An external orbit is an external subset consisting of one orbit.</p>
 
 <p><a id="X7FB656AE7A066C35" name="X7FB656AE7A066C35"></a></p>
 
 <h5>41.12-9 ExternalOrbit</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExternalOrbit</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>, <var class="Arg">pnt</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>], <var class="Arg">act</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExternalOrbit</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>, <var class="Arg">pnt</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>], <var class="Arg">act</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>constructs the external subset on the orbit of <var class="Arg">pnt</var>. The <code class="func">Representative</code> (<a href="chap30_mj.html#X865507568182424E"><span class="RefLink">30.4-7</span></a>) value of this external set is <var class="Arg">pnt</var>.</p>
 
 
@@ -1201,7 +1201,7 @@ true
 
 <h5>41.12-10 StabilizerOfExternalSet</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StabilizerOfExternalSet</code>( <var class="Arg">xset</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StabilizerOfExternalSet</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>computes the stabilizer of the <code class="func">Representative</code> (<a href="chap30_mj.html#X865507568182424E"><span class="RefLink">30.4-7</span></a>) value of the external set <var class="Arg">xset</var>. The stabilizer will have the acting group of <var class="Arg">xset</var> as its parent.</p>
 
 
@@ -1216,8 +1216,8 @@ Group([ (1,2,3) ])
 
 <h5>41.12-11 <span class="Heading">ExternalOrbits</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExternalOrbits</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExternalOrbits</code>( <var class="Arg">xset</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExternalOrbits</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExternalOrbits</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>computes a list of external orbits that give the orbits of <var class="Arg">G</var>.</p>
 
 
@@ -1230,8 +1230,8 @@ Group([ (1,2,3) ])
 
 <h5>41.12-12 <span class="Heading">ExternalOrbitsStabilizers</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExternalOrbitsStabilizers</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExternalOrbitsStabilizers</code>( <var class="Arg">xset</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExternalOrbitsStabilizers</code>( <var class="Arg">G</var>, <var class="Arg">Omega</var>[, <var class="Arg">gens</var>, <var class="Arg">acts</var>][, <var class="Arg">act</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExternalOrbitsStabilizers</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>In addition to <code class="func">ExternalOrbits</code> (<a href="chap41_mj.html#X867262FA82FDD592"><span class="RefLink">41.12-11</span></a>), this operation also computes the stabilizers of the representatives of the external orbits at the same time. (This can be quicker than computing the <code class="func">ExternalOrbits</code> (<a href="chap41_mj.html#X867262FA82FDD592"><span class="RefLink">41.12-11</span></a>) value first and the stabilizers afterwards.)</p>
 
 
@@ -1248,21 +1248,21 @@ Group([ (2,4,3) ])
 
 <h5>41.12-13 CanonicalRepresentativeOfExternalSet</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalRepresentativeOfExternalSet</code>( <var class="Arg">xset</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalRepresentativeOfExternalSet</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The canonical representative of an external set <var class="Arg">xset</var> may only depend on the defining attributes <var class="Arg">G</var>, <var class="Arg">Omega</var>, <var class="Arg">act</var> of <var class="Arg">xset</var> and (in the case of external subsets) <code class="code">Enumerator( <var class="Arg">xset</var> )</code>. It must <em>not</em> depend, e.g., on the representative of an external orbit. <strong class="pkg">GAP</strong> does not know methods for arbitrary external sets to compute a canonical representative, see <code class="func">CanonicalRepresentativeDeterminatorOfExternalSet</code> (<a href="chap41_mj.html#X8071A8D784DC8325"><span class="RefLink">41.12-14</span></a>).</p>
 
 <p><a id="X8071A8D784DC8325" name="X8071A8D784DC8325"></a></p>
 
 <h5>41.12-14 CanonicalRepresentativeDeterminatorOfExternalSet</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalRepresentativeDeterminatorOfExternalSet</code>( <var class="Arg">xset</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalRepresentativeDeterminatorOfExternalSet</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a function that takes as its arguments the acting group and a point. This function returns a list of length 1 or 3, the first entry being the canonical representative and the other entries (if bound) being the stabilizer of the canonical representative and a conjugating element, respectively. An external set is only guaranteed to be able to compute a canonical representative if it has a <code class="func">CanonicalRepresentativeDeterminatorOfExternalSet</code>.</p>
 
 <p><a id="X85E9A6A77B8D00B8" name="X85E9A6A77B8D00B8"></a></p>
 
 <h5>41.12-15 ActorOfExternalSet</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActorOfExternalSet</code>( <var class="Arg">xset</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ActorOfExternalSet</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns an element mapping <code class="code">Representative(<var class="Arg">xset</var>)</code> to <code class="code">CanonicalRepresentativeOfExternalSet(<var class="Arg">xset</var>)</code> under the given action.</p>
 
 
@@ -1281,7 +1281,7 @@ Group([ (2,4,3) ])
 
 <h5>41.12-16 UnderlyingExternalSet</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingExternalSet</code>( <var class="Arg">acthom</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingExternalSet</code>( <var class="Arg">acthom</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The underlying set of an action homomorphism <var class="Arg">acthom</var> is the external set on which it was defined.</p>
 
 
@@ -1304,7 +1304,7 @@ Group([ (2,4,3) ])
 
 <h5>41.12-17 SurjectiveActionHomomorphismAttr</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SurjectiveActionHomomorphismAttr</code>( <var class="Arg">xset</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SurjectiveActionHomomorphismAttr</code>( <var class="Arg">xset</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns an action homomorphism for the external set <var class="Arg">xset</var> which is surjective. (As the <code class="func">Image</code> (<a href="chap32_mj.html#X87F4D35A826599C6"><span class="RefLink">32.4-6</span></a>) value of this homomorphism has to be computed to obtain the range, this may take substantially longer than <code class="func">ActionHomomorphism</code> (<a href="chap41_mj.html#X78E6A002835288A4"><span class="RefLink">41.7-1</span></a>).)</p>
 
 

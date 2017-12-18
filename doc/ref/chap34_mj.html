@@ -82,14 +82,14 @@
 
 <h5>34.1-1 IsOrdering</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsOrdering</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsOrdering</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if and only if the object <var class="Arg">ord</var> is an ordering.</p>
 
 <p><a id="X85E6445C87283BEC" name="X85E6445C87283BEC"></a></p>
 
 <h5>34.1-2 OrderingsFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrderingsFamily</code>( <var class="Arg">fam</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrderingsFamily</code>( <var class="Arg">fam</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>for a family <var class="Arg">fam</var>, returns the family of all orderings on elements of <var class="Arg">fam</var>.</p>
 
 <p><a id="X85C4CAA784BD7F01" name="X85C4CAA784BD7F01"></a></p>
@@ -100,7 +100,7 @@
 
 <h5>34.2-1 OrderingByLessThanFunctionNC</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrderingByLessThanFunctionNC</code>( <var class="Arg">fam</var>, <var class="Arg">lt</var>[, <var class="Arg">l</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrderingByLessThanFunctionNC</code>( <var class="Arg">fam</var>, <var class="Arg">lt</var>[, <var class="Arg">l</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Called with two arguments, <code class="func">OrderingByLessThanFunctionNC</code> returns the ordering on the elements of the elements of the family <var class="Arg">fam</var>, according to the <code class="func">LessThanFunction</code> (<a href="chap34_mj.html#X7D08ED6882015BFB"><span class="RefLink">34.3-5</span></a>) value given by <var class="Arg">lt</var>, where <var class="Arg">lt</var> is a function that takes two arguments in <var class="Arg">fam</var> and returns <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>Called with three arguments, for a family <var class="Arg">fam</var>, a function <var class="Arg">lt</var> that takes two arguments in <var class="Arg">fam</var> and returns <code class="keyw">true</code> or <code class="keyw">false</code>, and a list <var class="Arg">l</var> of properties of orderings, <code class="func">OrderingByLessThanFunctionNC</code> returns the ordering on the elements of <var class="Arg">fam</var> with <code class="func">LessThanFunction</code> (<a href="chap34_mj.html#X7D08ED6882015BFB"><span class="RefLink">34.3-5</span></a>) value given by <var class="Arg">lt</var> and with the properties from <var class="Arg">l</var> set to <code class="keyw">true</code>.</p>
@@ -109,7 +109,7 @@
 
 <h5>34.2-2 OrderingByLessThanOrEqualFunctionNC</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrderingByLessThanOrEqualFunctionNC</code>( <var class="Arg">fam</var>, <var class="Arg">lteq</var>[, <var class="Arg">l</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrderingByLessThanOrEqualFunctionNC</code>( <var class="Arg">fam</var>, <var class="Arg">lteq</var>[, <var class="Arg">l</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Called with two arguments, <code class="func">OrderingByLessThanOrEqualFunctionNC</code> returns the ordering on the elements of the elements of the family <var class="Arg">fam</var> according to the <code class="func">LessThanOrEqualFunction</code> (<a href="chap34_mj.html#X857E800583E9026D"><span class="RefLink">34.3-6</span></a>) value given by <var class="Arg">lteq</var>, where <var class="Arg">lteq</var> is a function that takes two arguments in <var class="Arg">fam</var> and returns <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>Called with three arguments, for a family <var class="Arg">fam</var>, a function <var class="Arg">lteq</var> that takes two arguments in <var class="Arg">fam</var> and returns <code class="keyw">true</code> or <code class="keyw">false</code>, and a list <var class="Arg">l</var> of properties of orderings, <code class="func">OrderingByLessThanOrEqualFunctionNC</code> returns the ordering on the elements of <var class="Arg">fam</var> with <code class="func">LessThanOrEqualFunction</code> (<a href="chap34_mj.html#X857E800583E9026D"><span class="RefLink">34.3-6</span></a>) value given by <var class="Arg">lteq</var> and with the properties from <var class="Arg">l</var> set to <code class="keyw">true</code>.</p>
@@ -136,56 +136,56 @@ Ordering
 
 <h5>34.3-1 IsWellFoundedOrdering</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWellFoundedOrdering</code>( <var class="Arg">ord</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWellFoundedOrdering</code>( <var class="Arg">ord</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>for an ordering <var class="Arg">ord</var>, returns <code class="keyw">true</code> if and only if the ordering is well founded. An ordering <var class="Arg">ord</var> is well founded if it admits no infinite descending chains. Normally this property is set at the time of creation of the ordering and there is no general method to check whether a certain ordering is well founded.</p>
 
 <p><a id="X867AC932843AD921" name="X867AC932843AD921"></a></p>
 
 <h5>34.3-2 IsTotalOrdering</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTotalOrdering</code>( <var class="Arg">ord</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTotalOrdering</code>( <var class="Arg">ord</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>for an ordering <var class="Arg">ord</var>, returns true if and only if the ordering is total. An ordering <var class="Arg">ord</var> is total if any two elements of the family are comparable under <var class="Arg">ord</var>. Normally this property is set at the time of creation of the ordering and there is no general method to check whether a certain ordering is total.</p>
 
 <p><a id="X814E5E7D85EDCAC7" name="X814E5E7D85EDCAC7"></a></p>
 
 <h5>34.3-3 IsIncomparableUnder</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIncomparableUnder</code>( <var class="Arg">ord</var>, <var class="Arg">el1</var>, <var class="Arg">el2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIncomparableUnder</code>( <var class="Arg">ord</var>, <var class="Arg">el1</var>, <var class="Arg">el2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>for an ordering <var class="Arg">ord</var> on the elements of the family of <var class="Arg">el1</var> and <var class="Arg">el2</var>, returns <code class="keyw">true</code> if <var class="Arg">el1</var> <span class="SimpleMath">\(\neq\)</span> <var class="Arg">el2</var> and <code class="code">IsLessThanUnder</code>(<var class="Arg">ord</var>,<var class="Arg">el1</var>,<var class="Arg">el2</var>), <code class="code">IsLessThanUnder</code>(<var class="Arg">ord</var>,<var class="Arg">el2</var>,<var class="Arg">el1</var>) are both <code class="keyw">false</code>; and returns <code class="keyw">false</code> otherwise.</p>
 
 <p><a id="X872497B9782B97B4" name="X872497B9782B97B4"></a></p>
 
 <h5>34.3-4 FamilyForOrdering</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FamilyForOrdering</code>( <var class="Arg">ord</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FamilyForOrdering</code>( <var class="Arg">ord</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>for an ordering <var class="Arg">ord</var>, returns the family of elements that the ordering <var class="Arg">ord</var> compares.</p>
 
 <p><a id="X7D08ED6882015BFB" name="X7D08ED6882015BFB"></a></p>
 
 <h5>34.3-5 LessThanFunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LessThanFunction</code>( <var class="Arg">ord</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LessThanFunction</code>( <var class="Arg">ord</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>for an ordering <var class="Arg">ord</var>, returns a function <span class="SimpleMath">\(f\)</span> which takes two elements <span class="SimpleMath">\(el1\)</span>, <span class="SimpleMath">\(el2\)</span> in <code class="code">FamilyForOrdering</code>(<var class="Arg">ord</var>) and returns <code class="keyw">true</code> if <span class="SimpleMath">\(el1\)</span> is strictly less than <span class="SimpleMath">\(el2\)</span> (with respect to <var class="Arg">ord</var>), and returns <code class="keyw">false</code> otherwise.</p>
 
 <p><a id="X857E800583E9026D" name="X857E800583E9026D"></a></p>
 
 <h5>34.3-6 LessThanOrEqualFunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LessThanOrEqualFunction</code>( <var class="Arg">ord</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LessThanOrEqualFunction</code>( <var class="Arg">ord</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>for an ordering <var class="Arg">ord</var>, returns a function that takes two elements <span class="SimpleMath">\(el1\)</span>, <span class="SimpleMath">\(el2\)</span> in <code class="code">FamilyForOrdering</code>(<var class="Arg">ord</var>) and returns <code class="keyw">true</code> if <span class="SimpleMath">\(el1\)</span> is less than <em>or equal to</em> <span class="SimpleMath">\(el2\)</span> (with respect to <var class="Arg">ord</var>), and returns <code class="keyw">false</code> otherwise.</p>
 
 <p><a id="X87F51D737C695D41" name="X87F51D737C695D41"></a></p>
 
 <h5>34.3-7 IsLessThanUnder</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLessThanUnder</code>( <var class="Arg">ord</var>, <var class="Arg">el1</var>, <var class="Arg">el2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLessThanUnder</code>( <var class="Arg">ord</var>, <var class="Arg">el1</var>, <var class="Arg">el2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>for an ordering <var class="Arg">ord</var> on the elements of the family of <var class="Arg">el1</var> and <var class="Arg">el2</var>, returns <code class="keyw">true</code> if <var class="Arg">el1</var> is (strictly) less than <var class="Arg">el2</var> with respect to <var class="Arg">ord</var>, and <code class="keyw">false</code> otherwise.</p>
 
 <p><a id="X8308B7DF7AAF6D9C" name="X8308B7DF7AAF6D9C"></a></p>
 
 <h5>34.3-8 IsLessThanOrEqualUnder</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLessThanOrEqualUnder</code>( <var class="Arg">ord</var>, <var class="Arg">el1</var>, <var class="Arg">el2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLessThanOrEqualUnder</code>( <var class="Arg">ord</var>, <var class="Arg">el1</var>, <var class="Arg">el2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>for an ordering <var class="Arg">ord</var> on the elements of the family of <var class="Arg">el1</var> and <var class="Arg">el2</var>, returns <code class="keyw">true</code> if <var class="Arg">el1</var> is less than or equal to <var class="Arg">el2</var> with respect to <var class="Arg">ord</var>, and <code class="keyw">false</code> otherwise.</p>
 
 
@@ -212,14 +212,14 @@ true
 
 <h5>34.4-1 IsOrderingOnFamilyOfAssocWords</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsOrderingOnFamilyOfAssocWords</code>( <var class="Arg">ord</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsOrderingOnFamilyOfAssocWords</code>( <var class="Arg">ord</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>for an ordering <var class="Arg">ord</var>, returns true if <var class="Arg">ord</var> is an ordering over a family of associative words.</p>
 
 <p><a id="X8175B8887868F29A" name="X8175B8887868F29A"></a></p>
 
 <h5>34.4-2 IsTranslationInvariantOrdering</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTranslationInvariantOrdering</code>( <var class="Arg">ord</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTranslationInvariantOrdering</code>( <var class="Arg">ord</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>for an ordering <var class="Arg">ord</var> on a family of associative words, returns <code class="keyw">true</code> if and only if the ordering is translation invariant.</p>
 
 <p>This is a property of orderings on families of associative words. An ordering <var class="Arg">ord</var> over a family <span class="SimpleMath">\(F\)</span>, with alphabet <span class="SimpleMath">\(X\)</span> is translation invariant if <code class="code">IsLessThanUnder(</code> <var class="Arg">ord</var>, <span class="SimpleMath">\(u\)</span>, <span class="SimpleMath">\(v\)</span> <code class="code">)</code> implies that for any <span class="SimpleMath">\(a, b \in X^*\)</span>, <code class="code">IsLessThanUnder(</code> <var class="Arg">ord</var>, <span class="SimpleMath">\(a*u*b\)</span>, <span class="SimpleMath">\(a*v*b\)</span> <code class="code">)</code>.</p>
@@ -228,21 +228,21 @@ true
 
 <h5>34.4-3 IsReductionOrdering</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsReductionOrdering</code>( <var class="Arg">ord</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsReductionOrdering</code>( <var class="Arg">ord</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>for an ordering <var class="Arg">ord</var> on a family of associative words, returns <code class="keyw">true</code> if and only if the ordering is a reduction ordering. An ordering <var class="Arg">ord</var> is a reduction ordering if it is well founded and translation invariant.</p>
 
 <p><a id="X7B6051C282EA88D5" name="X7B6051C282EA88D5"></a></p>
 
 <h5>34.4-4 OrderingOnGenerators</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrderingOnGenerators</code>( <var class="Arg">ord</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrderingOnGenerators</code>( <var class="Arg">ord</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>for an ordering <var class="Arg">ord</var> on a family of associative words, returns a list in which the generators are considered. This could be indeed the ordering of the generators in the ordering, but, for example, if a weight is associated to each generator then this is not true anymore. See the example for <code class="func">WeightLexOrdering</code> (<a href="chap34_mj.html#X849DD7C6782333D5"><span class="RefLink">34.4-8</span></a>).</p>
 
 <p><a id="X79B2DEB786680F51" name="X79B2DEB786680F51"></a></p>
 
 <h5>34.4-5 LexicographicOrdering</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LexicographicOrdering</code>( <var class="Arg">D</var>[, <var class="Arg">gens</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LexicographicOrdering</code>( <var class="Arg">D</var>[, <var class="Arg">gens</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">D</var> be a free semigroup, a free monoid, or the elements family of such a domain. Called with only argument <var class="Arg">D</var>, <code class="func">LexicographicOrdering</code> returns the lexicographic ordering on the elements of <var class="Arg">D</var>.</p>
 
 <p>The optional argument <var class="Arg">gens</var> can be either the list of free generators of <var class="Arg">D</var>, in the desired order, or a list of the positions of these generators, in the desired order, and <code class="func">LexicographicOrdering</code> returns the lexicographic ordering on the elements of <var class="Arg">D</var> with the ordering on the generators as given.</p>
@@ -263,7 +263,7 @@ false
 
 <h5>34.4-6 ShortLexOrdering</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShortLexOrdering</code>( <var class="Arg">D</var>[, <var class="Arg">gens</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShortLexOrdering</code>( <var class="Arg">D</var>[, <var class="Arg">gens</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">D</var> be a free semigroup, a free monoid, or the elements family of such a domain. Called with only argument <var class="Arg">D</var>, <code class="func">ShortLexOrdering</code> returns the shortlex ordering on the elements of <var class="Arg">D</var>.</p>
 
 <p>The optional argument <var class="Arg">gens</var> can be either the list of free generators of <var class="Arg">D</var>, in the desired order, or a list of the positions of these generators, in the desired order, and <code class="func">ShortLexOrdering</code> returns the shortlex ordering on the elements of <var class="Arg">D</var> with the ordering on the generators as given.</p>
@@ -272,7 +272,7 @@ false
 
 <h5>34.4-7 IsShortLexOrdering</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsShortLexOrdering</code>( <var class="Arg">ord</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsShortLexOrdering</code>( <var class="Arg">ord</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>for an ordering <var class="Arg">ord</var> of a family of associative words, returns <code class="keyw">true</code> if and only if <var class="Arg">ord</var> is a shortlex ordering.</p>
 
 
@@ -293,21 +293,21 @@ true
 
 <h5>34.4-8 WeightLexOrdering</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WeightLexOrdering</code>( <var class="Arg">D</var>, <var class="Arg">gens</var>, <var class="Arg">wt</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WeightLexOrdering</code>( <var class="Arg">D</var>, <var class="Arg">gens</var>, <var class="Arg">wt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">D</var> be a free semigroup, a free monoid, or the elements family of such a domain. <var class="Arg">gens</var> can be either the list of free generators of <var class="Arg">D</var>, in the desired order, or a list of the positions of these generators, in the desired order. Let <var class="Arg">wt</var> be a list of weights. <code class="func">WeightLexOrdering</code> returns the weightlex ordering on the elements of <var class="Arg">D</var> with the ordering on the generators and weights of the generators as given.</p>
 
 <p><a id="X7C7D7954784F5C73" name="X7C7D7954784F5C73"></a></p>
 
 <h5>34.4-9 IsWeightLexOrdering</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWeightLexOrdering</code>( <var class="Arg">ord</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWeightLexOrdering</code>( <var class="Arg">ord</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>for an ordering <var class="Arg">ord</var> on a family of associative words, returns <code class="keyw">true</code> if and only if <var class="Arg">ord</var> is a weightlex ordering.</p>
 
 <p><a id="X7E7FAEA484148947" name="X7E7FAEA484148947"></a></p>
 
 <h5>34.4-10 WeightOfGenerators</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WeightOfGenerators</code>( <var class="Arg">ord</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WeightOfGenerators</code>( <var class="Arg">ord</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>for a weightlex ordering <var class="Arg">ord</var>, returns a list with length the size of the alphabet of the family. This list gives the weight of each of the letters of the alphabet which are used for weightlex orderings with respect to the ordering given by <code class="func">OrderingOnGenerators</code> (<a href="chap34_mj.html#X7B6051C282EA88D5"><span class="RefLink">34.4-4</span></a>).</p>
 
 
@@ -332,7 +332,7 @@ false
 
 <h5>34.4-11 BasicWreathProductOrdering</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BasicWreathProductOrdering</code>( <var class="Arg">D</var>[, <var class="Arg">gens</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BasicWreathProductOrdering</code>( <var class="Arg">D</var>[, <var class="Arg">gens</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">D</var> be a free semigroup, a free monoid, or the elements family of such a domain. Called with only argument <var class="Arg">D</var>, <code class="func">BasicWreathProductOrdering</code> returns the basic wreath product ordering on the elements of <var class="Arg">D</var>.</p>
 
 <p>The optional argument <var class="Arg">gens</var> can be either the list of free generators of <var class="Arg">D</var>, in the desired order, or a list of the positions of these generators, in the desired order, and <code class="func">BasicWreathProductOrdering</code> returns the lexicographic ordering on the elements of <var class="Arg">D</var> with the ordering on the generators as given.</p>
@@ -341,7 +341,7 @@ false
 
 <h5>34.4-12 IsBasicWreathProductOrdering</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBasicWreathProductOrdering</code>( <var class="Arg">ord</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBasicWreathProductOrdering</code>( <var class="Arg">ord</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := FreeSemigroup(3);</span>
@@ -360,21 +360,21 @@ false
 
 <h5>34.4-13 WreathProductOrdering</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WreathProductOrdering</code>( <var class="Arg">D</var>[, <var class="Arg">gens</var>], <var class="Arg">levels</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WreathProductOrdering</code>( <var class="Arg">D</var>[, <var class="Arg">gens</var>], <var class="Arg">levels</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">D</var> be a free semigroup, a free monoid, or the elements family of such a domain, let <var class="Arg">gens</var> be either the list of free generators of <var class="Arg">D</var>, in the desired order, or a list of the positions of these generators, in the desired order, and let <var class="Arg">levels</var> be a list of levels for the generators. If <var class="Arg">gens</var> is omitted then the default ordering is taken. <code class="func">WreathProductOrdering</code> returns the wreath product ordering on the elements of <var class="Arg">D</var> with the ordering on the generators as given.</p>
 
 <p><a id="X7F0EE6E987148C96" name="X7F0EE6E987148C96"></a></p>
 
 <h5>34.4-14 IsWreathProductOrdering</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWreathProductOrdering</code>( <var class="Arg">ord</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWreathProductOrdering</code>( <var class="Arg">ord</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>specifies whether an ordering is a wreath product ordering (see <code class="func">WreathProductOrdering</code> (<a href="chap34_mj.html#X7E6DF1B17F53642E"><span class="RefLink">34.4-13</span></a>)).</p>
 
 <p><a id="X7901AA4479EDBE72" name="X7901AA4479EDBE72"></a></p>
 
 <h5>34.4-15 LevelsOfGenerators</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LevelsOfGenerators</code>( <var class="Arg">ord</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LevelsOfGenerators</code>( <var class="Arg">ord</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>for a wreath product ordering <var class="Arg">ord</var>, returns the levels of the generators as given at creation (with respect to <code class="func">OrderingOnGenerators</code> (<a href="chap34_mj.html#X7B6051C282EA88D5"><span class="RefLink">34.4-4</span></a>)).</p>
 
 

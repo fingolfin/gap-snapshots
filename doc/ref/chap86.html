@@ -61,7 +61,7 @@
 
 <h5>86.1-1 WeakPointerObj</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WeakPointerObj</code>( <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WeakPointerObj</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">WeakPointerObj</code> returns a weak pointer object which contains the same subobjects as the list <var class="Arg">list</var>, that is it returns a <em>shallow</em> weak copy of <var class="Arg">list</var>.</p>
 
 
@@ -110,11 +110,11 @@ WeakPointerObj( [ [ 1, 2, 3 ], , , fail ] )
 
 <h5>86.2-1 SetElmWPObj</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetElmWPObj</code>( <var class="Arg">wp</var>, <var class="Arg">pos</var>, <var class="Arg">val</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnbindElmWPObj</code>( <var class="Arg">wp</var>, <var class="Arg">pos</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElmWPObj</code>( <var class="Arg">wp</var>, <var class="Arg">pos</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundElmWPObj</code>( <var class="Arg">wp</var>, <var class="Arg">pos</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LengthWPObj</code>( <var class="Arg">wp</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetElmWPObj</code>( <var class="Arg">wp</var>, <var class="Arg">pos</var>, <var class="Arg">val</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnbindElmWPObj</code>( <var class="Arg">wp</var>, <var class="Arg">pos</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ElmWPObj</code>( <var class="Arg">wp</var>, <var class="Arg">pos</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundElmWPObj</code>( <var class="Arg">wp</var>, <var class="Arg">pos</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LengthWPObj</code>( <var class="Arg">wp</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>The functions <code class="func">SetElmWPObj</code> and <code class="func">UnbindElmWPObj</code> set and unbind entries in a weak pointer object.</p>
 
 <p>The function <code class="func">ElmWPObj</code> returns the element at position <var class="Arg">pos</var> of the weak pointer object <var class="Arg">wp</var>, if there is one, and <code class="keyw">fail</code> otherwise. A return value of <code class="keyw">fail</code> can thus arise either because (a) the value <code class="keyw">fail</code> is stored at position <var class="Arg">pos</var>, or (b) no value is stored at position <var class="Arg">pos</var>. Since <code class="keyw">fail</code> cannot vanish in a garbage collection, these two cases can safely be distinguished by a <em>subsequent</em> call to <code class="func">IsBoundElmWPObj</code>, which returns <code class="keyw">true</code> if there is currently a value bound at position <var class="Arg">pos</var> of <var class="Arg">wp</var> and <code class="keyw">false</code> otherwise.</p>

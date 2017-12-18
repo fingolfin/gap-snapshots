@@ -95,7 +95,7 @@
 
 <h5>18.1-1 E</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; E</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; E</code>( <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">E</code> returns the primitive <var class="Arg">n</var>-th root of unity <span class="SimpleMath">e_n = exp(2π i/n)</span>. Cyclotomics are usually entered as sums of roots of unity, with rational coefficients, and irrational cyclotomics are displayed in such a way. (For special cyclotomics, see <a href="chap18.html#X7B242083873DD74F"><span class="RefLink">18.4</span></a>.)</p>
 
 
@@ -113,7 +113,7 @@ E(3)
 
 <h5>18.1-2 Cyclotomics</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cyclotomics</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cyclotomics</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
 <p>is the domain of all cyclotomics.</p>
 
 
@@ -142,8 +142,8 @@ infinity
 
 <h5>18.1-3 IsCyclotomic</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCyclotomic</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCyc</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCyclotomic</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCyc</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Every object in the family <code class="code">CyclotomicsFamily</code> lies in the category <code class="func">IsCyclotomic</code>. This covers integers, rationals, proper cyclotomics, the object <code class="func">infinity</code> (<a href="chap18.html#X8511B8DF83324C27"><span class="RefLink">18.2-1</span></a>), and unknowns (see Chapter <a href="chap74.html#X7C1FAB6280A02CCB"><span class="RefLink">74</span></a>). All these objects except <code class="func">infinity</code> (<a href="chap18.html#X8511B8DF83324C27"><span class="RefLink">18.2-1</span></a>) and unknowns lie also in the category <code class="func">IsCyc</code>, <code class="func">infinity</code> (<a href="chap18.html#X8511B8DF83324C27"><span class="RefLink">18.2-1</span></a>) lies in (and can be detected from) the category <code class="func">IsInfinity</code> (<a href="chap18.html#X8511B8DF83324C27"><span class="RefLink">18.2-1</span></a>), and unknowns lie in <code class="func">IsUnknown</code> (<a href="chap74.html#X828556067E069B6D"><span class="RefLink">74.1-3</span></a>).</p>
 
 
@@ -162,7 +162,7 @@ false
 
 <h5>18.1-4 IsIntegralCyclotomic</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIntegralCyclotomic</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIntegralCyclotomic</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>A cyclotomic is called <em>integral</em> or a <em>cyclotomic integer</em> if all coefficients of its minimal polynomial over the rationals are integers. Since the underlying basis of the external representation of cyclotomics is an integral basis (see <a href="chap60.html#X7D2421AC8491D2BE"><span class="RefLink">60.3</span></a>), the subring of cyclotomic integers in a cyclotomic field is formed by those cyclotomics for which the external representation is a list of integers. For example, square roots of integers are cyclotomic integers (see <a href="chap18.html#X7B242083873DD74F"><span class="RefLink">18.4</span></a>), any root of unity is a cyclotomic integer, character values are always cyclotomic integers, but all rationals which are not integers are not cyclotomic integers.</p>
 
 
@@ -185,7 +185,7 @@ true
 
 <h5>18.1-5 Int</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Int</code>( <var class="Arg">cyc</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Int</code>( <var class="Arg">cyc</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <p>The operation <code class="func">Int</code> can be used to find a cyclotomic integer near to an arbitrary cyclotomic, by applying <code class="func">Int</code> (<a href="chap14.html#X87CA734380B5F68C"><span class="RefLink">14.2-3</span></a>) to the coefficients.</p>
 
 
@@ -199,7 +199,7 @@ E(5)
 
 <h5>18.1-6 String</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; String</code>( <var class="Arg">cyc</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; String</code>( <var class="Arg">cyc</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <p>The operation <code class="func">String</code> returns for a cyclotomic <var class="Arg">cyc</var> a string corresponding to the way the cyclotomic is printed by <code class="func">ViewObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>) and <code class="func">PrintObj</code> (<a href="chap6.html#X815BF22186FD43C9"><span class="RefLink">6.3-5</span></a>).</p>
 
 
@@ -213,8 +213,8 @@ E(5)
 
 <h5>18.1-7 Conductor</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Conductor</code>( <var class="Arg">cyc</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Conductor</code>( <var class="Arg">C</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Conductor</code>( <var class="Arg">cyc</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Conductor</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>For an element <var class="Arg">cyc</var> of a cyclotomic field, <code class="func">Conductor</code> returns the smallest integer <span class="SimpleMath">n</span> such that <var class="Arg">cyc</var> is contained in the <span class="SimpleMath">n</span>-th cyclotomic field. For a collection <var class="Arg">C</var> of cyclotomics (for example a dense list of cyclotomics or a field of cyclotomics), <code class="func">Conductor</code> returns the smallest integer <span class="SimpleMath">n</span> such that all elements of <var class="Arg">C</var> are contained in the <span class="SimpleMath">n</span>-th cyclotomic field.</p>
 
 
@@ -229,7 +229,7 @@ E(5)
 
 <h5>18.1-8 AbsoluteValue</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AbsoluteValue</code>( <var class="Arg">cyc</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AbsoluteValue</code>( <var class="Arg">cyc</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the absolute value of a cyclotomic number <var class="Arg">cyc</var>. At the moment only methods for rational numbers exist.</p>
 
 
@@ -242,7 +242,7 @@ E(5)
 
 <h5>18.1-9 RoundCyc</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RoundCyc</code>( <var class="Arg">cyc</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RoundCyc</code>( <var class="Arg">cyc</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>is a cyclotomic integer <span class="SimpleMath">z</span> (see <code class="func">IsIntegralCyclotomic</code> (<a href="chap18.html#X869750DA81EA0E67"><span class="RefLink">18.1-4</span></a>)) near to the cyclotomic <var class="Arg">cyc</var> in the following sense: Let <code class="code">c</code> be the <span class="SimpleMath">i</span>-th coefficient in the external representation (see <code class="func">CoeffsCyc</code> (<a href="chap18.html#X7AE2933985BE4C3E"><span class="RefLink">18.1-10</span></a>)) of <var class="Arg">cyc</var>. Then the <span class="SimpleMath">i</span>-th coefficient in the external representation of <span class="SimpleMath">z</span> is <code class="code">Int( c + 1/2 )</code> or <code class="code">Int( c - 1/2 )</code>, depending on whether <code class="code">c</code> is nonnegative or negative, respectively.</p>
 
 <p>Expressed in terms of the Zumbroich basis (see <a href="chap60.html#X7D2421AC8491D2BE"><span class="RefLink">60.3</span></a>), rounding the coefficients of <var class="Arg">cyc</var> w.r.t. this basis to the nearest integer yields the coefficients of <span class="SimpleMath">z</span>.</p>
@@ -259,7 +259,7 @@ E(5)+E(5)^2
 
 <h5>18.1-10 CoeffsCyc</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoeffsCyc</code>( <var class="Arg">cyc</var>, <var class="Arg">N</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoeffsCyc</code>( <var class="Arg">cyc</var>, <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">cyc</var> be a cyclotomic with conductor <span class="SimpleMath">n</span> (see <code class="func">Conductor</code> (<a href="chap18.html#X815D6EC57CBA9827"><span class="RefLink">18.1-7</span></a>)). If <var class="Arg">N</var> is not a multiple of <span class="SimpleMath">n</span> then <code class="func">CoeffsCyc</code> returns <code class="keyw">fail</code> because <var class="Arg">cyc</var> cannot be expressed in terms of <var class="Arg">N</var>-th roots of unity. Otherwise <code class="func">CoeffsCyc</code> returns a list of length <var class="Arg">N</var> with entry at position <span class="SimpleMath">j</span> equal to the coefficient of <span class="SimpleMath">exp(2 π i (j-1)/<var class="Arg">N</var>)</span> if this root belongs to the <var class="Arg">N</var>-th Zumbroich basis (see <a href="chap60.html#X7D2421AC8491D2BE"><span class="RefLink">60.3</span></a>), and equal to zero otherwise. So we have <var class="Arg">cyc</var> = <code class="code">CoeffsCyc(</code> <var class="Arg">cyc</var>, <var class="Arg">N</var> <code class="code">) * List( [1..</code><var class="Arg">N</var><code class="code">], j -&gt; E(</code><var class="Arg">N</var><code class="code">)^(j-1) )</code>.</p>
 
 
@@ -276,14 +276,14 @@ fail
 
 <h5>18.1-11 DenominatorCyc</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DenominatorCyc</code>( <var class="Arg">cyc</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DenominatorCyc</code>( <var class="Arg">cyc</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For a cyclotomic number <var class="Arg">cyc</var> (see <code class="func">IsCyclotomic</code> (<a href="chap18.html#X841C425281A6F775"><span class="RefLink">18.1-3</span></a>)), this function returns the smallest positive integer <span class="SimpleMath">n</span> such that <span class="SimpleMath">n</span><code class="code"> * </code><var class="Arg">cyc</var> is a cyclotomic integer (see <code class="func">IsIntegralCyclotomic</code> (<a href="chap18.html#X869750DA81EA0E67"><span class="RefLink">18.1-4</span></a>)). For rational numbers <var class="Arg">cyc</var>, the result is the same as that of <code class="func">DenominatorRat</code> (<a href="chap17.html#X81F6B5877A81E727"><span class="RefLink">17.2-5</span></a>).</p>
 
 <p><a id="X785F2CAB805DE1BE" name="X785F2CAB805DE1BE"></a></p>
 
 <h5>18.1-12 ExtRepOfObj</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtRepOfObj</code>( <var class="Arg">cyc</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtRepOfObj</code>( <var class="Arg">cyc</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <p>The external representation of a cyclotomic <var class="Arg">cyc</var> with conductor <span class="SimpleMath">n</span> (see <code class="func">Conductor</code> (<a href="chap18.html#X815D6EC57CBA9827"><span class="RefLink">18.1-7</span></a>) is the list returned by <code class="func">CoeffsCyc</code> (<a href="chap18.html#X7AE2933985BE4C3E"><span class="RefLink">18.1-10</span></a>), called with <var class="Arg">cyc</var> and <span class="SimpleMath">n</span>.</p>
 
 
@@ -299,7 +299,7 @@ fail
 
 <h5>18.1-13 DescriptionOfRootOfUnity</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DescriptionOfRootOfUnity</code>( <var class="Arg">root</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DescriptionOfRootOfUnity</code>( <var class="Arg">root</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Given a cyclotomic <var class="Arg">root</var> that is known to be a root of unity (this is <em>not</em> checked), <code class="func">DescriptionOfRootOfUnity</code> returns a list <span class="SimpleMath">[ n, e ]</span> of coprime positive integers such that <var class="Arg">root</var> <span class="SimpleMath">=</span> <code class="code">E</code><span class="SimpleMath">(n)^e</span> holds.</p>
 
 
@@ -315,21 +315,21 @@ fail
 
 <h5>18.1-14 IsGaussInt</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGaussInt</code>( <var class="Arg">x</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGaussInt</code>( <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">IsGaussInt</code> returns <code class="keyw">true</code> if the object <var class="Arg">x</var> is a Gaussian integer (see <code class="func">GaussianIntegers</code> (<a href="chap60.html#X80BD5EAB879F096E"><span class="RefLink">60.5-1</span></a>)), and <code class="keyw">false</code> otherwise. Gaussian integers are of the form <span class="SimpleMath">a + b</span><code class="code">*E(4)</code>, where <span class="SimpleMath">a</span> and <span class="SimpleMath">b</span> are integers.</p>
 
 <p><a id="X7E6CF4947D0A56F7" name="X7E6CF4947D0A56F7"></a></p>
 
 <h5>18.1-15 IsGaussRat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGaussRat</code>( <var class="Arg">x</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGaussRat</code>( <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">IsGaussRat</code> returns <code class="keyw">true</code> if the object <var class="Arg">x</var> is a Gaussian rational (see <code class="func">GaussianRationals</code> (<a href="chap60.html#X82F53C65802FF551"><span class="RefLink">60.1-3</span></a>)), and <code class="keyw">false</code> otherwise. Gaussian rationals are of the form <span class="SimpleMath">a + b</span><code class="code">*E(4)</code>, where <span class="SimpleMath">a</span> and <span class="SimpleMath">b</span> are rationals.</p>
 
 <p><a id="X7FE3D5637B5485D0" name="X7FE3D5637B5485D0"></a></p>
 
 <h5>18.1-16 DefaultField</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DefaultField</code>( <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DefaultField</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">DefaultField</code> for cyclotomics is defined to return the smallest <em>cyclotomic</em> field containing the given elements.</p>
 
 <p>Note that <code class="func">Field</code> (<a href="chap58.html#X871AA7D58263E9AC"><span class="RefLink">58.1-3</span></a>) returns the smallest field containing all given elements, which need not be a cyclotomic field. In both cases, the fields represent vector spaces over the rationals (see <a href="chap60.html#X7D2421AC8491D2BE"><span class="RefLink">60.3</span></a>).</p>
@@ -349,10 +349,10 @@ CF(5)
 
 <h5>18.2-1 IsInfinity</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInfinity</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNegInfinity</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; infinity</code></td><td class="tdright">( global variable )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; -infinity</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInfinity</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNegInfinity</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; infinity</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; -infinity</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
 <p><code class="func">infinity</code> and <code class="func">-infinity</code> are special <strong class="pkg">GAP</strong> objects that lie in <code class="code">CyclotomicsFamily</code>. They are larger or smaller than all other objects in this family respectively. <code class="func">infinity</code> is mainly used as return value of operations such as <code class="func">Size</code> (<a href="chap30.html#X858ADA3B7A684421"><span class="RefLink">30.4-6</span></a>) and <code class="func">Dimension</code> (<a href="chap57.html#X7E6926C6850E7C4E"><span class="RefLink">57.3-3</span></a>) for infinite and infinite dimensional domains, respectively.</p>
 
 <p>Some arithmetic operations are provided for convenience when using <code class="func">infinity</code> and <code class="func">-infinity</code> as top and bottom element respectively.</p>
@@ -412,13 +412,13 @@ true
 
 <h5>18.4-1 <span class="Heading">EB, EC, <span class="SimpleMath">...</span>, EH</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EB</code>( <var class="Arg">N</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EC</code>( <var class="Arg">N</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ED</code>( <var class="Arg">N</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EE</code>( <var class="Arg">N</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EF</code>( <var class="Arg">N</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EG</code>( <var class="Arg">N</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EH</code>( <var class="Arg">N</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EB</code>( <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EC</code>( <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ED</code>( <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EE</code>( <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EF</code>( <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EG</code>( <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EH</code>( <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For a positive integer <var class="Arg">N</var>, let <span class="SimpleMath">z =</span> <code class="code">E(</code><var class="Arg">N</var><code class="code">)</code> <span class="SimpleMath">= exp(2 π i/<var class="Arg">N</var>)</span>. The following so-called <em>atomic irrationalities</em> (see <a href="chapBib.html#biBCCN85">[CCN+85, Chapter 7, Section 10]</a>) can be entered using functions. (Note that the values are not necessary irrational.)</p>
 
 <div class="pcenter"><table class="GAPDocTablenoborder">
@@ -501,8 +501,8 @@ E(5)+E(5)^4
 
 <h5>18.4-2 <span class="Heading">EI and ER</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EI</code>( <var class="Arg">N</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ER</code>( <var class="Arg">N</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EI</code>( <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ER</code>( <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For a rational number <var class="Arg">N</var>, <code class="func">ER</code> returns the square root <span class="SimpleMath">sqrt{<var class="Arg">N</var>}</span> of <var class="Arg">N</var>, and <code class="func">EI</code> returns <span class="SimpleMath">sqrt{-<var class="Arg">N</var>}</span>. By the chosen embedding of cyclotomic fields into the complex numbers, <code class="func">ER</code> returns the positive square root if <var class="Arg">N</var> is positive, and if <var class="Arg">N</var> is negative then <code class="code">ER(</code><var class="Arg">N</var><code class="code">) = EI(-</code><var class="Arg">N</var><code class="code">)</code> holds. In any case, <code class="code">EI(</code><var class="Arg">N</var><code class="code">) = E(4) * ER(</code><var class="Arg">N</var><code class="code">)</code>.</p>
 
 <p><code class="func">ER</code> is installed as method for the operation <code class="func">Sqrt</code> (<a href="chap31.html#X7E8F1FB87C229BB0"><span class="RefLink">31.12-5</span></a>), for rational argument.</p>
@@ -536,13 +536,13 @@ E(3)-E(3)^2
 
 <h5>18.4-3 <span class="Heading">EY, EX, <span class="SimpleMath">...</span>, ES</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EY</code>( <var class="Arg">N</var>[, <var class="Arg">d</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EX</code>( <var class="Arg">N</var>[, <var class="Arg">d</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EW</code>( <var class="Arg">N</var>[, <var class="Arg">d</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EV</code>( <var class="Arg">N</var>[, <var class="Arg">d</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EU</code>( <var class="Arg">N</var>[, <var class="Arg">d</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ET</code>( <var class="Arg">N</var>[, <var class="Arg">d</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ES</code>( <var class="Arg">N</var>[, <var class="Arg">d</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EY</code>( <var class="Arg">N</var>[, <var class="Arg">d</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EX</code>( <var class="Arg">N</var>[, <var class="Arg">d</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EW</code>( <var class="Arg">N</var>[, <var class="Arg">d</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EV</code>( <var class="Arg">N</var>[, <var class="Arg">d</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EU</code>( <var class="Arg">N</var>[, <var class="Arg">d</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ET</code>( <var class="Arg">N</var>[, <var class="Arg">d</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ES</code>( <var class="Arg">N</var>[, <var class="Arg">d</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For the given integer <var class="Arg">N</var> <span class="SimpleMath">&gt; 2</span>, let <span class="SimpleMath"><var class="Arg">N</var>_k</span> denote the first integer with multiplicative order exactly <span class="SimpleMath">k</span> modulo <var class="Arg">N</var>, chosen in the order of preference</p>
 
 <p class="pcenter">1, -1, 2, -2, 3, -3, 4, -4, ... .</p>
@@ -624,10 +624,10 @@ E(17)+E(17)^4+E(17)^13+E(17)^16
 
 <h5>18.4-4 <span class="Heading">EM, EL, <span class="SimpleMath">...</span>, EJ</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EM</code>( <var class="Arg">N</var>[, <var class="Arg">d</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EL</code>( <var class="Arg">N</var>[, <var class="Arg">d</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EK</code>( <var class="Arg">N</var>[, <var class="Arg">d</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EJ</code>( <var class="Arg">N</var>[, <var class="Arg">d</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EM</code>( <var class="Arg">N</var>[, <var class="Arg">d</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EL</code>( <var class="Arg">N</var>[, <var class="Arg">d</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EK</code>( <var class="Arg">N</var>[, <var class="Arg">d</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EJ</code>( <var class="Arg">N</var>[, <var class="Arg">d</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">N</var> be an integer, <var class="Arg">N</var> <span class="SimpleMath">&gt; 2</span>. We define (with <span class="SimpleMath">z = exp(2 π i/<var class="Arg">N</var>)</span>)</p>
 
 <div class="pcenter"><table class="GAPDocTablenoborder">
@@ -672,7 +672,7 @@ E(17)+E(17)^4+E(17)^13+E(17)^16
 
 <h5>18.4-5 NK</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NK</code>( <var class="Arg">N</var>, <var class="Arg">k</var>, <var class="Arg">d</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NK</code>( <var class="Arg">N</var>, <var class="Arg">k</var>, <var class="Arg">d</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <span class="SimpleMath"><var class="Arg">N</var>_<var class="Arg">k</var>^(<var class="Arg">d</var>)</span> be the <span class="SimpleMath">(<var class="Arg">d</var>+1)</span>-th integer with multiplicative order exactly <var class="Arg">k</var> modulo <var class="Arg">N</var>, chosen in the order of preference defined in Section <a href="chap18.html#X8672D7F986CBA116"><span class="RefLink">18.4-3</span></a>; <code class="func">NK</code> returns <span class="SimpleMath"><var class="Arg">N</var>_<var class="Arg">k</var>^(<var class="Arg">d</var>)</span>; if there is no integer with the required multiplicative order, <code class="func">NK</code> returns <code class="keyw">fail</code>.</p>
 
 <p>We write <span class="SimpleMath"><var class="Arg">N</var>_<var class="Arg">k</var> = <var class="Arg">N</var>_<var class="Arg">k</var>^(0), <var class="Arg">N</var>_<var class="Arg">k</var>^' = <var class="Arg">N</var>_<var class="Arg">k</var>^(1), <var class="Arg">N</var>_<var class="Arg">k</var>^'' = <var class="Arg">N</var>_<var class="Arg">k</var>^(2)</span> and so on.</p>
@@ -711,7 +711,7 @@ E(17)+E(17)^4+E(17)^13+E(17)^16
 
 <h5>18.4-6 AtlasIrrationality</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AtlasIrrationality</code>( <var class="Arg">irratname</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AtlasIrrationality</code>( <var class="Arg">irratname</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">irratname</var> be a string that describes an irrational value as a linear combination in terms of the atomic irrationalities introduced in the sections <a href="chap18.html#X8414ED887AF36359"><span class="RefLink">18.4-1</span></a>, <a href="chap18.html#X813CF4327C4B4D29"><span class="RefLink">18.4-2</span></a>, <a href="chap18.html#X8672D7F986CBA116"><span class="RefLink">18.4-3</span></a>, <a href="chap18.html#X7E5985FC846C5201"><span class="RefLink">18.4-4</span></a>. These irrational values are defined in <a href="chapBib.html#biBCCN85">[CCN+85, Chapter 6, Section 10]</a>, and the following description is mainly copied from there. If <span class="SimpleMath">q_N</span> is such a value (e.g. <span class="SimpleMath">y_24^''</span>) then linear combinations of algebraic conjugates of <span class="SimpleMath">q_N</span> are abbreviated as in the following examples:</p>
 
 <div class="pcenter"><table class="GAPDocTablenoborder">
@@ -761,8 +761,8 @@ E(24)-E(24)^19
 
 <h5>18.5-1 GaloisCyc</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisCyc</code>( <var class="Arg">cyc</var>, <var class="Arg">k</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisCyc</code>( <var class="Arg">list</var>, <var class="Arg">k</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisCyc</code>( <var class="Arg">cyc</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisCyc</code>( <var class="Arg">list</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>For a cyclotomic <var class="Arg">cyc</var> and an integer <var class="Arg">k</var>, <code class="func">GaloisCyc</code> returns the cyclotomic obtained by raising the roots of unity in the Zumbroich basis representation of <var class="Arg">cyc</var> to the <var class="Arg">k</var>-th power. If <var class="Arg">k</var> is coprime to the integer <span class="SimpleMath">n</span>, <code class="code">GaloisCyc( ., <var class="Arg">k</var> )</code> acts as a Galois automorphism of the <span class="SimpleMath">n</span>-th cyclotomic field (see <a href="chap60.html#X7E4AB4B17C7BA10C"><span class="RefLink">60.4</span></a>); to get the Galois automorphisms themselves, use <code class="func">GaloisGroup</code> (<a href="chap58.html#X80CAA5BA82F09ED2"><span class="RefLink">58.3-1</span></a>).</p>
 
 <p>The <em>complex conjugate</em> of <var class="Arg">cyc</var> is <code class="code">GaloisCyc( <var class="Arg">cyc</var>, -1 )</code>, which can also be computed using <code class="func">ComplexConjugate</code> (<a href="chap18.html#X7BE001A0811CD599"><span class="RefLink">18.5-2</span></a>).</p>
@@ -773,9 +773,9 @@ E(24)-E(24)^19
 
 <h5>18.5-2 ComplexConjugate</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComplexConjugate</code>( <var class="Arg">z</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RealPart</code>( <var class="Arg">z</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImaginaryPart</code>( <var class="Arg">z</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ComplexConjugate</code>( <var class="Arg">z</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RealPart</code>( <var class="Arg">z</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImaginaryPart</code>( <var class="Arg">z</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>For a cyclotomic number <var class="Arg">z</var>, <code class="func">ComplexConjugate</code> returns <code class="code">GaloisCyc( <var class="Arg">z</var>, -1 )</code>, see <code class="func">GaloisCyc</code> (<a href="chap18.html#X79EE9097783128C4"><span class="RefLink">18.5-1</span></a>). For a quaternion <span class="SimpleMath"><var class="Arg">z</var> = c_1 e + c_2 i + c_3 j + c_4 k</span>, <code class="func">ComplexConjugate</code> returns <span class="SimpleMath">c_1 e - c_2 i - c_3 j - c_4 k</span>, see <code class="func">IsQuaternion</code> (<a href="chap62.html#X82B3A9077D0CB453"><span class="RefLink">62.8-8</span></a>).</p>
 
 <p>When <code class="func">ComplexConjugate</code> is called with a list then the result is the list of return values of <code class="func">ComplexConjugate</code> for the list entries in the corresponding positions.</p>
@@ -800,7 +800,7 @@ E(7)^6
 
 <h5>18.5-3 StarCyc</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StarCyc</code>( <var class="Arg">cyc</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StarCyc</code>( <var class="Arg">cyc</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>If the cyclotomic <var class="Arg">cyc</var> is an irrational element of a quadratic extension of the rationals then <code class="func">StarCyc</code> returns the unique Galois conjugate of <var class="Arg">cyc</var> that is different from <var class="Arg">cyc</var>, otherwise <code class="keyw">fail</code> is returned. In the first case, the return value is often called <var class="Arg">cyc</var><span class="SimpleMath">*</span> (see <a href="chap71.html#X7C1941F17BE9FC21"><span class="RefLink">71.13</span></a>).</p>
 
 
@@ -814,7 +814,7 @@ fail
 
 <h5>18.5-4 Quadratic</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Quadratic</code>( <var class="Arg">cyc</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Quadratic</code>( <var class="Arg">cyc</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">cyc</var> be a cyclotomic integer that lies in a quadratic extension field of the rationals. Then we have <var class="Arg">cyc</var><span class="SimpleMath">= (a + b sqrt{n}) / d</span>, for integers <span class="SimpleMath">a</span>, <span class="SimpleMath">b</span>, <span class="SimpleMath">n</span>, <span class="SimpleMath">d</span>, such that <span class="SimpleMath">d</span> is either <span class="SimpleMath">1</span> or <span class="SimpleMath">2</span>. In this case, <code class="func">Quadratic</code> returns a record with the components <code class="code">a</code>, <code class="code">b</code>, <code class="code">root</code>, <code class="code">d</code>, <code class="code">ATLAS</code>, and <code class="code">display</code>; the values of the first four are <span class="SimpleMath">a</span>, <span class="SimpleMath">b</span>, <span class="SimpleMath">n</span>, and <span class="SimpleMath">d</span>, the <code class="code">ATLAS</code> value is a (not necessarily shortest) representation of <var class="Arg">cyc</var> in terms of the <strong class="pkg">Atlas</strong> irrationalities <span class="SimpleMath">b_{|n|}</span>, <span class="SimpleMath">i_{|n|}</span>, <span class="SimpleMath">r_{|n|}</span>, and the <code class="code">display</code> value is a string that expresses <var class="Arg">cyc</var> in <strong class="pkg">GAP</strong> notation, corresponding to the value of the <code class="code">ATLAS</code> component.</p>
 
 <p>If <var class="Arg">cyc</var> is not a cyclotomic integer or does not lie in a quadratic extension field of the rationals then <code class="keyw">fail</code> is returned.</p>
@@ -839,7 +839,7 @@ fail
 
 <h5>18.5-5 GaloisMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">mat</var> be a matrix of cyclotomics. <code class="func">GaloisMat</code> calculates the complete orbits under the operation of the Galois group of the (irrational) entries of <var class="Arg">mat</var>, and the permutations of rows corresponding to the generators of the Galois group.</p>
 
 <p>If some rows of <var class="Arg">mat</var> are identical, only the first one is considered for the permutations, and a warning will be printed.</p>
@@ -897,7 +897,7 @@ rec( galoisfams := [ 1, [ [ 2, 3 ], [ 1, 2 ] ], 0 ],
 
 <h5>18.5-6 RationalizedMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RationalizedMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RationalizedMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the list of rationalized rows of <var class="Arg">mat</var>, which must be a matrix of cyclotomics. This is the set of sums over orbits under the action of the Galois group of the entries of <var class="Arg">mat</var> (see <code class="func">GaloisMat</code> (<a href="chap18.html#X7DDDEC3F80543B7D"><span class="RefLink">18.5-5</span></a>)), so the operation may be viewed as a kind of trace on the rows.</p>
 
 <p>Note that no two rows of <var class="Arg">mat</var> should be equal.</p>
@@ -942,8 +942,8 @@ E(5)+E(5)^3
 
 <h5>18.6-1 SetCyclotomicsLimit</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetCyclotomicsLimit</code>( <var class="Arg">newlimit</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GetCyclotomicsLimit</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetCyclotomicsLimit</code>( <var class="Arg">newlimit</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GetCyclotomicsLimit</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">GetCyclotomicsLimit</code> returns the current limit on conductors of internally represented cyclotomic numbers</p>
 
 <p><code class="func">SetCyclotomicsLimit</code> can be called to increase the limit on conductors of internally represented cyclotomic numbers. Note that computing in large cyclotomic fields using this representation can be both slow and memory-consuming, and that other approaches may be better for some problems. See <a href="chap18.html#X8557FC2D7ACD6105"><span class="RefLink">18.6</span></a>.</p>

@@ -8,13 +8,14 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2014	Colorado State University, Fort Collins
+##  Copyright 2017	Colorado State University
+##                  Sabancı Üniversitesi
 ##					Università degli Studi di Padova
-##					Universeit Gent
+##					Universiteit Gent
 ##					University of St. Andrews
-##					University of Western Australia, Perth
+##					University of Western Australia
 ##                  Vrije Universiteit Brussel
-##                 
+##
 ##
 ##  Declaration stuff for placeholders of orbits/stabilizer functions
 ##
@@ -29,6 +30,8 @@ DeclareOperation( "FiningOrbit", [IsGroup, IsObject, IsFunction] );
 DeclareOperation( "FiningOrbit", [IsGroup, IsObject] );
 DeclareOperation( "FiningOrbits", [IsGroup, IsObject, IsFunction] );
 DeclareOperation( "FiningOrbits",[IsGroup, IsObject] );
+DeclareOperation( "FiningOrbitsDomain", [IsGroup, IsObject, IsFunction] );
+DeclareOperation( "FiningOrbitsDomain", [IsGroup, IsObject ] );
 
 #############################
 # Stabiliser methods that should work faster
@@ -53,3 +56,12 @@ DeclareOperation( "FiningStabiliserPerm2", [IsProjectiveGroupWithFrob, IsElement
 ################################
 
 DeclareOperation( "FixedSubspaces", [IsProjectiveGroupWithFrob, IsProjectiveSpace] );
+
+#############################
+# Stabilisers of subspaces
+################################
+
+DeclareOperation( "ProjectiveStabiliserGroupOfSubspace", [IsSubspaceOfProjectiveSpace] );
+DeclareOperation( "StabiliserGroupOfSubspace", [IsSubspaceOfProjectiveSpace] );
+DeclareOperation( "SpecialProjectiveStabiliserGroupOfSubspace", [IsSubspaceOfProjectiveSpace] );
+

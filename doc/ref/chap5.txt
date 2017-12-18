@@ -10,7 +10,7 @@
   
   [1X5.1-1 NameFunction[101X
   
-  [29X[2XNameFunction[102X( [3Xfunc[103X ) [32X operation
+  [33X[1;0Y[29X[2XNameFunction[102X( [3Xfunc[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  name  of  a function. For operations, this is the name used in
   their  declaration. For functions, this is the variable name they were first
@@ -35,7 +35,7 @@
   
   [1X5.1-2 NumberArgumentsFunction[101X
   
-  [29X[2XNumberArgumentsFunction[102X( [3Xfunc[103X ) [32X operation
+  [33X[1;0Y[29X[2XNumberArgumentsFunction[102X( [3Xfunc[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  number  of arguments the function [3Xfunc[103X accepts. -1 is returned
   for  all  operations.  For  functions that use [10X...[110X or [10Xarg[110X to take a variable
@@ -57,7 +57,7 @@
   
   [1X5.1-3 NamesLocalVariablesFunction[101X
   
-  [29X[2XNamesLocalVariablesFunction[102X( [3Xfunc[103X ) [32X operation
+  [33X[1;0Y[29X[2XNamesLocalVariablesFunction[102X( [3Xfunc[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  a  mutable  list of strings; the first entries are the names of the
   arguments  of  the  function [3Xfunc[103X, in the same order as they were entered in
@@ -76,7 +76,7 @@
   
   [1X5.1-4 FilenameFunc[101X
   
-  [29X[2XFilenameFunc[102X( [3Xfunc[103X ) [32X function
+  [33X[1;0Y[29X[2XFilenameFunc[102X( [3Xfunc[103X ) [32X function[133X
   
   [33X[0;0YFor  a  function [3Xfunc[103X, [2XFilenameFunc[102X returns either [9Xfail[109X or the absolute path
   of  the  file from which [3Xfunc[103X has been read. The return value [9Xfail[109X occurs if
@@ -97,8 +97,8 @@
   
   [1X5.1-5 StartlineFunc[101X
   
-  [29X[2XStartlineFunc[102X( [3Xfunc[103X ) [32X function
-  [29X[2XEndlineFunc[102X( [3Xfunc[103X ) [32X function
+  [33X[1;0Y[29X[2XStartlineFunc[102X( [3Xfunc[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XEndlineFunc[102X( [3Xfunc[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xfunc[103X  be a function. If [2XFilenameFunc[102X ([14X5.1-4[114X) returns [9Xfail[109X for [3Xfunc[103X then
   also  [2XStartlineFunc[102X returns [9Xfail[109X. If [2XFilenameFunc[102X ([14X5.1-4[114X) returns a filename
@@ -120,7 +120,7 @@
   
   [1X5.1-6 PageSource[101X
   
-  [29X[2XPageSource[102X( [3Xfunc[103X ) [32X function
+  [33X[1;0Y[29X[2XPageSource[102X( [3Xfunc[103X ) [32X function[133X
   
   [33X[0;0YThis  shows  the  file  containing the source code of the function or method
   [3Xfunc[103X  in  a  pager (see [2XPager[102X ([14X2.4-1[114X)). The display starts at a line shortly
@@ -144,7 +144,7 @@
   
   [1X5.2-1 CallFuncList[101X
   
-  [29X[2XCallFuncList[102X( [3Xfunc[103X, [3Xargs[103X ) [32X operation
+  [33X[1;0Y[29X[2XCallFuncList[102X( [3Xfunc[103X, [3Xargs[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  result, when calling function [3Xfunc[103X with the arguments given in
   the  list  [3Xargs[103X,  i.e. [3Xargs[103X  is  [21Xunwrapped[121X  so  that [3Xargs[103X appears as several
@@ -198,8 +198,8 @@
   
   [1X5.3-1 CallWithTimeout[101X
   
-  [29X[2XCallWithTimeout[102X( [3Xtimeout[103X, [3Xfunc[103X, [3X.....[103X ) [32X function
-  [29X[2XCallWithTimeoutList[102X( [3Xtimeout[103X, [3Xfunc[103X, [3Xarglist[103X ) [32X function
+  [33X[1;0Y[29X[2XCallWithTimeout[102X( [3Xtimeout[103X, [3Xfunc[103X, [3X.....[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCallWithTimeoutList[102X( [3Xtimeout[103X, [3Xfunc[103X, [3Xarglist[103X ) [32X function[133X
   
   [33X[0;0Y[10XCallWithTimeout[110X  and  [10XCallWithTimeoutList[110X  support calling a function with a
   limit on the CPU time it can consume.[133X
@@ -255,7 +255,7 @@
   
   [1X5.3-2 GAPInfo.TimeoutsSupported[101X
   
-  [29X[2XGAPInfo.TimeoutsSupported[102X[32X global variable
+  [33X[1;0Y[29X[2XGAPInfo.TimeoutsSupported[102X[32X global variable[133X
   
   [33X[0;0Ytests whether this installation of [5XGAP[105X supports the timeout functionality of
   [2XCallWithTimeout[102X ([14X5.3-1[114X) and related functions.[133X
@@ -270,7 +270,7 @@
   
   [1X5.4-1 ReturnTrue[101X
   
-  [29X[2XReturnTrue[102X( [3X...[103X ) [32X function
+  [33X[1;0Y[29X[2XReturnTrue[102X( [3X...[103X ) [32X function[133X
   
   [33X[0;0YThis function takes any number of arguments, and always returns [9Xtrue[109X.[133X
   
@@ -285,7 +285,7 @@
   
   [1X5.4-2 ReturnFalse[101X
   
-  [29X[2XReturnFalse[102X( [3X...[103X ) [32X function
+  [33X[1;0Y[29X[2XReturnFalse[102X( [3X...[103X ) [32X function[133X
   
   [33X[0;0YThis function takes any number of arguments, and always returns [9Xfalse[109X.[133X
   
@@ -300,7 +300,7 @@
   
   [1X5.4-3 ReturnFail[101X
   
-  [29X[2XReturnFail[102X( [3X...[103X ) [32X function
+  [33X[1;0Y[29X[2XReturnFail[102X( [3X...[103X ) [32X function[133X
   
   [33X[0;0YThis function takes any number of arguments, and always returns [9Xfail[109X.[133X
   
@@ -315,7 +315,7 @@
   
   [1X5.4-4 ReturnNothing[101X
   
-  [29X[2XReturnNothing[102X( [3X...[103X ) [32X function
+  [33X[1;0Y[29X[2XReturnNothing[102X( [3X...[103X ) [32X function[133X
   
   [33X[0;0YThis function takes any number of arguments, and always returns nothing.[133X
   
@@ -328,7 +328,7 @@
   
   [1X5.4-5 ReturnFirst[101X
   
-  [29X[2XReturnFirst[102X( [3X...[103X ) [32X function
+  [33X[1;0Y[29X[2XReturnFirst[102X( [3X...[103X ) [32X function[133X
   
   [33X[0;0YThis  function  takes  one  or  more arguments, and always returns the first
   argument.  [2XIdFunc[102X  ([14X5.4-6[114X)  behaves  similarly,  but  only  accepts a single
@@ -347,7 +347,7 @@
   
   [1X5.4-6 IdFunc[101X
   
-  [29X[2XIdFunc[102X( [3Xobj[103X ) [32X function
+  [33X[1;0Y[29X[2XIdFunc[102X( [3Xobj[103X ) [32X function[133X
   
   [33X[0;0Yreturns  [3Xobj[103X.  [2XReturnFirst[102X  ([14X5.4-5[114X)  is  similar,  but  accepts  one or more
   arguments, returning only the first.[133X
@@ -372,7 +372,7 @@
   
   [1X5.5-1 IsFunction[101X
   
-  [29X[2XIsFunction[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsFunction[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0Yis the category of functions.[133X
   
@@ -389,7 +389,7 @@
   
   [1X5.5-2 IsOperation[101X
   
-  [29X[2XIsOperation[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsOperation[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0Yis  the  category of operations. Every operation is a function, but not vice
   versa.[133X
@@ -409,7 +409,7 @@
   
   [1X5.5-3 FunctionsFamily[101X
   
-  [29X[2XFunctionsFamily[102X[32X family
+  [33X[1;0Y[29X[2XFunctionsFamily[102X[32X family[133X
   
   [33X[0;0Yis the family of all functions.[133X
   

@@ -74,7 +74,7 @@
 
 <h5>22.1-1 IsBlist</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBlist</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBlist</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>A boolean list ("blist") is a list that has no holes and contains only <code class="keyw">true</code> and <code class="keyw">false</code>. Boolean lists can be represented in an efficient compact form, see <a href="chap22_mj.html#X7C71B225841DFC0F"><span class="RefLink">22.5</span></a> for details.</p>
 
 
@@ -103,7 +103,7 @@ false
 
 <h5>22.2-1 BlistList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BlistList</code>( <var class="Arg">list</var>, <var class="Arg">sub</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BlistList</code>( <var class="Arg">list</var>, <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a new boolean list that describes the list <var class="Arg">sub</var> as a sublist of the dense list <var class="Arg">list</var>. That is <code class="func">BlistList</code> returns a boolean list <span class="SimpleMath">\(blist\)</span> of the same length as <var class="Arg">list</var> such that <span class="SimpleMath">\(blist[i]\)</span> is <code class="keyw">true</code> if <var class="Arg">list</var><span class="SimpleMath">\([i]\)</span> is in <var class="Arg">sub</var> and <code class="keyw">false</code> otherwise.</p>
 
 <p><var class="Arg">list</var> need not be a proper set (see <a href="chap21_mj.html#X80ABC25582343910"><span class="RefLink">21.19</span></a>), even though in this case <code class="func">BlistList</code> is most efficient. In particular <var class="Arg">list</var> may contain duplicates. <var class="Arg">sub</var> need not be a proper sublist of <var class="Arg">list</var>, i.e., <var class="Arg">sub</var> may contain elements that are not in <var class="Arg">list</var>. Those elements of course have no influence on the result of <code class="func">BlistList</code>.</p>
@@ -122,7 +122,7 @@ false
 
 <h5>22.2-2 ListBlist</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ListBlist</code>( <var class="Arg">list</var>, <var class="Arg">blist</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ListBlist</code>( <var class="Arg">list</var>, <var class="Arg">blist</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the sublist <span class="SimpleMath">\(sub\)</span> of the list <var class="Arg">list</var>, which must have no holes, represented by the boolean list <var class="Arg">blist</var>, which must have the same length as <var class="Arg">list</var>.</p>
 
 <p><span class="SimpleMath">\(sub\)</span> contains the element <var class="Arg">list</var><span class="SimpleMath">\([i]\)</span> if <var class="Arg">blist</var><span class="SimpleMath">\([i]\)</span> is <code class="keyw">true</code> and does not contain the element if <var class="Arg">blist</var><span class="SimpleMath">\([i]\)</span> is <code class="keyw">false</code>. The order of the elements in <span class="SimpleMath">\(sub\)</span> is the same as the order of the corresponding elements in <var class="Arg">list</var>.</p>
@@ -140,7 +140,7 @@ false
 
 <h5>22.2-3 SizeBlist</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SizeBlist</code>( <var class="Arg">blist</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SizeBlist</code>( <var class="Arg">blist</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the number of entries of the boolean list <var class="Arg">blist</var> that are <code class="keyw">true</code>. This is the size of the subset represented by the boolean list <var class="Arg">blist</var>.</p>
 
 
@@ -153,7 +153,7 @@ false
 
 <h5>22.2-4 IsSubsetBlist</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubsetBlist</code>( <var class="Arg">blist1</var>, <var class="Arg">blist2</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubsetBlist</code>( <var class="Arg">blist1</var>, <var class="Arg">blist2</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the boolean list <var class="Arg">blist2</var> is a subset of the boolean list <var class="Arg">blist1</var>, which must have equal length, and <code class="keyw">false</code> otherwise. <var class="Arg">blist2</var> is a subset of <var class="Arg">blist1</var> if <var class="Arg">blist1</var><span class="SimpleMath">\([i] =\)</span> <var class="Arg">blist1</var><span class="SimpleMath">\([i]\)</span> <code class="keyw">or</code> <var class="Arg">blist2</var><span class="SimpleMath">\([i]\)</span> for all <span class="SimpleMath">\(i\)</span>.</p>
 
 
@@ -175,8 +175,8 @@ true
 
 <h5>22.3-1 <span class="Heading">UnionBlist</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnionBlist</code>( <var class="Arg">blist1</var>, <var class="Arg">blist2</var>[, <var class="Arg">...</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnionBlist</code>( <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnionBlist</code>( <var class="Arg">blist1</var>, <var class="Arg">blist2</var>[, <var class="Arg">...</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnionBlist</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>In the first form <code class="func">UnionBlist</code> returns the union of the boolean lists <var class="Arg">blist1</var>, <var class="Arg">blist2</var>, etc., which must have equal length. The <em>union</em> is a new boolean list that contains at position <span class="SimpleMath">\(i\)</span> the value <var class="Arg">blist1</var><span class="SimpleMath">\([i]\)</span> <code class="keyw">or</code> <var class="Arg">blist2</var><span class="SimpleMath">\([i]\)</span> <code class="keyw">or</code> <span class="SimpleMath">\(\ldots\)</span>.</p>
 
 <p>The second form takes the union of all blists (which as for the first form must have equal length) in the list <var class="Arg">list</var>.</p>
@@ -185,8 +185,8 @@ true
 
 <h5>22.3-2 <span class="Heading">IntersectionBlist</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntersectionBlist</code>( <var class="Arg">blist1</var>, <var class="Arg">blist2</var>[, <var class="Arg">...</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntersectionBlist</code>( <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntersectionBlist</code>( <var class="Arg">blist1</var>, <var class="Arg">blist2</var>[, <var class="Arg">...</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntersectionBlist</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>In the first form <code class="func">IntersectionBlist</code> returns the intersection of the boolean lists <var class="Arg">blist1</var>, <var class="Arg">blist2</var>, etc., which must have equal length. The <em>intersection</em> is a new blist that contains at position <span class="SimpleMath">\(i\)</span> the value <var class="Arg">blist1</var><span class="SimpleMath">\([i]\)</span> <code class="keyw">and</code> <var class="Arg">blist2</var><span class="SimpleMath">\([i]\)</span> <code class="keyw">and</code> <span class="SimpleMath">\(\ldots\)</span>.</p>
 
 <p>In the second form <var class="Arg">list</var> must be a list of boolean lists <var class="Arg">blist1</var>, <var class="Arg">blist2</var>, etc., which must have equal length, and <code class="func">IntersectionBlist</code> returns the intersection of those boolean lists.</p>
@@ -195,7 +195,7 @@ true
 
 <h5>22.3-3 DifferenceBlist</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DifferenceBlist</code>( <var class="Arg">blist1</var>, <var class="Arg">blist2</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DifferenceBlist</code>( <var class="Arg">blist1</var>, <var class="Arg">blist2</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the asymmetric set difference of the two boolean lists <var class="Arg">blist1</var> and <var class="Arg">blist2</var>, which must have equal length. The <em>asymmetric set difference</em> is a new boolean list that contains at position <span class="SimpleMath">\(i\)</span> the value <var class="Arg">blist1</var><span class="SimpleMath">\([i]\)</span> <code class="keyw">and</code> <code class="keyw">not</code> <var class="Arg">blist2</var><span class="SimpleMath">\([i]\)</span>.</p>
 
 
@@ -218,7 +218,7 @@ true
 
 <h5>22.4-1 UniteBlist</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UniteBlist</code>( <var class="Arg">blist1</var>, <var class="Arg">blist2</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UniteBlist</code>( <var class="Arg">blist1</var>, <var class="Arg">blist2</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">UniteBlist</code> unites the boolean list <var class="Arg">blist1</var> with the boolean list <var class="Arg">blist2</var>, which must have the same length. This is equivalent to assigning <var class="Arg">blist1</var><span class="SimpleMath">\([i] :=\)</span> <var class="Arg">blist1</var><span class="SimpleMath">\([i]\)</span> <code class="keyw">or</code> <var class="Arg">blist2</var><span class="SimpleMath">\([i]\)</span> for all <span class="SimpleMath">\(i\)</span>.</p>
 
 <p><code class="func">UniteBlist</code> returns nothing, it is only called to change <var class="Arg">blist1</var>.</p>
@@ -238,14 +238,14 @@ true
 
 <h5>22.4-2 UniteBlistList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UniteBlistList</code>( <var class="Arg">list</var>, <var class="Arg">blist</var>, <var class="Arg">sub</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UniteBlistList</code>( <var class="Arg">list</var>, <var class="Arg">blist</var>, <var class="Arg">sub</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>works like <code class="code">UniteBlist(<var class="Arg">blist</var>,BlistList(<var class="Arg">list</var>,<var class="Arg">sub</var>))</code>. As no intermediate blist is created, the performance is better than the separate function calls.</p>
 
 <p><a id="X84EB70D37EB275DF" name="X84EB70D37EB275DF"></a></p>
 
 <h5>22.4-3 IntersectBlist</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntersectBlist</code>( <var class="Arg">blist1</var>, <var class="Arg">blist2</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntersectBlist</code>( <var class="Arg">blist1</var>, <var class="Arg">blist2</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>intersects the boolean list <var class="Arg">blist1</var> with the boolean list <var class="Arg">blist2</var>, which must have the same length. This is equivalent to assigning <var class="Arg">blist1</var><span class="SimpleMath">\([i]:=\)</span> <var class="Arg">blist1</var><span class="SimpleMath">\([i]\)</span> <code class="keyw">and</code> <var class="Arg">blist2</var><span class="SimpleMath">\([i]\)</span> for all <span class="SimpleMath">\(i\)</span>.</p>
 
 <p><code class="func">IntersectBlist</code> returns nothing, it is only called to change <var class="Arg">blist1</var>.</p>
@@ -265,7 +265,7 @@ true
 
 <h5>22.4-4 SubtractBlist</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubtractBlist</code>( <var class="Arg">blist1</var>, <var class="Arg">blist2</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubtractBlist</code>( <var class="Arg">blist1</var>, <var class="Arg">blist2</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>subtracts the boolean list <var class="Arg">blist2</var> from the boolean list <var class="Arg">blist1</var>, which must have equal length. This is equivalent to assigning <var class="Arg">blist1</var><span class="SimpleMath">\([i]:=\)</span> <var class="Arg">blist1</var><span class="SimpleMath">\([i]\)</span> <code class="keyw">and</code> <code class="keyw">not</code> <var class="Arg">blist2</var><span class="SimpleMath">\([i]\)</span> for all <span class="SimpleMath">\(i\)</span>.</p>
 
 <p><code class="func">SubtractBlist</code> returns nothing, it is only called to change <var class="Arg">blist1</var>.</p>
@@ -299,8 +299,8 @@ true
 
 <h5>22.5-1 IsBlistRep</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBlistRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">( representation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToBlistRep</code>( <var class="Arg">blist</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBlistRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;representation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToBlistRep</code>( <var class="Arg">blist</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
 <p>The first function is a filter that returns <code class="keyw">true</code> if the object <var class="Arg">obj</var> is a boolean list in compact representation and <code class="keyw">false</code> otherwise, see <a href="chap22_mj.html#X7C71B225841DFC0F"><span class="RefLink">22.5</span></a>.</p>

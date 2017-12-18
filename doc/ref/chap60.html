@@ -76,10 +76,10 @@
 
 <h5>60.1-1 CyclotomicField</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CyclotomicField</code>( [<var class="Arg">subfield</var>, ]<var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CyclotomicField</code>( [<var class="Arg">subfield</var>, ]<var class="Arg">gens</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CF</code>( [<var class="Arg">subfield</var>, ]<var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CF</code>( [<var class="Arg">subfield</var>, ]<var class="Arg">gens</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CyclotomicField</code>( [<var class="Arg">subfield</var>, ]<var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CyclotomicField</code>( [<var class="Arg">subfield</var>, ]<var class="Arg">gens</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CF</code>( [<var class="Arg">subfield</var>, ]<var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CF</code>( [<var class="Arg">subfield</var>, ]<var class="Arg">gens</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>The first version creates the <var class="Arg">n</var>-th cyclotomic field <span class="SimpleMath">ℚ_n</span>. The second version creates the smallest cyclotomic field containing the elements in the list <var class="Arg">gens</var>. In both cases the field can be generated as an extension of a designated subfield <var class="Arg">subfield</var> (cf. <a href="chap60.html#X7D2421AC8491D2BE"><span class="RefLink">60.3</span></a>).</p>
 
 <p><code class="func">CyclotomicField</code> can be abbreviated to <code class="func">CF</code>, this form is used also when <strong class="pkg">GAP</strong> prints cyclotomic fields.</p>
@@ -100,8 +100,8 @@ AsField( GaussianRationals, CF(28) )
 
 <h5>60.1-2 AbelianNumberField</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AbelianNumberField</code>( <var class="Arg">n</var>, <var class="Arg">stab</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NF</code>( <var class="Arg">n</var>, <var class="Arg">stab</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AbelianNumberField</code>( <var class="Arg">n</var>, <var class="Arg">stab</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NF</code>( <var class="Arg">n</var>, <var class="Arg">stab</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For a positive integer <var class="Arg">n</var> and a list <var class="Arg">stab</var> of prime residues modulo <var class="Arg">n</var>, <code class="func">AbelianNumberField</code> returns the fixed field of the group described by <var class="Arg">stab</var> (cf. <code class="func">GaloisStabilizer</code> (<a href="chap60.html#X87E7313D8070B9CC"><span class="RefLink">60.2-5</span></a>)), in the <var class="Arg">n</var>-th cyclotomic field. <code class="func">AbelianNumberField</code> is mainly thought for internal use and for printing fields in a standard way; <code class="func">Field</code> (<a href="chap58.html#X871AA7D58263E9AC"><span class="RefLink">58.1-3</span></a>) (cf. also <a href="chap60.html#X81B5FE06781DB824"><span class="RefLink">60.2</span></a>) is probably more suitable if one knows generators of the field in question.</p>
 
 <p><code class="func">AbelianNumberField</code> can be abbreviated to <code class="func">NF</code>, this form is used also when <strong class="pkg">GAP</strong> prints abelian number fields.</p>
@@ -122,8 +122,8 @@ true
 
 <h5>60.1-3 GaussianRationals</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaussianRationals</code></td><td class="tdright">( global variable )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGaussianRationals</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaussianRationals</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGaussianRationals</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p><code class="func">GaussianRationals</code> is the field <span class="SimpleMath">ℚ_4 = ℚ(sqrt{-1})</span> of Gaussian rationals, as a set of cyclotomic numbers, see Chapter <a href="chap18.html#X7DFC03C187DE4841"><span class="RefLink">18</span></a> for basic operations. This field can also be obtained as <code class="code">CF(4)</code> (see <code class="func">CyclotomicField</code> (<a href="chap60.html#X80D21D80850EFA4B"><span class="RefLink">60.1-1</span></a>)).</p>
 
 <p>The filter <code class="func">IsGaussianRationals</code> returns <code class="keyw">true</code> for the <strong class="pkg">GAP</strong> object <code class="func">GaussianRationals</code>, and <code class="keyw">false</code> for all other <strong class="pkg">GAP</strong> objects.</p>
@@ -148,7 +148,7 @@ true
 
 <h5>60.2-1 Factors</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Factors</code>( <var class="Arg">F</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Factors</code>( <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <p>Factoring of polynomials over abelian number fields consisting of cyclotomics works in principle but is not very efficient if the degree of the field extension is large.</p>
 
 
@@ -165,21 +165,21 @@ x_1
 
 <h5>60.2-2 IsNumberField</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNumberField</code>( <var class="Arg">F</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNumberField</code>( <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the field <var class="Arg">F</var> is a finite dimensional extension of a prime field in characteristic zero, and <code class="keyw">false</code> otherwise.</p>
 
 <p><a id="X7D202D707D5708FA" name="X7D202D707D5708FA"></a></p>
 
 <h5>60.2-3 IsAbelianNumberField</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAbelianNumberField</code>( <var class="Arg">F</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAbelianNumberField</code>( <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the field <var class="Arg">F</var> is a number field (see <code class="func">IsNumberField</code> (<a href="chap60.html#X87D78F5E875F2E8A"><span class="RefLink">60.2-2</span></a>)) that is a Galois extension of the prime field, with abelian Galois group (see <code class="func">GaloisGroup</code> (<a href="chap58.html#X80CAA5BA82F09ED2"><span class="RefLink">58.3-1</span></a>)).</p>
 
 <p><a id="X84CAE4627F0CD639" name="X84CAE4627F0CD639"></a></p>
 
 <h5>60.2-4 IsCyclotomicField</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCyclotomicField</code>( <var class="Arg">F</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCyclotomicField</code>( <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the field <var class="Arg">F</var> is a <em>cyclotomic field</em>, i.e., an abelian number field (see <code class="func">IsAbelianNumberField</code> (<a href="chap60.html#X7D202D707D5708FA"><span class="RefLink">60.2-3</span></a>)) that can be generated by roots of unity.</p>
 
 
@@ -201,7 +201,7 @@ false
 
 <h5>60.2-5 GaloisStabilizer</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisStabilizer</code>( <var class="Arg">F</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisStabilizer</code>( <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">F</var> be an abelian number field (see <code class="func">IsAbelianNumberField</code> (<a href="chap60.html#X7D202D707D5708FA"><span class="RefLink">60.2-3</span></a>)) with conductor <span class="SimpleMath">n</span>, say. (This means that the <span class="SimpleMath">n</span>-th cyclotomic field is the smallest cyclotomic field containing <var class="Arg">F</var>, see <code class="func">Conductor</code> (<a href="chap18.html#X815D6EC57CBA9827"><span class="RefLink">18.1-7</span></a>).) <code class="func">GaloisStabilizer</code> returns the set of all those integers <span class="SimpleMath">k</span> in the range <span class="SimpleMath">[ 1 .. n ]</span> such that the field automorphism induced by raising <span class="SimpleMath">n</span>-th roots of unity to the <span class="SimpleMath">k</span>-th power acts trivially on <var class="Arg">F</var>.</p>
 
 
@@ -258,7 +258,7 @@ NF(8,[ 1, 3 ])
 
 <h5>60.3-1 ZumbroichBase</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZumbroichBase</code>( <var class="Arg">n</var>, <var class="Arg">m</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZumbroichBase</code>( <var class="Arg">n</var>, <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">n</var> and <var class="Arg">m</var> be positive integers, such that <var class="Arg">m</var> divides <var class="Arg">n</var>. <code class="func">ZumbroichBase</code> returns the set of exponents <span class="SimpleMath">i</span> for which <code class="code">E(<var class="Arg">n</var>)^</code><span class="SimpleMath">i</span> belongs to the (generalized) Zumbroich basis of the cyclotomic field <span class="SimpleMath">ℚ_n</span>, viewed as a vector space over <span class="SimpleMath">ℚ_m</span>.</p>
 
 <p>This basis is defined as follows. Let <span class="SimpleMath">P</span> denote the set of prime divisors of <var class="Arg">n</var>, <span class="SimpleMath"><var class="Arg">n</var> = ∏_{p ∈ P} p^{ν_p}</span>, and <span class="SimpleMath"><var class="Arg">m</var> = ∏_{p ∈ P} p^{μ_p}</span> with <span class="SimpleMath">μ_p ≤ ν_p</span>. Let <span class="SimpleMath">e_l =</span> <code class="code">E</code><span class="SimpleMath">(l)</span> for any positive integer <span class="SimpleMath">l</span>, and <span class="SimpleMath">{ e_{n_1}^j }_{j ∈ J} ⊗ { e_{n_2}^k }_{k ∈ K} = { e_{n_1}^j ⋅ e_{n_2}^k }_{j ∈ J, k ∈ K}</span>.</p>
@@ -313,7 +313,7 @@ NF(8,[ 1, 3 ])
 
 <h5>60.3-2 LenstraBase</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LenstraBase</code>( <var class="Arg">n</var>, <var class="Arg">stabilizer</var>, <var class="Arg">super</var>, <var class="Arg">m</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LenstraBase</code>( <var class="Arg">n</var>, <var class="Arg">stabilizer</var>, <var class="Arg">super</var>, <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">n</var> and <var class="Arg">m</var> be positive integers such that <var class="Arg">m</var> divides <var class="Arg">n</var>, <var class="Arg">stabilizer</var> be a list of prime residues modulo <var class="Arg">n</var>, which describes a subfield of the <var class="Arg">n</var>-th cyclotomic field (see <code class="func">GaloisStabilizer</code> (<a href="chap60.html#X87E7313D8070B9CC"><span class="RefLink">60.2-5</span></a>)), and <var class="Arg">super</var> be a list representing a supergroup of the group given by <var class="Arg">stabilizer</var>.</p>
 
 <p><code class="func">LenstraBase</code> returns a list <span class="SimpleMath">[ b_1, b_2, ..., b_k ]</span> of lists, each <span class="SimpleMath">b_i</span> consisting of integers such that the elements <span class="SimpleMath">∑_{j ∈ b_i}</span><code class="code">E(n)</code><span class="SimpleMath">^j</span> form a basis of the abelian number field <code class="code">NF( <var class="Arg">n</var>, <var class="Arg">stabilizer</var> )</code>, as a vector space over the <var class="Arg">m</var>-th cyclotomic field (see <code class="func">AbelianNumberField</code> (<a href="chap60.html#X80E5AD028143E11E"><span class="RefLink">60.1-2</span></a>)).</p>
@@ -366,7 +366,7 @@ E(5)^2+E(5)^3
 
 <h5>60.4-1 GaloisGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisGroup</code>( <var class="Arg">F</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisGroup</code>( <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <p>The Galois group <span class="SimpleMath">Gal( ℚ_n, ℚ )</span> of the field extension <span class="SimpleMath">ℚ_n / ℚ</span> is isomorphic to the group <span class="SimpleMath">(ℤ / n ℤ)^*</span> of prime residues modulo <span class="SimpleMath">n</span>, via the isomorphism <span class="SimpleMath">(ℤ / n ℤ)^* → Gal( ℚ_n, ℚ )</span> that is defined by <span class="SimpleMath">k + n ℤ ↦ ( z ↦ z^*k )</span>.</p>
 
 <p>The Galois group of the field extension <span class="SimpleMath">ℚ_n / L</span> with any abelian number field <span class="SimpleMath">L ⊆ ℚ_n</span> is simply the factor group of <span class="SimpleMath">Gal( ℚ_n, ℚ )</span> modulo the stabilizer of <span class="SimpleMath">L</span>, and the Galois group of <span class="SimpleMath">L / L'</span>, with <span class="SimpleMath">L'</span> an abelian number field contained in <span class="SimpleMath">L</span>, is the subgroup in this group that stabilizes <span class="SimpleMath">L'</span>. These groups are easily described in terms of <span class="SimpleMath">(ℤ / n ℤ)^*</span>. Generators of <span class="SimpleMath">(ℤ / n ℤ)^*</span> can be computed using <code class="func">GeneratorsPrimeResidues</code> (<a href="chap15.html#X7D191CF67E5018BE"><span class="RefLink">15.2-4</span></a>).</p>
@@ -418,7 +418,7 @@ IdentityMapping( AsField( NF(5,[ 1, 4 ]), CF(5) ) )
 
 <h5>60.4-2 ANFAutomorphism</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ANFAutomorphism</code>( <var class="Arg">F</var>, <var class="Arg">k</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ANFAutomorphism</code>( <var class="Arg">F</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">F</var> be an abelian number field and <var class="Arg">k</var> be an integer that is coprime to the conductor (see <code class="func">Conductor</code> (<a href="chap18.html#X815D6EC57CBA9827"><span class="RefLink">18.1-7</span></a>)) of <var class="Arg">F</var>. Then <code class="func">ANFAutomorphism</code> returns the automorphism of <var class="Arg">F</var> that is defined as the linear extension of the map that raises each root of unity in <var class="Arg">F</var> to its <var class="Arg">k</var>-th power.</p>
 
 
@@ -443,14 +443,14 @@ E(5)^2
 
 <h5>60.5-1 GaussianIntegers</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaussianIntegers</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaussianIntegers</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
 <p><code class="func">GaussianIntegers</code> is the ring <span class="SimpleMath">ℤ[sqrt{-1}]</span> of Gaussian integers. This is a subring of the cyclotomic field <code class="func">GaussianRationals</code> (<a href="chap60.html#X82F53C65802FF551"><span class="RefLink">60.1-3</span></a>).</p>
 
 <p><a id="X7BFD33D27BFB7C5A" name="X7BFD33D27BFB7C5A"></a></p>
 
 <h5>60.5-2 IsGaussianIntegers</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGaussianIntegers</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGaussianIntegers</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>is the defining category for the domain <code class="func">GaussianIntegers</code> (<a href="chap60.html#X80BD5EAB879F096E"><span class="RefLink">60.5-1</span></a>).</p>
 
 

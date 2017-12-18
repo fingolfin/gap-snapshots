@@ -60,7 +60,7 @@
   
   [1X78.2-1 InstallMethod[101X
   
-  [29X[2XInstallMethod[102X( [3Xopr[103X[, [3Xinfo[103X][, [3Xfamp[103X], [3Xargs-filts[103X[, [3Xval[103X], [3Xmethod[103X ) [32X function
+  [33X[1;0Y[29X[2XInstallMethod[102X( [3Xopr[103X[, [3Xinfo[103X][, [3Xfamp[103X], [3Xargs-filts[103X[, [3Xval[103X], [3Xmethod[103X ) [32X function[133X
   
   [33X[0;0Yinstalls  a  function method [3Xmethod[103X for the operation [3Xopr[103X; [3Xargs-filts[103X should
   be  a  list of requirements for the arguments, each entry being a filter; if
@@ -85,7 +85,7 @@
   
   [1X78.2-2 InstallOtherMethod[101X
   
-  [29X[2XInstallOtherMethod[102X( [3Xopr[103X[, [3Xinfo[103X][, [3Xfamp[103X], [3Xargs-filts[103X[, [3Xval[103X], [3Xmethod[103X ) [32X function
+  [33X[1;0Y[29X[2XInstallOtherMethod[102X( [3Xopr[103X[, [3Xinfo[103X][, [3Xfamp[103X], [3Xargs-filts[103X[, [3Xval[103X], [3Xmethod[103X ) [32X function[133X
   
   [33X[0;0Yinstalls  a function method [3Xmethod[103X for the operation [3Xopr[103X, in the same way as
   for  [2XInstallMethod[102X  ([14X78.2-1[114X), but without the restriction that the number of
@@ -152,7 +152,7 @@
   
   [1X78.4-1 TryNextMethod[101X
   
-  [29X[2XTryNextMethod[102X(  ) [32X function
+  [33X[1;0Y[29X[2XTryNextMethod[102X(  ) [32X function[133X
   
   [33X[0;0YAfter  a  method has been selected and called, the method may recognize that
   it   cannot   compute   the   desired   result,   and  give  up  by  calling
@@ -200,7 +200,7 @@
   
   [1X78.5-1 RedispatchOnCondition[101X
   
-  [29X[2XRedispatchOnCondition[102X( [3Xoper[103X[, [3Xinfo[103X], [3Xfampred[103X, [3Xreqs[103X, [3Xcond[103X, [3Xval[103X ) [32X function
+  [33X[1;0Y[29X[2XRedispatchOnCondition[102X( [3Xoper[103X[, [3Xinfo[103X], [3Xfampred[103X, [3Xreqs[103X, [3Xcond[103X, [3Xval[103X ) [32X function[133X
   
   [33X[0;0YThis  function installs a method for the operation [3Xoper[103X under the conditions
   [3Xfampred[103X  and  [3Xreqs[103X  which  has absolute value [3Xval[103X; that is, the value of the
@@ -225,7 +225,7 @@
   
   [1X78.6-1 InstallImmediateMethod[101X
   
-  [29X[2XInstallImmediateMethod[102X( [3Xopr[103X[, [3Xinfo[103X], [3Xfilter[103X, [3Xrank[103X, [3Xmethod[103X ) [32X function
+  [33X[1;0Y[29X[2XInstallImmediateMethod[102X( [3Xopr[103X[, [3Xinfo[103X], [3Xfilter[103X, [3Xrank[103X, [3Xmethod[103X ) [32X function[133X
   
   [33X[0;0Y[2XInstallImmediateMethod[102X installs [3Xmethod[103X as an immediate method for [3Xopr[103X, which
   must  be  an attribute or a property, with requirement [3Xfilter[103X and rank [3Xrank[103X.
@@ -275,7 +275,7 @@
   
   [1X78.7-1 InstallTrueMethod[101X
   
-  [29X[2XInstallTrueMethod[102X( [3Xnewfil[103X, [3Xfilt[103X ) [32X function
+  [33X[1;0Y[29X[2XInstallTrueMethod[102X( [3Xnewfil[103X, [3Xfilt[103X ) [32X function[133X
   
   [33X[0;0YIt  may happen that a filter [3Xnewfil[103X shall be implied by another filter [3Xfilt[103X,
   which  is usually a meet of other properties, or the meet of some properties

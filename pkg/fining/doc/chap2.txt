@@ -591,8 +591,9 @@
   automorphism [22Xg[122X of [22XS[122X, we have[133X
   
   
-        [33X[1;6Y[24X[33X[0;0Yf(p^g) = f(p)^{\phi(g)} .[133X [124X[133X
+  [24X[33X[0;6Yf(p^g) = f(p)^{\phi(g)} .[133X
   
+  [124X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xmat1 := IdentityMat(4,GF(16));[127X[104X
@@ -725,7 +726,7 @@
   [4X[32X[104X
   
   
-  [1X2.3-5 [33X[0;0Ysubgeometries[133X[101X
+  [1X2.3-5 [33X[0;0YSubgeometries[133X[101X
   
   [33X[0;0YA projective space can be embedded as a subgeometry in a projective space of
   the  same dimension but over a field extension. A polar space, determined by

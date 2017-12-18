@@ -103,7 +103,7 @@
 
 <h5>9.1-1 LastSystemError</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LastSystemError</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LastSystemError</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">LastSystemError</code> returns a record describing the last system error that has occurred. This record contains at least the component <code class="code">message</code> which is a string. This message is, however, highly operating system dependent and should only be used as an informational message for the user.</p>
 
 <p><a id="X7A4973627A5DB27D" name="X7A4973627A5DB27D"></a></p>
@@ -126,14 +126,14 @@
 
 <h5>9.3-1 IsDirectory</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDirectory</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDirectory</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p><code class="func">IsDirectory</code> is a category of directories.</p>
 
 <p><a id="X86A71E927EEC7EAD" name="X86A71E927EEC7EAD"></a></p>
 
 <h5>9.3-2 Directory</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Directory</code>( <var class="Arg">string</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Directory</code>( <var class="Arg">string</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a directory object for the string <var class="Arg">string</var>. <code class="func">Directory</code> understands <code class="code">"."</code> for "current directory", that is, the directory in which <strong class="pkg">GAP</strong> was started. It also understands absolute paths.</p>
 
 <p>If the variable <code class="code">GAPInfo.UserHome</code> is defined (this may depend on the operating system) then <code class="func">Directory</code> understands a string with a leading <code class="code">~</code> (tilde) character for a path relative to the user's home directory (but a string beginning with <code class="code">"~other_user"</code> is <em>not</em> interpreted as a path relative to <code class="code">other_user</code>'s home directory, as in a UNIX shell).</p>
@@ -144,7 +144,7 @@
 
 <h5>9.3-3 DirectoryTemporary</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectoryTemporary</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectoryTemporary</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a directory object in the category <code class="func">IsDirectory</code> (<a href="chap9_mj.html#X82B3E24683942597"><span class="RefLink">9.3-1</span></a>) for a <em>new</em> temporary directory. This is guaranteed to be newly created and empty immediately after the call to <code class="func">DirectoryTemporary</code>. <strong class="pkg">GAP</strong> will make a reasonable effort to remove this directory upon termination of the <strong class="pkg">GAP</strong> job that created the directory.</p>
 
 <p>If <code class="func">DirectoryTemporary</code> is unable to create a new directory, <code class="keyw">fail</code> is returned. In this case <code class="func">LastSystemError</code> (<a href="chap9_mj.html#X87D278437A916905"><span class="RefLink">9.1-1</span></a>) can be used to get information about the error.</p>
@@ -155,14 +155,14 @@
 
 <h5>9.3-4 DirectoryCurrent</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectoryCurrent</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectoryCurrent</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the directory object for the current directory.</p>
 
 <p><a id="X87ED469A85343A3C" name="X87ED469A85343A3C"></a></p>
 
 <h5>9.3-5 DirectoriesLibrary</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectoriesLibrary</code>( [<var class="Arg">name</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectoriesLibrary</code>( [<var class="Arg">name</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">DirectoriesLibrary</code> returns the directory objects for the <strong class="pkg">GAP</strong> library <var class="Arg">name</var> as a list. <var class="Arg">name</var> must be one of <code class="code">"lib"</code> (the default), <code class="code">"doc"</code>, <code class="code">"tst"</code>, and so on.</p>
 
 <p>The string <code class="code">""</code> is also legal and with this argument <code class="func">DirectoriesLibrary</code> returns the list of <strong class="pkg">GAP</strong> root directories. The return value of this call differs from <code class="code">GAPInfo.RootPaths</code> in that the former is a list of directory objects and the latter a list of strings.</p>
@@ -175,14 +175,14 @@
 
 <h5>9.3-6 DirectoriesSystemPrograms</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectoriesSystemPrograms</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectoriesSystemPrograms</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">DirectoriesSystemPrograms</code> returns the directory objects for the list of directories where the system programs reside, as a list. Under UNIX this would usually represent <code class="code">$PATH</code>.</p>
 
 <p><a id="X7B225E5282534EDA" name="X7B225E5282534EDA"></a></p>
 
 <h5>9.3-7 DirectoryContents</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectoryContents</code>( <var class="Arg">dir</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectoryContents</code>( <var class="Arg">dir</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function returns a list of filenames/directory names that reside in the directory <var class="Arg">dir</var>. The argument <var class="Arg">dir</var> can either be given as a string indicating the name of the directory or as a directory object (see <code class="func">IsDirectory</code> (<a href="chap9_mj.html#X82B3E24683942597"><span class="RefLink">9.3-1</span></a>)). It is an error, if such a directory does not exist.</p>
 
 <p>The ordering of the list entries can depend on the operating system.</p>
@@ -193,14 +193,14 @@
 
 <h5>9.3-8 DirectoryDesktop</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectoryDesktop</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectoryDesktop</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a directory object for the users desktop directory as defined on many modern operating systems. The function is intended to provide a cross-platform interface to a directory that is easily accessible by the user. Under Unix systems (including Mac OS X) this will be the <code class="code">Desktop</code> directory in the users home directory if it exists, and the users home directory otherwise. Under Windows it will the users <code class="code">Desktop</code> folder (or the appropriate name under different languages).</p>
 
 <p><a id="X7B0D818A808A3481" name="X7B0D818A808A3481"></a></p>
 
 <h5>9.3-9 DirectoryHome</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectoryHome</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DirectoryHome</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a directory object for the users home directory, defined as a directory in which the user will typically have full read and write access. The function is intended to provide a cross-platform interface to a directory that is easily accessible by the user. Under Unix systems (including Mac OS X) this will be the usual user home directory. Under Windows it will the users <code class="code">My Documents</code> folder (or the appropriate name under different languages).</p>
 
 <p><a id="X8545E03E7D651456" name="X8545E03E7D651456"></a></p>
@@ -211,8 +211,8 @@
 
 <h5>9.4-1 <span class="Heading">Filename</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Filename</code>( <var class="Arg">dir</var>, <var class="Arg">name</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Filename</code>( <var class="Arg">list-of-dirs</var>, <var class="Arg">name</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Filename</code>( <var class="Arg">dir</var>, <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Filename</code>( <var class="Arg">list-of-dirs</var>, <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>If the first argument is a directory object <var class="Arg">dir</var>, <code class="func">Filename</code> returns the (system dependent) filename as a string for the file with name <var class="Arg">name</var> in the directory <var class="Arg">dir</var>. <code class="func">Filename</code> returns the filename regardless of whether the directory contains a file with name <var class="Arg">name</var> or not.</p>
 
 <p>If the first argument is a list <var class="Arg">list-of-dirs</var> (possibly of length 1) of directory objects, then <code class="func">Filename</code> searches the directories in order, and returns the filename for the file <var class="Arg">name</var> in the first directory which contains a file <var class="Arg">name</var> or <code class="keyw">fail</code> if no directory contains a file <var class="Arg">name</var>.</p>
@@ -268,7 +268,7 @@ fail
 
 <h5>9.6-1 IsExistingFile</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsExistingFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsExistingFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">IsExistingFile</code> returns <code class="keyw">true</code> if a file with the filename <var class="Arg">filename</var> exists and can be seen by the <strong class="pkg">GAP</strong> process. Otherwise <code class="keyw">false</code> is returned.</p>
 
 
@@ -287,7 +287,7 @@ false
 
 <h5>9.6-2 IsReadableFile</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsReadableFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsReadableFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">IsReadableFile</code> returns <code class="keyw">true</code> if a file with the filename <var class="Arg">filename</var> exists <em>and</em> the <strong class="pkg">GAP</strong> process has read permissions for the file, or <code class="keyw">false</code> if this is not the case.</p>
 
 
@@ -304,7 +304,7 @@ false
 
 <h5>9.6-3 IsWritableFile</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWritableFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWritableFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">IsWritableFile</code> returns <code class="keyw">true</code> if a file with the filename <var class="Arg">filename</var> exists <em>and</em> the <strong class="pkg">GAP</strong> process has write permissions for the file, or <code class="keyw">false</code> if this is not the case.</p>
 
 
@@ -317,7 +317,7 @@ false
 
 <h5>9.6-4 IsExecutableFile</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsExecutableFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsExecutableFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">IsExecutableFile</code> returns <code class="keyw">true</code> if a file with the filename <var class="Arg">filename</var> exists <em>and</em> the <strong class="pkg">GAP</strong> process has execute permissions for the file, or <code class="keyw">false</code> if this is not the case. Note that execute permissions do not imply that it is possible to execute the file, e.g., it may only be executable on a different machine.</p>
 
 
@@ -330,7 +330,7 @@ true
 
 <h5>9.6-5 IsDirectoryPath</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDirectoryPath</code>( <var class="Arg">filename</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDirectoryPath</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">IsDirectoryPath</code> returns <code class="keyw">true</code> if the file with the filename <var class="Arg">filename</var> exists <em>and</em> is a directory, and <code class="keyw">false</code> otherwise. Note that this function does not check if the <strong class="pkg">GAP</strong> process actually has write or execute permissions for the directory. You can use <code class="func">IsWritableFile</code> (<a href="chap9_mj.html#X8412F485796B25F5"><span class="RefLink">9.6-3</span></a>), resp. <code class="func">IsExecutableFile</code> (<a href="chap9_mj.html#X83A1AAD58435FC4C"><span class="RefLink">9.6-4</span></a>) to check such permissions.</p>
 
 <p><a id="X81A0A4FF842B039B" name="X81A0A4FF842B039B"></a></p>
@@ -341,7 +341,7 @@ true
 
 <h5>9.7-1 Read</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Read</code>( <var class="Arg">filename</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Read</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>reads the input from the file with the filename <var class="Arg">filename</var>, which must be given as a string.</p>
 
 <p><code class="func">Read</code> first opens the file <var class="Arg">filename</var>. If the file does not exist, or if <strong class="pkg">GAP</strong> cannot open it, e.g., because of access restrictions, an error is signalled.</p>
@@ -358,7 +358,7 @@ true
 
 <h5>9.7-2 ReadAsFunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadAsFunction</code>( <var class="Arg">filename</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReadAsFunction</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>reads the file with filename <var class="Arg">filename</var> as a function and returns this function.</p>
 
 <p><em>Example</em></p>
@@ -389,8 +389,8 @@ return a*10;
 
 <h5>9.7-3 <span class="Heading">PrintTo and AppendTo</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrintTo</code>( <var class="Arg">filename</var>[, <var class="Arg">obj1</var>, <var class="Arg">...</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AppendTo</code>( <var class="Arg">filename</var>[, <var class="Arg">obj1</var>, <var class="Arg">...</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrintTo</code>( <var class="Arg">filename</var>[, <var class="Arg">obj1</var>, <var class="Arg">...</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AppendTo</code>( <var class="Arg">filename</var>[, <var class="Arg">obj1</var>, <var class="Arg">...</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">PrintTo</code> works like <code class="func">Print</code> (<a href="chap6_mj.html#X7AFA64D97A1F39A3"><span class="RefLink">6.3-4</span></a>), except that the arguments <var class="Arg">obj1</var>, <span class="SimpleMath">\(\ldots\)</span> (if present) are printed to the file with the name <var class="Arg">filename</var> instead of the standard output. This file must of course be writable by <strong class="pkg">GAP</strong>. Otherwise an error is signalled. Note that <code class="func">PrintTo</code> will <em>overwrite</em> the previous contents of this file if it already existed; in particular, <code class="func">PrintTo</code> with just the <var class="Arg">filename</var> argument empties that file.</p>
 
 <p><code class="func">AppendTo</code> works like <code class="func">PrintTo</code>, except that the output does not overwrite the previous contents of the file, but is appended to the file.</p>
@@ -403,8 +403,8 @@ return a*10;
 
 <h5>9.7-4 <span class="Heading">LogTo</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LogTo</code>( <var class="Arg">filename</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LogTo</code>(  )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LogTo</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LogTo</code>(  )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Calling <code class="func">LogTo</code> with a string <var class="Arg">filename</var> causes the subsequent interaction to be logged to the file with the name <var class="Arg">filename</var>, i.e., everything you see on your terminal will also appear in this file. (<code class="func">LogTo</code> (<a href="chap10_mj.html#X7BF4E44C7D51E085"><span class="RefLink">10.4-5</span></a>) may also be used to log to a stream.) This file must of course be writable by <strong class="pkg">GAP</strong>, otherwise an error is signalled. Note that <code class="func">LogTo</code> will overwrite the previous contents of this file if it already existed.</p>
 
 <p>Called without arguments, <code class="func">LogTo</code> stops logging to a file or stream.</p>
@@ -413,8 +413,8 @@ return a*10;
 
 <h5>9.7-5 <span class="Heading">InputLogTo</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputLogTo</code>( <var class="Arg">filename</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputLogTo</code>(  )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputLogTo</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputLogTo</code>(  )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Calling <code class="func">InputLogTo</code> with a string <var class="Arg">filename</var> causes the subsequent input to be logged to the file with the name <var class="Arg">filename</var>, i.e., everything you type on your terminal will also appear in this file. Note that <code class="func">InputLogTo</code> and <code class="func">LogTo</code> (<a href="chap9_mj.html#X79813A6686894960"><span class="RefLink">9.7-4</span></a>) cannot be used at the same time while <code class="func">InputLogTo</code> and <code class="func">OutputLogTo</code> (<a href="chap9_mj.html#X7A5591D87EAFA6CC"><span class="RefLink">9.7-6</span></a>) can. Note that <code class="func">InputLogTo</code> will overwrite the previous contents of this file if it already existed.</p>
 
 <p>Called without arguments, <code class="func">InputLogTo</code> stops logging to a file or stream.</p>
@@ -423,8 +423,8 @@ return a*10;
 
 <h5>9.7-6 <span class="Heading">OutputLogTo</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OutputLogTo</code>( <var class="Arg">filename</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OutputLogTo</code>(  )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OutputLogTo</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OutputLogTo</code>(  )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Calling <code class="func">OutputLogTo</code> with a string <var class="Arg">filename</var> causes the subsequent output to be logged to the file with the name <var class="Arg">filename</var>, i.e., everything <strong class="pkg">GAP</strong> prints on your terminal will also appear in this file. Note that <code class="func">OutputLogTo</code> and <code class="func">LogTo</code> (<a href="chap9_mj.html#X79813A6686894960"><span class="RefLink">9.7-4</span></a>) cannot be used at the same time while <code class="func">InputLogTo</code> (<a href="chap9_mj.html#X7CAB119378B075B7"><span class="RefLink">9.7-5</span></a>) and <code class="func">OutputLogTo</code> can. Note that <code class="func">OutputLogTo</code> will overwrite the previous contents of this file if it already existed.</p>
 
 <p>Called without arguments, <code class="func">OutputLogTo</code> stops logging to a file or stream.</p>
@@ -433,7 +433,7 @@ return a*10;
 
 <h5>9.7-7 CrcFile</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CrcFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CrcFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>CRC (cyclic redundancy check) numbers provide a certain method of doing checksums. They are used by <strong class="pkg">GAP</strong> to check whether files have changed.</p>
 
 <p><code class="func">CrcFile</code> computes a checksum value for the file with filename <var class="Arg">filename</var> and returns this value as an integer. The function returns <code class="keyw">fail</code> if a system error occurred, say, for example, if <var class="Arg">filename</var> does not exist. In this case the function <code class="func">LastSystemError</code> (<a href="chap9_mj.html#X87D278437A916905"><span class="RefLink">9.1-1</span></a>) can be used to get information about the error.</p>
@@ -448,15 +448,15 @@ return a*10;
 
 <h5>9.7-8 RemoveFile</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RemoveFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RemoveFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>will remove the file with filename <var class="Arg">filename</var> and returns <code class="keyw">true</code> in case of success. The function returns <code class="keyw">fail</code> if a system error occurred, for example, if your permissions do not allow the removal of <var class="Arg">filename</var>. In this case the function <code class="func">LastSystemError</code> (<a href="chap9_mj.html#X87D278437A916905"><span class="RefLink">9.1-1</span></a>) can be used to get information about the error.</p>
 
 <p><a id="X79EE267A7FAF28A6" name="X79EE267A7FAF28A6"></a></p>
 
 <h5>9.7-9 Reread</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Reread</code>( <var class="Arg">filename</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; REREADING</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Reread</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; REREADING</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
 <p>In general, it is not possible to read the same <strong class="pkg">GAP</strong> library file twice, or to read a compiled version after reading a <strong class="pkg">GAP</strong> version, because crucial global variables are made read-only (see <a href="chap4_mj.html#X816FBEEA85782EC2"><span class="RefLink">4.9</span></a>) and filters and methods are added to global tables.</p>
 
 <p>A partial solution to this problem is provided by the function <code class="func">Reread</code> (and related functions <code class="code">RereadLib</code> etc.). <code class="code">Reread( <var class="Arg">filename</var> )</code> sets the global variable <code class="func">REREADING</code> to <code class="keyw">true</code>, reads the file named by <var class="Arg">filename</var> and then resets <code class="func">REREADING</code>. Various system functions behave differently when <code class="func">REREADING</code> is set to <code class="keyw">true</code>. In particular, assignment to read-only global variables is permitted, calls to <code class="func">NewRepresentation</code> (<a href="chap79_mj.html#X7CC8106F809E15CF"><span class="RefLink">79.2-1</span></a>) and <code class="func">NewInfoClass</code> (<a href="chap7_mj.html#X7AA1A1CF79F20790"><span class="RefLink">7.4-1</span></a>) with parameters identical to those of an existing representation or info class will return the existing object, and methods installed with <code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>) may sometimes displace existing methods.</p>

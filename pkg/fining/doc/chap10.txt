@@ -75,11 +75,8 @@
   accompanying  intertwiner  for  the  automorphism  groups  of the source and
   range.  Given  a geometry morphism [22Xf[122X from [22XS[122X to [22XS'[122X, an intertwiner [22Xϕ[122X is a map
   from  the automorphism group of [22XS[122X to the automorphism group of [22XS'[122X, such that
-  for every element [22Xp[122X of [22XS[122X and every automorphism [22Xg[122X of [22XS[122X, we have[133X
-  
-  
-        [33X[1;6Y[24X[33X[0;0Yf(p^g) = f(p)^{\phi(g)} .[133X [124X[133X
-  
+  for  every  element  [22Xp[122X  of [22XS[122X and every automorphism [22Xg[122X of [22XS[122X, we have [22Xf(p^g) =
+  f(p)^ϕ(g).[122X[133X
   
   [33X[0;0YThere  is no method to compute an intertwiner for a given geometry morphism,
   the  attribute  is  or  is  not  set during the construction of the geometry
@@ -374,14 +371,14 @@
   [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
   
   [33X[0;0YThe  operation  allows  the  construction  of the duality between [22XW(3,q)[122X and
-  [22XQ(4,q)[122X, respectively [22XQ^-(5,q)[122X, or [22XH(3,q^2)[122X, in two directions. It is checked
-  if  the  arguments  are  appropriate,  i.e.  the  right  type of generalised
-  quadrangle(s).   The  first  version  requires  two  arguments:  either  the
-  symplectic  or  parabolic  quadrangle,  in  any  order,  and  defined by any
-  suitable  bilinear/quadratic and bilinear form; or the elliptic or hermitian
-  quadrangle  (in  dimension  [22X3[122X),  in  any  order, and defined by any suitable
-  bilinear/quadratic   and  hermitian  form.  In  all  cases  the  generalised
-  quadrangles may be the standard one provided by the package [5XFinInG[105X.[133X
+  [22XQ(4,q)[122X,  respectively  [22XQ^-(5,q)[122X,  in  two  directions.  It is checked if the
+  arguments are appropriate, i.e. the right type of generalised quadrangle(s).
+  The first version requires two arguments: either the symplectic or parabolic
+  quadrangle, in any order, and defined by any suitable bilinear/quadratic and
+  bilinear  form; or the elliptic or hermitian quadrangle (in dimension [22X3[122X), in
+  any  order,  and  defined  by  any suitable bilinear/quadratic and hermitian
+  form.  In  all  cases  the  generalised  quadrangles may be the standard one
+  provided by the package [5XFinInG[105X.[133X
   
   [33X[0;0YThe  third  version  requires  only  one  argument,  either  [22XW(3,q)[122X, [22XQ(4,q)[122X,
   [22XQ^-(5,q)[122X,  or  [22XH(3,q^2)[122X,  standard  or  user  specified using an appropriate
@@ -547,7 +544,7 @@
   (when  calling  the  operation with two arguments) is set to [10Xtrue[110X. Note that
   the  source  of  the  intertwiner is the projectivity group of [3Xgeom1[103X and its
   range  is  a  subgroup  of the projectivity group of [3Xgeom2[103X. Here is a simple
-  example where the geometry morphism embeds [22XPG(2,3)[122X into [22XPG(2,9)[122X.[133X
+  example where the geometry morphism embeds PG(2,3) into PG(2,9).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xpg1 := PG(2,3);[127X[104X
@@ -602,27 +599,28 @@
   [1X10.4-3 [33X[0;0YEmbedding of projective spaces by field reduction[133X[101X
   
   [33X[0;0YWe briefly describe the mathematics behind field reduction. For more details
-  we  refer to [LV13]. Consider the fields [22XK=GF(q)[122X and [22XL=GF(q^t)[122X . The field [22XL[122X
-  is  a  [22Xt[122X-dimensional  vector  space  over [22XK[122X. Hence, with respect to a chosen
-  basis  [22XB[122X  for  [22XL[122X  as a [22XK[122X-vectorspace, the bijection between the vectorspaces
-  [22XV(n,q^t)[122X  and  [22XV(tn,q)[122X  can  be  implemented.  Consider the projective space
-  [22XPG(n-1,q^t)[122X. The elements are represented by subspaces of [22XV(n,q^t)[122X. Clearly,
-  a  [22Xk[122X  dimensional  subspace of [22XV(n,q^t)[122X is also a [22Xkn[122X-dimensional subspace of
-  the [22XV(nt,q)[122X. This induces an embedding from [22XPG(n-1,q^t)[122X into [22XPG(nt-1,q)[122X. The
-  embedding will be determined by the chosen basis of [22XL[122X as a vector space over
-  [22XGF(q)[122X.[133X
+  we  refer  to  [LVdV13].  Consider  the  fields [22XGF(q)[122X and [22XGF(q^t)[122X. The field
+  [22XGF(q^t)[122X is a [22Xt[122X-dimensional vector space over [22XGF(q)[122X. Hence, with respect to a
+  chosen basis [22XB[122X for [22XGF(q^t)[122X as a [22XGF(q)[122X-vectorspace, the bijection between the
+  vectorspaces   [22XV(n,q^t)[122X   and  [22XV(tn,q)[122X  can  be  implemented.  Consider  the
+  projective  space  [22XPG(n-1,q^t)[122X. The elements are represented by subspaces of
+  [22XV(n,q^t)[122X.   Clearly,  a  [22Xk[122X  dimensional  subspace  of  [22XV(n,q^t)[122X  is  also  a
+  [22Xkn[122X-dimensional   subspace   of  [22XV(nt,q)[122X.  This  induces  an  embedding  from
+  [22XPG(n-1,q^t)[122X  into [22XPG(nt-1,q)[122X. The embedding will be determined by the chosen
+  basis of [22XGF(q^t)[122X as a vector space over [22XGF(q)[122X[133X
   
   [1X10.4-4 BlownUpSubspaceOfProjectiveSpace[101X
   
   [29X[2XBlownUpSubspaceOfProjectiveSpace[102X( [3XB[103X, [3Xsubspace[103X ) [32X operation
   [6XReturns:[106X  [33X[0;10Ya subspace of a projective space[133X
   
-  [33X[0;0YLet  [3XB[103X  be  a  basis  for the field [22XL=GF(q^t)[122X as [22XGF(q)[122X vector space, and let
+  [33X[0;0YLet  [3XB[103X  be  a  basis  for  the  field [22XGF(q^t)[122X as [22XGF(q)[122X vector space, and let
   [3Xsubspace[103X  be  a  [22Xk-1[122X-dimensional  subspace  of  [22XPG(n-1,q^t)[122X represented by a
   [22Xk[122X-dimensional   subspace   [22XS[122X   of   [22XV(n,q^t)[122X.  This  operation  returns  the
   [22Xkt-1[122X-dimensional  subspace  of  [22XPG(nt-1,q)[122X  represented by blowing up [22XS[122X with
   respect  to  the  base  [3XB[103X.  This  operation  relies  on  the  [5XGAP[105X  operation
-  [11XBlownUpMat[111X. In the example, the effect of chosen a different basis is shown.[133X
+  [11XBlownUpMat[111X.  In  the  example,  the  effect of choosing a different basis is
+  shown.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xpg := PG(3,5^2);[127X[104X
@@ -653,21 +651,22 @@
   [6XReturns:[106X  [33X[0;10Ya geometry morphism[133X
   
   [33X[0;0YThis  operation  comes in four flavours. For the first flavour, the argument
-  [3Xgeom1[103X  is  a  projective  space over a field [22XL=GF(q^t)[122X. The argument [3Xf2[103X is a
-  subfield  [22XK=GF(q)[122X  of [22XL[122X. The argument [22XB[122X is a basis for [22XL[122X as a [22XK[122X-vectorspace.
-  When  this  argument  is  not  given, a basis for [22XL[122X over [22XK[122X is computed using
-  [11XBasis(AsVectorSpace(K,L))[111X.  It  is  checked  whether [3Xf2[103X is a subfield of the
-  basefield of [3Xgeom1[103X. The third and fourth flavour are comparable, where now [22XK[122X
-  is  found  as  the basefield of [3Xgeom2[103X. In fact the arguments [3Xgeom1[103X and [3Xgeom2[103X
-  are the projective spaces [22XPG(r-1,q^t)[122X and [22XPG(rt-1,q)[122X respectively. As in the
-  previous flavours, the argument [3XB[103X is optional.[133X
+  [3Xgeom1[103X  is  a  projective  space  over  a field [22XGF(q^t)[122X. The argument [3Xf2[103X is a
+  subfield  [22XGF(q)[122X  of  [22XGF(q^t)[122X.  The  argument  [22XB[122X  is a basis for [22XGF(q^t)[122X as a
+  [22XGF(q)[122X-vectorspace. When this argument is not given, a basis for [22XGF(q^t)[122X over
+  [22XGF(q)[122X  is  computed using [11XBasis(AsVectorSpace(GF(q),GF(q^t)))[111X. It is checked
+  whether  [3Xf2[103X  is  a  subfield of the basefield of [3Xgeom1[103X. The third and fourth
+  flavour  are comparable, where now [22XGF(q)[122X is found as the basefield of [3Xgeom2[103X.
+  In  fact the arguments [3Xgeom1[103X and [3Xgeom2[103X are the projective spaces [22XPG(n-1,q^t)[122X
+  and  [22XPG(nt-1,q)[122X respectively. As in the previous flavours, the argument [3XB[103X is
+  optional.[133X
   
   [33X[0;0YAn  intertwiner  is  always  available  for  this geometry morphism, and has
   source  the  homography  group  of  [3Xgeom1[103X  and  as  range  a subgroup of the
   homography  group  of  [3Xgeom2[103X  (or  the  projective  space of the appropriate
   dimension  over [3Xf2[103X. Notice in the example below the difference of a factor 2
   in  the  orders  of  the  group,  which  comes of course from restricing the
-  homomorphism  to  the  homography  group, which differes a factor 2 from the
+  homomorphism  to  the  homography  group,  which differs a factor 2 from the
   collineation group of the projective line, that has an extra automorphism of
   order two, corresponding with the Frobenius automorphism.[133X
   
@@ -804,14 +803,14 @@
   The  possible  embeddings,  where  the  polar  spaces  may  be  chosen up to
   equivalent form, are listed in the table below (see [KL90]):[133X
   
-        Polar Space 1 │ Polar Space 2 │ Conditions
-        ──────────────┼───────────────┼─  
-        ──────────────┼───────────────┼─  
-        [22XW(2n-1,q)[122X     │ [22XW(2n-1,q^a)[122X   │ --        
-        [22XW(2n-1,q)[122X     │ [22XH(2n-1,q^2)[122X   │ --        
-        [22XH(d,q^2)[122X      │ [22XH(d,q^2r)[122X     │ r odd     
-        [22XO^ϵ(d,q)[122X      │ [22XH(d,q^2)[122X      │ q odd     
-        [22XO^ϵ(d,q)[122X      │ [22XO^ϵ'(d,q^r)[122X   │ [22Xϵ=(ϵ')^r[122X  
+        Polar Space 1 │ Polar Space 2 │ Conditions   
+        ──────────────┼───────────────┼───────────  
+        ──────────────┼───────────────┼───────────  
+        [22XW(2n-1,q)[122X     │ [22XW(2n-1,q^a)[122X   │ --           
+        [22XW(2n-1,q)[122X     │ [22XH(2n-1,q^a)[122X   │ --           
+        [22XH(d,q^2)[122X      │ [22XH(d,q^(2r))[122X   │ [22Xr[122X odd        
+        [22XO^ϵ(d,q)[122X      │ [22XH(d,q^2)[122X      │ [22Xq[122X odd        
+        [22XO^ϵ(d,q)[122X      │ [22XO^ϵ'(d,q^r)[122X   │ [22Xϵ=(ϵ')^r[122X     
   
        [1XTable:[101X Subfield embeddings of polar spaces
   
@@ -853,48 +852,55 @@
   [1X10.5-3 [33X[0;0YEmbedding of polar spaces by field reduction[133X[101X
   
   [33X[0;0YField  reduction  for  polar  spaces  is  somewhat  more  involved  than for
-  projective  spaces,  and we give a brief description. Let [22XP[122X be a polar space
-  over  a  field  [22XL=GF(q^t)[122X  and  let  [22XK=GF(q)[122X.  Let  [22Xf[122X  be  the form on the [22Xr[122X
-  dimensional  vector  space  [22XV[122X  over  [22XL[122X determining [22XP[122X. Consider the trace map
-  [22XT:[122X[22XL=GF(q^t)  → GF(q):[122X [22Xx ↦ x^q^t+ x^q^t-1} + ... x[122X . Define for any [22Xα ∈ L[122X the
-  map  [22XT_α:  GF(q^t)→  GF(q):  T_α(x)  =  T(α x)[122X . Consider the [22Xrt[122X dimensional
-  vector  space [22XW[122X over [22XK[122X. There is a bijective map [22XΦ[122X from [22XV[122X to [22XW[122X and [22XT_α ∘ f ∘
-  Φ^-1[122X  defines  a quadratic or sesquilinear form (depending on [22Xα[122X, and [22Xf[122X being
-  quadratic  or  sesquilinear)  acting  on  [22XW[122X,  and  hence, if not singular or
-  degenerate, inducing a polar space [22XS[122X over the finite field [22XGF(q)[122X. An element
-  of  [22XP[122X  can be mapped onto an element of [22XS[122X by simply blowing up [22XP[122X using field
-  reduction for projective spaces. So the resulting polar space [22XW[122X is dependent
-  on  the  original  form [22Xf[122X, the parameter [22Xα[122X and the blowing up of elements by
-  field  reduction, the latter being dependent on the basis of [22XL[122X as a [22XK[122X vector
-  space.  [5XFinInG[105X provides two approaches. The first approach starts from [22XP[122X and
-  the  parameters [22XK[122X, [22Xα[122X and a basis for [22XL[122X as [22XK[122X vector space. Then the resulting
-  form  [22XT_α ∘ f ∘ Φ^-1[122X is determined, and the associated polar space [22XW[122X will be
-  the  range  of  the  embedding. Note that the resulting polar space will not
-  necessarily  be  canonical.  The second approach starts from two given polar
-  spaces  [22XP[122X  and  [22XS[122X. Based on this input, it is determined wheter an embedding
-  based  on  the  above  described  principle  is  possible, and the necessary
-  parameters are computed. The resulting embedding is a geometry morhpism from
-  [22XP[122X  to [22XS[122X. Note that the polar spaces used as an argument may be freely chosen
-  and are not required to be in the canonical form.[133X
+  projective  spaces,  and  we  give  a  brief description. Let [22XL[122X be the field
+  [22XGF(q^t)[122X  and let [22XK[122X be the field [22XGF(q)[122X Let [22XP[122X be a polar space over a field [22XL[122X.
+  Let  [22Xf[122X be the form on the [22Xr[122X dimensional vector space [22XV[122X over [22XL[122X determining [22XP[122X.
+  Consider the trace map[133X
   
-  [33X[0;0YFo  the  embeddings by field reduction of polar spaces, including conditions
-  on  the parameter [22Xα[122X, we refer to [Gil08] and [LV13]. The possible embeddings
-  are listed in the following table.[133X
+  [33X[0;0Y[22XT: L → K: x ↦ x^(q^t)+ x^(q^(t-1)) + ... + x.[122X[133X
   
-        Polar Space 1 │ Polar Space 2         │ Conditions
-        ──────────────┼───────────────────────┼─  
-        ──────────────┼───────────────────────┼─  
-        [22XW(2n-1,q^t)[122X   │ [22XW(2nt-1,q)[122X            │ --        
-        [22XQ^+(2n-1,q^t)[122X │ [22XQ^+(2nt-1,q)[122X          │ --        
-        [22XQ^-(2n-1,q^t)[122X │ [22XQ^-(2nt-1,q)[122X          │ --        
-        [22XQ(2n,q^2a+1)[122X  │ [22XQ((2a+1)(2n+1)-1,q)[122X   │ q odd     
-        [22XQ(2n,q^2a)[122X    │ [22XQ^-(2a(2n+1)-1,q)[122X     │ q=1 mod 4 
-        [22XQ(2n,q^4a+2)[122X  │ [22XQ^+((4a+2)(2n+1)-1,q)[122X │ q=3 mod 4 
-        [22XQ(2n,q^4a)[122X    │ [22XQ^-(4a(2n+1)-1,q)[122X     │ q=3 mod 4 
-        [22XH(n,q^2a+1)[122X   │ [22XH((n+1)(2a+1)-1,q)[122X    │ q square  
-        [22XH(n,q^2a)[122X     │ [22XW(2a(n+1)-1,q)[122X        │ q even    
-        [22XH(2n,q^2a)[122X    │ [22XQ^-(2a(2n+1)-1,q)[122X     │ q odd     
-        [22XH(2n+1,q^2a)[122X  │ [22XQ^+(2a(2n+2)-1,q)[122X     │ q odd     
+  [33X[0;0YDefine for any [22Xα ∈ L[122X the map[133X
+  
+  [33X[0;0Y[22XT_α: L → K: x ↦ T_α(x) = T(α x).[122X[133X
+  
+  [33X[0;0YConsider  the [22Xrt[122X dimensional vector space [22XW[122X over [22XK[122X. There is a bijective map
+  [22XΦ[122X:  [22XV  →  W[122X  and  [22XT_α  ∘  f  ∘ Φ^-1[122X defines a quadratic or sesquilinear form
+  (depending  on  [22Xα[122X,  and  [22Xf[122X being quadratic or sesquilinear) acting on [22XW[122X, and
+  hence,  if  not  singular  or  degenerate, inducing a polar space [22XS[122X over the
+  finite  field  [22XGF(q)[122X.  An element of [22XP[122X can be mapped onto an element of [22XS[122X by
+  simply  blowing  up  [22XP[122X  using  field reduction for projective spaces. So the
+  resulting polar space [22XS[122X is dependent on the original form [22Xf[122X, the parameter [22Xα[122X
+  and  the  blowing  up  of  elements  by  field  reduction,  the latter being
+  dependent  on  the  basis  of  [22XL[122X  as  a  [22XK[122X vector space. [5XFinInG[105X provides two
+  approaches.  The  first approach starts from [22XP[122X and the parameters [22XK[122X, [22Xα[122X and a
+  basis  for  [22XL[122X  as  [22XK[122X vector space. Then the resulting form [22XT_α ∘ f ∘ Φ^-1[122X is
+  determined,  and  the  associated  polar  space  [22XS[122X  will be the range of the
+  embedding.  Note  that  the  resulting  polar  space will not necessarily be
+  canonical.  The  second approach starts from two given polar spaces [22XP[122X and [22XS[122X.
+  Based on this input, it is determined wheter an embedding based on the above
+  described  principle is possible, and the necessary parameters are computed.
+  The  resulting  embedding  is a geometry morhpism from [22XP[122X to [22XS[122X. Note that the
+  polar  spaces  used as an argument may be freely chosen and are not required
+  to be in the canonical form.[133X
+  
+  [33X[0;0YFor  more  information on the embeddings by field reduction of polar spaces,
+  including  conditions  on the parameter [22Xα[122X, we refer to [Gil08] and [LVdV13].
+  The possible embeddings are listed in the following table.[133X
+  
+        Polar Space 1  │ Polar Space 2       │ Conditions    
+        ───────────────┼─────────────────────┼────────────  
+        ───────────────┼─────────────────────┼────────────  
+        [22XW(2n-1,q^t)[122X    │ [22XW(2nt-1,q)[122X          │ --            
+        [22XQ^+(2n-1,q^t)[122X  │ [22XQ^+(2nt-1,q)[122X        │ --            
+        [22XQ^-(2n-1,q^t)[122X  │ [22XQ^-(2nt-1,q)[122X        │ --            
+        [22XQ(2n,q^(2a+1))[122X │ [22XQ((2a+1)(2n+1)-1,q)[122X │ [22Xq[122X odd         
+        [22XQ(2n,q^(2a))[122X   │ [22XQ(2a(2n+1)-1,q)[122X     │ [22Xq ≡ 1 mod 4[122X   
+        [22XQ(2n,q^(4a+2))[122X │ [22XQ((4a+2)(2n+1)-1,q)[122X │ [22Xq ≡ 3 mod 4[122X   
+        [22XQ(2n,q^(4a))[122X   │ [22XQ^-(4a(2n+1)-1,q)[122X   │ [22Xq ≡ 3 mod 4[122X   
+        [22XH(n,q^(2a+1))[122X  │ [22XH((2a+1)(n+1)-1,q)[122X  │ [22Xq[122X square      
+        [22XH(n,q^(2a))[122X    │ [22XW(2a(n+1)-1,q)[122X      │ [22Xq[122X even        
+        [22XH(2n,q^(2a))[122X   │ [22XQ^-(2a(2n+1)-1,q)[122X   │ [22Xq[122X odd         
+        [22XH(2n+1,q^(2a))[122X │ [22XQ^+(2a(2n+2)-1,q)[122X   │ [22Xq[122X odd         
   
        [1XTable:[101X Field reduction of polar spaces
   
@@ -922,7 +928,7 @@
   In the first example, we construct a spread of maximal subspaces (solids) in
   a  7  dimensional  symplectic space. We compute a subgroup of its stabilizer
   group  using  the  intertwiner. In the second example, we construct a linear
-  blocking set of the symplectic generalised quadrangle over [22XGF(9)[122X.[133X
+  blocking set of the symplectic generalised quadrangle over GF(9).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xps1 := SymplecticSpace(1,3^3);[127X[104X

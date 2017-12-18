@@ -4,21 +4,14 @@
   
   [1XA.1 [33X[0;0YThe different components[133X[101X
   
-  [33X[0;0YLoading [5XFinInG[105X shows the following message:[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[28X---------------------------------------------------------------------[128X[104X
-    [4X[28Xloading: geometry, liegeometry, group, projectivespace, correlations, [128X[104X
-    [4X[28Xpolarspace/morphisms, enumerators, diagram, varieties, affinespace/affinegroup, [128X[104X
-    [4X[28Xgpolygons[128X[104X
-  [4X[32X[104X
-  
-  [33X[0;0YThe   different  components  are  listed  and  refer  to  the  corresponding
-  filenames.  So  [13Xcomponent[113X refers to [13Xcomponent.gd[113X and [13Xcomponent.gi[113X. When When
-  [13Xcomponent1/component2[113X  is  displayed,  Both  [13Xcomponent1.gi[113X and [13Xcomponent2.gi[113X
-  depend on the declarations in both [13Xcomponent1.gd[113X and [13Xcomponent2.gd[113X. In other
-  cases,  [13Xcomponent_n[113X  is  only dependent on its own declarations and the ones
-  before.[133X
+  [33X[0;0Y[5XFinInG[105X  consists  of the following components: geometry, liegeometry, group,
+  projectivespace,  correlations,  polarspace/morphisms, enumerators, diagram,
+  varieties,  affinespace/affinegroup, gpolygons, and orbits-stabilisers. Each
+  of  these  components corresponds with a [13Xcomponent.gd[113X and [13Xcomponent.gi[113X file.
+  The  file  [13Xcomponent.gi[113X will be dependent on [13Xcomponent.gd[113X and all previously
+  loaded  [13X.gd[113X  files,  [13Xcomponent1/component2[113X means that both [13Xcomponent1.gi[113X and
+  [13Xcomponent2.gi[113X   depend   on  the  declarations  in  both  [13Xcomponent1.gd[113X  and
+  [13Xcomponent2.gd[113X.[133X
   
   
   [1XA.2 [33X[0;0YThe complete inventory[133X[101X
@@ -104,6 +97,7 @@
     [4X[28XO: Span: [IsEmptySubspace, IsLieGeometry][128X[104X
     [4X[28XO: Span: [IsLieGeometry, IsEmptySubspace][128X[104X
     [4X[28XO: Span: [IsEmptySubspace, IsEmptySubspace][128X[104X
+    [4X[28XO: Span: [IsList][128X[104X
     [4X[28XO: Meet: [IsEmptySubspace, IsElementOfLieGeometry][128X[104X
     [4X[28XO: Meet: [IsElementOfLieGeometry, IsEmptySubspace][128X[104X
     [4X[28XO: Meet: [IsEmptySubspace, IsLieGeometry][128X[104X
@@ -129,6 +123,7 @@
     [4X[28XO: CollineationOfProjectiveSpace: [IsList, IsMapping, IsField][128X[104X
     [4X[28XO: CollineationOfProjectiveSpace: [IsProjectiveSpace, IsMatrix][128X[104X
     [4X[28XO: CollineationOfProjectiveSpace: [IsProjectiveSpace, IsMatrix, IsMapping][128X[104X
+    [4X[28XO: CollineationOfProjectiveSpace: [IsProjectiveSpace, IsMapping][128X[104X
     [4X[28XO: Collineation: [IsProjectiveSpace, IsMatrix][128X[104X
     [4X[28XO: Collineation: [IsProjectiveSpace, IsMatrix, IsMapping][128X[104X
     [4X[28XO: ProjectiveSemilinearMap: [IsList, IsMapping, IsField][128X[104X
@@ -171,7 +166,6 @@
     [4X[28XO: Span: [IsProjectiveSpace, IsSubspaceOfProjectiveSpace][128X[104X
     [4X[28XO: Span: [IsSubspaceOfProjectiveSpace, IsProjectiveSpace][128X[104X
     [4X[28XO: Span: [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsBool][128X[104X
-    [4X[28XO: Span: [IsList][128X[104X
     [4X[28XO: Span: [IsList, IsBool][128X[104X
     [4X[28XO: Meet: [IsSubspaceOfProjectiveSpace, IsProjectiveSpace][128X[104X
     [4X[28XO: Meet: [IsProjectiveSpace, IsSubspaceOfProjectiveSpace][128X[104X
@@ -184,6 +178,8 @@
     [4X[28XO: ProjectiveElationGroup: [IsSubspaceOfProjectiveSpace][128X[104X
     [4X[28XO: HomologyOfProjectiveSpace: [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace,  IsSubspaceOfProjectiveSpace ] [128X[104X
     [4X[28XO: ProjectiveHomologyGroup: [IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace][128X[104X
+    [4X[28XO: SingerCycleMat: [IsInt, IsInt][128X[104X
+    [4X[28XO: SingerCycleCollineation: [IsInt, IsInt][128X[104X
     [4X[28X[128X[104X
     [4X[28Xcorrelations.gd: operations[128X[104X
     [4X[28X[128X[104X
@@ -723,7 +719,6 @@
     [4X[28X[128X[104X
     [4X[28XF: PositionNonZeroFromRight[128X[104X
     [4X[28XF: FG_pos[128X[104X
-    [4X[28XF: FG_div[128X[104X
     [4X[28XF: FG_ffenumber[128X[104X
     [4X[28XF: FG_alpha_power[128X[104X
     [4X[28XF: FG_log_alpha[128X[104X
@@ -951,6 +946,7 @@
     [4X[28XM: ProjElsWithFrob, [IsList],[128X[104X
     [4X[28XM: CollineationOfProjectiveSpace, [ IsMatrix and IsFFECollColl, IsField],[128X[104X
     [4X[28XM: CollineationOfProjectiveSpace, InstallMethod(CollineationOfProjectiveSpace,[IsProjectiveSpace,IsMatrix],[128X[104X
+    [4X[28XM: CollineationOfProjectiveSpace, InstallMethod(CollineationOfProjectiveSpace,[IsProjectiveSpace,IsMapping],[128X[104X
     [4X[28XM: CollineationOfProjectiveSpace, InstallMethod(CollineationOfProjectiveSpace,[IsProjectiveSpace,IsMatrix,IsMapping],[128X[104X
     [4X[28XM: Collineation, InstallMethod(Collineation,[IsProjectiveSpace,IsMatrix],[128X[104X
     [4X[28XM: Collineation, InstallMethod(Collineation,[IsProjectiveSpace,IsMatrix,IsMapping],[128X[104X
@@ -1081,7 +1077,7 @@
     [4X[28XM: \in, [IsElementOfIncidenceStructure, IsElementsOfIncidenceStructure], 1*SUM_FLAGS+3,[128X[104X
     [4X[28XM: \in, [IsElementOfIncidenceStructure, IsAllElementsOfIncidenceStructure], 1*SUM_FLAGS+3,[128X[104X
     [4X[28XM: VectorSpaceToElement, [IsProjectiveSpace, IsCMatRep],[128X[104X
-    [4X[28XM: VectorSpaceToElement, [IsProjectiveSpace, IsPlistRep],[128X[104X
+    [4X[28XM: VectorSpaceToElement, [IsProjectiveSpace, IsPlistRep and IsMatrix],[128X[104X
     [4X[28XM: VectorSpaceToElement, [IsProjectiveSpace, IsGF2MatrixRep],[128X[104X
     [4X[28XM: VectorSpaceToElement, [IsProjectiveSpace, Is8BitMatrixRep],[128X[104X
     [4X[28XM: VectorSpaceToElement, [IsProjectiveSpace, IsCVecRep],[128X[104X
@@ -1111,7 +1107,6 @@
     [4X[28XM: FlagOfIncidenceStructure, [ IsProjectiveSpace, IsSubspaceOfProjectiveSpaceCollection ],[128X[104X
     [4X[28XM: FlagOfIncidenceStructure, [ IsProjectiveSpace, IsList and IsEmpty ],[128X[104X
     [4X[28XM: UnderlyingVectorSpace, [ IsFlagOfProjectiveSpace and IsFlagOfIncidenceStructureRep ],[128X[104X
-    [4X[28XM: ViewObj, [ IsFlagOfProjectiveSpace and IsFlagOfIncidenceStructureRep ],[128X[104X
     [4X[28XM: PrintObj, [ IsFlagOfProjectiveSpace and IsFlagOfIncidenceStructureRep ],[128X[104X
     [4X[28XM: Display, [ IsFlagOfProjectiveSpace and IsFlagOfIncidenceStructureRep ],[128X[104X
     [4X[28XM: ShadowOfFlag, [IsProjectiveSpace, IsFlagOfProjectiveSpace, IsPosInt],[128X[104X
@@ -1147,6 +1142,8 @@
     [4X[28XM: ProjectiveElationGroup, [ IsSubspaceOfProjectiveSpace ],[128X[104X
     [4X[28XM: HomologyOfProjectiveSpace, [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ],[128X[104X
     [4X[28XM: ProjectiveHomologyGroup, [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ],[128X[104X
+    [4X[28XM: SingerCycleMat, InstallMethod(SingerCycleMat,[IsInt,IsInt],[128X[104X
+    [4X[28XM: SingerCycleCollineation, InstallMethod(SingerCycleCollineation,[IsInt,IsInt],[128X[104X
     [4X[28XM: IncidenceGraph, [ IsProjectiveSpace ],[128X[104X
     [4X[28X[128X[104X
     [4X[28Xcorrelations.gi: methods[128X[104X
@@ -1319,11 +1316,11 @@
     [4X[28XM: TypesOfElementsOfIncidenceStructurePlural, [IsClassicalPolarSpace],[128X[104X
     [4X[28XM: Order, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],[128X[104X
     [4X[28XM: RepresentativesOfElements, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep ],[128X[104X
-    [4X[28XM: \QUO, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep, IsSubspaceOfClassicalPolarSpace],[128X[104X
+    [4X[28XM: QUO, [ IsClassicalPolarSpace and IsClassicalPolarSpaceRep, IsSubspaceOfClassicalPolarSpace],[128X[104X
     [4X[28XM: Size, [IsSubspacesOfClassicalPolarSpace],[128X[104X
     [4X[28XM: VectorSpaceToElement, [IsClassicalPolarSpace, IsCMatRep],[128X[104X
     [4X[28XM: VectorSpaceToElement, [IsClassicalPolarSpace, IsCVecRep],[128X[104X
-    [4X[28XM: VectorSpaceToElement, [IsClassicalPolarSpace, IsPlistRep],[128X[104X
+    [4X[28XM: VectorSpaceToElement, [IsClassicalPolarSpace, IsPlistRep and IsMatrix],[128X[104X
     [4X[28XM: VectorSpaceToElement, [IsClassicalPolarSpace, IsGF2MatrixRep],[128X[104X
     [4X[28XM: VectorSpaceToElement, [IsClassicalPolarSpace, Is8BitMatrixRep],[128X[104X
     [4X[28XM: VectorSpaceToElement, [IsClassicalPolarSpace, IsRowVector],[128X[104X
@@ -1431,7 +1428,7 @@
     [4X[28XM: NaturalEmbeddingBySubfield, [ IsClassicalPolarSpace, IsClassicalPolarSpace ],[128X[104X
     [4X[28XM: NaturalProjectionBySubspace, [ IsProjectiveSpace, IsSubspaceOfProjectiveSpace ],[128X[104X
     [4X[28XM: NaturalProjectionBySubspaceNC, [ IsProjectiveSpace, IsSubspaceOfProjectiveSpace ],[128X[104X
-    [4X[28XM: \QUO, [ IsProjectiveSpace and IsProjectiveSpaceRep, IsSubspaceOfProjectiveSpace],[128X[104X
+    [4X[28XM: QUO, [ IsProjectiveSpace and IsProjectiveSpaceRep, IsSubspaceOfProjectiveSpace],[128X[104X
     [4X[28XM: NaturalProjectionBySubspace, [ IsClassicalPolarSpace, IsSubspaceOfClassicalPolarSpace ],[128X[104X
     [4X[28XM: NaturalProjectionBySubspaceNC, [ IsClassicalPolarSpace, IsSubspaceOfClassicalPolarSpace ],[128X[104X
     [4X[28XM: PluckerCoordinates, [ IsMatrix ],[128X[104X
@@ -1663,7 +1660,7 @@
     [4X[28XM: ViewObj, [ IsSubspacesOfAffineSpace and IsSubspacesOfAffineSpaceRep ],[128X[104X
     [4X[28XM: PrintObj, [ IsSubspacesOfAffineSpace and IsAllSubspacesOfProjectiveSpaceRep ],[128X[104X
     [4X[28XM: Display, [ IsSubspaceOfAffineSpace ],[128X[104X
-    [4X[28XM: AffineSubspace, [IsAffineSpace, IsRowVector, IsPlistRep],[128X[104X
+    [4X[28XM: AffineSubspace, [IsAffineSpace, IsRowVector, IsPlistRep and IsMatrix],[128X[104X
     [4X[28XM: AffineSubspace, [IsAffineSpace, IsRowVector],[128X[104X
     [4X[28XM: AffineSubspace, [IsAffineSpace, IsCVecRep],[128X[104X
     [4X[28XM: AffineSubspace, [IsAffineSpace, IsRowVector, Is8BitMatrixRep],[128X[104X
@@ -1781,7 +1778,7 @@
     [4X[28XM: VectorSpaceToElement, [ IsClassicalGeneralisedHexagon, IsCVecRep],[128X[104X
     [4X[28XM: VectorSpaceToElement, [ IsClassicalGeneralisedHexagon, IsRowVector ],[128X[104X
     [4X[28XM: VectorSpaceToElement, [ IsClassicalGeneralisedHexagon, Is8BitVectorRep ],[128X[104X
-    [4X[28XM: VectorSpaceToElement, [ IsClassicalGeneralisedHexagon, IsPlistRep],[128X[104X
+    [4X[28XM: VectorSpaceToElement, [ IsClassicalGeneralisedHexagon, IsPlistRep and IsMatrix],[128X[104X
     [4X[28XM: VectorSpaceToElement, [ IsClassicalGeneralisedHexagon, IsGF2MatrixRep],[128X[104X
     [4X[28XM: VectorSpaceToElement, [ IsClassicalGeneralisedHexagon, Is8BitMatrixRep],[128X[104X
     [4X[28XM: VectorSpaceToElement, [ IsClassicalGeneralisedHexagon, IsCMatRep],[128X[104X
@@ -1837,6 +1834,7 @@
     [4X[28XM: FiningOrbit, [ IsProjectiveGroupWithFrob, CategoryCollections(IsElementOfIncidenceStructure), IsFunction],[128X[104X
     [4X[28XM: FiningOrbit, [ IsProjectiveGroupWithFrob, CategoryCollections(IsElementOfIncidenceStructure) ],[128X[104X
     [4X[28XM: FiningOrbits, [ IsGroup, IsHomogeneousList, IsFunction],[128X[104X
+    [4X[28XM: FiningOrbitsDomain, [ IsGroup, IsElementsOfIncidenceGeometry, IsFunction ],[128X[104X
     [4X[28XM: FiningOrbits, [ IsProjectiveGroupWithFrob, IsSubspaceOfProjectiveSpaceCollection and IsHomogeneousList ],[128X[104X
     [4X[28XM: FiningOrbits, [ IsProjectiveGroupWithFrob, IsSubspaceOfAffineSpaceCollection and IsHomogeneousList ],[128X[104X
     [4X[28XM: FiningOrbits, [ IsProjectiveGroupWithFrob, IsSubspacesOfProjectiveSpace ],[128X[104X
@@ -1855,6 +1853,9 @@
     [4X[28XM: FiningStabiliserPerm, InstallMethod(FiningStabiliserPerm,[IsProjectiveGroupWithFrob,IsElementOfIncidenceStructure],[128X[104X
     [4X[28XM: FiningStabiliserPerm2, [IsProjectiveGroupWithFrob, IsElementOfIncidenceStructure],[128X[104X
     [4X[28XM: FixedSubspaces, [IsProjectiveGroupWithFrob, IsProjectiveSpace],[128X[104X
+    [4X[28XM: ProjectiveStabiliserGroupOfSubspace, [IsSubspaceOfProjectiveSpace],[128X[104X
+    [4X[28XM: StabiliserGroupOfSubspace, [IsSubspaceOfProjectiveSpace],[128X[104X
+    [4X[28XM: SpecialProjectiveStabiliserGroupOfSubspace, [IsSubspaceOfProjectiveSpace],[128X[104X
     [4X[28X[128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X

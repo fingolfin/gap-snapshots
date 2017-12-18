@@ -92,14 +92,14 @@
   
   [1X47.1-1 IsSubgroupFpGroup[101X
   
-  [29X[2XIsSubgroupFpGroup[102X( [3XH[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsSubgroupFpGroup[102X( [3XH[103X ) [32X Category[133X
   
   [33X[0;0Yreturns  [9Xtrue[109X if [3XH[103X is a finitely presented group or a subgroup of a finitely
   presented group.[133X
   
   [1X47.1-2 IsFpGroup[101X
   
-  [29X[2XIsFpGroup[102X( [3XG[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsFpGroup[102X( [3XG[103X ) [32X filter[133X
   
   [33X[0;0Yis a synonym for [10XIsSubgroupFpGroup([3XG[103X[10X) and IsGroupOfFamily([3XG[103X[10X)[110X.[133X
   
@@ -123,7 +123,7 @@
   
   [1X47.1-3 InfoFpGroup[101X
   
-  [29X[2XInfoFpGroup[102X[32X info class
+  [33X[1;0Y[29X[2XInfoFpGroup[102X[32X info class[133X
   
   [33X[0;0YThe  info  class  for  functions  dealing  with finitely presented groups is
   [2XInfoFpGroup[102X.[133X
@@ -133,7 +133,7 @@
   
   [1X47.2-1 \/[101X
   
-  [29X[2X\/[102X( [3XF[103X, [3Xrels[103X ) [32X method
+  [33X[1;0Y[29X[2X\/[102X( [3XF[103X, [3Xrels[103X ) [32X method[133X
   
   [33X[0;0Ycreates a finitely presented group given by the presentation [22X⟨ gens ∣ [3Xrels[103X ⟩[122X
   where  [22Xgens[122X are the free generators of the free group [3XF[103X. Note that relations
@@ -151,14 +151,14 @@
   
   [1X47.2-2 FactorGroupFpGroupByRels[101X
   
-  [29X[2XFactorGroupFpGroupByRels[102X( [3XG[103X, [3Xelts[103X ) [32X function
+  [33X[1;0Y[29X[2XFactorGroupFpGroupByRels[102X( [3XG[103X, [3Xelts[103X ) [32X function[133X
   
   [33X[0;0Yreturns the factor group [3XG[103X/[22XN[122X of [3XG[103X by the normal closure [22XN[122X of [3Xelts[103X where [3Xelts[103X
   is expected to be a list of elements of [3XG[103X.[133X
   
   [1X47.2-3 ParseRelators[101X
   
-  [29X[2XParseRelators[102X( [3Xgens[103X, [3Xrels[103X ) [32X function
+  [33X[1;0Y[29X[2XParseRelators[102X( [3Xgens[103X, [3Xrels[103X ) [32X function[133X
   
   [33X[0;0YWill  translate  a  list of relations as given in print, e.g. [22Xx y^2 = (x y^3
   x)^2  xy  =  yzx[122X  into relators. [3Xgens[103X must be a list of generators of a free
@@ -180,7 +180,7 @@
   
   [1X47.2-4 StringFactorizationWord[101X
   
-  [29X[2XStringFactorizationWord[102X( [3Xw[103X ) [32X function
+  [33X[1;0Y[29X[2XStringFactorizationWord[102X( [3Xw[103X ) [32X function[133X
   
   [33X[0;0Yreturns  a string that expresses a given word [3Xw[103X in compact form written as a
   string.  Inverses  are  expressed  by  changing  the upper/lower case of the
@@ -196,7 +196,7 @@
   
   [1X47.3-1 \=[101X
   
-  [29X[2X\=[102X( [3Xa[103X, [3Xb[103X ) [32X method
+  [33X[1;0Y[29X[2X\=[102X( [3Xa[103X, [3Xb[103X ) [32X method[133X
   
   [33X[0;0YTwo  elements  of  a finitely presented group are equal if they are equal in
   this  group.  Nevertheless they may be represented as different words in the
@@ -222,7 +222,7 @@
   
   [1X47.3-2 \<[101X
   
-  [29X[2X\<[102X( [3Xa[103X, [3Xb[103X ) [32X method
+  [33X[1;0Y[29X[2X\<[102X( [3Xa[103X, [3Xb[103X ) [32X method[133X
   
   [33X[0;0YCompared  with  equality  testing,  problems  get  even worse when trying to
   compute  a  total ordering on the elements of a finitely presented group. As
@@ -237,7 +237,7 @@
   
   [1X47.3-3 FpElmComparisonMethod[101X
   
-  [29X[2XFpElmComparisonMethod[102X( [3Xfam[103X ) [32X attribute
+  [33X[1;0Y[29X[2XFpElmComparisonMethod[102X( [3Xfam[103X ) [32X attribute[133X
   
   [33X[0;0YIf  [3Xfam[103X  is the elements family of a finitely presented group this attribute
   returns  a  function  [10Xsmaller([3Xleft[103X[10X,  [3Xright[103X[10X)[110X  that  will  be  used to compare
@@ -245,7 +245,7 @@
   
   [1X47.3-4 SetReducedMultiplication[101X
   
-  [29X[2XSetReducedMultiplication[102X( [3Xobj[103X ) [32X function
+  [33X[1;0Y[29X[2XSetReducedMultiplication[102X( [3Xobj[103X ) [32X function[133X
   
   [33X[0;0YFor  an FpGroup [3Xobj[103X, an element [3Xobj[103X of it or the family [3Xobj[103X of its elements,
   this function will force immediate reduction when multiplying, keeping words
@@ -256,7 +256,7 @@
   
   [1X47.4-1 FreeGroupOfFpGroup[101X
   
-  [29X[2XFreeGroupOfFpGroup[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XFreeGroupOfFpGroup[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the  underlying free group for the finitely presented group [3XG[103X. This
   is   the   group   generated   by   the  free  generators  provided  by  the
@@ -264,8 +264,8 @@
   
   [1X47.4-2 FreeGeneratorsOfFpGroup[101X
   
-  [29X[2XFreeGeneratorsOfFpGroup[102X( [3XG[103X ) [32X attribute
-  [29X[2XFreeGeneratorsOfWholeGroup[102X( [3XU[103X ) [32X operation
+  [33X[1;0Y[29X[2XFreeGeneratorsOfFpGroup[102X( [3XG[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XFreeGeneratorsOfWholeGroup[102X( [3XU[103X ) [32X operation[133X
   
   [33X[0;0Y[2XFreeGeneratorsOfFpGroup[102X returns the underlying free generators corresponding
   to  the  generators  of  the finitely presented group [3XG[103X which must be a full
@@ -276,7 +276,7 @@
   
   [1X47.4-3 RelatorsOfFpGroup[101X
   
-  [29X[2XRelatorsOfFpGroup[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRelatorsOfFpGroup[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the relators of the finitely presented group [3XG[103X as words in the free
   generators provided by the [2XFreeGeneratorsOfFpGroup[102X ([14X47.4-2[114X) value of [3XG[103X.[133X
@@ -307,7 +307,7 @@
   
   [1X47.4-4 UnderlyingElement[101X
   
-  [29X[2XUnderlyingElement[102X( [3Xelm[103X ) [32X operation
+  [33X[1;0Y[29X[2XUnderlyingElement[102X( [3Xelm[103X ) [32X operation[133X
   
   [33X[0;0YLet  [3Xelm[103X  be  an  element of a group whose elements are represented as words
   with  further  properties.  Then [2XUnderlyingElement[102X returns the word from the
@@ -326,7 +326,7 @@
   
   [1X47.4-5 ElementOfFpGroup[101X
   
-  [29X[2XElementOfFpGroup[102X( [3Xfam[103X, [3Xword[103X ) [32X operation
+  [33X[1;0Y[29X[2XElementOfFpGroup[102X( [3Xfam[103X, [3Xword[103X ) [32X operation[133X
   
   [33X[0;0YIf  [3Xfam[103X  is  the elements family of a finitely presented group and [3Xword[103X is a
   word  in  the free generators underlying this finitely presented group, this
@@ -371,7 +371,7 @@
   
   [1X47.5-1 PseudoRandom[101X
   
-  [29X[2XPseudoRandom[102X( [3XF:[103X [3Xradius[103X [3X:=[103X [3Xl[103X ) [32X method
+  [33X[1;0Y[29X[2XPseudoRandom[102X( [3XF:[103X [3Xradius[103X [3X:=[103X [3Xl[103X ) [32X method[133X
   
   [33X[0;0YThe  default  algorithm  for  [2XPseudoRandom[102X  ([14X30.7-2[114X)  makes little sense for
   finitely  presented  or free groups, as it produces words that are extremely
@@ -399,7 +399,7 @@
   
   [1X47.6-1 CosetTable[101X
   
-  [29X[2XCosetTable[102X( [3XG[103X, [3XH[103X ) [32X operation
+  [33X[1;0Y[29X[2XCosetTable[102X( [3XG[103X, [3XH[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  coset table of the finitely presented group [3XG[103X on the cosets of
   the subgroup [3XH[103X.[133X
@@ -448,7 +448,7 @@
   
   [1X47.6-2 TracedCosetFpGroup[101X
   
-  [29X[2XTracedCosetFpGroup[102X( [3Xtab[103X, [3Xword[103X, [3Xpt[103X ) [32X function
+  [33X[1;0Y[29X[2XTracedCosetFpGroup[102X( [3Xtab[103X, [3Xword[103X, [3Xpt[103X ) [32X function[133X
   
   [33X[0;0YTraces  the coset number [3Xpt[103X under the word [3Xword[103X through the coset table [3Xtab[103X.
   (Note:  [3Xword[103X must be in the free group, use [2XUnderlyingElement[102X ([14X47.4-4[114X) if in
@@ -461,7 +461,7 @@
   
   [1X47.6-3 FactorCosetAction[101X
   
-  [29X[2XFactorCosetAction[102X( [3XG[103X, [3XH[103X ) [32X operation
+  [33X[1;0Y[29X[2XFactorCosetAction[102X( [3XG[103X, [3XH[103X ) [32X operation[133X
   
   [33X[0;0Yreturns the action of [3XG[103X on the cosets of its subgroup [3XH[103X.[133X
   
@@ -474,14 +474,14 @@
   
   [1X47.6-4 CosetTableBySubgroup[101X
   
-  [29X[2XCosetTableBySubgroup[102X( [3XG[103X, [3XH[103X ) [32X operation
+  [33X[1;0Y[29X[2XCosetTableBySubgroup[102X( [3XG[103X, [3XH[103X ) [32X operation[133X
   
   [33X[0;0Yreturns a coset table for the action of [3XG[103X on the cosets of [3XH[103X. The columns of
   the table correspond to the [2XGeneratorsOfGroup[102X ([14X39.2-4[114X) value of [3XG[103X.[133X
   
   [1X47.6-5 CosetTableFromGensAndRels[101X
   
-  [29X[2XCosetTableFromGensAndRels[102X( [3Xfgens[103X, [3Xgrels[103X, [3Xfsgens[103X ) [32X function
+  [33X[1;0Y[29X[2XCosetTableFromGensAndRels[102X( [3Xfgens[103X, [3Xgrels[103X, [3Xfsgens[103X ) [32X function[133X
   
   [33X[0;0Yis  an  internal  function  which  is  called  by  the  functions [2XCosetTable[102X
   ([14X47.6-1[114X),  [2XCosetTableInWholeGroup[102X  ([14X47.8-1[114X)  and others. It is, in fact, the
@@ -527,7 +527,7 @@
   
   [1X47.6-6 CosetTableDefaultMaxLimit[101X
   
-  [29X[2XCosetTableDefaultMaxLimit[102X[32X global variable
+  [33X[1;0Y[29X[2XCosetTableDefaultMaxLimit[102X[32X global variable[133X
   
   [33X[0;0Yis  the  default  limit  for  the  number  of  cosets  allowed  in  a  coset
   enumeration.[133X
@@ -597,7 +597,7 @@
   
   [1X47.6-7 CosetTableDefaultLimit[101X
   
-  [29X[2XCosetTableDefaultLimit[102X[32X global variable
+  [33X[1;0Y[29X[2XCosetTableDefaultLimit[102X[32X global variable[133X
   
   [33X[0;0Yis  the  default  number of cosets with which any coset table is initialized
   before doing a coset enumeration.[133X
@@ -614,7 +614,7 @@
   
   [1X47.6-8 MostFrequentGeneratorFpGroup[101X
   
-  [29X[2XMostFrequentGeneratorFpGroup[102X( [3XG[103X ) [32X function
+  [33X[1;0Y[29X[2XMostFrequentGeneratorFpGroup[102X( [3XG[103X ) [32X function[133X
   
   [33X[0;0Yis  an  internal  function which is used in some applications of coset table
   methods.  It  returns  the  first  of those generators of the given finitely
@@ -622,7 +622,7 @@
   
   [1X47.6-9 IndicesInvolutaryGenerators[101X
   
-  [29X[2XIndicesInvolutaryGenerators[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIndicesInvolutaryGenerators[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the  indices  of those generators of the finitely presented group [3XG[103X
   which  are  known  to  be  involutions.  This  knowledge is used by internal
@@ -662,7 +662,7 @@
   
   [1X47.7-1 CosetTableStandard[101X
   
-  [29X[2XCosetTableStandard[102X[32X global variable
+  [33X[1;0Y[29X[2XCosetTableStandard[102X[32X global variable[133X
   
   [33X[0;0Yspecifies  the  definition  of  a  [13Xstandard coset table[113X. It is used whenever
   coset  tables  or  augmented  coset  tables  are  created.  Its value may be
@@ -674,7 +674,7 @@
   
   [1X47.7-2 StandardizeTable[101X
   
-  [29X[2XStandardizeTable[102X( [3Xtable[103X, [3Xstandard[103X ) [32X function
+  [33X[1;0Y[29X[2XStandardizeTable[102X( [3Xtable[103X, [3Xstandard[103X ) [32X function[133X
   
   [33X[0;0Ystandardizes  the  given coset table [3Xtable[103X. The second argument is optional.
   It  defines  the  standard  to  be  used,  its  values  may  be  [10X"lenlex"[110X or
@@ -698,8 +698,8 @@
   
   [1X47.8-1 CosetTableInWholeGroup[101X
   
-  [29X[2XCosetTableInWholeGroup[102X( [3XH[103X ) [32X attribute
-  [29X[2XTryCosetTableInWholeGroup[102X( [3XH[103X ) [32X operation
+  [33X[1;0Y[29X[2XCosetTableInWholeGroup[102X( [3XH[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTryCosetTableInWholeGroup[102X( [3XH[103X ) [32X operation[133X
   
   [33X[0;0Yis  equivalent to [10XCosetTable([3XG[103X[10X,[3XH[103X[10X)[110X where [3XG[103X is the (unique) finitely presented
   group  such  that  [3XH[103X  is  a  subgroup  of  [3XG[103X.  It  overrides a [10Xsilent[110X option
@@ -712,7 +712,7 @@
   
   [1X47.8-2 SubgroupOfWholeGroupByCosetTable[101X
   
-  [29X[2XSubgroupOfWholeGroupByCosetTable[102X( [3Xfpfam[103X, [3Xtab[103X ) [32X function
+  [33X[1;0Y[29X[2XSubgroupOfWholeGroupByCosetTable[102X( [3Xfpfam[103X, [3Xtab[103X ) [32X function[133X
   
   [33X[0;0Ytakes  a  family  [3Xfpfam[103X  of an FpGroup and a coset table [3Xtab[103X and returns the
   subgroup   of   [3Xfpfam[103X[10X!.wholeGroup[110X   defined   by   this   coset  table.  See
@@ -723,7 +723,7 @@
   
   [1X47.9-1 AugmentedCosetTableInWholeGroup[101X
   
-  [29X[2XAugmentedCosetTableInWholeGroup[102X( [3XH[103X[, [3Xgens[103X] ) [32X function
+  [33X[1;0Y[29X[2XAugmentedCosetTableInWholeGroup[102X( [3XH[103X[, [3Xgens[103X] ) [32X function[133X
   
   [33X[0;0YFor  a  subgroup  [3XH[103X  of a finitely presented group, this function returns an
   augmented  coset  table.  If a generator set [3Xgens[103X is given, it is guaranteed
@@ -736,7 +736,7 @@
   
   [1X47.9-2 AugmentedCosetTableMtc[101X
   
-  [29X[2XAugmentedCosetTableMtc[102X( [3XG[103X, [3XH[103X, [3Xtype[103X, [3Xstring[103X ) [32X function
+  [33X[1;0Y[29X[2XAugmentedCosetTableMtc[102X( [3XG[103X, [3XH[103X, [3Xtype[103X, [3Xstring[103X ) [32X function[133X
   
   [33X[0;0Yis  an  internal  function  used  by  the  subgroup  presentation  functions
   described  in  [14X48.2[114X. It applies a Modified Todd-Coxeter coset representative
@@ -749,7 +749,7 @@
   
   [1X47.9-3 AugmentedCosetTableRrs[101X
   
-  [29X[2XAugmentedCosetTableRrs[102X( [3XG[103X, [3Xtable[103X, [3Xtype[103X, [3Xstring[103X ) [32X function
+  [33X[1;0Y[29X[2XAugmentedCosetTableRrs[102X( [3XG[103X, [3Xtable[103X, [3Xtype[103X, [3Xstring[103X ) [32X function[133X
   
   [33X[0;0Yis  an  internal  function  used  by  the  subgroup  presentation  functions
   described  in  [14X48.2[114X.  It applies the Reduced Reidemeister-Schreier method to
@@ -759,7 +759,7 @@
   
   [1X47.9-4 RewriteWord[101X
   
-  [29X[2XRewriteWord[102X( [3Xaug[103X, [3Xword[103X ) [32X function
+  [33X[1;0Y[29X[2XRewriteWord[102X( [3Xaug[103X, [3Xword[103X ) [32X function[133X
   
   [33X[0;0Y[2XRewriteWord[102X rewrites [3Xword[103X (which must be a word in the underlying free group
   with  respect  to  which  the  augmented  coset  table  [3Xaug[103X is given) in the
@@ -774,8 +774,8 @@
   
   [1X47.10-1 LowIndexSubgroupsFpGroupIterator[101X
   
-  [29X[2XLowIndexSubgroupsFpGroupIterator[102X( [3XG[103X[, [3XH[103X], [3Xindex[103X[, [3Xexcluded[103X] ) [32X operation
-  [29X[2XLowIndexSubgroupsFpGroup[102X( [3XG[103X[, [3XH[103X], [3Xindex[103X[, [3Xexcluded[103X] ) [32X operation
+  [33X[1;0Y[29X[2XLowIndexSubgroupsFpGroupIterator[102X( [3XG[103X[, [3XH[103X], [3Xindex[103X[, [3Xexcluded[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XLowIndexSubgroupsFpGroup[102X( [3XG[103X[, [3XH[103X], [3Xindex[103X[, [3Xexcluded[103X] ) [32X operation[133X
   
   [33X[0;0YThese   functions  compute  representatives  of  the  conjugacy  classes  of
   subgroups of the finitely presented group [3XG[103X that contain the subgroup [3XH[103X of [3XG[103X
@@ -863,7 +863,7 @@
   
   [1X47.11-1 IsomorphismFpGroup[101X
   
-  [29X[2XIsomorphismFpGroup[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIsomorphismFpGroup[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns an isomorphism from the given finite group [3XG[103X to a finitely presented
   group  isomorphic  to [3XG[103X. The function first [13Xchooses a set of generators of [3XG[103X[113X
@@ -882,8 +882,8 @@
   
   [1X47.11-2 IsomorphismFpGroupByGenerators[101X
   
-  [29X[2XIsomorphismFpGroupByGenerators[102X( [3XG[103X, [3Xgens[103X[, [3Xstring[103X] ) [32X function
-  [29X[2XIsomorphismFpGroupByGeneratorsNC[102X( [3XG[103X, [3Xgens[103X, [3Xstring[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsomorphismFpGroupByGenerators[102X( [3XG[103X, [3Xgens[103X[, [3Xstring[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XIsomorphismFpGroupByGeneratorsNC[102X( [3XG[103X, [3Xgens[103X, [3Xstring[103X ) [32X operation[133X
   
   [33X[0;0Yreturns an isomorphism from a finite group [3XG[103X to a finitely presented group [3XF[103X
   isomorphic to [3XG[103X. The generators of [3XF[103X correspond to the [13Xgenerators of [3XG[103X given
@@ -1066,7 +1066,7 @@
   
   [1X47.12-1 IsomorphismSimplifiedFpGroup[101X
   
-  [29X[2XIsomorphismSimplifiedFpGroup[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIsomorphismSimplifiedFpGroup[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yapplies  Tietze  transformations  to a copy of the presentation of the given
   finitely  presented group [3XG[103X in order to reduce it with respect to the number
@@ -1108,7 +1108,7 @@
   
   [1X47.13-1 SubgroupOfWholeGroupByQuotientSubgroup[101X
   
-  [29X[2XSubgroupOfWholeGroupByQuotientSubgroup[102X( [3Xfpfam[103X, [3XQ[103X, [3XU[103X ) [32X function
+  [33X[1;0Y[29X[2XSubgroupOfWholeGroupByQuotientSubgroup[102X( [3Xfpfam[103X, [3XQ[103X, [3XU[103X ) [32X function[133X
   
   [33X[0;0Ytakes  a FpGroup family [3Xfpfam[103X, a finitely generated group [3XQ[103X such that the fp
   generators   of  [3Xfpfam[103X  can  be  mapped  by  an  epimorphism  [22Xphi[122X  onto  the
@@ -1117,7 +1117,7 @@
   
   [1X47.13-2 IsSubgroupOfWholeGroupByQuotientRep[101X
   
-  [29X[2XIsSubgroupOfWholeGroupByQuotientRep[102X( [3XG[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsSubgroupOfWholeGroupByQuotientRep[102X( [3XG[103X ) [32X Representation[133X
   
   [33X[0;0Yis  the  representation  for  subgroups  of  an FpGroup, given by a quotient
   subgroup.  The  components  [3XG[103X[10X!.quot[110X  and  [3XG[103X[10X!.sub[110X hold quotient, respectively
@@ -1125,7 +1125,7 @@
   
   [1X47.13-3 AsSubgroupOfWholeGroupByQuotient[101X
   
-  [29X[2XAsSubgroupOfWholeGroupByQuotient[102X( [3XU[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAsSubgroupOfWholeGroupByQuotient[102X( [3XU[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns      the      same      subgroup      in      the     representation
   [2XAsSubgroupOfWholeGroupByQuotient[102X.[133X
@@ -1146,7 +1146,7 @@
   
   [1X47.13-4 DefiningQuotientHomomorphism[101X
   
-  [29X[2XDefiningQuotientHomomorphism[102X( [3XU[103X ) [32X function
+  [33X[1;0Y[29X[2XDefiningQuotientHomomorphism[102X( [3XU[103X ) [32X function[133X
   
   [33X[0;0Yif      [3XU[103X      is      a     subgroup     in     quotient     representation
   ([2XIsSubgroupOfWholeGroupByQuotientRep[102X  ([14X47.13-2[114X)),  this function returns the
@@ -1176,7 +1176,7 @@
   
   [1X47.14-1 PQuotient[101X
   
-  [29X[2XPQuotient[102X( [3XF[103X, [3Xp[103X[, [3Xc[103X][, [3Xlogord[103X][, [3Xctype[103X] ) [32X function
+  [33X[1;0Y[29X[2XPQuotient[102X( [3XF[103X, [3Xp[103X[, [3Xc[103X][, [3Xlogord[103X][, [3Xctype[103X] ) [32X function[133X
   
   [33X[0;0Ycomputes  a  factor  [3Xp[103X-group  of  a  finitely presented group [3XF[103X in form of a
   quotient  system.  The  quotient system can be converted into an epimorphism
@@ -1210,7 +1210,7 @@
   
   [1X47.14-2 EpimorphismQuotientSystem[101X
   
-  [29X[2XEpimorphismQuotientSystem[102X( [3Xquotsys[103X ) [32X operation
+  [33X[1;0Y[29X[2XEpimorphismQuotientSystem[102X( [3Xquotsys[103X ) [32X operation[133X
   
   [33X[0;0YFor   a  quotient  system  [3Xquotsys[103X  obtained  from  the  function  [2XPQuotient[102X
   ([14X47.14-1[114X),  this  operation  returns  an  epimorphism  [22X[3XF[103X  → [3XP[103X[122X where [22X[3XF[103X[122X is the
@@ -1231,7 +1231,7 @@
   
   [1X47.14-3 EpimorphismPGroup[101X
   
-  [29X[2XEpimorphismPGroup[102X( [3Xfpgrp[103X, [3Xp[103X[, [3Xcl[103X] ) [32X operation
+  [33X[1;0Y[29X[2XEpimorphismPGroup[102X( [3Xfpgrp[103X, [3Xp[103X[, [3Xcl[103X] ) [32X operation[133X
   
   [33X[0;0Ycomputes  an  epimorphism  from  the  finitely  presented group [3Xfpgrp[103X to the
   largest  [22Xp[122X-group  of  [22Xp[122X-class  [3Xcl[103X  which  is  a  quotient of [3Xfpgrp[103X. If [3Xcl[103X is
@@ -1251,7 +1251,7 @@
   
   [1X47.14-4 EpimorphismNilpotentQuotient[101X
   
-  [29X[2XEpimorphismNilpotentQuotient[102X( [3Xfpgrp[103X[, [3Xn[103X] ) [32X function
+  [33X[1;0Y[29X[2XEpimorphismNilpotentQuotient[102X( [3Xfpgrp[103X[, [3Xn[103X] ) [32X function[133X
   
   [33X[0;0Yreturns  an  epimorphism  on  the  class  [3Xn[103X finite nilpotent quotient of the
   finitely  presented  group  [3Xfpgrp[103X.  If  [3Xn[103X  is  omitted,  the  largest finite
@@ -1276,10 +1276,10 @@
   
   [1X47.14-5 SolvableQuotient[101X
   
-  [29X[2XSolvableQuotient[102X( [3XF[103X, [3Xsize[103X ) [32X function
-  [29X[2XSolvableQuotient[102X( [3XF[103X, [3Xprimes[103X ) [32X function
-  [29X[2XSolvableQuotient[102X( [3XF[103X, [3Xtuples[103X ) [32X function
-  [29X[2XSQ[102X( [3XF[103X, [3X...[103X ) [32X function
+  [33X[1;0Y[29X[2XSolvableQuotient[102X( [3XF[103X, [3Xsize[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSolvableQuotient[102X( [3XF[103X, [3Xprimes[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSolvableQuotient[102X( [3XF[103X, [3Xtuples[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSQ[102X( [3XF[103X, [3X...[103X ) [32X function[133X
   
   [33X[0;0YThis  routine calls the solvable quotient algorithm for a finitely presented
   group  [3XF[103X.  The  quotient to be found can be specified in the following ways:
@@ -1292,7 +1292,7 @@
   
   [1X47.14-6 EpimorphismSolvableQuotient[101X
   
-  [29X[2XEpimorphismSolvableQuotient[102X( [3XF[103X, [3Xparam[103X ) [32X function
+  [33X[1;0Y[29X[2XEpimorphismSolvableQuotient[102X( [3XF[103X, [3Xparam[103X ) [32X function[133X
   
   [33X[0;0Ycomputes  an  epimorphism  from  the  finitely  presented group [3Xfpgrp[103X to the
   largest  solvable  quotient given by [3Xparam[103X (specified as in [2XSolvableQuotient[102X
@@ -1314,7 +1314,7 @@
   
   [1X47.14-7 LargerQuotientBySubgroupAbelianization[101X
   
-  [29X[2XLargerQuotientBySubgroupAbelianization[102X( [3Xhom[103X, [3XU[103X ) [32X function
+  [33X[1;0Y[29X[2XLargerQuotientBySubgroupAbelianization[102X( [3Xhom[103X, [3XU[103X ) [32X function[133X
   
   [33X[0;0YLet [3Xhom[103X a homomorphism from a finitely presented group [22XG[122X to a finite group [22XH[122X
   and  [22X[3XU[103Xle  H[122X.  This  function will -- if it exists -- return a subgroup [22XSle[3XG[103X[122X,
@@ -1350,14 +1350,14 @@
   
   [1X47.15-1 AbelianInvariantsSubgroupFpGroup[101X
   
-  [29X[2XAbelianInvariantsSubgroupFpGroup[102X( [3XG[103X, [3XH[103X ) [32X function
+  [33X[1;0Y[29X[2XAbelianInvariantsSubgroupFpGroup[102X( [3XG[103X, [3XH[103X ) [32X function[133X
   
   [33X[0;0Y[2XAbelianInvariantsSubgroupFpGroup[102X        is        a        synonym       for
   [2XAbelianInvariantsSubgroupFpGroupRrs[102X ([14X47.15-3[114X).[133X
   
   [1X47.15-2 AbelianInvariantsSubgroupFpGroupMtc[101X
   
-  [29X[2XAbelianInvariantsSubgroupFpGroupMtc[102X( [3XG[103X, [3XH[103X ) [32X function
+  [33X[1;0Y[29X[2XAbelianInvariantsSubgroupFpGroupMtc[102X( [3XG[103X, [3XH[103X ) [32X function[133X
   
   [33X[0;0Yuses the Modified Todd-Coxeter method to compute the abelian invariants of a
   subgroup [3XH[103X of a finitely presented group [3XG[103X.[133X
@@ -1365,8 +1365,8 @@
   
   [1X47.15-3 [33X[0;0YAbelianInvariantsSubgroupFpGroupRrs[133X[101X
   
-  [29X[2XAbelianInvariantsSubgroupFpGroupRrs[102X( [3XG[103X, [3XH[103X ) [32X function
-  [29X[2XAbelianInvariantsSubgroupFpGroupRrs[102X( [3XG[103X, [3Xtable[103X ) [32X function
+  [33X[1;0Y[29X[2XAbelianInvariantsSubgroupFpGroupRrs[102X( [3XG[103X, [3XH[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XAbelianInvariantsSubgroupFpGroupRrs[102X( [3XG[103X, [3Xtable[103X ) [32X function[133X
   
   [33X[0;0Yuses  the  Reduced  Reidemeister-Schreier  method  to  compute  the  abelian
   invariants of a subgroup [3XH[103X of a finitely presented group [3XG[103X.[133X
@@ -1376,14 +1376,14 @@
   
   [1X47.15-4 AbelianInvariantsNormalClosureFpGroup[101X
   
-  [29X[2XAbelianInvariantsNormalClosureFpGroup[102X( [3XG[103X, [3XH[103X ) [32X function
+  [33X[1;0Y[29X[2XAbelianInvariantsNormalClosureFpGroup[102X( [3XG[103X, [3XH[103X ) [32X function[133X
   
   [33X[0;0Y[2XAbelianInvariantsNormalClosureFpGroup[102X       is       a      synonym      for
   [2XAbelianInvariantsNormalClosureFpGroupRrs[102X ([14X47.15-5[114X).[133X
   
   [1X47.15-5 AbelianInvariantsNormalClosureFpGroupRrs[101X
   
-  [29X[2XAbelianInvariantsNormalClosureFpGroupRrs[102X( [3XG[103X, [3XH[103X ) [32X function
+  [33X[1;0Y[29X[2XAbelianInvariantsNormalClosureFpGroupRrs[102X( [3XG[103X, [3XH[103X ) [32X function[133X
   
   [33X[0;0Yuses  the  Reduced  Reidemeister-Schreier  method  to  compute  the  abelian
   invariants  of  the  normal  closure of a subgroup [3XH[103X of a finitely presented
@@ -1471,14 +1471,14 @@
   
   [1X47.16-1 IsInfiniteAbelianizationGroup[101X
   
-  [29X[2XIsInfiniteAbelianizationGroup[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIsInfiniteAbelianizationGroup[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  true if the commutator factor group [22X[3XG[103X/[3XG[103X'[122X is infinite. This might be
   done without computing the full structure of the commutator factor group.[133X
   
   [1X47.16-2 NewmanInfinityCriterion[101X
   
-  [29X[2XNewmanInfinityCriterion[102X( [3XG[103X, [3Xp[103X ) [32X function
+  [33X[1;0Y[29X[2XNewmanInfinityCriterion[102X( [3XG[103X, [3Xp[103X ) [32X function[133X
   
   [33X[0;0YLet  [3XG[103X be a finitely presented group and [3Xp[103X a prime that divides the order of
   the  commutator  factor  group  of  [3XG[103X.  This  function  applies  an infinity

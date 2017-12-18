@@ -28,7 +28,7 @@
   
   [1X79.1-1 NewCategory[101X
   
-  [29X[2XNewCategory[102X( [3Xname[103X, [3Xsuper[103X[, [3Xrank[103X] ) [32X function
+  [33X[1;0Y[29X[2XNewCategory[102X( [3Xname[103X, [3Xsuper[103X[, [3Xrank[103X] ) [32X function[133X
   
   [33X[0;0Y[2XNewCategory[102X  returns  a  new  category  [3Xcat[103X  that  has  the name [3Xname[103X and is
   contained in the filter [3Xsuper[103X, see [14X13.2[114X. This means that every object in [3Xcat[103X
@@ -45,7 +45,7 @@
   
   [1X79.1-2 CategoryFamily[101X
   
-  [29X[2XCategoryFamily[102X( [3Xcat[103X ) [32X function
+  [33X[1;0Y[29X[2XCategoryFamily[102X( [3Xcat[103X ) [32X function[133X
   
   [33X[0;0YFor  a category [3Xcat[103X, [2XCategoryFamily[102X returns the [13Xfamily category[113X of [3Xcat[103X. This
   is  a  category in which all families lie that know from their creation that
@@ -65,7 +65,7 @@
   
   [1X79.2-1 NewRepresentation[101X
   
-  [29X[2XNewRepresentation[102X( [3Xname[103X, [3Xsuper[103X, [3Xslots[103X[, [3Xreq[103X] ) [32X function
+  [33X[1;0Y[29X[2XNewRepresentation[102X( [3Xname[103X, [3Xsuper[103X, [3Xslots[103X[, [3Xreq[103X] ) [32X function[133X
   
   [33X[0;0Y[2XNewRepresentation[102X  returns  a  new representation [3Xrep[103X that has the name [3Xname[103X
   and  is  a  subrepresentation  of  the representation [3Xsuper[103X. This means that
@@ -110,7 +110,7 @@
   
   [1X79.3-1 NewAttribute[101X
   
-  [29X[2XNewAttribute[102X( [3Xname[103X, [3Xfilter[103X[, [3X"mutable"[103X][, [3Xrank[103X] ) [32X function
+  [33X[1;0Y[29X[2XNewAttribute[102X( [3Xname[103X, [3Xfilter[103X[, [3X"mutable"[103X][, [3Xrank[103X] ) [32X function[133X
   
   [33X[0;0Y[2XNewAttribute[102X  returns  a  new  attribute  getter  with  name  [3Xname[103X  that  is
   applicable to objects with the property [3Xfilter[103X.[133X
@@ -143,7 +143,7 @@
   
   [1X79.3-2 NewProperty[101X
   
-  [29X[2XNewProperty[102X( [3Xname[103X, [3Xfilter[103X[, [3Xrank[103X] ) [32X function
+  [33X[1;0Y[29X[2XNewProperty[102X( [3Xname[103X, [3Xfilter[103X[, [3Xrank[103X] ) [32X function[133X
   
   [33X[0;0Y[2XNewProperty[102X  returns a new property [3Xprop[103X with name [3Xname[103X (see also [14X13.7[114X). The
   filter  [3Xfilter[103X  describes  the  involved  filters of [3Xprop[103X. As in the case of
@@ -160,7 +160,7 @@
   
   [1X79.4-1 NewFilter[101X
   
-  [29X[2XNewFilter[102X( [3Xname[103X[, [3Xrank[103X] ) [32X function
+  [33X[1;0Y[29X[2XNewFilter[102X( [3Xname[103X[, [3Xrank[103X] ) [32X function[133X
   
   [33X[0;0Y[2XNewFilter[102X  returns  a  simple filter with name [3Xname[103X (see [14X13.8[114X). The optional
   second  argument [3Xrank[103X denotes the incremental rank (see [14X13.2[114X) of the filter,
@@ -170,14 +170,14 @@
   
   [1X79.4-2 SetFilterObj[101X
   
-  [29X[2XSetFilterObj[102X( [3Xobj[103X, [3Xfilter[103X ) [32X function
+  [33X[1;0Y[29X[2XSetFilterObj[102X( [3Xobj[103X, [3Xfilter[103X ) [32X function[133X
   
   [33X[0;0Y[2XSetFilterObj[102X sets the value of [3Xfilter[103X (and of all filters implied by [3Xfilter[103X)
   for [3Xobj[103X to [9Xtrue[109X,[133X
   
   [1X79.4-3 ResetFilterObj[101X
   
-  [29X[2XResetFilterObj[102X( [3Xobj[103X, [3Xfilter[103X ) [32X function
+  [33X[1;0Y[29X[2XResetFilterObj[102X( [3Xobj[103X, [3Xfilter[103X ) [32X function[133X
   
   [33X[0;0Y[2XResetFilterObj[102X  sets  the value of [3Xfilter[103X for [3Xobj[103X to [9Xfalse[109X. (Implied filters
   of  [3Xfilt[103X  are  not  touched.  This  might  create inconsistent situations if
@@ -188,7 +188,7 @@
   
   [1X79.5-1 NewOperation[101X
   
-  [29X[2XNewOperation[102X( [3Xname[103X, [3Xargs-filts[103X ) [32X function
+  [33X[1;0Y[29X[2XNewOperation[102X( [3Xname[103X, [3Xargs-filts[103X ) [32X function[133X
   
   [33X[0;0Y[2XNewOperation[102X  returns  an  operation [3Xopr[103X with name [3Xname[103X. The list [3Xargs-filts[103X
   describes  requirements  about  the  arguments  of [3Xopr[103X, namely the number of
@@ -207,7 +207,7 @@
   
   [1X79.6-1 NewConstructor[101X
   
-  [29X[2XNewConstructor[102X( [3Xname[103X, [3Xargs-filts[103X ) [32X function
+  [33X[1;0Y[29X[2XNewConstructor[102X( [3Xname[103X, [3Xargs-filts[103X ) [32X function[133X
   
   [33X[0;0Y[2XNewConstructor[102X   returns  a  constructor  [3Xcons[103X  with  name  [3Xname[103X.  The  list
   [3Xargs-filts[103X  describes requirements about the arguments of [3Xconstr[103X, namely the
@@ -299,7 +299,7 @@
   
   [1X79.7-1 NewFamily[101X
   
-  [29X[2XNewFamily[102X( [3Xname[103X[, [3Xreq[103X[, [3Ximp[103X[, [3Xfamfilter[103X]]] ) [32X function
+  [33X[1;0Y[29X[2XNewFamily[102X( [3Xname[103X[, [3Xreq[103X[, [3Ximp[103X[, [3Xfamfilter[103X]]] ) [32X function[133X
   
   [33X[0;0Y[2XNewFamily[102X  returns  a  new  family  [3Xfam[103X with name [3Xname[103X. The argument [3Xreq[103X, if
   present,  is a filter of which [3Xfam[103X shall be a subset. If one tries to create
@@ -320,7 +320,7 @@
   
   [1X79.8-1 NewType[101X
   
-  [29X[2XNewType[102X( [3Xfamily[103X, [3Xfilter[103X[, [3Xdata[103X] ) [32X function
+  [33X[1;0Y[29X[2XNewType[102X( [3Xfamily[103X, [3Xfilter[103X[, [3Xdata[103X] ) [32X function[133X
   
   [33X[0;0Y[2XNewType[102X  returns  the type given by the family [3Xfamily[103X and the filter [3Xfilter[103X.
   The optional third argument [3Xdata[103X is any object that denotes defining data of
@@ -334,7 +334,7 @@
   
   [1X79.9-1 Objectify[101X
   
-  [29X[2XObjectify[102X( [3Xtype[103X, [3Xdata[103X ) [32X function
+  [33X[1;0Y[29X[2XObjectify[102X( [3Xtype[103X, [3Xdata[103X ) [32X function[133X
   
   [33X[0;0YNew  objects  are created by [2XObjectify[102X. [3Xdata[103X is a list or a record, and [3Xtype[103X
   is the type that the desired object shall have. [2XObjectify[102X turns [3Xdata[103X into an
@@ -352,7 +352,7 @@
   
   [1X79.9-2 ObjectifyWithAttributes[101X
   
-  [29X[2XObjectifyWithAttributes[102X( [3Xobj[103X, [3Xtype[103X, [3Xattr1[103X, [3Xval1[103X, [3Xattr2[103X, [3Xval2[103X, [3X...[103X ) [32X function
+  [33X[1;0Y[29X[2XObjectifyWithAttributes[102X( [3Xobj[103X, [3Xtype[103X, [3Xattr1[103X, [3Xval1[103X, [3Xattr2[103X, [3Xval2[103X, [3X...[103X ) [32X function[133X
   
   [33X[0;0YAttribute  assignments will change the type of an object. If you create many
   objects, code of the form[133X
@@ -467,7 +467,7 @@
   
   [1X79.10-1 NamesOfComponents[101X
   
-  [29X[2XNamesOfComponents[102X( [3Xcomobj[103X ) [32X function
+  [33X[1;0Y[29X[2XNamesOfComponents[102X( [3Xcomobj[103X ) [32X function[133X
   
   [33X[0;0YFor  a component object [3Xcomobj[103X, [2XNamesOfComponents[102X returns a list of strings,
   which are the names of components currently bound in [3Xcomobj[103X.[133X
@@ -961,8 +961,8 @@
   
   [1X79.16-1 ExtRepOfObj[101X
   
-  [29X[2XExtRepOfObj[102X( [3Xobj[103X ) [32X operation
-  [29X[2XObjByExtRep[102X( [3Xfam[103X, [3Xdata[103X ) [32X operation
+  [33X[1;0Y[29X[2XExtRepOfObj[102X( [3Xobj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XObjByExtRep[102X( [3Xfam[103X, [3Xdata[103X ) [32X operation[133X
   
   [33X[0;0Y[2XExtRepOfObj[102X  returns  the  external  representation  of  its  argument,  and
   [2XObjByExtRep[102X   returns  an  object  in  the  family  [3Xfam[103X  that  has  external
@@ -1121,21 +1121,21 @@
   
   [1X79.18-1 DeclareCategory[101X
   
-  [29X[2XDeclareCategory[102X( [3Xname[103X, [3Xsuper[103X[, [3Xrank[103X] ) [32X function
+  [33X[1;0Y[29X[2XDeclareCategory[102X( [3Xname[103X, [3Xsuper[103X[, [3Xrank[103X] ) [32X function[133X
   
   [33X[0;0Ydoes  the  same  as [2XNewCategory[102X ([14X79.1-1[114X) and additionally makes the variable
   [3Xname[103X read-only.[133X
   
   [1X79.18-2 DeclareRepresentation[101X
   
-  [29X[2XDeclareRepresentation[102X( [3Xname[103X, [3Xsuper[103X, [3Xslots[103X[, [3Xreq[103X] ) [32X function
+  [33X[1;0Y[29X[2XDeclareRepresentation[102X( [3Xname[103X, [3Xsuper[103X, [3Xslots[103X[, [3Xreq[103X] ) [32X function[133X
   
   [33X[0;0Ydoes  the  same  as  [2XNewRepresentation[102X  ([14X79.2-1[114X)  and additionally makes the
   variable [3Xname[103X read-only.[133X
   
   [1X79.18-3 DeclareAttribute[101X
   
-  [29X[2XDeclareAttribute[102X( [3Xname[103X, [3Xfilter[103X[, [3X"mutable"[103X][, [3Xrank[103X] ) [32X function
+  [33X[1;0Y[29X[2XDeclareAttribute[102X( [3Xname[103X, [3Xfilter[103X[, [3X"mutable"[103X][, [3Xrank[103X] ) [32X function[133X
   
   [33X[0;0Ydoes the same as [2XNewAttribute[102X ([14X79.3-1[114X), additionally makes the variable [3Xname[103X
   read-only  and  also binds read-only global variables with names [10XHas[3Xname[103X[10X[110X and
@@ -1143,7 +1143,7 @@
   
   [1X79.18-4 DeclareProperty[101X
   
-  [29X[2XDeclareProperty[102X( [3Xname[103X, [3Xfilter[103X[, [3Xrank[103X] ) [32X function
+  [33X[1;0Y[29X[2XDeclareProperty[102X( [3Xname[103X, [3Xfilter[103X[, [3Xrank[103X] ) [32X function[133X
   
   [33X[0;0Ydoes  the same as [2XNewProperty[102X ([14X79.3-2[114X), additionally makes the variable [3Xname[103X
   read-only  and  also binds read-only global variables with names [10XHas[3Xname[103X[10X[110X and
@@ -1151,22 +1151,22 @@
   
   [1X79.18-5 DeclareFilter[101X
   
-  [29X[2XDeclareFilter[102X( [3Xname[103X[, [3Xrank[103X] ) [32X function
+  [33X[1;0Y[29X[2XDeclareFilter[102X( [3Xname[103X[, [3Xrank[103X] ) [32X function[133X
   
   [33X[0;0Ydoes the same as [2XNewFilter[102X ([14X79.4-1[114X) and additionally makes the variable [3Xname[103X
   read-only.[133X
   
   [1X79.18-6 DeclareOperation[101X
   
-  [29X[2XDeclareOperation[102X( [3Xname[103X, [3Xfilters[103X ) [32X function
+  [33X[1;0Y[29X[2XDeclareOperation[102X( [3Xname[103X, [3Xfilters[103X ) [32X function[133X
   
   [33X[0;0Ydoes  the  same as [2XNewOperation[102X ([14X79.5-1[114X) and additionally makes the variable
   [3Xname[103X read-only.[133X
   
   [1X79.18-7 DeclareGlobalFunction[101X
   
-  [29X[2XDeclareGlobalFunction[102X( [3Xname[103X, [3Xinfo[103X ) [32X function
-  [29X[2XInstallGlobalFunction[102X( [3Xoper[103X, [3Xfunc[103X ) [32X function
+  [33X[1;0Y[29X[2XDeclareGlobalFunction[102X( [3Xname[103X, [3Xinfo[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XInstallGlobalFunction[102X( [3Xoper[103X, [3Xfunc[103X ) [32X function[133X
   
   [33X[0;0Y[2XDeclareGlobalFunction[102X  [5XGAP[105X  functions  that  are not operations and that are
   intended  to be called by users should be notified to [5XGAP[105X in the declaration
@@ -1193,7 +1193,7 @@
   
   [1X79.18-8 DeclareGlobalVariable[101X
   
-  [29X[2XDeclareGlobalVariable[102X( [3Xname[103X[, [3Xdescription[103X] ) [32X function
+  [33X[1;0Y[29X[2XDeclareGlobalVariable[102X( [3Xname[103X[, [3Xdescription[103X] ) [32X function[133X
   
   [33X[0;0YFor  global  variables  that  are [13Xnot[113X functions, instead of using [2XBindGlobal[102X
   ([14X4.9-7[114X)  one  can also declare the variable with [2XDeclareGlobalVariable[102X which
@@ -1207,9 +1207,9 @@
   
   [1X79.18-9 InstallValue[101X
   
-  [29X[2XInstallValue[102X( [3Xgvar[103X, [3Xvalue[103X ) [32X function
-  [29X[2XInstallFlushableValue[102X( [3Xgvar[103X, [3Xvalue[103X ) [32X function
-  [29X[2XInstallFlushableValueFromFunction[102X( [3Xgvar[103X, [3Xfunc[103X ) [32X function
+  [33X[1;0Y[29X[2XInstallValue[102X( [3Xgvar[103X, [3Xvalue[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XInstallFlushableValue[102X( [3Xgvar[103X, [3Xvalue[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XInstallFlushableValueFromFunction[102X( [3Xgvar[103X, [3Xfunc[103X ) [32X function[133X
   
   [33X[0;0Y[2XInstallValue[102X   assigns   the  value  [3Xvalue[103X  to  the  global  variable  [3Xgvar[103X.
   [2XInstallFlushableValue[102X does the same but additionally provides that each call
@@ -1225,8 +1225,8 @@
   
   [1X79.18-10 DeclareSynonym[101X
   
-  [29X[2XDeclareSynonym[102X( [3Xname[103X, [3Xvalue[103X ) [32X function
-  [29X[2XDeclareSynonymAttr[102X( [3Xname[103X, [3Xvalue[103X ) [32X function
+  [33X[1;0Y[29X[2XDeclareSynonym[102X( [3Xname[103X, [3Xvalue[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XDeclareSynonymAttr[102X( [3Xname[103X, [3Xvalue[103X ) [32X function[133X
   
   [33X[0;0Y[2XDeclareSynonym[102X assigns the string [3Xname[103X to a global variable as a synonym for
   [3Xvalue[103X. Two typical intended usages are to declare an [21Xand-filter[121X, e.g.[133X
@@ -1259,7 +1259,7 @@
   
   [1X79.18-11 FlushCaches[101X
   
-  [29X[2XFlushCaches[102X(  ) [32X operation
+  [33X[1;0Y[29X[2XFlushCaches[102X(  ) [32X operation[133X
   
   [33X[0;0Y[2XFlushCaches[102X  resets the value of each global variable that has been declared
   with  [2XDeclareGlobalVariable[102X  ([14X79.18-8[114X)  and  for which the initial value has

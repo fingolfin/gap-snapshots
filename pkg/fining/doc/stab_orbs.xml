@@ -69,6 +69,24 @@ of <A>coll</A> under the action <F>OnProjSubspaces</F>.
 </Description>
 </ManSection>
 
+<ManSection>
+<Oper Name="FiningOrbitsDomain" Arg="g, coll, act"/>
+<Returns>The orbits of the group <A>g</A> on a collection <A>coll</A> under the action of <A>act</A>.</Returns>
+<Description>
+The argument <A>coll</A> must be an object in the category <C>IsElementsOfIncidenceGeometry</C>, the argument <A>g</A>
+can be any group, acting on the elements of <A>coll</A> through a suitable action function <A>act</A>. This operation
+is inspired by the GAP operation <F>OrbitsDomain</F>. It computes the orbits of the group <A>g</A> on the set of 
+elements in <A>coll</A> <E>assuming</E> that the set of elements of <A>coll</A> is closed under that action of <A>g</A>.
+There is no check whether the assumption is correct, so this operation should typically be used when it is known that
+the assumption is correct. The operation is generic in the sense that it can be used for different types of 
+incidence geometries as long as the triple arguments consist of a suitable action of <A>g</A> on the elements of <A>coll</A>.
+In general, if the assumption is correct, this operation will be faster than <F>FiningOrbits</F>.
+<Example>
+<#Include SYSTEM "../examples/include/stab_orbs_finingorbitsdomain.include"> 
+</Example>
+</Description>
+</ManSection>
+
 </Section>
 
 <Section>
@@ -141,6 +159,34 @@ A small example shows the difference in computing time.
 <#Include SYSTEM "../examples/include/stab_orbs_timing2.include"> 
 </Example>
 
+For subspaces of projective spaces we can be even more efficient by writing down generators of the stabiliser and then return the generated subgroup.
+
+<ManSection>
+<Oper Name="StabiliserGroupOfSubspace" Arg="sub"/>
+<Returns>The subgroup of the collineation group of <A>AmbientSpace(sub)</A> stabilising the subspace <A>sub</A></Returns>
+<Description>The argument <A>sub</A> is a subspace of a projective space.
+
+</Description>
+</ManSection>
+<ManSection>
+<Oper Name="ProjectiveStabiliserGroupOfSubspace" Arg="sub"/>
+<Returns>The subgroup of the projectivity group of <A>AmbientSpace(sub)</A> stabilising the subspace <A>sub</A></Returns>
+<Description>The argument <A>sub</A> is a subspace of a projective space.
+
+</Description>
+</ManSection>
+<ManSection>
+<Oper Name="SpecialProjectiveStabiliserGroupOfSubspace" Arg="sub"/>
+<Returns>The subgroup of the special projectivity group of <A>AmbientSpace(sub)</A> stabilising the subspace <A>sub</A></Returns>
+<Description>The argument <A>sub</A> is a subspace of a projective space.
+
+<Example>
+<#Include SYSTEM "../examples/include/stab_orbs_stabofsubspace.include"> 
+</Example>
+</Description>
+</ManSection>
+
+
 </Section>
 
 <Section>
@@ -199,9 +245,8 @@ This is a generic GAP function, and returns a homorphism to a "better" represent
 </Description>
 </ManSection>
 
-<ManSection>
+<Subsection>
 <Heading>Different behaviour for different collineation groups</Heading>
-<Description>
 For the different Lie geometries implemented in <Package>FinInG</Package>, nicemonomorphisms
 are (necessarily) treated in a different way. As the aim of a nicemonomorphism of
 group <M>G</M> is to provide a permutation representation, such that efficient algorithms for
@@ -228,8 +273,7 @@ collineation group of a polar space can be time consuming.
 <Example>
 <#Include SYSTEM "../examples/include/stab_orbs_behaviour1.include">
 </Example>
-</Description>
-</ManSection>
+</Subsection>
 
 <ManSection>
 <Oper Name="SetParent" Arg="group"/>

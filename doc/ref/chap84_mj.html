@@ -62,7 +62,7 @@
 
 <h5>84.1-1 HELP_ADD_BOOK</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HELP_ADD_BOOK</code>( <var class="Arg">short</var>, <var class="Arg">long</var>, <var class="Arg">dir</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HELP_ADD_BOOK</code>( <var class="Arg">short</var>, <var class="Arg">long</var>, <var class="Arg">dir</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This command tells <strong class="pkg">GAP</strong> that in directory <var class="Arg">dir</var> (given as either a string describing the path relative to the <strong class="pkg">GAP</strong> root directory <code class="code">GAPInfo.RootPaths[1]</code> or as directory object) contains the basic information about a help book. The string <var class="Arg">short</var> is used as an identifying name for that book by the online help. The string <var class="Arg">long</var> should be a short explanation of the content of the book. Both strings together should easily fit on a line, since they are displayed with <code class="code">?books</code>.</p>
 
 <p>It is possible to reinstall a book with different strings <var class="Arg">short</var>, <var class="Arg">long</var>; (for example, documentation of a not-loaded <strong class="pkg">GAP</strong> package indicates this in the string <var class="Arg">short</var> and if you later load the package, <strong class="pkg">GAP</strong> quietly changes the string <var class="Arg">short</var> as it reinstalls its documentation).</p>
@@ -73,7 +73,7 @@
 
 <h5>84.1-2 HELP_REMOVE_BOOK</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HELP_REMOVE_BOOK</code>( <var class="Arg">short</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HELP_REMOVE_BOOK</code>( <var class="Arg">short</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This command tells <strong class="pkg">GAP</strong> not to use the help book with identifying name <var class="Arg">short</var> any more. The book can be re-installed using <code class="func">HELP_ADD_BOOK</code> (<a href="chap84_mj.html#X7CD0B8507A3D231D"><span class="RefLink">84.1-1</span></a>).</p>
 
 <p><a id="X8713EEAE840CEDA3" name="X8713EEAE840CEDA3"></a></p>
@@ -96,7 +96,7 @@
 
 <p>An implementation example of such a set of handler functions is the <code class="code">default</code> format, which is the format name used for the <code class="file">gapmacro.tex</code> documentation format, and this is contained in the file <code class="file">lib/helpdef.gi</code>.</p>
 
-<p>The package <strong class="pkg">GAPDoc</strong> (see Chapter <a href="../../pkg/GAPDoc-1.6/doc/chap1_mj.html#X7D4EE663818DA109"><span class="RefLink">GAPDoc: Introduction and Example</span></a>) also defines a format (as it should) which is called: <code class="code">GapDocGAP</code> (the case <em>is</em> significant).</p>
+<p>The package <strong class="pkg">GAPDoc</strong> (see Chapter <a href="../../pkg/GAPDoc-1.6.1/doc/chap1_mj.html#X7D4EE663818DA109"><span class="RefLink">GAPDoc: Introduction and Example</span></a>) also defines a format (as it should) which is called: <code class="code">GapDocGAP</code> (the case <em>is</em> significant).</p>
 
 <p>As you can see by the above two examples, the name for a document format can be anything, but it should be in some way meaningful.</p>
 
@@ -183,7 +183,7 @@
 
 <h5>84.4-1 HELP_VIEWER_INFO</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HELP_VIEWER_INFO</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HELP_VIEWER_INFO</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
 <p>The record <code class="func">HELP_VIEWER_INFO</code> contains one component for each help viewer. Each such component is a record with two components: <code class="code">.type</code> and <code class="code">.show</code>.</p>
 
 <p>The component <code class="code">.type</code> refers to one of the <code class="code">type</code>s recognized by the <code class="code">HelpData</code> handler function explained in the previous section (currently one of <code class="code">"text"</code>, <code class="code">"url"</code>, <code class="code">"dvi"</code>, or <code class="code">"pdf"</code>).</p>

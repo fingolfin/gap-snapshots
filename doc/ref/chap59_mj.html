@@ -84,18 +84,18 @@
 
 <h5>59.1-1 IsFFE</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFFE</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFFECollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFFECollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFFECollCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFFE</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFFECollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFFECollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFFECollCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Objects in the category <code class="func">IsFFE</code> are used to implement elements of finite fields. In this manual, the term <em>finite field element</em> always means an object in <code class="func">IsFFE</code>. All finite field elements of the same characteristic form a family in <strong class="pkg">GAP</strong> (see <a href="chap13_mj.html#X846063757EC05986"><span class="RefLink">13.1</span></a>). Any collection of finite field elements (see <code class="func">IsCollection</code> (<a href="chap30_mj.html#X79C9FC7F86E2738C"><span class="RefLink">30.1-1</span></a>)) lies in <code class="func">IsFFECollection</code>, and a collection of such collections (e.g., a matrix of finite field elements) lies in <code class="func">IsFFECollColl</code>.</p>
 
 <p><a id="X7AA52FAF7EDEDD56" name="X7AA52FAF7EDEDD56"></a></p>
 
 <h5>59.1-2 Z</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Z</code>( <var class="Arg">p^d</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Z</code>( <var class="Arg">p</var>, <var class="Arg">d</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Z</code>( <var class="Arg">p^d</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Z</code>( <var class="Arg">p</var>, <var class="Arg">d</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For creating elements of a finite field, the function <code class="func">Z</code> can be used. The call <code class="code">Z(<var class="Arg">p</var>,<var class="Arg">d</var>)</code> (alternatively <code class="code">Z(<var class="Arg">p</var>^<var class="Arg">d</var>)</code>) returns the designated generator of the multiplicative group of the finite field with <var class="Arg">p^d</var> elements. <var class="Arg">p</var> must be a prime integer.</p>
 
 <p><strong class="pkg">GAP</strong> can represent elements of all finite fields <code class="code">GF(<var class="Arg">p^d</var>)</code> such that either (1) <var class="Arg">p^d</var> <span class="SimpleMath">\(&lt;= 65536\)</span> (in which case an extremely efficient internal representation is used); (2) d = 1, (in which case, for large <var class="Arg">p</var>, the field is represented using the machinery of residue class rings (see section <a href="chap14_mj.html#X864BF040862409FC"><span class="RefLink">14.5</span></a>) or (3) if the Conway polynomial of degree <var class="Arg">d</var> over the field with <var class="Arg">p</var> elements is known, or can be computed (see <code class="func">ConwayPolynomial</code> (<a href="chap59_mj.html#X7C2425A786F09054"><span class="RefLink">59.5-1</span></a>)).</p>
@@ -147,8 +147,8 @@ you can 'return;' to continue
 
 <h5>59.1-3 IsLexOrderedFFE</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLexOrderedFFE</code>( <var class="Arg">ffe</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLogOrderedFFE</code>( <var class="Arg">ffe</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLexOrderedFFE</code>( <var class="Arg">ffe</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLogOrderedFFE</code>( <var class="Arg">ffe</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Elements of finite fields can be compared using the operators <code class="code">=</code> and <code class="code">&lt;</code>. The call <code class="code"><var class="Arg">a</var> = <var class="Arg">b</var></code> returns <code class="keyw">true</code> if and only if the finite field elements <var class="Arg">a</var> and <var class="Arg">b</var> are equal. Furthermore <code class="code"><var class="Arg">a</var> &lt; <var class="Arg">b</var></code> tests whether <var class="Arg">a</var> is smaller than <var class="Arg">b</var>. The exact behaviour of this comparison depends on which of two categories the field elements belong to:</p>
 
 <p>Finite field elements are ordered in <strong class="pkg">GAP</strong> (by <code class="func">\&lt;</code> (<a href="chap31_mj.html#X7EF67D047F03CA6F"><span class="RefLink">31.11-1</span></a>)) first by characteristic and then by their degree (i.e. the sizes of the smallest fields containing them). Amongst irreducible elements of a given field, the ordering depends on which of these categories the elements of the field belong to (all irreducible elements of a given field should belong to the same one)</p>
@@ -196,9 +196,9 @@ Z(3^2)^5
 
 <h5>59.2-1 DegreeFFE</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeFFE</code>( <var class="Arg">z</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeFFE</code>( <var class="Arg">vec</var> )</td><td class="tdright">( method )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeFFE</code>( <var class="Arg">mat</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeFFE</code>( <var class="Arg">z</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeFFE</code>( <var class="Arg">vec</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeFFE</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <p><code class="func">DegreeFFE</code> returns the degree of the smallest finite field <var class="Arg">F</var> containing the element <var class="Arg">z</var>, respectively all elements of the row vector <var class="Arg">vec</var> over a finite field (see <a href="chap23_mj.html#X82C7E6CF7BA03391"><span class="RefLink">23</span></a>), or the matrix <var class="Arg">mat</var> over a finite field (see <a href="chap24_mj.html#X812CCAB278643A59"><span class="RefLink">24</span></a>).</p>
 
 
@@ -215,7 +215,7 @@ Z(3^2)^5
 
 <h5>59.2-2 LogFFE</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LogFFE</code>( <var class="Arg">z</var>, <var class="Arg">r</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LogFFE</code>( <var class="Arg">z</var>, <var class="Arg">r</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">LogFFE</code> returns the discrete logarithm of the element <var class="Arg">z</var> in a finite field with respect to the root <var class="Arg">r</var>. An error is signalled if <var class="Arg">z</var> is zero. <code class="keyw">fail</code> is returned if <var class="Arg">z</var> is not a power of <var class="Arg">r</var>.</p>
 
 <p>The <em>discrete logarithm</em> of the element <var class="Arg">z</var> with respect to the root <var class="Arg">r</var> is the smallest nonnegative integer <span class="SimpleMath">\(i\)</span> such that <span class="SimpleMath">\(\textit{r}^i = \textit{z}\)</span> holds.</p>
@@ -231,8 +231,8 @@ Z(3^2)^5
 
 <h5>59.2-3 IntFFE</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntFFE</code>( <var class="Arg">z</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Int</code>( <var class="Arg">z</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntFFE</code>( <var class="Arg">z</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Int</code>( <var class="Arg">z</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <p><code class="func">IntFFE</code> returns the integer corresponding to the element <var class="Arg">z</var>, which must lie in a finite prime field. That is, <code class="func">IntFFE</code> returns the smallest nonnegative integer <span class="SimpleMath">\(i\)</span> such that <span class="SimpleMath">\(i\)</span><code class="code"> * One( </code><var class="Arg">z</var><code class="code"> ) = </code><var class="Arg">z</var>.</p>
 
 <p>The correspondence between elements from a finite prime field of characteristic <span class="SimpleMath">\(p\)</span> (for <span class="SimpleMath">\(p &lt; 2^{16}\)</span>) and the integers between <span class="SimpleMath">\(0\)</span> and <span class="SimpleMath">\(p-1\)</span> is defined by choosing <code class="code">Z(</code><span class="SimpleMath">\(p\)</span><code class="code">)</code> the element corresponding to the smallest primitive root mod <span class="SimpleMath">\(p\)</span> (see <code class="func">PrimitiveRootMod</code> (<a href="chap15_mj.html#X82440BB9812FF148"><span class="RefLink">15.3-3</span></a>)).</p>
@@ -257,8 +257,8 @@ Z(3^2)^5
 
 <h5>59.2-4 IntFFESymm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntFFESymm</code>( <var class="Arg">z</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntFFESymm</code>( <var class="Arg">vec</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntFFESymm</code>( <var class="Arg">z</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntFFESymm</code>( <var class="Arg">vec</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>For a finite prime field element <var class="Arg">z</var>, <code class="func">IntFFESymm</code> returns the corresponding integer of smallest absolute value. That is, <code class="func">IntFFESymm</code> returns the integer <span class="SimpleMath">\(i\)</span> of smallest absolute value such that <span class="SimpleMath">\(i\)</span><code class="code"> * One( </code><var class="Arg">z</var><code class="code"> ) = </code><var class="Arg">z</var> holds.</p>
 
 <p>For a vector <var class="Arg">vec</var> of FFEs, the operation returns the result of applying <code class="func">IntFFESymm</code> to every entry of the vector.</p>
@@ -281,14 +281,14 @@ Z(3^2)^5
 
 <h5>59.2-5 IntVecFFE</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntVecFFE</code>( <var class="Arg">vecffe</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IntVecFFE</code>( <var class="Arg">vecffe</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>is the list of integers corresponding to the vector <var class="Arg">vecffe</var> of finite field elements in a prime field (see <code class="func">IntFFE</code> (<a href="chap59_mj.html#X79F48E337FC2746A"><span class="RefLink">59.2-3</span></a>)).</p>
 
 <p><a id="X807959EE82CED148" name="X807959EE82CED148"></a></p>
 
 <h5>59.2-6 AsInternalFFE</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsInternalFFE</code>( <var class="Arg">ffe</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsInternalFFE</code>( <var class="Arg">ffe</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>return an internal FFE equal to <var class="Arg">ffe</var> if one exists, otherwise <code class="code">fail</code></p>
 
 <p><a id="X81B54A8378734C33" name="X81B54A8378734C33"></a></p>
@@ -299,8 +299,8 @@ Z(3^2)^5
 
 <h5>59.3-1 DefaultField</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DefaultField</code>( <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DefaultRing</code>( <var class="Arg">list</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DefaultField</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DefaultRing</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">DefaultField</code> and <code class="func">DefaultRing</code> for finite field elements are defined to return the <em>smallest</em> field containing the given elements.</p>
 
 
@@ -314,16 +314,16 @@ GF(2^6)
 
 <h5>59.3-2 GaloisField</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisField</code>( <var class="Arg">p^d</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GF</code>( <var class="Arg">p^d</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisField</code>( <var class="Arg">p</var>, <var class="Arg">d</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GF</code>( <var class="Arg">p</var>, <var class="Arg">d</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisField</code>( <var class="Arg">subfield</var>, <var class="Arg">d</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GF</code>( <var class="Arg">subfield</var>, <var class="Arg">d</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisField</code>( <var class="Arg">p</var>, <var class="Arg">pol</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GF</code>( <var class="Arg">p</var>, <var class="Arg">pol</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisField</code>( <var class="Arg">subfield</var>, <var class="Arg">pol</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GF</code>( <var class="Arg">subfield</var>, <var class="Arg">pol</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisField</code>( <var class="Arg">p^d</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GF</code>( <var class="Arg">p^d</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisField</code>( <var class="Arg">p</var>, <var class="Arg">d</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GF</code>( <var class="Arg">p</var>, <var class="Arg">d</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisField</code>( <var class="Arg">subfield</var>, <var class="Arg">d</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GF</code>( <var class="Arg">subfield</var>, <var class="Arg">d</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisField</code>( <var class="Arg">p</var>, <var class="Arg">pol</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GF</code>( <var class="Arg">p</var>, <var class="Arg">pol</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisField</code>( <var class="Arg">subfield</var>, <var class="Arg">pol</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GF</code>( <var class="Arg">subfield</var>, <var class="Arg">pol</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">GaloisField</code> returns a finite field. It takes two arguments. The form <code class="code">GaloisField( <var class="Arg">p</var>, <var class="Arg">d</var> )</code>, where <var class="Arg">p</var>, <var class="Arg">d</var> are integers, can also be given as <code class="code">GaloisField( <var class="Arg">p</var>^<var class="Arg">d</var> )</code>. <code class="func">GF</code> is an abbreviation for <code class="func">GaloisField</code>.</p>
 
 <p>The first argument specifies the subfield <span class="SimpleMath">\(S\)</span> over which the new field is to be taken. It can be a prime integer or a finite field. If it is a prime <var class="Arg">p</var>, the subfield is the prime field of this characteristic.</p>
@@ -354,7 +354,7 @@ AsField( GF(2^2), GF(2^4) )
 
 <h5>59.3-3 PrimitiveRoot</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrimitiveRoot</code>( <var class="Arg">F</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrimitiveRoot</code>( <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>A <em>primitive root</em> of a finite field is a generator of its multiplicative group. A primitive root is always a primitive element (see <code class="func">PrimitiveElement</code> (<a href="chap58_mj.html#X86DB31B57FB4F570"><span class="RefLink">58.2-3</span></a>)), the converse is in general not true.</p>
 
 
@@ -373,7 +373,7 @@ Z(3^5)
 
 <h5>59.4-1 FrobeniusAutomorphism</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FrobeniusAutomorphism</code>( <var class="Arg">F</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FrobeniusAutomorphism</code>( <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the Frobenius automorphism of the finite field <var class="Arg">F</var> as a field homomorphism (see <a href="chap32_mj.html#X7E88C32A82E942DA"><span class="RefLink">32.12</span></a>).</p>
 
 <p>The <em>Frobenius automorphism</em> <span class="SimpleMath">\(f\)</span> of a finite field <span class="SimpleMath">\(F\)</span> of characteristic <span class="SimpleMath">\(p\)</span> is the function that takes each element <span class="SimpleMath">\(z\)</span> of <span class="SimpleMath">\(F\)</span> to its <span class="SimpleMath">\(p\)</span>-th power. Each field automorphism of <span class="SimpleMath">\(F\)</span> is a power of <span class="SimpleMath">\(f\)</span>. Thus <span class="SimpleMath">\(f\)</span> is a generator for the Galois group of <span class="SimpleMath">\(F\)</span> relative to the prime field of <span class="SimpleMath">\(F\)</span>, and an appropriate power of <span class="SimpleMath">\(f\)</span> is a generator of the Galois group of <span class="SimpleMath">\(F\)</span> over a subfield (see <code class="func">GaloisGroup</code> (<a href="chap58_mj.html#X80CAA5BA82F09ED2"><span class="RefLink">58.3-1</span></a>)).</p>
@@ -400,7 +400,7 @@ FrobeniusAutomorphism( GF(2^4) )^2
 
 <h5>59.5-1 ConwayPolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConwayPolynomial</code>( <var class="Arg">p</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConwayPolynomial</code>( <var class="Arg">p</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is the Conway polynomial of the finite field <span class="SimpleMath">\(GF(p^n)\)</span> as polynomial over the prime field in characteristic <var class="Arg">p</var>.</p>
 
 <p>The <em>Conway polynomial</em> <span class="SimpleMath">\(\Phi_{{n,p}}\)</span> of <span class="SimpleMath">\(GF(p^n)\)</span> is defined by the following properties.</p>
@@ -436,14 +436,14 @@ x_1^7-x_1^2+Z(3)^0
 
 <h5>59.5-2 IsCheapConwayPolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCheapConwayPolynomial</code>( <var class="Arg">p</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCheapConwayPolynomial</code>( <var class="Arg">p</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns <code class="keyw">true</code> if <code class="code">ConwayPolynomial( <var class="Arg">p</var>, <var class="Arg">n</var> )</code> will give a result in <em>reasonable</em> time. This is either the case when this polynomial is pre-computed, or if <var class="Arg">n</var> is a not too big prime.</p>
 
 <p><a id="X7ECC593583E68A6C" name="X7ECC593583E68A6C"></a></p>
 
 <h5>59.5-3 RandomPrimitivePolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomPrimitivePolynomial</code>( <var class="Arg">F</var>, <var class="Arg">n</var>[, <var class="Arg">i</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomPrimitivePolynomial</code>( <var class="Arg">F</var>, <var class="Arg">n</var>[, <var class="Arg">i</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For a finite field <var class="Arg">F</var> and a positive integer <var class="Arg">n</var> this function returns a primitive polynomial of degree <var class="Arg">n</var> over <var class="Arg">F</var>, that is a zero of this polynomial has maximal multiplicative order <span class="SimpleMath">\(|\textit{F}|^n-1\)</span>. If <var class="Arg">i</var> is given then the polynomial is written in variable number <var class="Arg">i</var> over <var class="Arg">F</var> (see <code class="func">Indeterminate</code> (<a href="chap66_mj.html#X79D0380D7FA39F7D"><span class="RefLink">66.1-1</span></a>)), the default for <var class="Arg">i</var> is 1.</p>
 
 <p>Alternatively, <var class="Arg">F</var> can be a prime power q, then <var class="Arg">F</var> = GF(q) is assumed. And <var class="Arg">i</var> can be a univariate polynomial over <var class="Arg">F</var>, then the result is a polynomial in the same variable.</p>
@@ -458,9 +458,9 @@ x_1^7-x_1^2+Z(3)^0
 
 <h5>59.6-1 ViewObj</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ViewObj</code>( <var class="Arg">z</var> )</td><td class="tdright">( method )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrintObj</code>( <var class="Arg">z</var> )</td><td class="tdright">( method )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Display</code>( <var class="Arg">z</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ViewObj</code>( <var class="Arg">z</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrintObj</code>( <var class="Arg">z</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Display</code>( <var class="Arg">z</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <p>Internal finite field elements are viewed, printed and displayed (see section <a href="chap6_mj.html#X8074A8387C9DB9A8"><span class="RefLink">6.3</span></a> for the distinctions between these operations) as powers of the primitive root (except for the zero element, which is displayed as 0 times the primitive root). Thus:</p>
 
 

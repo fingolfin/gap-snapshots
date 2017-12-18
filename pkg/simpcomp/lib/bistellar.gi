@@ -1271,7 +1271,7 @@ end);
 ## <Example> NOEXECUTE
 ## Greetings master,
 ## 
-## this is simpcomp 2.1.6 running on igt215.mathematik.uni-stuttgart.de
+## this is simpcomp 2.1.7 running on igt215.mathematik.uni-stuttgart.de
 ## (Linux igt215 2.6.26-2-amd64 #1 SMP Thu Nov 5 02:23:12 UTC 2009 x86_64
 ## GNU/Linux), GAP 4.4.12.
 ## 
@@ -2053,7 +2053,7 @@ function(complex,k)
     fi;
   end;
   
-  if(k>Int((SCDim(complex)+2)/2)) then
+  if(k <= 0 or k > Int((SCDim(complex)+2)/2)) then
     Info(InfoSimpcomp,1,"SCIsKStackedSphere: second argument must be a ",
       "positive integer k with 1 <= k <= \\lfloor ",
       "(SCDim(complex)+2)/2 \\rfloor.");
@@ -2083,6 +2083,7 @@ function(complex,k)
   h:=SCIsHomologySphere(complex);
   
   if(d=fail or h=fail or f=fail) then
+    Info(InfoSimpcomp,1,"SCIsKStackedSphere: error computing dimension, f-vector, or homology.");
     return fail;
   fi;
   
@@ -2101,7 +2102,11 @@ function(complex,k)
   Info(InfoSimpcomp,1,"SCIsKStackedSphere: checking if complex is a ",
     k,"-stacked sphere...");  
   
-  maxtries:=50;
+  if k = 1 then
+    maxtries:=1;
+  else
+    maxtries:=50;
+  fi;
   for try in [1..maxtries] do
 
     cc:=SCCopy(complex);
@@ -2124,7 +2129,7 @@ function(complex,k)
         "pseudomanifold.");
           return [false,SCEmpty()];
     fi;
-      
+    
     if result=fail then  
       Info(InfoSimpcomp,1,"SCIsKStackedSphere: SCReduceComplexEx ",
         "returned fail.");
@@ -2139,7 +2144,7 @@ function(complex,k)
         return fail;
       fi;
       
-      if result[3]=0 and f[1]<>f[Size(f)] then
+      if (result[3]=0 and f[1]<>d+2) or (k=1 and f[1]<>d+2) then
         #could not reduce to boundary of a simplex. not k-stacked? 
         Info(InfoSimpcomp,1,"SCIsKStackedSphere: complex is not a ",
           k,"-stacked sphere.");
@@ -2753,7 +2758,7 @@ InstallGlobalFunction(SCReduceComplexFast,
     return fail;
   fi;
   
-  dir := DirectoriesLibrary("pkg/simpcomp/bin");
+  dir := DirectoriesPackageLibrary("simpcomp", "bin");
   if dir = fail then
     Info(InfoSimpcomp, 1, "SCReduceComplexFast: cannot find executable.");
     return fail;

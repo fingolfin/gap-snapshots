@@ -33,14 +33,13 @@ Subtitle := "Finite Incidence Geometry",
 ##  See '?Extending: Version Numbers' in GAP help for an explanation
 ##  of valid version numbers. For an automatic package distribution update
 ##  you must provide a new version number even after small changes.
-Version := "1.3.3",
+Version := "1.4",
 ##  Please adjust also the VERSION file in the package directory when
 ##  changing this.
 
 ##  Release date of the current version in dd/mm/yyyy format.
 # 
-#Date := "19/09/2014",  #this is the date Fining was submitted officially.
-Date := "16/02/2016",  #this is revision 1160.
+Date := "23/11/2017",
 
 
 ##  URL of the archive(s) of the current package release, but *without*
@@ -198,16 +197,20 @@ Persons := [
     IsAuthor      := true,
     IsMaintainer  := true,
     Email         := "michel.lavrauw@unipd.it",
-    WWWHome       := "http://cage.ugent.be/~ml",
+    WWWHome       := "http://people.sabanciuniv.edu/~mlavrauw/",
     PostalAddress := Concatenation( [
                        "Michel Lavrauw\n",
-                       "Dipartimento di Tecnica e Gestione dei Sistemi Industriali\n",
+                       "Faculty of Engineering and Natural Sciences\n",
+                       "Sabancõ †niversitesi\n",
+                       "Istanbul\n",
+                       "Turkey\n",
                        "Universitˆ degli Studi di Padova\n",
+                       "Dipartimento di Tecnica e Gestione dei Sistemi Industriali\n",
                        "Stradella S. Nicola, 3\n",
                        "I-36100\n",
                        "Italy" ] ),
-    Place         := "Vicenza",
-    Institution   := "Universitˆ degli Studi di Padova",
+    Place         := "Istanbul, and Vicenza",
+    Institution   := "Sabancõ †niversitesi, and Universitˆ degli Studi di Padova",
   ),
   rec( 
     LastName      := "Neunhoeffer",
@@ -240,16 +243,16 @@ Persons := [
 ##    "other"         for all other packages
 ##
 # Status := "accepted",
-Status := "submitted",
+Status := "accepted",
 
 ##  You must provide the next two entries if and only if the status is 
 ##  "accepted" because is was successfully refereed:
 # format: 'name (place)'
-# CommunicatedBy := "Mike Atkinson (St. Andrews)",
+CommunicatedBy := "Alexander Konovalov (St Andrews)",
 #CommunicatedBy := "",
 # format: mm/yyyy
 # AcceptDate := "08/1999",
-#AcceptDate := "",
+AcceptDate := "11/2017",
 
 ##  For a central overview of all packages and a collection of all package
 ##  archives it is necessary to have two files accessible which should be
@@ -284,7 +287,7 @@ AbstractHTML := "<span class=\"pkgname\">FinInG</span> is a package for computat
 #   is an example of how to create a <span class=\"pkgname\">GAP</span> \
 #   package. It has little functionality except for being a package",
 #
-PackageWWWHome := "http://cage.ugent.be/fining/",
+PackageWWWHome := "http://www.fining.org",
 #               
 ##  Here is the information on the help books of the package, used for
 ##  loading into GAP's online help and maybe for an online copy of the 
@@ -340,13 +343,13 @@ PackageDoc := rec(
 Dependencies := rec(
   # GAP version, use version strings for specifying exact versions,
   # prepend a '>=' for specifying a least version.
-  GAP := ">=4.7",
+  GAP := ">=4.8",
   # list of pairs [package name, (least) version],  package name is case
   # insensitive, least version denoted with '>=' prepended to version string.
   # without these, the package will not load
-  NeededOtherPackages := [["GAPDoc", ">= 1.5.1"], ["Forms", ">=1.2.3"],
-                          ["Orb",">=4.7.3"], ["GenSS",">=1.6.2"],
-			  ["GRAPE",">=4.6.1"], ["cvec", ">=2.5.3"]],
+  NeededOtherPackages := [["GAPDoc", ">= 1.6"], ["Forms", ">=1.2.3"],
+                          ["Orb",">=4.7.6"], ["GenSS",">=1.6.4"],
+			  ["GRAPE",">=4.7"], ["cvec", ">=2.5.7"]],
   # without these the package will issue a warning while loading
   # SuggestedOtherPackages := [],
   SuggestedOtherPackages := [],
@@ -383,11 +386,11 @@ AvailabilityTest := function()
 ##writing one \ eats the space right after it.
 BannerString := Concatenation(
 "-------------------------------------------------------------------------------\n",
-"         ______________       ________      _________   ______________         \n",
-"         ___  ____/__(_)__________  _/________  ____/   __<  /__|__  /         \n",
-"         __  /_   __  /__  __ \\__  / __  __ \\  / __     __  / ___/_ <          \n",
-"         _  __/   _  / _  / / /_/ /  _  / / / /_/ /     _  /______/ /          \n",
-"         /_/      /_/  /_/ /_//___/  /_/ /_/\\____/      /_/_(_)____/           \n",
+"         ______________       ________      _________   __________ __          \n",
+"         ___  ____/__(_)__________  _/________  ____/   __<  /_  // /          \n",
+"         __  /_   __  /__  __ \__  / __  __ \  / __     __  /_  // /_          \n",
+"         _  __/   _  / _  / / /_/ /  _  / / / /_/ /     _  /_/__  __/          \n",
+"         /_/      /_/  /_/ /_//___/  /_/ /_/\____/      /_/_(_)/_/             \n",
 "-------------------------------------------------------------------------------\n",
     "Loading  FinInG ", ~.Version, " (Finite Incidence Geometry) \n",
     "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
@@ -414,6 +417,8 @@ Autoload := false,
 ##  *Optional*, but recommended: path relative to package root to a file which 
 ##  contains as many tests of the package functionality as sensible.
 TestFile := "tst/testall.g",
+
+IssueTrackerURL := "https://bitbucket.org/jdebeule/fining/issues",
 
 ##  *Optional*: Here you can list some keyword related to the topic 
 ##  of the package.

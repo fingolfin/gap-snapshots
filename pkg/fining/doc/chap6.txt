@@ -32,14 +32,14 @@
   
   
   [33X[0;0YA  hermitian  polarity of the projective space [22XPG(n,q)[122X exists if and only if
-  the field [22XGF(q)[122X admits an involutory field automorphism [22Xθ[122X.[133X
+  the field [22XGF(q)[122X admits an involutory field automorphism.[133X
   
   [33X[0;0YIt  is  well  known  that  there  is  a correspondence between polarities of
   projective  spaces  and  non-degenerate sesquilinear forms on the underlying
   vector  space.  Consider a sesquilinear form [22Xf[122X on the vector space [22XV(n+1,q)[122X.
   Then  [22Xf[122X  induces  a map on the elements of [22XPG(n,q)[122X as follows: every element
   with underlying subspace [22Xα[122X is mapped to the element with underlying subspace
-  [22Xα^perp[122X,  i.e.  the  subspace of [22XV(n+1,q)[122X orthogonal to [22Xα[122X with respect to the
+  [22Xα^perp[122X  ,  i.e. the subspace of [22XV(n+1,q)[122X orthogonal to [22Xα[122X with respect to the
   form [22Xf[122X. It is clear that this induced map is a polarity of [22XPG(n,q)[122X. Also the
   converse  is  true,  with any polarity of [22XPG(n,q)[122X corresponds a sesquilinear
   form  on [22XV(n+1,q)[122X. The above classification of polarities of [22XPG(n,q)[122X follows
@@ -322,7 +322,7 @@
   
   [33X[0;0YSuppose that [22Xϕ[122X is a polarity of [22XPG(n,q)[122X and that [22Xα[122X is an element of [22XPG(n,q)[122X.
   We  call [22Xα[122X a [13Xtotally isotropic element[113X or an [13Xabsolute element[113X if and only if
-  [22Xα[122X  is  incident with [22Xα^ϕ[122X. An absolute element that is a point is also called
+  [22Xα[122X  is incident with [22Xα^ϕ[122X . An absolute element that is a point is also called
   an  [13Xabsolute  point[113X  or  an  [13Xisotropic point[113X. It is clear that an element of
   [22XPG(n,q)[122X  is  absolute  if and only if the underlying vector space is totally
   isotropic  with  respect to the sesquilinear form equivalent to [22Xϕ[122X. Hence the

@@ -103,7 +103,7 @@
   
   [1X77.4-1 InfoObsolete[101X
   
-  [29X[2XInfoObsolete[102X[32X info class
+  [33X[1;0Y[29X[2XInfoObsolete[102X[32X info class[133X
   
   [33X[0;0Yis  an  info class to display warnings when an obsolete variable is used. By
   default, these warnings are switched off since the info level for this class
@@ -161,7 +161,7 @@
   
   [1X77.6-1 IsSemilatticeAsSemigroup[101X
   
-  [29X[2XIsSemilatticeAsSemigroup[102X( [3XS[103X ) [32X property
+  [33X[1;0Y[29X[2XIsSemilatticeAsSemigroup[102X( [3XS[103X ) [32X property[133X
   
   [33X[0;0Y[10XIsSemilatticeAsSemigroup[110X  returns  [9Xtrue[109X  if the semigroup [3XS[103X is a semilattice
   and [9Xfalse[109X if it is not.[133X

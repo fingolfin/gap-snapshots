@@ -23,17 +23,18 @@
   [29X[2XShrinkMat[102X( [3Xf1[103X, [3Xf2[103X, [3Xmatrix[103X ) [32X operation
   [6XReturns:[106X  [33X[0;10Ya matrix[133X
   
-  [33X[0;0YLet  [22XK=GF(q)[122X  and  let [22XL=GF(q^d)[122X. Asumme that [22XB[122X is a basis for [22XL[122X as [22XK[122X vector
-  space. Let [22XA=(a_ij)[122X be a matrix over [22XL[122X. The result of [11XBlownUpMat(B,A)[111X is the
-  matrix [22XM=(m_ij)[122X, where each entry [22Xa=a_ij[122X is replaced by the [22Xd × d[122X matrix [22XM_a[122X
-  , representing the linear map [22Xx ↦ ax[122X with respect to the basis [22XB[122X. This means
-  that if [22XB={b_1,b_2,...,b_d}[122X , then the row [22Xj[122X is row of the [22Xd[122X coefficients of
-  [22Xab_j[122X  with  resepect  to the basis [22XB[122X. The operation [11XShrinkMat[111X implements the
-  converse  of  [11XBlownUpMat[111X. It is checked if the input is a blown up matrix as
-  follows.  Let [22XA[122X be a [22Xdm × dn[122X matrix. For each [22Xd × d[122X block, say [22XM[122X, we need to
-  check that the set [22X{b_i^(-1) ∑_j=1^d m_ij b_j: i ∈ {1,..,d}}[122X . has size one,
-  since  the unique element in that case is the element [22Xa ∈ L[122X represented as a
-  linear map by M with respect to the basis [22XB[122X.[133X
+  [33X[0;0YLet  [22XK[122X be the field [22XGF(q)[122X and let [22XL[122X be the field [22XGF(q^t)[122X. Asumme that [22XB[122X is a
+  basis  for  [22XL[122X as [22XK[122X vector space. Let A=(a<sub>ij </sub>) be a matrix over [22XL[122X.
+  The  result  of  [11XBlownUpMat(B,A)[111X  is  the matrix [22XM=(m_ij)[122X , where each entry
+  [22Xa=a_ij[122X is replaced by the [22Xt × t[122X matrix [22XM_a[122X , representing the linear map [22Xx ↦
+  ax[122X  with  respect  to  the basis [22XB[122X. This means that if [22XB={b_1,b_2,...,b_t}[122X ,
+  then  row  [22Xj[122X  is  the row of the [22Xt[122X coefficients of [22Xab_j[122X with resepect to the
+  basis  [22XB[122X.  The operation [11XShrinkMat[111X implements the converse of [11XBlownUpMat[111X. It
+  is  checked if the input is a blown up matrix as follows. Let [22XA[122X be a [22Xtm × tn[122X
+  matrix.  For  each [22Xt × t[122X block, say [22XM[122X, we need to check that the set [22X{b_i^-1
+  ∑_j=1^t  m_ij b_j: i ∈ {1,..,t}}[122X . has size one, since the unique element in
+  that case is the element [22Xa ∈ L[122X represented as a linear map by M with respect
+  to the basis [22XB[122X.[133X
   
   [33X[0;0YThe  first  flavour  of  this  operation  requires  a  given  basis as first
   argument.  The second flavour requires a field [3Xf1[103X and a subfield [3Xf2[103X as first
@@ -100,8 +101,8 @@
   [6XReturns:[106X  [33X[0;10Ya quadratic form[133X
   
   [33X[0;0YLet  [22Xf[122X  be  quadratic  form  determining a polar space over the field [22XL[122X This
-  operation returns the quadratic form T_{\alpha} \circ f \circ \Phi^{-1} over
-  a subfield [22XK[122X of [22XL[122X, as explained in Section [14X10.5-3[114X.[133X
+  operation  returns the quadratic form [22XT_α ∘ f ∘ Φ^-1[122X over a subfield [22XK[122X of [22XL[122X,
+  as explained in Section [14X10.5-3[114X.[133X
   
   [1XC.2-2 BilinearFormFieldReduction[101X
   
@@ -110,8 +111,8 @@
   [6XReturns:[106X  [33X[0;10Ya bilinear form[133X
   
   [33X[0;0YLet  [22Xf[122X  be  bilinear  form  determining  a polar space over the field [22XL[122X This
-  operation returns the quadratic form T_{\alpha} \circ f \circ \Phi^{-1} over
-  a subfield [22XK[122X of [22XL[122X, as explained in Section [14X10.5-3[114X.[133X
+  operation  returns  the bilinear form [22XT_α ∘ f ∘ Φ^-1[122X over a subfield [22XK[122X of [22XL[122X,
+  as explained in Section [14X10.5-3[114X.[133X
   
   [1XC.2-3 HermitianFormFieldReduction[101X
   
@@ -120,8 +121,8 @@
   [6XReturns:[106X  [33X[0;10Ya hermitian form[133X
   
   [33X[0;0YLet  [22Xf[122X  be  bilinear  form  determining  a polar space over the field [22XL[122X This
-  operation returns the quadratic form T_{\alpha} \circ f \circ \Phi^{-1} over
-  a subfield [22XK[122X of [22XL[122X, as explained in Section [14X10.5-3[114X.[133X
+  operation  returns the hermitian form [22XT_α ∘ f ∘ Φ^-1[122X over a subfield [22XK[122X of [22XL[122X,
+  as explained in Section [14X10.5-3[114X.[133X
   
   
   [1XC.3 [33X[0;0YLow level functions[133X[101X

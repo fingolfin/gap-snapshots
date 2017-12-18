@@ -19,6 +19,7 @@
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5.html">[Next Chapter]</a>&nbsp;  </div>
 
+<p id="mathjaxlink" class="pcenter"><a href="chap4_mj.html">[MathJax on]</a></p>
 <p><a id="X83BBAA668672A76D" name="X83BBAA668672A76D"></a></p>
 <div class="ChapSects"><a href="chap4.html#X83BBAA668672A76D">4 <span class="Heading">Projective Spaces</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X7862BC887D20B37A">4.1 <span class="Heading">Projective Spaces and basic operations</span></a>
@@ -63,7 +64,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7FFA08DA85C5251C">4.3-1 ShadowOfElement</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7E86E6417871730C">4.3-2 ShadowOfFlag</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X81A8365A7FE68447">4.3-3 ElementsIncidentWithElementOfIncidenceStructure</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7D12E3A28364CC84">4.3-4 <span class="Heading">Short names for <code class="file">ElementsIncidentWithElementOfIncidenceStructure</code></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7E29C31D7CB5DB23">4.3-4 <span class="Heading">Short names for <code class="file">ElementsIncidentWithElementOfIncidenceStructure</code></span></a>
 </span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X799F3A2A86F82E5B">4.4 <span class="Heading">Enumerating subspaces of a projective space</span></a>
@@ -181,7 +182,7 @@ ProjectiveSpace(4, 7)
 
 <h4>4.2 <span class="Heading">Subspaces of projective spaces</span></h4>
 
-<p>The elements of a projective space <span class="SimpleMath">PG(n,q)</span> are the subspaces of a suitable dimension. The empty subspace, also called the trivial subspace, has dimension <span class="SimpleMath">-1</span> and corresponds to the zero dimensional vector subspace of the underlying vector space of <span class="SimpleMath">PG(n,q)</span>, and is hence represented by the zero vector of length <span class="SimpleMath">n+1</span> over the underlying field <span class="SimpleMath">GF(q)</span>. The trivial subspace and the whole projective space are mathematically considered as a subspace of the projective geometry, but not as elements of the incidence geometry, and hence do in <strong class="pkg">FinInG</strong> <strong class="button">not</strong> belong to the category <code class="code">IsSubspaceOfProjectiveSpace</code>.</p>
+<p>The elements of a projective space PG(n,q) are the subspaces of a suitable dimension. The empty subspace, also called the trivial subspace, has dimension <span class="SimpleMath">-1</span> and corresponds to the zero dimensional vector subspace of the underlying vector space of PG(n,q), and is hence represented by the zero vector of length <span class="SimpleMath">n+1</span> over the underlying field GF(q). The trivial subspace and the whole projective space are mathematically considered as a subspace of the projective geometry, but not as elements of the incidence geometry, and hence do in <strong class="pkg">FinInG</strong> <strong class="button">not</strong> belong to the category <code class="code">IsSubspaceOfProjectiveSpace</code>.</p>
 
 <p><a id="X82E9593B8074AECB" name="X82E9593B8074AECB"></a></p>
 
@@ -190,7 +191,7 @@ ProjectiveSpace(4, 7)
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; VectorSpaceToElement</code>( <var class="Arg">geo</var>, <var class="Arg">v</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: an element</p>
 
-<p><var class="Arg">geo</var> is a projective space, and <var class="Arg">v</var> is either a row vector (for points) or an <span class="SimpleMath">m x n</span> matrix (for an <span class="SimpleMath">(m-1)</span>-subspace of projective space of dimension <span class="SimpleMath">n-1</span>). In the case that <var class="Arg">v</var> is a matrix, the rows represent generators for the subspace. An exceptional case is when <var class="Arg">v</var> is a zero-vector, in which case the trivial subspace is returned.</p>
+<p><var class="Arg">geo</var> is a projective space, and <var class="Arg">v</var> is either a row vector (for points) or an <span class="SimpleMath">m × n</span> matrix (for an <span class="SimpleMath">(m-1)</span>-subspace of projective space of dimension <span class="SimpleMath">n-1</span>). In the case that <var class="Arg">v</var> is a matrix, the rows represent generators for the subspace. An exceptional case is when <var class="Arg">v</var> is a zero-vector, in which case the trivial subspace is returned.</p>
 
 
 <div class="example"><pre>
@@ -859,7 +860,7 @@ ProjectiveSpace(6, 9)
  
 </pre></div>
 
-<p><a id="X7D12E3A28364CC84" name="X7D12E3A28364CC84"></a></p>
+<p><a id="X7E29C31D7CB5DB23" name="X7E29C31D7CB5DB23"></a></p>
 
 <h5>4.3-4 <span class="Heading">Short names for <code class="file">ElementsIncidentWithElementOfIncidenceStructure</code></span></h5>
 

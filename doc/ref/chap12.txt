@@ -26,7 +26,7 @@
   
   [1X12.1-1 IsObject[101X
   
-  [29X[2XIsObject[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsObject[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0Y[2XIsObject[102X returns [9Xtrue[109X if the object [3Xobj[103X is an object. Obviously it can never
   return [9Xfalse[109X.[133X
@@ -100,7 +100,7 @@
   
   [1X12.5-1 IsIdenticalObj[101X
   
-  [29X[2XIsIdenticalObj[102X( [3Xobj1[103X, [3Xobj2[103X ) [32X function
+  [33X[1;0Y[29X[2XIsIdenticalObj[102X( [3Xobj1[103X, [3Xobj2[103X ) [32X function[133X
   
   [33X[0;0Y[2XIsIdenticalObj[102X  tests  whether the objects [3Xobj1[103X and [3Xobj2[103X are identical (that
   is  they  are  either equal immediate objects or are both stored at the same
@@ -165,7 +165,7 @@
   
   [1X12.5-2 IsNotIdenticalObj[101X
   
-  [29X[2XIsNotIdenticalObj[102X( [3Xobj1[103X, [3Xobj2[103X ) [32X function
+  [33X[1;0Y[29X[2XIsNotIdenticalObj[102X( [3Xobj1[103X, [3Xobj2[103X ) [32X function[133X
   
   [33X[0;0Ytests whether the objects [3Xobj1[103X and [3Xobj2[103X are not identical.[133X
   
@@ -203,7 +203,7 @@
   
   [1X12.6-1 IsCopyable[101X
   
-  [29X[2XIsCopyable[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsCopyable[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YIf  a mutable form of an object [3Xobj[103X can be made in [5XGAP[105X, the object is called
   [13Xcopyable[113X.  Examples  of  copyable objects are of course lists and records. A
@@ -217,7 +217,7 @@
   
   [1X12.6-2 IsMutable[101X
   
-  [29X[2XIsMutable[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsMutable[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0Ytests whether [3Xobj[103X is mutable.[133X
   
@@ -236,7 +236,7 @@
   
   [1X12.6-3 Immutable[101X
   
-  [29X[2XImmutable[102X( [3Xobj[103X ) [32X function
+  [33X[1;0Y[29X[2XImmutable[102X( [3Xobj[103X ) [32X function[133X
   
   [33X[0;0Yreturns an immutable structural copy (see [2XStructuralCopy[102X ([14X12.7-2[114X)) of [3Xobj[103X in
   which  the  subobjects are immutable [13Xcopies[113X of the subobjects of [3Xobj[103X. If [3Xobj[103X
@@ -246,7 +246,7 @@
   
   [1X12.6-4 MakeImmutable[101X
   
-  [29X[2XMakeImmutable[102X( [3Xobj[103X ) [32X function
+  [33X[1;0Y[29X[2XMakeImmutable[102X( [3Xobj[103X ) [32X function[133X
   
   [33X[0;0YOne  can  turn  the  (mutable or immutable) object [3Xobj[103X into an immutable one
   with  [2XMakeImmutable[102X;  note  that  this  also  makes  all  subobjects  of [3Xobj[103X
@@ -346,7 +346,7 @@
   
   [1X12.7-1 ShallowCopy[101X
   
-  [29X[2XShallowCopy[102X( [3Xobj[103X ) [32X operation
+  [33X[1;0Y[29X[2XShallowCopy[102X( [3Xobj[103X ) [32X operation[133X
   
   [33X[0;0Y[2XShallowCopy[102X  returns  a [13Xnew mutable[113X object [13Xequal[113X to its argument, if this is
   possible.  The  subobjects  of  [10XShallowCopy(  [3Xobj[103X[10X  )[110X  are  [13Xidentical[113X  to the
@@ -364,7 +364,7 @@
   
   [1X12.7-2 StructuralCopy[101X
   
-  [29X[2XStructuralCopy[102X( [3Xobj[103X ) [32X function
+  [33X[1;0Y[29X[2XStructuralCopy[102X( [3Xobj[103X ) [32X function[133X
   
   [33X[0;0YIn  a  few  situations, one wants to make a [13Xstructural copy[113X [10Xscp[110X of an object
   [3Xobj[103X.  This  is  defined  as  follows.  [10Xscp[110X  and  [3Xobj[103X are identical if [3Xobj[103X is
@@ -404,13 +404,13 @@
   
   [1X12.8-1 SetName[101X
   
-  [29X[2XSetName[102X( [3Xobj[103X, [3Xname[103X ) [32X operation
+  [33X[1;0Y[29X[2XSetName[102X( [3Xobj[103X, [3Xname[103X ) [32X operation[133X
   
   [33X[0;0Yfor a suitable object [3Xobj[103X sets that object to have name [3Xname[103X (a string).[133X
   
   [1X12.8-2 Name[101X
   
-  [29X[2XName[102X( [3Xobj[103X ) [32X attribute
+  [33X[1;0Y[29X[2XName[102X( [3Xobj[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns the name, a string, previously assigned to [3Xobj[103X via a call to [2XSetName[102X
   ([14X12.8-1[114X). The name of an object is used [13Xonly[113X for viewing the object via this
@@ -431,14 +431,14 @@
   
   [1X12.8-3 InfoText[101X
   
-  [29X[2XInfoText[102X( [3Xobj[103X ) [32X attribute
+  [33X[1;0Y[29X[2XInfoText[102X( [3Xobj[103X ) [32X attribute[133X
   
   [33X[0;0Yis  a  mutable  string  with  information  about the object [3Xobj[103X. There is no
   default method to create an info text.[133X
   
   [1X12.8-4 IsInternallyConsistent[101X
   
-  [29X[2XIsInternallyConsistent[102X( [3Xobj[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsInternallyConsistent[102X( [3Xobj[103X ) [32X operation[133X
   
   [33X[0;0YFor  debugging  purposes,  it  may  be useful to check the consistency of an
   object [3Xobj[103X that is composed from other (composed) objects.[133X
@@ -451,7 +451,7 @@
   
   [1X12.8-5 MemoryUsage[101X
   
-  [29X[2XMemoryUsage[102X( [3Xobj[103X ) [32X operation
+  [33X[1;0Y[29X[2XMemoryUsage[102X( [3Xobj[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  amount  of  memory  in  bytes  used  by the object [3Xobj[103X and its
   subobjects.  Note  that in general, objects can reference each other in very

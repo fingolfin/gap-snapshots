@@ -90,9 +90,9 @@ rec(
 
 <h5>29.1-1 IsRecord</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRecord</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRecordCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRecordCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRecord</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRecordCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRecordCollColl</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRecord( rec( a := 1, b := 2 ) );</span>
@@ -105,7 +105,7 @@ false
 
 <h5>29.1-2 RecNames</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RecNames</code>( <var class="Arg">record</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RecNames</code>( <var class="Arg">record</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a list of strings corresponding to the names of the record components of the record <var class="Arg">record</var>.</p>
 
 
@@ -342,7 +342,7 @@ true
 
 <h5>29.6-1 IsBound</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBound</code>( <var class="Arg">r.name</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBound</code>( <var class="Arg">r.name</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">IsBound</code> returns <code class="keyw">true</code> if the record <var class="Arg">r</var> has a component with the name <var class="Arg">name</var> (which must be an identifier) and <code class="keyw">false</code> otherwise. <var class="Arg">r</var> must evaluate to a record, otherwise an error is signalled.</p>
 
 
@@ -358,7 +358,7 @@ false
 
 <h5>29.6-2 Unbind</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unbind</code>( <var class="Arg">r.name</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unbind</code>( <var class="Arg">r.name</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">Unbind</code> deletes the component with the name <var class="Arg">name</var> in the record <var class="Arg">r</var>. That is, after execution of <code class="func">Unbind</code>, <var class="Arg">r</var> no longer has a record component with this name. Note that it is not an error to unbind a nonexisting record component. <var class="Arg">r</var> must evaluate to a record, otherwise an error is signalled.</p>
 
 
@@ -384,15 +384,15 @@ rec( b := 2 )
 
 <h5>29.7-1 NameRNam</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NameRNam</code>( <var class="Arg">nr</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NameRNam</code>( <var class="Arg">nr</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a string representing the component name corresponding to the RNam <var class="Arg">nr</var>.</p>
 
 <p><a id="X78199B6B84A017B9" name="X78199B6B84A017B9"></a></p>
 
 <h5>29.7-2 RNamObj</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RNamObj</code>( <var class="Arg">str</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RNamObj</code>( <var class="Arg">int</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RNamObj</code>( <var class="Arg">str</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RNamObj</code>( <var class="Arg">int</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a number (the RNam) corresponding to the string <var class="Arg">str</var>. It is also possible to pass a positive integer <var class="Arg">int</var> in which case the decimal expansion of <var class="Arg">int</var> is used as a string.</p>
 
 
@@ -411,10 +411,10 @@ rec( b := 2 )
 
 <h5><code>29.7-3 \.</code></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \.</code>( <var class="Arg">obj</var>, <var class="Arg">rnam</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBound\.</code>( <var class="Arg">obj</var>, <var class="Arg">rnam</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \.\:\=</code>( <var class="Arg">obj</var>, <var class="Arg">rnam</var>, <var class="Arg">val</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unbind\.</code>( <var class="Arg">obj</var>, <var class="Arg">rnam</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \.</code>( <var class="Arg">obj</var>, <var class="Arg">rnam</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBound\.</code>( <var class="Arg">obj</var>, <var class="Arg">rnam</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \.\:\=</code>( <var class="Arg">obj</var>, <var class="Arg">rnam</var>, <var class="Arg">val</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unbind\.</code>( <var class="Arg">obj</var>, <var class="Arg">rnam</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>These operations are called for record accesses to arbitrary objects. If applicable methods are installed, they are called when the object is accessed as a record.</p>
 
 <p>For records, the operations implement component access, test for element boundness, component assignment and removal of the component represented by the RNam <var class="Arg">rnam</var>.</p>

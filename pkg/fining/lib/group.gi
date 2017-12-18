@@ -8,21 +8,20 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2014	Colorado State University, Fort Collins
+##  Copyright 2017	Colorado State University
+##                  Sabancı Üniversitesi
 ##					Università degli Studi di Padova
-##					Universeit Gent
+##					Universiteit Gent
 ##					University of St. Andrews
-##					University of Western Australia, Perth
+##					University of Western Australia
 ##                  Vrije Universiteit Brussel
-##                 
+##
 ##
 ##  Implementation stuff for our "projective groups"
 ##
 ############################################################################
 
 ## helping function. came from projectivespace.gi
-
-Print(", group\c");
 
 # CHECKED 5/09/11 jdb
 # We are currently CVec'ing everything. I decide to keep this function as is, and
@@ -605,6 +604,25 @@ InstallMethod( CollineationOfProjectiveSpace, [ IsProjectiveSpace, IsMatrix],
 			Error("The arguments <mat> and <pg> are incompatible");
 		fi;
 		return ProjElWithFrob( mat, IdentityMapping(gf), gf);
+	end );
+
+# Added jdb 26/05/2016
+# not documented yet
+#############################################################################
+#O  CollineationOfProjectiveSpace( <pg>, <mat> )
+# method to construct an collineation of a projective space with identitymatrix,
+# but with user defined field automorphism.
+## 
+InstallMethod( CollineationOfProjectiveSpace, [ IsProjectiveSpace, IsMapping],
+  	function( pg, frob )
+		local d,gf,mat;
+		d:=Dimension(pg);
+		gf:=Range(frob);
+        if not gf = pg!.basefield then
+            Error("basefield of <pg> does not match with range of <frob>");
+        fi;
+        mat := IdentityMat(d+1,gf);
+		return ProjElWithFrob( mat, frob, gf);
 	end );
 
 
@@ -3056,6 +3074,7 @@ InstallMethod( GammaU, [IsPosInt, IsField and IsFinite],
     SetSize( g, Order(frob) * Size(gu) / (sqrtq+1) );
     if d = 2 then
        Info(InfoFinInG, 1, "Warning: We have only factored scalars out of GammaU to construct a central cover of PGammaU.\n The centre is thus nontrivial and acts trivially on totally isotropic 1-spaces.");
+       Info(InfoFinInG, 2, "So be careful because you're opening a can of worms!");
        SetName( g, Concatenation("2.PGammaU(",String(d),",",String(sqrtq),"^2)") );
     else
        SetName( g, Concatenation("PGammaU(",String(d),",",String(sqrtq),"^2)") ); 

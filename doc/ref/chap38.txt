@@ -34,13 +34,13 @@
   
   [1X38.1-1 IsRewritingSystem[101X
   
-  [29X[2XIsRewritingSystem[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsRewritingSystem[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YThis is the category in which all rewriting systems lie.[133X
   
   [1X38.1-2 Rules[101X
   
-  [29X[2XRules[102X( [3Xrws[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRules[102X( [3Xrws[103X ) [32X attribute[133X
   
   [33X[0;0YThe  rules  comprising  the  rewriting  system.  Note  that these may change
   through  the life of the rewriting system, however they will always be a set
@@ -48,14 +48,14 @@
   
   [1X38.1-3 OrderOfRewritingSystem[101X
   
-  [29X[2XOrderOfRewritingSystem[102X( [3Xrws[103X ) [32X attribute
-  [29X[2XOrderingOfRewritingSystem[102X( [3Xrws[103X ) [32X attribute
+  [33X[1;0Y[29X[2XOrderOfRewritingSystem[102X( [3Xrws[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XOrderingOfRewritingSystem[102X( [3Xrws[103X ) [32X attribute[133X
   
   [33X[0;0Yreturn the ordering of the rewriting system [3Xrws[103X.[133X
   
   [1X38.1-4 ReducedForm[101X
   
-  [29X[2XReducedForm[102X( [3Xrws[103X, [3Xu[103X ) [32X operation
+  [33X[1;0Y[29X[2XReducedForm[102X( [3Xrws[103X, [3Xu[103X ) [32X operation[133X
   
   [33X[0;0YGiven  an  element  [3Xu[103X  in  the  free  (or  term) algebra [22XT[122X over which [3Xrws[103X is
   defined,  rewrite  [3Xu[103X by successive applications of the rules of [3Xrws[103X until no
@@ -64,8 +64,8 @@
   
   [1X38.1-5 [33X[0;0YIsConfluent[133X[101X
   
-  [29X[2XIsConfluent[102X( [3Xrws[103X ) [32X property
-  [29X[2XIsConfluent[102X( [3XA[103X ) [32X property
+  [33X[1;0Y[29X[2XIsConfluent[102X( [3Xrws[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsConfluent[102X( [3XA[103X ) [32X property[133X
   
   [33X[0;0YFor  a  rewriting system [3Xrws[103X, [2XIsConfluent[102X returns [9Xtrue[109X if and only if [3Xrws[103X is
   confluent.  A  rewriting system is [13Xconfluent[113X if, for every two words [22Xu[122X and [22Xv[122X
@@ -81,46 +81,46 @@
   
   [1X38.1-6 ConfluentRws[101X
   
-  [29X[2XConfluentRws[102X( [3Xrws[103X ) [32X attribute
+  [33X[1;0Y[29X[2XConfluentRws[102X( [3Xrws[103X ) [32X attribute[133X
   
   [33X[0;0YReturn  a  new  rewriting  system  defining the same algebra as [3Xrws[103X which is
   confluent.[133X
   
   [1X38.1-7 IsReduced[101X
   
-  [29X[2XIsReduced[102X( [3Xrws[103X ) [32X property
+  [33X[1;0Y[29X[2XIsReduced[102X( [3Xrws[103X ) [32X property[133X
   
   [33X[0;0YA  rewriting  system  is  reduced  if for each rule [22X(l, r)[122X, [22Xl[122X and [22Xr[122X are both
   reduced.[133X
   
   [1X38.1-8 ReduceRules[101X
   
-  [29X[2XReduceRules[102X( [3Xrws[103X ) [32X operation
+  [33X[1;0Y[29X[2XReduceRules[102X( [3Xrws[103X ) [32X operation[133X
   
   [33X[0;0YReduce rules and remove redundant rules to make [3Xrws[103X reduced.[133X
   
   [1X38.1-9 AddRule[101X
   
-  [29X[2XAddRule[102X( [3Xrws[103X, [3Xrule[103X ) [32X operation
+  [33X[1;0Y[29X[2XAddRule[102X( [3Xrws[103X, [3Xrule[103X ) [32X operation[133X
   
   [33X[0;0YAdd [3Xrule[103X to a rewriting system [3Xrws[103X.[133X
   
   [1X38.1-10 AddRuleReduced[101X
   
-  [29X[2XAddRuleReduced[102X( [3Xrws[103X, [3Xrule[103X ) [32X operation
+  [33X[1;0Y[29X[2XAddRuleReduced[102X( [3Xrws[103X, [3Xrule[103X ) [32X operation[133X
   
   [33X[0;0YAdd  [3Xrule[103X  to  rewriting  system  [3Xrws[103X. Performs a reduction operation on the
   resulting system, so that if [3Xrws[103X is reduced it will remain reduced.[133X
   
   [1X38.1-11 MakeConfluent[101X
   
-  [29X[2XMakeConfluent[102X( [3Xrws[103X ) [32X operation
+  [33X[1;0Y[29X[2XMakeConfluent[102X( [3Xrws[103X ) [32X operation[133X
   
   [33X[0;0YAdd rules (and perhaps reduce) in order to make [3Xrws[103X confluent[133X
   
   [1X38.1-12 GeneratorsOfRws[101X
   
-  [29X[2XGeneratorsOfRws[102X( [3Xrws[103X ) [32X attribute
+  [33X[1;0Y[29X[2XGeneratorsOfRws[102X( [3Xrws[103X ) [32X attribute[133X
   
   [33X[0;0YReturns the list of generators of the rewriting system [3Xrws[103X.[133X
   
@@ -132,19 +132,19 @@
   
   [1X38.2-1 ReducedProduct[101X
   
-  [29X[2XReducedProduct[102X( [3Xrws[103X, [3Xu[103X, [3Xv[103X ) [32X operation
-  [29X[2XReducedSum[102X( [3Xrws[103X, [3Xleft[103X, [3Xright[103X ) [32X operation
-  [29X[2XReducedOne[102X( [3Xrws[103X ) [32X operation
-  [29X[2XReducedAdditiveInverse[102X( [3Xrws[103X, [3Xobj[103X ) [32X operation
-  [29X[2XReducedComm[102X( [3Xrws[103X, [3Xleft[103X, [3Xright[103X ) [32X operation
-  [29X[2XReducedConjugate[102X( [3Xrws[103X, [3Xleft[103X, [3Xright[103X ) [32X operation
-  [29X[2XReducedDifference[102X( [3Xrws[103X, [3Xleft[103X, [3Xright[103X ) [32X operation
-  [29X[2XReducedInverse[102X( [3Xrws[103X, [3Xobj[103X ) [32X operation
-  [29X[2XReducedLeftQuotient[102X( [3Xrws[103X, [3Xleft[103X, [3Xright[103X ) [32X operation
-  [29X[2XReducedPower[102X( [3Xrws[103X, [3Xobj[103X, [3Xpow[103X ) [32X operation
-  [29X[2XReducedQuotient[102X( [3Xrws[103X, [3Xleft[103X, [3Xright[103X ) [32X operation
-  [29X[2XReducedScalarProduct[102X( [3Xrws[103X, [3Xleft[103X, [3Xright[103X ) [32X operation
-  [29X[2XReducedZero[102X( [3Xrws[103X ) [32X operation
+  [33X[1;0Y[29X[2XReducedProduct[102X( [3Xrws[103X, [3Xu[103X, [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XReducedSum[102X( [3Xrws[103X, [3Xleft[103X, [3Xright[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XReducedOne[102X( [3Xrws[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XReducedAdditiveInverse[102X( [3Xrws[103X, [3Xobj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XReducedComm[102X( [3Xrws[103X, [3Xleft[103X, [3Xright[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XReducedConjugate[102X( [3Xrws[103X, [3Xleft[103X, [3Xright[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XReducedDifference[102X( [3Xrws[103X, [3Xleft[103X, [3Xright[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XReducedInverse[102X( [3Xrws[103X, [3Xobj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XReducedLeftQuotient[102X( [3Xrws[103X, [3Xleft[103X, [3Xright[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XReducedPower[102X( [3Xrws[103X, [3Xobj[103X, [3Xpow[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XReducedQuotient[102X( [3Xrws[103X, [3Xleft[103X, [3Xright[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XReducedScalarProduct[102X( [3Xrws[103X, [3Xleft[103X, [3Xright[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XReducedZero[102X( [3Xrws[103X ) [32X operation[133X
   
   [33X[0;0YThe  result  of [2XReducedProduct[102X is [22Xw[122X where [22X[w][122X equals [[3Xu[103X][[3Xv[103X] in [22XA[122X and [22Xw[122X is in
   reduced form.[133X
@@ -157,12 +157,12 @@
   
   [1X38.3-1 IsBuiltFromAdditiveMagmaWithInverses[101X
   
-  [29X[2XIsBuiltFromAdditiveMagmaWithInverses[102X( [3Xobj[103X ) [32X property
-  [29X[2XIsBuiltFromMagma[102X( [3Xobj[103X ) [32X property
-  [29X[2XIsBuiltFromMagmaWithOne[102X( [3Xobj[103X ) [32X property
-  [29X[2XIsBuiltFromMagmaWithInverses[102X( [3Xobj[103X ) [32X property
-  [29X[2XIsBuiltFromSemigroup[102X( [3Xobj[103X ) [32X property
-  [29X[2XIsBuiltFromGroup[102X( [3Xobj[103X ) [32X property
+  [33X[1;0Y[29X[2XIsBuiltFromAdditiveMagmaWithInverses[102X( [3Xobj[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsBuiltFromMagma[102X( [3Xobj[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsBuiltFromMagmaWithOne[102X( [3Xobj[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsBuiltFromMagmaWithInverses[102X( [3Xobj[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsBuiltFromSemigroup[102X( [3Xobj[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsBuiltFromGroup[102X( [3Xobj[103X ) [32X property[133X
   
   [33X[0;0YThese properties may be used to identify the type of term algebra over which
   the rewriting system is defined.[133X

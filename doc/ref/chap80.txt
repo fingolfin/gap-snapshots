@@ -607,7 +607,7 @@
   
   [1X80.9-1 ArithmeticElementCreator[101X
   
-  [29X[2XArithmeticElementCreator[102X( [3Xspec[103X ) [32X function
+  [33X[1;0Y[29X[2XArithmeticElementCreator[102X( [3Xspec[103X ) [32X function[133X
   
   [33X[0;0Yoffers  a  simple  interface  to create new arithmetic elements by providing
   functions  that perform addition, multiplication and so forth, conforming to

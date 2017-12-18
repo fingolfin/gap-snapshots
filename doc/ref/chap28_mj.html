@@ -172,7 +172,7 @@ fail
 
 <h5>28.2-1 NewDictionary</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewDictionary</code>( <var class="Arg">obj</var>, <var class="Arg">look</var>[, <var class="Arg">objcoll</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewDictionary</code>( <var class="Arg">obj</var>, <var class="Arg">look</var>[, <var class="Arg">objcoll</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>creates a new dictionary for objects such as <var class="Arg">obj</var>. If <var class="Arg">objcoll</var> is given the dictionary will be for objects only from this collection, knowing this can improve the performance. If <var class="Arg">objcoll</var> is given, <var class="Arg">obj</var> may be replaced by <code class="keyw">false</code>, i.e. no sample object is needed.</p>
 
 <p>The function tries to find the right kind of dictionary for the basic dictionary functions to be quick. If <var class="Arg">look</var> is <code class="keyw">true</code>, the dictionary will be a lookup dictionary, otherwise it is an ordinary dictionary.</p>
@@ -187,42 +187,42 @@ fail
 
 <h5>28.3-1 DictionaryByPosition</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DictionaryByPosition</code>( <var class="Arg">list</var>, <var class="Arg">lookup</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DictionaryByPosition</code>( <var class="Arg">list</var>, <var class="Arg">lookup</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>creates a new (lookup) dictionary which uses <code class="func">PositionCanonical</code> (<a href="chap21_mj.html#X7B4B10AE81602D4E"><span class="RefLink">21.16-3</span></a>) in <var class="Arg">list</var> for indexing. The dictionary will have an entry <var class="Arg">dict</var><code class="code">!.blist</code> which is a bit list corresponding to <var class="Arg">list</var> indicating the known values. If <var class="Arg">look</var> is <code class="keyw">true</code>, the dictionary will be a lookup dictionary, otherwise it is an ordinary dictionary.</p>
 
 <p><a id="X87F7247E784021C2" name="X87F7247E784021C2"></a></p>
 
 <h5>28.3-2 IsDictionary</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDictionary</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDictionary</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>A dictionary is a growable collection of objects that permits to add objects (with associated values) and to check whether an object is already known.</p>
 
 <p><a id="X7D776BC67ABDDCCE" name="X7D776BC67ABDDCCE"></a></p>
 
 <h5>28.3-3 IsLookupDictionary</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLookupDictionary</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLookupDictionary</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>A <em>lookup dictionary</em> is a dictionary, which permits not only to check whether an object is contained, but also to retrieve associated values, using the operation <code class="func">LookupDictionary</code> (<a href="chap28_mj.html#X863706BF847A47EB"><span class="RefLink">28.3-6</span></a>).</p>
 
 <p><a id="X86C4F0507AD98B8A" name="X86C4F0507AD98B8A"></a></p>
 
 <h5>28.3-4 AddDictionary</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddDictionary</code>( <var class="Arg">dict</var>, <var class="Arg">key</var>[, <var class="Arg">val</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddDictionary</code>( <var class="Arg">dict</var>, <var class="Arg">key</var>[, <var class="Arg">val</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>adds <var class="Arg">key</var> to the dictionary <var class="Arg">dict</var>, storing the associated value <var class="Arg">val</var> in case <var class="Arg">dict</var> is a lookup dictionary. If <var class="Arg">key</var> is not an object of the kind for which the dictionary was specified, or if <var class="Arg">key</var> is known already to <var class="Arg">dict</var>, the results are unpredictable.</p>
 
 <p><a id="X808C885D7E267285" name="X808C885D7E267285"></a></p>
 
 <h5>28.3-5 KnowsDictionary</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KnowsDictionary</code>( <var class="Arg">dict</var>, <var class="Arg">key</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KnowsDictionary</code>( <var class="Arg">dict</var>, <var class="Arg">key</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>checks, whether <var class="Arg">key</var> is known to the dictionary <var class="Arg">dict</var>, and returns <code class="keyw">true</code> or <code class="keyw">false</code> accordingly. <var class="Arg">key</var> <em>must</em> be an object of the kind for which the dictionary was specified, otherwise the results are unpredictable.</p>
 
 <p><a id="X863706BF847A47EB" name="X863706BF847A47EB"></a></p>
 
 <h5>28.3-6 LookupDictionary</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LookupDictionary</code>( <var class="Arg">dict</var>, <var class="Arg">key</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LookupDictionary</code>( <var class="Arg">dict</var>, <var class="Arg">key</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>looks up <var class="Arg">key</var> in the lookup dictionary <var class="Arg">dict</var> and returns the associated value. If <var class="Arg">key</var> is not known to the dictionary, <code class="keyw">fail</code> is returned.</p>
 
 <p><a id="X8444087381BBA88A" name="X8444087381BBA88A"></a></p>
@@ -249,7 +249,7 @@ fail
 
 <h5>28.5-1 DenseIntKey</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DenseIntKey</code>( <var class="Arg">objcoll</var>, <var class="Arg">obj</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DenseIntKey</code>( <var class="Arg">objcoll</var>, <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a function that can be used as hash key function for objects such as <var class="Arg">obj</var> in the collection <var class="Arg">objcoll</var>. Typically, <var class="Arg">objcoll</var> will be a large domain. If the domain is not available, it can be given as <code class="keyw">false</code> in which case the hash key function will be determined only based on <var class="Arg">obj</var>. (For a further discussion of these two arguments see <code class="func">NewDictionary</code> (<a href="chap28_mj.html#X7E78E3E983A5C895"><span class="RefLink">28.2-1</span></a>)).</p>
 
 <p>The function returned by <code class="func">DenseIntKey</code> is guaranteed to give different values for different objects. If no suitable hash key function has been predefined, <code class="keyw">fail</code> is returned.</p>
@@ -258,7 +258,7 @@ fail
 
 <h5>28.5-2 SparseIntKey</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SparseIntKey</code>( <var class="Arg">objcoll</var>, <var class="Arg">obj</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SparseIntKey</code>( <var class="Arg">objcoll</var>, <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a function that can be used as hash key function for objects such as <var class="Arg">obj</var> in the collection <var class="Arg">objcoll</var>. In contrast to <code class="func">DenseIntKey</code> (<a href="chap28_mj.html#X79DEEB5783513838"><span class="RefLink">28.5-1</span></a>), the function returned may return the same key value for different objects. If no suitable hash key function has been predefined, <code class="keyw">fail</code> is returned.</p>
 
 <p><a id="X84D1A83C8247E7FB" name="X84D1A83C8247E7FB"></a></p>
@@ -271,7 +271,7 @@ fail
 
 <h5>28.6-1 DenseHashTable</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DenseHashTable</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DenseHashTable</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Construct an empty dense hash table. This is the only correct way to construct such a table.</p>
 
 <p><a id="X7FDB74417A19E674" name="X7FDB74417A19E674"></a></p>
@@ -286,14 +286,14 @@ fail
 
 <h5>28.7-1 SparseHashTable</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SparseHashTable</code>( [<var class="Arg">intkeyfun</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SparseHashTable</code>( [<var class="Arg">intkeyfun</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Construct an empty sparse hash table. This is the only correct way to construct such a table. If the argument <var class="Arg">intkeyfun</var> is given, this function will be used to obtain numbers for the keys passed to it.</p>
 
 <p><a id="X80FDDF957887B4FC" name="X80FDDF957887B4FC"></a></p>
 
 <h5>28.7-2 DoubleHashArraySize</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DoubleHashArraySize</code>( <var class="Arg">hash</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DoubleHashArraySize</code>( <var class="Arg">hash</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Double the size of the hash array and rehash all the entries. This will also happen automatically when the hash array is half full.</p>
 
 

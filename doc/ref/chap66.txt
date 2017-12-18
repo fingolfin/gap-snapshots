@@ -97,12 +97,12 @@
   
   [1X66.1-1 [33X[0;0YIndeterminate[133X[101X
   
-  [29X[2XIndeterminate[102X( [3XR[103X[, [3Xnr[103X] ) [32X operation
-  [29X[2XIndeterminate[102X( [3XR[103X[, [3Xname[103X][, [3Xavoid[103X] ) [32X operation
-  [29X[2XIndeterminate[102X( [3Xfam[103X, [3Xnr[103X ) [32X operation
-  [29X[2XX[102X( [3XR[103X[, [3Xnr[103X] ) [32X operation
-  [29X[2XX[102X( [3XR[103X[, [3Xname[103X][, [3Xavoid[103X] ) [32X operation
-  [29X[2XX[102X( [3Xfam[103X, [3Xnr[103X ) [32X operation
+  [33X[1;0Y[29X[2XIndeterminate[102X( [3XR[103X[, [3Xnr[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XIndeterminate[102X( [3XR[103X[, [3Xname[103X][, [3Xavoid[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XIndeterminate[102X( [3Xfam[103X, [3Xnr[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XX[102X( [3XR[103X[, [3Xnr[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XX[102X( [3XR[103X[, [3Xname[103X][, [3Xavoid[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XX[102X( [3Xfam[103X, [3Xnr[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  indeterminate number [3Xnr[103X over the ring [3XR[103X. If [3Xnr[103X is not given it
   defaults to 1. If the number is not specified a list [3Xavoid[103X of indeterminates
@@ -130,7 +130,7 @@
   
   [1X66.1-2 IndeterminateNumberOfUnivariateRationalFunction[101X
   
-  [29X[2XIndeterminateNumberOfUnivariateRationalFunction[102X( [3Xrfun[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIndeterminateNumberOfUnivariateRationalFunction[102X( [3Xrfun[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the  number  of  the indeterminate in which the univariate rational
   function  [3Xrfun[103X  is expressed. (This also provides a way to obtain the number
@@ -145,7 +145,7 @@
   
   [1X66.1-3 IndeterminateOfUnivariateRationalFunction[101X
   
-  [29X[2XIndeterminateOfUnivariateRationalFunction[102X( [3Xrfun[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIndeterminateOfUnivariateRationalFunction[102X( [3Xrfun[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the indeterminate in which the univariate rational function [3Xrfun[103X is
   expressed. (cf. [2XIndeterminateNumberOfUnivariateRationalFunction[102X ([14X66.1-2[114X).)[133X
@@ -159,9 +159,9 @@
   
   [1X66.1-4 IndeterminateName[101X
   
-  [29X[2XIndeterminateName[102X( [3Xfam[103X, [3Xnr[103X ) [32X operation
-  [29X[2XHasIndeterminateName[102X( [3Xfam[103X, [3Xnr[103X ) [32X operation
-  [29X[2XSetIndeterminateName[102X( [3Xfam[103X, [3Xnr[103X, [3Xname[103X ) [32X operation
+  [33X[1;0Y[29X[2XIndeterminateName[102X( [3Xfam[103X, [3Xnr[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHasIndeterminateName[102X( [3Xfam[103X, [3Xnr[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSetIndeterminateName[102X( [3Xfam[103X, [3Xnr[103X, [3Xname[103X ) [32X operation[133X
   
   [33X[0;0Y[2XSetIndeterminateName[102X  assigns  the  name  [3Xname[103X  to  indeterminate  [3Xnr[103X in the
   rational  functions  family [3Xfam[103X. It issues an error if the indeterminate was
@@ -196,7 +196,7 @@
   
   [1X66.1-5 CIUnivPols[101X
   
-  [29X[2XCIUnivPols[102X( [3Xupol1[103X, [3Xupol2[103X ) [32X function
+  [33X[1;0Y[29X[2XCIUnivPols[102X( [3Xupol1[103X, [3Xupol2[103X ) [32X function[133X
   
   [33X[0;0YThis  function  (whose  name  stands  for [21Xcommon indeterminate of univariate
   polynomials[121X)   takes  two  univariate  polynomials  as  arguments.  If  both
@@ -325,8 +325,8 @@
   
   [1X66.4-1 IsPolynomialFunction[101X
   
-  [29X[2XIsPolynomialFunction[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsRationalFunction[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsPolynomialFunction[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsRationalFunction[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YA rational function is an element of the quotient field of a polynomial ring
   over  an  UFD.  It  is  represented  as  a  quotient of two polynomials, its
@@ -340,7 +340,7 @@
   
   [1X66.4-2 NumeratorOfRationalFunction[101X
   
-  [29X[2XNumeratorOfRationalFunction[102X( [3Xratfun[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNumeratorOfRationalFunction[102X( [3Xratfun[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns the numerator of the rational function [3Xratfun[103X.[133X
   
@@ -349,7 +349,7 @@
   
   [1X66.4-3 DenominatorOfRationalFunction[101X
   
-  [29X[2XDenominatorOfRationalFunction[102X( [3Xratfun[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDenominatorOfRationalFunction[102X( [3Xratfun[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns the denominator of the rational function [3Xratfun[103X.[133X
   
@@ -366,7 +366,7 @@
   
   [1X66.4-4 IsPolynomial[101X
   
-  [29X[2XIsPolynomial[102X( [3Xratfun[103X ) [32X property
+  [33X[1;0Y[29X[2XIsPolynomial[102X( [3Xratfun[103X ) [32X property[133X
   
   [33X[0;0YA  polynomial  is  a  rational  function  whose  denominator is one. (If the
   coefficients  family  forms  a  field  this is equivalent to the denominator
@@ -385,7 +385,7 @@
   
   [1X66.4-5 AsPolynomial[101X
   
-  [29X[2XAsPolynomial[102X( [3Xpoly[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAsPolynomial[102X( [3Xpoly[103X ) [32X attribute[133X
   
   [33X[0;0YIf  [3Xpoly[103X  is a rational function that is a polynomial this attribute returns
   an  equal  rational function [22Xp[122X such that [22Xp[122X is equal to its numerator and the
@@ -398,7 +398,7 @@
   
   [1X66.4-6 IsUnivariateRationalFunction[101X
   
-  [29X[2XIsUnivariateRationalFunction[102X( [3Xratfun[103X ) [32X property
+  [33X[1;0Y[29X[2XIsUnivariateRationalFunction[102X( [3Xratfun[103X ) [32X property[133X
   
   [33X[0;0YA  rational  function is univariate if its numerator and its denominator are
   both   polynomials   in   the   same   one   indeterminate.   The  attribute
@@ -407,7 +407,7 @@
   
   [1X66.4-7 CoefficientsOfUnivariateRationalFunction[101X
   
-  [29X[2XCoefficientsOfUnivariateRationalFunction[102X( [3Xrfun[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCoefficientsOfUnivariateRationalFunction[102X( [3Xrfun[103X ) [32X attribute[133X
   
   [33X[0;0Yif  [3Xrfun[103X  is a univariate rational function, this attribute returns a list [10X[
   [3Xncof[103X[10X,  [3Xdcof[103X[10X,  [3Xval[103X[10X  ][110X where [3Xncof[103X and [3Xdcof[103X are coefficient lists of univariate
@@ -418,13 +418,13 @@
   
   [1X66.4-8 IsUnivariatePolynomial[101X
   
-  [29X[2XIsUnivariatePolynomial[102X( [3Xratfun[103X ) [32X property
+  [33X[1;0Y[29X[2XIsUnivariatePolynomial[102X( [3Xratfun[103X ) [32X property[133X
   
   [33X[0;0YA univariate polynomial is a polynomial in only one indeterminate.[133X
   
   [1X66.4-9 CoefficientsOfUnivariatePolynomial[101X
   
-  [29X[2XCoefficientsOfUnivariatePolynomial[102X( [3Xpol[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCoefficientsOfUnivariatePolynomial[102X( [3Xpol[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XCoefficientsOfUnivariatePolynomial[102X  returns  the  coefficient  list  of  the
   polynomial [3Xpol[103X, sorted in ascending order. (It returns the empty list if [3Xpol[103X
@@ -432,7 +432,7 @@
   
   [1X66.4-10 IsLaurentPolynomial[101X
   
-  [29X[2XIsLaurentPolynomial[102X( [3Xratfun[103X ) [32X property
+  [33X[1;0Y[29X[2XIsLaurentPolynomial[102X( [3Xratfun[103X ) [32X property[133X
   
   [33X[0;0YA  Laurent polynomial is a univariate rational function whose denominator is
   a monomial. Therefore every univariate polynomial is a Laurent polynomial.[133X
@@ -442,14 +442,14 @@
   
   [1X66.4-11 IsConstantRationalFunction[101X
   
-  [29X[2XIsConstantRationalFunction[102X( [3Xratfun[103X ) [32X property
+  [33X[1;0Y[29X[2XIsConstantRationalFunction[102X( [3Xratfun[103X ) [32X property[133X
   
   [33X[0;0YA  constant  rational function is a function whose numerator and denominator
   are polynomials of degree 0.[133X
   
   [1X66.4-12 IsPrimitivePolynomial[101X
   
-  [29X[2XIsPrimitivePolynomial[102X( [3XF[103X, [3Xpol[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsPrimitivePolynomial[102X( [3XF[103X, [3Xpol[103X ) [32X operation[133X
   
   [33X[0;0YFor  a  univariate  polynomial  [3Xpol[103X of degree [22Xd[122X in the indeterminate [22XX[122X, with
   coefficients in a finite field [3XF[103X with [22Xq[122X elements, say, [2XIsPrimitivePolynomial[102X
@@ -464,7 +464,7 @@
   
   [1X66.4-13 SplittingField[101X
   
-  [29X[2XSplittingField[102X( [3Xf[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSplittingField[102X( [3Xf[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the  smallest  field  which  contains the coefficients of [3Xf[103X and the
   roots of [3Xf[103X.[133X
@@ -478,14 +478,14 @@
   
   [1X66.5-1 UnivariatePolynomial[101X
   
-  [29X[2XUnivariatePolynomial[102X( [3Xring[103X, [3Xcofs[103X[, [3Xind[103X] ) [32X operation
+  [33X[1;0Y[29X[2XUnivariatePolynomial[102X( [3Xring[103X, [3Xcofs[103X[, [3Xind[103X] ) [32X operation[133X
   
   [33X[0;0Yconstructs  an univariate polynomial over the ring [3Xring[103X in the indeterminate
   [3Xind[103X with the coefficients given by [3Xcoefs[103X.[133X
   
   [1X66.5-2 UnivariatePolynomialByCoefficients[101X
   
-  [29X[2XUnivariatePolynomialByCoefficients[102X( [3Xfam[103X, [3Xcofs[103X, [3Xind[103X ) [32X operation
+  [33X[1;0Y[29X[2XUnivariatePolynomialByCoefficients[102X( [3Xfam[103X, [3Xcofs[103X, [3Xind[103X ) [32X operation[133X
   
   [33X[0;0Yconstructs  an univariate polynomial over the coefficients family [3Xfam[103X and in
   the  indeterminate  [3Xind[103X  with the coefficients given by [3Xcoefs[103X. This function
@@ -494,7 +494,7 @@
   
   [1X66.5-3 DegreeOfLaurentPolynomial[101X
   
-  [29X[2XDegreeOfLaurentPolynomial[102X( [3Xpol[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDegreeOfLaurentPolynomial[102X( [3Xpol[103X ) [32X attribute[133X
   
   [33X[0;0YThe  degree of a univariate (Laurent) polynomial [3Xpol[103X is the largest exponent
   [22Xn[122X of a monomial [22Xx^n[122X of [3Xpol[103X. The degree of a zero polynomial is defined to be
@@ -519,7 +519,7 @@
   
   [1X66.5-4 RootsOfPolynomial[101X
   
-  [29X[2XRootsOfPolynomial[102X( [[3XR[103X, ][3Xp[103X ) [32X function
+  [33X[1;0Y[29X[2XRootsOfPolynomial[102X( [[3XR[103X, ][3Xp[103X ) [32X function[133X
   
   [33X[0;0YFor a univariate polynomial [3Xp[103X, this function returns all roots of [3Xp[103X over the
   ring  [3XR[103X.  If the ring is not specified, it defaults to the ring specified by
@@ -536,7 +536,7 @@
   
   [1X66.5-5 RootsOfUPol[101X
   
-  [29X[2XRootsOfUPol[102X( [[3Xfield[103X, ][3Xupol[103X ) [32X function
+  [33X[1;0Y[29X[2XRootsOfUPol[102X( [[3Xfield[103X, ][3Xupol[103X ) [32X function[133X
   
   [33X[0;0YThis  function returns a list of all roots of the univariate polynomial [3Xupol[103X
   in  its  default  domain. If the optional argument [3Xfield[103X is a field then the
@@ -550,7 +550,7 @@
   
   [1X66.5-6 QuotRemLaurpols[101X
   
-  [29X[2XQuotRemLaurpols[102X( [3Xleft[103X, [3Xright[103X, [3Xmode[103X ) [32X function
+  [33X[1;0Y[29X[2XQuotRemLaurpols[102X( [3Xleft[103X, [3Xright[103X, [3Xmode[103X ) [32X function[133X
   
   [33X[0;0YThis  internal  function  for  euclidean  division  of polynomials takes two
   polynomials [3Xleft[103X and [3Xright[103X and computes their quotient. No test is performed
@@ -568,7 +568,7 @@
   
   [1X66.5-7 UnivariatenessTestRationalFunction[101X
   
-  [29X[2XUnivariatenessTestRationalFunction[102X( [3Xf[103X ) [32X function
+  [33X[1;0Y[29X[2XUnivariatenessTestRationalFunction[102X( [3Xf[103X ) [32X function[133X
   
   [33X[0;0Ytakes  a  rational  function  [3Xf[103X  and tests whether it is univariate rational
   function  (or  even  a Laurent polynomial). It returns a list [10X[isunivariate,
@@ -601,7 +601,7 @@
   
   [1X66.5-8 InfoPoly[101X
   
-  [29X[2XInfoPoly[102X[32X info class
+  [33X[1;0Y[29X[2XInfoPoly[102X[32X info class[133X
   
   [33X[0;0Yis the info class for univariate polynomials.[133X
   
@@ -627,7 +627,7 @@
   
   [1X66.6-1 DegreeIndeterminate[101X
   
-  [29X[2XDegreeIndeterminate[102X( [3Xpol[103X, [3Xind[103X ) [32X operation
+  [33X[1;0Y[29X[2XDegreeIndeterminate[102X( [3Xpol[103X, [3Xind[103X ) [32X operation[133X
   
   [33X[0;0Yreturns   the  degree  of  the  polynomial  [3Xpol[103X  in  the  indeterminate  (or
   indeterminate number) [3Xind[103X.[133X
@@ -643,7 +643,7 @@
   
   [1X66.6-2 PolynomialCoefficientsOfPolynomial[101X
   
-  [29X[2XPolynomialCoefficientsOfPolynomial[102X( [3Xpol[103X, [3Xind[103X ) [32X operation
+  [33X[1;0Y[29X[2XPolynomialCoefficientsOfPolynomial[102X( [3Xpol[103X, [3Xind[103X ) [32X operation[133X
   
   [33X[0;0Y[2XPolynomialCoefficientsOfPolynomial[102X   returns  the  coefficient  list  (whose
   entries  are polynomials not involving the indeterminate [3Xind[103X) describing the
@@ -657,14 +657,14 @@
   
   [1X66.6-3 LeadingCoefficient[101X
   
-  [29X[2XLeadingCoefficient[102X( [3Xpol[103X ) [32X operation
+  [33X[1;0Y[29X[2XLeadingCoefficient[102X( [3Xpol[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  leading  coefficient  (that  is the coefficient of the leading
   monomial, see [2XLeadingMonomial[102X ([14X66.6-4[114X)) of the polynomial [3Xpol[103X.[133X
   
   [1X66.6-4 LeadingMonomial[101X
   
-  [29X[2XLeadingMonomial[102X( [3Xpol[103X ) [32X operation
+  [33X[1;0Y[29X[2XLeadingMonomial[102X( [3Xpol[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  leading  monomial  (with  respect  to  the  ordering  given by
   [2XMonomialExtGrlexLess[102X  ([14X66.17-14[114X)) of the polynomial [3Xpol[103X as a list containing
@@ -683,7 +683,7 @@
   
   [1X66.6-5 Derivative[101X
   
-  [29X[2XDerivative[102X( [3Xratfun[103X[, [3Xind[103X] ) [32X attribute
+  [33X[1;0Y[29X[2XDerivative[102X( [3Xratfun[103X[, [3Xind[103X] ) [32X attribute[133X
   
   [33X[0;0YIf  [3Xratfun[103X  is  a  univariate  rational function then [2XDerivative[102X returns the
   [13Xderivative[113X of [3Xufun[103X by its indeterminate. For a rational function [3Xratfun[103X, the
@@ -698,7 +698,7 @@
   
   [1X66.6-6 Discriminant[101X
   
-  [29X[2XDiscriminant[102X( [3Xpol[103X[, [3Xind[103X] ) [32X operation
+  [33X[1;0Y[29X[2XDiscriminant[102X( [3Xpol[103X[, [3Xind[103X] ) [32X operation[133X
   
   [33X[0;0YIf [3Xpol[103X is a univariate polynomial then [2XDiscriminant[102X returns the [13Xdiscriminant[113X
   of  [3Xpol[103X by its indeterminate. The two-argument form returns the discriminant
@@ -718,7 +718,7 @@
   
   [1X66.6-7 Resultant[101X
   
-  [29X[2XResultant[102X( [3Xpol1[103X, [3Xpol2[103X, [3Xind[103X ) [32X operation
+  [33X[1;0Y[29X[2XResultant[102X( [3Xpol1[103X, [3Xpol2[103X, [3Xind[103X ) [32X operation[133X
   
   [33X[0;0Ycomputes  the resultant of the polynomials [3Xpol1[103X and [3Xpol2[103X with respect to the
   indeterminate [3Xind[103X, or indeterminate number [3Xind[103X. The resultant considers [3Xpol1[103X
@@ -738,8 +738,8 @@
   
   [1X66.7-1 [33X[0;0YValue[133X[101X
   
-  [29X[2XValue[102X( [3Xratfun[103X, [3Xindets[103X, [3Xvals[103X[, [3Xone[103X] ) [32X operation
-  [29X[2XValue[102X( [3Xupol[103X, [3Xvalue[103X[, [3Xone[103X] ) [32X operation
+  [33X[1;0Y[29X[2XValue[102X( [3Xratfun[103X, [3Xindets[103X, [3Xvals[103X[, [3Xone[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XValue[102X( [3Xupol[103X, [3Xvalue[103X[, [3Xone[103X] ) [32X operation[133X
   
   [33X[0;0YThe  first  variant  takes  a  rational  function [3Xratfun[103X and specializes the
   indeterminates  given  in  [3Xindets[103X to the values given in [3Xvals[103X, replacing the
@@ -772,7 +772,7 @@
   
   [1X66.8-1 MinimalPolynomial[101X
   
-  [29X[2XMinimalPolynomial[102X( [3XR[103X, [3Xelm[103X[, [3Xind[103X] ) [32X operation
+  [33X[1;0Y[29X[2XMinimalPolynomial[102X( [3XR[103X, [3Xelm[103X[, [3Xind[103X] ) [32X operation[133X
   
   [33X[0;0Yreturns  the  [13Xminimal  polynomial[113X  of  [3Xelm[103X over the ring [3XR[103X, expressed in the
   indeterminate number [3Xind[103X. If [3Xind[103X is not given, it defaults to 1.[133X
@@ -790,7 +790,7 @@
   
   [1X66.9-1 CyclotomicPolynomial[101X
   
-  [29X[2XCyclotomicPolynomial[102X( [3XF[103X, [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XCyclotomicPolynomial[102X( [3XF[103X, [3Xn[103X ) [32X function[133X
   
   [33X[0;0Yis the [3Xn[103X-th cyclotomic polynomial over the ring [3XF[103X.[133X
   
@@ -808,7 +808,7 @@
   
   [1X66.10-1 Factors[101X
   
-  [29X[2XFactors[102X( [[3XR[103X, ][3Xpoly[103X[, [3Xopt[103X] ) [32X method
+  [33X[1;0Y[29X[2XFactors[102X( [[3XR[103X, ][3Xpoly[103X[, [3Xopt[103X] ) [32X method[133X
   
   [33X[0;0Yreturns  a  list  of  the  irreducible factors of the polynomial [3Xpoly[103X in the
   polynomial  ring  [3XR[103X.  (That  is  factors over the [2XCoefficientsRing[102X ([14X66.15-3[114X)
@@ -846,7 +846,7 @@
   
   [1X66.10-2 FactorsSquarefree[101X
   
-  [29X[2XFactorsSquarefree[102X( [3Xpring[103X, [3Xupol[103X, [3Xopt[103X ) [32X operation
+  [33X[1;0Y[29X[2XFactorsSquarefree[102X( [3Xpring[103X, [3Xupol[103X, [3Xopt[103X ) [32X operation[133X
   
   [33X[0;0Yreturns a factorization of the squarefree, monic, univariate polynomial [3Xupol[103X
   in  the  polynomial  ring  [3Xpring[103X;  [3Xopt[103X  must be a (possibly empty) record of
@@ -870,7 +870,7 @@
   
   [1X66.11-1 PrimitivePolynomial[101X
   
-  [29X[2XPrimitivePolynomial[102X( [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XPrimitivePolynomial[102X( [3Xf[103X ) [32X operation[133X
   
   [33X[0;0Ytakes  a  polynomial  [3Xf[103X  with  rational  coefficients  and  computes  a  new
   polynomial  with integral coefficients, obtained by multiplying with the Lcm
@@ -880,14 +880,14 @@
   
   [1X66.11-2 PolynomialModP[101X
   
-  [29X[2XPolynomialModP[102X( [3Xpol[103X, [3Xp[103X ) [32X function
+  [33X[1;0Y[29X[2XPolynomialModP[102X( [3Xpol[103X, [3Xp[103X ) [32X function[133X
   
   [33X[0;0Yfor  a  rational  polynomial [3Xpol[103X this function returns a polynomial over the
   field with [3Xp[103X elements, obtained by reducing the coefficients modulo [3Xp[103X.[133X
   
   [1X66.11-3 GaloisType[101X
   
-  [29X[2XGaloisType[102X( [3Xf[103X ) [32X attribute
+  [33X[1;0Y[29X[2XGaloisType[102X( [3Xf[103X ) [32X attribute[133X
   
   [33X[0;0YLet [3Xf[103X be an irreducible polynomial with rational coefficients. This function
   returns  the type of Gal([3Xf[103X) (considered as a transitive permutation group of
@@ -908,7 +908,7 @@
   
   [1X66.11-4 ProbabilityShapes[101X
   
-  [29X[2XProbabilityShapes[102X( [3Xf[103X ) [32X function
+  [33X[1;0Y[29X[2XProbabilityShapes[102X( [3Xf[103X ) [32X function[133X
   
   [33X[0;0YLet [3Xf[103X be an irreducible polynomial with rational coefficients. This function
   returns  a  list  of  the  most  likely  type(s)  of  Gal([3Xf[103X) (see [2XGaloisType[102X
@@ -936,14 +936,14 @@
   
   [1X66.12-1 BombieriNorm[101X
   
-  [29X[2XBombieriNorm[102X( [3Xpol[103X ) [32X function
+  [33X[1;0Y[29X[2XBombieriNorm[102X( [3Xpol[103X ) [32X function[133X
   
   [33X[0;0Ycomputes  weighted  Norm  [[3Xpol[103X][22X_2[122X  of [3Xpol[103X which is a good measure for factor
   coefficients (see [BTW93]).[133X
   
   [1X66.12-2 MinimizedBombieriNorm[101X
   
-  [29X[2XMinimizedBombieriNorm[102X( [3Xf[103X ) [32X attribute
+  [33X[1;0Y[29X[2XMinimizedBombieriNorm[102X( [3Xf[103X ) [32X attribute[133X
   
   [33X[0;0YThis  function applies linear Tschirnhaus transformations ([22Xx ↦ x + i[122X) to the
   polynomial  [3Xf[103X, trying to get the Bombieri norm of [3Xf[103X small. It returns a list
@@ -951,7 +951,7 @@
   
   [1X66.12-3 HenselBound[101X
   
-  [29X[2XHenselBound[102X( [3Xpol[103X[, [3Xminpol[103X, [3Xden[103X] ) [32X function
+  [33X[1;0Y[29X[2XHenselBound[102X( [3Xpol[103X[, [3Xminpol[103X, [3Xden[103X] ) [32X function[133X
   
   [33X[0;0Yreturns  the  Hensel  bound  of the polynomial [3Xpol[103X. If the computation takes
   place  over  an  algebraic extension, then the minimal polynomial [3Xminpol[103X and
@@ -959,7 +959,7 @@
   
   [1X66.12-4 OneFactorBound[101X
   
-  [29X[2XOneFactorBound[102X( [3Xpol[103X ) [32X function
+  [33X[1;0Y[29X[2XOneFactorBound[102X( [3Xpol[103X ) [32X function[133X
   
   [33X[0;0Yreturns the coefficient bound for a single factor of the rational polynomial
   [3Xpol[103X.[133X
@@ -980,7 +980,7 @@
   
   [1X66.13-1 LaurentPolynomialByCoefficients[101X
   
-  [29X[2XLaurentPolynomialByCoefficients[102X( [3Xfam[103X, [3Xcofs[103X, [3Xval[103X[, [3Xind[103X] ) [32X operation
+  [33X[1;0Y[29X[2XLaurentPolynomialByCoefficients[102X( [3Xfam[103X, [3Xcofs[103X, [3Xval[103X[, [3Xind[103X] ) [32X operation[133X
   
   [33X[0;0Yconstructs  a Laurent polynomial over the coefficients family [3Xfam[103X and in the
   indeterminate [3Xind[103X (defaulting to 1) with the coefficients given by [3Xcoefs[103X and
@@ -988,7 +988,7 @@
   
   [1X66.13-2 CoefficientsOfLaurentPolynomial[101X
   
-  [29X[2XCoefficientsOfLaurentPolynomial[102X( [3Xlaurent[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCoefficientsOfLaurentPolynomial[102X( [3Xlaurent[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a  Laurent polynomial [3Xlaurent[103X, this function returns a pair [10X[[3Xcof[103X[10X, [3Xval[103X[10X][110X,
   consisting  of  the  coefficient  list  (in  ascending  order)  [3Xcof[103X  and the
@@ -1007,7 +1007,7 @@
   
   [1X66.13-3 IndeterminateNumberOfLaurentPolynomial[101X
   
-  [29X[2XIndeterminateNumberOfLaurentPolynomial[102X( [3Xpol[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIndeterminateNumberOfLaurentPolynomial[102X( [3Xpol[103X ) [32X attribute[133X
   
   [33X[0;0YIs a synonym for [2XIndeterminateNumberOfUnivariateRationalFunction[102X ([14X66.1-2[114X).[133X
   
@@ -1016,7 +1016,7 @@
   
   [1X66.14-1 UnivariateRationalFunctionByCoefficients[101X
   
-  [29X[2XUnivariateRationalFunctionByCoefficients[102X( [3Xfam[103X, [3Xncof[103X, [3Xdcof[103X, [3Xval[103X[, [3Xind[103X] ) [32X operation
+  [33X[1;0Y[29X[2XUnivariateRationalFunctionByCoefficients[102X( [3Xfam[103X, [3Xncof[103X, [3Xdcof[103X, [3Xval[103X[, [3Xind[103X] ) [32X operation[133X
   
   [33X[0;0Yconstructs  a  univariate rational function over the coefficients family [3Xfam[103X
   and   in  the  indeterminate  [3Xind[103X  (defaulting  to  1)  with  numerator  and
@@ -1080,10 +1080,10 @@
   
   [1X66.15-1 [33X[0;0YPolynomialRing[133X[101X
   
-  [29X[2XPolynomialRing[102X( [3XR[103X, [3Xrank[103X[, [3Xavoid[103X] ) [32X operation
-  [29X[2XPolynomialRing[102X( [3XR[103X, [3Xnames[103X[, [3Xavoid[103X] ) [32X operation
-  [29X[2XPolynomialRing[102X( [3XR[103X, [3Xindets[103X ) [32X operation
-  [29X[2XPolynomialRing[102X( [3XR[103X, [3Xindetnums[103X ) [32X operation
+  [33X[1;0Y[29X[2XPolynomialRing[102X( [3XR[103X, [3Xrank[103X[, [3Xavoid[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XPolynomialRing[102X( [3XR[103X, [3Xnames[103X[, [3Xavoid[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XPolynomialRing[102X( [3XR[103X, [3Xindets[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPolynomialRing[102X( [3XR[103X, [3Xindetnums[103X ) [32X operation[133X
   
   [33X[0;0Ycreates  a  polynomial  ring  over the ring [3XR[103X. If a positive integer [3Xrank[103X is
   given,  this  creates  the  polynomial  ring  in  [3Xrank[103X indeterminates. These
@@ -1104,15 +1104,15 @@
   
   [1X66.15-2 IndeterminatesOfPolynomialRing[101X
   
-  [29X[2XIndeterminatesOfPolynomialRing[102X( [3Xpring[103X ) [32X attribute
-  [29X[2XIndeterminatesOfFunctionField[102X( [3Xffield[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIndeterminatesOfPolynomialRing[102X( [3Xpring[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIndeterminatesOfFunctionField[102X( [3Xffield[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  a  list  of  the  indeterminates  of  the  polynomial  ring  [3Xpring[103X,
   respectively the function field [3Xffield[103X.[133X
   
   [1X66.15-3 CoefficientsRing[101X
   
-  [29X[2XCoefficientsRing[102X( [3Xpring[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCoefficientsRing[102X( [3Xpring[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the  ring of coefficients of the polynomial ring [3Xpring[103X, that is the
   ring over which [3Xpring[103X was defined.[133X
@@ -1138,26 +1138,26 @@
   
   [1X66.15-4 IsPolynomialRing[101X
   
-  [29X[2XIsPolynomialRing[102X( [3Xpring[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsPolynomialRing[102X( [3Xpring[103X ) [32X Category[133X
   
   [33X[0;0Yis the category of polynomial rings[133X
   
   [1X66.15-5 IsFiniteFieldPolynomialRing[101X
   
-  [29X[2XIsFiniteFieldPolynomialRing[102X( [3Xpring[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsFiniteFieldPolynomialRing[102X( [3Xpring[103X ) [32X Category[133X
   
   [33X[0;0Yis the category of polynomial rings over a finite field (see Chapter [14X59[114X).[133X
   
   [1X66.15-6 IsAbelianNumberFieldPolynomialRing[101X
   
-  [29X[2XIsAbelianNumberFieldPolynomialRing[102X( [3Xpring[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsAbelianNumberFieldPolynomialRing[102X( [3Xpring[103X ) [32X Category[133X
   
   [33X[0;0Yis  the  category  of  polynomial rings over a field of cyclotomics (see the
   chapters [14X18[114X and [14X60[114X).[133X
   
   [1X66.15-7 IsRationalsPolynomialRing[101X
   
-  [29X[2XIsRationalsPolynomialRing[102X( [3Xpring[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsRationalsPolynomialRing[102X( [3Xpring[103X ) [32X Category[133X
   
   [33X[0;0Yis the category of polynomial rings over the rationals (see Chapter [14X17[114X).[133X
   
@@ -1174,10 +1174,10 @@
   
   [1X66.15-8 [33X[0;0YFunctionField[133X[101X
   
-  [29X[2XFunctionField[102X( [3XR[103X, [3Xrank[103X[, [3Xavoid[103X] ) [32X operation
-  [29X[2XFunctionField[102X( [3XR[103X, [3Xnames[103X[, [3Xavoid[103X] ) [32X operation
-  [29X[2XFunctionField[102X( [3XR[103X, [3Xindets[103X ) [32X operation
-  [29X[2XFunctionField[102X( [3XR[103X, [3Xindetnums[103X ) [32X operation
+  [33X[1;0Y[29X[2XFunctionField[102X( [3XR[103X, [3Xrank[103X[, [3Xavoid[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XFunctionField[102X( [3XR[103X, [3Xnames[103X[, [3Xavoid[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XFunctionField[102X( [3XR[103X, [3Xindets[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XFunctionField[102X( [3XR[103X, [3Xindetnums[103X ) [32X operation[133X
   
   [33X[0;0Ycreates  a  function  field  over the integral ring [3XR[103X. If a positive integer
   [3Xrank[103X is given, this creates the function field in [3Xrank[103X indeterminates. These
@@ -1198,7 +1198,7 @@
   
   [1X66.15-9 IsFunctionField[101X
   
-  [29X[2XIsFunctionField[102X( [3Xffield[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsFunctionField[102X( [3Xffield[103X ) [32X Category[133X
   
   [33X[0;0Yis the category of function fields[133X
   
@@ -1208,8 +1208,8 @@
   
   [1X66.16-1 [33X[0;0YUnivariatePolynomialRing[133X[101X
   
-  [29X[2XUnivariatePolynomialRing[102X( [3XR[103X[, [3Xnr[103X] ) [32X operation
-  [29X[2XUnivariatePolynomialRing[102X( [3XR[103X[, [3Xname[103X][, [3Xavoid[103X] ) [32X operation
+  [33X[1;0Y[29X[2XUnivariatePolynomialRing[102X( [3XR[103X[, [3Xnr[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XUnivariatePolynomialRing[102X( [3XR[103X[, [3Xname[103X][, [3Xavoid[103X] ) [32X operation[133X
   
   [33X[0;0Yreturns  a  univariate polynomial ring in the indeterminate [3Xnr[103X over the base
   ring [3XR[103X. If [3Xnr[103X is not given it defaults to 1.[133X
@@ -1223,7 +1223,7 @@
   
   [1X66.16-2 IsUnivariatePolynomialRing[101X
   
-  [29X[2XIsUnivariatePolynomialRing[102X( [3Xpring[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsUnivariatePolynomialRing[102X( [3Xpring[103X ) [32X Category[133X
   
   [33X[0;0Yis the category of polynomial rings with one indeterminate.[133X
   
@@ -1262,7 +1262,7 @@
   
   [1X66.17-1 IsMonomialOrdering[101X
   
-  [29X[2XIsMonomialOrdering[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsMonomialOrdering[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YA  monomial  ordering  is  an  object  representing a monomial ordering. Its
   attributes          [2XMonomialComparisonFunction[102X         ([14X66.17-5[114X)         and
@@ -1270,7 +1270,7 @@
   
   [1X66.17-2 LeadingMonomialOfPolynomial[101X
   
-  [29X[2XLeadingMonomialOfPolynomial[102X( [3Xpol[103X, [3Xord[103X ) [32X operation
+  [33X[1;0Y[29X[2XLeadingMonomialOfPolynomial[102X( [3Xpol[103X, [3Xord[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  leading  monomial  (with  respect  to the ordering [3Xord[103X) of the
   polynomial [3Xpol[103X.[133X
@@ -1292,7 +1292,7 @@
   
   [1X66.17-3 LeadingTermOfPolynomial[101X
   
-  [29X[2XLeadingTermOfPolynomial[102X( [3Xpol[103X, [3Xord[103X ) [32X operation
+  [33X[1;0Y[29X[2XLeadingTermOfPolynomial[102X( [3Xpol[103X, [3Xord[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  leading  term  (with  respect  to  the  ordering  [3Xord[103X)  of the
   polynomial  [3Xpol[103X,  i.e.  the  product  of  leading  coefficient  and  leading
@@ -1300,7 +1300,7 @@
   
   [1X66.17-4 LeadingCoefficientOfPolynomial[101X
   
-  [29X[2XLeadingCoefficientOfPolynomial[102X( [3Xpol[103X, [3Xord[103X ) [32X operation
+  [33X[1;0Y[29X[2XLeadingCoefficientOfPolynomial[102X( [3Xpol[103X, [3Xord[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  leading  coefficient  (that  is the coefficient of the leading
   monomial, see [2XLeadingMonomialOfPolynomial[102X ([14X66.17-2[114X)) of the polynomial [3Xpol[103X.[133X
@@ -1316,7 +1316,7 @@
   
   [1X66.17-5 MonomialComparisonFunction[101X
   
-  [29X[2XMonomialComparisonFunction[102X( [3XO[103X ) [32X attribute
+  [33X[1;0Y[29X[2XMonomialComparisonFunction[102X( [3XO[103X ) [32X attribute[133X
   
   [33X[0;0YIf [3XO[103X is an object representing a monomial ordering, this attribute returns a
   [13Xfunction[113X  that  can  be  used  to compare or sort monomials (and polynomials
@@ -1333,7 +1333,7 @@
   
   [1X66.17-6 MonomialExtrepComparisonFun[101X
   
-  [29X[2XMonomialExtrepComparisonFun[102X( [3XO[103X ) [32X attribute
+  [33X[1;0Y[29X[2XMonomialExtrepComparisonFun[102X( [3XO[103X ) [32X attribute[133X
   
   [33X[0;0YIf [3XO[103X is an object representing a monomial ordering, this attribute returns a
   [13Xfunction[113X  that  can  be  used to compare or sort monomials [13Xin their external
@@ -1342,7 +1342,7 @@
   
   [1X66.17-7 MonomialLexOrdering[101X
   
-  [29X[2XMonomialLexOrdering[102X( [[3Xvari[103X] ) [32X function
+  [33X[1;0Y[29X[2XMonomialLexOrdering[102X( [[3Xvari[103X] ) [32X function[133X
   
   [33X[0;0YThis  function creates a lexicographic ordering for monomials. Monomials are
   compared  first by the exponents of the largest variable, then the exponents
@@ -1375,7 +1375,7 @@
   
   [1X66.17-8 MonomialGrlexOrdering[101X
   
-  [29X[2XMonomialGrlexOrdering[102X( [[3Xvari[103X] ) [32X function
+  [33X[1;0Y[29X[2XMonomialGrlexOrdering[102X( [[3Xvari[103X] ) [32X function[133X
   
   [33X[0;0YThis  function  creates  a  degree/lexicographic  ordering. In this ordering
   monomials  are  compared first by their total degree, then lexicographically
@@ -1389,7 +1389,7 @@
   
   [1X66.17-9 MonomialGrevlexOrdering[101X
   
-  [29X[2XMonomialGrevlexOrdering[102X( [[3Xvari[103X] ) [32X function
+  [33X[1;0Y[29X[2XMonomialGrevlexOrdering[102X( [[3Xvari[103X] ) [32X function[133X
   
   [33X[0;0YThis  function  creates  a  [21Xgrevlex[121X ordering. In this ordering monomials are
   compared  first  by total degree and then backwards lexicographically. (This
@@ -1418,7 +1418,7 @@
   
   [1X66.17-10 EliminationOrdering[101X
   
-  [29X[2XEliminationOrdering[102X( [3Xelim[103X[, [3Xrest[103X] ) [32X function
+  [33X[1;0Y[29X[2XEliminationOrdering[102X( [3Xelim[103X[, [3Xrest[103X] ) [32X function[133X
   
   [33X[0;0YThis  function creates an elimination ordering for eliminating the variables
   in  [3Xelim[103X.  Two  monomials are compared first by the exponent vectors for the
@@ -1432,7 +1432,7 @@
   
   [1X66.17-11 PolynomialReduction[101X
   
-  [29X[2XPolynomialReduction[102X( [3Xpoly[103X, [3Xgens[103X, [3Xorder[103X ) [32X function
+  [33X[1;0Y[29X[2XPolynomialReduction[102X( [3Xpoly[103X, [3Xgens[103X, [3Xorder[103X ) [32X function[133X
   
   [33X[0;0Yreduces  the  polynomial  [3Xpoly[103X  by the ideal generated by the polynomials in
   [3Xgens[103X, using the order [3Xorder[103X of monomials. Unless [3Xgens[103X is a Gröbner basis the
@@ -1448,7 +1448,7 @@
   
   [1X66.17-12 PolynomialReducedRemainder[101X
   
-  [29X[2XPolynomialReducedRemainder[102X( [3Xpoly[103X, [3Xgens[103X, [3Xorder[103X ) [32X function
+  [33X[1;0Y[29X[2XPolynomialReducedRemainder[102X( [3Xpoly[103X, [3Xgens[103X, [3Xorder[103X ) [32X function[133X
   
   [33X[0;0Ythis  operation does the same way as [2XPolynomialReduction[102X ([14X66.17-11[114X) but does
   not keep track of the actual quotients and returns only the remainder (it is
@@ -1456,7 +1456,7 @@
   
   [1X66.17-13 PolynomialDivisionAlgorithm[101X
   
-  [29X[2XPolynomialDivisionAlgorithm[102X( [3Xpoly[103X, [3Xgens[103X, [3Xorder[103X ) [32X function
+  [33X[1;0Y[29X[2XPolynomialDivisionAlgorithm[102X( [3Xpoly[103X, [3Xgens[103X, [3Xorder[103X ) [32X function[133X
   
   [33X[0;0YThis function implements the division algorithm for multivariate polynomials
   as  given  in  [CLO97,  Theorem  3  in  Chapter 2]. (It might be slower than
@@ -1480,7 +1480,7 @@
   
   [1X66.17-14 MonomialExtGrlexLess[101X
   
-  [29X[2XMonomialExtGrlexLess[102X( [3Xa[103X, [3Xb[103X ) [32X function
+  [33X[1;0Y[29X[2XMonomialExtGrlexLess[102X( [3Xa[103X, [3Xb[103X ) [32X function[133X
   
   [33X[0;0Yimplements  comparison  of  monomial  in  their external representation by a
   [21Xgrlex[121X  order  with  [22Xx_1>x_2[122X  (This  is  exactly  the same as the ordering by
@@ -1504,9 +1504,9 @@
   
   [1X66.18-1 [33X[0;0YGroebnerBasis[133X[101X
   
-  [29X[2XGroebnerBasis[102X( [3XL[103X, [3XO[103X ) [32X operation
-  [29X[2XGroebnerBasis[102X( [3XI[103X, [3XO[103X ) [32X operation
-  [29X[2XGroebnerBasisNC[102X( [3XL[103X, [3XO[103X ) [32X function
+  [33X[1;0Y[29X[2XGroebnerBasis[102X( [3XL[103X, [3XO[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGroebnerBasis[102X( [3XI[103X, [3XO[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGroebnerBasisNC[102X( [3XL[103X, [3XO[103X ) [32X function[133X
   
   [33X[0;0YLet [3XO[103X be a monomial ordering and [3XL[103X be a list of polynomials that generate an
   ideal  [3XI[103X.  This  operation returns a Groebner basis of [3XI[103X with respect to the
@@ -1534,8 +1534,8 @@
   
   [1X66.18-2 [33X[0;0YReducedGroebnerBasis[133X[101X
   
-  [29X[2XReducedGroebnerBasis[102X( [3XL[103X, [3XO[103X ) [32X operation
-  [29X[2XReducedGroebnerBasis[102X( [3XI[103X, [3XO[103X ) [32X operation
+  [33X[1;0Y[29X[2XReducedGroebnerBasis[102X( [3XL[103X, [3XO[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XReducedGroebnerBasis[102X( [3XI[103X, [3XO[103X ) [32X operation[133X
   
   [33X[0;0Ya  Groebner  basis [22XB[122X (see [2XGroebnerBasis[102X ([14X66.18-1[114X)) is [13Xreduced[113X if no monomial
   in  a  polynomial  in  [3XB[103X  is  divisible  by  the leading monomial of another
@@ -1564,7 +1564,7 @@
   
   [1X66.18-3 StoredGroebnerBasis[101X
   
-  [29X[2XStoredGroebnerBasis[102X( [3XI[103X ) [32X attribute
+  [33X[1;0Y[29X[2XStoredGroebnerBasis[102X( [3XI[103X ) [32X attribute[133X
   
   [33X[0;0YFor  an  ideal  [3XI[103X in a polynomial ring, this attribute holds a list [22X[ B, O ][122X
   where [22XB[122X is a Groebner basis for the monomial ordering [22XO[122X. this can be used to
@@ -1572,7 +1572,7 @@
   
   [1X66.18-4 InfoGroebner[101X
   
-  [29X[2XInfoGroebner[102X[32X info class
+  [33X[1;0Y[29X[2XInfoGroebner[102X[32X info class[133X
   
   [33X[0;0YThis info class gives information about Groebner basis calculations.[133X
   
@@ -1588,7 +1588,7 @@
   
   [1X66.19-1 RationalFunctionsFamily[101X
   
-  [29X[2XRationalFunctionsFamily[102X( [3Xfam[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRationalFunctionsFamily[102X( [3Xfam[103X ) [32X attribute[133X
   
   [33X[0;0Ycreates a family containing rational functions with coefficients in [3Xfam[103X. All
   elements    of    the   [2XRationalFunctionsFamily[102X   are   rational   functions
@@ -1596,8 +1596,8 @@
   
   [1X66.19-2 IsPolynomialFunctionsFamily[101X
   
-  [29X[2XIsPolynomialFunctionsFamily[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsRationalFunctionsFamily[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsPolynomialFunctionsFamily[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsRationalFunctionsFamily[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0Y[2XIsPolynomialFunctionsFamily[102X  is the category of a family of polynomials. For
   families  over  an  UFD,  the category becomes [2XIsRationalFunctionsFamily[102X (as
@@ -1612,7 +1612,7 @@
   
   [1X66.19-3 CoefficientsFamily[101X
   
-  [29X[2XCoefficientsFamily[102X( [3Xrffam[103X ) [32X attribute
+  [33X[1;0Y[29X[2XCoefficientsFamily[102X( [3Xrffam[103X ) [32X attribute[133X
   
   [33X[0;0YIf  [3Xrffam[103X  has  been created as [10XRationalFunctionsFamily([3Xcfam[103X[10X)[110X this attribute
   holds the coefficients family [3Xcfam[103X.[133X
@@ -1713,7 +1713,7 @@
   
   [1X66.21-1 IsRationalFunctionDefaultRep[101X
   
-  [29X[2XIsRationalFunctionDefaultRep[102X( [3Xobj[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsRationalFunctionDefaultRep[102X( [3Xobj[103X ) [32X Representation[133X
   
   [33X[0;0Yis  the default representation of rational functions. A rational function in
   this  representation  is  defined  by  the  attributes [2XExtRepNumeratorRatFun[102X
@@ -1722,7 +1722,7 @@
   
   [1X66.21-2 ExtRepNumeratorRatFun[101X
   
-  [29X[2XExtRepNumeratorRatFun[102X( [3Xratfun[103X ) [32X attribute
+  [33X[1;0Y[29X[2XExtRepNumeratorRatFun[102X( [3Xratfun[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the  external  representation  of  the  numerator polynomial of the
   rational function [3Xratfun[103X. Numerator and denominator are not guaranteed to be
@@ -1730,7 +1730,7 @@
   
   [1X66.21-3 ExtRepDenominatorRatFun[101X
   
-  [29X[2XExtRepDenominatorRatFun[102X( [3Xratfun[103X ) [32X attribute
+  [33X[1;0Y[29X[2XExtRepDenominatorRatFun[102X( [3Xratfun[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the  external  representation  of the denominator polynomial of the
   rational function [3Xratfun[103X. Numerator and denominator are not guaranteed to be
@@ -1738,7 +1738,7 @@
   
   [1X66.21-4 ZeroCoefficientRatFun[101X
   
-  [29X[2XZeroCoefficientRatFun[102X( [3Xratfun[103X ) [32X operation
+  [33X[1;0Y[29X[2XZeroCoefficientRatFun[102X( [3Xratfun[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the zero of the coefficient ring. This might be needed to represent
   the  zero  polynomial for which the external representation of the numerator
@@ -1746,7 +1746,7 @@
   
   [1X66.21-5 IsPolynomialDefaultRep[101X
   
-  [29X[2XIsPolynomialDefaultRep[102X( [3Xobj[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsPolynomialDefaultRep[102X( [3Xobj[103X ) [32X Representation[133X
   
   [33X[0;0Yis   the  default  representation  of  polynomials.  A  polynomial  in  this
   representation  is  defined  by  the  components  and  [2XExtRepNumeratorRatFun[102X
@@ -1755,7 +1755,7 @@
   
   [1X66.21-6 ExtRepPolynomialRatFun[101X
   
-  [29X[2XExtRepPolynomialRatFun[102X( [3Xpolynomial[103X ) [32X attribute
+  [33X[1;0Y[29X[2XExtRepPolynomialRatFun[102X( [3Xpolynomial[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the  external  representation  of  a  polynomial. The difference to
   [2XExtRepNumeratorRatFun[102X  ([14X66.21-2[114X) is that rational functions might know to be
@@ -1764,7 +1764,7 @@
   
   [1X66.21-7 IsLaurentPolynomialDefaultRep[101X
   
-  [29X[2XIsLaurentPolynomialDefaultRep[102X( [3Xobj[103X ) [32X Representation
+  [33X[1;0Y[29X[2XIsLaurentPolynomialDefaultRep[102X( [3Xobj[103X ) [32X Representation[133X
   
   [33X[0;0YThis   representation   is  used  for  Laurent  polynomials  and  univariate
   polynomials.   It   represents  a  Laurent  polynomial  via  the  attributes
@@ -1780,8 +1780,8 @@
   
   [1X66.22-1 RationalFunctionByExtRep[101X
   
-  [29X[2XRationalFunctionByExtRep[102X( [3Xrfam[103X, [3Xnum[103X, [3Xden[103X ) [32X function
-  [29X[2XRationalFunctionByExtRepNC[102X( [3Xrfam[103X, [3Xnum[103X, [3Xden[103X ) [32X function
+  [33X[1;0Y[29X[2XRationalFunctionByExtRep[102X( [3Xrfam[103X, [3Xnum[103X, [3Xden[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XRationalFunctionByExtRepNC[102X( [3Xrfam[103X, [3Xnum[103X, [3Xden[103X ) [32X function[133X
   
   [33X[0;0Yconstructs     a     rational     function     (in     the    representation
   [2XIsRationalFunctionDefaultRep[102X  ([14X66.21-1[114X))  in  the  rational  function family
@@ -1794,8 +1794,8 @@
   
   [1X66.22-2 PolynomialByExtRep[101X
   
-  [29X[2XPolynomialByExtRep[102X( [3Xrfam[103X, [3Xextrep[103X ) [32X function
-  [29X[2XPolynomialByExtRepNC[102X( [3Xrfam[103X, [3Xextrep[103X ) [32X function
+  [33X[1;0Y[29X[2XPolynomialByExtRep[102X( [3Xrfam[103X, [3Xextrep[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPolynomialByExtRepNC[102X( [3Xrfam[103X, [3Xextrep[103X ) [32X function[133X
   
   [33X[0;0Yconstructs   a  polynomial  (in  the  representation  [2XIsPolynomialDefaultRep[102X
   ([14X66.21-5[114X))  in  the  rational function family [3Xrfam[103X, the polynomial itself is
@@ -1819,8 +1819,8 @@
   
   [1X66.22-3 LaurentPolynomialByExtRep[101X
   
-  [29X[2XLaurentPolynomialByExtRep[102X( [3Xfam[103X, [3Xcofs[103X, [3Xval[103X, [3Xind[103X ) [32X function
-  [29X[2XLaurentPolynomialByExtRepNC[102X( [3Xfam[103X, [3Xcofs[103X, [3Xval[103X, [3Xind[103X ) [32X function
+  [33X[1;0Y[29X[2XLaurentPolynomialByExtRep[102X( [3Xfam[103X, [3Xcofs[103X, [3Xval[103X, [3Xind[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XLaurentPolynomialByExtRepNC[102X( [3Xfam[103X, [3Xcofs[103X, [3Xval[103X, [3Xind[103X ) [32X function[133X
   
   [33X[0;0Ycreates  a  Laurent polynomial in the family [3Xfam[103X with [[3Xcofs[103X,[3Xval[103X] as value of
   [2XCoefficientsOfLaurentPolynomial[102X   ([14X66.13-2[114X).   No  coefficient  shifting  is
@@ -1840,7 +1840,7 @@
   
   [1X66.23-1 ZippedSum[101X
   
-  [29X[2XZippedSum[102X( [3Xz1[103X, [3Xz2[103X, [3Xczero[103X, [3Xfuncs[103X ) [32X operation
+  [33X[1;0Y[29X[2XZippedSum[102X( [3Xz1[103X, [3Xz2[103X, [3Xczero[103X, [3Xfuncs[103X ) [32X operation[133X
   
   [33X[0;0Ycomputes  the  sum of two external representations of polynomials [3Xz1[103X and [3Xz2[103X.
   [3Xczero[103X  is the appropriate coefficient zero and [3Xfuncs[103X a list [ [3Xmonomial_less[103X,
@@ -1853,7 +1853,7 @@
   
   [1X66.23-2 ZippedProduct[101X
   
-  [29X[2XZippedProduct[102X( [3Xz1[103X, [3Xz2[103X, [3Xczero[103X, [3Xfuncs[103X ) [32X operation
+  [33X[1;0Y[29X[2XZippedProduct[102X( [3Xz1[103X, [3Xz2[103X, [3Xczero[103X, [3Xfuncs[103X ) [32X operation[133X
   
   [33X[0;0Ycomputes  the  product of two external representations of polynomials [3Xz1[103X and
   [3Xz2[103X.   [3Xczero[103X  is  the  appropriate  coefficient  zero  and  [3Xfuncs[103X  a  list  [
@@ -1864,7 +1864,7 @@
   
   [1X66.23-3 QuotientPolynomialsExtRep[101X
   
-  [29X[2XQuotientPolynomialsExtRep[102X( [3Xfam[103X, [3Xa[103X, [3Xb[103X ) [32X function
+  [33X[1;0Y[29X[2XQuotientPolynomialsExtRep[102X( [3Xfam[103X, [3Xa[103X, [3Xb[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xa[103X and [3Xb[103X the external representations of two polynomials in the rational
   functions  family [3Xfam[103X. This function computes the external representation of
@@ -1881,7 +1881,7 @@
   
   [1X66.24-1 RationalFunctionByExtRepWithCancellation[101X
   
-  [29X[2XRationalFunctionByExtRepWithCancellation[102X( [3Xrfam[103X, [3Xnum[103X, [3Xden[103X ) [32X function
+  [33X[1;0Y[29X[2XRationalFunctionByExtRepWithCancellation[102X( [3Xrfam[103X, [3Xnum[103X, [3Xden[103X ) [32X function[133X
   
   [33X[0;0Yconstructs  a  rational  function as [2XRationalFunctionByExtRep[102X ([14X66.22-1[114X) does
   but tries to cancel out common factors of numerator and denominator, calling
@@ -1889,7 +1889,7 @@
   
   [1X66.24-2 TryGcdCancelExtRepPolynomials[101X
   
-  [29X[2XTryGcdCancelExtRepPolynomials[102X( [3Xfam[103X, [3Xa[103X, [3Xb[103X ) [32X function
+  [33X[1;0Y[29X[2XTryGcdCancelExtRepPolynomials[102X( [3Xfam[103X, [3Xa[103X, [3Xb[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xa[103X  and  [3Xb[103X  be  the  external  representations  of two polynomials. This
   function   tries   to   cancel  common  factors  between  the  corresponding
@@ -1899,7 +1899,7 @@
   
   [1X66.24-3 HeuristicCancelPolynomialsExtRep[101X
   
-  [29X[2XHeuristicCancelPolynomialsExtRep[102X( [3Xfam[103X, [3Xext1[103X, [3Xext2[103X ) [32X operation
+  [33X[1;0Y[29X[2XHeuristicCancelPolynomialsExtRep[102X( [3Xfam[103X, [3Xext1[103X, [3Xext2[103X ) [32X operation[133X
   
   [33X[0;0Yis  called  by [2XTryGcdCancelExtRepPolynomials[102X ([14X66.24-2[114X) to perform the actual
   work.   It   will   return  either  [9Xfail[109X  or  a  new  list  of  of  external

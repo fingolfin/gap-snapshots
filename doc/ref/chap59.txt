@@ -21,10 +21,10 @@
   
   [1X59.1-1 IsFFE[101X
   
-  [29X[2XIsFFE[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsFFECollection[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsFFECollColl[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsFFECollCollColl[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsFFE[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsFFECollection[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsFFECollColl[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsFFECollCollColl[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YObjects  in  the  category  [2XIsFFE[102X  are  used to implement elements of finite
   fields. In this manual, the term [13Xfinite field element[113X always means an object
@@ -35,8 +35,8 @@
   
   [1X59.1-2 Z[101X
   
-  [29X[2XZ[102X( [3Xp^d[103X ) [32X function
-  [29X[2XZ[102X( [3Xp[103X, [3Xd[103X ) [32X function
+  [33X[1;0Y[29X[2XZ[102X( [3Xp^d[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XZ[102X( [3Xp[103X, [3Xd[103X ) [32X function[133X
   
   [33X[0;0YFor  creating  elements  of  a finite field, the function [2XZ[102X can be used. The
   call  [10XZ([3Xp[103X[10X,[3Xd[103X[10X)[110X  (alternatively [10XZ([3Xp[103X[10X^[3Xd[103X[10X)[110X) returns the designated generator of the
@@ -120,8 +120,8 @@
   
   [1X59.1-3 IsLexOrderedFFE[101X
   
-  [29X[2XIsLexOrderedFFE[102X( [3Xffe[103X ) [32X Category
-  [29X[2XIsLogOrderedFFE[102X( [3Xffe[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsLexOrderedFFE[102X( [3Xffe[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsLogOrderedFFE[102X( [3Xffe[103X ) [32X Category[133X
   
   [33X[0;0YElements  of  finite fields can be compared using the operators [10X=[110X and [10X<[110X. The
   call [10X[3Xa[103X[10X = [3Xb[103X[10X[110X returns [9Xtrue[109X if and only if the finite field elements [3Xa[103X and [3Xb[103X are
@@ -182,9 +182,9 @@
   
   [1X59.2-1 DegreeFFE[101X
   
-  [29X[2XDegreeFFE[102X( [3Xz[103X ) [32X attribute
-  [29X[2XDegreeFFE[102X( [3Xvec[103X ) [32X method
-  [29X[2XDegreeFFE[102X( [3Xmat[103X ) [32X method
+  [33X[1;0Y[29X[2XDegreeFFE[102X( [3Xz[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XDegreeFFE[102X( [3Xvec[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XDegreeFFE[102X( [3Xmat[103X ) [32X method[133X
   
   [33X[0;0Y[2XDegreeFFE[102X  returns  the degree of the smallest finite field [3XF[103X containing the
   element  [3Xz[103X,  respectively  all  elements of the row vector [3Xvec[103X over a finite
@@ -201,7 +201,7 @@
   
   [1X59.2-2 LogFFE[101X
   
-  [29X[2XLogFFE[102X( [3Xz[103X, [3Xr[103X ) [32X operation
+  [33X[1;0Y[29X[2XLogFFE[102X( [3Xz[103X, [3Xr[103X ) [32X operation[133X
   
   [33X[0;0Y[2XLogFFE[102X  returns  the  discrete  logarithm of the element [3Xz[103X in a finite field
   with  respect  to  the  root  [3Xr[103X. An error is signalled if [3Xz[103X is zero. [9Xfail[109X is
@@ -218,8 +218,8 @@
   
   [1X59.2-3 IntFFE[101X
   
-  [29X[2XIntFFE[102X( [3Xz[103X ) [32X attribute
-  [29X[2XInt[102X( [3Xz[103X ) [32X method
+  [33X[1;0Y[29X[2XIntFFE[102X( [3Xz[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XInt[102X( [3Xz[103X ) [32X method[133X
   
   [33X[0;0Y[2XIntFFE[102X returns the integer corresponding to the element [3Xz[103X, which must lie in
   a  finite  prime  field.  That  is,  [2XIntFFE[102X returns the smallest nonnegative
@@ -248,8 +248,8 @@
   
   [1X59.2-4 IntFFESymm[101X
   
-  [29X[2XIntFFESymm[102X( [3Xz[103X ) [32X attribute
-  [29X[2XIntFFESymm[102X( [3Xvec[103X ) [32X attribute
+  [33X[1;0Y[29X[2XIntFFESymm[102X( [3Xz[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIntFFESymm[102X( [3Xvec[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a  finite  prime  field element [3Xz[103X, [2XIntFFESymm[102X returns the corresponding
   integer  of smallest absolute value. That is, [2XIntFFESymm[102X returns the integer
@@ -277,14 +277,14 @@
   
   [1X59.2-5 IntVecFFE[101X
   
-  [29X[2XIntVecFFE[102X( [3Xvecffe[103X ) [32X operation
+  [33X[1;0Y[29X[2XIntVecFFE[102X( [3Xvecffe[103X ) [32X operation[133X
   
   [33X[0;0Yis  the  list of integers corresponding to the vector [3Xvecffe[103X of finite field
   elements in a prime field (see [2XIntFFE[102X ([14X59.2-3[114X)).[133X
   
   [1X59.2-6 AsInternalFFE[101X
   
-  [29X[2XAsInternalFFE[102X( [3Xffe[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAsInternalFFE[102X( [3Xffe[103X ) [32X attribute[133X
   
   [33X[0;0Yreturn an internal FFE equal to [3Xffe[103X if one exists, otherwise [10Xfail[110X[133X
   
@@ -293,8 +293,8 @@
   
   [1X59.3-1 DefaultField[101X
   
-  [29X[2XDefaultField[102X( [3Xlist[103X ) [32X function
-  [29X[2XDefaultRing[102X( [3Xlist[103X ) [32X function
+  [33X[1;0Y[29X[2XDefaultField[102X( [3Xlist[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XDefaultRing[102X( [3Xlist[103X ) [32X function[133X
   
   [33X[0;0Y[2XDefaultField[102X and [2XDefaultRing[102X for finite field elements are defined to return
   the [13Xsmallest[113X field containing the given elements.[133X
@@ -307,16 +307,16 @@
   
   [1X59.3-2 GaloisField[101X
   
-  [29X[2XGaloisField[102X( [3Xp^d[103X ) [32X function
-  [29X[2XGF[102X( [3Xp^d[103X ) [32X function
-  [29X[2XGaloisField[102X( [3Xp[103X, [3Xd[103X ) [32X function
-  [29X[2XGF[102X( [3Xp[103X, [3Xd[103X ) [32X function
-  [29X[2XGaloisField[102X( [3Xsubfield[103X, [3Xd[103X ) [32X function
-  [29X[2XGF[102X( [3Xsubfield[103X, [3Xd[103X ) [32X function
-  [29X[2XGaloisField[102X( [3Xp[103X, [3Xpol[103X ) [32X function
-  [29X[2XGF[102X( [3Xp[103X, [3Xpol[103X ) [32X function
-  [29X[2XGaloisField[102X( [3Xsubfield[103X, [3Xpol[103X ) [32X function
-  [29X[2XGF[102X( [3Xsubfield[103X, [3Xpol[103X ) [32X function
+  [33X[1;0Y[29X[2XGaloisField[102X( [3Xp^d[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGF[102X( [3Xp^d[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGaloisField[102X( [3Xp[103X, [3Xd[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGF[102X( [3Xp[103X, [3Xd[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGaloisField[102X( [3Xsubfield[103X, [3Xd[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGF[102X( [3Xsubfield[103X, [3Xd[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGaloisField[102X( [3Xp[103X, [3Xpol[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGF[102X( [3Xp[103X, [3Xpol[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGaloisField[102X( [3Xsubfield[103X, [3Xpol[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XGF[102X( [3Xsubfield[103X, [3Xpol[103X ) [32X function[133X
   
   [33X[0;0Y[2XGaloisField[102X  returns  a  finite  field.  It  takes  two  arguments. The form
   [10XGaloisField(  [3Xp[103X[10X,  [3Xd[103X[10X  )[110X,  where  [3Xp[103X,  [3Xd[103X  are  integers,  can  also be given as
@@ -362,7 +362,7 @@
   
   [1X59.3-3 PrimitiveRoot[101X
   
-  [29X[2XPrimitiveRoot[102X( [3XF[103X ) [32X attribute
+  [33X[1;0Y[29X[2XPrimitiveRoot[102X( [3XF[103X ) [32X attribute[133X
   
   [33X[0;0YA  [13Xprimitive  root[113X  of  a  finite field is a generator of its multiplicative
   group.  A primitive root is always a primitive element (see [2XPrimitiveElement[102X
@@ -380,7 +380,7 @@
   
   [1X59.4-1 FrobeniusAutomorphism[101X
   
-  [29X[2XFrobeniusAutomorphism[102X( [3XF[103X ) [32X attribute
+  [33X[1;0Y[29X[2XFrobeniusAutomorphism[102X( [3XF[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the  Frobenius  automorphism  of  the  finite  field  [3XF[103X  as a field
   homomorphism (see [14X32.12[114X).[133X
@@ -413,7 +413,7 @@
   
   [1X59.5-1 ConwayPolynomial[101X
   
-  [29X[2XConwayPolynomial[102X( [3Xp[103X, [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XConwayPolynomial[102X( [3Xp[103X, [3Xn[103X ) [32X function[133X
   
   [33X[0;0Yis  the Conway polynomial of the finite field [22XGF(p^n)[122X as polynomial over the
   prime field in characteristic [3Xp[103X.[133X
@@ -474,7 +474,7 @@
   
   [1X59.5-2 IsCheapConwayPolynomial[101X
   
-  [29X[2XIsCheapConwayPolynomial[102X( [3Xp[103X, [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XIsCheapConwayPolynomial[102X( [3Xp[103X, [3Xn[103X ) [32X function[133X
   
   [33X[0;0YReturns  [9Xtrue[109X  if  [10XConwayPolynomial( [3Xp[103X[10X, [3Xn[103X[10X )[110X will give a result in [13Xreasonable[113X
   time.  This is either the case when this polynomial is pre-computed, or if [3Xn[103X
@@ -482,7 +482,7 @@
   
   [1X59.5-3 RandomPrimitivePolynomial[101X
   
-  [29X[2XRandomPrimitivePolynomial[102X( [3XF[103X, [3Xn[103X[, [3Xi[103X] ) [32X function
+  [33X[1;0Y[29X[2XRandomPrimitivePolynomial[102X( [3XF[103X, [3Xn[103X[, [3Xi[103X] ) [32X function[133X
   
   [33X[0;0YFor  a  finite  field  [3XF[103X  and  a  positive integer [3Xn[103X this function returns a
   primitive  polynomial  of degree [3Xn[103X over [3XF[103X, that is a zero of this polynomial
@@ -502,9 +502,9 @@
   
   [1X59.6-1 ViewObj[101X
   
-  [29X[2XViewObj[102X( [3Xz[103X ) [32X method
-  [29X[2XPrintObj[102X( [3Xz[103X ) [32X method
-  [29X[2XDisplay[102X( [3Xz[103X ) [32X method
+  [33X[1;0Y[29X[2XViewObj[102X( [3Xz[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XPrintObj[102X( [3Xz[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XDisplay[102X( [3Xz[103X ) [32X method[133X
   
   [33X[0;0YInternal  finite  field  elements  are  viewed,  printed  and displayed (see
   section  [14X6.3[114X for the distinctions between these operations) as powers of the

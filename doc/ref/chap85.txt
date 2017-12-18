@@ -27,7 +27,7 @@
   
   [1X85.1-1 KeyDependentOperation[101X
   
-  [29X[2XKeyDependentOperation[102X( [3Xname[103X, [3Xdom-req[103X, [3Xkey-req[103X, [3Xkey-test[103X ) [32X function
+  [33X[1;0Y[29X[2XKeyDependentOperation[102X( [3Xname[103X, [3Xdom-req[103X, [3Xkey-req[103X, [3Xkey-test[103X ) [32X function[133X
   
   [33X[0;0YThere are several functions that require as first argument a domain, e.g., a
   group,  and  as  second  argument  something  much  simpler,  e.g., a prime.
@@ -107,7 +107,7 @@
   
   [1X85.2-1 InParentFOA[101X
   
-  [29X[2XInParentFOA[102X( [3Xname[103X, [3Xsuper[103X, [3Xsub[103X, [3XAorP[103X ) [32X function
+  [33X[1;0Y[29X[2XInParentFOA[102X( [3Xname[103X, [3Xsuper[103X, [3Xsub[103X, [3XAorP[103X ) [32X function[133X
   
   [33X[0;0YThis  section  describes  how you can add new [21Xin parent attributes[121X (see [14X31.8[114X
   and  [14X31.7[114X).  As  an  example, we describe how [2XIndex[102X ([14X39.3-2[114X) and its related
@@ -203,7 +203,7 @@
   
   [1X85.3-1 OrbitsishOperation[101X
   
-  [29X[2XOrbitsishOperation[102X( [3Xname[103X, [3Xreqs[103X, [3Xusetype[103X, [3XAorP[103X ) [32X function
+  [33X[1;0Y[29X[2XOrbitsishOperation[102X( [3Xname[103X, [3Xreqs[103X, [3Xusetype[103X, [3XAorP[103X ) [32X function[133X
   
   [33X[0;0Ydeclares an attribute [10Xop[110X, with name [3Xname[103X. The second argument [3Xreqs[103X specifies
   the  list  of required filters for the usual (five-argument) methods that do
@@ -258,7 +258,7 @@
   
   [1X85.3-2 OrbitishFO[101X
   
-  [29X[2XOrbitishFO[102X( [3Xname[103X, [3Xreqs[103X, [3Xfamrel[103X, [3Xusetype[103X, [3Xrealenum[103X ) [32X function
+  [33X[1;0Y[29X[2XOrbitishFO[102X( [3Xname[103X, [3Xreqs[103X, [3Xfamrel[103X, [3Xusetype[103X, [3Xrealenum[103X ) [32X function[133X
   
   [33X[0;0Yis used to create operations like [2XOrbit[102X ([14X41.4-1[114X). This function is analogous
   to  [2XOrbitsishOperation[102X  ([14X85.3-1[114X),  but  for operations [3Xorbish[103X like [10XOrbit( [3XG[103X[10X,

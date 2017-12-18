@@ -6,10 +6,10 @@
                            [1XFinite Incidence Geometry[101X
   
   
-                                      1.3
+                                      1.4
   
   
-                                      2015
+                                  23-Nov-2017
   
   
   John Bamberg, Anton Betten, Philippe Cara, Jan De Beule, Michel Lavrauw, Max
@@ -17,10 +17,13 @@
   
   
   
+  John Bamberg, Anton Betten, Philippe Cara, Jan De Beule, Michel Lavrauw, Max Neunhoeffer.
+      Email:    [7Xmailto:support@fining.org[107X
+      Homepage: [7Xhttp://www.fining.org[107X
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2015 by the authors[133X
+  [33X[0;0Y© 2014-2017 by the authors[133X
   
   [33X[0;0YThis  package  may  be distributed under the terms and conditions of the GNU
   Public License Version 2 or higher.[133X
@@ -28,13 +31,14 @@
   [33X[0;0YThe  development  group  of  [5XFinInG[105X welcomes contact with users. In case you
   have  obtained the package as a deposited package part of archive during the
   installation   of   GAP,   we  call  on  your  beneficence  to  register  at
-  [7Xhttp://cage.ugent.be/fining[107X when you use [5XFinInG[105X.[133X
+  [7Xhttp:/www.fining.org[107X when you use [5XFinInG[105X, or to tell us by sending an e-mail
+  to [7Xmailto:council@fining.org[107X.[133X
   
-  [33X[0;0YPlease  tell us about the use of [5XFinInG[105X in your research or teaching. We are
-  very  interested in results obtained using [5XFinInG[105X and we might refer to your
-  work  in  the  future.  If your work is published, we ask you to cite [5XFinInG[105X
-  like  a  journal  article or book. We provide the necessary BibTex and LaTeX
-  code in Section [14X1.2[114X.[133X
+  [33X[0;0YPlease also tell us about the use of [5XFinInG[105X in your research or teaching. We
+  are  very  interested in results obtained using [5XFinInG[105X and we might refer to
+  your  work  in  the  future.  If  your work is published, we ask you to cite
+  [5XFinInG[105X  like  a journal article or book. We provide the necessary BibTex and
+  LaTeX code in Section [14X1.2[114X.[133X
   
   
   -------------------------------------------------------
@@ -59,7 +63,7 @@
   Lavrauw  and  Corrado Zanella. Our stays in Vicenza were always fruitful and
   very  enjoyable.  During  or  daily  morning and afternoon coffee breaks, we
   discussed   several  topics,  while  enjoying  coffee  in  [13XCaffe  Pigaffeta[113X,
-  [7Xhttp://www.caffepigafetta.it[107X.  Although  one  cannot  acknowledge everybody,
+  [7Xhttp://www.caffepigafetta.com[107X.  Although  one  cannot acknowledge everybody,
   such  as the bakery who provided us with the sandwiches, we acknowledge very
   much the hospitality of Carla and Luigi, who introduced us to many different
   kinds of coffees from all over the world.[133X
@@ -74,7 +78,10 @@
     1.1 [33X[0;0YPhilosophy[133X
     1.2 [33X[0;0YHow to cite [5XFinInG[105X[133X
     1.3 [33X[0;0YOverview of this manual[133X
-    1.4 [33X[0;0YInstalling [5XFinInG[105X[133X
+    1.4 [33X[0;0YGetting and installing [5XFinInG[105X[133X
+      1.4-1 [33X[0;0YInstallation procedure under UNIX like systems[133X
+      1.4-2 [33X[0;0YCompiling packages[133X
+      1.4-3 [33X[0;0YUpdating [5XFinInG[105X[133X
     1.5 [33X[0;0YThe Development Team[133X
   2 [33X[0;0YExamples[133X
     2.1 [33X[0;0YElementary examples[133X
@@ -93,7 +100,7 @@
       2.3-2 [33X[0;0YIntertwiners[133X
       2.3-3 [33X[0;0YKlein correspondence[133X
       2.3-4 [33X[0;0YEmbedding in a subspace[133X
-      2.3-5 [33X[0;0Ysubgeometries[133X
+      2.3-5 [33X[0;0YSubgeometries[133X
       2.3-6 [33X[0;0YEmbedding by field reduction[133X
     2.4 [33X[0;0YSome geometrical objects[133X
       2.4-1 [33X[0;0YSpreads of [22XW(5,3)[122X[133X
@@ -339,10 +346,14 @@
     8.1 [33X[0;0YOrbits[133X
       8.1-1 FiningOrbit
       8.1-2 FiningOrbits
+      8.1-3 FiningOrbitsDomain
     8.2 [33X[0;0YStabilisers[133X
       8.2-1 FiningStabiliser
       8.2-2 FiningStabiliserOrb
       8.2-3 FiningSetwiseStabiliser
+      8.2-4 StabiliserGroupOfSubspace
+      8.2-5 ProjectiveStabiliserGroupOfSubspace
+      8.2-6 SpecialProjectiveStabiliserGroupOfSubspace
     8.3 [33X[0;0YActions and nice monomorphisms revisited[133X
       8.3-1 [33X[0;0YAction functions[133X
       8.3-2 [33X[0;0YGeneric GAP functions[133X

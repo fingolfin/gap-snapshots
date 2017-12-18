@@ -34,24 +34,12 @@
   [[20XBH08[120X]  [16XBovdi,  V.  A.  and  Hertweck, M.[116X, [17XZassenhaus conjecture for central
   extensions of S_5[117X, [18XJ. Group Theory[118X, [19X11[119X, 1 (2008), 63--74.
   
-  [[20XBJK11[120X]  [16XBovdi,  V.  A.,  Jespers, E. and Konovalov, A. B.[116X, [17XTorsion units in
-  integral  group  rings  of Janko simple groups[117X, [18XMath. Comp.[118X, [19X80[119X, 273 (2011),
-  593--615.
-  
-  [[20XBK07a[120X]  [16XBovdi, V. A. and Konovalov, A. B.[116X, [17XIntegral group ring of the first
-  Mathieu  simple  group[117X,  in Groups St. Andrews 2005. Vol. 1, Cambridge Univ.
-  Press, Cambridge, London Math. Soc. Lecture Note Ser., [19X339[119X (2007), 237--245.
-  
-  [[20XBK07b[120X]  [16XBovdi,  V.  A.  and  Konovalov,  A.  B.[116X, [17XIntegral group ring of the
+  [[20XBK07[120X]  [16XBovdi,  V.  A.  and  Konovalov,  A.  B.[116X,  [17XIntegral group ring of the
   McLaughlin simple group[117X, [18XAlgebra Discrete Math.[118X, 2 (2007), 43--53.
   
   [[20XBK10[120X]  [16XBovdi,  V.  A. and Konovalov, A. B.[116X, [17XTorsion units in integral group
   ring  of  Higman-Sims simple group[117X, [18XStudia Sci. Math. Hungar.[118X, [19X47[119X, 1 (2010),
   1--11.
-  
-  [[20XBKL08[120X]  [16XBovdi,  V.  A.,  Konovalov,  A. B. and Linton, S.[116X, [17XTorsion units in
-  integral  group ring of the Mathieu simple group M_22[117X, [18XLMS J. Comput. Math.[118X,
-  [19X11[119X (2008), 28--39.
   
   [[20XBIRSS[120X]  [16XBruns,  W.,  Ichim,  B.,  R\"omer,  T.,  Sieg,  R. and S\"oger, C.[116X,
   [17XNormaliz.  Algorithms  for  rational  cones and affine monoids[117X, Available at

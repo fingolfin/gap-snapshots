@@ -1,5 +1,0 @@
-gap> 
-gap> #gammasp
-gap> GammaSp(4,GF(9));
-PGammaSp(4,9)
-gap> quit;

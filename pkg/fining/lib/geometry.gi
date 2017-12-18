@@ -8,19 +8,18 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2014	Colorado State University, Fort Collins
+##  Copyright 2017	Colorado State University
+##                  Sabancı Üniversitesi
 ##					Università degli Studi di Padova
-##					Universeit Gent
+##					Universiteit Gent
 ##					University of St. Andrews
-##					University of Western Australia, Perth
+##					University of Western Australia
 ##                  Vrije Universiteit Brussel
-##                 
+##
 ##
 ##  Implementation stuff for geometries.
 ##
 #############################################################################
-
-Print("loading: geometry\c");
 
 InstallValue( FINING, rec() );
 
@@ -1004,7 +1003,7 @@ InstallMethod( IsConfiguration,
     "for an incidence structure",
     [ IsIncidenceStructure],
     function(x)
-    Info(InfoFinInG, 10, "The authors are grateful to Harald Gropp for pointing out clearly the difference between a configuration and a constellation.");
+    Info(InfoFinInG, 2, "The authors are grateful to Harald Gropp for pointing out clearly the difference between a configuration and a constellation.");
     return true;
     end );
     
@@ -1012,7 +1011,7 @@ InstallMethod( IsConstellation,
     "for an incidence structure",
     [ IsIncidenceStructure],
     function(x)
-    Info(InfoFinInG, 10, "The authors are grateful to Harald Gropp for pointing out clearly the difference between a configuration and a constellation.");
+    Info(InfoFinInG, 2, "The authors are grateful to Harald Gropp for pointing out clearly the difference between a configuration and a constellation.");
     return true;
     end );
 

@@ -19,6 +19,7 @@
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7.html">[Next Chapter]</a>&nbsp;  </div>
 
+<p id="mathjaxlink" class="pcenter"><a href="chap6_mj.html">[MathJax on]</a></p>
 <p><a id="X87BA55CB86B110EC" name="X87BA55CB86B110EC"></a></p>
 <div class="ChapSects"><a href="chap6.html#X87BA55CB86B110EC">6 <span class="Heading">Polarities of Projective Spaces</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X86D948C3875A5005">6.1 <span class="Heading">Creating polarities of projective spaces</span></a>
@@ -62,7 +63,7 @@ spaces</span></a>
 
 <h4>6.1 <span class="Heading">Creating polarities of projective spaces</span></h4>
 
-<p>Since polarities of a projective space necessarily have an involutory field automorphism as companion automorphism and the standard duality of the projective space as the companion projective space isomorphism, a polarity of a projective space is determined completely by a suitable matrix <span class="SimpleMath">A</span>. Every polarity of a projective space <span class="SimpleMath">PG(n,q)</span> is listed in the following table, including the conditions on the matrix <span class="SimpleMath">A</span>.</p>
+<p>Since polarities of a projective space necessarily have an involutory field automorphism as companion automorphism and the standard duality of the projective space as the companion projective space isomorphism, a polarity of a projective space is determined completely by a suitable matrix <span class="SimpleMath">A</span>. Every polarity of a projective space PG(n,q) is listed in the following table, including the conditions on the matrix <span class="SimpleMath">A</span>.</p>
 
 <div class="pcenter"><table class="GAPDocTable">
 <caption class="GAPDocTable"><b>Table: </b>polarities of a projective space</caption>
@@ -83,7 +84,7 @@ spaces</span></a>
 </tr>
 <tr>
 <td class="tdleft">orthogonal</td>
-<td class="tdleft">A<sup>T </sup> = - A</td>
+<td class="tdleft">A<sup>T </sup> = A</td>
 <td class="tdleft"></td>
 </tr>
 <tr>
@@ -94,9 +95,9 @@ spaces</span></a>
 </table><br /><p>&nbsp;</p><br />
 </div>
 
-<p>A hermitian polarity of the projective space <span class="SimpleMath">PG(n,q)</span> exists if and only if the field <span class="SimpleMath">GF(q)</span> admits an involutory field automorphism θ.</p>
+<p>A hermitian polarity of the projective space PG(n,q) exists if and only if the field GF(q) admits an involutory field automorphism.</p>
 
-<p>It is well known that there is a correspondence between polarities of projective spaces and non-degenerate sesquilinear forms on the underlying vector space. Consider a sesquilinear form <span class="SimpleMath">f</span> on the vector space <span class="SimpleMath">V(n+1,q)</span>. Then <span class="SimpleMath">f</span> induces a map on the elements of <span class="SimpleMath">PG(n,q)</span> as follows: every element with underlying subspace α is mapped to the element with underlying subspace α<sup>⊥</sup>, i.e. the subspace of <span class="SimpleMath">V(n+1,q)</span> orthogonal to α with respect to the form <span class="SimpleMath">f</span>. It is clear that this induced map is a polarity of <span class="SimpleMath">PG(n,q)</span>. Also the converse is true, with any polarity of <span class="SimpleMath">PG(n,q)</span> corresponds a sesquilinear form on <span class="SimpleMath">V(n+1,q)</span>. The above classification of polarities of <span class="SimpleMath">PG(n,q)</span> follows from the classification of sesquilinear forms on <span class="SimpleMath">V(n+1,q)</span>. For more information, we refer to <a href="chapBib.html#biBHirschfeldThas">[HT91]</a> and <a href="chapBib.html#biBKleidmanLiebeck">[KL90]</a>. We mention that the implementation of the action of correlations on projective points (see <a href="chap5.html#X7EBA895D7A501CE0"><span class="RefLink">5.8</span></a>) guarantees that a sesquilinear form with matrix <span class="SimpleMath">M</span> and field automorphism θ corresponds to a polarity with matrix <span class="SimpleMath">M</span> and field automorphism θ and vice versa.</p>
+<p>It is well known that there is a correspondence between polarities of projective spaces and non-degenerate sesquilinear forms on the underlying vector space. Consider a sesquilinear form <span class="SimpleMath">f</span> on the vector space <span class="SimpleMath">V(n+1,q)</span>. Then <span class="SimpleMath">f</span> induces a map on the elements of PG(n,q) as follows: every element with underlying subspace <span class="SimpleMath">α</span> is mapped to the element with underlying subspace α<sup>⊥</sup>, i.e. the subspace of <span class="SimpleMath">V(n+1,q)</span> orthogonal to <span class="SimpleMath">α</span> with respect to the form <span class="SimpleMath">f</span>. It is clear that this induced map is a polarity of PG(n,q). Also the converse is true, with any polarity of PG(n,q) corresponds a sesquilinear form on <span class="SimpleMath">V(n+1,q)</span>. The above classification of polarities of PG(n,q) follows from the classification of sesquilinear forms on <span class="SimpleMath">V(n+1,q)</span>. For more information, we refer to <a href="chapBib.html#biBHirschfeldThas">[HT91]</a> and <a href="chapBib.html#biBKleidmanLiebeck">[KL90]</a>. We mention that the implementation of the action of correlations on projective points (see <a href="chap5.html#X7EBA895D7A501CE0"><span class="RefLink">5.8</span></a>) guarantees that a sesquilinear form with matrix <span class="SimpleMath">M</span> and field automorphism <span class="SimpleMath">θ</span> corresponds to a polarity with matrix <span class="SimpleMath">M</span> and field automorphism <span class="SimpleMath">θ</span> and vice versa.</p>
 
 <p>In <strong class="pkg">FinInG</strong>, polarities of projective spaces are always objects in the category <code class="code">IsPolarityOfProjectiveSpace</code>, which is a subcategory of the category <code class="code">IsProjGrpElWithFrobWithPSIsom</code>.</p>
 
@@ -376,9 +377,9 @@ true
 <h4>6.3 <span class="Heading">Polarities, absolute points, totally isotropic elements and finite classical polar
 spaces</span></h4>
 
-<p>We already mentioned the equivalence between polarities of <span class="SimpleMath">PG(n,q)</span> and sesquilinear forms on <span class="SimpleMath">V(n+1,q)</span>, hence there is a relation between polarities of <span class="SimpleMath">PG(n,q)</span> and polar spaces induced by sesquilinear forms. The following concepts express these relations geometrically.</p>
+<p>We already mentioned the equivalence between polarities of PG(n,q) and sesquilinear forms on <span class="SimpleMath">V(n+1,q)</span>, hence there is a relation between polarities of PG(n,q) and polar spaces induced by sesquilinear forms. The following concepts express these relations geometrically.</p>
 
-<p>Suppose that φ is a polarity of <span class="SimpleMath">PG(n,q)</span> and that α is an element of <span class="SimpleMath">PG(n,q)</span>. We call α a <em>totally isotropic element</em> or an <em>absolute element</em> if and only if α is incident with α<sup>φ</sup>. An absolute element that is a point is also called an <em>absolute point</em> or an <em>isotropic point</em>. It is clear that an element of <span class="SimpleMath">PG(n,q)</span> is absolute if and only if the underlying vector space is totally isotropic with respect to the sesquilinear form equivalent to φ. Hence the absolute elements induce a <em>finite classical polar space</em>, the same that is induced by the equivalent sesquilinear form. When φ is a pseudo-polarity, the set of absolute elements are the elements of a hyperplane of <span class="SimpleMath">PG(n,q)</span>.</p>
+<p>Suppose that <span class="SimpleMath">ϕ</span> is a polarity of PG(n,q) and that <span class="SimpleMath">α</span> is an element of PG(n,q). We call <span class="SimpleMath">α</span> a <em>totally isotropic element</em> or an <em>absolute element</em> if and only if <span class="SimpleMath">α</span> is incident with α<sup>φ</sup>. An absolute element that is a point is also called an <em>absolute point</em> or an <em>isotropic point</em>. It is clear that an element of PG(n,q) is absolute if and only if the underlying vector space is totally isotropic with respect to the sesquilinear form equivalent to <span class="SimpleMath">ϕ</span>. Hence the absolute elements induce a <em>finite classical polar space</em>, the same that is induced by the equivalent sesquilinear form. When <span class="SimpleMath">ϕ</span> is a pseudo-polarity, the set of absolute elements are the elements of a hyperplane of PG(n,q).</p>
 
 <p>We restrict our introduction to finite classical polar spaces in this section to the following examples. Many aspects of these geometries are extensively described in Chapter <a href="chap7.html#X7F96B1327C022A28"><span class="RefLink">7</span></a>.</p>
 

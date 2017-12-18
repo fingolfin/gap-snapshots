@@ -183,7 +183,7 @@
 
 <h5>32.1-1 IsDirectProductElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDirectProductElement</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDirectProductElement</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p><code class="func">IsDirectProductElement</code> is a subcategory of the meet of <code class="func">IsDenseList</code> (<a href="chap21.html#X870AA9D8798C93DD"><span class="RefLink">21.1-2</span></a>), <code class="func">IsMultiplicativeElementWithInverse</code> (<a href="chap31.html#X7FDB14E57814FA3B"><span class="RefLink">31.14-13</span></a>), <code class="func">IsAdditiveElementWithInverse</code> (<a href="chap31.html#X7C0E4AE883947778"><span class="RefLink">31.14-7</span></a>), and <code class="func">IsCopyable</code> (<a href="chap12.html#X811EFD727EBD1ADC"><span class="RefLink">12.6-1</span></a>), where the arithmetic operations (addition, zero, additive inverse, multiplication, powering, one, inverse) are defined componentwise.</p>
 
 <p>Note that each of these operations will cause an error message if its result for at least one component cannot be formed.</p>
@@ -198,15 +198,15 @@
 
 <h5>32.2-1 GeneralMappingByElements</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneralMappingByElements</code>( <var class="Arg">S</var>, <var class="Arg">R</var>, <var class="Arg">elms</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneralMappingByElements</code>( <var class="Arg">S</var>, <var class="Arg">R</var>, <var class="Arg">elms</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is the general mapping with source <var class="Arg">S</var> and range <var class="Arg">R</var>, and with underlying relation consisting of the collection <var class="Arg">elms</var> of direct product elements.</p>
 
 <p><a id="X7D55E1977ED70E01" name="X7D55E1977ED70E01"></a></p>
 
 <h5>32.2-2 <span class="Heading">MappingByFunction</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MappingByFunction</code>( <var class="Arg">S</var>, <var class="Arg">R</var>, <var class="Arg">fun</var>[, <var class="Arg">invfun</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MappingByFunction</code>( <var class="Arg">S</var>, <var class="Arg">R</var>, <var class="Arg">fun</var>, <var class="Arg">false</var>, <var class="Arg">prefun</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MappingByFunction</code>( <var class="Arg">S</var>, <var class="Arg">R</var>, <var class="Arg">fun</var>[, <var class="Arg">invfun</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MappingByFunction</code>( <var class="Arg">S</var>, <var class="Arg">R</var>, <var class="Arg">fun</var>, <var class="Arg">false</var>, <var class="Arg">prefun</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">MappingByFunction</code> returns a mapping <code class="code">map</code> with source <var class="Arg">S</var> and range <var class="Arg">R</var>, such that each element <span class="SimpleMath">s</span> of <var class="Arg">S</var> is mapped to the element <var class="Arg">fun</var><span class="SimpleMath">( s )</span>, where <var class="Arg">fun</var> is a <strong class="pkg">GAP</strong> function.</p>
 
 <p>If the argument <var class="Arg">invfun</var> is bound then <code class="code">map</code> is a bijection between <var class="Arg">S</var> and <var class="Arg">R</var>, and the preimage of each element <span class="SimpleMath">r</span> of <var class="Arg">R</var> is given by <var class="Arg">invfun</var><span class="SimpleMath">( r )</span>, where <var class="Arg">invfun</var> is a <strong class="pkg">GAP</strong> function.</p>
@@ -219,7 +219,7 @@
 
 <h5>32.2-3 InverseGeneralMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseGeneralMapping</code>( <var class="Arg">map</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InverseGeneralMapping</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The <em>inverse general mapping</em> of a general mapping <var class="Arg">map</var> is the general mapping whose underlying relation (see <code class="func">UnderlyingRelation</code> (<a href="chap32.html#X784F871383FB599B"><span class="RefLink">32.3-9</span></a>)) contains a pair <span class="SimpleMath">(r,s)</span> if and only if the underlying relation of <var class="Arg">map</var> contains the pair <span class="SimpleMath">(s,r)</span>.</p>
 
 <p>See the introduction to Chapter <a href="chap32.html#X7C9734B880042C73"><span class="RefLink">32</span></a> for the subtleties concerning the difference between <code class="func">InverseGeneralMapping</code> and <code class="func">Inverse</code> (<a href="chap31.html#X78EE524E83624057"><span class="RefLink">31.10-8</span></a>).</p>
@@ -230,7 +230,7 @@
 
 <h5>32.2-4 CompositionMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompositionMapping</code>( <var class="Arg">map1</var>, <var class="Arg">map2</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompositionMapping</code>( <var class="Arg">map1</var>, <var class="Arg">map2</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">CompositionMapping</code> allows one to compose arbitrarily many general mappings, and delegates each step to <code class="func">CompositionMapping2</code> (<a href="chap32.html#X86486B687B7077AC"><span class="RefLink">32.2-5</span></a>).</p>
 
 <p>Additionally, the properties <code class="func">IsInjective</code> (<a href="chap32.html#X7F065FD7822C0A12"><span class="RefLink">32.3-4</span></a>) and <code class="func">IsSingleValued</code> (<a href="chap32.html#X86D44C8A78BF1981"><span class="RefLink">32.3-2</span></a>) are maintained; if the source of the <span class="SimpleMath">i+1</span>-th general mapping is identical to the range of the <span class="SimpleMath">i</span>-th general mapping, also <code class="func">IsTotal</code> (<a href="chap32.html#X83C7494E828CC9C8"><span class="RefLink">32.3-1</span></a>) and <code class="func">IsSurjective</code> (<a href="chap32.html#X784ECE847E005B8F"><span class="RefLink">32.3-5</span></a>) are maintained. (So one should not call <code class="func">CompositionMapping2</code> (<a href="chap32.html#X86486B687B7077AC"><span class="RefLink">32.2-5</span></a>) directly if one wants to maintain these properties.)</p>
@@ -241,8 +241,8 @@
 
 <h5>32.2-5 CompositionMapping2</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompositionMapping2</code>( <var class="Arg">map2</var>, <var class="Arg">map1</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompositionMapping2General</code>( <var class="Arg">map2</var>, <var class="Arg">map1</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompositionMapping2</code>( <var class="Arg">map2</var>, <var class="Arg">map1</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompositionMapping2General</code>( <var class="Arg">map2</var>, <var class="Arg">map1</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">CompositionMapping2</code> returns the composition of <var class="Arg">map2</var> and <var class="Arg">map1</var>, this is the general mapping that maps an element first under <var class="Arg">map1</var>, and then maps the images under <var class="Arg">map2</var>.</p>
 
 <p>(Note the reverse ordering of arguments in the composition via the multiplication <code class="func">\*</code> (<a href="chap31.html#X8481C9B97B214C23"><span class="RefLink">31.12-1</span></a>).</p>
@@ -253,21 +253,21 @@
 
 <h5>32.2-6 IsCompositionMappingRep</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCompositionMappingRep</code>( <var class="Arg">map</var> )</td><td class="tdright">( representation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCompositionMappingRep</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;representation&nbsp;)</td></tr></table></div>
 <p>Mappings in this representation are stored as composition of two mappings, (pre)images of elements are computed in a two-step process. The constituent mappings of the composition can be obtained via <code class="func">ConstituentsCompositionMapping</code> (<a href="chap32.html#X87775B438008DCA5"><span class="RefLink">32.2-7</span></a>).</p>
 
 <p><a id="X87775B438008DCA5" name="X87775B438008DCA5"></a></p>
 
 <h5>32.2-7 ConstituentsCompositionMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConstituentsCompositionMapping</code>( <var class="Arg">map</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConstituentsCompositionMapping</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">map</var> is stored in the representation <code class="func">IsCompositionMappingRep</code> (<a href="chap32.html#X7A926D167C3155F6"><span class="RefLink">32.2-6</span></a>) as composition of two mappings <var class="Arg">map1</var> and <var class="Arg">map2</var>, this function returns the two constituent mappings in a list <code class="code">[ <var class="Arg">map1</var>, <var class="Arg">map2</var> ]</code>.</p>
 
 <p><a id="X795FF8DC785F110A" name="X795FF8DC785F110A"></a></p>
 
 <h5>32.2-8 ZeroMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZeroMapping</code>( <var class="Arg">S</var>, <var class="Arg">R</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZeroMapping</code>( <var class="Arg">S</var>, <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>A zero mapping is a total general mapping that maps each element of its source to the zero element of its range.</p>
 
 <p>(Each mapping with empty source is a zero mapping.)</p>
@@ -276,31 +276,31 @@
 
 <h5>32.2-9 IdentityMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdentityMapping</code>( <var class="Arg">D</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdentityMapping</code>( <var class="Arg">D</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is the bijective mapping with source and range equal to the collection <var class="Arg">D</var>, which maps each element of <var class="Arg">D</var> to itself.</p>
 
 <p><a id="X86452F8587CBAEA0" name="X86452F8587CBAEA0"></a></p>
 
 <h5>32.2-10 <span class="Heading">Embedding</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Embedding</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Embedding</code>( <var class="Arg">S</var>, <var class="Arg">i</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Embedding</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Embedding</code>( <var class="Arg">S</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the embedding of the domain <var class="Arg">S</var> in the domain <var class="Arg">T</var>, or in the second form, some domain indexed by the positive integer <var class="Arg">i</var>. The precise natures of the various methods are described elsewhere: for Lie algebras, see <code class="func">LieFamily</code> (<a href="chap64.html#X8725993C7BF386EE"><span class="RefLink">64.1-3</span></a>); for group products, see <a href="chap49.html#X798FDA1386A0EAC6"><span class="RefLink">49.6</span></a> for a general description, or for examples see <a href="chap49.html#X7D39232A84CD8DBD"><span class="RefLink">49.1</span></a> for direct products, <a href="chap49.html#X87FE512E7DB7346C"><span class="RefLink">49.2</span></a> for semidirect products, or <a href="chap49.html#X7DF2AEBC8518FFA4"><span class="RefLink">49.4</span></a> for wreath products; or for magma rings see <a href="chap65.html#X80366F1480ACD8DF"><span class="RefLink">65.3</span></a>.</p>
 
 <p><a id="X8769E8DA80BC96C1" name="X8769E8DA80BC96C1"></a></p>
 
 <h5>32.2-11 <span class="Heading">Projection</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Projection</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Projection</code>( <var class="Arg">S</var>, <var class="Arg">i</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Projection</code>( <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Projection</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Projection</code>( <var class="Arg">S</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Projection</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the projection of the domain <var class="Arg">S</var> onto the domain <var class="Arg">T</var>, or in the second form, some domain indexed by the positive integer <var class="Arg">i</var>, or in the third form some natural quotient domain of <var class="Arg">S</var>. Various methods are defined for group products; see <a href="chap49.html#X798FDA1386A0EAC6"><span class="RefLink">49.6</span></a> for a general description, or for examples see <a href="chap49.html#X7D39232A84CD8DBD"><span class="RefLink">49.1</span></a> for direct products, <a href="chap49.html#X87FE512E7DB7346C"><span class="RefLink">49.2</span></a> for semidirect products, <a href="chap49.html#X815AFC537B215D7B"><span class="RefLink">49.3</span></a> for subdirect products, or <a href="chap49.html#X7DF2AEBC8518FFA4"><span class="RefLink">49.4</span></a> for wreath products.</p>
 
 <p><a id="X800014D683A81009" name="X800014D683A81009"></a></p>
 
 <h5>32.2-12 RestrictedMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RestrictedMapping</code>( <var class="Arg">map</var>, <var class="Arg">subdom</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RestrictedMapping</code>( <var class="Arg">map</var>, <var class="Arg">subdom</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">subdom</var> is a subdomain of the source of the general mapping <var class="Arg">map</var>, this operation returns the restriction of <var class="Arg">map</var> to <var class="Arg">subdom</var>.</p>
 
 <p><a id="X7E5A430D7F838F1C" name="X7E5A430D7F838F1C"></a></p>
@@ -311,14 +311,14 @@
 
 <h5>32.3-1 IsTotal</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTotal</code>( <var class="Arg">map</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsTotal</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>is <code class="keyw">true</code> if each element in the source <span class="SimpleMath">S</span> of the general mapping <var class="Arg">map</var> has images, i.e., <span class="SimpleMath">s^<var class="Arg">map</var> ≠ ∅</span> for all <span class="SimpleMath">s ∈ S</span>, and <code class="keyw">false</code> otherwise.</p>
 
 <p><a id="X86D44C8A78BF1981" name="X86D44C8A78BF1981"></a></p>
 
 <h5>32.3-2 IsSingleValued</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSingleValued</code>( <var class="Arg">map</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSingleValued</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>is <code class="keyw">true</code> if each element in the source <span class="SimpleMath">S</span> of the general mapping <var class="Arg">map</var> has at most one image, i.e., <span class="SimpleMath">|s^<var class="Arg">map</var>| ≤ 1</span> for all <span class="SimpleMath">s ∈ S</span>, and <code class="keyw">false</code> otherwise.</p>
 
 <p>Equivalently, <code class="code">IsSingleValued( <var class="Arg">map</var> )</code> is <code class="keyw">true</code> if and only if the preimages of different elements in <span class="SimpleMath">R</span> are disjoint.</p>
@@ -327,7 +327,7 @@
 
 <h5>32.3-3 IsMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMapping</code>( <var class="Arg">map</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMapping</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p>A <em>mapping</em> <var class="Arg">map</var> is a general mapping that assigns to each element <code class="code">elm</code> of its source a unique element <code class="code">Image( <var class="Arg">map</var>, elm )</code> of its range.</p>
 
 <p>Equivalently, the general mapping <var class="Arg">map</var> is a mapping if and only if it is total and single-valued (see <code class="func">IsTotal</code> (<a href="chap32.html#X83C7494E828CC9C8"><span class="RefLink">32.3-1</span></a>), <code class="func">IsSingleValued</code> (<a href="chap32.html#X86D44C8A78BF1981"><span class="RefLink">32.3-2</span></a>)).</p>
@@ -336,7 +336,7 @@
 
 <h5>32.3-4 IsInjective</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInjective</code>( <var class="Arg">map</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInjective</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>is <code class="keyw">true</code> if the images of different elements in the source <span class="SimpleMath">S</span> of the general mapping <var class="Arg">map</var> are disjoint, i.e., <span class="SimpleMath">x^<var class="Arg">map</var> ∩ y^<var class="Arg">map</var> = ∅</span> for <span class="SimpleMath">x ≠ y ∈ S</span>, and <code class="keyw">false</code> otherwise.</p>
 
 <p>Equivalently, <code class="code">IsInjective( <var class="Arg">map</var> )</code> is <code class="keyw">true</code> if and only if each element in the range of <var class="Arg">map</var> has at most one preimage in <span class="SimpleMath">S</span>.</p>
@@ -345,35 +345,35 @@
 
 <h5>32.3-5 IsSurjective</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSurjective</code>( <var class="Arg">map</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSurjective</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>is <code class="keyw">true</code> if each element in the range <span class="SimpleMath">R</span> of the general mapping <var class="Arg">map</var> has preimages in the source <span class="SimpleMath">S</span> of <var class="Arg">map</var>, i.e., <span class="SimpleMath">{ s ∈ S ∣ x ∈ s^<var class="Arg">map</var> } ≠ ∅</span> for all <span class="SimpleMath">x ∈ R</span>, and <code class="keyw">false</code> otherwise.</p>
 
 <p><a id="X878F56AB7B342767" name="X878F56AB7B342767"></a></p>
 
 <h5>32.3-6 IsBijective</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBijective</code>( <var class="Arg">map</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBijective</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>A general mapping <var class="Arg">map</var> is <em>bijective</em> if and only if it is an injective and surjective mapping (see <code class="func">IsMapping</code> (<a href="chap32.html#X7CC95EB282854385"><span class="RefLink">32.3-3</span></a>), <code class="func">IsInjective</code> (<a href="chap32.html#X7F065FD7822C0A12"><span class="RefLink">32.3-4</span></a>), <code class="func">IsSurjective</code> (<a href="chap32.html#X784ECE847E005B8F"><span class="RefLink">32.3-5</span></a>)).</p>
 
 <p><a id="X7B6FD7277CDE9FCB" name="X7B6FD7277CDE9FCB"></a></p>
 
 <h5>32.3-7 Range</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Range</code>( <var class="Arg">map</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Range</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The range of a general mapping.</p>
 
 <p><a id="X7DE8173F80E07AB1" name="X7DE8173F80E07AB1"></a></p>
 
 <h5>32.3-8 Source</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Source</code>( <var class="Arg">map</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Source</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The source of a general mapping.</p>
 
 <p><a id="X784F871383FB599B" name="X784F871383FB599B"></a></p>
 
 <h5>32.3-9 UnderlyingRelation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingRelation</code>( <var class="Arg">map</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingRelation</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The <em>underlying relation</em> of a general mapping <var class="Arg">map</var> is the domain of pairs <span class="SimpleMath">(s,r)</span>, with <span class="SimpleMath">s</span> in the source and <span class="SimpleMath">r</span> in the range of <var class="Arg">map</var> (see <code class="func">Source</code> (<a href="chap32.html#X7DE8173F80E07AB1"><span class="RefLink">32.3-8</span></a>), <code class="func">Range</code> (<a href="chap32.html#X7B6FD7277CDE9FCB"><span class="RefLink">32.3-7</span></a>)), and <span class="SimpleMath">r ∈</span> <code class="code">ImagesElm( <var class="Arg">map</var>, </code><span class="SimpleMath">s</span><code class="code"> )</code>.</p>
 
 <p>Each element of the underlying relation is represented by a direct product element (see <code class="func">IsDirectProductElement</code> (<a href="chap32.html#X87FD9FE787023FF0"><span class="RefLink">32.1-1</span></a>)).</p>
@@ -382,7 +382,7 @@
 
 <h5>32.3-10 UnderlyingGeneralMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingGeneralMapping</code>( <var class="Arg">map</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingGeneralMapping</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>attribute for underlying relations of general mappings</p>
 
 <p><a id="X83B4FF15847F06FC" name="X83B4FF15847F06FC"></a></p>
@@ -393,7 +393,7 @@
 
 <h5>32.4-1 ImagesSource</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImagesSource</code>( <var class="Arg">map</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImagesSource</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is the set of images of the source of the general mapping <var class="Arg">map</var>.</p>
 
 <p><code class="func">ImagesSource</code> delegates to <code class="func">ImagesSet</code> (<a href="chap32.html#X8781348F7F5796A0"><span class="RefLink">32.4-4</span></a>), it is introduced only to store the image of <var class="Arg">map</var> as attribute value.</p>
@@ -402,7 +402,7 @@
 
 <h5>32.4-2 ImagesRepresentative</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImagesRepresentative</code>( <var class="Arg">map</var>, <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImagesRepresentative</code>( <var class="Arg">map</var>, <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">elm</var> is an element of the source of the general mapping <var class="Arg">map</var> then <code class="func">ImagesRepresentative</code> returns either a representative of the set of images of <var class="Arg">elm</var> under <var class="Arg">map</var> or <code class="keyw">fail</code>, the latter if and only if <var class="Arg">elm</var> has no images under <var class="Arg">map</var>.</p>
 
 <p>Anything may happen if <var class="Arg">elm</var> is not an element of the source of <var class="Arg">map</var>.</p>
@@ -411,7 +411,7 @@
 
 <h5>32.4-3 ImagesElm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImagesElm</code>( <var class="Arg">map</var>, <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImagesElm</code>( <var class="Arg">map</var>, <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">elm</var> is an element of the source of the general mapping <var class="Arg">map</var> then <code class="func">ImagesElm</code> returns the set of all images of <var class="Arg">elm</var> under <var class="Arg">map</var>.</p>
 
 <p>Anything may happen if <var class="Arg">elm</var> is not an element of the source of <var class="Arg">map</var>.</p>
@@ -420,7 +420,7 @@
 
 <h5>32.4-4 ImagesSet</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImagesSet</code>( <var class="Arg">map</var>, <var class="Arg">elms</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImagesSet</code>( <var class="Arg">map</var>, <var class="Arg">elms</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">elms</var> is a subset of the source of the general mapping <var class="Arg">map</var> then <code class="func">ImagesSet</code> returns the set of all images of <var class="Arg">elms</var> under <var class="Arg">map</var>.</p>
 
 <p>The result will be either a proper set or a domain. Anything may happen if <var class="Arg">elms</var> is not a subset of the source of <var class="Arg">map</var>.</p>
@@ -429,7 +429,7 @@
 
 <h5>32.4-5 ImageElm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImageElm</code>( <var class="Arg">map</var>, <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImageElm</code>( <var class="Arg">map</var>, <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">elm</var> is an element of the source of the total and single-valued mapping <var class="Arg">map</var> then <code class="func">ImageElm</code> returns the unique image of <var class="Arg">elm</var> under <var class="Arg">map</var>.</p>
 
 <p>Anything may happen if <var class="Arg">elm</var> is not an element of the source of <var class="Arg">map</var>.</p>
@@ -438,9 +438,9 @@
 
 <h5>32.4-6 <span class="Heading">Image</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Image</code>( <var class="Arg">map</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Image</code>( <var class="Arg">map</var>, <var class="Arg">elm</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Image</code>( <var class="Arg">map</var>, <var class="Arg">coll</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Image</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Image</code>( <var class="Arg">map</var>, <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Image</code>( <var class="Arg">map</var>, <var class="Arg">coll</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="code">Image( <var class="Arg">map</var> )</code> is the <em>image</em> of the general mapping <var class="Arg">map</var>, i.e., the subset of elements of the range of <var class="Arg">map</var> that are actually values of <var class="Arg">map</var>. <em>Note</em> that in this case the argument may also be multi-valued.</p>
 
 <p><code class="code">Image( <var class="Arg">map</var>, <var class="Arg">elm</var> )</code> is the image of the element <var class="Arg">elm</var> of the source of the mapping <var class="Arg">map</var> under <var class="Arg">map</var>, i.e., the unique element of the range to which <var class="Arg">map</var> maps <var class="Arg">elm</var>. This can also be expressed as <var class="Arg">elm</var><code class="code">^</code><var class="Arg">map</var>. Note that <var class="Arg">map</var> must be total and single valued, a multi valued general mapping is not allowed (see <code class="func">Images</code> (<a href="chap32.html#X86114B2E7E77488C"><span class="RefLink">32.4-7</span></a>)).</p>
@@ -455,9 +455,9 @@
 
 <h5>32.4-7 <span class="Heading">Images</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Images</code>( <var class="Arg">map</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Images</code>( <var class="Arg">map</var>, <var class="Arg">elm</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Images</code>( <var class="Arg">map</var>, <var class="Arg">coll</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Images</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Images</code>( <var class="Arg">map</var>, <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Images</code>( <var class="Arg">map</var>, <var class="Arg">coll</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="code">Images( <var class="Arg">map</var> )</code> is the <em>image</em> of the general mapping <var class="Arg">map</var>, i.e., the subset of elements of the range of <var class="Arg">map</var> that are actually values of <var class="Arg">map</var>.</p>
 
 <p><code class="code">Images( <var class="Arg">map</var>, <var class="Arg">elm</var> )</code> is the set of images of the element <var class="Arg">elm</var> of the source of the general mapping <var class="Arg">map</var> under <var class="Arg">map</var>, i.e., the set of elements of the range to which <var class="Arg">map</var> maps <var class="Arg">elm</var>.</p>
@@ -476,7 +476,7 @@
 
 <h5>32.5-1 PreImagesRange</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImagesRange</code>( <var class="Arg">map</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImagesRange</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is the set of preimages of the range of the general mapping <var class="Arg">map</var>.</p>
 
 <p><code class="func">PreImagesRange</code> delegates to <code class="func">PreImagesSet</code> (<a href="chap32.html#X856BAFC87B2D2811"><span class="RefLink">32.5-5</span></a>), it is introduced only to store the preimage of <var class="Arg">map</var> as attribute value.</p>
@@ -485,7 +485,7 @@
 
 <h5>32.5-2 PreImagesElm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImagesElm</code>( <var class="Arg">map</var>, <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImagesElm</code>( <var class="Arg">map</var>, <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">elm</var> is an element of the range of the general mapping <var class="Arg">map</var> then <code class="func">PreImagesElm</code> returns the set of all preimages of <var class="Arg">elm</var> under <var class="Arg">map</var>.</p>
 
 <p>Anything may happen if <var class="Arg">elm</var> is not an element of the range of <var class="Arg">map</var>.</p>
@@ -494,7 +494,7 @@
 
 <h5>32.5-3 PreImageElm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImageElm</code>( <var class="Arg">map</var>, <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImageElm</code>( <var class="Arg">map</var>, <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">elm</var> is an element of the range of the injective and surjective general mapping <var class="Arg">map</var> then <code class="func">PreImageElm</code> returns the unique preimage of <var class="Arg">elm</var> under <var class="Arg">map</var>.</p>
 
 <p>Anything may happen if <var class="Arg">elm</var> is not an element of the range of <var class="Arg">map</var>.</p>
@@ -503,7 +503,7 @@
 
 <h5>32.5-4 PreImagesRepresentative</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImagesRepresentative</code>( <var class="Arg">map</var>, <var class="Arg">elm</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImagesRepresentative</code>( <var class="Arg">map</var>, <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">elm</var> is an element of the range of the general mapping <var class="Arg">map</var> then <code class="func">PreImagesRepresentative</code> returns either a representative of the set of preimages of <var class="Arg">elm</var> under <var class="Arg">map</var> or <code class="keyw">fail</code>, the latter if and only if <var class="Arg">elm</var> has no preimages under <var class="Arg">map</var>.</p>
 
 <p>Anything may happen if <var class="Arg">elm</var> is not an element of the range of <var class="Arg">map</var>.</p>
@@ -512,7 +512,7 @@
 
 <h5>32.5-5 PreImagesSet</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImagesSet</code>( <var class="Arg">map</var>, <var class="Arg">elms</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImagesSet</code>( <var class="Arg">map</var>, <var class="Arg">elms</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">elms</var> is a subset of the range of the general mapping <var class="Arg">map</var> then <code class="func">PreImagesSet</code> returns the set of all preimages of <var class="Arg">elms</var> under <var class="Arg">map</var>.</p>
 
 <p>Anything may happen if <var class="Arg">elms</var> is not a subset of the range of <var class="Arg">map</var>.</p>
@@ -521,9 +521,9 @@
 
 <h5>32.5-6 <span class="Heading">PreImage</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImage</code>( <var class="Arg">map</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImage</code>( <var class="Arg">map</var>, <var class="Arg">elm</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImage</code>( <var class="Arg">map</var>, <var class="Arg">coll</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImage</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImage</code>( <var class="Arg">map</var>, <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImage</code>( <var class="Arg">map</var>, <var class="Arg">coll</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="code">PreImage( <var class="Arg">map</var> )</code> is the preimage of the general mapping <var class="Arg">map</var>, i.e., the subset of elements of the source of <var class="Arg">map</var> that actually have values under <var class="Arg">map</var>. Note that in this case the argument may also be non-injective or non-surjective.</p>
 
 <p><code class="code">PreImage( <var class="Arg">map</var>, <var class="Arg">elm</var> )</code> is the preimage of the element <var class="Arg">elm</var> of the range of the injective and surjective mapping <var class="Arg">map</var> under <var class="Arg">map</var>, i.e., the unique element of the source which is mapped under <var class="Arg">map</var> to <var class="Arg">elm</var>. Note that <var class="Arg">map</var> must be injective and surjective (see <code class="func">PreImages</code> (<a href="chap32.html#X85C8590E832002EF"><span class="RefLink">32.5-7</span></a>)).</p>
@@ -538,9 +538,9 @@
 
 <h5>32.5-7 <span class="Heading">PreImages</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImages</code>( <var class="Arg">map</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImages</code>( <var class="Arg">map</var>, <var class="Arg">elm</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImages</code>( <var class="Arg">map</var>, <var class="Arg">coll</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImages</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImages</code>( <var class="Arg">map</var>, <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PreImages</code>( <var class="Arg">map</var>, <var class="Arg">coll</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="code">PreImages( <var class="Arg">map</var> )</code> is the preimage of the general mapping <var class="Arg">map</var>, i.e., the subset of elements of the source of <var class="Arg">map</var> that have actually values under <var class="Arg">map</var>.</p>
 
 <p><code class="code">PreImages( <var class="Arg">map</var>, <var class="Arg">elm</var> )</code> is the set of preimages of the element <var class="Arg">elm</var> of the range of the general mapping <var class="Arg">map</var> under <var class="Arg">map</var>, i.e., the set of elements of the source which <var class="Arg">map</var> maps to <var class="Arg">elm</var>.</p>
@@ -601,21 +601,21 @@
 
 <h5>32.8-1 IsMagmaHomomorphism</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMagmaHomomorphism</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMagmaHomomorphism</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p>A <em>magma homomorphism</em> is a total single valued mapping which respects multiplication.</p>
 
 <p><a id="X8181676787E760A2" name="X8181676787E760A2"></a></p>
 
 <h5>32.8-2 MagmaHomomorphismByFunctionNC</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MagmaHomomorphismByFunctionNC</code>( <var class="Arg">G</var>, <var class="Arg">H</var>, <var class="Arg">fn</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MagmaHomomorphismByFunctionNC</code>( <var class="Arg">G</var>, <var class="Arg">H</var>, <var class="Arg">fn</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Creates the homomorphism from <var class="Arg">G</var> to <var class="Arg">H</var> without checking that <var class="Arg">fn</var> is a homomorphism.</p>
 
 <p><a id="X79D0216E871B7051" name="X79D0216E871B7051"></a></p>
 
 <h5>32.8-3 NaturalHomomorphismByGenerators</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalHomomorphismByGenerators</code>( <var class="Arg">f</var>, <var class="Arg">s</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalHomomorphismByGenerators</code>( <var class="Arg">f</var>, <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a mapping from the magma <var class="Arg">f</var> with <span class="SimpleMath">n</span> generators to the magma <var class="Arg">s</var> with <span class="SimpleMath">n</span> generators, which maps the <span class="SimpleMath">i</span>-th generator of <var class="Arg">f</var> to the <span class="SimpleMath">i</span>-th generator of <var class="Arg">s</var>.</p>
 
 <p><a id="X806F892C862F29F9" name="X806F892C862F29F9"></a></p>
@@ -626,7 +626,7 @@
 
 <h5>32.9-1 RespectsMultiplication</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RespectsMultiplication</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RespectsMultiplication</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">mapp</var> be a general mapping with underlying relation <span class="SimpleMath">F ⊆ S × R</span>, where <span class="SimpleMath">S</span> and <span class="SimpleMath">R</span> are the source and the range of <var class="Arg">mapp</var>, respectively. Then <code class="func">RespectsMultiplication</code> returns <code class="keyw">true</code> if <span class="SimpleMath">S</span> and <span class="SimpleMath">R</span> are magmas such that <span class="SimpleMath">(s_1,r_1), (s_2,r_2) ∈ F</span> implies <span class="SimpleMath">(s_1 * s_2,r_1 * r_2) ∈ F</span>, and <code class="keyw">false</code> otherwise.</p>
 
 <p>If <var class="Arg">mapp</var> is single-valued then <code class="func">RespectsMultiplication</code> returns <code class="keyw">true</code> if and only if the equation <code class="code"><var class="Arg">s1</var>^<var class="Arg">mapp</var> * <var class="Arg">s2</var>^<var class="Arg">mapp</var> = (<var class="Arg">s1</var> * <var class="Arg">s2</var>)^<var class="Arg">mapp</var></code> holds for all <var class="Arg">s1</var>, <var class="Arg">s2</var> in <span class="SimpleMath">S</span>.</p>
@@ -635,7 +635,7 @@
 
 <h5>32.9-2 RespectsOne</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RespectsOne</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RespectsOne</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">mapp</var> be a general mapping with underlying relation <span class="SimpleMath">F ⊆ <var class="Arg">S</var> × <var class="Arg">R</var></span>, where <var class="Arg">S</var> and <var class="Arg">R</var> are the source and the range of <var class="Arg">mapp</var>, respectively. Then <code class="func">RespectsOne</code> returns <code class="keyw">true</code> if <var class="Arg">S</var> and <var class="Arg">R</var> are magmas-with-one such that <span class="SimpleMath">(</span><code class="code">One(<var class="Arg">S</var>)</code><span class="SimpleMath">,</span><code class="code">One(<var class="Arg">R</var>)</code><span class="SimpleMath">) ∈ F</span>, and <code class="keyw">false</code> otherwise.</p>
 
 <p>If <var class="Arg">mapp</var> is single-valued then <code class="func">RespectsOne</code> returns <code class="keyw">true</code> if and only if the equation <code class="code">One( <var class="Arg">S</var> )^<var class="Arg">mapp</var> = One( <var class="Arg">R</var> )</code> holds.</p>
@@ -644,7 +644,7 @@
 
 <h5>32.9-3 RespectsInverses</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RespectsInverses</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RespectsInverses</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">mapp</var> be a general mapping with underlying relation <span class="SimpleMath">F ⊆ <var class="Arg">S</var> × <var class="Arg">R</var></span>, where <var class="Arg">S</var> and <var class="Arg">R</var> are the source and the range of <var class="Arg">mapp</var>, respectively. Then <code class="func">RespectsInverses</code> returns <code class="keyw">true</code> if <var class="Arg">S</var> and <var class="Arg">R</var> are magmas-with-inverses such that, for <span class="SimpleMath">s ∈ <var class="Arg">S</var></span> and <span class="SimpleMath">r ∈ <var class="Arg">R</var></span>, <span class="SimpleMath">(s,r) ∈ F</span> implies <span class="SimpleMath">(s^{-1},r^{-1}) ∈ F</span>, and <code class="keyw">false</code> otherwise.</p>
 
 <p>If <var class="Arg">mapp</var> is single-valued then <code class="func">RespectsInverses</code> returns <code class="keyw">true</code> if and only if the equation <code class="code">Inverse( <var class="Arg">s</var> )^<var class="Arg">mapp</var> = Inverse( <var class="Arg">s</var>^<var class="Arg">mapp</var> )</code> holds for all <var class="Arg">s</var> in <span class="SimpleMath">S</span>.</p>
@@ -653,8 +653,8 @@
 
 <h5>32.9-4 IsGroupGeneralMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGroupGeneralMapping</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( filter )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGroupHomomorphism</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGroupGeneralMapping</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGroupHomomorphism</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p>A <em>group general mapping</em> is a mapping which respects multiplication and inverses. If it is total and single valued it is called a <em>group homomorphism</em>.</p>
 
 <p>Chapter <a href="chap40.html#X83702FC27B3C3098"><span class="RefLink">40</span></a> explains group homomorphisms in more detail.</p>
@@ -663,7 +663,7 @@
 
 <h5>32.9-5 KernelOfMultiplicativeGeneralMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KernelOfMultiplicativeGeneralMapping</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KernelOfMultiplicativeGeneralMapping</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">mapp</var> be a general mapping. Then <code class="func">KernelOfMultiplicativeGeneralMapping</code> returns the set of all elements in the source of <var class="Arg">mapp</var> that have the identity of the range in their set of images.</p>
 
 <p>(This is a monoid if <var class="Arg">mapp</var> respects multiplication and one, and if the source of <var class="Arg">mapp</var> is associative.)</p>
@@ -672,7 +672,7 @@
 
 <h5>32.9-6 CoKernelOfMultiplicativeGeneralMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoKernelOfMultiplicativeGeneralMapping</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoKernelOfMultiplicativeGeneralMapping</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">mapp</var> be a general mapping. Then <code class="func">CoKernelOfMultiplicativeGeneralMapping</code> returns the set of all elements in the range of <var class="Arg">mapp</var> that have the identity of the source in their set of preimages.</p>
 
 <p>(This is a monoid if <var class="Arg">mapp</var> respects multiplication and one, and if the range of <var class="Arg">mapp</var> is associative.)</p>
@@ -685,7 +685,7 @@
 
 <h5>32.10-1 RespectsAddition</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RespectsAddition</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RespectsAddition</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">mapp</var> be a general mapping with underlying relation <span class="SimpleMath">F ⊆ S × R</span>, where <span class="SimpleMath">S</span> and <span class="SimpleMath">R</span> are the source and the range of <var class="Arg">mapp</var>, respectively. Then <code class="func">RespectsAddition</code> returns <code class="keyw">true</code> if <span class="SimpleMath">S</span> and <span class="SimpleMath">R</span> are additive magmas such that <span class="SimpleMath">(s_1,r_1), (s_2,r_2) ∈ F</span> implies <span class="SimpleMath">(s_1 + s_2,r_1 + r_2) ∈ F</span>, and <code class="keyw">false</code> otherwise.</p>
 
 <p>If <var class="Arg">mapp</var> is single-valued then <code class="func">RespectsAddition</code> returns <code class="keyw">true</code> if and only if the equation <code class="code"><var class="Arg">s1</var>^<var class="Arg">mapp</var> + <var class="Arg">s2</var>^<var class="Arg">mapp</var> = (<var class="Arg">s1</var>+<var class="Arg">s2</var>)^<var class="Arg">mapp</var></code> holds for all <var class="Arg">s1</var>, <var class="Arg">s2</var> in <span class="SimpleMath">S</span>.</p>
@@ -694,7 +694,7 @@
 
 <h5>32.10-2 RespectsAdditiveInverses</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RespectsAdditiveInverses</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RespectsAdditiveInverses</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">mapp</var> be a general mapping with underlying relation <span class="SimpleMath">F ⊆ S × R</span>, where <span class="SimpleMath">S</span> and <span class="SimpleMath">R</span> are the source and the range of <var class="Arg">mapp</var>, respectively. Then <code class="func">RespectsAdditiveInverses</code> returns <code class="keyw">true</code> if <span class="SimpleMath">S</span> and <span class="SimpleMath">R</span> are additive-magmas-with-inverses such that <span class="SimpleMath">(s,r) ∈ F</span> implies <span class="SimpleMath">(-s,-r) ∈ F</span>, and <code class="keyw">false</code> otherwise.</p>
 
 <p>If <var class="Arg">mapp</var> is single-valued then <code class="func">RespectsAdditiveInverses</code> returns <code class="keyw">true</code> if and only if the equation <code class="code">AdditiveInverse( <var class="Arg">s</var> )^<var class="Arg">mapp</var> = AdditiveInverse( <var class="Arg">s</var>^<var class="Arg">mapp</var> )</code> holds for all <var class="Arg">s</var> in <span class="SimpleMath">S</span>.</p>
@@ -703,7 +703,7 @@
 
 <h5>32.10-3 RespectsZero</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RespectsZero</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RespectsZero</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">mapp</var> be a general mapping with underlying relation <span class="SimpleMath">F ⊆ <var class="Arg">S</var> × <var class="Arg">R</var></span>, where <var class="Arg">S</var> and <var class="Arg">R</var> are the source and the range of <var class="Arg">mapp</var>, respectively. Then <code class="func">RespectsZero</code> returns <code class="keyw">true</code> if <var class="Arg">S</var> and <var class="Arg">R</var> are additive-magmas-with-zero such that <span class="SimpleMath">(</span><code class="code">Zero(<var class="Arg">S</var>)</code><span class="SimpleMath">,</span><code class="code">Zero(<var class="Arg">R</var>)</code><span class="SimpleMath">) ∈ F</span>, and <code class="keyw">false</code> otherwise.</p>
 
 <p>If <var class="Arg">mapp</var> is single-valued then <code class="func">RespectsZero</code> returns <code class="keyw">true</code> if and only if the equation <code class="code">Zero( <var class="Arg">S</var> )^<var class="Arg">mapp</var> = Zero( <var class="Arg">R</var> )</code> holds.</p>
@@ -712,8 +712,8 @@
 
 <h5>32.10-4 IsAdditiveGroupGeneralMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAdditiveGroupGeneralMapping</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( filter )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAdditiveGroupHomomorphism</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAdditiveGroupGeneralMapping</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAdditiveGroupHomomorphism</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p><code class="func">IsAdditiveGroupGeneralMapping</code> specifies whether a general mapping <var class="Arg">mapp</var> respects addition (see <code class="func">RespectsAddition</code> (<a href="chap32.html#X7A3321E878925C3A"><span class="RefLink">32.10-1</span></a>)) and respects additive inverses (see <code class="func">RespectsAdditiveInverses</code> (<a href="chap32.html#X8130D8907B92F746"><span class="RefLink">32.10-2</span></a>)).</p>
 
 <p><code class="func">IsAdditiveGroupHomomorphism</code> is a synonym for the meet of <code class="func">IsAdditiveGroupGeneralMapping</code> and <code class="func">IsMapping</code> (<a href="chap32.html#X7CC95EB282854385"><span class="RefLink">32.3-3</span></a>).</p>
@@ -722,14 +722,14 @@
 
 <h5>32.10-5 KernelOfAdditiveGeneralMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KernelOfAdditiveGeneralMapping</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KernelOfAdditiveGeneralMapping</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">mapp</var> be a general mapping. Then <code class="func">KernelOfAdditiveGeneralMapping</code> returns the set of all elements in the source of <var class="Arg">mapp</var> that have the zero of the range in their set of images.</p>
 
 <p><a id="X813C6D7980213F41" name="X813C6D7980213F41"></a></p>
 
 <h5>32.10-6 CoKernelOfAdditiveGeneralMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoKernelOfAdditiveGeneralMapping</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoKernelOfAdditiveGeneralMapping</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">mapp</var> be a general mapping. Then <code class="func">CoKernelOfAdditiveGeneralMapping</code> returns the set of all elements in the range of <var class="Arg">mapp</var> that have the zero of the source in their set of preimages.</p>
 
 <p><a id="X7C24431C81532575" name="X7C24431C81532575"></a></p>
@@ -742,7 +742,7 @@
 
 <h5>32.11-1 RespectsScalarMultiplication</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RespectsScalarMultiplication</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RespectsScalarMultiplication</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">mapp</var> be a general mapping, with underlying relation <span class="SimpleMath">F ⊆ S × R</span>, where <span class="SimpleMath">S</span> and <span class="SimpleMath">R</span> are the source and the range of <var class="Arg">mapp</var>, respectively. Then <code class="func">RespectsScalarMultiplication</code> returns <code class="keyw">true</code> if <span class="SimpleMath">S</span> and <span class="SimpleMath">R</span> are left modules with the left acting domain <span class="SimpleMath">D</span> of <span class="SimpleMath">S</span> contained in the left acting domain of <span class="SimpleMath">R</span> and such that <span class="SimpleMath">(s,r) ∈ F</span> implies <span class="SimpleMath">(c * s,c * r) ∈ F</span> for all <span class="SimpleMath">c ∈ D</span>, and <code class="keyw">false</code> otherwise.</p>
 
 <p>If <var class="Arg">mapp</var> is single-valued then <code class="func">RespectsScalarMultiplication</code> returns <code class="keyw">true</code> if and only if the equation <code class="code"><var class="Arg">c</var> * <var class="Arg">s</var>^<var class="Arg">mapp</var> = (<var class="Arg">c</var> * <var class="Arg">s</var>)^<var class="Arg">mapp</var></code> holds for all <var class="Arg">c</var> in <span class="SimpleMath">D</span> and <var class="Arg">s</var> in <span class="SimpleMath">S</span>.</p>
@@ -751,8 +751,8 @@
 
 <h5>32.11-2 IsLeftModuleGeneralMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftModuleGeneralMapping</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( filter )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftModuleHomomorphism</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftModuleGeneralMapping</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftModuleHomomorphism</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p><code class="func">IsLeftModuleGeneralMapping</code> specifies whether a general mapping <var class="Arg">mapp</var> satisfies the property <code class="func">IsAdditiveGroupGeneralMapping</code> (<a href="chap32.html#X7B99EF287A8A0BD9"><span class="RefLink">32.10-4</span></a>) and respects scalar multiplication (see <code class="func">RespectsScalarMultiplication</code> (<a href="chap32.html#X87842ED97FA19973"><span class="RefLink">32.11-1</span></a>)).</p>
 
 <p><code class="func">IsLeftModuleHomomorphism</code> is a synonym for the meet of <code class="func">IsLeftModuleGeneralMapping</code> and <code class="func">IsMapping</code> (<a href="chap32.html#X7CC95EB282854385"><span class="RefLink">32.3-3</span></a>).</p>
@@ -761,7 +761,7 @@
 
 <h5>32.11-3 IsLinearMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLinearMapping</code>( <var class="Arg">F</var>, <var class="Arg">mapp</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLinearMapping</code>( <var class="Arg">F</var>, <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>For a field <var class="Arg">F</var> and a general mapping <var class="Arg">mapp</var>, <code class="func">IsLinearMapping</code> returns <code class="keyw">true</code> if <var class="Arg">mapp</var> is an <var class="Arg">F</var>-linear mapping, and <code class="keyw">false</code> otherwise.</p>
 
 <p>A mapping <span class="SimpleMath">f</span> is a linear mapping (or vector space homomorphism) if the source and range are vector spaces over the same division ring <span class="SimpleMath">D</span>, and if <span class="SimpleMath">f( a + b ) = f(a) + f(b)</span> and <span class="SimpleMath">f( s * a ) = s * f(a)</span> hold for all elements <span class="SimpleMath">a</span>, <span class="SimpleMath">b</span> in the source of <span class="SimpleMath">f</span> and <span class="SimpleMath">s ∈ D</span>.</p>
@@ -774,8 +774,8 @@
 
 <h5>32.12-1 IsRingGeneralMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRingGeneralMapping</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( filter )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRingHomomorphism</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRingGeneralMapping</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRingHomomorphism</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p><code class="func">IsRingGeneralMapping</code> specifies whether a general mapping <var class="Arg">mapp</var> satisfies the property <code class="func">IsAdditiveGroupGeneralMapping</code> (<a href="chap32.html#X7B99EF287A8A0BD9"><span class="RefLink">32.10-4</span></a>) and respects multiplication (see <code class="func">RespectsMultiplication</code> (<a href="chap32.html#X7BEFF95883EAEC78"><span class="RefLink">32.9-1</span></a>)).</p>
 
 <p><code class="func">IsRingHomomorphism</code> is a synonym for the meet of <code class="func">IsRingGeneralMapping</code> and <code class="func">IsMapping</code> (<a href="chap32.html#X7CC95EB282854385"><span class="RefLink">32.3-3</span></a>).</p>
@@ -784,14 +784,14 @@
 
 <h5>32.12-2 IsRingWithOneGeneralMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRingWithOneGeneralMapping</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( filter )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRingWithOneHomomorphism</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRingWithOneGeneralMapping</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRingWithOneHomomorphism</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p><a id="X86B14F908601DEA9" name="X86B14F908601DEA9"></a></p>
 
 <h5>32.12-3 IsAlgebraGeneralMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAlgebraGeneralMapping</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( filter )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAlgebraHomomorphism</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAlgebraGeneralMapping</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAlgebraHomomorphism</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p><code class="func">IsAlgebraGeneralMapping</code> specifies whether a general mapping <var class="Arg">mapp</var> satisfies both properties <code class="func">IsRingGeneralMapping</code> (<a href="chap32.html#X7C8DA031799B79D5"><span class="RefLink">32.12-1</span></a>) and (see <code class="func">IsLeftModuleGeneralMapping</code> (<a href="chap32.html#X780BE6307A3271A9"><span class="RefLink">32.11-2</span></a>)).</p>
 
 <p><code class="func">IsAlgebraHomomorphism</code> is a synonym for the meet of <code class="func">IsAlgebraGeneralMapping</code> and <code class="func">IsMapping</code> (<a href="chap32.html#X7CC95EB282854385"><span class="RefLink">32.3-3</span></a>).</p>
@@ -800,8 +800,8 @@
 
 <h5>32.12-4 IsAlgebraWithOneGeneralMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAlgebraWithOneGeneralMapping</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( filter )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAlgebraWithOneHomomorphism</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( filter )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAlgebraWithOneGeneralMapping</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAlgebraWithOneHomomorphism</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p><code class="func">IsAlgebraWithOneGeneralMapping</code> specifies whether a general mapping <var class="Arg">mapp</var> satisfies both properties <code class="func">IsAlgebraGeneralMapping</code> (<a href="chap32.html#X86B14F908601DEA9"><span class="RefLink">32.12-3</span></a>) and <code class="func">RespectsOne</code> (<a href="chap32.html#X7EE4DA097AE9CBC1"><span class="RefLink">32.9-2</span></a>).</p>
 
 <p><code class="func">IsAlgebraWithOneHomomorphism</code> is a synonym for the meet of <code class="func">IsAlgebraWithOneGeneralMapping</code> and <code class="func">IsMapping</code> (<a href="chap32.html#X7CC95EB282854385"><span class="RefLink">32.3-3</span></a>).</p>
@@ -810,7 +810,7 @@
 
 <h5>32.12-5 IsFieldHomomorphism</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFieldHomomorphism</code>( <var class="Arg">mapp</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFieldHomomorphism</code>( <var class="Arg">mapp</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>A general mapping is a field homomorphism if and only if it is a ring homomorphism with source a field.</p>
 
 <p><a id="X7E4A55567BED0F88" name="X7E4A55567BED0F88"></a></p>
@@ -821,14 +821,14 @@
 
 <h5>32.13-1 IsGeneralMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGeneralMapping</code>( <var class="Arg">map</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGeneralMapping</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Each general mapping lies in the category <code class="func">IsGeneralMapping</code>. It implies the categories <code class="func">IsMultiplicativeElementWithInverse</code> (<a href="chap31.html#X7FDB14E57814FA3B"><span class="RefLink">31.14-13</span></a>) and <code class="func">IsAssociativeElement</code> (<a href="chap31.html#X7979AFAA80FF795A"><span class="RefLink">31.15-1</span></a>); for a discussion of these implications, see <a href="chap32.html#X7E2E16277940FA0B"><span class="RefLink">32.6</span></a>.</p>
 
 <p><a id="X791690817E23D90C" name="X791690817E23D90C"></a></p>
 
 <h5>32.13-2 IsConstantTimeAccessGeneralMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConstantTimeAccessGeneralMapping</code>( <var class="Arg">map</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConstantTimeAccessGeneralMapping</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>is <code class="keyw">true</code> if the underlying relation of the general mapping <var class="Arg">map</var> knows its <code class="func">AsList</code> (<a href="chap30.html#X8289FCCC8274C89D"><span class="RefLink">30.3-8</span></a>) value, and <code class="keyw">false</code> otherwise.</p>
 
 <p>In the former case, <var class="Arg">map</var> is allowed to use this list for calls to <code class="func">ImagesElm</code> (<a href="chap32.html#X7D51184B7EE5B2CF"><span class="RefLink">32.4-3</span></a>) etc.</p>
@@ -837,7 +837,7 @@
 
 <h5>32.13-3 IsEndoGeneralMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEndoGeneralMapping</code>( <var class="Arg">obj</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsEndoGeneralMapping</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>If a general mapping has this property then its source and range are equal.</p>
 
 <p><a id="X7D6F78587C00CDD0" name="X7D6F78587C00CDD0"></a></p>
@@ -866,48 +866,48 @@
 
 <h5>32.14-1 IsSPGeneralMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSPGeneralMapping</code>( <var class="Arg">map</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNonSPGeneralMapping</code>( <var class="Arg">map</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSPGeneralMapping</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNonSPGeneralMapping</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p><a id="X80D02AD183E01F16" name="X80D02AD183E01F16"></a></p>
 
 <h5>32.14-2 IsGeneralMappingFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGeneralMappingFamily</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGeneralMappingFamily</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>The family category of the category of general mappings.</p>
 
 <p><a id="X86CFADBA7F2FE446" name="X86CFADBA7F2FE446"></a></p>
 
 <h5>32.14-3 FamilyRange</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FamilyRange</code>( <var class="Arg">Fam</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FamilyRange</code>( <var class="Arg">Fam</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is the elements family of the family of the range of each general mapping in the family <var class="Arg">Fam</var>.</p>
 
 <p><a id="X7C3736E281A9E505" name="X7C3736E281A9E505"></a></p>
 
 <h5>32.14-4 FamilySource</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FamilySource</code>( <var class="Arg">Fam</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FamilySource</code>( <var class="Arg">Fam</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is the elements family of the family of the source of each general mapping in the family <var class="Arg">Fam</var>.</p>
 
 <p><a id="X7AE54FB67E2E6374" name="X7AE54FB67E2E6374"></a></p>
 
 <h5>32.14-5 FamiliesOfGeneralMappingsAndRanges</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FamiliesOfGeneralMappingsAndRanges</code>( <var class="Arg">Fam</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FamiliesOfGeneralMappingsAndRanges</code>( <var class="Arg">Fam</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is a list that stores at the odd positions the families of general mappings with source in the family <var class="Arg">Fam</var>, at the even positions the families of ranges of the general mappings.</p>
 
 <p><a id="X7E1E26E37C413F6F" name="X7E1E26E37C413F6F"></a></p>
 
 <h5>32.14-6 GeneralMappingsFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneralMappingsFamily</code>( <var class="Arg">sourcefam</var>, <var class="Arg">rangefam</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneralMappingsFamily</code>( <var class="Arg">sourcefam</var>, <var class="Arg">rangefam</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>All general mappings with same source family <var class="Arg">FS</var> and same range family <var class="Arg">FR</var> lie in the family <code class="code">GeneralMappingsFamily( <var class="Arg">FS</var>, <var class="Arg">FR</var> )</code>.</p>
 
 <p><a id="X7CF92CC37A6BBDA5" name="X7CF92CC37A6BBDA5"></a></p>
 
 <h5>32.14-7 TypeOfDefaultGeneralMapping</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TypeOfDefaultGeneralMapping</code>( <var class="Arg">source</var>, <var class="Arg">range</var>, <var class="Arg">filter</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TypeOfDefaultGeneralMapping</code>( <var class="Arg">source</var>, <var class="Arg">range</var>, <var class="Arg">filter</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is the type of mappings with <code class="code">IsDefaultGeneralMappingRep</code> with source <var class="Arg">source</var> and range <var class="Arg">range</var> and additional categories <var class="Arg">filter</var>.</p>
 
 

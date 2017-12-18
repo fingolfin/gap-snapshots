@@ -11,7 +11,7 @@
   
   [1X16.1-1 Factorial[101X
   
-  [29X[2XFactorial[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XFactorial[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the [13Xfactorial[113X [22Xn![122X of the positive integer [3Xn[103X, which is defined as the
   product [22X1 ⋅ 2 ⋅ 3 ⋯ n[122X.[133X
@@ -31,7 +31,7 @@
   
   [1X16.1-2 Binomial[101X
   
-  [29X[2XBinomial[102X( [3Xn[103X, [3Xk[103X ) [32X function
+  [33X[1;0Y[29X[2XBinomial[102X( [3Xn[103X, [3Xk[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the [13Xbinomial coefficient[113X [22X{n choose k}[122X of integers [3Xn[103X and [3Xk[103X, which is
   defined as [22Xn! / (k! (n-k)!)[122X (see [2XFactorial[102X ([14X16.1-1[114X)). We define [22X{0 choose 0}
@@ -67,7 +67,7 @@
   
   [1X16.1-3 Bell[101X
   
-  [29X[2XBell[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XBell[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the  [13XBell number[113X [22XB(n)[122X. The Bell numbers are defined by [22XB(0) = 1[122X and
   the recurrence [22XB(n+1) = ∑_{k = 0}^n {n choose k} B(k)[122X.[133X
@@ -87,7 +87,7 @@
   
   [1X16.1-4 Bernoulli[101X
   
-  [29X[2XBernoulli[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XBernoulli[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0Yreturns the [3Xn[103X-th [13XBernoulli number[113X [22XB_n[122X, which is defined by [22XB_0 = 1[122X and [22XB_n =
   -∑_{k = 0}^{n-1} {n+1 choose k} B_k/(n+1)[122X.[133X
@@ -108,7 +108,7 @@
   
   [1X16.1-5 Stirling1[101X
   
-  [29X[2XStirling1[102X( [3Xn[103X, [3Xk[103X ) [32X function
+  [33X[1;0Y[29X[2XStirling1[102X( [3Xn[103X, [3Xk[103X ) [32X function[133X
   
   [33X[0;0Yreturns the [13XStirling number of the first kind[113X [22XS_1(n,k)[122X of the integers [3Xn[103X and
   [3Xk[103X.  Stirling numbers of the first kind are defined by [22XS_1(0,0) = 1[122X, [22XS_1(n,0)
@@ -144,7 +144,7 @@
   
   [1X16.1-6 Stirling2[101X
   
-  [29X[2XStirling2[102X( [3Xn[103X, [3Xk[103X ) [32X function
+  [33X[1;0Y[29X[2XStirling2[102X( [3Xn[103X, [3Xk[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the  [13XStirling  number of the second kind[113X [22XS_2(n,k)[122X of the integers [3Xn[103X
   and  [3Xk[103X.  Stirling  numbers  of  the second kind are defined by [22XS_2(0,0) = 1[122X,
@@ -183,7 +183,7 @@
   
   [1X16.2-1 Combinations[101X
   
-  [29X[2XCombinations[102X( [3Xmset[103X[, [3Xk[103X] ) [32X function
+  [33X[1;0Y[29X[2XCombinations[102X( [3Xmset[103X[, [3Xk[103X] ) [32X function[133X
   
   [33X[0;0Yreturns  the set of all combinations of the multiset [3Xmset[103X (a list of objects
   which  may  contain  the same object several times) with [3Xk[103X elements; if [3Xk[103X is
@@ -203,8 +203,8 @@
   
   [1X16.2-2 [33X[0;0YIterator and enumerator of combinations[133X[101X
   
-  [29X[2XIteratorOfCombinations[102X( [3Xmset[103X[, [3Xk[103X] ) [32X function
-  [29X[2XEnumeratorOfCombinations[102X( [3Xmset[103X ) [32X function
+  [33X[1;0Y[29X[2XIteratorOfCombinations[102X( [3Xmset[103X[, [3Xk[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XEnumeratorOfCombinations[102X( [3Xmset[103X ) [32X function[133X
   
   [33X[0;0Y[2XIteratorOfCombinations[102X  returns  an  [2XIterator[102X ([14X30.8-1[114X) for combinations (see
   [2XCombinations[102X ([14X16.2-1[114X)) of the given multiset [3Xmset[103X. If a non-negative integer
@@ -234,7 +234,7 @@
   
   [1X16.2-3 NrCombinations[101X
   
-  [29X[2XNrCombinations[102X( [3Xmset[103X[, [3Xk[103X] ) [32X function
+  [33X[1;0Y[29X[2XNrCombinations[102X( [3Xmset[103X[, [3Xk[103X] ) [32X function[133X
   
   [33X[0;0Yreturns the number of [10XCombinations([3Xmset[103X[10X,[3Xk[103X[10X)[110X.[133X
   
@@ -254,7 +254,7 @@
   
   [1X16.2-4 Arrangements[101X
   
-  [29X[2XArrangements[102X( [3Xmset[103X[, [3Xk[103X] ) [32X function
+  [33X[1;0Y[29X[2XArrangements[102X( [3Xmset[103X[, [3Xk[103X] ) [32X function[133X
   
   [33X[0;0Yreturns  the  set  of  arrangements  of  the  multiset  [3Xmset[103X  that contain [3Xk[103X
   elements. If [3Xk[103X is not given it returns all arrangements of [3Xmset[103X.[133X
@@ -266,7 +266,7 @@
   
   [1X16.2-5 NrArrangements[101X
   
-  [29X[2XNrArrangements[102X( [3Xmset[103X[, [3Xk[103X] ) [32X function
+  [33X[1;0Y[29X[2XNrArrangements[102X( [3Xmset[103X[, [3Xk[103X] ) [32X function[133X
   
   [33X[0;0Yreturns the number of [10XArrangements([3Xmset[103X[10X,[3Xk[103X[10X)[110X.[133X
   
@@ -299,7 +299,7 @@
   
   [1X16.2-6 UnorderedTuples[101X
   
-  [29X[2XUnorderedTuples[102X( [3Xset[103X, [3Xk[103X ) [32X function
+  [33X[1;0Y[29X[2XUnorderedTuples[102X( [3Xset[103X, [3Xk[103X ) [32X function[133X
   
   [33X[0;0Yreturns the set of all unordered tuples of length [3Xk[103X of the set [3Xset[103X.[133X
   
@@ -316,7 +316,7 @@
   
   [1X16.2-7 NrUnorderedTuples[101X
   
-  [29X[2XNrUnorderedTuples[102X( [3Xset[103X, [3Xk[103X ) [32X function
+  [33X[1;0Y[29X[2XNrUnorderedTuples[102X( [3Xset[103X, [3Xk[103X ) [32X function[133X
   
   [33X[0;0Yreturns the number of [10XUnorderedTuples([3Xset[103X[10X,[3Xk[103X[10X)[110X.[133X
   
@@ -345,7 +345,7 @@
   
   [1X16.2-8 Tuples[101X
   
-  [29X[2XTuples[102X( [3Xset[103X, [3Xk[103X ) [32X function
+  [33X[1;0Y[29X[2XTuples[102X( [3Xset[103X, [3Xk[103X ) [32X function[133X
   
   [33X[0;0Yreturns the set of all ordered tuples of length [3Xk[103X of the set [3Xset[103X.[133X
   
@@ -361,7 +361,7 @@
   
   [1X16.2-9 EnumeratorOfTuples[101X
   
-  [29X[2XEnumeratorOfTuples[102X( [3Xset[103X, [3Xk[103X ) [32X function
+  [33X[1;0Y[29X[2XEnumeratorOfTuples[102X( [3Xset[103X, [3Xk[103X ) [32X function[133X
   
   [33X[0;0YThis  function  is referred to as an example of enumerators that are defined
   by  functions  but are not constructed from a domain. The result is equal to
@@ -370,7 +370,7 @@
   
   [1X16.2-10 IteratorOfTuples[101X
   
-  [29X[2XIteratorOfTuples[102X( [3Xset[103X, [3Xk[103X ) [32X function
+  [33X[1;0Y[29X[2XIteratorOfTuples[102X( [3Xset[103X, [3Xk[103X ) [32X function[133X
   
   [33X[0;0YFor a set [3Xset[103X and a positive integer [3Xk[103X, [2XIteratorOfTuples[102X returns an iterator
   (see [14X30.8[114X)  of the set of all ordered tuples (see [2XTuples[102X ([14X16.2-8[114X)) of length
@@ -378,7 +378,7 @@
   
   [1X16.2-11 NrTuples[101X
   
-  [29X[2XNrTuples[102X( [3Xset[103X, [3Xk[103X ) [32X function
+  [33X[1;0Y[29X[2XNrTuples[102X( [3Xset[103X, [3Xk[103X ) [32X function[133X
   
   [33X[0;0Yreturns the number of [10XTuples([3Xset[103X[10X,[3Xk[103X[10X)[110X.[133X
   
@@ -400,7 +400,7 @@
   
   [1X16.2-12 PermutationsList[101X
   
-  [29X[2XPermutationsList[102X( [3Xmset[103X ) [32X function
+  [33X[1;0Y[29X[2XPermutationsList[102X( [3Xmset[103X ) [32X function[133X
   
   [33X[0;0Y[2XPermutationsList[102X returns the set of permutations of the multiset [3Xmset[103X.[133X
   
@@ -413,7 +413,7 @@
   
   [1X16.2-13 NrPermutationsList[101X
   
-  [29X[2XNrPermutationsList[102X( [3Xmset[103X ) [32X function
+  [33X[1;0Y[29X[2XNrPermutationsList[102X( [3Xmset[103X ) [32X function[133X
   
   [33X[0;0Yreturns the number of [10XPermutationsList([3Xmset[103X[10X)[110X.[133X
   
@@ -434,7 +434,7 @@
   
   [1X16.2-14 Derangements[101X
   
-  [29X[2XDerangements[102X( [3Xlist[103X ) [32X function
+  [33X[1;0Y[29X[2XDerangements[102X( [3Xlist[103X ) [32X function[133X
   
   [33X[0;0Yreturns the set of all derangements of the list [3Xlist[103X.[133X
   
@@ -451,7 +451,7 @@
   
   [1X16.2-15 NrDerangements[101X
   
-  [29X[2XNrDerangements[102X( [3Xlist[103X ) [32X function
+  [33X[1;0Y[29X[2XNrDerangements[102X( [3Xlist[103X ) [32X function[133X
   
   [33X[0;0Yreturns the number of [10XDerangements([3Xlist[103X[10X)[110X.[133X
   
@@ -481,7 +481,7 @@
   
   [1X16.2-16 PartitionsSet[101X
   
-  [29X[2XPartitionsSet[102X( [3Xset[103X[, [3Xk[103X] ) [32X function
+  [33X[1;0Y[29X[2XPartitionsSet[102X( [3Xset[103X[, [3Xk[103X] ) [32X function[133X
   
   [33X[0;0Yreturns  the  set of all unordered partitions of the set [3Xset[103X into [3Xk[103X pairwise
   disjoint  nonempty  sets.  If  [3Xk[103X  is  not  given  it  returns  all unordered
@@ -494,7 +494,7 @@
   
   [1X16.2-17 NrPartitionsSet[101X
   
-  [29X[2XNrPartitionsSet[102X( [3Xset[103X[, [3Xk[103X] ) [32X function
+  [33X[1;0Y[29X[2XNrPartitionsSet[102X( [3Xset[103X[, [3Xk[103X] ) [32X function[133X
   
   [33X[0;0Yreturns the number of [10XPartitionsSet([3Xset[103X[10X,[3Xk[103X[10X)[110X.[133X
   
@@ -518,7 +518,7 @@
   
   [1X16.2-18 Partitions[101X
   
-  [29X[2XPartitions[102X( [3Xn[103X[, [3Xk[103X] ) [32X function
+  [33X[1;0Y[29X[2XPartitions[102X( [3Xn[103X[, [3Xk[103X] ) [32X function[133X
   
   [33X[0;0Yreturns the set of all (unordered) partitions of the positive integer [3Xn[103X into
   sums  with [3Xk[103X summands. If [3Xk[103X is not given it returns all unordered partitions
@@ -544,7 +544,7 @@
   
   [1X16.2-19 IteratorOfPartitions[101X
   
-  [29X[2XIteratorOfPartitions[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XIteratorOfPartitions[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0YFor   a   positive  integer  [3Xn[103X,  [2XIteratorOfPartitions[102X  returns  an  iterator
   (see [14X30.8[114X)  of  the  set  of partitions of [3Xn[103X (see [2XPartitions[102X ([14X16.2-18[114X)). The
@@ -552,7 +552,7 @@
   
   [1X16.2-20 NrPartitions[101X
   
-  [29X[2XNrPartitions[102X( [3Xn[103X[, [3Xk[103X] ) [32X function
+  [33X[1;0Y[29X[2XNrPartitions[102X( [3Xn[103X[, [3Xk[103X] ) [32X function[133X
   
   [33X[0;0Yreturns the number of [10XPartitions([3Xset[103X[10X,[3Xk[103X[10X)[110X.[133X
   
@@ -575,7 +575,7 @@
   
   [1X16.2-21 OrderedPartitions[101X
   
-  [29X[2XOrderedPartitions[102X( [3Xn[103X[, [3Xk[103X] ) [32X function
+  [33X[1;0Y[29X[2XOrderedPartitions[102X( [3Xn[103X[, [3Xk[103X] ) [32X function[133X
   
   [33X[0;0Yreturns  the  set  of  all ordered partitions of the positive integer [3Xn[103X into
   sums with [3Xk[103X summands. If [3Xk[103X is not given it returns all ordered partitions of
@@ -591,7 +591,7 @@
   
   [1X16.2-22 NrOrderedPartitions[101X
   
-  [29X[2XNrOrderedPartitions[102X( [3Xn[103X[, [3Xk[103X] ) [32X function
+  [33X[1;0Y[29X[2XNrOrderedPartitions[102X( [3Xn[103X[, [3Xk[103X] ) [32X function[133X
   
   [33X[0;0Yreturns the number of [10XOrderedPartitions([3Xset[103X[10X,[3Xk[103X[10X)[110X.[133X
   
@@ -613,21 +613,21 @@
   
   [1X16.2-23 PartitionsGreatestLE[101X
   
-  [29X[2XPartitionsGreatestLE[102X( [3Xn[103X, [3Xm[103X ) [32X function
+  [33X[1;0Y[29X[2XPartitionsGreatestLE[102X( [3Xn[103X, [3Xm[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the set of all (unordered) partitions of the integer [3Xn[103X having parts
   less or equal to the integer [3Xm[103X.[133X
   
   [1X16.2-24 PartitionsGreatestEQ[101X
   
-  [29X[2XPartitionsGreatestEQ[102X( [3Xn[103X, [3Xm[103X ) [32X function
+  [33X[1;0Y[29X[2XPartitionsGreatestEQ[102X( [3Xn[103X, [3Xm[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the  set  of  all  (unordered)  partitions  of the integer [3Xn[103X having
   greatest part equal to the integer [3Xm[103X.[133X
   
   [1X16.2-25 RestrictedPartitions[101X
   
-  [29X[2XRestrictedPartitions[102X( [3Xn[103X, [3Xset[103X[, [3Xk[103X] ) [32X function
+  [33X[1;0Y[29X[2XRestrictedPartitions[102X( [3Xn[103X, [3Xset[103X[, [3Xk[103X] ) [32X function[133X
   
   [33X[0;0YIn  the  first  form  [2XRestrictedPartitions[102X returns the set of all restricted
   partitions  of  the  positive  integer  [3Xn[103X into sums with [3Xk[103X summands with the
@@ -642,7 +642,7 @@
   
   [1X16.2-26 NrRestrictedPartitions[101X
   
-  [29X[2XNrRestrictedPartitions[102X( [3Xn[103X, [3Xset[103X[, [3Xk[103X] ) [32X function
+  [33X[1;0Y[29X[2XNrRestrictedPartitions[102X( [3Xn[103X, [3Xset[103X[, [3Xk[103X] ) [32X function[133X
   
   [33X[0;0Yreturns the number of [10XRestrictedPartitions([3Xn[103X[10X,[3Xset[103X[10X,[3Xk[103X[10X)[110X.[133X
   
@@ -659,7 +659,7 @@
   
   [1X16.2-27 SignPartition[101X
   
-  [29X[2XSignPartition[102X( [3Xpi[103X ) [32X function
+  [33X[1;0Y[29X[2XSignPartition[102X( [3Xpi[103X ) [32X function[133X
   
   [33X[0;0Yreturns the sign of a permutation with cycle structure [3Xpi[103X.[133X
   
@@ -675,7 +675,7 @@
   
   [1X16.2-28 AssociatedPartition[101X
   
-  [29X[2XAssociatedPartition[102X( [3Xpi[103X ) [32X function
+  [33X[1;0Y[29X[2XAssociatedPartition[102X( [3Xpi[103X ) [32X function[133X
   
   [33X[0;0Y[2XAssociatedPartition[102X  returns  the  associated  partition of the partition [3Xpi[103X
   which is obtained by transposing the corresponding Young diagram.[133X
@@ -689,7 +689,7 @@
   
   [1X16.2-29 PowerPartition[101X
   
-  [29X[2XPowerPartition[102X( [3Xpi[103X, [3Xk[103X ) [32X function
+  [33X[1;0Y[29X[2XPowerPartition[102X( [3Xpi[103X, [3Xk[103X ) [32X function[133X
   
   [33X[0;0Y[2XPowerPartition[102X  returns  the  partition corresponding to the [3Xk[103X-th power of a
   permutation with cycle structure [3Xpi[103X.[133X
@@ -705,7 +705,7 @@
   
   [1X16.2-30 PartitionTuples[101X
   
-  [29X[2XPartitionTuples[102X( [3Xn[103X, [3Xr[103X ) [32X function
+  [33X[1;0Y[29X[2XPartitionTuples[102X( [3Xn[103X, [3Xr[103X ) [32X function[133X
   
   [33X[0;0Y[2XPartitionTuples[102X  returns  the  list  of  all  [3Xr[103X-tuples  of  partitions which
   together form a partition of [3Xn[103X.[133X
@@ -715,7 +715,7 @@
   
   [1X16.2-31 NrPartitionTuples[101X
   
-  [29X[2XNrPartitionTuples[102X( [3Xn[103X, [3Xr[103X ) [32X function
+  [33X[1;0Y[29X[2XNrPartitionTuples[102X( [3Xn[103X, [3Xr[103X ) [32X function[133X
   
   [33X[0;0Yreturns the number of [10XPartitionTuples( [3Xn[103X[10X, [3Xr[103X[10X )[110X.[133X
   
@@ -732,7 +732,7 @@
   
   [1X16.3-1 Fibonacci[101X
   
-  [29X[2XFibonacci[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XFibonacci[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0Yreturns the [3Xn[103Xth number of the [13XFibonacci sequence[113X. The Fibonacci sequence [22XF_n[122X
   is  defined  by  the  initial  conditions  [22XF_1  = F_2 = 1[122X and the recurrence
@@ -757,7 +757,7 @@
   
   [1X16.3-2 Lucas[101X
   
-  [29X[2XLucas[102X( [3XP[103X, [3XQ[103X, [3Xk[103X ) [32X function
+  [33X[1;0Y[29X[2XLucas[102X( [3XP[103X, [3XQ[103X, [3Xk[103X ) [32X function[133X
   
   [33X[0;0Yreturns the [3Xk[103X-th values of the [13XLucas sequence[113X with parameters [3XP[103X and [3XQ[103X, which
   must  be  integers, as a list of three integers. If [3Xk[103X is a negative integer,
@@ -797,7 +797,7 @@
   
   [1X16.4-1 Permanent[101X
   
-  [29X[2XPermanent[102X( [3Xmat[103X ) [32X function
+  [33X[1;0Y[29X[2XPermanent[102X( [3Xmat[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the [13Xpermanent[113X of the matrix [3Xmat[103X. The permanent is defined by [22X∑_{p ∈
   Sym(n)} ∏_{i = 1}^n mat[i][i^p][122X.[133X

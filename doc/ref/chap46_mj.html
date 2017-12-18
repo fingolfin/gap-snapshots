@@ -189,28 +189,28 @@
 
 <h5>46.1-1 FamilyPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FamilyPcgs</code>( <var class="Arg">grp</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FamilyPcgs</code>( <var class="Arg">grp</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a "natural" pcgs of a pc group <var class="Arg">grp</var> (with respect to which pcgs operations as described in Chapter <a href="chap45_mj.html#X86007B0083F60470"><span class="RefLink">45</span></a> are particularly efficient).</p>
 
 <p><a id="X80893D2A7FFC791B" name="X80893D2A7FFC791B"></a></p>
 
 <h5>46.1-2 IsFamilyPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFamilyPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFamilyPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>specifies whether the pcgs is a <code class="func">FamilyPcgs</code> (<a href="chap46_mj.html#X79EDB35E82C99304"><span class="RefLink">46.1-1</span></a>) of a pc group.</p>
 
 <p><a id="X85C1596A867BE93D" name="X85C1596A867BE93D"></a></p>
 
 <h5>46.1-3 InducedPcgsWrtFamilyPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InducedPcgsWrtFamilyPcgs</code>( <var class="Arg">grp</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InducedPcgsWrtFamilyPcgs</code>( <var class="Arg">grp</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the pcgs which induced with respect to a family pcgs (see <code class="func">IsParentPcgsFamilyPcgs</code> (<a href="chap46_mj.html#X8333ACCB7F530406"><span class="RefLink">46.1-4</span></a>) for further details).</p>
 
 <p><a id="X8333ACCB7F530406" name="X8333ACCB7F530406"></a></p>
 
 <h5>46.1-4 IsParentPcgsFamilyPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsParentPcgsFamilyPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsParentPcgsFamilyPcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>This property indicates that the pcgs <var class="Arg">pcgs</var> is induced with respect to a family pcgs.</p>
 
 <p>This property is needed to distinguish between different independent polycyclic generating sequences which a pc group may have, since the elementary operations for a non-family pcgs may not be as efficient as the elementary operations for the family pcgs.</p>
@@ -227,16 +227,16 @@
 
 <h5>46.2-1 <span class="Heading">Comparison of elements of pc groups</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \=</code>( <var class="Arg">pcword1</var>, <var class="Arg">pcword2</var> )</td><td class="tdright">( method )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \&lt;</code>( <var class="Arg">pcword1</var>, <var class="Arg">pcword2</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \=</code>( <var class="Arg">pcword1</var>, <var class="Arg">pcword2</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \&lt;</code>( <var class="Arg">pcword1</var>, <var class="Arg">pcword2</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <p>The elements of a pc group <span class="SimpleMath">\(G\)</span> are always represented as words in normal form with respect to the family pcgs of <span class="SimpleMath">\(G\)</span>. Thus it is straightforward to compare elements of a pc group, since this boils down to a mere comparison of exponent vectors with respect to the family pcgs. In particular, the word problem is efficiently solvable in pc groups.</p>
 
 <p><a id="X7D1B700882FC6C78" name="X7D1B700882FC6C78"></a></p>
 
 <h5>46.2-2 <span class="Heading">Arithmetic operations for elements of pc groups</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \*</code>( <var class="Arg">pcword1</var>, <var class="Arg">pcword2</var> )</td><td class="tdright">( method )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Inverse</code>( <var class="Arg">pcword</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \*</code>( <var class="Arg">pcword1</var>, <var class="Arg">pcword2</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Inverse</code>( <var class="Arg">pcword</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>However, multiplication and inversion of elements in pc groups is not as straightforward as in arbitrary finitely presented groups where a simple concatenation or reversion of the corresponding words is sufficient (but one cannot solve the word problem).</p>
 
 <p>To multiply two elements in a pc group, we first concatenate the corresponding words and then use an algorithm called <em>collection</em> to transform the new word into a word in normal form.</p>
@@ -261,7 +261,7 @@ f2^2*f3*f4
 
 <h5>46.3-1 IsPcGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPcGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPcGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>tests whether <var class="Arg">G</var> is a pc group.</p>
 
 
@@ -278,7 +278,7 @@ false
 
 <h5>46.3-2 IsomorphismFpGroupByPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismFpGroupByPcgs</code>( <var class="Arg">pcgs</var>, <var class="Arg">str</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismFpGroupByPcgs</code>( <var class="Arg">pcgs</var>, <var class="Arg">str</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>It is possible to convert a pc group to a fp group in <strong class="pkg">GAP</strong>. The function <code class="func">IsomorphismFpGroupByPcgs</code> computes the power-commutator presentation defined by <var class="Arg">pcgs</var>. The string <var class="Arg">str</var> can be used to give a name to the generators of the fp group.</p>
 
 
@@ -319,7 +319,7 @@ Pcgs([ f1, f2, f3, f4 ])
 
 <h5>46.4-1 PcGroupFpGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcGroupFpGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcGroupFpGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>creates a pc group <var class="Arg">P</var> from an fp group (see Chapter <a href="chap47_mj.html#X7AA982637E90B35A"><span class="RefLink">47</span></a>) <var class="Arg">G</var> whose presentation is polycyclic. The resulting group <var class="Arg">P</var> has generators corresponding to the generators of <var class="Arg">G</var>. They are printed in the same way as generators of <var class="Arg">G</var>, but they lie in a different family. If the pc presentation of <var class="Arg">G</var> is not confluent, an error message occurs.</p>
 
 
@@ -341,8 +341,8 @@ Pcgs([ f1, f2, f3, f4 ])
 
 <h5>46.4-2 SingleCollector</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingleCollector</code>( <var class="Arg">fgrp</var>, <var class="Arg">relorders</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CombinatorialCollector</code>( <var class="Arg">fgrp</var>, <var class="Arg">relorders</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SingleCollector</code>( <var class="Arg">fgrp</var>, <var class="Arg">relorders</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CombinatorialCollector</code>( <var class="Arg">fgrp</var>, <var class="Arg">relorders</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>initializes a single collector or a combinatorial collector, where <var class="Arg">fgrp</var> must be a free group and <var class="Arg">relorders</var> must be a list of the relative orders of the pc series.</p>
 
 <p>A combinatorial collector can only be set up for a finite <span class="SimpleMath">\(p\)</span>-group. Here, the relative orders <var class="Arg">relorders</var> must all be equal and a prime.</p>
@@ -351,7 +351,7 @@ Pcgs([ f1, f2, f3, f4 ])
 
 <h5>46.4-3 SetConjugate</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetConjugate</code>( <var class="Arg">coll</var>, <var class="Arg">j</var>, <var class="Arg">i</var>, <var class="Arg">w</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetConjugate</code>( <var class="Arg">coll</var>, <var class="Arg">j</var>, <var class="Arg">i</var>, <var class="Arg">w</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <span class="SimpleMath">\(f_1, \ldots, f_n\)</span> be the generators of the underlying free group of the collector <var class="Arg">coll</var>.</p>
 
 <p>For <var class="Arg">i</var> <span class="SimpleMath">\(&lt;\)</span> <var class="Arg">j</var>, <code class="func">SetConjugate</code> sets the conjugate <span class="SimpleMath">\(f_j^{{f_i}}\)</span> to equal <var class="Arg">w</var>, which is assumed to be a word in <span class="SimpleMath">\(f_{{i+1}}, \ldots, f_n\)</span>.</p>
@@ -360,7 +360,7 @@ Pcgs([ f1, f2, f3, f4 ])
 
 <h5>46.4-4 SetCommutator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetCommutator</code>( <var class="Arg">coll</var>, <var class="Arg">j</var>, <var class="Arg">i</var>, <var class="Arg">w</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetCommutator</code>( <var class="Arg">coll</var>, <var class="Arg">j</var>, <var class="Arg">i</var>, <var class="Arg">w</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <span class="SimpleMath">\(f_1, \ldots, f_n\)</span> be the generators of the underlying free group of the collector <var class="Arg">coll</var>.</p>
 
 <p>For <var class="Arg">i</var> <span class="SimpleMath">\(&lt;\)</span> <var class="Arg">j</var>, <code class="func">SetCommutator</code> sets the commutator of <span class="SimpleMath">\(f_j\)</span> and <span class="SimpleMath">\(f_i\)</span> to equal <var class="Arg">w</var>, which is assumed to be a word in <span class="SimpleMath">\(f_{{i+1}}, \ldots, f_n\)</span>.</p>
@@ -369,7 +369,7 @@ Pcgs([ f1, f2, f3, f4 ])
 
 <h5>46.4-5 SetPower</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetPower</code>( <var class="Arg">coll</var>, <var class="Arg">i</var>, <var class="Arg">w</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetPower</code>( <var class="Arg">coll</var>, <var class="Arg">i</var>, <var class="Arg">w</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <span class="SimpleMath">\(f_1, \ldots, f_n\)</span> be the generators of the underlying free group of the collector <var class="Arg">coll</var>, and let <span class="SimpleMath">\(r_i\)</span> be the corresponding relative orders.</p>
 
 <p><code class="func">SetPower</code> sets the power <span class="SimpleMath">\(f_i^{{r_i}}\)</span> to equal <var class="Arg">w</var>, which is assumed to be a word in <span class="SimpleMath">\(f_{{i+1}}, \ldots, f_n\)</span>.</p>
@@ -378,15 +378,15 @@ Pcgs([ f1, f2, f3, f4 ])
 
 <h5>46.4-6 GroupByRws</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupByRws</code>( <var class="Arg">coll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupByRwsNC</code>( <var class="Arg">coll</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupByRws</code>( <var class="Arg">coll</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroupByRwsNC</code>( <var class="Arg">coll</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>creates a group from a rewriting system. In the first version it is checked whether the rewriting system is confluent, in the second version this is assumed to be true.</p>
 
 <p><a id="X7DF4835F79667099" name="X7DF4835F79667099"></a></p>
 
 <h5>46.4-7 IsConfluent</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConfluent</code>( <var class="Arg">G</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConfluent</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>checks whether the pc group <var class="Arg">G</var> has been built from a collector with a confluent power-commutator presentation.</p>
 
 
@@ -415,14 +415,14 @@ false
 
 <h5>46.4-8 IsomorphismRefinedPcGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismRefinedPcGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismRefinedPcGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns an isomorphism from <var class="Arg">G</var> onto an isomorphic pc group whose family pcgs is a prime order pcgs.</p>
 
 <p><a id="X821560A387762DD1" name="X821560A387762DD1"></a></p>
 
 <h5>46.4-9 RefinedPcGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RefinedPcGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RefinedPcGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the range of the <code class="func">IsomorphismRefinedPcGroup</code> (<a href="chap46_mj.html#X7E6226597DFE5F8F"><span class="RefLink">46.4-8</span></a>) value of <var class="Arg">G</var>.</p>
 
 <p><a id="X83F69FE27B024E24" name="X83F69FE27B024E24"></a></p>
@@ -435,7 +435,7 @@ false
 
 <h5>46.5-1 PcGroupWithPcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcGroupWithPcgs</code>( <var class="Arg">mpcgs</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcGroupWithPcgs</code>( <var class="Arg">mpcgs</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>creates a new pc group <var class="Arg">G</var> whose family pcgs is isomorphic to the (modulo) pcgs <var class="Arg">mpcgs</var>.</p>
 
 
@@ -469,7 +469,7 @@ Pcgs([ (4,5) ])
 
 <h5>46.5-2 IsomorphismPcGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismPcGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismPcGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns an isomorphism from <var class="Arg">G</var> onto an isomorphic pc group. The series chosen for this pc representation depends on the method chosen. <var class="Arg">G</var> must be a polycyclic group of any kind, for example a solvable permutation group.</p>
 
 
@@ -485,7 +485,7 @@ Group([ f1, f2, f3 ])
 
 <h5>46.5-3 IsomorphismSpecialPcGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismSpecialPcGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsomorphismSpecialPcGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns an isomorphism from <var class="Arg">G</var> onto an isomorphic pc group whose family pcgs is a special pcgs. (This can be beneficial to the runtime of calculations.) <var class="Arg">G</var> may be a polycyclic group of any kind, for example a solvable permutation group.</p>
 
 <p><a id="X85696AB9791DF047" name="X85696AB9791DF047"></a></p>
@@ -498,7 +498,7 @@ Group([ f1, f2, f3 ])
 
 <h5>46.6-1 GapInputPcGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GapInputPcGroup</code>( <var class="Arg">grp</var>, <var class="Arg">string</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GapInputPcGroup</code>( <var class="Arg">grp</var>, <var class="Arg">string</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">G := SmallGroup( 24, 12 );</span>
@@ -540,21 +540,21 @@ true
 
 <h5>46.8-1 TwoCoboundaries</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TwoCoboundaries</code>( <var class="Arg">G</var>, <var class="Arg">M</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TwoCoboundaries</code>( <var class="Arg">G</var>, <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the group of <span class="SimpleMath">\(2\)</span>-coboundaries of a pc group <var class="Arg">G</var> by the <var class="Arg">G</var>-module <var class="Arg">M</var>. The generators of <var class="Arg">M</var> must correspond to the <code class="func">Pcgs</code> (<a href="chap45_mj.html#X84C3750C7A4EEC34"><span class="RefLink">45.2-1</span></a>) value of <var class="Arg">G</var>. The group of coboundaries is given as vector space over the field underlying <var class="Arg">M</var>.</p>
 
 <p><a id="X784FCA207B8694A6" name="X784FCA207B8694A6"></a></p>
 
 <h5>46.8-2 TwoCocycles</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TwoCocycles</code>( <var class="Arg">G</var>, <var class="Arg">M</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TwoCocycles</code>( <var class="Arg">G</var>, <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the <span class="SimpleMath">\(2\)</span>-cocycles of a pc group <var class="Arg">G</var> by the <var class="Arg">G</var>-module <var class="Arg">M</var>. The generators of <var class="Arg">M</var> must correspond to the <code class="func">Pcgs</code> (<a href="chap45_mj.html#X84C3750C7A4EEC34"><span class="RefLink">45.2-1</span></a>) value of <var class="Arg">G</var>. The operation returns a list of vectors over the field underlying <var class="Arg">M</var> and the additive group generated by these vectors is the group of <span class="SimpleMath">\(2\)</span>-cocyles.</p>
 
 <p><a id="X838065F97F60468F" name="X838065F97F60468F"></a></p>
 
 <h5>46.8-3 TwoCohomology</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TwoCohomology</code>( <var class="Arg">G</var>, <var class="Arg">M</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TwoCohomology</code>( <var class="Arg">G</var>, <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a record defining the second cohomology group as factor space of the space of cocycles by the space of coboundaries. <var class="Arg">G</var> must be a pc group and the generators of <var class="Arg">M</var> must correspond to the pcgs of <var class="Arg">G</var>.</p>
 
 
@@ -582,29 +582,29 @@ rec( IsOverFiniteField := true, dimension := 1, field := GF(2),
 
 <h5>46.8-4 Extensions</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Extensions</code>( <var class="Arg">G</var>, <var class="Arg">M</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Extensions</code>( <var class="Arg">G</var>, <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns all extensions of <var class="Arg">G</var> by the <var class="Arg">G</var>-module <var class="Arg">M</var> up to equivalence as pc groups.</p>
 
 <p><a id="X7B3BE908867CE4F9" name="X7B3BE908867CE4F9"></a></p>
 
 <h5>46.8-5 Extension</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Extension</code>( <var class="Arg">G</var>, <var class="Arg">M</var>, <var class="Arg">c</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtensionNC</code>( <var class="Arg">G</var>, <var class="Arg">M</var>, <var class="Arg">c</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Extension</code>( <var class="Arg">G</var>, <var class="Arg">M</var>, <var class="Arg">c</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtensionNC</code>( <var class="Arg">G</var>, <var class="Arg">M</var>, <var class="Arg">c</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the extension of <var class="Arg">G</var> by the <var class="Arg">G</var>-module <var class="Arg">M</var> via the cocycle <var class="Arg">c</var> as pc groups. The <code class="code">NC</code> version does not check the resulting group for consistence.</p>
 
 <p><a id="X83DCB5AB7B6EE785" name="X83DCB5AB7B6EE785"></a></p>
 
 <h5>46.8-6 SplitExtension</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SplitExtension</code>( <var class="Arg">G</var>, <var class="Arg">M</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SplitExtension</code>( <var class="Arg">G</var>, <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the split extension of <var class="Arg">G</var> by the <var class="Arg">G</var>-module <var class="Arg">M</var>. See also <code class="func">SplitExtension</code> (<a href="chap46_mj.html#X84E2DA897FAAF6D8"><span class="RefLink">46.8-10</span></a>) for its 3-argument version.</p>
 
 <p><a id="X7EAC6B8B7ABEEB86" name="X7EAC6B8B7ABEEB86"></a></p>
 
 <h5>46.8-7 ModuleOfExtension</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ModuleOfExtension</code>( <var class="Arg">E</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ModuleOfExtension</code>( <var class="Arg">E</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the module of an extension <var class="Arg">E</var> of <var class="Arg">G</var> by <var class="Arg">M</var>. This is the normal subgroup of <var class="Arg">E</var> which corresponds to <var class="Arg">M</var>.</p>
 
 
@@ -637,14 +637,14 @@ rec( IsOverFiniteField := true, dimension := 1, field := GF(2),
 
 <h5>46.8-8 CompatiblePairs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompatiblePairs</code>( <var class="Arg">G</var>, <var class="Arg">M</var>[, <var class="Arg">D</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompatiblePairs</code>( <var class="Arg">G</var>, <var class="Arg">M</var>[, <var class="Arg">D</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the group of compatible pairs of the group <var class="Arg">G</var> with the <var class="Arg">G</var>-module <var class="Arg">M</var> as subgroup of the direct product Aut(<var class="Arg">G</var>) <span class="SimpleMath">\(\times\)</span> Aut(<var class="Arg">M</var>). Here Aut(<var class="Arg">M</var>) is considered as subgroup of a general linear group. The optional argument <var class="Arg">D</var> should be a subgroup of Aut(<var class="Arg">G</var>) <span class="SimpleMath">\(\times\)</span> Aut(<var class="Arg">M</var>). If it is given, then only the compatible pairs in <var class="Arg">D</var> are computed.</p>
 
 <p><a id="X854FFEF187C4AAB9" name="X854FFEF187C4AAB9"></a></p>
 
 <h5>46.8-9 ExtensionRepresentatives</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtensionRepresentatives</code>( <var class="Arg">G</var>, <var class="Arg">M</var>, <var class="Arg">P</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtensionRepresentatives</code>( <var class="Arg">G</var>, <var class="Arg">M</var>, <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns all extensions of <var class="Arg">G</var> by the <var class="Arg">G</var>-module <var class="Arg">M</var> up to equivalence under action of <var class="Arg">P</var> where <var class="Arg">P</var> has to be a subgroup of the group of compatible pairs of <var class="Arg">G</var> with <var class="Arg">M</var>.</p>
 
 
@@ -678,7 +678,7 @@ rec( IsOverFiniteField := true, dimension := 1, field := GF(2),
 
 <h5>46.8-10 SplitExtension</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SplitExtension</code>( <var class="Arg">G</var>, <var class="Arg">aut</var>, <var class="Arg">N</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SplitExtension</code>( <var class="Arg">G</var>, <var class="Arg">aut</var>, <var class="Arg">N</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the split extensions of the pc group <var class="Arg">G</var> by the pc group <var class="Arg">N</var>. <var class="Arg">aut</var> should be a homomorphism from <var class="Arg">G</var> into Aut(<var class="Arg">N</var>).</p>
 
 <p>In the following example we construct the holomorph of <span class="SimpleMath">\(Q_8\)</span> as split extension of <span class="SimpleMath">\(Q_8\)</span> by <span class="SimpleMath">\(S_4\)</span>.</p>
@@ -718,7 +718,7 @@ Group([ f1, f2 ])
 
 <h5>46.9-1 CodePcgs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CodePcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CodePcgs</code>( <var class="Arg">pcgs</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the code corresponding to <var class="Arg">pcgs</var>.</p>
 
 
@@ -733,7 +733,7 @@ Group([ f1, f2 ])
 
 <h5>46.9-2 CodePcGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CodePcGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CodePcGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the code for a pcgs of <var class="Arg">G</var>.</p>
 
 
@@ -747,7 +747,7 @@ Group([ f1, f2 ])
 
 <h5>46.9-3 PcGroupCode</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcGroupCode</code>( <var class="Arg">code</var>, <var class="Arg">size</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PcGroupCode</code>( <var class="Arg">code</var>, <var class="Arg">size</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a pc group of size <var class="Arg">size</var> corresponding to <var class="Arg">code</var>. The argument <var class="Arg">code</var> must be a valid code for a pcgs, otherwise anything may happen. Valid codes are usually obtained by one of the functions <code class="func">CodePcgs</code> (<a href="chap46_mj.html#X79948F1D7D4FF8D9"><span class="RefLink">46.9-1</span></a>) or <code class="func">CodePcGroup</code> (<a href="chap46_mj.html#X8041C2D88721EEA9"><span class="RefLink">46.9-2</span></a>).</p>
 
 
@@ -774,7 +774,7 @@ true
 
 <h5>46.10-1 RandomIsomorphismTest</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomIsomorphismTest</code>( <var class="Arg">coderecs</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomIsomorphismTest</code>( <var class="Arg">coderecs</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>The first argument is a list <var class="Arg">coderecs</var> containing records describing groups, and the second argument is a non-negative integer <var class="Arg">n</var>.</p>
 
 <p>The test returns a sublist of <var class="Arg">coderecs</var> where isomorphic copies detected by the probabilistic test have been removed.</p>

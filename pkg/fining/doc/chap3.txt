@@ -153,7 +153,7 @@
   
   [33X[0;0YBoth    attributes    are    declared    for   objects   in   the   category
   [10XIsIncidenceStructure[110X.  Any  incidence structure has a set of types, which is
-  usually  just  the list [22X1..n[122X. If specific names are given to each type, like
+  usually just the list [22X[1..n][122X. If specific names are given to each type, like
   points,  lines,  etc.,  this  attribute returns the names for the particular
   incidence  structure  [3Xinc[103X. The second variant returns the list of plurals of
   these  names.  For  genericly constructed incidence structures, the names of
@@ -1407,11 +1407,23 @@
   [29X[2XIsProjectiveSpace[102X[32X Category
   [29X[2XIsClassicalPolarSpace[102X[32X Category
   
-  [33X[0;0YLie geometries bundle projective spaces and classical polar spaces together.
-  In  the  future,  more  subcategories  could  be  added since the term ``Lie
-  geometry''  refers to a geometry whose automorphism group lies in some group
-  of  Lie  type.  Both  classes  of  geometries  have  their  category,  as  a
-  subcategory of [10XIsLieGeometry[110X.[133X
+  [33X[0;0YIn [5XFinInG[105X, a [13XLie geometry[113X [22XG[122X refers to a geometry whose automorphism group is
+  a  (subgroup of a) group of Lie type. Generally spoken, one could say that a
+  Lie  geometry  is an incidence geometry, such that each element of type [22Xi[122X is
+  represented  by  a  sub  space  of  dimension  [22Xi+1[122X  of a vector space [22XV[122X. The
+  projective  space  [22XP[122X  associated with [22XV[122X is naturally the [13Xambient space[113X of [22XG[122X.
+  However,  as  one may also consider subspaces of the given vector space over
+  [13Xsubfields  of the ground field of [22XV[122X[113X, one cannot not just say that the set of
+  elements  of [22XG[122X of a given type [22Xi[122X, is a subset of the set of elements of type
+  [22Xi[122X  of  [22XP[122X. Geometrically, this means that embeddings may be full or not, i.e.
+  when  a line of a Lie geometry is embedded into [22XP[122X as a line [22Xl[122X, the embedding
+  is full only if all projective points of [22Xl[122X have a pre image in [22XG[122X. Embeddings
+  of finite classical polar spaces are full, and indeed the set of elements of
+  type  [22Xi[122X  is  a  proper  subset  of  the  set  of  elements  of  type [22Xi[122X of [22XP[122X.
+  Subgeometries of projective spaces behave differently, and indeed, a line of
+  a subgeometry can be embedded into [22XP[122X, but will not be identified with a line
+  of  [22XP[122X.  All  geometries  in  [5XFinInG[105X  that have a projective space as ambient
+  space, belong to a subcategory of [10XIsLieGeometry[110X.[133X
   
   [33X[0;0YOne  common fact of Lie geometries is that their elements are represented by
   subspaces  of  a vector space. In these geometries, incidence is symmetrized

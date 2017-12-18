@@ -785,7 +785,7 @@ end);
 ## <Meth Name="SCIsFlag" Arg="complex,k"/>
 ## <Returns><K>true</K> or <K>false</K> upon success, <K>fail</K> otherwise.</Returns>
 ## <Description>
-## Checks if <Arg>complex</Arg> is flag. A simplicial complex is a flag complex  if all edges of a potential face of the complex are in the complex, or equivalently if all of its minimal non-faces are edges (cf. <Cite Key="Frohmader08FaceVecFlagCompl" />). 
+## Checks if <Arg>complex</Arg> is flag. A connected simplicial complex of dimension at least one is a flag complex if all cliques in its 1-skeleton span a face of the complex (cf. <Cite Key="Frohmader08FaceVecFlagCompl" />). 
 ## <Example>
 ## gap> SCLib.SearchByName("RP^2");   
 ## gap> rp2_6:=SCLib.Load(last[1][1]);;
@@ -799,22 +799,47 @@ InstallMethod(SCIsFlag,
 "for SCSimplicialComplex",
 [SCIsSimplicialComplex],
 function(complex)
+  local dim,isconn,i,lowskel,skel,face,vFace,comb;
 	
-	local nf,f;
-	
-	
-	nf:=SCMinimalNonFacesEx(complex);
-	if(nf=fail) then
-		return fail;
-	fi;
-	
-	if(Length(nf)<3 or ForAll(nf{[3..Length(nf)]},IsEmpty)) then
-		f:=true;
-	else
-		f:=false;
-	fi;
-	
-	return f;
+  dim:=SCDim(complex);
+  isconn:=SCIsConnected(complex);
+  if dim = fail or isconn = fail then
+    return fail;
+  fi;
+  
+  if dim < 1 then
+    Info(InfoSimpcomp,1,"SCIsFlag: complex must be at least 1-dimensional.");
+    return fail;
+  fi;
+
+  if not isconn then
+    Info(InfoSimpcomp,1,"SCIsFlag: complex must be connected.");
+    return fail;
+  fi;  
+
+  # check for every dimension 
+  #
+  #           1 <= i <= DIM(complex) + 1 
+  #
+  # if there exist a clique in the one-skeleton of the complex
+  # which in not a face of the complex
+  for i in [2..dim+1] do
+    lowskel:=SCSkelEx(complex,i-1);
+    if i > dim then
+      skel := [];
+    else
+      skel := SCSkelEx(complex,i);
+    fi;
+    for comb in Combinations(lowskel,i+1) do
+      vFace:=Union(comb);
+      if Size(vFace) = i+1 and not vFace in skel then
+        Info(InfoSimpcomp,2,"SCIsFlag: found missing clique ",vFace,": complex is not flag.");
+        return false;
+      fi;
+    od;
+  od;
+
+  return true;    
 end);
 
 	
@@ -3529,8 +3554,9 @@ function(complex,k)
 	if dim = fail then
 		return fail;
 	fi;
+
 	
-	if(k > 0 and k > Int((SCDim(complex)+1)/2)) then
+	if(k <= 0 or k > Int((SCDim(complex)+1)/2)) then
 		Info(InfoSimpcomp,1,"SCIsInKd: second argument must be a positive integer k with 1 <= k <= \\lfloor (SCDim(complex)+1)/2 \\rfloor.");
 		return fail;
 	fi;

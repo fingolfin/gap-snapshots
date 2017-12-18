@@ -8,11 +8,12 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2014	Colorado State University, Fort Collins
+##  Copyright 2017	Colorado State University
+##                  Sabancı Üniversitesi
 ##					Università degli Studi di Padova
-##					Universeit Gent
+##					Universiteit Gent
 ##					University of St. Andrews
-##					University of Western Australia, Perth
+##					University of Western Australia
 ##                  Vrije Universiteit Brussel
 ##                 
 ##
@@ -128,7 +129,7 @@ DeclareOperation("Span",[IsSubspaceOfProjectiveSpace, IsProjectiveSpace]);
 DeclareOperation("Span",[IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace, IsBool]);
 
 #DeclareOperation("Span",[IsHomogeneousList and IsSubspaceOfProjectiveSpaceCollection ]);
-DeclareOperation("Span",[IsList]);
+#DeclareOperation("Span",[ IsHomogeneousList ]);
 DeclareOperation("Span",[IsList, IsBool]);
 
 
@@ -157,5 +158,10 @@ DeclareOperation( "HomologyOfProjectiveSpace", [ IsSubspaceOfProjectiveSpace, Is
 	IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ] );
 DeclareOperation( "ProjectiveHomologyGroup", [ IsSubspaceOfProjectiveSpace, IsSubspaceOfProjectiveSpace ] );
 
+#############################################################################
+# Singer cycles of projective spaces
+#############################################################################
 
+DeclareOperation( "SingerCycleMat", [IsInt, IsInt]);
+DeclareOperation( "SingerCycleCollineation", [IsInt, IsInt]);
 

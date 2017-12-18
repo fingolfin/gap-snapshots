@@ -134,7 +134,7 @@
 
 <h5>48.1-1 PresentationFpGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PresentationFpGroup</code>( <var class="Arg">G</var>[, <var class="Arg">printlevel</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PresentationFpGroup</code>( <var class="Arg">G</var>[, <var class="Arg">printlevel</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>creates a presentation, i. e., a Tietze object, for the given finitely presented group <var class="Arg">G</var>. This presentation will be exactly as the presentation of <var class="Arg">G</var> and <em>no</em> initial Tietze transformations are applied to it.</p>
 
 <p>The optional <var class="Arg">printlevel</var> parameter can be used to restrict or to extend the amount of output provided by Tietze transformation commands when being applied to the created presentation. The default value 1 is designed for interactive use and implies explicit messages to be displayed by most of these commands. A <var class="Arg">printlevel</var> value of 0 will suppress these messages, whereas a <var class="Arg">printlevel</var> value of 2 will enforce some additional output.</p>
@@ -153,21 +153,21 @@
 
 <h5>48.1-2 TzSort</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzSort</code>( <var class="Arg">P</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzSort</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>sorts the relators of the given presentation <var class="Arg">P</var> by increasing lengths. There is no particular ordering defined for the relators of equal length. Note that <code class="func">TzSort</code> does not return a new object. It changes the given presentation.</p>
 
 <p><a id="X849429BC7D435F77" name="X849429BC7D435F77"></a></p>
 
 <h5>48.1-3 GeneratorsOfPresentation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsOfPresentation</code>( <var class="Arg">P</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsOfPresentation</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a list of free generators that is a shallow copy (see <code class="func">ShallowCopy</code> (<a href="chap12_mj.html#X846BC7107C352031"><span class="RefLink">12.7-1</span></a>)) of the current generators of the presentation <var class="Arg">P</var>.</p>
 
 <p><a id="X7D6F40A87F24D3D6" name="X7D6F40A87F24D3D6"></a></p>
 
 <h5>48.1-4 FpGroupPresentation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FpGroupPresentation</code>( <var class="Arg">P</var>[, <var class="Arg">nam</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FpGroupPresentation</code>( <var class="Arg">P</var>[, <var class="Arg">nam</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>constructs an f. p. group as defined by the given Tietze presentation <var class="Arg">P</var>.</p>
 
 
@@ -182,7 +182,7 @@ false
 
 <h5>48.1-5 PresentationViaCosetTable</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PresentationViaCosetTable</code>( <var class="Arg">G</var>[, <var class="Arg">F</var>, <var class="Arg">words</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PresentationViaCosetTable</code>( <var class="Arg">G</var>[, <var class="Arg">F</var>, <var class="Arg">words</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>constructs a presentation for a given concrete finite group. It applies the relations finding algorithm which has been described in <a href="chapBib_mj.html#biBCan73">[Can73]</a> and <a href="chapBib_mj.html#biBNeu82">[Neu82]</a>. It automatically applies Tietze transformations to the presentation found.</p>
 
 <p>If only a group <var class="Arg">G</var> has been specified, the single stage algorithm is applied.</p>
@@ -250,7 +250,7 @@ GL(2,7)
 
 <h5>48.1-6 SimplifiedFpGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimplifiedFpGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimplifiedFpGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>applies Tietze transformations to a copy of the presentation of the given finitely presented group <var class="Arg">G</var> in order to reduce it with respect to the number of generators, the number of relators, and the relator lengths.</p>
 
 <p><code class="func">SimplifiedFpGroup</code> returns a group isomorphic to the given one with a presentation which has been tried to simplify via Tietze transformations.</p>
@@ -295,15 +295,15 @@ H := FpGroupPresentation( P );
 
 <h5>48.2-1 PresentationSubgroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PresentationSubgroup</code>( <var class="Arg">G</var>, <var class="Arg">H</var>[, <var class="Arg">string</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PresentationSubgroup</code>( <var class="Arg">G</var>, <var class="Arg">H</var>[, <var class="Arg">string</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">PresentationSubgroup</code> is a synonym for <code class="func">PresentationSubgroupRrs</code> (<a href="chap48_mj.html#X857365CD87ADC29E"><span class="RefLink">48.2-2</span></a>).</p>
 
 <p><a id="X857365CD87ADC29E" name="X857365CD87ADC29E"></a></p>
 
 <h5>48.2-2 <span class="Heading">PresentationSubgroupRrs</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PresentationSubgroupRrs</code>( <var class="Arg">G</var>, <var class="Arg">H</var>[, <var class="Arg">string</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PresentationSubgroupRrs</code>( <var class="Arg">G</var>, <var class="Arg">table</var>[, <var class="Arg">string</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PresentationSubgroupRrs</code>( <var class="Arg">G</var>, <var class="Arg">H</var>[, <var class="Arg">string</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PresentationSubgroupRrs</code>( <var class="Arg">G</var>, <var class="Arg">table</var>[, <var class="Arg">string</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>uses the Reduced Reidemeister-Schreier method to compute a presentation <var class="Arg">P</var>, say, for a subgroup <var class="Arg">H</var> of a finitely presented group <var class="Arg">G</var>. The generators in the resulting presentation will be named <var class="Arg">string</var><code class="code">1</code>, <var class="Arg">string</var><code class="code">2</code>, <span class="SimpleMath">\(\ldots\)</span>, the default string is <code class="code">"_x"</code>. You may access the <span class="SimpleMath">\(i\)</span>-th of these generators by <var class="Arg">P</var><code class="code">!.</code><span class="SimpleMath">\(i\)</span>.</p>
 
 <p>Alternatively to the subgroup <var class="Arg">H</var>, its coset table <var class="Arg">table</var> in <var class="Arg">G</var> may be given as second argument.</p>
@@ -357,7 +357,7 @@ g1
 
 <h5>48.2-3 PrimaryGeneratorWords</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrimaryGeneratorWords</code>( <var class="Arg">P</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrimaryGeneratorWords</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is an attribute of the presentation <var class="Arg">P</var> which holds a list of words in the associated group generators (of the underlying free group) which express the primary subgroup generators of <var class="Arg">P</var>.</p>
 
 
@@ -370,7 +370,7 @@ g1
 
 <h5>48.2-4 PresentationSubgroupMtc</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PresentationSubgroupMtc</code>( <var class="Arg">G</var>, <var class="Arg">H</var>[, <var class="Arg">string</var>][, <var class="Arg">print</var>, <var class="Arg">level</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PresentationSubgroupMtc</code>( <var class="Arg">G</var>, <var class="Arg">H</var>[, <var class="Arg">string</var>][, <var class="Arg">print</var>, <var class="Arg">level</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>uses the Modified Todd-Coxeter coset representative enumeration method to compute a presentation <span class="SimpleMath">\(P\)</span>, say, for a subgroup <var class="Arg">H</var> of a finitely presented group <var class="Arg">G</var>. The presentation returned is in generators corresponding to the generators of <var class="Arg">H</var>. The generators in the resulting presentation will be named <var class="Arg">string</var><code class="code">1</code>, <var class="Arg">string</var><code class="code">2</code>, <span class="SimpleMath">\(\ldots\)</span>, the default string is <code class="code">"_x"</code>. You may access the <span class="SimpleMath">\(i\)</span>-th of these generators by <span class="SimpleMath">\(P\)</span><code class="code">!.</code><span class="SimpleMath">\(i\)</span>.</p>
 
 <p>The default print level is <span class="SimpleMath">\(1\)</span>. If the print level is set to <span class="SimpleMath">\(0\)</span>, then the printout of the implicitly called function <code class="func">DecodeTree</code> (<a href="chap48_mj.html#X7ACBFE2F78D72A31"><span class="RefLink">48.10-1</span></a>) will be suppressed.</p>
@@ -407,14 +407,14 @@ g1
 
 <h5>48.2-5 PresentationNormalClosureRrs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PresentationNormalClosureRrs</code>( <var class="Arg">G</var>, <var class="Arg">H</var>[, <var class="Arg">string</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PresentationNormalClosureRrs</code>( <var class="Arg">G</var>, <var class="Arg">H</var>[, <var class="Arg">string</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>uses the Reduced Reidemeister-Schreier method to compute a presentation <span class="SimpleMath">\(P\)</span>, say, for the normal closure of a subgroup <var class="Arg">H</var> of a finitely presented group <var class="Arg">G</var>. The generators in the resulting presentation will be named <var class="Arg">string</var><code class="code">1</code>, <var class="Arg">string</var><code class="code">2</code>, <span class="SimpleMath">\(\ldots\)</span>, the default string is <code class="code">"_x"</code>. You may access the <span class="SimpleMath">\(i\)</span>-th of these generators by <span class="SimpleMath">\(P\)</span><code class="code">!.</code><span class="SimpleMath">\(i\)</span>.</p>
 
 <p><a id="X7A7E5D0084DB0B4F" name="X7A7E5D0084DB0B4F"></a></p>
 
 <h5>48.2-6 PresentationNormalClosure</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PresentationNormalClosure</code>( <var class="Arg">G</var>, <var class="Arg">H</var>[, <var class="Arg">string</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PresentationNormalClosure</code>( <var class="Arg">G</var>, <var class="Arg">H</var>[, <var class="Arg">string</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">PresentationNormalClosure</code> is a synonym for <code class="func">PresentationNormalClosureRrs</code> (<a href="chap48_mj.html#X7D6A52837BEE5C3D"><span class="RefLink">48.2-5</span></a>).</p>
 
 <p><a id="X7BC960AB7E8DE419" name="X7BC960AB7E8DE419"></a></p>
@@ -427,7 +427,7 @@ g1
 
 <h5>48.3-1 TietzeWordAbstractWord</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TietzeWordAbstractWord</code>( <var class="Arg">word</var>, <var class="Arg">fgens</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TietzeWordAbstractWord</code>( <var class="Arg">word</var>, <var class="Arg">fgens</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>assumes <var class="Arg">fgens</var> to be a list of free group generators and <var class="Arg">word</var> to be an abstract word in these generators. It converts <var class="Arg">word</var> into a Tietze word, i. e., a list of positive or negative generator numbers.</p>
 
 <p>This function simply calls <code class="func">LetterRepAssocWord</code> (<a href="chap37_mj.html#X7BD7647C7B088389"><span class="RefLink">37.6-8</span></a>).</p>
@@ -436,7 +436,7 @@ g1
 
 <h5>48.3-2 AbstractWordTietzeWord</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AbstractWordTietzeWord</code>( <var class="Arg">word</var>, <var class="Arg">fgens</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AbstractWordTietzeWord</code>( <var class="Arg">word</var>, <var class="Arg">fgens</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>assumes <var class="Arg">fgens</var> to be a list of free group generators and <var class="Arg">word</var> to be a Tietze word in these generators, i. e., a list of positive or negative generator numbers. It converts <var class="Arg">word</var> to an abstract word.</p>
 
 <p>This function simply calls <code class="func">AssocWordByLetterRep</code> (<a href="chap37_mj.html#X7AC8EC757CFB9A51"><span class="RefLink">37.6-9</span></a>).</p>
@@ -462,7 +462,7 @@ d^-1*b^-1*d*c^-2
 
 <h5>48.4-1 TzPrintGenerators</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzPrintGenerators</code>( <var class="Arg">P</var>[, <var class="Arg">list</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzPrintGenerators</code>( <var class="Arg">P</var>[, <var class="Arg">list</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>prints the generators of the given Tietze presentation <var class="Arg">P</var> together with the number of their occurrences in the relators. The optional second argument can be used to specify the numbers of the generators to be printed. Default: all generators are printed.</p>
 
 
@@ -481,7 +481,7 @@ Group([ (1,2,3,4,5), (2,3,5,4), (1,6)(3,4) ])
 
 <h5>48.4-2 TzPrintRelators</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzPrintRelators</code>( <var class="Arg">P</var>[, <var class="Arg">list</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzPrintRelators</code>( <var class="Arg">P</var>[, <var class="Arg">list</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>prints the relators of the given Tietze presentation <var class="Arg">P</var>. The optional second argument <var class="Arg">list</var> can be used to specify the numbers of the relators to be printed. Default: all relators are printed.</p>
 
 
@@ -499,7 +499,7 @@ Group([ (1,2,3,4,5), (2,3,5,4), (1,6)(3,4) ])
 
 <h5>48.4-3 TzPrintLengths</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzPrintLengths</code>( <var class="Arg">P</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzPrintLengths</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>prints just a list of all relator lengths of the given presentation <var class="Arg">P</var>.</p>
 
 
@@ -512,7 +512,7 @@ Group([ (1,2,3,4,5), (2,3,5,4), (1,6)(3,4) ])
 
 <h5>48.4-4 TzPrintStatus</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzPrintStatus</code>( <var class="Arg">P</var>[, <var class="Arg">norepeat</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzPrintStatus</code>( <var class="Arg">P</var>[, <var class="Arg">norepeat</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is an internal function which is used by the Tietze transformation routines to print the number of generators, the number of relators, and the total length of all relators in the given Tietze presentation <var class="Arg">P</var>. If <var class="Arg">norepeat</var> is specified as <code class="keyw">true</code>, the printing is suppressed if none of the three values has changed since the last call.</p>
 
 
@@ -525,14 +525,14 @@ Group([ (1,2,3,4,5), (2,3,5,4), (1,6)(3,4) ])
 
 <h5>48.4-5 TzPrintPresentation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzPrintPresentation</code>( <var class="Arg">P</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzPrintPresentation</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>prints the generators and the relators of a Tietze presentation. In fact, it is an abbreviation for the successive call of the three commands <code class="func">TzPrintGenerators</code> (<a href="chap48_mj.html#X847EA6737C21171C"><span class="RefLink">48.4-1</span></a>), <code class="func">TzPrintRelators</code> (<a href="chap48_mj.html#X821B63DD82894443"><span class="RefLink">48.4-2</span></a>), and <code class="func">TzPrintStatus</code> (<a href="chap48_mj.html#X7D7B3F46865443E4"><span class="RefLink">48.4-4</span></a>), each with the presentation <var class="Arg">P</var> as only argument.</p>
 
 <p><a id="X7CA8BA51802655FC" name="X7CA8BA51802655FC"></a></p>
 
 <h5>48.4-6 TzPrint</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzPrint</code>( <var class="Arg">P</var>[, <var class="Arg">list</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzPrint</code>( <var class="Arg">P</var>[, <var class="Arg">list</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>prints the current generators of the given presentation <var class="Arg">P</var>, and prints the relators of <var class="Arg">P</var> as Tietze words (without converting them back to abstract words as the functions <code class="func">TzPrintRelators</code> (<a href="chap48_mj.html#X821B63DD82894443"><span class="RefLink">48.4-2</span></a>) and <code class="func">TzPrintPresentation</code> (<a href="chap48_mj.html#X85F8DAE27F06C32B"><span class="RefLink">48.4-5</span></a>) do). The optional second argument can be used to specify the numbers of the relators to be printed. Default: all relators are printed.</p>
 
 
@@ -552,7 +552,7 @@ Group([ (1,2,3,4,5), (2,3,5,4), (1,6)(3,4) ])
 
 <h5>48.4-7 TzPrintPairs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzPrintPairs</code>( <var class="Arg">P</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzPrintPairs</code>( <var class="Arg">P</var>[, <var class="Arg">n</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>prints the <var class="Arg">n</var> most often occurring relator subwords of the form <span class="SimpleMath">\(a b\)</span>, where <span class="SimpleMath">\(a\)</span> and <span class="SimpleMath">\(b\)</span> are different generators or inverses of generators, together with the number of their occurrences. The default value of <var class="Arg">n</var> is 10. A value <var class="Arg">n</var> = 0 is interpreted as <code class="func">infinity</code> (<a href="chap18_mj.html#X8511B8DF83324C27"><span class="RefLink">18.2-1</span></a>).</p>
 
 <p>The function <code class="func">TzPrintPairs</code> is useful in the context of Tietze transformations which introduce new generators by substituting words in the current generators (see <a href="chap48_mj.html#X7D2FACCF79F57040"><span class="RefLink">48.8</span></a>). It gives some evidence for an appropriate choice of a word of length 2 to be substituted.</p>
@@ -575,7 +575,7 @@ Group([ (1,2,3,4,5), (2,3,5,4), (1,6)(3,4) ])
 
 <h5>48.5-1 AddGenerator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddGenerator</code>( <var class="Arg">P</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddGenerator</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>extends the presentation <var class="Arg">P</var> by a new generator.</p>
 
 <p>Let <span class="SimpleMath">\(i\)</span> be the smallest positive integer which has not yet been used as a generator number in the given presentation. <code class="func">AddGenerator</code> defines a new abstract generator <span class="SimpleMath">\(x_i\)</span> with the name <code class="code">"_x</code><span class="SimpleMath">\(i\)</span><code class="code">"</code> and adds it to the list of generators of <var class="Arg">P</var>.</p>
@@ -602,21 +602,21 @@ true
 
 <h5>48.5-2 TzNewGenerator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzNewGenerator</code>( <var class="Arg">P</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzNewGenerator</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is an internal function which defines a new abstract generator and adds it to the presentation <var class="Arg">P</var>. It is called by <code class="func">AddGenerator</code> (<a href="chap48_mj.html#X7F632A6D8685855D"><span class="RefLink">48.5-1</span></a>) and by several Tietze transformation commands. As it does not know which global lists have to be kept consistent, you should not call it. Instead, you should call the function <code class="func">AddGenerator</code> (<a href="chap48_mj.html#X7F632A6D8685855D"><span class="RefLink">48.5-1</span></a>), if needed.</p>
 
 <p><a id="X78D1BCE67FA852D8" name="X78D1BCE67FA852D8"></a></p>
 
 <h5>48.5-3 AddRelator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddRelator</code>( <var class="Arg">P</var>, <var class="Arg">word</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddRelator</code>( <var class="Arg">P</var>, <var class="Arg">word</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>adds the relator <var class="Arg">word</var> to the presentation <var class="Arg">P</var>, probably changing the group defined by <var class="Arg">P</var>. <var class="Arg">word</var> must be an abstract word in the generators of <var class="Arg">P</var>.</p>
 
 <p><a id="X7B11E89E78A22EBF" name="X7B11E89E78A22EBF"></a></p>
 
 <h5>48.5-4 RemoveRelator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RemoveRelator</code>( <var class="Arg">P</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RemoveRelator</code>( <var class="Arg">P</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>removes the <var class="Arg">n</var>-th relator from the presentation <var class="Arg">P</var>, probably changing the group defined by <var class="Arg">P</var>.</p>
 
 <p><a id="X829B634286471AB7" name="X829B634286471AB7"></a></p>
@@ -635,7 +635,7 @@ true
 
 <h5>48.6-1 TzGo</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzGo</code>( <var class="Arg">P</var>[, <var class="Arg">silent</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzGo</code>( <var class="Arg">P</var>[, <var class="Arg">silent</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>automatically performs suitable Tietze transformations of the given presentation <var class="Arg">P</var>. It is perhaps the most convenient one among the interactive Tietze transformation commands. It offers a kind of default strategy which, in general, saves you from explicitly calling the lower-level commands it involves.</p>
 
 <p>If <var class="Arg">silent</var> is specified as <code class="keyw">true</code>, the printing of the status line by <code class="func">TzGo</code> is suppressed if the Tietze option <code class="code">printLevel</code> (see <a href="chap48_mj.html#X856F37537E9927EE"><span class="RefLink">48.11</span></a>) has a value less than <span class="SimpleMath">\(2\)</span>.</p>
@@ -644,7 +644,7 @@ true
 
 <h5>48.6-2 SimplifyPresentation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimplifyPresentation</code>( <var class="Arg">P</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimplifyPresentation</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">SimplifyPresentation</code> is a synonym for <code class="func">TzGo</code> (<a href="chap48_mj.html#X7C4A30328224C466"><span class="RefLink">48.6-1</span></a>).</p>
 
 
@@ -689,7 +689,7 @@ true
 
 <h5>48.6-3 TzGoGo</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzGoGo</code>( <var class="Arg">P</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzGoGo</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>calls the command <code class="func">TzGo</code> (<a href="chap48_mj.html#X7C4A30328224C466"><span class="RefLink">48.6-1</span></a>) again and again until it does not reduce the presentation any more.</p>
 
 <p>The result of the Tietze transformations can be affected substantially by the options parameters (see <a href="chap48_mj.html#X856F37537E9927EE"><span class="RefLink">48.11</span></a>). To demonstrate the effect of the <code class="code">eliminationsLimit</code> parameter, we will give an example in which we handle a subgroup of index 240 in a group of order 40320 given by a presentation due to B. H. Neumann. First we construct a presentation of the subgroup, and then we apply to it the command <code class="func">TzGoGo</code> for different values of the parameter <code class="code">eliminationsLimit</code> (including the default value 100). In fact, we also alter the <code class="code">printLevel</code> parameter, but this is only done in order to suppress most of the output. In all cases the resulting presentations cannot be improved any more by applying the command <code class="func">TzGoGo</code> again, i.e., they are the best results which we can get without substituting new generators.</p>
@@ -755,8 +755,8 @@ true
 
 <h5>48.7-1 <span class="Heading">TzEliminate</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzEliminate</code>( <var class="Arg">P</var>[, <var class="Arg">gen</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzEliminate</code>( <var class="Arg">P</var>[, <var class="Arg">n</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzEliminate</code>( <var class="Arg">P</var>[, <var class="Arg">gen</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzEliminate</code>( <var class="Arg">P</var>[, <var class="Arg">n</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>tries to eliminate a generator from a presentation <var class="Arg">P</var> via Tietze transformations.</p>
 
 <p>Any relator which contains some generator just once can be used to substitute that generator by a word in the remaining generators. If such generators and relators exist, then <code class="func">TzEliminate</code> chooses a generator for which the product of its number of occurrences and the length of the substituting word is minimal, and then it eliminates this generator from the presentation, provided that the resulting total length of the relators does not exceed the associated Tietze option parameter <code class="code">spaceLimit</code> (see <a href="chap48_mj.html#X856F37537E9927EE"><span class="RefLink">48.11</span></a>). The default value of that parameter is <code class="func">infinity</code> (<a href="chap18_mj.html#X8511B8DF83324C27"><span class="RefLink">18.2-1</span></a>), but you may alter it appropriately.</p>
@@ -769,7 +769,7 @@ true
 
 <h5>48.7-2 TzSearch</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzSearch</code>( <var class="Arg">P</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzSearch</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>searches for relator subwords which, in some relator, have a complement of shorter length and which occur in other relators, too, and uses them to reduce these other relators.</p>
 
 <p>The idea is to find pairs of relators <span class="SimpleMath">\(r_1\)</span> and <span class="SimpleMath">\(r_2\)</span> of length <span class="SimpleMath">\(l_1\)</span> and <span class="SimpleMath">\(l_2\)</span>, respectively, such that <span class="SimpleMath">\(l_1 \leq l_2\)</span> and <span class="SimpleMath">\(r_1\)</span> and <span class="SimpleMath">\(r_2\)</span> coincide (possibly after inverting or conjugating one of them) in some maximal subword <span class="SimpleMath">\(w\)</span>, say, of length greater than <span class="SimpleMath">\(l_1/2\)</span>, and then to substitute each copy of <span class="SimpleMath">\(w\)</span> in <span class="SimpleMath">\(r_2\)</span> by the inverse complement of <span class="SimpleMath">\(w\)</span> in <span class="SimpleMath">\(r_1\)</span>.</p>
@@ -794,7 +794,7 @@ true
 
 <h5>48.7-3 TzSearchEqual</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzSearchEqual</code>( <var class="Arg">P</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzSearchEqual</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>searches for Tietze relator subwords which, in some relator, have a complement of equal length and which occur in other relators, too, and uses them to modify these other relators.</p>
 
 <p>The idea is to find pairs of relators <span class="SimpleMath">\(r_1\)</span> and <span class="SimpleMath">\(r_2\)</span> of length <span class="SimpleMath">\(l_1\)</span> and <span class="SimpleMath">\(l_2\)</span>, respectively, such that <span class="SimpleMath">\(l_1\)</span> is even, <span class="SimpleMath">\(l_1 \leq l_2\)</span>, and <span class="SimpleMath">\(r_1\)</span> and <span class="SimpleMath">\(r_2\)</span> coincide (possibly after inverting or conjugating one of them) in some maximal subword <span class="SimpleMath">\(w\)</span>, say, of length at least <span class="SimpleMath">\(l_1/2\)</span>. Let <span class="SimpleMath">\(l\)</span> be the length of <span class="SimpleMath">\(w\)</span>. Then, if <span class="SimpleMath">\(l &gt; l_1/2\)</span>, the pair is handled as in <code class="func">TzSearch</code> (<a href="chap48_mj.html#X7DF4BBDF839643DD"><span class="RefLink">48.7-2</span></a>). Otherwise, if <span class="SimpleMath">\(l = l_1/2\)</span>, then <code class="func">TzSearchEqual</code> substitutes each copy of <span class="SimpleMath">\(w\)</span> in <span class="SimpleMath">\(r_2\)</span> by the inverse complement of <span class="SimpleMath">\(w\)</span> in <span class="SimpleMath">\(r_1\)</span>.</p>
@@ -805,7 +805,7 @@ true
 
 <h5>48.7-4 TzFindCyclicJoins</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzFindCyclicJoins</code>( <var class="Arg">P</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzFindCyclicJoins</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>searches for power and commutator relators in order to find pairs of generators which generate a common cyclic subgroup. It uses these pairs to introduce new relators, but it does not introduce any new generators as is done by <code class="func">TzSubstituteCyclicJoins</code> (<a href="chap48_mj.html#X7ADE3B437C19B94D"><span class="RefLink">48.8-2</span></a>).</p>
 
 <p>More precisely: <code class="func">TzFindCyclicJoins</code> searches for pairs of generators <span class="SimpleMath">\(a\)</span> and <span class="SimpleMath">\(b\)</span> such that (possibly after inverting or conjugating some relators) the set of relators contains the commutator <span class="SimpleMath">\([a,b]\)</span>, a power <span class="SimpleMath">\(a^n\)</span>, and a product of the form <span class="SimpleMath">\(a^s b^t\)</span> with <span class="SimpleMath">\(s\)</span> prime to <span class="SimpleMath">\(n\)</span>. For each such pair, <code class="func">TzFindCyclicJoins</code> uses the Euclidean algorithm to express <span class="SimpleMath">\(a\)</span> as a power of <span class="SimpleMath">\(b\)</span>, and then it eliminates <span class="SimpleMath">\(a\)</span>.</p>
@@ -820,8 +820,8 @@ true
 
 <h5>48.8-1 <span class="Heading">TzSubstitute</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzSubstitute</code>( <var class="Arg">P</var>, <var class="Arg">word</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzSubstitute</code>( <var class="Arg">P</var>[, <var class="Arg">n</var>[, <var class="Arg">eliminate</var>]] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzSubstitute</code>( <var class="Arg">P</var>, <var class="Arg">word</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzSubstitute</code>( <var class="Arg">P</var>[, <var class="Arg">n</var>[, <var class="Arg">eliminate</var>]] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>In the first form <code class="func">TzSubstitute</code> expects <var class="Arg">P</var> to be a presentation and <var class="Arg">word</var> to be either an abstract word or a Tietze word in the generators of <var class="Arg">P</var>. It substitutes the given word as a new generator of <var class="Arg">P</var>. This is done as follows: First, <code class="func">TzSubstitute</code> creates a new abstract generator, <span class="SimpleMath">\(g\)</span> say, and adds it to the presentation, then it adds a new relator <span class="SimpleMath">\(g^{{-1}} \cdot \textit{word}\)</span>.</p>
 
 <p>In its second form, <code class="func">TzSubstitute</code> substitutes a squarefree word of length 2 as a new generator and then eliminates a generator from the extended generator list. We will describe this process in more detail below.</p>
@@ -1003,7 +1003,7 @@ A5 2^4
 
 <h5>48.8-2 TzSubstituteCyclicJoins</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzSubstituteCyclicJoins</code>( <var class="Arg">P</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzSubstituteCyclicJoins</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>tries to find pairs of commuting generators <span class="SimpleMath">\(a\)</span> and <span class="SimpleMath">\(b\)</span>, say, such that the exponent of <span class="SimpleMath">\(a\)</span> (i. e. the least currently known positive integer <span class="SimpleMath">\(n\)</span> such that <span class="SimpleMath">\(a^n\)</span> is a relator in <var class="Arg">P</var>) is prime to the exponent of <span class="SimpleMath">\(b\)</span>. For each such pair, their product <span class="SimpleMath">\(a b\)</span> is substituted as a new generator, and <span class="SimpleMath">\(a\)</span> and <span class="SimpleMath">\(b\)</span> are eliminated.</p>
 
 <p><a id="X85E703997A0212EE" name="X85E703997A0212EE"></a></p>
@@ -1016,7 +1016,7 @@ A5 2^4
 
 <h5>48.9-1 TzInitGeneratorImages</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzInitGeneratorImages</code>( <var class="Arg">P</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzInitGeneratorImages</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>expects <var class="Arg">P</var> to be a presentation. It defines the current generators to be the "old generators" of <var class="Arg">P</var> and initializes the (pre)image tracing. See <code class="func">TzImagesOldGens</code> (<a href="chap48_mj.html#X798B38F87C082C45"><span class="RefLink">48.9-3</span></a>) and <code class="func">TzPreImagesNewGens</code> (<a href="chap48_mj.html#X7AC41B117DBB87D6"><span class="RefLink">48.9-4</span></a>) for details.</p>
 
 <p>You can reinitialize the tracing of the generator images at any later state by just calling the function <code class="func">TzInitGeneratorImages</code> again.</p>
@@ -1029,28 +1029,28 @@ A5 2^4
 
 <h5>48.9-2 OldGeneratorsOfPresentation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OldGeneratorsOfPresentation</code>( <var class="Arg">P</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OldGeneratorsOfPresentation</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>assumes that <var class="Arg">P</var> is a presentation for which the generator images and preimages are being traced under Tietze transformations. It returns the list of old generators of <var class="Arg">P</var>.</p>
 
 <p><a id="X798B38F87C082C45" name="X798B38F87C082C45"></a></p>
 
 <h5>48.9-3 TzImagesOldGens</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzImagesOldGens</code>( <var class="Arg">P</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzImagesOldGens</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>assumes that <var class="Arg">P</var> is a presentation for which the generator images and preimages are being traced under Tietze transformations. It returns a list <span class="SimpleMath">\(l\)</span> of words in the (current) <code class="func">GeneratorsOfPresentation</code> (<a href="chap48_mj.html#X849429BC7D435F77"><span class="RefLink">48.1-3</span></a>) value of <var class="Arg">P</var> such that the <span class="SimpleMath">\(i\)</span>-th word <span class="SimpleMath">\(l[i]\)</span> represents the <span class="SimpleMath">\(i\)</span>-th old generator of <var class="Arg">P</var>, i. e., the <span class="SimpleMath">\(i\)</span>-th entry of the <code class="func">OldGeneratorsOfPresentation</code> (<a href="chap48_mj.html#X7AB9A06F80FB3659"><span class="RefLink">48.9-2</span></a>) value of <var class="Arg">P</var>.</p>
 
 <p><a id="X7AC41B117DBB87D6" name="X7AC41B117DBB87D6"></a></p>
 
 <h5>48.9-4 TzPreImagesNewGens</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzPreImagesNewGens</code>( <var class="Arg">P</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzPreImagesNewGens</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>assumes that <var class="Arg">P</var> is a presentation for which the generator images and preimages are being traced under Tietze transformations. It returns a list <span class="SimpleMath">\(l\)</span> of words in the old generators of <var class="Arg">P</var> (the <code class="func">OldGeneratorsOfPresentation</code> (<a href="chap48_mj.html#X7AB9A06F80FB3659"><span class="RefLink">48.9-2</span></a>) value of <var class="Arg">P</var>) such that the <span class="SimpleMath">\(i\)</span>-th entry of <span class="SimpleMath">\(l\)</span> represents the <span class="SimpleMath">\(i\)</span>-th (current) generator of <var class="Arg">P</var> (the <code class="func">GeneratorsOfPresentation</code> (<a href="chap48_mj.html#X849429BC7D435F77"><span class="RefLink">48.1-3</span></a>) value of <var class="Arg">P</var>).</p>
 
 <p><a id="X7F086D0E7AD6173B" name="X7F086D0E7AD6173B"></a></p>
 
 <h5>48.9-5 TzPrintGeneratorImages</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzPrintGeneratorImages</code>( <var class="Arg">P</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzPrintGeneratorImages</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>assumes that <var class="Arg">P</var> is a presentation for which the generator images and preimages are being traced under Tietze transformations. It displays the preimages of the current generators as Tietze words in the old generators, and the images of the old generators as Tietze words in the current generators.</p>
 
 
@@ -1100,7 +1100,7 @@ v = a*t*a
 
 <h5>48.10-1 DecodeTree</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DecodeTree</code>( <var class="Arg">P</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DecodeTree</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>assumes that <var class="Arg">P</var> is a subgroup presentation provided by the Reduced Reidemeister-Schreier or by the Modified Todd-Coxeter method (see <code class="func">PresentationSubgroupRrs</code> (<a href="chap48_mj.html#X857365CD87ADC29E"><span class="RefLink">48.2-2</span></a>), <code class="func">PresentationNormalClosureRrs</code> (<a href="chap48_mj.html#X7D6A52837BEE5C3D"><span class="RefLink">48.2-5</span></a>), <code class="func">PresentationSubgroupMtc</code> (<a href="chap48_mj.html#X80BA10F780EAE68E"><span class="RefLink">48.2-4</span></a>)). It eliminates the secondary generators of <var class="Arg">P</var> (see Section <a href="chap48_mj.html#X8118FECE7AD1879B"><span class="RefLink">48.2</span></a>) by applying the so called "decoding tree" procedure.</p>
 
 <p><code class="func">DecodeTree</code> is called automatically by the command <code class="func">PresentationSubgroupMtc</code> (<a href="chap48_mj.html#X80BA10F780EAE68E"><span class="RefLink">48.2-4</span></a>) where it reduces <var class="Arg">P</var> to a presentation on the given (primary) subgroup generators.</p>
@@ -1249,7 +1249,7 @@ v = a*t*a
 
 <h5>48.11-1 TzOptions</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzOptions</code>( <var class="Arg">P</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzOptions</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is a record whose components direct the heuristics applied by the Tietze transformation functions.</p>
 
 <p>You may alter the value of any of these Tietze options by just assigning a new value to the respective record component.</p>
@@ -1299,7 +1299,7 @@ v = a*t*a
 
 <h5>48.11-2 TzPrintOptions</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzPrintOptions</code>( <var class="Arg">P</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TzPrintOptions</code>( <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>prints the current values of the Tietze options of the presentation <var class="Arg">P</var>.</p>
 
 

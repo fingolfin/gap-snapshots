@@ -29,8 +29,8 @@
   
   [1X49.1-1 DirectProduct[101X
   
-  [29X[2XDirectProduct[102X( [3XG[103X[, [3XH[103X, [3X...[103X] ) [32X function
-  [29X[2XDirectProductOp[102X( [3Xlist[103X, [3Xexpl[103X ) [32X operation
+  [33X[1;0Y[29X[2XDirectProduct[102X( [3XG[103X[, [3XH[103X, [3X...[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XDirectProductOp[102X( [3Xlist[103X, [3Xexpl[103X ) [32X operation[133X
   
   [33X[0;0YThese  functions  construct  the  direct  product  of  the  groups  given as
   arguments. [2XDirectProduct[102X takes an arbitrary positive number of arguments and
@@ -78,8 +78,8 @@
   
   [1X49.2-1 [33X[0;0YSemidirectProduct[133X[101X
   
-  [29X[2XSemidirectProduct[102X( [3XG[103X, [3Xalpha[103X, [3XN[103X ) [32X operation
-  [29X[2XSemidirectProduct[102X( [3Xautgp[103X, [3XN[103X ) [32X operation
+  [33X[1;0Y[29X[2XSemidirectProduct[102X( [3XG[103X, [3Xalpha[103X, [3XN[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSemidirectProduct[102X( [3Xautgp[103X, [3XN[103X ) [32X operation[133X
   
   [33X[0;0Yconstructs  the  semidirect product of [3XN[103X with [3XG[103X acting via [3Xalpha[103X, which must
   be a homomorphism from [3XG[103X into a group of automorphisms of [3XN[103X.[133X
@@ -177,7 +177,7 @@
   
   [1X49.3-1 SubdirectProduct[101X
   
-  [29X[2XSubdirectProduct[102X( [3XG[103X, [3XH[103X, [3XGhom[103X, [3XHhom[103X ) [32X operation
+  [33X[1;0Y[29X[2XSubdirectProduct[102X( [3XG[103X, [3XH[103X, [3XGhom[103X, [3XHhom[103X ) [32X operation[133X
   
   [33X[0;0Yconstructs the subdirect product of [3XG[103X and [3XH[103X with respect to the epimorphisms
   [3XGhom[103X from [3XG[103X onto a group [22XA[122X and [3XHhom[103X from [3XH[103X onto the same group [22XA[122X.[133X
@@ -203,7 +203,7 @@
   
   [1X49.3-2 SubdirectProducts[101X
   
-  [29X[2XSubdirectProducts[102X( [3XG[103X, [3XH[103X ) [32X function
+  [33X[1;0Y[29X[2XSubdirectProducts[102X( [3XG[103X, [3XH[103X ) [32X function[133X
   
   [33X[0;0Ythis  function computes all subdirect products of [3XG[103X and [3XH[103X up to conjugacy in
   the  direct  product  of Parent([3XG[103X) and Parent([3XH[103X). The subdirect products are
@@ -226,8 +226,8 @@
   
   [1X49.4-1 WreathProduct[101X
   
-  [29X[2XWreathProduct[102X( [3XG[103X, [3XH[103X[, [3Xhom[103X] ) [32X operation
-  [29X[2XStandardWreathProduct[102X( [3XG[103X, [3XH[103X ) [32X operation
+  [33X[1;0Y[29X[2XWreathProduct[102X( [3XG[103X, [3XH[103X[, [3Xhom[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XStandardWreathProduct[102X( [3XG[103X, [3XH[103X ) [32X operation[133X
   
   [33X[0;0Y[10XWreathProduct[110X constructs the wreath product of the group [3XG[103X with the group [3XH[103X,
   acting as a permutation group.[133X
@@ -271,7 +271,7 @@
   
   [1X49.4-2 WreathProductImprimitiveAction[101X
   
-  [29X[2XWreathProductImprimitiveAction[102X( [3XG[103X, [3XH[103X ) [32X function
+  [33X[1;0Y[29X[2XWreathProductImprimitiveAction[102X( [3XG[103X, [3XH[103X ) [32X function[133X
   
   [33X[0;0YFor  two  permutation  groups  [3XG[103X  and [3XH[103X, this function constructs the wreath
   product of [3XG[103X and [3XH[103X in the imprimitive action. If [3XG[103X acts on [22Xl[122X points and [3XH[103X on
@@ -289,7 +289,7 @@
   
   [1X49.4-3 WreathProductProductAction[101X
   
-  [29X[2XWreathProductProductAction[102X( [3XG[103X, [3XH[103X ) [32X function
+  [33X[1;0Y[29X[2XWreathProductProductAction[102X( [3XG[103X, [3XH[103X ) [32X function[133X
   
   [33X[0;0YFor  two  permutation  groups  [3XG[103X  and [3XH[103X, this function constructs the wreath
   product  in  product  action.  If  [3XG[103X acts on [22Xl[122X points and [3XH[103X on [22Xm[122X points this
@@ -307,7 +307,7 @@
   
   [1X49.4-4 KuKGenerators[101X
   
-  [29X[2XKuKGenerators[102X( [3XG[103X, [3Xbeta[103X, [3Xalpha[103X ) [32X function
+  [33X[1;0Y[29X[2XKuKGenerators[102X( [3XG[103X, [3Xbeta[103X, [3Xalpha[103X ) [32X function[133X
   
   [33X[0;0YIf  [3Xbeta[103X is a homomorphism from [3XG[103X into a transitive permutation group, [22XU[122X the
   full preimage of the point stabilizer and [3Xalpha[103X a homomorphism defined on (a
@@ -338,8 +338,8 @@
   
   [1X49.5-1 [33X[0;0YFreeProduct[133X[101X
   
-  [29X[2XFreeProduct[102X( [3XG[103X[, [3XH[103X, [3X...[103X] ) [32X function
-  [29X[2XFreeProduct[102X( [3Xlist[103X ) [32X function
+  [33X[1;0Y[29X[2XFreeProduct[102X( [3XG[103X[, [3XH[103X, [3X...[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XFreeProduct[102X( [3Xlist[103X ) [32X function[133X
   
   [33X[0;0Yconstructs  a  finitely  presented  group  which  is the free product of the
   groups given as arguments. If the group arguments are not finitely presented
@@ -367,7 +367,7 @@
   
   [1X49.6-1 Embedding[101X
   
-  [29X[2XEmbedding[102X( [3XP[103X, [3Xnr[103X ) [32X operation
+  [33X[1;0Y[29X[2XEmbedding[102X( [3XP[103X, [3Xnr[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  [3Xnr[103X-th  embedding in the group product [3XP[103X. The actual meaning of
   this  embedding  is  described  in  the  manual  section for the appropriate
@@ -375,7 +375,7 @@
   
   [1X49.6-2 Projection[101X
   
-  [29X[2XProjection[102X( [3XP[103X, [3Xnr[103X ) [32X operation
+  [33X[1;0Y[29X[2XProjection[102X( [3XP[103X, [3Xnr[103X ) [32X operation[133X
   
   [33X[0;0Yreturns the ([3Xnr[103X-th) projection of the group product [3XP[103X. The actual meaning of
   the  projection  returned  is  described  in  the  manual  section  for  the

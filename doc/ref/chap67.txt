@@ -21,7 +21,7 @@
   
   [1X67.1-1 AlgebraicExtension[101X
   
-  [29X[2XAlgebraicExtension[102X( [3XK[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XAlgebraicExtension[102X( [3XK[103X, [3Xf[103X ) [32X operation[133X
   
   [33X[0;0Yconstructs  an  extension  [3XL[103X  of  the field [3XK[103X by one root of the irreducible
   polynomial   [3Xf[103X,   using   Kronecker's  construction.  [3XL[103X  is  a  field  whose
@@ -42,7 +42,7 @@
   
   [1X67.1-2 IsAlgebraicExtension[101X
   
-  [29X[2XIsAlgebraicExtension[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsAlgebraicExtension[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0Yis the category of algebraic extensions of fields.[133X
   
@@ -109,7 +109,7 @@
   
   [1X67.2-1 IsAlgebraicElement[101X
   
-  [29X[2XIsAlgebraicElement[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsAlgebraicElement[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0Yis the category for elements of an algebraic extension.[133X
   

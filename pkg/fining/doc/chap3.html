@@ -19,6 +19,7 @@
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4.html">[Next Chapter]</a>&nbsp;  </div>
 
+<p id="mathjaxlink" class="pcenter"><a href="chap3_mj.html">[MathJax on]</a></p>
 <p><a id="X838ACF8A7F100A2B" name="X838ACF8A7F100A2B"></a></p>
 <div class="ChapSects"><a href="chap3.html#X838ACF8A7F100A2B">3 <span class="Heading">Incidence Geometry</span></a>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7FB175337C4F8B76">3.1 <span class="Heading">Incidence structures</span></a>
@@ -27,7 +28,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X81F7D8FA82A55561">3.1-1 IsIncidenceStructure</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X78C74BE87E050E84">3.1-2 IsIncidenceGeometry</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7C3258887C8DF5C1">3.1-3 IncidenceStructure</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7EB285F379512585">3.1-4 <span class="Heading">Main categories in <code class="code">IsIncidenceGeometry</code></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7B0347E2863C1E8C">3.1-4 <span class="Heading">Main categories in <code class="code">IsIncidenceGeometry</code></span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X87FFB1648575FFF2">3.1-5 <span class="Heading">Examples of categories of incidence geometries</span></a>
 </span>
@@ -88,7 +89,7 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X84D77D437B5F3716">3.6 <span class="Heading">Lie geometries</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X85D26CF97A70B761">3.6-1 <span class="Heading">Main categories in <code class="code">IsLieGeometry</code></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7D012B9F86E63702">3.6-1 <span class="Heading">Main categories in <code class="code">IsLieGeometry</code></span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8606750A8586DF8D">3.6-2 AmbientSpace</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7D544D7985A4572D">3.6-3 UnderlyingVectorSpace</a></span>
@@ -100,8 +101,8 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X82E9593B8074AECB">3.7-1 VectorSpaceToElement</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X810D4D6D87069697">3.7-2 UnderlyingObject</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X87BDB89B7AAFE8AD">3.7-3 \in</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8365B36785DACE78">3.7-4 <span class="Heading">More short names for <code class="file">ElementsIncidentWithElementOfIncidenceStructure</code></span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X87BDB89B7AAFE8AD"><code>3.7-3 \in</code></a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X814C3AC27E49AD5B">3.7-4 <span class="Heading">More short names for <code class="file">ElementsIncidentWithElementOfIncidenceStructure</code></span></a>
 </span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7A9EBF9782671634">3.8 <span class="Heading">Changing the ambient geometry of elements of a Lie geometry</span></a>
@@ -182,7 +183,7 @@ Incidence structure of rank 4
 
 <p>Lie Geometries, i.e., geometries with a projective space as ambient space, affine spaces and generalised polygons have their own category, which is a subcategory of <code class="code">IsIncidenceGeometry</code>.</p>
 
-<p><a id="X7EB285F379512585" name="X7EB285F379512585"></a></p>
+<p><a id="X7B0347E2863C1E8C" name="X7B0347E2863C1E8C"></a></p>
 
 <h5>3.1-4 <span class="Heading">Main categories in <code class="code">IsIncidenceGeometry</code></span></h5>
 
@@ -230,7 +231,7 @@ Incidence structure of rank 4
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TypesOfElementsOfIncidenceStructurePlural</code>( <var class="Arg">inc</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
 <p>Returns: a list of strings or integers</p>
 
-<p>Both attributes are declared for objects in the category <code class="code">IsIncidenceStructure</code>. Any incidence structure has a set of types, which is usually just the list <span class="SimpleMath">1..n</span>. If specific names are given to each type, like points, lines, etc., this attribute returns the names for the particular incidence structure <var class="Arg">inc</var>. The second variant returns the list of plurals of these names. For genericly constructed incidence structures, the names of the Elements are also generic: elements of type 1, elements of type 2, etc.</p>
+<p>Both attributes are declared for objects in the category <code class="code">IsIncidenceStructure</code>. Any incidence structure has a set of types, which is usually just the list <span class="SimpleMath">[1..n]</span>. If specific names are given to each type, like points, lines, etc., this attribute returns the names for the particular incidence structure <var class="Arg">inc</var>. The second variant returns the list of plurals of these names. For genericly constructed incidence structures, the names of the Elements are also generic: elements of type 1, elements of type 2, etc.</p>
 
 
 <div class="example"><pre>
@@ -1406,13 +1407,13 @@ Q(6, 2)
 
 <h4>3.6 <span class="Heading">Lie geometries</span></h4>
 
-<p><a id="X85D26CF97A70B761" name="X85D26CF97A70B761"></a></p>
+<p><a id="X7D012B9F86E63702" name="X7D012B9F86E63702"></a></p>
 
 <h5>3.6-1 <span class="Heading">Main categories in <code class="code">IsLieGeometry</code></span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsProjectiveSpace</code></td><td class="tdright">( category )</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsClassicalPolarSpace</code></td><td class="tdright">( category )</td></tr></table></div>
-<p>Lie geometries bundle projective spaces and classical polar spaces together. In the future, more subcategories could be added since the term ``Lie geometry'' refers to a geometry whose automorphism group lies in some group of Lie type. Both classes of geometries have their category, as a subcategory of <code class="code">IsLieGeometry</code>.</p>
+<p>In <strong class="pkg">FinInG</strong>, a <em>Lie geometry</em> <span class="SimpleMath">G</span> refers to a geometry whose automorphism group is a (subgroup of a) group of Lie type. Generally spoken, one could say that a Lie geometry is an incidence geometry, such that each element of type <span class="SimpleMath">i</span> is represented by a sub space of dimension <span class="SimpleMath">i+1</span> of a vector space <span class="SimpleMath">V</span>. The projective space <span class="SimpleMath">P</span> associated with <span class="SimpleMath">V</span> is naturally the <em>ambient space</em> of <span class="SimpleMath">G</span>. However, as one may also consider subspaces of the given vector space over <em>subfields of the ground field of <span class="SimpleMath">V</span></em>, one cannot not just say that the set of elements of <span class="SimpleMath">G</span> of a given type <span class="SimpleMath">i</span>, is a subset of the set of elements of type <span class="SimpleMath">i</span> of <span class="SimpleMath">P</span>. Geometrically, this means that embeddings may be full or not, i.e. when a line of a Lie geometry is embedded into <span class="SimpleMath">P</span> as a line <span class="SimpleMath">l</span>, the embedding is full only if all projective points of <span class="SimpleMath">l</span> have a pre image in <span class="SimpleMath">G</span>. Embeddings of finite classical polar spaces are full, and indeed the set of elements of type <span class="SimpleMath">i</span> is a proper subset of the set of elements of type <span class="SimpleMath">i</span> of <span class="SimpleMath">P</span>. Subgeometries of projective spaces behave differently, and indeed, a line of a subgeometry can be embedded into <span class="SimpleMath">P</span>, but will not be identified with a line of <span class="SimpleMath">P</span>. All geometries in <strong class="pkg">FinInG</strong> that have a projective space as ambient space, belong to a subcategory of <code class="code">IsLieGeometry</code>.</p>
 
 <p>One common fact of Lie geometries is that their elements are represented by subspaces of a vector space. In these geometries, incidence is symmetrized set-theoretic containment. In this section we describe methods that are declared in a generic way for (elements of) Lie geometries. These operations are applicable to Lie geometries and related objects.</p>
 
@@ -1545,7 +1546,7 @@ you can 'return;' to continue
 
 <p><a id="X87BDB89B7AAFE8AD" name="X87BDB89B7AAFE8AD"></a></p>
 
-<h5>3.7-3 \in</h5>
+<h5><code>3.7-3 \in</code></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \in</code>( <var class="Arg">u</var>, <var class="Arg">v</var> )</td><td class="tdright">( operation )</td></tr></table></div>
 <p>Returns: true if and only if the element <var class="Arg">u</var> is set-theoretically contained in the element <var class="Arg">w</var></p>
@@ -1569,7 +1570,7 @@ true
  
 </pre></div>
 
-<p><a id="X8365B36785DACE78" name="X8365B36785DACE78"></a></p>
+<p><a id="X814C3AC27E49AD5B" name="X814C3AC27E49AD5B"></a></p>
 
 <h5>3.7-4 <span class="Heading">More short names for <code class="file">ElementsIncidentWithElementOfIncidenceStructure</code></span></h5>
 

@@ -98,8 +98,8 @@
 {\Huge \textbf{ Hertweck-Luthar-Passi method. \mbox{}}}\\
 \vfill
 
-{\Huge  3.1 \mbox{}}\\[1cm]
-{ 12/01/2017 \mbox{}}\\[1cm]
+{\Huge  3.3 \mbox{}}\\[1cm]
+{ 11/12/2017 \mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{ Andreas B{\"a}chle\\
     \mbox{}}}\\
@@ -232,146 +232,7 @@ Conjecture for this group the function will return \texttt{true} and \texttt{fal
  The prior computed partial augmentations in \texttt{HeLP{\textunderscore}sol} will not be used and will be overwritten. If you do not like the last fact,
 please use \texttt{HeLP{\textunderscore}AllOrders} (\ref{HeLPAllOrders}). }
 
- 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@G := AlternatingGroup(5);|
-  Alt( [ 1 .. 5 ] )
-  !gapprompt@gap>| !gapinput@HeLP_ZC(G);|
-  true
-  !gapprompt@gap>| !gapinput@C := CharacterTable("A5");|
-  CharacterTable( "A5" )
-  !gapprompt@gap>| !gapinput@HeLP_ZC(C);|
-  true
-  !gapprompt@gap>| !gapinput@HeLP_sol;|
-  [ [ [ [ 1 ] ] ], [ [ [ 1 ] ] ], [ [ [ 1 ] ] ],, 
-    [ [ [ 0, 1 ] ], [ [ 1, 0 ] ] ], [  ],,,, [  ],,,,, [  ],,,,,,,,,,,,,,, [  ] 
-   ]
-  !gapprompt@gap>| !gapinput@HeLP_PrintSolution(); |
-  Solutions for elements of order 2:
-  [ [         u ],
-    [  [ "2a" ] ],
-    [       --- ],
-    [     [ 1 ] ] ]
-  Solutions for elements of order 3:
-  [ [         u ],
-    [  [ "3a" ] ],
-    [       --- ],
-    [     [ 1 ] ] ]
-  Solutions for elements of order 5:
-  [ [               u ],
-    [  [ "5a", "5b" ] ],
-    [             --- ],
-    [        [ 0, 1 ] ],
-    [        [ 1, 0 ] ] ]
-  There are no admissible partial augmentations for elements of order 6.
-  There are no admissible partial augmentations for elements of order 10.
-  There are no admissible partial augmentations for elements of order 15.
-  There are no admissible partial augmentations for elements of order 30.
-\end{Verbatim}
- This is the classical example of Luthar and Passi to verify the Zassenhaus
-Conjecture for the alternating group of degree 5, cf. \cite{LP}. In the first call of \texttt{HeLP{\textunderscore}ZC} this is checked using the character table computed by GAP using the given
-group, the second call uses the character table from the character table
-library. The entries of \texttt{HeLP{\textunderscore}sol} are 
-\begin{itemize}
-\item  lists with entries 0 and 1 (at the spots 1, 2, 3 and 5, which correspond to
-torsion units that are conjugate to group elements), 
-\item  empty lists (at the spots 6, 10, 15 and 30, stating that there are no
-admissible partial augmentations for these orders), 
-\item  or are not bound (these orders were not checked as they don't divide the
-exponent of the group). 
-\end{itemize}
- The function \texttt{HeLP{\textunderscore}PrintSolution} (\ref{HeLPPrintSolution}) can be used to display the result in a pretty way. 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable( "A6" );|
-  CharacterTable( "A6" )
-  !gapprompt@gap>| !gapinput@SetInfoLevel(HeLP_Info, 2);|
-  !gapprompt@gap>| !gapinput@HeLP_ZC(C);|
-  #I  Checking order 2.
-  #I  Checking order 3.
-  #I  Checking order 4.
-  #I  Checking order 5.
-  #I  Checking order 6.
-  #I  Checking order 10.
-  #I  Checking order 12.
-  #I  Checking order 15.
-  #I  Checking order 20.
-  #I  Checking order 30.
-  #I  Checking order 60.
-  #I  ZC can't be solved, using the given data, for the orders: [ 6 ].
-  false
-  !gapprompt@gap>| !gapinput@HeLP_sol[6];                                          |
-  [ [ [ 1 ], [ 0, 1 ], [ -2, 2, 1 ] ], [ [ 1 ], [ 1, 0 ], [ -2, 1, 2 ] ] ]
-  !gapprompt@gap>| !gapinput@HeLP_PrintSolution(6);                                |
-  Solutions for elements of order 6:
-  [ [                   u^3,                   u^2,                     u ],
-    [              [ "2a" ],        [ "3a", "3b" ],  [ "2a", "3a", "3b" ] ],
-    [                   ---,                   ---,                   --- ],
-    [                 [ 1 ],              [ 0, 1 ],          [ -2, 2, 1 ] ],
-    [                 [ 1 ],              [ 1, 0 ],          [ -2, 1, 2 ] ] ]
-  !gapprompt@gap>| !gapinput@SetInfoLevel(HeLP_Info, 1);|
-\end{Verbatim}
- This is the example M. Hertweck deals with in his article \cite{HerA6}. The HeLP-method is not sufficient to verify the Zassenhaus Conjecture for
-this group. There are two tuples of possible partial augmentations for torsion
-units of order 6 which are admissible by the HeLP method. M. Hertweck used a
-different argument to eliminate these possibilities. 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@G := SmallGroup(48,30);;|
-  !gapprompt@gap>| !gapinput@StructureDescription(G);|
-  "A4 : C4"
-  !gapprompt@gap>| !gapinput@HeLP_ZC(G);|
-  #I  ZC can't be solved, using the given data, for the orders: [ 4 ].
-  false
-  !gapprompt@gap>| !gapinput@Size(HeLP_sol[4]);|
-  10
-\end{Verbatim}
- The group SmallGroup(48,30) is the smallest group for which the HeLP method
-does not suffice to prove the Zassenhaus Conjecture. However (ZC) was proved
-for this group in \cite{HoefertKimmerle}, Proposition 4.2. 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C1 := CharacterTable(SymmetricGroup(5));|
-  CharacterTable( Sym( [ 1 .. 5 ] ) )
-  !gapprompt@gap>| !gapinput@HeLP_ZC(C1);|
-  #I  The Brauer tables for the following primes are not available: [ 2, 3, 5 ].
-  #I  ZC can't be solved, using the given data, for the orders: [ 4, 6 ].
-  false
-  !gapprompt@gap>| !gapinput@C2 := CharacterTable("S5");|
-  CharacterTable( "A5.2" )
-  !gapprompt@gap>| !gapinput@HeLP_ZC(C2); |
-  true
-\end{Verbatim}
- This example demonstrates the advantage of using the GAP character table
-library: Since GAP can't compute the Brauer tables from the ordinary table of $S_5$ in the current implementation, they are not used in the first calculation. But
-in the second calculation \texttt{HeLP{\textunderscore}ZC} accesses the Brauer tables from the library and can prove the Zassenhaus
-Conjecture for this group, see \cite{HertweckBrauer}, Section 5. This example might of course change as soon as GAP will be able
-to compute the needed Brauer tables. 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable("M11");|
-  CharacterTable( "M11" )
-  !gapprompt@gap>| !gapinput@HeLP_ZC(C);|
-  #I  ZC can't be solved, using the given data, for the orders: [ 4, 6, 8 ].
-  false
-  !gapprompt@gap>| !gapinput@HeLP_sol[12];|
-  [  ]
-  !gapprompt@gap>| !gapinput@HeLP_PrintSolution(8);|
-  Solutions for elements of order 8:
-  [ [      u^4,                         u^2,                           u ],
-    [ [ "2a" ],              [ "2a", "4a" ],  [ "2a", "4a", "8a", "8b" ] ],
-    [      ---,                         ---,                         --- ],
-    [    [ 1 ],                    [ 0, 1 ],              [ 0, 0, 0, 1 ] ],
-    [    [ 1 ],                    [ 0, 1 ],              [ 0, 0, 1, 0 ] ],
-    [    [ 1 ],                    [ 0, 1 ],             [ 0, 2, -1, 0 ] ],
-    [    [ 1 ],                    [ 0, 1 ],             [ 0, 2, 0, -1 ] ],
-    [    [ 1 ],                   [ 2, -1 ],              [ 0, 0, 0, 1 ] ],
-    [    [ 1 ],                   [ 2, -1 ],              [ 0, 0, 1, 0 ] ],
-    [    [ 1 ],                   [ 2, -1 ],             [ 0, 2, -1, 0 ] ],
-    [    [ 1 ],                   [ 2, -1 ],             [ 0, 2, 0, -1 ] ] ]
-\end{Verbatim}
- Comparing this example to the result in \cite{KonovalovM11} one sees, that the existence of elements of order 12 in $\mathrm{V}(\mathbb{Z}M_{11})$ may not be eliminated using only the HeLP method. This may be done however by
-applying also the Wagner test, cf. Section \ref{Chapter_Background_Section_The_Wagner_test} and the example for the function \texttt{HeLP{\textunderscore}WagnerTest} (\ref{HeLPWagnerTest}).
-
- This example also demonstrates, why also the partial augmentations of the
-powers of $u$ must be stored (and not only the partial augmentations of $u$). To prove that all elements of order $8$ in $\mathrm{V}(\mathbb{Z}M_{11})$ are rationally conjugate to group elements, it is not enough to prove that all
-elements $u$ of order $8$ in $\mathrm{V}(\mathbb{Z}M_{11})$ have all partial augmentations $1$ and $0$, as the fifth and sixth possibility from above still could exist in $\mathrm{V}(\mathbb{Z}M_{11})$, which would not be rationally conjugate to group elements. }
+ }
 
  
 \section{\textcolor{Chapter }{Prime Graph Question}}\label{Chapter_The_main_functions_Section_Prime_Graph_Question}
@@ -407,80 +268,7 @@ Prime Graph Question, the function will return \texttt{true} and it will return 
 order $k$ and its (non-trivial) powers in \texttt{HeLP{\textunderscore}sol[k]}. The function also does not use the previously computed partial augmentations
 for elements of these orders but will overwrite the content of \texttt{HeLP{\textunderscore}sol}. If you do not like the last fact, please use \texttt{HeLP{\textunderscore}AllOrdersPQ} (\ref{HeLPAllOrdersPQ}). }
 
- 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable("A7");|
-  CharacterTable( "A7" )
-  !gapprompt@gap>| !gapinput@HeLP_PQ(C);|
-  true
-\end{Verbatim}
- The Prime Graph Question for the alternating group of degree 7 was first
-proved by M. Salim \cite{SalimA7A8}. 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable("L2(19)");|
-  CharacterTable( "L2(19)" )
-  !gapprompt@gap>| !gapinput@HeLP_PQ(C);                   |
-  true
-  !gapprompt@gap>| !gapinput@HeLP_ZC(C);|
-  #I  (ZC) can't be solved, using the given data, for the orders: [ 10 ].
-  false
-  !gapprompt@gap>| !gapinput@HeLP_sol[10];|
-  [ [ [ 1 ], [ 0, 1 ], [ 0, -1, 1, 0, 1 ] ], 
-    [ [ 1 ], [ 0, 1 ], [ 0, 0, 0, 1, 0 ] ], 
-    [ [ 1 ], [ 1, 0 ], [ 0, 0, 0, 0, 1 ] ], 
-    [ [ 1 ], [ 1, 0 ], [ 0, 1, -1, 1, 0 ] ] ]
-\end{Verbatim}
- The HeLP method provides an affirmative answer to the Prime Graph Question for
-the group L2(19), although the method doesn't solve the Zassenhaus Conjecture
-for that group, as there are two sets of possible partial augmentations for
-units of order 10 left, which do not correspond to elements which are
-rationally conjugate to group elements. The Zassenhaus Conjecture for this
-group is proved in \cite{BaMaM10}. 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C1 := CharacterTable(PSL(2,7));                                  |
-  CharacterTable( Group([ (3,7,5)(4,8,6), (1,2,6)(3,4,8) ]) )
-  !gapprompt@gap>| !gapinput@HeLP_PQ(C1);|
-  #I  The Brauer tables for the following primes are not available: [ 2, 3, 7 ].
-  #I  PQ can't be solved, using the given data, for the orders: [ 6 ].
-  false
-  !gapprompt@gap>| !gapinput@C2 := CharacterTable("L2(7)");  |
-  CharacterTable( "L3(2)" )
-  !gapprompt@gap>| !gapinput@HeLP_PQ(C2);                  |
-  true
-\end{Verbatim}
- This example demonstrates the advantage of using tables from the GAP character
-table library: Since GAP can not compute the Brauer tables corresponding to \texttt{C1} they are not used in the first calculation. But in the second calculation \texttt{HeLP{\textunderscore}PQ} accesses the Brauer tables from the library and can prove the Prime Graph
-Question for this group, see \cite{HertweckBrauer}, Section 6. This example might change, as soon as GAP will be able to compute
-the Brauer tables needed. 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@SetInfoLevel(HeLP_Info,2);|
-  !gapprompt@gap>| !gapinput@C := CharacterTable("A6");|
-  CharacterTable( "A6" )
-  !gapprompt@gap>| !gapinput@HeLP_PQ(C);|
-  #I  Checking order 2.
-  #I  Checking order 3.
-  #I  Checking order 5.
-  #I  Checking order 6.
-  #I  Checking order 10.
-  #I  Checking order 15.
-  #I  PQ can't be solved, using the given data, for the orders: [ 6 ].
-  false
-  !gapprompt@gap>| !gapinput@SetInfoLevel(HeLP_Info,1);|
-\end{Verbatim}
- The Prime Graph Question can not be confirmed for the alternating group of
-degree 6 with the HeLP-method. This group is handled in \cite{HerA6} by other means. 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable("L2(49)");|
-  CharacterTable( "L2(49)" )
-  !gapprompt@gap>| !gapinput@HeLP_PQ(C);|
-  #I  The Brauer tables for the following primes are not available: [ 7 ].
-  #I  (PQ) can't be solved, using the given data, for the orders: [ 10, 15 ].
-  false
-\end{Verbatim}
- This example shows the limitations of the program. Using the Brauer table for
-the prime 7 one can prove (PQ) for PSL(2,49), but this data is not available
-in GAP at the moment. The fact that there are no torsion units of order 10 and
-15 was proved in \cite{HertweckBrauer}, Proposition 6.7. See also the example in Section \ref{Chapter_Extended_examples_Section_Non-standard_characters}. The other critical orders were handled in a more general context in \cite{BaMa4prI}. }
+ }
 
  }
 
@@ -523,109 +311,6 @@ apply the Wagner test \ref{Chapter_Background_Section_The_Wagner_test}. If the c
 be written in \texttt{HeLP{\textunderscore}sol[ord]}. If for divisors $d$ of \mbox{\texttt{\mdseries\slshape ord}} solutions are already calculated and stored in \texttt{HeLP{\textunderscore}sol[d]}, these will be used, otherwise the function \texttt{HeLP{\textunderscore}WithGivenOrder} will first be applied to this order and the data given in the first argument. }
 
  
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable("A5");|
-  CharacterTable( "A5" )
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(C, 5);|
-  #I  Number of solutions for elements of order 5: 2; stored in HeLP_sol[5].
-  [ [ [ 0, 1 ] ], [ [ 1, 0 ] ] ]
-  !gapprompt@gap>| !gapinput@HeLP_PrintSolution(5);|
-  Solutions for elements of order 5:
-  [ [               u ],.
-    [  [ "5a", "5b" ] ],
-    [             --- ],
-    [        [ 0, 1 ] ],
-    [        [ 1, 0 ] ] ]
-\end{Verbatim}
- Tests which partial augmentations for elements of order 5 are admissible. 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable("A6");|
-  CharacterTable( "A6" )
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(C, 4);|
-  #I  Number of solutions for elements of order 4: 4; stored in HeLP_sol[4].
-  [ [ [ 1 ], [ -1, 2 ] ], [ [ 1 ], [ 2, -1 ] ], [ [ 1 ], [ 1, 0 ] ], 
-    [ [ 1 ], [ 0, 1 ] ] ]
-  !gapprompt@gap>| !gapinput@HeLP_sol[4];              |
-  [ [ [ 1 ], [ -1, 2 ] ], [ [ 1 ], [ 2, -1 ] ], [ [ 1 ], [ 1, 0 ] ], 
-    [ [ 1 ], [ 0, 1 ] ] ]
-\end{Verbatim}
- Two of the non-trivial partial augmentations can be eliminated by using the
-Brauer table modulo the prime $3$: 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(C mod 3, 4);                                                                    |
-  #I  Number of solutions for elements of order 4: 2; stored in HeLP_sol[4].
-  [ [ [ 1 ], [ 1, 0 ] ], [ [ 1 ], [ 0, 1 ] ] ]
-\end{Verbatim}
- When using \texttt{HeLP{\textunderscore}ZC} also the last remaining non-trivial partial augmentation disappears, as this
-function applies the Wagner test, cf. \ref{Chapter_Background_Section_The_Wagner_test} and \texttt{HeLP{\textunderscore}WagnerTest} (\ref{HeLPWagnerTest}): 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@HeLP_ZC(C);               |
-  #I  ZC can't be solved, using the given data, for the orders: [ 6 ].
-  false
-  !gapprompt@gap>| !gapinput@HeLP_sol[4]; HeLP_sol[6];|
-  [ [ [ 1 ], [ 0, 1 ] ] ]
-  [ [ [ 1 ], [ 0, 1 ], [ -2, 2, 1 ] ], [ [ 1 ], [ 1, 0 ], [ -2, 1, 2 ] ] ]
-\end{Verbatim}
- The following example demonstrates how one can use lists of characters to
-obtain constraints for partial augmentations: 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable("L2(49).2_1");   |
-  CharacterTable( "L2(49).2_1" )
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(Irr(C), 7);;|
-  #I  Number of solutions for elements of order 7: 1; stored in HeLP_sol[7].
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(Irr(C){[2]}, 14);|
-  #I  The given data admit infinitely many solutions for elements of order 14.
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(Irr(C){[44]}, 14);|
-  #I  The given data admit infinitely many solutions for elements of order 14.
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(Irr(C){[2,44]}, 14);|
-  #I  Number of solutions for elements of order 14: 0; stored in HeLP_sol[14].
-  [  ]
-\end{Verbatim}
- Brauer tables can provide more restrictions on partial augmentations of
-certain torsion units: 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable("J1");       |
-  CharacterTable( "J1" )
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(C, 6);;|
-  #I  Number of solutions for elements of order 6: 73; stored in HeLP_sol[6].
-  !gapprompt@gap>| !gapinput@B := C mod 11;|
-  BrauerTable( "J1", 11 )
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(B, 6);;       |
-  #I  Number of solutions for elements of order 6: 6; stored in HeLP_sol[6].
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(Irr(B){[2,3]}, 6);;|
-  #I  Number of solutions for elements of order 6: 6; stored in HeLP_sol[6].
-  !gapprompt@gap>| !gapinput@HeLP_PrintSolution(6);|
-  Solutions for elements of order 6:
-  [ [                   u^3,                   u^2,                     u ],
-    [              [ "2a" ],              [ "3a" ],  [ "2a", "3a", "6a" ] ],
-    [                   ---,                   ---,                   --- ],
-    [                 [ 1 ],                 [ 1 ],          [ -2, 0, 3 ] ],
-    [                 [ 1 ],                 [ 1 ],          [ 2, 0, -1 ] ],
-    [                 [ 1 ],                 [ 1 ],           [ 0, 0, 1 ] ],
-    [                 [ 1 ],                 [ 1 ],          [ -4, 3, 2 ] ],
-    [                 [ 1 ],                 [ 1 ],          [ 0, 3, -2 ] ],
-    [                 [ 1 ],                 [ 1 ],          [ -2, 3, 0 ] ] ]
-\end{Verbatim}
- The result of the previous example can be found in \cite{BJK}. 
-
- When dealing with many variables using lists of characters instead of a
-complete character table might also speed up the calculations a lot, see
-Section \ref{Chapter_Extended_examples_Section_Saving_time}. 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable("L2(27)");|
-  CharacterTable( "L2(27)" )
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(C,7);;|
-  #I  Number of solutions for elements of order 7: 78; stored in HeLP_sol[7].
-  !gapprompt@gap>| !gapinput@SetInfoLevel(HeLP_Info,4);|
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(C,3*7); |
-  #I      Solutions for order 3 not yet calculated.  Restart for this order.
-  #I  Number of solutions for elements of order 21: 0; stored in HeLP_sol[21].  
-  [  ]
-  !gapprompt@gap>| !gapinput@SetInfoLevel(HeLP_Info,1);|
-\end{Verbatim}
- \texttt{HeLP{\textunderscore}WithGivenOrder} often needs to consider many cases. Set the info class
-HeLP{\textunderscore}Info to a level 4 or higher to keep track of the
-progress, see Section \ref{Chapter_Extended_examples_Section_Using_InfoLevels} on info levels. 
 
 \subsection{\textcolor{Chapter }{HeLP{\textunderscore}WithGivenOrderAndPA}}
 \logpage{[ 3, 1, 2 ]}\nobreak
@@ -644,39 +329,6 @@ having the same underlying character table. The function uses the partial
 augmentations for the powers $u^d$ with $d$ divisors of $k$ different from $1$ and $k$ given in \mbox{\texttt{\mdseries\slshape partaugs}}. Here, the $d$'s have to be in a descending order (i.e. the orders of the $u^d$'s are ascending). This function only uses the constraints of the HeLP method,
 but does not apply the Wagner test \ref{Chapter_Background_Section_The_Wagner_test}. Note that this function will not affect \texttt{HeLP{\textunderscore}sol}. }
 
- 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@G := SmallGroup(48,33);; StructureDescription(G);|
-  "SL(2,3) : C2"
-  !gapprompt@gap>| !gapinput@C := CharacterTable(G);;|
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(C, 4);;|
-  #I  Number of solutions for elements of order 4: 4; stored in HeLP_sol[4].
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(C, 6);;|
-  #I  Number of solutions for elements of order 6: 2; stored in HeLP_sol[6].
-  !gapprompt@gap>| !gapinput@HeLP_sol[4]; HeLP_sol[6];|
-  [ [ [ 1, 0 ], [ 0, 1, 0, 0, 0 ] ], [ [ 1, 0 ], [ 0, 0, 0, 0, 1 ] ], 
-    [ [ 1, 0 ], [ 0, 0, 0, 1, 0 ] ], [ [ 1, 0 ], [ 0, 0, 1, 0, 0 ] ] ]
-  [ [ [ 1, 0 ], [ 0, 1 ], [ 0, 0, 0, 0, 1, 0 ] ], 
-    [ [ 1, 0 ], [ 1, 0 ], [ 0, 0, 0, 0, 0, 1 ] ] ]
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrderAndPA(C, 12, [ [ 1, 0 ],  [ 0, 1 ], [ 0, 0, 0, 0, 1 ],|
-  !gapprompt@>| !gapinput@    [ 0, 0, 0, 0, 1, 0 ] ]); |
-  #I  Number of solutions for elements of order 12 with these partial augmentation
-  s for the powers: 1.
-  [ [ [ 1, 0 ], [ 0, 1 ], [ 0, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 1, 0 ], 
-        [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0 ] ] ]
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrderAndPA(C, 12, [ [ 1, 0 ],  [ 0, 1 ], [ 0, 0, 0, 1, 0 ],|
-  !gapprompt@>| !gapinput@    [ 0, 0, 0, 0, 1, 0 ] ]);|
-  #I  Number of solutions for elements of order 12 with these partial augmentation
-  s for the powers: 0.
-  [  ]
-\end{Verbatim}
- In the calls of \texttt{HeLP{\textunderscore}WithGivenOrderAndPA} the function uses the following partial augmentations: 
-\begin{itemize}
-\item  \texttt{[ 1, 0 ]} for the element $u^6$ of order 2, 
-\item  \texttt{[ 0, 1 ]} for the element $u^4$ of order 3, 
-\item  \texttt{[ 0, 0, 0, 0, 1 ]} and \texttt{[ 0, 0, 0, 1, 0 ]} for the element $u^3$ of order 4 respectively, 
-\item  \texttt{[ 0, 0, 0, 0, 1, 0 ]} for the element $u^2$ of order 6. 
-\end{itemize}
  
 
 \subsection{\textcolor{Chapter }{HeLP{\textunderscore}WithGivenOrderAllTables}}
@@ -742,35 +394,6 @@ understood as follows: If a character $\chi$ is not given in a pair all inequali
 If it is given in a pair with the integer $m$ the inequalities obtainable from the multiplicity of \texttt{E(ord)} taken to the power $m$ as an eigenvalue of a representation affording $\chi$ are used. The function uses the partial augmentations for the powers $u^d$ with $d$ divisors of $k$ different from $1$ and $k$ given in \mbox{\texttt{\mdseries\slshape partaugs}}. Here, the $d$'s have to be in a descending order (i.e. the orders of the $u^d$'s are ascending). This function only uses the constraints of the HeLP method,
 but does not apply the Wagner test \ref{Chapter_Background_Section_The_Wagner_test}. Note that this function will not affect \texttt{HeLP{\textunderscore}sol}. }
 
- 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable("A5");|
-  CharacterTable( "A5" )
-  !gapprompt@gap>| !gapinput@chi := Irr(C)[2];; psi := Irr(C)[4];|
-  Character( CharacterTable( "A5" ), [ 4, 0, 1, -1, -1 ] )
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrderAndPAAndSpecificSystem([[chi, 1], [chi, 2]],|
-  !gapprompt@>| !gapinput@ 5, [ ], true);|
-  [ [ [ [ 0, 1 ] ], [ [ 1, 0 ] ] ], [ [ -3/5, 2/5 ], [ 2/5, -3/5 ] ], [ 3/5, 3/5 ] ]
-  !gapprompt@gap>| !gapinput@sol5 := HeLP_WithGivenOrderAndPAAndSpecificSystem([[chi, 1], [chi, 2]], |
-  !gapprompt@>| !gapinput@ 5, [ ]);      |
-  [ [ [ 0, 1 ] ], [ [ 1, 0 ] ] ]
-\end{Verbatim}
- The inequalities in the above examples are: 
-\[\frac{-3}{5}\varepsilon_{5a}(u) + \frac{2}{5}\varepsilon_{5b}(u) + \frac{3}{5}
-\in \mathbb{Z}_{\geq 0} \ \ {\rm{and}} \ \ \frac{2}{5}\varepsilon_{5a}(u) +
-\frac{-3}{5}\varepsilon_{5b}(u) + \frac{3}{5} \in \mathbb{Z}_{\geq 0}. \]
- Continuing the above example: 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrderAndPAAndSpecificSystem([psi], |
-  !gapprompt@>| !gapinput@ 2*5, [[1], sol5[1][1]], true);     |
-  [ [  ], [ [ 0, -2/5, -2/5 ], [ 0, -1/10, -1/10 ], [ 0, 1/10, 1/10 ],
-   [ 0, -1/10, -1/10 ], [ 0, 1/10, 1/10 ], [ 0, 2/5, 2/5 ], 
-   [ 0, 1/10, 1/10 ], [ 0, -1/10, -1/10 ], [ 0, 1/10, 1/10 ], 
-  [ 0, -1/10, -1/10 ] ], [ 0, 1/2, 1/2, 1/2, 1/2, 0, 1/2, 1/2, 1/2, 1/2 ] ]
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrderAndPAAndSpecificSystem([[psi, 0], [psi, 2], [psi, 5]], |
-  !gapprompt@>| !gapinput@ 2*5, [[1], sol5[2][1]], true); |
-  [ [  ], [ [ 0, -2/5, -2/5 ], [ 0, 1/10, 1/10 ], [ 0, 2/5, 2/5 ] ], [ 0, 1/2, 0 ] ]
-\end{Verbatim}
  }
 
  
@@ -804,40 +427,6 @@ order $st$ the function returns \texttt{"infinite"}, otherwiese it returns the f
 classes of elements of order \mbox{\texttt{\mdseries\slshape s}} and the other entries are the partial augmentations on the classes of order \mbox{\texttt{\mdseries\slshape t}}. Only in the case that the existence of units of order $s*t$ can be excluded by this function the variable \texttt{HeLP{\textunderscore}sol[s*t]} will be affected and \texttt{HeLP{\textunderscore}sol[s*t]} will be set to \texttt{[ ]}. }
 
  
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable("A6");;|
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(C, 6);            |
-  #I  Number of solutions for elements of order 6: 2; stored in HeLP_sol[6].
-  [ [ [ 1 ], [ 0, 1 ], [ -2, 2, 1 ] ], [ [ 1 ], [ 1, 0 ], [ -2, 1, 2 ] ] ]
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrderSConstant(C, 2, 3);|
-  [ [ [ 0, 1 ], [ -2, 2, 1 ] ], [ [ 1, 0 ], [ -2, 1, 2 ] ] ]
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrderSConstant(C, 3, 2);     |
-  [ [ [ 1 ], [ 3, -2 ] ] ]
-\end{Verbatim}
- 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable("Sz(8)");;|
-  !gapprompt@gap>| !gapinput@SetInfoLevel(HeLP_Info, 4);|
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrderSConstant(C, 7, 13);|
-  #I    Partial augmentations for elements of order 13 not yet calculated.  Restar
-  t for this order.
-  #I    Number of non-trivial 7-constant characters in the list: 7.
-  [  ]
-  !gapprompt@gap>| !gapinput@SetInfoLevel(HeLP_Info, 1);|
-\end{Verbatim}
- The last example can also be checked by using all characters in \texttt{C}, but this takes notably longer. 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable("Sz(32)");|
-  CharacterTable( "Sz(32)" )
-  !gapprompt@gap>| !gapinput@L := Filtered(OrdersClassRepresentatives(C), x-> x = 31);; Size(L);|
-  15           # I.e. HeLP_WithGivenOrder(C,31) would take hopelessly long
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrderSConstant(C mod 2, 31, 5);|
-  [  ]
-  !gapprompt@gap>| !gapinput@IsBound(HeLP_sol[31]);|
-  false 
-\end{Verbatim}
- We still have no clue about elements of order 31, but there are none of order
-5*31. 
 
 \subsection{\textcolor{Chapter }{HeLP{\textunderscore}AddGaloisCharacterSums}}
 \logpage{[ 3, 2, 2 ]}\nobreak
@@ -882,19 +471,6 @@ information, which was not obtained using this package and was entered
 manually into \texttt{HeLP{\textunderscore}sol}. }
 
  
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable(PSL(2,7));         |
-  CharacterTable( Group([ (3,7,5)(4,8,6), (1,2,6)(3,4,8) ]) )
-  !gapprompt@gap>| !gapinput@HeLP_ZC(C);        |
-  #I  The Brauer tables for the following primes are not available: [ 2, 3, 7 ].
-  #I  (ZC) can't be solved, using the given data, for the orders: [ 6 ].
-  false
-  !gapprompt@gap>| !gapinput@HeLP_sol[6] := [ ];|
-  [  ]
-  !gapprompt@gap>| !gapinput@HeLP_AllOrders(C);|
-  true
-\end{Verbatim}
- 
 
 \subsection{\textcolor{Chapter }{HeLP{\textunderscore}AllOrdersPQ}}
 \logpage{[ 3, 3, 2 ]}\nobreak
@@ -915,23 +491,7 @@ Kimmerle-result to have an immediate positive solution for (ZC).
 information, which was not obtained using this package and was entered
 manually into \texttt{HeLP{\textunderscore}sol}. }
 
- 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable("A12");|
-  CharacterTable( "A12" )
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(Irr(C){[2, 4, 7]}, 2);;|
-  #I  Number of solutions for elements of order 2: 37; stored in HeLP_sol[2].
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrderSConstant(C mod 3,11,2);|
-  [  ]
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(Irr(C mod 2){[2, 3, 4, 6]}, 3);;|
-  #I  Number of solutions for elements of order 3: 99; stored in HeLP_sol[3].
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrderSConstant(C mod 2, 11, 3);|
-  [  ]
-  !gapprompt@gap>| !gapinput@HeLP_AllOrdersPQ(C);|
-  true
-\end{Verbatim}
- Thus the Prime Graph Question holds for the alternating group of degree 12.
-Just using \texttt{HeLP{\textunderscore}PQ(C)} would take hopelessly long. }
+ }
 
  
 \section{\textcolor{Chapter }{Changing the used Character Table}}\label{Chapter_Further_functions_Section_Changing_the_used_Character_Table}
@@ -960,64 +520,6 @@ and their InfoText begins with "origin: ATLAS of finite groups", this is done
 automatically by the program.) A user may also use characters, which are
 normally not accessible in GAP. }
 
- To keep track of the change of the character tables one can set
-HeLP{\textunderscore}Info to level 5. In this first example it is not realized
-that the character tables belong to the same group, so the solutions for
-elements of order 2 are recalculated (they have been reset, as another
-character table is used). 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@SetInfoLevel(HeLP_Info, 5);|
-  !gapprompt@gap>| !gapinput@C := CharacterTable(SymmetricGroup(4)); |
-  CharacterTable( Sym( [ 1 .. 4 ] ) )
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(C mod 2, 3); |
-  #I  USED CHARACTER TABLE CHANGED TO BrauerTable( SymmetricGroup( [ 1 .. 4 ] ), 2
-   ), ALL GLOBAL VARIABLES RESET.
-  #I  Number of solutions for elements of order 3: 1; stored in HeLP_sol[3].
-  [ [ [ 1 ] ] ]
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(C, 2*3);    |
-  #I  USED CHARACTER TABLE CHANGED TO CharacterTable( SymmetricGroup( [ 1 .. 4 ] )
-   ), ALL GLOBAL VARIABLES RESET.
-  #I      Solutions for order 2 not yet calculated.  Restart for this order.
-  #I      Solutions for order 3 not yet calculated.  Restart for this order.
-  #I  Number of solutions for elements of order 6: 0; stored in HeLP_sol[6].
-  [  ]
-\end{Verbatim}
- The recalculations of the solutions can be avoided by calling \texttt{HeLP{\textunderscore}ChangeCharKeepSols} before using another character table. 
-\begin{Verbatim}[commandchars=@|F,fontsize=\small,frame=single,label=Example]
-  @gapprompt|gap>F @gapinput|D := CharacterTable(SymmetricGroup(4));F
-  CharacterTable( Sym( [ 1 .. 4 ] ) )
-  @gapprompt|gap>F @gapinput|HeLP_WithGivenOrder(D mod 2, 3);       F
-  #I  USED CHARACTER TABLE CHANGED TO BrauerTable( SymmetricGroup( [ 1 .. 4 ] ), 2
-   ), ALL GLOBAL VARIABLES RESET.
-  #I  Number of solutions for elements of order 3: 1; stored in HeLP_sol[3].
-  [ [ [ 1 ] ] ]
-  @gapprompt|gap>F @gapinput|HeLP_ChangeCharKeepSols(D);F
-  #I  WARNING: Change used character table without checking if the character table
-  s have the same underlying groups and the ordering of the conjugacy classes are 
-  the same!
-  @gapprompt|gap>F @gapinput|HeLP_WithGivenOrder(D, 2*3);    F
-  #I  Using same character table as until now; all known solutions kept.
-  #I      Solutions for order 2 not yet calculated.  Restart for this order.
-  #I  Number of solutions for elements of order 6: 0; stored in HeLP_sol[6].
-  [  ]
-\end{Verbatim}
- When using tables from the ATLAS this is done automatically: 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@CA := CharacterTable("A5");|
-  CharacterTable( "A5" )
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(CA mod 2, 5);|
-  #I  USED CHARACTER TABLE CHANGED TO BrauerTable( "A5", 2 ), ALL GLOBAL VARIABLES
-   RESET.
-  #I  Testing possibility 1 out of 1.
-  #I  Number of solutions for elements of order 5: 2; stored in HeLP_sol[5].
-  [ [ [ 0, 1 ] ], [ [ 1, 0 ] ] ]
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(CA, 2*5);    |
-  #I  Using character table of the same group; all known solutions kept.
-  #I      Solutions for order 2 not yet calculated.  Restart for this order.
-  #I  Number of solutions for elements of order 10: 0; stored in HeLP_sol[10].
-  [  ]
-  !gapprompt@gap>| !gapinput@SetInfoLevel(HeLP_Info, 1);|
-\end{Verbatim}
  
 
 \subsection{\textcolor{Chapter }{HeLP{\textunderscore}Reset}}
@@ -1192,31 +694,6 @@ e.g. \texttt{HeLP{\textunderscore}WithGivenOrder} (\ref{HeLPWithGivenOrder}).
  If there is no third argument given, i.e. the augmentations from \texttt{HeLP{\textunderscore}sol[k]} are used, the result overwrites \texttt{HeLP{\textunderscore}sol[k]}. }
 
  
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable("A6");;|
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(C, 4);|
-  #I  Number of solutions for elements of order 4: 4; stored in HeLP_sol[4].
-  [ [ [ 1 ], [ -1, 2 ] ], [ [ 1 ], [ 2, -1 ] ], [ [ 1 ], [ 1, 0 ] ], 
-    [ [ 1 ], [ 0, 1 ] ] ]
-  !gapprompt@gap>| !gapinput@HeLP_VerifySolution(C mod 3, 4);|
-  [ [ [ 1 ], [ 1, 0 ] ], [ [ 1 ], [ 0, 1 ] ] ]
-  !gapprompt@gap>| !gapinput@HeLP_sol[4];|
-  [ [ [ 1 ], [ 1, 0 ] ], [ [ 1 ], [ 0, 1 ] ] ]
-\end{Verbatim}
- 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable("S12");;|
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(Irr(C mod 5){[2..6]}, 2);;|
-  #I  Number of solutions for elements of order 2: 563; stored in HeLP_sol[2].
-  !gapprompt@gap>| !gapinput@HeLP_VerifySolution(C mod 5, 2);;|
-  !gapprompt@gap>| !gapinput@Size(HeLP_sol[2]);|
-  387
-  !gapprompt@gap>| !gapinput@HeLP_VerifySolution(C mod 3, 2);;|
-  !gapprompt@gap>| !gapinput@Size(HeLP_sol[2]);|
-  324
-\end{Verbatim}
- Using \texttt{HeLP{\textunderscore}WithGivenOrder(C mod 5, 2)} or \texttt{HeLP{\textunderscore}WithGivenOrder(C mod 3, 2)} takes much longer since in that case a bigger system of inequalities must be
-solved. 
 
 \subsection{\textcolor{Chapter }{HeLP{\textunderscore}FindAndVerifySolution}}
 \logpage{[ 3, 6, 2 ]}\nobreak
@@ -1254,23 +731,6 @@ units of a given order $n,$ if the partial augmentations if units of order $n/p$
 of some possibility is taking too long, one can check it using \texttt{HeLP{\textunderscore}WithGivenOrderAndPA} (\ref{HeLPWithGivenOrderAndPA}). }
 
  
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@SetInfoLevel(HeLP_Info,4);|
-  !gapprompt@gap>| !gapinput@C := CharacterTable(SmallGroup(160,91));|
-  CharacterTable( <pc group of size 160 with 6 generators> )
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(C,4);;|
-  #I      Solutions for order 2 not yet calculated.  Restart for this order.
-  #I  Number of solutions for elements of order 4: 22; stored in HeLP_sol[4].   
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(C,10);;|
-  #I      Solutions for order 5 not yet calculated.  Restart for this order.
-  #I  Number of solutions for elements of order 10: 6; stored in HeLP_sol[10].  
-  !gapprompt@gap>| !gapinput@LP := HeLP_PossiblePartialAugmentationsOfPowers(20);;|
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrderAndPA(Irr(C){[2..20]},20,LP[1]);|
-  #I  Number of solutions for elements of order 20 with these partial augmentations
-   for the powers: 0.
-  [  ]
-\end{Verbatim}
- 
 
 \subsection{\textcolor{Chapter }{HeLP{\textunderscore}WriteTrivialSolution}}
 \logpage{[ 3, 6, 4 ]}\nobreak
@@ -1287,24 +747,6 @@ Trivial solutions.
 with the partial augmentations of group elements) and stores them in \texttt{HeLP{\textunderscore}sol[k]}. If solutions of order $k$ were already calculated, they are overwritten by this function, so this
 function can be used in particular if elements of order $k$ are known to be rationally conjugate to group elements by theoretical results. }
 
- With the character tables that are currently available in GAP, the Zassenhaus
-Conjecture for elements of order $4$ in $\text{PSL}(2,49)$ cannot be solved. However it was proved in \cite{HertweckBrauer} using the Brauer table modulo $7$. 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable("L2(49)");|
-  CharacterTable( "L2(49)" )
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(C, 4);|
-  #I  Number of solutions for elements of order 4: 14; stored in HeLP_sol[4].
-  [ [ [ 1 ], [ -6, 7 ] ], [ [ 1 ], [ -5, 6 ] ], [ [ 1 ], [ -4, 5 ] ], 
-    [ [ 1 ], [ -3, 4 ] ], [ [ 1 ], [ -2, 3 ] ], [ [ 1 ], [ -1, 2 ] ], 
-    [ [ 1 ], [ 0, 1 ] ], [ [ 1 ], [ 1, 0 ] ], [ [ 1 ], [ 2, -1 ] ], 
-    [ [ 1 ], [ 3, -2 ] ], [ [ 1 ], [ 4, -3 ] ], [ [ 1 ], [ 5, -4 ] ], 
-    [ [ 1 ], [ 6, -5 ] ], [ [ 1 ], [ 7, -6 ] ] ]
-  !gapprompt@gap>| !gapinput@C mod 7;|
-  fail
-  !gapprompt@gap>| !gapinput@HeLP_WriteTrivialSolution(C, 4);;|
-  !gapprompt@gap>| !gapinput@HeLP_sol[4];|
-  [ [ [ 1 ], [ 0, 1 ] ] ]
-\end{Verbatim}
  }
 
  
@@ -1328,66 +770,6 @@ List of admissible partial augmentations
  This function applies the Wagner test (cf. Section \ref{Chapter_Background_Section_The_Wagner_test}) to the given data. If only the order \mbox{\texttt{\mdseries\slshape k}} is given as argument, the Wagner test will be applied to the solutions stored
 in \texttt{HeLP{\textunderscore}sol[k]}. If the arguments are the order \mbox{\texttt{\mdseries\slshape k}}, a list of possible solutions \mbox{\texttt{\mdseries\slshape list{\textunderscore}paraugs}} and an ordinary character table \mbox{\texttt{\mdseries\slshape OrdinaryCharacterTable}} it applies the test to the solutions given in \mbox{\texttt{\mdseries\slshape list{\textunderscore}paraugs}} and using the number of conjugacy classes for elements a divisor of \mbox{\texttt{\mdseries\slshape k}}, which will be extracted from the head of \mbox{\texttt{\mdseries\slshape OrdinaryCharacterTable}}. }
 
- 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable("M11");|
-  CharacterTable( "M11" )
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(C,8);;|
-  #I  Number of solutions for elements of order 8: 36; stored in HeLP_sol[8].
-  !gapprompt@gap>| !gapinput@HeLP_sol[8] := HeLP_WagnerTest(8);;|
-  !gapprompt@gap>| !gapinput@Size(HeLP_sol[8]);|
-  24
-\end{Verbatim}
- Thus the Wagner-Test eliminates 12 possible partial augmentations for elements
-of order 8. Continuing the example: 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(C,12);|
-  #I  Number of solutions for elements of order 12: 7; stored in HeLP_sol[12].
-  [ [ [ 1 ], [ 1 ], [ 2, -1 ], [ 0, 3, -2 ], [ 1, 0, -1, 1 ] ], 
-    [ [ 1 ], [ 1 ], [ 1, 0 ], [ 0, 3, -2 ], [ 0, 0, 0, 1 ] ], 
-    [ [ 1 ], [ 1 ], [ -1, 2 ], [ 0, 3, -2 ], [ 0, 0, 2, -1 ] ], 
-    [ [ 1 ], [ 1 ], [ 0, 1 ], [ 0, 3, -2 ], [ 1, 0, 1, -1 ] ], 
-    [ [ 1 ], [ 1 ], [ 0, 1 ], [ 0, 3, -2 ], [ -1, 0, 1, 1 ] ], 
-    [ [ 1 ], [ 1 ], [ 1, 0 ], [ 0, -3, 4 ], [ 0, 0, 0, 1 ] ], 
-    [ [ 1 ], [ 1 ], [ -1, 2 ], [ 0, -3, 4 ], [ 1, 0, -1, 1 ] ] ]
-  !gapprompt@gap>| !gapinput@HeLP_sol[12] := HeLP_WagnerTest(12);|
-  [ [ [ 1 ], [ 1 ], [ 1, 0 ], [ 0, 3, -2 ], [ 0, 0, 0, 1 ] ], 
-    [ [ 1 ], [ 1 ], [ -1, 2 ], [ 0, 3, -2 ], [ 0, 0, 2, -1 ] ], 
-    [ [ 1 ], [ 1 ], [ 1, 0 ], [ 0, -3, 4 ], [ 0, 0, 0, 1 ] ] ]
-  !gapprompt@gap>| !gapinput@HeLP_sol[4] := HeLP_WagnerTest(4);;|
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(C,12);|
-  #I  Number of solutions for elements of order 12: 3; stored in HeLP_sol[12].
-  [ [ [ 1 ], [ 1 ], [ 2, -1 ], [ 0, 3, -2 ], [ 1, 0, -1, 1 ] ], 
-    [ [ 1 ], [ 1 ], [ 0, 1 ], [ 0, 3, -2 ], [ 1, 0, 1, -1 ] ], 
-    [ [ 1 ], [ 1 ], [ 0, 1 ], [ 0, 3, -2 ], [ -1, 0, 1, 1 ] ] ]
-  !gapprompt@gap>| !gapinput@HeLP_sol[12] := HeLP_WagnerTest(12);|
-  [  ]
-\end{Verbatim}
- Thus there are no normalized units of order 12 in the integral group ring of $M_{11}.$ 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable("M22");|
-  CharacterTable( "M22" )
-  !gapprompt@gap>| !gapinput@HeLP_WagnerTest(12, [ [ [1], [1], [1,0], [0,0,1], [-3,3,2,3,-4] ] ],C);|
-  [  ]
-\end{Verbatim}
- This example is taken from the appendix of \cite{KonovalovM22}.
-
- Sometimes the Wagner-Test may even prove the Zassenhaus Conjecture: 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@G := SmallGroup(96,187);|
-  <pc group of size 96 with 6 generators>
-  !gapprompt@gap>| !gapinput@C := CharacterTable(G);|
-  CharacterTable( <pc group of size 96 with 6 generators> )
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(C,4);;|
-  #I  Number of solutions for elements of order 4: 34; stored in HeLP_sol[4].
-  !gapprompt@gap>| !gapinput@HeLP_WagnerTest(4);       |
-  [ [ [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 1 ] ],
-    [ [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 1, 0, 0 ] ],
-    [ [ 0, 1, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 1, 0, 0, 0 ] ], 
-    [ [ 0, 1, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1, 0 ] ] ]
-  !gapprompt@gap>| !gapinput@HeLP_ZC(C);|
-  true
-\end{Verbatim}
  }
 
  
@@ -1413,15 +795,6 @@ representatives of each orbit of the action of the automorphism group of $G$ on 
 action of the automorphism group of $G$. If as third argument a lisrt of partial augmentations is given, then these
 will be used, otherwise the partial augmentations that are stored in \texttt{HeLP{\textunderscore}sol[k]} are used. }
 
- 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable("A6");;|
-  !gapprompt@gap>| !gapinput@gap> HeLP_WithGivenOrder(C, 6);|
-  #I  Number of solutions for elements of order 6: 2; stored in HeLP_sol[6].
-  [ [ [ 1 ], [ 0, 1 ], [ -2, 2, 1 ] ], [ [ 1 ], [ 1, 0 ], [ -2, 1, 2 ] ] ]
-  !gapprompt@gap>| !gapinput@HeLP_AutomorphismOrbits(C, 6);|
-  [ [ [ 1 ], [ 0, 1 ], [ -2, 2, 1 ] ] ]
-\end{Verbatim}
  }
 
  
@@ -1447,44 +820,6 @@ integer \mbox{\texttt{\mdseries\slshape k}} as argument is given, then it prints
 units of order \mbox{\texttt{\mdseries\slshape k}}, if they are already calculated. If no argument is given, the function prints
 information on all orders for which there are already informations. }
 
- 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable("A5");;|
-  !gapprompt@gap>| !gapinput@HeLP_ZC(C);          |
-  true
-  !gapprompt@gap>| !gapinput@HeLP_PrintSolution();|
-  Solutions for elements of order 2:
-  [ [         u ],
-    [  [ "2a" ] ],
-    [       --- ],
-    [     [ 1 ] ] ]
-  Solutions for elements of order 3:
-  [ [         u ],
-    [  [ "3a" ] ],
-    [       --- ],
-    [     [ 1 ] ] ]
-  Solutions for elements of order 5:
-  [ [               u ],
-    [  [ "5a", "5b" ] ],
-    [             --- ],
-    [        [ 0, 1 ] ],
-    [        [ 1, 0 ] ] ]
-  There are no admissible partial augmentations for elements of order 6.
-  There are no admissible partial augmentations for elements of order 10.
-  There are no admissible partial augmentations for elements of order 15.
-  There are no admissible partial augmentations for elements of order 30.
-  !gapprompt@gap>| !gapinput@C := CharacterTable("A6");;|
-  !gapprompt@gap>| !gapinput@HeLP_ZC(C);           |
-  #I  ZC can't be solved, using the given data, for the orders: [ 6 ].
-  false
-  !gapprompt@gap>| !gapinput@HeLP_PrintSolution(6);|
-  Solutions for elements of order 6:
-  [ [                   u^3,                   u^2,                     u ],
-    [              [ "2a" ],        [ "3a", "3b" ],  [ "2a", "3a", "3b" ] ],
-    [                   ---,                   ---,                   --- ],
-    [                 [ 1 ],              [ 0, 1 ],          [ -2, 2, 1 ] ],
-    [                 [ 1 ],              [ 1, 0 ],          [ -2, 1, 2 ] ] ]
-\end{Verbatim}
  }
 
  
@@ -1522,23 +857,7 @@ the character value $chi(u)$
 
  The function returns the character value $chi(u)$ of an element $u$ of order $k$ having the partial augmentations \mbox{\texttt{\mdseries\slshape paraug}}. }
 
- 
-\begin{Verbatim}[commandchars=!@|,fontsize=\small,frame=single,label=Example]
-  !gapprompt@gap>| !gapinput@C := CharacterTable("A6");;|
-  !gapprompt@gap>| !gapinput@HeLP_WithGivenOrder(C, 6);                               |
-  #I  Number of solutions for elements of order 6: 2; stored in HeLP_sol[6].
-  [ [ [ 1 ], [ 0, 1 ], [ -2, 2, 1 ] ], [ [ 1 ], [ 1, 0 ], [ -2, 1, 2 ] ] ]
-  !gapprompt@gap>| !gapinput@chi := Irr(C)[2];;   # a character of degree 5|
-  !gapprompt@gap>| !gapinput@HeLP_MultiplicitiesOfEigenvalues(chi, 6, HeLP_sol[6][2]);|
-  [ 1, 0, 1, 2, 1, 0 ]
-  !gapprompt@gap>| !gapinput@HeLP_CharacterValue(chi, 6, HeLP_sol[6][2][3]);          |
-  -2
-  !gapprompt@gap>| !gapinput@HeLP_CharacterValue(chi, 6, [-2,1,2]);|
-  -2
-  !gapprompt@gap>| !gapinput@HeLP_CharacterValue(chi, 6, [-2,2,1]);|
-  1
-\end{Verbatim}
- These eigenvalues were computed manually by M. Hertweck and may be found in \cite{HerA6}. }
+ }
 
  
 \section{\textcolor{Chapter }{Check whether Zassenhaus Conjecture is known from theoretical results}}\label{Chapter_Further_functions_Section_Check_whether_Zassenhaus_Conjecture_is_known_from_theoretical_results}
@@ -2392,6 +1711,7 @@ package. We will be happy to help. }
 
 \printindex
 
+\immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \immediate\write\pagenrlog{["Ind", 0, 0], \arabic{page},}
 \newpage

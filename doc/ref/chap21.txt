@@ -38,7 +38,7 @@
   
   [1X21.1-1 IsList[101X
   
-  [29X[2XIsList[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsList[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0Ytests whether [3Xobj[103X is a list.[133X
   
@@ -50,7 +50,7 @@
   
   [1X21.1-2 IsDenseList[101X
   
-  [29X[2XIsDenseList[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsDenseList[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YA  list  is  [13Xdense[113X  if  it  has no holes, i.e., contains an element at every
   position  up to the length. It is absolutely legal to have lists with holes.
@@ -85,7 +85,7 @@
   
   [1X21.1-3 IsHomogeneousList[101X
   
-  [29X[2XIsHomogeneousList[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsHomogeneousList[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0Yreturns [9Xtrue[109X if [3Xobj[103X is a list and it is homogeneous, and [9Xfalse[109X otherwise.[133X
   
@@ -103,7 +103,7 @@
   
   [1X21.1-4 IsTable[101X
   
-  [29X[2XIsTable[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsTable[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YA  [13Xtable[113X  is  a  nonempty  list  of  homogeneous lists which lie in the same
   family. Typical examples of tables are matrices (see [14X24[114X).[133X
@@ -119,14 +119,14 @@
   
   [1X21.1-5 IsRectangularTable[101X
   
-  [29X[2XIsRectangularTable[102X( [3Xlist[103X ) [32X property
+  [33X[1;0Y[29X[2XIsRectangularTable[102X( [3Xlist[103X ) [32X property[133X
   
   [33X[0;0YA  list  lies in [10XIsRectangularTable[110X when it is nonempty and its elements are
   all homogeneous lists of the same family and the same length.[133X
   
   [1X21.1-6 IsConstantTimeAccessList[101X
   
-  [29X[2XIsConstantTimeAccessList[102X( [3Xlist[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsConstantTimeAccessList[102X( [3Xlist[103X ) [32X Category[133X
   
   [33X[0;0YThis  category indicates whether the access to each element of the list [3Xlist[103X
   will  take  roughly the same time. This is implied for example by [10XIsList and
@@ -163,10 +163,10 @@
   
   [1X21.2-1 \[\][101X
   
-  [29X[2X\[\][102X( [3Xlist[103X, [3Xix[103X ) [32X operation
-  [29X[2XIsBound\[\][102X( [3Xlist[103X, [3Xix[103X ) [32X operation
-  [29X[2X\[\]\:\=[102X( [3Xlist[103X, [3Xpos[103X, [3Xix[103X ) [32X operation
-  [29X[2XUnbind\[\][102X( [3Xlist[103X, [3Xix[103X ) [32X operation
+  [33X[1;0Y[29X[2X\[\][102X( [3Xlist[103X, [3Xix[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsBound\[\][102X( [3Xlist[103X, [3Xix[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2X\[\]\:\=[102X( [3Xlist[103X, [3Xpos[103X, [3Xix[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XUnbind\[\][102X( [3Xlist[103X, [3Xix[103X ) [32X operation[133X
   
   [33X[0;0YThese  operations  implement  element  access, test for element boundedness,
   list element assignment, and removal of the element with index [3Xix[103X.[133X
@@ -290,7 +290,7 @@
   
   [1X21.3-1 \{\}[101X
   
-  [29X[2X\{\}[102X( [3Xlist[103X, [3Xposs[103X ) [32X operation
+  [33X[1;0Y[29X[2X\{\}[102X( [3Xlist[103X, [3Xposs[103X ) [32X operation[133X
   
   [33X[0;0YThis  operation  implements [13Xsublist access[113X. For any list, the default method
   is to loop over the entries in the list [3Xposs[103X, and to delegate to the element
@@ -411,7 +411,7 @@
   
   [1X21.4-1 \{\}\:\=[101X
   
-  [29X[2X\{\}\:\=[102X( [3Xlist[103X, [3Xposs[103X, [3Xval[103X ) [32X operation
+  [33X[1;0Y[29X[2X\{\}\:\=[102X( [3Xlist[103X, [3Xposs[103X, [3Xval[103X ) [32X operation[133X
   
   [33X[0;0YThis  operation  implements  sublist  assignment.  For any list, the default
   method  is to loop over the entries in the list [3Xposs[103X, and to delegate to the
@@ -420,7 +420,7 @@
   
   [1X21.4-2 Add[101X
   
-  [29X[2XAdd[102X( [3Xlist[103X, [3Xobj[103X[, [3Xpos[103X] ) [32X operation
+  [33X[1;0Y[29X[2XAdd[102X( [3Xlist[103X, [3Xobj[103X[, [3Xpos[103X] ) [32X operation[133X
   
   [33X[0;0Yadds the element [3Xobj[103X to the mutable list [3Xlist[103X. The two argument version adds
   [3Xobj[103X  at  the  end  of  [3Xlist[103X,  i.e., it is equivalent to the assignment [10X[3Xlist[103X[10X[
@@ -435,7 +435,7 @@
   
   [1X21.4-3 Remove[101X
   
-  [29X[2XRemove[102X( [3Xlist[103X[, [3Xpos[103X] ) [32X operation
+  [33X[1;0Y[29X[2XRemove[102X( [3Xlist[103X[, [3Xpos[103X] ) [32X operation[133X
   
   [33X[0;0Yremoves  an  element  from  [3Xlist[103X.  The  one  argument  form removes the last
   element.  The  two argument form removes the element in position [3Xpos[103X, moving
@@ -467,7 +467,7 @@
   
   [1X21.4-4 CopyListEntries[101X
   
-  [29X[2XCopyListEntries[102X( [3Xfromlst[103X, [3Xfromind[103X, [3Xfromstep[103X, [3Xtolst[103X, [3Xtoind[103X, [3Xtostep[103X, [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XCopyListEntries[102X( [3Xfromlst[103X, [3Xfromind[103X, [3Xfromstep[103X, [3Xtolst[103X, [3Xtoind[103X, [3Xtostep[103X, [3Xn[103X ) [32X function[133X
   
   [33X[0;0YThis  function  copies [3Xn[103X elements from [3Xfromlst[103X, starting at position [3Xfromind[103X
   and  incrementing the position by [3Xfromstep[103X each time, into [3Xtolst[103X starting at
@@ -480,7 +480,7 @@
   
   [1X21.4-5 Append[101X
   
-  [29X[2XAppend[102X( [3Xlist1[103X, [3Xlist2[103X ) [32X operation
+  [33X[1;0Y[29X[2XAppend[102X( [3Xlist1[103X, [3Xlist2[103X ) [32X operation[133X
   
   [33X[0;0Yadds  the  elements  of the list [3Xlist2[103X to the end of the mutable list [3Xlist1[103X,
   see [14X21.4[114X.  [3Xlist2[103X  may contain holes, in which case the corresponding entries
@@ -502,8 +502,8 @@
   
   [1X21.5-1 IsBound[101X
   
-  [29X[2XIsBound[102X( [3Xlist[103X[, [3Xn[103X] ) [32X operation
-  [29X[2XIsBound[102X( [3Xlist[103X[, [3Xix1[103X, [3Xix2[103X, [3X...[103X] ) [32X operation
+  [33X[1;0Y[29X[2XIsBound[102X( [3Xlist[103X[, [3Xn[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsBound[102X( [3Xlist[103X[, [3Xix1[103X, [3Xix2[103X, [3X...[103X] ) [32X operation[133X
   
   [33X[0;0Y[2XIsBound[102X  returns  [9Xtrue[109X  if the list [3Xlist[103X has a element at index [3Xn[103X, and [9Xfalse[109X
   otherwise. [3Xlist[103X must evaluate to a list, otherwise an error is signalled.[133X
@@ -522,8 +522,8 @@
   
   [1X21.5-2 Unbind[101X
   
-  [29X[2XUnbind[102X( [3Xlist[103X[, [3Xn[103X] ) [32X operation
-  [29X[2XUnbind[102X( [3Xlist[103X[, [3Xix1[103X, [3Xix2[103X, [3X...[103X] ) [32X operation
+  [33X[1;0Y[29X[2XUnbind[102X( [3Xlist[103X[, [3Xn[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XUnbind[102X( [3Xlist[103X[, [3Xix1[103X, [3Xix2[103X, [3X...[103X] ) [32X operation[133X
   
   [33X[0;0Y[2XUnbind[102X  deletes  the element with index [3Xn[103X in the mutable list [3Xlist[103X. That is,
   after  execution  of [2XUnbind[102X, [3Xlist[103X no longer has an assigned value with index
@@ -747,7 +747,7 @@
   
   [1X21.8-1 \in[101X
   
-  [29X[2X\in[102X( [3Xobj[103X, [3Xlist[103X ) [32X operation
+  [33X[1;0Y[29X[2X\in[102X( [3Xobj[103X, [3Xlist[103X ) [32X operation[133X
   
   [33X[0;0YThis function call or the infix variant [3Xobj[103X [9Xin[109X [3Xlist[103X tests whether there is a
   positive integer [22Xi[122X such that [3Xlist[103X[22X[i] =[122X [3Xobj[103X holds.[133X
@@ -809,10 +809,10 @@
   
   [1X21.9-1 EmptyPlist[101X
   
-  [29X[2XEmptyPlist[102X( [3Xlen[103X ) [32X function
+  [33X[1;0Y[29X[2XEmptyPlist[102X( [3Xlen[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ya plain list[133X
   
-  [29X[2XShrinkAllocationPlist[102X( [3Xl[103X ) [32X function
+  [33X[1;0Y[29X[2XShrinkAllocationPlist[102X( [3Xl[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
   [33X[0;0YThe  function [2XEmptyPlist[102X returns an empty plain list which has enough memory
@@ -934,7 +934,7 @@
   
   [1X21.12-1 IsGeneralizedRowVector[101X
   
-  [29X[2XIsGeneralizedRowVector[102X( [3Xlist[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsGeneralizedRowVector[102X( [3Xlist[103X ) [32X Category[133X
   
   [33X[0;0YFor  a  list  [3Xlist[103X, the value [9Xtrue[109X for [2XIsGeneralizedRowVector[102X indicates that
   the  additive  arithmetic behaviour of [3Xlist[103X is as defined in [14X21.13[114X, and that
@@ -953,7 +953,7 @@
   
   [1X21.12-2 IsMultiplicativeGeneralizedRowVector[101X
   
-  [29X[2XIsMultiplicativeGeneralizedRowVector[102X( [3Xlist[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsMultiplicativeGeneralizedRowVector[102X( [3Xlist[103X ) [32X Category[133X
   
   [33X[0;0YFor  a  list  [3Xlist[103X,  the value [9Xtrue[109X for [2XIsMultiplicativeGeneralizedRowVector[102X
   indicates that the multiplicative arithmetic behaviour of [3Xlist[103X is as defined
@@ -975,7 +975,7 @@
   
   [1X21.12-3 IsListDefault[101X
   
-  [29X[2XIsListDefault[102X( [3Xlist[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsListDefault[102X( [3Xlist[103X ) [32X Category[133X
   
   [33X[0;0YFor  a  list  [3Xlist[103X,  [2XIsListDefault[102X  indicates  that  the default methods for
   arithmetic   operations   of   lists,   such   as   pointwise  addition  and
@@ -1004,7 +1004,7 @@
   
   [1X21.12-4 NestingDepthA[101X
   
-  [29X[2XNestingDepthA[102X( [3Xobj[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNestingDepthA[102X( [3Xobj[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a  [5XGAP[105X  object [3Xobj[103X, [2XNestingDepthA[102X returns the [13Xadditive nesting depth[113X of
   [3Xobj[103X.  This  is  defined  recursively  as  the  integer  [22X0[122X  if  [3Xobj[103X is not in
@@ -1014,7 +1014,7 @@
   
   [1X21.12-5 NestingDepthM[101X
   
-  [29X[2XNestingDepthM[102X( [3Xobj[103X ) [32X attribute
+  [33X[1;0Y[29X[2XNestingDepthM[102X( [3Xobj[103X ) [32X attribute[133X
   
   [33X[0;0YFor a [5XGAP[105X object [3Xobj[103X, [2XNestingDepthM[102X returns the [13Xmultiplicative nesting depth[113X
   of  [3Xobj[103X.  This  is  defined  recursively  as  the integer [22X0[122X if [3Xobj[103X is not in
@@ -1398,7 +1398,7 @@
   
   [1X21.15-1 ListWithIdenticalEntries[101X
   
-  [29X[2XListWithIdenticalEntries[102X( [3Xn[103X, [3Xobj[103X ) [32X function
+  [33X[1;0Y[29X[2XListWithIdenticalEntries[102X( [3Xn[103X, [3Xobj[103X ) [32X function[133X
   
   [33X[0;0Yis  a  list  [3Xlist[103X  of length [3Xn[103X that has the object [3Xobj[103X stored at each of the
   positions  from  [10X1[110X  to  [3Xn[103X.  Note  that  all elements of [3Xlists[103X are identical,
@@ -1414,7 +1414,7 @@
   
   [1X21.16-1 Position[101X
   
-  [29X[2XPosition[102X( [3Xlist[103X, [3Xobj[103X[, [3Xfrom[103X] ) [32X operation
+  [33X[1;0Y[29X[2XPosition[102X( [3Xlist[103X, [3Xobj[103X[, [3Xfrom[103X] ) [32X operation[133X
   
   [33X[0;0Yreturns  the position of the first occurrence [3Xobj[103X in [3Xlist[103X, or [9Xfail[109X if [3Xobj[103X is
   not  contained  in  [3Xlist[103X.  If a starting index [3Xfrom[103X is given, it returns the
@@ -1438,8 +1438,8 @@
   
   [1X21.16-2 Positions[101X
   
-  [29X[2XPositions[102X( [3Xlist[103X, [3Xobj[103X ) [32X function
-  [29X[2XPositionsOp[102X( [3Xlist[103X, [3Xobj[103X ) [32X operation
+  [33X[1;0Y[29X[2XPositions[102X( [3Xlist[103X, [3Xobj[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPositionsOp[102X( [3Xlist[103X, [3Xobj[103X ) [32X operation[133X
   
   [33X[0;0Yreturns the positions of [13Xall[113X occurrences of [3Xobj[103X in [3Xlist[103X.[133X
   
@@ -1452,7 +1452,7 @@
   
   [1X21.16-3 PositionCanonical[101X
   
-  [29X[2XPositionCanonical[102X( [3Xlist[103X, [3Xobj[103X ) [32X operation
+  [33X[1;0Y[29X[2XPositionCanonical[102X( [3Xlist[103X, [3Xobj[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  position  of  the  canonical  associate  of  [3Xobj[103X  in [3Xlist[103X. The
   definition  of  this  associate  depends on [3Xlist[103X. For internally represented
@@ -1476,7 +1476,7 @@
   
   [1X21.16-4 PositionNthOccurrence[101X
   
-  [29X[2XPositionNthOccurrence[102X( [3Xlist[103X, [3Xobj[103X, [3Xn[103X ) [32X operation
+  [33X[1;0Y[29X[2XPositionNthOccurrence[102X( [3Xlist[103X, [3Xobj[103X, [3Xn[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the position of the [3Xn[103X-th occurrence of [3Xobj[103X in [3Xlist[103X and returns [9Xfail[109X
   if [3Xobj[103X does not occur [3Xn[103X times.[133X
@@ -1494,7 +1494,7 @@
   
   [1X21.16-5 PositionSorted[101X
   
-  [29X[2XPositionSorted[102X( [3Xlist[103X, [3Xelm[103X[, [3Xfunc[103X] ) [32X function
+  [33X[1;0Y[29X[2XPositionSorted[102X( [3Xlist[103X, [3Xelm[103X[, [3Xfunc[103X] ) [32X function[133X
   
   [33X[0;0YCalled  with  two  arguments,  [2XPositionSorted[102X  returns  the  position of the
   element [3Xelm[103X in the sorted list [3Xlist[103X.[133X
@@ -1533,7 +1533,7 @@
   
   [1X21.16-6 PositionSet[101X
   
-  [29X[2XPositionSet[102X( [3Xlist[103X, [3Xobj[103X[, [3Xfunc[103X] ) [32X function
+  [33X[1;0Y[29X[2XPositionSet[102X( [3Xlist[103X, [3Xobj[103X[, [3Xfunc[103X] ) [32X function[133X
   
   [33X[0;0Y[2XPositionSet[102X  is  a  slight  variation  of [2XPositionSorted[102X ([14X21.16-5[114X). The only
   difference  to  [2XPositionSorted[102X ([14X21.16-5[114X) is that [2XPositionSet[102X returns [9Xfail[109X if
@@ -1554,7 +1554,7 @@
   
   [1X21.16-7 PositionProperty[101X
   
-  [29X[2XPositionProperty[102X( [3Xlist[103X, [3Xfunc[103X[, [3Xfrom[103X] ) [32X operation
+  [33X[1;0Y[29X[2XPositionProperty[102X( [3Xlist[103X, [3Xfunc[103X[, [3Xfrom[103X] ) [32X operation[133X
   
   [33X[0;0Yreturns  the  position  of  the  first  entry in the list [3Xlist[103X for which the
   property tester function [3Xfunc[103X returns [9Xtrue[109X, or [9Xfail[109X if no such entry exists.
@@ -1574,7 +1574,7 @@
   
   [1X21.16-8 PositionsProperty[101X
   
-  [29X[2XPositionsProperty[102X( [3Xlist[103X, [3Xfunc[103X ) [32X operation
+  [33X[1;0Y[29X[2XPositionsProperty[102X( [3Xlist[103X, [3Xfunc[103X ) [32X operation[133X
   
   [33X[0;0Yreturns the list of all those positions in the dense list [3Xlist[103X for which the
   property tester function [3Xfunc[103X returns [9Xtrue[109X.[133X
@@ -1592,7 +1592,7 @@
   
   [1X21.16-9 PositionBound[101X
   
-  [29X[2XPositionBound[102X( [3Xlist[103X ) [32X operation
+  [33X[1;0Y[29X[2XPositionBound[102X( [3Xlist[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the first index for which an element is bound in the list [3Xlist[103X. For
   the empty list it returns [9Xfail[109X.[133X
@@ -1606,7 +1606,7 @@
   
   [1X21.16-10 PositionNot[101X
   
-  [29X[2XPositionNot[102X( [3Xlist[103X, [3Xval[103X[, [3Xfrom[103X] ) [32X operation
+  [33X[1;0Y[29X[2XPositionNot[102X( [3Xlist[103X, [3Xval[103X[, [3Xfrom[103X] ) [32X operation[133X
   
   [33X[0;0YFor  a  list  [3Xlist[103X  and  an  object  [3Xval[103X,  [2XPositionNot[102X  returns the smallest
   nonnegative  integer  [22Xn[122X  such that [22X[3Xlist[103X[n][122X is either unbound or not equal to
@@ -1623,7 +1623,7 @@
   
   [1X21.16-11 PositionNonZero[101X
   
-  [29X[2XPositionNonZero[102X( [3Xvec[103X[, [3Xfrom[103X] ) [32X operation
+  [33X[1;0Y[29X[2XPositionNonZero[102X( [3Xvec[103X[, [3Xfrom[103X] ) [32X operation[133X
   
   [33X[0;0YFor  a  row  vector  [3Xvec[103X,  [2XPositionNonZero[102X returns the position of the first
   non-zero element of [3Xvec[103X, or [10XLength([110X [3Xvec[103X [10X)+1[110X if all entries of [3Xvec[103X are zero.[133X
@@ -1645,7 +1645,7 @@
   
   [1X21.16-12 PositionSublist[101X
   
-  [29X[2XPositionSublist[102X( [3Xlist[103X, [3Xsub[103X[, [3Xfrom[103X] ) [32X operation
+  [33X[1;0Y[29X[2XPositionSublist[102X( [3Xlist[103X, [3Xsub[103X[, [3Xfrom[103X] ) [32X operation[133X
   
   [33X[0;0Yreturns  the smallest index in the list [3Xlist[103X at which a sublist equal to [3Xsub[103X
   starts.  If  [3Xsub[103X does not occur the operation returns [9Xfail[109X. The version with
@@ -1682,7 +1682,7 @@
   
   [1X21.17-1 IsMatchingSublist[101X
   
-  [29X[2XIsMatchingSublist[102X( [3Xlist[103X, [3Xsub[103X[, [3Xat[103X] ) [32X operation
+  [33X[1;0Y[29X[2XIsMatchingSublist[102X( [3Xlist[103X, [3Xsub[103X[, [3Xat[103X] ) [32X operation[133X
   
   [33X[0;0Yreturns  [9Xtrue[109X  if [3Xsub[103X matches a sublist of [3Xlist[103X from position [10X1[110X (or position
   [3Xat[103X,  in  the  case of three arguments), or [9Xfalse[109X, otherwise. If [3Xsub[103X is empty
@@ -1695,8 +1695,8 @@
   
   [1X21.17-2 IsDuplicateFree[101X
   
-  [29X[2XIsDuplicateFree[102X( [3Xobj[103X ) [32X property
-  [29X[2XIsDuplicateFreeList[102X( [3Xobj[103X ) [32X property
+  [33X[1;0Y[29X[2XIsDuplicateFree[102X( [3Xobj[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsDuplicateFreeList[102X( [3Xobj[103X ) [32X property[133X
   
   [33X[0;0Y[2XIsDuplicateFree[102X  returns [9Xtrue[109X if [3Xobj[103X is both a list or collection, and it is
   duplicate free; otherwise it returns [9Xfalse[109X. [2XIsDuplicateFreeList[102X is a synonym
@@ -1711,7 +1711,7 @@
   
   [1X21.17-3 IsSortedList[101X
   
-  [29X[2XIsSortedList[102X( [3Xobj[103X ) [32X property
+  [33X[1;0Y[29X[2XIsSortedList[102X( [3Xobj[103X ) [32X property[133X
   
   [33X[0;0Yreturns [9Xtrue[109X if [3Xobj[103X is a list and it is sorted, and [9Xfalse[109X otherwise.[133X
   
@@ -1732,8 +1732,8 @@
   
   [1X21.17-4 IsSSortedList[101X
   
-  [29X[2XIsSSortedList[102X( [3Xobj[103X ) [32X property
-  [29X[2XIsSet[102X( [3Xobj[103X ) [32X property
+  [33X[1;0Y[29X[2XIsSSortedList[102X( [3Xobj[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsSet[102X( [3Xobj[103X ) [32X property[133X
   
   [33X[0;0Yreturns  [9Xtrue[109X  if  [3Xobj[103X  is  a  list  and  it  is  strictly sorted, and [9Xfalse[109X
   otherwise. [2XIsSSortedList[102X is short for [21Xis strictly sorted list[121X; [2XIsSet[102X is just
@@ -1753,14 +1753,14 @@
   
   [1X21.17-5 Length[101X
   
-  [29X[2XLength[102X( [3Xlist[103X ) [32X attribute
+  [33X[1;0Y[29X[2XLength[102X( [3Xlist[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns the [13Xlength[113X of the list [3Xlist[103X, which is defined to be the index of the
   last bound entry in [3Xlist[103X.[133X
   
   [1X21.17-6 ConstantTimeAccessList[101X
   
-  [29X[2XConstantTimeAccessList[102X( [3Xlist[103X ) [32X attribute
+  [33X[1;0Y[29X[2XConstantTimeAccessList[102X( [3Xlist[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XConstantTimeAccessList[102X   returns  an  immutable  list  containing  the  same
   elements  as the list [3Xlist[103X (which may have holes) in the same order. If [3Xlist[103X
@@ -1773,8 +1773,8 @@
   
   [1X21.18-1 Sort[101X
   
-  [29X[2XSort[102X( [3Xlist[103X[, [3Xfunc[103X] ) [32X operation
-  [29X[2XSortBy[102X( [3Xlist[103X, [3Xfunc[103X ) [32X operation
+  [33X[1;0Y[29X[2XSort[102X( [3Xlist[103X[, [3Xfunc[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XSortBy[102X( [3Xlist[103X, [3Xfunc[103X ) [32X operation[133X
   
   [33X[0;0Y[2XSort[102X  sorts the list [3Xlist[103X in increasing order. In the one argument form [2XSort[102X
   uses the operator [10X<[110X to compare the elements. (If the list is not homogeneous
@@ -1817,7 +1817,7 @@
   
   [1X21.18-2 SortParallel[101X
   
-  [29X[2XSortParallel[102X( [3Xlist1[103X, [3Xlist2[103X[, [3Xfunc[103X] ) [32X operation
+  [33X[1;0Y[29X[2XSortParallel[102X( [3Xlist1[103X, [3Xlist2[103X[, [3Xfunc[103X] ) [32X operation[133X
   
   [33X[0;0Ysorts  the  list  [3Xlist1[103X  in increasing order just as [2XSort[102X ([14X21.18-1[114X) does. In
   parallel  it  applies the same exchanges that are necessary to sort [3Xlist1[103X to
@@ -1838,7 +1838,7 @@
   
   [1X21.18-3 Sortex[101X
   
-  [29X[2XSortex[102X( [3Xlist[103X[, [3Xfunc[103X] ) [32X operation
+  [33X[1;0Y[29X[2XSortex[102X( [3Xlist[103X[, [3Xfunc[103X] ) [32X operation[133X
   
   [33X[0;0Ysorts the list [3Xlist[103X and returns a permutation that can be applied to [3Xlist[103X to
   obtain  the sorted list. The one argument form sorts via the operator [10X<[110X, the
@@ -1862,7 +1862,7 @@
   
   [1X21.18-4 SortingPerm[101X
   
-  [29X[2XSortingPerm[102X( [3Xlist[103X ) [32X attribute
+  [33X[1;0Y[29X[2XSortingPerm[102X( [3Xlist[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XSortingPerm[102X  returns  the  same  as [2XSortex[102X ([14X21.18-3[114X) but does [13Xnot[113X change the
   argument.[133X
@@ -1940,7 +1940,7 @@
   
   [1X21.19-1 \in[101X
   
-  [29X[2X\in[102X( [3Xobj[103X, [3Xlist[103X ) [32X method
+  [33X[1;0Y[29X[2X\in[102X( [3Xobj[103X, [3Xlist[103X ) [32X method[133X
   
   [33X[0;0YFor  a  list  [3Xlist[103X that stores that it is strictly sorted, the test with [2X\in[102X
   whether the object [3Xobj[103X is an entry of [3Xlist[103X uses binary search. This test can
@@ -1948,7 +1948,7 @@
   
   [1X21.19-2 IsEqualSet[101X
   
-  [29X[2XIsEqualSet[102X( [3Xlist1[103X, [3Xlist2[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsEqualSet[102X( [3Xlist1[103X, [3Xlist2[103X ) [32X operation[133X
   
   [33X[0;0Ytests  whether  [3Xlist1[103X  and  [3Xlist2[103X  are equal [13Xwhen viewed as sets[113X, that is if
   every  element  of  [3Xlist1[103X  is  an  element  of  [3Xlist2[103X and vice versa. Either
@@ -1969,7 +1969,7 @@
   
   [1X21.19-3 IsSubsetSet[101X
   
-  [29X[2XIsSubsetSet[102X( [3Xlist1[103X, [3Xlist2[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsSubsetSet[102X( [3Xlist1[103X, [3Xlist2[103X ) [32X operation[133X
   
   [33X[0;0Ytests  whether every element of [3Xlist2[103X is contained in [3Xlist1[103X. Either argument
   of  [2XIsSubsetSet[102X  may  also be a list that is not a proper set, in which case
@@ -1977,7 +1977,7 @@
   
   [1X21.19-4 AddSet[101X
   
-  [29X[2XAddSet[102X( [3Xset[103X, [3Xobj[103X ) [32X operation
+  [33X[1;0Y[29X[2XAddSet[102X( [3Xset[103X, [3Xobj[103X ) [32X operation[133X
   
   [33X[0;0Yadds  the  element [3Xobj[103X to the proper set [3Xset[103X. If [3Xobj[103X is already contained in
   [3Xset[103X  then  [3Xset[103X  is  not  changed.  Otherwise  [3Xobj[103X is inserted at the correct
@@ -1997,7 +1997,7 @@
   
   [1X21.19-5 RemoveSet[101X
   
-  [29X[2XRemoveSet[102X( [3Xset[103X, [3Xobj[103X ) [32X operation
+  [33X[1;0Y[29X[2XRemoveSet[102X( [3Xset[103X, [3Xobj[103X ) [32X operation[133X
   
   [33X[0;0Yremoves  the element [3Xobj[103X from the proper set [3Xset[103X. If [3Xobj[103X is not contained in
   [3Xset[103X  then  [3Xset[103X is not changed. If [3Xobj[103X is an element of [3Xset[103X it is removed and
@@ -2013,7 +2013,7 @@
   
   [1X21.19-6 UniteSet[101X
   
-  [29X[2XUniteSet[102X( [3Xset[103X, [3Xlist[103X ) [32X operation
+  [33X[1;0Y[29X[2XUniteSet[102X( [3Xset[103X, [3Xlist[103X ) [32X operation[133X
   
   [33X[0;0Yunites  the  proper  set  [3Xset[103X  with  [3Xlist[103X.  This is equivalent to adding all
   elements of [3Xlist[103X to [3Xset[103X (see [2XAddSet[102X ([14X21.19-4[114X)).[133X
@@ -2028,7 +2028,7 @@
   
   [1X21.19-7 IntersectSet[101X
   
-  [29X[2XIntersectSet[102X( [3Xset[103X, [3Xlist[103X ) [32X operation
+  [33X[1;0Y[29X[2XIntersectSet[102X( [3Xset[103X, [3Xlist[103X ) [32X operation[133X
   
   [33X[0;0Yintersects the proper set [3Xset[103X with [3Xlist[103X. This is equivalent to removing from
   [3Xset[103X all elements of [3Xset[103X that are not contained in [3Xlist[103X.[133X
@@ -2043,7 +2043,7 @@
   
   [1X21.19-8 SubtractSet[101X
   
-  [29X[2XSubtractSet[102X( [3Xset[103X, [3Xlist[103X ) [32X operation
+  [33X[1;0Y[29X[2XSubtractSet[102X( [3Xset[103X, [3Xlist[103X ) [32X operation[133X
   
   [33X[0;0Ysubtracts  [3Xlist[103X from the proper set [3Xset[103X. This is equivalent to removing from
   [3Xset[103X all elements of [3Xlist[103X.[133X
@@ -2065,8 +2065,8 @@
   
   [1X21.20-1 Concatenation[101X
   
-  [29X[2XConcatenation[102X( [3Xlist1[103X, [3Xlist2[103X, [3X...[103X ) [32X function
-  [29X[2XConcatenation[102X( [3Xlist[103X ) [32X function
+  [33X[1;0Y[29X[2XConcatenation[102X( [3Xlist1[103X, [3Xlist2[103X, [3X...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XConcatenation[102X( [3Xlist[103X ) [32X function[133X
   
   [33X[0;0YIn  the  first  form  [2XConcatenation[102X  returns  the concatenation of the lists
   [3Xlist1[103X,  [3Xlist2[103X,  etc.  The  [13Xconcatenation[113X  is  the  list that begins with the
@@ -2096,7 +2096,7 @@
   
   [1X21.20-2 Compacted[101X
   
-  [29X[2XCompacted[102X( [3Xlist[103X ) [32X operation
+  [33X[1;0Y[29X[2XCompacted[102X( [3Xlist[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  a  new  mutable list that contains the elements of [3Xlist[103X in the same
   order but omitting the holes.[133X
@@ -2108,7 +2108,7 @@
   
   [1X21.20-3 Collected[101X
   
-  [29X[2XCollected[102X( [3Xlist[103X ) [32X operation
+  [33X[1;0Y[29X[2XCollected[102X( [3Xlist[103X ) [32X operation[133X
   
   [33X[0;0Yreturns a new list [3Xnew[103X that contains for each element [3Xelm[103X of the list [3Xlist[103X a
   list  of  length two, the first element of this is [3Xelm[103X itself and the second
@@ -2129,8 +2129,8 @@
   
   [1X21.20-4 DuplicateFreeList[101X
   
-  [29X[2XDuplicateFreeList[102X( [3Xlist[103X ) [32X operation
-  [29X[2XUnique[102X( [3Xlist[103X ) [32X operation
+  [33X[1;0Y[29X[2XDuplicateFreeList[102X( [3Xlist[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XUnique[102X( [3Xlist[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  a  new mutable list whose entries are the elements of the list [3Xlist[103X
   with  duplicates  removed.  [2XDuplicateFreeList[102X only uses the [10X=[110X comparison and
@@ -2149,14 +2149,14 @@
   
   [1X21.20-5 AsDuplicateFreeList[101X
   
-  [29X[2XAsDuplicateFreeList[102X( [3Xlist[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAsDuplicateFreeList[102X( [3Xlist[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the  same  result  as  [2XDuplicateFreeList[102X ([14X21.20-4[114X), except that the
   result is immutable.[133X
   
   [1X21.20-6 Flat[101X
   
-  [29X[2XFlat[102X( [3Xlist[103X ) [32X operation
+  [33X[1;0Y[29X[2XFlat[102X( [3Xlist[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the list of all elements that are contained in the list [3Xlist[103X or its
   sublists. That is, [2XFlat[102X first makes a new empty list [3Xnew[103X. Then it loops over
@@ -2181,7 +2181,7 @@
   
   [1X21.20-7 Reversed[101X
   
-  [29X[2XReversed[102X( [3Xlist[103X ) [32X function
+  [33X[1;0Y[29X[2XReversed[102X( [3Xlist[103X ) [32X function[133X
   
   [33X[0;0Yreturns  a  new mutable list, containing the elements of the dense list [3Xlist[103X
   in reversed order.[133X
@@ -2200,7 +2200,7 @@
   
   [1X21.20-8 Shuffle[101X
   
-  [29X[2XShuffle[102X( [3Xlist[103X ) [32X operation
+  [33X[1;0Y[29X[2XShuffle[102X( [3Xlist[103X ) [32X operation[133X
   
   [33X[0;0YThe  argument [3Xlist[103X must be a dense mutable list. This operation permutes the
   entries of [3Xlist[103X randomly (in place), and returns [3Xlist[103X.[133X
@@ -2222,7 +2222,7 @@
   
   [1X21.20-9 IsLexicographicallyLess[101X
   
-  [29X[2XIsLexicographicallyLess[102X( [3Xlist1[103X, [3Xlist2[103X ) [32X function
+  [33X[1;0Y[29X[2XIsLexicographicallyLess[102X( [3Xlist1[103X, [3Xlist2[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xlist1[103X  and  [3Xlist2[103X  be  two dense, but not necessarily homogeneous lists
   (see [2XIsDenseList[102X  ([14X21.1-2[114X),  [2XIsHomogeneousList[102X ([14X21.1-3[114X)), such that for each
@@ -2232,7 +2232,7 @@
   
   [1X21.20-10 Apply[101X
   
-  [29X[2XApply[102X( [3Xlist[103X, [3Xfunc[103X ) [32X function
+  [33X[1;0Y[29X[2XApply[102X( [3Xlist[103X, [3Xfunc[103X ) [32X function[133X
   
   [33X[0;0Y[2XApply[102X  applies  the  function [3Xfunc[103X to every element of the dense and mutable
   list  [3Xlist[103X,  and  replaces  each  element  entry by the corresponding return
@@ -2248,7 +2248,7 @@
   
   [1X21.20-11 Perform[101X
   
-  [29X[2XPerform[102X( [3Xlist[103X, [3Xfunc[103X ) [32X function
+  [33X[1;0Y[29X[2XPerform[102X( [3Xlist[103X, [3Xfunc[103X ) [32X function[133X
   
   [33X[0;0Y[2XPerform[102X  applies  the  function  [3Xfunc[103X  to  every  element  of the list [3Xlist[103X,
   discarding any return values. It does not return a value.[133X
@@ -2262,7 +2262,7 @@
   
   [1X21.20-12 PermListList[101X
   
-  [29X[2XPermListList[102X( [3Xlist1[103X, [3Xlist2[103X ) [32X function
+  [33X[1;0Y[29X[2XPermListList[102X( [3Xlist1[103X, [3Xlist2[103X ) [32X function[133X
   
   [33X[0;0Yreturns  a  permutation [22Xp[122X of [10X[ 1 .. Length( [3Xlist1[103X[10X ) ][110X such that [3Xlist1[103X[22X[i[122X[10X^[110X[22Xp] =[122X
   [3Xlist2[103X[22X[i][122X. It returns [9Xfail[109X if there is no such permutation.[133X
@@ -2279,8 +2279,8 @@
   
   [1X21.20-13 [33X[0;0YMaximum[133X[101X
   
-  [29X[2XMaximum[102X( [3Xobj1[103X, [3Xobj2[103X, [3X...[103X ) [32X function
-  [29X[2XMaximum[102X( [3Xlist[103X ) [32X function
+  [33X[1;0Y[29X[2XMaximum[102X( [3Xobj1[103X, [3Xobj2[103X, [3X...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XMaximum[102X( [3Xlist[103X ) [32X function[133X
   
   [33X[0;0YIn  the  first  form [2XMaximum[102X returns the [13Xmaximum[113X of its arguments, i.e., one
   argument [3Xobj[103X for which [22X[3Xobj[103X ≥ [3Xobj1[103X[122X, [22X[3Xobj[103X ≥ [3Xobj2[103X[122X etc.[133X
@@ -2301,8 +2301,8 @@
   
   [1X21.20-14 [33X[0;0YMinimum[133X[101X
   
-  [29X[2XMinimum[102X( [3Xobj1[103X, [3Xobj2[103X, [3X...[103X ) [32X function
-  [29X[2XMinimum[102X( [3Xlist[103X ) [32X function
+  [33X[1;0Y[29X[2XMinimum[102X( [3Xobj1[103X, [3Xobj2[103X, [3X...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XMinimum[102X( [3Xlist[103X ) [32X function[133X
   
   [33X[0;0YIn  the  first  form [2XMinimum[102X returns the [13Xminimum[113X of its arguments, i.e., one
   argument [3Xobj[103X for which [22X[3Xobj[103X ≤ [3Xobj1[103X[122X, [22X[3Xobj[103X ≤ [3Xobj2[103X[122X etc.[133X
@@ -2326,8 +2326,8 @@
   
   [1X21.20-15 [33X[0;0YMaximumList and MinimumList[133X[101X
   
-  [29X[2XMaximumList[102X( [3Xlist[103X[, [3Xseed[103X] ) [32X operation
-  [29X[2XMinimumList[102X( [3Xlist[103X[, [3Xseed[103X] ) [32X operation
+  [33X[1;0Y[29X[2XMaximumList[102X( [3Xlist[103X[, [3Xseed[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XMinimumList[102X( [3Xlist[103X[, [3Xseed[103X] ) [32X operation[133X
   
   [33X[0;0Yreturn  the maximum resp. the minimum of the elements in the list [3Xlist[103X. They
   are  the  operations  called by [2XMaximum[102X ([14X21.20-13[114X) resp. [2XMinimum[102X ([14X21.20-14[114X).
@@ -2342,8 +2342,8 @@
   
   [1X21.20-16 [33X[0;0YCartesian[133X[101X
   
-  [29X[2XCartesian[102X( [3Xlist1[103X, [3Xlist2[103X, [3X...[103X ) [32X function
-  [29X[2XCartesian[102X( [3Xlist[103X ) [32X function
+  [33X[1;0Y[29X[2XCartesian[102X( [3Xlist1[103X, [3Xlist2[103X, [3X...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCartesian[102X( [3Xlist[103X ) [32X function[133X
   
   [33X[0;0YIn  the  first  form  [2XCartesian[102X  returns  the cartesian product of the lists
   [3Xlist1[103X, [3Xlist2[103X, etc.[133X
@@ -2381,8 +2381,8 @@
   
   [1X21.20-17 [33X[0;0YIteratorOfCartesianProduct[133X[101X
   
-  [29X[2XIteratorOfCartesianProduct[102X( [3Xlist1[103X, [3Xlist2[103X, [3X...[103X ) [32X function
-  [29X[2XIteratorOfCartesianProduct[102X( [3Xlist[103X ) [32X function
+  [33X[1;0Y[29X[2XIteratorOfCartesianProduct[102X( [3Xlist1[103X, [3Xlist2[103X, [3X...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XIteratorOfCartesianProduct[102X( [3Xlist[103X ) [32X function[133X
   
   [33X[0;0YIn  the first form [2XIteratorOfCartesianProduct[102X returns an iterator (see [14X30.8[114X)
   of  all  elements of the cartesian product (see [2XCartesian[102X ([14X21.20-16[114X)) of the
@@ -2402,7 +2402,7 @@
   
   [1X21.20-18 Permuted[101X
   
-  [29X[2XPermuted[102X( [3Xlist[103X, [3Xperm[103X ) [32X operation
+  [33X[1;0Y[29X[2XPermuted[102X( [3Xlist[103X, [3Xperm[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  a new list [3Xnew[103X that contains the elements of the list [3Xlist[103X permuted
   according to the permutation [3Xperm[103X. That is [10X[3Xnew[103X[10X[[3Xi[103X[10X^[3Xperm[103X[10X] = [3Xlist[103X[10X[[3Xi[103X[10X][110X.[133X
@@ -2417,7 +2417,7 @@
   
   [1X21.20-19 List[101X
   
-  [29X[2XList[102X( [3Xlist[103X[, [3Xfunc[103X] ) [32X function
+  [33X[1;0Y[29X[2XList[102X( [3Xlist[103X[, [3Xfunc[103X] ) [32X function[133X
   
   [33X[0;0YThis  function returns a new mutable list [10Xnew[110X of the same length as the list
   [3Xlist[103X  (which  may  have  holes).  The  entry [10Xnew[i][110X is unbound if [10X[3Xlist[103X[10X[i][110X is
@@ -2438,7 +2438,7 @@
   
   [1X21.20-20 Filtered[101X
   
-  [29X[2XFiltered[102X( [3Xlistorcoll[103X, [3Xfunc[103X ) [32X function
+  [33X[1;0Y[29X[2XFiltered[102X( [3Xlistorcoll[103X, [3Xfunc[103X ) [32X function[133X
   
   [33X[0;0Yreturns  a  new  list that contains those elements of the list or collection
   [3Xlistorcoll[103X (see [14X30[114X), respectively, for which the unary function [3Xfunc[103X returns
@@ -2474,7 +2474,7 @@
   
   [1X21.20-21 Number[101X
   
-  [29X[2XNumber[102X( [3Xlistorcoll[103X[, [3Xfunc[103X] ) [32X function
+  [33X[1;0Y[29X[2XNumber[102X( [3Xlistorcoll[103X[, [3Xfunc[103X] ) [32X function[133X
   
   [33X[0;0YCalled with a list [3Xlistorcoll[103X, [2XNumber[102X returns the number of bound entries in
   this  list.  For  dense  lists  [2XNumber[102X,  [2XLength[102X ([14X21.17-5[114X), and [2XSize[102X ([14X30.4-6[114X)
@@ -2511,7 +2511,7 @@
   
   [1X21.20-22 First[101X
   
-  [29X[2XFirst[102X( [3Xlist[103X, [3Xfunc[103X ) [32X function
+  [33X[1;0Y[29X[2XFirst[102X( [3Xlist[103X, [3Xfunc[103X ) [32X function[133X
   
   [33X[0;0Y[2XFirst[102X  returns  the  first  element  of  the  list  [3Xlist[103X for which the unary
   function  [3Xfunc[103X returns [9Xtrue[109X. [3Xlist[103X may contain holes. [3Xfunc[103X must return either
@@ -2535,7 +2535,7 @@
   
   [1X21.20-23 ForAll[101X
   
-  [29X[2XForAll[102X( [3Xlistorcoll[103X, [3Xfunc[103X ) [32X function
+  [33X[1;0Y[29X[2XForAll[102X( [3Xlistorcoll[103X, [3Xfunc[103X ) [32X function[133X
   
   [33X[0;0Ytests  whether  the unary function [3Xfunc[103X returns [9Xtrue[109X for all elements in the
   list or collection [3Xlistorcoll[103X.[133X
@@ -2553,7 +2553,7 @@
   
   [1X21.20-24 ForAny[101X
   
-  [29X[2XForAny[102X( [3Xlistorcoll[103X, [3Xfunc[103X ) [32X function
+  [33X[1;0Y[29X[2XForAny[102X( [3Xlistorcoll[103X, [3Xfunc[103X ) [32X function[133X
   
   [33X[0;0Ytests  whether the unary function [3Xfunc[103X returns [9Xtrue[109X for at least one element
   in the list or collection [3Xlistorcoll[103X.[133X
@@ -2573,7 +2573,7 @@
   
   [1X21.20-25 Product[101X
   
-  [29X[2XProduct[102X( [3Xlistorcoll[103X[, [3Xfunc[103X][, [3Xinit[103X] ) [32X function
+  [33X[1;0Y[29X[2XProduct[102X( [3Xlistorcoll[103X[, [3Xfunc[103X][, [3Xinit[103X] ) [32X function[133X
   
   [33X[0;0YCalled  with  one  argument,  a dense list or collection [3Xlistorcoll[103X, [2XProduct[102X
   returns the product of the elements of [3Xlistorcoll[103X (see [14X30[114X).[133X
@@ -2608,7 +2608,7 @@
   
   [1X21.20-26 Sum[101X
   
-  [29X[2XSum[102X( [3Xlistorcoll[103X[, [3Xfunc[103X][, [3Xinit[103X] ) [32X function
+  [33X[1;0Y[29X[2XSum[102X( [3Xlistorcoll[103X[, [3Xfunc[103X][, [3Xinit[103X] ) [32X function[133X
   
   [33X[0;0YCalled with one argument, a dense list or collection [3Xlistorcoll[103X, [2XSum[102X returns
   the sum of the elements of [3Xlistorcoll[103X (see [14X30[114X).[133X
@@ -2643,7 +2643,7 @@
   
   [1X21.20-27 Iterated[101X
   
-  [29X[2XIterated[102X( [3Xlist[103X, [3Xf[103X ) [32X operation
+  [33X[1;0Y[29X[2XIterated[102X( [3Xlist[103X, [3Xf[103X ) [32X operation[133X
   
   [33X[0;0Yreturns the result of the iterated application of the function [3Xf[103X, which must
   take  two  arguments,  to  the elements of the list [3Xlist[103X. More precisely, if
@@ -2657,7 +2657,7 @@
   
   [1X21.20-28 ListN[101X
   
-  [29X[2XListN[102X( [3Xlist1[103X, [3Xlist2[103X, [3X...[103X, [3Xlistn[103X, [3Xf[103X ) [32X function
+  [33X[1;0Y[29X[2XListN[102X( [3Xlist1[103X, [3Xlist2[103X, [3X...[103X, [3Xlistn[103X, [3Xf[103X ) [32X function[133X
   
   [33X[0;0Yapplies  the  [22Xn[122X-argument function [3Xf[103X to the lists. That is, [2XListN[102X returns the
   list whose [22Xi[122X-th entry is [22X[3Xf[103X([3Xlist1[103X[i], [3Xlist2[103X[i], ..., [3Xlistn[103X[i])[122X.[133X
@@ -2675,7 +2675,7 @@
   
   [1X21.21-1 ListX[101X
   
-  [29X[2XListX[102X( [3Xarg1[103X, [3Xarg2[103X, [3X...[103X, [3Xargn[103X, [3Xfunc[103X ) [32X function
+  [33X[1;0Y[29X[2XListX[102X( [3Xarg1[103X, [3Xarg2[103X, [3X...[103X, [3Xargn[103X, [3Xfunc[103X ) [32X function[133X
   
   [33X[0;0Y[2XListX[102X returns a new list constructed from the arguments.[133X
   
@@ -2742,21 +2742,21 @@
   
   [1X21.21-2 SetX[101X
   
-  [29X[2XSetX[102X( [3Xarg1[103X, [3Xarg2[103X, [3X...[103X, [3Xfunc[103X ) [32X function
+  [33X[1;0Y[29X[2XSetX[102X( [3Xarg1[103X, [3Xarg2[103X, [3X...[103X, [3Xfunc[103X ) [32X function[133X
   
   [33X[0;0YThe only difference between [2XSetX[102X and [2XListX[102X ([14X21.21-1[114X) is that the result list
   of [2XSetX[102X is strictly sorted.[133X
   
   [1X21.21-3 SumX[101X
   
-  [29X[2XSumX[102X( [3Xarg1[103X, [3Xarg2[103X, [3X...[103X, [3Xfunc[103X ) [32X function
+  [33X[1;0Y[29X[2XSumX[102X( [3Xarg1[103X, [3Xarg2[103X, [3X...[103X, [3Xfunc[103X ) [32X function[133X
   
   [33X[0;0Y[2XSumX[102X returns the sum of the elements in the list obtained by [2XListX[102X ([14X21.21-1[114X)
   when this is called with the same arguments.[133X
   
   [1X21.21-4 ProductX[101X
   
-  [29X[2XProductX[102X( [3Xarg1[103X, [3Xarg2[103X, [3X...[103X, [3Xfunc[103X ) [32X function
+  [33X[1;0Y[29X[2XProductX[102X( [3Xarg1[103X, [3Xarg2[103X, [3X...[103X, [3Xfunc[103X ) [32X function[133X
   
   [33X[0;0Y[2XProductX[102X  returns  the product of the elements in the list obtained by [2XListX[102X
   ([14X21.21-1[114X) when this is called with the same arguments.[133X
@@ -2840,7 +2840,7 @@
   
   [1X21.22-1 IsRange[101X
   
-  [29X[2XIsRange[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsRange[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0Ytests if the object [3Xobj[103X is a range, i.e. is a dense list of integers that is
   also a range (see [14X21.22[114X for a definition of [21Xrange[121X).[133X
@@ -2859,7 +2859,7 @@
   
   [1X21.22-2 ConvertToRangeRep[101X
   
-  [29X[2XConvertToRangeRep[102X( [3Xlist[103X ) [32X function
+  [33X[1;0Y[29X[2XConvertToRangeRep[102X( [3Xlist[103X ) [32X function[133X
   
   [33X[0;0YFor  some  lists  the  [5XGAP[105X  kernel knows that they are in fact ranges. Those
   lists  are  represented  internally in a compact way instead of the ordinary
@@ -2942,7 +2942,7 @@
   
   [1X21.23-1 IsQuickPositionList[101X
   
-  [29X[2XIsQuickPositionList[102X( [3Xlist[103X ) [32X filter
+  [33X[1;0Y[29X[2XIsQuickPositionList[102X( [3Xlist[103X ) [32X filter[133X
   
   [33X[0;0YThis  filter  indicates that a position test in [3Xlist[103X is quicker than about 5
   or  6  element  comparisons  for  [21Xsmaller[121X.  If  this  is  the case it can be

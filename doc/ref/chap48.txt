@@ -25,7 +25,7 @@
   
   [1X48.1-1 PresentationFpGroup[101X
   
-  [29X[2XPresentationFpGroup[102X( [3XG[103X[, [3Xprintlevel[103X] ) [32X function
+  [33X[1;0Y[29X[2XPresentationFpGroup[102X( [3XG[103X[, [3Xprintlevel[103X] ) [32X function[133X
   
   [33X[0;0Ycreates  a  presentation,  i.  e.,  a  Tietze object, for the given finitely
   presented  group [3XG[103X. This presentation will be exactly as the presentation of
@@ -49,7 +49,7 @@
   
   [1X48.1-2 TzSort[101X
   
-  [29X[2XTzSort[102X( [3XP[103X ) [32X function
+  [33X[1;0Y[29X[2XTzSort[102X( [3XP[103X ) [32X function[133X
   
   [33X[0;0Ysorts  the relators of the given presentation [3XP[103X by increasing lengths. There
   is  no  particular  ordering  defined for the relators of equal length. Note
@@ -57,14 +57,14 @@
   
   [1X48.1-3 GeneratorsOfPresentation[101X
   
-  [29X[2XGeneratorsOfPresentation[102X( [3XP[103X ) [32X function
+  [33X[1;0Y[29X[2XGeneratorsOfPresentation[102X( [3XP[103X ) [32X function[133X
   
   [33X[0;0Yreturns  a  list  of free generators that is a shallow copy (see [2XShallowCopy[102X
   ([14X12.7-1[114X)) of the current generators of the presentation [3XP[103X.[133X
   
   [1X48.1-4 FpGroupPresentation[101X
   
-  [29X[2XFpGroupPresentation[102X( [3XP[103X[, [3Xnam[103X] ) [32X function
+  [33X[1;0Y[29X[2XFpGroupPresentation[102X( [3XP[103X[, [3Xnam[103X] ) [32X function[133X
   
   [33X[0;0Yconstructs an f. p. group as defined by the given Tietze presentation [3XP[103X.[133X
   
@@ -77,7 +77,7 @@
   
   [1X48.1-5 PresentationViaCosetTable[101X
   
-  [29X[2XPresentationViaCosetTable[102X( [3XG[103X[, [3XF[103X, [3Xwords[103X] ) [32X function
+  [33X[1;0Y[29X[2XPresentationViaCosetTable[102X( [3XG[103X[, [3XF[103X, [3Xwords[103X] ) [32X function[133X
   
   [33X[0;0Yconstructs  a presentation for a given concrete finite group. It applies the
   relations finding algorithm which has been described in [Can73] and [Neu82].
@@ -165,7 +165,7 @@
   
   [1X48.1-6 SimplifiedFpGroup[101X
   
-  [29X[2XSimplifiedFpGroup[102X( [3XG[103X ) [32X function
+  [33X[1;0Y[29X[2XSimplifiedFpGroup[102X( [3XG[103X ) [32X function[133X
   
   [33X[0;0Yapplies  Tietze  transformations  to a copy of the presentation of the given
   finitely  presented group [3XG[103X in order to reduce it with respect to the number
@@ -212,15 +212,15 @@
   
   [1X48.2-1 PresentationSubgroup[101X
   
-  [29X[2XPresentationSubgroup[102X( [3XG[103X, [3XH[103X[, [3Xstring[103X] ) [32X function
+  [33X[1;0Y[29X[2XPresentationSubgroup[102X( [3XG[103X, [3XH[103X[, [3Xstring[103X] ) [32X function[133X
   
   [33X[0;0Y[2XPresentationSubgroup[102X is a synonym for [2XPresentationSubgroupRrs[102X ([14X48.2-2[114X).[133X
   
   
   [1X48.2-2 [33X[0;0YPresentationSubgroupRrs[133X[101X
   
-  [29X[2XPresentationSubgroupRrs[102X( [3XG[103X, [3XH[103X[, [3Xstring[103X] ) [32X function
-  [29X[2XPresentationSubgroupRrs[102X( [3XG[103X, [3Xtable[103X[, [3Xstring[103X] ) [32X function
+  [33X[1;0Y[29X[2XPresentationSubgroupRrs[102X( [3XG[103X, [3XH[103X[, [3Xstring[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XPresentationSubgroupRrs[102X( [3XG[103X, [3Xtable[103X[, [3Xstring[103X] ) [32X function[133X
   
   [33X[0;0Yuses  the  Reduced Reidemeister-Schreier method to compute a presentation [3XP[103X,
   say, for a subgroup [3XH[103X of a finitely presented group [3XG[103X. The generators in the
@@ -316,7 +316,7 @@
   
   [1X48.2-3 PrimaryGeneratorWords[101X
   
-  [29X[2XPrimaryGeneratorWords[102X( [3XP[103X ) [32X attribute
+  [33X[1;0Y[29X[2XPrimaryGeneratorWords[102X( [3XP[103X ) [32X attribute[133X
   
   [33X[0;0Yis  an  attribute  of  the presentation [3XP[103X which holds a list of words in the
   associated group generators (of the underlying free group) which express the
@@ -329,7 +329,7 @@
   
   [1X48.2-4 PresentationSubgroupMtc[101X
   
-  [29X[2XPresentationSubgroupMtc[102X( [3XG[103X, [3XH[103X[, [3Xstring[103X][, [3Xprint[103X, [3Xlevel[103X] ) [32X function
+  [33X[1;0Y[29X[2XPresentationSubgroupMtc[102X( [3XG[103X, [3XH[103X[, [3Xstring[103X][, [3Xprint[103X, [3Xlevel[103X] ) [32X function[133X
   
   [33X[0;0Yuses  the  Modified  Todd-Coxeter coset representative enumeration method to
   compute  a  presentation  [22XP[122X,  say,  for a subgroup [3XH[103X of a finitely presented
@@ -424,7 +424,7 @@
   
   [1X48.2-5 PresentationNormalClosureRrs[101X
   
-  [29X[2XPresentationNormalClosureRrs[102X( [3XG[103X, [3XH[103X[, [3Xstring[103X] ) [32X function
+  [33X[1;0Y[29X[2XPresentationNormalClosureRrs[102X( [3XG[103X, [3XH[103X[, [3Xstring[103X] ) [32X function[133X
   
   [33X[0;0Yuses  the  Reduced Reidemeister-Schreier method to compute a presentation [22XP[122X,
   say, for the normal closure of a subgroup [3XH[103X of a finitely presented group [3XG[103X.
@@ -434,7 +434,7 @@
   
   [1X48.2-6 PresentationNormalClosure[101X
   
-  [29X[2XPresentationNormalClosure[102X( [3XG[103X, [3XH[103X[, [3Xstring[103X] ) [32X function
+  [33X[1;0Y[29X[2XPresentationNormalClosure[102X( [3XG[103X, [3XH[103X[, [3Xstring[103X] ) [32X function[133X
   
   [33X[0;0Y[2XPresentationNormalClosure[102X  is  a  synonym  for  [2XPresentationNormalClosureRrs[102X
   ([14X48.2-5[114X).[133X
@@ -454,7 +454,7 @@
   
   [1X48.3-1 TietzeWordAbstractWord[101X
   
-  [29X[2XTietzeWordAbstractWord[102X( [3Xword[103X, [3Xfgens[103X ) [32X operation
+  [33X[1;0Y[29X[2XTietzeWordAbstractWord[102X( [3Xword[103X, [3Xfgens[103X ) [32X operation[133X
   
   [33X[0;0Yassumes  [3Xfgens[103X  to  be  a  list  of  free group generators and [3Xword[103X to be an
   abstract  word  in these generators. It converts [3Xword[103X into a Tietze word, i.
@@ -464,7 +464,7 @@
   
   [1X48.3-2 AbstractWordTietzeWord[101X
   
-  [29X[2XAbstractWordTietzeWord[102X( [3Xword[103X, [3Xfgens[103X ) [32X function
+  [33X[1;0Y[29X[2XAbstractWordTietzeWord[102X( [3Xword[103X, [3Xfgens[103X ) [32X function[133X
   
   [33X[0;0Yassumes  [3Xfgens[103X to be a list of free group generators and [3Xword[103X to be a Tietze
   word  in  these  generators, i. e., a list of positive or negative generator
@@ -497,7 +497,7 @@
   
   [1X48.4-1 TzPrintGenerators[101X
   
-  [29X[2XTzPrintGenerators[102X( [3XP[103X[, [3Xlist[103X] ) [32X function
+  [33X[1;0Y[29X[2XTzPrintGenerators[102X( [3XP[103X[, [3Xlist[103X] ) [32X function[133X
   
   [33X[0;0Yprints  the  generators of the given Tietze presentation [3XP[103X together with the
   number  of  their  occurrences in the relators. The optional second argument
@@ -517,7 +517,7 @@
   
   [1X48.4-2 TzPrintRelators[101X
   
-  [29X[2XTzPrintRelators[102X( [3XP[103X[, [3Xlist[103X] ) [32X function
+  [33X[1;0Y[29X[2XTzPrintRelators[102X( [3XP[103X[, [3Xlist[103X] ) [32X function[133X
   
   [33X[0;0Yprints  the relators of the given Tietze presentation [3XP[103X. The optional second
   argument  [3Xlist[103X  can  be  used  to  specify the numbers of the relators to be
@@ -535,7 +535,7 @@
   
   [1X48.4-3 TzPrintLengths[101X
   
-  [29X[2XTzPrintLengths[102X( [3XP[103X ) [32X function
+  [33X[1;0Y[29X[2XTzPrintLengths[102X( [3XP[103X ) [32X function[133X
   
   [33X[0;0Yprints just a list of all relator lengths of the given presentation [3XP[103X.[133X
   
@@ -546,7 +546,7 @@
   
   [1X48.4-4 TzPrintStatus[101X
   
-  [29X[2XTzPrintStatus[102X( [3XP[103X[, [3Xnorepeat[103X] ) [32X function
+  [33X[1;0Y[29X[2XTzPrintStatus[102X( [3XP[103X[, [3Xnorepeat[103X] ) [32X function[133X
   
   [33X[0;0Yis  an internal function which is used by the Tietze transformation routines
   to  print  the  number  of generators, the number of relators, and the total
@@ -561,7 +561,7 @@
   
   [1X48.4-5 TzPrintPresentation[101X
   
-  [29X[2XTzPrintPresentation[102X( [3XP[103X ) [32X function
+  [33X[1;0Y[29X[2XTzPrintPresentation[102X( [3XP[103X ) [32X function[133X
   
   [33X[0;0Yprints the generators and the relators of a Tietze presentation. In fact, it
   is   an   abbreviation  for  the  successive  call  of  the  three  commands
@@ -570,7 +570,7 @@
   
   [1X48.4-6 TzPrint[101X
   
-  [29X[2XTzPrint[102X( [3XP[103X[, [3Xlist[103X] ) [32X function
+  [33X[1;0Y[29X[2XTzPrint[102X( [3XP[103X[, [3Xlist[103X] ) [32X function[133X
   
   [33X[0;0Yprints  the  current  generators of the given presentation [3XP[103X, and prints the
   relators  of  [3XP[103X  as  Tietze  words (without converting them back to abstract
@@ -592,7 +592,7 @@
   
   [1X48.4-7 TzPrintPairs[101X
   
-  [29X[2XTzPrintPairs[102X( [3XP[103X[, [3Xn[103X] ) [32X function
+  [33X[1;0Y[29X[2XTzPrintPairs[102X( [3XP[103X[, [3Xn[103X] ) [32X function[133X
   
   [33X[0;0Yprints  the [3Xn[103X most often occurring relator subwords of the form [22Xa b[122X, where [22Xa[122X
   and  [22Xb[122X are different generators or inverses of generators, together with the
@@ -621,7 +621,7 @@
   
   [1X48.5-1 AddGenerator[101X
   
-  [29X[2XAddGenerator[102X( [3XP[103X ) [32X function
+  [33X[1;0Y[29X[2XAddGenerator[102X( [3XP[103X ) [32X function[133X
   
   [33X[0;0Yextends the presentation [3XP[103X by a new generator.[133X
   
@@ -652,7 +652,7 @@
   
   [1X48.5-2 TzNewGenerator[101X
   
-  [29X[2XTzNewGenerator[102X( [3XP[103X ) [32X function
+  [33X[1;0Y[29X[2XTzNewGenerator[102X( [3XP[103X ) [32X function[133X
   
   [33X[0;0Yis  an  internal function which defines a new abstract generator and adds it
   to  the presentation [3XP[103X. It is called by [2XAddGenerator[102X ([14X48.5-1[114X) and by several
@@ -662,14 +662,14 @@
   
   [1X48.5-3 AddRelator[101X
   
-  [29X[2XAddRelator[102X( [3XP[103X, [3Xword[103X ) [32X function
+  [33X[1;0Y[29X[2XAddRelator[102X( [3XP[103X, [3Xword[103X ) [32X function[133X
   
   [33X[0;0Yadds  the  relator  [3Xword[103X  to the presentation [3XP[103X, probably changing the group
   defined by [3XP[103X. [3Xword[103X must be an abstract word in the generators of [3XP[103X.[133X
   
   [1X48.5-4 RemoveRelator[101X
   
-  [29X[2XRemoveRelator[102X( [3XP[103X, [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XRemoveRelator[102X( [3XP[103X, [3Xn[103X ) [32X function[133X
   
   [33X[0;0Yremoves  the  [3Xn[103X-th  relator  from  the presentation [3XP[103X, probably changing the
   group defined by [3XP[103X.[133X
@@ -700,7 +700,7 @@
   
   [1X48.6-1 TzGo[101X
   
-  [29X[2XTzGo[102X( [3XP[103X[, [3Xsilent[103X] ) [32X function
+  [33X[1;0Y[29X[2XTzGo[102X( [3XP[103X[, [3Xsilent[103X] ) [32X function[133X
   
   [33X[0;0Yautomatically   performs   suitable  Tietze  transformations  of  the  given
   presentation  [3XP[103X. It is perhaps the most convenient one among the interactive
@@ -714,7 +714,7 @@
   
   [1X48.6-2 SimplifyPresentation[101X
   
-  [29X[2XSimplifyPresentation[102X( [3XP[103X ) [32X function
+  [33X[1;0Y[29X[2XSimplifyPresentation[102X( [3XP[103X ) [32X function[133X
   
   [33X[0;0Y[2XSimplifyPresentation[102X is a synonym for [2XTzGo[102X ([14X48.6-1[114X).[133X
   
@@ -772,7 +772,7 @@
   
   [1X48.6-3 TzGoGo[101X
   
-  [29X[2XTzGoGo[102X( [3XP[103X ) [32X function
+  [33X[1;0Y[29X[2XTzGoGo[102X( [3XP[103X ) [32X function[133X
   
   [33X[0;0Ycalls the command [2XTzGo[102X ([14X48.6-1[114X) again and again until it does not reduce the
   presentation any more.[133X
@@ -849,8 +849,8 @@
   
   [1X48.7-1 [33X[0;0YTzEliminate[133X[101X
   
-  [29X[2XTzEliminate[102X( [3XP[103X[, [3Xgen[103X] ) [32X function
-  [29X[2XTzEliminate[102X( [3XP[103X[, [3Xn[103X] ) [32X function
+  [33X[1;0Y[29X[2XTzEliminate[102X( [3XP[103X[, [3Xgen[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XTzEliminate[102X( [3XP[103X[, [3Xn[103X] ) [32X function[133X
   
   [33X[0;0Ytries   to   eliminate   a  generator  from  a  presentation  [3XP[103X  via  Tietze
   transformations.[133X
@@ -877,7 +877,7 @@
   
   [1X48.7-2 TzSearch[101X
   
-  [29X[2XTzSearch[102X( [3XP[103X ) [32X function
+  [33X[1;0Y[29X[2XTzSearch[102X( [3XP[103X ) [32X function[133X
   
   [33X[0;0Ysearches  for  relator subwords which, in some relator, have a complement of
   shorter  length  and  which  occur  in other relators, too, and uses them to
@@ -937,7 +937,7 @@
   
   [1X48.7-3 TzSearchEqual[101X
   
-  [29X[2XTzSearchEqual[102X( [3XP[103X ) [32X function
+  [33X[1;0Y[29X[2XTzSearchEqual[102X( [3XP[103X ) [32X function[133X
   
   [33X[0;0Ysearches  for  Tietze  relator  subwords  which,  in  some  relator,  have a
   complement  of equal length and which occur in other relators, too, and uses
@@ -958,7 +958,7 @@
   
   [1X48.7-4 TzFindCyclicJoins[101X
   
-  [29X[2XTzFindCyclicJoins[102X( [3XP[103X ) [32X function
+  [33X[1;0Y[29X[2XTzFindCyclicJoins[102X( [3XP[103X ) [32X function[133X
   
   [33X[0;0Ysearches  for  power  and  commutator  relators  in  order  to find pairs of
   generators  which  generate a common cyclic subgroup. It uses these pairs to
@@ -986,8 +986,8 @@
   
   [1X48.8-1 [33X[0;0YTzSubstitute[133X[101X
   
-  [29X[2XTzSubstitute[102X( [3XP[103X, [3Xword[103X ) [32X function
-  [29X[2XTzSubstitute[102X( [3XP[103X[, [3Xn[103X[, [3Xeliminate[103X]] ) [32X function
+  [33X[1;0Y[29X[2XTzSubstitute[102X( [3XP[103X, [3Xword[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XTzSubstitute[102X( [3XP[103X[, [3Xn[103X[, [3Xeliminate[103X]] ) [32X function[133X
   
   [33X[0;0YIn the first form [2XTzSubstitute[102X expects [3XP[103X to be a presentation and [3Xword[103X to be
   either  an  abstract  word  or  a  Tietze  word  in  the generators of [3XP[103X. It
@@ -1199,7 +1199,7 @@
   
   [1X48.8-2 TzSubstituteCyclicJoins[101X
   
-  [29X[2XTzSubstituteCyclicJoins[102X( [3XP[103X ) [32X function
+  [33X[1;0Y[29X[2XTzSubstituteCyclicJoins[102X( [3XP[103X ) [32X function[133X
   
   [33X[0;0Ytries  to  find  pairs  of  commuting generators [22Xa[122X and [22Xb[122X, say, such that the
   exponent  of [22Xa[122X (i. e. the least currently known positive integer [22Xn[122X such that
@@ -1222,7 +1222,7 @@
   
   [1X48.9-1 TzInitGeneratorImages[101X
   
-  [29X[2XTzInitGeneratorImages[102X( [3XP[103X ) [32X function
+  [33X[1;0Y[29X[2XTzInitGeneratorImages[102X( [3XP[103X ) [32X function[133X
   
   [33X[0;0Yexpects  [3XP[103X to be a presentation. It defines the current generators to be the
   [21Xold   generators[121X   of   [3XP[103X   and  initializes  the  (pre)image  tracing.  See
@@ -1243,7 +1243,7 @@
   
   [1X48.9-2 OldGeneratorsOfPresentation[101X
   
-  [29X[2XOldGeneratorsOfPresentation[102X( [3XP[103X ) [32X function
+  [33X[1;0Y[29X[2XOldGeneratorsOfPresentation[102X( [3XP[103X ) [32X function[133X
   
   [33X[0;0Yassumes  that  [3XP[103X  is  a  presentation  for  which  the  generator images and
   preimages are being traced under Tietze transformations. It returns the list
@@ -1251,7 +1251,7 @@
   
   [1X48.9-3 TzImagesOldGens[101X
   
-  [29X[2XTzImagesOldGens[102X( [3XP[103X ) [32X function
+  [33X[1;0Y[29X[2XTzImagesOldGens[102X( [3XP[103X ) [32X function[133X
   
   [33X[0;0Yassumes  that  [3XP[103X  is  a  presentation  for  which  the  generator images and
   preimages are being traced under Tietze transformations. It returns a list [22Xl[122X
@@ -1261,7 +1261,7 @@
   
   [1X48.9-4 TzPreImagesNewGens[101X
   
-  [29X[2XTzPreImagesNewGens[102X( [3XP[103X ) [32X function
+  [33X[1;0Y[29X[2XTzPreImagesNewGens[102X( [3XP[103X ) [32X function[133X
   
   [33X[0;0Yassumes  that  [3XP[103X  is  a  presentation  for  which  the  generator images and
   preimages are being traced under Tietze transformations. It returns a list [22Xl[122X
@@ -1271,7 +1271,7 @@
   
   [1X48.9-5 TzPrintGeneratorImages[101X
   
-  [29X[2XTzPrintGeneratorImages[102X( [3XP[103X ) [32X function
+  [33X[1;0Y[29X[2XTzPrintGeneratorImages[102X( [3XP[103X ) [32X function[133X
   
   [33X[0;0Yassumes  that  [3XP[103X  is  a  presentation  for  which  the  generator images and
   preimages  are  being  traced  under Tietze transformations. It displays the
@@ -1322,7 +1322,7 @@
   
   [1X48.10-1 DecodeTree[101X
   
-  [29X[2XDecodeTree[102X( [3XP[103X ) [32X function
+  [33X[1;0Y[29X[2XDecodeTree[102X( [3XP[103X ) [32X function[133X
   
   [33X[0;0Yassumes   that  [3XP[103X  is  a  subgroup  presentation  provided  by  the  Reduced
   Reidemeister-Schreier   or   by   the   Modified  Todd-Coxeter  method  (see
@@ -1558,7 +1558,7 @@
   
   [1X48.11-1 TzOptions[101X
   
-  [29X[2XTzOptions[102X( [3XP[103X ) [32X attribute
+  [33X[1;0Y[29X[2XTzOptions[102X( [3XP[103X ) [32X attribute[133X
   
   [33X[0;0Yis  a  record  whose  components direct the heuristics applied by the Tietze
   transformation functions.[133X
@@ -1650,7 +1650,7 @@
   
   [1X48.11-2 TzPrintOptions[101X
   
-  [29X[2XTzPrintOptions[102X( [3XP[103X ) [32X function
+  [33X[1;0Y[29X[2XTzPrintOptions[102X( [3XP[103X ) [32X function[133X
   
   [33X[0;0Yprints the current values of the Tietze options of the presentation [3XP[103X.[133X
   

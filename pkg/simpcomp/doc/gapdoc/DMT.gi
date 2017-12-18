@@ -148,7 +148,7 @@
 ## 
 ## /SimplicialComplex]
 ## gap&gt; coll.Facets;
-## [ [ 1, 3 ], [ 1, 5 ], [ 2, 3 ], [ 2, 5 ], [ 3, 4 ], [ 3, 7 ], [ 4, 7 ] ]
+## [ [ 2, 5 ], [ 2, 6 ], [ 2, 7 ], [ 5, 6 ], [ 5, 7 ] ]
 ## gap&gt; sphere:=SCBdSimplex(4);;                              
 ## gap&gt; bdsphere:=SCDifference(sphere,SC([sphere.Facets[1]]));;
 ## gap&gt; coll:=SCCollapseGreedy(bdsphere);
@@ -164,7 +164,7 @@
 ## 
 ## /SimplicialComplex]
 ## gap&gt; coll.Facets;                     
-## [ [ 5 ] ]
+## [ [ 2 ] ]
 ## </Example>
 ## </Description>
 ## </ManSection>
@@ -193,7 +193,7 @@
 ## 
 ## /SimplicialComplex]
 ## gap&gt; coll.Facets;
-## [ [ 1, 3 ], [ 1, 5 ], [ 3, 6 ], [ 3, 7 ], [ 5, 6 ], [ 6, 7 ] ]
+## [ [ 1, 6 ], [ 1, 7 ], [ 2, 5 ], [ 2, 7 ], [ 5, 7 ], [ 6, 7 ] ]
 ## gap&gt; sphere:=SCBdSimplex(4);;                              
 ## gap&gt; ball:=SCDifference(sphere,SC([sphere.Facets[1]]));;
 ## gap&gt; coll:=SCCollapseLex(ball);
@@ -238,7 +238,7 @@
 ## 
 ## /SimplicialComplex]
 ## gap&gt; coll.Facets;
-## [ [ 1, 3 ], [ 1, 6 ], [ 3, 6 ], [ 3, 7 ], [ 6, 7 ] ]
+## [ [ 1, 3 ], [ 1, 7 ], [ 3, 4 ], [ 3, 5 ], [ 4, 7 ], [ 5, 7 ] ]
 ## gap&gt; sphere:=SCBdSimplex(4);;                              
 ## gap&gt; ball:=SCDifference(sphere,SC([sphere.Facets[1]]));;
 ## gap&gt; coll:=SCCollapseRevLex(ball);
@@ -305,16 +305,15 @@
 ## <Example>
 ## gap&gt; c:=SCSeriesHomologySphere(2,3,5);;
 ## gap&gt; f:=SCMorseSpec(c,30,SCMorseRandom);
-## [ [ 6, [ 1, 2, 2, 1 ], 27 ], [ 8, [ 1, 3, 3, 1 ], 3 ] ]
+## [ [ 6, [ 1, 2, 2, 1 ], 25 ], [ 8, [ 1, 3, 3, 1 ], 5 ] ]
 ## gap&gt; f:=SCMorseSpec(c,30,SCMorseRandomLex);
-## [ [ 6, [ 1, 2, 2, 1 ], 29 ], [ 8, [ 1, 3, 3, 1 ], 1 ] ]
+## [ [ 6, [ 1, 2, 2, 1 ], 30 ] ]
 ## gap&gt; f:=SCMorseSpec(c,30,SCMorseRandomRevLex);
-## [ [ 6, [ 1, 2, 2, 1 ], 7 ], [ 8, [ 1, 3, 3, 1 ], 9 ], 
-##   [ 8, [ 2, 3, 2, 1 ], 1 ], [ 10, [ 1, 4, 4, 1 ], 11 ], 
-##   [ 12, [ 1, 5, 5, 1 ], 1 ], [ 14, [ 1, 6, 6, 1 ], 1 ] ]
+## [ [ 6, [ 1, 2, 2, 1 ], 7 ], [ 8, [ 1, 3, 3, 1 ], 13 ], 
+##   [ 10, [ 1, 4, 4, 1 ], 9 ], [ 10, [ 2, 4, 3, 1 ], 1 ] ]
 ## gap&gt; f:=SCMorseSpec(c,30,SCMorseUST);
 ## [ [ 6, [ 1, 2, 2, 1 ], 18 ], [ 8, [ 1, 3, 3, 1 ], 8 ], 
-##   [ 10, [ 1, 4, 4, 1 ], 3 ], [ 12, [ 1, 5, 5, 1 ], 1 ] ]
+##   [ 10, [ 1, 4, 4, 1 ], 4 ] ]
 ## </Example>
 ## </Description>
 ## </ManSection>
@@ -350,23 +349,23 @@
 ## gap&gt; c := SCSeriesHomologySphere(2,3,5);;
 ## gap&gt; SCHomologyEx(c,SCMorseRandom,SmithNormalFormIntegerMat); time;
 ## [ [ 0, [  ] ], [ 0, [  ] ], [ 0, [  ] ], [ 1, [  ] ] ]
-## 60
+## 40
 ## gap&gt; c := SCSeriesHomologySphere(2,3,5);;
 ## gap&gt; SCHomologyEx(c,SCMorseRandomLex,SmithNormalFormIntegerMat); time;
 ## [ [ 0, [  ] ], [ 0, [  ] ], [ 0, [  ] ], [ 1, [  ] ] ]
-## 56
+## 40
 ## gap&gt; c := SCSeriesHomologySphere(2,3,5);;
 ## gap&gt; SCHomologyEx(c,SCMorseRandomRevLex,SmithNormalFormIntegerMat); time;
 ## [ [ 0, [  ] ], [ 0, [  ] ], [ 0, [  ] ], [ 1, [  ] ] ]
-## 56
+## 44
 ## gap&gt; c := SCSeriesHomologySphere(2,3,5);;
 ## gap&gt; SCHomologyEx(c,SCMorseEngstroem,SmithNormalFormIntegerMat); time;
 ## [ [ 0, [  ] ], [ 0, [  ] ], [ 0, [  ] ], [ 1, [  ] ] ]
-## 100
+## 92
 ## gap&gt; c := SCSeriesHomologySphere(2,3,5);;
 ## gap&gt; SCHomologyEx(c,SCMorseUST,SmithNormalFormIntegerMat); time;
 ## [ [ 0, [  ] ], [ 0, [  ] ], [ 0, [  ] ], [ 1, [  ] ] ]
-## 136
+## 92
 ## </Example>
 ## </Description>
 ## </ManSection>
@@ -421,9 +420,9 @@
 ## gap&gt; c:=SCSurface(1,false);;
 ## gap&gt; HD:=SCHasseDiagram(c);;
 ## gap&gt; stTop:=SCSpanningTreeRandom(HD,true);
-## [ 3, 10, 13, 8, 1, 15, 12, 6, 14 ]
+## [ 15, 2, 6, 12, 7, 8, 1, 3, 11 ]
 ## gap&gt; stBot:=SCSpanningTreeRandom(HD,false);
-## [ 10, 6, 9, 5, 13 ]
+## [ 9, 5, 3, 6, 11 ]
 ## </Example>
 ## </Description>
 ## </ManSection>

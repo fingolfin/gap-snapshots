@@ -64,7 +64,7 @@
   
   [1X75.1-1 InfoMonomial[101X
   
-  [29X[2XInfoMonomial[102X[32X info class
+  [33X[1;0Y[29X[2XInfoMonomial[102X[32X info class[133X
   
   [33X[0;0YMost  of  the  functions  described  in  this  chapter print some (hopefully
   useful)  [13Xinformation[113X  if the info level of the info class [2XInfoMonomial[102X is at
@@ -75,7 +75,7 @@
   
   [1X75.2-1 Alpha[101X
   
-  [29X[2XAlpha[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAlpha[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a group [3XG[103X, [2XAlpha[102X returns a list whose [22Xi[122X-th entry is the maximal derived
   length  of  groups  [22X[3XG[103X  /  ker(χ)[122X  for  [22Xχ ∈ Irr([3XG[103X)[122X with [22Xχ(1)[122X at most the [22Xi[122X-th
@@ -83,7 +83,7 @@
   
   [1X75.2-2 Delta[101X
   
-  [29X[2XDelta[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDelta[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a  group  [3XG[103X, [2XDelta[102X returns the list [22X[ 1, alp[2] - alp[1], ..., alp[[3Xn[103X] -
   alp[[3Xn[103X-1] ][122X, where [22Xalp =[122X[10XAlpha( [3XG[103X[10X )[110X (see [2XAlpha[102X ([14X75.2-1[114X)).[133X
@@ -91,8 +91,8 @@
   
   [1X75.2-3 [33X[0;0YIsBergerCondition[133X[101X
   
-  [29X[2XIsBergerCondition[102X( [3XG[103X ) [32X property
-  [29X[2XIsBergerCondition[102X( [3Xchi[103X ) [32X property
+  [33X[1;0Y[29X[2XIsBergerCondition[102X( [3XG[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsBergerCondition[102X( [3Xchi[103X ) [32X property[133X
   
   [33X[0;0YCalled  with  an  irreducible  character [3Xchi[103X of a group [22XG[122X, [2XIsBergerCondition[102X
   returns  [9Xtrue[109X  if [3Xchi[103X satisfies [22XM' ≤ ker(χ)[122X for every normal subgroup [22XM[122X of [22XG[122X
@@ -132,7 +132,7 @@
   
   [1X75.3-1 TestHomogeneous[101X
   
-  [29X[2XTestHomogeneous[102X( [3Xchi[103X, [3XN[103X ) [32X function
+  [33X[1;0Y[29X[2XTestHomogeneous[102X( [3Xchi[103X, [3XN[103X ) [32X function[133X
   
   [33X[0;0YFor a group character [3Xchi[103X of the group [22XG[122X, say, and a normal subgroup [3XN[103X of [22XG[122X,
   [2XTestHomogeneous[102X returns a record with information whether the restriction of
@@ -178,7 +178,7 @@
   
   [1X75.3-2 IsPrimitiveCharacter[101X
   
-  [29X[2XIsPrimitiveCharacter[102X( [3Xchi[103X ) [32X property
+  [33X[1;0Y[29X[2XIsPrimitiveCharacter[102X( [3Xchi[103X ) [32X property[133X
   
   [33X[0;0YFor  a  character [3Xchi[103X of the group [22XG[122X, say, [2XIsPrimitiveCharacter[102X returns [9Xtrue[109X
   if [3Xchi[103X is not induced from any proper subgroup, and [9Xfalse[109X otherwise.[133X
@@ -192,8 +192,8 @@
   
   [1X75.3-3 TestQuasiPrimitive[101X
   
-  [29X[2XTestQuasiPrimitive[102X( [3Xchi[103X ) [32X attribute
-  [29X[2XIsQuasiPrimitive[102X( [3Xchi[103X ) [32X property
+  [33X[1;0Y[29X[2XTestQuasiPrimitive[102X( [3Xchi[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsQuasiPrimitive[102X( [3Xchi[103X ) [32X property[133X
   
   [33X[0;0Y[2XTestQuasiPrimitive[102X  returns a record with information about quasiprimitivity
   of  the  group  character  [3Xchi[103X, i.e., whether [3Xchi[103X restricts homogeneously to
@@ -228,8 +228,8 @@
   
   [1X75.3-4 TestInducedFromNormalSubgroup[101X
   
-  [29X[2XTestInducedFromNormalSubgroup[102X( [3Xchi[103X[, [3XN[103X] ) [32X function
-  [29X[2XIsInducedFromNormalSubgroup[102X( [3Xchi[103X ) [32X property
+  [33X[1;0Y[29X[2XTestInducedFromNormalSubgroup[102X( [3Xchi[103X[, [3XN[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XIsInducedFromNormalSubgroup[102X( [3Xchi[103X ) [32X property[133X
   
   [33X[0;0Y[2XTestInducedFromNormalSubgroup[102X  returns a record with information whether the
   irreducible  character  [3Xchi[103X  of  the  group [22XG[122X, say, is induced from a proper
@@ -269,10 +269,10 @@
   
   [1X75.4-1 [33X[0;0YTestMonomial[133X[101X
   
-  [29X[2XTestMonomial[102X( [3Xchi[103X ) [32X attribute
-  [29X[2XTestMonomial[102X( [3XG[103X ) [32X attribute
-  [29X[2XTestMonomial[102X( [3Xchi[103X, [3Xuselattice[103X ) [32X operation
-  [29X[2XTestMonomial[102X( [3XG[103X, [3Xuselattice[103X ) [32X operation
+  [33X[1;0Y[29X[2XTestMonomial[102X( [3Xchi[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTestMonomial[102X( [3XG[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTestMonomial[102X( [3Xchi[103X, [3Xuselattice[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XTestMonomial[102X( [3XG[103X, [3Xuselattice[103X ) [32X operation[133X
   
   [33X[0;0YCalled  with  a  group  character  [3Xchi[103X  of a group [3XG[103X, [2XTestMonomial[102X returns a
   record  containing information about monomiality of the group [3XG[103X or the group
@@ -313,7 +313,7 @@
   
   [1X75.4-2 TestMonomialUseLattice[101X
   
-  [29X[2XTestMonomialUseLattice[102X[32X global variable
+  [33X[1;0Y[29X[2XTestMonomialUseLattice[102X[32X global variable[133X
   
   [33X[0;0YThis  global  variable  controls for which groups the operation [2XTestMonomial[102X
   ([14X75.4-1[114X)  may  compute  the  subgroup  lattice.  The  value  can be set to a
@@ -321,7 +321,7 @@
   
   [1X75.4-3 IsMonomialNumber[101X
   
-  [29X[2XIsMonomialNumber[102X( [3Xn[103X ) [32X property
+  [33X[1;0Y[29X[2XIsMonomialNumber[102X( [3Xn[103X ) [32X property[133X
   
   [33X[0;0YFor  a  positive  integer [3Xn[103X, [2XIsMonomialNumber[102X returns [9Xtrue[109X if every solvable
   group  of  order  [3Xn[103X  is  monomial,  and  [9Xfalse[109X  otherwise.  One can also use
@@ -363,8 +363,8 @@
   
   [1X75.4-4 [33X[0;0YTestMonomialQuick[133X[101X
   
-  [29X[2XTestMonomialQuick[102X( [3Xchi[103X ) [32X attribute
-  [29X[2XTestMonomialQuick[102X( [3XG[103X ) [32X attribute
+  [33X[1;0Y[29X[2XTestMonomialQuick[102X( [3Xchi[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTestMonomialQuick[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XTestMonomialQuick[102X  does  some  cheap tests whether the irreducible character
   [3Xchi[103X  or  the  group  [3XG[103X,  respectively,  is  monomial.  Here  [21Xcheap[121X  means in
@@ -400,10 +400,10 @@
   
   [1X75.4-5 [33X[0;0YTestSubnormallyMonomial[133X[101X
   
-  [29X[2XTestSubnormallyMonomial[102X( [3XG[103X ) [32X attribute
-  [29X[2XTestSubnormallyMonomial[102X( [3Xchi[103X ) [32X attribute
-  [29X[2XIsSubnormallyMonomial[102X( [3XG[103X ) [32X property
-  [29X[2XIsSubnormallyMonomial[102X( [3Xchi[103X ) [32X property
+  [33X[1;0Y[29X[2XTestSubnormallyMonomial[102X( [3XG[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTestSubnormallyMonomial[102X( [3Xchi[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsSubnormallyMonomial[102X( [3XG[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsSubnormallyMonomial[102X( [3Xchi[103X ) [32X property[133X
   
   [33X[0;0YA  character of the group [22XG[122X is called [13Xsubnormally monomial[113X (SM for short) if
   it  is induced from a linear character of a subnormal subgroup of [22XG[122X. A group
@@ -437,12 +437,12 @@
   
   [1X75.4-6 [33X[0;0YTestRelativelySM[133X[101X
   
-  [29X[2XTestRelativelySM[102X( [3XG[103X ) [32X attribute
-  [29X[2XTestRelativelySM[102X( [3Xchi[103X ) [32X attribute
-  [29X[2XTestRelativelySM[102X( [3XG[103X, [3XN[103X ) [32X operation
-  [29X[2XTestRelativelySM[102X( [3Xchi[103X, [3XN[103X ) [32X operation
-  [29X[2XIsRelativelySM[102X( [3XG[103X ) [32X property
-  [29X[2XIsRelativelySM[102X( [3Xchi[103X ) [32X property
+  [33X[1;0Y[29X[2XTestRelativelySM[102X( [3XG[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTestRelativelySM[102X( [3Xchi[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XTestRelativelySM[102X( [3XG[103X, [3XN[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XTestRelativelySM[102X( [3Xchi[103X, [3XN[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIsRelativelySM[102X( [3XG[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsRelativelySM[102X( [3Xchi[103X ) [32X property[133X
   
   [33X[0;0YIn  the  first two cases, [2XTestRelativelySM[102X returns a record with information
   whether the argument, which must be a SM group [3XG[103X or an irreducible character
@@ -482,7 +482,7 @@
   
   [1X75.5-1 IsMinimalNonmonomial[101X
   
-  [29X[2XIsMinimalNonmonomial[102X( [3XG[103X ) [32X property
+  [33X[1;0Y[29X[2XIsMinimalNonmonomial[102X( [3XG[103X ) [32X property[133X
   
   [33X[0;0YA group [3XG[103X is called [13Xminimal nonmonomial[113X if it is nonmonomial, and all proper
   subgroups and factor groups are monomial.[133X
@@ -495,7 +495,7 @@
   
   [1X75.5-2 MinimalNonmonomialGroup[101X
   
-  [29X[2XMinimalNonmonomialGroup[102X( [3Xp[103X, [3Xfactsize[103X ) [32X function
+  [33X[1;0Y[29X[2XMinimalNonmonomialGroup[102X( [3Xp[103X, [3Xfactsize[103X ) [32X function[133X
   
   [33X[0;0Yis a solvable minimal nonmonomial group described by the parameters [3Xfactsize[103X
   and [3Xp[103X if such a group exists, and [9Xfalse[109X otherwise.[133X

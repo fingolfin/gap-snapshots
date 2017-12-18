@@ -59,7 +59,7 @@
   
   [1X13.1-1 FamilyObj[101X
   
-  [29X[2XFamilyObj[102X( [3Xobj[103X ) [32X function
+  [33X[1;0Y[29X[2XFamilyObj[102X( [3Xobj[103X ) [32X function[133X
   
   [33X[0;0Yreturns the family of the object [3Xobj[103X.[133X
   
@@ -141,7 +141,7 @@
   
   [1X13.2-1 RankFilter[101X
   
-  [29X[2XRankFilter[102X( [3Xfilt[103X ) [32X function
+  [33X[1;0Y[29X[2XRankFilter[102X( [3Xfilt[103X ) [32X function[133X
   
   [33X[0;0YFor  simple  filters,  an  [13Xincremental  rank[113X  is  defined when the filter is
   created,  see  the sections about the creation of filters: [14X79.1[114X, [14X79.2[114X, [14X79.3[114X,
@@ -154,7 +154,7 @@
   
   [1X13.2-2 NamesFilter[101X
   
-  [29X[2XNamesFilter[102X( [3Xfilt[103X ) [32X function
+  [33X[1;0Y[29X[2XNamesFilter[102X( [3Xfilt[103X ) [32X function[133X
   
   [33X[0;0Y[2XNamesFilter[102X  returns  a  list  of names of the [13Ximplied[113X simple filters of the
   filter  [3Xfilt[103X,  these are all those simple filters [10Ximp[110X such that every object
@@ -163,7 +163,7 @@
   
   [1X13.2-3 ShowImpliedFilters[101X
   
-  [29X[2XShowImpliedFilters[102X( [3Xfilter[103X ) [32X function
+  [33X[1;0Y[29X[2XShowImpliedFilters[102X( [3Xfilter[103X ) [32X function[133X
   
   [33X[0;0YDisplays  information  about the filters that may be implied by [3Xfilter[103X. They
   are given by their names. [10XShowImpliedFilters[110X first displays the names of all
@@ -308,7 +308,7 @@
   
   [1X13.3-1 CategoriesOfObject[101X
   
-  [29X[2XCategoriesOfObject[102X( [3Xobject[103X ) [32X operation
+  [33X[1;0Y[29X[2XCategoriesOfObject[102X( [3Xobject[103X ) [32X operation[133X
   
   [33X[0;0Yreturns a list of the names of the categories in which [3Xobject[103X lies.[133X
   
@@ -377,7 +377,7 @@
   
   [1X13.4-1 RepresentationsOfObject[101X
   
-  [29X[2XRepresentationsOfObject[102X( [3Xobject[103X ) [32X operation
+  [33X[1;0Y[29X[2XRepresentationsOfObject[102X( [3Xobject[103X ) [32X operation[133X
   
   [33X[0;0Yreturns a list of the names of the representations [3Xobject[103X has.[133X
   
@@ -433,7 +433,7 @@
   
   [1X13.5-1 KnownAttributesOfObject[101X
   
-  [29X[2XKnownAttributesOfObject[102X( [3Xobject[103X ) [32X operation
+  [33X[1;0Y[29X[2XKnownAttributesOfObject[102X( [3Xobject[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  a  list  of  the names of the attributes whose values are known for
   [3Xobject[103X.[133X
@@ -459,7 +459,7 @@
   
   [1X13.6-1 Tester[101X
   
-  [29X[2XTester[102X( [3Xattr[103X ) [32X function
+  [33X[1;0Y[29X[2XTester[102X( [3Xattr[103X ) [32X function[133X
   
   [33X[0;0YFor an attribute [3Xattr[103X, [10XTester([3Xattr[103X[10X)[110X is a filter (see [14X13.2[114X) that returns [9Xtrue[109X
   or  [9Xfalse[109X,  depending  on whether or not the value of [3Xattr[103X for the object is
@@ -468,7 +468,7 @@
   
   [1X13.6-2 Setter[101X
   
-  [29X[2XSetter[102X( [3Xattr[103X ) [32X function
+  [33X[1;0Y[29X[2XSetter[102X( [3Xattr[103X ) [32X function[133X
   
   [33X[0;0YFor  an  attribute  [3Xattr[103X,  [10XSetter([3Xattr[103X[10X)[110X  is  called  automatically  when the
   attribute  value has been computed for the first time. One can also call the
@@ -524,7 +524,7 @@
   
   [1X13.6-3 AttributeValueNotSet[101X
   
-  [29X[2XAttributeValueNotSet[102X( [3Xattr[103X, [3Xobj[103X ) [32X function
+  [33X[1;0Y[29X[2XAttributeValueNotSet[102X( [3Xattr[103X, [3Xobj[103X ) [32X function[133X
   
   [33X[0;0YIf   the   value   of   the  attribute  [3Xattr[103X  is  already  stored  for  [3Xobj[103X,
   [10XAttributeValueNotSet[110X simply returns this value. Otherwise the value of [10X[3Xattr[103X[10X(
@@ -554,7 +554,7 @@
   
   [1X13.6-4 InfoAttributes[101X
   
-  [29X[2XInfoAttributes[102X[32X info class
+  [33X[1;0Y[29X[2XInfoAttributes[102X[32X info class[133X
   
   [33X[0;0YThis  info  class  (together  with  [2XInfoWarning[102X ([14X7.4-7[114X) is used for messages
   about attribute storing being disabled (at level 2) or enabled (level 3). It
@@ -563,7 +563,7 @@
   
   [1X13.6-5 DisableAttributeValueStoring[101X
   
-  [29X[2XDisableAttributeValueStoring[102X( [3Xattr[103X ) [32X function
+  [33X[1;0Y[29X[2XDisableAttributeValueStoring[102X( [3Xattr[103X ) [32X function[133X
   
   [33X[0;0Ydisables  the  usual call of [10XSetter( [3Xattr[103X[10X )[110X when a method for [3Xattr[103X returns a
   value.  In  consequence the values will never be stored. Note that [3Xattr[103X must
@@ -571,7 +571,7 @@
   
   [1X13.6-6 EnableAttributeValueStoring[101X
   
-  [29X[2XEnableAttributeValueStoring[102X( [3Xattr[103X ) [32X function
+  [33X[1;0Y[29X[2XEnableAttributeValueStoring[102X( [3Xattr[103X ) [32X function[133X
   
   [33X[0;0Yenables  the  usual  call of [10XSetter( [3Xattr[103X[10X )[110X when a method for [3Xattr[103X returns a
   value.  In  consequence  the values may be stored. This will usually have no
@@ -643,14 +643,14 @@
   
   [1X13.7-1 KnownPropertiesOfObject[101X
   
-  [29X[2XKnownPropertiesOfObject[102X( [3Xobject[103X ) [32X operation
+  [33X[1;0Y[29X[2XKnownPropertiesOfObject[102X( [3Xobject[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  a  list  of  the names of the properties whose values are known for
   [3Xobject[103X.[133X
   
   [1X13.7-2 KnownTruePropertiesOfObject[101X
   
-  [29X[2XKnownTruePropertiesOfObject[102X( [3Xobject[103X ) [32X operation
+  [33X[1;0Y[29X[2XKnownTruePropertiesOfObject[102X( [3Xobject[103X ) [32X operation[133X
   
   [33X[0;0Yreturns a list of the names of the properties known to be [9Xtrue[109X for [3Xobject[103X.[133X
   
@@ -735,7 +735,7 @@
   
   [1X13.9-1 TypeObj[101X
   
-  [29X[2XTypeObj[102X( [3Xobj[103X ) [32X function
+  [33X[1;0Y[29X[2XTypeObj[102X( [3Xobj[103X ) [32X function[133X
   
   [33X[0;0Yreturns the type of the object [3Xobj[103X.[133X
   
@@ -747,7 +747,7 @@
   
   [1X13.9-2 DataType[101X
   
-  [29X[2XDataType[102X( [3Xtype[103X ) [32X function
+  [33X[1;0Y[29X[2XDataType[102X( [3Xtype[103X ) [32X function[133X
   
   [33X[0;0YThe  last part of the type, defining data, has not been mentioned before and
   seems  to  be of minor importance. It can be used, e.g., for cosets [22XU g[122X of a

@@ -32,7 +32,7 @@
   
   [1X68.1-1 PurePadicNumberFamily[101X
   
-  [29X[2XPurePadicNumberFamily[102X( [3Xp[103X, [3Xprecision[103X ) [32X function
+  [33X[1;0Y[29X[2XPurePadicNumberFamily[102X( [3Xp[103X, [3Xprecision[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the  family  of pure [22Xp[122X-adic numbers over the prime [3Xp[103X with [3Xprecision[103X
   [21Xdigits[121X.  That  is to say, the approximate value will differ from the correct
@@ -40,7 +40,7 @@
   
   [1X68.1-2 PadicNumber[101X
   
-  [29X[2XPadicNumber[102X( [3Xfam[103X, [3Xrat[103X ) [32X operation
+  [33X[1;0Y[29X[2XPadicNumber[102X( [3Xfam[103X, [3Xrat[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  element  of the [22Xp[122X-adic number family [3Xfam[103X that approximates the
   rational number [3Xrat[103X.[133X
@@ -66,26 +66,26 @@
   
   [1X68.1-3 Valuation[101X
   
-  [29X[2XValuation[102X( [3Xobj[103X ) [32X operation
+  [33X[1;0Y[29X[2XValuation[102X( [3Xobj[103X ) [32X operation[133X
   
   [33X[0;0YThe valuation is the [22Xp[122X-part of the [22Xp[122X-adic number.[133X
   
   [1X68.1-4 ShiftedPadicNumber[101X
   
-  [29X[2XShiftedPadicNumber[102X( [3Xpadic[103X, [3Xint[103X ) [32X operation
+  [33X[1;0Y[29X[2XShiftedPadicNumber[102X( [3Xpadic[103X, [3Xint[103X ) [32X operation[133X
   
   [33X[0;0Y[2XShiftedPadicNumber[102X  takes  a  [22Xp[122X-adic  number  [3Xpadic[103X and an integer [3Xshift[103X and
   returns the [22Xp[122X-adic number [22Xc[122X, that is [3Xpadic[103X [10X*[110X [22Xp[122X[10X^[110X[3Xshift[103X.[133X
   
   [1X68.1-5 IsPurePadicNumber[101X
   
-  [29X[2XIsPurePadicNumber[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsPurePadicNumber[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YThe category of pure [22Xp[122X-adic numbers.[133X
   
   [1X68.1-6 IsPurePadicNumberFamily[101X
   
-  [29X[2XIsPurePadicNumberFamily[102X( [3Xfam[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsPurePadicNumberFamily[102X( [3Xfam[103X ) [32X Category[133X
   
   [33X[0;0YThe family of pure [22Xp[122X-adic numbers.[133X
   
@@ -109,7 +109,7 @@
   
   [1X68.2-1 PadicExtensionNumberFamily[101X
   
-  [29X[2XPadicExtensionNumberFamily[102X( [3Xp[103X, [3Xprecision[103X, [3Xunram[103X, [3Xram[103X ) [32X function
+  [33X[1;0Y[29X[2XPadicExtensionNumberFamily[102X( [3Xp[103X, [3Xprecision[103X, [3Xunram[103X, [3Xram[103X ) [32X function[133X
   
   [33X[0;0YAn  extended  [22Xp[122X-adic  field  [22XL[122X  is  given  by  two  polynomials [22Xh[122X and [22Xg[122X with
   coefficient  lists [3Xunram[103X (for the unramified part) and [3Xram[103X (for the ramified
@@ -136,9 +136,9 @@
   
   [1X68.2-2 PadicNumber[101X
   
-  [29X[2XPadicNumber[102X( [3Xfam[103X, [3Xrat[103X ) [32X operation
-  [29X[2XPadicNumber[102X( [3Xpurefam[103X, [3Xlist[103X ) [32X operation
-  [29X[2XPadicNumber[102X( [3Xextfam[103X, [3Xlist[103X ) [32X operation
+  [33X[1;0Y[29X[2XPadicNumber[102X( [3Xfam[103X, [3Xrat[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPadicNumber[102X( [3Xpurefam[103X, [3Xlist[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPadicNumber[102X( [3Xextfam[103X, [3Xlist[103X ) [32X operation[133X
   
   [33X[0;0Y(see also [2XPadicNumber[102X ([14X68.1-2[114X)).[133X
   
@@ -178,7 +178,7 @@
   
   [1X68.2-3 IsPadicExtensionNumber[101X
   
-  [29X[2XIsPadicExtensionNumber[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsPadicExtensionNumber[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YThe category of elements of the extended [22Xp[122X-adic field.[133X
   
@@ -190,7 +190,7 @@
   
   [1X68.2-4 IsPadicExtensionNumberFamily[101X
   
-  [29X[2XIsPadicExtensionNumberFamily[102X( [3Xfam[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsPadicExtensionNumberFamily[102X( [3Xfam[103X ) [32X Category[133X
   
   [33X[0;0YFamily of elements of the extended [22Xp[122X-adic field.[133X
   

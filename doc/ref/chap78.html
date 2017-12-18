@@ -103,7 +103,7 @@
 
 <h5>78.2-1 InstallMethod</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallMethod</code>( <var class="Arg">opr</var>[, <var class="Arg">info</var>][, <var class="Arg">famp</var>], <var class="Arg">args-filts</var>[, <var class="Arg">val</var>], <var class="Arg">method</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallMethod</code>( <var class="Arg">opr</var>[, <var class="Arg">info</var>][, <var class="Arg">famp</var>], <var class="Arg">args-filts</var>[, <var class="Arg">val</var>], <var class="Arg">method</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>installs a function method <var class="Arg">method</var> for the operation <var class="Arg">opr</var>; <var class="Arg">args-filts</var> should be a list of requirements for the arguments, each entry being a filter; if supplied <var class="Arg">info</var> should be a short but informative string that describes for what situation the method is installed, <var class="Arg">famp</var> should be a function to be applied to the families of the arguments, and <var class="Arg">val</var> should be an integer that measures the priority of the method.</p>
 
 <p>The default values for <var class="Arg">info</var>, <var class="Arg">famp</var>, and <var class="Arg">val</var> are the empty string, the function <code class="func">ReturnTrue</code> (<a href="chap5.html#X7DB422A2876CCC4D"><span class="RefLink">5.4-1</span></a>), and the integer zero, respectively.</p>
@@ -116,7 +116,7 @@
 
 <h5>78.2-2 InstallOtherMethod</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallOtherMethod</code>( <var class="Arg">opr</var>[, <var class="Arg">info</var>][, <var class="Arg">famp</var>], <var class="Arg">args-filts</var>[, <var class="Arg">val</var>], <var class="Arg">method</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallOtherMethod</code>( <var class="Arg">opr</var>[, <var class="Arg">info</var>][, <var class="Arg">famp</var>], <var class="Arg">args-filts</var>[, <var class="Arg">val</var>], <var class="Arg">method</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>installs a function method <var class="Arg">method</var> for the operation <var class="Arg">opr</var>, in the same way as for <code class="func">InstallMethod</code> (<a href="chap78.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>), but without the restriction that the number of arguments must match a declaration of <var class="Arg">opr</var> and without the restriction that <var class="Arg">args-filts</var> imply the respective requirements of the operation <var class="Arg">opr</var>.</p>
 
 <p><a id="X851FC6387CA2B241" name="X851FC6387CA2B241"></a></p>
@@ -153,7 +153,7 @@
 
 <h5>78.4-1 TryNextMethod</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TryNextMethod</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TryNextMethod</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>After a method has been selected and called, the method may recognize that it cannot compute the desired result, and give up by calling <code class="code">TryNextMethod()</code>.</p>
 
 <p>In effect, the execution of the method is terminated, and the method selection calls the next method that is applicable w.r.t. the original arguments. In other words, the applicable method is called that is subsequent to the one that called <code class="func">TryNextMethod</code>, according to decreasing rank of the methods.</p>
@@ -178,7 +178,7 @@
 
 <h5>78.5-1 RedispatchOnCondition</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RedispatchOnCondition</code>( <var class="Arg">oper</var>[, <var class="Arg">info</var>], <var class="Arg">fampred</var>, <var class="Arg">reqs</var>, <var class="Arg">cond</var>, <var class="Arg">val</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RedispatchOnCondition</code>( <var class="Arg">oper</var>[, <var class="Arg">info</var>], <var class="Arg">fampred</var>, <var class="Arg">reqs</var>, <var class="Arg">cond</var>, <var class="Arg">val</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function installs a method for the operation <var class="Arg">oper</var> under the conditions <var class="Arg">fampred</var> and <var class="Arg">reqs</var> which has absolute value <var class="Arg">val</var>; that is, the value of the filters <var class="Arg">reqs</var> is disregarded. <var class="Arg">cond</var> is a list of filters. If not all the values of properties involved in these filters are already known for actual arguments of the method, they are explicitly tested and if they are fulfilled <em>and</em> stored after this test, the operation is dispatched again. Otherwise the method exits with <code class="func">TryNextMethod</code> (<a href="chap78.html#X7EED949B83046A7F"><span class="RefLink">78.4-1</span></a>). If supplied, <var class="Arg">info</var> should be a short but informative string that describes these conditions. This can be used to enforce tests like <code class="func">IsFinite</code> (<a href="chap30.html#X808A4061809A6E67"><span class="RefLink">30.4-2</span></a>) in situations when all existing methods require this property. The list <var class="Arg">cond</var> may have unbound entries in which case the corresponding argument is ignored for further tests.</p>
 
 <p><a id="X87D38D2584D0A8AF" name="X87D38D2584D0A8AF"></a></p>
@@ -193,7 +193,7 @@
 
 <h5>78.6-1 InstallImmediateMethod</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallImmediateMethod</code>( <var class="Arg">opr</var>[, <var class="Arg">info</var>], <var class="Arg">filter</var>, <var class="Arg">rank</var>, <var class="Arg">method</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallImmediateMethod</code>( <var class="Arg">opr</var>[, <var class="Arg">info</var>], <var class="Arg">filter</var>, <var class="Arg">rank</var>, <var class="Arg">method</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">InstallImmediateMethod</code> installs <var class="Arg">method</var> as an immediate method for <var class="Arg">opr</var>, which must be an attribute or a property, with requirement <var class="Arg">filter</var> and rank <var class="Arg">rank</var>. The rank must be an integer value that measures the priority of <var class="Arg">method</var> among the immediate methods for <var class="Arg">opr</var>. If supplied, <var class="Arg">info</var> should be a short but informative string that describes the situation in which the method is called.</p>
 
 <p>An immediate method is called automatically as soon as the object lies in <var class="Arg">filter</var>, provided that the value is not yet known. Afterwards the attribute setter is called in order to store the value, unless the method exits via <code class="func">TryNextMethod</code> (<a href="chap78.html#X7EED949B83046A7F"><span class="RefLink">78.4-1</span></a>).</p>
@@ -216,7 +216,7 @@
 
 <h5>78.7-1 InstallTrueMethod</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallTrueMethod</code>( <var class="Arg">newfil</var>, <var class="Arg">filt</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallTrueMethod</code>( <var class="Arg">newfil</var>, <var class="Arg">filt</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>It may happen that a filter <var class="Arg">newfil</var> shall be implied by another filter <var class="Arg">filt</var>, which is usually a meet of other properties, or the meet of some properties and some categories. Such a logical implication can be installed as an "immediate method" for <var class="Arg">newfil</var> that requires <var class="Arg">filt</var> and that always returns <code class="keyw">true</code>. (This should not be mixed up with the methods installed via <code class="func">InstallImmediateMethod</code> (<a href="chap78.html#X87B47AC0849611F8"><span class="RefLink">78.6-1</span></a>), which have to be called at runtime for the actual objects.)</p>
 
 <p><code class="func">InstallTrueMethod</code> has the effect that <var class="Arg">newfil</var> becomes an implied filter of <var class="Arg">filt</var>, see <a href="chap13.html#X84EFA4C07D4277BB"><span class="RefLink">13.2</span></a>.</p>

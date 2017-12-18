@@ -25,9 +25,9 @@
   
   [1X14.1-1 Integers[101X
   
-  [29X[2XIntegers[102X[32X global variable
-  [29X[2XPositiveIntegers[102X[32X global variable
-  [29X[2XNonnegativeIntegers[102X[32X global variable
+  [33X[1;0Y[29X[2XIntegers[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XPositiveIntegers[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XNonnegativeIntegers[102X[32X global variable[133X
   
   [33X[0;0YThese  global  variables represent the ring of integers and the semirings of
   positive and nonnegative integers, respectively.[133X
@@ -44,9 +44,9 @@
   
   [1X14.1-2 IsIntegers[101X
   
-  [29X[2XIsIntegers[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsPositiveIntegers[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsNonnegativeIntegers[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsIntegers[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsPositiveIntegers[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsNonnegativeIntegers[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0Yare   the   defining   categories   for   the   domains  [2XIntegers[102X  ([14X14.1-1[114X),
   [2XPositiveIntegers[102X ([14X14.1-1[114X), and [2XNonnegativeIntegers[102X ([14X14.1-1[114X).[133X
@@ -63,20 +63,20 @@
   
   [1X14.2-1 IsInt[101X
   
-  [29X[2XIsInt[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsInt[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YEvery rational integer lies in the category [2XIsInt[102X, which is a subcategory of
   [2XIsRat[102X ([14X17.2-1[114X).[133X
   
   [1X14.2-2 IsPosInt[101X
   
-  [29X[2XIsPosInt[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsPosInt[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YEvery positive integer lies in the category [2XIsPosInt[102X.[133X
   
   [1X14.2-3 Int[101X
   
-  [29X[2XInt[102X( [3Xelm[103X ) [32X attribute
+  [33X[1;0Y[29X[2XInt[102X( [3Xelm[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XInt[102X returns an integer [10Xint[110X whose meaning depends on the type of [3Xelm[103X.[133X
   
@@ -106,19 +106,19 @@
   
   [1X14.2-4 IsEvenInt[101X
   
-  [29X[2XIsEvenInt[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XIsEvenInt[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0Ytests if the integer [3Xn[103X is divisible by 2.[133X
   
   [1X14.2-5 IsOddInt[101X
   
-  [29X[2XIsOddInt[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XIsOddInt[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0Ytests if the integer [3Xn[103X is not divisible by 2.[133X
   
   [1X14.2-6 AbsInt[101X
   
-  [29X[2XAbsInt[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XAbsInt[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0Y[2XAbsInt[102X  returns  the  absolute  value  of  the  integer  [3Xn[103X,  i.e., [3Xn[103X if [3Xn[103X is
   positive, -[3Xn[103X if [3Xn[103X is negative and 0 if [3Xn[103X is 0.[133X
@@ -138,7 +138,7 @@
   
   [1X14.2-7 SignInt[101X
   
-  [29X[2XSignInt[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XSignInt[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0Y[2XSignInt[102X returns the sign of the integer [3Xn[103X, i.e., 1 if [3Xn[103X is positive, -1 if [3Xn[103X
   is negative and 0 if [3Xn[103X is 0.[133X
@@ -154,7 +154,7 @@
   
   [1X14.2-8 LogInt[101X
   
-  [29X[2XLogInt[102X( [3Xn[103X, [3Xbase[103X ) [32X function
+  [33X[1;0Y[29X[2XLogInt[102X( [3Xn[103X, [3Xbase[103X ) [32X function[133X
   
   [33X[0;0Y[2XLogInt[102X  returns  the integer part of the logarithm of the positive integer [3Xn[103X
   with  respect  to  the  positive  integer  [3Xbase[103X,  i.e., the largest positive
@@ -175,7 +175,7 @@
   
   [1X14.2-9 RootInt[101X
   
-  [29X[2XRootInt[102X( [3Xn[103X[, [3Xk[103X] ) [32X function
+  [33X[1;0Y[29X[2XRootInt[102X( [3Xn[103X[, [3Xk[103X] ) [32X function[133X
   
   [33X[0;0Y[2XRootInt[102X  returns  the  integer part of the [3Xk[103Xth root of the integer [3Xn[103X. If the
   optional  integer  argument  [3Xk[103X  is not given it defaults to 2, i.e., [2XRootInt[102X
@@ -199,7 +199,7 @@
   
   [1X14.2-10 SmallestRootInt[101X
   
-  [29X[2XSmallestRootInt[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XSmallestRootInt[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0Y[2XSmallestRootInt[102X returns the smallest root of the integer [3Xn[103X.[133X
   
@@ -226,7 +226,7 @@
   
   [1X14.2-11 ListOfDigits[101X
   
-  [29X[2XListOfDigits[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XListOfDigits[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0YFor  a  positive integer [3Xn[103X this function returns a list [3Xl[103X, consisting of the
   digits of [3Xn[103X in decimal representation.[133X
@@ -238,7 +238,7 @@
   
   [1X14.2-12 Random[101X
   
-  [29X[2XRandom[102X( [3XIntegers[103X ) [32X method
+  [33X[1;0Y[29X[2XRandom[102X( [3XIntegers[103X ) [32X method[133X
   
   [33X[0;0Y[2XRandom[102X  for  integers  returns  pseudo  random  integers  between [22X-10[122X and [22X10[122X
   distributed  according  to  a  binomial  distribution. To generate uniformly
@@ -250,7 +250,7 @@
   
   [1X14.3-1 QuoInt[101X
   
-  [29X[2XQuoInt[102X( [3Xn[103X, [3Xm[103X ) [32X function
+  [33X[1;0Y[29X[2XQuoInt[102X( [3Xn[103X, [3Xm[103X ) [32X function[133X
   
   [33X[0;0Y[2XQuoInt[102X returns the integer part of the quotient of its integer operands.[133X
   
@@ -272,7 +272,7 @@
   
   [1X14.3-2 BestQuoInt[101X
   
-  [29X[2XBestQuoInt[102X( [3Xn[103X, [3Xm[103X ) [32X function
+  [33X[1;0Y[29X[2XBestQuoInt[102X( [3Xn[103X, [3Xm[103X ) [32X function[133X
   
   [33X[0;0Y[2XBestQuoInt[102X  returns the best quotient [22Xq[122X of the integers [3Xn[103X and [3Xm[103X. This is the
   quotient  such  that  [22X[3Xn[103X-q*[3Xm[103X[122X  has  minimal  absolute  value. If there are two
@@ -287,7 +287,7 @@
   
   [1X14.3-3 RemInt[101X
   
-  [29X[2XRemInt[102X( [3Xn[103X, [3Xm[103X ) [32X function
+  [33X[1;0Y[29X[2XRemInt[102X( [3Xn[103X, [3Xm[103X ) [32X function[133X
   
   [33X[0;0Y[2XRemInt[102X returns the remainder of its two integer operands.[133X
   
@@ -310,7 +310,7 @@
   
   [1X14.3-4 GcdInt[101X
   
-  [29X[2XGcdInt[102X( [3Xm[103X, [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XGcdInt[102X( [3Xm[103X, [3Xn[103X ) [32X function[133X
   
   [33X[0;0Y[2XGcdInt[102X returns the greatest common divisor of its two integer operands [3Xm[103X and
   [3Xn[103X, i.e., the greatest integer that divides both [3Xm[103X and [3Xn[103X. The greatest common
@@ -326,7 +326,7 @@
   
   [1X14.3-5 Gcdex[101X
   
-  [29X[2XGcdex[102X( [3Xm[103X, [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XGcdex[102X( [3Xm[103X, [3Xn[103X ) [32X function[133X
   
   [33X[0;0Yreturns  a record [10Xg[110X describing the extended greatest common divisor of [3Xm[103X and
   [3Xn[103X.  The  component  [10Xgcd[110X  is  this  gcd, the components [10Xcoeff1[110X and [10Xcoeff2[110X are
@@ -363,7 +363,7 @@
   
   [1X14.3-6 LcmInt[101X
   
-  [29X[2XLcmInt[102X( [3Xm[103X, [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XLcmInt[102X( [3Xm[103X, [3Xn[103X ) [32X function[133X
   
   [33X[0;0Yreturns the least common multiple of the integers [3Xm[103X and [3Xn[103X.[133X
   
@@ -376,7 +376,7 @@
   
   [1X14.3-7 CoefficientsQadic[101X
   
-  [29X[2XCoefficientsQadic[102X( [3Xi[103X, [3Xq[103X ) [32X operation
+  [33X[1;0Y[29X[2XCoefficientsQadic[102X( [3Xi[103X, [3Xq[103X ) [32X operation[133X
   
   [33X[0;0Yreturns  the  [3Xq[103X-adic  representation  of  the  integer  [3Xi[103X  as  a  list  [22Xl[122X of
   coefficients  satisfying  the  equality  [22X[3Xi[103X  =  ∑_{j = 0} [3Xq[103X^j ⋅ l[j+1][122X for an
@@ -389,7 +389,7 @@
   
   [1X14.3-8 CoefficientsMultiadic[101X
   
-  [29X[2XCoefficientsMultiadic[102X( [3Xints[103X, [3Xint[103X ) [32X function
+  [33X[1;0Y[29X[2XCoefficientsMultiadic[102X( [3Xints[103X, [3Xint[103X ) [32X function[133X
   
   [33X[0;0Yreturns the multiadic expansion of the integer [3Xint[103X modulo the integers given
   in  [3Xints[103X  (in  ascending  order).  It  returns a list of coefficients in the
@@ -397,7 +397,7 @@
   
   [1X14.3-9 ChineseRem[101X
   
-  [29X[2XChineseRem[102X( [3Xmoduli[103X, [3Xresidues[103X ) [32X function
+  [33X[1;0Y[29X[2XChineseRem[102X( [3Xmoduli[103X, [3Xresidues[103X ) [32X function[133X
   
   [33X[0;0Y[2XChineseRem[102X  returns the combination of the [3Xresidues[103X modulo the [3Xmoduli[103X, i.e.,
   the  unique  integer  [10Xc[110X  from  [10X[0..Lcm([3Xmoduli[103X[10X)-1][110X  such that [10Xc = [3Xresidues[103X[10X[i][110X
@@ -428,7 +428,7 @@
   
   [1X14.3-10 PowerModInt[101X
   
-  [29X[2XPowerModInt[102X( [3Xr[103X, [3Xe[103X, [3Xm[103X ) [32X function
+  [33X[1;0Y[29X[2XPowerModInt[102X( [3Xr[103X, [3Xe[103X, [3Xm[103X ) [32X function[133X
   
   [33X[0;0Yreturns [22X[3Xr[103X^[3Xe[103X mod [3Xm[103X[122X for integers [3Xr[103X, [3Xe[103X and [3Xm[103X ([22X[3Xe[103X ≥ 0[122X).[133X
   
@@ -443,7 +443,7 @@
   
   [1X14.4-1 Primes[101X
   
-  [29X[2XPrimes[102X[32X global variable
+  [33X[1;0Y[29X[2XPrimes[102X[32X global variable[133X
   
   [33X[0;0Y[2XPrimes[102X is a strictly sorted list of the 168 primes less than 1000.[133X
   
@@ -459,8 +459,8 @@
   
   [1X14.4-2 IsPrimeInt[101X
   
-  [29X[2XIsPrimeInt[102X( [3Xn[103X ) [32X function
-  [29X[2XIsProbablyPrimeInt[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XIsPrimeInt[102X( [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XIsProbablyPrimeInt[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0Y[2XIsPrimeInt[102X returns [9Xfalse[109X if it can prove that the integer [3Xn[103X is composite and
   [9Xtrue[109X  otherwise.  By convention [10XIsPrimeInt(0) = IsPrimeInt(1) = false[110X and we
@@ -510,7 +510,7 @@
   
   [1X14.4-3 PrimalityProof[101X
   
-  [29X[2XPrimalityProof[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XPrimalityProof[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0YConstruct  a  machine  verifiable  proof  of  the primality of (the probable
   prime)  [3Xn[103X,  following  the  ideas  of [BLS75]. The proof consists of various
@@ -524,7 +524,7 @@
   
   [1X14.4-4 IsPrimePowerInt[101X
   
-  [29X[2XIsPrimePowerInt[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XIsPrimePowerInt[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0Y[2XIsPrimePowerInt[102X  returns  [9Xtrue[109X  if  the integer [3Xn[103X is a prime power and [9Xfalse[109X
   otherwise.[133X
@@ -550,7 +550,7 @@
   
   [1X14.4-5 NextPrimeInt[101X
   
-  [29X[2XNextPrimeInt[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XNextPrimeInt[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0Y[2XNextPrimeInt[102X  returns  the  smallest prime which is strictly larger than the
   integer [3Xn[103X.[133X
@@ -566,7 +566,7 @@
   
   [1X14.4-6 PrevPrimeInt[101X
   
-  [29X[2XPrevPrimeInt[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XPrevPrimeInt[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0Y[2XPrevPrimeInt[102X  returns  the  largest prime which is strictly smaller than the
   integer [3Xn[103X.[133X
@@ -582,8 +582,8 @@
   
   [1X14.4-7 FactorsInt[101X
   
-  [29X[2XFactorsInt[102X( [3Xn[103X ) [32X function
-  [29X[2XFactorsInt[102X( [3Xn:[103X [3XRhoTrials[103X [3X:=[103X [3Xtrials[103X ) [32X function
+  [33X[1;0Y[29X[2XFactorsInt[102X( [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XFactorsInt[102X( [3Xn:[103X [3XRhoTrials[103X [3X:=[103X [3Xtrials[103X ) [32X function[133X
   
   [33X[0;0Y[2XFactorsInt[102X returns a list of factors of a given integer [3Xn[103X such that [10XProduct(
   FactorsInt(  [3Xn[103X[10X  )  ) = [3Xn[103X[10X[110X. If [22X|n| ≤ 1[122X the list [10X[[3Xn[103X[10X][110X is returned. Otherwise the
@@ -636,7 +636,7 @@
   
   [1X14.4-8 PrimeDivisors[101X
   
-  [29X[2XPrimeDivisors[102X( [3Xn[103X ) [32X attribute
+  [33X[1;0Y[29X[2XPrimeDivisors[102X( [3Xn[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XPrimeDivisors[102X  returns  for  a  non-zero  integer  [3Xn[103X  a  set of its positive
   (probable)  primes  divisors.  In  rare  cases  the  result  could contain a
@@ -652,7 +652,7 @@
   
   [1X14.4-9 PartialFactorization[101X
   
-  [29X[2XPartialFactorization[102X( [3Xn[103X[, [3Xeffort[103X] ) [32X operation
+  [33X[1;0Y[29X[2XPartialFactorization[102X( [3Xn[103X[, [3Xeffort[103X] ) [32X operation[133X
   
   [33X[0;0Y[2XPartialFactorization[102X  returns  a  partial factorization of the integer [3Xn[103X. No
   assertions  are  made  about  the  primality of the factors, except of those
@@ -710,7 +710,7 @@
   
   [1X14.4-10 PrintFactorsInt[101X
   
-  [29X[2XPrintFactorsInt[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XPrintFactorsInt[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0Yprints the prime factorization of the integer [3Xn[103X in human-readable form.[133X
   
@@ -721,7 +721,7 @@
   
   [1X14.4-11 PrimePowersInt[101X
   
-  [29X[2XPrimePowersInt[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XPrimePowersInt[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0Yreturns  the prime factorization of the integer [3Xn[103X as a list [22X[ p_1, e_1, ...,
   p_k, e_k ][122X with [3Xn[103X = [22Xp_1^{e_1} ⋅ p_2^{e_2} ⋅ ... ⋅ p_k^{e_k}[122X.[133X
@@ -733,7 +733,7 @@
   
   [1X14.4-12 DivisorsInt[101X
   
-  [29X[2XDivisorsInt[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XDivisorsInt[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0Y[2XDivisorsInt[102X  returns  a  list  of all divisors of the integer [3Xn[103X. The list is
   sorted,  so  that  it  starts  with  1  and  ends  with  [3Xn[103X.  We  define that
@@ -762,7 +762,7 @@
   
   [1X14.5-1 \mod[101X
   
-  [29X[2X\mod[102X( [3Xr/s[103X, [3Xn[103X ) [32X operation
+  [33X[1;0Y[29X[2X\mod[102X( [3Xr/s[103X, [3Xn[103X ) [32X operation[133X
   
   [33X[0;0YIf  [3Xr[103X, [3Xs[103X and [3Xn[103X are integers, [10X[3Xr[103X[10X / [3Xs[103X[10X[110X as a reduced fraction is [10Xp/q[110X, where [10Xq[110X and
   [3Xn[103X  are  coprime,  then [10X[3Xr[103X[10X / [3Xs[103X[10X mod [3Xn[103X[10X[110X is defined to be the product of [10Xp[110X and the
@@ -773,9 +773,9 @@
   
   [1X14.5-2 ZmodnZ[101X
   
-  [29X[2XZmodnZ[102X( [3Xn[103X ) [32X function
-  [29X[2XZmodpZ[102X( [3Xp[103X ) [32X function
-  [29X[2XZmodpZNC[102X( [3Xp[103X ) [32X function
+  [33X[1;0Y[29X[2XZmodnZ[102X( [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XZmodpZ[102X( [3Xp[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XZmodpZNC[102X( [3Xp[103X ) [32X function[133X
   
   [33X[0;0Y[2XZmodnZ[102X returns a ring [22XR[122X isomorphic to the residue class ring of the integers
   modulo  the  ideal  generated by [3Xn[103X. The element corresponding to the residue
@@ -794,8 +794,8 @@
   
   [1X14.5-3 ZmodnZObj[101X
   
-  [29X[2XZmodnZObj[102X( [3XFam[103X, [3Xr[103X ) [32X operation
-  [29X[2XZmodnZObj[102X( [3Xr[103X, [3Xn[103X ) [32X operation
+  [33X[1;0Y[29X[2XZmodnZObj[102X( [3XFam[103X, [3Xr[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XZmodnZObj[102X( [3Xr[103X, [3Xn[103X ) [32X operation[133X
   
   [33X[0;0YIf  the  first argument is a residue class family [3XFam[103X then [2XZmodnZObj[102X returns
   the element in [3XFam[103X whose coset is represented by the integer [3Xr[103X.[133X
@@ -818,11 +818,11 @@
   
   [1X14.5-4 IsZmodnZObj[101X
   
-  [29X[2XIsZmodnZObj[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsZmodnZObjNonprime[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsZmodpZObj[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsZmodpZObjSmall[102X( [3Xobj[103X ) [32X Category
-  [29X[2XIsZmodpZObjLarge[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsZmodnZObj[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsZmodnZObjNonprime[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsZmodpZObj[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsZmodpZObjSmall[102X( [3Xobj[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsZmodpZObjLarge[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YThe elements in the rings [22XZ / n Z[122X are in the category [2XIsZmodnZObj[102X. If [22Xn[122X is a
   prime  then  the elements are of course also in the category [2XIsFFE[102X ([14X59.1-1[114X),
@@ -856,10 +856,10 @@
   
   [1X14.6-1 CheckDigitISBN[101X
   
-  [29X[2XCheckDigitISBN[102X( [3Xn[103X ) [32X function
-  [29X[2XCheckDigitISBN13[102X( [3Xn[103X ) [32X function
-  [29X[2XCheckDigitPostalMoneyOrder[102X( [3Xn[103X ) [32X function
-  [29X[2XCheckDigitUPC[102X( [3Xn[103X ) [32X function
+  [33X[1;0Y[29X[2XCheckDigitISBN[102X( [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCheckDigitISBN13[102X( [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCheckDigitPostalMoneyOrder[102X( [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCheckDigitUPC[102X( [3Xn[103X ) [32X function[133X
   
   [33X[0;0YThese  functions  can  be  used  to compute, or check, check digits for some
   everyday items. In each case what is submitted as input is either the number
@@ -900,7 +900,7 @@
   
   [1X14.6-2 CheckDigitTestFunction[101X
   
-  [29X[2XCheckDigitTestFunction[102X( [3Xl[103X, [3Xm[103X, [3Xf[103X ) [32X function
+  [33X[1;0Y[29X[2XCheckDigitTestFunction[102X( [3Xl[103X, [3Xm[103X, [3Xf[103X ) [32X function[133X
   
   [33X[0;0YThis  function  creates  check  digit  test functions such as [2XCheckDigitISBN[102X
   ([14X14.6-1[114X)  for  check  digit schemes that use the inner products with a fixed
@@ -927,7 +927,7 @@
   
   [1X14.7-1 IsRandomSource[101X
   
-  [29X[2XIsRandomSource[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsRandomSource[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YThis is the category of random source objects which are defined to have, for
   an  object  [3Xrs[103X  in  this  category,  methods  available  for  the  following
@@ -947,8 +947,8 @@
   
   [1X14.7-2 Random[101X
   
-  [29X[2XRandom[102X( [3Xrs[103X, [3Xlist[103X ) [32X operation
-  [29X[2XRandom[102X( [3Xrs[103X, [3Xlow[103X, [3Xhigh[103X ) [32X operation
+  [33X[1;0Y[29X[2XRandom[102X( [3Xrs[103X, [3Xlist[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRandom[102X( [3Xrs[103X, [3Xlow[103X, [3Xhigh[103X ) [32X operation[133X
   
   [33X[0;0YThis operation returns a random element from list [3Xlist[103X, or an integer in the
   range from the given (possibly large) integers [3Xlow[103X to [3Xhigh[103X, respectively.[133X
@@ -964,9 +964,9 @@
   
   [1X14.7-3 State[101X
   
-  [29X[2XState[102X( [3Xrs[103X ) [32X operation
-  [29X[2XReset[102X( [3Xrs[103X[, [3Xseed[103X] ) [32X operation
-  [29X[2XInit[102X( [3Xprers[103X[, [3Xseed[103X] ) [32X operation
+  [33X[1;0Y[29X[2XState[102X( [3Xrs[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XReset[102X( [3Xrs[103X[, [3Xseed[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XInit[102X( [3Xprers[103X[, [3Xseed[103X] ) [32X operation[133X
   
   [33X[0;0YThese  are the basic operations for which random sources (see [2XIsRandomSource[102X
   ([14X14.7-1[114X)) must have methods.[133X
@@ -1004,11 +1004,11 @@
   
   [1X14.7-4 IsMersenneTwister[101X
   
-  [29X[2XIsMersenneTwister[102X( [3Xrs[103X ) [32X Category
-  [29X[2XIsGAPRandomSource[102X( [3Xrs[103X ) [32X Category
-  [29X[2XIsGlobalRandomSource[102X( [3Xrs[103X ) [32X Category
-  [29X[2XGlobalMersenneTwister[102X[32X global variable
-  [29X[2XGlobalRandomSource[102X[32X global variable
+  [33X[1;0Y[29X[2XIsMersenneTwister[102X( [3Xrs[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsGAPRandomSource[102X( [3Xrs[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XIsGlobalRandomSource[102X( [3Xrs[103X ) [32X Category[133X
+  [33X[1;0Y[29X[2XGlobalMersenneTwister[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XGlobalRandomSource[102X[32X global variable[133X
   
   [33X[0;0YCurrently,   the  [5XGAP[105X  library  provides  three  types  of  random  sources,
   distinguished by the three listed categories.[133X
@@ -1038,7 +1038,7 @@
   
   [1X14.7-5 RandomSource[101X
   
-  [29X[2XRandomSource[102X( [3Xcat[103X[, [3Xseed[103X] ) [32X operation
+  [33X[1;0Y[29X[2XRandomSource[102X( [3Xcat[103X[, [3Xseed[103X] ) [32X operation[133X
   
   [33X[0;0YThis  operation is used to create new random sources. The first argument [3Xcat[103X
   is  the  category  describing  the type of the random generator, an optional

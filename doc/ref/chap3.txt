@@ -414,10 +414,10 @@
   
   [1X3.2-3 [33X[0;0YConfiguring User preferences[133X[101X
   
-  [29X[2XSetUserPreference[102X( [[3Xpackage[103X, ][3Xname[103X, [3Xvalue[103X ) [32X function
-  [29X[2XUserPreference[102X( [[3Xpackage[103X, ][3Xname[103X ) [32X function
-  [29X[2XShowUserPreferences[102X( [3Xpackage1[103X, [3Xpackage2[103X, [3X...[103X ) [32X function
-  [29X[2XWriteGapIniFile[102X( [[3Xdir[103X, ][[3Xignorecurrent[103X] ) [32X function
+  [33X[1;0Y[29X[2XSetUserPreference[102X( [[3Xpackage[103X, ][3Xname[103X, [3Xvalue[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XUserPreference[102X( [[3Xpackage[103X, ][3Xname[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XShowUserPreferences[102X( [3Xpackage1[103X, [3Xpackage2[103X, [3X...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XWriteGapIniFile[102X( [[3Xdir[103X, ][[3Xignorecurrent[103X] ) [32X function[133X
   
   [33X[0;0YSome  aspects of the behaviour of [5XGAP[105X can be customized by the user via [13Xuser
   preferences[113X. Examples include the way help sections are displayed or the use
@@ -480,7 +480,7 @@
   
   [1X3.2-4 DeclareUserPreference[101X
   
-  [29X[2XDeclareUserPreference[102X( [3Xrecord[103X ) [32X function
+  [33X[1;0Y[29X[2XDeclareUserPreference[102X( [3Xrecord[103X ) [32X function[133X
   
   [33X[0;0YThis  function  can  be  used  (also  in  packages)  to  introduce  new user
   preferences.  It  declares a user preference, determines a default value and
@@ -575,7 +575,7 @@
   
   [1X3.3-1 SaveWorkspace[101X
   
-  [29X[2XSaveWorkspace[102X( [3Xfilename[103X ) [32X function
+  [33X[1;0Y[29X[2XSaveWorkspace[102X( [3Xfilename[103X ) [32X function[133X
   
   [33X[0;0Ywill  save  a  [21Xsnapshot[121X  image  of  the  current  [5XGAP[105X  workspace in the file
   [3Xfilename[103X.  This  image  then can be loaded by another copy of [5XGAP[105X which then
@@ -596,20 +596,20 @@
   
   [1X3.4-1 ARCH_IS_UNIX[101X
   
-  [29X[2XARCH_IS_UNIX[102X(  ) [32X function
+  [33X[1;0Y[29X[2XARCH_IS_UNIX[102X(  ) [32X function[133X
   
   [33X[0;0Ytests whether [5XGAP[105X is running on a UNIX system (including Mac OS X).[133X
   
   [1X3.4-2 ARCH_IS_MAC_OS_X[101X
   
-  [29X[2XARCH_IS_MAC_OS_X[102X(  ) [32X function
+  [33X[1;0Y[29X[2XARCH_IS_MAC_OS_X[102X(  ) [32X function[133X
   
   [33X[0;0Ytests  whether  [5XGAP[105X  is  running  on  Mac  OS X. Note that on Mac OS X, also
   [2XARCH_IS_UNIX[102X ([14X3.4-1[114X) will be [10Xtrue[110X.[133X
   
   [1X3.4-3 ARCH_IS_WINDOWS[101X
   
-  [29X[2XARCH_IS_WINDOWS[102X(  ) [32X function
+  [33X[1;0Y[29X[2XARCH_IS_WINDOWS[102X(  ) [32X function[133X
   
   [33X[0;0Ytests whether [5XGAP[105X is running on a Windows system.[133X
   
@@ -618,7 +618,7 @@
   
   [1X3.5-1 GAPInfo[101X
   
-  [29X[2XGAPInfo[102X[32X global variable
+  [33X[1;0Y[29X[2XGAPInfo[102X[32X global variable[133X
   
   [33X[0;0YSeveral global values control the [5XGAP[105X session, such as the command line, the
   architecture,  or  the information about available and loaded packages. Many
@@ -640,7 +640,7 @@
   
   [1X3.6-1 ColorPrompt[101X
   
-  [29X[2XColorPrompt[102X( [3Xbool[103X[, [3Xoptrec[103X] ) [32X function
+  [33X[1;0Y[29X[2XColorPrompt[102X( [3Xbool[103X[, [3Xoptrec[103X] ) [32X function[133X
   
   [33X[0;0YWith  [10XColorPrompt(true);[110X [5XGAP[105X changes its user interface: The prompts and the
   user input are displayed in different colors. Switch off the colored prompts

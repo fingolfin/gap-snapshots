@@ -8,19 +8,18 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2014	Colorado State University, Fort Collins
+##  Copyright 2017	Colorado State University
+##                  Sabancı Üniversitesi
 ##					Università degli Studi di Padova
-##					Universeit Gent
+##					Universiteit Gent
 ##					University of St. Andrews
-##					University of Western Australia, Perth
+##					University of Western Australia
 ##                  Vrije Universiteit Brussel
-##                 
+##
 ##
 ##  Implementation stuff for polar spaces
 ##
 #############################################################################
-
-Print(", polarspace/morphisms\c");
 
 #############################################################################
 # Low level help methods:
@@ -1574,11 +1573,11 @@ InstallMethod( RepresentativesOfElements,
 
 # CHECKED 21/09/11 jdb
 #############################################################################
-#O  \QUO( <ps>, <v> )
+#O  QUO( <ps>, <v> )
 # returns the quotien space of the element <v>, which must be an element of the
 # polar space <ps>
 ##
-InstallOtherMethod(\QUO,  
+InstallOtherMethod(QUO,
 	"for a polar space and an element of a polar space",
 	[ IsClassicalPolarSpace and IsClassicalPolarSpaceRep, IsSubspaceOfClassicalPolarSpace],
 	function( ps, v )
@@ -2864,6 +2863,7 @@ InstallMethod( CollineationGroup,
  	   type := PolarSpaceType( ps );
        if type ="hermitian" and d = 2 and not IsPrime(Sqrt(Size(f)))  then
           Info(InfoFinInG, 1, "No nice monomorphism computed.");
+          Info(InfoFinInG, 2, "This really pisses me off, John!");
  	   else
 	      if not IsEmpty(x) then
             if type = "hermitian" and d=4 then

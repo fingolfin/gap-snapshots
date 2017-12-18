@@ -283,12 +283,12 @@ GF(3)[z]
 
 <h5>66.1-1 <span class="Heading">Indeterminate</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Indeterminate</code>( <var class="Arg">R</var>[, <var class="Arg">nr</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Indeterminate</code>( <var class="Arg">R</var>[, <var class="Arg">name</var>][, <var class="Arg">avoid</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Indeterminate</code>( <var class="Arg">fam</var>, <var class="Arg">nr</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; X</code>( <var class="Arg">R</var>[, <var class="Arg">nr</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; X</code>( <var class="Arg">R</var>[, <var class="Arg">name</var>][, <var class="Arg">avoid</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; X</code>( <var class="Arg">fam</var>, <var class="Arg">nr</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Indeterminate</code>( <var class="Arg">R</var>[, <var class="Arg">nr</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Indeterminate</code>( <var class="Arg">R</var>[, <var class="Arg">name</var>][, <var class="Arg">avoid</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Indeterminate</code>( <var class="Arg">fam</var>, <var class="Arg">nr</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; X</code>( <var class="Arg">R</var>[, <var class="Arg">nr</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; X</code>( <var class="Arg">R</var>[, <var class="Arg">name</var>][, <var class="Arg">avoid</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; X</code>( <var class="Arg">fam</var>, <var class="Arg">nr</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the indeterminate number <var class="Arg">nr</var> over the ring <var class="Arg">R</var>. If <var class="Arg">nr</var> is not given it defaults to 1. If the number is not specified a list <var class="Arg">avoid</var> of indeterminates may be given. The function will return an indeterminate that is guaranteed to be different from all the indeterminates in the list <var class="Arg">avoid</var>. The third usage returns an indeterminate called <var class="Arg">name</var> (also avoiding the indeterminates in <var class="Arg">avoid</var> if given).</p>
 
 <p><code class="func">X</code> is simply a synonym for <code class="func">Indeterminate</code>. However, we do not recommend to use this synonym which is supported only for the backwards compatibility.</p>
@@ -312,7 +312,7 @@ x
 
 <h5>66.1-2 IndeterminateNumberOfUnivariateRationalFunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndeterminateNumberOfUnivariateRationalFunction</code>( <var class="Arg">rfun</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndeterminateNumberOfUnivariateRationalFunction</code>( <var class="Arg">rfun</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the number of the indeterminate in which the univariate rational function <var class="Arg">rfun</var> is expressed. (This also provides a way to obtain the number of a given indeterminate.)</p>
 
 <p>A constant rational function might not possess an indeterminate number. In this case <code class="func">IndeterminateNumberOfUnivariateRationalFunction</code> will default to a value of 1. Therefore two univariate polynomials may be considered to be in the same univariate polynomial ring if their indeterminates have the same number or one if of them is constant. (see also <code class="func">CIUnivPols</code> (<a href="chap66_mj.html#X791A06E67F784328"><span class="RefLink">66.1-5</span></a>) and <code class="func">IsLaurentPolynomialDefaultRep</code> (<a href="chap66_mj.html#X7E1B98CC7BADAF56"><span class="RefLink">66.21-7</span></a>)).</p>
@@ -321,7 +321,7 @@ x
 
 <h5>66.1-3 IndeterminateOfUnivariateRationalFunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndeterminateOfUnivariateRationalFunction</code>( <var class="Arg">rfun</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndeterminateOfUnivariateRationalFunction</code>( <var class="Arg">rfun</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the indeterminate in which the univariate rational function <var class="Arg">rfun</var> is expressed. (cf. <code class="func">IndeterminateNumberOfUnivariateRationalFunction</code> (<a href="chap66_mj.html#X816C8D797C804380"><span class="RefLink">66.1-2</span></a>).)</p>
 
 
@@ -336,9 +336,9 @@ X
 
 <h5>66.1-4 IndeterminateName</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndeterminateName</code>( <var class="Arg">fam</var>, <var class="Arg">nr</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasIndeterminateName</code>( <var class="Arg">fam</var>, <var class="Arg">nr</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetIndeterminateName</code>( <var class="Arg">fam</var>, <var class="Arg">nr</var>, <var class="Arg">name</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndeterminateName</code>( <var class="Arg">fam</var>, <var class="Arg">nr</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HasIndeterminateName</code>( <var class="Arg">fam</var>, <var class="Arg">nr</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetIndeterminateName</code>( <var class="Arg">fam</var>, <var class="Arg">nr</var>, <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">SetIndeterminateName</code> assigns the name <var class="Arg">name</var> to indeterminate <var class="Arg">nr</var> in the rational functions family <var class="Arg">fam</var>. It issues an error if the indeterminate was already named.</p>
 
 <p><code class="func">IndeterminateName</code> returns the name of the <var class="Arg">nr</var>-th indeterminate (and returns <code class="keyw">fail</code> if no name has been assigned).</p>
@@ -371,7 +371,7 @@ ah^5+ah
 
 <h5>66.1-5 CIUnivPols</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CIUnivPols</code>( <var class="Arg">upol1</var>, <var class="Arg">upol2</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CIUnivPols</code>( <var class="Arg">upol1</var>, <var class="Arg">upol2</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function (whose name stands for "common indeterminate of univariate polynomials") takes two univariate polynomials as arguments. If both polynomials are given in the same indeterminate number <var class="Arg">indnum</var> (in this case they are "compatible" as univariate polynomials) it returns <var class="Arg">indnum</var>. In all other cases it returns <code class="keyw">fail</code>. <code class="func">CIUnivPols</code> also accepts if either polynomial is constant but formally expressed in another indeterminate, in this situation the indeterminate of the other polynomial is selected.</p>
 
 <p><a id="X86A68FD582F4F757" name="X86A68FD582F4F757"></a></p>
@@ -477,8 +477,8 @@ false
 
 <h5>66.4-1 IsPolynomialFunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPolynomialFunction</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRationalFunction</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPolynomialFunction</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRationalFunction</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>A rational function is an element of the quotient field of a polynomial ring over an UFD. It is represented as a quotient of two polynomials, its numerator (see <code class="func">NumeratorOfRationalFunction</code> (<a href="chap66_mj.html#X7D7D2667803D8D8A"><span class="RefLink">66.4-2</span></a>)) and its denominator (see <code class="func">DenominatorOfRationalFunction</code> (<a href="chap66_mj.html#X78DC1B5B866ADB6C"><span class="RefLink">66.4-3</span></a>))</p>
 
 <p>A polynomial function is an element of a polynomial ring (not necessarily an UFD), or a rational function.</p>
@@ -489,7 +489,7 @@ false
 
 <h5>66.4-2 NumeratorOfRationalFunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NumeratorOfRationalFunction</code>( <var class="Arg">ratfun</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NumeratorOfRationalFunction</code>( <var class="Arg">ratfun</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the numerator of the rational function <var class="Arg">ratfun</var>.</p>
 
 <p>As no proper multivariate gcd has been implemented yet, numerators and denominators are not guaranteed to be reduced!</p>
@@ -498,7 +498,7 @@ false
 
 <h5>66.4-3 DenominatorOfRationalFunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DenominatorOfRationalFunction</code>( <var class="Arg">ratfun</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DenominatorOfRationalFunction</code>( <var class="Arg">ratfun</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the denominator of the rational function <var class="Arg">ratfun</var>.</p>
 
 <p>As no proper multivariate gcd has been implemented yet, numerators and denominators are not guaranteed to be reduced!</p>
@@ -516,7 +516,7 @@ x^2+x*y
 
 <h5>66.4-4 IsPolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPolynomial</code>( <var class="Arg">ratfun</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPolynomial</code>( <var class="Arg">ratfun</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>A polynomial is a rational function whose denominator is one. (If the coefficients family forms a field this is equivalent to the denominator being constant.)</p>
 
 <p>If the base family is not a field, it may be impossible to represent the quotient of a polynomial by a ring element as a polynomial again, but it will have to be represented as a rational function.</p>
@@ -533,7 +533,7 @@ false
 
 <h5>66.4-5 AsPolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsPolynomial</code>( <var class="Arg">poly</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsPolynomial</code>( <var class="Arg">poly</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">poly</var> is a rational function that is a polynomial this attribute returns an equal rational function <span class="SimpleMath">\(p\)</span> such that <span class="SimpleMath">\(p\)</span> is equal to its numerator and the denominator of <span class="SimpleMath">\(p\)</span> is one.</p>
 
 
@@ -546,35 +546,35 @@ x^2*y^2+x
 
 <h5>66.4-6 IsUnivariateRationalFunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUnivariateRationalFunction</code>( <var class="Arg">ratfun</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUnivariateRationalFunction</code>( <var class="Arg">ratfun</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>A rational function is univariate if its numerator and its denominator are both polynomials in the same one indeterminate. The attribute <code class="func">IndeterminateNumberOfUnivariateRationalFunction</code> (<a href="chap66_mj.html#X816C8D797C804380"><span class="RefLink">66.1-2</span></a>) can be used to obtain the number of this common indeterminate.</p>
 
 <p><a id="X7F1F67527A35A9CE" name="X7F1F67527A35A9CE"></a></p>
 
 <h5>66.4-7 CoefficientsOfUnivariateRationalFunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoefficientsOfUnivariateRationalFunction</code>( <var class="Arg">rfun</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoefficientsOfUnivariateRationalFunction</code>( <var class="Arg">rfun</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>if <var class="Arg">rfun</var> is a univariate rational function, this attribute returns a list <code class="code">[ <var class="Arg">ncof</var>, <var class="Arg">dcof</var>, <var class="Arg">val</var> ]</code> where <var class="Arg">ncof</var> and <var class="Arg">dcof</var> are coefficient lists of univariate polynomials <var class="Arg">n</var> and <var class="Arg">d</var> and a valuation <var class="Arg">val</var> such that <span class="SimpleMath">\(\textit{rfun} = x^{\textit{val}} \cdot \textit{n} / \textit{d}\)</span> where <span class="SimpleMath">\(x\)</span> is the variable with the number given by <code class="func">IndeterminateNumberOfUnivariateRationalFunction</code> (<a href="chap66_mj.html#X816C8D797C804380"><span class="RefLink">66.1-2</span></a>). Numerator and denominator are guaranteed to be cancelled.</p>
 
 <p><a id="X86A2546685D0016B" name="X86A2546685D0016B"></a></p>
 
 <h5>66.4-8 IsUnivariatePolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUnivariatePolynomial</code>( <var class="Arg">ratfun</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUnivariatePolynomial</code>( <var class="Arg">ratfun</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>A univariate polynomial is a polynomial in only one indeterminate.</p>
 
 <p><a id="X78C9524D7F2708C2" name="X78C9524D7F2708C2"></a></p>
 
 <h5>66.4-9 CoefficientsOfUnivariatePolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoefficientsOfUnivariatePolynomial</code>( <var class="Arg">pol</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoefficientsOfUnivariatePolynomial</code>( <var class="Arg">pol</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p><code class="func">CoefficientsOfUnivariatePolynomial</code> returns the coefficient list of the polynomial <var class="Arg">pol</var>, sorted in ascending order. (It returns the empty list if <var class="Arg">pol</var> is 0.)</p>
 
 <p><a id="X79138FF28213B6EC" name="X79138FF28213B6EC"></a></p>
 
 <h5>66.4-10 IsLaurentPolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLaurentPolynomial</code>( <var class="Arg">ratfun</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLaurentPolynomial</code>( <var class="Arg">ratfun</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>A Laurent polynomial is a univariate rational function whose denominator is a monomial. Therefore every univariate polynomial is a Laurent polynomial.</p>
 
 <p>The attribute <code class="func">CoefficientsOfLaurentPolynomial</code> (<a href="chap66_mj.html#X86D58AB67F86469F"><span class="RefLink">66.13-2</span></a>) gives a compact representation as Laurent polynomial.</p>
@@ -583,14 +583,14 @@ x^2*y^2+x
 
 <h5>66.4-11 IsConstantRationalFunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConstantRationalFunction</code>( <var class="Arg">ratfun</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConstantRationalFunction</code>( <var class="Arg">ratfun</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>A constant rational function is a function whose numerator and denominator are polynomials of degree 0.</p>
 
 <p><a id="X834B54947FAADEA4" name="X834B54947FAADEA4"></a></p>
 
 <h5>66.4-12 IsPrimitivePolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPrimitivePolynomial</code>( <var class="Arg">F</var>, <var class="Arg">pol</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPrimitivePolynomial</code>( <var class="Arg">F</var>, <var class="Arg">pol</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>For a univariate polynomial <var class="Arg">pol</var> of degree <span class="SimpleMath">\(d\)</span> in the indeterminate <span class="SimpleMath">\(X\)</span>, with coefficients in a finite field <var class="Arg">F</var> with <span class="SimpleMath">\(q\)</span> elements, say, <code class="func">IsPrimitivePolynomial</code> returns <code class="keyw">true</code> if</p>
 
 <ol>
@@ -607,7 +607,7 @@ x^2*y^2+x
 
 <h5>66.4-13 SplittingField</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SplittingField</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SplittingField</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the smallest field which contains the coefficients of <var class="Arg">f</var> and the roots of <var class="Arg">f</var>.</p>
 
 <p><a id="X82E2F1707FC2E553" name="X82E2F1707FC2E553"></a></p>
@@ -620,21 +620,21 @@ x^2*y^2+x
 
 <h5>66.5-1 UnivariatePolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnivariatePolynomial</code>( <var class="Arg">ring</var>, <var class="Arg">cofs</var>[, <var class="Arg">ind</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnivariatePolynomial</code>( <var class="Arg">ring</var>, <var class="Arg">cofs</var>[, <var class="Arg">ind</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>constructs an univariate polynomial over the ring <var class="Arg">ring</var> in the indeterminate <var class="Arg">ind</var> with the coefficients given by <var class="Arg">coefs</var>.</p>
 
 <p><a id="X85178A3E7B4F11E0" name="X85178A3E7B4F11E0"></a></p>
 
 <h5>66.5-2 UnivariatePolynomialByCoefficients</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnivariatePolynomialByCoefficients</code>( <var class="Arg">fam</var>, <var class="Arg">cofs</var>, <var class="Arg">ind</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnivariatePolynomialByCoefficients</code>( <var class="Arg">fam</var>, <var class="Arg">cofs</var>, <var class="Arg">ind</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>constructs an univariate polynomial over the coefficients family <var class="Arg">fam</var> and in the indeterminate <var class="Arg">ind</var> with the coefficients given by <var class="Arg">coefs</var>. This function should be used in algorithms to create polynomials as it avoids overhead associated with <code class="func">UnivariatePolynomial</code> (<a href="chap66_mj.html#X8379F8CB7D0076BA"><span class="RefLink">66.5-1</span></a>).</p>
 
 <p><a id="X78AF77C383245254" name="X78AF77C383245254"></a></p>
 
 <h5>66.5-3 DegreeOfLaurentPolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeOfLaurentPolynomial</code>( <var class="Arg">pol</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeOfLaurentPolynomial</code>( <var class="Arg">pol</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The degree of a univariate (Laurent) polynomial <var class="Arg">pol</var> is the largest exponent <span class="SimpleMath">\(n\)</span> of a monomial <span class="SimpleMath">\(x^n\)</span> of <var class="Arg">pol</var>. The degree of a zero polynomial is defined to be <code class="code">-infinity</code>.</p>
 
 
@@ -659,7 +659,7 @@ x
 
 <h5>66.5-4 RootsOfPolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RootsOfPolynomial</code>( [<var class="Arg">R</var>, ]<var class="Arg">p</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RootsOfPolynomial</code>( [<var class="Arg">R</var>, ]<var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For a univariate polynomial <var class="Arg">p</var>, this function returns all roots of <var class="Arg">p</var> over the ring <var class="Arg">R</var>. If the ring is not specified, it defaults to the ring specified by the coefficients of <var class="Arg">p</var> via <code class="func">DefaultRing</code> (<a href="chap56_mj.html#X83AFFCC77DE6ABDA"><span class="RefLink">56.1-3</span></a>)).</p>
 
 
@@ -676,7 +676,7 @@ x^4-1
 
 <h5>66.5-5 RootsOfUPol</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RootsOfUPol</code>( [<var class="Arg">field</var>, ]<var class="Arg">upol</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RootsOfUPol</code>( [<var class="Arg">field</var>, ]<var class="Arg">upol</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function returns a list of all roots of the univariate polynomial <var class="Arg">upol</var> in its default domain. If the optional argument <var class="Arg">field</var> is a field then the roots in this field are computed. If <var class="Arg">field</var> is the string <code class="code">"split"</code> then the splitting field of the polynomial is taken.</p>
 
 
@@ -689,7 +689,7 @@ x^4-1
 
 <h5>66.5-6 QuotRemLaurpols</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuotRemLaurpols</code>( <var class="Arg">left</var>, <var class="Arg">right</var>, <var class="Arg">mode</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuotRemLaurpols</code>( <var class="Arg">left</var>, <var class="Arg">right</var>, <var class="Arg">mode</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This internal function for euclidean division of polynomials takes two polynomials <var class="Arg">left</var> and <var class="Arg">right</var> and computes their quotient. No test is performed whether the arguments indeed are polynomials. Depending on the integer variable <var class="Arg">mode</var>, which may take values in a range from 1 to 4, it returns respectively:</p>
 
 <ol>
@@ -710,7 +710,7 @@ x^4-1
 
 <h5>66.5-7 UnivariatenessTestRationalFunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnivariatenessTestRationalFunction</code>( <var class="Arg">f</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnivariatenessTestRationalFunction</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>takes a rational function <var class="Arg">f</var> and tests whether it is univariate rational function (or even a Laurent polynomial). It returns a list <code class="code">[isunivariate, indet, islaurent, cofs]</code>.</p>
 
 <p>If <var class="Arg">f</var> is a univariate rational function then <code class="code">isunivariate</code> is <code class="keyw">true</code> and <code class="code">indet</code> is the number of the appropriate indeterminate.</p>
@@ -737,7 +737,7 @@ x^4-1
 
 <h5>66.5-8 InfoPoly</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoPoly</code></td><td class="tdright">( info class )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoPoly</code></td><td class="tdright">(&nbsp;info class&nbsp;)</td></tr></table></div>
 <p>is the info class for univariate polynomials.</p>
 
 <p>We remark that some functions for multivariate polynomials (which will be defined in the following sections) permit a different syntax for univariate polynomials which drops the requirement to specify the indeterminate. Examples are <code class="func">Value</code> (<a href="chap66_mj.html#X7A70769C7F52CD2D"><span class="RefLink">66.7-1</span></a>), <code class="func">Discriminant</code> (<a href="chap66_mj.html#X7C7D790A7D6E11AD"><span class="RefLink">66.6-6</span></a>), <code class="func">Derivative</code> (<a href="chap66_mj.html#X7B57CEE2780D0E0B"><span class="RefLink">66.6-5</span></a>), <code class="func">LeadingCoefficient</code> (<a href="chap66_mj.html#X80710E9B7D8340BD"><span class="RefLink">66.6-3</span></a>) and <code class="func">LeadingMonomial</code> (<a href="chap66_mj.html#X7B3EAE41795598A5"><span class="RefLink">66.6-4</span></a>):</p>
@@ -762,7 +762,7 @@ Z(5)^2
 
 <h5>66.6-1 DegreeIndeterminate</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeIndeterminate</code>( <var class="Arg">pol</var>, <var class="Arg">ind</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeIndeterminate</code>( <var class="Arg">pol</var>, <var class="Arg">ind</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the degree of the polynomial <var class="Arg">pol</var> in the indeterminate (or indeterminate number) <var class="Arg">ind</var>.</p>
 
 
@@ -779,7 +779,7 @@ Z(5)^2
 
 <h5>66.6-2 PolynomialCoefficientsOfPolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolynomialCoefficientsOfPolynomial</code>( <var class="Arg">pol</var>, <var class="Arg">ind</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolynomialCoefficientsOfPolynomial</code>( <var class="Arg">pol</var>, <var class="Arg">ind</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">PolynomialCoefficientsOfPolynomial</code> returns the coefficient list (whose entries are polynomials not involving the indeterminate <var class="Arg">ind</var>) describing the polynomial <var class="Arg">pol</var> viewed as a polynomial in <var class="Arg">ind</var>. Instead of the indeterminate, <var class="Arg">ind</var> can also be an indeterminate number.</p>
 
 
@@ -792,14 +792,14 @@ Z(5)^2
 
 <h5>66.6-3 LeadingCoefficient</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeadingCoefficient</code>( <var class="Arg">pol</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeadingCoefficient</code>( <var class="Arg">pol</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the leading coefficient (that is the coefficient of the leading monomial, see <code class="func">LeadingMonomial</code> (<a href="chap66_mj.html#X7B3EAE41795598A5"><span class="RefLink">66.6-4</span></a>)) of the polynomial <var class="Arg">pol</var>.</p>
 
 <p><a id="X7B3EAE41795598A5" name="X7B3EAE41795598A5"></a></p>
 
 <h5>66.6-4 LeadingMonomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeadingMonomial</code>( <var class="Arg">pol</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeadingMonomial</code>( <var class="Arg">pol</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the leading monomial (with respect to the ordering given by <code class="func">MonomialExtGrlexLess</code> (<a href="chap66_mj.html#X7A30E10B820311D1"><span class="RefLink">66.17-14</span></a>)) of the polynomial <var class="Arg">pol</var> as a list containing indeterminate numbers and exponents.</p>
 
 
@@ -818,7 +818,7 @@ Z(5)^2
 
 <h5>66.6-5 Derivative</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Derivative</code>( <var class="Arg">ratfun</var>[, <var class="Arg">ind</var>] )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Derivative</code>( <var class="Arg">ratfun</var>[, <var class="Arg">ind</var>] )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">ratfun</var> is a univariate rational function then <code class="func">Derivative</code> returns the <em>derivative</em> of <var class="Arg">ufun</var> by its indeterminate. For a rational function <var class="Arg">ratfun</var>, the derivative by the indeterminate <var class="Arg">ind</var> is returned, regarding <var class="Arg">ratfun</var> as univariate in <var class="Arg">ind</var>. Instead of the desired indeterminate, also the number of this indeterminate can be given as <var class="Arg">ind</var>.</p>
 
 
@@ -831,7 +831,7 @@ Z(5)^2
 
 <h5>66.6-6 Discriminant</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Discriminant</code>( <var class="Arg">pol</var>[, <var class="Arg">ind</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Discriminant</code>( <var class="Arg">pol</var>[, <var class="Arg">ind</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">pol</var> is a univariate polynomial then <code class="func">Discriminant</code> returns the <em>discriminant</em> of <var class="Arg">pol</var> by its indeterminate. The two-argument form returns the discriminant of a polynomial <var class="Arg">pol</var> by the indeterminate number <var class="Arg">ind</var>, regarding <var class="Arg">pol</var> as univariate in this indeterminate. Instead of the indeterminate number, the indeterminate itself can also be given as <var class="Arg">ind</var>.</p>
 
 
@@ -849,7 +849,7 @@ true
 
 <h5>66.6-7 Resultant</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Resultant</code>( <var class="Arg">pol1</var>, <var class="Arg">pol2</var>, <var class="Arg">ind</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Resultant</code>( <var class="Arg">pol1</var>, <var class="Arg">pol2</var>, <var class="Arg">ind</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>computes the resultant of the polynomials <var class="Arg">pol1</var> and <var class="Arg">pol2</var> with respect to the indeterminate <var class="Arg">ind</var>, or indeterminate number <var class="Arg">ind</var>. The resultant considers <var class="Arg">pol1</var> and <var class="Arg">pol2</var> as univariate in <var class="Arg">ind</var> and returns an element of the corresponding base ring (which might be a polynomial ring).</p>
 
 
@@ -868,8 +868,8 @@ x^16+x
 
 <h5>66.7-1 <span class="Heading">Value</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Value</code>( <var class="Arg">ratfun</var>, <var class="Arg">indets</var>, <var class="Arg">vals</var>[, <var class="Arg">one</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Value</code>( <var class="Arg">upol</var>, <var class="Arg">value</var>[, <var class="Arg">one</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Value</code>( <var class="Arg">ratfun</var>, <var class="Arg">indets</var>, <var class="Arg">vals</var>[, <var class="Arg">one</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Value</code>( <var class="Arg">upol</var>, <var class="Arg">value</var>[, <var class="Arg">one</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>The first variant takes a rational function <var class="Arg">ratfun</var> and specializes the indeterminates given in <var class="Arg">indets</var> to the values given in <var class="Arg">vals</var>, replacing the <span class="SimpleMath">\(i\)</span>-th entry in <var class="Arg">indets</var> by the <span class="SimpleMath">\(i\)</span>-th entry in <var class="Arg">vals</var>. If this specialization results in a constant polynomial, an element of the coefficient ring is returned. If the specialization would specialize the denominator of <var class="Arg">ratfun</var> to zero, an error is raised.</p>
 
 <p>A variation is the evaluation at elements of another ring <span class="SimpleMath">\(R\)</span>, for which a multiplication with elements of the coefficient ring of <var class="Arg">ratfun</var> are defined. In this situation the identity element of <span class="SimpleMath">\(R\)</span> may be given by a further argument <var class="Arg">one</var> which will be used for <span class="SimpleMath">\(x^0\)</span> for any specialized indeterminate <span class="SimpleMath">\(x\)</span>.</p>
@@ -892,7 +892,7 @@ x^16+x
 
 <h5>66.8-1 MinimalPolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalPolynomial</code>( <var class="Arg">R</var>, <var class="Arg">elm</var>[, <var class="Arg">ind</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimalPolynomial</code>( <var class="Arg">R</var>, <var class="Arg">elm</var>[, <var class="Arg">ind</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the <em>minimal polynomial</em> of <var class="Arg">elm</var> over the ring <var class="Arg">R</var>, expressed in the indeterminate number <var class="Arg">ind</var>. If <var class="Arg">ind</var> is not given, it defaults to 1.</p>
 
 <p>The minimal polynomial is the monic polynomial of smallest degree with coefficients in <var class="Arg">R</var> that has value zero at <var class="Arg">elm</var>.</p>
@@ -911,7 +911,7 @@ x-2
 
 <h5>66.9-1 CyclotomicPolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CyclotomicPolynomial</code>( <var class="Arg">F</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CyclotomicPolynomial</code>( <var class="Arg">F</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is the <var class="Arg">n</var>-th cyclotomic polynomial over the ring <var class="Arg">F</var>.</p>
 
 
@@ -930,7 +930,7 @@ x^4+x^3+x^2+x+1
 
 <h5>66.10-1 Factors</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Factors</code>( [<var class="Arg">R</var>, ]<var class="Arg">poly</var>[, <var class="Arg">opt</var>] )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Factors</code>( [<var class="Arg">R</var>, ]<var class="Arg">poly</var>[, <var class="Arg">opt</var>] )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <p>returns a list of the irreducible factors of the polynomial <var class="Arg">poly</var> in the polynomial ring <var class="Arg">R</var>. (That is factors over the <code class="func">CoefficientsRing</code> (<a href="chap66_mj.html#X8235D10781BE8003"><span class="RefLink">66.15-3</span></a>) value of <var class="Arg">R</var>.)</p>
 
 <p>For univariate factorizations, it is possible to pass a record <var class="Arg">opt</var> as a third argument. This record can contain the following components:</p>
@@ -969,7 +969,7 @@ x^2+1
 
 <h5>66.10-2 FactorsSquarefree</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FactorsSquarefree</code>( <var class="Arg">pring</var>, <var class="Arg">upol</var>, <var class="Arg">opt</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FactorsSquarefree</code>( <var class="Arg">pring</var>, <var class="Arg">upol</var>, <var class="Arg">opt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a factorization of the squarefree, monic, univariate polynomial <var class="Arg">upol</var> in the polynomial ring <var class="Arg">pring</var>; <var class="Arg">opt</var> must be a (possibly empty) record of options. <var class="Arg">upol</var> must not have zero as a root. This function is used by the factoring algorithms.</p>
 
 <p>The current method for multivariate factorization reduces to univariate factorization by use of a reduction homomorphism of the form <span class="SimpleMath">\(f(x_1,x_2,x_3) \mapsto f(x,x^p,x^{{p^2}})\)</span>. It can be very time intensive for larger degrees.</p>
@@ -990,21 +990,21 @@ x^2+1
 
 <h5>66.11-1 PrimitivePolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrimitivePolynomial</code>( <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrimitivePolynomial</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>takes a polynomial <var class="Arg">f</var> with rational coefficients and computes a new polynomial with integral coefficients, obtained by multiplying with the Lcm of the denominators of the coefficients and casting out the content (the Gcd of the coefficients). The operation returns a list [<var class="Arg">newpol</var>,<var class="Arg">coeff</var>] with rational <var class="Arg">coeff</var> such that <code class="code"><var class="Arg">coeff</var>*<var class="Arg">newpol</var>=<var class="Arg">f</var></code>.</p>
 
 <p><a id="X7A73A3877EB73566" name="X7A73A3877EB73566"></a></p>
 
 <h5>66.11-2 PolynomialModP</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolynomialModP</code>( <var class="Arg">pol</var>, <var class="Arg">p</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolynomialModP</code>( <var class="Arg">pol</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>for a rational polynomial <var class="Arg">pol</var> this function returns a polynomial over the field with <var class="Arg">p</var> elements, obtained by reducing the coefficients modulo <var class="Arg">p</var>.</p>
 
 <p><a id="X7AB9A6257ED694EC" name="X7AB9A6257ED694EC"></a></p>
 
 <h5>66.11-3 GaloisType</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisType</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GaloisType</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">f</var> be an irreducible polynomial with rational coefficients. This function returns the type of Gal(<var class="Arg">f</var>) (considered as a transitive permutation group of the roots of <var class="Arg">f</var>). It returns a number <var class="Arg">i</var> if Gal(<var class="Arg">f</var>) is permutation isomorphic to <code class="code">TransitiveGroup(<var class="Arg">n</var>,<var class="Arg">i</var>)</code> where <var class="Arg">n</var> is the degree of <var class="Arg">f</var>.</p>
 
 <p>Identification is performed by factoring appropriate Galois resolvents as proposed in <a href="chapBib_mj.html#biBMS85">[SM85]</a>. This function is provided for rational polynomials of degree up to 15. However, in some cases the required calculations become unfeasibly large.</p>
@@ -1017,7 +1017,7 @@ x^2+1
 
 <h5>66.11-4 ProbabilityShapes</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProbabilityShapes</code>( <var class="Arg">f</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProbabilityShapes</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">f</var> be an irreducible polynomial with rational coefficients. This function returns a list of the most likely type(s) of Gal(<var class="Arg">f</var>) (see <code class="func">GaloisType</code> (<a href="chap66_mj.html#X7AB9A6257ED694EC"><span class="RefLink">66.11-3</span></a>)), based on factorization modulo a set of primes. It is very fast, but the result is only probabilistic.</p>
 
 <p>This function requires the transitive groups library to be installed (see <a href="chap50_mj.html#X7FBB970F7D110FDB"><span class="RefLink">50.6</span></a>).</p>
@@ -1043,28 +1043,28 @@ x^2+1
 
 <h5>66.12-1 BombieriNorm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BombieriNorm</code>( <var class="Arg">pol</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BombieriNorm</code>( <var class="Arg">pol</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>computes weighted Norm [<var class="Arg">pol</var>]<span class="SimpleMath">\(_2\)</span> of <var class="Arg">pol</var> which is a good measure for factor coefficients (see <a href="chapBib_mj.html#biBBTW93">[BTW93]</a>).</p>
 
 <p><a id="X856D769D878AF7AE" name="X856D769D878AF7AE"></a></p>
 
 <h5>66.12-2 MinimizedBombieriNorm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimizedBombieriNorm</code>( <var class="Arg">f</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MinimizedBombieriNorm</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>This function applies linear Tschirnhaus transformations (<span class="SimpleMath">\(x \mapsto x + i\)</span>) to the polynomial <var class="Arg">f</var>, trying to get the Bombieri norm of <var class="Arg">f</var> small. It returns a list <code class="code">[<var class="Arg">new_polynomial</var>, <var class="Arg">i_of_transformation</var>]</code>.</p>
 
 <p><a id="X8139BB0F87399F2C" name="X8139BB0F87399F2C"></a></p>
 
 <h5>66.12-3 HenselBound</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HenselBound</code>( <var class="Arg">pol</var>[, <var class="Arg">minpol</var>, <var class="Arg">den</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HenselBound</code>( <var class="Arg">pol</var>[, <var class="Arg">minpol</var>, <var class="Arg">den</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the Hensel bound of the polynomial <var class="Arg">pol</var>. If the computation takes place over an algebraic extension, then the minimal polynomial <var class="Arg">minpol</var> and denominator <var class="Arg">den</var> must be given.</p>
 
 <p><a id="X79CC9C8D7C9F6B6A" name="X79CC9C8D7C9F6B6A"></a></p>
 
 <h5>66.12-4 OneFactorBound</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OneFactorBound</code>( <var class="Arg">pol</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OneFactorBound</code>( <var class="Arg">pol</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the coefficient bound for a single factor of the rational polynomial <var class="Arg">pol</var>.</p>
 
 <p><a id="X844B3C6C87A0E7E0" name="X844B3C6C87A0E7E0"></a></p>
@@ -1077,14 +1077,14 @@ x^2+1
 
 <h5>66.13-1 LaurentPolynomialByCoefficients</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LaurentPolynomialByCoefficients</code>( <var class="Arg">fam</var>, <var class="Arg">cofs</var>, <var class="Arg">val</var>[, <var class="Arg">ind</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LaurentPolynomialByCoefficients</code>( <var class="Arg">fam</var>, <var class="Arg">cofs</var>, <var class="Arg">val</var>[, <var class="Arg">ind</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>constructs a Laurent polynomial over the coefficients family <var class="Arg">fam</var> and in the indeterminate <var class="Arg">ind</var> (defaulting to 1) with the coefficients given by <var class="Arg">coefs</var> and valuation <var class="Arg">val</var>.</p>
 
 <p><a id="X86D58AB67F86469F" name="X86D58AB67F86469F"></a></p>
 
 <h5>66.13-2 CoefficientsOfLaurentPolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoefficientsOfLaurentPolynomial</code>( <var class="Arg">laurent</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoefficientsOfLaurentPolynomial</code>( <var class="Arg">laurent</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>For a Laurent polynomial <var class="Arg">laurent</var>, this function returns a pair <code class="code">[<var class="Arg">cof</var>, <var class="Arg">val</var>]</code>, consisting of the coefficient list (in ascending order) <var class="Arg">cof</var> and the valuation <var class="Arg">val</var> of <var class="Arg">laurent</var>.</p>
 
 
@@ -1103,7 +1103,7 @@ x^2
 
 <h5>66.13-3 IndeterminateNumberOfLaurentPolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndeterminateNumberOfLaurentPolynomial</code>( <var class="Arg">pol</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndeterminateNumberOfLaurentPolynomial</code>( <var class="Arg">pol</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Is a synonym for <code class="func">IndeterminateNumberOfUnivariateRationalFunction</code> (<a href="chap66_mj.html#X816C8D797C804380"><span class="RefLink">66.1-2</span></a>).</p>
 
 <p><a id="X7C1708D27F97B05F" name="X7C1708D27F97B05F"></a></p>
@@ -1114,7 +1114,7 @@ x^2
 
 <h5>66.14-1 UnivariateRationalFunctionByCoefficients</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnivariateRationalFunctionByCoefficients</code>( <var class="Arg">fam</var>, <var class="Arg">ncof</var>, <var class="Arg">dcof</var>, <var class="Arg">val</var>[, <var class="Arg">ind</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnivariateRationalFunctionByCoefficients</code>( <var class="Arg">fam</var>, <var class="Arg">ncof</var>, <var class="Arg">dcof</var>, <var class="Arg">val</var>[, <var class="Arg">ind</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>constructs a univariate rational function over the coefficients family <var class="Arg">fam</var> and in the indeterminate <var class="Arg">ind</var> (defaulting to 1) with numerator and denominator coefficients given by <var class="Arg">ncof</var> and <var class="Arg">dcof</var> and valuation <var class="Arg">val</var>.</p>
 
 <p><a id="X7C59471783C3FEDC" name="X7C59471783C3FEDC"></a></p>
@@ -1163,10 +1163,10 @@ b
 
 <h5>66.15-1 <span class="Heading">PolynomialRing</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolynomialRing</code>( <var class="Arg">R</var>, <var class="Arg">rank</var>[, <var class="Arg">avoid</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolynomialRing</code>( <var class="Arg">R</var>, <var class="Arg">names</var>[, <var class="Arg">avoid</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolynomialRing</code>( <var class="Arg">R</var>, <var class="Arg">indets</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolynomialRing</code>( <var class="Arg">R</var>, <var class="Arg">indetnums</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolynomialRing</code>( <var class="Arg">R</var>, <var class="Arg">rank</var>[, <var class="Arg">avoid</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolynomialRing</code>( <var class="Arg">R</var>, <var class="Arg">names</var>[, <var class="Arg">avoid</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolynomialRing</code>( <var class="Arg">R</var>, <var class="Arg">indets</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolynomialRing</code>( <var class="Arg">R</var>, <var class="Arg">indetnums</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>creates a polynomial ring over the ring <var class="Arg">R</var>. If a positive integer <var class="Arg">rank</var> is given, this creates the polynomial ring in <var class="Arg">rank</var> indeterminates. These indeterminates will have the internal index numbers 1 to <var class="Arg">rank</var>. The second usage takes a list <var class="Arg">names</var> of strings and returns a polynomial ring in indeterminates labelled by <var class="Arg">names</var>. These indeterminates have "new" internal index numbers as if they had been created by calls to <code class="func">Indeterminate</code> (<a href="chap66_mj.html#X79D0380D7FA39F7D"><span class="RefLink">66.1-1</span></a>). (If the argument <var class="Arg">avoid</var> is given it contains indeterminates that should be avoided, in this case internal index numbers are incremented to skip these variables.) In the third version, a list of indeterminates <var class="Arg">indets</var> is given. This creates the polynomial ring in the indeterminates <var class="Arg">indets</var>. Finally, the fourth version specifies indeterminates by their index numbers.</p>
 
 <p>To get the indeterminates of a polynomial ring use <code class="func">IndeterminatesOfPolynomialRing</code> (<a href="chap66_mj.html#X80D585E1793D4552"><span class="RefLink">66.15-2</span></a>). (Indeterminates created independently with <code class="func">Indeterminate</code> (<a href="chap66_mj.html#X79D0380D7FA39F7D"><span class="RefLink">66.1-1</span></a>) will usually differ, though they might be given the same name and display identically, see Section <a href="chap66_mj.html#X7A8FADCD875826DA"><span class="RefLink">66.1</span></a>.)</p>
@@ -1175,15 +1175,15 @@ b
 
 <h5>66.15-2 IndeterminatesOfPolynomialRing</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndeterminatesOfPolynomialRing</code>( <var class="Arg">pring</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndeterminatesOfFunctionField</code>( <var class="Arg">ffield</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndeterminatesOfPolynomialRing</code>( <var class="Arg">pring</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IndeterminatesOfFunctionField</code>( <var class="Arg">ffield</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a list of the indeterminates of the polynomial ring <var class="Arg">pring</var>, respectively the function field <var class="Arg">ffield</var>.</p>
 
 <p><a id="X8235D10781BE8003" name="X8235D10781BE8003"></a></p>
 
 <h5>66.15-3 CoefficientsRing</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoefficientsRing</code>( <var class="Arg">pring</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoefficientsRing</code>( <var class="Arg">pring</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the ring of coefficients of the polynomial ring <var class="Arg">pring</var>, that is the ring over which <var class="Arg">pring</var> was defined.</p>
 
 
@@ -1210,28 +1210,28 @@ GF(7)[x,y,z,z2]
 
 <h5>66.15-4 IsPolynomialRing</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPolynomialRing</code>( <var class="Arg">pring</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPolynomialRing</code>( <var class="Arg">pring</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>is the category of polynomial rings</p>
 
 <p><a id="X86F391237A76D804" name="X86F391237A76D804"></a></p>
 
 <h5>66.15-5 IsFiniteFieldPolynomialRing</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFiniteFieldPolynomialRing</code>( <var class="Arg">pring</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFiniteFieldPolynomialRing</code>( <var class="Arg">pring</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>is the category of polynomial rings over a finite field (see Chapter <a href="chap59_mj.html#X7893ABF67A028802"><span class="RefLink">59</span></a>).</p>
 
 <p><a id="X782D07F77BCF67C1" name="X782D07F77BCF67C1"></a></p>
 
 <h5>66.15-6 IsAbelianNumberFieldPolynomialRing</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAbelianNumberFieldPolynomialRing</code>( <var class="Arg">pring</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAbelianNumberFieldPolynomialRing</code>( <var class="Arg">pring</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>is the category of polynomial rings over a field of cyclotomics (see the chapters <a href="chap18_mj.html#X7DFC03C187DE4841"><span class="RefLink">18</span></a> and <a href="chap60_mj.html#X80510B5880521FDC"><span class="RefLink">60</span></a>).</p>
 
 <p><a id="X7D45213A8642033B" name="X7D45213A8642033B"></a></p>
 
 <h5>66.15-7 IsRationalsPolynomialRing</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRationalsPolynomialRing</code>( <var class="Arg">pring</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRationalsPolynomialRing</code>( <var class="Arg">pring</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>is the category of polynomial rings over the rationals (see Chapter <a href="chap17_mj.html#X87003045878E74DF"><span class="RefLink">17</span></a>).</p>
 
 
@@ -1249,10 +1249,10 @@ true
 
 <h5>66.15-8 <span class="Heading">FunctionField</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FunctionField</code>( <var class="Arg">R</var>, <var class="Arg">rank</var>[, <var class="Arg">avoid</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FunctionField</code>( <var class="Arg">R</var>, <var class="Arg">names</var>[, <var class="Arg">avoid</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FunctionField</code>( <var class="Arg">R</var>, <var class="Arg">indets</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FunctionField</code>( <var class="Arg">R</var>, <var class="Arg">indetnums</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FunctionField</code>( <var class="Arg">R</var>, <var class="Arg">rank</var>[, <var class="Arg">avoid</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FunctionField</code>( <var class="Arg">R</var>, <var class="Arg">names</var>[, <var class="Arg">avoid</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FunctionField</code>( <var class="Arg">R</var>, <var class="Arg">indets</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FunctionField</code>( <var class="Arg">R</var>, <var class="Arg">indetnums</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>creates a function field over the integral ring <var class="Arg">R</var>. If a positive integer <var class="Arg">rank</var> is given, this creates the function field in <var class="Arg">rank</var> indeterminates. These indeterminates will have the internal index numbers 1 to <var class="Arg">rank</var>. The second usage takes a list <var class="Arg">names</var> of strings and returns a function field in indeterminates labelled by <var class="Arg">names</var>. These indeterminates have "new" internal index numbers as if they had been created by calls to <code class="func">Indeterminate</code> (<a href="chap66_mj.html#X79D0380D7FA39F7D"><span class="RefLink">66.1-1</span></a>). (If the argument <var class="Arg">avoid</var> is given it contains indeterminates that should be avoided, in this case internal index numbers are incremented to skip these variables.) In the third version, a list of indeterminates <var class="Arg">indets</var> is given. This creates the function field in the indeterminates <var class="Arg">indets</var>. Finally, the fourth version specifies indeterminates by their index number.</p>
 
 <p>To get the indeterminates of a function field use <code class="func">IndeterminatesOfFunctionField</code> (<a href="chap66_mj.html#X80D585E1793D4552"><span class="RefLink">66.15-2</span></a>). (Indeterminates created independently with <code class="func">Indeterminate</code> (<a href="chap66_mj.html#X79D0380D7FA39F7D"><span class="RefLink">66.1-1</span></a>) will usually differ, though they might be given the same name and display identically, see Section <a href="chap66_mj.html#X7A8FADCD875826DA"><span class="RefLink">66.1</span></a>.)</p>
@@ -1261,7 +1261,7 @@ true
 
 <h5>66.15-9 IsFunctionField</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFunctionField</code>( <var class="Arg">ffield</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFunctionField</code>( <var class="Arg">ffield</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>is the category of function fields</p>
 
 <p><a id="X85CA757B844F12AE" name="X85CA757B844F12AE"></a></p>
@@ -1272,8 +1272,8 @@ true
 
 <h5>66.16-1 <span class="Heading">UnivariatePolynomialRing</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnivariatePolynomialRing</code>( <var class="Arg">R</var>[, <var class="Arg">nr</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnivariatePolynomialRing</code>( <var class="Arg">R</var>[, <var class="Arg">name</var>][, <var class="Arg">avoid</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnivariatePolynomialRing</code>( <var class="Arg">R</var>[, <var class="Arg">nr</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnivariatePolynomialRing</code>( <var class="Arg">R</var>[, <var class="Arg">name</var>][, <var class="Arg">avoid</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a univariate polynomial ring in the indeterminate <var class="Arg">nr</var> over the base ring <var class="Arg">R</var>. If <var class="Arg">nr</var> is not given it defaults to 1.</p>
 
 <p>If the number is not specified a list <var class="Arg">avoid</var> of indeterminates may be given. Then the function will return a ring in an indeterminate that is guaranteed to be different from all the indeterminates in <var class="Arg">avoid</var>.</p>
@@ -1284,7 +1284,7 @@ true
 
 <h5>66.16-2 IsUnivariatePolynomialRing</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUnivariatePolynomialRing</code>( <var class="Arg">pring</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUnivariatePolynomialRing</code>( <var class="Arg">pring</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>is the category of polynomial rings with one indeterminate.</p>
 
 
@@ -1315,14 +1315,14 @@ true
 
 <h5>66.17-1 IsMonomialOrdering</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMonomialOrdering</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMonomialOrdering</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>A monomial ordering is an object representing a monomial ordering. Its attributes <code class="func">MonomialComparisonFunction</code> (<a href="chap66_mj.html#X7EDE941781BA7F8B"><span class="RefLink">66.17-5</span></a>) and <code class="func">MonomialExtrepComparisonFun</code> (<a href="chap66_mj.html#X7EDC3A457E7B591E"><span class="RefLink">66.17-6</span></a>) are actual comparison functions.</p>
 
 <p><a id="X7D052A017A73E91E" name="X7D052A017A73E91E"></a></p>
 
 <h5>66.17-2 LeadingMonomialOfPolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeadingMonomialOfPolynomial</code>( <var class="Arg">pol</var>, <var class="Arg">ord</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeadingMonomialOfPolynomial</code>( <var class="Arg">pol</var>, <var class="Arg">ord</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the leading monomial (with respect to the ordering <var class="Arg">ord</var>) of the polynomial <var class="Arg">pol</var>.</p>
 
 
@@ -1345,14 +1345,14 @@ y^3
 
 <h5>66.17-3 LeadingTermOfPolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeadingTermOfPolynomial</code>( <var class="Arg">pol</var>, <var class="Arg">ord</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeadingTermOfPolynomial</code>( <var class="Arg">pol</var>, <var class="Arg">ord</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the leading term (with respect to the ordering <var class="Arg">ord</var>) of the polynomial <var class="Arg">pol</var>, i.e. the product of leading coefficient and leading monomial.</p>
 
 <p><a id="X798E707D86141087" name="X798E707D86141087"></a></p>
 
 <h5>66.17-4 LeadingCoefficientOfPolynomial</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeadingCoefficientOfPolynomial</code>( <var class="Arg">pol</var>, <var class="Arg">ord</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeadingCoefficientOfPolynomial</code>( <var class="Arg">pol</var>, <var class="Arg">ord</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the leading coefficient (that is the coefficient of the leading monomial, see <code class="func">LeadingMonomialOfPolynomial</code> (<a href="chap66_mj.html#X7D052A017A73E91E"><span class="RefLink">66.17-2</span></a>)) of the polynomial <var class="Arg">pol</var>.</p>
 
 
@@ -1369,7 +1369,7 @@ y^3
 
 <h5>66.17-5 MonomialComparisonFunction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonomialComparisonFunction</code>( <var class="Arg">O</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonomialComparisonFunction</code>( <var class="Arg">O</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">O</var> is an object representing a monomial ordering, this attribute returns a <em>function</em> that can be used to compare or sort monomials (and polynomials which will be compared by their monomials in decreasing order) in this order.</p>
 
 
@@ -1385,14 +1385,14 @@ function( a, b ) ... end
 
 <h5>66.17-6 MonomialExtrepComparisonFun</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonomialExtrepComparisonFun</code>( <var class="Arg">O</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonomialExtrepComparisonFun</code>( <var class="Arg">O</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">O</var> is an object representing a monomial ordering, this attribute returns a <em>function</em> that can be used to compare or sort monomials <em>in their external representation</em> (as lists). This comparison variant is used inside algorithms that manipulate the external representation.</p>
 
 <p><a id="X852D7BB37ECE98E1" name="X852D7BB37ECE98E1"></a></p>
 
 <h5>66.17-7 MonomialLexOrdering</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonomialLexOrdering</code>( [<var class="Arg">vari</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonomialLexOrdering</code>( [<var class="Arg">vari</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function creates a lexicographic ordering for monomials. Monomials are compared first by the exponents of the largest variable, then the exponents of the second largest variable and so on.</p>
 
 <p>The variables are ordered according to their (internal) index, i.e., <span class="SimpleMath">\(x_1\)</span> is larger than <span class="SimpleMath">\(x_2\)</span> and so on. If <var class="Arg">vari</var> is given, and is a list of variables or variable indices, instead this arrangement of variables (in descending order; i.e. the first variable is larger than the second) is used as the underlying order of variables.</p>
@@ -1421,7 +1421,7 @@ function( a, b ) ... end
 
 <h5>66.17-8 MonomialGrlexOrdering</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonomialGrlexOrdering</code>( [<var class="Arg">vari</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonomialGrlexOrdering</code>( [<var class="Arg">vari</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function creates a degree/lexicographic ordering. In this ordering monomials are compared first by their total degree, then lexicographically (see <code class="func">MonomialLexOrdering</code> (<a href="chap66_mj.html#X852D7BB37ECE98E1"><span class="RefLink">66.17-7</span></a>)).</p>
 
 <p>The variables are ordered according to their (internal) index, i.e., <span class="SimpleMath">\(x_1\)</span> is larger than <span class="SimpleMath">\(x_2\)</span> and so on. If <var class="Arg">vari</var> is given, and is a list of variables or variable indices, instead this arrangement of variables (in descending order; i.e. the first variable is larger than the second) is used as the underlying order of variables.</p>
@@ -1430,7 +1430,7 @@ function( a, b ) ... end
 
 <h5>66.17-9 MonomialGrevlexOrdering</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonomialGrevlexOrdering</code>( [<var class="Arg">vari</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonomialGrevlexOrdering</code>( [<var class="Arg">vari</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function creates a "grevlex" ordering. In this ordering monomials are compared first by total degree and then backwards lexicographically. (This is different than "grlex" ordering with variables reversed.)</p>
 
 <p>The variables are ordered according to their (internal) index, i.e., <span class="SimpleMath">\(x_1\)</span> is larger than <span class="SimpleMath">\(x_2\)</span> and so on. If <var class="Arg">vari</var> is given, and is a list of variables or variable indices, instead this arrangement of variables (in descending order; i.e. the first variable is larger than the second) is used as the underlying order of variables.</p>
@@ -1455,7 +1455,7 @@ function( a, b ) ... end
 
 <h5>66.17-10 EliminationOrdering</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EliminationOrdering</code>( <var class="Arg">elim</var>[, <var class="Arg">rest</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EliminationOrdering</code>( <var class="Arg">elim</var>[, <var class="Arg">rest</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function creates an elimination ordering for eliminating the variables in <var class="Arg">elim</var>. Two monomials are compared first by the exponent vectors for the variables listed in <var class="Arg">elim</var> (a lexicographic comparison with respect to the ordering indicated in <var class="Arg">elim</var>). If these submonomial are equal, the submonomials given by the other variables are compared by a graded lexicographic ordering (with respect to the variable order given in <var class="Arg">rest</var>, if called with two parameters).</p>
 
 <p>Both <var class="Arg">elim</var> and <var class="Arg">rest</var> may be a list of variables or a list of variable indices.</p>
@@ -1464,7 +1464,7 @@ function( a, b ) ... end
 
 <h5>66.17-11 PolynomialReduction</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolynomialReduction</code>( <var class="Arg">poly</var>, <var class="Arg">gens</var>, <var class="Arg">order</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolynomialReduction</code>( <var class="Arg">poly</var>, <var class="Arg">gens</var>, <var class="Arg">order</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>reduces the polynomial <var class="Arg">poly</var> by the ideal generated by the polynomials in <var class="Arg">gens</var>, using the order <var class="Arg">order</var> of monomials. Unless <var class="Arg">gens</var> is a Gröbner basis the result is not guaranteed to be unique.</p>
 
 <p>The operation returns a list of length two, the first entry is the remainder after the reduction. The second entry is a list of quotients corresponding to <var class="Arg">gens</var>.</p>
@@ -1475,14 +1475,14 @@ function( a, b ) ... end
 
 <h5>66.17-12 PolynomialReducedRemainder</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolynomialReducedRemainder</code>( <var class="Arg">poly</var>, <var class="Arg">gens</var>, <var class="Arg">order</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolynomialReducedRemainder</code>( <var class="Arg">poly</var>, <var class="Arg">gens</var>, <var class="Arg">order</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>this operation does the same way as <code class="func">PolynomialReduction</code> (<a href="chap66_mj.html#X7C99593584D478D7"><span class="RefLink">66.17-11</span></a>) but does not keep track of the actual quotients and returns only the remainder (it is therefore slightly faster).</p>
 
 <p><a id="X7C8239057FD4EC03" name="X7C8239057FD4EC03"></a></p>
 
 <h5>66.17-13 PolynomialDivisionAlgorithm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolynomialDivisionAlgorithm</code>( <var class="Arg">poly</var>, <var class="Arg">gens</var>, <var class="Arg">order</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolynomialDivisionAlgorithm</code>( <var class="Arg">poly</var>, <var class="Arg">gens</var>, <var class="Arg">order</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function implements the division algorithm for multivariate polynomials as given in <a href="chapBib_mj.html#biBcoxlittleoshea">[CLO97, Theorem 3 in Chapter 2]</a>. (It might be slower than <code class="func">PolynomialReduction</code> (<a href="chap66_mj.html#X7C99593584D478D7"><span class="RefLink">66.17-11</span></a>) but the remainders are guaranteed to agree with the textbook.)</p>
 
 <p>The operation returns a list of length two, the first entry is the remainder after the reduction. The second entry is a list of quotients corresponding to <var class="Arg">gens</var>.</p>
@@ -1503,7 +1503,7 @@ function( a, b ) ... end
 
 <h5>66.17-14 MonomialExtGrlexLess</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonomialExtGrlexLess</code>( <var class="Arg">a</var>, <var class="Arg">b</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MonomialExtGrlexLess</code>( <var class="Arg">a</var>, <var class="Arg">b</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>implements comparison of monomial in their external representation by a "grlex" order with <span class="SimpleMath">\(x_1&gt;x_2\)</span> (This is exactly the same as the ordering by <code class="func">MonomialGrlexOrdering</code> (<a href="chap66_mj.html#X786C866C824D2688"><span class="RefLink">66.17-8</span></a>), see  <a href="chap66_mj.html#X86E2ADEA784AD163"><span class="RefLink">66.17</span></a>). The function takes two monomials <var class="Arg">a</var> and <var class="Arg">b</var> in expanded form and returns whether the first is smaller than the second. (This ordering is also used by <strong class="pkg">GAP</strong> internally for representing polynomials as a linear combination of monomials.)</p>
 
 <p>See section <a href="chap66_mj.html#X7F44CF87801DB965"><span class="RefLink">66.21</span></a> for details on the expanded form of monomials.</p>
@@ -1520,9 +1520,9 @@ function( a, b ) ... end
 
 <h5>66.18-1 <span class="Heading">GroebnerBasis</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroebnerBasis</code>( <var class="Arg">L</var>, <var class="Arg">O</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroebnerBasis</code>( <var class="Arg">I</var>, <var class="Arg">O</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroebnerBasisNC</code>( <var class="Arg">L</var>, <var class="Arg">O</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroebnerBasis</code>( <var class="Arg">L</var>, <var class="Arg">O</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroebnerBasis</code>( <var class="Arg">I</var>, <var class="Arg">O</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GroebnerBasisNC</code>( <var class="Arg">L</var>, <var class="Arg">O</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">O</var> be a monomial ordering and <var class="Arg">L</var> be a list of polynomials that generate an ideal <var class="Arg">I</var>. This operation returns a Groebner basis of <var class="Arg">I</var> with respect to the ordering <var class="Arg">O</var>.</p>
 
 <p><code class="func">GroebnerBasisNC</code> works like <code class="func">GroebnerBasis</code> with the only distinction that the first argument has to be a list of polynomials and that no test is performed to check whether the ordering is defined for all occuring variables.</p>
@@ -1545,8 +1545,8 @@ function( a, b ) ... end
 
 <h5>66.18-2 <span class="Heading">ReducedGroebnerBasis</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedGroebnerBasis</code>( <var class="Arg">L</var>, <var class="Arg">O</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedGroebnerBasis</code>( <var class="Arg">I</var>, <var class="Arg">O</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedGroebnerBasis</code>( <var class="Arg">L</var>, <var class="Arg">O</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReducedGroebnerBasis</code>( <var class="Arg">I</var>, <var class="Arg">O</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>a Groebner basis <span class="SimpleMath">\(B\)</span> (see <code class="func">GroebnerBasis</code> (<a href="chap66_mj.html#X7A43611E876B7560"><span class="RefLink">66.18-1</span></a>)) is <em>reduced</em> if no monomial in a polynomial in <var class="Arg">B</var> is divisible by the leading monomial of another polynomial in <span class="SimpleMath">\(B\)</span>. This operation computes a Groebner basis with respect to the monomial ordering <var class="Arg">O</var> and then reduces it.</p>
 
 
@@ -1574,14 +1574,14 @@ function( a, b ) ... end
 
 <h5>66.18-3 StoredGroebnerBasis</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StoredGroebnerBasis</code>( <var class="Arg">I</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StoredGroebnerBasis</code>( <var class="Arg">I</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>For an ideal <var class="Arg">I</var> in a polynomial ring, this attribute holds a list <span class="SimpleMath">\([ B, O ]\)</span> where <span class="SimpleMath">\(B\)</span> is a Groebner basis for the monomial ordering <span class="SimpleMath">\(O\)</span>. this can be used to test membership or canonical coset representatives.</p>
 
 <p><a id="X7C55702786D284A7" name="X7C55702786D284A7"></a></p>
 
 <h5>66.18-4 InfoGroebner</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoGroebner</code></td><td class="tdright">( info class )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoGroebner</code></td><td class="tdright">(&nbsp;info class&nbsp;)</td></tr></table></div>
 <p>This info class gives information about Groebner basis calculations.</p>
 
 <p><a id="X8113DD9B781CA6C1" name="X8113DD9B781CA6C1"></a></p>
@@ -1596,15 +1596,15 @@ function( a, b ) ... end
 
 <h5>66.19-1 RationalFunctionsFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RationalFunctionsFamily</code>( <var class="Arg">fam</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RationalFunctionsFamily</code>( <var class="Arg">fam</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>creates a family containing rational functions with coefficients in <var class="Arg">fam</var>. All elements of the <code class="func">RationalFunctionsFamily</code> are rational functions (see <code class="func">IsRationalFunction</code> (<a href="chap66_mj.html#X86C92F677DA9347F"><span class="RefLink">66.4-1</span></a>)).</p>
 
 <p><a id="X86E097307D188D3B" name="X86E097307D188D3B"></a></p>
 
 <h5>66.19-2 IsPolynomialFunctionsFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPolynomialFunctionsFamily</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRationalFunctionsFamily</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPolynomialFunctionsFamily</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRationalFunctionsFamily</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p><code class="func">IsPolynomialFunctionsFamily</code> is the category of a family of polynomials. For families over an UFD, the category becomes <code class="func">IsRationalFunctionsFamily</code> (as rational functions and quotients are only provided for families over an UFD.)</p>
 
 
@@ -1618,7 +1618,7 @@ NewFamily( "RationalFunctionsFamily(...)", [ 618, 620 ],
 
 <h5>66.19-3 CoefficientsFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoefficientsFamily</code>( <var class="Arg">rffam</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoefficientsFamily</code>( <var class="Arg">rffam</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">rffam</var> has been created as <code class="code">RationalFunctionsFamily(<var class="Arg">cfam</var>)</code> this attribute holds the coefficients family <var class="Arg">cfam</var>.</p>
 
 <p><strong class="pkg">GAP</strong> does <em>not</em> embed the base ring in the polynomial ring. While multiplication and addition of base ring elements to rational functions return the expected results, polynomials and rational functions are not equal.</p>
@@ -1667,49 +1667,49 @@ false
 
 <h5>66.21-1 IsRationalFunctionDefaultRep</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRationalFunctionDefaultRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">( representation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRationalFunctionDefaultRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;representation&nbsp;)</td></tr></table></div>
 <p>is the default representation of rational functions. A rational function in this representation is defined by the attributes <code class="func">ExtRepNumeratorRatFun</code> (<a href="chap66_mj.html#X7DF955C87CBFC12B"><span class="RefLink">66.21-2</span></a>) and <code class="func">ExtRepDenominatorRatFun</code> (<a href="chap66_mj.html#X8059E74D7DCABDBC"><span class="RefLink">66.21-3</span></a>), the values of which are external representations of polynomials.</p>
 
 <p><a id="X7DF955C87CBFC12B" name="X7DF955C87CBFC12B"></a></p>
 
 <h5>66.21-2 ExtRepNumeratorRatFun</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtRepNumeratorRatFun</code>( <var class="Arg">ratfun</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtRepNumeratorRatFun</code>( <var class="Arg">ratfun</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the external representation of the numerator polynomial of the rational function <var class="Arg">ratfun</var>. Numerator and denominator are not guaranteed to be cancelled against each other.</p>
 
 <p><a id="X8059E74D7DCABDBC" name="X8059E74D7DCABDBC"></a></p>
 
 <h5>66.21-3 ExtRepDenominatorRatFun</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtRepDenominatorRatFun</code>( <var class="Arg">ratfun</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtRepDenominatorRatFun</code>( <var class="Arg">ratfun</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the external representation of the denominator polynomial of the rational function <var class="Arg">ratfun</var>. Numerator and denominator are not guaranteed to be cancelled against each other.</p>
 
 <p><a id="X84F546F87B5ECFE0" name="X84F546F87B5ECFE0"></a></p>
 
 <h5>66.21-4 ZeroCoefficientRatFun</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZeroCoefficientRatFun</code>( <var class="Arg">ratfun</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZeroCoefficientRatFun</code>( <var class="Arg">ratfun</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the zero of the coefficient ring. This might be needed to represent the zero polynomial for which the external representation of the numerator is the empty list.</p>
 
 <p><a id="X833CE16579AB26E0" name="X833CE16579AB26E0"></a></p>
 
 <h5>66.21-5 IsPolynomialDefaultRep</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPolynomialDefaultRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">( representation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPolynomialDefaultRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;representation&nbsp;)</td></tr></table></div>
 <p>is the default representation of polynomials. A polynomial in this representation is defined by the components and <code class="func">ExtRepNumeratorRatFun</code> (<a href="chap66_mj.html#X7DF955C87CBFC12B"><span class="RefLink">66.21-2</span></a>) where <code class="func">ExtRepNumeratorRatFun</code> (<a href="chap66_mj.html#X7DF955C87CBFC12B"><span class="RefLink">66.21-2</span></a>) is the external representation of the polynomial.</p>
 
 <p><a id="X8406EE2E8775FBAB" name="X8406EE2E8775FBAB"></a></p>
 
 <h5>66.21-6 ExtRepPolynomialRatFun</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtRepPolynomialRatFun</code>( <var class="Arg">polynomial</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtRepPolynomialRatFun</code>( <var class="Arg">polynomial</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the external representation of a polynomial. The difference to <code class="func">ExtRepNumeratorRatFun</code> (<a href="chap66_mj.html#X7DF955C87CBFC12B"><span class="RefLink">66.21-2</span></a>) is that rational functions might know to be a polynomial but can still have a non-vanishing denominator. In this case <code class="func">ExtRepPolynomialRatFun</code> has to call a quotient routine.</p>
 
 <p><a id="X7E1B98CC7BADAF56" name="X7E1B98CC7BADAF56"></a></p>
 
 <h5>66.21-7 IsLaurentPolynomialDefaultRep</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLaurentPolynomialDefaultRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">( representation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLaurentPolynomialDefaultRep</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;representation&nbsp;)</td></tr></table></div>
 <p>This representation is used for Laurent polynomials and univariate polynomials. It represents a Laurent polynomial via the attributes <code class="func">CoefficientsOfLaurentPolynomial</code> (<a href="chap66_mj.html#X86D58AB67F86469F"><span class="RefLink">66.13-2</span></a>) and <code class="func">IndeterminateNumberOfLaurentPolynomial</code> (<a href="chap66_mj.html#X8381E1B582F38C85"><span class="RefLink">66.13-3</span></a>).</p>
 
 <p><a id="X791FADD278A2F32F" name="X791FADD278A2F32F"></a></p>
@@ -1722,8 +1722,8 @@ false
 
 <h5>66.22-1 RationalFunctionByExtRep</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RationalFunctionByExtRep</code>( <var class="Arg">rfam</var>, <var class="Arg">num</var>, <var class="Arg">den</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RationalFunctionByExtRepNC</code>( <var class="Arg">rfam</var>, <var class="Arg">num</var>, <var class="Arg">den</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RationalFunctionByExtRep</code>( <var class="Arg">rfam</var>, <var class="Arg">num</var>, <var class="Arg">den</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RationalFunctionByExtRepNC</code>( <var class="Arg">rfam</var>, <var class="Arg">num</var>, <var class="Arg">den</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>constructs a rational function (in the representation <code class="func">IsRationalFunctionDefaultRep</code> (<a href="chap66_mj.html#X791E16C67A352263"><span class="RefLink">66.21-1</span></a>)) in the rational function family <var class="Arg">rfam</var>, the rational function itself is given by the external representations <var class="Arg">num</var> and <var class="Arg">den</var> for numerator and denominator. No cancellation takes place.</p>
 
 <p>The variant <code class="func">RationalFunctionByExtRepNC</code> does not perform any test of the arguments and thus potentially can create illegal objects. It only should be used if speed is required and the arguments are known to be in correct form.</p>
@@ -1732,8 +1732,8 @@ false
 
 <h5>66.22-2 PolynomialByExtRep</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolynomialByExtRep</code>( <var class="Arg">rfam</var>, <var class="Arg">extrep</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolynomialByExtRepNC</code>( <var class="Arg">rfam</var>, <var class="Arg">extrep</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolynomialByExtRep</code>( <var class="Arg">rfam</var>, <var class="Arg">extrep</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PolynomialByExtRepNC</code>( <var class="Arg">rfam</var>, <var class="Arg">extrep</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>constructs a polynomial (in the representation <code class="func">IsPolynomialDefaultRep</code> (<a href="chap66_mj.html#X833CE16579AB26E0"><span class="RefLink">66.21-5</span></a>)) in the rational function family <var class="Arg">rfam</var>, the polynomial itself is given by the external representation <var class="Arg">extrep</var>.</p>
 
 <p>The variant <code class="func">PolynomialByExtRepNC</code> does not perform any test of the arguments and thus potentially can create invalid objects. It only should be used if speed is required and the arguments are known to be in correct form.</p>
@@ -1755,8 +1755,8 @@ false
 
 <h5>66.22-3 LaurentPolynomialByExtRep</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LaurentPolynomialByExtRep</code>( <var class="Arg">fam</var>, <var class="Arg">cofs</var>, <var class="Arg">val</var>, <var class="Arg">ind</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LaurentPolynomialByExtRepNC</code>( <var class="Arg">fam</var>, <var class="Arg">cofs</var>, <var class="Arg">val</var>, <var class="Arg">ind</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LaurentPolynomialByExtRep</code>( <var class="Arg">fam</var>, <var class="Arg">cofs</var>, <var class="Arg">val</var>, <var class="Arg">ind</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LaurentPolynomialByExtRepNC</code>( <var class="Arg">fam</var>, <var class="Arg">cofs</var>, <var class="Arg">val</var>, <var class="Arg">ind</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>creates a Laurent polynomial in the family <var class="Arg">fam</var> with [<var class="Arg">cofs</var>,<var class="Arg">val</var>] as value of <code class="func">CoefficientsOfLaurentPolynomial</code> (<a href="chap66_mj.html#X86D58AB67F86469F"><span class="RefLink">66.13-2</span></a>). No coefficient shifting is performed. This is the lowest level function to create a Laurent polynomial but will rely on the coefficients being shifted properly and will not perform any tests. Unless this is guaranteed for the parameters, <code class="func">LaurentPolynomialByCoefficients</code> (<a href="chap66_mj.html#X8467263B7EFA013E"><span class="RefLink">66.13-1</span></a>) should be used.</p>
 
 <p><a id="X809028CD7C0EA7CE" name="X809028CD7C0EA7CE"></a></p>
@@ -1771,7 +1771,7 @@ false
 
 <h5>66.23-1 ZippedSum</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZippedSum</code>( <var class="Arg">z1</var>, <var class="Arg">z2</var>, <var class="Arg">czero</var>, <var class="Arg">funcs</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZippedSum</code>( <var class="Arg">z1</var>, <var class="Arg">z2</var>, <var class="Arg">czero</var>, <var class="Arg">funcs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>computes the sum of two external representations of polynomials <var class="Arg">z1</var> and <var class="Arg">z2</var>. <var class="Arg">czero</var> is the appropriate coefficient zero and <var class="Arg">funcs</var> a list [ <var class="Arg">monomial_less</var>, <var class="Arg">coefficient_sum</var> ] containing a monomial comparison and a coefficient addition function. This list can be found in the component <var class="Arg">fam</var><code class="code">!.zippedSum</code> of the rational functions family.</p>
 
 <p>Note that <var class="Arg">coefficient_sum</var> must be a proper "summation" function, not a function computing differences.</p>
@@ -1780,14 +1780,14 @@ false
 
 <h5>66.23-2 ZippedProduct</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZippedProduct</code>( <var class="Arg">z1</var>, <var class="Arg">z2</var>, <var class="Arg">czero</var>, <var class="Arg">funcs</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZippedProduct</code>( <var class="Arg">z1</var>, <var class="Arg">z2</var>, <var class="Arg">czero</var>, <var class="Arg">funcs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>computes the product of two external representations of polynomials <var class="Arg">z1</var> and <var class="Arg">z2</var>. <var class="Arg">czero</var> is the appropriate coefficient zero and <var class="Arg">funcs</var> a list [ <var class="Arg">monomial_prod</var>, <var class="Arg">monomial_less</var>, <var class="Arg">coefficient_sum</var>, <var class="Arg">coefficient_prod</var>] containing functions to multiply and compare monomials, to add and to multiply coefficients. This list can be found in the component <code class="code"><var class="Arg">fam</var>!.zippedProduct</code> of the rational functions family.</p>
 
 <p><a id="X87E5EB8985AF04CD" name="X87E5EB8985AF04CD"></a></p>
 
 <h5>66.23-3 QuotientPolynomialsExtRep</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuotientPolynomialsExtRep</code>( <var class="Arg">fam</var>, <var class="Arg">a</var>, <var class="Arg">b</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; QuotientPolynomialsExtRep</code>( <var class="Arg">fam</var>, <var class="Arg">a</var>, <var class="Arg">b</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">a</var> and <var class="Arg">b</var> the external representations of two polynomials in the rational functions family <var class="Arg">fam</var>. This function computes the external representation of the quotient of both polynomials, it returns <code class="keyw">fail</code> if the polynomial described by <var class="Arg">b</var> does not divide the polynomial described by <var class="Arg">a</var>.</p>
 
 <p><a id="X811B7D8E79E4BD46" name="X811B7D8E79E4BD46"></a></p>
@@ -1800,21 +1800,21 @@ false
 
 <h5>66.24-1 RationalFunctionByExtRepWithCancellation</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RationalFunctionByExtRepWithCancellation</code>( <var class="Arg">rfam</var>, <var class="Arg">num</var>, <var class="Arg">den</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RationalFunctionByExtRepWithCancellation</code>( <var class="Arg">rfam</var>, <var class="Arg">num</var>, <var class="Arg">den</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>constructs a rational function as <code class="func">RationalFunctionByExtRep</code> (<a href="chap66_mj.html#X81297E4587A9F2A6"><span class="RefLink">66.22-1</span></a>) does but tries to cancel out common factors of numerator and denominator, calling <code class="func">TryGcdCancelExtRepPolynomials</code> (<a href="chap66_mj.html#X7BFB55887A153003"><span class="RefLink">66.24-2</span></a>).</p>
 
 <p><a id="X7BFB55887A153003" name="X7BFB55887A153003"></a></p>
 
 <h5>66.24-2 TryGcdCancelExtRepPolynomials</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TryGcdCancelExtRepPolynomials</code>( <var class="Arg">fam</var>, <var class="Arg">a</var>, <var class="Arg">b</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TryGcdCancelExtRepPolynomials</code>( <var class="Arg">fam</var>, <var class="Arg">a</var>, <var class="Arg">b</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">a</var> and <var class="Arg">b</var> be the external representations of two polynomials. This function tries to cancel common factors between the corresponding polynomials and returns a list <span class="SimpleMath">\([ a', b' ]\)</span> of external representations of cancelled polynomials. As there is no proper multivariate GCD cancellation is not guaranteed to be optimal.</p>
 
 <p><a id="X8477D7337C4A98AB" name="X8477D7337C4A98AB"></a></p>
 
 <h5>66.24-3 HeuristicCancelPolynomialsExtRep</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HeuristicCancelPolynomialsExtRep</code>( <var class="Arg">fam</var>, <var class="Arg">ext1</var>, <var class="Arg">ext2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HeuristicCancelPolynomialsExtRep</code>( <var class="Arg">fam</var>, <var class="Arg">ext1</var>, <var class="Arg">ext2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>is called by <code class="func">TryGcdCancelExtRepPolynomials</code> (<a href="chap66_mj.html#X7BFB55887A153003"><span class="RefLink">66.24-2</span></a>) to perform the actual work. It will return either <code class="keyw">fail</code> or a new list of of external representations of cancelled polynomials. The cancellation performed is not necessarily optimal.</p>
 
 

@@ -75,14 +75,14 @@
 
 <h5>57.1-1 IsLeftOperatorAdditiveGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftOperatorAdditiveGroup</code>( <var class="Arg">D</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftOperatorAdditiveGroup</code>( <var class="Arg">D</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>A domain <var class="Arg">D</var> lies in <code class="code">IsLeftOperatorAdditiveGroup</code> if it is an additive group that is closed under scalar multiplication from the left, and such that <span class="SimpleMath">\(\lambda * ( x + y ) = \lambda * x + \lambda * y\)</span> for all scalars <span class="SimpleMath">\(\lambda\)</span> and elements <span class="SimpleMath">\(x, y \in D\)</span> (here and below by scalars we mean elements of a domain acting on <var class="Arg">D</var> from left or right as appropriate).</p>
 
 <p><a id="X7ED323027B291BDF" name="X7ED323027B291BDF"></a></p>
 
 <h5>57.1-2 IsLeftModule</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftModule</code>( <var class="Arg">M</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLeftModule</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>A domain <var class="Arg">M</var> lies in <code class="code">IsLeftModule</code> if it lies in <code class="code">IsLeftOperatorAdditiveGroup</code>, <em>and</em> the set of scalars forms a ring, <em>and</em> <span class="SimpleMath">\((\lambda + \mu) * x = \lambda * x + \mu * x\)</span> for scalars <span class="SimpleMath">\(\lambda, \mu\)</span> and <span class="SimpleMath">\(x \in M\)</span>, <em>and</em> scalar multiplication satisfies <span class="SimpleMath">\(\lambda * (\mu * x) = (\lambda * \mu) * x\)</span> for scalars <span class="SimpleMath">\(\lambda, \mu\)</span> and <span class="SimpleMath">\(x \in M\)</span>.</p>
 
 
@@ -97,14 +97,14 @@ true
 
 <h5>57.1-3 GeneratorsOfLeftOperatorAdditiveGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsOfLeftOperatorAdditiveGroup</code>( <var class="Arg">D</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsOfLeftOperatorAdditiveGroup</code>( <var class="Arg">D</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a list of elements of <var class="Arg">D</var> that generates <var class="Arg">D</var> as a left operator additive group.</p>
 
 <p><a id="X7C7684EF867323C2" name="X7C7684EF867323C2"></a></p>
 
 <h5>57.1-4 GeneratorsOfLeftModule</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsOfLeftModule</code>( <var class="Arg">M</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsOfLeftModule</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a list of elements of <var class="Arg">M</var> that generate <var class="Arg">M</var> as a left module.</p>
 
 
@@ -118,7 +118,7 @@ true
 
 <h5>57.1-5 AsLeftModule</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsLeftModule</code>( <var class="Arg">R</var>, <var class="Arg">D</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsLeftModule</code>( <var class="Arg">R</var>, <var class="Arg">D</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>if the domain <var class="Arg">D</var> forms an additive group and is closed under left multiplication by the elements of <var class="Arg">R</var>, then <code class="code">AsLeftModule( <var class="Arg">R</var>, <var class="Arg">D</var> )</code> returns the domain <var class="Arg">D</var> viewed as a left module.</p>
 
 
@@ -134,35 +134,35 @@ true
 
 <h5>57.1-6 IsRightOperatorAdditiveGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightOperatorAdditiveGroup</code>( <var class="Arg">D</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightOperatorAdditiveGroup</code>( <var class="Arg">D</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>A domain <var class="Arg">D</var> lies in <code class="code">IsRightOperatorAdditiveGroup</code> if it is an additive group that is closed under scalar multiplication from the right, and such that <span class="SimpleMath">\(( x + y ) * \lambda = x * \lambda + y * \lambda\)</span> for all scalars <span class="SimpleMath">\(\lambda\)</span> and elements <span class="SimpleMath">\(x, y \in D\)</span>.</p>
 
 <p><a id="X8479A5AA7DF25F50" name="X8479A5AA7DF25F50"></a></p>
 
 <h5>57.1-7 IsRightModule</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightModule</code>( <var class="Arg">M</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRightModule</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>A domain <var class="Arg">M</var> lies in <code class="code">IsRightModule</code> if it lies in <code class="code">IsRightOperatorAdditiveGroup</code>, <em>and</em> the set of scalars forms a ring, <em>and</em> <span class="SimpleMath">\(x * (\lambda + \mu) = x * \lambda + x * \mu\)</span> for scalars <span class="SimpleMath">\(\lambda, \mu\)</span> and <span class="SimpleMath">\(x \in M\)</span>, <em>and</em> scalar multiplication satisfies <span class="SimpleMath">\((x * \mu) * \lambda = x * (\mu * \lambda)\)</span> for scalars <span class="SimpleMath">\(\lambda, \mu\)</span> and <span class="SimpleMath">\(x \in M\)</span>.</p>
 
 <p><a id="X7DBC4BCB876EEE1C" name="X7DBC4BCB876EEE1C"></a></p>
 
 <h5>57.1-8 GeneratorsOfRightOperatorAdditiveGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsOfRightOperatorAdditiveGroup</code>( <var class="Arg">D</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsOfRightOperatorAdditiveGroup</code>( <var class="Arg">D</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a list of elements of <var class="Arg">D</var> that generates <var class="Arg">D</var> as a right operator additive group.</p>
 
 <p><a id="X8586A83B85F176F6" name="X8586A83B85F176F6"></a></p>
 
 <h5>57.1-9 GeneratorsOfRightModule</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsOfRightModule</code>( <var class="Arg">M</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsOfRightModule</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a list of elements of <var class="Arg">M</var> that generate <var class="Arg">M</var> as a left module.</p>
 
 <p><a id="X79ED1D7D7F0AE59A" name="X79ED1D7D7F0AE59A"></a></p>
 
 <h5>57.1-10 LeftModuleByGenerators</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftModuleByGenerators</code>( <var class="Arg">R</var>, <var class="Arg">gens</var>[, <var class="Arg">zero</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftModuleByGenerators</code>( <var class="Arg">R</var>, <var class="Arg">gens</var>[, <var class="Arg">zero</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the left module over <var class="Arg">R</var> generated by <var class="Arg">gens</var>.</p>
 
 
@@ -176,7 +176,7 @@ true
 
 <h5>57.1-11 LeftActingDomain</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftActingDomain</code>( <var class="Arg">D</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftActingDomain</code>( <var class="Arg">D</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">D</var> be an external left set, that is, <var class="Arg">D</var> is closed under the action of a domain <span class="SimpleMath">\(L\)</span> by multiplication from the left. Then <span class="SimpleMath">\(L\)</span> can be accessed as value of <code class="code">LeftActingDomain</code> for <var class="Arg">D</var>.</p>
 
 <p><a id="X7934FAE97B6D2AD8" name="X7934FAE97B6D2AD8"></a></p>
@@ -187,7 +187,7 @@ true
 
 <h5>57.2-1 Submodule</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Submodule</code>( <var class="Arg">M</var>, <var class="Arg">gens</var>[, <var class="Arg">"basis"</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Submodule</code>( <var class="Arg">M</var>, <var class="Arg">gens</var>[, <var class="Arg">"basis"</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is the left module generated by the collection <var class="Arg">gens</var>, with parent module <var class="Arg">M</var>. If the string <code class="code">"basis"</code> is entered as the third argument then the submodule of <var class="Arg">M</var> is created for which the list <var class="Arg">gens</var> is known to be a list of basis vectors; in this case, it is <em>not</em> checked whether <var class="Arg">gens</var> really is linearly independent and whether all in <var class="Arg">gens</var> lie in <var class="Arg">M</var>.</p>
 
 
@@ -204,14 +204,14 @@ true
 
 <h5>57.2-2 SubmoduleNC</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubmoduleNC</code>( <var class="Arg">M</var>, <var class="Arg">gens</var>[, <var class="Arg">"basis"</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubmoduleNC</code>( <var class="Arg">M</var>, <var class="Arg">gens</var>[, <var class="Arg">"basis"</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">SubmoduleNC</code> does the same as <code class="func">Submodule</code> (<a href="chap57_mj.html#X8465103F874BC07B"><span class="RefLink">57.2-1</span></a>), except that it does not check whether all in <var class="Arg">gens</var> lie in <var class="Arg">M</var>.</p>
 
 <p><a id="X7C68C4E287481EC0" name="X7C68C4E287481EC0"></a></p>
 
 <h5>57.2-3 ClosureLeftModule</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ClosureLeftModule</code>( <var class="Arg">M</var>, <var class="Arg">m</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ClosureLeftModule</code>( <var class="Arg">M</var>, <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>is the left module generated by the left module generators of <var class="Arg">M</var> and the element <var class="Arg">m</var>.</p>
 
 
@@ -226,7 +226,7 @@ true
 
 <h5>57.2-4 TrivialSubmodule</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TrivialSubmodule</code>( <var class="Arg">M</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TrivialSubmodule</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the zero submodule of <var class="Arg">M</var>.</p>
 
 
@@ -244,7 +244,7 @@ true
 
 <h5>57.3-1 IsFreeLeftModule</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeLeftModule</code>( <var class="Arg">M</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFreeLeftModule</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>A left module is free as module if it is isomorphic to a direct sum of copies of its left acting domain.</p>
 
 <p>Free left modules can have bases.</p>
@@ -255,7 +255,7 @@ true
 
 <h5>57.3-2 FreeLeftModule</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeLeftModule</code>( <var class="Arg">R</var>, <var class="Arg">gens</var>[, <var class="Arg">zero</var>][, <var class="Arg">"basis"</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeLeftModule</code>( <var class="Arg">R</var>, <var class="Arg">gens</var>[, <var class="Arg">zero</var>][, <var class="Arg">"basis"</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="code">FreeLeftModule( <var class="Arg">R</var>, <var class="Arg">gens</var> )</code> is the free left module over the ring <var class="Arg">R</var>, generated by the vectors in the collection <var class="Arg">gens</var>.</p>
 
 <p>If there are three arguments, a ring <var class="Arg">R</var> and a collection <var class="Arg">gens</var> and an element <var class="Arg">zero</var>, then <code class="code">FreeLeftModule( <var class="Arg">R</var>, <var class="Arg">gens</var>, <var class="Arg">zero</var> )</code> is the <var class="Arg">R</var>-free left module generated by <var class="Arg">gens</var>, with zero element <var class="Arg">zero</var>.</p>
@@ -274,7 +274,7 @@ true
 
 <h5>57.3-3 Dimension</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Dimension</code>( <var class="Arg">M</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Dimension</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>A free left module has dimension <span class="SimpleMath">\(n\)</span> if it is isomorphic to a direct sum of <span class="SimpleMath">\(n\)</span> copies of its left acting domain.</p>
 
 <p>(We do <em>not</em> mark <code class="func">Dimension</code> as invariant under isomorphisms since we want to call <code class="func">UseIsomorphismRelation</code> (<a href="chap31_mj.html#X839BE6467E8474D9"><span class="RefLink">31.13-3</span></a>) also for free left modules over different left acting domains.)</p>
@@ -290,7 +290,7 @@ true
 
 <h5>57.3-4 IsFiniteDimensional</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFiniteDimensional</code>( <var class="Arg">M</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFiniteDimensional</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>is <code class="keyw">true</code> if <var class="Arg">M</var> is a free left module that is finite dimensional over its left acting domain, and <code class="keyw">false</code> otherwise.</p>
 
 
@@ -304,7 +304,7 @@ true
 
 <h5>57.3-5 UseBasis</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UseBasis</code>( <var class="Arg">V</var>, <var class="Arg">gens</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UseBasis</code>( <var class="Arg">V</var>, <var class="Arg">gens</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>The vectors in the list <var class="Arg">gens</var> are known to form a basis of the free left module <var class="Arg">V</var>. <code class="func">UseBasis</code> stores information in <var class="Arg">V</var> that can be derived form this fact, namely</p>
 
 
@@ -328,21 +328,21 @@ true
 
 <h5>57.3-6 IsRowModule</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRowModule</code>( <var class="Arg">V</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRowModule</code>( <var class="Arg">V</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>A <em>row module</em> is a free left module whose elements are row vectors.</p>
 
 <p><a id="X81FCC1D780435CF1" name="X81FCC1D780435CF1"></a></p>
 
 <h5>57.3-7 IsMatrixModule</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixModule</code>( <var class="Arg">V</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrixModule</code>( <var class="Arg">V</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>A <em>matrix module</em> is a free left module whose elements are matrices.</p>
 
 <p><a id="X853E085C868196EF" name="X853E085C868196EF"></a></p>
 
 <h5>57.3-8 IsFullRowModule</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFullRowModule</code>( <var class="Arg">M</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFullRowModule</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>A <em>full row module</em> is a module <span class="SimpleMath">\(R^n\)</span>, for a ring <span class="SimpleMath">\(R\)</span> and a nonnegative integer <span class="SimpleMath">\(n\)</span>.</p>
 
 <p>More precisely, a full row module is a free left module over a ring <span class="SimpleMath">\(R\)</span> such that the elements are row vectors of the same length <span class="SimpleMath">\(n\)</span> and with entries in <span class="SimpleMath">\(R\)</span> and such that the dimension is equal to <span class="SimpleMath">\(n\)</span>.</p>
@@ -353,7 +353,7 @@ true
 
 <h5>57.3-9 FullRowModule</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FullRowModule</code>( <var class="Arg">R</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FullRowModule</code>( <var class="Arg">R</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is the row module <code class="code"><var class="Arg">R</var>^<var class="Arg">n</var></code>, for a ring <var class="Arg">R</var> and a nonnegative integer <var class="Arg">n</var>.</p>
 
 
@@ -366,7 +366,7 @@ true
 
 <h5>57.3-10 IsFullMatrixModule</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFullMatrixModule</code>( <var class="Arg">M</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsFullMatrixModule</code>( <var class="Arg">M</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>A <em>full matrix module</em> is a module <span class="SimpleMath">\(R^{{[m,n]}}\)</span>, for a ring <span class="SimpleMath">\(R\)</span> and two nonnegative integers <span class="SimpleMath">\(m\)</span>, <span class="SimpleMath">\(n\)</span>.</p>
 
 <p>More precisely, a full matrix module is a free left module over a ring <span class="SimpleMath">\(R\)</span> such that the elements are <span class="SimpleMath">\(m\)</span> by <span class="SimpleMath">\(n\)</span> matrices with entries in <span class="SimpleMath">\(R\)</span> and such that the dimension is equal to <span class="SimpleMath">\(m n\)</span>.</p>
@@ -375,7 +375,7 @@ true
 
 <h5>57.3-11 FullMatrixModule</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FullMatrixModule</code>( <var class="Arg">R</var>, <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FullMatrixModule</code>( <var class="Arg">R</var>, <var class="Arg">m</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is the matrix module <code class="code"><var class="Arg">R</var>^[<var class="Arg">m</var>,<var class="Arg">n</var>]</code>, for a ring <var class="Arg">R</var> and nonnegative integers <var class="Arg">m</var> and <var class="Arg">n</var>.</p>
 
 

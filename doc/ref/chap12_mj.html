@@ -94,7 +94,7 @@
 
 <h5>12.1-1 IsObject</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsObject</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsObject</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p><code class="func">IsObject</code> returns <code class="keyw">true</code> if the object <var class="Arg">obj</var> is an object. Obviously it can never return <code class="keyw">false</code>.</p>
 
 <p>It can be used as a filter in <code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>) when one of the arguments can be anything.</p>
@@ -141,7 +141,7 @@
 
 <h5>12.5-1 IsIdenticalObj</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIdenticalObj</code>( <var class="Arg">obj1</var>, <var class="Arg">obj2</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsIdenticalObj</code>( <var class="Arg">obj1</var>, <var class="Arg">obj2</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">IsIdenticalObj</code> tests whether the objects <var class="Arg">obj1</var> and <var class="Arg">obj2</var> are identical (that is they are either equal immediate objects or are both stored at the same location in memory.</p>
 
 <p>If two copies of a simple constant object (see section <a href="chap12_mj.html#X7F0C119682196D65"><span class="RefLink">12.6</span></a>) are created, it is not defined whether <strong class="pkg">GAP</strong> will actually store two equal but non-identical objects, or just a single object. For mutable objects, however, it is important to know whether two values refer to identical or non-identical objects, and the documentation of operations that return mutable values should make clear whether the values returned are new, or may be identical to values stored elsewhere.</p>
@@ -194,7 +194,7 @@ true
 
 <h5>12.5-2 IsNotIdenticalObj</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNotIdenticalObj</code>( <var class="Arg">obj1</var>, <var class="Arg">obj2</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNotIdenticalObj</code>( <var class="Arg">obj1</var>, <var class="Arg">obj2</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>tests whether the objects <var class="Arg">obj1</var> and <var class="Arg">obj2</var> are not identical.</p>
 
 <p><a id="X7F0C119682196D65" name="X7F0C119682196D65"></a></p>
@@ -213,7 +213,7 @@ true
 
 <h5>12.6-1 IsCopyable</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCopyable</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCopyable</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>If a mutable form of an object <var class="Arg">obj</var> can be made in <strong class="pkg">GAP</strong>, the object is called <em>copyable</em>. Examples of copyable objects are of course lists and records. A new mutable version of the object can always be obtained by the operation <code class="func">ShallowCopy</code> (<a href="chap12_mj.html#X846BC7107C352031"><span class="RefLink">12.7-1</span></a>).</p>
 
 <p>Objects for which only an immutable form exists in <strong class="pkg">GAP</strong> are called <em>constants</em>. Examples of constants are integers, permutations, and domains. Called with a constant as argument, <code class="func">Immutable</code> (<a href="chap12_mj.html#X7F0ABF2C870B0CBB"><span class="RefLink">12.6-3</span></a>) and <code class="func">ShallowCopy</code> (<a href="chap12_mj.html#X846BC7107C352031"><span class="RefLink">12.7-1</span></a>) return this argument.</p>
@@ -222,7 +222,7 @@ true
 
 <h5>12.6-2 IsMutable</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMutable</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMutable</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>tests whether <var class="Arg">obj</var> is mutable.</p>
 
 <p>If an object is mutable then it is also copyable (see <code class="func">IsCopyable</code> (<a href="chap12_mj.html#X811EFD727EBD1ADC"><span class="RefLink">12.6-1</span></a>)), and a <code class="func">ShallowCopy</code> (<a href="chap12_mj.html#X846BC7107C352031"><span class="RefLink">12.7-1</span></a>) method should be supplied for it. Note that <code class="func">IsMutable</code> must not be implied by another filter, since otherwise <code class="func">Immutable</code> (<a href="chap12_mj.html#X7F0ABF2C870B0CBB"><span class="RefLink">12.6-3</span></a>) would be able to create paradoxical objects in the sense that <code class="func">IsMutable</code> for such an object is <code class="keyw">false</code> but the filter that implies <code class="func">IsMutable</code> is <code class="keyw">true</code>.</p>
@@ -233,7 +233,7 @@ true
 
 <h5>12.6-3 Immutable</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Immutable</code>( <var class="Arg">obj</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Immutable</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns an immutable structural copy (see <code class="func">StructuralCopy</code> (<a href="chap12_mj.html#X7C1E70587EBDD2CB"><span class="RefLink">12.7-2</span></a>)) of <var class="Arg">obj</var> in which the subobjects are immutable <em>copies</em> of the subobjects of <var class="Arg">obj</var>. If <var class="Arg">obj</var> is immutable then <code class="func">Immutable</code> returns <var class="Arg">obj</var> itself.</p>
 
 <p><strong class="pkg">GAP</strong> will complain with an error if one tries to change an immutable object.</p>
@@ -242,7 +242,7 @@ true
 
 <h5>12.6-4 MakeImmutable</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MakeImmutable</code>( <var class="Arg">obj</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MakeImmutable</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>One can turn the (mutable or immutable) object <var class="Arg">obj</var> into an immutable one with <code class="func">MakeImmutable</code>; note that this also makes all subobjects of <var class="Arg">obj</var> immutable, so one should call <code class="func">MakeImmutable</code> only if <var class="Arg">obj</var> and its mutable subobjects are newly created. If one is not sure about this, <code class="func">Immutable</code> (<a href="chap12_mj.html#X7F0ABF2C870B0CBB"><span class="RefLink">12.6-3</span></a>) should be used.</p>
 
 <p>Note that it is <em>not</em> possible to turn an immutable object into a mutable one; only mutable copies can be made (see <a href="chap12_mj.html#X786B942B82D684BD"><span class="RefLink">12.7</span></a>).</p>
@@ -283,7 +283,7 @@ true
 
 <h5>12.7-1 ShallowCopy</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShallowCopy</code>( <var class="Arg">obj</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShallowCopy</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">ShallowCopy</code> returns a <em>new mutable</em> object <em>equal</em> to its argument, if this is possible. The subobjects of <code class="code">ShallowCopy( <var class="Arg">obj</var> )</code> are <em>identical</em> to the subobjects of <var class="Arg">obj</var>.</p>
 
 <p>If <strong class="pkg">GAP</strong> does not support a mutable form of the immutable object <var class="Arg">obj</var> (see <a href="chap12_mj.html#X7F0C119682196D65"><span class="RefLink">12.6</span></a>) then <code class="func">ShallowCopy</code> returns <var class="Arg">obj</var> itself.</p>
@@ -296,7 +296,7 @@ true
 
 <h5>12.7-2 StructuralCopy</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StructuralCopy</code>( <var class="Arg">obj</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StructuralCopy</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>In a few situations, one wants to make a <em>structural copy</em> <code class="code">scp</code> of an object <var class="Arg">obj</var>. This is defined as follows. <code class="code">scp</code> and <var class="Arg">obj</var> are identical if <var class="Arg">obj</var> is immutable. Otherwise, <code class="code">scp</code> is a mutable copy of <var class="Arg">obj</var> such that each subobject of <code class="code">scp</code> is a structural copy of the corresponding subobject of <var class="Arg">obj</var>. Furthermore, if two subobjects of <var class="Arg">obj</var> are identical then also the corresponding subobjects of <code class="code">scp</code> are identical.</p>
 
 
@@ -328,14 +328,14 @@ true
 
 <h5>12.8-1 SetName</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetName</code>( <var class="Arg">obj</var>, <var class="Arg">name</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetName</code>( <var class="Arg">obj</var>, <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>for a suitable object <var class="Arg">obj</var> sets that object to have name <var class="Arg">name</var> (a string).</p>
 
 <p><a id="X7F14EF9D81432113" name="X7F14EF9D81432113"></a></p>
 
 <h5>12.8-2 Name</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Name</code>( <var class="Arg">obj</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Name</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the name, a string, previously assigned to <var class="Arg">obj</var> via a call to <code class="func">SetName</code> (<a href="chap12_mj.html#X85D6D47B83BD02A1"><span class="RefLink">12.8-1</span></a>). The name of an object is used <em>only</em> for viewing the object via this name.</p>
 
 <p>There are no methods installed for computing names of objects, but the name may be set for suitable objects, using <code class="func">SetName</code> (<a href="chap12_mj.html#X85D6D47B83BD02A1"><span class="RefLink">12.8-1</span></a>).</p>
@@ -355,14 +355,14 @@ Z[x,y]
 
 <h5>12.8-3 InfoText</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoText</code>( <var class="Arg">obj</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoText</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is a mutable string with information about the object <var class="Arg">obj</var>. There is no default method to create an info text.</p>
 
 <p><a id="X7F6C5C3287E8B816" name="X7F6C5C3287E8B816"></a></p>
 
 <h5>12.8-4 IsInternallyConsistent</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInternallyConsistent</code>( <var class="Arg">obj</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInternallyConsistent</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>For debugging purposes, it may be useful to check the consistency of an object <var class="Arg">obj</var> that is composed from other (composed) objects.</p>
 
 <p>There is a default method of <code class="func">IsInternallyConsistent</code>, with rank zero, that returns <code class="keyw">true</code>. So it is possible (and recommended) to check the consistency of subobjects of <var class="Arg">obj</var> recursively by <code class="func">IsInternallyConsistent</code>.</p>
@@ -373,7 +373,7 @@ Z[x,y]
 
 <h5>12.8-5 MemoryUsage</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MemoryUsage</code>( <var class="Arg">obj</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MemoryUsage</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the amount of memory in bytes used by the object <var class="Arg">obj</var> and its subobjects. Note that in general, objects can reference each other in very difficult ways such that determining the memory usage is a recursive procedure. In particular, computing the memory usage of a complicated structure itself uses some additional memory, which is however no longer used after completion of this operation. This procedure descends into lists and records, positional and component objects, however it does not take into account the type and family objects! For functions, it only takes the memory usage of the function body, not of the local context the function was created in, although the function keeps a reference to that as well!</p>
 
 

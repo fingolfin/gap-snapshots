@@ -203,7 +203,7 @@
 
 <h5>64.1-1 LieObject</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieObject</code>( <var class="Arg">obj</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieObject</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">obj</var> be a ring element. Then <code class="code">LieObject( <var class="Arg">obj</var> )</code> is the corresponding Lie object. If <var class="Arg">obj</var> lies in the family <code class="code">F</code>, then <code class="code">LieObject( <var class="Arg">obj</var> )</code> lies in the family <code class="code">LieFamily( F )</code> (see <code class="func">LieFamily</code> (<a href="chap64.html#X8725993C7BF386EE"><span class="RefLink">64.1-3</span></a>)).</p>
 
 
@@ -221,10 +221,10 @@ LieObject( [ [ 0, 0 ], [ 0, 0 ] ] )
 
 <h5>64.1-2 IsLieObject</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLieObject</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLieObjectCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRestrictedLieObject</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRestrictedLieObjectCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLieObject</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLieObjectCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRestrictedLieObject</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRestrictedLieObjectCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>An object lies in <code class="func">IsLieObject</code> if and only if it lies in a family constructed by <code class="func">LieFamily</code> (<a href="chap64.html#X8725993C7BF386EE"><span class="RefLink">64.1-3</span></a>).</p>
 
 
@@ -242,7 +242,7 @@ true
 
 <h5>64.1-3 LieFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieFamily</code>( <var class="Arg">Fam</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieFamily</code>( <var class="Arg">Fam</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is a family <code class="code">F</code> in bijection with the family <var class="Arg">Fam</var>, but with the Lie bracket as infix multiplication. That is, for <code class="code">x</code>, <code class="code">y</code> in <var class="Arg">Fam</var>, the product of the images in <code class="code">F</code> will be the image of <code class="code">x * y - y * x</code>.</p>
 
 <p>The standard type of objects in a Lie family <code class="code">F</code> is <code class="code"><var class="Arg">F</var>!.packedType</code>.</p>
@@ -253,14 +253,14 @@ true
 
 <h5>64.1-4 UnderlyingFamily</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingFamily</code>( <var class="Arg">Fam</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingFamily</code>( <var class="Arg">Fam</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">Fam</var> is a Lie family then <code class="code">UnderlyingFamily( <var class="Arg">Fam</var> )</code> is a family <code class="code">F</code> such that <code class="code"><var class="Arg">Fam</var> = LieFamily( F )</code>.</p>
 
 <p><a id="X874B2B2A7F5A9A78" name="X874B2B2A7F5A9A78"></a></p>
 
 <h5>64.1-5 UnderlyingRingElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingRingElement</code>( <var class="Arg">obj</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingRingElement</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">obj</var> be a Lie object constructed from a ring element <code class="code">r</code> by calling <code class="code">LieObject( r )</code>. Then <code class="code">UnderlyingRingElement( <var class="Arg">obj</var> )</code> returns the ring element <code class="code">r</code> used to construct <var class="Arg">obj</var>. If <code class="code">r</code> lies in the family <code class="code">F</code>, then <var class="Arg">obj</var> lies in the family <code class="code">LieFamily( F )</code> (see <code class="func">LieFamily</code> (<a href="chap64.html#X8725993C7BF386EE"><span class="RefLink">64.1-3</span></a>)).</p>
 
 
@@ -285,7 +285,7 @@ LieObject( [ [ 0, 0 ], [ 0, 0 ] ] )
 
 <h5>64.2-1 LieAlgebraByStructureConstants</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieAlgebraByStructureConstants</code>( <var class="Arg">R</var>, <var class="Arg">sct</var>[, <var class="Arg">nameinfo</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieAlgebraByStructureConstants</code>( <var class="Arg">R</var>, <var class="Arg">sct</var>[, <var class="Arg">nameinfo</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">LieAlgebraByStructureConstants</code> does the same as <code class="func">AlgebraByStructureConstants</code> (<a href="chap62.html#X7CC58DFD816E6B65"><span class="RefLink">62.4-1</span></a>), and has the same meaning of arguments, except that the result is assumed to be a Lie algebra. Note that the function does not check whether <var class="Arg">sct</var> satisfies the Jacobi identity. (So if one creates a Lie algebra this way with a table that does not satisfy the Jacobi identity, errors may occur later on.)</p>
 
 
@@ -300,7 +300,7 @@ LieObject( [ [ 0, 0 ], [ 0, 0 ] ] )
 
 <h5>64.2-2 RestrictedLieAlgebraByStructureConstants</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RestrictedLieAlgebraByStructureConstants</code>( <var class="Arg">R</var>, <var class="Arg">sct</var>[, <var class="Arg">nameinfo</var>], <var class="Arg">pmapping</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RestrictedLieAlgebraByStructureConstants</code>( <var class="Arg">R</var>, <var class="Arg">sct</var>[, <var class="Arg">nameinfo</var>], <var class="Arg">pmapping</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">RestrictedLieAlgebraByStructureConstants</code> does the same as <code class="func">LieAlgebraByStructureConstants</code> (<a href="chap64.html#X7D362350824FA115"><span class="RefLink">64.2-1</span></a>), and has the same meaning of all arguments, except that the result is assumed to be a restricted Lie algebra (see <a href="chap64.html#X878080BB79BE3F2E"><span class="RefLink">64.8</span></a>) with the <span class="SimpleMath">p</span>-map given by the additional argument <var class="Arg">pmapping</var>. This last argument is a list of the length equal to the dimension of the algebra; its <span class="SimpleMath">i</span>-th entry specifies the <span class="SimpleMath">p</span>-th power of the <span class="SimpleMath">i</span>-th basis vector in the same format <code class="code">[ coeff1, position1, coeff2, position2, ... ]</code> as <code class="func">SetEntrySCTable</code> (<a href="chap62.html#X817BD086876EC1C4"><span class="RefLink">62.4-4</span></a>) uses to specify entries of the structure constants table.</p>
 
 <p>Note that the function does not check whether <var class="Arg">sct</var> satisfies the Jacobi identity, of whether <var class="Arg">pmapping</var> specifies a legitimate <span class="SimpleMath">p</span>-mapping.</p>
@@ -323,8 +323,8 @@ v.2+v.3
 
 <h5>64.2-3 LieAlgebra</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieAlgebra</code>( <var class="Arg">L</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieAlgebra</code>( <var class="Arg">F</var>, <var class="Arg">gens</var>[, <var class="Arg">zero</var>][, <var class="Arg">"basis"</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieAlgebra</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieAlgebra</code>( <var class="Arg">F</var>, <var class="Arg">gens</var>[, <var class="Arg">zero</var>][, <var class="Arg">"basis"</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For an associative algebra <var class="Arg">L</var>, <code class="code">LieAlgebra( <var class="Arg">L</var> )</code> is the Lie algebra isomorphic to <var class="Arg">L</var> as a vector space but with the Lie bracket as product.</p>
 
 <p><code class="code">LieAlgebra( <var class="Arg">F</var>, <var class="Arg">gens</var> )</code> is the Lie algebra over the division ring <var class="Arg">F</var>, generated <em>as Lie algebra</em> by the Lie objects corresponding to the vectors in the list <var class="Arg">gens</var>.</p>
@@ -352,8 +352,8 @@ v.2+v.3
 
 <h5>64.2-4 FreeLieAlgebra</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeLieAlgebra</code>( <var class="Arg">R</var>, <var class="Arg">rank</var>[, <var class="Arg">name</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeLieAlgebra</code>( <var class="Arg">R</var>, <var class="Arg">name1</var>, <var class="Arg">name2</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeLieAlgebra</code>( <var class="Arg">R</var>, <var class="Arg">rank</var>[, <var class="Arg">name</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeLieAlgebra</code>( <var class="Arg">R</var>, <var class="Arg">name1</var>, <var class="Arg">name2</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns a free Lie algebra of rank <var class="Arg">rank</var> over the ring <var class="Arg">R</var>. <code class="code">FreeLieAlgebra( <var class="Arg">R</var>, <var class="Arg">name1</var>, <var class="Arg">name2</var>,...)</code> returns a free Lie algebra over <var class="Arg">R</var> with generators named <var class="Arg">name1</var>, <var class="Arg">name2</var>, and so on. The elements of a free Lie algebra are written on the Hall-Lyndon basis.</p>
 
 
@@ -369,9 +369,9 @@ v.2+v.3
 
 <h5>64.2-5 FullMatrixLieAlgebra</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FullMatrixLieAlgebra</code>( <var class="Arg">R</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MatrixLieAlgebra</code>( <var class="Arg">R</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MatLieAlgebra</code>( <var class="Arg">R</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FullMatrixLieAlgebra</code>( <var class="Arg">R</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MatrixLieAlgebra</code>( <var class="Arg">R</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MatLieAlgebra</code>( <var class="Arg">R</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is the full matrix Lie algebra of <span class="SimpleMath"><var class="Arg">n</var> × <var class="Arg">n</var></span> matrices over the ring <var class="Arg">R</var>, for a nonnegative integer <var class="Arg">n</var>.</p>
 
 
@@ -384,9 +384,9 @@ v.2+v.3
 
 <h5>64.2-6 RightDerivations</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightDerivations</code>( <var class="Arg">B</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftDerivations</code>( <var class="Arg">B</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Derivations</code>( <var class="Arg">B</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightDerivations</code>( <var class="Arg">B</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftDerivations</code>( <var class="Arg">B</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Derivations</code>( <var class="Arg">B</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>These functions all return the matrix Lie algebra of derivations of the algebra <span class="SimpleMath">A</span> with basis <var class="Arg">B</var>.</p>
 
 <p><code class="code">RightDerivations( <var class="Arg">B</var> )</code> returns the algebra of derivations represented by their right action on the algebra <span class="SimpleMath">A</span>. This means that with respect to the basis <span class="SimpleMath">B</span> of <span class="SimpleMath">A</span>, the derivation <span class="SimpleMath">D</span> is described by the matrix <span class="SimpleMath">[ d_{i,j} ]</span> which means that <span class="SimpleMath">D</span> maps the <span class="SimpleMath">i</span>-th basis element <span class="SimpleMath">b_i</span> to <span class="SimpleMath">∑_{j = 1}^n d_{i,j} b_j</span>.</p>
@@ -407,7 +407,7 @@ v.2+v.3
 
 <h5>64.2-7 SimpleLieAlgebra</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimpleLieAlgebra</code>( <var class="Arg">type</var>, <var class="Arg">n</var>, <var class="Arg">F</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimpleLieAlgebra</code>( <var class="Arg">type</var>, <var class="Arg">n</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function constructs the simple Lie algebra of type given by the string <var class="Arg">type</var> and rank <var class="Arg">n</var> over the field <var class="Arg">F</var>. The string <var class="Arg">type</var> must be one of <code class="code">"A"</code>, <code class="code">"B"</code>, <code class="code">"C"</code>, <code class="code">"D"</code>, <code class="code">"E"</code>, <code class="code">"F"</code>, <code class="code">"G"</code>, <code class="code">"H"</code>, <code class="code">"K"</code>, <code class="code">"S"</code>, <code class="code">"W"</code> or <code class="code">"M"</code>. For the types <code class="code">A</code> to <code class="code">G</code>, <var class="Arg">n</var> must be a positive integer. The last five types only exist over fields of characteristic <span class="SimpleMath">p&gt;0</span>. If the type is <code class="code">H</code>, then <var class="Arg">n</var> must be a list of positive integers of even length. If the type is <code class="code">K</code>, then <var class="Arg">n</var> must be a list of positive integers of odd length. For the types <code class="code">S</code> and <code class="code">W</code>, <var class="Arg">n</var> must be a list of positive integers of any length. If the type is <code class="code">M</code>, then the Melikyan algebra is constructed. In this case <var class="Arg">n</var> must be a list of two positive integers. This Lie algebra only exists over fields of characteristic <span class="SimpleMath">5</span>. This Lie algebra is <span class="SimpleMath">ℤ × ℤ</span> graded; and the grading can be accessed via the attribute <code class="code">Grading(L)</code> (see <code class="func">Grading</code> (<a href="chap62.html#X7DCA2568870A2D34"><span class="RefLink">62.9-20</span></a>)). In some cases the Lie algebra returned by this function is not simple. Examples are the Lie algebras of type <span class="SimpleMath">A_n</span> over a field of characteristic <span class="SimpleMath">p&gt;0</span> where <span class="SimpleMath">p</span> divides <span class="SimpleMath">n+1</span>, and the Lie algebras of type <span class="SimpleMath">K_n</span> where <span class="SimpleMath">n</span> is a list of length 1.</p>
 
 <p>If <var class="Arg">type</var> is one of <code class="code">A</code>, <code class="code">B</code>, <code class="code">C</code>, <code class="code">D</code>, <code class="code">E</code>, <code class="code">F</code>, <code class="code">G</code>, and <var class="Arg">F</var> is a field of characteristic zero, then the basis of the returned Lie algebra is a Chevalley basis.</p>
@@ -436,8 +436,8 @@ v.2+v.3
 
 <h5>64.3-1 LieCentre</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieCentre</code>( <var class="Arg">L</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieCenter</code>( <var class="Arg">L</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieCentre</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieCenter</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The <em>Lie</em> centre of the Lie algebra <var class="Arg">L</var> is the kernel of the adjoint mapping, that is, the set <span class="SimpleMath">{ a ∈ L : ∀ x ∈ L: a x = 0 }</span>.</p>
 
 <p>In characteristic <span class="SimpleMath">2</span> this may differ from the usual centre (that is the set of all <span class="SimpleMath">a ∈ L</span> such that <span class="SimpleMath">a x = x a</span> for all <span class="SimpleMath">x ∈ L</span>). Therefore, this operation is named <code class="func">LieCentre</code> and not <code class="func">Centre</code> (<a href="chap35.html#X847ABE6F781C7FE8"><span class="RefLink">35.4-5</span></a>).</p>
@@ -455,7 +455,7 @@ v.2+v.3
 
 <h5>64.3-2 LieCentralizer</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieCentralizer</code>( <var class="Arg">L</var>, <var class="Arg">S</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieCentralizer</code>( <var class="Arg">L</var>, <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>is the annihilator of <var class="Arg">S</var> in the Lie algebra <var class="Arg">L</var>, that is, the set <span class="SimpleMath">{ a ∈ L : ∀ s ∈ S: a*s = 0 }</span>. Here <var class="Arg">S</var> may be a subspace or a subalgebra of <var class="Arg">L</var>.</p>
 
 
@@ -471,7 +471,7 @@ v.2+v.3
 
 <h5>64.3-3 LieNormalizer</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieNormalizer</code>( <var class="Arg">L</var>, <var class="Arg">U</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieNormalizer</code>( <var class="Arg">L</var>, <var class="Arg">U</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>is the normalizer of the subspace <var class="Arg">U</var> in the Lie algebra <var class="Arg">L</var>, that is, the set <span class="SimpleMath">N_L(U) = { x ∈ L : [x,U] ⊂ U }</span>.</p>
 
 
@@ -487,7 +487,7 @@ v.2+v.3
 
 <h5>64.3-4 LieDerivedSubalgebra</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieDerivedSubalgebra</code>( <var class="Arg">L</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieDerivedSubalgebra</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is the (Lie) derived subalgebra of the Lie algebra <var class="Arg">L</var>.</p>
 
 
@@ -502,7 +502,7 @@ v.2+v.3
 
 <h5>64.3-5 LieNilRadical</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieNilRadical</code>( <var class="Arg">L</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieNilRadical</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>This function calculates the (Lie) nil radical of the Lie algebra <var class="Arg">L</var>.</p>
 
 
@@ -518,7 +518,7 @@ v.2+v.3
 
 <h5>64.3-6 LieSolvableRadical</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieSolvableRadical</code>( <var class="Arg">L</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieSolvableRadical</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns the (Lie) solvable radical of the Lie algebra <var class="Arg">L</var>.</p>
 
 
@@ -533,7 +533,7 @@ v.2+v.3
 
 <h5>64.3-7 CartanSubalgebra</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CartanSubalgebra</code>( <var class="Arg">L</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CartanSubalgebra</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>A Cartan subalgebra of a Lie algebra <var class="Arg">L</var> is defined as a nilpotent subalgebra of <var class="Arg">L</var> equal to its own Lie normalizer in <var class="Arg">L</var>.</p>
 
 
@@ -551,7 +551,7 @@ v.2+v.3
 
 <h5>64.4-1 LieDerivedSeries</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieDerivedSeries</code>( <var class="Arg">L</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieDerivedSeries</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is the (Lie) derived series of the Lie algebra <var class="Arg">L</var>.</p>
 
 
@@ -568,7 +568,7 @@ v.2+v.3
 
 <h5>64.4-2 LieLowerCentralSeries</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieLowerCentralSeries</code>( <var class="Arg">L</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieLowerCentralSeries</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is the (Lie) lower central series of the Lie algebra <var class="Arg">L</var>.</p>
 
 
@@ -584,7 +584,7 @@ v.2+v.3
 
 <h5>64.4-3 LieUpperCentralSeries</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieUpperCentralSeries</code>( <var class="Arg">L</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieUpperCentralSeries</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is the (Lie) upper central series of the Lie algebra <var class="Arg">L</var>.</p>
 
 
@@ -605,7 +605,7 @@ v.2+v.3
 
 <h5>64.5-1 IsLieAbelian</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLieAbelian</code>( <var class="Arg">L</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLieAbelian</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if <var class="Arg">L</var> is a Lie algebra such that each product of elements in <var class="Arg">L</var> is zero, and <code class="keyw">false</code> otherwise.</p>
 
 
@@ -621,7 +621,7 @@ true
 
 <h5>64.5-2 IsLieNilpotent</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLieNilpotent</code>( <var class="Arg">L</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLieNilpotent</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>A Lie algebra <var class="Arg">L</var> is defined to be (Lie) <em>nilpotent</em> when its (Lie) lower central series reaches the trivial subalgebra.</p>
 
 
@@ -637,7 +637,7 @@ true
 
 <h5>64.5-3 IsLieSolvable</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLieSolvable</code>( <var class="Arg">L</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsLieSolvable</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>A Lie algebra <var class="Arg">L</var> is defined to be (Lie) <em>solvable</em> when its (Lie) derived series reaches the trivial subalgebra.</p>
 
 
@@ -659,7 +659,7 @@ true
 
 <h5>64.6-1 SemiSimpleType</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemiSimpleType</code>( <var class="Arg">L</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SemiSimpleType</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">L</var> be a semisimple Lie algebra, i.e., a direct sum of simple Lie algebras. Then <code class="func">SemiSimpleType</code> returns the type of <var class="Arg">L</var>, i.e., a string containing the types of the simple summands of <var class="Arg">L</var>.</p>
 
 
@@ -677,7 +677,7 @@ true
 
 <h5>64.6-2 ChevalleyBasis</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChevalleyBasis</code>( <var class="Arg">L</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ChevalleyBasis</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Here <var class="Arg">L</var> must be a semisimple Lie algebra with a split Cartan subalgebra. Then <code class="code">ChevalleyBasis(<var class="Arg">L</var>)</code> returns a list consisting of three sublists. Together these sublists form a Chevalley basis of <var class="Arg">L</var>. The first list contains the positive root vectors, the second list contains the negative root vectors, and the third list the Cartan elements of the Chevalley basis.</p>
 
 
@@ -693,21 +693,21 @@ true
 
 <h5>64.6-3 IsRootSystem</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRootSystem</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRootSystem</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Category of root systems.</p>
 
 <p><a id="X7D64D49479CBB203" name="X7D64D49479CBB203"></a></p>
 
 <h5>64.6-4 IsRootSystemFromLieAlgebra</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRootSystemFromLieAlgebra</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRootSystemFromLieAlgebra</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Category of root systems that come from (semisimple) Lie algebras. They often have special attributes such as <code class="func">UnderlyingLieAlgebra</code> (<a href="chap64.html#X7CA021E28527763E"><span class="RefLink">64.6-6</span></a>), <code class="func">PositiveRootVectors</code> (<a href="chap64.html#X829C78427A442C23"><span class="RefLink">64.6-9</span></a>), <code class="func">NegativeRootVectors</code> (<a href="chap64.html#X7AB374DC87A39349"><span class="RefLink">64.6-10</span></a>), <code class="func">CanonicalGenerators</code> (<a href="chap64.html#X7FAE45B37C5779A0"><span class="RefLink">64.6-14</span></a>).</p>
 
 <p><a id="X80D15C027BB8029B" name="X80D15C027BB8029B"></a></p>
 
 <h5>64.6-5 RootSystem</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RootSystem</code>( <var class="Arg">L</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RootSystem</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p><code class="func">RootSystem</code> calculates the root system of the semisimple Lie algebra <var class="Arg">L</var> with a split Cartan subalgebra.</p>
 
 
@@ -726,63 +726,63 @@ true
 
 <h5>64.6-6 UnderlyingLieAlgebra</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingLieAlgebra</code>( <var class="Arg">R</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingLieAlgebra</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>For a root system <var class="Arg">R</var> coming from a semisimple Lie algebra <code class="code">L</code>, returns the Lie algebra <code class="code">L</code>.</p>
 
 <p><a id="X7B6B0BBD8035D7E5" name="X7B6B0BBD8035D7E5"></a></p>
 
 <h5>64.6-7 PositiveRoots</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositiveRoots</code>( <var class="Arg">R</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositiveRoots</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The list of positive roots of the root system <var class="Arg">R</var>.</p>
 
 <p><a id="X81F9E0E67DD2688F" name="X81F9E0E67DD2688F"></a></p>
 
 <h5>64.6-8 NegativeRoots</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NegativeRoots</code>( <var class="Arg">R</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NegativeRoots</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The list of negative roots of the root system <var class="Arg">R</var>.</p>
 
 <p><a id="X829C78427A442C23" name="X829C78427A442C23"></a></p>
 
 <h5>64.6-9 PositiveRootVectors</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositiveRootVectors</code>( <var class="Arg">R</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositiveRootVectors</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>A list of positive root vectors of the root system <var class="Arg">R</var> that comes from a Lie algebra <code class="code">L</code>. This is a list in bijection with the list <code class="code">PositiveRoots( L )</code> (see <code class="func">PositiveRoots</code> (<a href="chap64.html#X7B6B0BBD8035D7E5"><span class="RefLink">64.6-7</span></a>)). The root vector is a non-zero element of the root space (in <code class="code">L</code>) of the corresponding root.</p>
 
 <p><a id="X7AB374DC87A39349" name="X7AB374DC87A39349"></a></p>
 
 <h5>64.6-10 NegativeRootVectors</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NegativeRootVectors</code>( <var class="Arg">R</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NegativeRootVectors</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>A list of negative root vectors of the root system <var class="Arg">R</var> that comes from a Lie algebra <code class="code">L</code>. This is a list in bijection with the list <code class="code">NegativeRoots( L )</code> (see <code class="func">NegativeRoots</code> (<a href="chap64.html#X81F9E0E67DD2688F"><span class="RefLink">64.6-8</span></a>)). The root vector is a non-zero element of the root space (in <code class="code">L</code>) of the corresponding root.</p>
 
 <p><a id="X7DBD179E7CCF6699" name="X7DBD179E7CCF6699"></a></p>
 
 <h5>64.6-11 SimpleSystem</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimpleSystem</code>( <var class="Arg">R</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimpleSystem</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>A list of simple roots of the root system <var class="Arg">R</var>.</p>
 
 <p><a id="X84E3FEF587CB66C3" name="X84E3FEF587CB66C3"></a></p>
 
 <h5>64.6-12 CartanMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CartanMatrix</code>( <var class="Arg">R</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CartanMatrix</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The Cartan matrix of the root system <var class="Arg">R</var>, relative to the simple roots in <code class="code">SimpleSystem( <var class="Arg">R</var> )</code> (see <code class="func">SimpleSystem</code> (<a href="chap64.html#X7DBD179E7CCF6699"><span class="RefLink">64.6-11</span></a>)).</p>
 
 <p><a id="X878644D68571BF44" name="X878644D68571BF44"></a></p>
 
 <h5>64.6-13 BilinearFormMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BilinearFormMat</code>( <var class="Arg">R</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BilinearFormMat</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The matrix of the bilinear form of the root system <var class="Arg">R</var>. If we denote this matrix by <span class="SimpleMath">B</span>, then we have <span class="SimpleMath">B(i,j) = (α_i, α_j)</span>, where the <span class="SimpleMath">α_i</span> are the simple roots of <var class="Arg">R</var>.</p>
 
 <p><a id="X7FAE45B37C5779A0" name="X7FAE45B37C5779A0"></a></p>
 
 <h5>64.6-14 CanonicalGenerators</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalGenerators</code>( <var class="Arg">R</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CanonicalGenerators</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Here <var class="Arg">R</var> must be a root system coming from a semisimple Lie algebra <code class="code">L</code>. This function returns <span class="SimpleMath">3l</span> generators of <var class="Arg">L</var>, <span class="SimpleMath">x_1, ..., x_l, y_1, ..., y_l, h_1, ..., h_l</span>, where <span class="SimpleMath">x_i</span> lies in the root space corresponding to the <span class="SimpleMath">i</span>-th simple root of the root system of <var class="Arg">L</var>, <span class="SimpleMath">y_i</span> lies in the root space corresponding to <span class="SimpleMath">-</span> the <span class="SimpleMath">i</span>-th simple root, and the <span class="SimpleMath">h_i</span> are elements of the Cartan subalgebra. These elements satisfy the relations <span class="SimpleMath">h_i * h_j = 0</span>, <span class="SimpleMath">x_i * y_j = δ_ij h_i</span>, <span class="SimpleMath">h_j * x_i = c_ij x_i</span>, <span class="SimpleMath">h_j * y_i = -c_ij y_i</span>, where <span class="SimpleMath">c_ij</span> is the entry of the Cartan matrix on position <span class="SimpleMath">ij</span>.</p>
 
 <p>Also if <span class="SimpleMath">a</span> is a root of the root system <var class="Arg">R</var> (so <span class="SimpleMath">a</span> is a list of numbers), then we have the relation <span class="SimpleMath">h_i * x = a[i] x</span>, where <span class="SimpleMath">x</span> is a root vector corresponding to <span class="SimpleMath">a</span>.</p>
@@ -820,21 +820,21 @@ true
 
 <h5>64.7-1 IsWeylGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWeylGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWeylGroup</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>A Weyl group is a group generated by reflections, with the attribute <code class="func">SparseCartanMatrix</code> (<a href="chap64.html#X81EF01E57E5DC18A"><span class="RefLink">64.7-2</span></a>) set.</p>
 
 <p><a id="X81EF01E57E5DC18A" name="X81EF01E57E5DC18A"></a></p>
 
 <h5>64.7-2 SparseCartanMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SparseCartanMatrix</code>( <var class="Arg">W</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SparseCartanMatrix</code>( <var class="Arg">W</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>This is a sparse form of the Cartan matrix of the corresponding root system. If we denote the Cartan matrix by <code class="code">C</code>, then the sparse Cartan matrix of <var class="Arg">W</var> is a list (of length equal to the length of the Cartan matrix), where the <code class="code">i</code>-th entry is a list consisting of elements <code class="code">[ j, C[i][j] ]</code>, where <code class="code">j</code> is such that <code class="code">C[i][j]</code> is non-zero.</p>
 
 <p><a id="X86BED5098322EBEF" name="X86BED5098322EBEF"></a></p>
 
 <h5>64.7-3 WeylGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WeylGroup</code>( <var class="Arg">R</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WeylGroup</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>The Weyl group of the root system <var class="Arg">R</var>. It is generated by the simple reflections. A simple reflection is represented by a matrix, and the result of letting a simple reflection <code class="code">m</code> act on a weight <code class="code">w</code> is obtained by <code class="code">w*m</code>.</p>
 
 
@@ -858,7 +858,7 @@ true
 
 <h5>64.7-4 ApplySimpleReflection</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ApplySimpleReflection</code>( <var class="Arg">SC</var>, <var class="Arg">i</var>, <var class="Arg">wt</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ApplySimpleReflection</code>( <var class="Arg">SC</var>, <var class="Arg">i</var>, <var class="Arg">wt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Here <var class="Arg">SC</var> is the sparse Cartan matrix of a Weyl group. This function applies the <var class="Arg">i</var>-th simple reflection to the weight <var class="Arg">wt</var>, thus changing <var class="Arg">wt</var>.</p>
 
 
@@ -876,7 +876,7 @@ true
 
 <h5>64.7-5 LongestWeylWordPerm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LongestWeylWordPerm</code>( <var class="Arg">W</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LongestWeylWordPerm</code>( <var class="Arg">W</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <span class="SimpleMath">g_0</span> be the longest element in the Weyl group <var class="Arg">W</var>, and let <span class="SimpleMath">{ α_1, ..., α_l }</span> be a simple system of the corresponding root system. Then <span class="SimpleMath">g_0</span> maps <span class="SimpleMath">α_i</span> to <span class="SimpleMath">-α_{σ(i)}</span>, where <span class="SimpleMath">σ</span> is a permutation of <span class="SimpleMath">(1, ..., l)</span>. This function returns that permutation.</p>
 
 
@@ -891,8 +891,8 @@ true
 
 <h5>64.7-6 ConjugateDominantWeight</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConjugateDominantWeight</code>( <var class="Arg">W</var>, <var class="Arg">wt</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConjugateDominantWeightWithWord</code>( <var class="Arg">W</var>, <var class="Arg">wt</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConjugateDominantWeight</code>( <var class="Arg">W</var>, <var class="Arg">wt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConjugateDominantWeightWithWord</code>( <var class="Arg">W</var>, <var class="Arg">wt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Here <var class="Arg">W</var> is a Weyl group and <var class="Arg">wt</var> a weight (i.e., a list of integers). <code class="func">ConjugateDominantWeight</code> returns the unique dominant weight conjugate to <var class="Arg">wt</var> under <var class="Arg">W</var>.</p>
 
 <p><code class="func">ConjugateDominantWeightWithWord</code> returns a list of two elements. The first of these is the dominant weight conjugate to <var class="Arg">wt</var>. The second element is a list of indices of simple reflections that have to be applied to <var class="Arg">wt</var> in order to get the dominant weight conjugate to it.</p>
@@ -918,7 +918,7 @@ true
 
 <h5>64.7-7 WeylOrbitIterator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WeylOrbitIterator</code>( <var class="Arg">W</var>, <var class="Arg">wt</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WeylOrbitIterator</code>( <var class="Arg">W</var>, <var class="Arg">wt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns an iterator for the orbit of the weight <var class="Arg">wt</var> under the action of the Weyl group <var class="Arg">W</var>.</p>
 
 
@@ -952,7 +952,7 @@ true
 
 <h5>64.8-1 IsRestrictedLieAlgebra</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRestrictedLieAlgebra</code>( <var class="Arg">L</var> )</td><td class="tdright">( property )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRestrictedLieAlgebra</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>Test whether <var class="Arg">L</var> is restricted.</p>
 
 
@@ -971,7 +971,7 @@ true
 
 <h5>64.8-2 PthPowerImages</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PthPowerImages</code>( <var class="Arg">B</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PthPowerImages</code>( <var class="Arg">B</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Here <var class="Arg">B</var> is a basis of a restricted Lie algebra. This function returns the list of the images of the basis vectors of <var class="Arg">B</var> under the <span class="SimpleMath">p</span>-map.</p>
 
 
@@ -989,9 +989,9 @@ CanonicalBasis( &lt;Lie algebra of dimension 11 over GF(11)&gt; )
 
 <h5>64.8-3 PthPowerImage</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PthPowerImage</code>( <var class="Arg">B</var>, <var class="Arg">x</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PthPowerImage</code>( <var class="Arg">x</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PthPowerImage</code>( <var class="Arg">x</var>, <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PthPowerImage</code>( <var class="Arg">B</var>, <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PthPowerImage</code>( <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PthPowerImage</code>( <var class="Arg">x</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>This function computes the image of an element <var class="Arg">x</var> of a restricted Lie algebra under its <span class="SimpleMath">p</span>-map.</p>
 
 <p>In the first form, a basis of the Lie algebra is provided; this basis stores the <span class="SimpleMath">p</span>th powers of its elements. It is the traditional form, provided for backwards compatibility.</p>
@@ -1023,14 +1023,14 @@ LieObject( (Z(2)^0)*x^2 )
 
 <h5>64.8-4 JenningsLieAlgebra</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JenningsLieAlgebra</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JenningsLieAlgebra</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">G</var> be a nontrivial <span class="SimpleMath">p</span>-group, and let <span class="SimpleMath"><var class="Arg">G</var> = G_1 ⊃ G_2 ⊃ ⋯ ⊃ G_m = 1</span> be its Jennings series (see <code class="func">JenningsSeries</code> (<a href="chap39.html#X82A34BD681F24A94"><span class="RefLink">39.17-14</span></a>)). Then the quotients <span class="SimpleMath">G_i / G_{i+1}</span> are elementary abelian <span class="SimpleMath">p</span>-groups, i.e., they can be viewed as vector spaces over <code class="code">GF</code><span class="SimpleMath">(p)</span>. Now the Jennings-Lie algebra <span class="SimpleMath">L</span> of <var class="Arg">G</var> is the direct sum of those vector spaces. The Lie bracket on <span class="SimpleMath">L</span> is induced by the commutator in <var class="Arg">G</var>. Furthermore, the map <span class="SimpleMath">g ↦ g^p</span> in <var class="Arg">G</var> induces a <span class="SimpleMath">p</span>-map in <span class="SimpleMath">L</span> making <span class="SimpleMath">L</span> into a restricted Lie algebra. In the canonical basis of <span class="SimpleMath">L</span> this <span class="SimpleMath">p</span>-map is added as an attribute. A Lie algebra created by <code class="func">JenningsLieAlgebra</code> is naturally graded. The attribute <code class="func">Grading</code> (<a href="chap62.html#X7DCA2568870A2D34"><span class="RefLink">62.9-20</span></a>) is set.</p>
 
 <p><a id="X785251E879E1BFC6" name="X785251E879E1BFC6"></a></p>
 
 <h5>64.8-5 PCentralLieAlgebra</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PCentralLieAlgebra</code>( <var class="Arg">G</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PCentralLieAlgebra</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Here <var class="Arg">G</var> is a nontrivial <span class="SimpleMath">p</span>-group. <code class="code">PCentralLieAlgebra( <var class="Arg">G</var> )</code> does the same as <code class="func">JenningsLieAlgebra</code> (<a href="chap64.html#X8692ADD581359CA1"><span class="RefLink">64.8-4</span></a>) except that the <span class="SimpleMath">p</span>-central series is used instead of the Jennings series (see <code class="func">PCentralSeries</code> (<a href="chap39.html#X7809B7ED792669F3"><span class="RefLink">39.17-13</span></a>)). This function also returns a graded Lie algebra. However, it is not necessarily restricted.</p>
 
 
@@ -1056,7 +1056,7 @@ rec( hom_components := function( d ) ... end, max_degree := 3,
 
 <h5>64.8-6 NaturalHomomorphismOfLieAlgebraFromNilpotentGroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalHomomorphismOfLieAlgebraFromNilpotentGroup</code>( <var class="Arg">L</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalHomomorphismOfLieAlgebraFromNilpotentGroup</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>This is an attribute of Lie algebras created by <code class="func">JenningsLieAlgebra</code> (<a href="chap64.html#X8692ADD581359CA1"><span class="RefLink">64.8-4</span></a>) or <code class="func">PCentralLieAlgebra</code> (<a href="chap64.html#X785251E879E1BFC6"><span class="RefLink">64.8-5</span></a>). Then <var class="Arg">L</var> is the direct sum of quotients of successive terms of the Jennings, or <span class="SimpleMath">p</span>-central series of a <span class="SimpleMath">p</span>-group G. Let <code class="code">Gi</code> be the <span class="SimpleMath">i</span>-th term in this series, and let <code class="code">f = NaturalHomomorphismOfLieAlgebraFromNilpotentGroup( <var class="Arg">L</var> )</code>, then for <code class="code">g</code> in <code class="code">Gi</code>, <code class="code">f( <var class="Arg">g</var>, <var class="Arg">i</var> )</code> returns the element of <var class="Arg">L</var> (lying in the <span class="SimpleMath">i</span>-th homogeneous component) corresponding to <code class="code">g</code>.</p>
 
 <p><a id="X7C419FFA835EBE12" name="X7C419FFA835EBE12"></a></p>
@@ -1069,7 +1069,7 @@ rec( hom_components := function( d ) ... end, max_degree := 3,
 
 <h5>64.9-1 AdjointMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AdjointMatrix</code>( <var class="Arg">B</var>, <var class="Arg">x</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AdjointMatrix</code>( <var class="Arg">B</var>, <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>is the matrix of the adjoint representation of the element <var class="Arg">x</var> w.r.t. the basis <var class="Arg">B</var>. The adjoint map is the left multiplication by <var class="Arg">x</var>. The <span class="SimpleMath">i</span>-th column of the resulting matrix represents the image of the <span class="SimpleMath">i</span>-th basis vector of <var class="Arg">B</var> under left multiplication by <var class="Arg">x</var>.</p>
 
 
@@ -1083,7 +1083,7 @@ rec( hom_components := function( d ) ... end, max_degree := 3,
 
 <h5>64.9-2 AdjointAssociativeAlgebra</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AdjointAssociativeAlgebra</code>( <var class="Arg">L</var>, <var class="Arg">K</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AdjointAssociativeAlgebra</code>( <var class="Arg">L</var>, <var class="Arg">K</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>is the associative matrix algebra (with 1) generated by the matrices of the adjoint representation of the subalgebra <var class="Arg">K</var> on the Lie algebra <var class="Arg">L</var>.</p>
 
 
@@ -1099,7 +1099,7 @@ rec( hom_components := function( d ) ... end, max_degree := 3,
 
 <h5>64.9-3 KillingMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KillingMatrix</code>( <var class="Arg">B</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KillingMatrix</code>( <var class="Arg">B</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is the matrix of the Killing form <span class="SimpleMath">κ</span> with respect to the basis <var class="Arg">B</var>, i.e., the matrix <span class="SimpleMath">( κ( b_i, b_j ) )</span> where <span class="SimpleMath">b_1, b_2, ...</span> are the basis vectors of <var class="Arg">B</var>.</p>
 
 
@@ -1113,7 +1113,7 @@ rec( hom_components := function( d ) ... end, max_degree := 3,
 
 <h5>64.9-4 KappaPerp</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KappaPerp</code>( <var class="Arg">L</var>, <var class="Arg">U</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KappaPerp</code>( <var class="Arg">L</var>, <var class="Arg">U</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>is the orthogonal complement of the subspace <var class="Arg">U</var> of the Lie algebra <var class="Arg">L</var> with respect to the Killing form <span class="SimpleMath">κ</span>, that is, the set <span class="SimpleMath">U^{perp} = { x ∈ L; κ( x, y ) = 0 hbox for all y ∈ L }</span>.</p>
 
 <p><span class="SimpleMath">U^{perp}</span> is a subspace of <var class="Arg">L</var>, and if <var class="Arg">U</var> is an ideal of <var class="Arg">L</var> then <span class="SimpleMath">U^{perp}</span> is a subalgebra of <var class="Arg">L</var>.</p>
@@ -1131,7 +1131,7 @@ rec( hom_components := function( d ) ... end, max_degree := 3,
 
 <h5>64.9-5 IsNilpotentElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNilpotentElement</code>( <var class="Arg">L</var>, <var class="Arg">x</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsNilpotentElement</code>( <var class="Arg">L</var>, <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><var class="Arg">x</var> is nilpotent in <var class="Arg">L</var> if its adjoint matrix is a nilpotent matrix.</p>
 
 
@@ -1145,7 +1145,7 @@ true
 
 <h5>64.9-6 NonNilpotentElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NonNilpotentElement</code>( <var class="Arg">L</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NonNilpotentElement</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>A non-nilpotent element of a Lie algebra <var class="Arg">L</var> is an element <span class="SimpleMath">x</span> such that ad<span class="SimpleMath">x</span> is not nilpotent. If <var class="Arg">L</var> is not nilpotent, then by Engel's theorem non-nilpotent elements exist in <var class="Arg">L</var>. In this case this function returns a non-nilpotent element of <var class="Arg">L</var>, otherwise (if <var class="Arg">L</var> is nilpotent) <code class="keyw">fail</code> is returned.</p>
 
 
@@ -1161,7 +1161,7 @@ false
 
 <h5>64.9-7 FindSl2</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FindSl2</code>( <var class="Arg">L</var>, <var class="Arg">x</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FindSl2</code>( <var class="Arg">L</var>, <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function tries to find a subalgebra <span class="SimpleMath">S</span> of the Lie algebra <var class="Arg">L</var> with <span class="SimpleMath">S</span> isomorphic to <span class="SimpleMath">sl_2</span> and such that the nilpotent element <var class="Arg">x</var> of <var class="Arg">L</var> is contained in <span class="SimpleMath">S</span>. If such an algebra exists then it is returned, otherwise <code class="keyw">fail</code> is returned.</p>
 
 
@@ -1182,7 +1182,7 @@ true
 
 <h5>64.10-1 UniversalEnvelopingAlgebra</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UniversalEnvelopingAlgebra</code>( <var class="Arg">L</var>[, <var class="Arg">B</var>] )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UniversalEnvelopingAlgebra</code>( <var class="Arg">L</var>[, <var class="Arg">B</var>] )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns the universal enveloping algebra of the Lie algebra <var class="Arg">L</var>. The elements of this algebra are written on a Poincare-Birkhoff-Witt basis.</p>
 
 <p>If a second argument <var class="Arg">B</var> is given, it must be a basis of <var class="Arg">L</var>, and an isomorphic copy of the universal enveloping algebra is returned, generated by the images (in the universal enveloping algebra) of the elements of <var class="Arg">B</var>.</p>
@@ -1227,7 +1227,7 @@ true
 
 <h5>64.11-1 FpLieAlgebraByCartanMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FpLieAlgebraByCartanMatrix</code>( <var class="Arg">C</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FpLieAlgebraByCartanMatrix</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Here <var class="Arg">C</var> must be a Cartan matrix. The function returns the finitely-presented Lie algebra over the field of rational numbers defined by this Cartan matrix. By Serre's theorem, this Lie algebra is a semisimple Lie algebra, and its root system has Cartan matrix <var class="Arg">C</var>.</p>
 
 
@@ -1246,7 +1246,7 @@ true
 
 <h5>64.11-2 NilpotentQuotientOfFpLieAlgebra</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NilpotentQuotientOfFpLieAlgebra</code>( <var class="Arg">FpL</var>, <var class="Arg">max</var>[, <var class="Arg">weights</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NilpotentQuotientOfFpLieAlgebra</code>( <var class="Arg">FpL</var>, <var class="Arg">max</var>[, <var class="Arg">weights</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Here <var class="Arg">FpL</var> is a finitely presented Lie algebra. Let <span class="SimpleMath">K</span> be the quotient of <var class="Arg">FpL</var> by the <var class="Arg">max</var>+1-th term of its lower central series. This function calculates a surjective homomorphism from <var class="Arg">FpL</var> onto <span class="SimpleMath">K</span>. When called with the third argument <var class="Arg">weights</var>, the <span class="SimpleMath">k</span>-th generator of <var class="Arg">FpL</var> gets assigned the <span class="SimpleMath">k</span>-th element of the list <var class="Arg">weights</var>. In that case a quotient is calculated of <var class="Arg">FpL</var> by the ideal generated by all elements of weight <var class="Arg">max</var>+1. If the list <var class="Arg">weights</var> only consists of <span class="SimpleMath">1</span>'s then the two calls are equivalent. The default value of <var class="Arg">weights</var> is a list (of length equal to the number of generators of <var class="Arg">FpL</var>) consisting of <span class="SimpleMath">1</span>'s.</p>
 
 <p>If the relators of <var class="Arg">FpL</var> are homogeneous, then the resulting algebra is naturally graded.</p>
@@ -1306,15 +1306,15 @@ rec( hom_components := function( d ) ... end, max_degree := 50,
 
 <h5>64.12-1 IsCochain</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCochain</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCochainCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCochain</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCochainCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Categories of cochains and of collections of cochains.</p>
 
 <p><a id="X79F3DF0D8791C2E3" name="X79F3DF0D8791C2E3"></a></p>
 
 <h5>64.12-2 Cochain</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cochain</code>( <var class="Arg">V</var>, <var class="Arg">s</var>, <var class="Arg">obj</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cochain</code>( <var class="Arg">V</var>, <var class="Arg">s</var>, <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Constructs a <var class="Arg">s</var>-cochain given by the data in <var class="Arg">obj</var>, with respect to the Lie algebra module <var class="Arg">V</var>. If <var class="Arg">s</var> is non-zero, then <var class="Arg">obj</var> must be a list.</p>
 
 
@@ -1340,7 +1340,7 @@ true
 
 <h5>64.12-3 CochainSpace</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CochainSpace</code>( <var class="Arg">V</var>, <var class="Arg">s</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CochainSpace</code>( <var class="Arg">V</var>, <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns the space of all <var class="Arg">s</var>-cochains with respect to <var class="Arg">V</var>.</p>
 
 
@@ -1360,7 +1360,7 @@ true
 
 <h5>64.12-4 ValueCochain</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ValueCochain</code>( <var class="Arg">c</var>, <var class="Arg">y1</var>, <var class="Arg">y2</var>, <var class="Arg">...</var>, <var class="Arg">ys</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ValueCochain</code>( <var class="Arg">c</var>, <var class="Arg">y1</var>, <var class="Arg">y2</var>, <var class="Arg">...</var>, <var class="Arg">ys</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Here <var class="Arg">c</var> is an <code class="code">s</code>-cochain. This function returns the value of <var class="Arg">c</var> when applied to the <code class="code">s</code> elements <var class="Arg">y1</var> to <var class="Arg">ys</var> (that lie in the Lie algebra acting on the module corresponding to <var class="Arg">c</var>). It is also possible to call this function with two arguments: first <var class="Arg">c</var> and then the list containing <code class="code"><var class="Arg">y1</var>,...,<var class="Arg">ys</var></code>.</p>
 
 
@@ -1378,7 +1378,7 @@ true
 
 <h5>64.12-5 LieCoboundaryOperator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieCoboundaryOperator</code>( <var class="Arg">c</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LieCoboundaryOperator</code>( <var class="Arg">c</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This is a function that takes an <code class="code">s</code>-cochain <var class="Arg">c</var>, and returns an <code class="code">s+1</code>-cochain. The coboundary operator is applied.</p>
 
 
@@ -1397,14 +1397,14 @@ true
 
 <h5>64.12-6 Cocycles</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cocycles</code>( <var class="Arg">V</var>, <var class="Arg">s</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Cocycles</code>( <var class="Arg">V</var>, <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>is the space of all <var class="Arg">s</var>-cocycles with respect to the Lie algebra module <var class="Arg">V</var>. That is the kernel of the coboundary operator when restricted to the space of <var class="Arg">s</var>-cochains.</p>
 
 <p><a id="X7C4F372C7AE2F739" name="X7C4F372C7AE2F739"></a></p>
 
 <h5>64.12-7 Coboundaries</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Coboundaries</code>( <var class="Arg">V</var>, <var class="Arg">s</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Coboundaries</code>( <var class="Arg">V</var>, <var class="Arg">s</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>is the space of all <var class="Arg">s</var>-coboundaries with respect to the Lie algebra module <var class="Arg">V</var>. That is the image of the coboundary operator, when applied to the space of <var class="Arg">s</var>-1-cochains. By definition the space of all 0-coboundaries is zero.</p>
 
 
@@ -1432,15 +1432,15 @@ true
 
 <h5>64.13-1 DominantWeights</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DominantWeights</code>( <var class="Arg">R</var>, <var class="Arg">maxw</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DominantWeights</code>( <var class="Arg">R</var>, <var class="Arg">maxw</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Returns a list consisting of two lists. The first of these contains the dominant weights (written on the basis of fundamental weights) of the irreducible highest-weight module, with highest weight <var class="Arg">maxw</var>, over the Lie algebra with the root system <var class="Arg">R</var>. The <span class="SimpleMath">i</span>-th element of the second list is the level of the <span class="SimpleMath">i</span>-th dominant weight. (Where the level is defined as follows. For a weight <span class="SimpleMath">μ</span> we write <span class="SimpleMath">μ = λ - ∑_i k_i α_i</span>, where the <span class="SimpleMath">α_i</span> are the simple roots, and <span class="SimpleMath">λ</span> the highest weight. Then the level of <span class="SimpleMath">μ</span> is <span class="SimpleMath">∑_i k_i</span>.)</p>
 
 <p><a id="X79AAC71E8267E9F8" name="X79AAC71E8267E9F8"></a></p>
 
 <h5>64.13-2 DominantCharacter</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DominantCharacter</code>( <var class="Arg">L</var>, <var class="Arg">maxw</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DominantCharacter</code>( <var class="Arg">R</var>, <var class="Arg">maxw</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DominantCharacter</code>( <var class="Arg">L</var>, <var class="Arg">maxw</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DominantCharacter</code>( <var class="Arg">R</var>, <var class="Arg">maxw</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>For a highest weight <var class="Arg">maxw</var> and a semisimple Lie algebra <var class="Arg">L</var>, this returns the dominant weights of the highest-weight module over <var class="Arg">L</var>, with highest weight <var class="Arg">maxw</var>. The output is a list of two lists, the first list contains the dominant weights; the second list contains their multiplicities.</p>
 
 <p>The first argument can also be a root system, in which case the dominant character of the highest-weight module over the corresponding semisimple Lie algebra is returned.</p>
@@ -1449,14 +1449,14 @@ true
 
 <h5>64.13-3 DecomposeTensorProduct</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DecomposeTensorProduct</code>( <var class="Arg">L</var>, <var class="Arg">w1</var>, <var class="Arg">w2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DecomposeTensorProduct</code>( <var class="Arg">L</var>, <var class="Arg">w1</var>, <var class="Arg">w2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Here <var class="Arg">L</var> is a semisimple Lie algebra and <var class="Arg">w1</var>, <var class="Arg">w2</var> are dominant weights. Let <span class="SimpleMath">V_i</span> be the irreducible highest-weight module over <var class="Arg">L</var> with highest weight <span class="SimpleMath">w_i</span> for <span class="SimpleMath">i = 1, 2</span>. Let <span class="SimpleMath">W = V_1 ⊗ V_2</span>. Then in general <span class="SimpleMath">W</span> is a reducible <var class="Arg">L</var>-module. Now this function returns a list of two lists. The first of these is the list of highest weights of the irreducible modules occurring in the decomposition of <span class="SimpleMath">W</span> as a direct sum of irreducible modules. The second list contains the multiplicities of these weights (i.e., the number of copies of the irreducible module with the corresponding highest weight that occur in <span class="SimpleMath">W</span>). The algorithm uses Klimyk's formula (see <a href="chapBib.html#biBKlimyk68">[Kli68]</a> or <a href="chapBib.html#biBKlimyk66">[Kli66]</a> for the original Russian version).</p>
 
 <p><a id="X7D67A9BC7E4714D9" name="X7D67A9BC7E4714D9"></a></p>
 
 <h5>64.13-4 DimensionOfHighestWeightModule</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DimensionOfHighestWeightModule</code>( <var class="Arg">L</var>, <var class="Arg">w</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DimensionOfHighestWeightModule</code>( <var class="Arg">L</var>, <var class="Arg">w</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Here <var class="Arg">L</var> is a semisimple Lie algebra, and <var class="Arg">w</var> a dominant weight. This function returns the dimension of the highest-weight module over <var class="Arg">L</var> with highest weight <var class="Arg">w</var>. The algorithm uses Weyl's dimension formula.</p>
 
 
@@ -1518,16 +1518,16 @@ true
 
 <h5>64.14-1 IsUEALatticeElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUEALatticeElement</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUEALatticeElementCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUEALatticeElementFamily</code>( <var class="Arg">fam</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUEALatticeElement</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUEALatticeElementCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsUEALatticeElementFamily</code>( <var class="Arg">fam</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>is the category of elements of an admissible lattice in the universal enveloping algebra of a semisimple Lie algebra <code class="code">L</code>.</p>
 
 <p><a id="X79F4F58B7888B0A5" name="X79F4F58B7888B0A5"></a></p>
 
 <h5>64.14-2 LatticeGeneratorsInUEA</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LatticeGeneratorsInUEA</code>( <var class="Arg">L</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LatticeGeneratorsInUEA</code>( <var class="Arg">L</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Here <var class="Arg">L</var> must be a semisimple Lie algebra of characteristic <span class="SimpleMath">0</span>. This function returns a list of generators of an admissible lattice in the universal enveloping algebra of <var class="Arg">L</var>, relative to the Chevalley basis contained in <code class="code">ChevalleyBasis( <var class="Arg">L</var> )</code> (see <code class="func">ChevalleyBasis</code> (<a href="chap64.html#X82EBF10A7B3B6F6E"><span class="RefLink">64.6-2</span></a>)). First are listed the negative root vectors (denoted by <span class="SimpleMath">y_1, ..., y_s</span>), then the positive root vectors (denoted by <span class="SimpleMath">x_1, ..., x_s</span>). At the end of the list there are the Cartan elements. They are printed as <code class="code">( hi/1 )</code>, which means</p>
 
 <p class="pcenter">{h_i choose 1}.</p>
@@ -1544,7 +1544,7 @@ true
 
 <h5>64.14-3 ObjByExtRep</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ObjByExtRep</code>( <var class="Arg">F</var>, <var class="Arg">descr</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ObjByExtRep</code>( <var class="Arg">F</var>, <var class="Arg">descr</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <p>An UEALattice element is represented by a list of the form <code class="code">[ m1, c1, m2, c2, ... ]</code>, where the <code class="code">c1</code>, <code class="code">c2</code> etc. are coefficients, and the <code class="code">m1</code>, <code class="code">m2</code> etc. are monomials. A monomial is a list of the form <code class="code">[ ind1, e1, ind2, e2, ... ]</code> where <code class="code">ind1</code>, <code class="code">ind2</code> are indices, and <code class="code">e1</code>, <code class="code">e2</code> etc. are exponents. Let <span class="SimpleMath">N</span> be the number of positive roots of the underlying Lie algebra <code class="code">L</code>. The indices lie between 1 and <span class="SimpleMath">dim(L)</span>. If an index lies between 1 and <code class="code">N</code>, then it represents a negative root vector (corresponding to the root <code class="code">NegativeRoots( R )[ind]</code>, where <code class="code">R</code> is the root system of <code class="code">L</code>; see <code class="func">NegativeRoots</code> (<a href="chap64.html#X81F9E0E67DD2688F"><span class="RefLink">64.6-8</span></a>)). This leads to a factor <code class="code">yind1^(e1)</code> in the printed form of the monomial (which equals <code class="code">z^e1/e1!</code>, where <code class="code">z</code> is a basis element of <code class="code">L</code>). If an index lies between <span class="SimpleMath">N+1</span> and <span class="SimpleMath">2N</span>, then it represents a positive root vector. Finally, if ind lies between <span class="SimpleMath">2N+1</span> and <span class="SimpleMath">2N+rank</span>, then it represents an element of the Cartan subalgebra. This is printed as <span class="SimpleMath">( h_1/ e_1 )</span>, meaning <span class="SimpleMath">h_1 choose e_1</span>, where <span class="SimpleMath">h_1, ..., h_rank</span> are the canonical Cartan generators.</p>
 
 <p>The zero element is represented by the empty list, the identity element by the list <code class="code">[ [], 1 ]</code>.</p>
@@ -1569,9 +1569,9 @@ true
 
 <h5>64.14-4 IsWeightRepElement</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWeightRepElement</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWeightRepElementCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWeightRepElementFamily</code>( <var class="Arg">fam</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWeightRepElement</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWeightRepElementCollection</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsWeightRepElementFamily</code>( <var class="Arg">fam</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Is a category of vectors, that is used to construct elements of highest-weight modules (by <code class="func">HighestWeightModule</code> (<a href="chap64.html#X7FB14F7F80EFF33F"><span class="RefLink">64.14-5</span></a>)).</p>
 
 <p><code class="code">WeightRepElement</code>s are represented by a list of the form <code class="code">[ v1, c1, v2, c2, ....]</code>, where the <code class="code">vi</code> are basis vectors, and the <code class="code">ci</code> are coefficients. Furthermore a basis vector <code class="code">v</code> is a weight vector. It is represented by a list of the form <code class="code">[ k, mon, wt ]</code>, where <code class="code">k</code> is an integer (the basis vectors are numbered from <span class="SimpleMath">1</span> to <span class="SimpleMath">dim V</span>, where <span class="SimpleMath">V</span> is the highest weight module), <code class="code">mon</code> is an <code class="code">UEALatticeElement</code> (which means that the result of applying <code class="code">mon</code> to a highest weight vector is <code class="code">v</code>; see <code class="func">IsUEALatticeElement</code> (<a href="chap64.html#X86E6722379576746"><span class="RefLink">64.14-1</span></a>)) and <code class="code">wt</code> is the weight of <code class="code">v</code>. A <code class="code">WeightRepElement</code> is printed as <code class="code">mon*v0</code>, where <code class="code">v0</code> denotes a fixed highest weight vector.</p>
@@ -1582,7 +1582,7 @@ true
 
 <h5>64.14-5 HighestWeightModule</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HighestWeightModule</code>( <var class="Arg">L</var>, <var class="Arg">wt</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; HighestWeightModule</code>( <var class="Arg">L</var>, <var class="Arg">wt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the highest weight module with highest weight <var class="Arg">wt</var> of the semisimple Lie algebra <var class="Arg">L</var> of characteristic <span class="SimpleMath">0</span>.</p>
 
 <p>Note that the elements of such a module lie in the category <code class="func">IsLeftAlgebraModuleElement</code> (<a href="chap62.html#X80E786467F9163F9"><span class="RefLink">62.11-9</span></a>) (and in particular they do not lie in the category <code class="func">IsWeightRepElement</code> (<a href="chap64.html#X8248DB547B02B0FA"><span class="RefLink">64.14-4</span></a>)). However, if <code class="code">v</code> is an element of such a module, then <code class="code">ExtRepOfObj( v )</code> is a <code class="code">WeightRepElement</code>.</p>
@@ -1617,8 +1617,8 @@ y5*y7*y10*v0
 
 <h5>64.15-1 TensorProductOfAlgebraModules</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TensorProductOfAlgebraModules</code>( <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TensorProductOfAlgebraModules</code>( <var class="Arg">V</var>, <var class="Arg">W</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TensorProductOfAlgebraModules</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TensorProductOfAlgebraModules</code>( <var class="Arg">V</var>, <var class="Arg">W</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Here the elements of <var class="Arg">list</var> must be algebra modules. The tensor product is returned as an algebra module. The two-argument version works in the same way and returns the tensor product of its arguments.</p>
 
 
@@ -1641,7 +1641,7 @@ y5*y7*y10*v0
 
 <h5>64.15-2 ExteriorPowerOfAlgebraModule</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExteriorPowerOfAlgebraModule</code>( <var class="Arg">V</var>, <var class="Arg">k</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExteriorPowerOfAlgebraModule</code>( <var class="Arg">V</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Here <var class="Arg">V</var> must be an algebra module, defined over a Lie algebra. This function returns the <var class="Arg">k</var>-th exterior power of <var class="Arg">V</var> as an algebra module.</p>
 
 
@@ -1661,7 +1661,7 @@ y5*y7*y10*v0
 
 <h5>64.15-3 SymmetricPowerOfAlgebraModule</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SymmetricPowerOfAlgebraModule</code>( <var class="Arg">V</var>, <var class="Arg">k</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SymmetricPowerOfAlgebraModule</code>( <var class="Arg">V</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Here <var class="Arg">V</var> must be an algebra module. This function returns the <var class="Arg">k</var>-th symmetric power of <var class="Arg">V</var> (as an algebra module).</p>
 
 

@@ -86,7 +86,7 @@
 
 <h5>15.1-1 InfoNumtheor</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoNumtheor</code></td><td class="tdright">( info class )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InfoNumtheor</code></td><td class="tdright">(&nbsp;info class&nbsp;)</td></tr></table></div>
 <p><code class="func">InfoNumtheor</code> is the info class (see <a href="chap7.html#X7A9C902479CB6F7C"><span class="RefLink">7.4</span></a>) for the functions in the number theory chapter.</p>
 
 <p><a id="X823386567DAC22E6" name="X823386567DAC22E6"></a></p>
@@ -97,7 +97,7 @@
 
 <h5>15.2-1 PrimeResidues</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrimeResidues</code>( <var class="Arg">m</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrimeResidues</code>( <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">PrimeResidues</code> returns the set of integers from the range <code class="code">[ 0 .. Abs( <var class="Arg">m</var> )-1 ]</code> that are coprime to the integer <var class="Arg">m</var>.</p>
 
 <p><code class="code">Abs(<var class="Arg">m</var>)</code> must be less than <span class="SimpleMath">2^28</span>, otherwise the set would probably be too large anyhow.</p>
@@ -114,7 +114,7 @@
 
 <h5>15.2-2 Phi</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Phi</code>( <var class="Arg">m</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Phi</code>( <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">Phi</code> returns the number <span class="SimpleMath">ϕ(<var class="Arg">m</var>)</span> of positive integers less than the positive integer <var class="Arg">m</var> that are coprime to <var class="Arg">m</var>.</p>
 
 <p>Suppose that <span class="SimpleMath">m = p_1^{e_1} p_2^{e_2} ⋯ p_k^{e_k}</span>. Then <span class="SimpleMath">ϕ(m)</span> is <span class="SimpleMath">p_1^{e_1-1} (p_1-1) p_2^{e_2-1} (p_2-1) ⋯ p_k^{e_k-1} (p_k-1)</span>.</p>
@@ -133,7 +133,7 @@
 
 <h5>15.2-3 Lambda</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Lambda</code>( <var class="Arg">m</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Lambda</code>( <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">Lambda</code> returns the exponent <span class="SimpleMath">λ(<var class="Arg">m</var>)</span> of the group of prime residues modulo the integer <var class="Arg">m</var>.</p>
 
 <p><span class="SimpleMath">λ(<var class="Arg">m</var>)</span> is the smallest positive integer <span class="SimpleMath">l</span> such that for every <span class="SimpleMath">a</span> relatively prime to <var class="Arg">m</var> we have <span class="SimpleMath">a^l ≡ 1 mod <var class="Arg">m</var></span>. Fermat's theorem asserts <span class="SimpleMath">a^{ϕ(<var class="Arg">m</var>)} ≡ 1 mod <var class="Arg">m</var></span>; thus <span class="SimpleMath">λ(<var class="Arg">m</var>)</span> divides <span class="SimpleMath">ϕ(<var class="Arg">m</var>)</span> (see <code class="func">Phi</code> (<a href="chap15.html#X85A0C67982D9057A"><span class="RefLink">15.2-2</span></a>)).</p>
@@ -156,7 +156,7 @@
 
 <h5>15.2-4 GeneratorsPrimeResidues</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsPrimeResidues</code>( <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GeneratorsPrimeResidues</code>( <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">n</var> be a positive integer. <code class="func">GeneratorsPrimeResidues</code> returns a description of generators of the group of prime residues modulo <var class="Arg">n</var>. The return value is a record with components</p>
 
 
@@ -194,7 +194,7 @@ rec( exponents := [ 3, 2, 1 ],
 
 <h5>15.3-1 OrderMod</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrderMod</code>( <var class="Arg">n</var>, <var class="Arg">m</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OrderMod</code>( <var class="Arg">n</var>, <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">OrderMod</code> returns the multiplicative order of the integer <var class="Arg">n</var> modulo the positive integer <var class="Arg">m</var>. If <var class="Arg">n</var> and <var class="Arg">m</var> are not coprime the order of <var class="Arg">n</var> is not defined and <code class="func">OrderMod</code> will return <code class="code">0</code>.</p>
 
 <p>If <var class="Arg">n</var> and <var class="Arg">m</var> are relatively prime the multiplicative order of <var class="Arg">n</var> modulo <var class="Arg">m</var> is the smallest positive integer <span class="SimpleMath">i</span> such that <span class="SimpleMath"><var class="Arg">n</var>^i ≡ 1 mod <var class="Arg">m</var></span>. If the group of prime residues modulo <var class="Arg">m</var> is cyclic then each element of maximal order is called a primitive root modulo <var class="Arg">m</var> (see <code class="func">IsPrimitiveRootMod</code> (<a href="chap15.html#X790466C07BD90E20"><span class="RefLink">15.3-4</span></a>)).</p>
@@ -213,8 +213,8 @@ rec( exponents := [ 3, 2, 1 ],
 
 <h5>15.3-2 LogMod</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LogMod</code>( <var class="Arg">n</var>, <var class="Arg">r</var>, <var class="Arg">m</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LogModShanks</code>( <var class="Arg">n</var>, <var class="Arg">r</var>, <var class="Arg">m</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LogMod</code>( <var class="Arg">n</var>, <var class="Arg">r</var>, <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LogModShanks</code>( <var class="Arg">n</var>, <var class="Arg">r</var>, <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>computes the discrete <var class="Arg">r</var>-logarithm of the integer <var class="Arg">n</var> modulo the integer <var class="Arg">m</var>. It returns a number <var class="Arg">l</var> such that <span class="SimpleMath"><var class="Arg">r</var>^<var class="Arg">l</var> ≡ <var class="Arg">n</var> mod <var class="Arg">m</var></span> if such a number exists. Otherwise <code class="keyw">fail</code> is returned.</p>
 
 <p><code class="func">LogModShanks</code> uses the Baby Step - Giant Step Method of Shanks (see for example <a href="chapBib.html#biBCoh93">[Coh93, section 5.4.1]</a>) and in general requires more memory than a call to <code class="func">LogMod</code>.</p>
@@ -233,7 +233,7 @@ fail
 
 <h5>15.3-3 PrimitiveRootMod</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrimitiveRootMod</code>( <var class="Arg">m</var>[, <var class="Arg">start</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrimitiveRootMod</code>( <var class="Arg">m</var>[, <var class="Arg">start</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">PrimitiveRootMod</code> returns the smallest primitive root modulo the positive integer <var class="Arg">m</var> and <code class="keyw">fail</code> if no such primitive root exists. If the optional second integer argument <var class="Arg">start</var> is given <code class="func">PrimitiveRootMod</code> returns the smallest primitive root that is strictly larger than <var class="Arg">start</var>.</p>
 
 
@@ -255,7 +255,7 @@ fail
 
 <h5>15.3-4 IsPrimitiveRootMod</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPrimitiveRootMod</code>( <var class="Arg">r</var>, <var class="Arg">m</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsPrimitiveRootMod</code>( <var class="Arg">r</var>, <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">IsPrimitiveRootMod</code> returns <code class="keyw">true</code> if the integer <var class="Arg">r</var> is a primitive root modulo the positive integer <var class="Arg">m</var>, and <code class="keyw">false</code> otherwise. If <var class="Arg">r</var> is less than 0 or larger than <var class="Arg">m</var> it is replaced by its remainder.</p>
 
 
@@ -279,7 +279,7 @@ false
 
 <h5>15.4-1 Jacobi</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Jacobi</code>( <var class="Arg">n</var>, <var class="Arg">m</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Jacobi</code>( <var class="Arg">n</var>, <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">Jacobi</code> returns the value of the <em>Kronecker-Jacobi symbol</em> <span class="SimpleMath">J(<var class="Arg">n</var>,<var class="Arg">m</var>)</span> of the integer <var class="Arg">n</var> modulo the integer <var class="Arg">m</var>. It is defined as follows:</p>
 
 <p>If <span class="SimpleMath">n</span> and <span class="SimpleMath">m</span> are not coprime then <span class="SimpleMath">J(n,m) = 0</span>. Furthermore, <span class="SimpleMath">J(n,1) = 1</span> and <span class="SimpleMath">J(n,-1) = -1</span> if <span class="SimpleMath">m &lt; 0</span> and <span class="SimpleMath">+1</span> otherwise. And for odd <span class="SimpleMath">n</span> it is <span class="SimpleMath">J(n,2) = (-1)^k</span> with <span class="SimpleMath">k = (n^2-1)/8</span>. For odd primes <span class="SimpleMath">m</span> which are coprime to <span class="SimpleMath">n</span> the Kronecker-Jacobi symbol has the same value as the Legendre symbol (see <code class="func">Legendre</code> (<a href="chap15.html#X81464ABF7F10E544"><span class="RefLink">15.4-2</span></a>)).</p>
@@ -306,7 +306,7 @@ false
 
 <h5>15.4-2 Legendre</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Legendre</code>( <var class="Arg">n</var>, <var class="Arg">m</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Legendre</code>( <var class="Arg">n</var>, <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">Legendre</code> returns the value of the <em>Legendre symbol</em> of the integer <var class="Arg">n</var> modulo the positive integer <var class="Arg">m</var>.</p>
 
 <p>The value of the Legendre symbol <span class="SimpleMath">L(n/m)</span> is 1 if <span class="SimpleMath">n</span> is a <em>quadratic residue</em> modulo <span class="SimpleMath">m</span>, i.e., if there exists an integer <span class="SimpleMath">r</span> such that <span class="SimpleMath">r^2 ≡ n mod m</span> and <span class="SimpleMath">-1</span> otherwise.</p>
@@ -333,7 +333,7 @@ false
 
 <h5>15.4-3 RootMod</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RootMod</code>( <var class="Arg">n</var>[, <var class="Arg">k</var>], <var class="Arg">m</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RootMod</code>( <var class="Arg">n</var>[, <var class="Arg">k</var>], <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">RootMod</code> computes a <var class="Arg">k</var>th root of the integer <var class="Arg">n</var> modulo the positive integer <var class="Arg">m</var>, i.e., a <span class="SimpleMath">r</span> such that <span class="SimpleMath">r^<var class="Arg">k</var> ≡ <var class="Arg">n</var> mod <var class="Arg">m</var></span>. If no such root exists <code class="func">RootMod</code> returns <code class="keyw">fail</code>. If only the arguments <var class="Arg">n</var> and <var class="Arg">m</var> are given, the default value for <var class="Arg">k</var> is <span class="SimpleMath">2</span>.</p>
 
 <p>A square root of <var class="Arg">n</var> exists only if <code class="code">Legendre(<var class="Arg">n</var>,<var class="Arg">m</var>) = 1</code> (see <code class="func">Legendre</code> (<a href="chap15.html#X81464ABF7F10E544"><span class="RefLink">15.4-2</span></a>)). If <var class="Arg">m</var> has <span class="SimpleMath">r</span> different prime factors then there are <span class="SimpleMath">2^r</span> different roots of <var class="Arg">n</var> mod <var class="Arg">m</var>. It is unspecified which one <code class="func">RootMod</code> returns. You can, however, use <code class="func">RootsMod</code> (<a href="chap15.html#X84D3F03B862841F8"><span class="RefLink">15.4-4</span></a>) to compute the full set of roots.</p>
@@ -358,7 +358,7 @@ false
 
 <h5>15.4-4 RootsMod</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RootsMod</code>( <var class="Arg">n</var>[, <var class="Arg">k</var>], <var class="Arg">m</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RootsMod</code>( <var class="Arg">n</var>[, <var class="Arg">k</var>], <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">RootsMod</code> computes the set of <var class="Arg">k</var>th roots of the integer <var class="Arg">n</var> modulo the positive integer <var class="Arg">m</var>, i.e., the list of all <span class="SimpleMath">r</span> such that <span class="SimpleMath">r^<var class="Arg">k</var> ≡ <var class="Arg">n</var> mod <var class="Arg">m</var></span>. If only the arguments <var class="Arg">n</var> and <var class="Arg">m</var> are given, the default value for <var class="Arg">k</var> is <span class="SimpleMath">2</span>.</p>
 
 
@@ -377,7 +377,7 @@ false
 
 <h5>15.4-5 RootsUnityMod</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RootsUnityMod</code>( [<var class="Arg">k</var>, ]<var class="Arg">m</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RootsUnityMod</code>( [<var class="Arg">k</var>, ]<var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">RootsUnityMod</code> returns the set of <var class="Arg">k</var>-th roots of unity modulo the positive integer <var class="Arg">m</var>, i.e., the list of all solutions <span class="SimpleMath">r</span> of <span class="SimpleMath">r^<var class="Arg">k</var> ≡ <var class="Arg">n</var> mod <var class="Arg">m</var></span>. If only the argument <var class="Arg">m</var> is given, the default value for <var class="Arg">k</var> is <span class="SimpleMath">2</span>.</p>
 
 <p>In general there are <span class="SimpleMath"><var class="Arg">k</var>^n</span> such roots if the modulus <var class="Arg">m</var> has <span class="SimpleMath">n</span> different prime factors <span class="SimpleMath">p</span> such that <span class="SimpleMath">p ≡ 1 mod <var class="Arg">k</var></span>. If <span class="SimpleMath"><var class="Arg">k</var>^2</span> divides <var class="Arg">m</var> then there are <span class="SimpleMath"><var class="Arg">k</var>^{n+1}</span> such roots; and especially if <span class="SimpleMath"><var class="Arg">k</var> = 2</span> and 8 divides <var class="Arg">m</var> there are <span class="SimpleMath">2^{n+2}</span> such roots.</p>
@@ -404,7 +404,7 @@ false
 
 <h5>15.5-1 Sigma</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sigma</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sigma</code>( <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">Sigma</code> returns the sum of the positive divisors of the nonzero integer <var class="Arg">n</var>.</p>
 
 <p><code class="func">Sigma</code> is a multiplicative arithmetic function, i.e., if <span class="SimpleMath">n</span> and <span class="SimpleMath">m</span> are relatively prime we have that <span class="SimpleMath">σ(n ⋅ m) = σ(n) σ(m)</span>.</p>
@@ -429,7 +429,7 @@ true
 
 <h5>15.5-2 Tau</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Tau</code>( <var class="Arg">n</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Tau</code>( <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">Tau</code> returns the number of the positive divisors of the nonzero integer <var class="Arg">n</var>.</p>
 
 <p><code class="func">Tau</code> is a multiplicative arithmetic function, i.e., if <span class="SimpleMath">n</span> and <span class="SimpleMath">m</span> are relative prime we have <span class="SimpleMath">τ(n ⋅ m) = τ(n) τ(m)</span>. Together with the formula <span class="SimpleMath">τ(p^k) = k+1</span> this allows us to compute <span class="SimpleMath">τ(<var class="Arg">n</var>)</span>.</p>
@@ -453,7 +453,7 @@ true
 
 <h5>15.5-3 MoebiusMu</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MoebiusMu</code>( <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MoebiusMu</code>( <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">MoebiusMu</code> computes the value of Moebius inversion function for the nonzero integer <var class="Arg">n</var>. This is 0 for integers which are not squarefree, i.e., which are divided by a square <span class="SimpleMath">r^2</span>. Otherwise it is 1 if <var class="Arg">n</var> has a even number and <span class="SimpleMath">-1</span> if <var class="Arg">n</var> has an odd number of prime factors.</p>
 
 <p>The importance of <span class="SimpleMath">μ</span> stems from the so called inversion formula. Suppose <span class="SimpleMath">f</span> is a multiplicative arithmetic function defined on the positive integers and let <span class="SimpleMath">g(n) = ∑_{d ∣ n} f(d)</span>. Then <span class="SimpleMath">f(n) = ∑_{d ∣ n} μ(d) g(n/d)</span>. As a special case we have <span class="SimpleMath">ϕ(n) = ∑_{d ∣ n} μ(d) n/d</span> since <span class="SimpleMath">n = ∑_{d ∣ n} ϕ(d)</span> (see <code class="func">Phi</code> (<a href="chap15.html#X85A0C67982D9057A"><span class="RefLink">15.2-2</span></a>)).</p>
@@ -476,7 +476,7 @@ true
 
 <h5>15.6-1 ContinuedFractionExpansionOfRoot</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContinuedFractionExpansionOfRoot</code>( <var class="Arg">f</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContinuedFractionExpansionOfRoot</code>( <var class="Arg">f</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>The first <var class="Arg">n</var> terms of the continued fraction expansion of the only positive real root of the polynomial <var class="Arg">f</var> with integer coefficients. The leading coefficient of <var class="Arg">f</var> must be positive and the value of <var class="Arg">f</var> at 0 must be negative. If the degree of <var class="Arg">f</var> is 2 and <var class="Arg">n</var> = 0, the function computes one period of the continued fraction expansion of the root in question. Anything may happen if <var class="Arg">f</var> has three or more positive real roots.</p>
 
 
@@ -498,7 +498,7 @@ true
 
 <h5>15.6-2 ContinuedFractionApproximationOfRoot</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContinuedFractionApproximationOfRoot</code>( <var class="Arg">f</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ContinuedFractionApproximationOfRoot</code>( <var class="Arg">f</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>The <var class="Arg">n</var>th continued fraction approximation of the only positive real root of the polynomial <var class="Arg">f</var> with integer coefficients. The leading coefficient of <var class="Arg">f</var> must be positive and the value of <var class="Arg">f</var> at 0 must be negative. Anything may happen if <var class="Arg">f</var> has three or more positive real roots.</p>
 
 
@@ -522,7 +522,7 @@ true
 
 <h5>15.7-1 TwoSquares</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TwoSquares</code>( <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TwoSquares</code>( <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">TwoSquares</code> returns a list of two integers <span class="SimpleMath">x ≤ y</span> such that the sum of the squares of <span class="SimpleMath">x</span> and <span class="SimpleMath">y</span> is equal to the nonnegative integer <var class="Arg">n</var>, i.e., <span class="SimpleMath">n = x^2 + y^2</span>. If no such representation exists <code class="func">TwoSquares</code> will return <code class="keyw">fail</code>. <code class="func">TwoSquares</code> will return a representation for which the gcd of <span class="SimpleMath">x</span> and <span class="SimpleMath">y</span> is as small as possible. It is not specified which representation <code class="func">TwoSquares</code> returns if there is more than one.</p>
 
 <p>Let <span class="SimpleMath">a</span> be the product of all maximal powers of primes of the form <span class="SimpleMath">4k+3</span> dividing <var class="Arg">n</var>. A representation of <var class="Arg">n</var> as a sum of two squares exists if and only if <span class="SimpleMath">a</span> is a perfect square. Let <span class="SimpleMath">b</span> be the maximal power of <span class="SimpleMath">2</span> dividing <var class="Arg">n</var> or its half, whichever is a perfect square. Then the minimal possible gcd of <span class="SimpleMath">x</span> and <span class="SimpleMath">y</span> is the square root <span class="SimpleMath">c</span> of <span class="SimpleMath">a ⋅ b</span>. The number of different minimal representation with <span class="SimpleMath">x ≤ y</span> is <span class="SimpleMath">2^{l-1}</span>, where <span class="SimpleMath">l</span> is the number of different prime factors of the form <span class="SimpleMath">4k+1</span> of <var class="Arg">n</var>.</p>

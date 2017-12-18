@@ -1,5 +1,0 @@
-gap> 
-gap> #deltaoplus
-gap> DeltaOplus(8,GF(7));
-PDeltaO+(8,7)
-gap> quit;

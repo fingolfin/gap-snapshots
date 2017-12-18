@@ -20,11 +20,11 @@
 
 BIND_GLOBAL( "GAPInfo", rec(
 
-# do not edit the following three lines. Occurences of `4.8.8' and `20-Aug-2017'
+# do not edit the following three lines. Occurences of `4.8.9' and `18-Dec-2017'
 # will be replaced by string matching by distribution wrapping scripts.
-    Version := "4.8.8",
-    Date := "20-Aug-2017",
-    NeedKernelVersion := "4.8.8",
+    Version := "4.8.9",
+    Date := "18-Dec-2017",
+    NeedKernelVersion := "4.8.9",
 
 # Without the needed packages, GAP does not start.
     Dependencies := rec(

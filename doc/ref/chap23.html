@@ -89,7 +89,7 @@
 
 <h5>23.1-1 IsRowVector</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRowVector</code>( <var class="Arg">obj</var> )</td><td class="tdright">( category )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRowVector</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>A <em>row vector</em> is a vector (see <code class="func">IsVector</code> (<a href="chap31.html#X802F34F280B29DF4"><span class="RefLink">31.14-14</span></a>)) that is also a homogeneous list of odd additive nesting depth (see <a href="chap21.html#X84D642967B8546B7"><span class="RefLink">21.12</span></a>). Typical examples are lists of integers and rationals, lists of finite field elements of the same characteristic, and lists of polynomials from a common polynomial ring. Note that matrices are <em>not</em> regarded as row vectors, because they have even additive nesting depth.</p>
 
 <p>The additive operations of the vector must thus be compatible with that for lists, implying that the list entries are the coefficients of the vector with respect to some basis.</p>
@@ -188,7 +188,7 @@ true
 
 <h5>23.2-1 NormedRowVector</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NormedRowVector</code>( <var class="Arg">v</var> )</td><td class="tdright">( attribute )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NormedRowVector</code>( <var class="Arg">v</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a scalar multiple <code class="code"><var class="Arg">w</var> = <var class="Arg">c</var> * <var class="Arg">v</var></code> of the row vector <var class="Arg">v</var> with the property that the first nonzero entry of <var class="Arg">w</var> is an identity element in the sense of <code class="func">IsOne</code> (<a href="chap31.html#X814D78347858EC13"><span class="RefLink">31.10-5</span></a>).</p>
 
 
@@ -209,10 +209,10 @@ true
 
 <h5>23.3-1 <span class="Heading">ConvertToVectorRep</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToVectorRep</code>( <var class="Arg">list</var>[, <var class="Arg">field</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToVectorRep</code>( <var class="Arg">list</var>[, <var class="Arg">fieldsize</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToVectorRepNC</code>( <var class="Arg">list</var>[, <var class="Arg">field</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToVectorRepNC</code>( <var class="Arg">list</var>[, <var class="Arg">fieldsize</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToVectorRep</code>( <var class="Arg">list</var>[, <var class="Arg">field</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToVectorRep</code>( <var class="Arg">list</var>[, <var class="Arg">fieldsize</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToVectorRepNC</code>( <var class="Arg">list</var>[, <var class="Arg">field</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToVectorRepNC</code>( <var class="Arg">list</var>[, <var class="Arg">fieldsize</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Called with one argument <var class="Arg">list</var>, <code class="func">ConvertToVectorRep</code> converts <var class="Arg">list</var> to an internal row vector representation if possible.</p>
 
 <p>Called with a list <var class="Arg">list</var> and a finite field <var class="Arg">field</var>, <code class="func">ConvertToVectorRep</code> converts <var class="Arg">list</var> to an internal row vector representation appropriate for a row vector over <var class="Arg">field</var>.</p>
@@ -253,7 +253,7 @@ true
 
 <h5>23.3-2 NumberFFVector</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NumberFFVector</code>( <var class="Arg">vec</var>, <var class="Arg">sz</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NumberFFVector</code>( <var class="Arg">vec</var>, <var class="Arg">sz</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns an integer that gives the position of the finite field row vector <var class="Arg">vec</var> in the sorted list of all row vectors over the field with <var class="Arg">sz</var> elements in the same dimension as <var class="Arg">vec</var>. <code class="func">NumberFFVector</code> returns <code class="keyw">fail</code> if the vector cannot be represented over the field with <var class="Arg">sz</var> elements.</p>
 
 <p><a id="X85C68AED805E4B9C" name="X85C68AED805E4B9C"></a></p>
@@ -268,7 +268,7 @@ true
 
 <h5>23.4-1 AddRowVector</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddRowVector</code>( <var class="Arg">dst</var>, <var class="Arg">src</var>[, <var class="Arg">mul</var>[, <var class="Arg">from</var>, <var class="Arg">to</var>]] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddRowVector</code>( <var class="Arg">dst</var>, <var class="Arg">src</var>[, <var class="Arg">mul</var>[, <var class="Arg">from</var>, <var class="Arg">to</var>]] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Adds the product of <var class="Arg">src</var> and <var class="Arg">mul</var> to <var class="Arg">dst</var>, changing <var class="Arg">dst</var>. If <var class="Arg">from</var> and <var class="Arg">to</var> are given then only the index range <code class="code">[ <var class="Arg">from</var> .. <var class="Arg">to</var> ]</code> is guaranteed to be affected. Other indices <em>may</em> be affected, if it is more convenient to do so. Even when <var class="Arg">from</var> and <var class="Arg">to</var> are given, <var class="Arg">dst</var> and <var class="Arg">src</var> must be row vectors of the <em>same</em> length.</p>
 
 <p>If <var class="Arg">mul</var> is not given either then this operation simply adds <var class="Arg">src</var> to <var class="Arg">dst</var>.</p>
@@ -277,7 +277,7 @@ true
 
 <h5>23.4-2 AddCoeffs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddCoeffs</code>( <var class="Arg">list1</var>[, <var class="Arg">poss1</var>], <var class="Arg">list2</var>[, <var class="Arg">poss2</var>[, <var class="Arg">mul</var>]] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddCoeffs</code>( <var class="Arg">list1</var>[, <var class="Arg">poss1</var>], <var class="Arg">list2</var>[, <var class="Arg">poss2</var>[, <var class="Arg">mul</var>]] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">AddCoeffs</code> adds the entries of <var class="Arg">list2</var><code class="code">{</code><var class="Arg">poss2</var><code class="code">}</code>, multiplied by the scalar <var class="Arg">mul</var>, to <var class="Arg">list1</var><code class="code">{</code><var class="Arg">poss1</var><code class="code">}</code>. Unbound entries in <var class="Arg">list1</var> are assumed to be zero. The position of the right-most non-zero element is returned.</p>
 
 <p>If the ranges <var class="Arg">poss1</var> and <var class="Arg">poss2</var> are not given, they are assumed to span the whole vectors. If the scalar <var class="Arg">mul</var> is omitted, one is used as a default.</p>
@@ -298,7 +298,7 @@ true
 
 <h5>23.4-3 MultRowVector</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MultRowVector</code>( <var class="Arg">list1</var>[, <var class="Arg">poss1</var>, <var class="Arg">list2</var>, <var class="Arg">poss2</var>], <var class="Arg">mul</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MultRowVector</code>( <var class="Arg">list1</var>[, <var class="Arg">poss1</var>, <var class="Arg">list2</var>, <var class="Arg">poss2</var>], <var class="Arg">mul</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>The five argument version of this operation replaces <var class="Arg">list1</var><code class="code">[</code><var class="Arg">poss1</var><code class="code">[</code><span class="SimpleMath">i</span><code class="code">]]</code> by <code class="code"><var class="Arg">mul</var>*<var class="Arg">list2</var>[<var class="Arg">poss2</var>[</code><span class="SimpleMath">i</span><code class="code">]]</code> for <span class="SimpleMath">i</span> between <span class="SimpleMath">1</span> and <code class="code">Length( <var class="Arg">poss1</var> )</code>.</p>
 
 <p>The two-argument version simply multiplies each element of <var class="Arg">list1</var>, in-place, by <var class="Arg">mul</var>.</p>
@@ -307,7 +307,7 @@ true
 
 <h5>23.4-4 CoeffsMod</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoeffsMod</code>( <var class="Arg">list1</var>[, <var class="Arg">len1</var>], <var class="Arg">modulus</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CoeffsMod</code>( <var class="Arg">list1</var>[, <var class="Arg">len1</var>], <var class="Arg">modulus</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the coefficient list obtained by reducing the entries in <var class="Arg">list1</var> modulo <var class="Arg">modulus</var>. After reducing it shrinks the list to remove trailing zeroes. If the optional argument <var class="Arg">len1</var> is used, it reduces only first <var class="Arg">len1</var> elements of the list.</p>
 
 
@@ -326,21 +326,21 @@ true
 
 <h5>23.5-1 LeftShiftRowVector</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftShiftRowVector</code>( <var class="Arg">list</var>, <var class="Arg">shift</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LeftShiftRowVector</code>( <var class="Arg">list</var>, <var class="Arg">shift</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>changes <var class="Arg">list</var> by assigning <var class="Arg">list</var><span class="SimpleMath">[i]</span><code class="code">:= </code><var class="Arg">list</var><span class="SimpleMath">[i+<var class="Arg">shift</var>]</span> and removing the last <var class="Arg">shift</var> entries of the result.</p>
 
 <p><a id="X822CCA4781D5C5EC" name="X822CCA4781D5C5EC"></a></p>
 
 <h5>23.5-2 RightShiftRowVector</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightShiftRowVector</code>( <var class="Arg">list</var>, <var class="Arg">shift</var>, <var class="Arg">fill</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RightShiftRowVector</code>( <var class="Arg">list</var>, <var class="Arg">shift</var>, <var class="Arg">fill</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>changes <var class="Arg">list</var> by assigning <var class="Arg">list</var><span class="SimpleMath">[i+<var class="Arg">shift</var>]</span><code class="code">:= </code><var class="Arg">list</var><span class="SimpleMath">[i]</span> and filling each of the <var class="Arg">shift</var> first entries with <var class="Arg">fill</var>.</p>
 
 <p><a id="X78951C0E86D857B5" name="X78951C0E86D857B5"></a></p>
 
 <h5>23.5-3 ShrinkRowVector</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShrinkRowVector</code>( <var class="Arg">list</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShrinkRowVector</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>removes trailing zeroes from the list <var class="Arg">list</var>.</p>
 
 
@@ -353,7 +353,7 @@ true
 
 <h5>23.5-4 RemoveOuterCoeffs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RemoveOuterCoeffs</code>( <var class="Arg">list</var>, <var class="Arg">coef</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RemoveOuterCoeffs</code>( <var class="Arg">list</var>, <var class="Arg">coef</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>removes <var class="Arg">coef</var> at the beginning and at the end of <var class="Arg">list</var> and returns the number of elements removed at the beginning.</p>
 
 
@@ -374,36 +374,36 @@ true
 
 <h5>23.6-1 WeightVecFFE</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WeightVecFFE</code>( <var class="Arg">vec</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WeightVecFFE</code>( <var class="Arg">vec</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the weight of the finite field vector <var class="Arg">vec</var>, i.e. the number of nonzero entries.</p>
 
 <p><a id="X85AA5C6587559C1C" name="X85AA5C6587559C1C"></a></p>
 
 <h5>23.6-2 DistanceVecFFE</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DistanceVecFFE</code>( <var class="Arg">vec1</var>, <var class="Arg">vec2</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DistanceVecFFE</code>( <var class="Arg">vec1</var>, <var class="Arg">vec2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the distance between the two vectors <var class="Arg">vec1</var> and <var class="Arg">vec2</var>, which must have the same length and whose elements must lie in a common field. The distance is the number of places where <var class="Arg">vec1</var> and <var class="Arg">vec2</var> differ.</p>
 
 <p><a id="X7F2F630984A9D3D6" name="X7F2F630984A9D3D6"></a></p>
 
 <h5>23.6-3 DistancesDistributionVecFFEsVecFFE</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DistancesDistributionVecFFEsVecFFE</code>( <var class="Arg">vecs</var>, <var class="Arg">vec</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DistancesDistributionVecFFEsVecFFE</code>( <var class="Arg">vecs</var>, <var class="Arg">vec</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the distances distribution of the vector <var class="Arg">vec</var> to the vectors in the list <var class="Arg">vecs</var>. All vectors must have the same length, and all elements must lie in a common field. The distances distribution is a list <span class="SimpleMath">d</span> of length <code class="code">Length(<var class="Arg">vec</var>)+1</code>, such that the value <span class="SimpleMath">d[i]</span> is the number of vectors in <var class="Arg">vecs</var> that have distance <span class="SimpleMath">i+1</span> to <var class="Arg">vec</var>.</p>
 
 <p><a id="X85135CEB86E61D49" name="X85135CEB86E61D49"></a></p>
 
 <h5>23.6-4 DistancesDistributionMatFFEVecFFE</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DistancesDistributionMatFFEVecFFE</code>( <var class="Arg">mat</var>, <var class="Arg">F</var>, <var class="Arg">vec</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DistancesDistributionMatFFEVecFFE</code>( <var class="Arg">mat</var>, <var class="Arg">F</var>, <var class="Arg">vec</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the distances distribution of the vector <var class="Arg">vec</var> to the vectors in the vector space generated by the rows of the matrix <var class="Arg">mat</var> over the finite field <var class="Arg">F</var>. The length of the rows of <var class="Arg">mat</var> and the length of <var class="Arg">vec</var> must be equal, and all entries must lie in <var class="Arg">F</var>. The rows of <var class="Arg">mat</var> must be linearly independent. The distances distribution is a list <span class="SimpleMath">d</span> of length <code class="code">Length(<var class="Arg">vec</var>)+1</code>, such that the value <span class="SimpleMath">d[i]</span> is the number of vectors in the vector space generated by the rows of <var class="Arg">mat</var> that have distance <span class="SimpleMath">i+1</span> to <var class="Arg">vec</var>.</p>
 
 <p><a id="X82E5987E81487D18" name="X82E5987E81487D18"></a></p>
 
 <h5>23.6-5 AClosestVectorCombinationsMatFFEVecFFE</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AClosestVectorCombinationsMatFFEVecFFE</code>( <var class="Arg">mat</var>, <var class="Arg">f</var>, <var class="Arg">vec</var>, <var class="Arg">l</var>, <var class="Arg">stop</var> )</td><td class="tdright">( operation )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AClosestVectorCombinationsMatFFEVecFFECoords</code>( <var class="Arg">mat</var>, <var class="Arg">f</var>, <var class="Arg">vec</var>, <var class="Arg">l</var>, <var class="Arg">stop</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AClosestVectorCombinationsMatFFEVecFFE</code>( <var class="Arg">mat</var>, <var class="Arg">f</var>, <var class="Arg">vec</var>, <var class="Arg">l</var>, <var class="Arg">stop</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AClosestVectorCombinationsMatFFEVecFFECoords</code>( <var class="Arg">mat</var>, <var class="Arg">f</var>, <var class="Arg">vec</var>, <var class="Arg">l</var>, <var class="Arg">stop</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>These functions run through the <var class="Arg">f</var>-linear combinations of the vectors in the rows of the matrix <var class="Arg">mat</var> that can be written as linear combinations of exactly <var class="Arg">l</var> rows (that is without using zero as a coefficient). The length of the rows of <var class="Arg">mat</var> and the length of <var class="Arg">vec</var> must be equal, and all elements must lie in the field <var class="Arg">f</var>. The rows of <var class="Arg">mat</var> must be linearly independent. <code class="func">AClosestVectorCombinationsMatFFEVecFFE</code> returns a vector from these that is closest to the vector <var class="Arg">vec</var>. If it finds a vector of distance at most <var class="Arg">stop</var>, which must be a nonnegative integer, then it stops immediately and returns this vector.</p>
 
 <p><code class="func">AClosestVectorCombinationsMatFFEVecFFECoords</code> returns a length 2 list containing the same closest vector and also a vector <var class="Arg">v</var> with exactly <var class="Arg">l</var> non-zero entries, such that <var class="Arg">v</var> times <var class="Arg">mat</var> is the closest vector.</p>
@@ -412,7 +412,7 @@ true
 
 <h5>23.6-6 CosetLeadersMatFFE</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CosetLeadersMatFFE</code>( <var class="Arg">mat</var>, <var class="Arg">f</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CosetLeadersMatFFE</code>( <var class="Arg">mat</var>, <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns a list of representatives of minimal weight for the cosets of a code. <var class="Arg">mat</var> must be a <em>check matrix</em> for the code, the code is defined over the finite field <var class="Arg">f</var>. All rows of <var class="Arg">mat</var> must have the same length, and all elements must lie in the field <var class="Arg">f</var>. The rows of <var class="Arg">mat</var> must be linearly independent.</p>
 
 <p><a id="X87FEC1927B3A63C8" name="X87FEC1927B3A63C8"></a></p>
@@ -429,7 +429,7 @@ true
 
 <h5>23.7-1 ValuePol</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ValuePol</code>( <var class="Arg">coeff</var>, <var class="Arg">x</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ValuePol</code>( <var class="Arg">coeff</var>, <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">coeff</var> be the coefficients list of a univariate polynomial <span class="SimpleMath">f</span>, and <var class="Arg">x</var> a ring element. Then <code class="func">ValuePol</code> returns the value <span class="SimpleMath">f(<var class="Arg">x</var>)</span>.</p>
 
 <p>The coefficient of <span class="SimpleMath"><var class="Arg">x</var>^i</span> is assumed to be stored at position <span class="SimpleMath">i+1</span> in the coefficients list.</p>
@@ -444,7 +444,7 @@ true
 
 <h5>23.7-2 ProductCoeffs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProductCoeffs</code>( <var class="Arg">list1</var>[, <var class="Arg">len1</var>], <var class="Arg">list2</var>[, <var class="Arg">len2</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ProductCoeffs</code>( <var class="Arg">list1</var>[, <var class="Arg">len1</var>], <var class="Arg">list2</var>[, <var class="Arg">len2</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <span class="SimpleMath">p1</span> (and <span class="SimpleMath">p2</span>) be polynomials given by the first <var class="Arg">len1</var> (<var class="Arg">len2</var>) entries of the coefficient list <var class="Arg">list2</var> (<var class="Arg">list2</var>). If <var class="Arg">len1</var> and <var class="Arg">len2</var> are omitted, they default to the lengths of <var class="Arg">list1</var> and <var class="Arg">list2</var>. This operation returns the coefficient list of the product of <span class="SimpleMath">p1</span> and <span class="SimpleMath">p2</span>.</p>
 
 
@@ -457,7 +457,7 @@ true
 
 <h5>23.7-3 ReduceCoeffs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReduceCoeffs</code>( <var class="Arg">list1</var>[, <var class="Arg">len1</var>], <var class="Arg">list2</var>[, <var class="Arg">len2</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReduceCoeffs</code>( <var class="Arg">list1</var>[, <var class="Arg">len1</var>], <var class="Arg">list2</var>[, <var class="Arg">len2</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <span class="SimpleMath">p1</span> (and <span class="SimpleMath">p2</span>) be polynomials given by the first <var class="Arg">len1</var> (<var class="Arg">len2</var>) entries of the coefficient list <var class="Arg">list1</var> (<var class="Arg">list2</var>). If <var class="Arg">len1</var> and <var class="Arg">len2</var> are omitted, they default to the lengths of <var class="Arg">list1</var> and <var class="Arg">list2</var>. <code class="func">ReduceCoeffs</code> changes <var class="Arg">list1</var> to the coefficient list of the remainder when dividing <var class="Arg">p1</var> by <var class="Arg">p2</var>. This operation changes <var class="Arg">list1</var> which therefore must be a mutable list. The operation returns the position of the last non-zero entry of the result but is not guaranteed to remove trailing zeroes.</p>
 
 
@@ -472,7 +472,7 @@ true
 
 <h5>23.7-4 ReduceCoeffsMod</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReduceCoeffsMod</code>( <var class="Arg">list1</var>[, <var class="Arg">len1</var>], <var class="Arg">list2</var>[, <var class="Arg">len2</var>], <var class="Arg">modulus</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReduceCoeffsMod</code>( <var class="Arg">list1</var>[, <var class="Arg">len1</var>], <var class="Arg">list2</var>[, <var class="Arg">len2</var>], <var class="Arg">modulus</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <span class="SimpleMath">p1</span> (and <span class="SimpleMath">p2</span>) be polynomials given by the first <var class="Arg">len1</var> (<var class="Arg">len2</var>) entries of the coefficient list <var class="Arg">list1</var> (<var class="Arg">list2</var>). If <var class="Arg">len1</var> and <var class="Arg">len2</var> are omitted, they default to the lengths of <var class="Arg">list1</var> and <var class="Arg">list2</var>. <code class="func">ReduceCoeffsMod</code> changes <var class="Arg">list1</var> to the coefficient list of the remainder when dividing <var class="Arg">p1</var> by <var class="Arg">p2</var> modulo <var class="Arg">modulus</var>, which must be a positive integer. This operation changes <var class="Arg">list1</var> which therefore must be a mutable list. The operations returns the position of the last non-zero entry of the result but is not guaranteed to remove trailing zeroes.</p>
 
 
@@ -487,7 +487,7 @@ true
 
 <h5>23.7-5 PowerModCoeffs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PowerModCoeffs</code>( <var class="Arg">list1</var>[, <var class="Arg">len1</var>], <var class="Arg">exp</var>, <var class="Arg">list2</var>[, <var class="Arg">len2</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PowerModCoeffs</code>( <var class="Arg">list1</var>[, <var class="Arg">len1</var>], <var class="Arg">exp</var>, <var class="Arg">list2</var>[, <var class="Arg">len2</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>Let <span class="SimpleMath">p1</span> and <span class="SimpleMath">p2</span> be polynomials whose coefficients are given by the first <var class="Arg">len1</var> resp. <var class="Arg">len2</var> entries of the lists <var class="Arg">list1</var> and <var class="Arg">list2</var>, respectively. If <var class="Arg">len1</var> and <var class="Arg">len2</var> are omitted, they default to the lengths of <var class="Arg">list1</var> and <var class="Arg">list2</var>. Let <var class="Arg">exp</var> be a positive integer. <code class="func">PowerModCoeffs</code> returns the coefficient list of the remainder when dividing the <var class="Arg">exp</var>-th power of <span class="SimpleMath">p1</span> by <span class="SimpleMath">p2</span>. The coefficients are reduced already while powers are computed, therefore avoiding an explosion in list length.</p>
 
 
@@ -500,7 +500,7 @@ true
 
 <h5>23.7-6 ShiftedCoeffs</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShiftedCoeffs</code>( <var class="Arg">list</var>, <var class="Arg">shift</var> )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ShiftedCoeffs</code>( <var class="Arg">list</var>, <var class="Arg">shift</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>produces a new coefficient list <code class="code">new</code> obtained by the rule <code class="code">new[i+<var class="Arg">shift</var>]:= <var class="Arg">list</var>[i]</code> and filling initial holes by the appropriate zero.</p>
 
 

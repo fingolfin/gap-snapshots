@@ -13,7 +13,7 @@
   
   [1X11.1-1 Process[101X
   
-  [29X[2XProcess[102X( [3Xdir[103X, [3Xprg[103X, [3Xstream-in[103X, [3Xstream-out[103X, [3Xoptions[103X ) [32X operation
+  [33X[1;0Y[29X[2XProcess[102X( [3Xdir[103X, [3Xprg[103X, [3Xstream-in[103X, [3Xstream-out[103X, [3Xoptions[103X ) [32X operation[133X
   
   [33X[0;0Y[2XProcess[102X  runs  a  new  process  and  returns when the process terminates. It
   returns  the  return  value  of the process if the operating system supports
@@ -115,7 +115,7 @@
   
   [1X11.1-2 Exec[101X
   
-  [29X[2XExec[102X( [3Xcmd[103X, [3Xoption1[103X, [3X...[103X, [3XoptionN[103X ) [32X function
+  [33X[1;0Y[29X[2XExec[102X( [3Xcmd[103X, [3Xoption1[103X, [3X...[103X, [3XoptionN[103X ) [32X function[133X
   
   [33X[0;0Y[2XExec[102X  runs  a shell in the current directory to execute the command given by
   the string [3Xcmd[103X with options [3Xoption1[103X, ..., [3XoptionN[103X.[133X
