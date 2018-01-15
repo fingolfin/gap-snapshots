@@ -473,3 +473,14 @@
   distribution.  The  core part of the [5XGAP[105X system in this release is identical
   to the one from the [5XGAP[105X 4.8.8 release.[133X
   
+  
+  [1X2.9 [33X[0;0Y[5XGAP[105X[101X[1X 4.8.10 (January 2018)[133X[101X
+  
+  [33X[0;0YThis  release  contains  updated  versions  of  9  packages  from  [5XGAP[105X 4.8.9
+  distribution.  It  also  contains  an  older version 2.8.0 of the [5XSemigroups[105X
+  package, which is compatible with [5XGAP[105X 4.8, and an older version 4.7.6 of the
+  [5Xorb[105X  package,  which  is  compatible  with  the  specified  version  of  the
+  [5XSemigroups[105X.  Additionally,  it  provides  a  working version of the [5XDigraphs[105X
+  package  for  Windows.  The  core  part of the [5XGAP[105X system in this release is
+  again identical to the one from the [5XGAP[105X 4.8.8 release.[133X
+  

@@ -3,7 +3,7 @@
                       [1XGAP - Changes from Earlier Versions[101X
   
   
-                           Release 4.8.9, 18-Dec-2017
+                          Release 4.8.10, 15-Jan-2018
   
   
                                  The GAP Group
@@ -16,7 +16,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0YCopyright  ©  (1987-2017)  for  the  core  part of the [5XGAP[105X system by the [5XGAP[105X
+  [33X[0;0YCopyright  ©  (1987-2018)  for  the  core  part of the [5XGAP[105X system by the [5XGAP[105X
   Group.[133X
   
   [33X[0;0YMost  parts  of this distribution, including the core part of the [5XGAP[105X system
@@ -58,6 +58,7 @@
       2.7-1 [33X[0;0YChanges in the core [5XGAP[105X system introduced in [5XGAP[105X 4.8.8[133X
       2.7-2 [33X[0;0YNew and updated packages since [5XGAP[105X 4.8.7[133X
     2.8 [33X[0;0Y[5XGAP[105X 4.8.9 (December 2017)[133X
+    2.9 [33X[0;0Y[5XGAP[105X 4.8.10 (January 2018)[133X
   3 [33X[0;0YChanges between [5XGAP[105X 4.6 and [5XGAP[105X 4.7[133X
     3.1 [33X[0;0Y[5XGAP[105X 4.7.2 (December 2013)[133X
       3.1-1 [33X[0;0YChanges in the core [5XGAP[105X system introduced in [5XGAP[105X 4.7[133X

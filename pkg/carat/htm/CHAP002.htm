@@ -8,7 +8,7 @@ the <font face="Gill Sans,Helvetica,Arial">GAP</font> 4 root directories. We ass
 <p>
 <pre>
 cd /gap4/pkg
-tar zpxf carat-2.1.6.tar.gz
+tar zpxf carat-2.1.7.tar.gz
 </pre>
 <p>
 This creates a subdirectory <code>carat</code>, the home directory of the present
@@ -33,10 +33,11 @@ full path of this new directory, possibly along with new values for <code>CC</co
 line:
 <p>
 <pre>
-make TOPDIR=`pwd`
+make TOPDIR=`pwd` CFLAGS='-O -std=gnu89' 
 chmod -R a+rX .
 </pre>
 <p>
+The flag '-std=gnu89' is necessary if you use gcc of version 5 or higher.
 If you build for more than one architecture, make sure to do a 
 'make clean' in between.
 <p>
@@ -84,5 +85,5 @@ make Qcatalog
 <p>
 [<a href = "chapters.htm">Up</a>] [<a href ="CHAP001.htm">Previous</a>] [<a href ="CHAP003.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<address>CARAT manual<br>May 2016
+<address>CARAT manual<br>December 2017
 </address></body></html>

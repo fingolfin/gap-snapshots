@@ -4,7 +4,7 @@ TMP="$1".tmp
 DST="$1"
 
 # Determine build version and date
-GAP_BUILD_VERSION="4.8.9, 18-Dec-2017, build"
+GAP_BUILD_VERSION="4.8.10, 15-Jan-2018, build"
 if command -v git >/dev/null 2>&1 ; then
   if test -d .git ; then
     GAP_BUILD_VERSION=`git describe --tags --dirty || echo`

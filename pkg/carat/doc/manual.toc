@@ -8,3 +8,4 @@
 \seccontents {3.5}{CARAT Bravais Catalog} {8}
 \seccontents {3.6}{CARAT Q-Class Catalog} {9}
 \chapcontents {}{Bibliography}{10}
+\chapcontents {}{Index}{11}
