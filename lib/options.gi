@@ -15,7 +15,12 @@
 ## don't replace it, so we can make it Read Only
 ##
 
-OptionsStack := [];
+if IsHPCGAP then
+    BindThreadLocal("OptionsStack", [ ]);
+else
+    OptionsStack := [];
+fi;
+
 MakeReadOnlyGlobal("OptionsStack");
 
 #############################################################################

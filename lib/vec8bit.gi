@@ -14,7 +14,7 @@
 ##
 #V  `TYPES_VEC8BIT . . . . . . . . prepared types for compressed GF(q) vectors
 ##
-##  A length 2 list of length 257 lists. TYPES_VEC8BIT[1][q] will be the type
+##  A length 4 list of length 257 lists. TYPES_VEC8BIT[1][q] will be the type
 ##  of mutable vectors over GF(q), TYPES_VEC8BIT[2][q] is the type of 
 ##  immutable vectors and TYPES_VEC8BIT[3][q] the type of locked vectors
 ##  The 257th position is bound to 1 to stop the lists
@@ -78,9 +78,9 @@ end);
 ##  doesn't really say anything, because there are no applicable operations.
 ##
 
-InstallValue( TYPE_FIELDINFO_8BIT,
-  NewType(NewFamily("FieldInfo8BitFamily", IsObject),
-          IsObject and IsDataObjectRep));
+
+InstallValue( TYPE_FIELDINFO_8BIT, TYPE_KERNEL_OBJECT);
+
 
 #############################################################################
 ##
@@ -251,6 +251,7 @@ InstallMethod(ELM0_LIST, "For an 8 bit vector",
 #M  DegreeFFE( <vector> )
 ##
 BindGlobal("Q_TO_DEGREE", # discrete logarithm list
+  MakeImmutable( 
   [0,1,1,2,1,0,1,3,2,0,1,0,1,0,0,4,1,0,1,0,0,0,1,0,2,0,3,0,1,0,1,5,0,0,0,0,
   1,0,0,0,1,0,1,0,0,0,1,0,2,0,0,0,1,0,0,0,0,0,1,0,1,0,0,6,0,0,1,0,0,0,1,0,
   1,0,0,0,0,0,1,0,4,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,
@@ -258,7 +259,7 @@ BindGlobal("Q_TO_DEGREE", # discrete logarithm list
   0,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,0,2,0,0,0,1,0,0,0,0,0,1,0,
   1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,
   0,0,0,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0,1,0,1,0,5,0,0,0,0,0,0,0,1,0,
-  0,0,0,8]);
+  0,0,0,8] ) );
 
 InstallOtherMethod( DegreeFFE, "for 8 bit vectors", true,
     [ IsRowVector and IsFFECollection and Is8BitVectorRep], 0,
@@ -988,14 +989,19 @@ InstallMethod( BaseDomain, "for an 8bit vector",
   [ Is8BitVectorRep ], function( v ) return GF(Q_VEC8BIT(v)); end );
 InstallMethod( BaseDomain, "for an 8bit matrix",
   [ Is8BitMatrixRep ], function( m ) return GF(Q_VEC8BIT(m[1])); end );
+InstallMethod( NumberRows, "for an 8bit matrix",
+  [ Is8BitMatrixRep ], m -> m![1]);
 # FIXME: this breaks down for matrices with 0 rows
-InstallMethod( RowLength, "for an 8bit matrix",
+InstallMethod( NumberColumns, "for an 8bit matrix",
   [ Is8BitMatrixRep ], function( m ) return Length(m[1]); end );
 # FIXME: this breaks down for matrices with 0 rows
 InstallMethod( Vector, "for a plist of finite field elements and an 8bitvector",
   [ IsList and IsFFECollection, Is8BitVectorRep ],
   function( l, v )
-    local r; r := ShallowCopy(l); ConvertToVectorRep(r,Q_VEC8BIT(v)); return r;
+    local r;
+    r := ShallowCopy(l);
+    ConvertToVectorRep(r,Q_VEC8BIT(v));
+    return r;
   end );
 InstallMethod( Randomize, "for a mutable 8bit vector",
   [ Is8BitVectorRep and IsMutable ],
@@ -1023,15 +1029,15 @@ InstallMethod( MutableCopyMat, "for an 8bit matrix",
   end );
 InstallMethod( MatElm, "for an 8bit matrix and two integers",
   [ Is8BitMatrixRep, IsPosInt, IsPosInt ],
-  function( m, r, c ) return m[r][c]; end );
+  MAT_ELM_MAT8BIT );
 InstallMethod( SetMatElm, "for an 8bit matrix, two integers, and a ffe",
   [ Is8BitMatrixRep, IsPosInt, IsPosInt, IsFFE ],
-  function( m, r, c, e ) m[r][c] := e; end );
+  SET_MAT_ELM_MAT8BIT );
 InstallMethod( Matrix, "for a list of vecs, an integer, and an 8bit mat",
   [IsList, IsInt, Is8BitMatrixRep],
   function(l,rl,m)
     local q,i,li;
-    if not(IsList(l[1])) then
+    if not IsList(l[1]) then
         li := [];
         for i in [1..QuoInt(Length(l),rl)] do
             li[i] := l{[(i-1)*rl+1..i*rl]};
@@ -1117,7 +1123,7 @@ InstallOtherMethod( KroneckerProduct, "for two 8bit matrices",
   end );
 
 InstallMethod( Fold, "for an 8bit vector, a positive int, and an 8bit matrix",
-  [ IsRowVectorObj and Is8BitVectorRep, IsPosInt, Is8BitMatrixRep ],
+  [ IsVectorObj and Is8BitVectorRep, IsPosInt, Is8BitMatrixRep ],
   function( v, rl, t )
     local rows,i,tt,m;
     m := [];
@@ -1140,7 +1146,7 @@ InstallMethod( BaseField, "for a compressed 8bit matrix",
 InstallMethod( BaseField, "for a compressed 8bit vector",
   [Is8BitVectorRep], function(v) return GF(Q_VEC8BIT(v)); end );
 
-InstallMethod( NewRowVector, "for Is8BitVectorRep, GF(q), and a list",
+InstallMethod( NewVector, "for Is8BitVectorRep, GF(q), and a list",
   [ Is8BitVectorRep, IsField and IsFinite, IsList ],
   function( filter, f, l )
     local v;
@@ -1246,15 +1252,6 @@ InstallMethod( CompatibleVector, "for an 8bit matrix",
     return ShallowCopy(m[1]);
   end );
 
-InstallMethod( CompatibleMatrix, "for an 8bit vector",
-  [ Is8BitVectorRep ],
-  function( v )
-    local m;
-    m := [ShallowCopy(v)];
-    ConvertToMatrixRep(m,Q_VEC8BIT(v));
-    return m;
-  end );
-
 InstallMethod( WeightOfVector, "for an 8bit vector",
   [ Is8BitVectorRep ],
   function( v )
@@ -1275,7 +1272,7 @@ InstallMethod( NewCompanionMatrix,
     one := One(bd);
     l := CoefficientsOfUnivariatePolynomial(po);
     n := Length(l)-1;
-    if not(IsOne(l[n+1])) then
+    if not IsOne(l[n+1]) then
         Error("CompanionMatrix: polynomial is not monic");
         return fail;
     fi;

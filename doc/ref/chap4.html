@@ -57,14 +57,15 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7CD3523B84744EB2">4.9-1 IsReadOnlyGlobal</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X850CE44478254F27">4.9-2 MakeReadOnlyGlobal</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X832AAF13861968BE">4.9-3 MakeReadWriteGlobal</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X84BB4B1E872849FF">4.9-4 ValueGlobal</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X823D4BC378395B32">4.9-5 IsBoundGlobal</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X829A5F0E811F77D3">4.9-6 UnbindGlobal</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7D39D3E17CF49F5B">4.9-7 BindGlobal</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X876A6EB68745A510">4.9-8 NamesGVars</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7E604AF579A7BC92">4.9-9 NamesSystemGVars</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X870169447AF490D8">4.9-10 NamesUserGVars</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X798433307E62DCBA">4.9-11 TemporaryGlobalVarName</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X847706237E72418F">4.9-4 MakeConstantGlobal</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X84BB4B1E872849FF">4.9-5 ValueGlobal</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X823D4BC378395B32">4.9-6 IsBoundGlobal</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X829A5F0E811F77D3">4.9-7 UnbindGlobal</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7D39D3E17CF49F5B">4.9-8 BindGlobal</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X876A6EB68745A510">4.9-9 NamesGVars</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X7E604AF579A7BC92">4.9-10 NamesSystemGVars</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X870169447AF490D8">4.9-11 NamesUserGVars</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4.html#X798433307E62DCBA">4.9-12 TemporaryGlobalVarName</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4.html#X7DF8774F7D542298">4.10 <span class="Heading">Namespaces for <strong class="pkg">GAP</strong> packages</span></a>
 </span>
@@ -391,11 +392,30 @@ end;
 
 <p>Certain special facilities are provided for manipulating global variables which are not available for other types of variable (such as local variables or function arguments).</p>
 
-<p>First, such variables may be marked <em>read-only</em>. In which case attempts to change them will fail. Most of the global variables defined in the <strong class="pkg">GAP</strong> library are so marked.</p>
+<p>First, such variables may be marked <em>read-only</em> using <code class="func">MakeReadOnlyGlobal</code> (<a href="chap4.html#X850CE44478254F27"><span class="RefLink">4.9-2</span></a>). In which case attempts to change them will fail. Most of the global variables defined in the <strong class="pkg">GAP</strong> library are so marked. <em>read-only</em> variables can be made read-write again by calling <code class="func">MakeReadWriteGlobal</code> (<a href="chap4.html#X832AAF13861968BE"><span class="RefLink">4.9-3</span></a>). GAP also features <em>constant</em> variables, which are created by calling <code class="func">MakeConstantGlobal</code> (<a href="chap4.html#X847706237E72418F"><span class="RefLink">4.9-4</span></a>). Constant variables can never be changed. In some cases, GAP can optimise code which uses <em>constant</em> variables, as their value never changes. In this version GAP these optimisations can be observed by printing the function back out, but this behaviour may change in future.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">globali := 1 + 2;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">globalb := true;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MakeConstantGlobal("globali");</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">MakeConstantGlobal("globalb");</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := function()</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    if globalb then</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        return globali + 1;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    else</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        return globali + 2;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    fi;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">end;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Print(f);</span>
+function (  )
+    return 3 + 1;
+end
+</pre></div>
 
 <p>Second, a group of functions are supplied for accessing and altering the values assigned to global variables. Use of these functions differs from the use of assignment, <code class="func">Unbind</code> (<a href="chap4.html#X7BABB3E77F52626C"><span class="RefLink">4.8-2</span></a>) and <code class="func">IsBound</code> (<a href="chap4.html#X842B89D4860FD5DB"><span class="RefLink">4.8-1</span></a>) statements, in two ways. First, these functions always affect global variables, even if local variables of the same names exist. Second, the variable names are passed as strings, rather than being written directly into the statements.</p>
 
-<p>Note that the functions <code class="func">NamesGVars</code> (<a href="chap4.html#X876A6EB68745A510"><span class="RefLink">4.9-8</span></a>), <code class="func">NamesSystemGVars</code> (<a href="chap4.html#X7E604AF579A7BC92"><span class="RefLink">4.9-9</span></a>), <code class="func">NamesUserGVars</code> (<a href="chap4.html#X870169447AF490D8"><span class="RefLink">4.9-10</span></a>), and <code class="func">TemporaryGlobalVarName</code> (<a href="chap4.html#X798433307E62DCBA"><span class="RefLink">4.9-11</span></a>) deal with the <em>global namespace</em>.</p>
+<p>Note that the functions <code class="func">NamesGVars</code> (<a href="chap4.html#X876A6EB68745A510"><span class="RefLink">4.9-9</span></a>), <code class="func">NamesSystemGVars</code> (<a href="chap4.html#X7E604AF579A7BC92"><span class="RefLink">4.9-10</span></a>), <code class="func">NamesUserGVars</code> (<a href="chap4.html#X870169447AF490D8"><span class="RefLink">4.9-11</span></a>), and <code class="func">TemporaryGlobalVarName</code> (<a href="chap4.html#X798433307E62DCBA"><span class="RefLink">4.9-12</span></a>) deal with the <em>global namespace</em>.</p>
 
 <p><a id="X7CD3523B84744EB2" name="X7CD3523B84744EB2"></a></p>
 
@@ -447,23 +467,32 @@ true
 false
 </pre></div>
 
+<p><a id="X847706237E72418F" name="X847706237E72418F"></a></p>
+
+<h5>4.9-4 MakeConstantGlobal</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MakeConstantGlobal</code>( <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>MakeConstantGlobal ( <var class="Arg">name</var> ) marks the global variable named by the string <var class="Arg">name</var> as constant. A constant variable can never be changed or made read-write. Constant variables can only take an integer value, <code class="code">true</code> or <code class="code">false</code>. There is a limit on the size of allowed integers.</p>
+
+<p>A warning is given if <var class="Arg">name</var> is already constant.</p>
+
 <p><a id="X84BB4B1E872849FF" name="X84BB4B1E872849FF"></a></p>
 
-<h5>4.9-4 ValueGlobal</h5>
+<h5>4.9-5 ValueGlobal</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ValueGlobal</code>( <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the value currently bound to the global variable named by the string <var class="Arg">name</var>. An error is raised if no value is currently bound.</p>
 
 <p><a id="X823D4BC378395B32" name="X823D4BC378395B32"></a></p>
 
-<h5>4.9-5 IsBoundGlobal</h5>
+<h5>4.9-6 IsBoundGlobal</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBoundGlobal</code>( <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if a value currently bound to the global variable named by the string <var class="Arg">name</var> and <code class="keyw">false</code> otherwise.</p>
 
 <p><a id="X829A5F0E811F77D3" name="X829A5F0E811F77D3"></a></p>
 
-<h5>4.9-6 UnbindGlobal</h5>
+<h5>4.9-7 UnbindGlobal</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnbindGlobal</code>( <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>removes any value currently bound to the global variable named by the string <var class="Arg">name</var>. Nothing is returned.</p>
@@ -472,14 +501,15 @@ false
 
 <p><a id="X7D39D3E17CF49F5B" name="X7D39D3E17CF49F5B"></a></p>
 
-<h5>4.9-7 BindGlobal</h5>
+<h5>4.9-8 BindGlobal</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BindGlobal</code>( <var class="Arg">name</var>, <var class="Arg">val</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>sets the global variable named by the string <var class="Arg">name</var> to the value <var class="Arg">val</var>, provided it is writable, and makes it read-only. If <var class="Arg">name</var> already had a value, a warning message is printed.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BindConstant</code>( <var class="Arg">name</var>, <var class="Arg">val</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p><code class="func">BindGlobal</code> and <code class="func">BindConstant</code> set the global variable named by the string <var class="Arg">name</var> to the value <var class="Arg">val</var>, provided that variable is writable. <code class="func">BindGlobal</code> makes the resulting variable read-only, while <code class="func">BindConstant</code> makes it constant. If <var class="Arg">name</var> already had a value, a warning message is printed.</p>
 
-<p>This is intended to be the normal way to create and set "official" global variables (such as operations and filters).</p>
+<p>This is intended to be the normal way to create and set "official" global variables (such as operations, filters and constants).</p>
 
-<p>Caution should be exercised in using these functions, especially <code class="func">BindGlobal</code> and <code class="func">UnbindGlobal</code> (<a href="chap4.html#X829A5F0E811F77D3"><span class="RefLink">4.9-6</span></a>) as unexpected changes in global variables can be very confusing for the user.</p>
+<p>Caution should be exercised in using these functions, especially <code class="func">UnbindGlobal</code> (<a href="chap4.html#X829A5F0E811F77D3"><span class="RefLink">4.9-7</span></a>) as unexpected changes in global variables can be very confusing for the user.</p>
 
 
 <div class="example"><pre>
@@ -503,28 +533,28 @@ true
 
 <p><a id="X876A6EB68745A510" name="X876A6EB68745A510"></a></p>
 
-<h5>4.9-8 NamesGVars</h5>
+<h5>4.9-9 NamesGVars</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NamesGVars</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function returns an immutable (see <a href="chap12.html#X7F0C119682196D65"><span class="RefLink">12.6</span></a>) sorted (see <a href="chap21.html#X80ABC25582343910"><span class="RefLink">21.19</span></a>) list of all the global variable names known to the system. This includes names of variables which were bound but have now been unbound and some other names which have never been bound but have become known to the system by various routes.</p>
 
 <p><a id="X7E604AF579A7BC92" name="X7E604AF579A7BC92"></a></p>
 
-<h5>4.9-9 NamesSystemGVars</h5>
+<h5>4.9-10 NamesSystemGVars</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NamesSystemGVars</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function returns an immutable sorted list of all the global variable names created by the <strong class="pkg">GAP</strong> library when <strong class="pkg">GAP</strong> was started.</p>
 
 <p><a id="X870169447AF490D8" name="X870169447AF490D8"></a></p>
 
-<h5>4.9-10 NamesUserGVars</h5>
+<h5>4.9-11 NamesUserGVars</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NamesUserGVars</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function returns an immutable sorted list of the global variable names created since the library was read, to which a value is currently bound.</p>
 
 <p><a id="X798433307E62DCBA" name="X798433307E62DCBA"></a></p>
 
-<h5>4.9-11 TemporaryGlobalVarName</h5>
+<h5>4.9-12 TemporaryGlobalVarName</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TemporaryGlobalVarName</code>( [<var class="Arg">prefix</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns a string that can be used as the name of a global variable that is not bound at the time when <code class="func">TemporaryGlobalVarName</code> is called. The optional argument <var class="Arg">prefix</var> can specify a string with which the name of the global variable starts.</p>
@@ -1203,18 +1233,43 @@ function( l... ) ... end
 
 <p>Also see Chapter <a href="chap5.html#X86FA580F8055B274"><span class="RefLink">5</span></a>.</p>
 
-<p><code class="code"><var class="Arg">arg-ident</var> -&gt; <var class="Arg">expr</var></code></p>
+<p><code class="code">{ <var class="Arg">arg-list</var> } -&gt; <var class="Arg">expr</var></code></p>
 
 <p>This is a shorthand for</p>
 
-<p><code class="code">function ( <var class="Arg">arg-ident</var> ) return <var class="Arg">expr</var>; end.</code></p>
+<p><code class="code">function ( <var class="Arg">arg-list</var> ) return <var class="Arg">expr</var>; end.</code></p>
 
-<p><var class="Arg">arg-ident</var> must be a single identifier, i.e., it is not possible to write functions of several arguments this way. Also <code class="code">arg</code> is not treated specially, so it is also impossible to write functions that take a variable number of arguments this way.</p>
+<p><var class="Arg">arg-list</var> is a (possibly empty) argument list. Any arguments list which would be valid for a normal GAP function is also valid here (including variadic arguments).</p>
 
-<p>The following is an example of a typical use of such a function</p>
+<p>The following gives a couple of examples of a typical use of such a function</p>
 
 
 <div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Sum( List( [1..100], {x} -&gt; x^2 ) );</span>
+338350
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">list := [3, 5, 2, 1, 3];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Sort(list, {x,y} -&gt; x &gt; y);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">list;</span>
+[ 5, 3, 3, 2, 1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := {x,y...} -&gt; y;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f(1,2,3,4);</span>
+[ 2, 3, 4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := {} -&gt; 2;</span>
+function(  ) ... end
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Print(f);</span>
+function (  )
+    return 2;
+end
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f();</span>
+2
+</pre></div>
+
+<p>The <code class="code">{</code> and <code class="code">}</code> may be omitted for functions with one argument:</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Sum( List( [1..100], {x} -&gt; x^2 ) );</span>
+338350
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Sum( List( [1..100], x -&gt; x^2 ) );</span>
 338350
 </pre></div>

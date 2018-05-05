@@ -13,7 +13,7 @@
 **  The deep thought polynomials are stored in the list <dtpols> where
 **  <dtpols>[i] contains the polynomials f_{i1},...,f_{in}.
 **  <dtpols>[i] is a record consisting of the components <evlist> and
-**  <evlistvec>. <evlist> is a list of all deep thought monomials occuring
+**  <evlistvec>. <evlist> is a list of all deep thought monomials occurring
 **  in the polynomials f_{i1},...,f_{in}. <evlistvec>is a list of vectors
 **  describing the coefficients of the corresponding deep thought monomials
 **  in the polynomials f_{i1},..,f_{in}. For example when a pair [j,k]
@@ -23,38 +23,22 @@
 **  and f_{ij} = x_j (j<>i),  then <dtpols>[i] is either 1 or 0. <dtpols>[i]
 **  is 0 if also the polynomials f_{m1},...,f_{mn} for (m > i) are trivial .
 */
-#include       "system.h"
 
+#include <src/dteval.h>
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
-#include        "bool.h"                /* booleans                        */
-#include        "calls.h"               /* generic call mechanism          */
-#include        "gap.h"                 /* error handling, initialisation  */
-#include        "gvars.h"               /* global variables                */
-#include        "precord.h"             /* plain records                   */
-#include        "records.h"             /* generic records                 */
-#include        "integer.h"             /* integers                        */
-#include        "dt.h"                  /* deep thought                    */
-#include        "objcftl.h"             /* from the left collect           */
+#include <src/dt.h>
+#include <src/gap.h>
+#include <src/integer.h>
+#include <src/objcftl.h>
+#include <src/plist.h>
+#include <src/precord.h>
+#include <src/records.h>
 
-#include        "dteval.h"              /* deep though evaluation          */
+#ifdef HPCGAP
+#include <src/hpc/guards.h>
+#endif
 
 #define   CELM(list, pos)      (  INT_INTOBJ( ELM_PLIST(list, pos) ) )
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "listfunc.h"            /* functions for generic lists     */
-#include        "plist.h"               /* plain lists                     */
-#include        "string.h"              /* strings                         */
-
-#include	"code.h"		/* coder                           */
-#include	"thread.h"		/* threads			   */
-#include	"tls.h"			/* thread-local storage		   */
-
 
 static int             evlist, evlistvec;
 
@@ -63,7 +47,6 @@ extern Obj             ShallowCopyPlist( Obj  list );
 
 /****************************************************************************
 **
-
 *F  MultGen( <xk>, <gen>, <power>, <dtpols> )
 **
 **  MultGen multiplies the word given by the exponent vector <xk> with
@@ -83,7 +66,7 @@ void       MultGen(
     UInt  i, j, len, len2;
     Obj   copy, sum, sum1, sum2, prod, ord, help;
 
-    if ( IS_INTOBJ(power)  &&  INT_INTOBJ(power) == 0 )
+    if ( power == INTOBJ_INT(0) )
         return;
     sum = SumInt(ELM_PLIST(xk, gen),  power);
     if ( IS_INTOBJ( ELM_PLIST(dtpols, gen) ) )
@@ -107,7 +90,7 @@ void       MultGen(
     {
         /* evaluate the deep thought monomial <sum>[<i>],        */
         ord = Evaluation( ELM_PLIST( sum, i), copy, power  );
-        if ( !IS_INTOBJ(ord)  ||  INT_INTOBJ(ord) != 0 )
+        if ( ord != INTOBJ_INT(0) )
         {
             help = ELM_PLIST(sum1, i);
             len2 = LEN_PLIST(help);
@@ -115,7 +98,7 @@ void       MultGen(
                   j < len2;
                   j+=2    )
             {
-                /* and add the result multiplicated with the right coefficient
+                /* and add the result multiplied by the right coefficient
                 ** to <xk>[ <help>[j] ].                                    */
                 prod = ProdInt( ord, ELM_PLIST(  help, j+1 ) );
                 sum2 = SumInt(ELM_PLIST( xk, CELM( help,j ) ),
@@ -200,7 +183,7 @@ void        Multbound(
 
 Obj       Multiplybound(
                      Obj      x,
-                     Obj      y,       
+                     Obj      y,
                      Int      anf,
                      Int      end,
                      Obj      dtpols  )
@@ -345,7 +328,7 @@ Obj      Power(
         return res;
     }
     /* if <n> is a negative integer compute ( <x>^-1 )^(-<n>)           */
-    if (  TNUM_OBJ(n) == T_INTNEG  ||  INT_INTOBJ(n) < 0  ) 
+    if ( IS_NEG_INT(n) )
     {
         y = NEW_PLIST( T_PLIST, 0);
         SET_LEN_PLIST(y, 0);
@@ -354,7 +337,7 @@ Obj      Power(
     }
     res = NEW_PLIST(T_PLIST, 2);
     SET_LEN_PLIST(res, 0);
-    if ( IS_INTOBJ(n)  &&  INT_INTOBJ(n) == 0  )
+    if ( n == INTOBJ_INT(0) )
         return res;
     /* now use the russian peasant rule to get the result               */
     while( LtInt(INTOBJ_INT(0), n) )
@@ -389,7 +372,7 @@ Obj      Solution( Obj       x,
 
     if ( LEN_PLIST(x) == 0)
         return y;
-    /* first deal with the case that <x> and <y> ly in the centre of the
+    /* first deal with the case that <x> and <y> lie in the centre of the
     ** group defined by <dtpols>.                                       */
     if ( IS_INTOBJ( ELM_PLIST( dtpols, CELM(x, 1) )  )  &&
          CELM( dtpols, CELM(x, 1) ) == 0                &&
@@ -527,7 +510,7 @@ Obj       Commutator( Obj     x,
 **
 *F  Conjugate( <x>, <y>, <dtpols> )
 **
-**  Conjugate returns <x>^<y> for the words <x> and <y> by evaluating the 
+**  Conjugate returns <x>^<y> for the words <x> and <y> by evaluating the
 **  deep thought polynomials <dtpols>. The result is an ordered word.
 */
 
@@ -618,7 +601,7 @@ Obj       Powerred( Obj       x,
 **
 *F  Solutionred( <x>, <y>, <pcp> )
 **
-**  Solutionred returns the solution af the equation <x>*a = <y>.  The result
+**  Solutionred returns the solution of the equation <x>*a = <y>.  The result
 **  is an ordered word with the additional property that all word exponents
 **  are reduced modulo the generator orders given by the deep thought
 **  rewriting system <pcp>.
@@ -809,21 +792,18 @@ void     ReduceWord( Obj      x,
                      (prel = ELM_PLIST( powers, gen) )  != 0  )
                 {
                     if ( ( IS_INTOBJ(quo) && INT_INTOBJ(quo) >= INT_INTOBJ(potenz) )   ||
+                         INT_INTOBJ(mod) == 0 ||
                          TNUM_OBJ(quo) == T_INTPOS    )
                     {
-                        help = Powerred(  prel,
-                                          QuoInt(quo, potenz),
-                                          pcp    );
-                        help = Multiplyboundred( help, x, i+2, flag, pcp);
+                        quo = QuoInt(quo, potenz);
                     }
                     else
                     {
-                        quo = INT_INTOBJ(mod) == 0? QuoInt(quo,potenz):SumInt(QuoInt(quo, potenz),INTOBJ_INT(-1));
-                        help = Powerred(  prel, 
-                                          quo, 
-                                          pcp );
-                        help = Multiplyboundred( help, x, i+2, flag, pcp);
+                        quo = QuoInt(quo, potenz);
+                        quo = SumInt(quo, INTOBJ_INT(-1));
                     }
+                    help = Powerred(prel, quo, pcp);
+                    help = Multiplyboundred(help, x, i+2, flag, pcp);
                     len = LEN_PLIST(help);
                     for (j=1; j<=len; j++)
                         SET_ELM_PLIST(x, j+i+1, ELM_PLIST(help, j) );
@@ -935,7 +915,7 @@ Obj      FuncDTSolution( Obj     self,
 *F  DTCommutator( <x>, <y>, <pcp> )
 **
 **  DTCommutator returns the commutator of the words <x> and <y>.  The result
-**  is reduced with respect to the deep thought rewriting sytem <pcp>.
+**  is reduced with respect to the deep thought rewriting system <pcp>.
 */
 
 Obj        FuncDTCommutator( Obj      self,
@@ -961,7 +941,7 @@ Obj        FuncDTCommutator( Obj      self,
 *F  Conjugate( <x>, <y>, <pcp> ).
 **
 **  Conjugate returns <x>^<y> for the words <x> and <y>.  The result is
-**  ewduced with respect to the deep thought rewriting system <pcp>.
+**  reduced with respect to the deep thought rewriting system <pcp>.
 */
 
 Obj        FuncDTConjugate( Obj      self,
@@ -1013,47 +993,30 @@ Obj       FuncDTQuotient( Obj      self,
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    { "DTCompress", 1, "list",
-      FuncDTCompress, "src/dteval.c:DTCompress" },
-
-    { "DTMultiply", 3, "lword, rword, rws",
-      FuncDTMultiply, "src/dteval.c:DTMultiply" },
-
-    { "DTPower", 3, "word, exponent, rws",
-      FuncDTPower, "src/dteval.c:DTPower" },
-
-    { "DTSolution", 3, "lword, rword, rws",
-      FuncDTSolution, "src/dteval.c:DTSolution" },
-
-    { "DTCommutator", 3, "lword, rword, rws",
-      FuncDTCommutator, "src/dteval.c:DTCommutator" },
-
-    { "DTQuotient", 3, "lword, rword, rws",
-      FuncDTQuotient, "src/dteval.c:DTQuotient" },
-
-    { "DTConjugate", 3, "lword, rword, rws",
-      FuncDTConjugate, "src/dteval.c:DTConjugate" },
-
-    { 0 }
+    GVAR_FUNC(DTCompress, 1, "list"),
+    GVAR_FUNC(DTMultiply, 3, "lword, rword, rws"),
+    GVAR_FUNC(DTPower, 3, "word, exponent, rws"),
+    GVAR_FUNC(DTSolution, 3, "lword, rword, rws"),
+    GVAR_FUNC(DTCommutator, 3, "lword, rword, rws"),
+    GVAR_FUNC(DTQuotient, 3, "lword, rword, rws"),
+    GVAR_FUNC(DTConjugate, 3, "lword, rword, rws"),
+    { 0, 0, 0, 0, 0 }
 
 };
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
@@ -1102,29 +1065,16 @@ static Int InitLibrary (
 *F  InitInfoDTEvaluation()  . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "dteval",                           /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    PostRestore                         /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "dteval",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
+    .postRestore = PostRestore
 };
 
 StructInitInfo * InitInfoDTEvaluation ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  dteval.c  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-**
-*/

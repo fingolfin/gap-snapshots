@@ -12,6 +12,7 @@
 # data for simple groups of order up to 10^18 that are not L_2(q)
 # for some of the groups entry #5 indicates the smallest permutation degree
 BindGlobal("SIMPLEGPSNONL2",
+  MakeImmutable(
   [[60,"A",5,0,5],[360,"A",6,0,6],[2520,"A",7,0,7],
     [5616,"L",3,3,13],[6048,"U",3,3,28],
     [7920,"Spor","M(11)",0,11],[20160,"A",8,0,8],
@@ -148,12 +149,12 @@ BindGlobal("SIMPLEGPSNONL2",
     [712975930219192320,"L",4,17],[756131656307437872,"U",3,197],
     [796793353927300800,"G",2,19],[802332214764045216,"L",3,173],
     [819770591880266400,"L",3,199],[911215823217986880,"S",4,67]]
-    );
+    ));
 
 # call atlasrep, possibly with extra parameters, but only if atlasrep is available
 BindGlobal("DoAtlasrepGroup",function(params)
 local g;
-  if LoadPackage("atlasrep")<>true then
+  if IsPackageMarkedForLoading("atlasrep","")<>true then
     Error("`atlasrep' package must be available to construct group ",params[1]);
   fi;
   g:=CallFuncList(ValueGlobal("AtlasGroup"),params);
@@ -1101,7 +1102,7 @@ local a;
   if n<=10^55 and Length(a)=0 then
     # L2 case
     return 2*RootInt(n,3);
-  elif ForAll(a,x->Length(x)>4) then
+  elif Length(a)>0 and ForAll(a,x->Length(x)>4) then
     return Maximum(List(a,x->x[5]));
   fi;
   # we don't know a smallest degree
@@ -1179,17 +1180,20 @@ local H,d,id,hom,field,C,dom,orbs;
      and Image(hom)=G then
     d:=IdentityMapping(G);
   else
+    # only force isomorphism if we really want it -- e.g. maximal subgroups
+    if ValueOption("classicepiuseiso")<>true then
+      return fail;
+    fi;
     # Image(hom) is the better group to search in, e.g. classes.
     d:=Image(hom);
     d!.actionHomomorphism:=hom;
-    return fail;
-    Error("QQQ");
-    d:=IsomorphismGroups(G,Image(hom));
+    # option to avoid infinite recursion
+    d:=IsomorphismGroups(G,Image(hom):classicepiuseiso:=false);
   fi;
   if d=fail then
     Error("inconsistent image 2");
   fi;
-  return hom*InverseGeneralMapping(d);
+  return hom*RestrictedInverseGeneralMapping(d);
 
 end);
 

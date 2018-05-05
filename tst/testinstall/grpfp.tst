@@ -5,8 +5,6 @@
 ##
 #Y  Copyright 2005,    Lehrstuhl D für Mathematik,   RWTH Aachen,    Germany
 ##
-##  To be listed in testinstall.g
-##
 gap> START_TEST("grpfp.tst");
 gap> f:= FreeGroup( "a", "b" );;  a := f.1;;  b := f.2;;
 gap> c2:= f / [ a*b*a^-2*b*a/b, (b^-1*a^3*b^-1*a^-3)^2*a ];;
@@ -103,7 +101,7 @@ gap> Print( Collected( List( l, x -> Index( c2, x ) ) ), "\n" );
 gap> Print( Collected( List( LowIndexSubgroupsFpGroup( g, s, 5 ),
 >                            x -> Index( c2, x ) ) ), "\n" );
 [ [ 12, 1 ], [ 24, 1 ], [ 48, 1 ] ]
-gap> STOP_TEST( "grpfp.tst", 10780000);
+gap> STOP_TEST( "grpfp.tst", 1);
 
 #############################################################################
 ##

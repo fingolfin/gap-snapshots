@@ -33,6 +33,7 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78_mj.html#X837EFDAB7BEF290B">78.2-1 InstallMethod</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78_mj.html#X7D2C12DB841CE539">78.2-2 InstallOtherMethod</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap78_mj.html#X78CA646678B0539F">78.2-3 InstallMethodWithRandomSource</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap78_mj.html#X851FC6387CA2B241">78.3 <span class="Heading">Applicable Methods and Method Selection</span></a>
 </span>
@@ -122,6 +123,18 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallOtherMethod</code>( <var class="Arg">opr</var>[, <var class="Arg">info</var>][, <var class="Arg">famp</var>], <var class="Arg">args-filts</var>[, <var class="Arg">val</var>], <var class="Arg">method</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>installs a function method <var class="Arg">method</var> for the operation <var class="Arg">opr</var>, in the same way as for <code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>), but without the restriction that the number of arguments must match a declaration of <var class="Arg">opr</var> and without the restriction that <var class="Arg">args-filts</var> imply the respective requirements of the operation <var class="Arg">opr</var>.</p>
 
+<p><a id="X78CA646678B0539F" name="X78CA646678B0539F"></a></p>
+
+<h5>78.2-3 InstallMethodWithRandomSource</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallMethodWithRandomSource</code>( <var class="Arg">opr</var>, <var class="Arg">info</var>[, <var class="Arg">famp</var>], <var class="Arg">args-filts</var>[, <var class="Arg">val</var>], <var class="Arg">method</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallOtherMethodWithRandomSource</code>( <var class="Arg">opr</var>, <var class="Arg">info</var>[, <var class="Arg">famp</var>], <var class="Arg">args-filts</var>[, <var class="Arg">val</var>], <var class="Arg">method</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>These functions are designed to simplify adding new methods for <code class="func">Random</code> (<a href="chap30_mj.html#X7FF906E57D6936F8"><span class="RefLink">30.7-1</span></a>) and <code class="func">PseudoRandom</code> (<a href="chap30_mj.html#X811B5BD47DC5356B"><span class="RefLink">30.7-2</span></a>) to GAP which can be called both with, and without, a random source.</p>
+
+<p>They accept the same arguments as <code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>) and <code class="func">InstallOtherMethod</code> (<a href="chap78_mj.html#X7D2C12DB841CE539"><span class="RefLink">78.2-2</span></a>), with the extra requirement that the first member of <var class="Arg">args-filts</var> must be <code class="func">IsRandomSource</code> (<a href="chap14_mj.html#X82E31A697E389F1D"><span class="RefLink">14.7-1</span></a>), and the <var class="Arg">info</var> argument is compulsory and must begin 'for a random source and'.</p>
+
+<p>This function then installs two methods: first it calls <code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>) (or <code class="func">InstallOtherMethod</code> (<a href="chap78_mj.html#X7D2C12DB841CE539"><span class="RefLink">78.2-2</span></a>)) with unchanged arguments. Then it calls <code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>) (or <code class="func">InstallOtherMethod</code> (<a href="chap78_mj.html#X7D2C12DB841CE539"><span class="RefLink">78.2-2</span></a>)) a second time to install another method which lacks the initial random source argument; this additional method simply invokes the original method, with <code class="func">GlobalMersenneTwister</code> (<a href="chap14_mj.html#X7F772E2686B35865"><span class="RefLink">14.7-4</span></a>) added as first argument.</p>
+
 <p><a id="X851FC6387CA2B241" name="X851FC6387CA2B241"></a></p>
 
 <h4>78.3 <span class="Heading">Applicable Methods and Method Selection</span></h4>
@@ -140,7 +153,9 @@
 
 <p>Otherwise, the applicable method with highest <em>rank</em> is selected and then called. This rank is given by the sum of the ranks of the filters in the list <var class="Arg">args-filt</var>, <em>including involved filters</em>, plus the number <var class="Arg">val</var> used in the call of <code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>). So the argument <var class="Arg">val</var> can be used to raise the priority of a method relative to other methods for <var class="Arg">opr</var>.</p>
 
-<p>Note that from the applicable methods, an efficient one shall be selected. This is a method that needs only little time and storage for the computations.</p>
+<p>Note that for operations which are constructors special rules with respect to applicability and rank of the corresponding methods apply (see section <code class="func">NewConstructor</code> (<a href="chap79_mj.html#X783FA45E7858A8CF"><span class="RefLink">79.6-1</span></a>)).</p>
+
+<p>Note that from the applicable methods an efficient one shall be selected. This is a method that needs only little time and storage for the computations.</p>
 
 <p>It seems to be impossible for <strong class="pkg">GAP</strong> to select an optimal method in all cases. The present ranking of methods is based on the assumption that a method installed for a special situation shall be preferred to a method installed for a more general situation.</p>
 

@@ -25,6 +25,7 @@ InstallMethod(SparseIntKey,"defaults to DenseIntKey",true,[IsObject,IsObject],
 #############################################################################
 ##
 #F  HashKeyBag(<obj>,<seed>,<skip>,<maxread>)
+#F  HashKeyWholeBag(<obj>,<seed>)
 ##
 ##  returns a hash key which is given by the bytes in the bag storing <obj>.
 ##  The result is reduced modulo $2^{28}$ (on 32 bit systems) resp. modulo
@@ -40,7 +41,14 @@ InstallMethod(SparseIntKey,"defaults to DenseIntKey",true,[IsObject,IsObject],
 ##  between different runs of {\GAP} and no reference to their absolute
 ##  values ought to be made.
 ##
+##  HashKeyWholeBag hashes all the contents of a bag, which is equivalent
+##  to passing 0 and -1 as the third and fourth arguments of HashKeyBag.
+##  Be aware that for many types in GAP (for example permutations), equal
+##  objects may not have identical bags, so HashKeyWholeBag may return
+##  different values for two equal objects.
+##
 BindGlobal("HashKeyBag",HASHKEY_BAG);
+BindGlobal("HashKeyWholeBag", {x,y} -> HASHKEY_BAG(x,y,0,-1));
 
 #############################################################################
 ##
@@ -200,7 +208,7 @@ function(d,pe)
            if IsPerm4Rep(p) then
              # is it a proper 4byte perm?
              if l>65536 then
-               return HashKeyBag(p,255,0,4*l);
+               return HashKeyBag(p,255,GAPInfo.BytesPerVariable,4*l);
              else
                # the permutation does not require 4 bytes. Trim in two
                # byte representation (we need to do this to get consistent
@@ -209,12 +217,14 @@ function(d,pe)
              fi;
             fi;
             # now we have a Perm2Rep:
-            return HashKeyBag(p,255,0,2*l);
+            return HashKeyBag(p,255,GAPInfo.BytesPerVariable,2*l);
           end;
 end);
 
 #T Still to do: Permutation values based on base images: Method if the
 #T domain given is a permgroup.
+
+BindConstant( "DOUBLE_OBJLEN", 2*GAPInfo.BytesPerVariable );
 
 InstallMethod(SparseIntKey,"kernel pc group elements",true,
   [IsObject,

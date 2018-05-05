@@ -423,9 +423,33 @@
   which are not available for other types of variable (such as local variables
   or function arguments).[133X
   
-  [33X[0;0YFirst,  such  variables  may  be marked [13Xread-only[113X. In which case attempts to
-  change  them  will  fail.  Most  of  the global variables defined in the [5XGAP[105X
-  library are so marked.[133X
+  [33X[0;0YFirst,  such  variables  may  be  marked  [13Xread-only[113X using [2XMakeReadOnlyGlobal[102X
+  ([14X4.9-2[114X). In which case attempts to change them will fail. Most of the global
+  variables  defined in the [5XGAP[105X library are so marked. [13Xread-only[113X variables can
+  be  made  read-write  again by calling [2XMakeReadWriteGlobal[102X ([14X4.9-3[114X). GAP also
+  features [13Xconstant[113X variables, which are created by calling [2XMakeConstantGlobal[102X
+  ([14X4.9-4[114X).  Constant  variables  can  never be changed. In some cases, GAP can
+  optimise  code  which uses [13Xconstant[113X variables, as their value never changes.
+  In  this  version  GAP  these  optimisations can be observed by printing the
+  function back out, but this behaviour may change in future.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xglobali := 1 + 2;;[127X[104X
+    [4X[25Xgap>[125X [27Xglobalb := true;;[127X[104X
+    [4X[25Xgap>[125X [27XMakeConstantGlobal("globali");[127X[104X
+    [4X[25Xgap>[125X [27XMakeConstantGlobal("globalb");[127X[104X
+    [4X[25Xgap>[125X [27Xf := function()[127X[104X
+    [4X[25X>[125X [27X    if globalb then[127X[104X
+    [4X[25X>[125X [27X        return globali + 1;[127X[104X
+    [4X[25X>[125X [27X    else[127X[104X
+    [4X[25X>[125X [27X        return globali + 2;[127X[104X
+    [4X[25X>[125X [27X    fi;[127X[104X
+    [4X[25X>[125X [27Xend;;[127X[104X
+    [4X[25Xgap>[125X [27XPrint(f);[127X[104X
+    [4X[28Xfunction (  )[128X[104X
+    [4X[28X    return 3 + 1;[128X[104X
+    [4X[28Xend[128X[104X
+  [4X[32X[104X
   
   [33X[0;0YSecond,  a  group  of  functions are supplied for accessing and altering the
   values assigned to global variables. Use of these functions differs from the
@@ -434,8 +458,8 @@
   variables  of the same names exist. Second, the variable names are passed as
   strings, rather than being written directly into the statements.[133X
   
-  [33X[0;0YNote  that  the  functions  [2XNamesGVars[102X  ([14X4.9-8[114X),  [2XNamesSystemGVars[102X  ([14X4.9-9[114X),
-  [2XNamesUserGVars[102X  ([14X4.9-10[114X),  and [2XTemporaryGlobalVarName[102X ([14X4.9-11[114X) deal with the
+  [33X[0;0YNote  that  the  functions  [2XNamesGVars[102X  ([14X4.9-9[114X),  [2XNamesSystemGVars[102X ([14X4.9-10[114X),
+  [2XNamesUserGVars[102X  ([14X4.9-11[114X),  and [2XTemporaryGlobalVarName[102X ([14X4.9-12[114X) deal with the
   [13Xglobal namespace[113X.[133X
   
   [1X4.9-1 IsReadOnlyGlobal[101X
@@ -486,21 +510,32 @@
     [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
-  [1X4.9-4 ValueGlobal[101X
+  [1X4.9-4 MakeConstantGlobal[101X
+  
+  [33X[1;0Y[29X[2XMakeConstantGlobal[102X( [3Xname[103X ) [32X function[133X
+  
+  [33X[0;0YMakeConstantGlobal  (  [3Xname[103X  ) marks the global variable named by the string
+  [3Xname[103X  as  constant.  A  constant  variable  can  never  be  changed  or made
+  read-write.  Constant  variables  can  only  take  an integer value, [10Xtrue[110X or
+  [10Xfalse[110X. There is a limit on the size of allowed integers.[133X
+  
+  [33X[0;0YA warning is given if [3Xname[103X is already constant.[133X
+  
+  [1X4.9-5 ValueGlobal[101X
   
   [33X[1;0Y[29X[2XValueGlobal[102X( [3Xname[103X ) [32X function[133X
   
   [33X[0;0Yreturns the value currently bound to the global variable named by the string
   [3Xname[103X. An error is raised if no value is currently bound.[133X
   
-  [1X4.9-5 IsBoundGlobal[101X
+  [1X4.9-6 IsBoundGlobal[101X
   
   [33X[1;0Y[29X[2XIsBoundGlobal[102X( [3Xname[103X ) [32X function[133X
   
   [33X[0;0Yreturns  [9Xtrue[109X if a value currently bound to the global variable named by the
   string [3Xname[103X and [9Xfalse[109X otherwise.[133X
   
-  [1X4.9-6 UnbindGlobal[101X
+  [1X4.9-7 UnbindGlobal[101X
   
   [33X[1;0Y[29X[2XUnbindGlobal[102X( [3Xname[103X ) [32X function[133X
   
@@ -510,20 +545,22 @@
   [33X[0;0YA  warning is given if [3Xname[103X was not bound. The global variable named by [3Xname[103X
   must be writable, otherwise an error is raised.[133X
   
-  [1X4.9-7 BindGlobal[101X
+  [1X4.9-8 BindGlobal[101X
   
   [33X[1;0Y[29X[2XBindGlobal[102X( [3Xname[103X, [3Xval[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XBindConstant[102X( [3Xname[103X, [3Xval[103X ) [32X function[133X
   
-  [33X[0;0Ysets the global variable named by the string [3Xname[103X to the value [3Xval[103X, provided
-  it  is  writable,  and  makes  it  read-only. If [3Xname[103X already had a value, a
-  warning message is printed.[133X
+  [33X[0;0Y[2XBindGlobal[102X and [2XBindConstant[102X set the global variable named by the string [3Xname[103X
+  to  the  value [3Xval[103X, provided that variable is writable. [2XBindGlobal[102X makes the
+  resulting  variable read-only, while [2XBindConstant[102X makes it constant. If [3Xname[103X
+  already had a value, a warning message is printed.[133X
   
   [33X[0;0YThis  is  intended  to  be  the normal way to create and set [21Xofficial[121X global
-  variables (such as operations and filters).[133X
+  variables (such as operations, filters and constants).[133X
   
-  [33X[0;0YCaution  should be exercised in using these functions, especially [2XBindGlobal[102X
-  and  [2XUnbindGlobal[102X  ([14X4.9-6[114X)  as unexpected changes in global variables can be
-  very confusing for the user.[133X
+  [33X[0;0YCaution   should   be   exercised   in  using  these  functions,  especially
+  [2XUnbindGlobal[102X  ([14X4.9-7[114X)  as unexpected changes in global variables can be very
+  confusing for the user.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xxx := 16;[127X[104X
@@ -544,7 +581,7 @@
     [4X[25Xgap>[125X [27XUnbind(xx);[127X[104X
   [4X[32X[104X
   
-  [1X4.9-8 NamesGVars[101X
+  [1X4.9-9 NamesGVars[101X
   
   [33X[1;0Y[29X[2XNamesGVars[102X(  ) [32X function[133X
   
@@ -554,21 +591,21 @@
   which  have  never been bound but have become known to the system by various
   routes.[133X
   
-  [1X4.9-9 NamesSystemGVars[101X
+  [1X4.9-10 NamesSystemGVars[101X
   
   [33X[1;0Y[29X[2XNamesSystemGVars[102X(  ) [32X function[133X
   
   [33X[0;0YThis  function  returns  an immutable sorted list of all the global variable
   names created by the [5XGAP[105X library when [5XGAP[105X was started.[133X
   
-  [1X4.9-10 NamesUserGVars[101X
+  [1X4.9-11 NamesUserGVars[101X
   
   [33X[1;0Y[29X[2XNamesUserGVars[102X(  ) [32X function[133X
   
   [33X[0;0YThis  function returns an immutable sorted list of the global variable names
   created since the library was read, to which a value is currently bound.[133X
   
-  [1X4.9-11 TemporaryGlobalVarName[101X
+  [1X4.9-12 TemporaryGlobalVarName[101X
   
   [33X[1;0Y[29X[2XTemporaryGlobalVarName[102X( [[3Xprefix[103X] ) [32X function[133X
   
@@ -1488,20 +1525,43 @@
   
   [33X[0;0YAlso see Chapter [14X5[114X.[133X
   
-  [33X[0;0Y[10X[3Xarg-ident[103X[10X -> [3Xexpr[103X[10X[110X[133X
+  [33X[0;0Y[10X{ [3Xarg-list[103X[10X } -> [3Xexpr[103X[10X[110X[133X
   
   [33X[0;0YThis is a shorthand for[133X
   
-  [33X[0;0Y[10Xfunction ( [3Xarg-ident[103X[10X ) return [3Xexpr[103X[10X; end.[110X[133X
+  [33X[0;0Y[10Xfunction ( [3Xarg-list[103X[10X ) return [3Xexpr[103X[10X; end.[110X[133X
   
-  [33X[0;0Y[3Xarg-ident[103X  must  be  a  single identifier, i.e., it is not possible to write
-  functions  of several arguments this way. Also [10Xarg[110X is not treated specially,
-  so  it  is also impossible to write functions that take a variable number of
-  arguments this way.[133X
+  [33X[0;0Y[3Xarg-list[103X is a (possibly empty) argument list. Any arguments list which would
+  be  valid  for  a normal GAP function is also valid here (including variadic
+  arguments).[133X
   
-  [33X[0;0YThe following is an example of a typical use of such a function[133X
+  [33X[0;0YThe following gives a couple of examples of a typical use of such a function[133X
   
   [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSum( List( [1..100], {x} -> x^2 ) );[127X[104X
+    [4X[28X338350[128X[104X
+    [4X[25Xgap>[125X [27Xlist := [3, 5, 2, 1, 3];;[127X[104X
+    [4X[25Xgap>[125X [27XSort(list, {x,y} -> x > y);[127X[104X
+    [4X[25Xgap>[125X [27Xlist;[127X[104X
+    [4X[28X[ 5, 3, 3, 2, 1 ][128X[104X
+    [4X[25Xgap>[125X [27Xf := {x,y...} -> y;;[127X[104X
+    [4X[25Xgap>[125X [27Xf(1,2,3,4);[127X[104X
+    [4X[28X[ 2, 3, 4 ][128X[104X
+    [4X[25Xgap>[125X [27Xf := {} -> 2;[127X[104X
+    [4X[28Xfunction(  ) ... end[128X[104X
+    [4X[25Xgap>[125X [27XPrint(f);[127X[104X
+    [4X[28Xfunction (  )[128X[104X
+    [4X[28X    return 2;[128X[104X
+    [4X[28Xend[128X[104X
+    [4X[25Xgap>[125X [27Xf();[127X[104X
+    [4X[28X2[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe [10X{[110X and [10X}[110X may be omitted for functions with one argument:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSum( List( [1..100], {x} -> x^2 ) );[127X[104X
+    [4X[28X338350[128X[104X
     [4X[25Xgap>[125X [27XSum( List( [1..100], x -> x^2 ) );[127X[104X
     [4X[28X338350[128X[104X
   [4X[32X[104X

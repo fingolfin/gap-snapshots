@@ -5,13 +5,19 @@
 ##
 #Y  Copyright 1996,    Lehrstuhl D für Mathematik,   RWTH Aachen,    Germany
 ##
-##  To be listed in testinstall.g
-##
 gap> START_TEST("listgen.tst");
 gap> List( [ 1 .. 10 ], x -> x^2 );
 [ 1, 4, 9, 16, 25, 36, 49, 64, 81, 100 ]
 gap> List( [ 2, 1, 2, 1 ], x -> x - 1 );
 [ 1, 0, 1, 0 ]
+gap> List();
+Error, usage: List( <C>[, <func>] )
+gap> List([1..10], x->x^2, "extra argument");
+Error, usage: List( <C>[, <func>] )
+gap> List([,1,,3,4], x->x>2);
+[ , false,, true, true ]
+gap> IsMutable(List([1,2,3],x->x^2));
+true
 gap> Flat( List( [ 1 .. 5 ], x -> [ 1 .. x ] ) );
 [ 1, 1, 2, 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 4, 5 ]
 gap> Reversed( [ 1, 2, 1, 2 ] );
@@ -40,6 +46,22 @@ gap> PositionBound( [ ,,,, 1 ] );
 5
 gap> PositionBound( [] );
 fail
+gap> PositionNot( [ 2, 1 ], 1 );
+1
+gap> PositionNot( [ 1, 2 ], 1 );
+2
+gap> PositionNot( [ 1, 1 ], 1 );
+3
+gap> PositionNot( [ 1, 1 ], 1, 3 );
+4
+gap> PositionNonZero( [ 1, 1 ] );
+1
+gap> PositionNonZero( [ 0, 1 ] );
+2
+gap> PositionNonZero( [ 0, 0 ] );
+3
+gap> PositionNonZero( [ 0, 0 ], 3 );
+4
 gap> l:= [ 1 .. 10 ];;
 gap> SortParallel( [ 2, 3, 4, 1, 5, 10, 9, 7, 8, 6 ], l );
 gap> l;
@@ -82,6 +104,42 @@ gap> MinimumList( [ 1, 2 .. 20 ] );
 1
 gap> MinimumList( [ 10, 8 .. 2 ] );
 2
+gap> PositionMaximum([2,4,6,4,2,6]);
+3
+gap> PositionMaximum([2,4,6,4,2,6], x -> -x);
+1
+gap> PositionMinimum([2,4,6,4,2,6]);
+1
+gap> PositionMinimum([2,4,6,4,2,6], x -> -x);
+3
+gap> PositionMaximum();
+Error, Usage: PositionMaximum(<list>, [<func>])
+gap> PositionMaximum(2);
+Error, Usage: PositionMaximum(<list>, [<func>])
+gap> PositionMaximum([1,2], 2);
+Error, Usage: PositionMaximum(<list>, [<func>])
+gap> PositionMaximum([1,2], x -> x, 2);
+Error, Usage: PositionMaximum(<list>, [<func>])
+gap> PositionMinimum();
+Error, Usage: PositionMinimum(<list>, [<func>])
+gap> PositionMinimum([1,2], 2);
+Error, Usage: PositionMinimum(<list>, [<func>])
+gap> PositionMinimum(2);
+Error, Usage: PositionMinimum(<list>, [<func>])
+gap> PositionMinimum([1,2], x -> x, 2);
+Error, Usage: PositionMinimum(<list>, [<func>])
+gap> PositionMaximum([]);
+fail
+gap> PositionMaximum([,,,]);
+fail
+gap> PositionMaximum([2,,4,,6]);
+5
+gap> PositionMinimum([2,,4,,6]);
+1
+gap> PositionMinimum([,,,]);
+fail
+gap> PositionMinimum([]);
+fail
 gap> String( l );
 "[ 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 ]"
 gap> String( [ 1 .. 10 ] );
@@ -98,7 +156,7 @@ gap> p2:=Position(t,(5,7)(6,8));
 fail
 
 # that's all, folks
-gap> STOP_TEST( "listgen.tst", 350000);
+gap> STOP_TEST( "listgen.tst", 1);
 
 #############################################################################
 ##

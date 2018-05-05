@@ -13,10 +13,10 @@
 #ifndef GAP_BOOL_H
 #define GAP_BOOL_H
 
+#include <src/objects.h>
 
 /****************************************************************************
 **
-
 *V  True  . . . . . . . . . . . . . . . . . . . . . . . . . . . .  true value
 **
 **   'True' is the value 'true'.
@@ -43,33 +43,25 @@ extern Obj Fail;
 
 /****************************************************************************
 **
-*V  SuPeRfail  . . . . . . . . . . . . . . . . . . . . . . .  superfail value
+*V  Undefined  . . . . . . . . . . . . . . . . . . . . . . . undefined value
 **
-**  'SuPeRfail' is an ``superfail'' object which is used to indicate failure if
-**  `fail' itself is a sensible response. This is used when having GAP read
-**  a file line-by-line via a library function (demo.g)
+**  'Undefined' is a special object that is used in lieu of (Obj) 0 in places
+**  where the kernel cannot handle a null reference easily. This object is
+**  never exposed to GAP code and only used within the kernel.
 */
-extern Obj SuPeRfail;
+extern Obj Undefined;
 
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  InitInfoBool()  . . . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoBool ( void );
 
 
 #endif // GAP_BOOL_H
-
-/****************************************************************************
-**
-
-*E  bool.h  . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

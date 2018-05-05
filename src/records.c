@@ -12,60 +12,74 @@
 **  This package  provides a uniform  interface to  the functions that access
 **  records and the elements for the other packages in the GAP kernel.
 */
-#include        "system.h"              /* system dependent part           */
+
+#include <src/records.h>
+
+#include <src/bool.h>
+#include <src/gap.h>
+#include <src/gaputils.h>
+#include <src/opers.h>
+#include <src/plist.h>
+#include <src/stringobj.h>
+
+#ifdef HPCGAP
+#include <src/hpc/thread.h>
+#include <pthread.h>
+#endif
 
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
+static Obj HashRNam;
 
-#include        "gap.h"                 /* error handling, initialisation  */
+static Obj NamesRNam;
 
-#include        "gvars.h"               /* global variables                */
-#include        "calls.h"               /* generic call mechanism          */
-#include        "opers.h"               /* generic operations              */
+inline const Char *NAME_RNAM(UInt rnam)
+{
+    return CSTR_STRING(ELM_PLIST(NamesRNam, rnam));
+}
 
-#include        "records.h"             /* generic records                 */
+inline extern Obj NAME_OBJ_RNAM(UInt rnam)
+{
+    return ELM_PLIST(NamesRNam, rnam);
+}
 
-#include        "bool.h"                /* booleans                        */
 
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "plist.h"               /* plain lists                     */
-#include        "string.h"              /* strings                         */
-
-#include	"code.h"		/* coder                           */
-#include	"thread.h"		/* threads			   */
-#include	"tls.h"			/* thread-local storage		   */
-
+#ifdef HPCGAP
 
 /****************************************************************************
 **
-
-*F  CountRnam . . . . . . . . . . . . . . . . . . . .  number of record names
+*F  RNameLock . . . . . . . . . . . . . . . . . . . . .  lock for name table
 **
 **  'CountRnam' is the number of record names.
 */
-UInt            CountRNam;
+static pthread_rwlock_t RNameLock;
+
+static void HPC_LockNames(int write)
+{
+  if (PreThreadCreation)
+    return;
+  if (write)
+    pthread_rwlock_wrlock(&RNameLock);
+  else
+    pthread_rwlock_rdlock(&RNameLock);
+}
+
+static void HPC_UnlockNames(void)
+{
+  if (!PreThreadCreation)
+    pthread_rwlock_unlock(&RNameLock);
+}
+
+#endif
 
 
-/****************************************************************************
-**
-*F  NAME_RNAM(<rnam>) . . . . . . . . . . . . . . . .  name for a record name
-**
-**  'NAME_RNAM' returns the name (as a C string) for the record name <rnam>.
-**
-**  Note that 'NAME_RNAM' is a  macro, so do not call  it with arguments that
-**  have side effects.
-**
-**  'NAME_RNAM' is defined in the declaration part of this package as follows
-**
-#define NAME_RNAM(rnam) CSTR_STRING( ELM_PLIST( NamesRNam, rnam ) )
-*/
-Obj             NamesRNam;
-
+static inline UInt HashString( const Char * name )
+{
+    UInt hash = 0;
+    while ( *name ) {
+        hash = 65599 * hash + *name++;
+    }
+    return hash;
+}
 
 /****************************************************************************
 **
@@ -74,76 +88,97 @@ Obj             NamesRNam;
 **  'RNamName' returns  the record name with the  name  <name> (which is  a C
 **  string).
 */
-Obj             HashRNam;
-
-UInt            SizeRNam;
-
 UInt            RNamName (
     const Char *        name )
 {
     Obj                 rnam;           /* record name (as imm intobj)     */
     UInt                pos;            /* hash position                   */
-    UInt                len;            /* length of name                  */
     Char                namx [1024];    /* temporary copy of <name>        */
     Obj                 string;         /* temporary string object <name>  */
     Obj                 table;          /* temporary copy of <HashRNam>    */
     Obj                 rnam2;          /* one element of <table>          */
-    const Char *        p;              /* loop variable                   */
     UInt                i;              /* loop variable                   */
+    UInt                sizeRNam;
 
-    /* start looking in the table at the following hash position           */
-    pos = 0;
-    len = 0;
-    for ( p = name; *p != '\0'; p++ ) {
-        pos = 65599 * pos + *p;
-        len++;
-    }
-    pos = (pos % SizeRNam) + 1;
-
-    if(len >= 1023) {
+    if (strlen(name) >= 1023) {
         // Note: We can't pass 'name' here, as it might get moved by garbage collection
         ErrorQuit("Record names must consist of less than 1023 characters", 0, 0);
+        return 0;
     }
+
+    /* start looking in the table at the following hash position           */
+    const UInt hash = HashString( name );
+
+#ifdef HPCGAP
+    HPC_LockNames(0); /* try a read lock first */
+#endif
+
     /* look through the table until we find a free slot or the global      */
+    sizeRNam = LEN_PLIST(HashRNam);
+    pos = (hash % sizeRNam) + 1;
     while ( (rnam = ELM_PLIST( HashRNam, pos )) != 0
          && strncmp( NAME_RNAM( INT_INTOBJ(rnam) ), name, 1023 ) ) {
-        pos = (pos % SizeRNam) + 1;
+        pos = (pos % sizeRNam) + 1;
     }
+    if (rnam != 0) {
+#ifdef HPCGAP
+      HPC_UnlockNames();
+#endif
+      return INT_INTOBJ(rnam);
+    }
+#ifdef HPCGAP
+    if (!PreThreadCreation) {
+      HPC_UnlockNames(); /* switch to a write lock */
+      HPC_LockNames(1);
+      /* look through the table until we find a free slot or the global      */
+      sizeRNam = LEN_PLIST(HashRNam);
+      pos = (hash % sizeRNam) + 1;
+      while ( (rnam = ELM_PLIST( HashRNam, pos )) != 0
+           && strncmp( NAME_RNAM( INT_INTOBJ(rnam) ), name, 1023 ) ) {
+          pos = (pos % sizeRNam) + 1;
+      }
+    }
+    if (rnam != 0) {
+      HPC_UnlockNames();
+      return INT_INTOBJ(rnam);
+    }
+#endif
 
     /* if we did not find the global variable, make a new one and enter it */
     /* (copy the name first, to avoid a stale pointer in case of a GC)     */
-    if ( rnam == 0 ) {
-        CountRNam++;
-        rnam = INTOBJ_INT(CountRNam);
-        SET_ELM_PLIST( HashRNam, pos, rnam );
-        strlcpy( namx, name, sizeof(namx) );
-        C_NEW_STRING_DYN(string, namx);
-        GROW_PLIST(    NamesRNam,   CountRNam );
-        SET_LEN_PLIST( NamesRNam,   CountRNam );
-        SET_ELM_PLIST( NamesRNam,   CountRNam, string );
-        CHANGED_BAG(   NamesRNam );
-    }
+    strlcpy( namx, name, sizeof(namx) );
+    string = MakeImmString(namx);
 
-    /* if the table is too crowed, make a larger one, rehash the names     */
-    if ( SizeRNam < 3 * CountRNam / 2 ) {
+    const UInt countRNam = PushPlist(NamesRNam, string);
+    rnam = INTOBJ_INT(countRNam);
+    SET_ELM_PLIST( HashRNam, pos, rnam );
+
+    /* if the table is too crowded, make a larger one, rehash the names     */
+    if ( sizeRNam < 3 * countRNam / 2 ) {
         table = HashRNam;
-        SizeRNam = 2 * SizeRNam + 1;
-        HashRNam = NEW_PLIST( T_PLIST, SizeRNam );
-        SET_LEN_PLIST( HashRNam, SizeRNam );
-        for ( i = 1; i <= (SizeRNam-1)/2; i++ ) {
+        sizeRNam = 2 * sizeRNam + 1;
+        HashRNam = NEW_PLIST( T_PLIST, sizeRNam );
+        SET_LEN_PLIST( HashRNam, sizeRNam );
+#ifdef HPCGAP
+        /* The list is briefly non-public, but this is safe, because
+         * the mutex protects it from being accessed by other threads.
+         */
+        MakeBagPublic(HashRNam);
+#endif
+        for ( i = 1; i <= (sizeRNam-1)/2; i++ ) {
             rnam2 = ELM_PLIST( table, i );
             if ( rnam2 == 0 )  continue;
-            pos = 0;
-            for ( p = NAME_RNAM( INT_INTOBJ(rnam2) ); *p != '\0'; p++ ) {
-                pos = 65599 * pos + *p;
-            }
-            pos = (pos % SizeRNam) + 1;
+            pos = HashString( NAME_RNAM( INT_INTOBJ(rnam2) ) );
+            pos = (pos % sizeRNam) + 1;
             while ( ELM_PLIST( HashRNam, pos ) != 0 ) {
-                pos = (pos % SizeRNam) + 1;
+                pos = (pos % sizeRNam) + 1;
             }
             SET_ELM_PLIST( HashRNam, pos, rnam2 );
         }
     }
+#ifdef HPCGAP
+    HPC_UnlockNames();
+#endif
 
     /* return the record name                                              */
     return INT_INTOBJ(rnam);
@@ -204,27 +239,28 @@ UInt            RNamObj (
 
     /* otherwise fail                                                      */
     else {
-        obj = ErrorReturnObj(
+        Obj err;
+        err = ErrorReturnObj(
             "Record: '<rec>.(<obj>)' <obj> must be a string or an integer",
             0L, 0L,
             "you can replace <obj> via 'return <obj>;'" );
-        return RNamObj( obj );
+        return RNamObj( err );
     }
 }
 
 
 /****************************************************************************
 **
-*F  RNamObjHandler(<self>,<obj>)  . . . .  convert an object to a record name
+*F  FuncRNamObj(<self>,<obj>)  . . . .  convert an object to a record name
 **
-**  'RNamObjHandler' implements the internal function 'RNamObj'.
+**  'FuncRNamObj' implements the internal function 'RNamObj'.
 **
 **  'RNamObj( <obj> )'
 **
 **  'RNamObj' returns the record name  corresponding  to  the  object  <obj>,
 **  which currently must be a string or an integer.
 */
-Obj             RNamObjHandler (
+Obj             FuncRNamObj (
     Obj                 self,
     Obj                 obj )
 {
@@ -234,25 +270,24 @@ Obj             RNamObjHandler (
 
 /****************************************************************************
 **
-*F  NameRNamHandler(<self>,<rnam>)  . . . . convert a record name to a string
+*F  FuncNameRNam(<self>,<rnam>)  . . . . convert a record name to a string
 **
-**  'NameRNamHandler' implements the internal function 'NameRName'.
+**  'FuncNameRNam' implements the internal function 'NameRName'.
 **
 **  'NameRName( <rnam> )'
 **
 **  'NameRName' returns the string corresponding to the record name <rnam>.
 */
-Obj             NameRNamFunc;
-
-Obj             NameRNamHandler (
+Obj             FuncNameRNam (
     Obj                 self,
     Obj                 rnam )
 {
     Obj                 name;
     Obj                 oname;
+    const UInt          countRNam = LEN_PLIST(NamesRNam);
     while ( ! IS_INTOBJ(rnam)
          || INT_INTOBJ(rnam) <= 0
-        || CountRNam < INT_INTOBJ(rnam) ) {
+        || countRNam < INT_INTOBJ(rnam) ) {
         rnam = ErrorReturnObj(
             "NameRName: <rnam> must be a record name (not a %s)",
             (Int)TNAM_OBJ(rnam), 0L,
@@ -288,18 +323,6 @@ Obj             IsRecHandler (
     Obj                 obj )
 {
     return (IS_REC(obj) ? True : False);
-}
-
-Int             IsRecNot (
-    Obj                 obj )
-{
-    return 0L;
-}
-
-Int             IsRecYes (
-    Obj                 obj )
-{
-    return 1L;
 }
 
 Int             IsRecObject (
@@ -513,10 +536,11 @@ UInt            iscomplete_rnam (
     Char *              name,
     UInt                len )
 {
-    Char *              curr;
+    const Char *        curr;
     UInt                i, k;
+    const UInt          countRNam = LEN_PLIST(NamesRNam);
 
-    for ( i = 1; i <= CountRNam; i++ ) {
+    for ( i = 1; i <= countRNam; i++ ) {
         curr = NAME_RNAM( i );
         for ( k = 0; name[k] != 0 && curr[k] == name[k]; k++ ) ;
         if ( k == len && curr[k] == '\0' )  return 1;
@@ -528,12 +552,13 @@ UInt            completion_rnam (
     Char *              name,
     UInt                len )
 {
-    Char *              curr;
-    Char *              next;
+    const Char *        curr;
+    const Char *        next;
     UInt                i, k;
+    const UInt          countRNam = LEN_PLIST(NamesRNam);
 
     next = 0;
-    for ( i = 1; i <= CountRNam; i++ ) {
+    for ( i = 1; i <= countRNam; i++ ) {
         curr = NAME_RNAM( i );
         for ( k = 0; name[k] != 0 && curr[k] == name[k]; k++ ) ;
         if ( k < len || curr[k] <= name[k] )  continue;
@@ -559,26 +584,25 @@ Obj FuncALL_RNAMES (
     Obj                 copy, s;
     UInt                i;
     Obj                 name;
+    const UInt          countRNam = LEN_PLIST(NamesRNam);
 
-    copy = NEW_PLIST( T_PLIST+IMMUTABLE, CountRNam );
-    for ( i = 1;  i <= CountRNam;  i++ ) {
+    copy = NEW_PLIST( T_PLIST+IMMUTABLE, countRNam );
+    for ( i = 1;  i <= countRNam;  i++ ) {
         name = NAME_OBJ_RNAM( i );
         s = CopyToStringRep(name);
         SET_ELM_PLIST( copy, i, s );
     }
-    SET_LEN_PLIST( copy, CountRNam );
+    SET_LEN_PLIST( copy, countRNam );
     return copy;
 }
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *V  GVarFilts . . . . . . . . . . . . . . . . . . . list of filters to export
 */
 static StructGVarFilt GVarFilts [] = {
@@ -586,7 +610,7 @@ static StructGVarFilt GVarFilts [] = {
     { "IS_REC", "obj", &IsRecFilt,
       IsRecHandler, "src/records.c:IS_REC" },
 
-    { 0 }
+    { 0, 0, 0, 0, 0 }
 
 };
 
@@ -609,7 +633,7 @@ static StructGVarOper GVarOpers [] = {
     { "UNB_REC",  2, "obj, rnam", &UnbRecOper, 
       UnbRecHandler, "src/records.c:UNB_REC" },
 
-    { 0 }
+    { 0, 0, 0, 0, 0, 0 }
 
 };
 
@@ -620,23 +644,16 @@ static StructGVarOper GVarOpers [] = {
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    { "RNamObj", 1, "obj",
-      RNamObjHandler, "src/records.c:RNamObj" },
-
-    { "NameRNam", 1, "rnam",
-      NameRNamHandler, "src/records.c:NameRNam" },
-
-    { "ALL_RNAMES", 0, "",
-      FuncALL_RNAMES, "src/records.c:ALL_RNAMES" },
-
-    { 0 }
+    GVAR_FUNC(RNamObj, 1, "obj"),
+    GVAR_FUNC(NameRNam, 1, "rnam"),
+    GVAR_FUNC(ALL_RNAMES, 0, ""),
+    { 0, 0, 0, 0, 0 }
 
 };
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
@@ -657,10 +674,11 @@ static Int InitKernel (
 
     /* make and install the 'IS_REC' filter                                */
     for ( type = FIRST_REAL_TNUM; type <= LAST_REAL_TNUM; type++ ) {
-        IsRecFuncs[ type ] = IsRecNot;
+        assert(IsRecFuncs[ type ] == 0);
+        IsRecFuncs[ type ] = AlwaysNo;
     }
     for ( type = FIRST_RECORD_TNUM; type <= LAST_RECORD_TNUM; type++ ) {
-        IsRecFuncs[ type ] = IsRecYes;
+        IsRecFuncs[ type ] = AlwaysYes;
     }
     for ( type = FIRST_EXTERNAL_TNUM; type <= LAST_EXTERNAL_TNUM; type++ ) {
         IsRecFuncs[ type ] = IsRecObject;
@@ -669,6 +687,7 @@ static Int InitKernel (
 
     /* make and install the 'ELM_REC' operations                           */
     for ( type = FIRST_REAL_TNUM; type <= LAST_REAL_TNUM; type++ ) {
+        assert(ElmRecFuncs[ type ] == 0);
         ElmRecFuncs[ type ] = ElmRecError;
     }
     for ( type = FIRST_EXTERNAL_TNUM; type <= LAST_EXTERNAL_TNUM; type++ ) {
@@ -678,6 +697,7 @@ static Int InitKernel (
 
     /* make and install the 'ISB_REC' operation                            */
     for ( type = FIRST_REAL_TNUM; type <= LAST_REAL_TNUM; type++ ) {
+        assert(IsbRecFuncs[ type ] == 0);
         IsbRecFuncs[ type ] = IsbRecError;
     }
     for ( type = FIRST_EXTERNAL_TNUM; type <= LAST_EXTERNAL_TNUM; type++ ) {
@@ -687,6 +707,7 @@ static Int InitKernel (
 
     /* make and install the 'ASS_REC' operation                            */
     for ( type = FIRST_REAL_TNUM; type <= LAST_REAL_TNUM; type++ ) {
+        assert(AssRecFuncs[ type ] == 0);
         AssRecFuncs[ type ] = AssRecError;
     }
     for ( type = FIRST_EXTERNAL_TNUM; type <= LAST_EXTERNAL_TNUM; type++ ) {
@@ -696,29 +717,12 @@ static Int InitKernel (
 
     /* make and install the 'UNB_REC' operation                            */
     for ( type = FIRST_REAL_TNUM; type <= LAST_REAL_TNUM; type++ ) {
+        assert(UnbRecFuncs[ type ] == 0);
         UnbRecFuncs[ type ] = UnbRecError;
     }
     for ( type = FIRST_EXTERNAL_TNUM; type <= LAST_EXTERNAL_TNUM; type++ ) {
         UnbRecFuncs[ type ] = UnbRecObject;
     }
-
-    /* return success                                                      */
-    return 0;
-}
-
-
-/****************************************************************************
-**
-*F  PostRestore( <module> ) . . . . . . . . . . . . . after restore workspace
-*/
-static Int PostRestore (
-    StructInitInfo *    module )
-{
-    /* make the list of names of record names                              */
-    CountRNam = LEN_PLIST(NamesRNam);
-
-    /* make the hash list of record names                                  */
-    SizeRNam = LEN_PLIST(HashRNam);
 
     /* return success                                                      */
     return 0;
@@ -733,16 +737,14 @@ static Int InitLibrary (
     StructInitInfo *    module )
 {
     /* make the list of names of record names                              */
-    CountRNam = 0;
     NamesRNam = NEW_PLIST( T_PLIST, 0 );
-    MakeBagPublic(NamesRNam);
     SET_LEN_PLIST( NamesRNam, 0 );
+    MakeBagPublic(NamesRNam);
 
     /* make the hash list of record names                                  */
-    SizeRNam = 997;
-    HashRNam = NEW_PLIST( T_PLIST, SizeRNam );
+    HashRNam = NEW_PLIST( T_PLIST, 14033 );
+    SET_LEN_PLIST( HashRNam, 14033 );
     MakeBagPublic(HashRNam);
-    SET_LEN_PLIST( HashRNam, SizeRNam );
 
     /* init filters and functions                                          */
     InitGVarFiltsFromTable( GVarFilts );
@@ -759,28 +761,15 @@ static Int InitLibrary (
 *F  InitInfoRecords() . . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "records",                          /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    PostRestore                         /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "records",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoRecords ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  records.c . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

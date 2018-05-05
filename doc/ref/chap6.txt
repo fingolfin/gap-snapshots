@@ -46,7 +46,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27X1 * ;[127X[104X
-    [4X[28XSyntax error: expression expected[128X[104X
+    [4X[28XSyntax error: Expression expected[128X[104X
     [4X[28X1 * ;[128X[104X
     [4X[28X    ^[128X[104X
   [4X[32X[104X
@@ -112,8 +112,10 @@
   [4X[32X[104X
   
   [33X[0;0YAlso  in  each  statement  the  time spent by the last statement, whether it
-  produced  a value or not, is available in the variable [2Xtime[102X ([14X7.6-3[114X). This is
-  an integer that holds the number of milliseconds.[133X
+  produced  a value or not, is available in the variable [2Xtime[102X ([14X7.6-4[114X). This is
+  an  integer  that  holds the number of milliseconds. Similarly the amount of
+  memory  allocated during that statement (in bytes) is stored in the variable
+  [2Xmemory_allocated[102X ([14X7.7-2[114X).[133X
   
   
   [1X6.2 [33X[0;0YSpecial Rules for Input Lines[133X[101X
@@ -786,8 +788,7 @@
   [33X[1;0Y[29X[2XErrorCount[102X(  ) [32X function[133X
   
   [33X[0;0Y[2XErrorCount[102X  returns  a  count  of  the  number  of  errors  (including  user
-  interruptions)  which have occurred in the [5XGAP[105X session so far. This count is
-  reduced  modulo [22X2^28[122X on [22X32[122X bit systems, [22X2^60[122X on [22X64[122X bit systems. The count is
+  interruptions)  which  have occurred in the [5XGAP[105X session so far. The count is
   incremented  by  each  error,  even if [5XGAP[105X was started with the [10X-T[110X option to
   disable the break loop.[133X
   
@@ -1104,12 +1105,12 @@
   [33X[0;0YThe  second  command is the converse, it reads the lines from file [3Xfname[103X and
   [13Xprepends[113X them to the current command line history.[133X
   
-  [33X[0;0YBy  default an arbitrary number of input lines is stored in the command line
-  history.  For  very  long  [5XGAP[105X  sessions  or  if  [2XSaveCommandLineHistory[102X and
-  [2XReadCommandLineHistory[102X  are  used  repeatedly it can be sensible to restrict
-  the  number of saved lines via [10XSetUserPreference("HistoryMaxLines", num);[110X to
-  a  non  negative  number [10Xnum[110X (the default is [9Xinfinity[109X). An automatic storing
-  and   restoring   of   the  command  line  history  can  be  configured  via
+  [33X[0;0YBy  default, the command line history stores up to 1000 input lines. command
+  line   history.   This   number  may  be  restricted  or  enlarged  via  via
+  [10XSetUserPreference("HistoryMaxLines",  num);[110X  which  may  be  set  to  a  non
+  negative  number  [10Xnum[110X to store up to [10Xnum[110X input lines or to [9Xinfinity[109X to store
+  arbitrarily  many  lines.  An automatic storing and restoring of the command
+  line          history          can         be         configured         via
   [10XSetUserPreference("SaveAndRestoreHistory", true);[110X.[133X
   
   [33X[0;0YNote  that  these  functions are only available if your [5XGAP[105X is configured to
@@ -1239,8 +1240,8 @@
   [33X[0;0YTo  get  support  for  [5XGAP[105X  syntax  in  vim, create in your home directory a
   directory  [11X.vim[111X  with subdirectories [11X.vim/syntax[111X and [11X.vim/indent[111X (If you are
   not  using  Unix,  refer  to  the [10Xvim[110X documentation on where to place syntax
-  files).  Then  copy the file [11Xetc/gap.vim[111X to [11X.vim/syntax/gap.vim[111X and the file
-  [11Xetc/gap_indent.vim[111X to [11X.vim/indent/gap.vim[111X.[133X
+  files).  Then  copy  the file [11Xetc/vim/gap.vim[111X to [11X.vim/syntax/gap.vim[111X and the
+  file [11Xetc/vim/gap_indent.vim[111X to [11X.vim/indent/gap.vim[111X.[133X
   
   [33X[0;0YThen  edit  the  [11X.vimrc[111X  file  in  your  home directory. Add lines as in the
   following example:[133X

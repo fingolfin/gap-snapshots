@@ -5,8 +5,6 @@
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
-##  To be listed in testinstall.g
-##
 gap> START_TEST("ctblmoli.tst");
 gap> G:= AlternatingGroup( 5 );;
 gap> psi:= First( Irr( G ), x -> Degree( x ) = 3 );;
@@ -32,7 +30,7 @@ gap> Size( G );
 9720
 gap> MolienSeries( NaturalCharacter( G ) );
 ( 1 ) / ( (1-z^12)*(1-z^9)*(1-z^6)*(1-z^5)*(1-z^3)*(1-z) )
-gap> STOP_TEST( "ctblmoli.tst", 7850000);
+gap> STOP_TEST( "ctblmoli.tst", 1);
 
 #############################################################################
 ##

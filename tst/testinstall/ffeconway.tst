@@ -5,10 +5,8 @@
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
-##  This  file  tests  the large finite fields .
+##  This  file  tests  the large finite fields.
 ##
-##  To be listed in testinstall.g
-## 
 gap> START_TEST("ffeconway.tst");
 
 #
@@ -730,4 +728,4 @@ gap> SetInfoLevel(InfoPrimeInt,iPI);
 gap> SetInfoLevel(InfoFactor,iF);
 gap> if IsBound(InfoFactInt) then SetInfoLevel(InfoFactInt,iFI); fi;
 gap> SetInfoLevel(InfoWarning,iW);
-gap> STOP_TEST( "ffeconway.tst", 3110000);
+gap> STOP_TEST( "ffeconway.tst", 1);

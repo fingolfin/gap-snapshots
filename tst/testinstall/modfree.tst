@@ -5,8 +5,6 @@
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
-##  To be listed in testinstall.g
-##
 gap> START_TEST("modfree.tst");
 gap> u:= LeftModuleByGenerators( GF(3), [ [ Z(3), 0*Z(3) ] ] );
 <vector space over GF(3), with 1 generators>
@@ -188,7 +186,7 @@ gap> Coefficients( c, [ 1, 2, 3, 4 ] );
 [ 1, 2, 3, 4 ]
 gap> Basis( Integers^2 );
 CanonicalBasis( ( Integers^2 ) )
-gap> STOP_TEST( "modfree.tst", 590000);
+gap> STOP_TEST( "modfree.tst", 1);
 
 #############################################################################
 ##

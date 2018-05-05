@@ -13,7 +13,7 @@ MakeGAPDocDoc( GAPInfo.ManualDataChanges.pathtodoc,
                GAPInfo.ManualDataChanges.bookname,
                GAPInfo.ManualDataChanges.pathtoroot,
                "MathJax" );;
-               
+
 Exec ("mv -f manual.pdf manual-bw.pdf");
 
 SetGapDocLaTeXOptions("color", rec(Maintitlesize :=
@@ -29,8 +29,6 @@ MakeGAPDocDoc( GAPInfo.ManualDataChanges.pathtodoc,
 GAPDocManualLabFromSixFile( "changes", "manual.six" );;
 
 CopyHTMLStyleFiles(".");
-
-QUIT;
 
 #############################################################################
 ##

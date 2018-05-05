@@ -758,7 +758,7 @@ rec( random := 1000, reduced := true, tryPcgs := true )
 <h5>43.11-1 CopyStabChain</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CopyStabChain</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>This function returns a copy of the stabilizer chain <var class="Arg">S</var> that has no mutable object (list or record) in common with <var class="Arg">S</var>. The <code class="code">labels</code> components of the result are possibly shared by several levels, but superfluous labels are removed. (An entry in <code class="code">labels</code> is superfluous if it does not occur among the <code class="code">genlabels</code> or <code class="code">translabels</code> on any of the levels which share that <code class="code">labels</code> component.)</p>
+<p>This function returns a mutable copy of the stabilizer chain <var class="Arg">S</var> that has no mutable object (list or record) in common with <var class="Arg">S</var>. The <code class="code">labels</code> components of the result are possibly shared by several levels, but superfluous labels are removed. (An entry in <code class="code">labels</code> is superfluous if it does not occur among the <code class="code">genlabels</code> or <code class="code">translabels</code> on any of the levels which share that <code class="code">labels</code> component.)</p>
 
 <p>This is useful for stabiliser sub-chains that have been obtained as the (iterated) <code class="code">stabilizer</code> component of a bigger chain.</p>
 

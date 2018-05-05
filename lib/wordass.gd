@@ -219,7 +219,12 @@ DeclareRepresentation( "IsSyllableAssocWordRep", IsAssocWord, [] );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
+if IsHPCGAP then
+DeclareRepresentation( "IsLetterAssocWordRep", 
+                       IsAssocWord and IsAtomicPositionalObjectRep, [] );
+else
 DeclareRepresentation( "IsLetterAssocWordRep", IsAssocWord, [] );
+fi;
 
 #############################################################################
 ##
@@ -283,6 +288,38 @@ DeclareCategory( "IsLetterWordsFamily", IsAssocWordFamily );
 ##
 DeclareCategory( "IsBLetterWordsFamily", IsLetterWordsFamily );
 DeclareCategory( "IsWLetterWordsFamily", IsLetterWordsFamily );
+
+
+#############################################################################
+##
+#F  WordProductLetterRep( <w1>,<w2>,... ) . construct word from external repr.
+##
+##  <ManSection>
+##  <Func Name="WordProductLetterRep" Arg='<w1>,<w2>,...'/>
+##
+##  <Description>
+##  Given lists that are letter representations of words, this function
+##  calculates the product, maintaining that the result is freely reduced
+##  if the input is.
+##  </Description>
+##  </ManSection>
+##
+DeclareGlobalFunction( "WordProductLetterRep" );
+
+#############################################################################
+##
+#F  FreelyReducedLetterRepWord( <w> ) . free reduction
+##
+##  <ManSection>
+##  <Func Name="FreelyReducedLetterRepWord" Arg='<w1>,<w2>,...'/>
+##
+##  <Description>
+##  Given lists that is the  letter representation of a word, this function
+##  returns a freely reduced version.
+##  </Description>
+##  </ManSection>
+##
+DeclareGlobalFunction( "FreelyReducedLetterRepWord" );
 
 
 #############################################################################

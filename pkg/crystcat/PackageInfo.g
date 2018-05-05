@@ -9,11 +9,11 @@ PackageName := "CrystCat",
 
 Subtitle := "The crystallographic groups catalog",
 
-Version := "1.1.6",
+Version := "1.1.8",
 
-Date := "29/05/2012",
+Date := "09/02/2018",
 
-ArchiveURL := "http://www.math.uni-bielefeld.de/~gaehler/gap45/CrystCat/crystcat-1.1.6",
+ArchiveURL := "http://www.math.uni-bielefeld.de/~gaehler/gap45/CrystCat/crystcat-1.1.8",
 
 ArchiveFormats := ".tar.gz",
 
@@ -29,18 +29,18 @@ Persons := [
     WWWHome := "http://www.math.rwth-aachen.de/~Volkmar.Felsch/",
     #PostalAddress := "",           
     Place := "Aachen",
-    Institution := "Lehrstuhl D für Mathematik, RWTH Aachen"
+    Institution := "Lehrstuhl D fÃ¼r Mathematik, RWTH Aachen"
   ),
   rec(
-    LastName := "Gähler",
+    LastName := "GÃ¤hler",
     FirstNames := "Franz",
     IsAuthor := true,
     IsMaintainer := true,
     Email := "gaehler@math.uni-bielefeld.de",
-    WWWHome := "http://www.math.uni-bielefeld.de/~gaehler/",
+    WWWHome := "https://www.math.uni-bielefeld.de/~gaehler/",
     #PostalAddress := "",           
     Place := "Bielefeld",
-    Institution := "Mathematik, Universität Bielefeld"
+    Institution := "Mathematik, UniversitÃ¤t Bielefeld"
   )
 ],
 
@@ -50,8 +50,8 @@ CommunicatedBy := "Herbert Pahlings (Aachen)",
 
 AcceptDate := "02/2000",
 
-README_URL := "http://www.math.uni-bielefeld.de/~gaehler/gap45/CrystCat/README.crystcat",
-PackageInfoURL := "http://www.math.uni-bielefeld.de/~gaehler/gap45/CrystCat/PackageInfo.g",
+README_URL := "https://www.math.uni-bielefeld.de/~gaehler/gap45/CrystCat/README.crystcat",
+PackageInfoURL := "https://www.math.uni-bielefeld.de/~gaehler/gap45/CrystCat/PackageInfo.g",
 
 AbstractHTML := 
 "This package provides a catalog of crystallographic groups of \
@@ -63,7 +63,7 @@ computation with these groups are provided by the package \
 <span class=\"pkgname\">Cryst</span>, which must be installed as well.",
 
 PackageWWWHome := 
-  "http://www.math.uni-bielefeld.de/~gaehler/gap45/packages.php",
+  "https://www.math.uni-bielefeld.de/~gaehler/gap45/packages.php",
 
 PackageDoc  := rec(
   BookName  := "CrystCat",
@@ -84,7 +84,7 @@ Dependencies := rec(
 
 AvailabilityTest := ReturnTrue,
 
-#TestFile := "tst/testall.g",
+TestFile := "tst/testall.g",
 
 Keywords := [ "crystallographic groups", "space groups" ]
 

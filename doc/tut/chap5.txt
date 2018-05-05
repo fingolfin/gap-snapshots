@@ -31,8 +31,8 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xa8 := DerivedSubgroup( s8 );[127X[104X
-    [4X[28XGroup([ (1,2,3), (2,3,4), (2,4)(3,5), (2,6,4), (2,4)(5,7), [128X[104X
-    [4X[28X  (2,8,6,4)(3,5) ])[128X[104X
+    [4X[28XGroup([ (1,2,3), (2,4,3), (2,4,5), (2,5,6,3,4), (3,7,4), (2,6)[128X[104X
+    [4X[28X(4,7,8,5) ])[128X[104X
     [4X[25Xgap>[125X [27XSize( a8 ); IsAbelian( a8 ); IsPerfect( a8 );[127X[104X
     [4X[28X20160[128X[104X
     [4X[28Xfalse[128X[104X
@@ -98,12 +98,12 @@
   printing a group for us, because the group does not know which identifier(s)
   point  to  it,  in fact there can be several. In order to give a name to the
   group  itself  (rather  than  to  the  identifier), you can use the function
-  [2XSetName[102X  ([14XReference:  SetName[114X).  We  do  this  with  the name [10X2^3[110X here which
-  reflects the mathematical properties of the group. From now on, [5XGAP[105X will use
-  this  name when printing the group for us, but we still cannot use this name
-  to  specify  the group to [5XGAP[105X, because the name does not know to which group
-  it  was  assigned  (after  all,  you  could  assign the same name to several
-  groups). When talking to the computer, you must always use identifiers.[133X
+  [2XSetName[102X  ([14XReference: Name[114X). We do this with the name [10X2^3[110X here which reflects
+  the  mathematical  properties  of  the group. From now on, [5XGAP[105X will use this
+  name  when  printing  the group for us, but we still cannot use this name to
+  specify  the  group to [5XGAP[105X, because the name does not know to which group it
+  was  assigned (after all, you could assign the same name to several groups).
+  When talking to the computer, you must always use identifiers.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XSetName( elab, "<group of type 2^3>" ); elab;[127X[104X
@@ -324,7 +324,7 @@
     [4X[25Xgap>[125X [27Xcomposition := ophom * ophom2;;[127X[104X
     [4X[25Xgap>[125X [27Xstab := Stabilizer( op2, 2 );;[127X[104X
     [4X[25Xgap>[125X [27Xpreim := PreImages( composition, stab );[127X[104X
-    [4X[28XGroup([ (1,4,2), (3,6,7), (3,8,5,7,6), (1,4)(7,8) ])[128X[104X
+    [4X[28XGroup([ (1,2,4), (6,7,8), (3,6,8), (5,8,6), (1,2)(3,8) ])[128X[104X
   [4X[32X[104X
   
   [33X[0;0YAlternatively,  it  is  possible  to create action homomorphisms immediately
@@ -385,12 +385,10 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xcosets:=RightCosets(a8,norm);;[127X[104X
     [4X[25Xgap>[125X [27Xop:=Action(a8,cosets,OnRight);[127X[104X
-    [4X[28XGroup([ (1,2,3)(4,6,5)(7,8,9)(10,12,11)(13,14,15), [128X[104X
-    [4X[28X  (1,3,2)(4,9,13)(5,11,7)(6,15,10)(8,12,14), [128X[104X
-    [4X[28X  (1,13)(2,7)(3,10)(4,11)(5,15)(6,9), [128X[104X
-    [4X[28X  (1,8,13)(2,7,12)(3,9,5)(4,14,11)(6,10,15), [128X[104X
-    [4X[28X  (2,3)(4,14)(5,7)(8,13)(9,12)(10,15), [128X[104X
-    [4X[28X  (1,8)(2,3,11,6)(4,12,10,15)(5,7,14,9) ])[128X[104X
+    [4X[28XGroup([ (1,2,3)(4,6,5)(7,8,9)(10,12,11)(13,14,15), (1,2,3)(4,13,9)[128X[104X
+    [4X[28X(5,7,11)(6,10,15)(8,14,12), (1,11,6)(2,15,4)(3,9,5)(7,13,10)[128X[104X
+    [4X[28X(8,12,14), (1,10,12,3,13)(2,7,15,14,5)(4,6,8,9,11), (1,12,15)(2,10,5)[128X[104X
+    [4X[28X(3,11,8)(4,9,13)(6,14,7), (1,4,13,10)(2,15,14,3)(5,12,11,6)(7,9) ])[128X[104X
     [4X[25Xgap>[125X [27XNrMovedPoints(op);[127X[104X
     [4X[28X15[128X[104X
   [4X[32X[104X
@@ -460,12 +458,10 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XAction(a8,RightTransversal(a8,norm),OnRight);[127X[104X
-    [4X[28XGroup([ (1,2,3)(4,6,5)(7,8,9)(10,12,11)(13,14,15), [128X[104X
-    [4X[28X  (1,3,2)(4,9,13)(5,11,7)(6,15,10)(8,12,14), [128X[104X
-    [4X[28X  (1,13)(2,7)(3,10)(4,11)(5,15)(6,9), [128X[104X
-    [4X[28X  (1,8,13)(2,7,12)(3,9,5)(4,14,11)(6,10,15), [128X[104X
-    [4X[28X  (2,3)(4,14)(5,7)(8,13)(9,12)(10,15), [128X[104X
-    [4X[28X  (1,8)(2,3,11,6)(4,12,10,15)(5,7,14,9) ])[128X[104X
+    [4X[28XGroup([ (1,2,3)(4,6,5)(7,8,9)(10,12,11)(13,14,15), (1,2,3)(4,13,9)[128X[104X
+    [4X[28X(5,7,11)(6,10,15)(8,14,12), (1,11,6)(2,15,4)(3,9,5)(7,13,10)[128X[104X
+    [4X[28X(8,12,14), (1,10,12,3,13)(2,7,15,14,5)(4,6,8,9,11), (1,12,15)(2,10,5)[128X[104X
+    [4X[28X(3,11,8)(4,9,13)(6,14,7), (1,4,13,10)(2,15,14,3)(5,12,11,6)(7,9) ])[128X[104X
   [4X[32X[104X
   
   [33X[0;0Y[13XSummary.[113X  In  this  section  we  have  learned how groups can operate on [5XGAP[105X
@@ -612,8 +608,9 @@
   subgroup.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xblocks := Blocks( a8_56, [1..56], [1,13] );;[127X[104X
-    [4X[25Xgap>[125X [27Xu28_56 := Stabilizer( a8_56, [1,13], OnSets );;[127X[104X
+    [4X[25Xgap>[125X [27Xseed:=First(AllBlocks(a8_56),x->Length(x)=2);;[127X[104X
+    [4X[25Xgap>[125X [27Xblocks := Blocks( a8_56, [1..56], seed);;[127X[104X
+    [4X[25Xgap>[125X [27Xu28_56 := Stabilizer( a8_56, seed, OnSets );;[127X[104X
     [4X[25Xgap>[125X [27Xu28 := PreImages( h56, u28_56 );;[127X[104X
     [4X[25Xgap>[125X [27XIndex( a8, u28 );[127X[104X
     [4X[28X28[128X[104X
@@ -730,9 +727,9 @@
     [4X[25Xgap>[125X [27Xblocks := Blocks( a8, orb );; Length( blocks );[127X[104X
     [4X[28X15[128X[104X
     [4X[25Xgap>[125X [27Xblocks[1];[127X[104X
-    [4X[28X[ (1,2)(3,4)(5,6)(7,8), (1,3)(2,4)(5,7)(6,8), (1,4)(2,3)(5,8)(6,7), [128X[104X
-    [4X[28X  (1,5)(2,6)(3,7)(4,8), (1,6)(2,5)(3,8)(4,7), (1,7)(2,8)(3,5)(4,6), [128X[104X
-    [4X[28X  (1,8)(2,7)(3,6)(4,5) ][128X[104X
+    [4X[28X[ (1,2)(3,4)(5,6)(7,8), (1,3)(2,4)(5,8)(6,7), (1,4)(2,3)(5,7)(6,8), [128X[104X
+    [4X[28X  (1,5)(2,6)(3,8)(4,7), (1,6)(2,5)(3,7)(4,8), (1,7)(2,8)(3,6)(4,5), [128X[104X
+    [4X[28X  (1,8)(2,7)(3,5)(4,6) ][128X[104X
   [4X[32X[104X
   
   [33X[0;0YTo  find  the  subgroup  of  index 15 we again use closure. Now we must be a
@@ -1029,7 +1026,7 @@
     [4X[28XGroup([ (1,4,2,3), (1,5,4)(2,6,3), (1,2)(3,4), (3,4)(5,6) ])[128X[104X
     [4X[25Xgap>[125X [27XIsomorphismGroups( niceaut, SymmetricGroup( 4 ) );[127X[104X
     [4X[28X[ (1,4,2,3), (1,5,4)(2,6,3), (1,2)(3,4), (3,4)(5,6) ] -> [128X[104X
-    [4X[28X[ (1,4,3,2), (1,3,2), (1,3)(2,4), (1,2)(3,4) ][128X[104X
+    [4X[28X[ (1,4,3,2), (1,4,2), (1,3)(2,4), (1,4)(2,3) ][128X[104X
   [4X[32X[104X
   
   [33X[0;0YThe  range  of  a  nice  monomorphism  is in most cases a permutation group,

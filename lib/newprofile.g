@@ -31,27 +31,26 @@
 ##      <Ref Func="CoverageLineByLine"/>. Using this ignores all other
 ##      options.</Item>
 ##
-##  <Mark>justStat</Mark>
-##      <Item> Boolean (defaults to false). This switches profiling to only
-##      consider entire statements, rather than parts of statements.
-##      In general this will provide a courser profile, but produce smaller
-##      files.</Item>
-##
 ##  <Mark>wallTime</Mark>
 ##      <Item> Boolean (defaults to true). Sets if time should be measured
-##      using wall-clock time or CPU time.
-##      (measuring wall-clock time is lower overhead).
+##             using wall-clock time (true) or CPU time (false).
+##             (measuring CPU-time has a higher overhead).
+##      </Item>
+##
+##  <Mark>recordMem</Mark>
+##      <Item> Boolean (defaults to false). Instead of recording the
+##             CPU time taken by statements, record the total size of all
+##             new objects created by each line.
 ##      </Item>
 ##
 ##  <Mark>resolution</Mark>
-##      <Item> Integer (defaults to 0). How frequently (in nanoseconds) 
-##      to check which line is being executed. Setting this to a
-##      non-zero value improves performance and produces smaller
-##      traces, at the cost of accuracy. Setting this to a non-zero
-##      value will also make the number of executions per
-##      statement become inaccurance. However,i profiling
-##      will still accurately record which statements
-##      are executed at all.</Item>
+##      <Item> Integer (defaults to 0). By default profiling will record a trace
+##             of all executed code. When <A>resolution</A> non-zero, GAP
+##             instead samples which piece of code is being executed every
+##             <A>resolution</A> nanoseconds. Increasing this
+##             improves performance and produces smaller traces,
+##             at the cost of accuracy. GAP will still accurately record
+##             which statements are executed at least once.</Item>
 ##  </List>
 ##  </Description>
 ##  </ManSection>
@@ -64,8 +63,8 @@ BIND_GLOBAL("ProfileLineByLine",function(arg)
     fi;
 
     optRec := rec(coverage := false,
-                  justStat := false,
-                  wallTime := true, 
+                  wallTime := true,
+                  recordMem := false,
                   resolution := 0);
     if Length(arg) = 2 then
       if not(IsRecord(arg[2])) then
@@ -84,8 +83,8 @@ BIND_GLOBAL("ProfileLineByLine",function(arg)
        arg[1]{[Length(arg[1])-2..Length(arg[1])]} <> ".gz" then
       Info(InfoWarning, 1, "Profile filenames must end in .gz to enable compression");
     fi;
-    return ACTIVATE_PROFILING(arg[1], optRec.coverage, optRec.justStat,
-                                      optRec.wallTime, optRec.resolution);
+    return ACTIVATE_PROFILING(arg[1], optRec.coverage, optRec.wallTime,
+                                      optRec.recordMem, optRec.resolution);
 end);
 
 ##  <#GAPDoc Label="IsLineByLineProfileActive">

@@ -684,7 +684,7 @@
 ## gap&gt; g:=SCAutomorphismGroupInternal(c);
 ## PrimitiveGroup(3,2) = S(3)
 ## gap&gt; List(g);
-## [ (), (1,3,2), (1,2,3), (2,3), (1,3), (1,2) ]
+## [ (), (1,2,3), (1,3,2), (2,3), (1,2), (1,3) ]
 ## gap&gt; StructureDescription(g);
 ## "S3"
 ## </Example>

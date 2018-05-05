@@ -7,75 +7,24 @@
 *Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 *Y  Copyright (C) 2002 The GAP Group
 */
-#include        "system.h"              /* Ints, UInts                     */
 
+#include <src/objpcgel.h>
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
-
-#include        "gvars.h"               /* global variables                */
-#include        "gap.h"                 /* error handling, initialisation  */
-#include        "tls.h"                 /* thread-local storage            */
-
-#include        "calls.h"               /* generic call mechanism          */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "plist.h"               /* plain lists                     */
-#include        "string.h"              /* strings                         */
-
-#include        "ariths.h"              /* basic arithmetic                */
-#include        "bool.h"                /* booleans                        */
-
-#include        "code.h"                /* coder                           */
-#include        "tls.h"                 /* thread-local storage            */
-#include        "objfgelm.h"            /* objects of free groups          */
-#include        "objscoll.h"            /* single collector                */
-
-#include        "objpcgel.h"            /* objects of polycyclic groups    */
-
-#include	"thread.h"		/* threads			   */
+#include <src/bool.h>
+#include <src/gap.h>
+#include <src/gvars.h>
+#include <src/lists.h>
+#include <src/objscoll.h>
+#include <src/plist.h>
 
 
 /****************************************************************************
 **
-
-*F * * * * * * * * * * * * * * *  boxed objects * * * * * * * * * * * * * * *
-*/
-
-/****************************************************************************
-**
-
-*F  FuncLessBoxedObj( <self>, <left>, <right> )
-*/
-Obj FuncLessBoxedObj ( Obj self, Obj left, Obj right )
-{
-    return LT( ADDR_OBJ(left)[1], ADDR_OBJ(right)[1] ) ? False : True;
-}
-
-
-/****************************************************************************
-**
-*F  FuncEqualBoxedObj( <self>, <left>, <right> )
-*/
-Obj FuncEqualBoxedObj ( Obj self, Obj left, Obj right )
-{
-    return EQ( ADDR_OBJ(left)[1], ADDR_OBJ(right)[1] ) ? False : True;
-}
-
-
-/****************************************************************************
-**
-
 *F * * * * * * * * * * * * * * * pc word aspect * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  FuncNBitsPcWord_Comm( <self>, <left>, <right> )
 */
 Obj FuncNBitsPcWord_Comm ( Obj self, Obj left, Obj right )
@@ -144,13 +93,11 @@ Obj FuncNBitsPcWord_Quotient ( Obj self, Obj left, Obj right )
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * * free word aspect * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  Func8Bits_DepthOfPcElement( <self>, <pcgs>, <w> )
 */
 Obj Func8Bits_DepthOfPcElement ( Obj self, Obj pcgs, Obj w )
@@ -251,7 +198,6 @@ Obj Func8Bits_ExponentsOfPcElement ( Obj self, Obj pcgs, Obj w)
     UInt        expm;           /* signed exponent mask                    */
     UInt        exps;           /* sign exponent mask                      */
     UInt        ebits;          /* number of exponent bits                 */
- /* UInt        npos;           / the wanted generator number             */
     UInt        num;            /* number of syllables in <w>              */
     UInt1 *     ptr;            /* pointer to the syllables of <w>         */
     UInt        i,j;            /* loop                                    */
@@ -304,7 +250,6 @@ Obj Func8Bits_ExponentsOfPcElement ( Obj self, Obj pcgs, Obj w)
 
 /****************************************************************************
 **
-
 *F  Func16Bits_DepthOfPcElement( <self>, <pcgs>, <w> )
 */
 Obj Func16Bits_DepthOfPcElement ( Obj self, Obj pcgs, Obj w )
@@ -405,7 +350,6 @@ Obj Func16Bits_ExponentsOfPcElement ( Obj self, Obj pcgs, Obj w)
     UInt        expm;           /* signed exponent mask                    */
     UInt        exps;           /* sign exponent mask                      */
     UInt        ebits;          /* number of exponent bits                 */
- /* UInt        npos;           / the wanted generator number             */
     UInt        num;            /* number of syllables in <w>              */
     UInt2 *     ptr;            /* pointer to the syllables of <w>         */
     UInt        i,j;            /* loop                                    */
@@ -558,7 +502,6 @@ Obj Func32Bits_ExponentsOfPcElement ( Obj self, Obj pcgs, Obj w)
     UInt        expm;           /* signed exponent mask                    */
     UInt        exps;           /* sign exponent mask                      */
     UInt        ebits;          /* number of exponent bits                 */
-/*  UInt        npos;           / the wanted generator number             */
     UInt        num;            /* number of syllables in <w>              */
     UInt4 *     ptr;            /* pointer to the syllables of <w>         */
     UInt        i,j;            /* loop                                    */
@@ -611,87 +554,41 @@ Obj Func32Bits_ExponentsOfPcElement ( Obj self, Obj pcgs, Obj w)
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
-
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    { "LessBoxedObj", 2, "lobj, lobj",
-      FuncLessBoxedObj, "src/objpcgel.c:LessBoxedObj" },
-
-    { "EqualBoxedObj", 2, "lobj, lobj",
-      FuncEqualBoxedObj, "src/objpcgel.c:EqualBoxedObj" },
-
-    { "NBitsPcWord_Comm", 2, "n_bits_pcword, n_bits_pcword",
-      FuncNBitsPcWord_Comm, "src/objpcgel.c:NBitsPcWord_Comm" },
-
-    { "NBitsPcWord_Conjugate", 2, "n_bits_pcword, n_bits_pcword",
-      FuncNBitsPcWord_Conjugate, "src/objpcgel.c:NBitsPcWord_Conjugate" },
-
-    { "NBitsPcWord_LeftQuotient", 2, "n_bits_pcword, n_bits_pcword",
-      FuncNBitsPcWord_LeftQuotient, "src/objpcgel.c:NBitsPcWord_LeftQuotient" },
-
-    { "NBitsPcWord_PowerSmallInt", 2, "n_bits_pcword, small_integer",
-      FuncNBitsPcWord_PowerSmallInt, "src/objpcgel.c:NBitsPcWord_PowerSmallInt" },
-
-    { "NBitsPcWord_Product", 2, "n_bits_pcword, n_bits_pcword",
-      FuncNBitsPcWord_Product, "src/objpcgel.c:NBitsPcWord_Product" },
-
-    { "NBitsPcWord_Quotient", 2, "n_bits_pcword, n_bits_pcword",
-      FuncNBitsPcWord_Quotient, "src/objpcgel.c:NBitsPcWord_Quotient" },
-
-    { "8Bits_DepthOfPcElement", 2, "8_bits_pcgs, 8_bits_pcword",
-      Func8Bits_DepthOfPcElement, "src/objpcgel.c:8Bits_DepthOfPcElement" },
-
-    { "8Bits_ExponentOfPcElement", 3, "8_bits_pcgs, 8_bits_pcword, int",
-      Func8Bits_ExponentOfPcElement, "src/objpcgel.c:8Bits_ExponentOfPcElement" },
-
-    { "8Bits_LeadingExponentOfPcElement", 2, "8_bits_pcgs, 8_bits_word",
-      Func8Bits_LeadingExponentOfPcElement, "src/objpcgel.c:8Bits_LeadingExponentOfPcElement" },
-
-    { "8Bits_ExponentsOfPcElement", 2, "8_bits_pcgs, 8_bits_pcword",
-      Func8Bits_ExponentsOfPcElement, "src/objpcgel.c:8Bits_ExponentsOfPcElement" },
-
-    { "16Bits_DepthOfPcElement", 2, "16_bits_pcgs, 16_bits_pcword",
-      Func16Bits_DepthOfPcElement, "src/objpcgel.c:16Bits_DepthOfPcElement" },
-
-    { "16Bits_ExponentOfPcElement", 3, "16_bits_pcgs, 16_bits_pcword, int",
-      Func16Bits_ExponentOfPcElement, "src/objpcgel.c:16Bits_ExponentOfPcElement" },
-
-    { "16Bits_LeadingExponentOfPcElement", 2, "16_bits_pcgs, 16_bits_word",
-      Func16Bits_LeadingExponentOfPcElement, "src/objpcgel.c:16Bits_LeadingExponentOfPcElement" },
-
-    { "16Bits_ExponentsOfPcElement", 2, "16_bits_pcgs, 16_bits_pcword",
-      Func16Bits_ExponentsOfPcElement, "src/objpcgel.c:16Bits_ExponentsOfPcElement" },
-
-    { "32Bits_DepthOfPcElement", 2, "32_bits_pcgs, 32_bits_pcword",
-      Func32Bits_DepthOfPcElement, "src/objpcgel.c:32Bits_DepthOfPcElement" },
-
-    { "32Bits_ExponentOfPcElement", 3, "32_bits_pcgs, 32_bits_pcword, int",
-      Func32Bits_ExponentOfPcElement, "src/objpcgel.c:32Bits_ExponentOfPcElement" },
-
-    { "32Bits_LeadingExponentOfPcElement", 2, "32_bits_pcgs, 32_bits_word",
-      Func32Bits_LeadingExponentOfPcElement, "src/objpcgel.c:32Bits_LeadingExponentOfPcElement" },
-
-    { "32Bits_ExponentsOfPcElement", 2, "32_bits_pcgs, 32_bits_pcword",
-      Func32Bits_ExponentsOfPcElement, "src/objpcgel.c:32Bits_ExponentsOfPcElement" },
-
-    { 0 }
+    GVAR_FUNC(NBitsPcWord_Comm, 2, "n_bits_pcword, n_bits_pcword"),
+    GVAR_FUNC(NBitsPcWord_Conjugate, 2, "n_bits_pcword, n_bits_pcword"),
+    GVAR_FUNC(NBitsPcWord_LeftQuotient, 2, "n_bits_pcword, n_bits_pcword"),
+    GVAR_FUNC(NBitsPcWord_PowerSmallInt, 2, "n_bits_pcword, small_integer"),
+    GVAR_FUNC(NBitsPcWord_Product, 2, "n_bits_pcword, n_bits_pcword"),
+    GVAR_FUNC(NBitsPcWord_Quotient, 2, "n_bits_pcword, n_bits_pcword"),
+    GVAR_FUNC(8Bits_DepthOfPcElement, 2, "8_bits_pcgs, 8_bits_pcword"),
+    GVAR_FUNC(8Bits_ExponentOfPcElement, 3, "8_bits_pcgs, 8_bits_pcword, int"),
+    GVAR_FUNC(8Bits_LeadingExponentOfPcElement, 2, "8_bits_pcgs, 8_bits_word"),
+    GVAR_FUNC(8Bits_ExponentsOfPcElement, 2, "8_bits_pcgs, 8_bits_pcword"),
+    GVAR_FUNC(16Bits_DepthOfPcElement, 2, "16_bits_pcgs, 16_bits_pcword"),
+    GVAR_FUNC(16Bits_ExponentOfPcElement, 3, "16_bits_pcgs, 16_bits_pcword, int"),
+    GVAR_FUNC(16Bits_LeadingExponentOfPcElement, 2, "16_bits_pcgs, 16_bits_word"),
+    GVAR_FUNC(16Bits_ExponentsOfPcElement, 2, "16_bits_pcgs, 16_bits_pcword"),
+    GVAR_FUNC(32Bits_DepthOfPcElement, 2, "32_bits_pcgs, 32_bits_pcword"),
+    GVAR_FUNC(32Bits_ExponentOfPcElement, 3, "32_bits_pcgs, 32_bits_pcword, int"),
+    GVAR_FUNC(32Bits_LeadingExponentOfPcElement, 2, "32_bits_pcgs, 32_bits_word"),
+    GVAR_FUNC(32Bits_ExponentsOfPcElement, 2, "32_bits_pcgs, 32_bits_pcword"),
+    { 0, 0, 0, 0, 0 }
 
 };
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
@@ -713,14 +610,10 @@ static Int InitLibrary (
     StructInitInfo *    module )
 {
     /* export position numbers 'PCWP_SOMETHING'                            */
-    AssGVar( GVarName( "PCWP_FIRST_ENTRY" ),
-             INTOBJ_INT(PCWP_FIRST_ENTRY) );
-    AssGVar( GVarName( "PCWP_NAMES" ),
-             INTOBJ_INT(PCWP_NAMES) );
-    AssGVar( GVarName( "PCWP_COLLECTOR" ),
-             INTOBJ_INT(PCWP_COLLECTOR) );
-    AssGVar( GVarName( "PCWP_FIRST_FREE" ),
-             INTOBJ_INT(PCWP_FIRST_FREE) );
+    ExportAsConstantGVar(PCWP_FIRST_ENTRY);
+    ExportAsConstantGVar(PCWP_NAMES);
+    ExportAsConstantGVar(PCWP_COLLECTOR);
+    ExportAsConstantGVar(PCWP_FIRST_FREE);
 
     /* init filters and functions                                          */
     InitGVarFuncsFromTable( GVarFuncs );
@@ -735,28 +628,15 @@ static Int InitLibrary (
 *F  InitInfoPcElements()  . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "objpcgel",                         /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "objpcgel",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoPcElements ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  objpcgel.c  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

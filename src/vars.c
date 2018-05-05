@@ -16,50 +16,35 @@
 **  locals), higher variables (i.e., local variables of enclosing functions),
 **  global variables, list elements, and record elements.
 */
-#include        "system.h"              /* system dependent part           */
 
+#include <src/vars.h>
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "ariths.h"              /* equality */
-#include        "scanner.h"             /* scanner                         */
+#include <src/bool.h>
+#include <src/calls.h>
+#include <src/code.h>
+#include <src/exprs.h>
+#include <src/gap.h>
+#include <src/gaputils.h>
+#include <src/gvars.h>
+#include <src/hookintrprtr.h>
+#include <src/io.h>
+#include <src/lists.h>
+#include <src/plist.h>
+#include <src/precord.h>
+#include <src/records.h>
+#include <src/saveload.h>
+#include <src/stats.h>
+#include <src/stringobj.h>
 
-#include        "gap.h"                 /* error handling, initialisation  */
+#ifdef HPCGAP
+#include <src/hpc/aobjects.h>
+#include <src/hpc/guards.h>
+#endif
 
-#include        "gvars.h"               /* global variables                */
-
-#include        "calls.h"               /* generic call mechanism          */
-
-#include        "records.h"             /* generic records                 */
-#include        "lists.h"               /* generic lists                   */
-
-#include        "bool.h"                /* booleans                        */
-
-#include        "precord.h"             /* plain records                   */
-
-#include        "plist.h"               /* plain lists                     */
-#include        "string.h"              /* strings                         */
-
-#include        "code.h"                /* coder                           */
-
-#include        "exprs.h"               /* expressions                     */
-#include        "stats.h"               /* statements                      */
-
-#include        "tls.h"                 /* thread-local storage            */
-
-#include        "vars.h"                /* variables                       */
-
-
-#include        "aobjects.h"            /* atomic objects                  */
-#include        "saveload.h"            /* saving and loading              */
-
-#include	    "thread.h"		        /* threads                         */
-#include        "profile.h"             /* installing methods              */
-
+#include <stdio.h>
 
 /****************************************************************************
 **
-
 *V  CurrLVars   . . . . . . . . . . . . . . . . . . . . . local variables bag
 **
 **  'CurrLVars'  is the bag containing the  values  of the local variables of
@@ -69,7 +54,7 @@
 **  'CHANGED_BAG' for  each of such change.  Instead we wait until  a garbage
 **  collection begins  and then  call  'CHANGED_BAG'  in  'BeginCollectBags'.
 */
-Bag CurrLVars;
+/* TL: Bag CurrLVars; */
 
 
 /****************************************************************************
@@ -81,25 +66,24 @@ Bag CurrLVars;
 **  have to check for the bottom, slowing it down.
 **
 */
-Bag BottomLVars;
+/* TL: Bag BottomLVars; */
 
 
 /****************************************************************************
 **
 *V  PtrLVars  . . . . . . . . . . . . . . . .  pointer to local variables bag
 **
-**  'PtrLVars' is a pointer to the 'TLS(CurrLVars)' bag.  This  makes it faster to
+**  'PtrLVars' is a pointer to the 'STATE(CurrLVars)' bag.  This  makes it faster to
 **  access local variables.
 **
 **  Since   a   garbage collection may  move   this  bag  around, the pointer
 **  'PtrLVars' must be recalculated afterwards in 'VarsAfterCollectBags'.
 */
-Obj * PtrLVars;
+/* TL: Obj * PtrLVars; */
 
 
 /****************************************************************************
 **
-
 *F  ObjLVar(<lvar>) . . . . . . . . . . . . . . . . value of a local variable
 **
 **  'ObjLVar' returns the value of the local variable <lvar>.
@@ -115,6 +99,27 @@ Obj             ObjLVar (
             "you can 'return;' after assigning a value" );
     }
     return val;
+}
+
+Bag NewLVarsBag(UInt slots) {
+  Bag result;
+  if (slots < ARRAY_SIZE(STATE(LVarsPool))) {
+    result = STATE(LVarsPool)[slots];
+    if (result) {
+      STATE(LVarsPool)[slots] = CONST_ADDR_OBJ(result)[0];
+      return result;
+    }
+  }
+  return NewBag(T_LVARS, sizeof(Obj) * ( 3 + slots ) );
+}
+
+void FreeLVarsBag(Bag bag) {
+  UInt slots = SIZE_BAG(bag) / sizeof(Obj) - 3;
+  if (slots < ARRAY_SIZE(STATE(LVarsPool))) {
+    memset(PTR_BAG(bag), 0, SIZE_BAG(bag));
+    ADDR_OBJ(bag)[0] = STATE(LVarsPool)[slots];
+    STATE(LVarsPool)[slots] = bag;
+  }
 }
 
 
@@ -139,254 +144,6 @@ UInt            ExecAssLVar (
     return 0;
 }
 
-
-
-/****************************************************************************
-**
-*F  ExecAssLVar01(<stat>) . . . . . . . . assign to first      local variable
-*F  ExecAssLVar02(<stat>) . . . . . . . . assign to second     local variable
-*F  ExecAssLVar03(<stat>) . . . . . . . . assign to third      local variable
-*F  ExecAssLVar04(<stat>) . . . . . . . . assign to fourth     local variable
-*F  ExecAssLVar05(<stat>) . . . . . . . . assign to fifth      local variable
-*F  ExecAssLVar06(<stat>) . . . . . . . . assign to sixth      local variable
-*F  ExecAssLVar07(<stat>) . . . . . . . . assign to seventh    local variable
-*F  ExecAssLVar08(<stat>) . . . . . . . . assign to eigth      local variable
-*F  ExecAssLVar09(<stat>) . . . . . . . . assign to ninth      local variable
-*F  ExecAssLVar10(<stat>) . . . . . . . . assign to tenth      local variable
-*F  ExecAssLVar11(<stat>) . . . . . . . . assign to eleventh   local variable
-*F  ExecAssLVar12(<stat>) . . . . . . . . assign to twelveth   local variable
-*F  ExecAssLVar13(<stat>) . . . . . . . . assign to thirteenth local variable
-*F  ExecAssLVar14(<stat>) . . . . . . . . assign to fourteenth local variable
-*F  ExecAssLVar15(<stat>) . . . . . . . . assign to fifteenth  local variable
-*F  ExecAssLVar16(<stat>) . . . . . . . . assign to sixteenth  local variable
-**
-**  'ExecAssLVar<i>' executes  the local variable assignment statement <stat>
-**  to the local variable <i>.
-*/
-UInt            ExecAssLVar01 (
-    Stat                stat )
-{
-    Obj                 rhs;            /* value of right hand side        */
-
-    /* assign the right hand side to the local variable                    */
-    SET_BRK_CURR_STAT( stat );
-    rhs = EVAL_EXPR( ADDR_STAT(stat)[1] );
-    ASS_LVAR( 1, rhs );
-
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
-UInt            ExecAssLVar02 (
-    Stat                stat )
-{
-    Obj                 rhs;            /* value of right hand side        */
-
-    /* assign the right hand side to the local variable                    */
-    SET_BRK_CURR_STAT( stat );
-    rhs = EVAL_EXPR( ADDR_STAT(stat)[1] );
-    ASS_LVAR( 2, rhs );
-
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
-UInt            ExecAssLVar03 (
-    Stat                stat )
-{
-    Obj                 rhs;            /* value of right hand side        */
-
-    /* assign the right hand side to the local variable                    */
-    SET_BRK_CURR_STAT( stat );
-    rhs = EVAL_EXPR( ADDR_STAT(stat)[1] );
-    ASS_LVAR( 3, rhs );
-
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
-UInt            ExecAssLVar04 (
-    Stat                stat )
-{
-    Obj                 rhs;            /* value of right hand side        */
-
-    /* assign the right hand side to the local variable                    */
-    SET_BRK_CURR_STAT( stat );
-    rhs = EVAL_EXPR( ADDR_STAT(stat)[1] );
-    ASS_LVAR( 4, rhs );
-
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
-UInt            ExecAssLVar05 (
-    Stat                stat )
-{
-    Obj                 rhs;            /* value of right hand side        */
-
-    /* assign the right hand side to the local variable                    */
-    SET_BRK_CURR_STAT( stat );
-    rhs = EVAL_EXPR( ADDR_STAT(stat)[1] );
-    ASS_LVAR( 5, rhs );
-
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
-UInt            ExecAssLVar06 (
-    Stat                stat )
-{
-    Obj                 rhs;            /* value of right hand side        */
-
-    /* assign the right hand side to the local variable                    */
-    SET_BRK_CURR_STAT( stat );
-    rhs = EVAL_EXPR( ADDR_STAT(stat)[1] );
-    ASS_LVAR( 6, rhs );
-
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
-UInt            ExecAssLVar07 (
-    Stat                stat )
-{
-    Obj                 rhs;            /* value of right hand side        */
-
-    /* assign the right hand side to the local variable                    */
-    SET_BRK_CURR_STAT( stat );
-    rhs = EVAL_EXPR( ADDR_STAT(stat)[1] );
-    ASS_LVAR( 7, rhs );
-
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
-UInt            ExecAssLVar08 (
-    Stat                stat )
-{
-    Obj                 rhs;            /* value of right hand side        */
-
-    /* assign the right hand side to the local variable                    */
-    SET_BRK_CURR_STAT( stat );
-    rhs = EVAL_EXPR( ADDR_STAT(stat)[1] );
-    ASS_LVAR( 8, rhs );
-
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
-UInt            ExecAssLVar09 (
-    Stat                stat )
-{
-    Obj                 rhs;            /* value of right hand side        */
-
-    /* assign the right hand side to the local variable                    */
-    SET_BRK_CURR_STAT( stat );
-    rhs = EVAL_EXPR( ADDR_STAT(stat)[1] );
-    ASS_LVAR( 9, rhs );
-
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
-UInt            ExecAssLVar10 (
-    Stat                stat )
-{
-    Obj                 rhs;            /* value of right hand side        */
-
-    /* assign the right hand side to the local variable                    */
-    SET_BRK_CURR_STAT( stat );
-    rhs = EVAL_EXPR( ADDR_STAT(stat)[1] );
-    ASS_LVAR( 10, rhs );
-
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
-UInt            ExecAssLVar11 (
-    Stat                stat )
-{
-    Obj                 rhs;            /* value of right hand side        */
-
-    /* assign the right hand side to the local variable                    */
-    SET_BRK_CURR_STAT( stat );
-    rhs = EVAL_EXPR( ADDR_STAT(stat)[1] );
-    ASS_LVAR( 11, rhs );
-
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
-UInt            ExecAssLVar12 (
-    Stat                stat )
-{
-    Obj                 rhs;            /* value of right hand side        */
-
-    /* assign the right hand side to the local variable                    */
-    SET_BRK_CURR_STAT( stat );
-    rhs = EVAL_EXPR( ADDR_STAT(stat)[1] );
-    ASS_LVAR( 12, rhs );
-
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
-UInt            ExecAssLVar13 (
-    Stat                stat )
-{
-    Obj                 rhs;            /* value of right hand side        */
-
-    /* assign the right hand side to the local variable                    */
-    SET_BRK_CURR_STAT( stat );
-    rhs = EVAL_EXPR( ADDR_STAT(stat)[1] );
-    ASS_LVAR( 13, rhs );
-
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
-UInt            ExecAssLVar14 (
-    Stat                stat )
-{
-    Obj                 rhs;            /* value of right hand side        */
-
-    /* assign the right hand side to the local variable                    */
-    SET_BRK_CURR_STAT( stat );
-    rhs = EVAL_EXPR( ADDR_STAT(stat)[1] );
-    ASS_LVAR( 14, rhs );
-
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
-UInt            ExecAssLVar15 (
-    Stat                stat )
-{
-    Obj                 rhs;            /* value of right hand side        */
-
-    /* assign the right hand side to the local variable                    */
-    SET_BRK_CURR_STAT( stat );
-    rhs = EVAL_EXPR( ADDR_STAT(stat)[1] );
-    ASS_LVAR( 15, rhs );
-
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
-UInt            ExecAssLVar16 (
-    Stat                stat )
-{
-    Obj                 rhs;            /* value of right hand side        */
-
-    /* assign the right hand side to the local variable                    */
-    SET_BRK_CURR_STAT( stat );
-    rhs = EVAL_EXPR( ADDR_STAT(stat)[1] );
-    ASS_LVAR( 16, rhs );
-
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
 UInt            ExecUnbLVar (
     Stat                stat )
 {
@@ -398,354 +155,6 @@ UInt            ExecUnbLVar (
 }
 
 
-/****************************************************************************
-**
-*F  EvalRefLVar(<lvar>) . . . . . . . . .  value of            local variable
-*F  EvalRefLVar01(<lvar>) . . . . . . . .  value of first      local variable
-*F  EvalRefLVar02(<lvar>) . . . . . . . .  value of second     local variable
-*F  EvalRefLVar03(<lvar>) . . . . . . . .  value of third      local variable
-*F  EvalRefLVar04(<lvar>) . . . . . . . .  value of fourth     local variable
-*F  EvalRefLVar05(<lvar>) . . . . . . . .  value of fifth      local variable
-*F  EvalRefLVar06(<lvar>) . . . . . . . .  value of sixth      local variable
-*F  EvalRefLVar07(<lvar>) . . . . . . . .  value of seventh    local variable
-*F  EvalRefLVar08(<lvar>) . . . . . . . .  value of eigth      local variable
-*F  EvalRefLVar09(<lvar>) . . . . . . . .  value of ninth      local variable
-*F  EvalRefLVar10(<lvar>) . . . . . . . .  value of tenth      local variable
-*F  EvalRefLVar11(<lvar>) . . . . . . . .  value of eleventh   local variable
-*F  EvalRefLVar12(<lvar>) . . . . . . . .  value of twelth     local variable
-*F  EvalRefLVar13(<lvar>) . . . . . . . .  value of thirteenth local variable
-*F  EvalRefLVar14(<lvar>) . . . . . . . .  value of fourteenth local variable
-*F  EvalRefLVar15(<lvar>) . . . . . . . .  value of fifteenth  local variable
-*F  EvalRefLVar16(<lvar>) . . . . . . . .  value of sixteenth  local variable
-**
-**  'EvalRefLVar' evaluates the local variable reference expression <expr> to
-**  the local variable that is referenced in <expr>
-**
-**  'EvalRefLVar<i>' evaluates the local variable reference expression <expr>
-**  to the local variable <i>.
-*/
-Obj             EvalRefLVar (
-    Expr                expr )
-{
-    Obj                 val;            /* value, result                   */
-
-    /* get and check the value of the local variable                       */
-    if ( (val = OBJ_LVAR( (UInt)(ADDR_EXPR(expr)[0]) )) == 0 ) {
-        while ( (val = OBJ_LVAR( (UInt)(ADDR_EXPR(expr)[0]) )) == 0 ) {
-            ErrorReturnVoid(
-                "Variable: '%s' must have an assigned value",
-                (Int)NAME_LVAR( (UInt)(ADDR_EXPR(expr)[0]) ), 0L,
-                "you can 'return;' after assigning a value" );
-        }
-    }
-
-    /* return the value                                                    */
-    return val;
-}
-
-Obj             EvalRefLVar01 (
-    Expr                expr )
-{
-    Obj                 val;            /* value, result                   */
-
-    /* get and check the value of the local variable                       */
-    if ( (val = OBJ_LVAR( 1 )) == 0 ) {
-        while ( (val = OBJ_LVAR( 1 )) == 0 ) {
-            ErrorReturnVoid(
-                "Variable: '%s' must have an assigned value",
-                (Int)NAME_LVAR( 1 ), 0L,
-                "you can 'return;' after assigning a value" );
-        }
-    }
-
-    /* return the value                                                    */
-    return val;
-}
-
-Obj             EvalRefLVar02 (
-    Expr                expr )
-{
-    Obj                 val;            /* value, result                   */
-
-    /* get and check the value of the local variable                       */
-    if ( (val = OBJ_LVAR( 2 )) == 0 ) {
-        while ( (val = OBJ_LVAR( 2 )) == 0 ) {
-            ErrorReturnVoid(
-                "Variable: '%s' must have an assigned value",
-                (Int)NAME_LVAR( 2 ), 0L,
-                "you can 'return;' after assigning a value" );
-        }
-    }
-
-    /* return the value                                                    */
-    return val;
-}
-
-Obj             EvalRefLVar03 (
-    Expr                expr )
-{
-    Obj                 val;            /* value, result                   */
-
-    /* get and check the value of the local variable                       */
-    if ( (val = OBJ_LVAR( 3 )) == 0 ) {
-        while ( (val = OBJ_LVAR( 3 )) == 0 ) {
-            ErrorReturnVoid(
-                "Variable: '%s' must have an assigned value",
-                (Int)NAME_LVAR( 3 ), 0L,
-                "you can 'return;' after assigning a value" );
-        }
-    }
-
-    /* return the value                                                    */
-    return val;
-}
-
-Obj             EvalRefLVar04 (
-    Expr                expr )
-{
-    Obj                 val;            /* value, result                   */
-
-    /* get and check the value of the local variable                       */
-    if ( (val = OBJ_LVAR( 4 )) == 0 ) {
-        while ( (val = OBJ_LVAR( 4 )) == 0 ) {
-            ErrorReturnVoid(
-                "Variable: '%s' must have an assigned value",
-                (Int)NAME_LVAR( 4 ), 0L,
-                "you can 'return;' after assigning a value" );
-        }
-    }
-
-    /* return the value                                                    */
-    return val;
-}
-
-Obj             EvalRefLVar05 (
-    Expr                expr )
-{
-    Obj                 val;            /* value, result                   */
-
-    /* get and check the value of the local variable                       */
-    if ( (val = OBJ_LVAR( 5 )) == 0 ) {
-        while ( (val = OBJ_LVAR( 5 )) == 0 ) {
-            ErrorReturnVoid(
-                "Variable: '%s' must have an assigned value",
-                (Int)NAME_LVAR( 5 ), 0L,
-                "you can 'return;' after assigning a value" );
-        }
-    }
-
-    /* return the value                                                    */
-    return val;
-}
-
-Obj             EvalRefLVar06 (
-    Expr                expr )
-{
-    Obj                 val;            /* value, result                   */
-
-    /* get and check the value of the local variable                       */
-    if ( (val = OBJ_LVAR( 6 )) == 0 ) {
-        while ( (val = OBJ_LVAR( 6 )) == 0 ) {
-            ErrorReturnVoid(
-                "Variable: '%s' must have an assigned value",
-                (Int)NAME_LVAR( 6 ), 0L,
-                "you can 'return;' after assigning a value" );
-        }
-    }
-
-    /* return the value                                                    */
-    return val;
-}
-
-Obj             EvalRefLVar07 (
-    Expr                expr )
-{
-    Obj                 val;            /* value, result                   */
-
-    /* get and check the value of the local variable                       */
-    if ( (val = OBJ_LVAR( 7 )) == 0 ) {
-        while ( (val = OBJ_LVAR( 7 )) == 0 ) {
-            ErrorReturnVoid(
-                "Variable: '%s' must have an assigned value",
-                (Int)NAME_LVAR( 7 ), 0L,
-                "you can 'return;' after assigning a value" );
-        }
-    }
-
-    /* return the value                                                    */
-    return val;
-}
-
-Obj             EvalRefLVar08 (
-    Expr                expr )
-{
-    Obj                 val;            /* value, result                   */
-
-    /* get and check the value of the local variable                       */
-    if ( (val = OBJ_LVAR( 8 )) == 0 ) {
-        while ( (val = OBJ_LVAR( 8 )) == 0 ) {
-            ErrorReturnVoid(
-                "Variable: '%s' must have an assigned value",
-                (Int)NAME_LVAR( 8 ), 0L,
-                "you can 'return;' after assigning a value" );
-        }
-    }
-
-    /* return the value                                                    */
-    return val;
-}
-
-Obj             EvalRefLVar09 (
-    Expr                expr )
-{
-    Obj                 val;            /* value, result                   */
-
-    /* get and check the value of the local variable                       */
-    if ( (val = OBJ_LVAR( 9 )) == 0 ) {
-        while ( (val = OBJ_LVAR( 9 )) == 0 ) {
-            ErrorReturnVoid(
-                "Variable: '%s' must have an assigned value",
-                (Int)NAME_LVAR( 9 ), 0L,
-                "you can 'return;' after assigning a value" );
-        }
-    }
-
-    /* return the value                                                    */
-    return val;
-}
-
-Obj             EvalRefLVar10 (
-    Expr                expr )
-{
-    Obj                 val;            /* value, result                   */
-
-    /* get and check the value of the local variable                       */
-    if ( (val = OBJ_LVAR( 10 )) == 0 ) {
-        while ( (val = OBJ_LVAR( 10 )) == 0 ) {
-            ErrorReturnVoid(
-                "Variable: '%s' must have an assigned value",
-                (Int)NAME_LVAR( 10 ), 0L,
-                "you can 'return;' after assigning a value" );
-        }
-    }
-
-    /* return the value                                                    */
-    return val;
-}
-
-Obj             EvalRefLVar11 (
-    Expr                expr )
-{
-    Obj                 val;            /* value, result                   */
-
-    /* get and check the value of the local variable                       */
-    if ( (val = OBJ_LVAR( 11 )) == 0 ) {
-        while ( (val = OBJ_LVAR( 11 )) == 0 ) {
-            ErrorReturnVoid(
-                "Variable: '%s' must have an assigned value",
-                (Int)NAME_LVAR( 11 ), 0L,
-                "you can 'return;' after assigning a value" );
-        }
-    }
-
-    /* return the value                                                    */
-    return val;
-}
-
-Obj             EvalRefLVar12 (
-    Expr                expr )
-{
-    Obj                 val;            /* value, result                   */
-
-    /* get and check the value of the local variable                       */
-    if ( (val = OBJ_LVAR( 12 )) == 0 ) {
-        while ( (val = OBJ_LVAR( 12 )) == 0 ) {
-            ErrorReturnVoid(
-                "Variable: '%s' must have an assigned value",
-                (Int)NAME_LVAR( 12 ), 0L,
-                "you can 'return;' after assigning a value" );
-        }
-    }
-
-    /* return the value                                                    */
-    return val;
-}
-
-Obj             EvalRefLVar13 (
-    Expr                expr )
-{
-    Obj                 val;            /* value, result                   */
-
-    /* get and check the value of the local variable                       */
-    if ( (val = OBJ_LVAR( 13 )) == 0 ) {
-        while ( (val = OBJ_LVAR( 13 )) == 0 ) {
-            ErrorReturnVoid(
-                "Variable: '%s' must have an assigned value",
-                (Int)NAME_LVAR( 13 ), 0L,
-                "you can 'return;' after assigning a value" );
-        }
-    }
-
-    /* return the value                                                    */
-    return val;
-}
-
-Obj             EvalRefLVar14 (
-    Expr                expr )
-{
-    Obj                 val;            /* value, result                   */
-
-    /* get and check the value of the local variable                       */
-    if ( (val = OBJ_LVAR( 14 )) == 0 ) {
-        while ( (val = OBJ_LVAR( 14 )) == 0 ) {
-            ErrorReturnVoid(
-                "Variable: '%s' must have an assigned value",
-                (Int)NAME_LVAR( 14 ), 0L,
-                "you can 'return;' after assigning a value" );
-        }
-    }
-
-    /* return the value                                                    */
-    return val;
-}
-
-Obj             EvalRefLVar15 (
-    Expr                expr )
-{
-    Obj                 val;            /* value, result                   */
-
-    /* get and check the value of the local variable                       */
-    if ( (val = OBJ_LVAR( 15 )) == 0 ) {
-        while ( (val = OBJ_LVAR( 15 )) == 0 ) {
-            ErrorReturnVoid(
-                "Variable: '%s' must have an assigned value",
-                (Int)NAME_LVAR( 15 ), 0L,
-                "you can 'return;' after assigning a value" );
-        }
-    }
-
-    /* return the value                                                    */
-    return val;
-}
-
-Obj             EvalRefLVar16 (
-    Expr                expr )
-{
-    Obj                 val;            /* value, result                   */
-
-    /* get and check the value of the local variable                       */
-    if ( (val = OBJ_LVAR( 16 )) == 0 ) {
-        while ( (val = OBJ_LVAR( 16 )) == 0 ) {
-            ErrorReturnVoid(
-                "Variable: '%s' must have an assigned value",
-                (Int)NAME_LVAR( 16 ), 0L,
-                "you can 'return;' after assigning a value" );
-        }
-    }
-
-    /* return the value                                                    */
-    return val;
-}
 
 Obj             EvalIsbLVar (
     Expr                expr )
@@ -794,10 +203,7 @@ void            PrintUnbLVar (
 void            PrintRefLVar (
     Expr                expr )
 {
-    if ( IS_REFLVAR(expr) )
-        Pr( "%I", (Int)NAME_LVAR( LVAR_REFLVAR(expr) ), 0L );
-    else
-        Pr( "%I", (Int)NAME_LVAR( (UInt)(ADDR_EXPR(expr)[0]) ), 0L );
+    Pr( "%I", (Int)NAME_LVAR( LVAR_REFLVAR(expr) ), 0L );
 }
 
 void            PrintIsbLVar (
@@ -805,7 +211,7 @@ void            PrintIsbLVar (
 {
     Pr( "IsBound( ", 0L, 0L );
     Pr( "%I", (Int)NAME_LVAR( (UInt)(ADDR_EXPR(expr)[0]) ), 0L );
-    Pr( ")", 0L, 0L );
+    Pr( " )", 0L, 0L );
 }
 
 
@@ -821,70 +227,58 @@ void            PrintIsbLVar (
 **
 **  'NAME_HVAR' returns the name of the higher variable <hvar> as a C string.
 */
-void            ASS_HVAR (
-    UInt                hvar,
-    Obj                 val )
+void ASS_HVAR(UInt hvar, Obj val)
 {
-    Bag                 currLVars;      /* old current local variables     */
-    UInt                i;              /* loop variable                   */
-
-    /* walk up the environment chain to the correct values bag             */
-    currLVars = TLS(CurrLVars);
-    for ( i = 1; i <= (hvar >> 16); i++ ) {
-        SWITCH_TO_OLD_LVARS( ENVI_FUNC( CURR_FUNC ) );
-    }
-
-    /* assign the value                                                    */
-    ASS_LVAR( hvar & 0xFFFF, val );
-    /* CHANGED_BAG( TLS(CurrLVars) ); is done in the switch below               */
-
-    /* switch back to current local variables bag                          */
-    SWITCH_TO_OLD_LVARS( currLVars );
+    ASS_HVAR_WITH_CONTEXT(STATE(CurrLVars), hvar, val);
 }
 
-Obj             OBJ_HVAR (
-    UInt                hvar )
+Obj OBJ_HVAR(UInt hvar)
 {
-    Obj                 val;            /* value, result                   */
-    Bag                 currLVars;      /* old current local variables     */
-    UInt                i;              /* loop variable                   */
+    return OBJ_HVAR_WITH_CONTEXT(STATE(CurrLVars), hvar);
+}
 
-    /* walk up the environment chain to the correct values bag             */
-    currLVars = TLS(CurrLVars);
-    for ( i = 1; i <= (hvar >> 16); i++ ) {
-        SWITCH_TO_OLD_LVARS( ENVI_FUNC( CURR_FUNC ) );
+Char * NAME_HVAR(UInt hvar)
+{
+    return NAME_HVAR_WITH_CONTEXT(STATE(CurrLVars), hvar);
+}
+
+void ASS_HVAR_WITH_CONTEXT(Obj context, UInt hvar, Obj val)
+{
+    // walk up the environment chain to the correct values bag
+    for (UInt i = 1; i <= (hvar >> 16); i++) {
+        context = ENVI_FUNC(FUNC_LVARS(context));
     }
 
-    /* get the value                                                       */
-    val = OBJ_LVAR( hvar & 0xFFFF );
+    // assign the value
+    ASS_LVAR_WITH_CONTEXT(context, hvar & 0xFFFF, val);
+    CHANGED_BAG(context);
+}
 
-    /* switch back to current local variables bag                          */
-    SWITCH_TO_OLD_LVARS( currLVars );
+Obj OBJ_HVAR_WITH_CONTEXT(Obj context, UInt hvar)
+{
+    // walk up the environment chain to the correct values bag
+    for (UInt i = 1; i <= (hvar >> 16); i++) {
+        context = ENVI_FUNC(FUNC_LVARS(context));
+    }
 
-    /* return the value                                                    */
+    // get the value
+    Obj val = OBJ_LVAR_WITH_CONTEXT(context, hvar & 0xFFFF);
+
+    // return the value
     return val;
 }
 
-Char *          NAME_HVAR (
-    UInt                hvar )
+Char * NAME_HVAR_WITH_CONTEXT(Obj context, UInt hvar)
 {
-    Char *              name;           /* name, result                    */
-    Bag                 currLVars;      /* old current local variables     */
-    UInt                i;              /* loop variable                   */
-
-    /* walk up the environment chain to the correct values bag             */
-    currLVars = TLS(CurrLVars);
-    for ( i = 1; i <= (hvar >> 16); i++ ) {
-        SWITCH_TO_OLD_LVARS( ENVI_FUNC( CURR_FUNC ) );
+    // walk up the environment chain to the correct values bag
+    for (UInt i = 1; i <= (hvar >> 16); i++) {
+        context = ENVI_FUNC(FUNC_LVARS(context));
     }
 
-    /* get the name                                                        */
-    name = NAME_LVAR( hvar & 0xFFFF );
+    // get the name
+    Char * name = NAME_LVAR_WITH_CONTEXT(context, hvar & 0xFFFF);
 
-    /* switch back to current local variables bag                          */
-    SWITCH_TO_OLD_LVARS( currLVars );
-
-    /* return the name                                                     */
+    // return the name
     return name;
 }
 
@@ -1002,7 +396,7 @@ void            PrintIsbHVar (
 {
     Pr( "IsBound( ", 0L, 0L );
     Pr( "%I", (Int)NAME_HVAR( (UInt)(ADDR_EXPR(expr)[0]) ), 0L );
-    Pr( ")", 0L, 0L );
+    Pr( " )", 0L, 0L );
 }
 
 
@@ -1051,15 +445,11 @@ Obj             EvalRefGVar (
     Obj                 val;            /* value, result                   */
 
     /* get and check the value of the global variable                      */
-    if ( (val = VAL_GVAR( (UInt)(ADDR_EXPR(expr)[0]) )) == 0
-      && (val = ValAutoGVar( (UInt)(ADDR_EXPR(expr)[0]) )) == 0 ) {
-        while ( (val = VAL_GVAR( (UInt)(ADDR_EXPR(expr)[0]) )) == 0
-             && (val = ValAutoGVar( (UInt)(ADDR_EXPR(expr)[0]) )) == 0 ) {
-            ErrorReturnVoid(
-                "Variable: '%s' must have an assigned value",
-                (Int)NameGVar( (UInt)(ADDR_EXPR(expr)[0]) ), 0L,
-                "you can 'return;' after assigning a value" );
-        }
+    while ( (val = ValAutoGVar( (UInt)(ADDR_EXPR(expr)[0]) )) == 0 ) {
+        ErrorReturnVoid(
+            "Variable: '%s' must have an assigned value",
+            (Int)NameGVar( (UInt)(ADDR_EXPR(expr)[0]) ), 0L,
+            "you can 'return;' after assigning a value" );
     }
 
     /* return the value                                                    */
@@ -1072,7 +462,7 @@ Obj             EvalIsbGVar (
     Obj                 val;            /* value, result                   */
 
     /* get the value of the global variable                                */
-    val = VAL_GVAR( (UInt)(ADDR_EXPR(expr)[0]) );
+    val = ValAutoGVar( (UInt)(ADDR_EXPR(expr)[0]) );
 
     /* return the value                                                    */
     return (val != (Obj)0 ? True : False);
@@ -1121,7 +511,7 @@ void            PrintIsbGVar (
 {
     Pr( "IsBound( ", 0L, 0L );
     Pr( "%I", (Int)NameGVar( (UInt)(ADDR_EXPR(expr)[0]) ), 0L );
-    Pr( ")", 0L, 0L );
+    Pr( " )", 0L, 0L );
 }
 
 
@@ -1129,7 +519,7 @@ void            PrintIsbGVar (
 **
 *F  ExecAssList(<ass>)  . . . . . . . . . . .  assign to an element of a list
 **
-**  'ExexAssList'  executes the list  assignment statement <stat> of the form
+**  'ExecAssList'  executes the list  assignment statement <stat> of the form
 **  '<list>[<position>] := <rhs>;'.
 */
 UInt            ExecAssList (
@@ -1178,15 +568,15 @@ UInt            ExecAssList (
 **
 *F  ExecAss2List(<ass>)  . . . . . . . . . . .  assign to an element of a list
 **
-**  'ExexAss2List'  executes the list  assignment statement <stat> of the form
+**  'ExecAss2List'  executes the list  assignment statement <stat> of the form
 **  '<list>[<position>,<position>] := <rhs>;'.
 */
 UInt            ExecAss2List (
     Expr                stat )
 {
     Obj                 list;           /* list, left operand              */
-    Obj                 pos1;            /* position, left operand          */
-    Obj                 pos2;            /* position, left operand          */
+    Obj                 pos1;           /* position, left operand          */
+    Obj                 pos2;           /* position, left operand          */
     Obj                 rhs;            /* right hand side, right operand  */
 
     /* evaluate the list (checking is done by 'ASS_LIST')                  */
@@ -1209,7 +599,7 @@ UInt            ExecAss2List (
 **
 *F  ExecAssXList(<ass>)  . . . . . . . . . . .  assign to an element of a list
 **
-**  'ExexAssXList'  executes the list  assignment statement <stat> of the form
+**  'ExecAssXList'  executes the list  assignment statement <stat> of the form
 **  '<list>[<position>,<position>,<position>[,<position>]*] := <rhs>;'.
 */
 UInt            ExecAssXList (
@@ -1230,7 +620,7 @@ UInt            ExecAssXList (
     ixs = NEW_PLIST(T_PLIST,narg);
 
     for (i = 1; i <= narg; i++) {
-      /* evaluate the position                                               */
+      /* evaluate the position                                             */
       pos = EVAL_EXPR( ADDR_STAT(stat)[i] );
       SET_ELM_PLIST(ixs,i,pos);
       CHANGED_BAG(ixs);
@@ -1405,7 +795,7 @@ UInt            ExecAsssListLevel (
 **
 *F  ExecUnbList(<ass>)  . . . . . . . . . . . . . unbind an element of a list
 **
-**  'ExexUnbList'  executes the list   unbind  statement <stat> of the   form
+**  'ExecUnbList'  executes the list   unbind  statement <stat> of the   form
 **  'Unbind( <list>[<position>] );'.
 */
 UInt            ExecUnbList (
@@ -1423,7 +813,7 @@ UInt            ExecUnbList (
     narg = SIZE_STAT(stat)/sizeof(Stat) - 1;
     if (narg == 1) {
       pos = EVAL_EXPR( ADDR_STAT(stat)[1] );
-      /* unbind the element                                                  */
+      /* unbind the element                                                */
       if (IS_POS_INTOBJ(pos)) {
         UNB_LIST( list, INT_INTOBJ(pos) );
       } else {
@@ -1507,18 +897,17 @@ Obj             EvalElm2List (
 {
     Obj                 elm;            /* element, result                 */
     Obj                 list;           /* list, left operand              */
-    Obj                 pos1;            /* position, right operand         */
-    Obj                 pos2;            /* position, right operand         */
+    Obj                 pos1;           /* position, right operand         */
+    Obj                 pos2;           /* position, right operand         */
 
-    /* evaluate the list (checking is done by 'ELM2_LIST')                  */
+    /* evaluate the list (checking is done by 'ELM2_LIST')                 */
     list = EVAL_EXPR( ADDR_EXPR(expr)[0] );
 
-    /* evaluate and check the positions                                     */
+    /* evaluate and check the positions                                    */
     pos1 = EVAL_EXPR( ADDR_EXPR(expr)[1] ); 
     pos2 = EVAL_EXPR( ADDR_EXPR(expr)[2] ); 
    
     elm = ELM2_LIST(list, pos1, pos2);
-
 
     /* return the element                                                  */
     return elm;
@@ -1526,9 +915,9 @@ Obj             EvalElm2List (
 
 /****************************************************************************
 **
-*F  EvalElm2List(<expr>) . . . . . . . . . . . . select an element of a list
+*F  EvalElmXList(<expr>) . . . . . . . . . . . . select an element of a list
 **
-**  'EvalElm2List' evaluates the list  element expression  <expr> of the  form
+**  'EvalElmXList' evaluates the list  element expression  <expr> of the  form
 **  '<list>[<pos1>,<pos2>,<pos3>,....]'.
 */
 Obj             EvalElmXList (
@@ -1542,10 +931,10 @@ Obj             EvalElmXList (
     Int i;
      
 
-    /* evaluate the list (checking is done by 'ELM2_LIST')                  */
+    /* evaluate the list (checking is done by 'ELM2_LIST')                 */
     list = EVAL_EXPR( ADDR_EXPR(expr)[0] );
 
-    /* evaluate and check the positions                                     */
+    /* evaluate and check the positions                                    */
     narg = SIZE_EXPR(expr)/sizeof(Expr) -1;
     ixs = NEW_PLIST(T_PLIST,narg);
     for (i = 1; i <= narg; i++) {
@@ -1690,7 +1079,7 @@ Obj             EvalElmsListLevel (
 **
 *F  EvalIsbList(<expr>) . . . . . . . . test if an element of a list is bound
 **
-**  'EvalElmList'  evaluates the list  isbound expression  <expr> of the form
+**  'EvalIsbList'  evaluates the list  isbound expression  <expr> of the form
 **  'IsBound( <list>[<position>] )'.
 */
 Obj             EvalIsbList (
@@ -1705,7 +1094,7 @@ Obj             EvalIsbList (
     list = EVAL_EXPR( ADDR_EXPR(expr)[0] );
     narg = SIZE_EXPR(expr)/sizeof(Expr) -1;
     if (narg == 1) {
-      /* evaluate and check the position                                     */
+      /* evaluate and check the position                                   */
       pos = EVAL_EXPR( ADDR_EXPR(expr)[1] );
       
       if (IS_POS_INTOBJ(pos))
@@ -1866,7 +1255,7 @@ void PrintElmXList (
     PrintExpr( ADDR_EXPR(expr)[1] );
     for (i = 2; i <= narg; i++) {
       Pr("%<, %<",0L,0L);
-      PrintExpr( ADDR_EXPR(expr)[2] );
+      PrintExpr( ADDR_EXPR(expr)[i] );
     }
     Pr("%<]",0L,0L);
 }
@@ -1882,7 +1271,7 @@ void PrintElmListLevel (
     PrintExpr( ADDR_EXPR(expr)[1] );
     for (i = 2; i <= narg; i++) {
       Pr("%<, %<",0L,0L);
-      PrintExpr( ADDR_EXPR(expr)[2] );
+      PrintExpr( ADDR_EXPR(expr)[i] );
     }
     Pr("%<]",0L,0L);
 }
@@ -1911,7 +1300,7 @@ void            PrintIsbList (
 **
 *F  PrintElmsList(<expr>) . . print a selection of several elements of a list
 **
-**  'PrElmsList'  prints the list  elements  expression  <expr> of the   form
+**  'PrintElmsList'  prints the list  elements  expression  <expr> of the   form
 **  '<list>{<positions>}'.
 **
 **  Linebreaks are preferred after the '{'.
@@ -1995,7 +1384,7 @@ UInt            ExecAssRecExpr (
 **
 *F  ExecUnbRecName(<stat>)  . . . . . . . . . . unbind an element of a record
 **
-**  'ExecAssRecName' executes the record  unbind statement <stat> of the form
+**  'ExecUnbRecName' executes the record  unbind statement <stat> of the form
 **  'Unbind( <record>.<name> );'.
 */
 UInt            ExecUnbRecName (
@@ -2023,7 +1412,7 @@ UInt            ExecUnbRecName (
 **
 *F  ExecUnbRecExpr(<stat>)  . . . . . . . . . . unbind an element of a record
 **
-**  'ExecAssRecExpr' executes the record  unbind statement <stat> of the form
+**  'ExecUnbRecExpr' executes the record  unbind statement <stat> of the form
 **  'Unbind( <record>.(<name>) );'.
 */
 UInt            ExecUnbRecExpr (
@@ -2281,7 +1670,7 @@ void            PrintIsbRecExpr (
 **
 *F  ExecAssPosObj(<ass>)  . . . . . . . . . . .  assign to an element of a list
 **
-**  'ExexAssPosObj'  executes the list  assignment statement <stat> of the form
+**  'ExecAssPosObj'  executes the list  assignment statement <stat> of the form
 **  '<list>[<position>] := <rhs>;'.
 */
 UInt            ExecAssPosObj (
@@ -2311,15 +1700,19 @@ UInt            ExecAssPosObj (
 
     /* special case for plain list                                         */
     if ( TNUM_OBJ(list) == T_POSOBJ ) {
+#ifdef HPCGAP
         WriteGuard(list);
+#endif
         if ( SIZE_OBJ(list)/sizeof(Obj)-1 < p ) {
             ResizeBag( list, (p+1) * sizeof(Obj) );
         }
         SET_ELM_PLIST( list, p, rhs );
         CHANGED_BAG( list );
-    }
-    /* generic case                                                        */
-    else {
+#ifdef HPCGAP
+    } else if ( TNUM_OBJ(list) == T_APOSOBJ ) {
+        AssListFuncs[T_FIXALIST](list, p, rhs);
+#endif
+    } else {
         ASS_LIST( list, p, rhs );
     }
 
@@ -2332,7 +1725,7 @@ UInt            ExecAssPosObj (
 **
 *F  ExecUnbPosObj(<ass>)  . . . . . . . . . . . . . unbind an element of a list
 **
-**  'ExexUnbPosObj'  executes the list   unbind  statement <stat> of the   form
+**  'ExecUnbPosObj'  executes the list   unbind  statement <stat> of the   form
 **  'Unbind( <list>[<position>] );'.
 */
 UInt            ExecUnbPosObj (
@@ -2358,12 +1751,17 @@ UInt            ExecUnbPosObj (
 
     /* unbind the element                                                  */
     if ( TNUM_OBJ(list) == T_POSOBJ ) {
+#ifdef HPCGAP
         WriteGuard(list);
+#endif
         if ( p <= SIZE_OBJ(list)/sizeof(Obj)-1 ) {
             SET_ELM_PLIST( list, p, 0 );
         }
-    }
-    else {
+#ifdef HPCGAP
+    } else if (TNUM_OBJ(list) == T_APOSOBJ ) {
+        UnbListFuncs[T_FIXALIST](list, p);
+#endif
+    } else {
         UNB_LIST( list, p );
     }
 
@@ -2402,6 +1800,16 @@ Obj             EvalElmPosObj (
 
     /* special case for plain lists (use generic code to signal errors)    */
     if ( TNUM_OBJ(list) == T_POSOBJ ) {
+#ifdef HPCGAP
+        const Bag *contents = CONST_PTR_BAG(list);
+        while ( SIZE_BAG_CONTENTS(contents)/sizeof(Obj)-1 < p ) {
+            ErrorReturnVoid(
+                "PosObj Element: <PosObj>![%d] must have an assigned value",
+                (Int)p, 0L,
+                "you can 'return;' after assigning a value" );
+        }
+        elm = contents[p];
+#else
         while ( SIZE_OBJ(list)/sizeof(Obj)-1 < p ) {
             ErrorReturnVoid(
                 "PosObj Element: <PosObj>![%d] must have an assigned value",
@@ -2409,16 +1817,18 @@ Obj             EvalElmPosObj (
                 "you can 'return;' after assigning a value" );
         }
         elm = ELM_PLIST( list, p );
+#endif
         while ( elm == 0 ) {
             ErrorReturnVoid(
                 "PosObj Element: <PosObj>![%d] must have an assigned value",
                 (Int)p, 0L,
                 "you can 'return;' after assigning a value" );
         }
-    }
-
-    /* generic case                                                        */
-    else {
+#ifdef HPCGAP
+    } else if ( TNUM_OBJ(list) == T_APOSOBJ ) {
+        elm = ElmListFuncs[T_FIXALIST](list, p);
+#endif
+    } else {
         elm = ELM_LIST( list, p );
     }
 
@@ -2457,9 +1867,22 @@ Obj             EvalIsbPosObj (
 
     /* get the result                                                      */
     if ( TNUM_OBJ(list) == T_POSOBJ ) {
+#ifdef HPCGAP
+        const Bag *contents = CONST_PTR_BAG(list);
+        if (p > SIZE_BAG_CONTENTS(contents)/sizeof(Obj)-1)
+          isb = False;
+        else
+          isb = contents[p] != 0 ? True : False;
+#else
         isb = (p <= SIZE_OBJ(list)/sizeof(Obj)-1 && ELM_PLIST(list,p) != 0 ?
                True : False);
+#endif
     }
+#ifdef HPCGAP
+    else if ( TNUM_OBJ(list) == T_APOSOBJ ) {
+        isb = IsbListFuncs[T_FIXALIST](list, p) ? True : False;
+    }
+#endif
     else {
         isb = (ISB_LIST( list, p ) ? True : False);
     }
@@ -2532,7 +1955,7 @@ void            PrintIsbPosObj (
     Pr("%<![",0L,0L);
     PrintExpr( ADDR_EXPR(expr)[1] );
     Pr("%<]",0L,0L);
-    Pr( ")", 0L, 0L );
+    Pr( " )", 0L, 0L );
 }
 
 
@@ -2561,11 +1984,29 @@ UInt            ExecAssComObjName (
     rhs = EVAL_EXPR( ADDR_STAT(stat)[2] );
 
     /* assign the right hand side to the element of the record             */
-    if ( TNUM_OBJ(record) == T_COMOBJ ) {
+    switch (TNUM_OBJ(record)) {
+      case T_COMOBJ:
         AssPRec( record, rnam, rhs );
-    }
-    else {
+        break;
+#ifdef HPCGAP
+      case T_ACOMOBJ:
+#ifdef CHECK_TL_ASSIGNS
+        if (GetRegionOf(rhs) == STATE(threadRegion)) {
+            if (strcmp(NAME_RNAM(rnam), "buffer") != 0
+             && strcmp(NAME_RNAM(rnam), "state") != 0) {
+                ErrorReturnObj("Warning: thread local assignment of '%s'",
+                               (Int)NAME_RNAM(rnam), 0L,
+                               "type 'return <value>; to continue'");
+            }
+
+        }
+#endif
+        SetARecordField( record, rnam, rhs);
+        break;
+#endif
+      default:
         ASS_REC( record, rnam, rhs );
+        break;
     }
 
     /* return 0 (to indicate that no leave-statement was executed)         */
@@ -2598,11 +2039,18 @@ UInt            ExecAssComObjExpr (
     rhs = EVAL_EXPR( ADDR_STAT(stat)[2] );
 
     /* assign the right hand side to the element of the record             */
-    if ( TNUM_OBJ(record) == T_COMOBJ ) {
+    switch (TNUM_OBJ(record)) {
+      case T_COMOBJ:
         AssPRec( record, rnam, rhs );
-    }
-    else {
+        break;
+#ifdef HPCGAP
+      case T_ACOMOBJ:
+        SetARecordField( record, rnam, rhs );
+        break;
+#endif
+      default:
         ASS_REC( record, rnam, rhs );
+        break;
     }
 
     /* return 0 (to indicate that no leave-statement was executed)         */
@@ -2614,7 +2062,7 @@ UInt            ExecAssComObjExpr (
 **
 *F  ExecUnbComObjName(<stat>) . . . . . . . . . . unbind an element of a record
 **
-**  'ExecAssComObjName' executes the record unbind statement <stat> of the form
+**  'ExecUnbComObjName' executes the record unbind statement <stat> of the form
 **  'Unbind( <record>.<name> );'.
 */
 UInt            ExecUnbComObjName (
@@ -2631,11 +2079,18 @@ UInt            ExecUnbComObjName (
     rnam = (UInt)(ADDR_STAT(stat)[1]);
 
     /* unbind the element of the record                                    */
-    if ( TNUM_OBJ(record) == T_COMOBJ ) {
+    switch (TNUM_OBJ(record)) {
+      case T_COMOBJ:
         UnbPRec( record, rnam );
-    }
-    else {
+        break;
+#ifdef HPCGAP
+      case T_ACOMOBJ:
+        UnbARecord( record, rnam);
+        break;
+#endif
+      default:
         UNB_REC( record, rnam );
+        break;
     }
 
     /* return 0 (to indicate that no leave-statement was executed)         */
@@ -2647,7 +2102,7 @@ UInt            ExecUnbComObjName (
 **
 *F  ExecUnbComObjExpr(<stat>) . . . . . . . . . . unbind an element of a record
 **
-**  'ExecAssComObjExpr' executes the record unbind statement <stat> of the form
+**  'ExecUnbComObjExpr' executes the record unbind statement <stat> of the form
 **  'Unbind( <record>.(<name>) );'.
 */
 UInt            ExecUnbComObjExpr (
@@ -2664,11 +2119,18 @@ UInt            ExecUnbComObjExpr (
     rnam = RNamObj( EVAL_EXPR( ADDR_STAT(stat)[1] ) );
 
     /* unbind the element of the record                                    */
-    if ( TNUM_OBJ(record) == T_COMOBJ ) {
+    switch (TNUM_OBJ(record)) {
+      case T_COMOBJ:
         UnbPRec( record, rnam );
-    }
-    else {
+        break;
+#ifdef HPCGAP
+      case T_ACOMOBJ:
+        UnbARecord( record, rnam);
+        break;
+#endif
+      default:
         UNB_REC( record, rnam );
+        break;
     }
 
     /* return 0 (to indicate that no leave-statement was executed)         */
@@ -2697,11 +2159,18 @@ Obj             EvalElmComObjName (
     rnam = (UInt)(ADDR_EXPR(expr)[1]);
 
     /* select the element of the record                                    */
-    if ( TNUM_OBJ(record) == T_COMOBJ ) {
+    switch (TNUM_OBJ(record)) {
+      case T_COMOBJ:
         elm = ElmPRec( record, rnam );
-    }
-    else {
+        break;
+#ifdef HPCGAP
+      case T_ACOMOBJ:
+        elm = ElmARecord( record, rnam );
+        break;
+#endif
+      default:
         elm = ELM_REC( record, rnam );
+        break;
     }
 
     /* return the element                                                  */
@@ -2730,11 +2199,18 @@ Obj             EvalElmComObjExpr (
     rnam = RNamObj( EVAL_EXPR( ADDR_EXPR(expr)[1] ) );
 
     /* select the element of the record                                    */
-    if ( TNUM_OBJ(record) == T_COMOBJ ) {
+    switch (TNUM_OBJ(record)) {
+      case T_COMOBJ:
         elm = ElmPRec( record, rnam );
-    }
-    else {
+        break;
+#ifdef HPCGAP
+      case T_ACOMOBJ:
+        elm = ElmARecord( record, rnam );
+        break;
+#endif
+      default:
         elm = ELM_REC( record, rnam );
+        break;
     }
 
     /* return the element                                                  */
@@ -2746,7 +2222,7 @@ Obj             EvalElmComObjExpr (
 **
 *F  EvalIsbComObjName(<expr>) . . . . . . . . test if a record element is bound
 **
-**  'EvalElmComObjName' evaluates  the record isbound  expression <expr> of the
+**  'EvalIsbComObjName' evaluates  the record isbound  expression <expr> of the
 **  form 'IsBound( <record>.<name> )'.
 */
 Obj             EvalIsbComObjName (
@@ -2763,11 +2239,18 @@ Obj             EvalIsbComObjName (
     rnam = (UInt)(ADDR_EXPR(expr)[1]);
 
     /* select the element of the record                                    */
-    if ( TNUM_OBJ(record) == T_COMOBJ ) {
+    switch (TNUM_OBJ(record)) {
+      case T_COMOBJ:
         isb = (IsbPRec( record, rnam ) ? True : False);
-    }
-    else {
+        break;
+#ifdef HPCGAP
+      case T_ACOMOBJ:
+        isb = (GetARecordField( record, rnam ) != (Obj) 0 ? True : False);
+        break;
+#endif
+      default:
         isb = (ISB_REC( record, rnam ) ? True : False);
+        break;
     }
 
     /* return the result                                                   */
@@ -2789,18 +2272,25 @@ Obj             EvalIsbComObjExpr (
     Obj                 record;         /* the record, left operand        */
     UInt                rnam;           /* the name, right operand         */
 
-    /* evaluate the record (checking is done by 'ISB_REC')                */
+    /* evaluate the record (checking is done by 'ISB_REC')                 */
     record = EVAL_EXPR( ADDR_EXPR(expr)[0] );
 
     /* evaluate the name and convert it to a record name                   */
     rnam = RNamObj( EVAL_EXPR( ADDR_EXPR(expr)[1] ) );
 
     /* select the element of the record                                    */
-    if ( TNUM_OBJ(record) == T_COMOBJ ) {
+    switch (TNUM_OBJ(record)) {
+      case T_COMOBJ:
         isb = (IsbPRec( record, rnam ) ? True : False);
-    }
-    else {
+        break;
+#ifdef HPCGAP
+      case T_ACOMOBJ:
+        isb = (GetARecordField( record, rnam ) != (Obj) 0 ? True : False);
+        break;
+#endif
+      default:
         isb = (ISB_REC( record, rnam ) ? True : False);
+        break;
     }
 
     /* return the result                                                   */
@@ -2949,38 +2439,42 @@ void            PrintIsbComObjExpr (
 
 Obj FuncGetCurrentLVars( Obj self )
 {
-  return TLS(CurrLVars);
+  return STATE(CurrLVars);
 }
 
 Obj FuncGetBottomLVars( Obj self )
 {
-  return TLS(BottomLVars);
+  return STATE(BottomLVars);
 }
 
 Obj FuncParentLVars( Obj self, Obj lvars )
 {
-  if (lvars == TLS(BottomLVars))
-    return Fail;
-  return ADDR_OBJ(lvars)[2];
+  if (!IS_LVARS_OR_HVARS(lvars)) {
+    ErrorQuit( "<lvars> must be an lvars (not a %s)",
+               (Int)TNAM_OBJ(lvars), 0L );
+    return 0;
+  }
+  Obj parent = PARENT_LVARS(lvars);
+  return parent ? parent : Fail;
 }
 
 Obj FuncContentsLVars (Obj self, Obj lvars )
 {
   Obj contents = NEW_PREC(0);
-  Obj func = PTR_BAG(lvars)[0];
+  Obj func = FUNC_LVARS(lvars);
   Obj nams = NAMS_FUNC(func);
   UInt len = (SIZE_BAG(lvars) - 2*sizeof(Obj) - sizeof(UInt))/sizeof(Obj);
   Obj values = NEW_PLIST(T_PLIST+IMMUTABLE, len);
-  if (lvars == TLS(BottomLVars))
+  if (lvars == STATE(BottomLVars))
     return False;
   AssPRec(contents, RNamName("func"), func);
-  AssPRec(contents,RNamName("names"), nams);
-  memcpy((void *)(1+ADDR_OBJ(values)), (void *)(3+ADDR_OBJ(lvars)), len*sizeof(Obj));
-  while (ELM_PLIST(values, len) == 0)
-    len--;
+  AssPRec(contents, RNamName("names"), nams);
+  memcpy(1+ADDR_OBJ(values), 3+CONST_ADDR_OBJ(lvars), len*sizeof(Obj));
+  while (len > 0 && ELM_PLIST(values, len) == 0)
+      len--;
   SET_LEN_PLIST(values, len);
   AssPRec(contents, RNamName("values"), values);
-  if (ENVI_FUNC(func) != TLS(BottomLVars))
+  if (ENVI_FUNC(func) != STATE(BottomLVars))
     AssPRec(contents, RNamName("higher"), ENVI_FUNC(func));
   return contents;
 }
@@ -2992,19 +2486,18 @@ Obj FuncContentsLVars (Obj self, Obj lvars )
 */
 void VarsBeforeCollectBags ( void )
 {
-  if (TLS(CurrLVars))
-    CHANGED_BAG( TLS(CurrLVars) );
+  if (STATE(CurrLVars))
+    CHANGED_BAG( STATE(CurrLVars) );
 }
 
 void VarsAfterCollectBags ( void )
 {
-  if (TLS(CurrLVars))
+  if (STATE(CurrLVars))
     {
-      TLS(PtrLVars) = PTR_BAG( TLS(CurrLVars) );
-      TLS(PtrBody)  = (Stat*)PTR_BAG( BODY_FUNC( CURR_FUNC ) );
+      STATE(PtrLVars) = PTR_BAG( STATE(CurrLVars) );
+      STATE(PtrBody)  = (Stat*)PTR_BAG( BODY_FUNC( CURR_FUNC() ) );
     }
-  if (ValGVars)
-    PtrGVars = PTR_BAG( ValGVars );
+  GVarsAfterCollectBags();
 }
 
 /****************************************************************************
@@ -3016,15 +2509,14 @@ void VarsAfterCollectBags ( void )
 void SaveLVars( Obj lvars )
 {
   UInt len,i;
-  Obj *ptr;
-  SaveSubObj(ADDR_OBJ(lvars)[0]);
-  SaveUInt((UInt)ADDR_OBJ(lvars)[1]);
-  SaveSubObj(ADDR_OBJ(lvars)[2]);
+  const Obj *ptr;
+  SaveSubObj(FUNC_LVARS(lvars));
+  SaveUInt(STAT_LVARS(lvars));
+  SaveSubObj(PARENT_LVARS(lvars));
   len = (SIZE_OBJ(lvars) - (2*sizeof(Obj)+sizeof(UInt)))/sizeof(Obj);
-  ptr = ADDR_OBJ(lvars)+3;
+  ptr = CONST_ADDR_OBJ(lvars)+3;
   for (i = 0; i < len; i++)
     SaveSubObj(*ptr++);
-  return;
 }
 
 /****************************************************************************
@@ -3037,14 +2529,13 @@ void LoadLVars( Obj lvars )
 {
   UInt len,i;
   Obj *ptr;
-  ADDR_OBJ(lvars)[0] = LoadSubObj();
-  ((UInt *)ADDR_OBJ(lvars))[1] = LoadUInt();
-  ADDR_OBJ(lvars)[2] = LoadSubObj();
+  FUNC_LVARS(lvars) = LoadSubObj();
+  STAT_LVARS(lvars) = LoadUInt();
+  PARENT_LVARS(lvars) = LoadSubObj();
   len = (SIZE_OBJ(lvars) - (2*sizeof(Obj)+sizeof(UInt)))/sizeof(Obj);
   ptr = ADDR_OBJ(lvars)+3;
   for (i = 0; i < len; i++)
     *ptr++ = LoadSubObj();
-  return;
 }
 
 Obj TYPE_LVARS;
@@ -3059,19 +2550,9 @@ void PrintLVars( Obj lvars )
   Pr("<lvars bag>", 0,0);
 }
 
-Int EqLVars (Obj x, Obj y)
-{
-  return (x == y);
-}
-
-Int EqLVarsX (Obj x, Obj y)
-{
-  return 0;
-}
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * Initialize Package * * * * * * * * * * * * * * *
 */
 
@@ -3080,107 +2561,67 @@ Int EqLVarsX (Obj x, Obj y)
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
 static StructGVarFunc GVarFuncs [] = {
-  { "GetCurrentLVars", 0, "",
-    FuncGetCurrentLVars, "src/vars.c: GetCurrentLVars"},
-
-  { "GetBottomLVars", 0, "",
-    FuncGetBottomLVars, "src/vars.c: GetBottomLVars"},
-
-  { "ParentLVars", 1, "lvars",
-    FuncParentLVars, "src/vars.c: ParentLVars"},
-
-  { "ContentsLVars", 1, "lvars",
-    FuncContentsLVars, "src/vars.c: ContentsLVars"},
-
-  { 0} };
+  GVAR_FUNC(GetCurrentLVars, 0, ""),
+  GVAR_FUNC(GetBottomLVars, 0, ""),
+  GVAR_FUNC(ParentLVars, 1, "lvars"),
+  GVAR_FUNC(ContentsLVars, 1, "lvars"),
+  { 0, 0, 0, 0, 0 }
+};
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
     StructInitInfo *    module )
 {
-    UInt                i;              /* loop variable                   */
-    TLS(CurrLVars) = (Bag) 0;
-
+#if !defined(HPCGAP)
     /* make 'CurrLVars' known to Gasman                                    */
-    InitGlobalBag( &CurrLVars,   "src/vars.c:CurrLVars"   );
-    InitGlobalBag( &BottomLVars, "src/vars.c:BottomLVars" );
+    InitGlobalBag( &STATE(CurrLVars),   "src/vars.c:CurrLVars"   );
+    InitGlobalBag( &STATE(BottomLVars), "src/vars.c:BottomLVars" );
+
+    enum { count = ARRAY_SIZE(STATE(LVarsPool)) };
+    static char cookies[count][24];
+    for (int i = 0; i < count; i++) {
+      snprintf(cookies[i], sizeof(cookies[i]), "src/vars.c:LVarsPool%d", i);
+      InitGlobalBag(&STATE(LVarsPool[i]), cookies[i]);
+    }
+#endif
 
     /* install the marking functions for local variables bag               */
     InfoBags[ T_LVARS ].name = "values bag";
     InitMarkFuncBags( T_LVARS, MarkAllSubBags );
+    InfoBags[ T_HVARS ].name = "high variables bag";
+    InitMarkFuncBags( T_HVARS, MarkAllSubBags );
+
+#ifdef HPCGAP
+    /* Make T_LVARS bags public */
+    MakeBagTypePublic(T_LVARS);
+    MakeBagTypePublic(T_HVARS);
+#endif
 
     /* and the save restore functions */
     SaveObjFuncs[ T_LVARS ] = SaveLVars;
     LoadObjFuncs[ T_LVARS ] = LoadLVars;
+    SaveObjFuncs[ T_HVARS ] = SaveLVars;
+    LoadObjFuncs[ T_HVARS ] = LoadLVars;
 
     /* and a type */
-
     TypeObjFuncs[ T_LVARS ] = TypeLVars;
+    TypeObjFuncs[ T_HVARS ] = TypeLVars;
     PrintObjFuncs[ T_LVARS ] = PrintLVars;
-    EqFuncs[T_LVARS][T_LVARS] = EqLVars;
-    for (i = FIRST_REAL_TNUM; i <= LAST_REAL_TNUM; i++)
-      {
-        EqFuncs[T_LVARS][i] = EqLVarsX;
-        EqFuncs[i][T_LVARS] = EqLVarsX;
-      }
-
+    PrintObjFuncs[ T_HVARS ] = PrintLVars;
 
     /* install executors, evaluators, and printers for local variables     */
     InstallExecStatFunc( T_ASS_LVAR       , ExecAssLVar);
-    InstallExecStatFunc( T_ASS_LVAR_01    , ExecAssLVar01);
-    InstallExecStatFunc( T_ASS_LVAR_02    , ExecAssLVar02);
-    InstallExecStatFunc( T_ASS_LVAR_03    , ExecAssLVar03);
-    InstallExecStatFunc( T_ASS_LVAR_04    , ExecAssLVar04);
-    InstallExecStatFunc( T_ASS_LVAR_05    , ExecAssLVar05);
-    InstallExecStatFunc( T_ASS_LVAR_06    , ExecAssLVar06);
-    InstallExecStatFunc( T_ASS_LVAR_07    , ExecAssLVar07);
-    InstallExecStatFunc( T_ASS_LVAR_08    , ExecAssLVar08);
-    InstallExecStatFunc( T_ASS_LVAR_09    , ExecAssLVar09);
-    InstallExecStatFunc( T_ASS_LVAR_10    , ExecAssLVar10);
-    InstallExecStatFunc( T_ASS_LVAR_11    , ExecAssLVar11);
-    InstallExecStatFunc( T_ASS_LVAR_12    , ExecAssLVar12);
-    InstallExecStatFunc( T_ASS_LVAR_13    , ExecAssLVar13);
-    InstallExecStatFunc( T_ASS_LVAR_14    , ExecAssLVar14);
-    InstallExecStatFunc( T_ASS_LVAR_15    , ExecAssLVar15);
-    InstallExecStatFunc( T_ASS_LVAR_16    , ExecAssLVar16);
     InstallExecStatFunc( T_UNB_LVAR       , ExecUnbLVar);
-    InstallEvalExprFunc( T_REF_LVAR       , EvalRefLVar);
-    InstallEvalExprFunc( T_REF_LVAR_01    , EvalRefLVar01);
-    InstallEvalExprFunc( T_REF_LVAR_02    , EvalRefLVar02);
-    InstallEvalExprFunc( T_REF_LVAR_03    , EvalRefLVar03);
-    InstallEvalExprFunc( T_REF_LVAR_04    , EvalRefLVar04);
-    InstallEvalExprFunc( T_REF_LVAR_05    , EvalRefLVar05);
-    InstallEvalExprFunc( T_REF_LVAR_06    , EvalRefLVar06);
-    InstallEvalExprFunc( T_REF_LVAR_07    , EvalRefLVar07);
-    InstallEvalExprFunc( T_REF_LVAR_08    , EvalRefLVar08);
-    InstallEvalExprFunc( T_REF_LVAR_09    , EvalRefLVar09);
-    InstallEvalExprFunc( T_REF_LVAR_10    , EvalRefLVar10);
-    InstallEvalExprFunc( T_REF_LVAR_11    , EvalRefLVar11);
-    InstallEvalExprFunc( T_REF_LVAR_12    , EvalRefLVar12);
-    InstallEvalExprFunc( T_REF_LVAR_13    , EvalRefLVar13);
-    InstallEvalExprFunc( T_REF_LVAR_14    , EvalRefLVar14);
-    InstallEvalExprFunc( T_REF_LVAR_15    , EvalRefLVar15);
-    InstallEvalExprFunc( T_REF_LVAR_16    , EvalRefLVar16);
+    // no EvalExprFunc for T_REFLVAR, it is handled immediately by EVAL_EXPR
     InstallEvalExprFunc( T_ISB_LVAR       , EvalIsbLVar);
+
     InstallPrintStatFunc( T_ASS_LVAR       , PrintAssLVar);
-
-    for ( i = T_ASS_LVAR_01; i <= T_ASS_LVAR_16; i++ ) {
-        InstallPrintStatFunc( i , PrintAssLVar);
-    }
-
     InstallPrintStatFunc( T_UNB_LVAR       , PrintUnbLVar);
     InstallPrintExprFunc( T_REFLVAR        , PrintRefLVar);
-    InstallPrintExprFunc( T_REF_LVAR       , PrintRefLVar);
-
-    for ( i = T_REF_LVAR_01; i <= T_REF_LVAR_16; i++ ) {
-        InstallPrintExprFunc( i , PrintRefLVar);
-    }
-
     InstallPrintExprFunc( T_ISB_LVAR       , PrintIsbLVar);
 
     /* install executors, evaluators, and printers for higher variables    */
@@ -3302,9 +2743,8 @@ static Int InitKernel (
 static Int PostRestore (
     StructInitInfo *    module )
 {
-    TLS(CurrLVars) = TLS(BottomLVars);
-    SWITCH_TO_OLD_LVARS( TLS(BottomLVars) );
-
+    STATE(CurrLVars) = STATE(BottomLVars);
+    SWITCH_TO_OLD_LVARS( STATE(BottomLVars) );
 
     /* return success                                                      */
     return 0;
@@ -3318,14 +2758,6 @@ static Int PostRestore (
 static Int InitLibrary (
     StructInitInfo *    module )
 {
-    Obj                 tmp;
-
-    TLS(BottomLVars) = NewBag( T_LVARS, 3*sizeof(Obj) );
-    tmp = NewFunctionC( "bottom", 0, "", 0 );
-    PTR_BAG(TLS(BottomLVars))[0] = tmp;
-    tmp = NewBag( T_BODY, NUMBER_HEADER_ITEMS_BODY*sizeof(Obj) );
-    BODY_FUNC( PTR_BAG(TLS(BottomLVars))[0] ) = tmp;
-
     /* init filters and functions                                          */
     InitGVarFuncsFromTable( GVarFuncs );
 
@@ -3334,33 +2766,37 @@ static Int InitLibrary (
 }
 
 
-/****************************************************************************
-**
-*F  InitInfoVars()  . . . . . . . . . . . . . . . . . table of init functions
-*/
-static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "vars",                             /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    PostRestore                         /* postRestore                    */
-};
-
-StructInitInfo * InitInfoVars ( void )
+static void InitModuleState(ModuleStateOffset offset)
 {
-    return &module;
+    Obj tmpFunc, tmpBody;
+
+    STATE(BottomLVars) = NewBag(T_HVARS, 3 * sizeof(Obj));
+    tmpFunc = NewFunctionC( "bottom", 0, "", 0 );
+    FUNC_LVARS( STATE(BottomLVars) ) = tmpFunc;
+    PARENT_LVARS(STATE(BottomLVars)) = Fail;
+    tmpBody = NewBag( T_BODY, sizeof(BodyHeader) );
+    SET_BODY_FUNC( tmpFunc, tmpBody );
+
+    STATE(CurrLVars) = STATE(BottomLVars);
 }
 
 
 /****************************************************************************
 **
-
-*E  vars.c  . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+*F  InitInfoVars()  . . . . . . . . . . . . . . . . . table of init functions
 */
+static StructInitInfo module = {
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "vars",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
+    .postRestore = PostRestore
+};
+
+StructInitInfo * InitInfoVars ( void )
+{
+    RegisterModuleState(0, InitModuleState, 0);
+    return &module;
+}

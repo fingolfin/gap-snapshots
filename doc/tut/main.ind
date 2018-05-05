@@ -1,132 +1,132 @@
 \begin{theindex}
 
-  \item \texttt{ApplicableMethod}, \hyperpage{75}
-  \item arrays, see lists, \hyperpage{19}
-  \item assignment, \hyperpage{13}
-  \item \texttt{AsSomething}, \hyperpage{68}
+  \item \texttt{ApplicableMethod}, \hyperpage{76}
+  \item arrays, see lists, \hyperpage{20}
+  \item assignment, \hyperpage{14}
+  \item \texttt{AsSomething}, \hyperpage{69}
 
   \indexspace
 
-  \item break loops, \hyperpage{11}
+  \item break loops, \hyperpage{12}
 
   \indexspace
 
-  \item canonical position, \hyperpage{44}
-  \item \texttt{ClosureSomething}, \hyperpage{68}
-  \item cokernel, \hyperpage{52}
-  \item comments, \hyperpage{9}
-  \item constants, \hyperpage{11}
+  \item canonical position, \hyperpage{45}
+  \item \texttt{ClosureSomething}, \hyperpage{69}
+  \item cokernel, \hyperpage{53}
+  \item comments, \hyperpage{10}
+  \item constants, \hyperpage{12}
 
   \indexspace
 
-  \item elements, \hyperpage{15}
-  \item enumerator, \hyperpage{44}
+  \item elements, \hyperpage{16}
+  \item enumerator, \hyperpage{45}
 
   \indexspace
 
-  \item family, \hyperpage{24}
-  \item filters, \hyperpage{72}
+  \item family, \hyperpage{25}
+  \item filters, \hyperpage{73}
 
   \indexspace
 
-  \item \texttt{GeneratorsOfSomething}, \hyperpage{67}
+  \item \texttt{GeneratorsOfSomething}, \hyperpage{68}
   \item getter
-    \subitem of an attribute, \hyperpage{71}
-  \item group general mapping, \hyperpage{52}
-    \subitem single-valued, \hyperpage{52}
-    \subitem total, \hyperpage{52}
+    \subitem of an attribute, \hyperpage{72}
+  \item group general mapping, \hyperpage{53}
+    \subitem single-valued, \hyperpage{53}
+    \subitem total, \hyperpage{53}
   \item \texttt{GroupHomomorphismByImages} vs. \texttt{GroupGeneralMappingByImages}, 
-		\hyperpage{52}
+		\hyperpage{53}
 
   \indexspace
 
   \item homomorphism
-    \subitem action, \hyperpage{44}
-    \subitem natural, \hyperpage{40}
-    \subitem operation, \hyperpage{44}
+    \subitem action, \hyperpage{45}
+    \subitem natural, \hyperpage{41}
+    \subitem operation, \hyperpage{45}
 
   \indexspace
 
-  \item identifier, \hyperpage{13}
-  \item \texttt{IsIdenticalObj}, \hyperpage{15}
+  \item identifier, \hyperpage{14}
+  \item \texttt{IsIdenticalObj}, \hyperpage{16}
 
   \indexspace
 
-  \item kernel, \hyperpage{52}
-  \item \texttt{KnownAttributesOfObject}, \hyperpage{75}
-  \item \texttt{KnownPropertiesOfObject}, \hyperpage{75}
-  \item \texttt{KnownTruePropertiesOfObject}, \hyperpage{75}
+  \item kernel, \hyperpage{53}
+  \item \texttt{KnownAttributesOfObject}, \hyperpage{76}
+  \item \texttt{KnownPropertiesOfObject}, \hyperpage{76}
+  \item \texttt{KnownTruePropertiesOfObject}, \hyperpage{76}
 
   \indexspace
 
-  \item \texttt{last}, \hyperpage{14}
-  \item \texttt{last2}, \hyperpage{14}
-  \item \texttt{last3}, \hyperpage{14}
-  \item leaving \textsf{GAP}, \hyperpage{8}
-  \item line editing, \hyperpage{10, 11}
+  \item \texttt{last}, \hyperpage{15}
+  \item \texttt{last2}, \hyperpage{15}
+  \item \texttt{last3}, \hyperpage{15}
+  \item leaving \textsf{GAP}, \hyperpage{9}
+  \item line editing, \hyperpage{11}
   \item lists
-    \subitem dense, \hyperpage{21}
-    \subitem identical, \hyperpage{22}
-    \subitem plain, \hyperpage{19}
-    \subitem strictly sorted, \hyperpage{24}
-  \item loading source code from a file, \hyperpage{9}
+    \subitem dense, \hyperpage{22}
+    \subitem identical, \hyperpage{23}
+    \subitem plain, \hyperpage{20}
+    \subitem strictly sorted, \hyperpage{25}
+  \item loading source code from a file, \hyperpage{10}
   \item loop
-    \subitem for, \hyperpage{26}
-    \subitem while, \hyperpage{26}
+    \subitem for, \hyperpage{27}
+    \subitem while, \hyperpage{27}
 
   \indexspace
 
-  \item maps-to operator, \hyperpage{16}
-  \item matrices, \hyperpage{29}
-  \item methods, \hyperpage{71}
-    \subitem immediate, \hyperpage{74}
-    \subitem selection, \hyperpage{72}
-    \subitem true, \hyperpage{74}
+  \item maps-to operator, \hyperpage{17}
+  \item matrices, \hyperpage{30}
+  \item methods, \hyperpage{72}
+    \subitem immediate, \hyperpage{75}
+    \subitem selection, \hyperpage{73}
+    \subitem true, \hyperpage{75}
 
   \indexspace
 
-  \item objects, \hyperpage{13}
-    \subitem vs. elements, \hyperpage{15}
-    \subitem vs. variables, \hyperpage{13}
-  \item operations, \hyperpage{74}
-  \item operators, \hyperpage{11}
+  \item objects, \hyperpage{14}
+    \subitem vs. elements, \hyperpage{16}
+    \subitem vs. variables, \hyperpage{14}
+  \item operations, \hyperpage{75}
+  \item operators, \hyperpage{12}
 
   \indexspace
 
-  \item \texttt{quit}, \hyperpage{8}
+  \item \texttt{quit}, \hyperpage{9}
 
   \indexspace
 
-  \item \texttt{Read}, \hyperpage{9}
-  \item read evaluate print loop, \hyperpage{9}
-  \item reading source code from a file, \hyperpage{9}
+  \item \texttt{Read}, \hyperpage{10}
+  \item read evaluate print loop, \hyperpage{10}
+  \item reading source code from a file, \hyperpage{10}
 
   \indexspace
 
   \item setter
-    \subitem of an attribute, \hyperpage{71}
-  \item \texttt{Something}, \hyperpage{68}
-  \item starting \textsf{GAP}, \hyperpage{8}
-  \item strings, \hyperpage{21}
-  \item \texttt{Subsomething}, \hyperpage{69}
-  \item \texttt{SubsomethingNC}, \hyperpage{69}
+    \subitem of an attribute, \hyperpage{72}
+  \item \texttt{Something}, \hyperpage{69}
+  \item starting \textsf{GAP}, \hyperpage{9}
+  \item strings, \hyperpage{22}
+  \item \texttt{Subsomething}, \hyperpage{70}
+  \item \texttt{SubsomethingNC}, \hyperpage{70}
 
   \indexspace
 
   \item tester
-    \subitem of an attribute, \hyperpage{71}
-  \item \texttt{TraceMethods}, \hyperpage{75}
-  \item transversal, \hyperpage{44}
-  \item \texttt{TryNextMethod}, \hyperpage{73}
+    \subitem of an attribute, \hyperpage{72}
+  \item \texttt{TraceMethods}, \hyperpage{76}
+  \item transversal, \hyperpage{45}
+  \item \texttt{TryNextMethod}, \hyperpage{74}
 
   \indexspace
 
-  \item variables, \hyperpage{13}
+  \item variables, \hyperpage{14}
   \item vectors
-    \subitem row, \hyperpage{29}
+    \subitem row, \hyperpage{30}
 
   \indexspace
 
-  \item whitespace, \hyperpage{9}
+  \item whitespace, \hyperpage{10}
 
 \end{theindex}

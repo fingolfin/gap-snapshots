@@ -20,16 +20,18 @@
 #ifndef GAP_SYSTEM_H
 #define GAP_SYSTEM_H
 
-#define NOOP ((void) 0)
-
 /****************************************************************************
 **
 *V  autoconf  . . . . . . . . . . . . . . . . . . . . . . . .  use "config.h"
 */
-#include "config.h"
+#include <gen/config.h>
 
-/* include C library stdlib.h to ensure size_t etc. is defined. */
+#include <ctype.h>
+#include <limits.h>
+#include <setjmp.h>
+#include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 /****************************************************************************
@@ -73,16 +75,10 @@
 /* define to debug masterpointers errors                                   */
 /* #undef DEBUG_MASTERPOINTERS */
 
-/* define stack align for gasman (from "config.h")                         */
-#define SYS_STACK_ALIGN         C_STACK_ALIGN
-
 /* check if we are on a 64 bit machine                                     */
 #if SIZEOF_VOID_P == 8
 # define SYS_IS_64_BIT          1
-#elif !defined(SIZEOF_VOID_P) && !defined(USE_PRECOMPILED)
-/* If SIZEOF_VOID_P has not been defined, and we are not currently
-   re-making the dependency list (via cnf/Makefile), then trigger
-   an error. */
+#elif !defined(SIZEOF_VOID_P)
 # error Something is wrong with this GAP installation: SIZEOF_VOID_P not defined
 #endif
 
@@ -92,19 +88,64 @@
 #define HAVE_DOTGAPRC           1
 #endif
 
-/* Define as 1 if your systems uses '/' as path separator.
+
+/****************************************************************************
 **
-** Currently, we support nothing else. For Windows (or rather: Cygwin), we
-** rely on a small hack which converts the path separator '\' used there
-** on '/' on the fly. Put differently: Systems that use completely different
-**  path separators, or none at all, are currently not supported.
+*S  GAP_PATH_MAX . . . . . . . . . . . .  size for buffers storing file paths
+**
+**  'GAP_PATH_MAX' is the default buffer size GAP uses internally to store
+**  most paths. If any longer paths are encountered, they will be either
+**  truncated, or GAP aborts.
+**
+**  Note that no fixed buffer size is sufficient to store arbitrary paths
+**  on contemporary operation systems, as paths can have arbitrary length.
+**  This also means that the POSIX constant PATH_MAX does not really do the
+**  job its name would suggest (nor do MAXPATHLEN, MAX_PATH etc.).
+**
+**  Writing POSIX compliant code without a hard coded buffer size is rather
+**  challenging, as often there is no way to find out in advance how large a
+**  buffer may need to be. So you have to start with some buffer size, then
+**  check for errors; if 'errno' equals 'ERANGE', double the buffer size and
+**  repeated, until you succeed or run out of memory.
+**
+**  Instead of going down this road, we use a fixed buffer size after all.
+**  This way, at least our code stays simple. Also, this is what most (?)
+**  code out there does, too, so if somebody actually uses such long paths,
+**  at least GAP won't be the only program to run into problems.
 */
-#ifndef HAVE_SLASH_SEPARATOR
-#define HAVE_SLASH_SEPARATOR	1
+enum {
+#ifdef PATH_MAX
+    GAP_PATH_MAX = 4096 > PATH_MAX ? 4096 : PATH_MAX,
+#else
+    GAP_PATH_MAX = 4096,
 #endif
+};
 
 
 #define FPUTS_TO_STDERR(str) fputs (str, stderr)
+
+/****************************************************************************
+**
+*T  Wrappers for various compiler attributes
+**
+*/
+#ifdef HAVE_FUNC_ATTRIBUTE_ALWAYS_INLINE
+#define ALWAYS_INLINE __attribute__((always_inline)) inline
+#else
+#define ALWAYS_INLINE inline
+#endif
+
+#ifdef HAVE_FUNC_ATTRIBUTE_NOINLINE
+#define NOINLINE __attribute__((noinline))
+#else
+#define NOINLINE
+#endif
+
+#ifdef HAVE_FUNC_ATTRIBUTE_NORETURN
+#define NORETURN __attribute__((noreturn))
+#else
+#define NORETURN
+#endif
 
 /****************************************************************************
 **
@@ -121,8 +162,6 @@
 */
 
 
-#if HAVE_STDINT_H
-#include <stdint.h>
 typedef char              Char;
 
 typedef int8_t   Int1;
@@ -144,37 +183,33 @@ typedef Int4     Int;
 typedef UInt4    UInt;
 #endif
 
-/* 64 bit machines                                                         */
-#elif defined( SYS_IS_64_BIT )
-typedef char                    Char;
-typedef signed char             Int1;
-typedef short int               Int2;
-typedef int                     Int4;
-typedef long int                Int8;
-typedef long int                Int;
-typedef unsigned char           UChar;
-typedef unsigned char           UInt1;
-typedef unsigned short int      UInt2;
-typedef unsigned int            UInt4;
-typedef unsigned long int       UInt8;
-typedef unsigned long int       UInt;
-
-/* 32 bit machines                                                         */
-#else
-typedef char                    Char;
-typedef signed char             Int1;
-typedef short int               Int2;
-typedef long int                Int4;
-typedef long int                Int;
-typedef long long int           Int8;
-typedef unsigned char           UChar;
-typedef unsigned char           UInt1;
-typedef unsigned short int      UInt2;
-typedef unsigned long int       UInt4;
-typedef unsigned long int       UInt;
-typedef unsigned long long int  UInt8;
-
-#endif
+/****************************************************************************
+**
+**  'START_ENUM_RANGE' and 'END_ENUM_RANGE' simplify creating "ranges" of
+**  enum variables.
+**
+**  Usage example:
+**    enum {
+**      START_ENUM_RANGE(FIRST),
+**        FOO,
+**        BAR,
+**      END_ENUM_RANGE(LAST)
+**    };
+**  is essentially equivalent to
+**    enum {
+**      FIRST,
+**        FOO = FIRST,
+**        BAR,
+**      LAST = BAR
+**    };
+**  Note that if we add a value into the range after 'BAR', we must adjust
+**  the definition of 'LAST', which is easy to forget. Also, reordering enum
+**  values may require extra work. With the range macros, all of this is
+**  taken care of automatically.
+*/
+#define START_ENUM_RANGE(id)            id, _##id##_post = id - 1
+#define START_ENUM_RANGE_INIT(id,init)  id = init, _##id##_post = id - 1
+#define END_ENUM_RANGE(id)              _##id##_pre, id = _##id##_pre - 1
 
 
 /****************************************************************************
@@ -190,29 +225,58 @@ typedef UInt * *        Bag;
 **
 **  'Obj' is the type of objects.
 */
-#define Obj             Bag
+typedef Bag Obj;
 
 
 /****************************************************************************
 **
+*T  ObjFunc . . . . . . . . . . . . . . . . type of function returning object
+**
+**  'ObjFunc' is the type of a function returning an object.
+*/
+typedef Obj (* ObjFunc) (/*arguments*/);
 
+
+/****************************************************************************
+**
+*T  Stat  . . . . . . . . . . . . . . . . . . . . . . . .  type of statements
+**
+**  'Stat' is the type of statements.
+**
+**  If 'Stat' is different  from 'Expr', then  a lot of things will  probably
+**  break.
+*/
+typedef UInt Stat;
+
+
+/****************************************************************************
+**
+*T  Expr  . . . . . . . . . . . . . . . . . . . . . . . . type of expressions
+**
+**  'Expr' is the type of expressions.
+**
+**  If 'Expr' is different  from 'Stat', then  a lot of things will  probably
+**  break.
+*/
+typedef Stat Expr;
+
+
+/****************************************************************************
+**
+*V  BIPEB . . . . . . . . . . . . . . . . . . . . . . . . . .  bits per block
+**
+**  'BIPEB' is the  number of bits  per  block, where a  block  fills a UInt,
+**  which must be the same size as a bag identifier.
+**  'LBIPEB' is the log to the base 2 of BIPEB
+**
+*/
+enum { BIPEB = sizeof(UInt) * 8L, LBIPEB = (BIPEB == 64) ? 6L : 5L };
+
+
+/****************************************************************************
+**
 *F * * * * * * * * * * * command line settable options  * * * * * * * * * * *
 */
-
-/****************************************************************************
-**
-*V  SyStackAlign  . . . . . . . . . . . . . . . . . .  alignment of the stack
-**
-**  'SyStackAlign' is  the  alignment  of items on the stack.   It  must be a
-**  divisor of  'sizof(Bag)'.  The  addresses of all identifiers on the stack
-**  must be  divisable by 'SyStackAlign'.  So if it  is 1, identifiers may be
-**  anywhere on the stack, and if it is  'sizeof(Bag)',  identifiers may only
-**  be  at addresses  divisible by  'sizeof(Bag)'.  This value is initialized
-**  from a macro passed from the makefile, because it is machine dependent.
-**
-**  This value is passed to 'InitBags'.
-*/
-extern UInt SyStackAlign;
 
 
 /****************************************************************************
@@ -242,32 +306,9 @@ extern UInt SyCTRD;
 
 /****************************************************************************
 **
-*V  SyCacheSize . . . . . . . . . . . . . . . . . . . . . . size of the cache
-**
-**  'SyCacheSize' is the size of the data cache, in kilobytes
-**
-**  This is per  default 0, which means that  there is no usuable data cache.
-**  It is usually changed with the '-c' option in the script that starts GAP.
-**
-**  This value is passed to 'InitBags'.
-**
-**  Put in this package because the command line processing takes place here.
-*/
-extern UInt SyCacheSize;
-
-
-/****************************************************************************
- **
- *V  SyCheckCRCCompiledModule  . . .  check crc while loading compiled modules
- */
-extern Int SyCheckCRCCompiledModule;
-
-
-/****************************************************************************
-**
 *V  SyCompileInput  . . . . . . . . . . . . . . . . . .  from this input file
 */
-extern Char SyCompileInput [256];
+extern Char SyCompileInput[GAP_PATH_MAX];
 
 
 /****************************************************************************
@@ -281,20 +322,14 @@ extern Char * SyCompileMagic1;
 **
 *V  SyCompileName . . . . . . . . . . . . . . . . . . . . . .  with this name
 */
-extern Char SyCompileName [256];
+extern Char SyCompileName[256];
 
 
 /****************************************************************************
 **
 *V  SyCompileOutput . . . . . . . . . . . . . . . . . . into this output file
 */
-extern Char SyCompileOutput [256];
-
-/****************************************************************************
-**
-*V  SyCompileOptions . . . . . . . . . . . . . . . . . with these options
-*/
-extern Char SyCompileOptions [256];
+extern Char SyCompileOutput[GAP_PATH_MAX];
 
 
 /****************************************************************************
@@ -330,54 +365,13 @@ extern Int SyDebugLoading;
 **  
 **  Put in this package because the command line processing takes place here.
 */
-#define MAX_GAP_DIRS 128
-
-extern Char SyGapRootPaths [MAX_GAP_DIRS] [512];
-#if HAVE_DOTGAPRC
-extern Char DotGapPath[512];
+enum {
+    MAX_GAP_DIRS = 16
+};
+extern Char SyGapRootPaths[MAX_GAP_DIRS][GAP_PATH_MAX];
+#ifdef HAVE_DOTGAPRC
+extern Char DotGapPath[GAP_PATH_MAX];
 #endif
-
-/****************************************************************************
-**
-*V  SyInitfiles[] . . . . . . . . . . .  list of filenames to be read in init
-**
-**  'SyInitfiles' is a list of file to read upon startup of GAP.
-**
-**  It contains the 'init.g' file and a user specific init file if it exists.
-**  It also contains all names all the files specified on the  command  line.
-**
-**  This is used in 'InitGap' which tries to read those files  upon  startup.
-**
-**  Put in this package because the command line processing takes place here.
-**
-**  For UNIX this list contains 'LIBNAME/init.g' and '$HOME/.gaprc'.
-*/
-extern Char SyInitfiles [32] [512];
-
-/****************************************************************************
-**
-*V  SyPkgnames[] . . . . . . . . . . .  list of package names
-**
-**  'SyPkgnames' is a list of names of entries of the `pkg' directory. It is
-**  used for autoloading.
-*/
-#define SY_MAX_PKGNR 100
-extern Char SyPkgnames [SY_MAX_PKGNR][16];
-
-/****************************************************************************
-**
-*V  SyGapRCFilename . . . . . . . . . . . . . . . filename of the gaprc file
-*/
-extern Char SyGapRCFilename [512];
-
-/****************************************************************************
-**
-*V  SyHasUserHome . . . . . . . . . .  true if user has HOME in environment
-*V  SyUserHome . . . . . . . . . . . . .  path of users home (it is exists)
-*/
-extern Int SyHasUserHome;
-extern Char SyUserHome [256];
-
 
 /****************************************************************************
 **
@@ -463,6 +457,18 @@ extern UInt SyNrRowsLocked;
 */
 extern UInt SyQuiet;
 
+/****************************************************************************
+**
+*V  SyQuitOnBreak . . . . . . . . . . exit GAP instead of entering break loop
+**
+**  'SyQuitOnBreak' determines whether GAP should quit (with non-zero return
+**  value) instead of entering the break loop.
+**
+**  False by default, can be changed with the '--quitonbreak' option.
+**
+**  Put in this package because the command line processing takes place here.
+*/
+extern UInt SyQuitOnBreak;
 
 /****************************************************************************
 **
@@ -542,9 +548,9 @@ extern Int SyStorMin;
 
 /****************************************************************************
 **
-*V  SySystemInitFile  . . . . . . . . . . .  name of the system "init.g" file
+*V  SyLoadSystemInitFile  . . . . . . should GAP load 'lib/init.g' at startup
 */
-extern Char SySystemInitFile [256];
+extern Int SyLoadSystemInitFile;
 
 
 /****************************************************************************
@@ -569,24 +575,8 @@ extern UInt SyWindow;
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * time related functions * * * * * * * * * * * * *
 */
-
-/****************************************************************************
-**
-
-*V  SyStartTime . . . . . . . . . . . . . . . . . . time when GAP was started
-*/
-extern UInt SyStartTime;
-
-
-/****************************************************************************
-**
-*V  SyStopTime  . . . . . . . . . . . . . . . . . . time when reading started
-*/
-extern UInt SyStopTime;
-
 
 /****************************************************************************
 **
@@ -605,7 +595,6 @@ extern UInt SyTimeChildrenSys ( void );
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * * * string functions * * * * * * * * * * * * * *
 */
 
@@ -617,7 +606,6 @@ extern UInt SyTimeChildrenSys ( void );
 **  'IsAlpha' returns 1 if its character argument is a normal character  from
 **  the range 'a..zA..Z' and 0 otherwise.
 */
-#include <ctype.h>
 #define IsAlpha(ch)     (isalpha((unsigned int)ch))
 
 
@@ -630,6 +618,16 @@ extern UInt SyTimeChildrenSys ( void );
 */
 #define IsDigit(ch)     (isdigit((unsigned int)ch))
 
+
+/****************************************************************************
+**
+*F  IsHexDigit( <ch> ) . . . . . . . . . . . . . . .  is a character a digit
+**
+**  'IsDigit' returns 1 if its character argument is a digit from the ranges
+**  '0..9', 'A..F', or 'a..f' and 0 otherwise.
+*/
+#define IsHexDigit(ch)     (isxdigit((unsigned int)ch))
+
 /****************************************************************************
 **
 *F  IsSpace( <ch> ) . . . . . . . . . . . . . . . .is a character whitespace
@@ -638,15 +636,6 @@ extern UInt SyTimeChildrenSys ( void );
 **  carriage return, linefeed or vertical tab
 */
 #define IsSpace(ch)     (isspace((unsigned int)ch))
-
-
-/****************************************************************************
-**
-*F  SyIntString( <string> ) . . . . . . . . extract a C integer from a string
-**
-*/
-
-extern Int SyIntString( const Char *string );
 
 
 /****************************************************************************
@@ -758,7 +747,6 @@ size_t strxncat (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * * gasman interface * * * * * * * * * * * * * * *
 */
 
@@ -827,37 +815,64 @@ extern UInt * * * SyAllocBags (
 **
 **  'SyAbortBags' is the function called by Gasman in case of an emergency.
 */
-extern void SyAbortBags (
-            const Char *        msg );
+extern void SyAbortBags(const Char * msg) NORETURN;
 
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * loading of modules * * * * * * * * * * * * * * *
-*/
-
-
-/****************************************************************************
 **
-*F  MODULE_BUILTIN  . . . . . . . . . . . . . . . . . . . . .  builtin module
-*/
-#define MODULE_BUILTIN          1
-
-
-/****************************************************************************
+** GAP_KERNEL_API_VERSION gives the version of the GAP kernel. This value
+** is used to check if kernel modules were built with a compatible kernel.
+** This version is not the same as, and not connected to, the GAP version.
 **
-*F  MODULE_STATIC . . . . . . . . . . . . . statically loaded compiled module
-*/
-#define MODULE_STATIC           2
-
-
-/****************************************************************************
+** This is stored as GAP_KERNEL_MAJOR_VERSION*1000 + GAP_KERNEL_MINOR_VERSION
 **
-*F  MODULE_DYNAMIC  . . . . . . . . . . .  dynamically loaded compiled module
+** The algorithm used is the following:
+**
+** The kernel will not load a module compiled for a newer kernel.
+**
+** The kernel will not load a module compiled for a different major version.
+**
+** The minor version should be incremented when new backwards-compatible
+** functionality is added. The major version should be incremented when
+** a backwards-incompatible change is made.
+**
+** The kernel version is a macro so it can be used by packages
+** to optionally compile support for new functionality.
+**
 */
-#define MODULE_DYNAMIC          3
 
+#define GAP_KERNEL_MAJOR_VERSION 1
+#define GAP_KERNEL_MINOR_VERSION 1
+#define GAP_KERNEL_API_VERSION                                               \
+    ((GAP_KERNEL_MAJOR_VERSION)*1000 + (GAP_KERNEL_MINOR_VERSION))
+
+enum {
+    /** builtin module */
+    MODULE_BUILTIN = GAP_KERNEL_API_VERSION * 10,
+
+    /** statically loaded compiled module */
+    MODULE_STATIC = GAP_KERNEL_API_VERSION * 10 + 1,
+
+    /** dynamically loaded compiled module */
+    MODULE_DYNAMIC = GAP_KERNEL_API_VERSION * 10 + 2,
+};
+
+static inline Int IS_MODULE_BUILTIN(UInt type)
+{
+    return type % 10 == 0;
+}
+
+static inline Int IS_MODULE_STATIC(UInt type)
+{
+    return type % 10 == 1;
+}
+
+static inline Int IS_MODULE_DYNAMIC(UInt type)
+{
+    return type % 10 == 2;
+}
 
 
 /****************************************************************************
@@ -902,12 +917,6 @@ typedef struct init_info {
     /* function to call after restoring workspace                          */
     Int              (* postRestore)(struct init_info *);
 
-    /* filename relative to GAP_ROOT or absolut                            */
-    Char *           filename;
-
-    /* true if the filename is GAP_ROOT relative                           */
-    Int              isGapRootRelative;
-
 } StructInitInfo;
 
 typedef StructInitInfo* (*InitInfoFunc)(void);
@@ -934,6 +943,11 @@ typedef struct {
     Obj             (* handler)(/*arguments*/);
     const Char *    cookie;
 } StructGVarFilt;
+
+// GVAR_FILTER a helper macro for quickly creating table entries in
+// StructGVarFilt, StructGVarAttr and StructGVarProp arrays
+#define GVAR_FILTER(name, argument, filter) \
+  { #name, argument, filter, Func ## name, __FILE__ ":" #name }
 
 
 /****************************************************************************
@@ -975,6 +989,11 @@ typedef struct {
     const Char *    cookie;
 } StructGVarOper;
 
+// GVAR_OPER is a helper macro for quickly creating table entries in
+// StructGVarOper arrays
+#define GVAR_OPER(name, nargs, args, operation) \
+  { #name, nargs, args, operation, Func ## name, __FILE__ ":" #name }
+
 
 /****************************************************************************
 **
@@ -988,10 +1007,13 @@ typedef struct {
     const Char *    cookie;
 } StructGVarFunc;
 
+// GVAR_FUNC is a helper macro for quickly creating table entries in
+// StructGVarFunc arrays
+#define GVAR_FUNC(name, nargs, args) \
+  { #name, nargs, args, Func ## name, __FILE__ ":" #name }
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
@@ -1004,8 +1026,36 @@ typedef struct {
 **  If ret is 0 'SyExit' should signal to a calling proccess that all is  ok.
 **  If ret is 1 'SyExit' should signal a  failure  to  the  calling proccess.
 */
-extern void SyExit (
-    UInt                ret );
+extern void SyExit(UInt ret) NORETURN;
+
+
+/****************************************************************************
+**
+*F  SyNanosecondsSinceEpoch()
+**
+**  'SyNanosecondsSinceEpoch' returns a 64-bit integer which represents the
+**  number of nanoseconds since some unspecified starting point. This means
+**  that the number returned by this function is not in itself meaningful,
+**  but the difference between the values returned by two consecutive calls
+**  can be used to measure wallclock time.
+**
+**  The accuracy of this is system dependent. For systems that implement
+**  clock_getres, we could get the promised accuracy.
+**
+**  Note that gettimeofday has been marked obsolete in the POSIX standard.
+**  We are using it because it is implemented in most systems still.
+**
+**  If we are using gettimeofday we cannot guarantee the values that
+**  are returned by SyNanosecondsSinceEpoch to be monotonic.
+**
+**  Returns -1 to represent failure
+**
+*/
+extern Int8 SyNanosecondsSinceEpoch();
+extern Int8 SyNanosecondsSinceEpochResolution();
+
+extern const char * const SyNanosecondsSinceEpochMethod;
+extern const Int SyNanosecondsSinceEpochMonotonic;
 
 /****************************************************************************
 **
@@ -1015,6 +1065,15 @@ extern void SyExit (
 */
 
 extern void SySleep( UInt secs );
+
+/****************************************************************************
+**
+*F  SyUSleep( <msecs> ) . . . . . . . . .Try to sleep for <msecs> microseconds
+**
+**  The OS may wake us earlier, for example on receipt of a signal
+*/
+
+extern void SyUSleep( UInt msecs );
 
 /****************************************************************************
 **
@@ -1032,29 +1091,35 @@ extern Char *getOptionArg(Char key, UInt which);
  *F    sySetjmp( <jump buffer> )
  *F    syLongjmp( <jump buffer>, <value>)
  ** 
- **   macros, defining our selected longjump mechanism
+ **   macros and functions, defining our selected longjump mechanism
  */
 
-#include        <setjmp.h>              /* jmp_buf, setjmp, longjmp        */
 
-#if HAVE_SIGSETJMP
+#if defined(HAVE_SIGSETJMP)
 #define sySetjmp( buff ) (sigsetjmp( (buff), 0))
-#define syLongjmp siglongjmp
+#define syLongjmpInternal siglongjmp
 #define syJmp_buf sigjmp_buf
-#else
-#if HAVE__SETJMP
+#elif defined(HAVE__SETJMP)
 #define sySetjmp _setjmp
-#define syLongjmp _longjmp
+#define syLongjmpInternal _longjmp
 #define syJmp_buf jmp_buf
 #else
 #define sySetjmp setjmp
-#define syLongjmp longjmp
+#define syLongjmpInternal longjmp
 #define syJmp_buf jmp_buf
 #endif
-#endif
 
-extern syJmp_buf AlarmJumpBuffer;
+void syLongjmp(syJmp_buf* buf, int val) NORETURN;
 
+/****************************************************************************
+**
+*F RegisterSyLongjmpObserver : register a function to be called before
+**                   longjmp is called.
+*/
+
+typedef void (*voidfunc)(void);
+
+Int RegisterSyLongjmpObserver(voidfunc);
 
 
 /****************************************************************************
@@ -1065,24 +1130,12 @@ extern syJmp_buf AlarmJumpBuffer;
 **  It is passed the command line array  <argc>, <argv>  to look for options.
 **
 **  For UNIX it initializes the default files 'stdin', 'stdout' and 'stderr',
-**  installs the handler 'syAnsIntr' to answer the user interrupts '<ctr>-C',
-**  scans the command line for options, tries to  find  'LIBNAME/init.g'  and
-**  '$HOME/.gaprc' and copies the remaining arguments into 'SyInitfiles'.
+**  installs the handler 'syAnswerIntr' to answer the user interrupts
+**  '<ctr>-C', scans the command line for options, sets up the GAP root paths,
+**  locates the '.gaprc' file (if any), and more.
 */
 extern void InitSystem (
             Int                 argc,
             Char *              argv [] );
 
-
-// FIXME: The TLS macro is for compatibility with the HPC-GAP branch, and helps
-// to keep the diffs between it and master branch small(er).
-#define TLS(x) x
-
-
 #endif // GAP_SYSTEM_H
-
-/****************************************************************************
-**
-
-*E  system.h  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

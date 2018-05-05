@@ -13,37 +13,19 @@
 **  are distinguished by their addresses, kept in the C globals False, 
 **  True and Fail.
 */
-#include        "system.h"              /* system dependent part           */
 
+#include <src/bool.h>
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
-
-#include        "gap.h"                 /* error handling, initialisation  */
-
-#include        "gvars.h"               /* global variables                */
-#include        "calls.h"               /* generic call mechanism          */
-#include        "opers.h"               /* generic operations              */
-
-#include        "ariths.h"              /* basic arithmetic                */
-
-#include        "bool.h"                /* booleans                        */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "string.h"              /* strings                         */
-
-#include	"code.h"		/* coder                           */
-#include	"thread.h"		/* threads			   */
-#include	"tls.h"			/* thread-local storage		   */
+#include <src/ariths.h>
+#include <src/calls.h>
+#include <src/gap.h>
+#include <src/gvars.h>
+#include <src/io.h>
+#include <src/opers.h>
 
 
 /****************************************************************************
 **
-
 *V  True  . . . . . . . . . . . . . . . . . . . . . . . . . . . .  true value
 **
 **   'True' is the value 'true'.
@@ -70,18 +52,19 @@ Obj Fail;
 
 /****************************************************************************
 **
-*V  SuPeRfail  . . . . . . . . . . . . . . . . . . . . . . .  superfail value
+*V  Undefined  . . . . . . . . . . . . . . . . . . . . . . . undefined value
 **
-**  'SuPeRfail' is an ``superfail'' object which is used to indicate failure if
-**  `fail' itself is a sensible response. This is used when having GAP read
-**  a file line-by-line via a library function (demo.g)
+**  'Undefined' is a special object that is used in lieu of (Obj) 0 in places
+**  where the kernel cannot handle a null reference easily. This object is
+**  never exposed to GAP code and only used within the kernel.
 */
-Obj SuPeRfail;
+Obj Undefined;
+
+
 
 
 /****************************************************************************
 **
-
 *F  TypeBool( <bool> )  . . . . . . . . . . . . . . . type of a boolean value
 **
 **  'TypeBool' returns the type of boolean values.
@@ -115,8 +98,8 @@ void PrintBool (
     else if ( bool == Fail ) {
         Pr( "fail", 0L, 0L );
     }
-    else if ( bool == SuPeRfail ) {
-        Pr( "SuPeRfail", 0L, 0L );
+    else if ( bool == Undefined ) {
+        Pr( "Undefined", 0L, 0L );
     }
     else {
         Pr( "<<very strange boolean value>>", 0L, 0L );
@@ -192,7 +175,6 @@ Obj IsBoolHandler (
 
 /****************************************************************************
 **
-
 *F  ReturnTrue1( <val1> ) . . . . . . . . . . . . . . . . . .  return  'True'
 **
 **  'ReturnTrue?'  simply return  'True'  independent of  the values of   the
@@ -320,7 +302,6 @@ Obj ReturnFail3 (
 
 /****************************************************************************
 **
-
 *F  SaveBool( <bool> ) . . . . . . . . . . . . . . . . . . . . save a Boolean 
 **
 **  Actually, there is nothing to do
@@ -328,7 +309,6 @@ Obj ReturnFail3 (
 
 void SaveBool( Obj obj )
 {
-  return;
 }
 
 /****************************************************************************
@@ -340,18 +320,15 @@ void SaveBool( Obj obj )
 
 void LoadBool( Obj obj )
 {
-  return;
 }
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *V  GVarFilts . . . . . . . . . . . . . . . . . . . list of filters to export
 */
 static StructGVarFilt GVarFilts [] = {
@@ -359,14 +336,13 @@ static StructGVarFilt GVarFilts [] = {
     { "IS_BOOL", "obj", &IsBoolFilt,
       IsBoolHandler, "src/bool.c:IS_BOOL" },
 
-    { 0 }
+    { 0, 0, 0, 0, 0 }
 
 };
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
@@ -402,7 +378,7 @@ static Int InitKernel (
     InitGlobalBag( &True,  "src/bool.c:TRUE"  );
     InitGlobalBag( &False, "src/bool.c:FALSE" );
     InitGlobalBag( &Fail,  "src/bool.c:FAIL"  );
-    InitGlobalBag( &SuPeRfail,  "src/bool.c:SUPERFAIL"  );
+    InitGlobalBag( &Undefined,  "src/bool.c:UNDEFINED"  );
 
     /* install the saving functions                                       */
     SaveObjFuncs[ T_BOOL ] = SaveBool;
@@ -417,6 +393,7 @@ static Int InitKernel (
     EqFuncs[ T_BOOL ][ T_BOOL ] = EqBool;
     LtFuncs[ T_BOOL ][ T_BOOL ] = LtBool;
 
+    MakeBagTypePublic(T_BOOL);
     /* return success                                                      */
     return 0;
 }
@@ -429,7 +406,6 @@ static Int InitKernel (
 static Int InitLibrary (
     StructInitInfo *    module )
 {
-    UInt            gvar;
     Obj             tmp;
 
     /* init filters and functions                                          */
@@ -441,36 +417,31 @@ static Int InitLibrary (
     Fail  = NewBag( T_BOOL, 0L );
 
     /* `fail' is a variable not a language construct                       */
-    gvar = GVarName( "fail" );
-    AssGVar( gvar, Fail );
-    MakeReadOnlyGVar(gvar);
+    AssReadOnlyGVar( GVarName( "fail" ), Fail );
 
-    /* `SuPeRfail' ditto                       */
-    SuPeRfail  = NewBag( T_BOOL, 0L );
-    gvar = GVarName( "SuPeRfail" );
-    AssGVar( gvar, SuPeRfail );
-    MakeReadOnlyGVar(gvar);
+    /* Undefined is an internal value */
+    Undefined = NewBag( T_BOOL, 0 );
 
     /* make and install the 'RETURN_TRUE' function                         */
     tmp = NewFunctionC( "RETURN_TRUE", -1L, "arg", ReturnTrue1 );
-    HDLR_FUNC( tmp, 1 ) = ReturnTrue1;
-    HDLR_FUNC( tmp, 2 ) = ReturnTrue2;
-    HDLR_FUNC( tmp, 3 ) = ReturnTrue3;
-    AssGVar( GVarName("RETURN_TRUE"), tmp );
+    SET_HDLR_FUNC( tmp, 1, ReturnTrue1);
+    SET_HDLR_FUNC( tmp, 2, ReturnTrue2);
+    SET_HDLR_FUNC( tmp, 3, ReturnTrue3);
+    AssReadOnlyGVar( GVarName("RETURN_TRUE"), tmp );
 
     /* make and install the 'RETURN_FALSE' function                        */
     tmp = NewFunctionC("RETURN_FALSE",-1L,"arg",ReturnFalse1);
-    HDLR_FUNC( tmp, 1 ) = ReturnFalse1;
-    HDLR_FUNC( tmp, 2 ) = ReturnFalse2;
-    HDLR_FUNC( tmp, 3 ) = ReturnFalse3;
-    AssGVar( GVarName( "RETURN_FALSE" ), tmp );
+    SET_HDLR_FUNC( tmp, 1, ReturnFalse1);
+    SET_HDLR_FUNC( tmp, 2, ReturnFalse2);
+    SET_HDLR_FUNC( tmp, 3, ReturnFalse3);
+    AssReadOnlyGVar( GVarName( "RETURN_FALSE" ), tmp );
 
     /* make and install the 'RETURN_FAIL' function                        */
     tmp = NewFunctionC("RETURN_FAIL", -1L, "arg", ReturnFail1);
-    HDLR_FUNC( tmp, 1 ) = ReturnFail1;
-    HDLR_FUNC( tmp, 2 ) = ReturnFail2;
-    HDLR_FUNC( tmp, 3 ) = ReturnFail3;
-    AssGVar( GVarName( "RETURN_FAIL" ), tmp );
+    SET_HDLR_FUNC( tmp, 1, ReturnFail1);
+    SET_HDLR_FUNC( tmp, 2, ReturnFail2);
+    SET_HDLR_FUNC( tmp, 3, ReturnFail3);
+    AssReadOnlyGVar( GVarName( "RETURN_FAIL" ), tmp );
 
     /* return success                                                      */
     return 0;
@@ -482,28 +453,15 @@ static Int InitLibrary (
 *F  InitInfoBool()  . . . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "bool",                             /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "bool",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoBool ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  bool.c  . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

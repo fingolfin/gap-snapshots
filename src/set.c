@@ -19,37 +19,17 @@
 **  make sets, either  by converting a  list to  a  set, or  by computing the
 **  union, intersection, or difference of two sets.
 */
-#include        <assert.h>              /* assert                          */
-#include        "system.h"              /* system dependent part           */
 
+#include <src/set.h>
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
-
-#include        "gap.h"                 /* error handling, initialisation  */
-
-#include        "gvars.h"               /* global variables                */
-
-#include        "calls.h"               /* generic call mechanism          */
-#include        "opers.h"               /* generic operations              */
-
-#include        "ariths.h"              /* basic arithmetic                */
-
-#include        "bool.h"                /* booleans                        */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "listfunc.h"            /* functions for generic lists     */
-#include        "plist.h"               /* plain lists                     */
-#include        "set.h"                 /* plain sets                      */
-#include        "string.h"              /* strings                         */
-
-#include	"code.h"		/* coder                           */
-#include	"thread.h"		/* threads			   */
-#include	"tls.h"			/* thread-local storage		   */
+#include <src/ariths.h>
+#include <src/bool.h>
+#include <src/gap.h>
+#include <src/io.h>
+#include <src/listfunc.h>
+#include <src/lists.h>
+#include <src/plist.h>
+#include <src/sysfiles.h>
 
 
 /****************************************************************************
@@ -417,14 +397,11 @@ Obj             FuncIS_SUBSET_SET (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * * GAP level functions  * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
-
 *F  FuncADD_SET( <self>, <set>, <obj> ) . . . . . . . add an element to a set
 **
 **  'FuncADD_SET' implements the internal function 'AddSet'.
@@ -455,7 +432,7 @@ Obj FuncADD_SET (
   UInt                wasTab;
     
   /* check the arguments                                                 */
-  while ( ! IsSet(set) || ! IS_MUTABLE_OBJ(set) ) {
+  while ( ! IS_MUTABLE_OBJ(set) || ! IsSet(set) ) {
     set = ErrorReturnObj(
 			 "AddSet: <set> must be a mutable proper set (not a %s)",
 			 (Int)TNAM_OBJ(set), 0L,
@@ -473,14 +450,7 @@ Obj FuncADD_SET (
     {
       Obj *ptr;
       ptr = PTR_BAG(set);
-      memmove((void *)(ptr + pos+1),(void*)(ptr+pos),(size_t)(sizeof(Obj)*(len+1-pos)));
-#if 0
-      for ( i = len+1; pos < i; i-- ) {
-	*ptr = *(ptr-1);
-	ptr--;   */
-	/* SET_ELM_PLIST( set, i, ELM_PLIST(set,i-1) ); */
-      }
-#endif
+      SyMemmove(ptr + pos+1, ptr+pos, sizeof(Obj)*(len+1-pos));
     }
     SET_ELM_PLIST( set, pos, obj );
     CHANGED_BAG( set );
@@ -586,7 +556,7 @@ Obj FuncREM_SET (
     Obj                 *ptr;
 
     /* check the arguments                                                 */
-    while ( ! IsSet(set) || ! IS_MUTABLE_OBJ(set) ) {
+    while ( ! IS_MUTABLE_OBJ(set) || ! IsSet(set) ) {
         set = ErrorReturnObj(
             "RemoveSet: <set> must be a mutable proper set (not a %s)",
             (Int)TNAM_OBJ(set), 0L,
@@ -661,7 +631,7 @@ Obj FuncUNITE_SET (
     Obj                 TmpUnion;
 
     /* check the arguments                                                 */
-    while ( ! IsSet(set1) || ! IS_MUTABLE_OBJ(set1) ) {
+    while ( ! IS_MUTABLE_OBJ(set1) || ! IsSet(set1) ) {
         set1 = ErrorReturnObj(
             "UniteSet: <set1> must be a mutable proper set (not a %s)",
             (Int)TNAM_OBJ(set1), 0L,
@@ -840,7 +810,7 @@ Obj FuncINTER_SET (
     UInt                lenr;           /* length  of result set           */
 
     /* check the arguments                                                 */
-    while ( ! IsSet(set1) || ! IS_MUTABLE_OBJ(set1) ) {
+    while ( ! IS_MUTABLE_OBJ(set1) || ! IsSet(set1) ) {
         set1 = ErrorReturnObj(
             "IntersectSet: <set1> must be a mutable proper set (not a %s)",
             (Int)TNAM_OBJ(set1), 0L,
@@ -1019,7 +989,7 @@ Obj FuncSUBTR_SET (
     UInt                ll;           
 
     /* check the arguments                                                 */
-    while ( ! IsSet(set1) || ! IS_MUTABLE_OBJ(set1) ) {
+    while ( ! IS_MUTABLE_OBJ(set1) || ! IsSet(set1) ) {
         set1 = ErrorReturnObj(
             "SubtractSet: <set1> must be a mutable proper set (not a %s)",
             (Int)TNAM_OBJ(set1), 0L,
@@ -1074,50 +1044,30 @@ Obj FuncSUBTR_SET (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    { "LIST_SORTED_LIST", 1, "list",
-      FuncLIST_SORTED_LIST, "src/set.c:LIST_SORTED_LIST" },
-
-    { "IS_EQUAL_SET", 2, "set1, set2",
-      FuncIS_EQUAL_SET, "src/set.c:IS_EQUAL_SET" },
-
-    { "IS_SUBSET_SET", 2, "set1, set2",
-      FuncIS_SUBSET_SET, "src/set.c:IS_SUBSET_SET" },
-
-    { "ADD_SET", 2, "set, val",
-      FuncADD_SET, "src/set.c:ADD_SET" },
-
-    { "REM_SET", 2, "set, val",
-      FuncREM_SET, "src/set.c:REM_SET" },
-
-    { "UNITE_SET", 2, "set1, set2",
-      FuncUNITE_SET, "src/set.c:UNITE_SET" },
-
-    { "INTER_SET", 2, "set1, set2",
-      FuncINTER_SET, "src/set.c:INTER_SET" },
-
-    { "SUBTR_SET", 2, "set1, set2",
-      FuncSUBTR_SET, "src/set.c:SUBTR_SET" },
-
-
-    { 0 }
+    GVAR_FUNC(LIST_SORTED_LIST, 1, "list"),
+    GVAR_FUNC(IS_EQUAL_SET, 2, "set1, set2"),
+    GVAR_FUNC(IS_SUBSET_SET, 2, "set1, set2"),
+    GVAR_FUNC(ADD_SET, 2, "set, val"),
+    GVAR_FUNC(REM_SET, 2, "set, val"),
+    GVAR_FUNC(UNITE_SET, 2, "set1, set2"),
+    GVAR_FUNC(INTER_SET, 2, "set1, set2"),
+    GVAR_FUNC(SUBTR_SET, 2, "set1, set2"),
+    { 0, 0, 0, 0, 0 }
 
 };
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
@@ -1158,28 +1108,15 @@ static Int InitLibrary (
 *F  InitInfoSet() . . . . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "set",                              /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "set",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoSet ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  set.c . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

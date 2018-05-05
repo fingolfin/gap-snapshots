@@ -21,51 +21,23 @@
 **  such  a  vector, you *must* clear   it afterwards, because  all functions
 **  assume that the vectors are cleared.
 */
-#include        "system.h"              /* Ints, UInts                     */
 
+#include <src/objscoll.h>
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
-
-#include        "gvars.h"               /* global variables                */
-#include        "gap.h"                 /* error handling, initialisation  */
-
-#include        "calls.h"               /* generic call mechanism          */
-
-#include        "records.h"             /* generic records                 */
-#include        "lists.h"               /* generic lists                   */
-
-#include        "bool.h"                /* booleans                        */
-
-#include        "precord.h"             /* plain records                   */
-
-#include        "plist.h"               /* plain lists                     */
-#include        "string.h"              /* strings                         */
-
-#include        "code.h"                /* coder                           */
-
-#include        "tls.h"                 /* thread-local storage            */
-#include        "objfgelm.h"            /* objects of free groups          */
-
-#include        "objscoll.h"            /* single collector                */
-
-#include        "objccoll.h"            /* combinatorial collector         */
-#include        "thread.h"
+#include <src/bool.h>
+#include <src/gap.h>
+#include <src/gapstate.h>
+#include <src/gvars.h>
+#include <src/lists.h>
+#include <src/objccoll.h>
+#include <src/objfgelm.h>
+#include <src/plist.h>
+#include <src/stringobj.h>
 
 /****************************************************************************
 **
 *F * * * * * * * * * * * * local defines and typedefs * * * * * * * * * * * *
 */
-
-Obj SC_NW_STACK;
-Obj SC_LW_STACK;
-Obj SC_PW_STACK;
-Obj SC_EW_STACK;
-Obj SC_GE_STACK;
-Obj SC_CW_VECTOR;
-Obj SC_CW2_VECTOR;
-UInt SC_MAX_STACK_SIZE;
 
 /****************************************************************************
 **
@@ -103,7 +75,7 @@ typedef struct {
 #define SingleCollectWord   C8Bits_SingleCollectWord
 #define Solution            C8Bits_Solution
 #define UIntN               UInt1
-#include "src/objscoll-impl.h"
+#include <src/objscoll-impl.h>
 
 /****************************************************************************
 **
@@ -125,7 +97,7 @@ FinPowConjCol C8Bits_SingleCollector = {
 #define SingleCollectWord   C16Bits_SingleCollectWord
 #define Solution            C16Bits_Solution
 #define UIntN               UInt2
-#include "src/objscoll-impl.h"
+#include <src/objscoll-impl.h>
 
 /****************************************************************************
 **
@@ -147,7 +119,7 @@ FinPowConjCol C16Bits_SingleCollector = {
 #define SingleCollectWord   C32Bits_SingleCollectWord
 #define Solution            C32Bits_Solution
 #define UIntN               UInt4
-#include "src/objscoll-impl.h"
+#include <src/objscoll-impl.h>
 
 /****************************************************************************
 **
@@ -165,12 +137,11 @@ FinPowConjCol C32Bits_SingleCollector = {
 *F * * * * * * * * * * *  combinatorial collectors  * * * * * * * * * * * * *
 **
 **  Here the combinatorial collectors are setup.  They behave like single
-**  collectors and therefore can be used int the same way.
+**  collectors and therefore can be used in the same way.
 */
 
 /****************************************************************************
 **
-
 *V  C8Bits_CombiCollector
 */
 FinPowConjCol C8Bits_CombiCollector = {
@@ -182,7 +153,6 @@ FinPowConjCol C8Bits_CombiCollector = {
 
 /****************************************************************************
 **
-
 *V  C16Bits_CombiCollector
 */
 FinPowConjCol C16Bits_CombiCollector = {
@@ -194,7 +164,6 @@ FinPowConjCol C16Bits_CombiCollector = {
 
 /****************************************************************************
 **
-
 *V  C32Bits_CombiCollector
 */
 FinPowConjCol C32Bits_CombiCollector = {
@@ -206,7 +175,6 @@ FinPowConjCol C32Bits_CombiCollector = {
 
 /****************************************************************************
 **
-
 *V  FinPowConjCollectors
 */
 FinPowConjCol * FinPowConjCollectors [6] =
@@ -227,13 +195,11 @@ FinPowConjCol * FinPowConjCollectors [6] =
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * reduce something functions * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  CollectWordOrFail( <fc>, <sc>, <vv>, <w> )
 */
 Obj CollectWordOrFail ( 
@@ -287,7 +253,7 @@ Obj ReducedComm (
     Int *               qtr;        /* pointer into the collect vector     */
 
     /* use 'cwVector' to collect word <u>*<w> to                           */
-    vcw = TLS(SC_CW_VECTOR);
+    vcw = STATE(SC_CW_VECTOR);
     num = SC_NUMBER_RWS_GENERATORS(sc);
 
     /* check that it has the correct length, unpack <u> into it            */
@@ -305,7 +271,7 @@ Obj ReducedComm (
     }
 
     /* use 'cw2Vector' to collect word <w>*<u> to                          */
-    vc2 = TLS(SC_CW2_VECTOR);
+    vc2 = STATE(SC_CW2_VECTOR);
 
     /* check that it has the correct length, unpack <w> into it            */
     if ( fc->vectorWord( vc2, w, num ) == -1 ) {
@@ -357,7 +323,7 @@ Obj ReducedForm (
     Int *               qtr;    /* pointer into the collect vector         */
 
     /* use 'cwVector' to collect word <w> to                               */
-    vcw = TLS(SC_CW_VECTOR);
+    vcw = STATE(SC_CW_VECTOR);
     num = SC_NUMBER_RWS_GENERATORS(sc);
 
     /* check that it has the correct length                                */
@@ -397,7 +363,7 @@ Obj ReducedLeftQuotient (
     Int *               qtr;        /* pointer into the collect vector     */
 
     /* use 'cwVector' to collect word <w> to                               */
-    vcw = TLS(SC_CW_VECTOR);
+    vcw = STATE(SC_CW_VECTOR);
     num = SC_NUMBER_RWS_GENERATORS(sc);
 
     /* check that it has the correct length, unpack <w> into it            */
@@ -408,7 +374,7 @@ Obj ReducedLeftQuotient (
     }
 
     /* use 'cw2Vector' to collect word <u> to                              */
-    vc2 = TLS(SC_CW2_VECTOR);
+    vc2 = STATE(SC_CW2_VECTOR);
 
     /* check that it has the correct length, unpack <u> into it            */
     if ( fc->vectorWord( vc2, u, num ) == -1 ) {
@@ -452,7 +418,7 @@ Obj ReducedProduct (
     Int *               qtr;        /* pointer into the collect vector     */
 
     /* use 'cwVector' to collect word <w> to                               */
-    vcw = TLS(SC_CW_VECTOR);
+    vcw = STATE(SC_CW_VECTOR);
     num = SC_NUMBER_RWS_GENERATORS(sc);
 
     /* check that it has the correct length, unpack <w> into it            */
@@ -498,8 +464,8 @@ Obj ReducedPowerSmallInt (
     pow = INT_INTOBJ(vpow);
 
     /* use 'cwVector' and 'cw2Vector to collect words to                   */
-    vcw  = TLS(SC_CW_VECTOR);
-    vc2  = TLS(SC_CW2_VECTOR);
+    vcw  = STATE(SC_CW_VECTOR);
+    vc2  = STATE(SC_CW2_VECTOR);
     num  = SC_NUMBER_RWS_GENERATORS(sc);
     type = SC_DEFAULT_TYPE(sc);
 
@@ -596,8 +562,8 @@ Obj ReducedQuotient (
     Int *               qtr;        /* pointer into the collect vector     */
 
     /* use 'cwVector' to collect word <w> to                               */
-    vcw  = TLS(SC_CW_VECTOR);
-    vc2  = TLS(SC_CW2_VECTOR);
+    vcw  = STATE(SC_CW_VECTOR);
+    vc2  = STATE(SC_CW2_VECTOR);
     num  = SC_NUMBER_RWS_GENERATORS(sc);
     type = SC_DEFAULT_TYPE(sc);
 
@@ -641,13 +607,11 @@ Obj ReducedQuotient (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * exported GAP functions * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  FuncFinPowConjCol_CollectWordOrFail( <self>, <sc>, <vv>, <w> )
 */
 Obj FuncFinPowConjCol_CollectWordOrFail ( Obj self, Obj sc, Obj vv, Obj w )
@@ -723,7 +687,7 @@ Obj FuncFinPowConjCol_ReducedQuotient ( Obj self, Obj sc, Obj w, Obj u )
 Obj FuncSET_SCOBJ_MAX_STACK_SIZE ( Obj self, Obj size )
 {
     if (IS_INTOBJ(size) && INT_INTOBJ(size) > 0)
-        TLS(SC_MAX_STACK_SIZE) = INT_INTOBJ(size);
+        STATE(SC_MAX_STACK_SIZE) = INT_INTOBJ(size);
     else
         ErrorQuit( "collect vector must be a positive small integer not a %s",
                    (Int)TNAM_OBJ(size), 0L );
@@ -746,39 +710,15 @@ Obj FuncSET_SCOBJ_MAX_STACK_SIZE ( Obj self, Obj size )
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    { "FinPowConjCol_CollectWordOrFail", 3, "sc, list, word",
-      FuncFinPowConjCol_CollectWordOrFail, 
-      "src/objscoll.c:FinPowConjCol_CollectWordOrFail" },
-
-    { "FinPowConjCol_ReducedComm", 3, "sc, word, word",
-      FuncFinPowConjCol_ReducedComm, 
-      "src/objscoll.c:FinPowConjCol_ReducedComm" },
-
-    { "FinPowConjCol_ReducedForm", 2, "sc, word",
-      FuncFinPowConjCol_ReducedForm, 
-      "src/objscoll.c:FinPowConjCol_ReducedForm" },
-
-    { "FinPowConjCol_ReducedLeftQuotient", 3, "sc, word, word",
-      FuncFinPowConjCol_ReducedLeftQuotient, 
-      "src/objscoll.c:FinPowConjCol_ReducedLeftQuotient" },
-
-    { "FinPowConjCol_ReducedPowerSmallInt", 3, "sc, word, int",
-      FuncFinPowConjCol_ReducedPowerSmallInt,
-      "src/objscoll.c:FinPowConjCol_ReducedPowerSmallInt" },
-
-    { "FinPowConjCol_ReducedProduct", 3, "sc, word, word",
-      FuncFinPowConjCol_ReducedProduct,
-      "src/objscoll.c:FinPowConjCol_ReducedProduct" },
-
-    { "FinPowConjCol_ReducedQuotient", 3, "sc, word, word",
-      FuncFinPowConjCol_ReducedQuotient,
-      "src/objscoll.c:FinPowConjCol_ReducedQuotient" },
-
-    { "SET_SCOBJ_MAX_STACK_SIZE", 1, "size",
-      FuncSET_SCOBJ_MAX_STACK_SIZE,
-      "src/objscoll.c:SET_SCOBJ_MAX_STACK_SIZE" },
-
-    { 0 }
+    GVAR_FUNC(FinPowConjCol_CollectWordOrFail, 3, "sc, list, word"),
+    GVAR_FUNC(FinPowConjCol_ReducedComm, 3, "sc, word, word"),
+    GVAR_FUNC(FinPowConjCol_ReducedForm, 2, "sc, word"),
+    GVAR_FUNC(FinPowConjCol_ReducedLeftQuotient, 3, "sc, word, word"),
+    GVAR_FUNC(FinPowConjCol_ReducedPowerSmallInt, 3, "sc, word, int"),
+    GVAR_FUNC(FinPowConjCol_ReducedProduct, 3, "sc, word, word"),
+    GVAR_FUNC(FinPowConjCol_ReducedQuotient, 3, "sc, word, word"),
+    GVAR_FUNC(SET_SCOBJ_MAX_STACK_SIZE, 1, "size"),
+    { 0, 0, 0, 0, 0 }
 
 };
 
@@ -795,22 +735,6 @@ static inline Obj NewPlist( UInt tnum, UInt len, UInt reserved )
     return obj;
 }
 
-/*
- * Setup the collector stacks etc.
- */
-static void SetupCollectorStacks()
-{
-    const UInt maxStackSize = 256;
-    TLS(SC_NW_STACK) = NewPlist( T_PLIST_EMPTY, 0, maxStackSize );
-    TLS(SC_LW_STACK) = NewPlist( T_PLIST_EMPTY, 0, maxStackSize );
-    TLS(SC_PW_STACK) = NewPlist( T_PLIST_EMPTY, 0, maxStackSize );
-    TLS(SC_EW_STACK) = NewPlist( T_PLIST_EMPTY, 0, maxStackSize );
-    TLS(SC_GE_STACK) = NewPlist( T_PLIST_EMPTY, 0, maxStackSize );
-    TLS(SC_CW_VECTOR) = NEW_STRING( 0 );
-    TLS(SC_CW2_VECTOR) = NEW_STRING( 0 );
-    TLS(SC_MAX_STACK_SIZE) = maxStackSize;
-}
-
 
 /****************************************************************************
 **
@@ -821,14 +745,6 @@ static Int InitKernel (
 {
     /* init filters and functions                                          */
     InitHdlrFuncsFromTable( GVarFuncs );
-
-    InitGlobalBag( &SC_NW_STACK, "SC_NW_STACK" );
-    InitGlobalBag( &SC_LW_STACK, "SC_LW_STACK" );
-    InitGlobalBag( &SC_PW_STACK, "SC_PW_STACK" );
-    InitGlobalBag( &SC_EW_STACK, "SC_EW_STACK" );
-    InitGlobalBag( &SC_GE_STACK, "SC_GE_STACK" );
-    InitGlobalBag( &SC_CW_VECTOR, "SC_CW_VECTOR" );
-    InitGlobalBag( &SC_CW2_VECTOR, "SC_CW2_VECTOR" );
 
     /* return success                                                      */
     return 0;
@@ -843,50 +759,34 @@ static Int InitLibrary (
     StructInitInfo *    module )
 {
     /* export position numbers 'SCP_SOMETHING'                             */
-    AssGVar( GVarName( "SCP_UNDERLYING_FAMILY" ),
-             INTOBJ_INT(SCP_UNDERLYING_FAMILY) );
-    AssGVar( GVarName( "SCP_RWS_GENERATORS" ),
-             INTOBJ_INT(SCP_RWS_GENERATORS) );
-    AssGVar( GVarName( "SCP_NUMBER_RWS_GENERATORS" ),
-             INTOBJ_INT(SCP_NUMBER_RWS_GENERATORS) );
-    AssGVar( GVarName( "SCP_DEFAULT_TYPE" ),
-             INTOBJ_INT(SCP_DEFAULT_TYPE) );
-    AssGVar( GVarName( "SCP_IS_DEFAULT_TYPE" ),
-             INTOBJ_INT(SCP_IS_DEFAULT_TYPE) );
-    AssGVar( GVarName( "SCP_RELATIVE_ORDERS" ),
-             INTOBJ_INT(SCP_RELATIVE_ORDERS) );
-    AssGVar( GVarName( "SCP_POWERS" ),
-             INTOBJ_INT(SCP_POWERS) );
-    AssGVar( GVarName( "SCP_CONJUGATES" ),
-             INTOBJ_INT(SCP_CONJUGATES) );
-    AssGVar( GVarName( "SCP_INVERSES" ),
-             INTOBJ_INT(SCP_INVERSES) );
-    AssGVar( GVarName( "SCP_COLLECTOR" ),
-             INTOBJ_INT(SCP_COLLECTOR) );
-    AssGVar( GVarName( "SCP_AVECTOR" ),
-             INTOBJ_INT(SCP_AVECTOR) );
-    AssGVar( GVarName( "SCP_WEIGHTS" ),
-             INTOBJ_INT(SCP_WEIGHTS) );
-    AssGVar( GVarName( "SCP_CLASS" ),
-             INTOBJ_INT(SCP_CLASS) );
-    AssGVar( GVarName( "SCP_AVECTOR2" ),
-             INTOBJ_INT(SCP_AVECTOR2) );
-
-    SetupCollectorStacks();
+    ExportAsConstantGVar(SCP_UNDERLYING_FAMILY);
+    ExportAsConstantGVar(SCP_RWS_GENERATORS);
+    ExportAsConstantGVar(SCP_NUMBER_RWS_GENERATORS);
+    ExportAsConstantGVar(SCP_DEFAULT_TYPE);
+    ExportAsConstantGVar(SCP_IS_DEFAULT_TYPE);
+    ExportAsConstantGVar(SCP_RELATIVE_ORDERS);
+    ExportAsConstantGVar(SCP_POWERS);
+    ExportAsConstantGVar(SCP_CONJUGATES);
+    ExportAsConstantGVar(SCP_INVERSES);
+    ExportAsConstantGVar(SCP_COLLECTOR);
+    ExportAsConstantGVar(SCP_AVECTOR);
+    ExportAsConstantGVar(SCP_WEIGHTS);
+    ExportAsConstantGVar(SCP_CLASS);
+    ExportAsConstantGVar(SCP_AVECTOR2);
 
     /* export collector number                                             */
-    AssGVar( GVarName( "8Bits_SingleCollector" ),
+    AssConstantGVar( GVarName( "8Bits_SingleCollector" ),
              INTOBJ_INT(C8Bits_SingleCollectorNo) );
-    AssGVar( GVarName( "16Bits_SingleCollector" ),
+    AssConstantGVar( GVarName( "16Bits_SingleCollector" ),
              INTOBJ_INT(C16Bits_SingleCollectorNo) );
-    AssGVar( GVarName( "32Bits_SingleCollector" ),
+    AssConstantGVar( GVarName( "32Bits_SingleCollector" ),
              INTOBJ_INT(C32Bits_SingleCollectorNo) );
 
-    AssGVar( GVarName( "8Bits_CombiCollector" ),
+    AssConstantGVar( GVarName( "8Bits_CombiCollector" ),
              INTOBJ_INT(C8Bits_CombiCollectorNo) );
-    AssGVar( GVarName( "16Bits_CombiCollector" ),
+    AssConstantGVar( GVarName( "16Bits_CombiCollector" ),
              INTOBJ_INT(C16Bits_CombiCollectorNo) );
-    AssGVar( GVarName( "32Bits_CombiCollector" ),
+    AssConstantGVar( GVarName( "32Bits_CombiCollector" ),
              INTOBJ_INT(C32Bits_CombiCollectorNo) );
 
     /* init filters and functions                                          */
@@ -896,34 +796,44 @@ static Int InitLibrary (
     return 0;
 }
 
+static void InitModuleState(ModuleStateOffset offset)
+{
+    const UInt maxStackSize = 256;
+    STATE(SC_NW_STACK) = NewPlist(T_PLIST_EMPTY, 0, maxStackSize);
+    STATE(SC_LW_STACK) = NewPlist(T_PLIST_EMPTY, 0, maxStackSize);
+    STATE(SC_PW_STACK) = NewPlist(T_PLIST_EMPTY, 0, maxStackSize);
+    STATE(SC_EW_STACK) = NewPlist(T_PLIST_EMPTY, 0, maxStackSize);
+    STATE(SC_GE_STACK) = NewPlist(T_PLIST_EMPTY, 0, maxStackSize);
+    STATE(SC_CW_VECTOR) = NEW_STRING(0);
+    STATE(SC_CW2_VECTOR) = NEW_STRING(0);
+    STATE(SC_MAX_STACK_SIZE) = maxStackSize;
+
+#ifndef HPCGAP
+    InitGlobalBag( &STATE(SC_NW_STACK), "SC_NW_STACK" );
+    InitGlobalBag( &STATE(SC_LW_STACK), "SC_LW_STACK" );
+    InitGlobalBag( &STATE(SC_PW_STACK), "SC_PW_STACK" );
+    InitGlobalBag( &STATE(SC_EW_STACK), "SC_EW_STACK" );
+    InitGlobalBag( &STATE(SC_GE_STACK), "SC_GE_STACK" );
+    InitGlobalBag( &STATE(SC_CW_VECTOR), "SC_CW_VECTOR" );
+    InitGlobalBag( &STATE(SC_CW2_VECTOR), "SC_CW2_VECTOR" );
+#endif
+}
 
 /****************************************************************************
 **
 *F  InitInfoSingleCollector() . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "objscoll",                         /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "objscoll",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoSingleCollector ( void )
 {
+    RegisterModuleState(0, InitModuleState, 0);
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  objscoll.c  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

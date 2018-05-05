@@ -438,6 +438,9 @@ end);
 GAPKB_REW.MakeKnuthBendixRewritingSystemConfluent :=
   GKB_MakeKnuthBendixRewritingSystemConfluent;
 
+if IsHPCGAP then
+    MakeReadOnlyObj( GAPKB_REW );
+fi;
 
 #############################################################################
 ##

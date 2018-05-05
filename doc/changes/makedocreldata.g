@@ -9,7 +9,8 @@ GAPInfo.ManualDataChanges:= rec(
   bookname:= "changes",
   pathtoroot:= "../..",
 
-  files:= [ ],
+  files:= [
+  ],
  );;
 
 #############################################################################

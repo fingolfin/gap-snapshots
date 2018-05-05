@@ -15,9 +15,10 @@
 #ifndef GAP_SAVELOAD_H
 #define GAP_SAVELOAD_H
 
+#include <src/system.h>
+
 /***************************************************************************
 **
-
 *F  SaveWorkspace( <fname> ) . . . . . .save the workspace to the named file
 **
 **  'SaveWorkspace' is the entry point to the workspace saving. It is not
@@ -62,23 +63,15 @@ extern ObjFunc LoadHandler();
 
 /***************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  InitInfoSaveLoad()  . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoSaveLoad ( void );
 
 
 #endif // GAP_SAVELOAD_H
-
-/****************************************************************************
-**
-
-*E  saveload.h  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

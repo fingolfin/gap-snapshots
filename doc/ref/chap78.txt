@@ -92,6 +92,27 @@
   arguments  must  match a declaration of [3Xopr[103X and without the restriction that
   [3Xargs-filts[103X imply the respective requirements of the operation [3Xopr[103X.[133X
   
+  [1X78.2-3 InstallMethodWithRandomSource[101X
+  
+  [33X[1;0Y[29X[2XInstallMethodWithRandomSource[102X( [3Xopr[103X, [3Xinfo[103X[, [3Xfamp[103X], [3Xargs-filts[103X[, [3Xval[103X], [3Xmethod[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XInstallOtherMethodWithRandomSource[102X( [3Xopr[103X, [3Xinfo[103X[, [3Xfamp[103X], [3Xargs-filts[103X[, [3Xval[103X], [3Xmethod[103X ) [32X function[133X
+  
+  [33X[0;0YThese  functions  are  designed  to  simplify  adding new methods for [2XRandom[102X
+  ([14X30.7-1[114X) and [2XPseudoRandom[102X ([14X30.7-2[114X) to GAP which can be called both with, and
+  without, a random source.[133X
+  
+  [33X[0;0YThey   accept   the   same   arguments   as   [2XInstallMethod[102X   ([14X78.2-1[114X)   and
+  [2XInstallOtherMethod[102X  ([14X78.2-2[114X),  with  the  extra  requirement  that the first
+  member  of [3Xargs-filts[103X must be [2XIsRandomSource[102X ([14X14.7-1[114X), and the [3Xinfo[103X argument
+  is compulsory and must begin 'for a random source and'.[133X
+  
+  [33X[0;0YThis  function  then  installs  two  methods:  first  it calls [2XInstallMethod[102X
+  ([14X78.2-1[114X)  (or [2XInstallOtherMethod[102X ([14X78.2-2[114X)) with unchanged arguments. Then it
+  calls  [2XInstallMethod[102X ([14X78.2-1[114X) (or [2XInstallOtherMethod[102X ([14X78.2-2[114X)) a second time
+  to  install  another  method which lacks the initial random source argument;
+  this   additional   method   simply   invokes   the  original  method,  with
+  [2XGlobalMersenneTwister[102X ([14X14.7-4[114X) added as first argument.[133X
+  
   
   [1X78.3 [33X[0;0YApplicable Methods and Method Selection[133X[101X
   
@@ -127,7 +148,11 @@
   call of [2XInstallMethod[102X ([14X78.2-1[114X). So the argument [3Xval[103X can be used to raise the
   priority of a method relative to other methods for [3Xopr[103X.[133X
   
-  [33X[0;0YNote  that  from the applicable methods, an efficient one shall be selected.
+  [33X[0;0YNote  that  for operations which are constructors special rules with respect
+  to  applicability  and  rank of the corresponding methods apply (see section
+  [2XNewConstructor[102X ([14X79.6-1[114X)).[133X
+  
+  [33X[0;0YNote  that  from  the applicable methods an efficient one shall be selected.
   This  is  a  method  that  needs  only  little  time  and  storage  for  the
   computations.[133X
   

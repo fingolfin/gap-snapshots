@@ -62,11 +62,10 @@ end;
 #M  AlgebraicElementsFamily      generic method
 ##
 InstallMethod(AlgebraicElementsFamily,"generic",true,
-  [IsField,IsUnivariatePolynomial],0,
-function(f,p)
+  [IsField,IsUnivariatePolynomial,IsBool],0,
+function(f,p,check)
 local fam,i,cof,red,rchar,impattr,deg;
-  if not
-  IsIrreducibleRingElement(PolynomialRing(f,
+  if check and not IsIrreducibleRingElement(PolynomialRing(f,
              [IndeterminateNumberOfLaurentPolynomial(p)]),p) then
     Error("<p> must be irreducible over f");
   fi;
@@ -77,9 +76,6 @@ local fam,i,cof,red,rchar,impattr,deg;
   fi;
 
   impattr:=IsAlgebraicElement and CanEasilySortElements and IsZDFRE;
-  #if IsFinite(f) then
-  #  impattr:=impattr and IsFFE;
-  #fi;
   fam:=NewFamily("AlgebraicElementsFamily(...)",IsAlgebraicElement,
 	 impattr,
 	 IsAlgebraicElementFamily and CanEasilySortElements);
@@ -105,11 +101,9 @@ local fam,i,cof,red,rchar,impattr,deg;
   fam!.deg:=deg;
   i:=List([1..DegreeOfLaurentPolynomial(p)],i->fam!.zeroCoefficient);
   i[2]:=fam!.oneCoefficient;
-  if rchar>0 then
-    ConvertToVectorRep(i,rchar);
-  fi;
-  fam!.primitiveElm:=ObjByExtRep(fam,i);
-  fam!.indeterminateName:="a";
+  i:=ImmutableVector(Size(f),i,true);
+  fam!.primitiveElm:=MakeImmutable(ObjByExtRep(fam,i));
+  fam!.indeterminateName:=MakeImmutable("a");
 
   # reductions
   #red:=IdentityMat(deg,fam!.oneCoefficient);
@@ -118,7 +112,11 @@ local fam,i,cof,red,rchar,impattr,deg;
     cof:=ListWithIdenticalEntries(i,fam!.zeroCoefficient);
     Add(cof,fam!.oneCoefficient);
     if rchar>0 then
-      ConvertToVectorRep(cof,rchar);
+      if IsHPCGAP then
+        cof := CopyToVectorRep(cof,rchar); # rchar is <= 256
+      else
+        ConvertToVectorRep(cof,rchar);
+      fi;
     fi;
     ReduceCoeffs(cof,fam!.polCoeffs);
     while Length(cof)<deg do
@@ -129,13 +127,13 @@ local fam,i,cof,red,rchar,impattr,deg;
   red:=ImmutableMatrix(fam!.baseField,red);
   fam!.reductionMat:=red;
   fam!.prodlen:=Length(red);
-  fam!.entryrange:=[1..deg];
+  fam!.entryrange:=MakeImmutable([1..deg]);
 
   red:=[];
   for i in [deg..2*deg-1] do
     red[i]:=[deg+1..i];
   od;
-  fam!.mulrange:=red;
+  fam!.mulrange:=MakeImmutable(red);
 
   SetIsUFDFamily(fam,true);
   SetCoefficientsFamily(fam,FamilyObj(One(f)));
@@ -153,13 +151,11 @@ end);
 ##
 #M  AlgebraicExtension      generic method
 ##
-DoAlgebraicExt:=function(arg)
-local f,p,nam,e,fam,colf;
+DoAlgebraicExt:=function(f,p,extra...)
+local nam,e,fam,colf,check;
 
-  f:=arg[1];
-  p:=arg[2];
-  if Length(arg)>2 then
-    nam:=arg[3];
+if Length(extra)>0 and IsString(extra[1]) then
+    nam:=extra[1];
   else
     nam:="a";
   fi;
@@ -167,7 +163,12 @@ local f,p,nam,e,fam,colf;
     return f;
   fi;
 
-  fam:=AlgebraicElementsFamily(f,p);
+  if true in extra then
+    check := true;
+  else
+    check := false;
+  fi;
+  fam:=AlgebraicElementsFamily(f,p,check);
   SetCharacteristic(fam,Characteristic(f));
   fam!.indeterminateName:=nam;
   colf:=CollectionsFamily(fam);
@@ -177,7 +178,8 @@ local f,p,nam,e,fam,colf;
   fam!.wholeField:=e;
   e!.extFam:=fam;
   SetCharacteristic(e,Characteristic(f));
-  SetDegreeOverPrimeField(e,DegreeOfLaurentPolynomial(p)*DegreeOverPrimeField(f));
+  SetDegreeOverPrimeField(e,
+               DegreeOfLaurentPolynomial(p)*DegreeOverPrimeField(f));
   SetIsFiniteDimensional(e,true);
   SetLeftActingDomain(e,f);
   SetGeneratorsOfField(e,[fam!.primitiveElm]);
@@ -210,15 +212,35 @@ local f,p,nam,e,fam,colf;
 end;
 
 InstallMethod(AlgebraicExtension,"generic",true,
-  [IsField,IsUnivariatePolynomial],0,DoAlgebraicExt);
+  [IsField,IsUnivariatePolynomial],0,
+function(k,f) return DoAlgebraicExt(k,f,true);
+end);
+InstallMethod(AlgebraicExtensionNC,"generic",true,
+  [IsField,IsUnivariatePolynomial],0,
+function(k,f) return DoAlgebraicExt(k,f,false);
+end);
 
 RedispatchOnCondition(AlgebraicExtension,true,[IsField,IsRationalFunction],
   [IsField,IsUnivariatePolynomial],0);
 
+RedispatchOnCondition(AlgebraicExtensionNC,true,[IsField,IsRationalFunction],
+  [IsField,IsUnivariatePolynomial],0);
+
 InstallOtherMethod(AlgebraicExtension,"with name",true,
-  [IsField,IsUnivariatePolynomial,IsString],0,DoAlgebraicExt);
+  [IsField,IsUnivariatePolynomial,IsString],0,
+function(k,f,nam) return DoAlgebraicExt(k,f,nam,true);
+end);
+
+InstallOtherMethod(AlgebraicExtensionNC,"with name",true,
+  [IsField,IsUnivariatePolynomial,IsString],0,
+function(k,f,nam) return DoAlgebraicExt(k,f,nam,false);
+end);
 
 RedispatchOnCondition(AlgebraicExtension,true,
+  [IsField,IsRationalFunction,IsString],
+  [IsField,IsUnivariatePolynomial,IsString],0);
+
+RedispatchOnCondition(AlgebraicExtensionNC,true,
   [IsField,IsRationalFunction,IsString],
   [IsField,IsUnivariatePolynomial,IsString],0);
 
@@ -581,9 +603,7 @@ local i,fam,f,g,t,h,rf,rg,rh,z;
     #od;
   od;
   rf:=1/f[Length(f)]*rf;
-  if fam!.rchar>0 then
-    ConvertToVectorRep(rf,fam!.rchar);
-  fi;
+  rf:=ImmutableVector(fam!.rchar, rf, true);
   return AlgExtElm(fam,rf);
 end);
 
@@ -881,9 +901,7 @@ function(e)
 local fam,l;
   fam:=e!.extFam;
   l:=List([1..fam!.deg],i->Random(fam!.baseField));
-  if fam!.rchar>0 then
-    ConvertToVectorRep(l,fam!.rchar);
-  fi;
+  l:=ImmutableVector(fam!.rchar,l,true);
   return AlgExtElm(fam,l);
 end);
 
@@ -1130,7 +1148,7 @@ local coeffring, basring, theta, xind, yind, x, y, coeffs, G, c, val, k, T,
 
     # over finite field alg ext we cannot multiply with Integers
     kone:=Zero(one); for j in [1..k] do kone:=kone+one; od;
-    factors:= List( factors,f -> Value( f, xe + kone*theta ),one );
+    factors:= List( factors,f -> Value( f, xe + kone*theta ,one) );
     factors:= List( factors,f -> Gcd( Re, U, f ) );
     factors:=Filtered( factors,
                      x -> DegreeOfUnivariateLaurentPolynomial( x ) <> 0 );

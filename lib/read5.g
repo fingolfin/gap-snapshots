@@ -3,6 +3,8 @@
 #X  now read all the implementation parts
 ##
 
+ReadLib( "type.gi"     );
+
 ReadLib( "rvecempt.gi" );
 ReadLib( "ratfun1.gi"  );
 ReadLib( "matrix.gi"   );
@@ -147,6 +149,7 @@ ReadLib( "grppcatr.gi" );
 ReadLib( "grppcnrm.gi" );
 
 # files dealing with trees and hash tables
+ReadLib( "bitfields.gi" );
 ReadLib( "dict.gi"  );
 ReadLib( "dicthf.gi"  );
 
@@ -198,17 +201,18 @@ ReadLib( "schursym.gi");
 # files dealing with nice monomorphism
 ReadLib( "grpnice.gi"  );
 
-ReadLib( "morpheus.gi" );
-ReadLib( "grplatt.gi"  );
-ReadLib( "oprtglat.gi" );
-ReadLib( "grppclat.gi" );
-
 # fitting free library
 ReadLib( "fitfree.gi"  );
 ReadLib( "permdeco.gi" );
 ReadLib( "clashom.gi"  );
 ReadLib( "maxsub.gi"   );
 ReadLib( "norad.gi"    );
+
+ReadLib( "autsr.gi"    );
+ReadLib( "morpheus.gi" );
+ReadLib( "grplatt.gi"  );
+ReadLib( "oprtglat.gi" );
+ReadLib( "grppclat.gi" );
 
 ReadLib( "grppcaut.gi" );
 
@@ -248,12 +252,11 @@ ReadLib( "proto.gi");
 
 ReadLib( "orders.gi");
 
-ReadLib( "other.gi");
-
 ReadLib( "gasman.gi");
 
-ReadLib( "function.gi");
+ReadLib("memusage.gi");
 
+ReadLib( "function.gi");
 
 # floateans, now really install all handlers
 ReadLib( "float.gi" );

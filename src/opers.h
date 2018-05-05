@@ -14,10 +14,10 @@
 #ifndef GAP_OPERS_H
 #define GAP_OPERS_H
 
+#include <src/system.h>
 
 /****************************************************************************
 **
-
 *V  TRY_NEXT_METHOD . . . . . . . . . . . . . . . . . `TRY_NEXT_MESSAGE' flag
 */
 extern Obj TRY_NEXT_METHOD;
@@ -25,7 +25,6 @@ extern Obj TRY_NEXT_METHOD;
 
 /****************************************************************************
 **
-
 *F  IS_OPERATION( <obj> ) . . . . . . . . . . check if object is an operation
 */
 #define IS_OPERATION(func) \
@@ -85,7 +84,7 @@ extern Obj TRY_NEXT_METHOD;
 **                                 storing is enabled (default) else false
 */
 
-#define ENABLED_ATTR(oper)                    ((UInt)(ADDR_OBJ(oper)[37])) 
+#define ENABLED_ATTR(oper)                 ((UInt)(CONST_ADDR_OBJ(oper)[37]))
 
 /****************************************************************************
 **
@@ -104,14 +103,12 @@ extern Obj TRY_NEXT_METHOD;
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * internal flags functions * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  NEW_FLAGS( <flags>, <size> )  . . . . . . . . . . . . . .  new flags list
 */
 #define NEW_FLAGS( flags, size ) \
@@ -123,7 +120,7 @@ extern Obj TRY_NEXT_METHOD;
 *F  SIZE_PLEN_FLAGS( <plen> ) . .  size for a flags list with physical length
 */
 #define SIZE_PLEN_FLAGS(plen) \
-  (4*sizeof(Obj)+((plen)+BIPEB-1)/BIPEB*sizeof(Obj))
+  (4*sizeof(Obj)+(((plen)+BIPEB-1) >> LBIPEB)*sizeof(Obj))
 
 
 
@@ -133,7 +130,7 @@ extern Obj TRY_NEXT_METHOD;
 **
 **  returns the list of trues of <flags> or 0 if the list is not known yet.
 */
-#define TRUES_FLAGS(flags)              (ADDR_OBJ(flags)[0])
+#define TRUES_FLAGS(flags)              (CONST_ADDR_OBJ(flags)[0])
 
 
 /****************************************************************************
@@ -147,7 +144,7 @@ extern Obj TRY_NEXT_METHOD;
 **
 *F  HASH_FLAGS( <flags> ) . . . . . . . . . . . .  hash value of <flags> or 0
 */
-#define HASH_FLAGS(flags)               (ADDR_OBJ(flags)[1])
+#define HASH_FLAGS(flags)               (CONST_ADDR_OBJ(flags)[1])
 
 
 /****************************************************************************
@@ -161,7 +158,7 @@ extern Obj TRY_NEXT_METHOD;
 **
 *F  LEN_FLAGS( <flags> )  . . . . . . . . . . . . . .  length of a flags list
 */
-#define LEN_FLAGS(list)                 (INT_INTOBJ(ADDR_OBJ(list)[2]))
+#define LEN_FLAGS(list)                 (INT_INTOBJ(CONST_ADDR_OBJ(list)[2]))
 
 
 /****************************************************************************
@@ -175,7 +172,7 @@ extern Obj TRY_NEXT_METHOD;
 **
 *F  AND_CACHE_FLAGS( <flags> )  . . . . . . . . . `and' cache of a flags list
 */
-#define AND_CACHE_FLAGS(list)           (ADDR_OBJ(list)[3])
+#define AND_CACHE_FLAGS(list)           (CONST_ADDR_OBJ(list)[3])
 
 
 /****************************************************************************
@@ -187,9 +184,9 @@ extern Obj TRY_NEXT_METHOD;
 
 /****************************************************************************
 **
-*F  NRB_FLAGS( <flags> )  . . . . . .  number of basic blocks of a flags lits
+*F  NRB_FLAGS( <flags> )  . . . . . .  number of basic blocks of a flags list
 */
-#define NRB_FLAGS(flags)                ((LEN_FLAGS(flags)+BIPEB-1)/BIPEB)
+#define NRB_FLAGS(flags)                ((LEN_FLAGS(flags)+BIPEB-1) >> LBIPEB)
 
 
 
@@ -212,7 +209,7 @@ extern Obj TRY_NEXT_METHOD;
 **  Note that 'BLOCK_ELM_FLAGS' is a macro, so do not call it  with arguments
 **  that have side effects.
 */
-#define BLOCK_ELM_FLAGS(list, pos)      (BLOCKS_FLAGS(list)[((pos)-1)/BIPEB])
+#define BLOCK_ELM_FLAGS(list, pos)      (BLOCKS_FLAGS(list)[((pos)-1) >> LBIPEB])
 
 
 /****************************************************************************
@@ -225,7 +222,7 @@ extern Obj TRY_NEXT_METHOD;
 **  Note that 'MASK_POS_FLAGS'  is a macro, so  do not call it with arguments
 **  that have side effects.
 */
-#define MASK_POS_FLAGS(pos)             (((UInt) 1)<<((pos)-1)%BIPEB)
+#define MASK_POS_FLAGS(pos)             (((UInt) 1)<<(((pos)-1) & (BIPEB-1)))
 
 
 /****************************************************************************
@@ -238,9 +235,15 @@ extern Obj TRY_NEXT_METHOD;
 **
 **  Note that 'ELM_FLAGS' is a macro, so do not call it  with arguments  that
 **  have side effects.
+**
+**  C_ELM_FLAGS returns a result which it is better to use inside the kernel
+**  since the C compiler can't know that True != False. Using C_ELM_FLAGS
+**  gives slightly nicer C code and potential for a little more optimisation.
 */
-#define ELM_FLAGS(list,pos) \
-  ((BLOCK_ELM_FLAGS(list,pos) & MASK_POS_FLAGS(pos)) ?  True : False)
+#define C_ELM_FLAGS(list, pos)                                               \
+    ((BLOCK_ELM_FLAGS(list, pos) & MASK_POS_FLAGS(pos)) ? 1 : 0)
+
+#define ELM_FLAGS(list, pos) (C_ELM_FLAGS(list, pos) ? True : False)
 
 
 /****************************************************************************
@@ -268,14 +271,12 @@ extern Obj FuncIS_SUBSET_FLAGS( Obj self, Obj flags1, Obj flags2 );
      
 /****************************************************************************
 **
-
 *F * * * * * * * * * * *  internal filter functions * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *V  CountFlags  . . . . . . . . . . . . . . . . . . . . next free flag number
 */
 extern Int CountFlags;
@@ -298,7 +299,6 @@ extern Obj RESET_FILTER_OBJ;
 
 /****************************************************************************
 **
-
 *F  SetterFilter( <oper> )  . . . . . . . . . . . . . . .  setter of a filter
 */
 extern Obj SetterFilter (
@@ -342,10 +342,6 @@ extern Obj TesterAndFilter (
 **
 *F  NewFilter( <name>, <narg>, <nams>, <hdlr> )  . . . . .  make a new filter
 */
-extern Obj DoTestFilter (
-    Obj                 self,
-    Obj                 obj );
-
 extern Obj NewTesterFilter (
     Obj                 getter );
 
@@ -385,7 +381,6 @@ extern Obj NewAndFilter (
 
 /****************************************************************************
 **
-
 *V  ReturnTrueFilter . . . . . . . . . . . . . . . . the return 'true' filter
 */
 extern Obj ReturnTrueFilter;
@@ -393,14 +388,12 @@ extern Obj ReturnTrueFilter;
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * *  internal operation functions  * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  NewOperation( <name> )  . . . . . . . . . . . . . .  make a new operation
 */
 extern Obj DoOperation0Args (
@@ -536,7 +529,6 @@ extern Obj NewProperty (
 
 /****************************************************************************
 **
-
 *F  InstallMethodArgs( <oper>, <func> ) . . . . . . . . . . .  clone function
 **
 **  There is a problem  with uncompleted functions: if  they are  cloned then
@@ -550,7 +542,6 @@ extern void InstallMethodArgs (
 
 /****************************************************************************
 **
-
 *F  ChangeDoOperations( <oper>, <verb> )
 */
 extern void ChangeDoOperations (
@@ -584,23 +575,15 @@ extern void LoadOperationExtras( Obj oper );
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  InitInfoOpers() . . . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoOpers ( void );
 
 
 #endif // GAP_OPERS_H
-
-/****************************************************************************
-**
-
-*E  opers.h . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

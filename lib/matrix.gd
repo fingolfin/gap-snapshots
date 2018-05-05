@@ -266,7 +266,7 @@ DeclareAttribute( "DepthOfUpperTriangularMatrix", IsMatrix );
 ##  <#GAPDoc Label="DeterminantMat">
 ##  <ManSection>
 ##  <Attr Name="DeterminantMat" Arg='mat'/>
-##  <Attr Name="Determinant" Arg='mat'/>
+##  <Oper Name="Determinant" Arg='mat'/>
 ##
 ##  <Description>
 ##  returns the determinant of the square matrix <A>mat</A>.
@@ -1172,7 +1172,7 @@ DeclareOperation( "SumIntersectionMat", [ IsMatrix, IsMatrix ] );
 ##
 ##  <Description>
 ##  Computes an upper triangular form of the matrix <A>mat</A> via
-##  the Gaussian Algorithm. It returns a immutable matrix in upper triangular form.
+##  the Gaussian Algorithm. It returns a mutable matrix in upper triangular form.
 ##  This is sometimes also  called <Q>Hermite normal form</Q> or <Q>Reduced Row Echelon
 ##  Form</Q>.
 ##  <C>RREF</C> is a synonym for <C>TriangulizedMat</C>.
@@ -1615,16 +1615,17 @@ DeclareGlobalFunction( "ReflectionMat" );
 
 #############################################################################
 ##
-#F  RandomInvertibleMat( <m> [, <R>] )  . . . make a random invertible matrix
+#F  RandomInvertibleMat( [rs ,] <m> [, <R>] ) . . .  random invertible matrix
 ##
 ##  <#GAPDoc Label="RandomInvertibleMat">
 ##  <ManSection>
-##  <Func Name="RandomInvertibleMat" Arg='m [, R]'/>
+##  <Func Name="RandomInvertibleMat" Arg='[rs ,] m [, R]'/>
 ##
 ##  <Description>
 ##  <Ref Func="RandomInvertibleMat"/> returns a new mutable invertible random
 ##  matrix with <A>m</A> rows and columns with elements taken from the ring
 ##  <A>R</A>, which defaults to <Ref Var="Integers"/>.
+##  Optionally, a random source <A>rs</A> can be supplied.
 ##  <Example><![CDATA[
 ##  gap> m := RandomInvertibleMat(4);
 ##  [ [ -4, 1, 0, -1 ], [ -1, -1, 1, -1 ], [ 1, -2, -1, -2 ], 
@@ -1642,16 +1643,17 @@ DeclareGlobalFunction( "RandomInvertibleMat" );
 
 #############################################################################
 ##
-#F  RandomMat( <m>, <n> [, <R>] ) . . . . . . . . . . .  make a random matrix
+#F  RandomMat( [rs ,] <m>, <n> [, <R>] ) . . . . . . . . make a random matrix
 ##
 ##  <#GAPDoc Label="RandomMat">
 ##  <ManSection>
-##  <Func Name="RandomMat" Arg='m, n [, R]'/>
+##  <Func Name="RandomMat" Arg='[rs ,] m, n [, R]'/>
 ##
 ##  <Description>
 ##  <Ref Func="RandomMat"/> returns a new mutable random matrix with <A>m</A> rows and
 ##  <A>n</A> columns with elements taken from the ring <A>R</A>, which defaults
 ##  to <Ref Var="Integers"/>.
+##  Optionally, a random source <A>rs</A> can be supplied.
 ##  <Example><![CDATA[
 ##  gap> RandomMat(2,3,GF(3));
 ##  [ [ Z(3), Z(3), 0*Z(3) ], [ Z(3), Z(3)^0, Z(3) ] ]
@@ -1665,15 +1667,16 @@ DeclareGlobalFunction( "RandomMat" );
 
 #############################################################################
 ##
-#F  RandomUnimodularMat( <m> )  . . . . . . . . . .  random unimodular matrix
+#F  RandomUnimodularMat( [rs ,] <m> ) . . . . . . . . random unimodular matrix
 ##
 ##  <#GAPDoc Label="RandomUnimodularMat">
 ##  <ManSection>
-##  <Func Name="RandomUnimodularMat" Arg='m'/>
+##  <Func Name="RandomUnimodularMat" Arg='[rs ,] m'/>
 ##
 ##  <Description>
 ##  returns a new random mutable <A>m</A><M>\times</M><A>m</A> matrix with integer
 ##  entries that is invertible over the integers.
+##  Optionally, a random source <A>rs</A> can be supplied.
 ##  <Example><![CDATA[
 ##  gap> m := RandomUnimodularMat(3);
 ##  [ [ -5, 1, 0 ], [ 12, -2, -1 ], [ -14, 3, 0 ] ]
@@ -2091,6 +2094,37 @@ DeclareOperation("BaseField",[IsObject]);
 ##  <#/GAPDoc>
 ##
 DeclareGlobalFunction( "SimplexMethod" );
+
+#############################################################################
+##
+#O  RationalCanonicalFormTransform( <A> )
+##
+##  <#GAPDoc Label="Frobenius Normal Form">
+##  <ManSection>
+##  <Oper Name="RationalCanonicalFormTransform" Arg='A'/>
+##
+##  <Description>
+##  For a matrix <A>A</A> return a matrix <A>P</A> such that
+##  <M><A>A</A>^<A>P</A></M> is in rational canonical form (also called Frobenius normal form).
+##  The algorithm used is the basic textbook version and thus not of optimal complexity.
+##  <Example><![CDATA[
+##  gap> aa:=[ [ 0, -8, 12, 40, -36, 4, 0, 59, 15, -9 ], [ -2, -2, -2, 6, -11, 1, -1, 10, 1, 0 ],
+##  >   [ 1, 5, 0, -6, 12, -2, 0, -12, -4, 2 ], [ 0, 0, 0, 2, 0, 0, 0, 7, 0, 0 ],
+##  >   [ 0, 2, -3, -7, 8, -1, 0, -7, -3, 2 ], [ -5, -4, -6, 18, -30, 2, -2, 35, 5, -1 ],
+##  >   [ -1, -6, 6, 20, -28, 3, 0, 24, 10, -6 ], [ 0, 0, 0, -1, 0, 0, 0, -3, 0, 0 ],
+##  >   [ 0, 0, -1, -2, -2, 0, -1, -7, 0, 0 ], [ 0, -8, 9, 21, -36, 4, -2, 12, 12, -8 ] ];;
+##  gap> t:=RationalCanonicalFormTransform(aa);;
+##  gap> aa^t;
+##  [ [ 0, 0, 0, 1, 0, 0, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 1, 0, 0, 0, 0, 0, 0, 0, 0 ],
+##    [ 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 ],
+##    [ 0, 0, 0, 0, 0, 1, 0, 0, 0, 1 ], [ 0, 0, 0, 0, 0, 0, 1, 0, 0, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 1, 0, -1 ],
+##    [ 0, 0, 0, 0, 0, 0, 0, 0, 1, -1 ] ]
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction( "RationalCanonicalFormTransform" );
 
 
 #############################################################################

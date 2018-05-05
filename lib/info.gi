@@ -16,7 +16,7 @@
 ##  InfoSelector, and classes and selectors may be built up with \+
 #N  I wanted to use \or, but this isn't at operation
 ##  
-##  An message is associated with a selector and a level and is
+##  A message is associated with a selector and a level and is
 ##  printed when the desired level for any of the classes in the selector
 ##  equals or exceeds  the level of the message
 ##
@@ -32,31 +32,38 @@
 ##
 #R  IsInfoClassListRep(<obj>)                       length one positional rep
 ##                              
-##  An InfoClass is represented as a length one positional object with
-##  a positive integer in ic![1]. No other representations are 
-##  anticipated
+##  An InfoClass is represented as a positional object with the following
+##  members:
 ##
-
-DeclareRepresentation("IsInfoClassListRep", IsPositionalObjectRep,[]);
-
-#############################################################################
+##  1 : Current level (A positive integer)
+##  2 : ClassName     (String)
+##  3 : Handler       (Optional, handler for InfoDoPrint)
+##  4 : Output        (Optional, output stream)
+##  5 : ClassNum      (An integer identifying the class)
 ##
-#V  InfoData                 record of private stuff
-#V  InfoData.CurrentLevels   the current desired verbosity levels set by user
-#V  InfoData.ClassNames      names of all info classes, used for printing
-#V  InfoData.Handler         optional handler for InfoDoPrint
-##
-##  these are all lists, and the first two should have the same length, 
-##  which defines the number of Info classes that exist
-##
+##  In HPC-GAP, positional objects cannot change length, so we put a
+##  a non-optional member last, so the list of arguments always has
+##  fixed length.
 
-if not IsBound(InfoData) then
+DeclareRepresentation("IsInfoClassListRep", IsAtomicPositionalObjectRep,[]);
 
-    BIND_GLOBAL( "InfoData", rec() );
-    InfoData.CurrentLevels := [];
-    InfoData.ClassNames := [];
-    InfoData.Handler := [];
-    InfoData.Output := [];
+# Define constants for the positions in InfoClassListRep
+BIND_CONSTANT("INFODATA_CURRENTLEVEL", 1);
+BIND_CONSTANT("INFODATA_CLASSNAME", 2);
+BIND_CONSTANT("INFODATA_HANDLER", 3);
+BIND_CONSTANT("INFODATA_OUTPUT", 4);
+BIND_CONSTANT("INFODATA_NUM", 5);
+
+# A list of all created InfoClassListReps
+INFO_CLASSES := [];
+
+# This variable contains the level and (first) selector of the most recent
+# successful Info statement
+InfoData := rec();
+
+if IsHPCGAP then
+    ShareInternalObj(INFO_CLASSES);
+    MakeThreadLocal("InfoData");
 fi;
 
 InstallGlobalFunction( "SetDefaultInfoOutput", function( out )
@@ -68,13 +75,8 @@ InstallGlobalFunction( "SetDefaultInfoOutput", function( out )
 end);
 
 InstallGlobalFunction( "DefaultInfoHandler", function( infoclass, level, list )
-  local cl, out, fun, s;
-  cl := InfoData.LastClass![1];
-  if IsBound(InfoData.Output[cl]) then
-    out := InfoData.Output[cl];
-  else
-    out := DefaultInfoOutput;
-  fi;
+  local out, fun, s;
+  out := InfoOutput(infoclass);
   if out = "*Print*" then
     if IsBoundGlobal( "PrintFormattedString" ) then
       fun := function(s)
@@ -107,42 +109,31 @@ end);
 
 #############################################################################
 ##
-#F  InfoData.InfoClass( <num> )               make a number into an InfoClass
-##
-
-InfoData.InfoClass :=  function(num)
-    if num < 1 or num > Length(InfoData.CurrentLevels) then
-        Error("Bad info class number -- this is a bug");
-    fi;
-    return Objectify(NewType(InfoClassFamily,IsInfoClassListRep),
-                   [num]);
-end;
-
-#############################################################################
-##
 #M  NewInfoClass( <name> )                              make a new Info Class  
 ##
 ##  This is how Info Classes should be obtained
 ##
-#N  Is there any reason to make this an Operation?
-##
 
 InstallMethod(NewInfoClass, true, [IsString], 0,
         function(name)
-    local pos;
+    local pos, ic;
     
-    # if we are rereading and this class already exists then 
-    # do not make a new class
-    if REREADING then
-        pos := Position(InfoData.ClassNames,name);
-        if pos <> fail then
-            return InfoData.InfoClass(pos);
+    atomic readwrite INFO_CLASSES do
+        # if we are rereading and this class already exists then 
+        # do not make a new class
+        if REREADING then
+            pos := First(INFO_CLASSES, x -> x![INFODATA_CLASSNAME] = name);
+            if pos <> fail then
+                return INFO_CLASSES[pos];
+            fi;
         fi;
-    fi;
-    
-    Add(InfoData.CurrentLevels,0);
-    Add(InfoData.ClassNames,name);
-    return InfoData.InfoClass(Length(InfoData.CurrentLevels));
+        
+        pos := Length(INFO_CLASSES) + 1;
+        ic := Objectify(NewType(InfoClassFamily,IsInfoClassListRep),
+                  [0, name, , ,pos]);
+        INFO_CLASSES[pos] := ic;
+        return ic;
+    od;
 end);
 
 
@@ -163,7 +154,7 @@ end );
 #F  SetInfoHandler( <class>, <handler> )
 ##
 InstallGlobalFunction( SetInfoHandler, function(class, handler)
-  InfoData.Handler[class![1]] := handler;
+    class![INFODATA_HANDLER] := handler;
 end);
 
 #############################################################################
@@ -171,7 +162,19 @@ end);
 #F  SetInfoOutput( <class>, <handler> )
 ##
 InstallGlobalFunction( SetInfoOutput, function(class, out)
-  InfoData.Output[class![1]] := out;
+  class![INFODATA_OUTPUT] := out;
+end);
+
+InstallGlobalFunction( UnbindInfoOutput, function(class)
+  Unbind(class![INFODATA_OUTPUT]);
+end);
+
+InstallGlobalFunction( InfoOutput, function(class)
+  if IsBound(class![INFODATA_OUTPUT]) then
+    return class![INFODATA_OUTPUT];
+  else
+    return DefaultInfoOutput;
+  fi;
 end);
 
 #############################################################################
@@ -184,21 +187,21 @@ InstallMethod(\=,
     "for two info classes",
     IsIdenticalObj, [IsInfoClassListRep, IsInfoClassListRep], 0,
         function(ic1,ic2)
-    return ic1![1] = ic2![1];
+    return ic1![INFODATA_NUM] = ic2![INFODATA_NUM];
 end);
 
 InstallMethod(\<,
     "for two info classes",
     IsIdenticalObj, [IsInfoClassListRep, IsInfoClassListRep], 0,
         function(ic1,ic2)
-    return ic1![1] < ic2![1];
+    return ic1![INFODATA_NUM] < ic2![INFODATA_NUM];
 end);
 
 InstallMethod(PrintObj,
     "for an info class",
     true, [IsInfoClassListRep], 0,
         function(ic)
-    Print(InfoData.ClassNames[ic![1]]);
+    Print(ic![INFODATA_CLASSNAME]);
 end);
 
 #############################################################################
@@ -244,19 +247,19 @@ end);
 #M  SetInfoLevel( <class>, <level>)   set desired verbosity level for a class  
 ##
 
-InfoData.handler := function(ic,lev)
-    InfoData.CurrentLevels[ic![1]] := lev;
+INFODATA_DEFAULT_HANDLER := function(ic,lev)
+    ic![INFODATA_CURRENTLEVEL] := lev;
 end;
 
 InstallMethod(SetInfoLevel, true, 
         [IsInfoClass and IsInfoClassListRep, IsPosInt], 0,
-        InfoData.handler);
+        INFODATA_DEFAULT_HANDLER);
 
 InstallMethod(SetInfoLevel, true, 
         [IsInfoClass and IsInfoClassListRep, IsZeroCyc], 0,
-        InfoData.handler);
+        INFODATA_DEFAULT_HANDLER);
 
-Unbind(InfoData.handler);
+Unbind(INFODATA_DEFAULT_HANDLER);
 
 #############################################################################
 ##
@@ -264,12 +267,14 @@ Unbind(InfoData.handler);
 ##
 
 BIND_GLOBAL( "SetAllInfoLevels", function( level )
-    local i;
-    for i in [1..Length(InfoData.CurrentLevels)] do
-        InfoData.CurrentLevels[i] := level;
+    local infoclass;
+    atomic readwrite INFO_CLASSES do
+        for infoclass in INFO_CLASSES do
+            SetInfoLevel(infoclass, level);
+        od;
     od;
 end );
-                                     
+
 
 #############################################################################
 ##
@@ -279,46 +284,52 @@ end );
 InstallMethod(InfoLevel, true, 
         [IsInfoClass and IsInfoClassListRep], 0,
         function(ic)
-    return InfoData.CurrentLevels[ic![1]];
+    return ic![INFODATA_CURRENTLEVEL];
 end);
 
 #############################################################################
 ##
 #F  InfoDecision( <selector>, <level>) .  decide whether a message is printed
 ##
-##  This is called by the kernel
+##  The kernel skips this function for the case of an IsInfoClassListRep,
+##  where ret will be False.
 ##
 
 BIND_GLOBAL( "InfoDecision", function(selectors, level)
-    local usage;
-    usage := "Usage : InfoDecision(<selectors>, <level>)";
+    local usage, ret;
+    usage := "usage : Info(<selectors>, <level>, ...)";
     if not IsInt(level) or level <= 0 then
         if level = 0 then
-            Error("Level 0 info messages are not allowed");
+            Error("level 0 Info messages are not allowed");
         else
             Error(usage);
         fi;
     fi;
-   
-    # store the class an level
-    if IsInfoClass(selectors) then
-      InfoData.LastClass := selectors;
-    else
-      InfoData.LastClass := selectors[1];
-    fi;
-    InfoData.LastLevel := level;
 
+    ret := false;
+    
     if IsInfoClass(selectors) then
-        return InfoLevel(selectors) >= level;
+        ret := InfoLevel(selectors) >= level;
     elif IsInfoSelector(selectors)  then
-
         # note that we 'or' the classes together
-        return ForAny(selectors, ic -> InfoLevel(ic) >= level);
+        ret :=  ForAny(selectors, ic -> InfoLevel(ic) >= level);
     else
         Error(usage);
     fi;
+
+    if ret then
+        # store the class and level
+        if IsInfoClass(selectors) then
+            InfoData.LastClass := selectors;
+        else
+            InfoData.LastClass := selectors[1];
+        fi;
+        InfoData.LastLevel := level;
+    fi;
+
+    return ret;
 end );
-    
+
 #############################################################################
 ##
 #F  InfoDoPrint( arglist )  . . . . . . . . . . . . . . Print an info message
@@ -328,8 +339,8 @@ end );
 
 BIND_GLOBAL( "InfoDoPrint", function(arglist)
     local fun;
-    if IsBound(InfoData.Handler[InfoData.LastClass![1]]) then
-      fun := InfoData.Handler[InfoData.LastClass![1]];
+    if IsBound(InfoData.LastClass![INFODATA_HANDLER])  then
+      fun := InfoData.LastClass![INFODATA_HANDLER];
     else
       fun := DefaultInfoHandler;
     fi;
@@ -472,9 +483,9 @@ local out,w,w0,i;
     PrintTo(out,s," ");
     for i in [1..w] do
       if v>0 then
-	PrintTo(out,"#");
+        PrintTo(out,"#");
       else
-	PrintTo(out," ");
+        PrintTo(out," ");
       fi;
       v:=v-1;
     od;

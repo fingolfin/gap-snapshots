@@ -14,9 +14,10 @@
 #ifndef GAP_ARITHS_H
 #define GAP_ARITHS_H
 
+#include <src/objects.h>
+
 /****************************************************************************
 **
-
 *T  CompaMethod . . . . . . . . . . type of methods for comparison operations
 **
 **  'CompaMethod'  is the type of methods  for comparison operations, i.e., a
@@ -49,7 +50,6 @@ typedef Obj (* ArithMethod2) ( Obj opL, Obj opR );
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * *  unary arithmetic operations * * * * * * * * * * * *
 */
 
@@ -68,7 +68,7 @@ extern Obj ZEROOp;
 **
 *V  ZeroFuncs[<type>] . . . . . . . . . . . . . . . . . table of zero methods
 */
-extern ArithMethod1 ZeroFuncs [LAST_VIRTUAL_TNUM+1];
+extern ArithMethod1 ZeroFuncs [LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -92,7 +92,7 @@ extern Obj ZeroOp;
 **
 *V  ZeroMutFuncs[<type>] . . . . . . . . . . . . . . . . . table of zero methods
 */
-extern ArithMethod1 ZeroMutFuncs [LAST_VIRTUAL_TNUM+1];
+extern ArithMethod1 ZeroMutFuncs [LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -104,7 +104,6 @@ extern void InstallZeroMutObject ( Int );
 
 /****************************************************************************
 **
-
 *F  AINV( <op> )  . . . . . . . . . . . . . . . additive inverse of an object
 **
 **  'AINV' returns the additive inverse of the object <op>.
@@ -118,7 +117,7 @@ extern Obj AInvOp;
 **
 *V  AInvFuncs[<type>] . . . . . . . . . . . table of additive inverse methods
 */
-extern ArithMethod1 AInvFuncs [LAST_VIRTUAL_TNUM+1];
+extern ArithMethod1 AInvFuncs [LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -142,7 +141,7 @@ extern Obj AdditiveInverseOp;
 **
 *V  AInvMutFuncs[<type>] . . . . . . . . . . . table of additive inverse methods
 */
-extern ArithMethod1 AInvMutFuncs [LAST_VIRTUAL_TNUM+1];
+extern ArithMethod1 AInvMutFuncs [LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -191,7 +190,7 @@ extern Obj OneOp;
 **
 *V  OneFuncs[<type>]  . . . . . . . . . . . . . . . . .  table of one methods
 */
-extern ArithMethod1 OneFuncs [LAST_VIRTUAL_TNUM+1];
+extern ArithMethod1 OneFuncs [LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -216,7 +215,7 @@ extern Obj OneMutOp;
 **
 *V  OneMutFuncs[<type>]  . . . . . .table of mutability preservingone methods
 */
-extern ArithMethod1 OneMutFuncs [LAST_VIRTUAL_TNUM+1];
+extern ArithMethod1 OneMutFuncs [LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -241,7 +240,7 @@ extern Obj InvOp;
 **
 *V  InvFuncs[<type>]  . . . . . . . . . . . . . .  table of inverse functions
 */
-extern ArithMethod1 InvFuncs [LAST_VIRTUAL_TNUM+1];
+extern ArithMethod1 InvFuncs [LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -266,7 +265,7 @@ extern Obj InvMutOp;
 **
 *V  InvMutFuncs[<type>]  .. .table of mutability preserving inverse functions
 */
-extern ArithMethod1 InvMutFuncs [LAST_VIRTUAL_TNUM+1];
+extern ArithMethod1 InvMutFuncs [LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -278,13 +277,11 @@ extern void InstallInvMutObject ( Int );
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * comparison operations  * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  EQ( <opL>, <opR> )  . . . . . . . . . . . . . . comparison of two objects
 **
 **  'EQ' returns a nonzero value  if the object <opL>  is equal to the object
@@ -294,9 +291,6 @@ extern void InstallInvMutObject ( Int );
                          (!ARE_INTOBJS(opL,opR) && \
                           (*EqFuncs[TNUM_OBJ(opL)][TNUM_OBJ(opR)])(opL,opR)))
 
-#define EQ2(opL,opR)    ((opL) == (opR) || \
-                          (*EqFuncs[TNUM_OBJ(opL)][TNUM_OBJ(opR)])(opL,opR))
-
 extern Obj EqOper;
 
 
@@ -304,7 +298,7 @@ extern Obj EqOper;
 **
 *V  EqFuncs[<typeL>][<typeR>] . . . . . . . . . . table of comparison methods
 */
-extern CompaMethod EqFuncs [LAST_VIRTUAL_TNUM+1][LAST_VIRTUAL_TNUM+1];
+extern CompaMethod EqFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -316,7 +310,6 @@ extern void InstallEqObject ( Int );
 
 /****************************************************************************
 **
-
 *F  LT( <opL>, <opR> )  . . . . . . . . . . . . . . comparison of two objects
 **
 **  'LT' returns a nonzero value if the object <opL> is  less than the object
@@ -326,9 +319,6 @@ extern void InstallEqObject ( Int );
                          (ARE_INTOBJS(opL,opR) ? (Int)(opL) < (Int)(opR) : \
                           (*LtFuncs[TNUM_OBJ(opL)][TNUM_OBJ(opR)])(opL,opR)))
 
-#define LT2(opL,opR)    ((opL) == (opR) ? 0 : \
-                          (*LtFuncs[TNUM_OBJ(opL)][TNUM_OBJ(opR)])(opL,opR))
-
 extern Obj LtOper;
 
 
@@ -336,7 +326,7 @@ extern Obj LtOper;
 **
 *V  LtFuncs[<typeL>][<typeR>] . . . . . . . . . . table of comparison methods
 */
-extern CompaMethod LtFuncs [LAST_VIRTUAL_TNUM+1][LAST_VIRTUAL_TNUM+1];
+extern CompaMethod LtFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -348,7 +338,6 @@ extern void InstallLtObject ( Int );
 
 /****************************************************************************
 **
-
 *F  IN( <opL>, <opR> )  . . . . . . . . . . .  membership test of two objects
 **
 **  'IN' returns a nonzero   value if the object  <opL>  is a member  of  the
@@ -363,7 +352,7 @@ extern Obj InOper;
 **
 *V  InFuncs[<typeL>][<typeR>] . . . . . . . . . . table of membership methods
 */
-extern CompaMethod InFuncs [LAST_VIRTUAL_TNUM+1][LAST_VIRTUAL_TNUM+1];
+extern CompaMethod InFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -375,13 +364,11 @@ extern void InstallInObject ( Int );
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * binary arithmetic operations * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  SUM( <opL>, <opR> ) . . . . . . . . . . . . . . . . .  sum of two objects
 **
 **  'SUM' returns the sum of the two objects <opL> and <opR>.
@@ -401,7 +388,7 @@ extern Obj SumOper;
 **
 *V  SumFuncs[<typeL>][<typeR>]  . . . . . . . . . . . .  table of sum methods
 */
-extern ArithMethod2 SumFuncs [LAST_VIRTUAL_TNUM+1][LAST_VIRTUAL_TNUM+1];
+extern ArithMethod2 SumFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -441,7 +428,6 @@ extern void InstallSumObject ( Int );
 
 /****************************************************************************
 **
-
 *F  DIFF( <opL>, <opR> )  . . . . . . . . . . . . . difference of two objects
 **
 **  'DIFF' returns the difference of the two objects <opL> and <opR>.
@@ -461,7 +447,7 @@ extern Obj DiffOper;
 **
 *V  DiffFuncs[<typeL>][<typeR>] . . . . . . . . . table of difference methods
 */
-extern ArithMethod2 DiffFuncs [LAST_VIRTUAL_TNUM+1][LAST_VIRTUAL_TNUM+1];
+extern ArithMethod2 DiffFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -501,7 +487,6 @@ extern void InstallDiffObject ( Int );
 
 /****************************************************************************
 **
-
 *F  PROD( <opL>, <opR> )  . . . . . . . . . . . . . .  product of two objects
 **
 **  'PROD' returns the product of the two objects <opL> and <opR>.
@@ -521,7 +506,7 @@ extern Obj ProdOper;
 **
 *V  ProdFuncs[<typeL>][<typeR>] . . . . . . . . . .  table of product methods
 */
-extern  ArithMethod2    ProdFuncs [LAST_VIRTUAL_TNUM+1][LAST_VIRTUAL_TNUM+1];
+extern  ArithMethod2    ProdFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -561,7 +546,6 @@ extern void InstallProdObject ( Int );
 
 /****************************************************************************
 **
-
 *F  QUO( <opL>, <opR> ) . . . . . . . . . . . . . . . quotient of two objects
 **
 **  'QUO' returns the quotient of the object <opL> by the object <opR>.
@@ -575,7 +559,7 @@ extern Obj QuoOper;
 **
 *V  QuoFuncs[<typeL>][<typeR>]  . . . . . . . . . . table of quotient methods
 */
-extern ArithMethod2 QuoFuncs [LAST_VIRTUAL_TNUM+1][LAST_VIRTUAL_TNUM+1];
+extern ArithMethod2 QuoFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -587,7 +571,6 @@ extern void InstallQuoObject ( Int );
 
 /****************************************************************************
 **
-
 *F  LQUO( <opL>, <opR> )  . . . . . . . . . . .  left quotient of two operand
 **
 **  'LQUO' returns the left quotient of the object <opL> by the object <opR>.
@@ -601,7 +584,7 @@ extern Obj LQuoOper;
 **
 *V  LQuoFuncs[<typeL>][<typeR>] . . . . . . .  table of left quotient methods
 */
-extern ArithMethod2 LQuoFuncs [LAST_VIRTUAL_TNUM+1][LAST_VIRTUAL_TNUM+1];
+extern ArithMethod2 LQuoFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -613,7 +596,6 @@ extern void InstallLQuoObject ( Int );
 
 /****************************************************************************
 **
-
 *F  POW( <opL>, <opR> ) . . . . . . . . . . . . . . . .  power of two objects
 **
 **  'POW' returns the power of the object <opL> by the object <opL>.
@@ -629,7 +611,7 @@ extern Obj PowDefault ( Obj opL, Obj opR );
 **
 *V  PowFuncs[<typeL>][<typeR>]  . . . . . . . . . . .  table of power methods
 */
-extern ArithMethod2 PowFuncs [LAST_VIRTUAL_TNUM+1][LAST_VIRTUAL_TNUM+1];
+extern ArithMethod2 PowFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -641,7 +623,6 @@ extern void InstallPowObject ( Int );
 
 /****************************************************************************
 **
-
 *F  COMM( <opL>, <opR> )  . . . . . . . . . . . . . commutator of two objects
 **
 **  'COMM' returns the commutator of the two objects <opL> and <opR>.
@@ -655,7 +636,7 @@ extern Obj CommOper;
 **
 *V  CommFuncs[<typeL>][<typeR>] . . . . . . . . . table of commutator methods
 */
-extern ArithMethod2 CommFuncs [LAST_VIRTUAL_TNUM+1][LAST_VIRTUAL_TNUM+1];
+extern ArithMethod2 CommFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -667,7 +648,6 @@ extern void InstallCommObject ( Int );
 
 /****************************************************************************
 **
-
 *F  MOD( <opL>, <opR> ) . . . . . . . . . . . . . .  remainder of two objects
 **
 **  'MOD' returns the remainder of the object <opL> by the object <opR>.
@@ -681,7 +661,7 @@ extern Obj ModOper;
 **
 *V  ModFuncs[<typeL>][<typeR>]  . . . . . . . . .  table of remainder methods
 */
-extern ArithMethod2 ModFuncs [LAST_VIRTUAL_TNUM+1][LAST_VIRTUAL_TNUM+1];
+extern ArithMethod2 ModFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -693,22 +673,14 @@ extern void InstallModObject ( Int );
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  InitInfoAriths()  . . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoAriths ( void );
 
 
 #endif // GAP_ARITHS_H
-
-/****************************************************************************
-**
-
-*E  ariths.h  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

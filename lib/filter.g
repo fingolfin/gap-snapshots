@@ -9,19 +9,8 @@
 #Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 #Y  Copyright (C) 2002 The GAP Group
 ##
-##  This file deals with filters. Some speed-critical functions are in 
-##  filter1.g, which is compiled
+##  This file deals with filters.
 ##
-
-#############################################################################
-##
-#V  "forward declarations that will be picked up in filter1.g
-##
-
-IMPLICATIONS := fail;
-CLEAR_IMP_CACHE := fail;
-
-
 
 #############################################################################
 ##
@@ -65,11 +54,11 @@ BIND_GLOBAL( "RANK_FILTERS", [] );
 ##
 BIND_GLOBAL( "INFO_FILTERS", [] );
 
-BIND_GLOBAL( "FNUM_CATS", [ 1,  2 ] );
-BIND_GLOBAL( "FNUM_REPS", [ 3,  4 ] );
-BIND_GLOBAL( "FNUM_ATTS", [ 5,  6 ] );
-BIND_GLOBAL( "FNUM_PROS", [ 7,  9 ] );
-BIND_GLOBAL( "FNUM_TPRS", [ 8, 10 ] );
+BIND_GLOBAL( "FNUM_CATS", MakeImmutable([ 1,  2 ]) );
+BIND_GLOBAL( "FNUM_REPS", MakeImmutable([ 3,  4 ]) );
+BIND_GLOBAL( "FNUM_ATTS", MakeImmutable([ 5,  6 ]) );
+BIND_GLOBAL( "FNUM_PROS", MakeImmutable([ 7,  9 ]) );
+BIND_GLOBAL( "FNUM_TPRS", MakeImmutable([ 8, 10 ]) );
 
 
 #############################################################################
@@ -98,11 +87,6 @@ BIND_GLOBAL( "Setter", SETTER_FILTER );
 #F  Tester( <filter> )  . . . . . . . . . . . . . . . .  tester of a <filter>
 ##
 BIND_GLOBAL( "Tester", TESTER_FILTER );
-
-
-
-
-
 
 
 
@@ -302,9 +286,14 @@ end );
 ##
 ##  function to test whether <x> is a filter.
 ##  (This is *not* a filter itself!.)
+##  We handle IsObject as a special case, as it is equal to ReturnTrue,
+##  as all objects satisfy IsObject!
 ##
 BIND_GLOBAL( "IsFilter",
-    x -> IS_OPERATION( x ) and ( FLAG1_FILTER( x ) <> 0 or x in FILTERS ) );
+    x -> IS_IDENTICAL_OBJ(x, IS_OBJECT)
+         or ( IS_OPERATION( x )
+              and ( (FLAG1_FILTER( x ) <> 0 and FLAGS_FILTER(x) <> false)
+                    or x in FILTERS ) ) );
 
 
 ## Global Rank declarations
@@ -342,6 +331,32 @@ BIND_GLOBAL("NICE_FLAGS",QUO_INT(SUM_FLAGS,30));
 ##  `CanonicalBasis'.
 ##
 BIND_GLOBAL( "CANONICAL_BASIS_FLAGS", QUO_INT(SUM_FLAGS,5) );
+
+
+#############################################################################
+##
+#F  RankFilter( <filter> )  . . . . . . . . . . . . . . . .  rank of a filter
+##
+##  Compute the rank including the hidden implications.
+##
+BIND_GLOBAL( "RankFilter", function( filter )
+    local   rank,  flags,  i;
+
+    rank  := 0;
+    if IS_FUNCTION(filter)  then
+        flags := FLAGS_FILTER(filter);
+    else
+        flags := filter;
+    fi;
+    for i  in TRUES_FLAGS(WITH_HIDDEN_IMPS_FLAGS(flags))  do
+        if IsBound(RANK_FILTERS[i])  then
+            rank := rank + RANK_FILTERS[i];
+        else
+            rank := rank + 1;
+        fi;
+    od;
+    return rank;
+end );
 
 
 #############################################################################

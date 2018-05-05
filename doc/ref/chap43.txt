@@ -834,9 +834,9 @@
   
   [33X[1;0Y[29X[2XCopyStabChain[102X( [3XS[103X ) [32X function[133X
   
-  [33X[0;0YThis  function  returns a copy of the stabilizer chain [3XS[103X that has no mutable
-  object  (list  or  record)  in  common  with [3XS[103X. The [10Xlabels[110X components of the
-  result  are  possibly  shared  by several levels, but superfluous labels are
+  [33X[0;0YThis  function  returns a mutable copy of the stabilizer chain [3XS[103X that has no
+  mutable  object  (list or record) in common with [3XS[103X. The [10Xlabels[110X components of
+  the result are possibly shared by several levels, but superfluous labels are
   removed.  (An  entry in [10Xlabels[110X is superfluous if it does not occur among the
   [10Xgenlabels[110X  or  [10Xtranslabels[110X  on  any  of  the  levels which share that [10Xlabels[110X
   component.)[133X

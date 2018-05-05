@@ -106,6 +106,8 @@ InstallMethod( Round, "for macfloats", [ IsIEEE754FloatRep ], RINT_MACFLOAT );
 InstallMethod( Floor, "for macfloats", [ IsIEEE754FloatRep ], FLOOR_MACFLOAT );
 InstallMethod( Ceil, "for macfloats", [ IsIEEE754FloatRep ], CEIL_MACFLOAT );
 InstallMethod( AbsoluteValue, "for macfloats", [ IsIEEE754FloatRep ], ABS_MACFLOAT );
+InstallMethod( SignFloat, "for macfloats", [ IsIEEE754FloatRep ], SIGN_MACFLOAT );
+InstallMethod( SignBit, "for macfloats", [ IsIEEE754FloatRep ], SIGNBIT_MACFLOAT );
 InstallMethod( Hypothenuse, "for macfloats", [ IsIEEE754FloatRep, IsIEEE754FloatRep ], HYPOT_MACFLOAT );
 InstallMethod( LdExp, "for macfloat,int", [ IsIEEE754FloatRep, IsInt ], LDEXP_MACFLOAT );
 InstallMethod( FrExp, "for macfloat", [ IsIEEE754FloatRep ], FREXP_MACFLOAT );
@@ -161,6 +163,10 @@ InstallMethod( PrecisionFloat, "for macfloats", [ IsIEEE754FloatRep ], x->IEEE75
 IEEE754FLOAT.constants.EPSILON := LDEXP_MACFLOAT(MACFLOAT_INT(1),1-IEEE754FLOAT.constants.MANT_DIG);
 IEEE754FLOAT.constants.MAX := LDEXP_MACFLOAT(NewFloat(IsIEEE754FloatRep,2^IEEE754FLOAT.constants.MANT_DIG-1),IEEE754FLOAT.constants.MAX_EXP-IEEE754FLOAT.constants.MANT_DIG);
 IEEE754FLOAT.constants.MIN := LDEXP_MACFLOAT(MACFLOAT_INT(1),IEEE754FLOAT.constants.MIN_EXP-1);
+
+if IsHPCGAP then
+    MakeReadOnlyObj( IEEE754FLOAT );
+fi;
 
 # finally install the default floateans
 INSTALLFLOATCONSTRUCTORS(IEEE754FLOAT);

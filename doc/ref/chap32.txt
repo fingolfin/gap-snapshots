@@ -112,18 +112,28 @@
   general  mapping.  If  [3Xmap[103X knows to be bijective its inverse general mapping
   will know to be a mapping. In this case also [10XInverse( [3Xmap[103X[10X )[110X works.[133X
   
-  [1X32.2-4 CompositionMapping[101X
+  [1X32.2-4 RestrictedInverseGeneralMapping[101X
+  
+  [33X[1;0Y[29X[2XRestrictedInverseGeneralMapping[102X( [3Xmap[103X ) [32X attribute[133X
+  
+  [33X[0;0YThe  [13Xrestricted  inverse  general  mapping[113X  of  a general mapping [3Xmap[103X is the
+  general  mapping whose underlying relation (see [2XUnderlyingRelation[102X ([14X32.3-9[114X))
+  contains a pair [22X(r,s)[122X if and only if the underlying relation of [3Xmap[103X contains
+  the pair [22X(s,r)[122X, and whose domain is restricted to the image of [3Xmap[103X and whose
+  range is the domain of [3Xmap[103X.[133X
+  
+  [1X32.2-5 CompositionMapping[101X
   
   [33X[1;0Y[29X[2XCompositionMapping[102X( [3Xmap1[103X, [3Xmap2[103X, [3X...[103X ) [32X function[133X
   
   [33X[0;0Y[2XCompositionMapping[102X  allows one to compose arbitrarily many general mappings,
-  and delegates each step to [2XCompositionMapping2[102X ([14X32.2-5[114X).[133X
+  and delegates each step to [2XCompositionMapping2[102X ([14X32.2-6[114X).[133X
   
   [33X[0;0YAdditionally,   the   properties  [2XIsInjective[102X  ([14X32.3-4[114X)  and  [2XIsSingleValued[102X
   ([14X32.3-2[114X)  are  maintained;  if  the  source of the [22Xi+1[122X-th general mapping is
   identical  to  the  range of the [22Xi[122X-th general mapping, also [2XIsTotal[102X ([14X32.3-1[114X)
   and   [2XIsSurjective[102X   ([14X32.3-5[114X)  are  maintained.  (So  one  should  not  call
-  [2XCompositionMapping2[102X  ([14X32.2-5[114X)  directly  if  one  wants  to  maintain  these
+  [2XCompositionMapping2[102X  ([14X32.2-6[114X)  directly  if  one  wants  to  maintain  these
   properties.)[133X
   
   [33X[0;0YDepending  on  the  types  of  [3Xmap1[103X  and [3Xmap2[103X, the returned mapping might be
@@ -131,9 +141,9 @@
   their  images,  this  is  for example the case if both mappings preserve the
   same  algebraic  structures  and [5XGAP[105X can decompose elements of the source of
   [3Xmap2[103X     into     generators)    or    as    an    (iterated)    composition
-  (see [2XIsCompositionMappingRep[102X ([14X32.2-6[114X)).[133X
+  (see [2XIsCompositionMappingRep[102X ([14X32.2-7[114X)).[133X
   
-  [1X32.2-5 CompositionMapping2[101X
+  [1X32.2-6 CompositionMapping2[101X
   
   [33X[1;0Y[29X[2XCompositionMapping2[102X( [3Xmap2[103X, [3Xmap1[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XCompositionMapping2General[102X( [3Xmap2[103X, [3Xmap1[103X ) [32X function[133X
@@ -148,24 +158,24 @@
   [33X[0;0Y[2XCompositionMapping2General[102X is the method that forms a composite mapping with
   two constituent mappings. (This is used in some algorithms.)[133X
   
-  [1X32.2-6 IsCompositionMappingRep[101X
+  [1X32.2-7 IsCompositionMappingRep[101X
   
   [33X[1;0Y[29X[2XIsCompositionMappingRep[102X( [3Xmap[103X ) [32X Representation[133X
   
   [33X[0;0YMappings  in  this representation are stored as composition of two mappings,
   (pre)images  of elements are computed in a two-step process. The constituent
   mappings      of     the     composition     can     be     obtained     via
-  [2XConstituentsCompositionMapping[102X ([14X32.2-7[114X).[133X
+  [2XConstituentsCompositionMapping[102X ([14X32.2-8[114X).[133X
   
-  [1X32.2-7 ConstituentsCompositionMapping[101X
+  [1X32.2-8 ConstituentsCompositionMapping[101X
   
   [33X[1;0Y[29X[2XConstituentsCompositionMapping[102X( [3Xmap[103X ) [32X function[133X
   
-  [33X[0;0YIf  [3Xmap[103X  is stored in the representation [2XIsCompositionMappingRep[102X ([14X32.2-6[114X) as
+  [33X[0;0YIf  [3Xmap[103X  is stored in the representation [2XIsCompositionMappingRep[102X ([14X32.2-7[114X) as
   composition  of  two  mappings  [3Xmap1[103X and [3Xmap2[103X, this function returns the two
   constituent mappings in a list [10X[ [3Xmap1[103X[10X, [3Xmap2[103X[10X ][110X.[133X
   
-  [1X32.2-8 ZeroMapping[101X
+  [1X32.2-9 ZeroMapping[101X
   
   [33X[1;0Y[29X[2XZeroMapping[102X( [3XS[103X, [3XR[103X ) [32X operation[133X
   
@@ -174,7 +184,7 @@
   
   [33X[0;0Y(Each mapping with empty source is a zero mapping.)[133X
   
-  [1X32.2-9 IdentityMapping[101X
+  [1X32.2-10 IdentityMapping[101X
   
   [33X[1;0Y[29X[2XIdentityMapping[102X( [3XD[103X ) [32X attribute[133X
   
@@ -182,7 +192,7 @@
   which maps each element of [3XD[103X to itself.[133X
   
   
-  [1X32.2-10 [33X[0;0YEmbedding[133X[101X
+  [1X32.2-11 [33X[0;0YEmbedding[133X[101X
   
   [33X[1;0Y[29X[2XEmbedding[102X( [3XS[103X, [3XT[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XEmbedding[102X( [3XS[103X, [3Xi[103X ) [32X operation[133X
@@ -195,7 +205,7 @@
   for wreath products; or for magma rings see [14X65.3[114X.[133X
   
   
-  [1X32.2-11 [33X[0;0YProjection[133X[101X
+  [1X32.2-12 [33X[0;0YProjection[133X[101X
   
   [33X[1;0Y[29X[2XProjection[102X( [3XS[103X, [3XT[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XProjection[102X( [3XS[103X, [3Xi[103X ) [32X operation[133X
@@ -208,7 +218,7 @@
   direct  products, [14X49.2[114X for semidirect products, [14X49.3[114X for subdirect products,
   or [14X49.4[114X for wreath products.[133X
   
-  [1X32.2-12 RestrictedMapping[101X
+  [1X32.2-13 RestrictedMapping[101X
   
   [33X[1;0Y[29X[2XRestrictedMapping[102X( [3Xmap[103X, [3Xsubdom[103X ) [32X operation[133X
   
@@ -534,7 +544,7 @@
   [33X[0;0YThe  [13Xproduct[113X  of  two  general  mappings is defined as the composition. This
   multiplication  is always associative. In addition to the composition via [10X*[110X,
   general  mappings can be composed –in reversed order– via [2XCompositionMapping[102X
-  ([14X32.2-4[114X).[133X
+  ([14X32.2-5[114X).[133X
   
   [33X[0;0YGeneral  mappings  are  in  the  category  of  multiplicative  elements with
   inverses.  Similar  to matrices, not every general mapping has an inverse or

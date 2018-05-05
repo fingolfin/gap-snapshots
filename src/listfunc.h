@@ -13,10 +13,10 @@
 #ifndef GAP_LISTFUNC_H
 #define GAP_LISTFUNC_H
 
+#include <src/system.h>
 
 /****************************************************************************
 **
-
 *F  AddList(<list>,<obj>) . . . . . . . .  add an object to the end of a list
 **
 **  'AddList' adds the object <obj> to the end  of  the  list  <list>,  i.e.,
@@ -118,23 +118,15 @@ extern  UInt            RemoveDupsDensePlist (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  InitInfoListFunc()  . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoListFunc ( void );
 
 
 #endif // GAP_LISTFUNC_H
-
-/****************************************************************************
-**
-
-*E  listfunc.h  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

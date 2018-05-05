@@ -102,7 +102,7 @@ BIND_GLOBAL( "NEW_FAMILY",
     # cannot use 'Objectify', because 'IsList' may not be defined yet
     family := rec();
     SET_TYPE_COMOBJ( family, type );
-    family!.NAME            := name;
+    family!.NAME            := IMMUTABLE_COPY_OBJ(name);
     family!.REQ_FLAGS       := req_filter;
     family!.IMP_FLAGS       := imp_filter;
     family!.TYPES           := [];
@@ -201,22 +201,55 @@ end );
 NEW_TYPE_CACHE_MISS  := 0;
 NEW_TYPE_CACHE_HIT   := 0;
 
-BIND_GLOBAL( "NEW_TYPE", function ( typeOfTypes, family, flags, data )
-    local   hash,  cache,  cached,  type, ncache, ncl, t;
+BIND_GLOBAL( "NEW_TYPE", function ( typeOfTypes, family, flags, data, parent )
+    local   hash,  cache,  cached,  type, ncache, ncl, t, i, match;
 
     # maybe it is in the type cache
     cache := family!.TYPES;
     hash  := HASH_FLAGS(flags) mod family!.HASH_SIZE + 1;
-    if IsBound( cache[hash] )  then
+    if IsBound( cache[hash] ) then
         cached := cache[hash];
         if IS_EQUAL_FLAGS( flags, cached![2] )  then
+            flags := cached![2];
             if    IS_IDENTICAL_OBJ(  data,  cached![ POS_DATA_TYPE ] )
               and IS_IDENTICAL_OBJ(  typeOfTypes, TYPE_OBJ(cached) )
             then
-                NEW_TYPE_CACHE_HIT := NEW_TYPE_CACHE_HIT + 1;
-                return cached;
-            else
-                flags := cached![2];
+                # if there is no parent type, ensure that all non-standard entries
+                # of <cached> are not set; this is necessary because lots of types
+                # have LEN_POSOBJ(<type>) = 6, but entries 5 and 6 are unbound.
+                if IS_IDENTICAL_OBJ(parent, fail) then
+                    match := true;
+                    for i in [ POS_FIRST_FREE_TYPE .. LEN_POSOBJ( cached ) ] do
+                        if IsBound( cached![i] ) then
+                            match := false;
+                            break;
+                        fi;
+                    od;
+                    if match then
+                        NEW_TYPE_CACHE_HIT := NEW_TYPE_CACHE_HIT + 1;
+                        return cached;
+                    fi;
+                fi;
+                # if there is a parent type, make sure that any extra data in it
+                # matches what is in the cache
+                if LEN_POSOBJ( parent ) = LEN_POSOBJ( cached ) then
+                    match := true;
+                    for i in [ POS_FIRST_FREE_TYPE .. LEN_POSOBJ( parent ) ] do
+                        if IsBound( parent![i] ) <> IsBound( cached![i] ) then
+                            match := false;
+                            break;
+                        fi;
+                        if    IsBound( parent![i] ) and IsBound( cached![i] )
+                          and not IS_IDENTICAL_OBJ( parent![i], cached![i] ) then
+                            match := false;
+                            break;
+                        fi;
+                    od;
+                    if match then
+                        NEW_TYPE_CACHE_HIT := NEW_TYPE_CACHE_HIT + 1;
+                        return cached;
+                    fi;
+                fi;
             fi;
         fi;
         NEW_TYPE_CACHE_MISS := NEW_TYPE_CACHE_MISS + 1;
@@ -236,6 +269,14 @@ BIND_GLOBAL( "NEW_TYPE", function ( typeOfTypes, family, flags, data )
     type := [ family, flags ];
     type[POS_DATA_TYPE] := data;
     type[POS_NUMB_TYPE] := NEW_TYPE_NEXT_ID;
+
+    if not IS_IDENTICAL_OBJ(parent, fail) then
+        for i in [ POS_FIRST_FREE_TYPE .. LEN_POSOBJ( parent ) ] do
+            if IsBound( parent![i] ) and not IsBound( type[i] ) then
+                type[i] := parent![i];
+            fi;
+        od;
+    fi;
 
     SET_TYPE_POSOBJ( type, typeOfTypes );
     
@@ -260,21 +301,13 @@ end );
 
 
 
-BIND_GLOBAL( "NewType2", function ( typeOfTypes, family )
-    return NEW_TYPE( typeOfTypes,
-                     family,
-                     family!.IMP_FLAGS,
-                     false );
-end );
-
-
 BIND_GLOBAL( "NewType3", function ( typeOfTypes, family, filter )
     return NEW_TYPE( typeOfTypes,
                      family,
                      WITH_IMPS_FLAGS( AND_FLAGS(
                         family!.IMP_FLAGS,
                         FLAGS_FILTER(filter) ) ),
-                     false );
+                     fail, fail );
 end );
 
 
@@ -284,22 +317,7 @@ BIND_GLOBAL( "NewType4", function ( typeOfTypes, family, filter, data )
                      WITH_IMPS_FLAGS( AND_FLAGS(
                         family!.IMP_FLAGS,
                         FLAGS_FILTER(filter) ) ),
-                     data );
-end );
-
-
-BIND_GLOBAL( "NewType5",
-    function ( typeOfTypes, family, filter, data, stuff )
-    local   type;
-    type := NEW_TYPE( typeOfTypes,
-                      family,
-                      WITH_IMPS_FLAGS( AND_FLAGS(
-                         family!.IMP_FLAGS,
-                         FLAGS_FILTER(filter) ) ),
-                      data );
-    type![ POS_FIRST_FREE_TYPE ] := stuff;
-#T really ??
-    return type;
+                     data, fail );
 end );
 
 
@@ -311,25 +329,17 @@ BIND_GLOBAL( "NewType", function ( arg )
         Error("<family> must be a family");
     fi;
 
-    # only one argument (why would you want that?)
-    if LEN_LIST(arg) = 1  then
-        type := NewType2( TypeOfTypes, arg[1] );
-
     # NewType( <family>, <filter> )
-    elif LEN_LIST(arg) = 2  then
+    if LEN_LIST(arg) = 2  then
         type := NewType3( TypeOfTypes, arg[1], arg[2] );
 
     # NewType( <family>, <filter>, <data> )
     elif LEN_LIST(arg) = 3  then
         type := NewType4( TypeOfTypes, arg[1], arg[2], arg[3] );
 
-    # NewType( <family>, <filter>, <data>, <stuff> )
-    elif LEN_LIST(arg) = 4  then
-        type := NewType5( TypeOfTypes, arg[1], arg[2], arg[3], arg[4] );
-
     # otherwise signal an error
     else
-        Error("usage: NewType( <family> [, <filter> [, <data> ]] )");
+        Error("usage: NewType( <family>, <filter> [, <data> ] )");
 
     fi;
 
@@ -349,36 +359,22 @@ end );
 ##  </ManSection>
 ##
 BIND_GLOBAL( "Subtype2", function ( type, filter )
-    local   new, i;
-    new := NEW_TYPE( TypeOfTypes,
+    return NEW_TYPE( TypeOfTypes,
                      type![1],
                      WITH_IMPS_FLAGS( AND_FLAGS(
                         type![2],
                         FLAGS_FILTER( filter ) ) ),
-                     type![ POS_DATA_TYPE ] );
-    for i in [ POS_FIRST_FREE_TYPE .. LEN_POSOBJ( type ) ] do
-        if IsBound( type![i] ) then
-            new![i] := type![i];
-        fi;
-    od;
-    return new;
+                     type![ POS_DATA_TYPE ], type );
 end );
 
 
 BIND_GLOBAL( "Subtype3", function ( type, filter, data )
-    local   new, i;
-    new := NEW_TYPE( TypeOfTypes,
+    return NEW_TYPE( TypeOfTypes,
                      type![1],
                      WITH_IMPS_FLAGS( AND_FLAGS(
                         type![2],
                         FLAGS_FILTER( filter ) ) ),
-                     data );
-    for i in [ POS_FIRST_FREE_TYPE .. LEN_POSOBJ( type ) ] do
-        if IsBound( type![i] ) then
-            new![i] := type![i];
-        fi;
-    od;
-    return new;
+                     data, type );
 end );
 
 
@@ -412,36 +408,22 @@ end );
 ##  </ManSection>
 ##
 BIND_GLOBAL( "SupType2", function ( type, filter )
-    local   new, i;
-    new := NEW_TYPE( TypeOfTypes,
+    return NEW_TYPE( TypeOfTypes,
                      type![1],
                      SUB_FLAGS(
                         type![2],
                         FLAGS_FILTER( filter ) ),
-                     type![ POS_DATA_TYPE ] );
-    for i in [ POS_FIRST_FREE_TYPE .. LEN_POSOBJ( type ) ] do
-        if IsBound( type![i] ) then
-            new![i] := type![i];
-        fi;
-    od;
-    return new;
+                     type![ POS_DATA_TYPE ], type );
 end );
 
 
 BIND_GLOBAL( "SupType3", function ( type, filter, data )
-    local   new, i;
-    new := NEW_TYPE( TypeOfTypes,
+    return NEW_TYPE( TypeOfTypes,
                      type![1],
                      SUB_FLAGS(
                         type![2],
                         FLAGS_FILTER( filter ) ),
-                     data );
-    for i in [ POS_FIRST_FREE_TYPE .. LEN_POSOBJ( type ) ] do
-        if IsBound( type![i] ) then
-            new![i] := type![i];
-        fi;
-    od;
-    return new;
+                     data, type );
 end );
 
 
@@ -508,20 +490,6 @@ BIND_GLOBAL( "DataType", K -> K![ POS_DATA_TYPE ] );
 BIND_GLOBAL( "SetDataType", function ( K, data )
     K![ POS_DATA_TYPE ]:= data;
 end );
-
-
-#############################################################################
-##
-#F  SharedType( <K> ) . . . . . . . . . . . . . . shared data of the type <K>
-##
-##  <ManSection>
-##  <Func Name="SharedType" Arg='K'/>
-##
-##  <Description>
-##  </Description>
-##  </ManSection>
-##
-BIND_GLOBAL( "SharedType", K -> K![ POS_DATA_TYPE ] );
 
 
 #############################################################################
@@ -637,32 +605,25 @@ BIND_GLOBAL( "FlagsObj", obj -> FlagsType( TypeObj( obj ) ) );
 BIND_GLOBAL( "DataObj", obj -> DataType( TypeObj( obj ) ) );
 
 
+BIND_GLOBAL( "IsNonAtomicComponentObjectRepFlags",
+        FLAGS_FILTER(IsNonAtomicComponentObjectRep));
+BIND_GLOBAL( "IsAtomicPositionalObjectRepFlags",
+        FLAGS_FILTER(IsAtomicPositionalObjectRep));
+BIND_GLOBAL( "IsReadOnlyPositionalObjectRepFlags",
+        FLAGS_FILTER(IsReadOnlyPositionalObjectRep));
+
 #############################################################################
 ##
-#F  SharedObj( <obj> )  . . . . . . . . . . . . . .  shared data of an object
+#F  Objectify( <type>, <obj> )
 ##
 ##  <ManSection>
-##  <Func Name="SharedObj" Arg='obj'/>
+##  <Func Name="Objectify" Arg='type, obj'/>
 ##
 ##  <Description>
 ##  </Description>
 ##  </ManSection>
 ##
-BIND_GLOBAL( "SharedObj", obj -> SharedType( TypeObj( obj ) ) );
-
-
-#############################################################################
-##
-#F  SetTypeObj( <type>, <obj> )
-##
-##  <ManSection>
-##  <Func Name="SetTypeObj" Arg='type, obj'/>
-##
-##  <Description>
-##  </Description>
-##  </ManSection>
-##
-BIND_GLOBAL( "SetTypeObj", function ( type, obj )
+BIND_GLOBAL( "Objectify", function ( type, obj )
     if not IsType( type )  then
         Error("<type> must be a type");
     fi;
@@ -676,47 +637,6 @@ BIND_GLOBAL( "SetTypeObj", function ( type, obj )
     fi;
     return obj;
 end );
-
-
-BIND_GLOBAL( "IsNonAtomicComponentObjectRepFlags", 
-        FLAGS_FILTER(IsNonAtomicComponentObjectRep));
-BIND_GLOBAL( "IsAtomicPositionalObjectRepFlags", 
-        FLAGS_FILTER(IsAtomicPositionalObjectRep));
-BIND_GLOBAL( "IsReadOnlyPositionalObjectRepFlags", 
-        FLAGS_FILTER(IsReadOnlyPositionalObjectRep));
-
-BIND_GLOBAL( "Objectify", SetTypeObj );
-
-
-#############################################################################
-##
-#F  ChangeTypeObj( <type>, <obj> )
-##
-##  <ManSection>
-##  <Func Name="ChangeTypeObj" Arg='type, obj'/>
-##
-##  <Description>
-##  </Description>
-##  </ManSection>
-##
-BIND_GLOBAL( "ChangeTypeObj", function ( type, obj )
-    if not IsType( type )  then
-        Error("<type> must be a type");
-    fi;
-    if IS_POSOBJ( obj )  then
-        SET_TYPE_POSOBJ( obj, type );
-    elif IS_COMOBJ( obj )  then
-        SET_TYPE_COMOBJ( obj, type );
-    elif IS_DATOBJ( obj )  then
-        SET_TYPE_DATOBJ( obj, type );
-    fi;
-    if not IsNoImmediateMethodsObject(obj) then
-      RunImmediateMethods( obj, type![2] );
-    fi;
-    return obj;
-end );
-
-BIND_GLOBAL( "ReObjectify", ChangeTypeObj );
 
 
 #############################################################################
@@ -847,78 +767,6 @@ end );
 
 #############################################################################
 ##
-#F  SetMultipleAttributes( <obj>, <attr1>, <val1>, <attr2>, <val2> ... )
-##
-##  <ManSection>
-##  <Func Name="SetMultipleAttributes" Arg='obj, attr1, val1, attr2, val2 ...'/>
-##
-##  <Description>
-##  This function should have the same net effect as 
-##  <P/>
-##  Setter( <A>attr1</A> )( <A>obj</A>, <A>val1</A> )
-##  Setter( <A>attr2</A> )( <A>obj</A>, <A>val2</A> )
-##   . . .
-##  <P/>
-##  but hopefully be faster, by amalgamating all the type changes
-##  </Description>
-##  </ManSection>
-##
-BIND_GLOBAL( "SetMultipleAttributes", function (arg)
-    local obj, type, flags, attr, val, i, extra, nfilt, nflags;
-    obj := arg[1];
-    if IsAttributeStoringRep(obj) then
-        extra := [];
-        type := TypeObj(obj);
-        flags := FlagsType( type);
-        nfilt := IS_OBJECT;
-        for i in [2,4..LEN_LIST(arg)-1] do
-            attr := arg[i];
-            val := arg[i+1];
-            if 0 <> FLAG1_FILTER(attr) then
-
-                # `attr' is a property.
-                if val then
-                  nfilt:= nfilt and attr;  # (implies the property tester)
-                else
-                  nfilt:= nfilt and Tester( attr );
-                fi;
-
-            elif LEN_LIST(METHODS_OPERATION( Setter(attr) , 2)) <> 12 then
-
-                # There are special setter methods for `attr',
-                # we have to call the setter explicitly.
-                ADD_LIST(extra, attr);
-                ADD_LIST(extra, val);
-
-            else
-
-                # We set the attribute value.
-                obj!.(NAME_FUNC(attr)) := IMMUTABLE_COPY_OBJ(val);
-                nfilt := nfilt and Tester(attr);
-
-            fi;
-        od;
-        nflags := FLAGS_FILTER(nfilt);
-        if not IS_SUBSET_FLAGS(flags, nflags) then
-            flags := WITH_IMPS_FLAGS(AND_FLAGS(flags, nflags));
-            ChangeTypeObj(NEW_TYPE(TypeOfTypes, 
-                    FamilyType(type), 
-                    flags , 
-                    DataType(type)),obj);
-        fi;
-        for i in [2,4..LEN_LIST(extra)] do
-            Setter(extra[i-1])(obj,extra[i]);
-        od;
-    else
-        extra := arg;
-        for i in [2,4..LEN_LIST(extra)] do
-            Setter(extra[i])(obj,extra[i+1]);
-        od;
-    fi;
-end);
-
-#############################################################################
-##
 #F  ObjectifyWithAttributes(<obj>,<type>,<attr1>,<val1>,<attr2>,<val2>... )
 ##
 ##  <#GAPDoc Label="ObjectifyWithAttributes">
@@ -966,7 +814,7 @@ BIND_GLOBAL( "ObjectifyWithAttributes", function (arg)
     local obj, type, flags, attr, val, i, extra,  nflags;
     obj := arg[1];
     type := arg[2];
-    flags := FlagsType( type);
+    flags := FlagsType(type);
     extra := [];
     
     if not IS_SUBSET_FLAGS(
@@ -1010,16 +858,16 @@ BIND_GLOBAL( "ObjectifyWithAttributes", function (arg)
             Objectify( NEW_TYPE(TypeOfTypes, 
                     FamilyType(type), 
                     flags , 
-                    DataType(type)), obj);
+                    DataType(type), fail), obj);
         else
-            Objectify( type, obj);
+            Objectify( type, obj );
         fi;
     fi;
     for i in [1,3..LEN_LIST(extra)-1] do
         if (Tester(extra[i])(obj)) then
-	  INFO_OWA( "#W  Supplied type has tester of ",NAME_FUNC(extra[i]),
-		    "with non-standard setter\n" );
-	  ResetFilterObj(obj, Tester(extra[i]));
+            INFO_OWA( "#W  Supplied type has tester of ",NAME_FUNC(extra[i]),
+                      "with non-standard setter\n" );
+            ResetFilterObj(obj, Tester(extra[i]));
 #T If there is an immediate method relying on an attribute
 #T whose tester is set to `true' in `type'
 #T and that has a special setter
@@ -1027,10 +875,10 @@ BIND_GLOBAL( "ObjectifyWithAttributes", function (arg)
         fi;
         Setter(extra[i])(obj,extra[i+1]);
     od;
+    return obj;
 end );
 
 
 #############################################################################
 ##
 #E
-

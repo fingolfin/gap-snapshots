@@ -1177,16 +1177,24 @@ avoid their being overwritten accidentally.
 See also Section <Ref Sect="More About Global Variables"/>.
 
 <#Include Label="DeclareCategory">
+<#Include Label="TypeOfOperation">
+<#Include Label="IsCategory">
+<#Include Label="IsRepresentation">
+<#Include Label="IsProperty">
+<#Include Label="IsAttribute">
+<#Include Label="CategoryByName">
 <#Include Label="DeclareRepresentation">
 <#Include Label="DeclareAttribute">
 <#Include Label="DeclareProperty">
 <#Include Label="DeclareFilter">
 <#Include Label="DeclareOperation">
+<#Include Label="DeclareConstructor">
 <#Include Label="DeclareGlobalFunction">
 <#Include Label="DeclareGlobalVariable">
 <#Include Label="InstallValue">
 <#Include Label="DeclareSynonym">
 <#Include Label="FlushCaches">
+<#Include Label="FilterByName">
 
 </Section>
 

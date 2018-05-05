@@ -10,38 +10,16 @@
 **
 **  This file contains the functions of the  arithmetic  operations  package.
 */
-#include        "system.h"              /* system dependent part           */
 
+#include <src/ariths.h>
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
-
-#include        "gap.h"                 /* error handling, initialisation  */
-
-#include        "gvars.h"               /* global variables                */
-#include        "calls.h"               /* generic call mechanism          */
-#include        "opers.h"               /* generic operations              */
-
-#include        "ariths.h"              /* basic arithmetic                */
-
-#include        "bool.h"                /* booleans                        */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "string.h"              /* strings                         */
-
-#include	"code.h"		/* coder                           */
-#include	"thread.h"		/* threads			   */
-#include	"tls.h"			/* thread-local storage		   */
-
+#include <src/bool.h>
+#include <src/gap.h>
+#include <src/opers.h>
 
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * *  unary arithmetic operations * * * * * * * * * * * *
 */
 
@@ -49,7 +27,7 @@
 **
 *V  ZeroFuncs[ <type> ] . . . . . . . . . . . . . . . . table of zero methods
 */
-ArithMethod1 ZeroFuncs [LAST_VIRTUAL_TNUM+1];
+ArithMethod1 ZeroFuncs [LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -121,7 +99,7 @@ Obj FuncZERO (
 **
 *V  ZeroMutFuncs[ <type> ] . . . . . . . . . . . . . . . . table of zero methods
 */
-ArithMethod1 ZeroMutFuncs [LAST_VIRTUAL_TNUM+1];
+ArithMethod1 ZeroMutFuncs [LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -196,8 +174,8 @@ Obj FuncZERO_MUT (
 *V  AInvMutFuncs[ <type> ] . .  . . . . . . table of additive inverse methods
 **                                          which return mutable results
 */
-ArithMethod1 AInvFuncs [LAST_VIRTUAL_TNUM+1];
-ArithMethod1 AInvMutFuncs[ LAST_VIRTUAL_TNUM + 1];
+ArithMethod1 AInvFuncs [LAST_REAL_TNUM+1];
+ArithMethod1 AInvMutFuncs[ LAST_REAL_TNUM + 1];
 
 
 /****************************************************************************
@@ -329,10 +307,9 @@ Obj FuncAINV_MUT (
 
 /****************************************************************************
 **
-
 *V  OneFuncs[ <type> ]  . . . . . . . . . . . . . . . .  table of one methods
 */
-ArithMethod1 OneFuncs [LAST_VIRTUAL_TNUM+1];
+ArithMethod1 OneFuncs [LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -400,10 +377,9 @@ Obj FuncONE (
 
 /****************************************************************************
 **
-
 *V  OneMutFuncs[ <type> ]  . . . . .table of mutability retaining one methods
 */
-ArithMethod1 OneMutFuncs [LAST_VIRTUAL_TNUM+1];
+ArithMethod1 OneMutFuncs [LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -472,10 +448,9 @@ Obj FuncONE_MUT (
 
 /****************************************************************************
 **
-
 *V  InvFuncs[ <type> ]  . . . . . . . . . . . . .  table of inverse functions
 */
-ArithMethod1 InvFuncs [LAST_VIRTUAL_TNUM+1];
+ArithMethod1 InvFuncs [LAST_REAL_TNUM+1];
 
     
 /****************************************************************************
@@ -546,7 +521,7 @@ Obj FuncINV (
 **
 *V  InvMutFuncs[ <type> ]  . table of mutability-preserving inverse functions
 */
-ArithMethod1 InvMutFuncs [LAST_VIRTUAL_TNUM+1];
+ArithMethod1 InvMutFuncs [LAST_REAL_TNUM+1];
 
     
 /****************************************************************************
@@ -615,16 +590,14 @@ Obj FuncINV_MUT (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * comparison operations  * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *V  EqFuncs[ <typeL> ][ <typeR> ] . . . . . . . . table of comparison methods
 */
-CompaMethod EqFuncs [LAST_VIRTUAL_TNUM+1][LAST_VIRTUAL_TNUM+1];
+CompaMethod EqFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -677,12 +650,12 @@ void InstallEqObject ( Int verb )
 
     func = ( verb ? VerboseEqObject : EqObject );
     for ( t1 = FIRST_EXTERNAL_TNUM;  t1 <= LAST_EXTERNAL_TNUM;  t1++ ) {
-        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
             EqFuncs[t1][t2] = func;
             EqFuncs[t2][t1] = func;
         }
     }
-    for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+    for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
 
         EqFuncs[ t2 ][ T_PREC            ] = func;
         EqFuncs[ t2 ][ T_PREC +IMMUTABLE ] = func;
@@ -714,10 +687,9 @@ Obj FuncEQ (
 
 /****************************************************************************
 **
-
 *V  LtFuncs[ <typeL> ][ <typeR> ] . . . . . . . . table of comparison methods
 */
-CompaMethod LtFuncs [LAST_VIRTUAL_TNUM+1][LAST_VIRTUAL_TNUM+1];
+CompaMethod LtFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -758,12 +730,12 @@ void InstallLtObject ( Int verb )
 
     func = ( verb ? VerboseLtObject : LtObject );
     for ( t1 = FIRST_EXTERNAL_TNUM;  t1 <= LAST_EXTERNAL_TNUM;  t1++ ) {
-        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
             LtFuncs[t1][t2] = func;
             LtFuncs[t2][t1] = func;
         }
     }
-    for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+    for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
 
         LtFuncs[ t2 ][ T_PREC            ] = func;
         LtFuncs[ t2 ][ T_PREC +IMMUTABLE ] = func;
@@ -788,10 +760,9 @@ Obj FuncLT (
 
 /****************************************************************************
 **
-
 *V  InFuncs[ <typeL> ][ <typeR> ] . . . . . . . . table of membership methods
 */
-CompaMethod InFuncs [LAST_VIRTUAL_TNUM+1][LAST_VIRTUAL_TNUM+1];
+CompaMethod InFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -848,12 +819,12 @@ void InstallInObject ( Int verb )
 
     func = ( verb ? VerboseInObject : InObject );
     for ( t1 = FIRST_EXTERNAL_TNUM;  t1 <= LAST_EXTERNAL_TNUM;  t1++ ) {
-        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
             InFuncs[t1][t2] = func;
             InFuncs[t2][t1] = func;
         }
     }
-    for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+    for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
 
         InFuncs[ t2 ][ T_PREC            ] = func;
         InFuncs[ t2 ][ T_PREC +IMMUTABLE ] = func;
@@ -876,16 +847,14 @@ Obj FuncIN (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * binary arithmetic operations * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *V  SumFuncs[ <typeL> ][ <typeR> ]  . . . . . . . . . .  table of sum methods
 */
-ArithMethod2    SumFuncs [LAST_VIRTUAL_TNUM+1][LAST_VIRTUAL_TNUM+1];
+ArithMethod2    SumFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -936,12 +905,12 @@ void InstallSumObject ( Int verb )
 
     func = ( verb ? VerboseSumObject : SumObject );
     for ( t1 = FIRST_EXTERNAL_TNUM; t1 <= LAST_EXTERNAL_TNUM; t1++ ) {
-        for ( t2 = FIRST_REAL_TNUM; t2 <= LAST_VIRTUAL_TNUM; t2++ ) {
+        for ( t2 = FIRST_REAL_TNUM; t2 <= LAST_REAL_TNUM; t2++ ) {
             SumFuncs[t1][t2] = func;
             SumFuncs[t2][t1] = func;
         }
     }
-    for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM; t2++ ) {
+    for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM; t2++ ) {
 
         SumFuncs[ t2 ][ T_PREC            ] = func;
         SumFuncs[ t2 ][ T_PREC +IMMUTABLE ] = func;
@@ -966,10 +935,9 @@ Obj FuncSUM (
 
 /****************************************************************************
 **
-
 *V  DiffFuncs[ <typeL> ][ <typeR> ] . . . . . . . table of difference methods
 */
-ArithMethod2 DiffFuncs [LAST_VIRTUAL_TNUM+1][LAST_VIRTUAL_TNUM+1];
+ArithMethod2 DiffFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -1035,12 +1003,12 @@ void InstallDiffObject ( Int verb )
 
     func = ( verb ? VerboseDiffObject : DiffObject );
     for ( t1 = FIRST_EXTERNAL_TNUM;  t1 <= LAST_EXTERNAL_TNUM;  t1++ ) {
-        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
             DiffFuncs[t1][t2] = func;
             DiffFuncs[t2][t1] = func;
         }
     }
-    for ( t2 = FIRST_REAL_TNUM; t2 <= LAST_VIRTUAL_TNUM; t2++ ) {
+    for ( t2 = FIRST_REAL_TNUM; t2 <= LAST_REAL_TNUM; t2++ ) {
 
         DiffFuncs[ t2 ][ T_PREC            ] = func;
         DiffFuncs[ t2 ][ T_PREC +IMMUTABLE ] = func;
@@ -1080,10 +1048,9 @@ Obj FuncDIFF (
 
 /****************************************************************************
 **
-
 *V  ProdFuncs[ <typeL> ][ <typeR> ] . . . . . . . .  table of product methods
 */
-ArithMethod2    ProdFuncs [LAST_VIRTUAL_TNUM+1][LAST_VIRTUAL_TNUM+1];
+ArithMethod2    ProdFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -1134,12 +1101,12 @@ void InstallProdObject ( Int verb )
 
     func = ( verb ? VerboseProdObject : ProdObject );
     for ( t1 = FIRST_EXTERNAL_TNUM;  t1 <= LAST_EXTERNAL_TNUM;  t1++ ) {
-        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
             ProdFuncs[t1][t2] = func;
             ProdFuncs[t2][t1] = func;
         }
     }
-    for ( t2 = FIRST_REAL_TNUM; t2 <= LAST_VIRTUAL_TNUM; t2++ ) {
+    for ( t2 = FIRST_REAL_TNUM; t2 <= LAST_REAL_TNUM; t2++ ) {
 
         ProdFuncs[ t2 ][ T_PREC            ] = func;
         ProdFuncs[ t2 ][ T_PREC +IMMUTABLE ] = func;
@@ -1164,10 +1131,9 @@ Obj FuncPROD (
 
 /****************************************************************************
 **
-
 *V  QuoFuncs[ <typeL> ][ <typeR> ]  . . . . . . . . table of quotient methods
 */
-ArithMethod2 QuoFuncs [LAST_VIRTUAL_TNUM+1][LAST_VIRTUAL_TNUM+1];
+ArithMethod2 QuoFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -1232,12 +1198,12 @@ void InstallQuoObject ( Int verb )
 
     func = ( verb ? VerboseQuoObject : QuoObject );
     for ( t1 = FIRST_EXTERNAL_TNUM;  t1 <= LAST_EXTERNAL_TNUM;  t1++ ) {
-        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
             QuoFuncs[t1][t2] = func;
             QuoFuncs[t2][t1] = func;
         }
     }
-    for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+    for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
 
         QuoFuncs[ t2 ][ T_PREC            ] = func;
         QuoFuncs[ t2 ][ T_PREC +IMMUTABLE ] = func;
@@ -1277,10 +1243,9 @@ Obj FuncQUO (
 
 /****************************************************************************
 **
-
 *V  LQuoFuncs[ <typeL> ][ <typeR> ] . . . . .  table of left quotient methods
 */
-ArithMethod2 LQuoFuncs [LAST_VIRTUAL_TNUM+1][LAST_VIRTUAL_TNUM+1];
+ArithMethod2 LQuoFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -1345,12 +1310,12 @@ void InstallLQuoObject ( Int verb )
 
     func = ( verb ? VerboseLQuoObject : LQuoObject );
     for ( t1 = FIRST_EXTERNAL_TNUM; t1 <= LAST_EXTERNAL_TNUM; t1++ ) {
-        for ( t2 = FIRST_REAL_TNUM; t2 <= LAST_VIRTUAL_TNUM; t2++ ) {
+        for ( t2 = FIRST_REAL_TNUM; t2 <= LAST_REAL_TNUM; t2++ ) {
             LQuoFuncs[t1][t2] = func;
             LQuoFuncs[t2][t1] = func;
         }
     }
-    for ( t2 = FIRST_REAL_TNUM; t2 <= LAST_VIRTUAL_TNUM; t2++ ) {
+    for ( t2 = FIRST_REAL_TNUM; t2 <= LAST_REAL_TNUM; t2++ ) {
         LQuoFuncs[ t2 ][ T_PREC            ] = func;
         LQuoFuncs[ t2 ][ T_PREC +IMMUTABLE ] = func;
         LQuoFuncs[ T_PREC            ][ t2 ] = func;
@@ -1389,10 +1354,9 @@ Obj FuncLQUO (
 
 /****************************************************************************
 **
-
 *V  PowFuncs[ <typeL> ][ <typeR> ]  . . . . . . . . .  table of power methods
 */
-ArithMethod2 PowFuncs [LAST_VIRTUAL_TNUM+1][LAST_VIRTUAL_TNUM+1];
+ArithMethod2 PowFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -1458,12 +1422,12 @@ void InstallPowObject ( Int verb )
 
     func = ( verb ? VerbosePowObject : PowObject );
     for ( t1 = FIRST_EXTERNAL_TNUM;  t1 <= LAST_EXTERNAL_TNUM;  t1++ ) {
-        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
             PowFuncs[t1][t2] = func;
             PowFuncs[t2][t1] = func;
         }
     }
-    for ( t2 = FIRST_REAL_TNUM; t2 <= LAST_VIRTUAL_TNUM; t2++ ) {
+    for ( t2 = FIRST_REAL_TNUM; t2 <= LAST_REAL_TNUM; t2++ ) {
 
         PowFuncs[ t2 ][ T_PREC            ] = func;
         PowFuncs[ t2 ][ T_PREC +IMMUTABLE ] = func;
@@ -1503,10 +1467,9 @@ Obj FuncPOW (
 
 /****************************************************************************
 **
-
 *V  CommFuncs[ <typeL> ][ <typeR> ] . . . . . . . table of commutator methods
 */
-ArithMethod2 CommFuncs [LAST_VIRTUAL_TNUM+1][LAST_VIRTUAL_TNUM+1];
+ArithMethod2 CommFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 
 
 /****************************************************************************
@@ -1573,12 +1536,12 @@ void InstallCommObject ( Int verb )
 
     func = ( verb ? VerboseCommObject : CommObject );
     for ( t1 = FIRST_EXTERNAL_TNUM;  t1 <= LAST_EXTERNAL_TNUM;  t1++ ) {
-        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
             CommFuncs[t1][t2] = func;
             CommFuncs[t2][t1] = func;
         }
     }
-    for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+    for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
 
         CommFuncs[ t2 ][ T_PREC            ] = func;
         CommFuncs[ t2 ][ T_PREC +IMMUTABLE ] = func;
@@ -1618,10 +1581,9 @@ Obj FuncCOMM (
 
 /****************************************************************************
 **
-
 *V  ModFuncs[ <typeL> ][ <typeR> ]  . . . . . . .  table of remainder methods
 */
-ArithMethod2 ModFuncs [LAST_VIRTUAL_TNUM+1][LAST_VIRTUAL_TNUM+1];
+ArithMethod2 ModFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 
 
 
@@ -1673,12 +1635,12 @@ void InstallModObject ( Int verb )
 
     func = ( verb ? VerboseModObject : ModObject );
     for ( t1 = FIRST_EXTERNAL_TNUM;  t1 <= LAST_EXTERNAL_TNUM;  t1++ ) {
-        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
             ModFuncs[t1][t2] = func;
             ModFuncs[t2][t1] = func;
         }
     }
-    for ( t2 = FIRST_REAL_TNUM; t2 <= LAST_VIRTUAL_TNUM; t2++ ) {
+    for ( t2 = FIRST_REAL_TNUM; t2 <= LAST_REAL_TNUM; t2++ ) {
 
         ModFuncs[ t2 ][ T_PREC            ] = func;
         ModFuncs[ t2 ][ T_PREC +IMMUTABLE ] = func;
@@ -1703,22 +1665,8 @@ Obj FuncMOD (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
-
-/****************************************************************************
-**
-
-*V  GVarAttrs . . . . . . . . . . . . . . . . .  list of attributes to export
-*/
-static StructGVarAttr GVarAttrs [] = {
-
-
-    { 0 }
-
-};
-
 
 /****************************************************************************
 **
@@ -1726,64 +1674,26 @@ static StructGVarAttr GVarAttrs [] = {
 */
 static StructGVarOper GVarOpers [] = {
 
-    { "EQ", 2, "opL, opR", &EqOper,
-      FuncEQ, "src/ariths.c:EQ" },
-
-    { "LT", 2, "opL, opR", &LtOper,
-      FuncLT, "src/ariths.c:LT" },
-
-    { "IN", 2, "opL, opR", &InOper,
-      FuncIN, "src/ariths.c:IN" },
-
-    { "SUM", 2, "opL, opR", &SumOper,
-      FuncSUM, "src/ariths.c:SUM" },
-
-    { "DIFF", 2, "opL, opR", &DiffOper,
-      FuncDIFF, "src/ariths.c:DIFF" },
-
-    { "PROD", 2, "opL, opR", &ProdOper,
-      FuncPROD, "src/ariths.c:PROD" },
-
-    { "QUO", 2, "opL, opR", &QuoOper,
-      FuncQUO, "src/ariths.c:QUO" },
-
-    { "LQUO", 2, "opL, opR", &LQuoOper,
-      FuncLQUO, "src/ariths.c:LQUO" },
-
-    { "POW", 2, "opL, opR", &PowOper,
-      FuncPOW, "src/ariths.c:POW" },
-
-    { "COMM", 2, "opL, opR", &CommOper,
-      FuncCOMM, "src/ariths.c:COMM" },
-
-    { "MOD", 2, "opL, opR", &ModOper,
-      FuncMOD, "src/ariths.c:MOD" },
-
-    { "ZERO", 1, "op", &ZEROOp,
-      FuncZERO, "src/ariths.c:ZERO" },
-
-    { "ZERO_MUT", 1, "op", &ZeroOp,
-      FuncZERO_MUT, "src/ariths.c:ZERO_MUT" },
-
-    { "AINV", 1, "op", &AInvOp,
-      FuncAINV, "src/ariths.c:AINV" },
-
-    { "AINV_MUT", 1, "op", &AdditiveInverseOp,
-      FuncAINV_MUT, "src/ariths.c:AINV_MUT" },
-
-    { "ONE", 1, "op", &OneOp,
-      FuncONE, "src/ariths.c:ONE" },
-
-    { "ONE_MUT", 1, "op", &OneMutOp,
-      FuncONE_MUT, "src/ariths.c:ONE_MUT" },
-
-    { "INV", 1, "op", &InvOp,
-      FuncINV, "src/ariths.c:INV" },
-
-    { "INV_MUT", 1, "op", &InvMutOp,
-      FuncINV_MUT, "src/ariths.c:INV_MUT" },
-
-    { 0 }
+    GVAR_OPER(EQ, 2, "opL, opR", &EqOper),
+    GVAR_OPER(LT, 2, "opL, opR", &LtOper),
+    GVAR_OPER(IN, 2, "opL, opR", &InOper),
+    GVAR_OPER(SUM, 2, "opL, opR", &SumOper),
+    GVAR_OPER(DIFF, 2, "opL, opR", &DiffOper),
+    GVAR_OPER(PROD, 2, "opL, opR", &ProdOper),
+    GVAR_OPER(QUO, 2, "opL, opR", &QuoOper),
+    GVAR_OPER(LQUO, 2, "opL, opR", &LQuoOper),
+    GVAR_OPER(POW, 2, "opL, opR", &PowOper),
+    GVAR_OPER(COMM, 2, "opL, opR", &CommOper),
+    GVAR_OPER(MOD, 2, "opL, opR", &ModOper),
+    GVAR_OPER(ZERO, 1, "op", &ZEROOp),
+    GVAR_OPER(ZERO_MUT, 1, "op", &ZeroOp),
+    GVAR_OPER(AINV, 1, "op", &AInvOp),
+    GVAR_OPER(AINV_MUT, 1, "op", &AdditiveInverseOp),
+    GVAR_OPER(ONE, 1, "op", &OneOp),
+    GVAR_OPER(ONE_MUT, 1, "op", &OneMutOp),
+    GVAR_OPER(INV, 1, "op", &InvOp),
+    GVAR_OPER(INV_MUT, 1, "op", &InvMutOp),
+    { 0, 0, 0, 0, 0, 0 }
 
 };
 
@@ -1794,30 +1704,18 @@ static StructGVarOper GVarOpers [] = {
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    { "COMM_DEFAULT", 2, "opL, opR",
-      FuncCOMM_DEFAULT, "src/ariths.c:COMM_DEFAULT" },
-
-    { "POW_DEFAULT", 2, "opL, opR",
-      FuncPOW_DEFAULT, "src/ariths.c:POW_DEFAULT" },
-
-    { "LQUO_DEFAULT", 2, "opL, opR",
-      FuncLQUO_DEFAULT, "src/ariths.c:LQUO_DEFAULT" },
-
-    { "QUO_DEFAULT", 2, "opL, opR",
-      FuncQUO_DEFAULT, "src/ariths.c:QUO_DEFAULT" },
-
-    { "DIFF_DEFAULT", 2, "opL, opR",
-      FuncDIFF_DEFAULT, "src/ariths.c:DIFF_DEFAULT" },
-
-
-    { 0 }
+    GVAR_FUNC(COMM_DEFAULT, 2, "opL, opR"),
+    GVAR_FUNC(POW_DEFAULT, 2, "opL, opR"),
+    GVAR_FUNC(LQUO_DEFAULT, 2, "opL, opR"),
+    GVAR_FUNC(QUO_DEFAULT, 2, "opL, opR"),
+    GVAR_FUNC(DIFF_DEFAULT, 2, "opL, opR"),
+    { 0, 0, 0, 0, 0 }
 
 };
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
@@ -1827,141 +1725,159 @@ static Int InitKernel (
     UInt                t2;             /* type of right operand           */
 
     /* init filters and functions                                          */
-    InitHdlrAttrsFromTable( GVarAttrs );
     InitHdlrOpersFromTable( GVarOpers );
     InitHdlrFuncsFromTable( GVarFuncs );
 
     /* make and install the 'ZERO' arithmetic operation                    */
-    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_VIRTUAL_TNUM;  t1++ ) {
+    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_REAL_TNUM;  t1++ ) {
+        assert(ZeroFuncs[t1] == 0);
         ZeroFuncs[t1] = ZeroObject;
     }
     InstallZeroObject(0);
 
     /* make and install the 'ZERO_MUT' arithmetic operation                */
-    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_VIRTUAL_TNUM;  t1++ ) {
+    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_REAL_TNUM;  t1++ ) {
+        assert(ZeroMutFuncs[t1] == 0);
         ZeroMutFuncs[t1] = ZeroMutObject;
     }
     InstallZeroObject(0);
 
     /* make and install the 'AINV' arithmetic operation                    */
-    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_VIRTUAL_TNUM;  t1++ ) {
+    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_REAL_TNUM;  t1++ ) {
+        assert(AInvFuncs[t1] == 0);
         AInvFuncs[t1] = AInvObject;
-    }
-
-    InstallAinvMutObject(0);
-    /* make and install the 'AINV_MUT' arithmetic operation                */
-    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_VIRTUAL_TNUM;  t1++ ) {
-        AInvMutFuncs[t1] = AInvMutObject;
     }
     InstallAinvObject(0);
 
+    /* make and install the 'AINV_MUT' arithmetic operation                */
+    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_REAL_TNUM;  t1++ ) {
+        assert(AInvMutFuncs[t1] == 0);
+        AInvMutFuncs[t1] = AInvMutObject;
+    }
+    InstallAinvMutObject(0);
+
     /* make and install the 'ONE' arithmetic operation                     */
-    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_VIRTUAL_TNUM;  t1++ ) {
+    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_REAL_TNUM;  t1++ ) {
+        assert(OneFuncs[t1] == 0);
         OneFuncs[t1] = OneObject;
     }
     InstallOneObject(0);
 
     /* make and install the 'ONE' arithmetic operation                     */
-    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_VIRTUAL_TNUM;  t1++ ) {
+    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_REAL_TNUM;  t1++ ) {
+        assert(OneMutFuncs[t1] == 0);
         OneMutFuncs[t1] = OneMutObject;
     }
     InstallOneMutObject(0);
 
     /* make and install the 'INV' arithmetic operation                     */
-    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_VIRTUAL_TNUM;  t1++ ) {
+    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_REAL_TNUM;  t1++ ) {
+        assert(InvFuncs[t1] == 0);
         InvFuncs[t1] = InvObject;
     }
     InstallInvObject(0);
 
     /* make and install the 'INV' arithmetic operation                     */
-    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_VIRTUAL_TNUM;  t1++ ) {
+    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_REAL_TNUM;  t1++ ) {
+        assert(InvMutFuncs[t1] == 0);
         InvMutFuncs[t1] = InvMutObject;
     }
     InstallInvMutObject(0);
 
     /* make and install the 'EQ' comparison operation                      */
-    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_VIRTUAL_TNUM;  t1++ ) {
-        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_REAL_TNUM;  t1++ ) {
+        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
+            assert(EqFuncs[t1][t2] == 0);
             EqFuncs[t1][t2] = EqNot;
         }
     }
     InstallEqObject(0);
 
     /* make and install the 'LT' comparison operation                      */
-    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_VIRTUAL_TNUM;  t1++ ) {
-        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_REAL_TNUM;  t1++ ) {
+        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
+            assert(LtFuncs[t1][t2] == 0);
             LtFuncs[t1][t2] = LtObject;
         }
     }
     InstallLtObject(0);
 
     /* make and install the 'IN' comparison operation                      */
-    for ( t1 = FIRST_REAL_TNUM; t1 <= LAST_VIRTUAL_TNUM; t1++ ) {
-        for ( t2 = FIRST_REAL_TNUM; t2 <= LAST_VIRTUAL_TNUM; t2++ ) {
+    for ( t1 = FIRST_REAL_TNUM; t1 <= LAST_REAL_TNUM; t1++ ) {
+        for ( t2 = FIRST_REAL_TNUM; t2 <= LAST_REAL_TNUM; t2++ ) {
+            assert(InFuncs[t1][t2] == 0);
             InFuncs[t1][t2] = InUndefined;
         }
     }
     InstallInObject(0);
 
     /* make and install the 'SUM' arithmetic operation                     */
-    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_VIRTUAL_TNUM;  t1++ ) {
-        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_REAL_TNUM;  t1++ ) {
+        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
+            assert(SumFuncs[t1][t2] == 0);
             SumFuncs[t1][t2] = SumObject;
         }
     }
     InstallSumObject(0);
 
     /* make and install the 'DIFF' arithmetic operation                    */
-    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_VIRTUAL_TNUM;  t1++ ) {
-        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_REAL_TNUM;  t1++ ) {
+        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
+            assert(DiffFuncs[t1][t2] == 0);
             DiffFuncs[t1][t2] = DiffDefault;
         }
     }
     InstallDiffObject(0);
 
     /* make and install the 'PROD' arithmetic operation                    */
-    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_VIRTUAL_TNUM;  t1++ ) {
-        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_REAL_TNUM;  t1++ ) {
+        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
+            assert(ProdFuncs[t1][t2] == 0);
             ProdFuncs[t1][t2] = ProdObject;
         }
     }
     InstallProdObject(0);
 
     /* make and install the 'QUO' arithmetic operation                     */
-    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_VIRTUAL_TNUM;  t1++ ) {
-        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_REAL_TNUM;  t1++ ) {
+        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
+            assert(QuoFuncs[t1][t2] == 0);
             QuoFuncs[t1][t2] = QuoDefault;
         }
     }
     InstallQuoObject(0);
 
     /* make and install the 'LQUO' arithmetic operation                    */
-    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_VIRTUAL_TNUM;  t1++ ) {
-        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_REAL_TNUM;  t1++ ) {
+        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
+            assert(LQuoFuncs[t1][t2] == 0);
             LQuoFuncs[t1][t2] = LQuoDefault;
         }
     }
     InstallLQuoObject(0);
 
     /* make and install the 'POW' arithmetic operation                     */
-    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_VIRTUAL_TNUM;  t1++ ) {
-        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_REAL_TNUM;  t1++ ) {
+        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
+            assert(PowFuncs[t1][t2] == 0);
             PowFuncs[t1][t2] = PowObject;
         }
     }
     InstallPowObject(0);
 
     /* make and install the 'COMM' arithmetic operation                    */
-    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_VIRTUAL_TNUM;  t1++ ) {
-        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_REAL_TNUM;  t1++ ) {
+        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
+            assert(CommFuncs[t1][t2] == 0);
             CommFuncs[t1][t2] = CommDefault;
         }
     }
     InstallCommObject(0);
 
     /* make and install the 'MOD' arithmetic operation                     */
-    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_VIRTUAL_TNUM;  t1++ ) {
-        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_VIRTUAL_TNUM;  t2++ ) {
+    for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_REAL_TNUM;  t1++ ) {
+        for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
+            assert(ModFuncs[t1][t2] == 0);
             ModFuncs[t1][t2] = ModObject;
         }
     }
@@ -1981,7 +1897,6 @@ static Int InitLibrary (
     StructInitInfo *    module )
 {
     /* init filters and functions                                          */
-    InitGVarAttrsFromTable( GVarAttrs );
     InitGVarOpersFromTable( GVarOpers );
     InitGVarFuncsFromTable( GVarFuncs );
 
@@ -1995,38 +1910,15 @@ static Int InitLibrary (
 *F  InitInfoAriths()  . . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "ariths",                           /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "ariths",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoAriths ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  ariths.c  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/
-
-
-
-
-
-
-
-
-
-

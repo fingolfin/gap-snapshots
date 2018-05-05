@@ -15,16 +15,15 @@
 #ifndef GAP_COSTAB_H
 #define GAP_COSTAB_H
 
+#include <src/system.h>
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  InitInfoCosetTable() . . . . . . . . . . . . . .  table of init functions
 */
 StructInitInfo * InitInfoCosetTable ( void );
@@ -32,9 +31,3 @@ StructInitInfo * InitInfoCosetTable ( void );
 
 
 #endif // GAP_COSTAB_H
-
-/****************************************************************************
-**
-
-*E  costab.h . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

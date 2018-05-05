@@ -10,45 +10,30 @@
 **  This file contains  the functions of the  package with the operations for
 **  generic lists.
 */
-#include        "system.h"              /* Ints, UInts                     */
+
+#include <src/listoper.h>
+
+#include <src/ariths.h>
+#include <src/bool.h>
+#include <src/calls.h>
+#include <src/gap.h>
+#include <src/gvars.h>
+#include <src/io.h>
+#include <src/listfunc.h>
+#include <src/lists.h>
+#include <src/opers.h>
+#include <src/plist.h>
+#include <src/range.h>
 
 
-#include        "sysfiles.h"            /* file input/output               */
-
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
-
-#include        "gap.h"                 /* error handling, initialisation  */
-
-#include        "gvars.h"               /* global variables                */
-
-#include        "calls.h"               /* generic call mechanism          */
-
-#include        "ariths.h"              /* basic arithmetic                */
-
-#include        "bool.h"                /* booleans                        */
-
-#include        "integer.h"             /* integers                        */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "listoper.h"            /* operations for generic lists    */
-#include        "listfunc.h"            /* functions for generic lists    */
-#include        "plist.h"               /* plain lists                     */
-#include        "string.h"              /* strings                         */
-#include        "opers.h"               /* TRY_NEXT_METHOD                 */
-#include        "range.h"               /* Ranges                          */
-#include        "code.h"		/* Coder                           */
-#include        "thread.h"              /* threads                         */
-#include        "tls.h"                 /* thread-local storage            */
+#ifndef HPCGAP
+// HACK
+#define CheckedMakeImmutable(x) MakeImmutable(x)
+#endif
 
 
 /****************************************************************************
 **
-
 *F  EqListList(<listL>,<listR>) . . . . . . . . . test if two lists are equal
 **
 **  'EqListList' returns  'true' if  the  two lists <listL> and  <listR>  are
@@ -91,7 +76,7 @@ Int             EqListList (
     return 1L;
 }
 
-Obj             EqListListHandler (
+Obj FuncEQ_LIST_LIST_DEFAULT (
     Obj                 self,
     Obj                 listL,
     Obj                 listR )
@@ -141,7 +126,7 @@ Int             LtListList (
     return (lenL < lenR);
 }
 
-Obj             LtListListHandler (
+Obj FuncLT_LIST_LIST_DEFAULT (
     Obj                 self,
     Obj                 listL,
     Obj                 listR )
@@ -164,7 +149,7 @@ Int             InList (
   return Fail != POS_LIST( listR, objL, INTOBJ_INT(0L) );
 }
 
-Obj             InListDefaultHandler (
+Obj FuncIN_LIST_DEFAULT (
     Obj                 self,
     Obj                 obj,
     Obj                 list )
@@ -312,7 +297,7 @@ Obj             SumListList (
     return listS;
 }
 
-Obj             SumSclListHandler (
+Obj FuncSUM_SCL_LIST_DEFAULT (
     Obj                 self,
     Obj                 listL,
     Obj                 listR )
@@ -320,7 +305,7 @@ Obj             SumSclListHandler (
     return SumSclList( listL, listR );
 }
 
-Obj             SumListSclHandler (
+Obj FuncSUM_LIST_SCL_DEFAULT (
     Obj                 self,
     Obj                 listL,
     Obj                 listR )
@@ -328,7 +313,7 @@ Obj             SumListSclHandler (
     return SumListScl( listL, listR );
 }
 
-Obj             SumListListHandler (
+Obj FuncSUM_LIST_LIST_DEFAULT (
     Obj                 self,
     Obj                 listL,
     Obj                 listR )
@@ -411,7 +396,7 @@ Obj             ZeroListDefault (
     return res;
 }
 
-Obj             ZeroListDefaultHandler (
+Obj FuncZERO_LIST_DEFAULT (
     Obj                 self,
     Obj                 list )
 {
@@ -472,7 +457,7 @@ Obj             ZeroListMutDefault (
     return res;
 }
 
-Obj             ZeroListMutDefaultHandler (
+Obj FuncZERO_MUT_LIST_DEFAULT (
     Obj                 self,
     Obj                 list )
 {
@@ -487,7 +472,7 @@ Obj             ZeroListMutDefaultHandler (
    we want an immutable result, we can (a) reuse a single row of zeros
    (b) record that the result is a rectangular table */
 
-Obj ZeroAttrMat( Obj self, Obj mat )
+Obj FuncZERO_ATTR_MAT( Obj self, Obj mat )
 {
   Obj zrow;
   UInt len;
@@ -497,7 +482,7 @@ Obj ZeroAttrMat( Obj self, Obj mat )
   if (len == 0)
     return NEW_PLIST(T_PLIST_EMPTY + IMMUTABLE, 0);
   zrow = ZERO(ELM_LIST(mat,1));
-  MakeImmutable(zrow);
+  CheckedMakeImmutable(zrow);
   res = NEW_PLIST(T_PLIST_TAB_RECT+IMMUTABLE, len);
   SET_LEN_PLIST(res,len);
   for (i = 1; i <= len; i++)
@@ -572,7 +557,7 @@ Obj AInvMutListDefault (
     return res;
 }
 
-Obj AInvMutListDefaultHandler (
+Obj FuncAINV_MUT_LIST_DEFAULT (
     Obj                 self,
     Obj                 list )
 {
@@ -636,7 +621,7 @@ Obj AInvListDefault (
     return res;
 }
 
-Obj AInvListDefaultHandler (
+Obj FuncAINV_LIST_DEFAULT (
     Obj                 self,
     Obj                 list )
 {
@@ -835,7 +820,7 @@ Obj             DiffListList (
     return listD;
 }
 
-Obj             DiffSclListHandler (
+Obj FuncDIFF_SCL_LIST_DEFAULT (
     Obj                 self,
     Obj                 listL,
     Obj                 listR )
@@ -843,7 +828,7 @@ Obj             DiffSclListHandler (
     return DiffSclList( listL, listR );
 }
 
-Obj             DiffListSclHandler (
+Obj FuncDIFF_LIST_SCL_DEFAULT (
     Obj                 self,
     Obj                 listL,
     Obj                 listR )
@@ -851,7 +836,7 @@ Obj             DiffListSclHandler (
     return DiffListScl( listL, listR );
 }
 
-Obj             DiffListListHandler (
+Obj FuncDIFF_LIST_LIST_DEFAULT (
     Obj                 self,
     Obj                 listL,
     Obj                 listR )
@@ -1004,8 +989,11 @@ Obj             ProdListList (
           }
     }
 
+    /* TODO: This is possible expensive, we may be able to settle for
+     * a cheaper check and call MakeImmutable() instead.
+     */
     if (imm && IS_MUTABLE_OBJ(listP))
-      MakeImmutable(listP);
+      CheckedMakeImmutable(listP);
 
     if (!listP)
       ErrorMayQuit("Inner product multiplication of lists: no summands", 0, 0);
@@ -1014,7 +1002,7 @@ Obj             ProdListList (
     return listP;
 }
 
-Obj             ProdSclListHandler (
+Obj FuncPROD_SCL_LIST_DEFAULT (
     Obj                 self,
     Obj                 listL,
     Obj                 listR )
@@ -1022,7 +1010,7 @@ Obj             ProdSclListHandler (
     return ProdSclList( listL, listR );
 }
 
-Obj             ProdListSclHandler (
+Obj FuncPROD_LIST_SCL_DEFAULT (
     Obj                 self,
     Obj                 listL,
     Obj                 listR )
@@ -1030,7 +1018,7 @@ Obj             ProdListSclHandler (
     return ProdListScl( listL, listR );
 }
 
-Obj             ProdListListHandler (
+Obj FuncPROD_LIST_LIST_DEFAULT (
     Obj                 self,
     Obj                 listL,
     Obj                 listR,
@@ -1098,8 +1086,8 @@ Obj             OneMatrix (
     case 0:
       zero = ZERO_MUT( ELM_LIST( ELM_LIST( mat, 1 ), 1 ) );
       one  = ONE_MUT( zero );
-      MakeImmutable(zero);
-      MakeImmutable(one);
+      CheckedMakeImmutable(zero);
+      CheckedMakeImmutable(one);
       ctype = rtype = T_PLIST+IMMUTABLE;
       break;
       
@@ -1141,21 +1129,21 @@ Obj             OneMatrix (
     return res;
 }
 
-Obj             FuncOneMatrixImmutable (
+Obj FuncONE_MATRIX_IMMUTABLE (
     Obj                 self,
     Obj                 list )
 {
     return OneMatrix( list,0 );
 }
 
-Obj             FuncOneMatrixSameMutability (
+Obj FuncONE_MATRIX_SAME_MUTABILITY (
     Obj                 self,
     Obj                 list )
 {
     return OneMatrix( list,1 );
 }
 
-Obj             FuncOneMatrixMutable (
+Obj FuncONE_MATRIX_MUTABLE (
     Obj                 self,
     Obj                 list )
 {
@@ -1212,8 +1200,8 @@ Obj             InvMatrix (
         zero = ZERO_MUT( ELM_LIST( ELM_LIST( mat, 1 ), 1 ) );
         one  = ONE_MUT( zero );
         ctype = rtype = T_PLIST+IMMUTABLE;
-        MakeImmutable(zero);
-        MakeImmutable(one);
+        CheckedMakeImmutable(zero);
+        CheckedMakeImmutable(one);
         break;
         
       case 1:
@@ -1678,7 +1666,7 @@ Obj FuncPROD_VEC_MAT_DEFAULT( Obj self,
   if (res == (Obj)0)
     res = ZERO(ELMW_LIST(mat,1));
   if (!IS_MUTABLE_OBJ(vec) && !IS_MUTABLE_OBJ(mat))
-    MakeImmutable(res);
+    CheckedMakeImmutable(res);
   return res;
 }
 
@@ -1720,7 +1708,7 @@ Obj InvMatWithRowVecs( Obj mat, UInt mut)
     switch( mut) {
     case 0:
       res = INV(mat);
-      MakeImmutable(res);
+      CheckedMakeImmutable(res);
       return res;
       break;
     case 1:
@@ -1823,7 +1811,7 @@ Obj InvMatWithRowVecs( Obj mat, UInt mut)
   switch (mut)
     {
     case 0:
-      MakeImmutable(res);
+      CheckedMakeImmutable(res);
       break;
       
     case 1:
@@ -1831,10 +1819,10 @@ Obj InvMatWithRowVecs( Obj mat, UInt mut)
         {
           if (!IS_MUTABLE_OBJ(ELM_LIST(mat,1)))
             for (i = 1; i <= len; i++)
-              MakeImmutable(ELM_LIST(res,i));
+              CheckedMakeImmutable(ELM_LIST(res,i));
         }
       else
-        MakeImmutable(res);
+        CheckedMakeImmutable(res);
       break;
     case 2:
       break;
@@ -1988,7 +1976,7 @@ static Obj  FuncMONOM_TOT_DEG_LEX ( Obj self, Obj u, Obj  v ) {
 
 /****************************************************************************
 **
-*F  MONOM_GRLLEX( u, v ) . . . . . ``grlex'' ordering for internal monomials
+*F  MONOM_GRLEX( u, v ) . . . . . ``grlex'' ordering for internal monomials
 **
 **  This function  implements the ``grlex'' (degree, then lexicographic) ordering
 **  for monomials  of commuting indeterminates with x_1>x_2>x_3 etc. (this
@@ -2214,132 +2202,51 @@ static Obj  FuncMONOM_PROD( Obj self, Obj m1, Obj m2 ) {
 
 /****************************************************************************
 **
-
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    { "EQ_LIST_LIST_DEFAULT", 2, "listL, listR",
-      EqListListHandler, "src/listoper.c:EQ_LIST_LIST_DEFAULT" },
-
-    { "LT_LIST_LIST_DEFAULT", 2, "listL, listR",
-      LtListListHandler, "src/listoper.c:LT_LIST_LIST_DEFAULT" },
-
-    { "IN_LIST_DEFAULT", 2, "obj, list",
-      InListDefaultHandler, "src/listoper.c:IN_LIST_DEFAULT" },
-
-    { "SUM_SCL_LIST_DEFAULT", 2, "listL, listR",
-      SumSclListHandler, "src/listoper.c:SUM_SCL_LIST_DEFAULT" },
-
-    { "SUM_LIST_SCL_DEFAULT", 2, "listL, listR",
-      SumListSclHandler, "src/listoper.c:SUM_LIST_SCL_DEFAULT" },
-
-    { "SUM_LIST_LIST_DEFAULT", 2, "listL, listR",
-      SumListListHandler, "src/listoper.c:SUM_LIST_LIST_DEFAULT" },
-
-    { "ZERO_LIST_DEFAULT", 1, "list",
-      ZeroListDefaultHandler, "src/listoper.c:ZERO_LIST_DEFAULT" },
-
-    { "ZERO_MUT_LIST_DEFAULT", 1, "list",
-      ZeroListMutDefaultHandler, "src/listoper.c:ZERO_MUT_LIST_DEFAULT" },
-
-    { "ZERO_ATTR_MAT", 1, "mat",
-      ZeroAttrMat, "src/listoper.c:ZERO_ATTR_MAT" },
-
-    { "AINV_LIST_DEFAULT", 1, "list",
-      AInvListDefaultHandler, "src/listoper.c:AINV_LIST_DEFAULT" },
-
-    { "AINV_MUT_LIST_DEFAULT", 1, "list",
-      AInvMutListDefaultHandler, "src/listoper.c:AINV_MUT_LIST_DEFAULT" },
-
-    { "DIFF_SCL_LIST_DEFAULT", 2, "listL, listR",
-      DiffSclListHandler, "src/listoper.c:DIFF_SCL_LIST_DEFAULT" },
-
-    { "DIFF_LIST_SCL_DEFAULT", 2, "listL, listR",
-      DiffListSclHandler, "src/listoper.c:DIFF_LIST_SCL_DEFAULT" },
-
-    { "DIFF_LIST_LIST_DEFAULT", 2, "listL, listR",
-      DiffListListHandler, "src/listoper.c:DIFF_LIST_LIST_DEFAULT" },
-
-    { "PROD_SCL_LIST_DEFAULT", 2, "listL, listR",
-      ProdSclListHandler, "src/listoper.c:PROD_SCL_LIST_DEFAULT" },
-
-    { "PROD_LIST_SCL_DEFAULT", 2, "listL, listR",
-      ProdListSclHandler, "src/listoper.c:PROD_LIST_SCL_DEFAULT" },
-
-    { "PROD_LIST_LIST_DEFAULT", 3, "listL, listR, depthDiff",
-      ProdListListHandler, "src/listoper.c:PROD_LIST_LIST_DEFAULT" },
-
-    { "ONE_MATRIX_MUTABLE", 1, "list",
-      FuncOneMatrixMutable, "src/listoper.c:ONE_MATRIX_MUTABLE" },
-
-    { "ONE_MATRIX_SAME_MUTABILITY", 1, "list",
-      FuncOneMatrixSameMutability, "src/listoper.c:ONE_MATRIX_SAME_MUTABILITY" },
-
-    { "ONE_MATRIX_IMMUTABLE", 1, "list",
-      FuncOneMatrixImmutable, "src/listoper.c:ONE_MATRIX_IMMUTABLE" },
-
-    { "INV_MATRIX_MUTABLE", 1, "list",
-      FuncINV_MATRIX_MUTABLE, "src/listoper.c:INV_MATRIX_MUTABLE" },
-
-    { "INV_MATRIX_SAME_MUTABILITY", 1, "list",
-      FuncINV_MATRIX_SAME_MUTABILITY, "src/listoper.c:INV_MATRIX_SAME_MUTABILITY" },
-
-    { "INV_MATRIX_IMMUTABLE", 1, "list",
-      FuncINV_MATRIX_IMMUTABLE, "src/listoper.c:INV_MATRIX_IMMUTABLE" },
-
-    { "ADD_ROW_VECTOR_5", 5, "list1, list2, mult, from, to",
-      FuncADD_ROW_VECTOR_5, "src/listoper.c:ADD_ROW_VECTOR_5" },
-
-    { "ADD_ROW_VECTOR_5_FAST", 5, "list1, list2, mult, from, to",
-      FuncADD_ROW_VECTOR_5_FAST, "src/listoper.c:ADD_ROW_VECTOR_5_FAST" },
-
-    { "ADD_ROW_VECTOR_3", 3, "list1, list2, mult",
-      FuncADD_ROW_VECTOR_3, "src/listoper.c:ADD_ROW_VECTOR_3" },
-
-    { "ADD_ROW_VECTOR_3_FAST", 3, "list1, list2, mult",
-      FuncADD_ROW_VECTOR_3_FAST, "src/listoper.c:ADD_ROW_VECTOR_3_FAST" },
-
-    { "ADD_ROW_VECTOR_2", 2, "list1, list2",
-      FuncADD_ROW_VECTOR_2, "src/listoper.c:ADD_ROW_VECTOR_2" },
-
-    { "ADD_ROW_VECTOR_2_FAST", 2, "list1, list2",
-      FuncADD_ROW_VECTOR_2_FAST, "src/listoper.c:ADD_ROW_VECTOR_2_FAST" },
-
-    { "MULT_ROW_VECTOR_2", 2, "list, mult",
-      FuncMULT_ROW_VECTOR_2, "src/listoper.c:MULT_ROW_VECTOR_2" },
-
-    { "MULT_ROW_VECTOR_2_FAST", 2, "list, mult",
-      FuncMULT_ROW_VECTOR_2_FAST, "src/listoper.c:MULT_ROW_VECTOR_2_FAST" },
-
-    { "PROD_VEC_MAT_DEFAULT", 2, "vec, mat",
-      FuncPROD_VEC_MAT_DEFAULT, "src/listoper.c:PROD_VEC_MAT_DEFAULT" },
-    
-    { "INV_MAT_DEFAULT_MUTABLE", 1, "mat",
-      FuncINV_MAT_DEFAULT_MUTABLE, "src/listoper.c:INV_MAT_DEFAULT_MUTABLE" },
-
-    { "INV_MAT_DEFAULT_SAME_MUTABILITY", 1, "mat",
-      FuncINV_MAT_DEFAULT_SAME_MUTABILITY, "src/listoper.c:INV_MAT_DEFAULT_SAME_MUTABILITY" },
-
-    { "INV_MAT_DEFAULT_IMMUTABLE", 1, "mat",
-      FuncINV_MAT_DEFAULT_IMMUTABLE, "src/listoper.c:INV_MAT_DEFAULT_IMMUTABLE" },
-
-    { "ADD_TO_LIST_ENTRIES_PLIST_RANGE", 3, "list, range, x",
-      FuncADD_TO_LIST_ENTRIES_PLIST_RANGE, "src/listfunc.c:ADD_TO_LIST_ENTRIES_PLIST_RANGE" },
-
-    { "MONOM_TOT_DEG_LEX", 2, "monomial, monomial",
-      FuncMONOM_TOT_DEG_LEX, "src/ratfun.c:FuncMONOM_TOT_DEG_LEX" },
-
-    { "MONOM_GRLEX", 2, "monomial, monomial",
-      FuncMONOM_GRLEX, "src/ratfun.c:FuncMONOM_GRLEX" },
-
-    { "ZIPPED_SUM_LISTS", 4, "list,list,zero,funclist",
-      FuncZIPPED_SUM_LISTS, "src/ratfun.c:FuncZIPPED_SUM_LISTS" },
-
-    { "MONOM_PROD", 2, "monomial, monomial",
-      FuncMONOM_PROD, "src/ratfun.c:FuncMONOM_PROD" },
-
-    { 0 }
+    GVAR_FUNC(EQ_LIST_LIST_DEFAULT, 2, "listL, listR"),
+    GVAR_FUNC(LT_LIST_LIST_DEFAULT, 2, "listL, listR"),
+    GVAR_FUNC(IN_LIST_DEFAULT, 2, "obj, list"),
+    GVAR_FUNC(SUM_SCL_LIST_DEFAULT, 2, "listL, listR"),
+    GVAR_FUNC(SUM_LIST_SCL_DEFAULT, 2, "listL, listR"),
+    GVAR_FUNC(SUM_LIST_LIST_DEFAULT, 2, "listL, listR"),
+    GVAR_FUNC(ZERO_LIST_DEFAULT, 1, "list"),
+    GVAR_FUNC(ZERO_MUT_LIST_DEFAULT, 1, "list"),
+    GVAR_FUNC(ZERO_ATTR_MAT, 1, "mat"),
+    GVAR_FUNC(AINV_LIST_DEFAULT, 1, "list"),
+    GVAR_FUNC(AINV_MUT_LIST_DEFAULT, 1, "list"),
+    GVAR_FUNC(DIFF_SCL_LIST_DEFAULT, 2, "listL, listR"),
+    GVAR_FUNC(DIFF_LIST_SCL_DEFAULT, 2, "listL, listR"),
+    GVAR_FUNC(DIFF_LIST_LIST_DEFAULT, 2, "listL, listR"),
+    GVAR_FUNC(PROD_SCL_LIST_DEFAULT, 2, "listL, listR"),
+    GVAR_FUNC(PROD_LIST_SCL_DEFAULT, 2, "listL, listR"),
+    GVAR_FUNC(PROD_LIST_LIST_DEFAULT, 3, "listL, listR, depthDiff"),
+    GVAR_FUNC(ONE_MATRIX_MUTABLE, 1, "list"),
+    GVAR_FUNC(ONE_MATRIX_SAME_MUTABILITY, 1, "list"),
+    GVAR_FUNC(ONE_MATRIX_IMMUTABLE, 1, "list"),
+    GVAR_FUNC(INV_MATRIX_MUTABLE, 1, "list"),
+    GVAR_FUNC(INV_MATRIX_SAME_MUTABILITY, 1, "list"),
+    GVAR_FUNC(INV_MATRIX_IMMUTABLE, 1, "list"),
+    GVAR_FUNC(ADD_ROW_VECTOR_5, 5, "list1, list2, mult, from, to"),
+    GVAR_FUNC(ADD_ROW_VECTOR_5_FAST, 5, "list1, list2, mult, from, to"),
+    GVAR_FUNC(ADD_ROW_VECTOR_3, 3, "list1, list2, mult"),
+    GVAR_FUNC(ADD_ROW_VECTOR_3_FAST, 3, "list1, list2, mult"),
+    GVAR_FUNC(ADD_ROW_VECTOR_2, 2, "list1, list2"),
+    GVAR_FUNC(ADD_ROW_VECTOR_2_FAST, 2, "list1, list2"),
+    GVAR_FUNC(MULT_ROW_VECTOR_2, 2, "list, mult"),
+    GVAR_FUNC(MULT_ROW_VECTOR_2_FAST, 2, "list, mult"),
+    GVAR_FUNC(PROD_VEC_MAT_DEFAULT, 2, "vec, mat"),
+    GVAR_FUNC(INV_MAT_DEFAULT_MUTABLE, 1, "mat"),
+    GVAR_FUNC(INV_MAT_DEFAULT_SAME_MUTABILITY, 1, "mat"),
+    GVAR_FUNC(INV_MAT_DEFAULT_IMMUTABLE, 1, "mat"),
+    GVAR_FUNC(ADD_TO_LIST_ENTRIES_PLIST_RANGE, 3, "list, range, x"),
+    GVAR_FUNC(MONOM_TOT_DEG_LEX, 2, "monomial, monomial"),
+    GVAR_FUNC(MONOM_GRLEX, 2, "monomial, monomial"),
+    GVAR_FUNC(ZIPPED_SUM_LISTS, 4, "list,list,zero,funclist"),
+    GVAR_FUNC(MONOM_PROD, 2, "monomial, monomial"),
+    { 0, 0, 0, 0, 0 }
 
 };
 
@@ -2489,28 +2396,15 @@ static Int InitLibrary (
 *F  InitInfoListOper()  . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "listoper",                         /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "listoper",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoListOper ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  listoper.c  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

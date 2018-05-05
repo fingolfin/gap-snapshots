@@ -16,21 +16,19 @@
 #ifndef GAP_SYSFILES_H
 #define GAP_SYSFILES_H
 
+#include <src/system.h>
 
-#include <stdio.h>
-
+#include <stdio.h>  // for FILE
 
 /****************************************************************************
 **
-
-
 *F * * * * * * * * * * * * * * dynamic loading  * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-*F  SyFindOrLinkGapRootFile( <filename>, <crc>, <res> ) . . . .  load or link
+*F  SyFindOrLinkGapRootFile( <filename>, <result> ) . . . . . .  load or link
 **
 **  'SyFindOrLinkGapRootFile'  tries to find a GAP  file in the root area and
 **  check  if   there is a corresponding    statically  or dynamically linked
@@ -43,17 +41,15 @@
 **  1: if a dynamically linked module was found
 **  2: if a statically linked module was found
 **  3: a GAP file was found
-**  4: a GAP file was found and the CRC value didn't match
 */
 
 typedef union {
-  Char pathname[256];
+  Char pathname[GAP_PATH_MAX];
   StructInitInfo * module_info;
 } TypGRF_Data;
 
 extern Int SyFindOrLinkGapRootFile (
             const Char *    filename,
-            Int4            crc_gap,
             TypGRF_Data *   result );
 
 
@@ -70,10 +66,28 @@ extern Int4 SyGAPCRC(
 
 /****************************************************************************
 **
-*F  SyLoadModule( <name> )  . . . . . . . . . . . . .  load a compiled module
+*F  SyLoadModule( <name>, <func> )  . . . . . . . . .  load a compiled module
+**
+**  This function attempts to load a compiled module <name>.
+**  If successful, it returns 0, and sets <func> to a pointer to the init
+**  function of the module. In case of an error, <func> is set to 0, and the
+**  return value indicates which error occurred.
 */
-extern InitInfoFunc SyLoadModule(
-            const Char *    name );
+extern Int SyLoadModule( const Char * name, InitInfoFunc * func );
+
+
+/****************************************************************************
+**
+*F * * * * * * * * * * finding location of executable * * * * * * * * * * * *
+*/
+
+// 'GAPExecLocation' is the path to the directory containing the running GAP
+// executable, terminated by a slash, or contains the empty string is it could
+// not be detect.
+extern char GAPExecLocation[GAP_PATH_MAX];
+
+// Fills in GAPExecLocation. Is called straight after 'main' starts.
+void SetupGAPLocation(int argc, char ** argv);
 
 
 /****************************************************************************
@@ -108,15 +122,13 @@ extern void syWinPut (
 **  '@J'.  Then  'SyWinCmd' waits for  the window handlers answer and returns
 **  that string.
 */
-extern Char * SyWinCmd (
+extern const Char * SyWinCmd (
             const Char *    str,
             UInt                len );
 
 
 /****************************************************************************
 **
-
-
 *F * * * * * * * * * * * * * * * * open/close * * * * * * * * * * * * * * * *
 */
 
@@ -213,6 +225,26 @@ extern Int SyFclose (
 extern Int SyIsEndOfFile (
     Int                 fid );
 
+/****************************************************************************
+**
+*F  syStartraw( <fid> ) . . . . . . start raw mode on input file <fid>, local
+**
+**  'syStartraw' tries to put the file with the file  identifier  <fid>  into
+**  raw mode.  I.e.,  disabling  echo  and  any  buffering.  It also finds  a
+**  place to put the echoing  for  'syEchoch'.  If  'syStartraw'  succedes it
+**  returns 1, otherwise, e.g., if the <fid> is not a terminal, it returns 0.
+**
+**  'syStopraw' stops the raw mode for the file  <fid>  again,  switching  it
+**  back into whatever mode the terminal had before 'syStartraw'.
+**
+*/
+
+extern UInt syStartraw (
+            Int                 fid );
+
+extern void syStopraw (
+            Int                 fid );
+
 
 /****************************************************************************
 **
@@ -271,7 +303,7 @@ extern Int SyIsEndOfFile (
 **      <ctr>-_ undo a command.
 **      <esc>-T exchange two words.
 */
-#if HAVE_SELECT
+#ifdef HAVE_SELECT
 extern Obj OnCharReadHookActive;  /* if bound the hook is active */
 extern Obj OnCharReadHookInFds;   /* a list of UNIX file descriptors */
 extern Obj OnCharReadHookInFuncs; /* a list of GAP functions */
@@ -312,24 +344,15 @@ extern void SyInstallAnswerIntr ( void );
 
 extern UInt SyIsIntr ( void );
 
-extern int SyHaveAlarms;
-extern volatile int SyAlarmRunning;
-extern volatile int SyAlarmHasGoneOff;
-
-extern void SyInstallAlarm( UInt seconds, UInt nanoseconds);
-extern void SyStopAlarm( UInt *seconds, UInt *nanoseconds);
-
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * * * * * output * * * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  SyEchoch( <ch>, <fid> ) . . . . . . . . . . . echo a char to <fid>, local
 */
 extern Int SyEchoch (
@@ -339,14 +362,12 @@ extern Int SyEchoch (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * * * * * input  * * * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  SyFtell( <fid> )  . . . . . . . . . . . . . . . . . .  position of stream
 */
 extern Int SyFtell (
@@ -375,40 +396,7 @@ extern Int SyGetch (
 
 /****************************************************************************
 **
-*F  SyGetc( <fid> ).  . . . . . . . . . . . . . . . . . get a char from <fid>
-**
-**  'SyGetc' reads a character from <fid>, without any translation or
-**   interference
-*/
-
-extern Int SyGetc
-(
-    Int                 fid );
-
-/****************************************************************************
-**
-*F  SyPutc( <fid>, <char> ).. . . . . . . . . . . . . . . put a char to <fid>
-**
-**  'SyPutc' writes a character to <fid>, without any translation or
-**   interference
-*/
-
-extern Int SyPutc
-(
-    Int                 fid,
-    Char                c );
-
-
-/****************************************************************************
-**
-
 *F * * * * * * * * * * * * system error messages  * * * * * * * * * * * * * *
-*/
-
-
-/****************************************************************************
-**
-*V  SyLastMacErrorNo . . . . . . . . . . . . . .last error number, Macintosh
 */
 
 
@@ -442,7 +430,6 @@ extern void SySetErrorNo ( void );
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * file and execution * * * * * * * * * * * * * * *
 */
 
@@ -479,8 +466,8 @@ extern Int SyIsExistingFile(
 **
 *F  SyIsReadableFile( <name> )  . . . . . . . . . . . is file <name> readable
 **
-**  'SyIsReadableFile'   returns 1  if the   file  <name> is   readable and 0
-**  otherwise. <name> is a system dependent description of the file.
+**  'SyIsReadableFile'   returns 0  if the   file  <name> is   readable and
+**  -1 otherwise. <name> is a system dependent description of the file.
 */
 extern Int SyIsReadableFile(
             const Char * name );
@@ -553,19 +540,16 @@ extern Obj SyIsDir (
 
 /****************************************************************************
 **
-*F  SyFindGapRootFile( <filename>, <buffer> ) . . .  find file in system area
+*F  SyFindGapRootFile( <filename>, <buffer>, <bufferSize> ) . . .  find file in system area
 **
-**  <buffer> must point to a buffer of at least 256 characters. The returned
-**  pointer will either be NULL, or into <buffer>
+**  <buffer> must point to a buffer of at least <bufferSize> characters.
+**  The returned pointer will either be NULL, or <buffer>
 */
-extern Char * SyFindGapRootFile (
-            const Char *    filename,
-            Char *          buffer);
+extern Char *SyFindGapRootFile(const Char *filename, Char *buffer, size_t bufferSize);
 
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * * * directories  * * * * * * * * * * * * * * * *
 */
 
@@ -593,6 +577,7 @@ extern Char * SyTmpname ( void );
 */
 extern Char * SyTmpdir ( const Char * hint );
 
+
 /****************************************************************************
 **
 *F  void getwindowsize( void )  . probe the OS for the window size and
@@ -600,8 +585,6 @@ extern Char * SyTmpdir ( const Char * hint );
 */
 
 extern void getwindowsize( void );
-
-extern void     InterruptExecStat ( void );
 
 /***************************************************************************
 **
@@ -614,21 +597,6 @@ extern Char *SyFgetsSemiBlock (
     Char *              line,
     UInt                length,
     Int                 fid);
-
-/***************************************************************************
-**
-*F SyWinPut( <fid>, <cmd>, <str> ) . . . . send a line to the window handler
-**
-**  'syWinPut'  send the command   <cmd> and the  string  <str> to the window
-**  handler associated with the  file identifier <fid>.   In the string <str>
-**  '@'  characters are duplicated, and   control characters are converted to
-**  '@<chr>', e.g., <newline> is converted to '@J'.
-*/
-
-extern void syWinPut (
-    Int                 fid,
-    const Char *        cmd,
-    const Char *        str );
 
 /***************************************************************************
  **
@@ -645,24 +613,28 @@ extern Obj SyReadStringFid(Int fid);
 extern Obj SyReadStringFile(Int fid);
 extern Obj SyReadStringFileGeneric(Int fid);
 
+
+#if !defined(SYS_IS_64_BIT) && defined(__GNU_LIBRARY__)
+#define USE_CUSTOM_MEMMOVE 1
+#endif
+
+#ifdef USE_CUSTOM_MEMMOVE
+// Internal implementation of memmove, to avoid issues with glibc
+void * SyMemmove(void * dst, const void * src, size_t size);
+#else
+#define SyMemmove memmove
+#endif
+
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  InitInfoSysFiles()  . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoSysFiles ( void );
 
 
 #endif // GAP_SYSFILES_H
-
-/****************************************************************************
-**
-
-*E  sysfiles.h  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

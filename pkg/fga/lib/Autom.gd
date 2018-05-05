@@ -4,7 +4,7 @@
 ##
 ##  Declarations for methods to create and compute with inverse automata
 ##
-#Y  2003 - 2012
+#Y  2003 - 2018
 ##
 
 DeclareCategory( "IsInvAutomatonCategory", IsObject);
@@ -37,9 +37,8 @@ DeclareGlobalFunction( "FGA_initial" );
 DeclareGlobalFunction( "FGA_reducedPos" );
 DeclareGlobalFunction( "FGA_Index" );
 DeclareGlobalFunction( "FGA_AsWordLetterRepInFreeGenerators" );
-
-DeclareAttribute( "FGA_States", IsInvAutomatonCategory );
-DeclareAttribute( "FGA_GeneratorsLetterRep", IsInvAutomatonCategory );
+DeclareGlobalFunction( "FGA_States" );
+DeclareGlobalFunction( "FGA_GeneratorsLetterRep" );
 
 
 #############################################################################

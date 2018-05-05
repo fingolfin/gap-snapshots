@@ -11,31 +11,23 @@
 **  the workspace. There are support functions in gasman.c and elsewhere
 **  throughout the kernel
 */
-#include        "system.h"              /* system dependent part           */
 
+#include <src/saveload.h>
 
-#include        <unistd.h>              /* write, read                     */
-   
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "bool.h"                /* booleans                        */
-#include        "calls.h"               /* generic call mechanism          */
-#include        "gap.h"                 /* error handling, initialisation  */
-#include        "gvars.h"               /* global variables                */
-#include        "streams.h"             /* streams                         */
-#include        "string.h"              /* strings                         */
-#include        "scanner.h"             /* scanner                         */
-#include        "sysfiles.h"            /* file input/output               */
-#include        "plist.h"               /* plain lists                     */
-#include        "macfloat.h"            /* floating points */
-#include        "compstat.h"            /* statically compiled modules     */
-#include        "read.h"                /* to call function from library   */
+#include <src/bool.h>
+#include <src/calls.h>
+#include <src/compstat.h>
+#include <src/finfield.h>
+#include <src/gap.h>
+#include <src/gvars.h>
+#include <src/io.h>
+#include <src/macfloat.h>
+#include <src/read.h>
+#include <src/streams.h>
+#include <src/stringobj.h>
+#include <src/sysfiles.h>
 
-#include        "saveload.h"            /* saving and loading              */
-
-#include	"code.h"		/* coder                           */
-#include	"thread.h"		/* threads			   */
-#include	"tls.h"			/* thread-local storage		   */
+#include <unistd.h>
 
 
 /***************************************************************************
@@ -45,10 +37,13 @@
 
 
 static Int SaveFile;
+static Int LoadFile = -1;
 static UInt1 LoadBuffer[100000];
 static UInt1* LBPointer;
 static UInt1* LBEnd;
 static Obj userHomeExpand;
+
+#if !defined(BOEHM_GC)
 
 static Int OpenForSave( Obj fname ) 
 {
@@ -84,8 +79,7 @@ static void CloseAfterSave( void )
   SaveFile = -1;
 }
 
-Int LoadFile = -1;
-
+#endif
 
 static void OpenForLoad( Char *fname ) 
 {
@@ -334,6 +328,10 @@ void LoadString ( Obj string )
 
 void SaveSubObj( Obj subobj )
 {
+#ifdef BOEHM_GC
+  // FIXME: HACK
+  assert(0);
+#else
   if (!subobj)
     SaveUInt(0);
   else if (IS_INTOBJ(subobj))
@@ -349,12 +347,16 @@ void SaveSubObj( Obj subobj )
       SaveUInt(0);
     }
   else
-    SaveUInt(((UInt)((PTR_BAG(subobj))[-1])) << 2);
-
+    SaveUInt(((UInt)LINK_BAG(subobj)) << 2);
+#endif
 }
 
 Obj LoadSubObj( void )
 {
+#ifdef BOEHM_GC
+  // FIXME: HACK
+  assert(0);
+#else
   UInt word = LoadUInt();
   if (word == 0)
     return (Obj) 0;
@@ -362,6 +364,7 @@ Obj LoadSubObj( void )
     return (Obj) word;
   else
     return (Obj)(MptrBags + (word >> 2)-1);
+#endif
 }
 
 void SaveHandler( ObjFunc hdlr )
@@ -397,7 +400,7 @@ void SaveDouble( Double d)
 {
   UInt i;
   UInt1 buf[sizeof(Double)];
-  memcpy((void *) buf, (void *)&d, sizeof(Double));
+  memcpy(buf, &d, sizeof(Double));
   for (i = 0; i < sizeof(Double); i++)
     SAVE_BYTE(buf[i]);
 }
@@ -409,7 +412,7 @@ Double LoadDouble( void )
   Double d;
   for (i = 0; i < sizeof(Double); i++)
     buf[i] = LOAD_BYTE();
-  memcpy((void *)&d, (void *)buf, sizeof(Double));
+  memcpy(&d, buf, sizeof(Double));
   return d;
 }
 
@@ -418,17 +421,17 @@ Double LoadDouble( void )
 **  Bag level saving routines
 */
 
-
+#if !defined(BOEHM_GC)
 
 static void SaveBagData (Bag bag )
 {
-#ifndef USE_NEWSHAPE
-  SaveUInt((UInt)PTR_BAG(bag)[-3]);
-#endif
-  SaveUInt((UInt)PTR_BAG(bag)[-2]);
+  BagHeader * header = BAG_HEADER(bag);
+  SaveUInt1(header->type);
+  SaveUInt1(header->flags);
+  SaveUInt(header->size);
 
   /* dispatch */
-  (*(SaveObjFuncs[ TNUM_BAG( bag )]))(bag);
+  (*(SaveObjFuncs[ header->type]))(bag);
 
 }
 
@@ -437,18 +440,12 @@ static void SaveBagData (Bag bag )
 static void LoadBagData ( void )
 {
   Bag bag;
-  UInt size;
-  UInt type;
+  UInt type, flags, size;
   
   /* Recover the size & type */
-#ifdef USE_NEWSHAPE
+  type = LoadUInt1();
+  flags = LoadUInt1();
   size = LoadUInt();
-  type = size & 0xFFL;
-  size >>= 16;
-#else
-  type = LoadUInt();
-  size = LoadUInt();
-#endif
 
 #ifdef DEBUG_LOADING
   {
@@ -462,21 +459,21 @@ static void LoadBagData ( void )
 #endif  
 
   /* Get GASMAN to set up the bag for me */
-  bag = NextBagRestoring( size, type );
+  bag = NextBagRestoring( type, flags, size );
   
-  /* despatch */
+  /* dispatch */
   (*(LoadObjFuncs[ type ]))(bag);
-  
-  return;
 }
 
+#endif
 
 /***************************************************************************
 **
-
 *F  WriteSaveHeader() . . . . .  and utility functions, and loading functions
 **
 */
+
+#if !defined(BOEHM_GC)
 
 static void WriteEndiannessMarker( void )
 {
@@ -497,6 +494,9 @@ static void WriteEndiannessMarker( void )
   SAVE_BYTE(((UInt1 *)&x)[7]);
 #endif
 }
+
+#endif
+
 
 static void CheckEndiannessMarker( void )
 {
@@ -523,7 +523,7 @@ static void CheckEndiannessMarker( void )
 
 /***************************************************************************
 **
-**  BagStats
+**  FuncBagStats
 */
 
 static FILE *file;
@@ -533,7 +533,7 @@ static void report( Bag bag)
   fprintf(file,"%li %li\n", (long) TNUM_BAG(bag), (long) SIZE_BAG(bag));
 }
 
-Obj BagStats(Obj self, Obj filename)
+Obj FuncBagStats(Obj self, Obj filename)
 {
   file = fopen((Char *)CHARS_STRING(filename),"w");
   CallbackForAllBags(report);
@@ -560,7 +560,6 @@ static void ScanBag( Bag bag)
       SIZE_BAG(bag) <= fb_maxsize && 
       TNUM_BAG(bag) == fb_tnum) 
     hit = bag;
-  return;
 }
 
 Obj FuncFindBag( Obj self, Obj minsize, Obj maxsize, Obj tnum )
@@ -588,26 +587,20 @@ Obj FuncFindBag( Obj self, Obj minsize, Obj maxsize, Obj tnum )
 **  The return value is either True or Fail
 */
 
+#if !defined(BOEHM_GC)
+
 static UInt NextSaveIndex = 1;
 
 static void AddSaveIndex( Bag bag)
 {
-  PTR_BAG(bag)[-1] = (Obj)NextSaveIndex++;
+  LINK_BAG(bag) = (Obj)NextSaveIndex++;
 }
-
-/*  is this obsolete ???    
-static void CheckPlist( Bag bag)
-{
-  if (TNUM_BAG(bag) == 14 && sizeof(UInt)*((UInt)(PTR_BAG(bag)[0])) > SIZE_BAG(bag))
-    Pr("Panic %d %d\n",sizeof(UInt)*((UInt)(PTR_BAG(bag)[0])), SIZE_BAG(bag));
-  return;
-}
-*/
 
 static void RemoveSaveIndex( Bag bag)
 {
-  PTR_BAG(bag)[-1] = bag;
+  LINK_BAG(bag) = bag;
 }
+
 static void WriteSaveHeader( void )
 {
   UInt i;
@@ -637,9 +630,9 @@ static void WriteSaveHeader( void )
 
   for ( i = NrBuiltinModules; i < NrModules; i++)
     {
-      SaveUInt(Modules[i]->type);
-      SaveUInt(Modules[i]->isGapRootRelative);
-      SaveCStr(Modules[i]->filename);
+      SaveUInt(Modules[i].info->type);
+      SaveUInt(Modules[i].isGapRootRelative);
+      SaveCStr(Modules[i].filename);
     }
 
   SaveCStr("Kernel to WS refs");
@@ -652,29 +645,34 @@ static void WriteSaveHeader( void )
 	}
     }
 }
-
+#endif
 
 Obj SaveWorkspace( Obj fname )
 {
+#ifdef BOEHM_GC
+  Pr("SaveWorkspace is not currently supported when Boehm GC is in use",0,0);
+  return Fail;
 
+#else
   Int i;
   Obj fullname;
+  StructInitInfo * info;
 
   if (!IsStringConv(fname))
     ErrorQuit("usage: SaveWorkspace( <filename> )",0,0);
   /* maybe expand fname starting with ~/...   */
   fullname = Call1ArgsInNewReader(userHomeExpand, fname);
   
-  for (i = 0; i < NrModules; i++)
-    if (Modules[i]->preSave != NULL &&
-        (*(Modules[i]->preSave))(Modules[i]))
-      {
+  for (i = 0; i < NrModules; i++) {
+    info = Modules[i].info;
+    if (info->preSave != NULL && info->preSave(info)) {
         Pr("Failed to save workspace -- problem reported in %s\n",
-           (Int)Modules[i]->name, 0L);
+           (Int)info->name, 0L);
         for ( i--; i >= 0; i--)
-          (*(Modules[i]->postSave))(Modules[i]);
+          info->postSave(info);
         return Fail;
-      }
+    }
+  }
 
   /* Do a full garbage collection */
   CollectBags( 0, 1);
@@ -697,11 +695,14 @@ Obj SaveWorkspace( Obj fname )
   CallbackForAllBags( RemoveSaveIndex );
   
   /* Restore situation by calling all post-save methods */
-  for (i = 0; i < NrModules; i++)
-    if (Modules[i]->postSave != NULL)
-      (*(Modules[i]->postSave))(Modules[i]);
+  for (i = 0; i < NrModules; i++) {
+    info = Modules[i].info;
+    if (info->postSave != NULL)
+      info->postSave(info);
+  }
 
   return True;
+#endif
 }
 
 
@@ -728,10 +729,16 @@ Obj FuncSaveWorkspace(Obj self, Obj filename )
 
 void LoadWorkspace( Char * fname )
 {
-  UInt nMods, nGlobs, nBags, i, maxSize, isGapRootRelative;
+#ifdef BOEHM_GC
+  Pr("LoadWorkspace is not currently supported when Boehm GC is in use",0,0);
+  return;
+
+#else
+  UInt nMods, nGlobs, nBags, i, maxSize;
   UInt globalcount = 0;
   Char buf[256];
   Obj * glob;
+  Int res;
 
   /* Open saved workspace  */
   OpenForLoad( fname );
@@ -764,17 +771,7 @@ void LoadWorkspace( Char * fname )
            SyExit(1);
         }
   } else {
-     
-     /* try if it is an old workspace */
-
-#ifdef SYS_IS_64_BIT             
-     if (strcmp(buf,"GAP 4.0 beta 64 bit") != 0)
-#else 
-     if (strcmp(buf,"GAP 4.0 beta 32 bit") != 0)
-#endif
-        Pr("File %s probably isn't a GAP workspace.\n", (long)fname, 0L);
-     else 
-        Pr("This workspace was created by an old version of GAP.\n", 0L, 0L);
+     Pr("File %s probably isn't a GAP workspace.\n", (long)fname, 0L);
      SyExit(1);
   } 
   
@@ -808,7 +805,7 @@ void LoadWorkspace( Char * fname )
   for (i = 0; i < nMods; i++)
     {
       UInt type = LoadUInt();
-      isGapRootRelative = LoadUInt();
+      UInt isGapRootRelative = LoadUInt();
       LoadCStr(buf,256);
       if (isGapRootRelative)
         READ_GAP_ROOT( buf);
@@ -816,33 +813,33 @@ void LoadWorkspace( Char * fname )
 	{
 	  StructInitInfo *info = NULL;
  	  /* Search for user module static case first */
-	  if (type == MODULE_STATIC) { 
-	    UInt k;
-	    for ( k = 0;  CompInitFuncs[k];  k++ ) {
-	      info = (*(CompInitFuncs[k]))();
-	      if ( info == 0 ) {
-		continue;
-	      }
-	      if ( ! strcmp( buf, info->name ) ) {
-		break;
-	      }
-	    }
-	    if ( CompInitFuncs[k] == 0 ) {
-	      Pr( "Static module %s not found in loading kernel\n",
-		  (Int)buf, 0L );
-	      SyExit(1);
-	    }
+          if (IS_MODULE_STATIC(type)) {
+              UInt k;
+              for (k = 0; CompInitFuncs[k]; k++) {
+                  info = (*(CompInitFuncs[k]))();
+                  if (info == 0) {
+                      continue;
+                  }
+                  if (!strcmp(buf, info->name)) {
+                      break;
+                  }
+              }
+              if (CompInitFuncs[k] == 0) {
+                  Pr("Static module %s not found in loading kernel\n",
+                     (Int)buf, 0L);
+                  SyExit(1);
+              }
 	
 	  } else {
 	    /* and dynamic case */
 	    InitInfoFunc init; 
 	
-	    init = SyLoadModule(buf);
+	    res = SyLoadModule(buf, &init);
 	    
-	    if ((Int)init == 1 || (Int) init == 3 || (Int) init == 5 || (Int) init == 7)
+	    if (res != 0)
 	      {
 		Pr("Failed to load needed dynamic module %s, error code %d\n",
-		   (Int)buf, (Int) init);
+		   (Int)buf, res);
 		SyExit(1);
 	      }
 	    info = (*init)();
@@ -854,9 +851,8 @@ void LoadWorkspace( Char * fname )
 	       }
 	  }
 	/* link and init me                                                    */
-	info->isGapRootRelative = 0;
 	(info->initKernel)(info);
-	RecordLoadedModule(info, buf);
+	RecordLoadedModule(info, 0, buf);
       }
       
     }
@@ -915,16 +911,15 @@ void LoadWorkspace( Char * fname )
   /* Post restore methods are called elsewhere */
   
   CloseAfterLoad();
+#endif
 }
-
-#include        "finfield.h"            /* finite fields and ff elements   */
 
 static void PrSavedObj( UInt x)
 {
   if ((x & 3) == 1)
     Pr("Immediate  integer %d\n", INT_INTOBJ((Obj)x),0L);
   else if ((x & 3) == 2)
-    Pr("Immedate FFE %d %d\n", VAL_FFE(x), SIZE_FF(FLD_FFE(x)));
+    Pr("Immediate FFE %d %d\n", VAL_FFE(x), SIZE_FF(FLD_FFE(x)));
   else
     Pr("Reference to bag number %d\n",x>>2,0L);
 }
@@ -987,38 +982,27 @@ Obj FuncDumpWorkspace( Obj self, Obj fname )
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    { "SaveWorkspace", 1, "fname", 
-      FuncSaveWorkspace, "src/saveload.c:SaveWorkspace" },
-
-    { "DumpWorkspace", 1, "fname", 
-      FuncDumpWorkspace, "src/saveload.c:DumpWorkspace" },
-
-    { "FindBag", 3, "minsize, maxsize, tnum", 
-      FuncFindBag, "src/saveload.c:FindBag" },
-
-    { "BagStats", 1, "filename", 
-      BagStats, "src/saveload.c:BagStats" },
-
-    { 0 }
+    GVAR_FUNC(SaveWorkspace, 1, "fname"),
+    GVAR_FUNC(DumpWorkspace, 1, "fname"),
+    GVAR_FUNC(FindBag, 3, "minsize, maxsize, tnum"),
+    GVAR_FUNC(BagStats, 1, "filename"),
+    { 0, 0, 0, 0, 0 }
 
 };
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
@@ -1031,7 +1015,7 @@ static Int InitKernel (
     /* init filters and functions                                          */
     InitHdlrFuncsFromTable( GVarFuncs );
     /* allow ~/... expansion in SaveWorkspace                              */ 
-    ImportFuncFromLibrary("USER_HOME_EXPAND", &userHomeExpand);
+    ImportFuncFromLibrary("UserHomeExpand", &userHomeExpand);
 
     /* return success                                                      */
     return 0;
@@ -1061,28 +1045,15 @@ static Int InitLibrary (
 *F  InitInfoSaveLoad()  . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "saveload",                         /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "saveload",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoSaveLoad ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  saveload.c  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

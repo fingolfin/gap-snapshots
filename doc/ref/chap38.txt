@@ -239,7 +239,7 @@
   
   [33X[0;0YUnder  Unix, it is possible to use the [5Xkbmag[105X package to replace the built-in
   rewriting  by  this  packages  efficient  C  implementation. You can do this
-  (after  loading the [5Xkbmag[105X package) by assigning the variable [2XKB_REW[102X ([14X52.6-2[114X)
+  (after  loading the [5Xkbmag[105X package) by assigning the variable [2XKB_REW[102X ([14X52.5-2[114X)
   to   [10XKBMAG_REW[110X.   Assignment   to   [10XGAPKB_REW[110X   reverts   to   the  built-in
   implementation.[133X
   

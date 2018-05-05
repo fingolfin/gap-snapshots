@@ -5,8 +5,6 @@
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
-##  To be listed in testinstall.g
-##
 gap> START_TEST("mgmring.tst");
 gap> r:= GF(3);;
 gap> m:= Group( (1,2,3), (1,2) );;
@@ -33,7 +31,7 @@ gap> img:= Image( rembrm, Z(3) );
 (Z(3))*()
 gap> PreImagesRepresentative( rembrm, img );
 Z(3)
-gap> STOP_TEST( "mgmring.tst", 360000);
+gap> STOP_TEST( "mgmring.tst", 1);
 
 #############################################################################
 ##

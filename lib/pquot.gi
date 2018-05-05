@@ -43,6 +43,8 @@ PQStatistics := rec(
                     ConsCountBAN := 0,
                     ConsCountCBA := 0 );
 
+MakeThreadLocal( "PQStatistics" );
+
 IncreaseCounter := function( string )
 
     PQStatistics.(string) := PQStatistics.(string) + 1;
@@ -181,7 +183,7 @@ end;
 
 #############################################################################
 ##
-#F  RowEchelonFormLTM . . . .  row echelon form of an lower triangular matrix
+#F  RowEchelonFormLTM . . . .  row echelon form of a lower triangular matrix
 ##
 RowEchelonFormLTM := function( LTM )
     local   i,  j;
@@ -1791,6 +1793,7 @@ InstallMethod(EpimorphismQuotientSystem,
 
     H := GroupByQuotientSystem( qs );
     SetIsPGroup( H, true );
+    SetPrimePGroup( H, qs!.prime );
 
     # now we write the images of the generators of G in H from qs:
     l := List(qs!.images,x->ObjByExtRep(FamilyObj(One(H)),ExtRepOfObj(x)));

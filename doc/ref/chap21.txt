@@ -182,10 +182,6 @@
   itself, for example if one wants to install a method for element access in a
   special kind of lists.[133X
   
-  [33X[0;0YThe syntax [10X[3Xlist[103X[10X[ [3Xix1[103X[10X, [3Xix2[103X[10X,.... [3Xixn[103X[10X ][110X, with two or more indices is treated as
-  a  shorthand  for  [10X[3Xlist[103X[10X[[  [3Xix1[103X[10X, [3Xix2[103X[10X,.... [3Xixn[103X[10X]][110X This is intended to provide a
-  nicer syntax for accessing elements of matrices and tensors.[133X
-  
   [33X[0;0YSimilarly, [2XIsBound\[\][102X is used explicitly mainly in method installations. In
   other situations, one can simply call [2XIsBound[102X ([14X21.5-1[114X), which then delegates
   to [2XIsBound\[\][102X if the first argument is a list, and to [2XIsBound\.[102X ([14X29.7-3[114X) if
@@ -213,10 +209,6 @@
   integer,  method selection is invoked to try and find a way of indexing [3Xlist[103X
   with  index [3Xix[103X. If this fails, or the selected method finds that [10X[3Xlist[103X[10X[[3Xix[103X[10X][110X is
   unbound, an error is signalled.[133X
-  
-  [33X[0;0Y[10X[3Xlist[103X[10X[ [3Xix1[103X[10X,[3Xix2[103X[10X,...][110X[133X
-  
-  [33X[0;0Yis a short-hand for [10X[3Xlist[103X[10X[[[3Xix1[103X[10X,[3Xix2[103X[10X,...]][110X[133X
   
   [33X[0;0Y[10X[3Xlist[103X[10X{ [3Xposs[103X[10X }[110X[133X
   
@@ -334,12 +326,10 @@
   mutable (see [14X12.6[114X). See [14X21.6[114X for subtleties of changing lists.[133X
   
   [33X[0;0YIf  [3Xlist[103X  does  not  evaluate to a list, [3Xpos[103X does not evaluate to a positive
-  integer or [3Xobject[103X is a call to a function which does not return a value (for
-  example [10XPrint[110X) an error is signalled.[133X
-  
-  [33X[0;0Y[10X[3Xlist[103X[10X[ [3Xix1[103X[10X,[3Xix2[103X[10X,...] := [3Xobj[103X[10X[110X[133X
-  
-  [33X[0;0Yis a short-hand for [10X[3Xlist[103X[10X[[[3Xix1[103X[10X,[3Xix2[103X[10X,...]] := [3Xobj[103X[10X[110X.[133X
+  integer,  method selection is invoked to try and find a way of indexing [3Xlist[103X
+  with  index  [3Xpos[103X. If this fails, or the selected method finds that [10X[3Xlist[103X[10X[[3Xpos[103X[10X][110X
+  is  unbound,  or  if  [3Xobject[103X is a call to a function which does not return a
+  value (for example [10XPrint[110X) an error is signalled.[133X
   
   [33X[0;0Y[10X[3Xlist[103X[10X{ [3Xposs[103X[10X } := [3Xobjects[103X[10X;[110X[133X
   
@@ -503,10 +493,11 @@
   [1X21.5-1 IsBound[101X
   
   [33X[1;0Y[29X[2XIsBound[102X( [3Xlist[103X[, [3Xn[103X] ) [32X operation[133X
-  [33X[1;0Y[29X[2XIsBound[102X( [3Xlist[103X[, [3Xix1[103X, [3Xix2[103X, [3X...[103X] ) [32X operation[133X
   
-  [33X[0;0Y[2XIsBound[102X  returns  [9Xtrue[109X  if the list [3Xlist[103X has a element at index [3Xn[103X, and [9Xfalse[109X
-  otherwise. [3Xlist[103X must evaluate to a list, otherwise an error is signalled.[133X
+  [33X[0;0Y[2XIsBound[102X  returns  [9Xtrue[109X if the list [3Xlist[103X has an element at index [3Xn[103X, and [9Xfalse[109X
+  otherwise.  [3Xlist[103X  must  evaluate  to  a  list,  or  to an object for which a
+  suitable  method  for  [10XIsBound\[\][110X has been installed, otherwise an error is
+  signalled.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xl := [ , 2, 3, , 5, , 7, , , , 11 ];;[127X[104X
@@ -518,18 +509,48 @@
     [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
-  [33X[0;0Y[10XIsBound([3Xlist[103X[10X[[3Xix1[103X[10X,[3Xix2[103X[10X,...][110X is a short-hand for [10XIsBound([3Xlist[103X[10X[[[3Xix1[103X[10X,[3Xix2[103X[10X,...]][110X[133X
+  [1X21.5-2 GetWithDefault[101X
   
-  [1X21.5-2 Unbind[101X
+  [33X[1;0Y[29X[2XGetWithDefault[102X( [3Xlist[103X, [3Xn[103X, [3Xdefault[103X ) [32X operation[133X
+  
+  [33X[0;0Y[2XGetWithDefault[102X returns the [3Xn[103Xth element of the list [3Xlist[103X, if [3Xlist[103X has a value
+  at index [3Xn[103X, and [3Xdefault[103X otherwise.[133X
+  
+  [33X[0;0YWhile  this  method  can  be used on any list, it is particularly useful for
+  Weak Pointer lists [14X86.1[114X where the value of the list can change.[133X
+  
+  [33X[0;0YTo  distinguish  between  the [3Xn[103Xth element being unbound, or [3Xdefault[103X being in
+  [3Xlist[103X,   users   can   create  a  new  mutable  object,  such  as  a  string.
+  [2XIsIdenticalObj[102X ([14X12.5-1[114X) returns [9Xfalse[109X for different mutable strings, even if
+  their contents are the same.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xl := [1,2,,"a"];[127X[104X
+    [4X[28X[ 1, 2,, "a" ][128X[104X
+    [4X[25Xgap>[125X [27Xnewobj := "a";[127X[104X
+    [4X[28X"a"[128X[104X
+    [4X[25Xgap>[125X [27XGetWithDefault(l, 2, newobj);[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27XGetWithDefault(l, 3, newobj);[127X[104X
+    [4X[28X"a"[128X[104X
+    [4X[25Xgap>[125X [27XGetWithDefault(l, 4, newobj);[127X[104X
+    [4X[28X"a"[128X[104X
+    [4X[25Xgap>[125X [27XIsIdenticalObj(GetWithDefault(l, 3, newobj), newobj);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsIdenticalObj(GetWithDefault(l, 4, newobj), newobj);[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  [1X21.5-3 Unbind[101X
   
   [33X[1;0Y[29X[2XUnbind[102X( [3Xlist[103X[, [3Xn[103X] ) [32X operation[133X
-  [33X[1;0Y[29X[2XUnbind[102X( [3Xlist[103X[, [3Xix1[103X, [3Xix2[103X, [3X...[103X] ) [32X operation[133X
   
   [33X[0;0Y[2XUnbind[102X  deletes  the element with index [3Xn[103X in the mutable list [3Xlist[103X. That is,
   after  execution  of [2XUnbind[102X, [3Xlist[103X no longer has an assigned value with index
   [3Xn[103X.  Thus  [2XUnbind[102X can be used to produce holes in a list. Note that it is not
   an error to unbind a nonexistant list element. [3Xlist[103X must evaluate to a list,
-  otherwise an error is signalled.[133X
+  or  to  an  object  for  which  a  suitable  method  for [10XUnbind\[\][110X has been
+  installed, otherwise an error is signalled.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xl := [ , 2, 3, 5, , 7, , , , 11 ];;[127X[104X
@@ -542,8 +563,7 @@
   [33X[0;0YNote  that  [2XIsBound[102X  ([14X21.5-1[114X)  and  [2XUnbind[102X  are  special in that they do not
   evaluate  their  argument, otherwise [2XIsBound[102X ([14X21.5-1[114X) would always signal an
   error  when it is supposed to return [9Xfalse[109X and there would be no way to tell
-  [2XUnbind[102X  which  component to remove. [10XUnbind([3Xlist[103X[10X[[3Xix1[103X[10X,[3Xix2[103X[10X,...][110X is a short-hand
-  for [10XUnbind([3Xlist[103X[10X[[[3Xix1[103X[10X,[3Xix2[103X[10X,...]][110X[133X
+  [2XUnbind[102X which component to remove.[133X
   
   
   [1X21.6 [33X[0;0YIdentical Lists[133X[101X
@@ -1552,7 +1572,32 @@
     [4X[28Xfail[128X[104X
   [4X[32X[104X
   
-  [1X21.16-7 PositionProperty[101X
+  [1X21.16-7 PositionMaximum[101X
+  
+  [33X[1;0Y[29X[2XPositionMaximum[102X( [3Xlist[103X[, [3Xfunc[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XPositionMinimum[102X( [3Xlist[103X[, [3Xfunc[103X] ) [32X function[133X
+  
+  [33X[0;0Yreturns  the  position  of  maximum  (with [2XPositionMaximum[102X) or minimum (with
+  [2XPositionMinimum[102X)  entry  in  the  list  [3Xlist[103X.  If  a second argument [3Xfunc[103X is
+  passed,  then  return  instead the position of the largest/smallest entry in
+  [10XList(  [3Xlist[103X[10X  ,  [3Xfunc[103X[10X  )[110X.  If  several  entries  of the list are equal to the
+  maximum/minimum, the first such position is returned.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XPositionMaximum( [2,4,-6,2,4] );[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27XPositionMaximum( [2,4,-6,2,4], x -> -x);[127X[104X
+    [4X[28X3[128X[104X
+    [4X[25Xgap>[125X [27XPositionMinimum( [2,4,-6,2,4] );[127X[104X
+    [4X[28X3[128X[104X
+    [4X[25Xgap>[125X [27XPositionMinimum( [2,4,-6,2,4], x -> -x);[127X[104X
+    [4X[28X2[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Y[2XMaximum[102X  ([14X21.20-13[114X)  and [2XMinimum[102X ([14X21.20-14[114X) allow you to find the maximum or
+  minimum element of a list directly.[133X
+  
+  [1X21.16-8 PositionProperty[101X
   
   [33X[1;0Y[29X[2XPositionProperty[102X( [3Xlist[103X, [3Xfunc[103X[, [3Xfrom[103X] ) [32X operation[133X
   
@@ -1572,12 +1617,12 @@
   [33X[0;0Y[2XFirst[102X  ([14X21.20-22[114X)  allows  you  to  extract the first element of a list that
   satisfies a certain property.[133X
   
-  [1X21.16-8 PositionsProperty[101X
+  [1X21.16-9 PositionsProperty[101X
   
   [33X[1;0Y[29X[2XPositionsProperty[102X( [3Xlist[103X, [3Xfunc[103X ) [32X operation[133X
   
-  [33X[0;0Yreturns the list of all those positions in the dense list [3Xlist[103X for which the
-  property tester function [3Xfunc[103X returns [9Xtrue[109X.[133X
+  [33X[0;0Yreturns the list of all those positions in the list [3Xlist[103X which are bound and
+  for which the property tester function [3Xfunc[103X returns [9Xtrue[109X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xl:= [ -5 .. 5 ];;[127X[104X
@@ -1587,10 +1632,10 @@
     [4X[28X[ 1, 3, 4, 8, 9, 11 ][128X[104X
   [4X[32X[104X
   
-  [33X[0;0Y[2XPositionProperty[102X  ([14X21.16-7[114X)  allows you to extract the position of the first
+  [33X[0;0Y[2XPositionProperty[102X  ([14X21.16-8[114X)  allows you to extract the position of the first
   element in a list that satisfies a certain property.[133X
   
-  [1X21.16-9 PositionBound[101X
+  [1X21.16-10 PositionBound[101X
   
   [33X[1;0Y[29X[2XPositionBound[102X( [3Xlist[103X ) [32X operation[133X
   
@@ -1604,7 +1649,7 @@
     [4X[28X2[128X[104X
   [4X[32X[104X
   
-  [1X21.16-10 PositionNot[101X
+  [1X21.16-11 PositionNot[101X
   
   [33X[1;0Y[29X[2XPositionNot[102X( [3Xlist[103X, [3Xval[103X[, [3Xfrom[103X] ) [32X operation[133X
   
@@ -1621,7 +1666,7 @@
     [4X[28X6[128X[104X
   [4X[32X[104X
   
-  [1X21.16-11 PositionNonZero[101X
+  [1X21.16-12 PositionNonZero[101X
   
   [33X[1;0Y[29X[2XPositionNonZero[102X( [3Xvec[103X[, [3Xfrom[103X] ) [32X operation[133X
   
@@ -1631,7 +1676,7 @@
   [33X[0;0YIf  a  starting  index  [3Xfrom[103X  is given, it returns the position of the first
   occurrence starting the search [13Xafter[113X position [3Xfrom[103X.[133X
   
-  [33X[0;0Y[2XPositionNonZero[102X implements a special case of [2XPositionNot[102X ([14X21.16-10[114X). Namely,
+  [33X[0;0Y[2XPositionNonZero[102X implements a special case of [2XPositionNot[102X ([14X21.16-11[114X). Namely,
   the  element  to  be  avoided  is the zero element, and the list must be (at
   least)  homogeneous  because  otherwise the zero element cannot be specified
   implicitly.[133X
@@ -1643,7 +1688,7 @@
     [4X[28X2[128X[104X
   [4X[32X[104X
   
-  [1X21.16-12 PositionSublist[101X
+  [1X21.16-13 PositionSublist[101X
   
   [33X[1;0Y[29X[2XPositionSublist[102X( [3Xlist[103X, [3Xsub[103X[, [3Xfrom[103X] ) [32X operation[133X
   
@@ -1691,12 +1736,12 @@
   [33X[0;0YIf   you   actually   want  to  know  whether  there  is  an  [3Xat[103X  for  which
   [10XIsMatchingSublist(  [3Xlist[103X[10X,  [3Xsub[103X[10X,  [3Xat[103X[10X  )[110X  is  true,  use  a  construction like
   [10XPositionSublist(   [3Xlist[103X[10X,   [3Xsub[103X[10X   )  <>  fail[110X  instead  (see  [2XPositionSublist[102X
-  ([14X21.16-12[114X)); it's more efficient.[133X
+  ([14X21.16-13[114X)); it's more efficient.[133X
   
   [1X21.17-2 IsDuplicateFree[101X
   
   [33X[1;0Y[29X[2XIsDuplicateFree[102X( [3Xobj[103X ) [32X property[133X
-  [33X[1;0Y[29X[2XIsDuplicateFreeList[102X( [3Xobj[103X ) [32X property[133X
+  [33X[1;0Y[29X[2XIsDuplicateFreeList[102X( [3Xobj[103X ) [32X filter[133X
   
   [33X[0;0Y[2XIsDuplicateFree[102X  returns [9Xtrue[109X if [3Xobj[103X is both a list or collection, and it is
   duplicate free; otherwise it returns [9Xfalse[109X. [2XIsDuplicateFreeList[102X is a synonym
@@ -1775,6 +1820,8 @@
   
   [33X[1;0Y[29X[2XSort[102X( [3Xlist[103X[, [3Xfunc[103X] ) [32X operation[133X
   [33X[1;0Y[29X[2XSortBy[102X( [3Xlist[103X, [3Xfunc[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XStableSort[102X( [3Xlist[103X[, [3Xfunc[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XStableSortBy[102X( [3Xlist[103X[, [3Xfunc[103X] ) [32X operation[133X
   
   [33X[0;0Y[2XSort[102X  sorts the list [3Xlist[103X in increasing order. In the one argument form [2XSort[102X
   uses the operator [10X<[110X to compare the elements. (If the list is not homogeneous
@@ -1784,30 +1831,13 @@
   [9Xtrue[109X if the first is regarded as strictly smaller than the second, and [9Xfalse[109X
   otherwise.[133X
   
-  [33X[0;0YNote  that,  in  cases  where  it is applicable, [2XSortBy[102X is likely to be more
-  efficient.[133X
+  [33X[0;0Y[2XStableSort[102X  behaves  identically  to  [2XSort[102X, except that [2XStableSort[102X will keep
+  elements  which  compare  equal  in  the same relative order, while [2XSort[102X may
+  change their relative order.[133X
   
   [33X[0;0Y[2XSort[102X  does  not  return  anything,  it  just  changes the argument [3Xlist[103X. Use
   [2XShallowCopy[102X ([14X12.7-1[114X) if you want to keep [3Xlist[103X. Use [2XReversed[102X ([14X21.20-7[114X) if you
   want to get a new list that is sorted in decreasing order.[133X
-  
-  [33X[0;0YIt  is  possible  to sort lists that contain multiple elements which compare
-  equal.  It  is not guaranteed that those elements keep their relative order,
-  i.e., [2XSort[102X is not stable.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xlist := [ 5, 4, 6, 1, 7, 5 ];; Sort( list ); list;[127X[104X
-    [4X[28X[ 1, 4, 5, 5, 6, 7 ][128X[104X
-    [4X[25Xgap>[125X [27Xlist := [ [0,6], [1,2], [1,3], [1,5], [0,4], [3,4] ];;[127X[104X
-    [4X[25Xgap>[125X [27XSort( list, function(v,w) return v*v < w*w; end );[127X[104X
-    [4X[25Xgap>[125X [27Xlist;  # sorted according to the Euclidean distance from [0,0][127X[104X
-    [4X[28X[ [ 1, 2 ], [ 1, 3 ], [ 0, 4 ], [ 3, 4 ], [ 1, 5 ], [ 0, 6 ] ][128X[104X
-    [4X[25Xgap>[125X [27Xlist := [ [0,6], [1,3], [3,4], [1,5], [1,2], [0,4], ];;[127X[104X
-    [4X[25Xgap>[125X [27XSort( list, function(v,w) return v[1] < w[1]; end );[127X[104X
-    [4X[25Xgap>[125X [27X# note the random order of the elements with equal first component:[127X[104X
-    [4X[25Xgap>[125X [27Xlist;[127X[104X
-    [4X[28X[ [ 0, 6 ], [ 0, 4 ], [ 1, 3 ], [ 1, 5 ], [ 1, 2 ], [ 3, 4 ] ][128X[104X
-  [4X[32X[104X
   
   [33X[0;0Y[2XSortBy[102X  sorts  the  list  [3Xlist[103X  into  an  order  such  that [10Xfunc(list[i]) <=
   func(list[i+1])[110X  for  all  relevant  [3Xi[103X.  [3Xfunc[103X must thus be a function on one
@@ -1815,14 +1845,42 @@
   computed  just  once  and  stored, making this more efficient than using the
   two-argument version of [2XSort[102X in many cases.[133X
   
+  [33X[0;0Y[2XStableSortBy[102X  behaves  the  same  as [2XSortBy[102X except that, like [2XStableSort[102X, it
+  keeps  pairs  of  values which compare equal when [10Xfunc[110X is applied to them in
+  the same relative order.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xlist := [ 5, 4, 6, 1, 7, 5 ];; Sort( list ); list;[127X[104X
+    [4X[28X[ 1, 4, 5, 5, 6, 7 ][128X[104X
+    [4X[25Xgap>[125X [27XSortBy(list, x -> x mod 3);[127X[104X
+    [4X[25Xgap>[125X [27Xlist; # Sorted by mod 3[127X[104X
+    [4X[28X[ 6, 1, 4, 7, 5, 5][128X[104X
+    [4X[25Xgap>[125X [27Xlist := [ [0,6], [1,2], [1,3], [1,5], [0,4], [3,4] ];;[127X[104X
+    [4X[25Xgap>[125X [27XSort( list, function(v,w) return v*v < w*w; end );[127X[104X
+    [4X[25Xgap>[125X [27Xlist;  # sorted according to the Euclidean distance from [0,0][127X[104X
+    [4X[28X[ [ 1, 2 ], [ 1, 3 ], [ 0, 4 ], [ 3, 4 ], [ 1, 5 ], [ 0, 6 ] ][128X[104X
+    [4X[25Xgap>[125X [27XSortBy( list, function(v) return v[1] + v[2]; end );[127X[104X
+    [4X[25Xgap>[125X [27Xlist;  # sorted according to Manhattan distance from [0,0][127X[104X
+    [4X[28X[ [ 1, 2 ], [ 1, 3 ], [ 0, 4 ], [ 1, 5 ], [ 0, 6 ], [ 3, 4 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xlist := [ [0,6], [1,3], [3,4], [1,5], [1,2], [0,4], ];;[127X[104X
+    [4X[25Xgap>[125X [27XSort( list, function(v,w) return v[1] < w[1]; end );[127X[104X
+    [4X[25Xgap>[125X [27X# note the random order of the elements with equal first component:[127X[104X
+    [4X[25Xgap>[125X [27Xlist;[127X[104X
+    [4X[28X[ [ 0, 6 ], [ 0, 4 ], [ 1, 3 ], [ 1, 5 ], [ 1, 2 ], [ 3, 4 ] ][128X[104X
+  [4X[32X[104X
+  
   [1X21.18-2 SortParallel[101X
   
   [33X[1;0Y[29X[2XSortParallel[102X( [3Xlist1[103X, [3Xlist2[103X[, [3Xfunc[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XStableSortParallel[102X( [3Xlist1[103X, [3Xlist2[103X[, [3Xfunc[103X] ) [32X operation[133X
   
-  [33X[0;0Ysorts  the  list  [3Xlist1[103X  in increasing order just as [2XSort[102X ([14X21.18-1[114X) does. In
-  parallel  it  applies the same exchanges that are necessary to sort [3Xlist1[103X to
-  the list [3Xlist2[103X, which must of course have at least as many elements as [3Xlist1[103X
-  does.[133X
+  [33X[0;0Y[2XSortParallel[102X sorts the list [3Xlist1[103X in increasing order just as [2XSort[102X ([14X21.18-1[114X)
+  does.  In  parallel it applies the same exchanges that are necessary to sort
+  [3Xlist1[103X to the list [3Xlist2[103X, which must of course have at least as many elements
+  as [3Xlist1[103X does.[133X
+  
+  [33X[0;0Y[2XStableSortParallel[102X  behaves  identically  to  [2XSortParallel[102X,  except it keeps
+  elements in [3Xlist1[103X which compare equal in the same relative order.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xlist1 := [ 5, 4, 6, 1, 7, 5 ];;[127X[104X
@@ -1834,7 +1892,8 @@
     [4X[28X[ 7, 3, 2, 9, 5, 8 ][128X[104X
   [4X[32X[104X
   
-  [33X[0;0YNote that [10X[ 7, 3, 2, 9, 5, 8 ][110X or [10X[ 7, 3, 9, 2, 5, 8 ][110X are possible results.[133X
+  [33X[0;0YNote that [10X[ 7, 3, 2, 9, 5, 8 ][110X or [10X[ 7, 3, 9, 2, 5, 8 ][110X are possible results.
+  [2XStableSortParallel[102X will always return [10X[ 7, 3, 2, 9, 5, 8][110X.[133X
   
   [1X21.18-3 Sortex[101X
   
@@ -2298,6 +2357,8 @@
     [4X[28X[ 2, -11 ][128X[104X
   [4X[32X[104X
   
+  [33X[0;0YTo get the index of the maximum element use [2XPositionMaximum[102X ([14X21.16-7[114X)[133X
+  
   
   [1X21.20-14 [33X[0;0YMinimum[133X[101X
   
@@ -2322,6 +2383,8 @@
     [4X[25Xgap>[125X [27XMinimum( [ 1, 2 ], [ 0, 15 ], [ 1, 5 ], [ 2, -11 ] );[127X[104X
     [4X[28X[ 0, 15 ][128X[104X
   [4X[32X[104X
+  
+  [33X[0;0YTo get the index of the minimum element use [2XPositionMinimum[102X ([14X21.16-7[114X)[133X
   
   
   [1X21.20-15 [33X[0;0YMaximumList and MinimumList[133X[101X
@@ -2362,7 +2425,7 @@
   [33X[0;0YThe  last index runs fastest. That means that the first element [3Xtup1[103X of [3Xcart[103X
   contains  the  first  element  from  [3Xlist1[103X, from [3Xlist2[103X and so on. The second
   element  [3Xtup2[103X  of [3Xcart[103X contains the first element from [3Xlist1[103X, the first from
-  [3Xlist2[103X,  an  so on, but the last element of [3Xtup2[103X is the second element of the
+  [3Xlist2[103X,  and so on, but the last element of [3Xtup2[103X is the second element of the
   last  argument  list.  This implies that [3Xcart[103X is a proper set if and only if
   all argument lists are proper sets (see [14X21.19[114X).[133X
   
@@ -2518,7 +2581,7 @@
   [9Xtrue[109X  or [9Xfalse[109X for each element of [3Xlist[103X, otherwise an error is signalled. If
   [3Xfunc[103X returns [9Xfalse[109X for all elements of [3Xlist[103X then [2XFirst[102X returns [9Xfail[109X.[133X
   
-  [33X[0;0Y[2XPositionProperty[102X  ([14X21.16-7[114X)  allows  you  to  find the position of the first
+  [33X[0;0Y[2XPositionProperty[102X  ([14X21.16-8[114X)  allows  you  to  find the position of the first
   element in a list that satisfies a certain property.[133X
   
   [4X[32X  Example  [32X[104X

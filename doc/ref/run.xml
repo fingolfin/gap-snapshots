@@ -73,7 +73,7 @@ whose component names are the command line options
 <C>-A</C></Mark>
 <Item>
 By default, some needed and suggested &GAP; packages
-(see <Ref Chap="GAP Packages"/>) are loaded,
+(see <Ref Chap="Using and Developing GAP Packages"/>) are loaded,
 if present, into the &GAP; session when it  starts.
 This option disables (actually toggles) the loading of suggested packages,
 which can be useful for debugging or testing.
@@ -216,12 +216,6 @@ total allocated memory of 4096 kilobytes are available afterwards.
 tells &GAP; to print a summary of all available options (<C>-h</C> is mnemonic
 for <Q>help</Q>). &GAP; exits after printing the summary, all other options
 are ignored.
-</Item>
-<Mark><Index Key="-i"><C>-i</C></Index>
-<C>-i </C><A>filename</A></Mark>
-<Item>
-changes  the  name  of  the  init  file  from  the  default  <F>init.g</F>  to
-<A>filename</A>. (Usually not needed.)
 </Item>
 <Mark><Index Key="-K"><C>-K</C></Index> 
 <C>-K </C><A>memory</A></Mark>
@@ -390,13 +384,6 @@ suppresses the usual break loop behaviour of  &GAP;.  With  this  option
 This is intended for automated testing of &GAP;. This option may be 
 repeated to toggle this behavior on and off.
 </Item>
-<Mark><Index Key="-X"><C>-X</C></Index>
-<C>-X</C></Mark>
-<Item>
-tells &GAP; to do a consistency  check  of  the  library  file  and  the
-corresponding compiled module when loading the compiled module. This
-option may be repeated to toggle this behavior on and off.
-</Item>
 <Mark><Index Key="-x"><C>-x</C></Index>
 <C>-x </C><A>length</A></Mark>
 <Item>
@@ -437,10 +424,9 @@ If a file cannot be opened &GAP; will print an error message and will abort.
 </List>
 <P/>
 <Index Subkey="command line, internal">options</Index>
-<Index Key="-C"><C>-C</C></Index><Index Key="-U"><C>-U</C></Index>
 <Index Key="-P"><C>-P</C></Index><Index Key="-W"><C>-W</C></Index>
 <Index Key="-z"><C>-z</C></Index><Index Key="-p"><C>-p</C></Index>
-Additional options, <C>-C</C>, <C>-U</C>, <C>-P</C>, <C>-W</C>, <C>-p</C>
+Additional options, <C>-C</C>, <C>-P</C>, <C>-W</C>, <C>-p</C>
 and <C>-z</C> are  used  
 internally by the <Package>gac</Package> script (see <Ref Label="Kernel modules"/>)
 and/or on specific operating systems.

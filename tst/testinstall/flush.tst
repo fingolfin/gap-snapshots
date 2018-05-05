@@ -5,8 +5,8 @@ gap> cheesefun;
 << cheesefun to be defined>>
 gap> cheeseval;
 << cheeseval to be defined>>
-gap> InstallFlushableValueFromFunction(cheesefun, -> [1] );
-gap> InstallFlushableValueFromFunction(cheeseval, -> [2] );
+gap> InstallFlushableValueFromFunction(cheesefun, {} -> [1] );
+gap> InstallFlushableValueFromFunction(cheeseval, {} -> [2] );
 gap> cheesefun;
 [ 1 ]
 gap> cheeseval;
@@ -22,3 +22,6 @@ gap> cheesefun;
 [ 1 ]
 gap> cheeseval;
 [ 2 ]
+gap> MakeReadWriteGlobal("cheesefun"); UnbindGlobal("cheesefun");
+gap> MakeReadWriteGlobal("cheeseval"); UnbindGlobal("cheeseval");
+gap> STOP_TEST("flush.tst", 1);

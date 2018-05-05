@@ -125,7 +125,7 @@ local oper,l,obj,skip,verbos,fams,flags,i,j,methods,flag,flag2,
     Error("usage: ApplicableMethodTypes(<opr>,<arglist>[,<verbosity>[,<nr>]])");
   fi;
   oper:=arg[1];
-  isconstructor:=oper in CONSTRUCTORS;
+  isconstructor:=IS_CONSTRUCTOR(oper);
   obj:=arg[2];
   if Length(arg)>2 then
     verbos:=arg[3];
@@ -148,7 +148,7 @@ local oper,l,obj,skip,verbos,fams,flags,i,j,methods,flag,flag2,
   flags:=[];
   fams:=[];
   for i in obj do
-    if IsFilter(i) or IsIdenticalObj( i, IsObject ) then
+    if IsFilter(i) then
       Add(flags,FLAGS_FILTER(i));
       Add(fams,fail);
     elif IsType(i) then
@@ -176,8 +176,13 @@ local oper,l,obj,skip,verbos,fams,flags,i,j,methods,flag,flag2,
   for i in [1..Length(methods)/lent] do
     nam:=methods[lent*(i-1)+l+4];
     val:=methods[lent*(i-1)+l+3];
+    oper:=methods[lent*(i-1)+l+2];
     if verbos>1 then
-      Print("#I  Method ",i,": ``",nam,"'', value: ");
+      Print("#I  Method ",i,": ``",nam,"''");
+      if LocationFunc(oper) <> "" then
+        Print(" at ",LocationFunc(oper));
+      fi;
+      Print(", value: ");
       Print_Value_SFF(val);
       Print("\n");
     fi;
@@ -205,12 +210,16 @@ local oper,l,obj,skip,verbos,fams,flags,i,j,methods,flag,flag2,
     od;
     if flag then
       if fams=fail or CallFuncList(methods[lent*(i-1)+1],fams) then
+	oper:=methods[lent*(i-1)+j+1];
 	if verbos=1 then
-	  Print("#I  Method ",i,": ``",nam,"'', value: ");
+	  Print("#I  Method ",i,": ``",nam,"''");
+	  if LocationFunc(oper) <> "" then
+	    Print(" at ",LocationFunc(oper));
+	  fi;
+	  Print(" , value: ");
 	  Print_Value_SFF(val);
 	  Print("\n");
 	fi;
-	oper:=methods[lent*(i-1)+j+1];
 	if verbos>5 then
 	  Print("#I  Function Body:\n");
 	  Print(oper);
@@ -243,7 +252,7 @@ local i,l;
   fi;
   l:=ShallowCopy(arg[2]);
   for i in [1..Length(l)] do
-    if i=1 and arg[1] in CONSTRUCTORS then
+    if i=1 and IS_CONSTRUCTOR(arg[1]) then
       l[i]:=l[i];
     else
       l[i]:=TypeObj(l[i]);
@@ -272,20 +281,20 @@ end);
 ##  <Example><![CDATA[
 ##  gap> ShowImpliedFilters(IsMatrix);
 ##  Implies:
-##     IsGeneralizedRowVector
 ##     IsNearAdditiveElementWithInverse
 ##     IsAdditiveElement
 ##     IsMultiplicativeElement
+##     IsGeneralizedRowVector
 ##  
 ##  
 ##  May imply with:
-##  +IsGF2MatrixRep
+##  +IsInternalRep
 ##     IsOrdinaryMatrix
 ##  
 ##  +CategoryCollections(CategoryCollections(IsAdditivelyCommutativeElement))
 ##     IsAdditivelyCommutativeElement
 ##  
-##  +IsInternalRep
+##  +IsGF2MatrixRep
 ##     IsOrdinaryMatrix
 ##  
 ##  ]]></Example>
@@ -296,17 +305,19 @@ end);
 BIND_GLOBAL("ShowImpliedFilters",function(fil)
 local flags,f,i,j,l,m,n;
   flags:=FLAGS_FILTER(fil);
-  f:=Filtered(IMPLICATIONS,x->IS_SUBSET_FLAGS(x[2],flags));
-  l:=[];
-  m:=[];
-  for i in f do
-    n:=SUB_FLAGS(i[2],flags); # the additional requirements
-    if SIZE_FLAGS(n)=0 then
-      Add(l,i[1]);
-    else
-      Add(m,[n,i[1]]);
-    fi;
-  od;
+  atomic readonly IMPLICATIONS do
+    f:=Filtered(IMPLICATIONS,x->IS_SUBSET_FLAGS(x[2],flags));
+    l:=[];
+    m:=[];
+    for i in f do
+      n:=SUB_FLAGS(i[2],flags); # the additional requirements
+      if SIZE_FLAGS(n)=0 then
+        Add(l,i[1]);
+      else
+        Add(m,[n,i[1]]);
+      fi;
+    od;
+  od; # end atomic
   if Length(l)>0 then
     Print("Implies:\n");
     for i in l do
@@ -335,33 +346,84 @@ end);
 ##
 ##  <#GAPDoc Label="PageSource">
 ##  <ManSection>
-##  <Func Name="PageSource" Arg='func'/>
+##  <Func Name="PageSource" Arg='func[, nr]'/>
 ##
 ##  <Description>
 ##  This shows the file containing the source code of the function or method
 ##  <A>func</A> in a pager (see <Ref Func="Pager"/>). The display starts at 
 ##  a line shortly before the code of <A>func</A>.<P/>
 ##  
-##  This function works if <C>FilenameFunc(<A>func</A>)</C> returns the name of
-##  a proper file. In that case this filename and the position of the 
-##  function definition are also printed.
-##  Otherwise the function indicates that the source is not available 
-##  (for example this happens for functions which are implemented in 
-##  the &GAP; C-kernel).<P/>
+##  For operations <A>func</A> the function shows the source code of the
+##  declaration of <A>func</A>. Operations can have several declarations, use
+##  the optional second argument to specify which one should be shown (in the
+##  order the declarations were read); the default is to show the first.<P/>
 ##  
+##  For kernel functions the function tries to show the C source code.<P/>
+##  
+##  If GAP cannot find a file containing the source code this will be indicated.
+##  <P/>
 ##  Usage examples:<Br/>
 ##  <C>met := ApplicableMethod(\^, [(1,2),2743527]); PageSource(met);</C><Br/>
 ##  <C>PageSource(Combinations);</C><Br/>
-##  <C>ct:=CharacterTable(Group((1,2,3))); </C><Br/>
+##  <C>PageSource(SORT_LIST); </C><Br/>
+##  <C>PageSource(Size, 2);</C><Br/>
+##  <C>ct := CharacterTable(Group((1,2,3))); </C><Br/>
 ##  <C>met := ApplicableMethod(Size,[ct]); PageSource(met); </C>
 ##  <P/>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
-BIND_GLOBAL("PageSource", function ( fun )
-    local f, l;
+BIND_GLOBAL("PageSource", function ( fun, nr... )
+    local f, n, l, s, ss, locs;
+
+    if Length(nr) > 0 and IsPosInt(nr[1]) then
+      n := nr[1];
+    else
+      n := 1;
+    fi;
+    l := fail;
     f := FILENAME_FUNC( fun );
-    if f = fail then
+    if IsString(f) and Length(f)>0 and f[1] <> '/' then
+      if Length(f) > 7 and f{[1..8]} = "GAPROOT/" then
+        f := f{[9..Length(f)]};
+      fi;
+      f := Filename(List(GAPInfo.RootPaths, Directory), f);
+    fi;
+    if f = fail and fun in OPERATIONS then
+      # for operations we show the location(s) of their operation
+      locs := GET_DECLARATION_LOCATIONS(fun);
+      if n > Length(locs) then
+        Print("Operation ", NameFunction(fun), " has only ",
+              Length(locs), " declarations.\n");
+        return;
+      else
+        if Length(locs) > 1 then
+          Print("Operation ", NameFunction(fun), " has ",
+                Length(locs), " declarations, showing number ", n, ".\n");
+        fi;
+        f := locs[n][1];
+        l := locs[n][2];
+      fi;
+    fi;
+    if f <> fail then
+        if l = fail then
+          l := STARTLINE_FUNC( fun );
+          if l <> fail then
+              l := Maximum(l-5, 1);
+          elif IsKernelFunction(fun) then
+              # page correct C source file and try to find line in C
+              # source starting `Obj Func<fun>`
+              s := String(fun);
+              ss:=SplitString(s,""," <>");
+              s := First(ss, a-> ':' in a);
+              if s <> fail then
+                ss := SplitString(s,":","");
+                l := Concatenation("/Obj *Func", ss[2]);
+              fi;
+          fi;
+        fi;
+    fi;
+    if f = fail or l = fail then
         if IsKernelFunction(fun) then
           Print("Cannot locate source of kernel function ",
                  NameFunction(fun),".\n");
@@ -371,9 +433,7 @@ BIND_GLOBAL("PageSource", function ( fun )
     elif not (IsExistingFile(f) and IsReadableFile(f)) then
         Print( "Cannot access code from file \"",f,"\".\n");
     else
-        l := Maximum(STARTLINE_FUNC( fun )-5, 1);
         Print( "Showing source in ", f, " (from line ", l, ")\n" );
-        # Exec( Concatenation( "view +", String( l ), " ", f ) );
         Pager(rec(lines := StringFile(f), formatted := true, start := l));
     fi;
 end);

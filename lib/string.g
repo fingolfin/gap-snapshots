@@ -65,7 +65,8 @@ DeclareCategoryCollections( "IsChar" );
 ##  See <Ref Func="IsStringRep"/> below for more details.
 ##  <P/>
 ##  Each character, in particular those which cannot be typed directly from
-##  the keyboard, can also be typed in three digit octal notation.
+##  the keyboard, can also be typed in three digit octal notation, or
+##  two digit hexadecimal notation.
 ##  And for some special characters (like the newline character) there is a
 ##  further possibility to type them,
 ##  see section <Ref Sect="Special Characters"/>.
@@ -238,6 +239,9 @@ BIND_GLOBAL( "TYPES_STRING",
           # T_STRING_SSORT +IMMUTABLE
           ]);
 
+if IsHPCGAP then
+    MakeReadOnlySingleObj( TYPES_STRING );
+fi;
 
 #############################################################################
 ##
@@ -259,8 +263,6 @@ BIND_GLOBAL( "TYPES_STRING",
 ##  <!-- and <C>IsPlistRep</C> is <E>set</E>,-->
 ##  <!-- although <E>calling</E> <C>IsStringRep</C> for <C>[]</C> yields <K>false</K>,-->
 ##  <!-- and <E>calling</E> <C>IsPlistRep</C> for <C>""</C> yields <K>false</K>, too.-->
-##  <!-- Why is <C>TNUM_OBJ_INT</C> used here,-->
-##  <!-- calling <C>IsStringRep</C> would be enough, or?-->
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> l:= [];;  IsString( l );  IsEmptyString( l );  IsEmpty( l );
@@ -285,13 +287,10 @@ BIND_GLOBAL( "TYPES_STRING",
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-BIND_GLOBAL( "TNUM_EMPTY_STRING",
-             [ TNUM_OBJ_INT( "" ), TNUM_OBJ_INT( Immutable( "" ) ) ] );
-
 BIND_GLOBAL( "IsEmptyString",
     obj ->     IsString( obj )
            and IsEmpty( obj )
-           and TNUM_OBJ_INT( obj ) in TNUM_EMPTY_STRING );
+           and IsStringRep( obj ) );
 
 
 ############################################################################
@@ -324,28 +323,30 @@ InstallMethod( String,
     
 #############################################################################
 ##
-#F  USER_HOME_EXPAND . . . . . . . . . . . . .  expand leading ~ in file name
+#F  UserHomeExpand( <str> ) . . . . . . . . . . . . expand leading ~ in str
 ##
+##  <#GAPDoc Label="UserHomeExpand">
 ##  <ManSection>
-##  <Func Name="USER_HOME_EXPAND" Arg='obj'/>
+##  <Func Name="UserHomeExpand" Arg='str'/>
 ##  <Description>
 ##
+##  If the string <A>str</A> starts with a <C>'~'</C> character this
+##  function returns a new string with the leading <C>'~'</C> substituted by
+##  the users home directory as stored in <C>GAPInfo.UserHome</C>.
 ##  
-##  If `GAPInfo.UserHome' has positive length then a leading '~' character in 
-##  string `str' is substituted by the content of `GAPInfo.UserHome'.
-##  Otherwise `str' itself is returned.
+##  Otherwise <A>str</A> is returned unchanged.
 ##  </Description>
 ##  </ManSection>
-##  
-BIND_GLOBAL("USER_HOME_EXPAND", function(str)
-  if Length(str) > 0 and str[1] = '~' and IsString(GAPInfo.UserHome) and
-     Length( GAPInfo.UserHome ) > 0 then
+##  <#/GAPDoc>
+##
+BIND_GLOBAL("UserHomeExpand", function(str)
+  if IsString(str) and Length(str) > 0 and str[1] = '~' 
+        and IsString(GAPInfo.UserHome) and Length( GAPInfo.UserHome ) > 0 then
     return Concatenation( GAPInfo.UserHome, str{[2..Length(str)]});
   else
     return str;
   fi;
 end);
-    
 
 #############################################################################
 ##

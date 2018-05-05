@@ -3,7 +3,7 @@
                              [1XGAP - Reference Manual[101X
   
   
-                          Release 4.8.10, 15-Jan-2018
+                           Release 4.9.1, 05-May-2018
   
   
                                  The GAP Group
@@ -82,14 +82,15 @@
       4.9-1 IsReadOnlyGlobal
       4.9-2 MakeReadOnlyGlobal
       4.9-3 MakeReadWriteGlobal
-      4.9-4 ValueGlobal
-      4.9-5 IsBoundGlobal
-      4.9-6 UnbindGlobal
-      4.9-7 BindGlobal
-      4.9-8 NamesGVars
-      4.9-9 NamesSystemGVars
-      4.9-10 NamesUserGVars
-      4.9-11 TemporaryGlobalVarName
+      4.9-4 MakeConstantGlobal
+      4.9-5 ValueGlobal
+      4.9-6 IsBoundGlobal
+      4.9-7 UnbindGlobal
+      4.9-8 BindGlobal
+      4.9-9 NamesGVars
+      4.9-10 NamesSystemGVars
+      4.9-11 NamesUserGVars
+      4.9-12 TemporaryGlobalVarName
     4.10 [33X[0;0YNamespaces for [5XGAP[105X packages[133X
     4.11 [33X[0;0YFunction Calls[133X
       4.11-1 [33X[0;0YFunction Call With Arguments[133X
@@ -114,13 +115,13 @@
       5.1-3 NamesLocalVariablesFunction
       5.1-4 FilenameFunc
       5.1-5 StartlineFunc
-      5.1-6 PageSource
+      5.1-6 LocationFunc
+      5.1-7 PageSource
     5.2 [33X[0;0YCalling a function with a list argument that is interpreted as several
     arguments[133X
       5.2-1 CallFuncList
-    5.3 [33X[0;0YCalling a function with a time limit[133X
-      5.3-1 CallWithTimeout
-      5.3-2 GAPInfo.TimeoutsSupported
+    5.3 [33X[0;0YWrapping a function, so the values produced are cached[133X
+      5.3-1 MemoizePosIntFunction
     5.4 [33X[0;0YFunctions that do nothing[133X
       5.4-1 ReturnTrue
       5.4-2 ReturnFalse
@@ -206,40 +207,45 @@
     7.6 [33X[0;0YTiming[133X
       7.6-1 Runtimes
       7.6-2 Runtime
-      7.6-3 time
-    7.7 [33X[0;0YProfiling[133X
-      7.7-1 [33X[0;0YFunction Profiling[133X
-      7.7-2 ProfileGlobalFunctions
-      7.7-3 ProfileOperations
-      7.7-4 ProfileOperationsAndMethods
-      7.7-5 ProfileFunctions
-      7.7-6 UnprofileFunctions
-      7.7-7 ProfileMethods
-      7.7-8 UnprofileMethods
-      7.7-9 DisplayProfile
-      7.7-10 ClearProfile
-      7.7-11 [33X[0;0YAn Example of Function Profiling[133X
-      7.7-12 [33X[0;0YLine By Line Profiling[133X
-      7.7-13 [33X[0;0YLine by Line profiling example[133X
-      7.7-14 ProfileLineByLine
-      7.7-15 CoverageLineByLine
-      7.7-16 UnprofileLineByLine
-      7.7-17 UncoverageLineByLine
-      7.7-18 ActivateProfileColour
-      7.7-19 IsLineByLineProfileActive
-      7.7-20 DisplayCacheStats
-      7.7-21 ClearCacheStats
-    7.8 [33X[0;0YInformation about the version used[133X
-    7.9 [33X[0;0YTest Files[133X
-      7.9-1 [33X[0;0YStarting and stopping test[133X
-      7.9-2 Test
-      7.9-3 TestDirectory
-    7.10 [33X[0;0YDebugging Recursion[133X
-      7.10-1 SetRecursionTrapInterval
-    7.11 [33X[0;0YGlobal Memory Information[133X
-      7.11-1 GasmanStatistics
-      7.11-2 GasmanMessageStatus
-      7.11-3 GasmanLimits
+      7.6-3 NanosecondsSinceEpoch
+      7.6-4 time
+      7.6-5 Sleep
+    7.7 [33X[0;0YTracking Memory Usage[133X
+      7.7-1 TotalMemoryAllocated
+      7.7-2 memory_allocated
+    7.8 [33X[0;0YProfiling[133X
+      7.8-1 [33X[0;0YFunction Profiling[133X
+      7.8-2 ProfileGlobalFunctions
+      7.8-3 ProfileOperations
+      7.8-4 ProfileOperationsAndMethods
+      7.8-5 ProfileFunctions
+      7.8-6 UnprofileFunctions
+      7.8-7 ProfileMethods
+      7.8-8 UnprofileMethods
+      7.8-9 DisplayProfile
+      7.8-10 ClearProfile
+      7.8-11 [33X[0;0YAn Example of Function Profiling[133X
+      7.8-12 [33X[0;0YLine By Line Profiling[133X
+      7.8-13 [33X[0;0YLine by Line profiling example[133X
+      7.8-14 ProfileLineByLine
+      7.8-15 CoverageLineByLine
+      7.8-16 UnprofileLineByLine
+      7.8-17 UncoverageLineByLine
+      7.8-18 ActivateProfileColour
+      7.8-19 IsLineByLineProfileActive
+      7.8-20 DisplayCacheStats
+      7.8-21 ClearCacheStats
+    7.9 [33X[0;0YInformation about the version used[133X
+    7.10 [33X[0;0YTest Files[133X
+      7.10-1 [33X[0;0YStarting and stopping test[133X
+      7.10-2 Test
+      7.10-3 TestDirectory
+    7.11 [33X[0;0YDebugging Recursion[133X
+      7.11-1 SetRecursionTrapInterval
+    7.12 [33X[0;0YGlobal Memory Information[133X
+      7.12-1 GasmanStatistics
+      7.12-2 GasmanMessageStatus
+      7.12-3 GasmanLimits
   8 [33X[0;0YOptions Stack[133X
     8.1 [33X[0;0YFunctions Dealing with the Options Stack[133X
       8.1-1 PushOptions
@@ -282,7 +288,8 @@
       9.7-6 [33X[0;0YOutputLogTo[133X
       9.7-7 CrcFile
       9.7-8 RemoveFile
-      9.7-9 Reread
+      9.7-9 UserHomeExpand
+      9.7-10 Reread
   10 [33X[0;0YStreams[133X
     10.1 [33X[0;0YCategories for Streams and the StreamsFamily[133X
       10.1-1 IsStream
@@ -376,6 +383,7 @@
       13.2-1 RankFilter
       13.2-2 NamesFilter
       13.2-3 ShowImpliedFilters
+      13.2-4 FiltersType
     13.3 [33X[0;0YCategories[133X
       13.3-1 CategoriesOfObject
     13.4 [33X[0;0YRepresentation[133X
@@ -451,6 +459,9 @@
       14.7-3 State
       14.7-4 IsMersenneTwister
       14.7-5 RandomSource
+    14.8 [33X[0;0YBitfields[133X
+      14.8-1 MakeBitfields
+      14.8-2 BuildBitfields
   15 [33X[0;0YNumber Theory[133X
     15.1 [33X[0;0YInfoNumtheor (Info Class)[133X
       15.1-1 InfoNumtheor
@@ -478,7 +489,8 @@
       15.6-1 ContinuedFractionExpansionOfRoot
       15.6-2 ContinuedFractionApproximationOfRoot
     15.7 [33X[0;0YMiscellaneous[133X
-      15.7-1 TwoSquares
+      15.7-1 PValuation
+      15.7-2 TwoSquares
   16 [33X[0;0YCombinatorics[133X
     16.1 [33X[0;0YCombinatorial Numbers[133X
       16.1-1 Factorial
@@ -575,18 +587,30 @@
   19 [33X[0;0YFloats[133X
     19.1 [33X[0;0YA sample run[133X
     19.2 [33X[0;0YMethods[133X
-      19.2-1 [33X[0;0YMathematical operations[133X
-      19.2-2 EqFloat
-      19.2-3 PrecisionFloat
-      19.2-4 [33X[0;0YInterval operations[133X
-      19.2-5 IsPInfinity
-      19.2-6 FLOAT
-      19.2-7 Float
-      19.2-8 Rat
-      19.2-9 SetFloats
+      19.2-1 [33X[0;0YFloat creators[133X
+      19.2-2 Rat
+      19.2-3 Cyc
+      19.2-4 SetFloats
+      19.2-5 FLOAT
+      19.2-6 EqFloat
+      19.2-7 PrecisionFloat
+      19.2-8 SignBit
+      19.2-9 [33X[0;0YInfinity testers[133X
+      19.2-10 [33X[0;0YStandard mathematical operations[133X
     19.3 [33X[0;0YHigh-precision-specific methods[133X
     19.4 [33X[0;0YComplex arithmetic[133X
+      19.4-1 Argument
     19.5 [33X[0;0YInterval-specific methods[133X
+      19.5-1 Sup
+      19.5-2 Inf
+      19.5-3 Mid
+      19.5-4 AbsoluteDiameter
+      19.5-5 RelativeDiameter
+      19.5-6 IsDisjoint
+      19.5-7 IsSubset
+      19.5-8 IncreaseInterval
+      19.5-9 BlowupInterval
+      19.5-10 BisectInterval
   20 [33X[0;0YBooleans[133X
     20.1 [33X[0;0YIsBool (Filter)[133X
       20.1-1 IsBool
@@ -619,7 +643,8 @@
       21.4-5 Append
     21.5 [33X[0;0YIsBound and Unbind for Lists[133X
       21.5-1 IsBound
-      21.5-2 Unbind
+      21.5-2 GetWithDefault
+      21.5-3 Unbind
     21.6 [33X[0;0YIdentical Lists[133X
     21.7 [33X[0;0YDuplication of Lists[133X
     21.8 [33X[0;0YMembership Test for Lists[133X
@@ -655,12 +680,13 @@
       21.16-4 PositionNthOccurrence
       21.16-5 PositionSorted
       21.16-6 PositionSet
-      21.16-7 PositionProperty
-      21.16-8 PositionsProperty
-      21.16-9 PositionBound
-      21.16-10 PositionNot
-      21.16-11 PositionNonZero
-      21.16-12 PositionSublist
+      21.16-7 PositionMaximum
+      21.16-8 PositionProperty
+      21.16-9 PositionsProperty
+      21.16-10 PositionBound
+      21.16-11 PositionNot
+      21.16-12 PositionNonZero
+      21.16-13 PositionSublist
     21.17 [33X[0;0YProperties and Attributes for Lists[133X
       21.17-1 IsMatchingSublist
       21.17-2 IsDuplicateFree
@@ -747,7 +773,8 @@
       23.2-1 NormedRowVector
     23.3 [33X[0;0YRow Vectors over Finite Fields[133X
       23.3-1 [33X[0;0YConvertToVectorRep[133X
-      23.3-2 NumberFFVector
+      23.3-2 ImmutableVector
+      23.3-3 NumberFFVector
     23.4 [33X[0;0YCoefficient List Arithmetic[133X
       23.4-1 AddRowVector
       23.4-2 AddCoeffs
@@ -937,16 +964,20 @@
       27.7-9 StringPP
       27.7-10 WordAlp
       27.7-11 LowercaseString
-      27.7-12 SplitString
-      27.7-13 ReplacedString
-      27.7-14 NormalizeWhitespace
-      27.7-15 NormalizedWhitespace
-      27.7-16 RemoveCharacters
-      27.7-17 JoinStringsWithSeparator
-      27.7-18 Chomp
-      27.7-19 StartsWith
-      27.7-20 NumbersString
-      27.7-21 StringNumbers
+      27.7-12 LowercaseChar
+      27.7-13 UppercaseString
+      27.7-14 UppercaseChar
+      27.7-15 SplitString
+      27.7-16 ReplacedString
+      27.7-17 NormalizeWhitespace
+      27.7-18 NormalizedWhitespace
+      27.7-19 RemoveCharacters
+      27.7-20 JoinStringsWithSeparator
+      27.7-21 Chomp
+      27.7-22 StartsWith
+      27.7-23 NumbersString
+      27.7-24 StringNumbers
+      27.7-25 StringOfMemoryAmount
     27.8 [33X[0;0YCharacter Conversion[133X
       27.8-1 IntChar
       27.8-2 CharInt
@@ -954,9 +985,11 @@
       27.8-4 CharSInt
     27.9 [33X[0;0YOperations to Evaluate Strings[133X
       27.9-1 Int
-      27.9-2 Ordinal
-      27.9-3 EvalString
-      27.9-4 CrcString
+      27.9-2 Rat
+      27.9-3 IntHexString
+      27.9-4 Ordinal
+      27.9-5 EvalString
+      27.9-6 CrcString
     27.10 [33X[0;0YCalendar Arithmetic[133X
       27.10-1 DaysInYear
       27.10-2 DaysInMonth
@@ -1130,15 +1163,16 @@
       32.2-1 GeneralMappingByElements
       32.2-2 [33X[0;0YMappingByFunction[133X
       32.2-3 InverseGeneralMapping
-      32.2-4 CompositionMapping
-      32.2-5 CompositionMapping2
-      32.2-6 IsCompositionMappingRep
-      32.2-7 ConstituentsCompositionMapping
-      32.2-8 ZeroMapping
-      32.2-9 IdentityMapping
-      32.2-10 [33X[0;0YEmbedding[133X
-      32.2-11 [33X[0;0YProjection[133X
-      32.2-12 RestrictedMapping
+      32.2-4 RestrictedInverseGeneralMapping
+      32.2-5 CompositionMapping
+      32.2-6 CompositionMapping2
+      32.2-7 IsCompositionMappingRep
+      32.2-8 ConstituentsCompositionMapping
+      32.2-9 ZeroMapping
+      32.2-10 IdentityMapping
+      32.2-11 [33X[0;0YEmbedding[133X
+      32.2-12 [33X[0;0YProjection[133X
+      32.2-13 RestrictedMapping
     32.3 [33X[0;0YProperties and Attributes of (General) Mappings[133X
       32.3-1 IsTotal
       32.3-2 IsSingleValued
@@ -1527,11 +1561,12 @@
       39.15-17 IsFinitelyGeneratedGroup
       39.15-18 IsSubsetLocallyFiniteGroup
       39.15-19 IsPGroup
-      39.15-20 PrimePGroup
-      39.15-21 PClassPGroup
-      39.15-22 RankPGroup
-      39.15-23 IsPSolvable
-      39.15-24 IsPNilpotent
+      39.15-20 IsPowerfulPGroup
+      39.15-21 PrimePGroup
+      39.15-22 PClassPGroup
+      39.15-23 RankPGroup
+      39.15-24 IsPSolvable
+      39.15-25 IsPNilpotent
     39.16 [33X[0;0YNumerical Group Attributes[133X
       39.16-1 AbelianInvariants
       39.16-2 Exponent
@@ -1568,22 +1603,26 @@
       39.19-2 IsConjugacyClassSubgroupsRep
       39.19-3 ConjugacyClassesSubgroups
       39.19-4 ConjugacyClassesMaximalSubgroups
-      39.19-5 AllSubgroups
-      39.19-6 MaximalSubgroupClassReps
-      39.19-7 MaximalSubgroups
-      39.19-8 NormalSubgroups
-      39.19-9 MaximalNormalSubgroups
-      39.19-10 MinimalNormalSubgroups
+      39.19-5 MaximalSubgroupClassReps
+      39.19-6 LowIndexSubgroups
+      39.19-7 AllSubgroups
+      39.19-8 MaximalSubgroups
+      39.19-9 NormalSubgroups
+      39.19-10 MaximalNormalSubgroups
+      39.19-11 MinimalNormalSubgroups
     39.20 [33X[0;0YSubgroup Lattice[133X
       39.20-1 LatticeSubgroups
       39.20-2 ClassElementLattice
       39.20-3 DotFileLatticeSubgroups
       39.20-4 MaximalSubgroupsLattice
       39.20-5 MinimalSupergroupsLattice
-      39.20-6 RepresentativesPerfectSubgroups
-      39.20-7 ConjugacyClassesPerfectSubgroups
-      39.20-8 Zuppos
-      39.20-9 InfoLattice
+      39.20-6 LowLayerSubgroups
+      39.20-7 ContainedConjugates
+      39.20-8 ContainingConjugates
+      39.20-9 RepresentativesPerfectSubgroups
+      39.20-10 ConjugacyClassesPerfectSubgroups
+      39.20-11 Zuppos
+      39.20-12 InfoLattice
     39.21 [33X[0;0YSpecific Methods for Subgroup Lattice Computations[133X
       39.21-1 LatticeByCyclicExtension
       39.21-2 InvariantSubgroupsElementaryAbelianGroup
@@ -1763,6 +1802,7 @@
       42.1-1 IsPerm
       42.1-2 IsPermCollection
       42.1-3 PermutationsFamily
+      42.1-4 PERM_INVERSE_THRESHOLD
     42.2 [33X[0;0YComparison of Permutations[133X
       42.2-1 \=
       42.2-2 DistancePerms
@@ -2213,52 +2253,22 @@
       50.3-1 NrConjugacyClassesGL
     50.4 [33X[0;0YConstructors for Basic Groups[133X
     50.5 [33X[0;0YSelection Functions[133X
-    50.6 [33X[0;0YTransitive Permutation Groups[133X
-      50.6-1 TransitiveGroup
-      50.6-2 NrTransitiveGroups
-      50.6-3 TransitiveIdentification
-    50.7 [33X[0;0YSmall Groups[133X
-      50.7-1 SmallGroup
-      50.7-2 AllSmallGroups
-      50.7-3 OneSmallGroup
-      50.7-4 NumberSmallGroups
-      50.7-5 IdSmallGroup
-      50.7-6 IdsOfAllSmallGroups
-      50.7-7 IdGap3SolvableGroup
-      50.7-8 SmallGroupsInformation
-      50.7-9 UnloadSmallGroupsData
-    50.8 [33X[0;0YFinite Perfect Groups[133X
-      50.8-1 SizesPerfectGroups
-      50.8-2 [33X[0;0YPerfectGroup[133X
-      50.8-3 PerfectIdentification
-      50.8-4 NumberPerfectGroups
-      50.8-5 NumberPerfectLibraryGroups
-      50.8-6 SizeNumbersPerfectGroups
-      50.8-7 [33X[0;0YDisplayInformationPerfectGroups[133X
-      50.8-8 [33X[0;0YMore about the Perfect Groups Library[133X
-    50.9 [33X[0;0YPrimitive Permutation Groups[133X
-      50.9-1 PrimitiveGroup
-      50.9-2 NrPrimitiveGroups
-      50.9-3 PrimitiveGroupsIterator
-      50.9-4 COHORTS_PRIMITIVE_GROUPS
-    50.10 [33X[0;0YIndex numbers of primitive groups[133X
-      50.10-1 PrimitiveIdentification
-      50.10-2 SimsNo
-      50.10-3 PRIMITIVE_INDICES_MAGMA
-    50.11 [33X[0;0YIrreducible Solvable Matrix Groups[133X
-      50.11-1 IrreducibleSolvableGroupMS
-      50.11-2 NumberIrreducibleSolvableGroups
-      50.11-3 AllIrreducibleSolvableGroups
-      50.11-4 OneIrreducibleSolvableGroup
-      50.11-5 PrimitiveIndexIrreducibleSolvableGroup
-      50.11-6 IrreducibleSolvableGroup
-    50.12 [33X[0;0YIrreducible Maximal Finite Integral Matrix Groups[133X
-      50.12-1 ImfNumberQQClasses
-      50.12-2 DisplayImfInvariants
-      50.12-3 ImfInvariants
-      50.12-4 ImfMatrixGroup
-      50.12-5 IsomorphismPermGroup
-      50.12-6 IsomorphismPermGroupImfGroup
+    50.6 [33X[0;0YFinite Perfect Groups[133X
+      50.6-1 SizesPerfectGroups
+      50.6-2 [33X[0;0YPerfectGroup[133X
+      50.6-3 PerfectIdentification
+      50.6-4 NumberPerfectGroups
+      50.6-5 NumberPerfectLibraryGroups
+      50.6-6 SizeNumbersPerfectGroups
+      50.6-7 [33X[0;0YDisplayInformationPerfectGroups[133X
+      50.6-8 [33X[0;0YMore about the Perfect Groups Library[133X
+    50.7 [33X[0;0YIrreducible Maximal Finite Integral Matrix Groups[133X
+      50.7-1 ImfNumberQQClasses
+      50.7-2 DisplayImfInvariants
+      50.7-3 ImfInvariants
+      50.7-4 ImfMatrixGroup
+      50.7-5 IsomorphismPermGroup
+      50.7-6 IsomorphismPermGroupImfGroup
   51 [33X[0;0YSemigroups and Monoids[133X
     51.1 [33X[0;0YSemigroups[133X
       51.1-1 IsSemigroup
@@ -2322,6 +2332,7 @@
       51.8-10 GroupHClassOfGreensDClass
       51.8-11 IsGroupHClass
       51.8-12 IsRegularDClass
+      51.8-13 DisplaySemigroup
     51.9 [33X[0;0YRees Matrix Semigroups[133X
       51.9-1 ReesMatrixSemigroup
       51.9-2 ReesMatrixSubsemigroup
@@ -2337,36 +2348,29 @@
   52 [33X[0;0YFinitely Presented Semigroups and Monoids[133X
     52.1 [33X[0;0YIsSubsemigroupFpSemigroup (Filter)[133X
       52.1-1 IsSubsemigroupFpSemigroup
-      52.1-2 IsSubmonoidFpMonoid
-      52.1-3 IsFpSemigroup
-      52.1-4 IsFpMonoid
-      52.1-5 IsElementOfFpSemigroup
-      52.1-6 IsElementOfFpMonoid
-      52.1-7 FpGrpMonSmgOfFpGrpMonSmgElement
-    52.2 [33X[0;0YCreating Finitely Presented Semigroups[133X
+      52.1-2 IsFpSemigroup
+      52.1-3 IsElementOfFpSemigroup
+      52.1-4 FpGrpMonSmgOfFpGrpMonSmgElement
+    52.2 [33X[0;0YCreating Finitely Presented Semigroups and Monoids[133X
       52.2-1 \/
       52.2-2 FactorFreeSemigroupByRelations
       52.2-3 IsomorphismFpSemigroup
     52.3 [33X[0;0YComparison of Elements of Finitely Presented Semigroups[133X
       52.3-1 \=
-    52.4 [33X[0;0YPreimages in the Free Semigroup[133X
+    52.4 [33X[0;0YPreimages in the Free Semigroup or Monoid[133X
       52.4-1 UnderlyingElement
       52.4-2 ElementOfFpSemigroup
       52.4-3 FreeSemigroupOfFpSemigroup
       52.4-4 FreeGeneratorsOfFpSemigroup
       52.4-5 RelationsOfFpSemigroup
-    52.5 [33X[0;0YFinitely presented monoids[133X
-      52.5-1 \/
-    52.6 [33X[0;0YRewriting Systems and the Knuth-Bendix Procedure[133X
-      52.6-1 ReducedConfluentRewritingSystem
-      52.6-2 KB_REW
-      52.6-3 [33X[0;0YKnuthBendixRewritingSystem[133X
-      52.6-4 SemigroupOfRewritingSystem
-      52.6-5 MonoidOfRewritingSystem
-      52.6-6 FreeSemigroupOfRewritingSystem
-      52.6-7 FreeMonoidOfRewritingSystem
-    52.7 [33X[0;0YTodd-Coxeter Procedure[133X
-      52.7-1 CosetTableOfFpSemigroup
+    52.5 [33X[0;0YRewriting Systems and the Knuth-Bendix Procedure[133X
+      52.5-1 ReducedConfluentRewritingSystem
+      52.5-2 KB_REW
+      52.5-3 [33X[0;0YKnuthBendixRewritingSystem[133X
+      52.5-4 SemigroupOfRewritingSystem
+      52.5-5 FreeSemigroupOfRewritingSystem
+    52.6 [33X[0;0YTodd-Coxeter Procedure[133X
+      52.6-1 CosetTableOfFpSemigroup
   53 [33X[0;0YTransformations[133X
     53.1 [33X[0;0YThe family and categories of transformations[133X
       53.1-1 IsTransformation
@@ -2459,7 +2463,7 @@
       54.3-20 ComponentRepsOfPartialPerm
       54.3-21 LeftOne
       54.3-22 One
-      54.3-23 Zero
+      54.3-23 MultiplicativeZero
     54.4 [33X[0;0YChanging the representation of a partial permutation[133X
       54.4-1 AsPartialPerm
       54.4-2 AsPartialPerm
@@ -2477,7 +2481,7 @@
       54.7-3 SymmetricInverseSemigroup
       54.7-4 IsSymmetricInverseSemigroup
       54.7-5 NaturalPartialOrder
-      54.7-6 IsomorphismPartialPermMonoid
+      54.7-6 IsomorphismPartialPermSemigroup
   55 [33X[0;0YAdditive Magmas[133X
     55.1 [33X[0;0Y(Near-)Additive Magma Categories[133X
       55.1-1 IsNearAdditiveMagma
@@ -3556,13 +3560,14 @@
     75.5 [33X[0;0YMinimal Nonmonomial Groups[133X
       75.5-1 IsMinimalNonmonomial
       75.5-2 MinimalNonmonomialGroup
-  76 [33X[0;0YUsing GAP Packages[133X
+  76 [33X[0;0YUsing and Developing GAP Packages[133X
     76.1 [33X[0;0YInstalling a GAP Package[133X
     76.2 [33X[0;0YLoading a GAP Package[133X
       76.2-1 LoadPackage
-      76.2-2 SetPackagePath
-      76.2-3 ExtendRootDirectories
-      76.2-4 DisplayPackageLoadingLog
+      76.2-2 [33X[0;0YAutomatic loading of [5XGAP[105X packages[133X
+      76.2-3 SetPackagePath
+      76.2-4 ExtendRootDirectories
+      76.2-5 DisplayPackageLoadingLog
     76.3 [33X[0;0YFunctions for GAP Packages[133X
       76.3-1 ReadPackage
       76.3-2 TestPackageAvailability
@@ -3580,6 +3585,39 @@
       76.3-14 ShowPackageVariables
       76.3-15 BibEntry
       76.3-16 Cite
+    76.4 [33X[0;0YGuidelines for Writing a GAP Package[133X
+    76.5 [33X[0;0YStructure of a GAP Package[133X
+    76.6 [33X[0;0YWriting Documentation and Tools Needed[133X
+    76.7 [33X[0;0YAn Example of a GAP Package[133X
+    76.8 [33X[0;0YFile Structure[133X
+    76.9 [33X[0;0YCreating the PackageInfo.g File[133X
+    76.10 [33X[0;0YFunctions and Variables and Choices of Their Names[133X
+    76.11 [33X[0;0YPackage Dependencies (Requesting one [5XGAP[105X Package from within
+    Another)[133X
+    76.12 [33X[0;0YDeclaration and Implementation Part of a Package[133X
+    76.13 [33X[0;0YAutoreadable Variables[133X
+    76.14 [33X[0;0YStandalone Programs in a [5XGAP[105X Package[133X
+      76.14-1 [33X[0;0YInstallation of [5XGAP[105X Package Binaries[133X
+      76.14-2 [33X[0;0YTest for the Existence of GAP Package Binaries[133X
+      76.14-3 [33X[0;0YCalling of and Communication with External Binaries[133X
+    76.15 [33X[0;0YHaving an InfoClass[133X
+    76.16 [33X[0;0YThe Banner[133X
+    76.17 [33X[0;0YVersion Numbers[133X
+    76.18 [33X[0;0YTesting a [5XGAP[105X package[133X
+      76.18-1 [33X[0;0YTests files for a GAP package[133X
+      76.18-2 [33X[0;0YTesting [5XGAP[105X package loading[133X
+      76.18-3 LoadAllPackages
+      76.18-4 [33X[0;0YTesting a [5XGAP[105X package with the [5XGAP[105X standard test suite[133X
+    76.19 [33X[0;0YAccess to the [5XGAP[105X Development Version[133X
+    76.20 [33X[0;0YVersion control and continuous integration for [5XGAP[105X packages[133X
+    76.21 [33X[0;0YSelecting a license for a [5XGAP[105X Package[133X
+    76.22 [33X[0;0YReleasing a GAP Package[133X
+    76.23 [33X[0;0YThe homepage of a Package[133X
+    76.24 [33X[0;0YSome things to keep in mind[133X
+    76.25 [33X[0;0YPackage release checklists[133X
+      76.25-1 [33X[0;0YChecklist for releasing a new package[133X
+      76.25-2 [33X[0;0YChecklist for upgrading the package for the next major release
+      of [5XGAP[105X[133X
   77 [33X[0;0YReplaced and Removed Command Names[133X
     77.1 [33X[0;0YGroup Actions – Name Changes[133X
     77.2 [33X[0;0YPackage Interface – Obsolete Functions and Name Changes[133X
@@ -3594,6 +3632,7 @@
     78.2 [33X[0;0YMethod Installation[133X
       78.2-1 InstallMethod
       78.2-2 InstallOtherMethod
+      78.2-3 InstallMethodWithRandomSource
     78.3 [33X[0;0YApplicable Methods and Method Selection[133X
     78.4 [33X[0;0YPartial Methods[133X
       78.4-1 TryNextMethod
@@ -3640,16 +3679,24 @@
     79.17 [33X[0;0YMutability and Copying[133X
     79.18 [33X[0;0YGlobal Variables in the Library[133X
       79.18-1 DeclareCategory
-      79.18-2 DeclareRepresentation
-      79.18-3 DeclareAttribute
-      79.18-4 DeclareProperty
-      79.18-5 DeclareFilter
-      79.18-6 DeclareOperation
-      79.18-7 DeclareGlobalFunction
-      79.18-8 DeclareGlobalVariable
-      79.18-9 InstallValue
-      79.18-10 DeclareSynonym
-      79.18-11 FlushCaches
+      79.18-2 TypeOfOperation
+      79.18-3 IsCategory
+      79.18-4 IsRepresentation
+      79.18-5 IsProperty
+      79.18-6 IsAttribute
+      79.18-7 CategoryByName
+      79.18-8 DeclareRepresentation
+      79.18-9 DeclareAttribute
+      79.18-10 DeclareProperty
+      79.18-11 DeclareFilter
+      79.18-12 DeclareOperation
+      79.18-13 DeclareConstructor
+      79.18-14 DeclareGlobalFunction
+      79.18-15 DeclareGlobalVariable
+      79.18-16 InstallValue
+      79.18-17 DeclareSynonym
+      79.18-18 FlushCaches
+      79.18-19 FilterByName
     79.19 [33X[0;0YDeclaration and Implementation Part[133X
   80 [33X[0;0YExamples of Extending the System[133X
     80.1 [33X[0;0YAddition of a Method[133X

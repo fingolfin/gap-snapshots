@@ -1,45 +1,31 @@
-#include        "system.h"              /* system dependent part           */
+/****************************************************************************
+**
+*W  vecgf2.c                    GAP source                       Frank Celler
+**
+**
+*Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+*Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
+*Y  Copyright (C) 2002 The GAP Group
+*/
 
+#include <src/vecgf2.h>
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
+#include <src/ariths.h>
+#include <src/blister.h>
+#include <src/bool.h>
+#include <src/finfield.h>
+#include <src/gap.h>
+#include <src/gvars.h>
+#include <src/integer.h>
+#include <src/lists.h>
+#include <src/opers.h>
+#include <src/plist.h>
+#include <src/precord.h>
+#include <src/range.h>
+#include <src/records.h>
+#include <src/stats.h>
+#include <src/vec8bit.h>
 
-#include        "gap.h"                 /* error handling, initialisation  */
-
-#include        "gvars.h"               /* global variables                */
-#include        "calls.h"               /* generic call mechanism          */
-#include        "opers.h"               /* generic operations              */
-
-#include        "ariths.h"              /* basic arithmetic                */
-#include        "finfield.h"            /* finite fields and ff elements   */
-
-#include        "bool.h"                /* booleans                        */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "plist.h"               /* plain lists                     */
-#include        "range.h"               /* ranges                          */
-#include        "blister.h"             /* boolean lists                   */
-#include        "string.h"              /* strings                         */
-
-#include        "vecgf2.h"              /* GF2 vectors                     */
-
-#include        "saveload.h"            /* saving and loading              */
-
-#include        "integer.h"             /* integers                        */
-
-#include        "vec8bit.h"             /* vectors over bigger small fields*/
-
-#include        "code.h"                /* Needed for TakeInterrupt */
-#include        "stats.h"
-
-#include	"thread.h"		/* threads			   */
-#include	"tls.h"			/* thread-local storage		   */
-
-#include        <assert.h>
 
 /****************************************************************************
 **
@@ -180,235 +166,22 @@ Obj AddCoeffsGF2VecGF2Vec (
 }
 
 
-
-
-static inline UInt highbits( UInt word, UInt howmany) 
+static inline void
+CopySection_GF2Vecs(Obj src, Obj dest, UInt smin, UInt dmin, UInt nelts)
 {
-  return (word  >> (BIPEB-howmany));
-}
+    UInt   soff;
+    UInt   doff;
+    UInt * sptr;
+    UInt * dptr;
 
-static inline UInt lowbits(UInt word, UInt howmany)
-{
-  return word & (((UInt)(-1L)) >> (BIPEB - howmany));
-}
+    /* switch to zero-based indices and find the first blocks and so on */
+    soff = (smin - 1) % BIPEB;
+    doff = (dmin - 1) % BIPEB;
+    sptr = BLOCKS_GF2VEC(src) + (smin - 1) / BIPEB;
+    dptr = BLOCKS_GF2VEC(dest) + (dmin - 1) / BIPEB;
 
-static inline UInt midbits(UInt word, UInt from, UInt howmany)
-{
-  return lowbits(highbits(word, BIPEB-from), howmany);
-}
-
-
-
-static inline void setlowbits(UInt *dest, UInt howmany, UInt bits) 
-{
-  *dest = (highbits(*dest, BIPEB - howmany) << howmany) | bits;
-}
-
-static inline void sethighbits(UInt *dest, UInt howmany, UInt bits) 
-{
-  *dest = lowbits(*dest, BIPEB - howmany) | (bits << (BIPEB - howmany));
-}
-
-
-static inline void setmidbits(UInt *dest, UInt from, UInt howmany, UInt bits) 
-{
-  UInt mask;
-  if (from + howmany == BIPEB)
-    mask = 0;
-  else
-    mask = ((UInt)(-1L)) << (from  + howmany);
-  if (from != 0)
-    mask |= ((UInt)(-1L)) >> (BIPEB - from);
-  *dest = (*dest & mask) | (bits << from);
-}
-
-
-/* This is the time critical loop for the unaligned case
-   we bring it out as an inline function to mark various things as const
-   and allow us to include it once for each shift which saves about a factor of 2 */
-
-static inline void dothework( UInt const *sptr, UInt *dptr, const UInt cbits, UInt * const dend) {
-  UInt bits;
-  UInt x = *sptr++;
-  while (dptr < dend) {
-    bits = x >> (BIPEB - cbits);
-    x = *sptr++;
-    *dptr++ =  bits | (x  << cbits);
-    }
-} 
-    
-void CopySection_GF2Vecs(Obj src, Obj dest, UInt smin, UInt dmin, UInt nelts)
-{
-  UInt soff;
-  UInt doff;
-  UInt *sptr;
-  UInt *dptr;
-  UInt *dend;
-
-  if (nelts == 0) {
+    CopyBits(sptr, soff, dptr, doff, nelts);
     return;
-  }
-    
-  /* switch to zero-based indices and find the first blocks and so on */
-  soff = (--smin) %BIPEB;
-  doff = (--dmin) %BIPEB;
-  sptr = BLOCKS_GF2VEC(src) + smin/BIPEB;
-  dptr = BLOCKS_GF2VEC(dest) + dmin/BIPEB;
-  
-  /* deal with some short section cases */
-  UInt bits;
-  /* all the section is within the starting source block */
-  if (nelts <= BIPEB -soff) {
-    /* get all the section in one go */
-    bits = midbits(*sptr, soff, nelts);
-    /* they may or may not all hit one destination block */
-    if (nelts <= BIPEB - doff) 
-      setmidbits(dptr, doff, nelts, bits);
-    else {
-      sethighbits(dptr++, BIPEB- doff, lowbits(bits, BIPEB - doff));
-      setlowbits(dptr, nelts - BIPEB + doff, (bits >> (BIPEB - doff)));
-    }
-    return;
-  }
-  
-  /* all the section is within the starting destination block */
-  if (nelts <= BIPEB - doff) {
-    /* since we weren't in the last case, we need to collect the bits from two
-       source blocks */
-
-    bits = highbits(*sptr++, BIPEB-soff);
-    bits |= (lowbits(*sptr, nelts + soff  - BIPEB) << (BIPEB-soff));
-    setmidbits(dptr, doff, nelts, bits);
-    return;
-  }
-
-  /* If we reach this point, we are reading from at least two source blocks
-     and writing to at least two destination blocks */  
-
-  /* Now, split according to relationship of soff and doff 
-     easiest case first, when they are equal */
-  if (soff == doff) {
-    UInt fullblocks;
-    /* partial block at the start */
-    if (soff != 0) {
-      bits = highbits(*sptr++, BIPEB - soff);
-      sethighbits(dptr++, BIPEB - soff, bits);
-      fullblocks = (nelts + soff - BIPEB)/BIPEB;
-    } else
-      fullblocks = nelts/BIPEB;
-    /* Now zero or more full blocks */
-    memmove(dptr, sptr, fullblocks*sizeof(Obj));
-    /* partial block at the end */
-    UInt eoff = (soff + nelts) % BIPEB;
-    if (eoff != 0) {
-      bits = lowbits(sptr[fullblocks],eoff);
-      setlowbits(dptr+fullblocks,eoff, bits);
-    }
-    return;
-  } else {
-    UInt cbits, endbits;
-    if (soff > doff) {
-      setmidbits(dptr, doff, BIPEB - soff, highbits(*sptr++, BIPEB - soff));
-      sethighbits(dptr++, soff-doff, lowbits(*sptr, soff-doff));
-      cbits = BIPEB + doff-soff;
-    } else {
-      sethighbits(dptr++, BIPEB -doff, midbits(*sptr, soff, BIPEB-doff));
-      cbits = doff-soff;
-    }
-
-    /* At this point dptr points to a block that needs to be filled from the start
-       with the cbits highbits of *sptr and the remaining bits from sptr[1] 
-     except of course that it might be the final block and so need less than that */
-    dend = BLOCKS_GF2VEC(dest) + (dmin + nelts )/BIPEB; /* first block we don't fill completely */
-    /* We replicate the inner loop 31 or 63 times, so that the shifts are known at compile time*/
-
-
-    switch(cbits) {
-    case 1:     dothework(sptr, dptr, 1, dend); break;
-    case 2:     dothework(sptr, dptr, 2, dend); break;
-    case 3:     dothework(sptr, dptr, 3, dend); break;
-    case 4:     dothework(sptr, dptr, 4, dend); break;
-    case 5:     dothework(sptr, dptr, 5, dend); break;
-    case 6:     dothework(sptr, dptr, 6, dend); break;
-    case 7:     dothework(sptr, dptr, 7, dend); break;
-    case 8:     dothework(sptr, dptr, 8, dend); break;
-    case 9:     dothework(sptr, dptr, 9, dend); break;
-    case 10:     dothework(sptr, dptr, 10, dend); break;
-    case 11:     dothework(sptr, dptr, 11, dend); break;
-    case 12:     dothework(sptr, dptr, 12, dend); break;
-    case 13:     dothework(sptr, dptr, 13, dend); break;
-    case 14:     dothework(sptr, dptr, 14, dend); break;
-    case 15:     dothework(sptr, dptr, 15, dend); break;
-    case 16:     dothework(sptr, dptr, 16, dend); break;
-    case 17:     dothework(sptr, dptr, 17, dend); break;
-    case 18:     dothework(sptr, dptr, 18, dend); break;
-    case 19:     dothework(sptr, dptr, 19, dend); break;
-    case 20:     dothework(sptr, dptr, 20, dend); break;
-    case 21:     dothework(sptr, dptr, 21, dend); break;
-    case 22:     dothework(sptr, dptr, 22, dend); break;
-    case 23:     dothework(sptr, dptr, 23, dend); break;
-    case 24:     dothework(sptr, dptr, 24, dend); break;
-    case 25:     dothework(sptr, dptr, 25, dend); break;
-    case 26:     dothework(sptr, dptr, 26, dend); break;
-    case 27:     dothework(sptr, dptr, 27, dend); break;
-    case 28:     dothework(sptr, dptr, 28, dend); break;
-    case 29:     dothework(sptr, dptr, 29, dend); break;
-    case 30:     dothework(sptr, dptr, 30, dend); break;
-    case 31:     dothework(sptr, dptr, 31, dend); break;
-#ifdef SYS_IS_64_BIT
-    case 32:     dothework(sptr, dptr, 32, dend); break;
-    case 33:     dothework(sptr, dptr, 33, dend); break;
-    case 34:     dothework(sptr, dptr, 34, dend); break;
-    case 35:     dothework(sptr, dptr, 35, dend); break;
-    case 36:     dothework(sptr, dptr, 36, dend); break;
-    case 37:     dothework(sptr, dptr, 37, dend); break;
-    case 38:     dothework(sptr, dptr, 38, dend); break;
-    case 39:     dothework(sptr, dptr, 39, dend); break;
-    case 40:     dothework(sptr, dptr, 40, dend); break;
-    case 41:     dothework(sptr, dptr, 41, dend); break;
-    case 42:     dothework(sptr, dptr, 42, dend); break;
-    case 43:     dothework(sptr, dptr, 43, dend); break;
-    case 44:     dothework(sptr, dptr, 44, dend); break;
-    case 45:     dothework(sptr, dptr, 45, dend); break;
-    case 46:     dothework(sptr, dptr, 46, dend); break;
-    case 47:     dothework(sptr, dptr, 47, dend); break;
-    case 48:     dothework(sptr, dptr, 48, dend); break;
-    case 49:     dothework(sptr, dptr, 49, dend); break;
-    case 50:     dothework(sptr, dptr, 50, dend); break;
-    case 51:     dothework(sptr, dptr, 51, dend); break;
-    case 52:     dothework(sptr, dptr, 52, dend); break;
-    case 53:     dothework(sptr, dptr, 53, dend); break;
-    case 54:     dothework(sptr, dptr, 54, dend); break;
-    case 55:     dothework(sptr, dptr, 55, dend); break;
-    case 56:     dothework(sptr, dptr, 56, dend); break;
-    case 57:     dothework(sptr, dptr, 57, dend); break;
-    case 58:     dothework(sptr, dptr, 58, dend); break;
-    case 59:     dothework(sptr, dptr, 59, dend); break;
-    case 60:     dothework(sptr, dptr, 60, dend); break;
-    case 61:     dothework(sptr, dptr, 61, dend); break;
-    case 62:     dothework(sptr, dptr, 62, dend); break;
-    case 63:     dothework(sptr, dptr, 63, dend); break;
-#endif
-    default:  Pr("Illegal shift %i", cbits, 0);
-      SyExit(2);
-    }
-
-    /* fixup pointers */
-    sptr += (dend - dptr);
-    dptr = dend;
-    /* OK, so now we may need to copy some more bits to fill the final block */
-    endbits = (dmin + nelts) % BIPEB;
-    if (endbits) 
-      {
-	if (endbits <= cbits)
-	  setlowbits(dptr, endbits, midbits(*sptr++,BIPEB-cbits, endbits));
-	else {
-	  bits = highbits(*sptr++,cbits);
-	  setlowbits(dptr, endbits, bits | (lowbits(*sptr, endbits - cbits) << cbits));
-	}
-      }
-    return;
-  }
 }
 
 /****************************************************************************
@@ -609,7 +382,6 @@ Obj ProdGF2VecGF2Mat ( Obj vl, Obj vr )
     col = LEN_GF2VEC( row1 );
     NEW_GF2VEC( prod, (IS_MUTABLE_OBJ(vl) || IS_MUTABLE_OBJ(row1)) ? 
 		TYPE_LIST_GF2VEC : TYPE_LIST_GF2VEC_IMM, col );
-    SET_LEN_GF2VEC( prod, col );
     
     /* get the start and end block                                         */
     start = BLOCKS_GF2VEC(prod);
@@ -683,7 +455,6 @@ Obj ProdGF2MatGF2Vec ( Obj ml, Obj vr )
     /* make the result vector                                              */
     NEW_GF2VEC( prod, (IS_MUTABLE_OBJ(ELM_GF2MAT(ml,1)) || IS_MUTABLE_OBJ(vr)) ? 
 		TYPE_LIST_GF2VEC :TYPE_LIST_GF2VEC_IMM, ln2 );
-    SET_LEN_GF2VEC( prod, ln2 );
 
     /* loop over the entries and multiply                                  */
     nrb = len/BIPEB;
@@ -906,7 +677,6 @@ Obj ProdGF2MatGF2MatAdvanced( Obj ml, Obj mr, UInt greasesize , UInt blocksize)
   for (i = 1; i <= len; i++)
     {
       NEW_GF2VEC(row, rtype, rlen);
-      SET_LEN_GF2VEC(row, rlen);
       SET_ELM_GF2MAT(prod,i,row);
       CHANGED_BAG(prod);
     }
@@ -1065,11 +835,11 @@ Obj ProdGF2MatGF2MatAdvanced( Obj ml, Obj mr, UInt greasesize , UInt blocksize)
 
 /****************************************************************************
 **
-*F  FuncProdGF2VecAnyMat( <self>, <v>, <m>) . . . method to handle vector*plain list
-**                                    of GF2Vectors reasonably efficiently
+*F  FuncPROD_GF2VEC_ANYMAT( <self>, <v>, <m>)
 **
+**  method to handle vector*plain list of GF2Vectors reasonably efficiently.
 */
-Obj FuncProdGF2VecAnyMat ( Obj self, Obj vec, Obj mat )
+Obj FuncPROD_GF2VEC_ANYMAT(Obj self, Obj vec, Obj mat)
 {
   Obj res;
   UInt len;
@@ -1092,7 +862,6 @@ Obj FuncProdGF2VecAnyMat ( Obj self, Obj vec, Obj mat )
   NEW_GF2VEC( res,
 	      (IS_MUTABLE_OBJ(vec) || IS_MUTABLE_OBJ(row1)) ? TYPE_LIST_GF2VEC : TYPE_LIST_GF2VEC_IMM,
 	      len1);
-  SET_LEN_GF2VEC(res,len1);
 
   /* Finally, we start work */
   for (i = 1; i <= len; i++)
@@ -1139,7 +908,6 @@ Obj InversePlistGF2VecsDesstructive( Obj list )
     tmp = NEW_PLIST( T_PLIST, len );
     for ( i = len;  0 < i;  i-- ) {
       NEW_GF2VEC( row, TYPE_LIST_GF2VEC, len );
-      SET_LEN_GF2VEC( row, len );
       BLOCK_ELM_GF2VEC(row,i) |= MASK_POS_GF2VEC(i);
       SET_ELM_PLIST( tmp, i, row );
       CHANGED_BAG(tmp);
@@ -1246,7 +1014,6 @@ Obj InverseGF2Mat (
     for ( i = len;  0 < i;  i-- ) {
         old = ELM_GF2MAT( mat, i );
         NEW_GF2VEC( row, TYPE_LIST_GF2VEC_IMM, len );
-        SET_LEN_GF2VEC( row, len );
         ptQ = BLOCKS_GF2VEC(old);
         ptP = BLOCKS_GF2VEC(row);
         end = ptP + ((len+BIPEB-1)/BIPEB);
@@ -1293,10 +1060,9 @@ Obj ShallowCopyVecGF2( Obj vec )
   UInt *ptrD;
   len = LEN_GF2VEC(vec);
   NEW_GF2VEC( copy, TYPE_LIST_GF2VEC, len);
-  SET_LEN_GF2VEC(copy,len);
   ptrS = BLOCKS_GF2VEC(vec);
   ptrD = BLOCKS_GF2VEC(copy);
-  memcpy((void *) ptrD, (void *) ptrS, NUMBER_BLOCKS_GF2VEC(vec)*sizeof(UInt));
+  memcpy(ptrD, ptrS, NUMBER_BLOCKS_GF2VEC(vec)*sizeof(UInt));
   return copy;
 }
 
@@ -1352,7 +1118,6 @@ Obj SemiEchelonListGF2Vecs( Obj mat, UInt TransformationsNeeded )
       if (TransformationsNeeded)
 	{
 	  NEW_GF2VEC(coeffrow, TYPE_LIST_GF2VEC, nrows);
-	  SET_LEN_GF2VEC(coeffrow, nrows);
 	  BLOCK_ELM_GF2VEC( coeffrow, i) |= MASK_POS_GF2VEC(i);
 	}
       
@@ -1500,14 +1265,12 @@ UInt TriangulizeListGF2Vecs( Obj mat, UInt clearup)
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * *  conversion functions  * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  PlainGF2Vec( <list> ) . . .  . convert a GF2 vector into an ordinary list
 **
 **  'PlainGF2Vec' converts the GF2 vector <list> to a plain list.
@@ -1620,7 +1383,7 @@ void ConvGF2Vec (
     len   = LEN_PLIST(list);
 
     /* We may have to resize the bag now because a length 1
-       plain list is shorter than a length 1 VECGF2 */
+       plain list is shorter than a length 1 GF2VEC */
     if (SIZE_PLEN_GF2VEC(len) > SIZE_OBJ(list))
       ResizeBag( list, SIZE_PLEN_GF2VEC(len) );
 
@@ -1651,7 +1414,7 @@ void ConvGF2Vec (
     /* retype and resize bag                                               */
     ResizeBag( list, SIZE_PLEN_GF2VEC(len) );
     SET_LEN_GF2VEC( list, len );
-    if ( HAS_FILT_LIST( list, FN_IS_MUTABLE ) ) {
+    if ( IS_MUTABLE_PLIST( list ) ) {
         SetTypeDatObj( list, TYPE_LIST_GF2VEC);
     } else {
         SetTypeDatObj( list, TYPE_LIST_GF2VEC_IMM);
@@ -1673,6 +1436,95 @@ Obj FuncCONV_GF2VEC (
 
     /* return nothing                                                      */
     return 0;
+}
+
+
+/****************************************************************************
+**
+*F  NewGF2Vec( <list> )  . . . . . . convert a list into a GF2 vector object
+** 
+**  This is a non-destructive counterpart of ConvGF2Vec
+*/
+Obj NewGF2Vec (
+    Obj                 list )
+{
+    Int                 len;            /* logical length of the vector    */
+    Int                 i;              /* loop variable                   */
+    UInt                block;          /* one block of the boolean list   */
+    UInt                bit;            /* one bit of a block              */
+    Obj                 x;
+    Obj                 res;            /* resulting GF2 vector object     */
+    
+    /* already in the correct representation                               */
+    if ( IS_GF2VEC_REP(list) ) {
+        res = ShallowCopyVecGF2(list);
+        if (!IS_MUTABLE_OBJ(list))
+          SetTypeDatObj(res, TYPE_LIST_GF2VEC_IMM);
+        return res;
+    }
+    
+    len = LEN_PLIST(list);
+    NEW_GF2VEC( res, TYPE_LIST_GF2VEC, len );
+    
+    /* Otherwise make it a plain list so that we will know where it keeps
+       its data -- could do much better in the case of GF(2^n) vectors that actually
+       lie over GF(2)
+       AK: for now, comment this out - these will destroy the argument. 
+       We will just test it on plain lists first 
+    if (IS_VEC8BIT_REP(list))
+      PlainVec8Bit(list);
+    else
+      PLAIN_LIST( list );
+    */
+    
+    /* now do the work */
+    block = 0;
+    bit   = 1;
+    for ( i = 1;  i <= len;  i++ ) {
+      x = ELM_PLIST(list, i);
+      if (x == GF2One)
+	    block |= bit;
+      else if (x != GF2Zero)
+	    {
+	      /* might be GF(2) elt written over bigger field */
+	      if (EQ(x, GF2One))
+	        block |= bit;
+	      else
+	        assert(EQ(x, GF2Zero));
+	    }
+      
+      bit = bit << 1;
+      if ( bit == 0 || i == len ) {
+	    BLOCK_ELM_GF2VEC(res,i) = block; /* only changed list to res */
+	    block = 0;
+	    bit   = 1;
+      }
+    }
+
+    /* mutability should be inherited from the argument */
+    if ( IS_MUTABLE_PLIST( list ) )
+        SetTypeDatObj( res , TYPE_LIST_GF2VEC);
+    else
+        SetTypeDatObj( res , TYPE_LIST_GF2VEC_IMM);
+    
+    return res;
+}
+
+
+/****************************************************************************
+**
+*F  FuncCOPY_GF2VEC( <self>, <list> ) . . . . . convert into a GF2 vector rep
+**
+**  This is a non-destructive counterpart of FuncCONV_GF2VEC
+*/
+Obj FuncCOPY_GF2VEC (
+    Obj                 self,
+    Obj                 list )
+{
+    /* check whether <list> is a GF2 vector                               */
+    list = NewGF2Vec(list);
+
+    return list;
 }
 
 /****************************************************************************
@@ -1706,11 +1558,11 @@ Obj FuncCONV_GF2MAT( Obj self, Obj list)
 	    }
 	  ErrorMayQuit("CONV_GF2MAT: argument must be a list of compressed GF2 vectors", 0L, 0L);
 	}
-      TYPE_DATOBJ(tmp) = IS_MUTABLE_OBJ(tmp) ? TYPE_LIST_GF2VEC_LOCKED: TYPE_LIST_GF2VEC_IMM_LOCKED;
+      SetTypeDatObj(tmp, IS_MUTABLE_OBJ(tmp) ? TYPE_LIST_GF2VEC_LOCKED: TYPE_LIST_GF2VEC_IMM_LOCKED);
       SET_ELM_PLIST(list, i+1, tmp);
     }
   SET_ELM_PLIST(list,1,INTOBJ_INT(len));
-  mut = IS_MUTABLE_OBJ(list);
+  mut = IS_MUTABLE_PLIST(list);
   RetypeBag(list, T_POSOBJ);
   SET_TYPE_POSOBJ(list, mut ? TYPE_LIST_GF2MAT : TYPE_LIST_GF2MAT_IMM);
   return (Obj) 0;
@@ -1896,7 +1748,6 @@ Obj FuncLEN_GF2VEC (
 
 /****************************************************************************
 **
-
 *F  FuncELM0_GF2VEC( <self>, <list>, <pos> )  . select an elm of a GF2 vector
 **
 **  'ELM0_GF2VEC'  returns the element at the  position  <pos> of the boolean
@@ -1990,7 +1841,6 @@ Obj FuncELMS_GF2VEC (
 
         /* make the result vector                                          */
         NEW_GF2VEC( elms, TYPE_LIST_GF2VEC, lenPoss );
-        SET_LEN_GF2VEC( elms, lenPoss );
 
         /* loop over the entries of <positions> and select                 */
         for ( i = 1;  i <= lenPoss;  i++ ) {
@@ -2038,7 +1888,6 @@ Obj FuncELMS_GF2VEC (
 
         /* make the result vector                                          */
         NEW_GF2VEC( elms, TYPE_LIST_GF2VEC, lenPoss );
-        SET_LEN_GF2VEC( elms, lenPoss );
 	
 	/* increment 1 ranges is a block copy */
 	if (inc == 1)
@@ -2069,8 +1918,6 @@ Obj FuncELMS_GF2VEC (
 **  It is the responsibility of the caller  to ensure that <pos> is positive,
 **  and that <elm> is not 0.
 */
-
-static Obj ConvertToVectorRep;	/* BH: changed to static */
 
 Obj FuncASS_GF2VEC (
     Obj                 self,
@@ -2185,7 +2032,7 @@ Obj FuncASS_GF2MAT (
     }
     else if ( p == 1 && 1 >= LEN_GF2MAT(list) ) {
         ResizeBag( list, SIZE_PLEN_GF2MAT(p) );
-	TYPE_DATOBJ(elm) = IS_MUTABLE_OBJ(elm) ? TYPE_LIST_GF2VEC_LOCKED : TYPE_LIST_GF2VEC_IMM_LOCKED;
+	SetTypeDatObj(elm, IS_MUTABLE_OBJ(elm) ? TYPE_LIST_GF2VEC_LOCKED : TYPE_LIST_GF2VEC_IMM_LOCKED);
         SET_ELM_GF2MAT( list, p, elm );
 	CHANGED_BAG(list);
     }
@@ -2198,7 +2045,7 @@ Obj FuncASS_GF2MAT (
             ResizeBag( list, SIZE_PLEN_GF2MAT(p) );
             SET_LEN_GF2MAT( list, p );
         }
-	TYPE_DATOBJ(elm) = IS_MUTABLE_OBJ(elm) ? TYPE_LIST_GF2VEC_LOCKED : TYPE_LIST_GF2VEC_IMM_LOCKED;
+	SetTypeDatObj(elm, IS_MUTABLE_OBJ(elm) ? TYPE_LIST_GF2VEC_LOCKED : TYPE_LIST_GF2VEC_IMM_LOCKED);
         SET_ELM_GF2MAT( list, p, elm );
         CHANGED_BAG(list);
     }
@@ -2212,7 +2059,25 @@ Obj FuncASS_GF2MAT (
 
 /****************************************************************************
 **
+*F  FuncELM_GF2MAT( <self>, <mat>, <row> ) . . . select a row of a GF2 matrix
+**
+*/
+Obj FuncELM_GF2MAT( Obj self, Obj mat, Obj row )
+{
+    if (!IS_POS_INTOBJ(row)) {
+        ErrorMayQuit("ELM_GF2MAT: position must be a small integer, not a %s",
+                     (Int)TNAM_OBJ(row), 0L);
+    }
+    UInt r = INT_INTOBJ(row);
+    if (LEN_GF2MAT(mat) < r) {
+        ErrorMayQuit("row index %d exceeds %d, the number of rows", r, LEN_GF2MAT(mat));
+    }
+    return ELM_GF2MAT(mat, r);
+}
 
+
+/****************************************************************************
+**
 *F  FuncUNB_GF2VEC( <self>, <list>, <pos> ) . unbind position of a GF2 vector
 **
 **  'UNB_GF2VEC' unbind  the element at  the position  <pos> in  a GF2 vector
@@ -2315,14 +2180,12 @@ Obj FuncUNB_GF2MAT (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * arithmetic operations  * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  FuncZERO_GF2VEC( <self>, <mat> )  . . . . . . . . . . . . zero GF2 vector
 **
 **  return the zero vector over GF2 of the same length as <mat>.
@@ -2337,7 +2200,6 @@ Obj FuncZERO_GF2VEC (
     /* create a new GF2 vector                                             */
     len = LEN_GF2VEC(mat);
     NEW_GF2VEC( zero, TYPE_LIST_GF2VEC, len );
-    SET_LEN_GF2VEC( zero, len );
     return zero;
 }
 
@@ -2359,7 +2221,6 @@ Obj FuncZERO_GF2VEC_2 (
 		(Int)TNAM_OBJ(len),0L);
     
     NEW_GF2VEC( zero, TYPE_LIST_GF2VEC, INT_INTOBJ(len) );
-    SET_LEN_GF2VEC( zero, INT_INTOBJ(len) );
     return zero;
 }
 
@@ -2857,18 +2718,24 @@ Obj FuncPOSITION_NONZERO_GF2VEC3(
 
 
 
-Obj FuncCOPY_SECTION_GF2VECS(Obj self, Obj src, Obj dest, Obj from, Obj to, Obj howmany) {
+Obj FuncCOPY_SECTION_GF2VECS(Obj self, Obj src, Obj dest, Obj from, Obj to, Obj howmany) 
+{
+  Int   ifrom;
+  Int   ito;
+  Int   ihowmany;
+  UInt  lens;
+  UInt  lend;
   if (!IS_GF2VEC_REP(src) ||
       !IS_GF2VEC_REP(dest) ||
       !IS_INTOBJ(from) || 
       !IS_INTOBJ(to) || 
       !IS_INTOBJ(howmany)) 
     ErrorMayQuit("Bad argument types", 0,0);
-  Int ifrom = INT_INTOBJ(from);
-  Int ito = INT_INTOBJ(to);
-  Int ihowmany = INT_INTOBJ(howmany);
-  UInt lens = LEN_GF2VEC(src);
-  UInt lend = LEN_GF2VEC(dest);
+  ifrom = INT_INTOBJ(from);
+  ito = INT_INTOBJ(to);
+  ihowmany = INT_INTOBJ(howmany);
+  lens = LEN_GF2VEC(src);
+  lend = LEN_GF2VEC(dest);
   if (ifrom <= 0 || ito <= 0 ||
       ihowmany < 0 || ifrom + ihowmany -1 > lens || ito + ihowmany -1 > lend)
     ErrorMayQuit("Bad argument values",0,0);
@@ -2881,11 +2748,11 @@ Obj FuncCOPY_SECTION_GF2VECS(Obj self, Obj src, Obj dest, Obj from, Obj to, Obj 
 
 /****************************************************************************
 **
-*F  FuncAPPEND_VECGF2( <self>, <vecl>, <vecr> )
+*F  FuncAPPEND_GF2VEC( <self>, <vecl>, <vecr> )
 **
 */
 
-Obj FuncAPPEND_VECGF2( Obj self, Obj vecl, Obj vecr )
+Obj FuncAPPEND_GF2VEC( Obj self, Obj vecl, Obj vecr )
 {
   UInt lenl, lenr;
   lenl = LEN_GF2VEC(vecl);
@@ -2904,11 +2771,11 @@ Obj FuncAPPEND_VECGF2( Obj self, Obj vecl, Obj vecr )
 
 /****************************************************************************
 **
-*F  FuncSHALLOWCOPY_VECGF2( <self>, <vec> )
+*F  FuncSHALLOWCOPY_GF2VEC( <self>, <vec> )
 **
 */
 
-Obj FuncSHALLOWCOPY_VECGF2( Obj self, Obj vec)
+Obj FuncSHALLOWCOPY_GF2VEC( Obj self, Obj vec)
 {
   return ShallowCopyVecGF2(vec);
 }
@@ -2991,7 +2858,7 @@ Obj FuncSUM_GF2MAT_GF2MAT( Obj self, Obj matl, Obj matr)
 	  AddGF2VecToGF2Vec(BLOCKS_GF2VEC(sv), BLOCKS_GF2VEC(vl), wm);
 	}
       
-      TYPE_DATOBJ(sv) = rtype;
+      SetTypeDatObj(sv, rtype);
       SET_ELM_GF2MAT( sum, i, sv);
       CHANGED_BAG(sum);
     }
@@ -3005,7 +2872,7 @@ Obj FuncSUM_GF2MAT_GF2MAT( Obj self, Obj matl, Obj matr)
       if (rtype == TYPE_LIST_GF2VEC_LOCKED)
 	sv = ShallowCopyVecGF2( sv );
       
-      TYPE_DATOBJ(sv) = rtype;
+      SetTypeDatObj(sv, rtype);
       SET_ELM_GF2MAT( sum, i, sv);
       CHANGED_BAG(sum);      
     }
@@ -3057,7 +2924,6 @@ Obj FuncTRANSPOSED_GF2MAT( Obj self, Obj mat)
   /* create new matrix */
   for (i = 1; i <= w; i++) {
     NEW_GF2VEC( row,  typ, l );
-    SET_LEN_GF2VEC(row,l);
 
     ptr=BLOCKS_GF2VEC(row);
     for (n=1;n<=nrb;n++){*ptr=0;}
@@ -3109,20 +2975,17 @@ Obj FuncTRANSPOSED_GF2MAT( Obj self, Obj mat)
 
 /****************************************************************************
 **
-*F  FuncNUMBER_VECGF2( <self>, <vect> )
+*F  FuncNUMBER_GF2VEC( <self>, <vect> )
 **
 */
-
-#ifdef USE_GMP
-
-Obj FuncNUMBER_VECGF2( Obj self, Obj vec )
+Obj FuncNUMBER_GF2VEC( Obj self, Obj vec )
 {
   UInt len,nd,i;
   UInt head,a;
   UInt off,off2;		/* 0 based */
   Obj zahl;  /* the long number */
   UInt *num;
-  TypLimb *vp;
+  mp_limb_t *vp;
   len = LEN_GF2VEC(vec);
   num = BLOCKS_GF2VEC(vec) + (len-1)/BIPEB;
   off = (len -1) % BIPEB + 1; /* number of significant bits in last word */
@@ -3151,7 +3014,7 @@ Obj FuncNUMBER_VECGF2( Obj self, Obj vec )
     /* garbage collection might lose pointer */
     num = BLOCKS_GF2VEC(vec) + (len-1)/BIPEB;
 
-    vp = (TypLimb *)ADDR_OBJ(zahl); /* the place we write to */
+    vp = (mp_limb_t *)ADDR_OBJ(zahl); /* the place we write to */
     i=1;
 
     if (off!=BIPEB) {
@@ -3186,124 +3049,6 @@ Obj FuncNUMBER_VECGF2( Obj self, Obj vec )
   }
 
 }
-
-#else
-
-Obj FuncNUMBER_VECGF2( Obj self, Obj vec )
-{
-  UInt len,nd,i,nonz;
-  UInt head,a;
-  UInt off,off2;		/* 0 based */
-  Obj zahl;  /* the long number */
-  UInt *num;
-  UInt *vp;
-  len = LEN_GF2VEC(vec);
-  num = BLOCKS_GF2VEC(vec) + (len-1)/BIPEB;
-  off = (len -1) % BIPEB + 1; /* number of significant bits in last word */
-  off2 = BIPEB - off;         /* number of insignificant bits in last word */
-
-  /* mask out the last bits */
-#ifdef SYS_IS_64_BIT
-  *num &= 0xffffffffffffffff >> off2;
-#else
-  *num &= 0xffffffff >> off2;
-#endif
-
-  if (len <=NR_SMALL_INT_BITS) 
-    /* it still fits into a small integer */
-    return INTOBJ_INT(revertbits(*num,len));
-  else {
-    /* we might have to build a long integer */
-
-    /* the number of words we need. A word is two digits */
-    nd = ((len-1)/NR_DIGIT_BITS/2)+1;
-
-    /* zahl = NewBag( T_INTPOS, nd*sizeof(UInt) ); */
-       zahl = NewBag( T_INTPOS, (((nd+1)>>1)<<1)*sizeof(UInt) );
-    /* +1)>>1)<<1: round up to next even number 
-     legacy long ints always have a multiple of 4 digits. */
-
-    /* garbage collection might lose pointer */
-    num = BLOCKS_GF2VEC(vec) + (len-1)/BIPEB;
-
-    vp = (UInt *)ADDR_OBJ(zahl); /* the place we write to */
-    nonz=0; /* last non-zero position */ 
-    i=1;
-
-    if (off!=BIPEB) {
-      head = revertbits(*num,off); /* the last 'off' bits, reverted */
-      while (i<nd) {
-	/* next word */
-	num--;
-	*vp = head; /* the bits left from last word */
-	a = revertbits(*num,BIPEB); /* the full word reverted */
-	head = a>>off2; /* next head: trailing `off' bits */
-	a =a << off; /* the rest of the word */
-	*vp |=a;
-#ifdef WORDS_BIGENDIAN
-	*vp = (*vp >> NR_DIGIT_BITS) | (*vp << NR_DIGIT_BITS);
-#endif
-	if (*vp != 0) {nonz=i;} 
-	vp++;
-	i++;
-      }
-      *vp = head; /* last head bits */
-#ifdef WORDS_BIGENDIAN
-      *vp = (*vp >> NR_DIGIT_BITS) | (*vp << NR_DIGIT_BITS);
-#endif
-      vp++;
-      if (head !=0) {
-	nonz=i; 
-      }
-    }
-    else {
-      while (i<=nd) {
-        *vp=revertbits(*num--,BIPEB);
-	if (*vp != 0) {nonz=i;} 
-#ifdef WORDS_BIGENDIAN
-      *vp = (*vp >> NR_DIGIT_BITS) | (*vp << NR_DIGIT_BITS);
-#endif
-	vp++;
-	i++;
-      }
-    }
-
-
-    i=nd%2; 
-    if (i==1) { 
-      *vp=0; /* erase the trailing two digits if existing */
-      nd++; /* point to the last position */
-    }
-
-    if ((nonz<=1)) {
-      /* there were only entries in the first word. Can we make it a small
-       * int? */
-      num = (UInt*)ADDR_OBJ(zahl);
-      head = *num;
-#ifdef WORDS_BIGENDIAN
-      head = (head >> NR_DIGIT_BITS) | (head << NR_DIGIT_BITS);
-#endif
-      if (0==(head & (((UInt)15L)<<NR_SMALL_INT_BITS))) {
-	return INTOBJ_INT(head);
-      }
-    }
-
-    /* if there are mult. of 2 words of zero entries we have to remove them */
-    if ((nd>2) && ((nd-1)>nonz)) {
-      /* get the length */
-      while ((nd>2) && ((nd-1)>nonz)) {
-	nd -= 2;
-      } 
-      ResizeBag(zahl,nd*sizeof(UInt)); 
-
-    }
-    return zahl;
-  }
-
-}
-
-#endif
-
 
 /****************************************************************************
 **
@@ -3384,10 +3129,10 @@ UInt DistGF2Vecs(UInt* ptL,UInt* ptR,UInt len)
   end = ptL + ((len+BIPEB-1)/BIPEB);
   sum=0;
   /* loop over the entries */
+  /*T possibly unroll this loop */
   while ( ptL < end ) {
     m = *ptL++ ^ *ptR++; /* xor of bits, nr bits therein is difference */
-    COUNT_TRUES_BLOCK(m);
-    sum += m;
+    sum += COUNT_TRUES_BLOCK(m);
   }
   return sum;
 }
@@ -3500,7 +3245,7 @@ Int DistVecClosVec(
   return chg;
 }
 
-Obj FuncDistVecClosVec(
+Obj FuncDIST_VEC_CLOS_VEC(
   Obj		self,
   Obj		veclis, /* pointers to matrix vectors and their multiples */
   Obj		vec,    /* vector we compute distance to */
@@ -3514,7 +3259,6 @@ Obj FuncDistVecClosVec(
 
   /* get space for sum vector */
   NEW_GF2VEC( sum, TYPE_LIST_GF2VEC, len );
-  SET_LEN_GF2VEC( sum, len );
 
   /* do the recursive work */
   DistVecClosVec(veclis,vec,d,sum,1,LEN_PLIST(veclis),len);
@@ -3617,7 +3361,7 @@ UInt AClosVec(
 
 
 
-Obj FuncAClosVec(
+Obj FuncA_CLOS_VEC(
   Obj		self,
   Obj		veclis, /* pointers to matrix vectors and their multiples */
   Obj		vec,    /* vector we compute distance to */
@@ -3638,11 +3382,7 @@ Obj FuncAClosVec(
 
   /* get space for sum vector and zero out */
   NEW_GF2VEC( sum, TYPE_LIST_GF2VEC, len );
-  SET_LEN_GF2VEC( sum, len );
-
   NEW_GF2VEC( best, TYPE_LIST_GF2VEC, len );
-  SET_LEN_GF2VEC( best, len );
-
 
   /* do the recursive work */
   AClosVec(veclis,vec,sum,1, LEN_PLIST(veclis),len,
@@ -3652,7 +3392,7 @@ Obj FuncAClosVec(
   return best;
 }
 
-Obj FuncAClosVecCoords(
+Obj FuncA_CLOS_VEC_COORDS(
   Obj		self,
   Obj		veclis, /* pointers to matrix vectors and their multiples */
   Obj		vec,    /* vector we compute distance to */
@@ -3677,10 +3417,7 @@ Obj FuncAClosVecCoords(
 
   /* get space for sum vector and zero out */
   NEW_GF2VEC( sum, TYPE_LIST_GF2VEC, len );
-  SET_LEN_GF2VEC( sum, len );
-
   NEW_GF2VEC( best, TYPE_LIST_GF2VEC, len );
-  SET_LEN_GF2VEC( best, len );
 
   coords = NEW_PLIST(  T_PLIST_CYC, len2 );
   SET_LEN_PLIST( coords, len2 );
@@ -3749,7 +3486,6 @@ UInt CosetLeadersInnerGF2( Obj veclis,
 	  if ((Obj) 0 == ELM_PLIST(leaders,sy+1))
 	    {
 	      NEW_GF2VEC(vc, TYPE_LIST_GF2VEC_IMM, len);
-	      SET_LEN_GF2VEC(vc, len);
 	      for (j = 0; j < NUMBER_BLOCKS_GF2VEC(v); j++)
 		BLOCKS_GF2VEC(vc)[j] = BLOCKS_GF2VEC(v)[j];
 	      SET_ELM_PLIST(leaders,sy+1,vc);
@@ -3796,10 +3532,8 @@ Obj FuncCOSET_LEADERS_INNER_GF2( Obj self, Obj veclis, Obj weight, Obj tofind, O
   
   lenv = LEN_PLIST(veclis);
   NEW_GF2VEC(v, TYPE_LIST_GF2VEC, lenv);
-  SET_LEN_GF2VEC(v, lenv);
   lenw = LEN_GF2VEC(ELM_PLIST(ELM_PLIST(veclis,1),1));
-  NEW_GF2VEC(w, TYPE_LIST_GF2VEC,lenw );
-  SET_LEN_GF2VEC(w,lenw);
+  NEW_GF2VEC(w, TYPE_LIST_GF2VEC, lenw);
   if (lenw > BIPEB-4)
     ErrorMayQuit("COSET_LEADERS_INNER_GF2: too many cosets to return the leaders in a plain list",0,0);
   return INTOBJ_INT(CosetLeadersInnerGF2( veclis, v, w, INT_INTOBJ(weight), 1, leaders, INT_INTOBJ(tofind)));
@@ -3960,7 +3694,6 @@ void ShiftLeftGF2Vec( Obj vec, UInt amount )
 	}
     }
   ResizeGF2Vec(vec, len-amount);
-  return;
 }
 
 /****************************************************************************
@@ -4037,7 +3770,6 @@ void ShiftRightGF2Vec( Obj vec, UInt amount )
       while (ptr1 >= ptr0)
 	*ptr1-- = 0;
     }
-  return;
 }
 
 /****************************************************************************
@@ -4172,7 +3904,6 @@ Obj ProductCoeffsGF2Vec( Obj vec1, UInt len1, Obj vec2, UInt len2)
   else
     len = len1 + len2 -1;
   NEW_GF2VEC(prod, TYPE_LIST_GF2VEC, len);
-  SET_LEN_GF2VEC(prod, len);
 
   /* better to do the longer loop on the inside */
   if (len2 < len1)
@@ -4269,7 +4000,6 @@ void ReduceCoeffsGF2Vec( Obj vec1, Obj vec2, UInt len2, Obj quotient )
       i--;
       j--;
     }
- return;
 }
 
 /****************************************************************************
@@ -4357,12 +4087,10 @@ Obj FuncQUOTREM_COEFFS_GF2VEC( Obj self, Obj vec1, Obj len1, Obj vec2, Obj len2)
      }
 
      NEW_GF2VEC(remv, TYPE_LIST_GF2VEC, len1a);
-     SET_LEN_GF2VEC(remv, len1a);
-     memcpy((void *)BLOCKS_GF2VEC(remv), (void *)BLOCKS_GF2VEC(vec1),
+     memcpy(BLOCKS_GF2VEC(remv), BLOCKS_GF2VEC(vec1),
 	    ((len1a + BIPEB-1)/BIPEB)*sizeof(UInt));
      
      NEW_GF2VEC(quotv, TYPE_LIST_GF2VEC, len1a-len2a+1);
-     SET_LEN_GF2VEC(quotv, len1a-len2a+1);
      ReduceCoeffsGF2Vec( remv, vec2, len2a, quotv);
      
      ret = NEW_PLIST(T_PLIST_TAB, 2);
@@ -4560,7 +4288,8 @@ Obj FuncKRONECKERPRODUCT_GF2MAT_GF2MAT( Obj self, Obj matl, Obj matr)
   UInt nrowl, nrowr, nrowp, ncoll, ncolr, ncolp, ncol,
     i, j, k, l, mutable;
   Obj mat, type, row, shift[BIPEB];
-  UInt *datar, *data;
+  UInt *data;
+  const UInt *datar;
 
   nrowl = LEN_GF2MAT(matl);
   nrowr = LEN_GF2MAT(matr);
@@ -4586,7 +4315,6 @@ Obj FuncKRONECKERPRODUCT_GF2MAT_GF2MAT( Obj self, Obj matl, Obj matr)
 
   for (i = 1; i <= nrowp; i++) {
     NEW_GF2VEC(row, type, ncolp);
-    SET_LEN_GF2VEC(row, ncolp);
     SET_ELM_GF2MAT(mat,i,row);
     CHANGED_BAG(mat);
   }
@@ -4620,7 +4348,7 @@ Obj FuncKRONECKERPRODUCT_GF2MAT_GF2MAT( Obj self, Obj matl, Obj matr)
 	l = 0;
 	if (BLOCK_ELM_GF2VEC(ELM_GF2MAT(matl,i),k) & MASK_POS_GF2VEC(k)) {
 	  /* append shift[ncol%BIPEB] to data */
-	  datar = (UInt *) ADDR_OBJ(shift[ncol%BIPEB]);
+	  datar = (const UInt *) CONST_ADDR_OBJ(shift[ncol%BIPEB]);
 	  if (ncol % BIPEB) {
 	    data[-1] ^= *datar++;
 	    l = BIPEB - ncol%BIPEB;
@@ -4641,8 +4369,82 @@ Obj FuncKRONECKERPRODUCT_GF2MAT_GF2MAT( Obj self, Obj matl, Obj matr)
 }
 
 
+/****************************************************************************
+**
+*F  FuncMAT_ELM_GF2MAT( <self>, <mat>, <row>, <col> )
+**
+*/
+Obj FuncMAT_ELM_GF2MAT( Obj self, Obj mat, Obj row, Obj col )
+{
+    if (!IS_POS_INTOBJ(row)) {
+        ErrorMayQuit("row index must be a small positive integer, not a %s",
+                     (Int)TNAM_OBJ(row), 0L);
+    }
+    if (!IS_POS_INTOBJ(col)) {
+        ErrorMayQuit("column index must be a small positive integer, not a %s",
+                     (Int)TNAM_OBJ(col), 0L);
+    }
+
+    UInt r = INT_INTOBJ(row);
+    if (LEN_GF2MAT(mat) < r) {
+        ErrorMayQuit("row index %d exceeds %d, the number of rows", r, LEN_GF2MAT(mat));
+    }
+
+    Obj vec = ELM_GF2MAT(mat, r);
+
+    UInt c = INT_INTOBJ(col);
+    if (LEN_GF2VEC(vec) < c) {
+        ErrorMayQuit("column index %d exceeds %d, the number of columns", c, LEN_GF2VEC(vec));
+    }
+
+    return ELM_GF2VEC(vec, c);
+}
 
 
+/****************************************************************************
+**
+*F  FuncSET_MAT_ELM_GF2MAT( <self>, <mat>, <row>, <col>, <elm> )
+**
+*/
+Obj FuncSET_MAT_ELM_GF2MAT( Obj self, Obj mat, Obj row, Obj col, Obj elm )
+{
+    if (!IS_POS_INTOBJ(row)) {
+        ErrorMayQuit("row index must be a small positive integer, not a %s",
+                     (Int)TNAM_OBJ(row), 0L);
+    }
+    if (!IS_POS_INTOBJ(col)) {
+        ErrorMayQuit("column index must be a small positive integer, not a %s",
+                     (Int)TNAM_OBJ(col), 0L);
+    }
+
+    UInt r = INT_INTOBJ(row);
+    if (LEN_GF2MAT(mat) < r) {
+        ErrorMayQuit("row index %d exceeds %d, the number of rows", r, LEN_GF2MAT(mat));
+    }
+
+    Obj vec = ELM_GF2MAT(mat, r);
+    if ( ! IS_MUTABLE_OBJ(vec) ) {
+        ErrorMayQuit("row %d is immutable", r, 0);
+    }
+
+    UInt c = INT_INTOBJ(col);
+    if (LEN_GF2VEC(vec) < c) {
+        ErrorMayQuit("column index %d exceeds %d, the number of columns", c, LEN_GF2VEC(vec));
+    }
+
+    if ( EQ(GF2One, elm) ) {
+        BLOCK_ELM_GF2VEC(vec,c) |= MASK_POS_GF2VEC(c);
+    }
+    else if ( EQ(GF2Zero, elm) ) {
+        BLOCK_ELM_GF2VEC(vec,c) &= ~MASK_POS_GF2VEC(c);
+    }
+    else {
+        ErrorMayQuit("SET_MAT_ELM_GF2MAT: assigned element must be a GF(2) element, not a %s",
+                     (Int)TNAM_OBJ(elm), 0L);
+    }
+
+    return 0;
+}
 
 
 /****************************************************************************
@@ -4653,203 +4455,82 @@ Obj FuncKRONECKERPRODUCT_GF2MAT_GF2MAT( Obj self, Obj matl, Obj matr)
 
 /****************************************************************************
 **
-
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    { "CONV_GF2VEC", 1, "list",
-      FuncCONV_GF2VEC, "src/vecgf2.c:CONV_GF2VEC" },
-
-    { "PLAIN_GF2VEC", 1, "gf2vec",
-      FuncPLAIN_GF2VEC, "src/vecgf2.c:PLAIN_GF2VEC" },
-
-    { "PLAIN_GF2MAT", 1, "gf2mat",
-      FuncPLAIN_GF2MAT, "src/vecgf2.c:PLAIN_GF2MAT" },
-
-    { "EQ_GF2VEC_GF2VEC", 2, "gf2vec, gf2vec",
-      FuncEQ_GF2VEC_GF2VEC, "src/vecgf2.c:EQ_GF2VEC_GF2VEC" },
-
-    { "LT_GF2VEC_GF2VEC", 2, "gf2vec, gf2vec",
-      FuncLT_GF2VEC_GF2VEC, "src/vecgf2.c:LT_GF2VEC_GF2VEC" },
-
-    { "EQ_GF2MAT_GF2MAT", 2, "gf2mat, gf2mat",
-      FuncEQ_GF2MAT_GF2MAT, "src/vecgf2.c:EQ_GF2MAT_GF2MAT" },
-
-    { "LT_GF2MAT_GF2MAT", 2, "gf2mat, gf2mat",
-      FuncLT_GF2MAT_GF2MAT, "src/vecgf2.c:LT_GF2MAT_GF2MAT" },
-
-    { "LEN_GF2VEC", 1, "gf2vec",
-      FuncLEN_GF2VEC, "src/vecgf2.c:LEN_GF2VEC" },
-
-    { "ELM0_GF2VEC", 2, "gf2vec, pos",
-      FuncELM0_GF2VEC, "src/vecgf2.c:ELM0_GF2VEC" },
-
-    { "ELM_GF2VEC", 2, "gf2vec, pos",
-      FuncELM_GF2VEC, "src/vecgf2.c:ELM_GF2VEC" },
-
-    { "ELMS_GF2VEC", 2, "gf2vec, poss",
-      FuncELMS_GF2VEC, "src/vecgf2.c:ELMS_GF2VEC" },
-
-    { "ASS_GF2VEC", 3, "gf2vec, pos, elm",
-      FuncASS_GF2VEC, "src/vecgf2.c:ASS_GF2VEC" },
-
-    { "ASS_GF2MAT", 3, "gf2mat, pos, elm",
-      FuncASS_GF2MAT, "src/vecgf2.c:ASS_GF2MAT" },
-
-    { "UNB_GF2VEC", 2, "gf2vec, pos",
-      FuncUNB_GF2VEC, "src/vecgf2.c:UNB_GF2VEC" },
-
-    { "UNB_GF2MAT", 2, "gf2mat, pos",
-      FuncUNB_GF2MAT, "src/vecgf2.c:UNB_GF2MAT" },
-
-    { "ZERO_GF2VEC", 1, "gf2vec",
-      FuncZERO_GF2VEC, "src/vecgf2.c:ZERO_GF2VEC" },
-
-    { "ZERO_GF2VEC_2", 1, "len",
-      FuncZERO_GF2VEC_2, "src/vecgf2.c:ZERO_GF2VEC_2" },
-
-    { "INV_GF2MAT_MUTABLE", 1, "gf2mat",
-      FuncINV_GF2MAT_MUTABLE, "src/vecgf2.c:INV_GF2MAT_MUTABLE" },
-
-    { "INV_GF2MAT_SAME_MUTABILITY", 1, "gf2mat",
-      FuncINV_GF2MAT_SAME_MUTABILITY, "src/vecgf2.c:INV_GF2MAT_SAME_MUTABILITY" },
-
-    { "INV_GF2MAT", 1, "gf2mat",
-      FuncINV_GF2MAT_IMMUTABLE, "src/vecgf2.c:INV_GF2MAT_IMMUTABLE" },
-
-    { "INV_PLIST_GF2VECS_DESTRUCTIVE", 1, "list",
-      FuncINV_PLIST_GF2VECS_DESTRUCTIVE, "src/vecgf2.c:INV_PLIST_GF2VECS_DESTRUCTIVE" },
-
-    { "SUM_GF2VEC_GF2VEC", 2, "gf2vec, gf2vec",
-      FuncSUM_GF2VEC_GF2VEC, "src/vecgf2.c:SUM_GF2VEC_GF2VEC" },
-
-    { "PROD_GF2VEC_GF2VEC", 2, "gf2vec, gf2vec",
-      FuncPROD_GF2VEC_GF2VEC, "src/vecgf2.c:PROD_GF2VEC_GF2VEC" },
-
-    { "PROD_GF2VEC_GF2MAT", 2, "gf2vec, gf2mat",
-      FuncPROD_GF2VEC_GF2MAT, "src/vecgf2.c:PROD_GF2VEC_GF2MAT" },
-
-    { "PROD_GF2MAT_GF2VEC", 2, "gf2mat, gf2vec",
-      FuncPROD_GF2MAT_GF2VEC, "src/vecgf2.c:PROD_GF2MAT_GF2VEC" },
-
-    { "PROD_GF2MAT_GF2MAT", 2, "gf2matl, gf2matr",
-      FuncPROD_GF2MAT_GF2MAT, "src/vecgf2.c:PROD_GF2MAT_GF2MAT" },
-
-    { "PROD_GF2MAT_GF2MAT_SIMPLE", 2, "gf2matl, gf2matr",
-      FuncPROD_GF2MAT_GF2MAT_SIMPLE, "src/vecgf2.c:PROD_GF2MAT_GF2MAT_SIMPLE" },
-
-    { "PROD_GF2MAT_GF2MAT_ADVANCED", 4, "gf2matl, gf2matr, greaselevel, blocklevel",
-      FuncPROD_GF2MAT_GF2MAT_ADVANCED, "src/vecgf2.c:PROD_GF2MAT_GF2MAT_ADVANCED" },
-
-    { "ADDCOEFFS_GF2VEC_GF2VEC_MULT", 3, "gf2vec, gf2vec, mul",
-      FuncADDCOEFFS_GF2VEC_GF2VEC_MULT, "src/vecgf2.c:ADDCOEFFS_GF2VEC_GF2VEC_MULT" },
-
-    { "ADDCOEFFS_GF2VEC_GF2VEC", 2, "gf2vec, gf2vec",
-      FuncADDCOEFFS_GF2VEC_GF2VEC, "src/vecgf2.c:ADDCOEFFS_GF2VEC_GF2VEC" },
-
-    { "SHRINKCOEFFS_GF2VEC", 1, "gf2vec",
-      FuncSHRINKCOEFFS_GF2VEC, "src/vecgf2.c:SHRINKCOEFFS_GF2VEC" },
-
-    { "POSITION_NONZERO_GF2VEC", 2, "gf2vec, zero",
-      FuncPOSITION_NONZERO_GF2VEC, "src/vecgf2.c:POSITION_NONZERO_GF2VEC" },
-
-    { "POSITION_NONZERO_GF2VEC3", 3, "gf2vec, zero, from",
-      FuncPOSITION_NONZERO_GF2VEC3, "src/vecgf2.c:POSITION_NONZERO_GF2VEC3" },
-
-    { "MULT_ROW_VECTOR_GF2VECS_2", 2, "gf2vecl, mul",
-      FuncMULT_ROW_VECTOR_GF2VECS_2, "src/vecgf2.c:MULT_ROW_VECTOR_GF2VECS_2" },
-
-    { "APPEND_GF2VEC", 2, "gf2vecl, gf2vecr",
-      FuncAPPEND_VECGF2, "src/vecgf2.c:APPEND_GF2VEC" },
-
-    { "SHALLOWCOPY_GF2VEC", 1, "gf2vec",
-      FuncSHALLOWCOPY_VECGF2, "src/vecgf2.c:SHALLOWCOPY_GF2VEC" },
-
-    { "NUMBER_GF2VEC", 1, "gf2vec",
-      FuncNUMBER_VECGF2, "src/vecgf2.c:NUMBER_GF2VEC" },
-
-    { "TRANSPOSED_GF2MAT", 1, "gf2mat",
-      FuncTRANSPOSED_GF2MAT, "src/vecgf2.c:TRANSPOSED_GF2MAT" },
-
-    { "DIST_GF2VEC_GF2VEC", 2, "gf2vec, gf2vec",
-      FuncDIST_GF2VEC_GF2VEC, "src/vecgf2.c:DIST_GF2VEC_GF2VEC" },
-
-    { "DIST_VEC_CLOS_VEC", 3, "list, gf2vec, list",
-      FuncDistVecClosVec, "src/vecgf2.c:DIST_VEC_CLOS_VEC" },
-
-    { "SUM_GF2MAT_GF2MAT", 2, "matl, matr",
-      FuncSUM_GF2MAT_GF2MAT, "src/vecgf2.c:SUM_GF2MAT_GF2MAT" },
-
-    { "A_CLOS_VEC", 4, "list, gf2vec, int, int",
-      FuncAClosVec, "src/vecgf2.c:A_CLOS_VEC" },
-
-    { "A_CLOS_VEC_COORDS", 4, "list, gf2vec, int, int",
-      FuncAClosVecCoords, "src/vecgf2.c:A_CLOS_VEC_COORDS" },
-
-    { "COSET_LEADERS_INNER_GF2", 4, "veclis, weight, tofind, leaders",
-      FuncCOSET_LEADERS_INNER_GF2, "src/vecgf2.c:COSET_LEADERS_INNER_GF2" },
-
-    { "CONV_GF2MAT", 1, "list",
-      FuncCONV_GF2MAT, "src/vecgf2.c:CONV_GF2MAT" },
-
-    { "PROD_GF2VEC_ANYMAT", 2, "vec, mat",
-      FuncProdGF2VecAnyMat, "src/vecgf2.c:PROD_GF2VEC_ANYMAT" },
-    
-    { "RIGHTMOST_NONZERO_GF2VEC", 1, "vec",
-      FuncRIGHTMOST_NONZERO_GF2VEC, "src/vecgf2.c:RIGHTMOST_NONZERO_GF2VEC" },
-    
-    { "RESIZE_GF2VEC", 2, "vec, newlen",
-      FuncRESIZE_GF2VEC, "src/vecgf2.c:RESIZE_GF2VEC" },
-    
-    { "SHIFT_LEFT_GF2VEC", 2, "vec, amount",
-      FuncSHIFT_LEFT_GF2VEC, "src/vecgf2.c:SHIFT_LEFT_GF2VEC" },
-    
-    { "SHIFT_RIGHT_GF2VEC", 3, "vec, amount, zero",
-      FuncSHIFT_RIGHT_GF2VEC, "src/vecgf2.c:SHIFT_RIGHT_GF2VEC" },
-
-    { "ADD_GF2VEC_GF2VEC_SHIFTED", 4, "vec1, vec2,len2, off",
-      FuncADD_GF2VEC_GF2VEC_SHIFTED, "src/vecgf2.c:ADD_GF2VEC_GF2VEC_SHIFTED" },
-    
-    { "PROD_COEFFS_GF2VEC", 4, "vec1, len1, vec2,len2",
-      FuncPROD_COEFFS_GF2VEC, "src/vecgf2.c:PROD_COEFFS_GF2VEC" },
-
-    { "REDUCE_COEFFS_GF2VEC", 4, "vec1, len1, vec2,len2",
-      FuncREDUCE_COEFFS_GF2VEC, "src/vecgf2.c:REDUCE_COEFFS_GF2VEC" },
-
-    { "QUOTREM_COEFFS_GF2VEC", 4, "vec1, len1, vec2,len2",
-      FuncQUOTREM_COEFFS_GF2VEC, "src/vecgf2.c:QUOTREM_COEFFS_GF2VEC" },
-
-    { "SEMIECHELON_LIST_GF2VECS", 1, "mat",
-      FuncSEMIECHELON_LIST_GF2VECS, "src/vecgf2.c:SEMIECHELON_LIST_GF2VECS" },
-
-    { "SEMIECHELON_LIST_GF2VECS_TRANSFORMATIONS", 1, "mat",
-      FuncSEMIECHELON_LIST_GF2VECS_TRANSFORMATIONS, "src/vecgf2.c:SEMIECHELON_LIST_GF2VECS_TRANSFORMATIONS" },
-
-    { "TRIANGULIZE_LIST_GF2VECS", 1, "mat",
-      FuncTRIANGULIZE_LIST_GF2VECS, "src/vecgf2.c:TRIANGULIZE_LIST_GF2VECS" },
-
-    { "DETERMINANT_LIST_GF2VECS", 1, "mat",
-      FuncDETERMINANT_LIST_GF2VECS, "src/vecgf2.c:DETERMINANT_LIST_GF2VECS" },
-
-    { "RANK_LIST_GF2VECS", 1, "mat",
-      FuncRANK_LIST_GF2VECS, "src/vecgf2.c:RANK_LIST_GF2VECS" },
-    
-    { "KRONECKERPRODUCT_GF2MAT_GF2MAT", 2, "mat, mat",
-      FuncKRONECKERPRODUCT_GF2MAT_GF2MAT, "src/vecgf2.c:KRONECKERPRODUCT_GF2MAT_GF2MAT" },
-
-
-    { "COPY_SECTION_GF2VECS", 5, "src, dest, from, to, howmany",
-      FuncCOPY_SECTION_GF2VECS, "src/vecgf2.c:COPY_SECTION_GF2VECS"},
-    
-    { 0 }
+    GVAR_FUNC(CONV_GF2VEC, 1, "list"),
+    GVAR_FUNC(COPY_GF2VEC, 1, "list"),
+    GVAR_FUNC(PLAIN_GF2VEC, 1, "gf2vec"),
+    GVAR_FUNC(PLAIN_GF2MAT, 1, "gf2mat"),
+    GVAR_FUNC(EQ_GF2VEC_GF2VEC, 2, "gf2vec, gf2vec"),
+    GVAR_FUNC(LT_GF2VEC_GF2VEC, 2, "gf2vec, gf2vec"),
+    GVAR_FUNC(EQ_GF2MAT_GF2MAT, 2, "gf2mat, gf2mat"),
+    GVAR_FUNC(LT_GF2MAT_GF2MAT, 2, "gf2mat, gf2mat"),
+    GVAR_FUNC(LEN_GF2VEC, 1, "gf2vec"),
+    GVAR_FUNC(ELM0_GF2VEC, 2, "gf2vec, pos"),
+    GVAR_FUNC(ELM_GF2VEC, 2, "gf2vec, pos"),
+    GVAR_FUNC(ELMS_GF2VEC, 2, "gf2vec, poss"),
+    GVAR_FUNC(ASS_GF2VEC, 3, "gf2vec, pos, elm"),
+    GVAR_FUNC(ELM_GF2MAT, 2, "gf2mat, pos"),
+    GVAR_FUNC(ASS_GF2MAT, 3, "gf2mat, pos, elm"),
+    GVAR_FUNC(UNB_GF2VEC, 2, "gf2vec, pos"),
+    GVAR_FUNC(UNB_GF2MAT, 2, "gf2mat, pos"),
+    GVAR_FUNC(ZERO_GF2VEC, 1, "gf2vec"),
+    GVAR_FUNC(ZERO_GF2VEC_2, 1, "len"),
+    GVAR_FUNC(INV_GF2MAT_MUTABLE, 1, "gf2mat"),
+    GVAR_FUNC(INV_GF2MAT_SAME_MUTABILITY, 1, "gf2mat"),
+    GVAR_FUNC(INV_GF2MAT_IMMUTABLE, 1, "gf2mat"),
+    GVAR_FUNC(INV_PLIST_GF2VECS_DESTRUCTIVE, 1, "list"),
+    GVAR_FUNC(SUM_GF2VEC_GF2VEC, 2, "gf2vec, gf2vec"),
+    GVAR_FUNC(PROD_GF2VEC_GF2VEC, 2, "gf2vec, gf2vec"),
+    GVAR_FUNC(PROD_GF2VEC_GF2MAT, 2, "gf2vec, gf2mat"),
+    GVAR_FUNC(PROD_GF2MAT_GF2VEC, 2, "gf2mat, gf2vec"),
+    GVAR_FUNC(PROD_GF2MAT_GF2MAT, 2, "gf2matl, gf2matr"),
+    GVAR_FUNC(PROD_GF2MAT_GF2MAT_SIMPLE, 2, "gf2matl, gf2matr"),
+    GVAR_FUNC(PROD_GF2MAT_GF2MAT_ADVANCED, 4, "gf2matl, gf2matr, greaselevel, blocklevel"),
+    GVAR_FUNC(ADDCOEFFS_GF2VEC_GF2VEC_MULT, 3, "gf2vec, gf2vec, mul"),
+    GVAR_FUNC(ADDCOEFFS_GF2VEC_GF2VEC, 2, "gf2vec, gf2vec"),
+    GVAR_FUNC(SHRINKCOEFFS_GF2VEC, 1, "gf2vec"),
+    GVAR_FUNC(POSITION_NONZERO_GF2VEC, 2, "gf2vec, zero"),
+    GVAR_FUNC(POSITION_NONZERO_GF2VEC3, 3, "gf2vec, zero, from"),
+    GVAR_FUNC(MULT_ROW_VECTOR_GF2VECS_2, 2, "gf2vecl, mul"),
+    GVAR_FUNC(APPEND_GF2VEC, 2, "gf2vecl, gf2vecr"),
+    GVAR_FUNC(SHALLOWCOPY_GF2VEC, 1, "gf2vec"),
+    GVAR_FUNC(NUMBER_GF2VEC, 1, "gf2vec"),
+    GVAR_FUNC(TRANSPOSED_GF2MAT, 1, "gf2mat"),
+    GVAR_FUNC(DIST_GF2VEC_GF2VEC, 2, "gf2vec, gf2vec"),
+    GVAR_FUNC(DIST_VEC_CLOS_VEC, 3, "list, gf2vec, list"),
+    GVAR_FUNC(SUM_GF2MAT_GF2MAT, 2, "matl, matr"),
+    GVAR_FUNC(A_CLOS_VEC, 4, "list, gf2vec, int, int"),
+    GVAR_FUNC(A_CLOS_VEC_COORDS, 4, "list, gf2vec, int, int"),
+    GVAR_FUNC(COSET_LEADERS_INNER_GF2, 4, "veclis, weight, tofind, leaders"),
+    GVAR_FUNC(CONV_GF2MAT, 1, "list"),
+    GVAR_FUNC(PROD_GF2VEC_ANYMAT, 2, "vec, mat"),
+    GVAR_FUNC(RIGHTMOST_NONZERO_GF2VEC, 1, "vec"),
+    GVAR_FUNC(RESIZE_GF2VEC, 2, "vec, newlen"),
+    GVAR_FUNC(SHIFT_LEFT_GF2VEC, 2, "vec, amount"),
+    GVAR_FUNC(SHIFT_RIGHT_GF2VEC, 3, "vec, amount, zero"),
+    GVAR_FUNC(ADD_GF2VEC_GF2VEC_SHIFTED, 4, "vec1, vec2,len2, off"),
+    GVAR_FUNC(PROD_COEFFS_GF2VEC, 4, "vec1, len1, vec2,len2"),
+    GVAR_FUNC(REDUCE_COEFFS_GF2VEC, 4, "vec1, len1, vec2,len2"),
+    GVAR_FUNC(QUOTREM_COEFFS_GF2VEC, 4, "vec1, len1, vec2,len2"),
+    GVAR_FUNC(SEMIECHELON_LIST_GF2VECS, 1, "mat"),
+    GVAR_FUNC(SEMIECHELON_LIST_GF2VECS_TRANSFORMATIONS, 1, "mat"),
+    GVAR_FUNC(TRIANGULIZE_LIST_GF2VECS, 1, "mat"),
+    GVAR_FUNC(DETERMINANT_LIST_GF2VECS, 1, "mat"),
+    GVAR_FUNC(RANK_LIST_GF2VECS, 1, "mat"),
+    GVAR_FUNC(KRONECKERPRODUCT_GF2MAT_GF2MAT, 2, "mat, mat"),
+    GVAR_FUNC(COPY_SECTION_GF2VECS, 5, "src, dest, from, to, howmany"),
+    GVAR_FUNC(MAT_ELM_GF2MAT, 3, "mat, row, col"),
+    GVAR_FUNC(SET_MAT_ELM_GF2MAT, 4, "mat, row, col, elm"),
+    { 0, 0, 0, 0, 0 }
 
 };
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
@@ -4876,7 +4557,6 @@ static Int InitKernel (
     /* init filters and functions                                          */
     InitHdlrFuncsFromTable( GVarFuncs );
 
-    InitFopyGVar("ConvertToVectorRep", &ConvertToVectorRep);
     InitFopyGVar("IsLockedRepresentationVector", &IsLockedRepresentationVector);
 
     /* return success                                                      */
@@ -4904,28 +4584,15 @@ static Int InitLibrary (
 *F  InitInfoGF2Vec()  . . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "vecgf2",                           /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "vecgf2",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoGF2Vec ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  vecgf2.c  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

@@ -177,7 +177,7 @@
   [22Xa[122X is immutable and [22XO[122X is some operation on [22Xa[122X, then if [22Xa = b[122X evaluates to [9Xtrue[109X
   before  executing  [22XO(a)[122X,  [22Xa = b[122X also evaluates to [9Xtrue[109X afterwards. (Examples
   for  operations  [22XO[122X  that  change mutable objects are [2XAdd[102X ([14X21.4-2[114X) and [2XUnbind[102X
-  ([14X21.5-2[114X)  which  are  used  to  change  list  objects,  see  Chapter [14X21[114X.) An
+  ([14X21.5-3[114X)  which  are  used  to  change  list  objects,  see  Chapter [14X21[114X.) An
   immutable  object  [13Xmay[113X  change,  for example to store new information, or to
   adopt  a  more  efficient  representation,  but  this  does  not  affect its
   behaviour under [22X=[122X.[133X
@@ -451,16 +451,17 @@
   
   [1X12.8-5 MemoryUsage[101X
   
-  [33X[1;0Y[29X[2XMemoryUsage[102X( [3Xobj[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XMemoryUsage[102X( [3Xobj[103X ) [32X function[133X
   
-  [33X[0;0Yreturns  the  amount  of  memory  in  bytes  used  by the object [3Xobj[103X and its
+  [33X[0;0YReturns  the  amount  of  memory  in  bytes  used  by the object [3Xobj[103X and its
   subobjects.  Note  that in general, objects can reference each other in very
   difficult  ways  such  that  determining  the  memory  usage  is a recursive
   procedure.  In  particular,  computing  the  memory  usage  of a complicated
   structure  itself  uses  some  additional memory, which is however no longer
   used  after completion of this operation. This procedure descends into lists
-  and records, positional and component objects, however it does not take into
-  account the type and family objects! For functions, it only takes the memory
-  usage  of  the  function  body,  not  of  the local context the function was
-  created in, although the function keeps a reference to that as well![133X
+  and  records, positional and component objects; however it deliberately does
+  not  take  into  account the type and family objects. For functions, it only
+  takes  the  memory  usage of the function body, not of the local context the
+  function  was created in, although the function keeps a reference to that as
+  well.[133X
   

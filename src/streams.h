@@ -15,10 +15,10 @@
 #ifndef GAP_STREAMS_H
 #define GAP_STREAMS_H
 
+#include <src/system.h>
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * streams and files related functions  * * * * * * * * * *
 */
 
@@ -40,27 +40,19 @@ extern Obj READ_AS_FUNC ( void );
 **  search all   directories given   in 'SyGapRootPaths',  check  dynamically
 **  loadable modules and statically linked modules.
 */
-extern Int READ_GAP_ROOT ( Char * filename );
+extern Int READ_GAP_ROOT ( const Char * filename );
 
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  InitInfoStreams() . . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoStreams ( void );
 
 
 #endif // GAP_STREAMS_H
-
-/****************************************************************************
-**
-
-*E  streams.h . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

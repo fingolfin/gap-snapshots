@@ -111,7 +111,7 @@
   [33X[0;0YThe standard type of objects in a Lie family [10XF[110X is [10X[3XF[103X[10X!.packedType[110X.[133X
   
   [33X[0;0YThe  bijection  from [3XFam[103X to [10XF[110X is given by [10XEmbedding( [3XFam[103X[10X, F )[110X (see [2XEmbedding[102X
-  ([14X32.2-10[114X)); this bijection respects addition and additive inverses.[133X
+  ([14X32.2-11[114X)); this bijection respects addition and additive inverses.[133X
   
   [1X64.1-4 UnderlyingFamily[101X
   

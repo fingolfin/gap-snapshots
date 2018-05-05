@@ -15,27 +15,19 @@
 #ifndef GAP_DTEVAL_H
 #define GAP_DTEVAL_H
 
+#include <src/system.h>
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  InitInfoDTEvaluation()  . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoDTEvaluation ( void );
 
 
 #endif // GAP_DTEVAL_H
-
-/****************************************************************************
-**
-
-*E  dteval.h  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-**
-*/

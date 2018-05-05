@@ -1,0 +1,39 @@
+\begin{thebibliography}{CHM98}
+
+\bibitem[BM83]{BM83}
+G.~Butler and J.~McKay.
+\newblock The transitive groups of degree up to eleven.
+\newblock {\em Comm. Algebra}, 11(8):863--911, 1983.
+
+\bibitem[But93]{Butler93}
+G.~Butler.
+\newblock The transitive groups of degree fourteen and fifteen.
+\newblock {\em J. Symbolic Comput.}, 16(5):413--422, 1993.
+
+\bibitem[CH08]{CanHolt32}
+John~J. Cannon and Derek~F. Holt.
+\newblock The transitive permutation groups of degree 32.
+\newblock {\em Experiment. Math.}, 17(3):307--314, 2008.
+
+\bibitem[CHM98]{ConwayHulpkeMcKay98}
+J.~H. Conway, A.~Hulpke, and J.~McKay.
+\newblock On transitive permutation groups.
+\newblock {\em LMS J. Comput. Math.}, 1:1--8 (electronic), 1998.
+
+\bibitem[Hul96]{Hulpke96}
+A.~Hulpke.
+\newblock {\em Konstruktion transitiver {P}ermutationsgruppen}.
+\newblock Dissertation, Rheinisch Westf{\"a}lische Technische Hochschule,
+  Aachen, Germany, 1996.
+
+\bibitem[Hul05]{HulpkeTG}
+A.~Hulpke.
+\newblock Constructing transitive permutation groups.
+\newblock {\em J. Symbolic Comput.}, 39(1):1--30, 2005.
+
+\bibitem[Roy87]{Roy87}
+G.~F. Royle.
+\newblock The transitive groups of degree twelve.
+\newblock {\em J. Symbolic Comput.}, 4(2):255--268, 1987.
+
+\end{thebibliography}

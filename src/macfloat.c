@@ -9,45 +9,33 @@
 **
 **  This file contains the functions for the macfloat package.
 **
-** macfloats are stored as bags containing a 64 bit value
+**  Machine floating point values, aka macfloats, are stored as bags
+**  containing a 64 bit value.
 */
-#include        "system.h"              /* system dependent part           */
 
+// glibc only declares exp10 in its headers if we define _GNU_SOURCE
+#ifndef _GNU_SOURCE
+#define _GNU_SOURCE
+#endif
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
+#include <math.h>
 
-#include        "gap.h"                 /* error handling, initialisation  */
+#include <src/macfloat.h>
 
+#include <src/ariths.h>
+#include <src/bool.h>
+#include <src/gap.h>
+#include <src/io.h>
+#include <src/plist.h>
+#include <src/stringobj.h>
 
-#include        "plist.h"               /* lists */
-#include        "ariths.h"              /* basic arithmetic                */
-#include        "integer.h"             /* basic arithmetic                */
-
-#include        "macfloat.h"                /* macfloateans                        */
-
-#include        "bool.h"
-#include        "scanner.h"
-#include        "string.h"
-#include        <assert.h>
-
-#include	"code.h"		/* coder                           */
-#include	"thread.h"		/* threads			   */
-#include	"tls.h"			/* thread-local storage		   */
 
 /* the following two declarations would belong in `saveload.h', but then all
  * files get macfloat dependencies */
 extern Double LoadDouble( void);
 extern void SaveDouble( Double d);
 
-#ifdef HAVE_STDIO_H
 #include <stdio.h>
-#endif
-
-#ifdef HAVE_MATH_H
-#include <math.h>
-#endif
-
 #include <stdlib.h>
 
 #define SIZE_MACFLOAT   sizeof(Double)
@@ -98,7 +86,8 @@ Int EqMacfloat (
   return VAL_MACFLOAT(macfloatL) == VAL_MACFLOAT(macfloatR);
 }
 
-Obj FuncEqMacfloat (
+Obj FuncEQ_MACFLOAT (
+    Obj                 self,
     Obj                 macfloatL,
     Obj                 macfloatR )
 {
@@ -121,28 +110,6 @@ Int LtMacfloat (
 
 /****************************************************************************
 **
-*F  IsMacfloatFilt( <self>, <obj> ) . . . . . . . . . .  test for a macfloatean value
-**
-**  'IsMacfloatFilt' implements the internal filter 'IsMacfloat'.
-**
-**  'IsMacfloat( <obj> )'
-**
-**  'IsMacfloat'  returns  'true'  if  <obj>  is   a macfloatean  value  and  'false'
-**  otherwise.
-*/
-Obj IsMacfloatFilt;
-
-Obj IsMacfloatHandler (
-    Obj                 self,
-    Obj                 obj )
-{
-  return IS_MACFLOAT(obj) ? True : False;
-}
-
-
-
-/****************************************************************************
-**
 *F  SaveMacfloat( <macfloat> ) . . . . . . . . . . . . . . . . . . . . save a Macfloatean 
 **
 */
@@ -150,7 +117,6 @@ Obj IsMacfloatHandler (
 void SaveMacfloat( Obj obj )
 {
   SaveDouble(VAL_MACFLOAT(obj));
-  return;
 }
 
 /****************************************************************************
@@ -379,22 +345,22 @@ MAKEMATHPRIMITIVE(ASIN,asin)
 MAKEMATHPRIMITIVE(ATAN,atan)
 MAKEMATHPRIMITIVE(LOG,log)
 MAKEMATHPRIMITIVE(EXP,exp)
-#if HAVE_LOG2
+#ifdef HAVE_LOG2
 MAKEMATHPRIMITIVE(LOG2,log2)
 #endif
-#if HAVE_LOG10
+#ifdef HAVE_LOG10
 MAKEMATHPRIMITIVE(LOG10,log10)
 #endif
-#if HAVE_LOG1P
+#ifdef HAVE_LOG1P
 MAKEMATHPRIMITIVE(LOG1P,log1p)
 #endif
-#if HAVE_EXP2
+#ifdef HAVE_EXP2
 MAKEMATHPRIMITIVE(EXP2,exp2)
 #endif
-#if HAVE_EXPM1
+#ifdef HAVE_EXPM1
 MAKEMATHPRIMITIVE(EXPM1,expm1)
 #endif
-#if HAVE_EXP10
+#ifdef HAVE_EXP10
 MAKEMATHPRIMITIVE(EXP10,exp10)
 #endif
 MAKEMATHPRIMITIVE(SQRT,sqrt)
@@ -405,11 +371,24 @@ MAKEMATHPRIMITIVE(ABS,fabs)
 MAKEMATHPRIMITIVE2(ATAN2,atan2)
 MAKEMATHPRIMITIVE2(HYPOT,hypot)
 
+Obj FuncSIGN_MACFLOAT( Obj self, Obj f )
+{
+  Double vf = VAL_MACFLOAT(f);
+  
+  return vf == 0. ? INTOBJ_INT(0) : vf > 0. ? INTOBJ_INT(1) : INTOBJ_INT(-1);
+}
+
+Obj FuncSIGNBIT_MACFLOAT( Obj self, Obj f )
+{
+  return signbit(VAL_MACFLOAT(f)) ? True : False;
+}
+
+
 extern Obj FuncIntHexString(Obj,Obj);
 
 Obj FuncINTFLOOR_MACFLOAT( Obj self, Obj obj )
 {
-#if HAVE_TRUNC
+#ifdef HAVE_TRUNC
   Double f = trunc(VAL_MACFLOAT(obj));
 #else
   Double f = VAL_MACFLOAT(obj);
@@ -445,7 +424,7 @@ Obj FuncSTRING_DIGITS_MACFLOAT( Obj self, Obj gapprec, Obj f)
   if (prec > 40) /* too much anyways, and would risk buffer overrun */
     prec = 40;
   snprintf(buf, sizeof(buf), "%.*" PRINTFFORMAT, prec, (TOPRINTFFORMAT)VAL_MACFLOAT(f));
-  C_NEW_STRING_DYN(str, buf);
+  str = MakeString(buf);
   return str;
 }
 
@@ -472,112 +451,80 @@ Obj FuncFREXP_MACFLOAT( Obj self, Obj f)
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
-
-/****************************************************************************
-**
-
-*V  GVarFilts . . . . . . . . . . . . . . . . . . . list of filters to export
-*/
-static StructGVarFilt GVarFilts [] = {
-
-    { "IS_MACFLOAT", "obj", &IsMacfloatFilt,
-      IsMacfloatHandler, "src/macfloat.c:IS_MACFLOAT" },
-
-    { 0 }
-
-};
 
 
 /****************************************************************************
 **
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
-#define GVARENTRY(NAME) { #NAME "_MACFLOAT", 1, "macfloat",		\
-      Func##NAME##_MACFLOAT, "src/macfloat.c:" #NAME "_MACFLOAT" }
-
 static StructGVarFunc GVarFuncs [] = {
-  { "MACFLOAT_INT", 1, "int",
-    FuncMACFLOAT_INT, "src/macfloat.c:MACFLOAT_INT" },
+  GVAR_FUNC(MACFLOAT_INT, 1, "int"),
+  GVAR_FUNC(MACFLOAT_STRING, 1, "string"),
+  GVAR_FUNC(SIN_MACFLOAT, 1, "macfloat"),
+  GVAR_FUNC(COS_MACFLOAT, 1, "macfloat"),
+  GVAR_FUNC(TAN_MACFLOAT, 1, "macfloat"),
+  GVAR_FUNC(ASIN_MACFLOAT, 1, "macfloat"),
+  GVAR_FUNC(ACOS_MACFLOAT, 1, "macfloat"),
+  GVAR_FUNC(ATAN_MACFLOAT, 1, "macfloat"),
 
-  { "MACFLOAT_STRING", 1, "string",
-    FuncMACFLOAT_STRING, "src/macfloat.c:MACFLOAT_STRING" },
-
-  GVARENTRY(SIN),
-  GVARENTRY(COS),
-  GVARENTRY(TAN),
-  GVARENTRY(ASIN),
-  GVARENTRY(ACOS),
-  GVARENTRY(ATAN),
-
-  { "ATAN2_MACFLOAT", 2, "real, imag",
-    FuncATAN2_MACFLOAT, "src/macfloat.c:ATAN2_MACFLOAT" },
-
-  { "HYPOT_MACFLOAT", 2, "real, imag",
-    FuncHYPOT_MACFLOAT, "src/macfloat.c:HYPOT_MACFLOAT" },
-
-  GVARENTRY(LOG),
-  GVARENTRY(EXP),
-#if HAVE_LOG2
-  GVARENTRY(LOG2),
+  GVAR_FUNC(ATAN2_MACFLOAT, 2, "real, imag"),
+  GVAR_FUNC(HYPOT_MACFLOAT, 2, "real, imag"),
+  GVAR_FUNC(LOG_MACFLOAT, 1, "macfloat"),
+  GVAR_FUNC(EXP_MACFLOAT, 1, "macfloat"),
+#ifdef HAVE_LOG2
+  GVAR_FUNC(LOG2_MACFLOAT, 1, "macfloat"),
 #endif
-#if HAVE_LOG10
-  GVARENTRY(LOG10),
+#ifdef HAVE_LOG10
+  GVAR_FUNC(LOG10_MACFLOAT, 1, "macfloat"),
 #endif  
-#if HAVE_LOG1P
-  GVARENTRY(LOG1P),
+#ifdef HAVE_LOG1P
+  GVAR_FUNC(LOG1P_MACFLOAT, 1, "macfloat"),
 #endif  
-#if HAVE_EXP2
-  GVARENTRY(EXP2),
+#ifdef HAVE_EXP2
+  GVAR_FUNC(EXP2_MACFLOAT, 1, "macfloat"),
 #endif  
-#if HAVE_EXPM1
-  GVARENTRY(EXPM1),
+#ifdef HAVE_EXPM1
+  GVAR_FUNC(EXPM1_MACFLOAT, 1, "macfloat"),
 #endif
-#if HAVE_EXP10
-  GVARENTRY(EXP10),
+#ifdef HAVE_EXP10
+  GVAR_FUNC(EXP10_MACFLOAT, 1, "macfloat"),
 #endif
 
-  { "LDEXP_MACFLOAT", 2, "macfloat, int",
-    FuncLDEXP_MACFLOAT, "src/macfloat.c:LDEXP_MACFLOAT" },
+  GVAR_FUNC(LDEXP_MACFLOAT, 2, "macfloat, int"),
+  GVAR_FUNC(FREXP_MACFLOAT, 1, "macfloat"),
+  GVAR_FUNC(SQRT_MACFLOAT, 1, "macfloat"),
+  GVAR_FUNC(RINT_MACFLOAT, 1, "macfloat"),
+  GVAR_FUNC(INTFLOOR_MACFLOAT, 1, "macfloat"),
+  GVAR_FUNC(FLOOR_MACFLOAT, 1, "macfloat"),
+  GVAR_FUNC(CEIL_MACFLOAT, 1, "macfloat"),
+  GVAR_FUNC(ABS_MACFLOAT, 1, "macfloat"),
+  GVAR_FUNC(SIGN_MACFLOAT, 1, "macfloat"),
+  GVAR_FUNC(SIGNBIT_MACFLOAT, 1, "macfloat"),
+  GVAR_FUNC(STRING_MACFLOAT, 1, "macfloat"),
 
-  GVARENTRY(FREXP),
-  GVARENTRY(SQRT),
-  GVARENTRY(RINT),
-  GVARENTRY(INTFLOOR),
-  GVARENTRY(FLOOR),
-  GVARENTRY(CEIL),
-  GVARENTRY(ABS),
-  GVARENTRY(STRING),
-
-  { "STRING_DIGITS_MACFLOAT", 2, "digits, macfloat",
-    FuncSTRING_DIGITS_MACFLOAT, "src/macfloat.c:STRING_DIGITS_MACFLOAT" },
-
-  { "EQ_MACFLOAT", 2, "x, y",
-    FuncEqMacfloat, "src/macfloat.c:FuncEqMacfloat" },
-
-  {0}
+  GVAR_FUNC(STRING_DIGITS_MACFLOAT, 2, "digits, macfloat"),
+  GVAR_FUNC(EQ_MACFLOAT, 2, "x, y"),
+  { 0, 0, 0, 0, 0 }
 };
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
+extern Int EqObject (Obj,Obj);
+
 static Int InitKernel (
     StructInitInfo *    module )
 {
-    Int EqObject (Obj,Obj);
-
     /* install the marking functions for macfloatean values                    */
     InfoBags[ T_MACFLOAT ].name = "macfloat";
     InitMarkFuncBags( T_MACFLOAT, MarkNoSubBags );
     MakeBagTypePublic( T_MACFLOAT );
 
-    /* init filters and functions                                          */
-    InitHdlrFiltsFromTable( GVarFilts );
+    /* init functions */
     InitHdlrFuncsFromTable( GVarFuncs );
 
     /* install the type function                                           */
@@ -641,11 +588,7 @@ static Int InitKernel (
 static Int InitLibrary (
     StructInitInfo *    module )
 {
-/*  UInt            gvar; */
-/*  Obj             tmp;  */
-
-    /* init filters and functions                                          */
-    InitGVarFiltsFromTable( GVarFilts );
+    /* init functions */
     InitGVarFuncsFromTable( GVarFuncs );
 
     /* return success                                                      */
@@ -658,28 +601,15 @@ static Int InitLibrary (
 *F  InitInfoMacfloat()  . . . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "macfloat",                             /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "macfloat",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoMacfloat ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  macfloat.c  . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

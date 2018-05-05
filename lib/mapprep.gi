@@ -255,7 +255,7 @@ InstallMethod( ImagesElm,
 #M  ImagesSet( <map>, <elms> )  . . . . . . . . . . . for composition mapping
 ##
 InstallMethod( ImagesSet,
-    "for a composition mapping, and an collection",
+    "for a composition mapping, and a collection",
     CollFamSourceEqFamElms,
     [ IsCompositionMappingRep, IsCollection ], 0,
     function ( com, elms )
@@ -325,7 +325,7 @@ InstallMethod( PreImagesElm,
 #M  PreImagesSet( <map>, <elm> )  . . . . . . . . . . for composition mapping
 ##
 InstallMethod( PreImagesSet,
-    "for a composition mapping, and an collection",
+    "for a composition mapping, and a collection",
     CollFamRangeEqFamElms,
     [ IsCompositionMappingRep, IsCollection ], 0,
     function( com, elms )
@@ -753,13 +753,21 @@ end );
 ##
 #M  InverseGeneralMapping( <map> )  . . . . . . . . . for mapping by function
 ##
-InstallMethod( InverseGeneralMapping,
-    "for mapping by function",
-    true,
+InstallMethod( InverseGeneralMapping, "for mapping by function", true,
     [ IsMappingByFunctionWithInverseRep ], 0,
     function ( map )
     local inv;
     inv:= MappingByFunction( Range( map ), Source( map ),
+                             map!.invFun, map!.fun );
+    TransferMappingPropertiesToInverse( map, inv );
+    return inv;
+    end );
+
+InstallMethod( RestrictedInverseGeneralMapping, "for mapping by function", true,
+    [ IsMappingByFunctionWithInverseRep ], 0,
+    function ( map )
+    local inv;
+    inv:= MappingByFunction( Image( map ), Source( map ),
                              map!.invFun, map!.fun );
     TransferMappingPropertiesToInverse( map, inv );
     return inv;
@@ -1747,7 +1755,7 @@ InstallMethod( ImagesElm,
 #M  ImagesSet( <map>, <elms> )  . . . . . . . . . . . for restricted mapping
 ##
 InstallMethod( ImagesSet,
-    "for a restricted mapping, and an collection",
+    "for a restricted mapping, and a collection",
     CollFamSourceEqFamElms,
     [ IsGeneralRestrictedMappingRep, IsCollection ], 0,
     function ( res, elms )
@@ -1811,7 +1819,7 @@ end );
 #M  PreImagesSet( <map>, <elm> )  . . . . . . . . . . for restricted mapping
 ##
 InstallMethod( PreImagesSet,
-    "for a restricted mapping, and an collection",
+    "for a restricted mapping, and a collection",
     CollFamRangeEqFamElms,
     [ IsGeneralRestrictedMappingRep, IsCollection ], 0,
     function( res, elms )

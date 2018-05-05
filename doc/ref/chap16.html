@@ -113,9 +113,11 @@
 <h5>16.1-2 Binomial</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Binomial</code>( <var class="Arg">n</var>, <var class="Arg">k</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>returns the <em>binomial coefficient</em> <span class="SimpleMath">{n choose k}</span> of integers <var class="Arg">n</var> and <var class="Arg">k</var>, which is defined as <span class="SimpleMath">n! / (k! (n-k)!)</span> (see <code class="func">Factorial</code> (<a href="chap16.html#X87665F748594BF29"><span class="RefLink">16.1-1</span></a>)). We define <span class="SimpleMath">{0 choose 0} = 1, {n choose k} = 0</span> if <span class="SimpleMath">k &lt; 0</span> or <span class="SimpleMath">n &lt; k</span>, and <span class="SimpleMath">{n choose k} = (-1)^k {-n+k-1 choose k}</span> if <span class="SimpleMath">n &lt; 0</span>, which is consistent with the equivalent definition <span class="SimpleMath">{n choose k} = {n-1 choose k} + {n-1 choose k-1}</span>.</p>
+<p>returns the <em>binomial coefficient</em> <span class="SimpleMath">{n choose k}</span> of integers <var class="Arg">n</var> and <var class="Arg">k</var>. This is defined by the conditions <span class="SimpleMath">{n choose k} = 0</span> for <span class="SimpleMath">k &lt; 0</span>, <span class="SimpleMath">{0 choose k} = 0</span> for <span class="SimpleMath">k ≠ 0</span>, <span class="SimpleMath">{0 choose 0} = 1</span> and the relation <span class="SimpleMath">{n choose k} = {n-1 choose k} + {n-1 choose k-1}</span> for all <span class="SimpleMath">n</span> and <span class="SimpleMath">k</span>.</p>
 
-<p><span class="SimpleMath">{n choose k}</span> is the number of combinations with <span class="SimpleMath">k</span> elements, i.e., the number of subsets with <span class="SimpleMath">k</span> elements, of a set with <span class="SimpleMath">n</span> elements. <span class="SimpleMath">{n choose k}</span> is the coefficient of the term <span class="SimpleMath">x^k</span> of the polynomial <span class="SimpleMath">(x + 1)^n</span>, which is the generating function for <span class="SimpleMath">{n choose .}</span>, hence the name.</p>
+<p>There are many ways of describing this function. For example, if <span class="SimpleMath">n ≥ 0</span> and <span class="SimpleMath">0 ≤ k ≤ n</span>, then <span class="SimpleMath">{n choose k} = n! / (k! (n-k)!)</span> and for <span class="SimpleMath">n &lt; 0</span> and <span class="SimpleMath">k ≥ 0</span> we have <span class="SimpleMath">{n choose k} = (-1)^k {-n+k-1 choose k}</span>.</p>
+
+<p>If <span class="SimpleMath">n ≥ 0</span> then <span class="SimpleMath">{n choose k}</span> is the number of subsets with <span class="SimpleMath">k</span> elements of a set with <span class="SimpleMath">n</span> elements. Also, <span class="SimpleMath">{n choose k}</span> is the coefficient of <span class="SimpleMath">x^k</span> in the polynomial <span class="SimpleMath">(x + 1)^n</span>, which is the generating function for <span class="SimpleMath">{n choose .}</span>, hence the name.</p>
 
 
 <div class="example"><pre>
@@ -766,7 +768,7 @@
 
 <h5>16.4-1 Permanent</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Permanent</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Permanent</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the <em>permanent</em> of the matrix <var class="Arg">mat</var>. The permanent is defined by <span class="SimpleMath">∑_{p ∈ Sym(n)} ∏_{i = 1}^n mat[i][i^p]</span>.</p>
 
 <p>Note the similarity of the definition of the permanent to the definition of the determinant (see <code class="func">DeterminantMat</code> (<a href="chap24.html#X83045F6F82C180E1"><span class="RefLink">24.4-4</span></a>)). In fact the only difference is the missing sign of the permutation. However the permanent is quite unlike the determinant, for example it is not multilinear or alternating. It has however important combinatorial properties.</p>

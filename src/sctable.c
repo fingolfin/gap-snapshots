@@ -36,37 +36,17 @@
 **  NOTE: most of the code consists of dimension- and type checks,  as a user
 **        can fool around with SCTables as s/he likes. 
 */
-#include        "system.h"              /* system dependent part           */
 
+#include <src/sctable.h>
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
-
-#include        "gap.h"                 /* error handling, initialisation  */
-
-#include        "gvars.h"               /* global variables                */
-
-#include        "calls.h"               /* generic call mechanism          */
-#include        "ariths.h"              /* basic arithmetic                */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "plist.h"               /* plain lists                     */
-#include        "string.h"              /* strings                         */
-
-#include        "sctable.h"             /* structure constant table        */
-
-#include	"code.h"		/* coder                           */
-#include	"thread.h"		/* threads			   */
-#include	"tls.h"			/* thread-local storage		   */
+#include <src/ariths.h>
+#include <src/gap.h>
+#include <src/lists.h>
+#include <src/plist.h>
 
 
 /****************************************************************************
 **
-
 *F  SCTableEntry( <table>, <i>, <j>, <k> )  . . . .  entry of structure table
 **
 **  'SCTableEntry' returns the coefficient $c_{i,j}^{k}$ from the structure
@@ -74,7 +54,7 @@
 */
 Obj SCTableEntryFunc;
 
-Obj SCTableEntryHandler (
+Obj FuncSC_TABLE_ENTRY (
     Obj                 self,
     Obj                 table,
     Obj                 i,
@@ -94,7 +74,7 @@ Obj SCTableEntryHandler (
             "SCTableEntry: <table> must be a small list (not a %s)",
             (Int)TNAM_OBJ(table), 0L,
             "you can replace <table> via 'return <table>;'" );
-        return SCTableEntryHandler( self, table, i, j, k );
+        return FuncSC_TABLE_ENTRY( self, table, i, j, k );
     }
     dim = LEN_LIST(table) - 2;
     if ( dim <= 0 ) {
@@ -102,7 +82,7 @@ Obj SCTableEntryHandler (
             "SCTableEntry: <table> must be a list with at least 3 elements",
             0L, 0L,
             "you can replace <table> via 'return <table>;'" );
-        return SCTableEntryHandler( self, table, i, j, k );
+        return FuncSC_TABLE_ENTRY( self, table, i, j, k );
     }
 
     /* check <i>                                                           */
@@ -111,7 +91,7 @@ Obj SCTableEntryHandler (
             "SCTableEntry: <i> must be an integer between 0 and %d",
             dim, 0L,
             "you can replace <i> via 'return <i>;'" );
-        return SCTableEntryHandler( self, table, i, j, k );
+        return FuncSC_TABLE_ENTRY( self, table, i, j, k );
     }
 
     /* get and check the relevant row                                      */
@@ -121,7 +101,7 @@ Obj SCTableEntryHandler (
             "SCTableEntry: <table>[%d] must be a list with %d elements",
             INT_INTOBJ(i), dim,
             "you can replace <table> via 'return <table>;'" );
-        return SCTableEntryHandler( self, table, i, j, k );
+        return FuncSC_TABLE_ENTRY( self, table, i, j, k );
 
     }
 
@@ -131,7 +111,7 @@ Obj SCTableEntryHandler (
             "SCTableEntry: <j> must be an integer between 0 and %d",
             dim, 0L,
             "you can replace <j> via 'return <j>;'" );
-        return SCTableEntryHandler( self, table, i, j, k );
+        return FuncSC_TABLE_ENTRY( self, table, i, j, k );
     }
 
     /* get and check the basis and coefficients list                       */
@@ -141,7 +121,7 @@ Obj SCTableEntryHandler (
             "SCTableEntry: <table>[%d][%d] must be a basis/coeffs list",
             0L, 0L,
             "you can replace <table> via 'return <table>;'" );
-        return SCTableEntryHandler( self, table, i, j, k );
+        return FuncSC_TABLE_ENTRY( self, table, i, j, k );
     }
 
     /* get and check the basis list                                        */
@@ -151,7 +131,7 @@ Obj SCTableEntryHandler (
             "SCTableEntry: <table>[%d][%d][1] must be a basis list",
             0L, 0L,
             "you can replace <table> via 'return <table>;'" );
-        return SCTableEntryHandler( self, table, i, j, k );
+        return FuncSC_TABLE_ENTRY( self, table, i, j, k );
     }
 
     /* get and check the coeffs list                                       */
@@ -161,7 +141,7 @@ Obj SCTableEntryHandler (
             "SCTableEntry: <table>[%d][%d][2] must be a coeffs list",
             0L, 0L,
             "you can replace <table> via 'return <table>;'" );
-        return SCTableEntryHandler( self, table, i, j, k );
+        return FuncSC_TABLE_ENTRY( self, table, i, j, k );
     }
 
     /* check that they have the same length                                */
@@ -171,7 +151,7 @@ Obj SCTableEntryHandler (
             "SCTableEntry: <table>[%d][%d][1], ~[2] must have equal length",
             0L, 0L,
             "you can replace <table> via 'return <table>;'" );
-        return SCTableEntryHandler( self, table, i, j, k );
+        return FuncSC_TABLE_ENTRY( self, table, i, j, k );
     }
 
     /* check <k>                                                           */
@@ -180,7 +160,7 @@ Obj SCTableEntryHandler (
             "SCTableEntry: <k> must be an integer between 0 and %d",
             dim, 0L,
             "you can replace <k> via 'return <k>;'" );
-        return SCTableEntryHandler( self, table, i, j, k );
+        return FuncSC_TABLE_ENTRY( self, table, i, j, k );
     }
 
     /* look for the (i,j,k) entry                                          */
@@ -241,7 +221,7 @@ void SCTableProdAdd (
 
 Obj SCTableProductFunc;
 
-Obj SCTableProductHandler (
+Obj FuncSC_TABLE_PRODUCT (
     Obj                 self,
     Obj                 table,
     Obj                 list1,
@@ -262,7 +242,7 @@ Obj SCTableProductHandler (
             "SCTableProduct: <table> must be a list (not a %s)",
             (Int)TNAM_OBJ(table), 0L,
             "you can replace <table> via 'return <table>;'" );
-        return SCTableProductHandler( self, table, list1, list2 );
+        return FuncSC_TABLE_PRODUCT( self, table, list1, list2 );
     }
     dim = LEN_LIST(table) - 2;
     if ( dim <= 0 ) {
@@ -270,7 +250,7 @@ Obj SCTableProductHandler (
             "SCTableProduct: <table> must be a list with at least 3 elements",
             0L, 0L,
             "you can replace <table> via 'return <table>;'" );
-        return SCTableProductHandler( self, table, list1, list2 );
+        return FuncSC_TABLE_PRODUCT( self, table, list1, list2 );
     }
     zero = ELM_LIST( table, dim+2 );
     if ( ! IS_SMALL_LIST(list1) || LEN_LIST(list1) != dim ) {
@@ -278,14 +258,14 @@ Obj SCTableProductHandler (
             "SCTableProduct: <list1> must be a list with %d elements",
             dim, 0L,
             "you can replace <list1> via 'return <list1>;'" );
-        return SCTableProductHandler( self, table, list1, list2 );
+        return FuncSC_TABLE_PRODUCT( self, table, list1, list2 );
     }
     if ( ! IS_SMALL_LIST(list2) || LEN_LIST(list2) != dim ) {
         list2 = ErrorReturnObj(
             "SCTableProduct: <list2> must be a list with %d elements",
             dim, 0L,
             "you can replace <list2> via 'return <list2>;'" );
-        return SCTableProductHandler( self, table, list1, list2 );
+        return FuncSC_TABLE_PRODUCT( self, table, list1, list2 );
     }
 
     /* make the result list                                                */
@@ -366,31 +346,24 @@ Obj SCTableProductHandler (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    { "SC_TABLE_ENTRY", 4, "table, i, j, k",
-      SCTableEntryHandler, "src/sctable.c:SC_TABLE_ENTRY" },
-
-    { "SC_TABLE_PRODUCT", 3, "table, list1, list2",
-      SCTableProductHandler, "src/sctable.c:SC_TABLE_PRODUCT" },
-
-    { 0 }
+    GVAR_FUNC(SC_TABLE_ENTRY, 4, "table, i, j, k"),
+    GVAR_FUNC(SC_TABLE_PRODUCT, 3, "table, list1, list2"),
+    { 0, 0, 0, 0, 0 }
 
 };
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
@@ -424,31 +397,15 @@ static Int InitLibrary (
 *F  InitInfoSCTable() . . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "sctable",                          /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "sctable",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoSCTable ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  sctable.c . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/
-
-
-

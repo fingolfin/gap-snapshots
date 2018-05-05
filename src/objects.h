@@ -17,10 +17,17 @@
 #ifndef GAP_OBJECTS_H
 #define GAP_OBJECTS_H
 
+#include <src/debug.h>
+#include <src/intobj.h>
+#include <src/gasman.h>
+
+#ifdef HPCGAP
+#define USE_THREADSAFE_COPYING
+#endif
+
 
 /****************************************************************************
 **
-
 *T  Obj . . . . . . . . . . . . . . . . . . . . . . . . . . . type of objects
 **
 **  'Obj' is the type of objects.
@@ -33,189 +40,15 @@
 
 /****************************************************************************
 **
-*F  IS_INTOBJ( <o> )  . . . . . . . .  test if an object is an integer object
-**
-**  'IS_INTOBJ' returns 1 if the object <o> is an (immediate) integer object,
-**  and 0 otherwise.
-*/
-#define IS_INTOBJ(o) \
-    ((Int)(o) & 0x01)
-
-
-/****************************************************************************
-**
-*F  IS_POS_INTOBJ( <o> )  . .  test if an object is a positive integer object
-**
-**  'IS_POS_INTOBJ' returns 1 if the object <o> is an (immediate) integer
-**  object encoding a positive integer, and 0 otherwise.
-*/
-#define IS_POS_INTOBJ(o) \
-    (((Int)(o) & 0x01) && ((Int)(o) > 0x01))
-
-
-/****************************************************************************
-**
-*F  ARE_INTOBJS( <o1>, <o2> ) . . . . test if two objects are integer objects
-**
-**  'ARE_INTOBJS' returns 1 if the objects <o1> and <o2> are both (immediate)
-**  integer objects.
-*/
-#define ARE_INTOBJS(o1,o2) \
-    ((Int)(o1) & (Int)(o2) & 0x01)
-
-
-/****************************************************************************
-**
-*F  INTOBJ_INT( <i> ) . . . . . . .  convert a C integer to an integer object
-**
-**  'INTOBJ_INT' converts the C integer <i> to an (immediate) integer object.
-*/
-#define INTOBJ_INT(i) \
-    ((Obj)(((UInt)(Int)(i) << 2) + 0x01))
-
-
-/****************************************************************************
-**
-*F  INT_INTOBJ( <o> ) . . . . . . .  convert an integer object to a C integer
-**
-**  'INT_INTOBJ' converts the (immediate) integer object <o> to a C integer.
-*/
-/* Note that the C standard does not define what >> does here if the
- * value is negative. So we have to be careful if the C compiler
- * chooses to do a logical right shift. */
-#if HAVE_ARITHRIGHTSHIFT
-#define INT_INTOBJ(o) \
-    ((Int)(o) >> 2)
-#else
-#define INT_INTOBJ(o) \
-    (((Int)(o)-1) / 4)
-#endif
-
-
-
-/****************************************************************************
-**
-*F  EQ_INTOBJS( <o>, <l>, <r> ) . . . . . . . . . compare two integer objects
-**
-**  'EQ_INTOBJS' returns 'True' if the  (immediate)  integer  object  <l>  is
-**  equal to the (immediate) integer object <r> and  'False'  otherwise.  The
-**  result is also stored in <o>.
-*/
-#define EQ_INTOBJS(o,l,r) \
-    ((o) = (((Int)(l)) == ((Int)(r)) ? True : False))
-
-
-/****************************************************************************
-**
-*F  LT_INTOBJS( <o>, <l>, <r> ) . . . . . . . . . compare two integer objects
-**
-**  'LT_INTOBJS' returns 'True' if the  (immediate)  integer  object  <l>  is
-**  less than the (immediate) integer object <r> and  'False' otherwise.  The
-**  result is also stored in <o>.
-*/
-#define LT_INTOBJS(o,l,r) \
-    ((o) = (((Int)(l)) <  ((Int)(r)) ? True : False))
-
-
-/****************************************************************************
-**
-*F  SUM_INTOBJS( <o>, <l>, <r> )  . . . . . . . .  sum of two integer objects
-**
-**  'SUM_INTOBJS' returns  1  if  the  sum  of  the  (imm.)  integer  objects
-**  <l> and <r> can be stored as (immediate) integer object  and 0 otherwise.
-**  The sum itself is stored in <o>.
-*/
-#if HAVE_ARITHRIGHTSHIFT
-#define SUM_INTOBJS(o,l,r)             \
-    ((o) = (Obj)((Int)(l)+(Int)(r)-1), \
-    (((Int)(o) << 1) >> 1) == (Int)(o) )
-#else
-#define SUM_INTOBJS(o,l,r)             \
-    ((o) = (Obj)((Int)(l)+(Int)(r)-1), \
-     ((((UInt) (o)) >> (sizeof(UInt)*8-2))-1) > 1)
-#endif
-
-
-/****************************************************************************
-**
-*F  DIFF_INTOBJS( <o>, <l>, <r> ) . . . . . difference of two integer objects
-**
-**  'DIFF_INTOBJS' returns 1 if the difference of the (imm.) integer  objects
-**  <l> and <r> can be stored as (immediate) integer object  and 0 otherwise.
-**  The difference itself is stored in <o>.
-*/
-#if HAVE_ARITHRIGHTSHIFT
-#define DIFF_INTOBJS(o,l,r)            \
-    ((o) = (Obj)((Int)(l)-(Int)(r)+1), \
-     (((Int)(o) << 1) >> 1) == (Int)(o) )
-#else
-#define DIFF_INTOBJS(o,l,r)            \
-    ((o) = (Obj)((Int)(l)-(Int)(r)+1), \
-     ((((UInt) (o)) >> (sizeof(UInt)*8-2))-1) > 1)
-#endif
-
-
-/****************************************************************************
-**
-*F  PROD_INTOBJS( <o>, <l>, <r> ) . . . . . .  product of two integer objects
-**
-**  'PROD_INTOBJS' returns 1 if the product of  the  (imm.)  integer  objects
-**  <l> and <r> can be stored as (immediate) integer object  and 0 otherwise.
-**  The product itself is stored in <o>.
-*/
-
-#ifdef SYS_IS_64_BIT
-#define HALF_A_WORD 32
-#else
-#define HALF_A_WORD 16
-#endif
-
-static inline Obj prod_intobjs(Int l, Int r)
-{
-  Int prod;
-  if (l == (Int)INTOBJ_INT(0) || r == (Int)INTOBJ_INT(0))
-    return INTOBJ_INT(0);
-  if (l == (Int)INTOBJ_INT(1))
-    return (Obj)r;
-  if (r == (Int)INTOBJ_INT(1))
-    return (Obj)l;
-  prod = ((Int)((UInt)l >> 2) * ((UInt)r-1)+1);
-
-#if HAVE_ARITHRIGHTSHIFT
-  if ((prod << 1)>> 1 !=  prod)
-    return (Obj) 0;
-#else
-  if (((((UInt) (prod)) >> (sizeof(UInt)*8-2))-1) <= 1)
-    return (Obj) 0;
-#endif
-
-  if ((((Int)l)<<HALF_A_WORD)>>HALF_A_WORD == (Int) l &&
-      (((Int)r)<<HALF_A_WORD)>>HALF_A_WORD == (Int) r)
-    return (Obj) prod;
-
-#if HAVE_ARITHRIGHTSHIFT
-  if ((prod -1) / (l >> 2) == r-1)
-    return (Obj) prod;
-#else
-  if ((prod-1) / ((l-1)/4) == r-1)
-    return (Obj) prod;
-#endif
-
-  return (Obj) 0;
-}
-
-#define PROD_INTOBJS( o, l, r) ((o) = prod_intobjs((Int)(l),(Int)(r)), \
-                                  (o) != (Obj) 0)
-   
-/****************************************************************************
-**
 *F  IS_FFE( <o> ) . . . . . . . . test if an object is a finite field element
 **
 **  'IS_FFE'  returns 1  if the  object <o>  is  an  (immediate) finite field
 **  element and 0 otherwise.
 */
-#define IS_FFE(o)               \
-                        ((Int)(o) & 0x02)
+static inline Int IS_FFE(Obj o)
+{
+    return (Int)o & 0x02;
+}
 
 
 /****************************************************************************
@@ -234,14 +67,45 @@ Int RegisterPackageTNUM( const char *name, Obj (*typeObjFunc)(Obj obj) );
 
 /****************************************************************************
 **
+*F  NEXT_ENUM_EVEN( <id> )
+*F  START_ENUM_RANGE_EVEN( <id> )
+*F  END_ENUM_RANGE_ODD( <id> )
+**
+**  'NEXT_ENUM_EVEN' can be used in an enum to force <id> to use the next
+**  available even integer value.
+**
+**  'START_ENUM_RANGE_EVEN' is a variant of 'START_ENUM_RANGE' which always
+**  sets the value of <id> to the next even integer.
+**
+**  'END_ENUM_RANGE_ODD' is a variant of 'END_ENUM_RANGE' which always sets
+**  the value of <id> to an odd integer.
+*/
+#define NEXT_ENUM_EVEN(id)   \
+    _##id##_pre, \
+    id = _##id##_pre + (_##id##_pre & 1)
+#define START_ENUM_RANGE_EVEN(id)   \
+    NEXT_ENUM_EVEN(id), \
+    _##id##_post = id - 1
+#define END_ENUM_RANGE_ODD(id)   \
+    _##id##_pre, \
+    id = _##id##_pre - !(_##id##_pre & 1)
 
+
+/****************************************************************************
+**
+*/
+enum {
+    IMMUTABLE = 1    // IMMUTABLE is not a TNUM, but rather a bitmask
+};
+
+/****************************************************************************
+**
 *S  T_<name>  . . . . . . . . . . . . . . . . symbolic names for object types
 *S  FIRST_CONSTANT_TNUM, LAST_CONSTANT_TNUM . . . . range of constant   types
 *S  FIRST_RECORD_TNUM,   LAST_RECORD_TNUM . . . . . range of record     types
 *S  FIRST_LIST_TNUM,     LAST_LIST_TNUM . . . . . . range of list       types
 *S  FIRST_EXTERNAL_TNUM, LAST_EXTERNAL_TNUM . . . . range of external   types
 *S  FIRST_REAL_TNUM,     LAST_REAL_TNUM . . . . . . range of real       types
-*S  FIRST_VIRTUAL_TNUM,  LAST_VIRTUAL_TNUM  . . . . range of virtual    types
 *S  FIRST_IMM_MUT_TNUM,  LAST_IMM_MUT_TNUM  . . . . range of im/mutable types
 **
 **  For every type of objects there is a symbolic name defined for this type.
@@ -264,9 +128,6 @@ Int RegisterPackageTNUM( const char *name, Obj (*typeObjFunc)(Obj obj) );
 **  'FIRST_REAL_TNUM' is the first  real  type, namely 'FIRST_CONSTANT_TNUM'.
 **  'LAST_REAL_TNUM'  is the last   real  type, namely  'LAST_EXTERNAL_TNUM'.
 **
-**  'FIRST_VIRTUAL_TNUM' is   the first virtual type.  'LAST_VIRTUAL_TNUM' is
-**  the last virtual type.
-**
 **  'FIRST_IMM_MUT_TNUM'  is the first  real  internal type of objects  which
 **  might be mutable, 'LAST_IMM_MUT_TNUM' is the last such type.
 **
@@ -274,118 +135,210 @@ Int RegisterPackageTNUM( const char *name, Obj (*typeObjFunc)(Obj obj) );
 **  then the record types, then the list types,  then the external types, and
 **  finally the virtual types.
 */
-#define FIRST_REAL_TNUM         0
+enum TNUM {
+    START_ENUM_RANGE(FIRST_REAL_TNUM),
 
-#define FIRST_CONSTANT_TNUM     (0UL)
-#define T_INT                   (FIRST_CONSTANT_TNUM+ 0)    /* immediate */
-#define T_INTPOS                (FIRST_CONSTANT_TNUM+ 1)
-#define T_INTNEG                (FIRST_CONSTANT_TNUM+ 2)
-#define T_RAT                   (FIRST_CONSTANT_TNUM+ 3)
-#define T_CYC                   (FIRST_CONSTANT_TNUM+ 4)
-#define T_FFE                   (FIRST_CONSTANT_TNUM+ 5)    /* immediate */
-#define T_PERM2                 (FIRST_CONSTANT_TNUM+ 6)
-#define T_PERM4                 (FIRST_CONSTANT_TNUM+ 7)
-#define T_BOOL                  (FIRST_CONSTANT_TNUM+ 8)
-#define T_CHAR                  (FIRST_CONSTANT_TNUM+ 9)
-#define T_FUNCTION              (FIRST_CONSTANT_TNUM+10)
-#define T_FLAGS                 (FIRST_CONSTANT_TNUM+11)
-#define T_MACFLOAT              (FIRST_CONSTANT_TNUM+12)
-#define T_LVARS                 (FIRST_CONSTANT_TNUM+13)   
-#define T_SINGULAR              (FIRST_CONSTANT_TNUM+14)   
-#define T_POLYMAKE              (FIRST_CONSTANT_TNUM+15)
-#define T_TRANS2                (FIRST_CONSTANT_TNUM+16)
-#define T_TRANS4                (FIRST_CONSTANT_TNUM+17)
-#define T_PPERM2                (FIRST_CONSTANT_TNUM+18)
-#define T_PPERM4                (FIRST_CONSTANT_TNUM+19)
-#define T_SPARE1                (FIRST_CONSTANT_TNUM+20)
-#define T_SPARE2                (FIRST_CONSTANT_TNUM+21)
-#define T_SPARE3                (FIRST_CONSTANT_TNUM+22)
-#define T_SPARE4                (FIRST_CONSTANT_TNUM+23)
-#define LAST_CONSTANT_TNUM      (T_SPARE4)
+    START_ENUM_RANGE(FIRST_CONSTANT_TNUM),
+        T_INT,      // immediate
+        T_INTPOS,
+        T_INTNEG,
+        T_RAT,
+        T_CYC,
+        T_FFE,      // immediate
+        T_PERM2,
+        T_PERM4,
+        T_TRANS2,
+        T_TRANS4,
+        T_PPERM2,
+        T_PPERM4,
+        T_BOOL,
+        T_CHAR,
+        T_FUNCTION,
+        T_BODY,     // the type of function body bags
+        T_FLAGS,
+        T_MACFLOAT,
+        T_LVARS,
+        T_HVARS,
+    END_ENUM_RANGE(LAST_CONSTANT_TNUM),
 
-#define IMMUTABLE               1
+    // first mutable/immutable TNUM
+    START_ENUM_RANGE_EVEN(FIRST_IMM_MUT_TNUM),
 
-#define FIRST_IMM_MUT_TNUM      (LAST_CONSTANT_TNUM+1)    /* Should be even */
-#define FIRST_RECORD_TNUM       FIRST_IMM_MUT_TNUM
-#define T_PREC                  (FIRST_RECORD_TNUM+ 0)
-#define LAST_RECORD_TNUM        (T_PREC+IMMUTABLE)
+        // records
+        START_ENUM_RANGE_EVEN(FIRST_RECORD_TNUM),
+            T_PREC,
+        END_ENUM_RANGE_ODD(LAST_RECORD_TNUM),
 
-#define FIRST_LIST_TNUM         (LAST_RECORD_TNUM+1)
-#define FIRST_PLIST_TNUM        FIRST_LIST_TNUM
-#define T_PLIST                 (FIRST_LIST_TNUM+ 0)
-#define T_PLIST_NDENSE          (FIRST_LIST_TNUM+ 2)
-#define T_PLIST_DENSE           (FIRST_LIST_TNUM+ 4)
-#define T_PLIST_DENSE_NHOM      (FIRST_LIST_TNUM+ 6)
-#define T_PLIST_DENSE_NHOM_SSORT (FIRST_LIST_TNUM+8 )
-#define T_PLIST_DENSE_NHOM_NSORT (FIRST_LIST_TNUM+10)
-#define T_PLIST_EMPTY           (FIRST_LIST_TNUM+12)
-#define T_PLIST_HOM             (FIRST_LIST_TNUM+14)
-#define T_PLIST_HOM_NSORT       (FIRST_LIST_TNUM+16)
-#define T_PLIST_HOM_SSORT       (FIRST_LIST_TNUM+18)
-#define T_PLIST_TAB             (FIRST_LIST_TNUM+20)
-#define T_PLIST_TAB_NSORT       (FIRST_LIST_TNUM+22)
-#define T_PLIST_TAB_SSORT       (FIRST_LIST_TNUM+24)
-#define T_PLIST_TAB_RECT             (FIRST_LIST_TNUM+26)
-#define T_PLIST_TAB_RECT_NSORT       (FIRST_LIST_TNUM+28)
-#define T_PLIST_TAB_RECT_SSORT       (FIRST_LIST_TNUM+30)
-#define T_PLIST_CYC             (FIRST_LIST_TNUM+32)
-#define T_PLIST_CYC_NSORT       (FIRST_LIST_TNUM+34)
-#define T_PLIST_CYC_SSORT       (FIRST_LIST_TNUM+36)
-#define T_PLIST_FFE             (FIRST_LIST_TNUM+38)
-#define LAST_PLIST_TNUM         (T_PLIST_FFE+IMMUTABLE)
-#define T_RANGE_NSORT           (FIRST_LIST_TNUM+40)
-#define T_RANGE_SSORT           (FIRST_LIST_TNUM+42)
-#define T_BLIST                 (FIRST_LIST_TNUM+44)
-#define T_BLIST_NSORT           (FIRST_LIST_TNUM+46)
-#define T_BLIST_SSORT           (FIRST_LIST_TNUM+48)
-#define T_STRING                (FIRST_LIST_TNUM+50)
-#define T_STRING_NSORT          (FIRST_LIST_TNUM+52)
-#define T_STRING_SSORT          (FIRST_LIST_TNUM+54)
-#define LAST_LIST_TNUM          (T_STRING_SSORT+IMMUTABLE)
-#define LAST_IMM_MUT_TNUM       LAST_LIST_TNUM
+        // lists
+        START_ENUM_RANGE_EVEN(FIRST_LIST_TNUM),
 
-/* IMMUTABLE is not used for external types but keep the parity */
-#define FIRST_EXTERNAL_TNUM     (LAST_LIST_TNUM+1)
-#define T_COMOBJ                (FIRST_EXTERNAL_TNUM+ 0)
-#define T_POSOBJ                (FIRST_EXTERNAL_TNUM+ 1)
-#define T_DATOBJ                (FIRST_EXTERNAL_TNUM+ 2)
-#define T_WPOBJ                 (FIRST_EXTERNAL_TNUM+ 3)
-     /* #define T_DUMMYOBJ              (FIRST_EXTERNAL_TNUM+ 4)
-        remove to get parity right */
+            // plists
+            START_ENUM_RANGE_EVEN(FIRST_PLIST_TNUM),
+                NEXT_ENUM_EVEN(T_PLIST),
+                NEXT_ENUM_EVEN(T_PLIST_NDENSE),
+                NEXT_ENUM_EVEN(T_PLIST_DENSE),
+                NEXT_ENUM_EVEN(T_PLIST_DENSE_NHOM),
+                NEXT_ENUM_EVEN(T_PLIST_DENSE_NHOM_SSORT),
+                NEXT_ENUM_EVEN(T_PLIST_DENSE_NHOM_NSORT),
+                NEXT_ENUM_EVEN(T_PLIST_EMPTY),
+                NEXT_ENUM_EVEN(T_PLIST_HOM),
+                NEXT_ENUM_EVEN(T_PLIST_HOM_NSORT),
+                NEXT_ENUM_EVEN(T_PLIST_HOM_SSORT),
+                NEXT_ENUM_EVEN(T_PLIST_TAB),
+                NEXT_ENUM_EVEN(T_PLIST_TAB_NSORT),
+                NEXT_ENUM_EVEN(T_PLIST_TAB_SSORT),
+                NEXT_ENUM_EVEN(T_PLIST_TAB_RECT),
+                NEXT_ENUM_EVEN(T_PLIST_TAB_RECT_NSORT),
+                NEXT_ENUM_EVEN(T_PLIST_TAB_RECT_SSORT),
+                NEXT_ENUM_EVEN(T_PLIST_CYC),
+                NEXT_ENUM_EVEN(T_PLIST_CYC_NSORT),
+                NEXT_ENUM_EVEN(T_PLIST_CYC_SSORT),
+                NEXT_ENUM_EVEN(T_PLIST_FFE),
+            END_ENUM_RANGE_ODD(LAST_PLIST_TNUM),
 
-/* reserve space for 50 package TNUMs */
-#define FIRST_PACKAGE_TNUM      (FIRST_EXTERNAL_TNUM+ 4)
-#define LAST_PACKAGE_TNUM       (FIRST_EXTERNAL_TNUM+53)
+            // other kinds of lists
+            NEXT_ENUM_EVEN(T_RANGE_NSORT),
+            NEXT_ENUM_EVEN(T_RANGE_SSORT),
+            NEXT_ENUM_EVEN(T_BLIST),
+            NEXT_ENUM_EVEN(T_BLIST_NSORT),
+            NEXT_ENUM_EVEN(T_BLIST_SSORT),
+            NEXT_ENUM_EVEN(T_STRING),
+            NEXT_ENUM_EVEN(T_STRING_NSORT),
+            NEXT_ENUM_EVEN(T_STRING_SSORT),
 
-#define LAST_EXTERNAL_TNUM      LAST_PACKAGE_TNUM
-#define LAST_REAL_TNUM          LAST_EXTERNAL_TNUM
-#define LAST_VIRTUAL_TNUM LAST_EXTERNAL_TNUM
+        END_ENUM_RANGE_ODD(LAST_LIST_TNUM),
 
-#define FIRST_COPYING_TNUM      (LAST_REAL_TNUM + 1)
-#define COPYING                 (FIRST_COPYING_TNUM - FIRST_RECORD_TNUM)
-#define LAST_COPYING_TNUM       (LAST_REAL_TNUM + COPYING)
+        // object sets and maps
+        START_ENUM_RANGE_EVEN(FIRST_OBJSET_TNUM),
+            NEXT_ENUM_EVEN(T_OBJSET),
+            NEXT_ENUM_EVEN(T_OBJMAP),
+        END_ENUM_RANGE_ODD(LAST_OBJSET_TNUM),
 
-/* share the same numbers between `COPYING' and `TESTING' */
-#define FIRST_TESTING_TNUM      FIRST_COPYING_TNUM
-#define TESTING                 COPYING
-#define LAST_TESTING_TNUM       LAST_COPYING_TNUM
+    // last mutable/immutable TNUM
+    END_ENUM_RANGE(LAST_IMM_MUT_TNUM),
 
-#if LAST_COPYING_TNUM > 254
-#error LAST_COPYING_TNUM out of range
+    // external types
+    START_ENUM_RANGE(FIRST_EXTERNAL_TNUM),
+        T_COMOBJ,
+        T_POSOBJ,
+        T_DATOBJ,
+        T_WPOBJ,
+#ifdef HPCGAP
+        T_APOSOBJ,
+        T_ACOMOBJ,
+#endif
+
+        // package TNUMs, for use by kernel extensions
+        //
+        // The largest TNUM (which, depending on USE_THREADSAFE_COPYING, is
+        // either LAST_REAL_TNUM or LAST_COPYING_TNUM) must not exceed 253.
+        // This restricts the value for LAST_PACKAGE_TNUM indirectly. It is
+        // difficult to describe the largest possible value with a formula, as
+        // LAST_COPYING_TNUM itself changes depending LAST_PACKAGE_TNUM, and
+        // the fact that some TNUMs are forced to be even causes additional
+        // jumps; so increasing LAST_PACKAGE_TNUM by 1 can lead to
+        // LAST_COPYING_TNUM growing by 2, 3 or even 4. So we simply hand-pick
+        // LAST_PACKAGE_TNUM as the largest value that does not trigger the
+        // GAP_STATIC_ASSERT following this enum.
+        FIRST_PACKAGE_TNUM,
+#ifdef HPCGAP
+        LAST_PACKAGE_TNUM   = FIRST_PACKAGE_TNUM + 153,
+#else
+        LAST_PACKAGE_TNUM   = FIRST_PACKAGE_TNUM + 50,
+#endif
+
+    END_ENUM_RANGE(LAST_EXTERNAL_TNUM),
+
+#ifdef HPCGAP
+    START_ENUM_RANGE(FIRST_SHARED_TNUM),
+        // primitive types
+        T_THREAD,
+        T_MONITOR,
+        T_REGION,
+        // user-programmable types
+        T_SEMAPHORE,
+        T_CHANNEL,
+        T_BARRIER,
+        T_SYNCVAR,
+        // atomic lists and records, thread local records
+    START_ENUM_RANGE(FIRST_ATOMIC_TNUM),
+    START_ENUM_RANGE(FIRST_ATOMIC_LIST_TNUM),
+        T_FIXALIST,
+        T_ALIST,
+    END_ENUM_RANGE(LAST_ATOMIC_LIST_TNUM),
+    START_ENUM_RANGE(FIRST_ATOMIC_RECORD_TNUM),
+        T_AREC,
+        T_AREC_INNER,
+        T_TLREC,
+        T_TLREC_INNER,
+    END_ENUM_RANGE(LAST_ATOMIC_RECORD_TNUM),
+    END_ENUM_RANGE(LAST_ATOMIC_TNUM),
+    END_ENUM_RANGE(LAST_SHARED_TNUM),
+#endif
+
+    END_ENUM_RANGE(LAST_REAL_TNUM),
+
+#if !defined(USE_THREADSAFE_COPYING)
+    // virtual TNUMs for copying objects
+    START_ENUM_RANGE_EVEN(FIRST_COPYING_TNUM),
+        COPYING             = FIRST_COPYING_TNUM - FIRST_IMM_MUT_TNUM,
+        // we use LAST_EXTERNAL_TNUM+1 instead of LAST_REAL_TNUM to
+        // skip over the shared TNUMs in HPC-GAP
+    LAST_COPYING_TNUM       = LAST_EXTERNAL_TNUM + COPYING,
+#endif
+};
+
+#if defined(USE_THREADSAFE_COPYING)
+GAP_STATIC_ASSERT(LAST_REAL_TNUM <= 254, "LAST_REAL_TNUM is too large");
+#else
+GAP_STATIC_ASSERT(LAST_COPYING_TNUM <= 254, "LAST_COPYING_TNUM is too large");
 #endif
 
 
 /****************************************************************************
 **
-*S  T_BODY  . . . . . . . . . . . . . . . . . . . . type of function body bag
+*F  TEST_OBJ_FLAG(<obj>, <flag>) . . . . . . . . . . . . . . test object flag
+*F  SET_OBJ_FLAG(<obj>, <flag>) . . . . . . . . . . . . . . . set object flag
+*F  CLEAR_OBJ_FLAG(<obj>, <flag>) . . . . . . . . . . . . . clear object flag
 **
-**  'T_BODY' is the type of the function body bags.
+**  These three macros test, set, and clear object flags, respectively.
+**  For non-immediate objects, these are simply the bag flags, see
+**  TEST_BAG_FLAG, SET_BAG_FLAG, CLEAR_BAG_FLAG.
+**
+**  For immediate objects, objects flags are always 0.
 */
-#define T_BODY                  254
+static inline uint8_t TEST_OBJ_FLAG(Obj obj, uint8_t flag)
+{
+    if (IS_BAG_REF(obj))
+        return TEST_BAG_FLAG(obj, flag);
+    else
+        return 0;
+}
 
-#if T_BODY <= LAST_COPYING_TNUM
-#error T_BODY out of range
+static inline void SET_OBJ_FLAG(Obj obj, uint8_t flag)
+{
+    if (IS_BAG_REF(obj))
+        SET_BAG_FLAG(obj, flag);
+}
+
+static inline void CLEAR_OBJ_FLAG(Obj obj, uint8_t flag)
+{
+    if (IS_BAG_REF(obj))
+        CLEAR_BAG_FLAG(obj, flag);
+}
+
+
+/****************************************************************************
+**
+** Object flags for use with SET_OBJ_FLAG() etc.
+**
+*/
+enum {
+    TESTING = (1 << 0),
+#ifdef HPCGAP
+    TESTED  = (1 << 1),
 #endif
+};
 
 
 /****************************************************************************
@@ -394,15 +347,24 @@ Int RegisterPackageTNUM( const char *name, Obj (*typeObjFunc)(Obj obj) );
 **
 **  'TNUM_OBJ' returns the type of the object <obj>.
 */
-#define TNUM_OBJ(obj)   (IS_INTOBJ( obj ) ? T_INT : \
-                         (IS_FFE( obj ) ? T_FFE : TNUM_BAG( obj )))
+static inline UInt TNUM_OBJ(Obj obj)
+{
+    if (IS_INTOBJ(obj))
+        return T_INT;
+    if (IS_FFE(obj))
+        return T_FFE;
+    return TNUM_BAG(obj);
+}
 
 
 /****************************************************************************
 **
 *F  TNAM_OBJ( <obj> ) . . . . . . . . . . . . . name of the type of an object
 */
-#define TNAM_OBJ(obj)   (InfoBags[TNUM_OBJ(obj)].name)
+static inline const Char * TNAM_OBJ(Obj obj)
+{
+    return InfoBags[TNUM_OBJ(obj)].name;
+}
 
 
 /****************************************************************************
@@ -411,7 +373,10 @@ Int RegisterPackageTNUM( const char *name, Obj (*typeObjFunc)(Obj obj) );
 **
 **  'SIZE_OBJ' returns the size of the object <obj>.
 */
-#define SIZE_OBJ        SIZE_BAG
+static inline UInt SIZE_OBJ(Obj obj)
+{
+    return SIZE_BAG(obj);
+}
 
 
 /****************************************************************************
@@ -421,12 +386,19 @@ Int RegisterPackageTNUM( const char *name, Obj (*typeObjFunc)(Obj obj) );
 **  'ADDR_OBJ' returns the absolute address of the memory block of the object
 **  <obj>.
 */
-#define ADDR_OBJ(bag)        PTR_BAG(bag)
+static inline Obj *ADDR_OBJ(Obj obj)
+{
+    return PTR_BAG(obj);
+}
+
+static inline const Obj *CONST_ADDR_OBJ(Obj obj)
+{
+    return CONST_PTR_BAG(obj);
+}
 
 
 /****************************************************************************
 **
-
 *F  FAMILY_TYPE( <type> ) . . . . . . . . . . . . . . . . .  family of a type
 **
 **  'FAMILY_TYPE' returns the family of the type <type>.
@@ -443,7 +415,7 @@ Int RegisterPackageTNUM( const char *name, Obj (*typeObjFunc)(Obj obj) );
 
 /****************************************************************************
 **
-*F  FLAGS_TYPE( <type> )  . . . . . . . . . . .  flags boolean list of a type
+*F  FLAGS_TYPE( <type> ) . . . . . . . . . . . . flags boolean list of a type
 **
 **  'FLAGS_TYPE' returns the flags boolean list of the type <type>.
 */
@@ -452,14 +424,14 @@ Int RegisterPackageTNUM( const char *name, Obj (*typeObjFunc)(Obj obj) );
 
 /****************************************************************************
 **
-*F  SHARED_TYPE( <type> ) . . . . . . . . . . . . . . . shared data of a type
+*F  DATA_TYPE( <type> ) . . . . . . . . . . . . . . . . shared data of a type
 **
-**  'SHARED_TYPE' returns the shared data of the type <type>.
-XXX nowhere used, throw away??? (FL)
+**  'DATA_TYPE' returns the shared data of the type <type>.
+**  Not used by the GAP kernel right now, but useful for kernel extensions.
 */
-/* #define SHARED_TYPE(type)       ELM_PLIST( type, 3 )
-*/                        
-                        
+#define DATA_TYPE(type)       ELM_PLIST( type, 3 )
+
+
 /****************************************************************************
 **
 *F  ID_TYPE( <type> ) . . . . . . . . . . . . . . . . . . . . .  id of a type
@@ -468,7 +440,8 @@ XXX nowhere used, throw away??? (FL)
 **  will renumber all IDs.  Therefore the  corresponding routine must excatly
 **  know where such numbers are stored.
 */
-#define ID_TYPE(type)           ELM_PLIST( type, 4 )
+#define ID_TYPE(type) ELM_PLIST(type, 4)
+#define SET_ID_TYPE(type, val) SET_ELM_PLIST(type, 4, val)
 
 
 /****************************************************************************
@@ -481,18 +454,21 @@ XXX nowhere used, throw away??? (FL)
 
 extern Obj (*TypeObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 
+
 /****************************************************************************
 **
-*F  SetTypeDatobj( <obj>, <kind> ) . . . . . . . .  set kind of a data object
+*F  SET_TYPE_OBJ( <obj>, <kind> ) . . . . . . . . . . . set kind of an object
 **
-**  'SetTypeDatobj' sets the kind <kind> of the data object <obj>.
+**  'SET_TYPE_OBJ' sets the kind <kind>of the object <obj>.
 */
+#define SET_TYPE_OBJ(obj, kind) \
+  ((*SetTypeObjFuncs[ TNUM_OBJ(obj) ])( obj, kind ))
 
-#define SetTypeDatObj(obj, type)  SET_TYPE_DATOBJ(obj, type)
+extern void (*SetTypeObjFuncs[ LAST_REAL_TNUM+1 ]) ( Obj obj, Obj kind );
+
 
 /****************************************************************************
 **
-
 *F  MUTABLE_TNUM( <type> )  . . . . . . . . . . mutable type of internal type
 */
 #define MUTABLE_TNUM(type) \
@@ -518,6 +494,18 @@ extern void MakeImmutable( Obj obj );
 
 /****************************************************************************
 **
+*F  CheckedMakeImmutable( <obj> )  . . . . . . . . . make an object immutable
+**
+**  Same effect as MakeImmutable( <obj> ), but checks first that all
+**  subobjects lie in a writable region.
+*/
+
+#ifdef HPCGAP
+extern void CheckedMakeImmutable( Obj obj );
+#endif
+
+/****************************************************************************
+**
 *F  IS_MUTABLE_OBJ( <obj> ) . . . . . . . . . . . . . .  is an object mutable
 **
 **  'IS_MUTABLE_OBJ' returns   1 if the object  <obj> is mutable   (i.e., can
@@ -527,6 +515,20 @@ extern void MakeImmutable( Obj obj );
                         ((*IsMutableObjFuncs[ TNUM_OBJ(obj) ])( obj ))
 
 extern Int (*IsMutableObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
+
+/****************************************************************************
+**
+*F  IsInternallyMutableObj( <obj> ) . . . does an object have a mutable state
+**
+**  This function returns   1 if the object  <obj> has a mutable state, i.e.
+**  if its internal representation can change even though its outwardly
+**  visible properties do not, e.g. through code that transparently
+**  reorganizes its structure.
+*/
+
+#ifdef HPCGAP
+extern Int IsInternallyMutableObj(Obj obj);
+#endif
 
 /****************************************************************************
 **
@@ -582,7 +584,6 @@ extern Int (*IsCopyableObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 
 /****************************************************************************
 **
-
 *F  SHALLOW_COPY_OBJ( <obj> ) . . . . . . .  make a shallow copy of an object
 **
 **  'SHALLOW_COPY_OBJ' makes a shallow copy of the object <obj>.
@@ -600,7 +601,6 @@ extern Obj (*ShallowCopyObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 
 /****************************************************************************
 **
-
 *F  CopyObj( <obj> )  . . . . . . . . . . make a structural copy of an object
 **
 **  'CopyObj' returns a  structural (deep) copy  of the object <obj>, i.e., a
@@ -621,8 +621,10 @@ extern Obj CopyObj (
 **  Note that 'COPY_OBJ' and 'CLEAN_OBJ' are macros, so do not call them with
 **  arguments that have side effects.
 */
+#if !defined(USE_THREADSAFE_COPYING)
 #define COPY_OBJ(obj,mut) \
                         ((*CopyObjFuncs[ TNUM_OBJ(obj) ])( obj, mut ))
+#endif
 
 
 /****************************************************************************
@@ -635,9 +637,10 @@ extern Obj CopyObj (
 **  Note that 'COPY_OBJ' and 'CLEAN_OBJ' are macros, so do not call them with
 **  arguments that have side effects.
 */
+#if !defined(USE_THREADSAFE_COPYING)
 #define CLEAN_OBJ(obj) \
                         ((*CleanObjFuncs[ TNUM_OBJ(obj) ])( obj ))
-
+#endif
 
 
 /****************************************************************************
@@ -660,15 +663,18 @@ extern Obj CopyObj (
 **  then call 'CLEAN_OBJ'  for all subobjects recursively.  If called for an
 **  already unmarked object, it should simply return.
 */
+#if !defined(USE_THREADSAFE_COPYING)
 extern Obj (*CopyObjFuncs[LAST_REAL_TNUM+COPYING+1]) ( Obj obj, Int mut );
-
+#endif
 
 
 /****************************************************************************
 **
 *V  CleanObjFuncs[<type>] . . . . . . . . . . . . table of cleaning functions
 */
+#if !defined(USE_THREADSAFE_COPYING)
 extern void (*CleanObjFuncs[LAST_REAL_TNUM+COPYING+1]) ( Obj obj );
+#endif
 
 
 extern void (*MakeImmutableObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
@@ -692,12 +698,10 @@ extern void PrintObj (
 **  is the function '<func>(<obj>)' that should be called to print the object
 **  <obj> of this type.
 */
-extern Obj  PrintObjThis;
+/* TL: extern Obj  PrintObjThis; */
 
-extern Int  PrintObjIndex;
-extern Int  PrintObjDepth;
-
-extern Int  PrintObjFull;
+/* TL: extern Int  PrintObjIndex; */
+/* TL: extern Int  PrintObjDepth; */
 
 extern void (* PrintObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 
@@ -733,7 +737,6 @@ extern void (* PrintPathFuncs[LAST_REAL_TNUM+1]) (
 
 /****************************************************************************
 **
-
 *F  IS_COMOBJ( <obj> )  . . . . . . . . . . . is an object a component object
 */
 #define IS_COMOBJ(obj)            (TNUM_OBJ(obj) == T_COMOBJ)
@@ -755,7 +758,6 @@ extern void (* PrintPathFuncs[LAST_REAL_TNUM+1]) (
 
 /****************************************************************************
 **
-
 *F  IS_POSOBJ( <obj> )  . . . . . . . . . .  is an object a positional object
 */
 #define IS_POSOBJ(obj)            (TNUM_OBJ(obj) == T_POSOBJ)
@@ -773,11 +775,10 @@ extern void (* PrintPathFuncs[LAST_REAL_TNUM+1]) (
 *F  SET_TYPE_POSOBJ( <obj>, <val> ) . . . set the type of a positional object
 */
 #define SET_TYPE_POSOBJ(obj,val)  (ADDR_OBJ(obj)[0] = (val))
- 
+
 
 /****************************************************************************
 **
-
 *F  IS_DATOBJ( <obj> )  . . . . . . . . . . . . .  is an object a data object
 */
 #define IS_DATOBJ(obj)            (TNUM_OBJ(obj) == T_DATOBJ)
@@ -792,30 +793,26 @@ extern void (* PrintPathFuncs[LAST_REAL_TNUM+1]) (
 
 /****************************************************************************
 **
-*F  SET_TYPE_DATOBJ( <obj>, <val> )  . . . . .  set the type of a data object
+*F  SetTypeDatobj( <obj>, <kind> ) . . . . . .  set the type of a data object
+**
+**  'SetTypeDatobj' sets the kind <kind> of the data object <obj>.
 */
-#define SET_TYPE_DATOBJ(obj,val)  (ADDR_OBJ(obj)[0] = (val))
+extern void SetTypeDatObj( Obj obj, Obj type );
+
+#define SET_TYPE_DATOBJ(obj, type)  SetTypeDatObj(obj, type)
 
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  InitInfoObjects() . . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoObjects ( void );
 
 
 #endif // GAP_OBJECTS_H
-
-/****************************************************************************
-**
-
-*E  objects.h . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

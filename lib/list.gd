@@ -134,23 +134,23 @@ BIND_GLOBAL( "MAX_SIZE_LIST_INTERNAL", 2^(8*GAPInfo.BytesPerVariable-4) - 1 );
 ##  <#/GAPDoc>
 ##
 DeclareAttributeKernel( "Length", IsList, LENGTH );
+InstallTrueMethod(HasLength,IsPlistRep);
 
 
 #############################################################################
 ##
 #O  IsBound( <list>[<pos>] )  . . . . . . . . test for an element from a list
-#O  IsBound( <list>[<ix1>,<ix2>,...] )  . . . . . . . . test for an element from a list
 ##
 ##  <#GAPDoc Label="IsBound_list">
 ##  <ManSection>
 ##  <Oper Name="IsBound" Arg='list[n]' Label="for a list index"/>
-##  <Oper Name="IsBound" Arg='list[ix1,ix2,...]' Label="for multiple indices"/>
 ##
 ##  <Description>
 ##  <Ref Func="IsBound" Label="for a list index"/> returns <K>true</K>
-##  if the list <A>list</A> has a element at index <A>n</A>,
+##  if the list <A>list</A> has an element at index <A>n</A>,
 ##  and <K>false</K> otherwise.
-##  <A>list</A> must evaluate to a list, otherwise an error is signalled.
+##  <A>list</A> must evaluate to a list, or to an object for which a suitable
+##  method for <C>IsBound\[\]</C> has been installed, otherwise an error is signalled.
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> l := [ , 2, 3, , 5, , 7, , , , 11 ];;
@@ -161,15 +161,12 @@ DeclareAttributeKernel( "Length", IsList, LENGTH );
 ##  gap> IsBound( l[101] );
 ##  false
 ##  ]]></Example>
-##
-##  <C>IsBound(<A>list</A>[<A>ix1</A>,<A>ix2</A>,...]</C> is a short-hand for  
-##  <C>IsBound(<A>list</A>[[<A>ix1</A>,<A>ix2</A>,...]]</C>   
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
 DeclareOperationKernel( "IsBound[]",
-    [ IsList, IsObject ],
+    [ IsList, IS_INT ],
     ISB_LIST );
 
 
@@ -178,8 +175,53 @@ DeclareOperationKernel( "IsBound[]",
 #o  <list>[<pos>] . . . . . . . . . . . . . . . select an element from a list
 ##
 DeclareOperationKernel( "[]",
-    [ IsList, IsObject ],
+    [ IsList, IS_INT ],
     ELM_LIST );
+
+#############################################################################
+##
+##  <#GAPDoc Label="GetWithDefault_list">
+##  <ManSection>
+##  <Oper Name="GetWithDefault" Arg='list, n, default'/>
+##
+##  <Description>
+##  <Ref Func="GetWithDefault"/> returns the <A>n</A>th element of the list
+##  <A>list</A>, if <A>list</A> has a value at index <A>n</A>, and
+##  <A>default</A> otherwise.
+##  <P/>
+##  While this method can be used on any list, it is particularly useful
+##  for Weak Pointer lists <Ref Sect="Weak Pointer Objects"/> where the
+##  value of the list can change.
+##  <P/>
+##  To distinguish between the <A>n</A>th element being unbound, or
+##  <A>default</A> being in <A>list</A>, users can create a new mutable
+##  object, such as a string. <Ref Func="IsIdenticalObj"/> returns
+##  <K>false</K> for different mutable strings, even if their contents are
+##  the same.
+##
+##  <Example><![CDATA[
+##  gap> l := [1,2,,"a"];
+##  [ 1, 2,, "a" ]
+##  gap> newobj := "a";
+##  "a"
+##  gap> GetWithDefault(l, 2, newobj);
+##  2
+##  gap> GetWithDefault(l, 3, newobj);
+##  "a"
+##  gap> GetWithDefault(l, 4, newobj);
+##  "a"
+##  gap> IsIdenticalObj(GetWithDefault(l, 3, newobj), newobj);
+##  true
+##  gap> IsIdenticalObj(GetWithDefault(l, 4, newobj), newobj);
+##  false
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareOperationKernel( "GetWithDefault",
+    [ IsList, IS_INT, IsObject ],
+    ELM_DEFAULT_LIST );
 
 
 #############################################################################
@@ -207,17 +249,17 @@ DeclareOperationKernel( "Elm0List",
 ##  <#GAPDoc Label="Unbind_list">
 ##  <ManSection>
 ##  <Oper Name="Unbind" Arg='list[n]' Label="unbind a list entry"/>
-##  <Oper Name="Unbind" Arg='list[ix1,ix2,...]' Label="for multiple indices"/>
 ##
 ##  <Description>
-##  <Ref Func="Unbind" Label="unbind a list entry"/> deletes the element with index
-##  <A>n</A> in the mutable list <A>list</A>.  That is, after
+##  <Ref Func="Unbind" Label="unbind a list entry"/> deletes the element with
+##  index <A>n</A> in the mutable list <A>list</A>.  That is, after
 ##  execution of <Ref Func="Unbind" Label="unbind a list entry"/>,
 ##  <A>list</A> no longer has an assigned value with index <A>n</A>.
 ##  Thus <Ref Func="Unbind" Label="unbind a list entry"/> can be used to
 ##  produce holes in a list.
 ##  Note that it is not an error to unbind a nonexistant list element.
-##  <A>list</A> must evaluate to a list, otherwise an error is signalled.
+##  <A>list</A> must evaluate to a list, or to an object for which a suitable
+##  method for <C>Unbind\[\]</C> has been installed, otherwise an error is signalled.
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> l := [ , 2, 3, 5, , 7, , , , 11 ];;
@@ -235,14 +277,12 @@ DeclareOperationKernel( "Elm0List",
 ##  and there would be no way to tell
 ##  <Ref Func="Unbind" Label="unbind a list entry"/>
 ##  which component to remove.
-##  <C>Unbind(<A>list</A>[<A>ix1</A>,<A>ix2</A>,...]</C> is a short-hand for  
-##  <C>Unbind(<A>list</A>[[<A>ix1</A>,<A>ix2</A>,...]]</C>   
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
 DeclareOperationKernel( "Unbind[]",
-    [ IsList and IsMutable, IsObject ],
+    [ IsList and IsMutable, IS_INT ],
     UNB_LIST );
 
 
@@ -251,7 +291,7 @@ DeclareOperationKernel( "Unbind[]",
 #o  <list>[<pos>] := <obj>
 ##
 DeclareOperationKernel( "[]:=",
-    [ IsList and IsMutable, IsObject, IsObject ],
+    [ IsList and IsMutable, IS_INT, IsObject ],
     ASS_LIST );
 
 
@@ -505,14 +545,14 @@ InstallTrueMethod( IsSortedList, IsSSortedList );
 InstallTrueMethod( IsSSortedList, IsList and IsEmpty );
 
 
-#T #############################################################################
-#T ##
-#T #p  IsNSortedList( <list> )
-#T ##
-#T ##  returns `true' if the list <list> is not sorted (see~"IsSortedList").
-#T ##
-#T DeclarePropertyKernel( "IsNSortedList", IsDenseList, IS_NSORT_LIST );
-#T (is currently not really supported)
+#############################################################################
+##
+#p  IsNSortedList( <list> )
+##
+##  returns `true' if the list <list> is not sorted (see~"IsSortedList").
+##
+DeclarePropertyKernel( "IsNSortedList", IsDenseList, IS_NSORT_LIST );
+#T (is currently not really supported, but we declare it anyway so that FILTERS is dense
 
 
 #############################################################################
@@ -523,7 +563,7 @@ InstallTrueMethod( IsSSortedList, IsList and IsEmpty );
 ##  <#GAPDoc Label="IsDuplicateFree">
 ##  <ManSection>
 ##  <Prop Name="IsDuplicateFree" Arg='obj'/>
-##  <Prop Name="IsDuplicateFreeList" Arg='obj'/>
+##  <Filt Name="IsDuplicateFreeList" Arg='obj'/>
 ##
 ##  <Description>
 ##  <Ref Prop="IsDuplicateFree"/> returns <K>true</K> if <A>obj</A> is both a
@@ -867,6 +907,44 @@ DeclareGlobalFunction( "PositionSet" );
 DeclareOperation( "PositionProperty", [ IsList, IsFunction ] );
 DeclareOperation( "PositionProperty", [ IsList, IsFunction, IS_INT ] );
 
+#############################################################################
+##
+#O  PositionMaximum( <list> [, <func>] )
+#O  PositionMinimum( <list> [, <func>] )
+##
+##  <#GAPDoc Label="PositionMaximum">
+##  <ManSection>
+##  <Func Name="PositionMaximum" Arg='list [, func]'/>
+##  <Func Name="PositionMinimum" Arg='list [, func]'/>
+##
+##  <Description>
+##  returns the position of maximum (with <Ref Func="PositionMaximum"/>) or
+##  minimum (with <Ref Func="PositionMinimum"/>) entry in the list <A>list</A>.
+##  If a second argument <A>func</A> is passed, then return instead the position
+##  of the largest/smallest entry in <C>List( <A>list</A> , <A>func</A> )</C>.
+##  If several entries of the list are equal
+##  to the maximum/minimum, the first such position is returned.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> PositionMaximum( [2,4,-6,2,4] );
+##  2
+##  gap> PositionMaximum( [2,4,-6,2,4], x -> -x);
+##  3
+##  gap> PositionMinimum( [2,4,-6,2,4] );
+##  3
+##  gap> PositionMinimum( [2,4,-6,2,4], x -> -x);
+##  2
+##  ]]></Example>
+##  <P/>
+##  <Ref Func="Maximum" Label="for various objects"/> and 
+##  <Ref Func="Minimum" Label="for various objects"/>
+##  allow you to find the maximum or minimum element of a list directly.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction( "PositionMaximum" );
+DeclareGlobalFunction( "PositionMinimum" );
 
 #############################################################################
 ##
@@ -877,7 +955,8 @@ DeclareOperation( "PositionProperty", [ IsList, IsFunction, IS_INT ] );
 ##  <Oper Name="PositionsProperty" Arg='list, func'/>
 ##
 ##  <Description>
-##  returns the list of all those positions in the dense list <A>list</A>
+##  returns the list of all those positions in the list <A>list</A>
+##  which are bound and
 ##  for which the property tester function <A>func</A> returns <K>true</K>.
 ##  <P/>
 ##  <Example><![CDATA[
@@ -894,7 +973,7 @@ DeclareOperation( "PositionProperty", [ IsList, IsFunction, IS_INT ] );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareOperation( "PositionsProperty", [ IsDenseList, IsFunction ] );
+DeclareOperation( "PositionsProperty", [ IsList, IsFunction ] );
 
 
 #############################################################################
@@ -1474,7 +1553,8 @@ DeclareGlobalFunction( "IsLexicographicallyLess" );
 ##  <ManSection>
 ##  <Oper Name="Sort" Arg='list[, func]'/>
 ##  <Oper Name="SortBy" Arg='list, func'/>
-##
+##  <Oper Name="StableSort" Arg='list, [func]'/>
+##  <Oper Name="StableSortBy" Arg='list, [func]'/>
 ##  <Description>
 ##  <Ref Oper="Sort"/> sorts the list <A>list</A> in increasing order.
 ##  In the one argument form <Ref Oper="Sort"/> uses the operator <C>&lt;</C>
@@ -1488,8 +1568,9 @@ DeclareGlobalFunction( "IsLexicographicallyLess" );
 ##  <K>true</K> if the first is regarded as strictly smaller than the second,
 ##  and <K>false</K> otherwise.
 ##  <P/>
-##  Note that, in cases where it is applicable, <Ref Oper="SortBy"/> is likely to be more
-##  efficient.
+##  <Ref Oper="StableSort"/> behaves identically to <Ref Oper="Sort"/>, except
+##  that <Ref Oper="StableSort"/> will keep elements which compare equal in the
+##  same relative order, while <Ref Oper="Sort"/> may change their relative order.
 ##  <P/>
 ##  <Ref Oper="Sort"/> does not return anything,
 ##  it just changes the argument <A>list</A>.
@@ -1497,30 +1578,36 @@ DeclareGlobalFunction( "IsLexicographicallyLess" );
 ##  Use <Ref Func="Reversed"/> if you want to get a new list that is
 ##  sorted in decreasing order.
 ##  <P/>
-##  It is possible to sort lists that contain multiple elements which compare
-##  equal.
-##  It is not guaranteed that those elements keep their relative order,
-##  i.e., <Ref Oper="Sort"/> is not stable.
+##  <Ref Oper="SortBy"/> sorts the list <A>list</A> into an order such that
+##  <C>func(list[i]) &lt;= func(list[i+1])</C> for all relevant
+##  <A>i</A>. <A>func</A> must thus be a function on one argument which returns
+##  values that can be compared.  Each <C>func(list[i])</C> is computed just
+##  once and stored, making this more efficient than using the two-argument
+##  version of <Ref Oper="Sort"/> in many cases.
+##  <P/>
+##  <Ref Oper="StableSortBy"/> behaves the same as <Ref Oper="SortBy"/> except that,
+## like <Ref Oper="StableSort"/>, it keeps pairs of values which compare equal when
+## <C>func</C> is applied to them in the same relative order.
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> list := [ 5, 4, 6, 1, 7, 5 ];; Sort( list ); list;
 ##  [ 1, 4, 5, 5, 6, 7 ]
+##  gap> SortBy(list, x -> x mod 3);
+##  gap> list; # Sorted by mod 3
+##  [ 6, 1, 4, 7, 5, 5]
 ##  gap> list := [ [0,6], [1,2], [1,3], [1,5], [0,4], [3,4] ];;
 ##  gap> Sort( list, function(v,w) return v*v < w*w; end );
 ##  gap> list;  # sorted according to the Euclidean distance from [0,0]
 ##  [ [ 1, 2 ], [ 1, 3 ], [ 0, 4 ], [ 3, 4 ], [ 1, 5 ], [ 0, 6 ] ]
+##  gap> SortBy( list, function(v) return v[1] + v[2]; end );
+##  gap> list;  # sorted according to Manhattan distance from [0,0]
+##  [ [ 1, 2 ], [ 1, 3 ], [ 0, 4 ], [ 1, 5 ], [ 0, 6 ], [ 3, 4 ] ]
 ##  gap> list := [ [0,6], [1,3], [3,4], [1,5], [1,2], [0,4], ];;
 ##  gap> Sort( list, function(v,w) return v[1] < w[1]; end );
 ##  gap> # note the random order of the elements with equal first component:
 ##  gap> list;
 ##  [ [ 0, 6 ], [ 0, 4 ], [ 1, 3 ], [ 1, 5 ], [ 1, 2 ], [ 3, 4 ] ]
 ##  ]]></Example>
-##  <Ref Oper="SortBy"/> sorts the list <A>list</A> into an order such that
-##  <C>func(list[i]) &lt;= func(list[i+1])</C> for all relevant
-##  <A>i</A>. <A>func</A> must thus be a function on one argument which returns
-##  values that can be compared.  Each <C>func(list[i])</C> is computed just
-##  once and stored, making this more efficient than using the two-argument
-##  version of <Ref Oper="Sort"/> in many cases.  
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -1528,6 +1615,10 @@ DeclareGlobalFunction( "IsLexicographicallyLess" );
 DeclareOperation( "Sort", [ IsList and IsMutable ] );
 DeclareOperation( "Sort", [ IsList and IsMutable, IsFunction ] );
 DeclareOperation( "SortBy", [IsList and IsMutable, IsFunction ] );
+
+DeclareOperation( "StableSort", [ IsList and IsMutable ] );
+DeclareOperation( "StableSort", [ IsList and IsMutable, IsFunction ] );
+DeclareOperation( "StableSortBy", [IsList and IsMutable, IsFunction ] );
 
 
 #############################################################################
@@ -1632,13 +1723,18 @@ DeclareGlobalFunction( "PermListList" );
 ##  <#GAPDoc Label="SortParallel">
 ##  <ManSection>
 ##  <Oper Name="SortParallel" Arg='list1, list2[, func]'/>
+##  <Oper Name="StableSortParallel" Arg='list1, list2[, func]'/>
 ##
 ##  <Description>
-##  sorts the list <A>list1</A> in increasing order
+##  <Ref Oper="SortParallel"/> sorts the list <A>list1</A> in increasing order
 ##  just as <Ref Func="Sort"/> does.
 ##  In parallel it applies the same exchanges that are necessary to sort
 ##  <A>list1</A> to the list <A>list2</A>,
 ##  which must of course have at least as many elements as <A>list1</A> does.
+##  <P/>
+##  <Ref Oper="StableSortParallel"/> behaves identically to
+##  <Ref Oper="SortParallel"/>, except it keeps elements in <A>list1</A> which
+##  compare equal in the same relative order.
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> list1 := [ 5, 4, 6, 1, 7, 5 ];;
@@ -1651,7 +1747,8 @@ DeclareGlobalFunction( "PermListList" );
 ##  ]]></Example>
 ##  <P/>
 ##  Note that <C>[ 7, 3, 2, 9, 5, 8 ]</C> or <C>[ 7, 3, 9, 2, 5, 8 ]</C>
-##  are possible results.
+##  are possible results. <Ref Oper="StableSortParallel"/> will always
+##  return <C>[ 7, 3, 2, 9, 5, 8]</C>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -1659,6 +1756,11 @@ DeclareGlobalFunction( "PermListList" );
 DeclareOperation( "SortParallel",
     [ IsDenseList and IsMutable, IsDenseList and IsMutable ] );
 DeclareOperation( "SortParallel",
+    [ IsDenseList and IsMutable, IsDenseList and IsMutable, IsFunction ] );
+
+DeclareOperation( "StableSortParallel",
+    [ IsDenseList and IsMutable, IsDenseList and IsMutable ] );
+DeclareOperation( "StableSortParallel",
     [ IsDenseList and IsMutable, IsDenseList and IsMutable, IsFunction ] );
 
 
@@ -1692,6 +1794,7 @@ DeclareOperation( "SortParallel",
 ##  gap> Maximum( [1,2], [0,15], [1,5], [2,-11] );  
 ##  [ 2, -11 ]
 ##  ]]></Example>
+##  To get the index of the maximum element use <Ref Func="PositionMaximum"/>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -1734,6 +1837,7 @@ DeclareGlobalFunction( "Maximum" );
 ##  gap> Minimum( [ 1, 2 ], [ 0, 15 ], [ 1, 5 ], [ 2, -11 ] );
 ##  [ 0, 15 ]
 ##  ]]></Example>
+##  To get the index of the minimum element use <Ref Func="PositionMinimum"/>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -1813,7 +1917,7 @@ DeclareOperation( "MinimumList", [ IsList, IsObject ] );
 ##  That means that the first element <A>tup1</A> of <A>cart</A> contains
 ##  the first element from <A>list1</A>, from <A>list2</A> and so on.
 ##  The second element <A>tup2</A> of <A>cart</A> contains the first element
-##  from <A>list1</A>, the first from <A>list2</A>, an so on,
+##  from <A>list1</A>, the first from <A>list2</A>, and so on,
 ##  but the last element of <A>tup2</A> is the second element of the last
 ##  argument list.
 ##  This implies that <A>cart</A> is a proper set if and only if all argument
@@ -2297,16 +2401,17 @@ DeclareGlobalFunction("BlistStringDecode");
 ##
 #F  Average(l);
 #F  Median(l);
+#F  Variance(l);
 ##
 ##  For a nonempty list of objects that can be ordered totally and permit
 ##  scalar multiplication by rational numbers, these functions compute the
-##  average and median of the objects in the list.
+##  average, median, and variance of the objects in the list.
 ##
 DeclareGlobalFunction("Average");
 DeclareGlobalFunction("Median");
+DeclareGlobalFunction("Variance");
 
 
 #############################################################################
 ##
 #E
-

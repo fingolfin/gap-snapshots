@@ -278,9 +278,8 @@ DeclareOperation("LookupDictionary",[IsDictionary,IsObject]);
 
 DeclareSynonym("GetHashEntry",LookupDictionary);
 
-
 IsDictionaryDefaultRep:=NewRepresentation("IsDictionaryDefaultRep",
-  IsDictionary and IsComponentObjectRep,[]);
+  IsDictionary and IsNonAtomicComponentObjectRep,[]);
 
 #############################################################################
 ##
@@ -353,7 +352,7 @@ IsSortLookupDictionary:=NewRepresentation("IsSortLookupDictionary",
 ##
 IsPositionDictionary:=NewRepresentation("IsPositionDictionary",
   IsDictionaryDefaultRep,["domain","blist"] );
-IsPositionLookupDictionary:=NewRepresentation("IsPositionDictionary",
+IsPositionLookupDictionary:=NewRepresentation("IsPositionLookupDictionary",
   IsPositionDictionary and IsLookupDictionary,
   ["domain","blist","vals"] );
 
@@ -501,7 +500,7 @@ DeclareGlobalFunction( "DenseHashTable", [] );
 DeclareRepresentation( "IsSparseHashRep",
     # as we will call `Enumerator' to get the *current* value list, a hash
     # table may not be attribute storing.
-    IsComponentObjectRep and IsHash,
+    IsNonAtomicComponentObjectRep and IsHash,
     ["KeyArray", "ValueArray", "HashFunct", "LengthArray",
      "LengthArrayHalf", # so we dont need to *2 to see overflow
      "NumberKeys"] );
@@ -515,17 +514,19 @@ BindGlobal("DefaultSparseHashWithIKRepType",
 
 #############################################################################
 ##
-#F  SparseHashTable([<intkeyfun>])
+#F  SparseHashTable([<intkeyfun>[,<startlength>])
 ##
 ##  <#GAPDoc Label="SparseHashTable">
 ##  <ManSection>
-##  <Func Name="SparseHashTable" Arg='[intkeyfun]'/>
+##  <Func Name="SparseHashTable" Arg='[intkeyfun[,startlength]]'/>
 ##
 ##  <Description>
 ##  Construct an empty sparse hash table.  This is the only correct way to
 ##  construct such a table.
 ##  If the argument <A>intkeyfun</A> is given, this function will be used to
 ##  obtain numbers for the keys passed to it.
+##  If also <A>startlength</A> is given, the hash table will be initalized
+##  at that size.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -694,4 +695,3 @@ DeclareOperation( "SetHashEntry", [ IsHash and IsMutable, IsObject, IsObject ] )
 ##DeclareOperation( "AddHashEntryAtLastIndex", [ IsHash and IsMutable, IsObject ] );
 
 #E
-

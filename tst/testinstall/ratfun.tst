@@ -5,8 +5,6 @@
 ##
 #Y  (C) 1998 School Math. and Comp. Sci., University of St Andrews, Scotland
 ##
-##  To be listed in testinstall.g
-##
 gap> START_TEST("ratfun.tst");
 gap> t:=Indeterminate(Rationals,100);;
 gap> SetName(t,"t");;
@@ -37,7 +35,7 @@ gap> Value(det,[y1,y2,y3],[1,-5,1]);
 12
 gap> 1/( y1*y2 );
 1/(x_1*x_2)
-gap> STOP_TEST( "ratfun.tst", 300000);
+gap> STOP_TEST( "ratfun.tst", 1);
 
 #############################################################################
 ##

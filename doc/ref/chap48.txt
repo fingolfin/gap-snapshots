@@ -344,8 +344,6 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xp := PresentationSubgroupMtc( g, u );[127X[104X
-    [4X[28X#I  there are 3 generators and 4 relators of total length 12[128X[104X
-    [4X[28X#I  there are 2 generators and 3 relators of total length 14[128X[104X
     [4X[28X<presentation with 2 gens and 3 rels of total length 14>[128X[104X
   [4X[32X[104X
   
@@ -1491,52 +1489,30 @@
     [4X[25Xgap>[125X [27XH := Subgroup( G, [ a, c ] );;[127X[104X
     [4X[25Xgap>[125X [27XSetInfoLevel( InfoFpGroup, 1 );[127X[104X
     [4X[25Xgap>[125X [27XP := PresentationSubgroupMtc( G, H );;[127X[104X
-    [4X[28X#I  index = 240  total = 4737  max = 4507[128X[104X
-    [4X[28X#I  MTC defined 2 primary and 4444 secondary subgroup generators[128X[104X
-    [4X[28X#I  there are 246 generators and 617 relators of total length 2893[128X[104X
-    [4X[28X#I  calling DecodeTree[128X[104X
-    [4X[28X#I  there are 114 generators and 385 relators of total length 1860[128X[104X
-    [4X[28X#I  there are 69 generators and 294 relators of total length 1855[128X[104X
-    [4X[28X#I  there are 43 generators and 235 relators of total length 2031[128X[104X
-    [4X[28X#I  there are 35 generators and 207 relators of total length 2348[128X[104X
-    [4X[28X#I  there are 25 generators and 181 relators of total length 3055[128X[104X
-    [4X[28X#I  there are 19 generators and 165 relators of total length 3290[128X[104X
-    [4X[28X#I  there are 20 generators and 160 relators of total length 5151[128X[104X
-    [4X[28X#I  there are 23 generators and 159 relators of total length 8177[128X[104X
-    [4X[28X#I  there are 25 generators and 159 relators of total length 12241[128X[104X
-    [4X[28X#I  there are 29 generators and 159 relators of total length 18242[128X[104X
-    [4X[28X#I  there are 34 generators and 159 relators of total length 27364[128X[104X
-    [4X[28X#I  there are 38 generators and 159 relators of total length 41480[128X[104X
-    [4X[28X#I  there are 41 generators and 159 relators of total length 62732[128X[104X
-    [4X[28X#I  there are 45 generators and 159 relators of total length 88872[128X[104X
-    [4X[28X#I  there are 46 generators and 159 relators of total length 111092[128X[104X
-    [4X[28X#I  there are 44 generators and 155 relators of total length 158181[128X[104X
-    [4X[28X#I  there are 32 generators and 155 relators of total length 180478[128X[104X
-    [4X[28X#I  there are 7 generators and 133 relators of total length 29897[128X[104X
-    [4X[28X#I  there are 4 generators and 119 relators of total length 28805[128X[104X
-    [4X[28X#I  there are 3 generators and 116 relators of total length 35209[128X[104X
-    [4X[28X#I  there are 2 generators and 111 relators of total length 25658[128X[104X
-    [4X[28X#I  there are 2 generators and 111 relators of total length 22634[128X[104X
+    [4X[28X#I  there are 4 generators and 144 relators of total length 4373[128X[104X
+    [4X[28X#I  there are 4 generators and 140 relators of total length 3898[128X[104X
+    [4X[28X#I  there are 4 generators and 137 relators of total length 3715[128X[104X
+    [4X[28X#I  there are 4 generators and 135 relators of total length 3380[128X[104X
+    [4X[28X#I  there are 4 generators and 134 relators of total length 3291[128X[104X
+    [4X[28X#I  there are 4 generators and 133 relators of total length 3212[128X[104X
+    [4X[28X#I  there are 3 generators and 129 relators of total length 6494[128X[104X
+    [4X[28X#I  there are 3 generators and 128 relators of total length 5465[128X[104X
+    [4X[28X#I  there are 3 generators and 127 relators of total length 3722[128X[104X
+    [4X[28X#I  there are 3 generators and 126 relators of total length 3048[128X[104X
+    [4X[28X#I  there are 2 generators and 10 relators of total length 118[128X[104X
+    [4X[28X#I  there are 2 generators and 5 relators of total length 38[128X[104X
     [4X[25Xgap>[125X [27XTzGoGo( P );[127X[104X
-    [4X[28X#I  there are 2 generators and 108 relators of total length 11760[128X[104X
-    [4X[28X#I  there are 2 generators and 95 relators of total length 6482[128X[104X
-    [4X[28X#I  there are 2 generators and 38 relators of total length 1464[128X[104X
-    [4X[28X#I  there are 2 generators and 8 relators of total length 116[128X[104X
-    [4X[28X#I  there are 2 generators and 7 relators of total length 76[128X[104X
-    [4X[28X#I  there are 2 generators and 6 relators of total length 66[128X[104X
-    [4X[28X#I  there are 2 generators and 6 relators of total length 52[128X[104X
     [4X[25Xgap>[125X [27XTzPrintGenerators( P );[127X[104X
-    [4X[28X#I  1.  _x1   26 occurrences[128X[104X
-    [4X[28X#I  2.  _x2   26 occurrences[128X[104X
+    [4X[28X#I  1.  _x1   19 occurrences[128X[104X
+    [4X[28X#I  2.  _x2   19 occurrences[128X[104X
     [4X[25Xgap>[125X [27XTzPrint( P );[127X[104X
     [4X[28X#I  generators: [ _x1, _x2 ][128X[104X
     [4X[28X#I  relators:[128X[104X
     [4X[28X#I  1.  3  [ 1, 1, 1 ][128X[104X
     [4X[28X#I  2.  3  [ 2, 2, 2 ][128X[104X
-    [4X[28X#I  3.  8  [ 2, -1, 2, -1, 2, -1, 2, -1 ][128X[104X
+    [4X[28X#I  3.  8  [ 1, -2, 1, -2, 1, -2, 1, -2 ][128X[104X
     [4X[28X#I  4.  8  [ 2, 1, 2, 1, 2, 1, 2, 1 ][128X[104X
-    [4X[28X#I  5.  14  [ -1, -2, 1, 2, 1, -2, -1, 2, 1, -2, -1, -2, 1, 2 ][128X[104X
-    [4X[28X#I  6.  16  [ 1, 2, 1, -2, 1, 2, 1, -2, 1, 2, 1, -2, 1, 2, 1, -2 ][128X[104X
+    [4X[28X#I  5.  16  [ 2, -1, 2, 1, 2, -1, 2, 1, 2, -1, 2, 1, 2, -1, 2, 1 ][128X[104X
     [4X[25Xgap>[125X [27XK :=  FpGroupPresentation( P );[127X[104X
     [4X[28X<fp group on the generators [ _x1, _x2 ]>[128X[104X
     [4X[25Xgap>[125X [27XSetInfoLevel( InfoFpGroup, 0 );[127X[104X
@@ -1656,7 +1632,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XTzPrintOptions( P );[127X[104X
-    [4X[28X#I  protected          = 0[128X[104X
+    [4X[28X#I  protected          = 2[128X[104X
     [4X[28X#I  eliminationsLimit  = 100[128X[104X
     [4X[28X#I  expandLimit        = 150[128X[104X
     [4X[28X#I  generatorsLimit    = 0[128X[104X

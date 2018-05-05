@@ -49,8 +49,8 @@
   Instead  it  may  be worth to convert all factors to a common representation
   first, before forming the product.[133X
   
-  [33X[0;0YFor  a direct product [22XP[122X, calling [2XEmbedding[102X ([14X32.2-10[114X) with [22XP[122X and [22Xn[122X yields the
-  homomorphism  embedding the [22Xn[122X-th factor into [22XP[122X; calling [2XProjection[102X ([14X32.2-11[114X)
+  [33X[0;0YFor  a direct product [22XP[122X, calling [2XEmbedding[102X ([14X32.2-11[114X) with [22XP[122X and [22Xn[122X yields the
+  homomorphism  embedding the [22Xn[122X-th factor into [22XP[122X; calling [2XProjection[102X ([14X32.2-12[114X)
   with [3XP[103X and [3Xn[103X yields the projection of [22XP[122X onto the [22Xn[122X-th factor, see [14X49.6[114X.[133X
   
   [4X[32X  Example  [32X[104X
@@ -103,13 +103,12 @@
     [4X[25Xgap>[125X [27Xau:=DerivedSubgroup(AutomorphismGroup(n));;[127X[104X
     [4X[25Xgap>[125X [27XSize(au);[127X[104X
     [4X[28X120[128X[104X
-    [4X[25Xgap>[125X [27Xp:=SemidirectProduct(au,n);[127X[104X
-    [4X[28X<permutation group with 5 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xp:=SemidirectProduct(au,n);;[127X[104X
     [4X[25Xgap>[125X [27XSize(p);[127X[104X
     [4X[28X3000[128X[104X
     [4X[25Xgap>[125X [27Xn:=Group((1,2),(3,4));;[127X[104X
     [4X[25Xgap>[125X [27Xau:=AutomorphismGroup(n);;[127X[104X
-    [4X[25Xgap>[125X [27Xau:=First(Elements(au),i->Order(i)=3);;[127X[104X
+    [4X[25Xgap>[125X [27Xau:=First(AsSet(au),i->Order(i)=3);;[127X[104X
     [4X[25Xgap>[125X [27Xau:=Group(au);[127X[104X
     [4X[28X<group with 1 generators>[128X[104X
     [4X[25Xgap>[125X [27XIsGroupOfAutomorphisms(au);[127X[104X
@@ -118,16 +117,11 @@
     [4X[28X<pc group with 3 generators>[128X[104X
     [4X[25Xgap>[125X [27Xn:=AbelianGroup(IsPcGroup,[2,2]);[127X[104X
     [4X[28X<pc group of size 4 with 2 generators>[128X[104X
-    [4X[25Xgap>[125X [27Xau:=AutomorphismGroup(n);[127X[104X
-    [4X[28X<group of size 6 with 2 generators>[128X[104X
-    [4X[25Xgap>[125X [27Xapc:=IsomorphismPcGroup(au);[127X[104X
-    [4X[28XCompositionMapping( Pcgs([ (2,3), (1,2,3) ]) -> [128X[104X
-    [4X[28X[ f1, f2 ], <action isomorphism> )[128X[104X
+    [4X[25Xgap>[125X [27Xau:=AutomorphismGroup(n);;[127X[104X
+    [4X[25Xgap>[125X [27Xapc:=IsomorphismPcGroup(au);;[127X[104X
     [4X[25Xgap>[125X [27Xg:=Image(apc);[127X[104X
     [4X[28XGroup([ f1, f2 ])[128X[104X
-    [4X[25Xgap>[125X [27Xapci:=InverseGeneralMapping(apc);[127X[104X
-    [4X[28X[ f1*f2^2, f1*f2 ] -> [ Pcgs([ f1, f2 ]) -> [ f1*f2, f2 ], [128X[104X
-    [4X[28X  Pcgs([ f1, f2 ]) -> [ f2, f1 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xapci:=InverseGeneralMapping(apc);;[127X[104X
     [4X[25Xgap>[125X [27XIsGroupHomomorphism(apci);[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27Xp:=SemidirectProduct(g,apci,n);[127X[104X
@@ -148,9 +142,9 @@
     [4X[28X<matrix group of size 15360 with 4 generators>[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YFor  a  semidirect product [22XP[122X of [3XG[103X with [3XN[103X, calling [2XEmbedding[102X ([14X32.2-10[114X) with [22XP[122X
-  and  [10X1[110X  yields  the embedding of [3XG[103X, calling [2XEmbedding[102X ([14X32.2-10[114X) with [22XP[122X and [10X2[110X
-  yields  the  embedding  of [3XN[103X; calling [2XProjection[102X ([14X32.2-11[114X) with [3XP[103X yields the
+  [33X[0;0YFor  a  semidirect product [22XP[122X of [3XG[103X with [3XN[103X, calling [2XEmbedding[102X ([14X32.2-11[114X) with [22XP[122X
+  and  [10X1[110X  yields  the embedding of [3XG[103X, calling [2XEmbedding[102X ([14X32.2-11[114X) with [22XP[122X and [10X2[110X
+  yields  the  embedding  of [3XN[103X; calling [2XProjection[102X ([14X32.2-12[114X) with [3XP[103X yields the
   projection of [22XP[122X onto [3XG[103X, see [14X49.6[114X.[133X
   
   [4X[32X  Example  [32X[104X
@@ -177,12 +171,12 @@
   
   [1X49.3-1 SubdirectProduct[101X
   
-  [33X[1;0Y[29X[2XSubdirectProduct[102X( [3XG[103X, [3XH[103X, [3XGhom[103X, [3XHhom[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XSubdirectProduct[102X( [3XG[103X, [3XH[103X, [3XGhom[103X, [3XHhom[103X ) [32X function[133X
   
   [33X[0;0Yconstructs the subdirect product of [3XG[103X and [3XH[103X with respect to the epimorphisms
   [3XGhom[103X from [3XG[103X onto a group [22XA[122X and [3XHhom[103X from [3XH[103X onto the same group [22XA[122X.[133X
   
-  [33X[0;0YFor  a subdirect product [22XP[122X, calling [2XProjection[102X ([14X32.2-11[114X) with [22XP[122X and [22Xn[122X yields
+  [33X[0;0YFor  a subdirect product [22XP[122X, calling [2XProjection[102X ([14X32.2-12[114X) with [22XP[122X and [22Xn[122X yields
   the projection on the [22Xn[122X-th factor. (In general the factors do not embed into
   a subdirect product.)[133X
   
@@ -242,10 +236,10 @@
   permutation action of [3XH[103X on its elements.[133X
   
   [33X[0;0YFor a wreath product [22XW[122X of [3XG[103X with a permutation group [22XP[122X of degree [22Xn[122X and [22X1 ≤ i
-  ≤  n[122X  calling  [2XEmbedding[102X ([14X32.2-10[114X) with [22XW[122X and [22Xi[122X yields the embedding of [3XG[103X in
+  ≤  n[122X  calling  [2XEmbedding[102X ([14X32.2-11[114X) with [22XW[122X and [22Xi[122X yields the embedding of [3XG[103X in
   the [22Xi[122X-th component of the direct product of the base group [22X[3XG[103X^n[122X of [22XW[122X. For [22Xi =
-  n+1[122X,  [2XEmbedding[102X  ([14X32.2-10[114X)  yields  the  embedding  of  [22XP[122X  into  [22XW[122X.  Calling
-  [2XProjection[102X  ([14X32.2-11[114X)  with [22XW[122X yields the projection onto the acting group [22XP[122X,
+  n+1[122X,  [2XEmbedding[102X  ([14X32.2-11[114X)  yields  the  embedding  of  [22XP[122X  into  [22XW[122X.  Calling
+  [2XProjection[102X  ([14X32.2-12[114X)  with [22XW[122X yields the projection onto the acting group [22XP[122X,
   see [14X49.6[114X.[133X
   
   [4X[32X  Example  [32X[104X
@@ -278,7 +272,7 @@
   [22Xm[122X  points this action will be on [22Xl ⋅ m[122X points, it will be imprimitive with [22Xm[122X
   blocks of size [22Xl[122X each.[133X
   
-  [33X[0;0YThe  operations [2XEmbedding[102X ([14X32.2-10[114X) and [2XProjection[102X ([14X32.2-11[114X) operate on this
+  [33X[0;0YThe  operations [2XEmbedding[102X ([14X32.2-11[114X) and [2XProjection[102X ([14X32.2-12[114X) operate on this
   product as described for general wreath products.[133X
   
   [4X[32X  Example  [32X[104X
@@ -295,7 +289,7 @@
   product  in  product  action.  If  [3XG[103X acts on [22Xl[122X points and [3XH[103X on [22Xm[122X points this
   action will be on [22Xl^m[122X points.[133X
   
-  [33X[0;0YThe  operations [2XEmbedding[102X ([14X32.2-10[114X) and [2XProjection[102X ([14X32.2-11[114X) operate on this
+  [33X[0;0YThe  operations [2XEmbedding[102X ([14X32.2-11[114X) and [2XProjection[102X ([14X32.2-12[114X) operate on this
   product as described for general wreath products.[133X
   
   [4X[32X  Example  [32X[104X
@@ -345,7 +339,7 @@
   groups given as arguments. If the group arguments are not finitely presented
   groups, then [2XIsomorphismFpGroup[102X ([14X47.11-1[114X) must be defined for them.[133X
   
-  [33X[0;0YThe operation [2XEmbedding[102X ([14X32.2-10[114X) operates on this product.[133X
+  [33X[0;0YThe operation [2XEmbedding[102X ([14X32.2-11[114X) operates on this product.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xg := DihedralGroup(8);;[127X[104X

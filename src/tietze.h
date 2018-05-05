@@ -13,25 +13,18 @@
 #ifndef GAP_TIETZE_H
 #define GAP_TIETZE_H
 
+#include <src/system.h>
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  InitInfoTietze()  . . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoTietze ( void );
 
 
 #endif // GAP_TIETZE_H
-
-/****************************************************************************
-**
-
-*E  tietze.h  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

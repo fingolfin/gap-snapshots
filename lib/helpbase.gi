@@ -90,9 +90,9 @@ end);
 ##  - Modification of these rules (or using the patterns where one of
 ##    spelling variants is the trailing substring of another) may require
 ##    changing algorithms used in `FindMultiSpelledHelpEntries' and
-##    `SuggestedSpellings'.
+##    `HELP_SEARCH_ALTERNATIVES'.
 
-BindGlobal( "TRANSATL", 
+BindGlobal( "TRANSATL", MakeImmutable(
             [ [ "atalogue", "atalog" ],
               [ "olour", "olor" ],
               [ "entre", "enter" ],
@@ -100,21 +100,22 @@ BindGlobal( "TRANSATL",
               [ "ise", "ize" ],
               [ "abeling", "abelling" ],
               [ "olvable", "oluble" ],
-              [ "yse", "yze" ] ] );
+              [ "yse", "yze" ],
+              [ "roebner", "robner"]] ) );
 
 
 #############################################################################
 ##
-##  SuggestedSpellings
+##  HELP_SEARCH_ALTERNATIVES
 ## 
 ##  This function is used by HELP_GET_MATCHES to check if the search topic
-##  might have different spellings, lookign for patterns from `TRANSATL'.
+##  might have different spellings, looking for patterns from `TRANSATL'.
 ##  
 ##  It returns a list of suggested spellings of a string, for example:
 ##
-##  gap> SuggestedSpellings("TriangulizeMat");
+##  gap> HELP_SEARCH_ALTERNATIVES("TriangulizeMat");
 ##  [ "TrianguliseMat", "TriangulizeMat" ]
-##  gap> SuggestedSpellings("CentralizerSolvableGroup");
+##  gap> HELP_SEARCH_ALTERNATIVES("CentralizerSolvableGroup");
 ##  [ "CentraliserSolubleGroup", "CentraliserSolvableGroup", 
 ##    "CentralizerSolubleGroup", "CentralizerSolvableGroup" ]
 ##
@@ -131,9 +132,13 @@ BindGlobal( "TRANSATL",
 ##  about a dozen of entries which contains two occurrences of some patterns, 
 ##  and none with three or more of them.
 ##
-BindGlobal( "SuggestedSpellings", function( topic )
+##  In addition, it ensures that the search for system setters and testers
+##  such as e.g. ?SetIsMapping and ?HasIsMapping will return corresponding
+##  attributes and properties. e.g. IsMapping.
+##
+BindGlobal( "HELP_SEARCH_ALTERNATIVES", function( topic )
 local positions, patterns, pattern, where, what, variant, pos,
-      newwhere, newwhat, i, chop, begin, topics;
+      newwhere, newwhat, i, chop, begin, topics, shorttopic, r;
 
 positions:=[];
 patterns:=[];
@@ -185,36 +190,58 @@ for pattern in TRANSATL do
   fi;
 od;
 
-if Length(positions) = 0 then # no matches - return immeditely
-  return [ topic ];
-fi;  
+if Length(positions) > 0 then # matches found
+  # sort data about matches accordingly to their positions in `topic'.
+  SortParallel( positions, patterns );
 
-# sort data about matches accordingly to their positions in `topic'.
-SortParallel( positions, patterns );
+  # Now chop the string 'topic' into a list of lists, each of them either
+  # a list of all variants from the respective spelling pattern or just
+  # a one-element list with the "glueing" string between two patterns or
+  # a pattern and the beginning or end of the string.
 
-# Now chop the string 'topic' into a list of lists, each of them either
-# a list of all variants from the respective spelling pattern or just
-# a one-element list with the "glueing" string between two pattersn or
-# a pattern and the beginning or end of the string. 
+  chop:=[];
+  begin:=1;
+  for i in [1..Length(positions)] do
+    Add( chop, [ topic{[begin..patterns[i].start-1 ]} ] );
+    Add( chop, patterns[i].pattern );
+    begin := Minimum( patterns[i].finish+1, Length(topic) );
+  od;
 
-chop:=[];
-begin:=1;
-for i in [1..Length(positions)] do
-  Add( chop, [ topic{[begin..patterns[i].start-1 ]} ] );
-  Add( chop, patterns[i].pattern );
-  begin := Minimum( patterns[i].finish+1, Length(topic) );
-od;
+  if begin < Length( topic ) then
+    Add( chop, [ topic{[begin..Length(topic)]} ] );
+  fi;
 
-if begin < Length( topic ) then
-  Add( chop, [ topic{[begin..Length(topic)]} ] );
+  # Take the cartesian product of 'chop' and form spelling suggestions
+  # as concatenations of its elements.
+
+  topics := List( Cartesian(chop), Concatenation );
+
+else # no matches
+
+  topics := [ topic ];
+
 fi;
 
-# Take the cartesian product of 'chop' and form spelling suggestions 
-# as concatenations of its elements. 
+r := [];
 
-topics := List( Cartesian(chop), Concatenation );
-Sort( topics );
-return( topics );
+# This ensures that e.g. `?HasIsMapping` will show `IsMapping` even if only the
+# latter is documented. It is guaranteed that the help system will send search
+# terms in lowercase. The requirement of the search term to have the length at
+# least 5 and do not have a space after "has" or "set" is essential: it prevents
+# "set stabiliser", "hash", "sets", "SetX" etc. to be handled in the same way.
+for topic in topics do
+  if Length(topic) > 4 and topic{[1..3]} in [ "has" , "set" ] and topic[4]<>' ' then
+    shorttopic := topic{[4..Length(topic)]};
+    Append( r, [ shorttopic,
+                 Concatenation( "has", shorttopic),
+                 Concatenation( "set", shorttopic) ] );
+  else
+    Add(r, topic );
+  fi;
+od;
+
+Sort( r );
+return( r );
 
 end);
 
@@ -226,7 +253,7 @@ end);
 ##
 ##  This utility may be used in checks of the help system by GAP developers.
 ##
-##  `HELP_GET_MATCHES' uses `SuggestedSpellings' to look for other possible
+##  `HELP_GET_MATCHES' uses `HELP_SEARCH_ALTERNATIVES' to look for other possible
 ##  spellings, e.g. Normaliser/Normalizer, Center/Centre, Solvable/Soluble, 
 ##  Analyse/Analyze, Factorisation/Factorization etc. 
 ##
@@ -266,7 +293,7 @@ for pair in TRANSATL do
       # same pattern appears more than once.
       hits := Sum(Flat(patterns));
       if hits >= 1 then
-        AddSet( report, [ hits, book, match ] );
+        AddSet( report, MakeImmutable([ hits, book, match ]) );
       fi;
     od;
   od;
@@ -289,7 +316,8 @@ fi;
 ##  No form of  normalization is applied to  <a> or <b>, so this  should be done
 ##  before calling MATCH_BEGIN.
 ##  
-InstallGlobalFunction(MATCH_BEGIN, function( a, b ) local p,q;
+InstallGlobalFunction(MATCH_BEGIN, function( a, b )
+    local p,q;
 
     if Length(a)=0 and Length(b)=0 then
       return true;
@@ -415,7 +443,7 @@ InstallGlobalFunction(SIMPLE_STRING, function(str)
 "efghijklmnopqrstuvwxyz[\000]^_\000abcdefghijklmnopqrstuvwxyz{ }~",
 "\177\200\201\202",
 "\203\204\205\206\207\210\211\212\213\214\215\216\217\220\221\222\223\224\225",
-"\226\227\230\231\232\233\234\235\236\237\238",
+"\226\227\230\231\232\233\234\235\236\237\240",
 "\241\242\244\244\246\246\250\250\251\252\253\254\255\256\257\260\261\262",
 "\264\264\265\266\270\270\271\272\276\276\276\276\277aaaaaa",
 "aceeeeiiiidnooooo\327ouuuuypsaaaaaaaceeeeiiiidnooooo\367ouuuuypy"
@@ -470,7 +498,7 @@ InstallGlobalFunction(HELP_ADD_BOOK, function( short, long, dir )
   # (looks a bit lengthy)
   sortfun := function(a, b)
     local main, pa, pb;
-    main := ["tutorial", "reference", "changes"];
+    main := ["tutorial", "reference", "changes", "hpc-gap", "development" ];
     pa := Position(main, a);
     pb := Position(main, b);
     if pa <> fail then
@@ -519,7 +547,7 @@ end);
 
 InstallGlobalFunction(HELP_REMOVE_BOOK, function( short )
   local str, pos;
-  
+
   str := SIMPLE_STRING(short);
   pos := Position(HELP_KNOWN_BOOKS[1], str);
   if pos = fail then
@@ -569,7 +597,7 @@ InstallValue(HELP_BOOK_HANDLER, rec(default:=rec()));
 ##  This information is  stored in a record with at  least the following
 ##  components, which are used by this generic interface to the help system:
 ##
-##  bookname:	    
+##  bookname:
 ##  
 ##    The short name of the book, e.g. "ref", "matrix", "EDIM".
 ##  
@@ -713,7 +741,7 @@ InstallGlobalFunction(HELP_SHOW_BOOKS, function( arg )
   Append(books, List(HELP_KNOWN_BOOKS[2], a-> FILLED_LINE(a[1], a[2], ' ')));
   Pager(books);
   return true;
-  
+
 end);
 
 #############################################################################
@@ -721,7 +749,7 @@ end);
 #F  HELP_SHOW_CHAPTERS( <book> )  . . . . . . . . . . . . . show all chapters
 ##
 InstallGlobalFunction(HELP_SHOW_CHAPTERS, function(book)
-  local   info;
+  local info;
   # delegate to handler 
   info := HELP_BOOK_INFO(book);
   if info = fail then
@@ -731,7 +759,7 @@ InstallGlobalFunction(HELP_SHOW_CHAPTERS, function(book)
     HELP_LAST.MATCH := 1;
     Pager(HELP_BOOK_HANDLER.(info.handler).ShowChapters(info));
   fi;
-  return true;  
+  return true;
 end);
 
 #############################################################################
@@ -739,7 +767,7 @@ end);
 #F  HELP_SHOW_SECTIONS( <book> )  . . . . . . . . . . . . . show all sections
 ##
 InstallGlobalFunction(HELP_SHOW_SECTIONS, function(book)
-  local   info;
+  local info;
   # delegate to handler 
   info := HELP_BOOK_INFO(book);
   if info = fail then
@@ -749,7 +777,7 @@ InstallGlobalFunction(HELP_SHOW_SECTIONS, function(book)
     HELP_LAST.MATCH := 1;
     Pager(HELP_BOOK_HANDLER.(info.handler).ShowSections(info));
   fi;
-  return true;  
+  return true;
 end);
 
 #############################################################################
@@ -811,7 +839,6 @@ InstallGlobalFunction(HELP_SHOW_PREV_CHAPTER, function( arg )
   else
     HELP_PRINT_MATCH(match);
     HELP_LAST.MATCH := match[2];
-    return true;
   fi;
 end);
 
@@ -833,7 +860,6 @@ InstallGlobalFunction(HELP_SHOW_NEXT_CHAPTER, function( arg )
   else
     HELP_PRINT_MATCH(match);
     HELP_LAST.MATCH := match[2];
-    return true;
   fi;
 end);
 
@@ -855,7 +881,6 @@ InstallGlobalFunction(HELP_SHOW_PREV, function( arg )
   else
     HELP_PRINT_MATCH(match);
     HELP_LAST.MATCH := match[2];
-    return true;
   fi;
 end);
 
@@ -877,7 +902,6 @@ InstallGlobalFunction(HELP_SHOW_NEXT, function( arg )
   else
     HELP_PRINT_MATCH(match);
     HELP_LAST.MATCH := match[2];
-    return true;
   fi;
 end);
 
@@ -911,14 +935,14 @@ end);
 ##  remaining ones.
 ##
 InstallGlobalFunction(HELP_GET_MATCHES, function( books, topic, frombegin )
-  local exact, match, em, b, x, topics, transatl, pair, newtopic;
+  local exact, match, em, b, x, topics, transatl, pair, newtopic, getsecnum;
 
   # First we try to produce some suggestions for possible different spellings
   # (see the global variable 'TRANSATL' for the list of spelling patterns).
   if topic = "size" then # "size" is a notable exception (lowercase is guaranteed)
     topics:=[ topic ];
   else
-    topics:=SuggestedSpellings( topic );
+    topics:=HELP_SEARCH_ALTERNATIVES( topic );
   fi;
 
   # <exact> and <match> contain the topics matching
@@ -937,10 +961,10 @@ InstallGlobalFunction(HELP_GET_MATCHES, function( books, topic, frombegin )
       if b<>fail then
         em := HELP_BOOK_HANDLER.(b.handler).SearchMatches(b, topic, frombegin);
         for x in em[1] do
-	      Add(exact, [b, x]);
+          Add(exact, [b, x]);
         od;
         for x in em[2] do
-	      Add(match, [b, x]);
+          Add(match, [b, x]);
         od;
       fi;
     od;
@@ -951,6 +975,24 @@ InstallGlobalFunction(HELP_GET_MATCHES, function( books, topic, frombegin )
   # Note: before GAP 4.5 this was only done in case of substring search.
   match := Concatenation(exact, match);
   exact := [];
+  
+  # check if all matches point to the same subsection of the same book,
+  # in that case we only keep the first match which then will be displayed
+  # immediately
+
+  # this function makes sure that nothing breaks if the help book handler
+  # has no support for SubsectionNumber
+  getsecnum := function(m)
+    if IsBound(HELP_BOOK_HANDLER.(m[1].handler).SubsectionNumber) then
+      return HELP_BOOK_HANDLER.(m[1].handler).SubsectionNumber(m[1], m[2]);
+    else
+      return m[2];
+    fi;
+  end;
+  if Length(match) > 1 and Length(Set(List(match, 
+                            m-> [m[1].bookname,getsecnum(m)]))) = 1 then
+    match := [match[1]];
+  fi;
 
   return [exact, match];
 end);

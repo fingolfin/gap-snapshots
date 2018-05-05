@@ -203,7 +203,7 @@
   [1X65.3 [33X[0;0YNatural Embeddings related to Magma Rings[133X[101X
   
   [33X[0;0YNeither  the  coefficient  ring [22XR[122X nor the magma [22XM[122X are regarded as subsets of
-  the  magma  ring  [22XRM[122X, so one has to use [13Xembeddings[113X (see [2XEmbedding[102X ([14X32.2-10[114X))
+  the  magma  ring  [22XRM[122X, so one has to use [13Xembeddings[113X (see [2XEmbedding[102X ([14X32.2-11[114X))
   explicitly   whenever   one   needs  for  example  the  magma  ring  element
   corresponding to a given magma element.[133X
   

@@ -146,7 +146,7 @@
 ## <Example>
 ## gap&gt; SCRunTest();
 ## simpcomp package test
-## GAP4stones: 69463
+## GAP4stones: 113019
 ## true
 ## </Example>
 ## </Description>

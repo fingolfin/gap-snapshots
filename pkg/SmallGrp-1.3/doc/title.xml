@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    SmallGrp
+  </Title>
+  <Subtitle>
+    The &GAP; Small Groups Library
+  </Subtitle>
+  <Version>
+    1.3
+  </Version>
+  <Author>
+    Bettina Eick<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Institut Computational Mathematics<Br/>
+TU Braunschweig<Br/>
+Pockelsstr. 14<Br/>
+ D-38106 Braunschweig<Br/>
+ Germany<Br/>
+</Address>
+<Email>beick@tu-bs.de</Email>
+<Homepage>http://www.icm.tu-bs.de/~beick</Homepage>
+
+  </Author>
+  <Author>
+    Hans Ulrich Besche<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Institut Computational MathematicsTU Braunschweig<Br/>
+Pockelsstr. 14<Br/>
+ D-38106 Braunschweig<Br/>
+ Germany<Br/>
+</Address>
+<Email>hubesche@tu-bs.de</Email>
+<Homepage>http://www-public.tu-bs.de/~hubesche/</Homepage>
+
+  </Author>
+  <Author>
+    Eamonn O'Brien<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Department of Mathematics<Br/>
+University of Auckland<Br/>
+Private Bag 92019<Br/>
+ Auckland<Br/>
+ New Zealand<Br/>
+</Address>
+<Email>obrien@math.auckland.ac.nz</Email>
+<Homepage>http://www.math.auckland.ac.nz/~obrien</Homepage>
+
+  </Author>
+  <Author>
+    The GAP Team<Alt Only="LaTeX"><Br/></Alt>
+<Email>support@gap-system.org</Email>
+
+  </Author>
+  <Date>
+    9 April 2018
+  </Date>
+  </TitlePage>

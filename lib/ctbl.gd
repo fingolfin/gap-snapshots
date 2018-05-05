@@ -1526,7 +1526,7 @@ DeclareAttributeSuppCT( "CharacterNames", IsNearlyCharacterTable,
 #F  ColumnCharacterTable( <tbl>,<nr> )
 ##
 ##  <ManSection>
-##  <Func Name="GroupString" Arg='T, n'/>
+##  <Func Name="ColumnCharacterTable" Arg='tbl, nr'/>
 ##  <Description>
 ##  returns a column vector that is the <A>nr</A>-th column of the character
 ##  table <A>tbl</A>.
@@ -1644,8 +1644,11 @@ DeclareAttributeSuppCT( "Identifier", IsNearlyCharacterTable, [] );
 DeclareGlobalVariable( "LARGEST_IDENTIFIER_NUMBER",
     "list containing the largest identifier of an ordinary character table\
  in the current session" );
-InstallFlushableValue( LARGEST_IDENTIFIER_NUMBER, [ 0 ] );
-
+if IsHPCGAP then
+    InstallValue( LARGEST_IDENTIFIER_NUMBER, FixedAtomicList([ 0 ]) );
+else
+    InstallFlushableValue( LARGEST_IDENTIFIER_NUMBER, [ 0 ] );
+fi;
 
 #############################################################################
 ##
@@ -4377,15 +4380,13 @@ DeclareGlobalFunction( "NormalSubgroupClasses" );
 ##  gap> HasNormalSubgroupClassesInfo( tbl );
 ##  true
 ##  gap> NormalSubgroupClassesInfo( tbl );
-##  rec( nsg := [ Group([ (1,2)(3,4), (1,3)(2,4) ]) ],
+##  rec( nsg := [ Group([ (1,2)(3,4), (1,3)(2,4) ]) ], 
 ##    nsgclasses := [ [ 1, 3 ] ], nsgfactors := [  ] )
 ##  gap> ClassPositionsOfNormalSubgroup( tbl, kernel );
 ##  [ 1, 3 ]
-##  gap> FactorGroupNormalSubgroupClasses( tbl, [ 1, 3 ] );
-##  Group([ f1, f2 ])
-##  gap> NormalSubgroupClassesInfo( tbl );
-##  rec( nsg := [ Group([ (1,2)(3,4), (1,3)(2,4) ]) ],
-##    nsgclasses := [ [ 1, 3 ] ], nsgfactors := [ Group([ f1, f2 ]) ] )
+##  gap> G := FactorGroupNormalSubgroupClasses( tbl, [ 1, 3 ] );;
+##  gap> NormalSubgroupClassesInfo( tbl ).nsgfactors[1] = G;
+##  true
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>

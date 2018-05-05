@@ -63,13 +63,14 @@
   semigroup [3XS[103X and [9Xfalse[109X if it is not.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=Transformation( [ 5, 6, 7, 1, 4, 3, 2, 7 ] );[127X[104X
+    [4X[25Xgap>[125X [27Xf := Transformation([5, 6, 7, 1, 4, 3, 2, 7]);[127X[104X
     [4X[28XTransformation( [ 5, 6, 7, 1, 4, 3, 2, 7 ] )[128X[104X
-    [4X[25Xgap>[125X [27XT:=Semigroup(f);;[127X[104X
+    [4X[25Xgap>[125X [27XT := Semigroup(f);;[127X[104X
     [4X[25Xgap>[125X [27XIsSubsemigroup(FullTransformationSemigroup(4), T);[127X[104X
     [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27XS:=Semigroup(f);; T:=Semigroup(f^2);;[127X[104X
-    [4X[25Xgap>[125X [27XIsSubsemigroup(S, T);                             [127X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup(f);;[127X[104X
+    [4X[25Xgap>[125X [27XT := Semigroup(f ^ 2);;[127X[104X
+    [4X[25Xgap>[125X [27XIsSubsemigroup(S, T);[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
@@ -81,7 +82,7 @@
   
   [1X51.1-6 AsSemigroup[101X
   
-  [33X[1;0Y[29X[2XAsSemigroup[102X( [3XC[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XAsSemigroup[102X( [3XC[103X ) [32X operation[133X
   
   [33X[0;0YIf  [3XC[103X  is  a  collection  whose  elements  form a semigroup (see [2XIsSemigroup[102X
   ([14X51.1-1[114X))  then  [2XAsSemigroup[102X  returns  this  semigroup.  Otherwise  [9Xfail[109X  is
@@ -113,7 +114,7 @@
   
   [33X[1;0Y[29X[2XIsGeneratorsOfSemigroup[102X( [3XC[103X ) [32X property[133X
   
-  [33X[0;0YThis  property  reflects  wheter  the  list  or  collection  [3XC[103X  generates  a
+  [33X[0;0YThis  property  reflects  whether  the  list  or  collection  [3XC[103X  generates a
   semigroup.       [2XIsAssociativeElementCollection[102X       ([14X31.15-1[114X)      implies
    [2XIsGeneratorsOfSemigroup[102X,  but  is  not  used  directly  in  semigroup code,
   because of conflicts with matrices.[133X
@@ -168,7 +169,7 @@
     [4X[28X<free semigroup on the generators [ gen1, gen2 ]>[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YAlso see Chapter [14X51[114X.[133X
+  [33X[0;0YFor more on associative words see Chapter [14X37[114X.[133X
   
   [33X[0;0YEach  free  object defines a unique alphabet (and a unique family of words).
   Its generators are the letters of this alphabet, thus words of length one.[133X
@@ -264,10 +265,10 @@
   
   [1X51.2-5 AsMonoid[101X
   
-  [33X[1;0Y[29X[2XAsMonoid[102X( [3XC[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XAsMonoid[102X( [3XC[103X ) [32X operation[133X
   
-  [33X[0;0YIf  [3XC[103X  is  a collection whose elements form a monoid (see [2XIsMonoid[102X ([14X51.2-1[114X))
-  then [2XAsMonoid[102X returns this monoid. Otherwise [9Xfail[109X is returned.[133X
+  [33X[0;0YIf  [3XC[103X  is  a  collection whose elements form a monoid, then [2XAsMonoid[102X returns
+  this monoid. Otherwise [9Xfail[109X is returned.[133X
   
   [1X51.2-6 AsSubmonoid[101X
   
@@ -321,7 +322,7 @@
   then  specifies  the representation used for the elements of the free monoid
   (see [14X37.6[114X). If no such filter is given, a letter representation is used.[133X
   
-  [33X[0;0YAlso see Chapter [14X51[114X.[133X
+  [33X[0;0YFor more on associative words see Chapter [14X37[114X.[133X
   
   [1X51.2-10 MonoidByMultiplicationTable[101X
   
@@ -492,7 +493,7 @@
   [1X51.4-3 InversesOfSemigroupElement[101X
   
   [33X[1;0Y[29X[2XInversesOfSemigroupElement[102X( [3XS[103X, [3Xx[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10YThe inverses of an element of a semigroup.[133X
+  [6XReturns:[106X  [33X[0;10YA list of the inverses of an element of a semigroup.[133X
   
   [33X[0;0Y[10XInversesOfSemigroupElement[110X  returns  a list of the inverses of the element [3Xx[103X
   in the semigroup [3XS[103X.[133X
@@ -501,24 +502,26 @@
   has an inverse if and only if [3Xx[103X is a regular element of [3XS[103X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS:=Semigroup([ Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1 ] ), [127X[104X
-    [4X[25X>[125X [27X Transformation( [ 5, 7, 8, 8, 7, 5, 9, 1, 9 ] ), [127X[104X
-    [4X[25X>[125X [27X Transformation( [ 7, 6, 2, 8, 4, 7, 5, 8, 3 ] ) ]);;[127X[104X
-    [4X[25Xgap>[125X [27Xx:=Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1 ] );;[127X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
+    [4X[25X>[125X [27X Transformation([3, 1, 4, 2, 5, 2, 1, 6, 1]), [127X[104X
+    [4X[25X>[125X [27X Transformation([5, 7, 8, 8, 7, 5, 9, 1, 9]), [127X[104X
+    [4X[25X>[125X [27X Transformation([7, 6, 2, 8, 4, 7, 5, 8, 3])]);[127X[104X
+    [4X[28X<transformation semigroup of degree 9 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27Xx := Transformation([3, 1, 4, 2, 5, 2, 1, 6, 1]);;[127X[104X
     [4X[25Xgap>[125X [27XInversesOfSemigroupElement(S, x);[127X[104X
     [4X[28X[  ][128X[104X
     [4X[25Xgap>[125X [27XIsRegularSemigroupElement(S, x);[127X[104X
     [4X[28Xfalse[128X[104X
-    [4X[25Xgap>[125X [27Xx:=Transformation( [ 1, 9, 7, 5, 5, 1, 9, 5, 1 ] );;[127X[104X
+    [4X[25Xgap>[125X [27Xx := Transformation([1, 9, 7, 5, 5, 1, 9, 5, 1]);;[127X[104X
     [4X[25Xgap>[125X [27XSet(InversesOfSemigroupElement(S, x));[127X[104X
     [4X[28X[ Transformation( [ 1, 2, 3, 5, 5, 1, 3, 5, 2 ] ), [128X[104X
     [4X[28X  Transformation( [ 1, 5, 1, 1, 5, 1, 3, 1, 2 ] ), [128X[104X
     [4X[28X  Transformation( [ 1, 5, 1, 2, 5, 1, 3, 2, 2 ] ) ][128X[104X
     [4X[25Xgap>[125X [27XIsRegularSemigroupElement(S, x);[127X[104X
     [4X[28Xtrue[128X[104X
-    [4X[25Xgap>[125X [27XS:=ReesZeroMatrixSemigroup(Group((1,2,3)), [127X[104X
-    [4X[25X>[125X [27X[ [ (), () ], [ (), 0 ], [ (), (1,2,3) ] ]);;[127X[104X
-    [4X[25Xgap>[125X [27Xx:=ReesZeroMatrixSemigroupElement(S, 2, (1,2,3), 3);;[127X[104X
+    [4X[25Xgap>[125X [27XS := ReesZeroMatrixSemigroup(Group((1,2,3)),[127X[104X
+    [4X[25X>[125X [27X [[(), ()], [(), 0], [(), (1,2,3)]]);;[127X[104X
+    [4X[25Xgap>[125X [27Xx := ReesZeroMatrixSemigroupElement(S, 2, (1,2,3), 3);;[127X[104X
     [4X[25Xgap>[125X [27XInversesOfSemigroupElement(S, x);[127X[104X
     [4X[28X[ (1,(1,2,3),3), (1,(1,3,2),1), (2,(),3), (2,(1,2,3),1) ][128X[104X
   [4X[32X[104X
@@ -556,17 +559,18 @@
   [33X[1;0Y[29X[2XIsInverseMonoid[102X( [3XS[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
-  [33X[0;0YA  semigroup  is  an  [13Xinverse  semigroup[113X  if  every  element  [10Xx[110X has a unique
-  semigroup  inverse,  that  is,  a  unique  element  [10Xy[110X  such that [10Xx*y*x=x[110X and
+  [33X[0;0YA  semigroup  [3XS[103X is an [13Xinverse semigroup[113X if every element [10Xx[110X in [3XS[103X has a unique
+  semigroup  inverse,  that  is, a unique element [10Xy[110X in [3XS[103X such that [10Xx*y*x=x[110X and
   [10Xy*x*y=y[110X.[133X
   
   [33X[0;0YA  monoid  that  happens  to  be  an  inverse semigroup is called an [13Xinverse
-  monoid[113X.[133X
+  monoid[113X; see [2XIsMonoid[102X ([14X51.2-1[114X).[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XS:=Semigroup( Transformation( [ 1, 2, 4, 5, 6, 3, 7, 8 ] ),[127X[104X
-    [4X[25X>[125X [27XTransformation( [ 3, 3, 4, 5, 6, 2, 7, 8 ] ),[127X[104X
-    [4X[25X>[125X [27XTransformation( [ 1, 2, 5, 3, 6, 8, 4, 4 ] ) );;[127X[104X
+    [4X[25Xgap>[125X [27XS := Semigroup([[127X[104X
+    [4X[25X>[125X [27X Transformation([1, 2, 4, 5, 6, 3, 7, 8]),[127X[104X
+    [4X[25X>[125X [27X Transformation([3, 3, 4, 5, 6, 2, 7, 8]),[127X[104X
+    [4X[25X>[125X [27X Transformation([1, 2, 5, 3, 6, 8, 4, 4])]);;[127X[104X
     [4X[25Xgap>[125X [27XIsInverseSemigroup(S);[127X[104X
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
@@ -794,6 +798,22 @@
   [22Xeee  =  e[122X  so  it follows that a Green's [22XD[122X class containing an idempotent is
   regular. Conversely, it is true that a regular [22XD[122X class must contain at least
   one idempotent. (See [How76, Prop. 3.2].)[133X
+  
+  [1X51.8-13 DisplaySemigroup[101X
+  
+  [33X[1;0Y[29X[2XDisplaySemigroup[102X( [3XS[103X ) [32X operation[133X
+  
+  [33X[0;0YProduces  a  convenient  display  of  a  transformation  semigroup's D-Class
+  structure. Let [3XS[103X be a transformation semigroup of degree [22Xn[122X. Then for each [22Xr≤
+  n[122X, we show all D-classes of rank [22Xr[122X.[133X
+  
+  [33X[0;0YA regular D-class with a single H-class of size 120 appears as[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X*[H size = 120, 1 L-class, 1 R-class] [128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0Y(the [10X*[110X denoting regularity).[133X
   
   
   [1X51.9 [33X[0;0YRees Matrix Semigroups[133X[101X

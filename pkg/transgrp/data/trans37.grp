@@ -1,0 +1,17 @@
+#############################################################################
+##
+#A  trans37.grp                 GAP group library           Alexander Hulpke
+##
+#Y  Copyright (C) 2014, Derek Holt, University of Warwick
+#Y  Converted by Alexander Hulpke
+##
+##  This file contains part of the transitive groups of degree 37
+##
+
+TRANSGRP[37]:=[];
+TRANSPROPERTIES[37]:=[];
+TRANSSELECT[37]:=[];
+TRANSLENGTHS[37]:=11;
+TRANSSIZES[37]:=[37,74,111,148,222,333,444,666,1332,
+6881876545613172523157989790790451200000000,
+13763753091226345046315979581580902400000000];

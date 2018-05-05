@@ -7,11 +7,8 @@
 ##
 ##  This  file  tests the automorphism routines
 ##
-##  To be listed in testinstall.g
-##
 gap> START_TEST("morpheus.tst");
 gap> g:=Group((1,2,3,4),(1,3));;
-gap> LoadPackage("autpgrp", false);;
 gap> a:=AutomorphismGroup(g);;
 gap> inn:=InnerAutomorphismsAutomorphismGroup(a);;
 gap> iso1:=IsomorphismGroups(a,g);;
@@ -64,7 +61,7 @@ S (1 gens, size 3)
 1 (size 1)
 
 # that's all, folks
-gap> STOP_TEST( "morpheus.tst", 6920000);
+gap> STOP_TEST( "morpheus.tst", 1);
 
 #############################################################################
 ##

@@ -5,8 +5,6 @@
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
-##  To be listed in testinstall.g
-##
 gap> START_TEST("algmat.tst");
 
 #############################################################################
@@ -134,6 +132,8 @@ true
 gap> radc:= RadicalOfAlgebra( c );
 <algebra of dimension 0 over CF(5)>
 gap> Dimension( radc );
+0
+gap> Dimension( RadicalOfAlgebra( radc ) );
 0
 
 #############################################################################
@@ -291,7 +291,7 @@ true
 # missing: natural modules, abstract expressions, field multiplicity
 
 #############################################################################
-gap> STOP_TEST( "algmat.tst", 11540000);
+gap> STOP_TEST( "algmat.tst", 1);
 
 #############################################################################
 ##

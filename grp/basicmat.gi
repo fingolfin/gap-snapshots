@@ -17,7 +17,7 @@
 InstallOtherMethod( CyclicGroupCons,
     "matrix group for given field",
     true,
-    [ IsMatrixGroup and IsFinite,
+    [ IsMatrixGroup and IsFinite and IsCyclic,
       IsField,
       IsInt and IsPosRat ],
     0,
@@ -48,7 +48,7 @@ end );
 InstallMethod( CyclicGroupCons,
     "matrix group for default field",
     true,
-    [ IsMatrixGroup and IsFinite,
+    [ IsMatrixGroup and IsFinite and IsCyclic,
       IsInt and IsPosRat ],
     0,
 
@@ -402,7 +402,8 @@ MaximalUnipotentSubgroupOfNaturalGL := function( gl )
     )
   );
   SetSize( u, Size(q)^Binomial(n,2) );
-  IsPGroup( u );
+  SetIsPGroup( u, true );
+  SetPrimePGroup( u, Characteristic(q) );
   return u;
 end;
 
@@ -538,6 +539,7 @@ SylowSubgroupOfNaturalGL := function( gl, p )
   SetSize( syl, p^PadicValuation( Size(gl), p ) );
   SetIsPGroup( syl, true );
   SetPrimePGroup( syl, p );
+  SetHallSubgroup(gl, [p], syl);
   Assert( 2, Size( Group( GeneratorsOfGroup( syl ) ) ) = Size( syl ) );
   return syl;
 end;

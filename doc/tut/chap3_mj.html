@@ -140,7 +140,7 @@ Error, Variable: 'lll' must have a value
 
 <p>Of course existing entries of a list can be changed by this mechanism, too. We will not do it here because <code class="code">primes</code> then may no longer be a list of primes. Try for yourself to change the 17 in the list into a 9.</p>
 
-<p>To get the position of 17 in the list <code class="code">primes</code> use the function <code class="func">Position</code> (<a href="../../doc/ref/chap21_mj.html#X79975EC6783B4293"><span class="RefLink">Reference: Position</span></a>) which takes the list as its first argument and the element as its second argument and returns the position of the first occurrence of the element 17 in the list <code class="code">primes</code>. If the element is not contained in the list then <code class="func">Position</code> (<a href="../../doc/ref/chap21_mj.html#X79975EC6783B4293"><span class="RefLink">Reference: Position</span></a>) will return the special object <code class="keyw">fail</code>.</p>
+<p>To get the position of 17 in the list <code class="code">primes</code> use the function <code class="func">Position</code> (<span class="RefLink">Reference: Position</span>) which takes the list as its first argument and the element as its second argument and returns the position of the first occurrence of the element 17 in the list <code class="code">primes</code>. If the element is not contained in the list then <code class="func">Position</code> (<span class="RefLink">Reference: Position</span>) will return the special object <code class="keyw">fail</code>.</p>
 
 
 <div class="example"><pre>
@@ -178,7 +178,7 @@ fail
 
 <p>Now the tilde in the fourth position of <code class="code">lll</code> denotes the object that is currently printed. Note that the result of the last operation is the actual value of the object <code class="code">lll</code> on the right hand side of the assignment. In fact it is identical to the value of the whole list <code class="code">lll</code> on the left hand side of the assignment.</p>
 
-<p>A <em>string</em> is a special type of list, namely a dense list of <em>characters</em>, where <em>dense</em> means that the list has no holes. Here, <em>characters</em> are special <strong class="pkg">GAP</strong> objects representing an element of the character set of the operating system. The input of printable characters is by enclosing them in single quotes <code class="code">'</code>. A string literal can either be entered as the list of characters or by writing the characters between doublequotes <code class="code">"</code>. Strings are handled specially by <code class="func">Print</code> (<a href="../../doc/ref/chap6_mj.html#X7AFA64D97A1F39A3"><span class="RefLink">Reference: Print</span></a>). You can learn much more about strings in the reference manual.</p>
+<p>A <em>string</em> is a special type of list, namely a dense list of <em>characters</em>, where <em>dense</em> means that the list has no holes. Here, <em>characters</em> are special <strong class="pkg">GAP</strong> objects representing an element of the character set of the operating system. The input of printable characters is by enclosing them in single quotes <code class="code">'</code>. A string literal can either be entered as the list of characters or by writing the characters between doublequotes <code class="code">"</code>. Strings are handled specially by <code class="func">Print</code> (<span class="RefLink">Reference: Print</span>). You can learn much more about strings in the reference manual.</p>
 
 
 <div class="example"><pre>
@@ -263,13 +263,13 @@ false
 [ ~ ]
 </pre></div>
 
-<p>Now return to Section <a href="chap3_mj.html#X81ECC2077D88E112"><span class="RefLink">3.1</span></a> and find out whether the functions <code class="func">Add</code> (<a href="../../doc/ref/chap21_mj.html#X795EC9D67E34DAB0"><span class="RefLink">Reference: Add</span></a>) and <code class="func">Append</code> (<a href="../../doc/ref/chap21_mj.html#X79E31DB27C82D6E1"><span class="RefLink">Reference: Append</span></a>) change their arguments.</p>
+<p>Now return to Section <a href="chap3_mj.html#X81ECC2077D88E112"><span class="RefLink">3.1</span></a> and find out whether the functions <code class="func">Add</code> (<span class="RefLink">Reference: Add</span>) and <code class="func">Append</code> (<span class="RefLink">Reference: Append</span>) change their arguments.</p>
 
 <p><a id="X8614C8207D57AD7A" name="X8614C8207D57AD7A"></a></p>
 
 <h4>3.3 <span class="Heading">Immutability</span></h4>
 
-<p><strong class="pkg">GAP</strong> has a mechanism that protects lists against changes like the ones that have bothered us in Section <a href="chap3_mj.html#X7DD65BEA7EDB0CD7"><span class="RefLink">3.2</span></a>. The function <code class="func">Immutable</code> (<a href="../../doc/ref/chap12_mj.html#X7F0ABF2C870B0CBB"><span class="RefLink">Reference: Immutable</span></a>) takes as argument a list and returns an immutable copy of it, i.e., a list which looks exactly like the old one, but has two extra properties: (1) The new list is immutable, i.e., the list itself and its subobjects cannot be changed. (2) In constructing the copy, every part of the list that can be changed has been copied, so that changes to the old list will not affect the new one. In other words, the new list has no mutable subobjects in common with the old list.</p>
+<p><strong class="pkg">GAP</strong> has a mechanism that protects lists against changes like the ones that have bothered us in Section <a href="chap3_mj.html#X7DD65BEA7EDB0CD7"><span class="RefLink">3.2</span></a>. The function <code class="func">Immutable</code> (<span class="RefLink">Reference: Immutable</span>) takes as argument a list and returns an immutable copy of it, i.e., a list which looks exactly like the old one, but has two extra properties: (1) The new list is immutable, i.e., the list itself and its subobjects cannot be changed. (2) In constructing the copy, every part of the list that can be changed has been copied, so that changes to the old list will not affect the new one. In other words, the new list has no mutable subobjects in common with the old list.</p>
 
 
 <div class="example"><pre>
@@ -288,7 +288,7 @@ you can 'return;' and ignore the assignment to continue
 
 <p>As a consequence of these rules, in the immutable copy of a list which contains an already immutable list as subobject, this immutable subobject need not be copied, because it is unchangeable. Immutable lists are useful in many complex <strong class="pkg">GAP</strong> objects, for example as generator lists of groups. By making them immutable, <strong class="pkg">GAP</strong> ensures that no generators can be added to the list, removed or exchanged. Such changes would of course lead to serious inconsistencies with other knowledge that may already have been calculated for the group.</p>
 
-<p>A converse function to <code class="func">Immutable</code> (<a href="../../doc/ref/chap12_mj.html#X7F0ABF2C870B0CBB"><span class="RefLink">Reference: Immutable</span></a>) is <code class="func">ShallowCopy</code> (<a href="../../doc/ref/chap12_mj.html#X846BC7107C352031"><span class="RefLink">Reference: ShallowCopy</span></a>), which produces a new mutable list whose <span class="SimpleMath">\(i\)</span>-th entry is the <span class="SimpleMath">\(i\)</span>-th entry of the old list. The single entries are not copied, they are just placed in the new list. If the old list is immutable, and hence the list entries are immutable themselves, the result of <code class="func">ShallowCopy</code> (<a href="../../doc/ref/chap12_mj.html#X846BC7107C352031"><span class="RefLink">Reference: ShallowCopy</span></a>) is mutable only on the top level.</p>
+<p>A converse function to <code class="func">Immutable</code> (<span class="RefLink">Reference: Immutable</span>) is <code class="func">ShallowCopy</code> (<span class="RefLink">Reference: ShallowCopy</span>), which produces a new mutable list whose <span class="SimpleMath">\(i\)</span>-th entry is the <span class="SimpleMath">\(i\)</span>-th entry of the old list. The single entries are not copied, they are just placed in the new list. If the old list is immutable, and hence the list entries are immutable themselves, the result of <code class="func">ShallowCopy</code> (<span class="RefLink">Reference: ShallowCopy</span>) is mutable only on the top level.</p>
 
 <p>It should be noted that also other objects than lists can appear in mutable or immutable form. Records (see Section <a href="chap3_mj.html#X7CF7BBD58135B981"><span class="RefLink">3.9</span></a>) provide another example.</p>
 
@@ -300,7 +300,7 @@ you can 'return;' and ignore the assignment to continue
 
 <p>This provides a natural model for mathematical sets whose elements are given by an explicit enumeration.</p>
 
-<p><strong class="pkg">GAP</strong> also calls a set a <em>strictly sorted list</em>, and the function <code class="func">IsSSortedList</code> (<a href="../../doc/ref/chap21_mj.html#X80CDAF45782E8DCB"><span class="RefLink">Reference: IsSSortedList</span></a>) tests whether a given list is a set. It returns a boolean value. For almost any list whose elements are contained in the same family, there exists a corresponding set. This set is constructed by the function <code class="func">Set</code> (<a href="../../doc/ref/chap30_mj.html#X7E399AC97FD98217"><span class="RefLink">Reference: Set</span></a>) which takes the list as its argument and returns a set obtained from this list by ignoring holes and duplicates and by sorting the elements.</p>
+<p><strong class="pkg">GAP</strong> also calls a set a <em>strictly sorted list</em>, and the function <code class="func">IsSSortedList</code> (<span class="RefLink">Reference: IsSSortedList</span>) tests whether a given list is a set. It returns a boolean value. For almost any list whose elements are contained in the same family, there exists a corresponding set. This set is constructed by the function <code class="func">Set</code> (<span class="RefLink">Reference: Set</span>) which takes the list as its argument and returns a set obtained from this list by ignoring holes and duplicates and by sorting the elements.</p>
 
 <p>The elements of the sets used in the examples of this section are strings.</p>
 
@@ -314,7 +314,7 @@ false
 [ "apple", "cherry", "plum", "strawberry" ]
 </pre></div>
 
-<p>Note that the original list <code class="code">fruits</code> is not changed by the function <code class="func">Set</code> (<a href="../../doc/ref/chap30_mj.html#X7E399AC97FD98217"><span class="RefLink">Reference: Set</span></a>). We have to make a new assignment to the variable <code class="code">fruits</code> in order to make it a set.</p>
+<p>Note that the original list <code class="code">fruits</code> is not changed by the function <code class="func">Set</code> (<span class="RefLink">Reference: Set</span>). We have to make a new assignment to the variable <code class="code">fruits</code> in order to make it a set.</p>
 
 <p>The operator <code class="keyw">in</code> is used to test whether an object is an element of a set. It returns a boolean value <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
@@ -326,7 +326,7 @@ true
 false
 </pre></div>
 
-<p>The operator <code class="keyw">in</code> can also be applied to ordinary lists. It is however much faster to perform a membership test for sets since sets are always sorted and a binary search can be used instead of a linear search. New elements may be added to a set by the function <code class="func">AddSet</code> (<a href="../../doc/ref/chap21_mj.html#X832C23CC7FCD8892"><span class="RefLink">Reference: AddSet</span></a>) which takes the set <code class="code">fruits</code> as its first argument and an element as its second argument and adds the element to the set if it wasn't already there. Note that the object <code class="code">fruits</code> is changed.</p>
+<p>The operator <code class="keyw">in</code> can also be applied to ordinary lists. It is however much faster to perform a membership test for sets since sets are always sorted and a binary search can be used instead of a linear search. New elements may be added to a set by the function <code class="func">AddSet</code> (<span class="RefLink">Reference: AddSet</span>) which takes the set <code class="code">fruits</code> as its first argument and an element as its second argument and adds the element to the set if it wasn't already there. Note that the object <code class="code">fruits</code> is changed.</p>
 
 
 <div class="example"><pre>
@@ -338,9 +338,9 @@ false
 [ "apple", "banana", "cherry", "plum", "strawberry" ]
 </pre></div>
 
-<p>Note that inserting new elements into a set with <code class="func">AddSet</code> (<a href="../../doc/ref/chap21_mj.html#X832C23CC7FCD8892"><span class="RefLink">Reference: AddSet</span></a>) is usually more expensive than simply adding new elements at the end of a list.</p>
+<p>Note that inserting new elements into a set with <code class="func">AddSet</code> (<span class="RefLink">Reference: AddSet</span>) is usually more expensive than simply adding new elements at the end of a list.</p>
 
-<p>Sets can be intersected by the function <code class="func">Intersection</code> (<a href="../../doc/ref/chap30_mj.html#X851069107CACF98E"><span class="RefLink">Reference: Intersection</span></a>) and united by the function <code class="func">Union</code> (<a href="../../doc/ref/chap30_mj.html#X799F0E2F7A502DBA"><span class="RefLink">Reference: Union</span></a>) which both take two sets as their arguments and return the intersection resp. union of the two sets as a new object.</p>
+<p>Sets can be intersected by the function <code class="func">Intersection</code> (<span class="RefLink">Reference: Intersection</span>) and united by the function <code class="func">Union</code> (<span class="RefLink">Reference: Union</span>) which both take two sets as their arguments and return the intersection resp. union of the two sets as a new object.</p>
 
 
 <div class="example"><pre>
@@ -350,7 +350,7 @@ false
 [ "apple" ]
 </pre></div>
 
-<p>The arguments of the functions <code class="func">Intersection</code> (<a href="../../doc/ref/chap30_mj.html#X851069107CACF98E"><span class="RefLink">Reference: Intersection</span></a>) and <code class="func">Union</code> (<a href="../../doc/ref/chap30_mj.html#X799F0E2F7A502DBA"><span class="RefLink">Reference: Union</span></a>) could be ordinary lists, while their result is always a set. Note that in the preceding example at least one argument of <code class="func">Intersection</code> (<a href="../../doc/ref/chap30_mj.html#X851069107CACF98E"><span class="RefLink">Reference: Intersection</span></a>) was not a set. The functions <code class="func">IntersectSet</code> (<a href="../../doc/ref/chap21_mj.html#X8473AA657FEC3D4D"><span class="RefLink">Reference: IntersectSet</span></a>) and <code class="func">UniteSet</code> (<a href="../../doc/ref/chap21_mj.html#X7B3469CD7EFC1A87"><span class="RefLink">Reference: UniteSet</span></a>) also form the intersection resp. union of two sets. They will however not return the result but change their first argument to be the result. Try them carefully.</p>
+<p>The arguments of the functions <code class="func">Intersection</code> (<span class="RefLink">Reference: Intersection</span>) and <code class="func">Union</code> (<span class="RefLink">Reference: Union</span>) could be ordinary lists, while their result is always a set. Note that in the preceding example at least one argument of <code class="func">Intersection</code> (<span class="RefLink">Reference: Intersection</span>) was not a set. The functions <code class="func">IntersectSet</code> (<span class="RefLink">Reference: IntersectSet</span>) and <code class="func">UniteSet</code> (<span class="RefLink">Reference: UniteSet</span>) also form the intersection resp. union of two sets. They will however not return the result but change their first argument to be the result. Try them carefully.</p>
 
 <p><a id="X79596BDE7CAF8491" name="X79596BDE7CAF8491"></a></p>
 
@@ -372,7 +372,7 @@ false
 [ 999999, 999997 .. 1 ]
 </pre></div>
 
-<p>This compact printed representation of a fairly long list corresponds to a compact internal representation. The function <code class="func">IsRange</code> (<a href="../../doc/ref/chap21_mj.html#X86DDC2FF7A50FBEE"><span class="RefLink">Reference: IsRange</span></a>) tests whether an object is a range, the function <code class="func">ConvertToRangeRep</code> (<a href="../../doc/ref/chap21_mj.html#X7D22B2298167A58F"><span class="RefLink">Reference: ConvertToRangeRep</span></a>) changes the representation of a list that is in fact a range to this compact internal representation.</p>
+<p>This compact printed representation of a fairly long list corresponds to a compact internal representation. The function <code class="func">IsRange</code> (<span class="RefLink">Reference: IsRange</span>) tests whether an object is a range, the function <code class="func">ConvertToRangeRep</code> (<span class="RefLink">Reference: ConvertToRangeRep</span>) changes the representation of a list that is in fact a range to this compact internal representation.</p>
 
 
 <div class="example"><pre>
@@ -484,7 +484,7 @@ false
 
 <p>In a similar way it is possible to enlarge the list which is looped over. This yields a nice and short orbit algorithm for the action of a group, for example.</p>
 
-<p>More about <code class="keyw">for</code> and <code class="keyw">while</code> loops can be found in the sections <a href="../../doc/ref/chap4_mj.html#X87AA46408783383F"><span class="RefLink">Reference: While</span></a> and <a href="../../doc/ref/chap4_mj.html#X78783E777867638A"><span class="RefLink">Reference: For</span></a>.</p>
+<p>More about <code class="keyw">for</code> and <code class="keyw">while</code> loops can be found in the sections <span class="RefLink">Reference: While</span> and <span class="RefLink">Reference: For</span>.</p>
 
 <p><a id="X879CFE0985DBA041" name="X879CFE0985DBA041"></a></p>
 
@@ -500,9 +500,9 @@ false
 (1,8,4,2,3,6,5,9)
 </pre></div>
 
-<p>The function <code class="func">Product</code> (<a href="../../doc/ref/chap21_mj.html#X7E5C72F27B657948"><span class="RefLink">Reference: Product</span></a>) takes a list as its argument and computes the product of the elements of the list. This is possible whenever a multiplication of the elements of the list is defined. So <code class="func">Product</code> (<a href="../../doc/ref/chap21_mj.html#X7E5C72F27B657948"><span class="RefLink">Reference: Product</span></a>) executes a loop over all elements of the list.</p>
+<p>The function <code class="func">Product</code> (<span class="RefLink">Reference: Product</span>) takes a list as its argument and computes the product of the elements of the list. This is possible whenever a multiplication of the elements of the list is defined. So <code class="func">Product</code> (<span class="RefLink">Reference: Product</span>) executes a loop over all elements of the list.</p>
 
-<p>There are other often used loops available as functions. Guess what the function <code class="func">Sum</code> (<a href="../../doc/ref/chap21_mj.html#X7A04B71C84CFCC2D"><span class="RefLink">Reference: Sum</span></a>) does. The function <code class="func">List</code> (<a href="../../doc/ref/chap21_mj.html#X7B256AE5780F140A"><span class="RefLink">Reference: Lists</span></a>) may take a list and a function as its arguments. It will then apply the function to each element of the list and return the corresponding list of results. A list of cubes is produced as follows with the function <code class="code">cubed</code> from Section <a href="chap4_mj.html#X86FA580F8055B274"><span class="RefLink">4</span></a>.</p>
+<p>There are other often used loops available as functions. Guess what the function <code class="func">Sum</code> (<span class="RefLink">Reference: Sum</span>) does. The function <code class="func">List</code> (<span class="RefLink">Reference: Lists</span>) may take a list and a function as its arguments. It will then apply the function to each element of the list and return the corresponding list of results. A list of cubes is produced as follows with the function <code class="code">cubed</code> from Section <a href="chap4_mj.html#X86FA580F8055B274"><span class="RefLink">4</span></a>.</p>
 
 
 <div class="example"><pre>
@@ -511,7 +511,7 @@ false
 [ 8, 27, 64, 125, 216, 343, 512, 729, 1000 ]
 </pre></div>
 
-<p>To add all these cubes we might apply the function <code class="func">Sum</code> (<a href="../../doc/ref/chap21_mj.html#X7A04B71C84CFCC2D"><span class="RefLink">Reference: Sum</span></a>) to the last list. But we may as well give the function <code class="code">cubed</code> to <code class="func">Sum</code> (<a href="../../doc/ref/chap21_mj.html#X7A04B71C84CFCC2D"><span class="RefLink">Reference: Sum</span></a>) as an additional argument.</p>
+<p>To add all these cubes we might apply the function <code class="func">Sum</code> (<span class="RefLink">Reference: Sum</span>) to the last list. But we may as well give the function <code class="code">cubed</code> to <code class="func">Sum</code> (<span class="RefLink">Reference: Sum</span>) as an additional argument.</p>
 
 
 <div class="example"><pre>
@@ -519,7 +519,7 @@ false
 true
 </pre></div>
 
-<p>The primes less than 30 can be retrieved out of the list <code class="code">primes</code> from Section <a href="chap3_mj.html#X81ECC2077D88E112"><span class="RefLink">3.1</span></a> by the function <code class="func">Filtered</code> (<a href="../../doc/ref/chap21_mj.html#X7C86D7F7795125F0"><span class="RefLink">Reference: Filtered</span></a>). This function takes the list <code class="code">primes</code> and a property as its arguments and will return the list of those elements of <code class="code">primes</code> which have this property. Such a property will be represented by a function that returns a boolean value. In this example the property of being less than 30 can be represented by the function <code class="code">x -&gt; x &lt; 30</code> since <code class="code">x &lt; 30</code> will evaluate to <code class="keyw">true</code> for values <code class="code">x</code> less than 30 and to <code class="keyw">false</code> otherwise.</p>
+<p>The primes less than 30 can be retrieved out of the list <code class="code">primes</code> from Section <a href="chap3_mj.html#X81ECC2077D88E112"><span class="RefLink">3.1</span></a> by the function <code class="func">Filtered</code> (<span class="RefLink">Reference: Filtered</span>). This function takes the list <code class="code">primes</code> and a property as its arguments and will return the list of those elements of <code class="code">primes</code> which have this property. Such a property will be represented by a function that returns a boolean value. In this example the property of being less than 30 can be represented by the function <code class="code">x -&gt; x &lt; 30</code> since <code class="code">x &lt; 30</code> will evaluate to <code class="keyw">true</code> for values <code class="code">x</code> less than 30 and to <code class="keyw">false</code> otherwise.</p>
 
 
 <div class="example"><pre>
@@ -535,7 +535,7 @@ true
 [ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 ]
 </pre></div>
 
-<p>Finally we mention the function <code class="func">ForAll</code> (<a href="../../doc/ref/chap21_mj.html#X7F06961278166671"><span class="RefLink">Reference: ForAll</span></a>) that checks whether a property holds for all elements of a list. It takes as its arguments a list and a function that returns a boolean value. <code class="func">ForAll</code> (<a href="../../doc/ref/chap21_mj.html#X7F06961278166671"><span class="RefLink">Reference: ForAll</span></a>) checks whether the function returns <code class="keyw">true</code> for all elements of the list.</p>
+<p>Finally we mention the function <code class="func">ForAll</code> (<span class="RefLink">Reference: ForAll</span>) that checks whether a property holds for all elements of a list. It takes as its arguments a list and a function that returns a boolean value. <code class="func">ForAll</code> (<span class="RefLink">Reference: ForAll</span>) checks whether the function returns <code class="keyw">true</code> for all elements of the list.</p>
 
 
 <div class="example"><pre>
@@ -546,7 +546,7 @@ true
 false
 </pre></div>
 
-<p>You will find more predefined <code class="keyw">for</code> loops in chapter <a href="../../doc/ref/chap21_mj.html#X7B256AE5780F140A"><span class="RefLink">Reference: Lists</span></a>.</p>
+<p>You will find more predefined <code class="keyw">for</code> loops in chapter <span class="RefLink">Reference: Lists</span>.</p>
 
 <p><a id="X851A7DD07866323F" name="X851A7DD07866323F"></a></p>
 
@@ -634,7 +634,7 @@ z = Z(4)
 
 <p>The first curly brackets contain the selection of rows, the second that of columns.</p>
 
-<p>Matrices appear not only in linear algebra, but also as group elements, provided they are invertible. Here we have the opportunity to meet a group-theoretical function, namely <code class="func">Order</code> (<a href="../../doc/ref/chap31_mj.html#X84F59A2687C62763"><span class="RefLink">Reference: Order</span></a>), which computes the order of a group element.</p>
+<p>Matrices appear not only in linear algebra, but also as group elements, provided they are invertible. Here we have the opportunity to meet a group-theoretical function, namely <code class="func">Order</code> (<span class="RefLink">Reference: Order</span>), which computes the order of a group element.</p>
 
 
 <div class="example"><pre>
@@ -644,7 +644,7 @@ z = Z(4)
 infinity
 </pre></div>
 
-<p>For matrices whose entries are more complex objects, for example rational functions, <strong class="pkg">GAP</strong>'s <code class="func">Order</code> (<a href="../../doc/ref/chap31_mj.html#X84F59A2687C62763"><span class="RefLink">Reference: Order</span></a>) methods might not be able to prove that the matrix has infinite order, and one gets the following warning.</p>
+<p>For matrices whose entries are more complex objects, for example rational functions, <strong class="pkg">GAP</strong>'s <code class="func">Order</code> (<span class="RefLink">Reference: Order</span>) methods might not be able to prove that the matrix has infinite order, and one gets the following warning.</p>
 
 
 <div class="example"><pre>
@@ -661,7 +661,7 @@ infinity
 [ x_1-2, x_1^2+3 ]
 </pre></div>
 
-<p><code class="func">Factors</code> (<a href="../../doc/ref/chap56_mj.html#X82D6EDC685D12AE2"><span class="RefLink">Reference: Factors</span></a>) returns a list of irreducible factors of the polynomial <code class="code">f</code>. The first irreducible factor <span class="SimpleMath">\(X-2\)</span> reveals that 2 is an eigenvalue of <code class="code">m</code>, hence its order cannot be finite.</p>
+<p><code class="func">Factors</code> (<span class="RefLink">Reference: Factors</span>) returns a list of irreducible factors of the polynomial <code class="code">f</code>. The first irreducible factor <span class="SimpleMath">\(X-2\)</span> reveals that 2 is an eigenvalue of <code class="code">m</code>, hence its order cannot be finite.</p>
 
 <p><a id="X7CF7BBD58135B981" name="X7CF7BBD58135B981"></a></p>
 
@@ -702,7 +702,7 @@ rec( day := 14, month := "Jul",
 
 <p>Records are objects that may be changed. An assignment to a record component changes the original object. The remarks made in Sections <a href="chap3_mj.html#X7DD65BEA7EDB0CD7"><span class="RefLink">3.2</span></a> and <a href="chap3_mj.html#X8614C8207D57AD7A"><span class="RefLink">3.3</span></a> about identity and mutability of lists are also true for records.</p>
 
-<p>Sometimes it is interesting to know which components of a certain record are bound. This information is available from the function <code class="func">RecNames</code> (<a href="../../doc/ref/chap29_mj.html#X837F1E1F866FB1A0"><span class="RefLink">Reference: RecNames</span></a>), which takes a record as its argument and returns a list of names of all bound components of this record as a list of strings.</p>
+<p>Sometimes it is interesting to know which components of a certain record are bound. This information is available from the function <code class="func">RecNames</code> (<span class="RefLink">Reference: RecNames</span>), which takes a record as its argument and returns a list of names of all bound components of this record as a list of strings.</p>
 
 
 <div class="example"><pre>
@@ -718,11 +718,11 @@ rec( day := 14, month := "Jul",
 
 <p>(The following cross-references point to the <strong class="pkg">GAP</strong> Reference Manual.)</p>
 
-<p>You will find more about lists, sets, and ranges in Chapter <a href="../../doc/ref/chap21_mj.html#X7B256AE5780F140A"><span class="RefLink">Reference: Lists</span></a>, in particular more about identical lists in Section <a href="../../doc/ref/chap21_mj.html#X7DD65BEA7EDB0CD7"><span class="RefLink">Reference: Identical Lists</span></a>. A more detailed description of strings is contained in Chapter <a href="../../doc/ref/chap27_mj.html#X7D28329B7EDB8F47"><span class="RefLink">Reference: Strings and Characters</span></a>. Fields are described in Chapter <a href="../../doc/ref/chap58_mj.html#X80A8E676814A19FD"><span class="RefLink">Reference: Fields and Division Rings</span></a>, some known fields in <strong class="pkg">GAP</strong> are described in Chapters <a href="../../doc/ref/chap17_mj.html#X87003045878E74DF"><span class="RefLink">Reference: Rational Numbers</span></a>, <a href="../../doc/ref/chap60_mj.html#X80510B5880521FDC"><span class="RefLink">Reference: Abelian Number Fields</span></a>, and <a href="../../doc/ref/chap59_mj.html#X7893ABF67A028802"><span class="RefLink">Reference: Finite Fields</span></a>. Row vectors and matrices are described in more detail in Chapters <a href="../../doc/ref/chap23_mj.html#X82C7E6CF7BA03391"><span class="RefLink">Reference: Row Vectors</span></a> and <a href="../../doc/ref/chap24_mj.html#X812CCAB278643A59"><span class="RefLink">Reference: Matrices</span></a>. Vector spaces are described in Chapter <a href="../../doc/ref/chap61_mj.html#X7DAD6700787EC845"><span class="RefLink">Reference: Vector Spaces</span></a>, further matrix related structures are described in Chapters <a href="../../doc/ref/chap44_mj.html#X7CF51CB48610A07D"><span class="RefLink">Reference: Matrix Groups</span></a>, <a href="../../doc/ref/chap62_mj.html#X7DDBF6F47A2E021C"><span class="RefLink">Reference: Algebras</span></a>, and <a href="../../doc/ref/chap64_mj.html#X78559D4C800AF58A"><span class="RefLink">Reference: Lie Algebras</span></a>.</p>
+<p>You will find more about lists, sets, and ranges in Chapter <span class="RefLink">Reference: Lists</span>, in particular more about identical lists in Section <span class="RefLink">Reference: Identical Lists</span>. A more detailed description of strings is contained in Chapter <span class="RefLink">Reference: Strings and Characters</span>. Fields are described in Chapter <span class="RefLink">Reference: Fields and Division Rings</span>, some known fields in <strong class="pkg">GAP</strong> are described in Chapters <span class="RefLink">Reference: Rational Numbers</span>, <span class="RefLink">Reference: Abelian Number Fields</span>, and <span class="RefLink">Reference: Finite Fields</span>. Row vectors and matrices are described in more detail in Chapters <span class="RefLink">Reference: Row Vectors</span> and <span class="RefLink">Reference: Matrices</span>. Vector spaces are described in Chapter <span class="RefLink">Reference: Vector Spaces</span>, further matrix related structures are described in Chapters <span class="RefLink">Reference: Matrix Groups</span>, <span class="RefLink">Reference: Algebras</span>, and <span class="RefLink">Reference: Lie Algebras</span>.</p>
 
-<p>You will find more list operations in Chapter <a href="../../doc/ref/chap21_mj.html#X7B256AE5780F140A"><span class="RefLink">Reference: Lists</span></a>.</p>
+<p>You will find more list operations in Chapter <span class="RefLink">Reference: Lists</span>.</p>
 
-<p>Records and functions for records are described in detail in Chapter <a href="../../doc/ref/chap29_mj.html#X7AA1073C7E943DD7"><span class="RefLink">Reference: Records</span></a>.</p>
+<p>Records and functions for records are described in detail in Chapter <span class="RefLink">Reference: Records</span>.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4_mj.html">[Next Chapter]</a>&nbsp;  </div>

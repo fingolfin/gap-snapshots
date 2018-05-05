@@ -373,6 +373,32 @@ DeclareSynonym( "IsMultiplicativeElementWithOneList",
 DeclareSynonym( "IsMultiplicativeElementWithOneTable",
     IsMultiplicativeElementWithOneCollColl   and IsTable );
 
+##  <#GAPDoc Label="IsMultiplicativeElementWithZero">
+##  <ManSection>
+##  <Filt Name="IsMultiplicativeElementWithZero" Arg='elt' Type='Category'/>
+##  <Returns><K>true</K> or <K>false</K>.</Returns>
+##  <Description>
+##  This is the category of elements in a family which can be the operands of 
+##  <C>*</C> (multiplication) and the operation 
+##  <Ref Attr="MultiplicativeZeroOp"/>.
+##  <Example><![CDATA[
+##  gap> S:=Semigroup(Transformation( [ 1, 1, 1 ] ));;
+##  gap> M:=MagmaWithZeroAdjoined(S);
+##  <<commutative transformation semigroup of degree 3 with 1 generator>
+##    with 0 adjoined>
+##  gap> x:=Representative(M);
+##  <semigroup with 0 adjoined elt: Transformation( [ 1, 1, 1 ] )>
+##  gap> IsMultiplicativeElementWithZero(x);
+##  true
+##  gap> MultiplicativeZeroOp(x);
+##  <semigroup with 0 adjoined elt: 0>
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+
+DeclareCategory("IsMultiplicativeElementWithZero",IsMultiplicativeElement);
+DeclareCategoryCollections("IsMultiplicativeElementWithZero");
 
 #############################################################################
 ##
@@ -966,8 +992,16 @@ DeclareCategoryCollections("IsZDFRECollection");
 ##  <Filt Name="IsMatrix" Arg='obj' Type='Category'/>
 ##
 ##  <Description>
-##  A <E>matrix</E> is a list of lists of equal length whose entries lie in a
-##  common ring.
+##  By convention <E>matrix</E> is a list of lists of equal length whose
+##  entries lie in a common ring.
+##  <P/>
+##  For technical reasons laid out at the top of Chapter <Ref Chap="Matrices"/>,
+##  the filter <Ref Filt="IsMatrix"/> is a synonym for a table of ring elements,
+##  (see <Ref Filt="IsTable"/> and <Ref Filt="IsRingElement"/>). This means that
+##  <Ref Filt="IsMatrix"/> returns <K>true</K> for tables such as 
+##  <C>[[1,2],[3]]</C>.
+##  If necessary, <Ref Prop="IsRectangularTable"/> can be used to test whether
+##  an object is a list of homogenous lists of equal lengths manually.
 ##  <P/>
 ##  Note that matrices may have different multiplications,
 ##  besides the usual matrix product there is for example the Lie product.
@@ -982,11 +1016,13 @@ DeclareCategoryCollections("IsZDFRECollection");
 ##  [ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ] ]
 ##  gap> IsMatrix(mat);
 ##  true
+##  gap> mat:=[[1,2],[3]];
+##  [ [ 1, 2 ], [ 3 ] ]
+##  gap> IsMatrix(mat);
+##  true
+##  gap> IsRectangularTable(mat);
+##  false
 ##  ]]></Example>
-##  <P/>
-##  Note also the filter <Ref Func="IsTable"/>
-##  which may be more appropriate than <Ref Filt="IsMatrix"/>
-##  for some purposes.
 ##  <P/>
 ##  Note that the empty list <C>[]</C> and more complex
 ##  <Q>empty</Q> structures such as <C>[[]]</C> are <E>not</E> matrices,
@@ -1819,7 +1855,7 @@ DeclareOperationKernel( "mod", [ IsObject, IsObject ], MOD );
 ##
 ##  <Description>
 ##  <Ref Attr="Int"/> returns an integer <C>int</C> whose meaning depends
-##  on the type of <A>elm</A>.
+##  on the type of <A>elm</A>. For example:
 ##  <P/>
 ##  If <A>elm</A> is a rational number
 ##  (see Chapter&nbsp;<Ref Chap="Rational Numbers"/>) then <C>int</C> is the
@@ -1832,10 +1868,12 @@ DeclareOperationKernel( "mod", [ IsObject, IsObject ], MOD );
 ##  <C><A>elm</A> = int * One( <A>elm</A> )</C>.
 ##  <P/>
 ##  If <A>elm</A> is a string
-##  (see Chapter&nbsp;<Ref Chap="Strings and Characters"/>) consisting of
-##  digits <C>'0'</C>, <C>'1'</C>, <M>\ldots</M>, <C>'9'</C>
-##  and <C>'-'</C> (at the first position) then <C>int</C> is the integer
-##  described by this string.
+##  (see Chapter&nbsp;<Ref Chap="Strings and Characters"/>) consisting entirely
+##  of decimal digits <C>'0'</C>, <C>'1'</C>, <M>\ldots</M>, <C>'9'</C>,
+##  and optionally a sign <C>'-'</C> (at the first position), then <C>int</C> is the integer
+##  described by this string. For all other strings, <C>fail</C> is returned.
+##  See <Ref Func="Int" Label="for strings"/>.
+##  <P/>
 ##  The operation <Ref Func="String"/> can be used to compute a string for
 ##  rational integers, in fact for all cyclotomics.
 ##  <P/>
@@ -1874,6 +1912,7 @@ DeclareAttribute( "Int", IsObject );
 ##  <M>\ldots</M>, <C>'9'</C> and <C>'-'</C> (at the first position),
 ##  <C>'/'</C> and the decimal dot <C>'.'</C> then <A>rat</A> is the rational
 ##  described by this string.
+##  If <A>elm</A> is a rational number, then <C>Rat</C> returns <A>elm</A>.
 ##  The operation <Ref Func="String"/> can be used to compute a string for
 ##  rational numbers, in fact for all cyclotomics.
 ##  <P/>

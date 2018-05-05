@@ -135,7 +135,7 @@
   [33X[1;0Y[29X[2XTriangulizedIntegerMat[102X( [3Xmat[103X ) [32X operation[133X
   
   [33X[0;0YComputes  an  upper  triangular  form  of  a matrix with integer entries. It
-  returns a immutable matrix in upper triangular form.[133X
+  returns a mutable matrix in upper triangular form.[133X
   
   [1X25.2-2 TriangulizedIntegerMatTransform[101X
   

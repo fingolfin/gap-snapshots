@@ -33,7 +33,7 @@
   [33X[0;0YThe concept of a group action is sometimes referred to as a [21Xgroup operation[121X.
   In  [5XGAP[105X 3  as well as in older versions of [5XGAP[105X 4 the term [10XOperation[110X was used
   instead  of  [10XAction[110X.  We decided to change the names to avoid confusion with
-  the term [21Xoperation[121X as in [2XDeclareOperation[102X ([14X79.18-6[114X) and [21Xoperations for Xyz[121X.[133X
+  the term [21Xoperation[121X as in [2XDeclareOperation[102X ([14X79.18-12[114X) and [21Xoperations for Xyz[121X.[133X
   
   [33X[0;0YHere are some examples of such name changes.[133X
   
@@ -108,8 +108,7 @@
   [33X[0;0Yis  an  info class to display warnings when an obsolete variable is used. By
   default, these warnings are switched off since the info level for this class
   is  0.  Setting  it  to  1  will trigger warnings if [5XGAP[105X will detect that an
-  obsolete  variable  is used at runtime (this detection is possible, however,
-  only for obsolete variables declared using [10XDeclareObsoleteSynonym[110X).[133X
+  obsolete variable is used at runtime.[133X
   
   [33X[0;0YTo  check  that  the [5XGAP[105X code does not use obsolete variables at the parsing
   time, and not at a runtime, use [10X-O[110X command line option, see [14X3.1[114X.[133X

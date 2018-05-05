@@ -100,6 +100,12 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14_mj.html#X7F772E2686B35865">14.7-4 IsMersenneTwister</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14_mj.html#X7CB0B5BC82F8FD8F">14.7-5 RandomSource</a></span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap14_mj.html#X7A0311DF78DB4FD8">14.8 <span class="Heading">Bitfields</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14_mj.html#X85C7BD9E7FCC6C10">14.8-1 MakeBitfields</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap14_mj.html#X8068CE3781F4003C">14.8-2 BuildBitfields</a></span>
+</div></div>
 </div>
 
 <h3>14 <span class="Heading">Integers</span></h3>
@@ -180,13 +186,15 @@ false
 <h5>14.2-3 Int</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Int</code>( <var class="Arg">elm</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p><code class="func">Int</code> returns an integer <code class="code">int</code> whose meaning depends on the type of <var class="Arg">elm</var>.</p>
+<p><code class="func">Int</code> returns an integer <code class="code">int</code> whose meaning depends on the type of <var class="Arg">elm</var>. For example:</p>
 
 <p>If <var class="Arg">elm</var> is a rational number (see Chapter <a href="chap17_mj.html#X87003045878E74DF"><span class="RefLink">17</span></a>) then <code class="code">int</code> is the integer part of the quotient of numerator and denominator of <var class="Arg">elm</var> (see <code class="func">QuoInt</code> (<a href="chap14_mj.html#X849D0F807F697D35"><span class="RefLink">14.3-1</span></a>)).</p>
 
 <p>If <var class="Arg">elm</var> is an element of a finite prime field (see Chapter <a href="chap59_mj.html#X7893ABF67A028802"><span class="RefLink">59</span></a>) then <code class="code">int</code> is the smallest nonnegative integer such that <code class="code"><var class="Arg">elm</var> = int * One( <var class="Arg">elm</var> )</code>.</p>
 
-<p>If <var class="Arg">elm</var> is a string (see Chapter <a href="chap27_mj.html#X7D28329B7EDB8F47"><span class="RefLink">27</span></a>) consisting of digits <code class="code">'0'</code>, <code class="code">'1'</code>, <span class="SimpleMath">\(\ldots\)</span>, <code class="code">'9'</code> and <code class="code">'-'</code> (at the first position) then <code class="code">int</code> is the integer described by this string. The operation <code class="func">String</code> (<a href="chap27_mj.html#X81FB5BE27903EC32"><span class="RefLink">27.7-6</span></a>) can be used to compute a string for rational integers, in fact for all cyclotomics.</p>
+<p>If <var class="Arg">elm</var> is a string (see Chapter <a href="chap27_mj.html#X7D28329B7EDB8F47"><span class="RefLink">27</span></a>) consisting entirely of decimal digits <code class="code">'0'</code>, <code class="code">'1'</code>, <span class="SimpleMath">\(\ldots\)</span>, <code class="code">'9'</code>, and optionally a sign <code class="code">'-'</code> (at the first position), then <code class="code">int</code> is the integer described by this string. For all other strings, <code class="code">fail</code> is returned. See <code class="func">Int</code> (<a href="chap27_mj.html#X7B6D118184F692A0"><span class="RefLink">27.9-1</span></a>).</p>
+
+<p>The operation <code class="func">String</code> (<a href="chap27_mj.html#X81FB5BE27903EC32"><span class="RefLink">27.7-6</span></a>) can be used to compute a string for rational integers, in fact for all cyclotomics.</p>
 
 
 <div class="example"><pre>
@@ -516,7 +524,7 @@ you can 'return;' to continue
 <h5>14.3-10 PowerModInt</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PowerModInt</code>( <var class="Arg">r</var>, <var class="Arg">e</var>, <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>returns <span class="SimpleMath">\(\textit{r}^{\textit{e}} \pmod{\textit{m}}\)</span> for integers <var class="Arg">r</var>, <var class="Arg">e</var> and <var class="Arg">m</var> (<span class="SimpleMath">\(\textit{e} \geq 0\)</span>).</p>
+<p>returns <span class="SimpleMath">\(\textit{r}^{\textit{e}} \pmod{\textit{m}}\)</span> for integers <var class="Arg">r</var>, <var class="Arg">e</var> and <var class="Arg">m</var>.</p>
 
 <p>Note that <code class="func">PowerModInt</code> can reduce intermediate results and thus will generally be faster than using <var class="Arg">r</var><code class="code">^</code><var class="Arg">e</var><code class="code"> mod </code><var class="Arg">m</var>, which would compute <span class="SimpleMath">\(\textit{r}^{\textit{e}}\)</span> first and reduces the result afterwards.</p>
 
@@ -717,7 +725,7 @@ false
 
 </li>
 </ul>
-<p>Increasing the value of the argument <var class="Arg">effort</var> by one usually results in an increase of the runtime requirements by a factor of (very roughly!) 3 to 10. (Also see <code class="func">CheapFactorsInt</code> (<a href="../../pkg/edim/doc/chap1_mj.html#X7BAB977C7EB05067"><span class="RefLink">EDIM: CheapFactorsInt</span></a>)).</p>
+<p>Increasing the value of the argument <var class="Arg">effort</var> by one usually results in an increase of the runtime requirements by a factor of (very roughly!) 3 to 10. (Also see <code class="func">CheapFactorsInt</code> (<a href="../../pkg/EDIM-1.3.3/doc/chap1_mj.html#X7BAB977C7EB05067"><span class="RefLink">EDIM: CheapFactorsInt</span></a>)).</p>
 
 
 <div class="example"><pre>
@@ -741,7 +749,7 @@ false
 <h5>14.4-10 PrintFactorsInt</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrintFactorsInt</code>( <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>prints the prime factorization of the integer <var class="Arg">n</var> in human-readable form.</p>
+<p>prints the prime factorization of the integer <var class="Arg">n</var> in human-readable form. See also <code class="func">StringPP</code> (<a href="chap27_mj.html#X7BB1059185AB4F84"><span class="RefLink">27.7-9</span></a>).</p>
 
 
 <div class="example"><pre>
@@ -756,10 +764,14 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PrimePowersInt</code>( <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the prime factorization of the integer <var class="Arg">n</var> as a list <span class="SimpleMath">\([ p_1, e_1, \ldots, p_k, e_k ]\)</span> with <var class="Arg">n</var> = <span class="SimpleMath">\(p_1^{{e_1}} \cdot p_2^{{e_2}} \cdot ... \cdot p_k^{{e_k}}\)</span>.</p>
 
+<p>For negative integers, the absolute value is taken. Zero is not allowed as input.</p>
+
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrimePowersInt( Factorial( 7 ) );</span>
 [ 2, 4, 3, 2, 5, 1, 7, 1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PrimePowersInt( 1 );</span>
+[  ]
 </pre></div>
 
 <p><a id="X809E0E1B83AF7695" name="X809E0E1B83AF7695"></a></p>
@@ -1025,6 +1037,77 @@ true
 false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n := Random(rs1, 1, 2^220);</span>
 1077726777923092117987668044202944212469136000816111066409337432400
+</pre></div>
+
+<p><a id="X7A0311DF78DB4FD8" name="X7A0311DF78DB4FD8"></a></p>
+
+<h4>14.8 <span class="Heading">Bitfields</span></h4>
+
+<p>Bitfields are a low-level feature intended to support efficient subdivision of immediate integers into bitfields of various widths. This is typically useful in implementing space-efficient and/or cache-efficient data structures. This feature should be used with care because (<em>inter alia</em>) it has different limitations on 32-bit and 64-bit architectures.</p>
+
+<p><a id="X85C7BD9E7FCC6C10" name="X85C7BD9E7FCC6C10"></a></p>
+
+<h5>14.8-1 MakeBitfields</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MakeBitfields</code>( <var class="Arg">width....</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>This function sets up the machinery for a set of bitfields of the given widths. All bitfield values are treated as unsigned. The total of the widths must not exceed 60 bits on 64-bit architecture or 28 bits on a 32-bit architecture. For performance reasons some checks that one might wish to do are ommitted. In particular, the builder and setter functions do not check if the value[s] passed to them are negative or too large (unless <strong class="pkg">GAP</strong> is specially compiled for debugging). Behaviour when such arguments are passed is undefined. You can tell which type of architecture you are running on by acccessing <code class="code">GAPInfo.BytesPerVariable</code> which is 8 on 64-bits and 4 on 32. The return value when <span class="SimpleMath">\(n\)</span> widths are given is a record whose fields are</p>
+
+
+<dl>
+<dt><strong class="Mark"><code class="code">widths</code></strong></dt>
+<dd><p>a copy of the arguments, for convenience,</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">getters</code></strong></dt>
+<dd><p>a list of <span class="SimpleMath">\(n\)</span> functions of one argument each of which extracts one of the fields from an immediate integer</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">setters</code></strong></dt>
+<dd><p>a list of <span class="SimpleMath">\(n\)</span> functions each taking two arguments: a packed value and a new value for one of its fields and returning a new packed value. The <span class="SimpleMath">\(i\)</span>th function returned the new packed value in which the <span class="SimpleMath">\(i\)</span>th field has been replaced by the new value. Note that this does NOT modify the original packed value.</p>
+
+</dd>
+</dl>
+<p>Two additional fields may be present if any of the field widths is one. Each is a list and only has entried bound in the positions corresponding to the width 1 fields.</p>
+
+
+<dl>
+<dt><strong class="Mark"><code class="code">booleanGetters</code></strong></dt>
+<dd><p>if the <span class="SimpleMath">\(i\)</span>th position of this list is set, it contains a function which extracts the <span class="SimpleMath">\(i\)</span>th field (which will have width one) and returns <code class="code">true</code> if it contains 1 and <code class="code">false</code> if it contains 0</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">booleanSetters</code></strong></dt>
+<dd><p>if the <span class="SimpleMath">\(i\)</span>th position of this list is set, it contains a function of two arguments. The first argument is a packed value, the second is <code class="code">true</code> or <code class="code">false</code>. It returns a new packed value in which the <span class="SimpleMath">\(i\)</span>th field is set to 1 if the second argument was <code class="code">true</code> and 0 if it was <code class="code">false</code>. Behaviour for any other value is undefined.</p>
+
+</dd>
+</dl>
+<p><a id="X8068CE3781F4003C" name="X8068CE3781F4003C"></a></p>
+
+<h5>14.8-2 BuildBitfields</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BuildBitfields</code>( <var class="Arg">widths</var>, <var class="Arg">vals...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>This function takes one or more argument. It's first argument is a list of field widths, as found in the <code class="code">widths</code> entry of a record returned by <code class="code">MakeBitfields</code>. The remaining arguments are unsigned integer values, equal in number to the entries of the list of field widths. It returns a small integer in which those entries are packed into bitfields of the given widths. The first entry occupies the least significant bits. DeclareGlobalFunction("BuildBitfields");</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">bf := MakeBitfields(1,2,3);</span>
+rec( booleanGetters := [ function( data ) ... end ], 
+  booleanSetters := [ function( data, val ) ... end ], 
+  getters := [ function( data ) ... end, function( data ) ... end, 
+      function( data ) ... end ], 
+  setters := [ function( data, val ) ... end, function( data, val ) ... end, 
+      function( data, val ) ... end ], widths := [ 1, 2, 3 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := BuildBitfields(bf.widths,0,3,5);</span>
+46
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">bf.getters[3](x);</span>
+5
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">y := bf.setters[1](x,1);</span>
+47  
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x;</span>
+46
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">bf.booleanGetters[1](x);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">bf.booleanGetters[1](y);</span>
+true
 </pre></div>
 
 

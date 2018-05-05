@@ -8,48 +8,28 @@
 **  This file contains profile related functionality.
 **
 */
-#include        "system.h"              /* system dependent part           */
 
-#include        "tls.h"
+#include <src/profile.h>
 
-#include        "sysfiles.h"            /* file input/output               */
+#include <src/bool.h>
+#include <src/calls.h>
+#include <src/code.h>
+#include <src/gap.h>
+#include <src/hookintrprtr.h>
+#include <src/io.h>
+#include <src/lists.h>
+#include <src/plist.h>
+#include <src/stringobj.h>
+#include <src/vars.h>
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
+#include <src/hpc/thread.h>
 
-#include        "gap.h"                 /* error handling, initialisation  */
+#include <stdio.h>
+#include <sys/time.h>                   // for gettimeofday
+#ifdef HAVE_SYS_RESOURCE_H
+#include <sys/resource.h>               // definition of 'struct rusage'
+#endif
 
-#include        "gvars.h"               /* global variables                */
-
-#include        "calls.h"               /* generic call mechanism          */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "plist.h"               /* plain lists                     */
-#include        "string.h"              /* strings                         */
-
-#include        "bool.h"                /* booleans                        */
-
-#include        "code.h"                /* coder                           */
-#include        "vars.h"                /* variables                       */
-#include        "exprs.h"               /* expressions                     */
-
-#include        "intrprtr.h"            /* interpreter                     */
-
-#include        "ariths.h"              /* basic arithmetic                */
-
-#include        "stats.h"               /* statements                      */
-
-#include        <assert.h>
-
-#include        "profile.h"
-
-#include        "thread.h"
-
-#include        "calls.h"               /* function filename, line number  */
 
 /****************************************************************************
 **
@@ -86,7 +66,7 @@
 **     line of each created statement, so we can chck which lines have code
 **     on them.
 **
-**  2) If we wait until the user can run ProfileLineByLine, they have missed
+**  2) If we wait until the user can run HookedLine, they have missed
 **     the reading and execution of lots of the standard library. Therefore
 **     we provide -P (profiling) and -c (code coverage) options to the GAP
 **     executable so the user can start before code loading starts
@@ -120,18 +100,6 @@
 ** Store the current state of the profiler
 */
 
-#ifdef HAVE_GETRUSAGE
-#if HAVE_SYS_TIME_H
-# include       <sys/time.h>            /* definition of 'struct timeval'  */
-#endif
-#if HAVE_SYS_RESOURCE_H
-# include       <sys/resource.h>        /* definition of 'struct rusage'   */
-#endif
-#endif
-#ifdef HAVE_GETTIMEOFDAY
-# include       <sys/time.h>            /* for gettimeofday                */
-#endif
-
 Obj OutputtedFilenameList;
 
 struct StatementLocation
@@ -139,6 +107,8 @@ struct StatementLocation
     int fileID;
     int line;
 };
+
+typedef enum { Tick_WallTime, Tick_CPUTime, Tick_Mem } TickMethod;
 
 struct ProfileState
 {
@@ -160,10 +130,9 @@ struct ProfileState
   struct StatementLocation lastOutputted;
   int lastOutputtedExec;
 
-#if defined(HAVE_GETRUSAGE) || defined(HAVE_GETTIMEOFDAY)
-  struct timeval lastOutputtedTime;
-#endif
-  int useGetTimeOfDay;
+  Int8 lastOutputtedTime;
+
+  TickMethod tickMethod;
 
   int minimumProfileTick;
 #ifdef HPCGAP
@@ -181,30 +150,47 @@ struct ProfileState
 /* We keep this seperate as it is exported for use in other files */
 UInt profileState_Active;
 
+static inline void outputFilenameIdIfRequired(UInt id)
+{
+    if (id == 0) {
+        return;
+    }
+    if (LEN_PLIST(OutputtedFilenameList) < id ||
+        ELM_PLIST(OutputtedFilenameList, id) != True) {
+        AssPlist(OutputtedFilenameList, id, True);
+        fprintf(profileState.Stream,
+                "{\"Type\":\"S\",\"File\":\"%s\",\"FileId\":%d}\n",
+                CSTR_STRING(ELM_LIST(FilenameCache, id)), (int)id);
+    }
+}
+
+// This function checks gets the filenameId of the current function.
+static inline UInt getFilenameIdOfCurrentFunction(void)
+{
+    Obj func = CURR_FUNC();
+    Obj body = BODY_FUNC(func);
+    return GET_GAPNAMEID_BODY(body);
+}
 
 
-void ProfileLineByLineOutput(Obj func, char type)
+void HookedLineOutput(Obj func, char type)
 {
   HashLock(&profileState);
   if(profileState_Active && profileState.OutputRepeats)
   {
-    int startline_i = 0, endline_i = 0;
-    Obj startline = FuncSTARTLINE_FUNC(0, func);
-    Obj endline = FuncENDLINE_FUNC(0, func);
-    if(IS_INTOBJ(startline)) {
-      startline_i = INT_INTOBJ(startline);
-    }
-    if(IS_INTOBJ(endline)) {
-      endline_i = INT_INTOBJ(endline);
-    }
+    Obj body = BODY_FUNC(func);
+    UInt startline = GET_STARTLINE_BODY(body);
+    UInt endline = GET_ENDLINE_BODY(body);
 
     Obj name = NAME_FUNC(func);
-    Char *name_c = ((UInt)name) ? (Char *)CHARS_STRING(name) : (Char *)"nameless";
+    const Char *name_c = name ? CSTR_STRING(name) : "nameless";
 
-    Obj filename = FuncFILENAME_FUNC(0, func);
-    Char *filename_c = (Char*)"<missing filename>";
+    Obj         filename = GET_FILENAME_BODY(body);
+    UInt        fileID = GET_GAPNAMEID_BODY(body);
+    outputFilenameIdIfRequired(fileID);
+    const Char *filename_c = "<missing filename>";
     if(filename != Fail && filename != NULL)
-      filename_c = (Char *)CHARS_STRING(filename);
+      filename_c = CSTR_STRING(filename);
 
     if(type == 'I' && profileState.lastNotOutputted.line != -1)
     {
@@ -213,12 +199,23 @@ void ProfileLineByLineOutput(Obj func, char type)
               (int)profileState.lastNotOutputted.fileID);
     }
 
-    fprintf(profileState.Stream,
-            "{\"Type\":\"%c\",\"Fun\":\"%s\",\"Line\":%d,\"EndLine\":%d,\"File\":\"%s\"}\n",
-            type, name_c, startline_i, endline_i, filename_c);
+    // We output 'File' here for compatability with
+    // profiling v1.3.0 and earlier, FileId provides the same information
+    // in a more useful and compact form.
+    fprintf(profileState.Stream, "{\"Type\":\"%c\",\"Fun\":\"%s\",\"Line\":%"
+                                 "d,\"EndLine\":%d,\"File\":\"%s\","
+                                 "\"FileId\":%d}\n",
+            type, name_c, (int)startline, (int)endline, filename_c,
+            (int)fileID);
   }
   HashUnlock(&profileState);
 }
+
+void enterFunction(Obj func)
+{ HookedLineOutput(func, 'I'); }
+
+void leaveFunction(Obj func)
+{ HookedLineOutput(func, 'O'); }
 
 /****************************************************************************
 **
@@ -228,7 +225,7 @@ void ProfileLineByLineOutput(Obj func, char type)
 ** of GAP's execution, before anything else is done.
 */
 
-#if HAVE_POPEN
+#ifdef HAVE_POPEN
 static int endsWithgz(char* s)
 {
   s = strrchr(s, '.');
@@ -241,7 +238,7 @@ static int endsWithgz(char* s)
 
 static void fopenMaybeCompressed(char* name, struct ProfileState* ps)
 {
-#if HAVE_POPEN
+#ifdef HAVE_POPEN
   char popen_buf[4096];
   if(endsWithgz(name) && strlen(name) < 3000)
   {
@@ -259,7 +256,7 @@ static void fopenMaybeCompressed(char* name, struct ProfileState* ps)
 
 static void fcloseMaybeCompressed(struct ProfileState* ps)
 {
-#if HAVE_POPEN
+#ifdef HAVE_POPEN
   if(ps->StreamWasPopened)
   {
     pclose(ps->Stream);
@@ -271,94 +268,32 @@ static void fcloseMaybeCompressed(struct ProfileState* ps)
   ps->Stream = 0;
 }
 
-/****************************************************************************
-**
-** Store the true values of each function we wrap for profiling. These always
-** store the correct values and are never changed.
-*/
-
-
-UInt (* OriginalExecStatFuncsForProf[256]) ( Stat stat );
-
-Obj  (* OriginalEvalExprFuncsForProf[256]) ( Expr expr );
-Obj  (* OriginalEvalBoolFuncsForProf[256]) ( Expr expr );
-
-void (* OriginalPrintStatFuncsForProf[256]) ( Stat stat );
-void (* OriginalPrintExprFuncsForProf[256]) ( Expr expr );
-
-/****************************************************************************
-**
-** These functions are here because the library may want to install
-** functions once profiling has started.
-*/
-
-void InstallEvalBoolFunc( Int pos, Obj(*expr)(Expr)) {
-  OriginalEvalBoolFuncsForProf[pos] = expr;
-  HashLock(&profileState);
-  if(!profileState_Active) {
-    EvalBoolFuncs[pos] = expr;
-  }
-  HashUnlock(&profileState);
-}
-
-void InstallEvalExprFunc( Int pos, Obj(*expr)(Expr)) {
-  OriginalEvalExprFuncsForProf[pos] = expr;
-  HashLock(&profileState);
-  if(!profileState_Active) {
-    EvalExprFuncs[pos] = expr;
-  }
-  HashUnlock(&profileState);
-}
-
-void InstallExecStatFunc( Int pos, UInt(*stat)(Stat)) {
-  OriginalExecStatFuncsForProf[pos] = stat;
-  HashLock(&profileState);
-  if(!profileState_Active) {
-    ExecStatFuncs[pos] = stat;
-  }
-  HashUnlock(&profileState);
-}
-
-void InstallPrintStatFunc(Int pos, void(*stat)(Stat)) {
-  OriginalPrintStatFuncsForProf[pos] = stat;
-  HashLock(&profileState);
-  if(!profileState.ColouringOutput) {
-    PrintStatFuncs[pos] = stat;
-  }
-  HashUnlock(&profileState);
-}
-
-void InstallPrintExprFunc(Int pos, void(*expr)(Expr)) {
-  OriginalPrintExprFuncsForProf[pos] = expr;
-  HashLock(&profileState);
-  if(!profileState.ColouringOutput) {
-    PrintExprFuncs[pos] = expr;
-  }
-  HashUnlock(&profileState);
-}
-
-/****************************************************************************
-**
-** These functions are only used when profiling is enabled. They output
-** as approriate, and then pass through to the true function
-*/
-
-// This function checks if we have ever printed out the id of stat
-static inline UInt getFilenameId(Stat stat)
+static inline Int8 CPUmicroseconds(void)
 {
-  UInt id = FILENAMEID_STAT(stat);
-  if(LEN_PLIST(OutputtedFilenameList) < id || ELM_PLIST(OutputtedFilenameList,id) != True)
-  {
-    if(LEN_PLIST(OutputtedFilenameList) < id) {
-      GROW_PLIST(OutputtedFilenameList, id);
-      SET_LEN_PLIST(OutputtedFilenameList, id);
+#ifdef HAVE_GETRUSAGE
+  struct rusage buf;
+
+  getrusage( RUSAGE_SELF, &buf );
+
+  return (Int8)buf.ru_utime.tv_sec * 1000000 + (Int8)buf.ru_utime.tv_usec;
+#else
+  // Should never get here!
+  abort();
+#endif
+}
+
+static inline Int8 getTicks(void)
+{
+    switch (profileState.tickMethod) {
+    case Tick_CPUTime:
+        return CPUmicroseconds();
+    case Tick_WallTime:
+        return SyNanosecondsSinceEpoch() / 1000;
+    case Tick_Mem:
+        return SizeAllBags;
+    default:
+        return 0;
     }
-    SET_ELM_PLIST(OutputtedFilenameList, id, True);
-    CHANGED_BAG(OutputtedFilenameList);
-    fprintf(profileState.Stream, "{\"Type\":\"S\",\"File\":\"%s\",\"FileId\":%d}\n",
-                                  CSTR_STRING(FILENAME_STAT(stat)), (int)id);
-  }
-  return id;
 }
 
 // exec : are we executing this statement
@@ -368,83 +303,62 @@ static inline void outputStat(Stat stat, int exec, int visited)
   UInt line;
   int nameid;
 
-  int ticks = 0;
-#if defined(HAVE_GETTIMEOFDAY)
-  struct timeval timebuf;
-#else
-#if defined(HAVE_GETRUSAGE)
-  struct timeval timebuf;
-  struct rusage buf;
-#endif
-#endif
+  Int8 ticks = 0, newticks = 0;
 
-
-  HashLock(&profileState);
   // Explicitly skip these two cases, as they are often specially handled
   // and also aren't really interesting statements (something else will
   // be executed whenever they are).
-  if(TNUM_STAT(stat) == T_TRUE_EXPR || TNUM_STAT(stat) == T_FALSE_EXPR)
-    return;
-
-  // Catch the case we arrive here and profiling is already disabled
-  if(!profileState_Active) {
-    HashUnlock(&profileState);
+  if (TNUM_STAT(stat) == T_TRUE_EXPR || TNUM_STAT(stat) == T_FALSE_EXPR) {
     return;
   }
 
-  nameid = getFilenameId(stat);
+  // Catch the case we arrive here and profiling is already disabled
+  if (!profileState_Active) {
+    return;
+  }
+
+  nameid = getFilenameIdOfCurrentFunction();
+  outputFilenameIdIfRequired(nameid);
+
+  // Statement not attached to a file
+  if (nameid == 0) {
+    return;
+  }
+
   line = LINE_STAT(stat);
-  if(profileState.lastOutputted.line != line ||
+  if (profileState.lastOutputted.line != line ||
      profileState.lastOutputted.fileID != nameid ||
      profileState.lastOutputtedExec != exec)
   {
 
-    if(profileState.OutputRepeats) {
+    if (profileState.OutputRepeats) {
+        newticks = getTicks();
 
-      if(profileState.useGetTimeOfDay) {
-#if defined(HAVE_GETTIMEOFDAY)
-        gettimeofday(&timebuf, 0);
-#else
-        abort(); // should never be reached
-#endif
-      }
-      else {
-#if defined(HAVE_GETRUSAGE)
-        struct rusage buf;
-        getrusage( RUSAGE_SELF, &buf );
-        timebuf = buf.ru_utime;
-#else
-        abort(); // should never be reached
-#endif
-      }
+        ticks = newticks - profileState.lastOutputtedTime;
 
-
-#if defined(HAVE_GETTIMEOFDAY) || defined(HAVE_GETRUSAGE)
-      ticks = (timebuf.tv_sec - profileState.lastOutputtedTime.tv_sec) * 1000000 +
-              (timebuf.tv_usec - profileState.lastOutputtedTime.tv_usec);
-#endif
-      // Basic sanity check
-      if(ticks < 0)
-        ticks = 0;
-      if((profileState.minimumProfileTick == 0)
-         || (ticks > profileState.minimumProfileTick)
-         || (!visited)) {
-        int ticksDone;
-        if(profileState.minimumProfileTick == 0) {
-          ticksDone = ticks;
-        } else {
-          ticksDone = (ticks/profileState.minimumProfileTick) * profileState.minimumProfileTick;
-        }
-        ticks -= ticksDone;
-        fprintf(profileState.Stream, "{\"Type\":\"%c\",\"Ticks\":%d,\"Line\":%d,\"FileId\":%d}\n",
+        // Basic sanity check
+        if (ticks < 0)
+            ticks = 0;
+        if ((profileState.minimumProfileTick == 0) ||
+            (ticks > profileState.minimumProfileTick) || (!visited)) {
+            int ticksDone;
+            if (profileState.minimumProfileTick == 0) {
+                ticksDone = ticks;
+            }
+            else {
+                ticksDone = (ticks / profileState.minimumProfileTick) *
+                            profileState.minimumProfileTick;
+            }
+            ticks -= ticksDone;
+            fprintf(
+                profileState.Stream,
+                "{\"Type\":\"%c\",\"Ticks\":%d,\"Line\":%d,\"FileId\":%d}\n",
                 exec ? 'E' : 'R', ticksDone, (int)line, (int)nameid);
-#if defined(HAVE_GETRUSAGE) || defined(HAVE_GETTIMEOFDAY)
-        profileState.lastOutputtedTime = timebuf;
-#endif
-        profileState.lastNotOutputted.line = -1;
-        profileState.lastOutputted.line = line;
-        profileState.lastOutputted.fileID = nameid;
-        profileState.lastOutputtedExec = exec;
+            profileState.lastOutputtedTime = newticks;
+            profileState.lastNotOutputted.line = -1;
+            profileState.lastOutputted.line = line;
+            profileState.lastOutputted.fileID = nameid;
+            profileState.lastOutputtedExec = exec;
       }
       else {
         profileState.lastNotOutputted.line = line;
@@ -460,121 +374,26 @@ static inline void outputStat(Stat stat, int exec, int visited)
       profileState.lastNotOutputted.line = -1;
     }
   }
-
-  HashUnlock(&profileState);
 }
 
 void visitStat(Stat stat)
 {
 #ifdef HPCGAP
-  if(profileState.profiledThread != TLS(threadID))
+  if (profileState.profiledThread != TLS(threadID))
     return;
 #endif
 
   int visited = VISITED_STAT(stat);
 
-  if(!visited) {
-    ADDR_STAT(stat)[-1] |= (Stat)1 << 63;
+  if (!visited) {
+    STAT_HEADER(stat)->visited = 1;
   }
 
-  if(profileState.OutputRepeats || !visited) {
+  if (profileState.OutputRepeats || !visited) {
+    HashLock(&profileState);
     outputStat(stat, 1, visited);
-  }
-}
-
-UInt ProfileStatPassthrough(Stat stat)
-{
-  visitStat(stat);
-  return OriginalExecStatFuncsForProf[TNUM_STAT(stat)](stat);
-}
-
-Obj ProfileEvalExprPassthrough(Expr stat)
-{
-  visitStat(stat);
-  return OriginalEvalExprFuncsForProf[TNUM_STAT(stat)](stat);
-}
-
-Obj ProfileEvalBoolPassthrough(Expr stat)
-{
-  /* There are two cases we must pass through without touching */
-  /* From TNUM_EXPR */
-  if(IS_REFLVAR(stat)) {
-    return OriginalEvalBoolFuncsForProf[T_REFLVAR](stat);
-  }
-  if(IS_INTEXPR(stat)) {
-    return OriginalEvalBoolFuncsForProf[T_INTEXPR](stat);
-  }
-  visitStat(stat);
-  return OriginalEvalBoolFuncsForProf[TNUM_STAT(stat)](stat);
-}
-
-
-/****************************************************************************
-**
-** This functions check if we overflow either 2^16 lines, or files.
-** In this case profiling will "give up". We print a warning to tell users
-** that this happens.
-**/
-
-Int HaveReportedLineProfileOverflow;
-Int ShouldReportLineProfileOverflow;
-
-Int HaveReportedFileProfileOverflow;
-Int ShouldReportFileProfileOverflow;
-
-// This function only exists to allow testing of these overflow checks
-Obj FuncCLEAR_PROFILE_OVERFLOW_CHECKS(Obj self) {
-  HaveReportedLineProfileOverflow = 0;
-  ShouldReportLineProfileOverflow = 0;
-
-  HaveReportedFileProfileOverflow = 0;
-  ShouldReportFileProfileOverflow = 0;
-  
-  return 0;
-}
-
-void CheckPrintOverflowWarnings() {
-    if(!HaveReportedLineProfileOverflow && ShouldReportLineProfileOverflow)
-    {
-      HaveReportedLineProfileOverflow = 1;
-      Pr("#I Profiling only works on the first 65,535 lines of each file\n"
-         "#I (this warning will only appear once).\n",
-          0L, 0L);
-    }
-    
-    if(!HaveReportedFileProfileOverflow && ShouldReportFileProfileOverflow)
-    {
-      HaveReportedFileProfileOverflow = 1;
-      Pr("#I Profiling only works for the first 65,535 read files\n"
-         "#I (this warning will only appear once).\n",
-          0L, 0L );
-    }
-}
-
-void RegisterProfilingLineOverflowOccured()
-{
-    Int active;
-    HashLock(&profileState);
-    active = profileState_Active;
     HashUnlock(&profileState);
-    ShouldReportLineProfileOverflow = 1;
-    if(active)
-    {
-        CheckPrintOverflowWarnings();
-    }
-}
-
-void RegisterProfilingFileOverflowOccured()
-{
-    Int active;
-    HashLock(&profileState);
-    active = profileState_Active;
-    HashUnlock(&profileState);
-    ShouldReportFileProfileOverflow = 1;
-    if(active)
-    {
-        CheckPrintOverflowWarnings();
-    }
+  }
 }
 
 /****************************************************************************
@@ -582,27 +401,47 @@ void RegisterProfilingFileOverflowOccured()
 ** Activating and deacivating profiling, either at startup or by user request
 */
 
-void outputVersionInfo()
+void outputVersionInfo(void)
 {
-    fprintf(profileState.Stream, 
+    const char timeTypeNames[3][10] = { "WallTime", "CPUTime", "Memory" };
+    fprintf(profileState.Stream,
             "{ \"Type\": \"_\", \"Version\":1, \"IsCover\": %s, "
-            "  \"TimeType\": \"%s\"}\n", 
-            profileState.OutputRepeats?"false":"true",
-            profileState.useGetTimeOfDay?"Wall":"CPU");
-  
+            "  \"TimeType\": \"%s\"}\n",
+            profileState.OutputRepeats ? "false" : "true",
+            timeTypeNames[profileState.tickMethod]);
 }
 
-void enableAtStartup(char* filename, Int repeats)
-{
-    Int i;
+/****************************************************************************
+**
+** This function exists to help with code coverage -- this outputs which
+** lines have statements on expressions on them, so later we can
+** check we executed something on those lines!
+**/
 
+void registerStat(Stat stat)
+{
+    int active;
+    HashLock(&profileState);
+    active = profileState_Active;
+    if (active) {
+      outputStat(stat, 0, 0);
+    }
+    HashUnlock(&profileState);
+}
+
+
+struct InterpreterHooks profileHooks = {
+  visitStat, enterFunction, leaveFunction, registerStat,
+ "line-by-line profiling"};
+
+
+void enableAtStartup(char * filename, Int repeats, TickMethod tickMethod)
+{
     if(profileState_Active) {
         fprintf(stderr, "-P or -C can only be passed once\n");
         exit(1);
     }
     
-    
-
     profileState.OutputRepeats = repeats;
 
     fopenMaybeCompressed(filename, &profileState);
@@ -612,29 +451,16 @@ void enableAtStartup(char* filename, Int repeats)
         exit(1);
     }
 
-    for( i = 0; i < sizeof(ExecStatFuncs)/sizeof(ExecStatFuncs[0]); i++) {
-      ExecStatFuncs[i] = ProfileStatPassthrough;
-      EvalExprFuncs[i] = ProfileEvalExprPassthrough;
-      EvalBoolFuncs[i] = ProfileEvalBoolPassthrough;
-    }
+    ActivateHooks(&profileHooks);
 
     profileState_Active = 1;
     profileState.profiledPreviously = 1;
 #ifdef HPCGAP
     profileState.profiledThread = TLS(threadID);
 #endif
+    profileState.tickMethod = tickMethod;
     profileState.lastNotOutputted.line = -1;
-#ifdef HAVE_GETTIMEOFDAY
-    profileState.useGetTimeOfDay = 1;
-    gettimeofday(&(profileState.lastOutputtedTime), 0);
-#else
-#ifdef HAVE_GETRUSAGE
-    profileState.useGetTimeOfDay = 0;
-    struct rusage buf;
-    getrusage( RUSAGE_SELF, &buf );
-    profileState.lastOutputtedTime = buf.ru_utime;
-#endif
-#endif
+    profileState.lastOutputtedTime = getTicks();
 
     outputVersionInfo();
 }
@@ -644,7 +470,7 @@ void enableAtStartup(char* filename, Int repeats)
 // we quit straight away.
 Int enableCodeCoverageAtStartup( Char **argv, void * dummy)
 {
-    enableAtStartup(argv[0], 0);
+    enableAtStartup(argv[0], 0, Tick_Mem);
     return 1;
 }
 
@@ -653,20 +479,31 @@ Int enableCodeCoverageAtStartup( Char **argv, void * dummy)
 // we quit straight away.
 Int enableProfilingAtStartup( Char **argv, void * dummy)
 {
-    enableAtStartup(argv[0], 1);
+    TickMethod tickMethod = Tick_WallTime;
+#ifdef HAVE_GETTIMEOFDAY
+    tickMethod = Tick_WallTime;
+#else
+#ifdef HAVE_GETRUSAGE
+    tickMethod = Tick_CPUTime;
+#endif
+#endif
+    enableAtStartup(argv[0], 1, tickMethod);
     return 1;
 }
 
-Obj FuncACTIVATE_PROFILING (
-    Obj                 self,
-    Obj                 filename, /* filename to write to */
-    Obj                 coverage,
-    Obj                 justStat,
-    Obj                 wallTime,
-    Obj                 resolution)
+Int enableMemoryProfilingAtStartup(Char ** argv, void * dummy)
 {
-    Int i;
+    enableAtStartup(argv[0], 1, Tick_Mem);
+    return 1;
+}
 
+Obj FuncACTIVATE_PROFILING(Obj self,
+                           Obj filename, /* filename to write to */
+                           Obj coverage,
+                           Obj wallTime,
+                           Obj recordMem,
+                           Obj resolution)
+{
     if(profileState_Active) {
       return Fail;
     }
@@ -678,8 +515,6 @@ Obj FuncACTIVATE_PROFILING (
         return Fail;
     }
 
-    CheckPrintOverflowWarnings();
-
     OutputtedFilenameList = NEW_PLIST(T_PLIST, 0);
 
     if ( ! IsStringConv( filename ) ) {
@@ -690,26 +525,30 @@ Obj FuncACTIVATE_PROFILING (
       ErrorMayQuit("<coverage> must be a boolean",0,0);
     }
 
-    if(justStat != True && justStat != False) {
-      ErrorMayQuit("<justStat> must be a boolean",0,0);
-    }
-
     if(wallTime != True && wallTime != False) {
       ErrorMayQuit("<wallTime> must be a boolean",0,0);
     }
 
 #ifndef HAVE_GETTIMEOFDAY
     if(wallTime == True) {
-        ErrorMayQuit("This OS does not support wall-clock based timing");
+        ErrorMayQuit("This OS does not support wall-clock based timing",0,0);
     }
 #endif
 #ifndef HAVE_GETRUSAGE
     if(wallTime == False) {
-        ErrorMayQuit("This OS does not support CPU based timing");
+        ErrorMayQuit("This OS does not support CPU based timing",0,0);
     }
 #endif
 
-    profileState.useGetTimeOfDay = (wallTime == True);
+    if (recordMem == True) {
+        profileState.tickMethod = Tick_Mem;
+    }
+    else {
+        profileState.tickMethod =
+            (wallTime == True) ? Tick_WallTime : Tick_CPUTime;
+    }
+
+    profileState.lastOutputtedTime = getTicks();
 
     if( ! IS_INTOBJ(resolution) ) {
       ErrorMayQuit("<resolution> must be an integer",0,0);
@@ -743,14 +582,6 @@ Obj FuncACTIVATE_PROFILING (
       return Fail;
     }
 
-    for( i = 0; i < sizeof(ExecStatFuncs)/sizeof(ExecStatFuncs[0]); i++) {
-      ExecStatFuncs[i] = ProfileStatPassthrough;
-      if(justStat == False) {
-          EvalExprFuncs[i] = ProfileEvalExprPassthrough;
-          EvalBoolFuncs[i] = ProfileEvalBoolPassthrough;
-      }
-    }
-
     profileState_Active = 1;
     profileState.profiledPreviously = 1;
 #ifdef HPCGAP
@@ -758,25 +589,11 @@ Obj FuncACTIVATE_PROFILING (
 #endif
     profileState.lastNotOutputted.line = -1;
 
-    if(wallTime == True) {
-#ifdef HAVE_GETTIMEOFDAY
-        gettimeofday(&(profileState.lastOutputtedTime), 0);
-#else
-        abort(); // this should never be reached
-#endif
-    }
-    else {
-#ifdef HAVE_GETRUSAGE
-        struct rusage buf;
-        getrusage( RUSAGE_SELF, &buf );
-        profileState.lastOutputtedTime = buf.ru_utime;
-#else
-        abort(); // this should never be reached
-#endif
-    }
-
     outputVersionInfo();
     HashUnlock(&profileState);
+
+    // This must be after the hash unlock, as it also takes a lock
+    ActivateHooks(&profileHooks);
 
     return True;
 }
@@ -784,8 +601,6 @@ Obj FuncACTIVATE_PROFILING (
 Obj FuncDEACTIVATE_PROFILING (
     Obj                 self)
 {
-  int i;
-
   HashLock(&profileState);
 
   if(!profileState_Active) {
@@ -794,21 +609,16 @@ Obj FuncDEACTIVATE_PROFILING (
   }
 
   fcloseMaybeCompressed(&profileState);
-
-  for( i = 0; i < sizeof(ExecStatFuncs)/sizeof(ExecStatFuncs[0]); i++) {
-    ExecStatFuncs[i] = OriginalExecStatFuncsForProf[i];
-    EvalExprFuncs[i] = OriginalEvalExprFuncsForProf[i];
-    EvalBoolFuncs[i] = OriginalEvalBoolFuncsForProf[i];
-  }
-
   profileState_Active = 0;
-
   HashUnlock(&profileState);
+
+  // This must be after the hash unlock, as it also takes a lock
+  DeactivateHooks(&profileHooks);
 
   return True;
 }
 
-Obj FuncIS_PROFILE_ACTIVE (
+Obj FuncIsLineByLineProfileActive (
     Obj self)
 {
   if(profileState_Active) {
@@ -826,11 +636,9 @@ Obj FuncIS_PROFILE_ACTIVE (
 ** as being executed.
 */
 
-
-
 Int CurrentColour = 0;
 
-static void setColour()
+static void setColour(void)
 {
   if(CurrentColour == 0) {
     Pr("\x1b[0m",0L,0L);
@@ -853,7 +661,7 @@ void ProfilePrintStatPassthrough(Stat stat)
     CurrentColour = 2;
   }
   setColour();
-  OriginalPrintStatFuncsForProf[TNUM_STAT(stat)](stat);
+  OriginalPrintStatFuncsForHook[TNUM_STAT(stat)](stat);
   CurrentColour = SavedColour;
   setColour();
 }
@@ -864,9 +672,9 @@ void ProfilePrintExprPassthrough(Expr stat)
   /* There are two cases we must pass through without touching */
   /* From TNUM_EXPR */
   if(IS_REFLVAR(stat)) {
-    OriginalPrintExprFuncsForProf[T_REFLVAR](stat);
+    OriginalPrintExprFuncsForHook[T_REFLVAR](stat);
   } else if(IS_INTEXPR(stat)) {
-    OriginalPrintExprFuncsForProf[T_INTEXPR](stat);
+    OriginalPrintExprFuncsForHook[T_INTEXPR](stat);
   } else {
     SavedColour = CurrentColour;
     if(VISITED_STAT(stat)) {
@@ -876,16 +684,17 @@ void ProfilePrintExprPassthrough(Expr stat)
       CurrentColour = 2;
     }
     setColour();
-    OriginalPrintExprFuncsForProf[TNUM_STAT(stat)](stat);
+    OriginalPrintExprFuncsForHook[TNUM_STAT(stat)](stat);
     CurrentColour = SavedColour;
     setColour();
   }
 }
 
+struct PrintHooks profilePrintHooks =
+  {ProfilePrintStatPassthrough, ProfilePrintExprPassthrough};
+
 Obj activate_colored_output_from_profile(void)
 {
-    int i;
-
     HashLock(&profileState);
 
     if(profileState.ColouringOutput) {
@@ -893,10 +702,7 @@ Obj activate_colored_output_from_profile(void)
       return Fail;
     }
 
-    for( i = 0; i < sizeof(ExecStatFuncs)/sizeof(ExecStatFuncs[0]); i++) {
-      PrintStatFuncs[i] = ProfilePrintStatPassthrough;
-      PrintExprFuncs[i] = ProfilePrintExprPassthrough;
-    }
+    ActivatePrintHooks(&profilePrintHooks);
 
     profileState.ColouringOutput = 1;
     CurrentColour = 0;
@@ -909,8 +715,6 @@ Obj activate_colored_output_from_profile(void)
 
 Obj deactivate_colored_output_from_profile(void)
 {
-  int i;
-
   HashLock(&profileState);
 
   if(!profileState.ColouringOutput) {
@@ -918,10 +722,7 @@ Obj deactivate_colored_output_from_profile(void)
     return Fail;
   }
 
-  for( i = 0; i < sizeof(ExecStatFuncs)/sizeof(ExecStatFuncs[0]); i++) {
-    PrintStatFuncs[i] = OriginalPrintStatFuncsForProf[i];
-    PrintExprFuncs[i] = OriginalPrintExprFuncsForProf[i];
-  }
+  DeactivatePrintHooks(&profilePrintHooks);
 
   profileState.ColouringOutput = 0;
   CurrentColour = 0;
@@ -946,31 +747,11 @@ Obj FuncACTIVATE_COLOR_PROFILING(Obj self, Obj arg)
     return Fail;
 }
 
-/****************************************************************************
-**
-** This function exists to help with code coverage -- this outputs which
-** lines have statements on expressions on them, so later we can
-** check we executed something on those lines!
-**/
-
-void RegisterStatWithProfiling(Stat stat)
-{
-    int active;
-    HashLock(&profileState);
-    active = profileState_Active;
-    HashUnlock(&profileState);
-    if(active) {
-      outputStat(stat, 0, 0);
-    }
-
-}
-
 
 
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
@@ -978,19 +759,15 @@ void RegisterStatWithProfiling(Stat stat)
 **
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
-static StructGVarFunc GVarFuncs [] = {
+static StructGVarFunc GVarFuncs[] = {
 
-    { "ACTIVATE_PROFILING", 5, "string,boolean,boolean,boolean,integer",
-      FuncACTIVATE_PROFILING, "src/profile.c:ACTIVATE_PROFILING" },
-    { "DEACTIVATE_PROFILING", 0, "",
-      FuncDEACTIVATE_PROFILING, "src/profile.c:DEACTIVATE_PROFILING" },
-    { "CLEAR_PROFILE_OVERFLOW_CHECKS", 0, "",
-      FuncCLEAR_PROFILE_OVERFLOW_CHECKS, "src/profile.c:CLEAR_PROFILE_OVERFLOW_CHECKS" },
-    { "IsLineByLineProfileActive", 0, "",
-      FuncIS_PROFILE_ACTIVE, "src/profile.c:IsLineByLineProfileActive" },
-    { "ACTIVATE_COLOR_PROFILING", 1, "bool",
-        FuncACTIVATE_COLOR_PROFILING, "src/profile.c:ACTIVATE_COLOR_PROFILING" },
-    { 0 }
+    GVAR_FUNC(ACTIVATE_PROFILING,
+              5,
+              "filename,coverage,wallTime,recordMem,resolution"),
+    GVAR_FUNC(DEACTIVATE_PROFILING, 0, ""),
+    GVAR_FUNC(IsLineByLineProfileActive, 0, ""),
+    GVAR_FUNC(ACTIVATE_COLOR_PROFILING, 1, "arg"),
+    { 0, 0, 0, 0, 0 }
 };
 
 
@@ -1021,34 +798,32 @@ static Int InitKernel (
     return 0;
 }
 
+static Int PostRestore ( StructInitInfo * module )
+{
+    /* When we restore a workspace, we start a new profile.
+     * 'OutputtedFilenameList' is the only part of the profile which is
+     * stored in the GAP memory space, so we need to clear it in case
+     * it still has a value from a previous profile.
+     */
+    OutputtedFilenameList = NEW_PLIST(T_PLIST, 0);
+    return 0;
+}
 
 /****************************************************************************
 **
 *F  InitInfoStats() . . . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "stats",                            /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "stats",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
+    .postRestore = PostRestore
 };
 
 StructInitInfo * InitInfoProfile ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  stats.c . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

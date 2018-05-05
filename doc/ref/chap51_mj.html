@@ -114,6 +114,7 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51_mj.html#X7CB4A18685B850E2">51.8-10 GroupHClassOfGreensDClass</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51_mj.html#X79D740EF7F0E53BD">51.8-11 IsGroupHClass</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51_mj.html#X7F5860927CAD920F">51.8-12 IsRegularDClass</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap51_mj.html#X81AF2EAB7CEF8C19">51.8-13 DisplaySemigroup</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap51_mj.html#X8225A9EC87A255E6">51.9 <span class="Heading">Rees Matrix Semigroups</span></a>
 </span>
@@ -195,13 +196,14 @@ Transformation( [ 2, 3, 4, 1 ] )
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f:=Transformation( [ 5, 6, 7, 1, 4, 3, 2, 7 ] );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := Transformation([5, 6, 7, 1, 4, 3, 2, 7]);</span>
 Transformation( [ 5, 6, 7, 1, 4, 3, 2, 7 ] )
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T:=Semigroup(f);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := Semigroup(f);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubsemigroup(FullTransformationSemigroup(4), T);</span>
 false
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup(f);; T:=Semigroup(f^2);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubsemigroup(S, T);                             </span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup(f);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">T := Semigroup(f ^ 2);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSubsemigroup(S, T);</span>
 true</pre></div>
 
 <p><a id="X79FBBEC9841544F3" name="X79FBBEC9841544F3"></a></p>
@@ -215,7 +217,7 @@ true</pre></div>
 
 <h5>51.1-6 AsSemigroup</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsSemigroup</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsSemigroup</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">C</var> is a collection whose elements form a semigroup (see <code class="func">IsSemigroup</code> (<a href="chap51_mj.html#X7B412E5B8543E9B7"><span class="RefLink">51.1-1</span></a>)) then <code class="func">AsSemigroup</code> returns this semigroup. Otherwise <code class="keyw">fail</code> is returned.</p>
 
 <p><a id="X7B1EEA3E82BFE09F" name="X7B1EEA3E82BFE09F"></a></p>
@@ -245,7 +247,7 @@ true</pre></div>
 <h5>51.1-9 IsGeneratorsOfSemigroup</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsGeneratorsOfSemigroup</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>This property reflects wheter the list or collection <var class="Arg">C</var> generates a semigroup. <code class="func">IsAssociativeElementCollection</code> (<a href="chap31_mj.html#X7979AFAA80FF795A"><span class="RefLink">31.15-1</span></a>) implies  <code class="func">IsGeneratorsOfSemigroup</code>, but is not used directly in semigroup code, because of conflicts with matrices.</p>
+<p>This property reflects whether the list or collection <var class="Arg">C</var> generates a semigroup. <code class="func">IsAssociativeElementCollection</code> (<a href="chap31_mj.html#X7979AFAA80FF795A"><span class="RefLink">31.15-1</span></a>) implies  <code class="func">IsGeneratorsOfSemigroup</code>, but is not used directly in semigroup code, because of conflicts with matrices.</p>
 
 
 <div class="example"><pre>
@@ -284,7 +286,7 @@ true
 &lt;free semigroup on the generators [ gen1, gen2 ]&gt;
 </pre></div>
 
-<p>Also see Chapter <a href="chap51_mj.html#X8665D8737FDD5B10"><span class="RefLink">51</span></a>.</p>
+<p>For more on associative words see Chapter <a href="chap37_mj.html#X78C56A0A87CE380E"><span class="RefLink">37</span></a>.</p>
 
 <p>Each free object defines a unique alphabet (and a unique family of words). Its generators are the letters of this alphabet, thus words of length one.</p>
 
@@ -376,8 +378,8 @@ fail
 
 <h5>51.2-5 AsMonoid</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsMonoid</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p>If <var class="Arg">C</var> is a collection whose elements form a monoid (see <code class="func">IsMonoid</code> (<a href="chap51_mj.html#X861C523483C6248C"><span class="RefLink">51.2-1</span></a>)) then <code class="func">AsMonoid</code> returns this monoid. Otherwise <code class="keyw">fail</code> is returned.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsMonoid</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>If <var class="Arg">C</var> is a collection whose elements form a monoid, then <code class="func">AsMonoid</code> returns this monoid. Otherwise <code class="keyw">fail</code> is returned.</p>
 
 <p><a id="X7C9A12DE8287B2D3" name="X7C9A12DE8287B2D3"></a></p>
 
@@ -418,7 +420,7 @@ fail
 
 <p>If the extra argument <var class="Arg">wfilt</var> is given, it must be either <code class="func">IsSyllableWordsFamily</code> (<a href="chap37_mj.html#X7869716C84EA9D81"><span class="RefLink">37.6-6</span></a>) or <code class="func">IsLetterWordsFamily</code> (<a href="chap37_mj.html#X7E36F7897D82417F"><span class="RefLink">37.6-2</span></a>) or <code class="func">IsWLetterWordsFamily</code> (<a href="chap37_mj.html#X8719E7F27CDA1995"><span class="RefLink">37.6-4</span></a>) or <code class="func">IsBLetterWordsFamily</code> (<a href="chap37_mj.html#X8719E7F27CDA1995"><span class="RefLink">37.6-4</span></a>). This filter then specifies the representation used for the elements of the free monoid (see <a href="chap37_mj.html#X80A9F39582ED296E"><span class="RefLink">37.6</span></a>). If no such filter is given, a letter representation is used.</p>
 
-<p>Also see Chapter <a href="chap51_mj.html#X8665D8737FDD5B10"><span class="RefLink">51</span></a>.</p>
+<p>For more on associative words see Chapter <a href="chap37_mj.html#X78C56A0A87CE380E"><span class="RefLink">37</span></a>.</p>
 
 <p><a id="X7BFE938E857CA27D" name="X7BFE938E857CA27D"></a></p>
 
@@ -577,7 +579,7 @@ true</pre></div>
 <h5>51.4-3 InversesOfSemigroupElement</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InversesOfSemigroupElement</code>( <var class="Arg">S</var>, <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: The inverses of an element of a semigroup.</p>
+<p>Returns: A list of the inverses of an element of a semigroup.</p>
 
 <p><code class="code">InversesOfSemigroupElement</code> returns a list of the inverses of the element <var class="Arg">x</var> in the semigroup <var class="Arg">S</var>.</p>
 
@@ -585,24 +587,26 @@ true</pre></div>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup([ Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1 ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation( [ 5, 7, 8, 8, 7, 5, 9, 1, 9 ] ), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation( [ 7, 6, 2, 8, 4, 7, 5, 8, 3 ] ) ]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=Transformation( [ 3, 1, 4, 2, 5, 2, 1, 6, 1 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([3, 1, 4, 2, 5, 2, 1, 6, 1]), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([5, 7, 8, 8, 7, 5, 9, 1, 9]), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([7, 6, 2, 8, 4, 7, 5, 8, 3])]);</span>
+&lt;transformation semigroup of degree 9 with 3 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Transformation([3, 1, 4, 2, 5, 2, 1, 6, 1]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">InversesOfSemigroupElement(S, x);</span>
 [  ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRegularSemigroupElement(S, x);</span>
 false
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=Transformation( [ 1, 9, 7, 5, 5, 1, 9, 5, 1 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := Transformation([1, 9, 7, 5, 5, 1, 9, 5, 1]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set(InversesOfSemigroupElement(S, x));</span>
 [ Transformation( [ 1, 2, 3, 5, 5, 1, 3, 5, 2 ] ), 
   Transformation( [ 1, 5, 1, 1, 5, 1, 3, 1, 2 ] ), 
   Transformation( [ 1, 5, 1, 2, 5, 1, 3, 2, 2 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRegularSemigroupElement(S, x);</span>
 true
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=ReesZeroMatrixSemigroup(Group((1,2,3)), </span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">[ [ (), () ], [ (), 0 ], [ (), (1,2,3) ] ]);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=ReesZeroMatrixSemigroupElement(S, 2, (1,2,3), 3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := ReesZeroMatrixSemigroup(Group((1,2,3)),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> [[(), ()], [(), 0], [(), (1,2,3)]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := ReesZeroMatrixSemigroupElement(S, 2, (1,2,3), 3);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">InversesOfSemigroupElement(S, x);</span>
 [ (1,(1,2,3),3), (1,(1,3,2),1), (2,(),3), (2,(1,2,3),1) ]</pre></div>
 
@@ -642,15 +646,16 @@ true
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsInverseMonoid</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
-<p>A semigroup is an <em>inverse semigroup</em> if every element <code class="code">x</code> has a unique semigroup inverse, that is, a unique element <code class="code">y</code> such that <code class="code">x*y*x=x</code> and <code class="code">y*x*y=y</code>.</p>
+<p>A semigroup <var class="Arg">S</var> is an <em>inverse semigroup</em> if every element <code class="code">x</code> in <var class="Arg">S</var> has a unique semigroup inverse, that is, a unique element <code class="code">y</code> in <var class="Arg">S</var> such that <code class="code">x*y*x=x</code> and <code class="code">y*x*y=y</code>.</p>
 
-<p>A monoid that happens to be an inverse semigroup is called an <em>inverse monoid</em>.</p>
+<p>A monoid that happens to be an inverse semigroup is called an <em>inverse monoid</em>; see <code class="func">IsMonoid</code> (<a href="chap51_mj.html#X861C523483C6248C"><span class="RefLink">51.2-1</span></a>).</p>
 
 
 <div class="example"><pre>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S:=Semigroup( Transformation( [ 1, 2, 4, 5, 6, 3, 7, 8 ] ),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 3, 3, 4, 5, 6, 2, 7, 8 ] ),</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">Transformation( [ 1, 2, 5, 3, 6, 8, 4, 4 ] ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">S := Semigroup([</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([1, 2, 4, 5, 6, 3, 7, 8]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([3, 3, 4, 5, 6, 2, 7, 8]),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput"> Transformation([1, 2, 5, 3, 6, 8, 4, 4])]);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsInverseSemigroup(S);</span>
 true</pre></div>
 
@@ -854,6 +859,22 @@ true</pre></div>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRegularDClass</code>( <var class="Arg">Dclass</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if the Greens <span class="SimpleMath">\(D\)</span> class <var class="Arg">Dclass</var> is regular. A <span class="SimpleMath">\(D\)</span> class is regular if and only if each of its elements is regular, which in turn is true if and only if any one element of <var class="Arg">Dclass</var> is regular. Idempotents are regular since <span class="SimpleMath">\(eee = e\)</span> so it follows that a Green's <span class="SimpleMath">\(D\)</span> class containing an idempotent is regular. Conversely, it is true that a regular <span class="SimpleMath">\(D\)</span> class must contain at least one idempotent. (See <a href="chapBib_mj.html#biBHowie76">[How76, Prop. 3.2]</a>.)</p>
+
+<p><a id="X81AF2EAB7CEF8C19" name="X81AF2EAB7CEF8C19"></a></p>
+
+<h5>51.8-13 DisplaySemigroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DisplaySemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Produces a convenient display of a transformation semigroup's D-Class structure. Let <var class="Arg">S</var> be a transformation semigroup of degree <span class="SimpleMath">\(n\)</span>. Then for each <span class="SimpleMath">\(r\leq n\)</span>, we show all D-classes of rank <span class="SimpleMath">\(r\)</span>.</p>
+
+<p>A regular D-class with a single H-class of size 120 appears as</p>
+
+
+<div class="example"><pre>
+*[H size = 120, 1 L-class, 1 R-class] 
+</pre></div>
+
+<p>(the <code class="code">*</code> denoting regularity).</p>
 
 <p><a id="X8225A9EC87A255E6" name="X8225A9EC87A255E6"></a></p>
 

@@ -13,10 +13,10 @@
 #ifndef GAP_GAP_H
 #define GAP_GAP_H
 
+#include <src/system.h>
 
 /****************************************************************************
 **
-
 *V  Last  . . . . . . . . . . . . . . . . . . . . . . global variable  'last'
 **
 **  'Last',  'Last2', and 'Last3'  are the  global variables 'last', 'last2',
@@ -49,44 +49,37 @@ extern UInt Last3;
 */
 extern UInt Time;
 
-/****************************************************************************
-**
-*V  AlarmJumpBuffer . . . . . .long jump buffer used for timeouts 
-**
-**  Needs to be visible to code in read.c that stores away execution state 
-*/
-
-
-extern syJmp_buf AlarmJumpBuffers[];
-extern UInt NumAlarmJumpBuffers;
-
 
 /****************************************************************************
 **
-
 *F  ViewObjHandler  . . . . . . . . . handler to view object and catch errors
 */
 extern UInt ViewObjGVar;
-extern UInt CustomViewGVar;
 
 extern void ViewObjHandler ( Obj obj );
 
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * * print and error  * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-*F  FuncPrint( <self>, <args> ) . . . . . . . . . . . . . . . .  print <args>
+*F RegisterBreakloopObserver( <func> )
+**
+** Register a function which will be called when the break loop is entered
+** and left. Function should take a single Int argument which will be 1 when
+** break loop is entered, 0 when leaving.
+**
+** Note that it is also possible to leave the break loop (or any GAP code)
+** by longjmping. This should be tracked with RegisterSyLongjmpObserver.
 */
-extern Obj FuncPrint (
-    Obj                 self,
-    Obj                 args );
 
+typedef void (*intfunc)(Int);
+
+Int RegisterBreakloopObserver(intfunc func);
 
 /****************************************************************************
 **
@@ -172,6 +165,14 @@ extern void ErrorQuitNrArgs (
 
 /****************************************************************************
 **
+*F  ErrorQuitNrAtLeastArgs( <narg>, <args> ) . . . . . . not enough arguments
+*/
+extern void ErrorQuitNrAtLeastArgs (
+    Int                 narg,
+    Obj                 args );
+
+/****************************************************************************
+**
 *F  ErrorQuitRange3( <first>, <second>, <last> ) . . .divisibility rules
 */
 extern void ErrorQuitRange3 (
@@ -201,9 +202,6 @@ extern void ErrorReturnVoid (
             Int                 arg2,
             const Char *        msg2 );
 
-extern Obj ErrorLVars;
-extern Obj ErrorLVars0;
-
 
 /****************************************************************************
 **
@@ -213,148 +211,35 @@ extern Obj ErrorLVars0;
 **
 **  Values are powers of two, although I do not currently know of any
 **  cirumstances where they can get combined
-**
-** STATUS_END           0    ran off the end of the code 
-** STATUS_RETURN_VAL    1    value returned  
-** STATUS_RETURN_VOID   2    void returned   
-** STATUS_TNM           4    try-next-method 
-** STATUS_QUIT          8    quit command
-** STATUS_EOF          16    End of file 
-** STATUS_ERROR        32    error
-** STATUS_QQUIT        64    QUIT command
 */
 
 typedef UInt ExecStatus;
 
-#define STATUS_END         0
-#define STATUS_RETURN_VAL  1
-#define STATUS_RETURN_VOID 2
-#define STATUS_TNM         4
-#define STATUS_QUIT        8
-#define STATUS_EOF        16
-#define STATUS_ERROR      32
-#define STATUS_QQUIT      64
-
-
-
-extern UInt UserHasQuit;
-extern UInt UserHasQUIT;
-extern UInt SystemErrorCode;
-
-#if 0
-/****************************************************************************
-**
-*F  FuncError( <self>, <args> ) . . . . . . . . . . . . . . . signal an error
-**
-*/
-extern Obj FuncError (
-    Obj                 self,
-    Obj                 args );
-
-#endif
+enum {
+    STATUS_END         =  0,    // ran off the end of the code
+    STATUS_RETURN_VAL  =  1,    // value returned
+    STATUS_RETURN_VOID =  2,    // void returned
+    STATUS_BREAK       =  4,    // 'break' statement
+    STATUS_QUIT        =  8,    // quit command
+    STATUS_CONTINUE    =  8,    // 'continue' statement
+    STATUS_EOF         = 16,    // End of file
+    STATUS_ERROR       = 32,    // error
+    STATUS_QQUIT       = 64,    // QUIT command
+};
 
 
 /****************************************************************************
 **
-
-*F * * * * * * * * * * * * * important filters  * * * * * * * * * * * * * * *
-*/
-
-/****************************************************************************
-**
-
-*V  FN_IS_MUTABLE . . . . . . . . . . . . . . . filter number for `IsMutable'
-*/
-#define FN_IS_MUTABLE           1
-
-
-/****************************************************************************
-**
-*V  FN_IS_EMPTY . . . . . . . . . . . . . . . . . filter number for `IsEmpty'
-*/
-#define FN_IS_EMPTY             2
-
-
-/****************************************************************************
-**
-*V  FN_IS_SSORT . . . . . . . . . . . . . . filter number for `IsSSortedList'
-*/
-#define FN_IS_SSORT             3
-
-
-/****************************************************************************
-**
-*V  FN_IS_NSORT . . . . . . . . . . . . . . filter number for `IsNSortedList'
-*/
-#define FN_IS_NSORT             4
-
-
-/****************************************************************************
-**
-*V  FN_IS_DENSE . . . . . . . . . . . . . . . filter number for `IsDenseList'
-*/
-#define FN_IS_DENSE             5
-
-
-/****************************************************************************
-**
-*V  FN_IS_NDENSE  . . . . . . . . . . . . .  filter number for `IsNDenseList'
-*/
-#define FN_IS_NDENSE            6
-
-
-/****************************************************************************
-**
-*V  FN_IS_HOMOG . . . . . . . . . . . . filter number for `IsHomogeneousList'
-*/
-#define FN_IS_HOMOG             7
-
-
-/****************************************************************************
-**
-*V  FN_IS_NHOMOG  . . . . . . . . .  filter number for `IsNonHomogeneousList'
-*/
-#define FN_IS_NHOMOG            8
-
-
-/****************************************************************************
-**
-*V  FN_IS_TABLE . . . . . . . . . . . . . . . . . filter number for `IsTable'
-*/
-#define FN_IS_TABLE             9
-
-/****************************************************************************
-**
-*V  FN_IS_RECT . . . . . . . . . . . . filter number for `IsRectangularTable'
-*/
-#define FN_IS_RECT             10
-#define LAST_FN                 FN_IS_RECT
-
-
-/****************************************************************************
-**
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
-*F  FillInVersion( <module>, <rev_c>, <rev_h> ) . . .  fill in version number
+*F  FillInVersion -- obsolete function, only kept for backwards compatibility
+**  with packages using it.
 */
-extern void FillInVersion (
-    StructInitInfo *            module );
-
-
-/****************************************************************************
-**
-*F  RequireModule( <calling>, <required>, <version> ) . . . .  require module
-*/
-extern void RequireModule (
-    StructInitInfo *            module,
-    const Char *                required,
-    UInt                        version );
+static inline void FillInVersion ( StructInitInfo * module ) {}
 
 
 /****************************************************************************
@@ -497,21 +382,22 @@ extern void ImportFuncFromLibrary(
 
 /****************************************************************************
 **
-
-*V  Revisions . . . . . . . . . . . . . . . . . .  record of revision numbers
-*/
-extern Obj Revisions;
-
-
-extern Obj Error;
-extern Obj ErrorInner;
-
-/****************************************************************************
-**
-
 *F  Modules . . . . . . . . . . . . . . . . . . . . . . . . . list of modules
 */
-extern StructInitInfo * Modules [];
+typedef struct {
+
+    // pointer to the actual StructInitInfo
+    StructInitInfo * info;
+
+    // filename relative to GAP_ROOT or absolute
+    Char *           filename;
+
+    // true if the filename is GAP_ROOT relative
+    Int              isGapRootRelative;
+
+} StructInitInfoExt;
+
+extern StructInitInfoExt Modules [];
 extern UInt NrModules;
 extern UInt NrBuiltinModules;
 
@@ -527,25 +413,20 @@ extern UInt NrBuiltinModules;
 */
 extern void RecordLoadedModule (
     StructInitInfo *        module,
-    Char *                  filename );
+    Int                     isGapRootRelative,
+    const Char *            filename );
 
 
 
 
 /****************************************************************************
 **
-
 *F  InitializeGap( <argc>, <argv> ) . . . . . . . . . . . . . . . .  init GAP
 */
 extern void InitializeGap (
             int *               pargc,
-            char *              argv [] );
+            char *              argv [],
+            char *              environ [] );
 
 
 #endif // GAP_GAP_H
-
-/****************************************************************************
-**
-
-*E  gap.h . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

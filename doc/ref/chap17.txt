@@ -133,8 +133,9 @@
   
   [33X[0;0YIf  [3Xelm[103X  is a string consisting of digits [10X'0'[110X, [10X'1'[110X, [22X...[122X, [10X'9'[110X and [10X'-'[110X (at the
   first  position),  [10X'/'[110X  and  the  decimal  dot  [10X'.'[110X then [3Xrat[103X is the rational
-  described  by  this  string.  The  operation  [2XString[102X ([14X27.7-6[114X) can be used to
-  compute a string for rational numbers, in fact for all cyclotomics.[133X
+  described by this string. If [3Xelm[103X is a rational number, then [10XRat[110X returns [3Xelm[103X.
+  The  operation  [2XString[102X ([14X27.7-6[114X) can be used to compute a string for rational
+  numbers, in fact for all cyclotomics.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XRat( "1/2" );  Rat( "35/14" );  Rat( "35/-27" );  Rat( "3.14159" );[127X[104X

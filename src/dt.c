@@ -51,37 +51,18 @@
 **  entry contains num( <a> ) and the last entry finally gives a boundary
 **  for pos( <b> ) for all trees <b> which are represented by <a>.
 */
-#include       "system.h"
 
+#include <src/dt.h>
 
-
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
-#include        "bool.h"                /* booleans                        */
-#include        "calls.h"               /* generic call mechanism          */
-#include        "gap.h"                 /* error handling, initialisation  */
-#include        "gvars.h"               /* global variables                */
-#include        "integer.h"             /* integers                        */
-
-#include        "dt.h"                  /* deep thought                    */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "listfunc.h"            /* functions for generic lists     */
-#include        "plist.h"               /* plain lists                     */
-#include        "string.h"              /* strings                         */
-
-#include	"code.h"		/* coder                           */
-#include	"thread.h"		/* threads			   */
-#include	"tls.h"			/* thread-local storage		   */
+#include <src/calls.h>
+#include <src/gap.h>
+#include <src/gvars.h>
+#include <src/integer.h>
+#include <src/plist.h>
 
 
 /****************************************************************************
 **
-
 *F  DT_POS(tree, index) . . . . . . . . . . . . . position of (<tree>, index)
 **
 **  'DT_POS' returns pos(<a>) where <a> is the subtree of <tree> rooted at
@@ -97,7 +78,7 @@
 *F  SET_DT_POS(tree, index, obj) . . . assign the position of(<tree>, index)
 **
 **  'SET_DT_POS sets pos(<a>) to the object <obj>, where <a> is the subtree
-**  of <tree>,  rooted at (<tree>, index).  <index> has to be an positive
+**  of <tree>,  rooted at (<tree>, index).  <index> has to be a positive
 **  integer less or equal to the number of nodes of <tree>
 */
 #define  SET_DT_POS(tree, index, obj) \
@@ -121,7 +102,7 @@
 *F  SET_DT_GEN(tree, index, obj) . . . assign the generator of(<tree>, index)
 **
 **  'SET_DT_GEN sets num(<a>) to the object <obj>, where <a> is the subtree
-**  of <tree>,  rooted at (<tree>, index).  <index> has to be an positive
+**  of <tree>,  rooted at (<tree>, index).  <index> has to be a positive
 **  integer less or equal to the number of nodes of <tree>
 */
 #define  SET_DT_GEN(tree, index, obj) \
@@ -504,11 +485,7 @@ Obj    Mark2(
             else
             {
                 new = ELM_PLIST(list, INT_INTOBJ( DT_POS(tree, i) )  );
-                GROW_PLIST(new, LEN_PLIST(new) + 1);
-                SET_LEN_PLIST(new, LEN_PLIST(new) + 1);
-                SET_ELM_PLIST(new, LEN_PLIST(new), INTOBJ_INT(i) );
-                /*  tell gasman that new has changed                         */
-                CHANGED_BAG(new);
+                PushPlist(new, INTOBJ_INT(i) );
             }
         }
         /*  Since num(a) < num(b) holds for all subtrees <a> of an arbitrary
@@ -982,9 +959,8 @@ void    GetReps(
             SET_ELM_PLIST(tree, 2, ELM_PLIST( list, 3) );
             SET_ELM_PLIST(tree, 3, INTOBJ_INT(0) );
             SET_ELM_PLIST(tree, 4, INTOBJ_INT((int)(k/5)) );
-            if  (  TNUM_OBJ( ELM_PLIST(list, 4) ) == T_INT        &&
-                   CELM(list, 4) < 100                            &&
-                   CELM(list, 4) > 0                                 )
+            if ( IS_INTOBJ( ELM_PLIST(list, 4) ) &&
+                   CELM(list, 4) < 100 && CELM(list, 4) > 0 )
                 SET_ELM_PLIST(tree, 5, ELM_PLIST(list, 4) );
             else
                 SET_ELM_PLIST(tree, 5, INTOBJ_INT(0) );
@@ -1065,11 +1041,7 @@ void   FindNewReps1(
         if ( Leftof(tree, DT_LEFT(tree, 1), tree, DT_RIGHT(tree, 1) )  )
         {
             y = ShallowCopyPlist(tree);
-            GROW_PLIST(reps, LEN_PLIST(reps) + 1);
-            SET_LEN_PLIST(reps, LEN_PLIST(reps) + 1);
-            SET_ELM_PLIST(reps, LEN_PLIST(reps), y);
-            /*  tell gasman that <reps> has changed           */
-            CHANGED_BAG(reps);              
+            AssPlist(reps, LEN_PLIST(reps) + 1, y);
         }
         return;
     }
@@ -1273,10 +1245,7 @@ void   FindNewReps(
               UnmarkTree(tree);
               tree = MakeFormulaVector(tree, pr);
               list1 = ELM_PLIST(reps, CELM(rel, 3) );
-              GROW_PLIST(list1, LEN_PLIST(list1) + 1 );
-              SET_LEN_PLIST(list1, LEN_PLIST(list1) + 1 );
-              SET_ELM_PLIST(list1, LEN_PLIST(list1), tree);
-              CHANGED_BAG(list1);
+              PushPlist(list1, tree);
             }
             else
             {
@@ -1288,11 +1257,7 @@ void   FindNewReps(
                         i+=2                                        )
                 {
                     list1 = ELM_PLIST(reps, CELM(rel, i)  );
-                    GROW_PLIST(list1, LEN_PLIST(list1) + 1);
-                    SET_LEN_PLIST(list1, LEN_PLIST(list1) + 1);
-                    SET_ELM_PLIST(list1, LEN_PLIST(list1), y);
-                    /*  tell gasman that <list1> has changed           */
-                    CHANGED_BAG(list1);             
+                    PushPlist(list1, y);
                 }
             }
         }
@@ -1781,41 +1746,28 @@ Obj    FuncDT_evaluation(Obj      self,
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    { "MakeFormulaVector", 2, "tree, presentation",
-      FuncMakeFormulaVector, "src/dt.c:MakeFormulaVector" },
-
-    { "FindNewReps", 4, "tree, representatives, presentation, maximum",
-      FuncFindNewReps, "src/dt.c:FindNewReps" },
-
-    { "UnmarkTree", 1, "tree",
-      FuncUnmarkTree, "src/dt.c:UnmarkTree" },
-
-    { "GetPols", 3, "list, presentation, polynomial",
-      FuncGetPols, "src/dt.c:GetPols" },
-    
-    { "DT_evaluation", 1, "vector",
-      FuncDT_evaluation, "src/dt.c:DT_evaluation" },
-
-    { 0 }
+    GVAR_FUNC(MakeFormulaVector, 2, "tree, presentation"),
+    GVAR_FUNC(FindNewReps, 4, "tree, representatives, presentation, maximum"),
+    GVAR_FUNC(UnmarkTree, 1, "tree"),
+    GVAR_FUNC(GetPols, 3, "list, presentation, polynomial"),
+    GVAR_FUNC(DT_evaluation, 1, "vector"),
+    { 0, 0, 0, 0, 0 }
 
 };
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
@@ -1851,29 +1803,15 @@ static Int InitLibrary (
 *F  InitInfoDeepThought() . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "dt",                               /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "dt",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoDeepThought ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  dt.c  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-**
-*/

@@ -94,7 +94,7 @@
 
 <p>If the groups are in different representations a generic direct product will be formed which may not be particularly efficient for many calculations. Instead it may be worth to convert all factors to a common representation first, before forming the product.</p>
 
-<p>For a direct product <span class="SimpleMath">\(P\)</span>, calling <code class="func">Embedding</code> (<a href="chap32_mj.html#X86452F8587CBAEA0"><span class="RefLink">32.2-10</span></a>) with <span class="SimpleMath">\(P\)</span> and <span class="SimpleMath">\(n\)</span> yields the homomorphism embedding the <span class="SimpleMath">\(n\)</span>-th factor into <span class="SimpleMath">\(P\)</span>; calling <code class="func">Projection</code> (<a href="chap32_mj.html#X8769E8DA80BC96C1"><span class="RefLink">32.2-11</span></a>) with <var class="Arg">P</var> and <var class="Arg">n</var> yields the projection of <span class="SimpleMath">\(P\)</span> onto the <span class="SimpleMath">\(n\)</span>-th factor, see <a href="chap49_mj.html#X798FDA1386A0EAC6"><span class="RefLink">49.6</span></a>.</p>
+<p>For a direct product <span class="SimpleMath">\(P\)</span>, calling <code class="func">Embedding</code> (<a href="chap32_mj.html#X86452F8587CBAEA0"><span class="RefLink">32.2-11</span></a>) with <span class="SimpleMath">\(P\)</span> and <span class="SimpleMath">\(n\)</span> yields the homomorphism embedding the <span class="SimpleMath">\(n\)</span>-th factor into <span class="SimpleMath">\(P\)</span>; calling <code class="func">Projection</code> (<a href="chap32_mj.html#X8769E8DA80BC96C1"><span class="RefLink">32.2-12</span></a>) with <var class="Arg">P</var> and <var class="Arg">n</var> yields the projection of <span class="SimpleMath">\(P\)</span> onto the <span class="SimpleMath">\(n\)</span>-th factor, see <a href="chap49_mj.html#X798FDA1386A0EAC6"><span class="RefLink">49.6</span></a>.</p>
 
 
 <div class="example"><pre>
@@ -139,13 +139,12 @@ Group([ (1,2,3), (1,2), (4,5,6), (4,5), (7,8,9), (7,8) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">au:=DerivedSubgroup(AutomorphismGroup(n));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(au);</span>
 120
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p:=SemidirectProduct(au,n);</span>
-&lt;permutation group with 5 generators&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p:=SemidirectProduct(au,n);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size(p);</span>
 3000
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=Group((1,2),(3,4));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">au:=AutomorphismGroup(n);;</span>
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">au:=First(Elements(au),i-&gt;Order(i)=3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">au:=First(AsSet(au),i-&gt;Order(i)=3);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">au:=Group(au);</span>
 &lt;group with 1 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupOfAutomorphisms(au);</span>
@@ -154,16 +153,11 @@ true
 &lt;pc group with 3 generators&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">n:=AbelianGroup(IsPcGroup,[2,2]);</span>
 &lt;pc group of size 4 with 2 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">au:=AutomorphismGroup(n);</span>
-&lt;group of size 6 with 2 generators&gt;
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">apc:=IsomorphismPcGroup(au);</span>
-CompositionMapping( Pcgs([ (2,3), (1,2,3) ]) -&gt; 
-[ f1, f2 ], &lt;action isomorphism&gt; )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">au:=AutomorphismGroup(n);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">apc:=IsomorphismPcGroup(au);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:=Image(apc);</span>
 Group([ f1, f2 ])
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">apci:=InverseGeneralMapping(apc);</span>
-[ f1*f2^2, f1*f2 ] -&gt; [ Pcgs([ f1, f2 ]) -&gt; [ f1*f2, f2 ], 
-  Pcgs([ f1, f2 ]) -&gt; [ f2, f1 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">apci:=InverseGeneralMapping(apc);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsGroupHomomorphism(apci);</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p:=SemidirectProduct(g,apci,n);</span>
@@ -184,7 +178,7 @@ true
 &lt;matrix group of size 15360 with 4 generators&gt;
 </pre></div>
 
-<p>For a semidirect product <span class="SimpleMath">\(P\)</span> of <var class="Arg">G</var> with <var class="Arg">N</var>, calling <code class="func">Embedding</code> (<a href="chap32_mj.html#X86452F8587CBAEA0"><span class="RefLink">32.2-10</span></a>) with <span class="SimpleMath">\(P\)</span> and <code class="code">1</code> yields the embedding of <var class="Arg">G</var>, calling <code class="func">Embedding</code> (<a href="chap32_mj.html#X86452F8587CBAEA0"><span class="RefLink">32.2-10</span></a>) with <span class="SimpleMath">\(P\)</span> and <code class="code">2</code> yields the embedding of <var class="Arg">N</var>; calling <code class="func">Projection</code> (<a href="chap32_mj.html#X8769E8DA80BC96C1"><span class="RefLink">32.2-11</span></a>) with <var class="Arg">P</var> yields the projection of <span class="SimpleMath">\(P\)</span> onto <var class="Arg">G</var>, see <a href="chap49_mj.html#X798FDA1386A0EAC6"><span class="RefLink">49.6</span></a>.</p>
+<p>For a semidirect product <span class="SimpleMath">\(P\)</span> of <var class="Arg">G</var> with <var class="Arg">N</var>, calling <code class="func">Embedding</code> (<a href="chap32_mj.html#X86452F8587CBAEA0"><span class="RefLink">32.2-11</span></a>) with <span class="SimpleMath">\(P\)</span> and <code class="code">1</code> yields the embedding of <var class="Arg">G</var>, calling <code class="func">Embedding</code> (<a href="chap32_mj.html#X86452F8587CBAEA0"><span class="RefLink">32.2-11</span></a>) with <span class="SimpleMath">\(P\)</span> and <code class="code">2</code> yields the embedding of <var class="Arg">N</var>; calling <code class="func">Projection</code> (<a href="chap32_mj.html#X8769E8DA80BC96C1"><span class="RefLink">32.2-12</span></a>) with <var class="Arg">P</var> yields the projection of <span class="SimpleMath">\(P\)</span> onto <var class="Arg">G</var>, see <a href="chap49_mj.html#X798FDA1386A0EAC6"><span class="RefLink">49.6</span></a>.</p>
 
 
 <div class="example"><pre>
@@ -216,10 +210,10 @@ true
 
 <h5>49.3-1 SubdirectProduct</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubdirectProduct</code>( <var class="Arg">G</var>, <var class="Arg">H</var>, <var class="Arg">Ghom</var>, <var class="Arg">Hhom</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SubdirectProduct</code>( <var class="Arg">G</var>, <var class="Arg">H</var>, <var class="Arg">Ghom</var>, <var class="Arg">Hhom</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>constructs the subdirect product of <var class="Arg">G</var> and <var class="Arg">H</var> with respect to the epimorphisms <var class="Arg">Ghom</var> from <var class="Arg">G</var> onto a group <span class="SimpleMath">\(A\)</span> and <var class="Arg">Hhom</var> from <var class="Arg">H</var> onto the same group <span class="SimpleMath">\(A\)</span>.</p>
 
-<p>For a subdirect product <span class="SimpleMath">\(P\)</span>, calling <code class="func">Projection</code> (<a href="chap32_mj.html#X8769E8DA80BC96C1"><span class="RefLink">32.2-11</span></a>) with <span class="SimpleMath">\(P\)</span> and <span class="SimpleMath">\(n\)</span> yields the projection on the <span class="SimpleMath">\(n\)</span>-th factor. (In general the factors do not embed into a subdirect product.)</p>
+<p>For a subdirect product <span class="SimpleMath">\(P\)</span>, calling <code class="func">Projection</code> (<a href="chap32_mj.html#X8769E8DA80BC96C1"><span class="RefLink">32.2-12</span></a>) with <span class="SimpleMath">\(P\)</span> and <span class="SimpleMath">\(n\)</span> yields the projection on the <span class="SimpleMath">\(n\)</span>-th factor. (In general the factors do not embed into a subdirect product.)</p>
 
 
 <div class="example"><pre>
@@ -266,7 +260,7 @@ Group([ (1,2,3), (1,2)(4,5), (4,5,6) ])
 
 <p><code class="code">StandardWreathProduct</code> returns the wreath product for the (right regular) permutation action of <var class="Arg">H</var> on its elements.</p>
 
-<p>For a wreath product <span class="SimpleMath">\(W\)</span> of <var class="Arg">G</var> with a permutation group <span class="SimpleMath">\(P\)</span> of degree <span class="SimpleMath">\(n\)</span> and <span class="SimpleMath">\(1 \leq i \leq n\)</span> calling <code class="func">Embedding</code> (<a href="chap32_mj.html#X86452F8587CBAEA0"><span class="RefLink">32.2-10</span></a>) with <span class="SimpleMath">\(W\)</span> and <span class="SimpleMath">\(i\)</span> yields the embedding of <var class="Arg">G</var> in the <span class="SimpleMath">\(i\)</span>-th component of the direct product of the base group <span class="SimpleMath">\(\textit{G}^n\)</span> of <span class="SimpleMath">\(W\)</span>. For <span class="SimpleMath">\(i = n+1\)</span>, <code class="func">Embedding</code> (<a href="chap32_mj.html#X86452F8587CBAEA0"><span class="RefLink">32.2-10</span></a>) yields the embedding of <span class="SimpleMath">\(P\)</span> into <span class="SimpleMath">\(W\)</span>. Calling <code class="func">Projection</code> (<a href="chap32_mj.html#X8769E8DA80BC96C1"><span class="RefLink">32.2-11</span></a>) with <span class="SimpleMath">\(W\)</span> yields the projection onto the acting group <span class="SimpleMath">\(P\)</span>, see <a href="chap49_mj.html#X798FDA1386A0EAC6"><span class="RefLink">49.6</span></a>.</p>
+<p>For a wreath product <span class="SimpleMath">\(W\)</span> of <var class="Arg">G</var> with a permutation group <span class="SimpleMath">\(P\)</span> of degree <span class="SimpleMath">\(n\)</span> and <span class="SimpleMath">\(1 \leq i \leq n\)</span> calling <code class="func">Embedding</code> (<a href="chap32_mj.html#X86452F8587CBAEA0"><span class="RefLink">32.2-11</span></a>) with <span class="SimpleMath">\(W\)</span> and <span class="SimpleMath">\(i\)</span> yields the embedding of <var class="Arg">G</var> in the <span class="SimpleMath">\(i\)</span>-th component of the direct product of the base group <span class="SimpleMath">\(\textit{G}^n\)</span> of <span class="SimpleMath">\(W\)</span>. For <span class="SimpleMath">\(i = n+1\)</span>, <code class="func">Embedding</code> (<a href="chap32_mj.html#X86452F8587CBAEA0"><span class="RefLink">32.2-11</span></a>) yields the embedding of <span class="SimpleMath">\(P\)</span> into <span class="SimpleMath">\(W\)</span>. Calling <code class="func">Projection</code> (<a href="chap32_mj.html#X8769E8DA80BC96C1"><span class="RefLink">32.2-12</span></a>) with <span class="SimpleMath">\(W\)</span> yields the projection onto the acting group <span class="SimpleMath">\(P\)</span>, see <a href="chap49_mj.html#X798FDA1386A0EAC6"><span class="RefLink">49.6</span></a>.</p>
 
 
 <div class="example"><pre>
@@ -297,7 +291,7 @@ Group([ (1,4,7)(2,5,8)(3,6,9) ])
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WreathProductImprimitiveAction</code>( <var class="Arg">G</var>, <var class="Arg">H</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For two permutation groups <var class="Arg">G</var> and <var class="Arg">H</var>, this function constructs the wreath product of <var class="Arg">G</var> and <var class="Arg">H</var> in the imprimitive action. If <var class="Arg">G</var> acts on <span class="SimpleMath">\(l\)</span> points and <var class="Arg">H</var> on <span class="SimpleMath">\(m\)</span> points this action will be on <span class="SimpleMath">\(l \cdot m\)</span> points, it will be imprimitive with <span class="SimpleMath">\(m\)</span> blocks of size <span class="SimpleMath">\(l\)</span> each.</p>
 
-<p>The operations <code class="func">Embedding</code> (<a href="chap32_mj.html#X86452F8587CBAEA0"><span class="RefLink">32.2-10</span></a>) and <code class="func">Projection</code> (<a href="chap32_mj.html#X8769E8DA80BC96C1"><span class="RefLink">32.2-11</span></a>) operate on this product as described for general wreath products.</p>
+<p>The operations <code class="func">Embedding</code> (<a href="chap32_mj.html#X86452F8587CBAEA0"><span class="RefLink">32.2-11</span></a>) and <code class="func">Projection</code> (<a href="chap32_mj.html#X8769E8DA80BC96C1"><span class="RefLink">32.2-12</span></a>) operate on this product as described for general wreath products.</p>
 
 
 <div class="example"><pre>
@@ -313,7 +307,7 @@ Group([ (1,4,7)(2,5,8)(3,6,9) ])
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WreathProductProductAction</code>( <var class="Arg">G</var>, <var class="Arg">H</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For two permutation groups <var class="Arg">G</var> and <var class="Arg">H</var>, this function constructs the wreath product in product action. If <var class="Arg">G</var> acts on <span class="SimpleMath">\(l\)</span> points and <var class="Arg">H</var> on <span class="SimpleMath">\(m\)</span> points this action will be on <span class="SimpleMath">\(l^m\)</span> points.</p>
 
-<p>The operations <code class="func">Embedding</code> (<a href="chap32_mj.html#X86452F8587CBAEA0"><span class="RefLink">32.2-10</span></a>) and <code class="func">Projection</code> (<a href="chap32_mj.html#X8769E8DA80BC96C1"><span class="RefLink">32.2-11</span></a>) operate on this product as described for general wreath products.</p>
+<p>The operations <code class="func">Embedding</code> (<a href="chap32_mj.html#X86452F8587CBAEA0"><span class="RefLink">32.2-11</span></a>) and <code class="func">Projection</code> (<a href="chap32_mj.html#X8769E8DA80BC96C1"><span class="RefLink">32.2-12</span></a>) operate on this product as described for general wreath products.</p>
 
 
 <div class="example"><pre>
@@ -357,7 +351,7 @@ Group([ (2,3,4), (1,2,4) ])
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FreeProduct</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>constructs a finitely presented group which is the free product of the groups given as arguments. If the group arguments are not finitely presented groups, then <code class="func">IsomorphismFpGroup</code> (<a href="chap47_mj.html#X7F28268F850F454E"><span class="RefLink">47.11-1</span></a>) must be defined for them.</p>
 
-<p>The operation <code class="func">Embedding</code> (<a href="chap32_mj.html#X86452F8587CBAEA0"><span class="RefLink">32.2-10</span></a>) operates on this product.</p>
+<p>The operation <code class="func">Embedding</code> (<a href="chap32_mj.html#X86452F8587CBAEA0"><span class="RefLink">32.2-11</span></a>) operates on this product.</p>
 
 
 <div class="example"><pre>

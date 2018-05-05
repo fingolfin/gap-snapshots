@@ -32,7 +32,7 @@ function ( filter, q )
 
   if not IsPrimePowerInt(q)
     or SmallestRootInt(q) <> 2 or LogInt(q,2) mod 2 = 0
-  then Error("<q> must be a non-square power of 2\n"); fi;
+  then Error("<q> must be a non-square power of 2"); fi;
 
   f := GF(q);
   G := GroupByGenerators(
@@ -74,19 +74,17 @@ function ( filter, q )
 
   if not IsPrimePowerInt(q)
     or SmallestRootInt(q) <> 2 or LogInt(q,2) mod 2 = 0
-  then Error("<q> must be a non-square power of 2\n"); fi;
+  then Error("<q> must be a non-square power of 2"); fi;
 
   f := GF(q);
   r := RootInt(2 * q);
-  v:=[1,0,0,0] * One(f);
-  ConvertToVectorRep(v,q);
-  MakeImmutable(v);
+  v := [1,0,0,0] * One(f);
+  v := ImmutableVector(f, v);
   Ovoid := [v];
   for a in f do
     for b in f do
       v:=[a^(r+2) + a*b + b^r,b,a,One(f)];
-      ConvertToVectorRep(v,q);
-      MakeImmutable(v);
+      v := ImmutableVector(f, v);
       Add(Ovoid,NormedRowVector(v));
     od;
   od;

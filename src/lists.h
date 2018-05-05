@@ -18,12 +18,7 @@
 #ifndef GAP_LISTS_H
 #define GAP_LISTS_H
 
-
-
-extern  Obj             TYPE_LIST_EMPTY_MUTABLE;
-extern  Obj             TYPE_LIST_EMPTY_IMMUTABLE;
-
-extern  Obj             TYPE_LIST_HOM;
+#include <src/objects.h>
 
 /****************************************************************************
 **
@@ -33,17 +28,18 @@ extern  Obj             TYPE_LIST_HOM;
 **  'IS_LIST' returns a nonzero value if  the object <obj> is a list and zero
 **  otherwise.
 **
-**  Note that 'IS_LIST'  is a macro,  so do not  call it with arguments  that
-**  have side effects.
-**
 **  A package implementing  an ordinary list type <type>   must set the  flag
 **  'IsListFlag[<type>]'  for  this type to '1'.   A  package  implementing a
-**  vector type must set  it to '2'.  A  package implementing an matrix  type
+**  vector type must set  it to '2'.  A  package implementing a matrix  type
 **  must set it to '3'.
 */
-#define IS_LIST(obj)    ((*IsListFuncs[ TNUM_OBJ( obj ) ])( obj ))
-
 extern  Int             (*IsListFuncs [LAST_REAL_TNUM+1]) ( Obj obj );
+
+static inline Int IS_LIST(Obj obj)
+{
+    return (*IsListFuncs[TNUM_OBJ(obj)])(obj);
+}
+
 
 /****************************************************************************
 **
@@ -59,19 +55,91 @@ extern  Int             (*IsListFuncs [LAST_REAL_TNUM+1]) ( Obj obj );
 **  instead it will check if the object HasIsSmallList and IsSmallList, or
 **  HasLength in which case Length will be checked
 */
+extern Int (*IsSmallListFuncs[LAST_REAL_TNUM + 1])(Obj obj);
 
-#define IS_SMALL_LIST(obj)    ((*IsSmallListFuncs[ TNUM_OBJ( obj ) ])( obj ))
+static inline Int IS_SMALL_LIST(Obj obj)
+{
+    return (*IsSmallListFuncs[TNUM_OBJ(obj)])(obj);
+}
 
-extern  Int                (*IsSmallListFuncs [LAST_REAL_TNUM+1]) ( Obj obj );
+/****************************************************************************
+**
+*F  IS_DENSE_LIST(<list>) . . . . . . . . . . . . . . .  test for dense lists
+*V  IsDenseListFuncs[<type>]  . . . . . .  table of dense list test functions
+**
+**  'IS_DENSE_LIST'  returns 1 if the   list <list> is a   dense  list and  0
+**  otherwise, i.e., if either <list> is not a list, or if it is not dense.
+**
+**  A package  implementing a list type  <type> must provide such  a function
+**  and  install it in  'IsDenseListFuncs[<type>]'.   This function must loop
+**  over the list and test for holes, unless  the type of the list guarantees
+**  already that the list is dense (e.g. for sets).
+*/
 
+extern Int (*IsDenseListFuncs[LAST_REAL_TNUM + 1])(Obj list);
+
+extern Int IsDenseListDefault(Obj list);
+
+static inline Int IS_DENSE_LIST(Obj list)
+{
+    return (*IsDenseListFuncs[TNUM_OBJ(list)])(list);
+}
+
+/****************************************************************************
+**
+*F  IS_HOMOG_LIST(<list>) . . . . . . . . . . . .  test for homogeneous lists
+*V  IsHomogListFuncs[<type>]  . . .  table of homogeneous list test functions
+**
+**  'IS_HOMOG_LIST' returns 1 if  the list <list>  is a  homogeneous list and
+**  0 otherwise, i.e., if either <list> is not  a  list,  or  if  it  is  not
+**  homogeneous.
+**
+**  A  package implementing a list  type <type> must  provide such a function
+**  and install  it  in 'IsHomogListFuncs[<type>]'.  This function  must loop
+**  over the list   and test whether all  elements  lie in  the  same family,
+**  unless  the type  of   the list  guarantees    already that the  list  is
+**  homogeneous (e.g. for sets).
+*/
+
+extern Int (*IsHomogListFuncs[LAST_REAL_TNUM + 1])(Obj list);
+
+extern Int IsHomogListDefault(Obj list);
+
+static inline Int IS_HOMOG_LIST(Obj list)
+{
+    return (*IsHomogListFuncs[TNUM_OBJ(list)])(list);
+}
+
+/****************************************************************************
+**
+*F  IS_POSS_LIST(<list>)  . . . . . . . . . . . . .  test for positions lists
+*V  IsPossListFuncs[<type>] . . . . . . table of positions list test function
+**
+**  'IS_POSS_LIST' returns  1 if the list  <list> is  a dense list containing
+**  only positive  integers and 0 otherwise, i.e.,  if either <list> is not a
+**  list, or if it is not dense,  or if it contains  an element that is not a
+**  positive integer.
+**
+**  A package  implementing a list type  <type> must provide such  a function
+**  and install  it  in 'IsPossListFuncs[<type>]'.   This function  must loop
+**  over the list  and  test for holes   and elements that are  not  positive
+**  integers, unless the type of the list guarantees already that the list is
+**  acceptable (e.g. a range with positive <low> and <high> values).
+*/
+
+extern Int (*IsPossListFuncs[LAST_REAL_TNUM + 1])(Obj list);
+
+extern Int IsPossListDefault(Obj list);
+
+static inline Int IS_POSS_LIST(Obj list)
+{
+    return (*IsPossListFuncs[TNUM_OBJ(list)])(list);
+}
 
 /****************************************************************************
 **
 *F  LEN_LIST(<list>)  . . . . . . . . . . . . . . . . . . .  length of a list
 *V  LenListFuncs[<type>]  . . . . . . . . . . . . . table of length functions
-**
-**  'LEN_LIST' returns the logical length of the list <list>  as a C integer.
-**  An error is signalled if <list> is not a small list.
 **
 **  Note that  'LEN_LIST' is a  macro, so do  not call it with arguments that
 **  have side effects.
@@ -79,9 +147,12 @@ extern  Int                (*IsSmallListFuncs [LAST_REAL_TNUM+1]) ( Obj obj );
 **  A package  implementing a list type <type>  must  provide such a function
 **  and install it in 'LenListFuncs[<type>]'.
 */
-#define LEN_LIST(list)  ((*LenListFuncs[ TNUM_OBJ(list) ])( list ))
-
 extern  Int             (*LenListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
+
+static inline Int LEN_LIST(Obj list)
+{
+    return (*LenListFuncs[TNUM_OBJ(list)])(list);
+}
 
 
 /****************************************************************************
@@ -92,67 +163,52 @@ extern  Int             (*LenListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 **  'LENGTH' returns the logical length of the list <list>  as a GAP object
 **  An error is signalled if <list> is not a list.
 **
-**  Note that  'LENGTH' is a  macro, so do  not call it with arguments that
-**  have side effects.
-**
 **  A package  implementing a list type <type>  must  provide such a function
 **  and install it in 'LengthFuncs[<type>]'.
 */
-#define LENGTH(list)    ((*LengthFuncs[ TNUM_OBJ(list) ])( list ))
-
 extern  Obj             (*LengthFuncs[LAST_REAL_TNUM+1]) ( Obj list );
+
+static inline Obj LENGTH(Obj list)
+{
+    return (*LengthFuncs[TNUM_OBJ(list)])(list);
+}
 
 
 /****************************************************************************
 **
 *F  ISB_LIST(<list>,<pos>)  . . . . . . . . . .  test for element from a list
-*F  ISBV_LIST(<list>,<pos>) . . . . . . . . . .  test for element from a list
 *V  IsbListFuncs[<type>]  . . . . . . . . . . . . . . table of test functions
-*V  IsbvListFuncs[<type>] . . . . . . . . . . . . . . table of test functions
 **
 **  'ISB_LIST' returns 1  if the list <list>  has an entry at  position <pos>
 **  and 0 otherwise.  An error is signalled  if <list> is not  a list.  It is
 **  the  responsibility of  the  caller to  ensure that  <pos> is a  positive
 **  integer.
 **
-**  'ISBV_LIST'  does the same as  'ISB_LIST', but the caller also guarantees
-**  that <list> ist a list and that <pos> is less than or equal to the length
-**  of <list>.
-**
-**  Note that 'ISB_LIST' and 'ISBV_LIST are macros, so  do not call them with
-**  arguments that have side effects.
-**
 **  A  package implementing a  list type <type>  must  provide a function for
 **  'ISB_LIST' and install it in 'IsbListFuncs[<type>]'.
 **
-**  A package  implementing  a list type  <type> must  provide a function for
-**  'ISBV_LIST' and  install  it in 'IsbvListFuncs[<type>]'.   This  function
-**  need not  test whether  <pos> is less  than   or equal to the   length of
-**  <list>.
 */
-#define ISB_LIST(list,pos) \
-                        ((*IsbListFuncs[TNUM_OBJ(list)])(list,pos))
-
-#define ISBV_LIST(list,pos) \
-                        ((*IsbvListFuncs[TNUM_OBJ(list)])(list,pos))
 
 extern  Int             (*IsbListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 
-extern  Int             (*IsbvListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
+static inline Int ISB_LIST(Obj list, Int pos)
+{
+    return (*IsbListFuncs[TNUM_OBJ(list)])(list, pos);
+}
 
 extern Int ISBB_LIST( Obj list, Obj pos );
+
+extern Int ISB2_LIST(Obj list, Obj pos1, Obj pos2);
 
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * list access functions  * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *V  Elm0ListFuncs[ <type> ] . . . . . . . . . .  table of selection functions
 **
 **  A package  implementing a  list type <type>  must provide  a function for
@@ -169,11 +225,36 @@ extern Obj (*Elm0ListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 **  or 0 if <list>  has no assigned  object at position  <pos>.  An  error is
 **  signalled if <list>  is  not a list.  It   is the responsibility   of the
 **  caller to ensure that <pos> is a positive integer.
-**
-**  Note that 'ELM0_LIST' is a  macro, so do  not call it with arguments that
-**  have side effects.
 */
-#define ELM0_LIST(list,pos)     ((*Elm0ListFuncs[TNUM_OBJ(list)])(list,pos))
+static inline Obj ELM0_LIST(Obj list, Int pos)
+{
+    return (*Elm0ListFuncs[TNUM_OBJ(list)])(list, pos);
+}
+
+/****************************************************************************
+**
+*V  ElmDefListFuncs[ <type> ] . . . . . . . . .  table of selection functions
+**
+**  A package implementing a list type <type> can provide a function for
+**  'ELM_DEFAULT_LIST' and install it in 'ElmDefListFuncs[<type>]', otherwise
+**  a default implementation is provided.
+*/
+extern Obj (*ElmDefListFuncs[LAST_REAL_TNUM + 1])(Obj list, Int pos, Obj def);
+
+
+/****************************************************************************
+**
+*F  ELM_DEFAULT_LIST( <list>, <pos>, <default> )select an element from a list
+**
+**  'ELM_DEFAULT_LIST' returns the element at the position <pos> in the list
+**  <list>, or <default> if <list> has no assigned object at position <pos>.
+**  An error is signalled if <list> is not a list. It is the responsibility
+**  of the caller to ensure that <pos> is a positive integer.
+*/
+static inline Obj ELM_DEFAULT_LIST(Obj list, Int pos, Obj def)
+{
+    return (*ElmDefListFuncs[TNUM_OBJ(list)])(list, pos, def);
+}
 
 
 /****************************************************************************
@@ -195,11 +276,13 @@ extern  Obj (*Elm0vListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 **  'ELMV0_LIST' does the same as 'ELM0_LIST', but the caller also guarantees
 **  that <list> is a list and that <pos> is less than  or equal to the length
 **  of <list>.
-**
-**  Note that 'ELMV0_LIST' is a macro, so do not call  it with arguments that
-**  have side effects.
 */
-#define ELMV0_LIST(list,pos)    ((*Elm0vListFuncs[TNUM_OBJ(list)])(list,pos))
+static inline Obj ELMV0_LIST(Obj list, Int pos)
+{
+    GAP_ASSERT(pos > 0);
+    GAP_ASSERT(pos <= LEN_LIST(list));
+    return (*Elm0vListFuncs[TNUM_OBJ(list)])(list, pos);
+}
 
 
 /****************************************************************************
@@ -225,30 +308,31 @@ extern Obj (*ElmListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 **  is the responsibility  of the caller to  ensure that <pos>  is a positive
 **  integer.
 **
-**  Note that 'ELM_LIST', 'ELMV_LIST', and  'ELMW_LIST' are macros, so do not
-**  call them with arguments that have side effects.
-**
 **  The difference between ELM_LIST and ELMB_LIST is that ELMB_LIST accepts
 **  an object as the second argument
 **  It is intended as an interface for access to elements of large external
 **  lists, on the rare occasions when the kernel needs to do this.
 */
-#define ELM_LIST(list,pos)      ((*ElmListFuncs[TNUM_OBJ(list)])(list,pos))
-
 extern Obj ELMB_LIST( Obj list, Obj pos );
+
+static inline Obj ELM_LIST(Obj list, Int pos)
+{
+    Obj ret = (*ElmListFuncs[TNUM_OBJ(list)])(list, pos);
+    GAP_ASSERT(ret != 0);
+    return ret;
+}
+
 
 /****************************************************************************
 **
 *F  ELM2_LIST( <list>, <pos1>, <pos2> ) . . . . select an element from a list
+**
+**  'ELM2_LIST' implements 'list[pos1,pos2]', which for lists of lists is
+**  defined as 'list[pos1][pos2]', and for other kind of objects is handled
+**  by method dispatch through the GAP attribute 'ELM_LIST' with three
+**  arguments.
 */
-
-extern Obj Elm2List(Obj list, Obj pos1, Obj pos2);
-
-#define ELM2_LIST(list, pos1, pos2) Elm2List(list, pos1, pos2)
-
-extern void Ass2List(Obj list, Obj pos1, Obj pos2, Obj obj);
-
-#define ASS2_LIST(list, pos1, pos2, obj) Ass2List(list, pos1, pos2, obj)
+extern Obj ELM2_LIST(Obj list, Obj pos1, Obj pos2);
 
 
 /****************************************************************************
@@ -271,11 +355,13 @@ extern Obj (*ElmvListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 **  'ELMV_LIST' does  the same as 'ELM_LIST', but  the caller also guarantees
 **  that <list> is a list and that <pos> is less  than or equal to the length
 **  of <list>.
-**
-**  Note that 'ELM_LIST', 'ELMV_LIST', and  'ELMW_LIST' are macros, so do not
-**  call them with arguments that have side effects.
 */
-#define ELMV_LIST(list,pos)     ((*ElmvListFuncs[TNUM_OBJ(list)])(list,pos))
+static inline Obj ELMV_LIST(Obj list, Int pos)
+{
+    GAP_ASSERT(pos > 0);
+    GAP_ASSERT(pos <= LEN_LIST(list));
+    return (*ElmvListFuncs[TNUM_OBJ(list)])(list, pos);
+}
 
 
 /****************************************************************************
@@ -296,16 +382,19 @@ extern Obj (*ElmwListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 **
 **  'ELMW_LIST' does the same as 'ELMV_LIST', but  the caller also guarantees
 **  that <list> has an assigned object at the position <pos>.
-**
-**  Note that 'ELM_LIST', 'ELMV_LIST', and  'ELMW_LIST' are macros, so do not
-**  call them with arguments that have side effects.
 */
-#define ELMW_LIST(list,pos)     ((*ElmwListFuncs[TNUM_OBJ(list)])(list,pos))
+static inline Obj ELMW_LIST(Obj list, Int pos)
+{
+    GAP_ASSERT(pos > 0);
+    GAP_ASSERT(pos <= LEN_LIST(list));
+    Obj ret = (*ElmwListFuncs[TNUM_OBJ(list)])(list, pos);
+    GAP_ASSERT(ret != 0);
+    return ret;
+}
 
 
 /****************************************************************************
 **
-
 *V  ElmsListFuncs[ <type> ] . . . . . . . . . .  table of selection functions
 **
 **  A package implementing a list  type <type> must  provide such a  function
@@ -332,12 +421,12 @@ extern Obj (*ElmsListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Obj poss );
 **  of  <list>, or if <list> has  no assigned object at any of the positions.
 **  It is the responsibility of the  caller to ensure  that <poss> is a dense
 **  list of positive integers.
-**
-**  Note that 'ELMS_LIST' is a  macro, so do not call it with arguments  that
-**  have side effects.
 */
-#define ELMS_LIST(list,poss)    ((*ElmsListFuncs[TNUM_OBJ(list)])(list,poss))
-
+static inline Obj ELMS_LIST(Obj list, Obj poss)
+{
+    GAP_ASSERT(IS_POSS_LIST(poss));
+    return (*ElmsListFuncs[TNUM_OBJ(list)])(list, poss);
+}
 
 
 /****************************************************************************
@@ -370,7 +459,6 @@ extern void ElmsListLevelCheck (
 
 /****************************************************************************
 **
-
 *F  UNB_LIST(<list>,<pos>)  . . . . . . . . . . .  unbind element from a list
 *V  UnbListFuncs[<type>]  . . . . . . . . . . . . . table of unbind functions
 **
@@ -379,21 +467,24 @@ extern void ElmsListLevelCheck (
 **  <list>.  An error is signalled if  <list>  is  not  a  list.  It  is  the
 **  responsibility of the caller to ensure that <pos> is a positive integer.
 **
-**  Note that 'UNB_LIST' is a macro, so do not call it  with  arguments  that
-**  have side effects.
-**
 **  A package implementing a list type <type> must provide  such  a  function
 **  and install it in 'UnbListFuncs[<type>]'.  This function must change  the
 **  representation of <list> to that of a plain list if necessary.
 */
-#define UNB_LIST(list,pos) \
-                        ((*UnbListFuncs[TNUM_OBJ(list)])(list,pos))
 
 extern void             (*UnbListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 
 extern void UNBB_LIST( Obj list, Obj pos );
 
 extern void UnbListDefault( Obj list, Int  pos );
+
+static inline void UNB_LIST(Obj list, Int pos)
+{
+    GAP_ASSERT(pos > 0);
+    (*UnbListFuncs[TNUM_OBJ(list)])(list, pos);
+}
+
+extern void UNB2_LIST(Obj list, Obj pos1, Obj pos2);
 
 
 /****************************************************************************
@@ -407,20 +498,35 @@ extern void UnbListDefault( Obj list, Int  pos );
 **  responsibility of the caller to ensure that <pos>  is a positive integer,
 **  and that <obj> is not 0.
 **
-**  Note that 'ASS_LIST' is a macro,  so do not  call it with arguments  that
-**  have side effects.
-**
 **  A package  implementing a list type  <type> must provide  such a function
 **  and   install it in  'AssListFuncs[<type>]'.   This  function must extend
 **  <list> if <pos> is larger than the length of  <list> and must also change
 **  the representation of <list> to that of a plain list if necessary.
 */
-#define ASS_LIST(list,pos,obj) \
-                        ((*AssListFuncs[TNUM_OBJ(list)])(list,pos,obj))
+
 
 extern  void            (*AssListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos, Obj obj );
 
 extern void ASSB_LIST( Obj list, Obj pos, Obj obj );
+
+static inline void ASS_LIST(Obj list, Int pos, Obj obj)
+{
+    GAP_ASSERT(pos > 0);
+    GAP_ASSERT(obj != 0);
+    (*AssListFuncs[TNUM_OBJ(list)])(list, pos, obj);
+}
+
+
+/****************************************************************************
+**
+*F  ASS2_LIST( <list>, <pos1>, <pos2>, <obj> )
+**
+**  'ASS2_LIST' implements 'list[pos1,pos2]:=obj', which for lists of lists
+**  is defined as 'list[pos1][pos2]:=obj', and for other kind of objects is
+**  handled by method dispatch through the GAP attribute 'ASS_LIST' with
+**  three arguments.
+*/
+extern void ASS2_LIST(Obj list, Obj pos1, Obj pos2, Obj obj);
 
 
 /****************************************************************************
@@ -435,18 +541,12 @@ extern void ASSB_LIST( Obj list, Obj pos, Obj obj );
 **  caller to ensure that  <poss> is a dense  list  of positive  integers and
 **  that <objs> is a dense list of the same length as <poss>.
 **
-**  Note that 'ASSS_LIST' is a macro, so do not call it with  arguments  that
-**  have side effects.
-**
 **  A package implementing  a list type <type> must  provide  such a function
 **  and install it in 'AsssListFuncs[<type>]'.  This function must extend the
 **  <list> if any of the  positions is larger than the  length of <list>  and
 **  must also change the representation of <list> to that  of a plain list if
 **  necessary.
 */
-#define ASSS_LIST(list,poss,objs) \
-                        ((*AsssListFuncs[TNUM_OBJ(list)])(list,poss,objs))
-
 extern  void            (*AsssListFuncs[LAST_REAL_TNUM+1]) (Obj list, Obj poss, Obj objs);
 
 extern  void            AsssListDefault (
@@ -454,6 +554,13 @@ extern  void            AsssListDefault (
             Obj                 poss,
             Obj                 objs );
 
+static inline void ASSS_LIST(Obj list, Obj poss, Obj objs)
+{
+    GAP_ASSERT(IS_POSS_LIST(poss));
+    GAP_ASSERT(IS_DENSE_LIST(objs));
+    GAP_ASSERT(LEN_LIST(poss) == LEN_LIST(objs));
+    (*AsssListFuncs[TNUM_OBJ(list)])(list, poss, objs);
+}
 
 /****************************************************************************
 **
@@ -467,67 +574,11 @@ extern void AssListObject (
 
 /****************************************************************************
 **
-
-*F  IS_DENSE_LIST(<list>) . . . . . . . . . . . . . . .  test for dense lists
-*V  IsDenseListFuncs[<type>]  . . . . . .  table of dense list test functions
-**
-**  'IS_DENSE_LIST'  returns 1 if the   list <list> is a   dense  list and  0
-**  otherwise, i.e., if either <list> is not a list, or if it is not dense.
-**
-**  Note that  'IS_DENSE_LIST' is a macro, so  do not call it  with arguments
-**  that have side effects.
-**
-**  A package  implementing a list type  <type> must provide such  a function
-**  and  install it in  'IsDenseListFuncs[<type>]'.   This function must loop
-**  over the list and test for holes, unless  the type of the list guarantees
-**  already that the list is dense (e.g. for sets).
-*/
-#define IS_DENSE_LIST(list) \
-                        ((*IsDenseListFuncs[TNUM_OBJ(list)])(list))
-
-extern  Int             (*IsDenseListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
-
-extern  Int             IsDenseListDefault (
-            Obj                 list );
-
-
-/****************************************************************************
-**
-*F  IS_HOMOG_LIST(<list>) . . . . . . . . . . . .  test for homogeneous lists
-*V  IsHomogListFuncs[<type>]  . . .  table of homogeneous list test functions
-**
-**  'IS_HOMOG_LIST' returns 1 if  the list <list>  is a  homogeneous list and
-**  0 otherwise, i.e., if either <list> is not  a  list,  or  if  it  is  not
-**  homogeneous.
-**
-**  'IS_HOMOG_LIST' is a macro, so do not call it with  arguments  that  have
-**  side effects.
-**
-**  A  package implementing a list  type <type> must  provide such a function
-**  and install  it  in 'IsHomogListFuncs[<type>]'.  This function  must loop
-**  over the list   and test whether all  elements  lie in  the  same family,
-**  unless  the type  of   the list  guarantees    already that the  list  is
-**  homogeneous (e.g. for sets).
-*/
-#define IS_HOMOG_LIST(list) \
-                        ((*IsHomogListFuncs[TNUM_OBJ(list)])(list))
-
-extern  Int             (*IsHomogListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
-
-extern  Int             IsHomogListDefault (
-            Obj                 list );
-
-
-/****************************************************************************
-**
 *F  IS_TABLE_LIST(<list>) . . . . . . . . . . . . . . .  test for table lists
 *V  IsTableListFuncs[<type>]  . . . . . .  table of table list test functions
 **
 **  'IS_TABLE_LIST'  returns  1 if  the  list  <list>  is  a  table, i.e.,  a
 **  homogeneous list of homogeneous lists of equal length, and 0 otherwise.
-**
-**  'IS_TABLE_LIST' is a macro, so do not call it with  arguments  that  have
-**  side effects.
 **
 **  A  package implementing a list  type <type> must  provide such a function
 **  and install it in  'IsTableListFuncs[<type>]'.   This function must  loop
@@ -535,14 +586,16 @@ extern  Int             IsHomogListDefault (
 **  homogenous lists, and have  the same length, unless the  type of the list
 **  guarantees already that the list has this property.
 */
-#define IS_TABLE_LIST(list) \
-                        ((*IsTableListFuncs[TNUM_OBJ(list)])(list))
 
 extern  Int             (*IsTableListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 
 extern  Int             IsTableListDefault (
             Obj                 list );
 
+static inline Int IS_TABLE_LIST(Obj list)
+{
+    return (*IsTableListFuncs[TNUM_OBJ(list)])(list);
+}
 
 /****************************************************************************
 **
@@ -553,22 +606,21 @@ extern  Int             IsTableListDefault (
 **  and 0 otherwise,  i.e., if either <list>  is not a list,  or if it is not
 **  strictly sorted.
 **
-**  'IS_SSORT_LIST' is a macro, so do not call it  with arguments  that  have
-**  side effects.
-**
 **  A  package implementing a  list type <type>  must provide such a function
 **  and install it  in  'IsSSortListFuncs[<type>]'.  This function must  loop
 **  over the list and compare each element with the next one, unless the type
 **  of the list guarantees already that the list is strictly sorted.
 */
-#define IS_SSORT_LIST(list) \
-                        ((*IsSSortListFuncs[TNUM_OBJ(list)])(list))
 
 extern  Int             (*IsSSortListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 
 extern  Int             IsSSortListDefault (
             Obj                 list );
 
+static inline Int IS_SSORT_LIST(Obj list)
+{
+    return (*IsSSortListFuncs[TNUM_OBJ(list)])(list);
+}
 
 /****************************************************************************
 **
@@ -583,35 +635,6 @@ extern Obj IsSSortListProp;
 */
 extern Obj IsNSortListProp;
 
-
-/****************************************************************************
-**
-*F  IS_POSS_LIST(<list>)  . . . . . . . . . . . . .  test for positions lists
-*V  IsPossListFuncs[<type>] . . . . . . table of positions list test function
-**
-**  'IS_POSS_LIST' returns  1 if the list  <list> is  a dense list containing
-**  only positive  integers and 0 otherwise, i.e.,  if either <list> is not a
-**  list, or if it is not dense,  or if it contains  an element that is not a
-**  positive integer.
-**
-**  Note that  'IS_POSS_LIST' is a macro,  so  do not  call it with arguments
-**  that have side effects.
-**
-**  A package  implementing a list type  <type> must provide such  a function
-**  and install  it  in 'IsPossListFuncs[<type>]'.   This function  must loop
-**  over the list  and  test for holes   and elements that are  not  positive
-**  integers, unless the type of the list guarantees already that the list is
-**  acceptable (e.g. a range with positive <low> and <high> values).
-*/
-#define IS_POSS_LIST(list) \
-                        ((*IsPossListFuncs[TNUM_OBJ(list)])(list))
-
-extern  Int             (*IsPossListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
-
-extern  Int             IsPossListDefault (
-            Obj                 list );
-
-
 /****************************************************************************
 **
 *F  POS_LIST(<list>,<obj>,<start>)  . . . . . . . . find an element in a list
@@ -622,14 +645,9 @@ extern  Int             IsPossListDefault (
 **  position  <start> as GAP Integer.  Fail is returned if  <obj> is not in the
 **  list after <start>.  An error is signalled if <list> is not a list.
 **
-**  Note that 'POS_LIST'  is a macro,  so do  not call it with arguments that
-**  have side effects.
-**
 **  A package implementing a list  type <type> must  provide such a  function
 **  and install it in 'PosListFuncs[<type>]'.
 */
-#define POS_LIST(list,obj,start) \
-                        ((*PosListFuncs[TNUM_OBJ(list)])(list,obj,start))
 
 extern  Obj             (*PosListFuncs[LAST_REAL_TNUM+1]) (Obj list, Obj obj, Obj start);
 
@@ -638,6 +656,10 @@ extern  Obj             PosListDefault (
             Obj                 obj,
             Obj                 start );
 
+static inline Obj POS_LIST(Obj list, Obj obj, Obj start)
+{
+    return (*PosListFuncs[TNUM_OBJ(list)])(list, obj, start);
+}
 
 /****************************************************************************
 **
@@ -759,16 +781,16 @@ extern  void            AsssListLevel (
 **  it could also be 'T_SET' or 'T_VECTOR'.  An  error is signalled if <list>
 **  is not a list.
 **
-**  Note that 'PLAIN_LIST' is a macro, so do not call  it with arguments that
-**  have side effects.
-**
 **  A package implementing a  list type <type>  must provide such  a function
 **  and install it in 'PlainListFuncs[<type>]'.
 */
-#define PLAIN_LIST(list) \
-                        ((*PlainListFuncs[TNUM_OBJ(list)])(list))
 
 extern  void            (*PlainListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
+
+static inline void PLAIN_LIST(Obj list)
+{
+    ((*PlainListFuncs[TNUM_OBJ(list)])(list));
+}
 
 
 /****************************************************************************
@@ -781,7 +803,43 @@ extern  Obj             TYPES_LIST_FAM (
 
 /****************************************************************************
 **
+*F * * * * * * * * * * * * * important filters  * * * * * * * * * * * * * * *
+*/
 
+enum {
+    /** filter number for `IsEmpty' */
+    FN_IS_EMPTY,
+
+    /** filter number for `IsSSortedList' */
+    FN_IS_SSORT,
+
+    /** filter number for `IsNSortedList' */
+    FN_IS_NSORT,
+
+    /** filter number for `IsDenseList' */
+    FN_IS_DENSE,
+
+    /** filter number for `IsNDenseList' */
+    FN_IS_NDENSE,
+
+    /** filter number for `IsHomogeneousList' */
+    FN_IS_HOMOG,
+
+    /** filter number for `IsNonHomogeneousList' */
+    FN_IS_NHOMOG,
+
+    /** filter number for `IsTable' */
+    FN_IS_TABLE,
+
+    /** filter number for `IsRectangularTable' */
+    FN_IS_RECT,
+
+    LAST_FN = FN_IS_RECT
+};
+
+
+/****************************************************************************
+**
 *V  SetFiltListTNums[ <tnum> ][ <fnum> ]  . . . . . new tnum after filter set
 **
 **  If a list  with type number <tnum>  gains  the filter  with filter number
@@ -807,7 +865,7 @@ extern UInt SetFiltListTNums [ LAST_REAL_TNUM ] [ LAST_FN + 1 ];
       RetypeBagIfWritable( list, new ); \
      else { \
       Pr( "#E  SET_FILT_LIST[%s][%d] in ", (Int)TNAM_OBJ(list), fn ); \
-      Pr( "%s line %d\n", (Int)__FILE__, (Int)__LINE__); \
+      Pr( "%s:%d\n", (Int)__FILE__, (Int)__LINE__); \
       }  \
   } while (0)
 
@@ -844,7 +902,7 @@ extern UInt ResetFiltListTNums [ LAST_REAL_TNUM ] [ LAST_FN + 1 ];
       RetypeBag( list, new ); \
     else  { \
       Pr( "#E  RESET_FILT_LIST[%s][%d] in ", (Int)TNAM_OBJ(list), fn ); \
-      Pr( "%s line %d\n", (Int)__FILE__, (Int)__LINE__); \
+      Pr( "%s:%d\n", (Int)__FILE__, (Int)__LINE__); \
       }  \
   } while (0)
 
@@ -865,7 +923,7 @@ extern Int HasFiltListTNums [ LAST_REAL_TNUM ] [ LAST_FN + 1 ];
 
 /****************************************************************************
 **
-*V  ClearFiltsTNums[ <tnum> ] . clear all list filters except `FN_IS_MUTABLE'
+*V  ClearFiltsTNums[ <tnum> ] . . . . . . . . . . . .  clear all list filters
 **
 **  The type  number without any  known properties  of a  list of type number
 **  <tnum> is stored in:
@@ -889,36 +947,19 @@ extern UInt ClearFiltsTNums [ LAST_REAL_TNUM ];
       RetypeBag( list, new ); \
 /*    else if ( new < 0 ) { \
       Pr( "#E  CLEAR_FILTS_LIST[%s] in ", (Int)TNAM_OBJ(list), 0 ); \
-      Pr( "%s line %d\n", (Int)__FILE__, (Int)__LINE__); \
+      Pr( "%s:%d\n", (Int)__FILE__, (Int)__LINE__); \
       } */ \
   } while (0)
 
-/****************************************************************************
-**
-*F  MARK_LIST( <list>, <what> ) . . . . . . . . . . . . . . . . . . mark list
-*/
-#define MARK_LIST( list, what ) \
-    RetypeBag( list, TNUM_OBJ(list) + what );
-
 
 /****************************************************************************
 **
-*F  UNMARK_LIST( <list>, <what> ) . . . . . . . . . . . . . . . . unmark list
-*/
-#define UNMARK_LIST( list, what ) \
-    RetypeBag( list, TNUM_OBJ(list) - what );
-
-
-/****************************************************************************
-**
-
 *F * * * * * * * * * * * functions with checking  * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  AsssListCheck( <list>, <poss>, <rhss> ) . . . . . . . . . . . . ASSS_LIST
 */
 extern void AsssListCheck (
@@ -950,23 +991,15 @@ extern void AsssListLevelCheck (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  InitInfoLists() . . . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoLists ( void );
 
 
 #endif // GAP_LISTS_H
-
-/****************************************************************************
-**
-
-*E  lists.h . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

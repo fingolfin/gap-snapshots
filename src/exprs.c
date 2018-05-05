@@ -12,117 +12,32 @@
 **  The expressions  package is the  part  of the interpreter  that evaluates
 **  expressions to their values and prints expressions.
 */
-#include        "system.h"              /* Ints, UInts                     */
 
+#include <src/exprs.h>
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
+#include <src/ariths.h>
+#include <src/bool.h>
+#include <src/calls.h>
+#include <src/code.h>
+#include <src/gap.h>
+#include <src/gapstate.h>
+#include <src/gvars.h>
+#include <src/integer.h>
+#include <src/io.h>
+#include <src/hookintrprtr.h>
+#include <src/lists.h>
+#include <src/opers.h>
+#include <src/permutat.h>
+#include <src/plist.h>
+#include <src/precord.h>
+#include <src/range.h>
+#include <src/records.h>
+#include <src/stringobj.h>
+#include <src/vars.h>
 
-#include        "gap.h"                 /* error handling, initialisation  */
-
-#include        "gvars.h"               /* global variables                */
-
-#include        "ariths.h"              /* basic arithmetic                */
-#include        "records.h"             /* generic records                 */
-#include        "lists.h"               /* generic lists                   */
-
-#include        "bool.h"                /* booleans                        */
-#include        "integer.h"             /* integers                        */
-
-#include        "permutat.h"            /* permutations                    */
-#include        "trans.h"               /* transformations                 */
-#include        "pperm.h"               /* partial perms                   */
-
-#include        "precord.h"             /* plain records                   */
-
-#include        "plist.h"               /* plain lists                     */
-#include        "range.h"               /* ranges                          */
-#include        "string.h"              /* strings                         */
-
-#include        "code.h"                /* coder                           */
-#include        "calls.h"
-#include        "stats.h"
-
-
-#include        "exprs.h"               /* expressions                     */
-
-#include        "tls.h"                 /* thread-local storage            */
-#include        "profile.h"             /* installing methods              */
-#include        "aobjects.h"            /* atomic objects                  */
-
-#include        "vars.h"                /* variables                       */
-
-#include	<assert.h>
-
-
-/****************************************************************************
-**
-
-*F  OBJ_REFLVAR(<expr>) . . . . . . . . . . . value of a reference to a local
-**
-**  'OBJ_REFLVAR'  returns  the value of  the reference  to a  local variable
-**  <expr>.
-**
-**  'OBJ_REFLVAR'  is defined  in the  declaration  part of  this  package as
-**  follows
-**
-#ifdef  NO_LVAR_CHECKS
-#define OBJ_REFLVAR(expr)       \
-                        OBJ_LVAR( LVAR_REFLVAR( (expr) ) )
+#ifdef HPCGAP
+#include <src/hpc/aobjects.h>
 #endif
-#ifndef NO_LVAR_CHECKS
-#define OBJ_REFLVAR(expr)       \
-                        (*(Obj*)(((char*)TLS(PtrLVars))+(expr)+5) != 0 ? \
-                         *(Obj*)(((char*)TLS(PtrLVars))+(expr)+5) : \
-                         ObjLVar( LVAR_REFLVAR( expr ) ) )
-#endif
-*/
-
-
-/****************************************************************************
-**
-*F  OBJ_INTEXPR(<expr>) . . . . . . . . . . .  value of an integer expression
-**
-**  'OBJ_INTEXPR' returns the (immediate)  integer  value of the  (immediate)
-**  integer expression <expr>.
-**
-**  'OBJ_INTEXPR(<expr>)'  should  be 'OBJ_INT(INT_INTEXPR(<expr>))', but for
-**  performance  reasons we implement  it   as '(Obj)(<expr>)'.  This is   of
-**  course    highly  dependent  on    (immediate)  integer   expressions and
-**  (immediate) integer values having the same representation.
-**
-**  'OBJ_INTEXPR' is  defined in  the declaration  part  of  this package  as
-**  follow
-**
-#define OBJ_INTEXPR(expr)       \
-                        ((Obj)(Int)(Int4)(expr))
-*/
-
-
-/****************************************************************************
-**
-*F  EVAL_EXPR(<expr>) . . . . . . . . . . . . . . . .  evaluate an expression
-**
-**  'EVAL_EXPR' evaluates the expression <expr>.
-**
-**  'EVAL_EXPR' returns the value of <expr>.
-**
-**  'EVAL_EXPR'  causes  the   evaluation of   <expr> by  dispatching  to the
-**  evaluator, i.e., to  the function that evaluates  expressions of the type
-**  of <expr>.
-**
-**  Note that 'EVAL_EXPR' does not use 'TNUM_EXPR', since it also handles the
-**  two special cases that 'TNUM_EXPR' handles.
-**
-**  'EVAL_EXPR' is defined in the declaration part of this package as follows:
-**
-#define EVAL_EXPR(expr) \
-                        (IS_REFLVAR(expr) ? OBJ_REFLVAR(expr) : \
-                         (IS_INTEXPR(expr) ? OBJ_INTEXPR(expr) : \
-                          (*EvalExprFuncs[ TNUM_STAT(expr) ])( expr ) ))
-*/
-
 
 /****************************************************************************
 **
@@ -134,25 +49,6 @@
 **  type.
 */
 Obj             (* EvalExprFuncs [256]) ( Expr expr );
-
-
-/****************************************************************************
-**
-*F  EVAL_BOOL_EXPR(<expr>)  . . . . evaluate an expression to a boolean value
-**
-**  'EVAL_BOOL_EXPR' evaluates   the expression  <expr> and  checks  that the
-**  value is either  'true' or 'false'.  If the  expression does not evaluate
-**  to 'true' or 'false', then an error is signalled.
-**
-**  'EVAL_BOOL_EXPR' returns the  value of <expr> (which  is either 'true' or
-**  'false').
-**
-**  'EVAL_BOOL_EXPR' is defined  in the declaration part  of this package  as
-**  follows
-**
-#define EVAL_BOOL_EXPR(expr) \
-                        ( (*EvalBoolFuncs[ TNUM_EXPR( expr ) ])( expr ) )
-*/
 
 
 /****************************************************************************
@@ -265,10 +161,6 @@ Obj             EvalOr (
 **
 **      if (index <= max) and (list[index] = 0)  then ... fi;
 */
-extern  Obj             NewAndFilter (
-            Obj                     oper1,
-            Obj                     oper2 );
-
 Obj             EvalAnd (
     Expr                expr )
 {
@@ -729,36 +621,6 @@ Obj             EvalProd (
 
 /****************************************************************************
 **
-*F  EvalInv(<expr>) . . . . . . . . . . . . evaluate a multiplicative inverse
-**
-**  'EvalInv' evaluates the multiplicative inverse-expression and returns its
-**  value,  i.e., the multiplicative inverse  of  the operand.  'EvalInv' is
-**  called from 'EVAL_EXPR' to evaluate expressions of type 'T_INV'.
-**
-**  'EvalInv' evaluates the operand and then calls the 'INV' macro.
-*/
-Obj             EvalInv (
-    Expr                expr )
-{
-    Obj                 val;            /* value, result                   */
-    Obj                 opL;            /* evaluated left  operand         */
-    Expr                tmp;            /* temporary expression            */
-
-    /* get the operands                                                    */
-    tmp = ADDR_EXPR(expr)[0];
-    opL = EVAL_EXPR( tmp );
-
-    /* compute the multiplicative inverse                                  */
-    SET_BRK_CALL_TO(expr);     /* Note possible call for FuncWhere */
-    val = INV_MUT( opL );
-
-    /* return the value                                                    */
-    return val;
-}
-
-
-/****************************************************************************
-**
 *F  EvalQuo(<expr>) . . . . . . . . . . . . . . . . . . . evaluate a quotient
 **
 **  'EvalQuo' evaluates the quotient-expression <expr> and returns its value,
@@ -876,12 +738,26 @@ Obj             EvalIntExpr (
     
     /* allocate the integer                                                */
     val = NewBag( ((UInt *)ADDR_EXPR(expr))[0], SIZE_EXPR(expr)-sizeof(UInt));
-    memcpy((void *)ADDR_OBJ(val), (void *)(((UInt *)ADDR_EXPR(expr))+1), (size_t) (SIZE_EXPR(expr)-sizeof(UInt)));
+    memcpy(ADDR_OBJ(val), ((UInt *)ADDR_EXPR(expr))+1, SIZE_EXPR(expr)-sizeof(UInt));
 
     /* return the value                                                    */
     return val;
 }
 
+/****************************************************************************
+**
+*F  EvalTildeExpr(<expr>)  . . . . . . . . .  evaluate tilde expression
+**
+**  'EvalTildeExpr' evaluates the tilde expression and returns its value.
+*/
+Obj             EvalTildeExpr (
+    Expr                expr )
+{
+    if( ! (STATE(Tilde)) ) {
+        ErrorQuit("'~' does not have a value here",0L,0L);
+    }
+    return STATE(Tilde);
+}
 
 /****************************************************************************
 **
@@ -969,12 +845,15 @@ Obj             EvalPermExpr (
                     "you can replace <expr> via 'return <expr>;'" );
             }
             c = INT_INTOBJ(val);
+	    if (c > MAX_DEG_PERM4)
+	      ErrorMayQuit( "Permutation literal exceeds maximum permutation degree -- %i vs %i",
+			    c, MAX_DEG_PERM4);
 
             /* if necessary resize the permutation                         */
-            if ( SIZE_OBJ(perm)/sizeof(UInt4) < c ) {
-                ResizeBag( perm, (c + 1023) / 1024 * 1024 * sizeof(UInt4) );
-                ptr4 = ADDR_PERM4( perm );
-                for ( k = m+1; k <= SIZE_OBJ(perm)/sizeof(UInt4); k++ ) {
+            if (DEG_PERM4(perm) < c) {
+                ResizeBag(perm, SIZEBAG_PERM4((c + 1023) / 1024 * 1024));
+                ptr4 = ADDR_PERM4(perm);
+                for (k = m + 1; k <= DEG_PERM4(perm); k++) {
                     ptr4[k-1] = k-1;
                 }
             }
@@ -1014,12 +893,12 @@ Obj             EvalPermExpr (
             ptr2[k-1] = ptr4[k-1];
         };
         RetypeBag( perm, T_PERM2 );
-        ResizeBag( perm, m * sizeof(UInt2) );
+        ResizeBag(perm, SIZEBAG_PERM2(m));
     }
 
     /* otherwise just shorten the permutation                              */
     else {
-        ResizeBag( perm, m * sizeof(UInt4) );
+        ResizeBag(perm, SIZEBAG_PERM4(m));
     }
 
     /* return the permutation                                              */
@@ -1047,7 +926,7 @@ Obj             EvalListExpr (
 {
     Obj                 list;         /* list value, result                */
 
-    /* evalute the list expression                                         */
+    /* evaluate the list expression                                         */
     list = ListExpr1( expr );
     ListExpr2( list, expr );
 
@@ -1078,19 +957,19 @@ Obj             EvalListTildeExpr (
     Obj                 tilde;          /* old value of tilde              */
 
     /* remember the old value of '~'                                       */
-    tilde = VAL_GVAR( Tilde );
+    tilde = STATE( Tilde );
 
     /* create the list value                                               */
     list = ListExpr1( expr );
 
     /* assign the list to '~'                                              */
-    AssGVar( Tilde, list );
+    STATE(Tilde) = list;
 
     /* evaluate the subexpressions into the list value                     */
     ListExpr2( list, expr );
 
     /* restore old value of '~'                                            */
-    AssGVar( Tilde, tilde );
+    STATE(Tilde) = tilde;
 
     /* return the list value                                               */
     return list;
@@ -1173,29 +1052,9 @@ void ListExpr2 (
                 SET_FILT_LIST(list, FN_IS_NDENSE);
                 posshole = 2;
               }
-
-            /* special case if subexpression is a list expression              */
-            if ( TNUM_EXPR( ADDR_EXPR(expr)[i-1] ) == T_LIST_EXPR ) {
-              sub = ListExpr1( ADDR_EXPR(expr)[i-1] );
-              SET_ELM_PLIST( list, i, sub );
-              CHANGED_BAG( list );
-              ListExpr2( sub, ADDR_EXPR(expr)[i-1] );
-            }
-            
-            /* special case if subexpression is a record expression            */
-            else if ( TNUM_EXPR( ADDR_EXPR(expr)[i-1] ) == T_REC_EXPR ) {
-              sub = RecExpr1( ADDR_EXPR(expr)[i-1] );
-              SET_ELM_PLIST( list, i, sub );
-              CHANGED_BAG( list );
-              RecExpr2( sub, ADDR_EXPR(expr)[i-1] );
-            }
-            
-            /* general case                                                    */
-            else {
-              sub = EVAL_EXPR( ADDR_EXPR(expr)[i-1] );
-              SET_ELM_PLIST( list, i, sub );
-              CHANGED_BAG( list );
-            }
+            sub = EVAL_EXPR( ADDR_EXPR(expr)[i-1] );
+            SET_ELM_PLIST( list, i, sub );
+            CHANGED_BAG( list );
           }
 
     }
@@ -1273,13 +1132,13 @@ Obj             EvalRangeExpr (
 
     /* if <low> is larger than <high> the range is empty                   */
     if ( (0 < inc && high < low) || (inc < 0 && low < high) ) {
-        range = NEW_PLIST( T_PLIST, 0 );
+        range = NEW_PLIST( T_PLIST_EMPTY, 0 );
         SET_LEN_PLIST( range, 0 );
     }
 
     /* if <low> is equal to <high> the range is a singleton list           */
     else if ( low == high ) {
-        range = NEW_PLIST( T_PLIST, 1 );
+        range = NEW_PLIST( T_PLIST_CYC_SSORT, 1 );
         SET_LEN_PLIST( range, 1 );
         SET_ELM_PLIST( range, 1, INTOBJ_INT(low) );
     }
@@ -1320,8 +1179,7 @@ Obj             EvalStringExpr (
     
     len = *((UInt *)ADDR_EXPR(expr));
     string = NEW_STRING(len);
-    memcpy((void *)ADDR_OBJ(string), (void *)ADDR_EXPR(expr), 
-                      SIZEBAG_STRINGLEN(len) );
+    memcpy(ADDR_OBJ(string), ADDR_EXPR(expr), SIZEBAG_STRINGLEN(len) );
 
     /* return the string                                                   */
     return string;
@@ -1336,7 +1194,6 @@ Obj             EvalStringExpr (
 */
 static Obj CONVERT_FLOAT_LITERAL;
 static Obj FLOAT_LITERAL_CACHE;
-static UInt GVAR_FLOAT_LITERAL_CACHE;
 static Obj MAX_FLOAT_LITERAL_CACHE_SIZE;
 
 Obj             EvalFloatExprLazy (
@@ -1348,34 +1205,28 @@ Obj             EvalFloatExprLazy (
     Obj cache= 0;
     Obj fl;
     
+    /* This code is safe for threads trying to create or update the
+     * cache concurrently in that it won't crash, but may occasionally
+     * result in evaluating a floating point literal twice.
+     */
     ix = ((UInt *)ADDR_EXPR(expr))[1];
     if (ix && (!MAX_FLOAT_LITERAL_CACHE_SIZE || 
                MAX_FLOAT_LITERAL_CACHE_SIZE == INTOBJ_INT(0) ||
                ix <= INT_INTOBJ(MAX_FLOAT_LITERAL_CACHE_SIZE))) {
       cache = FLOAT_LITERAL_CACHE;
-      if (!cache)
-        {
-          cache = NEW_PLIST(T_PLIST,ix);
-          AssGVar(GVAR_FLOAT_LITERAL_CACHE, cache);
-        }
-      else
-        assert(IS_PLIST(cache));
-      GROW_PLIST(cache,ix);
-      fl = ELM_PLIST(cache,ix);
+      assert(cache);
+      fl = ELM0_LIST(cache, ix);
       if (fl)
         return fl;
     }
     len = *((UInt *)ADDR_EXPR(expr));
     string = NEW_STRING(len);
-    memcpy((void *)CHARS_STRING(string), 
-           (void *)((char *)ADDR_EXPR(expr) + 2*sizeof(UInt)), 
+    memcpy(CHARS_STRING(string), 
+           (char *)ADDR_EXPR(expr) + 2*sizeof(UInt),
            len );
     fl = CALL_1ARGS(CONVERT_FLOAT_LITERAL, string);
     if (cache) {
-      SET_ELM_PLIST(cache, ix, fl);
-      CHANGED_BAG(cache);
-      if (LEN_PLIST(cache) < ix)
-        SET_LEN_PLIST(cache, ix);
+      ASS_LIST(cache, ix, fl);
     }
 
     return fl;
@@ -1388,20 +1239,12 @@ Obj             EvalFloatExprLazy (
 **  'EvalFloatExpr'   evaluates the  float  expression  <expr>  to a float
 **  value.
 */
-static Obj EAGER_FLOAT_LITERAL_CACHE;
+extern Obj EAGER_FLOAT_LITERAL_CACHE;
 
-Obj             EvalFloatExprEager (
-    Expr                expr )
+Obj EvalFloatExprEager(Expr expr)
 {
-    UInt                 ix;
-    Obj cache= 0;
-    Obj fl;
-    
-    ix = ((UInt *)ADDR_EXPR(expr))[0];
-    cache = EAGER_FLOAT_LITERAL_CACHE;
-    assert(IS_PLIST(cache));
-    fl = ELM_PLIST(cache,ix);
-    assert(fl);
+    UInt ix = ((UInt *)ADDR_EXPR(expr))[0];
+    Obj fl = ELM_LIST(EAGER_FLOAT_LITERAL_CACHE, ix);
     return fl;
 }
 
@@ -1439,7 +1282,7 @@ Obj             EvalRecExpr (
 **  'EvalRecExpr' is that in <expr> there are  occurrences of '~' referring to
 **  this record value.
 **
-**  'EvalRecTildeExpr' just  calls 'RecExpr1'  to create teh  record, assigns
+**  'EvalRecTildeExpr' just  calls 'RecExpr1'  to create the  record, assigns
 **  the record to the variable '~',  and finally calls 'RecExpr2' to evaluate
 **  the subexpressions  into the record.  Thus  subexpressions  in the record
 **  expression    can refer to this variable    and its  subobjects to create
@@ -1452,19 +1295,19 @@ Obj             EvalRecTildeExpr (
     Obj                 tilde;          /* old value of tilde              */
 
     /* remember the old value of '~'                                       */
-    tilde = VAL_GVAR( Tilde );
+    tilde = STATE( Tilde );
 
     /* create the record value                                             */
     rec = RecExpr1( expr );
 
     /* assign the record value to the variable '~'                         */
-    AssGVar( Tilde, rec );
+    STATE(Tilde) = rec;
 
     /* evaluate the subexpressions into the record value                   */
     RecExpr2( rec, expr );
 
     /* restore the old value of '~'                                        */
-    AssGVar( Tilde, tilde );
+    STATE(Tilde) = tilde;
 
     /* return the record value                                             */
     return rec;
@@ -1536,26 +1379,8 @@ void            RecExpr2 (
         if ( tmp == 0 ) {
             continue;
         }
-
-        /* special case if subexpression is a list expression             */
-        else if ( TNUM_EXPR( tmp ) == T_LIST_EXPR ) {
-            sub = ListExpr1( tmp );
-            AssPRec(rec,rnam,sub);
-            ListExpr2( sub, tmp );
-        }
-
-        /* special case if subexpression is a record expression            */
-        else if ( TNUM_EXPR( tmp ) == T_REC_EXPR ) {
-            sub = RecExpr1( tmp );
-            AssPRec(rec,rnam,sub);
-            RecExpr2( sub, tmp );
-        }
-
-        /* general case                                                    */
-        else {
-            sub = EVAL_EXPR( tmp );
-            AssPRec(rec,rnam,sub);
-        }
+        sub = EVAL_EXPR( tmp );
+        AssPRec(rec,rnam,sub);
     }
     SortPRecRNam(rec,0);
 
@@ -1608,18 +1433,18 @@ void            PrintUnknownExpr (
 
 /****************************************************************************
 **
-*V  PrintPreceedence  . . . . . . . . . . . . . . . current preceedence level
+*V  PrintPrecedence  . . . . . . . . . . . . . . . . current precedence level
 **
-**  'PrintPreceedence' contains  the  current  preceedence   level,  i.e.  an
-**  integer  indicating the binding power  of the currently printed operator.
-**  If one of the operands is an operation that has lower binding power it is
-**  printed in parenthesis.  If the right  operand has the same binding power
-**  it is put in parenthesis, since  all the operations are left associative.
-**  Preceedence: 14: ^; 12: mod,/,*; 10: -,+; 8: in,=; 6: not; 4: and; 2: or.
-**  This sometimes puts in superflous parenthesis: 2 * f( (3 + 4) ), since it
+**  'PrintPrecedence' contains the current precedence level, i.e., an integer
+**  indicating the binding power of the currently printed operator. If one of
+**  the operands is an operation that has lower binding power it is printed
+**  in parenthesis. If the right operand has the same binding power it is put
+**  in parenthesis, since all the operations are left associative.
+**  Precedence: 14: ^; 12: mod,/,*; 10: -,+; 8: in,=; 6: not; 4: and; 2: or.
+**  This sometimes puts in superfluous parenthesis: 2 * f( (3 + 4) ), since it
 **  doesn't know that a function call adds automatically parenthesis.
 */
-UInt            PrintPreceedence;
+UInt            PrintPrecedence;
 
 
 /****************************************************************************
@@ -1633,11 +1458,11 @@ void            PrintNot (
 {
     UInt                oldPrec;
 
-    oldPrec = PrintPreceedence;
-    PrintPreceedence = 6;
+    oldPrec = PrintPrecedence;
+    PrintPrecedence = 6;
     
     /* if necessary print the opening parenthesis                          */
-    if ( oldPrec >= PrintPreceedence ) Pr("%>(%>",0L,0L);
+    if ( oldPrec >= PrintPrecedence ) Pr("%>(%>",0L,0L);
     else Pr("%2>",0L,0L);
     
     Pr("not%> ",0L,0L);
@@ -1645,10 +1470,10 @@ void            PrintNot (
     Pr("%<",0L,0L);
     
     /* if necessary print the closing parenthesis                          */
-    if ( oldPrec >= PrintPreceedence ) Pr("%2<)",0L,0L);
+    if ( oldPrec >= PrintPrecedence ) Pr("%2<)",0L,0L);
     else Pr("%2<",0L,0L);
     
-    PrintPreceedence = oldPrec;
+    PrintPrecedence = oldPrec;
 }
 
 
@@ -1657,18 +1482,18 @@ void            PrintNot (
 *F  PrintBinop(<expr>)  . . . . . . . . . . . . . .  prints a binary operator
 **
 **  'PrintBinop'  prints  the   binary operator    expression <expr>,   using
-**  'PrintPreceedence' for parenthesising.
+**  'PrintPrecedence' for parenthesising.
 */
 void            PrintAInv (
     Expr                expr )
 {
     UInt                oldPrec;
 
-    oldPrec = PrintPreceedence;
-    PrintPreceedence = 11;
+    oldPrec = PrintPrecedence;
+    PrintPrecedence = 11;
     
     /* if necessary print the opening parenthesis                          */
-    if ( oldPrec >= PrintPreceedence ) Pr("%>(%>",0L,0L);
+    if ( oldPrec >= PrintPrecedence ) Pr("%>(%>",0L,0L);
     else Pr("%2>",0L,0L);
     
     Pr("-%> ",0L,0L);
@@ -1676,55 +1501,42 @@ void            PrintAInv (
     Pr("%<",0L,0L);
     
     /* if necessary print the closing parenthesis                          */
-    if ( oldPrec >= PrintPreceedence ) Pr("%2<)",0L,0L);
+    if ( oldPrec >= PrintPrecedence ) Pr("%2<)",0L,0L);
     else Pr("%2<",0L,0L);
     
-    PrintPreceedence = oldPrec;
-}
-
-void            PrintInv (
-    Expr                expr )
-{
-    UInt                oldPrec;
-
-    oldPrec = PrintPreceedence;
-    PrintPreceedence = 14;
-    Pr("%> ",0L,0L);
-    PrintExpr( ADDR_EXPR(expr)[0] );
-    Pr("%<^-1",0L,0L);
-    PrintPreceedence = oldPrec;
+    PrintPrecedence = oldPrec;
 }
 
 void            PrintBinop (
     Expr                expr )
 {
-    UInt                oldPrec;        /* old preceedence level           */
+    UInt                oldPrec;        /* old precedence level           */
     const Char *        op;             /* operand                         */
-    /* remember the current preceedence level                              */
-    oldPrec = PrintPreceedence;
+    /* remember the current precedence level                              */
+    oldPrec = PrintPrecedence;
 
-    /* select the new preceedence level                                    */
+    /* select the new precedence level                                    */
     switch ( TNUM_EXPR(expr) ) {
-    case T_OR:     op = "or";   PrintPreceedence =  2;  break;
-    case T_AND:    op = "and";  PrintPreceedence =  4;  break;
-    case T_EQ:     op = "=";    PrintPreceedence =  8;  break;
-    case T_LT:     op = "<";    PrintPreceedence =  8;  break;
-    case T_GT:     op = ">";    PrintPreceedence =  8;  break;
-    case T_NE:     op = "<>";   PrintPreceedence =  8;  break;
-    case T_LE:     op = "<=";   PrintPreceedence =  8;  break;
-    case T_GE:     op = ">=";   PrintPreceedence =  8;  break;
-    case T_IN:     op = "in";   PrintPreceedence =  8;  break;
-    case T_SUM:    op = "+";    PrintPreceedence = 10;  break;
-    case T_DIFF:   op = "-";    PrintPreceedence = 10;  break;
-    case T_PROD:   op = "*";    PrintPreceedence = 12;  break;
-    case T_QUO:    op = "/";    PrintPreceedence = 12;  break;
-    case T_MOD:    op = "mod";  PrintPreceedence = 12;  break;
-    case T_POW:    op = "^";    PrintPreceedence = 16;  break;
+    case T_OR:     op = "or";   PrintPrecedence =  2;  break;
+    case T_AND:    op = "and";  PrintPrecedence =  4;  break;
+    case T_EQ:     op = "=";    PrintPrecedence =  8;  break;
+    case T_LT:     op = "<";    PrintPrecedence =  8;  break;
+    case T_GT:     op = ">";    PrintPrecedence =  8;  break;
+    case T_NE:     op = "<>";   PrintPrecedence =  8;  break;
+    case T_LE:     op = "<=";   PrintPrecedence =  8;  break;
+    case T_GE:     op = ">=";   PrintPrecedence =  8;  break;
+    case T_IN:     op = "in";   PrintPrecedence =  8;  break;
+    case T_SUM:    op = "+";    PrintPrecedence = 10;  break;
+    case T_DIFF:   op = "-";    PrintPrecedence = 10;  break;
+    case T_PROD:   op = "*";    PrintPrecedence = 12;  break;
+    case T_QUO:    op = "/";    PrintPrecedence = 12;  break;
+    case T_MOD:    op = "mod";  PrintPrecedence = 12;  break;
+    case T_POW:    op = "^";    PrintPrecedence = 16;  break;
     default:       op = "<bogus-operator>";   break;
     }
 
     /* if necessary print the opening parenthesis                          */
-    if ( oldPrec > PrintPreceedence ) Pr("%>(%>",0L,0L);
+    if ( oldPrec > PrintPrecedence ) Pr("%>(%>",0L,0L);
     else Pr("%2>",0L,0L);
 
     /* print the left operand                                              */
@@ -1745,16 +1557,16 @@ void            PrintBinop (
     Pr("%2< %2>%s%> %<",(Int)op,0L);
 
     /* print the right operand                                             */
-    PrintPreceedence++;
+    PrintPrecedence++;
     PrintExpr( ADDR_EXPR(expr)[1] );
-    PrintPreceedence--;
+    PrintPrecedence--;
 
     /* if necessary print the closing parenthesis                          */
-    if ( oldPrec > PrintPreceedence ) Pr("%2<)",0L,0L);
+    if ( oldPrec > PrintPrecedence ) Pr("%2<)",0L,0L);
     else Pr("%2<",0L,0L);
 
-    /* restore the old preceedence level                                   */
-    PrintPreceedence = oldPrec;
+    /* restore the old precedence level                                   */
+    PrintPrecedence = oldPrec;
 }
 
 
@@ -1775,6 +1587,16 @@ void            PrintIntExpr (
     }
 }
 
+
+/****************************************************************************
+**
+*F  PrintTildeExpr(<expr>) . . . . . . . . . . . print tilde expression
+*/
+void            PrintTildeExpr (
+    Expr                expr )
+{
+    Pr( "~", 0L, 0L );
+}
 
 /****************************************************************************
 **
@@ -1999,16 +1821,36 @@ void            PrintRecExpr (
 }
 
 
+Obj FuncFLUSH_FLOAT_LITERAL_CACHE(Obj self)
+{
+#ifdef HPCGAP
+    FLOAT_LITERAL_CACHE = NewAtomicList(T_ALIST, 0);
+#else
+    FLOAT_LITERAL_CACHE = NEW_PLIST(T_PLIST, 0);
+#endif
+    return 0;
+}
+
+
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
+/****************************************************************************
+ **
+ *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
+ */
+static StructGVarFunc GVarFuncs [] = {
+
+  GVAR_FUNC(FLUSH_FLOAT_LITERAL_CACHE, 0, ""),
+  { 0, 0, 0, 0, 0 }
+
+};
+
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
@@ -2017,9 +1859,10 @@ static Int InitKernel (
     UInt                type;           /* loop variable                   */
 
     InitFopyGVar("CONVERT_FLOAT_LITERAL",&CONVERT_FLOAT_LITERAL);
-    InitCopyGVar("FLOAT_LITERAL_CACHE",&FLOAT_LITERAL_CACHE);
-    InitCopyGVar("EAGER_FLOAT_LITERAL_CACHE",&EAGER_FLOAT_LITERAL_CACHE);
     InitCopyGVar("MAX_FLOAT_LITERAL_CACHE_SIZE",&MAX_FLOAT_LITERAL_CACHE_SIZE);
+
+    InitGlobalBag( &FLOAT_LITERAL_CACHE, "FLOAT_LITERAL_CACHE" );
+    InitHdlrFuncsFromTable( GVarFuncs );
 
     
     /* clear the evaluation dispatch table                                 */
@@ -2061,7 +1904,6 @@ static Int InitKernel (
     InstallEvalExprFunc( T_AINV           , EvalAInv);
     InstallEvalExprFunc( T_DIFF           , EvalDiff);
     InstallEvalExprFunc( T_PROD           , EvalProd);
-    InstallEvalExprFunc( T_INV            , EvalInv);
     InstallEvalExprFunc( T_QUO            , EvalQuo);
     InstallEvalExprFunc( T_MOD            , EvalMod);
     InstallEvalExprFunc( T_POW            , EvalPow);
@@ -2070,18 +1912,19 @@ static Int InitKernel (
     InstallEvalExprFunc( T_INT_EXPR       , EvalIntExpr);
     InstallEvalExprFunc( T_TRUE_EXPR      , EvalTrueExpr);
     InstallEvalExprFunc( T_FALSE_EXPR     , EvalFalseExpr);
+    InstallEvalExprFunc( T_TILDE_EXPR     , EvalTildeExpr);
     InstallEvalExprFunc( T_CHAR_EXPR      , EvalCharExpr);
     InstallEvalExprFunc( T_PERM_EXPR      , EvalPermExpr);
+    InstallEvalExprFunc( T_FLOAT_EXPR_LAZY  , EvalFloatExprLazy);
+    InstallEvalExprFunc( T_FLOAT_EXPR_EAGER , EvalFloatExprEager);
 
     /* install the evaluators for list and record expressions              */
     InstallEvalExprFunc( T_LIST_EXPR      , EvalListExpr);
-    InstallEvalExprFunc( T_LIST_TILD_EXPR , EvalListTildeExpr);
+    InstallEvalExprFunc( T_LIST_TILDE_EXPR, EvalListTildeExpr);
     InstallEvalExprFunc( T_RANGE_EXPR     , EvalRangeExpr);
     InstallEvalExprFunc( T_STRING_EXPR    , EvalStringExpr);
     InstallEvalExprFunc( T_REC_EXPR       , EvalRecExpr);
-    InstallEvalExprFunc( T_REC_TILD_EXPR  , EvalRecTildeExpr);
-    InstallEvalExprFunc( T_FLOAT_EXPR_LAZY  , EvalFloatExprLazy);
-    InstallEvalExprFunc( T_FLOAT_EXPR_EAGER  , EvalFloatExprEager);
+    InstallEvalExprFunc( T_REC_TILDE_EXPR , EvalRecTildeExpr);
 
     /* clear the tables for the printing dispatching                       */
     for ( type = 0; type < 256; type++ ) {
@@ -2107,7 +1950,6 @@ static Int InitKernel (
     InstallPrintExprFunc( T_AINV           , PrintAInv);
     InstallPrintExprFunc( T_DIFF           , PrintBinop);
     InstallPrintExprFunc( T_PROD           , PrintBinop);
-    InstallPrintExprFunc( T_INV            , PrintInv);
     InstallPrintExprFunc( T_QUO            , PrintBinop);
     InstallPrintExprFunc( T_MOD            , PrintBinop);
     InstallPrintExprFunc( T_POW            , PrintBinop);
@@ -2117,28 +1959,32 @@ static Int InitKernel (
     InstallPrintExprFunc( T_INT_EXPR       , PrintIntExpr);
     InstallPrintExprFunc( T_TRUE_EXPR      , PrintTrueExpr);
     InstallPrintExprFunc( T_FALSE_EXPR     , PrintFalseExpr);
+    InstallPrintExprFunc( T_TILDE_EXPR     , PrintTildeExpr);
     InstallPrintExprFunc( T_CHAR_EXPR      , PrintCharExpr);
     InstallPrintExprFunc( T_PERM_EXPR      , PrintPermExpr);
+    InstallPrintExprFunc( T_FLOAT_EXPR_LAZY  , PrintFloatExprLazy);
+    InstallPrintExprFunc( T_FLOAT_EXPR_EAGER , PrintFloatExprEager);
 
     /* install the printers for list and record expressions                */
     InstallPrintExprFunc( T_LIST_EXPR      , PrintListExpr);
-    InstallPrintExprFunc( T_LIST_TILD_EXPR , PrintListExpr);
+    InstallPrintExprFunc( T_LIST_TILDE_EXPR, PrintListExpr);
     InstallPrintExprFunc( T_RANGE_EXPR     , PrintRangeExpr);
     InstallPrintExprFunc( T_STRING_EXPR    , PrintStringExpr);
-    InstallPrintExprFunc( T_FLOAT_EXPR_LAZY    , PrintFloatExprLazy);
-    InstallPrintExprFunc( T_FLOAT_EXPR_EAGER    , PrintFloatExprEager);
     InstallPrintExprFunc( T_REC_EXPR       , PrintRecExpr);
-    InstallPrintExprFunc( T_REC_TILD_EXPR  , PrintRecExpr);
+    InstallPrintExprFunc( T_REC_TILDE_EXPR , PrintRecExpr);
 
     /* return success                                                      */
     return 0;
 }
 
 
-static Int InitLibrary (
-    StructInitInfo *    module )
+static Int InitLibrary(StructInitInfo * module)
 {
-    GVAR_FLOAT_LITERAL_CACHE = GVarName("FLOAT_LITERAL_CACHE");
+    /* init filters and functions                                          */
+    InitGVarFuncsFromTable( GVarFuncs );
+
+    FuncFLUSH_FLOAT_LITERAL_CACHE(0);
+
     return 0;
 }
 
@@ -2147,28 +1993,15 @@ static Int InitLibrary (
 *F  InitInfoExprs() . . . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "exprs",                            /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    InitLibrary                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "exprs",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoExprs ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  exprs.c . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

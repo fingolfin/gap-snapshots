@@ -233,42 +233,28 @@ end);
 ##
 #F  StringPP( <int> ) . . . . . . . . . . . . . . . . . . . . P1^E1 ... Pn^En
 ##
-InstallGlobalFunction(StringPP , function( n )
-    local   l, p, e, i, prime, str;
+InstallGlobalFunction(StringPP, function( n )
+    local str, facs, i;
 
-    if n = 1  then
-        return "1";
-    elif n = -1  then
-        return "-1";
-    elif n = 0  then
-        return "0";
-    elif n < 0  then
-        l := FactorsInt( -n );
-	str := "-";
-    else
-        l := FactorsInt( n );
-	str := "";
-    fi;
-    p := [];
-    e := [];
-    for prime  in Set( l )  do
-        Add( p, prime );
-        Add( e, Length( Filtered( l, x -> prime = x ) ) );
-    od;
-
-    if e[ 1 ] = 1   then
-        str := Concatenation( str, String( p[ 1 ] ) );
-    else
-        str := Concatenation( str, String( p[ 1 ] ),
-	                                 "^", String( e[ 1 ] ) );
+    # hand special cases (in particular 0, 1, -1)
+    if n in [-3..3] then
+        return String( n );
     fi;
 
-    for i  in [ 2 .. Length( p ) ]  do
-        if e[ i ] = 1  then
-	    str := Concatenation( str, "*", String( p[ i ] ) );
-        else
-	    str := Concatenation( str, "*", String( p[ i ] ),
-	                                     "^", String( e[ i ] ) );
+    if n < 0  then
+        n := -n;
+        str := "-";
+    else
+        str := "";
+    fi;
+
+    facs := Collected( FactorsInt( n ) );
+    for i in [ 1 .. Length( facs ) ] do
+        if i > 1 then Append( str, "*" ); fi;
+        Append( str, String( facs[ i ][ 1 ] ) );
+        if facs[ i ][ 2 ] > 1 then
+            Append( str, "^" );
+            Append( str, String( facs[ i ][ 2 ] ) );
         fi;
     od;
 
@@ -301,44 +287,56 @@ InstallGlobalFunction(WordAlp , function( alpha, nr )
     return Reversed( word );
 end);
 
+BindGlobal("LOWERCASETRANSTABLE", (function()
+    local l;
+    l := List([0..255], CHAR_INT);
+    l{1+[65..90]} := l{1+[97..122]};
+    l{1+[192..214]} := l{33+[192..214]};
+    l{1+[216..221]} := l{33+[216..221]};
+    return Immutable(l);
+end)());
+
+BindGlobal("UPPERCASETRANSTABLE", (function()
+    local l;
+    l := List([0..255], CHAR_INT);
+    l{1+[97..122]} := l{1+[65..90]};
+    l{33+[192..214]} := l{1+[192..214]};
+    l{33+[216..221]} := l{1+[216..221]};
+    return Immutable(l);
+end)());
+
 #############################################################################
 ##
 #F  LowercaseString( <string> ) . . . string consisting of lower case letters
 ##
-LOWERCASETRANSTABLE := 0;
+
 InstallGlobalFunction(LowercaseString , function( str )
   local res;
-  # initialize translation table before first use
-  if LOWERCASETRANSTABLE = 0 then
-    LOWERCASETRANSTABLE := List([0..255], CHAR_INT);
-    LOWERCASETRANSTABLE{1+[65..90]} := LOWERCASETRANSTABLE{1+[97..122]};
-    LOWERCASETRANSTABLE{1+[192..214]} := LOWERCASETRANSTABLE{33+[192..214]};
-    LOWERCASETRANSTABLE{1+[216..221]} := LOWERCASETRANSTABLE{33+[216..221]};
-  fi;
-  # now delegate to kernels TranslateString
+  # delegate to kernels TranslateString
   res := ShallowCopy(str);
   TranslateString(res, LOWERCASETRANSTABLE);
   return res;
+end);
+
+InstallGlobalFunction(LowercaseChar , function( c )
+  return LOWERCASETRANSTABLE[IntChar(c)+1];
 end);
 
 #############################################################################
 ##
 #F  UppercaseString( <string> ) . . . string consisting of upper case letters
 ##
-UPPERCASETRANSTABLE := 0;
+
 InstallGlobalFunction(UppercaseString , function( str )
   local res;
-  # initialize translation table before first use
-  if UPPERCASETRANSTABLE = 0 then
-    UPPERCASETRANSTABLE := List([0..255], CHAR_INT);
-    UPPERCASETRANSTABLE{1+[97..122]} := UPPERCASETRANSTABLE{1+[65..90]};
-    UPPERCASETRANSTABLE{33+[192..214]} := UPPERCASETRANSTABLE{1+[192..214]};
-    UPPERCASETRANSTABLE{33+[216..221]} := UPPERCASETRANSTABLE{1+[216..221]};
-  fi;
-  # now delegate to kernels TranslateString
+  # delegate to kernels TranslateString
   res := ShallowCopy(str);
   TranslateString(res, UPPERCASETRANSTABLE);
   return res;
+end);
+
+InstallGlobalFunction(UppercaseChar , function( c )
+  return UPPERCASETRANSTABLE[IntChar(c)+1];
 end);
 
 #############################################################################
@@ -350,35 +348,7 @@ InstallMethod( Int,
     true,
     [ IsString ],
     0,
-
-function( str )
-    local   z,  d,  i,  s;
- 
-    # use kernel parser for longer strings:
-    if Length(str) > 30 then
-      z := EvalString(str);
-      if IsInt(z) then
-        return z;
-      else
-        Error("not string of integer: ", str, "\n");
-      fi;
-    fi;
-
-    d := 1;
-    while IsBound( str[d] ) and str[d] = '-'  do
-        d := d + 1;
-    od;
-    z := 0;
-    for i  in [ d .. Length( str ) ]  do
-        # this is quite fast since it is done in a kernel loop
-        s := Position( CHARS_DIGITS, str[i] );
-        if s = fail  then
-            return fail;
-        fi;
-        z := 10 * z + (s - 1);
-    od;
-    return z * (-1) ^ (d - 1);
-end );
+    INT_STRING );
 
 
 #############################################################################
@@ -401,6 +371,9 @@ function( string )
     for i  in [ 1 .. Length(string) ]  do
         if i = p and string[i] = '-'  then
             m := -1;
+            if Length(string) = 1 then
+                return fail;
+            fi;
         elif string[i] = '/' and IsBound(n)  then
             return fail;
         elif string[i] = '/' and not IsBound(n)  then
@@ -418,10 +391,10 @@ function( string )
             d := 1;
         else
             s := Position( CHARS_DIGITS, string[i] );
-            if s <> false  then
+            if s <> fail  then
                 z := 10 * z + (s-1);
             else
-                return false;
+                return fail;
             fi;
             if IsRat(d)  then
                 d := d / 10;
@@ -480,7 +453,7 @@ end);
 
 InstallMethod(ViewObj,"empty strings",true,[IsString and IsEmpty],0,
 function(e)
-  if TNUM_OBJ_INT(e) in TNUM_EMPTY_STRING then
+  if IsStringRep(e) then
     Print("\"\"");
   else
     Print("[  ]");
@@ -542,46 +515,7 @@ InstallMethod( SplitString,
         "for three strings",
         true,
         [ IsString, IsString, IsString ], 0,
-##  function( string, seps, wspace )
-##      local   substrings,  a,  z;
-##  
-##      ##  make sets from char lists
-##      seps := Set(seps);
-##      wspace := Set(wspace);
-##  
-##      ##  store the substrings in a list.
-##      substrings := [];
-##  
-##      ##  a is the position after the last separator/white space.
-##      a := 1;
-##      z := 0;
-##  
-##      for z in [1..Length( string )] do
-##          ##  Whenever we encounter a separator or a white space, the substring
-##          ##  starting after the last separator/white space is cut out.  The
-##          ##  only difference between white spaces and separators is that white
-##          ##  spaces don't separate empty strings.  
-##          if string[z] in wspace then
-##              if a < z then
-##                  Add( substrings, string{[a..z-1]} );
-##              fi;
-##              a := z+1;
-##          elif string[z] in seps then
-##              Add( substrings, string{[a..z-1]} );
-##              a := z+1;
-##          fi;
-##      od;
-##  
-##      ##  Pick up a substring at the end of the string.  Note that a trailing
-##      ##  separator does not produce an empty string.
-##      if a <= z  then
-##          Add( substrings, string{[a..z]} );
-##      fi;
-##      return substrings;
-##  end 
-# moved to kernel
-SplitStringInternal
-);
+        SplitStringInternal );
 
 InstallMethod( SplitString,
         "for a string and two characters",
@@ -783,7 +717,8 @@ InstallGlobalFunction(StringFile, function(name)
   str := READ_STRING_FILE(f![1]);
   if str = fail then
     CloseStream(f);
-    Error("in StringFile: ", LastSystemError().message, "\n");
+      Error("in StringFile: ", LastSystemError().message,
+            " (", LastSystemError().number, ")\n");
     return fail;
   fi;
   CloseStream(f);
@@ -810,7 +745,8 @@ InstallGlobalFunction(FileString, function(arg)
   IS_STRING_CONV(str);
   if WRITE_STRING_FILE_NC(out![1], str) = fail then
     CloseStream(out);
-    Error("in FileString: ", LastSystemError().message, "\n");
+      Error("in FileString: ", LastSystemError().message,
+            " (", LastSystemError().number, ")\n");
     return fail;
   fi;
   CloseStream(out);
@@ -881,7 +817,7 @@ local l, b;
 end);
 
 InstallGlobalFunction(ReadCSV,function(arg)
-local nohead,file,sep,f, line, fields, l, r, i,s,add,dir;
+local nohead,file,sep,f, line, fields, l, r, i,s,t,add,dir;
   file:=arg[1];
 
   if not IsReadableFile(file) then
@@ -954,10 +890,16 @@ local nohead,file,sep,f, line, fields, l, r, i,s,add,dir;
       for i in [1..Length(fields)] do
 	if IsBound(line[i]) and Length(line[i])>0 then
 	  s:=line[i];
-	  # openoffice and Word translate booleans differently. 
+	  # openoffice and Excel translate booleans differently. 
 	  if s="TRUE" then s:="1";
 	  elif s="FALSE" then s:="0";
+	  else
+	    t:=Rat(s);
+	    if not IsBool(t) and not '.' in s then 
+	      s:=t;
+	    fi;
 	  fi;
+
 	  r.(fields[i]):=s;
 	  add:=true;
 	fi;
@@ -984,7 +926,7 @@ InstallGlobalFunction(PrintCSV,function(arg)
     q:=false;
     if not IsString(s) then
       s:=String(s);
-    elif IsString(s) and Int(s)<>fail and AbsInt(Int(s))>10^7 then
+    elif IsString(s) and ForAll(s,x->x in CHARS_DIGITS or x in "+-") and Int(s)<>fail and AbsInt(Int(s))>10^9 then
       q:=true;
     fi;
 
@@ -1026,7 +968,7 @@ InstallGlobalFunction(PrintCSV,function(arg)
   else
     rf:=[];
     for i in l do
-      r:=RecFields(i);
+      r:=RecNames(i);
       for j in r do
 	if not j in rf then
 	  Add(rf,j);
@@ -1083,14 +1025,22 @@ end);
 # B: Background color
 # option `rows' colors alternating rows
 InstallGlobalFunction(LaTeXTable,function(file,l)
-local f,i,j,format,cold,a,e,z,str,new,box,lc,mini,color,alt;
+local f,i,j,format,cold,a,e,z,str,new,box,lc,mini,color,alt,renum;
 
   alt:=ValueOption("rows")<>fail;
   color:=fail;
   # row 1 indicates which columns are relevant and their formatting
-  cold:=l[1];
-  f:=RecFields(cold);
+  cold:=ShallowCopy(l[1]);
+  f:=RecNames(cold);
+  renum:=[];
   for i in ShallowCopy(f) do
+
+    a:=Filtered(cold.(i),x->x in CHARS_DIGITS);
+    if LENGTH(a)>0 then
+      cold.(i):=Filtered(cold.(i),x->not x in CHARS_DIGITS);
+      Add(renum,Int(a));
+    fi;
+
     if cold.(i)="B" then 
       # color indicator
       color:=i;
@@ -1100,6 +1050,15 @@ local f,i,j,format,cold,a,e,z,str,new,box,lc,mini,color,alt;
       cold.(i):=UppercaseString(cold.(i));
     fi;
   od;
+
+  # resort columns if numbers are given
+  if Length(renum)=Length(f) then
+    a:=ShallowCopy(renum);
+    a:=Sortex(a);
+    f:=Permuted(f,a);
+  fi;
+
+
   PrintTo(file);
   # header
   format:="";
@@ -1148,21 +1107,25 @@ local f,i,j,format,cold,a,e,z,str,new,box,lc,mini,color,alt;
 	  mini:=false;
 	fi;
 	if 'F' in cold.(f[i]) then
-	  # transform str in normal format
-	  str:=Filtered(str,x->x<>',');
-	  z:=0;
-	  a:=Position(str,'E');
-	  if a<>fail then
-	    z:=Int(Filtered(str{[a+1..Length(str)]},x->x<>'+'));
-	    str:=str{[1..a-1]};
-	  fi;
-	  a:=Position(str,'.');
-	  if a<>fail then
-	    z:=z-(Length(str)-a);
-	    str:=Filtered(str,x->x<>'.');
-	  fi;
+          if IsInt(str) then
+            a:=str;
+          else
+            # transform str in normal format
+            str:=Filtered(str,x->x<>',');
+            z:=0;
+            a:=Position(str,'E');
+            if a<>fail then
+              z:=Int(Filtered(str{[a+1..Length(str)]},x->x<>'+'));
+              str:=str{[1..a-1]};
+            fi;
+            a:=Position(str,'.');
+            if a<>fail then
+              z:=z-(Length(str)-a);
+              str:=Filtered(str,x->x<>'.');
+            fi;
 
-	  a:=Int(str)*10^z;
+            a:=Int(str)*10^z;
+          fi;
 
 	  a:=Collected(Factors(a));
 	  AppendTo(file,"$");
@@ -1222,6 +1185,57 @@ local f,i,j,format,cold,a,e,z,str,new,box,lc,mini,color,alt;
 
   AppendTo(file,"\\end{tabular}\n");
 end);
+
+
+#############################################################################
+##
+#F  Convenience method to inform users how to concatenate strings.
+##
+##  Note that we could also have this method do the following
+##     return Concatenation(a,b);
+##  instead of raising an error. But this leads to inefficient code when
+##  concatenating many strings. So in order to not encourage such bad code,
+##  we instead tell the user the proper way to do this.
+##
+InstallOtherMethod(\+, [IsString,IsString],
+function(a,b)
+    Error("concatenating strings via + is not supported, use Concatenation(<a>,<b>) instead");
+end);
+
+#############################################################################
+##
+#F StringOfMemoryAmount( <m> )    returns an appropriate human-readable string 
+##                        representation of <m> bytes
+##
+
+InstallGlobalFunction(StringOfMemoryAmount, function(m)
+    local  whole, frac, shift, s, units;
+    if not IsInt(m) or m < 0 then
+        Error("StringOfMemoryAmount: amount must be a non-negative integer number of bytes");
+    fi;
+    whole := m;
+    frac := 0;
+    shift := 0;
+    while whole >= 1024 do
+        frac := whole mod 1024;
+        whole := Int(whole / 1024);
+        shift := shift+1;
+    od;
+    s := ShallowCopy(String(whole));
+    if whole < 100 then
+        Append(s,".");
+        Append(s,String(Int(frac/102.4)));
+        if whole < 10 then
+            Append(s, String(Int(frac/10.24) mod 10));
+        fi;
+    fi;
+    units := ["B","KB","MB","GB","TB","PB","EB","YB","ZB"];    
+    Append(s, units[shift+1]);
+    return s;
+end);
+
+        
+    
 
 #############################################################################
 ##

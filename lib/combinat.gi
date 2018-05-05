@@ -15,28 +15,7 @@
 ##
 #F  Factorial( <n> )  . . . . . . . . . . . . . . . . factorial of an integer
 ##
-# can be much further improved, together with Binomial ... (FL)
-# but for the moment this is huge improvement over Product([1..n]) for large n
-# Factorial(1000000) is no problem now
-InstallGlobalFunction(Factorial,function ( n )
-    local pr;
-    if n < 0  then Error("<n> must be nonnegative");  fi;
-    pr := function(l, i, j)
-      local bound, len, res, l2, k;
-      bound := 30;
-      len := j+1-i;
-      if len < bound then
-        res := 1;
-        for k in [i..j] do
-          res := res*l[k];
-        od;
-        return res;
-      fi;   
-      l2 := QuoInt(len,2);
-      return pr(l,i,i+l2)*pr(l,i+l2+1,j);
-    end;
-    return pr( [1..n], 1, n );
-end);
+InstallGlobalFunction(Factorial, FACTORIAL_INT);
 
 
 #############################################################################
@@ -60,32 +39,7 @@ end);
 ##
 #F  Binomial( <n>, <k> )  . . . . . . . . .  binomial coefficient of integers
 ##
-InstallGlobalFunction(Binomial,function ( n, k )
-    local   bin, i, j;
-    if   k < 0  then
-        bin := 0;
-    elif k = 0  then
-        bin := 1;
-    elif n < 0  then
-        bin := (-1)^k * Binomial( -n+k-1, k );
-    elif n < k  then
-        bin := 0;
-    elif n = k  then
-        bin := 1;
-    elif n-k < k  then
-        bin := Binomial( n, n-k );
-    else
-        bin := 1;  j := 1;
-        # note that all intermediate results are binomial coefficients itself
-        # hence integers!
-        # slight improvement by Frank and Max.
-        for i  in [0..k-1]  do
-            bin := bin * (n-i) / j;
-            j := j + 1;
-        od;
-    fi;
-    return bin;
-end);
+InstallGlobalFunction(Binomial, BINOMIAL_INT);
 
 
 #############################################################################
@@ -873,10 +827,8 @@ InstallGlobalFunction( "IteratorOfCartesianProduct",
     # this mimics usage of functions Cartesian and Cartesian2
     if Length( arg ) = 1  then
         return IteratorOfCartesianProduct2( arg[1] );
-    else
-        return IteratorOfCartesianProduct2( arg );
     fi;
-    return;
+    return IteratorOfCartesianProduct2( arg );
     end);
 
 BindGlobal( "NumberElement_Cartesian", 
@@ -942,8 +894,7 @@ BindGlobal( "EnumeratorOfCartesianProduct2",
     
     if (not ForAll(colls, IsFinite)) or not (ForAll(colls, IsCollection) or 
      ForAll(colls, IsEnumeratorByFunctions)) then
-      Error("usage: each argument must be a finite collection or enumerator,");
-      return;
+      ErrorNoReturn("usage: each argument must be a finite collection or enumerator,");
     fi;
 
     new_colls:=[]; 
@@ -983,10 +934,8 @@ InstallGlobalFunction( "EnumeratorOfCartesianProduct",
       return EmptyPlist(0);
     elif Length( arg ) = 1  then
         return EnumeratorOfCartesianProduct2( arg[1] );
-    else
-        return EnumeratorOfCartesianProduct2( arg );
     fi;
-    return;
+    return EnumeratorOfCartesianProduct2( arg );
 end);
 
 #############################################################################
@@ -1344,7 +1293,10 @@ Permanent2 := function ( mat, m, n, r, v, i, sum )
 end;
 MakeReadOnlyGlobal( "Permanent2" );
 
-InstallGlobalFunction(Permanent,function ( mat )
+InstallMethod(Permanent,
+   "for matrices",
+   [ IsMatrix ],
+function ( mat )
     local m, n;
 
     m := Length(mat);
@@ -1849,8 +1801,7 @@ InstallGlobalFunction(Partitions,function ( arg )
         fi;
     elif Length(arg) = 2  then
         if not(IsInt(arg[1]) and IsInt(arg[2])) then
-            Error("usage: Partitions( <n> [, <k>] )");
-            return;
+            ErrorNoReturn("usage: Partitions( <n> [, <k>] )");
         elif arg[1] < 0 or arg[2] < 0 then
             parts := [];
         else
@@ -1869,8 +1820,7 @@ InstallGlobalFunction(Partitions,function ( arg )
             fi;
         fi;
     else
-        Error("usage: Partitions( <n> [, <k>] )");
-        return;
+        ErrorNoReturn("usage: Partitions( <n> [, <k>] )");
     fi;
     return parts;
 end);
@@ -2036,8 +1986,7 @@ InstallGlobalFunction( PartitionsGreatestLE,
 function(n,m)
     local parts;
     if not(IsInt(n) and IsInt(m)) then
-        Error("usage: PartitionsGreatestLE( <n>, <m> )");
-        return;
+        ErrorNoReturn("usage: PartitionsGreatestLE( <n>, <m> )");
     elif n < 0 or m < 0 then
         parts := [];
     else
@@ -2129,8 +2078,7 @@ InstallGlobalFunction( PartitionsGreatestEQ,
 function(n,m)
     local parts;
     if not(IsInt(n) and IsInt(m)) then
-        Error("usage: PartitionsGreatestEQ( <n>, <m> )");
-        return;
+        ErrorNoReturn("usage: PartitionsGreatestEQ( <n>, <m> )");
     elif n < 0 or m < 0 then
         parts := [];
     else
@@ -2719,42 +2667,41 @@ end);
 ##
 #F  Bernoulli( <n> )  . . . . . . . . . . . . value of the Bernoulli sequence
 ##
-BindGlobal( "Bernoulli2",
-    [-1/2,1/6,0,-1/30,0,1/42,0,-1/30,0,5/66,0,-691/2730,0,7/6] );
-
-InstallGlobalFunction(Bernoulli,function ( n )
-    local   brn, bin, i, j;
-    if   n < 0  then
-        Error("Bernoulli: <n> must be nonnegative");
-    elif n = 0  then
-        brn := 1;
-    elif n = 1  then
-        brn := -1/2;
-    elif n mod 2 = 1  then
-        brn := 0;
-    elif n <= Length(Bernoulli2)  then
-        brn := Bernoulli2[n];
-    else
-        for i  in [Length(Bernoulli2)+1..n]  do
-            if i mod 2 = 1  then
-                Bernoulli2[i] := 0;
-            else
-                bin := 1;
-                brn := 1;
-                for j  in [1..i-1]  do
-                    bin := (i+2-j)/j * bin;
-                    brn := brn + bin * Bernoulli2[j];
-                od;
-                Bernoulli2[i] := - brn / (i+1);
+InstallGlobalFunction(Bernoulli,
+    MemoizePosIntFunction(
+    function ( n )
+        local   brn, bin, j;
+        if   n < 0  then
+            Error("Bernoulli: <n> must be nonnegative");
+        elif n = 0  then
+            brn := 1;
+        elif n = 1  then
+            brn := -1/2;
+        elif n mod 2 = 1  then
+            brn := 0;
+        else
+            bin := 1;
+            brn := 1;
+            for j  in [1..n-1]  do
+                bin := (n+2-j)/j * bin;
+                brn := brn + bin * Bernoulli(j);
+            od;
+            brn := - brn / (n+1);
+        fi;
+        return brn;
+    end,
+    rec(errorHandler :=
+        function ( n )
+            if n <> 0 then
+                Error("Bernoulli: <n> must be a nonnegative integer");
             fi;
-        od;
-        brn := Bernoulli2[n];
-    fi;
-    return brn;
-end);
+            return 1;
+        end
+    )
+));
+
 
 #############################################################################
 ##
 #E  combinat.gi . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
 ##
-

@@ -16,19 +16,19 @@
 if not IsBound( LARGE_TASK )  then  LARGE_TASK := false;   fi;
 
 # set some global variables
-BindGlobal("STBBCKT_STRING_CENTRALIZER","Centralizer");
-BindGlobal("STBBCKT_STRING_REGORB1","_RegularOrbit1");
-BindGlobal("STBBCKT_STRING_REGORB2","RegularOrbit2");
-BindGlobal("STBBCKT_STRING_REGORB3","RegularOrbit3");
-BindGlobal("STBBCKT_STRING_SPLITOFF","SplitOffBlock");
-BindGlobal("STBBCKT_STRING_INTERSECTION","Intersection");
-BindGlobal("STBBCKT_STRING_PROCESSFIX","ProcessFixpoint");
-BindGlobal("STBBCKT_STRING_MAKEBLOX","_MakeBlox");
-BindGlobal("STBBCKT_STRING_SUBORBITS0","Suborbits0");
-BindGlobal("STBBCKT_STRING_SUBORBITS1","Suborbits1");
-BindGlobal("STBBCKT_STRING_SUBORBITS2","Suborbits2");
-BindGlobal("STBBCKT_STRING_SUBORBITS3","Suborbits3");
-BindGlobal("STBBCKT_STRING_TWOCLOSURE","TwoClosure");
+BindGlobal("STBBCKT_STRING_CENTRALIZER",MakeImmutable("Centralizer"));
+BindGlobal("STBBCKT_STRING_REGORB1",MakeImmutable("_RegularOrbit1"));
+BindGlobal("STBBCKT_STRING_REGORB2",MakeImmutable("RegularOrbit2"));
+BindGlobal("STBBCKT_STRING_REGORB3",MakeImmutable("RegularOrbit3"));
+BindGlobal("STBBCKT_STRING_SPLITOFF",MakeImmutable("SplitOffBlock"));
+BindGlobal("STBBCKT_STRING_INTERSECTION",MakeImmutable("Intersection"));
+BindGlobal("STBBCKT_STRING_PROCESSFIX",MakeImmutable("ProcessFixpoint"));
+BindGlobal("STBBCKT_STRING_MAKEBLOX",MakeImmutable("_MakeBlox"));
+BindGlobal("STBBCKT_STRING_SUBORBITS0",MakeImmutable("Suborbits0"));
+BindGlobal("STBBCKT_STRING_SUBORBITS1",MakeImmutable("Suborbits1"));
+BindGlobal("STBBCKT_STRING_SUBORBITS2",MakeImmutable("Suborbits2"));
+BindGlobal("STBBCKT_STRING_SUBORBITS3",MakeImmutable("Suborbits3"));
+BindGlobal("STBBCKT_STRING_TWOCLOSURE",MakeImmutable("TwoClosure"));
 
 # #############################################################################
 # ##
@@ -829,7 +829,7 @@ InstallGlobalFunction( EmptyRBase, function( G, Omega, P )
         if IsIdenticalObj( G[ 1 ], G[ 2 ] )  then
             rbase.level2 := true;
         else
-            rbase.level2 := CopyStabChain( StabChainMutable( G[ 2 ] ) );
+            rbase.level2 := CopyStabChain( StabChainImmutable( G[ 2 ] ) );
             rbase.lev2   := [  ];
         fi;
         G := G[ 1 ];
@@ -841,7 +841,7 @@ InstallGlobalFunction( EmptyRBase, function( G, Omega, P )
 #        rbase.fix   := [  ];
 #        rbase.level := NrMovedPoints( G );
 #    else
-        rbase.chain := CopyStabChain( StabChainMutable( G ) );
+        rbase.chain := CopyStabChain( StabChainImmutable( G ) );
         rbase.level := rbase.chain;
 #    fi;
     
@@ -1547,8 +1547,8 @@ InstallGlobalFunction( PartitionBacktrack,
         
         # In   the representative case,   assign  to <L>  and <R>  stabilizer
         # chains.
-        L := ListStabChain( CopyStabChain( StabChainMutable( L ) ) );
-        R := ListStabChain( CopyStabChain( StabChainMutable( R ) ) );
+        L := ListStabChain( CopyStabChain( StabChainImmutable( L ) ) );
+        R := ListStabChain( CopyStabChain( StabChainImmutable( R ) ) );
 
     fi;
     
@@ -1881,6 +1881,13 @@ function( rbase, image, G, f, Q, strat )
     return MeetPartitionStrat( rbase, image, Q, t, strat );
 end);
 Refinements.(STBBCKT_STRING_TWOCLOSURE):=Refinements_TwoClosure;
+
+#############################################################################
+##
+## After construction, make Refinements immutable for thread-safety
+##
+MakeImmutable(Refinements);
+
 
 #############################################################################
 ##
@@ -2832,14 +2839,20 @@ end );
 ##
 #M  PartitionStabilizerPermGroup(<G>,<part>)
 ##
+##  This really should be a backtrack on its own
 InstallGlobalFunction( PartitionStabilizerPermGroup, function(G,part)
-local pl,i,p,W,op,S;
+local pl,single,i,p,W,op,S;
 
   # first separate the sets of different lengths
   pl:=Set(List(part,Length));
+  single:=[];
   for i in [1..Length(pl)] do
     pl[i]:=Filtered(part,j->Length(j)=pl[i]);
-    G:=Stabilizer(G,Set(Concatenation(pl[i])),OnSets);
+    Add(single,Set(Concatenation(pl[i])));
+  od;
+  SortBy(single,Length);
+  for i in single do
+    G:=Stabilizer(G,i,OnSets);
   od;
 
   # now pl is a list of lists of sets of the same length, sorted in

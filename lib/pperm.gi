@@ -130,8 +130,7 @@ function(arg)
   if IsPartialPermCollection(arg[1]) then 
     return CallFuncList(JoinOfPartialPerms, arg[1]);
   elif not IsPartialPermCollection(arg) then 
-    Error("usage: the argument should be a collection of partial perms,");
-    return;
+    ErrorNoReturn("usage: the argument should be a collection of partial perms,");
   fi;
 
   join:=arg[1]; i:=1;
@@ -151,8 +150,7 @@ function(arg)
   if IsPartialPermCollection(arg[1]) then 
     return CallFuncList(JoinOfIdempotentPartialPermsNC, arg[1]);
   elif not IsPartialPermCollection(arg) then 
-    Error("usage: the argument should be a collection of partial perms,");
-    return;
+    ErrorNoReturn("usage: the argument should be a collection of partial perms,");
   fi;
 
   join:=arg[1]; i:=1;
@@ -167,20 +165,22 @@ end);
 
 InstallGlobalFunction(MeetOfPartialPerms, 
 function(arg)
-  local meet, i;
-
-  if IsPartialPermCollection(arg[1]) then 
+  local meet, i, empty;
+  
+  if Length(arg) = 1 and IsPartialPermCollection(arg[1]) then 
     return CallFuncList(MeetOfPartialPerms, AsList(arg[1]));
   elif not IsPartialPermCollection(arg) then 
-    Error("usage: the argument should be a collection of partial perms,");
-    return;
+    ErrorNoReturn("usage: the argument should be a collection of partial perms, ");
   fi;
 
-  meet:=arg[1]; i:=1;
-  repeat
-    i:=i+1;
-    meet:=MEET_PPERMS(meet, arg[i]);
-  until i=Length(arg) or meet=EmptyPartialPerm();
+  meet := arg[1]; 
+  i := 1;
+  empty := EmptyPartialPerm();
+
+  while i < Length(arg) and meet <> empty do
+    i := i + 1;
+    meet := MEET_PPERMS(meet, arg[i]);
+  od;
     
   return meet;
 end);
@@ -192,8 +192,7 @@ InstallMethod(AsPartialPerm, "for a perm and a list",
 function(p, list)
   
   if not IsSSortedList(list) or not ForAll(list, IsPosInt) then 
-    Error("usage: the second argument must be a set of positive integers,");
-    return;
+    ErrorNoReturn("usage: the second argument must be a set of positive integers,");
   fi;
 
   return AS_PPERM_PERM(p, list);
@@ -226,14 +225,12 @@ InstallMethod(AsPartialPerm, "for a transformation and list",
 [IsTransformation, IsList], 
 function(f, list)
   
-  if not IsSSortedList(list) or not ForAll(list, IsPosInt) 
-    or not ForAll(list, i-> i<=DegreeOfTransformation(f)) then 
-    Error("usage: the second argument must be a set of positive integers ", 
-    "not greater than the degree of the first argument,");
-    return;
+  if not IsSSortedList(list) or not ForAll(list, IsPosInt) then 
+    ErrorNoReturn("usage: the second argument must be a set of positive ",
+                  "integers,"); 
   elif not IsInjectiveListTrans(list, f) then 
-    Error("usage: the first argument must be injective on the second,");
-    return fail;
+    ErrorNoReturn("usage: the first argument must be injective on the ",
+                  "second,");
   fi;
   return PartialPermNC(list, OnTuples(list, f)); 
 end);
@@ -246,27 +243,6 @@ function(f, n)
   return AsPartialPerm(f, [1..n]);
 end);
 
-# c method? JDM
-
-InstallMethod(AsPartialPerm, "for a transformation", 
-[IsTransformation],
-function(f)
-  local img, n;
-  n:=DegreeOfTransformation(f);
-  if not n^f=n then 
-    return fail; 
-  fi;
-  return PartialPerm(List([1..n], function(i) 
-    local j;
-    j:=i^f;
-    if j=n then 
-      return 0; 
-    else 
-      return j; 
-    fi;
-  end));
-end);
-
 # n is image of undefined points 
 InstallMethod(AsTransformation, "for a partial perm and positive integer",
 [IsPartialPerm, IsPosInt],
@@ -274,9 +250,8 @@ function(f, n)
   local deg, out, i;
   
   if n<DegreeOfPartialPerm(f) and n^f<>0 and n^f<>n then 
-    Error("usage: the 2nd argument must not be a moved point of the 1st ", 
+    ErrorNoReturn("usage: the 2nd argument must not be a moved point of the 1st ", 
     "argument,");
-    return;
   fi;
   deg:=Maximum(n, LargestMovedPoint(f)+1, LargestImageOfMovedPoint(f)+1); 
   out:=ListWithIdenticalEntries(deg, n);
@@ -303,8 +278,7 @@ InstallMethod(RestrictedPartialPerm, "for a partial perm",
 function(f, list)
 
   if not IsSSortedList(list) or not ForAll(list, IsPosInt) then 
-    Error("usage: the second argument must be a set of positive integers,");
-    return;
+    ErrorNoReturn("usage: the second argument must be a set of positive integers,");
   fi;
 
   return RESTRICTED_PPERM(f, list);
@@ -327,8 +301,7 @@ InstallMethod(PermLeftQuoPartialPerm, "for a partial perm and partial perm",
 function(f, g)
   
   if ImageSetOfPartialPerm(f)<>ImageSetOfPartialPerm(g) then 
-    Error("usage: the arguments must be partial perms with equal image sets,");
-    return;
+    ErrorNoReturn("usage: the arguments must be partial perms with equal image sets,");
   fi;
 
   return PERM_LEFT_QUO_PPERM_NC(f, g);
@@ -500,9 +473,8 @@ function(arg)
       min:=Minimum(source)-1;
       max:=Maximum(source);
     else
-      Error("usage: the argument must be a positive integer, a set, ",
+      ErrorNoReturn("usage: the argument must be a positive integer, a set, ",
       "or 2 sets, of positive integers,");
-      return;
     fi;
 
     out:=List([1..max], x-> 0);
@@ -538,9 +510,8 @@ function(arg)
     od;
     return SparsePartialPermNC(out1, out2);
   else 
-    Error("usage: the argument must be a positive integer, a set, ",
+    ErrorNoReturn("usage: the argument must be a positive integer, a set, ",
      "or 2 sets, of positive integers,");
-    return;
   fi;
 
 end);
@@ -556,8 +527,7 @@ function(arg)
     return SparsePartialPermNC(arg[1], arg[2]); 
   fi; 
  
-  Error("usage: there should be one or two arguments,"); 
-  return; 
+  ErrorNoReturn("usage: there should be one or two arguments,");
 end); 
 
 #
@@ -568,26 +538,23 @@ function(arg)
   if Length(arg)=1 then  
     if ForAll(arg[1], i-> i=0 or IsPosInt(i)) and 
       IsDuplicateFreeList(Filtered(arg[1], x-> x<>0)) then 
-      return DensePartialPermNC(arg[1]); 
+      return DensePartialPermNC(arg[1]);
     else
-      Error("usage: the argument must be a list of non-negative integers ", 
+      ErrorNoReturn("usage: the argument must be a list of non-negative integers ",
       "and the non-zero elements must be duplicate-free,");
-      return;
     fi;
   elif Length(arg)=2 then  
     if IsSSortedList(arg[1]) and ForAll(arg[1], IsPosInt) and
      IsDuplicateFreeList(arg[2]) and ForAll(arg[2], IsPosInt) then 
       return SparsePartialPermNC(arg[1], arg[2]); 
     else
-      Error("usage: the 1st argument must be a set of positive integers ",
+      ErrorNoReturn("usage: the 1st argument must be a set of positive integers ",
       "and the 2nd argument must be a duplicate-free list of positive ",
       "integers");
-      return;
     fi;
   fi; 
  
-  Error("usage: there should be one or two arguments,"); 
-  return; 
+  ErrorNoReturn("usage: there should be one or two arguments,");
 end); 
 
 # printing, viewing, displaying...
@@ -597,7 +564,6 @@ InstallMethod(String, "for a partial perm",
 function(f)
   return STRINGIFY("PartialPermNC( ", DomainOfPartialPerm(f), ", ",
    ImageListOfPartialPerm(f), " )");
-  return;
 end);
 
 #
@@ -608,7 +574,6 @@ function(f)
   return PRINT_STRINGIFY("PartialPermNC( ",
     Concatenation(PrintString(DomainOfPartialPerm(f)), ", "),
      ImageListOfPartialPerm(f), " )");
-  return;
 end);
 
 #
@@ -618,7 +583,6 @@ InstallMethod(PrintObj, "for a partial perm",
 function(f)
   Print("PartialPerm(\>\> ", DomainOfPartialPerm(f), "\<, \>",
      ImageListOfPartialPerm(f), "\<\< )");
-  return;
 end);
 
 #
@@ -647,7 +611,6 @@ function(f)
         return PRINT_STRINGIFY("<identity partial perm on ", 
          DomainOfPartialPerm(f), ">");
       fi;
-      return;
     elif UserPreference("NotationForPartialPerms")="input" then 
       return PrintString(f);
     fi;
@@ -740,7 +703,7 @@ InstallMethod(MovedPoints, "for a partial perm coll",
 [IsPartialPermCollection], coll-> Union(List(coll, MovedPoints)));
 
 InstallMethod(NrFixedPoints, "for a partial perm coll",
-[IsPartialPermCollection], coll-> Length(MovedPoints(coll)));
+[IsPartialPermCollection], coll-> Length(FixedPointsOfPartialPerm(coll)));
 
 InstallMethod(NrMovedPoints, "for a partial perm coll",
 [IsPartialPermCollection], coll-> Length(MovedPoints(coll)));
@@ -759,21 +722,14 @@ InstallMethod(SmallestImageOfMovedPoint, "for a partial perm collection",
 [IsPartialPermCollection], 
 coll-> Minimum(List(coll, SmallestImageOfMovedPoint)));
 
-InstallOtherMethod(One, "for a partial perm coll", 
+InstallMethod(OneImmutable, "for a partial perm coll", 
 [IsPartialPermCollection], 
 function(x)
-  return JoinOfIdempotentPartialPermsNC(List(x, One)); 
+  return JoinOfIdempotentPartialPermsNC(List(x, OneImmutable)); 
 end);
 
-InstallOtherMethod(OneMutable, "for a partial perm coll", 
-[IsPartialPermCollection], 
-function(x)
-  return JoinOfIdempotentPartialPermsNC(List(x, One)); 
-end);
+InstallMethod(OneMutable, "for a partial perm coll", 
+[IsPartialPermCollection], OneImmutable);
 
-#
-
-InstallOtherMethod(ZeroMutable, "for a partial perm coll",
-[IsPartialPermCollection], MeetOfPartialPerms);
-
-#EOF
+InstallMethod(MultiplicativeZeroOp, "for a partial perm",
+[IsPartialPerm], x -> PartialPerm([]));

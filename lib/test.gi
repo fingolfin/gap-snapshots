@@ -80,25 +80,25 @@ InstallGlobalFunction(ParseTestFile, function(arg)
   fi;
   str := StringFile(fnam);
   if str = fail then
-    Error("Cannot read file ",fnam,"\n");
-    return;
+    ErrorNoReturn("Cannot read file ",fnam,"\n");
   fi;
   return ParseTestInput(str, ignorecomments);
 end);
 
 InstallGlobalFunction(RunTests, function(arg)
-  local tests, opts, breakOnError, inp, outp, pos, cmp, times, ttime, 
+  local tests, opts, breakOnError, inp, outp, pos, cmp, times, ttime, nrlines,
         s, res, fres, t, f, i;
   # don't enter break loop in case of error during test
   tests := arg[1];
-  opts := rec( breakOnError := false, showProgress := false );
+  opts := rec( breakOnError := false, showProgress := "some" );
+  if not IS_OUTPUT_TTY() then
+    opts.showProgress := false;
+  fi;
   if Length(arg) > 1 and IsRecord(arg[2]) then
-    for f in RecFields(arg[2]) do
+    for f in RecNames(arg[2]) do
       opts.(f) := arg[2].(f);
     od;
   fi;
-  breakOnError := BreakOnError;
-  BreakOnError := opts.breakOnError;
 
   # we collect outputs and add them as 4th entry to 'tests'
   # also collect timings and add them as 5th entry to 'tests'
@@ -107,10 +107,26 @@ InstallGlobalFunction(RunTests, function(arg)
   pos := tests[3];
   cmp := [];
   times := [];
+  tests[4] := cmp;
+  tests[5] := times;
+
+  if Length(inp) = 0 then
+    return;
+  fi;
+
+  breakOnError := BreakOnError;
+  BreakOnError := opts.breakOnError;
+
   ttime := Runtime();
+  nrlines := pos[Length(pos) - 1];
   for i in [1..Length(inp)] do
     if opts.showProgress = true then
       Print("# line ", pos[i], ", input:\n",inp[i]);
+    elif opts.showProgress = "some" then
+      Print("\r# line ", pos[i],
+            " of ", nrlines,
+            " (", Int(pos[i] / nrlines * 100), "%)",
+            "\c");
     fi;
     s := InputTextString(inp[i]);
     res := "";
@@ -124,16 +140,17 @@ InstallGlobalFunction(RunTests, function(arg)
     Add(cmp, res);
     Add(times, Runtime()-t);
   od;
+  if opts.showProgress = "some" then
+    Print("\r                                    \c\r"); # clear the line
+  fi;
   # add total time to 'times'
   Add(times, Runtime() - ttime);
-  tests[4] := cmp;
-  tests[5] := times;
   # reset
   BreakOnError := breakOnError;
 end);
 
-BindGlobal("TEST", rec(Timings := rec()));
-TEST.compareFunctions := rec();
+BindGlobal("TEST", AtomicRecord( rec(Timings := rec())));
+TEST.compareFunctions := AtomicRecord(rec());
 TEST.compareFunctions.uptonl := function(a, b)
   a := ShallowCopy(a);
   b := ShallowCopy(b);
@@ -189,7 +206,7 @@ end;
 ##  If the optional argument <Arg>optrec</Arg> is given it must be a record.
 ##  The following components of <Arg>optrec</Arg> are recognized and can change
 ##  the default behaviour of <Ref Func="Test" />:
-##  <List >
+##  <List>
 ##  <Mark><C>ignoreComments</C></Mark>
 ##  <Item>If set to <K>false</K> then no lines in <Arg>fname</Arg>
 ##  are ignored as explained above (default is <K>true</K>).</Item>
@@ -217,7 +234,8 @@ end;
 ##  <Item>If this is bound to a string it is considered as a file name
 ##  and that file is written with the same input and comment lines as
 ##  <Arg>fname</Arg> but the output substituted by the newly generated
-##  version (default is <K>false</K>).</Item>
+##  version; if it is bound to <K>true</K>, then this is treated as if
+##  it was bound to <Arg>fname</Arg> (default is <K>false</K>).</Item>
 ##  <Mark><C>writeTimings</C></Mark>
 ##  <Item>If this is bound to a string it is considered as a file name,
 ##  that file is written and contains timing information for each input 
@@ -246,15 +264,18 @@ end;
 ##  -->
 ##  <Mark><C>showProgress</C></Mark>
 ##  <Item>If this is <K>true</K> then &GAP; prints position information
-##  and the input line before it is processed
-##  (default is <K>false</K>).</Item>
+##  and the input line before it is processed; if set to <C>"some"</C>,
+##  then GAP shows the current line number of the test being processed;
+##  if set to <K>false</K>, no progress updates are displayed
+##  (default is <C>"some"</C> if GAP's output goes to a terminal, otherwise
+##  <K>false</K>). </Item>
 ##  <Mark><C>subsWindowsLineBreaks</C></Mark>
 ##  <Item>If this is <K>true</K> then &GAP; substitutes DOS/Windows style
 ##  line breaks "\r\n" by UNIX style line breaks "\n" after reading the test
 ##  file. (default is <K>true</K>).</Item>
 ##  </List>
 ## 
-##  <Example>
+##  <Log><![CDATA[
 ##  gap> tnam := Filename(DirectoriesLibrary(), "../doc/ref/demo.tst");;
 ##  gap> mask := function(str) return Concatenation("| ", 
 ##  >          JoinStringsWithSeparator(SplitString(str, "\n", ""), "\n| "),
@@ -298,7 +319,7 @@ end;
 ##  | # the following fails:
 ##  | gap> a := 13+29;
 ##  | 42
-##  </Example>
+##  ]]></Log>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -320,7 +341,7 @@ InstallGlobalFunction("Test", function(arg)
            width := 80,
            ignoreSTOP_TEST := true,
            compareFunction := EQ,
-           showProgress := false,
+           showProgress := "some",
            writeTimings := false,
            compareTimings := false,
            reportTimeDiff := function(inp, fnam, line, oldt, newt)
@@ -329,8 +350,12 @@ InstallGlobalFunction("Test", function(arg)
              if d[1] <> '-' then
                d := Concatenation("+", d);
              fi;
-             Print("########> Time diff in ",
-                   fnam,", line ",line,":\n");
+             Print("########> Time diff in ");
+             if IsStream(fnam) then
+               Print("test stream, line ",line,":\n");
+             else
+               Print(fnam,":",line,"\n");
+             fi;
              Print("# Input:\n", inp);
              Print("# Old time: ", oldt,"   New time: ", newt,
              "    (", d, "%)\n");
@@ -338,11 +363,12 @@ InstallGlobalFunction("Test", function(arg)
            rewriteToFile := false,
            breakOnError := false,
            reportDiff := function(inp, expout, found, fnam, line, time)
+             Print("########> Diff in ");
              if IsStream(fnam) then
-               fnam := "test stream";
+               Print("test stream, line ",line,":\n");
+             else
+               Print(fnam,":",line,"\n");
              fi;
-             Print("########> Diff in ",
-                   fnam,", line ",line,":\n");
              Print("# Input is:\n", inp);
              Print("# Expected output:\n", expout);
              Print("# But found:\n", found);
@@ -350,7 +376,18 @@ InstallGlobalFunction("Test", function(arg)
            end,
            subsWindowsLineBreaks := true,
          );
-  for c in RecFields(nopts) do
+  if not IS_OUTPUT_TTY() then
+    opts.showProgress := false;
+  fi;
+
+  if IsHPCGAP then
+    # HPCGAP's window size varies in different threads
+    opts.compareFunction := "uptowhitespace";
+    # HPCGAP's output is not compatible with changing lines
+    opts.showProgress := false;
+  fi;
+
+  for c in RecNames(nopts) do
     opts.(c) := nopts.(c);
   od;
   # check shortcuts
@@ -370,8 +407,7 @@ InstallGlobalFunction("Test", function(arg)
   if not opts.isStream then
     full := StringFile(fnam);
     if full = fail then
-      Error("Cannot read file ",fnam,"\n");
-      return;
+      ErrorNoReturn("Cannot read file ",fnam,"\n");
     fi;
   else
     full := ReadAll(fnam);
@@ -407,6 +443,9 @@ InstallGlobalFunction("Test", function(arg)
   od;
 
   # maybe rewrite the input into a file
+  if opts.rewriteToFile = true then
+    opts.rewriteToFile := fnam;
+  fi;
   if IsString(opts.rewriteToFile) then
     lines := SplitString(full, "\n", "");
     ign := pf[3][Length(pf[3])];
@@ -499,7 +538,7 @@ end);
 ##  If the optional argument <Arg>optrec</Arg> is given it must be a record.
 ##  The following components of <Arg>optrec</Arg> are recognized and can change
 ##  the default behaviour of <Ref Func="TestDirectory" />:
-##  <List >
+##  <List>
 ##  <Mark><C>testOptions</C></Mark>
 ##  <Item>A record which will be passed on as the second argument of <Ref Func="Test" />
 ##  if present.</Item>
@@ -507,103 +546,50 @@ end);
 ##  <Item>If <K>true</K>, stop as soon as any <Ref Func="Test" /> fails (defaults to <K>false</K>).
 ##  </Item>
 ##  <Mark><C>showProgress</C></Mark>
-##  <Item>Print information about how tests are progressing (defaults to <K>true</K>).
+##  <Item>Print information about how tests are progressing (defaults to <C>"some"</C>
+##  if GAP's output goes to a terminal, otherwise <K>false</K>).
 ##  </Item>
 ##  <Mark><C>suppressStatusMessage</C></Mark>
 ##  <Item>suppress displaying status messages <C>#I  Errors detected while testing</C> and
 ##  <C>#I  No errors detected while testing</C> after the test (defaults to <K>false</K>).
 ##  </Item>
+##  <Mark><C>rewriteToFile</C></Mark>
+##  <Item>If <K>true</K>, then rewrite each test file to disc, with the output substituted
+##  by the results of running the test (defaults to <K>false</K>).
+##  </Item>
+##  <Mark><C>exclude</C></Mark>
+##  <Item>A list of file and directory names which will be excluded from
+##  testing (defaults to <K>[]</K>).
+##  </Item>
 ##  <Mark><C>exitGAP</C></Mark>
 ##  <Item>Rather than returning <K>true</K> or <K>false</K>, exit GAP with the return value
 ##  of GAP set to success or fail, depending on if all tests passed (defaults to <K>false</K>).
 ##  </Item>
-##  <Mark><C>stonesLimit</C></Mark>
-##  <Item>Only try tests which take less than <C>stonesLimit</C> stones (defaults to infinity)</Item>
-##  <Mark><C>renormaliseStones</C></Mark>
-##  <Item>Re-normalise the stones number given in every tst files's 'STOP_TEST'</Item>
 ##  </List>
 ## 
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
-
-###################################
-##
-## TestDirectory(<files> [, <options> ])
-## <files>: A directory (or filename) or list of filenames and directories
-## <options>: Optional record of options (with defaults)
-## 
-##    testOptions := rec()   : Options to pass on to Test
-##    earlyStop := false     : Stop once one test fails
-##    showProgress := true   : Show progress
-##    suppressStatusMessage := false: do not print status messages after the test
-##    recursive := true      : Search through directories recursively
-##    exitGAP := false       : Exit GAP, setting exit value depending on if tests succeeded
-##    stonesLimit := infinity: Set limit (in GAPstones) on longest test to be run.
-##    renormaliseStones := false: Edit tst files to re-normalise the gapstones stored in every file.
-##
-##
-
 InstallGlobalFunction( "TestDirectory", function(arg)
-  local basedirs, nopts, opts, files, newfiles, filestones, filetimes, 
-        f, c, i, recurseFiles, StringEnd, getStones, setStones,
-        startTime, time, stones, testResult, testTotal,
-        totalTime, totalStones, STOP_TEST_CPY, stopPos,
-        count, prod;
-  
+    local  testTotal, totalTime, totalMem, STOP_TEST_CPY, 
+           basedirs, nopts, opts, testOptions, earlyStop, 
+           showProgress, suppressStatusMessage, exitGAP, c, files, 
+           filetimes, filemems, recurseFiles, f, i, startTime, 
+           startMem, testResult, time, mem, startGcTime, gctime,
+           totalGcTime, filegctimes, GcTime;
 
   testTotal := true;
   totalTime := 0;
-  totalStones := 0;
-  count := 0;
-  prod := 1;
+  totalMem := 0;
+  totalGcTime := 0;
   
+  GcTime := function()
+      local g;
+      g := GASMAN_STATS();    
+      return g[1][8] + g[2][8];    
+  end;
   STOP_TEST_CPY := STOP_TEST;
   STOP_TEST := function(arg) end;
-  
-  StringEnd := function(str, postfix)
-    return Length(str) >= Length(postfix) and str{[Length(str)-Length(postfix)+1..Length(str)]} = postfix;
-  end;
-  
-  getStones := function(file)
-    local lines, l, start, finish, stones;
-    
-    lines := SplitString(StringFile(file.name),"\n");
-    for l in lines do
-      if PositionSublist(l, "STOP_TEST") <> fail then
-        # Try our best to get the stones out!
-        start := PositionSublist(l, ",");
-        finish := PositionSublist(l, ")");
-        stones := EvalString(l{[start+1..finish-1]});
-        if IsInt(stones) then
-          return stones;
-        fi;
-      fi;
-    od;
-    return 0;
-  end;
-  
-  setStones := function(file, newstones)
-    local lines, l, start, finish, stones;
-    lines := SplitString(StringFile(file.name), "\n");
-    for i in [1..Length(lines)] do
-      if PositionSublist(lines[i], "STOP_TEST") <> fail then
-        # Try our best to get the stones out!
-        start := PositionSublist(lines[i], ",");
-        finish := PositionSublist(lines[i], ")");
-        stones := EvalString(lines[i]{[start+1..finish-1]});
-        if IsInt(stones) then
-          lines[i] := Concatenation(lines[i]{[1..start]}," ",String(newstones),
-                                    lines[i]{[finish..Length(lines[i])]});
-          FileString(file.name, Concatenation(List(lines, x -> Concatenation(x,"\n"))));
-        else
-          Print("Unable to parse STOP_TEST in ", file.name);
-        fi;
-      fi;
-    od;
-  end;
-          
-    
   
   if IsString(arg[1]) or IsDirectory(arg[1]) then
     basedirs := [arg[1]];
@@ -622,14 +608,15 @@ InstallGlobalFunction( "TestDirectory", function(arg)
     earlyStop := false,
     showProgress := true,
     suppressStatusMessage := false,
+    rewriteToFile := false,
+    exclude := [],
     exitGAP := false,
-    stonesLimit := infinity,
-    renormaliseStones := false
   );
   
-  for c in RecFields(nopts) do
+  for c in RecNames(nopts) do
     opts.(c) := nopts.(c);
   od;
+  opts.exclude := Set(opts.exclude);
   
   
   if opts.exitGAP then
@@ -638,55 +625,52 @@ InstallGlobalFunction( "TestDirectory", function(arg)
   
   files := [];
   filetimes := [];
+  filemems := [];  
+  filegctimes := [];  
   
-  recurseFiles := function(dir, basedir)
-    local dircontents, testfiles, t, testrecs, shortName, recursedirs, d;
-    dircontents := List(DirectoryContents(dir), x -> Filename(Directory(dir), x));
-    testfiles := Filtered(dircontents, x -> Length(x) > 4 and x{[Length(x)-3..Length(x)]} = ".tst");
+  recurseFiles := function(dirs, prefix)
+    local dircontents, testfiles, t, testrecs, shortName, recursedirs, d, subdirs;
+    if Length(dirs) = 0 then return; fi;
+    if prefix in opts.exclude then return; fi;
+    dircontents := Union(List(dirs, DirectoryContents));
+    testfiles := Filtered(dircontents, x -> EndsWith(x, ".tst"));
     testrecs := [];
     for t in testfiles do
-      shortName := t{[Length(basedir)+1..Length(t)]};
+      shortName := Concatenation(prefix, t);
       if shortName[1] = '/' then
         shortName := shortName{[2..Length(shortName)]};
       fi;
-      Add(testrecs, rec(name := t, shortName := shortName));
+      if not shortName in opts.exclude then
+        Add(testrecs, rec(name := Filename(dirs, t), shortName := shortName));
+      fi;
     od;
     Append(files, testrecs);
-    recursedirs := Filtered(dircontents, x -> IsDirectoryPath(x) and not(StringEnd(x,"/.")) and not(StringEnd(x,"/..")));
+
+    recursedirs := Difference(dircontents, testfiles);
+    RemoveSet(recursedirs, ".");
+    RemoveSet(recursedirs, "..");
     for d in recursedirs do
-      recurseFiles(d, basedir);
+      subdirs := List(dirs, x -> Directory(Filename(x, d)));
+      subdirs := Filtered(subdirs, IsDirectoryPath);
+      recurseFiles(subdirs, Concatenation(prefix,d,"/"));
     od;
   end;
   
   files := [];
   for f in basedirs do
-    if IsDirectoryPath(f) then
-      if IsDirectory(f) then
-        recurseFiles(f![1], f![1]);
-      else
-        recurseFiles(f,f);
-      fi;
+    if not IsString(f) and IsList(f) and ForAll(f, IsDirectoryPath) then
+      recurseFiles(List(f, Directory), "");
+    elif IsDirectoryPath(f) then
+      recurseFiles( [ Directory(f) ], "" );
     else
       Add(files, rec(name := f, shortName := f));
     fi;
   od;
 
-  filestones := List(files, getStones);
-  
-  # Sort fastest to slowest
-  SortParallel(filestones, files);
-  
-  stopPos := PositionProperty(filestones, x -> x >= opts.stonesLimit);
-  if stopPos <> fail then
-    filestones := filestones{[1..stopPos-1]};
-    files := files{[1..stopPos-1]};
-  fi;
-    
-  
+  SortBy(files, f -> [f.shortName, f.name]);
+
   if opts.showProgress then
-    Print( "Architecture: ", GAPInfo.Architecture, "\n\n",
-           "test file         GAP4stones     time(msec)\n",
-           "-------------------------------------------\n" );
+    Print( "Architecture: ", GAPInfo.Architecture, "\n\n" );
   fi;
   
   for i in [1..Length(files)] do
@@ -695,6 +679,12 @@ InstallGlobalFunction( "TestDirectory", function(arg)
     fi;
     
     startTime := Runtime();
+    startMem := TotalMemoryAllocated();    
+    startGcTime := GcTime();
+
+    if opts.rewriteToFile then
+      opts.testOptions.rewriteToFile := files[i].name;
+    fi;
     testResult := Test(files[i].name, opts.testOptions);
     if not(testResult) and opts.earlyStop then
       STOP_TEST := STOP_TEST_CPY;
@@ -710,49 +700,28 @@ InstallGlobalFunction( "TestDirectory", function(arg)
     testTotal := testTotal and testResult;
     
     time := Runtime() - startTime;
+    mem := TotalMemoryAllocated() - startMem;    
+    gctime := GcTime() - startGcTime;    
     filetimes[i] := time;
-    if time > 100 and filestones[i] > 1000 then
-      stones := QuoInt(filestones[i], time);
-      totalTime := totalTime + time;
-      totalStones := totalStones + filestones[i];
-      prod := prod * stones;
-      count := count + 1;
-    else
-      stones := 0;
-    fi;
+    filemems[i] := mem;    
+    filegctimes[i] := gctime;    
+    totalTime := totalTime + time;
+    totalMem := totalMem + mem;    
+    totalGcTime := totalGcTime + gctime;    
     
     if opts.showProgress then
-      Print( String( files[i].shortName, -20 ),
-             String( stones, 8 ),
-             String( time, 15 ) );
-      if i < Length(filestones) and filestones[i+1] > 0 and totalTime > 0 then
-      #Print(totalTime,":", filestones[i+1],":" ,10^3,":",totalStones,":" );
-        Print("   ( next ~", Int( (totalTime * filestones[i+1] )/10^3/totalStones), " sec )" );
-      fi;
-      Print("\n");
+        Print( String( time, 8 ), " ms (",String(gctime)," ms GC) and ", 
+               StringOfMemoryAmount( mem ), 
+               " allocated for ", files[i].shortName, "\n" );
     fi;
   od;       
   
   STOP_TEST := STOP_TEST_CPY;
   
-  Print("-------------------------------------------\n");
-  if count = 0 then
-    count:= 1;
-  fi;
+  Print("-----------------------------------\n");
   Print( "total",
-         String( RootInt( prod, count ), 23 ),
-         String( totalTime, 15 ), "\n\n" );
-        
-        
-  if opts.renormaliseStones then
-    for i in [1..Length(files)] do
-      if filetimes[i] < 5 then
-        setStones(files[i], 1);
-      else
-        setStones(files[i], filetimes[i] * 10000);
-      fi;
-    od;
-  fi;
+         String( totalTime, 10 ), " ms (",String( totalGcTime )," ms GC) and ", 
+         StringOfMemoryAmount( totalMem )," allocated\n\n" );
 
   if not opts.suppressStatusMessage then
     if testTotal then

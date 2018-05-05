@@ -78,7 +78,8 @@
   
   [33X[1;0Y[29X[2XInt[102X( [3Xelm[103X ) [32X attribute[133X
   
-  [33X[0;0Y[2XInt[102X returns an integer [10Xint[110X whose meaning depends on the type of [3Xelm[103X.[133X
+  [33X[0;0Y[2XInt[102X  returns  an  integer  [10Xint[110X whose meaning depends on the type of [3Xelm[103X. For
+  example:[133X
   
   [33X[0;0YIf [3Xelm[103X is a rational number (see Chapter [14X17[114X) then [10Xint[110X is the integer part of
   the quotient of numerator and denominator of [3Xelm[103X (see [2XQuoInt[102X ([14X14.3-1[114X)).[133X
@@ -86,10 +87,13 @@
   [33X[0;0YIf  [3Xelm[103X  is  an element of a finite prime field (see Chapter [14X59[114X) then [10Xint[110X is
   the smallest nonnegative integer such that [10X[3Xelm[103X[10X = int * One( [3Xelm[103X[10X )[110X.[133X
   
-  [33X[0;0YIf  [3Xelm[103X is a string (see Chapter [14X27[114X) consisting of digits [10X'0'[110X, [10X'1'[110X, [22X...[122X, [10X'9'[110X
-  and  [10X'-'[110X  (at  the first position) then [10Xint[110X is the integer described by this
-  string.  The  operation  [2XString[102X ([14X27.7-6[114X) can be used to compute a string for
-  rational integers, in fact for all cyclotomics.[133X
+  [33X[0;0YIf  [3Xelm[103X  is  a string (see Chapter [14X27[114X) consisting entirely of decimal digits
+  [10X'0'[110X,  [10X'1'[110X, [22X...[122X, [10X'9'[110X, and optionally a sign [10X'-'[110X (at the first position), then
+  [10Xint[110X  is the integer described by this string. For all other strings, [10Xfail[110X is
+  returned. See [2XInt[102X ([14X27.9-1[114X).[133X
+  
+  [33X[0;0YThe  operation  [2XString[102X ([14X27.7-6[114X) can be used to compute a string for rational
+  integers, in fact for all cyclotomics.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XInt( 4/3 );  Int( -2/3 );[127X[104X
@@ -430,7 +434,7 @@
   
   [33X[1;0Y[29X[2XPowerModInt[102X( [3Xr[103X, [3Xe[103X, [3Xm[103X ) [32X function[133X
   
-  [33X[0;0Yreturns [22X[3Xr[103X^[3Xe[103X mod [3Xm[103X[122X for integers [3Xr[103X, [3Xe[103X and [3Xm[103X ([22X[3Xe[103X ≥ 0[122X).[133X
+  [33X[0;0Yreturns [22X[3Xr[103X^[3Xe[103X mod [3Xm[103X[122X for integers [3Xr[103X, [3Xe[103X and [3Xm[103X.[133X
   
   [33X[0;0YNote  that  [2XPowerModInt[102X  can  reduce  intermediate  results  and  thus  will
   generally  be faster than using [3Xr[103X[10X^[110X[3Xe[103X[10X mod [110X[3Xm[103X, which would compute [22X[3Xr[103X^[3Xe[103X[122X first and
@@ -712,7 +716,8 @@
   
   [33X[1;0Y[29X[2XPrintFactorsInt[102X( [3Xn[103X ) [32X function[133X
   
-  [33X[0;0Yprints the prime factorization of the integer [3Xn[103X in human-readable form.[133X
+  [33X[0;0Yprints  the prime factorization of the integer [3Xn[103X in human-readable form. See
+  also [2XStringPP[102X ([14X27.7-9[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XPrintFactorsInt( Factorial( 7 ) ); Print( "\n" );[127X[104X
@@ -726,9 +731,14 @@
   [33X[0;0Yreturns  the prime factorization of the integer [3Xn[103X as a list [22X[ p_1, e_1, ...,
   p_k, e_k ][122X with [3Xn[103X = [22Xp_1^{e_1} ⋅ p_2^{e_2} ⋅ ... ⋅ p_k^{e_k}[122X.[133X
   
+  [33X[0;0YFor  negative  integers, the absolute value is taken. Zero is not allowed as
+  input.[133X
+  
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XPrimePowersInt( Factorial( 7 ) );[127X[104X
     [4X[28X[ 2, 4, 3, 2, 5, 1, 7, 1 ][128X[104X
+    [4X[25Xgap>[125X [27XPrimePowersInt( 1 );[127X[104X
+    [4X[28X[  ][128X[104X
   [4X[32X[104X
   
   [1X14.4-12 DivisorsInt[101X
@@ -1058,5 +1068,93 @@
     [4X[28Xfalse[128X[104X
     [4X[25Xgap>[125X [27Xn := Random(rs1, 1, 2^220);[127X[104X
     [4X[28X1077726777923092117987668044202944212469136000816111066409337432400[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X14.8 [33X[0;0YBitfields[133X[101X
+  
+  [33X[0;0YBitfields  are a low-level feature intended to support efficient subdivision
+  of  immediate  integers  into bitfields of various widths. This is typically
+  useful   in   implementing   space-efficient   and/or  cache-efficient  data
+  structures.  This  feature  should be used with care because ([13Xinter alia[113X) it
+  has different limitations on 32-bit and 64-bit architectures.[133X
+  
+  [1X14.8-1 MakeBitfields[101X
+  
+  [33X[1;0Y[29X[2XMakeBitfields[102X( [3Xwidth....[103X ) [32X function[133X
+  
+  [33X[0;0YThis  function  sets  up  the  machinery for a set of bitfields of the given
+  widths. All bitfield values are treated as unsigned. The total of the widths
+  must  not  exceed  60  bits  on  64-bit  architecture or 28 bits on a 32-bit
+  architecture.  For performance reasons some checks that one might wish to do
+  are  ommitted.  In particular, the builder and setter functions do not check
+  if  the  value[s]  passed  to  them are negative or too large (unless [5XGAP[105X is
+  specially  compiled for debugging). Behaviour when such arguments are passed
+  is  undefined. You can tell which type of architecture you are running on by
+  acccessing  [10XGAPInfo.BytesPerVariable[110X  which is 8 on 64-bits and 4 on 32. The
+  return value when [22Xn[122X widths are given is a record whose fields are[133X
+  
+  [8X[10Xwidths[110X[8X[108X
+        [33X[0;6Ya copy of the arguments, for convenience,[133X
+  
+  [8X[10Xgetters[110X[8X[108X
+        [33X[0;6Ya  list  of  [22Xn[122X functions of one argument each of which extracts one of
+        the fields from an immediate integer[133X
+  
+  [8X[10Xsetters[110X[8X[108X
+        [33X[0;6Ya  list of [22Xn[122X functions each taking two arguments: a packed value and a
+        new  value for one of its fields and returning a new packed value. The
+        [22Xi[122Xth  function returned the new packed value in which the [22Xi[122Xth field has
+        been  replaced  by  the  new value. Note that this does NOT modify the
+        original packed value.[133X
+  
+  [33X[0;0YTwo additional fields may be present if any of the field widths is one. Each
+  is  a  list and only has entried bound in the positions corresponding to the
+  width 1 fields.[133X
+  
+  [8X[10XbooleanGetters[110X[8X[108X
+        [33X[0;6Yif  the [22Xi[122Xth position of this list is set, it contains a function which
+        extracts the [22Xi[122Xth field (which will have width one) and returns [10Xtrue[110X if
+        it contains 1 and [10Xfalse[110X if it contains 0[133X
+  
+  [8X[10XbooleanSetters[110X[8X[108X
+        [33X[0;6Yif the [22Xi[122Xth position of this list is set, it contains a function of two
+        arguments. The first argument is a packed value, the second is [10Xtrue[110X or
+        [10Xfalse[110X.  It returns a new packed value in which the [22Xi[122Xth field is set to
+        1 if the second argument was [10Xtrue[110X and 0 if it was [10Xfalse[110X. Behaviour for
+        any other value is undefined.[133X
+  
+  [1X14.8-2 BuildBitfields[101X
+  
+  [33X[1;0Y[29X[2XBuildBitfields[102X( [3Xwidths[103X, [3Xvals...[103X ) [32X function[133X
+  
+  [33X[0;0YThis  function  takes one or more argument. It's first argument is a list of
+  field  widths,  as  found  in  the  [10Xwidths[110X  entry  of  a  record returned by
+  [10XMakeBitfields[110X. The remaining arguments are unsigned integer values, equal in
+  number  to  the  entries  of  the  list  of field widths. It returns a small
+  integer  in  which  those  entries  are  packed  into bitfields of the given
+  widths.   The   first   entry   occupies   the   least   significant   bits.
+  DeclareGlobalFunction("BuildBitfields");[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xbf := MakeBitfields(1,2,3);[127X[104X
+    [4X[28Xrec( booleanGetters := [ function( data ) ... end ], [128X[104X
+    [4X[28X  booleanSetters := [ function( data, val ) ... end ], [128X[104X
+    [4X[28X  getters := [ function( data ) ... end, function( data ) ... end, [128X[104X
+    [4X[28X      function( data ) ... end ], [128X[104X
+    [4X[28X  setters := [ function( data, val ) ... end, function( data, val ) ... end, [128X[104X
+    [4X[28X      function( data, val ) ... end ], widths := [ 1, 2, 3 ] )[128X[104X
+    [4X[25Xgap>[125X [27Xx := BuildBitfields(bf.widths,0,3,5);[127X[104X
+    [4X[28X46[128X[104X
+    [4X[25Xgap>[125X [27Xbf.getters[3](x);[127X[104X
+    [4X[28X5[128X[104X
+    [4X[25Xgap>[125X [27Xy := bf.setters[1](x,1);[127X[104X
+    [4X[28X47  [128X[104X
+    [4X[25Xgap>[125X [27Xx;[127X[104X
+    [4X[28X46[128X[104X
+    [4X[25Xgap>[125X [27Xbf.booleanGetters[1](x);[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xbf.booleanGetters[1](y);[127X[104X
+    [4X[28Xtrue[128X[104X
   [4X[32X[104X
   

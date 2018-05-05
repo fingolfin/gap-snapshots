@@ -6,12 +6,12 @@
 #Y  Copyright (C)  1998,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
 ##  Test orbit algorithms, which use hashing
-##  Exclude from testinstall.g: why?
+##  Exclude from testinstall.g as it takes considerable time.
 ##
 gap> START_TEST("hash2.tst");
-gap> g:=GL(20,2);;
+gap> g:=GL(18,2);;
 gap> Length(Orbit(g,g.1[1],OnRight));
-1048575
+262143
 gap> g:=GL(8,2);;
 gap> Length(Orbit(g,g.1,OnPoints));
 32385
@@ -37,7 +37,7 @@ gap> Length(Orbit(h,h.1[1],OnRight));
 2079
 gap> Length(Orbit(h,h.2^5,OnPoints));
 693
-gap> STOP_TEST( "hash2.tst", 198230000);
+gap> STOP_TEST( "hash2.tst", 1);
 
 #############################################################################
 ##

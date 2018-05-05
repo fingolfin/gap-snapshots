@@ -623,10 +623,12 @@ Group([ (1,5)(2,4) ])
 [ 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 20, 25 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Union( [ [1,2,4], [2,3,4], [1,3,4] ] )</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">   ;  # or one list of lists or collections</span>
-[ 1, 2, 3, 4 ]
+[ 1 .. 4 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Union( [ ] );</span>
 [  ]
 </pre></div>
+
+<p>When computing the Union of lists or sets of small integers and ranges, every attempt is made to return the result as a range and to avoid expanding ranges provided as input.</p>
 
 <p><a id="X825AC0F07E010B07" name="X825AC0F07E010B07"></a></p>
 

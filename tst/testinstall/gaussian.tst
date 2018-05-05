@@ -5,8 +5,6 @@
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
-##  To be listed in testinstall.g
-##
 gap> START_TEST("gaussian.tst");
 gap> 257 in GaussianIntegers;
 true
@@ -94,7 +92,7 @@ gap> Factors( GaussianIntegers, 1+2*E(4) );
 [ 1+2*E(4) ]
 gap> Factors( GaussianIntegers, 5-E(4) );
 [ 1-E(4), 3+2*E(4) ]
-gap> STOP_TEST( "gaussian.tst", 270000);
+gap> STOP_TEST( "gaussian.tst", 1);
 
 #############################################################################
 ##

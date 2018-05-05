@@ -1,0 +1,221 @@
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Tasks}}{5}{chapter.1}
+\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }Overview}}{5}{section.1.1}
+\contentsline {section}{\numberline {1.2}\leavevmode {\color {Chapter }Running tasks}}{6}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}\leavevmode {\color {Chapter }RunTask}}{6}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}\leavevmode {\color {Chapter }ScheduleTask}}{7}{subsection.1.2.2}
+\contentsline {subsection}{\numberline {1.2.3}\leavevmode {\color {Chapter }DelayTask}}{7}{subsection.1.2.3}
+\contentsline {subsection}{\numberline {1.2.4}\leavevmode {\color {Chapter }RunAsyncTask}}{7}{subsection.1.2.4}
+\contentsline {subsection}{\numberline {1.2.5}\leavevmode {\color {Chapter }ScheduleAsyncTask}}{7}{subsection.1.2.5}
+\contentsline {subsection}{\numberline {1.2.6}\leavevmode {\color {Chapter }MakeTaskAsync}}{7}{subsection.1.2.6}
+\contentsline {subsection}{\numberline {1.2.7}\leavevmode {\color {Chapter }ImmediateTask}}{8}{subsection.1.2.7}
+\contentsline {subsection}{\numberline {1.2.8}\leavevmode {\color {Chapter }ExecuteTask}}{8}{subsection.1.2.8}
+\contentsline {subsection}{\numberline {1.2.9}\leavevmode {\color {Chapter }WaitTask}}{8}{subsection.1.2.9}
+\contentsline {subsection}{\numberline {1.2.10}\leavevmode {\color {Chapter }WaitAnyTask}}{8}{subsection.1.2.10}
+\contentsline {subsection}{\numberline {1.2.11}\leavevmode {\color {Chapter }TaskResult}}{8}{subsection.1.2.11}
+\contentsline {subsection}{\numberline {1.2.12}\leavevmode {\color {Chapter }CullIdleTasks}}{9}{subsection.1.2.12}
+\contentsline {section}{\numberline {1.3}\leavevmode {\color {Chapter }Information about tasks}}{9}{section.1.3}
+\contentsline {subsection}{\numberline {1.3.1}\leavevmode {\color {Chapter }TaskSuccess}}{9}{subsection.1.3.1}
+\contentsline {subsection}{\numberline {1.3.2}\leavevmode {\color {Chapter }TaskError}}{9}{subsection.1.3.2}
+\contentsline {subsection}{\numberline {1.3.3}\leavevmode {\color {Chapter }CurrentTask}}{9}{subsection.1.3.3}
+\contentsline {subsection}{\numberline {1.3.4}\leavevmode {\color {Chapter }RunningTasks}}{9}{subsection.1.3.4}
+\contentsline {subsection}{\numberline {1.3.5}\leavevmode {\color {Chapter }TaskStarted}}{9}{subsection.1.3.5}
+\contentsline {subsection}{\numberline {1.3.6}\leavevmode {\color {Chapter }TaskFinished}}{10}{subsection.1.3.6}
+\contentsline {subsection}{\numberline {1.3.7}\leavevmode {\color {Chapter }TaskIsAsync}}{10}{subsection.1.3.7}
+\contentsline {section}{\numberline {1.4}\leavevmode {\color {Chapter }Cancelling tasks}}{10}{section.1.4}
+\contentsline {subsection}{\numberline {1.4.1}\leavevmode {\color {Chapter }CancelTask}}{10}{subsection.1.4.1}
+\contentsline {subsection}{\numberline {1.4.2}\leavevmode {\color {Chapter }TaskCancellationRequested}}{10}{subsection.1.4.2}
+\contentsline {subsection}{\numberline {1.4.3}\leavevmode {\color {Chapter }OnTaskCancellation}}{10}{subsection.1.4.3}
+\contentsline {subsection}{\numberline {1.4.4}\leavevmode {\color {Chapter }OnTaskCancellationReturn}}{11}{subsection.1.4.4}
+\contentsline {section}{\numberline {1.5}\leavevmode {\color {Chapter }Conditions}}{11}{section.1.5}
+\contentsline {section}{\numberline {1.6}\leavevmode {\color {Chapter }Milestones}}{11}{section.1.6}
+\contentsline {subsection}{\numberline {1.6.1}\leavevmode {\color {Chapter }NewMilestone}}{11}{subsection.1.6.1}
+\contentsline {subsection}{\numberline {1.6.2}\leavevmode {\color {Chapter }ContributeToMilestone}}{11}{subsection.1.6.2}
+\contentsline {subsection}{\numberline {1.6.3}\leavevmode {\color {Chapter }AchieveMilestone}}{11}{subsection.1.6.3}
+\contentsline {subsection}{\numberline {1.6.4}\leavevmode {\color {Chapter }IsMilestoneAchieved}}{12}{subsection.1.6.4}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Variables in HPC-GAP}}{13}{chapter.2}
+\contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }Global variables}}{13}{section.2.1}
+\contentsline {section}{\numberline {2.2}\leavevmode {\color {Chapter }Thread-local variables}}{13}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}\leavevmode {\color {Chapter }MakeThreadLocal}}{13}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}\leavevmode {\color {Chapter }BindThreadLocal}}{14}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}\leavevmode {\color {Chapter }BindThreadLocalConstructor}}{14}{subsection.2.2.3}
+\contentsline {subsection}{\numberline {2.2.4}\leavevmode {\color {Chapter }ThreadVar}}{14}{subsection.2.2.4}
+\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }How HPC-GAP organizes shared memory: Regions}}{15}{chapter.3}
+\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Thread-local regions}}{15}{section.3.1}
+\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }Shared regions}}{15}{section.3.2}
+\contentsline {section}{\numberline {3.3}\leavevmode {\color {Chapter }Ordering of shared regions}}{15}{section.3.3}
+\contentsline {section}{\numberline {3.4}\leavevmode {\color {Chapter }The public region}}{16}{section.3.4}
+\contentsline {section}{\numberline {3.5}\leavevmode {\color {Chapter }The read-only region}}{16}{section.3.5}
+\contentsline {section}{\numberline {3.6}\leavevmode {\color {Chapter }Migrating objects between regions}}{16}{section.3.6}
+\contentsline {section}{\numberline {3.7}\leavevmode {\color {Chapter }Region names}}{17}{section.3.7}
+\contentsline {section}{\numberline {3.8}\leavevmode {\color {Chapter }Controlling access to regions}}{17}{section.3.8}
+\contentsline {section}{\numberline {3.9}\leavevmode {\color {Chapter }Functions relating to regions}}{17}{section.3.9}
+\contentsline {subsection}{\numberline {3.9.1}\leavevmode {\color {Chapter }NewRegion}}{17}{subsection.3.9.1}
+\contentsline {subsection}{\numberline {3.9.2}\leavevmode {\color {Chapter }NewLibraryRegion}}{17}{subsection.3.9.2}
+\contentsline {subsection}{\numberline {3.9.3}\leavevmode {\color {Chapter }NewSystemRegion}}{17}{subsection.3.9.3}
+\contentsline {subsection}{\numberline {3.9.4}\leavevmode {\color {Chapter }NewKernelRegion}}{18}{subsection.3.9.4}
+\contentsline {subsection}{\numberline {3.9.5}\leavevmode {\color {Chapter }NewInternalRegion}}{18}{subsection.3.9.5}
+\contentsline {subsection}{\numberline {3.9.6}\leavevmode {\color {Chapter }NewSpecialRegion}}{18}{subsection.3.9.6}
+\contentsline {subsection}{\numberline {3.9.7}\leavevmode {\color {Chapter }RegionOf}}{18}{subsection.3.9.7}
+\contentsline {subsection}{\numberline {3.9.8}\leavevmode {\color {Chapter }RegionPrecedence}}{19}{subsection.3.9.8}
+\contentsline {subsection}{\numberline {3.9.9}\leavevmode {\color {Chapter }ShareObj}}{19}{subsection.3.9.9}
+\contentsline {subsection}{\numberline {3.9.10}\leavevmode {\color {Chapter }ShareLibraryObj}}{19}{subsection.3.9.10}
+\contentsline {subsection}{\numberline {3.9.11}\leavevmode {\color {Chapter }ShareSystemObj}}{19}{subsection.3.9.11}
+\contentsline {subsection}{\numberline {3.9.12}\leavevmode {\color {Chapter }ShareKernelObj}}{19}{subsection.3.9.12}
+\contentsline {subsection}{\numberline {3.9.13}\leavevmode {\color {Chapter }ShareInternalObj}}{20}{subsection.3.9.13}
+\contentsline {subsection}{\numberline {3.9.14}\leavevmode {\color {Chapter }ShareSpecialObj}}{20}{subsection.3.9.14}
+\contentsline {subsection}{\numberline {3.9.15}\leavevmode {\color {Chapter }ShareSingleObj}}{20}{subsection.3.9.15}
+\contentsline {subsection}{\numberline {3.9.16}\leavevmode {\color {Chapter }ShareSingleLibraryObj}}{20}{subsection.3.9.16}
+\contentsline {subsection}{\numberline {3.9.17}\leavevmode {\color {Chapter }ShareSingleSystemObj}}{20}{subsection.3.9.17}
+\contentsline {subsection}{\numberline {3.9.18}\leavevmode {\color {Chapter }ShareSingleKernelObj}}{21}{subsection.3.9.18}
+\contentsline {subsection}{\numberline {3.9.19}\leavevmode {\color {Chapter }ShareSingleInternalObj}}{21}{subsection.3.9.19}
+\contentsline {subsection}{\numberline {3.9.20}\leavevmode {\color {Chapter }ShareSingleSpecialObj}}{21}{subsection.3.9.20}
+\contentsline {subsection}{\numberline {3.9.21}\leavevmode {\color {Chapter }MigrateObj}}{21}{subsection.3.9.21}
+\contentsline {subsection}{\numberline {3.9.22}\leavevmode {\color {Chapter }MigrateSingleObj}}{21}{subsection.3.9.22}
+\contentsline {subsection}{\numberline {3.9.23}\leavevmode {\color {Chapter }LockAndMigrateObj}}{21}{subsection.3.9.23}
+\contentsline {subsection}{\numberline {3.9.24}\leavevmode {\color {Chapter }IncorporateObj}}{22}{subsection.3.9.24}
+\contentsline {subsection}{\numberline {3.9.25}\leavevmode {\color {Chapter }AtomicIncorporateObj}}{22}{subsection.3.9.25}
+\contentsline {subsection}{\numberline {3.9.26}\leavevmode {\color {Chapter }AdoptObj}}{23}{subsection.3.9.26}
+\contentsline {subsection}{\numberline {3.9.27}\leavevmode {\color {Chapter }AdoptSingleObj}}{23}{subsection.3.9.27}
+\contentsline {subsection}{\numberline {3.9.28}\leavevmode {\color {Chapter }LockAndAdoptObj}}{23}{subsection.3.9.28}
+\contentsline {subsection}{\numberline {3.9.29}\leavevmode {\color {Chapter }CopyRegion}}{23}{subsection.3.9.29}
+\contentsline {subsection}{\numberline {3.9.30}\leavevmode {\color {Chapter }IsPublic}}{24}{subsection.3.9.30}
+\contentsline {subsection}{\numberline {3.9.31}\leavevmode {\color {Chapter }IsThreadLocal}}{24}{subsection.3.9.31}
+\contentsline {subsection}{\numberline {3.9.32}\leavevmode {\color {Chapter }IsShared}}{24}{subsection.3.9.32}
+\contentsline {subsection}{\numberline {3.9.33}\leavevmode {\color {Chapter }HaveReadAccess}}{24}{subsection.3.9.33}
+\contentsline {subsection}{\numberline {3.9.34}\leavevmode {\color {Chapter }HaveWriteAccess}}{25}{subsection.3.9.34}
+\contentsline {subsection}{\numberline {3.9.35}\leavevmode {\color {Chapter }MakeReadOnlyObj}}{25}{subsection.3.9.35}
+\contentsline {subsection}{\numberline {3.9.36}\leavevmode {\color {Chapter }MakeReadOnlySingleObj}}{25}{subsection.3.9.36}
+\contentsline {subsection}{\numberline {3.9.37}\leavevmode {\color {Chapter }IsReadOnlyObj}}{25}{subsection.3.9.37}
+\contentsline {subsection}{\numberline {3.9.38}\leavevmode {\color {Chapter }SetRegionName}}{26}{subsection.3.9.38}
+\contentsline {subsection}{\numberline {3.9.39}\leavevmode {\color {Chapter }ClearRegionName}}{26}{subsection.3.9.39}
+\contentsline {subsection}{\numberline {3.9.40}\leavevmode {\color {Chapter }RegionName}}{26}{subsection.3.9.40}
+\contentsline {subsection}{\numberline {3.9.41}\leavevmode {\color {Chapter }ViewShared}}{26}{subsection.3.9.41}
+\contentsline {subsection}{\numberline {3.9.42}\leavevmode {\color {Chapter }UNSAFE{\textunderscore }VIEW}}{26}{subsection.3.9.42}
+\contentsline {subsection}{\numberline {3.9.43}\leavevmode {\color {Chapter }The \texttt {atomic} statement.}}{26}{subsection.3.9.43}
+\contentsline {section}{\numberline {3.10}\leavevmode {\color {Chapter }Atomic functions}}{27}{section.3.10}
+\contentsline {section}{\numberline {3.11}\leavevmode {\color {Chapter }Write-once functionality}}{27}{section.3.11}
+\contentsline {subsection}{\numberline {3.11.1}\leavevmode {\color {Chapter }BindOnce}}{27}{subsection.3.11.1}
+\contentsline {subsection}{\numberline {3.11.2}\leavevmode {\color {Chapter }TestBindOnce}}{28}{subsection.3.11.2}
+\contentsline {subsection}{\numberline {3.11.3}\leavevmode {\color {Chapter }BindOnceExpr}}{28}{subsection.3.11.3}
+\contentsline {subsection}{\numberline {3.11.4}\leavevmode {\color {Chapter }TestBindOnceExpr}}{28}{subsection.3.11.4}
+\contentsline {subsection}{\numberline {3.11.5}\leavevmode {\color {Chapter }StrictBindOnce}}{29}{subsection.3.11.5}
+\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Console User Interface}}{30}{chapter.4}
+\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }Console UI commands}}{30}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\leavevmode {\color {Chapter }!shell [name]}}{30}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}\leavevmode {\color {Chapter }!fork [name]}}{30}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}\leavevmode {\color {Chapter }!list}}{30}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}\leavevmode {\color {Chapter }!kill id}}{31}{subsection.4.1.4}
+\contentsline {subsection}{\numberline {4.1.5}\leavevmode {\color {Chapter }!break id}}{31}{subsection.4.1.5}
+\contentsline {subsection}{\numberline {4.1.6}\leavevmode {\color {Chapter }!name [id] name}}{31}{subsection.4.1.6}
+\contentsline {subsection}{\numberline {4.1.7}\leavevmode {\color {Chapter }!info id}}{31}{subsection.4.1.7}
+\contentsline {subsection}{\numberline {4.1.8}\leavevmode {\color {Chapter }!hide [id|*]}}{31}{subsection.4.1.8}
+\contentsline {subsection}{\numberline {4.1.9}\leavevmode {\color {Chapter }!watch [id|*]}}{31}{subsection.4.1.9}
+\contentsline {subsection}{\numberline {4.1.10}\leavevmode {\color {Chapter }!keep num}}{31}{subsection.4.1.10}
+\contentsline {subsection}{\numberline {4.1.11}\leavevmode {\color {Chapter }!prompt (id|*) string}}{31}{subsection.4.1.11}
+\contentsline {subsection}{\numberline {4.1.12}\leavevmode {\color {Chapter }!prefix (id|*) string}}{31}{subsection.4.1.12}
+\contentsline {subsection}{\numberline {4.1.13}\leavevmode {\color {Chapter }!select id}}{32}{subsection.4.1.13}
+\contentsline {subsection}{\numberline {4.1.14}\leavevmode {\color {Chapter }!next}}{32}{subsection.4.1.14}
+\contentsline {subsection}{\numberline {4.1.15}\leavevmode {\color {Chapter }!previous}}{32}{subsection.4.1.15}
+\contentsline {subsection}{\numberline {4.1.16}\leavevmode {\color {Chapter }!replay num [id]}}{32}{subsection.4.1.16}
+\contentsline {subsection}{\numberline {4.1.17}\leavevmode {\color {Chapter }!id}}{32}{subsection.4.1.17}
+\contentsline {subsection}{\numberline {4.1.18}\leavevmode {\color {Chapter }!source file}}{32}{subsection.4.1.18}
+\contentsline {subsection}{\numberline {4.1.19}\leavevmode {\color {Chapter }!alias shortcut expansion}}{32}{subsection.4.1.19}
+\contentsline {subsection}{\numberline {4.1.20}\leavevmode {\color {Chapter }!unalias shortcut}}{32}{subsection.4.1.20}
+\contentsline {subsection}{\numberline {4.1.21}\leavevmode {\color {Chapter }!eval expr}}{32}{subsection.4.1.21}
+\contentsline {subsection}{\numberline {4.1.22}\leavevmode {\color {Chapter }!run function string}}{32}{subsection.4.1.22}
+\contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }GAP functions to access the Shell UI}}{33}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}\leavevmode {\color {Chapter }TextUIRegisterCommand}}{33}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}\leavevmode {\color {Chapter }TextUIForegroundThread}}{33}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}\leavevmode {\color {Chapter }TextUIForegroundThreadName}}{33}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}\leavevmode {\color {Chapter }TextUISelectThread}}{33}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}\leavevmode {\color {Chapter }TextUIOutputHistory}}{33}{subsection.4.2.5}
+\contentsline {subsection}{\numberline {4.2.6}\leavevmode {\color {Chapter }TextUISetOutputHistoryLength}}{33}{subsection.4.2.6}
+\contentsline {subsection}{\numberline {4.2.7}\leavevmode {\color {Chapter }TextUINewSession}}{34}{subsection.4.2.7}
+\contentsline {subsection}{\numberline {4.2.8}\leavevmode {\color {Chapter }TextUIRunCommand}}{34}{subsection.4.2.8}
+\contentsline {subsection}{\numberline {4.2.9}\leavevmode {\color {Chapter }TextUIWritePrompt}}{34}{subsection.4.2.9}
+\contentsline {chapter}{\numberline {5}\leavevmode {\color {Chapter }Atomic objects}}{35}{chapter.5}
+\contentsline {section}{\numberline {5.1}\leavevmode {\color {Chapter }Atomic lists}}{35}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}\leavevmode {\color {Chapter }AtomicList}}{36}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}\leavevmode {\color {Chapter }FixedAtomicList}}{36}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}\leavevmode {\color {Chapter }MakeFixedAtomicList}}{36}{subsection.5.1.3}
+\contentsline {subsection}{\numberline {5.1.4}\leavevmode {\color {Chapter }FromAtomicList}}{36}{subsection.5.1.4}
+\contentsline {subsection}{\numberline {5.1.5}\leavevmode {\color {Chapter }ATOMIC{\textunderscore }ADDITION}}{37}{subsection.5.1.5}
+\contentsline {subsection}{\numberline {5.1.6}\leavevmode {\color {Chapter }COMPARE{\textunderscore }AND{\textunderscore }SWAP}}{37}{subsection.5.1.6}
+\contentsline {section}{\numberline {5.2}\leavevmode {\color {Chapter }Atomic records and component objects}}{37}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}\leavevmode {\color {Chapter }AtomicRecord}}{37}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}\leavevmode {\color {Chapter }FromAtomicRecord}}{38}{subsection.5.2.2}
+\contentsline {section}{\numberline {5.3}\leavevmode {\color {Chapter }Replacement policy functions}}{38}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}\leavevmode {\color {Chapter }MakeWriteOnceAtomic}}{38}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}\leavevmode {\color {Chapter }MakeStrictWriteOnceAtomic}}{39}{subsection.5.3.2}
+\contentsline {subsection}{\numberline {5.3.3}\leavevmode {\color {Chapter }MakeReadWriteAtomic}}{39}{subsection.5.3.3}
+\contentsline {section}{\numberline {5.4}\leavevmode {\color {Chapter }Thread-local records}}{39}{section.5.4}
+\contentsline {subsection}{\numberline {5.4.1}\leavevmode {\color {Chapter }ThreadLocalRecord}}{39}{subsection.5.4.1}
+\contentsline {subsection}{\numberline {5.4.2}\leavevmode {\color {Chapter }SetTLDefault}}{40}{subsection.5.4.2}
+\contentsline {subsection}{\numberline {5.4.3}\leavevmode {\color {Chapter }SetTLConstructor}}{40}{subsection.5.4.3}
+\contentsline {chapter}{\numberline {6}\leavevmode {\color {Chapter }Thread functions}}{41}{chapter.6}
+\contentsline {section}{\numberline {6.1}\leavevmode {\color {Chapter }Thread functions}}{41}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}\leavevmode {\color {Chapter }CreateThread}}{41}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}\leavevmode {\color {Chapter }WaitThread}}{41}{subsection.6.1.2}
+\contentsline {subsection}{\numberline {6.1.3}\leavevmode {\color {Chapter }CurrentThread}}{41}{subsection.6.1.3}
+\contentsline {subsection}{\numberline {6.1.4}\leavevmode {\color {Chapter }ThreadID}}{42}{subsection.6.1.4}
+\contentsline {subsection}{\numberline {6.1.5}\leavevmode {\color {Chapter }KillThread}}{42}{subsection.6.1.5}
+\contentsline {subsection}{\numberline {6.1.6}\leavevmode {\color {Chapter }PauseThread}}{42}{subsection.6.1.6}
+\contentsline {subsection}{\numberline {6.1.7}\leavevmode {\color {Chapter }ResumeThread}}{42}{subsection.6.1.7}
+\contentsline {subsection}{\numberline {6.1.8}\leavevmode {\color {Chapter }InterruptThread}}{43}{subsection.6.1.8}
+\contentsline {subsection}{\numberline {6.1.9}\leavevmode {\color {Chapter }SetInterruptHandler}}{43}{subsection.6.1.9}
+\contentsline {subsection}{\numberline {6.1.10}\leavevmode {\color {Chapter }NewInterruptID}}{43}{subsection.6.1.10}
+\contentsline {subsection}{\numberline {6.1.11}\leavevmode {\color {Chapter }MAX{\textunderscore }INTERRUPT}}{43}{subsection.6.1.11}
+\contentsline {chapter}{\numberline {7}\leavevmode {\color {Chapter }Channels}}{44}{chapter.7}
+\contentsline {section}{\numberline {7.1}\leavevmode {\color {Chapter }Channels}}{44}{section.7.1}
+\contentsline {subsection}{\numberline {7.1.1}\leavevmode {\color {Chapter }CreateChannel}}{44}{subsection.7.1.1}
+\contentsline {subsection}{\numberline {7.1.2}\leavevmode {\color {Chapter }SendChannel}}{44}{subsection.7.1.2}
+\contentsline {subsection}{\numberline {7.1.3}\leavevmode {\color {Chapter }TransmitChannel}}{45}{subsection.7.1.3}
+\contentsline {subsection}{\numberline {7.1.4}\leavevmode {\color {Chapter }TrySendChannel}}{46}{subsection.7.1.4}
+\contentsline {subsection}{\numberline {7.1.5}\leavevmode {\color {Chapter }TryTransmitChannel}}{46}{subsection.7.1.5}
+\contentsline {subsection}{\numberline {7.1.6}\leavevmode {\color {Chapter }ReceiveChannel}}{46}{subsection.7.1.6}
+\contentsline {subsection}{\numberline {7.1.7}\leavevmode {\color {Chapter }TryReceiveChannel}}{46}{subsection.7.1.7}
+\contentsline {subsection}{\numberline {7.1.8}\leavevmode {\color {Chapter }MultiSendChannel}}{47}{subsection.7.1.8}
+\contentsline {subsection}{\numberline {7.1.9}\leavevmode {\color {Chapter }TryMultiSendChannel}}{47}{subsection.7.1.9}
+\contentsline {subsection}{\numberline {7.1.10}\leavevmode {\color {Chapter }MultiReceiveChannel}}{47}{subsection.7.1.10}
+\contentsline {subsection}{\numberline {7.1.11}\leavevmode {\color {Chapter }ReceiveAnyChannel}}{47}{subsection.7.1.11}
+\contentsline {subsection}{\numberline {7.1.12}\leavevmode {\color {Chapter }ReceiveAnyChannelWithIndex}}{48}{subsection.7.1.12}
+\contentsline {subsection}{\numberline {7.1.13}\leavevmode {\color {Chapter }TallyChannel}}{48}{subsection.7.1.13}
+\contentsline {subsection}{\numberline {7.1.14}\leavevmode {\color {Chapter }InspectChannel}}{48}{subsection.7.1.14}
+\contentsline {chapter}{\numberline {8}\leavevmode {\color {Chapter }Semaphores}}{50}{chapter.8}
+\contentsline {section}{\numberline {8.1}\leavevmode {\color {Chapter }Semaphores}}{50}{section.8.1}
+\contentsline {subsection}{\numberline {8.1.1}\leavevmode {\color {Chapter }CreateSemaphore}}{50}{subsection.8.1.1}
+\contentsline {subsection}{\numberline {8.1.2}\leavevmode {\color {Chapter }WaitSemaphore}}{50}{subsection.8.1.2}
+\contentsline {subsection}{\numberline {8.1.3}\leavevmode {\color {Chapter }SignalSemaphore}}{50}{subsection.8.1.3}
+\contentsline {subsection}{\numberline {8.1.4}\leavevmode {\color {Chapter }Simulating locks}}{51}{subsection.8.1.4}
+\contentsline {chapter}{\numberline {9}\leavevmode {\color {Chapter }Synchronization variables}}{52}{chapter.9}
+\contentsline {section}{\numberline {9.1}\leavevmode {\color {Chapter }Synchronization variables}}{52}{section.9.1}
+\contentsline {subsection}{\numberline {9.1.1}\leavevmode {\color {Chapter }CreateSyncVar}}{52}{subsection.9.1.1}
+\contentsline {subsection}{\numberline {9.1.2}\leavevmode {\color {Chapter }SyncWrite}}{52}{subsection.9.1.2}
+\contentsline {subsection}{\numberline {9.1.3}\leavevmode {\color {Chapter }SyncRead}}{53}{subsection.9.1.3}
+\contentsline {chapter}{\numberline {10}\leavevmode {\color {Chapter }Serialization support}}{54}{chapter.10}
+\contentsline {section}{\numberline {10.1}\leavevmode {\color {Chapter }Serialization support}}{54}{section.10.1}
+\contentsline {subsection}{\numberline {10.1.1}\leavevmode {\color {Chapter }SerializeToNativeString}}{54}{subsection.10.1.1}
+\contentsline {subsection}{\numberline {10.1.2}\leavevmode {\color {Chapter }DeserializeNativeString}}{54}{subsection.10.1.2}
+\contentsline {subsection}{\numberline {10.1.3}\leavevmode {\color {Chapter }InstallTypeSerializationTag}}{54}{subsection.10.1.3}
+\contentsline {subsection}{\numberline {10.1.4}\leavevmode {\color {Chapter }InstallSerializer}}{55}{subsection.10.1.4}
+\contentsline {subsection}{\numberline {10.1.5}\leavevmode {\color {Chapter }InstallDeserializer}}{55}{subsection.10.1.5}
+\contentsline {chapter}{\numberline {11}\leavevmode {\color {Chapter }Low-level functionality}}{57}{chapter.11}
+\contentsline {section}{\numberline {11.1}\leavevmode {\color {Chapter }Explicit lock and unlock primitives}}{57}{section.11.1}
+\contentsline {subsection}{\numberline {11.1.1}\leavevmode {\color {Chapter }LOCK}}{57}{subsection.11.1.1}
+\contentsline {subsection}{\numberline {11.1.2}\leavevmode {\color {Chapter }TRYLOCK}}{57}{subsection.11.1.2}
+\contentsline {subsection}{\numberline {11.1.3}\leavevmode {\color {Chapter }UNLOCK}}{58}{subsection.11.1.3}
+\contentsline {section}{\numberline {11.2}\leavevmode {\color {Chapter }Hash locks}}{58}{section.11.2}
+\contentsline {subsection}{\numberline {11.2.1}\leavevmode {\color {Chapter }HASH{\textunderscore }LOCK}}{58}{subsection.11.2.1}
+\contentsline {subsection}{\numberline {11.2.2}\leavevmode {\color {Chapter }HASH{\textunderscore }UNLOCK}}{58}{subsection.11.2.2}
+\contentsline {subsection}{\numberline {11.2.3}\leavevmode {\color {Chapter }HASH{\textunderscore }LOCK{\textunderscore }SHARED}}{59}{subsection.11.2.3}
+\contentsline {subsection}{\numberline {11.2.4}\leavevmode {\color {Chapter }HASH{\textunderscore }UNLOCK{\textunderscore }SHARED}}{59}{subsection.11.2.4}
+\contentsline {section}{\numberline {11.3}\leavevmode {\color {Chapter }Migration to the public region}}{59}{section.11.3}
+\contentsline {subsection}{\numberline {11.3.1}\leavevmode {\color {Chapter }MAKE{\textunderscore }PUBLIC}}{59}{subsection.11.3.1}
+\contentsline {subsection}{\numberline {11.3.2}\leavevmode {\color {Chapter }MAKE{\textunderscore }PUBLIC{\textunderscore }NORECURSE}}{59}{subsection.11.3.2}
+\contentsline {section}{\numberline {11.4}\leavevmode {\color {Chapter }Memory barriers}}{59}{section.11.4}
+\contentsline {subsection}{\numberline {11.4.1}\leavevmode {\color {Chapter }ORDERED{\textunderscore }WRITE}}{59}{subsection.11.4.1}
+\contentsline {subsection}{\numberline {11.4.2}\leavevmode {\color {Chapter }ORDERED{\textunderscore }READ}}{60}{subsection.11.4.2}
+\contentsline {section}{\numberline {11.5}\leavevmode {\color {Chapter }Object manipulation}}{60}{section.11.5}
+\contentsline {subsection}{\numberline {11.5.1}\leavevmode {\color {Chapter }SWITCH{\textunderscore }OBJ}}{60}{subsection.11.5.1}
+\contentsline {subsection}{\numberline {11.5.2}\leavevmode {\color {Chapter }FORCE{\textunderscore }SWITCH{\textunderscore }OBJ}}{61}{subsection.11.5.2}
+\contentsline {chapter}{Index}{62}{section*.3}

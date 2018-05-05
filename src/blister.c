@@ -54,7 +54,7 @@
 **
 **  The  second  part  consists  of  the  functions  'LenBlist',  'ElmBlist',
 **  'ElmsBlist',   'AssBlist',    'AsssBlist',   'PosBlist',    'PlainBlist',
-**  'IsDenseBlist',  'IsPossBlist', 'EqBlist', and  'LtBlist'.  They  are the
+**  'IsPossBlist', 'EqBlist', and  'LtBlist'.  They  are the
 **  functions required by the  generic lists  package.  Using these functions
 **  the other parts of  the {\GAP} kernel can access and modify boolean lists
 **  without actually being aware that they are dealing with a boolean list.
@@ -69,43 +69,23 @@
 **
 *N  1992/12/16 martin should have 'LtBlist'
 */
-#include        "system.h"              /* system dependent part           */
 
+#include <src/blister.h>
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
-
-#include        "gap.h"                 /* error handling, initialisation  */
-
-#include        "gvars.h"               /* global variables                */
-#include        "calls.h"               /* generic call mechanism          */
-#include        "opers.h"               /* generic operations              */
-
-#include        "ariths.h"              /* basic arithmetic                */
-
-#include        "bool.h"                /* booleans                        */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "plist.h"               /* plain lists                     */
-#include        "set.h"                 /* plain sets                      */
-#include        "blister.h"             /* boolean lists                   */
-#include        "range.h"               /* ranges                          */
-#include        "string.h"              /* strings                         */
-
-#include        "saveload.h"            /* saving and loading              */
-
-#include	"code.h"		/* coder                           */
-#include	"thread.h"		/* threads			   */
-#include	"tls.h"			/* thread-local storage		   */
+#include <src/ariths.h>
+#include <src/bool.h>
+#include <src/gap.h>
+#include <src/gaputils.h>
+#include <src/io.h>
+#include <src/lists.h>
+#include <src/plist.h>
+#include <src/range.h>
+#include <src/saveload.h>
+#include <src/set.h>
 
 
 /****************************************************************************
 **
-
 *F  TypeBlist( <list> )  . . . . . . . . . . . . . . . type of a boolean list
 **
 **  'TypeBlist' returns the type of a boolean list.
@@ -200,14 +180,13 @@ void SaveBlist (
     Obj                 bl )
 {
     UInt                i;
-    UInt *              ptr;
+    const UInt *        ptr;
 
     /* logical length                                                      */
-    SaveSubObj(ADDR_OBJ(bl)[0]);
-    ptr = BLOCKS_BLIST(bl);
+    SaveSubObj(CONST_ADDR_OBJ(bl)[0]);
+    ptr = CONST_BLOCKS_BLIST(bl);
     for (i = 1; i <= NUMBER_BLOCKS_BLIST( bl ); i++ )
         SaveUInt(*ptr++);
-    return;
 }
 
 /****************************************************************************
@@ -226,23 +205,19 @@ void LoadBlist (
     ADDR_OBJ(bl)[0] = LoadSubObj(); 
   
     /* Now load the real data                                              */
-    ptr = (UInt *)BLOCKS_BLIST(bl);
+    ptr = BLOCKS_BLIST(bl);
     for (i = 1; i <= NUMBER_BLOCKS_BLIST( bl ); i++ )
         *ptr++ = LoadUInt();
-    return;
 }
 
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * * copy functions * * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
-
 *F  CopyBlist( <list>, <mut> )  . . . . . . . . . . . . . copy a boolean list
 **
 **  'CopyBlist' returns a structural (deep) copy  of the boolean list <list>,
@@ -262,10 +237,10 @@ void LoadBlist (
 **  'CleanBlist' is the function in 'CleanObjFuncs' for boolean lists.
 */
 
-Obj DoCopyBlist(Obj list, Int mut) {
-  Obj copy;
-  UInt *l;
-  UInt *c;
+Obj DoCopyBlist(Obj list, Int mut)
+{
+    Obj copy;
+
     /* make a copy                                                         */
     if ( mut ) {
       copy = NewBag( MUTABLE_TNUM(TNUM_OBJ(list)), SIZE_OBJ(list) );
@@ -274,29 +249,49 @@ Obj DoCopyBlist(Obj list, Int mut) {
       copy = NewBag( IMMUTABLE_TNUM( TNUM_OBJ(list) ), SIZE_OBJ(list) );
     }
 
-
     /* copy the subvalues                                                  */
-    l = (UInt*)(ADDR_OBJ(list));
-    c = (UInt*)(ADDR_OBJ(copy));
-    memcpy((void *)c, (void *)l, sizeof(UInt)*(1+NUMBER_BLOCKS_BLIST(list)));
+    memcpy(ADDR_OBJ(copy), CONST_ADDR_OBJ(list),
+            sizeof(UInt)*(1+NUMBER_BLOCKS_BLIST(list)));
 
     /* return the copy                                                     */
     return copy;
   
 }
 
+#if !defined(USE_THREADSAFE_COPYING)
+
+Obj CopyBlistImm(Obj list, Int mut)
+{
+    GAP_ASSERT(!IS_MUTABLE_OBJ(list));
+    return list;
+}
+
 Obj CopyBlist (
     Obj                 list,
     Int                 mut )
 {
+    Obj copy;
+    Obj tmp;
 
-    /* don't change immutable objects                                      */
-    if ( ! IS_MUTABLE_OBJ(list) ) {
-        return list;
-    }
+    /* immutable objects should never end up here, because
+     * they have their own handler defined above
+     */
+    GAP_ASSERT(IS_MUTABLE_OBJ(list));
 
-    return DoCopyBlist(list, mut);
+    copy = DoCopyBlist(list, mut);
+    /* leave a forwarding pointer */
+    tmp = NEW_PLIST( T_PLIST, 2 );
+    SET_LEN_PLIST( tmp, 2 );
+    SET_ELM_PLIST( tmp, 1, CONST_ADDR_OBJ(list)[0] );
+    SET_ELM_PLIST( tmp, 2, copy );
+    ADDR_OBJ(list)[0] = tmp;
+    CHANGED_BAG(list);
+    RetypeBag( list, TNUM_OBJ(list) + COPYING );
+    return copy;
 }
+
+#endif // !defined(USE_THREADSAFE_COPYING)
+
 
 Obj ShallowCopyBlist ( Obj list)
 {
@@ -304,16 +299,15 @@ Obj ShallowCopyBlist ( Obj list)
 }
 
 
+#if !defined(USE_THREADSAFE_COPYING)
 
 /****************************************************************************
 **
 *F  CopyBlistCopy( <list>, <mut> )  . . . . . . . copy a already copied blist
 */
-Obj CopyBlistCopy (
-    Obj                 list,
-    Int                 mut )
+Obj CopyBlistCopy(Obj list, Int mut)
 {
-    return ADDR_OBJ(list)[0];
+    return ELM_PLIST(CONST_ADDR_OBJ(list)[0], 2);
 }
 
 
@@ -331,27 +325,25 @@ void CleanBlist (
 **
 *F  CleanBlistCopy( <list> )  . . . . . . . . . . . . .  clean a copied blist
 */
-void CleanBlistCopy (
-    Obj                 list )
+void CleanBlistCopy(Obj list)
 {
-    /* remove the forwarding pointer                                       */
-    ADDR_OBJ(list)[0] = ADDR_OBJ( ADDR_OBJ(list)[0] )[0];
+    /* remove the forwarding pointer */
+    ADDR_OBJ(list)[0] = ELM_PLIST(CONST_ADDR_OBJ(list)[0], 1);
 
-    /* now it is cleaned                                                   */
-    UNMARK_LIST( list, COPYING );
+    /* now it is cleaned */
+    RetypeBag(list, TNUM_OBJ(list) - COPYING);
 }
+
+#endif // !defined(USE_THREADSAFE_COPYING)
 
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * * list functions * * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
-
 *F  EqBlist( <listL>, <listR> ) . . . . . test if two boolean lists are equal
 **
 **  'EqBlist' returns 'true' if the two boolean lists <listL> and <listR> are
@@ -363,8 +355,8 @@ Int EqBlist (
 {
     long                lenL;           /* length of the left operand      */
     long                lenR;           /* length of the right operand     */
-    UInt *              ptrL;           /* pointer to the left operand     */
-    UInt *              ptrR;           /* pointer to the right operand    */
+    const UInt *        ptrL;           /* pointer to the left operand     */
+    const UInt *        ptrR;           /* pointer to the right operand    */
     UInt                i;              /* loop variable                   */
 
     /* get the lengths of the lists and compare them                       */
@@ -375,8 +367,8 @@ Int EqBlist (
     }
 
     /* test for equality blockwise                                         */
-    ptrL = BLOCKS_BLIST(listL);
-    ptrR = BLOCKS_BLIST(listR);
+    ptrL = CONST_BLOCKS_BLIST(listL);
+    ptrR = CONST_BLOCKS_BLIST(listR);
     for ( i = (lenL+BIPEB-1)/BIPEB; 0 < i; i-- ) {
         if ( *ptrL++ != *ptrR++ )
             return 0L;
@@ -422,19 +414,6 @@ Int IsbBlist (
 
 /****************************************************************************
 **
-*F  IsbvBlist( <list>, <pos> )  . . . . test for an element of a boolean list
-*/
-Int IsbvBlist (
-    Obj                 list,
-    Int                 pos )
-{
-    return 1L;
-}
-
-
-/****************************************************************************
-**
-
 *F  Elm0Blist( <list>, <pos> )  . . . . . select an element of a boolean list
 **
 **  'Elm0Blist' returns the element at the position <pos> of the boolean list
@@ -536,7 +515,6 @@ Obj ElmsBlist (
 {
     Obj                 elms;           /* selected sublist, result        */
     Int                 lenList;        /* length of <list>                */
-    Obj                 elm;            /* one element from <list>         */
     Int                 lenPoss;        /* length of <positions>           */
     Int                 pos;            /* <position> as integer           */
     Int                 inc;            /* increment in a range            */
@@ -571,15 +549,12 @@ Obj ElmsBlist (
                 return ELMS_LIST( list, poss );
             }
 
-            /* select the element                                          */
-            elm = ELM_BLIST( list, pos );
-
             /* assign the element into <elms>                              */
-            if ( elm == True )
+            if (TEST_BIT_BLIST(list, pos))
                 block |= bit;
             bit <<= 1;
             if ( bit == 0 || i == lenPoss ) {
-                BLOCK_ELM_BLIST( elms, i) =  block;
+                *BLOCK_ELM_BLIST_PTR(elms, i) = block;
                 block = 0;
                 bit = 1;
             }
@@ -589,11 +564,10 @@ Obj ElmsBlist (
     }
 
     /* special code for ranges                                             */
-    /*N 1992/12/15 martin special code for ranges with increment 1         */
     else {
 
         /* get the length of <list>                                        */
-        lenList = LEN_PLIST( list );
+        lenList = LEN_BLIST( list );
 
         /* get the length of <positions>, the first elements, and the inc. */
         lenPoss = GET_LEN_RANGE( poss );
@@ -620,27 +594,28 @@ Obj ElmsBlist (
         elms = NewBag( T_BLIST, SIZE_PLEN_BLIST( lenPoss ) );
         SET_LEN_BLIST( elms, lenPoss );
 
-        /* loop over the entries of <positions> and select                 */
-        block = 0;  bit = 1;
-        for ( i = 1; i <= lenPoss; i++, pos += inc ) {
-
-            /* select the element                                          */
-            elm = ELM_BLIST( list, pos );
-
-            /* assign the element to <elms>                                */
-            if ( elm == True )
-                block |= bit;
-            bit <<= 1;
-            if ( bit == 0 || i == lenPoss ) {
-                BLOCK_ELM_BLIST(elms, i) =  block;
-                block = 0;
-                bit = 1;
-            }
-
+        if (inc == 1) {
+            CopyBits(CONST_BLOCKS_BLIST(list) + ((pos - 1) / BIPEB),
+                     (pos - 1) % BIPEB, BLOCKS_BLIST(elms), 0, lenPoss);
         }
+        else {
+            /* loop over the entries of <positions> and select */
+            block = 0;
+            bit = 1;
+            for (i = 1; i <= lenPoss; i++, pos += inc) {
 
+                /* assign the element to <elms> */
+                if (TEST_BIT_BLIST(list, pos))
+                    block |= bit;
+                bit <<= 1;
+                if (bit == 0 || i == lenPoss) {
+                    *BLOCK_ELM_BLIST_PTR(elms, i) = block;
+                    block = 0;
+                    bit = 1;
+                }
+            }
+	}
     }
-
     /* return the result                                                   */
     return elms;
 }
@@ -648,7 +623,6 @@ Obj ElmsBlist (
 
 /****************************************************************************
 **
-
 *F  AssBlist( <list>, <pos>, <val> )  . . . . . . .  assign to a boolean list
 **
 **  'AssBlist' assigns the   value <val> to  the  boolean list <list> at  the
@@ -672,13 +646,13 @@ void AssBlist (
 {
     /* if <pos> is less than the logical length and <elm> is 'true'        */
     if      ( pos <= LEN_BLIST(list) && val == True ) {
-        SET_ELM_BLIST( list, pos, True );
+        SET_BIT_BLIST(list, pos);
         CLEAR_FILTS_LIST(list);
     }
 
     /* if <i> is less than the logical length and <elm> is 'false'         */
     else if ( pos <= LEN_BLIST(list) && val == False ) {
-        SET_ELM_BLIST( list, pos, False );
+        CLEAR_BIT_BLIST(list, pos);
         CLEAR_FILTS_LIST(list);
     }
 
@@ -687,7 +661,7 @@ void AssBlist (
         if ( SIZE_OBJ(list) < SIZE_PLEN_BLIST(pos) )
             ResizeBag( list, SIZE_PLEN_BLIST(pos) );
         SET_LEN_BLIST( list, pos );
-        SET_ELM_BLIST( list, pos, True );
+        SET_BIT_BLIST(list, pos);
         CLEAR_FILTS_LIST(list);
     }
 
@@ -696,7 +670,7 @@ void AssBlist (
         if ( SIZE_OBJ(list) < SIZE_PLEN_BLIST(pos) )
             ResizeBag( list, SIZE_PLEN_BLIST(pos) );
         SET_LEN_BLIST( list, pos );
-        SET_ELM_BLIST( list, pos, False );
+        CLEAR_BIT_BLIST(list, pos);
         CLEAR_FILTS_LIST(list);
     }
 
@@ -781,7 +755,6 @@ void AsssBlistImm (
 
 /****************************************************************************
 **
-
 *F  PosBlist( <list>, <val>, <start> )   position of an elm in a boolean list
 **
 **  'PosBlist' returns the   position of  the first  occurrence  of the  value
@@ -797,7 +770,7 @@ Obj PosBlist (
     Obj                 start )
 {
     Int                 len;            /* logical length of the list      */
-    UInt *              ptr;            /* pointer to the blocks           */
+    const UInt *        ptr;            /* pointer to the blocks           */
     UInt                i,  j;          /* loop variables                  */
     UInt                istart;
     UInt                firstblock, lastblock;
@@ -816,7 +789,7 @@ Obj PosBlist (
       return Fail;
     }
 
-    ptr = BLOCKS_BLIST(list);
+    ptr = CONST_BLOCKS_BLIST(list);
     firstblock = istart/BIPEB;
     lastblock = (len-1)/BIPEB;
     firstoffset = istart%BIPEB;
@@ -916,7 +889,7 @@ void PlainBlist (
     /* replace the bits by 'True' or 'False' as the case may be            */
     /* this must of course be done from the end of the list backwards      */
     for ( i = len; 0 < i; i-- )
-        SET_ELM_PLIST( list, i, ELM_BLIST( list, i ) );
+        SET_ELM_PLIST(list, i, ELM_BLIST(list, i));
 
     /* 'CHANGED_BAG' not needed, 'True' and 'False' are safe           */
 }
@@ -934,22 +907,6 @@ Int IsPossBlist (
     Obj                 list )
 {
     return LEN_BLIST(list) == 0;
-}
-
-
-/****************************************************************************
-**
-
-*F  IsDenseBlist( <list> )  . . .  dense list test function for boolean lists
-**
-**  'IsDenseBlist' returns 1, since boolean lists are always dense.
-**
-**  'IsDenseBlist' is the function in 'IsDenseBlistFuncs' for boolean lists.
-*/
-Int IsDenseBlist (
-    Obj                 list )
-{
-    return 1L;
 }
 
 
@@ -977,7 +934,7 @@ Int IsSSortBlist (
         isSort = 1;
     }
     else if ( LEN_BLIST(list) == 2 ) {
-        isSort = (ELM_BLIST(list,1) == True && ELM_BLIST(list,2) == False);
+        isSort = (TEST_BIT_BLIST(list, 1) && !TEST_BIT_BLIST(list, 2));
     }
     else {
         isSort = 0;
@@ -990,29 +947,6 @@ Int IsSSortBlist (
 
 /****************************************************************************
 **
-*F  IsSSortBlistNot( <list> ) . . . . . . . . . . . . . unsorted boolean list
-*/
-Int IsSSortBlistNot (
-    Obj                 list )
-{
-    return 0L;
-}
-
-
-/****************************************************************************
-**
-*F  IsSSortBlistYes( <list> ) . . . . . . . . . . . . . . sorted boolean list
-*/
-Int IsSSortBlistYes (
-    Obj                 list )
-{
-    return 1L;
-}
-
-
-/****************************************************************************
-**
-
 *F  ConvBlist( <list> ) . . . . . . . . .  convert a list into a boolean list
 **
 **  `ConvBlist' changes the representation of boolean  lists into the compact
@@ -1040,7 +974,7 @@ void ConvBlist (
             block |= bit;
         bit = bit << 1;
         if ( bit == 0 || i == len ) {
-            BLOCK_ELM_BLIST(list,i) = block;
+            *BLOCK_ELM_BLIST_PTR(list, i) = block;
             block = 0;
             bit = 1;
         }
@@ -1156,71 +1090,30 @@ Int IsBlistConv (
 **  'SizeBlist' returns   the number of  entries of  the boolean list <blist>
 **  that are 'true'.
 **
-**  The sequence to compute the  number of bits in  a block is quite  clever.
-**  The idea is that after the <i>-th instruction each subblock of $2^i$ bits
-**  holds the number of   bits of this  subblock  in the original block  <m>.
-**  This is illustrated in the example below for a block of with 8 bits:
-**
-**       // a b c d e f g h
-**      m = (m & 0x55)       +  ((m >> 1) & 0x55);
-**       // . b . d . f . h  +  . a . c . e . g   =  a+b c+d e+f g+h
-**      m = (m & 0x33)       +  ((m >> 2) & 0x33);
-**       // . . c+d . . g+h  +  . . a+b . . e+f   =  a+b+c+d e+f+g+h
-**      m = (m & 0x0f)       +  ((m >> 4) & 0x0f);
-**       // . . . . e+f+g+h  +  . . . . a+b+c+d   =  a+b+c+d+e+f+g+h
-**
-**  In the actual  code  some unnecessary mask  have  been removed, improving
-**  performance quite a bit,  because masks are 32  bit immediate values  for
-**  which most RISC  processors need two  instructions to load them.  Talking
-**  about performance.  The code is  close to optimal,  it should compile  to
-**  only about  22 MIPS  or SPARC instructions.   Dividing the  block into  4
-**  bytes and looking up the number of bits  of a byte in a  table may be 10%
-**  faster, but only if the table lives in the data cache.
-**
-*N  1992/12/15 martin this depends on 'BIPEB' being 32 
-*N  1996/11/12 Steve  altered to handle 64 bit also
-**
-**  Introduced the SizeBlist function for kernel use, and the 
-**  COUNT_TRUES_BLOCK( <var> ) macro which replaces a block of bits in <var> 
-**  by the number of ones it contains. It will fail horribly if <var> is not 
-**  a variable.
+**  The work is done in `COUNT_TRUES_BLOCKS` in blister.h and the algorithms
+**  are documented there.
 */
 UInt SizeBlist (
     Obj                 blist )
 {
-    UInt *              ptr;            /* pointer to blist                */
+    const UInt *        ptr;            /* pointer to blist                */
     UInt                nrb;            /* number of blocks in blist       */
-    UInt                m;              /* number of bits in a block       */
-    UInt                n;              /* number of bits in blist         */
-    UInt                i;              /* loop variable                   */
 
     /* get the number of blocks and a pointer                              */
     nrb = NUMBER_BLOCKS_BLIST(blist);
-    ptr = BLOCKS_BLIST( blist );
+    ptr = CONST_BLOCKS_BLIST(blist);
 
-    /* loop over the blocks, adding the number of bits of each one         */
-    n = 0;
-    for ( i = 1; i <= nrb; i++ ) {
-        m = *ptr++;
-        COUNT_TRUES_BLOCK(m);
-        n += m;
-    }
-
-    /* return the number of bits                                           */
-    return n;
+    return COUNT_TRUES_BLOCKS( ptr, nrb);
 }
 
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * * GAP level functions  * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
-
 *F  FuncIS_BLIST( <self>, <val> ) . . . . . test if a value is a boolean list
 **
 **  'FuncIS_BLIST' handles the internal function 'IsBlist'.
@@ -1254,8 +1147,6 @@ Obj FuncIS_BLIST (
 **  otherwise.  A value is a   boolean list if  it is  a lists without  holes
 **  containing only  'true' and 'false'.
 */
-Obj IsBlistFilt;
-
 Obj FuncIS_BLIST_CONV (
     Obj                 self,
     Obj                 val )
@@ -1302,7 +1193,6 @@ Obj FuncIS_BLIST_REP (
 
 /****************************************************************************
 **
-
 *F  FuncSIZE_BLIST( <self>, <blist> ) . . number of 'true' entries in <blist>
 **
 **  'FuncSIZE_BLIST' implements the internal function 'SizeBlist'
@@ -1350,7 +1240,7 @@ Obj FuncBLIST_LIST (
     UInt                block;          /* one block of boolean list       */
     UInt                bit;            /* one bit of block                */
     Int                 lenList;        /* logical length of the list      */
-    Obj *               ptrSub;         /* pointer to the sublist          */
+    const Obj *               ptrSub;         /* pointer to the sublist          */
     UInt                lenSub;         /* logical length of sublist       */
     UInt                i, j, k = 0, l;     /* loop variables                  */
     long                s, t;           /* elements of a range             */
@@ -1409,7 +1299,7 @@ Obj FuncBLIST_LIST (
         blist = NewBag( T_BLIST, SIZE_PLEN_BLIST( lenList ) );
         ADDR_OBJ(blist)[0] = INTOBJ_INT(lenList);
         ptrBlist = BLOCKS_BLIST(blist);
-        ptrSub = ADDR_OBJ(sub);
+        ptrSub = CONST_ADDR_OBJ(sub);
 
         /* loop over <sub> and set the corresponding entries to 'true'     */
         s = INT_INTOBJ( GET_ELM_RANGE( list, 1 ) );
@@ -1417,7 +1307,7 @@ Obj FuncBLIST_LIST (
             if ( ptrSub[l] != 0 ) {
 
                 /* if <sub>[<l>] is an integer it is very easy             */
-                if ( TNUM_OBJ( ptrSub[l] ) == T_INT ) {
+                if ( IS_INTOBJ( ptrSub[l] ) ) {
                     t = INT_INTOBJ( ptrSub[l] ) - s + 1;
                     if ( 0 < t && t <= lenList )
                         ptrBlist[(t-1)/BIPEB] |= (1UL << (t-1)%BIPEB);
@@ -1461,13 +1351,13 @@ Obj FuncBLIST_LIST (
 
             /* run over the elements of <sub> and search for the elements  */
             for ( l = 1; l <= LEN_LIST(sub); l++ ) {
-                if ( ADDR_OBJ(sub)[l] != 0 ) {
+                if ( CONST_ADDR_OBJ(sub)[l] != 0 ) {
 
                     /* perform the binary search to find the position      */
                     i = 0;  k = lenList+1;
                     while ( i+1 < k ) {
                         j = (i + k) / 2;
-                        if ( LT(ADDR_OBJ(list)[j],ADDR_OBJ(sub)[l]) )
+                        if ( LT(CONST_ADDR_OBJ(list)[j],CONST_ADDR_OBJ(sub)[l]) )
                             i = j;
                         else
                             k = j;
@@ -1475,8 +1365,8 @@ Obj FuncBLIST_LIST (
 
                     /* set bit if <sub>[<l>] was found at position k       */
                     if ( k <= lenList
-                      && EQ( ADDR_OBJ(list)[k], ADDR_OBJ(sub)[l] ) )
-                      SET_ELM_BLIST( blist, k, True);
+                      && EQ( CONST_ADDR_OBJ(list)[k], CONST_ADDR_OBJ(sub)[l] ) )
+                        SET_BIT_BLIST(blist, k);
                 }
             }
 
@@ -1503,12 +1393,12 @@ Obj FuncBLIST_LIST (
 
                 /* test if <list>[<l>] is in <sub>                         */
                 while ( k <= lenSub
-                     && LT(ADDR_OBJ(sub)[k],ADDR_OBJ(list)[l]) )
+                     && LT(CONST_ADDR_OBJ(sub)[k],CONST_ADDR_OBJ(list)[l]) )
                     k++;
 
                 /* if <list>[<k>] is in <sub> set the current bit in block */
                 if ( k <= lenSub
-                  && EQ(ADDR_OBJ(sub)[k],ADDR_OBJ(list)[l]) ) {
+                  && EQ(CONST_ADDR_OBJ(sub)[k],CONST_ADDR_OBJ(list)[l]) ) {
                     block |= bit;
                     k++;
                 }
@@ -1516,9 +1406,9 @@ Obj FuncBLIST_LIST (
                 /* if block is full add it to boolean list and start next  */
                 bit = bit << 1;
                 if ( bit == 0 || l == lenList ) {
-                  BLOCK_ELM_BLIST( blist, l) = block;
-                  block = 0;
-                  bit   = 1;
+                    *BLOCK_ELM_BLIST_PTR(blist, l) = block;
+                    block = 0;
+                    bit = 1;
                 }
 
             }
@@ -1548,16 +1438,16 @@ Obj FuncBLIST_LIST (
         for ( l = 1; l <= lenList; l++ ) {
 
             /* test if <list>[<l>] is in <sub>                             */
-            if ( l == 1 || LT(ADDR_OBJ(list)[l-1],ADDR_OBJ(list)[l]) ){
+            if ( l == 1 || LT(CONST_ADDR_OBJ(list)[l-1],CONST_ADDR_OBJ(list)[l]) ){
                 while ( k <= lenSub
-                     && LT(ADDR_OBJ(sub)[k],ADDR_OBJ(list)[l]) )
+                     && LT(CONST_ADDR_OBJ(sub)[k],CONST_ADDR_OBJ(list)[l]) )
                     k++;
             }
             else {
                 i = 0;  k = LEN_PLIST(sub) + 1;
                 while ( i+1 < k ) {
                     j = (i + k) / 2;
-                    if ( LT( ADDR_OBJ(sub)[j], ADDR_OBJ(list)[l] ) )
+                    if ( LT( CONST_ADDR_OBJ(sub)[j], CONST_ADDR_OBJ(list)[l] ) )
                         i = j;
                     else
                         k = j;
@@ -1566,7 +1456,7 @@ Obj FuncBLIST_LIST (
 
             /* if <list>[<k>] is in <sub> set the current bit in the block */
             if ( k <= lenSub
-              && EQ( ADDR_OBJ(sub)[k], ADDR_OBJ(list)[l] ) ) {
+              && EQ( CONST_ADDR_OBJ(sub)[k], CONST_ADDR_OBJ(list)[l] ) ) {
                 block |= bit;
                 k++;
             }
@@ -1574,7 +1464,7 @@ Obj FuncBLIST_LIST (
             /* if block is full add it to the boolean list and start next  */
             bit = bit << 1;
             if ( bit == 0 || l == lenList ) {
-                BLOCK_ELM_BLIST( blist, l) =  block;
+                *BLOCK_ELM_BLIST_PTR(blist, l) = block;
                 block = 0;
                 bit   = 1;
             }
@@ -1630,7 +1520,7 @@ Obj FuncLIST_BLIST (
     while ( LEN_LIST( list ) != LEN_BLIST( blist ) ) {
         blist = ErrorReturnObj(
             "ListBlist: <blist> must have the same length as <list> (%d)",
-            LEN_PLIST( list ), 0L,
+            LEN_LIST( list ), 0L,
             "you can replace <blist> via 'return <blist>;'" );
     }
 
@@ -1645,7 +1535,7 @@ Obj FuncLIST_BLIST (
     len = LEN_LIST( list );
     nn  = 1;
     for ( i = 1;  nn <= n && i <= len;  i++  ) {
-        if ( ELM_BLIST( blist, i ) == True ) {
+        if (TEST_BIT_BLIST(blist, i)) {
             SET_ELM_PLIST( sub, (Int)nn, ELMW_LIST( list, (Int)i ) );
             CHANGED_BAG( sub );
             nn++;
@@ -1659,7 +1549,6 @@ Obj FuncLIST_BLIST (
 
 /****************************************************************************
 **
-
 *F  FuncPositionsTrueBlist( <self>, <blist> ) . . . true positions in a blist
 **
 *N  1992/12/15 martin this depends on 'BIPEB' being 32
@@ -1670,11 +1559,8 @@ Obj FuncPositionsTrueBlist (
     Obj                 blist )
 {
     Obj                 sub;            /* handle of the result            */
-    Int                 len;            /* logical length of the list      */
-    UInt  *             ptr;            /* pointer to blist                */
-    UInt                nrb;            /* number of blocks in blist       */
-    UInt                m;              /* number of bits in a block       */
     UInt                n;              /* number of bits in blist         */
+    UInt                len;            
     UInt                nn;
     UInt                i;              /* loop variable                   */
 
@@ -1687,14 +1573,7 @@ Obj FuncPositionsTrueBlist (
     }
 
     /* compute the number of 'true'-s just as in 'FuncSIZE_BLIST'            */
-    nrb = NUMBER_BLOCKS_BLIST( blist);
-    ptr = BLOCKS_BLIST( blist );
-    n = 0;
-    for ( i = 1; i <= nrb; i++ ) {
-        m = *ptr++;
-        COUNT_TRUES_BLOCK(m);
-        n += m;
-    }
+    n = SizeBlist(blist);
 
     /* make the sublist (we now know its size exactly)                    */
     sub = NEW_PLIST( T_PLIST, n );
@@ -1706,7 +1585,7 @@ Obj FuncPositionsTrueBlist (
     len = LEN_BLIST( blist );
     nn  = 1;
     for ( i = 1; nn <= n && i <= len;  i++ ) {
-        if ( ELM_BLIST( blist, i ) == True ) {
+        if (TEST_BIT_BLIST(blist, i)) {
             SET_ELM_PLIST( sub, nn, INTOBJ_INT(i) );
             nn++;
         }
@@ -1734,7 +1613,7 @@ Obj FuncPositionNthTrueBlist (
     UInt                nrb;
     Int                 nth,  pos,  i;
     UInt                m,  mask;
-    UInt  *             ptr;
+    const UInt *        ptr;
 
     /* Check the arguments. */    
     while ( ! IsBlistConv( blist ) ) {
@@ -1754,17 +1633,15 @@ Obj FuncPositionNthTrueBlist (
     if ( ! nrb )  return Fail;
     nth = INT_INTOBJ( Nth );
     pos = 0;
-    ptr = BLOCKS_BLIST( blist );
+    ptr = CONST_BLOCKS_BLIST(blist);
     i = 1;
-    m = *ptr;
-    COUNT_TRUES_BLOCK(m);
+    m = COUNT_TRUES_BLOCK(*ptr);
     while ( nth > m ) {
         if ( ++i > nrb )  return Fail;
         nth -= m;
         pos += BIPEB;
         ptr++;
-        m = *ptr;
-        COUNT_TRUES_BLOCK(m);
+        m = COUNT_TRUES_BLOCK(*ptr);
     }
     m = *ptr;
     mask = 0x1;
@@ -1794,8 +1671,8 @@ Obj FuncIS_SUB_BLIST (
     Obj                 list1,
     Obj                 list2 )
 {
-    UInt *              ptr1;           /* pointer to the first argument   */
-    UInt *              ptr2;           /* pointer to the second argument  */
+    const UInt *        ptr1;           /* pointer to the first argument   */
+    const UInt *        ptr2;           /* pointer to the second argument  */
     UInt                i;              /* loop variable                   */
 
     /* get and check the arguments                                         */
@@ -1819,8 +1696,8 @@ Obj FuncIS_SUB_BLIST (
     }
 
     /* test for subset property blockwise                                  */
-    ptr1 = BLOCKS_BLIST(list1);
-    ptr2 = BLOCKS_BLIST(list2);
+    ptr1 = CONST_BLOCKS_BLIST(list1);
+    ptr2 = CONST_BLOCKS_BLIST(list2);
 
     for ( i = NUMBER_BLOCKS_BLIST(list1); 0 < i; i-- ) {
         if ( *ptr1 != (*ptr1 | *ptr2) )
@@ -1851,7 +1728,7 @@ Obj FuncUNITE_BLIST (
     Obj                 list2 )
 {
     UInt *              ptr1;           /* pointer to the first argument   */
-    UInt *              ptr2;           /* pointer to the second argument  */
+    const UInt *        ptr2;           /* pointer to the second argument  */
     UInt                i;              /* loop variable                   */
 
     /* get and check the arguments                                         */
@@ -1876,7 +1753,7 @@ Obj FuncUNITE_BLIST (
 
     /* compute the union by *or*-ing blockwise                             */
     ptr1 = BLOCKS_BLIST(list1);
-    ptr2 = BLOCKS_BLIST(list2);
+    ptr2 = CONST_BLOCKS_BLIST(list2);
     for ( i = (LEN_BLIST(list1)+BIPEB-1)/BIPEB; 0 < i; i-- ) {
         *ptr1++ |= *ptr2++;
     }
@@ -1907,7 +1784,7 @@ Obj FuncUNITE_BLIST_LIST (
     UInt                block;          /* one block of boolean list       */
     UInt                bit;            /* one bit of block                */
     Int                 lenList;        /* logical length of the list      */
-    Obj *               ptrSub;         /* pointer to the sublist          */
+    const Obj *         ptrSub;         /* pointer to the sublist          */
     UInt                lenSub;         /* logical length of sublist       */
     UInt                i, j, k = 0, l;     /* loop variables                  */
     long                s, t;           /* elements of a range             */
@@ -1986,7 +1863,7 @@ Obj FuncUNITE_BLIST_LIST (
 
         lenSub   = LEN_LIST( sub );
         ptrBlist = BLOCKS_BLIST(blist);
-        ptrSub = ADDR_OBJ(sub);
+        ptrSub = CONST_ADDR_OBJ(sub);
 
         /* loop over <sub> and set the corresponding entries to 'true'     */
         s = INT_INTOBJ( GET_ELM_RANGE( list, 1 ) );
@@ -1994,7 +1871,7 @@ Obj FuncUNITE_BLIST_LIST (
             if ( ptrSub[l] != 0 ) {
 
                 /* if <sub>[<l>] is an integer it is very easy             */
-                if ( TNUM_OBJ( ptrSub[l] ) == T_INT ) {
+                if ( IS_INTOBJ( ptrSub[l] ) ) {
                     t = INT_INTOBJ( ptrSub[l] ) - s + 1;
                     if ( 0 < t && t <= lenList )
                         ptrBlist[(t-1)/BIPEB] |= (1UL << (t-1)%BIPEB);
@@ -2040,13 +1917,13 @@ Obj FuncUNITE_BLIST_LIST (
 
             /* run over the elements of <sub> and search for the elements  */
             for ( l = 1; l <= LEN_LIST(sub); l++ ) {
-                if ( ADDR_OBJ(sub)[l] != 0 ) {
+                if ( CONST_ADDR_OBJ(sub)[l] != 0 ) {
 
                     /* perform the binary search to find the position      */
                     i = 0;  k = lenList+1;
                     while ( i+1 < k ) {
                         j = (i + k) / 2;
-                        if ( LT(ADDR_OBJ(list)[j],ADDR_OBJ(sub)[l]) )
+                        if ( LT(CONST_ADDR_OBJ(list)[j],CONST_ADDR_OBJ(sub)[l]) )
                             i = j;
                         else
                             k = j;
@@ -2054,8 +1931,8 @@ Obj FuncUNITE_BLIST_LIST (
 
                     /* set bit if <sub>[<l>] was found at position k       */
                     if ( k <= lenList
-                      && EQ( ADDR_OBJ(list)[k], ADDR_OBJ(sub)[l] ) )
-                      SET_ELM_BLIST( blist, k, True);
+                      && EQ( CONST_ADDR_OBJ(list)[k], CONST_ADDR_OBJ(sub)[l] ) )
+                        SET_BIT_BLIST(blist, k);
                 }
             }
 
@@ -2078,12 +1955,12 @@ Obj FuncUNITE_BLIST_LIST (
 
                 /* test if <list>[<l>] is in <sub>                         */
                 while ( k <= lenSub
-                     && LT(ADDR_OBJ(sub)[k],ADDR_OBJ(list)[l]) )
+                     && LT(CONST_ADDR_OBJ(sub)[k],CONST_ADDR_OBJ(list)[l]) )
                     k++;
 
                 /* if <list>[<k>] is in <sub> set the current bit in block */
                 if ( k <= lenSub
-                  && EQ(ADDR_OBJ(sub)[k],ADDR_OBJ(list)[l]) ) {
+                  && EQ(CONST_ADDR_OBJ(sub)[k],CONST_ADDR_OBJ(list)[l]) ) {
                     block |= bit;
                     k++;
                 }
@@ -2091,9 +1968,9 @@ Obj FuncUNITE_BLIST_LIST (
                 /* if block is full add it to boolean list and start next  */
                 bit = bit << 1;
                 if ( bit == 0 || l == lenList ) {
-                  BLOCK_ELM_BLIST( blist, l) |= block;
-                  block = 0;
-                  bit   = 1;
+                    *BLOCK_ELM_BLIST_PTR(blist, l) |= block;
+                    block = 0;
+                    bit = 1;
                 }
 
             }
@@ -2130,16 +2007,16 @@ Obj FuncUNITE_BLIST_LIST (
         for ( l = 1; l <= lenList; l++ ) {
 
             /* test if <list>[<l>] is in <sub>                             */
-            if ( l == 1 || LT(ADDR_OBJ(list)[l-1],ADDR_OBJ(list)[l]) ){
+            if ( l == 1 || LT(CONST_ADDR_OBJ(list)[l-1],CONST_ADDR_OBJ(list)[l]) ){
                 while ( k <= lenSub
-                     && LT(ADDR_OBJ(sub)[k],ADDR_OBJ(list)[l]) )
+                     && LT(CONST_ADDR_OBJ(sub)[k],CONST_ADDR_OBJ(list)[l]) )
                     k++;
             }
             else {
                 i = 0;  k = LEN_PLIST(sub) + 1;
                 while ( i+1 < k ) {
                     j = (i + k) / 2;
-                    if ( LT( ADDR_OBJ(sub)[j], ADDR_OBJ(list)[l] ) )
+                    if ( LT( CONST_ADDR_OBJ(sub)[j], CONST_ADDR_OBJ(list)[l] ) )
                         i = j;
                     else
                         k = j;
@@ -2148,7 +2025,7 @@ Obj FuncUNITE_BLIST_LIST (
 
             /* if <list>[<k>] is in <sub> set the current bit in the block */
             if ( k <= lenSub
-              && EQ( ADDR_OBJ(sub)[k], ADDR_OBJ(list)[l] ) ) {
+              && EQ( CONST_ADDR_OBJ(sub)[k], CONST_ADDR_OBJ(list)[l] ) ) {
                 block |= bit;
                 k++;
             }
@@ -2156,7 +2033,7 @@ Obj FuncUNITE_BLIST_LIST (
             /* if block is full add it to the boolean list and start next  */
             bit = bit << 1;
             if ( bit == 0 || l == lenList ) {
-                BLOCK_ELM_BLIST( blist,l) |= block;
+                *BLOCK_ELM_BLIST_PTR(blist, l) |= block;
                 block = 0;
                 bit   = 1;
             }
@@ -2186,8 +2063,8 @@ Obj FuncINTER_BLIST (
     Obj                 list1,
     Obj                 list2 )
 {
-    UInt  *             ptr1;           /* pointer to the first argument   */
-    UInt  *             ptr2;           /* pointer to the second argument  */
+    UInt *              ptr1;           /* pointer to the first argument   */
+    const UInt *        ptr2;           /* pointer to the second argument  */
     UInt                i;              /* loop variable                   */
 
     /* get and check the arguments                                         */
@@ -2212,7 +2089,7 @@ Obj FuncINTER_BLIST (
 
     /* compute the intersection by *and*-ing blockwise                     */
     ptr1 = BLOCKS_BLIST(list1);
-    ptr2 = BLOCKS_BLIST(list2);
+    ptr2 = CONST_BLOCKS_BLIST(list2);
     for ( i = NUMBER_BLOCKS_BLIST(list1); 0 < i; i-- ) {
         *ptr1++ &= *ptr2++;
     }
@@ -2240,7 +2117,7 @@ Obj FuncSUBTR_BLIST (
     Obj                 list2 )
 {
     UInt *              ptr1;           /* pointer to the first argument   */
-    UInt *              ptr2;           /* pointer to the second argument  */
+    const UInt *        ptr2;           /* pointer to the second argument  */
     UInt                i;              /* loop variable                   */
 
     /* get and check the arguments                                         */
@@ -2265,13 +2142,15 @@ Obj FuncSUBTR_BLIST (
 
     /* compute the difference by operating blockwise                       */
     ptr1 = BLOCKS_BLIST(list1);
-    ptr2 = BLOCKS_BLIST(list2); 
+    ptr2 = CONST_BLOCKS_BLIST(list2);
     for ( i = NUMBER_BLOCKS_BLIST(list1); 0 < i; i-- ) 
       { 
         *ptr1++ &= ~ *ptr2++; 
       }
 
-    /* return nothing, this function is a procedure */ return 0; }
+    /* return nothing, this function is a procedure */
+    return 0;
+}
 
 /****************************************************************************
 **
@@ -2292,8 +2171,8 @@ Obj FuncMEET_BLIST (
     Obj                 list1,
     Obj                 list2 )
 {
-    UInt *              ptr1;           /* pointer to the first argument   */
-    UInt *              ptr2;           /* pointer to the second argument  */
+    const UInt *        ptr1;           /* pointer to the first argument   */
+    const UInt *        ptr2;           /* pointer to the second argument  */
     UInt                i;              /* loop variable                   */
 
     /* get and check the arguments                                         */
@@ -2317,8 +2196,8 @@ Obj FuncMEET_BLIST (
     }
 
     /* compute the difference by operating blockwise                       */
-    ptr1 = BLOCKS_BLIST(list1);
-    ptr2 = BLOCKS_BLIST(list2); 
+    ptr1 = CONST_BLOCKS_BLIST(list1);
+    ptr2 = CONST_BLOCKS_BLIST(list2);
     for ( i = NUMBER_BLOCKS_BLIST(list1); 0 < i; i-- ) 
       { 
 	if (*ptr1++ & *ptr2++) return True;
@@ -2348,22 +2227,23 @@ void MakeImmutableBlist( Obj blist )
 
 /****************************************************************************
 **
-
 *V  BagNames  . . . . . . . . . . . . . . . . . . . . . . . list of bag names
 */
 static StructBagNames BagNames[] = {
   { T_BLIST,                           "list (boolean)"                  },
   { T_BLIST       +IMMUTABLE,          "list (boolean,imm)"              },
-  { T_BLIST                  +COPYING, "list (boolean,copied)"           },
-  { T_BLIST       +IMMUTABLE +COPYING, "list (boolean,imm,copied)"       },
   { T_BLIST_NSORT,                     "list (boolean,nsort)"            },
   { T_BLIST_NSORT +IMMUTABLE,          "list (boolean,nsort,imm)"        },
-  { T_BLIST_NSORT            +COPYING, "list (boolean,nsort,copied)"     },
-  { T_BLIST_NSORT +IMMUTABLE +COPYING, "list (boolean,nsort,imm,copied)" },
   { T_BLIST_SSORT,                     "list (boolean,ssort)"            },
   { T_BLIST_SSORT +IMMUTABLE,          "list (boolean,ssort,imm)"        },
+#if !defined(USE_THREADSAFE_COPYING)
+  { T_BLIST                  +COPYING, "list (boolean,copied)"           },
+  { T_BLIST       +IMMUTABLE +COPYING, "list (boolean,imm,copied)"       },
+  { T_BLIST_NSORT            +COPYING, "list (boolean,nsort,copied)"     },
+  { T_BLIST_NSORT +IMMUTABLE +COPYING, "list (boolean,nsort,imm,copied)" },
   { T_BLIST_SSORT            +COPYING, "list (boolean,ssort,copied)"     },
   { T_BLIST_SSORT +IMMUTABLE +COPYING, "list (boolean,ssort,imm,copied)" },
+#endif
   { -1,                                ""                                }
 };
 
@@ -2374,11 +2254,8 @@ static StructBagNames BagNames[] = {
 */
 static Int ClearFiltsTab [] = {
     T_BLIST,                 T_BLIST,
-    T_BLIST      +IMMUTABLE, T_BLIST+IMMUTABLE,
     T_BLIST_NSORT,           T_BLIST,
-    T_BLIST_NSORT+IMMUTABLE, T_BLIST+IMMUTABLE,
     T_BLIST_SSORT,           T_BLIST,
-    T_BLIST_SSORT+IMMUTABLE, T_BLIST+IMMUTABLE,
     -1,                      -1
 };
 
@@ -2390,7 +2267,6 @@ static Int ClearFiltsTab [] = {
 static Int HasFiltTab [] = {
 
     /* mutable boolean list                                                */
-    T_BLIST,                    FN_IS_MUTABLE,  1,
     T_BLIST,                    FN_IS_EMPTY,    0,
     T_BLIST,                    FN_IS_DENSE,    1,
     T_BLIST,                    FN_IS_NDENSE,   0,
@@ -2400,19 +2276,7 @@ static Int HasFiltTab [] = {
     T_BLIST,                    FN_IS_SSORT,    0,
     T_BLIST,                    FN_IS_NSORT,    0,
 
-    /* immutable boolean list                                               */
-    T_BLIST      +IMMUTABLE,    FN_IS_MUTABLE,  0,
-    T_BLIST      +IMMUTABLE,    FN_IS_EMPTY,    0,
-    T_BLIST      +IMMUTABLE,    FN_IS_DENSE,    1,
-    T_BLIST      +IMMUTABLE,    FN_IS_NDENSE,   0,
-    T_BLIST      +IMMUTABLE,    FN_IS_HOMOG,    1,
-    T_BLIST      +IMMUTABLE,    FN_IS_NHOMOG,   0,
-    T_BLIST      +IMMUTABLE,    FN_IS_TABLE,    0,
-    T_BLIST      +IMMUTABLE,    FN_IS_SSORT,    0,
-    T_BLIST      +IMMUTABLE,    FN_IS_NSORT,    0,
-
     /* nsort mutable boolean list                                          */
-    T_BLIST_NSORT,              FN_IS_MUTABLE,  1,
     T_BLIST_NSORT,              FN_IS_EMPTY,    0,
     T_BLIST_NSORT,              FN_IS_DENSE,    1,
     T_BLIST_NSORT,              FN_IS_NDENSE,   0,
@@ -2422,19 +2286,7 @@ static Int HasFiltTab [] = {
     T_BLIST_NSORT,              FN_IS_SSORT,    0,
     T_BLIST_NSORT,              FN_IS_NSORT,    1,
 
-    /* nsort immutable boolean list                                        */
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_MUTABLE,  0,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_EMPTY,    0,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_DENSE,    1,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_NDENSE,   0,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_HOMOG,    1,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_NHOMOG,   0,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_TABLE,    0,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_SSORT,    0,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_NSORT,    1,
-
     /* ssort mutable boolean list                                          */
-    T_BLIST_SSORT,              FN_IS_MUTABLE,  1,
     T_BLIST_SSORT,              FN_IS_EMPTY,    0,
     T_BLIST_SSORT,              FN_IS_DENSE,    1,
     T_BLIST_SSORT,              FN_IS_NDENSE,   0,
@@ -2443,17 +2295,6 @@ static Int HasFiltTab [] = {
     T_BLIST_SSORT,              FN_IS_TABLE,    0,
     T_BLIST_SSORT,              FN_IS_SSORT,    1,
     T_BLIST_SSORT,              FN_IS_NSORT,    0,
-
-    /* ssort immutable boolean list                                        */
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_MUTABLE,  0,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_EMPTY,    0,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_DENSE,    1,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_NDENSE,   0,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_HOMOG,    1,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_NHOMOG,   0,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_TABLE,    0,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_SSORT,    1,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_NSORT,    0,
 
     -1,                         -1,             -1
 };
@@ -2466,7 +2307,6 @@ static Int HasFiltTab [] = {
 static Int SetFiltTab [] = {
 
     /* mutable boolean list                                                */
-    T_BLIST,                    FN_IS_MUTABLE,  T_BLIST,
     T_BLIST,                    FN_IS_EMPTY,    T_BLIST_SSORT,
     T_BLIST,                    FN_IS_DENSE,    T_BLIST,
     T_BLIST,                    FN_IS_NDENSE,   -1,
@@ -2476,19 +2316,7 @@ static Int SetFiltTab [] = {
     T_BLIST,                    FN_IS_SSORT,    T_BLIST_SSORT,
     T_BLIST,                    FN_IS_NSORT,    T_BLIST_NSORT,
 
-    /* immutable boolean list                                              */
-    T_BLIST      +IMMUTABLE,    FN_IS_MUTABLE,  T_BLIST,
-    T_BLIST      +IMMUTABLE,    FN_IS_EMPTY,    T_BLIST_SSORT+IMMUTABLE,
-    T_BLIST      +IMMUTABLE,    FN_IS_DENSE,    T_BLIST      +IMMUTABLE,
-    T_BLIST      +IMMUTABLE,    FN_IS_NDENSE,   -1,
-    T_BLIST      +IMMUTABLE,    FN_IS_HOMOG,    T_BLIST      +IMMUTABLE,
-    T_BLIST      +IMMUTABLE,    FN_IS_NHOMOG,   -1,
-    T_BLIST      +IMMUTABLE,    FN_IS_TABLE,    -1,
-    T_BLIST      +IMMUTABLE,    FN_IS_SSORT,    T_BLIST_SSORT+IMMUTABLE,
-    T_BLIST      +IMMUTABLE,    FN_IS_NSORT,    T_BLIST_NSORT+IMMUTABLE,
-
     /* nsort mutable boolean list                                          */
-    T_BLIST_NSORT,              FN_IS_MUTABLE,  T_BLIST_NSORT,
     T_BLIST_NSORT,              FN_IS_EMPTY,    -1,
     T_BLIST_NSORT,              FN_IS_DENSE,    T_BLIST_NSORT,
     T_BLIST_NSORT,              FN_IS_NDENSE,   -1,
@@ -2498,19 +2326,7 @@ static Int SetFiltTab [] = {
     T_BLIST_NSORT,              FN_IS_SSORT,    -1,
     T_BLIST_NSORT,              FN_IS_NSORT,    T_BLIST_NSORT,
 
-    /* nsort immutable boolean list                                        */
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_MUTABLE,  T_BLIST_NSORT,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_EMPTY,    -1,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_DENSE,    T_BLIST_NSORT+IMMUTABLE,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_NDENSE,   -1,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_HOMOG,    T_BLIST_NSORT+IMMUTABLE,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_NHOMOG,   -1,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_TABLE,    -1,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_SSORT,    -1,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_NSORT,    T_BLIST_NSORT+IMMUTABLE,
-
     /* ssort mutable boolean list                                          */
-    T_BLIST_SSORT,              FN_IS_MUTABLE,  T_BLIST_SSORT,
     T_BLIST_SSORT,              FN_IS_EMPTY,    T_BLIST_SSORT,
     T_BLIST_SSORT,              FN_IS_DENSE,    T_BLIST_SSORT,
     T_BLIST_SSORT,              FN_IS_NDENSE,   -1,
@@ -2519,17 +2335,6 @@ static Int SetFiltTab [] = {
     T_BLIST_SSORT,              FN_IS_TABLE,    -1,
     T_BLIST_SSORT,              FN_IS_SSORT,    T_BLIST_SSORT,
     T_BLIST_SSORT,              FN_IS_NSORT,    -1,
-
-    /* ssort immutable boolean list                                        */
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_MUTABLE,  T_BLIST_SSORT,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_EMPTY,    T_BLIST_SSORT+IMMUTABLE,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_DENSE,    T_BLIST_SSORT+IMMUTABLE,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_NDENSE,   -1,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_HOMOG,    T_BLIST_SSORT+IMMUTABLE,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_NHOMOG,   -1,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_TABLE,    -1,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_SSORT,    T_BLIST_SSORT+IMMUTABLE,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_NSORT,    -1,
 
     -1,                         -1,             -1
 
@@ -2543,7 +2348,6 @@ static Int SetFiltTab [] = {
 static Int ResetFiltTab [] = {
 
     /* mutable boolean list                                                */
-    T_BLIST,                    FN_IS_MUTABLE,  T_BLIST      +IMMUTABLE,
     T_BLIST,                    FN_IS_EMPTY,    T_BLIST,
     T_BLIST,                    FN_IS_DENSE,    T_BLIST,
     T_BLIST,                    FN_IS_NDENSE,   T_BLIST,
@@ -2553,19 +2357,7 @@ static Int ResetFiltTab [] = {
     T_BLIST,                    FN_IS_SSORT,    T_BLIST,
     T_BLIST,                    FN_IS_NSORT,    T_BLIST,
 
-    /* immutable boolean list                                               */
-    T_BLIST      +IMMUTABLE,    FN_IS_MUTABLE,  T_BLIST      +IMMUTABLE,
-    T_BLIST      +IMMUTABLE,    FN_IS_EMPTY,    T_BLIST      +IMMUTABLE,
-    T_BLIST      +IMMUTABLE,    FN_IS_DENSE,    T_BLIST      +IMMUTABLE,
-    T_BLIST      +IMMUTABLE,    FN_IS_NDENSE,   T_BLIST      +IMMUTABLE,
-    T_BLIST      +IMMUTABLE,    FN_IS_HOMOG,    T_BLIST      +IMMUTABLE,
-    T_BLIST      +IMMUTABLE,    FN_IS_NHOMOG,   T_BLIST      +IMMUTABLE,
-    T_BLIST      +IMMUTABLE,    FN_IS_NSORT,    T_BLIST      +IMMUTABLE,
-    T_BLIST      +IMMUTABLE,    FN_IS_SSORT,    T_BLIST      +IMMUTABLE,
-    T_BLIST      +IMMUTABLE,    FN_IS_TABLE,    T_BLIST      +IMMUTABLE,
-
     /* nsort mutable boolean list                                          */
-    T_BLIST_NSORT,              FN_IS_MUTABLE,  T_BLIST_NSORT+IMMUTABLE,
     T_BLIST_NSORT,              FN_IS_EMPTY,    T_BLIST_NSORT,
     T_BLIST_NSORT,              FN_IS_DENSE,    T_BLIST_NSORT,
     T_BLIST_NSORT,              FN_IS_NDENSE,   T_BLIST_NSORT,
@@ -2575,19 +2367,7 @@ static Int ResetFiltTab [] = {
     T_BLIST_NSORT,              FN_IS_SSORT,    T_BLIST_NSORT,
     T_BLIST_NSORT,              FN_IS_NSORT,    T_BLIST,
 
-    /* nsort immutable boolean list                                        */
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_MUTABLE,  T_BLIST_NSORT+IMMUTABLE,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_EMPTY,    T_BLIST_NSORT+IMMUTABLE,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_DENSE,    T_BLIST_NSORT+IMMUTABLE,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_NDENSE,   T_BLIST_NSORT+IMMUTABLE,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_HOMOG,    T_BLIST_NSORT+IMMUTABLE,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_NHOMOG,   T_BLIST_NSORT+IMMUTABLE,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_TABLE,    T_BLIST_NSORT+IMMUTABLE,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_SSORT,    T_BLIST_NSORT+IMMUTABLE,
-    T_BLIST_NSORT+IMMUTABLE,    FN_IS_NSORT,    T_BLIST      +IMMUTABLE,
-
     /* ssort mutable boolean list                                          */
-    T_BLIST_SSORT,              FN_IS_MUTABLE,  T_BLIST_SSORT+IMMUTABLE,
     T_BLIST_SSORT,              FN_IS_EMPTY,    T_BLIST_SSORT,
     T_BLIST_SSORT,              FN_IS_DENSE,    T_BLIST_SSORT,
     T_BLIST_SSORT,              FN_IS_NDENSE,   T_BLIST_SSORT,
@@ -2596,17 +2376,6 @@ static Int ResetFiltTab [] = {
     T_BLIST_SSORT,              FN_IS_TABLE,    T_BLIST_SSORT,
     T_BLIST_SSORT,              FN_IS_SSORT,    T_BLIST,
     T_BLIST_SSORT,              FN_IS_NSORT,    T_BLIST_SSORT,
-
-    /* ssort immutable boolean list                                        */
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_MUTABLE,  T_BLIST_SSORT+IMMUTABLE,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_EMPTY,    T_BLIST_SSORT+IMMUTABLE,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_DENSE,    T_BLIST_SSORT+IMMUTABLE,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_NDENSE,   T_BLIST_SSORT+IMMUTABLE,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_HOMOG,    T_BLIST_SSORT+IMMUTABLE,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_NHOMOG,   T_BLIST_SSORT+IMMUTABLE,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_TABLE,    T_BLIST_SSORT+IMMUTABLE,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_SSORT,    T_BLIST      +IMMUTABLE,
-    T_BLIST_SSORT+IMMUTABLE,    FN_IS_NSORT,    T_BLIST_SSORT+IMMUTABLE,
 
     -1,                         -1,             -1
 
@@ -2619,13 +2388,9 @@ static Int ResetFiltTab [] = {
 */
 static StructGVarFilt GVarFilts [] = {
 
-    { "IS_BLIST", "obj", &IsBlistFilt, 
-      FuncIS_BLIST, "src/blister.c:IS_BLIST" },
-
-    { "IS_BLIST_REP", "obj", &IsBlistRepFilt, 
-      FuncIS_BLIST_REP, "src/blister.c:IS_BLIST_REP" },
-
-    { 0 }
+    GVAR_FILTER(IS_BLIST, "obj", &IsBlistFilt),
+    GVAR_FILTER(IS_BLIST_REP, "obj", &IsBlistRepFilt),
+    { 0, 0, 0, 0, 0 }
 
 };
 
@@ -2636,53 +2401,26 @@ static StructGVarFilt GVarFilts [] = {
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    { "IS_BLIST_CONV", 1, "obj", 
-      FuncIS_BLIST_CONV, "src/blister.c:IS_BLIST_CONV" },
-
-    { "CONV_BLIST", 1, "blist",
-      FuncCONV_BLIST, "src/blister.c:CONV_BLIST" },
-
-    { "BLIST_LIST", 2, "list, sub",
-      FuncBLIST_LIST, "src/blister.c:BLIST_LIST" },
-
-    { "LIST_BLIST", 2, "list, blist",
-      FuncLIST_BLIST, "src/blister.c:LIST_BLIST" },
-
-    { "SIZE_BLIST", 1, "blist",
-      FuncSIZE_BLIST, "src/blister.c:SIZE_BLIST" },
-
-    { "IS_SUB_BLIST", 2, "blist1, blist2",
-      FuncIS_SUB_BLIST, "src/blister.c:IS_SUB_BLIST" },
-
-    { "UNITE_BLIST", 2, "blist1, blist2",
-      FuncUNITE_BLIST, "src/blister.c:UNITE_BLIST" },
-
-    { "UNITE_BLIST_LIST", 3, "list, blist, sub",
-      FuncUNITE_BLIST_LIST, "src/blister.c:UNITE_BLIST_LIST" },
-
-    { "INTER_BLIST", 2, "blist1, blist2",
-      FuncINTER_BLIST, "src/blister.c:INTER_BLIST" },
-
-    { "SUBTR_BLIST", 2, "blist1, blist2",
-      FuncSUBTR_BLIST, "src/blister.c:SUBTR_BLIST" },
-
-    { "MEET_BLIST", 2, "blist1, blist2",
-      FuncMEET_BLIST, "src/blister.c:MEET_BLIST" },
-
-    { "PositionNthTrueBlist", 2, "blist, nth",
-      FuncPositionNthTrueBlist, "src/blister.c:PositionNthTrueBlist" },
-
-    { "PositionsTrueBlist", 1, "blist",
-      FuncPositionsTrueBlist, "src/blister.c:PositionsTrueBlist" },
-
-    { 0 }
+    GVAR_FUNC(IS_BLIST_CONV, 1, "obj"),
+    GVAR_FUNC(CONV_BLIST, 1, "blist"),
+    GVAR_FUNC(BLIST_LIST, 2, "list, sub"),
+    GVAR_FUNC(LIST_BLIST, 2, "list, blist"),
+    GVAR_FUNC(SIZE_BLIST, 1, "blist"),
+    GVAR_FUNC(IS_SUB_BLIST, 2, "blist1, blist2"),
+    GVAR_FUNC(UNITE_BLIST, 2, "blist1, blist2"),
+    GVAR_FUNC(UNITE_BLIST_LIST, 3, "list, blist, sub"),
+    GVAR_FUNC(INTER_BLIST, 2, "blist1, blist2"),
+    GVAR_FUNC(SUBTR_BLIST, 2, "blist1, blist2"),
+    GVAR_FUNC(MEET_BLIST, 2, "blist1, blist2"),
+    GVAR_FUNC(PositionNthTrueBlist, 2, "blist, nth"),
+    GVAR_FUNC(PositionsTrueBlist, 1, "blist"),
+    { 0, 0, 0, 0, 0 }
 
 };
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
@@ -2690,9 +2428,6 @@ static Int InitKernel (
 {
     UInt                t1;
     UInt                t2;
-
-    /* check dependencies                                                  */
-    RequireModule( module, "lists", 403600000UL );
 
     /* init filters and functions                                          */
     InitHdlrFiltsFromTable( GVarFilts );
@@ -2702,10 +2437,12 @@ static Int InitKernel (
     InitBagNamesFromTable( BagNames );
 
     for ( t1 = T_BLIST;  t1 <= T_BLIST_SSORT;  t1 += 2 ) {
-        InitMarkFuncBags( t1,                      MarkNoSubBags  );
-        InitMarkFuncBags( t1 +IMMUTABLE,           MarkNoSubBags  );
+        InitMarkFuncBags( t1                     , MarkNoSubBags  );
+        InitMarkFuncBags( t1 +IMMUTABLE          , MarkNoSubBags  );
+#if !defined(USE_THREADSAFE_COPYING)
         InitMarkFuncBags( t1            +COPYING , MarkOneSubBags );
         InitMarkFuncBags( t1 +IMMUTABLE +COPYING , MarkOneSubBags );
+#endif
     }
 
     /* Make immutable blists public					   */
@@ -2737,16 +2474,18 @@ static Int InitKernel (
 
     /* install the copy functions                                          */
     for ( t1 = T_BLIST; t1 <= T_BLIST_SSORT; t1 += 2 ) {
+#if !defined(USE_THREADSAFE_COPYING)
         CopyObjFuncs [ t1                     ] = CopyBlist;
-        CopyObjFuncs [ t1 +IMMUTABLE          ] = CopyBlist;
+        CopyObjFuncs [ t1 +IMMUTABLE          ] = CopyBlistImm;
         CopyObjFuncs [ t1            +COPYING ] = CopyBlistCopy;
         CopyObjFuncs [ t1 +IMMUTABLE +COPYING ] = CopyBlistCopy;
         CleanObjFuncs[ t1                     ] = CleanBlist;
         CleanObjFuncs[ t1 +IMMUTABLE          ] = CleanBlist;
         CleanObjFuncs[ t1            +COPYING ] = CleanBlistCopy;
         CleanObjFuncs[ t1 +IMMUTABLE +COPYING ] = CleanBlistCopy;
-	ShallowCopyObjFuncs[ t1 ] = ShallowCopyBlist;
-	ShallowCopyObjFuncs[ t1 +IMMUTABLE ] = ShallowCopyBlist;
+#endif
+        ShallowCopyObjFuncs[ t1               ] = ShallowCopyBlist;
+        ShallowCopyObjFuncs[ t1 +IMMUTABLE    ] = ShallowCopyBlist;
     }
 
     /* install the comparison methods                                      */
@@ -2762,8 +2501,6 @@ static Int InitKernel (
         LenListFuncs    [ t1 +IMMUTABLE ] = LenBlist;
         IsbListFuncs    [ t1            ] = IsbBlist;
         IsbListFuncs    [ t1 +IMMUTABLE ] = IsbBlist;
-        IsbvListFuncs   [ t1            ] = IsbvBlist;
-        IsbvListFuncs   [ t1 +IMMUTABLE ] = IsbvBlist;
         Elm0ListFuncs   [ t1            ] = Elm0Blist;
         Elm0ListFuncs   [ t1 +IMMUTABLE ] = Elm0Blist;
         Elm0vListFuncs  [ t1            ] = Elm0vBlist;
@@ -2780,8 +2517,8 @@ static Int InitKernel (
         AssListFuncs    [ t1 +IMMUTABLE ] = AssBlistImm;
         AsssListFuncs   [ t1            ] = AsssListDefault;
         AsssListFuncs   [ t1 +IMMUTABLE ] = AsssBlistImm;
-        IsDenseListFuncs[ t1            ] = IsDenseBlist;
-        IsDenseListFuncs[ t1 +IMMUTABLE ] = IsDenseBlist;
+        IsDenseListFuncs[ t1            ] = AlwaysYes;
+        IsDenseListFuncs[ t1 +IMMUTABLE ] = AlwaysYes;
         IsHomogListFuncs[ t1            ] = IsHomogBlist;
         IsHomogListFuncs[ t1 +IMMUTABLE ] = IsHomogBlist;
         IsSSortListFuncs[ t1            ] = IsSSortBlist;
@@ -2794,10 +2531,10 @@ static Int InitKernel (
         PlainListFuncs  [ t1 +IMMUTABLE ] = PlainBlist;
         MakeImmutableObjFuncs [ t1      ] = MakeImmutableBlist;
     }
-    IsSSortListFuncs[ T_BLIST_NSORT            ] = IsSSortBlistNot;
-    IsSSortListFuncs[ T_BLIST_NSORT +IMMUTABLE ] = IsSSortBlistNot;
-    IsSSortListFuncs[ T_BLIST_SSORT            ] = IsSSortBlistYes;
-    IsSSortListFuncs[ T_BLIST_SSORT +IMMUTABLE ] = IsSSortBlistYes;
+    IsSSortListFuncs[ T_BLIST_NSORT            ] = AlwaysNo;
+    IsSSortListFuncs[ T_BLIST_NSORT +IMMUTABLE ] = AlwaysNo;
+    IsSSortListFuncs[ T_BLIST_SSORT            ] = AlwaysYes;
+    IsSSortListFuncs[ T_BLIST_SSORT +IMMUTABLE ] = AlwaysYes;
 
     /* Import the types of blists: */
     ImportGVarFromLibrary( "TYPE_BLIST_MUT", &TYPE_BLIST_MUT );
@@ -2835,28 +2572,15 @@ static Int InitLibrary (
 *F  InitInfoBlist() . . . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "blister",                          /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "blister",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoBlist ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  blister.c . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

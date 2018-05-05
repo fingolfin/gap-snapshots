@@ -16,7 +16,7 @@
 ##
 InstallMethod( TrivialGroupCons,
     "pc group",
-    [ IsPcGroup and IsFinite ],
+    [ IsPcGroup and IsTrivial ],
     function( filter )
     filter:= CyclicGroup( IsPcGroup, 1 );
     SetIsTrivial( filter, true );
@@ -29,7 +29,7 @@ InstallMethod( TrivialGroupCons,
 #M  AbelianGroupCons( <IsPcGroup and IsFinite>, <ints> )
 ##
 InstallMethod( AbelianGroupCons, "pc group", true,
-    [ IsPcGroup and IsFinite, IsList ], 0,
+    [ IsPcGroup and IsAbelian, IsList ], 0,
 function( filter, ints )
 local   pis,  f,  g,  r,  k,  pi,  i,  geni,  j,  name,  ps;
 
@@ -101,22 +101,10 @@ local   pis,  f,  g,  r,  k,  pi,  i,  geni,  j,  name,  ps;
     od;
     if not HasIsCyclic( k ) then
       SetIsCyclic( k, true );
-      SetNameIsomorphismClass( k, Concatenation( "c", String( Size( f ))));
       return k;
     fi;
     Sort( pis );
     SetAbelianInvariants( k, pis );
-    pis := Collected( pis );
-    name := "";
-    for i in pis do
-      Append( name, String( i[ 1 ] ) );
-      if i[ 2 ] > 1 then
-        name := Concatenation( name, "^", String( i[ 2 ] ) );
-      fi;
-      Append( name, "x" );
-    od;
-    Unbind( name[ Length( name ) ] );
-    SetNameIsomorphismClass( k, name );
     return k;
 end );
 
@@ -151,7 +139,7 @@ end );
 InstallMethod( CyclicGroupCons,
     "pc group",
     true,
-    [ IsPcGroup and IsFinite,
+    [ IsPcGroup and IsCyclic,
       IsInt and IsPosRat ],
     0,
 
@@ -182,7 +170,6 @@ function( filter, n )
 
     SetSize( f, n );
     SetIsCyclic( f, true );
-    SetNameIsomorphismClass( f, Concatenation( "c", String( n ) ) );
     return f;
 end );
 
@@ -278,7 +265,7 @@ end );
 InstallMethod( ElementaryAbelianGroupCons,
     "pc group",
     true,
-    [ IsPcGroup and IsFinite,
+    [ IsPcGroup and IsElementaryAbelian,
       IsInt and IsPosRat ],
     0,
 

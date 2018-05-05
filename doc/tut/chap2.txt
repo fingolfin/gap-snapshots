@@ -71,9 +71,9 @@
   always,  a  combination  like  [12XCtrl-D[112X means that you have to press the [12XD[112X key
   while you hold down the [12XCtrl[112X key.[133X
   
-  [33X[0;0YOn  some  systems  (for  example the Apple Macintosh) minor changes might be
-  necessary.  This  is  explained  in  [5XGAP[105X  installation instructions (see the
-  [11XINSTALL[111X file in the [5XGAP[105X root directory, or the [5XGAP[105X website).[133X
+  [33X[0;0YOn  some  systems minor changes might be necessary. This is explained in [5XGAP[105X
+  installation  instructions  (see the [11XINSTALL[111X file in the [5XGAP[105X root directory,
+  or the [5XGAP[105X website).[133X
   
   [33X[0;0YIn  most  places  [13Xwhitespace[113X  characters (i.e. [12XSpace[112Xs, [12XTab[112Xs and [12XReturn[112Xs) are
   insignificant  for  the  meaning of [5XGAP[105X input. Identifiers and keywords must
@@ -100,8 +100,7 @@
   [4X[32X[104X
   
   [33X[0;0YYou  can  either  give the full absolute path name of the source file or its
-  relative  path  name  from  the [5XGAP[105X root directory (the directory containing
-  [11Xbin/[111X, [11Xdoc/[111X, [11Xlib/[111X, etc.).[133X
+  relative path name from the current directory.[133X
   
   
   [1X2.3 [33X[0;0YThe Read Evaluate Print Loop[133X[101X

@@ -71,46 +71,26 @@
 **  PURETYPE_WORDTYPE( <type> )
 **    returns the result type
 */
-#include        <assert.h>              /* assert                          */
-#include        "system.h"              /* Ints, UInts                     */
 
+#include <src/objfgelm.h>
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
-
-#include        "gap.h"                 /* error handling, initialisation  */
-
-#include        "gvars.h"               /* global variables                */
-#include        "calls.h"               /* generic call mechanism          */
-#include        "opers.h"               /* generic operations              */
-#include        "ariths.h"              /* arithmetic macros               */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "plist.h"               /* plain lists                     */
-#include        "string.h"              /* strings                         */
-
-#include        "bool.h"                /* booleans                        */
-
-#include	"code.h"		/* coder                           */
-#include	"thread.h"		/* threads			   */
-#include	"tls.h"			/* thread-local storage		   */
-
-#include        "objfgelm.h"            /* objects of free groups          */
+#include <src/ariths.h>
+#include <src/bool.h>
+#include <src/gap.h>
+#include <src/gvars.h>
+#include <src/lists.h>
+#include <src/opers.h>
+#include <src/plist.h>
+#include <src/stringobj.h>
 
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * * * * 8 bits words * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  Func8Bits_Equal( <self>, <l>, <r> )
 */
 Obj Func8Bits_Equal (
@@ -165,13 +145,13 @@ Obj Func8Bits_ExponentSums3 (
     UInt1 *     ptr;            /* pointer into the data area of <obj>     */
 
     /* <start> must be positive                                            */
-    while ( !IS_INTOBJ(vstart) || INT_INTOBJ(vstart) <= 0 )
+    while ( !IS_POS_INTOBJ(vstart) )
         vstart = ErrorReturnObj( "<start> must be a positive integer", 0L, 0L,
                                  "you can replace <start> via 'return <start>;'" );
     start = INT_INTOBJ(vstart);
 
     /* <end> must be positive                                              */
-    while ( !IS_INTOBJ(vend) || INT_INTOBJ(vend) <= 0 )
+    while ( !IS_POS_INTOBJ(vend) )
         vend = ErrorReturnObj( "<end> must be a positive integer", 0L, 0L,
                                "you can replace <end> via 'return <end>;'" );
     end = INT_INTOBJ(vend);
@@ -386,7 +366,6 @@ Obj Func8Bits_HeadByNumber (
     /* get the number of bits for exponents                                */
     ebits = EBITS_WORD(l);
 
-
     /* get the generator mask                                              */
     genm = ((1UL << (8-ebits)) - 1) << ebits;
 
@@ -577,15 +556,12 @@ Obj Func8Bits_AssocWord (
         vgen = ELMW_LIST( data, 2*i-1 );
         ngen = INT_INTOBJ(vgen);
         vexp = ELMW_LIST( data, 2*i );
-        nexp = INT_INTOBJ(vexp);
-        while ( ! IS_INTOBJ(vexp) || nexp == 0 ) {
-            vexp = ErrorReturnObj( "<exponent> must be a positive integer", 
+        while ( ! IS_INTOBJ(vexp) || vexp == INTOBJ_INT(0) ) {
+            vexp = ErrorReturnObj( "<exponent> must be a non-zero integer", 
                                    0L, 0L,
                                    "you can replace <exponent> via 'return <exponent>;'" );
-            nexp = INT_INTOBJ(vexp);
-            ptr  = (UInt1*)DATA_WORD(obj) + (i-1);
         }
-        nexp = nexp & expm;
+        nexp = INT_INTOBJ(vexp) & expm;
         *ptr = ((ngen-1) << ebits) | nexp;
         assert( ptr == (UInt1*)DATA_WORD(obj) + (i-1) );
     }
@@ -625,7 +601,7 @@ Obj Func8Bits_ObjByVector (
         vexp = ELMW_LIST(data,i);
         while ( ! IS_INTOBJ(vexp) ) {
             vexp = ErrorReturnObj(
-                "%d element must be integer (not a %s)",
+                "%d element must be a small integer (not a %s)",
                 (Int) i, (Int) TNAM_OBJ(vexp),
                 "you can replace the element by <val> via 'return <val>;'" );
         }
@@ -1065,6 +1041,7 @@ Obj Func8Bits_LengthWord (
   UInt npairs,i,ebits,exps,expm;
   Obj len, uexp;
   UInt1 *data, pair;
+
   npairs = NPAIRS_WORD(w);
   ebits = EBITS_WORD(w);
   data = (UInt1*)DATA_WORD(w);
@@ -1093,7 +1070,6 @@ Obj Func8Bits_LengthWord (
 
 /****************************************************************************
 **
-
 *F  Func16Bits_Equal( <self>, <l>, <r> )
 */
 Obj Func16Bits_Equal (
@@ -1148,13 +1124,13 @@ Obj Func16Bits_ExponentSums3 (
     UInt2 *     ptr;            /* pointer into the data area of <obj>     */
 
     /* <start> must be positive                                            */
-    while ( !IS_INTOBJ(vstart) || INT_INTOBJ(vstart) <= 0 )
+    while ( !IS_POS_INTOBJ(vstart) )
         vstart = ErrorReturnObj( "<start> must be a positive integer", 0L, 0L,
                                  "you can replace <start> via 'return <start>;'" );
     start = INT_INTOBJ(vstart);
 
     /* <end> must be positive                                              */
-    while ( !IS_INTOBJ(vend) || INT_INTOBJ(vend) <= 0 )
+    while ( !IS_POS_INTOBJ(vend) )
         vend = ErrorReturnObj( "<end> must be a positive integer", 0L, 0L,
                                "you can replace <end> via 'return <end>;'" );
     end = INT_INTOBJ(vend);
@@ -1298,9 +1274,9 @@ Obj Func16Bits_ExtRepOfObj (
 
     /* and unpack <obj> into <lst>                                         */
     ptr = (UInt2*)DATA_WORD(obj);
-    for ( i = 1;  i <= num;  i++, ptr++ ) {
 
-        /* this will not cause a garbage collection                        */
+    /* this will not cause a garbage collection                            */
+    for ( i = 1;  i <= num;  i++, ptr++ ) {
         SET_ELM_PLIST( lst, 2*i-1, INTOBJ_INT(((*ptr) >> ebits)+1) );
         if ( (*ptr) & exps )
             SET_ELM_PLIST( lst, 2*i, INTOBJ_INT(((*ptr)&expm)-exps) );
@@ -1513,9 +1489,9 @@ Obj Func16Bits_AssocWord (
     UInt        expm;           /* unsigned exponent mask                  */
     Int         num;            /* number of gen/exp pairs in <data>       */
     Int         i;              /* loop variable for gen/exp pairs         */
-    Obj         vgen;           /* value of current exponent               */
+    Obj         vexp;           /* value of current exponent               */
     Int         nexp;           /* current exponent                        */
-    Obj         vexp;           /* value of current generator              */
+    Obj         vgen;           /* value of current generator              */
     Int         ngen;           /* current generator                       */
     Obj         obj;            /* result                                  */
     UInt2 *     ptr;            /* pointer into the data area of <obj>     */
@@ -1538,15 +1514,12 @@ Obj Func16Bits_AssocWord (
         vgen = ELMW_LIST( data, 2*i-1 );
         ngen = INT_INTOBJ(vgen);
         vexp = ELMW_LIST( data, 2*i );
-        nexp = INT_INTOBJ(vexp);
-        while ( ! IS_INTOBJ(vexp) || nexp == 0 ) {
-            vexp = ErrorReturnObj( "<exponent> must be a positive integer", 
+        while ( ! IS_INTOBJ(vexp) || vexp == INTOBJ_INT(0) ) {
+            vexp = ErrorReturnObj( "<exponent> must be a non-zero integer", 
                                    0L, 0L,
                                    "you can replace <exponent> via 'return <exponent>;'" );
-            nexp = INT_INTOBJ(vexp);
-            ptr = (UInt2*)DATA_WORD(obj) + (i-1);
         }
-        nexp = nexp & expm;
+        nexp = INT_INTOBJ(vexp) & expm;
         *ptr = ((ngen-1) << ebits) | nexp;
         assert( ptr == (UInt2*)DATA_WORD(obj) + (i-1) );
     }
@@ -1586,7 +1559,7 @@ Obj Func16Bits_ObjByVector (
         vexp = ELMW_LIST(data,i);
         while ( ! IS_INTOBJ(vexp) ) {
             vexp = ErrorReturnObj(
-                "%d element must be an integer (not a %s)",
+                "%d element must be a small integer (not a %s)",
                 (Int) i, (Int) TNAM_OBJ(vexp),
                 "you can replace the element by <val> via 'return <val>;'" );
         }
@@ -1887,7 +1860,7 @@ Obj Func16Bits_Product (
 
     /* look closely at the meeting point                                   */
     sr = 0;
-    pl = ((UInt2*)DATA_WORD(l))+(nl-1);
+    pl = (UInt2*)DATA_WORD(l)+(nl-1);
     pr = (UInt2*)DATA_WORD(r);
     while ( 0 < nl && sr < nr && (*pl & genm) == (*pr & genm) ) {
         if ( (*pl&exps) == (*pr&exps) )
@@ -2050,13 +2023,11 @@ Obj Func16Bits_LengthWord (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * * *  32 bits words * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  Func32Bits_Equal( <self>, <l>, <r> )
 */
 Obj Func32Bits_Equal (
@@ -2111,13 +2082,13 @@ Obj Func32Bits_ExponentSums3 (
     UInt4 *     ptr;            /* pointer into the data area of <obj>     */
 
     /* <start> must be positive                                            */
-    while ( !IS_INTOBJ(vstart) || INT_INTOBJ(vstart) <= 0 )
+    while ( !IS_POS_INTOBJ(vstart) )
         vstart = ErrorReturnObj( "<start> must be a positive integer", 0L, 0L,
                                  "you can replace <start> via 'return <start>;'" );
     start = INT_INTOBJ(vstart);
 
     /* <end> must be positive                                              */
-    while ( !IS_INTOBJ(vend) || INT_INTOBJ(vend) <= 0 )
+    while ( !IS_POS_INTOBJ(vend) )
         vend = ErrorReturnObj( "<end> must be a positive integer", 0L, 0L,
                                "you can replace <end> via 'return <end>;'" );
     end = INT_INTOBJ(vend);
@@ -2261,9 +2232,9 @@ Obj Func32Bits_ExtRepOfObj (
 
     /* and unpack <obj> into <lst>                                         */
     ptr = (UInt4*)DATA_WORD(obj);
-    for ( i = 1;  i <= num;  i++, ptr++ ) {
 
-        /* this will not cause a garbage collection                    */
+    /* this will not cause a garbage collection                            */
+    for ( i = 1;  i <= num;  i++, ptr++ ) {
         SET_ELM_PLIST( lst, 2*i-1, INTOBJ_INT(((*ptr) >> ebits)+1) );
         if ( (*ptr) & exps )
             SET_ELM_PLIST( lst, 2*i, INTOBJ_INT(((*ptr)&expm)-exps) );
@@ -2476,9 +2447,9 @@ Obj Func32Bits_AssocWord (
     UInt        expm;           /* unsigned exponent mask                  */
     Int         num;            /* number of gen/exp pairs in <data>       */
     Int         i;              /* loop variable for gen/exp pairs         */
-    Obj         vgen;           /* value of current exponent               */
+    Obj         vexp;           /* value of current exponent               */
     Int         nexp;           /* current exponent                        */
-    Obj         vexp;           /* value of current generator              */
+    Obj         vgen;           /* value of current generator              */
     Int         ngen;           /* current generator                       */
     Obj         obj;            /* result                                  */
     UInt4 *     ptr;            /* pointer into the data area of <obj>     */
@@ -2493,7 +2464,7 @@ Obj Func32Bits_AssocWord (
     num = LEN_LIST(data)/2;
     NEW_WORD( obj, type, num );
 
-    /* use UInt4 pointer for eight bits                                    */
+    /* use UInt4 pointer for thirty-two bits                               */
     ptr = (UInt4*)DATA_WORD(obj);
     for ( i = 1;  i <= num;  i++, ptr++ ) {
 
@@ -2501,15 +2472,12 @@ Obj Func32Bits_AssocWord (
         vgen = ELMW_LIST( data, 2*i-1 );
         ngen = INT_INTOBJ(vgen);
         vexp = ELMW_LIST( data, 2*i );
-        nexp = INT_INTOBJ(vexp);
-        while ( ! IS_INTOBJ(vexp) || nexp == 0 ) {
-            vexp = ErrorReturnObj( "<exponent> must not be a positive integer",
+        while ( ! IS_INTOBJ(vexp) || vexp == INTOBJ_INT(0) ) {
+            vexp = ErrorReturnObj( "<exponent> must be a non-zero integer", 
                                    0L, 0L,
                                    "you can replace <exponent> via 'return <exponent>;'" );
-            nexp = INT_INTOBJ(vexp);
-            ptr = (UInt4*)DATA_WORD(obj) + (i-1);
         }
-        nexp = nexp & expm;
+        nexp = INT_INTOBJ(vexp) & expm;
         *ptr = ((ngen-1) << ebits) | nexp;
         assert( ptr == (UInt4*)DATA_WORD(obj) + (i-1) );
     }
@@ -2549,7 +2517,7 @@ Obj Func32Bits_ObjByVector (
         vexp = ELMW_LIST(data,i);
         while ( ! IS_INTOBJ(vexp) ) {
             vexp = ErrorReturnObj(
-                "%d element must be an integer (not a %s)",
+                "%d element must be a small integer (not a %s)",
                 (Int) i, (Int) TNAM_OBJ(vexp),
                 "you can replace the element by <val> via 'return <val>;'" );
         }
@@ -2562,7 +2530,7 @@ Obj Func32Bits_ObjByVector (
     /* construct a new object                                              */
     NEW_WORD( obj, type, num );
 
-    /* use UInt4 pointer for thirteen bits                                 */
+    /* use UInt4 pointer for thirty-two bits                               */
     ptr = (UInt4*)DATA_WORD(obj);
     for ( i = 1;  i <= num;  i++, ptr++, j++ ) {
 
@@ -2602,7 +2570,6 @@ Obj Func32Bits_Power (
     UInt4 *     pr;             /* data area in <obj>                      */
     UInt4 *     pe;             /* end marker                              */
     Int         ex = 0;         /* meeting exponent                        */
-    Int         exs;            /* save <ex> for overflow test             */
     Int         pow;            /* power to take                           */
     Int         apw;            /* absolute value of <pow>                 */
 
@@ -2665,7 +2632,7 @@ Obj Func32Bits_Power (
     if ( sl == sr ) {
         ex = (*pl&expm);
         if ( *pl & exps )  ex -= exps;
-        exs = ex;
+        Int exs = ex;   // save <ex> for overflow test
         ex  = (Int)((UInt)ex * (UInt)pow);
 
         /* check that n*pow fits into the exponent                         */
@@ -3015,13 +2982,11 @@ Obj Func32Bits_LengthWord (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * * * all bits words * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  FuncNBits_NumberSyllables( <self>, <w> )
 */
 Obj FuncNBits_NumberSyllables (
@@ -3263,166 +3228,79 @@ Obj FuncMultBytLettrep (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    { "8Bits_Equal", 2, "8_bits_word, 8_bits_word",
-      Func8Bits_Equal, "src/objfgelm.c:8Bits_Equal" },
-
-    { "8Bits_ExponentSums1", 1, "8_bits_word",
-      Func8Bits_ExponentSums1, "src/objfgelm.c:8Bits_ExponentSums1" },
-
-    { "8Bits_ExponentSums3", 3, "8_bits_word, start, end",
-      Func8Bits_ExponentSums3, "src/objfgelm.c:8Bits_ExponentSums3" },
-
-    { "8Bits_ExponentSyllable", 2, "8_bits_word, position",
-      Func8Bits_ExponentSyllable, "src/objfgelm.c:8Bits_ExponentSyllable" },
-
-    { "8Bits_ExtRepOfObj", 1, "8_bits_word",
-      Func8Bits_ExtRepOfObj, "src/objfgelm.c:8Bits_ExtRepOfObj" },
-
-    { "8Bits_GeneratorSyllable", 2, "8_bits_word, position",
-      Func8Bits_GeneratorSyllable, "src/objfgelm.c:8Bits_GeneratorSyllable" },
-
-    { "8Bits_Less", 2, "8_bits_word, 8_bits_word",
-      Func8Bits_Less, "src/objfgelm.c:8Bits_Less" },
-
-    { "8Bits_AssocWord", 2, "type, data",
-      Func8Bits_AssocWord, "src/objfgelm.c:8Bits_AssocWord" },
-
+    GVAR_FUNC(8Bits_Equal, 2, "8_bits_word, 8_bits_word"),
+    GVAR_FUNC(8Bits_ExponentSums1, 1, "8_bits_word"),
+    GVAR_FUNC(8Bits_ExponentSums3, 3, "8_bits_word, start, end"),
+    GVAR_FUNC(8Bits_ExponentSyllable, 2, "8_bits_word, position"),
+    GVAR_FUNC(8Bits_ExtRepOfObj, 1, "8_bits_word"),
+    GVAR_FUNC(8Bits_GeneratorSyllable, 2, "8_bits_word, position"),
+    GVAR_FUNC(8Bits_Less, 2, "8_bits_word, 8_bits_word"),
+    GVAR_FUNC(8Bits_AssocWord, 2, "type, data"),
     { "8Bits_NumberSyllables", 1, "8_bits_word",
       FuncNBits_NumberSyllables, "src/objfgelm.c:8Bits_NumberSyllables" },
 
-    { "8Bits_ObjByVector", 2, "type, data",
-      Func8Bits_ObjByVector, "src/objfgelm.c:8Bits_ObjByVector" },
-
-    { "8Bits_HeadByNumber", 2, "16_bits_word, gen_num",
-      Func8Bits_HeadByNumber, "src/objfgelm.c:8Bits_HeadByNumber" },
-
-    { "8Bits_Power", 2, "8_bits_word, small_integer",
-      Func8Bits_Power, "src/objfgelm.c:8Bits_Power" },
-
-    { "8Bits_Product", 2, "8_bits_word, 8_bits_word",
-      Func8Bits_Product, "src/objfgelm.c:8Bits_Product" },
-
-    { "8Bits_Quotient", 2, "8_bits_word, 8_bits_word",
-      Func8Bits_Quotient, "src/objfgelm.c:8Bits_Quotient" },
-
-    { "8Bits_LengthWord", 1, "8_bits_word",
-      Func8Bits_LengthWord, "src/objfgelm.c:8Bits_LengthWord" },
-
-    { "16Bits_Equal", 2, "16_bits_word, 16_bits_word",
-      Func16Bits_Equal, "src/objfgelm.c:16Bits_Equal" },
-
-    { "16Bits_ExponentSums1", 1, "16_bits_word",
-      Func16Bits_ExponentSums1, "src/objfgelm.c:16Bits_ExponentSums1" },
-
-    { "16Bits_ExponentSums3", 3, "16_bits_word, start, end",
-      Func16Bits_ExponentSums3, "src/objfgelm.c:16Bits_ExponentSums3" },
-
-    { "16Bits_ExponentSyllable", 2, "16_bits_word, position",
-      Func16Bits_ExponentSyllable, "src/objfgelm.c:16Bits_ExponentSyllable" },
-
-    { "16Bits_ExtRepOfObj", 1, "16_bits_word",
-      Func16Bits_ExtRepOfObj, "src/objfgelm.c:16Bits_ExtRepOfObj" },
-
-    { "16Bits_GeneratorSyllable", 2, "16_bits_word, pos",
-      Func16Bits_GeneratorSyllable, "src/objfgelm.c:16Bits_GeneratorSyllable" },
-
-    { "16Bits_Less", 2, "16_bits_word, 16_bits_word",
-      Func16Bits_Less, "src/objfgelm.c:16Bits_Less" },
-
-    { "16Bits_AssocWord", 2, "type, data",
-      Func16Bits_AssocWord, "src/objfgelm.c:16Bits_AssocWord" },
-
+    GVAR_FUNC(8Bits_ObjByVector, 2, "type, data"),
+    GVAR_FUNC(8Bits_HeadByNumber, 2, "16_bits_word, gen_num"),
+    GVAR_FUNC(8Bits_Power, 2, "8_bits_word, small_integer"),
+    GVAR_FUNC(8Bits_Product, 2, "8_bits_word, 8_bits_word"),
+    GVAR_FUNC(8Bits_Quotient, 2, "8_bits_word, 8_bits_word"),
+    GVAR_FUNC(8Bits_LengthWord, 1, "8_bits_word"),
+    GVAR_FUNC(16Bits_Equal, 2, "16_bits_word, 16_bits_word"),
+    GVAR_FUNC(16Bits_ExponentSums1, 1, "16_bits_word"),
+    GVAR_FUNC(16Bits_ExponentSums3, 3, "16_bits_word, start, end"),
+    GVAR_FUNC(16Bits_ExponentSyllable, 2, "16_bits_word, position"),
+    GVAR_FUNC(16Bits_ExtRepOfObj, 1, "16_bits_word"),
+    GVAR_FUNC(16Bits_GeneratorSyllable, 2, "16_bits_word, pos"),
+    GVAR_FUNC(16Bits_Less, 2, "16_bits_word, 16_bits_word"),
+    GVAR_FUNC(16Bits_AssocWord, 2, "type, data"),
     { "16Bits_NumberSyllables", 1, "16_bits_word",
       FuncNBits_NumberSyllables, "src/objfgelm.c:16Bits_NumberSyllables" },
 
-    { "16Bits_ObjByVector", 2, "type, data",
-      Func16Bits_ObjByVector, "src/objfgelm.c:16Bits_ObjByVector" },
-
-    { "16Bits_HeadByNumber", 2, "16_bits_word, gen_num",
-      Func16Bits_HeadByNumber, "src/objfgelm.c:16Bits_HeadByNumber" },
-
-    { "16Bits_Power", 2, "16_bits_word, small_integer",
-      Func16Bits_Power, "src/objfgelm.c:16Bits_Power" },
-
-    { "16Bits_Product", 2, "16_bits_word, 16_bits_word",
-      Func16Bits_Product, "src/objfgelm.c:16Bits_Product" },
-
-    { "16Bits_Quotient", 2, "16_bits_word, 16_bits_word",
-      Func16Bits_Quotient, "src/objfgelm.c:16Bits_Quotient" },
-
-    { "16Bits_LengthWord", 1, "16_bits_word",
-      Func16Bits_LengthWord, "src/objfgelm.c:16Bits_LengthWord" },
-
-    { "32Bits_Equal", 2, "32_bits_word, 32_bits_word",
-      Func32Bits_Equal, "src/objfgelm.c:32Bits_Equal" },
-
-    { "32Bits_ExponentSums1", 1, "32_bits_word",
-      Func32Bits_ExponentSums1, "src/objfgelm.c:32Bits_ExponentSums1" },
-
-    { "32Bits_ExponentSums3", 3, "32_bits_word, start, end",
-      Func32Bits_ExponentSums3, "src/objfgelm.c:32Bits_ExponentSums3" },
-
-    { "32Bits_ExponentSyllable", 2, "32_bits_word, position",
-      Func32Bits_ExponentSyllable, "src/objfgelm.c:32Bits_ExponentSyllable" },
-
-    { "32Bits_ExtRepOfObj", 1, "32_bits_word",
-      Func32Bits_ExtRepOfObj, "src/objfgelm.c:32Bits_ExtRepOfObj" },
-
-    { "32Bits_GeneratorSyllable", 2, "32_bits_word, pos",
-      Func32Bits_GeneratorSyllable, "src/objfgelm.c:32Bits_GeneratorSyllable" },
-
-    { "32Bits_Less", 2, "32_bits_word, 32_bits_word",
-      Func32Bits_Less, "src/objfgelm.c:32Bits_Less" },
-
-    { "32Bits_AssocWord", 2, "type, data",
-      Func32Bits_AssocWord, "src/objfgelm.c:32Bits_AssocWord" },
-
+    GVAR_FUNC(16Bits_ObjByVector, 2, "type, data"),
+    GVAR_FUNC(16Bits_HeadByNumber, 2, "16_bits_word, gen_num"),
+    GVAR_FUNC(16Bits_Power, 2, "16_bits_word, small_integer"),
+    GVAR_FUNC(16Bits_Product, 2, "16_bits_word, 16_bits_word"),
+    GVAR_FUNC(16Bits_Quotient, 2, "16_bits_word, 16_bits_word"),
+    GVAR_FUNC(16Bits_LengthWord, 1, "16_bits_word"),
+    GVAR_FUNC(32Bits_Equal, 2, "32_bits_word, 32_bits_word"),
+    GVAR_FUNC(32Bits_ExponentSums1, 1, "32_bits_word"),
+    GVAR_FUNC(32Bits_ExponentSums3, 3, "32_bits_word, start, end"),
+    GVAR_FUNC(32Bits_ExponentSyllable, 2, "32_bits_word, position"),
+    GVAR_FUNC(32Bits_ExtRepOfObj, 1, "32_bits_word"),
+    GVAR_FUNC(32Bits_GeneratorSyllable, 2, "32_bits_word, pos"),
+    GVAR_FUNC(32Bits_Less, 2, "32_bits_word, 32_bits_word"),
+    GVAR_FUNC(32Bits_AssocWord, 2, "type, data"),
     { "32Bits_NumberSyllables", 1, "32_bits_word",
       FuncNBits_NumberSyllables, "src/objfgelm.c:32Bits_NumberSyllables" },
 
-    { "32Bits_ObjByVector", 2, "type, data",
-      Func32Bits_ObjByVector, "src/objfgelm.c:32Bits_ObjByVector" },
-
-    { "32Bits_HeadByNumber", 2, "16_bits_word, gen_num",
-      Func32Bits_HeadByNumber, "src/objfgelm.c:32Bits_HeadByNumber" },
-
-    { "32Bits_Power", 2, "32_bits_word, small_integer",
-      Func32Bits_Power, "src/objfgelm.c:32Bits_Power" },
-
-    { "32Bits_Product", 2, "32_bits_word, 32_bits_word",
-      Func32Bits_Product, "src/objfgelm.c:32Bits_Product" },
-
-    { "32Bits_Quotient", 2, "32_bits_word, 32_bits_word",
-      Func32Bits_Quotient, "src/objfgelm.c:32Bits_Quotient" },
-
-    { "32Bits_LengthWord", 1, "32_bits_word",
-      Func32Bits_LengthWord, "src/objfgelm.c:32Bits_LengthWord" },
-
+    GVAR_FUNC(32Bits_ObjByVector, 2, "type, data"),
+    GVAR_FUNC(32Bits_HeadByNumber, 2, "16_bits_word, gen_num"),
+    GVAR_FUNC(32Bits_Power, 2, "32_bits_word, small_integer"),
+    GVAR_FUNC(32Bits_Product, 2, "32_bits_word, 32_bits_word"),
+    GVAR_FUNC(32Bits_Quotient, 2, "32_bits_word, 32_bits_word"),
+    GVAR_FUNC(32Bits_LengthWord, 1, "32_bits_word"),
     { "MULT_WOR_LETTREP", 2, "list,list",
       FuncMultWorLettrep, "src/objfgelm.c:MULT_WOR_LETTREP" },
 
     { "MULT_BYT_LETTREP", 2, "string,string",
       FuncMultBytLettrep, "src/objfgelm.c:MULT_BYT_LETTREP" },
 
-    { 0 }
+    { 0, 0, 0, 0, 0 }
 
 };
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
@@ -3444,22 +3322,14 @@ static Int InitLibrary (
     StructInitInfo *    module )
 {
     /* export position numbers 'AWP_SOMETHING'                             */
-    AssGVar( GVarName( "AWP_FIRST_ENTRY" ),
-             INTOBJ_INT(AWP_FIRST_ENTRY) );
-    AssGVar( GVarName( "AWP_PURE_TYPE" ),
-             INTOBJ_INT(AWP_PURE_TYPE) );
-    AssGVar( GVarName( "AWP_NR_BITS_EXP" ),
-             INTOBJ_INT(AWP_NR_BITS_EXP) );
-    AssGVar( GVarName( "AWP_NR_GENS" ),
-             INTOBJ_INT(AWP_NR_GENS) );
-    AssGVar( GVarName( "AWP_NR_BITS_PAIR" ),
-             INTOBJ_INT(AWP_NR_BITS_PAIR) );
-    AssGVar( GVarName( "AWP_FUN_OBJ_BY_VECTOR" ),
-             INTOBJ_INT(AWP_FUN_OBJ_BY_VECTOR) );
-    AssGVar( GVarName( "AWP_FUN_ASSOC_WORD" ),
-             INTOBJ_INT(AWP_FUN_ASSOC_WORD) );
-    AssGVar( GVarName( "AWP_FIRST_FREE" ),
-             INTOBJ_INT(AWP_FIRST_FREE) );
+    ExportAsConstantGVar(AWP_FIRST_ENTRY);
+    ExportAsConstantGVar(AWP_PURE_TYPE);
+    ExportAsConstantGVar(AWP_NR_BITS_EXP);
+    ExportAsConstantGVar(AWP_NR_GENS);
+    ExportAsConstantGVar(AWP_NR_BITS_PAIR);
+    ExportAsConstantGVar(AWP_FUN_OBJ_BY_VECTOR);
+    ExportAsConstantGVar(AWP_FUN_ASSOC_WORD);
+    ExportAsConstantGVar(AWP_FIRST_FREE);
 
     /* init filters and functions                                          */
     InitGVarFuncsFromTable( GVarFuncs );
@@ -3474,28 +3344,15 @@ static Int InitLibrary (
 *F  InitInfoFreeGroupElements() . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "objfgelm",                         /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "objfgelm",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoFreeGroupElements ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  objfgelm.c  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

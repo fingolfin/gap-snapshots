@@ -6,10 +6,10 @@
                            [1XFinite Incidence Geometry[101X
   
   
-                                      1.4
+                                     1.4.1
   
   
-                                  23-Nov-2017
+                                  31-Mar-2018
   
   
   John Bamberg, Anton Betten, Philippe Cara, Jan De Beule, Michel Lavrauw, Max
@@ -23,7 +23,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2014-2017 by the authors[133X
+  [33X[0;0Y© 2014-2018 by the authors[133X
   
   [33X[0;0YThis  package  may  be distributed under the terms and conditions of the GNU
   Public License Version 2 or higher.[133X
@@ -31,8 +31,8 @@
   [33X[0;0YThe  development  group  of  [5XFinInG[105X welcomes contact with users. In case you
   have  obtained the package as a deposited package part of archive during the
   installation   of   GAP,   we  call  on  your  beneficence  to  register  at
-  [7Xhttp:/www.fining.org[107X when you use [5XFinInG[105X, or to tell us by sending an e-mail
-  to [7Xmailto:council@fining.org[107X.[133X
+  [7Xhttp://www.fining.org[107X  when  you  use  [5XFinInG[105X,  or  to tell us by sending an
+  e-mail to [7Xmailto:council@fining.org[107X.[133X
   
   [33X[0;0YPlease also tell us about the use of [5XFinInG[105X in your research or teaching. We
   are  very  interested in results obtained using [5XFinInG[105X and we might refer to
@@ -62,11 +62,11 @@
   Vicenza  while  developing  [5XFinInG[105X. We acknowledge the hospitality of Michel
   Lavrauw  and  Corrado Zanella. Our stays in Vicenza were always fruitful and
   very  enjoyable.  During  or  daily  morning and afternoon coffee breaks, we
-  discussed   several  topics,  while  enjoying  coffee  in  [13XCaffe  Pigaffeta[113X,
-  [7Xhttp://www.caffepigafetta.com[107X.  Although  one  cannot acknowledge everybody,
-  such  as the bakery who provided us with the sandwiches, we acknowledge very
-  much the hospitality of Carla and Luigi, who introduced us to many different
-  kinds of coffees from all over the world.[133X
+  discussed several topics, while enjoying coffee in [13XCaffe Pigaffeta[113X. Although
+  one  cannot  acknowledge  everybody, such as the bakery who provided us with
+  the sandwiches, we acknowledge very much the hospitality of Carla and Luigi,
+  who  introduced  us  to  many  different  kinds of coffees from all over the
+  world.[133X
   
   
   -------------------------------------------------------

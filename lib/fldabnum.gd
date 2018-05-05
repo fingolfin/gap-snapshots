@@ -294,25 +294,28 @@ DeclareGlobalVariable( "GaussianRationals",
 DeclareCategory( "IsGaussianRationals", IsCyclotomicCollection and IsField );
 #T better?
 
+DeclareGlobalFunction( "AbelianNumberFieldByReducedGaloisStabilizerInfo" );
 
 #############################################################################
 ##
 #V  CYCLOTOMIC_FIELDS
 ##
 ##  <ManSection>
-##  <Var Name="CYCLOTOMIC_FIELDS"/>
+##  <Func Name="CYCLOTOMIC_FIELDS" Arg='n'/>
 ##
 ##  <Description>
-##  At position <A>n</A>, the <A>n</A>-th cyclotomic field is stored.
+##  Returns the <A>n</A>-th cyclotomic field.
 ##  </Description>
 ##  </ManSection>
 ##
-DeclareGlobalVariable( "CYCLOTOMIC_FIELDS",
-    "list, CYCLOTOMIC_FIELDS[n] = CF(n) if bound" );
-
-InstallFlushableValue( CYCLOTOMIC_FIELDS,
-    [ Rationals,,, GaussianRationals ] );
-
+BindGlobal( "CYCLOTOMIC_FIELDS",
+    MemoizePosIntFunction(
+        function(xtension)
+            return AbelianNumberFieldByReducedGaloisStabilizerInfo( Rationals,
+                   xtension, [ 1 ] );
+        end,
+    rec( defaults := [ Rationals, Rationals,, GaussianRationals ] ) )
+);
 
 #############################################################################
 ##
@@ -386,6 +389,9 @@ DeclareSynonym( "CF", CyclotomicField );
 DeclareGlobalVariable( "ABELIAN_NUMBER_FIELDS",
     "list of lists, at position [1][n] stabilizers, at [2][n] the fields" );
 InstallFlushableValue( ABELIAN_NUMBER_FIELDS, [ [], [] ] );
+if IsHPCGAP then
+    ShareSpecialObj(ABELIAN_NUMBER_FIELDS);
+fi;
 
 
 #############################################################################

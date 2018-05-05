@@ -279,7 +279,7 @@
 ## IndexAttributes=[ "Name", "Dim", "F", "G", "H", "Chi", "Homology", "IsPM", 
 ##   "IsManifold" ]
 ## Loaded=true
-## Path="/home/mi/spreerjn/private/apps/gap4r8/pkg/simpcomp/complexes/"
+## Path="/home/jspreer/apps/gap4r8/pkg/simpcomp/complexes/"
 ## ]
 ## </Example>
 ## </Description>
@@ -365,7 +365,7 @@
 ## IndexAttributes=[ "Name", "Dim", "F", "G", "H", "Chi", "Homology", "IsPM", 
 ##   "IsManifold" ]
 ## Loaded=true
-## Path="/home/mi/spreerjn/private/apps/gap4r8/pkg/simpcomp/complexes/"
+## Path="/home/jspreer/apps/gap4r8/pkg/simpcomp/complexes/"
 ## ]
 ## gap&gt; SCLib.Size;
 ## 7649

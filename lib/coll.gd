@@ -337,18 +337,24 @@ end );
 ##  <#/GAPDoc>
 ##
 BIND_GLOBAL( "DeclareSynonym", function( name, value )
-    BIND_GLOBAL( name, value );
+    if ISBOUND_GLOBAL(name) and IS_IDENTICAL_OBJ(VALUE_GLOBAL(name), value) then
+        if not REREADING then
+            INFO_DEBUG( 1, "multiple declarations for synonym `", name, "'\n" );
+        fi;
+    else
+        BIND_GLOBAL( name, value );
+    fi;
 end );
 
 BIND_GLOBAL( "DeclareSynonymAttr", function( name, value )
     local nname;
-    BIND_GLOBAL( name, value );
+    DeclareSynonym( name, value );
     nname:= "Set";
     APPEND_LIST_INTR( nname, name );
-    BIND_GLOBAL( nname, Setter( value ) );
+    DeclareSynonym( nname, Setter( value ) );
     nname:= "Has";
     APPEND_LIST_INTR( nname, name );
-    BIND_GLOBAL( nname, Tester( value ) );
+    DeclareSynonym( nname, Tester( value ) );
 end );
 
 
@@ -3089,10 +3095,13 @@ DeclareOperation( "Intersection2",
 ##  [ 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 20, 25 ]
 ##  gap> Union( [ [1,2,4], [2,3,4], [1,3,4] ] )
 ##  >    ;  # or one list of lists or collections
-##  [ 1, 2, 3, 4 ]
+##  [ 1 .. 4 ]
 ##  gap> Union( [ ] );
 ##  [  ]
-##  ]]></Example>
+##  ]]></Example><P/>
+##  When computing the Union of lists or sets of small integers and ranges, 
+##  every attempt is made to return the result as a range and to avoid expanding
+##  ranges provided as input.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -3225,11 +3234,13 @@ DeclareOperation( "CanComputeIsSubset", [IsObject,IsObject] );
 ##
 ##  <#GAPDoc Label="CanComputeSize">
 ##  <ManSection>
-##  <Func Name="CanComputeSize" Arg='dom'/>
+##  <Filt Name="CanComputeSize" Arg='dom'/>
 ##
 ##  <Description>
-##  This filter indicates whether the size of the domain <A>dom</A>
-##  (which might be <Ref Var="infinity"/>) can be computed.
+##  This filter indicates that we know that the size of the domain <A>dom</A>
+##  (which might be <Ref Var="infinity"/>) can be computed reasonably
+##  easily. It doesn't imply as quick a computation as <C>HasSize</C> would
+##  but its absence does not imply that the size cannot be computed.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -3237,13 +3248,6 @@ DeclareOperation( "CanComputeIsSubset", [IsObject,IsObject] );
 DeclareFilter( "CanComputeSize" );
 
 InstallTrueMethod( CanComputeSize, HasSize );
-
-
-DeclareOperation( "Randomizer", [IsCollection] );
-DeclareOperation( "CheapRandomizer", [IsCollection] );
-
-DeclareAttribute( "RandomizerAttr", IsCollection );
-DeclareAttribute( "CheapRandomizerAttr", IsCollection );
 
 # to allow for recusive calls
 DeclareGlobalFunction("JoinRanges");

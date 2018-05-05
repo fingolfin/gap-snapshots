@@ -209,7 +209,7 @@ end );
 #M  IsNilpotentGroup( <D> )
 ##
 InstallMethod( IsNilpotentGroup, "for direct products",
-               [IsGroup and HasDirectProductInfo],
+               [IsGroup and HasDirectProductInfo], 30,
 function( D )
     return ForAll( DirectProductInfo( D ).groups, IsNilpotentGroup );
 end );
@@ -263,11 +263,17 @@ end );
 InstallMethod( PrimePGroup, "for direct products",
                [IsPGroup and HasDirectProductInfo],
 function( D )
-    local p;
-    Assert (1, ForAll (DirectProductInfo( D ).groups, IsPGroup));    
-    p := First (DirectProductInfo( D ).groups, G -> PrimePGroup (G) <> fail);
-    Assert (1, ForAll (DirectProductInfo( D ).groups, G -> PrimePGroup (G) in [fail, p]));
-    return PrimePGroup(p);
+    local groups, p, H;
+    groups := DirectProductInfo(D).groups;
+    Assert(1, ForAll(groups, IsPGroup));
+    H := First(groups, G -> PrimePGroup(G) <> fail);
+    if H = fail then
+      SetIsTrivial(D, true);
+      return fail;
+    fi;
+    p := PrimePGroup(H);
+    Assert(1, ForAll(groups, G -> PrimePGroup(G) in [fail, p]));
+    return p;
 end );
 
 #############################################################################
@@ -791,7 +797,7 @@ InstallMethod( StandardWreathProduct,"generic groups", true,
  [ IsGroup, IsGroup ], 0,
 function(G,H)
 local iso;
-  iso:=ActionHomomorphism(H,Elements(H),OnRight,"surjective");
+  iso:=ActionHomomorphism(H,AsSSortedList(H),OnRight,"surjective");
   return WreathProduct(G,H,iso);
 end);
 

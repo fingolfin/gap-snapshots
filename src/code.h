@@ -16,17 +16,20 @@
 #ifndef GAP_CODE_H
 #define GAP_CODE_H
 
+#include <src/debug.h>
+#include <src/objects.h>
 
 /****************************************************************************
 **
-*T  Stat  . . . . . . . . . . . . . . . . . . . . . . . .  type of statements
+*T  StatHeader
 **
-**  'Stat' is the type of statements.
-**
-**  If 'Stat' is different  from 'Expr', then  a lot of things will  probably
-**  break.
 */
-#define Stat            UInt8
+typedef struct {
+    unsigned int visited : 1;
+    unsigned int line : 31;
+    unsigned int size : 24;
+    unsigned int type : 8;
+} StatHeader;
 
 
 /****************************************************************************
@@ -35,23 +38,75 @@
 **
 **  'PtrBody' is a pointer to the current body.
 */
-extern  Stat *          PtrBody;
+/* TL: extern  Stat *          PtrBody; */
 
 
 /****************************************************************************
 **
-*V  FIRST_STAT_CURR_FUNC  . . . . . . . .  index of first statement in a body
+** Function body headers
 **
-**  'FIRST_STAT_CURR_FUNC' is the index of the first statement in a body.
+** 'FILENAME_BODY' is a string containing the file of a function
+** 'STARTLINE_BODY' is the line number where a function starts.
+** 'ENDLINE_BODY' is the line number where a function ends.
+** 'LOCATION_BODY' is a string describing the location of a function.
+**  Typically this will be the name of a C function implementing it.
+**
+**  These each have a 'GET' and a 'SET' variant, to read or set the value.
+**  Note that STARTLINE_BODY and LOCATION_BODY are stored in the same place,
+**  so writing one will overwrite the other.
+**
+**  All of these variables may be 0, if the information is not known,
 */
 
+typedef struct {
+    // if non-zero, this is either a string containing the name of the
+    // file of a function, or an immediate integer containing the index
+    // of the filename inside FilenameCache
+    Obj filename_or_id;
 
-#define FILENAME_BODY(body) (ADDR_OBJ(body)[0])
-#define STARTLINE_BODY(body) (ADDR_OBJ(body)[1])
-#define ENDLINE_BODY(body) (ADDR_OBJ(body)[2])
-#define NUMBER_HEADER_ITEMS_BODY 3
+    // if non-zero, this is either an immediate integer encoding the
+    // line number where a function starts, or string describing the
+    // location of a function. Typically this will be the name of a C
+    // function implementing it.
+    Obj startline_or_location;
 
-#define FIRST_STAT_CURR_FUNC    (sizeof(Stat)+NUMBER_HEADER_ITEMS_BODY*sizeof(Bag))
+    // if non-zero, this is an immediate integer encoding the line
+    // number where a function ends
+    Obj endline;
+} BodyHeader;
+
+static inline BodyHeader *BODY_HEADER(Obj body)
+{
+    GAP_ASSERT(TNUM_OBJ(body) == T_BODY);
+    return (BodyHeader *)ADDR_OBJ(body);
+}
+
+Obj GET_FILENAME_BODY(Obj body);
+void SET_FILENAME_BODY(Obj body, Obj val);
+
+UInt GET_GAPNAMEID_BODY(Obj body);
+void SET_GAPNAMEID_BODY(Obj body, UInt val);
+
+Obj GET_LOCATION_BODY(Obj body);
+void SET_LOCATION_BODY(Obj body, Obj val);
+
+UInt GET_STARTLINE_BODY(Obj body);
+void SET_STARTLINE_BODY(Obj body, UInt val);
+UInt GET_ENDLINE_BODY(Obj body);
+void SET_ENDLINE_BODY(Obj body, UInt val);
+
+/****************************************************************************
+**
+*V  OFFSET_FIRST_STAT . . . . . . . . . . offset of first statement in a body
+**
+**  'OFFSET_FIRST_STAT' is the offset of the first statement in a body.
+*/
+
+enum {
+    OFFSET_FIRST_STAT = sizeof(StatHeader)+sizeof(BodyHeader)
+};
+
+
 
 /****************************************************************************
 **
@@ -61,103 +116,127 @@ extern  Stat *          PtrBody;
 **
 **  For every type  of statements there is  a symbolic name  defined for this
 **  type.
-**
-**  As long as statements   are represented by  bags,  these types  must  not
-**  overlap with the object types, lest Gasman becomes confused.
 */
-#define FIRST_STAT_TNUM         (0UL)
+enum STAT_TNUM {
+    START_ENUM_RANGE(FIRST_STAT_TNUM),
 
-#define T_PROCCALL_0ARGS        (FIRST_STAT_TNUM+ 0)
-#define T_PROCCALL_1ARGS        (FIRST_STAT_TNUM+ 1)
-#define T_PROCCALL_2ARGS        (FIRST_STAT_TNUM+ 2)
-#define T_PROCCALL_3ARGS        (FIRST_STAT_TNUM+ 3)
-#define T_PROCCALL_4ARGS        (FIRST_STAT_TNUM+ 4)
-#define T_PROCCALL_5ARGS        (FIRST_STAT_TNUM+ 5)
-#define T_PROCCALL_6ARGS        (FIRST_STAT_TNUM+ 6)
-#define T_PROCCALL_XARGS        (FIRST_STAT_TNUM+ 7)
+        T_PROCCALL_0ARGS,
+        T_PROCCALL_1ARGS,
+        T_PROCCALL_2ARGS,
+        T_PROCCALL_3ARGS,
+        T_PROCCALL_4ARGS,
+        T_PROCCALL_5ARGS,
+        T_PROCCALL_6ARGS,
+        T_PROCCALL_XARGS,
 
-#define T_SEQ_STAT              (FIRST_STAT_TNUM+ 8)
-#define T_SEQ_STAT2             (FIRST_STAT_TNUM+ 9)
-#define T_SEQ_STAT3             (FIRST_STAT_TNUM+10)
-#define T_SEQ_STAT4             (FIRST_STAT_TNUM+11)
-#define T_SEQ_STAT5             (FIRST_STAT_TNUM+12)
-#define T_SEQ_STAT6             (FIRST_STAT_TNUM+13)
-#define T_SEQ_STAT7             (FIRST_STAT_TNUM+14)
-#define T_IF                    (FIRST_STAT_TNUM+15)
-#define T_IF_ELSE               (FIRST_STAT_TNUM+16)
-#define T_IF_ELIF               (FIRST_STAT_TNUM+17)
-#define T_IF_ELIF_ELSE          (FIRST_STAT_TNUM+18)
-#define T_FOR                   (FIRST_STAT_TNUM+19)
-#define T_FOR2                  (FIRST_STAT_TNUM+20)
-#define T_FOR3                  (FIRST_STAT_TNUM+21)
-#define T_FOR_RANGE             (FIRST_STAT_TNUM+22)
-#define T_FOR_RANGE2            (FIRST_STAT_TNUM+23)
-#define T_FOR_RANGE3            (FIRST_STAT_TNUM+24)
-#define T_WHILE                 (FIRST_STAT_TNUM+25)
-#define T_WHILE2                (FIRST_STAT_TNUM+26)
-#define T_WHILE3                (FIRST_STAT_TNUM+27)
-#define T_REPEAT                (FIRST_STAT_TNUM+28)
-#define T_REPEAT2               (FIRST_STAT_TNUM+29)
-#define T_REPEAT3               (FIRST_STAT_TNUM+30)
-#define T_BREAK                 (FIRST_STAT_TNUM+31)
-#define T_CONTINUE              (FIRST_STAT_TNUM+32)
-#define T_RETURN_OBJ            (FIRST_STAT_TNUM+33)
-#define T_RETURN_VOID           (FIRST_STAT_TNUM+34)
+        T_PROCCALL_OPTS,
 
-#define T_ASS_LVAR              (FIRST_STAT_TNUM+35)
-#define T_ASS_LVAR_01           (FIRST_STAT_TNUM+36)
-#define T_ASS_LVAR_02           (FIRST_STAT_TNUM+37)
-#define T_ASS_LVAR_03           (FIRST_STAT_TNUM+38)
-#define T_ASS_LVAR_04           (FIRST_STAT_TNUM+39)
-#define T_ASS_LVAR_05           (FIRST_STAT_TNUM+40)
-#define T_ASS_LVAR_06           (FIRST_STAT_TNUM+41)
-#define T_ASS_LVAR_07           (FIRST_STAT_TNUM+42)
-#define T_ASS_LVAR_08           (FIRST_STAT_TNUM+43)
-#define T_ASS_LVAR_09           (FIRST_STAT_TNUM+44)
-#define T_ASS_LVAR_10           (FIRST_STAT_TNUM+45)
-#define T_ASS_LVAR_11           (FIRST_STAT_TNUM+46)
-#define T_ASS_LVAR_12           (FIRST_STAT_TNUM+47)
-#define T_ASS_LVAR_13           (FIRST_STAT_TNUM+48)
-#define T_ASS_LVAR_14           (FIRST_STAT_TNUM+49)
-#define T_ASS_LVAR_15           (FIRST_STAT_TNUM+50)
-#define T_ASS_LVAR_16           (FIRST_STAT_TNUM+51)
-#define T_UNB_LVAR              (FIRST_STAT_TNUM+52)
-#define T_ASS_HVAR              (FIRST_STAT_TNUM+53)
-#define T_UNB_HVAR              (FIRST_STAT_TNUM+54)
-#define T_ASS_GVAR              (FIRST_STAT_TNUM+55)
-#define T_UNB_GVAR              (FIRST_STAT_TNUM+56)
-#define T_ASS_LIST              (FIRST_STAT_TNUM+57)
-#define T_ASSS_LIST             (FIRST_STAT_TNUM+58)
-#define T_ASS_LIST_LEV          (FIRST_STAT_TNUM+59)
-#define T_ASSS_LIST_LEV         (FIRST_STAT_TNUM+60)
-#define T_UNB_LIST              (FIRST_STAT_TNUM+61)
-#define T_ASS_REC_NAME          (FIRST_STAT_TNUM+62)
-#define T_ASS_REC_EXPR          (FIRST_STAT_TNUM+63)
-#define T_UNB_REC_NAME          (FIRST_STAT_TNUM+64)
-#define T_UNB_REC_EXPR          (FIRST_STAT_TNUM+65)
-#define T_ASS_POSOBJ            (FIRST_STAT_TNUM+66)
-#define T_ASSS_POSOBJ           (FIRST_STAT_TNUM+67)
-#define T_ASS_POSOBJ_LEV        (FIRST_STAT_TNUM+68)
-#define T_ASSS_POSOBJ_LEV       (FIRST_STAT_TNUM+69)
-#define T_UNB_POSOBJ            (FIRST_STAT_TNUM+70)
-#define T_ASS_COMOBJ_NAME       (FIRST_STAT_TNUM+71)
-#define T_ASS_COMOBJ_EXPR       (FIRST_STAT_TNUM+72)
-#define T_UNB_COMOBJ_NAME       (FIRST_STAT_TNUM+73)
-#define T_UNB_COMOBJ_EXPR       (FIRST_STAT_TNUM+74)
+        // T_EMPTY could also be considered to be "T_SEQ_STAT0", but it
+        // must be an interruptible statement, so that loops with empty
+        // body can be interrupted.
+        T_EMPTY,
 
-#define T_INFO                  (FIRST_STAT_TNUM+75)
-#define T_ASSERT_2ARGS          (FIRST_STAT_TNUM+76)
-#define T_ASSERT_3ARGS          (FIRST_STAT_TNUM+77)
+        // The statement types between FIRST_NON_INTERRUPT_STAT and
+        // LAST_NON_INTERRUPT_STAT will not be interrupted (which may happen
+        // for two reasons: the user interrupted, e.g. via ctrl-c; or memory
+        // run full). We don't want to compound statements to be interrupted,
+        // relying instead on their sub-statements being interruptible. This
+        // results in a slightly better user experience in break loops, where
+        // the interrupted statement is printed, which works better for single
+        // statements than for compound statements.
+        START_ENUM_RANGE(FIRST_NON_INTERRUPT_STAT),
 
-#define T_EMPTY                 (FIRST_STAT_TNUM+78)
+            START_ENUM_RANGE(FIRST_COMPOUND_STAT),
 
-#define T_PROCCALL_OPTS         (FIRST_STAT_TNUM+ 79)
+            T_SEQ_STAT,
+            T_SEQ_STAT2,
+            T_SEQ_STAT3,
+            T_SEQ_STAT4,
+            T_SEQ_STAT5,
+            T_SEQ_STAT6,
+            T_SEQ_STAT7,
 
-#define T_ATOMIC               (FIRST_STAT_TNUM+80)
+            T_IF,
+            T_IF_ELSE,
+            T_IF_ELIF,
+            T_IF_ELIF_ELSE,
 
-#define LAST_STAT_TNUM          T_ATOMIC
+            T_FOR,
+            T_FOR2,
+            T_FOR3,
+
+            T_FOR_RANGE,
+            T_FOR_RANGE2,
+            T_FOR_RANGE3,
+
+            T_WHILE,
+            T_WHILE2,
+            T_WHILE3,
+
+            T_REPEAT,
+            T_REPEAT2,
+            T_REPEAT3,
+
+            T_ATOMIC,
+
+            END_ENUM_RANGE(LAST_COMPOUND_STAT),
+
+        END_ENUM_RANGE(LAST_NON_INTERRUPT_STAT),
+
+        START_ENUM_RANGE(FIRST_CONTROL_FLOW_STAT),
+
+            T_BREAK,
+            T_CONTINUE,
+            T_RETURN_OBJ,
+            T_RETURN_VOID,
+
+        END_ENUM_RANGE(LAST_CONTROL_FLOW_STAT),
+
+        T_ASS_LVAR,
+        T_UNB_LVAR,
+
+        T_ASS_HVAR,
+        T_UNB_HVAR,
+
+        T_ASS_GVAR,
+        T_UNB_GVAR,
+
+        T_ASS_LIST,
+        T_ASS2_LIST,
+        T_ASSX_LIST,
+        T_ASSS_LIST,
+        T_ASS_LIST_LEV,
+        T_ASSS_LIST_LEV,
+        T_UNB_LIST,
+
+        T_ASS_REC_NAME,
+        T_ASS_REC_EXPR,
+        T_UNB_REC_NAME,
+        T_UNB_REC_EXPR,
+
+        T_ASS_POSOBJ,
+        T_ASSS_POSOBJ,
+        T_ASS_POSOBJ_LEV,
+        T_ASSS_POSOBJ_LEV,
+        T_UNB_POSOBJ,
+
+        T_ASS_COMOBJ_NAME,
+        T_ASS_COMOBJ_EXPR,
+        T_UNB_COMOBJ_NAME,
+        T_UNB_COMOBJ_EXPR,
+
+        T_INFO,
+        T_ASSERT_2ARGS,
+        T_ASSERT_3ARGS,
+
+    END_ENUM_RANGE(LAST_STAT_TNUM),
+};
 
 #define T_NO_STAT		(Stat)(-1)
+
+
+
+#define STAT_HEADER(stat) (((StatHeader *)ADDR_STAT(stat)) - 1)
 
 
 /****************************************************************************
@@ -166,7 +245,7 @@ extern  Stat *          PtrBody;
 **
 **  'TNUM_STAT' returns the type of the statement <stat>.
 */
-#define TNUM_STAT(stat) ((Int)(ADDR_STAT(stat)[-1] & 0xFF))
+#define TNUM_STAT(stat) (STAT_HEADER(stat)->type)
 
 
 /****************************************************************************
@@ -175,7 +254,7 @@ extern  Stat *          PtrBody;
 **
 **  'SIZE_STAT' returns the size of the statement <stat>.
 */
-#define SIZE_STAT(stat) ((Int)(ADDR_STAT(stat)[-1] >> 8 & 0xFFFFFF))
+#define SIZE_STAT(stat) (STAT_HEADER(stat)->size)
 
 /****************************************************************************
 **
@@ -183,34 +262,16 @@ extern  Stat *          PtrBody;
 **
 **  'LINE_STAT' returns the line number of the statement <stat>.
 */
-#define LINE_STAT(stat) ((Int)(ADDR_STAT(stat)[-1] >> 32 & 0xFFFF))
+#define LINE_STAT(stat) (STAT_HEADER(stat)->line)
 
 /****************************************************************************
 **
-*F  FILENAMEID_STAT(<stat>) . . . . . . . . . . . . file name of a statement
-**
-**  'FILENAMEID_STAT' returns the file the statment <stat> was read from.
-**  This should be looked up in the FilenameCache variable
-*/
-#define FILENAMEID_STAT(stat) ((Int)(ADDR_STAT(stat)[-1] >> 48 & 0x7FFF))
-
-/****************************************************************************
-**
-*F  FILENAME_STAT(<stat>) . . . . . . . . . . . . file name of a statement
-**
-**  'FILENAME_STAT' returns a gap string containing the file where the statment
-**  <stat> was read from.
-*/
-Obj FILENAME_STAT(Stat stat);
-
-/****************************************************************************
-**
-*F  VISITED_STAT(<stat>) . . . . . . . . . . . . if statement has even been run
+*F  VISITED_STAT(<stat>) . . . . . . . . . . . if statement has even been run
 **
 **  'VISITED_STAT' returns true if the statement has ever been executed
 **  while profiling is turned on.
 */
-#define VISITED_STAT(stat) (ADDR_STAT(stat)[-1] >> 63 && 0x1)
+#define VISITED_STAT(stat) (STAT_HEADER(stat)->visited)
 
 
 
@@ -221,19 +282,7 @@ Obj FILENAME_STAT(Stat stat);
 **  'ADDR_STAT' returns   the  absolute address of the    memory block of the
 **  statement <stat>.
 */
-#define ADDR_STAT(stat) ((Stat*)(((char*)TLS(PtrBody))+(stat)))
-
-
-/****************************************************************************
-**
-*T  Expr  . . . . . . . . . . . . . . . . . . . . . . . . type of expressions
-**
-**  'Expr' is the type of expressions.
-**
-**  If 'Expr' is different  from 'Stat', then  a lot of things will  probably
-**  break.
-*/
-#define Expr            Stat
+#define ADDR_STAT(stat) ((Stat*)(((char*)STATE(PtrBody))+(stat)))
 
 
 /****************************************************************************
@@ -280,7 +329,7 @@ Obj FILENAME_STAT(Stat stat);
                         (((Int)(expr) & 0x03) == 0x01)
 
 #define INTEXPR_INT(indx)       \
-                        ((Expr)(((Int)(indx) << 2) + 0x01))
+                        ((Expr)(((UInt)(indx) << 2) + 0x01))
 
 #define INT_INTEXPR(expr)       \
                         (((Int)(expr)-0x01) >> 2)
@@ -294,107 +343,93 @@ Obj FILENAME_STAT(Stat stat);
 **
 **  For every type of expressions there  is a symbolic  name defined for this
 **  type.
-**
-**  As long as  expressions  are represented by  bags,  these types must  not
-**  overlap with the object types, lest Gasman becomes confused.
 */
-#define FIRST_EXPR_TNUM         ((UInt)128)
+enum EXPR_TNUM {
+    START_ENUM_RANGE_INIT(FIRST_EXPR_TNUM, 128),
 
-#define T_FUNCCALL_0ARGS        (FIRST_EXPR_TNUM+ 0)
-#define T_FUNCCALL_1ARGS        (FIRST_EXPR_TNUM+ 1)
-#define T_FUNCCALL_2ARGS        (FIRST_EXPR_TNUM+ 2)
-#define T_FUNCCALL_3ARGS        (FIRST_EXPR_TNUM+ 3)
-#define T_FUNCCALL_4ARGS        (FIRST_EXPR_TNUM+ 4)
-#define T_FUNCCALL_5ARGS        (FIRST_EXPR_TNUM+ 5)
-#define T_FUNCCALL_6ARGS        (FIRST_EXPR_TNUM+ 6)
-#define T_FUNCCALL_XARGS        (FIRST_EXPR_TNUM+ 7)
-#define T_FUNC_EXPR             (FIRST_EXPR_TNUM+ 8)
+    T_FUNCCALL_0ARGS,
+    T_FUNCCALL_1ARGS,
+    T_FUNCCALL_2ARGS,
+    T_FUNCCALL_3ARGS,
+    T_FUNCCALL_4ARGS,
+    T_FUNCCALL_5ARGS,
+    T_FUNCCALL_6ARGS,
+    T_FUNCCALL_XARGS,
+    T_FUNC_EXPR,
 
-#define T_OR                    (FIRST_EXPR_TNUM+ 9)
-#define T_AND                   (FIRST_EXPR_TNUM+10)
-#define T_NOT                   (FIRST_EXPR_TNUM+11)
-#define T_EQ                    (FIRST_EXPR_TNUM+12)
-#define T_NE                    (FIRST_EXPR_TNUM+13)
-#define T_LT                    (FIRST_EXPR_TNUM+14)
-#define T_GE                    (FIRST_EXPR_TNUM+15)
-#define T_GT                    (FIRST_EXPR_TNUM+16)
-#define T_LE                    (FIRST_EXPR_TNUM+17)
-#define T_IN                    (FIRST_EXPR_TNUM+18)
-#define T_SUM                   (FIRST_EXPR_TNUM+19)
-#define T_AINV                  (FIRST_EXPR_TNUM+20)
-#define T_DIFF                  (FIRST_EXPR_TNUM+21)
-#define T_PROD                  (FIRST_EXPR_TNUM+22)
-#define T_INV                   (FIRST_EXPR_TNUM+23)
-#define T_QUO                   (FIRST_EXPR_TNUM+24)
-#define T_MOD                   (FIRST_EXPR_TNUM+25)
-#define T_POW                   (FIRST_EXPR_TNUM+26)
+    T_FUNCCALL_OPTS,
 
-#define T_INTEXPR               (FIRST_EXPR_TNUM+27)
-#define T_INT_EXPR              (FIRST_EXPR_TNUM+28)
-#define T_TRUE_EXPR             (FIRST_EXPR_TNUM+29)
-#define T_FALSE_EXPR            (FIRST_EXPR_TNUM+30)
-#define T_CHAR_EXPR             (FIRST_EXPR_TNUM+31)
-#define T_PERM_EXPR             (FIRST_EXPR_TNUM+32)
-#define T_PERM_CYCLE            (FIRST_EXPR_TNUM+33)
-#define T_LIST_EXPR             (FIRST_EXPR_TNUM+34)
-#define T_LIST_TILD_EXPR        (FIRST_EXPR_TNUM+35)
-#define T_RANGE_EXPR            (FIRST_EXPR_TNUM+36)
-#define T_STRING_EXPR           (FIRST_EXPR_TNUM+37)
-#define T_REC_EXPR              (FIRST_EXPR_TNUM+38)
-#define T_REC_TILD_EXPR         (FIRST_EXPR_TNUM+39)
+    T_OR,
+    T_AND,
+    T_NOT,
+    T_EQ,
+    T_NE,
+    T_LT,
+    T_GE,
+    T_GT,
+    T_LE,
+    T_IN,
+    T_SUM,
+    T_AINV,
+    T_DIFF,
+    T_PROD,
+    T_QUO,
+    T_MOD,
+    T_POW,
 
-#define T_REFLVAR               (FIRST_EXPR_TNUM+40)
-#define T_REF_LVAR              (FIRST_EXPR_TNUM+41)
-#define T_REF_LVAR_01           (FIRST_EXPR_TNUM+42)
-#define T_REF_LVAR_02           (FIRST_EXPR_TNUM+43)
-#define T_REF_LVAR_03           (FIRST_EXPR_TNUM+44)
-#define T_REF_LVAR_04           (FIRST_EXPR_TNUM+45)
-#define T_REF_LVAR_05           (FIRST_EXPR_TNUM+46)
-#define T_REF_LVAR_06           (FIRST_EXPR_TNUM+47)
-#define T_REF_LVAR_07           (FIRST_EXPR_TNUM+48)
-#define T_REF_LVAR_08           (FIRST_EXPR_TNUM+49)
-#define T_REF_LVAR_09           (FIRST_EXPR_TNUM+50)
-#define T_REF_LVAR_10           (FIRST_EXPR_TNUM+51)
-#define T_REF_LVAR_11           (FIRST_EXPR_TNUM+52)
-#define T_REF_LVAR_12           (FIRST_EXPR_TNUM+53)
-#define T_REF_LVAR_13           (FIRST_EXPR_TNUM+54)
-#define T_REF_LVAR_14           (FIRST_EXPR_TNUM+55)
-#define T_REF_LVAR_15           (FIRST_EXPR_TNUM+56)
-#define T_REF_LVAR_16           (FIRST_EXPR_TNUM+57)
-#define T_ISB_LVAR              (FIRST_EXPR_TNUM+58)
-#define T_REF_HVAR              (FIRST_EXPR_TNUM+59)
-#define T_ISB_HVAR              (FIRST_EXPR_TNUM+60)
-#define T_REF_GVAR              (FIRST_EXPR_TNUM+61)
-#define T_ISB_GVAR              (FIRST_EXPR_TNUM+62)
-#define T_ELM_LIST              (FIRST_EXPR_TNUM+63)
-#define T_ELMS_LIST             (FIRST_EXPR_TNUM+64)
-#define T_ELM_LIST_LEV          (FIRST_EXPR_TNUM+65)
-#define T_ELMS_LIST_LEV         (FIRST_EXPR_TNUM+66)
-#define T_ISB_LIST              (FIRST_EXPR_TNUM+67)
-#define T_ELM_REC_NAME          (FIRST_EXPR_TNUM+68)
-#define T_ELM_REC_EXPR          (FIRST_EXPR_TNUM+69)
-#define T_ISB_REC_NAME          (FIRST_EXPR_TNUM+70)
-#define T_ISB_REC_EXPR          (FIRST_EXPR_TNUM+71)
-#define T_ELM_POSOBJ            (FIRST_EXPR_TNUM+72)
-#define T_ELMS_POSOBJ           (FIRST_EXPR_TNUM+73)
-#define T_ELM_POSOBJ_LEV        (FIRST_EXPR_TNUM+74)
-#define T_ELMS_POSOBJ_LEV       (FIRST_EXPR_TNUM+75)
-#define T_ISB_POSOBJ            (FIRST_EXPR_TNUM+76)
-#define T_ELM_COMOBJ_NAME       (FIRST_EXPR_TNUM+77)
-#define T_ELM_COMOBJ_EXPR       (FIRST_EXPR_TNUM+78)
-#define T_ISB_COMOBJ_NAME       (FIRST_EXPR_TNUM+79)
-#define T_ISB_COMOBJ_EXPR       (FIRST_EXPR_TNUM+80)
+    T_INTEXPR,
+    T_INT_EXPR,
+    T_TRUE_EXPR,
+    T_FALSE_EXPR,
+    T_TILDE_EXPR,
+    T_CHAR_EXPR,
+    T_PERM_EXPR,
+    T_PERM_CYCLE,
+    T_LIST_EXPR,
+    T_LIST_TILDE_EXPR,
+    T_RANGE_EXPR,
+    T_STRING_EXPR,
+    T_REC_EXPR,
+    T_REC_TILDE_EXPR,
 
-#define T_FUNCCALL_OPTS         (FIRST_EXPR_TNUM+81)
-#define T_FLOAT_EXPR_EAGER      (FIRST_EXPR_TNUM+82)
-#define T_FLOAT_EXPR_LAZY       (FIRST_EXPR_TNUM+83)
+    T_FLOAT_EXPR_EAGER,
+    T_FLOAT_EXPR_LAZY,
 
-#define T_ELM2_LIST             (FIRST_EXPR_TNUM+84)
-#define T_ELMX_LIST             (FIRST_EXPR_TNUM+85)
-#define T_ASS2_LIST             (FIRST_EXPR_TNUM+86)
-#define T_ASSX_LIST             (FIRST_EXPR_TNUM+87)
+    T_REFLVAR,
+    T_ISB_LVAR,
 
-#define LAST_EXPR_TNUM          T_ASSX_LIST
+    T_REF_HVAR,
+    T_ISB_HVAR,
+
+    T_REF_GVAR,
+    T_ISB_GVAR,
+
+    T_ELM_LIST,
+    T_ELM2_LIST,
+    T_ELMX_LIST,
+    T_ELMS_LIST,
+    T_ELM_LIST_LEV,
+    T_ELMS_LIST_LEV,
+    T_ISB_LIST,
+
+    T_ELM_REC_NAME,
+    T_ELM_REC_EXPR,
+    T_ISB_REC_NAME,
+    T_ISB_REC_EXPR,
+
+    T_ELM_POSOBJ,
+    T_ELMS_POSOBJ,
+    T_ELM_POSOBJ_LEV,
+    T_ELMS_POSOBJ_LEV,
+    T_ISB_POSOBJ,
+
+    T_ELM_COMOBJ_NAME,
+    T_ELM_COMOBJ_EXPR,
+    T_ISB_COMOBJ_NAME,
+    T_ISB_COMOBJ_EXPR,
+
+    END_ENUM_RANGE(LAST_EXPR_TNUM)
+};
 
 
 /****************************************************************************
@@ -489,7 +524,7 @@ Obj FILENAME_STAT(Stat stat);
 **  'CodeResult'  is the result  of the coding, i.e.,   the function that was
 **  coded.
 */
-extern  Obj             CodeResult;
+/* TL: extern  Obj             CodeResult; */
 
 
 /****************************************************************************
@@ -516,13 +551,11 @@ extern Stat PopStat ( void );
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * *  coder functions * * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  CodeBegin() . . . . . . . . . . . . . . . . . . . . . . . start the coder
 *F  CodeEnd(<error>)  . . . . . . . . . . . . . . . . . . . .  stop the coder
 **
@@ -589,9 +622,7 @@ extern void CodeFuncExprBegin (
             Obj                 nams,
             Int startLine);
 
-extern void CodeFuncExprEnd (
-            UInt                nr,
-            UInt                mapsto );
+extern void CodeFuncExprEnd(UInt nr);
 
 /****************************************************************************
 **
@@ -728,8 +759,6 @@ extern  void            CodeForEnd ( void );
 **  'CodeAtomicEnd' is an action to code a atomic-statement.  It is called when
 **  the reader encounters  the end  of the  statement, i.e., immediate  after
 **  'CodeAtomicEndBody'.
-**
-**  These functions are just placeholders for the future HPC-GAP code.
 */
 
 void CodeAtomicBegin ( void );
@@ -845,9 +874,13 @@ extern  void            CodeReturnObj ( void );
 **
 **  'CodeReturnVoid' is the action  to  code a return-void-statement.   It is
 **  called when the reader encounters a 'return;'.
+**
+**  'CodeReturnVoidWhichIsNotProfiled' creates a return which will not
+**  be tracked by profiling. This is used for the implicit return put
+**  at the end of functions.
 */
 extern  void            CodeReturnVoid ( void );
-
+extern  void            CodeReturnVoidWhichIsNotProfiled ( void );
 
 /****************************************************************************
 **
@@ -865,7 +898,6 @@ extern  void            CodeReturnVoid ( void );
 *F  CodeAInv()  . . . . . . . . . . . . . . . . . . . code unary --expression
 *F  CodeDiff()  . . . . . . . . . . . . . . . . . . . . . . code --expression
 *F  CodeProd()  . . . . . . . . . . . . . . . . . . . . . . code *-expression
-*F  CodeInv() . . . . . . . . . . . . . . . . . . . . . . code ^-1-expression
 *F  CodeQuo() . . . . . . . . . . . . . . . . . . . . . . . code /-expression
 *F  CodeMod() . . . . . . . . . . . . . . . . . . . . . . code mod-expression
 *F  CodePow() . . . . . . . . . . . . . . . . . . . . . . . code ^-expression
@@ -907,8 +939,6 @@ extern  void            CodeDiff ( void );
 
 extern  void            CodeProd ( void );
 
-extern  void            CodeInv ( void );
-
 extern  void            CodeQuo ( void );
 
 extern  void            CodeMod ( void );
@@ -918,15 +948,20 @@ extern  void            CodePow ( void );
 
 /****************************************************************************
 **
-*F  CodeIntExpr(<str>)  . . . . . . . . . . . code literal integer expression
+*F  CodeIntExpr(<val>)  . . . . . . . . . . . code literal integer expression
 **
-**  'CodeIntExpr' is the action to code a literal integer expression.  <str>
-**  is the integer as a (null terminated) C character string.
+**  'CodeIntExpr' is the action to code a literal integer expression.  <val>
+**  is the integer as a GAP object.
 */
-extern  void            CodeIntExpr (
-            Char *              str );
-extern  void            CodeLongIntExpr (
-            Obj                 string ); 
+extern void CodeIntExpr(Obj val);
+
+/****************************************************************************
+**
+*F  CodeTildeExpr()  . . . . . . . . . . . . . .  code tilde expression
+**
+**  'CodeTildeExpr' is the action to code a tilde expression.
+*/
+extern  void            CodeTildeExpr ( void );
 
 /****************************************************************************
 **
@@ -1343,17 +1378,22 @@ extern  void            CodeAssertEnd3Args ( void );
 /*  CodeContinue() .  . . . . . . . . . . . .  code continue-statement */
 extern  void            CodeContinue ( void );
 
+/****************************************************************************
+**
+*V  FilenameCache . . . . . . . . . . . . . . . . . . list of filenames
+**
+**  'FilenameCache' is a list of previously opened filenames.
+*/
+extern Obj FilenameCache;
 
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  InitInfoCode() . . . . . . . . . . . . . . . . .  table of init functions
 */
 StructInitInfo * InitInfoCode ( void );
@@ -1361,9 +1401,3 @@ StructInitInfo * InitInfoCode ( void );
 
 
 #endif // GAP_CODE_H
-
-/****************************************************************************
-**
-
-*E  code.h  . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

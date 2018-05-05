@@ -34,22 +34,8 @@
   Proceedings  of  the  International  Symposium  on  Symbolic  and  Algebraic
   Computation (ISSAC'91), Bonn 1991, ACM Press (1991), 200–209.
   
-  [[20XBE99a[120X]  [16XBesche,  H.  U.  and  Eick,  B.[116X,  [17XConstruction of finite groups[117X, [18XJ.
+  [[20XBE99[120X]  [16XBesche,  H.  U.  and  Eick,  B.[116X,  [17XConstruction  of finite groups[117X, [18XJ.
   Symbolic Comput.[118X, [19X27[119X, 4 (1999), 387–404.
-  
-  [[20XBE99b[120X]  [16XBesche, H. U. and Eick, B.[116X, [17XThe groups of order at most 1000 except
-  512 and 768[117X, [18XJ. Symbolic Comput.[118X, [19X27[119X, 4 (1999), 405–413.
-  
-  [[20XBE01[120X]  [16XBesche,  H.  U.  and  Eick,  B.[116X,  [17XThe groups of order q^n ⋅ p[117X, [18XComm.
-  Algebra[118X, [19X29[119X, 4 (2001), 1759–1772.
-  
-  [[20XBEO01[120X]  [16XBesche,  H. U., Eick, B. and O'Brien, E. A.[116X, [17XThe groups of order at
-  most  2000[117X,  [18XElectron.  Res.  Announc.  Amer.  Math.  Soc.[118X,  [19X7[119X  (2001),  1–4
-  (electronic).
-  
-  [[20XBEO02[120X]  [16XBesche,  H.  U., Eick, B. and O'Brien, E. A.[116X, [17XA millennium project:
-  constructing  small  groups[117X,  [18XInternat.  J.  Algebra  Comput.[118X, [19X12[119X, 5 (2002),
-  623–644.
   
   [[20XBer76[120X] [16XBerger, T. R.[116X, [17XCharacters and derived length in groups of odd order[117X,
   [18XJ. Algebra[118X, [19X39[119X, 1 (1976), 199–207.
@@ -73,9 +59,6 @@
   [[20XBLS75[120X]  [16XBrillhart, J., Lehmer, D. and Selfridge, J.[116X, [17XNew primality criteria
   and  factorizations  of  2^m  ±  1[117X,  [18XMathematics  of Computation[118X, [19X29[119X (1975),
   620–647.
-  
-  [[20XBM83[120X]  [16XButler,  G.  and  McKay,  J.[116X,  [17XThe transitive groups of degree up to
-  eleven[117X, [18XComm. Algebra[118X, [19X11[119X, 8 (1983), 863–911.
   
   [[20XBou70[120X]  [16XBourbaki,  N.[116X,  [17XÉléments de mathématique. Algèbre. Chapitres 1 à 3[117X,
   Hermann, Paris (1970), xiii+635 pp. (not consecutively paged) pages.
@@ -101,9 +84,6 @@
   Inc.,  New  York  (1955),  xxiv+512 pages, ((Unabridged republication of the
   second edition, published in 1911)).
   
-  [[20XBut93[120X] [16XButler, G.[116X, [17XThe transitive groups of degree fourteen and fifteen[117X, [18XJ.
-  Symbolic Comput.[118X, [19X16[119X, 5 (1993), 413–422.
-  
   [[20XCan73[120X]  [16XCannon, J. J.[116X, [17XConstruction of defining relators for finite groups[117X,
   [18XDiscrete Math.[118X, [19X5[119X (1973), 105–129.
   
@@ -115,9 +95,6 @@
   Wilson,  R.  A.[116X,  [17XAtlas  of  finite groups[117X, Oxford University Press, Eynsham
   (1985),  xxxiv+252  pages,  ((Maximal  subgroups and ordinary characters for
   simple groups, With computational assistance from J. G. Thackray)).
-  
-  [[20XCHM98[120X]  [16XConway,  J. H., Hulpke, A. and McKay, J.[116X, [17XOn transitive permutation
-  groups[117X, [18XLMS J. Comput. Math.[118X, [19X1[119X (1998), 1–8 (electronic).
   
   [[20XCLO97[120X]  [16XCox,  D.,  Little,  J.  and  O'Shea,  D.[116X,  [17XIdeals,  varieties,  and
   algorithms[117X,   Springer-Verlag,   Second   edition,  Undergraduate  Texts  in
@@ -135,9 +112,6 @@
   of   soluble   groups[117X,   [18XJ.   Symbolic  Comput.[118X,  [19X9[119X,  5-6  (1990),  551–570,
   ((Computational group theory, Part 1)).
   
-  [[20XDE05[120X]  [16XDietrich,  H.  and  Eick,  B.[116X,  [17XOn the groups of cube-free order[117X, [18XJ.
-  Algebra[118X, [19X292[119X, 1 (2005), 122–137.
-  
   [[20XDix67[120X]  [16XDixon,  J.  D.[116X,  [17XHigh speed computation of group characters[117X, [18XNumer.
   Math.[118X, [19X10[119X (1967), 446–450.
   
@@ -146,18 +120,11 @@
   NJ,  1991),  Amer.  Math.  Soc., DIMACS Ser. Discrete Math. Theoret. Comput.
   Sci., [19X11[119X, Providence, RI (1993), 105–112.
   
-  [[20XDM88[120X]  [16XDixon,  J.  D. and Mortimer, B.[116X, [17XThe primitive permutation groups of
-  degree  less  than  1000[117X, [18XMath. Proc. Cambridge Philos. Soc.[118X, [19X103[119X, 2 (1988),
-  213–238.
-  
   [[20XDre69[120X]  [16XDress,  A.[116X,  [17XA  characterisation  of solvable groups[117X, [18XMath. Z.[118X, [19X110[119X
   (1969), 213–217.
   
   [[20XEH01[120X]  [16XEick,  B.  and  Hulpke,  A.[116X,  [17XComputing  the  maximal subgroups of a
   permutation group I[117X, 155–168.
-  
-  [[20XEH03[120X]  [16XEick,  B. and Höfling, B.[116X, [17XThe solvable primitive permutation groups
-  of degree at most 6560[117X, [18XLMS J. Comput. Math.[118X, [19X6[119X (2003), 29–39 (electronic).
   
   [[20XEic97[120X]  [16XEick,  B.[116X  ([1m[31mFinkelstein,  L.  and  Kantor,  W.  M.[15X,  Eds.), [17XSpecial
   presentations   for  finite  soluble  groups  and  computing  (pre-)Frattini
@@ -167,15 +134,6 @@
   
   [[20XEll98[120X]  [16XEllis,  G.[116X, [17XOn the capability of groups[117X, [18XProc. Edinburgh Math. Soc.
   (2)[118X, [19X41[119X, 3 (1998), 487–495.
-  
-  [[20XEO99a[120X] [16XEick, B. and O'Brien, E. A.[116X, [17XEnumerating p-groups[117X, [18XJ. Austral. Math.
-  Soc. Ser. A[118X, [19X67[119X, 2 (1999), 191–205, ((Group theory)).
-  
-  [[20XEO99b[120X]  [16XEick, B. and O'Brien, E. A.[116X ([1m[31mMatzat, B. H., Greuel, G.-M. and Hiss,
-  G.[15X, Eds.), [17XThe groups of order 512[117X, in Algorithmic algebra and number theory
-  (Heidelberg,  1997),  Springer,  Berlin  (1999),  379–380,  ((Proceedings of
-  Abschlusstagung   des   DFG   Schwerpunktes   Algorithmische   Algebra   und
-  Zahlentheorie in Heidelberg)).
   
   [[20XFJNT95[120X]  [16XFelsch,  V., Johnson, D. L., Neubüser, J. and Tsaranov, S. V.[116X, [17XThe
   structure of certain Coxeter groups[117X, in Groups '93 Galway/St Andrews, Vol. 1
@@ -190,9 +148,6 @@
   
   [[20XFra82[120X]  [16XFrame,  J.  S.[116X,  [17XRecursive  computation of tensor power components[117X,
   [18XBayreuth. Math. Schr.[118X, [19X10[119X (1982), 153–159.
-  
-  [[20XGir03[120X]  [16XGirnat,  B.[116X,  [17XKlassifikation  der  Gruppen  bis  zur  Ordnung  p^5[117X,
-  Staatsexamensarbeit, TU Braunschweig, Braunschweig, Germany (2003).
   
   [[20XHal36[120X]  [16XHall,  P.[116X,  [17XThe  Eulerian  functions  of  a  group[117X, [18XQuarterly J. Of
   Mathematics[118X, [19Xos-7[119X, 1 (1936), 134–151.
@@ -257,9 +212,6 @@
   
   [[20XHul01[120X]  [16XHulpke,  A.[116X, [17XRepresenting subgroups of finitely presented groups by
   quotient subgroups[117X, [18XExperiment. Math.[118X, [19X10[119X, 3 (2001), 369–381.
-  
-  [[20XHul05[120X]  [16XHulpke, A.[116X, [17XConstructing transitive permutation groups[117X, [18XJ. Symbolic
-  Comput.[118X, [19X39[119X, 1 (2005), 1–30.
   
   [[20XHum72[120X]  [16XHumphreys,  J.  E.[116X, [17XIntroduction to Lie algebras and representation
   theory[117X, Springer-Verlag, New York (1972), xii+169 pages, ((Graduate Texts in
@@ -368,18 +320,8 @@
   [[20XNeu92[120X]   [16XNeukirch,   J.[116X,   [17XAlgebraische  Zahlentheorie[117X,  Springer,  Berlin,
   Heidelberg and New York (1992).
   
-  [[20XNew77[120X]  [16XNewman,  M.  F.[116X ([1m[31mBryce, R. A., Cossey, J. and Newman, M. F.[15X, Eds.),
-  [17XDetermination  of  groups  of  prime-power  order[117X,  in  Group  theory (Proc.
-  Miniconf.,  Australian  Nat. Univ., Canberra, 1975), Springer, Lecture Notes
-  in  Math.,  [19X573[119X,  Berlin  (1977),  73–84.  Lecture Notes in Math., Vol. 573,
-  ((Lecture Notes in Mathematics, Vol. 573)).
-  
   [[20XNew90[120X]  [16XNewman, M. F.[116X, [17XProving a group infinite[117X, [18XArch. Math. (Basel)[118X, [19X54[119X, 3
   (1990), 209–211.
-  
-  [[20XNOVL04[120X]  [16XNewman,  M.  F., O'Brien, E. A. and Vaughan-Lee, M. R.[116X, [17XGroups and
-  nilpotent  Lie  rings whose order is the sixth power of a prime[117X, [18XJ. Algebra[118X,
-  [19X278[119X, 1 (2004), 383–401.
   
   [[20XNP95b[120X]  [16XNebe,  G.  and Plesken, W.[116X, [17XFinite rational matrix groups of degree
   16[117X, [18XMem. Amer. Math. Soc.[118X, AMS, 556 (1995), 74–144, ((vol. 116)).
@@ -388,15 +330,6 @@
   [17XCAS;  design  and  use  of a system for the handling of characters of finite
   groups[117X, in Computational group theory (Durham, 1982), Academic Press, London
   (1984), 195–247.
-  
-  [[20XO'B90[120X]  [16XO'Brien,  E.  A.[116X,  [17XThe  p-group  generation  algorithm[117X, [18XJ. Symbolic
-  Comput.[118X, [19X9[119X, 5-6 (1990), 677–698, ((Computational group theory, Part 1)).
-  
-  [[20XO'B91[120X]  [16XO'Brien, E. A.[116X, [17XThe groups of order 256[117X, [18XJ. Algebra[118X, [19X143[119X, 1 (1991),
-  219–235.
-  
-  [[20XOVL05[120X] [16XO'Brien, E. A. and Vaughan-Lee, M. R.[116X, [17XThe groups with order p^7 for
-  odd prime p[117X, [18XJ. Algebra[118X, [19X292[119X, 1 (2005), 243–258.
   
   [[20XPah93[120X]  [16XPahlings, H.[116X, [17XOn the Möbius function of a finite group[117X, [18XArch. Math.
   (Basel)[118X, [19X60[119X, 1 (1993), 7–14.
@@ -433,21 +366,11 @@
   application  to  n  =  8,  V.  The  eight  dimensional  case  and a complete
   description of dimensions less than ten[117X, [18XMath. Comp.[118X, [19X34[119X (1980), 245–301.
   
-  [[20XRD05[120X]  [16XRoney-Dougal, C. M.[116X, [17XThe primitive permutation groups of degree less
-  than 2500[117X, [18XJ. Algebra[118X, [19X292[119X, 1 (2005), 154–183.
-  
-  [[20XRDU03[120X]  [16XRoney-Dougal,  C.  M.  and  Unger,  W.  R.[116X,  [17XThe  affine  primitive
-  permutation  groups  of  degree  less  than 1000[117X, [18XJ. Symbolic Comput.[118X, [19X35[119X, 4
-  (2003), 421–439.
-  
   [[20XRin93[120X]  [16XRinge,  M.[116X, [17XThe C MeatAxe, Release 1.5[117X, Lehrstuhl D für Mathematik,
   Rheinisch Westfälische Technische Hochschule, Aachen, Germany (1993).
   
   [[20XRob88[120X]  [16XRobertson,  E.  F.[116X,  [17XTietze transformations with weighted substring
   search[117X, [18XJ. Symbolic Comput.[118X, [19X6[119X, 1 (1988), 59–64.
-  
-  [[20XRoy87[120X]  [16XRoyle,  G.  F.[116X, [17XThe transitive groups of degree twelve[117X, [18XJ. Symbolic
-  Comput.[118X, [19X4[119X, 2 (1987), 255–268.
   
   [[20XRT98[120X]  [16XRylands,  L.  J.  and  Taylor,  D.  E.[116X,  [17XMatrix  generators  for the
   orthogonal groups[117X, [18XJ. Symbolic Comput.[118X, [19X25[119X, 3 (1998), 351–360.
@@ -474,10 +397,6 @@
   
   [[20XSer03[120X] [16XSeress, Á.[116X, [17XPermutation Group Algorithms[117X, Cambridge University Press
   (2003).
-  
-  [[20XSho92[120X]  [16XShort,  M.  W.[116X,  [17XThe primitive soluble permutation groups of degree
-  less  than  256[117X, Springer-Verlag, Lecture Notes in Mathematics, [19X1519[119X, Berlin
-  (1992), x+145 pages.
   
   [[20XSim70[120X]  [16XSims, C. C.[116X ([1m[31mLeech, J.[15X, Ed.), [17XComputational methods in the study of
   permutation  groups[117X,  in  Computational  Problems in Abstract Algebra (Proc.

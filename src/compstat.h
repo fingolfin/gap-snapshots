@@ -13,7 +13,6 @@
 
 /****************************************************************************
 **
-
 *V  CompInitFuncs . . . . . . . . . .  list of compiled module init functions
 **
 **  This a dummy list in case no module is statically linked.
@@ -22,9 +21,3 @@ extern InitInfoFunc CompInitFuncs [];
 
 
 #endif // GAP_COMPSTAT_H
-
-/****************************************************************************
-**
-
-*E  compstat.h  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

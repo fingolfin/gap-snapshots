@@ -894,6 +894,7 @@ InstallValue( BaumClausenInfoDebug, rec(
         return true;
     end ) );
 
+MakeImmutable(BaumClausenInfoDebug);
 
 
 #############################################################################
@@ -917,7 +918,7 @@ InstallMethod( BaumClausenInfo,
           i,             # current position in the iteration: $G_i$
           p,             # size of current composition factor
           pexp,          # exponent vector of `pcgs[i]^p'
-          root,          # value of an xtension
+          root,          # value of an extension
           roots,         # list of $p$-th roots (relative to `e')
           mulmoma,       # product of two monomial matrices
           poweval,       # representing matrix for power of generator

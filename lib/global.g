@@ -72,6 +72,16 @@ IS_READ_ONLY_GLOBAL := IsReadOnlyGVar;
 
 #############################################################################
 ##
+#F  IS_CONSTANT_GLOBAL ( <name> ) determine if a global variable is constant
+##
+##  IS_CONSTANT_GLOBAL ( <name> ) returns true if the global variable
+##  named by the string <name> is constant and false otherwise (the default)
+##
+
+IS_CONSTANT_GLOBAL := IsConstantGVar;
+
+#############################################################################
+##
 #F  MAKE_READ_ONLY_GLOBAL ( <name> ) . . . . make a global variable read-only
 ##
 ##  MAKE_READ_ONLY_GLOBAL ( <name> ) marks the global variable named
@@ -89,6 +99,16 @@ MAKE_READ_ONLY_GLOBAL := MakeReadOnlyGVar;
 ##
 
 MAKE_READ_WRITE_GLOBAL := MakeReadWriteGVar;
+
+#############################################################################
+##
+#F  MAKE_CONSTANT_GLOBAL ( <name> )
+##
+##  MAKE_CONSTANT_GLOBAL ( <name> ) marks the global variable named
+##  by the string <name> as constant
+##
+
+MAKE_CONSTANT_GLOBAL := MakeConstantGVar;
 
 #############################################################################
 ##
@@ -123,6 +143,23 @@ BIND_GLOBAL := function( name, val)
     MAKE_READ_ONLY_GLOBAL(name);
     return val;
 end;
+MAKE_READ_ONLY_GLOBAL("BIND_GLOBAL");
+
+BIND_CONSTANT := function( name, val)
+    # Ignore attempts to reassign an identical value, to simplify
+    # rereading files
+    if ISBOUND_GLOBAL( name ) and 
+       IS_IDENTICAL_OBJ( val, VAL_GVAR( name ) ) then
+       return;
+    fi;
+
+    # Even when REREADING we do not allow constants to be changed, as
+    # they are substituted in at parsing time
+    ASS_GVAR(name, val);
+    MAKE_CONSTANT_GLOBAL(name);
+    return val;
+end;
+MAKE_READ_ONLY_GLOBAL("BIND_CONSTANT");
 
 #############################################################################
 ##

@@ -203,6 +203,14 @@
 ##  <#/GAPDoc>
 ##
 
+## Shared region for storing results of FamiliesOfGeneralMappingsAndRanges
+## This has to have higher precedence than TRANSREGION, because
+## while doing TransitiveIdentification we hold a lock on TRANSREGION
+## and want a lock for GENERAL_MAPPING_REGION
+if IsHPCGAP then
+BindGlobal("GENERAL_MAPPING_REGION",
+        NewInternalRegion("FamiliesOfGeneralMappingsAndRanges region"));
+fi;
 
 #############################################################################
 ##
@@ -686,6 +694,29 @@ DeclareAttribute( "IdentityMapping", IsCollection );
 ##  <#/GAPDoc>
 ##
 DeclareAttribute( "InverseGeneralMapping", IsGeneralMapping );
+
+#############################################################################
+##
+#A  RestrictedInverseGeneralMapping( <map> )
+##
+##  <#GAPDoc Label="RestrictedInverseGeneralMapping">
+##  <ManSection>
+##  <Attr Name="RestrictedInverseGeneralMapping" Arg='map'/>
+##
+##  <Description>
+##  The <E>restricted inverse general mapping</E> of a general
+##  mapping <A>map</A> is
+##  the general mapping whose underlying relation
+##  (see&nbsp;<Ref Func="UnderlyingRelation"/>) contains a pair <M>(r,s)</M>
+##  if and only if the underlying relation of <A>map</A> contains the pair
+##  <M>(s,r)</M>, and whose domain is restricted to the image of <A>map</A>
+##  and whose range is the domain of <A>map</A>.
+##  <P/>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareAttribute( "RestrictedInverseGeneralMapping", IsGeneralMapping );
 
 
 #############################################################################

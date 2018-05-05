@@ -187,6 +187,7 @@ local hom,gp,f;
     f:=Factors(Size(gp));
     if Length(Set(f))=1 then
       SetIsPGroup(gp,true);
+      SetPrimePGroup(gp,f[1]);
     elif Length(Set(f))=2 then
       SetIsSolvableGroup(gp,true);
     fi;
@@ -350,13 +351,18 @@ local gens, lim, n, r, l, w, a,la,f,up;
     if not IsBound(grp!.randomrange) or lim<>grp!.randlim then
       # there are 1+(n+1)(1+n+n^2+...+n^(lim-1))=(n^lim*(n+1)-2)/(n-1)
       # words of length up to lim in the free group on |gens| generators
-      up:=(n^lim*(n+1)-2)/(n-1);
-      if up>=2^28 then
-	f:=Int(up/2^28+1);
-	grp!.randomrange:=[1..2^28-1];
+      if n=1 then
+        grp!.randomrange:=[1..Minimum(lim,2^28-1)];
+        f:=1;
       else
-	grp!.randomrange:=[1..up];
-	f:=1;
+        up:=(n^lim*(n+1)-2)/(n-1);
+        if up>=2^28 then
+          f:=Int(up/2^28+1);
+          grp!.randomrange:=[1..2^28-1];
+        else
+          grp!.randomrange:=[1..up];
+          f:=1;
+        fi;
       fi;
       l:=[Int(1/f),Int((n+2)/f)];
       a:=n+1;
@@ -423,6 +429,7 @@ local S;
 #    return S;
 #  fi;
 
+  Assert(1,Length(GeneratorsOfGroup(Q))=Length(GeneratorsOfGroup(fam!.wholeGroup)));
   S := Objectify(NewType(fam, IsGroup and
     IsSubgroupOfWholeGroupByQuotientRep and IsAttributeStoringRep ),
         rec(quot:=Q,sub:=U) ); 
@@ -748,7 +755,7 @@ end );
 #M  IsInfiniteAbelianizationGroup( <G> ) . . . . . . . . . . . for a fp group
 ##
 BindGlobal("HasFullColumnRankIntMatDestructive",function( mat )
-  local n, rb, next, primes, mp, row, r, pm, ns, nns, j, p, i;
+  local n, rb, next, primes, mp, r, pm, ns, nns, j, p, i;
   n:=Length(mat[1]);
   if Length(mat)<n then
     return false;
@@ -758,12 +765,7 @@ BindGlobal("HasFullColumnRankIntMatDestructive",function( mat )
   next:=7;
   primes:=[2,7,251];
   for p in primes do
-    mp:=[];
-    for i in mat do
-      row:=i*Z(p)^0;
-      ConvertToVectorRep(row,p);
-      Add(mp,row);
-    od;
+    mp:=ImmutableMatrix(p,mat*Z(p)^0);
     r:=RankMat(mp);
     if rb>0 and r<>rb and next<250 then
       next:=NextPrimeInt(next);
@@ -928,6 +930,10 @@ local hom,u;
   fi;
   u:=PreImage(hom,TrivialSubgroup(Range(hom)));
   SetIndexInWholeGroup(u,Size(Range(hom)));
+  if IsFreeGroup(G) and not IsAbelian(G) then
+    SetIsFinite(u,false);
+    SetIsFinitelyGeneratedGroup(u,false);
+  fi;
   return u;
 end);
 
@@ -937,7 +943,14 @@ function(G)
 local iso,hom,u;
   iso:=IsomorphismFpGroup(G);
   hom:=MaximalAbelianQuotient(Range(iso));
-  if Size(Range(hom))=1 then
+  if HasAbelianInvariants(Range(iso)) then
+    SetAbelianInvariants(G,AbelianInvariants(Range(iso)));
+  fi;
+  if HasIsAbelian(G) and IsAbelian(G) then
+    return TrivialSubgroup(G);
+  elif Size(Image(hom))=infinity then
+    Error("Derived subgroup has infinite index, cannot represent");
+  elif Size(Range(hom))=1 then
     return G; # this is needed because the trivial quotient is represented
               # as fp group on no generators
   fi;
@@ -1273,6 +1286,10 @@ end);
 
 GAPTCENUM.CosetTableFromGensAndRels := GTC_CosetTableFromGensAndRels;
 
+if IsHPCGAP then
+    MakeReadOnlyObj( GAPTCENUM );
+fi;
+
 
 #############################################################################
 ##
@@ -1327,12 +1344,6 @@ InstallMethod( CosetTableInWholeGroup,"from augmented table Rrs",
     true, [ IsSubgroupFpGroup and HasAugmentedCosetTableRrsInWholeGroup], 0,
 function( H )
   return AugmentedCosetTableRrsInWholeGroup(H).cosetTable;
-end );
-
-InstallMethod( CosetTableInWholeGroup,"from augmented table Mtc",
-    true, [ IsSubgroupFpGroup and HasAugmentedCosetTableMtcInWholeGroup], 0,
-function( H )
-  return AugmentedCosetTableMtcInWholeGroup(H).cosetTable;
 end );
 
 InstallMethod(CosetTableInWholeGroup,"ByQuoSubRep",true,
@@ -1571,6 +1582,26 @@ InstallOtherMethod( \/,
     0,
     FactorFreeGroupByRelators );
 
+InstallOtherMethod( \/,
+    "for fp groups and relators",
+    IsIdenticalObj,
+    [ IsFpGroup, IsCollection ],
+    0,
+    FactorGroupFpGroupByRels );
+
+InstallOtherMethod( \/,
+    "for free groups and a list of equations",
+    IsElmsColls,
+    [ IsFreeGroup, IsCollection ],
+    0,
+    {F, rels} -> FactorFreeGroupByRelators(F, List(rels, r -> r[1] / r[2]))); 
+
+InstallOtherMethod( \/,
+    "for fp groups and a list of equations",
+    IsElmsColls,
+    [ IsFpGroup, IsCollection ],
+    0,
+    {F, rels} -> FactorGroupFpGroupByRels(F, List(rels, r -> r[1] / r[2]))); 
 
 #############################################################################
 ##
@@ -1582,7 +1613,6 @@ InstallOtherMethod( \/,
     [ IsFreeGroup, IsEmpty ],
     0,
     FactorFreeGroupByRelators );
-
 
 #############################################################################
 ##
@@ -1960,7 +1990,7 @@ local d,A,B,e1,e2,Ag,Bg,s,sg,u,v;
   if HasSize(s) and IsPermGroup(s) and (Size(s)=Size(A) or Size(s)=Size(B)
     or NrMovedPoints(s)>1000) then
     d:=SmallerDegreePermutationRepresentation(s);
-    A:=Image(d,s);
+    A:=SubgroupNC(Range(d),List(GeneratorsOfGroup(s),x->ImagesRepresentative(d,x)));
     if NrMovedPoints(A)<NrMovedPoints(s) then
       Info(InfoFpGroup,3,"reduced degree from ",NrMovedPoints(s)," to ",
            NrMovedPoints(A));
@@ -3088,6 +3118,13 @@ InstallMethod(LowIndexSubgroupsFpGroup, "subgroups of full fp group",
   [IsSubgroupFpGroup and IsWholeFamily,IsSubgroupFpGroup,IsPosInt],0,
   DoLowIndexSubgroupsFpGroupViaIterator );
 
+InstallMethod(LowIndexSubgroups, "FpFroups, using LowIndexSubgroupsFpGroup",
+  true,
+  [IsSubgroupFpGroup,IsPosInt],
+  # rank higher than method for finit groups using maximal subgroups
+  RankFilter(IsGroup and IsFinite),
+  LowIndexSubgroupsFpGroup );
+
 InstallOtherMethod(LowIndexSubgroupsFpGroup,
   "subgroups of full fp group, with exclusion list", IsFamFamXY,
   [IsSubgroupFpGroup and IsWholeFamily,IsSubgroupFpGroup,IsPosInt,IsList],0,
@@ -3750,6 +3787,7 @@ local   fgens,      # generators of the free group
 	H,          # subgroup of <G>
 	gen,	    # generator of cyclic subgroup
 	max,        # maximal coset table length required
+	e,
 	T;          # coset table of <G> by <H>
 
   fgens := FreeGeneratorsOfFpGroup( G );
@@ -3775,11 +3813,14 @@ local   fgens,      # generators of the free group
     gen:=gen[1];
 
     H := Subgroup(G,[gen]);
-    T := AugmentedCosetTableMtc( G, H, -1, "_x":max:=max );
-    if T.exponent = infinity then
+    T := NEWTC_CosetEnumerator( FreeGeneratorsOfFpGroup(G),
+	  RelatorsOfFpGroup(G),GeneratorsOfGroup(H),true,false:
+	    cyclic:=true,limit:=1+max );
+    e:=NEWTC_CyclicSubgroupOrder(T);
+    if e=0 then
       return infinity;
     else
-      return T.index * T.exponent;
+      return T.index * e;
     fi;
   fi;
 
@@ -3821,7 +3862,11 @@ end);
 ##
 InstallGlobalFunction(IsomorphismPermGroupOrFailFpGroup, 
 function(arg)
-  local mappow, G, max, p, gens, rels, comb, i, l, m, H, t, gen, silent, sz, t1, bad, trial, b, bs, r, nl, o, u, rp, eo, rpo, e, e2, sc, j, z;
+local mappow, G, max, p, gens, rels, comb, i, l, m, H, t, gen, silent, sz,
+  t1, bad, trial, b, bs, r, nl, o, u, rp, eo, rpo, e, e2, sc, j, z,
+  timerFunc;
+
+  timerFunc := GET_TIMER_FROM_ReproducibleBehaviour();
 
   mappow:=function(n,g,e)
     while e>0 do
@@ -3886,23 +3931,25 @@ function(arg)
     if t<>fail then
       gen:=t[1];
       Unbind(t);
-      t:=AugmentedCosetTableMtc(G,Subgroup(G,[gen]),1,"@":
-          silent:=true,max:=max );
+      t := NEWTC_CosetEnumerator( FreeGeneratorsOfFpGroup(G),
+	    RelatorsOfFpGroup(G),[gen],true,false:
+	      cyclic:=true,limit:=1+max,quiet:=true );
     fi;
     if t=fail then
       # we cannot get the size within the permitted limits -- give up
       return fail;
     fi;
-    if t.exponent=infinity then
+    e:=NEWTC_CyclicSubgroupOrder(t);
+    if e=0 then
       SetSize(G,infinity);
       return fail;
     fi;
-    sz:=t.exponent*IndexCosetTab(t.cosetTable);
+    sz:=e*t.index;
     SetSize(G,sz);
     Info(InfoFpGroup,1,"found size ",sz);
-    if sz>200*IndexCosetTab(t.cosetTable) then
+    if sz>200*t.index then
       # try the corresponding perm rep
-      p:=t.cosetTable{[1,3..Length(t.cosetTable)-1]};
+      p:=t.ct{t.offset+[1..Length(FreeGeneratorsOfFpGroup(G))]};
       Unbind(t);
 
       for j in [1..Length(p)] do
@@ -3929,7 +3976,7 @@ function(arg)
     max:=sz*10;
   fi;
 
-  t1:=Runtime();
+  t1:=timerFunc();
   bad:=[];
   i:=1; 
   while Size(H)<sz and i<=Length(comb) do 
@@ -3970,13 +4017,13 @@ function(arg)
 
   # regular case?
   if Size(H)=NrMovedPoints(H) then
-    t1:=Runtime()-t1;
+    t1:=timerFunc()-t1;
     # try to find a cyclic subgroup that gives a faithful rep.
     b:=fail;
     bs:=1;
     t1:=t1*4;
     repeat
-      t1:=t1+Runtime();
+      t1:=t1+timerFunc();
       r:=Random(H);
       nl:=[];
       o:=Order(r);
@@ -4014,7 +4061,7 @@ function(arg)
 	  fi;
 	fi;
       od;
-      t1:=t1-Runtime();
+      t1:=t1-timerFunc();
     until t1<0;
     if b<>fail then
       b:=Orbit(H,Set(OrbitPerms([b],1)),OnSets);

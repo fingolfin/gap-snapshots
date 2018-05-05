@@ -15,11 +15,10 @@
   
   [1X26.1 [33X[0;0YFundamental ideas and rules[133X[101X
   
-  [33X[0;0YThe whole idea of this interface is that (row-) vectors and matrices must be
-  proper  objects  with  a  stored  type  (i.e.  created by Objectify allowing
-  inheritance) to benefit from method selection. We therefore refer to the new
-  style   vectors   and   matrices   as  [21Xvector  objects[121X  and  [21Xmatrix  objects[121X
-  respectively.[133X
+  [33X[0;0YThe whole idea of this interface is that vectors and matrices must be proper
+  objects  with a stored type (i.e. created by Objectify allowing inheritance)
+  to  benefit  from  method  selection.  We  therefore  refer to the new style
+  vectors and matrices as [21Xvector objects[121X and [21Xmatrix objects[121X respectively.[133X
   
   [33X[0;0YIt  should  be possible to write (efficient) code that is independent of the
   actual  representation  (in  the  sense of [5XGAP[105X's representation filters) and

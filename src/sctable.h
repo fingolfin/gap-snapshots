@@ -14,25 +14,18 @@
 #ifndef GAP_SCTABLE_H
 #define GAP_SCTABLE_H
 
+#include <src/system.h>
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  InitInfoSCTable() . . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoSCTable ( void );
 
 
 #endif // GAP_SCTABLE_H
-
-/****************************************************************************
-**
-
-*E  sctable.h . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

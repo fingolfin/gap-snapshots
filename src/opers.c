@@ -11,48 +11,31 @@
 **  This file contains the functions of the  filters, operations, attributes,
 **  and properties package.
 */
-#include        <assert.h>
 
-#include        "system.h"              /* Ints, UInts                     */
+#include <src/opers.h>
 
+#include <src/ariths.h>
+#include <src/blister.h>
+#include <src/bool.h>
+#include <src/calls.h>
+#include <src/gap.h>
+#include <src/gapstate.h>
+#include <src/gvars.h>
+#include <src/lists.h>
+#include <src/plist.h>
+#include <src/precord.h>
+#include <src/range.h>
+#include <src/records.h>
+#include <src/saveload.h>
+#include <src/stringobj.h>
+#include <src/sysfiles.h>
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
-
-#include        "gvars.h"               /* global variables                */
-
-#include        "gap.h"                 /* error handling, initialisation  */
-
-#include        "calls.h"               /* generic call mechanism          */
-
-#include        "code.h"                /* coder                           */
-
-#include        "opers.h"               /* generic operations              */
-
-#include        "ariths.h"              /* basic arithmetic                */
-#include        "lists.h"               /* generic lists                   */
-
-#include        "bool.h"                /* booleans                        */
-
-#include        "plist.h"               /* plain lists                     */
-#include        "blister.h"             /* boolean lists                   */
-#include        "string.h"              /* strings                         */
-#include        "range.h"               /* ranges                          */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "saveload.h"            /* saving and loading              */
-
-#include        "listfunc.h"   
-#include        "integer.h"   
-
-#include        "tls.h"                 /* thread-local storage            */
-#include        "thread.h"              /* threads                         */
-#include        "aobjects.h"            /* atomic objects                  */
-
-#include        "atomic.h"
+#ifdef HPCGAP
+#include <src/hpc/aobjects.h>
+#include <src/hpc/guards.h>
+#include <src/hpc/thread.h>
+#include <pthread.h>
+#endif
 
 /****************************************************************************
 **
@@ -64,16 +47,19 @@ Obj TRY_NEXT_METHOD;
 #define CACHE_SIZE 5
 
 
+static Obj StringFilterSetter;
+static Obj ArglistObjVal;
+static Obj ArglistObj;
+
+
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * internal flags functions * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  PrintFlags( <flags> ) . . . . . . . . . . . . . . . .  print a flags list
 */
 void PrintFlags (
@@ -108,14 +94,13 @@ void SaveFlags (
 
     SaveSubObj(TRUES_FLAGS(flags));
     SaveSubObj(HASH_FLAGS(flags));
-    SaveSubObj(ADDR_OBJ(flags)[2]); /* length, as an object */
+    SaveSubObj(CONST_ADDR_OBJ(flags)[2]); /* length, as an object */
     SaveSubObj(AND_CACHE_FLAGS(flags));
 
     len = NRB_FLAGS(flags);
     ptr = BLOCKS_FLAGS(flags);
     for ( i = 1;  i <= len;  i++ )
         SaveUInt(*ptr++);
-    return;
 }
 
 
@@ -139,20 +124,17 @@ void LoadFlags(
     ptr = BLOCKS_FLAGS(flags);
     for ( i = 1;  i <= len;  i++ )
         *ptr++ = LoadUInt();
-    return;
 }
 
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * *  GAP flags functions * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  FuncLEN_FLAGS( <self>, <flags> )  . . . . . . . .  length of a flags list
 **
 */
@@ -296,7 +278,6 @@ Obj FuncTRUES_FLAGS (
     Int                 len;            /* logical length of the list      */
     UInt *              ptr;            /* pointer to flags                */
     UInt                nrb;            /* number of blocks in flags       */
-    UInt                m;              /* number of bits in a block       */
     UInt                n;              /* number of bits in flags         */
     UInt                nn;
     UInt                i;              /* loop variable                   */
@@ -314,12 +295,7 @@ Obj FuncTRUES_FLAGS (
     /* compute the number of 'true'-s just as in 'FuncSizeBlist'            */
     nrb = NRB_FLAGS(flags);
     ptr = (UInt*)BLOCKS_FLAGS(flags);
-    n = 0;
-    for ( i = 1; i <= nrb; i++ ) {
-        m = *ptr++;
-        COUNT_TRUES_BLOCK(m); 
-        n += m;
-    }
+    n = COUNT_TRUES_BLOCKS(ptr, nrb);    
 
     /* make the sublist (we now know its size exactly)                    */
     sub = NEW_PLIST( T_PLIST+IMMUTABLE, n );
@@ -355,9 +331,7 @@ Obj FuncSIZE_FLAGS (
 {
     UInt *              ptr;            /* pointer to flags                */
     UInt                nrb;            /* number of blocks in flags       */
-    UInt                m;              /* number of bits in a block       */
     UInt                n;              /* number of bits in flags         */
-    UInt                i;              /* loop variable                   */
 
     /* get and check the first argument                                    */
     while ( TNUM_OBJ(flags) != T_FLAGS ) {
@@ -373,13 +347,7 @@ Obj FuncSIZE_FLAGS (
     nrb = NRB_FLAGS(flags);
     ptr = BLOCKS_FLAGS(flags);
 
-    /* loop over the blocks, adding the number of bits of each one         */
-    n = 0;
-    for ( i = 1; i <= nrb; i++ ) {
-        m = *ptr++;
-        COUNT_TRUES_BLOCK(m);
-        n += m;
-    }
+    n = COUNT_TRUES_BLOCKS(ptr, nrb);
 
     /* return the number of bits                                           */
     return INTOBJ_INT( n );
@@ -388,7 +356,6 @@ Obj FuncSIZE_FLAGS (
 
 /****************************************************************************
 **
-
 *F  FuncIS_EQUAL_FLAGS( <self>, <flags1>, <flags2> )  equality of flags lists
 */
 Obj FuncIS_EQUAL_FLAGS (
@@ -450,58 +417,63 @@ Obj FuncIS_EQUAL_FLAGS (
 }
 
 
-
-
-
-Int IsSubsetFlagsCalls;
-Int IsSubsetFlagsCalls1;
-Int IsSubsetFlagsCalls2;
+#ifdef COUNT_OPERS
+static Int IsSubsetFlagsCalls;
+static Int IsSubsetFlagsCalls1;
+static Int IsSubsetFlagsCalls2;
+#endif
 
 /****************************************************************************
 **
-*F  UncheckedIS_SUBSET_FLAGS( <self>, <flags1>, <flags2> ) subset test with 
+*F  UncheckedIS_SUBSET_FLAGS( <flags1>, <flags2> ) subset test with
 *F                                                         no safety check
 */
-Obj UncheckedIS_SUBSET_FLAGS (
-    Obj                 self,
-    Obj                 flags1,
-    Obj                 flags2 )
+static Obj UncheckedIS_SUBSET_FLAGS(Obj flags1, Obj flags2)
 {
-    Int                 len1;
-    Int                 len2;
-    UInt *              ptr1;
-    UInt *              ptr2;
-    Int                 i;
-    Obj                 trues;
+    Int    len1;
+    Int    len2;
+    UInt * ptr1;
+    UInt * ptr2;
+    Int    i;
+    Obj    trues;
 
-    /* do the real work                                                    */
+/* do the real work                                                    */
 #ifdef COUNT_OPERS
     IsSubsetFlagsCalls++;
 #endif
 
     /* first check the trues                                               */
     trues = TRUES_FLAGS(flags2);
-    if ( trues != 0 ) {
+    if (trues != 0) {
         len2 = LEN_PLIST(trues);
-        if ( TRUES_FLAGS(flags1) != 0 ) {
-            if ( LEN_PLIST(TRUES_FLAGS(flags1)) < len2 ) {
+        if (TRUES_FLAGS(flags1) != 0) {
+            if (LEN_PLIST(TRUES_FLAGS(flags1)) < len2) {
 #ifdef COUNT_OPERS
                 IsSubsetFlagsCalls1++;
 #endif
                 return False;
             }
         }
-        if ( len2 < 3 ) {
+        if (len2 == 0) {
+            return True;
+        }
+
+        /* If flags2 has only a "few" set bits then the best way is to
+           simply check if those bits are set in flags1. The optimal
+           value of "few" depends on compilers, hardware and the
+           length of flags1. Experiments in 2017 suggest that it is
+           somewhere between 10 and 20 for current setups. */
+        if (len2 < 16) {
 #ifdef COUNT_OPERS
             IsSubsetFlagsCalls2++;
 #endif
-            if ( LEN_FLAGS(flags1) < INT_INTOBJ(ELM_PLIST(trues,len2)) ) {
+            if (LEN_FLAGS(flags1) < INT_INTOBJ(ELM_PLIST(trues, len2))) {
                 return False;
             }
-            for ( i = len2;  0 < i;  i-- ) {
-               if (ELM_FLAGS(flags1,INT_INTOBJ(ELM_PLIST(trues,i)))==False) {
-                   return False;
-               }
+            for (i = len2; 0 < i; i--) {
+                if (!C_ELM_FLAGS(flags1, INT_INTOBJ(ELM_PLIST(trues, i)))) {
+                    return False;
+                }
             }
             return True;
         }
@@ -512,32 +484,22 @@ Obj UncheckedIS_SUBSET_FLAGS (
     len2 = NRB_FLAGS(flags2);
     ptr1 = BLOCKS_FLAGS(flags1);
     ptr2 = BLOCKS_FLAGS(flags2);
-    if ( len1 <= len2 ) {
-        ptr2 += len2-1;
-        for (i = len1+1 ; i <= len2; i++ ) {
-            if ( 0 != *ptr2 ) {
+    if (len1 < len2) {
+        for (i = len2 - 1; i >= len1; i--) {
+            if (ptr2[i] != 0)
                 return False;
-            }
-            ptr2--;
         }
-        
-        ptr1 += len1-1;
-        for ( i = 1; i <= len1; i++ ) {
-            if ( (*ptr1 & *ptr2) != *ptr2 ) {
+        for (i = len1 - 1; i >= 0; i--) {
+            UInt x = ptr2[i];
+            if ((x & ptr1[i]) != x)
                 return False;
-            }
-            ptr1--;  ptr2--;
         }
-
     }
     else {
-        ptr1 += len2-1;
-        ptr2 += len2-1;
-        for ( i = 1; i <= len2; i++ ) {
-            if ( (*ptr1 & *ptr2) != *ptr2 ) {
+        for (i = len2 - 1; i >= 0; i--) {
+            UInt x = ptr2[i];
+            if ((x & ptr1[i]) != x)
                 return False;
-            }
-            ptr1--;  ptr2--;
         }
     }
     return True;
@@ -564,12 +526,11 @@ Obj FuncIS_SUBSET_FLAGS (
             "you can replace <flags2> via 'return <flags2>;'" );
     }
     
-    return UncheckedIS_SUBSET_FLAGS(self, flags1, flags2);
+    return UncheckedIS_SUBSET_FLAGS(flags1, flags2);
 }
 
 /****************************************************************************
 **
-
 *F  FuncSUB_FLAGS( <self>, <flags1>, <flags2> ) . . .  substract a flags list
 */
 Obj FuncSUB_FLAGS (
@@ -635,9 +596,11 @@ Obj FuncSUB_FLAGS (
 */
 #define AND_FLAGS_HASH_SIZE             50
 
-Int AndFlagsCacheHit;
-Int AndFlagsCacheMiss;
-Int AndFlagsCacheLost;
+#ifdef COUNT_OPERS
+static Int AndFlagsCacheHit;
+static Int AndFlagsCacheMiss;
+static Int AndFlagsCacheLost;
+#endif
 
 Obj FuncAND_FLAGS (
     Obj                 self,
@@ -658,9 +621,12 @@ Obj FuncAND_FLAGS (
     Obj                 flagsX;
     Obj                 cache;
     Obj                 entry;
+#ifdef HPCGAP
+    Obj                 locked = 0;
+#endif
     UInt                hash;
     UInt                hash2;
-    static UInt         next = 0;
+    static UInt         next = 0;   // FIXME HPC-GAP: is usage of this static thread-safe?
 #endif
 
     /* do some trivial checks                                              */
@@ -675,10 +641,21 @@ Obj FuncAND_FLAGS (
             "you can replace <flags2> via 'return <flags2>;'" );
     }
 
-    /* check the cache                                                     */
+    // check the cache
 #   ifdef AND_FLAGS_HASH_SIZE
-        if ( INT_INTOBJ(flags1) < INT_INTOBJ(flags2) ) {
+        // We want to ensure if we calculate 'flags1 and flags2', then
+        // later do 'flags2 and flags1', we will get the value from the cache.
+        // Therefore we just compare the location of the Bag masterpointers
+        // for both flags (which doesn't change), and use the cache of the
+        // smaller.
+        if ( flags1 < flags2 ) {
             flagsX = flags2;
+#           ifdef HPCGAP
+                if (!PreThreadCreation) {
+                    locked = flags1;
+                    HashLock(locked);
+                }
+#           endif
             cache  = AND_CACHE_FLAGS(flags1);
             if ( cache == 0 ) {
                 cache = NEW_PLIST( T_PLIST, 2*AND_FLAGS_HASH_SIZE );
@@ -689,6 +666,12 @@ Obj FuncAND_FLAGS (
         }
         else {
             flagsX = flags1;
+#           ifdef HPCGAP
+                if (!PreThreadCreation) {
+                    locked = flags2;
+                    HashLock(locked);
+                }
+#           endif
             cache  = AND_CACHE_FLAGS(flags2);
             if ( cache == 0 ) {
                 cache = NEW_PLIST( T_PLIST, 2*AND_FLAGS_HASH_SIZE );
@@ -697,7 +680,7 @@ Obj FuncAND_FLAGS (
                 CHANGED_BAG(flags2);
             }
         }
-        hash = (UInt)INT_INTOBJ(flagsX);
+        hash = (UInt)flagsX;
         for ( i = 0;  i < 24;  i++ ) {
             hash2 = (hash + 97*i) % AND_FLAGS_HASH_SIZE;
             entry = ELM_PLIST( cache, 2*hash2+1 );
@@ -707,6 +690,10 @@ Obj FuncAND_FLAGS (
             if ( entry == flagsX ) {
 #               ifdef COUNT_OPERS
                     AndFlagsCacheHit++;
+#               endif
+#               if defined(HPCGAP) && defined(AND_FLAGS_HASH_SIZE)
+                    if (locked)
+                        HashUnlock(locked);
 #               endif
                 return ELM_PLIST( cache, 2*hash2+2 );
             }
@@ -730,9 +717,17 @@ Obj FuncAND_FLAGS (
     len2   = LEN_FLAGS(flags2);
     size2  = NRB_FLAGS(flags2);
     if ( len1 == 0 ) {
+#       if defined(HPCGAP) && defined(AND_FLAGS_HASH_SIZE)
+            if (locked)
+                HashUnlock(locked);
+#       endif
         return flags2;
     }
     if ( len2 == 0 ) {
+#       if defined(HPCGAP) && defined(AND_FLAGS_HASH_SIZE)
+            if (locked)
+                HashUnlock(locked);
+#       endif
         return flags1;
     }
     if ( len1 < len2 ) {
@@ -768,6 +763,10 @@ Obj FuncAND_FLAGS (
         SET_ELM_PLIST( cache, 2*hash+1, flagsX );
         SET_ELM_PLIST( cache, 2*hash+2, flags  );
         CHANGED_BAG(cache);
+#       ifdef HPCGAP
+            if (locked)
+                HashUnlock(locked);
+#       endif
 #   endif
 
     /* and return the result                                               */
@@ -776,7 +775,7 @@ Obj FuncAND_FLAGS (
 
 Obj HIDDEN_IMPS;
 Obj WITH_HIDDEN_IMPS_FLAGS_CACHE;
-static const Int hidden_imps_cache_length = 2003;
+enum { HIDDEN_IMPS_CACHE_LENGTH = 2003 };
 
 /* Forward declaration of FuncFLAGS_FILTER */
 Obj FuncFLAGS_FILTER(Obj self, Obj oper);
@@ -789,11 +788,18 @@ Obj FuncInstallHiddenTrueMethod(Obj self, Obj filter, Obj filters)
 {
     Obj imp = FuncFLAGS_FILTER(0, filter);
     Obj imps = FuncFLAGS_FILTER(0, filters);
+#ifdef HPCGAP
+    RegionWriteLock(REGION(HIDDEN_IMPS));
+#endif
     UInt len = LEN_PLIST(HIDDEN_IMPS);
     GROW_PLIST(HIDDEN_IMPS, len + 2);
     SET_LEN_PLIST(HIDDEN_IMPS, len + 2);
-    ELM_PLIST(HIDDEN_IMPS, len + 1) = imp;
-    ELM_PLIST(HIDDEN_IMPS, len + 2) = imps;
+    SET_ELM_PLIST(HIDDEN_IMPS, len + 1, imp);
+    SET_ELM_PLIST(HIDDEN_IMPS, len + 2, imps);
+    CHANGED_BAG(HIDDEN_IMPS);
+#ifdef HPCGAP
+    RegionWriteUnlock(REGION(HIDDEN_IMPS));
+#endif
     return 0;
 }
 
@@ -805,17 +811,22 @@ Obj FuncCLEAR_HIDDEN_IMP_CACHE(Obj self, Obj filter)
 {
   Int i;
   Obj flags = FuncFLAGS_FILTER(0, filter);
-  
-  for(i = 1; i < hidden_imps_cache_length * 2 - 1; i += 2)
+#ifdef HPCGAP
+  RegionWriteLock(REGION(WITH_HIDDEN_IMPS_FLAGS_CACHE));
+#endif
+  for(i = 1; i < HIDDEN_IMPS_CACHE_LENGTH * 2 - 1; i += 2)
   {
     if(ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, i) &&
        FuncIS_SUBSET_FLAGS(0, ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, i+1), flags) == True)
     {
-        ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, i) = 0;
-        ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, i+1) = 0;
+        SET_ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, i, 0);
+        SET_ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, i + 1, 0);
         CHANGED_BAG(WITH_HIDDEN_IMPS_FLAGS_CACHE);
     }
   }
+#ifdef HPCGAP
+  RegionWriteUnlock(REGION(WITH_HIDDEN_IMPS_FLAGS_CACHE));
+#endif
   return 0;
 }
 
@@ -823,11 +834,15 @@ Obj FuncCLEAR_HIDDEN_IMP_CACHE(Obj self, Obj filter)
 **
 *F  FuncWITH_HIDDEN_IMP_FLAGS( <self>, <flags> ) . . add hidden imps to flags
 */
+#ifdef COUNT_OPERS
+static Int WITH_HIDDEN_IMPS_MISS=0;
+static Int WITH_HIDDEN_IMPS_HIT=0;
+#endif
 Obj FuncWITH_HIDDEN_IMPS_FLAGS(Obj self, Obj flags)
 {
-    Int changed, i;
+    Int changed, i, lastand, stop;
     Int hidden_imps_length = LEN_PLIST(HIDDEN_IMPS) / 2;
-    Int base_hash = INT_INTOBJ(FuncHASH_FLAGS(0, flags)) % hidden_imps_cache_length;
+    Int base_hash = INT_INTOBJ(FuncHASH_FLAGS(0, flags)) % HIDDEN_IMPS_CACHE_LENGTH;
     Int hash = base_hash;
     Int hash_loop = 0;
     Obj cacheval;
@@ -842,27 +857,42 @@ Obj FuncWITH_HIDDEN_IMPS_FLAGS(Obj self, Obj flags)
             (Int)TNAM_OBJ(flags), 0L,
             "you can replace <flags> via 'return <flags>;'" );
     }
-    
+#ifdef HPCGAP
+    RegionWriteLock(REGION(WITH_HIDDEN_IMPS_FLAGS_CACHE));
+#endif
     for(hash_loop = 0; hash_loop < 3; ++hash_loop)
     {
       cacheval = ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, hash*2+1);
       if(cacheval && cacheval == flags) {
-        return ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, hash*2+2);
+        Obj ret = ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, hash*2+2);
+#ifdef HPCGAP
+        RegionWriteUnlock(REGION(WITH_HIDDEN_IMPS_FLAGS_CACHE));
+#endif
+#ifdef COUNT_OPERS
+        WITH_HIDDEN_IMPS_HIT++;
+#endif
+        return ret;
       }
-      hash = (hash * 311 + 61) % hidden_imps_cache_length;
+      hash = (hash * 311 + 61) % HIDDEN_IMPS_CACHE_LENGTH;
     }
     
+#ifdef COUNT_OPERS
+    WITH_HIDDEN_IMPS_MISS++;
+#endif
     changed = 1;
+    lastand = 0;
     while(changed)
     {
       changed = 0;
-      for(i = hidden_imps_length; i >= 1; --i)
+      for (i = hidden_imps_length, stop = lastand; i > stop; i--)
       {
-        if( UncheckedIS_SUBSET_FLAGS(0, with, ELM_PLIST(HIDDEN_IMPS, i*2)) == True &&
-           UncheckedIS_SUBSET_FLAGS(0, with, ELM_PLIST(HIDDEN_IMPS, i*2-1)) != True )
+        if( UncheckedIS_SUBSET_FLAGS(with, ELM_PLIST(HIDDEN_IMPS, i*2)) == True &&
+           UncheckedIS_SUBSET_FLAGS(with, ELM_PLIST(HIDDEN_IMPS, i*2-1)) != True )
         {
           with = FuncAND_FLAGS(0, with, ELM_PLIST(HIDDEN_IMPS, i*2-1));
           changed = 1;
+          stop = 0;
+          lastand = i;
         }
       }
     }
@@ -882,32 +912,179 @@ Obj FuncWITH_HIDDEN_IMPS_FLAGS(Obj self, Obj flags)
         old_with = ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, hash*2+2);
         old_moving = 1;
       }
-      
-      ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, hash*2+1) = new_flags;
-      ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, hash*2+2) = new_with;
-      
+
+      SET_ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, hash * 2 + 1, new_flags);
+      SET_ELM_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, hash * 2 + 2, new_with);
+
       if(old_moving)
       {
         new_flags = old_flags;
         new_with = old_with;
-        hash = (hash * 311 + 61) % hidden_imps_cache_length;
+        hash = (hash * 311 + 61) % HIDDEN_IMPS_CACHE_LENGTH;
       }
     }
     
-    CHANGED_BAG(WITH_HIDDEN_IMPS_FLAGS_CACHE);    
+    CHANGED_BAG(WITH_HIDDEN_IMPS_FLAGS_CACHE);
+#ifdef HPCGAP
+    RegionWriteUnlock(REGION(WITH_HIDDEN_IMPS_FLAGS_CACHE));
+#endif
     return with;
+}
+
+static Obj IMPLICATIONS;
+static Obj WITH_IMPS_FLAGS_CACHE;
+enum { IMPS_CACHE_LENGTH = 11001 };
+
+/****************************************************************************
+**
+*F  FuncCLEAR_IMP_CACHE( <self>, <flags> ) . . . . . . . clear cache of flags
+*/
+Obj FuncCLEAR_IMP_CACHE(Obj self)
+{
+  Int i;
+#ifdef HPCGAP
+  RegionWriteLock(REGION(IMPLICATIONS));
+#endif
+  for(i = 1; i < IMPS_CACHE_LENGTH * 2 - 1; i += 2)
+  {
+    SET_ELM_PLIST(WITH_IMPS_FLAGS_CACHE, i, 0);
+    SET_ELM_PLIST(WITH_IMPS_FLAGS_CACHE, i + 1, 0);
+  }
+#ifdef HPCGAP
+  RegionWriteUnlock(REGION(IMPLICATIONS));
+#endif
+  return 0;
 }
 
 /****************************************************************************
 **
+*F  FuncWITH_IMPS_FLAGS( <self>, <flags> ) . . . . . . . . add imps to flags
+*/
+#ifdef COUNT_OPERS
+static Int WITH_IMPS_FLAGS_MISS=0;
+static Int WITH_IMPS_FLAGS_HIT=0;
+#endif
+Obj FuncWITH_IMPS_FLAGS(Obj self, Obj flags)
+{
+    Int changed, lastand, i;
+    Int stop;
+    Int imps_length;
+    Int base_hash = INT_INTOBJ(FuncHASH_FLAGS(0, flags)) % IMPS_CACHE_LENGTH;
+    Int hash = base_hash;
+    Int hash_loop = 0;
+    Obj cacheval;
+    Obj old_with, old_flags, new_with, new_flags;
+    Int old_moving;
+    Obj with = flags;
+    Obj imp;
+    
+    /* do some trivial checks - we have to do this so we can use
+     * UncheckedIS_SUBSET_FLAGS                                              */
+    while ( TNUM_OBJ(flags) != T_FLAGS ) {
+            flags = ErrorReturnObj( "<flags> must be a flags list (not a %s)",
+            (Int)TNAM_OBJ(flags), 0L,
+            "you can replace <flags> via 'return <flags>;'" );
+    }
+#ifdef HPCGAP
+    RegionWriteLock(REGION(IMPLICATIONS));
+#endif
+    for(hash_loop = 0; hash_loop < 3; ++hash_loop)
+    {
+      cacheval = ELM_PLIST(WITH_IMPS_FLAGS_CACHE, hash*2+1);
+      if(cacheval && cacheval == flags) {
+        Obj ret = ELM_PLIST(WITH_IMPS_FLAGS_CACHE, hash*2+2);
+#ifdef HPCGAP
+        RegionWriteUnlock(REGION(IMPLICATIONS));
+#endif
+#ifdef COUNT_OPERS
+        WITH_IMPS_FLAGS_HIT++;
+#endif
+        return ret;
+      }
+      hash = (hash * 311 + 61) % IMPS_CACHE_LENGTH;
+    }
+    
+#ifdef COUNT_OPERS
+    WITH_IMPS_FLAGS_MISS++;
+#endif
+    changed = 1;
+    imps_length = LEN_PLIST(IMPLICATIONS);
+    lastand = imps_length+1;
+    while(changed)
+    {
+      changed = 0;
+      for (i = 1, stop = lastand; i < stop; i++)
+      {
+        imp = ELM_PLIST(IMPLICATIONS, i);
+        if( UncheckedIS_SUBSET_FLAGS(with, ELM_PLIST(imp, 2)) == True &&
+           UncheckedIS_SUBSET_FLAGS(with, ELM_PLIST(imp, 1)) != True )
+        {
+          with = FuncAND_FLAGS(0, with, ELM_PLIST(imp, 1));
+          changed = 1;
+          stop = imps_length+1;
+          lastand = i;
+        }
+      }
+    }
 
+    /* add to hash table, shuffling old values along (last one falls off) */
+    hash = base_hash;
+    
+    old_moving = 1;
+    new_with = with;
+    new_flags = flags;
+    
+    for(hash_loop = 0; old_moving && hash_loop < 3; ++hash_loop) {
+      old_moving = 0;
+      if(ELM_PLIST(WITH_IMPS_FLAGS_CACHE, hash*2+1))
+      {
+        old_flags = ELM_PLIST(WITH_IMPS_FLAGS_CACHE, hash*2+1);
+        old_with = ELM_PLIST(WITH_IMPS_FLAGS_CACHE, hash*2+2);
+        old_moving = 1;
+      }
+
+      SET_ELM_PLIST(WITH_IMPS_FLAGS_CACHE, hash * 2 + 1, new_flags);
+      SET_ELM_PLIST(WITH_IMPS_FLAGS_CACHE, hash * 2 + 2, new_with);
+      CHANGED_BAG(WITH_IMPS_FLAGS_CACHE);
+
+      if(old_moving)
+      {
+        new_flags = old_flags;
+        new_with = old_with;
+        hash = (hash * 311 + 61) % IMPS_CACHE_LENGTH;
+      }
+    }
+    
+#ifdef HPCGAP
+    RegionWriteUnlock(REGION(IMPLICATIONS));
+#endif
+    return with;
+}
+
+Obj FuncWITH_IMPS_FLAGS_STAT(Obj self)
+{
+    Obj res;
+    res = NEW_PLIST(T_PLIST, 3);
+    SET_LEN_PLIST(res, 3);
+    SET_ELM_PLIST(res, 1, WITH_IMPS_FLAGS_CACHE);
+#ifdef COUNT_OPERS
+    SET_ELM_PLIST(res, 2, INTOBJ_INT(WITH_IMPS_FLAGS_HIT));
+    SET_ELM_PLIST(res, 3, INTOBJ_INT(WITH_IMPS_FLAGS_MISS));
+#else
+    SET_ELM_PLIST(res, 2, Fail);
+    SET_ELM_PLIST(res, 3, Fail);
+#endif
+    return res;
+}
+
+/****************************************************************************
+**
 *F * * * * * * * * * * *  internal filter functions * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *V  Countlags  . . . . . . . . . . . . . . . . . . . . next free flag number
 */
 Int CountFlags;
@@ -915,7 +1092,6 @@ Int CountFlags;
 
 /****************************************************************************
 **
-
 *F  SetterFilter( <oper> )  . . . . . . . . . . . . . . .  setter of a filter
 */
 Obj SetterFilter (
@@ -966,8 +1142,8 @@ Obj SetterAndFilter (
     Obj                 setter;
     Obj                 obj;
     if ( SETTR_FILT( getter ) == INTOBJ_INT(0xBADBABE) ) {
-        setter = NewFunctionCT( T_FUNCTION, SIZE_OPER,
-                                "<<setter-and-filter>>", 2L, "obj, val",
+        setter = NewFunctionT( T_FUNCTION, SIZE_OPER,
+                                MakeImmString("<<setter-and-filter>>"), 2, ArglistObjVal,
                                 DoSetAndFilter );
         /* assign via 'obj' to avoid GC issues */
         obj =  SetterFilter( FLAG1_FILT(getter) );
@@ -1044,22 +1220,6 @@ Obj TesterAndFilter (
 **
 *F  NewFilter( <name>, <narg>, <nams>, <hdlr> )  . . . . .  make a new filter
 */
-Obj DoTestFilter (
-    Obj                 self,
-    Obj                 obj )
-{
-    return True;
-}
-
-Obj NewTesterFilter (
-    Obj                 getter )
-{
-    Obj                 tester;
-    tester = ReturnTrueFilter;
-    return tester;
-}
-
-
 Obj DoSetFilter (
     Obj                 self,
     Obj                 obj,
@@ -1097,9 +1257,6 @@ Obj DoSetFilter (
     /* return 'void'                                                       */
     return 0;
 }
-
-static Obj StringFilterSetter;
-static Obj ArglistObjVal;
 
 Obj NewSetterFilter (
     Obj                 getter )
@@ -1153,7 +1310,6 @@ Obj NewFilter (
 {
     Obj                 getter;
     Obj                 setter;
-    Obj                 tester;
     Int                 flag1;
     Obj                 flags;
     
@@ -1172,8 +1328,7 @@ Obj NewFilter (
     SETTR_FILT(getter)  = setter;
     CHANGED_BAG(getter);
     
-    tester = NewTesterFilter( getter );
-    TESTR_FILT(getter)  = tester;
+    TESTR_FILT(getter)  = ReturnTrueFilter;
     CHANGED_BAG(getter);
 
     return getter;    
@@ -1205,9 +1360,6 @@ Obj DoAndFilter (
     return True;
 }
 
-static Obj StringAndFilter;
-static Obj ArglistObj;
-
 Obj NewAndFilter (
     Obj                 oper1,
     Obj                 oper2 )
@@ -1215,10 +1367,28 @@ Obj NewAndFilter (
     Obj                 getter;
     Obj                 flags;
 
-    if ( oper1 == ReturnTrueFilter && oper2 == ReturnTrueFilter )
-        return ReturnTrueFilter;
+    Int                 str_len;
+    Obj                 str;
+    char*               s;
 
-    getter = NewFunctionT( T_FUNCTION, SIZE_OPER, StringAndFilter, 1,
+    if ( oper1 == ReturnTrueFilter )
+        return oper2;
+
+    if ( oper2 == ReturnTrueFilter )
+        return oper1;
+
+    str_len = GET_LEN_STRING(NAME_FUNC(oper1)) + GET_LEN_STRING(NAME_FUNC(oper2)) + 8;
+    str = NEW_STRING(str_len);
+    s = CSTR_STRING(str);
+    s[0] = '(';
+    s[1] = 0;
+    strlcat(s, CSTR_STRING(NAME_FUNC(oper1)), str_len);
+    strlcat(s, " and ", str_len);
+    strlcat(s, CSTR_STRING(NAME_FUNC(oper2)), str_len);
+    strlcat(s, ")", str_len);
+    SET_LEN_STRING(str, str_len - 1);
+
+    getter = NewFunctionT( T_FUNCTION, SIZE_OPER, str, 1,
                            ArglistObj, DoAndFilter );
     FLAG1_FILT(getter)  = oper1;
     FLAG2_FILT(getter)  = oper2;
@@ -1239,7 +1409,6 @@ Obj FuncIS_AND_FILTER( Obj self, Obj filt )
 
 /****************************************************************************
 **
-
 *V  ReturnTrueFilter . . . . . . . . . . . . . . . . the return 'true' filter
 */
 Obj ReturnTrueFilter;
@@ -1249,13 +1418,6 @@ Obj ReturnTrueFilter;
 **
 *F  NewReturnTrueFilter() . . . . . . . . . . create a new return true filter
 */
-Obj DoTestReturnTrueFilter (
-    Obj                 self,
-    Obj                 obj )
-{
-    return True;
-}
-
 Obj TesterReturnTrueFilter (
     Obj                 getter )
 {
@@ -1280,8 +1442,8 @@ Obj SetterReturnTrueFilter (
 {
     Obj                 setter;
 
-    setter = NewFunctionCT( T_FUNCTION, SIZE_OPER,
-        "<<setter-true-filter>>", 2L, "obj, val",
+    setter = NewFunctionT( T_FUNCTION, SIZE_OPER,
+        MakeImmString("<<setter-true-filter>>"), 2, ArglistObjVal,
         DoSetReturnTrueFilter );
     FLAG1_FILT(setter)  = INTOBJ_INT( 0 );
     FLAG2_FILT(setter)  = INTOBJ_INT( 0 );
@@ -1304,8 +1466,8 @@ Obj NewReturnTrueFilter ( void )
     Obj                 tester;
     Obj                 flags;
 
-    getter = NewFunctionCT( T_FUNCTION, SIZE_OPER,
-        "ReturnTrueFilter", 1L, "obj",
+    getter = NewFunctionT( T_FUNCTION, SIZE_OPER,
+        MakeImmString("ReturnTrueFilter"), 1, ArglistObj,
         DoReturnTrueFilter );
     FLAG1_FILT(getter)  = INTOBJ_INT( 0 );
     FLAG2_FILT(getter)  = INTOBJ_INT( 0 );
@@ -1328,14 +1490,12 @@ Obj NewReturnTrueFilter ( void )
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * GAP filter functions * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  FuncNEW_FILTER( <self>, <name> )  . . . . . . . . . . . . .  new filter
 */
 Obj FuncNEW_FILTER (
@@ -1355,7 +1515,6 @@ Obj FuncNEW_FILTER (
 
 /****************************************************************************
 **
-
 *F  FuncFLAG1_FILTER( <self>, <oper> )  . . . . . . . . . . . .  `FLAG1_FILT'
 */
 Obj FuncFLAG1_FILTER (
@@ -1473,7 +1632,6 @@ Obj FuncSET_FLAGS_FILTER (
 
 /****************************************************************************
 **
-
 *F  FuncSETTER_FILTER( <self>, <oper> ) . . . . . . . . .  setter of a filter
 */
 Obj FuncSETTER_FILTER (
@@ -1553,7 +1711,6 @@ Obj FuncSET_TESTER_FILTER (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * *  internal operation functions  * * * * * * * * * * * *
 */
 
@@ -1561,6 +1718,11 @@ Obj FuncSET_TESTER_FILTER (
 /****************************************************************************
 **
 *F  CallHandleMethodNotFound( <oper>, <nargs>, <args>, <verbose>, <constructor>)
+**
+**
+**  This enables the special error handling for Method Not Found Errors.
+**  It assembles all the necessary information into a form where it can be 
+**  conveniently accessed from GAP
 **
 */
 
@@ -1581,6 +1743,11 @@ Obj CallHandleMethodNotFound( Obj oper,
   Obj r;
   Obj arglist;
   UInt i;
+#ifdef HPCGAP
+  Region *savedRegion = TLS(currentRegion);
+  TLS(currentRegion) = TLS(threadRegion);
+#endif
+
   r = NEW_PREC(5);
   if (RNamOperation == 0)
     {
@@ -1604,14 +1771,20 @@ Obj CallHandleMethodNotFound( Obj oper,
   AssPRec(r,RNamIsConstructor,constructor ? True : False);
   AssPRec(r,RNamPrecedence,precedence);
   SortPRecRNam(r,0);
-  return CALL_1ARGS(HandleMethodNotFound, r);
+  r = CALL_1ARGS(HandleMethodNotFound, r);
+#ifdef HPCGAP
+  TLS(currentRegion) = savedRegion;
+#endif
+  return r;
 }
 
 /****************************************************************************
 **
-*F  FuncCompactTypeIDs( <self> ) . . . garbage collect the type IDs
+*F  FuncCOMPACT_TYPE_IDS( <self> ) . . . garbage collect the type IDs
 **
 */
+
+static Obj FLUSH_ALL_METHOD_CACHES;
 
 static Int NextTypeID;
 Obj IsType;
@@ -1620,69 +1793,36 @@ static void FixTypeIDs( Bag b ) {
   if ( (TNUM_OBJ( b )  == T_POSOBJ) &&
        (DoFilter(IsType, b ) == True ))
     {
-      ID_TYPE(b) = INTOBJ_INT(NextTypeID);
+      SET_ID_TYPE(b, INTOBJ_INT(NextTypeID));
       NextTypeID++;
     } 
 }
 
 
-Obj FuncCompactTypeIDs( Obj self )
+Obj FuncCOMPACT_TYPE_IDS( Obj self )
 {
-  NextTypeID = -(1L << NR_SMALL_INT_BITS);
+  NextTypeID = INT_INTOBJ_MIN;
   CallbackForAllBags( FixTypeIDs );
+  CALL_0ARGS(FLUSH_ALL_METHOD_CACHES);
   return INTOBJ_INT(NextTypeID);
 }
 
 /****************************************************************************
 **
-*F  DoOperation( <name> ) . . . . . . . . . . . . . . .  make a new operation
-*/
-UInt CacheIndex;
-
-Obj Method0Args;
-Obj NextMethod0Args;
-Obj Method1Args;
-Obj NextMethod1Args;
-Obj Method2Args;
-Obj NextMethod2Args;
-Obj Method3Args;
-Obj NextMethod3Args;
-Obj Method4Args;
-Obj NextMethod4Args;
-Obj Method5Args;
-Obj NextMethod5Args;
-Obj Method6Args;
-Obj NextMethod6Args;
-Obj MethodXArgs;
-Obj NextMethodXArgs;
-
-Obj VMethod0Args;
-Obj NextVMethod0Args;
-Obj VMethod1Args;
-Obj NextVMethod1Args;
-Obj VMethod2Args;
-Obj NextVMethod2Args;
-Obj VMethod3Args;
-Obj NextVMethod3Args;
-Obj VMethod4Args;
-Obj NextVMethod4Args;
-Obj VMethod5Args;
-Obj NextVMethod5Args;
-Obj VMethod6Args;
-Obj NextVMethod6Args;
-Obj VMethodXArgs;
-Obj NextVMethodXArgs;
-
-
-
-
-/****************************************************************************
+*F  DoOperation<N>Args( <oper>, ... ) . . . . . . . . . .  Operation Handlers
 **
-**  DoOperation0Args( <oper> )
+**  This section of the file provides handlers for operations. The main ones
+**  are DoOperation0Args ... DoOperation6Args and the DoVerboseOperation
+**  tracing variants. Then there are variants for constructors. In the
+**  following section are handlers for attributes, properties and the
+**  operations related to them.
+**
+**  This code has been refactored to reduce repetition. Its efficiency now
+**  depends on the C compiler inlining some quite large functions and then
+**  doing constant folding to effectively produce a specialised version of
+**  the main function
 */
-Int OperationHit;
-Int OperationMiss;
-Int OperationNext;
+/* TL: UInt CacheIndex; */
 
 
 /* This avoids a function call in the case of external objects with a
@@ -1692,6 +1832,10 @@ static inline Obj TYPE_OBJ_FEO (
                 Obj obj
         )
 {
+#ifdef HPCGAP
+    /* TODO: We need to be able to automatically derive this. */
+    ImpliedWriteGuard(obj);
+#endif
     switch ( TNUM_OBJ( obj ) ) {
     case T_COMOBJ:
         return TYPE_COMOBJ(obj);
@@ -1704,799 +1848,479 @@ static inline Obj TYPE_OBJ_FEO (
     }
 }
 
-static inline Obj CacheOper (
-    Obj                 oper,
-    UInt                i )
+/* Method Cache -- we remember recently selected methods in a cache.
+   The effectiveness of this cache is vital for GAP's performance */
+
+
+/* The next few functions deal with finding and allocating if necessary the cache 
+   for a given operation and number of arguments, and some locking in HPC-GAP */
+
+
+#ifdef HPCGAP
+
+static pthread_mutex_t CacheLock;
+static UInt            CacheSize;
+
+static void LockCache(void)
 {
-    Obj                 cache;
+    if (!PreThreadCreation)
+        pthread_mutex_lock(&CacheLock);
+}
+
+static void UnlockCache(void)
+{
+    if (!PreThreadCreation)
+        pthread_mutex_unlock(&CacheLock);
+}
+
+#endif
+
+static inline Obj CacheOper(Obj oper, UInt i)
+{
+    Obj  cache = CACHE_OPER(oper, i);
     UInt len;
-    cache = CACHE_OPER( oper, i );
-    if ( cache == 0 ) {
-        len = (i < 7 ? CACHE_SIZE * (i+2) : CACHE_SIZE * (1+2));
-        cache = NEW_PLIST( T_PLIST, len);
-        SET_LEN_PLIST( cache, len ); 
-        CACHE_OPER( oper, i ) = cache;
-        CHANGED_BAG( oper );
+
+#ifdef HPCGAP
+    UInt cacheIndex;
+
+    if (cache == 0) {
+        /* This is a safe form of double-checked locking, because
+         * the cache value is not a reference. */
+        LockCache();
+        cache = CACHE_OPER(oper, i);
+        if (cache == 0) {
+            CacheSize++;
+            cacheIndex = CacheSize;
+            CACHE_OPER(oper, i) = INTOBJ_INT(cacheIndex);
+        }
+        else
+            cacheIndex = INT_INTOBJ(cache);
+        UnlockCache();
     }
+    else {
+        cacheIndex = INT_INTOBJ(cache);
+    }
+
+    if (cacheIndex > STATE(MethodCacheSize)) {
+        len = STATE(MethodCacheSize);
+        while (cacheIndex > len)
+            len *= 2;
+        GROW_PLIST(STATE(MethodCache), len);
+        SET_LEN_PLIST(STATE(MethodCache), len);
+        STATE(MethodCacheItems) = ADDR_OBJ(STATE(MethodCache));
+        STATE(MethodCacheSize) = len;
+    }
+
+    cache = ELM_PLIST(STATE(MethodCache), cacheIndex);
+#endif
+
+    if (cache == 0) {
+        len = (i < 7 ? CACHE_SIZE * (i + 2) : CACHE_SIZE * (1 + 2));
+        cache = NEW_PLIST(T_PLIST, len);
+        SET_LEN_PLIST(cache, len);
+#ifdef HPCGAP
+        SET_ELM_PLIST(STATE(MethodCache), cacheIndex, cache);
+        CHANGED_BAG(STATE(MethodCache));
+#else
+        CACHE_OPER(oper, i) = cache;
+        CHANGED_BAG(oper);
+#endif
+    }
+
     return cache;
 }
 
-#define GET_METHOD_CACHE( oper, i ) \
-    CACHE_OPER( oper, i )
 
-Obj DoOperation0Args (
-    Obj                 oper )
+#ifdef HPCGAP
+
+#define GET_METHOD_CACHE(oper, i)                                            \
+    (STATE(MethodCacheItems)[INT_INTOBJ(CACHE_OPER(oper, i))])
+
+#else
+
+#define GET_METHOD_CACHE(oper, i) CACHE_OPER(oper, i)
+
+#endif
+
+/* This function actually searches the cache. Normally it should be called
+   with n a compile-time constant to allow the optimiser to tidy things up */
+
+#ifdef COUNT_OPERS
+static UInt CacheHitStatistics[CACHE_SIZE][CACHE_SIZE][7];
+static UInt CacheMissStatistics[CACHE_SIZE + 1][7];
+#endif
+
+static ALWAYS_INLINE Obj GetMethodCached(Obj  oper,
+                                         UInt n,
+                                         Int  prec,
+                                         Obj  ids[])
 {
-    Obj                 res;
-    Obj *               cache;
-    Obj                 method;
-    Int                 i;
-    Obj                prec;
+    UInt  typematch;
+    Obj * cache;
+    Obj   method = 0;
+    UInt  i;
+    const UInt cacheEntrySize = n + 2;
 
-    /* try to find an applicable method in the cache                       */
-    prec = INTOBJ_INT(-1);
+    cache = 1 + ADDR_OBJ(CacheOper(oper, n));
 
-    do {
-      /* The next line depends on the implementation of INTOBJS */
-      prec = (Obj)(((Int)prec) +4);
-      method = 0;
-
-      /* recalculate cache each pass, in case of GC     */
-      cache = 1+ADDR_OBJ( CacheOper( oper, 0 ) );
-
-      /* Up to CACHE_SIZE methods might be in the cache */
-      if (prec < INTOBJ_INT(CACHE_SIZE))
-        {
-          for (i = 0;  i < 2*CACHE_SIZE; i+= 2) {
-            if (  cache[i] != 0  && cache[i+1] == prec) {
-              method = cache[i];
+    /* Up to CACHE_SIZE methods might be in the cache */
+    if (prec < CACHE_SIZE) {
+        /* This loop runs through those */
+        UInt target =
+            cacheEntrySize * prec; /* first place to look and also the place
+                                      we'll put the result */
+        for (i = target; i < cacheEntrySize * CACHE_SIZE;
+             i += cacheEntrySize) {
+            if (cache[i + 1] == INTOBJ_INT(prec)) {
+                typematch = 1;
+                // This loop runs over the arguments, should be compiled away
+                for (UInt j = 0; j < n; j++) {
+                    if (cache[i + j + 2] != ids[j]) {
+                        typematch = 0;
+                        break;
+                    }
+                }
+                if (typematch) {
+                    method = cache[i];
 #ifdef COUNT_OPERS
-              OperationHit++;
+                    CacheHitStatistics[prec][i / cacheEntrySize][n]++;
 #endif
-              break;
-            }
-          }
-        }
-      
-      /* otherwise try to find one in the list of methods                    */
-      if (!method)
-        {
-          if (prec == INTOBJ_INT(0))
-            method = CALL_1ARGS( Method0Args, oper );
-          else
-            method = CALL_2ARGS( NextMethod0Args, oper, prec );
+                    if (i > target) {
 
-          /* If there was no method found, then pass the information needed for
-             the error reporting. This function rarely returns */
-          
-          while (method == Fail)
-            method = CallHandleMethodNotFound( oper, 0, (Obj *) 0, 0, 0, prec);
-          
-          /* update the cache */
-          if (method && prec < INTOBJ_INT(CACHE_SIZE))
-            {
-              Bag cacheBag = GET_METHOD_CACHE( oper, 0 );
-              cache = 1+ADDR_OBJ( cacheBag );
-              cache[2*TLS(CacheIndex)] = method;
-              cache[2*TLS(CacheIndex)+1] = prec;
-              TLS(CacheIndex) = (TLS(CacheIndex) + 1) % CACHE_SIZE;
-              CHANGED_BAG( cacheBag );
+                        /* We found the method, but it was further down the
+                           cache than we would like it to be, so move it up */
+                        Obj buf[cacheEntrySize];
+                        memcpy(buf, cache + i,
+                               sizeof(Obj) * cacheEntrySize);
+                        SyMemmove(cache + target + cacheEntrySize,
+                                cache + target,
+                                sizeof(Obj) * (i - target));
+                        memcpy(cache + target, buf,
+                               sizeof(Obj) * cacheEntrySize);
+                    }
+                    break;
+                }
             }
-#ifdef COUNT_OPERS
-          OperationMiss++;
-#endif
         }
-      if ( !method )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-      }
-      
-      /* call this method                                                    */
-      res = CALL_0ARGS( method );
     }
-    while (res == TRY_NEXT_METHOD );
-
-    /* return the result                                                   */
-    return res;
+    return method;
 }
 
-
-/****************************************************************************
-**
-**  DoOperation1Args( <oper>, <a1> )
-*/
-Obj DoOperation1Args (
-    Obj                 oper,
-    Obj                 arg1 )
+/* Add a method to the cache -- called when a method is selected that is not
+   in the cache */
+static inline void
+CacheMethod(Obj oper, UInt n, Int prec, Obj * ids, Obj method)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 id1;
-    Obj *               cache;
-    Obj                 method;
-    Int                 i;
-    Obj                 prec;
+    if (prec >= CACHE_SIZE)
+        return;
+    /* We insert this method at position <prec> and move
+       the older methods down */
+    UInt  cacheEntrySize = n + 2;
+    Bag   cacheBag = GET_METHOD_CACHE(oper, n);
+    Obj * cache = 1 + prec * cacheEntrySize + ADDR_OBJ(cacheBag);
+    SyMemmove(cache + cacheEntrySize, cache,
+            sizeof(Obj) * (CACHE_SIZE - prec - 1) * cacheEntrySize);
+    cache[0] = method;
+    cache[1] = INTOBJ_INT(prec);
+    for (UInt i = 0; i < n; i++)
+        cache[2 + i] = ids[i];
+    CHANGED_BAG(cacheBag);
+}
 
-    /* get the types of the arguments                                      */
-    type1 = TYPE_OBJ_FEO( arg1 );  id1 = ID_TYPE( type1 );
+/* These will contain the GAP method selection functions */
+static Obj MethodSelectors[2][7];
+static Obj VerboseMethodSelectors[2][7];
 
-    /* try to find an applicable method in the cache                       */
-    prec = INTOBJ_INT(-1);
-
-    do {
-      /* The next line depends on the implementation of INTOBJS */
-      prec = (Obj)(((Int)prec) +4);
-      method = 0;
-
-      /* recalculate cache each pass, in case of GC     */
-      cache = 1+ADDR_OBJ( CacheOper( oper, 1 ) );
-
-      /* Up to CACHE_SIZE methods might be in the cache */
-      if (prec < INTOBJ_INT(CACHE_SIZE))
-        {
-          for (i = 0;  i < 3*CACHE_SIZE; i+= 3) {
-            if (  cache[i+1] == prec && cache[i+2] == id1 ) {
-              method = cache[i];
-#ifdef COUNT_OPERS
-              OperationHit++;
-#endif
-              break;
-            }
-          }
+static ALWAYS_INLINE Obj
+GetMethodUncached(UInt n, Obj oper, Int prec, Obj types[], Obj selectors[][7])
+{
+    Obj  margs;
+    Obj  method = 0;
+    UInt i;
+    if (prec == 0) {
+        switch (n) {
+        case 0:
+            method = CALL_1ARGS(selectors[0][0], oper);
+            break;
+        case 1:
+            method = CALL_2ARGS(selectors[0][1], oper, types[0]);
+            break;
+        case 2:
+            method = CALL_3ARGS(selectors[0][2], oper, types[0], types[1]);
+            break;
+        case 3:
+            method = CALL_4ARGS(selectors[0][3], oper, types[0], types[1],
+                                types[2]);
+            break;
+        case 4:
+            method = CALL_5ARGS(selectors[0][4], oper, types[0], types[1],
+                                types[2], types[3]);
+            break;
+        case 5:
+            method = CALL_6ARGS(selectors[0][5], oper, types[0], types[1],
+                                types[2], types[3], types[4]);
+            break;
+        case 6:
+            margs = NEW_PLIST(T_PLIST, n + 1);
+            SET_ELM_PLIST(margs, 1, oper);
+            for (i = 0; i < n; i++)
+                SET_ELM_PLIST(margs, 2 + i, types[i]);
+            SET_LEN_PLIST(margs, n + 1);
+            method = CALL_XARGS(selectors[0][6], margs);
+            break;
+        default:
+            GAP_ASSERT(0);
         }
-      
-      /* otherwise try to find one in the list of methods                    */
-      if (!method)
-        {
-          if (prec == INTOBJ_INT(0))
-            method = CALL_2ARGS( Method1Args, oper, type1 );
-          else
-            method = CALL_3ARGS( NextMethod1Args, oper, prec, type1 );
-          
-          /* If there was no method found, then pass the information needed for
-             the error reporting. This function rarely returns */
-          if (method == Fail)
-          {
-            Obj args[1];
-            args[0] = arg1;
+    }
+    else {
+        switch (n) {
+        case 0:
+            method = CALL_2ARGS(selectors[1][0], oper, INTOBJ_INT(prec));
+            break;
+        case 1:
+            method =
+                CALL_3ARGS(selectors[1][1], oper, INTOBJ_INT(prec), types[0]);
+            break;
+        case 2:
+            method = CALL_4ARGS(selectors[1][2], oper, INTOBJ_INT(prec),
+                                types[0], types[1]);
+            break;
+        case 3:
+            method = CALL_5ARGS(selectors[1][3], oper, INTOBJ_INT(prec),
+                                types[0], types[1], types[2]);
+            break;
+        case 4:
+            method = CALL_6ARGS(selectors[1][4], oper, INTOBJ_INT(prec),
+                                types[0], types[1], types[2], types[3]);
+            break;
+        case 5:
+        case 6:
+
+            margs = NEW_PLIST(T_PLIST, n + 2);
+            SET_ELM_PLIST(margs, 1, oper);
+            SET_ELM_PLIST(margs, 2, INTOBJ_INT(prec));
+            for (i = 0; i < n; i++)
+                SET_ELM_PLIST(margs, 3 + i, types[i]);
+            SET_LEN_PLIST(margs, n + 2);
+            method = CALL_XARGS(selectors[1][n], margs);
+            break;
+        default:
+            GAP_ASSERT(0);
+        }
+    }
+    return method;
+}
+
+#ifdef COUNT_OPERS
+static Int OperationHit;
+static Int OperationMiss;
+static Int OperationNext;
+#endif
+
+
+static ALWAYS_INLINE Obj DoOperationNArgs(Obj  oper,
+                 UInt n,
+                 Obj  selectors[2][7],
+                 UInt verbose,
+                 UInt constructor,
+                 Obj  arg1,
+                 Obj  arg2,
+                 Obj  arg3,
+                 Obj  arg4,
+                 Obj  arg5,
+                 Obj  arg6)
+{
+    Obj types[n];
+    Obj ids[n];
+    Int prec;
+    Obj method;
+    Obj res;
+
+    /* It is intentional that each case in this case statement except 0
+       drops through */
+    switch (n) {
+    case 6:
+        types[5] = TYPE_OBJ_FEO(arg6);
+    case 5:
+        types[4] = TYPE_OBJ_FEO(arg5);
+    case 4:
+        types[3] = TYPE_OBJ_FEO(arg4);
+    case 3:
+        types[2] = TYPE_OBJ_FEO(arg3);
+    case 2:
+        types[1] = TYPE_OBJ_FEO(arg2);
+    case 1:
+        if (constructor) {
+            while (!IS_OPERATION(arg1)) {
+                arg1 = ErrorReturnObj("Constructor: the first argument must "
+                                      "be a filter not a %s",
+                                      (Int)TNAM_OBJ(arg1), 0L,
+                                      "you can replace the first argument "
+                                      "<arg1> via 'return <arg1>;'");
+            }
+
+            types[0] = FLAGS_FILT(arg1);
+        }
+        else
+            types[0] = TYPE_OBJ_FEO(arg1);
+    case 0:
+        break;
+    default:
+        GAP_ASSERT(0);
+    }
+
+    if (n > 0) {
+        if (constructor)
+            ids[0] = types[0];
+        else
+            ids[0] = ID_TYPE(types[0]);
+    }
+
+    for (UInt i = 1; i < n; i++)
+        ids[i] = ID_TYPE(types[i]);
+
+    /* outer loop deals with TryNextMethod */
+    prec = -1;
+    do {
+        prec++;
+        /* Is there a method in the cache */
+        method = verbose ? 0 : GetMethodCached(oper, n, prec, ids);
+
+#ifdef COUNT_OPERS
+        if (method)
+            OperationHit++;
+        else {
+            OperationMiss++;
+            CacheMissStatistics[(prec >= CACHE_SIZE) ? CACHE_SIZE : prec]
+                               [n]++;
+        }
+#endif
+
+        /* otherwise try to find one in the list of methods */
+        if (!method) {
+            method = GetMethodUncached(n, oper, prec, types, selectors);
+            /* update the cache */
+            if (!verbose && method)
+                CacheMethod(oper, n, prec, ids, method);
+        }
+
+        if (!method) {
+            ErrorQuit("no method returned", 0L, 0L);
+        }
+
+        /* If there was no method found, then pass the information needed
+           for the error reporting. This function rarely returns */
+        if (method == Fail) {
+            Obj args[n];
+            /* It is intentional that each case in this case statement except
+               0
+               drops through */
+            switch (n) {
+            case 6:
+                args[5] = arg6;
+            case 5:
+                args[4] = arg5;
+            case 4:
+                args[3] = arg4;
+            case 3:
+                args[2] = arg3;
+            case 2:
+                args[1] = arg2;
+            case 1:
+                args[0] = arg1;
+            case 0:
+                break;
+            default:
+                GAP_ASSERT(0);
+            }
             while (method == Fail)
-              method = CallHandleMethodNotFound( oper, 1, (Obj *) args, 0, 0, prec);
-          }
-          /* update the cache */
-          if (method && prec < INTOBJ_INT(CACHE_SIZE))
-            {
-              Bag cacheBag = GET_METHOD_CACHE( oper, 1 );
-              cache = 1+ADDR_OBJ( cacheBag );
-              cache[3*TLS(CacheIndex)] = method;
-              cache[3*TLS(CacheIndex)+1] = prec;
-              cache[3*TLS(CacheIndex)+2] = id1;
-              TLS(CacheIndex) = (TLS(CacheIndex) + 1) % CACHE_SIZE;
-              CHANGED_BAG( cacheBag );
-            }
-#ifdef COUNT_OPERS
-          OperationMiss++;
-#endif
+                method = CallHandleMethodNotFound(oper, n, (Obj *)args,
+                                                  verbose, constructor, INTOBJ_INT(prec));
         }
-      if ( !method )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-      }
-      
-      /* call this method                                                    */
-      res = CALL_1ARGS( method, arg1 );
-    }
-    while (res == TRY_NEXT_METHOD );
+
+        /* call this method */
+        switch (n) {
+        case 0:
+            res = CALL_0ARGS(method);
+            break;
+        case 1:
+            res = CALL_1ARGS(method, arg1);
+            break;
+        case 2:
+            res = CALL_2ARGS(method, arg1, arg2);
+            break;
+        case 3:
+            res = CALL_3ARGS(method, arg1, arg2, arg3);
+            break;
+        case 4:
+            res = CALL_4ARGS(method, arg1, arg2, arg3, arg4);
+            break;
+        case 5:
+            res = CALL_5ARGS(method, arg1, arg2, arg3, arg4, arg5);
+            break;
+        case 6:
+            res = CALL_6ARGS(method, arg1, arg2, arg3, arg4, arg5, arg6);
+            break;
+        }
+    } while (res == TRY_NEXT_METHOD);
 
     /* return the result                                                   */
     return res;
 }
 
 
-/****************************************************************************
-**
-**  DoOperation2Args( <oper>, <a1>, <a2> )
-*/
-Obj DoOperation2Args (
-    Obj                 oper,
-    Obj                 arg1,
-    Obj                 arg2 )
+Obj DoOperation0Args(Obj oper)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 id1;
-    Obj                 type2;
-    Obj                 id2;
-    Obj *               cache;
-    Obj                 method;
-    Int                 i;
-    Obj                 prec;
-
-    /* get the types of the arguments                                      */
-    type1 = TYPE_OBJ_FEO( arg1 );  id1 = ID_TYPE( type1 );
-    type2 = TYPE_OBJ_FEO( arg2 );  id2 = ID_TYPE( type2 );
-
-    /* try to find an applicable method in the cache                       */
-    prec = INTOBJ_INT(-1);
-
-    do {
-      /* The next line depends on the implementation of INTOBJS */
-      prec = (Obj)(((Int)prec) +4);
-      method = 0;
-
-      /* recalculate cache each pass, in case of GC     */
-      cache = 1+ADDR_OBJ( CacheOper( oper, 2 ) );
-
-      /* Up to CACHE_SIZE methods might be in the cache */
-      if (prec < INTOBJ_INT(CACHE_SIZE))
-        {
-          for (i = 0;  i < 4*CACHE_SIZE; i+= 4) {
-            if (  cache[i+1] == prec && cache[i+2] == id1
-                  && cache[i+3] == id2 ) {
-              method = cache[i];
-#ifdef COUNT_OPERS
-              OperationHit++;
-#endif
-              break;
-            }
-          }
-        }
-      
-      /* otherwise try to find one in the list of methods                    */
-      if (!method)
-        {
-          if (prec == INTOBJ_INT(0))
-            method = CALL_3ARGS( Method2Args, oper, type1, type2 );
-          else
-            method = CALL_4ARGS( NextMethod2Args, oper, prec, type1, type2 );
-          
-          /* If there was no method found, then pass the information needed for
-             the error reporting. This function rarely returns */
-          if (method == Fail)
-          {
-            Obj args[2];
-            args[0] = arg1;
-            args[1] = arg2;
-            while (method == Fail)
-              method = CallHandleMethodNotFound( oper, 2, (Obj *) args, 0, 0, prec);
-          }
-          
-          /* update the cache */
-          if (method && prec < INTOBJ_INT(CACHE_SIZE))
-            {
-              Bag cacheBag = GET_METHOD_CACHE( oper, 2 );
-              cache = 1+ADDR_OBJ( cacheBag );
-              cache[4*TLS(CacheIndex)] = method;
-              cache[4*TLS(CacheIndex)+1] = prec;
-              cache[4*TLS(CacheIndex)+2] = id1;
-              cache[4*TLS(CacheIndex)+3] = id2;
-              TLS(CacheIndex) = (TLS(CacheIndex) + 1) % CACHE_SIZE;
-              CHANGED_BAG( cacheBag );
-            }
-#ifdef COUNT_OPERS
-          OperationMiss++;
-#endif
-        }
-      if ( !method )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-      }
-      
-      /* call this method                                                    */
-      res = CALL_2ARGS( method, arg1, arg2 );
-    }
-    while (res == TRY_NEXT_METHOD );
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 0, MethodSelectors, 0, 0, 0, 0, 0, 0, 0, 0);
 }
 
-
-
-/****************************************************************************
-**
-**  DoOperation3Args( <oper>, <a1>, <a2>, <a3> )
-*/
-Obj DoOperation3Args (
-    Obj                 oper,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3 )
+Obj DoOperation1Args(Obj oper, Obj arg1)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 id1;
-    Obj                 type2;
-    Obj                 id2;
-    Obj                 type3;
-    Obj                 id3;
-    Obj *               cache;
-    Obj                 method;
-    Int                 i;
-    Obj                 prec;
-
-    /* get the types of the arguments                                      */
-    type1 = TYPE_OBJ_FEO( arg1 );  id1 = ID_TYPE( type1 );
-    type2 = TYPE_OBJ_FEO( arg2 );  id2 = ID_TYPE( type2 );
-    type3 = TYPE_OBJ_FEO( arg3 );  id3 = ID_TYPE( type3 );
-
-    /* try to find an applicable method in the cache                       */
-    prec = INTOBJ_INT(-1);
-
-    do {
-      /* The next line depends on the implementation of INTOBJS */
-      prec = (Obj)(((Int)prec) +4);
-      method = 0;
-
-      /* recalculate cache each pass, in case of GC     */
-      cache = 1+ADDR_OBJ( CacheOper( oper, 3 ) );
-
-      /* Up to CACHE_SIZE methods might be in the cache */
-      if (prec < INTOBJ_INT(CACHE_SIZE))
-        {
-          for (i = 0;  i < 5*CACHE_SIZE; i+= 5) {
-            if (  cache[i+1] == prec && cache[i+2] == id1
-                  && cache[i+3] == id2 && cache[i+4] == id3 ) {
-              method = cache[i];
-#ifdef COUNT_OPERS
-              OperationHit++;
-#endif
-              break;
-            }
-          }
-        }
-      
-      /* otherwise try to find one in the list of methods                    */
-      if (!method)
-        {
-          if (prec == INTOBJ_INT(0))
-            method = CALL_4ARGS( Method3Args, oper, type1, type2, type3 );
-          else
-            method = CALL_5ARGS( NextMethod3Args, oper, prec, type1, type2, type3 );
-          /* If there was no method found, then pass the information needed for
-             the error reporting. This function rarely returns */
-          if (method == Fail)
-          {
-            Obj args[3];
-            args[0] = arg1;
-            args[1] = arg2;
-            args[2] = arg3;
-            while (method == Fail)
-              method = CallHandleMethodNotFound( oper, 3, (Obj *) args, 0, 0, prec);
-          }
-
-          /* update the cache */
-          if (method && prec < INTOBJ_INT(CACHE_SIZE))
-            {
-              Bag cacheBag = GET_METHOD_CACHE( oper, 3 );
-              cache = 1+ADDR_OBJ( cacheBag );
-              cache[5*TLS(CacheIndex)] = method;
-              cache[5*TLS(CacheIndex)+1] = prec;
-              cache[5*TLS(CacheIndex)+2] = id1;
-              cache[5*TLS(CacheIndex)+3] = id2;
-              cache[5*TLS(CacheIndex)+4] = id3;
-              TLS(CacheIndex) = (TLS(CacheIndex) + 1) % CACHE_SIZE;
-              CHANGED_BAG( cacheBag );
-            }
-#ifdef COUNT_OPERS
-          OperationMiss++;
-#endif
-        }
-      if ( !method )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-      }
-      
-      /* call this method                                                    */
-      res = CALL_3ARGS( method, arg1, arg2, arg3 );
-    }
-    while (res == TRY_NEXT_METHOD );
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 1, MethodSelectors, 0, 0, arg1, 0, 0, 0, 0,
+                            0);
 }
 
-
-/****************************************************************************
-**
-**  DoOperation4Args( <oper>, <a1>, <a2>, <a3>, <a4> )
-*/
-Obj DoOperation4Args (
-    Obj                 oper,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3,
-    Obj                 arg4 )
+Obj DoOperation2Args(Obj oper, Obj arg1, Obj arg2)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 id1;
-    Obj                 type2;
-    Obj                 id2;
-    Obj                 type3;
-    Obj                 id3;
-    Obj                 type4;
-    Obj                 id4;
-    Obj *               cache;
-    Obj                 method;
-    Int                 i;
-    Obj                 prec;
-
-
-    /* get the types of the arguments                                      */
-    type1 = TYPE_OBJ_FEO( arg1 );  id1 = ID_TYPE( type1 );
-    type2 = TYPE_OBJ_FEO( arg2 );  id2 = ID_TYPE( type2 );
-    type3 = TYPE_OBJ_FEO( arg3 );  id3 = ID_TYPE( type3 );
-    type4 = TYPE_OBJ_FEO( arg4 );  id4 = ID_TYPE( type4 );
-
-    /* try to find an applicable method in the cache                       */
-    prec = INTOBJ_INT(-1);
-
-    do {
-      /* The next line depends on the implementation of INTOBJS */
-      prec = (Obj)(((Int)prec) +4);
-      method = 0;
-
-      /* recalculate cache each pass, in case of GC     */
-      cache = 1+ADDR_OBJ( CacheOper( oper, 4 ) );
-
-
-      /* Up to CACHE_SIZE methods might be in the cache */
-      if (prec < INTOBJ_INT(CACHE_SIZE))
-        {
-          for (i = 0;  i < 6*CACHE_SIZE; i+= 6) {
-            if (  cache[i+1] == prec && cache[i+2] == id1 &&
-                  cache[i+3] == id2 && cache[i+4] == id3 &&
-                  cache[i+5] == id4 ) {
-              method = cache[i];
-#ifdef COUNT_OPERS
-              OperationHit++;
-#endif
-              break;
-            }
-          }
-        }
-      
-      /* otherwise try to find one in the list of methods                    */
-      if (!method)
-        {
-          if (prec == INTOBJ_INT(0))
-            method = CALL_5ARGS( Method4Args, oper, type1, type2, type3, type4 );
-          else
-            method = CALL_6ARGS( NextMethod4Args, oper, prec, type1, type2, type3, type4 );
-          
-          /* If there was no method found, then pass the information needed for
-             the error reporting. This function rarely returns */
-          if (method == Fail)
-          {
-            Obj args[4];
-            args[0] = arg1;
-            args[1] = arg2;
-            args[2] = arg3;
-            args[3] = arg4;
-            while (method == Fail)
-              method = CallHandleMethodNotFound( oper, 4, (Obj *) args, 0, 0, prec);
-          }
-          
-          /* update the cache */
-          if (method && prec < INTOBJ_INT(CACHE_SIZE))
-            {
-              Bag cacheBag = GET_METHOD_CACHE( oper, 4 );
-              cache = 1+ADDR_OBJ( cacheBag );
-              cache[6*TLS(CacheIndex)] = method;
-              cache[6*TLS(CacheIndex)+1] = prec;
-              cache[6*TLS(CacheIndex)+2] = id1;
-              cache[6*TLS(CacheIndex)+3] = id2;
-              cache[6*TLS(CacheIndex)+4] = id3;
-              cache[6*TLS(CacheIndex)+5] = id4;
-              TLS(CacheIndex) = (TLS(CacheIndex) + 1) % CACHE_SIZE;
-              CHANGED_BAG( cacheBag );
-            }
-#ifdef COUNT_OPERS
-          OperationMiss++;
-#endif
-        }
-      if ( !method )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-      }
-      
-      /* call this method                                                    */
-      res = CALL_4ARGS( method, arg1, arg2, arg3, arg4 );
-    }
-    while (res == TRY_NEXT_METHOD );
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 2, MethodSelectors, 0, 0, arg1, arg2, 0, 0,
+                            0, 0);
 }
 
-
-
-/****************************************************************************
-**
-**  DoOperation5Args( <oper>, <a1>, <a2>, <a3>, <a4>, <a5> )
-*/
-Obj DoOperation5Args (
-    Obj                 oper,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3,
-    Obj                 arg4,
-    Obj                 arg5 )
+Obj DoOperation3Args(Obj oper, Obj arg1, Obj arg2, Obj arg3)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 id1;
-    Obj                 type2;
-    Obj                 id2;
-    Obj                 type3;
-    Obj                 id3;
-    Obj                 type4;
-    Obj                 id4;
-    Obj                 type5;
-    Obj                 id5;
-    Obj *               cache;
-    Obj                 method;
-    Int                 i;
-    Obj                 prec;
-    Obj                 margs;
-
-
-    /* get the types of the arguments                                      */
-    type1 = TYPE_OBJ_FEO( arg1 );  id1 = ID_TYPE( type1 );
-    type2 = TYPE_OBJ_FEO( arg2 );  id2 = ID_TYPE( type2 );
-    type3 = TYPE_OBJ_FEO( arg3 );  id3 = ID_TYPE( type3 );
-    type4 = TYPE_OBJ_FEO( arg4 );  id4 = ID_TYPE( type4 );
-    type5 = TYPE_OBJ_FEO( arg5 );  id5 = ID_TYPE( type5 );
-    
-    /* try to find an applicable method in the cache                       */
-    prec = INTOBJ_INT(-1);
-
-    do {
-      /* The next line depends on the implementation of INTOBJS */
-      prec = (Obj)(((Int)prec) +4);
-      method = 0;
-
-      /* recalculate cache each pass, in case of GC     */
-      cache = 1+ADDR_OBJ( CacheOper( oper, 5 ) );
-
-      /* Up to CACHE_SIZE methods might be in the cache */
-      if (prec < INTOBJ_INT(CACHE_SIZE))
-        {
-          for (i = 0;  i < 7*CACHE_SIZE; i+= 7) {
-            if (  cache[i+1] == prec && cache[i+2] == id1 &&
-                  cache[i+3] == id2 && cache[i+4] == id3 &&
-                  cache[i+5] == id4 && cache[i+6] == id5 ) {
-              method = cache[i];
-#ifdef COUNT_OPERS
-              OperationHit++;
-#endif
-              break;
-            }
-          }
-        }
-      
-      /* otherwise try to find one in the list of methods                    */
-      if (!method)
-        {
-          if (prec == INTOBJ_INT(0))
-            method = CALL_6ARGS( Method5Args, oper, type1, type2, type3, type4, type5 );
-          else
-            {
-              margs = NEW_PLIST(T_PLIST, 7);
-              SET_ELM_PLIST(margs, 1, oper );
-              SET_ELM_PLIST(margs, 2, prec );
-              SET_ELM_PLIST(margs, 3, type1 );
-              SET_ELM_PLIST(margs, 4, type2 );
-              SET_ELM_PLIST(margs, 5, type3 );
-              SET_ELM_PLIST(margs, 6, type4 );
-              SET_ELM_PLIST(margs, 7, type5 );
-              SET_LEN_PLIST(margs, 7);
-              method = CALL_XARGS( NextMethod5Args, margs );
-            }
-          
-          
-          /* If there was no method found, then pass the information needed for
-             the error reporting. This function rarely returns */
-          if (method == Fail)
-          {
-            Obj args[5];
-            args[0] = arg1;
-            args[1] = arg2;
-            args[2] = arg3;
-            args[3] = arg4;
-            args[4] = arg5;
-            while (method == Fail)
-              method = CallHandleMethodNotFound( oper, 5, (Obj *) args, 0, 0, prec);
-          }
-          
-          /* update the cache */
-          if (method && prec < INTOBJ_INT(CACHE_SIZE))
-            {
-              Bag cacheBag = GET_METHOD_CACHE( oper, 5 );
-              cache = 1+ADDR_OBJ( cacheBag );
-              cache[7*TLS(CacheIndex)] = method;
-              cache[7*TLS(CacheIndex)+1] = prec;
-              cache[7*TLS(CacheIndex)+2] = id1;
-              cache[7*TLS(CacheIndex)+3] = id2;
-              cache[7*TLS(CacheIndex)+4] = id3;
-              cache[7*TLS(CacheIndex)+5] = id4;
-              cache[7*TLS(CacheIndex)+6] = id5;
-              TLS(CacheIndex) = (TLS(CacheIndex) + 1) % CACHE_SIZE;
-              CHANGED_BAG( cacheBag );
-            }
-#ifdef COUNT_OPERS
-          OperationMiss++;
-#endif
-        }
-      if ( !method )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-      }
-      
-      /* call this method                                                    */
-      res = CALL_5ARGS( method, arg1, arg2, arg3, arg4, arg5 );
-    }
-    while (res == TRY_NEXT_METHOD );
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 3, MethodSelectors, 0, 0, arg1, arg2, arg3,
+                            0, 0, 0);
 }
 
-
-
-/****************************************************************************
-**
-**  DoOperation6Args( <oper>, <a1>, <a2>, <a3>, <a4>, <a5>, <a6> )
-*/
-Obj DoOperation6Args (
-    Obj                 oper,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3,
-    Obj                 arg4,
-    Obj                 arg5,
-    Obj                 arg6 )
+Obj DoOperation4Args(Obj oper, Obj arg1, Obj arg2, Obj arg3, Obj arg4)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 id1;
-    Obj                 type2;
-    Obj                 id2;
-    Obj                 type3;
-    Obj                 id3;
-    Obj                 type4;
-    Obj                 id4;
-    Obj                 type5;
-    Obj                 id5;
-    Obj                 type6;
-    Obj                 id6;
-    Obj *               cache;
-    Obj                 method;
-    Obj                 margs;
-    Int                 i;
-    Obj                 prec;
-
-
-    /* get the types of the arguments                                      */
-    type1 = TYPE_OBJ_FEO( arg1 );  id1 = ID_TYPE( type1 );
-    type2 = TYPE_OBJ_FEO( arg2 );  id2 = ID_TYPE( type2 );
-    type3 = TYPE_OBJ_FEO( arg3 );  id3 = ID_TYPE( type3 );
-    type4 = TYPE_OBJ_FEO( arg4 );  id4 = ID_TYPE( type4 );
-    type5 = TYPE_OBJ_FEO( arg5 );  id5 = ID_TYPE( type5 );
-    type6 = TYPE_OBJ_FEO( arg6 );  id6 = ID_TYPE( type6 );
-    
-    /* try to find an applicable method in the cache                       */
-    prec = INTOBJ_INT(-1);
-
-    do {
-      /* The next line depends on the implementation of INTOBJS */
-      prec = (Obj)(((Int)prec) +4);
-      method = 0;
-
-      /* recalculate cache each pass, in case of GC     */
-      cache = 1+ADDR_OBJ( CacheOper( oper, 6 ) );
-
-      /* Up to CACHE_SIZE methods might be in the cache */
-      if (prec < INTOBJ_INT(CACHE_SIZE))
-        {
-          for (i = 0;  i < 8*CACHE_SIZE; i+= 8) {
-            if (  cache[i+1] == prec && cache[i+2] == id1 &&
-                  cache[i+3] == id2 && cache[i+4] == id3 &&
-                  cache[i+5] == id4 && cache[i+6] == id5 &&
-                  cache[i+7] == id6) {
-              method = cache[i];
-#ifdef COUNT_OPERS
-              OperationHit++;
-#endif
-              break;
-            }
-          }
-        }
-      
-      /* otherwise try to find one in the list of methods                    */
-      if (!method)
-        {
-          if (prec == INTOBJ_INT(0))
-            {
-              margs = NEW_PLIST(T_PLIST, 7);
-              SET_ELM_PLIST(margs, 1, oper );
-              SET_ELM_PLIST(margs, 2, type1 );
-              SET_ELM_PLIST(margs, 3, type2 );
-              SET_ELM_PLIST(margs, 4, type3 );
-              SET_ELM_PLIST(margs, 5, type4 );
-              SET_ELM_PLIST(margs, 6, type5 );
-              SET_ELM_PLIST(margs, 7, type6 );
-              SET_LEN_PLIST(margs, 7);
-              method = CALL_XARGS( Method6Args, margs );
-
-            }
-          else
-            {
-              margs = NEW_PLIST(T_PLIST, 8);
-              SET_ELM_PLIST(margs, 1, oper );
-              SET_ELM_PLIST(margs, 2, prec );
-              SET_ELM_PLIST(margs, 3, type1 );
-              SET_ELM_PLIST(margs, 4, type2 );
-              SET_ELM_PLIST(margs, 5, type3 );
-              SET_ELM_PLIST(margs, 6, type4 );
-              SET_ELM_PLIST(margs, 7, type5 );
-              SET_ELM_PLIST(margs, 8, type6 );
-              SET_LEN_PLIST(margs, 8);
-              method = CALL_XARGS( NextMethod6Args, margs );
-            }
-          
-          
-          /* If there was no method found, then pass the information needed for
-             the error reporting. This function rarely returns */
-          if (method == Fail)
-          {
-            Obj args[6];
-            args[0] = arg1;
-            args[1] = arg2;
-            args[2] = arg3;
-            args[3] = arg4;
-            args[4] = arg5;
-            args[5] = arg6;
-            while (method == Fail)
-              method = CallHandleMethodNotFound( oper, 6, (Obj *) args, 0, 0, prec);
-          }
-          
-          /* update the cache */
-          if (method && prec < INTOBJ_INT(CACHE_SIZE))
-            {
-              Bag cacheBag = GET_METHOD_CACHE( oper, 6 );
-              cache = 1+ADDR_OBJ( cacheBag );
-              cache[8*TLS(CacheIndex)] = method;
-              cache[8*TLS(CacheIndex)+1] = prec;
-              cache[8*TLS(CacheIndex)+2] = id1;
-              cache[8*TLS(CacheIndex)+3] = id2;
-              cache[8*TLS(CacheIndex)+4] = id3;
-              cache[8*TLS(CacheIndex)+5] = id4;
-              cache[8*TLS(CacheIndex)+6] = id5;
-              cache[8*TLS(CacheIndex)+7] = id6;
-              TLS(CacheIndex) = (TLS(CacheIndex) + 1) % CACHE_SIZE;
-              CHANGED_BAG( cacheBag );
-            }
-#ifdef COUNT_OPERS
-          OperationMiss++;
-#endif
-        }
-      if ( !method )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-      }
-      
-      /* call this method                                                    */
-      res = CALL_6ARGS( method, arg1, arg2, arg3, arg4, arg5, arg6 );
-    }
-    while (res == TRY_NEXT_METHOD );
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 4, MethodSelectors, 0, 0, arg1, arg2, arg3,
+                            arg4, 0, 0);
 }
+
+Obj DoOperation5Args(
+    Obj oper, Obj arg1, Obj arg2, Obj arg3, Obj arg4, Obj arg5)
+{
+    return DoOperationNArgs(oper, 5, MethodSelectors, 0, 0, arg1, arg2, arg3,
+                            arg4, arg5, 0);
+}
+
+Obj DoOperation6Args(
+    Obj oper, Obj arg1, Obj arg2, Obj arg3, Obj arg4, Obj arg5, Obj arg6)
+{
+    return DoOperationNArgs(oper, 6, MethodSelectors, 0, 0, arg1, arg2, arg3,
+                            arg4, arg5, arg6);
+}
+
 
 /****************************************************************************
 **
 **  DoOperationXArgs( <oper>, ... )
 */
-Obj DoOperationXArgs (
-    Obj                 self,
-    Obj                 args )
+
+Obj DoOperationXArgs(Obj self, Obj args)
 {
-    ErrorQuit("sorry: cannot yet have X argument operations",0L,0L);
+    ErrorQuit("sorry: cannot yet have X argument operations", 0L, 0L);
     return 0;
 }
 
@@ -2505,493 +2329,48 @@ Obj DoOperationXArgs (
 **
 **  DoVerboseOperation0Args( <oper> )
 */
-Obj DoVerboseOperation0Args (
-    Obj                 oper )
+Obj DoVerboseOperation0Args(Obj oper)
 {
-    Obj                 res;
-    Obj                 method;
-    Int                 i;
-
-    /* try to find one in the list of methods                              */
-    method = CALL_1ARGS( VMethod0Args, oper );
-    while (method == Fail)
-      {
-        method = CallHandleMethodNotFound( oper, 0, (Obj *) 0, 1, 0, INTOBJ_INT(0));
-      }
-    if ( method == 0 )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-    }
-
-    /* call this method                                                    */
-    res = CALL_0ARGS( method );
-
-    /* try until a method doesn't give up                                  */
-    if ( res == TRY_NEXT_METHOD ) {
-        i = 1;
-        while ( res == TRY_NEXT_METHOD ) {
-#ifdef COUNT_OPERS
-            OperationNext++;
-#endif
-            method = CALL_2ARGS( NextVMethod0Args, oper, INTOBJ_INT(i) );
-            while (method == Fail)
-              {
-                method = CallHandleMethodNotFound( oper, 0, (Obj *) 0, 1, 0, INTOBJ_INT(i));
-              }
-            i++;
-            res = CALL_0ARGS( method );
-        }
-    }
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 0, VerboseMethodSelectors, 1, 0, 0, 0, 0, 0,
+                            0, 0);
 }
 
-
-/****************************************************************************
-**
-**  DoVerboseOperation1Args( <oper>, <a1> )
-*/
-Obj DoVerboseOperation1Args (
-    Obj                 oper,
-    Obj                 arg1 )
+Obj DoVerboseOperation1Args(Obj oper, Obj arg1)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 method;
-    Int                 i;
-
-    /* get the types of the arguments                                      */
-    type1 = TYPE_OBJ_FEO( arg1 );
-
-    /* try to find one in the list of methods                              */
-    method = CALL_2ARGS( VMethod1Args, oper, type1 );
-
-    while (method == Fail)
-      {
-        Obj arglist[1];
-        arglist[0] = arg1;
-        method = CallHandleMethodNotFound( oper, 1, arglist, 1, 0, INTOBJ_INT(0));
-      }
-    
-    if ( method == 0 )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-    }
-
-    /* call this method                                                    */
-    res = CALL_1ARGS( method, arg1 );
-
-    /* try until a method doesn't give up                                  */
-    if ( res == TRY_NEXT_METHOD ) {
-        i = 1;
-        while ( res == TRY_NEXT_METHOD ) {
-#ifdef COUNT_OPERS
-            OperationNext++;
-#endif
-            method = CALL_3ARGS( NextVMethod1Args, oper, INTOBJ_INT(i),
-                                 type1 );
-            while (method == Fail)
-              {
-                Obj arglist[1];
-                arglist[0] = arg1;
-                method = CallHandleMethodNotFound( oper, 1, arglist, 1, 0, INTOBJ_INT(i));
-              }
-    
-            i++;
-            res = CALL_1ARGS( method, arg1 );
-        }
-    }
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 1, VerboseMethodSelectors, 1, 0, arg1, 0, 0,
+                            0, 0, 0);
 }
 
-
-/****************************************************************************
-**
-**  DoVerboseOperation2Args( <oper>, <a1>, <a2> )
-*/
-Obj DoVerboseOperation2Args (
-    Obj                 oper,
-    Obj                 arg1,
-    Obj                 arg2 )
+Obj DoVerboseOperation2Args(Obj oper, Obj arg1, Obj arg2)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 type2;
-    Obj                 method;
-    Int                 i;
-
-    /* get the types of the arguments                                      */
-    type1 = TYPE_OBJ_FEO( arg1 );
-    type2 = TYPE_OBJ_FEO( arg2 );
-
-    /* try to find one in the list of methods                              */
-    method = CALL_3ARGS( VMethod2Args, oper, type1, type2 );
-    while (method == Fail)
-      {
-        Obj arglist[2];
-        arglist[0] = arg1;
-        arglist[1] = arg2;
-        method = CallHandleMethodNotFound( oper, 2, arglist, 1, 0, INTOBJ_INT(0));
-      }
-    
-    if ( method == 0 )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-    }
-
-    /* call this method                                                    */
-    res = CALL_2ARGS( method, arg1, arg2 );
-
-    /* try until a method doesn't give up                                  */
-    if ( res == TRY_NEXT_METHOD ) {
-        i = 1;
-        while ( res == TRY_NEXT_METHOD ) {
-#ifdef COUNT_OPERS
-            OperationNext++;
-#endif
-            method = CALL_4ARGS( NextVMethod2Args, oper, INTOBJ_INT(i),
-                                 type1, type2 );
-            while (method == Fail)
-              {
-                Obj arglist[2];
-                arglist[0] = arg1;
-                arglist[1] = arg2;
-                method = CallHandleMethodNotFound( oper, 2, arglist, 1, 0, INTOBJ_INT(i));
-              }
-    
-            i++;
-            res = CALL_2ARGS( method, arg1, arg2 );
-        }
-    }
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 2, VerboseMethodSelectors, 1, 0, arg1, arg2,
+                            0, 0, 0, 0);
 }
 
-
-/****************************************************************************
-**
-**  DoVerboseOperation3Args( <oper>, <a1>, <a2>, <a3> )
-*/
-Obj DoVerboseOperation3Args (
-    Obj                 oper,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3 )
+Obj DoVerboseOperation3Args(Obj oper, Obj arg1, Obj arg2, Obj arg3)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 type2;
-    Obj                 type3;
-    Obj                 method;
-    Int                 i;
-
-    /* get the types of the arguments                                      */
-    type1 = TYPE_OBJ_FEO( arg1 );
-    type2 = TYPE_OBJ_FEO( arg2 );
-    type3 = TYPE_OBJ_FEO( arg3 );
-
-    /* try to find one in the list of methods                              */
-    method = CALL_4ARGS( VMethod3Args, oper, type1, type2, type3 );
-    while (method == Fail)
-      {
-        Obj arglist[3];
-        arglist[0] = arg1;
-        arglist[1] = arg2;
-        arglist[2] = arg3;
-        method = CallHandleMethodNotFound( oper, 3, arglist, 1, 0, INTOBJ_INT(0));
-      }
-    
-    if ( method == 0 )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-    }
-
-    /* call this method                                                    */
-    res = CALL_3ARGS( method, arg1, arg2, arg3 );
-
-    /* try until a method doesn't give up                                  */
-    if ( res == TRY_NEXT_METHOD ) {
-        i = 1;
-        while ( res == TRY_NEXT_METHOD ) {
-#ifdef COUNT_OPERS
-            OperationNext++;
-#endif
-            method = CALL_5ARGS( NextVMethod3Args, oper, INTOBJ_INT(i),
-                                 type1, type2, type3 );
-            while (method == Fail)
-              {
-                Obj arglist[3];
-                arglist[0] = arg1;
-                arglist[1] = arg2;
-                arglist[2] = arg3;
-                method = CallHandleMethodNotFound( oper, 3, arglist, 1, 0, INTOBJ_INT(i));
-              }
-    
-            i++;
-            res = CALL_3ARGS( method, arg1, arg2, arg3 );
-        }
-    }
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 3, VerboseMethodSelectors, 1, 0, arg1, arg2,
+                            arg3, 0, 0, 0);
 }
 
-
-/****************************************************************************
-**
-**  DoVerboseOperation4Args( <oper>, <a1>, <a2>, <a3>, <a4> )
-*/
-Obj DoVerboseOperation4Args (
-    Obj                 oper,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3,
-    Obj                 arg4 )
+Obj DoVerboseOperation4Args(Obj oper, Obj arg1, Obj arg2, Obj arg3, Obj arg4)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 type2;
-    Obj                 type3;
-    Obj                 type4;
-    Obj                 method;
-    Int                 i;
-
-    /* get the types of the arguments                                      */
-    type1 = TYPE_OBJ_FEO( arg1 );
-    type2 = TYPE_OBJ_FEO( arg2 );
-    type3 = TYPE_OBJ_FEO( arg3 );
-    type4 = TYPE_OBJ_FEO( arg4 );
-
-    /* try to find one in the list of methods                              */
-    method = CALL_5ARGS( VMethod4Args, oper, type1, type2, type3, type4 );
-    while (method == Fail)
-      {
-        Obj arglist[4];
-        arglist[0] = arg1;
-        arglist[1] = arg2;
-        arglist[2] = arg3;
-        arglist[3] = arg4;
-        method = CallHandleMethodNotFound( oper, 4, arglist, 1, 0, INTOBJ_INT(0));
-      }
-    
-    if ( method == 0 )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-    }
-
-    /* call this method                                                    */
-    res = CALL_4ARGS( method, arg1, arg2, arg3, arg4 );
-
-    /* try until a method doesn't give up                                  */
-    if ( res == TRY_NEXT_METHOD ) {
-        i = 1;
-        while ( res == TRY_NEXT_METHOD ) {
-#ifdef COUNT_OPERS
-            OperationNext++;
-#endif
-            method = CALL_6ARGS( NextVMethod4Args, oper, INTOBJ_INT(i),
-                                 type1, type2, type3, type4 );
-            while (method == Fail)
-              {
-                Obj arglist[4];
-                arglist[0] = arg1;
-                arglist[1] = arg2;
-                arglist[2] = arg3;
-                arglist[3] = arg4;
-                method = CallHandleMethodNotFound( oper, 4, arglist, 1, 0, INTOBJ_INT(i));
-              }
-            i++;
-            res = CALL_4ARGS( method, arg1, arg2, arg3, arg4 );
-        }
-    }
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 4, VerboseMethodSelectors, 1, 0, arg1, arg2,
+                            arg3, arg4, 0, 0);
 }
 
-
-/****************************************************************************
-**
-**  DoVerboseOperation5Args( <oper>, <a1>, <a2>, <a3>, <a4>, <a5> )
-*/
-Obj DoVerboseOperation5Args (
-    Obj                 oper,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3,
-    Obj                 arg4,
-    Obj                 arg5 )
+Obj DoVerboseOperation5Args(
+    Obj oper, Obj arg1, Obj arg2, Obj arg3, Obj arg4, Obj arg5)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 type2;
-    Obj                 type3;
-    Obj                 type4;
-    Obj                 type5;
-    Obj                 method;
-    Obj                 margs;
-    Int                 i;
-
-    /* get the types of the arguments                                      */
-    type1 = TYPE_OBJ_FEO( arg1 );
-    type2 = TYPE_OBJ_FEO( arg2 );
-    type3 = TYPE_OBJ_FEO( arg3 );
-    type4 = TYPE_OBJ_FEO( arg4 );
-    type5 = TYPE_OBJ_FEO( arg5 );
-
-    /* try to find one in the list of methods                              */
-    method = CALL_6ARGS( VMethod5Args, oper, type1, type2, type3, type4,
-                         type5 );
-    while (method == Fail)
-      {
-        Obj arglist[5];
-        arglist[0] = arg1;
-        arglist[1] = arg2;
-        arglist[2] = arg3;
-        arglist[3] = arg4;
-        arglist[4] = arg5;
-        method = CallHandleMethodNotFound( oper, 5, arglist, 1, 0, INTOBJ_INT(0));
-      }
-    if ( method == 0 )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-    }
-
-    /* call this method                                                    */
-    res = CALL_5ARGS( method, arg1, arg2, arg3, arg4, arg5 );
-
-    /* try until a method doesn't give up                                  */
-    if ( res == TRY_NEXT_METHOD ) {
-        i = 1;
-        while ( res == TRY_NEXT_METHOD ) {
-#ifdef COUNT_OPERS
-            OperationNext++;
-#endif
-            margs = NEW_PLIST( T_PLIST, 7 );
-            SET_LEN_PLIST( margs, 7 );
-            SET_ELM_PLIST( margs, 1, oper );
-            SET_ELM_PLIST( margs, 2, INTOBJ_INT(i) );
-            SET_ELM_PLIST( margs, 3, type1 );
-            SET_ELM_PLIST( margs, 4, type2 );
-            SET_ELM_PLIST( margs, 5, type3 );
-            SET_ELM_PLIST( margs, 6, type4 );
-            SET_ELM_PLIST( margs, 7, type5 );
-            method = CALL_XARGS( NextVMethod5Args, margs );
-            while (method == Fail)
-              {
-                Obj arglist[5];
-                arglist[0] = arg1;
-                arglist[1] = arg2;
-                arglist[2] = arg3;
-                arglist[3] = arg4;
-                arglist[4] = arg5;
-                method = CallHandleMethodNotFound( oper, 5, arglist, 1, 0, INTOBJ_INT(i));
-              }
-            i++;
-            res = CALL_5ARGS( method, arg1, arg2, arg3, arg4, arg5 );
-        }
-    }
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 5, VerboseMethodSelectors, 1, 0, arg1, arg2,
+                            arg3, arg4, arg5, 0);
 }
 
-
-/****************************************************************************
-**
-**  DoVerboseOperation6Args( <oper>, <a1>, <a2>, <a3>, <a4>, <a5>, <a6> )
-*/
-Obj DoVerboseOperation6Args (
-    Obj                 oper,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3,
-    Obj                 arg4,
-    Obj                 arg5,
-    Obj                 arg6 )
+Obj DoVerboseOperation6Args(
+    Obj oper, Obj arg1, Obj arg2, Obj arg3, Obj arg4, Obj arg5, Obj arg6)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 type2;
-    Obj                 type3;
-    Obj                 type4;
-    Obj                 type5;
-    Obj                 type6;
-    Obj                 method;
-    Obj                 margs;
-    Int                 i;
-
-    /* get the types of the arguments                                      */
-    type1 = TYPE_OBJ_FEO( arg1 );
-    type2 = TYPE_OBJ_FEO( arg2 );
-    type3 = TYPE_OBJ_FEO( arg3 );
-    type4 = TYPE_OBJ_FEO( arg4 );
-    type5 = TYPE_OBJ_FEO( arg5 );
-    type6 = TYPE_OBJ_FEO( arg6 );
-
-    /* try to find one in the list of methods                              */
-    margs = NEW_PLIST( T_PLIST, 7 );
-    SET_LEN_PLIST( margs, 7 );
-    SET_ELM_PLIST( margs, 1, oper );
-    SET_ELM_PLIST( margs, 2, type1 );
-    SET_ELM_PLIST( margs, 3, type2 );
-    SET_ELM_PLIST( margs, 4, type3 );
-    SET_ELM_PLIST( margs, 5, type4 );
-    SET_ELM_PLIST( margs, 6, type5 );
-    SET_ELM_PLIST( margs, 7, type6 );
-    method = CALL_XARGS( VMethod6Args, margs );
-    while (method == Fail)
-      {
-        Obj arglist[6];
-        arglist[0] = arg1;
-        arglist[1] = arg2;
-        arglist[2] = arg3;
-        arglist[3] = arg4;
-        arglist[4] = arg5;
-        arglist[5] = arg6;
-        method = CallHandleMethodNotFound( oper, 6, arglist, 1, 0, INTOBJ_INT(0));
-      }
-    if ( method == 0 )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-    }
-
-    /* call this method                                                    */
-    res = CALL_6ARGS( method, arg1, arg2, arg3, arg4, arg5, arg6 );
-
-    /* try until a method doesn't give up                                  */
-    if ( res == TRY_NEXT_METHOD ) {
-        i = 1;
-        while ( res == TRY_NEXT_METHOD ) {
-#ifdef COUNT_OPERS
-            OperationNext++;
-#endif
-            margs = NEW_PLIST( T_PLIST, 8 );
-            SET_LEN_PLIST( margs, 8 );
-            SET_ELM_PLIST( margs, 1, oper );
-            SET_ELM_PLIST( margs, 2, INTOBJ_INT(i) );
-            SET_ELM_PLIST( margs, 3, type1 );
-            SET_ELM_PLIST( margs, 4, type2 );
-            SET_ELM_PLIST( margs, 5, type3 );
-            SET_ELM_PLIST( margs, 6, type4 );
-            SET_ELM_PLIST( margs, 7, type5 );
-            SET_ELM_PLIST( margs, 8, type6 );
-            method = CALL_XARGS( NextVMethod6Args, margs );
-            while (method == Fail)
-              {
-                Obj arglist[6];
-                arglist[0] = arg1;
-                arglist[1] = arg2;
-                arglist[2] = arg3;
-                arglist[3] = arg4;
-                arglist[4] = arg5;
-                arglist[5] = arg6;
-                method = CallHandleMethodNotFound( oper, 6, arglist, 1, 0, INTOBJ_INT(i));
-              }
-            i++;
-            res = CALL_6ARGS( method, arg1, arg2, arg3, arg4, arg5, arg6 );
-        }
-    }
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 6, VerboseMethodSelectors, 1, 0, arg1, arg2,
+                            arg3, arg4, arg5, arg6);
 }
 
 
@@ -2999,11 +2378,9 @@ Obj DoVerboseOperation6Args (
 **
 **  DoVerboseOperationXArgs( <oper>, ... )
 */
-Obj DoVerboseOperationXArgs (
-    Obj                 self,
-    Obj                 args )
+Obj DoVerboseOperationXArgs(Obj self, Obj args)
 {
-    ErrorQuit("sorry: cannot yet have X argument operations",0L,0L);
+    ErrorQuit("sorry: cannot yet have X argument operations", 0L, 0L);
     return 0;
 }
 
@@ -3012,35 +2389,26 @@ Obj DoVerboseOperationXArgs (
 **
 *F  NewOperation( <name>, <narg>, <nams>, <hdlr> )
 */
-Obj NewOperation (
-    Obj                 name,
-    Int                 narg,
-    Obj                 nams,
-    ObjFunc             hdlr )
+Obj NewOperation(Obj name, Int narg, Obj nams, ObjFunc hdlr)
 {
-    Obj                 oper;
-#ifdef  PREALLOCATE_TABLES
-    Obj                 cache;
-    Obj                 methods;
-    UInt                i;
-#endif
+    Obj oper;
 
     /* create the function                                                 */
-    oper = NewFunctionT( T_FUNCTION, SIZE_OPER, name, narg, nams, hdlr );
+    oper = NewFunctionT(T_FUNCTION, SIZE_OPER, name, narg, nams, hdlr);
 
     /* enter the handlers                                                  */
-    HDLR_FUNC(oper,0) = DoOperation0Args;
-    HDLR_FUNC(oper,1) = DoOperation1Args;
-    HDLR_FUNC(oper,2) = DoOperation2Args;
-    HDLR_FUNC(oper,3) = DoOperation3Args;
-    HDLR_FUNC(oper,4) = DoOperation4Args;
-    HDLR_FUNC(oper,5) = DoOperation5Args;
-    HDLR_FUNC(oper,6) = DoOperation6Args;
-    HDLR_FUNC(oper,7) = DoOperationXArgs;
+    SET_HDLR_FUNC(oper, 0, DoOperation0Args);
+    SET_HDLR_FUNC(oper, 1, DoOperation1Args);
+    SET_HDLR_FUNC(oper, 2, DoOperation2Args);
+    SET_HDLR_FUNC(oper, 3, DoOperation3Args);
+    SET_HDLR_FUNC(oper, 4, DoOperation4Args);
+    SET_HDLR_FUNC(oper, 5, DoOperation5Args);
+    SET_HDLR_FUNC(oper, 6, DoOperation6Args);
+    SET_HDLR_FUNC(oper, 7, DoOperationXArgs);
 
     /* reenter the given handler */
     if (narg != -1)
-      HDLR_FUNC(oper,narg) = hdlr;
+        SET_HDLR_FUNC(oper, narg, hdlr);
 
     /*N 1996/06/06 mschoene this should not be done here                   */
     FLAG1_FILT(oper) = INTOBJ_INT(0);
@@ -3048,17 +2416,6 @@ Obj NewOperation (
     FLAGS_FILT(oper) = False;
     SETTR_FILT(oper) = False;
     TESTR_FILT(oper) = False;
-    
-    /* create caches and methods lists                                     */
-#ifdef  PREALLOCATE_TABLES
-    for ( i = 0; i <= 7; i++ ) {
-        methods = NEW_PLIST( T_PLIST, 0 );
-        METHS_OPER( oper, i ) = methods;
-        cache = NEW_PLIST( T_PLIST, (i < 7 ? CACHE_SIZE * (i+2) : CACHE_SIZE * (1+2)) );
-        CACHE_OPER( oper, i ) = cache;
-        CHANGED_BAG(oper);
-    }
-#endif
 
     /* This isn't an attribute (yet) */
     SET_ENABLED_ATTR(oper, 0);
@@ -3069,45 +2426,12 @@ Obj NewOperation (
 
 
 /****************************************************************************
-**
+ **
+ *F  DoConstructor( <name> ) . . . . . . . . . . . . .  make a new constructor
+ */
 
-*F  DoConstructor( <name> ) . . . . . . . . . . . . .  make a new constructor
-*/
-UInt TLS(CacheIndex);
-
-Obj Constructor0Args;
-Obj NextConstructor0Args;
-Obj Constructor1Args;
-Obj NextConstructor1Args;
-Obj Constructor2Args;
-Obj NextConstructor2Args;
-Obj Constructor3Args;
-Obj NextConstructor3Args;
-Obj Constructor4Args;
-Obj NextConstructor4Args;
-Obj Constructor5Args;
-Obj NextConstructor5Args;
-Obj Constructor6Args;
-Obj NextConstructor6Args;
-Obj ConstructorXArgs;
-Obj NextConstructorXArgs;
-
-Obj VConstructor0Args;
-Obj NextVConstructor0Args;
-Obj VConstructor1Args;
-Obj NextVConstructor1Args;
-Obj VConstructor2Args;
-Obj NextVConstructor2Args;
-Obj VConstructor3Args;
-Obj NextVConstructor3Args;
-Obj VConstructor4Args;
-Obj NextVConstructor4Args;
-Obj VConstructor5Args;
-Obj NextVConstructor5Args;
-Obj VConstructor6Args;
-Obj NextVConstructor6Args;
-Obj VConstructorXArgs;
-Obj NextVConstructorXArgs;
+Obj ConstructorSelectors[2][7];
+Obj VerboseConstructorSelectors[2][7];
 
 /****************************************************************************
 **
@@ -3116,797 +2440,59 @@ Obj NextVConstructorXArgs;
 ** I'm not sure if this makes any sense at all
 */
 
-Obj DoConstructor0Args (
-    Obj                 oper )
+
+Obj DoConstructor0Args(Obj oper)
 {
-    Obj                 res;
-    Obj *               cache;
-    Obj                 method;
-    Int                 i;
-    Obj                prec;
-
-    /* try to find an applicable method in the cache                       */
-    prec = INTOBJ_INT(-1);
-
-    do {
-      /* The next line depends on the implementation of INTOBJS */
-      prec = (Obj)(((Int)prec) +4);
-      method = 0;
-
-      /* recalculate cache each pass, in case of GC     */
-      cache = 1+ADDR_OBJ( CacheOper( oper, 0 ) );
-
-      /* Up to CACHE_SIZE methods might be in the cache */
-      if (prec < INTOBJ_INT(CACHE_SIZE))
-        {
-          for (i = 0;  i < 2*CACHE_SIZE; i+= 2) {
-            if (  cache[i] != 0 && cache[i+1] == prec) {
-              method = cache[i];
-#ifdef COUNT_OPERS
-              OperationHit++;
-#endif
-              break;
-            }
-          }
-        }
-      
-      /* otherwise try to find one in the list of methods                    */
-      if (!method)
-        {
-          if (prec == INTOBJ_INT(0))
-            method = CALL_1ARGS( Constructor0Args, oper );
-          else
-            method = CALL_2ARGS( NextConstructor0Args, oper, prec );
-          
-          while (method == Fail)
-            method = CallHandleMethodNotFound( oper, 0, (Obj *)0, 0, 1, prec);
-          
-          /* update the cache */
-          if (method && prec < INTOBJ_INT(CACHE_SIZE))
-            {
-              Bag cacheBag = GET_METHOD_CACHE( oper, 0 );
-              cache = 1+ADDR_OBJ( cacheBag );
-              cache[2*TLS(CacheIndex)] = method;
-              cache[2*TLS(CacheIndex)+1] = prec;
-              TLS(CacheIndex) = (TLS(CacheIndex) + 1) % CACHE_SIZE;
-              CHANGED_BAG( cacheBag );
-            }
-#ifdef COUNT_OPERS
-          OperationMiss++;
-#endif
-        }
-      if ( !method )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-      }
-      
-      /* call this method                                                    */
-      res = CALL_0ARGS( method );
-    }
-    while (res == TRY_NEXT_METHOD );
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 0, ConstructorSelectors, 0, 1, 0, 0, 0, 0,
+                            0, 0);
 }
 
-
-/****************************************************************************
-**
-**  DoConstructor1Args( <oper>, <a1> )
-*/
-Obj DoConstructor1Args (
-    Obj                 oper,
-    Obj                 arg1 )
+Obj DoConstructor1Args(Obj oper, Obj arg1)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj *               cache;
-    Obj                 method;
-    Int                 i;
-    Obj                 prec;
-
-    /* get the types of the arguments                                      */
-    while (!IS_OPERATION(arg1))
-      {
-        arg1 = ErrorReturnObj(
-                "Constructor: the first argument must be a filter not a %s",
-                (Int)TNAM_OBJ(arg1), 0L, 
-                "you can replace the first argument <arg1> via 'return <arg1>;'");
-      }
-    
-    type1 = FLAGS_FILT( arg1 );
-
-    /* try to find an applicable method in the cache                       */
-    prec = INTOBJ_INT(-1);
-
-    do {
-      /* The next line depends on the implementation of INTOBJS */
-      prec = (Obj)(((Int)prec) +4);
-      method = 0;
-
-      /* recalculate cache each pass, in case of GC     */
-      cache = 1+ADDR_OBJ( CacheOper( oper, 1 ) );
-
-      /* Up to CACHE_SIZE methods might be in the cache */
-      if (prec < INTOBJ_INT(CACHE_SIZE))
-        {
-          for (i = 0;  i < 3*CACHE_SIZE; i+= 3) {
-            if (  cache[i+1] == prec && cache[i+2] == type1 ) {
-              method = cache[i];
-#ifdef COUNT_OPERS
-              ConstructorHit++;
-#endif
-              break;
-            }
-          }
-        }
-      
-      /* otherwise try to find one in the list of methods                    */
-      if (!method)
-        {
-          if (prec == INTOBJ_INT(0))
-            method = CALL_2ARGS( Constructor1Args, oper, type1 );
-          else
-            method = CALL_3ARGS( NextConstructor1Args, oper, prec, type1 );
-
-          while (method == Fail)
-            {
-              Obj arglist[1];
-              arglist[0] = arg1;
-              method = CallHandleMethodNotFound(oper, 1, arglist, 0, 1, prec);
-            }
-          
-          /* update the cache */
-          if (method && prec < INTOBJ_INT(CACHE_SIZE))
-            {
-              Bag cacheBag = GET_METHOD_CACHE( oper, 1 );
-              cache = 1+ADDR_OBJ( cacheBag );
-              cache[3*TLS(CacheIndex)] = method;
-              cache[3*TLS(CacheIndex)+1] = prec;
-              cache[3*TLS(CacheIndex)+2] = type1;
-              TLS(CacheIndex) = (TLS(CacheIndex) + 1) % CACHE_SIZE;
-              CHANGED_BAG( cacheBag );
-            }
-#ifdef COUNT_OPERS
-          ConstructorMiss++;
-#endif
-        }
-      if ( !method )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-      }
-      
-      /* call this method                                                    */
-      res = CALL_1ARGS( method, arg1 );
-    }
-    while (res == TRY_NEXT_METHOD );
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 1, ConstructorSelectors, 0, 1, arg1, 0, 0,
+                            0, 0, 0);
 }
 
-
-/****************************************************************************
-**
-**  DoConstructor2Args( <oper>, <a1>, <a2> )
-*/
-Obj DoConstructor2Args (
-    Obj                 oper,
-    Obj                 arg1,
-    Obj                 arg2 )
+Obj DoConstructor2Args(Obj oper, Obj arg1, Obj arg2)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 type2;
-    Obj                 id2;
-    Obj *               cache;
-    Obj                 method;
-    Int                 i;
-    Obj                 prec;
-
-    /* get the types of the arguments                                      */
-    while (!IS_OPERATION(arg1))
-      {
-        arg1 = ErrorReturnObj(
-                "Constructor: the first argument must be a filter not a %s",
-                (Int)TNAM_OBJ(arg1), 0L, 
-                "you can replace the first argument <arg1> via 'return <arg1>;'");
-      }
-    type1 = FLAGS_FILT( arg1 );
-    type2 = TYPE_OBJ_FEO( arg2 );  id2 = ID_TYPE( type2 );
-
-    /* try to find an applicable method in the cache                       */
-    prec = INTOBJ_INT(-1);
-
-    do {
-      /* The next line depends on the implementation of INTOBJS */
-      prec = (Obj)(((Int)prec) +4);
-      method = 0;
-
-      /* recalculate cache each pass, in case of GC     */
-      cache = 1+ADDR_OBJ( CacheOper( oper, 2 ) );
-
-      /* Up to CACHE_SIZE methods might be in the cache */
-      if (prec < INTOBJ_INT(CACHE_SIZE))
-        {
-          for (i = 0;  i < 4*CACHE_SIZE; i+= 4) {
-            if (  cache[i+1] == prec && cache[i+2] == type1
-                  && cache[i+3] == id2 ) {
-              method = cache[i];
-#ifdef COUNT_OPERS
-              OperationgHit++;
-#endif
-              break;
-            }
-          }
-        }
-      
-      /* otherwise try to find one in the list of methods                    */
-      if (!method)
-        {
-          if (prec == INTOBJ_INT(0))
-            method = CALL_3ARGS( Constructor2Args, oper, type1, type2 );
-          else
-            method = CALL_4ARGS( NextConstructor2Args, oper, prec, type1, type2 );
-          
-          while (method == Fail)
-            {
-              Obj arglist[2];
-              arglist[0] = arg1;
-              arglist[1] = arg2;
-              method = CallHandleMethodNotFound(oper, 2, arglist, 0, 1, prec);
-            }
-          
-          /* update the cache */
-          if (method && prec < INTOBJ_INT(CACHE_SIZE))
-            {
-              Bag cacheBag = GET_METHOD_CACHE( oper, 2 );
-              cache = 1+ADDR_OBJ( cacheBag );
-              cache[4*TLS(CacheIndex)] = method;
-              cache[4*TLS(CacheIndex)+1] = prec;
-              cache[4*TLS(CacheIndex)+2] = type1;
-              cache[4*TLS(CacheIndex)+3] = id2;
-              TLS(CacheIndex) = (TLS(CacheIndex) + 1) % CACHE_SIZE;
-              CHANGED_BAG( cacheBag );
-            }
-#ifdef COUNT_OPERS
-          OperationMiss++;
-#endif
-        }
-      if ( !method )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-      }
-      
-      /* call this method                                                    */
-      res = CALL_2ARGS( method, arg1, arg2 );
-    }
-    while (res == TRY_NEXT_METHOD );
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 2, ConstructorSelectors, 0, 1, arg1, arg2,
+                            0, 0, 0, 0);
 }
 
-
-
-/****************************************************************************
-**
-**  DoConstructor3Args( <oper>, <a1>, <a2>, <a3> )
-*/
-Obj DoConstructor3Args (
-    Obj                 oper,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3 )
+Obj DoConstructor3Args(Obj oper, Obj arg1, Obj arg2, Obj arg3)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 type2;
-    Obj                 id2;
-    Obj                 type3;
-    Obj                 id3;
-    Obj *               cache;
-    Obj                 method;
-    Int                 i;
-    Obj                 prec;
-
-    /* get the types of the arguments                                      */
-    while (!IS_OPERATION(arg1))
-      {
-        arg1 = ErrorReturnObj(
-                "Constructor: the first argument must be a filter not a %s",
-                (Int)TNAM_OBJ(arg1), 0L, 
-                "you can replace the first argument <arg1> via 'return <arg1>;'");
-      }
-    type1 = FLAGS_FILT( arg1 );
-    type2 = TYPE_OBJ_FEO( arg2 );  id2 = ID_TYPE( type2 );
-    type3 = TYPE_OBJ_FEO( arg3 );  id3 = ID_TYPE( type3 );
-
-    /* try to find an applicable method in the cache                       */
-    prec = INTOBJ_INT(-1);
-
-    do {
-      /* The next line depends on the implementation of INTOBJS */
-      prec = (Obj)(((Int)prec) +4);
-      method = 0;
-
-      /* recalculate cache each pass, in case of GC     */
-      cache = 1+ADDR_OBJ( CacheOper( oper, 3 ) );
-
-      /* Up to CACHE_SIZE methods might be in the cache */
-      if (prec < INTOBJ_INT(CACHE_SIZE))
-        {
-          for (i = 0;  i < 5*CACHE_SIZE; i+= 5) {
-            if (  cache[i+1] == prec && cache[i+2] == type1
-                  && cache[i+3] == id2 && cache[i+4] == id3 ) {
-              method = cache[i];
-#ifdef COUNT_OPERS
-              OperationHit++;
-#endif
-              break;
-            }
-          }
-        }
-      
-      /* otherwise try to find one in the list of methods                    */
-      if (!method)
-        {
-          if (prec == INTOBJ_INT(0))
-            method = CALL_4ARGS( Constructor3Args, oper, type1, type2, type3 );
-          else
-            method = CALL_5ARGS( NextConstructor3Args, oper, prec, type1, type2, type3 );
-          
-          while (method == Fail)
-            {
-              Obj arglist[3];
-              arglist[0] = arg1;
-              arglist[1] = arg2;
-              arglist[2] = arg3;
-              method = CallHandleMethodNotFound(oper, 3, arglist, 0, 1, prec);
-            }
-          
-          /* update the cache */
-          if (method && prec < INTOBJ_INT(CACHE_SIZE))
-            {
-              Bag cacheBag = GET_METHOD_CACHE( oper, 3 );
-              cache = 1+ADDR_OBJ( cacheBag );
-              cache[5*TLS(CacheIndex)] = method;
-              cache[5*TLS(CacheIndex)+1] = prec;
-              cache[5*TLS(CacheIndex)+2] = type1;
-              cache[5*TLS(CacheIndex)+3] = id2;
-              cache[5*TLS(CacheIndex)+4] = id3;
-              TLS(CacheIndex) = (TLS(CacheIndex) + 1) % CACHE_SIZE;
-              CHANGED_BAG( cacheBag );
-            }
-#ifdef COUNT_OPERS
-          OperationMiss++;
-#endif
-        }
-      if ( !method )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-      }
-      
-      /* call this method                                                    */
-      res = CALL_3ARGS( method, arg1, arg2, arg3 );
-    }
-    while (res == TRY_NEXT_METHOD );
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 3, ConstructorSelectors, 0, 1, arg1, arg2,
+                            arg3, 0, 0, 0);
 }
 
-
-/****************************************************************************
-**
-**  DoConstructor4Args( <oper>, <a1>, <a2>, <a3>, <a4> )
-*/
-Obj DoConstructor4Args (
-    Obj                 oper,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3,
-    Obj                 arg4 )
+Obj DoConstructor4Args(Obj oper, Obj arg1, Obj arg2, Obj arg3, Obj arg4)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 type2;
-    Obj                 id2;
-    Obj                 type3;
-    Obj                 id3;
-    Obj                 type4;
-    Obj                 id4;
-    Obj *               cache;
-    Obj                 method;
-    Int                 i;
-    Obj                 prec;
-
-
-    /* get the types of the arguments                                      */
-    while (!IS_OPERATION(arg1))
-      {
-        arg1 = ErrorReturnObj(
-                "Constructor: the first argument must be a filter not a %s",
-                (Int)TNAM_OBJ(arg1), 0L, 
-                "you can replace the first argument <arg1> via 'return <arg1>;'");
-      }
-    type1 = FLAGS_FILT( arg1 );
-    type2 = TYPE_OBJ_FEO( arg2 );  id2 = ID_TYPE( type2 );
-    type3 = TYPE_OBJ_FEO( arg3 );  id3 = ID_TYPE( type3 );
-    type4 = TYPE_OBJ_FEO( arg4 );  id4 = ID_TYPE( type4 );
-
-    /* try to find an applicable method in the cache                       */
-    prec = INTOBJ_INT(-1);
-
-    do {
-      /* The next line depends on the implementation of INTOBJS */
-      prec = (Obj)(((Int)prec) +4);
-      method = 0;
-
-      /* recalculate cache each pass, in case of GC     */
-      cache = 1+ADDR_OBJ( CacheOper( oper, 4 ) );
-
-      /* Up to CACHE_SIZE methods might be in the cache */
-      if (prec < INTOBJ_INT(CACHE_SIZE))
-        {
-          for (i = 0;  i < 6*CACHE_SIZE; i+= 6) {
-            if (  cache[i+1] == prec && cache[i+2] == type1 &&
-                  cache[i+3] == id2 && cache[i+4] == id3 &&
-                  cache[i+5] == id4 ) {
-              method = cache[i];
-#ifdef COUNT_OPERS
-              OperationHit++;
-#endif
-              break;
-            }
-          }
-        }
-      
-      /* otherwise try to find one in the list of methods                    */
-      if (!method)
-        {
-          if (prec == INTOBJ_INT(0))
-            method = CALL_5ARGS( Constructor4Args, oper, type1, type2, type3, type4 );
-          else
-            method = CALL_6ARGS( NextConstructor4Args, oper, prec, type1, type2, type3, type4 );
-          
-          while (method == Fail)
-            {
-              Obj arglist[4];
-              arglist[0] = arg1;
-              arglist[1] = arg2;
-              arglist[2] = arg3;
-              arglist[3] = arg4;
-              method = CallHandleMethodNotFound(oper, 4, arglist, 0, 1, prec);
-            }
-          
-          /* update the cache */
-          if (method && prec < INTOBJ_INT(CACHE_SIZE))
-            {
-              Bag cacheBag = GET_METHOD_CACHE( oper, 4 );
-              cache = 1+ADDR_OBJ( cacheBag );
-              cache[6*TLS(CacheIndex)] = method;
-              cache[6*TLS(CacheIndex)+1] = prec;
-              cache[6*TLS(CacheIndex)+2] = type1;
-              cache[6*TLS(CacheIndex)+3] = id2;
-              cache[6*TLS(CacheIndex)+4] = id3;
-              cache[6*TLS(CacheIndex)+5] = id4;
-              TLS(CacheIndex) = (TLS(CacheIndex) + 1) % CACHE_SIZE;
-              CHANGED_BAG( cacheBag );
-            }
-#ifdef COUNT_OPERS
-          OperationMiss++;
-#endif
-        }
-      if ( !method )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-      }
-      
-      /* call this method                                                    */
-      res = CALL_4ARGS( method, arg1, arg2, arg3, arg4 );
-    }
-    while (res == TRY_NEXT_METHOD );
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 4, ConstructorSelectors, 0, 1, arg1, arg2,
+                            arg3, arg4, 0, 0);
 }
 
-
-
-/****************************************************************************
-**
-**  DoConstructor5Args( <oper>, <a1>, <a2>, <a3>, <a4>, <a5> )
-*/
-Obj DoConstructor5Args (
-    Obj                 oper,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3,
-    Obj                 arg4,
-    Obj                 arg5 )
+Obj DoConstructor5Args(
+    Obj oper, Obj arg1, Obj arg2, Obj arg3, Obj arg4, Obj arg5)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 type2;
-    Obj                 id2;
-    Obj                 type3;
-    Obj                 id3;
-    Obj                 type4;
-    Obj                 id4;
-    Obj                 type5;
-    Obj                 id5;
-    Obj *               cache;
-    Obj                 method;
-    Int                 i;
-    Obj                 prec;
-    Obj                 margs;
-
-
-    /* get the types of the arguments                                      */
-    while (!IS_OPERATION(arg1))
-      {
-        arg1 = ErrorReturnObj(
-                "Constructor: the first argument must be a filter not a %s",
-                (Int)TNAM_OBJ(arg1), 0L, 
-                "you can replace the first argument <arg1> via 'return <arg1>;'");
-      }
-    type1 = FLAGS_FILT( arg1 );
-    type2 = TYPE_OBJ_FEO( arg2 );  id2 = ID_TYPE( type2 );
-    type3 = TYPE_OBJ_FEO( arg3 );  id3 = ID_TYPE( type3 );
-    type4 = TYPE_OBJ_FEO( arg4 );  id4 = ID_TYPE( type4 );
-    type5 = TYPE_OBJ_FEO( arg5 );  id5 = ID_TYPE( type5 );
-    
-    /* try to find an applicable method in the cache                       */
-    prec = INTOBJ_INT(-1);
-
-    do {
-      /* The next line depends on the implementation of INTOBJS */
-      prec = (Obj)(((Int)prec) +4);
-      method = 0;
-
-      /* recalculate cache each pass, in case of GC     */
-      cache = 1+ADDR_OBJ( CacheOper( oper, 5 ) );
-
-      /* Up to CACHE_SIZE methods might be in the cache */
-      if (prec < INTOBJ_INT(CACHE_SIZE))
-        {
-          for (i = 0;  i < 7*CACHE_SIZE; i+= 7) {
-            if (  cache[i+1] == prec && cache[i+2] == type1 &&
-                  cache[i+3] == id2 && cache[i+4] == id3 &&
-                  cache[i+5] == id4 && cache[i+6] == id5 ) {
-              method = cache[i];
-#ifdef COUNT_OPERS
-              OperationHit++;
-#endif
-              break;
-            }
-          }
-        }
-      
-      /* otherwise try to find one in the list of methods                    */
-      if (!method)
-        {
-          if (prec == INTOBJ_INT(0))
-            method = CALL_6ARGS( Constructor5Args, oper, type1, type2, type3, type4, type5 );
-          else
-            {
-              margs = NEW_PLIST(T_PLIST, 7);
-              SET_ELM_PLIST(margs, 1, oper );
-              SET_ELM_PLIST(margs, 2, prec );
-              SET_ELM_PLIST(margs, 3, type1 );
-              SET_ELM_PLIST(margs, 4, type2 );
-              SET_ELM_PLIST(margs, 5, type3 );
-              SET_ELM_PLIST(margs, 6, type4 );
-              SET_ELM_PLIST(margs, 7, type5 );
-              SET_LEN_PLIST(margs, 7);
-              method = CALL_XARGS( NextConstructor5Args, margs );
-            }
-          
-          while (method == Fail)
-            {
-              Obj arglist[5];
-              arglist[0] = arg1;
-              arglist[1] = arg2;
-              arglist[2] = arg3;
-              arglist[3] = arg4;
-              arglist[4] = arg5;
-              method = CallHandleMethodNotFound(oper, 5, arglist, 0, 1, prec);
-            }
-          
-          /* update the cache */
-          if (method && prec < INTOBJ_INT(CACHE_SIZE))
-            {
-              Bag cacheBag = GET_METHOD_CACHE( oper, 5 );
-              cache = 1+ADDR_OBJ( cacheBag );
-              cache[7*TLS(CacheIndex)] = method;
-              cache[7*TLS(CacheIndex)+1] = prec;
-              cache[7*TLS(CacheIndex)+2] = type1;
-              cache[7*TLS(CacheIndex)+3] = id2;
-              cache[7*TLS(CacheIndex)+4] = id3;
-              cache[7*TLS(CacheIndex)+5] = id4;
-              cache[7*TLS(CacheIndex)+6] = id5;
-              TLS(CacheIndex) = (TLS(CacheIndex) + 1) % CACHE_SIZE;
-              CHANGED_BAG( cacheBag );
-            }
-#ifdef COUNT_OPERS
-          OperationMiss++;
-#endif
-        }
-      if ( !method )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-      }
-      
-      /* call this method                                                    */
-      res = CALL_5ARGS( method, arg1, arg2, arg3, arg4, arg5 );
-    }
-    while (res == TRY_NEXT_METHOD );
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 5, ConstructorSelectors, 0, 1, arg1, arg2,
+                            arg3, arg4, arg5, 0);
 }
 
-
-
-/****************************************************************************
-**
-**  DoConstructor6Args( <oper>, <a1>, <a2>, <a3>, <a4>, <a5>, <a6> )
-*/
-Obj DoConstructor6Args (
-    Obj                 oper,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3,
-    Obj                 arg4,
-    Obj                 arg5,
-    Obj                 arg6 )
+Obj DoConstructor6Args(
+    Obj oper, Obj arg1, Obj arg2, Obj arg3, Obj arg4, Obj arg5, Obj arg6)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 type2;
-    Obj                 id2;
-    Obj                 type3;
-    Obj                 id3;
-    Obj                 type4;
-    Obj                 id4;
-    Obj                 type5;
-    Obj                 id5;
-    Obj                 type6;
-    Obj                 id6;
-    Obj *               cache;
-    Obj                 method;
-    Obj                 margs;
-    Int                 i;
-    Obj                 prec;
-
-
-    /* get the types of the arguments                                      */
-    while (!IS_OPERATION(arg1))
-      {
-        arg1 = ErrorReturnObj(
-                "Constructor: the first argument must be a filter not a %s",
-                (Int)TNAM_OBJ(arg1), 0L, 
-                "you can replace the first argument <arg1> via 'return <arg1>;'");
-      }
-    type1 = FLAGS_FILT( arg1 );
-    type2 = TYPE_OBJ_FEO( arg2 );  id2 = ID_TYPE( type2 );
-    type3 = TYPE_OBJ_FEO( arg3 );  id3 = ID_TYPE( type3 );
-    type4 = TYPE_OBJ_FEO( arg4 );  id4 = ID_TYPE( type4 );
-    type5 = TYPE_OBJ_FEO( arg5 );  id5 = ID_TYPE( type5 );
-    type6 = TYPE_OBJ_FEO( arg6 );  id6 = ID_TYPE( type6 );
-    
-    /* try to find an applicable method in the cache                       */
-    prec = INTOBJ_INT(-1);
-
-    do {
-      /* The next line depends on the implementation of INTOBJS */
-      prec = (Obj)(((Int)prec) +4);
-      method = 0;
-
-      /* recalculate cache each pass, in case of GC     */
-      cache = 1+ADDR_OBJ( CacheOper( oper, 6 ) );
-
-      /* Up to CACHE_SIZE methods might be in the cache */
-      if (prec < INTOBJ_INT(CACHE_SIZE))
-        {
-          for (i = 0;  i < 8*CACHE_SIZE; i+= 8) {
-            if (  cache[i+1] == prec && cache[i+2] == type1 &&
-                  cache[i+3] == id2 && cache[i+4] == id3 &&
-                  cache[i+5] == id4 && cache[i+6] == id5 &&
-                  cache[i+7] == id6) {
-              method = cache[i];
-#ifdef COUNT_OPERS
-              OperationHit++;
-#endif
-              break;
-            }
-          }
-        }
-      
-      /* otherwise try to find one in the list of methods                    */
-      if (!method)
-        {
-          if (prec == INTOBJ_INT(0))
-            {
-              margs = NEW_PLIST(T_PLIST, 7);
-              SET_ELM_PLIST(margs, 1, oper );
-              SET_ELM_PLIST(margs, 2, type1 );
-              SET_ELM_PLIST(margs, 3, type2 );
-              SET_ELM_PLIST(margs, 4, type3 );
-              SET_ELM_PLIST(margs, 5, type4 );
-              SET_ELM_PLIST(margs, 6, type5 );
-              SET_ELM_PLIST(margs, 7, type6 );
-              SET_LEN_PLIST(margs, 7);
-              method = CALL_XARGS( Constructor6Args, margs );
-
-            }
-          else
-            {
-              margs = NEW_PLIST(T_PLIST, 8);
-              SET_ELM_PLIST(margs, 1, oper );
-              SET_ELM_PLIST(margs, 2, prec );
-              SET_ELM_PLIST(margs, 3, type1 );
-              SET_ELM_PLIST(margs, 4, type2 );
-              SET_ELM_PLIST(margs, 5, type3 );
-              SET_ELM_PLIST(margs, 6, type4 );
-              SET_ELM_PLIST(margs, 7, type5 );
-              SET_ELM_PLIST(margs, 8, type6 );
-              SET_LEN_PLIST(margs, 8);
-              method = CALL_XARGS( NextConstructor6Args, margs );
-            }
-          
-          while (method == Fail)
-            {
-              Obj arglist[6];
-              arglist[0] = arg1;
-              arglist[1] = arg2;
-              arglist[2] = arg3;
-              arglist[3] = arg4;
-              arglist[4] = arg5;
-              arglist[5] = arg6;
-              method = CallHandleMethodNotFound(oper, 6, arglist, 0, 1, prec);
-            }
-          
-          /* update the cache */
-          if (method && prec < INTOBJ_INT(CACHE_SIZE))
-            {
-              Bag cacheBag = GET_METHOD_CACHE( oper, 6 );
-              cache = 1+ADDR_OBJ( cacheBag );
-              cache[8*TLS(CacheIndex)] = method;
-              cache[8*TLS(CacheIndex)+1] = prec;
-              cache[8*TLS(CacheIndex)+2] = type1;
-              cache[8*TLS(CacheIndex)+3] = id2;
-              cache[8*TLS(CacheIndex)+4] = id3;
-              cache[8*TLS(CacheIndex)+5] = id4;
-              cache[8*TLS(CacheIndex)+6] = id5;
-              cache[8*TLS(CacheIndex)+7] = id6;
-              TLS(CacheIndex) = (TLS(CacheIndex) + 1) % CACHE_SIZE;
-              CHANGED_BAG( cacheBag );
-            }
-#ifdef COUNT_OPERS
-          OperationMiss++;
-#endif
-        }
-      if ( !method )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-      }
-      
-      /* call this method                                                    */
-      res = CALL_6ARGS( method, arg1, arg2, arg3, arg4, arg5, arg6 );
-    }
-    while (res == TRY_NEXT_METHOD );
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 6, ConstructorSelectors, 0, 1, arg1, arg2,
+                            arg3, arg4, arg5, arg6);
 }
-
-
 
 
 /****************************************************************************
 **
 **  DoConstructorXArgs( <oper>, ... )
 */
-Obj DoConstructorXArgs (
-    Obj                 self,
-    Obj                 args )
+Obj DoConstructorXArgs(Obj self, Obj args)
 {
-    ErrorQuit("sorry: cannot yet have X argument constructors",0L,0L);
+    ErrorQuit("sorry: cannot yet have X argument constructors", 0L, 0L);
     return 0;
 }
 
@@ -3914,555 +2500,60 @@ Obj DoConstructorXArgs (
 **
 **  DoVerboseConstructor0Args( <oper> )
 */
-Obj DoVerboseConstructor0Args (
-    Obj                 oper )
+
+Obj DoVerboseConstructor0Args(Obj oper)
 {
-    Obj                 res;
-    Obj                 method;
-    Int                 i;
-
-    /* try to find one in the list of methods                              */
-    method = CALL_1ARGS( VConstructor0Args, oper );
-    while (method == Fail)
-      {
-        method = CallHandleMethodNotFound( oper, 0, (Obj *) 0, 1, 0, INTOBJ_INT(0));
-      }
-    if ( method == 0 )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-    }
-
-    /* call this method                                                    */
-    res = CALL_0ARGS( method );
-
-    /* try until a method doesn't give up                                  */
-    if ( res == TRY_NEXT_METHOD ) {
-        i = 1;
-        while ( res == TRY_NEXT_METHOD ) {
-#ifdef COUNT_OPERS
-            OperationNext++;
-#endif
-            method = CALL_2ARGS( NextVConstructor0Args, oper, INTOBJ_INT(i) );
-            while (method == Fail)
-              {
-                method = CallHandleMethodNotFound( oper, 0, (Obj *) 0, 1, 0, INTOBJ_INT(i));
-              }
-            i++;
-            res = CALL_0ARGS( method );
-        }
-    }
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 0, VerboseConstructorSelectors, 1, 1, 0, 0,
+                            0, 0, 0, 0);
 }
 
-
-/****************************************************************************
-**
-**  DoVerboseConstructor1Args( <oper>, <a1> )
-*/
-Obj DoVerboseConstructor1Args (
-    Obj                 oper,
-    Obj                 arg1 )
+Obj DoVerboseConstructor1Args(Obj oper, Obj arg1)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 method;
-    Int                 i;
-
-    /* get the types of the arguments                                      */
-    while (!IS_OPERATION(arg1))
-      {
-        arg1 = ErrorReturnObj(
-                "Constructor: the first argument must be a filter not a %s",
-                (Int)TNAM_OBJ(arg1), 0L, 
-                "you can replace the first argument <arg1> via 'return <arg1>;'");
-      }
-    
-    type1 = FLAGS_FILT( arg1 );
-
-
-    /* try to find one in the list of methods                              */
-    method = CALL_2ARGS( VConstructor1Args, oper, type1 );
-
-    while (method == Fail)
-      {
-        Obj arglist[1];
-        arglist[0] = arg1;
-        method = CallHandleMethodNotFound( oper, 1, arglist, 1, 0, INTOBJ_INT(0));
-      }
-    
-    if ( method == 0 )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-    }
-
-    /* call this method                                                    */
-    res = CALL_1ARGS( method, arg1 );
-
-    /* try until a method doesn't give up                                  */
-    if ( res == TRY_NEXT_METHOD ) {
-        i = 1;
-        while ( res == TRY_NEXT_METHOD ) {
-#ifdef COUNT_OPERS
-            OperationNext++;
-#endif
-            method = CALL_3ARGS( NextVConstructor1Args, oper, INTOBJ_INT(i),
-                                 type1 );
-            while (method == Fail)
-              {
-                Obj arglist[1];
-                arglist[0] = arg1;
-                method = CallHandleMethodNotFound( oper, 1, arglist, 1, 0, INTOBJ_INT(i));
-              }
-    
-            i++;
-            res = CALL_1ARGS( method, arg1 );
-        }
-    }
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 1, VerboseConstructorSelectors, 1, 1, arg1,
+                            0, 0, 0, 0, 0);
 }
 
-
-/****************************************************************************
-**
-**  DoVerboseConstructor2Args( <oper>, <a1>, <a2> )
-*/
-Obj DoVerboseConstructor2Args (
-    Obj                 oper,
-    Obj                 arg1,
-    Obj                 arg2 )
+Obj DoVerboseConstructor2Args(Obj oper, Obj arg1, Obj arg2)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 type2;
-    Obj                 method;
-    Int                 i;
-
-    /* get the types of the arguments                                      */
-    while (!IS_OPERATION(arg1))
-      {
-        arg1 = ErrorReturnObj(
-                "Constructor: the first argument must be a filter not a %s",
-                (Int)TNAM_OBJ(arg1), 0L, 
-                "you can replace the first argument <arg1> via 'return <arg1>;'");
-      }
-    
-    type1 = FLAGS_FILT( arg1 );
-    type2 = TYPE_OBJ_FEO( arg2 );
-
-    /* try to find one in the list of methods                              */
-    method = CALL_3ARGS( VConstructor2Args, oper, type1, type2 );
-    while (method == Fail)
-      {
-        Obj arglist[2];
-        arglist[0] = arg1;
-        arglist[1] = arg2;
-        method = CallHandleMethodNotFound( oper, 2, arglist, 1, 0, INTOBJ_INT(0));
-      }
-    
-    if ( method == 0 )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-    }
-
-    /* call this method                                                    */
-    res = CALL_2ARGS( method, arg1, arg2 );
-
-    /* try until a method doesn't give up                                  */
-    if ( res == TRY_NEXT_METHOD ) {
-        i = 1;
-        while ( res == TRY_NEXT_METHOD ) {
-#ifdef COUNT_OPERS
-            OperationNext++;
-#endif
-            method = CALL_4ARGS( NextVConstructor2Args, oper, INTOBJ_INT(i),
-                                 type1, type2 );
-            while (method == Fail)
-              {
-                Obj arglist[2];
-                arglist[0] = arg1;
-                arglist[1] = arg2;
-                method = CallHandleMethodNotFound( oper, 2, arglist, 1, 0, INTOBJ_INT(i));
-              }
-    
-            i++;
-            res = CALL_2ARGS( method, arg1, arg2 );
-        }
-    }
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 2, VerboseConstructorSelectors, 1, 1, arg1,
+                            arg2, 0, 0, 0, 0);
 }
 
-
-/****************************************************************************
-**
-**  DoVerboseConstructor3Args( <oper>, <a1>, <a2>, <a3> )
-*/
-Obj DoVerboseConstructor3Args (
-    Obj                 oper,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3 )
+Obj DoVerboseConstructor3Args(Obj oper, Obj arg1, Obj arg2, Obj arg3)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 type2;
-    Obj                 type3;
-    Obj                 method;
-    Int                 i;
-
-    /* get the types of the arguments                                      */
-    while (!IS_OPERATION(arg1))
-      {
-        arg1 = ErrorReturnObj(
-                "Constructor: the first argument must be a filter not a %s",
-                (Int)TNAM_OBJ(arg1), 0L, 
-                "you can replace the first argument <arg1> via 'return <arg1>;'");
-      }
-    
-    type1 = FLAGS_FILT( arg1 );
-    type2 = TYPE_OBJ_FEO( arg2 );
-    type3 = TYPE_OBJ_FEO( arg3 );
-
-    /* try to find one in the list of methods                              */
-    method = CALL_4ARGS( VConstructor3Args, oper, type1, type2, type3 );
-    while (method == Fail)
-      {
-        Obj arglist[3];
-        arglist[0] = arg1;
-        arglist[1] = arg2;
-        arglist[2] = arg3;
-        method = CallHandleMethodNotFound( oper, 3, arglist, 1, 0, INTOBJ_INT(0));
-      }
-    
-    if ( method == 0 )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-    }
-
-    /* call this method                                                    */
-    res = CALL_3ARGS( method, arg1, arg2, arg3 );
-
-    /* try until a method doesn't give up                                  */
-    if ( res == TRY_NEXT_METHOD ) {
-        i = 1;
-        while ( res == TRY_NEXT_METHOD ) {
-#ifdef COUNT_OPERS
-            OperationNext++;
-#endif
-            method = CALL_5ARGS( NextVConstructor3Args, oper, INTOBJ_INT(i),
-                                 type1, type2, type3 );
-            while (method == Fail)
-              {
-                Obj arglist[3];
-                arglist[0] = arg1;
-                arglist[1] = arg2;
-                arglist[2] = arg3;
-                method = CallHandleMethodNotFound( oper, 3, arglist, 1, 0, INTOBJ_INT(i));
-              }
-    
-            i++;
-            res = CALL_3ARGS( method, arg1, arg2, arg3 );
-        }
-    }
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 3, VerboseConstructorSelectors, 1, 1, arg1,
+                            arg2, arg3, 0, 0, 0);
 }
 
-
-/****************************************************************************
-**
-**  DoVerboseConstructor4Args( <oper>, <a1>, <a2>, <a3>, <a4> )
-*/
-Obj DoVerboseConstructor4Args (
-    Obj                 oper,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3,
-    Obj                 arg4 )
+Obj DoVerboseConstructor4Args(
+    Obj oper, Obj arg1, Obj arg2, Obj arg3, Obj arg4)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 type2;
-    Obj                 type3;
-    Obj                 type4;
-    Obj                 method;
-    Int                 i;
-
-    /* get the types of the arguments                                      */
-    while (!IS_OPERATION(arg1))
-      {
-        arg1 = ErrorReturnObj(
-                "Constructor: the first argument must be a filter not a %s",
-                (Int)TNAM_OBJ(arg1), 0L, 
-                "you can replace the first argument <arg1> via 'return <arg1>;'");
-      }
-    
-    type1 = FLAGS_FILT( arg1 );
-    type2 = TYPE_OBJ_FEO( arg2 );
-    type3 = TYPE_OBJ_FEO( arg3 );
-    type4 = TYPE_OBJ_FEO( arg4 );
-
-    /* try to find one in the list of methods                              */
-    method = CALL_5ARGS( VConstructor4Args, oper, type1, type2, type3, type4 );
-    while (method == Fail)
-      {
-        Obj arglist[4];
-        arglist[0] = arg1;
-        arglist[1] = arg2;
-        arglist[2] = arg3;
-        arglist[3] = arg4;
-        method = CallHandleMethodNotFound( oper, 4, arglist, 1, 0, INTOBJ_INT(0));
-      }
-    
-    if ( method == 0 )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-    }
-
-    /* call this method                                                    */
-    res = CALL_4ARGS( method, arg1, arg2, arg3, arg4 );
-
-    /* try until a method doesn't give up                                  */
-    if ( res == TRY_NEXT_METHOD ) {
-        i = 1;
-        while ( res == TRY_NEXT_METHOD ) {
-#ifdef COUNT_OPERS
-            OperationNext++;
-#endif
-            method = CALL_6ARGS( NextVConstructor4Args, oper, INTOBJ_INT(i),
-                                 type1, type2, type3, type4 );
-            while (method == Fail)
-              {
-                Obj arglist[4];
-                arglist[0] = arg1;
-                arglist[1] = arg2;
-                arglist[2] = arg3;
-                arglist[3] = arg4;
-                method = CallHandleMethodNotFound( oper, 4, arglist, 1, 0, INTOBJ_INT(i));
-              }
-            i++;
-            res = CALL_4ARGS( method, arg1, arg2, arg3, arg4 );
-        }
-    }
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 4, VerboseConstructorSelectors, 1, 1, arg1,
+                            arg2, arg3, arg4, 0, 0);
 }
 
-
-/****************************************************************************
-**
-**  DoVerboseConstructor5Args( <oper>, <a1>, <a2>, <a3>, <a4>, <a5> )
-*/
-Obj DoVerboseConstructor5Args (
-    Obj                 oper,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3,
-    Obj                 arg4,
-    Obj                 arg5 )
+Obj DoVerboseConstructor5Args(
+    Obj oper, Obj arg1, Obj arg2, Obj arg3, Obj arg4, Obj arg5)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 type2;
-    Obj                 type3;
-    Obj                 type4;
-    Obj                 type5;
-    Obj                 method;
-    Obj                 margs;
-    Int                 i;
-
-    /* get the types of the arguments                                      */
-    while (!IS_OPERATION(arg1))
-      {
-        arg1 = ErrorReturnObj(
-                "Constructor: the first argument must be a filter not a %s",
-                (Int)TNAM_OBJ(arg1), 0L, 
-                "you can replace the first argument <arg1> via 'return <arg1>;'");
-      }
-    
-    type1 = FLAGS_FILT( arg1 );
-    type2 = TYPE_OBJ_FEO( arg2 );
-    type3 = TYPE_OBJ_FEO( arg3 );
-    type4 = TYPE_OBJ_FEO( arg4 );
-    type5 = TYPE_OBJ_FEO( arg5 );
-
-    /* try to find one in the list of methods                              */
-    method = CALL_6ARGS( VConstructor5Args, oper, type1, type2, type3, type4,
-                         type5 );
-    while (method == Fail)
-      {
-        Obj arglist[5];
-        arglist[0] = arg1;
-        arglist[1] = arg2;
-        arglist[2] = arg3;
-        arglist[3] = arg4;
-        arglist[4] = arg5;
-        method = CallHandleMethodNotFound( oper, 5, arglist, 1, 0, INTOBJ_INT(0));
-      }
-    if ( method == 0 )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-    }
-
-    /* call this method                                                    */
-    res = CALL_5ARGS( method, arg1, arg2, arg3, arg4, arg5 );
-
-    /* try until a method doesn't give up                                  */
-    if ( res == TRY_NEXT_METHOD ) {
-        i = 1;
-        while ( res == TRY_NEXT_METHOD ) {
-#ifdef COUNT_OPERS
-            OperationNext++;
-#endif
-            margs = NEW_PLIST( T_PLIST, 7 );
-            SET_LEN_PLIST( margs, 7 );
-            SET_ELM_PLIST( margs, 1, oper );
-            SET_ELM_PLIST( margs, 2, INTOBJ_INT(i) );
-            SET_ELM_PLIST( margs, 3, type1 );
-            SET_ELM_PLIST( margs, 4, type2 );
-            SET_ELM_PLIST( margs, 5, type3 );
-            SET_ELM_PLIST( margs, 6, type4 );
-            SET_ELM_PLIST( margs, 7, type5 );
-            method = CALL_XARGS( NextVConstructor5Args, margs );
-            while (method == Fail)
-              {
-                Obj arglist[5];
-                arglist[0] = arg1;
-                arglist[1] = arg2;
-                arglist[2] = arg3;
-                arglist[3] = arg4;
-                arglist[4] = arg5;
-                method = CallHandleMethodNotFound( oper, 5, arglist, 1, 0, INTOBJ_INT(i));
-              }
-            i++;
-            res = CALL_5ARGS( method, arg1, arg2, arg3, arg4, arg5 );
-        }
-    }
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 5, VerboseConstructorSelectors, 1, 1, arg1,
+                            arg2, arg3, arg4, arg5, 0);
 }
 
-
-/****************************************************************************
-**
-**  DoVerboseConstructor6Args( <oper>, <a1>, <a2>, <a3>, <a4>, <a5>, <a6> )
-*/
-Obj DoVerboseConstructor6Args (
-    Obj                 oper,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3,
-    Obj                 arg4,
-    Obj                 arg5,
-    Obj                 arg6 )
+Obj DoVerboseConstructor6Args(
+    Obj oper, Obj arg1, Obj arg2, Obj arg3, Obj arg4, Obj arg5, Obj arg6)
 {
-    Obj                 res;
-    Obj                 type1;
-    Obj                 type2;
-    Obj                 type3;
-    Obj                 type4;
-    Obj                 type5;
-    Obj                 type6;
-    Obj                 method;
-    Obj                 margs;
-    Int                 i;
-
-    /* get the types of the arguments                                      */
-    while (!IS_OPERATION(arg1))
-      {
-        arg1 = ErrorReturnObj(
-                "Constructor: the first argument must be a filter not a %s",
-                (Int)TNAM_OBJ(arg1), 0L, 
-                "you can replace the first argument <arg1> via 'return <arg1>;'");
-      }
-    
-    type1 = FLAGS_FILT( arg1 );
-    type2 = TYPE_OBJ_FEO( arg2 );
-    type3 = TYPE_OBJ_FEO( arg3 );
-    type4 = TYPE_OBJ_FEO( arg4 );
-    type5 = TYPE_OBJ_FEO( arg5 );
-    type6 = TYPE_OBJ_FEO( arg6 );
-
-    /* try to find one in the list of methods                              */
-    margs = NEW_PLIST( T_PLIST, 7 );
-    SET_LEN_PLIST( margs, 7 );
-    SET_ELM_PLIST( margs, 1, oper );
-    SET_ELM_PLIST( margs, 2, type1 );
-    SET_ELM_PLIST( margs, 3, type2 );
-    SET_ELM_PLIST( margs, 4, type3 );
-    SET_ELM_PLIST( margs, 5, type4 );
-    SET_ELM_PLIST( margs, 6, type5 );
-    SET_ELM_PLIST( margs, 7, type6 );
-    method = CALL_XARGS( VConstructor6Args, margs );
-    while (method == Fail)
-      {
-        Obj arglist[6];
-        arglist[0] = arg1;
-        arglist[1] = arg2;
-        arglist[2] = arg3;
-        arglist[3] = arg4;
-        arglist[4] = arg5;
-        arglist[5] = arg6;
-        method = CallHandleMethodNotFound( oper, 6, arglist, 1, 0, INTOBJ_INT(0));
-      }
-    if ( method == 0 )  {
-        ErrorQuit( "no method returned", 0L, 0L );
-    }
-
-    /* call this method                                                    */
-    res = CALL_6ARGS( method, arg1, arg2, arg3, arg4, arg5, arg6 );
-
-    /* try until a method doesn't give up                                  */
-    if ( res == TRY_NEXT_METHOD ) {
-        i = 1;
-        while ( res == TRY_NEXT_METHOD ) {
-#ifdef COUNT_OPERS
-            OperationNext++;
-#endif
-            margs = NEW_PLIST( T_PLIST, 8 );
-            SET_LEN_PLIST( margs, 8 );
-            SET_ELM_PLIST( margs, 1, oper );
-            SET_ELM_PLIST( margs, 2, INTOBJ_INT(i) );
-            SET_ELM_PLIST( margs, 3, type1 );
-            SET_ELM_PLIST( margs, 4, type2 );
-            SET_ELM_PLIST( margs, 5, type3 );
-            SET_ELM_PLIST( margs, 6, type4 );
-            SET_ELM_PLIST( margs, 7, type5 );
-            SET_ELM_PLIST( margs, 8, type6 );
-            method = CALL_XARGS( NextVConstructor6Args, margs );
-            while (method == Fail)
-              {
-                Obj arglist[6];
-                arglist[0] = arg1;
-                arglist[1] = arg2;
-                arglist[2] = arg3;
-                arglist[3] = arg4;
-                arglist[4] = arg5;
-                arglist[5] = arg6;
-                method = CallHandleMethodNotFound( oper, 6, arglist, 1, 0, INTOBJ_INT(i));
-              }
-            i++;
-            res = CALL_6ARGS( method, arg1, arg2, arg3, arg4, arg5, arg6 );
-        }
-    }
-
-    /* return the result                                                   */
-    return res;
+    return DoOperationNArgs(oper, 6, VerboseConstructorSelectors, 1, 1, arg1,
+                            arg2, arg3, arg4, arg5, arg6);
 }
-
 
 
 /****************************************************************************
 **
 **  DoVerboseConstructorXArgs( <oper>, ... )
 */
-Obj DoVerboseConstructorXArgs (
-    Obj                 self,
-    Obj                 args )
+Obj DoVerboseConstructorXArgs(Obj self, Obj args)
 {
-    ErrorQuit("sorry: cannot yet have X argument constructors",0L,0L);
+    ErrorQuit("sorry: cannot yet have X argument constructors", 0L, 0L);
     return 0;
 }
 
@@ -4478,25 +2569,20 @@ Obj NewConstructor (
     ObjFunc             hdlr )
 {
     Obj                 oper;
-#ifdef  PREALLOCATE_TABLES
-    Obj                 cache;
-    Obj                 methods;
-    UInt                i;
-#endif
 
     /* create the function                                                 */
     oper = NewFunctionT( T_FUNCTION, SIZE_OPER, name, narg, nams, hdlr );
 
     /* enter the handlers                                                  */
     if ( narg == -1 ) {
-        HDLR_FUNC(oper,0) = DoConstructor0Args;
-        HDLR_FUNC(oper,1) = DoConstructor1Args;
-        HDLR_FUNC(oper,2) = DoConstructor2Args;
-        HDLR_FUNC(oper,3) = DoConstructor3Args;
-        HDLR_FUNC(oper,4) = DoConstructor4Args;
-        HDLR_FUNC(oper,5) = DoConstructor5Args;
-        HDLR_FUNC(oper,6) = DoConstructor6Args;
-        HDLR_FUNC(oper,7) = DoConstructorXArgs;
+        SET_HDLR_FUNC(oper, 0, DoConstructor0Args);
+        SET_HDLR_FUNC(oper, 1, DoConstructor1Args);
+        SET_HDLR_FUNC(oper, 2, DoConstructor2Args);
+        SET_HDLR_FUNC(oper, 3, DoConstructor3Args);
+        SET_HDLR_FUNC(oper, 4, DoConstructor4Args);
+        SET_HDLR_FUNC(oper, 5, DoConstructor5Args);
+        SET_HDLR_FUNC(oper, 6, DoConstructor6Args);
+        SET_HDLR_FUNC(oper, 7, DoConstructorXArgs);
     }
 
     /*N 1996/06/06 mschoene this should not be done here                   */
@@ -4506,17 +2592,6 @@ Obj NewConstructor (
     SETTR_FILT(oper) = False;
     TESTR_FILT(oper) = False;
     
-#ifdef  PREALLOCATE_TABLES
-    /* create caches and methods lists                                     */
-    for ( i = 0; i <= 7; i++ ) {
-        methods = NEW_PLIST( T_PLIST, 0 );
-        METHS_OPER( oper, i ) = methods;
-        cache = NEW_PLIST( T_PLIST, (i < 7 ? CACHE_SIZE * (i+1) : CACHE_SIZE * (1+1)) );
-        CACHE_OPER( oper, i ) = cache;
-        CHANGED_BAG(oper);
-    }
-#endif
-
     /* return constructor                                                  */
     return oper;
 }
@@ -4548,12 +2623,12 @@ Obj DoTestAttribute (
     type  = TYPE_OBJ_FEO( obj );
     flags = FLAGS_TYPE( type );
 
-    /* if the value of the property is already known, return 'true'        */
+    /* if the value of the attribute is already known, return 'true'        */
     if ( flag2 <= LEN_FLAGS( flags ) && ELM_FLAGS( flags, flag2 ) == True ) {
         return True;
     }
     
-    /* return the 'false'                                                  */
+    /* otherwise return 'false'                                            */
     return False;
 }
 
@@ -4580,7 +2655,7 @@ Obj DoAttribute (
     type  = TYPE_OBJ_FEO( obj );
     flags = FLAGS_TYPE( type );
 
-    /* if the value of the property is already known, simply return it     */
+    /* if the value of the attribute is already known, simply return it     */
     if ( flag2 <= LEN_FLAGS( flags ) && ELM_FLAGS( flags, flag2 ) == True ) {
         return DoOperation1Args( self, obj );
     }
@@ -4600,6 +2675,10 @@ Obj DoAttribute (
         case T_COMOBJ:
         case T_POSOBJ:
         case T_DATOBJ:
+#ifdef HPCGAP
+        case T_ACOMOBJ:
+        case T_APOSOBJ:
+#endif
             DoSetAttribute( SETTR_FILT(self), obj, val );
         }
     }
@@ -4631,13 +2710,14 @@ Obj DoVerboseAttribute (
     type  = TYPE_OBJ_FEO( obj );
     flags = FLAGS_TYPE( type );
 
-    /* if the value of the property is already known, simply return it     */
+    /* if the value of the attribute is already known, simply return it     */
     if ( flag2 <= LEN_FLAGS( flags ) && ELM_FLAGS( flags, flag2 ) == True ) {
         return DoVerboseOperation1Args( self, obj );
     }
     
     /* call the operation to compute the value                             */
-    val = CopyObj( DoVerboseOperation1Args( self, obj ), 0 );
+    val = DoVerboseOperation1Args( self, obj );
+    val = CopyObj( val, 0 );
     
     /* set the value (but not for internal objects)                        */
     if ( ENABLED_ATTR( self ) == 1 ) {
@@ -4645,6 +2725,10 @@ Obj DoVerboseAttribute (
         case T_COMOBJ:
         case T_POSOBJ:
         case T_DATOBJ:
+#ifdef HPCGAP
+        case T_ACOMOBJ:
+        case T_APOSOBJ:
+#endif
             DoVerboseSetAttribute( SETTR_FILT(self), obj, val );
         }
     }
@@ -4674,7 +2758,7 @@ Obj DoMutableAttribute (
     type  = TYPE_OBJ_FEO( obj );
     flags = FLAGS_TYPE( type );
 
-    /* if the value of the property is already known, simply return it     */
+    /* if the value of the attribute is already known, simply return it     */
     if ( flag2 <= LEN_FLAGS( flags ) && ELM_FLAGS( flags, flag2 ) == True ) {
         return DoOperation1Args( self, obj );
     }
@@ -4688,6 +2772,10 @@ Obj DoMutableAttribute (
         case T_COMOBJ:
         case T_POSOBJ:
         case T_DATOBJ:
+#ifdef HPCGAP
+        case T_ACOMOBJ:
+        case T_APOSOBJ:
+#endif
             DoSetAttribute( SETTR_FILT(self), obj, val );
         }
     }
@@ -4717,7 +2805,7 @@ Obj DoVerboseMutableAttribute (
     type  = TYPE_OBJ_FEO( obj );
     flags = FLAGS_TYPE( type );
 
-    /* if the value of the property is already known, simply return it     */
+    /* if the value of the attribute is already known, simply return it     */
     if ( flag2 <= LEN_FLAGS( flags ) && ELM_FLAGS( flags, flag2 ) == True ) {
         return DoVerboseOperation1Args( self, obj );
     }
@@ -4731,6 +2819,10 @@ Obj DoVerboseMutableAttribute (
         case T_COMOBJ:
         case T_POSOBJ:
         case T_DATOBJ:
+#ifdef HPCGAP
+        case T_ACOMOBJ:
+        case T_APOSOBJ:
+#endif
             DoVerboseSetAttribute( SETTR_FILT(self), obj, val );
         }
     }
@@ -4747,47 +2839,71 @@ Obj DoVerboseMutableAttribute (
 ** MakeSetter, MakeTester and SetupAttribute are support functions
 */
 
-#define WRAP_NAME(fname, name, addon) \
-    do { \
-        UInt name_len = GET_LEN_STRING(name); \
-        UInt addon_len = sizeof(addon) - 1; \
-        char *tmp; \
-        fname = NEW_STRING( name_len + addon_len + 2 ); \
-        ImpliedWriteGuard(fname); \
-        tmp = CSTR_STRING(fname); \
-        memcpy( tmp, addon, addon_len ); tmp += addon_len; \
-        *tmp++ = '('; \
-        memcpy( tmp, CSTR_STRING(name), name_len ); tmp += name_len; \
-        *tmp++ = ')'; \
-        *tmp = 0; \
-        RetypeBag( fname, IMMUTABLE_TNUM(TNUM_OBJ(fname)) ); \
-    } while(0)
+#if !defined(HPCGAP)
+#define ImpliedWriteGuard(x)
+#endif
 
-static Obj MakeSetter( Obj name, Int flag)
+static Obj WRAP_NAME(Obj name, const char *addon)
 {
-  Obj fname;
-  Obj setter;
-  WRAP_NAME(fname, name, "Setter");
-  setter = NewOperation( fname, 2L, 0L, DoSetAttribute );
-  FLAG1_FILT(setter)  = INTOBJ_INT( 0 );
-  FLAG2_FILT(setter)  = INTOBJ_INT( flag );
-  CHANGED_BAG(setter);
-  return setter;
+    UInt name_len = GET_LEN_STRING(name);
+    UInt addon_len = strlen(addon);
+    Obj fname = NEW_STRING( name_len + addon_len + 2 );
+    ImpliedWriteGuard(fname);
+
+    char *ptr = CSTR_STRING(fname);
+    memcpy( ptr, addon, addon_len );
+    ptr += addon_len;
+    *ptr++ = '(';
+    memcpy( ptr, CSTR_STRING(name), name_len );
+    ptr += name_len;
+    *ptr++ = ')';
+    *ptr = 0;
+    MakeImmutableString(fname);
+    return fname;
 }
 
-static Obj MakeTester( Obj name, Int flag)
+static Obj PREFIX_NAME(Obj name, const char *prefix)
+{
+    UInt name_len = GET_LEN_STRING(name);
+    UInt prefix_len = strlen(prefix);
+    Obj fname = NEW_STRING( name_len + prefix_len );
+    ImpliedWriteGuard(fname);
+
+    char *ptr = CSTR_STRING(fname);
+    memcpy( ptr, prefix, prefix_len );
+    ptr += prefix_len;
+    memcpy( ptr, CSTR_STRING(name), name_len );
+    ptr += name_len;
+    *ptr = 0;
+    MakeImmutableString(fname);
+    return fname;
+}
+
+static Obj MakeSetter(Obj name, Int flag1, Int flag2, Obj (*setFunc)(Obj, Obj, Obj))
+{
+    Obj fname;
+    Obj setter;
+    fname = PREFIX_NAME(name, "Set");
+    setter = NewOperation( fname, 2L, 0L, setFunc );
+    FLAG1_FILT(setter)  = INTOBJ_INT( flag1 );
+    FLAG2_FILT(setter)  = INTOBJ_INT( flag2 );
+    CHANGED_BAG(setter);
+    return setter;
+}
+
+static Obj MakeTester( Obj name, Int flag1, Int flag2)
 {
     Obj fname;
     Obj tester;
     Obj flags;
-    WRAP_NAME(fname, name, "Tester");
+    fname = PREFIX_NAME(name, "Has");
     tester = NewFunctionT( T_FUNCTION, SIZE_OPER, fname, 1L, 0L,
                            DoTestAttribute );    
-    FLAG1_FILT(tester)  = INTOBJ_INT( 0 );
-    FLAG2_FILT(tester)  = INTOBJ_INT( flag );
-    NEW_FLAGS( flags, flag );
-    SET_LEN_FLAGS( flags, flag );
-    SET_ELM_FLAGS( flags, flag, True );
+    FLAG1_FILT(tester)  = INTOBJ_INT( flag1 );
+    FLAG2_FILT(tester)  = INTOBJ_INT( flag2 );
+    NEW_FLAGS( flags, flag2 );
+    SET_LEN_FLAGS( flags, flag2 );
+    SET_ELM_FLAGS( flags, flag2, True );
     FLAGS_FILT(tester)  = flags;
     SETTR_FILT(tester)  = 0;
     TESTR_FILT(tester)  = ReturnTrueFilter;
@@ -4798,23 +2914,17 @@ static Obj MakeTester( Obj name, Int flag)
 
 static void SetupAttribute(Obj attr, Obj setter, Obj tester, Int flag2)
 {
-  Obj flags;
+    // Install additional data
+    FLAG1_FILT(attr)  = INTOBJ_INT( 0 );
+    FLAG2_FILT(attr)  = INTOBJ_INT( flag2 );
 
-    /* Install additional data */
-  FLAG1_FILT(attr)  = INTOBJ_INT( 0 );
-  FLAG2_FILT(attr)  = INTOBJ_INT( flag2 );
-  NEW_FLAGS( flags, flag2 );
-  SET_LEN_FLAGS( flags, flag2 );
-  SET_ELM_FLAGS( flags, flag2, True );
-  
-  /*    FLAGS_FILT(tester)  = flags; */
-  FLAGS_FILT(attr) = FLAGS_FILT(tester);
-  
-  SETTR_FILT(attr)  = setter;
-  TESTR_FILT(attr)  = tester;
-  SET_ENABLED_ATTR(attr,1);
-  CHANGED_BAG(attr);
-  return;
+    // reuse flags from tester
+    FLAGS_FILT(attr)  = FLAGS_FILT(tester);
+
+    SETTR_FILT(attr)  = setter;
+    TESTR_FILT(attr)  = tester;
+    SET_ENABLED_ATTR(attr,1);
+    CHANGED_BAG(attr);
 }
 
   
@@ -4831,8 +2941,9 @@ Obj NewAttribute (
     Int                 flag2;
     
     flag2 = ++CountFlags;
-    setter = MakeSetter(name, flag2);
-    tester = MakeTester(name, flag2);
+
+    setter = MakeSetter(name, 0, flag2, DoSetAttribute);
+    tester = MakeTester(name, 0, flag2);
 
     getter = NewOperation( name, 1L, nams, (hdlr ? hdlr : DoAttribute) ); 
     
@@ -4852,65 +2963,30 @@ void ConvertOperationIntoAttribute( Obj oper, ObjFunc hdlr )
     Obj                 setter;
     Obj                 tester;
     Int                 flag2;
-    Obj                  name;
+    Obj                 name;
 
     /* Need to get the name from oper */
     name = NAME_FUNC(oper);
 
     flag2 = ++CountFlags;
 
-    /* Make the setter */
-    setter = MakeSetter(name, flag2);
-
-    /* and the tester */
-    tester = MakeTester(name, flag2);
+    setter = MakeSetter(name, 0, flag2, DoSetAttribute);
+    tester = MakeTester(name, 0, flag2);
 
     /* Change the handlers */
-    HDLR_FUNC(oper, 1) = hdlr ? hdlr : DoAttribute;
+    SET_HDLR_FUNC(oper, 1, hdlr ? hdlr : DoAttribute);
 
     SetupAttribute( oper, setter, tester, flag2);
-
-    return;
 }
 
 
 /****************************************************************************
 **
-
 *F  DoProperty( <name> )  . . . . . . . . . . . . . . . . make a new property
 */
 Obj SET_FILTER_OBJ;
 
 Obj RESET_FILTER_OBJ;
-
-
-/****************************************************************************
-**
-**  DoTestProperty( <prop>, <obj> )
-*/
-Obj DoTestProperty (
-    Obj                 self,
-    Obj                 obj )
-{
-    Int                 flag2;
-    Obj                 type;
-    Obj                 flags;
-
-    /* get the flags for the getter and the tester                         */
-    flag2 = INT_INTOBJ( FLAG2_FILT( self ) );
-
-    /* get type of the object and its flags                                */
-    type  = TYPE_OBJ_FEO( obj );
-    flags = FLAGS_TYPE( type );
-
-    /* if the value of the property is already known, return 'true'        */
-    if ( flag2 <= LEN_FLAGS( flags ) && ELM_FLAGS( flags, flag2 ) == True ) {
-        return True;
-    }
-    
-    /* otherwise return 'false'                                            */
-    return False;
-}
 
 
 /****************************************************************************
@@ -4955,6 +3031,10 @@ Obj DoSetProperty (
     case T_COMOBJ:
     case T_POSOBJ:
     case T_DATOBJ:
+#ifdef HPCGAP
+    case T_ACOMOBJ:
+    case T_APOSOBJ:
+#endif
         flags = (val == True ? self : TESTR_FILT(self));
         CALL_2ARGS( SET_FILTER_OBJ, obj, flags );
         return 0;
@@ -5019,6 +3099,10 @@ Obj DoProperty (
         case T_COMOBJ:
         case T_POSOBJ:
         case T_DATOBJ:
+#ifdef HPCGAP
+        case T_ACOMOBJ:
+        case T_APOSOBJ:
+#endif
             flags = (val == True ? self : TESTR_FILT(self));
             CALL_2ARGS( SET_FILTER_OBJ, obj, flags );
         }
@@ -5065,6 +3149,10 @@ Obj DoVerboseProperty (
         case T_COMOBJ:
         case T_POSOBJ:
         case T_DATOBJ:
+#ifdef HPCGAP
+        case T_ACOMOBJ:
+        case T_APOSOBJ:
+#endif
             flags = (val == True ? self : TESTR_FILT(self));
             CALL_2ARGS( SET_FILTER_OBJ, obj, flags );
         }
@@ -5091,29 +3179,12 @@ Obj NewProperty (
     Int                 flag1;
     Int                 flag2;
     Obj                 flags;
-    Obj                 fname;
     
     flag1 = ++CountFlags;
     flag2 = ++CountFlags;
 
-    WRAP_NAME(fname, name, "Setter");
-    setter = NewOperation( fname, 2L, 0L, DoSetProperty );
-    FLAG1_FILT(setter)  = INTOBJ_INT( flag1 );
-    FLAG2_FILT(setter)  = INTOBJ_INT( flag2 );
-    CHANGED_BAG(setter);
-
-    WRAP_NAME(fname, name, "Tester");
-    tester = NewFunctionT( T_FUNCTION, SIZE_OPER, fname, 1L, 0L,
-                           DoTestProperty );    
-    FLAG1_FILT(tester)  = INTOBJ_INT( flag1 );
-    FLAG2_FILT(tester)  = INTOBJ_INT( flag2 );
-    NEW_FLAGS( flags, flag2 );
-    SET_LEN_FLAGS( flags, flag2 );
-    SET_ELM_FLAGS( flags, flag2, True );
-    FLAGS_FILT(tester)  = flags;
-    SETTR_FILT(tester)  = 0;
-    TESTR_FILT(tester)  = ReturnTrueFilter;
-    CHANGED_BAG(tester);
+    setter = MakeSetter(name, flag1, flag2, DoSetProperty);
+    tester = MakeTester(name, flag1, flag2);
 
     getter = NewOperation( name, 1L, nams, (hdlr ? hdlr : DoProperty) ); 
 
@@ -5141,16 +3212,15 @@ Obj NewProperty (
 
 /****************************************************************************
 **
-
-*F  DoOperationArgs( <name> ) . . . . . . . . . . . make a new operation args
+*F  DoGlobalFunction( <name> ) . . . . . . . . . . make a new global function
 */
 
 
 /****************************************************************************
 **
-**  DoUninstalledOperationArgs( <oper>, <args> )
+**  DoUninstalledGlobalFunction( <oper>, <args> )
 */
-Obj DoUninstalledOperationArgs (
+Obj DoUninstalledGlobalFunction (
     Obj                 oper,
     Obj                 args )
 {
@@ -5162,9 +3232,9 @@ Obj DoUninstalledOperationArgs (
 
 /****************************************************************************
 **
-*F  NewOperationArgs( <name>, <nargs>, <nams> )
+*F  NewGlobalFunction( <name>, <nargs>, <nams> )
 */
-Obj NewOperationArgs (
+Obj NewGlobalFunction (
     Obj                 name,
     Int                 narg,
     Obj                 nams )
@@ -5173,28 +3243,27 @@ Obj NewOperationArgs (
     Obj                 namobj;
 
     /* create the function                                                 */
-    func = NewFunctionT( T_FUNCTION, SIZE_FUNC, name, narg, nams, 
-                         DoUninstalledOperationArgs );
+    func = NewFunction( name, narg, nams, DoUninstalledGlobalFunction );
 
     /* check the number of args                                            */
     if ( narg == -1 ) {
-        HDLR_FUNC(func,0) = DoUninstalledOperationArgs;
-        HDLR_FUNC(func,1) = DoUninstalledOperationArgs;
-        HDLR_FUNC(func,2) = DoUninstalledOperationArgs;
-        HDLR_FUNC(func,3) = DoUninstalledOperationArgs;
-        HDLR_FUNC(func,4) = DoUninstalledOperationArgs;
-        HDLR_FUNC(func,5) = DoUninstalledOperationArgs;
-        HDLR_FUNC(func,6) = DoUninstalledOperationArgs;
-        HDLR_FUNC(func,7) = DoUninstalledOperationArgs;
+        SET_HDLR_FUNC(func, 0, DoUninstalledGlobalFunction);
+        SET_HDLR_FUNC(func, 1, DoUninstalledGlobalFunction);
+        SET_HDLR_FUNC(func, 2, DoUninstalledGlobalFunction);
+        SET_HDLR_FUNC(func, 3, DoUninstalledGlobalFunction);
+        SET_HDLR_FUNC(func, 4, DoUninstalledGlobalFunction);
+        SET_HDLR_FUNC(func, 5, DoUninstalledGlobalFunction);
+        SET_HDLR_FUNC(func, 6, DoUninstalledGlobalFunction);
+        SET_HDLR_FUNC(func, 7, DoUninstalledGlobalFunction);
     }
     else {
-        ErrorQuit("number of args must be -1 in `NewOperationArgs'",0L,0L);
+        ErrorQuit("number of args must be -1 in `NewGlobalFunction'",0L,0L);
         return 0;
     }
 
     /* added the name                                                      */
     namobj = CopyObj( name, 0 );
-    NAME_FUNC(func) = namobj;
+    SET_NAME_FUNC(func, namobj);
     CHANGED_BAG(func);
 
     /* and return                                                          */
@@ -5204,41 +3273,32 @@ Obj NewOperationArgs (
 
 /****************************************************************************
 **
-*F  InstallMethodArgs( <oper>, <func> ) . . . . . . . . . . .  clone function
+*F  InstallGlobalFunction( <oper>, <func> ) . . . . . . . . .  clone function
 **
 **  There is a problem  with uncompleted functions: if  they are  cloned then
 **  only   the orignal and not  the  clone will be  completed.  Therefore the
 **  clone must postpone the real cloning.
 */
-void InstallMethodArgs (
+void InstallGlobalFunction (
     Obj                 oper,
     Obj                 func )
 {
-    Obj                 name;
-    Int                 i;
+    // get the name
+    Obj name = NAME_FUNC(oper);
 
-    /* get the name                                                        */
-    name = NAME_FUNC(oper);
-
-    /* clone the function                                                  */
+    // clone the function
     if ( SIZE_OBJ(oper) != SIZE_OBJ(func) ) {
         ErrorQuit( "size mismatch of function bags", 0L, 0L );
     }
+    memcpy(ADDR_OBJ(oper), CONST_ADDR_OBJ(func), SIZE_OBJ(func));
 
-    /* clone the functions                                                 */
-    else {
-        for ( i = 0;  i < SIZE_OBJ(func)/sizeof(Obj);  i++ ) {
-            ADDR_OBJ(oper)[i] = ADDR_OBJ(func)[i];
-        }
-    }
-    NAME_FUNC(oper) = name;
+    SET_NAME_FUNC(oper, ConvImmString(name));
     CHANGED_BAG(oper);
 }
 
 
 /****************************************************************************
 **
-
 *F  SaveOperationExtras( <oper> ) . . . additional saving for functions which
 **
 **  This is called by SaveFunction when the function bag is too large to be
@@ -5258,9 +3318,13 @@ void SaveOperationExtras (
     SaveUInt(ENABLED_ATTR(oper));
     for (i = 0; i <= 7; i++)
         SaveSubObj(METHS_OPER(oper,i));
+#ifdef HPCGAP
+    // FIXME: We probably don't want to save/restore the cache?
+    // (and that would include "normal" GAP, too...)
+#else
     for (i = 0; i <= 7; i++)
         SaveSubObj(CACHE_OPER(oper,i));
-    return;
+#endif
 }
 
 
@@ -5286,23 +3350,25 @@ void LoadOperationExtras (
     SET_ENABLED_ATTR(oper,i);
     for (i = 0; i <= 7; i++)
         METHS_OPER(oper,i) = LoadSubObj();
+#ifdef HPCGAP
+    // FIXME: We probably don't want to save/restore the cache?
+    // (and that would include "normal" GAP, too...)
+#else
     for (i = 0; i <= 7; i++)
         CACHE_OPER(oper,i) = LoadSubObj();
-    return;
+#endif
 }
 
 
 /****************************************************************************
 **
 **
-
 *F * * * * * * * * * * * * GAP operation functions  * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  FuncNEW_OPERATION( <self>, <name> ) . . . . . . . . . . . . new operation
 */
 Obj FuncNEW_OPERATION (
@@ -5435,9 +3501,9 @@ Obj FuncNEW_PROPERTY (
 
 /****************************************************************************
 **
-*F  FuncNEW_OPERATION_ARGS( <self>, <name> )  . . . . . .  new operation args
+*F  FuncNEW_GLOBAL_FUNCTION( <self>, <name> ) . . . . . . new global function
 */
-Obj FuncNEW_OPERATION_ARGS (
+Obj FuncNEW_GLOBAL_FUNCTION (
     Obj                 self,
     Obj                 name )
 {
@@ -5446,27 +3512,27 @@ Obj FuncNEW_OPERATION_ARGS (
 
     /* check the argument                                                  */
     if ( ! IsStringConv(name) ) {
-        ErrorQuit( "usage: NewOperationArgs( <name> )", 0L, 0L );
+        ErrorQuit( "usage: NewGlobalFunction( <name> )", 0L, 0L );
         return 0;
     }
 
     /* make the new operation                                              */
-    C_NEW_STRING_CONST( args, "args" )
+    args = MakeImmString("args");
     list = NEW_PLIST( T_PLIST, 1 );
     SET_LEN_PLIST( list, 1 );
     SET_ELM_PLIST( list, 1, args );
     CHANGED_BAG( list );
-    return NewOperationArgs( name, -1, list );
+    return NewGlobalFunction( name, -1, list );
 }
 
 
 /****************************************************************************
 **
-*F  FuncINSTALL_METHOD_ARGS( <self>, <oper>, <func> ) . . install method args
+*F  FuncINSTALL_GLOBAL_FUNCTION( <self>, <oper>, <func> )
 */
 static Obj REREADING;
 
-Obj FuncINSTALL_METHOD_ARGS (
+Obj FuncINSTALL_GLOBAL_FUNCTION (
     Obj                 self,
     Obj                 oper,
     Obj                 func )
@@ -5477,7 +3543,7 @@ Obj FuncINSTALL_METHOD_ARGS (
                    (Int)TNAM_OBJ(oper), 0L );
     }
     if ( (REREADING != True) &&
-         (HDLR_FUNC(oper,0) != (ObjFunc)DoUninstalledOperationArgs) ) {
+         (HDLR_FUNC(oper,0) != (ObjFunc)DoUninstalledGlobalFunction) ) {
         ErrorQuit( "operation already installed",
                    0L, 0L );
         return 0;
@@ -5493,14 +3559,13 @@ Obj FuncINSTALL_METHOD_ARGS (
     }
 
     /* install the new method                                              */
-    InstallMethodArgs( oper, func );
+    InstallGlobalFunction( oper, func );
     return 0;
 }
 
 
 /****************************************************************************
 **
-
 *F  FuncIS_OPERATION( <self>, <obj> ) . . . . . . . . . is <obj> an operation
 */
 Obj IsOperationFilt;
@@ -5552,13 +3617,15 @@ Obj FuncMETHODS_OPERATION (
         ErrorQuit("<oper> must be an operation",0L,0L);
         return 0;
     }
-    if ( TNUM_OBJ(narg) != T_INT || INT_INTOBJ(narg) < 0 ) {
+    if ( !IS_INTOBJ(narg) || INT_INTOBJ(narg) < 0 ) {
         ErrorQuit("<narg> must be a nonnegative integer",0L,0L);
         return 0;
     }
     n = INT_INTOBJ( narg );
     meth = MethsOper( oper, (UInt)n );
+#ifdef HPCGAP
     MEMBAR_READ();
+#endif
     return meth == 0 ? Fail : meth;
 }
 
@@ -5573,7 +3640,7 @@ Obj FuncCHANGED_METHODS_OPERATION (
     Obj                 narg )
 {
     Obj *               cache;
-    Bag			        cacheBag;
+    Bag                 cacheBag;
     Int                 n;
     Int                 i;
 
@@ -5581,10 +3648,16 @@ Obj FuncCHANGED_METHODS_OPERATION (
         ErrorQuit("<oper> must be an operation",0L,0L);
         return 0;
     }
-    if ( TNUM_OBJ(narg) != T_INT || INT_INTOBJ(narg) < 0 ) {
+    if ( !IS_INTOBJ(narg) || INT_INTOBJ(narg) < 0 ) {
         ErrorQuit("<narg> must be a nonnegative integer",0L,0L);
         return 0;
     }
+#ifdef HPCGAP
+    if (!PreThreadCreation) {
+        ErrorQuit("Methods may only be changed before thread creation",0L,0L);
+        return 0;
+    }
+#endif
     n = INT_INTOBJ( narg );
     cacheBag = CacheOper( oper, (UInt) n );
     cache = ADDR_OBJ( cacheBag );
@@ -5611,12 +3684,14 @@ Obj FuncSET_METHODS_OPERATION (
         ErrorQuit("<oper> must be an operation",0L,0L);
         return 0;
     }
-    if ( TNUM_OBJ(narg) != T_INT || INT_INTOBJ(narg) < 0 ) {
+    if ( !IS_INTOBJ(narg) || INT_INTOBJ(narg) < 0 ) {
         ErrorQuit("<narg> must be a nonnegative integer",0L,0L);
         return 0;
     }
     n = INT_INTOBJ( narg );
+#ifdef HPCGAP
     MEMBAR_WRITE();
+#endif
     METHS_OPER( oper, n ) = meths;
     return 0;
 }
@@ -5624,8 +3699,7 @@ Obj FuncSET_METHODS_OPERATION (
 
 /****************************************************************************
 **
-
-*F  FuncSETTER_FUNCTION( <self>, <name> ) . . . . . . default attribut setter
+*F  FuncSETTER_FUNCTION( <self>, <name> ) . . . . .  default attribute setter
 */
 Obj DoSetterFunction (
     Obj                 self,
@@ -5637,9 +3711,19 @@ Obj DoSetterFunction (
     Obj                 flags;
     UInt                flag2;
     Obj                 type;
+#ifdef HPCGAP
+    int                 atomic = 0;
+#endif
 
-    if ( TNUM_OBJ(obj) != T_COMOBJ ) {
-        ErrorQuit( "<obj> must be an component object", 0L, 0L );
+    switch (TNUM_OBJ(obj)) {
+#ifdef HPCGAP
+      case T_ACOMOBJ:
+        atomic = 1;
+#endif
+      case T_COMOBJ:
+        break;
+      default:
+        ErrorQuit( "<obj> must be a component object", 0L, 0L );
         return 0L;
     }
 
@@ -5654,7 +3738,13 @@ Obj DoSetterFunction (
     }
 
     /* set the value                                                       */
-    AssPRec( obj, (UInt)INT_INTOBJ(ELM_PLIST(tmp,1)), CopyObj(value,0) );
+    UInt rnam = (UInt)INT_INTOBJ(ELM_PLIST(tmp,1));
+#ifdef HPCGAP
+    if (atomic)
+      SetARecordField( obj, rnam, CopyObj(value,0) );
+    else
+#endif
+      AssPRec( obj, rnam, CopyObj(value,0) );
     CALL_2ARGS( SET_FILTER_OBJ, obj, tester );
     return 0;
 }
@@ -5668,19 +3758,15 @@ Obj FuncSETTER_FUNCTION (
     Obj                 func;
     Obj                 fname;
     Obj                 tmp;
-    Obj                 args;
 
-    args = ArgStringToList("object, value");
-
-    WRAP_NAME(fname, name, "SetterFunc");
-    func = NewFunctionT( T_FUNCTION, SIZE_FUNC, fname, 2,
-                         args, DoSetterFunction );
-    tmp = NEW_PLIST( T_PLIST, 2 );
+    fname = WRAP_NAME(name, "SetterFunc");
+    func = NewFunction( fname, 2, ArglistObjVal, DoSetterFunction );
+    tmp = NEW_PLIST( T_PLIST+IMMUTABLE, 2 );
     SET_LEN_PLIST( tmp, 2 );
     SET_ELM_PLIST( tmp, 1, INTOBJ_INT( RNamObj(name) ) );
     SET_ELM_PLIST( tmp, 2, filter );
     CHANGED_BAG(tmp);
-    ENVI_FUNC(func) = tmp;
+    SET_ENVI_FUNC(func, tmp);
     CHANGED_BAG(func);
     return func;
 }
@@ -5688,17 +3774,23 @@ Obj FuncSETTER_FUNCTION (
 
 /****************************************************************************
 **
-*F  FuncGETTER_FUNCTION( <self>, <name> ) . . . . . . default attribut getter
+*F  FuncGETTER_FUNCTION( <self>, <name> ) . . . . .  default attribute getter
 */
 Obj DoGetterFunction (
     Obj                 self,
     Obj                 obj )
 {
-    if ( TNUM_OBJ(obj) != T_COMOBJ ) {
-        ErrorQuit( "<obj> must be an component object", 0L, 0L );
+    switch (TNUM_OBJ(obj)) {
+      case T_COMOBJ:
+        return ElmPRec( obj, (UInt)INT_INTOBJ(ENVI_FUNC(self)) );
+#ifdef HPCGAP
+      case T_ACOMOBJ:
+        return GetARecordField( obj, (UInt)INT_INTOBJ(ENVI_FUNC(self)) );
+#endif
+      default:
+        ErrorQuit( "<obj> must be a component object", 0L, 0L );
         return 0L;
     }
-    return ElmPRec( obj, (UInt)INT_INTOBJ(ENVI_FUNC(self)) );
 }
 
 
@@ -5708,47 +3800,86 @@ Obj FuncGETTER_FUNCTION (
 {
     Obj                 func;
     Obj                 fname;
-    Obj                 args;
-    Obj                 rnam;
 
-    args = ArgStringToList("object, value");
-
-    WRAP_NAME(fname, name, "GetterFunc");
-    func = NewFunctionT( T_FUNCTION, SIZE_FUNC, fname, 1,
-                         args, DoGetterFunction );
-    /* Need to seperate this onto two lines, in case RNamObj causes
-     * a garbage collection */
-    rnam = INTOBJ_INT( RNamObj(name) );
-    ENVI_FUNC(func) = rnam;
+    fname = WRAP_NAME(name, "GetterFunc");
+    func = NewFunction( fname, 1, ArglistObj, DoGetterFunction );
+    SET_ENVI_FUNC(func, INTOBJ_INT( RNamObj(name) ));
     return func;
 }
 
 
 /****************************************************************************
 **
-
 *F  FuncOPERS_CACHE_INFO( <self> )  . . . . . . .  return cache stats as list
 */
 Obj FuncOPERS_CACHE_INFO (
     Obj                        self )
 {
     Obj                 list;
+    Int                 i;
 
-    list = NEW_PLIST( IMMUTABLE_TNUM(T_PLIST), 9 );
-    SET_LEN_PLIST( list, 9 );
-    SET_ELM_PLIST( list, 1, INTOBJ_INT(AndFlagsCacheHit)    );
-    SET_ELM_PLIST( list, 2, INTOBJ_INT(AndFlagsCacheMiss)   );
-    SET_ELM_PLIST( list, 3, INTOBJ_INT(AndFlagsCacheLost)   );
-    SET_ELM_PLIST( list, 4, INTOBJ_INT(OperationHit)        );
-    SET_ELM_PLIST( list, 5, INTOBJ_INT(OperationMiss)       );
-    SET_ELM_PLIST( list, 6, INTOBJ_INT(IsSubsetFlagsCalls)  );
-    SET_ELM_PLIST( list, 7, INTOBJ_INT(IsSubsetFlagsCalls1) );
-    SET_ELM_PLIST( list, 8, INTOBJ_INT(IsSubsetFlagsCalls2) );
-    SET_ELM_PLIST( list, 9, INTOBJ_INT(OperationNext)       );
+    list = NEW_PLIST(IMMUTABLE_TNUM(T_PLIST), 15);
+    SET_LEN_PLIST(list, 15);
+#ifdef COUNT_OPERS
+    SET_ELM_PLIST(list, 1, INTOBJ_INT(AndFlagsCacheHit));
+    SET_ELM_PLIST(list, 2, INTOBJ_INT(AndFlagsCacheMiss));
+    SET_ELM_PLIST(list, 3, INTOBJ_INT(AndFlagsCacheLost));
+    SET_ELM_PLIST(list, 4, INTOBJ_INT(OperationHit));
+    SET_ELM_PLIST(list, 5, INTOBJ_INT(OperationMiss));
+    SET_ELM_PLIST(list, 6, INTOBJ_INT(IsSubsetFlagsCalls));
+    SET_ELM_PLIST(list, 7, INTOBJ_INT(IsSubsetFlagsCalls1));
+    SET_ELM_PLIST(list, 8, INTOBJ_INT(IsSubsetFlagsCalls2));
+    SET_ELM_PLIST(list, 9, INTOBJ_INT(OperationNext));
+    SET_ELM_PLIST(list, 10, INTOBJ_INT(WITH_HIDDEN_IMPS_HIT));
+    SET_ELM_PLIST(list, 11, INTOBJ_INT(WITH_HIDDEN_IMPS_MISS));
+    SET_ELM_PLIST(list, 12, INTOBJ_INT(WITH_IMPS_FLAGS_HIT));
+    SET_ELM_PLIST(list, 13, INTOBJ_INT(WITH_IMPS_FLAGS_MISS));
+    
+    /* Now we need to convert the 3d matrix of cache hit counts (by
+       precedence, location found and number of arguments) into a three
+       dimensional GAP matrix (tensor) */
+    Obj tensor = NEW_PLIST(IMMUTABLE_TNUM(T_PLIST), CACHE_SIZE);
+    SET_LEN_PLIST(tensor, CACHE_SIZE);
+    for (i = 1; i <= CACHE_SIZE; i++) {
+        Obj mat = NEW_PLIST(IMMUTABLE_TNUM(T_PLIST), CACHE_SIZE);
+        SET_LEN_PLIST(mat, CACHE_SIZE);
+        SET_ELM_PLIST(tensor, i, mat);
+        CHANGED_BAG(tensor);
+        for (Int j = 1; j <= CACHE_SIZE; j++) {
+            Obj vec = NEW_PLIST(IMMUTABLE_TNUM(T_PLIST), 7);
+            SET_LEN_PLIST(vec, 7);
+            SET_ELM_PLIST(mat, j, vec);
+            CHANGED_BAG(mat);
+            for (Int k = 0; k <= 6; k++)
+                SET_ELM_PLIST(
+                    vec, k + 1,
+                    INTOBJ_INT(CacheHitStatistics[i - 1][j - 1][k]));
+        }
+    }
+    SET_ELM_PLIST(list, 14, tensor);
+    CHANGED_BAG(list);
 
+    /* and similarly the 2D matrix of cache miss information (by
+       precedence and number of arguments) */
+    Obj mat = NEW_PLIST(IMMUTABLE_TNUM(T_PLIST), CACHE_SIZE + 1);
+    SET_LEN_PLIST(mat, CACHE_SIZE + 1);
+    for (Int j = 1; j <= CACHE_SIZE + 1; j++) {
+        Obj vec = NEW_PLIST(IMMUTABLE_TNUM(T_PLIST), 7);
+        SET_LEN_PLIST(vec, 7);
+        SET_ELM_PLIST(mat, j, vec);
+        CHANGED_BAG(mat);
+        for (Int k = 0; k <= 6; k++)
+            SET_ELM_PLIST(vec, k + 1,
+                          INTOBJ_INT(CacheMissStatistics[j - 1][k]));
+    }
+    SET_ELM_PLIST(list, 15, mat);
+    CHANGED_BAG(list);
+#else
+    for (i = 1; i <= 15; i++)
+        SET_ELM_PLIST(list, i, INTOBJ_INT(0));
+#endif
     return list;
 }
-
 
 
 /****************************************************************************
@@ -5758,6 +3889,7 @@ Obj FuncOPERS_CACHE_INFO (
 Obj FuncCLEAR_CACHE_INFO (
     Obj                        self )
 {
+#ifdef COUNT_OPERS
     AndFlagsCacheHit = 0;
     AndFlagsCacheMiss = 0;
     AndFlagsCacheLost = 0;
@@ -5767,13 +3899,19 @@ Obj FuncCLEAR_CACHE_INFO (
     IsSubsetFlagsCalls1 = 0;
     IsSubsetFlagsCalls2 = 0;
     OperationNext = 0;
+    WITH_HIDDEN_IMPS_HIT = 0;
+    WITH_HIDDEN_IMPS_MISS = 0;
+    WITH_IMPS_FLAGS_HIT = 0;
+    WITH_IMPS_FLAGS_MISS = 0;
+    memset(CacheHitStatistics, 0, sizeof(CacheHitStatistics));
+    memset(CacheMissStatistics, 0, sizeof(CacheMissStatistics));
+#endif
 
     return 0;
 }
 
 /****************************************************************************
 **
-
 *F  ChangeDoOperations( <oper>, <verb> )  . . .  verbose or silent operations
 */
 static ObjFunc TabSilentVerboseOperations[] =
@@ -5808,31 +3946,31 @@ void ChangeDoOperations (
     Int                 i;
     Int                 j;
 
+    /* catch infix operations                                          */
+    if ( oper == EqOper   )  { InstallEqObject(verb);   }
+    if ( oper == LtOper   )  { InstallLtObject(verb);   }
+    if ( oper == InOper   )  { InstallInObject(verb);   }
+    if ( oper == SumOper  )  { InstallSumObject(verb);  }
+    if ( oper == DiffOper )  { InstallDiffObject(verb); }
+    if ( oper == ProdOper )  { InstallProdObject(verb); }
+    if ( oper == QuoOper  )  { InstallQuoObject(verb);  }
+    if ( oper == LQuoOper )  { InstallLQuoObject(verb); }
+    if ( oper == PowOper  )  { InstallPowObject(verb);  }
+    if ( oper == CommOper )  { InstallCommObject(verb); }
+    if ( oper == ModOper  )  { InstallModObject(verb);  }
+    if ( oper == InvOp  )  { InstallInvObject(verb);  }
+    if ( oper == OneOp  )  { InstallOneObject(verb);  }
+    if ( oper == AInvOp )  { InstallAinvObject(verb); }
+    if ( oper == ZeroOp )  { InstallZeroObject(verb); }
+
     /* be verbose                                                          */
     if ( verb ) {
-
-        /* catch infix operations                                          */
-        if ( oper == EqOper   )  { InstallEqObject(1);   }
-        if ( oper == LtOper   )  { InstallLtObject(1);   }
-        if ( oper == InOper   )  { InstallInObject(1);   }
-        if ( oper == SumOper  )  { InstallSumObject(1);  }
-        if ( oper == DiffOper )  { InstallDiffObject(1); }
-        if ( oper == ProdOper )  { InstallProdObject(1); }
-        if ( oper == QuoOper  )  { InstallQuoObject(1);  }
-        if ( oper == LQuoOper )  { InstallLQuoObject(1); }
-        if ( oper == PowOper  )  { InstallPowObject(1);  }
-        if ( oper == CommOper )  { InstallCommObject(1); }
-        if ( oper == ModOper  )  { InstallModObject(1);  }
-        if ( oper == InvOp  )  { InstallInvObject(1);  }
-        if ( oper == OneOp  )  { InstallOneObject(1);  }
-        if ( oper == AInvOp )  { InstallAinvObject(1); } 
-        if ( oper == ZeroOp )  { InstallZeroObject(1); }
 
         /* switch do with do verbose                                       */
         for ( j = 0;  TabSilentVerboseOperations[j];  j += 2 ) {
             for ( i = 0;  i <= 7;  i++ ) {
                 if ( HDLR_FUNC(oper,i) == TabSilentVerboseOperations[j] ) {
-                    HDLR_FUNC(oper,i) = TabSilentVerboseOperations[j+1];
+                    SET_HDLR_FUNC(oper, i, TabSilentVerboseOperations[j+1]);
                 }
             }
         }
@@ -5841,28 +3979,11 @@ void ChangeDoOperations (
     /* be silent                                                           */
     else {
 
-        /* catch infix operations                                          */
-        if ( oper == EqOper   )  { InstallEqObject(0);   }
-        if ( oper == LtOper   )  { InstallLtObject(0);   }
-        if ( oper == InOper   )  { InstallInObject(0);   }
-        if ( oper == SumOper  )  { InstallSumObject(0);  }
-        if ( oper == DiffOper )  { InstallDiffObject(0); }
-        if ( oper == ProdOper )  { InstallProdObject(0); }
-        if ( oper == QuoOper  )  { InstallQuoObject(0);  }
-        if ( oper == LQuoOper )  { InstallLQuoObject(0); }
-        if ( oper == PowOper  )  { InstallPowObject(0);  }
-        if ( oper == CommOper )  { InstallCommObject(0); }
-        if ( oper == ModOper  )  { InstallModObject(0); }
-        if ( oper == InvOp  )  { InstallInvObject(0);  }
-        if ( oper == OneOp  )  { InstallOneObject(0);  }
-        if ( oper == AInvOp )  { InstallAinvObject(0); }
-        if ( oper == ZeroOp )  { InstallZeroObject(0); }
-
         /* switch do verbose with do                                       */
         for ( j = 1;  TabSilentVerboseOperations[j-1];  j += 2 ) {
             for ( i = 0;  i <= 7;  i++ ) {
                 if ( HDLR_FUNC(oper,i) == TabSilentVerboseOperations[j] ) {
-                    HDLR_FUNC(oper,i) = TabSilentVerboseOperations[j-1];
+                    SET_HDLR_FUNC(oper, i, TabSilentVerboseOperations[j-1]);
                 }
             }
         }
@@ -5940,22 +4061,18 @@ Obj FuncDO_NOTHING_SETTER( Obj self, Obj obj, Obj val)
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *V  GVarFilts . . . . . . . . . . . . . . . . . . . list of filters to export
 */
 static StructGVarFilt GVarFilts [] = {
 
-    { "IS_OPERATION", "obj", &IsOperationFilt,
-      FuncIS_OPERATION, "src/opers.c:IS_OPERATION" },
-
-    { 0 }
+    GVAR_FILTER(IS_OPERATION, "obj", &IsOperationFilt),
+    { 0, 0, 0, 0, 0 }
 
 };
 
@@ -5966,164 +4083,92 @@ static StructGVarFilt GVarFilts [] = {
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    { "AND_FLAGS", 2, "oper1, oper2",
-      FuncAND_FLAGS, "src/opers.c:AND_FLAGS" },
-
-    { "SUB_FLAGS", 2, "oper1, oper2",
-      FuncSUB_FLAGS, "src/opers.c:SUB_FLAGS" },
-
-    { "HASH_FLAGS", 1, "flags",
-      FuncHASH_FLAGS, "src/opers.c:HASH_FLAGS" },
-
-    { "IS_EQUAL_FLAGS", 2, "flags1, flags2",
-      FuncIS_EQUAL_FLAGS, "src/opers.c:IS_EQUAL_FLAGS" },
-
-    { "CLEAR_HIDDEN_IMP_CACHE", 1, "flags",
-      FuncCLEAR_HIDDEN_IMP_CACHE, "src/opers.c:CLEAR_HIDDEN_IMP_CACHE" },
-    
-    { "WITH_HIDDEN_IMPS_FLAGS", 1, "flags",
-      FuncWITH_HIDDEN_IMPS_FLAGS, "src/opers.c:WITH_HIDDEN_IMPS_FLAGS" },
-         
-    { "InstallHiddenTrueMethod", 2, "filter, filters",
-      FuncInstallHiddenTrueMethod, "src/opers.c:InstallHiddenTrueMethod" },
-          
-    { "IS_SUBSET_FLAGS", 2, "flags1, flags2",
-      FuncIS_SUBSET_FLAGS, "src/opers.c:IS_SUBSET_FLAGS" },
-
-    { "TRUES_FLAGS", 1, "flags",
-      FuncTRUES_FLAGS, "src/opers.c:TRUES_FLAGS" },
-
-    { "SIZE_FLAGS", 1, "flags",
-      FuncSIZE_FLAGS, "src/opers.c:SIZE_FLAGS" },
-
-    { "LEN_FLAGS", 1, "flags",
-      FuncLEN_FLAGS, "src/opers.c:LEN_FLAGS" },
-
-    { "ELM_FLAGS", 2, "flags, pos",
-      FuncELM_FLAGS, "src/opers.c:ELM_FLAGS" },
-
-    { "FLAG1_FILTER", 1, "oper",
-      FuncFLAG1_FILTER, "src/opers.c:FLAG1_FILTER" },
-
-    { "SET_FLAG1_FILTER", 2, "oper, flag1",
-      FuncSET_FLAG1_FILTER, "src/opers.c:SET_FLAG1_FILTER" },
-
-    { "FLAG2_FILTER", 1, "oper",
-      FuncFLAG2_FILTER, "src/opers.c:FLAG2_FILTER" },
-
-    { "SET_FLAG2_FILTER", 2, "oper, flag2",
-      FuncSET_FLAG2_FILTER, "src/opers.c:SET_FLAG2_FILTER" },
-
-    { "FLAGS_FILTER", 1, "oper",
-      FuncFLAGS_FILTER, "src/opers.c:FLAGS_FILTER" },
-
-    { "SET_FLAGS_FILTER", 2, "oper, flags",
-      FuncSET_FLAGS_FILTER, "src/opers.c:SET_FLAGS_FILTER" },
-
-    { "SETTER_FILTER", 1, "oper",
-      FuncSETTER_FILTER, "src/opers.c:SETTER_FILTER" },
-
-    { "SET_SETTER_FILTER", 2, "oper, other",
-      FuncSET_SETTER_FILTER, "src/opers.c:SET_SETTER_FILTER" },
-
-    { "TESTER_FILTER", 1, "oper",
-      FuncTESTER_FILTER, "src/opers.c:TESTER_FILTER" },
-
-    { "SET_TESTER_FILTER", 2, "oper, other",
-      FuncSET_TESTER_FILTER, "src/opers.c:SET_TESTER_FILTER" },
-
-    { "METHODS_OPERATION", 2, "oper, narg",
-      FuncMETHODS_OPERATION, "src/opers.c:METHODS_OPERATION" },
-
-    { "SET_METHODS_OPERATION", 3, "oper, narg, meths",
-      FuncSET_METHODS_OPERATION, "src/opers.c:SET_METHODS_OPERATION" },
-
-    { "CHANGED_METHODS_OPERATION", 2, "oper, narg",
-      FuncCHANGED_METHODS_OPERATION, "src/opers.c:CHANGED_METHODS_OPERATION" },
-
-    { "NEW_FILTER", 1, "name",
-      FuncNEW_FILTER, "src/opers.c:NEW_FILTER" },
-
-    { "NEW_OPERATION", 1, "name",
-      FuncNEW_OPERATION, "src/opers.c:NEW_OPERATION" },
-
-    { "NEW_CONSTRUCTOR", 1, "name",
-      FuncNEW_CONSTRUCTOR, "src/opers.c:NEW_CONSTRUCTOR" },
-
-    { "NEW_ATTRIBUTE", 1, "name",
-      FuncNEW_ATTRIBUTE, "src/opers.c:NEW_ATTRIBUTE" },
-
-    { "NEW_MUTABLE_ATTRIBUTE", 1, "name",
-      FuncNEW_MUTABLE_ATTRIBUTE, "src/opers.c:NEW_MUTABLE_ATTRIBUTE" },
-
-    { "NEW_PROPERTY", 1, "name",
-      FuncNEW_PROPERTY, "src/opers.c:NEW_PROPERTY" },
-
-    { "SETTER_FUNCTION", 2, "name, filter",
-      FuncSETTER_FUNCTION, "src/opers.c:SETTER_FUNCTION" },
-
-    { "GETTER_FUNCTION", 1, "name",
-      FuncGETTER_FUNCTION, "src/opers.c:GETTER_FUNCTION" },
-
-    { "NEW_OPERATION_ARGS", 1, "name",
-      FuncNEW_OPERATION_ARGS, "src/opers.c:NEW_OPERATION_ARGS" },
-
-    { "INSTALL_METHOD_ARGS", 2, "oper, func",
-      FuncINSTALL_METHOD_ARGS, "src/opers.c:INSTALL_METHOD_ARGS" },
-
-    { "TRACE_METHODS", 1, "oper",
-      FuncTRACE_METHODS, "src/opers.c:TRACE_METHODS" },
-
-    { "UNTRACE_METHODS", 1, "oper",
-      FuncUNTRACE_METHODS, "src/opers.c:UNTRACE_METHODS" },
-
-    { "OPERS_CACHE_INFO", 0, "",
-      FuncOPERS_CACHE_INFO, "src/opers.c:OPERS_CACHE_INFO" },
-
-    { "CLEAR_CACHE_INFO", 0, "",
-      FuncCLEAR_CACHE_INFO, "src/opers.c:CLEAR_CACHE_INFO" },
-    
-    { "SET_ATTRIBUTE_STORING", 2, "attr, val",
-      FuncSET_ATTRIBUTE_STORING, "src/opers.c:SET_ATTRIBUTE_STORING" },
-
-    { "DO_NOTHING_SETTER", 2, "obj, val",
-      FuncDO_NOTHING_SETTER, "src/opers.c:DO_NOTHING_SETTER" },
-
-    { "IS_AND_FILTER", 1, "filter",
-      FuncIS_AND_FILTER, "src/opers.c:IS_AND_FILTER" },
-
-    { "COMPACT_TYPE_IDS", 0, "",
-      FuncCompactTypeIDs, "src/opers.c:COMPACT_TYPE_IDS" },
-
-    { "OPER_TO_ATTRIBUTE", 1, "oper",
-      FuncOPER_TO_ATTRIBUTE, "src/opers.c:OPER_TO_ATTRIBUTE" },
-
-    { "OPER_TO_MUTABLE_ATTRIBUTE", 1, "oper",
-      FuncOPER_TO_MUTABLE_ATTRIBUTE, "src/opers.c:OPER_TO_MUTABLE_ATTRIBUTE" },
-
-    { 0 }
+    GVAR_FUNC(AND_FLAGS, 2, "oper1, oper2"),
+    GVAR_FUNC(SUB_FLAGS, 2, "oper1, oper2"),
+    GVAR_FUNC(HASH_FLAGS, 1, "flags"),
+    GVAR_FUNC(IS_EQUAL_FLAGS, 2, "flags1, flags2"),
+    GVAR_FUNC(CLEAR_HIDDEN_IMP_CACHE, 1, "flags"),
+    GVAR_FUNC(WITH_HIDDEN_IMPS_FLAGS, 1, "flags"),
+    GVAR_FUNC(InstallHiddenTrueMethod, 2, "filter, filters"),
+    GVAR_FUNC(CLEAR_IMP_CACHE, 0, ""),
+    GVAR_FUNC(WITH_IMPS_FLAGS, 1, "flags"),
+    GVAR_FUNC(WITH_IMPS_FLAGS_STAT, 0, ""),
+    GVAR_FUNC(IS_SUBSET_FLAGS, 2, "flags1, flags2"),
+    GVAR_FUNC(TRUES_FLAGS, 1, "flags"),
+    GVAR_FUNC(SIZE_FLAGS, 1, "flags"),
+    GVAR_FUNC(LEN_FLAGS, 1, "flags"),
+    GVAR_FUNC(ELM_FLAGS, 2, "flags, pos"),
+    GVAR_FUNC(FLAG1_FILTER, 1, "oper"),
+    GVAR_FUNC(SET_FLAG1_FILTER, 2, "oper, flag1"),
+    GVAR_FUNC(FLAG2_FILTER, 1, "oper"),
+    GVAR_FUNC(SET_FLAG2_FILTER, 2, "oper, flag2"),
+    GVAR_FUNC(FLAGS_FILTER, 1, "oper"),
+    GVAR_FUNC(SET_FLAGS_FILTER, 2, "oper, flags"),
+    GVAR_FUNC(SETTER_FILTER, 1, "oper"),
+    GVAR_FUNC(SET_SETTER_FILTER, 2, "oper, other"),
+    GVAR_FUNC(TESTER_FILTER, 1, "oper"),
+    GVAR_FUNC(SET_TESTER_FILTER, 2, "oper, other"),
+    GVAR_FUNC(METHODS_OPERATION, 2, "oper, narg"),
+    GVAR_FUNC(SET_METHODS_OPERATION, 3, "oper, narg, meths"),
+    GVAR_FUNC(CHANGED_METHODS_OPERATION, 2, "oper, narg"),
+    GVAR_FUNC(NEW_FILTER, 1, "name"),
+    GVAR_FUNC(NEW_OPERATION, 1, "name"),
+    GVAR_FUNC(NEW_CONSTRUCTOR, 1, "name"),
+    GVAR_FUNC(NEW_ATTRIBUTE, 1, "name"),
+    GVAR_FUNC(NEW_MUTABLE_ATTRIBUTE, 1, "name"),
+    GVAR_FUNC(NEW_PROPERTY, 1, "name"),
+    GVAR_FUNC(SETTER_FUNCTION, 2, "name, filter"),
+    GVAR_FUNC(GETTER_FUNCTION, 1, "name"),
+    GVAR_FUNC(NEW_GLOBAL_FUNCTION, 1, "name"),
+    GVAR_FUNC(INSTALL_GLOBAL_FUNCTION, 2, "oper, func"),
+    GVAR_FUNC(TRACE_METHODS, 1, "oper"),
+    GVAR_FUNC(UNTRACE_METHODS, 1, "oper"),
+    GVAR_FUNC(OPERS_CACHE_INFO, 0, ""),
+    GVAR_FUNC(CLEAR_CACHE_INFO, 0, ""),
+    GVAR_FUNC(SET_ATTRIBUTE_STORING, 2, "attr, val"),
+    GVAR_FUNC(DO_NOTHING_SETTER, 2, "obj, val"),
+    GVAR_FUNC(IS_AND_FILTER, 1, "filter"),
+    GVAR_FUNC(COMPACT_TYPE_IDS, 0, ""),
+    GVAR_FUNC(OPER_TO_ATTRIBUTE, 1, "oper"),
+    GVAR_FUNC(OPER_TO_MUTABLE_ATTRIBUTE, 1, "oper"),
+    { 0, 0, 0, 0, 0 }
 
 };
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
     StructInitInfo *    module )
 {
 
-  NextTypeID = 0;
-  CountFlags = 0;
-    InitGlobalBag( &StringAndFilter,    "src/opers.c:StringAndFilter"    );
+    NextTypeID = 0;
+    CountFlags = 0;
+
     InitGlobalBag( &StringFilterSetter, "src/opers.c:StringFilterSetter" );
     InitGlobalBag( &ArglistObj,         "src/opers.c:ArglistObj"         );
     InitGlobalBag( &ArglistObjVal,      "src/opers.c:ArglistObjVal"      );
 
-    /* Declare the handlers used in various places.  Some of the commonest */
-    /* ones are abbreviated to save space in saved workspace.              */
+    /* share between uncompleted functions                                 */
+    StringFilterSetter = MakeImmString("<<filter-setter>>");
+
+    ArglistObj = NEW_PLIST( T_PLIST+IMMUTABLE, 1 );
+    SET_LEN_PLIST( ArglistObj, 1 );
+    SET_ELM_PLIST( ArglistObj, 1, MakeImmString("obj") );
+    CHANGED_BAG( ArglistObj );
+
+    ArglistObjVal = NEW_PLIST( T_PLIST+IMMUTABLE, 2 );
+    SET_LEN_PLIST( ArglistObjVal, 2 );
+    SET_ELM_PLIST( ArglistObjVal, 1, MakeImmString("obj") );
+    CHANGED_BAG( ArglistObjVal );
+    SET_ELM_PLIST( ArglistObjVal, 2, MakeImmString("val") );
+    CHANGED_BAG( ArglistObjVal );
+
+
+    // Declare the handlers used in various places. Some of the most common
+    // ones are abbreviated to save space in saved workspace.
     InitHandlerFunc( DoFilter,                  "df"                                    );
     InitHandlerFunc( DoSetFilter,               "dsf"                                   );
     InitHandlerFunc( DoAndFilter,               "daf"                                   );
@@ -6140,7 +4185,6 @@ static Int InitKernel (
 
     InitHandlerFunc( DoProperty,                "src/opers.c:DoProperty"                );
     InitHandlerFunc( DoSetProperty,             "src/opers.c:DoSetProperty"             );
-    InitHandlerFunc( DoTestProperty,            "src/opers.c:DoTestProperty"            );
     InitHandlerFunc( DoVerboseProperty,         "src/opers.c:DoVerboseProperty"         );
 
     InitHandlerFunc( DoSetterFunction,          "dtf"                                   );
@@ -6182,7 +4226,7 @@ static Int InitKernel (
     InitHandlerFunc( DoVerboseConstructor6Args, "src/opers.c:DoVerboseConstructor6Args" );
     InitHandlerFunc( DoVerboseConstructorXArgs, "src/opers.c:DoVerboseConstructorXArgs" );
 
-    InitHandlerFunc( DoUninstalledOperationArgs, "src/opers.c:DoUninstalledOperationArgs" );
+    InitHandlerFunc( DoUninstalledGlobalFunction, "src/opers.c:DoUninstalledGlobalFunction" );
 
     /* install the type function                                           */
     ImportGVarFromLibrary( "TYPE_FLAGS", &TYPE_FLAGS );
@@ -6193,90 +4237,90 @@ static Int InitKernel (
     InitGlobalBag( &WITH_HIDDEN_IMPS_FLAGS_CACHE, "src/opers.c:WITH_HIDDEN_IMPS_FLAGS_CACHE");
     InitGlobalBag( &HIDDEN_IMPS, "src/opers.c:HIDDEN_IMPS");
     
+    /* set up implications                                                 */
+    InitGlobalBag( &WITH_IMPS_FLAGS_CACHE, "src/opers.c:WITH_IMPS_FLAGS_CACHE");
+    InitGlobalBag( &IMPLICATIONS, "src/opers.c:IMPLICATIONS");
+    
     /* make the 'true' operation                                           */  
     InitGlobalBag( &ReturnTrueFilter, "src/opers.c:ReturnTrueFilter" );
 
     /* install the (function) copies of global variables                   */
     /*for the inside-out (kernel to library) interface                    */
     InitGlobalBag( &TRY_NEXT_METHOD, "src/opers.c:TRY_NEXT_METHOD" );
+    
+    ImportFuncFromLibrary( "METHOD_0ARGS", &(MethodSelectors[0][0]) );
+    ImportFuncFromLibrary( "METHOD_1ARGS", &(MethodSelectors[0][1]) );
+    ImportFuncFromLibrary( "METHOD_2ARGS", &(MethodSelectors[0][2]) );
+    ImportFuncFromLibrary( "METHOD_3ARGS", &(MethodSelectors[0][3]) );
+    ImportFuncFromLibrary( "METHOD_4ARGS", &(MethodSelectors[0][4]) );
+    ImportFuncFromLibrary( "METHOD_5ARGS", &(MethodSelectors[0][5]) );
+    ImportFuncFromLibrary( "METHOD_6ARGS", &(MethodSelectors[0][6]) );
 
-    ImportFuncFromLibrary( "METHOD_0ARGS", &Method0Args );
-    ImportFuncFromLibrary( "METHOD_1ARGS", &Method1Args );
-    ImportFuncFromLibrary( "METHOD_2ARGS", &Method2Args );
-    ImportFuncFromLibrary( "METHOD_3ARGS", &Method3Args );
-    ImportFuncFromLibrary( "METHOD_4ARGS", &Method4Args );
-    ImportFuncFromLibrary( "METHOD_5ARGS", &Method5Args );
-    ImportFuncFromLibrary( "METHOD_6ARGS", &Method6Args );
-    ImportFuncFromLibrary( "METHOD_XARGS", &MethodXArgs );
+    ImportFuncFromLibrary( "NEXT_METHOD_0ARGS", &(MethodSelectors[1][0]) );
+    ImportFuncFromLibrary( "NEXT_METHOD_1ARGS", &(MethodSelectors[1][1]) );
+    ImportFuncFromLibrary( "NEXT_METHOD_2ARGS", &(MethodSelectors[1][2]) );
+    ImportFuncFromLibrary( "NEXT_METHOD_3ARGS", &(MethodSelectors[1][3]) );
+    ImportFuncFromLibrary( "NEXT_METHOD_4ARGS", &(MethodSelectors[1][4]) );
+    ImportFuncFromLibrary( "NEXT_METHOD_5ARGS", &(MethodSelectors[1][5]) );
+    ImportFuncFromLibrary( "NEXT_METHOD_6ARGS", &(MethodSelectors[1][6]) );
 
-    ImportFuncFromLibrary( "NEXT_METHOD_0ARGS", &NextMethod0Args );
-    ImportFuncFromLibrary( "NEXT_METHOD_1ARGS", &NextMethod1Args );
-    ImportFuncFromLibrary( "NEXT_METHOD_2ARGS", &NextMethod2Args );
-    ImportFuncFromLibrary( "NEXT_METHOD_3ARGS", &NextMethod3Args );
-    ImportFuncFromLibrary( "NEXT_METHOD_4ARGS", &NextMethod4Args );
-    ImportFuncFromLibrary( "NEXT_METHOD_5ARGS", &NextMethod5Args );
-    ImportFuncFromLibrary( "NEXT_METHOD_6ARGS", &NextMethod6Args );
-    ImportFuncFromLibrary( "NEXT_METHOD_XARGS", &NextMethodXArgs );
+    ImportFuncFromLibrary( "VMETHOD_0ARGS", &(VerboseMethodSelectors[0][0]) );
+    ImportFuncFromLibrary( "VMETHOD_1ARGS", &(VerboseMethodSelectors[0][1]) );
+    ImportFuncFromLibrary( "VMETHOD_2ARGS", &(VerboseMethodSelectors[0][2]) );
+    ImportFuncFromLibrary( "VMETHOD_3ARGS", &(VerboseMethodSelectors[0][3]) );
+    ImportFuncFromLibrary( "VMETHOD_4ARGS", &(VerboseMethodSelectors[0][4]) );
+    ImportFuncFromLibrary( "VMETHOD_5ARGS", &(VerboseMethodSelectors[0][5]) );
+    ImportFuncFromLibrary( "VMETHOD_6ARGS", &(VerboseMethodSelectors[0][6]) );
 
-    ImportFuncFromLibrary( "VMETHOD_0ARGS", &VMethod0Args );
-    ImportFuncFromLibrary( "VMETHOD_1ARGS", &VMethod1Args );
-    ImportFuncFromLibrary( "VMETHOD_2ARGS", &VMethod2Args );
-    ImportFuncFromLibrary( "VMETHOD_3ARGS", &VMethod3Args );
-    ImportFuncFromLibrary( "VMETHOD_4ARGS", &VMethod4Args );
-    ImportFuncFromLibrary( "VMETHOD_5ARGS", &VMethod5Args );
-    ImportFuncFromLibrary( "VMETHOD_6ARGS", &VMethod6Args );
-    ImportFuncFromLibrary( "VMETHOD_XARGS", &VMethodXArgs );
+    ImportFuncFromLibrary( "NEXT_VMETHOD_0ARGS", &(VerboseMethodSelectors[1][0]) );
+    ImportFuncFromLibrary( "NEXT_VMETHOD_1ARGS", &(VerboseMethodSelectors[1][1]) );
+    ImportFuncFromLibrary( "NEXT_VMETHOD_2ARGS", &(VerboseMethodSelectors[1][2]) );
+    ImportFuncFromLibrary( "NEXT_VMETHOD_3ARGS", &(VerboseMethodSelectors[1][3]) );
+    ImportFuncFromLibrary( "NEXT_VMETHOD_4ARGS", &(VerboseMethodSelectors[1][4]) );
+    ImportFuncFromLibrary( "NEXT_VMETHOD_5ARGS", &(VerboseMethodSelectors[1][5]) );
+    ImportFuncFromLibrary( "NEXT_VMETHOD_6ARGS", &(VerboseMethodSelectors[1][6]) );
 
-    ImportFuncFromLibrary( "NEXT_VMETHOD_0ARGS", &NextVMethod0Args );
-    ImportFuncFromLibrary( "NEXT_VMETHOD_1ARGS", &NextVMethod1Args );
-    ImportFuncFromLibrary( "NEXT_VMETHOD_2ARGS", &NextVMethod2Args );
-    ImportFuncFromLibrary( "NEXT_VMETHOD_3ARGS", &NextVMethod3Args );
-    ImportFuncFromLibrary( "NEXT_VMETHOD_4ARGS", &NextVMethod4Args );
-    ImportFuncFromLibrary( "NEXT_VMETHOD_5ARGS", &NextVMethod5Args );
-    ImportFuncFromLibrary( "NEXT_VMETHOD_6ARGS", &NextVMethod6Args );
-    ImportFuncFromLibrary( "NEXT_VMETHOD_XARGS", &NextVMethodXArgs );
 
-    ImportFuncFromLibrary( "CONSTRUCTOR_0ARGS", &Constructor0Args );
-    ImportFuncFromLibrary( "CONSTRUCTOR_1ARGS", &Constructor1Args );
-    ImportFuncFromLibrary( "CONSTRUCTOR_2ARGS", &Constructor2Args );
-    ImportFuncFromLibrary( "CONSTRUCTOR_3ARGS", &Constructor3Args );
-    ImportFuncFromLibrary( "CONSTRUCTOR_4ARGS", &Constructor4Args );
-    ImportFuncFromLibrary( "CONSTRUCTOR_5ARGS", &Constructor5Args );
-    ImportFuncFromLibrary( "CONSTRUCTOR_6ARGS", &Constructor6Args );
-    ImportFuncFromLibrary( "CONSTRUCTOR_XARGS", &ConstructorXArgs );
+    ImportFuncFromLibrary( "CONSTRUCTOR_0ARGS", &(ConstructorSelectors[0][0]) );
+    ImportFuncFromLibrary( "CONSTRUCTOR_1ARGS", &(ConstructorSelectors[0][1]) );
+    ImportFuncFromLibrary( "CONSTRUCTOR_2ARGS", &(ConstructorSelectors[0][2]) );
+    ImportFuncFromLibrary( "CONSTRUCTOR_3ARGS", &(ConstructorSelectors[0][3]) );
+    ImportFuncFromLibrary( "CONSTRUCTOR_4ARGS", &(ConstructorSelectors[0][4]) );
+    ImportFuncFromLibrary( "CONSTRUCTOR_5ARGS", &(ConstructorSelectors[0][5]) );
+    ImportFuncFromLibrary( "CONSTRUCTOR_6ARGS", &(ConstructorSelectors[0][6]) );
 
-    ImportFuncFromLibrary( "NEXT_CONSTRUCTOR_0ARGS", &NextConstructor0Args );
-    ImportFuncFromLibrary( "NEXT_CONSTRUCTOR_1ARGS", &NextConstructor1Args );
-    ImportFuncFromLibrary( "NEXT_CONSTRUCTOR_2ARGS", &NextConstructor2Args );
-    ImportFuncFromLibrary( "NEXT_CONSTRUCTOR_3ARGS", &NextConstructor3Args );
-    ImportFuncFromLibrary( "NEXT_CONSTRUCTOR_4ARGS", &NextConstructor4Args );
-    ImportFuncFromLibrary( "NEXT_CONSTRUCTOR_5ARGS", &NextConstructor5Args );
-    ImportFuncFromLibrary( "NEXT_CONSTRUCTOR_6ARGS", &NextConstructor6Args );
-    ImportFuncFromLibrary( "NEXT_CONSTRUCTOR_XARGS", &NextConstructorXArgs );
+    ImportFuncFromLibrary( "NEXT_CONSTRUCTOR_0ARGS", &(ConstructorSelectors[1][0]) );
+    ImportFuncFromLibrary( "NEXT_CONSTRUCTOR_1ARGS", &(ConstructorSelectors[1][1]) );
+    ImportFuncFromLibrary( "NEXT_CONSTRUCTOR_2ARGS", &(ConstructorSelectors[1][2]) );
+    ImportFuncFromLibrary( "NEXT_CONSTRUCTOR_3ARGS", &(ConstructorSelectors[1][3]) );
+    ImportFuncFromLibrary( "NEXT_CONSTRUCTOR_4ARGS", &(ConstructorSelectors[1][4]) );
+    ImportFuncFromLibrary( "NEXT_CONSTRUCTOR_5ARGS", &(ConstructorSelectors[1][5]) );
+    ImportFuncFromLibrary( "NEXT_CONSTRUCTOR_6ARGS", &(ConstructorSelectors[1][6]) );
 
-    ImportFuncFromLibrary( "VCONSTRUCTOR_0ARGS", &VConstructor0Args );
-    ImportFuncFromLibrary( "VCONSTRUCTOR_1ARGS", &VConstructor1Args );
-    ImportFuncFromLibrary( "VCONSTRUCTOR_2ARGS", &VConstructor2Args );
-    ImportFuncFromLibrary( "VCONSTRUCTOR_3ARGS", &VConstructor3Args );
-    ImportFuncFromLibrary( "VCONSTRUCTOR_4ARGS", &VConstructor4Args );
-    ImportFuncFromLibrary( "VCONSTRUCTOR_5ARGS", &VConstructor5Args );
-    ImportFuncFromLibrary( "VCONSTRUCTOR_6ARGS", &VConstructor6Args );
-    ImportFuncFromLibrary( "VCONSTRUCTOR_XARGS", &VConstructorXArgs );
+    ImportFuncFromLibrary( "VCONSTRUCTOR_0ARGS", &(VerboseConstructorSelectors[0][0]) );
+    ImportFuncFromLibrary( "VCONSTRUCTOR_1ARGS", &(VerboseConstructorSelectors[0][1]) );
+    ImportFuncFromLibrary( "VCONSTRUCTOR_2ARGS", &(VerboseConstructorSelectors[0][2]) );
+    ImportFuncFromLibrary( "VCONSTRUCTOR_3ARGS", &(VerboseConstructorSelectors[0][3]) );
+    ImportFuncFromLibrary( "VCONSTRUCTOR_4ARGS", &(VerboseConstructorSelectors[0][4]) );
+    ImportFuncFromLibrary( "VCONSTRUCTOR_5ARGS", &(VerboseConstructorSelectors[0][5]) );
+    ImportFuncFromLibrary( "VCONSTRUCTOR_6ARGS", &(VerboseConstructorSelectors[0][6]) );
 
-    ImportFuncFromLibrary( "NEXT_VCONSTRUCTOR_0ARGS", &NextVConstructor0Args );
-    ImportFuncFromLibrary( "NEXT_VCONSTRUCTOR_1ARGS", &NextVConstructor1Args );
-    ImportFuncFromLibrary( "NEXT_VCONSTRUCTOR_2ARGS", &NextVConstructor2Args );
-    ImportFuncFromLibrary( "NEXT_VCONSTRUCTOR_3ARGS", &NextVConstructor3Args );
-    ImportFuncFromLibrary( "NEXT_VCONSTRUCTOR_4ARGS", &NextVConstructor4Args );
-    ImportFuncFromLibrary( "NEXT_VCONSTRUCTOR_5ARGS", &NextVConstructor5Args );
-    ImportFuncFromLibrary( "NEXT_VCONSTRUCTOR_6ARGS", &NextVConstructor6Args );
-    ImportFuncFromLibrary( "NEXT_VCONSTRUCTOR_XARGS", &NextVConstructorXArgs );
+    ImportFuncFromLibrary( "NEXT_VCONSTRUCTOR_0ARGS", &(VerboseConstructorSelectors[1][0]) );
+    ImportFuncFromLibrary( "NEXT_VCONSTRUCTOR_1ARGS", &(VerboseConstructorSelectors[1][1]) );
+    ImportFuncFromLibrary( "NEXT_VCONSTRUCTOR_2ARGS", &(VerboseConstructorSelectors[1][2]) );
+    ImportFuncFromLibrary( "NEXT_VCONSTRUCTOR_3ARGS", &(VerboseConstructorSelectors[1][3]) );
+    ImportFuncFromLibrary( "NEXT_VCONSTRUCTOR_4ARGS", &(VerboseConstructorSelectors[1][4]) );
+    ImportFuncFromLibrary( "NEXT_VCONSTRUCTOR_5ARGS", &(VerboseConstructorSelectors[1][5]) );
+    ImportFuncFromLibrary( "NEXT_VCONSTRUCTOR_6ARGS", &(VerboseConstructorSelectors[1][6]) );
+
 
     ImportFuncFromLibrary( "SET_FILTER_OBJ",   &SET_FILTER_OBJ );
     ImportFuncFromLibrary( "RESET_FILTER_OBJ", &RESET_FILTER_OBJ );
     
     ImportFuncFromLibrary( "HANDLE_METHOD_NOT_FOUND", &HandleMethodNotFound );
     ImportGVarFromLibrary( "IsType", &IsType );
+
+    ImportFuncFromLibrary( "FLUSH_ALL_METHOD_CACHES", &FLUSH_ALL_METHOD_CACHES );
 
     /* init filters and functions                                          */
     InitHdlrFiltsFromTable( GVarFilts );
@@ -6293,11 +4337,17 @@ static Int InitKernel (
     SaveObjFuncs[ T_FLAGS ] = SaveFlags;
     LoadObjFuncs[ T_FLAGS ] = LoadFlags;
 
-    /* flags are protected objects by default */
+    /* flags are public objects by default */
     MakeBagTypePublic(T_FLAGS);
 
     /* import copy of REREADING */
     ImportGVarFromLibrary( "REREADING", &REREADING );
+
+#ifdef HPCGAP
+    /* initialize cache mutex */
+    pthread_mutex_init(&CacheLock, NULL);
+#endif
+
     /* return success                                                      */
     return 0;
 }
@@ -6314,7 +4364,7 @@ static Int postRestore (
     StructInitInfo *    module )
 {
 
-  CountFlags = LEN_LIST(VAL_GVAR(GVarName("FILTERS")))+1;
+  CountFlags = LEN_LIST(ValGVar(GVarName("FILTERS")));
   return 0;
 }
 
@@ -6325,46 +4375,35 @@ static Int postRestore (
 static Int InitLibrary (
     StructInitInfo *    module )
 {
-    Obj                 str;
-
-    /* share between uncompleted functions                                 */
-    C_NEW_STRING_CONST( StringAndFilter, "<<and-filter>>" );
-    RESET_FILT_LIST( StringAndFilter, FN_IS_MUTABLE );
-
-    C_NEW_STRING_CONST( StringFilterSetter, "<<filter-setter>>" );
-    RESET_FILT_LIST( StringFilterSetter, FN_IS_MUTABLE );
-
-    ArglistObj = NEW_PLIST( T_PLIST+IMMUTABLE, 1 );
-    SET_LEN_PLIST( ArglistObj, 1 );
-    C_NEW_STRING_CONST( str, "obj" );
-    RESET_FILT_LIST( str, FN_IS_MUTABLE );
-    SET_ELM_PLIST( ArglistObj, 1, str );
-    CHANGED_BAG( ArglistObj );
-
-    ArglistObjVal = NEW_PLIST( T_PLIST+IMMUTABLE, 2 );
-    SET_LEN_PLIST( ArglistObjVal, 2 );
-    C_NEW_STRING_CONST( str, "obj" );
-    RESET_FILT_LIST( str, FN_IS_MUTABLE );
-    SET_ELM_PLIST( ArglistObjVal, 1, str );
-    CHANGED_BAG( ArglistObjVal );
-    C_NEW_STRING_CONST( str, "val" );
-    RESET_FILT_LIST( str, FN_IS_MUTABLE );
-    SET_ELM_PLIST( ArglistObjVal, 2, str );
-    CHANGED_BAG( ArglistObjVal );
-
     HIDDEN_IMPS = NEW_PLIST(T_PLIST, 0);
     SET_LEN_PLIST(HIDDEN_IMPS, 0);
-    WITH_HIDDEN_IMPS_FLAGS_CACHE = NEW_PLIST(T_PLIST, hidden_imps_cache_length * 2);
-    SET_LEN_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, hidden_imps_cache_length * 2);
+    WITH_HIDDEN_IMPS_FLAGS_CACHE = NEW_PLIST(T_PLIST, HIDDEN_IMPS_CACHE_LENGTH * 2);
+    SET_LEN_PLIST(WITH_HIDDEN_IMPS_FLAGS_CACHE, HIDDEN_IMPS_CACHE_LENGTH * 2);
+
+#ifdef HPCGAP
+    REGION(HIDDEN_IMPS) = NewRegion();
+    REGION(WITH_HIDDEN_IMPS_FLAGS_CACHE) = REGION(HIDDEN_IMPS);
+#endif
+
+    IMPLICATIONS = NEW_PLIST(T_PLIST, 0);
+    SET_LEN_PLIST(IMPLICATIONS, 0);
+    WITH_IMPS_FLAGS_CACHE = NEW_PLIST(T_PLIST, IMPS_CACHE_LENGTH * 2);
+    SET_LEN_PLIST(WITH_IMPS_FLAGS_CACHE, IMPS_CACHE_LENGTH * 2);
+    AssGVar(GVarName("IMPLICATIONS"), IMPLICATIONS);
+
+#ifdef HPCGAP
+    REGION(IMPLICATIONS) = NewRegion();
+    REGION(WITH_IMPS_FLAGS_CACHE) = REGION(IMPLICATIONS);
+#endif
 
     /* make the 'true' operation                                           */  
     ReturnTrueFilter = NewReturnTrueFilter();
-    AssGVar( GVarName( "IS_OBJECT" ), ReturnTrueFilter );
+    AssReadOnlyGVar( GVarName( "IS_OBJECT" ), ReturnTrueFilter );
 
     /* install the (function) copies of global variables                   */
     /* for the inside-out (kernel to library) interface                    */
-    C_NEW_STRING_CONST(TRY_NEXT_METHOD, "TRY_NEXT_METHOD");
-    AssGVar( GVarName("TRY_NEXT_METHOD"), TRY_NEXT_METHOD );
+    TRY_NEXT_METHOD = MakeImmString("TRY_NEXT_METHOD");
+    AssReadOnlyGVar( GVarName("TRY_NEXT_METHOD"), TRY_NEXT_METHOD );
 
     /* init filters and functions                                          */
     InitGVarFiltsFromTable( GVarFilts );
@@ -6374,33 +4413,32 @@ static Int InitLibrary (
     return 0;
 }
 
+static void InitModuleState(ModuleStateOffset offset)
+{
+#ifdef HPCGAP
+    STATE(MethodCache) = NEW_PLIST(T_PLIST, 1);
+    STATE(MethodCacheItems) = ADDR_OBJ(STATE(MethodCache));
+    STATE(MethodCacheSize) = 1;
+    SET_LEN_PLIST(STATE(MethodCache), 1);
+#endif
+}
 
 /****************************************************************************
 **
 *F  InitInfoOpers() . . . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "opers",                            /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    postRestore                         /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "opers",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
+    .postRestore = postRestore
 };
 
 StructInitInfo * InitInfoOpers ( void )
 {
+    RegisterModuleState(0, InitModuleState, 0);
     return &module;
 }
-
-
-/****************************************************************************
-**
-*E  opers.c . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

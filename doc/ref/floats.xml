@@ -162,8 +162,36 @@ false
 ]]></Example>
 <P/>
 
-<#Include Label="FLOAT_UNARY">
 <#Include Label="Float">
+
+<ManSection>
+  <Var Name="FLOAT" Label="constants"/>
+  <Description>
+    This record contains useful floating-point constants: <List>
+    <Mark>DECIMAL_DIG</Mark> <Item>Maximal number of useful digits;</Item>
+    <Mark>DIG</Mark> <Item>Number of significant digits;</Item>
+    <Mark>VIEW_DIG</Mark> <Item>Number of digits to print in short view;</Item>
+    <Mark>EPSILON</Mark> <Item>Smallest number such that <M>1\neq1+\epsilon</M>;</Item>
+    <Mark>MANT_DIG</Mark> <Item>Number of bits in the mantissa;</Item>
+    <Mark>MAX</Mark> <Item>Maximal representable number;</Item>
+    <Mark>MAX_10_EXP</Mark> <Item>Maximal decimal exponent;</Item>
+    <Mark>MAX_EXP</Mark> <Item>Maximal binary exponent;</Item>
+    <Mark>MIN</Mark> <Item>Minimal positive representable number;</Item>
+    <Mark>MIN_10_EXP</Mark> <Item>Minimal decimal exponent;</Item>
+    <Mark>MIN_EXP</Mark> <Item>Minimal exponent;</Item>
+    <Mark>INFINITY</Mark> <Item>Positive infinity;</Item>
+    <Mark>NINFINITY</Mark> <Item>Negative infinity;</Item>
+    <Mark>NAN</Mark> <Item>Not-a-number,</Item>
+    </List>
+    as well as mathematical constants <C>E</C>, <C>LOG2E</C>, <C>LOG10E</C>,
+    <C>LN2</C>, <C>LN10</C>, <C>PI</C>, <C>PI_2</C>, <C>PI_4</C>,
+    <C>1_PI</C>, <C>2_PI</C>, <C>2_SQRTPI</C>, <C>SQRT2</C>, <C>SQRT1_2</C>.
+  </Description>
+</ManSection>
+
+<#Include Label="Float-Extra">
+<#Include Label="Float-Infinities">
+<#Include Label="Float-Math-Commands">
 
 </Section>
 
@@ -203,13 +231,18 @@ optional second argument requesting a precision in binary digits.
 
 <Section><Heading>Complex arithmetic</Heading>
 
-Complex arithmetic may be implemented in packages, and is present
-in <Package>float</Package>. Complex numbers are treated as usual
-numbers; they may be input with an extra "i" as in <C>-0.5+0.866i</C>.
+Complex arithmetic may be implemented in packages, and is present in
+<Package>float</Package>. Complex numbers are treated as usual
+numbers; they may be input with an extra "i" as in
+<C>-0.5+0.866i</C>. They may also be created using <Ref
+Oper="NewFloat"/> with three arguments: the float filter, the real
+part, and the imaginary part.
 <P/>
 
 Methods should then be implemented for <C>Norm</C>, <C>RealPart</C>,
 <C>ImaginaryPart</C>, <C>ComplexConjugate</C>, ...
+
+<#Include Label="Float-Complex">
 
 </Section>
 
@@ -220,13 +253,15 @@ are in fact efficient implementations of sets of real numbers. The
 only non-trivial issue is how they should be compared. The standard
 <C>EQ</C> tests if the intervals are equal; however, it is usually
 more useful to know if intervals overlap, or are disjoint, or are
-contained in each other. The methods provided by the package should
-include <C>Sup,Inf,Mid,DiameterOfInterval,Overlaps,IsSubset,IsDisjoint</C>.
+contained in each other.
 <P/>
 
 Note the usual convention that intervals are compared as
 in <M>[a,b]\le[c,d]</M> if and only if <M>a\le c</M> and <M>b\le
 d</M>.
+
+<#Include Label="Float-Intervals">
+
 </Section>
 
 </Chapter>

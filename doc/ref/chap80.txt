@@ -180,8 +180,8 @@
     [4X[28XInstallMethod(Exponent,"test abelianity", [IsGroup],[128X[104X
     [4X[28X  # enforced absolute rank of `IsGroup and IsAbelian' installation: Subtract[128X[104X
     [4X[28X  # the rank of `IsGroup' and add the rank of `IsGroup and IsAbelian':[128X[104X
-    [4X[28X  SIZE_FLAGS(FLAGS_FILTER(IsGroup and IsAbelian))[128X[104X
-    [4X[28X  -SIZE_FLAGS(FLAGS_FILTER(IsGroup)),[128X[104X
+    [4X[28X  RankFilter(IsGroup and IsAbelian)[128X[104X
+    [4X[28X  -RankFilter(IsGroup),[128X[104X
     [4X[28Xfunction(G)[128X[104X
   [4X[32X[104X
   
@@ -219,8 +219,8 @@
   [4X[32X[104X
   
   [33X[0;0Y(Note  that  we  are using [2XNewOperation[102X ([14X79.5-1[114X) instead of [2XDeclareOperation[102X
-  ([14X79.18-6[114X)  as  used  in  the  library.  The  only difference other than that
-  [2XDeclareOperation[102X  ([14X79.18-6[114X)  saves some typing, is that it also protects the
+  ([14X79.18-12[114X)  as  used  in  the  library.  The only difference other than that
+  [2XDeclareOperation[102X  ([14X79.18-12[114X) saves some typing, is that it also protects the
   variables against overwriting. When testing code (when one probably wants to
   change  things)  this might be restricting. If this does not bother you, you
   can use[133X
@@ -266,7 +266,7 @@
     [4X[28XSetPrimesDividingSize:=Setter(PrimesDividingSize);[128X[104X
   [4X[32X[104X
   
-  [33X[0;0YAlternatively,  there  is  a  declaration command [2XDeclareAttribute[102X ([14X79.18-3[114X)
+  [33X[0;0YAlternatively,  there  is  a  declaration command [2XDeclareAttribute[102X ([14X79.18-9[114X)
   that   executes  all  three  assignments  simultaneously  and  protects  the
   variables against overwriting:[133X
   
@@ -708,7 +708,7 @@
     [4X[25Xgap>[125X [27Xb:=mkposet([2,3,4]);[127X[104X
     [4X[28X[ 2, 3, 4 ][128X[104X
     [4X[25Xgap>[125X [27Xa+b;[127X[104X
-    [4X[28X[ 1, 2, 3, 4 ][128X[104X
+    [4X[28X[ 1 .. 4 ][128X[104X
     [4X[25Xgap>[125X [27Xa*b;[127X[104X
     [4X[28X[ 2, 3 ][128X[104X
     [4X[25Xgap>[125X [27Xs:=Semigroup(a,b);[127X[104X

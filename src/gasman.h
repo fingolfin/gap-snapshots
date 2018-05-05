@@ -36,34 +36,12 @@
 #ifndef GAP_GASMAN_H
 #define GAP_GASMAN_H
 
-/* This definition switches to the bigger bag header, supporting bags up to
-   4GB in length (lists limited to 1GB for other reasons) */
-
-/* Experimental 16+48 bit type/size word for 64 bit systems */
-
-/****************************************************************************
-**
-*V  autoconf  . . . . . . . . . . . . . . . . . . . . . . . .  use "config.h"
-*/
-#include "config.h"
-
-#include "atomic.h"
-
-/* on 64 bit systems use only two words for bag header */
-
-#if SIZEOF_VOID_P == 8
-#define USE_NEWSHAPE
-#elif !defined(SIZEOF_VOID_P) && !defined(USE_PRECOMPILED)
-/* If SIZEOF_VOID_P has not been defined, and we are not currently
-   re-making the dependency list (via cnf/Makefile), then trigger
-   an error. */
-#error Something is wrong with this GAP installation: SIZEOF_VOID_P not defined
-#endif
+#include <src/system.h>
+#include <src/debug.h>
 
 
 /****************************************************************************
 **
-
 *T  Bag . . . . . . . . . . . . . . . . . . . type of the identifier of a bag
 **
 **  'Bag'
@@ -99,9 +77,38 @@ typedef UInt * *        Bag;
 
 /****************************************************************************
 **
-*F  TNUM_BAG(<bag>) . . . . . . . . . . . . . . . . . . . . . . type of a bag
 **
-**  'TNUM_BAG( <bag> )'
+*/
+typedef struct {
+    uint8_t type : 8;
+    uint8_t flags : 8;
+#if SIZEOF_VOID_P == 8
+    uint64_t size : 48;
+#elif SIZEOF_VOID_P == 4
+    uint16_t reserved : 16;
+    uint32_t size : 32;
+#endif
+#if !defined(BOEHM_GC)
+    Bag link;
+#endif
+} BagHeader;
+
+
+/****************************************************************************
+**
+*F  BAG_HEADER(<bag>) . . . . . . . . . . . . . . . . . . . . header of a bag
+**
+**  'BAG_HEADER' returns the header of the bag with the identifier <bag>.
+*/
+static inline BagHeader * BAG_HEADER(Bag bag) {
+    GAP_ASSERT(bag);
+    return (((BagHeader *)*bag) - 1);
+}
+
+
+/****************************************************************************
+**
+*F  TNUM_BAG(<bag>) . . . . . . . . . . . . . . . . . . . . . . type of a bag
 **
 **  'TNUM_BAG' returns the type of the bag with the identifier <bag>.
 **
@@ -114,16 +121,64 @@ typedef UInt * *        Bag;
 **  {\Gasman} needs to know the type of a bag so that it knows which function
 **  to  call  to  mark all subbags  of a  given bag (see "InitMarkFuncBags").
 **  Apart from that {\Gasman} does not care at all about types.
-**
-**  Note  that 'TNUM_BAG' is a macro, so do not call  it with arguments  that
-**  have side effects.
 */
+static inline UInt TNUM_BAG(Bag bag) {
+    return BAG_HEADER(bag)->type;
+}
 
-#ifdef USE_NEWSHAPE
-#define TNUM_BAG(bag)  (*(*(bag)-2) & 0xFFFFL)
-#else
-#define TNUM_BAG(bag)   (*(*(bag)-3))
-#endif
+
+/****************************************************************************
+**
+*F  TEST_BAG_FLAG(<bag>, <flag>) . . . . . . . . . . . . . . .  test bag flag
+*F  SET_BAG_FLAG(<bag>, <flag>) . . . . . . . . . . . . . . . .  set bag flag
+*F  CLEAR_BAG_FLAG(<bag>, <flag>) . . . . . . . . . . . . . .  clear bag flag
+**
+**  These three macros test, set, and clear bag flags, respectively.
+**  Bag flags are stored in the bag header. Multiple flags can be ored
+**  together using '|' to set or clear multiple flags at once.
+**
+**  TEST_BAG_FLAG() will return the ored version of all tested flags. To
+**  test that one of them is set, check if the result is not equal to zero.
+**  To test that all of them are set, compare the result to the original
+**  flags, e.g.
+**
+** 	if (TEST_BAG_FLAG(obj, FLAG1 | FLAG2 ) == (FLAG1 | FLAG2)) ...
+**
+**  Similary, if you wish to test that FLAG1 is set and FLAG2 is not set,
+**  use:
+**
+** 	if (TEST_BAG_FLAG(obj, FLAG1 | FLAG2 ) == FLAG1) ...
+**
+**  Each flag must be a an integer with exactly one bit set, e.g. a value
+**  of the form (1 << i). Currently, 'i' must be in the range from 0 to
+**  7 (inclusive).
+*/
+static inline uint8_t TEST_BAG_FLAG(Bag bag, uint8_t flag)
+{
+    return BAG_HEADER(bag)->flags & flag;
+}
+
+static inline void SET_BAG_FLAG(Bag bag, uint8_t flag)
+{
+    BAG_HEADER(bag)->flags |= flag;
+}
+
+static inline void CLEAR_BAG_FLAG(Bag bag, uint8_t flag)
+{
+    BAG_HEADER(bag)->flags &= ~flag;
+}
+
+/****************************************************************************
+**
+*F  IS_BAG_REF(<bag>) . . . . . . verify that <bag> is a valid bag identifier
+**
+**  'IS_BAG_REF' checks whether <bag> is a valid bag identifier, i.e. that
+**  it is neither zero, nor an immediate object.
+**
+**  See also 'IS_INTOBJ' and 'IS_FFE'.
+*/
+#define IS_BAG_REF(bag) (bag && !((Int)(bag)& 0x03))
+
 
 /****************************************************************************
 **
@@ -135,20 +190,42 @@ typedef UInt * *        Bag;
 **  bytes.
 **
 **  Each bag has a  certain size.  The size  of a bag  is measured  in bytes.
-**  The  size must  be a   value between   0 and $2^{24}-1$.  The application
-**  specifies the size of a bag when it  allocates  it  with 'NewBag' and may
-**  later change it with 'ResizeBag' (see "NewBag" and "ResizeBag").
+**  The size must be a value between 0 and $2^{32}-1$ (on 32 bit systems)
+**  respectively $2^{48}-1$ (on 64 bit systems). The application specifies
+**  the size of a bag when it allocates it with 'NewBag' and may later change
+**  it with 'ResizeBag' (see "NewBag" and "ResizeBag").
+*/
+static inline UInt SIZE_BAG(Bag bag) {
+    return BAG_HEADER(bag)->size;
+}
+
+
+/****************************************************************************
 **
-**  Note that  'SIZE_BAG' is  a macro,  so do not call it with arguments that
+*F  SIZE_BAG_CONTENTS(<ptr>)  . . . . . . . . . . . . . . . . . size of a bag
+**
+**  'SIZE_BAG_CONTENTS' performs the same function as 'SIZE_BAG', but takes
+**  a pointer to the contents of the bag instead. This is useful for certain
+**  atomic operations that require a memory barrier in between dereferencing
+**  the bag pointer and accessing the contents of the bag.
+*/
+static inline UInt SIZE_BAG_CONTENTS(const void *ptr) {
+    return ((const BagHeader *)ptr)[-1].size;
+}
+
+
+/****************************************************************************
+**
+*F  LINK_BAG(<bag>) . . . . . . . . . . . . . . . . . . link pointer of a bag
+**
+**  'LINK_BAG' returns the link pointer of the bag with the identifier <bag>.
+**
+**  Note that  'LINK_BAG' is  a macro,  so do not call it with arguments that
 **  have side effects.
 */
-#ifdef USE_NEWSHAPE
-#define SIZE_BAG(bag)   (*(*(bag)-2) >> 16)
-#else
-#define SIZE_BAG(bag)   (*(*(bag)-2))
-#endif
+#define LINK_BAG(bag)   (BAG_HEADER(bag)->link)
 
-#define LINK_BAG(bag)   (*(Bag *)(*(bag)-1))
+
 /****************************************************************************
 **
 *F  PTR_BAG(<bag>)  . . . . . . . . . . . . . . . . . . . .  pointer to a bag
@@ -205,7 +282,23 @@ typedef UInt * *        Bag;
 **  Note that 'PTR_BAG' is a macro, so  do  not call it with  arguments  that
 **  have side effects.
 */
-#define PTR_BAG(bag)    (*(Bag**)(bag))
+static inline Bag *PTR_BAG(Bag bag)
+{
+    GAP_ASSERT(bag != 0);
+    return *(Bag**)bag;
+}
+
+static inline const Bag *CONST_PTR_BAG(Bag bag)
+{
+    GAP_ASSERT(bag != 0);
+    return *(const Bag**)bag;
+}
+
+static inline void SET_PTR_BAG(Bag bag, Bag *val)
+{
+    GAP_ASSERT(bag != 0);
+    *(Bag**)bag = val;
+}
 
 
 /****************************************************************************
@@ -248,11 +341,17 @@ typedef UInt * *        Bag;
 **  Note that 'CHANGED_BAG' is a macro, so do not call it with arguments that
 **  have side effects.
 */
-extern  Bag *                   YoungBags;
 
-extern  Bag                     ChangedBags;
+#ifdef BOEHM_GC
 
-/*****
+static inline void CHANGED_BAG(Bag bag)
+{
+}
+
+#elif defined(MEMORY_CANARY)
+
+/****************************************************************************
+**
 **  MEMORY_CANARY provides (basic) support for catching out-of-bounds memory
 **  problems in GAP. This is done through the excellent 'valgrind' program.
 **  valgrind is of limited use in GAP normally, because it doesn't understand
@@ -263,16 +362,22 @@ extern  Bag                     ChangedBags;
 **  block.
 */
 
-#ifdef MEMORY_CANARY
-extern void CHANGED_BAG_IMPL(Bag b);
-#define CHANGED_BAG(bag) CHANGED_BAG_IMPL(bag);
+extern void CHANGED_BAG(Bag b);
+
 #else
-#define CHANGED_BAG(bag)                                                    \
-                if (   PTR_BAG(bag) <= YoungBags                              \
-                  && PTR_BAG(bag)[-1] == (bag) ) {                          \
-                    PTR_BAG(bag)[-1] = ChangedBags; ChangedBags = (bag);    }
+
+extern Bag * YoungBags;
+extern Bag   ChangedBags;
+static inline void CHANGED_BAG(Bag bag)
+{
+    if (PTR_BAG(bag) <= YoungBags && LINK_BAG(bag) == bag) {
+        LINK_BAG(bag) = ChangedBags;
+        ChangedBags = bag;
+    }
+}
 
 #endif
+
 
 /****************************************************************************
 **
@@ -294,13 +399,11 @@ extern void CHANGED_BAG_IMPL(Bag b);
 **  accidently use the same value for two different types.
 **
 **  <size> is the size of the new bag in bytes and must be a value  between 0
-**  and $2^{24}-1$.  The   application can find  the    size  of a   bag with
-**  'SIZE_BAG'    and  change   it  with  'ResizeBag'   (see   "SIZE_BAG" and
-**  "ResizeBag").
+**  and $2^{32}-1$ (on 32 bit systems)  resp. $2^{48}-1$ (on 64 bit systems).
+**  The application can find the size of a bag with 'SIZE_BAG' and change  it
+**  with 'ResizeBag' (see "SIZE_BAG" and "ResizeBag").
 **
-**  If the initialization flag <dirty> is 0, all entries of  the new bag will
-**  be initialized to 0; otherwise the  entries  of the  new bag will contain
-**  random values (see "InitBags").
+**  All entries of  the new bag will be initialized to 0.
 **
 **  What  happens if {\Gasman}  cannot  get  enough  storage  to perform   an
 **  allocation     depends on  the  behavior    of   the allocation  function
@@ -351,7 +454,13 @@ extern  void            RetypeBag (
             Bag                 bag,
             UInt                new_type );
 
+#ifdef HPCGAP
+extern  void            RetypeBagIfWritable (
+            Bag                 bag,
+            UInt                new_type );
+#else
 #define RetypeBagIfWritable(x,y)     RetypeBag(x,y)
+#endif
 
 /****************************************************************************
 **
@@ -366,9 +475,7 @@ extern  void            RetypeBag (
 **  new size.  If the new size  <new> is larger than  the old size, {\Gasman}
 **  extends the bag.
 **
-**  If the initialization flag <dirty> is 0, all entries of an extension will
-**  be initialized to 0; otherwise the  entries of an  extension will contain
-**  random values (see "InitBags").
+**  All entries of an extension will be initialized to 0.
 **
 **  What happens  if {\Gasman} cannot   get   enough storage to  perform   an
 **  extension depends   on   the   behavior   of the   allocation    function
@@ -495,11 +602,11 @@ extern void SwapMasterPoint (
 */
 
 extern  UInt                    NrAllBags;
-extern  UInt                    SizeAllBags;
+extern  UInt8                   SizeAllBags;
 extern  UInt                    NrLiveBags;
 extern  UInt                    SizeLiveBags;
 extern  UInt                    NrDeadBags;
-extern  UInt                    SizeDeadBags;
+extern  UInt8                   SizeDeadBags;
 extern  UInt                    NrHalfDeadBags;
 
 
@@ -533,18 +640,26 @@ extern  UInt                    NrHalfDeadBags;
 */
 typedef struct  {
     const Char *            name;
+#ifdef COUNT_BAGS
     UInt                    nrLive;
     UInt                    nrAll;
     UInt                    sizeLive;
     UInt                    sizeAll;
+#endif
 } TNumInfoBags;
 
 extern  TNumInfoBags            InfoBags [ 256 ];
 
+
+#ifdef HPCGAP
+void MakeBagTypePublic(int type);
+Bag MakeBagPublic(Bag bag);
+Bag MakeBagReadOnly(Bag bag);
+#else
 #define MakeBagTypePublic(type)     do { } while(0)
-#define MakeBagTypeProtected(type)  do { } while(0)
 #define MakeBagPublic(bag)          do { } while(0)
 #define MakeBagReadOnly(bag)        do { } while(0)
+#endif
 
 /****************************************************************************
 **
@@ -611,6 +726,7 @@ extern  TNumInfoBags            InfoBags [ 256 ];
 **  34+3016 is the  number  of bags allocated  between  the last two  garbage
 **  collections, using 978 KByte and the other two numbers are as above.
 */
+#if !defined(BOEHM_GC)
 typedef void            (* TNumMsgsFuncBags) (
             UInt                full,
             UInt                phase,
@@ -618,18 +734,11 @@ typedef void            (* TNumMsgsFuncBags) (
 
 extern  void            InitMsgsFuncBags (
             TNumMsgsFuncBags    msgs_func );
-
+#endif
 
 /****************************************************************************
 **
 *F  InitMarkFuncBags(<type>,<mark-func>)  . . . . .  install marking function
-*F  MarkNoSubBags(<bag>)  . . . . . . . . marking function that marks nothing
-*F  MarkOneSubBags(<bag>) . . . . . .  marking function that marks one subbag
-*F  MarkTwoSubBags(<bag>) . . . . . . marking function that marks two subbags
-*F  MarkAllSubBags(<bag>) . . . . . .  marking function that marks everything
-*F  MARK_BAG(<bag>) . . . . . . . . . . . . . . . . . . .  mark a bag as live
-**
-**  'InitMarkFuncBags( <type>, <mark-func> )'
 **
 **  'InitMarkFuncBags' installs the function <mark-func>  as marking function
 **  for bags  of  type <type>.   The  application  *must* install  a  marking
@@ -638,7 +747,7 @@ extern  void            InitMsgsFuncBags (
 **
 **  A marking function  is a function  that takes a  single  argument of type
 **  'Bag' and returns nothing, i.e., has return type 'void'.  Such a function
-**  must apply the  macro 'MARK_BAG' to each bag  identifier that  appears in
+**  must apply the function 'MarkBag' to each bag  identifier that  appears in
 **  the bag (see below).
 **
 **  Those functions are applied during the garbage  collection to each marked
@@ -646,55 +755,44 @@ extern  void            InitMsgsFuncBags (
 **  subbags.  The ability to use the correct marking function is the only use
 **  that {\Gasman} has for types.
 **
-**  'MARK_BAG( <bag> )'
+**  {\Gasman} already provides several marking functions, see below.
+*/
+typedef void (* TNumMarkFuncBags )( Bag bag );
+extern void InitMarkFuncBags( UInt type, TNumMarkFuncBags mark_func );
+
+
+/****************************************************************************
 **
-**  'MARK_BAG' marks the <bag> as live so that it is  not thrown away during
-**  a garbage collection.  'MARK_BAG' should only be called from the marking
-**  functions installed with 'InitMarkFuncBags'.
-**
-**  'MARK_BAG' tests  if <bag> is  a valid identifier of a  bag  in the young
-**  bags  area.  If it is not,  then 'MARK_BAG' does nothing,  so there is no
-**  harm in  calling 'MARK_BAG' for  something   that is not actually  a  bag
-**  identifier.
-**
-**  Note that 'MARK_BAG' is a macro, so do not call it with an argument that
-**  has side effects.
-**
-**  'MarkBagWeakly( <bag> )'
-**
-**  'MarkBagWeakly' is an alternative to MARK_BAG, intended to be used by the
-**  marking functions  of weak pointer objects.  A  bag which is  marked both
-**  weakly and strongly  is treated as strongly marked.   A bag which is only
-**  weakly marked will be recovered by garbage collection, but its identifier
-**  remains, marked      in   a    way    which   can     be   detected    by
-**  "IS_WEAK_DEAD_BAG". Which should  always be   checked before copying   or
-**  using such an identifier.
-**
-**
-**  {\Gasman} already provides the following marking functions.
-**
-**  'MarkNoSubBags( <bag> )'
+*F  MarkNoSubBags(<bag>)  . . . . . . . . marking function that marks nothing
 **
 **  'MarkNoSubBags'  is a marking function   for types whose  bags contain no
 **  identifier of other   bags.  It does nothing,  as  its name implies,  and
 **  simply returns.  For example   in  {\GAP} the  bags for   large  integers
 **  contain only the digits and no identifiers of bags.
+*/
+extern void MarkNoSubBags( Bag bag );
+
+
+/****************************************************************************
 **
-**  'MarkOneSubBags( <bag> )'
+*F  MarkOneSubBags(<bag>) . . . . . .  marking function that marks one subbag
+*F  MarkTwoSubBags(<bag>) . . . . . . marking function that marks two subbags
+*F  MarkThreeSubBags(<bag>) . . . . marking function that marks three subbags
+*F  MarkFourSubBags(<bag>) . . . . . marking function that marks four subbags
 **
-**  'MarkOneSubBags'  is  a  marking  function for types   whose bags contain
-**  exactly one identifier of another bag as  the first entry.  It marks this
-**  subbag and returns.  For example in {\GAP} bags for finite field elements
-**  contain exactly one  bag  identifier  for the  finite field   the element
-**  belongs to.
+**  These are marking functions for types whose bags contain exactly the
+**  the indicated number as bag identifiers as their initial entries.
+**  These functions mark those subbags and return.
+*/
+extern void MarkOneSubBags( Bag bag );
+extern void MarkTwoSubBags( Bag bag );
+extern void MarkThreeSubBags( Bag bag );
+extern void MarkFourSubBags( Bag bag );
+
+
+/****************************************************************************
 **
-**  'MarkTwoSubBags( <bag> )'
-**
-**  'MarkTwoSubBags' is  a  marking function   for types  whose bags  contain
-**  exactly two identifiers of other bags as  the first and second entry such
-**  as the binary operations bags.  It marks those  subbags and returns.  For
-**  example  in {\GAP}  bags for  rational   numbers contain exactly two  bag
-**  identifiers for the numerator and the denominator.
+*F  MarkAllSubBags(<bag>) . . . . . .  marking function that marks everything
 **
 **  'MarkAllSubBags( <bag> )'
 **
@@ -709,62 +807,68 @@ extern  void            InitMsgsFuncBags (
 **  down 'CollectBags'.  For example  in {\GAP} bags  for lists contain  only
 **  bag identifiers for the elements  of the  list or 0   if an entry has  no
 **  assigned value.
-** */
-
-
-typedef void            (* TNumMarkFuncBags ) (
-            Bag                 bag );
-
-extern  void            InitMarkFuncBags (
-            UInt                type,
-            TNumMarkFuncBags    mark_func );
-
-extern  void            MarkNoSubBags (
-            Bag                 bag );
-
-extern  void            MarkOneSubBags (
-            Bag                 bag );
-
-extern  void            MarkTwoSubBags (
-            Bag                 bag );
-
-extern  void            MarkThreeSubBags (
-            Bag                 bag );
-
-extern  void            MarkFourSubBags (
-            Bag                 bag );
-
-extern  void            MarkAllSubBags (
-            Bag                 bag );
-
-extern void             MarkBagWeakly (
-            Bag                 bag );
-
-extern  Bag *                   MptrBags;
-extern  Bag *                   OldBags;
-extern  Bag *                   AllocBags;
-extern  Bag                     MarkedBags;
-
-#define MARKED_DEAD(x)  (x)
-#define MARKED_ALIVE(x) ((Bag)(((Char *)(x))+1))
-#define MARKED_HALFDEAD(x) ((Bag)(((Char *)(x))+2))
-#define IS_MARKED_ALIVE(bag) ((PTR_BAG(bag)[-1]) == MARKED_ALIVE(bag))
-#define IS_MARKED_DEAD(bag) ((PTR_BAG(bag)[-1]) == MARKED_DEAD(bag))
-#define IS_MARKED_HALFDEAD(bag) ((PTR_BAG(bag)[-1]) == MARKED_HALFDEAD(bag))
-#define UNMARKED_DEAD(x)  (x)
-#define UNMARKED_ALIVE(x) ((Bag)(((Char *)(x))-1))
-#define UNMARKED_HALFDEAD(x) ((Bag)(((Char *)(x))-2))
-
-
-#define MARK_BAG(bag)                                                       \
-                if ( (((UInt)(bag)) & (sizeof(Bag)-1)) == 0                 \
-                  && (Bag)MptrBags <= (bag)    && (bag) < (Bag)OldBags      \
-                  && YoungBags < PTR_BAG(bag)  && PTR_BAG(bag) <= AllocBags \
-                  && (IS_MARKED_DEAD(bag) || IS_MARKED_HALFDEAD(bag)) ) \
-                  {                                                          \
-                    PTR_BAG(bag)[-1] = MarkedBags; MarkedBags = (bag);      }
+*/
+extern void MarkAllSubBags( Bag bag );
 
 extern void MarkAllSubBagsDefault ( Bag );
+
+/****************************************************************************
+**
+*F  MarkBag(<bag>) . . . . . . . . . . . . . . . . . . .  mark a bag as live
+**
+**  'MarkBag' marks the <bag> as live so that it is  not thrown away during
+**  a garbage collection.  'MarkBag' should only be called from the marking
+**  functions installed with 'InitMarkFuncBags'.
+**
+**  'MarkBag' tests  if <bag> is  a valid identifier of a  bag  in the young
+**  bags  area.  If it is not,  then 'MarkBag' does nothing,  so there is no
+**  harm in  calling 'MarkBag' for  something   that is not actually  a  bag
+**  identifier.
+
+*/
+#if !defined(BOEHM_GC)
+extern void MarkBag( Bag bag );
+#else
+static inline void MarkBag( Bag bag ) {}
+#endif
+
+
+/****************************************************************************
+**
+**  MARK_BAG is provided for backwards compatibility with existing code. New
+**  code should use MarkBag directly instead.
+**
+*/
+#define MARK_BAG(bag)   MarkBag(bag)
+
+
+/****************************************************************************
+**
+*F  MarkBagWeakly(<bag>) . . . . . . . . . . . . .  mark a bag as weakly live
+**
+**  'MarkBagWeakly' is an alternative to MarkBag, intended to be used by the
+**  marking functions  of weak pointer objects.  A  bag which is  marked both
+**  weakly and strongly  is treated as strongly marked.   A bag which is only
+**  weakly marked will be recovered by garbage collection, but its identifier
+**  remains, marked      in   a    way    which   can     be   detected    by
+**  "IS_WEAK_DEAD_BAG". Which should  always be   checked before copying   or
+**  using such an identifier.
+*/
+#if !defined(BOEHM_GC)
+extern void MarkBagWeakly( Bag bag );
+#endif
+
+
+/****************************************************************************
+**
+*F  MarkArrayOfBags(<array>,<count>) . . . . . . .  mark all bags in an array
+**
+**  'MarkArrayOfBags' iterates over <count> all bags in the given array,
+**  and marks each bag using MarkBag.
+*/
+extern void MarkArrayOfBags( Bag array[], int count );
+
+
 
 
 /****************************************************************************
@@ -772,11 +876,26 @@ extern void MarkAllSubBagsDefault ( Bag );
 *F
 */
 
+#if !defined(BOEHM_GC)
+
+extern  Bag *                   MptrBags;
+extern  Bag *                   OldBags;
+extern  Bag *                   AllocBags;
+
 #define IS_WEAK_DEAD_BAG(bag) ( (((UInt)bag & (sizeof(Bag)-1)) == 0) && \
                                 (Bag)MptrBags <= (bag)    &&          \
                                 (bag) < (Bag)OldBags  &&              \
                                 (((UInt)*bag) & (sizeof(Bag)-1)) == 1)
 
+#else
+
+#define IS_WEAK_DEAD_BAG(bag) (!(bag))
+#define REGISTER_WP(loc, obj) \
+	GC_general_register_disappearing_link((void **)(loc), (obj))
+#define FORGET_WP(loc) \
+	GC_unregister_disappearing_link((void **)(loc))
+
+#endif
              
 /****************************************************************************
 **
@@ -812,11 +931,12 @@ extern  void            InitSweepFuncBags (
             TNumSweepFuncBags    sweep_func );
  
 
-
 /****************************************************************************
 **
 *V  GlobalBags  . . . . . . . . . . . . . . . . . . . . . list of global bags
 */
+#if !defined(BOEHM_GC)
+
 #ifndef NR_GLOBAL_BAGS
 #define NR_GLOBAL_BAGS  20000L
 #endif
@@ -830,6 +950,7 @@ typedef struct {
 
 extern TNumGlobalBags GlobalBags;
 
+#endif
 
 /****************************************************************************
 **
@@ -846,7 +967,7 @@ extern TNumGlobalBags GlobalBags;
 **  problem  if  such a  variable does not   actually  hold a bag identifier,
 **  {\Gasman} will simply ignore it then.
 **
-**  There is a limit on the number of calls to 'InitGlobalBags', which is 512
+**  There is a limit on the number of calls to 'InitGlobalBag', which is 20000
 **  by default.   If the application has  more global variables that may hold
 **  bag  identifier, you  have to  compile  {\Gasman} with a  higher value of
 **  'NR_GLOBAL_BAGS', i.e., with 'make COPTS=-DNR_GLOBAL_BAGS=<nr>'.
@@ -856,11 +977,13 @@ extern TNumGlobalBags GlobalBags;
 **  after a save and load
 */
 
-extern Int WarnInitGlobalBag;
-
 extern void InitGlobalBag (
             Bag *               addr,
             const Char *        cookie );
+
+#if !defined(BOEHM_GC)
+
+extern Int WarnInitGlobalBag;
 
 extern void SortGlobals( UInt byWhat );
 
@@ -871,11 +994,12 @@ extern Bag * GlobalByCookie(
 extern void StartRestoringBags( UInt nBags, UInt maxSize);
 
 
-extern Bag NextBagRestoring( UInt size,  UInt type);
+extern Bag NextBagRestoring( UInt type, UInt flags, UInt size );
 
 
 extern void FinishedRestoringBags( void );
 
+#endif
 
 
 /****************************************************************************
@@ -955,7 +1079,7 @@ extern void CheckMasterPointers( void );
 **
 **  InitBags( <alloc-func>, <initial-size>,
 **            <stack-func>, <stack-start>, <stack-align>,
-**            <cache-size>, <dirty>, <abort-func> )
+**            <abort-func> )
 **
 **  'InitBags'  initializes {\Gasman}.  It  must be called from a application
 **  using {\Gasman} before any bags can be allocated.
@@ -989,7 +1113,7 @@ extern void CheckMasterPointers( void );
 **  should allocate.  This   value is automatically rounded   up to the  next
 **  multiple of 1/2 MByte by 'InitBags'.
 **
-**  <stack-func>  must be   a    function    that  applies  'MARK_BAG'   (see
+**  <stack-func>  must be   a    function    that  applies  'MarkBag'   (see
 **  "InitMarkFuncBags") to each possible bag identifier on the application\'s
 **  stack, i.e., the stack where the applications local variables  are saved.
 **  This should be a function of no  arguments  and return type 'void'.  This
@@ -1016,26 +1140,6 @@ extern void CheckMasterPointers( void );
 **  on  the   machine,  the  operating system,   and   the compiler.   If the
 **  application provides another <stack-func>, <stack-align> is ignored.
 **
-**  <cache-size>  informs {\Gasman} whether  the  processor has a usable data
-**  cache and how large it is  measured in bytes.   If the application passes
-**  0, {\Gasman} assumes that the processor has no data cache or a data cache
-**  to small to be   useful.  In this case  the  entire free storage is  made
-**  available for allocations after garbage  collections.  If the application
-**  passes a  nonzero value, {\Gasman}  assumes that this is  the size of the
-**  part of the data cache that should  be used for  the allocation area, and
-**  tries  to keep the allocation  area small enough  so that it fits.  For a
-**  processor that has separate  data and instruction caches, the application
-**  should pass the size of the data cache minus 65536.  For a processor with
-**  a  unified cache,  the application  should  pass the size  of the unified
-**  cache minus   131072.  The application probably should   not pass a value
-**  less than 131072.
-**
-**  The initialization  flag  <dirty> determines  whether  bags allocated  by
-**  'NewBag' are initialized to contain only 0 or not.   If <dirty> is 0, the
-**  bags are  initialized to  contain only 0.    If  <dirty> is  1, the  bags
-**  initially contain  random values.  Note that {\Gasman}  will be  a little
-**  bit faster if bags need not be initialized.
-**
 **  <abort-func> should be a function that {\Gasman} should call in case that
 **  something goes  wrong, e.g.,     if it  cannot allocation    the  initial
 **  workspace.  <abort-func> should be a function of one string argument, and
@@ -1046,20 +1150,16 @@ typedef Bag *           (* TNumAllocFuncBags) (
                                 Int             size,
                                 UInt            need );
 
-typedef void            (* TNumStackFuncBags) ( void );
+typedef void (*TNumStackFuncBags)(void);
+typedef void (*TNumExtraMarkFuncBags)(void);
+typedef void (*TNumAbortFuncBags)(const Char * msg);
 
-typedef void            (* TNumAbortFuncBags) (
-                                const Char *    msg );
-
-extern  void            InitBags (
-            TNumAllocFuncBags   alloc_func,
-            UInt                initial_size,
-            TNumStackFuncBags   stack_func,
-            Bag *               stack_bottom,
-            UInt                stack_align,
-            UInt                cache_size,
-            UInt                dirty,
-            TNumAbortFuncBags   abort_func );
+extern void InitBags(TNumAllocFuncBags alloc_func,
+                     UInt              initial_size,
+                     TNumStackFuncBags stack_func,
+                     Bag *             stack_bottom,
+                     UInt              stack_align,
+                     TNumAbortFuncBags abort_func);
 
 /****************************************************************************
 **
@@ -1082,10 +1182,8 @@ extern void CallbackForAllBags(
      void (*func)(Bag) );
 
 
+#ifdef BOEHM_GC
+void *AllocateMemoryBlock(UInt size);
+#endif
+
 #endif // GAP_GASMAN_H
-
-/****************************************************************************
-**
-
-*E  gasman.c  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

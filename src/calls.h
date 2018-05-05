@@ -45,15 +45,9 @@
 #ifndef GAP_CALLS_H
 #define GAP_CALLS_H
 
+#include <src/gaputils.h>
+#include <src/objects.h>
 
-/****************************************************************************
-**
-
-*T  ObjFunc . . . . . . . . . . . . . . . . type of function returning object
-**
-**  'ObjFunc' is the type of a function returning an object.
-*/
-typedef Obj (* ObjFunc) (/*arguments*/);
 
 typedef Obj (* ObjFunc_0ARGS) (Obj self);
 typedef Obj (* ObjFunc_1ARGS) (Obj self, Obj a1);
@@ -76,7 +70,6 @@ typedef Obj (* ObjFunc_6ARGS) (Obj self, Obj a1, Obj a2, Obj a3, Obj a4, Obj a5,
 *F  BODY_FUNC(<func>) . . . . . . . . . . . . . . . . . .  body of a function
 *F  ENVI_FUNC(<func>) . . . . . . . . . . . . . . . environment of a function
 *F  FEXS_FUNC(<func>) . . . . . . . . . . . .  func. expr. list of a function
-*V  SIZE_FUNC . . . . . . . . . . . . . . . . . size of the bag of a function
 **
 **  These macros  make it possible  to access  the  various components  of  a
 **  function.
@@ -105,18 +98,150 @@ typedef Obj (* ObjFunc_6ARGS) (Obj self, Obj a1, Obj a2, Obj a3, Obj a4, Obj a5,
 **  'FEXS_FUNC(<func>)'  is the function expressions list (i.e., the list of
 **  the function expressions of the functions defined inside of <func>).
 **
+**  'LCKS_FUNC(<func>)' is a string that contains the lock mode for the
+**  arguments of <func>. Each byte corresponds to the mode for an argument:
+**  0 means no lock, 1 means a read-only lock, 2 means a read-write lock.
+**  The value of the bag can be null, in which case no argument requires a
+**  lock. Only used in HPC-GAP.
 */
-#define HDLR_FUNC(func,i)       (* (ObjFunc*) (ADDR_OBJ(func) + 0 +(i)) )
-#define NAME_FUNC(func)         (*            (ADDR_OBJ(func) + 8     ) )
-#define NARG_FUNC(func)         (* (Int*)     (ADDR_OBJ(func) + 9     ) )
-#define NAMS_FUNC(func)         (*            (ADDR_OBJ(func) +10     ) )
-#define NAMI_FUNC(func,i)       ((Char *)CHARS_STRING(ELM_LIST(NAMS_FUNC(func),i)))
-#define PROF_FUNC(func)         (*            (ADDR_OBJ(func) +11     ) )
-#define NLOC_FUNC(func)         (* (UInt*)    (ADDR_OBJ(func) +12     ) )
-#define BODY_FUNC(func)         (*            (ADDR_OBJ(func) +13     ) )
-#define ENVI_FUNC(func)         (*            (ADDR_OBJ(func) +14     ) )
-#define FEXS_FUNC(func)         (*            (ADDR_OBJ(func) +15     ) )
-#define SIZE_FUNC               (16*sizeof(Bag))
+typedef struct {
+    ObjFunc handlers[8];
+    Obj name;
+    Int nargs;
+    Obj namesOfLocals;
+    Obj prof;
+    UInt nloc;
+    Obj body;
+    Obj envi;
+    Obj fexs;
+#ifdef HPCGAP
+    Obj locks;
+#endif
+    // additional data follows for operations
+} FunctionHeader;
+
+static inline FunctionHeader * FUNC_HEADER(Obj func)
+{
+    GAP_ASSERT(TNUM_OBJ(func) == T_FUNCTION);
+    return (FunctionHeader *)ADDR_OBJ(func);
+}
+
+static inline ObjFunc HDLR_FUNC(Obj func, Int i)
+{
+    return FUNC_HEADER(func)->handlers[i];
+}
+
+static inline Obj NAME_FUNC(Obj func)
+{
+    return FUNC_HEADER(func)->name;
+}
+
+static inline Int NARG_FUNC(Obj func)
+{
+    return FUNC_HEADER(func)->nargs;
+}
+
+static inline Obj NAMS_FUNC(Obj func)
+{
+    return FUNC_HEADER(func)->namesOfLocals;
+}
+
+extern Char * NAMI_FUNC(Obj func, Int i);
+
+static inline Obj PROF_FUNC(Obj func)
+{
+    return FUNC_HEADER(func)->prof;
+}
+
+static inline UInt NLOC_FUNC(Obj func)
+{
+    return FUNC_HEADER(func)->nloc;
+}
+
+static inline Obj BODY_FUNC(Obj func)
+{
+    return FUNC_HEADER(func)->body;
+}
+
+static inline Obj ENVI_FUNC(Obj func)
+{
+    return FUNC_HEADER(func)->envi;
+}
+
+static inline Obj FEXS_FUNC(Obj func)
+{
+    return FUNC_HEADER(func)->fexs;
+}
+
+#ifdef HPCGAP
+static inline Obj LCKS_FUNC(Obj func)
+{
+    return FUNC_HEADER(func)->locks;
+}
+
+#endif
+
+static inline void SET_HDLR_FUNC(Obj func, Int i, ObjFunc hdlr)
+{
+    FunctionHeader *header = FUNC_HEADER(func);
+    GAP_ASSERT(0 <= i && i < ARRAY_SIZE(header->handlers));
+    header->handlers[i] = hdlr;
+}
+
+extern void SET_NAME_FUNC(Obj func, Obj name);
+
+static inline void SET_NARG_FUNC(Obj func, Int nargs)
+{
+    FUNC_HEADER(func)->nargs = nargs;
+}
+
+static inline void SET_NAMS_FUNC(Obj func, Obj namesOfLocals)
+{
+    FUNC_HEADER(func)->namesOfLocals = namesOfLocals;
+}
+
+static inline void SET_PROF_FUNC(Obj func, Obj prof)
+{
+    FUNC_HEADER(func)->prof = prof;
+}
+
+static inline void SET_NLOC_FUNC(Obj func, UInt nloc)
+{
+    FUNC_HEADER(func)->nloc = nloc;
+}
+
+static inline void SET_BODY_FUNC(Obj func, Obj body)
+{
+    GAP_ASSERT(TNUM_OBJ(body) == T_BODY);
+    FUNC_HEADER(func)->body = body;
+}
+
+static inline void SET_ENVI_FUNC(Obj func, Obj envi)
+{
+    FUNC_HEADER(func)->envi = envi;
+}
+
+static inline void SET_FEXS_FUNC(Obj func, Obj fexs)
+{
+    FUNC_HEADER(func)->fexs = fexs;
+}
+
+#ifdef HPCGAP
+static inline void SET_LCKS_FUNC(Obj func, Obj locks)
+{
+    FUNC_HEADER(func)->locks = locks;
+}
+#endif
+
+/****************************************************************************
+*
+*F  IsKernelFunction( <func> )
+**
+**  'IsKernelFunction' returns 1 if <func> is a kernel function (i.e.
+**  compiled from C code), and 0 otherwise.
+*/
+extern Int IsKernelFunction(Obj func);
+
 
 #define HDLR_0ARGS(func)        ((ObjFunc_0ARGS)HDLR_FUNC(func,0))
 #define HDLR_1ARGS(func)        ((ObjFunc_1ARGS)HDLR_FUNC(func,1))
@@ -138,7 +263,6 @@ extern Obj NargError(Obj func, Int actual);
 
 /****************************************************************************
 **
-
 *F  CALL_0ARGS(<func>)  . . . . . . . . . call a function with 0    arguments
 *F  CALL_1ARGS(<func>,<arg1>) . . . . . . call a function with 1    arguments
 *F  CALL_2ARGS(<func>,<arg1>...)  . . . . call a function with 2    arguments
@@ -173,7 +297,6 @@ extern Obj NargError(Obj func, Int actual);
 
 /****************************************************************************
 **
-
 *F  CALL_0ARGS_PROF( <func>, <arg1> ) . . . . .  call a prof func with 0 args
 *F  CALL_1ARGS_PROF( <func>, <arg1>, ... )  . .  call a prof func with 1 args
 *F  CALL_2ARGS_PROF( <func>, <arg1>, ... )  . .  call a prof func with 2 args
@@ -214,73 +337,11 @@ extern Obj NargError(Obj func, Int actual);
 
 /****************************************************************************
 **
-
-*F  COUNT_PROF( <prof> )  . . . . . . . . number of invocations of a function
-*F  TIME_WITH_PROF( <prof> )  . . . . . . time with    children in a function
-*F  TIME_WOUT_PROF( <prof> )  . . . . . . time without children in a function
-*F  STOR_WITH_PROF( <prof> )  . . . .  storage with    children in a function
-*F  STOR_WOUT_PROF( <prof> )  . . . .  storage without children in a function
-*V  LEN_PROF  . . . . . . . . . . .  length of a profiling bag for a function
-**
-**  With each  function we associate two  time measurements.  First the *time
-**  spent by this  function without its  children*, i.e., the amount  of time
-**  during which this  function was active.   Second the *time  spent by this
-**  function with its  children*, i.e., the amount  of time during which this
-**  function was either active or suspended.
-**
-**  Likewise with each  function  we associate the two  storage measurements,
-**  the storage spent by  this function without its  children and the storage
-**  spent by this function with its children.
-**
-**  These  macros  make it possible to  access   the various components  of a
-**  profiling information bag <prof> for a function <func>.
-**
-**  'COUNT_PROF(<prof>)' is the  number  of  calls  to the  function  <func>.
-**  'TIME_WITH_PROF(<prof>) is  the time spent  while the function <func> was
-**  either  active or suspended.   'TIME_WOUT_PROF(<prof>)' is the time spent
-**  while the function <func>   was active.  'STOR_WITH_PROF(<prof>)'  is the
-**  amount of  storage  allocated while  the  function  <func>  was active or
-**  suspended.  'STOR_WOUT_PROF(<prof>)' is  the amount  of storage allocated
-**  while the  function <func> was   active.  'LEN_PROF' is   the length of a
-**  profiling information bag.
-*/
-#define COUNT_PROF(prof)            (INT_INTOBJ(ELM_PLIST(prof,1)))
-#define TIME_WITH_PROF(prof)        (INT_INTOBJ(ELM_PLIST(prof,2)))
-#define TIME_WOUT_PROF(prof)        (INT_INTOBJ(ELM_PLIST(prof,3)))
-#define STOR_WITH_PROF(prof)        (INT_INTOBJ(ELM_PLIST(prof,4)))
-#define STOR_WOUT_PROF(prof)        (INT_INTOBJ(ELM_PLIST(prof,5)))
-
-#define SET_COUNT_PROF(prof,n)      SET_ELM_PLIST(prof,1,INTOBJ_INT(n))
-#define SET_TIME_WITH_PROF(prof,n)  SET_ELM_PLIST(prof,2,INTOBJ_INT(n))
-#define SET_TIME_WOUT_PROF(prof,n)  SET_ELM_PLIST(prof,3,INTOBJ_INT(n))
-#define SET_STOR_WITH_PROF(prof,n)  SET_ELM_PLIST(prof,4,INTOBJ_INT(n))
-#define SET_STOR_WOUT_PROF(prof,n)  SET_ELM_PLIST(prof,5,INTOBJ_INT(n))
-
-#define LEN_PROF                    5
-
-
-/****************************************************************************
-**
-
-*F  FuncFILENAME_FUNC(Obj self, Obj func) . . . . . . .  filename of function
-*F  FuncSTARTLINE_FUNC(Obj self, Obj func)  . . . . .  start line of function
-*F  FuncENDLINE_FUNC(Obj self, Obj func)  . . . . . . .  end line of function
-**
-**  These functions, usually exported to GAP, get information about GAP
-**  functions */
-Obj FuncFILENAME_FUNC(Obj self, Obj func);
-Obj FuncSTARTLINE_FUNC(Obj self, Obj func);
-Obj FuncENDLINE_FUNC(Obj self, Obj func);
-
-/****************************************************************************
-**
-
 *F * * * * * * * * * * * * *  create a new function * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  InitHandlerFunc( <handler>, <cookie> ) . . . . . . . . register a handler
 **
 **  Every handler should  be registered (once) before  it is installed in any
@@ -288,8 +349,6 @@ Obj FuncENDLINE_FUNC(Obj self, Obj func);
 **  saved workspace.  <cookie> should be a  unique  C string, identifying the
 **  handler
 */
-
-extern void InitHandlerRegistration( void );
 
 extern void InitHandlerFunc (
      ObjFunc            hdlr,
@@ -369,27 +428,20 @@ extern Obj ArgStringToList(const Char *nams_c);
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * type and print function  * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  PrintFunction( <func> )   . . . . . . . . . . . . . . .  print a function
 **
-**  'PrintFunction' prints  the   function  <func> in  abbreviated  form   if
-**  'PrintObjFull' is false.
+**  'PrintFunction' prints  the   function  <func> .
 */
 extern void PrintFunction (
     Obj                 func );
 
 
 /****************************************************************************
-**
-*F  FuncCALL_FUNC_LIST( <self>, <func>, <list> )  . . . . . . call a function
-**
-**  'FuncCALL_FUNC_LIST' implements the internal function 'CallFuncList'.
 **
 **  'CallFuncList( <func>, <list> )'
 **
@@ -405,22 +457,14 @@ extern Obj CallFuncListOper;
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  InitInfoCalls() . . . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoCalls ( void );
 
 
 #endif // GAP_CALLS_H
-
-/****************************************************************************
-**
-
-*E  calls.h . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

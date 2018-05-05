@@ -220,7 +220,7 @@
 
 <p>The return value is the number of streams that are ready, this may be 0 if a timeout was specified. All file descriptors in the three lists that are not yet ready are replaced by <code class="keyw">fail</code> in this function. So the lists are changed!</p>
 
-<p>This function is not available on the Macintosh architecture and is only available if your operating system has <code class="code">select</code>, which is detected during compilation of <strong class="pkg">GAP</strong>.</p>
+<p>This function is only available if your operating system has <code class="code">select</code>, which is detected during compilation of <strong class="pkg">GAP</strong>.</p>
 
 <p><a id="X7D1D33A587BFD93D" name="X7D1D33A587BFD93D"></a></p>
 
@@ -548,7 +548,7 @@ AppendLine
 <h5>10.6-3 InputFromUser</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InputFromUser</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>prints the <var class="Arg">arg</var> as a prompt, then waits until a text is typed by the user (or from the standard input device if it has been redirected). This text must be a <em>single</em> expression, followed by one <em>enter</em>. This is evaluated (see <code class="func">EvalString</code> (<a href="chap27.html#X7DE4CCD285440659"><span class="RefLink">27.9-3</span></a>)) and the result is returned.</p>
+<p>prints the <var class="Arg">arg</var> as a prompt, then waits until a text is typed by the user (or from the standard input device if it has been redirected). This text must be a <em>single</em> expression, followed by one <em>enter</em>. This is evaluated (see <code class="func">EvalString</code> (<a href="chap27.html#X7DE4CCD285440659"><span class="RefLink">27.9-5</span></a>)) and the result is returned.</p>
 
 <p><a id="X8028E1D87CE2F059" name="X8028E1D87CE2F059"></a></p>
 
@@ -688,7 +688,7 @@ line -&gt; 0 &lt; Length(line) and line[Length(line)] = '\n'
 
 <h4>10.10 <span class="Heading">Handling of Streams in the Background</span></h4>
 
-<p>This section describes a feature of the <strong class="pkg">GAP</strong> kernel that can be used to handle pending streams somehow "in the background". This is currently not available on the Macintosh architecture and only on operating systems that have <code class="code">select</code>.</p>
+<p>This section describes a feature of the <strong class="pkg">GAP</strong> kernel that can be used to handle pending streams somehow "in the background". This is only available on operating systems that have <code class="code">select</code>.</p>
 
 <p>Right before <strong class="pkg">GAP</strong> reads a keypress from the keyboard it calls a little subroutine that can handle streams that are ready to be read or ready to be written. This means that <strong class="pkg">GAP</strong> can handle these streams during user input on the command line. Note that this does not work when <strong class="pkg">GAP</strong> is in the middle of some calculation.</p>
 
@@ -703,7 +703,7 @@ line -&gt; 0 &lt; Length(line) and line[Length(line)] = '\n'
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallCharReadHookFunc</code>( <var class="Arg">stream</var>, <var class="Arg">mode</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>installs the function <var class="Arg">func</var> as a handler function for the stream <var class="Arg">stream</var>. The argument <var class="Arg">mode</var> decides, for what operations on the stream this function is installed. <var class="Arg">mode</var> must be a string, in which a letter <code class="code">r</code> means "read", <code class="code">w</code> means "write" and <code class="code">x</code> means "exception", according to the <code class="code">select</code> function call in the UNIX C-library (see <code class="code">man select</code> and <code class="func">UNIXSelect</code> (<a href="chap10.html#X87BC257A78F96828"><span class="RefLink">10.2-3</span></a>)). More than one letter is allowed in <var class="Arg">mode</var>. As described above the function is called in a situation when <strong class="pkg">GAP</strong> is reading a character from the keyboard. Handler functions should not use much time to complete.</p>
 
-<p>This functionality does not work on the Macintosh architecture and only works if the operating system has a <code class="code">select</code> function.</p>
+<p>This functionality only works if the operating system has a <code class="code">select</code> function.</p>
 
 <p><a id="X8492474C7A0B10AD" name="X8492474C7A0B10AD"></a></p>
 
@@ -712,7 +712,7 @@ line -&gt; 0 &lt; Length(line) and line[Length(line)] = '\n'
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnInstallCharReadHookFunc</code>( <var class="Arg">stream</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>uninstalls the function <var class="Arg">func</var> as a handler function for the stream <var class="Arg">stream</var>. All instances are deinstalled, regardless of the mode of operation (read, write, exception).</p>
 
-<p>This functionality does not work on the Macintosh architecture and only works if the operating system has a <code class="code">select</code> function.</p>
+<p>This functionality only works if the operating system has a <code class="code">select</code> function.</p>
 
 <p><a id="X848DD7DC79363341" name="X848DD7DC79363341"></a></p>
 

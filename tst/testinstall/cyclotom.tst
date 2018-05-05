@@ -10,8 +10,6 @@
 ##  (This holds also for minor changes such as the removal of whitespace or
 ##  the correction of typos.)
 ##
-##  To be listed in testinstall.g
-##
 gap> START_TEST("cyclotom.tst");
 
 # Check basic arithmetic operations.
@@ -227,9 +225,98 @@ gap> Print(RationalizedMat( gm.mat ),"\n");
 [ [ 2666, -1, -2, 0, 0 ], [ 519550080, 0, 0, 0, 0 ], 
   [ 1770515712, 0, -2, 0, 0 ], [ 4337827830, 0, 0, 0, -1 ] ]
 gap> a := -E(4)*2^(8*GAPInfo.BytesPerVariable-4);;
-gap> TNUM_OBJ(COEFFS_CYC(-a)[2]) <> [ 0, "integer" ];
+gap> TNUM_OBJ(COEFFS_CYC(-a)[2]) = T_INTPOS;
 true
-gap> STOP_TEST( "cyclotom.tst", 340000);
+
+#
+# IsIntegralCyclotomic
+#
+gap> IsIntegralCyclotomic(1);
+true
+gap> IsIntegralCyclotomic(1/2);
+false
+gap> IsIntegralCyclotomic(E(4));
+true
+gap> IsIntegralCyclotomic(E(4)/2);
+false
+gap> IsIntegralCyclotomic(false);
+false
+
+#
+# PowCyc
+#
+gap> E(1234)^1234;
+1
+gap> E(1234)^-1234;
+1
+gap> for n in [120,122,125,127,128] do
+>     x:=E(n);
+>     y:=1;
+>     z:=1;
+>     for i in [1..260] do
+>         y:=y*x; z:=z/x;
+>         Assert(0, x^i = y);
+>         Assert(0, x^-i = z);
+>     od;
+> od;
+gap> for n in [120,122,125,127,128] do
+>     x:=E(n);
+>     E(100);   # ensure special case in PowCyc does not trigger
+>     y:=1;
+>     z:=1;
+>     for i in [1..260] do
+>         y:=y*x; z:=z/x;
+>         Assert(0, x^i = y);
+>         Assert(0, x^-i = z);
+>     od;
+> od;
+
+#
+# CyclotomicsLimit
+#
+gap> GetCyclotomicsLimit();
+1000000
+gap> SetCyclotomicsLimit(1/2);
+Error, Cyclotomic Field size limit must be a small integer, not a rational 
+gap> SetCyclotomicsLimit(0);
+Error, Cyclotomic Field size limit must be positive
+gap> SetCyclotomicsLimit(100);
+Error, Cyclotomic Field size limit must not be less than old limit of 1000000
+gap> SetCyclotomicsLimit(1000000);
+
+#
+# test handling of invalid inputs
+#
+
+#
+gap> E(0);
+Error, E: <n> must be a positive integer (not a integer)
+
+#
+gap> IS_CYC('a');
+false
+
+#
+gap> IS_CYC_INT('a');
+false
+
+#
+gap> CONDUCTOR(fail);
+Error, Conductor: <cyc> must be a cyclotomic or a small list (not a boolean or\
+ fail)
+gap> CONDUCTOR([1,fail]);
+Error, Conductor: <list>[2] must be a cyclotomic (not a boolean or fail)
+
+#
+gap> COEFFS_CYC(false);
+Error, COEFFSCYC: <cyc> must be a cyclotomic (not a boolean or fail)
+
+#
+gap> CycList([1,fail]);
+Error, CycList: each entry must be a rational (not a boolean or fail)
+
+#
+gap> STOP_TEST( "cyclotom.tst", 1);
 
 #############################################################################
 ##

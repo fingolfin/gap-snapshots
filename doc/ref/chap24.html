@@ -191,7 +191,9 @@
 <h5>24.2-1 IsMatrix</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatrix</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
-<p>A <em>matrix</em> is a list of lists of equal length whose entries lie in a common ring.</p>
+<p>By convention <em>matrix</em> is a list of lists of equal length whose entries lie in a common ring.</p>
+
+<p>For technical reasons laid out at the top of Chapter <a href="chap24.html#X812CCAB278643A59"><span class="RefLink">24</span></a>, the filter <code class="func">IsMatrix</code> is a synonym for a table of ring elements, (see <code class="func">IsTable</code> (<a href="chap21.html#X80872FAF80EB5DF9"><span class="RefLink">21.1-4</span></a>) and <code class="func">IsRingElement</code> (<a href="chap31.html#X84BF40CA86C07361"><span class="RefLink">31.14-16</span></a>)). This means that <code class="func">IsMatrix</code> returns <code class="keyw">true</code> for tables such as <code class="code">[[1,2],[3]]</code>. If necessary, <code class="func">IsRectangularTable</code> (<a href="chap21.html#X79581E0387F7F7A9"><span class="RefLink">21.1-5</span></a>) can be used to test whether an object is a list of homogenous lists of equal lengths manually.</p>
 
 <p>Note that matrices may have different multiplications, besides the usual matrix product there is for example the Lie product. So there are categories such as <code class="func">IsOrdinaryMatrix</code> (<a href="chap24.html#X7CF42B8A845BC6A9"><span class="RefLink">24.2-2</span></a>) and <code class="func">IsLieMatrix</code> (<a href="chap24.html#X86EC33E17DD12D0E"><span class="RefLink">24.2-3</span></a>) that describe the matrix multiplication. One can form the product of two matrices only if they support the same multiplication.</p>
 
@@ -201,9 +203,13 @@
 [ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMatrix(mat);</span>
 true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">mat:=[[1,2],[3]];</span>
+[ [ 1, 2 ], [ 3 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMatrix(mat);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRectangularTable(mat);</span>
+false
 </pre></div>
-
-<p>Note also the filter <code class="func">IsTable</code> (<a href="chap21.html#X80872FAF80EB5DF9"><span class="RefLink">21.1-4</span></a>) which may be more appropriate than <code class="func">IsMatrix</code> for some purposes.</p>
 
 <p>Note that the empty list <code class="code">[]</code> and more complex "empty" structures such as <code class="code">[[]]</code> are <em>not</em> matrices, although special methods allow them be used in place of matrices in some situations. See <code class="func">EmptyMatrix</code> (<a href="chap24.html#X8508A7EA812BA0CC"><span class="RefLink">24.5-3</span></a>) below.</p>
 
@@ -406,7 +412,7 @@ GF(2^6)
 <h5>24.4-4 DeterminantMat</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeterminantMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Determinant</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Determinant</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the determinant of the square matrix <var class="Arg">mat</var>.</p>
 
 <p>These methods assume implicitly that <var class="Arg">mat</var> is defined over an integral domain whose quotient field is implemented in <strong class="pkg">GAP</strong>. For matrices defined over an arbitrary commutative ring with one see <code class="func">DeterminantMatDivFree</code> (<a href="chap24.html#X7EEA7E7A7F6BE6F3"><span class="RefLink">24.4-6</span></a>).</p>
@@ -635,8 +641,8 @@ EmptyMatrix( 5 )
 
 <h5>24.6-1 RandomMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMat</code>( <var class="Arg">m</var>, <var class="Arg">n</var>[, <var class="Arg">R</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p><code class="func">RandomMat</code> returns a new mutable random matrix with <var class="Arg">m</var> rows and <var class="Arg">n</var> columns with elements taken from the ring <var class="Arg">R</var>, which defaults to <code class="func">Integers</code> (<a href="chap14.html#X853DF11B80068ED5"><span class="RefLink">14</span></a>).</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomMat</code>( [<var class="Arg">rs</var>, ]<var class="Arg">m</var>, <var class="Arg">n</var>[, <var class="Arg">R</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p><code class="func">RandomMat</code> returns a new mutable random matrix with <var class="Arg">m</var> rows and <var class="Arg">n</var> columns with elements taken from the ring <var class="Arg">R</var>, which defaults to <code class="func">Integers</code> (<a href="chap14.html#X853DF11B80068ED5"><span class="RefLink">14</span></a>). Optionally, a random source <var class="Arg">rs</var> can be supplied.</p>
 
 
 <div class="example"><pre>
@@ -648,8 +654,8 @@ EmptyMatrix( 5 )
 
 <h5>24.6-2 RandomInvertibleMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomInvertibleMat</code>( <var class="Arg">m</var>[, <var class="Arg">R</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p><code class="func">RandomInvertibleMat</code> returns a new mutable invertible random matrix with <var class="Arg">m</var> rows and columns with elements taken from the ring <var class="Arg">R</var>, which defaults to <code class="func">Integers</code> (<a href="chap14.html#X853DF11B80068ED5"><span class="RefLink">14</span></a>).</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomInvertibleMat</code>( [<var class="Arg">rs</var>, ]<var class="Arg">m</var>[, <var class="Arg">R</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p><code class="func">RandomInvertibleMat</code> returns a new mutable invertible random matrix with <var class="Arg">m</var> rows and columns with elements taken from the ring <var class="Arg">R</var>, which defaults to <code class="func">Integers</code> (<a href="chap14.html#X853DF11B80068ED5"><span class="RefLink">14</span></a>). Optionally, a random source <var class="Arg">rs</var> can be supplied.</p>
 
 
 <div class="example"><pre>
@@ -665,8 +671,8 @@ EmptyMatrix( 5 )
 
 <h5>24.6-3 RandomUnimodularMat</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomUnimodularMat</code>( <var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>returns a new random mutable <var class="Arg">m</var><span class="SimpleMath">×</span><var class="Arg">m</var> matrix with integer entries that is invertible over the integers.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomUnimodularMat</code>( [<var class="Arg">rs</var>, ]<var class="Arg">m</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>returns a new random mutable <var class="Arg">m</var><span class="SimpleMath">×</span><var class="Arg">m</var> matrix with integer entries that is invertible over the integers. Optionally, a random source <var class="Arg">rs</var> can be supplied.</p>
 
 
 <div class="example"><pre>
@@ -702,7 +708,7 @@ EmptyMatrix( 5 )
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TriangulizedMat</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RREF</code>( <var class="Arg">mat</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Computes an upper triangular form of the matrix <var class="Arg">mat</var> via the Gaussian Algorithm. It returns a immutable matrix in upper triangular form. This is sometimes also called "Hermite normal form" or "Reduced Row Echelon Form". <code class="code">RREF</code> is a synonym for <code class="code">TriangulizedMat</code>.</p>
+<p>Computes an upper triangular form of the matrix <var class="Arg">mat</var> via the Gaussian Algorithm. It returns a mutable matrix in upper triangular form. This is sometimes also called "Hermite normal form" or "Reduced Row Echelon Form". <code class="code">RREF</code> is a synonym for <code class="code">TriangulizedMat</code>.</p>
 
 <p><a id="X8384CA8E7B3850D3" name="X8384CA8E7B3850D3"></a></p>
 
@@ -1309,7 +1315,7 @@ true
 
 <p>In order to form a row of a compressed matrix a vector must accept certain restrictions. Specifically, it cannot change its length or change the field over which it is compressed. The main consequences of this are: that only elements of the appropriate field can be assigned to entries of the vector, and only to positions between 1 and the original length; that the vector cannot be shared between two matrices compressed over different fields.</p>
 
-<p>This is enforced by the filter <code class="code">IsLockedRepresentationVector</code>. When a vector becomes part of a compressed matrix, this filter is set for it. Assignment, <code class="func">Unbind</code> (<a href="chap21.html#X78B72FDF7BD63C0B"><span class="RefLink">21.5-2</span></a>), <code class="func">ConvertToVectorRep</code> (<a href="chap23.html#X810E46927F9E8F75"><span class="RefLink">23.3-1</span></a>) and <code class="func">ConvertToMatrixRep</code> (<a href="chap24.html#X8587A62F818AA0D6"><span class="RefLink">24.14-2</span></a>) are all prevented from altering a vector with this filter.</p>
+<p>This is enforced by the filter <code class="code">IsLockedRepresentationVector</code>. When a vector becomes part of a compressed matrix, this filter is set for it. Assignment, <code class="func">Unbind</code> (<a href="chap21.html#X78B72FDF7BD63C0B"><span class="RefLink">21.5-3</span></a>), <code class="func">ConvertToVectorRep</code> (<a href="chap23.html#X810E46927F9E8F75"><span class="RefLink">23.3-1</span></a>) and <code class="func">ConvertToMatrixRep</code> (<a href="chap24.html#X8587A62F818AA0D6"><span class="RefLink">24.14-2</span></a>) are all prevented from altering a vector with this filter.</p>
 
 
 <div class="example"><pre>
@@ -1345,9 +1351,9 @@ fail
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ImmutableMatrix</code>( <var class="Arg">field</var>, <var class="Arg">matrix</var>[, <var class="Arg">change</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns an immutable matrix equal to <var class="Arg">matrix</var> which is in the optimal (concerning space and runtime) representation for matrices defined over <var class="Arg">field</var>. This means that matrices obtained by several calls of <code class="func">ImmutableMatrix</code> for the same <var class="Arg">field</var> are compatible for fast arithmetic without need for field conversion.</p>
 
-<p>The input matrix <var class="Arg">matrix</var> or its rows might change the representation, however the result of <code class="func">ImmutableMatrix</code> is not necessarily <em>identical</em> to <var class="Arg">matrix</var> if a conversion is not possible.</p>
+<p>The input matrix <var class="Arg">matrix</var> or its rows might change their representation as a side effect of this function, however the result of <code class="func">ImmutableMatrix</code> is not necessarily <em>identical</em> to <var class="Arg">matrix</var> if a conversion is not possible.</p>
 
-<p>If <var class="Arg">change</var> is <code class="keyw">true</code>, the rows of <var class="Arg">matrix</var> (or <var class="Arg">matrix</var> itself) may be changed to become immutable; otherwise they are copied first).</p>
+<p>If <var class="Arg">change</var> is <code class="keyw">true</code>, the rows of <var class="Arg">matrix</var> (or <var class="Arg">matrix</var> itself) may be changed to become immutable; otherwise they are copied first.</p>
 
 <p><a id="X8587A62F818AA0D6" name="X8587A62F818AA0D6"></a></p>
 

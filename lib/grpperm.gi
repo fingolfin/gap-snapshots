@@ -606,10 +606,10 @@ end);
 ##
 #M  Random( <G> ) . . . . . . . . . . . . . . . . . . . . . .  random element
 ##
-InstallMethod( Random,
-    "for a permutation group",
-    [ IsPermGroup ], 10,
-    function( G )
+InstallMethodWithRandomSource( Random,
+    "for a random source and a permutation group",
+    [ IsRandomSource, IsPermGroup ], 10,
+    function( rs, G )
     local   S,  rnd;
 
     # go down the stabchain and multiply random representatives
@@ -617,7 +617,7 @@ InstallMethod( Random,
     rnd := S.identity;
     while Length( S.genlabels ) <> 0  do
         rnd := LeftQuotient( InverseRepresentative( S,
-                       Random( S.orbit ) ), rnd );
+                       Random( rs, S.orbit ) ), rnd );
         S := S.stabilizer;
     od;
 
@@ -753,8 +753,6 @@ BindGlobal("DoClosurePrmGp",function( G, gens, options )
     return C;
 end );
 
-BindGlobal("PG_EMPTY_OPT",rec());
-
 InstallOtherMethod( ClosureGroup,"permgroup, elements, options",
     true,
     [ IsPermGroup, IsList and IsPermCollection, IsRecord ], 0,
@@ -769,13 +767,13 @@ end );
 InstallMethod( ClosureGroup, "permgroup, element",true,
   [ IsPermGroup, IsPerm ], 0,
 function( G, g )
-  return DoClosurePrmGp( G, [ g ], PG_EMPTY_OPT );
+  return DoClosurePrmGp( G, [ g ], rec() );
 end );
 
 InstallMethod( ClosureGroup, "permgroup, elements",true,
         [ IsPermGroup, IsList and IsPermCollection ], 0,
 function( G, gens )
-  return DoClosurePrmGp( G, gens, PG_EMPTY_OPT );
+  return DoClosurePrmGp( G, gens, rec() );
 end );
 
 InstallOtherMethod( ClosureGroup, "permgroup, element, options",true,
@@ -1422,6 +1420,7 @@ local   S;
   if Size(S) > 1 then
     SetIsPGroup( S, true );
     SetPrimePGroup( S, p );
+    SetHallSubgroup(G, [p], S);
   fi;
   return S;
 end );
@@ -1595,15 +1594,14 @@ end );
 ##
 InstallMethod( FrattiniSubgroup,"for permgrp", true, [ IsPermGroup ], 0,
     function( G )
-    local   fac,  p,  l,  k,  i,  j;
+    local   p,  l,  k,  i,  j;
 
-    fac := Set( FactorsInt( Size( G ) ) );
-    if Length( fac ) > 1  then
+    if not IsPGroup( G ) then
         TryNextMethod();
-    elif fac[1]=1 then
+    elif IsTrivial( G ) then
       return G;
     fi;
-    p := fac[ 1 ];
+    p := PrimePGroup( G );
     l := GeneratorsOfGroup( G );
     k := [ l[1]^p ];
     for i  in [ 2 .. Length(l) ]  do
@@ -1824,6 +1822,69 @@ local l,m,i, one;
   return m;
 end );
 
+
+# return e is a^e=b or false otherwise
+InstallGlobalFunction("LogPerm",
+function(a,b)
+local oa,ob,q,ma,mb,tofix,locpow,i,c,l,divisor,step,goal,exp,nc,j,new,k,gcd;
+  oa:=Order(a);
+  ob:=Order(b);
+  if oa mod ob<>0 then Info(InfoGroup,20,"1"); return false;fi;
+  q:=oa/ob;
+  ma:=MovedPoints(a);
+  mb:=MovedPoints(b);
+  if not IsSubset(ma,mb) then Info(InfoGroup,20,"2"); return false;fi;
+  tofix:=Difference(ma,mb);
+  ma:=ShallowCopy(ma); # to allow removing elements
+  Sort(ma);
+  IsSet(ma);
+  locpow:=[];
+
+  # reversed, as subgroup constructions naturally pick stabilizers first
+  for i in [Maximum(ma),Maximum(ma)-1..Minimum(ma)] do
+    if i in ma then #we're removing from ma on the way
+      c:=Cycle(a,i);
+      l:=Length(c);
+      divisor:=l/Gcd(l,q); # length of cycles
+      step:=l/divisor; # resulting number of cycles
+      #nc:=[];
+      if i in tofix and divisor>1 or divisor=1 and not i in tofix 
+        then Info(InfoGroup,20,"3"); return false;fi;
+      if divisor=1 then # all fixed
+	if ForAny(c,x->x in mb) then
+          Info(InfoGroup,20,"4");return false;
+	fi;
+        #for j in c do
+        #  Add(nc,[j]);
+        #od;
+      else
+        for j in [1..step] do
+          new:=c{j+([0,q..(divisor-1)*q] mod l)}; # cycle for q-th power
+          goal:=new[1]^b;
+          exp:=Position(new,goal);
+          if exp=fail then Info(InfoGroup,20,"5");return false;fi;
+          exp:=exp-1;
+	  for k in locpow do
+	    gcd:=Gcd(k[1],Length(new));
+	    if k[2] mod gcd<>exp mod gcd then Info(InfoGroup,20,"6");return false;fi;# cannot both hold
+	  od;
+          AddSet(locpow,[Length(new),exp]);
+          new:=new{1+(exp*[0..divisor-1] mod divisor)};
+          if new<>Cycle(b,new[1]) then Info(InfoGroup,20,"7");return false;fi;
+          #Add(nc,new);
+        od;
+      fi;
+      SubtractSet(ma,c);
+    fi;
+  od;
+  if Length(locpow)=0 then exp:=0;
+  else
+    exp:=ChineseRem(List(locpow,x->x[1]),List(locpow,x->x[2])); # power afterwards
+  fi;
+  return q*exp mod oa;
+end);
+
+
 #############################################################################
 ##
 #M  SmallGeneratingSet(<G>) 
@@ -1831,28 +1892,28 @@ end );
 InstallMethod(SmallGeneratingSet,"random and generators subset, randsims",true,
   [IsPermGroup],0,
 function (G)
-local  i, j, U, gens,o,v,a,sel;
+local  i, j, U, gens,o,v,a,sel,min;
 
   # remove obvious redundancies
   gens := ShallowCopy(Set(GeneratorsOfGroup(G)));
   o:=List(gens,Order);
   SortParallel(o,gens,function(a,b) return a>b;end);
   sel:=Filtered([1..Length(gens)],x->o[x]>1);
+
   for i in [1..Length(gens)] do
     if i in sel then
-      U:=Filtered(sel,x->x>i and IsInt(o[i]/o[x])); # potential powers
-      v:=[];
-      for j in U do
-	a:=SmallestMovedPoint(gens[j]);
-	if IsSubset(OrbitPerms([gens[i]],a),OrbitPerms([gens[j]],a)) then
-	  Add(v,j);
-	fi;
-      od;
-      # v are the possible powers
-      for j in v do
-	a:=gens[i]^(o[i]/o[j]);
-	if ForAny(Filtered([1..o[j]],z->Gcd(z,o[j])=1),x->a^x=gens[j]) then
-	  RemoveSet(sel,j);
+      #Print(i," ",sel,"\n");
+      for j in sel do
+        if j>i then
+	  a:=LogPerm(gens[i],gens[j]);
+	  if a=false then
+	    #Assert(1,not gens[j] in Group(gens[i]));
+	    a:=a; # avoid empty case
+	  else
+	    #Assert(1,gens[i]^a=gens[j]);
+	    #Print("Remove ",j," by ",i,"\n");
+	    RemoveSet(sel,j);
+	  fi;
 	fi;
       od;
     fi;
@@ -1865,14 +1926,19 @@ local  i, j, U, gens,o,v,a,sel;
     return MinimalGeneratingSet(G);
   fi;
 
+
+  min:=2;
   if Length(gens)>2 then
-    i:=2;
-    while i<=3 and i<Length(gens) do
+  # minimal: AbelianInvariants
+    min:=Maximum(List(Collected(Factors(Size(G)/Size(DerivedSubgroup(G)))),x->x[2]));
+    i:=Maximum(2,min);
+    while i<=min+1 and i<Length(gens) do
       # try to find a small generating system by random search
       j:=1;
       while j<=5 and i<Length(gens) do
         U:=Subgroup(G,List([1..i],j->Random(G)));
-        StabChain(U,rec(random:=1));
+	StabChainOptions(U).random:=100; # randomized size
+#Print("A:",i,",",j," ",Size(G)/Size(U),"\n");
         if Size(U)=Size(G) then
           gens:=Set(GeneratorsOfGroup(U));
         fi;
@@ -1881,19 +1947,24 @@ local  i, j, U, gens,o,v,a,sel;
       i:=i+1;
     od;
   fi;
+
   i := 1;
   if not IsAbelian(G) then
     i:=i+1;
   fi;
-  while i < Length(gens)  do
+  while i <= Length(gens) and Length(gens)>min do
     # random did not improve much, try subsets
     U:=Subgroup(G,gens{Difference([1..Length(gens)],[i])});
+    StabChainOptions(U).random:=100; # randomized size
+#Print("B:",i," ",Size(G)/Size(U),"\n");
     if Size(U)<Size(G) then
       i:=i+1;
     else
       gens:=Set(GeneratorsOfGroup(U));
     fi;
   od;
+#U:=Group(gens);
+#Assert(1,ForAll(GeneratorsOfGroup(G),x->x in U));
   return gens;
 end);
 
@@ -2050,7 +2121,7 @@ end );
 ##
 InstallMethod(ONanScottType,"primitive permgroups",true,[IsPermGroup],0,
 function(G)
-local dom,s,cs,t,ts,o;
+local dom,s,cs,t,ts,o,m,stb;
   dom:=MovedPoints(G);
   if not IsPrimitive(G,dom) then
     Error("<G> must be primitive");
@@ -2063,34 +2134,46 @@ local dom,s,cs,t,ts,o;
   elif Length(dom)=Size(s) then
     return "5";
   else
-    # now get one simple factor of the socle
+    # so the group now is of type 3 or 4. Next we determine a simple socle
+    # factor and a direct product of all but one socle factor.
+    # simple socle factor.
+
+    # as default stab chain chooes pts lexicographically, this is likely a
+    # stored stabilizer
+    stb:=Stabilizer(s,SmallestMovedPoint(s));
     cs:=CompositionSeries(s);
-    # if the group is diagonal, the diagonal together with a maximal socle
-    # normal subgroup generates the whole socle, so this normal subgroup
-    # acts transitively. For product type this is not the case.
     t:=cs[Length(cs)-1];
-    if IsTransitive(t,dom) then
-      # type 3
-      if Length(cs)=3 and IsNormal(G,t) then
-	# intransitive on 2 components:
+    m:=cs[2];
+
+    # now test Dixon&Mortimer, p.126, Case 1: R1 (projection of pt. stab
+    # onto one direct factor) is proper subgroup of T1.
+    
+    #if Size(ClosureSubgroup(m,stb))<Size(s) then
+    # Since m is normal, this projection is a proper subgroup iff m does not
+    # act transitively
+    if not IsTransitive(m,dom) then
+      return "4c"; # Product action of type 2 with transitive
+    fi;
+
+    #  Now we are in case 2, R1=T1. Group must be diagonal (3) or product
+    #  action of diagonal with transitive (4). For diagonal case the point
+    #  stabilizer must have the order of t, for product case it must be a
+    #  power of the order of t
+    if Size(stb)=Size(t) then # type 3
+      # in the a case the socle is not minimal
+      #if Size(NormalClosure(G,t))<Size(s) then
+      if Length(Orbit(G,t))<Length(cs)-1 then 
 	return "3a";
       else
-	return "3b";
+        return "3b";
       fi;
     else
-      # type 4
-      ts:=Orbit(G,t);
-      if Length(ts)=2 and NormalClosure(G,t)<>s then
-        return "4a";
-      fi;
-      # find the block on the T's first: Those t which keep the orbit are
-      # glued together diagonally
-      o:=Orbit(t,dom[1]);
-      ts:=Filtered(ts,i->i=t or IsSubset(o,Orbit(i,dom[1])));
-      if Length(ts)=1 then
-        return "4c"; 
+      # Same argument as for 3:
+      #if Size(NormalClosure(G,t))<Size(s) then
+      if Length(Orbit(G,t))<Length(cs)-1 then 
+	return "4a";
       else
-	return "4b";
+        return "4b";
       fi;
     fi;
   fi;

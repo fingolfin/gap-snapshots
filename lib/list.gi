@@ -33,7 +33,7 @@ InstallMethod(NestingDepthM, [IsCyclotomicCollColl and
         IsOrdinaryMatrix and IsMultiplicativeGeneralizedRowVector],
         function( m )
     local t;
-    t := TNUM_OBJ_INT(m[1]);
+    t := TNUM_OBJ(m[1]);
     if FIRST_LIST_TNUM > t or LAST_LIST_TNUM < t then
         TryNextMethod();
     else
@@ -50,7 +50,7 @@ InstallMethod(NestingDepthA, [IsFFECollColl and IsGeneralizedRowVector],
 InstallMethod(NestingDepthM, [IsFFECollColl and IsOrdinaryMatrix and IsMultiplicativeGeneralizedRowVector],
            function(m)
     local t,row;
-    t := TNUM_OBJ_INT(m[1]);
+    t := TNUM_OBJ(m[1]);
     if FIRST_LIST_TNUM > t or LAST_LIST_TNUM < t then
         TryNextMethod();
     else
@@ -300,7 +300,7 @@ InstallMethod( String,
     fi;
 
     # We cannot handle the case of an empty string in the method for strings
-    # because the type of the empty string need not satify the requirement
+    # because the type of the empty string need not satisfy the requirement
     # `IsString'.
     if IsEmptyString( list ) then
       return "";
@@ -353,8 +353,8 @@ local   str,ls, i;
     if IsBound(list[i]) then
       str:=ViewString(list[i]);
       if str=DEFAULTVIEWSTRING then
-	# there might not be a method
-	str:=String(list[i]);
+        # there might not be a method
+        str:=String(list[i]);
       fi;
       ls[i]:=str;
     else
@@ -454,12 +454,12 @@ InstallOtherMethod(
 ##
 #M  Random( <list> )  . . . . . . . . . . . . . . . .  for a dense small list
 ##
-InstallOtherMethod( Random,
+InstallMethod( Random,
     "for a dense small list",
     [ IsList and IsDenseList and IsSmallList ],
     RandomList );
 
-InstallOtherMethod( Random,
+InstallMethod( Random,
     "for a dense (small) list",
     [ IsList and IsDenseList ],
     function( list )
@@ -511,7 +511,7 @@ InstallOtherMethod( IsSmallList,
 ##  constant time access lists: this method just  returns the argument. (This
 ##  cannot work for `ShallowCopy', because the argument could be immutable.)
 ##
-for op  in [ ConstantTimeAccessList, ShallowCopy ]  do
+Perform( [ ConstantTimeAccessList, ShallowCopy ], function(op)
 
     InstallMethod( op,
         "for a list",
@@ -570,9 +570,7 @@ for op  in [ ConstantTimeAccessList, ShallowCopy ]  do
         fi;
     end );
 
-od;
-
-Unbind( op );
+end);
 
 InstallMethod( ConstantTimeAccessList,
     "for a constant time access list",
@@ -1527,8 +1525,8 @@ InstallMethod( PositionProperty,
     function( list, func, from )
     local i;
 
-    if from < 1 then
-      from:= 1;
+    if from < 0 then
+      from:= 0;
     fi;
     for i in [ from+1 .. Length( list ) ] do
       if IsBound( list[i] ) then
@@ -1559,8 +1557,8 @@ InstallMethod( PositionProperty,
     function( list, func, from )
     local i;
 
-    if from < 1 then
-      from:= 1;
+    if from < 0 then
+      from:= 0;
     fi;
     for i in [ from+1 .. Length( list ) ] do
       if func( list[i] ) then
@@ -1573,8 +1571,92 @@ InstallMethod( PositionProperty,
 
 #############################################################################
 ##
+#M  PositionMaximum(<list>[, <func>]) .  position of the largest element
+#M  PositionMinimum(<list>[, <func>]) .  position of the smallest element
+##
+
+InstallGlobalFunction( PositionMaximum,
+    function ( args... )
+    local list, func, i, bestval, bestindex, ival;
+
+    if Length(args) < 1 or Length(args) > 2
+       or not(IsList(args[1]))
+       or (Length(args) = 2 and not(IsFunction(args[2]))) then
+        ErrorNoReturn("Usage: PositionMaximum(<list>, [<func>])");
+    fi;
+
+    list := args[1];
+    if Length(args) = 2 then
+        func := args[2];
+    else
+        func := IdFunc;
+    fi;
+
+    bestindex := fail;
+    for i in [ 1 .. Length( list ) ] do
+        if IsBound( list[i] ) then
+            ival := func ( list[ i ] );
+
+            if not( IsBound(bestval) ) or ival > bestval then
+                bestval := ival;
+                bestindex := i;
+            fi;
+        fi;
+    od;
+    return bestindex;
+    end );
+
+InstallGlobalFunction( PositionMinimum,
+    function ( args... )
+    local list, func, i, bestval, bestindex, ival;
+
+    if Length(args) < 1 or Length(args) > 2
+       or not(IsList(args[1]))
+       or (Length(args) = 2 and not(IsFunction(args[2]))) then
+        ErrorNoReturn("Usage: PositionMinimum(<list>, [<func>])");
+    fi;
+
+    list := args[1];
+    if Length(args) = 2 then
+        func := args[2];
+    else
+        func := IdFunc;
+    fi;
+
+    bestindex := fail;
+    for i in [ 1 .. Length( list ) ] do
+        if IsBound( list[i] ) then
+            ival := func ( list[ i ] );
+
+            if not( IsBound(bestval) ) or ival < bestval then
+                bestval := ival;
+                bestindex := i;
+            fi;
+        fi;
+    od;
+    return bestindex;
+    end );
+
+#############################################################################
+##
 #M  PositionsProperty(<list>,<func>)  . positions of elements with a property
 ##
+InstallMethod( PositionsProperty,
+    "for list and function",
+    [ IsList, IsFunction ],
+    function( list, func )
+    local result, i;
+
+    result:= [];
+    for i in [ 1 .. Length( list ) ] do
+      if IsBound( list[ i ] ) and func( list[i] ) then
+        Add( result, i );
+      fi;
+    od;
+
+    return result;
+    end );
+
 InstallMethod( PositionsProperty,
     "for dense list and function",
     [ IsDenseList, IsFunction ],
@@ -2031,7 +2113,7 @@ InstallMethod( Flat,
 InstallGlobalFunction( Reversed,
     function( list )
     local tnum, len;
-    tnum:= TNUM_OBJ_INT( list );
+    tnum:= TNUM_OBJ( list );
     if FIRST_LIST_TNUM <= tnum and tnum <= LAST_LIST_TNUM then
       len:= Length( list );
       return list{ [ len, len-1 .. 1 ] };
@@ -2101,6 +2183,11 @@ InstallMethod( Sort,
     [ IsList and IsMutable and IsSmallList ],
     SORT_LIST );
 
+InstallMethod( StableSort,
+    "for a mutable small list",
+    [ IsList and IsMutable and IsSmallList ],
+    STABLE_SORT_LIST );
+
 InstallMethod( Sort,
     "for a mutable list",
     [ IsList and IsMutable ],
@@ -2112,7 +2199,23 @@ InstallMethod( Sort,
     fi;
     end );
 
+InstallMethod( StableSort,
+    "for a mutable list",
+    [ IsList and IsMutable ],
+    function( list )
+    if IsSmallList( list ) then
+      STABLE_SORT_LIST( list );
+    else
+      TryNextMethod();
+    fi;
+    end );
+
 InstallMethod( Sort,
+    "for a mutable set",
+    [ IsList and IsMutable and IsSortedList ], SUM_FLAGS,
+    Ignore );
+
+InstallMethod( StableSort,
     "for a mutable set",
     [ IsList and IsMutable and IsSortedList ], SUM_FLAGS,
     Ignore );
@@ -2122,12 +2225,28 @@ InstallMethod( Sort,
     [ IsList and IsMutable and IsSmallList, IsFunction ],
     SORT_LIST_COMP );
 
+InstallMethod( StableSort,
+    "for a mutable small list and a function",
+    [ IsList and IsMutable and IsSmallList, IsFunction ],
+    STABLE_SORT_LIST_COMP );
+
 InstallMethod( Sort,
     "for a mutable list and a function",
     [ IsList and IsMutable, IsFunction ],
     function( list, func )
     if IsSmallList( list ) then
       SORT_LIST_COMP( list, func );
+    else
+      TryNextMethod();
+  fi;
+end );
+
+InstallMethod( StableSort,
+    "for a mutable list and a function",
+    [ IsList and IsMutable, IsFunction ],
+    function( list, func )
+    if IsSmallList( list ) then
+      STABLE_SORT_LIST_COMP( list, func );
     else
       TryNextMethod();
   fi;
@@ -2147,7 +2266,14 @@ InstallMethod( SortBy, "for a mutable list and a function",
     return;
 end);
 
-
+InstallMethod( StableSortBy, "for a mutable list and a function",
+        [IsList and IsMutable, IsFunction ],
+        function(list, func)
+    local images;
+    images := List(list, func);
+    StableSortParallel(images, list);
+    return;
+end);
     
 #############################################################################
 ##
@@ -2175,11 +2301,20 @@ InstallOtherMethod( Sort,
     [ IsList ],
     SORT_MUTABILITY_ERROR_HANDLER );
 
+InstallOtherMethod( StableSort,
+    "for an immutable list",
+    [ IsList ],
+    SORT_MUTABILITY_ERROR_HANDLER );
+
 InstallOtherMethod( Sort,
     "for an immutable list and a function",
     [ IsList, IsFunction ],
     SORT_MUTABILITY_ERROR_HANDLER );
 
+InstallOtherMethod( StableSort,
+    "for an immutable list and a function",
+    [ IsList, IsFunction ],
+    SORT_MUTABILITY_ERROR_HANDLER );
 
 #############################################################################
 ##
@@ -2320,7 +2455,12 @@ InstallMethod( SortParallel,
       IsDenseList and IsMutable ],
     SORT_PARA_LIST );
 
-
+InstallMethod( StableSortParallel,
+    "for two dense and mutable lists",
+    [ IsDenseList and IsMutable,
+      IsDenseList and IsMutable ],
+    STABLE_SORT_PARA_LIST );
+    
 #############################################################################
 ##
 #M  SortParallel( <sorted>, <list> )
@@ -2332,6 +2472,12 @@ InstallMethod( SortParallel,
     SUM_FLAGS,
     Ignore );
 
+InstallMethod( StableSortParallel,
+    "for a mutable set and a dense mutable list",
+    [ IsDenseList and IsSortedList and IsMutable,
+      IsDenseList and IsMutable ],
+    SUM_FLAGS,
+    Ignore );
 
 #############################################################################
 ##
@@ -2344,8 +2490,19 @@ InstallMethod( SortParallel,
       IsFunction ],
     SORT_PARA_LIST_COMP );
 
+InstallMethod( StableSortParallel,
+    "for two dense and mutable lists, and function",
+    [ IsDenseList and IsMutable,
+      IsDenseList and IsMutable,
+      IsFunction ],
+    STABLE_SORT_PARA_LIST_COMP );
 
 InstallOtherMethod( SortParallel,
+    "for two immutable lists",
+    [IsList,IsList],
+    SORT_MUTABILITY_ERROR_HANDLER);
+
+InstallOtherMethod( StableSortParallel,
     "for two immutable lists",
     [IsList,IsList],
     SORT_MUTABILITY_ERROR_HANDLER);
@@ -2355,6 +2512,10 @@ InstallOtherMethod( SortParallel,
     [IsList,IsList,IsFunction],
     SORT_MUTABILITY_ERROR_HANDLER);
 
+InstallOtherMethod( StableSortParallel,
+    "for two immutable lists and function",
+    [IsList,IsList,IsFunction],
+    SORT_MUTABILITY_ERROR_HANDLER);
 
 #############################################################################
 ##
@@ -2622,7 +2783,7 @@ InstallMethod( Permuted,
 InstallGlobalFunction( First,
     function ( C, func )
     local tnum, elm;
-    tnum:= TNUM_OBJ_INT( C );
+    tnum:= TNUM_OBJ( C );
     if FIRST_LIST_TNUM <= tnum and tnum <= LAST_LIST_TNUM then
       for elm in C do
           if func( elm ) then
@@ -3527,21 +3688,8 @@ end );
 ##
 #F  ListWithIdenticalEntries( <n>, <obj> )
 ##
-InstallGlobalFunction( ListWithIdenticalEntries, function( n, obj )
-    local list, i;
-    if IsChar(obj) then
-      list := "";
-      for i in [ 1 .. n ] do
-        list[i]:= obj;
-      od;
-    else
-      list:= [];
-      for i in [ n, n-1 .. 1 ] do
-        list[i]:= obj;
-      od;
-    fi;
-    return list;
-end );
+InstallGlobalFunction( ListWithIdenticalEntries,
+LIST_WITH_IDENTICAL_ENTRIES );
 
 
 #############################################################################
@@ -3622,7 +3770,7 @@ end);
 ##  This is intended for use in certain rare situations, such as before
 ##  Objectifying. Normally, ConstantAccessTimeList should be enough
 ##
-##  This function guarantees that the reult will be a plain list, distinct
+##  This function guarantees that the result will be a plain list, distinct
 ##  from the input object.
 ##
 InstallGlobalFunction(PlainListCopy, function( list )
@@ -3636,13 +3784,13 @@ InstallGlobalFunction(PlainListCopy, function( list )
     copy := ShallowCopy(list);
 
     # now do a cheap check on copy
-    tnum := TNUM_OBJ_INT(copy);
+    tnum := TNUM_OBJ(copy);
     if FIRST_LIST_TNUM > tnum or LAST_LIST_TNUM < tnum then
         copy := PlainListCopyOp( copy );
     fi;
     Assert(2, not IsIdenticalObj(list,copy));
-    Assert(2, TNUM_OBJ_INT(copy) >= FIRST_LIST_TNUM);
-    Assert(2, TNUM_OBJ_INT(copy) <= LAST_LIST_TNUM);
+    Assert(2, TNUM_OBJ(copy) >= FIRST_LIST_TNUM);
+    Assert(2, TNUM_OBJ(copy) <= LAST_LIST_TNUM);
     return copy;
 end);
 
@@ -3762,76 +3910,85 @@ end);
 # Stuff for better storage of blists (trans grp. library)
 #
 
-BLISTBYTES:=[];
-HEXBYTES:=[];
-BLISTBYTES1:=[];
-HEXBYTES1:=[];
-BindGlobal("HexBlistSetup",function()
-local BLISTFT,BLISTIND;
-  if Length(BLISTBYTES)>0 then return;fi;
-  BLISTFT:=[false,true];
-  for BLISTIND in [0..255] do
-    BLISTBYTES[BLISTIND+1]:=
-      BLISTFT{1+Reversed(CoefficientsQadic(256+BLISTIND,2){[1..8]})};
-    IsBlist(BLISTBYTES[BLISTIND+1]);
-    MakeImmutable(BLISTBYTES[BLISTIND+1]);
-    HEXBYTES[BLISTIND+1]:=HexStringInt(256+BLISTIND){[2,3]};
-    MakeImmutable(HEXBYTES[BLISTIND+1]);
-  od;
-  SortParallel(BLISTBYTES,HEXBYTES);
-  HEXBYTES1:=ShallowCopy(HEXBYTES);
-  BLISTBYTES1:=ShallowCopy(BLISTBYTES);
-  SortParallel(HEXBYTES1,BLISTBYTES1);
-end);
+BLISTNIBBLES:=MakeImmutable([
+  [   true,   true,   true,   true ],
+  [   true,   true,   true,  false ],
+  [   true,   true,  false,   true ],
+  [   true,   true,  false,  false ],
+  [   true,  false,   true,   true ],
+  [   true,  false,   true,  false ],
+  [   true,  false,  false,   true ],
+  [   true,  false,  false,  false ],
+  [  false,   true,   true,   true ],
+  [  false,   true,   true,  false ],
+  [  false,   true,  false,   true ],
+  [  false,   true,  false,  false ],
+  [  false,  false,   true,   true ],
+  [  false,  false,   true,  false ],
+  [  false,  false,  false,   true ],
+  [  false,  false,  false,  false ],
+]);
+BLISTZERO:=MakeImmutable(BlistList([1..8],[]));
+HEXNIBBLES:=MakeImmutable("0123456789ABCDEF");
+
+DECODE_BITS_TO_HEX:=function(b,i)
+local n,v;
+  v:=0;
+  if b[i+0] then v:=v+8; fi;
+  if b[i+1] then v:=v+4; fi;
+  if b[i+2] then v:=v+2; fi;
+  if b[i+3] then v:=v+1; fi;
+  return HEXNIBBLES[v+1];
+end;
 
 InstallGlobalFunction(HexStringBlist,function(b)
 local i,n,s;
-  HexBlistSetup();
   n:=Length(b);
   i:=1;
   s:="";
-  while i+7<=n do
-    Append(s,HEXBYTES[PositionSorted(BLISTBYTES,b{[i..i+7]})]);
-    i:=i+8;
+  while i+3<=n do
+    Add(s,DECODE_BITS_TO_HEX(b,i));
+    i:=i+4;
   od;
-  b:=b{[i..n]};
-  if Length(b) = 0 then
-    return s;
+  if i <= n then
+    b:=b{[i..n]};
+    while Length(b)<4 do
+      Add(b,false);
+    od;
+    Add(s,DECODE_BITS_TO_HEX(b,1));
   fi;  
-  while Length(b)<8 do
-    Add(b,false);
-  od;
-  Append(s,HEXBYTES[PositionSorted(BLISTBYTES,b)]);
+  if IsOddInt(Length(s)) then Add(s,'0'); fi;
   return s;
 end);
 
 InstallGlobalFunction(HexStringBlistEncode,function(b)
 local i,n,s,t,u,zero;
-  HexBlistSetup();
   zero:="00";
   n:=Length(b);
   i:=1;
   s:="";
   u:=0;
   while i+7<=n do
-    t:=HEXBYTES[PositionSorted(BLISTBYTES,b{[i..i+7]})];
+    t:="";
+    Add(t,DECODE_BITS_TO_HEX(b,i));
+    Add(t,DECODE_BITS_TO_HEX(b,i+4));
     if t<>zero then
       if u>0 then
-	if u=1 then
-	  Append(s,zero);
-	else
-	  Add(s,'s');
-	  Append(s,HexStringInt(256+u){[2,3]});
-	fi;
-	u:=0;
+        if u=1 then
+          Append(s,zero);
+        else
+          Add(s,'s');
+          Append(s,HexStringInt(256+u){[2,3]});
+        fi;
+        u:=0;
       fi;
       Append(s,t);
     else
       u:=u+1;
       if u=255 then
         Add(s,'s');
-	Append(s,HexStringInt(256+u){[2,3]});
-	u:=0;
+        Append(s,HexStringInt(256+u){[2,3]});
+        u:=0;
       fi;
     fi;
     i:=i+8;
@@ -3840,44 +3997,47 @@ local i,n,s,t,u,zero;
   while Length(b)<8 do
     Add(b,false);
   od;
-  b:=HEXBYTES[PositionSorted(BLISTBYTES,b)];
-  if b<>zero then
+  t:="";
+  Add(t,DECODE_BITS_TO_HEX(b,1));
+  Add(t,DECODE_BITS_TO_HEX(b,5));
+  if t<>zero then
     if u>0 then
       if u=1 then
-	Append(s,zero);
+        Append(s,zero);
       else
-	Add(s,'s');
-	Append(s,HexStringInt(256+u){[2,3]});
+        Add(s,'s');
+        Append(s,HexStringInt(256+u){[2,3]});
       fi;
       u:=0;
     fi;
-    Append(s,b);
+    Append(s,t);
   fi;
   return s;
 end);
 
 InstallGlobalFunction(BlistStringDecode,function(arg)
 local s,b,i,j,zero,l;
-  HexBlistSetup();
-  zero:=BLISTBYTES1[PositionSorted(HEXBYTES1,"00")];
   s:=arg[1];
   b:=[];
   i:=1;
   while i<=Length(s) do
     if s[i]='s' then
       for j in [1..IntHexString(s{[i+1,i+2]})] do
-        Append(b,zero);
+        Append(b,BLISTZERO);
       od;
       i:=i+3;
     else
-      Append(b,BLISTBYTES1[PositionSorted(HEXBYTES1,s{[i,i+1]})]);
+      l:=IntHexString(s{[i]});
+      Append(b,BLISTNIBBLES[16-l]);
+      l:=IntHexString(s{[i+1]});
+      Append(b,BLISTNIBBLES[16-l]);
       i:=i+2;
     fi;
   od;
   if Length(arg)>1 then
     l:=arg[2];
     while Length(b)<l do
-      Append(b,zero);
+      Append(b,BLISTZERO);
     od;
     if Length(b)>l then
       b:=b{[1..l]};
@@ -3895,14 +4055,20 @@ InstallMethod(IntersectSet,
 
 InstallGlobalFunction(Average,l->1/Length(l)*Sum(l));
 
-InstallGlobalFunction(Median,function(l)
+InstallGlobalFunction(Median,
+function(l)
   l:=ShallowCopy(l);
   Sort(l);
   return l[Int((Length(l)+1)/2)];
 end);
 
+InstallGlobalFunction(Variance,
+function(l)
+    local avg;
+    avg := Average(l);
+    return Average(List(l, x -> (x-avg)^2));
+end);
+
 #############################################################################
 ##
 #E
-
-

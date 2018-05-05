@@ -68,7 +68,9 @@ local l,iso,fp,stbc,gens;
   # use the perfect groups library
   PerfGrpLoad(Size(G));
   if Size(G)<10^6 and IsRecord(PERFRec) and
+     ValueOption(NO_PRECOMPUTED_DATA_OPTION)<>true and
      not Size(G) in Union(PERFRec.notAvailable,PERFRec.notKnown) then
+    Info(InfoPerformance,2,"Using Perfect Groups Library");
     # loop over the groups
     for l in List([1..NrPerfectGroups(Size(G))],
                   i->PerfectGroup(IsPermGroup,Size(G),i)) do
@@ -438,7 +440,7 @@ function(g,str,N)
     SetKernelOfMultiplicativeGeneralMapping(hom,N);
   fi;
 
-  hom!.decompinfo:=di;
+  hom!.decompinfo:=MakeImmutable(di);
   SetIsWordDecompHomomorphism(hom,true);
   return hom;
 end);
@@ -591,7 +593,7 @@ local fpq, qgens, qreps, fpqg, rels, pcgs, p, f, qimg, idx, nimg, decomp,
     di.dec:=[elm->MappedWord(Image(hom,elm),fpqg,qimg),decomp];
   fi;
 
-  hom2!.decompinfo:=di;
+  hom2!.decompinfo:=MakeImmutable(di);
   SetIsWordDecompHomomorphism(hom2,true);
 
   SetIsSurjective(hom2,true);
@@ -613,7 +615,7 @@ local di, hom;
       # this homomorphism is just to store decomposition information and is
       # not declared total, so an assertion test will fail
       hom:=GroupHomomorphismByImagesNC(k,di.fp,cgens,GeneratorsOfGroup(di.fp):noassert);
-      hom!.decompinfo:=di;
+      hom!.decompinfo:=MakeImmutable(di);
       if HasIsSurjective(h) and IsSurjective(h) 
 	and HasKernelOfMultiplicativeGeneralMapping(h)
 	and m=KernelOfMultiplicativeGeneralMapping(h) then

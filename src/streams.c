@@ -12,72 +12,51 @@
 **  stuff.  The system depend part is in "sysfiles.c".
 */
 
-#include        "system.h"              /* system dependent part           */
+#include <src/streams.h>
 
-#include        <errno.h>
-#include        <stdio.h>
-#include        <string.h>              /* memcpy */
+#include <src/bool.h>
+#include <src/funcs.h>
+#include <src/gap.h>
+#include <src/gapstate.h>
+#include <src/gvars.h>
+#include <src/lists.h>
+#include <src/io.h>
+#include <src/plist.h>
+#include <src/precord.h>
+#include <src/read.h>
+#include <src/records.h>
+#include <src/stats.h>
+#include <src/stringobj.h>
+#include <src/sysfiles.h>
+#include <src/vars.h>
 
-#include        <unistd.h>              /* fstat, write, read              */
-#include        <sys/types.h>
-#include        <dirent.h>              /* for reading a directory         */
-#include        <sys/stat.h>
-#if HAVE_SYS_TIME_H
-#include        <sys/time.h>
+#include <dirent.h>
+#include <errno.h>
+#include <time.h>
+#include <unistd.h>
+
+#ifdef HAVE_SELECT
+// For FuncUNIXSelect
+#include <sys/time.h>
 #endif
 
 
 
-#include        "sysfiles.h"            /* file input/output               */
-
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
-#include        "code.h"                /* coder                           */
-
-#include        "gap.h"                 /* error handling, initialisation  */
-#include        "read.h"                /* reader                          */
-#include        "funcs.h"               /* functions                       */
-
-#include        "gvars.h"               /* global variables                */
-#include        "calls.h"               /* generic call mechanism          */
-
-#include        "bool.h"                /* booleans                        */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "plist.h"               /* plain lists                     */
-#include        "string.h"              /* strings                         */
-
-#include        "saveload.h"            /* saving and loading              */
-
-#include        "streams.h"             /* streams package                 */
-
-#include        "code.h"
-
-#include	"tls.h"
-
-#include        "vars.h"                /* TLS(BottomLVars) for execution contexts */
-
-
 /****************************************************************************
 **
-
 *F * * * * * * * * * streams and files related functions  * * * * * * * * * *
 */
 
-Int READ_COMMAND ( void )
+static Int READ_COMMAND(Obj *evalResult)
 {
     ExecStatus    status;
 
     ClearError();
-    status = ReadEvalCommand(TLS(BottomLVars), 0);
+    status = ReadEvalCommand(STATE(BottomLVars), evalResult, 0);
     if( status == STATUS_EOF )
         return 0;
 
-    if ( TLS(UserHasQuit) || TLS(UserHasQUIT) )
+    if ( STATE(UserHasQuit) || STATE(UserHasQUIT) )
         return 0;
     
     /* handle return-value or return-void command                          */
@@ -87,15 +66,90 @@ Int READ_COMMAND ( void )
 
     /* handle quit command                                 */
     else if (status == STATUS_QUIT) {
-        TLS(RecursionDepth) = 0;
-        TLS(UserHasQuit) = 1;
+        SetRecursionDepth(0);
+        STATE(UserHasQuit) = 1;
     }
     else if (status == STATUS_QQUIT) {
-        TLS(UserHasQUIT) = 1;
+        STATE(UserHasQUIT) = 1;
     }
     ClearError();
 
     return 1;
+}
+
+
+/*
+ * This function reads all code from the stream and returns either `fail` if the stream
+ * cannot be opened, or executes all statements in the stream and returns a list of lists,
+ * each entry of which reflects the result of the execution of one statement.
+ *
+ * The results are returned as lists with at most three bound positions.
+ *
+ * If the first entry is `true`, then the second entry is bound to the result of
+ * the statement if there was one, and unbound otherwise, and the third entry
+ * reflects whether the statement ended in a dual semicolon,
+ * if the first entry is `false', an error occurred during the execution of a statement,
+ * and no other positions of the list are bound.
+ *
+ * This function is currently used in interactive tools such as the GAP Jupyter kernel to
+ * execute cells and is likely to be replaced by a function that can read a single command
+ * from a stream without losing the rest of its content.
+ */
+Obj FuncREAD_ALL_COMMANDS( Obj self, Obj stream, Obj echo )
+{
+    ExecStatus status;
+    Int resultCount, resultCapacity;
+    UInt dualSemicolon;
+    Obj result, resultList;
+    Obj evalResult;
+
+    /* try to open the stream */
+    if (!OpenInputStream(stream) ) {
+      return Fail;
+    }
+
+    resultCount = 0;
+    resultCapacity = 16;
+    resultList = NEW_PLIST( T_PLIST, resultCapacity );
+    SET_LEN_PLIST(resultList, resultCount);
+
+    if (echo == True) {
+        STATE(Input)->echo = 1;
+    } else {
+        STATE(Input)->echo = 0;
+    }
+
+    do {
+        ClearError();
+        status = ReadEvalCommand(STATE(BottomLVars), &evalResult, &dualSemicolon);
+
+        if(!(status & (STATUS_EOF | STATUS_QUIT | STATUS_QQUIT))) {
+            resultCount++;
+            if (resultCount > resultCapacity) {
+                resultCapacity += 16;
+                GROW_PLIST(resultList, resultCapacity);
+            }
+            result = NEW_PLIST( T_PLIST, 3 );
+            SET_LEN_PLIST(result, 1);
+            SET_ELM_PLIST(result, 1, False);
+            SET_ELM_PLIST(resultList, resultCount, result );
+            SET_LEN_PLIST(resultList, resultCount );
+
+            if(!(status & STATUS_ERROR)) {
+                SET_LEN_PLIST(result, 3);
+                SET_ELM_PLIST(result, 1, True);
+                SET_ELM_PLIST(result, 3, dualSemicolon ? True : False);
+
+                if (evalResult) {
+                    SET_ELM_PLIST(result, 2, evalResult);
+                }
+            }
+        }
+    } while(!(status & (STATUS_EOF | STATUS_QUIT | STATUS_QQUIT)));
+    CloseInput();
+    ClearError();
+
+    return resultList;
 }
 
 /*
@@ -109,6 +163,7 @@ Obj FuncREAD_COMMAND_REAL ( Obj self, Obj stream, Obj echo )
 {
     Int status;
     Obj result;
+    Obj evalResult;
 
     result = NEW_PLIST( T_PLIST, 2 );
     SET_LEN_PLIST(result, 1);
@@ -120,47 +175,35 @@ Obj FuncREAD_COMMAND_REAL ( Obj self, Obj stream, Obj echo )
     }
 
     if (echo == True)
-      TLS(Input)->echo = 1;
+      STATE(Input)->echo = 1;
     else
-      TLS(Input)->echo = 0;
+      STATE(Input)->echo = 0;
 
-    status = READ_COMMAND();
+    status = READ_COMMAND(&evalResult);
     
     CloseInput();
 
     if( status == 0 ) return result;
 
-    if (TLS(UserHasQUIT)) {
-      TLS(UserHasQUIT) = 0;
+    if (STATE(UserHasQUIT)) {
+      STATE(UserHasQUIT) = 0;
       return result;
     }
 
-    if (TLS(UserHasQuit)) {
-      TLS(UserHasQuit) = 0;
+    if (STATE(UserHasQuit)) {
+      STATE(UserHasQuit) = 0;
     }
     
     SET_ELM_PLIST(result, 1, True);
-    if (TLS(ReadEvalResult)) {
+    if (evalResult) {
         SET_LEN_PLIST(result, 2);
-        SET_ELM_PLIST(result, 2, TLS(ReadEvalResult));
+        SET_ELM_PLIST(result, 2, evalResult);
     }
     return result;
 }
 
-/*
- Deprecated alternative to READ_COMMAND_REAL, kept for now to maintain
- compatibility with the few packages that use it.
- */
-Obj FuncREAD_COMMAND ( Obj self, Obj stream, Obj echo )
-{
-    Obj result;
-    result = FuncREAD_COMMAND_REAL(self, stream, echo);
-    return (LEN_PLIST(result) == 2) ? ELM_PLIST(result, 2) : SuPeRfail;
-}
-
 /****************************************************************************
 **
-
 *F  READ()  . . . . . . . . . . . . . . . . . . . . . . .  read current input
 **
 **  Read the current input and close the input stream.
@@ -170,17 +213,15 @@ static UInt LastReadValueGVar;
 
 static Int READ_INNER ( UInt UseUHQ )
 {
-    ExecStatus                status;
-
-    if (TLS(UserHasQuit))
+    if (STATE(UserHasQuit))
       {
         Pr("Warning: Entering READ with UserHasQuit set, this should never happen, resetting",0,0);
-        TLS(UserHasQuit) = 0;
+        STATE(UserHasQuit) = 0;
       }
-    if (TLS(UserHasQUIT))
+    if (STATE(UserHasQUIT))
       {
         Pr("Warning: Entering READ with UserHasQUIT set, this should never happen, resetting",0,0);
-        TLS(UserHasQUIT) = 0;
+        STATE(UserHasQUIT) = 0;
       }
     MakeReadWriteGVar(LastReadValueGVar);
     AssGVar( LastReadValueGVar, 0);
@@ -188,8 +229,9 @@ static Int READ_INNER ( UInt UseUHQ )
     /* now do the reading                                                  */
     while ( 1 ) {
         ClearError();
-        status = ReadEvalCommand(TLS(BottomLVars), 0);
-	if (TLS(UserHasQuit) || TLS(UserHasQUIT))
+        Obj evalResult;
+        ExecStatus status = ReadEvalCommand(STATE(BottomLVars), &evalResult, 0);
+	if (STATE(UserHasQuit) || STATE(UserHasQUIT))
 	  break;
         /* handle return-value or return-void command                      */
         if ( status & (STATUS_RETURN_VAL | STATUS_RETURN_VOID) ) {
@@ -202,18 +244,18 @@ static Int READ_INNER ( UInt UseUHQ )
         else if ( status  & (STATUS_ERROR | STATUS_EOF)) 
           break;
         else if (status == STATUS_QUIT) {
-          TLS(RecursionDepth) = 0;
-          TLS(UserHasQuit) = 1;
+          SetRecursionDepth(0);
+          STATE(UserHasQuit) = 1;
           break;
         }
         else if (status == STATUS_QQUIT) {
-          TLS(UserHasQUIT) = 1;
+          STATE(UserHasQUIT) = 1;
           break;
         }
-        if (TLS(ReadEvalResult))
+        if (evalResult)
           {
             MakeReadWriteGVar(LastReadValueGVar);
-            AssGVar( LastReadValueGVar, TLS(ReadEvalResult));
+            AssGVar( LastReadValueGVar, evalResult);
             MakeReadOnlyGVar(LastReadValueGVar);
           }
         
@@ -228,8 +270,8 @@ static Int READ_INNER ( UInt UseUHQ )
     }
     ClearError();
 
-    if (!UseUHQ && TLS(UserHasQuit)) {
-      TLS(UserHasQuit) = 0; /* stop recovery here */
+    if (!UseUHQ && STATE(UserHasQuit)) {
+      STATE(UserHasQuit) = 0; /* stop recovery here */
       return 2;
     }
 
@@ -253,20 +295,13 @@ static Int READ_NORECOVERY( void ) {
 */
 Obj READ_AS_FUNC ( void )
 {
-    Obj                 func;
-    UInt                type;
-
     /* now do the reading                                                  */
     ClearError();
-    type = ReadEvalFile();
+    Obj evalResult;
+    UInt type = ReadEvalFile(&evalResult);
 
     /* get the function                                                    */
-    if ( type == 0 ) {
-        func = TLS(ReadEvalResult);
-    }
-    else {
-        func = Fail;
-    }
+    Obj func = (type == 0) ? evalResult : Fail;
 
     /* close the input file again, and return 'true'                       */
     if ( ! CloseInput() ) {
@@ -295,23 +330,24 @@ static void READ_TEST_OR_LOOP(void)
 
         /* read and evaluate the command                                   */
         ClearError();
-        type = ReadEvalCommand(TLS(BottomLVars), &dualSemicolon);
+        Obj evalResult;
+        type = ReadEvalCommand(STATE(BottomLVars), &evalResult, &dualSemicolon);
 
         /* stop the stopwatch                                              */
         AssGVar( Time, INTOBJ_INT( SyTime() - oldtime ) );
 
         /* handle ordinary command                                         */
-        if ( type == 0 && TLS(ReadEvalResult) != 0 ) {
+        if ( type == 0 && evalResult != 0 ) {
 
             /* remember the value in 'last' and the time in 'time'         */
-            AssGVar( Last3, VAL_GVAR( Last2 ) );
-            AssGVar( Last2, VAL_GVAR( Last  ) );
-            AssGVar( Last,  TLS(ReadEvalResult)   );
+            AssGVar( Last3, ValGVarTL( Last2 ) );
+            AssGVar( Last2, ValGVarTL( Last  ) );
+            AssGVar( Last, evalResult );
 
             /* print the result                                            */
             if ( ! dualSemicolon ) {
-                Bag currLVars = TLS(CurrLVars); /* in case view runs into error */
-                ViewObjHandler( TLS(ReadEvalResult) );
+                Bag currLVars = STATE(CurrLVars); /* in case view runs into error */
+                ViewObjHandler( evalResult );
                 SWITCH_TO_OLD_LVARS(currLVars);
             }
         }
@@ -362,7 +398,7 @@ static void READ_LOOP ( void )
 */
 
 
-Int READ_GAP_ROOT ( Char * filename )
+Int READ_GAP_ROOT ( const Char * filename )
 {
     TypGRF_Data         result;
     Int                 res;
@@ -370,18 +406,21 @@ Int READ_GAP_ROOT ( Char * filename )
     StructInitInfo *    info;
 
     /* try to find the file                                                */
-    res = SyFindOrLinkGapRootFile( filename, 0L, &result );
+    res = SyFindOrLinkGapRootFile( filename, &result );
 
     /* not found                                                           */
     if ( res == 0 ) {
         return 0;
     }
 
-    /* dynamically linked                                                  */
-    else if ( res == 1 ) {
+    /* dynamically or statically linked                                    */
+    else if ( res == 1 || res == 2 ) {
+        // This code section covers loading of GAC compiled code; in contrast
+        // to FuncLOAD_STAT and FuncLOAD_DYN, which are typically used by
+        // kernel extensions to load C/C++ code.
         if ( SyDebugLoading ) {
-            Pr( "#I  READ_GAP_ROOT: loading '%s' dynamically\n",
-                (Int)filename, 0L );
+            const char *s = (res == 1) ? "dynamically" : "statically";
+            Pr( "#I  READ_GAP_ROOT: loading '%s' %s\n", (Int)filename, (Int)s );
         }
         info = result.module_info;
         res  = info->initKernel(info);
@@ -392,59 +431,35 @@ Int READ_GAP_ROOT ( Char * filename )
         if ( res ) {
             Pr( "#W  init functions returned non-zero exit code\n", 0L, 0L );
         }
-        
-        info->isGapRootRelative = 1;
-        RecordLoadedModule(info, filename);
-        return 1;
-    }
-
-    /* statically linked                                                   */
-    else if ( res == 2 ) {
-        if ( SyDebugLoading ) {
-            Pr( "#I  READ_GAP_ROOT: loading '%s' statically\n",
-                (Int)filename, 0L );
-        }
-        info = result.module_info;
-        res  = info->initKernel(info);
-        if (!SyRestoring) {
-          UpdateCopyFopyInfo();
-          res  = res || info->initLibrary(info);
-        }
-        if ( res ) {
-            Pr( "#W  init functions returned non-zero exit code\n", 0L, 0L );
-        }
-        info->isGapRootRelative = 1;
-        RecordLoadedModule(info, filename);
+        RecordLoadedModule(info, 1, filename);
         return 1;
     }
 
     /* special handling for the other cases, if we are trying to load compiled
        modules needed for a saved workspace ErrorQuit is not available */
-    else if (SyRestoring)
-      {
-        if (res == 3 || res == 4)
-          {
+    else if (SyRestoring) {
+        if ( res == 3 ) {
             Pr("Can't find compiled module '%s' needed by saved workspace\n",
                (Int) filename, 0L);
             return 0;
-          }
-        else
-          Pr("unknown result code %d from 'SyFindGapRoot'", res, 0L );
+        }
+        Pr("unknown result code %d from 'SyFindGapRoot'", res, 0L );
         SyExit(1);
-      }
+    }
     
     /* ordinary gap file                                                   */
-    else if ( res == 3 || res == 4  ) {
+    else if ( res == 3 ) {
         if ( SyDebugLoading ) {
             Pr( "#I  READ_GAP_ROOT: loading '%s' as GAP file\n",
                 (Int)filename, 0L );
         }
         if ( OpenInput(result.pathname) ) {
-          SySetBuffering(TLS(Input)->file);
+          SySetBuffering(STATE(Input)->file);
             while ( 1 ) {
                 ClearError();
-                type = ReadEvalCommand(TLS(BottomLVars), 0);
-                if (TLS(UserHasQuit) || TLS(UserHasQUIT))
+                Obj evalResult;
+                type = ReadEvalCommand(STATE(BottomLVars), &evalResult, 0);
+                if (STATE(UserHasQuit) || STATE(UserHasQUIT))
                   break;
                 if ( type & (STATUS_RETURN_VAL | STATUS_RETURN_VOID) ) {
                     Pr( "'return' must not be used in file", 0L, 0L );
@@ -473,7 +488,6 @@ Int READ_GAP_ROOT ( Char * filename )
 
 /****************************************************************************
 **
-
 *F  FuncCLOSE_LOG_TO()  . . . . . . . . . . . . . . . . . . . .  stop logging
 **
 **  'FuncCLOSE_LOG_TO' implements a method for 'LogTo'.
@@ -714,17 +728,17 @@ Obj FuncPrint (
             PrintFunction( arg );
         }
         else {
-            memcpy( readJmpError, TLS(ReadJmpError), sizeof(syJmp_buf) );
+            memcpy( readJmpError, STATE(ReadJmpError), sizeof(syJmp_buf) );
 
             /* if an error occurs stop printing                            */
-            if ( ! READ_ERROR() ) {
+            TRY_READ {
                 PrintObj( arg );
             }
-            else {
-                memcpy( TLS(ReadJmpError), readJmpError, sizeof(syJmp_buf) );
+            CATCH_READ_ERROR {
+                memcpy( STATE(ReadJmpError), readJmpError, sizeof(syJmp_buf) );
                 ReadEvalError();
             }
-            memcpy( TLS(ReadJmpError), readJmpError, sizeof(syJmp_buf) );
+            memcpy( STATE(ReadJmpError), readJmpError, sizeof(syJmp_buf) );
         }
     }
 
@@ -733,7 +747,7 @@ Obj FuncPrint (
 
 static Obj PRINT_OR_APPEND_TO(Obj args, int append)
 {
-    const char          *funcname = append ? "AppendTo" : "PrintTo";
+    const char * volatile funcname = append ? "AppendTo" : "PrintTo";
     volatile Obj        arg;
     volatile Obj        filename;
     volatile UInt       i;
@@ -767,23 +781,21 @@ static Obj PRINT_OR_APPEND_TO(Obj args, int append)
             PrintString1(arg);
         }
         else if ( TNUM_OBJ(arg) == T_FUNCTION ) {
-            TLS(PrintObjFull) = 1;
             PrintFunction( arg );
-            TLS(PrintObjFull) = 0;
         }
         else {
-            memcpy( readJmpError, TLS(ReadJmpError), sizeof(syJmp_buf) );
+            memcpy( readJmpError, STATE(ReadJmpError), sizeof(syJmp_buf) );
 
             /* if an error occurs stop printing                            */
-            if ( ! READ_ERROR() ) {
+            TRY_READ {
                 PrintObj( arg );
             }
-            else {
+            CATCH_READ_ERROR {
                 CloseOutput();
-                memcpy( TLS(ReadJmpError), readJmpError, sizeof(syJmp_buf) );
+                memcpy( STATE(ReadJmpError), readJmpError, sizeof(syJmp_buf) );
                 ReadEvalError();
             }
-            memcpy( TLS(ReadJmpError), readJmpError, sizeof(syJmp_buf) );
+            memcpy( STATE(ReadJmpError), readJmpError, sizeof(syJmp_buf) );
         }
     }
 
@@ -799,7 +811,7 @@ static Obj PRINT_OR_APPEND_TO(Obj args, int append)
 
 static Obj PRINT_OR_APPEND_TO_STREAM(Obj args, int append)
 {
-    const char          *funcname = append ? "AppendTo" : "PrintTo";
+    const char * volatile funcname = append ? "AppendTo" : "PrintTo";
     volatile Obj        arg;
     volatile Obj        stream;
     volatile UInt       i;
@@ -809,8 +821,7 @@ static Obj PRINT_OR_APPEND_TO_STREAM(Obj args, int append)
     stream = ELM_LIST(args,1);
 
     /* try to open the file for output                                     */
-    i = append ? OpenAppendStream(stream)
-               : OpenOutputStream(stream);
+    i = OpenOutputStream(stream);
     if ( ! i ) {
         ErrorQuit( "%s: cannot open stream for output", (Int)funcname, 0L );
         return 0;
@@ -821,8 +832,8 @@ static Obj PRINT_OR_APPEND_TO_STREAM(Obj args, int append)
         arg = ELM_LIST(args,i);
 
         /* if an error occurs stop printing                                */
-        memcpy( readJmpError, TLS(ReadJmpError), sizeof(syJmp_buf) );
-        if ( ! READ_ERROR() ) {
+        memcpy( readJmpError, STATE(ReadJmpError), sizeof(syJmp_buf) );
+        TRY_READ {
             if ( IS_PLIST(arg) && 0 < LEN_PLIST(arg) && IsStringConv(arg) ) {
                 PrintString1(arg);
             }
@@ -830,20 +841,18 @@ static Obj PRINT_OR_APPEND_TO_STREAM(Obj args, int append)
                 PrintString1(arg);
             }
             else if ( TNUM_OBJ( arg ) == T_FUNCTION ) {
-                TLS(PrintObjFull) = 1;
                 PrintFunction( arg );
-                TLS(PrintObjFull) = 0;
             }
             else {
                 PrintObj( arg );
             }
         }
-        else {
+        CATCH_READ_ERROR {
             CloseOutput();
-            memcpy( TLS(ReadJmpError), readJmpError, sizeof(syJmp_buf) );
+            memcpy( STATE(ReadJmpError), readJmpError, sizeof(syJmp_buf) );
             ReadEvalError();
         }
-        memcpy( TLS(ReadJmpError), readJmpError, sizeof(syJmp_buf) );
+        memcpy( STATE(ReadJmpError), readJmpError, sizeof(syJmp_buf) );
     }
 
     /* close the output file again, and return nothing                     */
@@ -875,6 +884,9 @@ Obj FuncPRINT_TO_STREAM (
     Obj                 self,
     Obj                 args )
 {
+    /* Note that FuncPRINT_TO_STREAM and FuncAPPEND_TO_STREAM do exactly the
+       same, they only differ in the function name they print as part
+       of their error messages. */
     return PRINT_OR_APPEND_TO_STREAM(args, 0);
 }
 
@@ -899,6 +911,9 @@ Obj FuncAPPEND_TO_STREAM (
     Obj                 self,
     Obj                 args )
 {
+    /* Note that FuncPRINT_TO_STREAM and FuncAPPEND_TO_STREAM do exactly the
+       same, they only differ in the function name they print as part
+       of their error messages. */
     return PRINT_OR_APPEND_TO_STREAM(args, 1);
 }
 
@@ -925,18 +940,14 @@ Obj FuncSET_OUTPUT (
           }
         }
     } else {  /* an open stream */
-        if ( append != False ) {
-          if ( ! OpenAppendStream( file ) ) {
+        if ( ! OpenOutputStream( file ) ) {
+          if ( append != False ) {
              ErrorQuit( "SET_OUTPUT: cannot open stream for appending", 0L, 0L );
           } else {
-             return 0;
+             ErrorQuit( "SET_OUTPUT: cannot open stream for output", 0L, 0L );
           }
         } else {
-          if ( ! OpenOutputStream( file ) ) {
-             ErrorQuit( "SET_OUTPUT: cannot open stream for output", 0L, 0L );
-          } else {
-            return 0;
-          }
+          return 0;
         }
     }
     return 0;
@@ -951,7 +962,23 @@ Obj FuncSET_PREVIOUS_OUTPUT( Obj self ) {
     }
     return 0;
 }
-     
+
+Obj FuncIS_INPUT_TTY(Obj self)
+{
+    GAP_ASSERT(STATE(Input));
+    if (STATE(Input)->isstream)
+        return False;
+    return syBuf[STATE(Input)->file].isTTY ? True : False;
+}
+
+Obj FuncIS_OUTPUT_TTY(Obj self)
+{
+    GAP_ASSERT(STATE(Output));
+    if (STATE(Output)->isstream)
+        return False;
+    return syBuf[STATE(Output)->file].isTTY ? True : False;
+}
+
 /****************************************************************************
 **
 *F  FuncREAD( <self>, <filename> )  . . . . . . . . . . . . . . . read a file
@@ -975,7 +1002,7 @@ Obj FuncREAD (
         return False;
     }
 
-    SySetBuffering(TLS(Input)->file);
+    SySetBuffering(STATE(Input)->file);
    
     /* read the test file                                                  */
     return READ() ? True : False;
@@ -1007,7 +1034,7 @@ Obj FuncREAD_NORECOVERY (
         return False;
     }
 
-    SySetBuffering(TLS(Input)->file);
+    SySetBuffering(STATE(Input)->file);
    
     /* read the file */
     switch (READ_NORECOVERY()) {
@@ -1050,14 +1077,14 @@ Obj FuncREAD_STREAM_LOOP (
         return False;
     }
     if ( catcherrstdout == True )
-      TLS(IgnoreStdoutErrout) = TLS(Output);
+      STATE(IgnoreStdoutErrout) = GetCurrentOutput();
     else
-      TLS(IgnoreStdoutErrout) = NULL;
+      STATE(IgnoreStdoutErrout) = NULL;
 
 
     /* read the test file                                                  */
     READ_LOOP();
-    TLS(IgnoreStdoutErrout) = NULL;
+    STATE(IgnoreStdoutErrout) = NULL;
     return True;
 }
 
@@ -1083,7 +1110,7 @@ Obj FuncREAD_AS_FUNC (
         return Fail;
     }
 
-    SySetBuffering(TLS(Input)->file);
+    SySetBuffering(STATE(Input)->file);
     
     /* read the function                                                   */
     return READ_AS_FUNC();
@@ -1116,7 +1143,7 @@ Obj FuncREAD_GAP_ROOT (
     Obj                 self,
     Obj                 filename )
 {
-    Char filenamecpy[4096];
+    Char filenamecpy[GAP_PATH_MAX];
 
     /* check the argument                                                  */
     while ( ! IsStringConv( filename ) ) {
@@ -1127,7 +1154,7 @@ Obj FuncREAD_GAP_ROOT (
     }
 
     /* Copy to avoid garbage collection moving string                      */
-    strlcpy(filenamecpy, CSTR_STRING(filename), 4096);
+    strlcpy(filenamecpy, CSTR_STRING(filename), GAP_PATH_MAX);
     /* try to open the file                                                */
     return READ_GAP_ROOT(filenamecpy) ? True : False;
 }
@@ -1135,7 +1162,6 @@ Obj FuncREAD_GAP_ROOT (
 
 /****************************************************************************
 **
-
 *F  FuncTmpName( <self> ) . . . . . . . . . . . . . . return a temporary name
 */
 Obj FuncTmpName (
@@ -1147,7 +1173,7 @@ Obj FuncTmpName (
     tmp = SyTmpname();
     if ( tmp == 0 )
         return Fail;
-    C_NEW_STRING_DYN( name, tmp );
+    name = MakeString(tmp);
     return name;
 }
 
@@ -1165,7 +1191,7 @@ Obj FuncTmpDirectory (
     tmp = SyTmpdir("tm");
     if ( tmp == 0 )
         return Fail;
-    C_NEW_STRING_DYN( name, tmp );
+    name = MakeString(tmp);
     return name;
 }
 
@@ -1254,14 +1280,12 @@ Obj FuncIsDir (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * file access test functions * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  FuncLastSystemError( <self> ) .  . . . . . .  return the last system error
 */
 UInt ErrorMessageRNam;
@@ -1279,14 +1303,14 @@ Obj FuncLastSystemError (
     /* check if an errors has occured                                      */
     if ( SyLastErrorNo != 0 ) {
         ASS_REC( err, ErrorNumberRNam, INTOBJ_INT(SyLastErrorNo) );
-        C_NEW_STRING_DYN(msg, SyLastErrorMessage);
+        msg = MakeString(SyLastErrorMessage);
         ASS_REC( err, ErrorMessageRNam, msg );
     }
 
     /* no error has occured                                                */
     else {
         ASS_REC( err, ErrorNumberRNam, INTOBJ_INT(0) );
-        C_NEW_STRING_CONST( msg, "no error" );
+        msg = MakeString("no error");
         ASS_REC( err, ErrorMessageRNam, msg );
     }
 
@@ -1469,13 +1493,11 @@ Obj FuncSTRING_LIST_DIR (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * text stream functions  * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  FuncCLOSE_FILE( <self>, <fid> ) . . . . . . . . . . . . .  close a stream
 */
 Obj FuncCLOSE_FILE (
@@ -1642,54 +1664,6 @@ Obj FuncREAD_BYTE_FILE (
 **  
 **  This uses fgets and works only if there are no zero characters in <fid>.
 */
-
-/*  this would be a proper function but it reads single chars and is slower
-
-Now SyFputs uses read byte-by-byte, so probably OK
-
-Obj FuncREAD_LINE_FILE (
-    Obj             self,
-    Obj             fid )
-{
-    Int             fidc, len, i;
-    Obj             str;
-    UInt1           *p;
-    Int              c;
-
-    while ( ! IS_INTOBJ(fid) ) {
-        fid = ErrorReturnObj(
-            "<fid> must be an integer (not a %s)",
-            (Int)TNAM_OBJ(fid), 0L,
-            "you can replace <fid> via 'return <fid>;'" );
-    }
-    
-    str = NEW_STRING(10);
-    len = 10;
-    i = 0;
-    fidc = INT_INTOBJ(fid);
-    p = CHARS_STRING(str); 
-    while (1) {
-      c = SyGetc(fidc);
-      if (i == len) {
-        len = GrowString(str, len+1);
-        p = CHARS_STRING(str);
-      }
-      if (c == '\n') {
-        p[i++] = (UInt1)c;
-        break;
-      }
-      else if (c == EOF) 
-        break;
-      else {
-        p[i++] = (UInt1)c;
-      }
-    }
-    ResizeBag( str, SIZEBAG_STRINGLEN(i) );
-    SET_LEN_STRING(str, i);
-      
-    return i == 0 ? Fail : str;
-}
-*/
 Obj FuncREAD_LINE_FILE (
     Obj             self,
     Obj             fid )
@@ -1801,7 +1775,7 @@ Obj FuncREAD_ALL_FILE (
 	SET_LEN_STRING(str, len);
 	syBuffers[bufno].bufstart += lstr;
       }
-#if SYS_IS_CYGWIN32
+#ifdef SYS_IS_CYGWIN32
  getmore:
 #endif
     while (ilim == -1 || len < ilim ) {
@@ -1842,7 +1816,7 @@ Obj FuncREAD_ALL_FILE (
 
     /* fix the length of <str>                                             */
     len = GET_LEN_STRING(str);
-#if SYS_IS_CYGWIN32
+#ifdef SYS_IS_CYGWIN32
     /* line end hackery */
     {
       UInt i = 0,j = 0;
@@ -2001,7 +1975,28 @@ Obj FuncFD_OF_FILE(Obj self,Obj fid)
   return INTOBJ_INT(fdi);
 }
 
-#if HAVE_SELECT
+#ifdef HPCGAP
+Obj FuncRAW_MODE_FILE(Obj self, Obj fid, Obj onoff)
+{
+  Int fd;
+  int fdi;
+  while (fid == (Obj) 0 || !(IS_INTOBJ(fid)))
+  {
+    fid = ErrorReturnObj(
+           "<fid> must be a small integer (not a %s)",
+           (Int)TNAM_OBJ(fid),0L,
+           "you can replace <fid> via 'return <fid>;'" );
+  }
+  fd = INT_INTOBJ(fid);
+  fdi = syBuf[fd].fp;
+  if (onoff == False || onoff == Fail)
+    return syStopraw(fdi), False;
+  else
+    return syStartraw(fdi) ? True : False;
+}
+#endif
+
+#ifdef HAVE_SELECT
 Obj FuncUNIXSelect(Obj self, Obj inlist, Obj outlist, Obj exclist, 
                    Obj timeoutsec, Obj timeoutusec)
 {
@@ -2110,14 +2105,12 @@ Obj FuncUNIXSelect(Obj self, Obj inlist, Obj outlist, Obj exclist,
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * execution functions  * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  FuncExecuteProcess( <self>, <dir>, <prg>, <in>, <out>, <args> )   process
 */
 static Obj    ExecArgs  [ 1024 ];
@@ -2203,187 +2196,84 @@ Obj FuncExecuteProcess (
 
 /****************************************************************************
 **
-
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
-static StructGVarFunc GVarFuncs [] = {
+static StructGVarFunc GVarFuncs[] = {
 
-    { "READ", 1L, "filename",
-      FuncREAD, "src/streams.c:READ" },
+    GVAR_FUNC(READ, 1, "filename"),
+    GVAR_FUNC(READ_NORECOVERY, 1, "filename"),
+    GVAR_FUNC(READ_ALL_COMMANDS, 2, "stream, echo"),
+    GVAR_FUNC(READ_COMMAND_REAL, 2, "stream, echo"),
+    GVAR_FUNC(READ_STREAM, 1, "stream"),
+    GVAR_FUNC(READ_STREAM_LOOP, 2, "stream, catchstderrout"),
+    GVAR_FUNC(READ_AS_FUNC, 1, "filename"),
+    GVAR_FUNC(READ_AS_FUNC_STREAM, 1, "stream"),
+    GVAR_FUNC(READ_GAP_ROOT, 1, "filename"),
+    GVAR_FUNC(LOG_TO, 1, "filename"),
+    GVAR_FUNC(LOG_TO_STREAM, 1, "filename"),
+    GVAR_FUNC(CLOSE_LOG_TO, 0, ""),
+    GVAR_FUNC(INPUT_LOG_TO, 1, "filename"),
+    GVAR_FUNC(INPUT_LOG_TO_STREAM, 1, "filename"),
+    GVAR_FUNC(CLOSE_INPUT_LOG_TO, 0, ""),
+    GVAR_FUNC(OUTPUT_LOG_TO, 1, "filename"),
+    GVAR_FUNC(OUTPUT_LOG_TO_STREAM, 1, "filename"),
+    GVAR_FUNC(CLOSE_OUTPUT_LOG_TO, 0, ""),
+    GVAR_FUNC(Print, -1, "args"),
+    GVAR_FUNC(PRINT_TO, -1, "args"),
+    GVAR_FUNC(PRINT_TO_STREAM, -1, "args"),
+    GVAR_FUNC(APPEND_TO, -1, "args"),
+    GVAR_FUNC(APPEND_TO_STREAM, -1, "args"),
+    GVAR_FUNC(SET_OUTPUT, 2, "file, app"),
+    GVAR_FUNC(SET_PREVIOUS_OUTPUT, 0, ""),
 
-    { "READ_NORECOVERY", 1L, "filename",
-      FuncREAD_NORECOVERY, "src/streams.c:READ_NORECOVERY" },
+    GVAR_FUNC(IS_INPUT_TTY, 0, ""),
+    GVAR_FUNC(IS_OUTPUT_TTY, 0, ""),
 
-    { "READ_COMMAND_REAL", 2L, "stream, echo",
-      FuncREAD_COMMAND_REAL, "src/streams.c:READ_COMMAND_REAL" },
-
-    { "READ_COMMAND", 2L, "stream, echo", 
-      FuncREAD_COMMAND, "src/streams.c:READ_COMMAND" },
-
-    { "READ_STREAM", 1L, "stream",
-      FuncREAD_STREAM, "src/streams.c:READ_STREAM" },
-
-    { "READ_STREAM_LOOP", 2L, "stream, catchstderrout",
-      FuncREAD_STREAM_LOOP, "src/streams.c:READ_STREAM_LOOP" },
-
-    { "READ_AS_FUNC", 1L, "filename",
-      FuncREAD_AS_FUNC, "src/streams.c:READ_AS_FUNC" },
-
-    { "READ_AS_FUNC_STREAM", 1L, "stream", 
-      FuncREAD_AS_FUNC_STREAM, "src/streams.c:READ_AS_FUNC_STREAM" },
-
-    { "READ_GAP_ROOT", 1L, "filename",
-      FuncREAD_GAP_ROOT, "src/streams.c:READ_GAP_ROOT" },
-
-    { "LOG_TO", 1L, "filename", 
-      FuncLOG_TO, "src/streams.c:LOG_TO" },
-
-    { "LOG_TO_STREAM", 1L, "filename", 
-      FuncLOG_TO_STREAM, "src/streams.c:LOG_TO_STREAM" },
-
-    { "CLOSE_LOG_TO", 0L, "", 
-      FuncCLOSE_LOG_TO, "src/streams.c:CLOSE_LOG_TO" },
-
-    { "INPUT_LOG_TO", 1L, "filename", 
-      FuncINPUT_LOG_TO, "src/streams.c:INPUT_LOG_TO" },
-
-    { "INPUT_LOG_TO_STREAM", 1L, "filename", 
-      FuncINPUT_LOG_TO_STREAM, "src/streams.c:INPUT_LOG_TO_STREAM" },
-
-    { "CLOSE_INPUT_LOG_TO", 0L, "", 
-      FuncCLOSE_INPUT_LOG_TO, "src/streams.c:CLOSE_INPUT_LOG_TO" },
-
-    { "OUTPUT_LOG_TO", 1L, "filename", 
-      FuncOUTPUT_LOG_TO, "src/streams.c:OUTPUT_LOG_TO" },
-
-    { "OUTPUT_LOG_TO_STREAM", 1L, "filename", 
-      FuncOUTPUT_LOG_TO_STREAM, "src/streams.c:OUTPUT_LOG_TO_STREAM" },
-
-    { "CLOSE_OUTPUT_LOG_TO", 0L, "", 
-      FuncCLOSE_OUTPUT_LOG_TO, "src/streams.c:CLOSE_OUTPUT_LOG_TO" },
-
-    { "Print", -1L, "args",
-      FuncPrint, "src/streams.c:Print" },
-
-    { "PRINT_TO", -1L, "args",
-      FuncPRINT_TO, "src/streams.c:PRINT_TO" },
-
-    { "PRINT_TO_STREAM", -1L, "args",
-      FuncPRINT_TO_STREAM, "src/streams.c:PRINT_TO_STREAM" },
-
-    { "APPEND_TO", -1L, "args",
-      FuncAPPEND_TO, "src/streams.c:APPEND_TO" },
-
-    { "APPEND_TO_STREAM", -1L, "args",
-      FuncAPPEND_TO_STREAM, "src/streams.c:APPEND_TO_STREAM" },
-
-    { "SET_OUTPUT", 2, "file, app",
-      FuncSET_OUTPUT, "src/streams.c:SET_OUTPUT" },
-
-    { "SET_PREVIOUS_OUTPUT", 0, "",
-      FuncSET_PREVIOUS_OUTPUT, "src/streams.c:SET_PREVIOUS_OUTPUT" },
-
-    { "TmpName", 0L, "",
-      FuncTmpName, "src/streams.c:TmpName" },
-
-    { "TmpDirectory", 0L, "",
-      FuncTmpDirectory, "src/streams.c:TmpDirectory" },
-
-    { "RemoveFile", 1L, "filename",
-      FuncRemoveFile, "src/streams.c:RemoveFile" },
-
-    { "CreateDir", 1L, "filename",
-      FuncCreateDir, "src/streams.c:CreateDir" },
-
-    { "RemoveDir", 1L, "filename",
-      FuncRemoveDir, "src/streams.c:RemoveDir" },
-
-    { "IsDir", 1L, "filename",
-      FuncIsDir, "src/streams.c:IsDir" },
-
-    { "LastSystemError", 0L, "", 
-      FuncLastSystemError, "src/streams.c:LastSystemError" },
-
-    { "IsExistingFile", 1L, "filename", 
-      FuncIsExistingFile, "src/streams.c:IsExistingFile" },
-
-    { "IsReadableFile", 1L, "filename",
-      FuncIsReadableFile, "src/streams.c:IsReadableFile" },
-
-    { "IsWritableFile", 1L, "filename",
-      FuncIsWritableFile, "src/streams.c:IsWritableFile" },
-
-    { "IsExecutableFile", 1L, "filename",
-      FuncIsExecutableFile, "src/streams.c:IsExecutableFile" },
-
-    { "IsDirectoryPathString", 1L, "filename",
-      FuncIsDirectoryPathString, "src/streams.c:IsDirectoryPath" },
-
-    { "STRING_LIST_DIR", 1L, "dirname",
-      FuncSTRING_LIST_DIR, "src/streams.c:STRING_LIST_DIR"},
-
-    { "CLOSE_FILE", 1L, "fid",
-      FuncCLOSE_FILE, "src/streams.c:CLOSE_FILE" },
-
-    { "INPUT_TEXT_FILE", 1L, "filename",
-      FuncINPUT_TEXT_FILE, "src/streams.c:INPUT_TEXT_FILE" },
-
-    { "OUTPUT_TEXT_FILE", 2L, "filename, append",
-      FuncOUTPUT_TEXT_FILE, "src/streams.c:OUTPUT_TEXT_FILE" },
-
-    { "IS_END_OF_FILE", 1L, "fid",
-      FuncIS_END_OF_FILE, "src/streams.c:IS_END_OF_FILE" },
-
-    { "POSITION_FILE", 1L, "fid",
-      FuncPOSITION_FILE, "src/streams.c:POSITION_FILE" },
-
-    { "READ_BYTE_FILE", 1L, "fid",
-      FuncREAD_BYTE_FILE, "src/streams.c:READ_BYTE_FILE" },
-
-    { "READ_LINE_FILE", 1L, "fid",
-      FuncREAD_LINE_FILE, "src/streams.c:READ_LINE_FILE" },
-
-    { "READ_ALL_FILE", 2L, "fid, limit",
-      FuncREAD_ALL_FILE, "src/streams.c:READ_ALL_FILE" },
-
-    { "SEEK_POSITION_FILE", 2L, "fid, pos",
-      FuncSEEK_POSITION_FILE, "src/streams.c:SEEK_POSITION_FILE" },
-
-    { "WRITE_BYTE_FILE", 2L, "fid, byte",
-      FuncWRITE_BYTE_FILE, "src/streams.c:WRITE_BYTE_FILE" },
-
-    { "WRITE_STRING_FILE_NC", 2L, "fid, string",
-      FuncWRITE_STRING_FILE_NC, "src/streams.c:WRITE_STRING_FILE_NC" },
-
-    { "READ_STRING_FILE", 1L, "fid",
-      FuncREAD_STRING_FILE, "src/streams.c:READ_STRING_FILE" },
-
-    { "FD_OF_FILE", 1L, "fid",
-      FuncFD_OF_FILE, "src/streams.c:FD_OF_FILE" },
-
-#ifdef HAVE_SELECT
-    { "UNIXSelect", 5L, "inlist, outlist, exclist, timeoutsec, timeoutusec",
-      FuncUNIXSelect, "src/streams.c:UNIXSelect" },
+    GVAR_FUNC(TmpName, 0, ""),
+    GVAR_FUNC(TmpDirectory, 0, ""),
+    GVAR_FUNC(RemoveFile, 1, "filename"),
+    GVAR_FUNC(CreateDir, 1, "filename"),
+    GVAR_FUNC(RemoveDir, 1, "filename"),
+    GVAR_FUNC(IsDir, 1, "filename"),
+    GVAR_FUNC(LastSystemError, 0, ""),
+    GVAR_FUNC(IsExistingFile, 1, "filename"),
+    GVAR_FUNC(IsReadableFile, 1, "filename"),
+    GVAR_FUNC(IsWritableFile, 1, "filename"),
+    GVAR_FUNC(IsExecutableFile, 1, "filename"),
+    GVAR_FUNC(IsDirectoryPathString, 1, "filename"),
+    GVAR_FUNC(STRING_LIST_DIR, 1, "dirname"),
+    GVAR_FUNC(CLOSE_FILE, 1, "fid"),
+    GVAR_FUNC(INPUT_TEXT_FILE, 1, "filename"),
+    GVAR_FUNC(OUTPUT_TEXT_FILE, 2, "filename, append"),
+    GVAR_FUNC(IS_END_OF_FILE, 1, "fid"),
+    GVAR_FUNC(POSITION_FILE, 1, "fid"),
+    GVAR_FUNC(READ_BYTE_FILE, 1, "fid"),
+    GVAR_FUNC(READ_LINE_FILE, 1, "fid"),
+    GVAR_FUNC(READ_ALL_FILE, 2, "fid, limit"),
+    GVAR_FUNC(SEEK_POSITION_FILE, 2, "fid, pos"),
+    GVAR_FUNC(WRITE_BYTE_FILE, 2, "fid, byte"),
+    GVAR_FUNC(WRITE_STRING_FILE_NC, 2, "fid, string"),
+    GVAR_FUNC(READ_STRING_FILE, 1, "fid"),
+    GVAR_FUNC(FD_OF_FILE, 1, "fid"),
+#ifdef HPCGAP
+    GVAR_FUNC(RAW_MODE_FILE, 2, "fid, bool"),
 #endif
-
-    { "ExecuteProcess", 5L, "dir, prg, in, out, args",
-      FuncExecuteProcess, "src/streams.c:ExecuteProcess" },
-
-    { 0 }
+#ifdef HAVE_SELECT
+    GVAR_FUNC(UNIXSelect, 5, "inlist, outlist, exclist, timeoutsec, timeoutusec"),
+#endif
+    GVAR_FUNC(ExecuteProcess, 5, "dir, prg, in, out, args"),
+    { 0, 0, 0, 0, 0 }
 
 };
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
@@ -2455,10 +2345,3 @@ StructInitInfo * InitInfoStreams ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  streams.c . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

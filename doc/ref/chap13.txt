@@ -176,22 +176,37 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XShowImpliedFilters(IsMatrix);[127X[104X
     [4X[28XImplies:[128X[104X
-    [4X[28X   IsGeneralizedRowVector[128X[104X
     [4X[28X   IsNearAdditiveElementWithInverse[128X[104X
     [4X[28X   IsAdditiveElement[128X[104X
     [4X[28X   IsMultiplicativeElement[128X[104X
+    [4X[28X   IsGeneralizedRowVector[128X[104X
     [4X[28X[128X[104X
     [4X[28X[128X[104X
     [4X[28XMay imply with:[128X[104X
-    [4X[28X+IsGF2MatrixRep[128X[104X
+    [4X[28X+IsInternalRep[128X[104X
     [4X[28X   IsOrdinaryMatrix[128X[104X
     [4X[28X[128X[104X
     [4X[28X+CategoryCollections(CategoryCollections(IsAdditivelyCommutativeElement))[128X[104X
     [4X[28X   IsAdditivelyCommutativeElement[128X[104X
     [4X[28X[128X[104X
-    [4X[28X+IsInternalRep[128X[104X
+    [4X[28X+IsGF2MatrixRep[128X[104X
     [4X[28X   IsOrdinaryMatrix[128X[104X
     [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X13.2-4 FiltersType[101X
+  
+  [33X[1;0Y[29X[2XFiltersType[102X( [3Xtype[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XFiltersObj[102X( [3Xobject[103X ) [32X operation[133X
+  
+  [33X[0;0Yreturns a list of the filters in the type [3Xtype[103X, or in the type of the object
+  [3Xobject[103X respectively.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XFiltersObj(fail);[127X[104X
+    [4X[28X[ <Category "IsBool">, <Representation "IsInternalRep"> ][128X[104X
+    [4X[25Xgap>[125X [27XFiltersType(TypeOfTypes);[127X[104X
+    [4X[28X[ <Representation "IsPositionalObjectRep">, <Category "IsType">, <Representation "IsTypeDefaultRep"> ][128X[104X
   [4X[32X[104X
   
   
@@ -475,8 +490,8 @@
   setter  explicitly, for example, [10XSetter( Size )( [3Xobj[103X[10X, [3Xval[103X[10X )[110X sets [3Xval[103X as size
   of the object [3Xobj[103X if the size was not yet known.[133X
   
-  [33X[0;0YFor  each  attribute  [3Xattr[103X  that is declared with [2XDeclareAttribute[102X ([14X79.18-3[114X)
-  resp. [2XDeclareProperty[102X   ([14X79.18-4[114X)   (see [14X79.18[114X),   tester   and  setter  are
+  [33X[0;0YFor  each  attribute  [3Xattr[103X  that is declared with [2XDeclareAttribute[102X ([14X79.18-9[114X)
+  resp. [2XDeclareProperty[102X   ([14X79.18-10[114X)   (see [14X79.18[114X),   tester  and  setter  are
   automatically   made   accessible   by   the   names  [10XHas[3Xattr[103X[10X[110X  and  [10XSet[3Xattr[103X[10X[110X,
   respectively.  For  example, the tester for [2XSize[102X ([14X30.4-6[114X) is called [10XHasSize[110X,
   and the setter is called [10XSetSize[110X.[133X
@@ -498,7 +513,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xprop:= IsFinite and IsCommutative;[127X[104X
-    [4X[28X<Property "<<and-filter>>">[128X[104X
+    [4X[28X<Property "(IsFinite and IsCommutative)">[128X[104X
     [4X[25Xgap>[125X [27Xg:= Group( (1,2,3), (4,5) );;[127X[104X
     [4X[25Xgap>[125X [27XTester( prop )( g );[127X[104X
     [4X[28Xfalse[128X[104X

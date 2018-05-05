@@ -11,26 +11,19 @@
 #ifndef GAP_VECFFE_H
 #define GAP_VECFFE_H
 
+#include <src/system.h>
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  InitInfoVecFFE()  . . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoVecFFE ( void );
 
 
 #endif // GAP_VECFFE_H
-
-/****************************************************************************
-**
-
-*E  vecffe.h  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

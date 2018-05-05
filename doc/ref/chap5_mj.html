@@ -33,7 +33,8 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X818BAB817A4FB346">5.1-3 NamesLocalVariablesFunction</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X80E108C57F90FAA3">5.1-4 FilenameFunc</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7FF7643781D2C194">5.1-5 StartlineFunc</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X845A929B83D46E01">5.1-6 PageSource</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X844F95767C74834F">5.1-6 LocationFunc</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X845A929B83D46E01">5.1-7 PageSource</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X851B58408520700D">5.2 <span class="Heading">Calling a function with a list argument that is interpreted as
 several arguments</span></a>
@@ -41,11 +42,10 @@ several arguments</span></a>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X7CF4DDB97D65AE52">5.2-1 CallFuncList</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X7B3D856B7DCAEB8F">5.3 <span class="Heading">Calling a function with a time limit</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X83066E5A80B5FB71">5.3 <span class="Heading">Wrapping a function, so the values produced are cached</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X782F88AC7B6DC4F9">5.3-1 CallWithTimeout</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X781D10C77D11A03C">5.3-2 GAPInfo.TimeoutsSupported</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5_mj.html#X817ED3B280A64601">5.3-1 MemoizePosIntFunction</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5_mj.html#X7EB0A85F7D128BE0">5.4 <span class="Heading">Functions that do nothing</span></a>
 </span>
@@ -179,16 +179,36 @@ fail
 487
 </pre></div>
 
+<p><a id="X844F95767C74834F" name="X844F95767C74834F"></a></p>
+
+<h5>5.1-6 LocationFunc</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LocationFunc</code>( <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Let <var class="Arg">func</var> be a function. Returns a string describing the location of <var class="Arg">func</var>, or an empty string if the information cannot be found. This uses the information provided by <code class="func">FilenameFunc</code> (<a href="chap5_mj.html#X80E108C57F90FAA3"><span class="RefLink">5.1-4</span></a>) and <code class="func">StartlineFunc</code> (<a href="chap5_mj.html#X7FF7643781D2C194"><span class="RefLink">5.1-5</span></a>)</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LocationFunc( Intersection );</span>
+"... some path ... gap/lib/coll.gi:2467"
+# String is an attribute, so no information is stored
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LocationFunc( String );</span>
+""
+</pre></div>
+
 <p><a id="X845A929B83D46E01" name="X845A929B83D46E01"></a></p>
 
-<h5>5.1-6 PageSource</h5>
+<h5>5.1-7 PageSource</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PageSource</code>( <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PageSource</code>( <var class="Arg">func</var>[, <var class="Arg">nr</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This shows the file containing the source code of the function or method <var class="Arg">func</var> in a pager (see <code class="func">Pager</code> (<a href="chap2_mj.html#X7ED03E41792C3840"><span class="RefLink">2.4-1</span></a>)). The display starts at a line shortly before the code of <var class="Arg">func</var>.</p>
 
-<p>This function works if <code class="code">FilenameFunc(<var class="Arg">func</var>)</code> returns the name of a proper file. In that case this filename and the position of the function definition are also printed. Otherwise the function indicates that the source is not available (for example this happens for functions which are implemented in the <strong class="pkg">GAP</strong> C-kernel).</p>
+<p>For operations <var class="Arg">func</var> the function shows the source code of the declaration of <var class="Arg">func</var>. Operations can have several declarations, use the optional second argument to specify which one should be shown (in the order the declarations were read); the default is to show the first.</p>
 
-<p>Usage examples:<br /> <code class="code">met := ApplicableMethod(\^, [(1,2),2743527]); PageSource(met);</code><br /> <code class="code">PageSource(Combinations);</code><br /> <code class="code">ct:=CharacterTable(Group((1,2,3))); </code><br /> <code class="code">met := ApplicableMethod(Size,[ct]); PageSource(met); </code></p>
+<p>For kernel functions the function tries to show the C source code.</p>
+
+<p>If GAP cannot find a file containing the source code this will be indicated.</p>
+
+<p>Usage examples:<br /> <code class="code">met := ApplicableMethod(\^, [(1,2),2743527]); PageSource(met);</code><br /> <code class="code">PageSource(Combinations);</code><br /> <code class="code">PageSource(SORT_LIST); </code><br /> <code class="code">PageSource(Size, 2);</code><br /> <code class="code">ct := CharacterTable(Group((1,2,3))); </code><br /> <code class="code">met := ApplicableMethod(Size,[ct]); PageSource(met); </code></p>
 
 <p><a id="X851B58408520700D" name="X851B58408520700D"></a></p>
 
@@ -200,6 +220,7 @@ several arguments</span></h4>
 <h5>5.2-1 CallFuncList</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CallFuncList</code>( <var class="Arg">func</var>, <var class="Arg">args</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CallFuncListWrap</code>( <var class="Arg">func</var>, <var class="Arg">args</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the result, when calling function <var class="Arg">func</var> with the arguments given in the list <var class="Arg">args</var>, i.e. <var class="Arg">args</var> is "unwrapped" so that <var class="Arg">args</var> appears as several arguments to <var class="Arg">func</var>.</p>
 
 
@@ -241,42 +262,69 @@ function( arg... ) ... end
 [ 1, 9, 7, 3, 2 ]
 </pre></div>
 
-<p><a id="X7B3D856B7DCAEB8F" name="X7B3D856B7DCAEB8F"></a></p>
+<p><code class="func">CallFuncListWrap</code> differs only in that the result is a list. This returned list is empty if the called function returned no value, else it contains the returned value as it's single member. This allows wrapping functions which may, or may not return a value.</p>
 
-<h4>5.3 <span class="Heading">Calling a function with a time limit</span></h4>
 
-<p><a id="X782F88AC7B6DC4F9" name="X782F88AC7B6DC4F9"></a></p>
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CallFuncListWrap( x -&gt; x, [1] );</span>
+[ 1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CallFuncListWrap( function(x) end, [1] );</span>
+[ ]
+</pre></div>
 
-<h5>5.3-1 CallWithTimeout</h5>
+<p><a id="X83066E5A80B5FB71" name="X83066E5A80B5FB71"></a></p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CallWithTimeout</code>( <var class="Arg">timeout</var>, <var class="Arg">func</var>, <var class="Arg">.....</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CallWithTimeoutList</code>( <var class="Arg">timeout</var>, <var class="Arg">func</var>, <var class="Arg">arglist</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p><code class="code">CallWithTimeout</code> and <code class="code">CallWithTimeoutList</code> support calling a function with a limit on the CPU time it can consume.</p>
+<h4>5.3 <span class="Heading">Wrapping a function, so the values produced are cached</span></h4>
 
-<p>This functionality may not be available on all systems and you should check <code class="func">GAPInfo.TimeoutsSupported</code> (<a href="chap5_mj.html#X781D10C77D11A03C"><span class="RefLink">5.3-2</span></a>) before using this functionality.</p>
+<p><a id="X817ED3B280A64601" name="X817ED3B280A64601"></a></p>
 
-<p><code class="code">CallWithTimeout</code> is variadic. Its third and subsequent arguments, if any, are the arguments passed to <var class="Arg">func</var>. <code class="code">CallWithTimeoutList</code> in contrast takes exactly three arguments, of which the third is a list (possibly empty) or arguments to pass to <var class="Arg">func</var>.</p>
+<h5>5.3-1 MemoizePosIntFunction</h5>
 
-<p>If the call completes within the allotted time and returns a value <code class="code">res</code>, the result of <code class="code">CallWithTimeout[List]</code> is a length 2 list of the form <code class="code"> [ true, res ] </code>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MemoizePosIntFunction</code>( <var class="Arg">function</var>[, <var class="Arg">options</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p><code class="func">MemoizePosIntFunction</code> returns a function which behaves the same as <var class="Arg">function</var>, except it caches the results; if the new function is called with the same input, then any call after the first will return the cached value, instead of recomputing it. The cache is flushed by calling <code class="func">FlushCaches</code> (<a href="chap79_mj.html#X87A4316C818B3DE3"><span class="RefLink">79.18-18</span></a>).</p>
 
-<p>If the call completes within the allotted time and returns no value, the result of <code class="code">CallWithTimeout[List]</code> is a list of length 1 containing the value <code class="code">true</code>.</p>
+<p>The returned function will only accept positive integers.</p>
 
-<p>If the call does not complete within the timeout, the result of <code class="code">CallWithTimeout[List]</code> is a list of length 1 containing the value <code class="code">false</code> In this case, just as if you had <code class="code">quit</code> from a break loop, there is some risk that internal data structures in <strong class="pkg">GAP</strong> may have been left in an inconsistent state, and you should proceed with caution.</p>
+<p>This function does not promise to never call <var class="Arg">function</var> more than once for any input -- values may be removed if the cache gets too large, or GAP chooses to flush all caches, or if multiple threads try to calculate the same value simultaneously.</p>
 
-<p>The timer is suspended during execution of a break loop and abandoned when you quit from a break loop.</p>
+<p>The optional second argument is a record which provides a number of configuration options. The following options are supported.</p>
 
-<p>Timeouts may not be nested. That is, during execution of <code class="code">CallWithTimeout(<var class="Arg">timeout</var>,<var class="Arg">func</var>,...)</code>, <var class="Arg">func</var> (or functions it calls) may not call <code class="code">CallWithTimeout</code> or <code class="code">CallWithTimeoutList</code>. This restriction may be lifted on at least some systems in future releases. It is permitted to use <code class="code">CallWithTimeout</code> or <code class="code">CallWithTimeoutList</code> from within a break loop, even if a suspended timeout exists, although there is limit on the depth of such nesting.</p>
 
-<p>The limit <var class="Arg">timeout</var> is specified as a record. At present the following components are recognised <code class="code">nanoseconds</code>, <code class="code">microseconds</code>, <code class="code">milliseconds</code>, <code class="code">seconds</code>, <code class="code">minutes</code>, <code class="code">hours</code>, <code class="code">days</code> and <code class="code">weeks</code>. Any of these components which is present should be bound to a positive integer, rational or float and the times represented are totalled to give the actual timeout. As a shorthand, a single positive integers may be supplied, and is taken as a number of microseconds. Further components are permitted and ignored, to allow for future functionality.</p>
+<dl>
+<dt><strong class="Mark"><code class="code">defaults</code> (default an empty list)</strong></dt>
+<dd><p>Used to initalise the cache, both initially and after each flush.</p>
 
-<p>The precision of the timeouts is not guaranteed, and there is a system dependent upper limit on the timeout which is typically about 8 years on 32 bit systems and about 30 billion years on 64 bit systems. Timeouts longer than this will be reduced to this limit. On Windows systems, timing is based on elapsed time, not CPU time because the necessary POSIX CPU timing API is not supported.</p>
+</dd>
+<dt><strong class="Mark"><code class="code">flush</code> (default <code class="keyw">true</code>)</strong></dt>
+<dd><p>If this is <code class="keyw">true</code>, the cache is emptied whenever <code class="func">FlushCaches</code> (<a href="chap79_mj.html#X87A4316C818B3DE3"><span class="RefLink">79.18-18</span></a>) is called.</p>
 
-<p><a id="X781D10C77D11A03C" name="X781D10C77D11A03C"></a></p>
+</dd>
+<dt><strong class="Mark"><code class="code">errorHandler</code> (defaults to <code class="func">Error</code> (<a href="chap6_mj.html#X7E7AD8D87EBA1A08"><span class="RefLink">6.6-1</span></a>))</strong></dt>
+<dd><p>A function to be called when an input which is not a positive integer is passed to the cache. If this function returns a value, that value is returned by the cache.</p>
 
-<h5>5.3-2 GAPInfo.TimeoutsSupported</h5>
+</dd>
+</dl>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GAPInfo.TimeoutsSupported</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
-<p>tests whether this installation of <strong class="pkg">GAP</strong> supports the timeout functionality of <code class="func">CallWithTimeout</code> (<a href="chap5_mj.html#X782F88AC7B6DC4F9"><span class="RefLink">5.3-1</span></a>) and related functions.</p>
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := MemoizePosIntFunction(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          function(i) Print("Check: ",i,"\n"); return i*i; end,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          rec(defaults := [,,50], errorHandler := x -&gt; "Bad") );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f(2);</span>
+Check: 2
+4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f(2);</span>
+4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f(3);</span>
+50
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f(-3);</span>
+"Bad"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">FlushCaches();</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f(2);</span>
+Check: 2
+4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f(3);</span>
+50
+</pre></div>
 
 <p><a id="X7EB0A85F7D128BE0" name="X7EB0A85F7D128BE0"></a></p>
 

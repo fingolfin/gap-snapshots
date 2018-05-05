@@ -11,9 +11,10 @@
 #ifndef GAP_VECGF2_H
 #define GAP_VECGF2_H
 
+#include <src/system.h>
+
 /****************************************************************************
 **
-
 *F  IS_GF2VEC_REP( <obj> )  . . . . . . check that <obj> is in GF2 vector rep
 */
 #define IS_GF2VEC_REP(obj) \
@@ -28,6 +29,7 @@
     do { \
         vec = NewBag( T_DATOBJ, SIZE_PLEN_GF2VEC(len) ); \
         SetTypeDatObj(vec, type); \
+        SET_LEN_GF2VEC(vec, len); \
     } while (0)
 
 
@@ -41,7 +43,7 @@
 **  Note that 'LEN_GF2VEC' is a macro, so do not call it with  arguments that
 **  have side effects.
 */
-#define LEN_GF2VEC(list)         ((Int)(ADDR_OBJ(list)[1]))
+#define LEN_GF2VEC(list)         ((Int)(CONST_ADDR_OBJ(list)[1]))
 
 
 /****************************************************************************
@@ -134,7 +136,7 @@
 **  Note that 'LEN_GF2MAT' is a macro, so do not call it with  arguments that
 **  have side effects.
 */
-#define LEN_GF2MAT(list)         (INT_INTOBJ(ADDR_OBJ(list)[1]))
+#define LEN_GF2MAT(list)         (INT_INTOBJ(CONST_ADDR_OBJ(list)[1]))
 
 
 /****************************************************************************
@@ -161,7 +163,7 @@
 **  Note that 'ELM_GF2MAT' is a macro, so do  not call it with arguments that
 **  have side effects.
 */
-#define ELM_GF2MAT(list,pos)    (ADDR_OBJ(list)[pos+1])
+#define ELM_GF2MAT(list,pos)    (CONST_ADDR_OBJ(list)[pos+1])
 
 
 /****************************************************************************
@@ -228,25 +230,19 @@ extern Obj TYPE_LIST_GF2MAT_IMM;
 
 extern Obj IsGF2VectorRep;
 
+extern Obj ShallowCopyVecGF2( Obj vec );
+
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  InitInfoGF2Vec()  . . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoGF2Vec ( void );
 
 
 #endif // GAP_VECGF2_H
-
-/****************************************************************************
-**
-
-*E  vecgf2.h  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

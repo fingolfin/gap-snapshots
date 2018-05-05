@@ -27,6 +27,8 @@ interactive environment in which you use &GAP;.
 <Index Key="last"><C>last</C></Index>
 <Index Key="last2"><C>last2</C></Index>
 <Index Key="last3"><C>last3</C></Index>
+<Index Key="time"><C>time</C></Index>
+<Index Key="memory_allocated"><C>memory_allocated</C></Index>
 <Index>previous result</Index>
 The normal interaction with &GAP; happens in the so-called
 <E>read-eval-print</E> loop.
@@ -81,7 +83,7 @@ error message of the following form
 <P/>
 <Log><![CDATA[
 gap> 1 * ;
-Syntax error: expression expected
+Syntax error: Expression expected
 1 * ;
     ^
 ]]></Log>
@@ -154,8 +156,10 @@ gap> last3 + last2 * last;
 ]]></Example>
 <P/>
 Also in each statement the time spent by the last statement, whether it
-produced a value or not, is available in the variable <Ref Var="time"/>.
-This is an integer that holds the number of milliseconds.
+produced a value or not, is available in the variable <Ref
+Var="time"/>. This is an integer that holds the number of
+milliseconds. Similarly the amount of memory allocated during that
+statement (in bytes) is stored in the variable <Ref Var="memory_allocated"/>.
 
 </Section>
 
@@ -944,8 +948,6 @@ This break loop can only be exited with <C>quit;</C>. The function differs from
 <Ref Func="ErrorCount"/> returns a count of the number of errors
 (including user interruptions) which have occurred in the &GAP; session
 so far.
-This count is reduced modulo <M>2^{28}</M> on <M>32</M> bit systems,
-<M>2^{60}</M> on <M>64</M> bit systems.
 The count is incremented by each error, even if &GAP; was
 started with the <C>-T</C> option to disable the break loop.
 </Description>
@@ -1294,8 +1296,8 @@ directory <F>.vim</F> with  subdirectories  <F>.vim/syntax</F> and
 <F>.vim/indent</F>
 (If you are not using Unix, refer to the <C>vim</C> documentation
 on where to place syntax files).
-Then copy the file <F>etc/gap.vim</F> to <F>.vim/syntax/gap.vim</F> 
-and  the file <F>etc/gap_indent.vim</F> to <F>.vim/indent/gap.vim</F>.
+Then copy the file <F>etc/vim/gap.vim</F> to <F>.vim/syntax/gap.vim</F> 
+and  the file <F>etc/vim/gap_indent.vim</F> to <F>.vim/indent/gap.vim</F>.
 <P/>
 Then edit the <F>.vimrc</F> file in your home directory.
 Add lines as in the following example:

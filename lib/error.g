@@ -42,9 +42,6 @@ end);
 
 ErrorLVars := fail;
 
-
-
-
 BIND_GLOBAL("WHERE", function( context, depth, outercontext)
     local   bottom,  lastcontext,  f;
     if depth <= 0 then
@@ -82,7 +79,7 @@ BIND_GLOBAL("Where", function(arg)
     else
         WHERE(ParentLVars(ErrorLVars),depth, ErrorLVars);
     fi;
-    Print("at line ",INPUT_LINENUMBER()," of ",INPUT_FILENAME(),"\n");
+    Print("at ",INPUT_FILENAME(),":",INPUT_LINENUMBER(),"\n");
 end);
 
 OnBreak := Where;
@@ -113,9 +110,9 @@ Unbind(ErrorInner);
 BIND_GLOBAL("ErrorInner",
         function( arg )
     local   context, mayReturnVoid,  mayReturnObj,  lateMessage,  earlyMessage,  
-            x,  prompt,  res, errorLVars, justQuit, printThisStatement, timeout;
+            x,  prompt,  res, errorLVars, justQuit, printThisStatement,
+            location;
 
-    timeout := STOP_TIMEOUT();
 	context := arg[1].context;
     if not IsLVarsBag(context) then
         PrintTo("*errout*", "ErrorInner:   option context must be a local variables bag\n");
@@ -214,8 +211,16 @@ BIND_GLOBAL("ErrorInner",
             PrintTo("*errout*","\c\n");
         fi;
     else
+        location := CURRENT_STATEMENT_LOCATION(context);
+        if location <> fail then          PrintTo("*errout*", " at ", location[1], ":", location[2]);
+        fi;
         PrintTo("*errout*"," called from\c\n");
     fi;
+
+    if SHOULD_QUIT_ON_BREAK() then
+        FORCE_QUIT_GAP(1);
+    fi;
+
     if IsBound(OnBreak) and IsFunction(OnBreak) then
         OnBreak();
     fi;
@@ -249,9 +254,6 @@ BIND_GLOBAL("ErrorInner",
         fi;
         JUMP_TO_CATCH(3);
     fi;
-    if timeout <> fail then
-       RESUME_TIMEOUT(timeout);
-    fi;
     if Length(res) > 0 then
         return res[1];
     else
@@ -269,6 +271,8 @@ BIND_GLOBAL("Error",
                                printThisStatement := false),
                                arg);
 end);
+
+Unbind(ErrorNoReturn);
 
 BIND_GLOBAL("ErrorNoReturn",
        function ( arg )

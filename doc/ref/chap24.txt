@@ -36,8 +36,15 @@
   
   [33X[1;0Y[29X[2XIsMatrix[102X( [3Xobj[103X ) [32X Category[133X
   
-  [33X[0;0YA  [13Xmatrix[113X  is  a list of lists of equal length whose entries lie in a common
-  ring.[133X
+  [33X[0;0YBy convention [13Xmatrix[113X is a list of lists of equal length whose entries lie in
+  a common ring.[133X
+  
+  [33X[0;0YFor technical reasons laid out at the top of Chapter [14X24[114X, the filter [2XIsMatrix[102X
+  is  a  synonym  for  a  table  of  ring  elements, (see [2XIsTable[102X ([14X21.1-4[114X) and
+  [2XIsRingElement[102X  ([14X31.14-16[114X)). This means that [2XIsMatrix[102X returns [9Xtrue[109X for tables
+  such  as  [10X[[1,2],[3]][110X. If necessary, [2XIsRectangularTable[102X ([14X21.1-5[114X) can be used
+  to  test  whether  an  object is a list of homogenous lists of equal lengths
+  manually.[133X
   
   [33X[0;0YNote  that  matrices  may  have different multiplications, besides the usual
   matrix product there is for example the Lie product. So there are categories
@@ -50,10 +57,13 @@
     [4X[28X[ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ] ][128X[104X
     [4X[25Xgap>[125X [27XIsMatrix(mat);[127X[104X
     [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xmat:=[[1,2],[3]];[127X[104X
+    [4X[28X[ [ 1, 2 ], [ 3 ] ][128X[104X
+    [4X[25Xgap>[125X [27XIsMatrix(mat);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsRectangularTable(mat);[127X[104X
+    [4X[28Xfalse[128X[104X
   [4X[32X[104X
-  
-  [33X[0;0YNote  also  the  filter  [2XIsTable[102X ([14X21.1-4[114X) which may be more appropriate than
-  [2XIsMatrix[102X for some purposes.[133X
   
   [33X[0;0YNote  that  the empty list [10X[][110X and more complex [21Xempty[121X structures such as [10X[[]][110X
   are  [13Xnot[113X  matrices,  although special methods allow them be used in place of
@@ -330,7 +340,7 @@
   [1X24.4-4 DeterminantMat[101X
   
   [33X[1;0Y[29X[2XDeterminantMat[102X( [3Xmat[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XDeterminant[102X( [3Xmat[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XDeterminant[102X( [3Xmat[103X ) [32X operation[133X
   
   [33X[0;0Yreturns the determinant of the square matrix [3Xmat[103X.[133X
   
@@ -565,10 +575,11 @@
   
   [1X24.6-1 RandomMat[101X
   
-  [33X[1;0Y[29X[2XRandomMat[102X( [3Xm[103X, [3Xn[103X[, [3XR[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XRandomMat[102X( [[3Xrs[103X, ][3Xm[103X, [3Xn[103X[, [3XR[103X] ) [32X function[133X
   
   [33X[0;0Y[2XRandomMat[102X returns a new mutable random matrix with [3Xm[103X rows and [3Xn[103X columns with
-  elements taken from the ring [3XR[103X, which defaults to [2XIntegers[102X ([14X14[114X).[133X
+  elements taken from the ring [3XR[103X, which defaults to [2XIntegers[102X ([14X14[114X). Optionally,
+  a random source [3Xrs[103X can be supplied.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XRandomMat(2,3,GF(3));[127X[104X
@@ -577,11 +588,11 @@
   
   [1X24.6-2 RandomInvertibleMat[101X
   
-  [33X[1;0Y[29X[2XRandomInvertibleMat[102X( [3Xm[103X[, [3XR[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XRandomInvertibleMat[102X( [[3Xrs[103X, ][3Xm[103X[, [3XR[103X] ) [32X function[133X
   
   [33X[0;0Y[2XRandomInvertibleMat[102X  returns  a  new mutable invertible random matrix with [3Xm[103X
   rows  and  columns  with  elements  taken from the ring [3XR[103X, which defaults to
-  [2XIntegers[102X ([14X14[114X).[133X
+  [2XIntegers[102X ([14X14[114X). Optionally, a random source [3Xrs[103X can be supplied.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xm := RandomInvertibleMat(4);[127X[104X
@@ -594,10 +605,11 @@
   
   [1X24.6-3 RandomUnimodularMat[101X
   
-  [33X[1;0Y[29X[2XRandomUnimodularMat[102X( [3Xm[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XRandomUnimodularMat[102X( [[3Xrs[103X, ][3Xm[103X ) [32X function[133X
   
   [33X[0;0Yreturns  a  new  random  mutable  [3Xm[103X[22X×[122X[3Xm[103X  matrix  with  integer entries that is
-  invertible over the integers.[133X
+  invertible  over  the  integers.  Optionally,  a  random  source  [3Xrs[103X  can be
+  supplied.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xm := RandomUnimodularMat(3);[127X[104X
@@ -632,7 +644,7 @@
   [33X[1;0Y[29X[2XRREF[102X( [3Xmat[103X ) [32X operation[133X
   
   [33X[0;0YComputes  an  upper  triangular  form  of  the  matrix  [3Xmat[103X via the Gaussian
-  Algorithm.  It  returns a immutable matrix in upper triangular form. This is
+  Algorithm.  It  returns  a  mutable matrix in upper triangular form. This is
   sometimes  also called [21XHermite normal form[121X or [21XReduced Row Echelon Form[121X. [10XRREF[110X
   is a synonym for [10XTriangulizedMat[110X.[133X
   
@@ -1270,7 +1282,7 @@
   
   [33X[0;0YThis  is  enforced by the filter [10XIsLockedRepresentationVector[110X. When a vector
   becomes  part of a compressed matrix, this filter is set for it. Assignment,
-  [2XUnbind[102X   ([14X21.5-2[114X),   [2XConvertToVectorRep[102X   ([14X23.3-1[114X)   and  [2XConvertToMatrixRep[102X
+  [2XUnbind[102X   ([14X21.5-3[114X),   [2XConvertToVectorRep[102X   ([14X23.3-1[114X)   and  [2XConvertToMatrixRep[102X
   ([14X24.14-2[114X) are all prevented from altering a vector with this filter.[133X
   
   [4X[32X  Example  [32X[104X
@@ -1313,12 +1325,12 @@
   for the same [3Xfield[103X are compatible for fast arithmetic without need for field
   conversion.[133X
   
-  [33X[0;0YThe input matrix [3Xmatrix[103X or its rows might change the representation, however
-  the  result  of  [2XImmutableMatrix[102X is not necessarily [13Xidentical[113X to [3Xmatrix[103X if a
-  conversion is not possible.[133X
+  [33X[0;0YThe  input  matrix [3Xmatrix[103X or its rows might change their representation as a
+  side  effect  of this function, however the result of [2XImmutableMatrix[102X is not
+  necessarily [13Xidentical[113X to [3Xmatrix[103X if a conversion is not possible.[133X
   
   [33X[0;0YIf  [3Xchange[103X  is [9Xtrue[109X, the rows of [3Xmatrix[103X (or [3Xmatrix[103X itself) may be changed to
-  become immutable; otherwise they are copied first).[133X
+  become immutable; otherwise they are copied first.[133X
   
   [1X24.14-2 ConvertToMatrixRep[101X
   

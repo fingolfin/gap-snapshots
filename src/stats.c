@@ -12,53 +12,35 @@
 **  The  statements package  is the  part  of  the interpreter that  executes
 **  statements for their effects and prints statements.
 */
-#include        "system.h"              /* system dependent part           */
 
+#include <src/stats.h>
 
-#include        "sysfiles.h"            /* file input/output               */
+#include <src/ariths.h>
+#include <src/bool.h>
+#include <src/calls.h>
+#include <src/code.h>
+#include <src/exprs.h>
+#include <src/gap.h>
+#include <src/gvars.h>
+#include <src/hookintrprtr.h>
+#include <src/intrprtr.h>
+#include <src/lists.h>
+#include <src/plist.h>
+#include <src/precord.h>
+#include <src/records.h>
+#include <src/stringobj.h>
+#include <src/sysfiles.h>
+#include <src/vars.h>
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
+#ifdef HPCGAP
+#include <src/hpc/thread.h>
+#endif
 
-#include        "gap.h"                 /* error handling, initialisation  */
+#include <assert.h>
 
-#include        "gvars.h"               /* global variables                */
-
-#include        "calls.h"               /* generic call mechanism          */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "plist.h"               /* plain lists                     */
-#include        "string.h"              /* strings                         */
-
-#include        "bool.h"                /* booleans                        */
-
-#include        "code.h"                /* coder                           */
-#include        "exprs.h"               /* expressions                     */
-
-#include        "intrprtr.h"            /* interpreter                     */
-
-#include        "ariths.h"              /* basic arithmetic                */
-
-#include        "stats.h"               /* statements                      */
-
-#include        "profile.h"             /* installing methods              */
-
-#include        <assert.h>
-
-#include	"tls.h"
-#include	"thread.h"
-
-#include        "vars.h"                /* variables                       */
-
-#include        "profile.h"             /* visit statements for profiling  */
 
 /****************************************************************************
 **
-
 *F  EXEC_STAT(<stat>) . . . . . . . . . . . . . . . . . . execute a statement
 **
 **  'EXEC_STAT' executes the statement <stat>.
@@ -77,7 +59,6 @@
 **
 **  'EXEC_STAT' is defined in the declaration part of this package as follows:
 **
-#define EXEC_STAT(stat) ( (*TLS(CurrExecStatFuncs)[ TNUM_STAT(stat) ]) ( stat ) )
 */
 
 
@@ -101,7 +82,7 @@ UInt            (* ExecStatFuncs[256]) ( Stat stat );
 **  purpose of 'CurrStat' is to make it possible to  point to the location in
 **  case an error is signalled.
 */
-Stat            CurrStat;
+/* TL: Stat            CurrStat; */
 
 
 /****************************************************************************
@@ -112,12 +93,11 @@ Stat            CurrStat;
 **  executed.  It is set  in  'ExecReturnObj' and  used in the  handlers that
 **  interpret functions.
 */
-Obj             ReturnObjStat;
+/* TL: Obj             ReturnObjStat; */
 
 
 /****************************************************************************
 **
-
 *F  ExecUnknownStat(<stat>) . . . . . executor for statements of unknown type
 **
 **  'ExecUnknownStat' is the executor that is called if an attempt is made to
@@ -140,8 +120,13 @@ UInt            ExecUnknownStat (
 **
 */
 
+#ifdef HPCGAP
+UInt HaveInterrupt( void ) {
+  return STATE(CurrExecStatFuncs) == IntrExecStatFuncs;
+}
+#else
 #define HaveInterrupt()   SyIsIntr()
-
+#endif
 
 /****************************************************************************
 **
@@ -445,11 +430,6 @@ UInt            ExecFor (
         var = LVAR_REFLVAR( ADDR_STAT(stat)[0] );
         vart = 'l';
     }
-    else if ( T_REF_LVAR <= TNUM_EXPR( ADDR_STAT(stat)[0] )
-           && TNUM_EXPR( ADDR_STAT(stat)[0] ) <= T_REF_LVAR_16 ) {
-        var = (UInt)(ADDR_EXPR( ADDR_STAT(stat)[0] )[0]);
-        vart = 'l';
-    }
     else if ( TNUM_EXPR( ADDR_STAT(stat)[0] ) == T_REF_HVAR ) {
         var = (UInt)(ADDR_EXPR( ADDR_STAT(stat)[0] )[0]);
         vart = 'h';
@@ -481,7 +461,7 @@ UInt            ExecFor (
             else if ( vart == 'h' )  ASS_HVAR( var, elm );
             else if ( vart == 'g' )  AssGVar(  var, elm );
 
-#if ! HAVE_SIGNAL
+#if !defined(HAVE_SIGNAL)
             /* test for an interrupt                                       */
             if ( HaveInterrupt() ) {
                 ErrorReturnVoid( "user interrupt", 0L, 0L, "you can 'return;'" );
@@ -490,9 +470,9 @@ UInt            ExecFor (
 
             /* execute the statements in the body                          */
             if ( (leave = EXEC_STAT( body )) != 0 ) {
-                if (leave == 8) 
+                if (leave == STATUS_CONTINUE)
                     continue;
-                return (leave & 3);
+                return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
             }
 
         }
@@ -505,7 +485,7 @@ UInt            ExecFor (
         /* get the iterator                                                */
         list = CALL_1ARGS( ITERATOR, list );
 
-        if ( CALL_1ARGS( STD_ITER, list ) == True ) {
+        if ( CALL_1ARGS( STD_ITER, list ) == True && IS_PREC(list) ) {
             /* this can avoid method selection overhead on iterator        */
             dfun = ElmPRec( list, RNamName("IsDoneIterator") );
             nfun = ElmPRec( list, RNamName("NextIterator") );
@@ -523,7 +503,7 @@ UInt            ExecFor (
             else if ( vart == 'h' )  ASS_HVAR( var, elm );
             else if ( vart == 'g' )  AssGVar(  var, elm );
 
-#if ! HAVE_SIGNAL
+#if !defined(HAVE_SIGNAL)
             /* test for an interrupt                                       */
             if ( HaveInterrupt() ) {
                 ErrorReturnVoid( "user interrupt", 0L, 0L, "you can 'return;'" );
@@ -532,9 +512,9 @@ UInt            ExecFor (
 
             /* execute the statements in the body                          */
             if ( (leave = EXEC_STAT( body )) != 0 ) {
-                if (leave == 8) 
+                if (leave == STATUS_CONTINUE)
                     continue;
-                return (leave & 3);
+                return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
             }
 
         }
@@ -562,11 +542,6 @@ UInt            ExecFor2 (
     /* get the variable (initialize them first to please 'lint')           */
     if ( IS_REFLVAR( ADDR_STAT(stat)[0] ) ) {
         var = LVAR_REFLVAR( ADDR_STAT(stat)[0] );
-        vart = 'l';
-    }
-    else if ( T_REF_LVAR <= TNUM_EXPR( ADDR_STAT(stat)[0] )
-           && TNUM_EXPR( ADDR_STAT(stat)[0] ) <= T_REF_LVAR_16 ) {
-        var = (UInt)(ADDR_EXPR( ADDR_STAT(stat)[0] )[0]);
         vart = 'l';
     }
     else if ( TNUM_EXPR( ADDR_STAT(stat)[0] ) == T_REF_HVAR ) {
@@ -601,7 +576,7 @@ UInt            ExecFor2 (
             else if ( vart == 'h' )  ASS_HVAR( var, elm );
             else if ( vart == 'g' )  AssGVar(  var, elm );
 
-#if ! HAVE_SIGNAL
+#if !defined(HAVE_SIGNAL)
             /* test for an interrupt                                       */
             if ( HaveInterrupt() ) {
                 ErrorReturnVoid( "user interrupt", 0L, 0L, "you can 'return;'" );
@@ -610,14 +585,14 @@ UInt            ExecFor2 (
 
             /* execute the statements in the body                          */
             if ( (leave = EXEC_STAT( body1 )) != 0 ) {
-                if (leave == 8) 
+                if (leave == STATUS_CONTINUE)
                     continue;
-                return (leave & 3);
+                return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
             }
             if ( (leave = EXEC_STAT( body2 )) != 0 ) {
-                if (leave == 8) 
+                if (leave == STATUS_CONTINUE)
                     continue;
-                return (leave & 3);
+                return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
             }
 
         }
@@ -630,7 +605,7 @@ UInt            ExecFor2 (
         /* get the iterator                                                */
         list = CALL_1ARGS( ITERATOR, list );
 
-        if ( CALL_1ARGS( STD_ITER, list ) == True ) {
+        if ( CALL_1ARGS( STD_ITER, list ) == True && IS_PREC(list) ) {
             /* this can avoid method selection overhead on iterator        */
             dfun = ElmPRec( list, RNamName("IsDoneIterator") );
             nfun = ElmPRec( list, RNamName("NextIterator") );
@@ -648,7 +623,7 @@ UInt            ExecFor2 (
             else if ( vart == 'h' )  ASS_HVAR( var, elm );
             else if ( vart == 'g' )  AssGVar(  var, elm );
 
-#if ! HAVE_SIGNAL
+#if !defined(HAVE_SIGNAL)
             /* test for an interrupt                                       */
             if ( HaveInterrupt() ) {
                 ErrorReturnVoid( "user interrupt", 0L, 0L, "you can 'return;'" );
@@ -657,14 +632,14 @@ UInt            ExecFor2 (
 
             /* execute the statements in the body                          */
             if ( (leave = EXEC_STAT( body1 )) != 0 ) {
-                if (leave == 8) 
+                if (leave == STATUS_CONTINUE)
                     continue;
-                return (leave & 3);
+                return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
             }
             if ( (leave = EXEC_STAT( body2 )) != 0 ) {
-                if (leave == 8) 
+                if (leave == STATUS_CONTINUE)
                     continue;
-                return (leave & 3);
+                return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
             }
 
         }
@@ -693,11 +668,6 @@ UInt            ExecFor3 (
     /* get the variable (initialize them first to please 'lint')           */
     if ( IS_REFLVAR( ADDR_STAT(stat)[0] ) ) {
         var = LVAR_REFLVAR( ADDR_STAT(stat)[0] );
-        vart = 'l';
-    }
-    else if ( T_REF_LVAR <= TNUM_EXPR( ADDR_STAT(stat)[0] )
-           && TNUM_EXPR( ADDR_STAT(stat)[0] ) <= T_REF_LVAR_16 ) {
-        var = (UInt)(ADDR_EXPR( ADDR_STAT(stat)[0] )[0]);
         vart = 'l';
     }
     else if ( TNUM_EXPR( ADDR_STAT(stat)[0] ) == T_REF_HVAR ) {
@@ -733,7 +703,7 @@ UInt            ExecFor3 (
             else if ( vart == 'h' )  ASS_HVAR( var, elm );
             else if ( vart == 'g' )  AssGVar(  var, elm );
 
-#if ! HAVE_SIGNAL
+#if !defined(HAVE_SIGNAL)
             /* test for an interrupt                                       */
             if ( HaveInterrupt() ) {
                 ErrorReturnVoid( "user interrupt", 0L, 0L, "you can 'return;'" );
@@ -742,19 +712,19 @@ UInt            ExecFor3 (
 
             /* execute the statements in the body                          */
             if ( (leave = EXEC_STAT( body1 )) != 0 ) {
-                if (leave == 8) 
+                if (leave == STATUS_CONTINUE)
                     continue;
-                return (leave & 3);
+                return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
             }
             if ( (leave = EXEC_STAT( body2 )) != 0 ) {
-                if (leave == 8) 
+                if (leave == STATUS_CONTINUE)
                     continue;
-                return (leave & 3);
+                return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
             }
             if ( (leave = EXEC_STAT( body3 )) != 0 ) {
-                if (leave == 8) 
+                if (leave == STATUS_CONTINUE)
                     continue;
-                return (leave & 3);
+                return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
             }
 
 
@@ -768,7 +738,7 @@ UInt            ExecFor3 (
         /* get the iterator                                                */
         list = CALL_1ARGS( ITERATOR, list );
 
-        if ( CALL_1ARGS( STD_ITER, list ) == True ) {
+        if ( CALL_1ARGS( STD_ITER, list ) == True && IS_PREC(list) ) {
             /* this can avoid method selection overhead on iterator        */
             dfun = ElmPRec( list, RNamName("IsDoneIterator") );
             nfun = ElmPRec( list, RNamName("NextIterator") );
@@ -786,7 +756,7 @@ UInt            ExecFor3 (
             else if ( vart == 'h' )  ASS_HVAR( var, elm );
             else if ( vart == 'g' )  AssGVar(  var, elm );
 
-#if ! HAVE_SIGNAL
+#if !defined(HAVE_SIGNAL)
             /* test for an interrupt                                       */
             if ( HaveInterrupt() ) {
                 ErrorReturnVoid( "user interrupt", 0L, 0L, "you can 'return;'" );
@@ -795,19 +765,19 @@ UInt            ExecFor3 (
 
             /* execute the statements in the body                          */
             if ( (leave = EXEC_STAT( body1 )) != 0 ) {
-                if (leave == 8) 
+                if (leave == STATUS_CONTINUE)
                     continue;
-                return (leave & 3);
+                return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
             }
             if ( (leave = EXEC_STAT( body2 )) != 0 ) {
-                if (leave == 8) 
+                if (leave == STATUS_CONTINUE)
                     continue;
-                return (leave & 3);
+                return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
             }
             if ( (leave = EXEC_STAT( body3 )) != 0 ) {
-                if (leave == 8) 
+                if (leave == STATUS_CONTINUE)
                     continue;
-                return (leave & 3);
+                return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
             }
 
 
@@ -859,7 +829,7 @@ UInt            ExecForRange (
 
     /* evaluate the range                                                  */
     SET_BRK_CURR_STAT( stat );
-    VisitStatIfProfiling(ADDR_STAT(stat)[1]);
+    VisitStatIfHooked(ADDR_STAT(stat)[1]);
     elm = EVAL_EXPR( ADDR_EXPR( ADDR_STAT(stat)[1] )[0] );
     while ( ! IS_INTOBJ(elm) ) {
         elm = ErrorReturnObj(
@@ -887,7 +857,7 @@ UInt            ExecForRange (
         elm = INTOBJ_INT( i );
         ASS_LVAR( lvar, elm );
 
-#if ! HAVE_SIGNAL
+#if !defined(HAVE_SIGNAL)
         /* test for an interrupt                                           */
         if ( HaveInterrupt() ) {
             ErrorReturnVoid( "user interrupt", 0L, 0L, "you can 'return;'" );
@@ -896,9 +866,9 @@ UInt            ExecForRange (
 
         /* execute the statements in the body                              */
         if ( (leave = EXEC_STAT( body )) != 0 ) {
-          if (leave == 8) 
+          if (leave == STATUS_CONTINUE)
             continue;
-          return (leave & 3);
+          return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
         }
 
     }
@@ -924,7 +894,7 @@ UInt            ExecForRange2 (
 
     /* evaluate the range                                                  */
     SET_BRK_CURR_STAT( stat );
-    VisitStatIfProfiling(ADDR_STAT(stat)[1]);
+    VisitStatIfHooked(ADDR_STAT(stat)[1]);
     elm = EVAL_EXPR( ADDR_EXPR( ADDR_STAT(stat)[1] )[0] );
     while ( ! IS_INTOBJ(elm) ) {
         elm = ErrorReturnObj(
@@ -953,7 +923,7 @@ UInt            ExecForRange2 (
         elm = INTOBJ_INT( i );
         ASS_LVAR( lvar, elm );
 
-#if ! HAVE_SIGNAL
+#if !defined(HAVE_SIGNAL)
         /* test for an interrupt                                           */
         if ( HaveInterrupt() ) {
             ErrorReturnVoid( "user interrupt", 0L, 0L, "you can 'return;'" );
@@ -962,14 +932,14 @@ UInt            ExecForRange2 (
 
         /* execute the statements in the body                              */
         if ( (leave = EXEC_STAT( body1 )) != 0 ) {
-            if (leave == 8) 
+            if (leave == STATUS_CONTINUE)
                 continue;
-            return (leave & 3);
+            return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
         }
         if ( (leave = EXEC_STAT( body2 )) != 0 ) {
-            if (leave == 8) 
+            if (leave == STATUS_CONTINUE)
                 continue;
-            return (leave & 3);
+            return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
         }
 
     }
@@ -996,7 +966,7 @@ UInt            ExecForRange3 (
 
     /* evaluate the range                                                  */
     SET_BRK_CURR_STAT( stat );
-    VisitStatIfProfiling(ADDR_STAT(stat)[1]);
+    VisitStatIfHooked(ADDR_STAT(stat)[1]);
     elm = EVAL_EXPR( ADDR_EXPR( ADDR_STAT(stat)[1] )[0] );
     while ( ! IS_INTOBJ(elm) ) {
         elm = ErrorReturnObj(
@@ -1026,7 +996,7 @@ UInt            ExecForRange3 (
         elm = INTOBJ_INT( i );
         ASS_LVAR( lvar, elm );
 
-#if ! HAVE_SIGNAL
+#if !defined(HAVE_SIGNAL)
         /* test for an interrupt                                           */
         if ( HaveInterrupt() ) {
             ErrorReturnVoid( "user interrupt", 0L, 0L, "you can 'return;'" );
@@ -1035,19 +1005,19 @@ UInt            ExecForRange3 (
 
         /* execute the statements in the body                              */
         if ( (leave = EXEC_STAT( body1 )) != 0 ) {
-            if (leave == 8) 
+            if (leave == STATUS_CONTINUE)
                 continue;
-            return (leave & 3);
+            return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
         }
         if ( (leave = EXEC_STAT( body2 )) != 0 ) {
-            if (leave == 8) 
+            if (leave == STATUS_CONTINUE)
                 continue;
-            return (leave & 3);
+            return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
         }
         if ( (leave = EXEC_STAT( body3 )) != 0 ) {
-            if (leave == 8) 
+            if (leave == STATUS_CONTINUE)
                 continue;
-            return (leave & 3);
+            return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
         }
 
     }
@@ -1064,8 +1034,63 @@ UInt            ExecForRange3 (
 UInt ExecAtomic(
 		Stat stat)
 {
+#ifdef HPCGAP
+  Obj tolock[MAX_ATOMIC_OBJS];
+  int locktypes[MAX_ATOMIC_OBJS];
+  int lockstatus[MAX_ATOMIC_OBJS];
+  int lockSP;
+  UInt mode, nrexprs,i,j,status;
+  Obj o;
+  
+  SET_BRK_CURR_STAT( stat );
+  nrexprs = ((SIZE_STAT(stat)/sizeof(Stat))-1)/2;
+  
+  j = 0;
+  for (i = 1; i <= nrexprs; i++) {
+    o = EVAL_EXPR(ADDR_STAT(stat)[2*i]);
+    if (!((Int)o & 0x3)) {
+      tolock[j] =  o;
+      mode = INT_INTEXPR(ADDR_STAT(stat)[2*i-1]);
+      locktypes[j] = (mode == 2) ? 1 : (mode == 1) ? 0 : DEFAULT_LOCK_TYPE;
+      j++;
+    }
+  }
+  
+  nrexprs = j;
+
+  GetLockStatus(nrexprs, tolock, lockstatus);
+
+  j = 0;
+  for (i = 0; i < nrexprs; i++) { 
+    switch (lockstatus[i]) {
+    case 0:
+      tolock[j] = tolock[i];
+      locktypes[j] = locktypes[i];
+      j++;
+      break;
+    case 2:
+      if (locktypes[i] == 1)
+        ErrorMayQuit("Attempt to change from read to write lock", 0L, 0L);
+      break;
+    case 1:
+      break;
+    default:
+      assert(0);
+    }
+  }
+  lockSP = LockObjects(j, tolock, locktypes);
+  if (lockSP >= 0) {
+    status = EXEC_STAT(ADDR_STAT(stat)[0]);
+    PopRegionLocks(lockSP);
+  } else {
+    status = 0;
+    ErrorMayQuit("Cannot lock required regions", 0L, 0L);      
+  }
+  return status;
+#else
     // In non-HPC GAP, we completely ignore all the 'atomic' terms
     return EXEC_STAT(ADDR_STAT(stat)[0]);
+#endif
 }
 
 
@@ -1103,7 +1128,7 @@ UInt ExecWhile (
     SET_BRK_CURR_STAT( stat );
     while ( EVAL_BOOL_EXPR( cond ) != False ) {
 
-#if ! HAVE_SIGNAL
+#if !defined(HAVE_SIGNAL)
         /* test for an interrupt                                           */
         if ( HaveInterrupt() ) {
             ErrorReturnVoid( "user interrupt", 0L, 0L, "you can 'return;'" );
@@ -1112,9 +1137,9 @@ UInt ExecWhile (
 
         /* execute the body                                                */
         if ( (leave = EXEC_STAT( body )) != 0 ) {
-            if (leave == 8) 
+            if (leave == STATUS_CONTINUE)
                 continue;
-            return (leave & 3);
+            return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
         }
         SET_BRK_CURR_STAT( stat );
 
@@ -1141,7 +1166,7 @@ UInt ExecWhile2 (
     SET_BRK_CURR_STAT( stat );
     while ( EVAL_BOOL_EXPR( cond ) != False ) {
 
-#if ! HAVE_SIGNAL
+#if !defined(HAVE_SIGNAL)
         /* test for an interrupt                                           */
         if ( HaveInterrupt() ) {
             ErrorReturnVoid( "user interrupt", 0L, 0L, "you can 'return;'" );
@@ -1150,14 +1175,14 @@ UInt ExecWhile2 (
 
         /* execute the body                                                */
         if ( (leave = EXEC_STAT( body1 )) != 0 ) {
-            if (leave == 8) 
+            if (leave == STATUS_CONTINUE)
                 continue;
-            return (leave & 3);
+            return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
         }
         if ( (leave = EXEC_STAT( body2 )) != 0 ) {
-            if (leave == 8) 
+            if (leave == STATUS_CONTINUE)
                 continue;
-            return (leave & 3);
+            return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
         }
         SET_BRK_CURR_STAT( stat );
 
@@ -1186,7 +1211,7 @@ UInt ExecWhile3 (
     SET_BRK_CURR_STAT( stat );
     while ( EVAL_BOOL_EXPR( cond ) != False ) {
 
-#if ! HAVE_SIGNAL
+#if !defined(HAVE_SIGNAL)
         /* test for an interrupt                                           */
         if ( HaveInterrupt() ) {
             ErrorReturnVoid( "user interrupt", 0L, 0L, "you can 'return;'" );
@@ -1195,19 +1220,19 @@ UInt ExecWhile3 (
 
         /* execute the body                                                */
         if ( (leave = EXEC_STAT( body1 )) != 0 ) {
-            if (leave == 8) 
+            if (leave == STATUS_CONTINUE)
                 continue;
-            return (leave & 3);
+            return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
         }
         if ( (leave = EXEC_STAT( body2 )) != 0 ) {
-            if (leave == 8) 
+            if (leave == STATUS_CONTINUE)
                 continue;
-            return (leave & 3);
+            return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
         }
         if ( (leave = EXEC_STAT( body3 )) != 0 ) {
-            if (leave == 8) 
+            if (leave == STATUS_CONTINUE)
                 continue;
-            return (leave & 3);
+            return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
         }
         SET_BRK_CURR_STAT( stat );
 
@@ -1252,7 +1277,7 @@ UInt ExecRepeat (
     SET_BRK_CURR_STAT( stat );
     do {
 
-#if ! HAVE_SIGNAL
+#if !defined(HAVE_SIGNAL)
         /* test for an interrupt                                           */
         if ( HaveInterrupt() ) {
             ErrorReturnVoid( "user interrupt", 0L, 0L, "you can 'return;'" );
@@ -1261,9 +1286,9 @@ UInt ExecRepeat (
 
         /* execute the body                                                */
         if ( (leave = EXEC_STAT( body )) != 0 ) {
-            if (leave == 8) 
+            if (leave == STATUS_CONTINUE)
                 continue;
-            return (leave & 3);
+            return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
         }
         SET_BRK_CURR_STAT( stat );
 
@@ -1290,7 +1315,7 @@ UInt ExecRepeat2 (
     SET_BRK_CURR_STAT( stat );
     do {
 
-#if ! HAVE_SIGNAL
+#if !defined(HAVE_SIGNAL)
         /* test for an interrupt                                           */
         if ( HaveInterrupt() ) {
             ErrorReturnVoid( "user interrupt", 0L, 0L, "you can 'return;'" );
@@ -1299,14 +1324,14 @@ UInt ExecRepeat2 (
 
         /* execute the body                                                */
         if ( (leave = EXEC_STAT( body1 )) != 0 ) {
-            if (leave == 8) 
+            if (leave == STATUS_CONTINUE)
                 continue;
-            return (leave & 3);
+            return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
         }
         if ( (leave = EXEC_STAT( body2 )) != 0 ) {
-            if (leave == 8) 
+            if (leave == STATUS_CONTINUE)
                 continue;
-            return (leave & 3);
+            return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
         }
         SET_BRK_CURR_STAT( stat );
 
@@ -1335,7 +1360,7 @@ UInt ExecRepeat3 (
     SET_BRK_CURR_STAT( stat );
     do {
 
-#if ! HAVE_SIGNAL
+#if !defined(HAVE_SIGNAL)
         /* test for an interrupt                                           */
         if ( HaveInterrupt() ) {
             ErrorReturnVoid( "user interrupt", 0L, 0L, "you can 'return;'" );
@@ -1344,19 +1369,19 @@ UInt ExecRepeat3 (
 
         /* execute the body                                                */
         if ( (leave = EXEC_STAT( body1 )) != 0 ) {
-            if (leave == 8) 
+            if (leave == STATUS_CONTINUE)
                 continue;
-            return (leave & 3);
+            return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
         }
         if ( (leave = EXEC_STAT( body2 )) != 0 ) {
-            if (leave == 8) 
+            if (leave == STATUS_CONTINUE)
                 continue;
-            return (leave & 3);
+            return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
         }
         if ( (leave = EXEC_STAT( body3 )) != 0 ) {
-            if (leave == 8) 
+            if (leave == STATUS_CONTINUE)
                 continue;
-            return (leave & 3);
+            return (leave & (STATUS_RETURN_VAL | STATUS_RETURN_VOID));
         }
         SET_BRK_CURR_STAT( stat );
 
@@ -1373,8 +1398,8 @@ UInt ExecRepeat3 (
 **
 **  'ExecBreak' executes the break-statement <stat>.
 **
-**  This  is done   by  returning 4  (to tell  the   calling executor that  a
-**  break-statement was executed).
+**  This is done by returning STATUS_BREAK (to tell the calling executor that
+**  a break-statement was executed).
 **
 **  A break-statement is  represented  by a bag of   type 'T_BREAK' with   no
 **  subbags.
@@ -1383,7 +1408,7 @@ UInt            ExecBreak (
     Stat                stat )
 {
     /* return to the next loop                                             */
-    return 4;
+    return STATUS_BREAK;
 }
 
 /****************************************************************************
@@ -1392,8 +1417,8 @@ UInt            ExecBreak (
 **
 **  'ExecContinue' executes the continue-statement <stat>.
 **
-**  This  is done   by  returning 8 (to tell  the   calling executor that  a
-**  continue-statement was executed).
+**  This is done by returning STATUS_CONTINUE (to tell the calling executor
+**  that a continue-statement was executed).
 **
 **  A continue-statement is  represented  by a bag of   type 'T_CONTINUE' with   no
 **  subbags.
@@ -1402,7 +1427,7 @@ UInt            ExecContinue (
     Stat                stat )
 {
     /* return to the next loop                                             */
-    return 8;
+    return STATUS_CONTINUE;
 }
 
 /****************************************************************************
@@ -1447,7 +1472,7 @@ UInt ExecInfo (
     SET_BRK_CALL_TO( stat );
     SET_BRK_CURR_STAT( stat );
 
-    selected = CALL_2ARGS(InfoDecision, selectors, level);
+    selected = InfoCheckLevel(selectors, level);
     if (selected == True) {
 
         /* Get the number of arguments to be printed                       */
@@ -1576,7 +1601,7 @@ UInt ExecAssert3Args (
 UInt            ExecReturnObj (
     Stat                stat )
 {
-#if ! HAVE_SIGNAL
+#if !defined(HAVE_SIGNAL)
     /* test for an interrupt                                               */
     if ( HaveInterrupt() ) {
         ErrorReturnVoid( "user interrupt", 0L, 0L, "you can 'return;'" );
@@ -1585,10 +1610,10 @@ UInt            ExecReturnObj (
 
     /* evaluate the expression                                             */
     SET_BRK_CURR_STAT( stat );
-    TLS(ReturnObjStat) = EVAL_EXPR( ADDR_STAT(stat)[0] );
+    STATE(ReturnObjStat) = EVAL_EXPR( ADDR_STAT(stat)[0] );
 
     /* return up to function interpreter                                   */
-    return 1;
+    return STATUS_RETURN_VAL;
 }
 
 
@@ -1608,40 +1633,41 @@ UInt            ExecReturnObj (
 UInt            ExecReturnVoid (
     Stat                stat )
 {
-#if ! HAVE_SIGNAL
+#if !defined(HAVE_SIGNAL)
     /* test for an interrupt                                               */
     if ( HaveInterrupt() ) {
         ErrorReturnVoid( "user interrupt", 0L, 0L, "you can 'return;'" );
     }
 #endif
 
-    /* set 'TLS(ReturnObjStat)' to void                                         */
-    TLS(ReturnObjStat) = 0;
+    /* set 'STATE(ReturnObjStat)' to void                                         */
+    STATE(ReturnObjStat) = 0;
 
     /* return up to function interpreter                                   */
-    return 2;
+    return STATUS_RETURN_VOID;
 }
 
-UInt (* RealExecStatFuncs[256]) ( Stat stat );
+UInt (* IntrExecStatFuncs[256]) ( Stat stat );
 
-#ifdef HAVE_SIG_ATOMIC_T
-sig_atomic_t volatile RealExecStatCopied;
-#else
-int volatile RealExecStatCopied;
-#endif
+static inline Int BreakLoopPending(void)
+{
+     return STATE(CurrExecStatFuncs) == IntrExecStatFuncs;
+}
+
+
 
 /****************************************************************************
 **
-*F  void CheckAndRespondToAlarm()
-**
+*F  UnInterruptExecStat()  . . . . .revert the Statement execution jump table 
+**                                   to normal 
 */
 
-static void CheckAndRespondToAlarm(void) {
-  if ( SyAlarmHasGoneOff ) {
-    assert(NumAlarmJumpBuffers);
-    syLongjmp(AlarmJumpBuffers[--NumAlarmJumpBuffers],1);
-  }
+static void UnInterruptExecStat(void)
+{
+    assert(STATE(CurrExecStatFuncs) != ExecStatFuncs);
+    STATE(CurrExecStatFuncs) = ExecStatFuncs;
 }
+
 
 /****************************************************************************
 **
@@ -1657,32 +1683,14 @@ static void CheckAndRespondToAlarm(void) {
 ** including possible garbage collection. In this case 1 is returned.
 */
 
-UInt TakeInterrupt( void ) {
+UInt TakeInterrupt( void )
+{
   if (HaveInterrupt()) {
-    UnInterruptExecStat();
-    CheckAndRespondToAlarm();
-    
-    ErrorReturnVoid( "user interrupt", 0L, 0L, "you can 'return;'" );
-    return 1;
+      UnInterruptExecStat();
+      ErrorReturnVoid( "user interrupt", 0L, 0L, "you can 'return;'" );
+      return 1;
   }
   return 0;
-}
-
-
-/****************************************************************************
-**
-*F  UnInterruptExecStat()  . . . . .revert the Statement execution jump table 
-**                                   to normal 
-*/
-
-void UnInterruptExecStat() {
-  UInt i;
-  assert(RealExecStatCopied);
-  for ( i=0; i<sizeof(ExecStatFuncs)/sizeof(ExecStatFuncs[0]); i++ ) {
-    ExecStatFuncs[i] = RealExecStatFuncs[i];
-  }
-  RealExecStatCopied = 0;
-  return;
 }
 
 
@@ -1701,16 +1709,17 @@ UInt ExecIntrStat (
 {
 
     /* change the entries in 'ExecStatFuncs' back to the original          */
-    if ( RealExecStatCopied ) {
-      UnInterruptExecStat();
+    if ( BreakLoopPending() ) {
+        UnInterruptExecStat();
     }
+
+#ifdef HPCGAP
+    /* and now for something completely different                          */
+    HandleInterrupts(1, stat);
+#else
+    // ensure global interrupt flag syLastIntr is cleared
     HaveInterrupt();
 
-
-    /* One reason we might be here is a timeout. If so longjump out to the 
-       CallWithTimeLimit where we started */
-    CheckAndRespondToAlarm();
-      
     /* and now for something completely different                          */
     SET_BRK_CURR_STAT( stat );
     if ( SyStorOverrun != 0 ) {
@@ -1722,6 +1731,7 @@ UInt ExecIntrStat (
     else {
       ErrorReturnVoid( "user interrupt", 0L, 0L, "you can 'return;'" );
     }
+#endif
 
     /* continue at the interrupted statement                               */
     return EXEC_STAT( stat );
@@ -1730,7 +1740,6 @@ UInt ExecIntrStat (
 
 /****************************************************************************
 **
-
 *F  InterruptExecStat() . . . . . . . . interrupt the execution of statements
 **
 **  'InterruptExecStat'  interrupts the execution of   statements at the next
@@ -1744,46 +1753,23 @@ UInt ExecIntrStat (
 */
 void InterruptExecStat ( void )
 {
-    UInt                i;              /* loop variable                   */
-    /*    assert(reason > 0) */
-
     /* remember the original entries from the table 'ExecStatFuncs'        */
-    if ( ! RealExecStatCopied ) {
-        for ( i=0; i<sizeof(ExecStatFuncs)/sizeof(ExecStatFuncs[0]); i++ ) {
-            RealExecStatFuncs[i] = ExecStatFuncs[i];
-        }
-        RealExecStatCopied = 1;
-    }
-
-    /* change the entries in the table 'ExecStatFuncs' to 'ExecIntrStat'   */
-    for ( i = 0;
-          i < T_SEQ_STAT;
-          i++ ) {
-        ExecStatFuncs[i] = ExecIntrStat;
-    }
-    for ( i = T_RETURN_VOID;
-          i < sizeof(ExecStatFuncs)/sizeof(ExecStatFuncs[0]);
-          i++ ) {
-        ExecStatFuncs[i] = ExecIntrStat;
-    }
+    STATE(CurrExecStatFuncs) = IntrExecStatFuncs;
 }
+
 
 /****************************************************************************
 **
 *F  ClearError()  . . . . . . . . . . . . . .  reset execution and error flag
 */
 
-Int BreakLoopPending( void ) {
-     return RealExecStatCopied;
-}
-
 void ClearError ( void )
 {
 
     /* change the entries in 'ExecStatFuncs' back to the original          */
-    
-    if ( RealExecStatCopied ) {
-      UnInterruptExecStat();
+    if ( BreakLoopPending() ) {
+        UnInterruptExecStat();
+
         /* check for user interrupt */
         if ( HaveInterrupt() ) {
           Pr("Noticed user interrupt, but you are back in main loop anyway.\n",
@@ -1797,8 +1783,8 @@ void ClearError ( void )
         }
     }
 
-    /* reset <TLS(NrError)>                                                     */
-    TLS(NrError) = 0;
+    /* reset <STATE(NrError)>                                                */
+    STATE(NrError) = 0;
 }
 
 /****************************************************************************
@@ -1888,23 +1874,26 @@ void            PrintIf (
     Stat                stat )
 {
     UInt                i;              /* loop variable                   */
+    UInt                len;            /* length of loop                  */
 
     /* print the 'if' branch                                               */
     Pr( "if%4> ", 0L, 0L );
     PrintExpr( ADDR_STAT(stat)[0] );
-    Pr( "%2<  then%2>\n", 0L, 0L );
+    Pr( "%2< then%2>\n", 0L, 0L );
     PrintStat( ADDR_STAT(stat)[1] );
     Pr( "%4<\n", 0L, 0L );
 
+    len = SIZE_STAT(stat) / (2 * sizeof(Stat));
     /* print the 'elif' branch                                             */
-    for ( i = 2; i <= SIZE_STAT(stat)/(2*sizeof(Stat)); i++ ) {
-        if ( TNUM_EXPR( ADDR_STAT(stat)[2*(i-1)] ) == T_TRUE_EXPR ) {
+    for (i = 2; i <= len; i++) {
+        if (i == len &&
+            TNUM_EXPR(ADDR_STAT(stat)[2 * (i - 1)]) == T_TRUE_EXPR) {
             Pr( "else%4>\n", 0L, 0L );
         }
         else {
             Pr( "elif%4> ", 0L, 0L );
             PrintExpr( ADDR_STAT(stat)[2*(i-1)] );
-            Pr( "%2<  then%2>\n", 0L, 0L );
+            Pr( "%2< then%2>\n", 0L, 0L );
         }
         PrintStat( ADDR_STAT(stat)[2*(i-1)+1] );
         Pr( "%4<\n", 0L, 0L );
@@ -1931,9 +1920,9 @@ void            PrintFor (
 
     Pr( "for%4> ", 0L, 0L );
     PrintExpr( ADDR_STAT(stat)[0] );
-    Pr( "%2<  in%2> ", 0L, 0L );
+    Pr( "%2< in%2> ", 0L, 0L );
     PrintExpr( ADDR_STAT(stat)[1] );
-    Pr( "%2<  do%2>\n", 0L, 0L );
+    Pr( "%2< do%2>\n", 0L, 0L );
     for ( i = 2; i <= SIZE_STAT(stat)/sizeof(Stat)-1; i++ ) {
         PrintStat( ADDR_STAT(stat)[i] );
         if ( i < SIZE_STAT(stat)/sizeof(Stat)-1 )  Pr( "\n", 0L, 0L );
@@ -1958,7 +1947,7 @@ void            PrintWhile (
 
     Pr( "while%4> ", 0L, 0L );
     PrintExpr( ADDR_STAT(stat)[0] );
-    Pr( "%2<  do%2>\n", 0L, 0L );
+    Pr( "%2< do%2>\n", 0L, 0L );
     for ( i = 1; i <= SIZE_STAT(stat)/sizeof(Stat)-1; i++ ) {
         PrintStat( ADDR_STAT(stat)[i] );
         if ( i < SIZE_STAT(stat)/sizeof(Stat)-1 )  Pr( "\n", 0L, 0L );
@@ -1995,7 +1984,7 @@ void            PrintAtomic (
       }
       PrintExpr(ADDR_STAT(stat)[2*i]);
     }
-    Pr( "%2<  do%2>\n", 0L, 0L );
+    Pr( "%2< do%2>\n", 0L, 0L );
     PrintStat( ADDR_STAT(stat)[0]);
     Pr( "%4<\nod;", 0L, 0L );
 }
@@ -2155,9 +2144,16 @@ void            PrintAssert3Args (
 void            PrintReturnObj (
     Stat                stat )
 {
-    Pr( "%2>return%< %>", 0L, 0L );
-    PrintExpr( ADDR_STAT(stat)[0] );
-    Pr( "%2<;", 0L, 0L );
+    Expr expr = ADDR_STAT(stat)[0];
+    if ( TNUM_EXPR(expr) == T_REF_GVAR &&
+         (UInt)(ADDR_STAT(expr)[0]) == GVarName( "TRY_NEXT_METHOD" ) ) {
+        Pr( "TryNextMethod();", 0L, 0L );
+    }
+    else {
+        Pr( "%2>return%< %>", 0L, 0L );
+        PrintExpr( expr );
+        Pr( "%2<;", 0L, 0L );
+    }
 }
 
 
@@ -2176,7 +2172,6 @@ void            PrintReturnVoid (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
@@ -2203,15 +2198,14 @@ static Int InitKernel (
 {
     UInt                i;              /* loop variable                   */
 
-    RealExecStatCopied = 0;
-    
     /* make the global bags known to Gasman                                */
     /* 'InitGlobalBag( &CurrStat );' is not really needed, since we are in */
     /* for a lot of trouble if 'CurrStat' ever becomes the last reference. */
     /* furthermore, statements are no longer bags                          */
     /* InitGlobalBag( &CurrStat );                                         */
-
-    InitGlobalBag( &ReturnObjStat, "src/stats.c:ReturnObjStat" );
+#if !defined HPCGAP
+    InitGlobalBag( &STATE(ReturnObjStat), "src/stats.c:ReturnObjStat" );
+#endif
 
     /* connect to external functions                                       */
     ImportFuncFromLibrary( "Iterator",       &ITERATOR );
@@ -2220,7 +2214,7 @@ static Int InitKernel (
     ImportFuncFromLibrary( "IsStandardIterator",   &STD_ITER );
 
     /* install executors for non-statements                                */
-    for ( i = 0; i < sizeof(ExecStatFuncs)/sizeof(ExecStatFuncs[0]); i++ ) {
+    for ( i = 0; i < ARRAY_SIZE(ExecStatFuncs); i++ ) {
         InstallExecStatFunc(i, ExecUnknownStat);
     }
 
@@ -2259,7 +2253,7 @@ static Int InitKernel (
     InstallExecStatFunc( T_ATOMIC         , ExecAtomic);
 
     /* install printers for non-statements                                */
-    for ( i = 0; i < sizeof(PrintStatFuncs)/sizeof(PrintStatFuncs[0]); i++ ) {
+    for ( i = 0; i < ARRAY_SIZE(PrintStatFuncs); i++ ) {
         InstallPrintStatFunc(i, PrintUnknownStat);
     }
     /* install printing functions for compound statements                  */
@@ -2296,38 +2290,42 @@ static Int InitKernel (
     InstallPrintStatFunc( T_EMPTY          , PrintEmpty);
     InstallPrintStatFunc( T_ATOMIC         , PrintAtomic);
 
+    for ( i = 0; i < ARRAY_SIZE(ExecStatFuncs); i++ )
+        IntrExecStatFuncs[i] = ExecIntrStat;
+    for (i = FIRST_NON_INTERRUPT_STAT; i <= LAST_NON_INTERRUPT_STAT; i++)
+        IntrExecStatFuncs[i] = ExecStatFuncs[i];
+
     /* return success                                                      */
     return 0;
 }
 
+static void InitModuleState(ModuleStateOffset offset)
+{
+    STATE(CurrExecStatFuncs) = ExecStatFuncs;
+#ifdef HPCGAP
+    MEMBAR_FULL();
+    if (GetThreadState(TLS(threadID)) >= TSTATE_INTERRUPT) {
+        MEMBAR_FULL();
+        STATE(CurrExecStatFuncs) = IntrExecStatFuncs;
+    }
+#endif
+}
 
 /****************************************************************************
 **
 *F  InitInfoStats() . . . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "stats",                            /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "stats",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoStats ( void )
 {
+    RegisterModuleState(0, InitModuleState, 0);
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  stats.c . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

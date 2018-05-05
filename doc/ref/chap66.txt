@@ -904,7 +904,7 @@
   current factoring methods.[133X
   
   [33X[0;0YThis  function  requires  the transitive groups library to be installed (see
-  [14X50.6[114X).[133X
+  [14X'transgrp: Transitive Permutation Groups'[114X).[133X
   
   [1X66.11-4 ProbabilityShapes[101X
   
@@ -916,7 +916,7 @@
   but the result is only probabilistic.[133X
   
   [33X[0;0YThis  function  requires  the transitive groups library to be installed (see
-  [14X50.6[114X).[133X
+  [14X'transgrp: Transitive Permutation Groups'[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xf:=x^9-9*x^7+27*x^5-39*x^3+36*x-8;;[127X[104X

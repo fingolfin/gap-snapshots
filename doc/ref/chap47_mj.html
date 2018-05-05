@@ -154,7 +154,7 @@
 
 <p>Finitely presented groups are obtained by factoring a free group by a set of relators. Their elements know about this presentation and compare accordingly.</p>
 
-<p>So to create a finitely presented group you first have to generate a free group (see <code class="func">FreeGroup</code> (<a href="chap37_mj.html#X8215999E835290F0"><span class="RefLink">37.2-1</span></a>) for details). Then a list of relators is constructed as words in the generators of the free group and is factored out to obtain the finitely presented group. Its generators <em>are</em> the images of the free generators. So for example to create the group</p>
+<p>So to create a finitely presented group you first have to generate a free group (see <code class="func">FreeGroup</code> (<a href="chap37_mj.html#X8215999E835290F0"><span class="RefLink">37.2-1</span></a>) for details). There are two ways to specify a quotient of the free group: either by giving a list of relators or by giving a list of equations. Relators are just words in the generators of the free group. Equations are represented as pairs of words in the generators of the free group. In either case the generators of the quotient are <em>the images</em> of the free generators under the canonical homomorphism from the free group onto the quotient. So for example to create the group</p>
 
 <p class="center">\[
 \langle a, b \mid a^2, b^3, (a b)^5 \rangle
@@ -166,6 +166,8 @@
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := FreeGroup( "a", "b" );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := f / [ f.1^2, f.2^3, (f.1*f.2)^5 ];</span>
+&lt;fp group on the generators [ a, b ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h := f / [ [f.1^2, f.1^0], [f.2^3, f.1^0], [(f.1*f.2)^4, f.2^-1*f.1^-1] ];</span>
 &lt;fp group on the generators [ a, b ]&gt;
 </pre></div>
 
@@ -263,7 +265,8 @@ false
 <h5><code>47.2-1 \/</code></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \/</code>( <var class="Arg">F</var>, <var class="Arg">rels</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
-<p>creates a finitely presented group given by the presentation <span class="SimpleMath">\(\langle gens \mid \textit{rels} \rangle\)</span> where <span class="SimpleMath">\(gens\)</span> are the free generators of the free group <var class="Arg">F</var>. Note that relations are entered as <em>relators</em>, i.e., as words in the generators of the free group. To enter an equation use the quotient operator, i.e., for the relation <span class="SimpleMath">\(a^b = ab\)</span> one has to enter <span class="SimpleMath">\(a^b / (a b)\)</span>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \/</code>( <var class="Arg">F</var>, <var class="Arg">eqns</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
+<p>creates a finitely presented group given by the presentation <span class="SimpleMath">\(\langle gens \mid \textit{rels} \rangle\)</span> or <span class="SimpleMath">\(\langle gens \mid \textit{eqns} \rangle\)</span>, respectively where <span class="SimpleMath">\(gens\)</span> are the free generators of the free group <var class="Arg">F</var>. Relations can be entered either as words or as pairs of words in the generators of <var class="Arg">F</var>. In the former case we refer to the words given as <em>relators</em>, in the latter we refer to the pairs of words as <em>equations</em>. The two methods can currently not be mixed.</p>
 
 <p>The same result is obtained with the infix operator <code class="code">/</code>, i.e., as <var class="Arg">F</var> <code class="code">/</code> <var class="Arg">rels</var>.</p>
 
@@ -271,6 +274,8 @@ false
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := FreeGroup( 3 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f / [ f.1^4, f.2^3, f.3^5, f.1*f.2*f.3 ];</span>
+&lt;fp group on the generators [ f1, f2, f3 ]&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f / [ [ f.1^4, f.1^0 ], [ f.2^3, f.1^0 ], [ f.1, f.2^-1*f.3^-1 ] ];</span>
 &lt;fp group on the generators [ f1, f2, f3 ]&gt;
 </pre></div>
 
@@ -324,7 +329,7 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; \=</code>( <var class="Arg">a</var>, <var class="Arg">b</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <p>Two elements of a finitely presented group are equal if they are equal in this group. Nevertheless they may be represented as different words in the generators. Because of the fundamental problems mentioned in the introduction to this chapter such a test may take very long and cannot be guaranteed to finish.</p>
 
-<p>The method employed by <strong class="pkg">GAP</strong> for such an equality test use the underlying finitely presented group. First (unless this group is known to be infinite) <strong class="pkg">GAP</strong> tries to find a faithful permutation representation by a bounded Todd-Coxeter. If this fails, a Knuth-Bendix (see <a href="chap52_mj.html#X87693BDC79DC6EBF"><span class="RefLink">52.6</span></a>) is attempted and the words are compared via their normal form.</p>
+<p>The method employed by <strong class="pkg">GAP</strong> for such an equality test use the underlying finitely presented group. First (unless this group is known to be infinite) <strong class="pkg">GAP</strong> tries to find a faithful permutation representation by a bounded Todd-Coxeter. If this fails, a Knuth-Bendix (see <a href="chap52_mj.html#X87693BDC79DC6EBF"><span class="RefLink">52.5</span></a>) is attempted and the words are compared via their normal form.</p>
 
 <p>If only elements in a subgroup are to be tested for equality it thus can be useful to translate the problem in a new finitely presented group by rewriting (see <code class="func">IsomorphismFpGroup</code> (<a href="chap47_mj.html#X7F28268F850F454E"><span class="RefLink">47.11-1</span></a>));</p>
 
@@ -449,7 +454,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := f / [ f.1^2, f.2^3, (f.1*f.2)^5 ];</span>
 &lt;fp group on the generators [ a, b ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h := IsomorphismPermGroup( g );</span>
-[ a, b ] -&gt; [ (1,2)(4,5), (2,3,4) ]
+[ a, b ] -&gt; [ (1,2)(3,5), (2,3,4) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">u:=Subgroup(g,[g.1*g.2]);;rt:=RightTransversal(g,u);</span>
 RightTransversal(&lt;fp group of size 60 on the generators 
 [ a, b ]&gt;,Group([ a*b ]))
@@ -736,7 +741,7 @@ gap&gt; Index( f, u : max := 0 );
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AugmentedCosetTableInWholeGroup</code>( <var class="Arg">H</var>[, <var class="Arg">gens</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For a subgroup <var class="Arg">H</var> of a finitely presented group, this function returns an augmented coset table. If a generator set <var class="Arg">gens</var> is given, it is guaranteed that <var class="Arg">gens</var> will be a subset of the primary and secondary subgroup generators of this coset table.</p>
 
-<p>It is mutable so we are permitted to add further entries. However existing entries may not be changed. Any entries added however should correspond to the subgroup only and not to an homomorphism.</p>
+<p>It is mutable so we are permitted to add further entries. However existing entries may not be changed. Any entries added however should correspond to the subgroup only and not to a homomorphism.</p>
 
 <p><a id="X7AF67CFD846C1159" name="X7AF67CFD846C1159"></a></p>
 
@@ -875,8 +880,7 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fp := Image( iso );</span>
 &lt;fp group of size 120 on the generators [ F1, F2 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RelatorsOfFpGroup( fp );</span>
-[ F1^2, F2^5, (F2^-1*F1)^4, (F2*F1*F2^-1*F1)^3, (F2*F1*F2^-2*F1*F2)^2 
- ]
+[ F1^2, F2^5, (F2^-1*F1)^4, (F1*F2^-1*F1*F2)^3, (F1*F2^2*F1*F2^-2)^2 ]
 </pre></div>
 
 <p>The main task of the function <code class="func">IsomorphismFpGroupByGenerators</code> is to find a presentation of <var class="Arg">G</var> in the provided generators <var class="Arg">gens</var>. In the case of a permutation group <var class="Arg">G</var> it does this by first constructing a stabilizer chain of <var class="Arg">G</var> and then it works through that chain from the bottom to the top, recursively computing a presentation for each of the involved stabilizers. The method used is essentially an implementation of John Cannon's multi-stage relations-finding algorithm as described in <a href="chapBib_mj.html#biBNeu82">[Neu82]</a> (see also <a href="chapBib_mj.html#biBCan73">[Can73]</a> for a more graph theoretical description). Moreover, it makes heavy use of Tietze transformations in each stage to avoid an explosion of the total length of the relators.</p>
@@ -890,9 +894,9 @@ Group([ (1,2,3,4,5,6,7,8,9,10,11), (3,7,11,8)(4,10,5,6),
   (1,12)(2,11)(3,6)(4,8)(5,9)(7,10) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens := GeneratorsOfGroup( M12 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismFpGroupByGenerators( M12, gens );;</span>
-#I  the image group has 3 gens and 20 rels of total length 497
+#I  the image group has 3 gens and 20 rels of total length 464
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismFpGroupByGenerators( M12, gens );;</span>
-#I  the image group has 3 gens and 19 rels of total length 493
+#I  the image group has 3 gens and 19 rels of total length 491
 </pre></div>
 
 <p>Also in the case of a permutation group <var class="Arg">G</var>, the function <code class="func">IsomorphismFpGroupByGenerators</code> supports the option <code class="code">method</code> that can be used to modify the strategy. The option <code class="code">method</code> may take the following values.</p>
@@ -923,7 +927,7 @@ Group([ (1,2,3,4,5,6,7,8,9,10,11), (3,7,11,8)(4,10,5,6),
 #I  the image group has 3 gens and 11 rels of total length 92
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismFpGroupByGenerators( M12, gens : </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                          method := "fast" );;</span>
-#I  the image group has 3 gens and 151 rels of total length 3658
+#I  the image group has 3 gens and 179 rels of total length 4099
 </pre></div>
 
 <p>Though the option <code class="code">method := "regular"</code> is only checked in the case of a permutation group it also affects the performance and the results of the function <code class="func">IsomorphismFpGroupByGenerators</code> for other groups, e. g. for matrix groups. This happens because, for these groups, the function first calls the function <code class="func">NiceMonomorphism</code> (<a href="chap40_mj.html#X7965086E82ABCF41"><span class="RefLink">40.5-2</span></a>) to get a bijective action homomorphism from <var class="Arg">G</var> to a suitable permutation group, <span class="SimpleMath">\(P\)</span> say, and then, recursively, calls itself for the group <span class="SimpleMath">\(P\)</span> so that now the option becomes relevant.</p>
@@ -938,7 +942,7 @@ ImfMatrixGroup(5,1,3)
   [ [ 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 0 ], 
       [ 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1 ] ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismFpGroupByGenerators( G, gens );;</span>
-#I  the image group has 2 gens and 11 rels of total length 150
+#I  the image group has 2 gens and 9 rels of total length 94
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iso := IsomorphismFpGroupByGenerators( G, gens : </span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                          method := "regular");;</span>
 #I  the image group has 2 gens and 6 rels of total length 56
@@ -950,10 +954,18 @@ ImfMatrixGroup(5,1,3)
 , 0, 0, 0, 1 ] ] ]-&gt;[ F1, F2 ]&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ConstituentsCompositionMapping(iso);</span>
 [ &lt;action isomorphism&gt;, 
-  [ (2,3,4)(5,6)(8,9,10), (1,2,3,5)(6,7,8,9) ] -&gt; [ F1, F2 ] ]
+  [ (2,3,5,9,16,29)(4,7,13,24,19,32)(6,11,20,34,40,57)(8,15,28,46,42,
+        59)(10,18,25,41,49,67)(12,22,37,53,48,66)(14,26,31)(17,30,35,
+        50,58,38)(21,36,33)(23,39,56)(27,44,61,72,43,60)(45,62,51,68,
+        54,70)(47,64,73)(52,69)(55,71,75,78,77,76)(65,74), 
+      (1,2,4,8)(3,6,12,23)(5,10,19,33)(7,14,27,45)(9,17,18,31)(11,21,
+        16,28)(13,25,42,57)(20,35,51,67)(22,38,55,70)(24,40,26,43)(29,
+        37,54,39)(30,47,65,68)(32,48)(34,49,36,52)(41,58,56,61)(44,50,
+        53,64)(46,63,69,59)(60,66,75,79)(62,73,72,77)(71,76,80,74) 
+     ] -&gt; [ F1, F2 ] ]
 </pre></div>
 
-<p>Since <strong class="pkg">GAP</strong> cannot decompose elements of a matrix group into generators, the resulting isomorphism is stored as a composition of a (faithful) permutation action on vectors and a homomorphism from the permutation image to the finitely presented group. In such a situation the constituent mappings can be obtained via <code class="func">ConstituentsCompositionMapping</code> (<a href="chap32_mj.html#X87775B438008DCA5"><span class="RefLink">32.2-7</span></a>) as separate <strong class="pkg">GAP</strong> objects.</p>
+<p>Since <strong class="pkg">GAP</strong> cannot decompose elements of a matrix group into generators, the resulting isomorphism is stored as a composition of a (faithful) permutation action on vectors and a homomorphism from the permutation image to the finitely presented group. In such a situation the constituent mappings can be obtained via <code class="func">ConstituentsCompositionMapping</code> (<a href="chap32_mj.html#X87775B438008DCA5"><span class="RefLink">32.2-8</span></a>) as separate <strong class="pkg">GAP</strong> objects.</p>
 
 <p><a id="X826604AA7F18BFA3" name="X826604AA7F18BFA3"></a></p>
 

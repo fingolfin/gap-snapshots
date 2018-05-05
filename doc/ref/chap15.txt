@@ -495,7 +495,22 @@
   
   [1X15.7 [33X[0;0YMiscellaneous[133X[101X
   
-  [1X15.7-1 TwoSquares[101X
+  [1X15.7-1 PValuation[101X
+  
+  [33X[1;0Y[29X[2XPValuation[102X( [3Xn[103X, [3Xp[103X ) [32X function[133X
+  
+  [33X[0;0YFor  an  integer [3Xn[103X and a prime [3Xp[103X this function returns the [3Xp[103X-valuation of [3Xn[103X,
+  that  is the exponent [22Xe[122X such that [22Xp^e[122X is the largest power of [3Xp[103X that divides
+  [3Xn[103X. The valuation of zero is infinity.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XPValuation(100,2);[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27XPValuation(100,3);[127X[104X
+    [4X[28X0[128X[104X
+  [4X[32X[104X
+  
+  [1X15.7-2 TwoSquares[101X
   
   [33X[1;0Y[29X[2XTwoSquares[102X( [3Xn[103X ) [32X function[133X
   

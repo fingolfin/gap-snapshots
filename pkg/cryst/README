@@ -1,4 +1,3 @@
-
 The GAP 4 package Cryst, previously known as CrystGap, is the 
 successor of the CrystGap package for GAP 3. During the porting 
 process to GAP 4, large parts of the code have been rewritten, and 
@@ -23,27 +22,29 @@ of the Cryst manual). The function WyckoffGraph needs the package XGAP.
 Cryst is distributed with GAP, and does not require any installation.
 It is loaded with the GAP command
 
-gap> LoadPackage( "cryst" ); 
+    gap> LoadPackage( "cryst" ); 
 
 Cryst has been developed by
 
-Bettina Eick,
-Institut Computational Mathematics,
-Fachbereich Mathematik und Informatik,
-Technische Universit\"at Braunschweig,
-Pockelsstr. 14, D-38106 Braunschweig, Germany
-e-mail: beick@tu-bs.de
+    Bettina Eick,
+    Institut Computational Mathematics,
+    Fachbereich Mathematik und Informatik,
+    Technische Universität Braunschweig,
+    Pockelsstr. 14, D-38106 Braunschweig, Germany
+    e-mail: beick@tu-bs.de
 
-Franz G\"ahler,
-Fakult\"at f\"ur Mathematik, Universit\"at Bielefeld,
-Postfach 10 01 31, D-33501 Bielefeld, Germany 
-e-mail: gaehler@math.uni-bielefeld.de
+    Franz Gähler,
+    Fakultät für Mathematik, Universität Bielefeld,
+    Postfach 10 01 31, D-33501 Bielefeld, Germany 
+    e-mail: gaehler@math.uni-bielefeld.de
 
-Werner Nickel,
-Fachbereich Mathematik, AG2,
-Technische Universit\"at Darmstadt,
-Schlossgartenstrasse 7, D-64289 Darmstadt, Germany
-e-mail: nickel@mathematik.tu-darmstadt.de
+    Werner Nickel,
+    Fachbereich Mathematik, AG2,
+    Technische Universität Darmstadt,
+    Schlossgartenstrasse 7, D-64289 Darmstadt, Germany
+    e-mail: nickel@mathematik.tu-darmstadt.de
 
-Please send bug reports, suggestions and other comments to any of these
-e-mail addresses.
+For bug reports, suggestions and other comments please use the issue
+tracker on the GitHub page of the package:
+
+    https://github.com/gap-packages/cryst/issues

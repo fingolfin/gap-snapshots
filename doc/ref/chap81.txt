@@ -186,7 +186,7 @@
   [2XNewCategory[102X  ([14X79.1-1[114X)  is  that  in  a  call to [2XDeclareCategory[102X ([14X79.18-1[114X), a
   variable corresponding to the first argument is set to the new category, and
   this    variable    is   read-only   (see [14X79.18[114X).   The   same   holds   for
-  [2XDeclareRepresentation[102X ([14X79.18-2[114X) and [2XNewRepresentation[102X ([14X79.2-1[114X) etc.[133X
+  [2XDeclareRepresentation[102X ([14X79.18-8[114X) and [2XNewRepresentation[102X ([14X79.2-1[114X) etc.[133X
   
   [33X[0;0YThere  is  no  analogue of categories in the implementation in Section [14X81.1[114X,
   since  there  it was not necessary to distinguish residue classes from other
@@ -707,7 +707,8 @@
     [4X[28X[ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3 ][128X[104X
     [4X[25Xgap>[125X [27Xsyl3:= SylowSubgroup( g, 3 );;[127X[104X
     [4X[25Xgap>[125X [27Xgens:= GeneratorsOfGroup( syl3 );[127X[104X
-    [4X[28X[ [ [ ( 1 mod 16 ), ( 7 mod 16 ) ], [ ( 11 mod 16 ), ( 14 mod 16 ) ] ] ][128X[104X
+    [4X[28X[ [ [ ( 1 mod 16 ), ( 7 mod 16 ) ], [ ( 11 mod 16 ), ( 14 mod 16 ) ] [128X[104X
+    [4X[28X     ] ][128X[104X
     [4X[25Xgap>[125X [27XOrder( gens[1] );[127X[104X
     [4X[28X3[128X[104X
   [4X[32X[104X

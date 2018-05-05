@@ -112,16 +112,26 @@ DeclareConstructor( "AbelianGroupCons", [ IsGroup, IsList ] );
 ##  <A>filt</A> which is of isomorphism type
 ##  <M>C_{{<A>ints</A>[1]}} \times C_{{<A>ints</A>[2]}} \times \ldots
 ##  \times C_{{<A>ints</A>[n]}}</M>,
-##  where <A>ints</A> must be a list of positive integers.
-##  If <A>filt</A> is not given it defaults to <Ref Func="IsPcGroup"/>.
+##  where <A>ints</A> must be a list of non-negative integers or
+##  <Ref Var="infinity"/>; for the latter value or 0, <M>C_{{<A>ints</A>[i]}}</M>
+##  is taken as an infinite cyclic group, otherwise as a cyclic group of
+##  order <A>ints</A>[i].
+##
+##  If <A>filt</A> is not given it defaults to <Ref Func="IsPcGroup"/>,
+##  unless any 0 or <C>infinity</C> is contained in  <A>ints</A>, in which
+##  the default filter is switched to  <Ref Func="IsFpGroup"/>.
 ##  The generators of the group returned are the elements corresponding to
-##  the integers in <A>ints</A>.
+##  the factors <M>C_{{<A>ints</A>[i]}}</M> and hence the integers in <A>ints</A>.
 ##  For more information on possible values of <A>filt</A> see section
 ##  (<Ref Sect="Basic Groups"/>).
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> AbelianGroup([1,2,3]);
 ##  <pc group of size 6 with 3 generators>
+##  gap> G:=AbelianGroup([0,3]);
+##  <fp group on the generators [ f1, f2 ]>
+##  gap> AbelianInvariants(G);
+##  [ 0, 3 ]
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -130,17 +140,13 @@ DeclareConstructor( "AbelianGroupCons", [ IsGroup, IsList ] );
 BindGlobal( "AbelianGroup", function ( arg )
 
   if Length(arg) = 1  then
-    if ForAny(arg[1],x->x=0) then
+    if ForAny(arg[1],x->x=0 or x=infinity) then
       return AbelianGroupCons( IsFpGroup, arg[1] );
     fi;
     return AbelianGroupCons( IsPcGroup, arg[1] );
   elif IsOperation(arg[1]) then
-
     if Length(arg) = 2  then
       return AbelianGroupCons( arg[1], arg[2] );
-
-    elif Length(arg) = 3  then
-      return AbelianGroupCons( arg[1], arg[2], arg[3] );
     fi;
   fi;
   Error( "usage: AbelianGroup( [<filter>, ]<ints> )" );
@@ -200,7 +206,7 @@ BindGlobal( "AlternatingGroup", function ( arg )
       return  AlternatingGroupCons( arg[1], arg[2] );
     fi;
   fi;
-  Error( "usage:  AlternatingGroup( [<filter>, ]<deg> )" );
+  Error( "usage: AlternatingGroup( [<filter>, ]<deg> )" );
 
 end );
 
@@ -230,13 +236,17 @@ DeclareConstructor( "CyclicGroupCons", [ IsGroup, IsInt ] );
 ##  <Description>
 ##  constructs the cyclic group of size <A>n</A> in the category given by the
 ##  filter <A>filt</A>.
-##  If <A>filt</A> is not given it defaults to <Ref Func="IsPcGroup"/>.
+##  If <A>filt</A> is not given it defaults to <Ref Func="IsPcGroup"/>,
+##  unless <A>n</A> equals <Ref Var="infinity"/>, in which case the
+##  default filter is switched to  <Ref Func="IsFpGroup"/>.
 ##  For more information on possible values of <A>filt</A> see section
 ##  (<Ref Sect="Basic Groups"/>).
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> CyclicGroup(12);
 ##  <pc group of size 12 with 3 generators>
+##  gap> CyclicGroup(infinity);
+##  <free group on the generators [ a ]>
 ##  gap> CyclicGroup(IsPermGroup,12);
 ##  Group([ (1,2,3,4,5,6,7,8,9,10,11,12) ])
 ##  gap> matgrp1:= CyclicGroup( IsMatrixGroup, 12 );
@@ -256,15 +266,14 @@ BindGlobal( "CyclicGroup", function ( arg )
 
   if Length(arg) = 1  then
     if arg[1]=infinity then
-      return CyclicGroupCons(IsFpGroup,arg[1]);
+      return CyclicGroupCons(IsFpGroup, arg[1]);
     fi;
     return CyclicGroupCons( IsPcGroup, arg[1] );
   elif IsOperation(arg[1]) then
-
     if Length(arg) = 2  then
       return CyclicGroupCons( arg[1], arg[2] );
-
     elif Length(arg) = 3  then
+      # some filters require extra arguments, e.g. IsMatrixGroup + field
       return CyclicGroupCons( arg[1], arg[2], arg[3] );
     fi;
   fi;
@@ -298,7 +307,9 @@ DeclareConstructor( "DihedralGroupCons", [ IsGroup, IsInt ] );
 ##  <Description>
 ##  constructs the dihedral group of size <A>n</A> in the category given by the
 ##  filter <A>filt</A>.
-##  If <A>filt</A> is not given it defaults to <Ref Func="IsPcGroup"/>.
+##  If <A>filt</A> is not given it defaults to <Ref Func="IsPcGroup"/>,
+##  unless <A>n</A> equals <Ref Var="infinity"/>, in which case the
+##  default filter is switched to  <Ref Func="IsFpGroup"/>.
 ##  For more information on possible values of <A>filt</A> see section
 ##  (<Ref Sect="Basic Groups"/>).
 ##  <P/>
@@ -307,6 +318,8 @@ DeclareConstructor( "DihedralGroupCons", [ IsGroup, IsInt ] );
 ##  <pc group of size 8 with 3 generators>
 ##  gap> DihedralGroup( IsPermGroup, 8 );
 ##  Group([ (1,2,3,4), (2,4) ])
+##  gap> DihedralGroup(infinity);
+##  <fp group of size infinity on the generators [ r, s ]>
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -315,14 +328,13 @@ DeclareConstructor( "DihedralGroupCons", [ IsGroup, IsInt ] );
 BindGlobal( "DihedralGroup", function ( arg )
 
   if Length(arg) = 1  then
+    if arg[1]=infinity then
+      return DihedralGroupCons( IsFpGroup, arg[1] );
+    fi;
     return DihedralGroupCons( IsPcGroup, arg[1] );
   elif IsOperation(arg[1]) then
-
     if Length(arg) = 2  then
       return DihedralGroupCons( arg[1], arg[2] );
-
-    elif Length(arg) = 3  then
-      return DihedralGroupCons( arg[1], arg[2], arg[3] );
     fi;
   fi;
   Error( "usage: DihedralGroup( [<filter>, ]<size> )" );
@@ -377,11 +389,10 @@ BindGlobal( "QuaternionGroup", function ( arg )
   if Length(arg) = 1  then
     return QuaternionGroupCons( IsPcGroup, arg[1] );
   elif IsOperation(arg[1]) then
-
     if Length(arg) = 2  then
       return QuaternionGroupCons( arg[1], arg[2] );
-
     elif Length(arg) = 3  then
+      # some filters require extra arguments, e.g. IsMatrixGroup + field
       return QuaternionGroupCons( arg[1], arg[2], arg[3] );
     fi;
   fi;
@@ -434,12 +445,8 @@ BindGlobal( "ElementaryAbelianGroup", function ( arg )
   if Length(arg) = 1  then
     return ElementaryAbelianGroupCons( IsPcGroup, arg[1] );
   elif IsOperation(arg[1]) then
-
     if Length(arg) = 2  then
       return ElementaryAbelianGroupCons( arg[1], arg[2] );
-
-    elif Length(arg) = 3  then
-      return ElementaryAbelianGroupCons( arg[1], arg[2], arg[3] );
     fi;
   fi;
   Error( "usage: ElementaryAbelianGroup( [<filter>, ]<size> )" );
@@ -489,15 +496,11 @@ BindGlobal( "FreeAbelianGroup", function ( arg )
   if Length(arg) = 1  then
     return FreeAbelianGroupCons( IsFpGroup, arg[1] );
   elif IsOperation(arg[1]) then
-
     if Length(arg) = 2  then
       return FreeAbelianGroupCons( arg[1], arg[2] );
-
-    elif Length(arg) = 3  then
-      return FreeAbelianGroupCons( arg[1], arg[2], arg[3] );
     fi;
   fi;
-  Error( "usage: FreeAbelianGroup( [<filter>, ]<size> )" );
+  Error( "usage: FreeAbelianGroup( [<filter>, ]<rank> )" );
 
 end );
 
@@ -557,12 +560,8 @@ BindGlobal( "ExtraspecialGroup", function ( arg )
   if Length(arg) = 2  then
     return ExtraspecialGroupCons( IsPcGroup, arg[1], arg[2] );
   elif IsOperation(arg[1]) then
-
     if Length(arg) = 3  then
       return ExtraspecialGroupCons( arg[1], arg[2], arg[3] );
-
-    elif Length(arg) = 4  then
-      return ExtraspecialGroupCons( arg[1], arg[2], arg[3], arg[4] );
     fi;
   fi;
   Error( "usage: ExtraspecialGroup( [<filter>, ]<order>, <exponent> )" );
@@ -613,12 +612,8 @@ BindGlobal( "MathieuGroup", function( arg )
   if Length( arg ) = 1 then
     return MathieuGroupCons( IsPermGroup, arg[1] );
   elif IsOperation( arg[1] ) then
-
     if Length( arg ) = 2 then
       return MathieuGroupCons( arg[1], arg[2] );
-
-    elif Length( arg ) = 3 then
-      return MathieuGroupCons( arg[1], arg[2], arg[3] );
     fi;
   fi;
   Error( "usage: MathieuGroup( [<filter>, ]<degree> )" );
@@ -683,7 +678,7 @@ BindGlobal( "SymmetricGroup", function ( arg )
       return  SymmetricGroupCons( arg[1], arg[2] );
     fi;
   fi;
-  Error( "usage:  SymmetricGroup( [<filter>, ]<deg> )" );
+  Error( "usage: SymmetricGroup( [<filter>, ]<deg> )" );
 
 end );
 
@@ -692,9 +687,7 @@ local val, i;
   val:=0;
   # force value 0 (unless offset).
   for i in filter do
-    # when completing, `RankFilter' is redefined. Thus we must use
-    # SIZE_FLAGS.
-    val:=val-SIZE_FLAGS(WITH_HIDDEN_IMPS_FLAGS(FLAGS_FILTER(i)));
+    val:=val-RankFilter(i);
   od;
 
   InstallOtherMethod( oper,

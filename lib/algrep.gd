@@ -790,6 +790,11 @@ DeclareCategory( "IsMonomialElement", IsVector );
 DeclareCategoryCollections( "IsMonomialElement" );
 DeclareCategoryFamily( "IsMonomialElement" );
 
+#
+DeclareHandlingByNiceBasis( "IsMonomialElementVectorSpace",
+    "for free left modules of monomial elements");
+
+
 #############################################################################
 ##
 #O  ConvertToNormalFormMonomialElement( <me> )
@@ -1133,6 +1138,11 @@ DeclareCategoryFamily( "IsSparseRowSpaceElement" );
 #T families even incomparable) elements may be easy to implement but is not
 #T desirable!
 #T TB, January 12th, 2000.
+
+
+#
+DeclareHandlingByNiceBasis( "IsSparseVectorSpace",
+    "for free left modules of sparse vectors");
 
 
 ##############################################################################

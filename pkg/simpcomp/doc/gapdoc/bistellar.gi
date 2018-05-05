@@ -416,7 +416,7 @@
 ##      Name="unnamed complex 18"
 ##      Dim=3
 ##     
-##     /SimplicialComplex], 9 ]
+##     /SimplicialComplex], 7 ]
 ## gap&gt; SCMailSetAddress("johndoe@somehost");   
 ## true
 ## gap&gt; SCMailIsEnabled();                     
@@ -435,7 +435,7 @@
 ## <Example> 
 ## Greetings master,
 ## 
-## this is simpcomp 2.1.7 running on igt215.mathematik.uni-stuttgart.de
+## this is simpcomp 2.1.8 running on igt215.mathematik.uni-stuttgart.de
 ## (Linux igt215 2.6.26-2-amd64 #1 SMP Thu Nov 5 02:23:12 UTC 2009 x86_64
 ## GNU/Linux), GAP 4.4.12.
 ## 
@@ -707,7 +707,7 @@
 ## 
 ## /SimplicialComplex]
 ## gap&gt; c.F;
-## [ 16, 65, 98, 49 ]
+## [ 17, 74, 114, 57 ]
 ## </Example>
 ## </Description>
 ## </ManSection>

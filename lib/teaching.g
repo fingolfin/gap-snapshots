@@ -194,9 +194,9 @@ DeclareGlobalFunction("CosetDecomposition");
 ##  <A>H</A>-conjugacy.
 ##  <Example><![CDATA[
 ##  gap> AllHomomorphismClasses(SymmetricGroup(4),SymmetricGroup(3)); 
-##  [ [ (1,3,4,2), (1,3,4) ] -> [ (), () ], 
-##    [ (1,3,4,2), (1,3,4) ] -> [ (1,2), () ], 
-##    [ (1,3,4,2), (1,3,4) ] -> [ (2,3), (1,2,3) ] ]
+##  [ [ (2,4,3), (1,2,3,4) ] -> [ (), () ], 
+##    [ (2,4,3), (1,2,3,4) ] -> [ (), (1,2) ], 
+##    [ (2,4,3), (1,2,3,4) ] -> [ (1,2,3), (1,2) ] ]
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -265,7 +265,17 @@ DeclareGlobalFunction("AllHomomorphisms");
 ##  <#/GAPDoc>
 ##
 BindGlobal("AllSubgroups",
-  G->Concatenation(List(ConjugacyClassesSubgroups(G),Elements)));
+function(G)
+local cl;
+  cl:=ConjugacyClassesSubgroups(G);
+  if Sum(cl,Size)>10^5 then
+    Info(InfoPerformance,1,"G has ",Sum(cl,Size),
+    " subgroups. Writing them all down\n",
+    "takes lots of memory and time. Use `ConjugacyClassesSubgroups' to get\n",
+    "classes up to conjugaction action, this will be more efficient!");
+  fi;
+  return Concatenation(List(cl,AsSSortedList));
+end);
 
 #############################################################################
 ##
@@ -448,7 +458,7 @@ DeclareGlobalFunction("SetExecutionObject");
 
 InstallGlobalFunction(CosetDecomposition,function(G,S)
 local i,l,e,t;
-  e:=Elements(S);
+  e:=AsSSortedList(S);
   l:=[e];
   for i in RightTransversal(G,S) do
     if not i in S then
@@ -693,7 +703,7 @@ InstallGlobalFunction(ShowMultiplicationTable,function(arg)
 local obj,op;
   obj:=arg[1];
   if not IsList(obj) then
-    obj:=Elements(obj);
+    obj:=AsSSortedList(obj);
   fi;
   op:=\*;
   if Length(arg)>1 and IsInt(arg[2]) then
@@ -706,7 +716,7 @@ InstallGlobalFunction(ShowAdditionTable,function(arg)
 local obj,op;
   obj:=arg[1];
   if not IsList(obj) then
-    obj:=Elements(obj);
+    obj:=AsSSortedList(obj);
   fi;
   op:=\+;
   if Length(arg)>1 and IsInt(arg[2]) then
@@ -742,8 +752,15 @@ return function(o,n)
 end;
 end);
 
-NAMEDOBJECTS:=[];
-EXECUTEOBJECTS:=[];
+if IsHPCGAP then
+    MakeThreadLocal("NAMEDOBJECTS");
+    MakeThreadLocal("EXECUTEOBJECTS");
+    BindThreadLocal("NAMEDOBJECTS", []);
+    BindThreadLocal("EXECUTEOBJECTS", []);
+else
+    NAMEDOBJECTS:=[];
+    EXECUTEOBJECTS:=[];
+fi;
 
 InstallGlobalFunction(SetNameObject,SpecialViewSetupFunction(NAMEDOBJECTS));
 InstallGlobalFunction(SetExecutionObject,
@@ -863,7 +880,7 @@ BindGlobal("GallianCyclic",function(n,a)
   if Gcd(a,n)<>1 then
     Error("a must be coprime to n");
   fi;
-  return Elements(Group(a*One(Integers mod n)));
+  return AsSSortedList(Group(a*One(Integers mod n)));
 end);
 
 BindGlobal("GallianOrderFrequency",function(G)
@@ -888,7 +905,7 @@ local c,l,i;
   l:=[];
   for i in c do
     if CycleStructurePerm(Representative(i))=s then
-      l:=Union(l,Elements(i));
+      l:=Union(l,AsSSortedList(i));
     fi;
   od;
   return l;
@@ -987,7 +1004,7 @@ local cl,cnt,bg,bw,bo,bi,k,gens,go,imgs,params,emb,clg,sg,vsu,c,i;
   fi;
 
   params:=rec(gens:=bg,from:=H);
-  # find all embeddings
+  # find all homs
   emb:=MorClassLoop(G,bi,params,
     # all homs = 1+8
     9); 
@@ -1013,7 +1030,7 @@ BindGlobal("AllEndomorphisms",G->AllHomomorphisms(G,G));
 
 BindGlobal("GallianHomoDn",AllEndomorphisms);
 
-BindGlobal("AllAutomorphisms",G->Elements(AutomorphismGroup(G)));
+BindGlobal("AllAutomorphisms",G->AsSSortedList(AutomorphismGroup(G)));
 
 BindGlobal("GallianAutoDn",AllAutomorphisms);
 

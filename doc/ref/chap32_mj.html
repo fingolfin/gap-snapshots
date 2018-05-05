@@ -37,17 +37,18 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32_mj.html#X7D55E1977ED70E01">32.2-2 <span class="Heading">MappingByFunction</span></a>
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32_mj.html#X865FC25A87D36F3D">32.2-3 InverseGeneralMapping</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32_mj.html#X7ED1E4E27CCE2DCA">32.2-4 CompositionMapping</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32_mj.html#X86486B687B7077AC">32.2-5 CompositionMapping2</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32_mj.html#X7A926D167C3155F6">32.2-6 IsCompositionMappingRep</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32_mj.html#X87775B438008DCA5">32.2-7 ConstituentsCompositionMapping</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32_mj.html#X795FF8DC785F110A">32.2-8 ZeroMapping</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32_mj.html#X7EBAE0368470A603">32.2-9 IdentityMapping</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32_mj.html#X86452F8587CBAEA0">32.2-10 <span class="Heading">Embedding</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32_mj.html#X7BD2D5A87CD6B213">32.2-4 RestrictedInverseGeneralMapping</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32_mj.html#X7ED1E4E27CCE2DCA">32.2-5 CompositionMapping</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32_mj.html#X86486B687B7077AC">32.2-6 CompositionMapping2</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32_mj.html#X7A926D167C3155F6">32.2-7 IsCompositionMappingRep</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32_mj.html#X87775B438008DCA5">32.2-8 ConstituentsCompositionMapping</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32_mj.html#X795FF8DC785F110A">32.2-9 ZeroMapping</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32_mj.html#X7EBAE0368470A603">32.2-10 IdentityMapping</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32_mj.html#X86452F8587CBAEA0">32.2-11 <span class="Heading">Embedding</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32_mj.html#X8769E8DA80BC96C1">32.2-11 <span class="Heading">Projection</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32_mj.html#X8769E8DA80BC96C1">32.2-12 <span class="Heading">Projection</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32_mj.html#X800014D683A81009">32.2-12 RestrictedMapping</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap32_mj.html#X800014D683A81009">32.2-13 RestrictedMapping</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap32_mj.html#X7E5A430D7F838F1C">32.3 <span class="Heading">Properties and Attributes of (General) Mappings</span></a>
 </span>
@@ -229,20 +230,27 @@
 
 <p>Note that the inverse general mapping of a mapping <var class="Arg">map</var> is in general only a general mapping. If <var class="Arg">map</var> knows to be bijective its inverse general mapping will know to be a mapping. In this case also <code class="code">Inverse( <var class="Arg">map</var> )</code> works.</p>
 
+<p><a id="X7BD2D5A87CD6B213" name="X7BD2D5A87CD6B213"></a></p>
+
+<h5>32.2-4 RestrictedInverseGeneralMapping</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RestrictedInverseGeneralMapping</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>The <em>restricted inverse general mapping</em> of a general mapping <var class="Arg">map</var> is the general mapping whose underlying relation (see <code class="func">UnderlyingRelation</code> (<a href="chap32_mj.html#X784F871383FB599B"><span class="RefLink">32.3-9</span></a>)) contains a pair <span class="SimpleMath">\((r,s)\)</span> if and only if the underlying relation of <var class="Arg">map</var> contains the pair <span class="SimpleMath">\((s,r)\)</span>, and whose domain is restricted to the image of <var class="Arg">map</var> and whose range is the domain of <var class="Arg">map</var>.</p>
+
 <p><a id="X7ED1E4E27CCE2DCA" name="X7ED1E4E27CCE2DCA"></a></p>
 
-<h5>32.2-4 CompositionMapping</h5>
+<h5>32.2-5 CompositionMapping</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompositionMapping</code>( <var class="Arg">map1</var>, <var class="Arg">map2</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p><code class="func">CompositionMapping</code> allows one to compose arbitrarily many general mappings, and delegates each step to <code class="func">CompositionMapping2</code> (<a href="chap32_mj.html#X86486B687B7077AC"><span class="RefLink">32.2-5</span></a>).</p>
+<p><code class="func">CompositionMapping</code> allows one to compose arbitrarily many general mappings, and delegates each step to <code class="func">CompositionMapping2</code> (<a href="chap32_mj.html#X86486B687B7077AC"><span class="RefLink">32.2-6</span></a>).</p>
 
-<p>Additionally, the properties <code class="func">IsInjective</code> (<a href="chap32_mj.html#X7F065FD7822C0A12"><span class="RefLink">32.3-4</span></a>) and <code class="func">IsSingleValued</code> (<a href="chap32_mj.html#X86D44C8A78BF1981"><span class="RefLink">32.3-2</span></a>) are maintained; if the source of the <span class="SimpleMath">\(i+1\)</span>-th general mapping is identical to the range of the <span class="SimpleMath">\(i\)</span>-th general mapping, also <code class="func">IsTotal</code> (<a href="chap32_mj.html#X83C7494E828CC9C8"><span class="RefLink">32.3-1</span></a>) and <code class="func">IsSurjective</code> (<a href="chap32_mj.html#X784ECE847E005B8F"><span class="RefLink">32.3-5</span></a>) are maintained. (So one should not call <code class="func">CompositionMapping2</code> (<a href="chap32_mj.html#X86486B687B7077AC"><span class="RefLink">32.2-5</span></a>) directly if one wants to maintain these properties.)</p>
+<p>Additionally, the properties <code class="func">IsInjective</code> (<a href="chap32_mj.html#X7F065FD7822C0A12"><span class="RefLink">32.3-4</span></a>) and <code class="func">IsSingleValued</code> (<a href="chap32_mj.html#X86D44C8A78BF1981"><span class="RefLink">32.3-2</span></a>) are maintained; if the source of the <span class="SimpleMath">\(i+1\)</span>-th general mapping is identical to the range of the <span class="SimpleMath">\(i\)</span>-th general mapping, also <code class="func">IsTotal</code> (<a href="chap32_mj.html#X83C7494E828CC9C8"><span class="RefLink">32.3-1</span></a>) and <code class="func">IsSurjective</code> (<a href="chap32_mj.html#X784ECE847E005B8F"><span class="RefLink">32.3-5</span></a>) are maintained. (So one should not call <code class="func">CompositionMapping2</code> (<a href="chap32_mj.html#X86486B687B7077AC"><span class="RefLink">32.2-6</span></a>) directly if one wants to maintain these properties.)</p>
 
-<p>Depending on the types of <var class="Arg">map1</var> and <var class="Arg">map2</var>, the returned mapping might be constructed completely new (for example by giving domain generators and their images, this is for example the case if both mappings preserve the same algebraic structures and <strong class="pkg">GAP</strong> can decompose elements of the source of <var class="Arg">map2</var> into generators) or as an (iterated) composition (see <code class="func">IsCompositionMappingRep</code> (<a href="chap32_mj.html#X7A926D167C3155F6"><span class="RefLink">32.2-6</span></a>)).</p>
+<p>Depending on the types of <var class="Arg">map1</var> and <var class="Arg">map2</var>, the returned mapping might be constructed completely new (for example by giving domain generators and their images, this is for example the case if both mappings preserve the same algebraic structures and <strong class="pkg">GAP</strong> can decompose elements of the source of <var class="Arg">map2</var> into generators) or as an (iterated) composition (see <code class="func">IsCompositionMappingRep</code> (<a href="chap32_mj.html#X7A926D167C3155F6"><span class="RefLink">32.2-7</span></a>)).</p>
 
 <p><a id="X86486B687B7077AC" name="X86486B687B7077AC"></a></p>
 
-<h5>32.2-5 CompositionMapping2</h5>
+<h5>32.2-6 CompositionMapping2</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompositionMapping2</code>( <var class="Arg">map2</var>, <var class="Arg">map1</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CompositionMapping2General</code>( <var class="Arg">map2</var>, <var class="Arg">map1</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
@@ -254,21 +262,21 @@
 
 <p><a id="X7A926D167C3155F6" name="X7A926D167C3155F6"></a></p>
 
-<h5>32.2-6 IsCompositionMappingRep</h5>
+<h5>32.2-7 IsCompositionMappingRep</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCompositionMappingRep</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;representation&nbsp;)</td></tr></table></div>
-<p>Mappings in this representation are stored as composition of two mappings, (pre)images of elements are computed in a two-step process. The constituent mappings of the composition can be obtained via <code class="func">ConstituentsCompositionMapping</code> (<a href="chap32_mj.html#X87775B438008DCA5"><span class="RefLink">32.2-7</span></a>).</p>
+<p>Mappings in this representation are stored as composition of two mappings, (pre)images of elements are computed in a two-step process. The constituent mappings of the composition can be obtained via <code class="func">ConstituentsCompositionMapping</code> (<a href="chap32_mj.html#X87775B438008DCA5"><span class="RefLink">32.2-8</span></a>).</p>
 
 <p><a id="X87775B438008DCA5" name="X87775B438008DCA5"></a></p>
 
-<h5>32.2-7 ConstituentsCompositionMapping</h5>
+<h5>32.2-8 ConstituentsCompositionMapping</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConstituentsCompositionMapping</code>( <var class="Arg">map</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>If <var class="Arg">map</var> is stored in the representation <code class="func">IsCompositionMappingRep</code> (<a href="chap32_mj.html#X7A926D167C3155F6"><span class="RefLink">32.2-6</span></a>) as composition of two mappings <var class="Arg">map1</var> and <var class="Arg">map2</var>, this function returns the two constituent mappings in a list <code class="code">[ <var class="Arg">map1</var>, <var class="Arg">map2</var> ]</code>.</p>
+<p>If <var class="Arg">map</var> is stored in the representation <code class="func">IsCompositionMappingRep</code> (<a href="chap32_mj.html#X7A926D167C3155F6"><span class="RefLink">32.2-7</span></a>) as composition of two mappings <var class="Arg">map1</var> and <var class="Arg">map2</var>, this function returns the two constituent mappings in a list <code class="code">[ <var class="Arg">map1</var>, <var class="Arg">map2</var> ]</code>.</p>
 
 <p><a id="X795FF8DC785F110A" name="X795FF8DC785F110A"></a></p>
 
-<h5>32.2-8 ZeroMapping</h5>
+<h5>32.2-9 ZeroMapping</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZeroMapping</code>( <var class="Arg">S</var>, <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>A zero mapping is a total general mapping that maps each element of its source to the zero element of its range.</p>
@@ -277,14 +285,14 @@
 
 <p><a id="X7EBAE0368470A603" name="X7EBAE0368470A603"></a></p>
 
-<h5>32.2-9 IdentityMapping</h5>
+<h5>32.2-10 IdentityMapping</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdentityMapping</code>( <var class="Arg">D</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>is the bijective mapping with source and range equal to the collection <var class="Arg">D</var>, which maps each element of <var class="Arg">D</var> to itself.</p>
 
 <p><a id="X86452F8587CBAEA0" name="X86452F8587CBAEA0"></a></p>
 
-<h5>32.2-10 <span class="Heading">Embedding</span></h5>
+<h5>32.2-11 <span class="Heading">Embedding</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Embedding</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Embedding</code>( <var class="Arg">S</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
@@ -292,7 +300,7 @@
 
 <p><a id="X8769E8DA80BC96C1" name="X8769E8DA80BC96C1"></a></p>
 
-<h5>32.2-11 <span class="Heading">Projection</span></h5>
+<h5>32.2-12 <span class="Heading">Projection</span></h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Projection</code>( <var class="Arg">S</var>, <var class="Arg">T</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Projection</code>( <var class="Arg">S</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
@@ -301,7 +309,7 @@
 
 <p><a id="X800014D683A81009" name="X800014D683A81009"></a></p>
 
-<h5>32.2-12 RestrictedMapping</h5>
+<h5>32.2-13 RestrictedMapping</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RestrictedMapping</code>( <var class="Arg">map</var>, <var class="Arg">subdom</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>If <var class="Arg">subdom</var> is a subdomain of the source of the general mapping <var class="Arg">map</var>, this operation returns the restriction of <var class="Arg">map</var> to <var class="Arg">subdom</var>.</p>
@@ -564,7 +572,7 @@
 
 <p><em>Scalar multiplication</em> of general mappings is defined likewise.</p>
 
-<p>The <em>product</em> of two general mappings is defined as the composition. This multiplication is always associative. In addition to the composition via <code class="code">*</code>, general mappings can be composed –in reversed order– via <code class="func">CompositionMapping</code> (<a href="chap32_mj.html#X7ED1E4E27CCE2DCA"><span class="RefLink">32.2-4</span></a>).</p>
+<p>The <em>product</em> of two general mappings is defined as the composition. This multiplication is always associative. In addition to the composition via <code class="code">*</code>, general mappings can be composed –in reversed order– via <code class="func">CompositionMapping</code> (<a href="chap32_mj.html#X7ED1E4E27CCE2DCA"><span class="RefLink">32.2-5</span></a>).</p>
 
 <p>General mappings are in the category of multiplicative elements with inverses. Similar to matrices, not every general mapping has an inverse or an identity, and we define the behaviour of <code class="func">One</code> (<a href="chap31_mj.html#X8046262384895B2A"><span class="RefLink">31.10-2</span></a>) and <code class="func">Inverse</code> (<a href="chap31_mj.html#X78EE524E83624057"><span class="RefLink">31.10-8</span></a>) for general mappings as follows. <code class="func">One</code> (<a href="chap31_mj.html#X8046262384895B2A"><span class="RefLink">31.10-2</span></a>) returns <code class="keyw">fail</code> when called for a general mapping whose source and range differ, otherwise <code class="func">One</code> (<a href="chap31_mj.html#X8046262384895B2A"><span class="RefLink">31.10-2</span></a>) returns the identity mapping of the source. (Note that the source may differ from the preimage). <code class="func">Inverse</code> (<a href="chap31_mj.html#X78EE524E83624057"><span class="RefLink">31.10-8</span></a>) returns <code class="keyw">fail</code> when called for a non-bijective general mapping or for a general mapping whose source and range differ; otherwise <code class="func">Inverse</code> (<a href="chap31_mj.html#X78EE524E83624057"><span class="RefLink">31.10-8</span></a>) returns the inverse mapping.</p>
 

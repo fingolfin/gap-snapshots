@@ -470,7 +470,7 @@ InstallGlobalFunction(DivisorsInt,function ( n )
     if n < 0  then n := -n;  fi;
     if n = 0  then Error("DivisorsInt: <n> must not be 0");  fi;
     if n <= Length(DivisorsIntCache)  then 
-      return DivisorsIntCache[n];  
+        return DivisorsIntCache[n];  
     fi;
     factors := FactorsInt( n );
 
@@ -700,7 +700,7 @@ InstallGlobalFunction(FactorsInt,function ( n )
     if 0 < Length(tmp[2])  then
       if ValueOption("quiet")<>true then
         len := Length(tmp[2]);
-        if LoadPackage("FactInt") = true then
+        if IsPackageMarkedForLoading("FactInt", "")  then
 ##            # in general cases we should proceed with the found factors:
 ##            while len > 0 do
 ##              Append(tmp[1], Factors(tmp[2][len]));
@@ -746,8 +746,7 @@ end);
 ##  
 InstallMethod( PrimeDivisors, "for integer", [ IsInt ], function(n)
   if n = 0 then
-    Error("PrimeDivisors: 0 has an infinite number of prime divisors.");
-    return;
+    Error( "<n> must be non zero" );
   fi;
   if n < 0 then
     n := -n;
@@ -988,7 +987,10 @@ BindGlobal( "IsProbablyPrimeIntWithFail", function( n )
     # faster than anything fancier because $n$ mod <small int> is very fast
     for p  in Primes  do
         if n mod p = 0  then return false;  fi;
-        if n < (p+1)^2  then AddSet( Primes2, n );  return true;   fi;
+        if n < (p+1)^2  then
+            AddSet( Primes2, n );
+            return true;
+        fi;
     od;
 
     # do trial division by the other known primes
@@ -1076,13 +1078,7 @@ InstallGlobalFunction( IsPrimePowerInt,
 ##
 #F  LcmInt( <m>, <n> )  . . . . . . . . . . least common multiple of integers
 ##
-InstallGlobalFunction(LcmInt,function ( n, m )
-    if m = 0  and n = 0  then
-        return 0;
-    else
-        return AbsInt( m / GcdInt( m, n ) * n );
-    fi;
-end);
+InstallGlobalFunction(LcmInt, LCM_INT);
 
 
 #############################################################################
@@ -1161,40 +1157,7 @@ end);
 ##
 #F  PowerModInt(<r>,<e>,<m>)  . . . . . . power of one integer modulo another
 ##
-InstallGlobalFunction(PowerModInt,function ( r, e, m )
-    local   pow, f;
-
-    # handle special cases
-    if m = 1  then
-        return 0;
-    elif e = 0 then
-        return 1;
-    fi;
-
-    # reduce `r' initially
-    r := r mod m;
-
-    # if `e' is negative then invert `r' modulo `m' with Euclids algorithm
-    if e < 0  then
-        r := 1/r mod m;
-        e := -e;
-    fi;
-
-    # now use the repeated squaring method (right-to-left)
-    pow := 1;
-    f := 2 ^ (LogInt( e, 2 ) + 1);
-    while 1 < f  do
-        pow := (pow * pow) mod m;
-        f := QuoInt( f, 2 );
-        if f <= e  then
-            pow := (pow * r) mod m;
-            e := e - f;
-        fi;
-    od;
-
-    # return the power
-    return pow;
-end);
+InstallGlobalFunction(PowerModInt, POWERMODINT);
 
 
 #############################################################################
@@ -1227,19 +1190,13 @@ InstallGlobalFunction(PrimePowersInt,function( n )
     local   p,  pows,  lst;
 
     if n = 1  then
-	return [];
+        return [];
     elif n = 0  then
     	Error( "<n> must be non zero" );
     elif n < 0  then
     	n := -1 * n;
     fi;
-    lst  := Factors( Integers, n );
-    pows := [];
-    for p  in Set( lst )  do
-	Add( pows, p );
-        Add( pows, Number( lst, x -> x = p ) );
-    od;
-    return pows;
+    return Flat(Collected(FactorsInt(n)));
 
 end);
 
@@ -1284,34 +1241,23 @@ end);
 ##
 #F  AbsInt( <n> ) . . . . . . . . . . . . . . .  absolute value of an integer
 ##
-InstallGlobalFunction( AbsInt, function( n )
-    if 0 <= n  then return  n;
-    else            return -n;
-    fi;
-end );
+#InstallGlobalFunction( AbsInt, ABS_INT );
+InstallGlobalFunction( AbsInt, ABS_RAT ); # support rationals for backwards compatibility
+
 
 #############################################################################
 ##
 #F  AbsoluteValue( <n> )
 ##
-# uses the particular form of AbsInt
-InstallMethod(AbsoluteValue,"rationals",true,[IsRat],0,AbsInt);
-
+InstallMethod( AbsoluteValue, "rationals", [IsRat], ABS_RAT );
 
 
 #############################################################################
 ##
 #F  SignInt( <n> )  . . . . . . . . . . . . . . . . . . .  sign of an integer
 ##
-InstallGlobalFunction( SignInt, function( n )
-    if   0 =  n  then
-        return 0;
-    elif 0 <= n  then
-        return 1;
-    else
-        return -1;
-    fi;
-end );
+#InstallGlobalFunction( SignInt, SIGN_INT );
+InstallGlobalFunction( SignInt, SIGN_RAT ); # support rationals for backwards compatibility
 
 
 #############################################################################
@@ -1689,15 +1635,24 @@ InstallMethod( QuotientMod,
     true,
     [ IsIntegers, IsInt, IsInt, IsInt ], 0,
     function ( Integers, r, s, m )
-    if s > m then 
-        s := s mod m;
-    fi;
+    local g;
     if m = 1 then
         return 0;
-    elif GcdInt( s, m ) <> 1 then
-        return fail;
     else
-        return r/s mod m;
+        r := r mod m;
+        if r = 0 then return 0; fi;  # as required by QuotientMod documentation
+        s := s mod m;
+        if s = 0 then return fail; fi;
+
+        g := GcdInt( r, s );
+        r := r / g;
+        s := s / g;
+        g := GcdInt( g, m );
+        m := m / g;
+        if GcdInt( s, m ) <> 1 then
+            return fail;
+        fi;
+        return r * INVMODINT(s, m) mod m;
     fi;
     end );
 
@@ -1747,12 +1702,12 @@ NrBitsInt := function ( n )
     return nr;
 end;
 
-InstallMethod( Random,
-    "for `Integers'",
-    true,
-    [ IsIntegers ], 0,
-    function( Integers )
-    return NrBitsInt( Random( [0..2^20-1] ) ) - 10;
+InstallMethodWithRandomSource(Random,
+    "for a random source and `Integers'", true,
+    [IsRandomSource, IsIntegers],
+    0,
+    function( rg, Integers )
+    return NrBitsInt( Random( rg, [0..2^20-1] ) ) - 10;
     end );
 
 
@@ -1822,24 +1777,13 @@ InstallMethod( StandardAssociateUnit,
 InstallOtherMethod( Valuation,
     "for two integers",
     IsIdenticalObj,
-    [ IsInt,
-      IsInt ],
+    [ IsInt, IsInt ],
     0,
-
 function( n, m )
-    local val;
-
     if n = 0  then
-        val := infinity;
-    else
-        val := 0;
-        while n mod m = 0  do
-            val := val + 1;
-            n   := n / m;
-        od;
+        return infinity;
     fi;
-    return val;
-
+    return PVALUATION_INT( n, m );
 end );
 
 
@@ -1887,27 +1831,7 @@ InstallMethod( \in,
 #F  PrintFactorsInt( <n> )  . . . . . . . . print factorization of an integer
 ##
 InstallGlobalFunction(PrintFactorsInt,function ( n )
-    local decomp, i;
-
-    if -4 < n and n < 4 then
-        Print( n );
-    else
-        decomp := Collected( Factors( AbsInt( n ) ) );
-        if n > 0 then
-            Print( decomp[1][1] );
-        else
-            Print( -decomp[1][1] );
-        fi;
-        if decomp[1][2] > 1 then
-            Print( "^", decomp[1][2] );
-        fi;
-        for i in [ 2 .. Length( decomp ) ] do
-            Print( "*", decomp[i][1] );
-            if decomp[i][2] > 1 then
-                Print( "^", decomp[i][2] );
-            fi;
-        od;
-    fi;
+    Print( StringPP( n ) );
 end);
 
 #############################################################################
@@ -1923,20 +1847,6 @@ InstallOtherMethod(Iterator, "more helpful error for integers", true,
         function(n) 
     Error("You cannot loop over the integer ",n,
           " did you mean the range [1..",n,"]");
-end);
-
-InstallGlobalFunction(PowerDecompositions,function(n)
-local d,i,r;
-  i:=2;
-  d:=[];
-  repeat
-    r:=RootInt(n,i);
-    if n=r^i then
-      Add(d,[r,i]);
-    fi;
-    i:=i+1;
-  until r<2;
-  return d;
 end);
 
 ##  The behaviour of View(String) for large integers can be configured via a

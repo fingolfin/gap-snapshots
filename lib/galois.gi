@@ -495,13 +495,21 @@ end);
 ##
 #F  ShapeFrequencies . . . . . . . . . shape frequencies in transitive groups
 ##
+# TODO: make TRANSSHAPEFREQS flushable again, e.g.
+# using MemoizePosIntFunction or some other similar method
+TRANSSHAPEFREQS := MakeWriteOnceAtomic([]);
+
+
 BindGlobal("ShapeFrequencies",function(n,i)
-local g,fu,j,k,ps,pps,sh;
-  TransGrpLoad(n,0);
-  if not IsBound(TRANSSHAPEFREQS[n]) then
-    TRANSSHAPEFREQS[n]:=[];
+local list,g,fu,j,k,ps,pps,sh;
+  if not TransitiveGroupsAvailable(n) then
+    Error("Transitive groups of degree ",n," are not available");
   fi;
-  if not IsBound(TRANSSHAPEFREQS[n][i]) then
+  if not IsBound(TRANSSHAPEFREQS[n]) then
+    TRANSSHAPEFREQS[n]:=MakeWriteOnceAtomic([]);
+  fi;
+  list:=TRANSSHAPEFREQS[n];
+  if not IsBound(list[i]) then
     sh:=Partitions(n);
     g:=TransitiveGroup(n,i);
     fu:=List([1..Length(sh)-1],i->0); 
@@ -527,9 +535,9 @@ local g,fu,j,k,ps,pps,sh;
       fi;
     od;
     fu:=fu/Size(g);
-    TRANSSHAPEFREQS[n][i]:=fu;
+    list[i]:=fu;
   fi;
-  return TRANSSHAPEFREQS[n][i];
+  return list[i];
 end);
 
 #############################################################################
@@ -539,12 +547,16 @@ end);
 InstallGlobalFunction(ProbabilityShapes,function(arg)
 local f,n,i,sh,fu,ps,pps,ind,keineu,ba,bk,j,k,a,anz,pm,
       cnt,cand,d,alt,p,g,weg,fac;
+  Info(InfoPerformance,2,"Using Transitive Groups Library");
   f:=arg[1];
   f:=f/LeadingCoefficient(f);
-  if not(IsIrreducible(f)) then
+  if not IsIrreducibleRingElement(f) then
     Error("f must be irreducible");
   fi;
   n:=DegreeOfUnivariateLaurentPolynomial(f);
+  if not TransitiveGroupsAvailable(n) then
+    Error("Transitive groups of degree ",n," are not available");
+  fi;
   fac:=3;
   if n>11 then
     fac:=7;
@@ -552,7 +564,7 @@ local f,n,i,sh,fu,ps,pps,ind,keineu,ba,bk,j,k,a,anz,pm,
     fac:=5;
   fi;
 
-  cand:=[1..TRANSLENGTHS[n]];
+  cand:=[1..NrTransitiveGroups(n)];
   if Length(arg)=2 then
     weg:=arg[2];
   else
@@ -604,7 +616,7 @@ local f,n,i,sh,fu,ps,pps,ind,keineu,ba,bk,j,k,a,anz,pm,
 	  pps:=Reversed(pps);
           fu[Position(sh,pps)-1]:=true;
         od;
-      elif ForAny([1..TRANSLENGTHS[n]],i->TRANSProperties(n,i)[5]=fu) then
+      elif ForAny([1..NrTransitiveGroups(n)],i->TRANSProperties(n,i)[5]=fu) then
         keineu:=keineu+1;
       fi;
     fi;
@@ -672,7 +684,7 @@ local n,i,sh,fu,ps,pps,ind,keineu,avoid,cf;
 	  pps:=Reversed(pps);
           fu[Position(sh,pps)-1]:=true;
         od;
-      elif ForAny([1..TRANSLENGTHS[n]],i->TRANSProperties(n,i)[5]=fu) then
+      elif ForAny([1..NrTransitiveGroups(n)],i->TRANSProperties(n,i)[5]=fu) then
         keineu:=keineu+1;
       fi;
     fi;
@@ -698,6 +710,7 @@ local f,n,sh,p,ind,cand,noca,alt,d,df,co,dco,res,resf,pat,pps,i,j,k,
       GrabCodedLengths,UnParOrbits,cnt,polring,basring,indet,indnum,
       extring,lpos;
 
+  Info(InfoPerformance,2,"Using Transitive Groups Library");
   GetProperty := function(l,prop)
   local i;
     for i in l{[9..Length(l)]} do
@@ -801,9 +814,12 @@ local f,n,sh,p,ind,cand,noca,alt,d,df,co,dco,res,resf,pat,pps,i,j,k,
     Error("f must be irreducible");
   fi;
   n:=DegreeOfUnivariateLaurentPolynomial(f);
+  if not TransitiveGroupsAvailable(n) then
+    Error("Transitive groups of degree ",n," are not available");
+  fi;
 
   if Length(arg)=1 then
-    cand:=[1..TRANSLENGTHS[n]];
+    cand:=[1..NrTransitiveGroups(n)];
   else
     cand:=arg[2];
   fi;
@@ -819,7 +835,7 @@ local f,n,sh,p,ind,cand,noca,alt,d,df,co,dco,res,resf,pat,pps,i,j,k,
   orbs:=[];
 
   # 2Set-Orbit Lengths
-  co:=List([1..TRANSLENGTHS[n]],i->TRANSProperties(n,i)[6]);
+  co:=List([1..NrTransitiveGroups(n)],i->TRANSProperties(n,i)[6]);
   if Length(Set(co{cand}))>1 then
     Info(InfoGalois,1,"2-Set Resolvent");
     #degs:=List(co,GrabCodedLengths);
@@ -845,7 +861,7 @@ local f,n,sh,p,ind,cand,noca,alt,d,df,co,dco,res,resf,pat,pps,i,j,k,
   fi;
 
   # 2Seq-Orbit Lengths
-  co:=List([1..TRANSLENGTHS[n]],i->TRANSProperties(n,i)[7]);
+  co:=List([1..NrTransitiveGroups(n)],i->TRANSProperties(n,i)[7]);
   if Length(Set(co{cand}))>1 then
     Info(InfoGalois,1,"2-Seq Resolvent");
     #degs:=List(co,GrabCodedLengths);
@@ -871,7 +887,7 @@ local f,n,sh,p,ind,cand,noca,alt,d,df,co,dco,res,resf,pat,pps,i,j,k,
   fi;
 
   # 3Set-Orbit Lengths
-  co:=List([1..TRANSLENGTHS[n]],i->TRANSProperties(n,i)[8]);
+  co:=List([1..NrTransitiveGroups(n)],i->TRANSProperties(n,i)[8]);
   if n>=5 and Length(Set(co{cand}))>1 then
     Info(InfoGalois,1,"3-Set Resolvent");
 

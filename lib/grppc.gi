@@ -136,8 +136,9 @@ function(pcgs, G )
   return igs;
 end );
 
+atomic readwrite OPERATIONS_REGION do
 ADD_LIST(WRAPPER_OPERATIONS, InducedPcgs);
-
+od;
 
 #############################################################################
 ##
@@ -222,7 +223,7 @@ end);
 ##
 #M  Pcgs( <G> )
 ##
-InstallMethod( Pcgs, "fail if insolvable", true,
+InstallMethod( Pcgs, "fail if not solvable", true,
         [ HasIsSolvableGroup ], 
 	SUM_FLAGS, # for groups for which we know that they are not solvable
 	           # this is the best we can do.
@@ -592,6 +593,7 @@ InstallMethod( SubgroupByPcgs, "subgroup with pcgs",
 function( G, pcgs )
     local U;
     U := SubgroupNC( G, AsList( pcgs ) );
+    SetSize(U,Product(RelativeOrders(pcgs)));
     SetPcgs( U, pcgs );
     SetGroupOfPcgs (pcgs, U);
     # home pcgs will be inherited
@@ -2507,8 +2509,8 @@ function(G,bound)
         return monic(LGLayers(pcgs),PrimePGroup(G),a->Order(PcElementByExponents(pcgs,a)));
 end);
 
-InstallMethod( Exponent,"solvable group",
-  true,[IsGroup and IsSolvableGroup],0,
+InstallMethod( Exponent,"finite solvable group",
+  true,[IsGroup and IsSolvableGroup and IsFinite],0,
 function(G)
 local exp, primes, p;
   if IsPGroup(G) then 
@@ -2696,7 +2698,9 @@ BindGlobal("Omega_Sims_RUNTIME",5000);
 #-Charles Sims
 BindGlobal("Omega_Sims",
 function(G,p,e)
-local H,K,Knew,fails,gens,r;
+local H,K,Knew,fails,gens,r, timerFunc;
+
+  timerFunc := GET_TIMER_FROM_ReproducibleBehaviour();
 
   if(IsTrivial(G)) then return G; fi;
 
@@ -2717,9 +2721,9 @@ local H,K,Knew,fails,gens,r;
 
   # Step 2, reduce until we have fail lots of times in a row
   # or waste a lot of time.
-  r:=Runtime();
+  r:=timerFunc();
   fails:=0;
-  while(fails<Omega_Sims_CENTRAL and Runtime()-r<Omega_Sims_RUNTIME) do
+  while(fails<Omega_Sims_CENTRAL and timerFunc()-r<Omega_Sims_RUNTIME) do
     Knew:=Omega_UpperBoundCentralQuotient(K,p,e);
     if(K=Knew) then fails:=fails+1; continue; fi;
     fails:=0;

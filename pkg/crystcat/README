@@ -1,8 +1,7 @@
-
 The GAP 4 package CrystCat provides a catalog of crystallographic 
 groups of dimensions 2, 3, and 4 which covers most of the data contained 
 in the book "Crystallographic groups of four-dimensional space" by 
-H. Brown, R. B\"ulow, J. Neub\"user, H. Wondratschek, and H. Zassenhaus 
+H. Brown, R. Bülow, J. Neubüser, H. Wondratschek, and H. Zassenhaus 
 (John Wiley, New York, 1978). This catalog was previously available in 
 the library of GAP 3. The present version for GAP 4 has been moved into 
 a separate package, because it requires the package Cryst, which is
@@ -19,12 +18,15 @@ gap> LoadPackage( "crystcat" );
 
 The catalog was brought into GAP format, and ported later to GAP 4 by 
 
-    Volkmar Felsch, Lehrstuhl D f\"ur Mathematik, RWTH Aachen,
+    Volkmar Felsch, Lehrstuhl D für Mathematik, RWTH Aachen,
     volkmar.felsch@math.rwth-aachen.de
 
-The integration with Cryst is by
+The integration with Cryst is done by
 
-    Franz G\"ahler, Fakult\"at f\"ur Mathematik,
-    Universit\"at Bielefeld, gaehler@math.uni-bielefeld.de
+    Franz Gähler, Fakultät für Mathematik,
+    Universität Bielefeld, gaehler@math.uni-bielefeld.de
 
-Please sent bug reports to any of these email addresses.
+For bug reports, suggestions and other comments please use the issue
+tracker on the GitHub page of the package:
+
+    https://github.com/gap-packages/crystcat/issues

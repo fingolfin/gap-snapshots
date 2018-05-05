@@ -1,44 +1,78 @@
-
-#include        "system.h"              /* system dependent part           */
-
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
-
-#include        "gap.h"                 /* error handling, initialisation  */
-
-#include        "gvars.h"               /* global variables                */
-
-#include        "calls.h"               /* generic call mechanism          */
-#include        "opers.h"               /* generic operations              */
-
-#include        "ariths.h"              /* basic arithmetic                */
-
-#include        "bool.h"                /* booleans                        */
-
-#include        "integer.h"             /* integers                        */
-#include        "intfuncs.h"            /* hashing                         */
-
-#include        "permutat.h"            /* permutations                    */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "plist.h"               /* plain lists                     */
-#include        "range.h"               /* ranges                          */
-#include        "string.h"              /* strings                         */
-
-#include        "saveload.h"            /* saving and loading              */
-
-#include        "set.h"                 /* sets                            */
-
-#include	"code.h"		/* coder                           */
-#include	"thread.h"		/* threads			   */
-#include	"tls.h"			/* thread-local storage		   */
-
 #ifndef GAP_PPERM_H
 #define GAP_PPERM_H
+
+#include <src/objects.h>
+
+static inline int IS_PPERM(Obj f)
+{
+    return (TNUM_OBJ(f) == T_PPERM2 || TNUM_OBJ(f) == T_PPERM4);
+}
+
+Obj NEW_PPERM2(UInt deg);
+
+static inline UInt2 * ADDR_PPERM2(Obj f)
+{
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+    return ((UInt2 *)((Obj *)(ADDR_OBJ(f)) + 2) + 1);
+}
+
+static inline const UInt2 * CONST_ADDR_PPERM2(Obj f)
+{
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+    return ((const UInt2 *)((const Obj *)(CONST_ADDR_OBJ(f)) + 2) + 1);
+}
+
+static inline UInt DEG_PPERM2(Obj f)
+{
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+    return ((UInt)(SIZE_OBJ(f) - sizeof(UInt2) - 2 * sizeof(Obj)) /
+            sizeof(UInt2));
+}
+
+UInt CODEG_PPERM2(Obj f);
+UInt RANK_PPERM2(Obj f);
+
+Obj NEW_PPERM4(UInt deg);
+
+static inline UInt4 * ADDR_PPERM4(Obj f)
+{
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+    return ((UInt4 *)((Obj *)(ADDR_OBJ(f)) + 2) + 1);
+}
+
+static inline const UInt4 * CONST_ADDR_PPERM4(Obj f)
+{
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+    return ((const UInt4 *)((const Obj *)(CONST_ADDR_OBJ(f)) + 2) + 1);
+}
+
+static inline UInt DEG_PPERM4(Obj f)
+{
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+    return ((UInt)(SIZE_OBJ(f) - sizeof(UInt4) - 2 * sizeof(Obj)) /
+            sizeof(UInt4));
+}
+
+UInt CODEG_PPERM4(Obj f);
+UInt RANK_PPERM4(Obj f);
+
+static inline UInt DEG_PPERM(Obj f)
+{
+    GAP_ASSERT(IS_PPERM(f));
+    return (TNUM_OBJ(f) == T_PPERM2 ? DEG_PPERM2(f) : DEG_PPERM4(f));
+}
+
+static inline UInt CODEG_PPERM(Obj f)
+{
+    GAP_ASSERT(IS_PPERM(f));
+    return (TNUM_OBJ(f) == T_PPERM2 ? CODEG_PPERM2(f) : CODEG_PPERM4(f));
+}
+
+static inline UInt RANK_PPERM(Obj f)
+{
+    GAP_ASSERT(IS_PPERM(f));
+    return (TNUM_OBJ(f) == T_PPERM2 ? RANK_PPERM2(f) : RANK_PPERM4(f));
+}
 
 /****************************************************************************
 **
@@ -48,17 +82,26 @@
 **  PPerm <f>.
 */
 
-extern Obj OnTuplesPPerm ( Obj set, Obj f );
+extern Obj OnTuplesPPerm(Obj set, Obj f);
 
 /****************************************************************************
 **
 *F  OnSetsPPerm( <set>, <f> ) . . . . . . . .  operations on sets of points
 **
-**  'OnSetsPPerm' returns the  image of the  tuple <set> under the 
-**  partial perm <f>. 
+**  'OnSetsPPerm' returns the  image of the  tuple <set> under the
+**  partial perm <f>.
 */
 
-extern Obj OnSetsPPerm ( Obj set, Obj f );
+extern Obj OnSetsPPerm(Obj set, Obj f);
+
+/****************************************************************************
+**
+*F HashFuncForPPerm( <f>) . . . hash pperm
+**
+** Returns a hash value for a partial permutation
+*/
+
+Int HashFuncForPPerm(Obj f);
 
 /****************************************************************************
 
@@ -69,6 +112,6 @@ extern Obj OnSetsPPerm ( Obj set, Obj f );
 *F  InitInfoPPerm()  . . . . . . . . . . . . . . . table of init functions
 */
 
-StructInitInfo * InitInfoPPerm ( void );
+StructInitInfo * InitInfoPPerm(void);
 
-#endif // GAP_PPERM_H
+#endif    // GAP_PPERM_H

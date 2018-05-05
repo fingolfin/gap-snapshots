@@ -110,10 +110,32 @@ end );
 # code for printing words in factored form. This pattern searching clearly
 # is improvable
 BindGlobal("FindSubstringPowers",function(l,n)
-local new,t,i,step,lstep,z,zz,j,a,k,good,bad,lim;
+local new,t,i,step,lstep,z,zz,j,a,k,good,bad,lim,plim;
   new:=0;
   t:=[];
   z:=Length(l);
+  # first deal with large powers to avoid x^1000 being an obstacle.
+  plim:=9; # length for treating large powers-1
+  j:=1;
+  while j+plim<=Length(l) do
+    if ForAll([1..plim],x->l[j]=l[j+x]) then
+      k:=j+plim;
+      while k<Length(l) and l[j]=l[k+1] do
+	k:=k+1;
+      od;
+      zz:=[0,l[j],k-j+1];
+      a:=Position(t,zz);
+      if a=fail then
+	new:=new+1;
+	t[new]:=zz;
+	a:=new;
+      fi;
+      l:=Concatenation(l{[1..j-1]},[a+n],l{[k+1..Length(l)]});
+    fi;
+    j:=j+1;
+  od;
+  z:=Length(l);
+
   # long matches first, we then treat the subpatterns themselves again
   j:=QuoInt(z,2);
   lstep:=j;
@@ -186,8 +208,8 @@ end);
 # threshold up to which to try.
 PRINTWORDPOWERS:=true;
 
-DoNSAW:=function(l,names)
-local a,n,
+DoNSAW:=function(l,names,tseed)
+local a,n,t,
       word,
       exp,
       i,j,
@@ -204,6 +226,7 @@ local a,n,
     a:=[l,[]];
   fi;
   word:=a[1];
+  a[2]:=Concatenation(tseed,a[2]);
 
   i:= 1;
   str:= "";
@@ -213,10 +236,24 @@ local a,n,
     fi;
     exp:=1;
     if word[i]>n then
-      # decode longer word -- it will occur as power, so use ()
-      Add(str,'(');
-      Append(str,DoNSAW(a[2][word[i]-n],names));
-      Add(str,')');
+      t:=a[2][word[i]-n];
+      # is it a power stored specially?
+      if t[1]=0 then
+	if t[2]<0 then
+	  Append( str, names[ -t[2] ] );
+	  Append( str, "^-" );
+	  Append( str, String(t[3]));
+	else
+	  Append( str, names[ t[2] ] );
+	  Append( str, "^" );
+	  Append( str, String(t[3]));
+	fi;
+      else
+	# decode longer word -- it will occur as power, so use ()
+	Add(str,'(');
+	Append(str,DoNSAW(t,names,Filtered(a[2],x->x[1]=0)));
+	Add(str,')');
+      fi;
     elif word[i]<0 then
       Append( str, names[ -word[i] ] );
       exp:=-1;
@@ -251,7 +288,7 @@ local names,word;
   if Length(word)=0 then
     return "<identity ...>";
   fi;
-  word:=DoNSAW(word,names);
+  word:=DoNSAW(word,names,[]);
   return word;
 end);
 
@@ -937,10 +974,12 @@ InstallGlobalFunction( StoreInfoFreeMagma, function( F, names, req )
 
     local rank,
           rbits,
-          K;
+          K,
+          expB,
+          typesList;
 
   # Store the names, initialize the types list.
-  F!.types := [];
+  typesList := [];
   F!.names := Immutable( names );
 
   # for letter word families we do not need these types
@@ -959,22 +998,25 @@ InstallGlobalFunction( StoreInfoFreeMagma, function( F, names, req )
     while 2^rbits < rank do
       rbits:= rbits + 1;
     od;
-    F!.expBits:= [  8 - rbits,
-		    16 - rbits,
-		    Minimum( 32 - rbits, 28 ),
-		    infinity ];
+    expB := [  8 - rbits,
+               16 - rbits,
+               Minimum( 32 - rbits, 28 ),
+               infinity ];
 
     # Note that one bit of the exponents is needed for the sign,
     # and we disallow the use of a representation if at most two
     # additional bits would be available.
-    if F!.expBits[1] <= 3 then F!.expBits[1]:= 0; fi;
-    if F!.expBits[2] <= 3 then F!.expBits[2]:= 0; fi;
-    if F!.expBits[3] <= 3 then F!.expBits[3]:= 0; fi;
+    if expB[1] <= 3 then expB[1]:= 0; fi;
+    if expB[2] <= 3 then expB[2]:= 0; fi;
+    if expB[3] <= 3 then expB[3]:= 0; fi;
+
+    MakeImmutable(expB);
+    F!.expBits := expB;
 
     F!.expBitsInfo := [ 2^( F!.expBits[1] - 1 ),
-			2^( F!.expBits[2] - 1 ),
-			2^( F!.expBits[3] - 1 ),
-			infinity          ];
+                        2^( F!.expBits[2] - 1 ),
+                        2^( F!.expBits[3] - 1 ),
+                        infinity          ];
 
     # Store the internal types.
     K:= NewType( F, Is8BitsAssocWord and req );
@@ -984,7 +1026,7 @@ InstallGlobalFunction( StoreInfoFreeMagma, function( F, names, req )
     K![ AWP_NR_BITS_PAIR ]      := 8;
     K![ AWP_FUN_OBJ_BY_VECTOR ] := 8Bits_ObjByVector;
     K![ AWP_FUN_ASSOC_WORD    ] := 8Bits_AssocWord;
-    F!.types[1]:= K;
+    typesList[1]:= K;
 
     K:= NewType( F, Is16BitsAssocWord and req );
     K![ AWP_PURE_TYPE    ]      := K;
@@ -993,7 +1035,7 @@ InstallGlobalFunction( StoreInfoFreeMagma, function( F, names, req )
     K![ AWP_NR_BITS_PAIR ]      := 16;
     K![ AWP_FUN_OBJ_BY_VECTOR ] := 16Bits_ObjByVector;
     K![ AWP_FUN_ASSOC_WORD    ] := 16Bits_AssocWord;
-    F!.types[2]:= K;
+    typesList[2]:= K;
 
     K:= NewType( F, Is32BitsAssocWord and req );
     K![ AWP_PURE_TYPE    ]      := K;
@@ -1002,7 +1044,7 @@ InstallGlobalFunction( StoreInfoFreeMagma, function( F, names, req )
     K![ AWP_NR_BITS_PAIR ]      := 32;
     K![ AWP_FUN_OBJ_BY_VECTOR ] := 32Bits_ObjByVector;
     K![ AWP_FUN_ASSOC_WORD    ] := 32Bits_AssocWord;
-    F!.types[3]:= K;
+    typesList[3]:= K;
 
   fi;
 
@@ -1013,7 +1055,9 @@ InstallGlobalFunction( StoreInfoFreeMagma, function( F, names, req )
   K![ AWP_NR_BITS_PAIR ]      := infinity;
   K![ AWP_FUN_OBJ_BY_VECTOR ] := InfBits_ObjByVector;
   K![ AWP_FUN_ASSOC_WORD    ] := InfBits_AssocWord;
-  F!.types[4]:= K;
+  typesList[4]:= K;
+
+  F!.types := MakeImmutable(typesList);
 
   if IsBLetterWordsFamily(F) then
     K:= NewType( F, IsBLetterAssocWordRep and req );
@@ -1520,6 +1564,49 @@ local l,gens,g,i,p;
   return l;
 
 end );
+
+InstallGlobalFunction(FreelyReducedLetterRepWord,function(w)
+local i;
+  i:=1;
+  while i<Length(w) do
+    if w[i]=-w[i+1] then
+      w:=Concatenation(w{[1..i-1]},w{[i+2..Length(w)]});
+      # there could be cancellation of previous
+      if i>1 then
+	i:=i-1;
+      fi;
+    else
+      i:=i+1;
+    fi;
+  od;
+  return w;
+end);
+
+InstallGlobalFunction(WordProductLetterRep,function(arg)
+local l,r,i,j,b,p;
+  l:=arg[1];
+  for p in [2..Length(arg)] do
+    r:=arg[p];
+    b:=Length(r);
+    if Length(l)=0 then l:=r;
+    elif b>0 then
+      # find cancellation
+      i:=Length(l);
+      j:=1;
+      while i>0 and j<=b and l[i]=-r[j] do
+	i:=i-1;j:=j+1;
+      od;
+      if j>b then
+	l:=l{[1..i]};
+      elif i=0 then
+	l:=r{[j..b]};
+      else
+	l:=Concatenation(l{[1..i]},r{[j..b]});
+      fi;
+    fi;
+  od;
+  return l;
+end);
 
 
 #############################################################################

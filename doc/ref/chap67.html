@@ -53,8 +53,11 @@
 
 <h5>67.1-1 AlgebraicExtension</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AlgebraicExtension</code>( <var class="Arg">K</var>, <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>constructs an extension <var class="Arg">L</var> of the field <var class="Arg">K</var> by one root of the irreducible polynomial <var class="Arg">f</var>, using Kronecker's construction. <var class="Arg">L</var> is a field whose <code class="func">LeftActingDomain</code> (<a href="chap57.html#X86F070E0807DC34E"><span class="RefLink">57.1-11</span></a>) value is <var class="Arg">K</var>. The polynomial <var class="Arg">f</var> is the <code class="func">DefiningPolynomial</code> (<a href="chap58.html#X7ADDCBF47E2ED3D4"><span class="RefLink">58.2-7</span></a>) value of <var class="Arg">L</var> and the attribute <code class="func">RootOfDefiningPolynomial</code> (<a href="chap58.html#X8173DA4982DB1E8A"><span class="RefLink">58.2-8</span></a>) of <var class="Arg">L</var> holds a root of <var class="Arg">f</var> in <var class="Arg">L</var>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AlgebraicExtension</code>( <var class="Arg">K</var>, <var class="Arg">f</var>[, <var class="Arg">nam</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AlgebraicExtensionNC</code>( <var class="Arg">K</var>, <var class="Arg">f</var>[, <var class="Arg">nam</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>constructs an extension <var class="Arg">L</var> of the field <var class="Arg">K</var> by one root of the irreducible polynomial <var class="Arg">f</var>, using Kronecker's construction. <var class="Arg">L</var> is a field whose <code class="func">LeftActingDomain</code> (<a href="chap57.html#X86F070E0807DC34E"><span class="RefLink">57.1-11</span></a>) value is <var class="Arg">K</var>. The polynomial <var class="Arg">f</var> is the <code class="func">DefiningPolynomial</code> (<a href="chap58.html#X7ADDCBF47E2ED3D4"><span class="RefLink">58.2-7</span></a>) value of <var class="Arg">L</var> and the attribute <code class="func">RootOfDefiningPolynomial</code> (<a href="chap58.html#X8173DA4982DB1E8A"><span class="RefLink">58.2-8</span></a>) of <var class="Arg">L</var> holds a root of <var class="Arg">f</var> in <var class="Arg">L</var>. By default this root is printed as <code class="code">a</code>, this string can be overwritten with the optional argument <var class="Arg">nam</var>.</p>
+
+<p>The first version of the command checks that the polynomial <var class="Arg">f</var> is an irreducible polynomial over <var class="Arg">K</var>. This check is skipped with the <code class="code">NC</code> variant.</p>
 
 
 <div class="example"><pre>
@@ -66,6 +69,9 @@
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a:=RootOfDefiningPolynomial(e);</span>
 a
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">l := AlgebraicExtensionNC(Rationals, x^24+3*x^2+1, "alpha");;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RootOfDefiningPolynomial(l)^50;</span>
+9*alpha^6+6*alpha^4+alpha^2
 </pre></div>
 
 <p><a id="X811F10217F12B3F9" name="X811F10217F12B3F9"></a></p>

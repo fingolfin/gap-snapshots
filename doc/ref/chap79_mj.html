@@ -107,16 +107,24 @@
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X879DE2A17A6C6E92">79.18-1 DeclareCategory</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X7C81FB2682AE54CD">79.18-2 DeclareRepresentation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X7A00FC8A7A677A56">79.18-3 DeclareAttribute</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X7F4602F082682A04">79.18-4 DeclareProperty</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X846EA18A7D36626C">79.18-5 DeclareFilter</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X843F48137B899BC3">79.18-6 DeclareOperation</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X834A8CC587A609BE">79.18-7 DeclareGlobalFunction</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X8324B5DE8300E0F2">79.18-8 DeclareGlobalVariable</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X7A23F09886E936D2">79.18-9 InstallValue</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X851654DA87616207">79.18-10 DeclareSynonym</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X87A4316C818B3DE3">79.18-11 FlushCaches</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X813BE52887A3E0FA">79.18-2 TypeOfOperation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X792A23BF82BDF66B">79.18-3 IsCategory</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X86D42C7783ACA5F4">79.18-4 IsRepresentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X81F1C3EE83003FA0">79.18-5 IsProperty</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X7973C8F4782D15A1">79.18-6 IsAttribute</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X85D07C3E7F4D4043">79.18-7 CategoryByName</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X7C81FB2682AE54CD">79.18-8 DeclareRepresentation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X7A00FC8A7A677A56">79.18-9 DeclareAttribute</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X7F4602F082682A04">79.18-10 DeclareProperty</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X846EA18A7D36626C">79.18-11 DeclareFilter</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X843F48137B899BC3">79.18-12 DeclareOperation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X7EB6830886F62CC0">79.18-13 DeclareConstructor</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X834A8CC587A609BE">79.18-14 DeclareGlobalFunction</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X8324B5DE8300E0F2">79.18-15 DeclareGlobalVariable</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X7A23F09886E936D2">79.18-16 InstallValue</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X851654DA87616207">79.18-17 DeclareSynonym</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X87A4316C818B3DE3">79.18-18 FlushCaches</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap79_mj.html#X7F6645D87DD26CF0">79.18-19 FilterByName</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap79_mj.html#X7837CA9A83D93B38">79.19 <span class="Heading">Declaration and Implementation Part</span></a>
 </span>
@@ -260,7 +268,7 @@
 
 <p>Each method that is installed for <var class="Arg">opr</var> via <code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>) must require that the <span class="SimpleMath">\(i\)</span>-th argument lies in the filter <var class="Arg">args-filts</var><span class="SimpleMath">\([i]\)</span>.</p>
 
-<p>One can install methods for other arguments tuples via <code class="func">InstallOtherMethod</code> (<a href="chap78_mj.html#X7D2C12DB841CE539"><span class="RefLink">78.2-2</span></a>), this way it is also possible to install methods for a different number of arguments than the length of <var class="Arg">args-filts</var>.</p>
+<p>One can install methods for other argument tuples via <code class="func">InstallOtherMethod</code> (<a href="chap78_mj.html#X7D2C12DB841CE539"><span class="RefLink">78.2-2</span></a>), this way it is also possible to install methods for a different number of arguments than the length of <var class="Arg">args-filts</var>.</p>
 
 <p><a id="X7D2593D6854C4F93" name="X7D2593D6854C4F93"></a></p>
 
@@ -271,11 +279,64 @@
 <h5>79.6-1 NewConstructor</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NewConstructor</code>( <var class="Arg">name</var>, <var class="Arg">args-filts</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p><code class="func">NewConstructor</code> returns a constructor <var class="Arg">cons</var> with name <var class="Arg">name</var>. The list <var class="Arg">args-filts</var> describes requirements about the arguments of <var class="Arg">constr</var>, namely the number of arguments must be equal to the length of <var class="Arg">args-filts</var>, and the <span class="SimpleMath">\(i\)</span>-th argument must lie in the filter <var class="Arg">args-filts</var><span class="SimpleMath">\([i]\)</span>. Additionally a constructor expects the first argument to be a filter to then select a method to construct an object.</p>
+<p><code class="func">NewConstructor</code> returns a constructor <var class="Arg">cons</var> with name <var class="Arg">name</var>. The list <var class="Arg">args-filts</var> describes requirements about the arguments of <var class="Arg">cons</var>. Namely the number of arguments must be equal to the length of <var class="Arg">args-filts</var>, and the <span class="SimpleMath">\(i\)</span>-th argument must lie in the filter <var class="Arg">args-filts</var><span class="SimpleMath">\([i]\)</span> for <span class="SimpleMath">\(i \neq 1\)</span>. A constructor expects the first argument to be a <em>filter</em> instead of an object and it must be a subset of the filter <var class="Arg">args-filts</var><span class="SimpleMath">\([1]\)</span>.</p>
 
-<p>Each method that is installed for <var class="Arg">cons</var> via <code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>) must require that the <span class="SimpleMath">\(i\)</span>-th argument lies in the filter <var class="Arg">args-filts</var><span class="SimpleMath">\([i]\)</span>.</p>
+<p>Each method that is installed for <var class="Arg">cons</var> via <code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>) must require that the <span class="SimpleMath">\(i\)</span>-th argument lies in the filter <var class="Arg">args-filts</var><span class="SimpleMath">\([i]\)</span> for <span class="SimpleMath">\(i \neq 1\)</span>. Its first argument is a filter and must be a subset of the filter <var class="Arg">args-filts</var><span class="SimpleMath">\([1]\)</span>.</p>
 
-<p>One can install methods for other arguments tuples via <code class="func">InstallOtherMethod</code> (<a href="chap78_mj.html#X7D2C12DB841CE539"><span class="RefLink">78.2-2</span></a>), this way it is also possible to install methods for a different number of arguments than the length of <var class="Arg">args-filts</var>.</p>
+<p>One can install methods for other argument tuples via <code class="func">InstallOtherMethod</code> (<a href="chap78_mj.html#X7D2C12DB841CE539"><span class="RefLink">78.2-2</span></a>), this way it is also possible to install methods for a different number of arguments than the length of <var class="Arg">args-filts</var>.</p>
+
+<p>Note that the method selection for constructors works slightly differently than for usual operations. As stated above, applicabilty to the first argument in an argument tuple is tested by determining whether the argument-filter is a <em>subset</em> of <var class="Arg">args-filts</var><span class="SimpleMath">\([1]\)</span>.</p>
+
+<p>The rank of a method installed for a constructor is determined solely by <var class="Arg">args-filts</var><span class="SimpleMath">\([1]\)</span> of the method. Instead of taking the sum of the ranks of filters involved in its <var class="Arg">args-filts</var><span class="SimpleMath">\([1]\)</span>, the sum of <span class="SimpleMath">\(-1\)</span> times these values is taken. The result is added to the number <var class="Arg">val</var> used in the call of <code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>).</p>
+
+<p>This has the following effects on the method selection for constructors. If <var class="Arg">cons</var> is called with an argument tuple whose first argument is the filter <var class="Arg">filt</var>, any method whose first argument is <em>more</em> specific than <var class="Arg">filt</var> is applicable (if its other <var class="Arg">args-filts</var> also match). Then the method with the "most general" filter <var class="Arg">args-filts</var><span class="SimpleMath">\([1]\)</span> is chosen, since the rank is computed by taking <span class="SimpleMath">\(-1\)</span> times the ranks of the involved filters. Thus, a constructor is chosen which returns an object in <var class="Arg">filt</var> using as few extra filters as possible, which presumably is both more flexible to use and easier to construct.</p>
+
+<p>The following example showcases this behaviour. Note that the argument <var class="Arg">filter</var> is only used for method dispatch.</p>
+
+
+<div class="example"><pre>
+DeclareFilter( "IsMyObj" );
+DeclareFilter( "IsMyFilter" );
+DeclareFilter( "IsMyOtherFilter" );
+BindGlobal( "MyFamily", NewFamily( "MyFamily" ) );
+
+DeclareConstructor( "NewMyObj", [ IsMyObj ] );
+
+InstallMethod( NewMyObj,
+[ IsMyObj ],
+function( filter )
+    local type;
+    Print("General constructor\n");
+    type := NewType( MyFamily, IsMyObj );
+    return Objectify( type, [] );
+end );
+InstallMethod( NewMyObj,
+[ IsMyObj and IsMyFilter and IsMyOtherFilter ],
+function( filter )
+    local type;
+    Print("Special constructor\n");
+    type := NewType( MyFamily, IsMyObj and IsMyFilter and IsMyOtherFilter );
+    return Objectify( type, [] );
+end );
+</pre></div>
+
+<p>If only IsMyObj is given, both methods are applicable and the general constructor is called. If also IsMyFilter is given, only the special constructor is applicable.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">a := NewMyObj( IsMyObj );;</span>
+General constructor
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMyOtherFilter(a);</span>
+false
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">b := NewMyObj( IsMyObj and IsMyFilter );;</span>
+Special constructor
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMyOtherFilter(b);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c := NewMyObj( IsMyObj and IsMyFilter and IsMyOtherFilter );;</span>
+Special constructor
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsMyOtherFilter(c);</span>
+true
+</pre></div>
 
 <p><a id="X8401A9367E8CAA37" name="X8401A9367E8CAA37"></a></p>
 
@@ -858,48 +919,103 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareCategory</code>( <var class="Arg">name</var>, <var class="Arg">super</var>[, <var class="Arg">rank</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>does the same as <code class="func">NewCategory</code> (<a href="chap79_mj.html#X87F68F887B44DBBD"><span class="RefLink">79.1-1</span></a>) and additionally makes the variable <var class="Arg">name</var> read-only.</p>
 
+<p><a id="X813BE52887A3E0FA" name="X813BE52887A3E0FA"></a></p>
+
+<h5>79.18-2 TypeOfOperation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TypeOfOperation</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>returns a string from the list <code class="code">[ "Attribute", "Operation", "Property", "Category", "Representation", "Filter", "Setter"]</code> reflecting which type of operation <var class="Arg">op</var> is.</p>
+
+<p>(see <a href="chap13_mj.html#X7CC6903E78F24167"><span class="RefLink">13.3</span></a>, <a href="chap13_mj.html#X8698205F8648EB33"><span class="RefLink">13.4</span></a>, <a href="chap13_mj.html#X7C701DBF7BAE649A"><span class="RefLink">13.5</span></a>, <a href="chap13_mj.html#X79DE5208877AE42A"><span class="RefLink">13.6</span></a>, <a href="chap13_mj.html#X871597447BB998A1"><span class="RefLink">13.7</span></a>, <a href="chap13_mj.html#X7997705185C7E720"><span class="RefLink">13.8</span></a>)</p>
+
+<p><a id="X792A23BF82BDF66B" name="X792A23BF82BDF66B"></a></p>
+
+<h5>79.18-3 IsCategory</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCategory</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>returns <code class="code">true</code> if <var class="Arg">object</var> is a category (see <a href="chap13_mj.html#X7CC6903E78F24167"><span class="RefLink">13.3</span></a>), and <code class="code">false</code> otherwise.</p>
+
+<p>Note that <strong class="pkg">GAP</strong> categories are <em>not</em> categories in the usual mathematical sense.</p>
+
+<p><a id="X86D42C7783ACA5F4" name="X86D42C7783ACA5F4"></a></p>
+
+<h5>79.18-4 IsRepresentation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsRepresentation</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>returns <code class="code">true</code> if <var class="Arg">object</var> is a representation (see <a href="chap13_mj.html#X8698205F8648EB33"><span class="RefLink">13.4</span></a>), and <code class="code">false</code> otherwise.</p>
+
+<p><a id="X81F1C3EE83003FA0" name="X81F1C3EE83003FA0"></a></p>
+
+<h5>79.18-5 IsProperty</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsProperty</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>returns <code class="code">true</code> if <var class="Arg">object</var> is a property (see <a href="chap13_mj.html#X871597447BB998A1"><span class="RefLink">13.7</span></a>), and <code class="code">false</code> otherwise.</p>
+
+<p><a id="X7973C8F4782D15A1" name="X7973C8F4782D15A1"></a></p>
+
+<h5>79.18-6 IsAttribute</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAttribute</code>( <var class="Arg">object</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>returns <code class="code">true</code> if <var class="Arg">object</var> is an attribute (see <a href="chap13_mj.html#X7C701DBF7BAE649A"><span class="RefLink">13.5</span></a>), and <code class="code">false</code> otherwise.</p>
+
+<p><a id="X85D07C3E7F4D4043" name="X85D07C3E7F4D4043"></a></p>
+
+<h5>79.18-7 CategoryByName</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CategoryByName</code>( <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>returns the category with name <var class="Arg">name</var> if it is found, or fail otherwise.</p>
+
 <p><a id="X7C81FB2682AE54CD" name="X7C81FB2682AE54CD"></a></p>
 
-<h5>79.18-2 DeclareRepresentation</h5>
+<h5>79.18-8 DeclareRepresentation</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareRepresentation</code>( <var class="Arg">name</var>, <var class="Arg">super</var>, <var class="Arg">slots</var>[, <var class="Arg">req</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>does the same as <code class="func">NewRepresentation</code> (<a href="chap79_mj.html#X7CC8106F809E15CF"><span class="RefLink">79.2-1</span></a>) and additionally makes the variable <var class="Arg">name</var> read-only.</p>
 
 <p><a id="X7A00FC8A7A677A56" name="X7A00FC8A7A677A56"></a></p>
 
-<h5>79.18-3 DeclareAttribute</h5>
+<h5>79.18-9 DeclareAttribute</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareAttribute</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>[, <var class="Arg">"mutable"</var>][, <var class="Arg">rank</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>does the same as <code class="func">NewAttribute</code> (<a href="chap79_mj.html#X7B9654807858A3B0"><span class="RefLink">79.3-1</span></a>), additionally makes the variable <var class="Arg">name</var> read-only and also binds read-only global variables with names <code class="code">Has<var class="Arg">name</var></code> and <code class="code">Set<var class="Arg">name</var></code> for the tester and setter of the attribute (see Section <a href="chap13_mj.html#X79DE5208877AE42A"><span class="RefLink">13.6</span></a>).</p>
 
 <p><a id="X7F4602F082682A04" name="X7F4602F082682A04"></a></p>
 
-<h5>79.18-4 DeclareProperty</h5>
+<h5>79.18-10 DeclareProperty</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareProperty</code>( <var class="Arg">name</var>, <var class="Arg">filter</var>[, <var class="Arg">rank</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>does the same as <code class="func">NewProperty</code> (<a href="chap79_mj.html#X7F2D6FD979FE23DD"><span class="RefLink">79.3-2</span></a>), additionally makes the variable <var class="Arg">name</var> read-only and also binds read-only global variables with names <code class="code">Has<var class="Arg">name</var></code> and <code class="code">Set<var class="Arg">name</var></code> for the tester and setter of the property (see Section <a href="chap13_mj.html#X79DE5208877AE42A"><span class="RefLink">13.6</span></a>).</p>
 
 <p><a id="X846EA18A7D36626C" name="X846EA18A7D36626C"></a></p>
 
-<h5>79.18-5 DeclareFilter</h5>
+<h5>79.18-11 DeclareFilter</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareFilter</code>( <var class="Arg">name</var>[, <var class="Arg">rank</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>does the same as <code class="func">NewFilter</code> (<a href="chap79_mj.html#X821635DA7821ED74"><span class="RefLink">79.4-1</span></a>) and additionally makes the variable <var class="Arg">name</var> read-only.</p>
 
 <p><a id="X843F48137B899BC3" name="X843F48137B899BC3"></a></p>
 
-<h5>79.18-6 DeclareOperation</h5>
+<h5>79.18-12 DeclareOperation</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareOperation</code>( <var class="Arg">name</var>, <var class="Arg">filters</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>does the same as <code class="func">NewOperation</code> (<a href="chap79_mj.html#X85A9E019795B79D6"><span class="RefLink">79.5-1</span></a>) and additionally makes the variable <var class="Arg">name</var> read-only.</p>
 
+<p><a id="X7EB6830886F62CC0" name="X7EB6830886F62CC0"></a></p>
+
+<h5>79.18-13 DeclareConstructor</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareConstructor</code>( <var class="Arg">name</var>, <var class="Arg">filters</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>does the same as <code class="func">NewConstructor</code> (<a href="chap79_mj.html#X783FA45E7858A8CF"><span class="RefLink">79.6-1</span></a>) and additionally makes the variable <var class="Arg">name</var> read-only.</p>
+
+<p>Note that for operations which are constructors special rules with respect to applicability and rank of the corresponding methods apply (see section <code class="func">NewConstructor</code> (<a href="chap79_mj.html#X783FA45E7858A8CF"><span class="RefLink">79.6-1</span></a>)).</p>
+
 <p><a id="X834A8CC587A609BE" name="X834A8CC587A609BE"></a></p>
 
-<h5>79.18-7 DeclareGlobalFunction</h5>
+<h5>79.18-14 DeclareGlobalFunction</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareGlobalFunction</code>( <var class="Arg">name</var>, <var class="Arg">info</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallGlobalFunction</code>( <var class="Arg">oper</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p><code class="func">DeclareGlobalFunction</code> <strong class="pkg">GAP</strong> functions that are not operations and that are intended to be called by users should be notified to <strong class="pkg">GAP</strong> in the declaration part of the respective package (see Section <a href="chap79_mj.html#X7837CA9A83D93B38"><span class="RefLink">79.19</span></a>) via <code class="func">DeclareGlobalFunction</code>, which returns a function that serves as a place holder for the function that will be installed later, and that will print an error message if it is called. See also <code class="func">DeclareSynonym</code> (<a href="chap79_mj.html#X851654DA87616207"><span class="RefLink">79.18-10</span></a>).</p>
+<p><code class="func">DeclareGlobalFunction</code> <strong class="pkg">GAP</strong> functions that are not operations and that are intended to be called by users should be notified to <strong class="pkg">GAP</strong> in the declaration part of the respective package (see Section <a href="chap79_mj.html#X7837CA9A83D93B38"><span class="RefLink">79.19</span></a>) via <code class="func">DeclareGlobalFunction</code>, which returns a function that serves as a place holder for the function that will be installed later, and that will print an error message if it is called. See also <code class="func">DeclareSynonym</code> (<a href="chap79_mj.html#X851654DA87616207"><span class="RefLink">79.18-17</span></a>).</p>
 
 <p>A global function declared with <code class="func">DeclareGlobalFunction</code> can be given its value <var class="Arg">func</var> via <code class="func">InstallGlobalFunction</code>; <var class="Arg">gvar</var> is the global variable (or a string denoting its name) named with the <var class="Arg">name</var> argument of the call to <code class="func">DeclareGlobalFunction</code>. For example, a declaration like</p>
 
@@ -917,25 +1033,25 @@ InstallGlobalFunction( SumOfTwoCubes, function(x, y) return x^3 + y^3; end);
 
 <p><a id="X8324B5DE8300E0F2" name="X8324B5DE8300E0F2"></a></p>
 
-<h5>79.18-8 DeclareGlobalVariable</h5>
+<h5>79.18-15 DeclareGlobalVariable</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareGlobalVariable</code>( <var class="Arg">name</var>[, <var class="Arg">description</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>For global variables that are <em>not</em> functions, instead of using <code class="func">BindGlobal</code> (<a href="chap4_mj.html#X7D39D3E17CF49F5B"><span class="RefLink">4.9-7</span></a>) one can also declare the variable with <code class="func">DeclareGlobalVariable</code> which creates a new global variable named by the string <var class="Arg">name</var>. If the second argument <var class="Arg">description</var> is entered then this must be a string that describes the meaning of the global variable. <code class="func">DeclareGlobalVariable</code> shall be used in the declaration part of the respective package (see <a href="chap79_mj.html#X7837CA9A83D93B38"><span class="RefLink">79.19</span></a>), values can then be assigned to the new variable with <code class="func">InstallValue</code> (<a href="chap79_mj.html#X7A23F09886E936D2"><span class="RefLink">79.18-9</span></a>), <code class="func">InstallFlushableValue</code> (<a href="chap79_mj.html#X7A23F09886E936D2"><span class="RefLink">79.18-9</span></a>) or <code class="func">InstallFlushableValueFromFunction</code> (<a href="chap79_mj.html#X7A23F09886E936D2"><span class="RefLink">79.18-9</span></a>), in the implementation part (again, see <a href="chap79_mj.html#X7837CA9A83D93B38"><span class="RefLink">79.19</span></a>).</p>
+<p>For global variables that are <em>not</em> functions, instead of using <code class="func">BindGlobal</code> (<a href="chap4_mj.html#X7D39D3E17CF49F5B"><span class="RefLink">4.9-8</span></a>) one can also declare the variable with <code class="func">DeclareGlobalVariable</code> which creates a new global variable named by the string <var class="Arg">name</var>. If the second argument <var class="Arg">description</var> is entered then this must be a string that describes the meaning of the global variable. <code class="func">DeclareGlobalVariable</code> shall be used in the declaration part of the respective package (see <a href="chap79_mj.html#X7837CA9A83D93B38"><span class="RefLink">79.19</span></a>), values can then be assigned to the new variable with <code class="func">InstallValue</code> (<a href="chap79_mj.html#X7A23F09886E936D2"><span class="RefLink">79.18-16</span></a>), <code class="func">InstallFlushableValue</code> (<a href="chap79_mj.html#X7A23F09886E936D2"><span class="RefLink">79.18-16</span></a>) or <code class="func">InstallFlushableValueFromFunction</code> (<a href="chap79_mj.html#X7A23F09886E936D2"><span class="RefLink">79.18-16</span></a>), in the implementation part (again, see <a href="chap79_mj.html#X7837CA9A83D93B38"><span class="RefLink">79.19</span></a>).</p>
 
 <p><a id="X7A23F09886E936D2" name="X7A23F09886E936D2"></a></p>
 
-<h5>79.18-9 InstallValue</h5>
+<h5>79.18-16 InstallValue</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallValue</code>( <var class="Arg">gvar</var>, <var class="Arg">value</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallFlushableValue</code>( <var class="Arg">gvar</var>, <var class="Arg">value</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallFlushableValueFromFunction</code>( <var class="Arg">gvar</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p><code class="func">InstallValue</code> assigns the value <var class="Arg">value</var> to the global variable <var class="Arg">gvar</var>. <code class="func">InstallFlushableValue</code> does the same but additionally provides that each call of <code class="func">FlushCaches</code> (<a href="chap79_mj.html#X87A4316C818B3DE3"><span class="RefLink">79.18-11</span></a>) will assign a structural copy of <var class="Arg">value</var> to <var class="Arg">gvar</var>. <code class="func">InstallFlushableValueFromFunction</code> instead assigns the result of <var class="Arg">func</var> to <var class="Arg">gvar</var> (<var class="Arg">func</var> is re-evaluated for each invocation of <code class="func">FlushCaches</code> (<a href="chap79_mj.html#X87A4316C818B3DE3"><span class="RefLink">79.18-11</span></a>)</p>
+<p><code class="func">InstallValue</code> assigns the value <var class="Arg">value</var> to the global variable <var class="Arg">gvar</var>. <code class="func">InstallFlushableValue</code> does the same but additionally provides that each call of <code class="func">FlushCaches</code> (<a href="chap79_mj.html#X87A4316C818B3DE3"><span class="RefLink">79.18-18</span></a>) will assign a structural copy of <var class="Arg">value</var> to <var class="Arg">gvar</var>. <code class="func">InstallFlushableValueFromFunction</code> instead assigns the result of <var class="Arg">func</var> to <var class="Arg">gvar</var> (<var class="Arg">func</var> is re-evaluated for each invocation of <code class="func">FlushCaches</code> (<a href="chap79_mj.html#X87A4316C818B3DE3"><span class="RefLink">79.18-18</span></a>)</p>
 
 <p><code class="func">InstallValue</code> does <em>not</em> work if <var class="Arg">value</var> is an "immediate object", i.e., an internally represented small integer or finite field element. It also fails for booleans. Furthermore, <code class="func">InstallFlushableValue</code> works only if <var class="Arg">value</var> is a list or a record. (Note that <code class="func">InstallFlushableValue</code> makes sense only for <em>mutable</em> global variables.)</p>
 
 <p><a id="X851654DA87616207" name="X851654DA87616207"></a></p>
 
-<h5>79.18-10 DeclareSynonym</h5>
+<h5>79.18-17 DeclareSynonym</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareSynonym</code>( <var class="Arg">name</var>, <var class="Arg">value</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DeclareSynonymAttr</code>( <var class="Arg">name</var>, <var class="Arg">value</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
@@ -967,12 +1083,19 @@ DeclareSynonymAttr( "GeneratorsOfField", GeneratorsOfDivisionRing );
 
 <p><a id="X87A4316C818B3DE3" name="X87A4316C818B3DE3"></a></p>
 
-<h5>79.18-11 FlushCaches</h5>
+<h5>79.18-18 FlushCaches</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FlushCaches</code>(  )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p><code class="func">FlushCaches</code> resets the value of each global variable that has been declared with <code class="func">DeclareGlobalVariable</code> (<a href="chap79_mj.html#X8324B5DE8300E0F2"><span class="RefLink">79.18-8</span></a>) and for which the initial value has been set with <code class="func">InstallFlushableValue</code> (<a href="chap79_mj.html#X7A23F09886E936D2"><span class="RefLink">79.18-9</span></a>) or <code class="func">InstallFlushableValueFromFunction</code> (<a href="chap79_mj.html#X7A23F09886E936D2"><span class="RefLink">79.18-9</span></a>) to this initial value.</p>
+<p><code class="func">FlushCaches</code> resets the value of each global variable that has been declared with <code class="func">DeclareGlobalVariable</code> (<a href="chap79_mj.html#X8324B5DE8300E0F2"><span class="RefLink">79.18-15</span></a>) and for which the initial value has been set with <code class="func">InstallFlushableValue</code> (<a href="chap79_mj.html#X7A23F09886E936D2"><span class="RefLink">79.18-16</span></a>) or <code class="func">InstallFlushableValueFromFunction</code> (<a href="chap79_mj.html#X7A23F09886E936D2"><span class="RefLink">79.18-16</span></a>) to this initial value.</p>
 
 <p><code class="func">FlushCaches</code> should be used only for debugging purposes, since the involved global variables include for example lists that store finite fields and cyclotomic fields used in the current <strong class="pkg">GAP</strong> session, in order to avoid that these fields are constructed anew in each call to <code class="func">GF</code> (<a href="chap59_mj.html#X8592DBB086A8A9BE"><span class="RefLink">59.3-2</span></a>) and <code class="func">CF</code> (<a href="chap60_mj.html#X80D21D80850EFA4B"><span class="RefLink">60.1-1</span></a>).</p>
+
+<p><a id="X7F6645D87DD26CF0" name="X7F6645D87DD26CF0"></a></p>
+
+<h5>79.18-19 FilterByName</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FilterByName</code>( <var class="Arg">name</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>finds the filter with name <var class="Arg">name</var> in the global FILTERS list. This is useful to find filters that were created but not bound to a global variable.</p>
 
 <p><a id="X7837CA9A83D93B38" name="X7837CA9A83D93B38"></a></p>
 
@@ -980,33 +1103,33 @@ DeclareSynonymAttr( "GeneratorsOfField", GeneratorsOfDivisionRing );
 
 <p>Each package of <strong class="pkg">GAP</strong> code consists of two parts, the <em>declaration part</em> that defines the new categories and operations for the objects the package deals with, and the <em>implementation part</em> where the corresponding methods are installed. The declaration part should be representation independent, representation dependent information should be dealt with in the implementation part.</p>
 
-<p><strong class="pkg">GAP</strong> functions that are not operations and that are intended to be called by users should be notified to <strong class="pkg">GAP</strong> in the declaration part via <code class="func">DeclareGlobalFunction</code> (<a href="chap79_mj.html#X834A8CC587A609BE"><span class="RefLink">79.18-7</span></a>). Values for these functions can be installed in the implementation part via <code class="func">InstallGlobalFunction</code> (<a href="chap79_mj.html#X834A8CC587A609BE"><span class="RefLink">79.18-7</span></a>).</p>
+<p><strong class="pkg">GAP</strong> functions that are not operations and that are intended to be called by users should be notified to <strong class="pkg">GAP</strong> in the declaration part via <code class="func">DeclareGlobalFunction</code> (<a href="chap79_mj.html#X834A8CC587A609BE"><span class="RefLink">79.18-14</span></a>). Values for these functions can be installed in the implementation part via <code class="func">InstallGlobalFunction</code> (<a href="chap79_mj.html#X834A8CC587A609BE"><span class="RefLink">79.18-14</span></a>).</p>
 
 <p>Calls to the following functions belong to the declaration part.</p>
 
-<p><code class="func">DeclareAttribute</code> (<a href="chap79_mj.html#X7A00FC8A7A677A56"><span class="RefLink">79.18-3</span></a>),</p>
+<p><code class="func">DeclareAttribute</code> (<a href="chap79_mj.html#X7A00FC8A7A677A56"><span class="RefLink">79.18-9</span></a>),</p>
 
 <p><code class="func">DeclareCategory</code> (<a href="chap79_mj.html#X879DE2A17A6C6E92"><span class="RefLink">79.18-1</span></a>),</p>
 
-<p><code class="func">DeclareFilter</code> (<a href="chap79_mj.html#X846EA18A7D36626C"><span class="RefLink">79.18-5</span></a>),</p>
+<p><code class="func">DeclareFilter</code> (<a href="chap79_mj.html#X846EA18A7D36626C"><span class="RefLink">79.18-11</span></a>),</p>
 
-<p><code class="func">DeclareOperation</code> (<a href="chap79_mj.html#X843F48137B899BC3"><span class="RefLink">79.18-6</span></a>),</p>
+<p><code class="func">DeclareOperation</code> (<a href="chap79_mj.html#X843F48137B899BC3"><span class="RefLink">79.18-12</span></a>),</p>
 
-<p><code class="func">DeclareGlobalFunction</code> (<a href="chap79_mj.html#X834A8CC587A609BE"><span class="RefLink">79.18-7</span></a>),</p>
+<p><code class="func">DeclareGlobalFunction</code> (<a href="chap79_mj.html#X834A8CC587A609BE"><span class="RefLink">79.18-14</span></a>),</p>
 
-<p><code class="func">DeclareSynonym</code> (<a href="chap79_mj.html#X851654DA87616207"><span class="RefLink">79.18-10</span></a>),</p>
+<p><code class="func">DeclareSynonym</code> (<a href="chap79_mj.html#X851654DA87616207"><span class="RefLink">79.18-17</span></a>),</p>
 
-<p><code class="func">DeclareSynonymAttr</code> (<a href="chap79_mj.html#X851654DA87616207"><span class="RefLink">79.18-10</span></a>),</p>
+<p><code class="func">DeclareSynonymAttr</code> (<a href="chap79_mj.html#X851654DA87616207"><span class="RefLink">79.18-17</span></a>),</p>
 
-<p><code class="func">DeclareProperty</code> (<a href="chap79_mj.html#X7F4602F082682A04"><span class="RefLink">79.18-4</span></a>),</p>
+<p><code class="func">DeclareProperty</code> (<a href="chap79_mj.html#X7F4602F082682A04"><span class="RefLink">79.18-10</span></a>),</p>
 
 <p><code class="func">InstallTrueMethod</code> (<a href="chap78_mj.html#X860B8B707995CFE3"><span class="RefLink">78.7-1</span></a>).</p>
 
 <p>Calls to the following functions belong to the implementation part.</p>
 
-<p><code class="func">DeclareRepresentation</code> (<a href="chap79_mj.html#X7C81FB2682AE54CD"><span class="RefLink">79.18-2</span></a>),</p>
+<p><code class="func">DeclareRepresentation</code> (<a href="chap79_mj.html#X7C81FB2682AE54CD"><span class="RefLink">79.18-8</span></a>),</p>
 
-<p><code class="func">InstallGlobalFunction</code> (<a href="chap79_mj.html#X834A8CC587A609BE"><span class="RefLink">79.18-7</span></a>),</p>
+<p><code class="func">InstallGlobalFunction</code> (<a href="chap79_mj.html#X834A8CC587A609BE"><span class="RefLink">79.18-14</span></a>),</p>
 
 <p><code class="func">InstallMethod</code> (<a href="chap78_mj.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>),</p>
 
@@ -1020,7 +1143,7 @@ DeclareSynonymAttr( "GeneratorsOfField", GeneratorsOfDivisionRing );
 
 <p><code class="func">Objectify</code> (<a href="chap79_mj.html#X7CB5C12E813F512B"><span class="RefLink">79.9-1</span></a>).</p>
 
-<p>Whenever both a <code class="code">New</code><var class="Arg">Something</var> and a <code class="code">Declare</code><var class="Arg">Something</var> variant of a function exist (see <a href="chap79_mj.html#X87E29BA57C8208A4"><span class="RefLink">79.18</span></a>), the use of <code class="code">Declare</code><var class="Arg">Something</var> is recommended because this protects the variables in question from being overwritten. Note that there are <em>no</em> functions <code class="code">DeclareFamily</code> and <code class="code">DeclareType</code> since families and types are created dynamically, hence usually no global variables are associated to them. Further note that <code class="func">DeclareRepresentation</code> (<a href="chap79_mj.html#X7C81FB2682AE54CD"><span class="RefLink">79.18-2</span></a>) is regarded as belonging to the implementation part, because usually representations of objects are accessed only in very few places, and all code that involves a particular representation is contained in one file; additionally, representations of objects are often not interesting for the user, so there is no need to provide a user interface or documentation about representations.</p>
+<p>Whenever both a <code class="code">New</code><var class="Arg">Something</var> and a <code class="code">Declare</code><var class="Arg">Something</var> variant of a function exist (see <a href="chap79_mj.html#X87E29BA57C8208A4"><span class="RefLink">79.18</span></a>), the use of <code class="code">Declare</code><var class="Arg">Something</var> is recommended because this protects the variables in question from being overwritten. Note that there are <em>no</em> functions <code class="code">DeclareFamily</code> and <code class="code">DeclareType</code> since families and types are created dynamically, hence usually no global variables are associated to them. Further note that <code class="func">DeclareRepresentation</code> (<a href="chap79_mj.html#X7C81FB2682AE54CD"><span class="RefLink">79.18-8</span></a>) is regarded as belonging to the implementation part, because usually representations of objects are accessed only in very few places, and all code that involves a particular representation is contained in one file; additionally, representations of objects are often not interesting for the user, so there is no need to provide a user interface or documentation about representations.</p>
 
 <p>It should be emphasized that "declaration" means only an explicit notification of mathematical or technical terms or of concepts to <strong class="pkg">GAP</strong>. For example, declaring a category or property with name <code class="code">IsInteresting</code> does of course not tell <strong class="pkg">GAP</strong> what this shall mean, and it is necessary to implement possibilities to create objects that know already that they lie in <code class="code">IsInteresting</code> in the case that it is a category, or to install implications or methods in order to compute for a given object whether <code class="code">IsInteresting</code> is <code class="keyw">true</code> or <code class="keyw">false</code> for it in the case that <code class="code">IsInteresting</code> is a property.</p>
 

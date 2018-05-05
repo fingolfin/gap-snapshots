@@ -10,38 +10,19 @@
 **
 **  This file contains the functions for computing with finite presentations.
 */
-#include        "system.h"              /* system dependent part           */
-#include        "code.h"
-#include        "stats.h"               /* for TakeInterrupt */
 
+#include <src/tietze.h>
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
-
-#include        "gap.h"                 /* error handling, initialisation  */
-#include        "calls.h"               /* generic call mechanism          */
-#include        "gvars.h"               /* global variables                */
-
-#include        "bool.h"                /* booleans                        */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "plist.h"               /* plain lists                     */
-#include        "string.h"              /* strings                         */
-
-#include        "tietze.h"              /* tietze helper functions         */
-
-#include	"code.h"		/* coder                           */
-#include	"thread.h"		/* threads			   */
-#include	"tls.h"			/* thread-local storage		   */
+#include <src/bool.h>
+#include <src/gap.h>
+#include <src/lists.h>
+#include <src/plist.h>
+#include <src/stats.h>
+#include <src/stringobj.h>
 
 
 /****************************************************************************
 **
-
 *V  TZ_SOMETHING  . . . . . . defining some constants for the Tietze routines
 */
 #define TZ_NUMGENS               1
@@ -58,7 +39,6 @@
 
 /****************************************************************************
 **
-
 *F  CheckTietzeStack( <tietze>, <ptTietze> )
 */
 void CheckTietzeStack (
@@ -195,7 +175,6 @@ void CheckTietzeRelLengths (
 
 /****************************************************************************
 **
-
 *F  FuncTzSortC( <self>, <stack> )  . . . . . . . sort the relators by length
 */
 Obj FuncTzSortC (
@@ -1538,7 +1517,7 @@ Obj FuncTzSearchC (
 
 /* rewriting using tz form relators */
 
-Obj  FuncReduceLetterRepWordsRewSys (
+Obj  FuncREDUCE_LETREP_WORDS_REW_SYS (
  Obj  self,
  Obj  tzrules,
  Obj  a_w )
@@ -1693,49 +1672,30 @@ Obj  FuncReduceLetterRepWordsRewSys (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    { "TzSortC", 1, "tietze",
-      FuncTzSortC, "src/tietze.c:TzSortC" },
-
-    { "TzRenumberGens", 1, "tietze",
-      FuncTzRenumberGens, "src/tietze.c:TzRenumberGens" },
-    
-    { "TzReplaceGens", 1, "tietze",
-      FuncTzReplaceGens, "src/tietze.c:TzReplaceGens" },
-
-    { "TzSubstituteGen", 3, "tietze, gennum, word",
-      FuncTzSubstituteGen, "src/tietze.c:TzSubstituteGen" },
-
-    { "TzOccurrences", -1, "args",
-      FuncTzOccurrences, "src/tietze.c:TzOccurrences" },
-
-    { "TzOccurrencesPairs", -1, "args",
-      FuncTzOccurrencesPairs, "src/tietze.c:TzOccurrencesPairs" },
-
-    { "TzSearchC", -1, "args",
-      FuncTzSearchC, "src/tietze.c:TzSearchC" },
-
-    { "REDUCE_LETREP_WORDS_REW_SYS", 2, "tzwords, word",
-  FuncReduceLetterRepWordsRewSys,"src/tietze.c:REDUCE_LETREP_WORDS_REW_SYS" },
-
-    { 0 }
+    GVAR_FUNC(TzSortC, 1, "tietze"),
+    GVAR_FUNC(TzRenumberGens, 1, "tietze"),
+    GVAR_FUNC(TzReplaceGens, 1, "tietze"),
+    GVAR_FUNC(TzSubstituteGen, 3, "tietze, gennum, word"),
+    GVAR_FUNC(TzOccurrences, -1, "args"),
+    GVAR_FUNC(TzOccurrencesPairs, -1, "args"),
+    GVAR_FUNC(TzSearchC, -1, "args"),
+    GVAR_FUNC(REDUCE_LETREP_WORDS_REW_SYS, 2, "tzwords, word"),
+    { 0, 0, 0, 0, 0 }
 
 };
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
@@ -1769,28 +1729,15 @@ static Int InitLibrary (
 *F  InitInfoTietze()  . . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "tietze",                           /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "tietze",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoTietze ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  tietze.c  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

@@ -5,8 +5,6 @@
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
-##  To be listed in testinstall.g
-##
 gap> START_TEST("rwspcgrp.tst");
 
 #############################################################################
@@ -825,7 +823,7 @@ gap> Print(ExtRepOfObj( w / l[1] ),"\n");
   2, 56, 30, 57, 1, 58, 1, 59, 4, 60, 4, 61, 4 ]
 
 #############################################################################
-gap> STOP_TEST( "rwspcgrp.tst", 3970000);
+gap> STOP_TEST( "rwspcgrp.tst", 1);
 
 #############################################################################
 ##

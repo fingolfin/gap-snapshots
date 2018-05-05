@@ -64,15 +64,15 @@ BindGlobal("InstallMonomialOrdering",function(ord,ordfun,idxord,
 	  # for each variable give its index position.
 	  return idxord(a,b,List([1..Maximum(idx)],i->Position(idx,i)));
 	end);
-      neword!.idxarrangement:=idx;
-      neword!.type:=type;
+      neword!.idxarrangement:=Immutable(idx);
+      neword!.type:=Immutable(type);
       SetOccuringVariableIndices(neword,ov);
       return neword;
     else
       nam:=Concatenation(ordname,"()");
       neword:=MakeMonomialOrdering(nam,ordfun);
-      neword!.idxarrangement:=idx;
-      neword!.type:=type;
+      neword!.idxarrangement:=Immutable(idx);
+      neword!.type:=Immutable(type);
       SetOccuringVariableIndices(neword,ov);
       return neword;
     fi;
@@ -226,7 +226,7 @@ InstallMonomialOrdering(MonomialLexOrdering,
       min:=am; # will increase until no variable in a left
     until false;
   end,
-  "lp");
+  MakeImmutable("lp"));
 
 #############################################################################
 ##
@@ -371,7 +371,7 @@ InstallMonomialOrdering(MonomialGrlexOrdering,
       min:=am; # will increase until no variable in a left
     until false;
   end,
-  "Dp");
+  MakeImmutable("Dp"));
 
 #############################################################################
 ##
@@ -432,7 +432,7 @@ InstallMonomialOrdering(MonomialGrevlexOrdering,
   function(a,b,idx)
     Error("indexed grevlex not yet implemented");
   end,
-  "dp");
+  MakeImmutable("dp"));
 
 #############################################################################
 ##
@@ -966,7 +966,7 @@ local li, lj, lcm, a, b, k;
   return false;
 end);
 
-BindGlobal("GAPGBASIS",rec(
+BindGlobal("GAPGBASIS",MakeImmutable(rec(
   name:="naive GAP version of Buchberger's algorithm",
   GroebnerBasis:=function(elms,order)
   local orderext, bas, baslte, fam, t, B, i, j, s;
@@ -978,14 +978,17 @@ BindGlobal("GAPGBASIS",rec(
     t:=Length(bas);
     B:=Concatenation(List([1..t],i->List([1..i-1],j->[j,i])));
     while Length(B)>0 do
-      i:=B[1]; # take one
-      j:=i[1];
-      i:=i[2];
+      j:=B[1][1];
+      i:=B[1][2];
+      # remove first entry of B
+      Remove(B, 1);
 
-      if # are the leading monomials coprime?
-	Length(Intersection(baslte[i]{[1,3..Length(baslte[i])-1]},
-	                    baslte[j]{[1,3..Length(baslte[j])-1]}))<>0
-        and not SyzygyCriterion(baslte,i,j,t,B) then
+      if Length(Intersection(baslte[i]{[1,3..Length(baslte[i])-1]},
+	                    baslte[j]{[1,3..Length(baslte[j])-1]}))=0 then
+	Info(InfoGroebner,2,"Pair (",i,",",j,") avoided by product criterion");
+      elif SyzygyCriterion(baslte,i,j,t,B) then
+	Info(InfoGroebner,2,"Pair (",i,",",j,") avoided by chain criterion");
+      else
 	s:=SPolynomial(bas[i],bas[j],order);
 	if InfoLevel(InfoGroebner)<3 then
 	  Info(InfoGroebner,2,"Spol(",i,",",j,")");
@@ -1000,23 +1003,16 @@ BindGlobal("GAPGBASIS",rec(
 	  Add(baslte,s[LeadingMonomialPosExtRep(fam,s,orderext)]);
 	  t:=t+1;
 	  # add new pairs
-	  for i in [1..t] do
+	  for i in [1..t-1] do
 	    Add(B,[i,t]);
 	  od;
 	  Info(InfoGroebner,1,"|bas|=",t,", ",Length(B)," pairs left");
 	fi;
-      else
-	Info(InfoGroebner,2,"Pair (",i,",",j,") avoided");
       fi;
-      # remove first entry of B
-      for j in [2..Length(B)] do
-	B[j-1]:=B[j];
-      od;
-      Unbind(B[Length(B)]);
     od;
     return bas;
   end)
-  );
+  ));
 
 #############################################################################
 ##
@@ -1365,7 +1361,9 @@ local ord,b,ind,num,c,corners,i,j,a,rem,bound,mon,n,monb,dim,sc,k,l,char,hom;
     if j<>fail then
       Add(l,GeneratorsOfLeftOperatorRing(a)[j]);
     else
-      Add(l,Zero(a));
+      rem:=PolynomialReducedRemainder(i,b,ord);
+      rem:=Coefficients(monb,rem);
+      Add(l,GeneratorsOfLeftOperatorRing(a)*rem);
     fi;
   od;
 

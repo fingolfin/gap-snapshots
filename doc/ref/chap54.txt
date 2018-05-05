@@ -100,7 +100,7 @@
   [10Xf[110X;  see  [2XLeftOne[102X  ([14X54.3-21[114X).  The  [13Xone[113X  of a partial permutation is just the
   identity on the union of its domain and its image, and the [13Xzero[113X of a partial
   permutation  is  just  the  empty partial permutation; see [2XOne[102X ([14X54.3-22[114X) and
-  [2XZero[102X ([14X54.3-23[114X).[133X
+  [2XMultiplicativeZero[102X ([14X54.3-23[114X).[133X
   
   [33X[0;0YIf  [10XS[110X  is  an arbitrary inverse semigroup, the [13Xnatural partial order[113X on [10XS[110X is
   defined  as follows: for elements [10Xx[110X and [10Xy[110X of [10XS[110X we say [10Xx[110X[22X≤[122X[10Xy[110X if there exists an
@@ -499,7 +499,7 @@
     [4X[25Xgap>[125X [27XS := SymmetricInverseSemigroup(5);                                [127X[104X
     [4X[28X<symmetric inverse monoid of degree 5>[128X[104X
     [4X[25Xgap>[125X [27XImageOfPartialPermCollection(GeneratorsOfInverseSemigroup(S));[127X[104X
-    [4X[28X[ 1, 2, 3, 4, 5 ][128X[104X
+    [4X[28X[ 1 .. 5 ][128X[104X
   [4X[32X[104X
   
   [1X54.3-6 ImageListOfPartialPerm[101X
@@ -863,18 +863,18 @@
     [4X[28X<identity partial perm on [ 1, 2, 3, 4, 5, 6, 7, 9, 10 ]>[128X[104X
   [4X[32X[104X
   
-  [1X54.3-23 Zero[101X
+  [1X54.3-23 MultiplicativeZero[101X
   
-  [33X[1;0Y[29X[2XZero[102X( [3Xf[103X ) [32X method[133X
+  [33X[1;0Y[29X[2XMultiplicativeZero[102X( [3Xf[103X ) [32X method[133X
   [6XReturns:[106X  [33X[0;10YThe empty partial permutation.[133X
   
-  [33X[0;0YAs  described  in [2XZeroImmutable[102X ([14XReference: ZeroImmutable[114X), [10XZero[110X returns the
-  multiplicative zero element of the partial permutation [3Xf[103X, which is the empty
-  partial permutation.[133X
+  [33X[0;0YAs  described  in  [2XMultiplicativeZero[102X  ([14XReference: MultiplicativeZero[114X), [10XZero[110X
+  returns  the multiplicative zero element of the partial permutation [3Xf[103X, which
+  is the empty partial permutation.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xf:=PartialPerm([ 1, 2, 3, 4, 5, 7, 10 ], [ 3, 7, 9, 6, 1, 10, 2 ]);;[127X[104X
-    [4X[25Xgap>[125X [27XZero(f);[127X[104X
+    [4X[25Xgap>[125X [27Xf := PartialPerm([ 1, 2, 3, 4, 5, 7, 10 ], [ 3, 7, 9, 6, 1, 10, 2 ]);;[127X[104X
+    [4X[25Xgap>[125X [27XMultiplicativeZero(f);[127X[104X
     [4X[28X<empty partial perm>[128X[104X
   [4X[32X[104X
   
@@ -938,7 +938,6 @@
   
   [33X[1;0Y[29X[2XAsPartialPerm[102X( [3Xf[103X, [3Xset[103X ) [32X operation[133X
   [33X[1;0Y[29X[2XAsPartialPerm[102X( [3Xf[103X, [3Xn[103X ) [32X method[133X
-  [33X[1;0Y[29X[2XAsPartialPerm[102X( [3Xf[103X ) [32X method[133X
   [6XReturns:[106X  [33X[0;10YA partial permutation or [9Xfail[109X.[133X
   
   [33X[0;0YA  transformation [3Xf[103X defines a partial permutation when it is restricted to a
@@ -960,28 +959,17 @@
         [10X[1..[3Xn[103X[10X][110X  when  [3XA[103X  is  a  positive  integer  and  this set satisfies the
         conditions given above.[133X
   
-  [8Xfor a transformation[108X
-        [33X[0;6YLet  [10Xn[110X  denote the degree of [3Xf[103X. If [10Xn^[3Xf[103X[10X=n[110X and [3Xf[103X is injective on those [10Xi[110X
-        such  that  [10Xi^[3Xf[103X[10X<>n[110X, then [10XAsPartialPerm[110X returns the partial permutation
-        obtained by restricting [3Xf[103X to those [10Xi[110X such that [10Xi^[3Xf[103X[10X<>n[110X.[133X
-  
-  [33X[0;0Y[10XAsPartialPerm[110X  returns  [9Xfail[109X  if  the  arguments  do  not describe a partial
-  permutation.[133X
-  
   [33X[0;0YThe   operation   [2XPartialPermOp[102X   ([14X54.2-2[114X)  can  also  be  used  to  convert
   transformations into partial permutations.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xf:=Transformation( [ 8, 3, 5, 9, 6, 2, 9, 7, 9 ] );;[127X[104X
-    [4X[25Xgap>[125X [27XAsPartialPerm(f);[127X[104X
-    [4X[28X[1,8,7](2,3,5,6)[128X[104X
+    [4X[25Xgap>[125X [27XAsPartialPerm(f, [1, 2, 3, 5, 8]);[127X[104X
+    [4X[28X[1,8,7][2,3,5,6][128X[104X
     [4X[25Xgap>[125X [27XAsPartialPerm(f, 3);[127X[104X
     [4X[28X[1,8][2,3,5][128X[104X
     [4X[25Xgap>[125X [27XAsPartialPerm(f, [ 2 .. 4 ] );[127X[104X
     [4X[28X[2,3,5][4,9][128X[104X
-    [4X[25Xgap>[125X [27Xf:=Transformation( [ 2, 10, 2, 4, 4, 7, 6, 9, 10, 1 ] );;[127X[104X
-    [4X[25Xgap>[125X [27XAsPartialPerm(f);[127X[104X
-    [4X[28Xfail[128X[104X
   [4X[32X[104X
   
   
@@ -1474,17 +1462,17 @@
     [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
-  [1X54.7-6 IsomorphismPartialPermMonoid[101X
+  [1X54.7-6 IsomorphismPartialPermSemigroup[101X
   
-  [33X[1;0Y[29X[2XIsomorphismPartialPermMonoid[102X( [3XS[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XIsomorphismPartialPermSemigroup[102X( [3XS[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIsomorphismPartialPermMonoid[102X( [3XS[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YAn isomorphism.[133X
   
   [33X[0;0Y[10XIsomorphismPartialPermSemigroup([3XS[103X[10X)[110X  returns  an isomorphism from the inverse
-  semigroup or group [3XS[103X to an inverse semigroup of partial permutations.[133X
+  semigroup [3XS[103X to an inverse semigroup of partial permutations.[133X
   
   [33X[0;0Y[10XIsomorphismPartialPermMonoid([3XS[103X[10X)[110X  returns  an  isomorphism  from  the inverse
-  monoid or group [3XS[103X to an inverse monoid of partial permutations.[133X
+  semigroup [3XS[103X to an inverse monoid of partial permutations, if possible.[133X
   
   [33X[0;0YWe  only describe [10XIsomorphismPartialPermMonoid[110X, the corresponding statements
   for [10XIsomorphismPartialPermSemigroup[110X also hold.[133X
@@ -1502,10 +1490,10 @@
         inverse of this isomorphism is obtained using [2XAsPermutation[102X ([14X42.5-5[114X).[133X
   
   [8XTransformation semigroups[108X
-        [33X[0;6YIf   [3XS[103X   is  a  transformation  semigroup  satisfying  [2XIsInverseMonoid[102X
-        ([14X51.4-8[114X),  then  [10XIsomorphismPartialPermMonoid[110X  returns  an isomorphism
-        from  [3XS[103X to an inverse monoid of partial permutations on a subset of [10X[1
-        .. DegreeOfTransformationSemigroup([3XS[103X[10X)][110X.[133X
+        [33X[0;6YIf  [3XS[103X  is  a transformation semigroup which is mathematically a monoid
+        but  which  does  not  necessarily  belong  to  the  category [2XIsMonoid[102X
+        ([14X51.2-1[114X),  then  [10XIsomorphismPartialPermMonoid[110X  returns  an isomorphism
+        from [3XS[103X to an inverse monoid of partial permutations.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XS := InverseSemigroup( [127X[104X
@@ -1513,10 +1501,13 @@
     [4X[25X>[125X [27XPartialPerm( [ 1, 2, 4, 5 ], [ 3, 1, 4, 2 ] ) );;[127X[104X
     [4X[25Xgap>[125X [27XIsMonoid(S); [127X[104X
     [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XSize(S);[127X[104X
+    [4X[28X508[128X[104X
     [4X[25Xgap>[125X [27Xiso := IsomorphismPartialPermMonoid(S);[127X[104X
-    [4X[28XMappingByFunction( <inverse partial perm semigroup of rank 5 with 2 [128X[104X
-    [4X[28X generators>, <inverse partial perm monoid of rank 5 with 2 [128X[104X
-    [4X[28X generators>, function( object ) ... end, function( object ) ... end )[128X[104X
+    [4X[28XMappingByFunction( <inverse partial perm semigroup of size 508, [128X[104X
+    [4X[28X rank 5 with 2 generators>, <inverse partial perm monoid of size 508, [128X[104X
+    [4X[28X rank 5 with 2 generators>[128X[104X
+    [4X[28X , function( object ) ... end, function( object ) ... end )[128X[104X
     [4X[25Xgap>[125X [27XSize(S);[127X[104X
     [4X[28X508[128X[104X
     [4X[25Xgap>[125X [27XSize(Range(iso));[127X[104X
@@ -1525,16 +1516,16 @@
     [4X[25Xgap>[125X [27XIsomorphismPartialPermSemigroup(G);[127X[104X
     [4X[28XMappingByFunction( Group([ (1,2)(3,8)(4,6)(5,7), (1,3,4,7)[128X[104X
     [4X[28X(2,5,6,8), (1,4)(2,6)(3,7)[128X[104X
-    [4X[28X(5,8) ]), <inverse partial perm semigroup of rank 8 with 3 generators>[128X[104X
-    [4X[28X , function( p ) ... end, function( f ) ... end )[128X[104X
+    [4X[28X(5,8) ]), <partial perm group of rank 8 with 3 generators>[128X[104X
+    [4X[28X, function( p ) ... end, <Attribute "AsPermutation"> )[128X[104X
     [4X[25Xgap>[125X [27XS := Semigroup(Transformation( [ 2, 5, 1, 7, 3, 7, 7 ] ), [127X[104X
     [4X[25X>[125X [27XTransformation( [ 3, 6, 5, 7, 2, 1, 7 ] ) );;[127X[104X
     [4X[25Xgap>[125X [27Xiso := IsomorphismPartialPermMonoid(S);;[127X[104X
     [4X[25Xgap>[125X [27XMultiplicativeNeutralElement(S) ^ iso;[127X[104X
-    [4X[28X<identity partial perm on [ 1, 2, 3, 5, 6, 7 ]>[128X[104X
+    [4X[28X<identity partial perm on [ 1, 2, 3, 4, 5, 6 ]>[128X[104X
     [4X[25Xgap>[125X [27XOne(Range(iso));[127X[104X
-    [4X[28X<identity partial perm on [ 1, 2, 3, 5, 6, 7 ]>[128X[104X
+    [4X[28X<identity partial perm on [ 1, 2, 3, 4, 5, 6 ]>[128X[104X
     [4X[25Xgap>[125X [27XMovedPoints(Range(iso));[127X[104X
-    [4X[28X[ 1, 2, 3, 5, 6 ][128X[104X
+    [4X[28X[ 1 .. 5 ][128X[104X
   [4X[32X[104X
   

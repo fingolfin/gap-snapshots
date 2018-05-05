@@ -135,7 +135,7 @@
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">1 * ;</span>
-Syntax error: expression expected
+Syntax error: Expression expected
 1 * ;
     ^
 </pre></div>
@@ -168,7 +168,7 @@ Syntax error: expression expected
 7
 </pre></div>
 
-<p>Also in each statement the time spent by the last statement, whether it produced a value or not, is available in the variable <code class="func">time</code> (<a href="chap7_mj.html#X7C0F91F982189624"><span class="RefLink">7.6-3</span></a>). This is an integer that holds the number of milliseconds.</p>
+<p>Also in each statement the time spent by the last statement, whether it produced a value or not, is available in the variable <code class="func">time</code> (<a href="chap7_mj.html#X7C0F91F982189624"><span class="RefLink">7.6-4</span></a>). This is an integer that holds the number of milliseconds. Similarly the amount of memory allocated during that statement (in bytes) is stored in the variable <code class="func">memory_allocated</code> (<a href="chap7_mj.html#X8156D7208591460F"><span class="RefLink">7.7-2</span></a>).</p>
 
 <p><a id="X866092F281910B74" name="X866092F281910B74"></a></p>
 
@@ -707,7 +707,7 @@ you can 'return;' to continue
 <h5>6.6-3 ErrorCount</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ErrorCount</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p><code class="func">ErrorCount</code> returns a count of the number of errors (including user interruptions) which have occurred in the <strong class="pkg">GAP</strong> session so far. This count is reduced modulo <span class="SimpleMath">\(2^{28}\)</span> on <span class="SimpleMath">\(32\)</span> bit systems, <span class="SimpleMath">\(2^{60}\)</span> on <span class="SimpleMath">\(64\)</span> bit systems. The count is incremented by each error, even if <strong class="pkg">GAP</strong> was started with the <code class="code">-T</code> option to disable the break loop.</p>
+<p><code class="func">ErrorCount</code> returns a count of the number of errors (including user interruptions) which have occurred in the <strong class="pkg">GAP</strong> session so far. The count is incremented by each error, even if <strong class="pkg">GAP</strong> was started with the <code class="code">-T</code> option to disable the break loop.</p>
 
 <p><a id="X83704B1080FD9B40" name="X83704B1080FD9B40"></a></p>
 
@@ -1002,7 +1002,7 @@ $endif
 
 <p>The second command is the converse, it reads the lines from file <var class="Arg">fname</var> and <em>prepends</em> them to the current command line history.</p>
 
-<p>By default an arbitrary number of input lines is stored in the command line history. For very long <strong class="pkg">GAP</strong> sessions or if <code class="func">SaveCommandLineHistory</code> and <code class="func">ReadCommandLineHistory</code> are used repeatedly it can be sensible to restrict the number of saved lines via <code class="code">SetUserPreference("HistoryMaxLines", num);</code> to a non negative number <code class="code">num</code> (the default is <code class="keyw">infinity</code>). An automatic storing and restoring of the command line history can be configured via <code class="code">SetUserPreference("SaveAndRestoreHistory", true);</code>.</p>
+<p>By default, the command line history stores up to 1000 input lines. command line history. This number may be restricted or enlarged via via <code class="code">SetUserPreference("HistoryMaxLines", num);</code> which may be set to a non negative number <code class="code">num</code> to store up to <code class="code">num</code> input lines or to <code class="keyw">infinity</code> to store arbitrarily many lines. An automatic storing and restoring of the command line history can be configured via <code class="code">SetUserPreference("SaveAndRestoreHistory", true);</code>.</p>
 
 <p>Note that these functions are only available if your <strong class="pkg">GAP</strong> is configured to use the <code class="code">readline</code> library.</p>
 
@@ -1102,7 +1102,7 @@ $endif
 
 <p><code class="code">vim</code> is a powerful editor that understands the basic <code class="code">vi</code> commands but provides much more functionality. You can find more information about it (and download it) from <span class="URL"><a href="http://www.vim.org">http://www.vim.org</a></span>.</p>
 
-<p>To get support for <strong class="pkg">GAP</strong> syntax in vim, create in your home directory a directory <code class="file">.vim</code> with subdirectories <code class="file">.vim/syntax</code> and <code class="file">.vim/indent</code> (If you are not using Unix, refer to the <code class="code">vim</code> documentation on where to place syntax files). Then copy the file <code class="file">etc/gap.vim</code> to <code class="file">.vim/syntax/gap.vim</code> and the file <code class="file">etc/gap_indent.vim</code> to <code class="file">.vim/indent/gap.vim</code>.</p>
+<p>To get support for <strong class="pkg">GAP</strong> syntax in vim, create in your home directory a directory <code class="file">.vim</code> with subdirectories <code class="file">.vim/syntax</code> and <code class="file">.vim/indent</code> (If you are not using Unix, refer to the <code class="code">vim</code> documentation on where to place syntax files). Then copy the file <code class="file">etc/vim/gap.vim</code> to <code class="file">.vim/syntax/gap.vim</code> and the file <code class="file">etc/vim/gap_indent.vim</code> to <code class="file">.vim/indent/gap.vim</code>.</p>
 
 <p>Then edit the <code class="file">.vimrc</code> file in your home directory. Add lines as in the following example:</p>
 

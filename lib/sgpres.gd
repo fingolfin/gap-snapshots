@@ -178,7 +178,7 @@ AbelianInvariantsSubgroupFpGroup := AbelianInvariantsSubgroupFpGroupRrs;
 ##  <P/>
 ##  It is mutable so we are permitted to add further entries. However
 ##  existing entries may not be changed. Any entries added however should
-##  correspond to the subgroup only and not to an homomorphism.
+##  correspond to the subgroup only and not to a homomorphism.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -205,7 +205,7 @@ BindGlobal("TABLE_TYPE_MTC",2);
 ##  <P/>
 ##  It is mutable so we are permitted to add further entries, however
 ##  existing entries may not be changed. Any entries added however should
-##  correspond to the subgroup only and not to an homomorphism.
+##  correspond to the subgroup only and not to a homomorphism.
 ##  </Description>
 ##  </ManSection>
 ##
@@ -226,7 +226,7 @@ DeclareAttribute("AugmentedCosetTableMtcInWholeGroup",IsGroup,"mutable");
 ##  <P/>
 ##  It is mutable so we are permitted to add further entries, however
 ##  existing entries may not be changed. Any entries added however should
-##  correspond to the subgroup only and not to an homomorphism.
+##  correspond to the subgroup only and not to a homomorphism.
 ##  </Description>
 ##  </ManSection>
 ##
@@ -505,8 +505,6 @@ PresentationNormalClosure := PresentationNormalClosureRrs;
 ##  implicitly called function <Ref Func="DecodeTree"/> will be suppressed.
 ##  <Example><![CDATA[
 ##  gap> p := PresentationSubgroupMtc( g, u );
-##  #I  there are 3 generators and 4 relators of total length 12
-##  #I  there are 2 generators and 3 relators of total length 14
 ##  <presentation with 2 gens and 3 rels of total length 14>
 ##  ]]></Example>
 ##  <P/>
@@ -1040,6 +1038,10 @@ DeclareGlobalFunction("SecondaryGeneratorWordsAugmentedCosetTable");
 ##
 DeclareGlobalFunction("CopiedAugmentedCosetTable");
 
+# forward declaration of the new mtc worker and presentation builder fct.
+DeclareGlobalFunction("NEWTC_CosetEnumerator");
+DeclareGlobalFunction("NEWTC_PresentationMTC");
+DeclareGlobalFunction("NEWTC_CyclicSubgroupOrder");
 
 #############################################################################
 ##  

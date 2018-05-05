@@ -62,12 +62,7 @@
   
   [1X84.2 [33X[0;0YThe manual.six File[133X[101X
   
-  [33X[0;0YIf  a  [11Xmanual.six[111X  file  for  a  help  book  is  not  in  the  format of the
-  [11Xgapmacro.tex[111X  macros,  explained  in  the  document  [21XThe gapmacro.tex Manual
-  Format[121X  (see  the  file  [11Xgap4r5/doc/gapmacrodoc.pdf[111X  from  the tools archive
-  [10Xetc/tools.tar.gz[110X    which    should    be    unpacked   using   the   script
-  [11Xetc/install-tools.sh[111X), the first non-empty line of [11Xmanual.six[111X must be of the
-  form[133X
+  [33X[0;0YThe first non-empty line of [11Xmanual.six[111X should be of the form[133X
   
   [33X[0;0Y[10X#SIXFORMAT[110X [3Xmyownformat[103X[133X
   
@@ -76,8 +71,10 @@
   [10XHELP_BOOK_HANDLER.[3Xmyownformat[103X[10X.ReadSix[110X  which  must  exist. Thus there are no
   further  regulations  for the format of the [11Xmanual.six[111X file, other that what
   you  yourself  impose. If such a line is missing then it is assumed that the
-  [11Xmanual.six[111X file complies with the [11Xgapmacro.tex[111X documentation format which is
-  the [10Xdefault[110X format.[133X
+  [11Xmanual.six[111X  file  complies with the [11Xgapmacro.tex[111X documentation format, which
+  internally  is  referred to as the [10Xdefault[110X format for historical reasons. In
+  that      case      reading      the      file      is      delegated     to
+  [10XHELP_BOOK_HANDLER.default.ReadSix[110X.[133X
   
   [33X[0;0YSection      [14X84.3[114X      explains      how     the     return     value     of
   [10XHELP_BOOK_HANDLER.[3Xmyownformat[103X[10X.ReadSix[110X  should  look  like  and which further
@@ -168,6 +165,11 @@
         string  [3Xtype[103X,  or  [9Xfail[109X if these data are not available. The values of
         [3Xtype[103X  which  currently  must  be  handled and the corresponding result
         format are described in the list below.[133X
+  
+  [8X[10XSubsectionNumber( [3Xinfo[103X[8X[10X, [3Xi[103X[8X[10X )[110X[8X [108X
+        [33X[0;6YThis  returns some [5XGAP[105X object that identifies the position in the book
+        where  the  display  of  this  entry is started. This can be useful to
+        detect if several help book entries actually point to the same place.[133X
   
   [33X[0;0YThe   [10XHELP_BOOK_HANDLER.[3Xmyownformat[103X[10X.HelpData[110X  function  must  recognize  the
   following values of the [3Xtype[103X argument.[133X

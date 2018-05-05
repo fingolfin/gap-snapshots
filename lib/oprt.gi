@@ -589,7 +589,7 @@ end );
 #M  ActionHomomorphismConstructor( <xset>, <surj> )
 ##
 InstallGlobalFunction( ActionHomomorphismConstructor, function(arg)
-local   xset,surj,G,  D,  act,  fam,  filter,  hom,  i;
+local   xset,surj,G,  D,  act,  fam,  filter,  hom,  i,blockacttest;
 
     xset:=arg[1];surj:=arg[2];
     G := ActingDomain( xset );
@@ -605,6 +605,50 @@ local   xset,surj,G,  D,  act,  fam,  filter,  hom,  i;
     if IsPermGroup( G )  then
 	filter := filter and IsPermGroupGeneralMapping;
     fi;
+
+    blockacttest:=function()
+        #
+        # Test if D is a block system for G
+        #
+        local  x, l1, i, b, y, a, p, g;
+        D:=List(D,Immutable); 
+        if Length(D) = 0 then
+            return false;
+        fi;
+        #
+        # x will map from points to blocks
+        #
+        x := [];
+        l1 := Length(D[1]);     
+        if l1 = 0 then
+            return false;
+        fi;        
+        for i in [1..Length(D)] do
+            b := D[i];
+            if not IsSSortedList(b) or Length(b) <> l1 then
+                # putative blocks not sets or not all the same size
+                return false;
+            fi;
+            for y in b do
+                if not IsPosInt(y) or IsBound(x[y]) then
+                    # bad block entry or blocks overlap
+                    return false;
+                fi;
+                x[y] := i;
+            od;
+        od;
+        for b in D do
+            for g in GeneratorsOfGroup(G) do
+                a:=b[1]^g;
+                p:=x[a];          
+                if OnSets(b,g)<>D[p] then
+                    # blocks not preserved by group action
+                    return false;
+                fi;
+            od;
+        od;
+        return true;
+    end;
 
     hom := rec(  );
     if Length(arg)>2 then
@@ -659,16 +703,13 @@ local   xset,surj,G,  D,  act,  fam,  filter,  hom,  i;
 
 
     # test for action on disjoint sets of numbers, preserved by group -> blocks homomorphism
+
     elif not IsExternalSubset( xset )
          and IsPermGroup( G )
          and IsList( D )
-         and ForAll( D, IsList and IsSSortedList )
-	 and Length(D)>0 and Length(D[1])>0 and IsInt(D[1][1])
          and act = OnSets
-	 # disjointness test
-	 and Length(Set(Flat(D)))=Sum(List(D,Length))
 	 # preserved test
-	 and ForAll(D,b->ForAll(GeneratorsOfGroup(G),g->OnSets(b,g) in D))
+	 and blockacttest()
 	 then
         filter := IsBlocksHomomorphism;
         hom.reps := [  ];
@@ -2833,9 +2874,13 @@ InstallGlobalFunction( Stabilizer, function( arg )
     fi;
 end );
 
-InstallMethod( StabilizerOp,
+InstallOtherMethod( StabilizerOp,
         "`OrbitStabilizerAlgorithm' with domain",true,
-        OrbitishReq, 0,
+        [ IsGroup , IsObject,
+	  IsObject,
+          IsList,
+          IsList,
+          IsFunction ], 0,
 function( G, D, d, gens, acts, act )
 local   orbstab;
   
@@ -3151,8 +3196,12 @@ InstallMethod( PreImagesRepresentative,"IsProjectiveActionHomomorphism",
 function( hom, elm )
   local   V,  base,  mat,  b,xset,lab,f,dim,start,time,sol,i;
   
-  # is this method applicable? Test whether the domain contains a vector
+  # is this method applicable? Test whether field
+  # finite, that the domain contains a vector
   # space basis (respectively just get this basis).
+  if not IsFFECollection(DefaultFieldOfMatrixGroup(ActingDomain(UnderlyingExternalSet(hom)))) then
+    TryNextMethod();
+  fi;
   lab:=LinearActionBasis(hom);
   if lab=fail then
     TryNextMethod();
@@ -3253,7 +3302,7 @@ local xset,dom,D,b,t,i,r,binv,pos,kero,dets,roots,dim,f;
   roots:=Set(RootsOfUPol(f,X(f)^dim-1));
 
   D:=List(GeneratorsOfGroup(Source(hom)),DeterminantMat);
-  D:=Elements(Group(D));
+  D:=AsSSortedList(Group(D));
 
   if Length(roots)<=1 then
     # 1 will always be root
@@ -3265,7 +3314,7 @@ local xset,dom,D,b,t,i,r,binv,pos,kero,dets,roots,dim,f;
     # even the kernel determinants are not reached, so clearly kernel not in
     return fail;
   else
-    kero:=List(Elements(KernelOfMultiplicativeGeneralMapping(hom)),x->x[1][1]^dim);
+    kero:=List(AsSSortedList(KernelOfMultiplicativeGeneralMapping(hom)),x->x[1][1]^dim);
   fi;
   
   if not IsSubset(kero,roots) then
@@ -3275,7 +3324,7 @@ local xset,dom,D,b,t,i,r,binv,pos,kero,dets,roots,dim,f;
 
   dets:=[];
   roots:=[];
-  for i in Filtered(Elements(f),x->not IsZero(x)) do
+  for i in Filtered(AsSSortedList(f),x->not IsZero(x)) do
     b:=i^dim;
     if not b in dets then
       Add(dets,b);
@@ -3360,9 +3409,7 @@ local p,n,f,o,v,ran,exp,H,phi,alpha;
 
   alpha:=GroupToAdditiveGroupHomomorphismByFunction(M,v,function(e)
     e:=ExponentsOfPcElement(p,e)*o;
-    MakeImmutable(e);
-    ConvertToVectorRep(e,f);
-    return e;
+    return ImmutableVector(f,e,true);
   end,
   function(r)
   local i,l;

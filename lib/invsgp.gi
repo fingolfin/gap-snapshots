@@ -306,8 +306,7 @@ function(s, gens)
   if ForAll(gens, x-> x in s) then 
     return InverseSubsemigroupNC(s, gens);
   fi;
-  Error("the specified elements do not belong to the first argument,");
-  return;
+  ErrorNoReturn("the specified elements do not belong to the first argument,");
 end);
 
 #
@@ -335,8 +334,7 @@ function(s, gens)
     fi;
     return InverseSubmonoidNC(s, gens);
   fi;
-  Error("the specified elements do not belong to the first argument,");
-  return;
+  ErrorNoReturn("the specified elements do not belong to the first argument,");
 end);
 
 #
@@ -373,11 +371,19 @@ InstallMethod( PrintObj,
     end );
 
 InstallMethod( String,
-    "for a inverse semigroup with known generators",
+    "for a inverse semigroup with known generators as an inverse semigroup",
     [ IsInverseSemigroup and HasGeneratorsOfInverseSemigroup ],
     function( S )
     return STRINGIFY( "InverseSemigroup( ", 
      GeneratorsOfInverseSemigroup( S ), " )" );
+    end );
+
+InstallMethod( String,
+    "for a inverse semigroup with known generators as a semigroup",
+    [ IsInverseSemigroup and HasGeneratorsOfSemigroup ],
+    function( S )
+    return STRINGIFY( "Semigroup( ", 
+     GeneratorsOfSemigroup( S ), " )" );
     end );
 
 InstallMethod( PrintString,
@@ -426,12 +432,21 @@ InstallMethod( PrintObj,
     end );
 
 InstallMethod( String,
-    "for a inverse monoid with known generators",
+    "for a inverse monoid with known generators as a monoid",
+    [ IsInverseMonoid and HasGeneratorsOfMonoid ],
+    function( S )
+    return STRINGIFY( "Monoid( ", 
+     GeneratorsOfMonoid( S ), " )" );
+    end );
+
+InstallMethod( String,
+    "for a inverse monoid with known generators as an inverse monoid",
     [ IsInverseMonoid and HasGeneratorsOfInverseMonoid ],
     function( S )
     return STRINGIFY( "InverseMonoid( ", 
      GeneratorsOfInverseMonoid( S ), " )" );
     end );
+
 
 InstallMethod( PrintString,
     "for a inverse monoid with known generators",

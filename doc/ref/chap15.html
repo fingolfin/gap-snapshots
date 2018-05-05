@@ -68,7 +68,8 @@
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap15.html#X7C5563A37D566DA5">15.7 <span class="Heading">Miscellaneous</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X85E1EFC484F648A4">15.7-1 TwoSquares</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X8243EAA586D78ED4">15.7-1 PValuation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap15.html#X85E1EFC484F648A4">15.7-2 TwoSquares</a></span>
 </div></div>
 </div>
 
@@ -518,9 +519,24 @@ true
 
 <h4>15.7 <span class="Heading">Miscellaneous</span></h4>
 
+<p><a id="X8243EAA586D78ED4" name="X8243EAA586D78ED4"></a></p>
+
+<h5>15.7-1 PValuation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PValuation</code>( <var class="Arg">n</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>For an integer <var class="Arg">n</var> and a prime <var class="Arg">p</var> this function returns the <var class="Arg">p</var>-valuation of <var class="Arg">n</var>, that is the exponent <span class="SimpleMath">e</span> such that <span class="SimpleMath">p^e</span> is the largest power of <var class="Arg">p</var> that divides <var class="Arg">n</var>. The valuation of zero is infinity.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PValuation(100,2);</span>
+2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PValuation(100,3);</span>
+0
+</pre></div>
+
 <p><a id="X85E1EFC484F648A4" name="X85E1EFC484F648A4"></a></p>
 
-<h5>15.7-1 TwoSquares</h5>
+<h5>15.7-2 TwoSquares</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TwoSquares</code>( <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">TwoSquares</code> returns a list of two integers <span class="SimpleMath">x ≤ y</span> such that the sum of the squares of <span class="SimpleMath">x</span> and <span class="SimpleMath">y</span> is equal to the nonnegative integer <var class="Arg">n</var>, i.e., <span class="SimpleMath">n = x^2 + y^2</span>. If no such representation exists <code class="func">TwoSquares</code> will return <code class="keyw">fail</code>. <code class="func">TwoSquares</code> will return a representation for which the gcd of <span class="SimpleMath">x</span> and <span class="SimpleMath">y</span> is as small as possible. It is not specified which representation <code class="func">TwoSquares</code> returns if there is more than one.</p>

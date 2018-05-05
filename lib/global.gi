@@ -40,18 +40,6 @@ DeclareInfoClass("InfoGlobal");
 
 #############################################################################
 ##
-#V  IdentifierLetters . . . . . . . .characters allowed in normal identifiers
-##                               
-##  This is used to produce warning messages when the XxxxGlobal functions
-##  are applied to a name which could not be read in by the parser without
-##  escapes
-##
-
-IdentifierLetters := 
-  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_@";
-
-#############################################################################
-##
 #F  IsValidIdentifier( <str> ) . . .  check if a string is a valid identifier
 ##
 
@@ -159,13 +147,31 @@ InstallGlobalFunction( IsReadOnlyGlobal,
     return isro;
 end);
 
+#############################################################################
+##
+#F  IsConstantGlobal ( <name> ) . determine if a global variable is constant
+##
+##  IsConstantGlobal ( <name> ) returns true if the global variable
+##  named by the string <name> is constant and false otherwise (the default)
+##
+
+InstallGlobalFunction( IsConstantGlobal,
+        function (name)
+    local isro;
+    CheckGlobalName( name );
+    isro := IS_CONSTANT_GLOBAL(name);
+    Info( InfoGlobal, 3,
+          "IsConstantGlobal: called for ", name, " returned ", isro);
+    return isro;
+end);
+
 
 #############################################################################
 ##
 #F  MakeReadOnlyGlobal ( <name> ) . . . . .  make a global variable read-only
 ##
-##  MakeReadOnlyGlobal ( <name> ) marks the global variable named
-##  by the string <name> as read-only. 
+##  MakeReadOnlyGlobal ( <name> ) marks the global variable named by the
+##  string <name> as read-only.
 ##
 ##  A warning is given if <name> has no value bound to it or if it is
 ##  already read-only
@@ -194,10 +200,10 @@ end);
 ##
 #F  MakeReadWriteGlobal ( <name> )  . . . . make a global variable read-write
 ##
-##  MakeReadWriteGlobal ( <name> ) marks the global variable named
-##  by the string <name> as read-write
+##  MakeReadWriteGlobal ( <name> ) marks the global variable named by the
+##  string <name> as read-write
 ##
-## A warning is given if <name> is already read-write
+##  A warning is given if <name> is already read-write
 ##
 
 InstallGlobalFunction( MakeReadWriteGlobal, 
@@ -209,6 +215,27 @@ InstallGlobalFunction( MakeReadWriteGlobal,
     fi;
     Info( InfoGlobal, 2, "MakeReadWriteGlobal: called for ", name);
     MAKE_READ_WRITE_GLOBAL( name );
+end);
+
+#############################################################################
+##
+#F  MakeConstantGlobal ( <name> )  . . . . .  make a global variable constant
+##
+##  MakeConstantGlobal ( <name> ) marks the global variable named by the
+##  string <name> as constant
+##
+##  A warning is given if <name> is already constant
+##
+
+InstallGlobalFunction( MakeConstantGlobal, 
+        function (name)
+    CheckGlobalName( name );
+    if IS_CONSTANT_GLOBAL( name ) then
+        Info( InfoWarning + InfoGlobal, 1, 
+              "MakeConstantGlobal: ", name, " already constant");
+    fi;
+    Info( InfoGlobal, 2, "MakeConstantGlobal: called for ", name);
+    MAKE_CONSTANT_GLOBAL( name );
 end);
 
 
@@ -230,6 +257,14 @@ InstallGlobalFunction( BindGlobal,
     CheckGlobalName( name );
     Info( InfoGlobal, 2, "BindGlobal: called to set ", name, " to ", value);
     BIND_GLOBAL( name, value );
+end);
+
+
+InstallGlobalFunction( BindConstant, 
+        function (name, value)
+    CheckGlobalName( name );
+    Info( InfoGlobal, 2, "BindConstant: called to set ", name, " to ", value);
+    BIND_CONSTANT( name, value );
 end);
 
 #############################################################################
@@ -266,7 +301,11 @@ InstallGlobalFunction( TemporaryGlobalVarName,
 end );
 
 
-HIDDEN_GVARS:=[];
+if IsHPCGAP then
+    BindThreadLocal("HIDDEN_GVARS",[]);
+else
+    HIDDEN_GVARS:=[];
+fi;
 
 InstallGlobalFunction(HideGlobalVariables,function(arg)
 local p,i;

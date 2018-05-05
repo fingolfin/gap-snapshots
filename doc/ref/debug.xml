@@ -204,6 +204,8 @@ gap> InfoLevel(InfoWarning);
 <Heading>Customizing <Ref Func="Info"/> statements</Heading>
 <Func Arg="infoclass, handler" Name="SetInfoHandler" />
 <Func Arg="infoclass, out" Name="SetInfoOutput" />
+<Func Arg="infoclass" Name="UnbindInfoOutput" />
+<Func Arg="infoclass" Name="InfoOutput" />
 <Func Arg="out" Name="SetDefaultInfoOutput" />
 <Returns>nothing</Returns>
 <Description>
@@ -223,8 +225,10 @@ If the first argument of an <Ref Func="Info"/> statement is a sum of
 Info classes, the handler of the first summand is used.
 <P/>
 The file or stream to which <Ref Func="Info"/> statements for individual
-<Ref Func="Info"/> classes print can be changed with 
-<Ref Func="SetInfoOutput"/>. The initial default for all <Ref Func="Info"/>
+<Ref Func="Info"/> classes print can be overriden with
+<Ref Func="SetInfoOutput"/>, retrieved with <Ref Func="InfoOutput"/>
+and reset to the default with <Ref Func="UnbindInfoOutput"/>.
+The initial default for all <Ref Func="Info"/>
 classes is the string <C>"*Print*"</C> which means the current output
 file. The default can be changed with <Ref Func="SetDefaultInfoOutput"/>.  
 The argument <A>out</A> can be a filename or an open stream, 
@@ -383,17 +387,85 @@ hour/minute format.
 </ManSection>
 
 
+
 <ManSection>
-<Var Name="time"/>
+<Func Name="NanosecondsSinceEpoch" Arg=''/>
+<Func Name="NanosecondsSinceEpochInfo" Arg=''/>
+<Description>
+<Ref Func="NanosecondsSinceEpoch"/> returns the time in nanoseconds
+that has passed since some fixed, but unspecified time in the past.
+
+This function is appropriate for doing wallclock time measurements.
+
+The actual resolution depends on the system that &GAP; is run on.
+Information about the used timers can be obtained by calling
+<Ref Func="NanosecondsSinceEpochInfo"/>, which returns a record
+containing members <C>Method</C>, <C>Monotonic</C>, <C>Reliable</C>
+and <C>Resolution</C>.
+
+<P/>
+<C>Method</C> is a string describing the method used to obtain timer
+values. This will usually contain the name of the syscall used.
+<P/>
+<C>Monotonic</C> is a boolean. If it is <C>true</C>, then the values
+returned by <Ref Func="NanosecondsSinceEpoch"/> are guaranteed to be
+strictly monotonically increasing between two calls, if it is <C>false</C>
+then there is no such guarantee.
+<P/>
+<C>Resolution</C> is an integer reflecting the resolution of the timer
+used in nanoseconds.
+<P/>
+<C>Reliable</C> is a boolean. If it is <C>true</C> then the
+value <C>Resolution</C> is deemed reliable in the sense that it was
+obtained by querying the operating system, otherwise <C>Resolution</C>
+should be treated as an estimate.
+</Description>
+</ManSection>
+
+<ManSection>
+  <Var Name="time"/>
 
 <Description>
 In the read-eval-print loop,
-<Ref Var="time"/> stores the time the last command took.
+<Ref Var="time"/> stores the number of milliseconds the last command
+took (see also <Ref Var="memory_allocated"/> for the number of bytes of
+memory it allocated).
+</Description>
+</ManSection>
+
+<ManSection>
+<Func Name="Sleep" Arg='time'/>
+<Func Name="NanoSleep" Arg='time'/>
+
+<Description>
+These functions make GAP stop execution for a given period of time. The time
+to stop is given to <Ref Func="Sleep"/> in seconds and <Ref Func="NanoSleep"/>
+in nanoseconds.
 </Description>
 </ManSection>
 
 </Section>
 
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<Section Label="Tracking Memory Usage">
+  <Heading>Tracking Memory Usage</Heading>
+
+  <ManSection>
+    <Func Name="TotalMemoryAllocated" Arg=""/>
+    <Description> <Ref Func="TotalMemoryAllocated"/> returns the total amount of memory
+    in bytes allocated by the &GAP; memory manager since &GAP; started.
+    </Description>
+  </ManSection>
+  
+  <ManSection>
+    <Var Name="memory_allocated"/>
+    <Description> In the read-eval-print loop, <Ref Var="memory_allocated"/>
+    stores the number of bytes of memory allocated by the last completed statement
+    (see also <Ref Var="time"/> for the number of milliseconds it took).
+  </Description>
+  </ManSection>
+
+</Section>
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Section Label="Profiling">
@@ -755,12 +827,12 @@ found in the <F>tst</F> directory of the &GAP; distribution.
 <#Include Label="[1]{testinstall.g}">
 
 <Log><![CDATA[
-test file         GAP4stones     time(msec)
+test file         time(msec)
 -------------------------------------------
 testing: ................/gap4r5/tst/zlattice.tst
-zlattice.tst               0              0
+zlattice.tst               0
 testing: ................/gap4r5/tst/gaussian.tst
-gaussian.tst               0             10
+gaussian.tst              10
 [ further lines deleted ]
 ]]></Log>
 
@@ -826,20 +898,35 @@ brk> return;
 gap> 
 ]]></Log>
 <P/>
-This behaviour can be controlled using the following procedure.
+
+This behaviour can be controlled using the following procedures.
 
 <ManSection>
 <Func Name="SetRecursionTrapInterval" Arg='interval'/>
+<Func Name="GetRecursionDepth" Arg=''/>
 
 <Description>
-<A>interval</A> must be a non-negative small integer (between 0 and
-<M>2^{28}</M>). An <A>interval</A> of 0 suppresses the monitoring of recursion
+<Ref Func="GetRecursionDepth"/> returns the nesting level of the GAP
+interpreter. This is reset to 0 every time the break loop is entered.
+<Ref Func="SetRecursionTrapInterval"/> sets the depth of the stack at which
+GAP will enter the Break loop. <A>interval</A> must be a non-negative small
+integer (between 0 and <M>2^{28}</M>).
+An <A>interval</A> of 0 suppresses the monitoring of recursion
 altogether. In this case excessive recursion may cause &GAP; to crash.
 <P/>
 <Log><![CDATA[
-gap> dive:= function(depth) if depth>1 then dive(depth-1); fi; return; end;
-function( depth ) ... end
+gap> GetRecursionDepth();
+0
+gap> dive := function(depth)
+>  if depth>1 then
+>    dive(depth-1);
+>  else
+>    Print("Depth ", GetRecursionDepth());
+>  fi;
+> end;;
 gap> SetRecursionTrapInterval(1000);
+gap> dive(100);
+Depth 100
 gap> dive(2500);
 recursion depth trap (1000)
  at
@@ -860,6 +947,8 @@ dive( depth - 1 ); called from
 Entering break read-eval-print loop ...
 you can 'quit;' to quit to outer loop, or
 you may 'return;' to continue
+brk> GetRecursionDepth();
+0
 brk> return;
 gap> SetRecursionTrapInterval(-1);
 SetRecursionTrapInterval( <interval> ): <interval> must be a non-negative smal\
@@ -868,19 +957,15 @@ not in any function
 Entering break read-eval-print loop ...
 you can 'quit;' to quit to outer loop, or
 you can replace <interval> via 'return <interval>;' to continue
-brk> return ();
-SetRecursionTrapInterval( <interval> ): <interval> must be a non-negative smal\
-l integer
-not in any function
-Entering break read-eval-print loop ...
-you can 'quit;' to quit to outer loop, or
-you can replace <interval> via 'return <interval>;' to continue
 brk> return 0;
 gap> dive(20000);
+Depth 20000
 gap> dive(2000000);
 Segmentation fault
 ]]></Log>
 </Description>
+
+
 </ManSection>
 
 </Section>
@@ -889,6 +974,8 @@ Segmentation fault
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Section Label="Global Memory Information">
 <Heading>Global Memory Information</Heading>
+
+<Index Key="GASMAN"><C>GASMAN</C></Index>
 
 The &GAP; environment provides automatic memory management, so that
 the programmer does not need to concern themselves with allocating

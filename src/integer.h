@@ -1,62 +1,190 @@
 /****************************************************************************
 **
-*W  integer.h                   GAP source                   Martin Schönert
-**                                                           & Alice Niemeyer
-**                                                           & Werner  Nickel
+*W  integer.h                   GAP source                     John McDermott
+**                                                           
+**                                                           
 **
 **
 *Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 *Y  (C) 1998 School Math and Comp. Sci., University of St Andrews, Scotland
 *Y  Copyright (C) 2002 The GAP Group
 **
-**  This file declares the functions handling arbitrary size integers.
+**  This file declares the functions handling gmp integers.
 */
 
 #ifndef GAP_INTEGER_H
 #define GAP_INTEGER_H
 
-#ifdef USE_GMP /* then use the gmp version of the header file */
- #include "gmpints.h"
-#else /* read the rest of this file */
+#include <src/objects.h>
 
-
-/****************************************************************************
-**
-
-*T  TypDigit  . . . . . . . . . . . . . . . . . . . .  type of a single digit
-**
-**  'TypDigit' is the type of a single digit of an  arbitrary  size  integer.
-**  This is of course unsigned short int, which gives us the 16 bits we want.
-*/
-#ifdef SYS_IS_64_BIT
-typedef UInt4           TypDigit;
-#define INTEGER_UNIT_SIZE 4
-#define INTEGER_ALLOCATION_SIZE 16
-#else
-typedef UInt2           TypDigit;
-#define INTEGER_UNIT_SIZE 2
-#define INTEGER_ALLOCATION_SIZE 8
+// GMP must be included outside of 'extern C'
+#ifdef GAP_IN_EXTERN_C
+}
+#endif
+#include <gmp.h>
+#ifdef GAP_IN_EXTERN_C
+extern "C" {
 #endif
 
-#define NR_DIGIT_BITS      (8 * sizeof(TypDigit))
-#define INTBASE            (1UL << NR_DIGIT_BITS)
-#define NR_SMALL_INT_BITS  (2*NR_DIGIT_BITS - 4)
-#define SIZE_INT(op)    (SIZE_OBJ(op) / sizeof(TypDigit))
-#define ADDR_INT(op)    ((TypDigit*)ADDR_OBJ(op))
+// TODO: Instead of hardcoding the values below, use
+//   GMP_LIMB_BITS etc. directly.
+//
+// To safeguard against bugs like compiling GAP against one version of
+// GMP and a plugin against another, we may want to add some safeguards.
+// E.g. add to config.h another #define GAP_GMP_LIMB_BITS and compare
+// that during compile time with GMP_LIMB_BITS.
+
+
+#ifdef SYS_IS_64_BIT
+#define INTEGER_UNIT_SIZE 8
+#else
+#define INTEGER_UNIT_SIZE 4
+#endif
+
+#if (GMP_LIMB_BITS != INTEGER_UNIT_SIZE * 8)
+#error Aborting compile: unexpected GMP limb size
+#endif
+#if GMP_NAIL_BITS != 0
+#error Aborting compile: GAP does not support non-zero GMP nail size
+#endif
+#if !defined(__GNU_MP_RELEASE)
+ #if __GMP_MP_RELEASE < 50002
+ #error Aborting compile: GAP requires GMP 5.0.2 or newer
+ #endif
+#endif
 
 
 /**************************************************************************
-** The following two functions convert a C Int or UInt respectively into
+**
+**  'IS_LARGEINT' returns 1 if 'obj' is large positive or negative integer
+**  object, and 0 for all other kinds of objects.
+*/
+static inline Int IS_LARGEINT(Obj obj)
+{
+    UInt tnum = TNUM_OBJ(obj);
+    return tnum == T_INTPOS || tnum == T_INTNEG;
+}
+
+
+/**************************************************************************
+**
+**  'IS_INT' returns 1 if 'obj' is either a large or an immediate integer
+**  object, and 0 for all other kinds of objects.
+*/
+static inline Int IS_INT(Obj obj)
+{
+    return IS_INTOBJ(obj) || IS_LARGEINT(obj);
+}
+
+
+/**************************************************************************
+**
+**  'ADDR_INT' returns a pointer to the limbs of the large integer 'obj'.
+**  'CONST_ADDR_INT' does the same, but returns a const pointer.
+*/
+static inline mp_limb_t * ADDR_INT(Obj obj)
+{
+    GAP_ASSERT(IS_LARGEINT(obj));
+    return (mp_limb_t *)ADDR_OBJ(obj);
+}
+
+static inline const mp_limb_t * CONST_ADDR_INT(Obj obj)
+{
+    GAP_ASSERT(IS_LARGEINT(obj));
+    return (const mp_limb_t *)CONST_ADDR_OBJ(obj);
+}
+
+
+/**************************************************************************
+**
+**  'SIZE_INT returns the number of limbs in a large integer object.
+*/
+static inline UInt SIZE_INT(Obj obj)
+{
+    GAP_ASSERT(IS_LARGEINT(obj));
+    return SIZE_OBJ(obj) / sizeof(mp_limb_t);
+}
+
+
+/**************************************************************************
+**
+**  IS_NEG_INT' returns 1 if 'obj' is a negative large or immediate
+**  integer object, and 0 for all other kinds of objects.
+*/
+static inline Int IS_NEG_INT(Obj obj)
+{
+    if (IS_INTOBJ(obj))
+        return (Int)obj < (Int)INTOBJ_INT(0);
+    return TNUM_OBJ(obj) == T_INTNEG;
+}
+
+/**************************************************************************
+**
+**  'IS_POS_INT' returns 1 if 'obj' is a positive large or immediate
+**  integer object, and 0 for all other kinds of objects.
+*/
+static inline Int IS_POS_INT(Obj obj)
+{
+    if (IS_INTOBJ(obj))
+        return (Int)obj > (Int)INTOBJ_INT(0);
+    return TNUM_OBJ(obj) == T_INTPOS;
+}
+
+/**************************************************************************
+**
+**  'IS_ODD_INT' returns 1 if 'obj' is an odd large or immediate integer
+**  object, and 0 for all other kinds of objects.
+*/
+static inline Int IS_ODD_INT(Obj obj)
+{
+    if (IS_INTOBJ(obj))
+        return ((Int)obj & 4) != 0;
+    return (*CONST_ADDR_INT(obj)) & 1;
+}
+
+
+/**************************************************************************
+**
+**  'IS_EVEN_INT' returns 1 if 'obj' is an even large or immediate integer
+**  object, and 0 for all other kinds of objects.
+*/
+static inline Int IS_EVEN_INT(Obj obj)
+{
+    return !IS_ODD_INT(obj);
+}
+
+
+/**************************************************************************
+**
+** The following functions convert Int, UInt or Int8 respectively into
 ** a GAP integer, either an immediate, small integer if possible or 
 ** otherwise a new GAP bag with TNUM T_INTPOS or T_INTNEG.
-**
-*F ObjInt_Int(Int i)
-*F ObjInt_UInt(UInt i)
-**
-****************************************************************************/
+*/
+extern Obj ObjInt_Int(Int i);
+extern Obj ObjInt_UInt(UInt i);
+extern Obj ObjInt_Int8(Int8 i);
+extern Obj ObjInt_UInt8(UInt8 i);
 
-Obj ObjInt_Int(Int i);
-Obj ObjInt_UInt(UInt i);
+/**************************************************************************
+**
+** The following functions convert a GAP integer into an Int, UInt,
+** Int8 or UInt8 if it is in range. Otherwise it gives an error.
+*/
+extern Int Int_ObjInt(Obj i);    
+extern UInt UInt_ObjInt(Obj i);    
+extern Int8 Int8_ObjInt(Obj i);    
+extern UInt8 UInt8_ObjInt(Obj i);    
+
+    
+/****************************************************************************
+**
+** Reduce and normalize the given large integer object if necessary.
+**
+** TODO: This is an internal implementation detail and ideally should not
+** be exported; unfortunately, FuncNUMBER_GF2VEC currently needs this.
+*/
+extern Obj GMP_REDUCE( Obj gmp );
+extern Obj GMP_NORMALIZE( Obj gmp );
 
 
 /****************************************************************************
@@ -66,186 +194,165 @@ Obj ObjInt_UInt(UInt i);
 **  'PrintInt'  prints  the integer  <int>   in the  usual  decimal notation.
 **  'PrintInt' handles objects of type 'T_INT', 'T_INTPOS' and 'T_INTNEG'.
 */
-extern  void            PrintInt (
-            Obj                 op );
+extern void PrintInt( Obj op );
+
+
+// Parse a string containing a decimal integer into a GAP integer
+// object. Returns 'fail' if the input is not a valid decimal.
+// This function handles signs.
+//
+// If <string> is non-NULL, then <str> is ignored, and <string>
+// must reference a GAP string object. If <string> is NULL, then
+// <str> must point to a C string.
+Obj IntStringInternal(Obj string, const Char *str);
 
 
 /****************************************************************************
 **
-*F  EqInt( <intL>, <intR> ) . . . . . . . . .  test if two integers are equal
+*F  EqInt( <gmpL>, <gmpR> ) . . . . . test if two integers are equal
 **
-**  'EqInt' returns 1  if  the two integer   arguments <intL> and  <intR> are
-**  equal and 0 otherwise.
+**  'EqInt' returns 1  if  the two GMP integer arguments <gmpL> and  
+**  <gmpR> are equal and 0 otherwise.
 */
-extern  Int             EqInt ( 
-            Obj                 opL,
-            Obj                 opR );
+extern Int EqInt( Obj opL, Obj opR );
 
 
 /****************************************************************************
 **
-*F  LtInt( <intL>, <intR> ) . . . . . test if an integer is less than another
+*F  LtInt( <gmpL>, <gmpR> )  test if an integer is less than another
 **
-**  'LtInt' returns 1 if the integer <intL> is strictly less than the integer
-**  <intR> and 0 otherwise.
+**  'LtInt' returns 1 if the integer <gmpL> is strictly less than the 
+**  integer <gmpR> and 0 otherwise.
 */
-extern  Int             LtInt (
-            Obj                 opL,
-            Obj                 opR );
+extern Int LtInt( Obj opL, Obj opR );
 
 
 /****************************************************************************
 **
-*F  SumInt( <intL>, <intR> )  . . . . . . . . . . . . . . sum of two integers
+*F  SumInt( <gmpL>, <gmpR> )  . . . . . . . . .  sum of two integers
 **
-**  'SumInt' returns the sum of the two integer arguments <intL> and  <intR>.
-**  'SumInt' handles operands of type 'T_INT', 'T_INTPOS' and 'T_INTNEG'.
+**  'SumInt' returns the sum of the two integer arguments <gmpL> and
+**  <gmpR>.
 **
-**  It can also be used in the cases that both operands  are  small  integers
-**  and the result is a small integer too,  i.e., that  no  overflow  occurs.
-**  This case is usually already handled in 'EvalSum' for a better  efficiency.
 */
-extern  Obj             SumInt (
-            Obj                 opL,
-            Obj                 opR );
+extern Obj SumInt( Obj opL, Obj opR );
 
 
 /****************************************************************************
 **
-*F  DiffInt( <intL>, <intR> ) . . . . . . . . . .  difference of two integers
+*F  DiffInt( <gmpL>, <gmpR> ) . . . . difference of two GMP integers
 **
-**  'DiffInt' returns the difference of the two integer arguments <intL>  and
-**  <intR>.  'DiffInt' handles  operands  of  type  'T_INT',  'T_INTPOS'  and
-**  'T_INTNEG'.
+**  'DiffInt' returns the difference of the two integer arguments <gmpL>
+**  and <gmpR>.
 **
-**  It can also be used in the cases that both operands  are  small  integers
-**  and the result is a small integer too,  i.e., that  no  overflow  occurs.
-**  This case is usually already handled in 'EvalDiff' for a better efficiency.
 */
-extern  Obj             DiffInt (
-            Obj                 opL,
-            Obj                 opR );
+extern Obj DiffInt( Obj opL, Obj opR );
 
 
 /****************************************************************************
 **
-*F  ProdInt( <intL>, <intR> ) . . . . . . . . . . . . product of two integers
-**
-**  'ProdInt' returns the product of the two  integer  arguments  <intL>  and
-**  <intR>.  'ProdInt' handles  operands  of  type  'T_INT',  'T_INTPOS'  and
-**  'T_INTNEG'.
-**
-**  It can also be used in the cases that both operands  are  small  integers
-**  and the result is a small integer too,  i.e., that  no  overflow  occurs.
-**  This case is usually already handled in 'EvalProd' for a better efficiency.
+*F  AbsInt( <op> ) . . . . . . . . . . . . . . . absolute value of an integer
 */
-extern  Obj             ProdInt (
-            Obj                 opL,
-            Obj                 opR );
+extern Obj AbsInt( Obj op );
 
 
 /****************************************************************************
 **
-*F  ModInt( <intL>, <intR> )  . . representant of residue class of an integer
-**
-**  'ModInt' returns the smallest positive representant of the residue  class
-**  of the  integer  <intL>  modulo  the  integer  <intR>.  'ModInt'  handles
-**  operands of type 'T_INT', 'T_INTPOS', 'T_INTNEG'.
-**
-**  It can also be used in the cases that both operands  are  small  integers
-**  and the result is a small integer too,  i.e., that  no  overflow  occurs.
-**  This case is usually already handled in 'EvalMod' for a better efficiency.
+*F  SignInt( <op> ) . . . . . . . . . . . . . . . . . . .  sign of an integer
 */
-extern  Obj             ModInt (
-            Obj                 opL,
-            Obj                 opR );
+extern Obj SignInt( Obj op );
 
 
 /****************************************************************************
 **
-*F  PowInt( <intL>, <intR> )  . . . . . . . . . . . . . . power of an integer
+*F  ProdInt( <gmpL>, <gmpR> ) . . . . .  product of two GMP integers
 **
-**  'PowInt' returns the <intR>-th (an integer) power of the integer  <intL>.
-**  'PowInt' is handles operands of type 'T_INT', 'T_INTPOS' and 'T_INTNEG'.
+**  'ProdInt' returns the product of the two integer arguments <gmpL>
+**  and <gmpR>.
 **
-**  It can also be used in the cases that both operands  are  small  integers
-**  and the result is a small integer too,  i.e., that  no  overflow  occurs.
-**  This case is usually already handled in 'EvalPow' for a better  efficiency.
 */
-extern  Obj             PowInt (
-            Obj                 opL,
-            Obj                 opR );
+extern Obj ProdInt( Obj opL, Obj opR );
 
 
 /****************************************************************************
 **
-*F  QuoInt( <intL>, <intR> )  . . . . . . . . . . . quotient of two integers
+*F  ModInt( <gmpL>, <gmpR> ) representative of res cl of a GMP integer
 **
-**  'QuoInt' returns the integer part of the two integers <intL> and  <intR>.
-**  'QuoInt' handles operands of type  'T_INT',  'T_INTPOS'  and  'T_INTNEG'.
+**  'ModInt' returns the smallest positive representative of the residue
+**  class of the  integer  <gmpL>  modulo  the  integer  <gmpR>.
 **
-**  It can also be used in the cases that both operands  are  small  integers
-**  and the result is a small integer too,  i.e., that  no  overflow  occurs.
-**
-**  Note that this routine is not called from 'EvalQuo', the  division  of  two
-**  integers yields  a  rational  and  is  therefor  performed  in  'QuoRat'.
-**  This operation is however available through the internal function 'Quo'.
 */
-extern  Obj             QuoInt (
-            Obj                 opL,
-            Obj                 opR );
+extern Obj ModInt( Obj opL, Obj opR );
 
 
 /****************************************************************************
 **
-*F  RemInt( <intL>, <intR> )  . . . . . . . . . . . remainder of two integers
+*F  PowInt( <gmpL>, <gmpR> )  . . . . . . . . power of a GMP integer
 **
-**  'RemInt' returns the remainder of the quotient  of  the  integers  <intL>
-**  and <intR>.  'RemInt' handles operands of type  'T_INT',  'T_INTPOS'  and
-**  'T_INTNEG'.
+**  'PowInt' returns the <gmpR>-th(a GMP int) power of the GMP integer
+**  <gmpL>.
 **
-**  Note that the remainder is different from the value returned by the 'mod'
-**  operator which is always positive.
 */
-extern  Obj             RemInt (
-            Obj                 opL,
-            Obj                 opR );
+extern Obj PowInt( Obj opL, Obj opR );
 
 
 /****************************************************************************
 **
-*F  GcdInt( <opL>, <opR> )  . . . . . . . . . . . . . . . gcd of two integers
+*F  QuoInt( <gmpL>, <gmpR> )  . . . . . quotient of two GMP integers
 **
-**  'GcdInt' returns the gcd of the two integers <opL> and <opR>.
+**  'QuoInt' returns the integer part of the two integers <gmpL> and
+**  <gmpR>.
+**
 */
-extern  Obj             GcdInt (
-            Obj                 opL,
-            Obj                 opR );
+extern Obj QuoInt( Obj opL, Obj opR );
 
-
-extern Int CLog2Int(Int a);
-extern Obj FuncLog2Int( Obj self, Obj intnum);
 
 /****************************************************************************
 **
+*F  RemInt( <gmpL>, <gmpR> )  . . . .  remainder of two GMP integers
+**
+**  'RemInt' returns the remainder of the quotient of the GMP ints
+**  <gmpL> and <gmpR>.
+**
+*/
+extern Obj RemInt( Obj opL, Obj opR );
 
+
+/****************************************************************************
+**
+*F  GcdInt( <gmpL>, <gmpR> )  . . . . . . .  gcd of two GMP integers
+**
+**  'GcdInt' returns the gcd of the two integers <gmpL> and <gmpR>.
+*/
+extern Obj GcdInt( Obj opL, Obj opR );
+
+
+/****************************************************************************
+**
+*F  AInvInt( <op> ) . . . . . . . . . . . . .  additive inverse of an integer
+**
+*/
+extern Obj AInvInt( Obj op );
+
+
+/****************************************************************************
+**
+** Compute log2 of the absolute value of an Int, i.e. the index of the highest
+** set bit. For input 0, return -1.
+*/
+extern Int CLog2Int( Int intnum );
+
+
+/****************************************************************************
+**
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
-/****************************************************************************
-**                                              \
-                                                \
-
-*F  InitInfoInt() . . . . . . . . . . . . . . . . . . table of init functions
-*/
-StructInitInfo * InitInfoInt ( void );
-
-
-#endif // USE_GMP
-
-#endif // GAP_INTEGER_H
 
 /****************************************************************************
 **
-*E  integer.c . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
+*F  InitInfoInt() . . . . . . . . . . . . . . . .  table of init functions
 */
+StructInitInfo * InitInfoInt( void );
+
+#endif // GAP_INTEGER_H

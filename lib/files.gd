@@ -418,6 +418,10 @@ BIND_GLOBAL( "DirectoriesSystemPrograms", function()
     if GAPInfo.DirectoriesPrograms = false  then
         GAPInfo.DirectoriesPrograms :=
             List( GAPInfo.DirectoriesSystemPrograms, Directory );
+        if IsHPCGAP then
+            GAPInfo.DirectoriesPrograms :=
+                AtomicList( GAPInfo.DirectoriesPrograms );
+        fi;
     fi;
     return GAPInfo.DirectoriesPrograms;
 end );
@@ -658,7 +662,6 @@ end );
 ##  <#/GAPDoc>
 ##
 DeclareGlobalFunction( "Edit" );
-
 
 # the character set definitions might be needed when processing files, thus
 # they must come earlier.

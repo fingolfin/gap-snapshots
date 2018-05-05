@@ -26,10 +26,14 @@
 ##  without changing the kernel.
 ##
 
-InstallValue(TYPES_MAT8BIT , [[],[]]);
-TYPES_MAT8BIT[1][257] := 1;
-TYPES_MAT8BIT[2][257] := 1;
-
+if IsHPCGAP then
+    InstallValue(TYPES_MAT8BIT, [ FixedAtomicList(256), FixedAtomicList(256) ]);
+    MakeReadOnlyObj(TYPES_MAT8BIT);
+else
+    InstallValue(TYPES_MAT8BIT, [[],[]]);
+    TYPES_MAT8BIT[1][257] := 1;
+    TYPES_MAT8BIT[2][257] := 1;
+fi;
 
 #############################################################################
 ##
@@ -41,7 +45,7 @@ TYPES_MAT8BIT[2][257] := 1;
 
 InstallGlobalFunction(TYPE_MAT8BIT,
   function( q, mut)
-    local col,filts;
+    local col, filts, type;
     if mut then col := 1; else col := 2; fi;
     if not IsBound(TYPES_MAT8BIT[col][q]) then
         filts := IsHomogeneousList and IsListDefault and IsCopyable and
@@ -49,7 +53,12 @@ InstallGlobalFunction(TYPE_MAT8BIT,
                  IsRingElementTable and IsNoImmediateMethodsObject and 
                  HasIsRectangularTable and IsRectangularTable;
         if mut then filts := filts and IsMutable; fi;
-        TYPES_MAT8BIT[col][q] := NewType(CollectionsFamily(FamilyObj(GF(q))),filts);
+        type := NewType(CollectionsFamily(FamilyObj(GF(q))),filts);
+        if IsHPCGAP then
+            InstallTypeSerializationTag(type, SERIALIZATION_BASE_MAT8BIT +
+                        SERIALIZATION_TAG_BASE * (q * 2 + col - 1));
+        fi;
+        TYPES_MAT8BIT[col][q] := type;
     fi;
     return TYPES_MAT8BIT[col][q];
 end);
@@ -60,7 +69,7 @@ end);
 #M  Length( <mat> )
 ##
 
-InstallOtherMethod( Length, "For a compressed MatFFE", 
+InstallOtherMethod( Length, "For a compressed MatFFE",
         true, [IsList and Is8BitMatrixRep], 0, m->m![1]);
 
 #############################################################################
@@ -68,9 +77,20 @@ InstallOtherMethod( Length, "For a compressed MatFFE",
 #M  <mat> [ <pos> ]
 ##
 
-InstallOtherMethod( \[\],  "For a compressed MatFFE", 
-        true, [IsList and Is8BitMatrixRep, IsPosInt], 0, function(m,i) 
-    return m![i+1]; end);
+InstallOtherMethod( \[\],  "For a compressed MatFFE",
+        [IsList and Is8BitMatrixRep, IsPosInt],
+        ELM_MAT8BIT
+        );
+
+#############################################################################
+##
+#M  <mat> [ <pos1>, <pos2> ]
+##
+
+InstallMethod( \[\],  "For a compressed MatFFE",
+        [Is8BitMatrixRep, IsPosInt, IsPosInt],
+        MAT_ELM_MAT8BIT
+        );
 
 #############################################################################
 ##
@@ -79,11 +99,20 @@ InstallOtherMethod( \[\],  "For a compressed MatFFE",
 ##  This may involve turning <mat> into a plain list, if <mat> does
 ##  not lie in the appropriate field.
 ##
-               
-InstallOtherMethod( \[\]\:\=,  "For a compressed MatFE", 
-        true, [IsMutable and IsList and Is8BitMatrixRep, IsPosInt, IsObject], 
-        0,
+
+InstallOtherMethod( \[\]\:\=,  "For a compressed MatFE",
+        [IsMutable and IsList and Is8BitMatrixRep, IsPosInt, IsObject],
         ASS_MAT8BIT
+        );
+
+#############################################################################
+##
+#M  <mat> [ <pos1>, <pos2> ] := <val>
+##
+
+InstallMethod( \[\]\:\=,  "For a compressed MatFE",
+        [IsMutable and Is8BitMatrixRep, IsPosInt, IsPosInt, IsObject],
+        SET_MAT_ELM_MAT8BIT
         );
 
 #############################################################################
@@ -284,7 +313,7 @@ InstallGlobalFunction(ConvertToMatrixRep,
                 fi;
 	      q1 := Size(q1);
 	  else
-	    return; # not a field -- exit
+	    return fail; # not a field -- exit
 	  fi;
         fi;
         givenq := true;
@@ -783,13 +812,11 @@ InstallGlobalFunction( RepresentationsOfMatrix,
             Print(" compressed over GF(",Q_VEC8BIT(m),") ");
         elif IsPlistRep(m) then
             Print(" plain list, tnum: ",TNUM_OBJ(m)," ");
-            if TNUM_OBJ_INT(m) in [54,55] then
+            if TNUM_OBJ(m) in [T_PLIST_FFE,T_PLIST_FFE+1] then
                 Print("known to be vecffe over GF(",CHAR_FFE_DEFAULT(m[1]),"^",
                       DEGREE_FFE_DEFAULT(m[1]),") ");
-            elif TNUM_OBJ_INT(m) in [48..53] then
+            elif TNUM_OBJ(m) in [T_PLIST_CYC..T_PLIST_CYC_SSORT+1] then
                 Print("known to be vector of cyclotomics ");
-            else 
-                Print("TNUM: ",TNUM_OBJ(m), " ");
             fi;
         else
             Print(" not a compressed or plain list, representations: ", 

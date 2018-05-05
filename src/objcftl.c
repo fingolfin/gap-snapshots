@@ -5,37 +5,26 @@
 **  Objects Collected From The Left.
 **  This file contains a collector from the left for polycyclic
 **  presentations.
+**
+**  This code (in particular the function "CollectPolycyc") is used exclusively by
+**  the polycyclic package. So in an ideal world, we'd turn it into a kernel      
+**  extensions that is shipped with polycyclic. However, doing so could lead to a 
+**  significant number of people not being able to use polycyclic (as they would   
+**  not know how to compile a kernel extension). And polycyclic is a very central 
+**  package upon which tons of other packages depend... so for now, we leave this 
+**  code here.                                                                    
 */
-#include "system.h"
+
+#include <src/objcftl.h>
+
+#include <src/ariths.h>
+#include <src/gap.h>
+#include <src/gvars.h>
+#include <src/integer.h>
+#include <src/plist.h>
 
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
-#include        "gvars.h"               /* global variables                */
-#include        "calls.h"               /* generic call mechanism          */
-#include        "gap.h"                 /* error handling, initialisation  */
-#include        "bool.h"                /* booleans                        */
-#include        "integer.h"             /* integers                        */
-#include        "ariths.h"              /* fast integers                   */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "plist.h"               /* plain lists                     */
-#include        "string.h"              /* strings                         */
-
-#include        "dt.h"                  /* deep thought                    */
-
-#include        "objcftl.h"             /* from the left collect           */
-
-#include	"code.h"
-#include	"thread.h"
-#include	"tls.h"
-
-
-#define IS_INT_ZERO( n )  (IS_INTOBJ(n) && ((n) == INTOBJ_INT(0))) 
+#define IS_INT_ZERO( n )  ((n) == INTOBJ_INT(0))
 
 #define GET_COMMUTE( g )  INT_INTOBJ(ELM_PLIST(commute,(g))) 
 
@@ -310,7 +299,7 @@ Obj CollectPolycyc (
     return (Obj)0;
 }
 
-Obj FuncCollectPolycyc (
+Obj FuncCollectPolycyclic (
     Obj self,
     Obj pcp,
     Obj list,
@@ -322,29 +311,24 @@ Obj FuncCollectPolycyc (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    { "CollectPolycyclic", 3, "pcp, list, word",
-      FuncCollectPolycyc, "src/objcftl.c:CollectPolycyclic" },
-
-    { 0 }
+    GVAR_FUNC(CollectPolycyclic, 3, "pcp, list, word"),
+    { 0, 0, 0, 0, 0 }
 
 };
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
@@ -380,46 +364,27 @@ static Int PostRestore (
 static Int InitLibrary (
     StructInitInfo *    module )
 {
-    AssGVar( GVarName( "PC_NUMBER_OF_GENERATORS" ),
-             INTOBJ_INT( PC_NUMBER_OF_GENERATORS ) );
-    AssGVar( GVarName( "PC_GENERATORS" ),
-             INTOBJ_INT( PC_GENERATORS ) );
-    AssGVar( GVarName( "PC_INVERSES" ),
-             INTOBJ_INT( PC_INVERSES ) );
-    AssGVar( GVarName( "PC_COMMUTE" ),
-             INTOBJ_INT( PC_COMMUTE ) );
-    AssGVar( GVarName( "PC_POWERS" ),
-             INTOBJ_INT( PC_POWERS ) );
-    AssGVar( GVarName( "PC_INVERSEPOWERS" ),
-             INTOBJ_INT( PC_INVERSEPOWERS ) );
-    AssGVar( GVarName( "PC_EXPONENTS" ),
-             INTOBJ_INT( PC_EXPONENTS ) );
-    AssGVar( GVarName( "PC_CONJUGATES" ),
-             INTOBJ_INT( PC_CONJUGATES ) );
-    AssGVar( GVarName( "PC_INVERSECONJUGATES" ),
-             INTOBJ_INT( PC_INVERSECONJUGATES ) );
-    AssGVar( GVarName( "PC_CONJUGATESINVERSE" ),
-             INTOBJ_INT( PC_CONJUGATESINVERSE ) );
-    AssGVar( GVarName( "PC_INVERSECONJUGATESINVERSE" ),
-             INTOBJ_INT( PC_INVERSECONJUGATESINVERSE ) );
-    AssGVar( GVarName( "PC_DEEP_THOUGHT_POLS" ),
-             INTOBJ_INT( PC_DEEP_THOUGHT_POLS ) );
-    AssGVar( GVarName( "PC_DEEP_THOUGHT_BOUND" ),
-             INTOBJ_INT( PC_DEEP_THOUGHT_BOUND ) );
-    AssGVar( GVarName( "PC_ORDERS" ), INTOBJ_INT( PC_ORDERS ) );
-    AssGVar( GVarName( "PC_WORD_STACK" ),
-             INTOBJ_INT( PC_WORD_STACK ) );
-    AssGVar( GVarName( "PC_STACK_SIZE" ),
-             INTOBJ_INT( PC_STACK_SIZE ) );
-    AssGVar( GVarName( "PC_WORD_EXPONENT_STACK" ),
-             INTOBJ_INT( PC_WORD_EXPONENT_STACK ) );
-    AssGVar( GVarName( "PC_SYLLABLE_STACK" ),
-             INTOBJ_INT( PC_SYLLABLE_STACK ) );
-    AssGVar( GVarName( "PC_EXPONENT_STACK" ),
-             INTOBJ_INT( PC_EXPONENT_STACK ) );
-    AssGVar( GVarName( "PC_STACK_POINTER" ),
-             INTOBJ_INT( PC_STACK_POINTER ) );
-    AssGVar( GVarName( "PC_DEFAULT_TYPE" ), INTOBJ_INT( PC_DEFAULT_TYPE ) );
+    ExportAsConstantGVar(PC_NUMBER_OF_GENERATORS);
+    ExportAsConstantGVar(PC_GENERATORS);
+    ExportAsConstantGVar(PC_INVERSES);
+    ExportAsConstantGVar(PC_COMMUTE);
+    ExportAsConstantGVar(PC_POWERS);
+    ExportAsConstantGVar(PC_INVERSEPOWERS);
+    ExportAsConstantGVar(PC_EXPONENTS);
+    ExportAsConstantGVar(PC_CONJUGATES);
+    ExportAsConstantGVar(PC_INVERSECONJUGATES);
+    ExportAsConstantGVar(PC_CONJUGATESINVERSE);
+    ExportAsConstantGVar(PC_INVERSECONJUGATESINVERSE);
+    ExportAsConstantGVar(PC_DEEP_THOUGHT_POLS);
+    ExportAsConstantGVar(PC_DEEP_THOUGHT_BOUND);
+    ExportAsConstantGVar(PC_ORDERS);
+    ExportAsConstantGVar(PC_WORD_STACK);
+    ExportAsConstantGVar(PC_STACK_SIZE);
+    ExportAsConstantGVar(PC_WORD_EXPONENT_STACK);
+    ExportAsConstantGVar(PC_SYLLABLE_STACK);
+    ExportAsConstantGVar(PC_EXPONENT_STACK);
+    ExportAsConstantGVar(PC_STACK_POINTER);
+    ExportAsConstantGVar(PC_DEFAULT_TYPE);
 
     /* init filters and functions                                          */
     InitGVarFuncsFromTable( GVarFuncs );
@@ -434,29 +399,16 @@ static Int InitLibrary (
 *F  InitInfoPcc() . . . . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "objcftl",                          /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    PostRestore                         /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "objcftl",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
+    .postRestore = PostRestore
 };
 
 StructInitInfo * InitInfoPcc ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  objcftl.c . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/
-

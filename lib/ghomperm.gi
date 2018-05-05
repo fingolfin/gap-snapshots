@@ -702,9 +702,9 @@ InstallOtherMethod( StabChainMutable, "perm mapping by images",  true,
     BuildOrb:=function(genimg)
     local a,orb,dict,orbf,T,elm,img,i,n;
       if Length(genimg[1])>0 then
-	a:=genimg[1][1];
+        a:=genimg[1][1];
       else
-	a:=One(Source(hom));
+        a:=One(Source(hom));
       fi;
       dict:=NewDictionary(a,false);
       a:=One(Source(hom));
@@ -1098,7 +1098,7 @@ InstallMethod( PreImagesRepresentative, FamRangeEqFamElm,
         [ IsToPermGroupGeneralMappingByImages,
           IsMultiplicativeElementWithInverse ], 0,
     function( hom, elm )
-    return ImagesRepresentative( InverseGeneralMapping( hom ), elm );
+    return ImagesRepresentative( RestrictedInverseGeneralMapping( hom ), elm );
 end );
 
 #############################################################################
@@ -1271,13 +1271,13 @@ InstallGlobalFunction( StabChainPermGroupToPermGroupGeneralMappingByImages,
     MakeStabChainLong( hom, StabChainOp( longgroup, options ),
            [ 1 .. n ], One( Source( hom ) ), conperminv, hom,
            CoKernelOfMultiplicativeGeneralMapping );
-    
-    if  NrMovedPoints(longgroup)<=10000 and
-       (not HasInverseGeneralMapping( hom )
-       or not HasStabChainMutable( InverseGeneralMapping( hom ) )
+
+    if  NrMovedPoints(longgroup)<=10000 and 
+       (not HasRestrictedInverseGeneralMapping( hom )
+       or not HasStabChainMutable( RestrictedInverseGeneralMapping( hom ) )
        or not HasKernelOfMultiplicativeGeneralMapping( hom ) 
-       )then
-        MakeStabChainLong( InverseGeneralMapping( hom ),
+       ) then
+        MakeStabChainLong( RestrictedInverseGeneralMapping( hom ),
                 StabChainOp( longgroup, [ n + 1 .. n + k ] ),
                 [ n + 1 .. n + k ], conperminv, One( Source( hom ) ), hom,
                 KernelOfMultiplicativeGeneralMapping );
@@ -1590,10 +1590,12 @@ InstallGlobalFunction( ImageKernelBlocksHomomorphism, function( hom, H,par )
             T,          # corresponding stabilizer in <I>
             full,       # flag: true if <H> is (identical to) the source
             B,          # current block
-            i,  j;      # loop variables
+            rep,        # new elt
+            img, p,orb,
+            i,  j, k;      # loop variables
     
     D := Enumerator( UnderlyingExternalSet( hom ) );
-    S := CopyStabChain( StabChainMutable( H ) );
+    S := CopyStabChain( StabChainImmutable( H ) );
     full := IsIdenticalObj( H, Source( hom ) );
     if full  then
         SetStabChainMutable( hom, S );
@@ -1621,15 +1623,46 @@ InstallGlobalFunction( ImageKernelBlocksHomomorphism, function( hom, H,par )
 
             # Make <S> the stabilizer of the block <B>.
             InsertTrivialStabilizer( S.stabilizer, B[ 1 ] );
-            j := 1;
-            while                                j < Length( B )
-                  and Length( S.stabilizer.orbit ) < Length( B )  do
-                j := j + 1;
-                if IsBound( S.translabels[ B[ j ] ] )  then
-                    AddGeneratorsExtendSchreierTree( S.stabilizer,
-                            [ InverseRepresentative( S, B[ j ] ) ] );
-                fi;
-            od;
+
+            if Length(B)>Length(D)^2 then
+              # if there are few, large blocks the search through all block
+              # points is tedious. Rather use an orbit/stabilizer algorithm.
+              orb:=[i];
+              rep:=[One(H)];
+              j:=1;
+              while j<=Length(orb) do
+                for k in S.generators do
+                  img:=D[orb[j]][1]^k;
+                  p:=hom!.reps[img];
+                  if not p in orb then
+                    Add(orb,p);
+                    Add(rep,rep[j]*k);
+                  else
+                    k:=rep[j]*k/rep[Position(orb,p)]; # will fix block
+                    if not IsOne(SiftedPermutation(S.stabilizer,k)) then
+                      AddGeneratorsExtendSchreierTree( S.stabilizer,
+                              [k] );
+                    fi;
+
+                  fi;
+                od;
+                j:=j+1;
+              od;
+            else
+              j := 1;
+              while                                j < Length( B )
+                    and Length( S.stabilizer.orbit ) < Length( B )  do
+                  j := j + 1;
+                  if IsBound( S.translabels[ B[ j ] ] )  then
+                      rep:=InverseRepresentative( S, B[ j ] );
+                      if not IsOne(SiftedPermutation(S.stabilizer,rep)) then
+                        AddGeneratorsExtendSchreierTree( S.stabilizer,
+                                [rep] );
+                      fi;
+                  fi;
+              od;
+            fi;
+
             S := S.stabilizer;
                     
         fi;
@@ -1683,6 +1716,23 @@ InstallMethod( Range, "surjective blocks homomorphism",true,
 InstallMethod( ImagesSource, "blocks homomorphism",true,
   [ IsBlocksHomomorphism ], 0,
   RanImgSrcSurjBloho);
+
+#############################################################################
+##
+#M  KernelOfMultiplicativeGeneralMapping( <hom> ) . . . . . .  for blocks hom
+##
+InstallMethod( KernelOfMultiplicativeGeneralMapping,"blocks homomorphism",
+    true,
+    [ IsBlocksHomomorphism ], 0,
+    function( hom )
+    local   img;
+    
+    img := ImageKernelBlocksHomomorphism( hom, Source( hom ),false);
+    if not HasImagesSource( hom )  then
+        SetImagesSource( hom, img );
+    fi;
+    return KernelOfMultiplicativeGeneralMapping( hom );
+end );
 
 #############################################################################
 ##
@@ -1761,7 +1811,7 @@ InstallGlobalFunction( PreImageSetStabBlocksHomomorphism, function( hom, I )
 
     # if <I> is trivial then preimage is the kernel of <hom>
     if IsEmpty( I.genlabels )  then
-        H := CopyStabChain( StabChainMutable(
+        H := CopyStabChain( StabChainImmutable(
                  KernelOfMultiplicativeGeneralMapping( hom ) ) );
 
     # else begin with the preimage $H_{block[i]}$ of the stabilizer  $I_{i}$,
@@ -1783,23 +1833,6 @@ InstallGlobalFunction( PreImageSetStabBlocksHomomorphism, function( hom, I )
 
     # return the preimage
     return H;
-end );
-
-#############################################################################
-##
-#M  KernelOfMultiplicativeGeneralMapping( <hom> ) . . . . . .  for blocks hom
-##
-InstallMethod( KernelOfMultiplicativeGeneralMapping,"blocks homomorphism",
-    true,
-    [ IsBlocksHomomorphism ], 0,
-    function( hom )
-    local   img;
-    
-    img := ImageKernelBlocksHomomorphism( hom, Source( hom ),false);
-    if not HasImagesSource( hom )  then
-        SetImagesSource( hom, img );
-    fi;
-    return KernelOfMultiplicativeGeneralMapping( hom );
 end );
 
 DeclareRepresentation("IsBlocksOfActionHomomorphism",
@@ -1913,7 +1946,7 @@ InstallOtherMethod( IsConjugatorIsomorphism,
   1,
 function( hom )
   local s, genss, rep,dom,insn,stb,E,bpt,fix,pnt,idom,sliced,
-    o,oimgs,i,pi,sto,stbs,stbi, r, sym,doms,gn,mapi,pos;
+    o,oimgs,i,pi,sto,stbs,stbi, r, sym,doms,gn,mapi,pos,orb;
 
   s:= Source( hom );
   if not IsPermGroup( s ) then
@@ -2023,23 +2056,23 @@ function( hom )
           fix:=First(oimgs[i],p->ForAll(GeneratorsOfGroup(E),
                       gen -> p ^ gen = p ) );
   
-	  # parallel orbit algorithm
-	  mapi:=MappingGeneratorsImages(hom);
-	  Add(dom,bpt);
-	  Add(idom,fix);
-	  pos:=Length(dom);
-	  doms:=[bpt];
-	  while pos<=Length(dom) do
-	    for gn in [1..Length(mapi[1])] do
-	      bpt:=dom[pos]^mapi[1][gn];
-	      if not bpt in doms then
-	        Add(dom,bpt);
-		AddSet(doms,bpt);
-		Add(idom,idom[pos]^mapi[2][gn]);
-	      fi;
-	    od;
-	    pos:=pos+1;
-	  od;
+          # parallel orbit algorithm
+          mapi:=MappingGeneratorsImages(hom);
+          Add(dom,bpt);
+          Add(idom,fix);
+          pos:=Length(dom);
+          doms:=[bpt];
+          while pos<=Length(dom) do
+            for gn in [1..Length(mapi[1])] do
+              bpt:=dom[pos]^mapi[1][gn];
+              if not bpt in doms then
+                Add(dom,bpt);
+                AddSet(doms,bpt);
+                Add(idom,idom[pos]^mapi[2][gn]);
+              fi;
+            od;
+            pos:=pos+1;
+          od;
 
           # # we could try to use stabilizer chains, but the homomorphism does
           # # not necessarily have one which acts in every orbit. So we use the
@@ -2053,7 +2086,34 @@ function( hom )
         od;
         rep:=MappingPermListList( dom, idom );
       else
-        # we got 
+        # we got multiple orbits
+
+        # does it matter? (can we do per orbit?)
+        orb:=List(Orbits(s,dom),Set);
+        rep:=[];
+        i:=1;
+        while i<=Length(orb) do
+          sym:=ActionHomomorphism(s,orb[i],"surjective");
+          pi:=InducedAutomorphism(sym,hom);
+          if IsConjugatorIsomorphism(pi) then
+            rep[i]:=ConjugatorOfConjugatorIsomorphism(pi);
+          else
+            rep:=fail;
+            i:=Length(orb);
+          fi;
+          i:=i+1;
+        od;
+        if rep<>fail then
+          pi:=List([1..Length(orb)],x->MappingPermListList(Permuted(orb[x],rep[x]),orb[x]));
+          rep:=Product(pi);
+          Assert(1,ForAll(genss,i->ImagesRepresentative(hom,i)=i^rep));
+          SetConjugatorOfConjugatorIsomorphism( hom, rep );
+          return true;
+        fi;
+
+        if ValueOption("cheap")=true then
+          return false;
+        fi;
         rep:=RepresentativeAction(OrbitStabilizingParentGroup(s),
               genss,
               List( genss, i -> ImagesRepresentative( hom, i ) ), OnTuples );
@@ -2095,4 +2155,3 @@ end );
 #############################################################################
 ##
 #E
-

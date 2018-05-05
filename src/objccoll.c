@@ -13,38 +13,13 @@
 **  interface to the corresponding single collector function.
 **
 */
-#include        "system.h"              /* Ints, UInts                     */
 
+#include <src/objccoll.h>
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
-
-#include        "gvars.h"               /* global variables                */
-#include        "gap.h"                 /* error handling, initialisation  */
-#include        "tls.h"                 /* thread-local storage            */
-
-#include        "calls.h"               /* generic call mechanism          */
-
-#include        "records.h"             /* generic records                 */
-#include        "lists.h"               /* generic lists                   */
-
-#include        "bool.h"                /* booleans                        */
-
-#include        "precord.h"             /* plain records                   */
-
-#include        "plist.h"               /* plain lists                     */
-#include        "string.h"              /* strings                         */
-
-#include        "code.h"                /* coder                           */
-#include        "thread.h"              /* threads                         */
-#include        "tls.h"                 /* thread-local storage            */
-
-#include        "objfgelm.h"            /* objects of free groups          */
-
-#include        "objscoll.h"            /* single collector                */
-
-#include        "objccoll.h"            /* combinatorial collector         */
+#include <src/intobj.h>
+#include <src/gapstate.h>
+#include <src/objfgelm.h>
+#include <src/objscoll.h>
 
 
 #define AddWordIntoExpVec   C8Bits_AddWordIntoExpVec
@@ -52,21 +27,21 @@
 #define AddPartIntoExpVec   C8Bits_AddPartIntoExpVec
 #define CombiCollectWord    C8Bits_CombiCollectWord
 #define UIntN       UInt1
-#include "objccoll-impl.h"
+#include <src/objccoll-impl.h>
 
 #define AddWordIntoExpVec   C16Bits_AddWordIntoExpVec
 #define AddCommIntoExpVec   C16Bits_AddCommIntoExpVec
 #define AddPartIntoExpVec   C16Bits_AddPartIntoExpVec
 #define CombiCollectWord    C16Bits_CombiCollectWord
 #define UIntN       UInt2
-#include "objccoll-impl.h"
+#include <src/objccoll-impl.h>
 
 #define AddWordIntoExpVec   C32Bits_AddWordIntoExpVec
 #define AddCommIntoExpVec   C32Bits_AddCommIntoExpVec
 #define AddPartIntoExpVec   C32Bits_AddPartIntoExpVec
 #define CombiCollectWord    C32Bits_CombiCollectWord
 #define UIntN       UInt4
-#include "objccoll-impl.h"
+#include <src/objccoll-impl.h>
 
 
 /****************************************************************************
@@ -84,28 +59,13 @@
 **
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "objccoll",                         /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    0,                                  /* initKernel                     */
-    0,                                  /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "objccoll",
 };
 
 StructInitInfo * InitInfoCombiCollector ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  objccoll.c  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

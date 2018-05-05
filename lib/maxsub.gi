@@ -332,7 +332,8 @@ end);
 ##
 #M  FrattiniSubgroup( <G> ) . . . . . . . . . .  Frattini subgroup of a group
 ##
-InstallMethod( FrattiniSubgroup, "Using radical", [ IsGroup ],0,
+InstallMethod( FrattiniSubgroup, "Using radical",
+[ IsGroup and CanComputeFittingFree ],0,
 function(G)
 local m,f,i;
   if IsTrivial(G) then
@@ -347,6 +348,9 @@ local m,f,i;
       f:=Core(G,NormalIntersection(f,m[i]));
     fi;
   od;
+  if HasIsFinite(G) and IsFinite(G) then
+    SetIsNilpotentGroup(f,true);
+  fi;
   return f;
 end);
 
@@ -391,7 +395,7 @@ end);
 # here in case the generic normalizer code is still missing improvements
 BindGlobal("MaxesCalcNormalizer",function(P,U)
 local map, s, b, bl, bb, sp;
-  map:=SmallerDegreePermutationRepresentation(P);
+  map:=SmallerDegreePermutationRepresentation(P:inmax);
   if Range(map)=P then
     map:=fail;
   else
@@ -523,13 +527,42 @@ local hom,embs,s,k,agens,ad,i,j,perm,dia,ggens,e,tgens,d,m,reco,emba,outs,id;
   return m;
 end);
 
-BindGlobal("MaxesAlmostSimple",function(G)
-local id,m,epi;
-  # which cases can we deal with already?
-  if IsNaturalSymmetricGroup(G) or IsNaturalAlternatingGroup(G) then
-    Info(InfoLattice,1,"MaxesAlmostSimple: Use S_n/A_n");
-    return MaximalSubgroupClassReps(G);
+InstallGlobalFunction(MaxesAlmostSimple,function(G)
+local id,m,epi,cnt,h;
+
+  # is a permutation degree too big?
+  if IsPermGroup(G) then
+    if NrMovedPoints(G)>
+        SufficientlySmallDegreeSimpleGroupOrder(Size(PerfectResiduum(G))) then
+      h:=G;
+      for cnt in [1..5] do
+	epi:=SmallerDegreePermutationRepresentation(h);
+	if NrMovedPoints(Range(epi))<NrMovedPoints(h) then
+	  m:=MaxesAlmostSimple(Image(epi,G));
+	  m:=List(m,x->PreImage(epi,x));
+	  return m;
+	fi;
+	# new group to avoid storing the map
+	h:=Group(GeneratorsOfGroup(G));
+	SetSize(h,Size(G));
+      od;
+    fi;
+
+
+    # Are just finding out that a group is symmetric or alternating?
+    # if so, try to use method that uses data library
+    if 
+    #not (HasIsNaturalSymmetricGroup(G) or HasIsNaturalAlternatingGroup(G)) and
+        (IsNaturalSymmetricGroup(G) or IsNaturalAlternatingGroup(G)) then
+      Info(InfoLattice,1,"MaxesAlmostSimple: Use S_n/A_n");
+      m:=MaximalSubgroupsSymmAlt(G,false);
+      if m<>fail then
+	return m;
+      fi;
+    fi;
   fi;
+
+  # is the degree bad?
 
   # does the table of marks have it?
   m:=TomDataMaxesAlmostSimple(G);
@@ -539,11 +572,11 @@ local id,m,epi;
     # following is stopgap for L
     id:=DataAboutSimpleGroup(G);
     if id.idSimple.series="A" then
-      Info(InfoWarning,1,"Alternating recognition needed!");
+      Info(InfoPerformance,1,"Alternating recognition needed!");
     elif id.idSimple.series="L" then
       m:=ClassicalMaximals("L",id.idSimple.parameter[1],id.idSimple.parameter[2]);
       if m<>fail then
-	epi:=EpimorphismFromClassical(G);
+	epi:=EpimorphismFromClassical(G:classicepiuseiso:=true);
 	if epi<>fail then
 	  m:=List(m,x->SubgroupNC(Range(epi),
 	      List(GeneratorsOfGroup(x),y->ImageElm(epi,y))));
@@ -757,9 +790,6 @@ local m, fact, fg, reps, ma, idx, nm, embs, proj, kproj, k, ag, agl, ug,
   return m;
 end);
 
-# declare as the function calls itself recursively.
-DeclareGlobalFunction("DoMaxesTF");
-
 InstallGlobalFunction(DoMaxesTF,function(arg)
 local G,types,ff,maxes,lmax,q,d,dorb,dorbt,i,dorbc,dorba,dn,act,comb,smax,soc,
   a1emb,a2emb,anew,wnew,e1,e2,emb,a1,a2,mm;
@@ -808,7 +838,12 @@ local G,types,ff,maxes,lmax,q,d,dorb,dorbt,i,dorbc,dorba,dn,act,comb,smax,soc,
     fi;
     List(lmax,Size);
     Info(InfoLattice,1,Length(lmax)," socle factor maxes");
-    lmax:=List(lmax,x->PreImage(act,x));
+    # special case: p factor
+    if Length(lmax)=1 and Size(lmax[1])=1 then
+      lmax:=[Socle(q)];
+    else
+      lmax:=List(lmax,x->PreImage(act,x));
+    fi;
     for mm in lmax do mm!.type:="1";od;
     Append(maxes,lmax);
   fi;
@@ -832,7 +867,8 @@ local G,types,ff,maxes,lmax,q,d,dorb,dorbt,i,dorbc,dorba,dn,act,comb,smax,soc,
       dorba[dn]:=act;
       if Length(dorb[dn])=1 and "2" in types then
 	# type 2: almost simple
-	lmax:=MaxesAlmostSimple(ImagesSource(act[2]));
+	a1:=ImagesSource(act[2]);
+	lmax:=MaxesAlmostSimple(a1);
 	lmax:=List(lmax,x->PreImage(act[2],x));
 	# eliminate those containing the socle
 	lmax:=Filtered(lmax,x->not IsSubset(x,soc));
@@ -925,10 +961,18 @@ for mm in lmax do mm!.type:="4a";od;
   fi;
 
   # the factorhom should be able to take preimages of subgroups OK
-  maxes:=List(maxes,x->PreImage(ff.factorhom,x));
+  #maxes:=List(maxes,x->PreImage(ff.factorhom,x));
+  lmax:=[];
+  d:=Size(KernelOfMultiplicativeGeneralMapping(ff.factorhom))>1;
+  for i in maxes do
+    a2:=PreImage(ff.factorhom,i);
+    if d then
+      SetRadicalGroup(a2,PreImage(ff.factorhom,RadicalGroup(i)));
+    fi;
+    Add(lmax,a2);
+  od;
 
-
-  return Concatenation(smax,maxes);
+  return Concatenation(smax,lmax);
 end);
 
 #############################################################################
@@ -936,10 +980,10 @@ end);
 #F  MaximalSubgroupClassReps(<G>) . . . . TF method
 ##
 InstallMethod(MaximalSubgroupClassReps,"TF method",true,
-  [IsGroup and IsFinite and HasFittingFreeLiftSetup],OVERRIDENICE,DoMaxesTF);
+  [IsGroup and IsFinite and CanComputeFittingFree],OVERRIDENICE,DoMaxesTF);
 
-InstallMethod(MaximalSubgroupClassReps,"perm group",true,
-  [IsPermGroup and IsFinite],0,DoMaxesTF);
+#InstallMethod(MaximalSubgroupClassReps,"perm group",true,
+#  [IsPermGroup and IsFinite],0,DoMaxesTF);
 
 BindGlobal("NextLevelMaximals",function(g,l)
 local m;

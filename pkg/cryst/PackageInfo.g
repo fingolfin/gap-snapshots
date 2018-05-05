@@ -9,13 +9,13 @@ PackageName := "Cryst",
 
 Subtitle := "Computing with crystallographic groups",
 
+Version := "4.1.17",
 
-Version := "4.1.13",
+# Format: dd/mm/yyyy
+Date := "13/04/2018",
 
-Date := "22/12/2017",
-
-ArchiveURL := 
-  "https://www.math.uni-bielefeld.de/~gaehler/gap45/Cryst/cryst-4.1.13",
+ArchiveURL := Concatenation( 
+  "https://www.math.uni-bielefeld.de/~gaehler/gap45/Cryst/cryst-", ~.Version ),
 
 ArchiveFormats := ".tar.gz",
 
@@ -82,6 +82,13 @@ functionality provided by the package <span class=\"pkgname\">Carat</span>.",
 PackageWWWHome := 
   "https://www.math.uni-bielefeld.de/~gaehler/gap45/packages.php",
 
+SourceRepository := rec(
+  Type := "git",
+  URL := Concatenation( "https://github.com/gap-packages/",
+                        LowercaseString( ~.PackageName ) ) ),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
+SupportEmail := "gaehler@math.uni-bielefeld.de",
+
 PackageDoc  := rec(
   BookName  := "Cryst",
   ArchiveURLSubset := ["doc", "htm"],
@@ -106,7 +113,7 @@ AvailabilityTest := ReturnTrue,
 
 #BannerString := "",
 
-#TestFile := "tst/testall.g",
+TestFile := "tst/testall.g",
 
 Keywords := [ "crystallographic groups", 
               "affine crystallographic groups",
@@ -114,7 +121,7 @@ Keywords := [ "crystallographic groups",
               "color groups",
               "point group",
               "Wyckoff positions",
-              "International Tables for Cystallography",
+              "International Tables for Crystallography",
               "maximal subgroups",
               "normalizer" ]
 ));

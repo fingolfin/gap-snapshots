@@ -55,6 +55,7 @@ DeclareInfoClass( "InfoDirectProductElements" );
 ##
 DeclareCategory( "IsDirectProductElement",
         IsDenseList
+    and IsSmallList
     and IsCopyable
     and IsMultiplicativeElementWithInverse
     and IsAdditiveElementWithInverse );

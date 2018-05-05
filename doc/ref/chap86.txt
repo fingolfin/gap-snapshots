@@ -184,7 +184,7 @@
   operation  of GASMAN. A kernel type (tnum) of bags which are intended to act
   as  weak  pointers  to their subobjects must meet three conditions. Firstly,
   the  marking  function  installed  for  that tnum must use [10XMarkBagWeakly[110X for
-  those  subbags,  rather than [10XMARK_BAG[110X. Secondly, before any access to such a
+  those  subbags,  rather  than [10XMarkBag[110X. Secondly, before any access to such a
   subbag, it must be checked with [10XIS_WEAK_DEAD_BAG[110X. If that returns [9Xtrue[109X, then
   the  subbag  has  evaporated  in a recent garbage collection and must not be
   accessed.  Typically  the  reference  to  it  should  be removed. Thirdly, a

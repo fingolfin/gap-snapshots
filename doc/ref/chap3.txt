@@ -154,10 +154,6 @@
         for [21Xhelp[121X). [5XGAP[105X exits after printing the summary, all other options are
         ignored.[133X
   
-  [8X [10X-i [110X[8X[3Xfilename[103X[8X[108X
-        [33X[0;6Ychanges the name of the init file from the default [11Xinit.g[111X to [3Xfilename[103X.
-        (Usually not needed.)[133X
-  
   [8X [10X-K [110X[8X[3Xmemory[103X[8X[108X
         [33X[0;6Yis  like  the  [10X-o[110X option. But while the latter actually allocates more
         memory  if  the  system  allows  it and then prints a warning inside a
@@ -285,11 +281,6 @@
         intended  for automated testing of [5XGAP[105X. This option may be repeated to
         toggle this behavior on and off.[133X
   
-  [8X [10X-X[110X[8X[108X
-        [33X[0;6Ytells  [5XGAP[105X  to  do  a  consistency  check  of the library file and the
-        corresponding  compiled  module when loading the compiled module. This
-        option may be repeated to toggle this behavior on and off.[133X
-  
   [8X [10X-x [110X[8X[3Xlength[103X[8X[108X
         [33X[0;6YWith  this  option  you can tell [5XGAP[105X how long lines are. [5XGAP[105X uses this
         value  to  decide when to split long lines. After starting [5XGAP[105X you may
@@ -321,7 +312,7 @@
         filenames  on  the  command  line. If a file cannot be opened [5XGAP[105X will
         print an error message and will abort.[133X
   
-  [33X[0;0YAdditional options, [10X-C[110X, [10X-U[110X, [10X-P[110X, [10X-W[110X, [10X-p[110X and [10X-z[110X are used internally by the [5Xgac[105X
+  [33X[0;0YAdditional  options,  [10X-C[110X,  [10X-P[110X,  [10X-W[110X, [10X-p[110X and [10X-z[110X are used internally by the [5Xgac[105X
   script (see [14X76.3-10[114X) and/or on specific operating systems.[133X
   
   
@@ -378,7 +369,7 @@
   read,  not  all  [5XGAP[105X  functions  may  be  called in the file. Assignments of
   numbers,  lists,  and  records  are  admissible  as  well  as calls to basic
   functions  such  as  [2XConcatenation[102X  ([14X21.20-1[114X)  and  [2XJoinStringsWithSeparator[102X
-  ([14X27.7-17[114X).[133X
+  ([14X27.7-20[114X).[133X
   
   [33X[0;0YNote  that  the  file  [11Xgap.ini[111X  is  read  also  when  [5XGAP[105X  is started with a
   workspace.[133X

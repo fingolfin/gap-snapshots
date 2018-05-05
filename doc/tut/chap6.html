@@ -88,7 +88,7 @@ true
 true
 </pre></div>
 
-<p>If <span class="SimpleMath">Φ</span> is an algebraic extension of <span class="SimpleMath">F</span>, then <span class="SimpleMath">Φ</span> is also a vector space over <span class="SimpleMath">F</span> (and indeed over any subfield of <span class="SimpleMath">Φ</span> that contains <span class="SimpleMath">F</span>). This field <span class="SimpleMath">F</span> is stored in the attribute <code class="func">LeftActingDomain</code> (<a href="../../doc/ref/chap57.html#X86F070E0807DC34E"><span class="RefLink">Reference: LeftActingDomain</span></a>). In <strong class="pkg">GAP</strong>, the default is to view fields as vector spaces over their <em>prime</em> fields. By the function <code class="func">AsVectorSpace</code> (<a href="../../doc/ref/chap61.html#X7B001BAF7D5FD5D0"><span class="RefLink">Reference: AsVectorSpace</span></a>), we can view fields as vector spaces over fields other than the prime field.</p>
+<p>If <span class="SimpleMath">Φ</span> is an algebraic extension of <span class="SimpleMath">F</span>, then <span class="SimpleMath">Φ</span> is also a vector space over <span class="SimpleMath">F</span> (and indeed over any subfield of <span class="SimpleMath">Φ</span> that contains <span class="SimpleMath">F</span>). This field <span class="SimpleMath">F</span> is stored in the attribute <code class="func">LeftActingDomain</code> (<span class="RefLink">Reference: LeftActingDomain</span>). In <strong class="pkg">GAP</strong>, the default is to view fields as vector spaces over their <em>prime</em> fields. By the function <code class="func">AsVectorSpace</code> (<span class="RefLink">Reference: AsVectorSpace</span>), we can view fields as vector spaces over fields other than the prime field.</p>
 
 
 <div class="example"><pre>
@@ -103,7 +103,7 @@ true
 GF(2^2)
 </pre></div>
 
-<p>A vector space has three important attributes: its <em>field</em> of definition, its <em>dimension</em> and a <em>basis</em>. We already encountered the function <code class="func">LeftActingDomain</code> (<a href="../../doc/ref/chap57.html#X86F070E0807DC34E"><span class="RefLink">Reference: LeftActingDomain</span></a>) in the example above. It extracts the field of definition of a vector space. The function <code class="func">Dimension</code> (<a href="../../doc/ref/chap57.html#X7E6926C6850E7C4E"><span class="RefLink">Reference: Dimension</span></a>) provides the dimension of the vector space.</p>
+<p>A vector space has three important attributes: its <em>field</em> of definition, its <em>dimension</em> and a <em>basis</em>. We already encountered the function <code class="func">LeftActingDomain</code> (<span class="RefLink">Reference: LeftActingDomain</span>) in the example above. It extracts the field of definition of a vector space. The function <code class="func">Dimension</code> (<span class="RefLink">Reference: Dimension</span>) provides the dimension of the vector space.</p>
 
 
 <div class="example"><pre>
@@ -127,7 +127,7 @@ GF(3)
 
 <p>In <strong class="pkg">GAP</strong>, bases are special lists of vectors. They are used mainly for the computation of coefficients and linear combinations.</p>
 
-<p>Given a vector space <span class="SimpleMath">V</span>, a basis of <span class="SimpleMath">V</span> is obtained by simply applying the function <code class="func">Basis</code> (<a href="../../doc/ref/chap61.html#X837BE54C80DE368E"><span class="RefLink">Reference: Basis</span></a>) to <span class="SimpleMath">V</span>. The vectors that form the basis are extracted from the basis by <code class="func">BasisVectors</code> (<a href="../../doc/ref/chap61.html#X7B1F17AE8027A590"><span class="RefLink">Reference: BasisVectors</span></a>).</p>
+<p>Given a vector space <span class="SimpleMath">V</span>, a basis of <span class="SimpleMath">V</span> is obtained by simply applying the function <code class="func">Basis</code> (<span class="RefLink">Reference: Basis</span>) to <span class="SimpleMath">V</span>. The vectors that form the basis are extracted from the basis by <code class="func">BasisVectors</code> (<span class="RefLink">Reference: BasisVectors</span>).</p>
 
 
 <div class="example"><pre>
@@ -141,7 +141,7 @@ SemiEchelonBasis( &lt;vector space over Rationals, with
 [ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 0, 1 ], [ 2, 4 ] ] ]
 </pre></div>
 
-<p>The coefficients of a vector relative to a given basis are found by the function <code class="func">Coefficients</code> (<a href="../../doc/ref/chap61.html#X80B32F667BF6AFD8"><span class="RefLink">Reference: Coefficients</span></a>). Furthermore, linear combinations of the basis vectors are constructed using <code class="func">LinearCombination</code> (<a href="../../doc/ref/chap61.html#X7D305AB3834889BF"><span class="RefLink">Reference: LinearCombination</span></a>).</p>
+<p>The coefficients of a vector relative to a given basis are found by the function <code class="func">Coefficients</code> (<span class="RefLink">Reference: Coefficients</span>). Furthermore, linear combinations of the basis vectors are constructed using <code class="func">LinearCombination</code> (<span class="RefLink">Reference: LinearCombination</span>).</p>
 
 
 <div class="example"><pre>
@@ -158,7 +158,7 @@ SemiEchelonBasis( &lt;vector space over Rationals, with
 [ 1, 0 ]
 </pre></div>
 
-<p>In the above examples we have seen that <strong class="pkg">GAP</strong> often chooses the basis it wants to work with. It is also possible to construct bases with prescribed basis vectors by giving a list of these vectors as second argument to <code class="func">Basis</code> (<a href="../../doc/ref/chap61.html#X837BE54C80DE368E"><span class="RefLink">Reference: Basis</span></a>).</p>
+<p>In the above examples we have seen that <strong class="pkg">GAP</strong> often chooses the basis it wants to work with. It is also possible to construct bases with prescribed basis vectors by giving a list of these vectors as second argument to <code class="func">Basis</code> (<span class="RefLink">Reference: Basis</span>).</p>
 
 
 <div class="example"><pre>
@@ -170,7 +170,7 @@ SemiEchelonBasis( &lt;vector space over Rationals, with 2 generators&gt;,
 [ 1, 2 ]
 </pre></div>
 
-<p>We can construct subspaces and quotient spaces of vector spaces. The natural projection map (constructed by <code class="func">NaturalHomomorphismBySubspace</code> (<a href="../../doc/ref/chap61.html#X8494AA5D7C3B88AD"><span class="RefLink">Reference: NaturalHomomorphismBySubspace</span></a>)), connects a vector space with its quotient space.</p>
+<p>We can construct subspaces and quotient spaces of vector spaces. The natural projection map (constructed by <code class="func">NaturalHomomorphismBySubspace</code> (<span class="RefLink">Reference: NaturalHomomorphismBySubspace</span>)), connects a vector space with its quotient space.</p>
 
 
 <div class="example"><pre>
@@ -214,7 +214,7 @@ true
 ( GF(3^2)^[ 3, 3 ] )
 </pre></div>
 
-<p>An algebra can be constructed from generators using the function <code class="func">Algebra</code> (<a href="../../doc/ref/chap62.html#X7B213851791A594B"><span class="RefLink">Reference: Algebra</span></a>). It takes as arguments the field of coefficients and a list of generators. Of course the coefficient field and the generators must fit together; if we want to construct an algebra of ordinary matrices, we may take the field generated by the entries of the generating matrices, or a subfield or extension field.</p>
+<p>An algebra can be constructed from generators using the function <code class="func">Algebra</code> (<span class="RefLink">Reference: Algebra</span>). It takes as arguments the field of coefficients and a list of generators. Of course the coefficient field and the generators must fit together; if we want to construct an algebra of ordinary matrices, we may take the field generated by the entries of the generating matrices, or a subfield or extension field.</p>
 
 
 <div class="example"><pre>
@@ -225,7 +225,7 @@ true
 
 <p>An interesting class of algebras for which many special algorithms are implemented is the class of <em>Lie algebras</em>. They arise for example as algebras of matrices whose product is defined by the Lie bracket <span class="SimpleMath">[ A, B ] = A * B - B * A</span>, where <span class="SimpleMath">*</span> denotes the ordinary matrix product.</p>
 
-<p>Since the multiplication of objects in <strong class="pkg">GAP</strong> is always assumed to be the operation <code class="code">*</code> (resp. the infix operator <code class="code">*</code>), and since there is already the "ordinary" matrix product defined for ordinary matrices, as mentioned above, we must use a different construction for matrices that occur as elements of Lie algebras. Such Lie matrices can be constructed by <code class="func">LieObject</code> (<a href="../../doc/ref/chap64.html#X87F121978775AF48"><span class="RefLink">Reference: LieObject</span></a>) from ordinary matrices, the sum and product of Lie matrices are again Lie matrices.</p>
+<p>Since the multiplication of objects in <strong class="pkg">GAP</strong> is always assumed to be the operation <code class="code">*</code> (resp. the infix operator <code class="code">*</code>), and since there is already the "ordinary" matrix product defined for ordinary matrices, as mentioned above, we must use a different construction for matrices that occur as elements of Lie algebras. Such Lie matrices can be constructed by <code class="func">LieObject</code> (<span class="RefLink">Reference: LieObject</span>) from ordinary matrices, the sum and product of Lie matrices are again Lie matrices.</p>
 
 
 <div class="example"><pre>
@@ -241,7 +241,7 @@ false
 true
 </pre></div>
 
-<p>Given a field <code class="code">F</code> and a list <code class="code">mats</code> of Lie objects over <code class="code">F</code>, we can construct the Lie algebra generated by <code class="code">mats</code> using the function <code class="func">Algebra</code> (<a href="../../doc/ref/chap62.html#X7B213851791A594B"><span class="RefLink">Reference: Algebra</span></a>). Alternatively, if we do not want to be bothered with the function <code class="func">LieObject</code> (<a href="../../doc/ref/chap64.html#X87F121978775AF48"><span class="RefLink">Reference: LieObject</span></a>), we can use the function <code class="func">LieAlgebra</code> (<a href="../../doc/ref/chap64.html#X7D362350824FA115"><span class="RefLink">Reference: LieAlgebraByStructureConstants</span></a>) that takes a field and a list of ordinary matrices, and constructs the Lie algebra generated by the corresponding Lie matrices. Note that this means that the ordinary matrices used in the call of <code class="func">LieAlgebra</code> (<a href="../../doc/ref/chap64.html#X7D362350824FA115"><span class="RefLink">Reference: LieAlgebraByStructureConstants</span></a>) are not contained in the returned Lie algebra.</p>
+<p>Given a field <code class="code">F</code> and a list <code class="code">mats</code> of Lie objects over <code class="code">F</code>, we can construct the Lie algebra generated by <code class="code">mats</code> using the function <code class="func">Algebra</code> (<span class="RefLink">Reference: Algebra</span>). Alternatively, if we do not want to be bothered with the function <code class="func">LieObject</code> (<span class="RefLink">Reference: LieObject</span>), we can use the function <code class="func">LieAlgebra</code> (<span class="RefLink">Reference: LieAlgebraByStructureConstants</span>) that takes a field and a list of ordinary matrices, and constructs the Lie algebra generated by the corresponding Lie matrices. Note that this means that the ordinary matrices used in the call of <code class="func">LieAlgebra</code> (<span class="RefLink">Reference: LieAlgebraByStructureConstants</span>) are not contained in the returned Lie algebra.</p>
 
 
 <div class="example"><pre>
@@ -259,7 +259,7 @@ false
 
 <p>Finally two numbers are added to the table. The first number can be 1, -1, or 0. If it is 1, then the table is known to be symmetric, i.e., <span class="SimpleMath">c_ij^k = c_ji^k</span>. If this number is -1, then the table is known to be antisymmetric (this happens for instance when the algebra is a Lie algebra). The remaining case, 0, occurs in all other cases. The second number that is added is the zero element of the field over which the algebra is defined.</p>
 
-<p>Empty structure constants tables are created by the function <code class="func">EmptySCTable</code> (<a href="../../doc/ref/chap62.html#X7F1203A1793411DF"><span class="RefLink">Reference: EmptySCTable</span></a>), which takes a dimension <span class="SimpleMath">d</span>, a zero element <span class="SimpleMath">z</span>, and optionally one of the strings <code class="code">"symmetric"</code>, <code class="code">"antisymmetric"</code>, and returns an empty structure constants table <span class="SimpleMath">T</span> corresponding to a <span class="SimpleMath">d</span>-dimensional algebra over a field with zero element <span class="SimpleMath">z</span>. Structure constants can be entered into the table <span class="SimpleMath">T</span> using the function <code class="func">SetEntrySCTable</code> (<a href="../../doc/ref/chap62.html#X817BD086876EC1C4"><span class="RefLink">Reference: SetEntrySCTable</span></a>). It takes four arguments, namely <span class="SimpleMath">T</span>, two indices <span class="SimpleMath">i</span> and <span class="SimpleMath">j</span>, and a list of the form <span class="SimpleMath">[ c_ij^{k_1}, k_1, c_ij^{k_2}, k_2, ... ]</span>. In this call to <code class="code">SetEntrySCTable</code>, the product of the <span class="SimpleMath">i</span>-th and the <span class="SimpleMath">j</span>-th basis vector in any algebra described by <span class="SimpleMath">T</span> is set to <span class="SimpleMath">∑_l c_ij^{k_l} x_{k_l}</span>. (Note that in the empty table, this product was zero.) If <span class="SimpleMath">T</span> knows that it is (anti)symmetric, then at the same time also the product of the <span class="SimpleMath">j</span>-th and the <span class="SimpleMath">i</span>-th basis vector is set appropriately.</p>
+<p>Empty structure constants tables are created by the function <code class="func">EmptySCTable</code> (<span class="RefLink">Reference: EmptySCTable</span>), which takes a dimension <span class="SimpleMath">d</span>, a zero element <span class="SimpleMath">z</span>, and optionally one of the strings <code class="code">"symmetric"</code>, <code class="code">"antisymmetric"</code>, and returns an empty structure constants table <span class="SimpleMath">T</span> corresponding to a <span class="SimpleMath">d</span>-dimensional algebra over a field with zero element <span class="SimpleMath">z</span>. Structure constants can be entered into the table <span class="SimpleMath">T</span> using the function <code class="func">SetEntrySCTable</code> (<span class="RefLink">Reference: SetEntrySCTable</span>). It takes four arguments, namely <span class="SimpleMath">T</span>, two indices <span class="SimpleMath">i</span> and <span class="SimpleMath">j</span>, and a list of the form <span class="SimpleMath">[ c_ij^{k_1}, k_1, c_ij^{k_2}, k_2, ... ]</span>. In this call to <code class="code">SetEntrySCTable</code>, the product of the <span class="SimpleMath">i</span>-th and the <span class="SimpleMath">j</span>-th basis vector in any algebra described by <span class="SimpleMath">T</span> is set to <span class="SimpleMath">∑_l c_ij^{k_l} x_{k_l}</span>. (Note that in the empty table, this product was zero.) If <span class="SimpleMath">T</span> knows that it is (anti)symmetric, then at the same time also the product of the <span class="SimpleMath">j</span>-th and the <span class="SimpleMath">i</span>-th basis vector is set appropriately.</p>
 
 <p>In the following example we temporarily increase the line length limit from its default value 80 to 82 in order to make the long output expression fit into one line.</p>
 
@@ -273,7 +273,7 @@ false
   [ [ [ 1, 2 ], [ 1/2, 1/3 ] ], [ [  ], [  ] ] ], 1, 0 ]
 </pre></div>
 
-<p>If we have defined a structure constants table, then we can construct the corresponding algebra by <code class="func">AlgebraByStructureConstants</code> (<a href="../../doc/ref/chap62.html#X7CC58DFD816E6B65"><span class="RefLink">Reference: AlgebraByStructureConstants</span></a>).</p>
+<p>If we have defined a structure constants table, then we can construct the corresponding algebra by <code class="func">AlgebraByStructureConstants</code> (<span class="RefLink">Reference: AlgebraByStructureConstants</span>).</p>
 
 
 <div class="example"><pre>
@@ -281,7 +281,7 @@ false
 &lt;algebra of dimension 2 over Rationals&gt;
 </pre></div>
 
-<p>If we know that a structure constants table defines a Lie algebra, then we can construct the corresponding Lie algebra by <code class="func">LieAlgebraByStructureConstants</code> (<a href="../../doc/ref/chap64.html#X7D362350824FA115"><span class="RefLink">Reference: LieAlgebraByStructureConstants</span></a>); the algebra returned by this function knows that it is a Lie algebra, so <strong class="pkg">GAP</strong> need not check the Jacobi identity.</p>
+<p>If we know that a structure constants table defines a Lie algebra, then we can construct the corresponding Lie algebra by <code class="func">LieAlgebraByStructureConstants</code> (<span class="RefLink">Reference: LieAlgebraByStructureConstants</span>); the algebra returned by this function knows that it is a Lie algebra, so <strong class="pkg">GAP</strong> need not check the Jacobi identity.</p>
 
 
 <div class="example"><pre>
@@ -332,7 +332,7 @@ CanonicalBasis( &lt;algebra of dimension 3 over GF(2)&gt; )
 &lt;algebra of dimension 1 over Rationals&gt;
 </pre></div>
 
-<p>The call <code class="code">B:= A/idA</code> creates a new algebra that does not "know" about its connection with <code class="code">A</code>. If we want to connect an algebra with its factor via a homomorphism, then we first have to create the homomorphism (<code class="func">NaturalHomomorphismByIdeal</code> (<a href="../../doc/ref/chap56.html#X83D53D98809EC461"><span class="RefLink">Reference: NaturalHomomorphismByIdeal</span></a>)). After this we create the factor algebra from the homomorphism by the function <code class="func">ImagesSource</code> (<a href="../../doc/ref/chap32.html#X7D23C1CE863DACD8"><span class="RefLink">Reference: ImagesSource</span></a>). In the next example we divide an algebra <code class="code">A</code> by its radical and lift the central idempotents of the factor to the original algebra <code class="code">A</code>.</p>
+<p>The call <code class="code">B:= A/idA</code> creates a new algebra that does not "know" about its connection with <code class="code">A</code>. If we want to connect an algebra with its factor via a homomorphism, then we first have to create the homomorphism (<code class="func">NaturalHomomorphismByIdeal</code> (<span class="RefLink">Reference: NaturalHomomorphismByIdeal</span>)). After this we create the factor algebra from the homomorphism by the function <code class="func">ImagesSource</code> (<span class="RefLink">Reference: ImagesSource</span>). In the next example we divide an algebra <code class="code">A</code> by its radical and lift the central idempotents of the factor to the original algebra <code class="code">A</code>.</p>
 
 
 <div class="example"><pre>
@@ -358,7 +358,7 @@ CanonicalBasis( &lt;algebra of dimension 3 over GF(2)&gt; )
 [ [ 1, 0, 0 ], [ 0, 0, 0 ], [ 0, 0, 0 ] ]
 </pre></div>
 
-<p>Structure constants tables for the simple Lie algebras are present in <strong class="pkg">GAP</strong>. They can be constructed using the function <code class="func">SimpleLieAlgebra</code> (<a href="../../doc/ref/chap64.html#X7933F05F7DE342AB"><span class="RefLink">Reference: SimpleLieAlgebra</span></a>). The Lie algebras constructed by this function come with a root system attached.</p>
+<p>Structure constants tables for the simple Lie algebras are present in <strong class="pkg">GAP</strong>. They can be constructed using the function <code class="func">SimpleLieAlgebra</code> (<span class="RefLink">Reference: SimpleLieAlgebra</span>). The Lie algebras constructed by this function come with a root system attached.</p>
 
 
 <div class="example"><pre>
@@ -404,7 +404,7 @@ true
 (1/3)*e+(-1/3)*i+(-1/3)*j
 </pre></div>
 
-<p>So <strong class="pkg">GAP</strong> knows about this fact. As in any ring, we can look at groups of units. (The function <code class="func">StarCyc</code> (<a href="../../doc/ref/chap18.html#X7E361C057E97CA66"><span class="RefLink">Reference: StarCyc</span></a>) used below computes the unique algebraic conjugate of an element in a quadratic subfield of a cyclotomic field.)</p>
+<p>So <strong class="pkg">GAP</strong> knows about this fact. As in any ring, we can look at groups of units. (The function <code class="func">StarCyc</code> (<span class="RefLink">Reference: StarCyc</span>) used below computes the unique algebraic conjugate of an element in a quadratic subfield of a cyclotomic field.)</p>
 
 
 <div class="example"><pre>
@@ -468,7 +468,7 @@ Group([ (2,3,5,9,15)(4,7,12,8,14)(10,17,23,20,24)(11,19,22,16,13),
 
 <h4>6.3 <span class="Heading">Further Information about Vector Spaces and Algebras</span></h4>
 
-<p>More information about vector spaces can be found in Chapter <a href="../../doc/ref/chap61.html#X7DAD6700787EC845"><span class="RefLink">Reference: Vector Spaces</span></a>. Chapter <a href="../../doc/ref/chap62.html#X7DDBF6F47A2E021C"><span class="RefLink">Reference: Algebras</span></a> deals with the functionality for general algebras. Furthermore, concerning special functions for Lie algebras, there is Chapter <a href="../../doc/ref/chap64.html#X78559D4C800AF58A"><span class="RefLink">Reference: Lie Algebras</span></a>.</p>
+<p>More information about vector spaces can be found in Chapter <span class="RefLink">Reference: Vector Spaces</span>. Chapter <span class="RefLink">Reference: Algebras</span> deals with the functionality for general algebras. Furthermore, concerning special functions for Lie algebras, there is Chapter <span class="RefLink">Reference: Lie Algebras</span>.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7.html">[Next Chapter]</a>&nbsp;  </div>

@@ -142,7 +142,7 @@
 
 <p>The next lines of <strong class="pkg">GAP</strong> code above create the categories <code class="code">CategoryCollections( IsMyZmodnZObj )</code> and two higher levels of collections categories of this, which will be needed later; it is important to create these categories before collections of the objects in <code class="code">IsMyZmodnZObj</code> actually arise.</p>
 
-<p>Note that the only difference between <code class="func">DeclareCategory</code> (<a href="chap79_mj.html#X879DE2A17A6C6E92"><span class="RefLink">79.18-1</span></a>) and <code class="func">NewCategory</code> (<a href="chap79_mj.html#X87F68F887B44DBBD"><span class="RefLink">79.1-1</span></a>) is that in a call to <code class="func">DeclareCategory</code> (<a href="chap79_mj.html#X879DE2A17A6C6E92"><span class="RefLink">79.18-1</span></a>), a variable corresponding to the first argument is set to the new category, and this variable is read-only (see <a href="chap79_mj.html#X87E29BA57C8208A4"><span class="RefLink">79.18</span></a>). The same holds for <code class="func">DeclareRepresentation</code> (<a href="chap79_mj.html#X7C81FB2682AE54CD"><span class="RefLink">79.18-2</span></a>) and <code class="func">NewRepresentation</code> (<a href="chap79_mj.html#X7CC8106F809E15CF"><span class="RefLink">79.2-1</span></a>) etc.</p>
+<p>Note that the only difference between <code class="func">DeclareCategory</code> (<a href="chap79_mj.html#X879DE2A17A6C6E92"><span class="RefLink">79.18-1</span></a>) and <code class="func">NewCategory</code> (<a href="chap79_mj.html#X87F68F887B44DBBD"><span class="RefLink">79.1-1</span></a>) is that in a call to <code class="func">DeclareCategory</code> (<a href="chap79_mj.html#X879DE2A17A6C6E92"><span class="RefLink">79.18-1</span></a>), a variable corresponding to the first argument is set to the new category, and this variable is read-only (see <a href="chap79_mj.html#X87E29BA57C8208A4"><span class="RefLink">79.18</span></a>). The same holds for <code class="func">DeclareRepresentation</code> (<a href="chap79_mj.html#X7C81FB2682AE54CD"><span class="RefLink">79.18-8</span></a>) and <code class="func">NewRepresentation</code> (<a href="chap79_mj.html#X7CC8106F809E15CF"><span class="RefLink">79.2-1</span></a>) etc.</p>
 
 <p>There is no analogue of categories in the implementation in Section <a href="chap81_mj.html#X81008A74838A792E"><span class="RefLink">81.1</span></a>, since there it was not necessary to distinguish residue classes from other <strong class="pkg">GAP</strong> objects. Note that the functions there assumed that their arguments were residue classes, and the user was responsible not to call them with other arguments. Thus an important aspect of types is to describe arguments of functions explicitly.</p>
 
@@ -510,7 +510,8 @@ fail
 [ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">syl3:= SylowSubgroup( g, 3 );;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">gens:= GeneratorsOfGroup( syl3 );</span>
-[ [ [ ( 1 mod 16 ), ( 7 mod 16 ) ], [ ( 11 mod 16 ), ( 14 mod 16 ) ] ] ]
+[ [ [ ( 1 mod 16 ), ( 7 mod 16 ) ], [ ( 11 mod 16 ), ( 14 mod 16 ) ] 
+     ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Order( gens[1] );</span>
 3
 </pre></div>

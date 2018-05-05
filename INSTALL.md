@@ -76,20 +76,16 @@ common problems with the installation.
 2 Getting the Archive
 =====================
 
-You can get archives for the GAP distribution from the GAP website
-<https://www.gap-system.org>. You need to download one of the archives
-named in the format
+You can get archives for the GAP distribution from the GAP website at
+<https://www.gap-system.org/Releases/>. If you use Unix (including OS X),
+you need to download the GAP source distribution, that is, a file named
 
-	gap4rXpY_<timestamp>.<archive_type>
+    gap-4.X.Y.tar.bz2
 
-for GAP 4.X.Y. The `<timestamp>` is updated whenever there is a change
-to the GAP system or any package.
+for GAP 4.X.Y. Alternatively, you can also use the `.tar.gz` or `.zip`
+archives.
 
-If you use Unix (including OS X), you can use the `.tar.gz`, `.tar.bz2` or
-`.zip` archives containing the GAP source distribution. Such archive will
-unpack to the directory named `gap4rX`.
-
-If you use Windows, then use the `.exe` installer which contains binaries
+If you use Windows, then download the `.exe` installer which contains binaries
 for GAP and some packages and provides the standard installation procedure.
 
 
@@ -103,7 +99,8 @@ Unix (including OS X)
 ---------------------
 
 Under Unix style operating systems (such as Linux and OS X), unpack the
-archive `gap4rXpY_<timestamp>` in whatever place you want GAP to reside.
+archive `gap-4.X.Y.tar.bz2` in whatever place you want GAP to reside.
+It will expand into a directory named `gap-4.X.Y`.
 
 (If you unpack the archive as root user under Unix, make sure that you
 issue the command `umask 022` before, to ensure that users will have
@@ -116,11 +113,11 @@ If you are using the `.exe` installer, simply download and run it. It will
 offer a standard installation procedure, during which you will be able to
 select installation path.
 
-Note that the path to the GAP directory should not contain spaces.
-For example, you may install it in a directory named like `C:\gap4rX`
-(default), `D:\gap4rXpY` or `C:\Math\GAP\gap4rX`, but you must not install
-it in a directory named like `C:\Users\alice\My Documents\gap4rX` or
-`C:\Program files\gap4rX` etc.
+Note that the path to the GAP directory must not contain spaces.
+For example, you may install it in a directory named like `C:\gap-4.X.Y`
+(default), `D:\gap` or `C:\Math\GAP\my-gap-4.X.Y`, but you must not install
+it in a directory named like `C:\Users\alice\My Documents\gap-4.X.Y` or
+`C:\Program files\gap-4.X.Y` etc.
 
 
 4 Compilation
@@ -131,7 +128,7 @@ binaries in place. Under Unix you will have to compile such a binary
 yourself. (OS X users: please see section "GAP for OS X" below for
 additional information about compilation)
 
-Change to the directory `gap4rX` (which you just created by unpacking).
+Change to the directory `gap-4.X.Y` (which you just created by unpacking).
 To get started quickly you may simply build GAP with default settings
 by issuing the two commands
 
@@ -143,11 +140,6 @@ by issuing the two commands
 Both will produce a lot of text output. You should end up with a shell
 script `bin/gap.sh` which you can use to start GAP. If you want, you can
 copy this script later to a directory that is listed in your search path.
-
-(Note: In fact, what is produced is a script called `bin/gap-<configname>.sh`,
-where `<configname>` is a name which you specify or a default string, and
-`bin/gap.sh` is a link to that script. See the section "Configure options"
-below.
 
 OS X users please note that this script must be started from within the
 Terminal Application. It is not possible to start GAP by clicking this
@@ -171,31 +163,31 @@ description of each is also available via
 GMP
 ---
 
-By default, GAP uses the external library GMP (see
-<http://www.gmplib.org>) for large integer arithmetic, replacing the built-in
-code used in previous versions and achieving a significant speed-up in
-related computations. There is a version of GMP included with the GAP
-archive you downloaded and this will be used unless otherwise requested.
-You can configure GMP use as follows:
+GAP 4 uses the external library GMP (see <http://www.gmplib.org>) for large
+integer arithmetic, replacing the built-in code used in previous versions
+and achieving a significant speed-up in related computations. There is a
+version of GMP included with the GAP archive you downloaded and this will
+be used if GAP does not find a version of GMP already installed on your
+system. You can configure which GMP GAP uses as follows:
 
-    ./configure --with-gmp=yes|no|system|"path"
+./configure --with-gmp=builtin|PREFIX
 
-If the argument you supply is `yes`, then the version of GMP bundled with
-this GAP will be used. This is the default. If the argument is `system` you
-are telling GAP that the GMP library is reachable with the standard search
-path, under `/usr` or `/usr/local`.
+If this option is *not* given, GAP will try to find a suitable version of GMP
+can be found using the specified CPPFLAGS, CFLAGS and LDFLAGS. If not,
+it will fallback to compiling its own version of GMP.
 
-You may instead give the complete path to a directory which contains the
-library. If the argument is `no`, original GAP large integer functionality
-will be used instead of GMP.
+You can force GAP to build its own copy of GMP by passing `--with-gmp=builtin`.
+Finally, you pass a prefix path where GAP should search for a copy of GMP;
+i.e., `--with-gmp=PREFIX` instructs GAP to search for the header file `gmp.h`
+in `PREFIX/includes`, and the library itself in `PREFIX/lib`.
 
-Note that `--with-gmp` is equivalent to `--with-gmp=yes` and `--without-gmp`
-is equivalent to `--with-gmp=no`.
+For historical reasons, you may also pass `--with-gmp=system`, which is
+simply ignored by GAP (i.e., the default behavior described above is used).
 
 Readline
 --------
 
-GAP optionally also uses the external library Readline (see
+GAP optionally also uses the external library GNU Readline (see
 <http://www.gnu.org/software/readline>) for better command line
 editing. GAP will use this library by default if it is available on
 your system. You can configure Readline use as follows:
@@ -235,38 +227,8 @@ use. Note that building in 64-bit mode on a 32-bit architecture is not
 supported.
 
 It is possible (on a 64-bit machine) to have builds in both 32- and 64-bit
-modes "side by side". To do this you could unpack your GAP archive and then
-do:
-
-    ./configure ABI=64
-    make
-    ./configure ABI=32
-    make
-
-This will create both scripts `bin/gap-default32.sh` and `bin/gap-default64.sh`
-(or alternative names if you use the `CONFIGNAME` variable as below) and
-these can be called directly to choose the version you want. The link
-`bin/gap.sh` will point to the most recent of these.
-
-The configure step creates the `Makefile`, needed for the make command. You
-should not need to provide any arguments to `make` in order to build GAP.
-
-Configuration name
-------------------
-
-In order to facilitate having several builds of GAP side-by-side, perhaps
-in the case that you have both 32 and 64-bit builds or for other different
-combinations of configuration options, the configure process allows you to
-choose a configuration name as follows:
-
-    ./configure CONFIGNAME="name"
-
-where `name` is a string of your choice. Examples might include `withGMP32`,
-`withGMP64`, etc., but any name which is meaningful to you is fine. If you do
-not specify `CONFIGNAME`, then it defaults to `defaultXX` where `XX` is `32`
-or `64`, according to the (specified or detected) value of `ABI`.
-
-The configure options just described may be combined as you like or omitted.
+modes using "out of tree builds". For details, please refer to the file
+`README.buildsys.md`.
 
 
 6 Testing the installation
@@ -279,7 +241,7 @@ users (including those on OS X) should type
 
 Windows users should start GAP with the batch file
 
-    C:\gap4rX\bin\gap.bat
+    C:\gap-4.X.Y\bin\gap.bat
 
 GAP should start up with its banner and after a little while give you a
 command prompt
@@ -324,23 +286,24 @@ should give the following lines:
 
 If you want to run a quick test of your GAP installation (though this is
 not required), you can read in a test script that exercises some GAP's
-capabilities. The test requires about 1 GB of memory and runs about one
-minute on an Intel Core 2 Duo / 2.53 GHz machine. You will get a large
+capabilities. The test requires about 1 GB of memory and should run in
+under a minute on an up-to-date desktop computer. You will get a large
 number of lines with output about the progress of the tests, for example:
 
     gap> Read( Filename( DirectoriesLibrary( "tst" ), "testinstall.g" ) );
+    You should start GAP4 using `gap -A -x 80 -r -m 100m -o 1g -K 2g'.
 
-    test file         GAP4stones     time(msec)
-    -------------------------------------------
-    testing: ..../gap4rX/tst/testinstall/flush.tst
-    flush.tst                  0             57
-    testing: ..../gap4rX/tst/testinstall/varargs.tst
-    varargs.tst                0             51
+    Architecture: SOMETHING-SOMETHING-gcc-default64
+
+    testing: ..../gap-4.X.Y/tst/testinstall/alghom.tst
+         105 msec for alghom.tst
+    testing: ..../gap-4.X.Y/tst/testinstall/algmat.tst
+        1216 msec for algmat.tst
     [ further lines deleted ]
-    testing: ..../gap4rX/tst/testinstall/grppcnrm.tst
-    grppcnrm.tst            9668          14071
-    -------------------------------------------
-    total                   8317          44347
+    testing: ..../gap-4.X.Y/tst/testinstall/zmodnze.tst
+          90 msec for zmodnze.tst
+    -----------------------------------
+    total     52070 msec
 
     #I  No errors detected while testing
 
@@ -366,7 +329,7 @@ to start GAP instead of `gapcmd.bat`.
 ==========
 
 The GAP distribution already contains all the GAP packages which we
-redistribute in the `gap4rX/pkg` directory, and for packages that consist
+redistribute in the `gap-4.X.Y/pkg` directory, and for packages that consist
 only of GAP code no further installation is necessary.
 
 Some packages however contain external binaries that will require separate
@@ -387,7 +350,7 @@ To help with this tedious process, we ship a shell script called
 `bin/BuildPackages.sh` that will compile most of the packages that require
 compilation on Unix systems (including Linux and OS X) with sufficiently
 many libraries, headers and tools available. To use it, change to the
-`gap4rX/pkg` directory and execute the script like this:
+`gap-4.X.Y/pkg` directory and execute the script like this:
 
     ../bin/BuildPackages.sh
 
@@ -432,11 +395,10 @@ the GAP Reference manual).
 
 There also is (if installed) an HTML version of some books that can be
 viewed with an HTML browser, see Section "Changing the Help Viewer" of the
-GAP Reference manual. Some of these use unicode characters for mathematical
-formulae. (Firefox, Konqueror and Safari all support unicode characters.)
+GAP Reference manual.
 
 The manual is also available in pdf format. In the full distribution these
-files are included in the directory `gap4rX/doc` in the subdirectories
+files are included in the directory `gap-4.X.Y/doc` in the subdirectories
 `tut` (a beginner's tutorial), `ref` (the reference manual) and `changes`
 (changes from earlier versions).
 
@@ -582,7 +544,7 @@ variables. However such settings may conflict with the automatic
 configuration process. If configure produces strange error messages about
 not being able to run the compiler, check whether environment variables
 that might affect the compilation (in particular `CC`, `LD`, `CFLAGS`,
-`LDFLAGS` and `C_INCLUDE_PATH`) are set and reset them using `unsetenv`.
+`LDFLAGS` and `CPPFLAGS`) are set and reset them using `unsetenv`.
 
 
 12 Optimization and Compiler Options
@@ -594,42 +556,39 @@ possible optimisation level, but you might need to tell make about it.
 
 If you want to compile GAP with further compiler options (for example
 specific processor optimisations) you will have to assign them to the
-variable COPTS as in the following example when calling make:
-
-    make COPTS=-option
+variables CFLAGS, CPPFLAGS and LDFLAGS, then re-run configure and make.
 
 If there are several compiler options or if they contain spaces you might
 have to enclose them by quotes depending on the shell you are
 using.
 
-The configure process also introduces some default compiler options. (See
-the Makefile in the `bin/<architecture>` directory for details.) You can
-eliminate these by assigning the variable `CFLAGS` (which contains the
-default options and `COPTS`) to the desired list of compiler options in the
-same way as you would assign `COPTS`.
+The configure process also introduces some default compiler options. You can
+eliminate these by assigning the replacement options to the variable `CFLAGS`.
 
-The recommended C compiler for GAP is the GNU C compiler gcc. The clang
-compiler appears to compile GAP correctly but, just as for gcc, some
-versions have problems with the GMP library. If you cannot build GAP -
-with or without GMP - using a particular compiler, you may wish to try
-another compiler or different version of the same compiler.
+The recommended C compiler for GAP is the GNU C compiler gcc version 4.8
+or later. The Clang compiler version 3.0 and later also should work fine.
+If you use another compiler, please let us know your experience with using
+it to compile GAP.
 
-If you do wish to use another compiler, you should run the command `make
-clean` in the GAP root directory, set the environment variable `CC` to
-the name of your preferred compiler and then rerun configure and make.
-You may have to experiment to determine the best values for `CFLAGS`
-and/or `COPTS` as described above. Please let us (<support@gap-system.org>)
-know the results of your experiments.
+If you do wish to use GAP with a specific compiler, you can set the environment
+variable `CC` to the name of your preferred compiler and then rerun configure
+and make.
 
 We also recommend that you install a C++ compiler before compiling GAP;
 while GAP itself does not need it, there are GAP packages which do
 require a C++ compiler.
 
+As an example, here is how one can configure GAP to compile with Clang 5
+(assuming it is installed on your system), with custom CFLAGS and debug mode
+enabled:
+
+    ./configure CC=clang-5.0 CFLAGS="-g -Og" --enable-debug
+
 
 13 GAP for OS X
-===================
+===============
 
-Currently we provide no precompiler binary distribution for OS X. However,
+Currently we provide no precompiled binary distribution for OS X. However,
 since OS X is an operating system in the Unix family, you can follow the
 Unix installation guidelines to compile GAP; then you will be able to use
 all features of GAP as well as all packages. However for installation you
@@ -641,15 +600,18 @@ First, note that you should get the Unix type GAP archives, i.e. one of
 `.zip`, `.tar.gz` or `.tar.bz2` archives, but not the `-win.zip` archive
 (you won't be able to compile the program as given in the `-win.zip` archive).
 
-Next, you will need a compiler and build tools like `make`. These tools are
-included in the "Xcode" application which is not installed by default on a
-new Mac. On all recent versions of OS X, you can install it for free via
-the App Store. For older versions for OS X, you may need to register with
-Apple as a developer and download it from <http://developer.apple.com>.
-
 To compile and run GAP you will have to open the Terminal application and
 type the necessary Unix commands into its window. The Terminal application
 can be found in the Utilities folder in the Applications folder.
+
+Next, you will need a compiler and build tools like `make`. These tools are
+included in the "Xcode" application which is not installed by default on a
+new Mac. On all recent versions of OS X, you can install it for free via
+the App Store. Afterwards, you also need to run the following command from
+a terminal in order to make all required tools available via the command line:
+
+     xcode-select --install
+
 Now simply follow the Unix installation instructions to compile and start
 GAP and then it will run in this Terminal window.
 
@@ -664,19 +626,19 @@ there is no installation procedure and you may have to edit the `*.bat`
 files yourself.
 
 The `-win.zip archive` already contains `*.bat` files which will work if GAP
-is installed in the standard location, which is `C:\gap4rX`. To install GAP
+is installed in the standard location, which is `C:\gap-4.X.Y`. To install GAP
 there, the archive must be extracted to the main directory of the `C:` drive.
 (If you do not have permissions or sufficient free space to create directories
 there, see the section "Expert Windows Installation" below). Make sure that
 you specify extraction to the `C:\` folder (with no extra directory name --
-the directory `gap4rX` is part of the archive) to avoid extraction
+the directory `gap-4.X.Y` is part of the archive) to avoid extraction
 in a wrong place or in a separate directory.
 
 After extraction you can start GAP with one of the following files:
 
-    C:\gap4rX\bin\gap.bat       (recommended)
-    C:\gap4rX\bin\gaprxvt.bat
-    C:\gap4rX\bin\gapcmd.bat
+    C:\gap-4.X.Y\bin\gap.bat       (recommended)
+    C:\gap-4.X.Y\bin\gaprxvt.bat
+    C:\gap-4.X.Y\bin\gapcmd.bat
 
 The `gap.bat` file will start GAP in the `mintty` shell. It allows for
 convenient copying and pasting (e.g. using mouse) and flexible customisation.
@@ -690,12 +652,12 @@ If you need to install GAP in a non-standard directory under Windows, we advice
 to use the Windows `.exe` installers which will adjust all paths in batch files
 during the installation. Whenever you use a Windows installer or install GAP f
 rom the `-win.zip` archive, you should avoid paths with spaces, e.g. do not use
-`C:\My Programs\gap4rX`. If you need to install GAP on another logical drive,
-say `E:`, the easiest way would be just to use `E:\gap4rX`.
+`C:\My Programs\gap-4.X.Y`. If you need to install GAP on another logical drive,
+say `E:`, the easiest way would be just to use `E:\gap-4.X.Y`.
 
 If you need to edit a `*.bat` file to specify the path to your GAP installation
-manually, you will have to replace substrings `/c/gap4rX/` by the actual path
-to the GAP root directory in the Unix format, and substrings `C:\gap4rX\` by
+manually, you will have to replace substrings `/c/gap-4.X.Y/` by the actual path
+to the GAP root directory in the Unix format, and substrings `C:\gap-4.X.Y\` by
 the actual path to the GAP root directory in the Windows format. Please avoid
 introducing new line breaks when editing (i.e. do not use a text editor which
 automatically wraps long lines).

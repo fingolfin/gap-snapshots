@@ -17,52 +17,61 @@
 #ifndef GAP_FUNCS_H
 #define GAP_FUNCS_H
 
+#include <src/system.h>
 
 /****************************************************************************
 **
-
 *F  MakeFunction(<fexp>)  . . . . . . . . . . . . . . . . . . make a function
 **
 **  'MakeFunction' makes a function from the function expression bag <fexp>.
 */
-extern  Obj             MakeFunction (
-            Obj                 fexp );
-
+extern Obj MakeFunction(Obj fexp);
 
 /****************************************************************************
 **
 *F  ExecBegin( <frame> ) . . . . . . . . .begin an execution in context frame
-**  if in doubt, pass TLS(BottomLVars) as <frame>
+**  if in doubt, pass STATE(BottomLVars) as <frame>
 **
 *F  ExecEnd(<error>)  . . . . . . . . . . . . . . . . . . .  end an execution
 */
-extern  void            ExecBegin ( Obj frame );
+extern void ExecBegin(Obj frame);
+extern void ExecEnd(UInt error);
 
-extern  void            ExecEnd (
-            UInt                error );
-
-
-extern Int RecursionDepth;
 
 /****************************************************************************
 **
+**  Functions for tracking the recursion depth, and detecting if it exceeds
+**  some threshold. This is used to abort recursion beyond a certain depth,
+**  to protect against stack overflows and the resulting crashes.
+*/
 
+void IncRecursionDepth(void);
+void DecRecursionDepth(void);
+Int GetRecursionDepth(void);
+void SetRecursionDepth(Int depth);
+
+extern UInt RecursionTrapInterval;
+extern void RecursionDepthTrap( void );
+
+static inline void CheckRecursionBefore( void )
+{
+    IncRecursionDepth();
+    if ( RecursionTrapInterval &&
+         0 == (GetRecursionDepth() % RecursionTrapInterval) )
+      RecursionDepthTrap();
+}
+
+
+/****************************************************************************
+**
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  InitInfoFuncs() . . . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoFuncs ( void );
 
-
 #endif // GAP_FUNCS_H
-
-/****************************************************************************
-**
-
-*E  funcs.c . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

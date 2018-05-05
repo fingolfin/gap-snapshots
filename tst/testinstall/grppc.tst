@@ -5,8 +5,6 @@
 ##
 #Y  Copyright (C)  1997
 ##
-##  To be listed in testinstall.g
-##
 gap> START_TEST("grppc.tst");
 gap> h:=Group((1,2,3,4),(1,2));;
 gap> m:=IsomorphismPcGroup(h);;
@@ -83,7 +81,7 @@ gap> RepresentativeAction(G,x,x^2);
 f1*f2
 
 # that's all, folks
-gap> STOP_TEST( "grppc.tst", 2970000);
+gap> STOP_TEST( "grppc.tst", 1);
 
 #############################################################################
 ##

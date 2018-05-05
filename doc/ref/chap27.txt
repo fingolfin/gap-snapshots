@@ -36,9 +36,9 @@
   representation. See [2XIsStringRep[102X ([14X27.4-1[114X) below for more details.[133X
   
   [33X[0;0YEach  character, in particular those which cannot be typed directly from the
-  keyboard,  can  also  be  typed  in three digit octal notation. And for some
-  special   characters  (like  the  newline  character)  there  is  a  further
-  possibility to type them, see section [14X27.2[114X.[133X
+  keyboard,  can  also  be  typed  in three digit octal notation, or two digit
+  hexadecimal  notation.  And  for  some  special characters (like the newline
+  character) there is a further possibility to type them, see section [14X27.2[114X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xs1 := ['H','e','l','l','o',' ','w','o','r','l','d','.'];[127X[104X
@@ -159,10 +159,11 @@
   
   [33X[0;0YThere  are  a number of [13Xspecial character sequences[113X that can be used between
   the  singlequotes  of  a  character literal or between the doublequotes of a
-  string  literal  to  specify characters. They consist of two characters. The
-  first  is  a backslash [10X\[110X. The second may be any character. If it is an octal
-  digit (from [10X0[110X to [10X7[110X) there must be two more such digits. The meaning is given
-  in the following list[133X
+  string literal to specify characters. They consist of a backslash [10X\[110X followed
+  by a second character indicating the type of special character sequence, and
+  possibly  more  characters.  The  following  special character sequences are
+  currently  defined.  For  any  other sequence starting with a backslash, the
+  backslash is ignored.[133X
   
   [8X[10X\n[110X[8X[108X
         [33X[0;6Y[13Xnewline  character[113X.  This  is  the  character  that,  at least on UNIX
@@ -202,12 +203,19 @@
         not include this character use [10X\c[110X.[133X
   
   [8X [10X\XYZ[110X[8X[108X
-        [33X[0;6Ywith  [10XX[110X,  [10XY[110X, [10XZ[110X three octal digits. This is translated to the character
-        corresponding to the number [10XX * 64 + Y * 8 + Z modulo 256[110X. This can be
-        used to specify and store arbitrary binary data as a string in [5XGAP[105X.[133X
+        [33X[0;6Ywith  [10XX[110X,  [10XY[110X,  [10XZ[110X three octal digits, that is one of [10X"01234567"[110X. This is
+        translated to the character corresponding to the number [10XX * 64 + Y * 8
+        + Z modulo 256[110X. This can be used to specify and store arbitrary binary
+        data as a string in [5XGAP[105X.[133X
+  
+  [8X [10X\0xYZ[110X[8X[108X
+        [33X[0;6Ywith    [10XY[110X,    and    [10XZ[110X    hexadecimal   digits,   that   is   one   of
+        [10X"0123456789ABCDEFabcdef"[110X,  where  [10Xa[110X to [10Xf[110X and [10XA[110X to [10XF[110X are interpreted as
+        the   numbers   [10X10[110X   to  [10X15[110X.  This  is  translated  to  the  character
+        corresponding to the number [10XY*16 + Z[110X.[133X
   
   [8X other[108X
-        [33X[0;6YFor any other character the backslash is simply ignored.[133X
+        [33X[0;6YFor any other character the backslash is ignored.[133X
   
   [33X[0;0YAgain,  if  the  line  is displayed as result of an evaluation, those escape
   sequences are displayed in the same way that they are input.[133X
@@ -524,16 +532,16 @@
   
   [33X[1;0Y[29X[2XHexStringInt[102X( [3Xint[103X ) [32X function[133X
   
-  [33X[0;0Yreturns  a  string which represents the integer [3Xint[103X with hexa-decimal digits
+  [33X[0;0Yreturns  a  string  which represents the integer [3Xint[103X with hexadecimal digits
   (using  [10XA[110X  to [10XF[110X as digits [10X10[110X to [10X15[110X). The inverse translation can be achieved
-  with [2XIntHexString[102X ([14X27.9-1[114X).[133X
+  with [2XIntHexString[102X ([14X27.9-3[114X).[133X
   
   [1X27.7-9 StringPP[101X
   
   [33X[1;0Y[29X[2XStringPP[102X( [3Xint[103X ) [32X function[133X
   
   [33X[0;0Yreturns  a string representing the prime factor decomposition of the integer
-  [3Xint[103X.[133X
+  [3Xint[103X. See also [2XPrintFactorsInt[102X ([14X14.4-10[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XStringPP(40320);[127X[104X
@@ -557,7 +565,7 @@
   
   [33X[1;0Y[29X[2XLowercaseString[102X( [3Xstring[103X ) [32X function[133X
   
-  [33X[0;0Yreturns a lowercase version of the string [3Xstring[103X, that is, a string in which
+  [33X[0;0YReturns a lowercase version of the string [3Xstring[103X, that is, a string in which
   each uppercase alphabet character is replaced by the corresponding lowercase
   character.[133X
   
@@ -566,7 +574,32 @@
     [4X[28X"this is uppercase"[128X[104X
   [4X[32X[104X
   
-  [1X27.7-12 SplitString[101X
+  [1X27.7-12 LowercaseChar[101X
+  
+  [33X[1;0Y[29X[2XLowercaseChar[102X( [3Xcharacter[103X ) [32X function[133X
+  
+  [33X[0;0YReturns the lowercase version of the character [3Xcharacter[103X.[133X
+  
+  [1X27.7-13 UppercaseString[101X
+  
+  [33X[1;0Y[29X[2XUppercaseString[102X( [3Xstring[103X ) [32X function[133X
+  
+  [33X[0;0YReturns a uppercase version of the string [3Xstring[103X, that is, a string in which
+  each lowercase alphabet character is replaced by the corresponding uppercase
+  character.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XUppercaseString("This Is UpperCase");[127X[104X
+    [4X[28X"THIS IS UPPERCASE"[128X[104X
+  [4X[32X[104X
+  
+  [1X27.7-14 UppercaseChar[101X
+  
+  [33X[1;0Y[29X[2XUppercaseChar[102X( [3Xcharacter[103X ) [32X function[133X
+  
+  [33X[0;0YReturns the uppercase version of the character [3Xcharacter[103X.[133X
+  
+  [1X27.7-15 SplitString[101X
   
   [33X[1;0Y[29X[2XSplitString[102X( [3Xstring[103X, [3Xseps[103X[, [3Xwspace[103X] ) [32X operation[133X
   
@@ -587,7 +620,7 @@
   
   [33X[0;0YA  separator  at the end of a string is interpreted as a terminator; in this
   case, the separator does not produce a trailing empty string. Also see [2XChomp[102X
-  ([14X27.7-18[114X).[133X
+  ([14X27.7-21[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XSplitString( "substr1:substr2::substr4", ":" );[127X[104X
@@ -598,7 +631,7 @@
     [4X[28X[ "home", "user", "dir" ][128X[104X
   [4X[32X[104X
   
-  [1X27.7-13 ReplacedString[101X
+  [1X27.7-16 ReplacedString[101X
   
   [33X[1;0Y[29X[2XReplacedString[102X( [3Xstring[103X, [3Xold[103X, [3Xnew[103X ) [32X function[133X
   
@@ -616,7 +649,7 @@
     [4X[28X"babbacbab"[128X[104X
   [4X[32X[104X
   
-  [1X27.7-14 NormalizeWhitespace[101X
+  [1X27.7-17 NormalizeWhitespace[101X
   
   [33X[1;0Y[29X[2XNormalizeWhitespace[102X( [3Xstring[103X ) [32X function[133X
   
@@ -625,7 +658,7 @@
   space  characters in [3Xstring[103X are removed. Sequences of white space characters
   between other characters are replaced by a single space character.[133X
   
-  [33X[0;0YSee [2XNormalizedWhitespace[102X ([14X27.7-15[114X) for a non-destructive version.[133X
+  [33X[0;0YSee [2XNormalizedWhitespace[102X ([14X27.7-18[114X) for a non-destructive version.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xs := "   x y \n\n\t\r  z\n   \n";[127X[104X
@@ -635,14 +668,14 @@
     [4X[28X"x y z"[128X[104X
   [4X[32X[104X
   
-  [1X27.7-15 NormalizedWhitespace[101X
+  [1X27.7-18 NormalizedWhitespace[101X
   
   [33X[1;0Y[29X[2XNormalizedWhitespace[102X( [3Xstr[103X ) [32X function[133X
   
   [33X[0;0YThis  function  returns  a  copy  of string [3Xstr[103X to which [2XNormalizeWhitespace[102X
-  ([14X27.7-14[114X) was applied.[133X
+  ([14X27.7-17[114X) was applied.[133X
   
-  [1X27.7-16 RemoveCharacters[101X
+  [1X27.7-19 RemoveCharacters[101X
   
   [33X[1;0Y[29X[2XRemoveCharacters[102X( [3Xstring[103X, [3Xchars[103X ) [32X function[133X
   
@@ -657,7 +690,7 @@
     [4X[28X"abcdefghi."[128X[104X
   [4X[32X[104X
   
-  [1X27.7-17 JoinStringsWithSeparator[101X
+  [1X27.7-20 JoinStringsWithSeparator[101X
   
   [33X[1;0Y[29X[2XJoinStringsWithSeparator[102X( [3Xlist[103X[, [3Xsep[103X] ) [32X function[133X
   
@@ -681,7 +714,7 @@
     [4X[28X    d[128X[104X
   [4X[32X[104X
   
-  [1X27.7-18 Chomp[101X
+  [1X27.7-21 Chomp[101X
   
   [33X[1;0Y[29X[2XChomp[102X( [3Xstr[103X ) [32X function[133X
   
@@ -708,7 +741,7 @@
   [33X[0;0Y[13XNote:[113X  [2XChomp[102X  only  removes  a  trailing newline character from [3Xstr[103X. If your
   string  contains several newline characters and you really want to split [3Xstr[103X
   into  lines  at the newline characters (and remove those newline characters)
-  then you should use [2XSplitString[102X ([14X27.7-12[114X), e.g.[133X
+  then you should use [2XSplitString[102X ([14X27.7-15[114X), e.g.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xstr := "The quick brown fox\njumps over the lazy dog.\n";[127X[104X
@@ -719,7 +752,7 @@
     [4X[28X"The quick brown fox\njumps over the lazy dog."[128X[104X
   [4X[32X[104X
   
-  [1X27.7-19 StartsWith[101X
+  [1X27.7-22 StartsWith[101X
   
   [33X[1;0Y[29X[2XStartsWith[102X( [3Xstring[103X, [3Xprefix[103X ) [32X function[133X
   [33X[1;0Y[29X[2XEndsWith[102X( [3Xstring[103X, [3Xsuffix[103X ) [32X function[133X
@@ -729,7 +762,7 @@
   [33X[0;0YThe  following  two  functions convert basic strings to lists of numbers and
   vice versa. They are useful for examples of text encryption.[133X
   
-  [1X27.7-20 NumbersString[101X
+  [1X27.7-23 NumbersString[101X
   
   [33X[1;0Y[29X[2XNumbersString[102X( [3Xs[103X, [3Xm[103X[, [3Xtable[103X] ) [32X function[133X
   
@@ -744,18 +777,31 @@
     [4X[28X  301835, 103025, 321529 ][128X[104X
   [4X[32X[104X
   
-  [1X27.7-21 StringNumbers[101X
+  [1X27.7-24 StringNumbers[101X
   
   [33X[1;0Y[29X[2XStringNumbers[102X( [3Xl[103X, [3Xm[103X[, [3Xtable[103X] ) [32X function[133X
   
   [33X[0;0Y[2XStringNumbers[102X   takes   a   list  [3Xl[103X  of  integers  that  was  encoded  using
-  [2XNumbersString[102X  ([14X27.7-20[114X)  and  the  size  integer  [3Xm[103X,  and returns a message
+  [2XNumbersString[102X  ([14X27.7-23[114X)  and  the  size  integer  [3Xm[103X,  and returns a message
   string,  using  the  scheme [22XA=11[122X, [22XB=12[122X and so on. If a list of characters is
   given in [3Xtable[103X, it is used instead for decoding).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XStringNumbers(l,1000000);[127X[104X
     [4X[28X"TWAS BRILLIG AND THE SLITHY TOVES"[128X[104X
+  [4X[32X[104X
+  
+  [1X27.7-25 StringOfMemoryAmount[101X
+  
+  [33X[1;0Y[29X[2XStringOfMemoryAmount[102X( [3Xnumbytes[103X ) [32X function[133X
+  
+  [33X[0;0YThis  function  returns  a  human-readable  string  representing [3Xnumbytes[103X of
+  memory.  It  is  used  in  printing amounts of memory allocated by tests and
+  benchmarks. Binary prefixes (representing powers of 1024) are used.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XStringOfMemoryAmount(123456789);[127X[104X
+    [4X[28X"117MB"[128X[104X
   [4X[32X[104X
   
   
@@ -822,48 +868,68 @@
   [1X27.9-1 Int[101X
   
   [33X[1;0Y[29X[2XInt[102X( [3Xstr[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XRat[102X( [3Xstr[103X ) [32X attribute[133X
-  [33X[1;0Y[29X[2XIntHexString[102X( [3Xstr[103X ) [32X function[133X
   
-  [33X[0;0Yreturn  either  an  integer  ([2XInt[102X  and [2XIntHexString[102X), or a rational ([2XRat[102X) as
-  represented  by  the  string  [3Xstr[103X.  [2XInt[102X returns [9Xfail[109X if non-digit characters
-  occur in [3Xstr[103X. For [2XRat[102X, the argument string may start with the sign character
-  [10X-[110X,  followed  by  either  a sequence of digits or by two sequences of digits
-  that  are separated by one of the characters [10X/[110X or [10X.[110X, where the latter stands
-  for  a  decimal  dot.  (The methods only evaluate numbers but do [13Xnot[113X perform
-  arithmetic!)[133X
+  [33X[0;0Yreturns an integer as represented by the string [3Xstr[103X. The argument string may
+  optionally  start  with  the  sign  character  [10X-[110X,  followed by a sequence of
+  decimal digits. For any other input [9Xfail[109X is returned.[133X
   
-  [33X[0;0Y[2XIntHexString[102X evaluates an integer written with hexa-decimal digits. Here the
-  letters [10Xa[110X-[10Xf[110X or [10XA[110X-[10XF[110X are used as [13Xdigits[113X [22X10[122X to [22X15[122X. An error occurs when a wrong
-  character  is  found in the string. This function can be used (together with
-  [2XHexStringInt[102X  ([14X27.7-8[114X))  for  efficiently storing and reading large integers
-  from  respectively  into [5XGAP[105X. Note that the translation between integers and
-  their  hexa-decimal representation costs linear computation time in terms of
-  the number of digits, while translation from and into decimal representation
-  needs   substantial   computations.   If   [3Xstr[103X  is  not  in  compact  string
-  representation  then  [2XConvertToStringRep[102X  ([14X27.4-2[114X)  is applied to it as side
-  effect.[133X
+  [33X[0;0YFor  backwards  compatibility, the empty string is accepted, in which case [22X0[122X
+  is returned as result.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XInt("12345")+1;[127X[104X
-    [4X[28X12346[128X[104X
+    [4X[25Xgap>[125X [27XInt("12345");[127X[104X
+    [4X[28X12345[128X[104X
     [4X[25Xgap>[125X [27XInt("123/45");[127X[104X
     [4X[28Xfail[128X[104X
     [4X[25Xgap>[125X [27XInt("1+2");[127X[104X
     [4X[28Xfail[128X[104X
     [4X[25Xgap>[125X [27XInt("-12");[127X[104X
     [4X[28X-12[128X[104X
+    [4X[25Xgap>[125X [27XInt("");[127X[104X
+    [4X[28X0[128X[104X
+  [4X[32X[104X
+  
+  [1X27.9-2 Rat[101X
+  
+  [33X[1;0Y[29X[2XRat[102X( [3Xstr[103X ) [32X attribute[133X
+  
+  [33X[0;0Yreturns a rational as represented by the string [3Xstr[103X. The argument string may
+  optionally start with the sign character [10X-[110X, followed by either a sequence of
+  decimal  digits  or by two sequences of decimal digits that are separated by
+  one of the characters [10X/[110X or [10X.[110X, where the latter stands for a decimal dot. For
+  any other input [9Xfail[109X is returned.[133X
+  
+  [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XRat("123/45");[127X[104X
     [4X[28X41/15[128X[104X
-    [4X[25Xgap>[125X [27XRat( "123.45" );[127X[104X
-    [4X[28X2469/20[128X[104X
+    [4X[25Xgap>[125X [27XRat("-123.45");[127X[104X
+    [4X[28X-2469/20[128X[104X
+  [4X[32X[104X
+  
+  [1X27.9-3 IntHexString[101X
+  
+  [33X[1;0Y[29X[2XIntHexString[102X( [3Xstr[103X ) [32X function[133X
+  
+  [33X[0;0Yreturns an integer as represented by the string [3Xstr[103X. The argument string may
+  optionally  start  with  the  sign  character  [10X-[110X,  followed by a sequence of
+  hexadecimal digits. Here the letters [10Xa[110X-[10Xf[110X or [10XA[110X-[10XF[110X are used as [13Xdigits[113X [22X10[122X to [22X15[122X.
+  Any other input results in an error.[133X
+  
+  [33X[0;0YThis  function  can  be  used  (together  with  [2XHexStringInt[102X  ([14X27.7-8[114X))  for
+  efficiently  storing  and reading large integers from respectively into [5XGAP[105X.
+  Note   that   the   translation   between  integers  and  their  hexadecimal
+  representation  costs  linear  computation  time  in  terms of the number of
+  digits,  while  translation  from  and  into  decimal  representation  needs
+  substantial computations.[133X
+  
+  [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XIntHexString("-abcdef0123456789");[127X[104X
     [4X[28X-12379813738877118345[128X[104X
     [4X[25Xgap>[125X [27XHexStringInt(last);[127X[104X
     [4X[28X"-ABCDEF0123456789"[128X[104X
   [4X[32X[104X
   
-  [1X27.9-2 Ordinal[101X
+  [1X27.9-4 Ordinal[101X
   
   [33X[1;0Y[29X[2XOrdinal[102X( [3Xn[103X ) [32X function[133X
   
@@ -877,7 +943,7 @@
     [4X[28X"-33rd"[128X[104X
   [4X[32X[104X
   
-  [1X27.9-3 EvalString[101X
+  [1X27.9-5 EvalString[101X
   
   [33X[1;0Y[29X[2XEvalString[102X( [3Xexpr[103X ) [32X function[133X
   
@@ -914,7 +980,7 @@
     [4X[28X10[128X[104X
   [4X[32X[104X
   
-  [1X27.9-4 CrcString[101X
+  [1X27.9-6 CrcString[101X
   
   [33X[1;0Y[29X[2XCrcString[102X( [3Xstr[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Yan integer[133X

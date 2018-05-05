@@ -5,8 +5,6 @@
 ##
 #Y  Copyright 1997,    Lehrstuhl D für Mathematik,   RWTH Aachen,    Germany
 ##
-##  To be listed in testinstall.g
-##
 gap> START_TEST("algsc.tst");
 
 #############################################################################
@@ -678,7 +676,16 @@ gap> c = t;
 true
 
 #############################################################################
-gap> STOP_TEST( "algsc.tst", 4020000);
+##
+##  Some bugfixes
+##
+gap> a:= Algebra( Rationals, [ [ [ 0, 0 ], [ 1, 0 ] ] ] );;
+gap> sc:= Image( IsomorphismSCAlgebra( a ) );;
+gap> Dimension( RadicalOfAlgebra( sc ) );
+1
+
+#############################################################################
+gap> STOP_TEST( "algsc.tst", 1);
 
 #############################################################################
 ##

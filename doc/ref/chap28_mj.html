@@ -125,13 +125,15 @@ fail
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RepresentationsOfObject(d);</span>
-[ "IsComponentObjectRep", "IsDictionaryDefaultRep", 
-  "IsListDictionary", "IsListLookupDictionary", "IsSortDictionary", 
+[ "IsComponentObjectRep", "IsNonAtomicComponentObjectRep", 
+  "IsDictionaryDefaultRep", "IsListDictionary", 
+  "IsListLookupDictionary", "IsSortDictionary", 
   "IsSortLookupDictionary" ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d:=NewDictionary((1,2,3),true,Elements(SymmetricGroup(5)));;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RepresentationsOfObject(d);</span>
-[ "IsComponentObjectRep", "IsDictionaryDefaultRep", 
-  "IsPositionDictionary", "IsPositionDictionary" ]
+[ "IsComponentObjectRep", "IsNonAtomicComponentObjectRep", 
+  "IsDictionaryDefaultRep", "IsPositionDictionary", 
+  "IsPositionLookupDictionary" ]
 </pre></div>
 
 <p>(Just indicating <code class="code">SymmetricGroup(5)</code> as a third parameter would still keep the first storage method, as indexing would be too expensive if no explicit element list is known.)</p>
@@ -143,13 +145,15 @@ fail
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">v:=GF(2)^7;;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d:=NewDictionary(Zero(v),true);;                            </span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RepresentationsOfObject(d);</span>
-[ "IsComponentObjectRep", "IsDictionaryDefaultRep", 
-  "IsListDictionary", "IsListLookupDictionary", "IsSortDictionary", 
+[ "IsComponentObjectRep", "IsNonAtomicComponentObjectRep", 
+  "IsDictionaryDefaultRep", "IsListDictionary", 
+  "IsListLookupDictionary", "IsSortDictionary", 
   "IsSortLookupDictionary" ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d:=NewDictionary(Zero(v),true,v);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">RepresentationsOfObject(d);</span>
-[ "IsComponentObjectRep", "IsDictionaryDefaultRep", 
-  "IsPositionDictionary", "IsPositionDictionary" ]
+[ "IsComponentObjectRep", "IsNonAtomicComponentObjectRep", 
+  "IsDictionaryDefaultRep", "IsPositionDictionary", 
+  "IsPositionLookupDictionary" ]
 </pre></div>
 
 <p><a id="X7B571EA282AF70D7" name="X7B571EA282AF70D7"></a></p>
@@ -286,8 +290,8 @@ fail
 
 <h5>28.7-1 SparseHashTable</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SparseHashTable</code>( [<var class="Arg">intkeyfun</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>Construct an empty sparse hash table. This is the only correct way to construct such a table. If the argument <var class="Arg">intkeyfun</var> is given, this function will be used to obtain numbers for the keys passed to it.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SparseHashTable</code>( [<var class="Arg">intkeyfun</var>[, <var class="Arg">startlength</var>]] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Construct an empty sparse hash table. This is the only correct way to construct such a table. If the argument <var class="Arg">intkeyfun</var> is given, this function will be used to obtain numbers for the keys passed to it. If also <var class="Arg">startlength</var> is given, the hash table will be initalized at that size.</p>
 
 <p><a id="X80FDDF957887B4FC" name="X80FDDF957887B4FC"></a></p>
 

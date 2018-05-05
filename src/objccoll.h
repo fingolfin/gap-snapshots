@@ -10,9 +10,10 @@
 #ifndef GAP_OBJCCOLL_H
 #define GAP_OBJCCOLL_H
 
+#include <src/system.h>
+
 /****************************************************************************
 **
-
 *D  SCP_SOMETHING . . . . . . . . . . . . . . .  for combinatorial collectors
 **
 **  Definitions which are needed by the combinatorial collectors in addition
@@ -24,18 +25,17 @@
 
 /****************************************************************************
 **
-
 *D  SC_SOMETHING( <sc> )  . . . . . . . . . . .  for combinatorial collectors
 **
 */
 #define SC_CLASS(sc) \
-    (ADDR_OBJ(sc)[SCP_CLASS])
+    (CONST_ADDR_OBJ(sc)[SCP_CLASS])
 
 #define SC_WEIGHTS(sc) \
-    (ADDR_OBJ(sc)[SCP_WEIGHTS])
+    (CONST_ADDR_OBJ(sc)[SCP_WEIGHTS])
 
 #define SC_AVECTOR2(sc) \
-    (ADDR_OBJ(sc)[SCP_AVECTOR2])
+    (CONST_ADDR_OBJ(sc)[SCP_AVECTOR2])
 
 
 /****************************************************************************
@@ -52,14 +52,12 @@ Int C32Bits_CombiCollectWord ( Obj, Obj, Obj );
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  InitInfoCombiCollector()  . . . . . . . . . . . . table of init functions
 */
 
@@ -67,9 +65,3 @@ StructInitInfo * InitInfoCombiCollector ( void );
 
 
 #endif // GAP_OBJCCOLL_H
-
-/****************************************************************************
-**
-
-*E  objccoll.h  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

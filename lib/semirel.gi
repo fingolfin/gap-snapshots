@@ -250,13 +250,15 @@ end);
 #O  GreensHClassOfElement(<semigroup>, <representative>)
 ##
 
-InstallMethod(GreensRClassOfElement, "for a semigroup and object",
-[IsSemigroup and HasIsFinite and IsFinite, IsObject],
+InstallMethod(GreensRClassOfElement, "for a semigroup and object", 
+IsCollsElms,
+[IsSemigroup and HasIsFinite and IsFinite, IsObject], 
 function(s,e)
   return EquivalenceClassOfElementNC( GreensRRelation(s), e );
 end);
 
 InstallMethod(GreensLClassOfElement, "for a semigroup and object",
+IsCollsElms,
 [IsSemigroup and HasIsFinite and IsFinite, IsObject],
 function(s,e)
   return EquivalenceClassOfElementNC( GreensLRelation(s), e );
@@ -264,6 +266,7 @@ end);
 
 
 InstallMethod(GreensHClassOfElement, "for a semigroup and object",
+IsCollsElms,
 [IsSemigroup and HasIsFinite and IsFinite, IsObject],
 function(s,e)
   return EquivalenceClassOfElementNC( GreensHRelation(s), e );
@@ -271,12 +274,14 @@ end);
 
 
 InstallMethod(GreensDClassOfElement, "for a semigroup and object", 
+IsCollsElms,
 [IsSemigroup and HasIsFinite and IsFinite, IsObject],
 function(s,e)
   return EquivalenceClassOfElementNC( GreensDRelation(s), e );
 end);
 
 InstallMethod(GreensJClassOfElement, "for a semigroup and object", 
+IsCollsElms,
 [IsSemigroup and HasIsFinite and IsFinite, IsObject],
 function(s,e)
   return EquivalenceClassOfElementNC( GreensJRelation(s), e );
@@ -396,7 +401,7 @@ end);
 
 InstallMethod(Size, "for Green's classes", true, [IsGreensClass], 0,
 function(class)
-   return Size(Elements(class));
+   return Size(AsSSortedList(class));
 end);
 
 #################
@@ -412,7 +417,7 @@ function(elm, class)
   if elm=Representative(class) then
      return true;
   fi;
-  return elm in Elements(class);
+  return elm in AsSSortedList(class);
 end);
 
 #################
@@ -498,28 +503,30 @@ x->GreensJClasses(Source(x)));
 ##
 ##  returns the XClass containing <hclass>, <lclass>, or <rclass>
 
-InstallMethod(RClassOfHClass, "for a Green's H-class", true, [IsGreensHClass], 0,
-    function(hc)
-    local x;
-    x:=GreensRClasses(ParentAttr(hc));
-    return First(x, y-> Representative(hc) in y);
+InstallMethod(RClassOfHClass, "for a Green's H-class", [IsGreensHClass],
+function(H)
+  return GreensRClassOfElement(Parent(H), Representative(H));
 end);
 
-InstallMethod(LClassOfHClass, "for a Green's H-class", true, [IsGreensHClass], 0,
-  function(hc)
-       local x;
-    x:=GreensLClasses(ParentAttr(hc));
-    return First(x, y-> Representative(hc) in y);
+InstallMethod(LClassOfHClass, "for a Green's H-class", [IsGreensHClass],
+function(H)
+  return GreensLClassOfElement(Parent(H), Representative(H));
 end);
 
-InstallMethod(DClassOfHClass, "for a Green's H-class", true, [IsGreensHClass], 0,
- x-> DClassOfHClass(CanonicalGreensClass(x)));
+InstallMethod(DClassOfHClass, "for a Green's H-class", [IsGreensHClass],
+function(H)
+  return GreensDClassOfElement(Parent(H), Representative(H));
+end);
 
-InstallMethod(DClassOfLClass, "for a Green's L-class", true, [IsGreensLClass], 0,
- x-> DClassOfLClass(CanonicalGreensClass(x)));
+InstallMethod(DClassOfLClass, "for a Green's L-class", [IsGreensLClass],
+function(L)
+  return GreensDClassOfElement(Parent(L), Representative(L));
+end);
 
-InstallMethod(DClassOfRClass, "for a Green's R-class", true, [IsGreensRClass], 0,
- x-> DClassOfRClass(CanonicalGreensClass(x)));
+InstallMethod(DClassOfRClass, "for a Green's R-class", [IsGreensRClass],
+function(R)
+  return GreensDClassOfElement(Parent(R), Representative(R));
+end);
 
 #################
 #################
@@ -548,9 +555,9 @@ local rrel, sc, i, classes, x, rc;
    SetInternalRepGreensRelation(rrel, sc); classes:=[];
 
    for i in [1..Length(sc)] do
-     rc:=GreensRClassOfElement(semi, Elements(semi)[sc[i][1]]);
+     rc:=GreensRClassOfElement(semi, AsSSortedList(semi)[sc[i][1]]);
      Add(classes, rc);
-     SetAsSSortedList(classes[i], Elements(semi){sc[i]});
+     SetAsSSortedList(classes[i], AsSSortedList(semi){sc[i]});
      SetSize(classes[i], Size(sc[i]));
    od;
 
@@ -579,9 +586,9 @@ InstallOtherMethod(GreensLClasses, "for a semigroup", true, [IsSemigroup], 0,
    SetInternalRepGreensRelation(lrel, sc); classes:=[];
 
    for i in [1..Length(sc)] do
-     lc:=GreensLClassOfElement(semi,Elements(semi)[sc[i][1]]);
+     lc:=GreensLClassOfElement(semi,AsSSortedList(semi)[sc[i][1]]);
      Add(classes, lc);
-     SetAsSSortedList(lc, Elements(semi){sc[i]});
+     SetAsSSortedList(lc, AsSSortedList(semi){sc[i]});
      SetSize(lc, Size(sc[i]));
    od;
 
@@ -609,7 +616,7 @@ function(semi)
   lrel:=GreensLRelation(semi); rrel:=GreensRRelation(semi);
   INT_L:=InternalRepGreensRelation(lrel);
   INT_R:=InternalRepGreensRelation(rrel);
-  elts:=Elements(semi);
+  elts:=AsSSortedList(semi);
 
   #these are to collect the R and L-classes that comprise the D-class
   INT_Rclasses:=[]; INT_Lclasses:=[]; INT_Dclasses:=[];
@@ -751,8 +758,7 @@ function(gcL,gcR)
     return a in MagmaIdealByGenerators(ParentAttr(gcR),[b]);
   fi;
 
-  Error("Green's classes are not of the same type or not L-, R-, or J-classes");
-  return;
+  ErrorNoReturn("Green's classes are not of the same type or not L-, R-, or J-classes");
 end);
 
 #############################################################################
@@ -958,7 +964,7 @@ function(m)
   local gens, k, free, freegens, actualelts, fpelts, rules, i, u, v, Last,
         currentlength, b, s, r, newelt, j, p, new, length, newword, first,
         final, prefix, suffix, next, postmult, reducedflags, premult, fpsemi,
-        old, sortedelts, pos, semi, perm, free2;
+        old, sortedelts, pos, semi, perm, free2, one;
 
   if not IsFinite(m) then 
     return fail;
@@ -971,13 +977,14 @@ function(m)
   fi;
 
   #gens:=Set(GeneratorsOfMonoid(semi));
-  gens:=Set(Filtered(GeneratorsOfMonoid(semi), x-> not IsOne(x)));
+  one:=One(semi);
+  gens:=Set(Filtered(GeneratorsOfMonoid(semi), x -> x <> one));
   k:=Length(gens);
   free:=FreeMonoid(k);
   freegens:=GeneratorsOfMonoid(free);
-  actualelts:=Concatenation([One(semi)], gens);
+  actualelts:=Concatenation([one], gens);
   fpelts:=Concatenation([One(free)], freegens);
-  sortedelts:=List(Concatenation([One(semi)], gens));
+  sortedelts:=List(Concatenation([one], gens));
 
   #output
 
@@ -1284,7 +1291,7 @@ InstallMethod(ImagesRepresentative, "for semigroup homomorphism by images",
               FamSourceEqFamElm,
               [IsSemigroupHomomorphism and IsSemigroupHomomorphismByImagesRep, IsMultiplicativeElement],
 function(hom, elt)
-  return hom!.imgslist[Position(Elements(Source(hom)), elt)];
+  return hom!.imgslist[Position(AsSSortedList(Source(hom)), elt)];
 end);
 
 ########
@@ -1304,7 +1311,7 @@ function(hom, x)
 
   preimgs:=List([1..Length(imgs)], function(y)
   if imgs[y]=x then
-    return Elements(Source(hom))[y];
+    return AsSSortedList(Source(hom))[y];
   else
     return fail;
   fi;
@@ -1368,7 +1375,8 @@ InstallMethod(InverseGeneralMapping, "for semigroup homomorphism by images",
               0,
 function(iso)
 
-  return SemigroupHomomorphismByImagesNC(Range(iso), Source(iso), List(Elements(Range(iso)), x-> Elements(Source(iso))[Position(iso!.imgslist, x)]));
+  return SemigroupHomomorphismByImagesNC(Range(iso), Source(iso),
+  List(AsSSortedList(Range(iso)), x-> AsSSortedList(Source(iso))[Position(iso!.imgslist, x)]));
 
 end);
 

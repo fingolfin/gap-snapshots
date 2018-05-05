@@ -10,109 +10,49 @@
 **
 **  This file contains the various read-eval-print loops and  related  stuff.
 */
-#include        <stdio.h>
-#include        <assert.h>
-#include        <string.h>              /* memcpy */
-#include        <stdlib.h>
 
-#include        "system.h"              /* system dependent part           */
+#include <src/gap.h>
 
-#ifdef HAVE_SYS_STAT_H
-#include        <sys/stat.h>
+#include <src/ariths.h>
+#include <src/bool.h>
+#include <src/calls.h>
+#include <src/code.h>
+#include <src/compiler.h>
+#include <src/compstat.h>
+#include <src/exprs.h>
+#include <src/funcs.h>
+#include <src/gapstate.h>
+#include <src/gvars.h>
+#include <src/integer.h>
+#include <src/lists.h>
+#include <src/opers.h>
+#include <src/plist.h>
+#include <src/precord.h>
+#include <src/records.h>
+#include <src/read.h>
+#include <src/saveload.h>
+#include <src/stats.h>
+#include <src/streams.h>
+#include <src/stringobj.h>
+#include <src/sysfiles.h>
+#include <src/vars.h>
+
+#ifdef HPCGAP
+#include <src/intrprtr.h>
+#include <src/hpc/misc.h>
+#include <src/hpc/thread.h>
+#include <src/hpc/threadapi.h>
 #endif
 
-#include	<sys/time.h>
-#include <unistd.h> /* move this and wrap execvp later */
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
+static Obj Error;
+static Obj ErrorInner;
 
-#include        "gap.h"                 /* error handling, initialisation  */
-#include        "tls.h"                 /* thread-local storage            */
+static UInt SystemErrorCode;
 
-#include        "read.h"                /* reader                          */
-
-#include        "gvars.h"               /* global variables                */
-#include        "calls.h"               /* generic call mechanism          */
-#include        "opers.h"               /* generic operations              */
-
-#include        "ariths.h"              /* basic arithmetic                */
-
-#include        "integer.h"             /* integers                        */
-#include        "rational.h"            /* rationals                       */
-#include        "cyclotom.h"            /* cyclotomics                     */
-#include        "finfield.h"            /* finite fields and ff elements   */
-
-#include        "bool.h"                /* booleans                        */
-#include        "macfloat.h"            /* machine doubles                 */
-#include        "permutat.h"            /* permutations                    */
-#include        "trans.h"               /* transformations                 */
-#include        "pperm.h"               /* partial perms                   */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "listoper.h"            /* operations for generic lists    */
-#include        "listfunc.h"            /* functions for generic lists     */
-#include        "plist.h"               /* plain lists                     */
-#include        "set.h"                 /* plain sets                      */
-#include        "vector.h"              /* functions for plain vectors     */
-#include        "vecffe.h"              /* functions for fin field vectors */
-#include        "blister.h"             /* boolean lists                   */
-#include        "range.h"               /* ranges                          */
-#include        "string.h"              /* strings                         */
-#include        "vecgf2.h"              /* functions for GF2 vectors       */
-#include        "vec8bit.h"             /* functions for other compressed
-                                           GF(q) vectors                   */
-#include        "objfgelm.h"            /* objects of free groups          */
-#include        "objpcgel.h"            /* objects of polycyclic groups    */
-#include        "objscoll.h"            /* single collector                */
-#include        "objccoll.h"            /* combinatorial collector         */
-#include        "objcftl.h"             /* from the left collect           */
-
-#include        "dt.h"                  /* deep thought                    */
-#include        "dteval.h"              /* deep thought evaluation          */
-
-#include        "sctable.h"             /* structure constant table        */
-#include        "costab.h"              /* coset table                     */
-#include        "tietze.h"              /* tietze helper functions         */
-
-#include        "code.h"                /* coder                           */
-
-#include        "exprs.h"               /* expressions                     */
-#include        "stats.h"               /* statements                      */
-#include        "funcs.h"               /* functions                       */
-
-#include        "intrprtr.h"            /* interpreter                     */
-
-#include        "compiler.h"            /* compiler                        */
-
-#include        "compstat.h"            /* statically linked modules       */
-
-#include        "saveload.h"            /* saving and loading              */
-
-#include        "streams.h"             /* streams package                 */
-#include        "sysfiles.h"            /* file input/output               */
-#include        "weakptr.h"             /* weak pointers                   */
-#include        "profile.h"             /* profiling                       */
-#ifdef GAPMPI
-#include        "gapmpi.h"              /* ParGAP/MPI                      */
-#endif
-
-#include        "thread.h"
-#include        "tls.h"
-#include        "aobjects.h"
-
-#include        "vars.h"                /* variables                       */
-
-#include        "intfuncs.h"
-#include        "iostream.h"
 
 /****************************************************************************
 **
-
 *V  Last  . . . . . . . . . . . . . . . . . . . . . . global variable  'last'
 **
 **  'Last',  'Last2', and 'Last3'  are the  global variables 'last', 'last2',
@@ -145,6 +85,16 @@ UInt Last3;
 */
 UInt Time;
 
+/****************************************************************************
+**
+*V  MemoryAllocated . . . . . . . . . . . global variable  'memory_allocated'
+**
+**  'MemoryAllocated' is the global variable 'memory_allocated', 
+**  which is automatically assigned the amount of memory allocated while
+**  executing the last command.
+*/
+UInt MemoryAllocated;
+
 
 /****************************************************************************
 **
@@ -155,43 +105,30 @@ UInt Time;
 **  is not yet defined, or the fallback methods not yet installed. To avoid
 **  this problem, we check, and use PrintObj if there is a problem
 **
-**  We also install a hook to use the GAP level function 'CustomView' if
-**  it exists. This can for example be used to restrict the amount of output
-**  or to show long output in a pager or .....
-**  
 **  This function also supplies the \n after viewing.
 */
 UInt ViewObjGVar;
-UInt CustomViewGVar;
 
 void ViewObjHandler ( Obj obj )
 {
   volatile Obj        func;
-  volatile Obj        cfunc;
   syJmp_buf             readJmpError;
 
   /* get the functions                                                   */
   func = ValAutoGVar(ViewObjGVar);
-  cfunc = ValAutoGVar(CustomViewGVar);
 
   /* if non-zero use this function, otherwise use `PrintObj'             */
-  memcpy( readJmpError, TLS(ReadJmpError), sizeof(syJmp_buf) );
-  if ( ! READ_ERROR() ) {
-    if ( cfunc != 0 && TNUM_OBJ(cfunc) == T_FUNCTION ) {
-      CALL_1ARGS(cfunc, obj);
-    }
-    else if ( func != 0 && TNUM_OBJ(func) == T_FUNCTION ) {
+  memcpy( readJmpError, STATE(ReadJmpError), sizeof(syJmp_buf) );
+  TRY_READ {
+    if ( func != 0 && TNUM_OBJ(func) == T_FUNCTION ) {
       ViewObj(obj);
     }
     else {
       PrintObj( obj );
     }
     Pr( "\n", 0L, 0L );
-    memcpy( TLS(ReadJmpError), readJmpError, sizeof(syJmp_buf) );
   }
-  else {
-    memcpy( TLS(ReadJmpError), readJmpError, sizeof(syJmp_buf) );
-  }
+  memcpy( STATE(ReadJmpError), readJmpError, sizeof(syJmp_buf) );
 }
 
 
@@ -217,14 +154,12 @@ static Int NrImportedGVars;
 static StructImportedGVars ImportedFuncs[MAX_IMPORTED_GVARS];
 static Int NrImportedFuncs;
 
-char *original_argv0;
-static char **sysargv;
 static char **sysenviron;
 
-Obj ShellContext = 0;
-Obj BaseShellContext = 0;
-UInt ShellContextDepth;
-
+/*
+TL: Obj ShellContext = 0;
+TL: Obj BaseShellContext = 0;
+*/
 
 Obj Shell ( Obj context, 
             UInt canReturnVoid,
@@ -238,7 +173,9 @@ Obj Shell ( Obj context,
             Char *outFile)
 {
   UInt time = 0;
+  UInt8 mem = 0;
   UInt status;
+  Obj evalResult;
   UInt dualSemicolon;
   UInt oldindent;
   UInt oldPrintDepth;
@@ -246,12 +183,13 @@ Obj Shell ( Obj context,
   Obj oldShellContext;
   Obj oldBaseShellContext;
   Int oldRecursionDepth;
-  oldShellContext = TLS(ShellContext);
-  TLS(ShellContext) = context;
-  oldBaseShellContext = TLS(BaseShellContext);
-  TLS(BaseShellContext) = context;
-  TLS(ShellContextDepth) = 0;
-  oldRecursionDepth = TLS(RecursionDepth);
+  oldShellContext = STATE(ShellContext);
+  STATE(ShellContext) = context;
+  oldBaseShellContext = STATE(BaseShellContext);
+  STATE(BaseShellContext) = context;
+  Int oldErrorLLevel = STATE(ErrorLLevel);
+  STATE(ErrorLLevel) = 0;
+  oldRecursionDepth = GetRecursionDepth();
   
   /* read-eval-print loop                                                */
   if (!OpenOutput(outFile))
@@ -263,23 +201,25 @@ Obj Shell ( Obj context,
       ErrorQuit("SHELL: can't open infile %s",(Int)inFile,0);
     }
   
-  oldPrintDepth = TLS(PrintObjDepth);
-  TLS(PrintObjDepth) = 0;
-  oldindent = TLS(Output)->indent;
-  TLS(Output)->indent = 0;
+  oldPrintDepth = STATE(PrintObjDepth);
+  STATE(PrintObjDepth) = 0;
+  oldindent = STATE(Output)->indent;
+  STATE(Output)->indent = 0;
 
   while ( 1 ) {
 
     /* start the stopwatch                                             */
-    if (setTime)
-      time = SyTime();
+    if (setTime) {
+          time = SyTime();
+          mem = SizeAllBags;
+    }
 
     /* read and evaluate one command                                   */
-    TLS(Prompt) = prompt;
+    STATE(Prompt) = prompt;
     ClearError();
-    TLS(PrintObjDepth) = 0;
-    TLS(Output)->indent = 0;
-    TLS(RecursionDepth) = 0;
+    STATE(PrintObjDepth) = 0;
+    STATE(Output)->indent = 0;
+    SetRecursionDepth(0);
       
     /* here is a hook: */
     if (preCommandHook) {
@@ -291,31 +231,31 @@ Obj Shell ( Obj context,
         {
           Call0ArgsInNewReader(preCommandHook);
           /* Recover from a potential break loop: */
-          TLS(Prompt) = prompt;
+          STATE(Prompt) = prompt;
           ClearError();
         }
     }
 
     /* now  read and evaluate and view one command  */
-    status = ReadEvalCommand(TLS(ShellContext), &dualSemicolon);
-    if (TLS(UserHasQUIT))
+    status = ReadEvalCommand(STATE(ShellContext), &evalResult, &dualSemicolon);
+    if (STATE(UserHasQUIT))
       break;
 
 
     /* handle ordinary command                                         */
-    if ( status == STATUS_END && TLS(ReadEvalResult) != 0 ) {
+    if ( status == STATUS_END && evalResult != 0 ) {
 
       /* remember the value in 'last'    */
       if (lastDepth >= 3)
-        AssGVar( Last3, VAL_GVAR( Last2 ) );
+        AssGVar( Last3, ValGVarTL( Last2 ) );
       if (lastDepth >= 2)
-        AssGVar( Last2, VAL_GVAR( Last  ) );
+        AssGVar( Last2, ValGVarTL( Last  ) );
       if (lastDepth >= 1)
-        AssGVar( Last,  TLS(ReadEvalResult)   );
+        AssGVar( Last, evalResult );
 
       /* print the result                                            */
       if ( ! dualSemicolon ) {
-        ViewObjHandler( TLS(ReadEvalResult) );
+        ViewObjHandler( evalResult );
       }
             
     }
@@ -337,41 +277,45 @@ Obj Shell ( Obj context,
     
     /* handle quit command or <end-of-file>                            */
     else if ( status & (STATUS_EOF | STATUS_QUIT ) ) {
-      TLS(RecursionDepth) = 0;
-      TLS(UserHasQuit) = 1;
+      SetRecursionDepth(0);
+      STATE(UserHasQuit) = 1;
       break;
     }
         
     /* handle QUIT */
     else if (status & (STATUS_QQUIT)) {
-      TLS(UserHasQUIT) = 1;
+      STATE(UserHasQUIT) = 1;
       break;
     }
         
     /* stop the stopwatch                                          */
-    if (setTime)
+    if (setTime) {
       AssGVar( Time, INTOBJ_INT( SyTime() - time ) );
+      AssGVar(MemoryAllocated, ObjInt_Int8(SizeAllBags - mem));
+    }
 
-    if (TLS(UserHasQuit))
+    if (STATE(UserHasQuit))
       {
         FlushRestOfInputLine();
-        TLS(UserHasQuit) = 0;        /* quit has done its job if we are here */
+        STATE(UserHasQuit) = 0;        /* quit has done its job if we are here */
       }
 
   }
   
-  TLS(PrintObjDepth) = oldPrintDepth;
-  TLS(Output)->indent = oldindent;
+  STATE(PrintObjDepth) = oldPrintDepth;
+  STATE(Output)->indent = oldindent;
   CloseInput();
   CloseOutput();
-  TLS(BaseShellContext) = oldBaseShellContext;
-  TLS(ShellContext) = oldShellContext;
-  TLS(RecursionDepth) = oldRecursionDepth;
-  if (TLS(UserHasQUIT))
+  STATE(BaseShellContext) = oldBaseShellContext;
+  STATE(ShellContext) = oldShellContext;
+  STATE(ErrorLLevel) = oldErrorLLevel;
+  SetRecursionDepth(oldRecursionDepth);
+
+  if (STATE(UserHasQUIT))
     {
       if (catchQUIT)
         {
-          TLS(UserHasQUIT) = 0;
+          STATE(UserHasQUIT) = 0;
           MakeReadWriteGVar(QUITTINGGVar);
           AssGVar(QUITTINGGVar, True);
           MakeReadOnlyGVar(QUITTINGGVar);
@@ -395,7 +339,7 @@ Obj Shell ( Obj context,
     {
       res = NEW_PLIST(T_PLIST_HOM,1);
       SET_LEN_PLIST(res,1);
-      SET_ELM_PLIST(res,1,TLS(ReadEvalResult));
+      SET_ELM_PLIST(res,1,evalResult);
       return res;
     }
   assert(0); 
@@ -423,7 +367,7 @@ Obj FuncSHELL (Obj self, Obj args)
     ErrorMayQuit("SHELL takes 10 arguments",0,0);
   
   context = ELM_PLIST(args,1);
-  if (TNUM_OBJ(context) != T_LVARS)
+  if (!IS_LVARS_OR_HVARS(context))
     ErrorMayQuit("SHELL: 1st argument should be a local variables bag",0,0);
   
   if (ELM_PLIST(args,2) == True)
@@ -493,287 +437,21 @@ Obj FuncSHELL (Obj self, Obj args)
   res =  Shell(context, canReturnVoid, canReturnObj, lastDepth, setTime, promptBuffer, preCommandHook, catchQUIT,
                CSTR_STRING(infile), CSTR_STRING(outfile));
 
-  TLS(UserHasQuit) = 0;
+  STATE(UserHasQuit) = 0;
   return res;
 }
-#ifdef HAVE_REALPATH
 
-static void StrAppend(char **st, const char *st2)
-{
-    Int len,len2;
-    if (*st == NULL)
-        len = 0;
-    else
-        len = strlen(*st);
-    len2 = strlen(st2);
-    *st = realloc(*st,len+len2+1);
-    if (*st == NULL) {
-        printf("Extremely unexpected out of memory error. Giving up.\n");
-        exit(1);
-    }
-    memcpy(*st + len, st2, len2);
-}
-
-static void DoFindMyself(char *myself, char **mypath, char **gappath)
-{
-    char *tmppath;
-    char *p;
-
-    /* First we find our own position in the filesystem: */
-    *mypath = realpath(myself,NULL);
-    if (*mypath == NULL) {
-        printf("Could not determine my own path, giving up.\n");
-        exit(-1);
-    }
-    tmppath = NULL;
-    StrAppend(&tmppath,*mypath);
-    p = tmppath+strlen(tmppath);
-    while (*p != '/') p--;
-    *p = 0;
-    StrAppend(&tmppath,"/../..");
-    *gappath = realpath(tmppath,NULL);
-    if (*gappath == NULL) {
-        printf("Could not determine GAP path, giving up.\n");
-        exit(-2);
-    }
-    free(tmppath);
-}
-
-
-int DoCreateStartupScript(int argc, char *argv[], int withws)
-{
-    /* This is used to create a startup shell script, possibly using
-     * a saved workspace in a standard location. */
-    /* We can use malloc/realloc here arbitrarily since this GAP
-     * process will never start its memory manager before terminating! */
-    char *mypath;
-    char *gappath;
-    char *tmppath;
-    char *p;
-    FILE *f;
-    int i;
-
-    DoFindMyself(argv[0],&mypath,&gappath);
-
-    /* Now write out the startup script: */
-    f = fopen(argv[2],"w");
-    if (f == NULL) {
-        printf("Could not write startup script to\n  %s\ngiving up.\n",argv[2]);
-        return -3;
-    }
-    fprintf(f,"#!/bin/sh\n");
-    fprintf(f,"# Created by %s\n",mypath);
-    fprintf(f,"GAP_DIR=\"%s\"\n",gappath);
-    fprintf(f,"GAP_PRG=\"%s\"\n",mypath);
-    fprintf(f,"GAP_ARCH=\"%s\"\n",SYS_ARCH);
-    tmppath = NULL;
-    StrAppend(&tmppath,SYS_ARCH);
-    p = tmppath;
-    while (*p != 0 && *p != '/') p++;
-    *p++ = 0;
-    fprintf(f,"GAP_ARCH_SYS=\"%s\"\n",tmppath);
-    fprintf(f,"GAP_ARCH_ABI=\"%s\"\n",p);	// FIXME: WRONG
-    fprintf(f,"exec %s -l %s",mypath,gappath);
-    if (withws) {
-        tmppath[0] = 0;
-        StrAppend(&tmppath,mypath);
-        p = tmppath+strlen(tmppath);
-        while (*p != '/') p--;
-        p[1] = 0;
-        StrAppend(&tmppath,"workspace.gap");
-        fprintf(f," -L %s",tmppath);
-    }
-    for (i = 3;i < argc;i++) fprintf(f," %s",argv[i]);
-    fprintf(f," \"$@\"\n");
-    fclose(f);
-#ifdef HAVE_CHMOD
-    chmod(argv[2],S_IRUSR | S_IWUSR | S_IXUSR |
-                  S_IRGRP | S_IWGRP | S_IXGRP |
-                  S_IROTH | S_IXOTH);
-#else
-    printf("Warning: Do not have chmod to make script executable!\n");
-#endif
-    free(tmppath);
-    free(mypath);
-    free(gappath);
-    return 0;
-}
-
-int DoCreateWorkspace(char *myself)
-{
-    /* This is used to create an architecture-dependent saved
-     * workspace in a standard location. */
-    char *mypath;
-    char *gappath;
-    char *command;
-    char *tmppath;
-    char *p;
-    FILE *f;
-
-    DoFindMyself(myself,&mypath,&gappath);
-
-    /* Now we create a saved workspace: */
-    printf("Creating workspace...\n");
-    command = NULL;
-    StrAppend(&command,mypath);
-    StrAppend(&command," -r");
-    StrAppend(&command," -l ");
-    StrAppend(&command,gappath);
-
-    tmppath = NULL;
-    StrAppend(&tmppath,mypath);
-    p = tmppath+strlen(tmppath);
-    while (*p != '/') p--;
-    p[1] = 0;
-    StrAppend(&tmppath,"workspace.gap");
-
-    /* Now to the action: */
-    f = popen(command,"w");
-    if (f == NULL) {
-        printf("Could not start myself to save workspace, giving up.\n");
-        return -6;
-    }
-    fprintf(f,"??blabla\n");
-    fprintf(f,"SaveWorkspace(\"%s\");\n",tmppath);
-    fprintf(f,"quit;\n");
-    fflush(f);
-    pclose(f);
-    printf("\nDone creating workspace in\n  %s\n",tmppath);
-
-    free(tmppath);
-    free(command);
-    free(gappath);
-    free(mypath);
-
-    return 0;
-}
-
-int DoFixGac(char *myself)
-{
-    char *mypath;
-    char *gappath;
-    FILE *f;
-    char *gacpath;
-    char *gapbin;
-    char *newpath;
-    char *p,*q,*r;
-    char *buf,*buf2;
-    size_t len,written;
-
-    DoFindMyself(myself,&mypath,&gappath);
-    gacpath = NULL;
-    StrAppend(&gacpath,mypath);
-    p = gacpath + strlen(gacpath);
-    while (*p != '/') p--;
-    *p = 0;
-    gapbin = NULL;
-    StrAppend(&gapbin,gacpath);
-    StrAppend(&gacpath,"/gac");
-    newpath = NULL;
-    StrAppend(&newpath,gacpath);
-    StrAppend(&newpath,".new");
-    f = fopen(gacpath,"r");
-    if (f == NULL) {
-        printf("Could not open gac. Giving up.\n");
-        return -7;
-    }
-    buf = malloc(65536);
-    buf2 = malloc(65536+strlen(gapbin)+10);
-    if (buf == NULL || buf2 == NULL) {
-        printf("Could not allocate 128kB of memory. Giving up.\n");
-        return -8;
-    }
-    len = fread(buf,1,65534,f);
-    fclose(f);
-
-    /* Now manipulate it: */
-    p = buf;
-    p[len] = 0;
-    p[len+1] = 0;
-    q = buf2;
-    while (*p) {
-        if (!strncmp(p,"gap_bin=",8)) {
-            while (*p != '\n' && *p != 0) p++;
-            *q++ = 'g'; *q++ = 'a'; *q++ = 'p'; *q++ = '_';
-            *q++ = 'b'; *q++ = 'i'; *q++ = 'n'; *q++ = '=';
-            r = gapbin;
-            while (*r) *q++ = *r++;
-            *q++ = '\n';
-        } else {
-            while (*p != '\n' && *p != 0) *q++ = *p++;
-            *q++ = *p++;
-        }
-    }
-    len = q - buf2;
-
-    f = fopen(newpath,"w");
-    if (f == NULL) {
-        printf("Could not open gac.new. Giving up.\n");
-        return -9;
-    }
-    written = fwrite(buf2,1,len,f);
-    if (written < len) {
-        printf("Could not write gac.new. Giving up.\n");
-        fclose(f);
-        return -10;
-    }
-    if (fclose(f) < 0) {
-        printf("Could not close gac.new. Giving up.\n");
-        fclose(f);
-        return -11;
-    }
-    if (rename(newpath,gacpath) < 0) {
-        printf("Could not replace gac with new version. Giving up.\n");
-        return -12;
-    }
-    return 0;
-}
-#endif
-
-#ifdef COMPILECYGWINDLL
-#define main realmain
-#endif
-
-int main (
-          int                 argc,
-          char *              argv [],
-          char *              environ [] )
+int realmain( int argc, char * argv[], char * environ[] )
 {
   UInt                type;                   /* result of compile       */
   Obj                 func;                   /* function (compiler)     */
   Int4                crc;                    /* crc of file to compile  */
 
-#ifdef HAVE_REALPATH
-  if (argc >= 3 && !strcmp(argv[1],"--createstartupscript")) {
-      return DoCreateStartupScript(argc,argv,0);
-  }
-  if (argc >= 3 && !strcmp(argv[1],"--createstartupscriptwithws")) {
-      return DoCreateStartupScript(argc,argv,1);
-  }
-  if (argc >= 2 && !strcmp(argv[1],"--createworkspace")) {
-      return DoCreateWorkspace(argv[0]);
-  }
-  if (argc >= 2 && !strcmp(argv[1],"--fixgac")) {
-      return DoFixGac(argv[0]);
-  }
-#endif
-  
-  original_argv0 = argv[0];
-  sysargv = argv;
-  sysenviron = environ;
-  
-  /* Initialize assorted variables in this file */
-  /*   BreakOnError = 1;
-       ErrorCount = 0; */
-  NrImportedGVars = 0;
-  NrImportedFuncs = 0;
-  TLS(UserHasQUIT) = 0;
-  TLS(UserHasQuit) = 0;
-  SystemErrorCode = 0;
-    
+  SetupGAPLocation(argc, argv);
+
   /* initialize everything and read init.g which runs the GAP session */
-  InitializeGap( &argc, argv );
-  if (!TLS(UserHasQUIT)) {         /* maybe the user QUIT from the initial
+  InitializeGap( &argc, argv, environ );
+  if (!STATE(UserHasQUIT)) {         /* maybe the user QUIT from the initial
                                    read of init.g  somehow*/
     /* maybe compile in which case init.g got skipped */
     if ( SyCompilePlease ) {
@@ -782,8 +460,6 @@ int main (
       }
       func = READ_AS_FUNC();
       crc  = SyGAPCRC(SyCompileInput);
-      if (strlen(SyCompileOptions) != 0)
-        SetCompileOpts(SyCompileOptions);
       type = CompileFunc(
                          SyCompileOutput,
                          func,
@@ -798,6 +474,23 @@ int main (
   SyExit(SystemErrorCode);
   return 0;
 }
+
+#if !defined(COMPILECYGWINDLL)
+int main ( int argc, char * argv[], char * environ[] )
+{
+#if defined(HAVE_BACKTRACE) && defined(PRINT_BACKTRACE)
+  InstallBacktraceHandlers();
+#endif
+
+#ifdef HPCGAP
+  RunThreadedMain(realmain, argc, argv, environ);
+  return 0;
+#else
+  return realmain(argc, argv, environ);
+#endif
+}
+
+#endif
 
 /****************************************************************************
 **
@@ -870,6 +563,59 @@ Obj FuncRUNTIMES( Obj     self)
 
 /****************************************************************************
 **
+*F  FuncNanosecondsSinceEpoch( <self> )
+**
+**  'FuncNanosecondsSinceEpoch' returns an integer which represents the
+**  number of nanoseconds since some unspecified starting point. This
+**  function wraps SyNanosecondsSinceEpoch.
+**
+*/
+Obj FuncNanosecondsSinceEpoch(Obj self)
+{
+  Int8 val = SyNanosecondsSinceEpoch();
+
+  if(val == -1) {
+    return Fail;
+  }
+  else {
+    return ObjInt_Int8(val);
+  }
+}
+
+/****************************************************************************
+**
+*F  FuncNanosecondsSinceEpochInfo( <self> )
+**
+**  'FuncNanosecondsSinceEpochInformation' returns a plain record
+**  contains information about the timers used for FuncNanosecondsSinceEpoch
+**
+*/
+Obj FuncNanosecondsSinceEpochInfo(Obj self)
+{
+  Obj res, tmp;
+  Int8 resolution;
+
+  res = NEW_PREC(4);
+  /* Note this has to be "DYN" since we're not passing a
+     literal but a const char * */
+  tmp = MakeImmString(SyNanosecondsSinceEpochMethod);
+  AssPRec(res, RNamName("Method"), tmp);
+  AssPRec(res, RNamName("Monotonic"),
+               SyNanosecondsSinceEpochMonotonic ? True : False);
+  resolution = SyNanosecondsSinceEpochResolution();
+  if (resolution > 0) {
+      AssPRec(res, RNamName("Resolution"), ObjInt_Int8(resolution));
+      AssPRec(res, RNamName("Reliable"), True);
+  } else if (resolution <= 0) {
+      AssPRec(res, RNamName("Resolution"), ObjInt_Int8(-resolution));
+      AssPRec(res, RNamName("Reliable"), False);
+  }
+  return res;
+}
+
+
+/****************************************************************************
+**
 *F  FuncSizeScreen( <self>, <args> )  . . . .  internal function 'SizeScreen'
 **
 **  'FuncSizeScreen'  implements  the  internal  function 'SizeScreen' to get
@@ -928,7 +674,7 @@ Obj FuncSizeScreen (
   }
   else {
     elm = ELMW_LIST(size,1);
-    while ( TNUM_OBJ(elm) != T_INT ) {
+    while ( !IS_INTOBJ(elm) ) {
       elm = ErrorReturnObj(
                            "SizeScreen: <x> must be an integer",
                            0L, 0L,
@@ -945,7 +691,7 @@ Obj FuncSizeScreen (
   }
   else {
     elm = ELMW_LIST(size,2);
-    while ( TNUM_OBJ(elm) != T_INT ) {
+    while ( !IS_INTOBJ(elm) ) {
       elm = ErrorReturnObj(
                            "SizeScreen: <y> must be an integer",
                            0L, 0L,
@@ -993,6 +739,7 @@ Obj FuncWindowCmd (
   Int             n,  m;
   Int             i;
   Char *          ptr;
+  const Char *    inptr;
   Char *          qtr;
 
   /* check arguments                                                     */
@@ -1021,14 +768,14 @@ Obj FuncWindowCmd (
   for ( i = 2;  i <= LEN_LIST(args);  i++ )
     {
       tmp = ELM_LIST( args, i );
-      while ( TNUM_OBJ(tmp) != T_INT && ! IsStringConv(tmp) ) {
+      while ( !IS_INTOBJ(tmp) && ! IsStringConv(tmp) ) {
         tmp = ErrorReturnObj(
                              "%d. argument must be a string or integer (not a %s)",
                              i, (Int)TNAM_OBJ(tmp),
                              "you can replace the argument <arg> via 'return <arg>;'" );
         SET_ELM_PLIST( args, i, tmp );
       }
-      if ( TNUM_OBJ(tmp) == T_INT )
+      if ( IS_INTOBJ(tmp) )
         len += 12;
       else
         len += 12 + LEN_LIST(tmp);
@@ -1049,7 +796,7 @@ Obj FuncWindowCmd (
     {
       tmp = ELM_LIST(args,i);
 
-      if ( TNUM_OBJ(tmp) == T_INT ) {
+      if ( IS_INTOBJ(tmp) ) {
         *ptr++ = 'I';
         m = INT_INTOBJ(tmp);
         for ( m = (m<0)?-m:m;  0 < m;  m /= 10 )
@@ -1074,35 +821,35 @@ Obj FuncWindowCmd (
 
   /* now call the window front end with the argument string              */
   qtr = CSTR_STRING(WindowCmdString);
-  ptr = SyWinCmd( qtr, strlen(qtr) );
-  len = strlen(ptr);
+  inptr = SyWinCmd( qtr, strlen(qtr) );
+  len = strlen(inptr);
 
   /* now convert result back into a list                                 */
   list = NEW_PLIST( T_PLIST, 11 );
   SET_LEN_PLIST( list, 0 );
   i = 1;
   while ( 0 < len ) {
-    if ( *ptr == 'I' ) {
-      ptr++;
-      for ( n=0,m=1; '0' <= *ptr && *ptr <= '9'; ptr++,m *= 10,len-- )
-        n += (*ptr-'0') * m;
-      if ( *ptr++ == '-' )
+    if ( *inptr == 'I' ) {
+      inptr++;
+      for ( n=0,m=1; '0' <= *inptr && *inptr <= '9'; inptr++,m *= 10,len-- )
+        n += (*inptr-'0') * m;
+      if ( *inptr++ == '-' )
         n *= -1;
       len -= 2;
       AssPlist( list, i, INTOBJ_INT(n) );
     }
-    else if ( *ptr == 'S' ) {
-      ptr++;
-      for ( n=0,m=1;  '0' <= *ptr && *ptr <= '9';  ptr++,m *= 10,len-- )
-        n += (*ptr-'0') * m;
-      ptr++; /* ignore the '+' */
-      C_NEW_STRING(tmp, n, ptr);
-      ptr += n;
+    else if ( *inptr == 'S' ) {
+      inptr++;
+      for ( n=0,m=1;  '0' <= *inptr && *inptr <= '9';  inptr++,m *= 10,len-- )
+        n += (*inptr-'0') * m;
+      inptr++; /* ignore the '+' */
+      C_NEW_STRING(tmp, n, inptr);
+      inptr += n;
       len -= n+2;
       AssPlist( list, i, tmp );
     }
     else {
-      ErrorQuit( "unknown return value '%s'", (Int)ptr, 0 );
+      ErrorQuit( "unknown return value '%s'", (Int)inptr, 0 );
       return 0;
     }
     i++;
@@ -1110,11 +857,10 @@ Obj FuncWindowCmd (
 
   /* if the first entry is one signal an error */
   if ( ELM_LIST(list,1) == INTOBJ_INT(1) ) {
-    C_NEW_STRING_CONST(tmp, "window system: ");
-    SET_ELM_PLIST( list, 1, tmp );
-    SET_LEN_PLIST( list, i-1 );
-    return CALL_XARGS(Error,list);
-    /*     return FuncError( 0, list );*/
+      tmp = MakeString("window system: ");
+      SET_ELM_PLIST(list, 1, tmp);
+      SET_LEN_PLIST(list, i - 1);
+      return CALL_XARGS(Error, list);
   }
   else {
     for ( m = 1;  m <= i-2;  m++ )
@@ -1127,7 +873,6 @@ Obj FuncWindowCmd (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * * error functions * * * * * * * * * * * * * * *
 */
 
@@ -1138,43 +883,32 @@ Obj FuncWindowCmd (
 *F  FuncDownEnv( <self>, <level> )  . . . . . . . . .  change the environment
 */
 
-Obj  ErrorLVars0;    
-Obj  ErrorLVars;
-Int  ErrorLLevel;
-
-extern Obj BottomLVars;
-
-
 void DownEnvInner( Int depth )
 {
-  /* if we really want to go up                                          */
-  if ( depth < 0 && -TLS(ErrorLLevel) <= -depth ) {
-    depth = 0;
-    TLS(ErrorLVars) = TLS(ErrorLVars0);
-    TLS(ErrorLLevel) = 0;
-    TLS(ShellContextDepth) = 0;
-    TLS(ShellContext) = TLS(BaseShellContext);
-  }
-  else if ( depth < 0 ) {
-    depth = -TLS(ErrorLLevel) + depth;
-    TLS(ErrorLVars) = TLS(ErrorLVars0);
-    TLS(ErrorLLevel) = 0;
-    TLS(ShellContextDepth) = 0;
-    TLS(ShellContext) = TLS(BaseShellContext);
+  /* if we are asked to go up ... */
+  if ( depth < 0 ) {
+    /* ... we determine which level we are supposed to end up on ... */
+    depth = STATE(ErrorLLevel) + depth;
+    if (depth < 0) {
+      depth = 0;
+    }
+    /* ... then go back to the top, and later go down to the appropriate level. */
+    STATE(ErrorLVars) = STATE(BaseShellContext);
+    STATE(ErrorLLevel) = 0;
+    STATE(ShellContext) = STATE(BaseShellContext);
   }
   
-  /* now go down                                                         */
+  /* now go down */
   while ( 0 < depth
-          && TLS(ErrorLVars) != TLS(BottomLVars)
-          && PTR_BAG(TLS(ErrorLVars))[2] != TLS(BottomLVars) ) {
-    TLS(ErrorLVars) = PTR_BAG(TLS(ErrorLVars))[2];
-    TLS(ErrorLLevel)--;
-    TLS(ShellContext) = PTR_BAG(TLS(ShellContext))[2];
-    TLS(ShellContextDepth)--;
+          && STATE(ErrorLVars) != STATE(BottomLVars)
+          && PARENT_LVARS(STATE(ErrorLVars)) != STATE(BottomLVars) ) {
+    STATE(ErrorLVars) = PARENT_LVARS(STATE(ErrorLVars));
+    STATE(ErrorLLevel)++;
+    STATE(ShellContext) = PARENT_LVARS(STATE(ShellContext));
     depth--;
   }
 }
-  
+
 Obj FuncDownEnv (
                  Obj                 self,
                  Obj                 args )
@@ -1189,17 +923,15 @@ Obj FuncDownEnv (
   }
   else {
     ErrorQuit( "usage: DownEnv( [ <depth> ] )", 0L, 0L );
-    return 0;
+    return (Obj)0;
   }
-  if ( TLS(ErrorLVars) == 0 ) {
+  if ( STATE(ErrorLVars) == STATE(BottomLVars) ) {
     Pr( "not in any function\n", 0L, 0L );
-    return 0;
+    return (Obj)0;
   }
 
   DownEnvInner( depth);
-
-  /* return nothing                                                      */
-  return 0;
+  return (Obj)0;
 }
 
 Obj FuncUpEnv (
@@ -1215,45 +947,87 @@ Obj FuncUpEnv (
   }
   else {
     ErrorQuit( "usage: UpEnv( [ <depth> ] )", 0L, 0L );
-    return 0;
+    return (Obj)0;
   }
-  if ( TLS(ErrorLVars) == 0 ) {
+  if ( STATE(ErrorLVars) == STATE(BottomLVars) ) {
     Pr( "not in any function\n", 0L, 0L );
-    return 0;
+    return (Obj)0;
   }
 
   DownEnvInner(-depth);
-  return 0;
+  return (Obj)0;
 }
 
-
-Obj FuncPrintExecutingStatement(Obj self, Obj context)
+Obj FuncCURRENT_STATEMENT_LOCATION(Obj self, Obj context)
 {
-  Obj currLVars = TLS(CurrLVars);
-  Expr call;
-  if (context == TLS(BottomLVars))
-    return (Obj) 0;
-  SWITCH_TO_OLD_LVARS(context);
-  call = BRK_CALL_TO();
-  if ( call == 0 ) {
-    Pr( "<compiled or corrupted statement> ", 0L, 0L );
-  }
-#if T_PROCCALL_0ARGS
-    else if ( FIRST_STAT_TNUM <= TNUM_STAT(call)
-              && TNUM_STAT(call)  <= LAST_STAT_TNUM ) {
-#else
-     else if ( TNUM_STAT(call)  <= LAST_STAT_TNUM ) {
-#endif
-      PrintStat( call );
-      Pr(" at %s:%d",(UInt)CSTR_STRING(FILENAME_STAT(call)),LINE_STAT(call));
+    if (context == STATE(BottomLVars))
+        return Fail;
+
+    Obj func = FUNC_LVARS(context);
+    GAP_ASSERT(func);
+    Stat call = STAT_LVARS(context);
+    if (IsKernelFunction(func)) {
+        return Fail;
     }
-    else if ( FIRST_EXPR_TNUM <= TNUM_EXPR(call)
-              && TNUM_EXPR(call)  <= LAST_EXPR_TNUM ) {
-      PrintExpr( call );
-      Pr(" at %s:%d",(UInt)CSTR_STRING(FILENAME_STAT(call)),LINE_STAT(call));
+    Obj body = BODY_FUNC(func);
+    if (call < OFFSET_FIRST_STAT || call > SIZE_BAG(body) - sizeof(StatHeader)) {
+        return Fail;
     }
-    SWITCH_TO_OLD_LVARS( currLVars );
-    return (Obj) 0;
+
+    Obj currLVars = STATE(CurrLVars);
+    SWITCH_TO_OLD_LVARS(context);
+    GAP_ASSERT(call == BRK_CALL_TO());
+
+    Obj retlist = Fail;
+    Int type = TNUM_STAT(call);
+    if ((FIRST_STAT_TNUM <= type && type <= LAST_STAT_TNUM) ||
+        (FIRST_EXPR_TNUM <= type && type <= LAST_EXPR_TNUM)) {
+        Int line = LINE_STAT(call);
+        Obj filename = GET_FILENAME_BODY(body);
+        retlist = NEW_PLIST(T_PLIST, 2);
+        SET_LEN_PLIST(retlist, 2);
+        SET_ELM_PLIST(retlist, 1, filename);
+        SET_ELM_PLIST(retlist, 2, INTOBJ_INT(line));
+        CHANGED_BAG(retlist);
+    }
+    SWITCH_TO_OLD_LVARS(currLVars);
+    return retlist;
+}
+
+Obj FuncPRINT_CURRENT_STATEMENT(Obj self, Obj context)
+{
+    if (context == STATE(BottomLVars))
+        return 0;
+
+    Obj func = FUNC_LVARS(context);
+    GAP_ASSERT(func);
+    Stat call = STAT_LVARS(context);
+    if (IsKernelFunction(func)) {
+        Pr("<compiled statement> ", 0L, 0L);
+        return 0;
+    }
+    Obj body = BODY_FUNC(func);
+    if (call < OFFSET_FIRST_STAT || call > SIZE_BAG(body) - sizeof(StatHeader)) {
+        Pr("<corrupted statement> ", 0L, 0L);
+        return 0;
+    }
+
+    Obj currLVars = STATE(CurrLVars);
+    SWITCH_TO_OLD_LVARS(context);
+    GAP_ASSERT(call == BRK_CALL_TO());
+
+    Int type = TNUM_STAT(call);
+    Obj filename = GET_FILENAME_BODY(body);
+    if (FIRST_STAT_TNUM <= type && type <= LAST_STAT_TNUM) {
+        PrintStat(call);
+        Pr(" at %s:%d", (UInt)CSTR_STRING(filename), LINE_STAT(call));
+    }
+    else if (FIRST_EXPR_TNUM <= type && type <= LAST_EXPR_TNUM) {
+        PrintExpr(call);
+        Pr(" at %s:%d", (UInt)CSTR_STRING(filename), LINE_STAT(call));
+    }
+    SWITCH_TO_OLD_LVARS(currLVars);
+    return 0;
 }    
 
 /****************************************************************************
@@ -1263,183 +1037,120 @@ Obj FuncPrintExecutingStatement(Obj self, Obj context)
 */
   
 /* syJmp_buf CatchBuffer; */
-Obj ThrownObject = 0;
+/* TL: Obj ThrownObject = 0; */
 
-Obj FuncCALL_WITH_CATCH( Obj self, Obj func, Obj args )
+Obj FuncCALL_WITH_CATCH( Obj self, Obj func, volatile Obj args )
 {
-    syJmp_buf readJmpError;
-    Obj res;
-    Obj currLVars;
-    Obj result;
-    Int recursionDepth;
-    Stat currStat;
+    volatile syJmp_buf readJmpError;
+    volatile Obj res;
+    volatile Obj currLVars;
+    volatile Obj tilde;
+    volatile Int recursionDepth;
+    volatile Stat currStat;
+
     if (!IS_FUNC(func))
       ErrorMayQuit("CALL_WITH_CATCH(<func>, <args>): <func> must be a function",0,0);
     if (!IS_LIST(args))
       ErrorMayQuit("CALL_WITH_CATCH(<func>, <args>): <args> must be a list",0,0);
-    memcpy((void *)&readJmpError, (void *)&TLS(ReadJmpError), sizeof(syJmp_buf));
-    currLVars = TLS(CurrLVars);
-    currStat = TLS(CurrStat);
-    recursionDepth = TLS(RecursionDepth);
+#ifdef HPCGAP
+    if (!IS_PLIST(args)) {
+      args = SHALLOW_COPY_OBJ(args);
+      PLAIN_LIST(args);
+    }
+#endif
+
+    memcpy((void *)&readJmpError, (void *)&STATE(ReadJmpError), sizeof(syJmp_buf));
+    currLVars = STATE(CurrLVars);
+    currStat = STATE(CurrStat);
+    recursionDepth = GetRecursionDepth();
+    tilde = STATE(Tilde);
     res = NEW_PLIST(T_PLIST_DENSE+IMMUTABLE,2);
-    if (sySetjmp(TLS(ReadJmpError))) {
+#ifdef HPCGAP
+    int lockSP = RegionLockSP();
+    Region *savedRegion = TLS(currentRegion);
+#endif
+    if (sySetjmp(STATE(ReadJmpError))) {
       SET_LEN_PLIST(res,2);
       SET_ELM_PLIST(res,1,False);
-      SET_ELM_PLIST(res,2,TLS(ThrownObject));
+      SET_ELM_PLIST(res,2,STATE(ThrownObject));
       CHANGED_BAG(res);
-      TLS(ThrownObject) = 0;
-      TLS(CurrLVars) = currLVars;
-      TLS(PtrLVars) = PTR_BAG(TLS(CurrLVars));
-      TLS(PtrBody) = (Stat*)PTR_BAG(BODY_FUNC(CURR_FUNC));
-      TLS(CurrStat) = currStat;
-      TLS(RecursionDepth) = recursionDepth;
+      STATE(ThrownObject) = 0;
+      SET_CURR_LVARS(currLVars);
+      STATE(CurrStat) = currStat;
+      SetRecursionDepth(recursionDepth);
+#ifdef HPCGAP
+      STATE(Tilde) = tilde;
+      PopRegionLocks(lockSP);
+      TLS(currentRegion) = savedRegion;
+      if (TLS(CurrentHashLock))
+        HashUnlock(TLS(CurrentHashLock));
+#else
+      STATE(Tilde) = tilde;
+#endif
     } else {
-    result = CallFuncList(func, args);
-    SET_ELM_PLIST(res,1,True);
-    if (result)
-      {
-	SET_LEN_PLIST(res,2);
-	SET_ELM_PLIST(res,2,result);
-	CHANGED_BAG(res);
-      }
-    else
-      SET_LEN_PLIST(res,1);
+      Obj result = CallFuncList(func, args);
+#ifdef HPCGAP
+      /* There should be no locks to pop off the stack, but better safe than sorry. */
+      PopRegionLocks(lockSP);
+      TLS(currentRegion) = savedRegion;
+#endif
+      SET_ELM_PLIST(res,1,True);
+      if (result) {
+        SET_LEN_PLIST(res,2);
+        SET_ELM_PLIST(res,2,result);
+        CHANGED_BAG(res);
+      } else
+        SET_LEN_PLIST(res,1);
     }
-    memcpy((void *)&TLS(ReadJmpError), (void *)&readJmpError, sizeof(syJmp_buf));
+    memcpy((void *)&STATE(ReadJmpError), (void *)&readJmpError, sizeof(syJmp_buf));
     return res;
 }
 
 Obj FuncJUMP_TO_CATCH( Obj self, Obj payload)
 {
-  TLS(ThrownObject) = payload;
-  syLongjmp(TLS(ReadJmpError), 1);
+  STATE(ThrownObject) = payload;
+  syLongjmp(&(STATE(ReadJmpError)), 1);
   return 0;
 }
-
-
-UInt UserHasQuit;
-UInt UserHasQUIT;
-UInt SystemErrorCode;
 
 Obj FuncSetUserHasQuit( Obj Self, Obj value)
 {
-  TLS(UserHasQuit) = INT_INTOBJ(value);
-  if (TLS(UserHasQuit))
-    TLS(RecursionDepth) = 0;
+  STATE(UserHasQuit) = INT_INTOBJ(value);
+  if (STATE(UserHasQuit))
+    SetRecursionDepth(0);
   return 0;
 }
 
 
- #define MAX_TIMEOUT_NESTING_DEPTH 1024
- 
- syJmp_buf AlarmJumpBuffers[MAX_TIMEOUT_NESTING_DEPTH];
- UInt NumAlarmJumpBuffers = 0;
-
- Obj FuncTIMEOUTS_SUPPORTED(Obj self) {
-   return SyHaveAlarms ? True: False;
- }
-   
- Obj FuncCALL_WITH_TIMEOUT( Obj self, Obj seconds, Obj microseconds, Obj func, Obj args )
-{
-    Obj res;
-    Obj currLVars;
-    Obj result;
-    Int recursionDepth;
-    Stat currStat;
-      
-    if (!SyHaveAlarms)
-      ErrorMayQuit("CALL_WITH_TIMEOUT: timeouts not supported on this system", 0L, 0L);
-    if (!IS_INTOBJ(seconds) || 0 > INT_INTOBJ(seconds))
-      ErrorMayQuit("CALL_WITH_TIMEOUT(<seconds>, <microseconds>, <func>, <args>):"
-		   " <seconds> must be a non-negative small integer",0,0);
-    if (!IS_INTOBJ(microseconds) || 0 > INT_INTOBJ(microseconds) || 999999999 < INT_INTOBJ(microseconds))
-      ErrorMayQuit("CALL_WITH_TIMEOUT(<seconds>, <microseconds>, <func>, <args>):"
-		   " <microseconds> must be a non-negative small integer less than 10^9",0,0);
-    if (!IS_FUNC(func))
-      ErrorMayQuit("CALL_WITH_TIMEOUT(<seconds>, <microseconds>, <func>,<args>): <func> must be a function",0,0);
-    if (!IS_LIST(args))
-      ErrorMayQuit("CALL_WITH_TIMEOUT(<seconds>, <microseconds>, <func>,<args>): <args> must be a list",0,0);
-    if (SyAlarmRunning) {            
-      ErrorMayQuit("CALL_WITH_TIMEOUT cannot currently be nested except via break loops."
-		   " There is already a timeout running", 0, 0); 
-    }
-    if (NumAlarmJumpBuffers >= MAX_TIMEOUT_NESTING_DEPTH-1)
-      ErrorMayQuit("Nesting depth of timeouts via break loops limited to %i", MAX_TIMEOUT_NESTING_DEPTH, 0L);
-    currLVars = TLS(CurrLVars);
-    currStat = TLS(CurrStat);
-    recursionDepth = TLS(RecursionDepth);
-    res = NEW_PLIST( T_PLIST_DENSE+IMMUTABLE, 2 );
-    SET_LEN_PLIST(res, 1);
-    if (sySetjmp(AlarmJumpBuffers[NumAlarmJumpBuffers++])) {
-      /* Timeout happened */
-      TLS(CurrLVars) = currLVars;
-      TLS(PtrLVars) = PTR_BAG(TLS(CurrLVars));
-      TLS(PtrBody) = (Stat*)PTR_BAG(BODY_FUNC(CURR_FUNC));
-      TLS(CurrStat) = currStat;
-      TLS(RecursionDepth) = recursionDepth;
-      SET_ELM_PLIST(res, 1, False);
-    } else {
-      SyInstallAlarm( INT_INTOBJ(seconds), 1000*INT_INTOBJ(microseconds));
-      result = CallFuncList(func, args);
-      /* make sure the alarm is not still running */
-      SyStopAlarm( NULL, NULL);
-      /* Now the alarm might have gone off since we executed the last statement 
-	 of func. So */
-      if (SyAlarmHasGoneOff) {
-	SyAlarmHasGoneOff = 0;
-	UnInterruptExecStat();
-      }
-      assert(NumAlarmJumpBuffers);
-      NumAlarmJumpBuffers--;
-      SET_ELM_PLIST(res,1,True);
-      if (result)
-        {
-          SET_LEN_PLIST(res,2);
-          SET_ELM_PLIST(res,2,result);
-        }
-    }
-    CHANGED_BAG(res);
-    return res;
-}
-
-Obj FuncSTOP_TIMEOUT( Obj self ) {
-  UInt seconds, nanoseconds;
-  if (!SyHaveAlarms || !SyAlarmRunning) 
-    return Fail;
-  SyStopAlarm(&seconds, &nanoseconds);
-  Obj state = NEW_PLIST(T_PLIST_CYC+IMMUTABLE, 3);
-  SET_ELM_PLIST(state,1,INTOBJ_INT(seconds));
-  SET_ELM_PLIST(state,2,INTOBJ_INT(nanoseconds/1000));
-  SET_ELM_PLIST(state,3,INTOBJ_INT(NumAlarmJumpBuffers));
-  SET_LEN_PLIST(state,3);
-  return state;
-}
-
-Obj FuncRESUME_TIMEOUT( Obj self, Obj state ) {
-  if (!SyHaveAlarms || SyAlarmRunning) 
-    return Fail;
-  if (!IS_PLIST(state) || LEN_PLIST(state) < 2)
-    return Fail;
-  if (!IS_INTOBJ(ELM_PLIST(state,1)) ||
-      !IS_INTOBJ(ELM_PLIST(state,2)))
-    return Fail;
-  Int s = INT_INTOBJ(ELM_PLIST(state,1));
-  Int us = INT_INTOBJ(ELM_PLIST(state,2));
-  if (s < 0 || us < 0 || us > 999999)
-    return Fail;
-  Int depth = INT_INTOBJ(ELM_PLIST(state,3));
-  if (depth < 0 || depth >= MAX_TIMEOUT_NESTING_DEPTH)
-    return Fail;
-  NumAlarmJumpBuffers = depth;
-  SyInstallAlarm(s, 1000*us);
-  return True;
-}
-
- 
- 
 /****************************************************************************
 **
-*F  ErrorQuit( <msg>, <arg1>, <arg2> )  . . . . . . . . . . .  print and quit
+*F RegisterBreakloopObserver( <func> )
+**
+** Register a function which will be called when the break loop is entered
+** and left. Function should take a single Int argument which will be 1 when
+** break loop is entered, 0 when leaving.
+**
+** Note that it is also possible to leave the break loop (or any GAP code)
+** by longjmping. This should be tracked with RegisterSyLongjmpObserver.
+*/
+
+static intfunc signalBreakFuncList[16];
+
+Int RegisterBreakloopObserver(intfunc func)
+{
+    Int i;
+    for (i = 0; i < ARRAY_SIZE(signalBreakFuncList); ++i) {
+        if (signalBreakFuncList[i] == 0) {
+            signalBreakFuncList[i] = func;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+/****************************************************************************
+**
+*F  ErrorMessageToGAPString( <msg>, <arg1>, <arg2> )
 */
 
 static Obj ErrorMessageToGAPString( 
@@ -1447,13 +1158,14 @@ static Obj ErrorMessageToGAPString(
     Int                 arg1,
     Int                 arg2 )
 {
-  Char message[120];
+  Char message[1024];
   Obj Message;
   SPrTo(message, sizeof(message), msg, arg1, arg2);
   message[sizeof(message)-1] = '\0';
-  C_NEW_STRING_DYN(Message, message);
+  Message = MakeString(message);
   return Message;
 }
+
 
 Obj CallErrorInner (
     const Char *        msg,
@@ -1468,8 +1180,14 @@ Obj CallErrorInner (
   Obj EarlyMsg;
   Obj r = NEW_PREC(0);
   Obj l;
+  Int i;
+
+#ifdef HPCGAP
+  Region *savedRegion = TLS(currentRegion);
+  TLS(currentRegion) = TLS(threadRegion);
+#endif
   EarlyMsg = ErrorMessageToGAPString(msg, arg1, arg2);
-  AssPRec(r, RNamName("context"), TLS(CurrLVars));
+  AssPRec(r, RNamName("context"), STATE(CurrLVars));
   AssPRec(r, RNamName("justQuit"), justQuit? True : False);
   AssPRec(r, RNamName("mayReturnObj"), mayReturnObj? True : False);
   AssPRec(r, RNamName("mayReturnVoid"), mayReturnVoid? True : False);
@@ -1478,8 +1196,16 @@ Obj CallErrorInner (
   l = NEW_PLIST(T_PLIST_HOM+IMMUTABLE, 1);
   SET_ELM_PLIST(l,1,EarlyMsg);
   SET_LEN_PLIST(l,1);
-  SET_BRK_CALL_TO(TLS(CurrStat));
-  Obj res =  CALL_2ARGS(ErrorInner,r,l);
+  SET_BRK_CALL_TO(STATE(CurrStat));
+  // Signal functions about entering and leaving break loop
+  for (i = 0; i < ARRAY_SIZE(signalBreakFuncList) && signalBreakFuncList[i]; ++i)
+      (signalBreakFuncList[i])(1);
+  Obj res = CALL_2ARGS(ErrorInner,r,l);
+  for (i = 0; i < ARRAY_SIZE(signalBreakFuncList) && signalBreakFuncList[i]; ++i)
+      (signalBreakFuncList[i])(0);
+#ifdef HPCGAP
+  TLS(currentRegion) = savedRegion;
+#endif
   return res;
 }
 
@@ -1596,6 +1322,19 @@ void ErrorQuitNrArgs (
 
 /****************************************************************************
 **
+*F  ErrorQuitNrAtLeastArgs( <narg>, <args> ) . . . . . . not enough arguments
+*/
+void ErrorQuitNrAtLeastArgs (
+    Int                 narg,
+    Obj                 args )
+{
+    ErrorQuit(
+        "Function Calls: number of arguments must be at least %d (not %d)",
+        narg, LEN_PLIST( args ) );
+}
+
+/****************************************************************************
+**
 *F  ErrorQuitRange3( <first>, <second>, <last> ) . . divisibility
 */
 void ErrorQuitRange3 (
@@ -1620,7 +1359,7 @@ Obj ErrorReturnObj (
     const Char *        msg2 )
 {
   Obj LateMsg;
-  C_NEW_STRING_DYN(LateMsg, msg2);
+  LateMsg = MakeString(msg2);
   return CallErrorInner(msg, arg1, arg2, 0, 0, 1, LateMsg, 1);
 }
 
@@ -1636,7 +1375,7 @@ void ErrorReturnVoid (
     const Char *        msg2 )
 {
   Obj LateMsg;
-  C_NEW_STRING_DYN(LateMsg, msg2);
+  LateMsg = MakeString(msg2);
   CallErrorInner( msg, arg1, arg2, 0,1,0,LateMsg, 1);
   /*    ErrorMode( msg, arg1, arg2, (Obj)0, msg2, 'x' ); */
 }
@@ -1650,33 +1389,20 @@ void ErrorMayQuit (
     Int                 arg1,
     Int                 arg2)
 {
-  CallErrorInner(msg, arg1, arg2, 0, 0,0, False, 1);
+  Obj LateMsg = MakeString("type 'quit;' to quit to outer loop");
+  CallErrorInner(msg, arg1, arg2, 0, 0, 0, LateMsg, 1);
  
 }
 
-Obj Error;
-Obj ErrorInner;
-
- 
-/****************************************************************************
-**
-
-*F * * * * * * * * * functions for creating the init file * * * * * * * * * *
-*/
-
-/* deleted 9/5/11 */
 
 /*************************************************************************
 **
-
 *F * * * * * * * * * functions for dynamical/static modules * * * * * * * * *
 */
 
 
-
 /****************************************************************************
 **
-
 *F  FuncGAP_CRC( <self>, <name> ) . . . . . . . create a crc value for a file
 */
 Obj FuncGAP_CRC (
@@ -1705,10 +1431,10 @@ Obj FuncLOAD_DYN (
     Obj                 filename,
     Obj                 crc )
 {
-    InitInfoFunc        init;
     StructInitInfo *    info;
     Obj                 crc1;
     Int                 res;
+    InitInfoFunc        init;
 
     /* check the argument                                                  */
     while ( ! IsStringConv( filename ) ) {
@@ -1717,7 +1443,7 @@ Obj FuncLOAD_DYN (
             (Int)TNAM_OBJ(filename), 0L,
             "you can replace <filename> via 'return <filename>;'" );
     }
-    while ( ! IS_INTOBJ(crc) && crc!=False ) {
+    while ( ! IS_INTOBJ(crc) && crc != False ) {
         crc = ErrorReturnObj(
             "<crc> must be a small integer or 'false' (not a %s)",
             (Int)TNAM_OBJ(crc), 0L,
@@ -1725,16 +1451,16 @@ Obj FuncLOAD_DYN (
     }
 
     /* try to read the module                                              */
-    init = SyLoadModule( CSTR_STRING(filename) );
-    if ( (Int)init == 1 )
+    res = SyLoadModule( CSTR_STRING(filename), &init );
+    if ( res == 1 )
         ErrorQuit( "module '%s' not found", (Int)CSTR_STRING(filename), 0L );
-    else if ( (Int) init == 3 )
+    else if ( res == 3 )
         ErrorQuit( "symbol 'Init_Dynamic' not found", 0L, 0L );
-    else if ( (Int) init == 5 )
+    else if ( res == 5 )
         ErrorQuit( "forget symbol failed", 0L, 0L );
 
     /* no dynamic library support                                          */
-    else if ( (Int) init == 7 ) {
+    else if ( res == 7 ) {
         if ( SyDebugLoading ) {
             Pr( "#I  LOAD_DYN: no support for dynamical loading\n", 0L, 0L );
         }
@@ -1745,6 +1471,22 @@ Obj FuncLOAD_DYN (
     info = (*init)();
     if ( info == 0 )
         ErrorQuit( "call to init function failed", 0L, 0L );
+
+    // info->type should not be larger than kernel version
+    if (info->type / 10 > GAP_KERNEL_API_VERSION)
+        ErrorMayQuit("LOAD_DYN: kernel module built for newer "
+                     "version of GAP",
+                     0L, 0L);
+
+    // info->type should not have an older major version
+    if (info->type / 10000 < GAP_KERNEL_MAJOR_VERSION)
+        ErrorMayQuit("LOAD_DYN: kernel module built for older "
+                     "version of GAP",
+                     0L, 0L);
+
+    // info->type % 10 should be 0, 1 or 2, for the 3 types of module
+    if (info->type % 10 > 2)
+        ErrorMayQuit("LOAD_DYN: Invalid kernel module", 0L, 0L);
 
     /* check the crc value                                                 */
     if ( crc != False ) {
@@ -1762,19 +1504,18 @@ Obj FuncLOAD_DYN (
     }
 
     /* link and init me                                                    */
-    info->isGapRootRelative = 0;
     res = (info->initKernel)(info);
     UpdateCopyFopyInfo();
 
     /* Start a new executor to run the outer function of the module
        in global context */
-    ExecBegin( TLS(BottomLVars) );
+    ExecBegin( STATE(BottomLVars) );
     res = res || (info->initLibrary)(info);
     ExecEnd(res ? STATUS_ERROR : STATUS_END);
     if ( res ) {
         Pr( "#W  init functions returned non-zero exit code\n", 0L, 0L );
     }
-    RecordLoadedModule(info, CSTR_STRING(filename));
+    RecordLoadedModule(info, 0, CSTR_STRING(filename));
 
     return True;
 }
@@ -1791,8 +1532,8 @@ Obj FuncLOAD_STAT (
 {
     StructInitInfo *    info = 0;
     Obj                 crc1;
-    Int                 k;
     Int                 res;
+    Int                 k;
 
     /* check the argument                                                  */
     while ( ! IsStringConv( filename ) ) {
@@ -1801,7 +1542,7 @@ Obj FuncLOAD_STAT (
             (Int)TNAM_OBJ(filename), 0L,
             "you can replace <filename> via 'return <filename>;'" );
     }
-    while ( !IS_INTOBJ(crc) && crc!=False ) {
+    while ( ! IS_INTOBJ(crc) && crc != False ) {
         crc = ErrorReturnObj(
             "<crc> must be a small integer or 'false' (not a %s)",
             (Int)TNAM_OBJ(crc), 0L,
@@ -1811,10 +1552,7 @@ Obj FuncLOAD_STAT (
     /* try to find the module                                              */
     for ( k = 0;  CompInitFuncs[k];  k++ ) {
         info = (*(CompInitFuncs[k]))();
-        if ( info == 0 ) {
-            continue;
-        }
-        if ( ! strcmp( CSTR_STRING(filename), info->name ) ) {
+        if ( info && ! strcmp( CSTR_STRING(filename), info->name ) ) {
             break;
         }
     }
@@ -1842,18 +1580,18 @@ Obj FuncLOAD_STAT (
     }
 
     /* link and init me                                                    */
-    info->isGapRootRelative = 0;
     res = (info->initKernel)(info);
     UpdateCopyFopyInfo();
+
     /* Start a new executor to run the outer function of the module
        in global context */
-    ExecBegin( TLS(BottomLVars) );
+    ExecBegin( STATE(BottomLVars) );
     res = res || (info->initLibrary)(info);
     ExecEnd(res ? STATUS_ERROR : STATUS_END);
     if ( res ) {
         Pr( "#W  init functions returned non-zero exit code\n", 0L, 0L );
     }
-    RecordLoadedModule(info, CSTR_STRING(filename));
+    RecordLoadedModule(info, 0, CSTR_STRING(filename));
 
     return True;
 }
@@ -1890,7 +1628,7 @@ Obj FuncSHOW_STAT (
         if ( info == 0 ) {
             continue;
         }
-        C_NEW_STRING_DYN(name, info->name);
+        name = MakeImmString(info->name);
 
         SET_ELM_PLIST( modules, im, name );
 
@@ -1919,47 +1657,44 @@ Obj FuncLoadedModules (
     list = NEW_PLIST( T_PLIST, NrModules * 3 );
     SET_LEN_PLIST( list, NrModules * 3 );
     for ( i = 0;  i < NrModules;  i++ ) {
-        m = Modules[i];
-        if ( m->type == MODULE_BUILTIN ) {
+        m = Modules[i].info;
+        if (IS_MODULE_BUILTIN(m->type)) {
             SET_ELM_PLIST( list, 3*i+1, ObjsChar[(Int)'b'] );
             CHANGED_BAG(list);
-            C_NEW_STRING_DYN( str, m->name );
+            str = MakeImmString( m->name );
             SET_ELM_PLIST( list, 3*i+2, str );
             SET_ELM_PLIST( list, 3*i+3, INTOBJ_INT(m->version) );
         }
-        else if ( m->type == MODULE_DYNAMIC ) {
+        else if (IS_MODULE_DYNAMIC(m->type)) {
             SET_ELM_PLIST( list, 3*i+1, ObjsChar[(Int)'d'] );
             CHANGED_BAG(list);
-            C_NEW_STRING_DYN( str, m->name );
+            str = MakeImmString( m->name );
             SET_ELM_PLIST( list, 3*i+2, str );
             CHANGED_BAG(list);
-            C_NEW_STRING_DYN( str, m->filename );
+            str = MakeImmString( Modules[i].filename );
             SET_ELM_PLIST( list, 3*i+3, str );
         }
-        else if ( m->type == MODULE_STATIC ) {
+        else if (IS_MODULE_STATIC(m->type)) {
             SET_ELM_PLIST( list, 3*i+1, ObjsChar[(Int)'s'] );
             CHANGED_BAG(list);
-            C_NEW_STRING_DYN( str, m->name );
+            str = MakeImmString( m->name );
             SET_ELM_PLIST( list, 3*i+2, str );
             CHANGED_BAG(list);
-            C_NEW_STRING_DYN( str, m->filename );
+            str = MakeImmString( Modules[i].filename );
             SET_ELM_PLIST( list, 3*i+3, str );
         }
     }
-    return CopyObj( list, 0 );
+    return list;
 }
 
 
 /****************************************************************************
 **
-
-
 *F * * * * * * * * * * * * * * debug functions  * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  FuncGASMAN( <self>, <args> )  . . . . . . . . .  expert function 'GASMAN'
 **
 **  'FuncGASMAN' implements the internal function 'GASMAN'
@@ -1970,23 +1705,18 @@ Obj FuncGASMAN (
     Obj                 self,
     Obj                 args )
 {
-    Obj                 cmd;            /* argument                        */
-    UInt                i,  k;          /* loop variables                  */
-    Char                buf[41];
-
     /* check the argument                                                  */
-    while ( ! IS_SMALL_LIST(args) || LEN_LIST(args) == 0 ) {
-        args = ErrorReturnObj(
+    if ( ! IS_SMALL_LIST(args) || LEN_LIST(args) == 0 ) {
+        ErrorMayQuit(
             "usage: GASMAN( \"display\"|\"displayshort\"|\"clear\"|\"collect\"|\"message\"|\"partial\" )",
-            0L, 0L,
-            "you can replace the argument list <args> via 'return <args>;'" );
+            0L, 0L);
     }
 
     /* loop over the arguments                                             */
-    for ( i = 1; i <= LEN_LIST(args); i++ ) {
+    for ( UInt i = 1; i <= LEN_LIST(args); i++ ) {
 
         /* evaluate and check the command                                  */
-        cmd = ELM_PLIST( args, i );
+        Obj cmd = ELM_PLIST( args, i );
 again:
         while ( ! IsStringConv(cmd) ) {
            cmd = ErrorReturnObj(
@@ -1995,13 +1725,28 @@ again:
                "you can replace <cmd> via 'return <cmd>;'" );
        }
 
+#ifdef BOEHM_GC
+        if ( strcmp( CSTR_STRING(cmd), "collect" ) == 0 ) {
+            CollectBags(0,1);
+        }
+        else {
+            cmd = ErrorReturnObj(
+                "GASMAN: <cmd> must be \"collect\"", 0L, 0L,
+                "you can replace <cmd> via 'return <cmd>;'" );
+            goto again;
+        }
+
+#else // BOEHM_GC
+
         /* if request display the statistics                               */
         if ( strcmp( CSTR_STRING(cmd), "display" ) == 0 ) {
+#ifdef COUNT_BAGS
             Pr( "%40s ", (Int)"type",  0L          );
             Pr( "%8s %8s ",  (Int)"alive", (Int)"kbyte" );
             Pr( "%8s %8s\n",  (Int)"total", (Int)"kbyte" );
-            for ( k = 0; k < 256; k++ ) {
+            for ( UInt k = 0; k < 256; k++ ) {
                 if ( InfoBags[k].name != 0 ) {
+                    Char buf[41];
                     buf[0] = '\0';
                     strlcat( buf, InfoBags[k].name, sizeof(buf) );
                     Pr("%40s ",    (Int)buf, 0L );
@@ -2011,19 +1756,22 @@ again:
                                    (Int)(InfoBags[k].sizeAll/1024));
                 }
             }
+#endif
         }
 
         /* if request give a short display of the statistics                */
         else if ( strcmp( CSTR_STRING(cmd), "displayshort" ) == 0 ) {
+#ifdef COUNT_BAGS
             Pr( "%40s ", (Int)"type",  0L          );
             Pr( "%8s %8s ",  (Int)"alive", (Int)"kbyte" );
             Pr( "%8s %8s\n",  (Int)"total", (Int)"kbyte" );
-            for ( k = 0; k < 256; k++ ) {
+            for ( UInt k = 0; k < 256; k++ ) {
                 if ( InfoBags[k].name != 0 && 
                      (InfoBags[k].nrLive != 0 ||
                       InfoBags[k].sizeLive != 0 ||
                       InfoBags[k].nrAll != 0 ||
                       InfoBags[k].sizeAll != 0) ) {
+                    Char buf[41];
                     buf[0] = '\0';
                     strlcat( buf, InfoBags[k].name, sizeof(buf) );
                     Pr("%40s ",    (Int)buf, 0L );
@@ -2033,11 +1781,13 @@ again:
                                    (Int)(InfoBags[k].sizeAll/1024));
                 }
             }
+#endif
         }
 
         /* if request display the statistics                               */
         else if ( strcmp( CSTR_STRING(cmd), "clear" ) == 0 ) {
-            for ( k = 0; k < 256; k++ ) {
+#ifdef COUNT_BAGS
+            for ( UInt k = 0; k < 256; k++ ) {
 #ifdef GASMAN_CLEAR_TO_LIVE
                 InfoBags[k].nrAll    = InfoBags[k].nrLive;
                 InfoBags[k].sizeAll  = InfoBags[k].sizeLive;
@@ -2046,6 +1796,7 @@ again:
                 InfoBags[k].sizeAll  = 0;
 #endif
             }
+#endif
         }
 
         /* or collect the garbage                                          */
@@ -2082,6 +1833,7 @@ again:
                 "you can replace <cmd> via 'return <cmd>;'" );
             goto again;
         }
+#endif // ! BOEHM_GC
     }
 
     /* return nothing, this function is a procedure                        */
@@ -2092,7 +1844,6 @@ Obj FuncGASMAN_STATS(Obj self)
 {
   Obj res;
   Obj row;
-  Obj entry;
   UInt i,j;
   Int x;
   res = NEW_PLIST(T_PLIST_TAB_RECT + IMMUTABLE, 2);
@@ -2106,15 +1857,7 @@ Obj FuncGASMAN_STATS(Obj self)
       for (j = 1; j <= 8; j++)
         {
           x = SyGasmanNumbers[i-1][j];
-
-          /* convert x to GAP integer. x may be too big to be a small int */
-          if (x < (1L << NR_SMALL_INT_BITS))
-            entry = INTOBJ_INT(x);
-          else
-            entry = SUM( PROD(INTOBJ_INT(x >> (NR_SMALL_INT_BITS/2)),
-                              INTOBJ_INT(1 << (NR_SMALL_INT_BITS/2))),
-                         INTOBJ_INT( x % ( 1 << (NR_SMALL_INT_BITS/2))));
-          SET_ELM_PLIST(row, j, entry);
+          SET_ELM_PLIST(row, j, ObjInt_Int(x));
         }
       SET_ELM_PLIST(row, 9, INTOBJ_INT(SyGasmanNumbers[i-1][0]));       
     }
@@ -2139,52 +1882,45 @@ Obj FuncGASMAN_LIMITS( Obj self )
 
 /****************************************************************************
 **
-*F  FuncSHALLOW_SIZE( <self>, <obj> ) . . . .  expert function 'SHALLOW_SIZE'
+*F  FuncTotalMemoryAllocated( <self> ) .expert function 'TotalMemoryAllocated'
 */
-Obj FuncSHALLOW_SIZE (
-    Obj                 self,
-    Obj                 obj )
+
+Obj FuncTotalMemoryAllocated( Obj self )
 {
-  if (IS_INTOBJ(obj) || IS_FFE(obj))
-    return INTOBJ_INT(0);
-  else
-    return ObjInt_UInt( SIZE_BAG( obj ) );
+    return ObjInt_UInt8(SizeAllBags);
 }
 
+/****************************************************************************
+**
+*F  FuncSIZE_OBJ( <self>, <obj> ) . . . .  expert function 'SIZE_OBJ'
+**
+**  'SIZE_OBJ( <obj> )' returns 0 for immediate objects, and otherwise
+**  returns the bag size of the object. This does not include the size of
+**  sub-objects.
+*/
+Obj FuncSIZE_OBJ(Obj self, Obj obj)
+{
+    if (IS_INTOBJ(obj) || IS_FFE(obj))
+        return INTOBJ_INT(0);
+    return ObjInt_UInt(SIZE_OBJ(obj));
+}
 
 /****************************************************************************
 **
 *F  FuncTNUM_OBJ( <self>, <obj> ) . . . . . . . .  expert function 'TNUM_OBJ'
 */
-
-Obj FuncTNUM_OBJ (
-    Obj                 self,
-    Obj                 obj )
+Obj FuncTNUM_OBJ(Obj self, Obj obj)
 {
-    Obj                 res;
-    Obj                 str;
-    const Char *        cst;
-
-    res = NEW_PLIST( T_PLIST, 2 );
-    SET_LEN_PLIST( res, 2 );
-
-    /* set the type                                                        */
-    SET_ELM_PLIST( res, 1, INTOBJ_INT( TNUM_OBJ(obj) ) );
-    cst = TNAM_OBJ(obj);
-    C_NEW_STRING_DYN(str, cst);
-    SET_ELM_PLIST( res, 2, str );
-
-    /* and return                                                          */
-    return res;
+    return INTOBJ_INT(TNUM_OBJ(obj));
 }
 
-Obj FuncTNUM_OBJ_INT (
-    Obj                 self,
-    Obj                 obj )
+/****************************************************************************
+**
+*F  FuncTNAM_OBJ( <self>, <obj> ) . . . . . . . .  expert function 'TNAM_OBJ'
+*/
+Obj FuncTNAM_OBJ(Obj self, Obj obj)
 {
-
-  
-    return  INTOBJ_INT( TNUM_OBJ(obj) ) ;
+    return MakeImmString(TNAM_OBJ(obj));
 }
 
 /****************************************************************************
@@ -2223,6 +1959,9 @@ Obj FuncOBJ_HANDLE (
 /****************************************************************************
 **
 *F  FuncHANDLE_OBJ( <self>, <obj> ) . . . . . .  expert function 'HANDLE_OBJ'
+**
+**  This is a very quick function which returns a unique integer for each object
+**  non-identical objects will have different handles. The integers may be large.
 */
 Obj FuncHANDLE_OBJ (
     Obj                 self,
@@ -2245,77 +1984,44 @@ Obj FuncHANDLE_OBJ (
     return hnum;
 }
 
+/* This function does quite  a similar job to HANDLE_OBJ, but (a) returns 0
+for all immediate objects (small integers or ffes) and (b) returns reasonably
+small results (roughly in the range from 1 to the max number of objects that
+have existed in this session. In HPCGAP it just returns the same value as
+HANDLE_OBJ for non-immediate objects */
+
 Obj FuncMASTER_POINTER_NUMBER(Obj self, Obj o)
 {
+#ifdef HPCGAP
+    if (IS_INTOBJ(o) || IS_FFE(o)) {
+        return INTOBJ_INT(0);
+    }
+    else {
+        return QuoInt(FuncHANDLE_OBJ(self, o), INTOBJ_INT(sizeof(Obj)));
+    }
+#else
     if ((void **) o >= (void **) MptrBags && (void **) o < (void **) OldBags) {
         return INTOBJ_INT( ((void **) o - (void **) MptrBags) + 1 );
     } else {
         return INTOBJ_INT( 0 );
     }
+#endif
 }
 
+/* Returns a measure of the size of a GAP function */
 Obj FuncFUNC_BODY_SIZE(Obj self, Obj f)
 {
     Obj body;
     if (TNUM_OBJ(f) != T_FUNCTION) return Fail;
     body = BODY_FUNC(f);
     if (body == 0) return INTOBJ_INT(0);
-    else return INTOBJ_INT( SIZE_BAG( body ) );
+    else return ObjInt_UInt( SIZE_BAG( body ) );
 }
 
 /****************************************************************************
 **
-*F  FuncSWAP_MPTR( <self>, <obj1>, <obj2> ) . . . . . . . swap master pointer
-**
-**  Never use this function unless you are debugging.
-*/
-Obj FuncSWAP_MPTR (
-    Obj                 self,
-    Obj                 obj1,
-    Obj                 obj2 )
-{
-    if ( TNUM_OBJ(obj1) == T_INT || TNUM_OBJ(obj1) == T_FFE ) {
-        ErrorQuit("SWAP_MPTR: <obj1> must not be an integer or ffe", 0L, 0L);
-        return 0;
-    }
-    if ( TNUM_OBJ(obj2) == T_INT || TNUM_OBJ(obj2) == T_FFE ) {
-        ErrorQuit("SWAP_MPTR: <obj2> must not be an integer or ffe", 0L, 0L);
-        return 0;
-    }
-        
-    SwapMasterPoint( obj1, obj2 );
-    return 0;
-}
-
-
-/****************************************************************************
-**
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
-
-
-/****************************************************************************
-**
-
-*F  FillInVersion( <module>, <rev_c>, <rev_h> ) . . .  fill in version number
-*/
-void FillInVersion (
-    StructInitInfo *            module )
-{
-}
-
-
-/****************************************************************************
-**
-*F  RequireModule( <calling>, <required>, <version> ) . . . .  require module
-*/
-void RequireModule (
-    StructInitInfo *            module,
-    const Char *                required,
-    UInt                        version )
-{
-}
 
 
 /****************************************************************************
@@ -2344,6 +2050,7 @@ void InitClearFiltsTNumsFromTable (
 
     for ( i = 0;  tab[i] != -1;  i += 2 ) {
         ClearFiltsTNums[tab[i]] = tab[i+1];
+        ClearFiltsTNums[tab[i] | IMMUTABLE] = tab[i+1] | IMMUTABLE;
     }
 }
 
@@ -2359,6 +2066,7 @@ void InitHasFiltListTNumsFromTable (
 
     for ( i = 0;  tab[i] != -1;  i += 3 ) {
         HasFiltListTNums[tab[i]][tab[i+1]] = tab[i+2];
+        HasFiltListTNums[tab[i] | IMMUTABLE][tab[i+1]] = tab[i+2];
     }
 }
 
@@ -2374,6 +2082,7 @@ void InitSetFiltListTNumsFromTable (
 
     for ( i = 0;  tab[i] != -1;  i += 3 ) {
         SetFiltListTNums[tab[i]][tab[i+1]] = tab[i+2];
+        SetFiltListTNums[tab[i] | IMMUTABLE][tab[i+1]] = tab[i+2] | IMMUTABLE;
     }
 }
 
@@ -2389,9 +2098,19 @@ void InitResetFiltListTNumsFromTable (
 
     for ( i = 0;  tab[i] != -1;  i += 3 ) {
         ResetFiltListTNums[tab[i]][tab[i+1]] = tab[i+2];
+        ResetFiltListTNums[tab[i] | IMMUTABLE][tab[i+1]] = tab[i+2] | IMMUTABLE;
     }
 }
 
+static Obj ValidatedArgList(const char *name, int nargs, const char *argStr)
+{
+    Obj args = ArgStringToList(argStr);
+    int len = LEN_PLIST(args);
+    if (nargs >= 0 && len != nargs)
+        fprintf(stderr, "#W %s takes %d arguments, but argument string is '%s'"
+          " which implies %d arguments\n", name, nargs, argStr, len);
+    return args;
+}
 
 /****************************************************************************
 **
@@ -2404,9 +2123,9 @@ void InitGVarFiltsFromTable (
 
     for ( i = 0;  tab[i].name != 0;  i++ ) {
         UInt gvar = GVarName( tab[i].name );
-        AssGVar( gvar,
-            NewFilter( NameGVarObj( gvar ), 1, ArgStringToList( tab[i].argument ), tab[i].handler ) );
-        MakeReadOnlyGVar( gvar );
+        Obj name = NameGVarObj( gvar );
+        Obj args = ValidatedArgList(tab[i].name, 1, tab[i].argument);
+        AssReadOnlyGVar( gvar, NewFilter( name, 1, args, tab[i].handler ) );
     }
 }
 
@@ -2422,15 +2141,11 @@ void InitGVarAttrsFromTable (
 
     for ( i = 0;  tab[i].name != 0;  i++ ) {
         UInt gvar = GVarName( tab[i].name );
-        AssGVar( gvar,
-            NewAttribute( NameGVarObj( gvar ),
-                          1,
-                          ArgStringToList( tab[i].argument ),
-                          tab[i].handler ) );
-        MakeReadOnlyGVar( gvar );
+        Obj name = NameGVarObj( gvar );
+        Obj args = ValidatedArgList(tab[i].name, 1, tab[i].argument);
+        AssReadOnlyGVar( gvar, NewAttribute( name, 1, args, tab[i].handler ) );
     }
 }
-
 
 /****************************************************************************
 **
@@ -2443,12 +2158,9 @@ void InitGVarPropsFromTable (
 
     for ( i = 0;  tab[i].name != 0;  i++ ) {
         UInt gvar = GVarName( tab[i].name );
-        AssGVar( gvar,
-            NewProperty( NameGVarObj( gvar ),
-                        1,
-                        ArgStringToList( tab[i].argument ),
-                        tab[i].handler ) );
-        MakeReadOnlyGVar( gvar );
+        Obj name = NameGVarObj( gvar );
+        Obj args = ValidatedArgList(tab[i].name, 1, tab[i].argument);
+        AssReadOnlyGVar( gvar, NewProperty( name, 1, args, tab[i].handler ) );
     }
 }
 
@@ -2464,15 +2176,45 @@ void InitGVarOpersFromTable (
 
     for ( i = 0;  tab[i].name != 0;  i++ ) {
         UInt gvar = GVarName( tab[i].name );
-        AssGVar( gvar,
-            NewOperation( NameGVarObj( gvar ),
-                          tab[i].nargs,
-                          ArgStringToList( tab[i].args ),
-                          tab[i].handler ) );
-        MakeReadOnlyGVar( gvar );
+        Obj name = NameGVarObj( gvar );
+        Obj args = ValidatedArgList(tab[i].name, tab[i].nargs, tab[i].args);
+        AssReadOnlyGVar( gvar, NewOperation( name, tab[i].nargs, args, tab[i].handler ) );
     }
 }
 
+static void SetupFuncInfo(Obj func, const Char* cookie)
+{
+    // The string <cookie> usually has the form "PATH/TO/FILE.c:FUNCNAME".
+    // We check if that is the case, and if so, split it into the parts before
+    // and after the colon. In addition, the file path is cut to only contain
+    // the last two '/'-separated components.
+    const Char* pos = strchr(cookie, ':');
+    if ( pos ) {
+        Obj location = MakeImmString(pos+1);
+
+        Obj filename;
+        char buffer[512];
+        Int len = 511<(pos-cookie) ? 511 : pos-cookie;
+        memcpy(buffer, cookie, len);
+        buffer[len] = 0;
+
+        Char* start = strrchr(buffer, '/');
+        if (start) {
+            while (start > buffer && *(start-1) != '/')
+                start--;
+        }
+        else
+            start = buffer;
+        filename = MakeImmString(start);
+
+        Obj body_bag = NewBag( T_BODY, sizeof(BodyHeader) );
+        SET_FILENAME_BODY(body_bag, filename);
+        SET_LOCATION_BODY(body_bag, location);
+        SET_BODY_FUNC(func, body_bag);
+        CHANGED_BAG(body_bag);
+        CHANGED_BAG(func);
+    }
+}
 
 /****************************************************************************
 **
@@ -2485,12 +2227,11 @@ void InitGVarFuncsFromTable (
 
     for ( i = 0;  tab[i].name != 0;  i++ ) {
         UInt gvar = GVarName( tab[i].name );
-        AssGVar( gvar,
-            NewFunction( NameGVarObj( gvar ),
-                         tab[i].nargs,
-                         ArgStringToList( tab[i].args ),
-                         tab[i].handler ) );
-        MakeReadOnlyGVar( gvar );
+        Obj name = NameGVarObj( gvar );
+        Obj args = ValidatedArgList(tab[i].name, tab[i].nargs, tab[i].args);
+        Obj func = NewFunction( name, tab[i].nargs, args, tab[i].handler );
+        SetupFuncInfo( func, tab[i].cookie );
+        AssReadOnlyGVar( gvar, func );
     }
 }
 
@@ -2692,6 +2433,10 @@ Obj FuncExportToKernelFinished (
 **
 */
 
+#ifdef HPCGAP
+  extern UInt HaveInterrupt();
+#endif
+
 Obj FuncSleep( Obj self, Obj secs )
 {
   Int  s;
@@ -2705,7 +2450,11 @@ Obj FuncSleep( Obj self, Obj secs )
     SySleep((UInt)s);
   
   /* either we used up the time, or we were interrupted. */
+#ifdef HPCGAP
+  if (HaveInterrupt())
+#else
   if (SyIsIntr())
+#endif
     {
       ClearError(); /* The interrupt may still be pending */
       ErrorReturnVoid("user interrupt in sleep", 0L, 0L,
@@ -2714,6 +2463,41 @@ Obj FuncSleep( Obj self, Obj secs )
   
   return (Obj) 0;
 }
+
+
+/****************************************************************************
+**
+*F  FuncMicroSleep( <self>, <secs> )
+**
+*/
+
+Obj FuncMicroSleep( Obj self, Obj msecs )
+{
+  Int  s;
+
+  while( ! IS_INTOBJ(msecs) )
+    msecs = ErrorReturnObj( "<usecs> must be a small integer", 0L, 0L, 
+                           "you can replace <usecs> via 'return <usecs>;'" );
+
+  
+  if ( (s = INT_INTOBJ(msecs)) > 0)
+    SyUSleep((UInt)s);
+  
+  /* either we used up the time, or we were interrupted. */
+#ifdef HPCGAP
+  if (HaveInterrupt())
+#else
+  if (SyIsIntr())
+#endif
+    {
+      ClearError(); /* The interrupt may still be pending */
+      ErrorReturnVoid("user interrupt in microsleep", 0L, 0L,
+                    "you can 'return;' as if the microsleep was finished");
+    }
+  
+  return (Obj) 0;
+}
+
 
 // Common code in the next 3 methods.
 static int SetExitValue(Obj code)
@@ -2757,9 +2541,9 @@ Obj FuncQUIT_GAP( Obj self, Obj args )
   else if ( LEN_LIST(args) != 1 
             || !SetExitValue(ELM_PLIST(args, 1) ) ) {
     ErrorQuit( "usage: QUIT_GAP( [ <return value> ] )", 0L, 0L );
-    return 0;
+    return (Obj)0;
   }
-  TLS(UserHasQUIT) = 1;
+  STATE(UserHasQUIT) = 1;
   ReadEvalError();
   return (Obj)0; 
 }
@@ -2779,12 +2563,21 @@ Obj FuncFORCE_QUIT_GAP( Obj self, Obj args )
   else if ( LEN_LIST(args) != 1 
             || !SetExitValue(ELM_PLIST(args, 1) ) ) {
     ErrorQuit( "usage: FORCE_QUIT_GAP( [ <return value> ] )", 0L, 0L );
-    return 0;
+    return (Obj)0;
   }
   SyExit(SystemErrorCode);
-  return (Obj) 0; /* should never get here */
 }
 
+/****************************************************************************
+**
+*F  FuncSHOULD_QUIT_ON_BREAK()
+**
+*/
+
+Obj FuncSHOULD_QUIT_ON_BREAK( Obj self)
+{
+  return SyQuitOnBreak ? True : False;
+}
 
 /****************************************************************************
 **
@@ -2802,21 +2595,17 @@ Obj FuncKERNEL_INFO(Obj self) {
   UInt i,j;
 
   /* GAP_ARCHITECTURE                                                    */
-  C_NEW_STRING_DYN( tmp, SyArchitecture );
-  RetypeBag( tmp, IMMUTABLE_TNUM(TNUM_OBJ(tmp)) );
+  tmp = MakeImmString( SyArchitecture );
   r = RNamName("GAP_ARCHITECTURE");
   AssPRec(res,r,tmp);
   /* KERNEL_VERSION */
-  C_NEW_STRING_DYN( tmp, SyKernelVersion );
-  RetypeBag( tmp, IMMUTABLE_TNUM(TNUM_OBJ(tmp)) );
+  tmp = MakeImmString( SyKernelVersion );
   r = RNamName("KERNEL_VERSION");
   AssPRec(res,r,tmp);
-  C_NEW_STRING_DYN( tmp, SyBuildVersion );
-  RetypeBag( tmp, IMMUTABLE_TNUM(TNUM_OBJ(tmp)) );
+  tmp = MakeImmString( SyBuildVersion );
   r = RNamName("BUILD_VERSION");
   AssPRec(res,r,tmp);
-  C_NEW_STRING_DYN( tmp, SyBuildDateTime );
-  RetypeBag( tmp, IMMUTABLE_TNUM(TNUM_OBJ(tmp)) );
+  tmp = MakeImmString( SyBuildDateTime );
   r = RNamName("BUILD_DATETIME");
   AssPRec(res,r,tmp);
   /* GAP_ROOT_PATH                                                       */
@@ -2825,8 +2614,7 @@ Obj FuncKERNEL_INFO(Obj self) {
   list = NEW_PLIST( T_PLIST+IMMUTABLE, MAX_GAP_DIRS );
   for ( i = 0, j = 1;  i < MAX_GAP_DIRS;  i++ ) {
     if ( SyGapRootPaths[i][0] ) {
-      C_NEW_STRING_DYN( tmp, SyGapRootPaths[i] );
-      RetypeBag( tmp, IMMUTABLE_TNUM(TNUM_OBJ(tmp)) );
+      tmp = MakeImmString( SyGapRootPaths[i] );
       SET_ELM_PLIST( list, j, tmp );
       j++;
     }
@@ -2835,9 +2623,8 @@ Obj FuncKERNEL_INFO(Obj self) {
   r = RNamName("GAP_ROOT_PATHS");
   AssPRec(res,r,list);
   /* And also the DotGapPath if available */
-#if HAVE_DOTGAPRC
-  C_NEW_STRING_DYN( tmp, DotGapPath );
-  RetypeBag( tmp, IMMUTABLE_TNUM(TNUM_OBJ(tmp)) );
+#ifdef HAVE_DOTGAPRC
+  tmp = MakeImmString( DotGapPath );
   r = RNamName("DOT_GAP_PATH");
   AssPRec(res,r,tmp);
 #endif
@@ -2847,7 +2634,7 @@ Obj FuncKERNEL_INFO(Obj self) {
   tmp = NEW_PLIST( T_PLIST+IMMUTABLE, lenvec );
   SET_LEN_PLIST( tmp, lenvec );
   for (i = 0; i<lenvec; i++) {
-    C_NEW_STRING_DYN( str, SyOriginalArgv[i] );
+    str = MakeImmString( SyOriginalArgv[i] );
     SET_ELM_PLIST(tmp, i+1, str);
     CHANGED_BAG(tmp);
   }
@@ -2876,11 +2663,11 @@ Obj FuncKERNEL_INFO(Obj self) {
   r = RNamName("ENVIRONMENT");
   AssPRec(res,r, tmp);
 
-  /* and also the CONFIGNAME of the running  GAP kernel  */
-  C_NEW_STRING_DYN( str, CONFIGNAME );
-  r = RNamName("CONFIGNAME");
-  AssPRec(res, r, str);
-  
+#ifdef HPCGAP
+  r = RNamName("NUM_CPUS");
+  AssPRec(res, r, INTOBJ_INT(SyNumProcessors));
+#endif
+
   /* export if we want to use readline  */
   r = RNamName("HAVE_LIBREADLINE");
   if (SyUseReadline)
@@ -2888,9 +2675,107 @@ Obj FuncKERNEL_INFO(Obj self) {
   else
     AssPRec(res, r, False);
 
+  /* export GMP version  */
+  str = MakeImmString( gmp_version );
+  r = RNamName("GMP_VERSION");
+  AssPRec(res, r, str);
+
+  r = RNamName("KernelDebug");
+#ifdef GAP_KERNEL_DEBUG
+  AssPRec(res, r, True);
+#else
+  AssPRec(res, r, False);
+#endif
+
+  MakeImmutable(res);
+  
   return res;
   
 }
+
+/****************************************************************************
+**
+*F FuncBREAKPOINT . . . . . . . . . . . . Mark kernel breakpoints in GAP code
+**
+** The purpose behind this function is to mark positions in the GAP code
+** and to transfer a stage flag to the kernel in a way that facilitates
+** the use of kernel breakpoints depending on GAP state.
+**
+** One use case is to simply insert BREAKPOINT(0) at a specific GAP
+** source location and then set a breakpoint on FuncBREAKPOINT in the
+** kernel.
+**
+** The function accepts any argument; if it is a small integer, it will be
+** converted and stored in the global variable BreakPointValue. This
+** also allows the encoding of GAP state in that value and to attach a
+** condition based on the value of BreakPointValue to other breakpoints.
+*/
+
+UInt BreakPointValue;
+
+Obj FuncBREAKPOINT(Obj self, Obj arg) {
+  if (IS_INTOBJ(arg))
+    BreakPointValue = INT_INTOBJ(arg);
+  return (Obj) 0;
+}
+
+#ifdef HPCGAP
+
+/****************************************************************************
+**
+*F FuncTHREAD_UI  ... Whether we use a multi-threaded interface
+**
+*/
+
+Obj FuncTHREAD_UI(Obj self)
+{
+  return ThreadUI ? True : False;
+}
+
+
+GVarDescriptor GVarTHREAD_INIT;
+GVarDescriptor GVarTHREAD_EXIT;
+
+void ThreadedInterpreter(void *funcargs) {
+  Obj tmp, func;
+  int i;
+
+  /* initialize everything and begin an interpreter                       */
+  STATE(IntrCoding) = 0;
+  STATE(IntrIgnoring) = 0;
+  STATE(NrError) = 0;
+  STATE(ThrownObject) = 0;
+
+  IntrBegin( STATE(BottomLVars) );
+  tmp = KEPTALIVE(funcargs);
+  StopKeepAlive(funcargs);
+  func = ELM_PLIST(tmp, 1);
+  for (i=2; i<=LEN_PLIST(tmp); i++)
+  {
+    Obj item = ELM_PLIST(tmp, i);
+    SET_ELM_PLIST(tmp, i-1, item);
+  }
+  SET_LEN_PLIST(tmp, LEN_PLIST(tmp)-1);
+
+  TRY_READ {
+    Obj init, exit;
+    if (sySetjmp(TLS(threadExit)))
+      return;
+    init = GVarOptFunction(&GVarTHREAD_INIT);
+    if (init) CALL_0ARGS(init);
+    CallFuncList(func, tmp);
+    exit = GVarOptFunction(&GVarTHREAD_EXIT);
+    if (exit) CALL_0ARGS(exit);
+    PushVoidObj();
+    /* end the interpreter                                                 */
+    IntrEnd( 0UL );
+  } CATCH_READ_ERROR {
+    IntrEnd( 1UL );
+    ClearError();
+  } 
+}
+
+#endif
 
 
 /****************************************************************************
@@ -2899,147 +2784,68 @@ Obj FuncKERNEL_INFO(Obj self) {
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    { "Runtime", 0, "",
-      FuncRuntime, "src/gap.c:Runtime" },
-
-    { "RUNTIMES", 0, "",
-      FuncRUNTIMES, "src/gap.c:RUNTIMES" },
-
-    { "SizeScreen", -1, "args",
-      FuncSizeScreen, "src/gap.c:SizeScreen" },
-
-    { "ID_FUNC", 1, "object",
-      FuncID_FUNC, "src/gap.c:ID_FUNC" },
-
-    { "RETURN_FIRST", -1, "object",
-      FuncRETURN_FIRST, "src/gap.c:RETURN_FIRST" },
-
-    { "RETURN_NOTHING", -1, "object",
-      FuncRETURN_NOTHING, "src/gap.c:RETURN_NOTHING" },
-
-    { "ExportToKernelFinished", 0, "",
-      FuncExportToKernelFinished, "src/gap.c:ExportToKernelFinished" },
-
-    { "DownEnv", -1, "args",
-      FuncDownEnv, "src/gap.c:DownEnv" },
-
-    { "UpEnv", -1, "args",
-      FuncUpEnv, "src/gap.c:UpEnv" },
-
-    { "GAP_CRC", 1, "filename",
-      FuncGAP_CRC, "src/gap.c:GAP_CRC" },
-
-    { "LOAD_DYN", 2, "filename, crc",
-      FuncLOAD_DYN, "src/gap.c:LOAD_DYN" },
-
-    { "LOAD_STAT", 2, "filename, crc",
-      FuncLOAD_STAT, "src/gap.c:LOAD_STAT" },
-
-    { "SHOW_STAT", 0, "",
-      FuncSHOW_STAT, "src/gap.c:SHOW_STAT" },
-
-    { "GASMAN", -1, "args",
-      FuncGASMAN, "src/gap.c:GASMAN" },
-
-    { "GASMAN_STATS", 0, "",
-      FuncGASMAN_STATS, "src/gap.c:GASMAN_STATS" },
-
-    { "GASMAN_MESSAGE_STATUS", 0, "",
-      FuncGASMAN_MESSAGE_STATUS, "src/gap.c:GASMAN_MESSAGE_STATUS" },
-
-    { "GASMAN_LIMITS", 0, "",
-      FuncGASMAN_LIMITS, "src/gap.c:GASMAN_LIMITS" },
-
-    { "SHALLOW_SIZE", 1, "object",
-      FuncSHALLOW_SIZE, "src/gap.c:SHALLOW_SIZE" },
-
-    { "TNUM_OBJ", 1, "object",
-      FuncTNUM_OBJ, "src/gap.c:TNUM_OBJ" },
-
-    { "TNUM_OBJ_INT", 1, "object",
-      FuncTNUM_OBJ_INT, "src/gap.c:TNUM_OBJ_INT" },
-
-    { "OBJ_HANDLE", 1, "object",
-      FuncOBJ_HANDLE, "src/gap.c:OBJ_HANDLE" },
-
-    { "HANDLE_OBJ", 1, "object",
-      FuncHANDLE_OBJ, "src/gap.c:HANDLE_OBJ" },
-
-    { "SWAP_MPTR", 2, "obj1, obj2",
-      FuncSWAP_MPTR, "src/gap.c:SWAP_MPTR" },
-
-    { "LoadedModules", 0, "",
-      FuncLoadedModules, "src/gap.c:LoadedModules" },
-
-    { "WindowCmd", 1, "arg-list",
-      FuncWindowCmd, "src/gap.c:WindowCmd" },
-
-
-    { "Sleep", 1, "secs",
-      FuncSleep, "src/gap.c:Sleep" },
-
-    { "GAP_EXIT_CODE", 1, "exit code",
-      FuncGAP_EXIT_CODE, "src/gap.c:GAP_EXIT_CODE" },
-        
-    { "QUIT_GAP", -1, "args",
-      FuncQUIT_GAP, "src/gap.c:QUIT_GAP" },
-
-    { "FORCE_QUIT_GAP", -1, "args",
-      FuncFORCE_QUIT_GAP, "src/gap.c:FORCE_QUIT_GAP" },
-
-    { "SHELL", -1, "context, canReturnVoid, canReturnObj, lastDepth, setTime, prompt, promptHook, infile, outfile",
-      FuncSHELL, "src/gap.c:FuncSHELL" },
-
-    { "CALL_WITH_CATCH", 2, "func, args",
-      FuncCALL_WITH_CATCH, "src/gap.c:CALL_WITH_CATCH" },
-
-    { "TIMEOUTS_SUPPORTED", 0, "",
-      FuncTIMEOUTS_SUPPORTED, "src/gap.c:TIMEOUTS_SUPPORTED" },
-
-    { "CALL_WITH_TIMEOUT", 4, "seconds, microseconds, func, args",
-      FuncCALL_WITH_TIMEOUT, "src/gap.c:CALL_WITH_TIMEOUT" },
-
-    {"STOP_TIMEOUT", 0, "",
-     FuncSTOP_TIMEOUT, "src/gap.c:FuncSTOP_TIMEOUT" },
-
-    {"RESUME_TIMEOUT", 1, "state",
-     FuncRESUME_TIMEOUT, "src/gap.c:FuncRESUME_TIMEOUT" },
-
-    { "JUMP_TO_CATCH", 1, "payload",
-      FuncJUMP_TO_CATCH, "src/gap.c:JUMP_TO_CATCH" },
-
-
-    { "KERNEL_INFO", 0, "",
-      FuncKERNEL_INFO, "src/gap.c:KERNEL_INFO" },
-
-    { "SetUserHasQuit", 1, "value",
-      FuncSetUserHasQuit, "src/gap.c:SetUserHasQuit" },
-
-    { "MASTER_POINTER_NUMBER", 1, "ob",
-      FuncMASTER_POINTER_NUMBER, "src/gap.c:MASTER_POINTER_NUMBER" },
-
-    { "FUNC_BODY_SIZE", 1, "f",
-      FuncFUNC_BODY_SIZE, "src/gap.c:FUNC_BODY_SIZE" },
-
-    { "PRINT_CURRENT_STATEMENT", 1, "context",
-      FuncPrintExecutingStatement, "src/gap.c:PRINT_CURRENT_STATEMENT" },
-
-  
-    { 0 }
+    GVAR_FUNC(Runtime, 0, ""),
+    GVAR_FUNC(RUNTIMES, 0, ""),
+    GVAR_FUNC(NanosecondsSinceEpoch, 0, ""),
+    GVAR_FUNC(NanosecondsSinceEpochInfo, 0, ""),
+    GVAR_FUNC(SizeScreen, -1, "args"),
+    GVAR_FUNC(ID_FUNC, 1, "object"),
+    GVAR_FUNC(RETURN_FIRST, -1, "object"),
+    GVAR_FUNC(RETURN_NOTHING, -1, "object"),
+    GVAR_FUNC(ExportToKernelFinished, 0, ""),
+    GVAR_FUNC(DownEnv, -1, "args"),
+    GVAR_FUNC(UpEnv, -1, "args"),
+    GVAR_FUNC(GAP_CRC, 1, "filename"),
+    GVAR_FUNC(LOAD_DYN, 2, "filename, crc"),
+    GVAR_FUNC(LOAD_STAT, 2, "filename, crc"),
+    GVAR_FUNC(SHOW_STAT, 0, ""),
+    GVAR_FUNC(GASMAN, -1, "args"),
+    GVAR_FUNC(GASMAN_STATS, 0, ""),
+    GVAR_FUNC(GASMAN_MESSAGE_STATUS, 0, ""),
+    GVAR_FUNC(GASMAN_LIMITS, 0, ""),
+    GVAR_FUNC(TotalMemoryAllocated, 0, ""),
+    GVAR_FUNC(SIZE_OBJ, 1, "object"),
+    GVAR_FUNC(TNUM_OBJ, 1, "object"),
+    GVAR_FUNC(TNAM_OBJ, 1, "object"),
+    GVAR_FUNC(OBJ_HANDLE, 1, "object"),
+    GVAR_FUNC(HANDLE_OBJ, 1, "object"),
+    GVAR_FUNC(LoadedModules, 0, ""),
+    GVAR_FUNC(WindowCmd, 1, "arg-list"),
+    GVAR_FUNC(MicroSleep, 1, "msecs"),
+    GVAR_FUNC(Sleep, 1, "secs"),
+    GVAR_FUNC(GAP_EXIT_CODE, 1, "exitCode"),
+    GVAR_FUNC(QUIT_GAP, -1, "args"),
+    GVAR_FUNC(FORCE_QUIT_GAP, -1, "args"),
+    GVAR_FUNC(SHOULD_QUIT_ON_BREAK, 0, ""),
+    GVAR_FUNC(SHELL, -1, "context, canReturnVoid, canReturnObj, lastDepth, setTime, prompt, promptHook, infile, outfile"),
+    GVAR_FUNC(CALL_WITH_CATCH, 2, "func, args"),
+    GVAR_FUNC(JUMP_TO_CATCH, 1, "payload"),
+    GVAR_FUNC(KERNEL_INFO, 0, ""),
+#ifdef HPCGAP
+    GVAR_FUNC(THREAD_UI, 0, ""),
+#endif
+    GVAR_FUNC(SetUserHasQuit, 1, "value"),
+    GVAR_FUNC(MASTER_POINTER_NUMBER, 1, "ob"),
+    GVAR_FUNC(FUNC_BODY_SIZE, 1, "f"),
+    GVAR_FUNC(PRINT_CURRENT_STATEMENT, 1, "context"),
+    GVAR_FUNC(CURRENT_STATEMENT_LOCATION, 1, "context"),
+    GVAR_FUNC(BREAKPOINT, 1, "integer"),
+    { 0, 0, 0, 0, 0 }
 
 };
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
     StructInitInfo *    module )
 {
     /* init the completion function                                        */
-    InitGlobalBag( &ThrownObject,      "src/gap.c:ThrownObject"      );
+#if !defined(HPCGAP)
+    InitGlobalBag( &STATE(ThrownObject), "src/gap.c:ThrownObject"      );
+#endif
 
     /* list of exit functions                                              */
     InitGlobalBag( &WindowCmdString, "src/gap.c:WindowCmdString" );
@@ -3054,8 +2860,12 @@ static Int InitKernel (
     ImportFuncFromLibrary(  "Error", &Error );
     ImportFuncFromLibrary(  "ErrorInner", &ErrorInner );
 
+#ifdef HPCGAP
+    DeclareGVar(&GVarTHREAD_INIT, "THREAD_INIT");
+    DeclareGVar(&GVarTHREAD_EXIT, "THREAD_EXIT");
+#endif
 
-#if HAVE_SELECT
+#ifdef HAVE_SELECT
     InitCopyGVar("OnCharReadHookActive",&OnCharReadHookActive);
     InitCopyGVar("OnCharReadHookInFds",&OnCharReadHookInFds);
     InitCopyGVar("OnCharReadHookInFuncs",&OnCharReadHookInFuncs);
@@ -3087,14 +2897,15 @@ static Int PostRestore (
 
     /* construct the `ViewObj' variable                                    */
     ViewObjGVar = GVarName( "ViewObj" ); 
-    CustomViewGVar = GVarName( "CustomView" ); 
 
     /* construct the last and time variables                               */
     Last              = GVarName( "last"  );
     Last2             = GVarName( "last2" );
     Last3             = GVarName( "last3" );
     Time              = GVarName( "time"  );
+    MemoryAllocated   = GVarName( "memory_allocated"  );
     AssGVar(Time, INTOBJ_INT(0));
+    AssGVar(MemoryAllocated, INTOBJ_INT(0));
     QUITTINGGVar      = GVarName( "QUITTING" );
     
     /* return success                                                      */
@@ -3115,6 +2926,13 @@ static Int InitLibrary (
     /* create windows command buffer                                       */
     WindowCmdString = NEW_STRING( 1000 );
 
+#ifdef HPCGAP
+    AssConstantGVar( GVarName( "HPCGAP" ), True );
+    AssConstantGVar( GVarName( "IsHPCGAP" ), True );
+#else
+    AssConstantGVar( GVarName( "IsHPCGAP" ), False );
+#endif
+
     /* return success                                                      */
     return PostRestore( module );
 }
@@ -3125,18 +2943,13 @@ static Int InitLibrary (
 *F  InitInfoGap() . . . . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "gap",                              /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    PostRestore                         /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "gap",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
+    .postRestore = PostRestore
 };
 
 StructInitInfo * InitInfoGap ( void )
@@ -3144,101 +2957,7 @@ StructInitInfo * InitInfoGap ( void )
     return &module;
 }
 
-
-/****************************************************************************
-**
-
-*V  InitFuncsBuiltinModules . . . . .  list of builtin modules init functions
-*/
-static InitInfoFunc InitFuncsBuiltinModules[] = {
-
-    /* global variables                                                    */
-    InitInfoGVars,
-
-    /* objects                                                             */
-    InitInfoObjects,
-
-    /* profiling information */
-    InitInfoProfile,
-
-    /* scanner, reader, interpreter, coder, caller, compiler               */
-    InitInfoScanner,
-    InitInfoRead,
-    InitInfoCalls,
-    InitInfoExprs,
-    InitInfoStats,
-    InitInfoCode,
-    InitInfoVars,       /* must come after InitExpr and InitStats */
-    InitInfoFuncs,
-    InitInfoOpers,
-    InitInfoIntrprtr,
-    InitInfoCompiler,
-
-    /* arithmetic operations                                               */
-    InitInfoAriths,
-    InitInfoInt,
-    InitInfoIntFuncs,
-    InitInfoRat,
-    InitInfoCyc,
-    InitInfoFinfield,
-    InitInfoPermutat,
-    InitInfoTrans,
-    InitInfoPPerm,
-    InitInfoBool,
-    InitInfoMacfloat,
-
-    /* record packages                                                     */
-    InitInfoRecords,
-    InitInfoPRecord,
-
-    /* list packages                                                       */
-    InitInfoLists,
-    InitInfoListOper,
-    InitInfoListFunc,
-    InitInfoPlist,
-    InitInfoSet,
-    InitInfoVector,
-    InitInfoVecFFE,
-    InitInfoBlist,
-    InitInfoRange,
-    InitInfoString,
-    InitInfoGF2Vec,
-    InitInfoVec8bit,
-
-    /* free and presented groups                                           */
-    InitInfoFreeGroupElements,
-    InitInfoCosetTable,
-    InitInfoTietze,
-    InitInfoPcElements,
-    InitInfoSingleCollector,
-    InitInfoCombiCollector,
-    InitInfoPcc,
-    InitInfoDeepThought,
-    InitInfoDTEvaluation,
-
-    /* algebras                                                            */
-    InitInfoSCTable,
-
-    /* save and load workspace, weak pointers                              */
-    InitInfoWeakPtr,
-    InitInfoSaveLoad,
-
-    /* input and output                                                    */
-    InitInfoStreams,
-    InitInfoSysFiles,
-    InitInfoIOStream,
-
-    /* main module                                                         */
-    InitInfoGap,
-
-#ifdef GAPMPI
-    /* ParGAP/MPI module                                                   */
-    InitInfoGapmpi,
-#endif
-
-    0
-};
-
+extern const InitInfoFunc InitFuncsBuiltinModules[];
 
 /****************************************************************************
 **
@@ -3257,7 +2976,7 @@ Char LoadedModuleFilenames[MAX_MODULE_FILENAMES];
 Char *NextLoadedModuleFilename = LoadedModuleFilenames;
 
 
-StructInitInfo * Modules [ MAX_MODULES ];
+StructInitInfoExt Modules [ MAX_MODULES ];
 UInt NrModules;
 UInt NrBuiltinModules;
 
@@ -3269,7 +2988,8 @@ UInt NrBuiltinModules;
 
 void RecordLoadedModule (
     StructInitInfo *        info,
-    Char *filename )
+    Int                     isGapRootRelative,
+    const Char *            filename )
 {
     UInt len;
     if ( NrModules == MAX_MODULES ) {
@@ -3282,9 +3002,11 @@ void RecordLoadedModule (
     }
     *NextLoadedModuleFilename = '\0';
     memcpy(NextLoadedModuleFilename, filename, len+1);
-    info->filename = NextLoadedModuleFilename;
+    Modules[NrModules].info = info;
+    Modules[NrModules].filename = NextLoadedModuleFilename;
     NextLoadedModuleFilename += len +1;
-    Modules[NrModules++] = info;
+    Modules[NrModules].isGapRootRelative = isGapRootRelative;
+    NrModules++;
 }
 
 
@@ -3319,39 +3041,49 @@ static Obj POST_RESTORE;
 
 void InitializeGap (
     int *               pargc,
-    char *              argv [] )
+    char *              argv [],
+    char *              environ [] )
 {
   /*    UInt                type; */
     UInt                i;
     Int                 ret;
-
+    StructInitInfo *    info;
 
     /* initialize the basic system and gasman                              */
-#ifdef GAPMPI
-    /* ParGAP/MPI needs to call MPI_Init() first to remove command line args */
-    InitGapmpi( pargc, &argv );
-#endif
-
     InitSystem( *pargc, argv );
 
     /* Initialise memory  -- have to do this here to make sure we are at top of C stack */
     InitBags( SyAllocBags, SyStorMin,
-              0, (Bag*)(((UInt)pargc/SyStackAlign)*SyStackAlign), SyStackAlign,
-              SyCacheSize, 0, SyAbortBags );
-              InitMsgsFuncBags( SyMsgsBags ); 
+              0, (Bag*)(((UInt)pargc/C_STACK_ALIGN)*C_STACK_ALIGN), C_STACK_ALIGN,
+              SyAbortBags );
+#if !defined(BOEHM_GC)
+    InitMsgsFuncBags( SyMsgsBags );
+#endif
 
+    STATE(IntrCoding)   = 0;
+    STATE(IntrIgnoring) = 0;
+    STATE(NrError)      = 0;
+    STATE(ThrownObject) = 0;
+    STATE(UserHasQUIT) = 0;
+    STATE(UserHasQuit) = 0;
 
-    /* get info structures for the build in modules                        */
+    NrImportedGVars = 0;
+    NrImportedFuncs = 0;
+
+    sysenviron = environ;
+
+    /* get info structures for the built in modules                        */
     NrModules = 0;
     for ( i = 0;  InitFuncsBuiltinModules[i];  i++ ) {
         if ( NrModules == MAX_MODULES ) {
             FPUTS_TO_STDERR( "panic: too many builtin modules\n" );
             SyExit(1);
         }
-        Modules[NrModules++] = InitFuncsBuiltinModules[i]();
+        info = InitFuncsBuiltinModules[i]();
+        Modules[NrModules++].info = info;
 #       ifdef DEBUG_LOADING
             FPUTS_TO_STDERR( "#I  InitInfo(builtin " );
-            FPUTS_TO_STDERR( Modules[NrModules-1]->name );
+            FPUTS_TO_STDERR( info->name );
             FPUTS_TO_STDERR( ")\n" );
 #       endif
     }
@@ -3359,25 +3091,31 @@ void InitializeGap (
 
     /* call kernel initialisation                                          */
     for ( i = 0;  i < NrBuiltinModules;  i++ ) {
-        if ( Modules[i]->initKernel ) {
+        info = Modules[i].info;
+        if ( info->initKernel ) {
 #           ifdef DEBUG_LOADING
                 FPUTS_TO_STDERR( "#I  InitKernel(builtin " );
-                FPUTS_TO_STDERR( Modules[i]->name );
+                FPUTS_TO_STDERR( info->name );
                 FPUTS_TO_STDERR( ")\n" );
 #           endif
-            ret =Modules[i]->initKernel( Modules[i] );
+            ret =info->initKernel( info );
             if ( ret ) {
                 FPUTS_TO_STDERR( "#I  InitKernel(builtin " );
-                FPUTS_TO_STDERR( Modules[i]->name );
+                FPUTS_TO_STDERR( info->name );
                 FPUTS_TO_STDERR( ") returned non-zero value\n" );
             }
         }
     }
 
+#ifdef HPCGAP
+    InitMainThread();
+#endif
+    InitGAPState(ActiveGAPState());
+
     InitGlobalBag(&POST_RESTORE, "gap.c: POST_RESTORE");
     InitFopyGVar( "POST_RESTORE", &POST_RESTORE);
 
-    /* you should set 'COUNT_BAGS' as well                                 */
+#ifdef COUNT_BAGS
 #   ifdef DEBUG_LOADING
         if ( SyRestoring ) {
             Pr( "#W  after setup\n", 0L, 0L );
@@ -3399,6 +3137,7 @@ void InitializeGap (
             }
         }
 #   endif
+#endif
 
 #ifndef BOEHM_GC
     /* and now for a special hack                                          */
@@ -3412,16 +3151,17 @@ void InitializeGap (
     if ( SyRestoring ) {
        LoadWorkspace(SyRestoring);
         for ( i = 0;  i < NrModules;  i++ ) {
-            if ( Modules[i]->postRestore ) {
+            info = Modules[i].info;
+            if ( info->postRestore ) {
 #               ifdef DEBUG_LOADING
                     FPUTS_TO_STDERR( "#I  PostRestore(builtin " );
-                    FPUTS_TO_STDERR( Modules[i]->name );
+                    FPUTS_TO_STDERR( info->name );
                     FPUTS_TO_STDERR( ")\n" );
 #               endif
-                ret = Modules[i]->postRestore( Modules[i] );
+                ret = info->postRestore( info );
                 if ( ret ) {
                     FPUTS_TO_STDERR( "#I  PostRestore(builtin " );
-                    FPUTS_TO_STDERR( Modules[i]->name );
+                    FPUTS_TO_STDERR( info->name );
                     FPUTS_TO_STDERR( ") returned non-zero value\n" );
                 }
             }
@@ -3433,49 +3173,56 @@ void InitializeGap (
            calls the post restore functions and then runs a GAP session */
         if (POST_RESTORE != (Obj) 0 &&
             IS_FUNC(POST_RESTORE))
-          if (!READ_ERROR())
+          TRY_READ {
             CALL_0ARGS(POST_RESTORE);
+          }
     }
 
 
     /* otherwise call library initialisation                               */
     else {
-        WarnInitGlobalBag = 1;
+#       if !defined(BOEHM_GC)
+            WarnInitGlobalBag = 1;
+#       endif
 #       ifdef DEBUG_HANDLER_REGISTRATION
             CheckAllHandlers();
 #       endif
 
         SyInitializing = 1;    
         for ( i = 0;  i < NrBuiltinModules;  i++ ) {
-            if ( Modules[i]->initLibrary ) {
+            info = Modules[i].info;
+            if ( info->initLibrary ) {
 #               ifdef DEBUG_LOADING
                     FPUTS_TO_STDERR( "#I  InitLibrary(builtin " );
-                    FPUTS_TO_STDERR( Modules[i]->name );
+                    FPUTS_TO_STDERR( info->name );
                     FPUTS_TO_STDERR( ")\n" );
 #               endif
-                ret = Modules[i]->initLibrary( Modules[i] );
+                ret = info->initLibrary( info );
                 if ( ret ) {
                     FPUTS_TO_STDERR( "#I  InitLibrary(builtin " );
-                    FPUTS_TO_STDERR( Modules[i]->name );
+                    FPUTS_TO_STDERR( info->name );
                     FPUTS_TO_STDERR( ") returned non-zero value\n" );
                 }
             }
         }
-        WarnInitGlobalBag = 0;
+#if     !defined(BOEHM_GC)
+            WarnInitGlobalBag = 0;
+#       endif
     }
 
     /* check initialisation                                                */
     for ( i = 0;  i < NrModules;  i++ ) {
-        if ( Modules[i]->checkInit ) {
+        info = Modules[i].info;
+        if ( info->checkInit ) {
 #           ifdef DEBUG_LOADING
                 FPUTS_TO_STDERR( "#I  CheckInit(builtin " );
-                FPUTS_TO_STDERR( Modules[i]->name );
+                FPUTS_TO_STDERR( info->name );
                 FPUTS_TO_STDERR( ")\n" );
 #           endif
-            ret = Modules[i]->checkInit( Modules[i] );
+            ret = info->checkInit( info );
             if ( ret ) {
                 FPUTS_TO_STDERR( "#I  CheckInit(builtin " );
-                FPUTS_TO_STDERR( Modules[i]->name );
+                FPUTS_TO_STDERR( info->name );
                 FPUTS_TO_STDERR( ") returned non-zero value\n" );
             }
         }
@@ -3485,18 +3232,18 @@ void InitializeGap (
        this now actually runs the GAP session, we only get 
        past here when we're about to exit. 
                                            */
-    if ( SySystemInitFile[0] ) {
-      if (!READ_ERROR()) {
-        if ( READ_GAP_ROOT(SySystemInitFile) == 0 ) {
+    if ( SyLoadSystemInitFile ) {
+      TRY_READ {
+        if ( READ_GAP_ROOT("lib/init.g") == 0 ) {
           /*             if ( ! SyQuiet ) { */
-                Pr( "gap: hmm, I cannot find '%s' maybe",
-                    (Int)SySystemInitFile, 0L );
+                Pr( "gap: hmm, I cannot find 'lib/init.g' maybe",
+                    0L, 0L );
                 Pr( " use option '-l <gaproot>'?\n If you ran the GAP"
                     " binary directly, try running the 'gap.sh' or 'gap.bat'"
                     " script instead.", 0L, 0L );
             }
       }
-      else
+      CATCH_READ_ERROR
         {
           Pr("Caught error at top-most level, probably quit from library loading",0L,0L);
           SyExit(1);
@@ -3505,8 +3252,3 @@ void InitializeGap (
     }
 
 }
-
-/****************************************************************************
-**
-*E  gap.c . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

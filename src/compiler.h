@@ -14,6 +14,7 @@
 #ifndef GAP_COMPILER_H
 #define GAP_COMPILER_H
 
+#include <src/system.h>
 
 /****************************************************************************
 **
@@ -26,34 +27,17 @@ extern Int CompileFunc (
             Int                 magic1,
             Char *              magic2 );
 
-/****************************************************************************
-**
-*F  SetCompileOpts( <string> ) . . parse the compiler options from <string>
-**                                 and set the appropriate variables
-**                                 unrecognised options are ignored for now
-*/
-
-extern void SetCompileOpts( Char *opts );
-
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  InitInfoCompiler() . . . . . . . . . . . . . . .  table of init functions
 */
 StructInitInfo * InitInfoCompiler ( void );
 
 
 #endif // GAP_COMPILER_H
-
-/****************************************************************************
-**
-
-*E  compiler.h  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

@@ -93,6 +93,12 @@ true
 gap> f:=PartialPermNC([1..100000]);;
 gap> IsIdempotent(f);
 true
+gap> f := PartialPerm([], []);
+<empty partial perm>
+gap> IndexPeriodOfPartialPerm(f);
+[ 1, 1 ]
+gap> SmallestIdempotentPower(f);
+1
 
 # ComponentsOfPartialPerm, NrComponentsOfPartialPerm, 
 # ComponentRepsOfPartialPerm and ComponentPartialPermInt
@@ -114,6 +120,14 @@ true
 gap> List(ComponentRepsOfPartialPerm(f), i-> ComponentPartialPermInt(f, i))
 > =ComponentsOfPartialPerm(f);
 true
+gap> f := PartialPerm([], []);
+<empty partial perm>
+gap> ComponentsOfPartialPerm(f);
+[  ]
+gap> ComponentRepsOfPartialPerm(f);
+[  ]
+gap> NrComponentsOfPartialPerm(f);
+0
 
 # FixedPointsOfPartialPerm, MovedPoints, 
 # NrFixedPoints, NrMovedPoints
@@ -656,6 +670,18 @@ gap> g:=PartialPermNC([100001,2,3,4,5]);
 [1,100001](2)(3)(4)(5)
 gap> MeetOfPartialPerms(f,g);
 <identity partial perm on [ 2, 3, 4, 5 ]>
+gap> MeetOfPartialPerms(PartialPerm([1]));
+<identity partial perm on [ 1 ]>
+gap> MeetOfPartialPerms(PartialPerm([1]), PartialPerm([2]));
+<empty partial perm>
+gap> MeetOfPartialPerms(PartialPerm([1]), PartialPerm([1, 2]));
+<identity partial perm on [ 1 ]>
+gap> MeetOfPartialPerms([]);
+Error, usage: the argument should be a collection of partial perms, 
+gap> MeetOfPartialPerms([PartialPerm([1]), PartialPerm([1, 2])]);
+<identity partial perm on [ 1 ]>
+gap> MeetOfPartialPerms(SymmetricInverseMonoid(3));
+<empty partial perm>
 
 # RestrictedPartialPerm
 gap> f:=PartialPermNC([100000,2,3,4,5]);
@@ -2019,10 +2045,8 @@ gap> DegreeOfPartialPerm(f)>DegreeOfPartialPerm(g);
 true
 gap> CodegreeOfPartialPerm(f)<=DegreeOfPartialPerm(g);
 true
-gap> f^g;
-[2,8][5,6,3](7)
-gap> g^-1*f*g;
-[2,8][5,6,3](7)
+gap> f^g = g^-1*f*g;
+true
 
 # PowPPerm24, Case 4 of 6, dom(f)     known, deg(f)>deg(g),   codeg(f)> deg(g)
 gap> f:=RandomPartialPerm(30);; DomainOfPartialPerm(f);;
@@ -2260,8 +2284,6 @@ gap> AsTransformation(f);
 <transformation: 6,2,5,10,4,7,8,9,10>
 gap> AsTransformation(f, 12);
 <transformation: 6,2,5,12,4,7,8,9,12,10,12>
-gap> AsPartialPerm(last);
-[1,6,7,8,9][3,5,4](2)(10)
 gap> f;
 [1,6,7,8,9][3,5,4](2)(10)
 gap> f:=PartialPermNC([ 1, 3, 4, 5, 6, 9 ], [ 9, 10, 5, 7, 2, 8 ]);;
@@ -2269,8 +2291,6 @@ gap> AsTransformation(f);
 <transformation: 9,11,10,5,7,2,11,11,8,11>
 gap> AsTransformation(f);
 <transformation: 9,11,10,5,7,2,11,11,8,11>
-gap> AsPartialPerm(last)=f;
-true
 gap> OnTuples([1..DegreeOfPartialPerm(f)], f);
 [ 9, 10, 5, 7, 2, 8 ]
 gap> g:=PartialPermNC([ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 19 ],
@@ -2375,10 +2395,26 @@ gap> RestrictedPartialPerm(EmptyPartialPerm(), [1,2,3,4]);
 gap> RestrictedPartialPerm(PartialPerm([1],[1]), [2,3,4]);                     
 <empty partial perm>
 
+# Test for bug in QuoPPerm2 as reported by Bill Allombert
+gap> x := PartialPerm([70000], [1]);
+[70000,1]
+gap> CodegreeOfPartialPerm(x / x);
+70000
+
+# Test Zero and MultiplicativeZeroOp
+gap> x := PartialPerm([1, 2, 4, 7, 9], [5, 3, 7, 4, 9]);;
+gap> Zero(x);
+Error, no method found! For debugging hints type ?Recovery from NoMethodFound
+Error, no 1st choice method found for `ZeroMutable' on 1 arguments
+gap> MultiplicativeZeroOp(x);
+<empty partial perm>
+gap> MultiplicativeZero(x);
+<empty partial perm>
+
 #
 gap> SetUserPreference("PartialPermDisplayLimit", display);;
 gap> SetUserPreference("NotationForPartialPerm", notationpp);;
 gap> SetUserPreference("NotationForTransformations", notationt);;
 
 #
-gap> STOP_TEST( "pperm.tst", 42710000);
+gap> STOP_TEST( "pperm.tst", 1);

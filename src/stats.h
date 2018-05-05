@@ -16,6 +16,9 @@
 #ifndef GAP_STATS_H
 #define GAP_STATS_H
 
+#include <src/code.h>
+#include <src/gapstate.h>
+
 /****************************************************************************
 **
 *V  ExecStatFuncs[<type>] . . . . . .  executor for statements of type <type>
@@ -29,7 +32,6 @@ extern  UInt            (* ExecStatFuncs[256]) ( Stat stat );
 
 /****************************************************************************
 **
-
 *F  EXEC_STAT(<stat>) . . . . . . . . . . . . . . . . . . execute a statement
 **
 **  'EXEC_STAT' executes the statement <stat>.
@@ -45,14 +47,24 @@ extern  UInt            (* ExecStatFuncs[256]) ( Stat stat );
 **  executor, i.e., to the  function that executes statements  of the type of
 **  <stat>.
 */
-
-#include <stdio.h>
-
 static inline UInt EXEC_STAT(Stat stat)
-{ 
-  return ( (*ExecStatFuncs[ TNUM_STAT(stat) ]) ( stat ) ); 
+{
+    UInt tnum = TNUM_STAT(stat);
+    return (*STATE(CurrExecStatFuncs)[ tnum ]) ( stat );
 }
-//#define EXEC_STAT(stat) ( (*ExecStatFuncs[ TNUM_STAT(stat) ]) ( stat ) )
+
+
+/****************************************************************************
+**
+*V  IntrExecStatFuncs[<type>] . . . .  pseudo executor to handle interrupts
+**
+**  'IntrExecStatFuncs' is a dispatch table that dispatches to an interrupt
+**  function for every single entry; it is used in lieu of 'ExecStatFuncs'
+**  when the normal control flow needs to be interrupted by an external
+**  event.
+*/
+
+extern  UInt 		(* IntrExecStatFuncs[256]) ( Stat stat );
 
 
 /****************************************************************************
@@ -63,7 +75,7 @@ static inline UInt EXEC_STAT(Stat stat)
 **  purpose of 'CurrStat' is to make it possible to  point to the location in
 **  case an error is signalled.
 */
-extern  Stat            CurrStat;
+/* TL: extern  Stat            CurrStat; */
 
 
 /****************************************************************************
@@ -74,10 +86,10 @@ extern  Stat            CurrStat;
 *F  RES_BRK_CURR_STAT() . . . . . . . . restore currently executing statement
 */
 #ifndef NO_BRK_CURR_STAT
-#define SET_BRK_CURR_STAT(stat) (TLS(CurrStat) = (stat))
+#define SET_BRK_CURR_STAT(stat) (STATE(CurrStat) = (stat))
 #define OLD_BRK_CURR_STAT       Stat oldStat;
-#define REM_BRK_CURR_STAT()     (oldStat = TLS(CurrStat))
-#define RES_BRK_CURR_STAT()     (TLS(CurrStat) = oldStat)
+#define REM_BRK_CURR_STAT()     (oldStat = STATE(CurrStat))
+#define RES_BRK_CURR_STAT()     (STATE(CurrStat) = oldStat)
 #endif
 #ifdef  NO_BRK_CURR_STAT
 #define SET_BRK_CURR_STAT(stat) /* do nothing */
@@ -95,7 +107,7 @@ extern  Stat            CurrStat;
 **  executed.  It is set  in  'ExecReturnObj' and  used in the  handlers that
 **  interpret functions.
 */
-extern  Obj             ReturnObjStat;
+/* TL: extern  Obj             ReturnObjStat; */
 
 
 extern UInt TakeInterrupt();
@@ -110,7 +122,6 @@ extern UInt TakeInterrupt();
 **  those systems the executors test 'SyIsIntr' at regular intervals.
 */
 extern  void            InterruptExecStat ( );
-extern  void            UnInterruptExecStat ( );
 
 
 /****************************************************************************
@@ -138,24 +149,28 @@ extern  void            (* PrintStatFuncs[256] ) ( Stat stat );
 
 
 /****************************************************************************
-**
+ **
+ *F  ClearError()  . . . . . . . . . . . . . .  reset execution and error flag
+ *
+ * FIXME: This function accesses NrError which is state of the scanner, so
+ *        scanner should have an API for this.
+ * 
+ */
 
+extern void ClearError ( void );
+
+
+/****************************************************************************
+**
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  InitInfoStats() . . . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoStats ( void );
 
 
 #endif // GAP_STATS_H
-
-/****************************************************************************
-**
-
-*E  stats.c . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

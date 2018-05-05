@@ -33,16 +33,19 @@
   
   [33X[1;0Y[29X[2XBinomial[102X( [3Xn[103X, [3Xk[103X ) [32X function[133X
   
-  [33X[0;0Yreturns  the [13Xbinomial coefficient[113X [22X{n choose k}[122X of integers [3Xn[103X and [3Xk[103X, which is
-  defined as [22Xn! / (k! (n-k)!)[122X (see [2XFactorial[102X ([14X16.1-1[114X)). We define [22X{0 choose 0}
-  =  1,  {n choose k} = 0[122X if [22Xk < 0[122X or [22Xn < k[122X, and [22X{n choose k} = (-1)^k {-n+k-1
-  choose  k}[122X  if  [22Xn < 0[122X, which is consistent with the equivalent definition [22X{n
-  choose k} = {n-1 choose k} + {n-1 choose k-1}[122X.[133X
+  [33X[0;0Yreturns  the  [13Xbinomial coefficient[113X [22X{n choose k}[122X of integers [3Xn[103X and [3Xk[103X. This is
+  defined by the conditions [22X{n choose k} = 0[122X for [22Xk < 0[122X, [22X{0 choose k} = 0[122X for [22Xk
+  ≠  0[122X, [22X{0 choose 0} = 1[122X and the relation [22X{n choose k} = {n-1 choose k} + {n-1
+  choose k-1}[122X for all [22Xn[122X and [22Xk[122X.[133X
   
-  [33X[0;0Y[22X{n choose k}[122X is the number of combinations with [22Xk[122X elements, i.e., the number
-  of  subsets  with  [22Xk[122X elements, of a set with [22Xn[122X elements. [22X{n choose k}[122X is the
-  coefficient  of  the  term  [22Xx^k[122X  of  the  polynomial [22X(x + 1)^n[122X, which is the
-  generating function for [22X{n choose .}[122X, hence the name.[133X
+  [33X[0;0YThere are many ways of describing this function. For example, if [22Xn ≥ 0[122X and [22X0
+  ≤  k  ≤  n[122X,  then [22X{n choose k} = n! / (k! (n-k)!)[122X and for [22Xn < 0[122X and [22Xk ≥ 0[122X we
+  have [22X{n choose k} = (-1)^k {-n+k-1 choose k}[122X.[133X
+  
+  [33X[0;0YIf [22Xn ≥ 0[122X then [22X{n choose k}[122X is the number of subsets with [22Xk[122X elements of a set
+  with  [22Xn[122X  elements.  Also,  [22X{n  choose  k}[122X  is  the coefficient of [22Xx^k[122X in the
+  polynomial  [22X(x  +  1)^n[122X,  which is the generating function for [22X{n choose .}[122X,
+  hence the name.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27X# Knuth calls this the trademark of Binomial:[127X[104X
@@ -797,7 +800,7 @@
   
   [1X16.4-1 Permanent[101X
   
-  [33X[1;0Y[29X[2XPermanent[102X( [3Xmat[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XPermanent[102X( [3Xmat[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the [13Xpermanent[113X of the matrix [3Xmat[103X. The permanent is defined by [22X∑_{p ∈
   Sym(n)} ∏_{i = 1}^n mat[i][i^p][122X.[133X

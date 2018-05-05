@@ -1118,11 +1118,6 @@ InstallGlobalFunction( DirectoriesPackagePrograms, function( name )
       if r.Version = version then
         path:= Concatenation( r.InstallationPath, "/bin/", arch, "/" );
         Add( dirs, Directory( path ) );
-        if arch <> GAPInfo.ArchitectureBase then
-          path:= Concatenation( r.InstallationPath, "/bin/",
-                     GAPInfo.ArchitectureBase, "/" );
-          Add( dirs, Directory( path ) );
-        fi;
       fi;
     od;
     return dirs;
@@ -1192,6 +1187,9 @@ InstallGlobalFunction( ReadPackage, function( arg )
     if   Length( arg ) = 1 then
       # Guess the package name.
       pos:= Position( arg[1], '/' );
+      if pos = fail then
+        ErrorNoReturn(arg[1], " is not a filename in the form 'package/filepath'");
+      fi;
       relpath:= arg[1]{ [ pos+1 .. Length( arg[1] ) ] };
       pkgname:= LowercaseString( arg[1]{ [ 1 .. pos-1 ] } );
       namespace := GAPInfo.PackagesInfo.(pkgname)[1].PackageName;
@@ -1561,7 +1559,7 @@ fi;
         # This is the first attempt to read stuff for this package.
         # So we handle the case of a `PreloadFile' entry.
         if IsBound( info.PreloadFile ) then
-          filename:= USER_HOME_EXPAND( info.PreloadFile );
+          filename:= UserHomeExpand( info.PreloadFile );
           if filename[1] = '/' then
             read:= READ( filename );
           else
@@ -2264,45 +2262,6 @@ InstallGlobalFunction( ValidatePackageInfo, function( info )
     TestOption( record, "PreloadFile", IsFilename,
                 "a string denoting a relative path to a readable file" );
     TestOption( record, "Keywords", IsStringList, "a list of strings" );
-
-    return result;
-    end );
-
-
-#############################################################################
-##
-#F  CheckPackageLoading( <pkgname> )
-##
-InstallGlobalFunction( CheckPackageLoading, function( pkgname )
-    local result, oldinfo, i;
-
-    result:= true;
-
-    # Check that loading the package does not change info levels that were
-    # defined before the package was loaded.
-    oldinfo:= rec( CurrentLevels := ShallowCopy( InfoData.CurrentLevels ),
-                   ClassNames := ShallowCopy( InfoData.ClassNames ) );
-    LoadPackage( pkgname );
-    for i in [ 1 .. Length( oldinfo.CurrentLevels ) ] do
-      if oldinfo.CurrentLevels[i] <> InfoData.CurrentLevels[
-             Position( InfoData.ClassNames, oldinfo.ClassNames[i] ) ] then
-        Print( "#E  package `", pkgname, "' modifies info level of `",
-               oldinfo.ClassNames[i], "'\n" );
-        result:= false;
-      fi;
-    od;
-
-    # Check the contents of the `PackageInfo.g' file of the package.
-    Unbind( GAPInfo.PackageInfoCurrent );
-    ReadPackage( pkgname, "PackageInfo.g" );
-    if IsBound( GAPInfo.PackageInfoCurrent ) then
-      result:= ValidatePackageInfo( GAPInfo.PackageInfoCurrent ) and result;
-    else
-      Print( "#E  missing or corrupted file `PackageInfo.g' for package `",
-             pkgname, "'\n" );
-      result:= false;
-    fi;
-    Unbind( GAPInfo.PackageInfoCurrent );
 
     return result;
     end );

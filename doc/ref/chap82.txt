@@ -73,7 +73,7 @@
   multiplied.  This  distinction  is  made  via  the [13Xtype[113X of the objects. More
   precisely, we declare a new [13Xfilter[113X, a function that will return [9Xtrue[109X for our
   new  objects,  and  [9Xfalse[109X  for  all  other  [5XGAP[105X objects. This can be done by
-  calling  [2XDeclareFilter[102X  ([14X79.18-5[114X), but since our objects will know about the
+  calling  [2XDeclareFilter[102X ([14X79.18-11[114X), but since our objects will know about the
   value  already  when  they  are  constructed, the filter can be created with
   [2XDeclareCategory[102X ([14X79.18-1[114X) or [2XNewCategory[102X ([14X79.1-1[114X).[133X
   

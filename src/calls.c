@@ -33,52 +33,98 @@
 **  ...what the handlers are..
 **  ...what the other components are...
 */
-#include        "system.h"              /* system dependent part           */
+
+#include <src/calls.h>
+
+#include <src/bool.h>
+#include <src/code.h>
+#include <src/gap.h>
+#include <src/gvars.h>
+#include <src/integer.h>
+#include <src/lists.h>
+#include <src/opers.h>
+#include <src/plist.h>
+#include <src/saveload.h>
+#include <src/stats.h>
+#include <src/stringobj.h>
+#include <src/vars.h>
 
 
+void SET_NAME_FUNC(Obj func, Obj name)
+{
+    GAP_ASSERT(name == 0 || IS_STRING_REP(name));
+    FUNC_HEADER(func)->name = name;
+}
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
+Char * NAMI_FUNC(Obj func, Int i)
+{
+    return CSTR_STRING(ELM_LIST(NAMS_FUNC(func),i));
+}
 
-#include        "gap.h"                 /* error handling, initialisation  */
-
-#include        "gvars.h"               /* global variables                */
-
-#include        "calls.h"               /* generic call mechanism          */
-
-#include        "opers.h"               /* generic operations              */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-
-#include        "bool.h"                /* booleans                        */
-
-#include        "plist.h"               /* plain lists                     */
-#include        "string.h"              /* strings                         */
-
-#include        "code.h"                /* coder                           */
-
-#include        "stats.h"               /* statements                      */
-
-#include        "saveload.h"            /* saving and loading              */
-#include        "tls.h"                 /* thread-local storage            */
-
-#include        "vars.h"                /* variables                       */
-
-#include <assert.h>
 
 /****************************************************************************
 **
+*F  COUNT_PROF( <prof> )  . . . . . . . . number of invocations of a function
+*F  TIME_WITH_PROF( <prof> )  . . . . . . time with    children in a function
+*F  TIME_WOUT_PROF( <prof> )  . . . . . . time without children in a function
+*F  STOR_WITH_PROF( <prof> )  . . . .  storage with    children in a function
+*F  STOR_WOUT_PROF( <prof> )  . . . .  storage without children in a function
+*V  LEN_PROF  . . . . . . . . . . .  length of a profiling bag for a function
+**
+**  With each  function we associate two  time measurements.  First the *time
+**  spent by this  function without its  children*, i.e., the amount  of time
+**  during which this  function was active.   Second the *time  spent by this
+**  function with its  children*, i.e., the amount  of time during which this
+**  function was either active or suspended.
+**
+**  Likewise with each  function  we associate the two  storage measurements,
+**  the storage spent by  this function without its  children and the storage
+**  spent by this function with its children.
+**
+**  These  macros  make it possible to  access   the various components  of a
+**  profiling information bag <prof> for a function <func>.
+**
+**  'COUNT_PROF(<prof>)' is the  number  of  calls  to the  function  <func>.
+**  'TIME_WITH_PROF(<prof>) is  the time spent  while the function <func> was
+**  either  active or suspended.   'TIME_WOUT_PROF(<prof>)' is the time spent
+**  while the function <func>   was active.  'STOR_WITH_PROF(<prof>)'  is the
+**  amount of  storage  allocated while  the  function  <func>  was active or
+**  suspended.  'STOR_WOUT_PROF(<prof>)' is  the amount  of storage allocated
+**  while the  function <func> was   active.  'LEN_PROF' is   the length of a
+**  profiling information bag.
+*/
+#define COUNT_PROF(prof)            (INT_INTOBJ(ELM_PLIST(prof,1)))
+#define TIME_WITH_PROF(prof)        (INT_INTOBJ(ELM_PLIST(prof,2)))
+#define TIME_WOUT_PROF(prof)        (INT_INTOBJ(ELM_PLIST(prof,3)))
+#define STOR_WITH_PROF(prof)        (UInt8_ObjInt(ELM_PLIST(prof,4)))
+#define STOR_WOUT_PROF(prof)        (UInt8_ObjInt(ELM_PLIST(prof,5)))
 
+#define SET_COUNT_PROF(prof,n)      SET_ELM_PLIST(prof,1,INTOBJ_INT(n))
+#define SET_TIME_WITH_PROF(prof,n)  SET_ELM_PLIST(prof,2,INTOBJ_INT(n))
+#define SET_TIME_WOUT_PROF(prof,n)  SET_ELM_PLIST(prof,3,INTOBJ_INT(n))
+
+static inline void SET_STOR_WITH_PROF(Obj prof, UInt8 n)
+{
+    SET_ELM_PLIST(prof,4,ObjInt_Int8(n));
+    CHANGED_BAG(prof);
+}
+
+static inline void SET_STOR_WOUT_PROF(Obj prof, UInt8 n)
+{
+    SET_ELM_PLIST(prof,5,ObjInt_Int8(n));
+    CHANGED_BAG(prof);
+}
+
+#define LEN_PROF                    5
+
+
+/****************************************************************************
+**
 *F * * * * wrapper for functions with variable number of arguments  * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  DoWrap0args( <self> ) . . . . . . . . . . . wrap up 0 arguments in a list
 **
 **  'DoWrap<i>args' accepts the  <i>  arguments  <arg1>, <arg2>, and   so on,
@@ -268,13 +314,11 @@ Obj DoWrap6args (
 
 /****************************************************************************
 **
-
 *F * * wrapper for functions with do not support the number of arguments  * *
 */
 
 /****************************************************************************
 **
-
 *F  DoFail0args( <self> )  . . . . . .  fail a function call with 0 arguments
 **
 **  'DoFail<i>args' accepts the <i> arguments <arg1>, <arg2>,  and so on, and
@@ -428,13 +472,11 @@ Obj DoFailXargs (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * *  wrapper for profiling * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *V  TimeDone  . . . . . .   amount of time spent for completed function calls
 **
 **  'TimeDone' is  the amount of time spent  for all function calls that have
@@ -450,7 +492,7 @@ UInt TimeDone;
 **  'StorDone' is the amount of storage spent for all function call that have
 **  already been completed.
 */
-UInt StorDone;
+UInt8 StorDone;
 
 
 /****************************************************************************
@@ -470,8 +512,8 @@ Obj DoProf0args (
     Obj                 prof;           /* profiling bag                   */
     UInt                timeElse;       /* time    spent elsewhere         */
     UInt                timeCurr;       /* time    spent in current funcs. */
-    UInt                storElse;       /* storage spent elsewhere         */
-    UInt                storCurr;       /* storage spent in current funcs. */ 
+    UInt8               storElse;       /* storage spent elsewhere         */
+    UInt8               storCurr;       /* storage spent in current funcs. */ 
 
     /* get the profiling bag                                               */
     prof = PROF_FUNC( PROF_FUNC( self ) );
@@ -519,8 +561,8 @@ Obj DoProf1args (
     Obj                 prof;           /* profiling bag                   */
     UInt                timeElse;       /* time    spent elsewhere         */
     UInt                timeCurr;       /* time    spent in current funcs. */
-    UInt                storElse;       /* storage spent elsewhere         */
-    UInt                storCurr;       /* storage spent in current funcs. */ 
+    UInt8               storElse;       /* storage spent elsewhere         */
+    UInt8               storCurr;       /* storage spent in current funcs. */ 
 
     /* get the profiling bag                                               */
     prof = PROF_FUNC( PROF_FUNC( self ) );
@@ -569,8 +611,8 @@ Obj DoProf2args (
     Obj                 prof;           /* profiling bag                   */
     UInt                timeElse;       /* time    spent elsewhere         */
     UInt                timeCurr;       /* time    spent in current funcs. */
-    UInt                storElse;       /* storage spent elsewhere         */
-    UInt                storCurr;       /* storage spent in current funcs. */ 
+    UInt8               storElse;       /* storage spent elsewhere         */
+    UInt8               storCurr;       /* storage spent in current funcs. */ 
 
     /* get the profiling bag                                               */
     prof = PROF_FUNC( PROF_FUNC( self ) );
@@ -620,8 +662,8 @@ Obj DoProf3args (
     Obj                 prof;           /* profiling bag                   */
     UInt                timeElse;       /* time    spent elsewhere         */
     UInt                timeCurr;       /* time    spent in current funcs. */
-    UInt                storElse;       /* storage spent elsewhere         */
-    UInt                storCurr;       /* storage spent in current funcs. */ 
+    UInt8               storElse;       /* storage spent elsewhere         */
+    UInt8               storCurr;       /* storage spent in current funcs. */ 
 
     /* get the profiling bag                                               */
     prof = PROF_FUNC( PROF_FUNC( self ) );
@@ -672,8 +714,8 @@ Obj DoProf4args (
     Obj                 prof;           /* profiling bag                   */
     UInt                timeElse;       /* time    spent elsewhere         */
     UInt                timeCurr;       /* time    spent in current funcs. */
-    UInt                storElse;       /* storage spent elsewhere         */
-    UInt                storCurr;       /* storage spent in current funcs. */ 
+    UInt8               storElse;       /* storage spent elsewhere         */
+    UInt8               storCurr;       /* storage spent in current funcs. */ 
 
     /* get the profiling bag                                               */
     prof = PROF_FUNC( PROF_FUNC( self ) );
@@ -725,8 +767,8 @@ Obj DoProf5args (
     Obj                 prof;           /* profiling bag                   */
     UInt                timeElse;       /* time    spent elsewhere         */
     UInt                timeCurr;       /* time    spent in current funcs. */
-    UInt                storElse;       /* storage spent elsewhere         */
-    UInt                storCurr;       /* storage spent in current funcs. */ 
+    UInt8               storElse;       /* storage spent elsewhere         */
+    UInt8               storCurr;       /* storage spent in current funcs. */ 
 
     /* get the profiling bag                                               */
     prof = PROF_FUNC( PROF_FUNC( self ) );
@@ -779,8 +821,8 @@ Obj DoProf6args (
     Obj                 prof;           /* profiling bag                   */
     UInt                timeElse;       /* time    spent elsewhere         */
     UInt                timeCurr;       /* time    spent in current funcs. */
-    UInt                storElse;       /* storage spent elsewhere         */
-    UInt                storCurr;       /* storage spent in current funcs. */ 
+    UInt8               storElse;       /* storage spent elsewhere         */
+    UInt8               storCurr;       /* storage spent in current funcs. */ 
 
     /* get the profiling bag                                               */
     prof = PROF_FUNC( PROF_FUNC( self ) );
@@ -828,8 +870,8 @@ Obj DoProfXargs (
     Obj                 prof;           /* profiling bag                   */
     UInt                timeElse;       /* time    spent elsewhere         */
     UInt                timeCurr;       /* time    spent in current funcs. */
-    UInt                storElse;       /* storage spent elsewhere         */
-    UInt                storCurr;       /* storage spent in current funcs. */ 
+    UInt8               storElse;       /* storage spent elsewhere         */
+    UInt8               storCurr;       /* storage spent in current funcs. */ 
 
     /* get the profiling bag                                               */
     prof = PROF_FUNC( PROF_FUNC( self ) );
@@ -867,13 +909,11 @@ Obj DoProfXargs (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * *  create a new function * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  InitHandlerFunc( <handler>, <cookie> ) . . . . . . . . register a handler
 **
 **  Every handler should  be registered (once) before  it is installed in any
@@ -891,10 +931,10 @@ typedef struct {
 }
 TypeHandlerInfo;
 
-static UInt HandlerSortingStatus;
+static UInt HandlerSortingStatus = 0;
 
 static TypeHandlerInfo HandlerFuncs[MAX_HANDLERS];
-static UInt NHandlerFuncs;
+static UInt NHandlerFuncs = 0;
  
 void InitHandlerFunc (
     ObjFunc             hdlr,
@@ -925,20 +965,11 @@ void InitHandlerFunc (
 *f  CheckHandlersBag( <bag> ) . . . . . . check that handlers are initialised
 */
 
-void InitHandlerRegistration( void )
-{
-  /* initialize these here rather than statically to allow for restart */
-  /* can't do them in InitKernel of this module because it's called too late
-     so make it a function and call it from an earlier InitKernel */
-  HandlerSortingStatus = 0;
-  NHandlerFuncs = 0;
-
-}
+#ifdef DEBUG_HANDLER_REGISTRATION
 
 static void CheckHandlersBag(
     Bag         bag )
 {
-#ifdef DEBUG_HANDLER_REGISTRATION
     UInt        i;
     UInt        j;
     ObjFunc     hdlr;
@@ -961,17 +992,15 @@ static void CheckHandlersBag(
             }
         }
     }
-#endif
-  return;
 }
 
 void CheckAllHandlers(
        void )
 {
   CallbackForAllBags( CheckHandlersBag);
-    return;
 }
 
+#endif
 
 static int IsLessHandlerInfo (
     TypeHandlerInfo *           h1, 
@@ -1014,7 +1043,6 @@ void SortHandlers( UInt byWhat )
     h = h / 3;
   }
   HandlerSortingStatus = byWhat;
-  return;
 }
 
 const Char * CookieOfHandler (
@@ -1081,7 +1109,6 @@ ObjFunc HandlerOfCookie(
 
 /****************************************************************************
 **
-
 *F  NewFunction( <name>, <narg>, <nams>, <hdlr> ) . . . . make a new function
 **
 **  'NewFunction' creates and returns a new function.  <name> must be  a  GAP
@@ -1097,7 +1124,7 @@ Obj NewFunction (
     Obj                 nams,
     ObjFunc             hdlr )
 {
-    return NewFunctionT( T_FUNCTION, SIZE_FUNC, name, narg, nams, hdlr );
+    return NewFunctionT( T_FUNCTION, sizeof(FunctionHeader), name, narg, nams, hdlr );
 }
     
 
@@ -1114,7 +1141,7 @@ Obj NewFunctionC (
     const Char *        nams,
     ObjFunc             hdlr )
 {
-    return NewFunctionCT( T_FUNCTION, SIZE_FUNC, name, narg, nams, hdlr );
+    return NewFunctionCT( T_FUNCTION, sizeof(FunctionHeader), name, narg, nams, hdlr );
 }
     
 
@@ -1142,33 +1169,33 @@ Obj NewFunctionT (
 
     /* create a function with a fixed number of arguments                  */
     if ( narg >= 0 ) {
-        HDLR_FUNC(func,0) = DoFail0args;
-        HDLR_FUNC(func,1) = DoFail1args;
-        HDLR_FUNC(func,2) = DoFail2args;
-        HDLR_FUNC(func,3) = DoFail3args;
-        HDLR_FUNC(func,4) = DoFail4args;
-        HDLR_FUNC(func,5) = DoFail5args;
-        HDLR_FUNC(func,6) = DoFail6args;
-        HDLR_FUNC(func,7) = DoFailXargs;
-        HDLR_FUNC( func, (narg <= 6 ? narg : 7) ) = hdlr;
+        SET_HDLR_FUNC(func, 0, DoFail0args);
+        SET_HDLR_FUNC(func, 1, DoFail1args);
+        SET_HDLR_FUNC(func, 2, DoFail2args);
+        SET_HDLR_FUNC(func, 3, DoFail3args);
+        SET_HDLR_FUNC(func, 4, DoFail4args);
+        SET_HDLR_FUNC(func, 5, DoFail5args);
+        SET_HDLR_FUNC(func, 6, DoFail6args);
+        SET_HDLR_FUNC(func, 7, DoFailXargs);
+        SET_HDLR_FUNC(func, (narg <= 6 ? narg : 7), hdlr );
     }
 
     /* create a function with a variable number of arguments               */
     else {
-      HDLR_FUNC(func,0) = (narg >= -1) ? DoWrap0args : DoFail0args;
-      HDLR_FUNC(func,1) = (narg >= -2) ? DoWrap1args : DoFail1args;
-      HDLR_FUNC(func,2) = (narg >= -3) ? DoWrap2args : DoFail2args;
-      HDLR_FUNC(func,3) = (narg >= -4) ? DoWrap3args : DoFail3args;
-      HDLR_FUNC(func,4) = (narg >= -5) ? DoWrap4args : DoFail4args;
-      HDLR_FUNC(func,5) = (narg >= -6) ? DoWrap5args : DoFail5args;
-      HDLR_FUNC(func,6) = (narg >= -7) ? DoWrap6args : DoFail6args;
-      HDLR_FUNC(func,7) = hdlr;
+      SET_HDLR_FUNC(func, 0, (narg >= -1) ? DoWrap0args : DoFail0args);
+      SET_HDLR_FUNC(func, 1, (narg >= -2) ? DoWrap1args : DoFail1args);
+      SET_HDLR_FUNC(func, 2, (narg >= -3) ? DoWrap2args : DoFail2args);
+      SET_HDLR_FUNC(func, 3, (narg >= -4) ? DoWrap3args : DoFail3args);
+      SET_HDLR_FUNC(func, 4, (narg >= -5) ? DoWrap4args : DoFail4args);
+      SET_HDLR_FUNC(func, 5, (narg >= -6) ? DoWrap5args : DoFail5args);
+      SET_HDLR_FUNC(func, 6, (narg >= -7) ? DoWrap6args : DoFail6args);
+      SET_HDLR_FUNC(func, 7, hdlr);
     }
 
     /* enter the arguments and the names                               */
-    NAME_FUNC(func) = name;
-    NARG_FUNC(func) = narg;
-    NAMS_FUNC(func) = nams;
+    SET_NAME_FUNC(func, ConvImmString(name));
+    SET_NARG_FUNC(func, narg);
+    SET_NAMS_FUNC(func, nams);
     if (nams) MakeBagPublic(nams);
     CHANGED_BAG(func);
 
@@ -1180,7 +1207,7 @@ Obj NewFunctionT (
     SET_TIME_WOUT_PROF( prof, 0 );
     SET_STOR_WITH_PROF( prof, 0 );
     SET_STOR_WOUT_PROF( prof, 0 );
-    PROF_FUNC(func) = prof;
+    SET_PROF_FUNC(func, prof);
     CHANGED_BAG(func);
 
     /* return the function bag                                             */
@@ -1207,8 +1234,7 @@ Obj NewFunctionCT (
     Obj                 name_o;         /* name as an object               */
 
     /* convert the name to an object                                       */
-    C_NEW_STRING_DYN(name_o, name_c);
-    RetypeBag(name_o, T_STRING+IMMUTABLE);
+    name_o = MakeImmString(name_c);
 
     /* make the function                                                   */
     return NewFunctionT( type, size, name_o, narg, ArgStringToList( nams_c ), hdlr );
@@ -1249,8 +1275,9 @@ Obj ArgStringToList(const Char *nams_c) {
             l++;
         }
         C_NEW_STRING( tmp, l - k, nams_c + k );
-        RetypeBag( tmp, T_STRING+IMMUTABLE );
+        MakeImmutableString( tmp );
         SET_ELM_PLIST( nams_o, i, tmp );
+        CHANGED_BAG( nams_o );
         k = l;
     }
 
@@ -1260,13 +1287,11 @@ Obj ArgStringToList(const Char *nams_c) {
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * type and print function  * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  TypeFunction( <func> )  . . . . . . . . . . . . . . .  type of a function
 **
 **  'TypeFunction' returns the type of the function <func>.
@@ -1300,6 +1325,9 @@ void PrintFunction (
     Obj                 oldLVars;       /* terrible hack                   */
     UInt                i;              /* loop variable                   */
     UInt                isvarg;         /* does function have varargs?     */
+#ifdef HPCGAP
+    UChar               *locks = 0L;
+#endif
 
     isvarg = 0;
 
@@ -1308,8 +1336,17 @@ void PrintFunction (
       return;
     }
 
+#ifdef HPCGAP
+    /* print 'function (' or 'atomic function ('                          */
+    if (LCKS_FUNC(func)) {
+      locks = CHARS_STRING(LCKS_FUNC(func));
+      Pr("%5>atomic function%< ( %>",0L,0L);
+    } else
+      Pr("%5>function%< ( %>",0L,0L);
+#else
     /* print 'function ('                                                  */
     Pr("%5>function%< ( %>",0L,0L);
+#endif
 
     /* print the arguments                                                 */
     narg = NARG_FUNC(func);
@@ -1319,6 +1356,18 @@ void PrintFunction (
     }
     
     for ( i = 1; i <= narg; i++ ) {
+#ifdef HPCGAP
+        if (locks) {
+            switch(locks[i-1]) {
+            case 1:
+                Pr("%>readonly %<", 0L, 0L);
+                break;
+            case 2:
+                Pr("%>readwrite %<", 0L, 0L);
+                break;
+            }
+        }
+#endif
         if ( NAMS_FUNC(func) != 0 )
             Pr( "%I", (Int)NAMI_FUNC( func, (Int)i ), 0L );
         else
@@ -1335,7 +1384,7 @@ void PrintFunction (
         /* print the locals                                                */
         nloc = NLOC_FUNC(func);
         if ( nloc >= 1 ) {
-            Pr("%>local  ",0L,0L);
+            Pr("%>local ",0L,0L);
             for ( i = 1; i <= nloc; i++ ) {
                 if ( NAMS_FUNC(func) != 0 )
                     Pr( "%I", (Int)NAMI_FUNC( func, (Int)(narg+i) ), 0L );
@@ -1347,13 +1396,33 @@ void PrintFunction (
         }
 
         /* print the body                                                  */
-        if ( BODY_FUNC(func) == 0 || SIZE_OBJ(BODY_FUNC(func)) == NUMBER_HEADER_ITEMS_BODY*sizeof(Obj) ) {
-            Pr("<<kernel or compiled code>>",0L,0L);
+        if (IsKernelFunction(func)) {
+            UInt outputtedfunc = 0;
+            if ( BODY_FUNC(func) ) {
+                Obj body = BODY_FUNC(func);
+                if ( GET_FILENAME_BODY(body) ) {
+                    if ( GET_LOCATION_BODY(body) ) {
+                        Pr("<<kernel code from %s:%s>>",
+                            (Int)CSTR_STRING(GET_FILENAME_BODY(body)),
+                            (Int)CSTR_STRING(GET_LOCATION_BODY(body)));
+                            outputtedfunc = 1;
+                    }
+                    else if ( GET_STARTLINE_BODY(body) ) {
+                        Pr("<<compiled GAP code from %s:%d>>",
+                            (Int)CSTR_STRING(GET_FILENAME_BODY(body)),
+                            GET_STARTLINE_BODY(body));
+                            outputtedfunc = 1;
+                    }
+                }
+            }
+            if(!outputtedfunc) {
+                Pr("<<kernel or compiled code>>",0L,0L);
+            }
         }
         else {
             SWITCH_TO_NEW_LVARS( func, narg, NLOC_FUNC(func),
                                  oldLVars );
-            PrintStat( FIRST_STAT_CURR_FUNC );
+            PrintStat( OFFSET_FIRST_STAT );
             SWITCH_TO_OLD_LVARS( oldLVars );
         }
         Pr("%4<\n",0L,0L);
@@ -1394,94 +1463,6 @@ Obj FuncIS_FUNCTION (
 
 /****************************************************************************
 **
-*F  FuncCALL_FUNC( <self>, <args> ) . . . . . . . . . . . . . call a function
-**
-**  'FuncCALL_FUNC' implements the internal function 'CallFunction'.
-**
-**  'CallFunction( <func>, <arg1>... )'
-**
-**  'CallFunction' calls the  function <func> with the  arguments  <arg1>...,
-**  i.e., it is equivalent to '<func>( <arg1>, <arg2>... )'.
-*/
-Obj CallFunctionOper;
-
-
-
-Obj FuncCALL_FUNC (
-    Obj                 self,
-    Obj                 args )
-{
-    Obj                 result;         /* result                          */
-    Obj                 func;           /* function                        */
-    Obj                 list2;          /* list of arguments               */
-    Obj                 arg;            /* one argument                    */
-    UInt                i;              /* loop variable                   */
-
-    /* the first argument is the function                                  */
-    if ( LEN_LIST( args ) == 0 ) {
-        func = ErrorReturnObj(
-            "usage: CallFunction( <func>, <arg1>... )",
-            0L, 0L,
-            "you can replace function <func> via 'return <func>;'" );
-    }
-    else {
-        func = ELMV_LIST( args, 1 );
-    }    
-
-    /* check that the first argument is a function                         */
-    /*N 1996/06/26 mschoene this should be done by 'CALL_<i>ARGS'          */
-    while ( TNUM_OBJ( func ) != T_FUNCTION ) {
-        func = ErrorReturnObj(
-            "CallFunction: <func> must be a function",
-            0L, 0L,
-            "you can replace function <func> via 'return <func>;'" );
-    }
-
-    /* call the function                                                   */
-    if      ( LEN_LIST(args) == 1 ) {
-        result = CALL_0ARGS( func );
-    }
-    else if ( LEN_LIST(args) == 2 ) {
-        result = CALL_1ARGS( func, ELMV_LIST(args,2) );
-    }
-    else if ( LEN_LIST(args) == 3 ) {
-        result = CALL_2ARGS( func, ELMV_LIST(args,2), ELMV_LIST(args,3) );
-    }
-    else if ( LEN_LIST(args) == 4 ) {
-        result = CALL_3ARGS( func, ELMV_LIST(args,2), ELMV_LIST(args,3),
-                                   ELMV_LIST(args,4) );
-    }
-    else if ( LEN_LIST(args) == 5 ) {
-        result = CALL_4ARGS( func, ELMV_LIST(args,2), ELMV_LIST(args,3),
-                                   ELMV_LIST(args,4), ELMV_LIST(args,5) );
-    }
-    else if ( LEN_LIST(args) == 6 ) {
-        result = CALL_5ARGS( func, ELMV_LIST(args,2), ELMV_LIST(args,3),
-                                   ELMV_LIST(args,4), ELMV_LIST(args,5),
-                                   ELMV_LIST(args,6) );
-    }
-    else if ( LEN_LIST(args) == 7 ) {
-        result = CALL_6ARGS( func, ELMV_LIST(args,2), ELMV_LIST(args,3),
-                                   ELMV_LIST(args,4), ELMV_LIST(args,5),
-                                   ELMV_LIST(args,6), ELMV_LIST(args,7) );
-    }
-    else {
-        list2 = NEW_PLIST( T_PLIST, LEN_LIST(args)-1 );
-        SET_LEN_PLIST( list2, LEN_LIST(args)-1 );
-        for ( i = 1; i <= LEN_LIST(args)-1; i++ ) {
-            arg = ELMV_LIST( args, (Int)(i+1) );
-            SET_ELM_PLIST( list2, i, arg );
-        }
-        result = CALL_XARGS( func, list2 );
-    }
-
-    /* return the result                                                   */
-    return result;
-}
-
-
-/****************************************************************************
-**
 *F  FuncCALL_FUNC_LIST( <self>, <func>, <list> )  . . . . . . call a function
 **
 **  'FuncCALL_FUNC_LIST' implements the internal function 'CallFuncList'.
@@ -1492,6 +1473,7 @@ Obj FuncCALL_FUNC (
 **  i.e., it is equivalent to '<func>( <list>[1], <list>[2]... )'.
 */
 Obj CallFuncListOper;
+Obj CallFuncListWrapOper;
 
 Obj CallFuncList ( Obj func, Obj list )
 {
@@ -1553,19 +1535,41 @@ Obj FuncCALL_FUNC_LIST (
     Obj                 func,
     Obj                 list )
 {
-  /* check that the second argument is a list                            */
-    while ( ! IS_SMALL_LIST( list ) ) {
-        list = ErrorReturnObj(
-            "CallFuncList: <list> must be a small list",
-            0L, 0L,
-            "you can replace <list> via 'return <list>;'" );
+    /* check that the second argument is a list                            */
+    if ( ! IS_SMALL_LIST( list ) ) {
+       ErrorMayQuit("CallFuncList: <list> must be a small list", 0L, 0L);
     }
     return CallFuncList(func, list);
 }
 
+Obj FuncCALL_FUNC_LIST_WRAP (
+    Obj                 self,
+    Obj                 func,
+    Obj                 list )
+{
+    Obj retval, retlist;
+    /* check that the second argument is a list                            */
+    if ( ! IS_SMALL_LIST( list ) ) {
+       ErrorMayQuit("CallFuncListWrap: <list> must be a small list", 0L, 0L);
+    }
+    retval = CallFuncList(func, list);
+
+    if (retval == 0)
+    {
+        retlist = NEW_PLIST(T_PLIST_EMPTY + IMMUTABLE, 0);
+    }
+    else
+    {
+        retlist = NEW_PLIST(T_PLIST, 1);
+        SET_LEN_PLIST(retlist, 1);
+        SET_ELM_PLIST(retlist, 1, retval);
+        CHANGED_BAG(retlist);
+    }
+    return retlist;
+}
+
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * * * utility functions  * * * * * * * * * * * * *
 */
 
@@ -1585,9 +1589,8 @@ Obj FuncNAME_FUNC (
     if ( TNUM_OBJ(func) == T_FUNCTION ) {
         name = NAME_FUNC(func);
         if ( name == 0 ) {
-            C_NEW_STRING_CONST(name, "unknown");
-            RetypeBag(name, T_STRING+IMMUTABLE);
-            NAME_FUNC(func) = name;
+            name = MakeImmString("unknown");
+            SET_NAME_FUNC(func, name);
             CHANGED_BAG(func);
         }
         return name;
@@ -1607,7 +1610,7 @@ Obj FuncSET_NAME_FUNC(
                           (Int)TNAM_OBJ(name), 0, "YOu can return a new name to continue");
   }
   if (TNUM_OBJ(func) == T_FUNCTION ) {
-    NAME_FUNC(func) = name;
+    SET_NAME_FUNC(func, ConvImmString(name));
     CHANGED_BAG(func);
   } else
     DoOperation2Args(SET_NAME_FUNC_Oper, func, name);
@@ -1654,6 +1657,32 @@ Obj FuncNAMS_FUNC (
     }
 }
 
+/****************************************************************************
+**
+*F  FuncLOCKS_FUNC( <self>, <func> ) . . . . locking status of a possibly
+**                                           atomic function
+*/
+Obj LOCKS_FUNC_Oper;
+
+Obj FuncLOCKS_FUNC(Obj self, Obj func)
+{
+#ifdef HPCGAP
+    Obj locks;
+    if (TNUM_OBJ(func) == T_FUNCTION) {
+        locks = LCKS_FUNC(func);
+        if (locks == (Obj)0)
+            return Fail;
+        else
+            return locks;
+    }
+    else {
+        return DoOperation1Args(self, func);
+    }
+#else
+    return Fail;
+#endif
+}
+
 
 /****************************************************************************
 **
@@ -1683,7 +1712,6 @@ Obj FuncPROF_FUNC (
 
 /****************************************************************************
 **
-
 *F  FuncCLEAR_PROFILE_FUNC( <self>, <func> )  . . . . . . . . . clear profile
 */
 Obj FuncCLEAR_PROFILE_FUNC(
@@ -1746,27 +1774,27 @@ Obj FuncPROFILE_FUNC(
     /* install new handlers                                                */
     if ( TNUM_OBJ(prof) != T_FUNCTION ) {
         copy = NewBag( TNUM_OBJ(func), SIZE_OBJ(func) );
-        HDLR_FUNC(copy,0) = HDLR_FUNC(func,0);
-        HDLR_FUNC(copy,1) = HDLR_FUNC(func,1);
-        HDLR_FUNC(copy,2) = HDLR_FUNC(func,2);
-        HDLR_FUNC(copy,3) = HDLR_FUNC(func,3);
-        HDLR_FUNC(copy,4) = HDLR_FUNC(func,4);
-        HDLR_FUNC(copy,5) = HDLR_FUNC(func,5);
-        HDLR_FUNC(copy,6) = HDLR_FUNC(func,6);
-        HDLR_FUNC(copy,7) = HDLR_FUNC(func,7);
-        NAME_FUNC(copy)   = NAME_FUNC(func);
-        NARG_FUNC(copy)   = NARG_FUNC(func);
-        NAMS_FUNC(copy)   = NAMS_FUNC(func);
-        PROF_FUNC(copy)   = PROF_FUNC(func);
-        HDLR_FUNC(func,0) = DoProf0args;
-        HDLR_FUNC(func,1) = DoProf1args;
-        HDLR_FUNC(func,2) = DoProf2args;
-        HDLR_FUNC(func,3) = DoProf3args;
-        HDLR_FUNC(func,4) = DoProf4args;
-        HDLR_FUNC(func,5) = DoProf5args;
-        HDLR_FUNC(func,6) = DoProf6args;
-        HDLR_FUNC(func,7) = DoProfXargs;
-        PROF_FUNC(func)   = copy;
+        SET_HDLR_FUNC(copy,0, HDLR_FUNC(func,0));
+        SET_HDLR_FUNC(copy,1, HDLR_FUNC(func,1));
+        SET_HDLR_FUNC(copy,2, HDLR_FUNC(func,2));
+        SET_HDLR_FUNC(copy,3, HDLR_FUNC(func,3));
+        SET_HDLR_FUNC(copy,4, HDLR_FUNC(func,4));
+        SET_HDLR_FUNC(copy,5, HDLR_FUNC(func,5));
+        SET_HDLR_FUNC(copy,6, HDLR_FUNC(func,6));
+        SET_HDLR_FUNC(copy,7, HDLR_FUNC(func,7));
+        SET_NAME_FUNC(copy,   NAME_FUNC(func));
+        SET_NARG_FUNC(copy,   NARG_FUNC(func));
+        SET_NAMS_FUNC(copy,   NAMS_FUNC(func));
+        SET_PROF_FUNC(copy,   PROF_FUNC(func));
+        SET_HDLR_FUNC(func,0, DoProf0args);
+        SET_HDLR_FUNC(func,1, DoProf1args);
+        SET_HDLR_FUNC(func,2, DoProf2args);
+        SET_HDLR_FUNC(func,3, DoProf3args);
+        SET_HDLR_FUNC(func,4, DoProf4args);
+        SET_HDLR_FUNC(func,5, DoProf5args);
+        SET_HDLR_FUNC(func,6, DoProf6args);
+        SET_HDLR_FUNC(func,7, DoProfXargs);
+        SET_PROF_FUNC(func,   copy);
         CHANGED_BAG(func);
     }
 
@@ -1799,18 +1827,14 @@ Obj FuncFILENAME_FUNC(Obj self, Obj func) {
     }
 
     if (BODY_FUNC(func)) {
-        Obj fn =  FILENAME_BODY(BODY_FUNC(func));
-#ifndef WARD_ENABLED
-        if (fn) {
+        Obj fn =  GET_FILENAME_BODY(BODY_FUNC(func));
+        if (fn)
             return fn;
-        }
-#endif
     }
     return Fail;
 }
 
 Obj FuncSTARTLINE_FUNC(Obj self, Obj func) {
-
     /* check the argument                                                  */
     if ( TNUM_OBJ(func) != T_FUNCTION ) {
         ErrorQuit( "<func> must be a function", 0L, 0L );
@@ -1818,15 +1842,14 @@ Obj FuncSTARTLINE_FUNC(Obj self, Obj func) {
     }
 
     if (BODY_FUNC(func)) {
-        Obj sl = STARTLINE_BODY(BODY_FUNC(func));
+        UInt sl = GET_STARTLINE_BODY(BODY_FUNC(func));
         if (sl)
-            return sl;
+            return INTOBJ_INT(sl);
     }
     return Fail;
 }
 
 Obj FuncENDLINE_FUNC(Obj self, Obj func) {
-
     /* check the argument                                                  */
     if ( TNUM_OBJ(func) != T_FUNCTION ) {
         ErrorQuit( "<func> must be a function", 0L, 0L );
@@ -1834,13 +1857,27 @@ Obj FuncENDLINE_FUNC(Obj self, Obj func) {
     }
 
     if (BODY_FUNC(func)) {
-        Obj el = ENDLINE_BODY(BODY_FUNC(func));
+        UInt el = GET_ENDLINE_BODY(BODY_FUNC(func));
         if (el)
-            return el;
+            return INTOBJ_INT(el);
     }
     return Fail;
 }
 
+Obj FuncLOCATION_FUNC(Obj self, Obj func) {
+    /* check the argument                                                  */
+    if ( TNUM_OBJ(func) != T_FUNCTION ) {
+        ErrorQuit( "<func> must be a function", 0L, 0L );
+        return 0;
+    }
+
+    if (BODY_FUNC(func)) {
+        Obj sl = GET_LOCATION_BODY(BODY_FUNC(func));
+        if (sl)
+            return sl;
+    }
+    return Fail;
+}
 
 /****************************************************************************
 **
@@ -1864,25 +1901,35 @@ Obj FuncUNPROFILE_FUNC(
     /* profiling is active, restore handlers                               */
     prof = PROF_FUNC(func);
     if ( TNUM_OBJ(prof) == T_FUNCTION ) {
-        HDLR_FUNC(func,0) = HDLR_FUNC(prof,0);
-        HDLR_FUNC(func,1) = HDLR_FUNC(prof,1);
-        HDLR_FUNC(func,2) = HDLR_FUNC(prof,2);
-        HDLR_FUNC(func,3) = HDLR_FUNC(prof,3);
-        HDLR_FUNC(func,4) = HDLR_FUNC(prof,4);
-        HDLR_FUNC(func,5) = HDLR_FUNC(prof,5);
-        HDLR_FUNC(func,6) = HDLR_FUNC(prof,6);
-        HDLR_FUNC(func,7) = HDLR_FUNC(prof,7);
-        PROF_FUNC(func)   = PROF_FUNC(prof);
+        for (Int i = 0; i <= 7; i++)
+            SET_HDLR_FUNC(func, i, HDLR_FUNC(prof, i));
+        SET_PROF_FUNC(func, PROF_FUNC(prof));
         CHANGED_BAG(func);
     }
 
     return (Obj)0;
 }
 
-Obj FuncIsKernelFunction(Obj self, Obj func) {
-  if (!IS_FUNC(func))
-    return Fail;
-  else return (BODY_FUNC(func) == 0 || SIZE_OBJ(BODY_FUNC(func)) == 0) ? True : False;
+
+/****************************************************************************
+*
+*F  FuncIsKernelFunction( <self>, <func> )
+**
+**  'FuncIsKernelFunction' returns Fail if <func> is not a function, True if
+**  <func> is a kernel function, and False otherwise.
+*/
+Obj FuncIsKernelFunction(Obj self, Obj func)
+{
+    if (!IS_FUNC(func))
+        return Fail;
+    return IsKernelFunction(func) ? True : False;
+}
+
+Int IsKernelFunction(Obj func)
+{
+    GAP_ASSERT(IS_FUNC(func));
+    return (BODY_FUNC(func) == 0) ||
+           (SIZE_OBJ(BODY_FUNC(func)) == sizeof(BodyHeader));
 }
 
 Obj FuncHandlerCookieOfFunction(Obj self, Obj func)
@@ -1898,30 +1945,29 @@ Obj FuncHandlerCookieOfFunction(Obj self, Obj func)
     narg = 7;
   hdlr = HDLR_FUNC(func, narg);
   cookie = CookieOfHandler(hdlr);
-  C_NEW_STRING_DYN(cookieStr, cookie);
+  cookieStr = MakeString(cookie);
   return cookieStr;
 }
 
 /****************************************************************************
 **
-
 *F  SaveFunction( <func> )  . . . . . . . . . . . . . . . . . save a function
 **
 */
 void SaveFunction ( Obj func )
 {
-  UInt i;
-  for (i = 0; i <= 7; i++)
-    SaveHandler(HDLR_FUNC(func,i));
-  SaveSubObj(NAME_FUNC(func));
-  SaveUInt(NARG_FUNC(func));
-  SaveSubObj(NAMS_FUNC(func));
-  SaveSubObj(PROF_FUNC(func));
-  SaveUInt(NLOC_FUNC(func));
-  SaveSubObj(BODY_FUNC(func));
-  SaveSubObj(ENVI_FUNC(func));
-  SaveSubObj(FEXS_FUNC(func));
-  if (SIZE_OBJ(func) != SIZE_FUNC)
+  FunctionHeader * header = FUNC_HEADER(func);
+  for (UInt i = 0; i <= 7; i++)
+    SaveHandler(header->handlers[i]);
+  SaveSubObj(header->name);
+  SaveUInt(header->nargs);
+  SaveSubObj(header->namesOfLocals);
+  SaveSubObj(header->prof);
+  SaveUInt(header->nloc);
+  SaveSubObj(header->body);
+  SaveSubObj(header->envi);
+  SaveSubObj(header->fexs);
+  if (SIZE_OBJ(func) != sizeof(FunctionHeader))
     SaveOperationExtras( func );
 }
 
@@ -1932,39 +1978,35 @@ void SaveFunction ( Obj func )
 */
 void LoadFunction ( Obj func )
 {
-  UInt i;
-  for (i = 0; i <= 7; i++)
-    HDLR_FUNC(func,i) = LoadHandler();
-  NAME_FUNC(func) = LoadSubObj();
-  NARG_FUNC(func) = LoadUInt();
-  NAMS_FUNC(func) = LoadSubObj();
-  PROF_FUNC(func) = LoadSubObj();
-  NLOC_FUNC(func) = LoadUInt();
-  BODY_FUNC(func) = LoadSubObj();
-  ENVI_FUNC(func) = LoadSubObj();
-  FEXS_FUNC(func) = LoadSubObj();
-  if (SIZE_OBJ(func) != SIZE_FUNC)
+  FunctionHeader * header = FUNC_HEADER(func);
+  for (UInt i = 0; i <= 7; i++)
+    header->handlers[i] = LoadHandler();
+  header->name = LoadSubObj();
+  header->nargs = LoadUInt();
+  header->namesOfLocals = LoadSubObj();
+  header->prof = LoadSubObj();
+  header->nloc = LoadUInt();
+  header->body = LoadSubObj();
+  header->envi = LoadSubObj();
+  header->fexs = LoadSubObj();
+  if (SIZE_OBJ(func) != sizeof(FunctionHeader))
     LoadOperationExtras( func );
 }
 
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *V  GVarFilts . . . . . . . . . . . . . . . . . . . list of filters to export
 */
 static StructGVarFilt GVarFilts [] = {
 
-    { "IS_FUNCTION", "obj", &IsFunctionFilt, 
-      FuncIS_FUNCTION, "src/calls.c:IS_FUNCTION" },
-
-    { 0 }
+    GVAR_FILTER(IS_FUNCTION, "obj", &IsFunctionFilt),
+    { 0, 0, 0, 0, 0 }
 
 };
 
@@ -1975,29 +2017,15 @@ static StructGVarFilt GVarFilts [] = {
 */
 static StructGVarOper GVarOpers [] = {
 
-    { "CALL_FUNC", -1, "args", &CallFunctionOper,
-      FuncCALL_FUNC, "src/calls.c:CALL_FUNC" },
-
-    { "CALL_FUNC_LIST", 2, "func, list", &CallFuncListOper,
-      FuncCALL_FUNC_LIST, "src/calls.c:CALL_FUNC_LIST" },
-
-    { "NAME_FUNC", 1, "func", &NAME_FUNC_Oper,
-      FuncNAME_FUNC, "src/calls.c:NAME_FUNC" },
-
-    { "SET_NAME_FUNC", 2, "func, name", &SET_NAME_FUNC_Oper,
-      FuncSET_NAME_FUNC, "src/calls.c:SET_NAME_FUNC" },
-
-    { "NARG_FUNC", 1, "func", &NARG_FUNC_Oper,
-      FuncNARG_FUNC, "src/calls.c:NARG_FUNC" },
-
-    { "NAMS_FUNC", 1, "func", &NAMS_FUNC_Oper,
-      FuncNAMS_FUNC, "src/calls.c:NAMS_FUNC" },
-
-    { "PROF_FUNC", 1, "func", &PROF_FUNC_Oper,
-      FuncPROF_FUNC, "src/calls.c:PROF_FUNC" },
-
-
-    { 0 }
+    GVAR_OPER(CALL_FUNC_LIST, 2, "func, list", &CallFuncListOper),
+    GVAR_OPER(CALL_FUNC_LIST_WRAP, 2, "func, list", &CallFuncListWrapOper),
+    GVAR_OPER(NAME_FUNC, 1, "func", &NAME_FUNC_Oper),
+    GVAR_OPER(SET_NAME_FUNC, 2, "func, name", &SET_NAME_FUNC_Oper),
+    GVAR_OPER(NARG_FUNC, 1, "func", &NARG_FUNC_Oper),
+    GVAR_OPER(NAMS_FUNC, 1, "func", &NAMS_FUNC_Oper),
+    GVAR_OPER(LOCKS_FUNC, 1, "func", &LOCKS_FUNC_Oper),
+    GVAR_OPER(PROF_FUNC, 1, "func", &PROF_FUNC_Oper),
+    { 0, 0, 0, 0, 0, 0 }
 
 };
 
@@ -2008,40 +2036,23 @@ static StructGVarOper GVarOpers [] = {
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    { "CLEAR_PROFILE_FUNC", 1, "func",
-      FuncCLEAR_PROFILE_FUNC, "src/calls.c:CLEAR_PROFILE_FUNC" },
-
-    { "IS_PROFILED_FUNC", 1, "func",
-      FuncIS_PROFILED_FUNC, "src/calls.c:IS_PROFILED_FUNC" },
-
-    { "PROFILE_FUNC", 1, "func",
-      FuncPROFILE_FUNC, "src/calls.c:PROFILE_FUNC" },
-
-    { "UNPROFILE_FUNC", 1, "func",
-      FuncUNPROFILE_FUNC, "src/calls.c:UNPROFILE_FUNC" },
-
-    { "IsKernelFunction", 1, "func",
-      FuncIsKernelFunction, "src/calls.c:IsKernelFunction" },
-
-    { "HandlerCookieOfFunction", 1, "func",
-      FuncHandlerCookieOfFunction, "src/calls.c:HandlerCookieOfFunction" },
-
-    { "FILENAME_FUNC", 1, "func", 
-      FuncFILENAME_FUNC, "src/calls.c:FILENAME_FUNC" },
-
-    { "STARTLINE_FUNC", 1, "func", 
-      FuncSTARTLINE_FUNC, "src/calls.c:STARTLINE_FUNC" },
-
-    { "ENDLINE_FUNC", 1, "func", 
-      FuncENDLINE_FUNC, "src/calls.c:ENDLINE_FUNC" },
-    { 0 }
+    GVAR_FUNC(CLEAR_PROFILE_FUNC, 1, "func"),
+    GVAR_FUNC(IS_PROFILED_FUNC, 1, "func"),
+    GVAR_FUNC(PROFILE_FUNC, 1, "func"),
+    GVAR_FUNC(UNPROFILE_FUNC, 1, "func"),
+    GVAR_FUNC(IsKernelFunction, 1, "func"),
+    GVAR_FUNC(HandlerCookieOfFunction, 1, "func"),
+    GVAR_FUNC(FILENAME_FUNC, 1, "func"),
+    GVAR_FUNC(LOCATION_FUNC, 1, "func"),
+    GVAR_FUNC(STARTLINE_FUNC, 1, "func"),
+    GVAR_FUNC(ENDLINE_FUNC, 1, "func"),
+    { 0, 0, 0, 0, 0 }
 
 };
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
@@ -2125,28 +2136,15 @@ static Int InitLibrary (
 *F  InitInfoCalls() . . . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "calls",                            /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "calls",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoCalls ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  calls.c . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

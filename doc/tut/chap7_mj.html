@@ -53,15 +53,15 @@
 
 <h3>7 <span class="Heading">Domains</span></h3>
 
-<p><em>Domain</em> is <strong class="pkg">GAP</strong>'s name for structured sets. We already saw examples of domains in Chapters <a href="chap5_mj.html#X8171DAF2833FF728"><span class="RefLink">5</span></a> and <a href="chap6_mj.html#X853484B982F1DF96"><span class="RefLink">6</span></a>: the groups <code class="code">s8</code> and <code class="code">a8</code> in Section <a href="chap5_mj.html#X85ED46007CED6191"><span class="RefLink">5.1</span></a> are domains, likewise the field <code class="code">f</code> and the vector space <code class="code">v</code> in Section <a href="chap6_mj.html#X7DAD6700787EC845"><span class="RefLink">6.1</span></a> are domains. They were constructed by functions such as <code class="func">Group</code> (<a href="../../doc/ref/chap39_mj.html#X8716635F7951801B"><span class="RefLink">Reference: Groups</span></a>) and <code class="func">GF</code> (<a href="../../doc/ref/chap59_mj.html#X8592DBB086A8A9BE"><span class="RefLink">Reference: GF for field size</span></a>), and they could be passed as arguments to other functions such as <code class="func">DerivedSubgroup</code> (<a href="../../doc/ref/chap39_mj.html#X7CC17CF179ED7EF2"><span class="RefLink">Reference: DerivedSubgroup</span></a>) and <code class="func">Dimension</code> (<a href="../../doc/ref/chap57_mj.html#X7E6926C6850E7C4E"><span class="RefLink">Reference: Dimension</span></a>).</p>
+<p><em>Domain</em> is <strong class="pkg">GAP</strong>'s name for structured sets. We already saw examples of domains in Chapters <a href="chap5_mj.html#X8171DAF2833FF728"><span class="RefLink">5</span></a> and <a href="chap6_mj.html#X853484B982F1DF96"><span class="RefLink">6</span></a>: the groups <code class="code">s8</code> and <code class="code">a8</code> in Section <a href="chap5_mj.html#X85ED46007CED6191"><span class="RefLink">5.1</span></a> are domains, likewise the field <code class="code">f</code> and the vector space <code class="code">v</code> in Section <a href="chap6_mj.html#X7DAD6700787EC845"><span class="RefLink">6.1</span></a> are domains. They were constructed by functions such as <code class="func">Group</code> (<span class="RefLink">Reference: Groups</span>) and <code class="func">GF</code> (<span class="RefLink">Reference: GF for field size</span>), and they could be passed as arguments to other functions such as <code class="func">DerivedSubgroup</code> (<span class="RefLink">Reference: DerivedSubgroup</span>) and <code class="func">Dimension</code> (<span class="RefLink">Reference: Dimension</span>).</p>
 
 <p><a id="X7D94C6F07ACEA397" name="X7D94C6F07ACEA397"></a></p>
 
 <h4>7.1 <span class="Heading">Domains as Sets</span></h4>
 
-<p>First of all, a domain <span class="SimpleMath">\(D\)</span> is a set. If <span class="SimpleMath">\(D\)</span> is finite then a list with the elements of this set can be computed with the functions <code class="func">AsList</code> (<a href="../../doc/ref/chap30_mj.html#X8289FCCC8274C89D"><span class="RefLink">Reference: AsList</span></a>) and <code class="func">AsSortedList</code> (<a href="../../doc/ref/chap30_mj.html#X7BCA5C6181391007"><span class="RefLink">Reference: AsSortedList</span></a>). For infinite <span class="SimpleMath">\(D\)</span>, <code class="func">Enumerator</code> (<a href="../../doc/ref/chap30_mj.html#X7EF8910F82B45EC7"><span class="RefLink">Reference: Enumerator</span></a>) and <code class="func">EnumeratorSorted</code> (<a href="../../doc/ref/chap30_mj.html#X80CD7DDC7D0C60D5"><span class="RefLink">Reference: EnumeratorSorted</span></a>) may work, but it is also possible that one gets an error message.</p>
+<p>First of all, a domain <span class="SimpleMath">\(D\)</span> is a set. If <span class="SimpleMath">\(D\)</span> is finite then a list with the elements of this set can be computed with the functions <code class="func">AsList</code> (<span class="RefLink">Reference: AsList</span>) and <code class="func">AsSortedList</code> (<span class="RefLink">Reference: AsSortedList</span>). For infinite <span class="SimpleMath">\(D\)</span>, <code class="func">Enumerator</code> (<span class="RefLink">Reference: Enumerator</span>) and <code class="func">EnumeratorSorted</code> (<span class="RefLink">Reference: EnumeratorSorted</span>) may work, but it is also possible that one gets an error message.</p>
 
-<p>Domains can be used as arguments of set functions such as <code class="func">Intersection</code> (<a href="../../doc/ref/chap30_mj.html#X851069107CACF98E"><span class="RefLink">Reference: Intersection</span></a>) and <code class="func">Union</code> (<a href="../../doc/ref/chap30_mj.html#X799F0E2F7A502DBA"><span class="RefLink">Reference: Union</span></a>). <strong class="pkg">GAP</strong> tries to return a domain in these cases, moreover it tries to return a domain with as much structure as possible. For example, the intersection of two groups is (either empty or) again a group, and <strong class="pkg">GAP</strong> will try to return it as a group. For <code class="func">Union</code> (<a href="../../doc/ref/chap30_mj.html#X799F0E2F7A502DBA"><span class="RefLink">Reference: Union</span></a>), the situation is different because the union of two groups is in general not a group.</p>
+<p>Domains can be used as arguments of set functions such as <code class="func">Intersection</code> (<span class="RefLink">Reference: Intersection</span>) and <code class="func">Union</code> (<span class="RefLink">Reference: Union</span>). <strong class="pkg">GAP</strong> tries to return a domain in these cases, moreover it tries to return a domain with as much structure as possible. For example, the intersection of two groups is (either empty or) again a group, and <strong class="pkg">GAP</strong> will try to return it as a group. For <code class="func">Union</code> (<span class="RefLink">Reference: Union</span>), the situation is different because the union of two groups is in general not a group.</p>
 
 
 <div class="example"><pre>
@@ -131,7 +131,7 @@ false
 
 <p>Each combination of operations under which a domain could be closed gives a notion of generation. So each group has group generators, and since it is a monoid, one can also ask for monoid generators of a group.</p>
 
-<p>Note that one cannot simply ask for "the generators of a domain", it is always necessary to specify what notion of generation is meant. Access to the different generators is provided by functions with names of the form <code class="code">GeneratorsOfSomething</code>. For example, <code class="func">GeneratorsOfGroup</code> (<a href="../../doc/ref/chap39_mj.html#X79C44528864044C5"><span class="RefLink">Reference: GeneratorsOfGroup</span></a>) denotes group generators, <code class="func">GeneratorsOfMonoid</code> (<a href="../../doc/ref/chap51_mj.html#X83CA2E7279C44718"><span class="RefLink">Reference: GeneratorsOfMonoid</span></a>) denotes monoid generators, and so on. The result of <code class="func">GeneratorsOfVectorSpace</code> (<a href="../../doc/ref/chap61_mj.html#X849651C6830C94A1"><span class="RefLink">Reference: GeneratorsOfVectorSpace</span></a>) is of course to be understood relative to the field of scalars of the vector space in question.</p>
+<p>Note that one cannot simply ask for "the generators of a domain", it is always necessary to specify what notion of generation is meant. Access to the different generators is provided by functions with names of the form <code class="code">GeneratorsOfSomething</code>. For example, <code class="func">GeneratorsOfGroup</code> (<span class="RefLink">Reference: GeneratorsOfGroup</span>) denotes group generators, <code class="func">GeneratorsOfMonoid</code> (<span class="RefLink">Reference: GeneratorsOfMonoid</span>) denotes monoid generators, and so on. The result of <code class="func">GeneratorsOfVectorSpace</code> (<span class="RefLink">Reference: GeneratorsOfVectorSpace</span>) is of course to be understood relative to the field of scalars of the vector space in question.</p>
 
 
 <div class="example"><pre>
@@ -147,7 +147,7 @@ false
 
 <h4>7.4 <span class="Heading">Domain Constructors</span></h4>
 
-<p>A group can be constructed from a list of group generators <var class="Arg">gens</var> by <code class="code">Group( <var class="Arg">gens</var> )</code>, likewise one can construct rings and algebras with the functions <code class="func">Ring</code> (<a href="../../doc/ref/chap56_mj.html#X820B172A860A5B1A"><span class="RefLink">Reference: Ring</span></a>) and <code class="func">Algebra</code> (<a href="../../doc/ref/chap62_mj.html#X7B213851791A594B"><span class="RefLink">Reference: Algebra</span></a>).</p>
+<p>A group can be constructed from a list of group generators <var class="Arg">gens</var> by <code class="code">Group( <var class="Arg">gens</var> )</code>, likewise one can construct rings and algebras with the functions <code class="func">Ring</code> (<span class="RefLink">Reference: Ring</span>) and <code class="func">Algebra</code> (<span class="RefLink">Reference: Algebra</span>).</p>
 
 <p>Note that it is not always or completely checked that <var class="Arg">gens</var> is in fact a valid list of group generators, for example whether the elements of <var class="Arg">gens</var> can be multiplied or whether they are invertible. This means that <strong class="pkg">GAP</strong> trusts you, at least to some extent, that the desired domain <code class="code">Something( <var class="Arg">gens</var> )</code> does exist.</p>
 
@@ -178,7 +178,7 @@ false
 
 <p>(Contrary to this, a domain <em>can</em> acquire knowledge about properties such as whether the multiplication is associative or commutative.)</p>
 
-<p>If one needs a domain with a different structure than the given one, one can construct a new domain with the required structure. The functions that do these constructions have names such as <code class="code">AsSomething</code>, they return a domain that has the same elements as the argument in question but the structure <code class="code">Something</code>. In the above situation, one can use <code class="func">AsGroup</code> (<a href="../../doc/ref/chap39_mj.html#X7A0747F17B50D967"><span class="RefLink">Reference: AsGroup</span></a>).</p>
+<p>If one needs a domain with a different structure than the given one, one can construct a new domain with the required structure. The functions that do these constructions have names such as <code class="code">AsSomething</code>, they return a domain that has the same elements as the argument in question but the structure <code class="code">Something</code>. In the above situation, one can use <code class="func">AsGroup</code> (<span class="RefLink">Reference: AsGroup</span>).</p>
 
 
 <div class="example"><pre>
@@ -197,7 +197,7 @@ true
 fail
 </pre></div>
 
-<p>The functions <code class="func">AsList</code> (<a href="../../doc/ref/chap30_mj.html#X8289FCCC8274C89D"><span class="RefLink">Reference: AsList</span></a>) and <code class="func">AsSortedList</code> (<a href="../../doc/ref/chap30_mj.html#X7BCA5C6181391007"><span class="RefLink">Reference: AsSortedList</span></a>) mentioned above do not return domains, but they fit into the general pattern in the sense that they forget all the structure of the argument, including the fact that it is a domain, and return a list with the same elements as the argument has.</p>
+<p>The functions <code class="func">AsList</code> (<span class="RefLink">Reference: AsList</span>) and <code class="func">AsSortedList</code> (<span class="RefLink">Reference: AsSortedList</span>) mentioned above do not return domains, but they fit into the general pattern in the sense that they forget all the structure of the argument, including the fact that it is a domain, and return a list with the same elements as the argument has.</p>
 
 <p><a id="X8318352D7B5F19BA" name="X8318352D7B5F19BA"></a></p>
 
@@ -227,7 +227,7 @@ true
 
 <h4>7.8 <span class="Heading">Further Information about Domains</span></h4>
 
-<p>More information about domains can be found in Chapter <a href="../../doc/ref/chap12_mj.html#X7BAF69417BB925F6"><span class="RefLink">Reference: Domains</span></a>. Many other other chapters deal with specific types of domain such as groups, vector spaces or algebras.</p>
+<p>More information about domains can be found in Chapter <span class="RefLink">Reference: Domains</span>. Many other other chapters deal with specific types of domain such as groups, vector spaces or algebras.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap6_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap8_mj.html">[Next Chapter]</a>&nbsp;  </div>

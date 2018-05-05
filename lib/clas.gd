@@ -250,6 +250,24 @@ DeclareGlobalFunction( "ConjugacyClassesByOrbits" );
 # `noaction' option is not set, otherwise it returns `fail'.
 DeclareGlobalFunction( "ConjugacyClassesForSmallGroup" );
 
+#############################################################################
+##
+#F  ConjugacyClassesByHomomorphicImage( <G>, <hom> )
+##
+##  <#GAPDoc Label="ConjugacyClassesByHomomorphicImage">
+##  <ManSection>
+##  <Func Name="ConjugacyClassesByHomomorphicImage" Arg='G,hom'/>
+##
+##  <Description>
+##  computes the classes of the group <A>G</A> through the image of <A>G</A>
+##  under the homomorphism <A>hom</A>.
+##  <P/>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction( "ConjugacyClassesByHomomorphicImage" );
+
 DeclareGlobalFunction( "GroupByPrimeResidues" );
 
 DeclareGlobalFunction( "ConjugacyClassesTry" );
@@ -302,8 +320,10 @@ DeclareGlobalFunction( "GeneralStepClEANS" );
 ##  <Mark><C>candidates</C></Mark>
 ##  <Item>
 ##  is a list of elements for which canonical representatives
-##  are to be computed or for which a conjugacy test is performed. They must
-##  be given in mode 4. In mode 0 a list of classes corresponding to
+##  are to be computed or for which a conjugacy test is performed. Both
+##  elements must lie in <A>G</A>, but this is not tested. In mode 4 these
+##  elements must be given.
+##  In mode 0 a list of classes corresponding to
 ##  <C>candidates</C> is returned (which may contain duplicates). The
 ##  <C>representative</C>s chosen are canonical with respect to <C>pcgs</C>.
 ##  The records returned also contain components <C>operator</C>
@@ -413,13 +433,6 @@ DeclareGlobalFunction( "RationalClassesSolvableGroup" );
 ##
 
 DeclareGlobalFunction( "CentralizerSizeLimitConsiderFunction" );
-
-DeclareGlobalFunction( "CompleteGaloisGroupPElement" );
-DeclareGlobalFunction( "RatClasPElmArrangeClasses" );
-DeclareGlobalFunction( "SortRationalClasses" );
-DeclareGlobalFunction( "FusionRationalClassesPSubgroup" );
-DeclareGlobalFunction( "RationalClassesPElements" );
-DeclareGlobalFunction( "RationalClassesPermGroup" );
 
 
 #############################################################################

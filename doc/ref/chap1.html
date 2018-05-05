@@ -61,15 +61,15 @@
 
 <h4>1.1 <span class="Heading">The <strong class="pkg">GAP</strong> System</span></h4>
 
-<p><strong class="pkg">GAP</strong> is a <em>free</em>, <em>open</em> and <em>extensible</em> software package for computation in discrete abstract algebra. The terms "free" and "open" describe the conditions under which the system is distributed -- in brief, it is <em>free of charge</em> (except possibly for the immediate costs of delivering it to you), you are <em>free to pass it on</em> within certain limits, and all of the workings of the system are <em>open for you to examine and change</em>. Details of these conditions can be found in Section <a href="../../doc/ref/chap1.html#X7950EFA183E3F666"><span class="RefLink">Reference: Copyright and License</span></a>.</p>
+<p><strong class="pkg">GAP</strong> is a <em>free</em>, <em>open</em> and <em>extensible</em> software package for computation in discrete abstract algebra. The terms "free" and "open" describe the conditions under which the system is distributed -- in brief, it is <em>free of charge</em> (except possibly for the immediate costs of delivering it to you), you are <em>free to pass it on</em> within certain limits, and all of the workings of the system are <em>open for you to examine and change</em>. Details of these conditions can be found in Section <span class="RefLink">Reference: Copyright and License</span>.</p>
 
-<p>The system is "extensible" in that you can write your own programs in the <strong class="pkg">GAP</strong> language, and use them in just the same way as the programs which form part of the system (the "library"). Indeed, we actively support the contribution, refereeing and distribution of extensions to the system, in the form of "<strong class="pkg">GAP</strong> packages". Further details of this can be found in chapter <a href="../../doc/ref/chap76.html#X7B6CD527825945CD"><span class="RefLink">Reference: Using GAP Packages</span></a>, and on our website.</p>
+<p>The system is "extensible" in that you can write your own programs in the <strong class="pkg">GAP</strong> language, and use them in just the same way as the programs which form part of the system (the "library"). Indeed, we actively support the contribution, refereeing and distribution of extensions to the system, in the form of "<strong class="pkg">GAP</strong> packages". Further details of this can be found in chapter <span class="RefLink">Reference: Using and Developing GAP Packages</span>, and on our website.</p>
 
 <p>Development of <strong class="pkg">GAP</strong> began at Lehrstuhl D für Mathematik, RWTH-Aachen, under the leadership of Joachim Neubüser in 1985. Version 2.4 was released in 1988 and version 3.1 in 1992. In 1997 coordination of <strong class="pkg">GAP</strong> development, now very much an international effort, was transferred to St Andrews. A complete internal redesign and almost complete rewrite of the system was completed over the following years and version 4.1 was released in July 1999. A sign of the further internationalization of the project was the <strong class="pkg">GAP</strong> 4.4 release in 2004, which has been coordinated from Colorado State University, Fort Collins.</p>
 
 <p>More information on the motivation and development of <strong class="pkg">GAP</strong> to date, can be found on our Web pages in a section entitled "Release history and Prefaces".</p>
 
-<p>For those readers who have used an earlier version of <strong class="pkg">GAP</strong>, an overview of the changes from <strong class="pkg">GAP</strong> 4.4 and a brief summary of changes from earlier versions is given in a separate manual <a href="../../doc/changes/chap5.html#X84D336197CBC3777"><span class="RefLink">Changes: Changes between GAP 4.4 and GAP 4.5</span></a>.</p>
+<p>For those readers who have used an earlier version of <strong class="pkg">GAP</strong>, an overview of the changes from <strong class="pkg">GAP</strong> 4.4 and a brief summary of changes from earlier versions is given in a separate manual <a href="../../doc/changes/chap6.html#X84D336197CBC3777"><span class="RefLink">Changes: Changes between GAP 4.4 and GAP 4.5</span></a>.</p>
 
 <p>The system that you are getting now consists of a "core system" and a number of packages. The core system consists of four main parts.</p>
 
@@ -110,11 +110,11 @@
 </ol>
 <p>Also included with the core system are some test files and a few small utilities which we hope you will find useful.</p>
 
-<p><strong class="pkg">GAP</strong> <em>packages</em> are self-contained extensions to the core system. A package contains <strong class="pkg">GAP</strong> code and its own documentation and may also contain data files or external programs to which the <strong class="pkg">GAP</strong> code provides an interface. These packages may be loaded into <strong class="pkg">GAP</strong> using the <code class="func">LoadPackage</code> (<a href="../../doc/ref/chap76.html#X79B373A77B29D1F5"><span class="RefLink">Reference: LoadPackage</span></a>) command, and both the package and its documentation are then available just as if they were parts of the core system. Some packages may be loaded automatically, when <strong class="pkg">GAP</strong> is started, if they are present. Some packages, because they depend on external programs, may only be available on the operating systems where those programs are available (usually UNIX). You should note that, while the packages included with this release are the most recent versions ready for release at this time, new packages and new versions may be released at any time and can be easily installed in your copy of <strong class="pkg">GAP</strong>.</p>
+<p><strong class="pkg">GAP</strong> <em>packages</em> are self-contained extensions to the core system. A package contains <strong class="pkg">GAP</strong> code and its own documentation and may also contain data files or external programs to which the <strong class="pkg">GAP</strong> code provides an interface. These packages may be loaded into <strong class="pkg">GAP</strong> using the <code class="func">LoadPackage</code> (<span class="RefLink">Reference: LoadPackage</span>) command, and both the package and its documentation are then available just as if they were parts of the core system. Some packages may be loaded automatically, when <strong class="pkg">GAP</strong> is started, if they are present. Some packages, because they depend on external programs, may only be available on the operating systems where those programs are available (usually UNIX). You should note that, while the packages included with this release are the most recent versions ready for release at this time, new packages and new versions may be released at any time and can be easily installed in your copy of <strong class="pkg">GAP</strong>.</p>
 
 <p>With <strong class="pkg">GAP</strong> there are two packages (the library of ordinary and Brauer character tables, and the library of tables of marks) which contain functionality developed from parts of the <strong class="pkg">GAP</strong> core system. These have been moved into packages for ease of maintenance and to allow new versions to be released independently of new releases of the core system. The library of small groups should also be regarded as a package, although it does not currently use the standard package mechanism. Other packages contain functionality which has never been part of the core system, and may extend it substantially, implementing specific algorithms to enhance its capabilities, providing data libraries, interfaces to other computer algebra systems and data sources such as the electronic version of the Atlas of Finite Group Representations; therefore, installation and usage of packages is recommended.</p>
 
-<p>Further details about <strong class="pkg">GAP</strong> packages can be found in chapter <a href="../../doc/ref/chap76.html#X7B6CD527825945CD"><span class="RefLink">Reference: Using GAP Packages</span></a>, and on the <strong class="pkg">GAP</strong> website here: <span class="URL"><a href="https://www.gap-system.org/Packages/packages.html">https://www.gap-system.org/Packages/packages.html</a></span>.</p>
+<p>Further details about <strong class="pkg">GAP</strong> packages can be found in chapter <span class="RefLink">Reference: Using and Developing GAP Packages</span>, and on the <strong class="pkg">GAP</strong> website here: <span class="URL"><a href="https://www.gap-system.org/Packages/packages.html">https://www.gap-system.org/Packages/packages.html</a></span>.</p>
 
 <p><a id="X877A62A1781C2147" name="X877A62A1781C2147"></a></p>
 
@@ -144,7 +144,7 @@
 
 <p>except for files in the distribution, which have an explicit different copyright statement. In particular, the copyright of packages distributed with <strong class="pkg">GAP</strong> is usually with the package authors or their institutions.</p>
 
-<p><strong class="pkg">GAP</strong> is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version. For details, see the file <code class="file">GPL</code> in the <code class="file">etc</code> directory of the <strong class="pkg">GAP</strong> distribution or see <span class="URL"><a href="http://www.gnu.org/licenses/gpl.html">http://www.gnu.org/licenses/gpl.html</a></span>.</p>
+<p><strong class="pkg">GAP</strong> is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version. For details, see the file <code class="file">LICENSE</code> in the root directory of the <strong class="pkg">GAP</strong> distribution or see <span class="URL"><a href="http://www.gnu.org/licenses/gpl.html">http://www.gnu.org/licenses/gpl.html</a></span>.</p>
 
 <p>If you obtain <strong class="pkg">GAP</strong> please send us a short notice to that effect, e.g., an e-mail message to the address <span class="URL"><a href="mailto:support@gap-system.org">support@gap-system.org</a></span>. This helps us to keep track of the number of <strong class="pkg">GAP</strong> users.</p>
 
@@ -155,7 +155,7 @@
 
 <div class="example"><pre>
 [GAP] The GAP Group, GAP - Groups, Algorithms, and Programming,
-      Version 4.8.10; 2018 (https://www.gap-system.org)
+      Version 4.9.1; 2018 (https://www.gap-system.org)
 </pre></div>
 
 <p>You are permitted to modify and redistribute <strong class="pkg">GAP</strong>, but you are not allowed to restrict further redistribution. That is to say proprietary modifications will not be allowed. We want all versions of <strong class="pkg">GAP</strong> to remain free.</p>
@@ -223,7 +223,7 @@
 
 <p>The GAP Group,</p>
 
-<p>15-Jan-2018</p>
+<p>05-May-2018</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap0.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap2.html">[Next Chapter]</a>&nbsp;  </div>

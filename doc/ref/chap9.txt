@@ -496,7 +496,15 @@
   function  [2XLastSystemError[102X  ([14X9.1-1[114X)  can be used to get information about the
   error.[133X
   
-  [1X9.7-9 Reread[101X
+  [1X9.7-9 UserHomeExpand[101X
+  
+  [33X[1;0Y[29X[2XUserHomeExpand[102X( [3Xstr[103X ) [32X function[133X
+  
+  [33X[0;0YIf  the  string  [3Xstr[103X starts with a [10X'~'[110X character this function returns a new
+  string  with  the  leading  [10X'~'[110X  substituted  by the users home directory as
+  stored in [10XGAPInfo.UserHome[110X. Otherwise [3Xstr[103X is returned unchanged.[133X
+  
+  [1X9.7-10 Reread[101X
   
   [33X[1;0Y[29X[2XReread[102X( [3Xfilename[103X ) [32X function[133X
   [33X[1;0Y[29X[2XREREADING[102X[32X global variable[133X

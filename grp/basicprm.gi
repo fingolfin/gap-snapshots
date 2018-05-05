@@ -16,11 +16,9 @@
 ##
 InstallMethod( TrivialGroupCons,
     "perm group",
-    [ IsPermGroup and IsFinite ],
+    [ IsPermGroup and IsTrivial ],
     function( filter )
-    filter:= Group( () );
-    SetIsTrivial( filter, true );
-    return filter;
+    return GroupByGenerators( [], () );
     end );
 
 
@@ -31,7 +29,7 @@ InstallMethod( TrivialGroupCons,
 InstallMethod( AbelianGroupCons,
     "perm group",
     true,
-    [ IsPermGroup and IsFinite,
+    [ IsPermGroup and IsAbelian,
       IsList ],
     0,
 
@@ -60,7 +58,7 @@ end );
 #M  ElementaryAbelianGroupCons( <IsPermGroup>, <size> )
 ##
 InstallMethod( ElementaryAbelianGroupCons, "perm group", true,
-    [ IsPermGroup and IsFinite, IsPosInt ],
+    [ IsPermGroup and IsElementaryAbelian, IsPosInt ],
     0,function(filter,size)
 
     local G;
@@ -127,9 +125,9 @@ function( filter, dom )
             Add( g, (dom[l-2],dom[l-1],dom[l]) );
         fi;
         alt := GroupByGenerators(g);
-	if Length(dom)<5000 then
-	  SetSize( alt, Factorial(Length(dom))/2 );
-	fi;
+        if Length(dom)<5000 then
+            SetSize( alt, Factorial(Length(dom))/2 );
+        fi;
         SetMovedPoints( alt, dom );
         SetNrMovedPoints( alt, Length(dom) );
         if 4 < Length(dom)  then
@@ -191,7 +189,7 @@ end );
 InstallMethod( CyclicGroupCons,
     "regular perm group",
     true,
-    [ IsPermGroup and IsRegular and IsFinite,
+    [ IsPermGroup and IsRegular and IsCyclic,
       IsInt and IsPosRat ],
     0,
 
@@ -391,11 +389,12 @@ function( filters, dom )
             Add( g, ( dom[1], dom[2] ) );
         fi;
         sym := GroupByGenerators( g );
-	if Length(dom)<5000 then
-	  SetSize( sym, Factorial(Length(dom)) );
-	fi;
-        SetMovedPoints(   sym, dom );
-        SetNrMovedPoints( sym, Length(dom) );
+        if Length(dom)<5000 then
+            SetSize( sym, Factorial(Length(dom)) );
+        fi;
+        SetMovedPoints(    sym, dom );
+        SetNrMovedPoints(  sym, Length(dom) );
+        SetIsPerfectGroup( sym, false );
     fi;
     SetIsPrimitiveAffine( sym, Length( dom ) < 5 );
     SetIsSymmetricGroup( sym, true );

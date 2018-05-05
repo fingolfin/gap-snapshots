@@ -68,7 +68,8 @@
   
   [33X[1;0Y[29X[2XValuation[102X( [3Xobj[103X ) [32X operation[133X
   
-  [33X[0;0YThe valuation is the [22Xp[122X-part of the [22Xp[122X-adic number.[133X
+  [33X[0;0YThe  valuation  is  the  [22Xp[122X-part  of  the  [22Xp[122X-adic number. See also [2XPValuation[102X
+  ([14X15.7-1[114X).[133X
   
   [1X68.1-4 ShiftedPadicNumber[101X
   

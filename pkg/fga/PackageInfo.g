@@ -4,16 +4,16 @@
 ##
 ## The package info file for the FGA package
 ##
-#Y 2003 - 2016
+#Y 2003 - 2018
 ##
 
 SetPackageInfo( rec(
 
 PackageName := "FGA",
 Subtitle := "Free Group Algorithms",
-Version := "1.3.1",
+Version := "1.4.0",
 #        dd/mm/yyyy
-Date := "28/02/2016",
+Date := "23/03/2018",
 
 Persons := [
   rec( 
@@ -57,6 +57,11 @@ ArchiveFormats := ".tar.gz",
 ArchiveURL     := Concatenation( ~.PackageWWWHome, "FGA-", ~.Version ),
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+SourceRepository := rec( 
+  Type := "git", 
+  URL := "https://github.com/chsievers/fga"
+),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
 
 ##  Here you  must provide a short abstract explaining the package content 
 ##  in HTML format (used on the package overview Web page) and an URL 
@@ -108,7 +113,7 @@ PackageDoc := rec(
 ##  Are there restrictions on the operating system for this package? Or does
 ##  the package need other packages to be available?
 Dependencies := rec(
-  GAP := ">=4.4",
+  GAP := ">=4.8",
   NeededOtherPackages := [],
   SuggestedOtherPackages := [],
   ExternalConditions := []

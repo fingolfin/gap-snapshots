@@ -21,13 +21,19 @@
   
   [1X67.1-1 AlgebraicExtension[101X
   
-  [33X[1;0Y[29X[2XAlgebraicExtension[102X( [3XK[103X, [3Xf[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAlgebraicExtension[102X( [3XK[103X, [3Xf[103X[, [3Xnam[103X] ) [32X operation[133X
+  [33X[1;0Y[29X[2XAlgebraicExtensionNC[102X( [3XK[103X, [3Xf[103X[, [3Xnam[103X] ) [32X operation[133X
   
   [33X[0;0Yconstructs  an  extension  [3XL[103X  of  the field [3XK[103X by one root of the irreducible
   polynomial   [3Xf[103X,   using   Kronecker's  construction.  [3XL[103X  is  a  field  whose
   [2XLeftActingDomain[102X   ([14X57.1-11[114X)   value   is   [3XK[103X.   The  polynomial  [3Xf[103X  is  the
   [2XDefiningPolynomial[102X    ([14X58.2-7[114X)    value    of    [3XL[103X    and    the   attribute
-  [2XRootOfDefiningPolynomial[102X ([14X58.2-8[114X) of [3XL[103X holds a root of [3Xf[103X in [3XL[103X.[133X
+  [2XRootOfDefiningPolynomial[102X  ([14X58.2-8[114X)  of  [3XL[103X holds a root of [3Xf[103X in [3XL[103X. By default
+  this  root is printed as [10Xa[110X, this string can be overwritten with the optional
+  argument [3Xnam[103X.[133X
+  
+  [33X[0;0YThe  first  version  of  the  command  checks  that  the  polynomial [3Xf[103X is an
+  irreducible polynomial over [3XK[103X. This check is skipped with the [10XNC[110X variant.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xx:=Indeterminate(Rationals,"x");;[127X[104X
@@ -38,6 +44,9 @@
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27Xa:=RootOfDefiningPolynomial(e);[127X[104X
     [4X[28Xa[128X[104X
+    [4X[25Xgap>[125X [27Xl := AlgebraicExtensionNC(Rationals, x^24+3*x^2+1, "alpha");;[127X[104X
+    [4X[25Xgap>[125X [27XRootOfDefiningPolynomial(l)^50;[127X[104X
+    [4X[28X9*alpha^6+6*alpha^4+alpha^2[128X[104X
   [4X[32X[104X
   
   [1X67.1-2 IsAlgebraicExtension[101X

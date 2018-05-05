@@ -31,26 +31,19 @@
 #ifndef GAP_VECTOR_H
 #define GAP_VECTOR_H
 
+#include <src/system.h>
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  InitInfoVector()  . . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoVector ( void );
 
 
 #endif // GAP_VECTOR_H
-
-/****************************************************************************
-**
-
-*E  vector.h  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

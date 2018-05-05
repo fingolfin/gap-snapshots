@@ -49,46 +49,25 @@
 **  Zech-Logarithm  table.  The zeroth  entry in the  finite field bag is the
 **  order of the finite field minus one.
 */
-#include        "system.h"              /* Ints, UInts                     */
 
+#include <src/finfield.h>
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
+#include <src/ariths.h>
+#include <src/bool.h>
+#include <src/calls.h>
+#include <src/gap.h>
+#include <src/gvars.h>
+#include <src/io.h>
+#include <src/lists.h>
+#include <src/opers.h>
+#include <src/plist.h>
 
-#include        "gap.h"                 /* error handling, initialisation  */
-
-#include        "gvars.h"               /* global variables                */
-
-#include        "calls.h"               /* generic call mechanism          */
-#include        "opers.h"               /* generic operations              */
-
-#include        "ariths.h"              /* basic arithmetic                */
-
-#include        "bool.h"                /* booleans                        */
-
-#include        "integer.h"             /* integers                        */
-
-#include        "finfield.h"            /* finite fields and ff elements   */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "plist.h"               /* plain lists                     */
-#include        "string.h"              /* strings                         */
-
-#include	"code.h"		/* coder                           */
-#include	"aobjects.h"		/* atomic access to plists	   */
-#include	"thread.h"		/* threads			   */
-#include	"tls.h"			/* thread-local storage		   */
-
-#include	"ffdata.h"		/* pre-computed finite field data  */
-
+#ifdef HPCGAP
+#include <src/hpc/aobjects.h>
+#endif
 
 /****************************************************************************
 **
-
 *T  FF  . . . . . . . . . . . . . . . . . . . . . type of small finite fields
 **
 **  'FF' is the type used to represent small finite fields.
@@ -115,9 +94,8 @@ typedef UInt2       FF;
 **
 **  'CHAR_FF' is defined in the declaration part of this package as follows
 **
-#define CHAR_FF(ff)             INT_INTOBJ( ELM_PLIST( CharFF, ff ) )
+#define CHAR_FF(ff)             (CharFF[ff])
 */
-Obj             CharFF;
 
 
 /****************************************************************************
@@ -131,9 +109,8 @@ Obj             CharFF;
 **
 **  'DEGR_FF' is defined in the declaration part of this package as follows
 **
-#define DEGR_FF(ff)             INT_INTOBJ( ELM_PLIST( DegrFF, ff ) )
+#define DEGR_FF(ff)             (DegrFF[ff])
 */
-Obj             DegrFF;
 
 
 /****************************************************************************
@@ -147,40 +124,13 @@ Obj             DegrFF;
 **
 **  'SIZE_FF' is defined in the declaration part of this package as follows
 **
-#define SIZE_FF(ff)             (*SUCC_FF(ff)+1)
+#define SIZE_FF(ff)             (SizeFF[ff])
 */
 
 
-/****************************************************************************
-**
-*F  SUCC_FF(<ff>) . . . . . . . . . . . successor table of small finite field
-**
-**  'SUCC_FF' returns a pointer to the successor table of  the  small  finite
-**  field <ff>.
-**
-**  Note that 'SUCC_FF' is a macro, so do not call  it  with  arguments  that
-**  side effects.
-**
-**  'SUCC_FF' is defined in the declaration part of this package as follows
-**
-#define SUCC_FF(ff)             ((FFV*)ADDR_OBJ( ELM_PLIST( SuccFF, ff ) ))
-*/
 Obj             SuccFF;
 
 
-/****************************************************************************
-**
-*F  TYPE_FF(<ff>) . . . . . . . . . . . . . . .  type of a small finite field
-**
-**  'TYPE_FF' returns the type of elements of the small finite field <ff>.
-**
-**  Note that  'TYPE_FF' is a macro, so  do not call  it  with arguments that
-**  have side effects.
-**
-**  'TYPE_FF' is defined in the declaration part of this package as follows
-**
-#define TYPE_FF(ff)             (ELM_PLIST( TypeFF, ff ))
-*/
 Obj             TypeFF;
 Obj             TypeFF0;
 
@@ -507,6 +457,9 @@ unsigned long   PolsFF [] = {
 };
 
 
+// used for successor bags
+static Obj TYPE_KERNEL_OBJECT;
+
 /****************************************************************************
 **
 *F  FiniteField(<p>,<d>)  . . . make the small finite field with <q> elements
@@ -518,35 +471,73 @@ FF              FiniteField (
     UInt                d )
 {
     FF                  ff;             /* finite field, result            */
-    Obj                 bag1, bag2;     /* successor table bags            */
+    Obj                 tmp;            /* temporary bag                   */
+    Obj                 succBag;        /* successor table bag             */
     FFV *               succ;           /* successor table                 */
     FFV *               indx;           /* index table                     */
     UInt                q;              /* size of finite field            */
     UInt                poly;           /* Conway polynomial of extension  */
     UInt                i, l, f, n, e;  /* loop variables                  */
 
-    /* search through the finite field table                               */
-    for ( ff = 1; ff <= LEN_PLIST(SuccFF); ff++ ) {
-        if ( CHAR_FF(ff) == p && DEGR_FF(ff) == d ) {
-            return ff;
-        }
-    }
-
-    /* check whether we can build such a finite field                      */
-    if ( (  2 <= p && 17 <= d) || (  3 <= p && 11 <= d)
-      || (  5 <= p &&  7 <= d) || (  7 <= p &&  6 <= d)
-      || ( 11 <= p &&  5 <= d) || ( 17 <= p &&  4 <= d)
-      || ( 41 <= p &&  3 <= d) || (257 <= p &&  2 <= d) ) {
-        return 0;
-    }
-
-    /* allocate a bag for the finite field and one for a temporary         */
+    /* calculate size of field */
     q = 1;
     for ( i = 1; i <= d; i++ ) q *= p;
-    bag1  = NewBag( T_PERM2, q * sizeof(FFV) );
-    bag2  = NewBag( T_PERM2, q * sizeof(FFV) );
-    indx = (FFV*)ADDR_OBJ( bag1 );
-    succ = (FFV*)ADDR_OBJ( bag2 );
+
+    /* search through the finite field table                               */
+    l = 1; n = NUM_SHORT_FINITE_FIELDS;
+    ff = 0;
+    while (l <= n && SizeFF[l] <= q && q <= SizeFF[n]) {
+      /* interpolation search */
+      /* cuts iterations roughly in half compared to binary search at
+       * the expense of additional divisions. */
+      e = (q - SizeFF[l]+1) * (n-l) / (SizeFF[n]-SizeFF[l]+1);
+      ff = l + e;
+      if (SizeFF[ff] == q)
+        break;
+      if (SizeFF[ff] < q)
+        l = ff+1;
+      else
+        n = ff-1;
+    }
+    if (ff < 1 || ff > NUM_SHORT_FINITE_FIELDS)
+      return 0;
+    if (CharFF[ff] != p)
+      return 0;
+    if (SizeFF[ff] != q)
+      return 0;
+#ifdef HPCGAP
+    /* Important correctness concern here:
+     *
+     * The values of SuccFF, TypeFF, and TypeFF0 are set in that
+     * order, separated by write barriers. This can happen concurrently
+     * in a different thread.
+     *
+     * Thus, after observing that TypeFF0 has been set, we can be sure
+     * that the thread also sees the values of SuccFF and TypeFF.
+     * This is ensured by the read barrier in ATOMIC_ELM_PLIST().
+     *
+     * In the worst case, we may do the following calculations once per
+     * thread and throw them away for all but one thread. Correctness
+     * is still ensured through the use of ATOMIC_SET_ELM_PLIST_ONCE(),
+     * which results in all threads sharing the same types and successor
+     * tables.
+     */
+    if (ATOMIC_ELM_PLIST(TypeFF0, ff))
+      return ff;
+#else
+    if (ELM_PLIST(TypeFF0, ff))
+      return ff;
+#endif
+
+    /* allocate a bag for the successor table and one for a temporary         */
+    tmp  = NewBag( T_DATOBJ, sizeof(Obj) + q * sizeof(FFV) );
+    SET_TYPE_DATOBJ(tmp, TYPE_KERNEL_OBJECT );
+
+    succBag = NewBag( T_DATOBJ, sizeof(Obj) + q * sizeof(FFV) );
+    SET_TYPE_DATOBJ(succBag, TYPE_KERNEL_OBJECT );
+
+    indx = (FFV*)(1+ADDR_OBJ( tmp ));
+    succ = (FFV*)(1+ADDR_OBJ( succBag ));
 
     /* if q is a prime find the smallest primitive root $e$, use $x - e$   */
     /*N 1990/02/04 mschoene this is likely to explode if 'FFV' is 'UInt4'  */
@@ -595,16 +586,26 @@ FF              FiniteField (
     }
 
     /* enter the finite field in the tables                                */
-    ASS_LIST( CharFF, ff, INTOBJ_INT(p) );
-    ASS_LIST( DegrFF, ff, INTOBJ_INT(d) );
-    ASS_LIST( SuccFF, ff, bag2 );
+#ifdef HPCGAP
+    MakeBagReadOnly(succBag);
+    ATOMIC_SET_ELM_PLIST_ONCE( SuccFF, ff, succBag );
     CHANGED_BAG(SuccFF);
-    bag1 = CALL_1ARGS( TYPE_FFE, INTOBJ_INT(p) );
-    ASS_LIST( TypeFF, ff, bag1 );
+    tmp = CALL_1ARGS( TYPE_FFE, INTOBJ_INT(p) );
+    ATOMIC_SET_ELM_PLIST_ONCE( TypeFF, ff, tmp );
     CHANGED_BAG(TypeFF);
-    bag1 = CALL_1ARGS( TYPE_FFE0, INTOBJ_INT(p) );
-    ASS_LIST( TypeFF0, ff, bag1 );
+    tmp = CALL_1ARGS( TYPE_FFE0, INTOBJ_INT(p) );
+    ATOMIC_SET_ELM_PLIST_ONCE( TypeFF0, ff, tmp );
     CHANGED_BAG(TypeFF0);
+#else
+    ASS_LIST( SuccFF, ff, succBag );
+    CHANGED_BAG(SuccFF);
+    tmp = CALL_1ARGS( TYPE_FFE, INTOBJ_INT(p) );
+    ASS_LIST( TypeFF, ff, tmp );
+    CHANGED_BAG(TypeFF);
+    tmp = CALL_1ARGS( TYPE_FFE0, INTOBJ_INT(p) );
+    ASS_LIST( TypeFF0, ff, tmp );
+    CHANGED_BAG(TypeFF0);
+#endif
 
     /* return the finite field                                             */
     return ff;
@@ -721,7 +722,7 @@ UInt DegreeFFE (
     return d;
 }
 
-Obj FunDEGREE_FFE_DEFAULT (
+Obj FuncDEGREE_FFE_DEFAULT (
     Obj                 self,
     Obj                 ffe )
 {
@@ -849,12 +850,18 @@ Int             LtFFE (
     if ( vL == 0 || vR == 0 ) {
         return (vL == 0 && vR != 0);
     }
+    
+    /* get the sizes of the fields over which the elements are written */
+    qL = SIZE_FF( fL );
+    qR = SIZE_FF( fR );
+
+    /* Deal quickly with the case where both elements are written over the ground field */
+    if (qL ==pL &&  qR == pR)
+      return vL < vR;
 
     /* compute the sizes of the minimal fields in which the elements lie   */
-    qL = SIZE_FF( fL );
     mL = pL;
     while ( (qL-1) % (mL-1) != 0 || (vL-1) % ((qL-1)/(mL-1)) != 0 ) mL *= pL;
-    qR = SIZE_FF( fR );
     mR = pR;
     while ( (qR-1) % (mR-1) != 0 || (vR-1) % ((qR-1)/(mR-1)) != 0 ) mR *= pR;
 
@@ -1001,7 +1008,7 @@ Obj             SumFFEInt (
     FFV                 vL, vR, vX;     /* value of left, right, result    */
     FF                  fX;             /* field of result                 */
     Int                 pX;             /* char. of result                 */
-    FF*                 sX;             /* successor table of result field */
+    const FFV*          sX;             /* successor table of result field */
 
     /* get the field for the result                                        */
     fX = FLD_FFE( opL );
@@ -1033,7 +1040,7 @@ Obj             SumIntFFE (
     FFV                 vL, vR, vX;     /* value of left, right, result    */
     FF                  fX;             /* field of result                 */
     Int                 pX;             /* char. of result                 */
-    FF*                 sX;             /* successor table of result field */
+    const FFV*          sX;             /* successor table of result field */
 
     /* get the field for the result                                        */
     fX = FLD_FFE( opR );
@@ -1085,7 +1092,7 @@ Obj             AInvFFE (
 {
     FFV                 v, vX;          /* value of operand, result        */
     FF                  fX;             /* field of result                 */
-    FF*                 sX;             /* successor table of result field */
+    const FFV*          sX;             /* successor table of result field */
 
     /* get the field for the result                                        */
     fX = FLD_FFE( op );
@@ -1170,7 +1177,7 @@ Obj             DiffFFEInt (
     FFV                 vL, vR, vX;     /* value of left, right, result    */
     FF                  fX;             /* field of result                 */
     Int                 pX;             /* char. of result                 */
-    FF*                 sX;             /* successor table of result field */
+    const FFV*          sX;             /* successor table of result field */
 
     /* get the field for the result                                        */
     fX = FLD_FFE( opL );
@@ -1203,7 +1210,7 @@ Obj             DiffIntFFE (
     FFV                 vL, vR, vX;     /* value of left, right, result    */
     FF                  fX;             /* field of result                 */
     Int                 pX;             /* char. of result                 */
-    FF*                 sX;             /* successor table of result field */
+    const FFV*          sX;             /* successor table of result field */
 
     /* get the field for the result                                        */
     fX = FLD_FFE( opR );
@@ -1299,7 +1306,7 @@ Obj             ProdFFEInt (
     FFV                 vL, vR, vX;     /* value of left, right, result    */
     FF                  fX;             /* field of result                 */
     Int                 pX;             /* char. of result                 */
-    FF*                 sX;             /* successor table of result field */
+    const FFV*          sX;             /* successor table of result field */
 
     /* get the field for the result                                        */
     fX = FLD_FFE( opL );
@@ -1331,7 +1338,7 @@ Obj             ProdIntFFE (
     FFV                 vL, vR, vX;     /* value of left, right, result    */
     FF                  fX;             /* field of result                 */
     Int                 pX;             /* char. of result                 */
-    FF*                 sX;             /* successor table of result field */
+    const FFV*          sX;             /* successor table of result field */
 
     /* get the field for the result                                        */
     fX = FLD_FFE( opR );
@@ -1383,7 +1390,7 @@ Obj             InvFFE (
 {
     FFV                 v, vX;          /* value of operand, result        */
     FF                  fX;             /* field of result                 */
-    FF*                 sX;             /* successor table of result field */
+    const FFV*          sX;             /* successor table of result field */
 
     /* get the field for the result                                        */
     fX = FLD_FFE( op );
@@ -1475,7 +1482,7 @@ Obj             QuoFFEInt (
     FFV                 vL, vR, vX;     /* value of left, right, result    */
     FF                  fX;             /* field of result                 */
     Int                 pX;             /* char. of result                 */
-    FF*                 sX;             /* successor table of result field */
+    const FFV*          sX;             /* successor table of result field */
 
     /* get the field for the result                                        */
     fX = FLD_FFE( opL );
@@ -1514,7 +1521,7 @@ Obj             QuoIntFFE (
     FFV                 vL, vR, vX;     /* value of left, right, result    */
     FF                  fX;             /* field of result                 */
     Int                 pX;             /* char. of result                 */
-    FF*                 sX;             /* successor table of result field */
+    const FFV*          sX;             /* successor table of result field */
 
     /* get the field for the result                                        */
     fX = FLD_FFE( opR );
@@ -1565,7 +1572,7 @@ Obj             PowFFEInt (
     FFV                 vL, vX;         /* value of left, result           */
     Int                 vR;             /* value of right                  */
     FF                  fX;             /* field of result                 */
-    FF*                 sX;             /* successor table of result field */
+    const FFV*          sX;             /* successor table of result field */
 
     /* get the field for the result                                        */
     fX = FLD_FFE( opL );
@@ -1641,7 +1648,7 @@ Obj FuncIS_FFE (
     Obj                 obj )
 {
     /* return 'true' if <obj> is a finite field element                    */
-    if ( TNUM_OBJ(obj) == T_FFE ) {
+    if ( IS_FFE(obj) ) {
         return True;
     }
     else if ( TNUM_OBJ(obj) < FIRST_EXTERNAL_TNUM ) {
@@ -1663,7 +1670,6 @@ Obj FuncIS_FFE (
 **  with respect to the root <r> which must lie in the same field like <z>.
 */
 Obj LOG_FFE_LARGE;
-#include <stdio.h>
 
 Obj FuncLOG_FFE_DEFAULT (
     Obj                 self,
@@ -1767,7 +1773,7 @@ Obj INT_FF (
     Obj                 conv;           /* conversion table, result        */
     Int                 q;              /* size of finite field            */
     Int                 p;              /* char of finite field            */
-    FFV *               succ;           /* successor table of finite field */
+    const FFV *         succ;           /* successor table of finite field */
     FFV                 z;              /* one element of finite field     */
     UInt                i;              /* loop variable                   */
 
@@ -1775,7 +1781,7 @@ Obj INT_FF (
     if ( LEN_PLIST(IntFF) < ff || ELM_PLIST(IntFF,ff) == 0 ) {
         q = SIZE_FF( ff );
         p = CHAR_FF( ff );
-        conv = NEW_PLIST( T_PLIST, p-1 );
+        conv = NEW_PLIST( T_PLIST+IMMUTABLE, p-1 );
         succ = SUCC_FF( ff );
         SET_LEN_PLIST( conv, p-1 );
         z = 1;
@@ -1783,12 +1789,7 @@ Obj INT_FF (
             SET_ELM_PLIST( conv, (z-1)/((q-1)/(p-1))+1, INTOBJ_INT(i) );
             z = succ[ z ];
         }
-        if ( LEN_PLIST(IntFF) < ff ) {
-            GROW_PLIST( IntFF, ff );
-            SET_LEN_PLIST( IntFF, (Int)ff );
-        }
-        SET_ELM_PLIST( IntFF, ff, conv );
-        CHANGED_BAG( IntFF );
+        AssPlist( IntFF, ff, conv );
     }
 
     /* return the conversion table                                           */
@@ -1862,11 +1863,11 @@ Obj FuncZ (
     UInt                r;              /* temporary                       */
 
     /* check the argument                                                  */
-    if ( (TNUM_OBJ(q) == T_INT && (INT_INTOBJ(q) > 65536)) ||
+    if ( (IS_INTOBJ(q) && (INT_INTOBJ(q) > 65536)) ||
          (TNUM_OBJ(q) == T_INTPOS))
       return CALL_1ARGS(ZOp, q);
     
-    if ( TNUM_OBJ(q)!=T_INT || INT_INTOBJ(q)<=1 ) {
+    if ( !IS_INTOBJ(q) || INT_INTOBJ(q)<=1 ) {
         q = ErrorReturnObj(
             "Z: <q> must be a positive prime power (not a %s)",
             (Int)TNAM_OBJ(q), 0L,
@@ -1924,7 +1925,10 @@ Obj FuncZ2 ( Obj self, Obj p, Obj d)
             {
               /* get the finite field                                                */
               ff = FiniteField( ip, id );
-              
+
+              if ( ff == 0 || CHAR_FF(ff) != ip )
+                ErrorMayQuit("Z: <p> must be a prime", 0, 0);
+
               /* make the root                                                       */
               return NEW_FFE( ff, (ip == 2 && id == 1 ? 1 : 2) );
             }
@@ -1936,22 +1940,18 @@ Obj FuncZ2 ( Obj self, Obj p, Obj d)
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *V  GVarFilts . . . . . . . . . . . . . . . . . . . list of filters to export
 */
 static StructGVarFilt GVarFilts [] = {
 
-    { "IS_FFE", "obj", &IsFFEFilt,
-      FuncIS_FFE, "src/finifield.c:IS_FFE" },
-
-    { 0 }
+    GVAR_FILTER(IS_FFE, "obj", &IsFFEFilt),
+    { 0, 0, 0, 0, 0 }
 
 };
 
@@ -1962,29 +1962,18 @@ static StructGVarFilt GVarFilts [] = {
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    { "CHAR_FFE_DEFAULT", 1, "z",
-      FuncCHAR_FFE_DEFAULT, "src/finifield.c:CHAR_FFE_DEFAULT" },
-
-    { "DEGREE_FFE_DEFAULT", 1, "z",
-      FunDEGREE_FFE_DEFAULT, "src/finifield.c:DEGREE_FFE_DEFAULT" },
-
-    { "LOG_FFE_DEFAULT", 2, "z, root",
-      FuncLOG_FFE_DEFAULT, "src/finifield.c:LOG_FFE_DEFAULT" },
-
-    { "INT_FFE_DEFAULT", 1, "z",
-      FuncINT_FFE_DEFAULT, "src/finifield.c:INT_FFE_DEFAULT" },
-
-    { "Z", 1, "q",
-      FuncZ, "src/finifield.c:Z" },
-
-    { 0 }
+    GVAR_FUNC(CHAR_FFE_DEFAULT, 1, "z"),
+    GVAR_FUNC(DEGREE_FFE_DEFAULT, 1, "z"),
+    GVAR_FUNC(LOG_FFE_DEFAULT, 2, "z, root"),
+    GVAR_FUNC(INT_FFE_DEFAULT, 1, "z"),
+    GVAR_FUNC(Z, 1, "q"),
+    { 0, 0, 0, 0, 0 }
 
 };
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
@@ -2001,12 +1990,10 @@ static Int InitKernel (
     TypeObjFuncs[ T_FFE ] = TypeFFE;
 
     /* create the fields and integer conversion bags                       */
-    InitGlobalBag( &CharFF, "src/finfield.c:CharFF" );
-    InitGlobalBag( &DegrFF, "src/finfield.c:DegrFF" );
     InitGlobalBag( &SuccFF, "src/finfield.c:SuccFF" );
     InitGlobalBag( &TypeFF, "src/finfield.c:TypeFF" );
     InitGlobalBag( &TypeFF0, "src/finfield.c:TypeFF0" );
-    InitGlobalBag( &IntFF, "src/finifield.c:IntFF" );
+    InitGlobalBag( &IntFF, "src/finfield.c:IntFF" );
 
     /* install the functions that handle overflow                          */
     ImportFuncFromLibrary( "SUM_FFE_LARGE",  &SUM_FFE_LARGE  );
@@ -2015,6 +2002,8 @@ static Int InitKernel (
     ImportFuncFromLibrary( "QUO_FFE_LARGE",  &QUO_FFE_LARGE  );
     ImportFuncFromLibrary( "LOG_FFE_LARGE",  &LOG_FFE_LARGE  );
 
+    ImportGVarFromLibrary( "TYPE_KERNEL_OBJECT", &TYPE_KERNEL_OBJECT );
+    
     /* init filters and functions                                          */
     InitHdlrFiltsFromTable( GVarFilts );
     InitHdlrFuncsFromTable( GVarFuncs );
@@ -2065,28 +2054,22 @@ static Int InitLibrary (
     StructInitInfo *    module )
 {
     /* create the fields and integer conversion bags                       */
-    CharFF = NEW_PLIST( T_PLIST, 0 );
-    SET_LEN_PLIST( CharFF, 0 );
+    SuccFF = NEW_PLIST( T_PLIST, NUM_SHORT_FINITE_FIELDS );
+    SET_LEN_PLIST( SuccFF, NUM_SHORT_FINITE_FIELDS );
 
-    DegrFF = NEW_PLIST( T_PLIST, 0 );
-    SET_LEN_PLIST( DegrFF, 0 );
+    TypeFF = NEW_PLIST( T_PLIST, NUM_SHORT_FINITE_FIELDS );
+    SET_LEN_PLIST( TypeFF, NUM_SHORT_FINITE_FIELDS );
 
-    SuccFF = NEW_PLIST( T_PLIST, 0 );
-    SET_LEN_PLIST( SuccFF, 0 );
+    TypeFF0 = NEW_PLIST( T_PLIST, NUM_SHORT_FINITE_FIELDS );
+    SET_LEN_PLIST( TypeFF0, NUM_SHORT_FINITE_FIELDS );
 
-    TypeFF = NEW_PLIST( T_PLIST, 0 );
-    SET_LEN_PLIST( TypeFF, 0 );
-
-    TypeFF0 = NEW_PLIST( T_PLIST, 0 );
-    SET_LEN_PLIST( TypeFF0, 0 );
-
-    IntFF = NEW_PLIST( T_PLIST, 0 );
-    SET_LEN_PLIST( IntFF, 0 );
+    IntFF = NEW_PLIST( T_PLIST, NUM_SHORT_FINITE_FIELDS );
+    SET_LEN_PLIST( IntFF, NUM_SHORT_FINITE_FIELDS );
 
     /* init filters and functions                                          */
     InitGVarFiltsFromTable( GVarFilts );
     InitGVarFuncsFromTable( GVarFuncs );
-    HDLR_FUNC(VAL_GVAR(GVarName("Z")),2) = FuncZ2;
+    SET_HDLR_FUNC(ValGVar(GVarName("Z")), 2, FuncZ2);
 
     /* return success                                                      */
     return 0;
@@ -2098,28 +2081,15 @@ static Int InitLibrary (
 *F  InitInfoFinfield()  . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "finfield",                         /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "finfield",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoFinfield ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  finfield.c  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

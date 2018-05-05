@@ -659,26 +659,40 @@ end );
 ##
 ##  tries to factor g as product of cosetreps in S; returns remainder
 ##
-InstallGlobalFunction( SCRSift, function ( S, g )
-    local stb,   # the stabilizer of S we currently work with
-          bpt;   # first point of stb.orbit
+ SCRSiftOld :=  function ( S, g )
+     local stb,   # the stabilizer of S we currently work with
+           bpt;   # first point of stb.orbit
 
-    stb := S;
-    while IsBound( stb.stabilizer ) do
-        bpt := stb.orbit[1];
-        if IsBound( stb.transversal[bpt^g] ) then
-            while bpt <> bpt^g do
-                g := g*stb.transversal[bpt^g];
-            od;
-            stb := stb.stabilizer;
-        else
-            #current g witnesses that input was not in S
-            return g;
-        fi;
-    od;
+     stb := S;
+     while IsBound( stb.stabilizer ) do
+         bpt := stb.orbit[1];
+         if IsBound( stb.transversal[bpt^g] ) then
+             while bpt <> bpt^g do
+                 g := g*stb.transversal[bpt^g];
+             od;
+             stb := stb.stabilizer;
+         else
+             #current g witnesses that input was not in S
+             return g;
+         fi;
+     od;
 
-    return g;
-end );
+     return g;
+ end;
+ 
+ 
+ 
+ InstallGlobalFunction( SCRSift, function(S,g)
+     local result;
+     
+#     return SCRSiftOld(S, g);
+     
+     result :=  SCR_SIFT_HELPER(S, g, Maximum(LargestMovedPoint(g),LargestMovedPoint(S!.generators)));
+     
+#     Assert(2,result = SCRSiftOld(S, g));
+     return result;
+end);
+
 
 
 #############################################################################
@@ -961,15 +975,15 @@ InstallGlobalFunction( SCRRandomString, function ( n )
     local i, j,     # loop variables
           k,        # number of 28 long substrings
           rnd,      # the random number which would be created by Random
-          string;   # the random string constructed
+          string,   # the random string constructed
+          range;    # Upper value of range used for getting ints
 
+    range := 2^28-1;
+    
     string:=[];
     k:=QuoInt(n-1,28);
     for i in [0..k-1] do
-        # follow steps in Random to create a random number < 2^28
-        R_N := R_N mod 55 + 1;
-        R_X[R_N] := (R_X[R_N] + R_X[(R_N+30) mod 55+1]) mod 2^28;
-        rnd:=R_X[R_N];
+        rnd := Random(0,range);
         # use each bit of rnd
         for j in [1 .. 28] do
             string[28*i+j] := rnd mod 2;
@@ -978,9 +992,7 @@ InstallGlobalFunction( SCRRandomString, function ( n )
     od;
 
     # construct last <= 28 bits  of string
-    R_N := R_N mod 55 + 1;
-    R_X[R_N] := (R_X[R_N] + R_X[(R_N+30) mod 55+1]) mod 2^28;
-    rnd:=R_X[R_N];
+    rnd := Random(0, range);
     for j in [28*k+1 .. n] do
         string[j] := rnd mod 2;
         rnd := QuoInt(rnd,2);
@@ -1513,6 +1525,7 @@ InstallGlobalFunction( ClosureRandomPermGroup,
            missing,     # if a correct base was provided by input, missing
                        # contains those points of it which are not in 
                        # constructed base
+           cnt,        # iteration counter
            correct;     # boolean; true if a correct base is given
 
 # warning:  options.base should be compatible with BaseOfGroup(G)
@@ -1635,6 +1648,7 @@ InstallGlobalFunction( ClosureRandomPermGroup,
             fi;
         od;
 
+	cnt:=0;
         ready := false; 
         while not ready do 
           if    IsBound(options.limit)
@@ -1656,6 +1670,15 @@ InstallGlobalFunction( ClosureRandomPermGroup,
               elif options.random = 1000 then 
                   G.restored := SCRRestoredRecord(G);
                   result := VerifySGS( G.restored, missing, correct );
+		  cnt:=cnt+1;
+		  if cnt>99 then
+		    # in rare cases this loop iterates for a very long time.
+		    # In this case, rather create a new chain, than try to
+		    # fix the problematic one
+		    #Error("infinite loop?");
+		    return StabChainRandomPermGroup(G.generators,G.identity,
+		            options);
+		  fi;
               elif options.random > 0 then 
                   result := SCRStrongGenTest
                           (G,param,orbits,basesize,base,correct,missing);
@@ -1683,6 +1706,7 @@ InstallGlobalFunction( ClosureRandomPermGroup,
 		Unbind(G.restored); 
                 SCRMakeStabStrong (G,new,param,orbits,
                         where,basesize,base,correct,missing,true);
+		#Print("D ",SizeStabChain(G),"\n");
               fi;
           fi;
         od; 

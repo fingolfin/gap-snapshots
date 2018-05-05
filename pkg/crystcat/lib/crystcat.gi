@@ -2,8 +2,6 @@
 ##
 #A  crystcat.gi                 GAP group library              Volkmar Felsch
 ##
-#H  @(#)$Id: crystcat.gi,v 1.4 2000/04/18 16:10:04 gap Exp $
-##
 #Y  Copyright (C)  1994,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
 ##
 ##  This file contains functions  that allow to access most of the data which
@@ -698,7 +696,7 @@ end );
 InstallGlobalFunction( CR_PcGroupQClass, function ( param, warning )
 
     local CR, cr, crgens, crrels, dim, F, G, i, ngens, nrels, num, ord, q,
-          qcl, rels, sys;
+          qcl, rels, sys, lev;
 
     # Get the arguments.
     dim := param[1];
@@ -733,7 +731,11 @@ InstallGlobalFunction( CR_PcGroupQClass, function ( param, warning )
             crgens, GeneratorsOfGroup( F ) ) );
 
         F := F / rels;
+        # suppress premature warning about better using RefinedPcGroup
+        lev := InfoLevel( InfoWarning );
+        SetInfoLevel( InfoWarning, 0 );
         G := PcGroupFpGroup( F );
+        SetInfoLevel( InfoWarning, lev );
 
         # Refine the pc series, if necessary.
         G := RefinedPcGroup( G );

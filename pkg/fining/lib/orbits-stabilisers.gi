@@ -8,7 +8,7 @@
 ##                                                            Michel Lavrauw
 ##                                                           Max Neunhoeffer
 ##
-##  Copyright 2017	Colorado State University
+##  Copyright 2018	Colorado State University
 ##                  Sabancı Üniversitesi
 ##					Università degli Studi di Padova
 ##					Universiteit Gent
@@ -149,7 +149,7 @@ InstallMethod( FiningOrbitsDomain,
     0,
     function(G,col,act)
     local blist,D,x,pos,orbs,next,orb;
-    D := Elements(AsList(col));
+    D := AsSet(col);
     blist := BlistList( [ 1 .. Length( D ) ], [  ] );
     orbs := [  ];
     for next in [1..Length(D)] do

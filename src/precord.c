@@ -25,50 +25,33 @@
 **  sorted areas. After that, all rnams are negative indicating sortedness.
 **
 */
-#include        <stdlib.h>              /* for qsort */
-#include        <sys/time.h>            /* for gettimeofday() */
-#include        "system.h"              /* system dependent part           */
 
+#include <src/precord.h>
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
+#include <src/ariths.h>
+#include <src/bool.h>
+#include <src/funcs.h>
+#include <src/gap.h>
+#include <src/gaputils.h>
+#include <src/io.h>
+#include <src/opers.h>
+#include <src/plist.h>
+#include <src/records.h>
+#include <src/saveload.h>
+#include <src/stringobj.h>
 
-#include        "gap.h"                 /* error handling, initialisation  */
-
-#include        "gvars.h"               /* global variables                */
-#include        "calls.h"               /* generic call mechanism          */
-#include        "opers.h"               /* generic operations              */
-
-#include        "ariths.h"              /* basic arithmetic                */
-#include        "records.h"             /* generic records                 */
-#include        "lists.h"               /* generic lists                   */
-
-#include        "bool.h"                /* booleans                        */
-
-#include        "precord.h"             /* plain records                   */
-
-#include        "plist.h"               /* plain lists                     */
-#include        "string.h"              /* strings                         */
-
-#include        "saveload.h"            /* saving and loading              */
-
-#include	"code.h"		/* coder                           */
-#include	"thread.h"		/* threads			   */
-#include	"tls.h"			/* thread-local storage		   */
-#include	"aobjects.h"		/* thread-local storage		   */
-
+#ifdef HPCGAP
+#include <src/hpc/aobjects.h>
+#endif
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * standard functions for plain records * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  TypePRec( <rec> ) . . . . . . . . . . . . . . . .  type of a plain record
 **
 **  'TypePRec' returns the type of the plain record <rec>.
@@ -92,45 +75,16 @@ Obj TypePRecImm (
     return TYPE_PREC_IMMUTABLE;
 }
 
-
 /****************************************************************************
 **
-*F  IsMutablePRecYes( <rec> ) . . . . . . mutability test for mutable records
-*F  IsMutablePRecNo( <rec> )  . . . . . mutability test for immutable records
+*F  SetTypePRecToComObj( <rec>, <kind> )  convert record to component object
 **
-**  'IsMutablePRecYes' simply returns 1.  'IsMutablePRecNo' simply returns 0.
-**  Note that we can decide from the type number whether  a record is mutable
-**  or immutable.
-**
-**  'IsMutablePRecYes'  is the function   in 'IsMutableObjFuncs'  for mutable
-**  records.   'IsMutablePRecNo' is  the function  in 'IsMutableObjFuncs' for
-**  immutable records.
 */
-Int IsMutablePRecYes (
-    Obj                 rec )
+void SetTypePRecToComObj( Obj rec, Obj kind )
 {
-    return 1;
-}
-
-Int IsMutablePRecNo (
-    Obj                 rec )
-{
-    return 0;
-}
-
-
-/****************************************************************************
-**
-*F  IsCopyablePRecYes( <rec> )  . . . . . . . .  copyability test for records
-**
-**  'IsCopyablePRec' simply returns 1.  Note that all records are copyable.
-**
-**  'IsCopyablePRec' is the function in 'IsCopyableObjFuncs' for records.
-*/
-Int IsCopyablePRecYes (
-    Obj                 rec )
-{
-    return 1;
+    TYPE_COMOBJ(rec) = kind;
+    RetypeBag(rec, T_COMOBJ);
+    CHANGED_BAG(rec);
 }
 
 /****************************************************************************
@@ -176,6 +130,9 @@ Int             GrowPRec (
     return 1L;
 }
 
+
+#if !defined(USE_THREADSAFE_COPYING)
+
 /****************************************************************************
 **
 *F  CopyPRec( <rec> ) . . . . . . . . . . . . . . . . . . copy a plain record
@@ -209,57 +166,29 @@ Obj CopyPRec (
         return rec;
     }
 
-    /* if an empty record has not yet been copied                          */
-    if ( LEN_PREC(rec) == 0 ) {
-
-        /* make a copy                                                     */
-        if ( mut ) {
-            copy = NewBag( TNUM_OBJ(rec), SIZE_OBJ(rec) );
-        }
-        else {
-            copy = NewBag( IMMUTABLE_TNUM(TNUM_OBJ(rec)), SIZE_OBJ(rec) );
-        }
-
-        /* leave a forwarding pointer                                      */
-        ResizeBag( rec, SIZE_OBJ(rec) + sizeof(Obj) );
-        SET_RNAM_PREC( rec, 1, (UInt)copy );
-        CHANGED_BAG( rec );
-
-        /* now it is copied                                                */
-        RetypeBag( rec, TNUM_OBJ(rec) + COPYING );
+    /* make a copy                                                     */
+    if ( mut ) {
+        copy = NewBag( TNUM_OBJ(rec), SIZE_OBJ(rec) );
     }
-
-    /* if the record has not yet been copied                               */
     else {
+        copy = NewBag( IMMUTABLE_TNUM(TNUM_OBJ(rec)), SIZE_OBJ(rec) );
+    }
+    ADDR_OBJ(copy)[0] = CONST_ADDR_OBJ(rec)[0];
 
-        /* make a copy                                                     */
-        if ( mut ) {
-            copy = NewBag( TNUM_OBJ(rec), SIZE_OBJ(rec) );
-        }
-        else {
-            copy = NewBag( IMMUTABLE_TNUM(TNUM_OBJ(rec)), SIZE_OBJ(rec) );
-        }
-        SET_RNAM_PREC( copy, 1, GET_RNAM_PREC( rec, 1 ) );
+    // leave a forwarding pointer
+    ADDR_OBJ(rec)[0] = copy;
+    CHANGED_BAG( rec );
 
-        /* leave a forwarding pointer                                      */
-        SET_RNAM_PREC( rec, 1, (UInt)copy );
-        CHANGED_BAG( rec );
+    // now it is copied
+    RetypeBag( rec, TNUM_OBJ(rec) + COPYING );
 
-        /* now it is copied                                                */
-        RetypeBag( rec, TNUM_OBJ(rec) + COPYING );
-
-        /* copy the subvalues                                              */
-        tmp = COPY_OBJ( GET_ELM_PREC( rec, 1 ), mut );
-        SET_LEN_PREC( copy, LEN_PREC(rec) );
-        SET_ELM_PREC( copy, 1, tmp );
+    // copy the subvalues
+    SET_LEN_PREC( copy, LEN_PREC(rec) );
+    for ( i = 1; i <= LEN_PREC(copy); i++ ) {
+        SET_RNAM_PREC( copy, i, GET_RNAM_PREC( rec, i ) );
+        tmp = COPY_OBJ( GET_ELM_PREC( rec, i ), mut );
+        SET_ELM_PREC( copy, i, tmp );
         CHANGED_BAG( copy );
-        for ( i = 2; i <= LEN_PREC(copy); i++ ) {
-            SET_RNAM_PREC( copy, i, GET_RNAM_PREC( rec, i ) );
-            tmp = COPY_OBJ( GET_ELM_PREC( rec, i ), mut );
-            SET_ELM_PREC( copy, i, tmp );
-            CHANGED_BAG( copy );
-        }
-
     }
 
     /* return the copy                                                     */
@@ -270,7 +199,7 @@ Obj CopyPRecCopy (
     Obj                 rec,
     Int                 mut )
 {
-    return (Obj)GET_RNAM_PREC( rec, 1 );
+    return ADDR_OBJ(rec)[0];
 }
 
 void CleanPRec (
@@ -283,32 +212,20 @@ void CleanPRecCopy (
 {
     UInt                i;              /* loop variable                   */
 
-    /* empty record                                                        */
-    if ( LEN_PREC(rec) == 0 ) {
+    /* remove the forwarding pointer                                       */
+    ADDR_OBJ(rec)[0] = CONST_ADDR_OBJ( CONST_ADDR_OBJ(rec)[0] )[0];
 
-        /* remove the forwarding pointer                                   */
-        ResizeBag( rec, SIZE_OBJ(rec) - sizeof(Obj) );
+    /* now it is cleaned                                               */
+    RetypeBag( rec, TNUM_OBJ(rec) - COPYING );
 
-        /* now it is cleaned                                               */
-        RetypeBag( rec, TNUM_OBJ(rec) - COPYING );
-    }
-
-    /* nonempty record                                                     */
-    else {
-
-        /* remove the forwarding pointer                                   */
-        SET_RNAM_PREC( rec, 1, GET_RNAM_PREC( GET_RNAM_PREC( rec, 1 ), 1 ) );
-
-        /* now it is cleaned                                               */
-        RetypeBag( rec, TNUM_OBJ(rec) - COPYING );
-
-        /* clean the subvalues                                             */
-        CLEAN_OBJ( GET_ELM_PREC( rec, 1 ) );
-        for ( i = 2; i <= LEN_PREC(rec); i++ ) {
-            CLEAN_OBJ( GET_ELM_PREC( rec, i ) );
-        }
+    /* clean the subvalues                                             */
+    for ( i = 1; i <= LEN_PREC(rec); i++ ) {
+        CLEAN_OBJ( GET_ELM_PREC( rec, i ) );
     }
 }
+
+#endif //!defined(USE_THREADSAFE_COPYING)
+
 
 /****************************************************************************
 **
@@ -322,6 +239,11 @@ void MakeImmutablePRec( Obj rec)
   len = LEN_PREC( rec );
   for ( i = 1; i <= len; i++ )
     MakeImmutable(GET_ELM_PREC(rec,i));
+  
+  /* Sort the record at this point.
+     This can never hurt, unless the record will never be accessed again anyway
+     for HPCGAP it's essential so that immutable records are actually binary unchanging */
+  SortPRecRNam(rec, 1); 
   RetypeBag(rec, IMMUTABLE_TNUM(TNUM_OBJ(rec)));
 }
 
@@ -627,7 +549,7 @@ void SortPRecRNam (
             i++; k++;
         }
         /* Finally, copy everything back to where it came from: */
-        memcpy(ADDR_OBJ(rec)+2,ADDR_OBJ(space)+2,sizeof(Obj)*2*len);
+        memcpy(ADDR_OBJ(rec)+2,CONST_ADDR_OBJ(space)+2,sizeof(Obj)*2*len);
     } else {   /* We have to work in place to avoid a garbage collection. */
         /* i == save is the cut point */
         j = 1;
@@ -660,40 +582,8 @@ void SortPRecRNam (
     }
 }
 
-#if 0
-void SortPRec ( Obj rec )
-{
-    UInt                rnam;           /* name of component               */
-    Obj                 val;            /* value of component              */
-    UInt                h;              /* gap width in shellsort          */
-    UInt                i,  k;          /* loop variables                  */
-
-    /* sort the right record with a shellsort                              */
-    h = 1;  while ( 9*h + 4 < LEN_PREC(rec) )  h = 3*h + 1;
-    while ( 0 < h ) {
-        for ( i = h+1; i <= LEN_PREC(rec); i++ ) {
-            rnam = GET_RNAM_PREC( rec, i );
-            val  = GET_ELM_PREC(  rec, i );
-            k = i;
-            while ( h < k
-                 && strcmp( NAME_RNAM(rnam),
-                              NAME_RNAM( GET_RNAM_PREC(rec,k-h) ) ) < 0 ) {
-                SET_RNAM_PREC( rec, k, GET_RNAM_PREC( rec, k-h ) );
-                SET_ELM_PREC(  rec, k, GET_ELM_PREC(  rec, k-h ) );
-                k -= h;
-            }
-            SET_RNAM_PREC( rec, k, rnam );
-            SET_ELM_PREC(  rec, k, val  );
-        }
-        h = h / 3;
-    }
-
-}
-#endif
-
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * default functions for records  * * * * * * * * * * *
 */
 
@@ -748,14 +638,18 @@ Obj FuncREC_NAMES (
     Obj                 rec )
 {
     /* check the argument                                                  */
-    while ( ! IS_PREC_REP(rec) ) {
-        rec = ErrorReturnObj(
-            "RecNames: <rec> must be a record (not a %s)",
-            (Int)TNAM_OBJ(rec), 0L,
-            "you can replace <rec> via 'return <rec>;'" );
+    switch (TNUM_OBJ(rec)) {
+      case T_PREC:
+      case T_PREC+IMMUTABLE:
+        return InnerRecNames(rec);
+#ifdef HPCGAP
+      case T_AREC:
+        return InnerRecNames(FromAtomicRecord(rec));
+#endif
     }
-
-    return InnerRecNames( rec );
+    ErrorMayQuit("RecNames: <rec> must be a record (not a %s)",
+                 (Int)TNAM_OBJ(rec), 0L);
+    return Fail;
 }
 
 
@@ -769,13 +663,17 @@ Obj FuncREC_NAMES_COMOBJ (
     Obj                 rec )
 {
     /* check the argument                                                  */
-    while ( TNUM_OBJ(rec) != T_COMOBJ ) {
-        rec = ErrorReturnObj(
-            "RecNames: <rec> must be a component object (not a %s)",
-            (Int)TNAM_OBJ(rec), 0L,
-            "you can replace <rec> via 'return <rec>;'" );
+    switch (TNUM_OBJ(rec)) {
+      case T_COMOBJ:
+        return InnerRecNames(rec);
+#ifdef HPCGAP
+      case T_ACOMOBJ:
+        return InnerRecNames(FromAtomicRecord(rec));
+#endif
     }
-    return InnerRecNames( rec );
+    ErrorMayQuit("RecNames: <rec> must be a component object (not a %s)",
+                 (Int)TNAM_OBJ(rec), 0L);
+    return Fail;
 }
 
 
@@ -794,9 +692,9 @@ Obj FuncEQ_PREC (
     UInt                i;              /* loop variable                   */
 
     /* quick first checks                                                  */
-    if ( ! IS_PREC_REP(left) )
+    if ( ! IS_PREC(left) )
         return False;
-    if ( ! IS_PREC_REP(right) )
+    if ( ! IS_PREC(right) )
         return False;
     if ( LEN_PREC(left) != LEN_PREC(right) )
         return False;
@@ -805,21 +703,26 @@ Obj FuncEQ_PREC (
     SortPRecRNam(left,0);
     SortPRecRNam(right,0);
 
+    CheckRecursionBefore();
+
     /* compare componentwise                                               */
     for ( i = 1; i <= LEN_PREC(right); i++ ) {
 
         /* compare the names                                               */
         if ( GET_RNAM_PREC(left,i) != GET_RNAM_PREC(right,i) ) {
+            DecRecursionDepth();
             return False;
         }
 
         /* compare the values                                              */
         if ( ! EQ(GET_ELM_PREC(left,i),GET_ELM_PREC(right,i)) ) {
+            DecRecursionDepth();
             return False;
         }
     }
 
     /* the records are equal                                               */
+    DecRecursionDepth();
     return True;
 }
 
@@ -838,9 +741,10 @@ Obj FuncLT_PREC (
     Obj                 right )
 {
     UInt                i;              /* loop variable                   */
+    Int                 res;            /* result of comparison            */
 
     /* quick first checks                                                  */
-    if ( ! IS_PREC_REP(left) || ! IS_PREC_REP(right) ) {
+    if ( ! IS_PREC(left) || ! IS_PREC(right) ) {
         if ( TNUM_OBJ(left ) < TNUM_OBJ(right) )  return True;
         if ( TNUM_OBJ(left ) > TNUM_OBJ(right) )  return False;
     }
@@ -849,35 +753,38 @@ Obj FuncLT_PREC (
     SortPRecRNam(left,0);
     SortPRecRNam(right,0);
 
+    CheckRecursionBefore();
+    res = 0;
+
     /* compare componentwise                                               */
     for ( i = 1; i <= LEN_PREC(right); i++ ) {
 
         /* if the left is a proper prefix of the right one                 */
-        if ( LEN_PREC(left) < i )  return True;
+        if ( LEN_PREC(left) < i ) {
+            res = 1;
+            break;
+        }
 
         /* compare the names                                               */
         /* The sense of this comparison is determined by the rule that
            unbound entries compare less than bound ones                    */
         if ( GET_RNAM_PREC(left,i) != GET_RNAM_PREC(right,i) ) {
-            if ( strcmp( NAME_RNAM( labs((Int)(GET_RNAM_PREC(left,i))) ),
-                   NAME_RNAM( labs((Int)(GET_RNAM_PREC(right,i))) ) ) > 0 ) {
-                return True;
-            }
-            else {
-                return False;
-            }
+            res = ( strcmp( NAME_RNAM( labs((Int)(GET_RNAM_PREC(left,i))) ),
+                   NAME_RNAM( labs((Int)(GET_RNAM_PREC(right,i))) ) ) > 0 );
+            break;
         }
 
         /* compare the values                                              */
         if ( ! EQ(GET_ELM_PREC(left,i),GET_ELM_PREC(right,i)) ) {
-            return LT( GET_ELM_PREC(left,i), GET_ELM_PREC(right,i) ) ?
-                   True : False;
+            res = LT( GET_ELM_PREC(left,i), GET_ELM_PREC(right,i) );
+            break;
         }
 
     }
 
     /* the records are equal or the right is a prefix of the left          */
-    return False;
+    DecRecursionDepth();
+    return res ? True : False;
 }
 
 
@@ -897,7 +804,6 @@ void SavePRec( Obj prec )
       SaveUInt(GET_RNAM_PREC(prec, i));
       SaveSubObj(GET_ELM_PREC(prec, i));
     }
-  return;
 }
 
 /****************************************************************************
@@ -916,25 +822,24 @@ void LoadPRec( Obj prec )
       SET_RNAM_PREC(prec, i, LoadUInt());
       SET_ELM_PREC(prec, i, LoadSubObj());
     }
-  return;
 }
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *V  BagNames  . . . . . . . . . . . . . . . . . . . . . . . list of bag names
 */
 static StructBagNames BagNames[] = {
   { T_PREC,                     "record (plain)"            },
   { T_PREC +IMMUTABLE,          "record (plain,imm)"        },
+#if !defined(USE_THREADSAFE_COPYING)
   { T_PREC            +COPYING, "record (plain,copied)"     },
   { T_PREC +IMMUTABLE +COPYING, "record (plain,imm,copied)" },
+#endif
   { -1,                         ""                          }
 };
 
@@ -945,44 +850,34 @@ static StructBagNames BagNames[] = {
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    { "REC_NAMES", 1, "rec",
-      FuncREC_NAMES, "src/precord.c:REC_NAMES" },
-
-    { "REC_NAMES_COMOBJ", 1, "rec obj",
-      FuncREC_NAMES_COMOBJ, "src/precord.c:REC_NAMES_COMOBJ" },
-
-    { "EQ_PREC", 2, "left, right",
-      FuncEQ_PREC, "src/precord.c:EQ_PREC" },
-
-    { "LT_PREC", 2, "left, right",
-      FuncLT_PREC, "src/precord.c:LT_PREC" },
-
-    { 0 }
+    GVAR_FUNC(REC_NAMES, 1, "rec"),
+    GVAR_FUNC(REC_NAMES_COMOBJ, 1, "rec"),
+    GVAR_FUNC(EQ_PREC, 2, "left, right"),
+    GVAR_FUNC(LT_PREC, 2, "left, right"),
+    { 0, 0, 0, 0, 0 }
 
 };
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
     StructInitInfo *    module )
 {
-    /* check dependencies                                                  */
-    RequireModule( module, "records", 503600000UL );
-
     /* GASMAN marking functions and GASMAN names                           */
     InitBagNamesFromTable( BagNames );
 
     InitMarkFuncBags( T_PREC                     , MarkAllSubBags );
     InitMarkFuncBags( T_PREC +IMMUTABLE          , MarkAllSubBags );
+#if !defined(USE_THREADSAFE_COPYING)
     InitMarkFuncBags( T_PREC            +COPYING , MarkAllSubBags );
     InitMarkFuncBags( T_PREC +IMMUTABLE +COPYING , MarkAllSubBags );
+#endif
 
-    /* Immutable records are public					   */
-    MakeBagTypePublic( T_PREC + IMMUTABLE );
+    /* Immutable records are public                                        */
+    MakeBagTypePublic( T_PREC +IMMUTABLE );
 
     /* init filters and functions                                          */
     InitHdlrFuncsFromTable( GVarFuncs );
@@ -1004,11 +899,12 @@ static Int InitKernel (
     UnbRecFuncs[ T_PREC +IMMUTABLE ] = UnbPRecImm;
 
     /* install mutability test                                             */
-    IsMutableObjFuncs[  T_PREC            ] = IsMutablePRecYes;
-    IsMutableObjFuncs[  T_PREC +IMMUTABLE ] = IsMutablePRecNo;
-    IsCopyableObjFuncs[ T_PREC            ] = IsCopyablePRecYes;
-    IsCopyableObjFuncs[ T_PREC +IMMUTABLE ] = IsCopyablePRecYes;
+    IsMutableObjFuncs[  T_PREC            ] = AlwaysYes;
+    IsMutableObjFuncs[  T_PREC +IMMUTABLE ] = AlwaysNo;
+    IsCopyableObjFuncs[ T_PREC            ] = AlwaysYes;
+    IsCopyableObjFuncs[ T_PREC +IMMUTABLE ] = AlwaysYes;
 
+#if !defined(USE_THREADSAFE_COPYING)
     /* install into copy function tables                                  */
     CopyObjFuncs [ T_PREC                     ] = CopyPRec;
     CopyObjFuncs [ T_PREC +IMMUTABLE          ] = CopyPRec;
@@ -1018,6 +914,7 @@ static Int InitKernel (
     CleanObjFuncs[ T_PREC +IMMUTABLE          ] = CleanPRec;
     CleanObjFuncs[ T_PREC            +COPYING ] = CleanPRecCopy;
     CleanObjFuncs[ T_PREC +IMMUTABLE +COPYING ] = CleanPRecCopy;
+#endif // !defined(USE_THREADSAFE_COPYING)
 
     /* install printer                                                     */
     PrintObjFuncs[  T_PREC            ] = PrintPRec;
@@ -1031,6 +928,8 @@ static Int InitKernel (
 
     TypeObjFuncs[ T_PREC            ] = TypePRecMut;
     TypeObjFuncs[ T_PREC +IMMUTABLE ] = TypePRecImm;
+
+    SetTypeObjFuncs[ T_PREC ] = SetTypePRecToComObj;
 
     MakeImmutableObjFuncs[ T_PREC   ] = MakeImmutablePRec;
 
@@ -1059,28 +958,15 @@ static Int InitLibrary (
 *F  InitInfoPRecord() . . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "precord",                          /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "precord",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoPRecord ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  precord.c . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

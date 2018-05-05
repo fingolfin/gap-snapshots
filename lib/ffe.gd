@@ -323,7 +323,9 @@ DeclareGlobalFunction( "FFEFamily" );
 ##  </ManSection>
 ##
 BIND_GLOBAL( "FAMS_FFE_LARGE", [ [], [] ] );
-
+if IsHPCGAP then
+    ShareSpecialObj( FAMS_FFE_LARGE );
+fi;
 
 #############################################################################
 ##
@@ -659,18 +661,19 @@ DeclareAttribute( "AsInternalFFE", IsFFE);
 ##
 ##  <#GAPDoc Label="RootFFE">
 ##  <ManSection>
-##  <Oper Name="RootFFE" Arg='z, k'/>
+##  <Oper Name="RootFFE" Arg='F, z, k'/>
 ##
 ##  <Description>
 ##  <Ref Func="RootFFE"/> returns a finite field element 
-##  <A>r</A> whose <A>k</A>-th power is <A>z</A>. If no such element exists
+##  <A>r</A> from <F> whose <A>k</A>-th power is <A>z</A>.
+##  If no such element exists
 ##  then
 ##  <K>fail</K> is returned.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareOperation( "RootFFE", [ IsFFE, IsObject ] );
+DeclareOperation( "RootFFE", [ IsObject, IsFFE, IsObject ] );
 
 
 #############################################################################

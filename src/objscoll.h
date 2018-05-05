@@ -11,6 +11,7 @@
 #ifndef GAP_OBJSCOLL_H
 #define GAP_OBJSCOLL_H
 
+#include <src/system.h>
 
 /****************************************************************************
 **
@@ -64,18 +65,8 @@
 #define SC_RWS_GENERATORS(sc) \
     (ADDR_OBJ(sc)[SCP_RWS_GENERATORS])
 
-extern Obj SC_NW_STACK;
-extern Obj SC_LW_STACK;
-extern Obj SC_PW_STACK;
-extern Obj SC_EW_STACK;
-extern Obj SC_GE_STACK;
-extern Obj SC_CW_VECTOR;
-extern Obj SC_CW2_VECTOR;
-extern UInt SC_MAX_STACK_SIZE;
-
 /****************************************************************************
 **
-
 *F  FuncFinPowConjCol_CollectWordOrFail( <self>, <sc>, <vv>, <w> )
 */
 extern Obj FuncFinPowConjCol_CollectWordOrFail ( Obj, Obj, Obj, Obj );
@@ -125,23 +116,15 @@ extern Obj FuncFinPowConjCol_ReducedQuotient ( Obj, Obj, Obj, Obj );
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  InitInfoSingleCollector() . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoSingleCollector ( void );
 
 
 #endif // GAP_OBJSCOLL_H
-
-/****************************************************************************
-**
-
-*E  objscoll.h  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

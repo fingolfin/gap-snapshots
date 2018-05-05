@@ -74,7 +74,7 @@
 $ gap
 </pre></div>
 
-<p><strong class="pkg">GAP</strong> answers your request with its beautiful banner and then it shows its own prompt <code class="code">gap&gt;</code> asking you for further input. (You can avoid the banner with the command line option <code class="code">-b</code>; more command line options are described in Section <a href="../../doc/ref/chap3.html#X782751D5858A6EAF"><span class="RefLink">Reference: Command Line Options</span></a>.)</p>
+<p><strong class="pkg">GAP</strong> answers your request with its beautiful banner and then it shows its own prompt <code class="code">gap&gt;</code> asking you for further input. (You can avoid the banner with the command line option <code class="code">-b</code>; more command line options are described in Section <span class="RefLink">Reference: Command Line Options</span>.)</p>
 
 
 <div class="example"><pre>
@@ -91,7 +91,7 @@ $
 
 <p>On some systems you could type <strong class="button">Ctrl-D</strong> to yield the same effect. In any situation <strong class="pkg">GAP</strong> is ended by typing <strong class="button">Ctrl-C</strong> twice within a second. Here as always, a combination like <strong class="button">Ctrl-D</strong> means that you have to press the <strong class="button">D</strong> key while you hold down the <strong class="button">Ctrl</strong> key.</p>
 
-<p>On some systems (for example the Apple Macintosh) minor changes might be necessary. This is explained in <strong class="pkg">GAP</strong> installation instructions (see the <code class="file">INSTALL</code> file in the <strong class="pkg">GAP</strong> root directory, or the <strong class="pkg">GAP</strong> website).</p>
+<p>On some systems minor changes might be necessary. This is explained in <strong class="pkg">GAP</strong> installation instructions (see the <code class="file">INSTALL</code> file in the <strong class="pkg">GAP</strong> root directory, or the <strong class="pkg">GAP</strong> website).</p>
 
 <p>In most places <em>whitespace</em> characters (i.e. <strong class="button">Space</strong>s, <strong class="button">Tab</strong>s and <strong class="button">Return</strong>s) are insignificant for the meaning of <strong class="pkg">GAP</strong> input. Identifiers and keywords must however not contain any whitespace. On the other hand, sometimes there must be whitespace around identifiers and keywords to separate them from each other and from numbers. We will use whitespace to format more complicated commands for better readability.</p>
 
@@ -101,14 +101,14 @@ $
 
 <h4>2.2 <span class="Heading">Loading Source Code from a File</span></h4>
 
-<p>The most convenient way of creating larger pieces of <strong class="pkg">GAP</strong> code is to write them to some text file. For this purpose you can simply use your favorite text editor. You can load such a file into <strong class="pkg">GAP</strong> using the <code class="func">Read</code> (<a href="../../doc/ref/chap9.html#X8373AC6B7D5F9167"><span class="RefLink">Reference: Read</span></a>) function:</p>
+<p>The most convenient way of creating larger pieces of <strong class="pkg">GAP</strong> code is to write them to some text file. For this purpose you can simply use your favorite text editor. You can load such a file into <strong class="pkg">GAP</strong> using the <code class="func">Read</code> (<span class="RefLink">Reference: Read</span>) function:</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Read("../../GAPProgs/Example.g");</span>
 </pre></div>
 
-<p>You can either give the full absolute path name of the source file or its relative path name from the <strong class="pkg">GAP</strong> root directory (the directory containing <code class="file">bin/</code>, <code class="file">doc/</code>, <code class="file">lib/</code>, etc.).</p>
+<p>You can either give the full absolute path name of the source file or its relative path name from the current directory.</p>
 
 <p><a id="X7C7388A683D15599" name="X7C7388A683D15599"></a></p>
 
@@ -118,7 +118,7 @@ $
 
 <p>The interactive nature of <strong class="pkg">GAP</strong> allows you to type an expression at the keyboard and see its value immediately. You can define a function and apply it to arguments to see how it works. You may even write whole programs containing lots of functions and test them without leaving the program.</p>
 
-<p>When your program is large it will be more convenient to write it on a file and then read that file into <strong class="pkg">GAP</strong>. Preparing your functions in a file has several advantages. You can compose your functions more carefully in a file (with your favorite text editor), you can correct errors without retyping the whole function and you can keep a copy for later use. Moreover you can write lots of comments into the program text, which are ignored by <strong class="pkg">GAP</strong>, but are very useful for human readers of your program text. <strong class="pkg">GAP</strong> treats input from a file in the same way that it treats input from the keyboard. Further details can be found in section <code class="func">Read</code> (<a href="../../doc/ref/chap9.html#X8373AC6B7D5F9167"><span class="RefLink">Reference: Read</span></a>).</p>
+<p>When your program is large it will be more convenient to write it on a file and then read that file into <strong class="pkg">GAP</strong>. Preparing your functions in a file has several advantages. You can compose your functions more carefully in a file (with your favorite text editor), you can correct errors without retyping the whole function and you can keep a copy for later use. Moreover you can write lots of comments into the program text, which are ignored by <strong class="pkg">GAP</strong>, but are very useful for human readers of your program text. <strong class="pkg">GAP</strong> treats input from a file in the same way that it treats input from the keyboard. Further details can be found in section <code class="func">Read</code> (<span class="RefLink">Reference: Read</span>).</p>
 
 <p>A simple calculation with <strong class="pkg">GAP</strong> is as easy as one can imagine. You type the problem just after the prompt, terminate it with a semicolon and then pass the problem to the program with the <strong class="button">Return</strong> key. For example, to multiply the difference between 9 and 7 by the sum of 5 and 6, that is to calculate <span class="SimpleMath">(9 - 7) * (5 + 6)</span>, you type exactly this last sequence of symbols followed by <code class="code">;</code> and <strong class="button">Return</strong>.</p>
 
@@ -131,7 +131,7 @@ $
 
 <p>Then <strong class="pkg">GAP</strong> echoes the result 22 on the next line and shows with the prompt that it is ready for the next problem. Henceforth, we will no longer print this additional prompt.</p>
 
-<p>If you make a mistake while typing the line, but <em>before</em> typing the final <strong class="button">Return</strong>, you can use the <strong class="button">Delete</strong> key (or sometimes <strong class="button">Backspace</strong> key) to delete the last typed character. You can also move the cursor back and forward in the line with <strong class="button">Ctrl-B</strong> and <strong class="button">Ctrl-F</strong> and insert or delete characters anywhere in the line. The line editing commands are fully described in section <a href="../../doc/ref/chap6.html#X82234FD181899530"><span class="RefLink">Reference: Line Editing</span></a>.</p>
+<p>If you make a mistake while typing the line, but <em>before</em> typing the final <strong class="button">Return</strong>, you can use the <strong class="button">Delete</strong> key (or sometimes <strong class="button">Backspace</strong> key) to delete the last typed character. You can also move the cursor back and forward in the line with <strong class="button">Ctrl-B</strong> and <strong class="button">Ctrl-F</strong> and insert or delete characters anywhere in the line. The line editing commands are fully described in section <span class="RefLink">Reference: Line Editing</span>.</p>
 
 <p>If you did omit the semicolon at the end of the line but have already typed <strong class="button">Return</strong>, then <strong class="pkg">GAP</strong> has read everything you typed, but does not know that the command is complete. The program is waiting for further input and indicates this with a partial prompt <code class="code">&gt;</code>. This problem is solved by simply typing the missing semicolon on the next line of input. Then the result is printed and the normal prompt returns.</p>
 
@@ -350,7 +350,7 @@ false
 
 <h4>2.6 <span class="Heading">Objects vs. Elements</span></h4>
 
-<p>In the last section we mentioned that every object is given a certain place in memory by the <strong class="pkg">GAP</strong> storage manager (although that place may change in the course of a <strong class="pkg">GAP</strong> session). In this sense, objects at different places in memory are never equal, and if the object pointed to by the variable <code class="code">a</code> (to be more precise, the variable with identifier <code class="code">a</code>) is equal to the object pointed to by the variable <code class="code">b</code>, then we should better say that they are not only equal but <em>identical</em>. <strong class="pkg">GAP</strong> provides the function <code class="func">IsIdenticalObj</code> (<a href="../../doc/ref/chap12.html#X7961183378DFB902"><span class="RefLink">Reference: IsIdenticalObj</span></a>) to test whether this is the case.</p>
+<p>In the last section we mentioned that every object is given a certain place in memory by the <strong class="pkg">GAP</strong> storage manager (although that place may change in the course of a <strong class="pkg">GAP</strong> session). In this sense, objects at different places in memory are never equal, and if the object pointed to by the variable <code class="code">a</code> (to be more precise, the variable with identifier <code class="code">a</code>) is equal to the object pointed to by the variable <code class="code">b</code>, then we should better say that they are not only equal but <em>identical</em>. <strong class="pkg">GAP</strong> provides the function <code class="func">IsIdenticalObj</code> (<span class="RefLink">Reference: IsIdenticalObj</span>) to test whether this is the case.</p>
 
 
 <div class="example"><pre>
@@ -372,7 +372,7 @@ true
 
 <h4>2.7 <span class="Heading">About Functions</span></h4>
 
-<p>A program written in the <strong class="pkg">GAP</strong> language is called a <em>function</em>. Functions are special <strong class="pkg">GAP</strong> objects. Most of them behave like mathematical functions. They are applied to objects and will return a new object depending on the input. The function <code class="func">Factorial</code> (<a href="../../doc/ref/chap16.html#X87665F748594BF29"><span class="RefLink">Reference: Factorial</span></a>), for example, can be applied to an integer and will return the factorial of this integer.</p>
+<p>A program written in the <strong class="pkg">GAP</strong> language is called a <em>function</em>. Functions are special <strong class="pkg">GAP</strong> objects. Most of them behave like mathematical functions. They are applied to objects and will return a new object depending on the input. The function <code class="func">Factorial</code> (<span class="RefLink">Reference: Factorial</span>), for example, can be applied to an integer and will return the factorial of this integer.</p>
 
 
 <div class="example"><pre>
@@ -380,7 +380,7 @@ true
 355687428096000
 </pre></div>
 
-<p>Applying a function to arguments means to write the arguments in parentheses following the function. Several arguments are separated by commas, as for the function <code class="func">Gcd</code> (<a href="../../doc/ref/chap56.html#X7DE207718456F98F"><span class="RefLink">Reference: Gcd</span></a>) which computes the greatest common divisor of two integers.</p>
+<p>Applying a function to arguments means to write the arguments in parentheses following the function. Several arguments are separated by commas, as for the function <code class="func">Gcd</code> (<span class="RefLink">Reference: Gcd</span>) which computes the greatest common divisor of two integers.</p>
 
 
 <div class="example"><pre>
@@ -388,7 +388,7 @@ true
 2
 </pre></div>
 
-<p>There are other functions that do not return an object but only produce a side effect, for example changing one of their arguments. These functions are sometimes called procedures. The function <code class="func">Print</code> (<a href="../../doc/ref/chap6.html#X7AFA64D97A1F39A3"><span class="RefLink">Reference: Print</span></a>) is only called for the side effect of printing something on the screen.</p>
+<p>There are other functions that do not return an object but only produce a side effect, for example changing one of their arguments. These functions are sometimes called procedures. The function <code class="func">Print</code> (<span class="RefLink">Reference: Print</span>) is only called for the side effect of printing something on the screen.</p>
 
 
 <div class="example"><pre>
@@ -396,9 +396,9 @@ true
 1234
 </pre></div>
 
-<p>In order to be able to compose arbitrary text with <code class="func">Print</code> (<a href="../../doc/ref/chap6.html#X7AFA64D97A1F39A3"><span class="RefLink">Reference: Print</span></a>), this function itself will not produce a line break after printing. Thus we had another newline character <code class="code">"\n"</code> printed to start a new line.</p>
+<p>In order to be able to compose arbitrary text with <code class="func">Print</code> (<span class="RefLink">Reference: Print</span>), this function itself will not produce a line break after printing. Thus we had another newline character <code class="code">"\n"</code> printed to start a new line.</p>
 
-<p>Some functions will both change an argument and return an object such as the function <code class="func">Sortex</code> (<a href="../../doc/ref/chap21.html#X87287FCA81E2B06A"><span class="RefLink">Reference: Sortex</span></a>) that sorts a list and returns the permutation of the list elements that it has performed. You will not understand right now what it means to change an object. We will return to this subject several times in the next sections.</p>
+<p>Some functions will both change an argument and return an object such as the function <code class="func">Sortex</code> (<span class="RefLink">Reference: Sortex</span>) that sorts a list and returns the permutation of the list elements that it has performed. You will not understand right now what it means to change an object. We will return to this subject several times in the next sections.</p>
 
 <p>A comfortable way to define a function yourself is the <em>maps-to</em> operator <code class="code">-&gt;</code> consisting of a minus sign and a greater sign with no whitespace between them. The function <code class="code">cubed</code> which maps a number to its cube is defined on the following line.</p>
 
@@ -469,15 +469,15 @@ Help: several entries match this topic - type ?2 to get match [2]
 
 <h4>2.9 <span class="Heading">Further Information introducing the System</span></h4>
 
-<p>For large amounts of input data, it might be advisable to write your input first into a file, and then read this into <strong class="pkg">GAP</strong>; see <code class="func">Read</code> (<a href="../../doc/ref/chap9.html#X8373AC6B7D5F9167"><span class="RefLink">Reference: Read</span></a>), <code class="func">Edit</code> (<a href="../../doc/ref/chap6.html#X82E5859C8113BA4D"><span class="RefLink">Reference: Edit</span></a>) for this.</p>
+<p>For large amounts of input data, it might be advisable to write your input first into a file, and then read this into <strong class="pkg">GAP</strong>; see <code class="func">Read</code> (<span class="RefLink">Reference: Read</span>), <code class="func">Edit</code> (<span class="RefLink">Reference: Edit</span>) for this.</p>
 
-<p>The definition of the <strong class="pkg">GAP</strong> syntax can be looked up in Chapter <a href="../../doc/ref/chap4.html#X7FE7C0C17E1ED118"><span class="RefLink">Reference: The Programming Language</span></a>. A complete list of command line editing facilities is found in Section <a href="../../doc/ref/chap6.html#X82234FD181899530"><span class="RefLink">Reference: Line Editing</span></a>. The break loop is described in Section <a href="../../doc/ref/chap6.html#X8593B49F8705B486"><span class="RefLink">Reference: Break Loops</span></a>.</p>
+<p>The definition of the <strong class="pkg">GAP</strong> syntax can be looked up in Chapter <span class="RefLink">Reference: The Programming Language</span>. A complete list of command line editing facilities is found in Section <span class="RefLink">Reference: Line Editing</span>. The break loop is described in Section <span class="RefLink">Reference: Break Loops</span>.</p>
 
-<p>Operators are explained in more detail in Sections <a href="../../doc/ref/chap4.html#X7BAFE9C1817253C6"><span class="RefLink">Reference: Expressions</span></a> and <a href="../../doc/ref/chap4.html#X7A274A1F8553B7E6"><span class="RefLink">Reference: Comparisons</span></a>. You will find more information about boolean values in Chapters <a href="../../doc/ref/chap20.html#X787B4AB77A2F5E14"><span class="RefLink">Reference: Booleans</span></a> and <a href="../../doc/ref/chap22.html#X7AC531DD79B6938E"><span class="RefLink">Reference: Boolean Lists</span></a>. Permutations are described in Chapter <a href="../../doc/ref/chap42.html#X80F808307A2D5AB8"><span class="RefLink">Reference: Permutations</span></a> and characters in Chapter <a href="../../doc/ref/chap27.html#X7D28329B7EDB8F47"><span class="RefLink">Reference: Strings and Characters</span></a>.</p>
+<p>Operators are explained in more detail in Sections <span class="RefLink">Reference: Expressions</span> and <span class="RefLink">Reference: Comparisons</span>. You will find more information about boolean values in Chapters <span class="RefLink">Reference: Booleans</span> and <span class="RefLink">Reference: Boolean Lists</span>. Permutations are described in Chapter <span class="RefLink">Reference: Permutations</span> and characters in Chapter <span class="RefLink">Reference: Strings and Characters</span>.</p>
 
-<p>Variables and assignments are described in more detail in <a href="../../doc/ref/chap4.html#X7A4C2D0E7E286B4F"><span class="RefLink">Reference: Variables</span></a> and <a href="../../doc/ref/chap4.html#X7E6A50307F4D3FAE"><span class="RefLink">Reference: Assignments</span></a>. A complete list of keywords is contained in <a href="../../doc/ref/chap4.html#X87506BDC7D5F789E"><span class="RefLink">Reference: Keywords</span></a>.</p>
+<p>Variables and assignments are described in more detail in <span class="RefLink">Reference: Variables</span> and <span class="RefLink">Reference: Assignments</span>. A complete list of keywords is contained in <span class="RefLink">Reference: Keywords</span>.</p>
 
-<p>More about functions can be found in <a href="../../doc/ref/chap4.html#X78C70489791FDF43"><span class="RefLink">Reference: Function Calls</span></a> and <a href="../../doc/ref/chap4.html#X825803DE78251DA6"><span class="RefLink">Reference: Procedure Calls</span></a>.</p>
+<p>More about functions can be found in <span class="RefLink">Reference: Function Calls</span> and <span class="RefLink">Reference: Procedure Calls</span>.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>

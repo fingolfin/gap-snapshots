@@ -3,87 +3,54 @@
 [<a href = "chapters.htm">Up</a>] [<a href ="CHAP001.htm">Previous</a>] [<a href ="CHAP003.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <h1>2 Installation</h1><p>
 <p>
-This package must be installed in the <code>pkg</code> subdirectory of any of
-the <font face="Gill Sans,Helvetica,Arial">GAP</font> 4 root directories. We assume here that this is <code>/gap4/pkg</code>.
+<font face="Gill Sans,Helvetica,Arial">GAP</font> is distributed together with a large number of packages, including
+this one. <font face="Gill Sans,Helvetica,Arial">Carat</font> is located inside the subdirectory <code>pkg/carat/</code> of your 
+<font face="Gill Sans,Helvetica,Arial">GAP</font> installation, and needs to be compiled. If you do not want to build 
+all packages with the script <code>BuildPackages.sh</code> from <font face="Gill Sans,Helvetica,Arial">GAP</font>, you can build 
+<font face="Gill Sans,Helvetica,Arial">Carat</font> alone by executing these commands inside the directory <code>pkg/carat/</code>:
 <p>
 <pre>
-cd /gap4/pkg
-tar zpxf carat-2.1.7.tar.gz
+./configure &lt;path-to-GAP-root&gt;
+make
 </pre>
 <p>
-This creates a subdirectory <code>carat</code>, the home directory of the present
-interface package. <font face="Gill Sans,Helvetica,Arial">CARAT</font> itself can be installed anywhere on your 
-system. You only have to make sure <font face="Gill Sans,Helvetica,Arial">GAP</font> finds the <font face="Gill Sans,Helvetica,Arial">CARAT</font> binaries, 
-by making a symbolic link from the <code>bin</code> subdirectory in <code>pkg/carat</code> to 
-the <code>bin</code> subdirectory of <font face="Gill Sans,Helvetica,Arial">CARAT</font> itself. In our example, we install 
-<font face="Gill Sans,Helvetica,Arial">CARAT</font> in <code>/gap4/pkg/carat</code> (the <font face="Gill Sans,Helvetica,Arial">CARAT</font> tar file should already be 
-there):
+The configure script optionally takes the path to the root directory of 
+your <font face="Gill Sans,Helvetica,Arial">GAP</font> installation as argument. The default <code>../..</code> should usually 
+work, but if you have unpacked <font face="Gill Sans,Helvetica,Arial">Carat</font> to a location like <code>&nbsp;/.gap/pkg/carat/</code>, 
+you need to explicitly give the path to the <font face="Gill Sans,Helvetica,Arial">GAP</font> root directory as argument.
+The result of <code>configure</code> is written to the file <code>config.carat</code>, which can be
+inspected if something goes wrong.
+<p>
+If <font face="Gill Sans,Helvetica,Arial">GAP</font> was configured to use a specific GMP library, or the GMP library
+bundled with <font face="Gill Sans,Helvetica,Arial">GAP</font>, then <font face="Gill Sans,Helvetica,Arial">CARAT</font> will try to use that same GMP library.
+Otherwise, the system GMP library in the default path is chosen. If you want
+to use another GMP library, you may add an argument <code>--with-gmp=path-to-gmp</code>
+to the above configure command, where the directory <code>path-to-gmp</code> must
+contain subdirectories <code>lib/</code> and <code>include/</code> with the GMP library and include
+files, respectively.
+<p>
+If you want or need to add further compile or link flags, you may prepend
+<code>CFLAGS="your flags"</code> to the configure command, or append it to the make
+command (one of these is enough), so that the complete build commands
+including all options are these:
 <p>
 <pre>
-cd /gap4/pkg/carat
-zcat carat-2.1b1.tgz | tar pxf -
-ln -s carat-2.1b1/bin bin
-cd carat-2.1b1
+ [CFLAGS="&lt;your flags&gt;"] ./configure [&lt;path-to-GAP-root&gt;] [--with-gmp=&lt;path-to-gmp&gt;]
+ make [CFLAGS="&lt;your flags&gt;"]
 </pre>
 <p>
-This creates a subdirectory <code>carat-2.1b1</code>, the <font face="Gill Sans,Helvetica,Arial">CARAT</font> top level directory. 
-For the compilation of <font face="Gill Sans,Helvetica,Arial">CARAT</font>, you have to set the variable <code>TOPDIR</code> to the 
-full path of this new directory, possibly along with new values for <code>CC</code> and 
-<code>CFLAGS</code>. You can do this either in the <code>Makefile</code>, or directly on the command 
-line:
+As <font face="Gill Sans,Helvetica,Arial">CARAT</font>'s catalog of Q-classes of unimodular groups is rather large,
+it is unpacked by default only up to dimension&nbsp;5. If you also want
+to unpack the data for dimension&nbsp;6, you can do this with the extra
+command (again inside directory <code>pkg/carat/</code>)
 <p>
 <pre>
-make TOPDIR=`pwd` CFLAGS='-O -std=gnu89' 
-chmod -R a+rX .
+make qcat6
 </pre>
 <p>
-The flag '-std=gnu89' is necessary if you use gcc of version 5 or higher.
-If you build for more than one architecture, make sure to do a 
-'make clean' in between.
-<p>
-You now have to check which subdirectory containing the CARAT 
-binaries has been created in the bin directory. The name of this
-subdirectory must be the same as that in the main GAP bin directory,
-'/gap4/bin'. If the names differ, you might have to add a symbolic
-link to correct this. For instance, if the <font face="Gill Sans,Helvetica,Arial">CARAT</font> bin directory
-contains <code>x86_64-pc-linux-gnu</code>, but in the GAP bin directory, you find 
-<code>x86_64-pc-linux-gnu-gcc-default32</code>, you would have to do this:
-<p>
-<pre>
-cd bin
-ln -s x86_64-pc-linux-gnu x86_64-pc-linux-gnu-gcc-default32
-ln -s x86_64-pc-linux-gnu x86_64-pc-linux-gnu-gcc-default64
-</pre>
-<p>
-You can use one installation of <font face="Gill Sans,Helvetica,Arial">CARAT</font> for both 32bit and 64bit gap.
-<p>
-Like any other <font face="Gill Sans,Helvetica,Arial">GAP</font> 4 package, <font face="Gill Sans,Helvetica,Arial">CARAT</font> is then loaded in <font face="Gill Sans,Helvetica,Arial">GAP</font> with
-<p>
-<pre>
-gap&gt; LoadPackage("carat");
-true
-</pre>
-<p>
-This package, together with <font face="Gill Sans,Helvetica,Arial">CARAT</font> itself, takes some 208Mb of disk space,
-or more, depending on the system. Some 170Mb is taken by the catalog
-of Q-classes if integer matrix groups up to dimension 6. If you want
-to avoid unpacking this catalog, you can create empty subdirectories
-<p>
-<pre>
-cd /gap4/pkg/carat/carat-2.1b1
-mkdir tables
-mkdir tables/qcatalog
-</pre>
-<p>
-before making <font face="Gill Sans,Helvetica,Arial">CARAT</font>. If you want to unpack the catalog later, just
-remove the empty directory <code>tables/qcatalog</code>, and do
-<p>
-<pre>
-make Qcatalog
-</pre>
-<p>
+This adds another 150 Mb of data to the installation.
 <p>
 [<a href = "chapters.htm">Up</a>] [<a href ="CHAP001.htm">Previous</a>] [<a href ="CHAP003.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<address>CARAT manual<br>December 2017
+<address>CARAT manual<br>March 2018
 </address></body></html>

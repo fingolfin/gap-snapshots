@@ -493,7 +493,7 @@
   
   [1X39.5-3 GrowthFunctionOfGroup[101X
   
-  [33X[1;0Y[29X[2XGrowthFunctionOfGroup[102X( [3XG[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XGrowthFunctionOfGroup[102X( [3XG[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XGrowthFunctionOfGroup[102X( [3XG[103X, [3Xradius[103X ) [32X operation[133X
   
   [33X[0;0YFor  a  group  [3XG[103X  with a generating set given in [2XGeneratorsOfGroup[102X ([14X39.2-4[114X),
@@ -596,11 +596,12 @@
   
   [8X1.[108X
         [33X[0;6YLookup in a precomputed list, if the order of [3XG[103X is not larger than 100
-        and not equal to 64.[133X
+        and not equal to 64 or 96.[133X
   
   [8X2.[108X
         [33X[0;6YIf  [3XG[103X  is abelian, then decompose it into cyclic factors in [21Xelementary
-        divisors style[121X. For example, [10X"C2 x C3 x C3"[110X is [10X"C6 x C3"[110X.[133X
+        divisors style[121X. For example, [10X"C2 x C3 x C3"[110X is [10X"C6 x C3"[110X. For infinite
+        abelian groups, [10X"C0"[110X denotes the group of integers.[133X
   
   [8X3.[108X
         [33X[0;6YRecognize  alternating  groups,  symmetric  groups,  dihedral  groups,
@@ -613,6 +614,25 @@
   [8X5.[108X
         [33X[0;6YRecognize  semidirect products [3XG[103X=[22XN[122X:[22XH[122X, where [22XN[122X is normal. Select a pair
         [22XN[122X, [22XH[122X with the following preferences:[133X
+  
+        [8X1.[108X
+              [33X[0;12Yif  [3XG[103X  is defined as a semidirect product of [22XN[122X, [22XH[122X then select [22XN[122X,
+              [22XH[122X,[133X
+  
+        [8X2.[108X
+              [33X[0;12Yif [3XG[103X is solvable, then select a solvable normal Hall subgroup [22XN[122X,
+              if  exists,  and  consider the semidirect decomposition of [22XN[122X and
+              [22X[3XG[103X/N[122X,[133X
+  
+        [8X3.[108X
+              [33X[0;12Yfind any nontrivial normal subgroup [22XN[122X which has a complement [22XH[122X.[133X
+  
+        [33X[0;6YThe  option  [21Xnice[121X  is  recognized.  If  this  option  is set, then all
+        semidirect  products  are  computed  in order to find a possibly nicer
+        presentation.  Note, that this may take a very long time if [3XG[103X has many
+        normal  subgroups, e.g. if [22X[3XG[103X/[3XG[103X'[122X has many cyclic factors. If the option
+        [21Xnice[121X  is  set,  then  GAP  would select a pair [22XN[122X, [22XH[122X with the following
+        preferences:[133X
   
         [8X1.[108X
               [33X[0;12Y[22XH[122X is abelian[133X
@@ -634,7 +654,7 @@
   
   [8X6.[108X
         [33X[0;6YFall back to non-splitting extensions: If the centre or the commutator
-        factor  group  is  non-trivial,  write  [3XG[103X  as  Z([3XG[103X).[3XG[103X/Z([3XG[103X) or [3XG[103X'.[3XG[103X/[3XG[103X',
+        factor  group  is  non-trivial,  write  [3XG[103X  as  [22XZ([3XG[103X)[122X.[22X[3XG[103X/Z([3XG[103X)[122X or [22X[3XG[103X'[122X.[22X[3XG[103X/[3XG[103X'[122X,
         respectively. Otherwise if the Frattini subgroup is non-trivial, write
         [3XG[103X as [22XΦ[122X([3XG[103X).[3XG[103X/[22XΦ[122X([3XG[103X).[133X
   
@@ -664,12 +684,20 @@
     [4X[25Xgap>[125X [27XList(l,StructureDescription);; l;[127X[104X
     [4X[28X[ C3 : C4, C12, A4, D12, C6 x C2 ][128X[104X
     [4X[25Xgap>[125X [27XList(AllSmallGroups(40),G->StructureDescription(G:short));[127X[104X
-    [4X[28X[ "5:8", "40", "5:8", "5:Q8", "4xD10", "D40", "2x(5:4)", "(10x2):2", [128X[104X
+    [4X[28X[ "5:8", "40", "5:8", "5:Q8", "4xD10", "D40", "2x(5:4)", "(10x2):2",[128X[104X
     [4X[28X  "20x2", "5xD8", "5xQ8", "2x(5:4)", "2^2xD10", "10x2^2" ][128X[104X
     [4X[25Xgap>[125X [27XList(AllTransitiveGroups(DegreeAction,6),[127X[104X
     [4X[25X>[125X [27X        G->StructureDescription(G:short));[127X[104X
     [4X[28X[ "6", "S3", "D12", "A4", "3xS3", "2xA4", "S4", "S4", "S3xS3", [128X[104X
     [4X[28X  "(3^2):4", "2xS4", "A5", "(S3xS3):2", "S5", "A6", "S6" ][128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(SmallGroup(504,7));[127X[104X
+    [4X[28X"C7 : (C9 x Q8)"[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(SmallGroup(504,7):nice);[127X[104X
+    [4X[28X"(C7 : Q8) : C9"[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(AbelianGroup([0,2,3]));[127X[104X
+    [4X[28X"C0 x C6"[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription(AbelianGroup([0,0,0,2,3,6]):short);[127X[104X
+    [4X[28X"0^3x6^2"[128X[104X
     [4X[25Xgap>[125X [27XStructureDescription(PSL(4,2));[127X[104X
     [4X[28X"A8"[128X[104X
   [4X[32X[104X
@@ -859,7 +887,7 @@
   
   [1X39.9-3 DoubleCosets[101X
   
-  [33X[1;0Y[29X[2XDoubleCosets[102X( [3XG[103X, [3XU[103X, [3XV[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XDoubleCosets[102X( [3XG[103X, [3XU[103X, [3XV[103X ) [32X function[133X
   [33X[1;0Y[29X[2XDoubleCosetsNC[102X( [3XG[103X, [3XU[103X, [3XV[103X ) [32X operation[133X
   
   [33X[0;0Ycomputes  a  duplicate  free  list of all double cosets [3XU[103X [22Xg[122X [3XV[103X for [22Xg ∈ [3XG[103X[122X. The
@@ -1156,10 +1184,10 @@
   of [3XG[103X and [3XU[103X which contains [3XU[103X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XNormalClosure(g,Subgroup(g,[(1,2,3)]));[127X[104X
-    [4X[28XGroup([ (1,2,3), (2,3,4) ])[128X[104X
-    [4X[25Xgap>[125X [27XNormalClosure(g,Group((3,4,5)));[127X[104X
-    [4X[28XGroup([ (3,4,5), (1,5,4), (1,2,5) ])[128X[104X
+    [4X[25Xgap>[125X [27XNormalClosure(g,Subgroup(g,[(1,2,3)])) = Group([ (1,2,3), (2,3,4) ]);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XNormalClosure(g,Group((3,4,5))) = Group([ (3,4,5), (1,5,4), (1,2,5) ]);[127X[104X
+    [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
   [1X39.11-5 NormalIntersection[101X
@@ -1239,8 +1267,8 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xg:=Group((1,2,3,4),(1,2));;[127X[104X
-    [4X[25Xgap>[125X [27XDerivedSubgroup(g);[127X[104X
-    [4X[28XGroup([ (1,3,2), (2,4,3) ])[128X[104X
+    [4X[25Xgap>[125X [27XDerivedSubgroup(g) = Group([ (1,3,2), (2,4,3) ]);[127X[104X
+    [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
   [1X39.12-4 CommutatorLength[101X
@@ -1316,7 +1344,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XPerfectResiduum(Group((1,2,3,4,5),(1,2)));[127X[104X
-    [4X[28XGroup([ (1,3,2), (1,4,3), (1,5,4) ])[128X[104X
+    [4X[28XGroup([ (1,3,2), (1,4,3), (3,5,4) ])[128X[104X
   [4X[32X[104X
   
   [1X39.12-9 RadicalGroup[101X
@@ -1352,8 +1380,8 @@
   subgroup [22XN[122X such that the factor group [22X[3XG[103X / N[122X is supersolvable.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XSupersolvableResiduum(g);[127X[104X
-    [4X[28XGroup([ (1,2)(3,4), (1,4)(2,3) ])[128X[104X
+    [4X[25Xgap>[125X [27XSupersolvableResiduum(g) = Group([ (1,3)(2,4), (1,4)(2,3) ]);[127X[104X
+    [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
   [1X39.12-12 PRump[101X
@@ -1537,7 +1565,7 @@
   commutativity.  In  such  cases,  the  name of the function for groups got a
   suffix [10XGroup[110X to distinguish different meanings for different structures.[133X
   
-  [33X[0;0YSome  functions, such as [2XIsPSolvable[102X ([14X39.15-23[114X) and [2XIsPNilpotent[102X ([14X39.15-24[114X),
+  [33X[0;0YSome  functions, such as [2XIsPSolvable[102X ([14X39.15-24[114X) and [2XIsPNilpotent[102X ([14X39.15-25[114X),
   although  they  are mathematical properties, are not properties in the sense
   of [5XGAP[105X (see [14X13.5[114X and [14X13.7[114X), as they depend on a parameter.[133X
   
@@ -1874,7 +1902,18 @@
   [22Xp^n[122X for a prime integer [22Xp[122X and a nonnegative integer [22Xn[122X. [2XIsPGroup[102X returns [9Xtrue[109X
   if [3XG[103X is a [22Xp[122X-group, and [9Xfalse[109X otherwise.[133X
   
-  [1X39.15-20 PrimePGroup[101X
+  [1X39.15-20 IsPowerfulPGroup[101X
+  
+  [33X[1;0Y[29X[2XIsPowerfulPGroup[102X( [3XG[103X ) [32X property[133X
+  
+  [33X[0;0YA  finite  p-group  [3XG[103X  is  said  to  be a [13Xpowerful [22Xp[122X-group[113X if the commutator
+  subgroup  [22X[[3XG[103X,[3XG[103X][122X  is  contained  in [22X[3XG[103X^p[122X if the prime [22Xp[122X is odd, or if [22X[[3XG[103X,[3XG[103X][122X is
+  contained  in  [22X[3XG[103X^4[122X  if  [22Xp  =  2[122X.  The subgroup [22X[3XG[103X^p[122X is called the first Agemo
+  subgroup,  (see [2XAgemo[102X  ([14X39.14-2[114X)).  [2XIsPowerfulPGroup[102X  returns [9Xtrue[109X if [3XG[103X is a
+  powerful [22Xp[122X-group, and [9Xfalse[109X otherwise. [13XNote: [113XThis function returns [9Xtrue[109X if [3XG[103X
+  is the trivial group.[133X
+  
+  [1X39.15-21 PrimePGroup[101X
   
   [33X[1;0Y[29X[2XPrimePGroup[102X( [3XG[103X ) [32X attribute[133X
   
@@ -1886,7 +1925,7 @@
   PrimePGroup(g)   ...[110X  where  the  code  represented  by  dots  assumes  that
   [10XPrimePGroup(g)[110X is an integer.)[133X
   
-  [1X39.15-21 PClassPGroup[101X
+  [1X39.15-22 PClassPGroup[101X
   
   [33X[1;0Y[29X[2XPClassPGroup[102X( [3XG[103X ) [32X attribute[133X
   
@@ -1894,7 +1933,7 @@
   lower  [22Xp[122X-central  series (see [2XPCentralSeries[102X ([14X39.17-13[114X)) of [3XG[103X. If [3XG[103X is not a
   [22Xp[122X-group then an error is issued.[133X
   
-  [1X39.15-22 RankPGroup[101X
+  [1X39.15-23 RankPGroup[101X
   
   [33X[1;0Y[29X[2XRankPGroup[102X( [3XG[103X ) [32X attribute[133X
   
@@ -1910,14 +1949,14 @@
     [4X[28X2[128X[104X
   [4X[32X[104X
   
-  [1X39.15-23 IsPSolvable[101X
+  [1X39.15-24 IsPSolvable[101X
   
   [33X[1;0Y[29X[2XIsPSolvable[102X( [3XG[103X, [3Xp[103X ) [32X operation[133X
   
   [33X[0;0YA  finite  group  is  [22Xp[122X-solvable  if every chief factor either has order not
   divisible by [22Xp[122X, or is solvable.[133X
   
-  [1X39.15-24 IsPNilpotent[101X
+  [1X39.15-25 IsPNilpotent[101X
   
   [33X[1;0Y[29X[2XIsPNilpotent[102X( [3XG[103X, [3Xp[103X ) [32X operation[133X
   
@@ -2052,9 +2091,11 @@
   descends from [3XG[103X to a subnormal subgroup [22XV ≥[122X[3XU[103X. If [3XU[103X is subnormal, [22XV =[122X [3XU[103X.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xs:=SubnormalSeries(g,Group((1,2)(3,4)));[127X[104X
-    [4X[28X[ Group([ (1,2,3,4), (1,2) ]), Group([ (1,2)(3,4), (1,3)(2,4) ]), [128X[104X
-    [4X[28X  Group([ (1,2)(3,4) ]) ][128X[104X
+    [4X[25Xgap>[125X [27Xs:=SubnormalSeries(g,Group((1,2)(3,4))) =[127X[104X
+    [4X[25X>[125X [27X[ Group([ (1,2,3,4), (1,2) ]),[127X[104X
+    [4X[25X>[125X [27X  Group([ (1,2)(3,4), (1,3)(2,4) ]),[127X[104X
+    [4X[25X>[125X [27X  Group([ (1,2)(3,4) ]) ];[127X[104X
+    [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
   [1X39.17-5 CompositionSeries[101X
@@ -2185,7 +2226,7 @@
   
   [33X[0;0YFor  a  [22Xp[122X-group [3XG[103X, this function returns its Jennings series. This series is
   defined  by  setting [22XG_1 = [3XG[103X[122X and for [22Xi ≥ 0[122X, [22XG_{i+1} = [G_i,[3XG[103X] G_j^p[122X, where [22Xj[122X
-  is the smallest integer [22X≥ i/p[122X.[133X
+  is the smallest integer [22X> i/p[122X.[133X
   
   [1X39.17-15 DimensionsLoewyFactors[101X
   
@@ -2397,7 +2438,7 @@
   [33X[1;0Y[29X[2XConjugacyClassesMaximalSubgroups[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  the conjugacy classes of maximal subgroups of [3XG[103X. Representatives of
-  the classes can be computed directly by [2XMaximalSubgroupClassReps[102X ([14X39.19-6[114X).[133X
+  the classes can be computed directly by [2XMaximalSubgroupClassReps[102X ([14X39.19-5[114X).[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XConjugacyClassesMaximalSubgroups(g);[127X[104X
@@ -2405,7 +2446,40 @@
     [4X[28X  Group( [ (1,2), (3,4), (1,3)(2,4) ] )^G ][128X[104X
   [4X[32X[104X
   
-  [1X39.19-5 AllSubgroups[101X
+  [1X39.19-5 MaximalSubgroupClassReps[101X
+  
+  [33X[1;0Y[29X[2XMaximalSubgroupClassReps[102X( [3XG[103X ) [32X attribute[133X
+  
+  [33X[0;0Yreturns a list of conjugacy representatives of the maximal subgroups of [3XG[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XMaximalSubgroupClassReps(g);[127X[104X
+    [4X[28X[ Alt( [ 1 .. 4 ] ), Group([ (1,2,3), (1,2) ]), Group([ (1,2), (3,4),[128X[104X
+    [4X[28X    (1,3)(2,4) ]) ][128X[104X
+  [4X[32X[104X
+  
+  [1X39.19-6 LowIndexSubgroups[101X
+  
+  [33X[1;0Y[29X[2XLowIndexSubgroups[102X( [3XG[103X, [3Xindex[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  operation  [2XLowIndexSubgroups[102X  computes representatives of the conjugacy
+  classes of subgroups of the group [3XG[103X that index less than or equal to [3Xindex[103X.[133X
+  
+  [33X[0;0YFor   finitely   presented   groups   this   operation  simply  defaults  to
+  [2XLowIndexSubgroupsFpGroup[102X   ([14X47.10-1[114X).  In  other  cases,  it  uses  repeated
+  calculation of maximal subgroups.[133X
+  
+  [33X[0;0YThe  function  [2XLowLayerSubgroups[102X  ([14X39.20-6[114X) works similar but does not bound
+  the index, but instead considers up to [3Xlayer[103X-th maximal subgroups.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg:=TransitiveGroup(18,950);;[127X[104X
+    [4X[25Xgap>[125X [27Xl:=LowIndexSubgroups(g,20);;Collected(List(l,x->Index(g,x)));[127X[104X
+    [4X[28X[ [ 1, 1 ], [ 2, 1 ], [ 5, 1 ], [ 6, 1 ], [ 10, 2 ], [ 12, 3 ], [ 15, 1 ], [128X[104X
+    [4X[28X  [ 16, 2 ], [ 18, 1 ], [ 20, 9 ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X39.19-7 AllSubgroups[101X
   
   [33X[1;0Y[29X[2XAllSubgroups[102X( [3XG[103X ) [32X function[133X
   
@@ -2420,19 +2494,7 @@
     [4X[28X  Group([ (1,2,3) ]), Group([ (1,2,3), (2,3) ]) ][128X[104X
   [4X[32X[104X
   
-  [1X39.19-6 MaximalSubgroupClassReps[101X
-  
-  [33X[1;0Y[29X[2XMaximalSubgroupClassReps[102X( [3XG[103X ) [32X attribute[133X
-  
-  [33X[0;0Yreturns a list of conjugacy representatives of the maximal subgroups of [3XG[103X.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XMaximalSubgroupClassReps(g);[127X[104X
-    [4X[28X[ Alt( [ 1 .. 4 ] ), Group([ (1,2,3), (1,2) ]), [128X[104X
-    [4X[28X  Group([ (1,2), (3,4), (1,3)(2,4) ]) ][128X[104X
-  [4X[32X[104X
-  
-  [1X39.19-7 MaximalSubgroups[101X
+  [1X39.19-8 MaximalSubgroups[101X
   
   [33X[1;0Y[29X[2XMaximalSubgroups[102X( [3XG[103X ) [32X attribute[133X
   
@@ -2446,7 +2508,7 @@
     [4X[28X  Group([ (1,3) ]) ][128X[104X
   [4X[32X[104X
   
-  [1X39.19-8 NormalSubgroups[101X
+  [1X39.19-9 NormalSubgroups[101X
   
   [33X[1;0Y[29X[2XNormalSubgroups[102X( [3XG[103X ) [32X attribute[133X
   
@@ -2461,19 +2523,28 @@
   [33X[0;0YThe  algorithm  for  the  computation  of  normal  subgroups is described in
   [Hul98].[133X
   
-  [1X39.19-9 MaximalNormalSubgroups[101X
+  [1X39.19-10 MaximalNormalSubgroups[101X
   
   [33X[1;0Y[29X[2XMaximalNormalSubgroups[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yis  a  list containing those proper normal subgroups of the group [3XG[103X that are
-  maximal among the proper normal subgroups.[133X
+  maximal  among the proper normal subgroups. Gives error if [3XG[103X/[3XG'[103X is infinite,
+  yielding  infinitely  many  maximal normal subgroups. Note, that the maximal
+  normal  subgroups  of  a  group  [3XG[103X  can  be computed more efficiently if the
+  character  table  of  [3XG[103X  is known or if [3XG[103X is known to be abelian or solvable
+  (even  if  infinite).  So  if the character table is needed, anyhow, or [3XG[103X is
+  suspected  to  be  abelian or solvable, then these should be computed before
+  computing the maximal normal subgroups.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XMaximalNormalSubgroups( g );[127X[104X
-    [4X[28X[ Group([ (2,4,3), (1,4)(2,3), (1,3)(2,4) ]) ][128X[104X
+    [4X[28X[ Group([ (1,2,3), (2,3,4) ]) ][128X[104X
+    [4X[25Xgap>[125X [27Xf := FreeGroup("x", "y");; x := f.1;; y := f.2;;[127X[104X
+    [4X[25Xgap>[125X [27XList(MaximalNormalSubgroups(f/[x^2, y^2]), GeneratorsOfGroup);[127X[104X
+    [4X[28X[ [ x, y*x*y^-1 ], [ y, x*y*x^-1 ], [ y*x^-1 ] ][128X[104X
   [4X[32X[104X
   
-  [1X39.19-10 MinimalNormalSubgroups[101X
+  [1X39.19-11 MinimalNormalSubgroups[101X
   
   [33X[1;0Y[29X[2XMinimalNormalSubgroups[102X( [3XG[103X ) [32X attribute[133X
   
@@ -2615,14 +2686,55 @@
     [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
-  [1X39.20-6 RepresentativesPerfectSubgroups[101X
+  [1X39.20-6 LowLayerSubgroups[101X
+  
+  [33X[1;0Y[29X[2XLowLayerSubgroups[102X( [3Xact[103X, [3XG[103X, [3Xlim[103X, [3Xcond[103X, [3Xdosub[103X ) [32X function[133X
+  
+  [33X[0;0YThis function computes representatives of the conjugacy classes of subgroups
+  of  the  finite  group [3XG[103X such that the subgroups can be obtained as [3Xlim[103X-fold
+  iterated  maximal subgroups. If a function [3Xcond[103X is given, only subgroups for
+  which this function returns true (also for their intermediate overgroups) is
+  returned.  If  also  a  function  [3Xdosub[103X is given, maximal subgroups are only
+  attempted  if  this function returns true (this is separated for performance
+  reasons).[133X
+  
+  [1X39.20-7 ContainedConjugates[101X
+  
+  [33X[1;0Y[29X[2XContainedConjugates[102X( [3XG[103X, [3XA[103X, [3XB[103X ) [32X function[133X
+  
+  [33X[0;0YFor  [22XA,B  ≤  G[122X  this  operation  returns  representatives of the [3XA[103X conjugacy
+  classes of subgroups that are conjugate to [3XB[103X under [3XG[103X. The function returns a
+  list of pairs of subgroup and conjugating element.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg:=SymmetricGroup(8);;[127X[104X
+    [4X[25Xgap>[125X [27Xa:=TransitiveGroup(8,47);;b:=TransitiveGroup(8,7);;[127X[104X
+    [4X[25Xgap>[125X [27XContainedConjugates(g,a,b);[127X[104X
+    [4X[28X[ [ Group([ (1,4,2,5,3,6,8,7), (1,3)(2,8) ]), (2,4,5,3)(7,8) ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X39.20-8 ContainingConjugates[101X
+  
+  [33X[1;0Y[29X[2XContainingConjugates[102X( [3XG[103X, [3XA[103X, [3XB[103X ) [32X function[133X
+  
+  [33X[0;0YFor [22XA,B ≤ G[122X this operation returns all [3XG[103X conjugates of [3XA[103X that contain [3XB[103X. The
+  function returns a list of pairs of subgroup and conjugating element.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg:=SymmetricGroup(8);;[127X[104X
+    [4X[25Xgap>[125X [27Xa:=TransitiveGroup(8,47);;b:=TransitiveGroup(8,7);;[127X[104X
+    [4X[25Xgap>[125X [27XContainingConjugates(g,a,b);[127X[104X
+    [4X[28X[ [ Group([ (1,3,5,7), (3,5), (1,4)(2,7)(3,6)(5,8) ]), (2,3,5,4)(7,8) ] ][128X[104X
+  [4X[32X[104X
+  
+  [1X39.20-9 RepresentativesPerfectSubgroups[101X
   
   [33X[1;0Y[29X[2XRepresentativesPerfectSubgroups[102X( [3XG[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XRepresentativesSimpleSubgroups[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns a list of conjugacy representatives of perfect (respectively simple)
   subgroups  of  [3XG[103X.  This uses the library of perfect groups (see [2XPerfectGroup[102X
-  ([14X50.8-2[114X)),  thus  it  will  issue an error if the library is insufficient to
+  ([14X50.6-2[114X)),  thus  it  will  issue an error if the library is insufficient to
   determine all perfect subgroups.[133X
   
   [4X[32X  Example  [32X[104X
@@ -2635,12 +2747,12 @@
     [4X[28X[ "A5", "A5", "A6", "PSL(2,11)", "M11", "1" ][128X[104X
   [4X[32X[104X
   
-  [1X39.20-7 ConjugacyClassesPerfectSubgroups[101X
+  [1X39.20-10 ConjugacyClassesPerfectSubgroups[101X
   
   [33X[1;0Y[29X[2XConjugacyClassesPerfectSubgroups[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  a  list  of  the  conjugacy classes of perfect subgroups of [3XG[103X. (see
-  [2XRepresentativesPerfectSubgroups[102X ([14X39.20-6[114X).)[133X
+  [2XRepresentativesPerfectSubgroups[102X ([14X39.20-9[114X).)[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xr := ConjugacyClassesPerfectSubgroups(m11);;[127X[104X
@@ -2650,7 +2762,7 @@
     [4X[28X[ 1, 1, 11, 12, 66, 132 ][128X[104X
   [4X[32X[104X
   
-  [1X39.20-8 Zuppos[101X
+  [1X39.20-11 Zuppos[101X
   
   [33X[1;0Y[29X[2XZuppos[102X( [3XG[103X ) [32X attribute[133X
   
@@ -2660,7 +2772,7 @@
   subgroups of a group [3XG[103X. That is all elements of [3XG[103X of prime power order up to
   the equivalence that they generate the same cyclic subgroup.[133X
   
-  [1X39.20-9 InfoLattice[101X
+  [1X39.20-12 InfoLattice[101X
   
   [33X[1;0Y[29X[2XInfoLattice[102X[32X info class[133X
   
@@ -3094,7 +3206,7 @@
   
   [33X[1;0Y[29X[2XOCOneCocycles[102X( [3Xocr[103X, [3XonlySplit[103X ) [32X function[133X
   
-  [33X[0;0Yis the more technical function to compute 1-cocycles. It takes an record [3Xocr[103X
+  [33X[0;0Yis  the more technical function to compute 1-cocycles. It takes a record [3Xocr[103X
   as  first  argument which must contain at least the components [10Xgroup[110X for the
   group  and  [10XmodulePcgs[110X  for  a (modulo) pcgs of the module. This record will
   also  be  returned  with components as described under [2XOneCocycles[102X ([14X39.23-1[114X)
@@ -3355,10 +3467,12 @@
   
   [1X39.25-3 CanComputeSize[101X
   
-  [33X[1;0Y[29X[2XCanComputeSize[102X( [3Xdom[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XCanComputeSize[102X( [3Xdom[103X ) [32X filter[133X
   
-  [33X[0;0YThis  filter  indicates  whether  the size of the domain [3Xdom[103X (which might be
-  [2Xinfinity[102X ([14X18.2-1[114X)) can be computed.[133X
+  [33X[0;0YThis  filter  indicates  that we know that the size of the domain [3Xdom[103X (which
+  might  be  [2Xinfinity[102X  ([14X18.2-1[114X)) can be computed reasonably easily. It doesn't
+  imply as quick a computation as [10XHasSize[110X would but its absence does not imply
+  that the size cannot be computed.[133X
   
   [1X39.25-4 CanComputeSizeAnySubgroup[101X
   

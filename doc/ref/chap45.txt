@@ -559,8 +559,8 @@
   
   [33X[1;0Y[29X[2XModuloPcgs[102X( [3XG[103X, [3XN[103X ) [32X operation[133X
   
-  [33X[0;0Yreturns a modulo pcgs for the factor [22X[3XG[103X/[3XN[103X[122X which must be solvable, which [3XN[103X may
-  be  insolvable.  [2XModuloPcgs[102X  will  return [13Xa[113X pcgs for the factor, there is no
+  [33X[0;0Yreturns a modulo pcgs for the factor [22X[3XG[103X/[3XN[103X[122X which must be solvable, while [3XN[103X may
+  be  non-solvable.  [2XModuloPcgs[102X will return [13Xa[113X pcgs for the factor, there is no
   guarantee  that  it  will  be  [21Xcompatible[121X  with  any  other pcgs. If this is
   required, the [9Xmod[109X operator must be used on induced pcgs, see [2X\mod[102X ([14X45.9-5[114X).[133X
   
@@ -591,7 +591,7 @@
     [4X[25Xgap>[125X [27XNumeratorOfModuloPcgs(P);[127X[104X
     [4X[28X[ (1,2,3,4,5), (1,2) ][128X[104X
     [4X[25Xgap>[125X [27XDenominatorOfModuloPcgs(P);[127X[104X
-    [4X[28X[ (1,3,2), (2,4,3), (2,3)(4,5) ][128X[104X
+    [4X[28X[ (1,3,2), (1,4,3), (2,5,4) ][128X[104X
     [4X[25Xgap>[125X [27XRelativeOrders(P);[127X[104X
     [4X[28X[ 2 ][128X[104X
     [4X[25Xgap>[125X [27XExponentsOfPcElement( P, (1,2,3,4,5) );[127X[104X
@@ -1247,7 +1247,7 @@
   [33X[0;0Y[2XIsNilpotentGroup[102X  ([14X39.15-3[114X),  [2XIsSupersolvableGroup[102X ([14X39.15-8[114X), [2XSize[102X ([14X30.4-6[114X),
   [2XCompositionSeries[102X   ([14X39.17-5[114X),   [2XConjugacyClasses[102X   ([14X39.10-2[114X),   [2XCentralizer[102X
   ([14X35.4-4[114X),   [2XFrattiniSubgroup[102X   ([14X39.12-6[114X),   [2XPrefrattiniSubgroup[102X   ([14X39.12-7[114X),
-  [2XMaximalSubgroups[102X  ([14X39.19-7[114X) and related operations, [2XHallSystem[102X ([14X39.13-6[114X) and
+  [2XMaximalSubgroups[102X  ([14X39.19-8[114X) and related operations, [2XHallSystem[102X ([14X39.13-6[114X) and
   related   operations,   [2XMinimalGeneratingSet[102X   ([14X39.22-3[114X),  [2XCentre[102X  ([14X35.4-5[114X),
   [2XIntersection[102X   ([14X30.5-2[114X),   [2XAutomorphismGroup[102X   ([14X40.7-1[114X),  [2XIrreducibleModules[102X
   ([14X71.15-1[114X).[133X
@@ -1286,12 +1286,12 @@
   
   [8X[10Xcandidates[110X[8X[108X
         [33X[0;6Yis  a  list  of elements for which canonical representatives are to be
-        computed  or  for  which  a  conjugacy test is performed. They must be
-        given  in  mode  4.  In  mode  0  a  list  of classes corresponding to
-        [10Xcandidates[110X   is   returned   (which   may   contain  duplicates).  The
-        [10Xrepresentative[110Xs chosen are canonical with respect to [10Xpcgs[110X. The records
-        returned  also  contain  components  [10Xoperator[110X  such  that  [10Xcandidate ^
-        operator = representative[110X.[133X
+        computed  or  for  which  a conjugacy test is performed. Both elements
+        must  lie  in [3XG[103X, but this is not tested. In mode 4 these elements must
+        be  given.  In mode 0 a list of classes corresponding to [10Xcandidates[110X is
+        returned  (which  may  contain duplicates). The [10Xrepresentative[110Xs chosen
+        are  canonical with respect to [10Xpcgs[110X. The records returned also contain
+        components [10Xoperator[110X such that [10Xcandidate ^ operator = representative[110X.[133X
   
   [8X[10Xconsider[110X[8X[108X
         [33X[0;6Yis a function [10Xconsider( fhome, rep, cenp, K, L )[110X. Here [10Xfhome[110X is a home

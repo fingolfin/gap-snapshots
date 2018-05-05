@@ -79,7 +79,8 @@
 </span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X8241CEAD80415BB9">9.7-7 CrcFile</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X7E63ACA38142BE96">9.7-8 RemoveFile</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X79EE267A7FAF28A6">9.7-9 Reread</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X83F3B0337C7EA5CC">9.7-9 UserHomeExpand</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X79EE267A7FAF28A6">9.7-10 Reread</a></span>
 </div></div>
 </div>
 
@@ -451,9 +452,16 @@ return a*10;
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RemoveFile</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>will remove the file with filename <var class="Arg">filename</var> and returns <code class="keyw">true</code> in case of success. The function returns <code class="keyw">fail</code> if a system error occurred, for example, if your permissions do not allow the removal of <var class="Arg">filename</var>. In this case the function <code class="func">LastSystemError</code> (<a href="chap9_mj.html#X87D278437A916905"><span class="RefLink">9.1-1</span></a>) can be used to get information about the error.</p>
 
+<p><a id="X83F3B0337C7EA5CC" name="X83F3B0337C7EA5CC"></a></p>
+
+<h5>9.7-9 UserHomeExpand</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UserHomeExpand</code>( <var class="Arg">str</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>If the string <var class="Arg">str</var> starts with a <code class="code">'~'</code> character this function returns a new string with the leading <code class="code">'~'</code> substituted by the users home directory as stored in <code class="code">GAPInfo.UserHome</code>. Otherwise <var class="Arg">str</var> is returned unchanged.</p>
+
 <p><a id="X79EE267A7FAF28A6" name="X79EE267A7FAF28A6"></a></p>
 
-<h5>9.7-9 Reread</h5>
+<h5>9.7-10 Reread</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Reread</code>( <var class="Arg">filename</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; REREADING</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>

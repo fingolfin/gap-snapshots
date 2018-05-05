@@ -27,6 +27,7 @@ functions.
 <#Include Label="NamesLocalVariablesFunction">
 <#Include Label="FilenameFunc">
 <#Include Label="StartlineFunc">
+<#Include Label="LocationFunc">
 <#Include Label="PageSource">
 
 </Section>
@@ -42,17 +43,12 @@ several arguments</Heading>
 
 </Section>
 
-<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
-<Section Label="Calling a function with a time limit">
-<Heading>Calling a function with a time limit</Heading>
+<Section Label="Memoizing a function">
+<Heading>Wrapping a function, so the values produced are cached</Heading>
 
+<#Include Label="MemoizePosIntFunction">
 
-<#Include Label="CallWithTimeout">
-<#Include Label="GAPInfo.TimeoutsSupported">
 </Section>
-
-
-
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Section Label="Functions that do nothing">

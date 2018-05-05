@@ -6,8 +6,6 @@
 ##
 #Y  Copyright (C)  1998,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
-##  To be listed in testinstall.g
-##
 gap> START_TEST("ctblmono.tst");
 gap> S4:= SymmetricGroup( 4 );;  SetName( S4, "S4");
 gap> Sl23:= SL( 2, 3 );;
@@ -104,7 +102,7 @@ gap> MinimalNonmonomialGroup(  1, 14 );
 2^(1+6):D14
 gap> MinimalNonmonomialGroup(  2, 14 );
 (2^(1+6)Y4):D14
-gap> STOP_TEST( "ctblmono.tst", 2290000);
+gap> STOP_TEST( "ctblmono.tst", 1);
 
 #############################################################################
 ##

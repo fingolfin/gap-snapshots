@@ -225,8 +225,7 @@ digraph filters {
 "IsShadowElementsOfLieGeometryRep" -> "IsShadowSubspacesOfProjectiveSpaceRep";
 "IsSPGeneralMapping" -> "IsProjectiveSpaceIsomorphism";
 "IsProjectiveSpaceIsomorphism" -> "IsStandardDualityOfProjectiveSpace";
-"IsProjectiveSpaceIsomorphism" -> "IsIdentityMappingOfElementsOfProjectiveSpac\
-e";
+"IsProjectiveSpaceIsomorphism" -> "IsIdentityMappingOfElementsOfProjectiveSpace";
 "IsComponentObjectRep" -> "IsProjGrpElWithFrobWithPSIsom";
 "IsMultiplicativeElementWithInverse" -> "IsProjGrpElWithFrobWithPSIsom";
 "IsProjGrpElWithFrobWithPSIsom" -> "IsProjGrpElWithFrobWithPSIsomRep";
@@ -236,11 +235,9 @@ e";
 "IsSubspacesOfProjectiveSpace" -> "IsSubspacesOfClassicalPolarSpace";
 "IsSubspacesOfProjectiveSpaceRep" -> "IsSubspacesOfClassicalPolarSpaceRep";
 "IsAllSubspacesOfProjectiveSpace" -> "IsAllSubspacesOfClassicalPolarSpace";
-"IsAllSubspacesOfProjectiveSpaceRep" -> "IsAllSubspacesOfClassicalPolarSpaceRe\
-p";
+"IsAllSubspacesOfProjectiveSpaceRep" -> "IsAllSubspacesOfClassicalPolarSpaceRep";
 "IsShadowElementsOfLieGeometry" -> "IsShadowSubspacesOfClassicalPolarSpace";
-"IsShadowElementsOfLieGeometryRep" -> "IsShadowSubspacesOfClassicalPolarSpaceR\
-ep";
+"IsShadowElementsOfLieGeometryRep" -> "IsShadowSubspacesOfClassicalPolarSpaceRep";
 "IsFlagOfProjectiveSpace" -> "IsFlagOfClassicalPolarSpace";
 "IsMapping" -> "IsGeometryMorphism";
 "IsComponentObjectRep" -> "IsDiagram";

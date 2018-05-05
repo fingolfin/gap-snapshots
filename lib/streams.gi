@@ -295,7 +295,7 @@ function(name)
     Print("#I  Already logging to ",IN_LOGGING_MODE,"\n");
     return;
   fi;
-  expandname := USER_HOME_EXPAND( name );
+  expandname := UserHomeExpand( name );
   LOG_TO( expandname );
   IN_LOGGING_MODE := name;
 end ); # ignore return value
@@ -333,7 +333,7 @@ InstallMethod( InputLogTo,
 InstallOtherMethod( InputLogTo,
     "for output file",
     [ IsString ],
-    function(name) name := USER_HOME_EXPAND(name); INPUT_LOG_TO(name); end );
+    function(name) name := UserHomeExpand(name); INPUT_LOG_TO(name); end );
     # ignore return value
 
 
@@ -364,7 +364,7 @@ InstallMethod( OutputLogTo,
 InstallOtherMethod( OutputLogTo,
     "for output file",
     [ IsString ],
-    function(name) name := USER_HOME_EXPAND(name); OUTPUT_LOG_TO(name); end );
+    function(name) name := UserHomeExpand(name); OUTPUT_LOG_TO(name); end );
     # ignore return value
 
 
@@ -636,14 +636,14 @@ InstallMethod( InputTextFile,
     [ IsString ],
 function( str )
     local   fid;
-    str := USER_HOME_EXPAND(str);
+    str := UserHomeExpand(str);
 
     fid := INPUT_TEXT_FILE(str);
     if fid = fail  then
         return fail;
     else
         AddSet( InputTextFileStillOpen, fid );
-        return Objectify( InputTextFileType, [fid,Immutable(str)] );
+        return Objectify( InputTextFileType, Immutable([fid, str]) );
     fi;
 end );
 
@@ -801,7 +801,7 @@ InputTextNoneType := NewType(
 #M  InputTextNone() . . . . . . . . . .  create a new dummy input text stream
 ##
 InstallGlobalFunction( InputTextNone, function()
-    return Objectify( InputTextNoneType, [] );
+    return Objectify( InputTextNoneType, Immutable([]) );
 end );
 
 
@@ -1074,14 +1074,14 @@ InstallMethod( OutputTextFile,
       IsBool ],
 function( str, append )
     local   fid;
-    str := USER_HOME_EXPAND(str);
+    str := UserHomeExpand(str);
 
     fid := OUTPUT_TEXT_FILE( str, append );
     if fid = fail  then
         return fail;
     else
         AddSet( OutputTextFileStillOpen, fid );
-        return Objectify( OutputTextFileType, [fid,Immutable(str), true] );
+        return Objectify( OutputTextFileType, Immutable([fid, str, true]) );
     fi;
 end );
 
@@ -1237,7 +1237,7 @@ OutputTextNoneType := NewType(
 #M  OutputTextNone()  . . . . . . . . . create a new dummy output text stream
 ##
 InstallGlobalFunction( OutputTextNone, function()
-    return Objectify( OutputTextNoneType, [] );
+    return Objectify( OutputTextNoneType, Immutable([]) );
 end );
 
 
@@ -1401,7 +1401,7 @@ InstallGlobalFunction( InputOutputLocalProcess,
     od;
     basename := exec{[i+1..Length(exec)]};
     return Objectify(InputOutputStreamByPtyDefaultType,
-                   [ptynum, basename, argts, false]);
+                   Immutable([ptynum, basename, argts, false]) );
 end);
 
 #############################################################################

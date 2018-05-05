@@ -29,40 +29,21 @@
 #ifndef GAP_GVARS_H
 #define GAP_GVARS_H
 
+#include <src/objects.h>
 
 /****************************************************************************
 **
-*V  ValGVars  . . . . . . . . . . . . . . . . . .  values of global variables
-*V  PtrGVars  . . . . . . . . . . . . . pointer to values of global variables
+*F  ValGVar(<gvar>)   . . . . . . . . . . . . . . .  value of global variable
 **
-**  'ValGVars' is the bag containing the values of the global variables.
-**
-**  'PtrGVars' is a pointer  to the 'ValGVars'  bag.  This makes it faster to
-**  access global variables.
-*/
-extern  Obj             ValGVars;
-
-extern  Obj *           PtrGVars;
-
-
-/****************************************************************************
-**
-*F  VAL_GVAR(<gvar>)  . . . . . . . . . . . . . . .  value of global variable
-**
-**  'VAL_GVAR' returns the  value of the global  variable  <gvar>.  If <gvar>
-**  has no  assigned value, 'VAL_GVAR' returns 0.   In this case <gvar> might
+**  'ValGVar' returns the  value of the global  variable  <gvar>.  If <gvar>
+**  has no  assigned value, 'ValGVar' returns 0.   In this case <gvar> might
 **  be an automatic global variable, and one should call 'ValAutoGVar', which
 **  will return the value of <gvar>  after evaluating <gvar>-s expression, or
 **  0 if <gvar> was not an automatic variable.
 */
-#define VAL_GVAR(gvar)          PtrGVars[ (gvar) ]
+extern Obj ValGVar(UInt gvar);
 
-
-/****************************************************************************
-**
-*V  WriteGVars  . . . . . . . . . . . . .  writable flags of global variables
-*/
-extern Obj WriteGVars;
+#define VAL_GVAR(gvar)      ValGVar(gvar)
 
 
 /****************************************************************************
@@ -107,6 +88,20 @@ extern  void            AssGVar (
 extern  Obj             ValAutoGVar (
             UInt                gvar );
 
+/****************************************************************************
+**
+*F  ValGVarTL(<gvar>) . . . . . . . . value of a global/thread-local variable
+**
+**  'ValGVarTL' returns the value of the global or thread-local variable
+**  <gvar>.
+*/
+#ifdef HPCGAP
+extern  Obj             ValGVarTL (
+            UInt                gvar );
+#else
+#define ValGVarTL(gvar)     ValGVar(gvar)
+#endif
+
 
 /****************************************************************************
 **
@@ -131,25 +126,22 @@ extern  Obj            NameGVarObj (
 
 /****************************************************************************
 **
+*F  ExprGVar(<gvar>)  . . . . . .  expression of an automatic global variable
+**
+**  'ExprGVar' returns the expression of the automatic global variable <gvar>.
+*/
+extern  Obj            ExprGVar (
+            UInt                gvar );
+
+
+/****************************************************************************
+**
 *F  GVarName(<name>)  . . . . . . . . . . . . . .  global variable for a name
 **
 **  'GVarName' returns the global variable with the name <name>.
 */
 extern UInt GVarName (
             const Char *              name );
-
-
-/****************************************************************************
-**
-*V  Tilde . . . . . . . . . . . . . . . . . . . . . . . . global variable '~'
-**
-**  'Tilde' is the  identifier for the global variable  '~', the one  used in
-**  expressions such as '[ [ 1, 2 ], ~[1] ]'.
-**
-**  Actually  when such expressions  appear in functions, one should probably
-**  use a local variable.  But for now this is good enough.
-*/
-extern  UInt            Tilde;
 
 
 /****************************************************************************
@@ -174,6 +166,7 @@ extern UInt completion_gvar (
 **
 *F  MakeReadOnlyGVar( <gvar> )  . . . . . .  make a global variable read only
 *F  MakeReadWriteGVar( <gvar> ) . . . . . . make a global variable read-write
+*F  MakeConstantGVar( <gvar> ) . . . . . . make a global variable constant
 */
 extern void MakeReadOnlyGVar (
     UInt                gvar );
@@ -181,19 +174,53 @@ extern void MakeReadOnlyGVar (
 extern void MakeReadWriteGVar (
     UInt                gvar );
 
-extern Int IsReadOnlyGVar (
+extern void MakeConstantGVar (
     UInt                gvar );
 
 /****************************************************************************
 **
+*F  MakeThreadLocalVar( <gvar>, <rnam> ) . . . . make a variable thread-local
+*/
+#ifdef HPCGAP
+extern void MakeThreadLocalVar (
+    UInt                gvar,
+    UInt		rnam );
+#endif
 
+extern Int IsReadOnlyGVar (
+    UInt                gvar );
+
+extern Int IsConstantGVar(UInt gvar);
+
+
+/****************************************************************************
+**
+**  Some convenient helpers
+*/
+static inline void AssReadOnlyGVar(UInt gvar, Obj val)
+{
+    AssGVar(gvar, val);
+    MakeReadOnlyGVar(gvar);
+}
+
+static inline void AssConstantGVar(UInt gvar, Obj val)
+{
+    AssGVar(gvar, val);
+    MakeConstantGVar(gvar);
+}
+
+#define ExportAsConstantGVar(symbol) \
+    AssConstantGVar(GVarName(#symbol), INTOBJ_INT(symbol))
+
+
+/****************************************************************************
+**
 *F * * * * * * * * * * * * * copies and fopies  * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  InitCopyGVar( <name>, <copy> )  . .  declare C variable as copy of global
 **
 **  'InitCopyGVar' makes  the C variable <cvar>  at address  <copy> a copy of
@@ -206,11 +233,6 @@ extern Int IsReadOnlyGVar (
 **  This is OK for garbage collection, but  a real problem  for saving in any
 **  event, this information  does not really want to  be saved  because it is
 **  kernel centred rather than workspace centred.
-**
-**  Accordingly we     provide  two    functions    `RemoveCopyFopyInfo'  and
-**  `RestoreCopyFopyInfo' to  remove  or restore   the  information from  the
-**  workspace.  The  Restore  function is  also   intended to  be used  after
-**  loading a saved workspace
 */
 extern void InitCopyGVar (
     const Char *        name ,
@@ -244,38 +266,56 @@ extern void UpdateCopyFopyInfo ( void );
 
 /****************************************************************************
 **
-*F  RemoveCopyFopyInfo()  . . . remove the info about copies of gvars from ws
+*F  GVarsAfterCollectBags()
 */
-extern void RemoveCopyFopyInfo( void );
+extern void GVarsAfterCollectBags( void );
 
 
 /****************************************************************************
 **
-*F  RestoreCopyFopyInfo() . . .  restore the info from the copy in the kernel
+*F  DeclareGVar(<gvar>, <name>) . . . . . .  declare global variable by name
+*F  GVarValue(<gvar>) . . . . . . . . . return value of <gvar>, 0 if unbound
+*F  GVarObj(<gvar>) . . . . . . . . return value of <gvar>, error if unbound
+*F  GVarFunction(<gvar>) . . . . return value of <gvar>, error if not a function
+*F  GVarOptFunction(<gvar>) . . return value of <gvar>, 0 if unbound/no function
+*F  SetGVar(<gvar>, <obj>) . . . . . . . . . . . . .  assign <obj> to <gvar>
 */
-extern void RestoreCopyFopyInfo( void );
 
+#ifdef HPCGAP
 
 
 /****************************************************************************
 **
+*T  GVarDescriptor  . . . . . . . . . . . .  descriptor for a global variable
+*/
 
+typedef struct GVarDescriptor {
+    Obj *ref;
+    const char *name;
+    struct GVarDescriptor *next;
+} GVarDescriptor;
+
+
+extern void DeclareGVar(GVarDescriptor *gvar, const char *name);
+extern Obj GVarValue(GVarDescriptor *gvar);
+extern Obj GVarObj(GVarDescriptor *gvar);
+extern Obj GVarFunction(GVarDescriptor *gvar);
+extern Obj GVarOptFunction(GVarDescriptor *gvar);
+extern void SetGVar(GVarDescriptor *gvar, Obj obj);
+#endif
+
+
+/****************************************************************************
+**
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  InitInfoGVars() . . . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoGVars ( void );
 
 
 #endif // GAP_GVARS_H
-
-/****************************************************************************
-**
-
-*E  gvars.h . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

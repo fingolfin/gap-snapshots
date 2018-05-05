@@ -5,8 +5,6 @@
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
-##  To be listed in testinstall.g
-##
 gap> START_TEST("relation.tst");
 gap> ##################################################
 gap> ##
@@ -191,7 +189,7 @@ gap> Size(UnderlyingRelation(rel));
 45
 gap> Size(GeneratorsOfEquivalenceRelationPartition(EquivalenceRelationByPairs(dom,el)));
 9
-gap> STOP_TEST( "relation.tst", 700000);
+gap> STOP_TEST( "relation.tst", 1);
 
 #############################################################################
 ##

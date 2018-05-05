@@ -36,8 +36,8 @@
   table  need  to  be  computed  only  once.  For example, suppose you want to
   restrict a character to a normal subgroup [22XN[122X that was constructed as a normal
   closure  of  some group elements, and suppose that you have already computed
-  with   normal   subgroups   (by   calls   to  [2XNormalSubgroups[102X  ([14X39.19-8[114X)  or
-  [2XMaximalNormalSubgroups[102X  ([14X39.19-9[114X))  and  their  character  tables.  Then you
+  with   normal   subgroups   (by   calls   to  [2XNormalSubgroups[102X  ([14X39.19-9[114X)  or
+  [2XMaximalNormalSubgroups[102X  ([14X39.19-10[114X))  and  their  character  tables. Then you
   should  look  in the lists of known normal subgroups whether [22XN[122X is contained,
   and  if  so you can use the known character table. A mechanism that supports
   this for normal subgroups is described in [14X71.23[114X.[133X
@@ -165,8 +165,8 @@
     [4X[28Xrec( character := Character( CharacterTable( Group([128X[104X
     [4X[28X    [ [ [ 0*Z(3), Z(3) ], [ Z(3)^0, 0*Z(3) ] ], [128X[104X
     [4X[28X      [ [ Z(3), 0*Z(3) ], [ 0*Z(3), Z(3) ] ], [128X[104X
-    [4X[28X      [ [ Z(3), Z(3)^0 ], [ Z(3)^0, Z(3)^0 ] ] ]) ),[128X[104X
-    [4X[28X  [ 1, -1, 1, -1, 1 ] ), comment := "restriction checked",[128X[104X
+    [4X[28X      [ [ Z(3)^0, Z(3) ], [ Z(3), Z(3) ] ] ]) ),[128X[104X
+    [4X[28X  [ 1, -1, 1, -1, 1 ] ), comment := "restriction checked", [128X[104X
     [4X[28X  isHomogeneous := false, multiplicity := 1 )[128X[104X
     [4X[25Xgap>[125X [27Xchi:= Irr( Sl23 )[4];[127X[104X
     [4X[28XCharacter( CharacterTable( SL(2,3) ), [ 2, 1, 1, -2, -1, -1, 0 ] )[128X[104X
@@ -221,8 +221,8 @@
     [4X[28Xrec( character := Character( CharacterTable( Group([128X[104X
     [4X[28X    [ [ [ 0*Z(3), Z(3) ], [ Z(3)^0, 0*Z(3) ] ], [128X[104X
     [4X[28X      [ [ Z(3), 0*Z(3) ], [ 0*Z(3), Z(3) ] ], [128X[104X
-    [4X[28X      [ [ Z(3), Z(3)^0 ], [ Z(3)^0, Z(3)^0 ] ] ]) ),[128X[104X
-    [4X[28X  [ 1, -1, 1, -1, 1 ] ), comment := "restriction checked",[128X[104X
+    [4X[28X      [ [ Z(3)^0, Z(3) ], [ Z(3), Z(3) ] ] ]) ),[128X[104X
+    [4X[28X  [ 1, -1, 1, -1, 1 ] ), comment := "restriction checked", [128X[104X
     [4X[28X  isQuasiPrimitive := false )[128X[104X
   [4X[32X[104X
   

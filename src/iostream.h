@@ -13,22 +13,22 @@
 #ifndef GAP_IOSTREAM_H
 #define GAP_IOSTREAM_H
 
+#include <src/system.h>
 
+// Provide a feature macro to let libraries check if GAP supports
+// CheckChildStatusChanged.
+#define GAP_HasCheckChildStatusChanged
+
+int CheckChildStatusChanged(int childPID, int status);
 
 /*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  InitInfoFloat()  . . . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoIOStream ( void );
 
 
 #endif // GAP_IOSTREAM_H
-
-/****************************************************************************
-**
-*E  float.h  . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

@@ -10,6 +10,12 @@
 ##  This file contains generic methods for magmas with zero adjoined.
 ##
 
+InstallMethod(MultiplicativeZero, "for a multiplicative element with zero",
+[IsMultiplicativeElementWithZero], 
+function(x)
+  return MultiplicativeZeroOp(x);
+end);
+
 InstallMethod( IsMultiplicativeZero,
 "for magma with multiplicative zero and multiplicative element",
 IsCollsElms,
@@ -110,9 +116,8 @@ function(m)
   local filts, fam, type, inj, zero, gens, out;
   
   if Length(GeneratorsOfMagma(m))=0 then
-    Error("usage: it is only possible to adjoin a zero to a magma",  
+    ErrorNoReturn("usage: it is only possible to adjoin a zero to a magma",  
     " with generators,");
-    return;
   fi;
  
   # filters for the elements
@@ -184,7 +189,6 @@ function(m)
   Print("<");
   PrintObj(Source(UnderlyingInjectionZeroMagma(m)));
   Print(" with 0 adjoined>");
-  return;
 end);  
 
 #
@@ -195,7 +199,6 @@ function(m)
   Print("<");
   ViewObj(Source(UnderlyingInjectionZeroMagma(m)));
   Print(" with 0 adjoined>");
-  return; 
 end);
 
 #
@@ -275,6 +278,5 @@ function(x)
     PrintObj(x!.elt);
   fi;
   Print(">");
-  return;
 end);
 

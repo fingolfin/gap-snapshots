@@ -83,10 +83,9 @@ local   dim, p, nul, one, C, L, blt, B, O, Q, i, j, v, w, n, z, root,r;
       Add(v,0);
     od;
     v:=v*one;
-    w:=ShallowCopy( v );
-    ConvertToVectorRep(w,p);
-    v:=Concatenation(v,[one]);
-    ConvertToVectorRep(v,p);
+    w:=ImmutableVector(p,v);
+    Add(v, one);
+    v:=ImmutableVector(p,v);
     O:=OrbitStabilizer( S,v, Sgens,mats);
     for v  in O.orbit  do
         n:=1;
@@ -1017,7 +1016,7 @@ local G,N,M,keep,H,K,f,primes,p,A,S,L,hom,c,cn,nc,ncn,lnc,lncn,q,qs,qn,ser,
 	  p^Length(bas.factorspace)," Complements");
 	elm:=VectorSpace(GF(p),bas.factorspace,Zero(ocr.oneCocycles));
 	if Length(bas.factorspace)=0 then
-	  elm:=Elements(elm);
+	  elm:=AsSSortedList(elm);
 	else
 	  elm:=Enumerator(elm);
 	fi;
@@ -1207,14 +1206,50 @@ end);
 #M  ComplementcClassesRepresentatives( <G>, <N> )
 ##
 InstallMethod( ComplementClassesRepresentatives,
-  "tell that the normal subgroup must be solvable",IsIdenticalObj,
-  [IsGroup,IsGroup],-2*RankFilter(IsGroup),
+  "tell that the normal subgroup or factor must be solvable", IsIdenticalObj,
+  [ IsGroup, IsGroup ], -2*RankFilter(IsGroup),
 function( G, N )
-  if IsSolvableGroup(N) then
+  if IsSolvableGroup(N) or HasSolvableFactorGroup(G, N) then
     TryNextMethod();
   fi;
-  Error("Cannot compute complement classes for nonsolvable normal subgroups");
+  Error("cannot compute complements if both N and G/N are nonsolvable");
 end);
+
+
+#############################################################################
+##
+#M  ComplementcClassesRepresentatives( <G>, <N> ) . from conj. cl. subgroups
+##
+InstallMethod( ComplementClassesRepresentatives,
+  "using conjugacy classes of subgroups", IsIdenticalObj,
+  [ IsGroup and HasConjugacyClassesSubgroups, IsGroup ], 0,
+
+function( G, N )
+
+  local C, Hc, H;
+
+  # if <N> is trivial the only complement is <G>
+  if IsTrivial(N) then
+      C := [ G ];
+  # if <G> and <N> are equal the only complement is trivial
+  elif G = N  then
+      C := [ TrivialSubgroup(G) ];
+  elif not IsNormal(G, N) then
+    Error("N must be normal in G");
+  else
+    C := [ ];
+    for Hc in ConjugacyClassesSubgroups(G) do
+      H := Representative(Hc);
+      if (( CanComputeSize(G) and CanComputeSize(N) and CanComputeSize(H) and
+	  Size(G) = Size(N)*Size(H) ) or G = ClosureGroup(N, H) )
+	  and IsTrivial(Intersection(N, H)) then
+	Add(C, H);
+      fi;
+    od;
+  fi;
+  return C;
+end);
+
 
 #############################################################################
 ##

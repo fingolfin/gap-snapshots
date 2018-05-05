@@ -20,23 +20,28 @@
 
 BIND_GLOBAL( "GAPInfo", rec(
 
-# do not edit the following three lines. Occurences of `4.8.10' and `15-Jan-2018'
+# do not edit the following three lines. Occurences of `4.9.1' and `05-May-2018'
 # will be replaced by string matching by distribution wrapping scripts.
-    Version := "4.8.10",
-    Date := "15-Jan-2018",
-    NeedKernelVersion := "4.8.10",
+    Version := MakeImmutable("4.9.1"),
+    Date := MakeImmutable("05-May-2018"),
+    NeedKernelVersion := MakeImmutable("4.9.1"),
 
 # Without the needed packages, GAP does not start.
     Dependencies := rec(
       NeededOtherPackages := [
         [ "gapdoc", ">= 1.2" ],
+        [ "primgrp", ">= 3.1.0" ],
+        [ "smallgrp", ">= 1.0" ],
+        [ "transgrp", ">= 1.0" ],
       ],
     ),
+# There is no SuggestedOtherPackages here because the default value of
+# the user preference PackagesToLoad does the job      
 
     HasReadGAPRC:= false,
 
     # list of all reserved keywords
-    Keywords:=ALL_KEYWORDS(),
+    Keywords:=MakeImmutable(ALL_KEYWORDS()),
 
     # the maximal number of arguments a method can have
     MaxNrArgsMethod:= 6,
@@ -72,7 +77,6 @@ BIND_GLOBAL( "GAPInfo", rec(
            help := [ "set hint for maximal workspace size (GAP may", "allocate more)"] ),
       rec( short:= "K", long := "limitworkspace", default := "0", arg := "<mem>",
            help := [ "set maximal workspace size (GAP never", "allocates more)"] ),
-      rec( short:= "c", default := "0", arg := "<mem>", help := [ "set the cache size value"] ),
       rec( short:= "s", default := "4g", arg := "<mem", help := [ "set the initially mapped virtual memory" ] ),
       rec( short:= "a", default := "0",  arg := "<mem>",help := [ "set amount to pre-malloc-ate",
              "postfix 'k' = *1024, 'm' = *1024*1024,", "'g' = *1024*1024*1024"] ),
@@ -90,20 +94,20 @@ BIND_GLOBAL( "GAPInfo", rec(
       rec( short:= "M", default := false, help := ["disable/enable loading of compiled modules"] ),
       rec( short:= "N", default := false, help := ["unused, for backward compatibility only"] ),
       rec( short:= "O", default := false, help := ["disable/enable loading of obsolete files"] ),
-      rec( short:= "X", default := false, help := ["enable/disable CRC checking for compiled modules"] ),
       rec( short:= "T", default := false, help := ["disable/enable break loop"] ),
-      rec( short:= "i", default := "", arg := "<file>", help := [ "change the name of the init file"] ),
+      rec( long := "quitonbreak", default := false, help := ["quit GAP with non-zero return value instead of entering break loop"]),
       ,
       rec( short:= "L", default := "", arg := "<file>", help := [ "restore a saved workspace"] ),
       rec( short:= "R", default := false, help := ["prevent restoring of workspace (ignoring -L)"] ),
       ,
       rec( short:= "p", default := false, help := ["enable/disable package output mode"] ),
       rec( short := "E", default :=false ),
-      rec( short := "U", default := "" ),     # -C -U undocumented options to the compiler
       rec( short := "s", default := "4g" ),
       rec( short := "z", default := "20" ),
       rec( long := "prof", default := "", arg := "<file>",
            help := [ "Run ProfileLineByLine(<filename>) on GAP start"] ),
+      rec( long := "memprof", default := "", arg := "<file>",
+           help := [ "Run ProfileLineByLine(<filename>) with recordMem := true on GAP start"] ),
       rec( long := "cover", default := "", arg := "<file>",
            help := [ "Run CoverageLineByLine(<filename>) on GAP start"] ),
           ],
@@ -113,11 +117,9 @@ BIND_GLOBAL( "GAPInfo", rec(
 #############################################################################
 ##
 #V  GAPInfo.BytesPerVariable
-#V  DOUBLE_OBJLEN
 ##
 ##  <ManSection>
 ##  <Var Name="GAPInfo.BytesPerVariable"/>
-##  <Var Name="DOUBLE_OBJLEN"/>
 ##
 ##  <Description>
 ##  <Ref Var="GAPInfo.BytesPerVariable"/> is the number of bytes used for one
@@ -133,7 +135,6 @@ while TNUM_OBJ( 2^((GAPInfo.BytesPerVariable-1)*8) )
     = TNUM_OBJ( 2^((GAPInfo.BytesPerVariable+1)*8) ) do
   GAPInfo.BytesPerVariable:= GAPInfo.BytesPerVariable + 4;
 od;
-BIND_GLOBAL( "DOUBLE_OBJLEN", 2*GAPInfo.BytesPerVariable );
 
 
 #############################################################################
@@ -218,13 +219,6 @@ CallAndInstallPostRestore( function()
     GAPInfo.BuildVersion:= GAPInfo.KernelInfo.BUILD_VERSION;
     GAPInfo.BuildDateTime:= GAPInfo.KernelInfo.BUILD_DATETIME;
     GAPInfo.Architecture:= GAPInfo.KernelInfo.GAP_ARCHITECTURE;
-    GAPInfo.ArchitectureBase:= GAPInfo.KernelInfo.GAP_ARCHITECTURE;
-    for i in [ 1 .. LENGTH( GAPInfo.Architecture ) ] do
-      if GAPInfo.Architecture[i] = '/' then
-        GAPInfo.ArchitectureBase:= GAPInfo.Architecture{ [ 1 .. i-1 ] };
-        break;
-      fi;
-    od;
     # On 32-bit we have to adjust some values:
     if GAPInfo.BytesPerVariable = 4 then
       i := 1;
@@ -512,23 +506,6 @@ end);
 BIND_GLOBAL("ARCH_IS_UNIX",function()
   return not ARCH_IS_WINDOWS();
 end);
-
-#############################################################################
-##
-#V  GAPInfo.TimeoutsSupported
-##
-##  <#GAPDoc Label="GAPInfo.TimeoutsSupported">
-##  <ManSection>
-##  <Var Name="GAPInfo.TimeoutsSupported"/>
-##
-## <Description>
-##  tests whether this installation of &GAP; supports the timeout functionality
-## of <Ref Func="CallWithTimeout"/> and related functions. 
-##  </Description>
-##  </ManSection>
-##  <#/GAPDoc>
-
-GAPInfo.TimeoutsSupported := TIMEOUTS_SUPPORTED();
 
 #############################################################################
 ##

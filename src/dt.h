@@ -15,6 +15,8 @@
 #ifndef GAP_DT_H
 #define GAP_DT_H
 
+#include <src/system.h>
+
 extern void  UnmarkTree(
                   Obj   z );
 
@@ -149,25 +151,15 @@ extern Obj Power(
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  InitInfoDeepThought() . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoDeepThought ( void );
 
 
 #endif // GAP_DT_H
-
-/****************************************************************************
-**
-
-*E  dt.h  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-**
-*/
-

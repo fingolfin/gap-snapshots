@@ -1,4 +1,3 @@
-
 /****************************************************************************
 **
 *W  vecffe.c                    GAP source                      Werner Nickel
@@ -8,50 +7,23 @@
 *Y  Copyright (C) 2002 The GAP Group
 **
 */
-#include        "system.h"              /* system dependent part           */
 
+#include <src/vecffe.h>
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
-
-#include        "gap.h"                 /* error handling, initialisation  */
-
-#include        "ariths.h"              /* basic arithmetic                */
-#include        "lists.h"               /* generic lists                   */
-
-#include        "bool.h"                /* booleans                        */
-
-#include        "integer.h"             /* integers                        */
-#include        "finfield.h"            /* finite fields                   */
-
-#include        "gvars.h"               /* global variables                */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "listoper.h"            /* operations for generic lists    */
-#include        "plist.h"               /* plain lists                     */
-#include        "string.h"              /* strings                         */
-
-#include        "vecffe.h"              /* functions for fin field vectors */
-
-#include        "range.h"               /* ranges                          */
-
-#include        "calls.h"               /* needed for opers.h              */
-#include        "opers.h"               /* for TRY_NEXT_METHOD             */
-
-#include	"code.h"		/* coder                           */
-#include	"thread.h"		/* threads			   */
-#include	"tls.h"			/* thread-local storage		   */
-
-#include <assert.h>
+#include <src/ariths.h>
+#include <src/calls.h>
+#include <src/bool.h>
+#include <src/finfield.h>
+#include <src/gap.h>
+#include <src/gvars.h>
+#include <src/listoper.h>
+#include <src/opers.h>
+#include <src/plist.h>
 
 
 /****************************************************************************
 **
-*F  SumFFEVecFFE(<elmL>,<vecR>) . . . .  sum of an fin field elm and a vector
+*F  SumFFEVecFFE(<elmL>,<vecR>) . . . .  sum of a finite field elm and a vector
 **
 **  'SumFFEVecFFE' returns the sum of the fin field elm <elmL> and the vector
 **  <vecR>.  The sum is a  list, where each element is  the sum of <elmL> and
@@ -67,12 +39,12 @@ Obj             SumFFEVecFFE (
     Obj                 vecS;           /* handle of the sum               */
     Obj *               ptrS;           /* pointer into the sum            */
     FFV                 valS;           /* the value of a sum              */
-    Obj *               ptrR;           /* pointer into the right operand  */
+    const Obj *         ptrR;           /* pointer into the right operand  */
     FFV                 valR;           /* the value of an element in vecR */
     UInt                len;            /* length                          */
     UInt                i;              /* loop variable                   */
     FF                  fld;            /* finite field                    */
-    FF *                succ;           /* successor table                 */
+    const FFV *         succ;           /* successor table                 */
     FFV                 valL;           /* the value of elmL               */
 
     /* get the field and check that elmL and vecR have the same field      */
@@ -99,7 +71,7 @@ Obj             SumFFEVecFFE (
 
     /* loop over the elements and add                                      */
     valL = VAL_FFE(elmL);
-    ptrR = ADDR_OBJ(vecR);
+    ptrR = CONST_ADDR_OBJ(vecR);
     ptrS = ADDR_OBJ(vecS);
     for (i = 1; i <= len; i++) {
         valR = VAL_FFE(ptrR[i]);
@@ -129,11 +101,11 @@ Obj             SumVecFFEFFE (
 {
     Obj                 vecS;           /* handle of the sum               */
     Obj *               ptrS;           /* pointer into the sum            */
-    Obj *               ptrL;           /* pointer into the left operand   */
+    const Obj *         ptrL;           /* pointer into the left operand   */
     UInt                len;            /* length                          */
     UInt                i;              /* loop variable                   */
     FF                  fld;            /* finite field                    */
-    FF *                succ;           /* successor table                 */
+    const FFV *         succ;           /* successor table                 */
     FFV                 valR;           /* the value of elmR               */
     FFV                 valL;           /* the value of an element in vecL */
     FFV                 valS;           /* the value of a sum              */
@@ -162,7 +134,7 @@ Obj             SumVecFFEFFE (
 
     /* loop over the elements and add                                      */
     valR = VAL_FFE(elmR);
-    ptrL = ADDR_OBJ(vecL);
+    ptrL = CONST_ADDR_OBJ(vecL);
     ptrS = ADDR_OBJ(vecS);
     for (i = 1; i <= len; i++) {
         valL = VAL_FFE(ptrL[i]);
@@ -192,15 +164,15 @@ Obj             SumVecFFEVecFFE (
     Obj                 vecS;           /* handle of the sum               */
     Obj *               ptrS;           /* pointer into the sum            */
     FFV                 valS;           /* one element of sum list         */
-    Obj *               ptrL;           /* pointer into the left operand   */
+    const Obj *         ptrL;           /* pointer into the left operand   */
     FFV                 valL;           /* one element of left operand     */
-    Obj *               ptrR;           /* pointer into the right operand  */
+    const Obj *         ptrR;           /* pointer into the right operand  */
     FFV                 valR;           /* one element of right operand    */
     UInt                lenL, lenR, len; /* length                          */
     UInt                lenmin;
     UInt                i;              /* loop variable                   */
     FF                  fld;            /* finite field                    */
-    FF *                succ;           /* successor table                 */
+    const FFV *         succ;           /* successor table                 */
 
     /* check the lengths                                                   */
     lenL = LEN_PLIST(vecL);
@@ -235,8 +207,8 @@ Obj             SumVecFFEVecFFE (
     succ = SUCC_FF(fld);
 
     /* loop over the elements and add                                      */
-    ptrL = ADDR_OBJ(vecL);
-    ptrR = ADDR_OBJ(vecR);
+    ptrL = CONST_ADDR_OBJ(vecL);
+    ptrR = CONST_ADDR_OBJ(vecR);
     ptrS = ADDR_OBJ(vecS);
     for (i = 1; i <= lenmin; i++) {
         valL = VAL_FFE(ptrL[i]);
@@ -273,11 +245,11 @@ Obj             DiffFFEVecFFE (
 {
     Obj                 vecD;           /* handle of the difference        */
     Obj *               ptrD;           /* pointer into the difference     */
-    Obj *               ptrR;           /* pointer into the right operand  */
+    const Obj *         ptrR;           /* pointer into the right operand  */
     UInt                len;            /* length                          */
     UInt                i;              /* loop variable                   */
     FF                  fld;            /* finite field                    */
-    FF *                succ;           /* successor table                 */
+    const FFV *         succ;           /* successor table                 */
     FFV                 valR;           /* the value of elmL               */
     FFV                 valL;           /* the value of an element in vecR */
     FFV                 valD;           /* the value of a difference       */
@@ -306,7 +278,7 @@ Obj             DiffFFEVecFFE (
 
     /* loop over the elements and subtract                                 */
     valL = VAL_FFE(elmL);
-    ptrR = ADDR_OBJ(vecR);
+    ptrR = CONST_ADDR_OBJ(vecR);
     ptrD = ADDR_OBJ(vecD);
     for (i = 1; i <= len; i++) {
         valR = VAL_FFE(ptrR[i]);
@@ -338,12 +310,12 @@ Obj             DiffVecFFEFFE (
     Obj                 vecD;           /* handle of the difference        */
     Obj *               ptrD;           /* pointer into the difference     */
     FFV                 valD;           /* the value of a difference       */
-    Obj *               ptrL;           /* pointer into the left operand   */
+    const Obj *         ptrL;           /* pointer into the left operand   */
     FFV                 valL;           /* the value of an element in vecL */
     UInt                len;            /* length                          */
     UInt                i;              /* loop variable                   */
     FF                  fld;            /* finite field                    */
-    FF *                succ;           /* successor table                 */
+    const FFV *         succ;           /* successor table                 */
     FFV                 valR;           /* the value of elmR               */
 
     /* get the field and check that vecL and elmR have the same field      */
@@ -371,7 +343,7 @@ Obj             DiffVecFFEFFE (
     /* loop over the elements and subtract                                 */
     valR = VAL_FFE(elmR);
     valR = NEG_FFV(valR, succ);
-    ptrL = ADDR_OBJ(vecL);
+    ptrL = CONST_ADDR_OBJ(vecL);
     ptrD = ADDR_OBJ(vecD);
     for (i = 1; i <= len; i++) {
         valL = VAL_FFE(ptrL[i]);
@@ -402,15 +374,15 @@ Obj             DiffVecFFEVecFFE (
     Obj                 vecD;           /* handle of the difference        */
     Obj *               ptrD;           /* pointer into the difference     */
     FFV                 valD;           /* one element of difference list  */
-    Obj *               ptrL;           /* pointer into the left operand   */
+    const Obj *         ptrL;           /* pointer into the left operand   */
     FFV                 valL;           /* one element of left operand     */
-    Obj *               ptrR;           /* pointer into the right operand  */
+    const Obj *         ptrR;           /* pointer into the right operand  */
     FFV                 valR;           /* one element of right operand    */
     UInt                len, lenL, lenR; /* length                          */
     UInt                lenmin;
     UInt                i;              /* loop variable                   */
     FF                  fld;            /* finite field                    */
-    FF *                succ;           /* successor table                 */
+    const FFV *         succ;           /* successor table                 */
 
     /* check the lengths                                                   */
     lenL = LEN_PLIST(vecL);
@@ -445,8 +417,8 @@ Obj             DiffVecFFEVecFFE (
     succ = SUCC_FF(fld);
 
     /* loop over the elements and subtract                                 */
-    ptrL = ADDR_OBJ(vecL);
-    ptrR = ADDR_OBJ(vecR);
+    ptrL = CONST_ADDR_OBJ(vecL);
+    ptrR = CONST_ADDR_OBJ(vecR);
     ptrD = ADDR_OBJ(vecD);
     for (i = 1; i <= lenmin; i++) {
         valL = VAL_FFE(ptrL[i]);
@@ -489,12 +461,12 @@ Obj             ProdFFEVecFFE (
     Obj                 vecP;           /* handle of the product           */
     Obj *               ptrP;           /* pointer into the product        */
     FFV                 valP;           /* the value of a product          */
-    Obj *               ptrR;           /* pointer into the right operand  */
+    const Obj *         ptrR;           /* pointer into the right operand  */
     FFV                 valR;           /* the value of an element in vecR */
     UInt                len;            /* length                          */
     UInt                i;              /* loop variable                   */
     FF                  fld;            /* finite field                    */
-    FF *                succ;           /* successor table                 */
+    const FFV *         succ;           /* successor table                 */
     FFV                 valL;           /* the value of elmL               */
 
     /* get the field and check that elmL and vecR have the same field      */
@@ -521,7 +493,7 @@ Obj             ProdFFEVecFFE (
 
     /* loop over the elements and multiply                                 */
     valL = VAL_FFE(elmL);
-    ptrR = ADDR_OBJ(vecR);
+    ptrR = CONST_ADDR_OBJ(vecR);
     ptrP = ADDR_OBJ(vecP);
     for (i = 1; i <= len; i++) {
         valR = VAL_FFE(ptrR[i]);
@@ -551,12 +523,12 @@ Obj             ProdVecFFEFFE (
     Obj                 vecP;           /* handle of the product           */
     Obj *               ptrP;           /* pointer into the product        */
     FFV                 valP;           /* the value of a product          */
-    Obj *               ptrL;           /* pointer into the left operand   */
+    const Obj *         ptrL;           /* pointer into the left operand   */
     FFV                 valL;           /* the value of an element in vecL */
     UInt                len;            /* length                          */
     UInt                i;              /* loop variable                   */
     FF                  fld;            /* finite field                    */
-    FF *                succ;           /* successor table                 */
+    const FFV *         succ;           /* successor table                 */
     FFV                 valR;           /* the value of elmR               */
 
     /* get the field and check that vecL and elmR have the same field      */
@@ -583,7 +555,7 @@ Obj             ProdVecFFEFFE (
 
     /* loop over the elements and multiply                                 */
     valR = VAL_FFE(elmR);
-    ptrL = ADDR_OBJ(vecL);
+    ptrL = CONST_ADDR_OBJ(vecL);
     ptrP = ADDR_OBJ(vecP);
     for (i = 1; i <= len; i++) {
         valL = VAL_FFE(ptrL[i]);
@@ -613,14 +585,14 @@ Obj             ProdVecFFEVecFFE (
 {
     FFV                 valP;           /* one product                     */
     FFV                 valS;           /* sum of the products             */
-    Obj *               ptrL;           /* pointer into the left operand   */
+    const Obj *         ptrL;           /* pointer into the left operand   */
     FFV                 valL;           /* one element of left operand     */
-    Obj *               ptrR;           /* pointer into the right operand  */
+    const Obj *         ptrR;           /* pointer into the right operand  */
     FFV                 valR;           /* one element of right operand    */
     UInt                lenL, lenR, len; /* length                          */
     UInt                i;              /* loop variable                   */
     FF                  fld;            /* finite field                    */
-    FF *                succ;           /* successor table                 */
+    const FFV *         succ;           /* successor table                 */
 
     /* check the lengths                                                   */
     lenL = LEN_PLIST(vecL);
@@ -646,7 +618,7 @@ Obj             ProdVecFFEVecFFE (
 
     /* loop over the elements and add                                      */
     valS = (FFV)0;
-    ptrL = ADDR_OBJ(vecL);
+    ptrL = CONST_ADDR_OBJ(vecL);
     ptrR = ADDR_OBJ(vecR);
     for (i = 1; i <= len; i++) {
         valL = VAL_FFE(ptrL[i]);
@@ -661,27 +633,27 @@ Obj             ProdVecFFEVecFFE (
 
 /****************************************************************************
 **
-*F  FuncAddRowVectorVecFFEsMult( <self>, <vecL>, <vecR>, <mult> )
+*F  FuncADD_ROWVECTOR_VECFFES_3( <self>, <vecL>, <vecR>, <mult> )
 **
 */
 
 static Obj AddRowVectorOp;   /* BH changed to static */
 
-Obj FuncAddRowVectorVecFFEsMult( Obj self, Obj vecL, Obj vecR, Obj mult )
+Obj FuncADD_ROWVECTOR_VECFFES_3( Obj self, Obj vecL, Obj vecR, Obj mult )
 {
     Obj *ptrL;
-    Obj *ptrR;
+    const Obj *ptrR;
     FFV  valM;
     FFV  valS;
     FFV  valL;
     FFV  valR;
     FF  fld;
-    FFV *succ;
+    const FFV *succ;
     UInt len;
     UInt xtype;
     UInt i;
 
-    if (TNUM_OBJ(mult) != T_FFE)
+    if (!IS_FFE(mult))
         return TRY_NEXT_METHOD;
 
     if (VAL_FFE(mult) == 0)
@@ -745,7 +717,7 @@ Obj FuncAddRowVectorVecFFEsMult( Obj self, Obj vecL, Obj vecR, Obj mult )
 
     succ = SUCC_FF(fld);
     ptrL = ADDR_OBJ(vecL);
-    ptrR = ADDR_OBJ(vecR);
+    ptrR = CONST_ADDR_OBJ(vecR);
 
     /* two versions of the loop to avoid multipling by 1 */
     if (valM == 1)
@@ -767,25 +739,25 @@ Obj FuncAddRowVectorVecFFEsMult( Obj self, Obj vecL, Obj vecR, Obj mult )
 }
 /****************************************************************************
 **
-*F  FuncMultRowVectorVecFFEs( <self>, <vec>, <mult> )
+*F  FuncMULT_ROWVECTOR_VECFFES( <self>, <vec>, <mult> )
 **
 */
 
 static Obj MultRowVectorOp;   /* BH changed to static */
 
-Obj FuncMultRowVectorVecFFEs( Obj self, Obj vec, Obj mult )
+Obj FuncMULT_ROWVECTOR_VECFFES( Obj self, Obj vec, Obj mult )
 {
     Obj *ptr;
     FFV  valM;
     FFV  valS;
     FFV  val;
     FF  fld;
-    FFV *succ;
+    const FFV *succ;
     UInt len;
     UInt xtype;
     UInt i;
 
-    if (TNUM_OBJ(mult) != T_FFE)
+    if (!IS_FFE(mult))
         return TRY_NEXT_METHOD;
 
     if (VAL_FFE(mult) == 1)
@@ -844,18 +816,18 @@ Obj FuncMultRowVectorVecFFEs( Obj self, Obj vec, Obj mult )
 
 /****************************************************************************
 **
-*F  FuncAddRowVectorVecFFEs( <self>, <vecL>, <vecR> )
+*F  FuncADD_ROWVECTOR_VECFFES_2( <self>, <vecL>, <vecR> )
 **
 */
-Obj FuncAddRowVectorVecFFEs( Obj self, Obj vecL, Obj vecR )
+Obj FuncADD_ROWVECTOR_VECFFES_2( Obj self, Obj vecL, Obj vecR )
 {
     Obj *ptrL;
-    Obj *ptrR;
+    const Obj *ptrR;
     FFV  valS;
     FFV  valL;
     FFV  valR;
     FF  fld;
-    FFV *succ;
+    const FFV *succ;
     UInt len;
     UInt xtype;
     UInt i;
@@ -894,7 +866,7 @@ Obj FuncAddRowVectorVecFFEs( Obj self, Obj vecL, Obj vecR )
 
     succ = SUCC_FF(fld);
     ptrL = ADDR_OBJ(vecL);
-    ptrR = ADDR_OBJ(vecR);
+    ptrR = CONST_ADDR_OBJ(vecR);
 
     for (i = 1; i <= len; i++) {
         valL = VAL_FFE(ptrL[i]);
@@ -927,13 +899,13 @@ Obj             ProdVecFFEMatFFE (
     FFV                 valP;           /* one value of the product        */
     FFV                 valL;           /* one value of the left operand   */
     Obj                 vecR;           /* one vector of the right operand */
-    Obj *               ptrR;           /* pointer into the right vector   */
+    const Obj *         ptrR;           /* pointer into the right vector   */
     FFV                 valR;           /* one value from the right vector */
     UInt                len;            /* length                          */
     UInt                col;            /* length of the rows in matR      */
     UInt                i, k;           /* loop variables                  */
     FF                  fld;            /* the common finite field         */
-    FF *                succ;           /* the successor table             */
+    const FFV *         succ;           /* the successor table             */
 
     /* check the lengths                                                   */
     len = LEN_PLIST(vecL);
@@ -1118,25 +1090,13 @@ Obj FuncSMALLEST_FIELD_VECFFE( Obj self, Obj vec)
 */
 static StructGVarFunc GVarFuncs [] = {
 
-  { "ADD_ROWVECTOR_VECFFES_3", 3, "vecl, vecr, mult",
-    FuncAddRowVectorVecFFEsMult, "src/vecffe.c: ADD_ROWVECTOR_VECFFES_3" },
-
-  { "ADD_ROWVECTOR_VECFFES_2", 2, "vecl, vecr",
-    FuncAddRowVectorVecFFEs, "src/vecffe.c: ADD_ROWVECTOR_VECFFES_2" },
-
-  { "MULT_ROWVECTOR_VECFFES", 2, "vec, mult",
-    FuncMultRowVectorVecFFEs, "src/vecffe.c: MULT_ROWVECTOR_VECFFES" },
-  
-  { "IS_VECFFE", 1, "vec",
-    FuncIS_VECFFE, "src/vecffe.c: IS_VECFFE" },
-
-  { "COMMON_FIELD_VECFFE", 1, "vec",
-    FuncCOMMON_FIELD_VECFFE, "src/vecffe.c: COMMON_FIELD_VECFFE" },
-
-  { "SMALLEST_FIELD_VECFFE", 1, "vec",
-    FuncSMALLEST_FIELD_VECFFE, "src/vecffe.c: SMALLEST_FIELD_VECFFE" },
-  
-    { 0 }
+  GVAR_FUNC(ADD_ROWVECTOR_VECFFES_3, 3, "vecl, vecr, mult"),
+  GVAR_FUNC(ADD_ROWVECTOR_VECFFES_2, 2, "vecl, vecr"),
+  GVAR_FUNC(MULT_ROWVECTOR_VECFFES, 2, "vec, mult"),
+  GVAR_FUNC(IS_VECFFE, 1, "vec"),
+  GVAR_FUNC(COMMON_FIELD_VECFFE, 1, "vec"),
+  GVAR_FUNC(SMALLEST_FIELD_VECFFE, 1, "vec"),
+  { 0, 0, 0, 0, 0 }
 
 };
 
@@ -1199,28 +1159,15 @@ static Int InitLibrary (
 *F  InitInfoVecFFE()  . . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "vecffe",                           /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "vecffe",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoVecFFE ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  vecffe.c  . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

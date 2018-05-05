@@ -78,13 +78,15 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XRepresentationsOfObject(d);[127X[104X
-    [4X[28X[ "IsComponentObjectRep", "IsDictionaryDefaultRep", [128X[104X
-    [4X[28X  "IsListDictionary", "IsListLookupDictionary", "IsSortDictionary", [128X[104X
+    [4X[28X[ "IsComponentObjectRep", "IsNonAtomicComponentObjectRep", [128X[104X
+    [4X[28X  "IsDictionaryDefaultRep", "IsListDictionary", [128X[104X
+    [4X[28X  "IsListLookupDictionary", "IsSortDictionary", [128X[104X
     [4X[28X  "IsSortLookupDictionary" ][128X[104X
     [4X[25Xgap>[125X [27Xd:=NewDictionary((1,2,3),true,Elements(SymmetricGroup(5)));;[127X[104X
     [4X[25Xgap>[125X [27XRepresentationsOfObject(d);[127X[104X
-    [4X[28X[ "IsComponentObjectRep", "IsDictionaryDefaultRep", [128X[104X
-    [4X[28X  "IsPositionDictionary", "IsPositionDictionary" ][128X[104X
+    [4X[28X[ "IsComponentObjectRep", "IsNonAtomicComponentObjectRep", [128X[104X
+    [4X[28X  "IsDictionaryDefaultRep", "IsPositionDictionary", [128X[104X
+    [4X[28X  "IsPositionLookupDictionary" ][128X[104X
   [4X[32X[104X
   
   [33X[0;0Y(Just indicating [10XSymmetricGroup(5)[110X as a third parameter would still keep the
@@ -101,13 +103,15 @@
     [4X[25Xgap>[125X [27Xv:=GF(2)^7;;[127X[104X
     [4X[25Xgap>[125X [27Xd:=NewDictionary(Zero(v),true);;                            [127X[104X
     [4X[25Xgap>[125X [27XRepresentationsOfObject(d);[127X[104X
-    [4X[28X[ "IsComponentObjectRep", "IsDictionaryDefaultRep", [128X[104X
-    [4X[28X  "IsListDictionary", "IsListLookupDictionary", "IsSortDictionary", [128X[104X
+    [4X[28X[ "IsComponentObjectRep", "IsNonAtomicComponentObjectRep", [128X[104X
+    [4X[28X  "IsDictionaryDefaultRep", "IsListDictionary", [128X[104X
+    [4X[28X  "IsListLookupDictionary", "IsSortDictionary", [128X[104X
     [4X[28X  "IsSortLookupDictionary" ][128X[104X
     [4X[25Xgap>[125X [27Xd:=NewDictionary(Zero(v),true,v);;[127X[104X
     [4X[25Xgap>[125X [27XRepresentationsOfObject(d);[127X[104X
-    [4X[28X[ "IsComponentObjectRep", "IsDictionaryDefaultRep", [128X[104X
-    [4X[28X  "IsPositionDictionary", "IsPositionDictionary" ][128X[104X
+    [4X[28X[ "IsComponentObjectRep", "IsNonAtomicComponentObjectRep", [128X[104X
+    [4X[28X  "IsDictionaryDefaultRep", "IsPositionDictionary", [128X[104X
+    [4X[28X  "IsPositionLookupDictionary" ][128X[104X
   [4X[32X[104X
   
   
@@ -296,11 +300,12 @@
   
   [1X28.7-1 SparseHashTable[101X
   
-  [33X[1;0Y[29X[2XSparseHashTable[102X( [[3Xintkeyfun[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XSparseHashTable[102X( [[3Xintkeyfun[103X[, [3Xstartlength[103X]] ) [32X function[133X
   
   [33X[0;0YConstruct  an  empty  sparse  hash  table.  This  is the only correct way to
   construct  such  a  table. If the argument [3Xintkeyfun[103X is given, this function
-  will be used to obtain numbers for the keys passed to it.[133X
+  will  be  used  to  obtain  numbers  for  the  keys  passed  to  it. If also
+  [3Xstartlength[103X is given, the hash table will be initalized at that size.[133X
   
   [1X28.7-2 DoubleHashArraySize[101X
   

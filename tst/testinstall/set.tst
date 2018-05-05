@@ -5,8 +5,6 @@
 ##
 #Y  Copyright (C)  1996,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
-##  Exclude from testinstall.g: why?
-##
 gap> START_TEST("set.tst");
 gap> a:=Set([(1,3,2),(4,5)]);;
 gap> b:=[(1,2),(5,9,7)];;
@@ -59,7 +57,7 @@ gap> [0..2016] = Set([1..2017], x -> (x * 503) mod 2017);
 true
 gap> [0..2016] = Set([1..5000], x -> (x * 503) mod 2017);
 true
-gap> STOP_TEST( "set.tst", 670000);
+gap> STOP_TEST( "set.tst", 1);
 
 #############################################################################
 ##

@@ -1,6 +1,6 @@
 #############################################################################
 ##
-#W  testall.g                   GAP library                      Frank Celler
+#W  teststandard.g                   GAP library                      Frank Celler
 ##
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
@@ -18,29 +18,18 @@
 ##  gap> Read( Filename( DirectoriesLibrary( "tst" ), "teststandard.g" ) );
 ##  ]]></Log>
 ##  <P/>
-##  The test requires up to 1 GB of memory and runs about one hour on an
-##  Intel Core 2 Duo / 2.53 GHz machine, and produces an output similar 
-##  to the <File>testinstall.g</File> test.
 ##  <#/GAPDoc>
 ##
 
-Print( "You should start GAP4 using `gap -A -x 80 -r -m 100m -o 1g'.\n",
-       "The more GAP4stones you get, the faster your system is.\n",
-       "The runtime of the following tests (in general) increases.\n",
-       "******************************************************************\n",
-       "You should expect the test to take about *ONE HOUR* and show about\n",
-       "125000 GAP4stones on an Intel Core 2 Duo / 2.53 GHz machine.\n",
-       "For a quick test taking about one minute, use 'testinstall.g'\n",
-       "******************************************************************\n",
-       "The `next' time is an approximation of the running time ",
-       "for the next file.\n\n" );
+Print( "You should start GAP4 using `gap -A -x 80 -r -m 100m -o 1g -K 2g'.\n\n" );
 
+bits := String(8*GAPInfo.BytesPerVariable);
 TestDirectory( [
-  Filename( DirectoriesLibrary( "tst" ), "teststandard" ),
-  Filename( DirectoriesLibrary( "tst" ), "testinstall" ),
-  Filename( DirectoriesLibrary( "tst" ), 
-       Concatenation("test", String(8*GAPInfo.BytesPerVariable), "bit"))],
-  rec(exitGAP := true) );
+  DirectoriesLibrary( "tst/teststandard" ),
+  DirectoriesLibrary( "tst/testinstall" ),
+  DirectoriesLibrary( "tst/testextra" ),
+  DirectoriesLibrary( Concatenation("tst/test", bits, "bit") ),
+  ], rec(exitGAP := true) );
   
 # Should never get here
 FORCE_QUIT_GAP(1);
@@ -48,4 +37,3 @@ FORCE_QUIT_GAP(1);
 #############################################################################
 ##
 #E
-

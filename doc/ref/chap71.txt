@@ -364,7 +364,7 @@
   
   [33X[0;0YNew attributes and properties can be notified to [2XSupportedCharacterTableInfo[102X
   by  creating  them  with  [10XDeclareAttributeSuppCT[110X  and  [10XDeclarePropertySuppCT[110X
-  instead of [2XDeclareAttribute[102X ([14X79.18-3[114X) and [2XDeclareProperty[102X ([14X79.18-4[114X).[133X
+  instead of [2XDeclareAttribute[102X ([14X79.18-9[114X) and [2XDeclareProperty[102X ([14X79.18-10[114X).[133X
   
   [1X71.3-5 ConvertToCharacterTable[101X
   
@@ -773,7 +773,7 @@
   group.  For  a  group [3XG[103X, [2XIrr[102X may delegate to its character table only if the
   irreducibles are already stored there.[133X
   
-  [33X[0;0Y(If   [3XG[103X  is  [3Xp[103X-solvable  (see [2XIsPSolvable[102X  ([14X39.15-23[114X))  then  the  [3Xp[103X-modular
+  [33X[0;0Y(If   [3XG[103X  is  [3Xp[103X-solvable  (see [2XIsPSolvable[102X  ([14X39.15-24[114X))  then  the  [3Xp[103X-modular
   irreducible  characters  can  be  computed  by the Fong-Swan Theorem; in all
   other cases, there may be no method.)[133X
   
@@ -1224,8 +1224,8 @@
   [33X[1;0Y[29X[2XClassPositionsOfMaximalNormalSubgroups[102X( [3Xordtbl[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XClassPositionsOfMinimalNormalSubgroups[102X( [3Xordtbl[103X ) [32X attribute[133X
   
-  [33X[0;0Ycorrespond  to  [2XNormalSubgroups[102X ([14X39.19-8[114X), [2XMaximalNormalSubgroups[102X ([14X39.19-9[114X),
-  [2XMinimalNormalSubgroups[102X  ([14X39.19-10[114X)  for  the group of the ordinary character
+  [33X[0;0Ycorrespond  to [2XNormalSubgroups[102X ([14X39.19-9[114X), [2XMaximalNormalSubgroups[102X ([14X39.19-10[114X),
+  [2XMinimalNormalSubgroups[102X  ([14X39.19-11[114X)  for  the group of the ordinary character
   table [3Xordtbl[103X.[133X
   
   [33X[0;0YThe  entries  of the result lists are sorted according to increasing length.
@@ -1688,7 +1688,7 @@
   [33X[1;0Y[29X[2XComputedIsPSolubleCharacterTables[102X( [3Xtbl[103X ) [32X attribute[133X
   
   [33X[0;0Y[2XIsPSolvableCharacterTable[102X  for  the ordinary character table [3Xtbl[103X corresponds
-  to  [2XIsPSolvable[102X  ([14X39.15-23[114X)  for  the group of [3Xtbl[103X, [3Xp[103X must be either a prime
+  to  [2XIsPSolvable[102X  ([14X39.15-24[114X)  for  the group of [3Xtbl[103X, [3Xp[103X must be either a prime
   integer or [10X0[110X.[133X
   
   [33X[0;0YThe default method uses the attribute [2XComputedIsPSolvableCharacterTables[102X for
@@ -3215,14 +3215,12 @@
     [4X[25Xgap>[125X [27XHasNormalSubgroupClassesInfo( tbl );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XNormalSubgroupClassesInfo( tbl );[127X[104X
-    [4X[28Xrec( nsg := [ Group([ (1,2)(3,4), (1,3)(2,4) ]) ],[128X[104X
+    [4X[28Xrec( nsg := [ Group([ (1,2)(3,4), (1,3)(2,4) ]) ], [128X[104X
     [4X[28X  nsgclasses := [ [ 1, 3 ] ], nsgfactors := [  ] )[128X[104X
     [4X[25Xgap>[125X [27XClassPositionsOfNormalSubgroup( tbl, kernel );[127X[104X
     [4X[28X[ 1, 3 ][128X[104X
-    [4X[25Xgap>[125X [27XFactorGroupNormalSubgroupClasses( tbl, [ 1, 3 ] );[127X[104X
-    [4X[28XGroup([ f1, f2 ])[128X[104X
-    [4X[25Xgap>[125X [27XNormalSubgroupClassesInfo( tbl );[127X[104X
-    [4X[28Xrec( nsg := [ Group([ (1,2)(3,4), (1,3)(2,4) ]) ],[128X[104X
-    [4X[28X  nsgclasses := [ [ 1, 3 ] ], nsgfactors := [ Group([ f1, f2 ]) ] )[128X[104X
+    [4X[25Xgap>[125X [27XG := FactorGroupNormalSubgroupClasses( tbl, [ 1, 3 ] );;[127X[104X
+    [4X[25Xgap>[125X [27XNormalSubgroupClassesInfo( tbl ).nsgfactors[1] = G;[127X[104X
+    [4X[28Xtrue[128X[104X
   [4X[32X[104X
   

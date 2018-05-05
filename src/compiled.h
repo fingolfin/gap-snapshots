@@ -14,88 +14,65 @@ extern "C" {
 #define GAP_IN_EXTERN_C
 #endif
 
-#include        "system.h"              /* system dependent part           */
+#include <src/ariths.h>
+#include <src/blister.h>
+#include <src/bool.h>
+#include <src/calls.h>
+#include <src/code.h>
+#include <src/compiler.h>
+#include <src/compstat.h>
+#include <src/costab.h>
+#include <src/cyclotom.h>
+#include <src/dt.h>
+#include <src/dteval.h>
+#include <src/exprs.h>
+#include <src/finfield.h>
+#include <src/funcs.h>
+#include <src/gap.h>
+#include <src/gapstate.h>
+#include <src/gasman.h>
+#include <src/gvars.h>
+#include <src/integer.h>
+#include <src/intrprtr.h>
+#include <src/io.h>
+#include <src/listfunc.h>
+#include <src/listoper.h>
+#include <src/lists.h>
+#include <src/macfloat.h>
+#include <src/objcftl.h>
+#include <src/objects.h>
+#include <src/objfgelm.h>
+#include <src/objpcgel.h>
+#include <src/objscoll.h>
+#include <src/opers.h>
+#include <src/permutat.h>
+#include <src/plist.h>
+#include <src/pperm.h>
+#include <src/precord.h>
+#include <src/range.h>
+#include <src/rational.h>
+#include <src/read.h>
+#include <src/records.h>
+#include <src/saveload.h>
+#include <src/scanner.h>
+#include <src/sctable.h>
+#include <src/set.h>
+#include <src/stats.h>
+#include <src/streams.h>
+#include <src/stringobj.h>
+#include <src/sysfiles.h>
+#include <src/system.h>
+#include <src/tietze.h>
+#include <src/trans.h>
+#include <src/vars.h>
+#include <src/vector.h>
+#include <src/weakptr.h>
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
+#ifdef HPCGAP
+#include <src/hpc/aobjects.h>
+#endif
 
-#include        "gap.h"                 /* error handling, initialisation  */
-
-#include        "read.h"                /* reader                          */
-
-#include        "gvars.h"               /* global variables                */
-#include        "calls.h"               /* generic call mechanism          */
-#include        "opers.h"               /* generic operations              */
-
-#include        "ariths.h"              /* basic arithmetic                */
-
-#include        "integer.h"             /* integers                        */
-#include        "rational.h"            /* rationals                       */
-#include        "cyclotom.h"            /* cyclotomics                     */
-#include        "finfield.h"            /* finite fields and ff elements   */
-#include        "macfloat.h"            /* machine floats                  */
-
-#include        "bool.h"                /* booleans                        */
-#include        "permutat.h"            /* permutations                    */
-#include        "trans.h"               /* transformation                  */
-#include        "pperm.h"               /* partial perms                   */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "listoper.h"            /* operations for generic lists    */
-#include        "listfunc.h"            /* functions for generic lists     */
-#include        "plist.h"               /* plain lists                     */
-#include        "set.h"                 /* plain sets                      */
-#include        "vector.h"              /* functions for plain vectors     */
-#include        "blister.h"             /* boolean lists                   */
-#include        "range.h"               /* ranges                          */
-#include        "string.h"              /* strings                         */
-
-#include        "code.h"                /* coder                           */
-#include        "tls.h"                 /* thread-local storage            */
-
-#include        "objfgelm.h"            /* objects of free groups          */
-#include        "objpcgel.h"            /* objects of polycyclic groups    */
-#include        "objscoll.h"            /* single collector                */
-#include        "objcftl.h"             /* from the left collect           */
-
-#include        "dt.h"                  /* deep thought                    */
-#include        "dteval.h"              /* deep thought evaluation          */
-
-#include        "sctable.h"             /* structure constant table        */
-#include        "costab.h"              /* coset table                     */
-#include        "tietze.h"              /* tietze helper functions         */
-
-#include        "exprs.h"               /* expressions                     */
-#include        "stats.h"               /* statements                      */
-#include        "funcs.h"               /* functions                       */
-
-
-#include        "intrprtr.h"            /* interpreter                     */
-
-#include        "compiler.h"            /* compiler                        */
-
-#include        "compstat.h"            /* statically linked modules       */
-
-#include        "saveload.h"            /* saving and loading              */
-
-#include        "streams.h"             /* streams package                 */
-#include        "sysfiles.h"            /* file input/output               */
-#include        "weakptr.h"             /* weak pointers                   */
-
-#include        "vars.h"                /* variables                       */
-
-#include        "aobjects.h"            /* atomic variables                */
 extern Obj InfoDecision;
-extern Obj InfoDoPrint;
-extern Obj CurrentAssertionLevel;
-
-extern Obj NewAndFilter (
-    Obj                 oper1,
-    Obj                 oper2 );
 
 
 /* types, should go into 'gvars.c' and 'records.c' * * * * * * * * * * * * */
@@ -120,7 +97,7 @@ typedef UInt    RNam;
  if ( ! IS_POS_INTOBJ(obj) ) ErrorQuitIntSmallPos(obj);
 
 #define CHECK_INT_POS(obj) \
- if ( TNUM_OBJ(obj) != T_INTPOS && ( ! IS_POS_INTOBJ(obj)) ) ErrorQuitIntPos(obj);
+ if ( ! IS_POS_INT(obj) ) ErrorQuitIntPos(obj);
 
 #define CHECK_BOOL(obj) \
  if ( obj != True && obj != False ) ErrorQuitBool(obj);
@@ -131,22 +108,24 @@ typedef UInt    RNam;
 #define CHECK_NR_ARGS(narg,args) \
  if ( narg != LEN_PLIST(args) ) ErrorQuitNrArgs(narg,args);
 
+#define CHECK_NR_AT_LEAST_ARGS(narg,args) \
+ if ( narg - 1 > LEN_PLIST(args) ) ErrorQuitNrAtLeastArgs(narg - 1,args);
 
 /* higher variables, should go into 'vars.c' * * * * * * * * * * * * * * * */
 
 #define SWITCH_TO_NEW_FRAME     SWITCH_TO_NEW_LVARS
 #define SWITCH_TO_OLD_FRAME     SWITCH_TO_OLD_LVARS
 
-#define CURR_FRAME              TLS(CurrLVars)
-#define CURR_FRAME_1UP          ENVI_FUNC( PTR_BAG( CURR_FRAME     )[0] )
-#define CURR_FRAME_2UP          ENVI_FUNC( PTR_BAG( CURR_FRAME_1UP )[0] )
-#define CURR_FRAME_3UP          ENVI_FUNC( PTR_BAG( CURR_FRAME_2UP )[0] )
-#define CURR_FRAME_4UP          ENVI_FUNC( PTR_BAG( CURR_FRAME_3UP )[0] )
-#define CURR_FRAME_5UP          ENVI_FUNC( PTR_BAG( CURR_FRAME_4UP )[0] )
-#define CURR_FRAME_6UP          ENVI_FUNC( PTR_BAG( CURR_FRAME_5UP )[0] )
-#define CURR_FRAME_7UP          ENVI_FUNC( PTR_BAG( CURR_FRAME_6UP )[0] )
+#define CURR_FRAME              STATE(CurrLVars)
+#define CURR_FRAME_1UP          ENVI_FUNC( FUNC_LVARS( CURR_FRAME     ) )
+#define CURR_FRAME_2UP          ENVI_FUNC( FUNC_LVARS( CURR_FRAME_1UP ) )
+#define CURR_FRAME_3UP          ENVI_FUNC( FUNC_LVARS( CURR_FRAME_2UP ) )
+#define CURR_FRAME_4UP          ENVI_FUNC( FUNC_LVARS( CURR_FRAME_3UP ) )
+#define CURR_FRAME_5UP          ENVI_FUNC( FUNC_LVARS( CURR_FRAME_4UP ) )
+#define CURR_FRAME_6UP          ENVI_FUNC( FUNC_LVARS( CURR_FRAME_5UP ) )
+#define CURR_FRAME_7UP          ENVI_FUNC( FUNC_LVARS( CURR_FRAME_6UP ) )
 
-/* #define OBJ_LVAR(lvar)  TLS(PtrLVars)[(lvar)+2] */
+/* #define OBJ_LVAR(lvar)  STATE(PtrLVars)[(lvar)+2] */
 #define OBJ_LVAR_0UP(lvar) \
     OBJ_LVAR(lvar)
 #define OBJ_LVAR_1UP(lvar) \
@@ -166,7 +145,7 @@ typedef UInt    RNam;
 #define OBJ_LVAR_8UP(lvar) \
     PTR_BAG(CURR_FRAME_8UP)[(lvar)+2]
 
-/* #define ASS_LVAR(lvar,obj) do { TLS(PtrLVars)[(lvar)+2] = (obj); } while ( 0 ) */
+/* #define ASS_LVAR(lvar,obj) do { STATE(PtrLVars)[(lvar)+2] = (obj); } while ( 0 ) */
 #define ASS_LVAR_0UP(lvar,obj) \
     ASS_LVAR(lvar,obj)
 #define ASS_LVAR_1UP(lvar,obj) \
@@ -295,14 +274,6 @@ typedef UInt    RNam;
 #define C_UNB_LIST( list, pos) \
    if (IS_POS_INTOBJ(pos)) UNB_LIST(list, INT_INTOBJ(pos)); else UNBB_LIST(list, pos);
 
-extern  void            AddList (
-            Obj                 list,
-            Obj                 obj );
-
-extern  void            AddPlist (
-            Obj                 list,
-            Obj                 obj );
-
 #define C_ADD_LIST(list,obj) \
  AddList( list, obj );
 
@@ -331,46 +302,11 @@ extern  Obj             GF_NEXT_ITER;
    due to limb size or other aspects of the representation */
 
 static inline  Obj C_MAKE_INTEGER_BAG( UInt size, UInt type)  {
-  /* Round size up to nearest multiple of INTEGER_ALLOCATION_SIZE */
-  return NewBag(type,INTEGER_ALLOCATION_SIZE*
-		((size + INTEGER_ALLOCATION_SIZE-1)/INTEGER_ALLOCATION_SIZE));
+  /* Round size up to nearest multiple of INTEGER_UNIT_SIZE */
+  return NewBag(type,INTEGER_UNIT_SIZE*
+                ((size + INTEGER_UNIT_SIZE-1)/INTEGER_UNIT_SIZE));
 }
 
-
-/* Set 2 bytes of data in an integer */
-
-static inline void C_SET_LIMB2(Obj bag, UInt limbnumber, UInt2 value)  {
-
-#if INTEGER_UNIT_SIZE == 2
-  ((UInt2 *)ADDR_OBJ(bag))[limbnumber] = value;
-#elif INTEGER_UNIT_SIZE == 4
-  UInt4 *p;
-  if (limbnumber % 2) {
-    p = ((UInt4 *)ADDR_OBJ(bag)) + (limbnumber-1) / 2;
-    *p = (*p & 0xFFFFUL) | ((UInt4)value << 16);
-  } else {
-    p = ((UInt4 *)ADDR_OBJ(bag)) + limbnumber / 2;
-    *p = (*p & 0xFFFF0000UL) | (UInt4)value;
-  }
-#else
-  UInt8 *p;
-    p  = ((UInt8 *)ADDR_OBJ(bag)) + limbnumber/4;
-    switch(limbnumber % 4) {
-    case 0: 
-      *p = (*p & 0xFFFFFFFFFFFF0000UL) | (UInt8)value;
-      break;
-    case 1:
-      *p = (*p & 0xFFFFFFFF0000FFFFUL) | ((UInt8)value << 16);
-      break;
-    case 2:
-      *p = (*p & 0xFFFF0000FFFFFFFFUL) | ((UInt8)value << 32);
-      break;
-    case 3:
-      *p = (*p & 0x0000FFFFFFFFFFFFUL) | ((UInt8)value << 48);
-      break;
-    }
-#endif  
-}
 
 static inline void C_SET_LIMB4(Obj bag, UInt limbnumber, UInt4 value)  {
 
@@ -386,8 +322,7 @@ static inline void C_SET_LIMB4(Obj bag, UInt limbnumber, UInt4 value)  {
     *p = (*p & 0xFFFFFFFF00000000UL) | (UInt8)value;
   }
 #else
-  ((UInt2 *)ADDR_OBJ(bag))[2*limbnumber] = (UInt2)(value & 0xFFFFUL);
-  ((UInt2 *)ADDR_OBJ(bag))[2*limbnumber+1] = (UInt2)(value >>16);
+   #error unsupported INTEGER_UNIT_SIZE
 #endif  
 }
 
@@ -400,10 +335,7 @@ static inline void C_SET_LIMB8(Obj bag, UInt limbnumber, UInt8 value)  {
   ((UInt4 *)ADDR_OBJ(bag))[2*limbnumber] = (UInt4)(value & 0xFFFFFFFFUL);
   ((UInt4 *)ADDR_OBJ(bag))[2*limbnumber+1] = (UInt4)(value >>32);
 #else
-  ((UInt2 *)ADDR_OBJ(bag))[4*limbnumber] = (UInt2)(value & 0xFFFFULL);
-  ((UInt2 *)ADDR_OBJ(bag))[4*limbnumber+1] = (UInt2)((value & 0xFFFF0000ULL) >>16);
-  ((UInt2 *)ADDR_OBJ(bag))[4*limbnumber+2] = (UInt2)((value & 0xFFFF00000000ULL) >>32);
-  ((UInt2 *)ADDR_OBJ(bag))[4*limbnumber+3] = (UInt2)(value >>48);
+   #error unsupported INTEGER_UNIT_SIZE
 #endif
 }
 
@@ -424,15 +356,7 @@ static inline Obj C_MAKE_MED_INT( Int8 value ) {
 }
 
 static inline Obj C_NORMALIZE_64BIT(Obj o) {
-  Int value =  *(Int *)ADDR_OBJ(o);
-  if (value < 0)
-    return o;
-  if (TNUM_OBJ(o) == T_INTNEG)
-    value = -value;
-  if (-(1L << 60) <= value && value < (1L << 60))
-    return INTOBJ_INT(value);
-  else
-    return o;    
+  return GMP_REDUCE(o);
 }
 
 
@@ -463,8 +387,3 @@ static inline Obj C_NORMALIZE_64BIT( Obj o) {
 #endif
     
 #endif // GAP_COMPILED_H
-
-/****************************************************************************
-**
-*E  compiled.h  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

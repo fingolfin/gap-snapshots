@@ -29,6 +29,49 @@
 ##
 DeclareSynonymAttr( "IsSemigroup", IsMagma and IsAssociative );
 
+##############################################################################
+##
+#O  InversesOfSemigroupElement( <S>, <x> )
+##
+##  <#GAPDoc Label="InversesOfSemigroupElement">
+##  <ManSection>
+##    <Oper Name="InversesOfSemigroupElement" Arg="S, x"/>
+##    <Returns>A list of the inverses of an element of a semigroup.</Returns>
+##    <Description>
+##      <C>InversesOfSemigroupElement</C> returns a list of the inverses of
+##      the element <A>x</A> in the semigroup <A>S</A>.<P/>
+##       
+##      An element <A>y</A> in <A>S</A> is an <E>inverse</E> of <A>x</A> if
+##      <C><A>x</A>*y*<A>x</A>=<A>x</A></C> and <C>y*<A>x</A>*y=y</C>.
+##      The element <A>x</A> has an inverse if and only if <A>x</A> is a
+##      regular element of <A>S</A>.
+##      <Example><![CDATA[
+##  gap> S := Semigroup([
+##  >  Transformation([3, 1, 4, 2, 5, 2, 1, 6, 1]), 
+##  >  Transformation([5, 7, 8, 8, 7, 5, 9, 1, 9]), 
+##  >  Transformation([7, 6, 2, 8, 4, 7, 5, 8, 3])]);
+##  <transformation semigroup of degree 9 with 3 generators>
+##  gap> x := Transformation([3, 1, 4, 2, 5, 2, 1, 6, 1]);;
+##  gap> InversesOfSemigroupElement(S, x);
+##  [  ]
+##  gap> IsRegularSemigroupElement(S, x);
+##  false
+##  gap> x := Transformation([1, 9, 7, 5, 5, 1, 9, 5, 1]);;
+##  gap> Set(InversesOfSemigroupElement(S, x));
+##  [ Transformation( [ 1, 2, 3, 5, 5, 1, 3, 5, 2 ] ), 
+##    Transformation( [ 1, 5, 1, 1, 5, 1, 3, 1, 2 ] ), 
+##    Transformation( [ 1, 5, 1, 2, 5, 1, 3, 2, 2 ] ) ]
+##  gap> IsRegularSemigroupElement(S, x);
+##  true
+##  gap> S := ReesZeroMatrixSemigroup(Group((1,2,3)),
+##  >  [[(), ()], [(), 0], [(), (1,2,3)]]);;
+##  gap> x := ReesZeroMatrixSemigroupElement(S, 2, (1,2,3), 3);;
+##  gap> InversesOfSemigroupElement(S, x);
+##  [ (1,(1,2,3),3), (1,(1,3,2),1), (2,(),3), (2,(1,2,3),1) ]]]></Example>
+##    </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
 DeclareOperation("InversesOfSemigroupElement", 
 [IsSemigroup, IsMultiplicativeElement]);
 
@@ -127,7 +170,7 @@ DeclareOperation( "SemigroupByGenerators", [ IsCollection ] );
 ##
 ##  <#GAPDoc Label="AsSemigroup">
 ##  <ManSection>
-##  <Attr Name="AsSemigroup" Arg='C'/>
+##  <Oper Name="AsSemigroup" Arg='C'/>
 ##
 ##  <Description>
 ##  If <A>C</A> is a collection whose elements form a semigroup
@@ -138,8 +181,7 @@ DeclareOperation( "SemigroupByGenerators", [ IsCollection ] );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareAttribute( "AsSemigroup", IsCollection );
-
+DeclareOperation( "AsSemigroup", [IsCollection]);
 
 #############################################################################
 ##
@@ -194,7 +236,7 @@ DeclareSynonymAttr( "GeneratorsOfSemigroup", GeneratorsOfMagma );
 ##  <Prop Name="IsGeneratorsOfSemigroup" Arg='C'/>
 ##
 ##  <Description>
-##  This property reflects wheter the list or collection <A>C</A> generates
+##  This property reflects whether the list or collection <A>C</A> generates
 ##  a semigroup.
 ##  <Ref Prop="IsAssociativeElementCollection"/> implies 
 ##  &nbsp;<Ref Prop="IsGeneratorsOfSemigroup"/>,
@@ -300,7 +342,8 @@ DeclareAttribute("CayleyGraphDualSemigroup",IsSemigroup);
 ##  <free semigroup on the generators [ gen1, gen2 ]>
 ##  ]]></Example>
 ##  <P/>
-##  Also see Chapter&nbsp;<Ref Chap="Semigroups"/>.
+##  For more on associative words see 
+##  Chapter&nbsp;<Ref Chap="Associative Words"/>.
 ##  <P/>
 ##  Each free object defines a unique alphabet (and a unique family of words).
 ##  Its generators are the letters of this alphabet,
@@ -521,14 +564,29 @@ DeclareProperty("IsRegularSemigroup", IsSemigroup);
 ##
 #P  IsInverseSemigroup( <S> )
 ##
+##  <#GAPDoc Label="IsInverseSemigroup">
 ##  <ManSection>
-##  <Prop Name="IsInverseSemigroup" Arg='S'/>
-##
-##  <Description>
-##  returns <K>true</K> if <A>S</A> is an inverse semigroup, i.e.,
-##  if every element of <A>S</A> has a unique (semigroup) inverse.
-##  </Description>
+##    <Prop Name="IsInverseSemigroup" Arg="S"/>
+##    <Filt Name="IsInverseMonoid" Arg="S" Type="Category"/>
+##    <Returns><K>true</K> or <K>false</K>.</Returns>
+##    <Description>
+##      A semigroup <A>S</A> is an <E>inverse semigroup</E> if every element
+##      <C>x</C> in <A>S</A> has a unique semigroup inverse, that is, a unique
+##      element <C>y</C> in <A>S</A> such that <C>x*y*x=x</C> and
+##      <C>y*x*y=y</C>.<P/>
+##  
+##      A monoid that happens to be an inverse semigroup is called an
+##      <E>inverse monoid</E>; see <Ref Filt="IsMonoid"/>.
+##      <Example>
+##  gap> S := Semigroup([
+##  >  Transformation([1, 2, 4, 5, 6, 3, 7, 8]),
+##  >  Transformation([3, 3, 4, 5, 6, 2, 7, 8]),
+##  >  Transformation([1, 2, 5, 3, 6, 8, 4, 4])]);;
+##  gap> IsInverseSemigroup(S);
+##  true</Example>
+##    </Description>
 ##  </ManSection>
+##  <#/GAPDoc>
 ##
 DeclareProperty("IsInverseSemigroup", IsSemigroup);
 
@@ -537,29 +595,57 @@ DeclareProperty("IsInverseSemigroup", IsSemigroup);
 ##
 #O  DisplaySemigroup( <S> )
 ##
+##  <#GAPDoc Label="DisplaySemigroup">
 ##  <ManSection>
 ##  <Oper Name="DisplaySemigroup" Arg='S'/>
 ##
 ##  <Description>
-##  Produces a convenient display of a semigroup's DClass
-##  structure.   Let <A>S</A> have degree <M>n</M>.   Then for each <M>r\leq n</M>, we
-##  show all D classes of rank <M>n</M>.   
+##  Produces a convenient display of a transformation semigroup's D-Class
+##  structure.   Let <A>S</A> be a transformation semigroup of degree
+##  <M>n</M>. Then for each <M>r\leq n</M>, we show all D-classes of
+##  rank <M>r</M>.   
 ##  <P/>
-##  A regular D class with a single H class of size 120 appears as
-##  <Example><![CDATA[
-##  *[H size = 120, 1 L classes, 1 R classes] 
-##  ]]></Example>
+##  A regular D-class with a single H-class of size 120 appears as
+##  <Log><![CDATA[
+##  *[H size = 120, 1 L-class, 1 R-class] 
+##  ]]></Log>
 ##  (the <C>*</C> denoting regularity).
 ##  </Description>
 ##  </ManSection>
+##  <#/GAPDoc>
 ##
-DeclareOperation("DisplaySemigroup", 
-    [IsSemigroup]);
+DeclareOperation("DisplaySemigroup", [IsSemigroup]);
 
 # Everything from here...
 
 DeclareAttribute("NilpotencyDegree", IsSemigroup);
 
+##############################################################################
+##
+#O IsSubsemigroup( <S>, <T> )
+##
+## <#GAPDoc Label="IsSubsemigroup">
+## <ManSection>
+##   <Oper Name="IsSubsemigroup"  Arg="S, T"/>
+##   <Returns><K>true</K> or <K>false</K>.</Returns>
+##   <Description>
+##
+##     This operation returns <K>true</K> if the semigroup <A>T</A> is a
+##     subsemigroup of the semigroup <A>S</A> and <K>false</K> if it is not.
+##     <Example>
+## gap> f := Transformation([5, 6, 7, 1, 4, 3, 2, 7]);
+## Transformation( [ 5, 6, 7, 1, 4, 3, 2, 7 ] )
+## gap> T := Semigroup(f);;
+## gap> IsSubsemigroup(FullTransformationSemigroup(4), T);
+## false
+## gap> S := Semigroup(f);;
+## gap> T := Semigroup(f ^ 2);;
+## gap> IsSubsemigroup(S, T);
+## true</Example>
+##   </Description>
+## </ManSection>
+## <#/GAPDoc>
+##
 DeclareOperation("IsSubsemigroup", [IsSemigroup, IsSemigroup]);
 
 DeclareProperty("IsBand", IsSemigroup);
@@ -584,14 +670,14 @@ DeclareProperty("IsZeroSemigroup", IsSemigroup);
 InstallTrueMethod(IsMonoidAsSemigroup, IsMagmaWithOne and IsSemigroup);
 InstallTrueMethod(IsGroupAsSemigroup, IsMagmaWithInverses and IsSemigroup);
 InstallTrueMethod(IsGroupAsSemigroup, IsInverseSemigroup and IsSimpleSemigroup and IsFinite);
-InstallTrueMethod(IsGroupAsSemigroup, IsCommutativeSemigroup and IsSimpleSemigroup);
+InstallTrueMethod(IsGroupAsSemigroup, IsCommutative and IsSimpleSemigroup);
 InstallTrueMethod(IsBand, IsSemilattice);
 InstallTrueMethod(IsBrandtSemigroup, IsInverseSemigroup and IsZeroSimpleSemigroup);
 InstallTrueMethod(IsCliffordSemigroup, IsSemilattice);
 InstallTrueMethod(IsCompletelyRegularSemigroup, IsCliffordSemigroup);
 InstallTrueMethod(IsCompletelyRegularSemigroup, IsSimpleSemigroup);
 InstallTrueMethod(IsCompletelySimpleSemigroup, IsSimpleSemigroup and IsFinite);
-InstallTrueMethod(IsIdempotentGenerated, IsSemilattice);
+InstallTrueMethod(IsIdempotentGenerated, IsBand);
 InstallTrueMethod(IsInverseSemigroup, IsSemilattice);
 InstallTrueMethod(IsInverseSemigroup, IsCliffordSemigroup);
 InstallTrueMethod(IsInverseSemigroup, IsGroupAsSemigroup);

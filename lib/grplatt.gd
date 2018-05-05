@@ -423,5 +423,79 @@ DeclareGlobalFunction("TomDataSubgroupsAlmostSimple");
 
 #############################################################################
 ##
+#F  LowLayerSubgroups( [<act>,],<G>, <lim> [,<cond> [,<dosub>]] )
+##
+##  <#GAPDoc Label="LowLayerSubgroups">
+##  <ManSection>
+##  <Func Name="LowLayerSubgroups" Arg='act, G, lim, cond, dosub'/>
+##
+##  <Description>
+##  This function computes representatives of the conjugacy classes of
+##  subgroups of the finite group <A>G</A> such that the subgroups can be
+##  obtained as <A>lim</A>-fold iterated maximal subgroups.
+##  
+##  If a function <A>cond</A> is given, only subgroups for which this
+##  function returns true (also for their intermediate overgroups) is
+##  returned. If also a function <A>dosub</A> is given, maximal subgroups
+##  are only attempted if this function returns true (this is separated for
+##  performance reasons).
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction("LowLayerSubgroups");
+
+#############################################################################
+##
+#O  ContainedConjugates(<G>,<A>,<B>)
+##
+##  <#GAPDoc Label="ContainedConjugates">
+##  <ManSection>
+##  <Func Name="ContainedConjugates" Arg='G, A, B'/>
+##
+##  <Description>
+##  For <M>A,B \leq G</M> this operation returns representatives of the <A>A</A>
+##  conjugacy classes of subgroups that are conjugate to <A>B</A> under <A>G</A>.
+##  The function returns a list of pairs of subgroup and conjugating element.
+##  <Example><![CDATA[
+##  gap> g:=SymmetricGroup(8);;
+##  gap> a:=TransitiveGroup(8,47);;b:=TransitiveGroup(8,7);;
+##  gap> ContainedConjugates(g,a,b);
+##  [ [ Group([ (1,4,2,5,3,6,8,7), (1,3)(2,8) ]), (2,4,5,3)(7,8) ] ]
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareOperation("ContainedConjugates",[IsGroup,IsGroup,IsGroup]);
+DeclareSynonym("EmbeddedConjugates",ContainedConjugates);
+
+#############################################################################
+##
+#O  ContainingConjugates(<G>,<A>,<B>)
+##
+##  <#GAPDoc Label="ContainingConjugates">
+##  <ManSection>
+##  <Func Name="ContainingConjugates" Arg='G, A, B'/>
+##
+##  <Description>
+##  For <M>A,B \leq G</M> this operation returns all <A>G</A> conjugates of <A>A</A> 
+##  that contain <A>B</A>.
+##  The function returns a list of pairs of subgroup and conjugating element.
+##  <Example><![CDATA[
+##  gap> g:=SymmetricGroup(8);;
+##  gap> a:=TransitiveGroup(8,47);;b:=TransitiveGroup(8,7);;
+##  gap> ContainingConjugates(g,a,b);
+##  [ [ Group([ (1,3,5,7), (3,5), (1,4)(2,7)(3,6)(5,8) ]), (2,3,5,4)(7,8) ] ]
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareOperation("ContainingConjugates",[IsGroup,IsGroup,IsGroup]);
+DeclareSynonym("EmbeddingConjugates",ContainingConjugates);
+
+#############################################################################
+##
 #E
 

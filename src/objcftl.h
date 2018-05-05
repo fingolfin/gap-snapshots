@@ -10,6 +10,7 @@
 #ifndef GAP_OBJCFTL_H
 #define GAP_OBJCFTL_H
 
+#include <src/system.h>
 
 #define PC_NUMBER_OF_GENERATORS      1
 #define PC_GENERATORS                2
@@ -36,23 +37,15 @@
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  InitInfoPcc() . . . . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoPcc ( void );
 
 
 #endif // GAP_OBJCFTL_H
-
-/****************************************************************************
-**
-
-*E  objcftl.c . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

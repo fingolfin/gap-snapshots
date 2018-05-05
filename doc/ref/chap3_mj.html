@@ -83,7 +83,7 @@
 <dl>
 <dt><strong class="Mark">
 <code class="code">-A</code></strong></dt>
-<dd><p>By default, some needed and suggested <strong class="pkg">GAP</strong> packages (see <a href="chap76_mj.html#X7B6CD527825945CD"><span class="RefLink">76</span></a>) are loaded, if present, into the <strong class="pkg">GAP</strong> session when it starts. This option disables (actually toggles) the loading of suggested packages, which can be useful for debugging or testing. The needed packages (and their needed packages, and so on) are loaded in any case.</p>
+<dd><p>By default, some needed and suggested <strong class="pkg">GAP</strong> packages (see <a href="chap76_mj.html#X79F76C1E834BFDCC"><span class="RefLink">76</span></a>) are loaded, if present, into the <strong class="pkg">GAP</strong> session when it starts. This option disables (actually toggles) the loading of suggested packages, which can be useful for debugging or testing. The needed packages (and their needed packages, and so on) are loaded in any case.</p>
 
 </dd>
 <dt><strong class="Mark">
@@ -179,11 +179,6 @@
 <dd><p>tells <strong class="pkg">GAP</strong> to print a summary of all available options (<code class="code">-h</code> is mnemonic for "help"). <strong class="pkg">GAP</strong> exits after printing the summary, all other options are ignored.</p>
 
 </dd>
-<dt><strong class="Mark">
-<code class="code">-i </code><var class="Arg">filename</var></strong></dt>
-<dd><p>changes the name of the init file from the default <code class="file">init.g</code> to <var class="Arg">filename</var>. (Usually not needed.)</p>
-
-</dd>
 <dt><strong class="Mark"> 
 <code class="code">-K </code><var class="Arg">memory</var></strong></dt>
 <dd><p>is like the <code class="code">-o</code> option. But while the latter actually allocates more memory if the system allows it and then prints a warning inside a break loop the <code class="code">-K</code> options tells <strong class="pkg">GAP</strong> not even to try to allocate more memory. Instead <strong class="pkg">GAP</strong> just exits with an appropriate message. The default is that this feature is switched off. You have to set it explicitly when you want to enable it.</p>
@@ -271,11 +266,6 @@ gap: hmm, I cannot find 'lib/init.g' maybe use option '-l &lt;gaproot&gt;'?
 
 </dd>
 <dt><strong class="Mark">
-<code class="code">-X</code></strong></dt>
-<dd><p>tells <strong class="pkg">GAP</strong> to do a consistency check of the library file and the corresponding compiled module when loading the compiled module. This option may be repeated to toggle this behavior on and off.</p>
-
-</dd>
-<dt><strong class="Mark">
 <code class="code">-x </code><var class="Arg">length</var></strong></dt>
 <dd><p>With this option you can tell <strong class="pkg">GAP</strong> how long lines are. <strong class="pkg">GAP</strong> uses this value to decide when to split long lines. After starting <strong class="pkg">GAP</strong> you may use <code class="func">SizeScreen</code> (<a href="chap6_mj.html#X8723E0A1837894F3"><span class="RefLink">6.12-1</span></a>) to alter the line length.</p>
 
@@ -295,7 +285,7 @@ gap: hmm, I cannot find 'lib/init.g' maybe use option '-l &lt;gaproot&gt;'?
 
 </dd>
 </dl>
-<p>Additional options, <code class="code">-C</code>, <code class="code">-U</code>, <code class="code">-P</code>, <code class="code">-W</code>, <code class="code">-p</code> and <code class="code">-z</code> are used internally by the <strong class="pkg">gac</strong> script (see <a href="chap76_mj.html#X85672DDD7D34D5F0"><span class="RefLink">76.3-10</span></a>) and/or on specific operating systems.</p>
+<p>Additional options, <code class="code">-C</code>, <code class="code">-P</code>, <code class="code">-W</code>, <code class="code">-p</code> and <code class="code">-z</code> are used internally by the <strong class="pkg">gac</strong> script (see <a href="chap76_mj.html#X85672DDD7D34D5F0"><span class="RefLink">76.3-10</span></a>) and/or on specific operating systems.</p>
 
 <p><a id="X7FD66F977A3B02DF" name="X7FD66F977A3B02DF"></a></p>
 
@@ -319,7 +309,7 @@ gap: hmm, I cannot find 'lib/init.g' maybe use option '-l &lt;gaproot&gt;'?
 
 <p>The file <code class="file">gap.ini</code> is expected to consist of calls to the function <code class="func">SetUserPreference</code> (<a href="chap3_mj.html#X7B0AD104839B6C3C"><span class="RefLink">3.2-3</span></a>), see Section <code class="func">SetUserPreference</code> (<a href="chap3_mj.html#X7B0AD104839B6C3C"><span class="RefLink">3.2-3</span></a>).</p>
 
-<p>Since the file <code class="file">gap.ini</code> is read before the implementation part of <strong class="pkg">GAP</strong> is read, not all <strong class="pkg">GAP</strong> functions may be called in the file. Assignments of numbers, lists, and records are admissible as well as calls to basic functions such as <code class="func">Concatenation</code> (<a href="chap21_mj.html#X840C55A77D1BB2E1"><span class="RefLink">21.20-1</span></a>) and <code class="func">JoinStringsWithSeparator</code> (<a href="chap27_mj.html#X84624FEB825EC4B5"><span class="RefLink">27.7-17</span></a>).</p>
+<p>Since the file <code class="file">gap.ini</code> is read before the implementation part of <strong class="pkg">GAP</strong> is read, not all <strong class="pkg">GAP</strong> functions may be called in the file. Assignments of numbers, lists, and records are admissible as well as calls to basic functions such as <code class="func">Concatenation</code> (<a href="chap21_mj.html#X840C55A77D1BB2E1"><span class="RefLink">21.20-1</span></a>) and <code class="func">JoinStringsWithSeparator</code> (<a href="chap27_mj.html#X84624FEB825EC4B5"><span class="RefLink">27.7-20</span></a>).</p>
 
 <p>Note that the file <code class="file">gap.ini</code> is read also when <strong class="pkg">GAP</strong> is started with a workspace.</p>
 

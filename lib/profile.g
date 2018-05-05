@@ -759,7 +759,7 @@ BIND_GLOBAL("ProfileOperationsOn",function()
     local   prof;
 
     # Note that the list of operations may have grown since the last call.
-    prof := OPERATIONS{[ 1, 3 .. Length(OPERATIONS)-1 ]};
+    prof := OPERATIONS;
     PROFILED_OPERATIONS := prof;
     UnprofileMethods(prof);
     ProfileFunctions( prof );
@@ -818,7 +818,7 @@ end);
 BIND_GLOBAL("ProfileOperationsAndMethodsOn",function()
     local   prof;
 
-    prof := OPERATIONS{[ 1, 3 .. Length(OPERATIONS)-1 ]};
+    prof := OPERATIONS;
     PROFILED_OPERATIONS := prof;
     ProfileFunctions( prof );
     ProfileMethods(prof);
@@ -951,10 +951,6 @@ BIND_GLOBAL("DisplayCacheStats",function()
 
     cache := ShallowCopy(OPERS_CACHE_INFO());
     Append( cache, [
-        WITH_HIDDEN_IMPS_FLAGS_CACHE_HIT,
-        WITH_HIDDEN_IMPS_FLAGS_CACHE_MISS,
-        WITH_IMPS_FLAGS_CACHE_HIT,
-        WITH_IMPS_FLAGS_CACHE_MISS,
         NEW_TYPE_CACHE_HIT,
         NEW_TYPE_CACHE_MISS,
     ] );
@@ -1011,10 +1007,6 @@ end);
 ##
 BIND_GLOBAL("ClearCacheStats",function()
     CLEAR_CACHE_INFO();
-    WITH_HIDDEN_IMPS_FLAGS_CACHE_HIT := 0;
-    WITH_HIDDEN_IMPS_FLAGS_CACHE_MISS := 0;
-    WITH_IMPS_FLAGS_CACHE_HIT := 0;
-    WITH_IMPS_FLAGS_CACHE_MISS := 0;
     NEW_TYPE_CACHE_HIT := 0;
     NEW_TYPE_CACHE_MISS := 0;
 end);
@@ -1023,13 +1015,13 @@ end);
 #############################################################################
 ##
 #F  START_TEST( <id> )  . . . . . . . . . . . . . . . . . . . start test file
-#F  STOP_TEST( <file>, <fac> )  . . . . . . . . . . . . . . .  stop test file
+#F  STOP_TEST( <file> )  . . . . . . . . . . . . . . . . . . . stop test file
 ##
 ##  <#GAPDoc Label="StartStopTest">
 ##  <ManSection>
 ##  <Heading>Starting and stopping test</Heading>
 ##  <Func Name="START_TEST" Arg='id'/>
-##  <Func Name="STOP_TEST" Arg='file, fac'/>
+##  <Func Name="STOP_TEST" Arg='file'/>
 ##
 ##  <Description>
 ##  <Ref Func="START_TEST"/> and <Ref Func="STOP_TEST"/> may be optionally
@@ -1052,16 +1044,10 @@ end);
 ##  and should be finished with a line
 ##  <P/>
 ##  <Log><![CDATA[
-##  gap> STOP_TEST( "filename", 10000 );
+##  gap> STOP_TEST( "filename" );
 ##  ]]></Log>
 ##  <P/>
 ##  Here the string <C>"filename"</C> should give the name of the test file.
-##  The number is a proportionality factor that is used to output a
-##  <Q>&GAP;stone</Q> speed ranking after the file has been completely
-##  processed.
-##  For the files provided with the distribution this scaling is roughly
-##  equalized to yield the same numbers as produced by the test file
-##  <F>tst/combinat.tst</F>.
 ##  <P/>
 ##  Note that the functions in <F>tst/testutil.g</F> temporarily replace
 ##  <Ref Func="STOP_TEST"/> before they call <Ref Func="Test"/>.
@@ -1080,9 +1066,13 @@ START_TEST := function( name )
     if GAPInfo.TestData.AssertionLevel < 2 then
         SetAssertionLevel( 2 );
     fi;
+    GAPInfo.TestData.InfoPerformanceLevel:= InfoLevel( InfoPerformance );
+    if GAPInfo.TestData.InfoPerformanceLevel > 0 then
+        SetInfoLevel( InfoPerformance, 0 );
+    fi;
 end;
 
-STOP_TEST := function( file, fac )
+STOP_TEST := function( file, args... )
     local time;
 
     if not IsBound( GAPInfo.TestData.START_TIME ) then
@@ -1091,12 +1081,9 @@ STOP_TEST := function( file, fac )
     fi;
     time:= Runtime() - GAPInfo.TestData.START_TIME;
     Print( GAPInfo.TestData.START_NAME, "\n" );
-    if time <> 0 and IsInt( fac ) then
-      Print( "GAP4stones: ", QuoInt( fac, time ), "\n" );
-    else
-      Print( "GAP4stones: infinity\n" );
-    fi;
+    Print( "msecs: ", time, "\n" );
     SetAssertionLevel( GAPInfo.TestData.AssertionLevel );
+    SetInfoLevel( InfoPerformance, GAPInfo.TestData.InfoPerformanceLevel );
     Unbind( GAPInfo.TestData.AssertionLevel );
     Unbind( GAPInfo.TestData.START_TIME );
     Unbind( GAPInfo.TestData.START_NAME );

@@ -28,7 +28,7 @@
 ##  to call this function instead of constructing generators and calling
 ##  `FieldByGenerators', which would mean to construct <N> and <stab> again.
 ##
-BindGlobal( "AbelianNumberFieldByReducedGaloisStabilizerInfo",
+InstallGlobalFunction( AbelianNumberFieldByReducedGaloisStabilizerInfo,
     function( F, N, stab )
 
     local D, d;
@@ -100,9 +100,8 @@ InstallGlobalFunction( CyclotomicField, function ( arg )
     if subfield = Rationals then
 
       # The standard field is required.  Look whether it is already stored.
-      if IsBound( CYCLOTOMIC_FIELDS[ xtension ] ) then
-        return CYCLOTOMIC_FIELDS[ xtension ];
-      fi;
+      # If not, generate it and return it
+      return CYCLOTOMIC_FIELDS( xtension );
 
     elif IsAbelianNumberField( subfield ) then
 
@@ -117,11 +116,6 @@ InstallGlobalFunction( CyclotomicField, function ( arg )
 
     F:= AbelianNumberFieldByReducedGaloisStabilizerInfo( subfield,
             xtension, [ 1 ] );
-
-    # If the standard field was constructed, store it.
-    if subfield = Rationals then
-      CYCLOTOMIC_FIELDS[ xtension ]:= F;
-    fi;
 
     # Return the field.
     return F;
@@ -1751,6 +1745,7 @@ SetIsFinite( Cyclotomics, false );
 SetIsWholeFamily( Cyclotomics, true );
 SetDegreeOverPrimeField( Cyclotomics, infinity );
 SetDimension( Cyclotomics, infinity );
+SetRepresentative(Cyclotomics, 0);
 
 
 #############################################################################
@@ -2109,10 +2104,12 @@ InstallMethod( GaloisGroup,
     fi;
 
     return group;
-    end );
+end );
+    
+
+InstallMethod( Representative, [IsCyclotomicField], f->0);
 
 
 #############################################################################
 ##
 #E
-

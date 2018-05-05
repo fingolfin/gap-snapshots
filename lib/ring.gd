@@ -546,7 +546,7 @@ DeclareCategory( "IsUniqueFactorizationRing", IsRing );
 ##  <Description>
 ##  A ring <M>R</M> is called a Euclidean ring if it is an integral ring and
 ##  there exists a function <M>\delta</M>, called the Euclidean degree, from
-##  <M>R-\{0_R\}</M> to the nonnegative integers,
+##  <M>R-\{0_R\}</M> into a well-ordered set (such as the the nonnegative integers),
 ##  such that for every pair <M>r \in R</M> and <M>s \in  R-\{0_R\}</M> there
 ##  exists an element <M>q</M> such that either
 ##  <M>r - q s = 0_R</M> or <M>\delta(r - q s) &lt; \delta( s )</M>.
@@ -1186,7 +1186,7 @@ DeclareOperation( "QuotientRemainder",
 ##  <Oper Name="QuotientMod" Arg='[R, ]r, s, m'/>
 ##
 ##  <Description>
-##  <Ref Oper="QuotientMod"/> returns the quotient of the ring
+##  <Ref Oper="QuotientMod"/> returns a quotient of the ring
 ##  elements <A>r</A> and <A>s</A> modulo the ring element <A>m</A>
 ##  in the ring <A>R</A>, if given,
 ##  and otherwise in their default ring, see
@@ -1194,16 +1194,14 @@ DeclareOperation( "QuotientRemainder",
 ##  <P/>
 ##  <A>R</A> must be a Euclidean ring (see <Ref Func="IsEuclideanRing"/>)
 ##  so that <Ref Func="EuclideanRemainder"/> can be applied.
-##  If the modular quotient does not exist (i.e. when <A>s</A> and <A>m</A>
-##  are not coprime), <K>fail</K> is returned.
+##  If no modular quotient exists, <K>fail</K> is returned.
 ##  <P/>
-##  The quotient <M>q</M> of <A>r</A> and <A>s</A> modulo <A>m</A> is
-##  an element of <A>R</A>
-##  such that <M>q <A>s</A> = <A>r</A></M> modulo <M>m</M>, i.e.,
-##  such that <M>q <A>s</A> - <A>r</A></M> is divisible by <A>m</A> in
-##  <A>R</A> and that <M>q</M> is either zero (if <A>r</A> is divisible by
-##  <A>m</A>) or the Euclidean degree of <M>q</M> is strictly smaller than
-##  the Euclidean degree of <A>m</A>.
+##  A quotient <M>q</M> of <A>r</A> and <A>s</A> modulo <A>m</A> is an
+##  element of <A>R</A> such that <M>q <A>s</A> = <A>r</A></M> modulo
+##  <M>m</M>, i.e., such that <M>q <A>s</A> - <A>r</A></M> is divisible by
+##  <A>m</A> in <A>R</A> and that <M>q</M> is either zero (if <A>r</A> is
+##  divisible by <A>m</A>) or the Euclidean degree of <M>q</M> is strictly
+##  smaller than the Euclidean degree of <A>m</A>.
 ##  <Example><![CDATA[
 ##  gap> QuotientMod( 7, 2, 3 );
 ##  2

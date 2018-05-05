@@ -19,6 +19,8 @@
 #ifndef GAP_INTRPRTR_H
 #define GAP_INTRPRTR_H
 
+#include <src/system.h>
+#include <src/gap.h>
 
 /****************************************************************************
 **
@@ -28,7 +30,7 @@
 **  the  statement  that  was  last  interpreted (which   might  have been  a
 **  return-value-statement).
 */
-extern  Obj             IntrResult;
+/* TL: extern  Obj             IntrResult; */
 
 
 /****************************************************************************
@@ -42,7 +44,7 @@ extern  Obj             IntrResult;
 **
 **  This mode is also used in Info and Assert, when arguments are not printed. 
 */
-extern UInt IntrIgnoring;
+/* TL: extern UInt IntrIgnoring; */
 
 
 /****************************************************************************
@@ -53,7 +55,7 @@ extern UInt IntrIgnoring;
 **  The interpreter  switches  to this  mode for  constructs  that it  cannot
 **  directly interpret, such as loops or function bodies.
 */
-extern UInt IntrCoding;
+/* TL: extern UInt IntrCoding; */
 
 /****************************************************************************
 **
@@ -64,7 +66,7 @@ extern UInt IntrCoding;
 **  statements enclosing a return statement. Actions from these statements
 **  are ignored.
 */
-extern UInt IntrReturning;
+/* TL: extern UInt IntrReturning; */
 
 /****************************************************************************
 **
@@ -72,7 +74,7 @@ extern UInt IntrReturning;
 *F  IntrEnd(<error>)  . . . . . . . . . . . . . . . . . . stop an interpreter
 **
 **  'IntrBegin( <frame> )' starts a new interpreter in context <frame>
-**  if in doubt, pass TLS(BottomLVars) as <frame>
+**  if in doubt, pass STATE(BottomLVars) as <frame>
 **
 **  'IntrEnd(<error>)' stops the current interpreter.
 **
@@ -116,12 +118,12 @@ extern  void            IntrFuncCallEnd (
 
 /****************************************************************************
 **
-*F  IntrFuncCallOptionsBegin() . . . .. . . . . .  interpret options, begin
-*F  IntrFuncCallOptionsBeginElmName(<rnam>).  interpret options, begin element
-*F  IntrFuncCallOptionsBeginElmExpr() . .. .  interpret options, begin element
-*F  IntrFuncCallOptionsEndElm() . . .. .  . .  interpret options, end element
-*F  IntrFuncCallOptionsEndElmEmpty() .. .  . .  interpret options, end element
-*F  IntrFuncCallOptionsEnd(<nr>)  . . . . . . . .  interpret options, end
+*F  IntrFuncCallOptionsBegin() . . . . . . . . . . . interpret options, begin
+*F  IntrFuncCallOptionsBeginElmName(<rnam>)  interpret options, begin element
+*F  IntrFuncCallOptionsBeginElmExpr() . . .  interpret options, begin element
+*F  IntrFuncCallOptionsEndElm() . . . . . . .  interpret options, end element
+*F  IntrFuncCallOptionsEndElmEmpty() . . . . . interpret options, end element
+*F  IntrFuncCallOptionsEnd(<nr>) . . . . . . . . . . . interpret options, end
 **
 **  The net effect of all of these is to leave a record object on the stack
 **  where IntrFuncCallEnd can use it
@@ -159,9 +161,7 @@ extern  void            IntrFuncExprBegin (
             Obj                 nams,
 	    Int                 startLine);
 
-extern  void            IntrFuncExprEnd (
-            UInt                nr,
-            UInt                mapsto );
+extern void IntrFuncExprEnd(UInt nr);
 
 
 /****************************************************************************
@@ -296,29 +296,30 @@ extern void IntrQualifiedExprEnd( void);
 
 /****************************************************************************
 **
-*F  IntrAtomicBegin()  . . . . . interpret atomic-statement, begin of statement
-*F  IntrAtomicBeginBody()  . . . . .  interpret atomic-statement, begin of body
-*F  IntrAtomicEndBody(<nr>)  . . . . .  interpret atomic-statement, end of body
-*F  IntrAtomicEnd()  . . . . . . . interpret atomic-statement, end of statement
+*F  IntrAtomicBegin() . . . .  interpret atomic-statement, begin of statement
+*F  IntrAtomicBeginBody() . . . . . interpret atomic-statement, begin of body
+*F  IntrAtomicEndBody(<nr>) . . . . . interpret atomic-statement, end of body
+*F  IntrAtomicEnd() . . . . . .  interpret atomic-statement, end of statement
 **
-**  'IntrAtomicBegin' is   an action to  interpret   a atomic-statement.  It is
-**  called when the    reader encounters the    'atomic', i.e., *before*   the
+**  'IntrAtomicBegin' is an action to interpret a atomic-statement. It is
+**  called when the reader encounters the 'atomic', i.e., *before* the
 **  condition is read.
 **
-**  'IntrAtomicBeginBody' is an action  to interpret a atomic-statement.  It is
-**  called when the reader encounters  the  beginning of the statement  body,
-**  i.e., *after* the expressions to be locked have been read. <nrexprs> is the number of such 
-**  expressions
+**  'IntrAtomicBeginBody' is an action to interpret a atomic-statement. It is
+**  called when the reader encounters the beginning of the statement body,
+**  i.e., *after* the expressions to be locked have been read. <nrexprs> is
+**  the number of such  expressions.
 **
-**  'IntrAtomicEndBody' is  an action to interpret   a atomic-statement.  It is
-**  called when the reader encounters the end of the statement body.  <nr> is
+**  'IntrAtomicEndBody' is an action to interpret a atomic-statement. It is
+**  called when the reader encounters the end of the statement body. <nr> is
 **  the number of statements in the body.
 **
-**  'IntrAtomicEnd' is an action to interpret a atomic-statement.  It is called
-**  when  the reader encounters  the  end of  the  statement, i.e., immediate
-**  after 'IntrAtomicEndBody'.
+**  'IntrAtomicEnd' is an action to interpret a atomic-statement. It is
+**  called when the reader encounters the end of the statement, i.e.,
+**  lyimmediate after 'IntrAtomicEndBody'.
 **
-**  These functions are just placeholders for future HPC-GAP code
+**  These functions only do something meaningful inside HPC-GAP; otherwise,
+**  they are simply placeholders.
 */
 
 extern  void            IntrAtomicBegin ( void );
@@ -329,6 +330,14 @@ extern  void            IntrAtomicEndBody (
             Int                nrstats );
 
 extern  void            IntrAtomicEnd ( void );
+
+#ifdef HPCGAP
+/* TODO: move these constants to a more appropriate location */
+enum {
+    DEFAULT_LOCK_TYPE  = 1,
+    MAX_ATOMIC_OBJS = 256
+};
+#endif
 
 
 /****************************************************************************
@@ -508,7 +517,6 @@ extern  void            IntrIn ( void );
 *F  IntrAInv()  . . . . . . . . . . . . . . . .  interpret unary --expression
 *F  IntrDiff()  . . . . . . . . . . . . . . . . . . .  interpret --expression
 *F  IntrProd()  . . . . . . . . . . . . . . . . . . .  interpret *-expression
-*F  IntrInv() . . . . . . . . . . . . . . . . . . .  interpret ^-1-expression
 *F  IntrQuo() . . . . . . . . . . . . . . . . . . . .  interpret /-expression
 *F  IntrMod()   . . . . . . . . . . . . . . . . . .  interpret mod-expression
 *F  IntrPow() . . . . . . . . . . . . . . . . . . . .  interpret ^-expression
@@ -525,8 +533,6 @@ extern  void            IntrDiff ( void );
 
 extern  void            IntrProd ( void );
 
-extern  void            IntrInv ( void );
-
 extern  void            IntrQuo ( void );
 
 extern  void            IntrMod ( void );
@@ -541,6 +547,8 @@ extern  void            IntrPow ( void );
 **  'IntrIntExpr' is the action  to  interpret a literal  integer expression.
 **  <str> is the integer as a (null terminated) C character string.
 */
+
+extern void             IntrIntObjExpr(Obj val);
 extern  void            IntrIntExpr (
             Char *              str );
 extern  void            IntrLongIntExpr (
@@ -575,6 +583,15 @@ extern  void            IntrTrueExpr ( void );
 */
 extern  void            IntrFalseExpr ( void );
 
+/****************************************************************************
+**
+*F  IntrTildeExpr() . . . . . . . . . . . . . . . interpret tilde expression
+**
+**  'IntrTildeExpr' is the action to interpret a tilde expression.
+*/
+extern  void            IntrTildeExpr ( void );
+
+extern void IntrHelp( Obj topic );
 
 /****************************************************************************
 **
@@ -820,10 +837,10 @@ extern  void            IntrIsbRecExpr ( void );
 
 /****************************************************************************
 **
-*F  IntrAssPosObj() . . . . . . . . . . . . . .  interpret assignment to a list
-*F  IntrAsssPosObj()  . . . . . . . . . interpret multiple assignment to a list
-*F  IntrAssPosObjLevel(<level>) . . . . . interpret assignment to several lists
-*F  IntrAsssPosObjLevel(<level>)  . . intr multiple assignment to several lists
+*F  IntrAssPosObj() . . . . . . . . . . . .  interpret assignment to a posobj
+*F  IntrAsssPosObj() . . . . . . .  interpret multiple assignment to a posobj
+*F  IntrAssPosObjLevel(<level>) . . . interpret assignment to several posobjs
+*F  IntrAsssPosObjLevel(<level>)  intr multiple assignment to several posobjs
 */
 extern  void            IntrAssPosObj ( void );
 
@@ -840,10 +857,10 @@ extern  void            IntrUnbPosObj ( void );
 
 /****************************************************************************
 **
-*F  IntrElmPosObj() . . . . . . . . . . . . . . . interpret selection of a list
-*F  IntrElmsPosObj()  . . . . . . . . .  interpret multiple selection of a list
-*F  IntrElmPosObjLevel(<level>) . . . . .  interpret selection of several lists
-*F  IntrElmsPosObjLevel(<level>)  . .  intr multiple selection of several lists
+*F  IntrElmPosObj() . . . . . . . . . . . . . interpret selection of a posobj
+*F  IntrElmsPosObj() . . . . . . . . interpret multiple selection of a posobj
+*F  IntrElmPosObjLevel(<level>) . . .  interpret selection of several posobjs
+*F  IntrElmsPosObjLevel(<level>) . intr multiple selection of several posobjs
 */
 extern  void            IntrElmPosObj ( void );
 
@@ -860,8 +877,8 @@ extern  void            IntrIsbPosObj ( void );
 
 /****************************************************************************
 **
-*F  IntrAssComObjName(<rnam>) . . . . . . . .  interpret assignment to a record
-*F  IntrAssComObjExpr() . . . . . . . . . . .  interpret assignment to a record
+*F  IntrAssComObjName(<rnam>) . . . . . . .  interpret assignment to a comobj
+*F  IntrAssComObjExpr() . . . . . . . . . .  interpret assignment to a comobj
 */
 extern  void            IntrAssComObjName (
             UInt                rnam );
@@ -876,8 +893,8 @@ extern  void            IntrUnbComObjExpr ( void );
 
 /****************************************************************************
 **
-*F  IntrElmComObjName(<rnam>) . . . . . . . . . interpret selection of a record
-*F  IntrElmComObjExpr() . . . . . . . . . . . . interpret selection of a record
+*F  IntrElmComObjName(<rnam>) . . . . . . . . interpret selection of a comobj
+*F  IntrElmComObjExpr() . . . . . . . . . . . interpret selection of a comobj
 */
 extern  void            IntrElmComObjName (
             UInt                rnam );
@@ -894,23 +911,22 @@ extern  void            IntrIsbComObjExpr ( void );
 *F  IntrEmpty() . . . . . . . . . . . . .  Interpret an empty statement body
 **
 */
-
 extern void             IntrEmpty ( void );
 
 /****************************************************************************
 **
 *F  IntrInfoBegin() . . . . . . . . .  start interpretation of Info statement
-*F  IntrInfoMiddle()  . . . . . .  shift to interpreting printable arguments
+*F  IntrInfoMiddle() . . . . . . .  shift to interpreting printable arguments
 *F  IntrInfoEnd( <narg> ) . . Info statement complete, <narg> things to print
-*V  InfoDecision . . . . . . . . . . .  fopy of the InfoDecision GAP function
-*V  InfoDoPrint  . . . . . . . . . . .  fopy of the InfoDoPrint GAP function
+*V  InfoCheckLevel(<selectors>,<level>) . . . . . check if Info should output
+*V  InfoDoPrint . . . . . . . . . . . .  fopy of the InfoDoPrint GAP function
 */
 
 extern void             IntrInfoBegin ( void );
 extern void             IntrInfoMiddle( void );
 extern void             IntrInfoEnd   (
            UInt                   narg );
-extern Obj              InfoDecision;
+extern Obj              InfoCheckLevel(Obj, Obj);
 extern Obj              InfoDoPrint;
 
 
@@ -924,13 +940,13 @@ extern Obj              InfoDoPrint;
 **
 *F  IntrAssertAfterCondition() called after the second argument has been read
 **
-**  At this point we know whether there is an assertion failure. We still need
-**  to read the third argument if any, to decide what to do about it One of:
+**  At this point we know whether there is an assertion failure. We still
+**  need to read the third argument if any, to decide what to do about it.
 **
-*F  IntrAssertEnd2Args() . . . .  called after reading the closing parenthesis
-*F  IntrAssertEnd3Args() . . . .  called after reading the closing parenthesis
+*F  IntrAssertEnd2Args() . . . . called after reading the closing parenthesis
+*F  IntrAssertEnd3Args() . . . . called after reading the closing parenthesis
 **
-*V  CurrentAssertionLevel . . . .  . . . . . . . . . . . . copy of GAP variable
+*V  CurrentAssertionLevel . . . .  . . . . . . . . . . . copy of GAP variable
 */
 
 extern void             IntrAssertBegin ( void );
@@ -967,23 +983,15 @@ extern void            PushVoidObj ( void );
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  InitInfoIntrprtr()  . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoIntrprtr ( void );
 
 
 #endif // GAP_INTRPRTR_H
-
-/****************************************************************************
-**
-
-*E  intrprtr.h  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

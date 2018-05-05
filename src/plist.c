@@ -34,43 +34,29 @@
 **  This package also contains the list  functions for plain lists, i.e., the
 **  functions called from the generic lists package.
 */
-#include        "system.h"              /* system dependent part           */
+
+#include <src/plist.h>
+
+#include <src/ariths.h>
+#include <src/blister.h>
+#include <src/bool.h>
+#include <src/calls.h>
+#include <src/finfield.h>
+#include <src/funcs.h>
+#include <src/gap.h>
+#include <src/gaputils.h>
+#include <src/io.h>
+#include <src/lists.h>
+#include <src/range.h>
+#include <src/saveload.h>
+
+#ifdef HPCGAP
+#include <src/hpc/guards.h>
+#endif
 
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
-
-#include        "gap.h"                 /* error handling, initialisation  */
-
-#include        "gvars.h"               /* global variables                */
-
-#include        "calls.h"               /* generic call mechanism          */
-#include        "opers.h"               /* generic operations              */
-
-#include        "ariths.h"              /* basic arithmetic                */
-#include        "finfield.h"            /* finite fields                   */
-
-#include        "bool.h"                /* booleans                        */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "plist.h"               /* plain lists                     */
-#include        "range.h"               /* ranges                          */
-#include        "string.h"              /* strings                         */
-#include        "blister.h"             /* boolean lists                   */
-
-#include        "saveload.h"            /* saving and loading              */
-#include	"code.h"
-#include	"thread.h"
-#include	"tls.h"
-
-#include        <assert.h>
 /****************************************************************************
 **
-
 *F  GROW_PLIST(<list>,<plen>) . . . .  make sure a plain list is large enough
 **
 */
@@ -81,8 +67,13 @@ Int             GrowPlist (
     UInt                plen;           /* new physical length             */
     UInt                good;           /* good new physical length        */
 
+    if (need > INT_INTOBJ_MAX)
+        ErrorMayQuit("GrowPlist: List size too large", 0, 0);
+
     /* find out how large the plain list should become                     */
     good = 5 * (SIZE_OBJ(list)/sizeof(Obj)-1) / 4 + 4;
+    if (good > INT_INTOBJ_MAX)
+        good = INT_INTOBJ_MAX;
 
     /* but maybe we need more                                              */
     if ( need < good ) { plen = good; }
@@ -197,25 +188,21 @@ Int             GrowPlist (
 **     its tnum BEFORE any element of it is examined.
 **
 **     
+**     FIXME HPC-GAP: All of this is horribly thread-unsafe!
 **
 */
 
-Obj TYPE_LIST_NDENSE_MUTABLE;
-Obj TYPE_LIST_NDENSE_IMMUTABLE;
-Obj TYPE_LIST_DENSE_NHOM_MUTABLE;
-Obj TYPE_LIST_DENSE_NHOM_IMMUTABLE;
-Obj TYPE_LIST_DENSE_NHOM_SSORT_MUTABLE;
-Obj TYPE_LIST_DENSE_NHOM_SSORT_IMMUTABLE;
-Obj TYPE_LIST_DENSE_NHOM_NSORT_MUTABLE;
-Obj TYPE_LIST_DENSE_NHOM_NSORT_IMMUTABLE;
-Obj TYPE_LIST_EMPTY_MUTABLE;
-Obj TYPE_LIST_EMPTY_IMMUTABLE;
-Obj TYPE_LIST_HOM;
-
-#define IS_TESTING_PLIST(list) \
-    (FIRST_TESTING_TNUM <= TNUM_OBJ(list) \
-  && TNUM_OBJ(list) <= LAST_TESTING_TNUM)
-
+static Obj TYPE_LIST_NDENSE_MUTABLE;
+static Obj TYPE_LIST_NDENSE_IMMUTABLE;
+static Obj TYPE_LIST_DENSE_NHOM_MUTABLE;
+static Obj TYPE_LIST_DENSE_NHOM_IMMUTABLE;
+static Obj TYPE_LIST_DENSE_NHOM_SSORT_MUTABLE;
+static Obj TYPE_LIST_DENSE_NHOM_SSORT_IMMUTABLE;
+static Obj TYPE_LIST_DENSE_NHOM_NSORT_MUTABLE;
+static Obj TYPE_LIST_DENSE_NHOM_NSORT_IMMUTABLE;
+static Obj TYPE_LIST_EMPTY_MUTABLE;
+static Obj TYPE_LIST_EMPTY_IMMUTABLE;
+static Obj TYPE_LIST_HOM;
 
 static Obj TypePlistWithKTNum( Obj list, UInt *ktnum );
 
@@ -230,6 +217,7 @@ Int KTNumPlist (
                                      only test this one for PLIST elements */
     Int                 areMut  = 0;    /* are <list>s elms mutable        */
     Int                 len     = 0;    /* if so, this is the length       */
+    Obj                 typeObj = 0;    /* type of <list>s elements        */
     Obj                 family  = 0;    /* family of <list>s elements      */
     Int                 lenList;        /* length of <list>                */
     Obj                 elm, x;         /* one element of <list>           */
@@ -242,23 +230,26 @@ Int KTNumPlist (
 					   known not to be dense */
     UInt                ktnumFirst;
 
-    /* if list has `TESTING' keep that                                     */
-    testing = IS_TESTING_PLIST(list) ? TESTING : 0;
+    Obj                 loopTypeObj = 0; /* typeObj in loop               */
 
-    UNMARK_LIST(list, testing);
+#ifdef HPCGAP
+    if (!CheckWriteAccess(list)) {
+      return TNUM_OBJ(list);
+    }
+#endif
+    /* if list has `TESTING' keep that                                     */
+    testing = TEST_OBJ_FLAG(list, TESTING);
+
     knownDense = HAS_FILT_LIST( list, FN_IS_DENSE );
     knownNDense = HAS_FILT_LIST( list, FN_IS_NDENSE );
-    MARK_LIST(list, testing);
 
     /* get the length of the list                                          */
     lenList = LEN_PLIST(list);
 
     /* special case for empty list                                         */
     if ( lenList == 0 ) {
-        UNMARK_LIST( list, testing );
         SET_FILT_LIST( list, FN_IS_EMPTY );
         res = TNUM_OBJ(list);
-        MARK_LIST( list, testing );
 	if (famfirst != (Obj *) 0)
 	  *famfirst = (Obj) 0;
         return res;
@@ -269,21 +260,34 @@ Int KTNumPlist (
     if ( elm == 0 ) {
         isDense = 0;
     }
-    else if ( IS_TESTING_PLIST(elm) ) {
+#ifdef HPCGAP
+    else if ( !CheckReadAccess(elm) ) {
+      isHom = 0;
+      areMut = 1;
+      isTable = 0;
+    }
+#endif
+    else if (TEST_OBJ_FLAG(elm, TESTING)) {
         isHom   = 0;
         areMut  = IS_MUTABLE_PLIST(elm);
         isTable = 0;
     }
     else {
-	if (!testing) MARK_LIST(list, TESTING);
+#ifdef HPCGAP
+	if (!testing) SET_OBJ_FLAG(list, TESTING|TESTED);
+#else
+	if (!testing) SET_OBJ_FLAG(list, TESTING);
+#endif
 
-	if (IS_PLIST(elm))
-	  family = FAMILY_TYPE( TypePlistWithKTNum(elm, &ktnumFirst));
-	else
-	  {
-	    family  = FAMILY_TYPE( TYPE_OBJ(elm) );
+	if (IS_PLIST(elm)) {
+	    typeObj = TypePlistWithKTNum(elm, &ktnumFirst);
+	    family = FAMILY_TYPE( typeObj );
+	}
+	else {
+	    typeObj =  TYPE_OBJ(elm);
+	    family  = FAMILY_TYPE( typeObj );
 	    ktnumFirst = 0;
-	  }
+	}
         isHom   = 1;
         areMut  = IS_MUTABLE_OBJ(elm);
         if ( ktnumFirst >= T_PLIST_HOM ||
@@ -300,28 +304,63 @@ Int KTNumPlist (
 	    }
 	  
         }
-	if (!testing) UNMARK_LIST(list, TESTING);
+	if (!testing) CLEAR_OBJ_FLAG(list, TESTING);
+    }
+
+    i = 2;
+    /* scan quickly through any initial INTOBJs                            */
+    if ( IS_INTOBJ(ELM_PLIST(list, 1)) ) {
+        /* We have already marked list as not table, not rect */
+        while(i <= lenList && IS_INTOBJ(ELM_PLIST( list, i ))) {
+            i++;
+        }
     }
 
     /* loop over the list                                                  */
-    for ( i = 2; isDense && (isHom || ! areMut) && i <= lenList; i++ ) {
+    for ( ; isDense && (isHom || ! areMut) && i <= lenList; i++ ) {
         elm = ELM_PLIST( list, i );
         if ( elm == 0 ) {
             isDense = 0;
         }
-        else if ( IS_TESTING_PLIST(elm) ) {
+#ifdef HPCGAP
+	else if ( !CheckReadAccess(elm) ) {
+	    isHom = 0;
+	    areMut = 1;
+	    isTable = 0;
+	    isRect = 0;
+	}
+#endif
+        else if (TEST_OBJ_FLAG(elm, TESTING)) {
             isHom   = 0;
             areMut  = (areMut || IS_MUTABLE_PLIST(elm));
             isTable = 0;
-	    isRect = 0;
+            isRect = 0;
         }
         else {
-            isHom   = (isHom && family == FAMILY_TYPE( TYPE_OBJ(elm) ));
+            if (isHom) {
+                loopTypeObj = TYPE_OBJ(elm);
+                if ( loopTypeObj != typeObj && FAMILY_TYPE(loopTypeObj) != family ) {
+                    isHom = 0;
+                    isTable = 0;
+                    isRect = 0;
+                }
+                if ( isTable ) {
+                    /* IS_PLIST first, as it is much cheaper */
+                    if (!(IS_PLIST(elm) || IS_LIST(elm))) {
+                        isTable = 0;
+                        isRect = 0;
+                    }
+                    if ( isRect ) {
+                        if ( !(IS_PLIST(elm) && LEN_PLIST(elm) == len) ) {
+                            isRect = 0;
+                        }
+                    }
+                }
+            }
             areMut  = (areMut || IS_MUTABLE_OBJ(elm));
-            isTable = isTable && IS_LIST(elm); /*(isTable && IS_SMALL_LIST(elm) && LEN_LIST(elm) == len); */
-	    isRect = isRect && IS_PLIST(elm) && LEN_PLIST(elm) == len;
         }
     }
+
     /* if we know it is not dense */
     if (knownNDense)
       isDense = 0;
@@ -335,7 +374,6 @@ Int KTNumPlist (
       }
 
     /* set the appropriate flags (not the hom. flag if elms are mutable)   */
-    UNMARK_LIST( list, testing );
     if      ( ! isDense ) {
         SET_FILT_LIST( list, FN_IS_NDENSE );
         res = T_PLIST_NDENSE;
@@ -358,7 +396,7 @@ Int KTNumPlist (
 	    /* This is a hack */
 	    RetypeBag(list, res + ( IS_MUTABLE_OBJ(list) ? 0 : IMMUTABLE ));
 	  }
-	else if (TNUM_OBJ(ELM_PLIST(list,1)) == T_FFE)
+	else if (IS_FFE(ELM_PLIST(list,1)))
 	  {
 	    FF fld = FLD_FFE(ELM_PLIST(list,1));
 	    UInt isFFE = 1;
@@ -399,7 +437,6 @@ Int KTNumPlist (
 	  *famfirst = (Obj) family;
       }
     res = res + ( IS_MUTABLE_OBJ(list) ? 0 : IMMUTABLE );
-    MARK_LIST( list, testing );
     return res;
 }
 
@@ -413,13 +450,15 @@ Int KTNumHomPlist (
     Int                 lenList;        /* length of list                  */
     Obj                 elm, x;         /* one element of <list>           */
     Int                 i;              /* loop variable                   */
-    Int                 testing;        /* to test or not to test type     */
     Int                 res;            /* result                          */
     Int                 isSSort;        /* list is (known to be) SSorted   */
     Int                 isNSort;        /* list is (known to be) non-sorted*/
 
-    /* if list has `TESTING' keep that                                     */
-    testing = IS_TESTING_PLIST(list) ? TESTING : 0;
+#ifdef HPCGAP
+    if (!CheckWriteAccess(list)) {
+      return TNUM_OBJ(list);
+    }
+#endif
 
     /* get the length of the list                                          */
     lenList = LEN_PLIST(list);
@@ -430,7 +469,7 @@ Int KTNumHomPlist (
     /* look at the first element                                           */
     elm = ELM_PLIST( list, 1 );
     assert(elm);
-    assert(!IS_TESTING_PLIST(elm));
+    assert(!TEST_OBJ_FLAG(elm, TESTING));
 
     isSSort = HAS_FILT_LIST(list, FN_IS_SSORT );
     isNSort = HAS_FILT_LIST(list, FN_IS_NSORT );
@@ -449,7 +488,7 @@ Int KTNumHomPlist (
 	RetypeBag(list, res + ( IS_MUTABLE_OBJ(list) ? 0 : IMMUTABLE ));
 	goto finish;
       }
-    if (TNUM_OBJ(elm) == T_FFE)
+    if (IS_FFE(elm))
       {
 	FF fld = FLD_FFE(ELM_PLIST(list,1));
 	UInt isFFE = 1;
@@ -487,8 +526,8 @@ Int KTNumHomPlist (
 	for ( i = 2; isTable && i <= lenList; i++ ) {
 	  elm = ELM_PLIST( list, i );
 	  assert(elm);
-	  assert(!IS_TESTING_PLIST(elm));
-	  isTable = isTable && IS_LIST(elm); /* (isTable && IS_SMALL_LIST(elm) && LEN_LIST(elm) == len);*/
+          assert(!TEST_OBJ_FLAG(elm, TESTING));
+          isTable = isTable && IS_LIST(elm); /* (isTable && IS_SMALL_LIST(elm) && LEN_LIST(elm) == len);*/
 	  isRect = isRect && IS_PLIST(elm) && LEN_PLIST(elm) == len;
 	}
       }
@@ -527,7 +566,6 @@ Int KTNumHomPlist (
     
  finish:
     res = res + ( IS_MUTABLE_OBJ(list) ? 0 : IMMUTABLE );
-    MARK_LIST( list, testing );
     return res;
 }
 
@@ -545,10 +583,22 @@ static Obj TypePlistWithKTNum (
     Obj                 family;         /* family of elements              */
     Obj                 types;          /* types list of <family>          */
 
+#ifdef HPCGAP
+    if (CheckWriteAccess(list)) {
+      /* recursion is possible for this type of list                         */
+      SET_OBJ_FLAG( list, TESTING|TESTED );
+      tnum = KTNumPlist( list, &family);
+      CLEAR_OBJ_FLAG( list, TESTING );
+    } else {
+      tnum = TNUM_OBJ(list);
+      family = 0;
+    }
+#else
     /* recursion is possible for this type of list                         */
-    MARK_LIST( list, TESTING );
+    SET_OBJ_FLAG( list, TESTING );
     tnum = KTNumPlist( list, &family);
-    UNMARK_LIST( list, TESTING );
+    CLEAR_OBJ_FLAG( list, TESTING );
+#endif
     if (ktnum != (UInt *) 0)
       *ktnum = tnum;
 
@@ -579,31 +629,51 @@ static Obj TypePlistWithKTNum (
     }
 
     /* handle homogeneous list                                             */
-    if ( HasFiltListTNums[tnum][FN_IS_HOMOG] ) {
+    if ( family && HasFiltListTNums[tnum][FN_IS_HOMOG] ) {
 
         /* get the list types of the elements family */
         types  = TYPES_LIST_FAM( family );
 
-        /* if the type is not yet known, compute it                        */
-        type = ELM0_LIST( types, tnum-T_PLIST_HOM+1 );
-        if ( type == 0 ) {
-            type = CALL_2ARGS( TYPE_LIST_HOM,
-                family, INTOBJ_INT(tnum-T_PLIST_HOM+1) );
-            ASS_LIST( types, tnum-T_PLIST_HOM+1, type );
+#ifdef HPCGAP
+	if (CheckWriteAccess(types)) {
+#endif
+            /* if the type is not yet known, compute it                        */
+            type = ELM0_LIST( types, tnum-T_PLIST_HOM+1 );
+            if ( type == 0 ) {
+                type = CALL_2ARGS( TYPE_LIST_HOM,
+                    family, INTOBJ_INT(tnum-T_PLIST_HOM+1) );
+                ASS_LIST( types, tnum-T_PLIST_HOM+1, type );
+            }
+
+            /* return the type                                                 */
+            return type;
+#ifdef HPCGAP
         }
-
-        /* return the type                                                 */
-        return type;
+#endif
     }
 
+#ifdef HPCGAP
+    UInt len = LEN_LIST(list);
+    UInt i;
+    for (i = 1; i <= len; i++) {
+      if (ELM_LIST(list, i) == (Obj) 0) {
+	if (IS_MUTABLE_OBJ(list))
+	  return TYPE_LIST_NDENSE_MUTABLE;
+	else
+	  return TYPE_LIST_NDENSE_IMMUTABLE;
+      }
+    }
+
+    if (IS_MUTABLE_OBJ(list))
+      return TYPE_LIST_DENSE_NHOM_MUTABLE;
+    else
+      return TYPE_LIST_DENSE_NHOM_IMMUTABLE;
+#else
     /* whats going on here?                                                */
-    else {
-        ErrorQuit(
-            "Panic: strange type tnum '%s' ('%d')",
-            (Int)TNAM_OBJ(list), (Int)(TNUM_OBJ(list)) );
-        return 0;
-    }
-
+    ErrorQuit( "Panic: strange type tnum '%s' ('%d')",
+               (Int)TNAM_OBJ(list), (Int)(TNUM_OBJ(list)) );
+    return 0;
+#endif
 }
 
 Obj TypePlistNDenseMut (
@@ -688,6 +758,10 @@ Obj TypePlistHom (
         type = CALL_2ARGS( TYPE_LIST_HOM,
             family, INTOBJ_INT(tnum-T_PLIST_HOM+1) );
         ASS_LIST( types, tnum-T_PLIST_HOM+1, type );
+#ifdef HPCGAP
+        // read back element before returning it, in case another thread raced us
+	type = ELM0_LIST( types, tnum-T_PLIST_HOM+1 );
+#endif
     }
 
     /* return the type                                                     */
@@ -717,6 +791,10 @@ Obj TypePlistCyc (
         type = CALL_2ARGS( TYPE_LIST_HOM,
             family, INTOBJ_INT(tnum-T_PLIST_CYC+1) );
         ASS_LIST( types, tnum-T_PLIST_CYC+1, type );
+#ifdef HPCGAP
+        // read back element before returning it, in case another thread raced us
+	type = ELM0_LIST( types, tnum-T_PLIST_CYC+1 );
+#endif
     }
 
     /* return the type                                                     */
@@ -744,12 +822,27 @@ Obj TypePlistFfe (
         type = CALL_2ARGS( TYPE_LIST_HOM,
             family, INTOBJ_INT(tnum-T_PLIST_FFE+1) );
         ASS_LIST( types, tnum-T_PLIST_FFE+1, type );
+#ifdef HPCGAP
+        // read back element before returning it, in case another thread raced us
+	type = ELM0_LIST( types, tnum-T_PLIST_FFE+1 );
+#endif
     }
 
     /* return the type                                                     */
     return type;
 }
 
+/****************************************************************************
+**
+*F  SetTypePlistToPosObj(<list>, <kind>) .  convert list to positional object
+**
+*/
+void SetTypePlistToPosObj(Obj list, Obj kind)
+{
+    TYPE_POSOBJ(list) = kind;
+    RetypeBag(list, T_POSOBJ);
+    CHANGED_BAG(list);
+}
 
 /****************************************************************************
 **
@@ -796,11 +889,9 @@ Obj             ShallowCopyPlist (
 Obj    FuncEmptyPlist( Obj self, Obj len )
 {
     Obj                 new;
-    while ( ! IS_INTOBJ(len) ) {
-        len = ErrorReturnObj(
-            "<len> must be an integer (not a %s)",
-            (Int)TNAM_OBJ(len), 0L,
-            "you can replace <len> via 'return <len>;'" );
+
+    if (!IS_INTOBJ(len) || INT_INTOBJ(len) < 0) {
+        ErrorMayQuit("<len> must be a non-negative small integer", 0L, 0L);
     }
 
     new = NEW_PLIST(T_PLIST_EMPTY, INT_INTOBJ(len));
@@ -829,7 +920,6 @@ Obj   FuncShrinkAllocationPlist( Obj self, Obj plist )
 
 /****************************************************************************
 **
-
 *F  FuncIS_PLIST_REP( <self>, <obj> ) . . . . . . . .  handler for `IS_PLIST'
 */
 Obj IsPListFilt;
@@ -842,9 +932,10 @@ Obj FuncIS_PLIST_REP (
 }
 
 
+#if !defined(USE_THREADSAFE_COPYING)
+
 /****************************************************************************
 **
-
 *F  CopyPlist( <list>, <mut> )  . . . . . . . . . . . . . . copy a plain list
 **
 **  'CopyPlist' returns a  structural (deep) copy  of the plain  list <list>,
@@ -890,7 +981,7 @@ Obj CopyPlist (
     CHANGED_BAG( list );
 
     /* now it is copied                                                    */
-    MARK_LIST( list, COPYING );
+    RetypeBag( list, TNUM_OBJ(list) + COPYING );
 
     /* copy the subvalues                                                  */
     for ( i = 1; i <= LEN_PLIST(copy); i++ ) {
@@ -941,7 +1032,7 @@ void CleanPlistCopy (
     ADDR_OBJ(list)[0] = ADDR_OBJ( ADDR_OBJ(list)[0] )[0];
 
     /* now it is cleaned                                                   */
-    UNMARK_LIST( list, COPYING );
+    RetypeBag( list, TNUM_OBJ(list) - COPYING );
 
     /* clean the subvalues                                                 */
     for ( i = 1; i <= LEN_PLIST(list); i++ ) {
@@ -952,9 +1043,11 @@ void CleanPlistCopy (
 }
 
 
+#endif // !defined(USE_THREADSAFE_COPYING)
+
+
 /****************************************************************************
 **
-
 *F  EqPlist(<left>,<right>) . . . . . . . . test if two plain lists are equal
 **
 **  'EqList'  returns 'true' if  the two plain lists   <left> and <right> are
@@ -979,22 +1072,20 @@ Int             EqPlist (
         return 0L;
     }
 
+    CheckRecursionBefore();
+
     /* loop over the elements and compare them                             */
     for ( i = 1; i <= lenL; i++ ) {
         elmL = ELM_PLIST( left, i );
         elmR = ELM_PLIST( right, i );
-        if ( elmL == 0 && elmR != 0 ) {
-            return 0L;
-        }
-        else if ( elmR == 0 && elmL != 0 ) {
-            return 0L;
-        }
-        else if ( ! EQ( elmL, elmR ) ) {
+        if ( ( (elmL == 0 ) != (elmR == 0) ) || ! EQ( elmL, elmR ) ) {
+            DecRecursionDepth();
             return 0L;
         }
     }
 
     /* no differences found, the lists are equal                           */
+    DecRecursionDepth();
     return 1L;
 }
 
@@ -1017,28 +1108,36 @@ Int             LtPlist (
     Obj                 elmL;           /* element of the left operand     */
     Obj                 elmR;           /* element of the right operand    */
     Int                 i;              /* loop variable                   */
+    Int                 res;            /* result of comparison            */
 
     /* get the lengths of the lists and compare them                       */
     lenL = LEN_PLIST( left );
     lenR = LEN_PLIST( right );
+    res = (lenL < lenR);
+
+    CheckRecursionBefore();
 
     /* loop over the elements and compare them                             */
     for ( i = 1; i <= lenL && i <= lenR; i++ ) {
         elmL = ELM_PLIST( left, i );
         elmR = ELM_PLIST( right, i );
         if ( elmL == 0 && elmR != 0 ) {
-            return 1L;
+            res = 1L;
+            break;
         }
         else if ( elmR == 0 && elmL != 0 ) {
-            return 0L;
+            res = 0L;
+            break;
         }
         else if ( ! EQ( elmL, elmR ) ) {
-            return LT( elmL, elmR );
+            res = LT( elmL, elmR );
+            break;
         }
     }
 
     /* reached the end of at least one list                                */
-    return (lenL < lenR);
+    DecRecursionDepth();
+    return res;
 }
 
 
@@ -1066,15 +1165,10 @@ Int             LenPlistEmpty (
 /****************************************************************************
 **
 *F  IsbPlist(<list>,<pos>)  . . . . . . test for an element from a plain list
-*F  IsbvPlist(<list>,<pos>) . . . . . . test for an element from a plain list
 **
 **  'IsbPlist' returns 1 if the list <list> has an entry  at  position  <pos>
 **  and 0 otherwise.  It is the responsibility of the caller to  ensure  that
 **  <pos> is a positive integer.
-**
-**  'IsbvPlist' does the  same thing than  'IsbList', but need not check that
-**  <pos>  is less  than or  equal  to the  length of   <list>,  this is  the
-**  responsibility of the caller.
 */
 Int             IsbPlist (
     Obj                 list,
@@ -1088,20 +1182,6 @@ Int             IsbPlistDense (
     Int                 pos )
 {
     return (pos <= LEN_PLIST( list ));
-}
-
-Int             IsbvPlist (
-    Obj                 list,
-    Int                 pos )
-{
-    return (ELM_PLIST( list, pos ) != 0);
-}
-
-Int             IsbvPlistDense (
-    Obj                 list,
-    Int                 pos )
-{
-    return (1L);
 }
 
 
@@ -1257,7 +1337,8 @@ Obj             ElmvPlistDense (
 **  value at any of  the positions in <poss>, or  if an element of  <poss> is
 **  larger than the length of <list>.
 **
-**  'ElmsPlist' is the function in 'ElmsListFuncs' for plain lists.
+**  'ElmsPlist' is the function in 'ElmsListFuncs' for plain lists which are 
+**  not known to be dense.
 */
 Obj             ElmsPlist (
     Obj                 list,
@@ -1286,8 +1367,7 @@ Obj             ElmsPlist (
         lenPoss = LEN_LIST( poss );
 
         /* make the result list                                            */
-        /* do not assert "dense", list might be homogeneous                */
-        elms = NEW_PLIST( T_PLIST, lenPoss );
+        elms = NEW_PLIST( T_PLIST_DENSE, lenPoss );
         SET_LEN_PLIST( elms, lenPoss );
 
         /* loop over the entries of <positions> and select                 */
@@ -1351,8 +1431,7 @@ Obj             ElmsPlist (
         }
 
         /* make the result list                                            */
-        /* do not assert "dense", list might be homogeneous                */
-        elms = NEW_PLIST( T_PLIST, lenPoss );
+        elms = NEW_PLIST( T_PLIST_DENSE, lenPoss );
         SET_LEN_PLIST( elms, lenPoss );
 
         /* loop over the entries of <positions> and select                 */
@@ -1381,6 +1460,9 @@ Obj             ElmsPlist (
     /* return the result                                                   */
     return elms;
 }
+
+/* This version for lists which are known to be at least dense 
+   and might be better */
 
 Obj             ElmsPlistDense (
     Obj                 list,
@@ -1415,6 +1497,8 @@ Obj             ElmsPlistDense (
 	    elms = NEW_PLIST( MUTABLE_TNUM(TNUM_OBJ(list)), lenPoss);
 	    RESET_FILT_LIST( elms, FN_IS_NHOMOG); /* can't deduce this one */
 	  }
+	else if (HAS_FILT_LIST(list, FN_IS_RECT))
+	  elms = NEW_PLIST( T_PLIST_TAB_RECT, lenPoss );
 	else if (HAS_FILT_LIST(list, FN_IS_TABLE))
 	  elms = NEW_PLIST( T_PLIST_TAB, lenPoss );
 	else if (T_PLIST_CYC <= TNUM_OBJ(list) && TNUM_OBJ(list) <= 
@@ -1426,7 +1510,7 @@ Obj             ElmsPlistDense (
 	else if (HAS_FILT_LIST(list, FN_IS_HOMOG))
 	  elms = NEW_PLIST( T_PLIST_HOM, lenPoss );
 	else
-	  elms = NEW_PLIST( T_PLIST, lenPoss);
+	  elms = NEW_PLIST( T_PLIST_DENSE, lenPoss);
 	  
         SET_LEN_PLIST( elms, lenPoss );
 
@@ -1494,6 +1578,8 @@ Obj             ElmsPlistDense (
 		  SET_FILT_LIST(elms, FN_IS_NSORT);
 		}  */
 	  }
+	else if (HAS_FILT_LIST(list, FN_IS_RECT))
+	  elms = NEW_PLIST( T_PLIST_TAB_RECT, lenPoss );
 	else if (HAS_FILT_LIST(list, FN_IS_TABLE))
 	  elms = NEW_PLIST( T_PLIST_TAB, lenPoss );
 	else if (T_PLIST_CYC <= TNUM_OBJ(list) && TNUM_OBJ(list) <= 
@@ -1603,7 +1689,8 @@ void            AssPlist (
 
     /* now perform the assignment                                          */
     SET_ELM_PLIST( list, pos, val );
-    CHANGED_BAG( list );
+    if ( IS_BAG_REF( val ) )
+        CHANGED_BAG( list );
 }
 
 void            AssPlistXXX (
@@ -1625,7 +1712,8 @@ void            AssPlistXXX (
 
     /* now perform the assignment                                          */
     SET_ELM_PLIST( list, pos, val );
-    CHANGED_BAG( list );
+    if ( IS_BAG_REF( val ) )
+        CHANGED_BAG( list );
 
     /* We may be able cheaply to tell that the list is non-dense          */
     if (len +1 < pos)
@@ -1638,8 +1726,7 @@ void AssPlistCyc   (
     Obj                 val )
 {
   Int len;
-  
-  
+
   /* resize the list if necessary                                        */
   len = LEN_PLIST( list );
   if ( len < pos ) {
@@ -1649,25 +1736,28 @@ void AssPlistCyc   (
 
     /* now perform the assignment                                          */
     SET_ELM_PLIST( list, pos, val );
-    CHANGED_BAG( list );
+    if ( IS_BAG_REF( val ) )
+        CHANGED_BAG( list );
 
     /* try and maintain maximum information about the list                */
-    if (pos > len + 1)
-      {
-	CLEAR_FILTS_LIST(list);
-	SET_FILT_LIST( list, FN_IS_NDENSE );
-      }
-    else if (TNUM_OBJ(val) > T_CYC)
-      {
-	CLEAR_FILTS_LIST(list);
-	SET_FILT_LIST( list, FN_IS_DENSE );
-      }
-    else
-      {
-      	RESET_FILT_LIST( list, FN_IS_NSORT );
-	RESET_FILT_LIST( list, FN_IS_SSORT );
-      }
-	
+    if (pos > len + 1) {
+        CLEAR_FILTS_LIST(list);
+        SET_FILT_LIST( list, FN_IS_NDENSE );
+    }
+#ifdef HPCGAP
+    else if (!CheckReadAccess(val)) {
+        CLEAR_FILTS_LIST(list);
+        SET_FILT_LIST( list, FN_IS_DENSE );
+    }
+#endif
+    else if (TNUM_OBJ(val) > T_CYC) {
+        CLEAR_FILTS_LIST(list);
+        SET_FILT_LIST( list, FN_IS_DENSE );
+    }
+    else {
+        RESET_FILT_LIST( list, FN_IS_NSORT );
+        RESET_FILT_LIST( list, FN_IS_SSORT );
+    }
 }
 
 void AssPlistFfe   (
@@ -1686,14 +1776,15 @@ void AssPlistFfe   (
 
     /* now perform the assignment                                          */
     SET_ELM_PLIST( list, pos, val );
-    CHANGED_BAG( list );
+    if ( IS_BAG_REF( val ) )
+        CHANGED_BAG( list );
 
     /* try and maintain maximum information about the list                 */
     if( pos > len + 1 ) {
 	CLEAR_FILTS_LIST(list);
 	SET_FILT_LIST( list, FN_IS_NDENSE );
     }
-    else if( TNUM_OBJ(val) != T_FFE ) {
+    else if( !IS_FFE(val) ) {
 	CLEAR_FILTS_LIST(list);
 	SET_FILT_LIST( list, FN_IS_DENSE );
     }
@@ -1802,6 +1893,11 @@ void AssPlistHomog (
 		SET_FILT_LIST( list, FN_IS_SSORT );
 	      }
 	  }
+#ifdef HPCGAP
+	else if (!CheckReadAccess(val)) {
+	  SET_FILT_LIST(list, FN_IS_NHOMOG);
+	}
+#endif
 	else if (!SyInitializing && !IS_MUTABLE_OBJ(val))
 	  {
 	    /* find the family of an original list element */
@@ -1865,7 +1961,12 @@ void AssPlistEmpty (
       else
 	AssPlistXXX( list, pos, val );
     }
-
+#ifdef HPCGAP
+    else if (!CheckReadAccess(val)) {
+        RetypeBag( list, T_PLIST );
+        AssPlistXXX( list, pos, val );
+    }
+#endif
     /* catch constants                                                     */
     else if ( TNUM_OBJ(val) < FIRST_EXTERNAL_TNUM ) {
         AssPlistXXX( list, pos, val );
@@ -2054,18 +2155,6 @@ Int             IsDensePlist (
     return 1L;
 }
 
-Int             IsDensePlistNot (
-    Obj                 list )
-{
-    return 0L;
-}
-
-Int             IsDensePlistYes (
-    Obj                 list )
-{
-    return 1L;
-}
-
 
 /****************************************************************************
 **
@@ -2084,18 +2173,6 @@ Int             IsHomogPlist (
     return (T_PLIST_HOM <= tnum);
 }
 
-Int             IsHomogPlistNot (
-    Obj                 list )
-{
-    return 0L;
-}
-
-Int             IsHomogPlistYes (
-    Obj                 list )
-{
-    return 1L;
-}
-
 
 /****************************************************************************
 **
@@ -2112,18 +2189,6 @@ Int             IsTablePlist (
     Int                 tnum;
     tnum = KTNumPlist( list, (Obj *)0 );
     return (T_PLIST_TAB <= tnum && tnum <= T_PLIST_TAB_RECT_SSORT);
-}
-
-Int             IsTablePlistNot (
-    Obj                 list )
-{
-    return 0L;
-}
-
-Int             IsTablePlistYes (
-    Obj                 list )
-{
-    return 1L;
 }
 
 
@@ -2162,6 +2227,10 @@ Int             IsSSortPlist (
     elm1    = ELM_PLIST( list, 1 );
     if (elm1 == 0)
       goto notDense;
+#ifdef HPCGAP
+    if (!CheckReadAccess(elm1))
+      return 0L;
+#endif
     areMut   = IS_MUTABLE_OBJ( elm1 );
     if (!SyInitializing)
       {
@@ -2176,6 +2245,10 @@ Int             IsSSortPlist (
       elm2 = ELM_PLIST( list, i );
       if (elm2 == 0)
 	goto notDense;
+#ifdef HPCGAP
+      if (!CheckReadAccess(elm2))
+	return 0L;
+#endif
       if ( ! LT( elm1, elm2 ) )
 	break;
       areMut = (areMut || IS_MUTABLE_OBJ( elm2 ));
@@ -2239,6 +2312,10 @@ Int             IsSSortPlistDense (
 
     /* get the first element                                               */
     elm1    = ELM_PLIST( list, 1 );
+#ifdef HPCGAP
+    if (!CheckReadAccess(elm1))
+      return 0L;
+#endif
     areMut   = IS_MUTABLE_OBJ( elm1 );
     if (!SyInitializing)
       {
@@ -2251,6 +2328,10 @@ Int             IsSSortPlistDense (
     /* loop over the other elements                                        */
     for ( i = 2; i <= lenList; i++ ) {
       elm2 = ELM_PLIST( list, i );
+#ifdef HPCGAP
+      if (!CheckReadAccess(elm2))
+        return 0L;
+#endif
       if ( ! LT( elm1, elm2 ) )
 	break;
       areMut = (areMut || IS_MUTABLE_OBJ( elm2 ));
@@ -2299,10 +2380,18 @@ Int             IsSSortPlistHom (
 
     /* get the first element                                               */
     elm1    = ELM_PLIST( list, 1 );
-    
+#ifdef HPCGAP
+    if (!CheckReadAccess(elm1))
+      return 0L;
+#endif 
+
     /* loop over the other elements                                        */
     for ( i = 2; i <= lenList; i++ ) {
       elm2 = ELM_PLIST( list, i );
+#ifdef HPCGAP
+      if (!CheckReadAccess(elm2))
+	return 0L;
+#endif 
       if ( ! LT( elm1, elm2 ) )
 	break;
       elm1 = elm2;
@@ -2321,19 +2410,7 @@ Int             IsSSortPlistHom (
 }
 
 
-Int             IsSSortPlistNot (
-    Obj                 list )
-{
-    return 0L;
-}
-
-Int             IsSSortPlistYes (
-    Obj                 list )
-{
-    return 2L;
-}
-
-Obj FuncSetIsSSortedPlist (Obj self, Obj list)
+Obj FuncSET_IS_SSORTED_PLIST(Obj self, Obj list)
 {
   SET_FILT_LIST(list, FN_IS_SSORT);
   return (Obj)0;
@@ -2362,9 +2439,13 @@ Int             IsPossPlist (
     /* loop over the entries of the list                                   */
     for ( i = 1; i <= lenList; i++ ) {
         elm = ELM_PLIST( list, i );
-        if ( elm == 0)
+        if (elm == 0)
 	  return 0L;
-	if( IS_INTOBJ(elm))
+#ifdef HPCGAP
+        if ( !CheckReadAccess(elm) )
+	  return 0L;
+#endif
+	if (IS_INTOBJ(elm))
 	  {
 	    if (INT_INTOBJ(elm) <= 0 )
 	      return 0L;
@@ -2602,7 +2683,7 @@ Obj FuncASS_PLIST_DEFAULT (
 **
 **  This is the function for Plists that might have mutable subobjects
 **  which is currently exactly those that are not known to be homogenous
-**  (or immutable, but MakeImmutable will have caught that case before we get h**  ere)
+**  (or immutable, but MakeImmutable will have caught that case before we get here)
 */
 
 void MakeImmutablePlistInHom( Obj list )
@@ -2688,109 +2769,148 @@ Obj FuncIsRectangularTablePlist( Obj self, Obj plist)
 
 /****************************************************************************
 **
-
 *V  BagNames  . . . . . . . . . . . . . . . . . . . . . . . list of bag names
 */
 static StructBagNames BagNames[] = {
   { T_PLIST,                                "list (plain)" },
   { T_PLIST            +IMMUTABLE,          "list (plain,imm)" },
+#if !defined(USE_THREADSAFE_COPYING)
   { T_PLIST                       +COPYING, "list (plain,copied)" },
   { T_PLIST            +IMMUTABLE +COPYING, "list (plain,imm,copied)" },
+#endif
 
   { T_PLIST_NDENSE,                         "list (plain,ndense)" },
   { T_PLIST_NDENSE     +IMMUTABLE,          "list (plain,ndense,imm)" },
+#if !defined(USE_THREADSAFE_COPYING)
   { T_PLIST_NDENSE                +COPYING, "list (plain,ndense,copied)" },
   { T_PLIST_NDENSE     +IMMUTABLE +COPYING, "list (plain,ndense,imm,copied)" },
+#endif
 
   { T_PLIST_DENSE,                          "list (plain,dense)" },
   { T_PLIST_DENSE      +IMMUTABLE,          "list (plain,dense,imm)" },
+#if !defined(USE_THREADSAFE_COPYING)
   { T_PLIST_DENSE                 +COPYING, "list (plain,dense,copied)" },
   { T_PLIST_DENSE      +IMMUTABLE +COPYING, "list (plain,dense,imm,copied)" },
+#endif
 
   { T_PLIST_DENSE_NHOM,                     "list (plain,dense,nhom)" },
   { T_PLIST_DENSE_NHOM +IMMUTABLE,          "list (plain,dense,nhom,imm)" },
+#if !defined(USE_THREADSAFE_COPYING)
   { T_PLIST_DENSE_NHOM            +COPYING, "list (plain,dense,nhom,copied)" },
   { T_PLIST_DENSE_NHOM +IMMUTABLE +COPYING, "list (plain,dense,nhom,imm,copied)" },
+#endif
 
   { T_PLIST_DENSE_NHOM_SSORT,                     "list (plain,dense,nhom,ssort)" },
   { T_PLIST_DENSE_NHOM_SSORT +IMMUTABLE,          "list (plain,dense,nhom,ssort,imm)" },
+#if !defined(USE_THREADSAFE_COPYING)
   { T_PLIST_DENSE_NHOM_SSORT            +COPYING, "list (plain,dense,nhom,ssort,copied)" },
   { T_PLIST_DENSE_NHOM_SSORT +IMMUTABLE +COPYING, "list (plain,dense,nhom,ssort,imm,copied)" },
+#endif
 
   { T_PLIST_DENSE_NHOM_NSORT,                     "list (plain,dense,nhom,nsort)" },
   { T_PLIST_DENSE_NHOM_NSORT +IMMUTABLE,          "list (plain,dense,nhom,nsort,imm)" },
+#if !defined(USE_THREADSAFE_COPYING)
   { T_PLIST_DENSE_NHOM_NSORT            +COPYING, "list (plain,dense,nhom,nsort,copied)" },
   { T_PLIST_DENSE_NHOM_NSORT +IMMUTABLE +COPYING, "list (plain,dense,nhom,nsort,imm,copied)" },
+#endif
 
   { T_PLIST_EMPTY,                          "list (plain,empty)" },
   { T_PLIST_EMPTY      +IMMUTABLE,          "list (plain,empty,imm)" },
+#if !defined(USE_THREADSAFE_COPYING)
   { T_PLIST_EMPTY                 +COPYING, "list (plain,empty,copied)" },
   { T_PLIST_EMPTY      +IMMUTABLE +COPYING, "list (plain,empty,imm,copied)" },
+#endif
 
   { T_PLIST_HOM,                            "list (plain,hom)" },
   { T_PLIST_HOM        +IMMUTABLE,          "list (plain,hom,imm)" },
+#if !defined(USE_THREADSAFE_COPYING)
   { T_PLIST_HOM                   +COPYING, "list (plain,hom,copied)" },
   { T_PLIST_HOM        +IMMUTABLE +COPYING, "list (plain,hom,imm,copied)" },
+#endif
 
   { T_PLIST_HOM_NSORT,                      "list (plain,hom,nsort)" },
   { T_PLIST_HOM_NSORT  +IMMUTABLE,          "list (plain,hom,nsort,imm)" },
+#if !defined(USE_THREADSAFE_COPYING)
   { T_PLIST_HOM_NSORT             +COPYING, "list (plain,hom,nsort,copied)" },
   { T_PLIST_HOM_NSORT  +IMMUTABLE +COPYING, "list (plain,hom,nsort,imm,copied)" },
+#endif
 
   { T_PLIST_HOM_SSORT,                      "list (plain,hom,ssort)" },
   { T_PLIST_HOM_SSORT +IMMUTABLE,           "list (plain,hom,ssort,imm)" },
+#if !defined(USE_THREADSAFE_COPYING)
   { T_PLIST_HOM_SSORT            +COPYING,  "list (plain,hom,ssort,copied)" },
   { T_PLIST_HOM_SSORT +IMMUTABLE +COPYING,  "list (plain,hom,ssort,imm,copied)" },
+#endif
 
   { T_PLIST_TAB,                            "list (plain,table)" },
   { T_PLIST_TAB       +IMMUTABLE,           "list (plain,table,imm)" },
+#if !defined(USE_THREADSAFE_COPYING)
   { T_PLIST_TAB                  +COPYING,  "list (plain,table,copied)" },
   { T_PLIST_TAB       +IMMUTABLE +COPYING,  "list (plain,table,imm,copied)" },
+#endif
 
   { T_PLIST_TAB_NSORT,                      "list (plain,table,nsort)" },
   { T_PLIST_TAB_NSORT +IMMUTABLE,           "list (plain,table,nsort,imm)" },
+#if !defined(USE_THREADSAFE_COPYING)
   { T_PLIST_TAB_NSORT            +COPYING,  "list (plain,table,nsort,copied)" },
   { T_PLIST_TAB_NSORT +IMMUTABLE +COPYING,  "list (plain,table,nsort,imm,copied)" },
+#endif
 
   { T_PLIST_TAB_SSORT,                      "list (plain,table,ssort)" },
   { T_PLIST_TAB_SSORT +IMMUTABLE,           "list (plain,table,ssort,imm)" },
+#if !defined(USE_THREADSAFE_COPYING)
   { T_PLIST_TAB_SSORT            +COPYING,  "list (plain,table,ssort,copied)" },
   { T_PLIST_TAB_SSORT +IMMUTABLE +COPYING,  "list (plain,table,ssort,imm,copied)" },
+#endif
 
   { T_PLIST_TAB_RECT,                            "list (plain,rect table)" },
   { T_PLIST_TAB_RECT       +IMMUTABLE,           "list (plain,rect table,imm)" },
+#if !defined(USE_THREADSAFE_COPYING)
   { T_PLIST_TAB_RECT                  +COPYING,  "list (plain,rect table,copied)" },
   { T_PLIST_TAB_RECT       +IMMUTABLE +COPYING,  "list (plain,rect table,imm,copied)" },
+#endif
 
   { T_PLIST_TAB_RECT_NSORT,                      "list (plain,rect table,nsort)" },
   { T_PLIST_TAB_RECT_NSORT +IMMUTABLE,           "list (plain,rect table,nsort,imm)" },
+#if !defined(USE_THREADSAFE_COPYING)
   { T_PLIST_TAB_RECT_NSORT            +COPYING,  "list (plain,rect table,nsort,copied)" },
   { T_PLIST_TAB_RECT_NSORT +IMMUTABLE +COPYING,  "list (plain,rect table,nsort,imm,copied)" },
+#endif
 
   { T_PLIST_TAB_RECT_SSORT,                      "list (plain,rect table,ssort)" },
   { T_PLIST_TAB_RECT_SSORT +IMMUTABLE,           "list (plain,rect table,ssort,imm)" },
+#if !defined(USE_THREADSAFE_COPYING)
   { T_PLIST_TAB_RECT_SSORT            +COPYING,  "list (plain,rect table,ssort,copied)" },
   { T_PLIST_TAB_RECT_SSORT +IMMUTABLE +COPYING,  "list (plain,rect table,ssort,imm,copied)" },
+#endif
 
   { T_PLIST_CYC,                            "list (plain,cyc)" },
   { T_PLIST_CYC       +IMMUTABLE,           "list (plain,cyc,imm)" },
+#if !defined(USE_THREADSAFE_COPYING)
   { T_PLIST_CYC                  +COPYING,  "list (plain,cyc,copied)" },
   { T_PLIST_CYC       +IMMUTABLE +COPYING,  "list (plain,cyc,imm,copied)" },
+#endif
 
   { T_PLIST_CYC_NSORT,                      "list (plain,cyc,nsort)" },
   { T_PLIST_CYC_NSORT +IMMUTABLE,           "list (plain,cyc,nsort,imm)" },
+#if !defined(USE_THREADSAFE_COPYING)
   { T_PLIST_CYC_NSORT            +COPYING,  "list (plain,cyc,nsort,copied)" },
   { T_PLIST_CYC_NSORT +IMMUTABLE +COPYING,  "list (plain,cyc,nsort,imm,copied)" },
+#endif
 
   { T_PLIST_CYC_SSORT,                      "list (plain,cyc,ssort)" },
   { T_PLIST_CYC_SSORT +IMMUTABLE,           "list (plain,cyc,ssort,imm)" },
+#if !defined(USE_THREADSAFE_COPYING)
   { T_PLIST_CYC_SSORT            +COPYING,  "list (plain,cyc,ssort,copied)" },
   { T_PLIST_CYC_SSORT +IMMUTABLE +COPYING,  "list (plain,cyc,ssort,imm,copied)" },
+#endif
 
   { T_PLIST_FFE,                     "list (sml fin fld elms)" },
   { T_PLIST_FFE +IMMUTABLE,          "list (sml fin fld elms,imm)" },
+#if !defined(USE_THREADSAFE_COPYING)
   { T_PLIST_FFE            +COPYING, "list (sml fin fld elms,copied)" },
   { T_PLIST_FFE +IMMUTABLE +COPYING, "list (sml fin fld elms,imm,copied)" },
+#endif
 
   { -1,                                     "" }
 };
@@ -2802,45 +2922,25 @@ static StructBagNames BagNames[] = {
 */
 static Int ClearFiltsTab [] = {
     T_PLIST,                          T_PLIST,
-    T_PLIST           +IMMUTABLE,     T_PLIST +IMMUTABLE,
     T_PLIST_NDENSE,                   T_PLIST,
-    T_PLIST_NDENSE    +IMMUTABLE,     T_PLIST +IMMUTABLE,
     T_PLIST_DENSE,                    T_PLIST,
-    T_PLIST_DENSE     +IMMUTABLE,     T_PLIST +IMMUTABLE,
     T_PLIST_DENSE_NHOM,               T_PLIST,
-    T_PLIST_DENSE_NHOM+IMMUTABLE,     T_PLIST +IMMUTABLE,
     T_PLIST_DENSE_NHOM_SSORT,         T_PLIST,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, T_PLIST +IMMUTABLE,
     T_PLIST_DENSE_NHOM_NSORT,         T_PLIST,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, T_PLIST +IMMUTABLE,
     T_PLIST_EMPTY,                    T_PLIST,
-    T_PLIST_EMPTY     +IMMUTABLE,     T_PLIST +IMMUTABLE,
     T_PLIST_HOM,                      T_PLIST,
-    T_PLIST_HOM       +IMMUTABLE,     T_PLIST +IMMUTABLE,
     T_PLIST_HOM_NSORT,                T_PLIST,
-    T_PLIST_HOM_NSORT +IMMUTABLE,     T_PLIST +IMMUTABLE,
     T_PLIST_HOM_SSORT,                T_PLIST,
-    T_PLIST_HOM_SSORT +IMMUTABLE,     T_PLIST +IMMUTABLE,
     T_PLIST_TAB,                      T_PLIST,
-    T_PLIST_TAB       +IMMUTABLE,     T_PLIST +IMMUTABLE,
     T_PLIST_TAB_NSORT,                T_PLIST,
-    T_PLIST_TAB_NSORT +IMMUTABLE,     T_PLIST +IMMUTABLE,
     T_PLIST_TAB_SSORT,                T_PLIST,
-    T_PLIST_TAB_SSORT +IMMUTABLE,     T_PLIST +IMMUTABLE,
-    T_PLIST_TAB_RECT,                      T_PLIST,
-    T_PLIST_TAB_RECT       +IMMUTABLE,     T_PLIST +IMMUTABLE,
-    T_PLIST_TAB_RECT_NSORT,                T_PLIST,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE,     T_PLIST +IMMUTABLE,
-    T_PLIST_TAB_RECT_SSORT,                T_PLIST,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE,     T_PLIST +IMMUTABLE,
+    T_PLIST_TAB_RECT,                 T_PLIST,
+    T_PLIST_TAB_RECT_NSORT,           T_PLIST,
+    T_PLIST_TAB_RECT_SSORT,           T_PLIST,
     T_PLIST_CYC,                      T_PLIST,
-    T_PLIST_CYC       +IMMUTABLE,     T_PLIST +IMMUTABLE,
     T_PLIST_CYC_NSORT,                T_PLIST,
-    T_PLIST_CYC_NSORT +IMMUTABLE,     T_PLIST +IMMUTABLE,
     T_PLIST_CYC_SSORT,                T_PLIST,
-    T_PLIST_CYC_SSORT +IMMUTABLE,     T_PLIST +IMMUTABLE,
     T_PLIST_FFE,                      T_PLIST,
-    T_PLIST_FFE       +IMMUTABLE,     T_PLIST +IMMUTABLE,
 
     -1,                               -1
 };
@@ -2852,8 +2952,7 @@ static Int ClearFiltsTab [] = {
 */
 static Int HasFiltTab [] = {
 
-    /* mutable plain lists                                                 */
-    T_PLIST,                      FN_IS_MUTABLE,  1,
+    // plain lists
     T_PLIST,                      FN_IS_EMPTY,    0,
     T_PLIST,                      FN_IS_DENSE,    0,
     T_PLIST,                      FN_IS_NDENSE,   0,
@@ -2864,20 +2963,7 @@ static Int HasFiltTab [] = {
     T_PLIST,                      FN_IS_SSORT,    0,
     T_PLIST,                      FN_IS_NSORT,    0,
 
-    /* immutable plain lists                                               */
-    T_PLIST           +IMMUTABLE, FN_IS_MUTABLE,  0,
-    T_PLIST           +IMMUTABLE, FN_IS_EMPTY,    0,
-    T_PLIST           +IMMUTABLE, FN_IS_DENSE,    0,
-    T_PLIST           +IMMUTABLE, FN_IS_NDENSE,   0,
-    T_PLIST           +IMMUTABLE, FN_IS_HOMOG,    0,
-    T_PLIST           +IMMUTABLE, FN_IS_NHOMOG,   0,
-    T_PLIST           +IMMUTABLE, FN_IS_TABLE,    0,
-    T_PLIST           +IMMUTABLE, FN_IS_RECT,     0,
-    T_PLIST           +IMMUTABLE, FN_IS_SSORT,    0,
-    T_PLIST           +IMMUTABLE, FN_IS_NSORT,    0,
-
-    /* mutable empty list                                                  */
-    T_PLIST_EMPTY,                FN_IS_MUTABLE,  1,
+    // empty list
     T_PLIST_EMPTY,                FN_IS_EMPTY,    1,
     T_PLIST_EMPTY,                FN_IS_DENSE,    1,
     T_PLIST_EMPTY,                FN_IS_NDENSE,   0,
@@ -2888,20 +2974,7 @@ static Int HasFiltTab [] = {
     T_PLIST_EMPTY,                FN_IS_SSORT,    1,
     T_PLIST_EMPTY,                FN_IS_NSORT,    0,
 
-    /* immutable empty list                                                */
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_MUTABLE,  0,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_EMPTY,    1,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_DENSE,    1,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_NDENSE,   0,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_HOMOG,    1,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_NHOMOG,   0,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_TABLE,    0,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_RECT,     0,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_SSORT,    1,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_NSORT,    0,
-
-    /* mutable dense list                                                  */
-    T_PLIST_DENSE,                FN_IS_MUTABLE,  1,
+    // dense list
     T_PLIST_DENSE,                FN_IS_EMPTY,    0,
     T_PLIST_DENSE,                FN_IS_DENSE,    1,
     T_PLIST_DENSE,                FN_IS_NDENSE,   0,
@@ -2912,20 +2985,7 @@ static Int HasFiltTab [] = {
     T_PLIST_DENSE,                FN_IS_SSORT,    0,
     T_PLIST_DENSE,                FN_IS_NSORT,    0,
 
-    /* immutable dense list                                                */
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_MUTABLE,  0,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_EMPTY,    0,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_DENSE,    1,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_NDENSE,   0,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_HOMOG,    0,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_NHOMOG,   0,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_TABLE,    0,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_RECT,     0,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_SSORT,    0,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_NSORT,    0,
-
-    /* mutable dense list, which contains immutables and is not homog      */
-    T_PLIST_DENSE_NHOM,           FN_IS_MUTABLE,  1,
+    // dense list, which contains immutables and is not homog
     T_PLIST_DENSE_NHOM,           FN_IS_EMPTY,    0,
     T_PLIST_DENSE_NHOM,           FN_IS_DENSE,    1,
     T_PLIST_DENSE_NHOM,           FN_IS_NDENSE,   0,
@@ -2936,20 +2996,7 @@ static Int HasFiltTab [] = {
     T_PLIST_DENSE_NHOM,           FN_IS_SSORT,    0,
     T_PLIST_DENSE_NHOM,           FN_IS_NSORT,    0,
 
-    /* immutable dense list, which is immutable and not homogeneous        */
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_MUTABLE,  0,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_EMPTY,    0,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_DENSE,    1,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_NDENSE,   0,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_HOMOG,    0,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_NHOMOG,   1,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_TABLE,    0,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_RECT,     0,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_SSORT,    0,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_NSORT,    0,
-
-    /* mutable dense ssorted list, which contains immutables and is not homog      */
-    T_PLIST_DENSE_NHOM_SSORT,      FN_IS_MUTABLE,  1,
+    // dense ssorted list, which contains immutables and is not homog
     T_PLIST_DENSE_NHOM_SSORT,      FN_IS_EMPTY,    0,
     T_PLIST_DENSE_NHOM_SSORT,      FN_IS_DENSE,    1,
     T_PLIST_DENSE_NHOM_SSORT,      FN_IS_NDENSE,   0,
@@ -2960,20 +3007,7 @@ static Int HasFiltTab [] = {
     T_PLIST_DENSE_NHOM_SSORT,      FN_IS_SSORT,    1,
     T_PLIST_DENSE_NHOM_SSORT,      FN_IS_NSORT,    0,
 
-    /* immutable dense ssorted list, which is immutable and not homogeneous        */
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_MUTABLE,  0,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_EMPTY,    0,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_DENSE,    1,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_NDENSE,   0,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_HOMOG,    0,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_NHOMOG,   1,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_TABLE,    0,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_RECT,     0,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_SSORT,    1,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_NSORT,    0,
-
-    /* mutable dense nsorted list, which contains immutables and is not homog      */
-    T_PLIST_DENSE_NHOM_NSORT,           FN_IS_MUTABLE,  1,
+    // dense nsorted list, which contains immutables and is not homog
     T_PLIST_DENSE_NHOM_NSORT,           FN_IS_EMPTY,    0,
     T_PLIST_DENSE_NHOM_NSORT,           FN_IS_DENSE,    1,
     T_PLIST_DENSE_NHOM_NSORT,           FN_IS_NDENSE,   0,
@@ -2984,20 +3018,7 @@ static Int HasFiltTab [] = {
     T_PLIST_DENSE_NHOM_NSORT,           FN_IS_SSORT,    0,
     T_PLIST_DENSE_NHOM_NSORT,           FN_IS_NSORT,    1,
 
-    /* immutable dense nsorted list, which is immutable and not homogeneous        */
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_MUTABLE,  0,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_EMPTY,    0,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_DENSE,    1,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_NDENSE,   0,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_HOMOG,    0,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_NHOMOG,   1,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_TABLE,    0,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_RECT,    0,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_SSORT,    0,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_NSORT,    1,
-
-    /* a mutable list with holes                                           */
-    T_PLIST_NDENSE,               FN_IS_MUTABLE,  1,
+    // a mutable list with holes
     T_PLIST_NDENSE,               FN_IS_EMPTY,    0,
     T_PLIST_NDENSE,               FN_IS_DENSE,    0,
     T_PLIST_NDENSE,               FN_IS_NDENSE,   1,
@@ -3008,92 +3029,40 @@ static Int HasFiltTab [] = {
     T_PLIST_NDENSE,               FN_IS_SSORT,    0,
     T_PLIST_NDENSE,               FN_IS_NSORT,    0,
 
-    /* an immutable list with holes                                        */
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_MUTABLE,  0,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_EMPTY,    0,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_DENSE,    0,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_NDENSE,   1,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_HOMOG,    0,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_NHOMOG,   0,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_TABLE,    0,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_RECT,    0,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_SSORT,    0,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_NSORT,    0,
-
-    /* mutable dense list, which conts imms, is homogeneous, not a table   */
-    T_PLIST_HOM,                  FN_IS_MUTABLE,  1,
+    // dense list, which conts imms, is homogeneous, not a table
     T_PLIST_HOM,                  FN_IS_EMPTY,    0,
     T_PLIST_HOM,                  FN_IS_DENSE,    1,
     T_PLIST_HOM,                  FN_IS_NDENSE,   0,
     T_PLIST_HOM,                  FN_IS_HOMOG,    1,
     T_PLIST_HOM,                  FN_IS_NHOMOG,   0,
     T_PLIST_HOM,                  FN_IS_TABLE,    0,
-    T_PLIST_HOM,                  FN_IS_RECT,    0,
+    T_PLIST_HOM,                  FN_IS_RECT,     0,
     T_PLIST_HOM,                  FN_IS_SSORT,    0,
     T_PLIST_HOM,                  FN_IS_NSORT,    0,
 
-    /* immutable dense list, which is immutable, homogeneous, not a table  */
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_MUTABLE,  0,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_EMPTY,    0,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_DENSE,    1,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_NDENSE,   0,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_HOMOG,    1,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_NHOMOG,   0,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_TABLE,    0,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_RECT,    0,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_SSORT,    0,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_NSORT,    0,
-
-    /* ssort mutable dense list, which conts imms, is homog, not a table   */
-    T_PLIST_HOM_SSORT,            FN_IS_MUTABLE,  1,
+    // ssort dense list, which conts imms, is homog, not a table
     T_PLIST_HOM_SSORT,            FN_IS_EMPTY,    0,
     T_PLIST_HOM_SSORT,            FN_IS_DENSE,    1,
     T_PLIST_HOM_SSORT,            FN_IS_NDENSE,   0,
     T_PLIST_HOM_SSORT,            FN_IS_HOMOG,    1,
     T_PLIST_HOM_SSORT,            FN_IS_NHOMOG,   0,
     T_PLIST_HOM_SSORT,            FN_IS_TABLE,    0,
-    T_PLIST_HOM_SSORT,            FN_IS_RECT,    0,
+    T_PLIST_HOM_SSORT,            FN_IS_RECT,     0,
     T_PLIST_HOM_SSORT,            FN_IS_SSORT,    1,
     T_PLIST_HOM_SSORT,            FN_IS_NSORT,    0,
 
-    /* ssort immutable dense list, which is immutable, homog, not a table  */
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_MUTABLE,  0,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_EMPTY,    0,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_DENSE,    1,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_NDENSE,   0,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_HOMOG,    1,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_NHOMOG,   0,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_TABLE,    0,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_RECT,    0,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_SSORT,    1,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_NSORT,    0,
-
-    /* nsort mutable dense list, which conts imms, is homog, not a table   */
-    T_PLIST_HOM_NSORT,            FN_IS_MUTABLE,  1,
+    // nsort dense list, which conts imms, is homog, not a table
     T_PLIST_HOM_NSORT,            FN_IS_EMPTY,    0,
     T_PLIST_HOM_NSORT,            FN_IS_DENSE,    1,
     T_PLIST_HOM_NSORT,            FN_IS_NDENSE,   0,
     T_PLIST_HOM_NSORT,            FN_IS_HOMOG,    1,
     T_PLIST_HOM_NSORT,            FN_IS_NHOMOG,   0,
     T_PLIST_HOM_NSORT,            FN_IS_TABLE,    0,
-    T_PLIST_HOM_NSORT,            FN_IS_RECT,    0,
+    T_PLIST_HOM_NSORT,            FN_IS_RECT,     0,
     T_PLIST_HOM_NSORT,            FN_IS_SSORT,    0,
     T_PLIST_HOM_NSORT,            FN_IS_NSORT,    1,
 
-    /* nsort immutable dense list, which is immutable, homog, not a table  */
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_MUTABLE,  0,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_EMPTY,    0,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_DENSE,    1,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_NDENSE,   0,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_HOMOG,    1,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_NHOMOG,   0,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_TABLE,    0,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_RECT,     0,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_SSORT,    0,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_NSORT,    1,
-
-    /* mutable dense list, which is immutable, homog, non-empty, table     */
-    T_PLIST_TAB,                  FN_IS_MUTABLE,  1,
+    // dense list, which is immutable, homog, non-empty, table
     T_PLIST_TAB,                  FN_IS_EMPTY,    0,
     T_PLIST_TAB,                  FN_IS_DENSE,    1,
     T_PLIST_TAB,                  FN_IS_NDENSE,   0,
@@ -3104,20 +3073,7 @@ static Int HasFiltTab [] = {
     T_PLIST_TAB,                  FN_IS_SSORT,    0,
     T_PLIST_TAB,                  FN_IS_NSORT,    0,
 
-    /* immutable dense list, which is immutable, homog, non-empty, table   */
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_MUTABLE,  0,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_EMPTY,    0,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_DENSE,    1,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_NDENSE,   0,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_HOMOG,    1,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_NHOMOG,   0,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_TABLE,    1,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_RECT,     0,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_SSORT,    0,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_NSORT,    0,
-
-    /* ssort, mutable dense list, which is imm, homog, non-empty, table    */
-    T_PLIST_TAB_SSORT,            FN_IS_MUTABLE,  1,
+    // ssort, dense list, which is imm, homog, non-empty, table
     T_PLIST_TAB_SSORT,            FN_IS_EMPTY,    0,
     T_PLIST_TAB_SSORT,            FN_IS_DENSE,    1,
     T_PLIST_TAB_SSORT,            FN_IS_NDENSE,   0,
@@ -3128,20 +3084,7 @@ static Int HasFiltTab [] = {
     T_PLIST_TAB_SSORT,            FN_IS_SSORT,    1,
     T_PLIST_TAB_SSORT,            FN_IS_NSORT,    0,
 
-    /* ssort, immutable dense list, which is imm, homog, non-empty, table  */
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_MUTABLE,  0,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_EMPTY,    0,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_DENSE,    1,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_NDENSE,   0,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_HOMOG,    1,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_NHOMOG,   0,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_TABLE,    1,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_RECT,     0,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_SSORT,    1,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_NSORT,    0,
-
-    /* nsort, mutable dense list, which is imm, homog, non-empty, table    */
-    T_PLIST_TAB_NSORT,            FN_IS_MUTABLE,  1,
+    // nsort, dense list, which is imm, homog, non-empty, table
     T_PLIST_TAB_NSORT,            FN_IS_EMPTY,    0,
     T_PLIST_TAB_NSORT,            FN_IS_DENSE,    1,
     T_PLIST_TAB_NSORT,            FN_IS_NDENSE,   0,
@@ -3152,20 +3095,7 @@ static Int HasFiltTab [] = {
     T_PLIST_TAB_NSORT,            FN_IS_SSORT,    0,
     T_PLIST_TAB_NSORT,            FN_IS_NSORT,    1,
 
-    /* nsort, immutable dense list, which is imm, homog, non-empty, table  */
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_MUTABLE,  0,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_EMPTY,    0,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_DENSE,    1,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_NDENSE,   0,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_HOMOG,    1,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_NHOMOG,   0,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_TABLE,    1,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_RECT,     0,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_SSORT,    0,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_NSORT,    1,
-
-    /* mutable dense list, which is immutable, homog, non-empty, rect table     */
-    T_PLIST_TAB_RECT,                  FN_IS_MUTABLE,  1,
+    // dense list, which is immutable, homog, non-empty, rect table
     T_PLIST_TAB_RECT,                  FN_IS_EMPTY,    0,
     T_PLIST_TAB_RECT,                  FN_IS_DENSE,    1,
     T_PLIST_TAB_RECT,                  FN_IS_NDENSE,   0,
@@ -3176,20 +3106,7 @@ static Int HasFiltTab [] = {
     T_PLIST_TAB_RECT,                  FN_IS_SSORT,    0,
     T_PLIST_TAB_RECT,                  FN_IS_NSORT,    0,
 
-    /* immutable dense list, which is immutable, homog, non-empty, rect table   */
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_MUTABLE,  0,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_EMPTY,    0,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_DENSE,    1,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_NDENSE,   0,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_HOMOG,    1,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_NHOMOG,   0,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_TABLE,    1,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_RECT,     1,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_SSORT,    0,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_NSORT,    0,
-
-    /* ssort, mutable dense list, which is imm, homog, non-empty, rect table    */
-    T_PLIST_TAB_RECT_SSORT,            FN_IS_MUTABLE,  1,
+    // ssort, dense list, which is imm, homog, non-empty, rect table
     T_PLIST_TAB_RECT_SSORT,            FN_IS_EMPTY,    0,
     T_PLIST_TAB_RECT_SSORT,            FN_IS_DENSE,    1,
     T_PLIST_TAB_RECT_SSORT,            FN_IS_NDENSE,   0,
@@ -3200,20 +3117,7 @@ static Int HasFiltTab [] = {
     T_PLIST_TAB_RECT_SSORT,            FN_IS_SSORT,    1,
     T_PLIST_TAB_RECT_SSORT,            FN_IS_NSORT,    0,
 
-    /* ssort, immutable dense list, which is imm, homog, non-empty, rect table  */
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_MUTABLE,  0,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_EMPTY,    0,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_DENSE,    1,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_NDENSE,   0,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_HOMOG,    1,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_NHOMOG,   0,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_TABLE,    1,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_RECT,     1,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_SSORT,    1,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_NSORT,    0,
-
-    /* nsort, mutable dense list, which is imm, homog, non-empty, rect table    */
-    T_PLIST_TAB_RECT_NSORT,            FN_IS_MUTABLE,  1,
+    // nsort, dense list, which is imm, homog, non-empty, rect table
     T_PLIST_TAB_RECT_NSORT,            FN_IS_EMPTY,    0,
     T_PLIST_TAB_RECT_NSORT,            FN_IS_DENSE,    1,
     T_PLIST_TAB_RECT_NSORT,            FN_IS_NDENSE,   0,
@@ -3224,20 +3128,7 @@ static Int HasFiltTab [] = {
     T_PLIST_TAB_RECT_NSORT,            FN_IS_SSORT,    0,
     T_PLIST_TAB_RECT_NSORT,            FN_IS_NSORT,    1,
 
-    /* nsort, immutable dense list, which is imm, homog, non-empty, rect table  */
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_MUTABLE,  0,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_EMPTY,    0,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_DENSE,    1,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_NDENSE,   0,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_HOMOG,    1,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_NHOMOG,   0,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_TABLE,    1,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_RECT,     1,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_SSORT,    0,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_NSORT,    1,
-
-    /* mutable dense list, which only contains objects of type <= T_CYC    */
-    T_PLIST_CYC,                  FN_IS_MUTABLE,  1,
+    // dense list, which only contains objects of type <= T_CYC
     T_PLIST_CYC,                  FN_IS_EMPTY,    0,
     T_PLIST_CYC,                  FN_IS_DENSE,    1,
     T_PLIST_CYC,                  FN_IS_NDENSE,   0,
@@ -3248,20 +3139,7 @@ static Int HasFiltTab [] = {
     T_PLIST_CYC,                  FN_IS_SSORT,    0,
     T_PLIST_CYC,                  FN_IS_NSORT,    0,
 
-    /* immutable dense list, which only contains objects of type <= T_CYC  */
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_MUTABLE,  0,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_EMPTY,    0,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_DENSE,    1,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_NDENSE,   0,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_HOMOG,    1,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_NHOMOG,   0,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_TABLE,    0,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_RECT,     0,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_SSORT,    0,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_NSORT,    0,
-
-    /* ssort mutable dense list, which only contains objs of type <= T_CYC */
-    T_PLIST_CYC_SSORT,            FN_IS_MUTABLE,  1,
+    // ssort dense list, which only contains objs of type <= T_CYC
     T_PLIST_CYC_SSORT,            FN_IS_EMPTY,    0,
     T_PLIST_CYC_SSORT,            FN_IS_DENSE,    1,
     T_PLIST_CYC_SSORT,            FN_IS_NDENSE,   0,
@@ -3272,20 +3150,7 @@ static Int HasFiltTab [] = {
     T_PLIST_CYC_SSORT,            FN_IS_SSORT,    1,
     T_PLIST_CYC_SSORT,            FN_IS_NSORT,    0,
 
-    /* ssort immutable dense list, which contains objs of type <= T_CYC    */
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_MUTABLE,  0,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_EMPTY,    0,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_DENSE,    1,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_NDENSE,   0,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_HOMOG,    1,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_NHOMOG,   0,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_TABLE,    0,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_RECT,     0,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_SSORT,    1,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_NSORT,    0,
-
-    /* nsort mutable dense list, which only contains objs of type <= T_CYC */
-    T_PLIST_CYC_NSORT,            FN_IS_MUTABLE,  1,
+    // nsort dense list, which only contains objs of type <= T_CYC
     T_PLIST_CYC_NSORT,            FN_IS_EMPTY,    0,
     T_PLIST_CYC_NSORT,            FN_IS_DENSE,    1,
     T_PLIST_CYC_NSORT,            FN_IS_NDENSE,   0,
@@ -3296,21 +3161,8 @@ static Int HasFiltTab [] = {
     T_PLIST_CYC_NSORT,            FN_IS_SSORT,    0,
     T_PLIST_CYC_NSORT,            FN_IS_NSORT,    1,
 
-    /* nsort immutable dense list, which contains objs of type <= T_CYC    */
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_MUTABLE,  0,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_EMPTY,    0,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_DENSE,    1,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_NDENSE,   0,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_HOMOG,    1,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_NHOMOG,   0,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_TABLE,    0,
-    T_PLIST_CYC_NSORT,            FN_IS_RECT,     0,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_SSORT,    0,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_NSORT,    1,
-
-    /* mutable dense list, which only contains objects of type T_FFE
-       all written over the same field*/
-    T_PLIST_FFE,            FN_IS_MUTABLE,  1,
+    // dense list, which only contains objects of type T_FFE
+    // all written over the same field
     T_PLIST_FFE,            FN_IS_EMPTY,    0,
     T_PLIST_FFE,            FN_IS_DENSE,    1,
     T_PLIST_FFE,            FN_IS_NDENSE,   0,
@@ -3320,19 +3172,6 @@ static Int HasFiltTab [] = {
     T_PLIST_FFE,            FN_IS_RECT,     0,
     T_PLIST_FFE,            FN_IS_SSORT,    0,
     T_PLIST_FFE,            FN_IS_NSORT,    0,
-
-    /* immutable dense list, which only contains objects of type T_FFE
-       all written over the same field */
-    T_PLIST_FFE +IMMUTABLE, FN_IS_MUTABLE,  0,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_EMPTY,    0,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_DENSE,    1,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_NDENSE,   0,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_HOMOG,    1,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_NHOMOG,   0,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_TABLE,    0,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_RECT,     0,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_SSORT,    0,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_NSORT,    0,
 
     -1,                         -1,             -1
 };
@@ -3344,32 +3183,18 @@ static Int HasFiltTab [] = {
 */
 static Int SetFiltTab [] = {
 
-    /* mutable plain lists                                                 */
-    T_PLIST,                      FN_IS_MUTABLE, T_PLIST,
+    // plain lists
     T_PLIST,                      FN_IS_EMPTY,   T_PLIST_EMPTY,
     T_PLIST,                      FN_IS_DENSE,   T_PLIST_DENSE,
     T_PLIST,                      FN_IS_NDENSE,  T_PLIST_NDENSE,
     T_PLIST,                      FN_IS_HOMOG,   T_PLIST_HOM,
     T_PLIST,                      FN_IS_NHOMOG,  T_PLIST,
     T_PLIST,                      FN_IS_TABLE,   T_PLIST_TAB,
-    T_PLIST,                      FN_IS_RECT,   T_PLIST_TAB_RECT,
+    T_PLIST,                      FN_IS_RECT,    T_PLIST_TAB_RECT,
     T_PLIST,                      FN_IS_SSORT,   T_PLIST,
     T_PLIST,                      FN_IS_NSORT,   T_PLIST,
 
-    /* immutable plain lists                                               */
-    T_PLIST           +IMMUTABLE, FN_IS_MUTABLE, T_PLIST,
-    T_PLIST           +IMMUTABLE, FN_IS_EMPTY,   T_PLIST_EMPTY     +IMMUTABLE,
-    T_PLIST           +IMMUTABLE, FN_IS_DENSE,   T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST           +IMMUTABLE, FN_IS_NDENSE,  T_PLIST_NDENSE    +IMMUTABLE,
-    T_PLIST           +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_HOM       +IMMUTABLE,
-    T_PLIST           +IMMUTABLE, FN_IS_NHOMOG,  T_PLIST           +IMMUTABLE,
-    T_PLIST           +IMMUTABLE, FN_IS_TABLE,   T_PLIST_TAB       +IMMUTABLE,
-    T_PLIST           +IMMUTABLE, FN_IS_RECT,   T_PLIST_TAB_RECT   +IMMUTABLE,
-    T_PLIST           +IMMUTABLE, FN_IS_SSORT,   T_PLIST           +IMMUTABLE,
-    T_PLIST           +IMMUTABLE, FN_IS_NSORT,   T_PLIST           +IMMUTABLE,
-
-    /* mutable empty list                                                  */
-    T_PLIST_EMPTY,                FN_IS_MUTABLE, T_PLIST_EMPTY,
+    // empty list
     T_PLIST_EMPTY,                FN_IS_EMPTY,   T_PLIST_EMPTY,
     T_PLIST_EMPTY,                FN_IS_DENSE,   T_PLIST_EMPTY,
     T_PLIST_EMPTY,                FN_IS_NDENSE,  -1,
@@ -3380,454 +3205,205 @@ static Int SetFiltTab [] = {
     T_PLIST_EMPTY,                FN_IS_SSORT,   T_PLIST_EMPTY,
     T_PLIST_EMPTY,                FN_IS_NSORT,   -1,
 
-
-    /* immutable empty list                                                */
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_EMPTY,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_EMPTY,   T_PLIST_EMPTY     +IMMUTABLE,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_DENSE,   T_PLIST_EMPTY     +IMMUTABLE,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_NDENSE,  -1,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_EMPTY     +IMMUTABLE,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_NHOMOG,  -1,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_TABLE,   -1,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_RECT,   -1,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_SSORT,   T_PLIST_EMPTY     +IMMUTABLE,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_NSORT,   -1,
-
-    /* mutable dense list                                                  */
-    T_PLIST_DENSE,                FN_IS_MUTABLE, T_PLIST_DENSE,
+    // dense list
     T_PLIST_DENSE,                FN_IS_EMPTY,   T_PLIST_EMPTY,
     T_PLIST_DENSE,                FN_IS_DENSE,   T_PLIST_DENSE,
     T_PLIST_DENSE,                FN_IS_NDENSE,  -1,
     T_PLIST_DENSE,                FN_IS_HOMOG,   T_PLIST_HOM,
     T_PLIST_DENSE,                FN_IS_NHOMOG,  T_PLIST_DENSE_NHOM,
     T_PLIST_DENSE,                FN_IS_TABLE,   T_PLIST_TAB,
-    T_PLIST_DENSE,                FN_IS_RECT,   T_PLIST_TAB_RECT,
+    T_PLIST_DENSE,                FN_IS_RECT,    T_PLIST_TAB_RECT,
     T_PLIST_DENSE,                FN_IS_SSORT,   T_PLIST_DENSE,
     T_PLIST_DENSE,                FN_IS_NSORT,   T_PLIST_DENSE,
 
-    /* immutable dense list                                                */
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_DENSE,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_EMPTY,   T_PLIST_EMPTY     +IMMUTABLE,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_DENSE,   T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_NDENSE,  -1,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_HOM       +IMMUTABLE,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_DENSE_NHOM+IMMUTABLE,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_TABLE,   T_PLIST_TAB       +IMMUTABLE,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_RECT,    T_PLIST_TAB_RECT  +IMMUTABLE,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_SSORT,   T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_NSORT,   T_PLIST_DENSE     +IMMUTABLE,
-
-    /* mutable dense list, which contains immutables and is not homog      */
-    T_PLIST_DENSE_NHOM,           FN_IS_MUTABLE, T_PLIST_DENSE_NHOM,
+    // dense list, which contains immutables and is not homog
     T_PLIST_DENSE_NHOM,           FN_IS_EMPTY,   -1,
     T_PLIST_DENSE_NHOM,           FN_IS_DENSE,   T_PLIST_DENSE_NHOM,
     T_PLIST_DENSE_NHOM,           FN_IS_NDENSE,  -1,
     T_PLIST_DENSE_NHOM,           FN_IS_HOMOG,   -1,
     T_PLIST_DENSE_NHOM,           FN_IS_NHOMOG,  T_PLIST_DENSE_NHOM,
     T_PLIST_DENSE_NHOM,           FN_IS_TABLE,   -1,
-    T_PLIST_DENSE_NHOM,           FN_IS_RECT,   -1,
+    T_PLIST_DENSE_NHOM,           FN_IS_RECT,    -1,
     T_PLIST_DENSE_NHOM,           FN_IS_SSORT,   T_PLIST_DENSE_NHOM_SSORT,
     T_PLIST_DENSE_NHOM,           FN_IS_NSORT,   T_PLIST_DENSE_NHOM_NSORT,
 
-    /* immutable dense list, which is immutable and not homogeneous        */
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_MUTABLE, T_PLIST_DENSE_NHOM,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_EMPTY,   -1,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_DENSE,   T_PLIST_DENSE_NHOM+IMMUTABLE,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_NDENSE,  -1,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_HOMOG,   -1,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_DENSE_NHOM+IMMUTABLE,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_TABLE,   -1,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_RECT,   -1,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_SSORT,   T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_NSORT,   T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE,
-
-    /* mutable dense ssorted list, which contains immutables and is not homog      */
-    T_PLIST_DENSE_NHOM_SSORT,     FN_IS_MUTABLE, T_PLIST_DENSE_NHOM_SSORT,
+    // dense ssorted list, which contains immutables and is not homog
     T_PLIST_DENSE_NHOM_SSORT,     FN_IS_EMPTY,   -1,
     T_PLIST_DENSE_NHOM_SSORT,     FN_IS_DENSE,   T_PLIST_DENSE_NHOM_SSORT,
     T_PLIST_DENSE_NHOM_SSORT,     FN_IS_NDENSE,  -1,
     T_PLIST_DENSE_NHOM_SSORT,     FN_IS_HOMOG,   -1,
     T_PLIST_DENSE_NHOM_SSORT,     FN_IS_NHOMOG,  T_PLIST_DENSE_NHOM_SSORT,
     T_PLIST_DENSE_NHOM_SSORT,     FN_IS_TABLE,   -1,
-    T_PLIST_DENSE_NHOM_SSORT,     FN_IS_RECT,   -1,
+    T_PLIST_DENSE_NHOM_SSORT,     FN_IS_RECT,    -1,
     T_PLIST_DENSE_NHOM_SSORT,     FN_IS_SSORT,   T_PLIST_DENSE_NHOM_SSORT,
     T_PLIST_DENSE_NHOM_SSORT,     FN_IS_NSORT,   -1,
 
-    /* immutable dense ssorted list, which is immutable and not homogeneous        */
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_MUTABLE, T_PLIST_DENSE_NHOM_SSORT,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_EMPTY,   -1,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_DENSE,   T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_NDENSE,  -1,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_HOMOG,   -1,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_TABLE,   -1,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_RECT,   -1,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_SSORT,   T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_NSORT,   -1,
-
-    /* mutable dense nsorted list, which contains immutables and is not homog      */
-    T_PLIST_DENSE_NHOM_NSORT,     FN_IS_MUTABLE, T_PLIST_DENSE_NHOM_NSORT,
+    // dense nsorted list, which contains immutables and is not homog
     T_PLIST_DENSE_NHOM_NSORT,     FN_IS_EMPTY,   -1,
     T_PLIST_DENSE_NHOM_NSORT,     FN_IS_DENSE,   T_PLIST_DENSE_NHOM_NSORT,
     T_PLIST_DENSE_NHOM_NSORT,     FN_IS_NDENSE,  -1,
     T_PLIST_DENSE_NHOM_NSORT,     FN_IS_HOMOG,   -1,
     T_PLIST_DENSE_NHOM_NSORT,     FN_IS_NHOMOG,  T_PLIST_DENSE_NHOM_NSORT,
     T_PLIST_DENSE_NHOM_NSORT,     FN_IS_TABLE,   -1,
-    T_PLIST_DENSE_NHOM_NSORT,     FN_IS_RECT,   -1,
+    T_PLIST_DENSE_NHOM_NSORT,     FN_IS_RECT,    -1,
     T_PLIST_DENSE_NHOM_NSORT,     FN_IS_SSORT,   -1,
     T_PLIST_DENSE_NHOM_NSORT,     FN_IS_NSORT,   T_PLIST_DENSE_NHOM_NSORT,
 
-    /* immutable dense nsorted list, which is immutable and not homogeneous        */
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_MUTABLE, T_PLIST_DENSE_NHOM_NSORT,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_EMPTY,   -1,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_DENSE,   T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_NDENSE,  -1,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_HOMOG,   -1,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_TABLE,   -1,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_RECT,   -1,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_SSORT,   -1,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_NSORT,   T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE,
-
-    /* a mutable list with holes                                           */
-    T_PLIST_NDENSE,               FN_IS_MUTABLE, T_PLIST_NDENSE,
+    // a mutable list with holes
     T_PLIST_NDENSE,               FN_IS_EMPTY,   -1,
     T_PLIST_NDENSE,               FN_IS_DENSE,   -1,
     T_PLIST_NDENSE,               FN_IS_NDENSE,  T_PLIST_NDENSE,
     T_PLIST_NDENSE,               FN_IS_HOMOG,   -1,
     T_PLIST_NDENSE,               FN_IS_NHOMOG,  T_PLIST_NDENSE,
     T_PLIST_NDENSE,               FN_IS_TABLE,   -1,
-    T_PLIST_NDENSE,               FN_IS_RECT,   -1,
+    T_PLIST_NDENSE,               FN_IS_RECT,    -1,
     T_PLIST_NDENSE,               FN_IS_SSORT,   T_PLIST_NDENSE,
     T_PLIST_NDENSE,               FN_IS_NSORT,   T_PLIST_NDENSE,
 
-    /* an immutable list with holes                                        */
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_NDENSE,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_EMPTY,   -1,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_DENSE,   -1,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_NDENSE,  T_PLIST_NDENSE    +IMMUTABLE,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_HOMOG,   -1,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_NDENSE    +IMMUTABLE,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_TABLE,   -1,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_RECT,   -1,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_SSORT,   T_PLIST_NDENSE    +IMMUTABLE,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_NSORT,   T_PLIST_NDENSE    +IMMUTABLE,
-
-    /* mutable dense list, which conts imms, is homogeneous, not a table   */
-    T_PLIST_HOM,                  FN_IS_MUTABLE, T_PLIST_HOM,
+    // dense list, which conts imms, is homogeneous, not a table
     T_PLIST_HOM,                  FN_IS_EMPTY,   T_PLIST_EMPTY,
     T_PLIST_HOM,                  FN_IS_DENSE,   T_PLIST_HOM,
     T_PLIST_HOM,                  FN_IS_NDENSE,  -1,
     T_PLIST_HOM,                  FN_IS_HOMOG,   T_PLIST_HOM,
     T_PLIST_HOM,                  FN_IS_NHOMOG,  -1,
     T_PLIST_HOM,                  FN_IS_TABLE,   T_PLIST_TAB,
-    T_PLIST_HOM,                  FN_IS_RECT,   T_PLIST_TAB_RECT,
+    T_PLIST_HOM,                  FN_IS_RECT,    T_PLIST_TAB_RECT,
     T_PLIST_HOM,                  FN_IS_SSORT,   T_PLIST_HOM_SSORT,
     T_PLIST_HOM,                  FN_IS_NSORT,   T_PLIST_HOM_NSORT,
 
-    /* immutable dense list, which is immutable, homogeneous, not a table  */
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_HOM,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_EMPTY,   T_PLIST_EMPTY     +IMMUTABLE,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_DENSE,   T_PLIST_HOM       +IMMUTABLE,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_NDENSE,  -1,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_HOM       +IMMUTABLE,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_NHOMOG,  -1,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_TABLE,   T_PLIST_TAB       +IMMUTABLE,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_RECT,   T_PLIST_TAB_RECT       +IMMUTABLE,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_SSORT,   T_PLIST_HOM_SSORT +IMMUTABLE,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_NSORT,   T_PLIST_HOM_NSORT +IMMUTABLE,
-
-    /* ssort mutable dense list, which conts imms, is homog, not a table   */
-    T_PLIST_HOM_SSORT,            FN_IS_MUTABLE, T_PLIST_HOM_SSORT,
+    // ssort dense list, which conts imms, is homog, not a table
     T_PLIST_HOM_SSORT,            FN_IS_EMPTY,   T_PLIST_EMPTY,
     T_PLIST_HOM_SSORT,            FN_IS_DENSE,   T_PLIST_HOM_SSORT,
     T_PLIST_HOM_SSORT,            FN_IS_NDENSE,  -1,
     T_PLIST_HOM_SSORT,            FN_IS_HOMOG,   T_PLIST_HOM_SSORT,
     T_PLIST_HOM_SSORT,            FN_IS_NHOMOG,  -1,
     T_PLIST_HOM_SSORT,            FN_IS_TABLE,   T_PLIST_TAB_SSORT,
-    T_PLIST_HOM_SSORT,            FN_IS_RECT,   T_PLIST_TAB_RECT_SSORT,
+    T_PLIST_HOM_SSORT,            FN_IS_RECT,    T_PLIST_TAB_RECT_SSORT,
     T_PLIST_HOM_SSORT,            FN_IS_SSORT,   T_PLIST_HOM_SSORT,
     T_PLIST_HOM_SSORT,            FN_IS_NSORT,   -1,
 
-    /* ssort immutable dense list, which is immutable, homog, not a table  */
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_HOM_SSORT,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_EMPTY,   T_PLIST_EMPTY     +IMMUTABLE,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_DENSE,   T_PLIST_HOM_SSORT +IMMUTABLE,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_NDENSE,  -1,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_HOM_SSORT +IMMUTABLE,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_NHOMOG,  -1,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_TABLE,   T_PLIST_TAB_SSORT +IMMUTABLE,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_RECT,   T_PLIST_TAB_RECT_SSORT +IMMUTABLE,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_SSORT,   T_PLIST_HOM_SSORT +IMMUTABLE,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_NSORT,   -1,
-
-    /* nsort mutable dense list, which conts imms, is homog, not a table   */
-    T_PLIST_HOM_NSORT,            FN_IS_MUTABLE, T_PLIST_HOM_NSORT,
+    // nsort dense list, which conts imms, is homog, not a table
     T_PLIST_HOM_NSORT,            FN_IS_EMPTY,   -1,
     T_PLIST_HOM_NSORT,            FN_IS_DENSE,   T_PLIST_HOM_NSORT,
     T_PLIST_HOM_NSORT,            FN_IS_NDENSE,  -1,
     T_PLIST_HOM_NSORT,            FN_IS_HOMOG,   T_PLIST_HOM_NSORT,
     T_PLIST_HOM_NSORT,            FN_IS_NHOMOG,  -1,
     T_PLIST_HOM_NSORT,            FN_IS_TABLE,   T_PLIST_TAB_NSORT,
-    T_PLIST_HOM_NSORT,            FN_IS_RECT,   T_PLIST_TAB_RECT_NSORT,
+    T_PLIST_HOM_NSORT,            FN_IS_RECT,    T_PLIST_TAB_RECT_NSORT,
     T_PLIST_HOM_NSORT,            FN_IS_SSORT,   -1,
     T_PLIST_HOM_NSORT,            FN_IS_NSORT,   T_PLIST_HOM_NSORT,
 
-    /* nsort immutable dense list, which is immutable, homog, not a table  */
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_HOM_NSORT,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_EMPTY,   -1,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_DENSE,   T_PLIST_HOM_NSORT +IMMUTABLE,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_NDENSE,  -1,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_HOM_NSORT +IMMUTABLE,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_NHOMOG,  -1,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_TABLE,   T_PLIST_TAB_NSORT +IMMUTABLE,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_RECT,   T_PLIST_TAB_RECT_NSORT +IMMUTABLE,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_SSORT,   -1,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_NSORT,   T_PLIST_HOM_NSORT +IMMUTABLE,
-
-    /* mutable dense list, which is immutable, homog, non-empty, table     */
-    T_PLIST_TAB,                  FN_IS_MUTABLE, T_PLIST_TAB,
+    // dense list, which is immutable, homog, non-empty, table
     T_PLIST_TAB,                  FN_IS_EMPTY,   -1,
     T_PLIST_TAB,                  FN_IS_DENSE,   T_PLIST_TAB,
     T_PLIST_TAB,                  FN_IS_NDENSE,  -1,
     T_PLIST_TAB,                  FN_IS_HOMOG,   T_PLIST_TAB,
     T_PLIST_TAB,                  FN_IS_NHOMOG,  -1,
     T_PLIST_TAB,                  FN_IS_TABLE,   T_PLIST_TAB,
-    T_PLIST_TAB,                  FN_IS_RECT,   T_PLIST_TAB_RECT,
+    T_PLIST_TAB,                  FN_IS_RECT,    T_PLIST_TAB_RECT,
     T_PLIST_TAB,                  FN_IS_SSORT,   T_PLIST_TAB_SSORT,
     T_PLIST_TAB,                  FN_IS_NSORT,   T_PLIST_TAB_NSORT,
 
-    /* immutable dense list, which is immutable, homog, non-empty, table   */
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_TAB,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_EMPTY,   -1,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_DENSE,   T_PLIST_TAB       +IMMUTABLE,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_NDENSE,  -1,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_TAB       +IMMUTABLE,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_NHOMOG,  -1,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_TABLE,   T_PLIST_TAB       +IMMUTABLE,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_RECT,   T_PLIST_TAB_RECT       +IMMUTABLE,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_SSORT,   T_PLIST_TAB_SSORT +IMMUTABLE,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_NSORT,   T_PLIST_TAB_NSORT +IMMUTABLE,
-
-    /* ssort, mutable dense list, which is imm, homog, non-empty, table    */
-    T_PLIST_TAB_SSORT,            FN_IS_MUTABLE, T_PLIST_TAB_SSORT,
+    // ssort, dense list, which is imm, homog, non-empty, table
     T_PLIST_TAB_SSORT,            FN_IS_EMPTY,   -1,
     T_PLIST_TAB_SSORT,            FN_IS_DENSE,   T_PLIST_TAB_SSORT,
     T_PLIST_TAB_SSORT,            FN_IS_NDENSE,  -1,
     T_PLIST_TAB_SSORT,            FN_IS_HOMOG,   T_PLIST_TAB_SSORT,
     T_PLIST_TAB_SSORT,            FN_IS_NHOMOG,  -1,
     T_PLIST_TAB_SSORT,            FN_IS_TABLE,   T_PLIST_TAB_SSORT,
-    T_PLIST_TAB_SSORT,            FN_IS_RECT,   T_PLIST_TAB_RECT_SSORT,
+    T_PLIST_TAB_SSORT,            FN_IS_RECT,    T_PLIST_TAB_RECT_SSORT,
     T_PLIST_TAB_SSORT,            FN_IS_SSORT,   T_PLIST_TAB_SSORT,
     T_PLIST_TAB_SSORT,            FN_IS_NSORT,   -1,
 
-    /* ssort, immutable dense list, which is imm, homog, non-empty, table  */
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_TAB_SSORT,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_EMPTY,   -1,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_DENSE,   T_PLIST_TAB_SSORT +IMMUTABLE,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_NDENSE,  -1,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_TAB_SSORT +IMMUTABLE,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_NHOMOG,  -1,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_TABLE,   T_PLIST_TAB_SSORT +IMMUTABLE,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_RECT,   T_PLIST_TAB_RECT_SSORT +IMMUTABLE,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_SSORT,   T_PLIST_TAB_SSORT +IMMUTABLE,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_NSORT,   -1,
-
-    /* nsort, mutable dense list, which is imm, homog, non-empty, table    */
-    T_PLIST_TAB_NSORT,            FN_IS_MUTABLE, T_PLIST_TAB_NSORT,
+    // nsort, dense list, which is imm, homog, non-empty, table
     T_PLIST_TAB_NSORT,            FN_IS_EMPTY,   -1,
     T_PLIST_TAB_NSORT,            FN_IS_DENSE,   T_PLIST_TAB_NSORT,
     T_PLIST_TAB_NSORT,            FN_IS_NDENSE,  -1,
     T_PLIST_TAB_NSORT,            FN_IS_HOMOG,   T_PLIST_TAB_NSORT,
     T_PLIST_TAB_NSORT,            FN_IS_NHOMOG,  -1,
     T_PLIST_TAB_NSORT,            FN_IS_TABLE,   T_PLIST_TAB_NSORT,
-    T_PLIST_TAB_NSORT,            FN_IS_RECT,   T_PLIST_TAB_RECT_NSORT,
+    T_PLIST_TAB_NSORT,            FN_IS_RECT,    T_PLIST_TAB_RECT_NSORT,
     T_PLIST_TAB_NSORT,            FN_IS_SSORT,   -1,
     T_PLIST_TAB_NSORT,            FN_IS_NSORT,   T_PLIST_TAB_NSORT,
 
-    /* nsort, immutable dense list, which is imm, homog, non-empty, table  */
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_TAB_NSORT,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_EMPTY,   -1,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_DENSE,   T_PLIST_TAB_NSORT +IMMUTABLE,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_NDENSE,  -1,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_TAB_NSORT +IMMUTABLE,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_NHOMOG,  -1,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_TABLE,   T_PLIST_TAB_NSORT +IMMUTABLE,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_RECT,   T_PLIST_TAB_RECT_NSORT +IMMUTABLE,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_SSORT,   -1,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_NSORT,   T_PLIST_TAB_NSORT +IMMUTABLE,
-
-
-    /* mutable dense list, which is immutable, homog, non-empty, rect table     */
-    T_PLIST_TAB_RECT,                  FN_IS_MUTABLE, T_PLIST_TAB_RECT,
+    // dense list, which is immutable, homog, non-empty, rect table
     T_PLIST_TAB_RECT,                  FN_IS_EMPTY,   -1,
     T_PLIST_TAB_RECT,                  FN_IS_DENSE,   T_PLIST_TAB_RECT,
     T_PLIST_TAB_RECT,                  FN_IS_NDENSE,  -1,
     T_PLIST_TAB_RECT,                  FN_IS_HOMOG,   T_PLIST_TAB_RECT,
     T_PLIST_TAB_RECT,                  FN_IS_NHOMOG,  -1,
     T_PLIST_TAB_RECT,                  FN_IS_TABLE,   T_PLIST_TAB_RECT,
-    T_PLIST_TAB_RECT,                  FN_IS_RECT,   T_PLIST_TAB_RECT,
+    T_PLIST_TAB_RECT,                  FN_IS_RECT,    T_PLIST_TAB_RECT,
     T_PLIST_TAB_RECT,                  FN_IS_SSORT,   T_PLIST_TAB_RECT_SSORT,
     T_PLIST_TAB_RECT,                  FN_IS_NSORT,   T_PLIST_TAB_RECT_NSORT,
 
-    /* immutable dense list, which is immutable, homog, non-empty, rect table   */
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_TAB_RECT,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_EMPTY,   -1,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_DENSE,   T_PLIST_TAB_RECT       +IMMUTABLE,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_NDENSE,  -1,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_TAB_RECT       +IMMUTABLE,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_NHOMOG,  -1,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_TABLE,   T_PLIST_TAB_RECT       +IMMUTABLE,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_RECT,   T_PLIST_TAB_RECT       +IMMUTABLE,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_SSORT,   T_PLIST_TAB_RECT_SSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_NSORT,   T_PLIST_TAB_RECT_NSORT +IMMUTABLE,
-
-    /* ssort, mutable dense list, which is imm, homog, non-empty, rect table    */
-    T_PLIST_TAB_RECT_SSORT,            FN_IS_MUTABLE, T_PLIST_TAB_RECT_SSORT,
+    // ssort, dense list, which is imm, homog, non-empty, rect table
     T_PLIST_TAB_RECT_SSORT,            FN_IS_EMPTY,   -1,
     T_PLIST_TAB_RECT_SSORT,            FN_IS_DENSE,   T_PLIST_TAB_RECT_SSORT,
     T_PLIST_TAB_RECT_SSORT,            FN_IS_NDENSE,  -1,
     T_PLIST_TAB_RECT_SSORT,            FN_IS_HOMOG,   T_PLIST_TAB_RECT_SSORT,
     T_PLIST_TAB_RECT_SSORT,            FN_IS_NHOMOG,  -1,
     T_PLIST_TAB_RECT_SSORT,            FN_IS_TABLE,   T_PLIST_TAB_RECT_SSORT,
-    T_PLIST_TAB_RECT_SSORT,            FN_IS_RECT,   T_PLIST_TAB_RECT_SSORT,
+    T_PLIST_TAB_RECT_SSORT,            FN_IS_RECT,    T_PLIST_TAB_RECT_SSORT,
     T_PLIST_TAB_RECT_SSORT,            FN_IS_SSORT,   T_PLIST_TAB_RECT_SSORT,
     T_PLIST_TAB_RECT_SSORT,            FN_IS_NSORT,   -1,
 
-    /* ssort, immutable dense list, which is imm, homog, non-empty, rect table  */
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_TAB_RECT_SSORT,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_EMPTY,   -1,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_DENSE,   T_PLIST_TAB_RECT_SSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_NDENSE,  -1,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_TAB_RECT_SSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_NHOMOG,  -1,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_TABLE,   T_PLIST_TAB_RECT_SSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_RECT,   T_PLIST_TAB_RECT_SSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_SSORT,   T_PLIST_TAB_RECT_SSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_NSORT,   -1,
-
-    /* nsort, mutable dense list, which is imm, homog, non-empty, rect table    */
-    T_PLIST_TAB_RECT_NSORT,            FN_IS_MUTABLE, T_PLIST_TAB_RECT_NSORT,
+    // nsort, dense list, which is imm, homog, non-empty, rect table
     T_PLIST_TAB_RECT_NSORT,            FN_IS_EMPTY,   -1,
     T_PLIST_TAB_RECT_NSORT,            FN_IS_DENSE,   T_PLIST_TAB_RECT_NSORT,
     T_PLIST_TAB_RECT_NSORT,            FN_IS_NDENSE,  -1,
     T_PLIST_TAB_RECT_NSORT,            FN_IS_HOMOG,   T_PLIST_TAB_RECT_NSORT,
     T_PLIST_TAB_RECT_NSORT,            FN_IS_NHOMOG,  -1,
     T_PLIST_TAB_RECT_NSORT,            FN_IS_TABLE,   T_PLIST_TAB_RECT_NSORT,
-    T_PLIST_TAB_RECT_NSORT,            FN_IS_RECT,   T_PLIST_TAB_RECT_NSORT,
+    T_PLIST_TAB_RECT_NSORT,            FN_IS_RECT,    T_PLIST_TAB_RECT_NSORT,
     T_PLIST_TAB_RECT_NSORT,            FN_IS_SSORT,   -1,
     T_PLIST_TAB_RECT_NSORT,            FN_IS_NSORT,   T_PLIST_TAB_RECT_NSORT,
 
-    /* nsort, immutable dense list, which is imm, homog, non-empty, rect table  */
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_TAB_RECT_NSORT,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_EMPTY,   -1,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_DENSE,   T_PLIST_TAB_RECT_NSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_NDENSE,  -1,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_TAB_RECT_NSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_NHOMOG,  -1,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_TABLE,   T_PLIST_TAB_RECT_NSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_RECT,   T_PLIST_TAB_RECT_NSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_SSORT,   -1,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_NSORT,   T_PLIST_TAB_RECT_NSORT +IMMUTABLE,
-
-    /* mutable dense list, which only contains objects of type <= T_CYC    */
-    T_PLIST_CYC,                  FN_IS_MUTABLE, T_PLIST_CYC,
+    // dense list, which only contains objects of type <= T_CYC
     T_PLIST_CYC,                  FN_IS_EMPTY,   -1,
     T_PLIST_CYC,                  FN_IS_DENSE,   T_PLIST_CYC,
     T_PLIST_CYC,                  FN_IS_NDENSE,  -1,
     T_PLIST_CYC,                  FN_IS_HOMOG,   T_PLIST_CYC,
     T_PLIST_CYC,                  FN_IS_NHOMOG,  -1,
     T_PLIST_CYC,                  FN_IS_TABLE,   -1,
-    T_PLIST_CYC,                  FN_IS_RECT,   -1,
+    T_PLIST_CYC,                  FN_IS_RECT,    -1,
     T_PLIST_CYC,                  FN_IS_SSORT,   T_PLIST_CYC_SSORT,
     T_PLIST_CYC,                  FN_IS_NSORT,   T_PLIST_CYC_NSORT,
 
-    /* immutable dense list, which only contains objects of type <= T_CYC  */
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_CYC,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_EMPTY,  -1,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_DENSE,   T_PLIST_CYC       +IMMUTABLE,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_NDENSE,  -1,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_CYC       +IMMUTABLE,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_NHOMOG,  -1,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_TABLE,   -1,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_RECT,   -1,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_SSORT,   T_PLIST_CYC_SSORT +IMMUTABLE,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_NSORT,   T_PLIST_CYC_NSORT +IMMUTABLE,
-
-    /* ssort mutable dense list, which only contains objs of type <= T_CYC */
-    T_PLIST_CYC_SSORT,            FN_IS_MUTABLE, T_PLIST_CYC_SSORT,
+    // ssort dense list, which only contains objs of type <= T_CYC
     T_PLIST_CYC_SSORT,            FN_IS_EMPTY,   -1,
     T_PLIST_CYC_SSORT,            FN_IS_DENSE,   T_PLIST_CYC_SSORT,
     T_PLIST_CYC_SSORT,            FN_IS_NDENSE,  -1,
     T_PLIST_CYC_SSORT,            FN_IS_HOMOG,   T_PLIST_CYC_SSORT,
     T_PLIST_CYC_SSORT,            FN_IS_NHOMOG,  -1,
     T_PLIST_CYC_SSORT,            FN_IS_TABLE,   -1,
-    T_PLIST_CYC_SSORT,            FN_IS_RECT,   -1,
+    T_PLIST_CYC_SSORT,            FN_IS_RECT,    -1,
     T_PLIST_CYC_SSORT,            FN_IS_SSORT,   T_PLIST_CYC_SSORT,
     T_PLIST_CYC_SSORT,            FN_IS_NSORT,   -1,
 
-    /* ssort immutable dense list, which contains objs of type <= T_CYC    */
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_CYC_SSORT,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_EMPTY,   -1,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_DENSE,   T_PLIST_CYC_SSORT +IMMUTABLE,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_NDENSE,  -1,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_CYC_SSORT +IMMUTABLE,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_NHOMOG,  -1,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_TABLE,   -1,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_RECT,   -1,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_SSORT,   T_PLIST_CYC_SSORT +IMMUTABLE,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_NSORT,   -1,
-
-    /* nsort mutable dense list, which only contains objs of type <= T_CYC */
-    T_PLIST_CYC_NSORT,            FN_IS_MUTABLE, T_PLIST_CYC_NSORT,
+    // nsort dense list, which only contains objs of type <= T_CYC
     T_PLIST_CYC_NSORT,            FN_IS_EMPTY,   -1,
     T_PLIST_CYC_NSORT,            FN_IS_DENSE,   T_PLIST_CYC_NSORT,
     T_PLIST_CYC_NSORT,            FN_IS_NDENSE,  -1,
     T_PLIST_CYC_NSORT,            FN_IS_HOMOG,   T_PLIST_CYC_NSORT,
     T_PLIST_CYC_NSORT,            FN_IS_NHOMOG,  -1,
     T_PLIST_CYC_NSORT,            FN_IS_TABLE,   -1,
-    T_PLIST_CYC_NSORT,            FN_IS_RECT,   -1,
+    T_PLIST_CYC_NSORT,            FN_IS_RECT,    -1,
     T_PLIST_CYC_NSORT,            FN_IS_SSORT,   -1,
     T_PLIST_CYC_NSORT,            FN_IS_NSORT,   T_PLIST_CYC_NSORT,
 
-    /* nsort immutable dense list, which contains objs of type <= T_CYC    */
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_CYC_NSORT,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_EMPTY,   -1,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_DENSE,   T_PLIST_CYC_NSORT +IMMUTABLE,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_NDENSE,  -1,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_CYC_NSORT +IMMUTABLE,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_NHOMOG,  -1,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_TABLE,   -1,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_RECT,   -1,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_SSORT,   -1,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_NSORT,   T_PLIST_CYC_NSORT +IMMUTABLE,
-
-    /* mutable dense list, which only contains objects of type T_FFE       */
-    T_PLIST_FFE,            FN_IS_MUTABLE, T_PLIST_FFE,
+    // dense list, which only contains objects of type T_FFE
     T_PLIST_FFE,            FN_IS_EMPTY,   -1,
     T_PLIST_FFE,            FN_IS_DENSE,   T_PLIST_FFE,
     T_PLIST_FFE,            FN_IS_NDENSE,  -1,
     T_PLIST_FFE,            FN_IS_HOMOG,   T_PLIST_FFE,
     T_PLIST_FFE,            FN_IS_NHOMOG,  -1,
     T_PLIST_FFE,            FN_IS_TABLE,   -1,
-    T_PLIST_FFE,            FN_IS_RECT,   -1,
+    T_PLIST_FFE,            FN_IS_RECT,    -1,
     T_PLIST_FFE,            FN_IS_SSORT,   T_PLIST_FFE,
     T_PLIST_FFE,            FN_IS_NSORT,   T_PLIST_FFE,
 
-    /* immutable dense list, which only contains objects of type T_FFE     */
-    T_PLIST_FFE +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_FFE,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_EMPTY,   -1,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_DENSE,   T_PLIST_FFE +IMMUTABLE,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_NDENSE,  -1,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_FFE +IMMUTABLE,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_NHOMOG,  -1,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_TABLE,   -1,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_RECT,   -1,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_SSORT,   T_PLIST_FFE +IMMUTABLE,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_NSORT,   T_PLIST_FFE +IMMUTABLE,
-
     -1,                           -1,            -1
-
 };
 
 
@@ -3837,260 +3413,117 @@ static Int SetFiltTab [] = {
 */
 static Int ResetFiltTab [] = {
 
-    /* mutable plain lists                                                 */
-    T_PLIST,                      FN_IS_MUTABLE, T_PLIST           +IMMUTABLE,
+    // plain lists
     T_PLIST,                      FN_IS_EMPTY,   T_PLIST,
     T_PLIST,                      FN_IS_DENSE,   T_PLIST,
     T_PLIST,                      FN_IS_NDENSE,  T_PLIST,
     T_PLIST,                      FN_IS_HOMOG,   T_PLIST,
     T_PLIST,                      FN_IS_NHOMOG,  T_PLIST,
     T_PLIST,                      FN_IS_TABLE,   T_PLIST,
-    T_PLIST,                      FN_IS_RECT,   T_PLIST,
+    T_PLIST,                      FN_IS_RECT,    T_PLIST,
     T_PLIST,                      FN_IS_SSORT,   T_PLIST,
     T_PLIST,                      FN_IS_NSORT,   T_PLIST,
 
-    /* immutable plain lists                                               */
-    T_PLIST           +IMMUTABLE, FN_IS_MUTABLE, T_PLIST           +IMMUTABLE,
-    T_PLIST           +IMMUTABLE, FN_IS_EMPTY,   T_PLIST           +IMMUTABLE,
-    T_PLIST           +IMMUTABLE, FN_IS_DENSE,   T_PLIST           +IMMUTABLE,
-    T_PLIST           +IMMUTABLE, FN_IS_NDENSE,  T_PLIST           +IMMUTABLE,
-    T_PLIST           +IMMUTABLE, FN_IS_HOMOG,   T_PLIST           +IMMUTABLE,
-    T_PLIST           +IMMUTABLE, FN_IS_NHOMOG,  T_PLIST           +IMMUTABLE,
-    T_PLIST           +IMMUTABLE, FN_IS_TABLE,   T_PLIST           +IMMUTABLE,
-    T_PLIST           +IMMUTABLE, FN_IS_RECT,   T_PLIST           +IMMUTABLE,
-    T_PLIST           +IMMUTABLE, FN_IS_SSORT,   T_PLIST           +IMMUTABLE,
-    T_PLIST           +IMMUTABLE, FN_IS_NSORT,   T_PLIST           +IMMUTABLE,
-
-    /* mutable empty list                                                  */
-    T_PLIST_EMPTY,                FN_IS_MUTABLE, T_PLIST_EMPTY     +IMMUTABLE,
+    // empty list
     T_PLIST_EMPTY,                FN_IS_EMPTY,   T_PLIST,
     T_PLIST_EMPTY,                FN_IS_DENSE,   T_PLIST,
     T_PLIST_EMPTY,                FN_IS_NDENSE,  T_PLIST_EMPTY,
     T_PLIST_EMPTY,                FN_IS_HOMOG,   T_PLIST,
     T_PLIST_EMPTY,                FN_IS_NHOMOG,  T_PLIST_EMPTY,
     T_PLIST_EMPTY,                FN_IS_TABLE,   T_PLIST_EMPTY,
-    T_PLIST_EMPTY,                FN_IS_RECT,   T_PLIST_EMPTY,
+    T_PLIST_EMPTY,                FN_IS_RECT,    T_PLIST_EMPTY,
     T_PLIST_EMPTY,                FN_IS_SSORT,   T_PLIST,
     T_PLIST_EMPTY,                FN_IS_NSORT,   T_PLIST_EMPTY,
 
-    /* mutable empty list                                                  */
-    T_PLIST_EMPTY,                FN_IS_MUTABLE, T_PLIST_EMPTY     +IMMUTABLE,
-    T_PLIST_EMPTY,                FN_IS_EMPTY,   T_PLIST,
-    T_PLIST_EMPTY,                FN_IS_DENSE,   T_PLIST,
-    T_PLIST_EMPTY,                FN_IS_NDENSE,  T_PLIST_EMPTY,
-    T_PLIST_EMPTY,                FN_IS_HOMOG,   T_PLIST,
-    T_PLIST_EMPTY,                FN_IS_NHOMOG,  T_PLIST_EMPTY,
-    T_PLIST_EMPTY,                FN_IS_TABLE,   T_PLIST_EMPTY,
-    T_PLIST_EMPTY,                FN_IS_RECT,   T_PLIST_EMPTY,
-    T_PLIST_EMPTY,                FN_IS_SSORT,   T_PLIST,
-    T_PLIST_EMPTY,                FN_IS_NSORT,   T_PLIST_EMPTY,
-
-    /* immutable empty list                                                */
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_EMPTY     +IMMUTABLE,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_EMPTY,   T_PLIST           +IMMUTABLE,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_DENSE,   T_PLIST           +IMMUTABLE,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_NDENSE,  T_PLIST_EMPTY     +IMMUTABLE,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_HOMOG,   T_PLIST           +IMMUTABLE,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_EMPTY     +IMMUTABLE,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_RECT,   T_PLIST_EMPTY     +IMMUTABLE,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_TABLE,   T_PLIST_EMPTY     +IMMUTABLE,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_SSORT,   T_PLIST,
-    T_PLIST_EMPTY     +IMMUTABLE, FN_IS_NSORT,   T_PLIST_EMPTY     +IMMUTABLE,
-
-    /* mutable dense list                                                  */
-    T_PLIST_DENSE,                FN_IS_MUTABLE, T_PLIST_DENSE     +IMMUTABLE,
+    // dense list
     T_PLIST_DENSE,                FN_IS_EMPTY,   T_PLIST_DENSE,
     T_PLIST_DENSE,                FN_IS_DENSE,   T_PLIST,
     T_PLIST_DENSE,                FN_IS_NDENSE,  T_PLIST_DENSE,
     T_PLIST_DENSE,                FN_IS_HOMOG,   T_PLIST_DENSE,
     T_PLIST_DENSE,                FN_IS_NHOMOG,  T_PLIST_DENSE,
     T_PLIST_DENSE,                FN_IS_TABLE,   T_PLIST_DENSE,
-    T_PLIST_DENSE,                FN_IS_RECT,   T_PLIST_DENSE,
+    T_PLIST_DENSE,                FN_IS_RECT,    T_PLIST_DENSE,
     T_PLIST_DENSE,                FN_IS_SSORT,   T_PLIST_DENSE,
     T_PLIST_DENSE,                FN_IS_NSORT,   T_PLIST_DENSE,
 
-    /* immutable dense list                                                */
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_EMPTY,   T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_DENSE,   T_PLIST           +IMMUTABLE,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_NDENSE,  T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_TABLE,   T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_RECT,   T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_SSORT,   T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST_DENSE     +IMMUTABLE, FN_IS_NSORT,   T_PLIST_DENSE     +IMMUTABLE,
-
-    /* mutable dense list, which contains immutables and is not homog      */
-    T_PLIST_DENSE_NHOM,           FN_IS_MUTABLE, T_PLIST_DENSE_NHOM+IMMUTABLE,
+    // dense list, which contains immutables and is not homog
     T_PLIST_DENSE_NHOM,           FN_IS_EMPTY,   T_PLIST_DENSE_NHOM,
     T_PLIST_DENSE_NHOM,           FN_IS_DENSE,   T_PLIST,
     T_PLIST_DENSE_NHOM,           FN_IS_NDENSE,  T_PLIST_DENSE_NHOM,
     T_PLIST_DENSE_NHOM,           FN_IS_HOMOG,   T_PLIST_DENSE_NHOM,
     T_PLIST_DENSE_NHOM,           FN_IS_NHOMOG,  T_PLIST_DENSE,
     T_PLIST_DENSE_NHOM,           FN_IS_TABLE,   T_PLIST_DENSE_NHOM,
-    T_PLIST_DENSE_NHOM,           FN_IS_RECT,   T_PLIST_DENSE_NHOM,
+    T_PLIST_DENSE_NHOM,           FN_IS_RECT,    T_PLIST_DENSE_NHOM,
     T_PLIST_DENSE_NHOM,           FN_IS_SSORT,   T_PLIST_DENSE_NHOM,
     T_PLIST_DENSE_NHOM,           FN_IS_NSORT,   T_PLIST_DENSE_NHOM,
 
-    /* immutable dense list, which is immutable and not homogeneous        */
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_MUTABLE, T_PLIST_DENSE_NHOM+IMMUTABLE,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_EMPTY,   T_PLIST_DENSE_NHOM+IMMUTABLE,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_DENSE,   T_PLIST           +IMMUTABLE,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_NDENSE,  T_PLIST_DENSE_NHOM+IMMUTABLE,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_HOMOG,   T_PLIST_DENSE_NHOM+IMMUTABLE,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_TABLE,   T_PLIST_DENSE_NHOM+IMMUTABLE,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_RECT,   T_PLIST_DENSE_NHOM+IMMUTABLE,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_SSORT,   T_PLIST_DENSE_NHOM+IMMUTABLE,
-    T_PLIST_DENSE_NHOM+IMMUTABLE, FN_IS_NSORT,   T_PLIST_DENSE_NHOM+IMMUTABLE,
-
-    /* mutable dense ssorted list, which contains immutables and is not homog      */
-    T_PLIST_DENSE_NHOM_SSORT,     FN_IS_MUTABLE, T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE,
+    // dense ssorted list, which contains immutables and is not homog
     T_PLIST_DENSE_NHOM_SSORT,     FN_IS_EMPTY,   T_PLIST_DENSE_NHOM_SSORT,
     T_PLIST_DENSE_NHOM_SSORT,     FN_IS_DENSE,   T_PLIST,
     T_PLIST_DENSE_NHOM_SSORT,     FN_IS_NDENSE,  T_PLIST_DENSE_NHOM_SSORT,
     T_PLIST_DENSE_NHOM_SSORT,     FN_IS_HOMOG,   T_PLIST_DENSE_NHOM_SSORT,
     T_PLIST_DENSE_NHOM_SSORT,     FN_IS_NHOMOG,  T_PLIST_DENSE,
     T_PLIST_DENSE_NHOM_SSORT,     FN_IS_TABLE,   T_PLIST_DENSE_NHOM_SSORT,
-    T_PLIST_DENSE_NHOM_SSORT,     FN_IS_RECT,   T_PLIST_DENSE_NHOM_SSORT,
+    T_PLIST_DENSE_NHOM_SSORT,     FN_IS_RECT,    T_PLIST_DENSE_NHOM_SSORT,
     T_PLIST_DENSE_NHOM_SSORT,     FN_IS_SSORT,   T_PLIST_DENSE_NHOM,
     T_PLIST_DENSE_NHOM_SSORT,     FN_IS_NSORT,   T_PLIST_DENSE_NHOM_SSORT,
 
-    /* immutable dense ssorted list, which is immutable and not homogeneous        */
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_MUTABLE, T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_EMPTY,   T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_DENSE,   T_PLIST           +IMMUTABLE,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_NDENSE,  T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_HOMOG,   T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_TABLE,   T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_RECT,   T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_SSORT,   T_PLIST_DENSE_NHOM+IMMUTABLE,
-    T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE, FN_IS_NSORT,   T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE,
-
-    /* mutable dense nsorted list, which contains immutables and is not homog      */
-    T_PLIST_DENSE_NHOM_NSORT,     FN_IS_MUTABLE, T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE,
+    // dense nsorted list, which contains immutables and is not homog
     T_PLIST_DENSE_NHOM_NSORT,     FN_IS_EMPTY,   T_PLIST_DENSE_NHOM_NSORT,
     T_PLIST_DENSE_NHOM_NSORT,     FN_IS_DENSE,   T_PLIST,
     T_PLIST_DENSE_NHOM_NSORT,     FN_IS_NDENSE,  T_PLIST_DENSE_NHOM_NSORT,
     T_PLIST_DENSE_NHOM_NSORT,     FN_IS_HOMOG,   T_PLIST_DENSE_NHOM_NSORT,
     T_PLIST_DENSE_NHOM_NSORT,     FN_IS_NHOMOG,  T_PLIST_DENSE,
     T_PLIST_DENSE_NHOM_NSORT,     FN_IS_TABLE,   T_PLIST_DENSE_NHOM_NSORT,
-    T_PLIST_DENSE_NHOM_NSORT,     FN_IS_RECT,   T_PLIST_DENSE_NHOM_NSORT,
+    T_PLIST_DENSE_NHOM_NSORT,     FN_IS_RECT,    T_PLIST_DENSE_NHOM_NSORT,
     T_PLIST_DENSE_NHOM_NSORT,     FN_IS_SSORT,   T_PLIST_DENSE_NHOM_NSORT,
     T_PLIST_DENSE_NHOM_NSORT,     FN_IS_NSORT,   T_PLIST_DENSE_NHOM,
 
-    /* immutable dense nsorted list, which is immutable and not homogeneous        */
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_MUTABLE, T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_EMPTY,   T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_DENSE,   T_PLIST           +IMMUTABLE,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_NDENSE,  T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_HOMOG,   T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_TABLE,   T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_RECT,   T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_SSORT,   T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE,
-    T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE, FN_IS_NSORT,   T_PLIST_DENSE_NHOM+IMMUTABLE,
-
-    /* a mutable list with holes                                           */
-    T_PLIST_NDENSE,               FN_IS_MUTABLE, T_PLIST_NDENSE    +IMMUTABLE,
+    // a mutable list with holes
     T_PLIST_NDENSE,               FN_IS_EMPTY,   T_PLIST_NDENSE,
     T_PLIST_NDENSE,               FN_IS_DENSE,   T_PLIST_NDENSE,
     T_PLIST_NDENSE,               FN_IS_NDENSE,  T_PLIST,
     T_PLIST_NDENSE,               FN_IS_HOMOG,   T_PLIST_NDENSE,
     T_PLIST_NDENSE,               FN_IS_NHOMOG,  T_PLIST_NDENSE,
     T_PLIST_NDENSE,               FN_IS_TABLE,   T_PLIST_NDENSE,
-    T_PLIST_NDENSE,               FN_IS_RECT,   T_PLIST_NDENSE,
+    T_PLIST_NDENSE,               FN_IS_RECT,    T_PLIST_NDENSE,
     T_PLIST_NDENSE,               FN_IS_SSORT,   T_PLIST_NDENSE,
     T_PLIST_NDENSE,               FN_IS_NSORT,   T_PLIST_NDENSE,
 
-    /* an immutable list with holes                                        */
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_NDENSE    +IMMUTABLE,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_EMPTY,   T_PLIST_NDENSE    +IMMUTABLE,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_DENSE,   T_PLIST_NDENSE    +IMMUTABLE,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_NDENSE,  T_PLIST           +IMMUTABLE,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_NDENSE    +IMMUTABLE,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_NDENSE    +IMMUTABLE,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_TABLE,   T_PLIST_NDENSE    +IMMUTABLE,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_RECT,   T_PLIST_NDENSE    +IMMUTABLE,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_SSORT,   T_PLIST_NDENSE    +IMMUTABLE,
-    T_PLIST_NDENSE    +IMMUTABLE, FN_IS_NSORT,   T_PLIST_NDENSE    +IMMUTABLE,
-
-    /* mutable dense list, which conts imms, is homogeneous, not a table   */
-    T_PLIST_HOM,                  FN_IS_MUTABLE, T_PLIST_HOM      +IMMUTABLE,
+    // dense list, which conts imms, is homogeneous, not a table
     T_PLIST_HOM,                  FN_IS_EMPTY,   T_PLIST_HOM,
     T_PLIST_HOM,                  FN_IS_DENSE,   T_PLIST,
     T_PLIST_HOM,                  FN_IS_NDENSE,  T_PLIST_HOM,
     T_PLIST_HOM,                  FN_IS_HOMOG,   T_PLIST_DENSE,
     T_PLIST_HOM,                  FN_IS_NHOMOG,  T_PLIST_HOM,
     T_PLIST_HOM,                  FN_IS_TABLE,   T_PLIST_HOM,
-    T_PLIST_HOM,                  FN_IS_RECT,   T_PLIST_HOM,
+    T_PLIST_HOM,                  FN_IS_RECT,    T_PLIST_HOM,
     T_PLIST_HOM,                  FN_IS_SSORT,   T_PLIST_HOM,
     T_PLIST_HOM,                  FN_IS_NSORT,   T_PLIST_HOM,
 
-    /* immutable dense list, which is immutable, homogeneous, not a table  */
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_HOM       +IMMUTABLE,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_EMPTY,   T_PLIST_HOM       +IMMUTABLE,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_DENSE,   T_PLIST           +IMMUTABLE,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_NDENSE,  T_PLIST_HOM       +IMMUTABLE,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_HOM       +IMMUTABLE,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_TABLE,   T_PLIST_HOM       +IMMUTABLE,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_RECT,   T_PLIST_HOM       +IMMUTABLE,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_SSORT,   T_PLIST_HOM       +IMMUTABLE,
-    T_PLIST_HOM       +IMMUTABLE, FN_IS_NSORT,   T_PLIST_HOM       +IMMUTABLE,
-
-    /* ssort mutable dense list, which conts imms, is homog, not a table   */
-    T_PLIST_HOM_SSORT,            FN_IS_MUTABLE, T_PLIST_HOM_SSORT+IMMUTABLE,
+    // ssort dense list, which conts imms, is homog, not a table
     T_PLIST_HOM_SSORT,            FN_IS_EMPTY,   T_PLIST_HOM_SSORT,
     T_PLIST_HOM_SSORT,            FN_IS_DENSE,   T_PLIST,
     T_PLIST_HOM_SSORT,            FN_IS_NDENSE,  T_PLIST_HOM_SSORT,
     T_PLIST_HOM_SSORT,            FN_IS_HOMOG,   T_PLIST_DENSE,
     T_PLIST_HOM_SSORT,            FN_IS_NHOMOG,  T_PLIST_HOM_SSORT,
     T_PLIST_HOM_SSORT,            FN_IS_TABLE,   T_PLIST_HOM_SSORT,
-    T_PLIST_HOM_SSORT,            FN_IS_RECT,   T_PLIST_HOM_SSORT,
+    T_PLIST_HOM_SSORT,            FN_IS_RECT,    T_PLIST_HOM_SSORT,
     T_PLIST_HOM_SSORT,            FN_IS_SSORT,   T_PLIST_HOM,
     T_PLIST_HOM_SSORT,            FN_IS_NSORT,   T_PLIST_HOM_SSORT,
 
-    /* ssort immutable dense list, which is immutable, homog, not a table  */
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_HOM_SSORT +IMMUTABLE,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_EMPTY,   T_PLIST_HOM_SSORT +IMMUTABLE,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_DENSE,   T_PLIST           +IMMUTABLE,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_NDENSE,  T_PLIST_HOM_SSORT +IMMUTABLE,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_HOM_SSORT +IMMUTABLE,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_TABLE,   T_PLIST_HOM_SSORT +IMMUTABLE,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_RECT,   T_PLIST_HOM_SSORT +IMMUTABLE,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_SSORT,   T_PLIST_HOM       +IMMUTABLE,
-    T_PLIST_HOM_SSORT +IMMUTABLE, FN_IS_NSORT,   T_PLIST_HOM_SSORT +IMMUTABLE,
-
-    /* nsort mutable dense list, which conts imms, is homog, not a table   */
-    T_PLIST_HOM_NSORT,            FN_IS_MUTABLE, T_PLIST_HOM_NSORT +IMMUTABLE,
+    // nsort dense list, which conts imms, is homog, not a table
     T_PLIST_HOM_NSORT,            FN_IS_EMPTY,   T_PLIST_HOM_NSORT,
     T_PLIST_HOM_NSORT,            FN_IS_DENSE,   T_PLIST,
     T_PLIST_HOM_NSORT,            FN_IS_NDENSE,  T_PLIST_HOM_NSORT,
     T_PLIST_HOM_NSORT,            FN_IS_HOMOG,   T_PLIST_DENSE,
     T_PLIST_HOM_NSORT,            FN_IS_NHOMOG,  T_PLIST_HOM_NSORT,
     T_PLIST_HOM_NSORT,            FN_IS_TABLE,   T_PLIST_HOM_NSORT,
-    T_PLIST_HOM_NSORT,            FN_IS_RECT,   T_PLIST_HOM_NSORT,
+    T_PLIST_HOM_NSORT,            FN_IS_RECT,    T_PLIST_HOM_NSORT,
     T_PLIST_HOM_NSORT,            FN_IS_SSORT,   T_PLIST_HOM_NSORT,
     T_PLIST_HOM_NSORT,            FN_IS_NSORT,   T_PLIST_HOM,
 
-    /* nsort immutable dense list, which is immutable, homog, not a table  */
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_HOM_NSORT +IMMUTABLE,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_EMPTY,   T_PLIST_HOM_NSORT +IMMUTABLE,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_DENSE,   T_PLIST           +IMMUTABLE,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_NDENSE,  T_PLIST_HOM_NSORT +IMMUTABLE,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_HOMOG,   T_PLIST           +IMMUTABLE,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_HOM_NSORT +IMMUTABLE,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_TABLE,   T_PLIST_HOM_NSORT +IMMUTABLE,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_RECT,   T_PLIST_HOM_NSORT +IMMUTABLE,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_SSORT,   T_PLIST_HOM_NSORT +IMMUTABLE,
-    T_PLIST_HOM_NSORT +IMMUTABLE, FN_IS_NSORT,   T_PLIST_HOM       +IMMUTABLE,
-
-    /* mutable dense list, which is immutable, homog, non-empty, table     */
-    T_PLIST_TAB,                  FN_IS_MUTABLE, T_PLIST_TAB       +IMMUTABLE,
+    // dense list, which is immutable, homog, non-empty, table
     T_PLIST_TAB,                  FN_IS_EMPTY,   T_PLIST_TAB,
     T_PLIST_TAB,                  FN_IS_DENSE,   T_PLIST,
     T_PLIST_TAB,                  FN_IS_NDENSE,  T_PLIST_TAB,
@@ -4101,44 +3534,18 @@ static Int ResetFiltTab [] = {
     T_PLIST_TAB,                  FN_IS_SSORT,   T_PLIST_TAB,
     T_PLIST_TAB,                  FN_IS_NSORT,   T_PLIST_TAB,
 
-    /* immutable dense list, which is immutable, homog, non-empty, table   */
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_TAB       +IMMUTABLE,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_EMPTY,   T_PLIST_TAB       +IMMUTABLE,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_DENSE,   T_PLIST           +IMMUTABLE,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_NDENSE,  T_PLIST_TAB       +IMMUTABLE,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_TAB       +IMMUTABLE,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_TABLE,   T_PLIST_HOM       +IMMUTABLE,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_RECT,   T_PLIST_TAB       +IMMUTABLE,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_SSORT,   T_PLIST_TAB       +IMMUTABLE,
-    T_PLIST_TAB       +IMMUTABLE, FN_IS_NSORT,   T_PLIST_TAB       +IMMUTABLE,
-
-    /* ssort, mutable dense list, which is imm, homog, non-empty, table    */
-    T_PLIST_TAB_SSORT,            FN_IS_MUTABLE, T_PLIST_TAB_SSORT +IMMUTABLE,
+    // ssort, dense list, which is imm, homog, non-empty, table
     T_PLIST_TAB_SSORT,            FN_IS_EMPTY,   T_PLIST_TAB_SSORT,
     T_PLIST_TAB_SSORT,            FN_IS_DENSE,   T_PLIST,
     T_PLIST_TAB_SSORT,            FN_IS_NDENSE,  T_PLIST_TAB_SSORT,
     T_PLIST_TAB_SSORT,            FN_IS_HOMOG,   T_PLIST_DENSE,
     T_PLIST_TAB_SSORT,            FN_IS_NHOMOG,  T_PLIST_TAB_SSORT,
     T_PLIST_TAB_SSORT,            FN_IS_TABLE,   T_PLIST_HOM_SSORT,
-    T_PLIST_TAB_SSORT,            FN_IS_RECT,   T_PLIST_TAB_SSORT,
+    T_PLIST_TAB_SSORT,            FN_IS_RECT,    T_PLIST_TAB_SSORT,
     T_PLIST_TAB_SSORT,            FN_IS_SSORT,   T_PLIST_TAB,
     T_PLIST_TAB_SSORT,            FN_IS_NSORT,   T_PLIST_TAB_SSORT,
 
-    /* ssort, immutable dense list, which is imm, homog, non-empty, table  */
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_TAB_SSORT +IMMUTABLE,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_EMPTY,   T_PLIST_TAB_SSORT +IMMUTABLE,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_DENSE,   T_PLIST           +IMMUTABLE,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_NDENSE,  T_PLIST_TAB_SSORT +IMMUTABLE,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_TAB_SSORT +IMMUTABLE,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_TABLE,   T_PLIST_HOM_SSORT +IMMUTABLE,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_RECT,    T_PLIST_TAB_SSORT +IMMUTABLE,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_SSORT,   T_PLIST_TAB       +IMMUTABLE,
-    T_PLIST_TAB_SSORT +IMMUTABLE, FN_IS_NSORT,   T_PLIST_TAB_SSORT +IMMUTABLE,
-
-    /* nsort, mutable dense list, which is imm, homog, non-empty, table    */
-    T_PLIST_TAB_NSORT,            FN_IS_MUTABLE, T_PLIST_TAB_NSORT +IMMUTABLE,
+    // nsort, dense list, which is imm, homog, non-empty, table
     T_PLIST_TAB_NSORT,            FN_IS_EMPTY,   T_PLIST_TAB_NSORT,
     T_PLIST_TAB_NSORT,            FN_IS_DENSE,   T_PLIST,
     T_PLIST_TAB_NSORT,            FN_IS_NDENSE,  T_PLIST_TAB_NSORT,
@@ -4149,19 +3556,7 @@ static Int ResetFiltTab [] = {
     T_PLIST_TAB_NSORT,            FN_IS_SSORT,   T_PLIST_TAB_NSORT,
     T_PLIST_TAB_NSORT,            FN_IS_NSORT,   T_PLIST_TAB,
 
-    /* nsort, immutable dense list, which is imm, homog, non-empty, table  */
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_TAB_NSORT +IMMUTABLE,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_EMPTY,   T_PLIST_TAB_NSORT +IMMUTABLE,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_DENSE,   T_PLIST           +IMMUTABLE,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_NDENSE,  T_PLIST_TAB_NSORT +IMMUTABLE,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_TAB_NSORT +IMMUTABLE,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_TABLE,   T_PLIST_HOM_NSORT +IMMUTABLE,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_RECT,    T_PLIST_TAB_NSORT +IMMUTABLE,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_SSORT,   T_PLIST_TAB_NSORT +IMMUTABLE,
-    T_PLIST_TAB_NSORT +IMMUTABLE, FN_IS_NSORT,   T_PLIST_TAB       +IMMUTABLE,
-    /* mutable dense list, which is immutable, homog, non-empty, rect table     */
-    T_PLIST_TAB_RECT,                  FN_IS_MUTABLE, T_PLIST_TAB_RECT       +IMMUTABLE,
+    // dense list, which is immutable, homog, non-empty, rect table
     T_PLIST_TAB_RECT,                  FN_IS_EMPTY,   T_PLIST_TAB_RECT,
     T_PLIST_TAB_RECT,                  FN_IS_DENSE,   T_PLIST,
     T_PLIST_TAB_RECT,                  FN_IS_NDENSE,  T_PLIST_TAB_RECT,
@@ -4172,44 +3567,18 @@ static Int ResetFiltTab [] = {
     T_PLIST_TAB_RECT,                  FN_IS_SSORT,   T_PLIST_TAB_RECT,
     T_PLIST_TAB_RECT,                  FN_IS_NSORT,   T_PLIST_TAB_RECT,
 
-    /* immutable dense list, which is immutable, homog, non-empty, rect table   */
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_TAB_RECT       +IMMUTABLE,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_EMPTY,   T_PLIST_TAB_RECT       +IMMUTABLE,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_DENSE,   T_PLIST           +IMMUTABLE,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_NDENSE,  T_PLIST_TAB_RECT       +IMMUTABLE,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_TAB_RECT       +IMMUTABLE,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_TABLE,   T_PLIST_HOM       +IMMUTABLE,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_RECT,   T_PLIST_TAB       +IMMUTABLE,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_SSORT,   T_PLIST_TAB_RECT       +IMMUTABLE,
-    T_PLIST_TAB_RECT       +IMMUTABLE, FN_IS_NSORT,   T_PLIST_TAB_RECT       +IMMUTABLE,
-
-    /* ssort, mutable dense list, which is imm, homog, non-empty, rect table    */
-    T_PLIST_TAB_RECT_SSORT,            FN_IS_MUTABLE, T_PLIST_TAB_RECT_SSORT +IMMUTABLE,
+    // ssort, dense list, which is imm, homog, non-empty, rect table
     T_PLIST_TAB_RECT_SSORT,            FN_IS_EMPTY,   T_PLIST_TAB_RECT_SSORT,
     T_PLIST_TAB_RECT_SSORT,            FN_IS_DENSE,   T_PLIST,
     T_PLIST_TAB_RECT_SSORT,            FN_IS_NDENSE,  T_PLIST_TAB_RECT_SSORT,
     T_PLIST_TAB_RECT_SSORT,            FN_IS_HOMOG,   T_PLIST_DENSE,
     T_PLIST_TAB_RECT_SSORT,            FN_IS_NHOMOG,  T_PLIST_TAB_RECT_SSORT,
     T_PLIST_TAB_RECT_SSORT,            FN_IS_TABLE,   T_PLIST_HOM_SSORT,
-    T_PLIST_TAB_RECT_SSORT,            FN_IS_RECT,   T_PLIST_TAB_SSORT,
+    T_PLIST_TAB_RECT_SSORT,            FN_IS_RECT,    T_PLIST_TAB_SSORT,
     T_PLIST_TAB_RECT_SSORT,            FN_IS_SSORT,   T_PLIST_TAB_RECT,
     T_PLIST_TAB_RECT_SSORT,            FN_IS_NSORT,   T_PLIST_TAB_RECT_SSORT,
 
-    /* ssort, immutable dense list, which is imm, homog, non-empty, rect table  */
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_TAB_RECT_SSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_EMPTY,   T_PLIST_TAB_RECT_SSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_DENSE,   T_PLIST           +IMMUTABLE,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_NDENSE,  T_PLIST_TAB_RECT_SSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_TAB_RECT_SSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_TABLE,   T_PLIST_HOM_SSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_RECT,    T_PLIST_TAB_SSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_SSORT,   T_PLIST_TAB_RECT       +IMMUTABLE,
-    T_PLIST_TAB_RECT_SSORT +IMMUTABLE, FN_IS_NSORT,   T_PLIST_TAB_RECT_SSORT +IMMUTABLE,
-
-    /* nsort, mutable dense list, which is imm, homog, non-empty, rect table    */
-    T_PLIST_TAB_RECT_NSORT,            FN_IS_MUTABLE, T_PLIST_TAB_RECT_NSORT +IMMUTABLE,
+    // loop variables
     T_PLIST_TAB_RECT_NSORT,            FN_IS_EMPTY,   T_PLIST_TAB_RECT_NSORT,
     T_PLIST_TAB_RECT_NSORT,            FN_IS_DENSE,   T_PLIST,
     T_PLIST_TAB_RECT_NSORT,            FN_IS_NDENSE,  T_PLIST_TAB_RECT_NSORT,
@@ -4220,113 +3589,49 @@ static Int ResetFiltTab [] = {
     T_PLIST_TAB_RECT_NSORT,            FN_IS_SSORT,   T_PLIST_TAB_RECT_NSORT,
     T_PLIST_TAB_RECT_NSORT,            FN_IS_NSORT,   T_PLIST_TAB_RECT,
 
-    /* nsort, immutable dense list, which is imm, homog, non-empty, rect table  */
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_TAB_RECT_NSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_EMPTY,   T_PLIST_TAB_RECT_NSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_DENSE,   T_PLIST           +IMMUTABLE,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_NDENSE,  T_PLIST_TAB_RECT_NSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_TAB_RECT_NSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_TABLE,   T_PLIST_HOM_NSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_RECT,    T_PLIST_TAB_NSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_SSORT,   T_PLIST_TAB_RECT_NSORT +IMMUTABLE,
-    T_PLIST_TAB_RECT_NSORT +IMMUTABLE, FN_IS_NSORT,   T_PLIST_TAB_RECT       +IMMUTABLE,
-
-    /* mutable dense list, which only contains objects of type <= T_CYC    */
-    T_PLIST_CYC,                  FN_IS_MUTABLE, T_PLIST_CYC       +IMMUTABLE,
+    // dense list, which only contains objects of type <= T_CYC
     T_PLIST_CYC,                  FN_IS_EMPTY,   T_PLIST_CYC,
     T_PLIST_CYC,                  FN_IS_DENSE,   T_PLIST,
     T_PLIST_CYC,                  FN_IS_NDENSE,  T_PLIST_CYC,
     T_PLIST_CYC,                  FN_IS_HOMOG,   T_PLIST_DENSE,
     T_PLIST_CYC,                  FN_IS_NHOMOG,  T_PLIST_CYC,
     T_PLIST_CYC,                  FN_IS_TABLE,   T_PLIST_CYC,
-    T_PLIST_CYC,                  FN_IS_RECT,   T_PLIST_CYC,
+    T_PLIST_CYC,                  FN_IS_RECT,    T_PLIST_CYC,
     T_PLIST_CYC,                  FN_IS_SSORT,   T_PLIST_CYC,
     T_PLIST_CYC,                  FN_IS_NSORT,   T_PLIST_CYC,
 
-    /* immutable dense list, which only contains objects of type <= T_CYC  */
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_CYC       +IMMUTABLE,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_EMPTY,   T_PLIST_CYC       +IMMUTABLE,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_DENSE,   T_PLIST           +IMMUTABLE,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_NDENSE,  T_PLIST_CYC       +IMMUTABLE,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_HOMOG,   T_PLIST_DENSE     +IMMUTABLE,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_CYC       +IMMUTABLE,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_TABLE,   T_PLIST_CYC       +IMMUTABLE,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_RECT,   T_PLIST_CYC       +IMMUTABLE,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_SSORT,   T_PLIST_CYC       +IMMUTABLE,
-    T_PLIST_CYC       +IMMUTABLE, FN_IS_NSORT,   T_PLIST_CYC       +IMMUTABLE,
-
-    /* ssort mutable dense list, which only contains objs of type <= T_CYC */
-    T_PLIST_CYC_SSORT,            FN_IS_MUTABLE, T_PLIST_CYC_SSORT +IMMUTABLE,
+    // ssort dense list, which only contains objs of type <= T_CYC
     T_PLIST_CYC_SSORT,            FN_IS_EMPTY,   T_PLIST_CYC_SSORT,
     T_PLIST_CYC_SSORT,            FN_IS_DENSE,   T_PLIST,
     T_PLIST_CYC_SSORT,            FN_IS_NDENSE,  T_PLIST_CYC_SSORT,
     T_PLIST_CYC_SSORT,            FN_IS_HOMOG,   T_PLIST,
     T_PLIST_CYC_SSORT,            FN_IS_NHOMOG,  T_PLIST_CYC_SSORT,
     T_PLIST_CYC_SSORT,            FN_IS_TABLE,   T_PLIST_CYC_SSORT,
-    T_PLIST_CYC_SSORT,            FN_IS_RECT,   T_PLIST_CYC_SSORT,
+    T_PLIST_CYC_SSORT,            FN_IS_RECT,    T_PLIST_CYC_SSORT,
     T_PLIST_CYC_SSORT,            FN_IS_SSORT,   T_PLIST_CYC,
     T_PLIST_CYC_SSORT,            FN_IS_NSORT,   T_PLIST_CYC_SSORT,
 
-    /* ssort immutable dense list, which contains objs of type <= T_CYC    */
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_CYC_SSORT +IMMUTABLE,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_EMPTY,   T_PLIST_CYC_SSORT +IMMUTABLE,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_DENSE,   T_PLIST           +IMMUTABLE,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_NDENSE,  T_PLIST_CYC_SSORT +IMMUTABLE,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_HOMOG,   T_PLIST           +IMMUTABLE,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_CYC_SSORT +IMMUTABLE,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_TABLE,   T_PLIST_CYC_SSORT +IMMUTABLE,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_RECT,   T_PLIST_CYC_SSORT +IMMUTABLE,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_SSORT,   T_PLIST_CYC       +IMMUTABLE,
-    T_PLIST_CYC_SSORT +IMMUTABLE, FN_IS_NSORT,   T_PLIST_CYC_SSORT +IMMUTABLE,
-
-    /* nsort mutable dense list, which only contains objs of type <= T_CYC */
-    T_PLIST_CYC_NSORT,            FN_IS_MUTABLE, T_PLIST_CYC_NSORT +IMMUTABLE,
+    // nsort dense list, which only contains objs of type <= T_CYC
     T_PLIST_CYC_NSORT,            FN_IS_EMPTY,   T_PLIST_CYC_NSORT,
     T_PLIST_CYC_NSORT,            FN_IS_DENSE,   T_PLIST,
     T_PLIST_CYC_NSORT,            FN_IS_NDENSE,  T_PLIST_CYC_NSORT,
     T_PLIST_CYC_NSORT,            FN_IS_HOMOG,   T_PLIST,
     T_PLIST_CYC_NSORT,            FN_IS_NHOMOG,  T_PLIST_CYC_NSORT,
     T_PLIST_CYC_NSORT,            FN_IS_TABLE,   T_PLIST_CYC_NSORT,
-    T_PLIST_CYC_NSORT,            FN_IS_RECT,   T_PLIST_CYC_NSORT,
+    T_PLIST_CYC_NSORT,            FN_IS_RECT,    T_PLIST_CYC_NSORT,
     T_PLIST_CYC_NSORT,            FN_IS_SSORT,   T_PLIST_CYC_NSORT,
     T_PLIST_CYC_NSORT,            FN_IS_NSORT,   T_PLIST_CYC,
 
-    /* nsort immutable dense list, which contains objs of type <= T_CYC    */
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_CYC_NSORT +IMMUTABLE,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_EMPTY,   T_PLIST_CYC_NSORT +IMMUTABLE,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_DENSE,   T_PLIST           +IMMUTABLE,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_NDENSE,  T_PLIST_CYC_NSORT +IMMUTABLE,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_HOMOG,   T_PLIST           +IMMUTABLE,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_CYC_NSORT +IMMUTABLE,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_TABLE,   T_PLIST_CYC_NSORT +IMMUTABLE,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_RECT,   T_PLIST_CYC_NSORT +IMMUTABLE,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_SSORT,   T_PLIST_CYC_NSORT +IMMUTABLE,
-    T_PLIST_CYC_NSORT +IMMUTABLE, FN_IS_NSORT,   T_PLIST_CYC       +IMMUTABLE,
-
-    /* mutable dense list, which only contains objects of type T_FFE       */
-    T_PLIST_FFE,            FN_IS_MUTABLE, T_PLIST_FFE +IMMUTABLE,
+    // dense list, which only contains objects of type T_FFE
     T_PLIST_FFE,            FN_IS_EMPTY,   T_PLIST_FFE,
     T_PLIST_FFE,            FN_IS_DENSE,   T_PLIST,
     T_PLIST_FFE,            FN_IS_NDENSE,  T_PLIST_FFE,
     T_PLIST_FFE,            FN_IS_HOMOG,   T_PLIST,
     T_PLIST_FFE,            FN_IS_NHOMOG,  T_PLIST_FFE,
     T_PLIST_FFE,            FN_IS_TABLE,   T_PLIST_FFE,
-    T_PLIST_FFE,            FN_IS_RECT,   T_PLIST_FFE,
+    T_PLIST_FFE,            FN_IS_RECT,    T_PLIST_FFE,
     T_PLIST_FFE,            FN_IS_SSORT,   T_PLIST_FFE,
     T_PLIST_FFE,            FN_IS_NSORT,   T_PLIST_FFE,
-
-    /* immutable dense list, which only contains objects of type T_FFE     */
-    T_PLIST_FFE +IMMUTABLE, FN_IS_MUTABLE, T_PLIST_FFE +IMMUTABLE,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_EMPTY,   T_PLIST_FFE +IMMUTABLE,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_DENSE,   T_PLIST     +IMMUTABLE,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_NDENSE,  T_PLIST_FFE +IMMUTABLE,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_HOMOG,   T_PLIST     +IMMUTABLE,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_NHOMOG,  T_PLIST_FFE +IMMUTABLE,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_TABLE,   T_PLIST_FFE +IMMUTABLE,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_RECT,   T_PLIST_FFE +IMMUTABLE,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_SSORT,   T_PLIST_FFE +IMMUTABLE,
-    T_PLIST_FFE +IMMUTABLE, FN_IS_NSORT,   T_PLIST_FFE +IMMUTABLE,
 
     -1,                         -1,             -1
 
@@ -4339,10 +3644,8 @@ static Int ResetFiltTab [] = {
 */
 static StructGVarFilt GVarFilts [] = {
 
-    { "IS_PLIST_REP", "obj", &IsPListFilt,
-      FuncIS_PLIST_REP, "src/lists.c:IS_PLIST_REP" },
-
-    { 0 }
+    GVAR_FILTER(IS_PLIST_REP, "obj", &IsPListFilt),
+    { 0, 0, 0, 0, 0 }
 
 };
 
@@ -4353,22 +3656,12 @@ static StructGVarFilt GVarFilts [] = {
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    { "ASS_PLIST_DEFAULT", 3, "list, pos, val",
-      FuncASS_PLIST_DEFAULT, "src/lists.c:ASS_PLIST_DEFAULT" },
-    
-    { "IsRectangularTablePlist", 1, "plist",
-      FuncIsRectangularTablePlist, "src/lists.c:IsRectangularTablePlist" },
-
-    { "SET_IS_SSORTED_PLIST", 1, "list",
-      FuncSetIsSSortedPlist, "src/lists.c:SET_IS_SSORTED_PLIST" },
-    
-    { "EmptyPlist", 1, "len",
-      FuncEmptyPlist, "src/lists.c:FuncEmptyPlist" },
-    
-    { "ShrinkAllocationPlist", 1, "plist",
-      FuncShrinkAllocationPlist, "src/lists.c:FuncShrinkAllocationPlist" },
-    
-    { 0 }
+    GVAR_FUNC(ASS_PLIST_DEFAULT, 3, "list, pos, val"),
+    GVAR_FUNC(IsRectangularTablePlist, 1, "plist"),
+    GVAR_FUNC(SET_IS_SSORTED_PLIST, 1, "list"),
+    GVAR_FUNC(EmptyPlist, 1, "len"),
+    GVAR_FUNC(ShrinkAllocationPlist, 1, "plist"),
+    { 0, 0, 0, 0, 0 }
 
 };
 
@@ -4411,23 +3704,24 @@ static Int InitKernel (
 {
     UInt                t1, t2;         /* loop variables                  */
 
-    /* check dependencies                                                  */
-    RequireModule( module, "lists", 403600000UL );
-
     /* GASMAN marking functions and GASMAN names                           */
     InitBagNamesFromTable( BagNames );
 
     for ( t1 = T_PLIST;  t1 < T_PLIST_FFE ;  t1 += 2 ) {
         InitMarkFuncBags( t1                     , MarkAllSubBags );
         InitMarkFuncBags( t1 +IMMUTABLE          , MarkAllSubBags );
+#if !defined(USE_THREADSAFE_COPYING)
         InitMarkFuncBags( t1            +COPYING , MarkAllSubBags );
         InitMarkFuncBags( t1 +IMMUTABLE +COPYING , MarkAllSubBags );
+#endif
     }
 
     InitMarkFuncBags( T_PLIST_FFE                     , MarkNoSubBags );
     InitMarkFuncBags( T_PLIST_FFE +IMMUTABLE          , MarkNoSubBags );
+#if !defined(USE_THREADSAFE_COPYING)
     InitMarkFuncBags( T_PLIST_FFE            +COPYING , MarkNoSubBags );
     InitMarkFuncBags( T_PLIST_FFE +IMMUTABLE +COPYING , MarkNoSubBags );
+#endif
 
 #ifdef CHECK_NDENSE_BAGS
     InitSweepFuncBags( T_PLIST_NDENSE, SweepAndCheckNonDensePlist);
@@ -4438,10 +3732,10 @@ static Int InitKernel (
        work needs to be done here */
 
     for ( t1 = T_PLIST;  t1 <= LAST_PLIST_TNUM;  t1 += 2 ) {
-        SaveObjFuncs[ t1 ]             = SavePlist;
-        SaveObjFuncs[ t1 + IMMUTABLE ] = SavePlist; 
-        LoadObjFuncs[ t1 ]             = LoadPlist;
-        LoadObjFuncs[ t1 + IMMUTABLE ] = LoadPlist; 
+        SaveObjFuncs[ t1            ] = SavePlist;
+        SaveObjFuncs[ t1 +IMMUTABLE ] = SavePlist; 
+        LoadObjFuncs[ t1            ] = LoadPlist;
+        LoadObjFuncs[ t1 +IMMUTABLE ] = LoadPlist; 
     }
 
     /* get the types (resp. type functions)                                */
@@ -4493,6 +3787,10 @@ static Int InitKernel (
     TypeObjFuncs[ T_PLIST_DENSE_NHOM_NSORT +IMMUTABLE ] = TypePlistDenseNHomNSortImm;
     TypeObjFuncs[ T_PLIST_EMPTY                 ] = TypePlistEmptyMut;
     TypeObjFuncs[ T_PLIST_EMPTY      +IMMUTABLE ] = TypePlistEmptyImm;
+
+    for ( t1 = T_PLIST;  t1 <= LAST_PLIST_TNUM;  t1 += 2 ) {
+        SetTypeObjFuncs[ t1 ] = SetTypePlistToPosObj;
+    }
     
     for ( t1 = T_PLIST_HOM; t1 <= T_PLIST_TAB_RECT_SSORT; t1 += 2 ) {
         TypeObjFuncs[ t1            ] = TypePlistHom;
@@ -4524,7 +3822,7 @@ static Int InitKernel (
         ShallowCopyObjFuncs[ t1 +IMMUTABLE ] = ShallowCopyPlist;
     }
 
-
+#if !defined(USE_THREADSAFE_COPYING)
     /* install the copy list methods                                       */
     for ( t1 = T_PLIST; t1 <= LAST_PLIST_TNUM; t1 += 2 ) {
         CopyObjFuncs [ t1                     ] = CopyPlist;
@@ -4536,7 +3834,7 @@ static Int InitKernel (
         CleanObjFuncs[ t1            +COPYING ] = CleanPlistCopy;
         CleanObjFuncs[ t1 +IMMUTABLE +COPYING ] = CleanPlistCopy;
     }
-
+#endif
 
     /* install the comparison methods                                      */
     for ( t1 = T_PLIST; t1 <= LAST_PLIST_TNUM; t1++ ) {
@@ -4564,14 +3862,6 @@ static Int InitKernel (
     for ( t1 = T_PLIST_DENSE; t1 <= LAST_PLIST_TNUM; t1 += 2 ) {
         IsbListFuncs  [ t1            ] = IsbPlistDense;
         IsbListFuncs  [ t1 +IMMUTABLE ] = IsbPlistDense;
-    }
-    for ( t1 = T_PLIST; t1 <= LAST_PLIST_TNUM; t1 += 2 ) {
-        IsbvListFuncs [ t1            ] = IsbvPlist;
-        IsbvListFuncs [ t1 +IMMUTABLE ] = IsbvPlist;
-    }
-    for ( t1 = T_PLIST_DENSE; t1 <= LAST_PLIST_TNUM; t1 += 2 ) {
-        IsbvListFuncs [ t1            ] = IsbvPlistDense;
-        IsbvListFuncs [ t1 +IMMUTABLE ] = IsbvPlistDense;
     }
 
 
@@ -4631,33 +3921,32 @@ static Int InitKernel (
     /* install the list assignment methods                                 */
     AssListFuncs    [ T_PLIST           ] = AssPlist;
     AssListFuncs    [ T_PLIST+IMMUTABLE ] = AssPlistImm;
-    AssListFuncs    [ T_PLIST_NDENSE    ] = AssPlistXXX;
+    AssListFuncs    [ T_PLIST_NDENSE           ] = AssPlistXXX;
     AssListFuncs    [ T_PLIST_NDENSE+IMMUTABLE ] = AssPlistImm;
-    AssListFuncs    [ T_PLIST_DENSE    ] = AssPlistDense;
+    AssListFuncs    [ T_PLIST_DENSE           ] = AssPlistDense;
     AssListFuncs    [ T_PLIST_DENSE+IMMUTABLE ] = AssPlistImm;
-    AssListFuncs    [ T_PLIST_DENSE_NHOM    ] = AssPlistDense;
+    AssListFuncs    [ T_PLIST_DENSE_NHOM           ] = AssPlistDense;
     AssListFuncs    [ T_PLIST_DENSE_NHOM+IMMUTABLE ] = AssPlistImm;
-    AssListFuncs    [ T_PLIST_DENSE_NHOM_SSORT    ] = AssPlistDense;
+    AssListFuncs    [ T_PLIST_DENSE_NHOM_SSORT           ] = AssPlistDense;
     AssListFuncs    [ T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE ] = AssPlistImm;
-    AssListFuncs    [ T_PLIST_DENSE_NHOM_NSORT    ] = AssPlistDense;
+    AssListFuncs    [ T_PLIST_DENSE_NHOM_NSORT           ] = AssPlistDense;
     AssListFuncs    [ T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE ] = AssPlistImm;
-    AssListFuncs    [ T_PLIST_EMPTY    ] = AssPlistEmpty;
+    AssListFuncs    [ T_PLIST_EMPTY           ] = AssPlistEmpty;
     AssListFuncs    [ T_PLIST_EMPTY+IMMUTABLE ] = AssPlistImm;
     
     
-    
     for ( t1 = T_PLIST_HOM; t1 < T_PLIST_CYC; t1 += 2 ) {
-      AssListFuncs[ t1+IMMUTABLE      ] = AssPlistImm;
       AssListFuncs[ t1                ] = AssPlistHomog;
+      AssListFuncs[ t1+IMMUTABLE      ] = AssPlistImm;
     }
 
     for ( t1 = T_PLIST_CYC; t1 <= T_PLIST_CYC_SSORT; t1 += 2 ) {
-      AssListFuncs[ t1+IMMUTABLE      ] = AssPlistImm;
       AssListFuncs[ t1                ] = AssPlistCyc;
+      AssListFuncs[ t1+IMMUTABLE      ] = AssPlistImm;
     }
 
-    AssListFuncs[ T_PLIST_FFE+IMMUTABLE ] = AssPlistImm;
     AssListFuncs[ T_PLIST_FFE           ] = AssPlistFfe;
+    AssListFuncs[ T_PLIST_FFE+IMMUTABLE ] = AssPlistImm;
 
     /* install the list assignments methods                                */
     AsssListFuncs   [ T_PLIST            ] = AsssPlist;
@@ -4671,117 +3960,117 @@ static Int InitKernel (
     /* install the dense list test methods                                 */
     IsDenseListFuncs[ T_PLIST                   ] = IsDensePlist;
     IsDenseListFuncs[ T_PLIST        +IMMUTABLE ] = IsDensePlist;
-    IsDenseListFuncs[ T_PLIST_NDENSE            ] = IsDensePlistNot;
-    IsDenseListFuncs[ T_PLIST_NDENSE +IMMUTABLE ] = IsDensePlistNot;
+    IsDenseListFuncs[ T_PLIST_NDENSE            ] = AlwaysNo;
+    IsDenseListFuncs[ T_PLIST_NDENSE +IMMUTABLE ] = AlwaysNo;
     for ( t1 = T_PLIST_DENSE; t1 <= LAST_PLIST_TNUM; t1 += 2 ) {
-        IsDenseListFuncs[ t1            ] = IsDensePlistYes;
-        IsDenseListFuncs[ t1 +IMMUTABLE ] = IsDensePlistYes;
+        IsDenseListFuncs[ t1            ] = AlwaysYes;
+        IsDenseListFuncs[ t1 +IMMUTABLE ] = AlwaysYes;
     }
 
 
     /* install the homogeneous list test methods                           */
     IsHomogListFuncs[ T_PLIST                       ] = IsHomogPlist;
     IsHomogListFuncs[ T_PLIST            +IMMUTABLE ] = IsHomogPlist;
-    IsHomogListFuncs[ T_PLIST_NDENSE                ] = IsHomogPlistNot;
-    IsHomogListFuncs[ T_PLIST_NDENSE     +IMMUTABLE ] = IsHomogPlistNot;
+    IsHomogListFuncs[ T_PLIST_NDENSE                ] = AlwaysNo;
+    IsHomogListFuncs[ T_PLIST_NDENSE     +IMMUTABLE ] = AlwaysNo;
     IsHomogListFuncs[ T_PLIST_DENSE                 ] = IsHomogPlist;
     IsHomogListFuncs[ T_PLIST_DENSE      +IMMUTABLE ] = IsHomogPlist;
-    IsHomogListFuncs[ T_PLIST_DENSE_NHOM            ] = IsHomogPlistNot;
-    IsHomogListFuncs[ T_PLIST_DENSE_NHOM +IMMUTABLE ] = IsHomogPlistNot;
-    IsHomogListFuncs[ T_PLIST_DENSE_NHOM_SSORT      ] = IsHomogPlistNot;
-    IsHomogListFuncs[ T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE ] = IsHomogPlistNot;
-    IsHomogListFuncs[ T_PLIST_DENSE_NHOM_NSORT      ] = IsHomogPlistNot;
-    IsHomogListFuncs[ T_PLIST_DENSE_NHOM_NSORT +IMMUTABLE ] = IsHomogPlistNot;
-    IsHomogListFuncs[ T_PLIST_EMPTY                 ] = IsHomogPlistYes;
-    IsHomogListFuncs[ T_PLIST_EMPTY      +IMMUTABLE ] = IsHomogPlistYes;
+    IsHomogListFuncs[ T_PLIST_DENSE_NHOM            ] = AlwaysNo;
+    IsHomogListFuncs[ T_PLIST_DENSE_NHOM +IMMUTABLE ] = AlwaysNo;
+    IsHomogListFuncs[ T_PLIST_DENSE_NHOM_SSORT            ] = AlwaysNo;
+    IsHomogListFuncs[ T_PLIST_DENSE_NHOM_SSORT +IMMUTABLE ] = AlwaysNo;
+    IsHomogListFuncs[ T_PLIST_DENSE_NHOM_NSORT            ] = AlwaysNo;
+    IsHomogListFuncs[ T_PLIST_DENSE_NHOM_NSORT +IMMUTABLE ] = AlwaysNo;
+    IsHomogListFuncs[ T_PLIST_EMPTY                 ] = AlwaysYes;
+    IsHomogListFuncs[ T_PLIST_EMPTY      +IMMUTABLE ] = AlwaysYes;
     for ( t1 = T_PLIST_HOM; t1 <= LAST_PLIST_TNUM; t1 += 2 ) {
-        IsHomogListFuncs[ t1            ] = IsHomogPlistYes;
-        IsHomogListFuncs[ t1 +IMMUTABLE ] = IsHomogPlistYes;
+        IsHomogListFuncs[ t1            ] = AlwaysYes;
+        IsHomogListFuncs[ t1 +IMMUTABLE ] = AlwaysYes;
     }
 
 
     /* install the equal length list test methods                          */
     IsTableListFuncs[ T_PLIST                       ] = IsTablePlist;
     IsTableListFuncs[ T_PLIST            +IMMUTABLE ] = IsTablePlist;
-    IsTableListFuncs[ T_PLIST_NDENSE                ] = IsTablePlistNot;
-    IsTableListFuncs[ T_PLIST_NDENSE     +IMMUTABLE ] = IsTablePlistNot;
+    IsTableListFuncs[ T_PLIST_NDENSE                ] = AlwaysNo;
+    IsTableListFuncs[ T_PLIST_NDENSE     +IMMUTABLE ] = AlwaysNo;
     IsTableListFuncs[ T_PLIST_DENSE                 ] = IsTablePlist;
     IsTableListFuncs[ T_PLIST_DENSE      +IMMUTABLE ] = IsTablePlist;
-    IsTableListFuncs[ T_PLIST_DENSE_NHOM            ] = IsTablePlistNot;
-    IsTableListFuncs[ T_PLIST_DENSE_NHOM +IMMUTABLE ] = IsTablePlistNot;
-    IsTableListFuncs[ T_PLIST_DENSE_NHOM_SSORT      ] = IsTablePlistNot;
-    IsTableListFuncs[ T_PLIST_DENSE_NHOM_SSORT +IMMUTABLE ] = IsTablePlistNot;
-    IsTableListFuncs[ T_PLIST_DENSE_NHOM_NSORT      ] = IsTablePlistNot;
-    IsTableListFuncs[ T_PLIST_DENSE_NHOM_NSORT +IMMUTABLE ] = IsTablePlistNot;
-    IsTableListFuncs[ T_PLIST_EMPTY                 ] = IsTablePlistNot;
-    IsTableListFuncs[ T_PLIST_EMPTY      +IMMUTABLE ] = IsTablePlistNot;
+    IsTableListFuncs[ T_PLIST_DENSE_NHOM            ] = AlwaysNo;
+    IsTableListFuncs[ T_PLIST_DENSE_NHOM +IMMUTABLE ] = AlwaysNo;
+    IsTableListFuncs[ T_PLIST_DENSE_NHOM_SSORT            ] = AlwaysNo;
+    IsTableListFuncs[ T_PLIST_DENSE_NHOM_SSORT +IMMUTABLE ] = AlwaysNo;
+    IsTableListFuncs[ T_PLIST_DENSE_NHOM_NSORT            ] = AlwaysNo;
+    IsTableListFuncs[ T_PLIST_DENSE_NHOM_NSORT +IMMUTABLE ] = AlwaysNo;
+    IsTableListFuncs[ T_PLIST_EMPTY                 ] = AlwaysNo;
+    IsTableListFuncs[ T_PLIST_EMPTY      +IMMUTABLE ] = AlwaysNo;
     IsTableListFuncs[ T_PLIST_HOM                   ] = IsTablePlist;
     IsTableListFuncs[ T_PLIST_HOM        +IMMUTABLE ] = IsTablePlist;
     IsTableListFuncs[ T_PLIST_HOM_NSORT             ] = IsTablePlist;
     IsTableListFuncs[ T_PLIST_HOM_NSORT  +IMMUTABLE ] = IsTablePlist;
     IsTableListFuncs[ T_PLIST_HOM_SSORT             ] = IsTablePlist;
     IsTableListFuncs[ T_PLIST_HOM_SSORT  +IMMUTABLE ] = IsTablePlist;
-    IsTableListFuncs[ T_PLIST_TAB                   ] = IsTablePlistYes;
-    IsTableListFuncs[ T_PLIST_TAB        +IMMUTABLE ] = IsTablePlistYes;
-    IsTableListFuncs[ T_PLIST_TAB_NSORT             ] = IsTablePlistYes;
-    IsTableListFuncs[ T_PLIST_TAB_NSORT  +IMMUTABLE ] = IsTablePlistYes;
-    IsTableListFuncs[ T_PLIST_TAB_SSORT             ] = IsTablePlistYes;
-    IsTableListFuncs[ T_PLIST_TAB_SSORT  +IMMUTABLE ] = IsTablePlistYes;
-    IsTableListFuncs[ T_PLIST_TAB_RECT                   ] = IsTablePlistYes;
-    IsTableListFuncs[ T_PLIST_TAB_RECT        +IMMUTABLE ] = IsTablePlistYes;
-    IsTableListFuncs[ T_PLIST_TAB_RECT_NSORT             ] = IsTablePlistYes;
-    IsTableListFuncs[ T_PLIST_TAB_RECT_NSORT  +IMMUTABLE ] = IsTablePlistYes;
-    IsTableListFuncs[ T_PLIST_TAB_RECT_SSORT             ] = IsTablePlistYes;
-    IsTableListFuncs[ T_PLIST_TAB_RECT_SSORT  +IMMUTABLE ] = IsTablePlistYes;
-    IsTableListFuncs[ T_PLIST_CYC                   ] = IsTablePlistNot;
-    IsTableListFuncs[ T_PLIST_CYC        +IMMUTABLE ] = IsTablePlistNot;
-    IsTableListFuncs[ T_PLIST_CYC_NSORT             ] = IsTablePlistNot;
-    IsTableListFuncs[ T_PLIST_CYC_NSORT  +IMMUTABLE ] = IsTablePlistNot;
-    IsTableListFuncs[ T_PLIST_CYC_SSORT             ] = IsTablePlistNot;
-    IsTableListFuncs[ T_PLIST_CYC_SSORT  +IMMUTABLE ] = IsTablePlistNot;
-    IsTableListFuncs[ T_PLIST_FFE                   ] = IsTablePlistNot;
-    IsTableListFuncs[ T_PLIST_FFE        +IMMUTABLE ] = IsTablePlistNot;
+    IsTableListFuncs[ T_PLIST_TAB                   ] = AlwaysYes;
+    IsTableListFuncs[ T_PLIST_TAB        +IMMUTABLE ] = AlwaysYes;
+    IsTableListFuncs[ T_PLIST_TAB_NSORT             ] = AlwaysYes;
+    IsTableListFuncs[ T_PLIST_TAB_NSORT  +IMMUTABLE ] = AlwaysYes;
+    IsTableListFuncs[ T_PLIST_TAB_SSORT             ] = AlwaysYes;
+    IsTableListFuncs[ T_PLIST_TAB_SSORT  +IMMUTABLE ] = AlwaysYes;
+    IsTableListFuncs[ T_PLIST_TAB_RECT                   ] = AlwaysYes;
+    IsTableListFuncs[ T_PLIST_TAB_RECT        +IMMUTABLE ] = AlwaysYes;
+    IsTableListFuncs[ T_PLIST_TAB_RECT_NSORT             ] = AlwaysYes;
+    IsTableListFuncs[ T_PLIST_TAB_RECT_NSORT  +IMMUTABLE ] = AlwaysYes;
+    IsTableListFuncs[ T_PLIST_TAB_RECT_SSORT             ] = AlwaysYes;
+    IsTableListFuncs[ T_PLIST_TAB_RECT_SSORT  +IMMUTABLE ] = AlwaysYes;
+    IsTableListFuncs[ T_PLIST_CYC                   ] = AlwaysNo;
+    IsTableListFuncs[ T_PLIST_CYC        +IMMUTABLE ] = AlwaysNo;
+    IsTableListFuncs[ T_PLIST_CYC_NSORT             ] = AlwaysNo;
+    IsTableListFuncs[ T_PLIST_CYC_NSORT  +IMMUTABLE ] = AlwaysNo;
+    IsTableListFuncs[ T_PLIST_CYC_SSORT             ] = AlwaysNo;
+    IsTableListFuncs[ T_PLIST_CYC_SSORT  +IMMUTABLE ] = AlwaysNo;
+    IsTableListFuncs[ T_PLIST_FFE                   ] = AlwaysNo;
+    IsTableListFuncs[ T_PLIST_FFE        +IMMUTABLE ] = AlwaysNo;
 
 
     /* install the strictly sorted list test methods                       */
     IsSSortListFuncs[ T_PLIST                      ] = IsSSortPlist;
     IsSSortListFuncs[ T_PLIST           +IMMUTABLE ] = IsSSortPlist;
-    IsSSortListFuncs[ T_PLIST_NDENSE               ] = IsSSortPlistNot;
-    IsSSortListFuncs[ T_PLIST_NDENSE    +IMMUTABLE ] = IsSSortPlistNot;
+    IsSSortListFuncs[ T_PLIST_NDENSE               ] = AlwaysNo;
+    IsSSortListFuncs[ T_PLIST_NDENSE    +IMMUTABLE ] = AlwaysNo;
     IsSSortListFuncs[ T_PLIST_DENSE                ] = IsSSortPlistDense;
     IsSSortListFuncs[ T_PLIST_DENSE     +IMMUTABLE ] = IsSSortPlistDense;
     IsSSortListFuncs[ T_PLIST_DENSE_NHOM           ] = IsSSortPlistDense;
     IsSSortListFuncs[ T_PLIST_DENSE_NHOM+IMMUTABLE ] = IsSSortPlistDense;
-    IsSSortListFuncs[ T_PLIST_DENSE_NHOM_SSORT     ] = IsSSortPlistYes;
-    IsSSortListFuncs[ T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE ] = IsSSortPlistYes;
-    IsSSortListFuncs[ T_PLIST_DENSE_NHOM_NSORT     ] = IsSSortPlistNot;
-    IsSSortListFuncs[ T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE ] = IsSSortPlistNot;
-    IsSSortListFuncs[ T_PLIST_EMPTY                ] = IsSSortPlistYes;
-    IsSSortListFuncs[ T_PLIST_EMPTY     +IMMUTABLE ] = IsSSortPlistYes;
+    IsSSortListFuncs[ T_PLIST_DENSE_NHOM_SSORT           ] = AlwaysYes;
+    IsSSortListFuncs[ T_PLIST_DENSE_NHOM_SSORT+IMMUTABLE ] = AlwaysYes;
+    IsSSortListFuncs[ T_PLIST_DENSE_NHOM_NSORT           ] = AlwaysNo;
+    IsSSortListFuncs[ T_PLIST_DENSE_NHOM_NSORT+IMMUTABLE ] = AlwaysNo;
+    IsSSortListFuncs[ T_PLIST_EMPTY                ] = AlwaysYes;
+    IsSSortListFuncs[ T_PLIST_EMPTY     +IMMUTABLE ] = AlwaysYes;
     IsSSortListFuncs[ T_PLIST_HOM                  ] = IsSSortPlistHom;
     IsSSortListFuncs[ T_PLIST_HOM       +IMMUTABLE ] = IsSSortPlistHom;
-    IsSSortListFuncs[ T_PLIST_HOM_NSORT            ] = IsSSortPlistNot;
-    IsSSortListFuncs[ T_PLIST_HOM_NSORT +IMMUTABLE ] = IsSSortPlistNot;
-    IsSSortListFuncs[ T_PLIST_HOM_SSORT            ] = IsSSortPlistYes;
-    IsSSortListFuncs[ T_PLIST_HOM_SSORT +IMMUTABLE ] = IsSSortPlistYes;
+    IsSSortListFuncs[ T_PLIST_HOM_NSORT            ] = AlwaysNo;
+    IsSSortListFuncs[ T_PLIST_HOM_NSORT +IMMUTABLE ] = AlwaysNo;
+    IsSSortListFuncs[ T_PLIST_HOM_SSORT            ] = AlwaysYes;
+    IsSSortListFuncs[ T_PLIST_HOM_SSORT +IMMUTABLE ] = AlwaysYes;
     IsSSortListFuncs[ T_PLIST_TAB                  ] = IsSSortPlistHom;
     IsSSortListFuncs[ T_PLIST_TAB       +IMMUTABLE ] = IsSSortPlistHom;
-    IsSSortListFuncs[ T_PLIST_TAB_NSORT            ] = IsSSortPlistNot;
-    IsSSortListFuncs[ T_PLIST_TAB_NSORT +IMMUTABLE ] = IsSSortPlistNot;
-    IsSSortListFuncs[ T_PLIST_TAB_SSORT            ] = IsSSortPlistYes;
-    IsSSortListFuncs[ T_PLIST_TAB_SSORT +IMMUTABLE ] = IsSSortPlistYes;
+    IsSSortListFuncs[ T_PLIST_TAB_NSORT            ] = AlwaysNo;
+    IsSSortListFuncs[ T_PLIST_TAB_NSORT +IMMUTABLE ] = AlwaysNo;
+    IsSSortListFuncs[ T_PLIST_TAB_SSORT            ] = AlwaysYes;
+    IsSSortListFuncs[ T_PLIST_TAB_SSORT +IMMUTABLE ] = AlwaysYes;
     IsSSortListFuncs[ T_PLIST_TAB_RECT                  ] = IsSSortPlistHom;
     IsSSortListFuncs[ T_PLIST_TAB_RECT       +IMMUTABLE ] = IsSSortPlistHom;
-    IsSSortListFuncs[ T_PLIST_TAB_RECT_NSORT            ] = IsSSortPlistNot;
-    IsSSortListFuncs[ T_PLIST_TAB_RECT_NSORT +IMMUTABLE ] = IsSSortPlistNot;
-    IsSSortListFuncs[ T_PLIST_TAB_RECT_SSORT            ] = IsSSortPlistYes;
-    IsSSortListFuncs[ T_PLIST_TAB_RECT_SSORT +IMMUTABLE ] = IsSSortPlistYes;
+    IsSSortListFuncs[ T_PLIST_TAB_RECT_NSORT            ] = AlwaysNo;
+    IsSSortListFuncs[ T_PLIST_TAB_RECT_NSORT +IMMUTABLE ] = AlwaysNo;
+    IsSSortListFuncs[ T_PLIST_TAB_RECT_SSORT            ] = AlwaysYes;
+    IsSSortListFuncs[ T_PLIST_TAB_RECT_SSORT +IMMUTABLE ] = AlwaysYes;
     IsSSortListFuncs[ T_PLIST_CYC                  ] = IsSSortPlistHom;
     IsSSortListFuncs[ T_PLIST_CYC       +IMMUTABLE ] = IsSSortPlistHom;
-    IsSSortListFuncs[ T_PLIST_CYC_NSORT            ] = IsSSortPlistNot;
-    IsSSortListFuncs[ T_PLIST_CYC_NSORT +IMMUTABLE ] = IsSSortPlistNot;
-    IsSSortListFuncs[ T_PLIST_CYC_SSORT            ] = IsSSortPlistYes;
-    IsSSortListFuncs[ T_PLIST_CYC_SSORT +IMMUTABLE ] = IsSSortPlistYes;
+    IsSSortListFuncs[ T_PLIST_CYC_NSORT            ] = AlwaysNo;
+    IsSSortListFuncs[ T_PLIST_CYC_NSORT +IMMUTABLE ] = AlwaysNo;
+    IsSSortListFuncs[ T_PLIST_CYC_SSORT            ] = AlwaysYes;
+    IsSSortListFuncs[ T_PLIST_CYC_SSORT +IMMUTABLE ] = AlwaysYes;
     IsSSortListFuncs[ T_PLIST_FFE                  ] = IsSSortPlistHom;
     IsSSortListFuncs[ T_PLIST_FFE       +IMMUTABLE ] = IsSSortPlistHom;
 
@@ -4803,7 +4092,7 @@ static Int InitKernel (
         PosListFuncs[ t1 +IMMUTABLE ] = PosPlistDense;
     }
     
-    PosListFuncs[ T_PLIST_DENSE_NHOM_SSORT     ] = PosPlistSort;
+    PosListFuncs[ T_PLIST_DENSE_NHOM_SSORT            ] = PosPlistSort;
     PosListFuncs[ T_PLIST_DENSE_NHOM_SSORT +IMMUTABLE ] = PosPlistSort;
     PosListFuncs[ T_PLIST_HOM_SSORT            ] = PosPlistHomSort;
     PosListFuncs[ T_PLIST_HOM_SSORT +IMMUTABLE ] = PosPlistHomSort;
@@ -4830,10 +4119,12 @@ static Int InitKernel (
     /* mutable tables may have mutable rows */
       MakeImmutableObjFuncs[T_PLIST_TAB] = MakeImmutablePlistInHom;
     
+#ifdef HPCGAP
+    for ( t1 = T_PLIST; t1 <= LAST_PLIST_TNUM; t1 += 2 ) {
+        MakeBagTypePublic(t1 +IMMUTABLE);
+    }
+#endif
 
-
-      
-    
     /* return success                                                      */
     return 0;
 }
@@ -4860,28 +4151,15 @@ static Int InitLibrary (
 *F  InitInfoPlist() . . . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "plist",                            /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "plist",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoPlist ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  plist.c . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

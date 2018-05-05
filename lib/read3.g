@@ -2,6 +2,7 @@
 ##
 #X  now read all the definition parts
 ##
+ReadLib( "type.gd"     );
 ReadLib( "tuples.gd"   );
 ReadLib( "rvecempt.gd" );
 
@@ -11,6 +12,7 @@ ReadLib( "extrset.gd"  );
 ReadLib( "extuset.gd"  );
 
 ReadLib( "dict.gd"     );
+ReadLib( "bitfields.gd" );
 
 ReadLib( "mapping.gd"  );
 ReadLib( "mapphomo.gd" );
@@ -242,12 +244,9 @@ ReadLib( "tom.gd" );
 # prototyping utilities
 ReadLib("proto.gd");
 
-ReadLib("other.gd");
-
 ReadLib("gasman.gd");
 
-# files dealing with function calling
-ReadLib("function.gd");
+ReadLib("memusage.gd");
 
 # random sources
 ReadLib("random.gi");

@@ -132,13 +132,12 @@ DeclareGlobalFunction("DefaultInfoHandler");
 
 #############################################################################
 ##
-#O  SetInfoOutput( <selector>, <out> )
 ##  
-##  <out> must be output file name or stream
-##  
+DeclareGlobalFunction("UnbindInfoOutput");
 DeclareGlobalFunction("SetInfoOutput");
+DeclareGlobalFunction("InfoOutput");
 DeclareGlobalFunction("SetDefaultInfoOutput");
-BIND_GLOBAL("DefaultInfoOutput", "*Print*");
+BIND_GLOBAL("DefaultInfoOutput", MakeImmutable("*Print*"));
 
 #############################################################################
 ##

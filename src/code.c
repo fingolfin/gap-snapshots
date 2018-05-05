@@ -12,60 +12,46 @@
 **  The  coder package  is   the part of   the interpreter  that creates  the
 **  expressions.  Its functions are called from the reader.
 */
-#include        <stdio.h>               /* on SunOS, assert.h uses stderr
-                                           but does not include stdio.h    */
-#include        <assert.h>              /* assert                          */
-#include        "system.h"              /* Ints, UInts                     */
+
+#include <src/code.h>
+
+#include <src/bool.h>
+#include <src/calls.h>
+#include <src/funcs.h>
+#include <src/gap.h>
+#include <src/gapstate.h>
+#include <src/gvars.h>
+#include <src/hookintrprtr.h>
+#include <src/lists.h>
+#include <src/plist.h>
+#include <src/read.h>
+#include <src/records.h>
+#include <src/saveload.h>
+#include <src/scanner.h>
+#include <src/stringobj.h>
+#include <src/vars.h>
+
+#include <src/hpc/thread.h>
+
+#ifdef HPCGAP
+#include <src/hpc/aobjects.h>
+#endif
 
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
-
-#include        "gap.h"                 /* error handling, initialisation  */
-
-#include        "calls.h"               /* generic call mechanism          */
 /*N 1996/06/16 mschoene func expressions should be different from funcs    */
 
-#include        "records.h"             /* generic records                 */
-
-#include        "integer.h"             /* integers                        */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "plist.h"               /* plain lists                     */
-#include        "string.h"              /* strings                         */
-
-#include        "funcs.h"               /* functions                       */
-
-#include        "code.h"                /* coder                           */
-
-#include        "saveload.h"            /* saving and loading              */
-#include        "read.h"                /* to access stack of for loop globals */
-#include        "gvars.h"
-#include        "thread.h"              /* threads                         */
-#include        "tls.h"                 /* thread-local storage            */
-#include	"aobjects.h"		/* atomic objects		   */
-
-#include        "vars.h"                /* variables                       */
-
-
-#include        "profile.h"             /* access to stat register function*/
+GAP_STATIC_ASSERT(sizeof(StatHeader) == 8, "StatHeader has wrong size");
 
 /****************************************************************************
 **
-
 *V  PtrBody . . . . . . . . . . . . . . . . . . . . . pointer to current body
 **
 **  'PtrBody' is a pointer to the current body.
 */
-Stat * PtrBody;
+/* TL: Stat * PtrBody; */
 
 /****************************************************************************
 **
-
 *V  FilenameCache . . . . . . . . . . . . . . . . . . list of filenames
 **
 **  'FilenameCache' is a list of previously opened filenames.
@@ -80,87 +66,134 @@ Obj FilenameCache;
 **  coding.
 */
 #define MAX_FUNC_EXPR_NESTING 1024
+/* TL: Stat OffsBody; */
 
+/* TL: Stat OffsBodyStack[1024]; */
+/* TL: UInt OffsBodyCount = 0; */
 
-Stat OffsBody;
-
-Stat OffsBodyStack[MAX_FUNC_EXPR_NESTING];
-UInt OffsBodyCount = 0;
-
-UInt LoopNesting = 0;
-UInt LoopStack[MAX_FUNC_EXPR_NESTING];
-UInt LoopStackCount = 0;
+/* TL: UInt LoopNesting = 0; */
+/* TL: UInt LoopStack[MAX_FUNC_EXPR_NESTING]; */
+/* TL: UInt LoopStackCount = 0; */
 
 static inline void PushOffsBody( void ) {
-  assert(TLS(OffsBodyCount) <= MAX_FUNC_EXPR_NESTING-1);
-  TLS(OffsBodyStack)[TLS(OffsBodyCount)++] = TLS(OffsBody);
+  assert(STATE(OffsBodyCount) <= MAX_FUNC_EXPR_NESTING-1);
+  STATE(OffsBodyStack)[STATE(OffsBodyCount)++] = STATE(OffsBody);
 }
 
 static inline void PopOffsBody( void ) {
-  assert(TLS(OffsBodyCount));
-  TLS(OffsBody) = TLS(OffsBodyStack)[--TLS(OffsBodyCount)];
+  assert(STATE(OffsBodyCount));
+  STATE(OffsBody) = STATE(OffsBodyStack)[--STATE(OffsBodyCount)];
 }
 
 static inline void PushLoopNesting( void ) {
-  assert(TLS(LoopStackCount) <= MAX_FUNC_EXPR_NESTING-1);
-  TLS(LoopStack)[TLS(LoopStackCount)++] = TLS(LoopNesting);
+  assert(STATE(LoopStackCount) <= MAX_FUNC_EXPR_NESTING-1);
+  STATE(LoopStack)[STATE(LoopStackCount)++] = STATE(LoopNesting);
 }
 
 static inline void PopLoopNesting( void ) {
-  assert(TLS(LoopStackCount));
-  TLS(LoopNesting) = TLS(LoopStack)[--TLS(LoopStackCount)];
+  assert(STATE(LoopStackCount));
+  STATE(LoopNesting) = STATE(LoopStack)[--STATE(LoopStackCount)];
 }
 
-static inline void setup_gapname(TypInputFile* i)
+static inline void SetupGapname(TypInputFile* i)
 {
-  UInt len;
-  if(!i->gapname) {
-    C_NEW_STRING_DYN(i->gapname, i->name);
-    len = LEN_PLIST( FilenameCache );
-    GROW_PLIST(      FilenameCache, len+1 );
-    SET_LEN_PLIST(   FilenameCache, len+1 );
-    SET_ELM_PLIST(   FilenameCache, len+1, i->gapname );
-    CHANGED_BAG(     FilenameCache );
-    i->gapnameid = len+1;
-  }
+    if (i->gapnameid == 0) {
+        Obj filename = MakeImmString(i->name);
+#ifdef HPCGAP
+        // TODO/FIXME: adjust this code to work more like the corresponding
+        // code below for GAP?!?
+        i->gapnameid = AddAList(FilenameCache, filename);
+#else
+        Obj pos = POS_LIST(FilenameCache, filename, INTOBJ_INT(1));
+        if (pos == Fail) {
+            i->gapnameid = PushPlist(FilenameCache, filename);
+        }
+        else {
+            i->gapnameid = INT_INTOBJ(pos);
+        }
+#endif
+    }
 }
 
-Obj FILENAME_STAT(Stat stat)
+Obj FuncGET_FILENAME_CACHE(Obj self)
 {
-  Obj filename;
-  UInt filenameid = FILENAMEID_STAT(stat);
-  if (filenameid == 0)
-      filename = NEW_STRING(0);
-  else
-      filename = ELM_PLIST(FilenameCache, filenameid);
-  return filename;
+  return CopyObj(FilenameCache, 1);
 }
 
+// filename
 
-/****************************************************************************
-**
-** Fill in filename and line of a statement, checking we do not overflow
-** the space we have for storing information
-*/
-Stat fillFilenameLine(Int fileid, Int line, Int size, Int type)
+Obj GET_FILENAME_BODY(Obj body)
 {
-  Stat stat;
-  if(fileid < 0 || fileid >= (1 << 16))
-  {
-    fileid = (1 << 16) - 1;
-    RegisterProfilingFileOverflowOccured();
-  }
-  if(line < 0 || line >= (1 << 16))
-  {
-    line = (1 << 16) - 1;
-    RegisterProfilingLineOverflowOccured();
-  }
+    Obj val = BODY_HEADER(body)->filename_or_id;
+    if (IS_INTOBJ(val)) {
+        UInt gapnameid = INT_INTOBJ(val);
+        val = ELM_LIST(FilenameCache, gapnameid);
+    }
 
-  stat = ((Stat)fileid << 48) + ((Stat)line << 32) +
-          ((Stat)size << 8) + (Stat)type;
-
-  return stat;
+    return val;
 }
+
+void SET_FILENAME_BODY(Obj body, Obj val)
+{
+    GAP_ASSERT(IS_STRING_REP(val));
+    MakeImmutableString(val);
+    BODY_HEADER(body)->filename_or_id = val;
+}
+
+// gapnameid
+
+UInt GET_GAPNAMEID_BODY(Obj body)
+{
+    Obj gapnameid = BODY_HEADER(body)->filename_or_id;
+    return IS_POS_INTOBJ(gapnameid) ? INT_INTOBJ(gapnameid) : 0;
+}
+
+void SET_GAPNAMEID_BODY(Obj body, UInt val)
+{
+    BODY_HEADER(body)->filename_or_id = INTOBJ_INT(val);
+}
+
+// location
+
+Obj GET_LOCATION_BODY(Obj body)
+{
+    Obj location = BODY_HEADER(body)->startline_or_location;
+    return IS_STRING_REP(location) ? location : 0;
+}
+
+void SET_LOCATION_BODY(Obj body, Obj val)
+{
+    GAP_ASSERT(IS_STRING_REP(val));
+    MakeImmutableString(val);
+    BODY_HEADER(body)->startline_or_location = val;
+}
+
+// startline
+
+UInt GET_STARTLINE_BODY(Obj body)
+{
+    Obj line = BODY_HEADER(body)->startline_or_location;
+    return IS_POS_INTOBJ(line) ? INT_INTOBJ(line) : 0;
+}
+
+void SET_STARTLINE_BODY(Obj body, UInt val)
+{
+    BODY_HEADER(body)->startline_or_location = val ? INTOBJ_INT(val) : 0;
+}
+
+// endline
+
+UInt GET_ENDLINE_BODY(Obj body)
+{
+    Obj line = BODY_HEADER(body)->endline;
+    return IS_POS_INTOBJ(line) ? INT_INTOBJ(line) : 0;
+}
+
+void SET_ENDLINE_BODY(Obj body, UInt val)
+{
+    BODY_HEADER(body)->endline = val ? INTOBJ_INT(val) : 0;
+}
+
 
 /****************************************************************************
 **
@@ -169,11 +202,12 @@ Stat fillFilenameLine(Int fileid, Int line, Int size, Int type)
 **  'NewStat'   allocates a new   statement memory block  of  type <type> and
 **  <size> bytes.  'NewStat' returns the identifier of the new statement.
 **
-**  NewStat( <type>, <size>, <line> ) allows the line number of the statement
-**  to also be specified (else the current line when NewStat is called is
-**  used).
+**  NewStatWithProf( <type>, <size>, <line>, <file> ) allows the line number
+**  and fileid of the statement to also be specified, else the current line
+**  and file when NewStat was called is used. line=0, file=0 is used
+**  to denote a statement which should not be tracked.
 */
-Stat NewStatWithLine (
+static Stat NewStatWithProf (
     UInt                type,
     UInt                size,
     UInt                line)
@@ -181,25 +215,26 @@ Stat NewStatWithLine (
     Stat                stat;           /* result                          */
 
     /* this is where the new statement goes                                */
-    stat = TLS(OffsBody) + FIRST_STAT_CURR_FUNC;
+    stat = STATE(OffsBody) + sizeof(StatHeader);
 
     /* increase the offset                                                 */
-    TLS(OffsBody) = stat + ((size+sizeof(Stat)-1) / sizeof(Stat)) * sizeof(Stat);
+    STATE(OffsBody) = stat + ((size+sizeof(Stat)-1) / sizeof(Stat)) * sizeof(Stat);
 
     /* make certain that the current body bag is large enough              */
-    if ( SIZE_BAG(BODY_FUNC(CURR_FUNC)) == 0 ) {
-      ResizeBag( BODY_FUNC(CURR_FUNC), TLS(OffsBody) + NUMBER_HEADER_ITEMS_BODY*sizeof(Obj) );
-        TLS(PtrBody) = (Stat*)PTR_BAG( BODY_FUNC(CURR_FUNC) );
-    }
-    while ( SIZE_BAG(BODY_FUNC(CURR_FUNC)) < TLS(OffsBody) + NUMBER_HEADER_ITEMS_BODY*sizeof(Obj)  ) {
-        ResizeBag( BODY_FUNC(CURR_FUNC), 2*SIZE_BAG(BODY_FUNC(CURR_FUNC)) );
-        TLS(PtrBody) = (Stat*)PTR_BAG( BODY_FUNC(CURR_FUNC) );
-    }
-    setup_gapname(TLS(Input));
-    
+    Obj body = BODY_FUNC(CURR_FUNC());
+    UInt bodySize = SIZE_BAG(body);
+    if (bodySize == 0)
+        bodySize = STATE(OffsBody);
+    while (bodySize < STATE(OffsBody))
+        bodySize *= 2;
+    ResizeBag(body, bodySize);
+    STATE(PtrBody) = (Stat*)PTR_BAG(body);
+
     /* enter type and size                                                 */
-    ADDR_STAT(stat)[-1] = fillFilenameLine(TLS(Input)->gapnameid, line, size, type);
-    RegisterStatWithProfiling(stat);
+    STAT_HEADER(stat)->line = line;
+    STAT_HEADER(stat)->size = size;
+    STAT_HEADER(stat)->type = type;
+    RegisterStatWithHook(stat);
     /* return the new statement                                            */
     return stat;
 }
@@ -208,7 +243,8 @@ Stat NewStat (
     UInt                type,
     UInt                size)
 {
-    return NewStatWithLine(type, size, TLS(Input)->number);
+    assert(STATE(Input)->gapnameid != 0);
+    return NewStatWithProf(type, size, STATE(Input)->number);
 }
 
 
@@ -223,30 +259,7 @@ Expr            NewExpr (
     UInt                type,
     UInt                size )
 {
-    Expr                expr;           /* result                          */
-
-    /* this is where the new expression goes                               */
-    expr = TLS(OffsBody) + FIRST_STAT_CURR_FUNC;
-
-    /* increase the offset                                                 */
-    TLS(OffsBody) = expr + ((size+sizeof(Expr)-1) / sizeof(Expr)) * sizeof(Expr);
-
-    /* make certain that the current body bag is large enough              */
-    if ( SIZE_BAG(BODY_FUNC(CURR_FUNC)) == 0 ) {
-        ResizeBag( BODY_FUNC(CURR_FUNC), TLS(OffsBody) );
-        TLS(PtrBody) = (Stat*)PTR_BAG( BODY_FUNC(CURR_FUNC) );
-    }
-    while ( SIZE_BAG(BODY_FUNC(CURR_FUNC)) < TLS(OffsBody) ) {
-        ResizeBag( BODY_FUNC(CURR_FUNC), 2*SIZE_BAG(BODY_FUNC(CURR_FUNC)) );
-        TLS(PtrBody) = (Stat*)PTR_BAG( BODY_FUNC(CURR_FUNC) );
-    }
-
-    /* enter type and size                                                 */
-    ADDR_EXPR(expr)[-1] = fillFilenameLine(TLS(Input)->gapnameid,
-                                           TLS(Input)->number, size, type);
-    RegisterStatWithProfiling(expr);
-    /* return the new expression                                           */
-    return expr;
+    return NewStat(type, size);
 }
 
 
@@ -257,7 +270,7 @@ Expr            NewExpr (
 **  'CodeResult'  is the result  of the coding, i.e.,   the function that was
 **  coded.
 */
-Obj CodeResult;
+/* TL: Obj CodeResult; */
 
 
 /****************************************************************************
@@ -278,25 +291,25 @@ Obj CodeResult;
 **  'PopStat' returns the  top statement from the  statements  stack and pops
 **  it.  It is an error if the stack is empty.
 */
-Bag StackStat;
+/* TL: Bag StackStat; */
 
-Int CountStat;
+/* TL: Int CountStat; */
 
 void PushStat (
     Stat                stat )
 {
     /* there must be a stack, it must not be underfull or overfull         */
-    assert( TLS(StackStat) != 0 );
-    assert( 0 <= TLS(CountStat) );
-    assert( TLS(CountStat) <= SIZE_BAG(TLS(StackStat))/sizeof(Stat) );
+    assert( STATE(StackStat) != 0 );
+    assert( 0 <= STATE(CountStat) );
+    assert( STATE(CountStat) <= SIZE_BAG(STATE(StackStat))/sizeof(Stat) );
     assert( stat != 0 );
 
     /* count up and put the statement onto the stack                       */
-    if ( TLS(CountStat) == SIZE_BAG(TLS(StackStat))/sizeof(Stat) ) {
-        ResizeBag( TLS(StackStat), 2*TLS(CountStat)*sizeof(Stat) );
+    if ( STATE(CountStat) == SIZE_BAG(STATE(StackStat))/sizeof(Stat) ) {
+        ResizeBag( STATE(StackStat), 2*STATE(CountStat)*sizeof(Stat) );
     }
-    ((Stat*)PTR_BAG(TLS(StackStat)))[TLS(CountStat)] = stat;
-    TLS(CountStat)++;
+    ((Stat*)PTR_BAG(STATE(StackStat)))[STATE(CountStat)] = stat;
+    STATE(CountStat)++;
 }
 
 Stat PopStat ( void )
@@ -304,13 +317,13 @@ Stat PopStat ( void )
     Stat                stat;
 
     /* there must be a stack, it must not be underfull/empty or overfull   */
-    assert( TLS(StackStat) != 0 );
-    assert( 1 <= TLS(CountStat) );
-    assert( TLS(CountStat) <= SIZE_BAG(TLS(StackStat))/sizeof(Stat) );
+    assert( STATE(StackStat) != 0 );
+    assert( 1 <= STATE(CountStat) );
+    assert( STATE(CountStat) <= SIZE_BAG(STATE(StackStat))/sizeof(Stat) );
 
     /* get the top statement from the stack, and count down                */
-    TLS(CountStat)--;
-    stat = ((Stat*)PTR_BAG(TLS(StackStat)))[TLS(CountStat)];
+    STATE(CountStat)--;
+    stat = ((Stat*)PTR_BAG(STATE(StackStat)))[STATE(CountStat)];
 
     /* return the popped statement                                         */
     return stat;
@@ -353,6 +366,33 @@ Stat PopSeqStat (
     return body;
 }
 
+static inline Stat PopLoopStat(UInt baseType, UInt extra, UInt nr)
+{
+    // fix up the case of no statements
+    if (0 == nr) {
+        PushStat(NewStat(T_EMPTY, 0));
+        nr = 1;
+    }
+
+    // collect the statements into a statement sequence if necessary
+    else if (3 < nr) {
+        PushStat(PopSeqStat(nr));
+        nr = 1;
+    }
+
+    // allocate the compound statement
+    Stat stat = NewStat(baseType + (nr - 1),
+                        extra * sizeof(Expr) + nr * sizeof(Stat));
+
+    // enter the statements
+    for (UInt i = nr; 1 <= i; i--) {
+        Stat stat1 = PopStat();
+        ADDR_STAT(stat)[i + extra - 1] = stat1;
+    }
+
+    return stat;
+}
+
 
 /****************************************************************************
 **
@@ -372,25 +412,25 @@ Stat PopSeqStat (
 **  'PopExpr' returns the top expressions from the expressions stack and pops
 **  it.  It is an error if the stack is empty.
 */
-Bag StackExpr;
+/* TL: Bag StackExpr; */
 
-Int CountExpr;
+/* TL: Int CountExpr; */
 
 void PushExpr (
     Expr                expr )
 {
     /* there must be a stack, it must not be underfull or overfull         */
-    assert( TLS(StackExpr) != 0 );
-    assert( 0 <= TLS(CountExpr) );
-    assert( TLS(CountExpr) <= SIZE_BAG(TLS(StackExpr))/sizeof(Expr) );
+    assert( STATE(StackExpr) != 0 );
+    assert( 0 <= STATE(CountExpr) );
+    assert( STATE(CountExpr) <= SIZE_BAG(STATE(StackExpr))/sizeof(Expr) );
     assert( expr != 0 );
 
     /* count up and put the expression onto the stack                      */
-    if ( TLS(CountExpr) == SIZE_BAG(TLS(StackExpr))/sizeof(Expr) ) {
-        ResizeBag( TLS(StackExpr), 2*TLS(CountExpr)*sizeof(Expr) );
+    if ( STATE(CountExpr) == SIZE_BAG(STATE(StackExpr))/sizeof(Expr) ) {
+        ResizeBag( STATE(StackExpr), 2*STATE(CountExpr)*sizeof(Expr) );
     }
-    ((Expr*)PTR_BAG(TLS(StackExpr)))[TLS(CountExpr)] = expr;
-    TLS(CountExpr)++;
+    ((Expr*)PTR_BAG(STATE(StackExpr)))[STATE(CountExpr)] = expr;
+    STATE(CountExpr)++;
 }
 
 Expr PopExpr ( void )
@@ -398,13 +438,13 @@ Expr PopExpr ( void )
     Expr                expr;
 
     /* there must be a stack, it must not be underfull/empty or overfull   */
-    assert( TLS(StackExpr) != 0 );
-    assert( 1 <= TLS(CountExpr) );
-    assert( TLS(CountExpr) <= SIZE_BAG(TLS(StackExpr))/sizeof(Expr) );
+    assert( STATE(StackExpr) != 0 );
+    assert( 1 <= STATE(CountExpr) );
+    assert( STATE(CountExpr) <= SIZE_BAG(STATE(StackExpr))/sizeof(Expr) );
 
     /* get the top expression from the stack, and count down               */
-    TLS(CountExpr)--;
-    expr = ((Expr*)PTR_BAG(TLS(StackExpr)))[TLS(CountExpr)];
+    STATE(CountExpr)--;
+    expr = ((Expr*)PTR_BAG(STATE(StackExpr)))[STATE(CountExpr)];
 
     /* return the popped expression                                        */
     return expr;
@@ -468,7 +508,6 @@ void PushBinaryOp (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * *  coder functions * * * * * * * * * * * * * * * *
 */
 
@@ -539,7 +578,6 @@ void            CodeFuncCallOptionsEnd ( UInt nr )
 
 /****************************************************************************
 **
-
 *F  CodeBegin() . . . . . . . . . . . . . . . . . . . . . . . start the coder
 *F  CodeEnd( <error> )  . . . . . . . . . . . . . . . . . . .  stop the coder
 **
@@ -554,19 +592,19 @@ void            CodeFuncCallOptionsEnd ( UInt nr )
 **
 **  ...only function expressions inbetween...
 */
-Bag CodeLVars;
+/* TL: Bag CodeLVars; */
 
 void CodeBegin ( void )
 {
     /* the stacks must be empty                                            */
-    assert( TLS(CountStat) == 0 );
-    assert( TLS(CountExpr) == 0 );
+    assert( STATE(CountStat) == 0 );
+    assert( STATE(CountExpr) == 0 );
 
     /* remember the current frame                                          */
-    TLS(CodeLVars) = TLS(CurrLVars);
+    STATE(CodeLVars) = STATE(CurrLVars);
 
     /* clear the code result bag                                           */
-    TLS(CodeResult) = 0;
+    STATE(CodeResult) = 0;
 }
 
 UInt CodeEnd (
@@ -576,24 +614,24 @@ UInt CodeEnd (
     if ( ! error ) {
 
         /* the stacks must be empty                                        */
-        assert( TLS(CountStat) == 0 );
-        assert( TLS(CountExpr) == 0 );
+        assert( STATE(CountStat) == 0 );
+        assert( STATE(CountExpr) == 0 );
 
-        /* we must be back to 'TLS(CurrLVars)'                                  */
-        assert( TLS(CurrLVars) == TLS(CodeLVars) );
+        /* we must be back to 'STATE(CurrLVars)'                                  */
+        assert( STATE(CurrLVars) == STATE(CodeLVars) );
 
-        /* 'CodeFuncExprEnd' left the function already in 'TLS(CodeResult)'     */
+        /* 'CodeFuncExprEnd' left the function already in 'STATE(CodeResult)'     */
     }
 
     /* otherwise clean up the mess                                         */
     else {
 
         /* empty the stacks                                                */
-        TLS(CountStat) = 0;
-        TLS(CountExpr) = 0;
+        STATE(CountStat) = 0;
+        STATE(CountExpr) = 0;
 
         /* go back to the correct frame                                    */
-        SWITCH_TO_OLD_LVARS( TLS(CodeLVars) );
+        SWITCH_TO_OLD_LVARS( STATE(CodeLVars) );
     }
 
     /* return value is ignored                                             */
@@ -684,7 +722,7 @@ void CodeFuncCallEnd (
 /****************************************************************************
 **
 *F  CodeFuncExprBegin( <narg>, <nloc>, <nams> ) . . code function expr, begin
-*F  CodeFuncExprEnd( <nr>, <mapsto> )   . . . . code function expression, end
+*F  CodeFuncExprEnd( <nr> ) . . . . . . . . . . code function expression, end
 **
 **  'CodeFuncExprBegin'  is an action to code  a  function expression.  It is
 **  called when the reader encounters the beginning of a function expression.
@@ -715,35 +753,39 @@ void CodeFuncExprBegin (
     PushLoopNesting();
     
     /* create a function expression                                        */
-    fexp = NewBag( T_FUNCTION, SIZE_FUNC );
-    NARG_FUNC( fexp ) = narg;
-    NLOC_FUNC( fexp ) = nloc;
-    NAMS_FUNC( fexp ) = nams;
+    fexp = NewBag( T_FUNCTION, sizeof(FunctionHeader) );
+    SET_NARG_FUNC( fexp, narg );
+    SET_NLOC_FUNC( fexp, nloc );
+    SET_NAMS_FUNC( fexp, nams );
+#ifdef HPCGAP
+    if (nams) MakeBagPublic(nams);
+#endif
     CHANGED_BAG( fexp );
 
     /* give it a functions expressions list                                */
     fexs = NEW_PLIST( T_PLIST, 0 );
     SET_LEN_PLIST( fexs, 0 );
-    FEXS_FUNC( fexp ) = fexs;
+    SET_FEXS_FUNC( fexp, fexs );
     CHANGED_BAG( fexp );
 
     /* give it a body                                                      */
     body = NewBag( T_BODY, 1024*sizeof(Stat) );
-    BODY_FUNC( fexp ) = body;
+    SET_BODY_FUNC( fexp, body );
     CHANGED_BAG( fexp );
 
     /* record where we are reading from */
-    setup_gapname(TLS(Input));
-    FILENAME_BODY(body) = TLS(Input)->gapname;
-    STARTLINE_BODY(body) = INTOBJ_INT(startLine);
-    /*    Pr("Coding begin at %s:%d ",(Int)(TLS(Input)->name),TLS(Input)->number);
+    SetupGapname(STATE(Input));
+    SET_GAPNAMEID_BODY(body, STATE(Input)->gapnameid);
+    SET_STARTLINE_BODY(body, startLine);
+    /*    Pr("Coding begin at %s:%d ",(Int)(STATE(Input)->name),STATE(Input)->number);
           Pr(" Body id %d\n",(Int)(body),0L); */
-    TLS(OffsBody) = 0;
-    TLS(LoopNesting) = 0;
+    STATE(OffsBody) = sizeof(BodyHeader);
+    STATE(LoopNesting) = 0;
 
     /* give it an environment                                              */
-    ENVI_FUNC( fexp ) = TLS(CurrLVars);
+    SET_ENVI_FUNC( fexp, STATE(CurrLVars) );
     CHANGED_BAG( fexp );
+    MakeHighVars(STATE(CurrLVars));
 
     /* switch to this function                                             */
     SWITCH_TO_NEW_LVARS( fexp, (narg >0 ? narg : -narg), nloc, old );
@@ -751,12 +793,10 @@ void CodeFuncExprBegin (
 
     /* allocate the top level statement sequence                           */
     stat1 = NewStat( T_SEQ_STAT, 8*sizeof(Stat) );
-    assert( stat1 == FIRST_STAT_CURR_FUNC );
+    assert( stat1 == OFFSET_FIRST_STAT );
 }
 
-void CodeFuncExprEnd (
-    UInt                nr,
-    UInt                mapsto )
+void CodeFuncExprEnd(UInt nr)
 {
     Expr                expr;           /* function expression, result     */
     Stat                stat1;          /* single statement of body        */
@@ -766,11 +806,11 @@ void CodeFuncExprEnd (
     UInt                i;              /* loop variable                   */
 
     /* get the function expression                                         */
-    fexp = CURR_FUNC;
-    assert(!LoopNesting);
+    fexp = CURR_FUNC();
+    assert(!STATE(LoopNesting));
     
     /* get the body of the function                                        */
-    /* push an addition return-void-statement if neccessary                */
+    /* push an additional return-void-statement if neccessary              */
     /* the function interpreters depend on each function ``returning''     */
     if ( nr == 0 ) {
         CodeReturnVoid();
@@ -782,7 +822,7 @@ void CodeFuncExprEnd (
         if ( TNUM_STAT(stat1) != T_RETURN_VOID
           && TNUM_STAT(stat1) != T_RETURN_OBJ )
         {
-            CodeReturnVoid();
+            CodeReturnVoidWhichIsNotProfiled();
             nr++;
         }
     }
@@ -796,19 +836,21 @@ void CodeFuncExprEnd (
 
     /* stuff the first statements into the first statement sequence       */
     /* Making sure to preserve the line number and file name              */
-    ADDR_STAT(FIRST_STAT_CURR_FUNC)[-1]
-        = ((Stat)FILENAMEID_STAT(FIRST_STAT_CURR_FUNC) << 48) +
-          ((Stat)LINE_STAT(FIRST_STAT_CURR_FUNC) << 32) +
-          ((nr*sizeof(Stat)) << 8) + T_SEQ_STAT+nr-1;
+    STAT_HEADER(OFFSET_FIRST_STAT)->line = LINE_STAT(OFFSET_FIRST_STAT);
+    STAT_HEADER(OFFSET_FIRST_STAT)->size = nr*sizeof(Stat);
+    STAT_HEADER(OFFSET_FIRST_STAT)->type = T_SEQ_STAT+nr-1;
     for ( i = 1; i <= nr; i++ ) {
         stat1 = PopStat();
-        ADDR_STAT(FIRST_STAT_CURR_FUNC)[nr-i] = stat1;
+        ADDR_STAT(OFFSET_FIRST_STAT)[nr-i] = stat1;
     }
 
+    // make the function expression list immutable
+    MakeImmutable( FEXS_FUNC( fexp ) );
+
     /* make the body smaller                                               */
-    ResizeBag( BODY_FUNC(fexp), TLS(OffsBody)+NUMBER_HEADER_ITEMS_BODY*sizeof(Obj) );
-    ENDLINE_BODY(BODY_FUNC(fexp)) = INTOBJ_INT(TLS(Input)->number);
-    /*    Pr("  finished coding %d at line %d\n",(Int)(BODY_FUNC(fexp)), TLS(Input)->number); */
+    ResizeBag( BODY_FUNC(fexp), STATE(OffsBody) );
+    SET_ENDLINE_BODY(BODY_FUNC(fexp), STATE(Input)->number);
+    /*    Pr("  finished coding %d at line %d\n",(Int)(BODY_FUNC(fexp)), STATE(Input)->number); */
 
     /* switch back to the previous function                                */
     SWITCH_TO_OLD_LVARS( ENVI_FUNC(fexp) );
@@ -821,21 +863,17 @@ void CodeFuncExprEnd (
 
     /* if this was inside another function definition, make the expression */
     /* and store it in the function expression list of the outer function  */
-    if ( TLS(CurrLVars) != TLS(CodeLVars) ) {
-        fexs = FEXS_FUNC( CURR_FUNC );
-        len = LEN_PLIST( fexs );
-        GROW_PLIST(      fexs, len+1 );
-        SET_LEN_PLIST(   fexs, len+1 );
-        SET_ELM_PLIST(   fexs, len+1, fexp );
-        CHANGED_BAG(     fexs );
+    if ( STATE(CurrLVars) != STATE(CodeLVars) ) {
+        fexs = FEXS_FUNC( CURR_FUNC() );
+        len = PushPlist( fexs, fexp );
         expr = NewExpr( T_FUNC_EXPR, sizeof(Expr) );
-        ADDR_EXPR(expr)[0] = (Expr)(len+1);
+        ADDR_EXPR(expr)[0] = (Expr)len;
         PushExpr( expr );
     }
 
-    /* otherwise, make the function and store it in 'TLS(CodeResult)'           */
+    /* otherwise, make the function and store it in 'STATE(CodeResult)'           */
     else {
-        TLS(CodeResult) = MakeFunction( fexp );
+        STATE(CodeResult) = MakeFunction( fexp );
     }
 
 }
@@ -900,16 +938,54 @@ void CodeIfEnd (
 {
     Stat                stat;           /* if-statement, result            */
     Expr                cond;           /* condition of a branch           */
-    Stat                body;           /* body of a branch                */
     UInt                hase;           /* has else branch                 */
     UInt                i;              /* loop variable                   */
+    Expr                cond1 = 0;      /* first condition                 */
+    Expr                cond2 = 0;      /* second condition                */
 
-    /* peek at the last condition                                          */
-    body = PopStat();
-    cond = PopExpr();
-    hase = (TNUM_EXPR(cond) == T_TRUE_EXPR);
-    PushExpr( cond );
-    PushStat( body );
+    /* peek at the last two conditions                                     */
+    cond1 = PopExpr();
+    hase = (TNUM_EXPR(cond1) == T_TRUE_EXPR);
+    if (nr == 2) {
+        cond2 = PopExpr();
+        PushExpr(cond2);
+    }
+    PushExpr(cond1);
+
+    // Some optimisation cases
+    if (nr == 1) {
+        if (TNUM_EXPR(cond1) == T_TRUE_EXPR) {
+            // Leave statement
+            PopExpr();
+            return;
+        }
+        else if (TNUM_EXPR(cond1) == T_FALSE_EXPR) {
+            // Remove entire if statement
+            PopStat();
+            PopExpr();
+            PushStat(NewStat(T_EMPTY, 0));
+            return;
+        }
+    }
+
+    if (nr == 2 && hase) {
+        if (TNUM_EXPR(cond2) == T_TRUE_EXPR) {
+            // Leave 'true' case
+            PopStat();
+            PopExpr();
+            PopExpr();
+            return;
+        }
+        else if (TNUM_EXPR(cond2) == T_FALSE_EXPR) {
+            // Leave 'false' case
+            Stat body = PopStat();
+            PopExpr();
+            PopStat();
+            PopExpr();
+            PushStat(body);
+            return;
+        }
+    }
 
     /* allocate the if-statement                                           */
     if      ( nr == 1 ) {
@@ -927,7 +1003,7 @@ void CodeIfEnd (
 
     /* enter the branches                                                  */
     for ( i = nr; 1 <= i; i-- ) {
-        body = PopStat();
+        Stat body = PopStat();
         cond = PopExpr();
         ADDR_STAT(stat)[2*(i-1)] = cond;
         ADDR_STAT(stat)[2*(i-1)+1] = body;
@@ -981,7 +1057,7 @@ void CodeForIn ( void )
 
 void CodeForBeginBody ( void )
 {
-  TLS(LoopNesting)++;
+  STATE(LoopNesting)++;
 }
 
 void CodeForEndBody (
@@ -991,20 +1067,6 @@ void CodeForEndBody (
     UInt                type;           /* type of for-statement           */
     Expr                var;            /* variable                        */
     Expr                list;           /* list                            */
-    Stat                stat1;          /* single statement of body        */
-    UInt                i;              /* loop variable                   */
-
-    /* fix up the case of no statements */
-    if ( 0 == nr ) {
-      PushStat( NewStat( T_EMPTY, 0) );
-      nr = 1;
-    }
-
-    /* collect the statements into a statement sequence if necessary       */
-    if ( 3 < nr ) {
-        PushStat( PopSeqStat( nr ) );
-        nr = 1;
-    }
 
     /* get the list expression                                             */
     list = PopExpr();
@@ -1017,21 +1079,15 @@ void CodeForEndBody (
     
     /* select the type of the for-statement                                */
     if ( TNUM_EXPR(list) == T_RANGE_EXPR && SIZE_EXPR(list) == 2*sizeof(Expr)
-      && TNUM_EXPR(var)  == T_REFLVAR ) {
-        type = T_FOR_RANGE + (nr-1);
+      && IS_REFLVAR(var) ) {
+        type = T_FOR_RANGE;
     }
     else {
-        type = T_FOR + (nr-1);
+        type = T_FOR;
     }
 
     /* allocate the for-statement                                          */
-    stat = NewStat( type, 2*sizeof(Expr) + nr * sizeof(Stat) );
-
-    /* enter the body statements                                           */
-    for ( i = nr; 1 <= i; i-- ) {
-        stat1 = PopStat();
-        ADDR_STAT(stat)[i+1] = stat1;
-    }
+    stat = PopLoopStat(type, 2, nr);
 
     /* enter the list expression                                           */
     ADDR_STAT(stat)[1] = list;
@@ -1043,7 +1099,7 @@ void CodeForEndBody (
     PushStat( stat );
 
     /* decrement loop nesting count */
-    TLS(LoopNesting)--;
+    STATE(LoopNesting)--;
 }
 
 void CodeForEnd ( void )
@@ -1073,8 +1129,6 @@ void CodeForEnd ( void )
 **  'CodeAtomicEnd' is an action to code a atomic-statement.  It is called when
 **  the reader encounters  the end  of the  statement, i.e., immediate  after
 **  'CodeAtomicEndBody'.
-**
-**  These functions are just placeholders for the future HPC-GAP code.
 */
 
 void CodeAtomicBegin ( void )
@@ -1084,7 +1138,6 @@ void CodeAtomicBegin ( void )
 void CodeAtomicBeginBody ( UInt nrexprs )
 {
   PushExpr(INTEXPR_INT(nrexprs)); 
-  return;
 }
 
 void CodeAtomicEndBody (
@@ -1096,29 +1149,17 @@ void CodeAtomicEndBody (
     UInt nrexprs;
     Expr  e,qual;
 
-
-    /* fix up the case of no statements */
-    if ( 0 == nrstats ) {
-       PushStat( NewStat( T_EMPTY, 0) );
-       nrstats = 1;
-    }
-    
     /* collect the statements into a statement sequence   */
-    if ( 1 < nrstats ) {
-      stat1 = PopSeqStat( nrstats );
-    } else {
-      stat1 = PopStat();
-    }
+    stat1 = PopSeqStat( nrstats );
+
     nrexprs = INT_INTEXPR(PopExpr());
     
     /* allocate the atomic-statement                                        */
     stat = NewStat( T_ATOMIC, sizeof(Stat) + nrexprs*2*sizeof(Stat) );
     
-
     /* enter the statement sequence */
     ADDR_STAT(stat)[0] = stat1;
 
-    
     /* enter the expressions                                                */
     for ( i = 2*nrexprs; 1 <= i; i -= 2 ) {
         e = PopExpr();
@@ -1126,7 +1167,6 @@ void CodeAtomicEndBody (
         ADDR_STAT(stat)[i] = e;
         ADDR_STAT(stat)[i-1] = qual;
     }
-
 
     /* push the atomic-statement                                            */
     PushStat( stat );
@@ -1150,7 +1190,7 @@ void CodeQualifiedExprBegin(UInt qual)
   PushExpr(INTEXPR_INT(qual));
 }
 
-void CodeQualifiedExprEnd() 
+void CodeQualifiedExprEnd(void) 
 {
 }
 
@@ -1186,7 +1226,7 @@ void CodeWhileBegin ( void )
 
 void CodeWhileBeginBody ( void )
 {
-  TLS(LoopNesting)++;
+  STATE(LoopNesting)++;
 }
 
 void CodeWhileEndBody (
@@ -1194,37 +1234,16 @@ void CodeWhileEndBody (
 {
     Stat                stat;           /* while-statement, result         */
     Expr                cond;           /* condition                       */
-    Stat                stat1;          /* single statement of body        */
-    UInt                i;              /* loop variable                   */
-
-
-    /* fix up the case of no statements */
-    if ( 0 == nr ) {
-      PushStat( NewStat( T_EMPTY, 0) );
-      nr = 1;
-    }
-    
-    /* collect the statements into a statement sequence if necessary       */
-    if ( 3 < nr ) {
-        PushStat( PopSeqStat( nr ) );
-        nr = 1;
-    }
 
     /* allocate the while-statement                                        */
-    stat = NewStat( T_WHILE + (nr-1), sizeof(Expr) + nr * sizeof(Stat) );
-
-    /* enter the statements                                                */
-    for ( i = nr; 1 <= i; i-- ) {
-        stat1 = PopStat();
-        ADDR_STAT(stat)[i] = stat1;
-    }
+    stat = PopLoopStat(T_WHILE, 1, nr);
 
     /* enter the condition                                                 */
     cond = PopExpr();
     ADDR_STAT(stat)[0] = cond;
 
     /* decrmement loop nesting */
-    TLS(LoopNesting)--;
+    STATE(LoopNesting)--;
     
     /* push the while-statement                                            */
     PushStat( stat );
@@ -1264,7 +1283,7 @@ void CodeRepeatBegin ( void )
 
 void CodeRepeatBeginBody ( void )
 {
-  TLS(LoopNesting)++;
+  STATE(LoopNesting)++;
 }
 
 void CodeRepeatEndBody (
@@ -1272,7 +1291,7 @@ void CodeRepeatEndBody (
 {
     /* leave the number of statements in the body on the expression stack  */
     PushExpr( INTEXPR_INT(nr) );
-    TLS(LoopNesting)--;
+    STATE(LoopNesting)--;
 }
 
 void CodeRepeatEnd ( void )
@@ -1280,9 +1299,7 @@ void CodeRepeatEnd ( void )
     Stat                stat;           /* repeat-statement, result        */
     UInt                nr;             /* number of statements in body    */
     Expr                cond;           /* condition                       */
-    Stat                stat1;          /* single statement of body        */
     Expr                tmp;            /* temporary                       */
-    UInt                i;              /* loop variable                   */
 
     /* get the condition                                                   */
     cond = PopExpr();
@@ -1292,28 +1309,11 @@ void CodeRepeatEnd ( void )
     tmp = PopExpr();
     nr = INT_INTEXPR( tmp );
 
-    /* fix up the case of no statements */
-    if ( 0 == nr ) {
-      PushStat( NewStat( T_EMPTY, 0) );
-      nr = 1;
-    }
-    /* collect the statements into a statement sequence if necessary       */
-    if ( 3 < nr ) {
-        PushStat( PopSeqStat( nr ) );
-        nr = 1;
-    }
-
     /* allocate the repeat-statement                                       */
-    stat = NewStat( T_REPEAT + (nr-1), sizeof(Expr) + nr * sizeof(Stat) );
+    stat = PopLoopStat(T_REPEAT, 1, nr);
 
     /* enter the condition                                                 */
     ADDR_STAT(stat)[0] = cond;
-
-    /* enter the statements                                                */
-    for ( i = nr; 1 <= i; i-- ) {
-        stat1 = PopStat();
-        ADDR_STAT(stat)[i] = stat1;
-    }
 
     /* push the repeat-statement                                           */
     PushStat( stat );
@@ -1331,8 +1331,8 @@ void            CodeBreak ( void )
 {
     Stat                stat;           /* break-statement, result         */
 
-    if (!TLS(LoopNesting))
-      SyntaxError("break statement not enclosed in a loop");
+    if (!STATE(LoopNesting))
+      SyntaxError("'break' statement not enclosed in a loop");
     
     /* allocate the break-statement                                        */
     stat = NewStat( T_BREAK, 0 * sizeof(Expr) );
@@ -1352,8 +1352,8 @@ void            CodeContinue ( void )
 {
     Stat                stat;           /* continue-statement, result         */
 
-    if (!TLS(LoopNesting))
-      SyntaxError("continue statement not enclosed in a loop");
+    if (!STATE(LoopNesting))
+      SyntaxError("'continue' statement not enclosed in a loop");
 
     /* allocate the continue-statement                                        */
     stat = NewStat( T_CONTINUE, 0 * sizeof(Expr) );
@@ -1394,6 +1394,10 @@ void CodeReturnObj ( void )
 **
 **  'CodeReturnVoid' is the action  to  code a return-void-statement.   It is
 **  called when the reader encounters a 'return;'.
+**
+**  'CodeReturnVoidWhichIsNotProfiled' creates a return which will not
+**  be tracked by profiling. This is used for the implicit return put
+**  at the end of functions.
 */
 void CodeReturnVoid ( void )
 {
@@ -1401,6 +1405,18 @@ void CodeReturnVoid ( void )
 
     /* allocate the return-statement                                       */
     stat = NewStat( T_RETURN_VOID, 0 * sizeof(Expr) );
+
+    /* push the return-statement                                           */
+    PushStat( stat );
+}
+
+void CodeReturnVoidWhichIsNotProfiled ( void )
+{
+    Stat                stat;           /* return-statement, result        */
+
+    /* allocate the return-statement, without profile information          */
+
+    stat = NewStatWithProf( T_RETURN_VOID, 0 * sizeof(Expr), 0 );
 
     /* push the return-statement                                           */
     PushStat( stat );
@@ -1423,7 +1439,6 @@ void CodeReturnVoid ( void )
 *F  CodeAInv()  . . . . . . . . . . . . . . . . . . . code unary --expression
 *F  CodeDiff()  . . . . . . . . . . . . . . . . . . . . . . code --expression
 *F  CodeProd()  . . . . . . . . . . . . . . . . . . . . . . code *-expression
-*F  CodeInv() . . . . . . . . . . . . . . . . . . . . . . code ^-1-expression
 *F  CodeQuo() . . . . . . . . . . . . . . . . . . . . . . . code /-expression
 *F  CodeMod() . . . . . . . . . . . . . . . . . . . . . . code mod-expression
 *F  CodePow() . . . . . . . . . . . . . . . . . . . . . . . code ^-expression
@@ -1502,7 +1517,7 @@ void CodeAInv ( void )
     Int                 i;
 
     expr = PopExpr();
-    if ( IS_INTEXPR(expr) && INT_INTEXPR(expr) != -(1L<<NR_SMALL_INT_BITS) ) {
+    if ( IS_INTEXPR(expr) && INT_INTEXPR(expr) != INT_INTOBJ_MIN ) {
         i = INT_INTEXPR(expr);
         PushExpr( INTEXPR_INT( -i ) );
     }
@@ -1520,11 +1535,6 @@ void CodeDiff ( void )
 void CodeProd ( void )
 {
     PushBinaryOp( T_PROD );
-}
-
-void CodeInv ( void )
-{
-    PushUnaryOp( T_INV );
 }
 
 void CodeQuo ( void )
@@ -1545,58 +1555,14 @@ void CodePow ( void )
 
 /****************************************************************************
 **
-*F  CodeIntExpr( <str> )  . . . . . . . . . . code literal integer expression
+*F  CodeIntExpr( <val> )  . . . . . . . . . . code literal integer expression
 **
-**  'CodeIntExpr' is the action to code a literal integer expression.  <str>
-**  is the integer as a (null terminated) C character string.
+**  'CodeIntExpr' is the action to code a literal integer expression.  <val>
+**  is the integer as a GAP object.
 */
-void CodeIntExpr (
-    Char *              str )
+void CodeIntExpr(Obj val)
 {
     Expr                expr;           /* expression, result              */
-    Obj                 val;            /* value = <upp> * <pow> + <low>    */
-    Obj                 upp;            /* upper part                       */
-    Int                 pow;            /* power                            */
-    Int                 low;            /* lower part                       */
-    Int                 sign;           /* is the integer negative          */
-    UInt                i;              /* loop variable                    */
-
-    /* get the signs, if any                                                */
-    sign = 1;
-    i = 0;
-    while ( str[i] == '-' ) {
-        sign = - sign;
-        i++;
-    }
-
-    /* collect the digits in groups of 8                                    */
-    low = 0;
-    pow = 1;
-    upp = INTOBJ_INT(0);
-    while ( str[i] != '\0' ) {
-        low = 10 * low + str[i] - '0';
-        pow = 10 * pow;
-        if ( pow == 100000000L ) {
-            upp = SumInt( ProdInt( upp, INTOBJ_INT(pow) ),
-                          INTOBJ_INT(sign*low) );
-            pow = 1;
-            low = 0;
-        }
-        i++;
-    }
-
-    /* compose the integer value (set <val> first to silence 'lint')       */
-    val = 0;
-    if ( upp == INTOBJ_INT(0) ) {
-        val = INTOBJ_INT(sign*low);
-    }
-    else if ( pow == 1 ) {
-        val = upp;
-    }
-    else {
-        val = SumInt( ProdInt( upp, INTOBJ_INT(pow) ),
-                      INTOBJ_INT(sign*low) );
-    }
 
     /* if it is small enough code it immediately                           */
     if ( IS_INTOBJ(val) ) {
@@ -1605,9 +1571,10 @@ void CodeIntExpr (
 
     /* otherwise stuff the value into the values list                      */
     else {
+        GAP_ASSERT(TNUM_OBJ(val) == T_INTPOS || TNUM_OBJ(val) == T_INTNEG);
         expr = NewExpr( T_INT_EXPR, sizeof(UInt) + SIZE_OBJ(val) );
         ((UInt *)ADDR_EXPR(expr))[0] = (UInt)TNUM_OBJ(val);
-        memcpy((void *)((UInt *)ADDR_EXPR(expr)+1), (void *)ADDR_OBJ(val), (size_t)SIZE_OBJ(val));
+        memcpy((UInt *)ADDR_EXPR(expr)+1, CONST_ADDR_OBJ(val), (size_t)SIZE_OBJ(val));
     }
 
     /* push the expression                                                 */
@@ -1616,77 +1583,13 @@ void CodeIntExpr (
 
 /****************************************************************************
 **
-*F  CodeLongIntExpr( <str> )   . . . code literal long integer expression
+*F  CodeTildeExpr()  . . . . . . . . . . . . . .  code tilde expression
 **
-**  'CodeIntExpr'  is  the  action  to   code  a  long  literal  integer
-**  expression whose digits are stored in a string GAP object.
+**  'CodeTildeExpr' is the action to code a tilde expression.
 */
-void CodeLongIntExpr (
-    Obj              string )
+void CodeTildeExpr ( void )
 {
-    Expr                expr;           /* expression, result              */
-    Obj                 val;            /* value = <upp> * <pow> + <low>    */
-    Obj                 upp;            /* upper part                       */
-    Int                 pow;            /* power                            */
-    Int                 low;            /* lower part                       */
-    Int                 sign;           /* is the integer negative          */
-    UInt                i;              /* loop variable                    */
-    UChar *              str;
-
-    /* get the signs, if any                                                */
-    str = CHARS_STRING(string);
-    sign = 1;
-    i = 0;
-    while ( str[i] == '-' ) {
-        sign = - sign;
-        i++;
-    }
-
-    /* collect the digits in groups of 8                                    */
-    low = 0;
-    pow = 1;
-    upp = INTOBJ_INT(0);
-    while ( str[i] != '\0' ) {
-        low = 10 * low + str[i] - '0';
-        pow = 10 * pow;
-        if ( pow == 100000000L ) {
-            upp = SumInt( ProdInt( upp, INTOBJ_INT(pow) ),
-                          INTOBJ_INT(sign*low) );
-            str = CHARS_STRING(string);
-            pow = 1;
-            low = 0;
-        }
-        i++;
-    }
-
-    /* compose the integer value (set <val> first to silence 'lint')       */
-    val = 0;
-    if ( upp == INTOBJ_INT(0) ) {
-        val = INTOBJ_INT(sign*low);
-    }
-    else if ( pow == 1 ) {
-        val = upp;
-    }
-    else {
-        val = SumInt( ProdInt( upp, INTOBJ_INT(pow) ),
-                      INTOBJ_INT(sign*low) );
-    }
-
-    /* if it is small enough code it immediately                           */
-    if ( IS_INTOBJ(val) ) {
-        expr = INTEXPR_INT( INT_INTOBJ(val) );
-    }
-
-    /* otherwise stuff the value into the values list                      */
-    /* Need to fix this up for GMP integers */
-    else {
-        expr = NewExpr( T_INT_EXPR, sizeof(UInt) + SIZE_OBJ(val) );
-        ((UInt *)ADDR_EXPR(expr))[0] = (UInt)TNUM_OBJ(val);
-        memcpy((void *)((UInt *)ADDR_EXPR(expr)+1), (void *)ADDR_OBJ(val), (size_t)SIZE_OBJ(val));
-    }
-
-    /* push the expression                                                 */
-    PushExpr( expr );
+    PushExpr( NewExpr( T_TILDE_EXPR, 0L ) );
 }
 
 /****************************************************************************
@@ -1841,7 +1744,7 @@ void CodeListExprEnd (
         list = NewExpr( T_LIST_EXPR,      INT_INTEXPR(pos) * sizeof(Expr) );
     }
     else if ( ! range && (top && tilde) ) {
-        list = NewExpr( T_LIST_TILD_EXPR, INT_INTEXPR(pos) * sizeof(Expr) );
+        list = NewExpr( T_LIST_TILDE_EXPR, INT_INTEXPR(pos) * sizeof(Expr) );
     }
     else /* if ( range && ! (top && tilde) ) */ {
         list = NewExpr( T_RANGE_EXPR,     INT_INTEXPR(pos) * sizeof(Expr) );
@@ -1872,7 +1775,7 @@ void CodeStringExpr (
     string = NewExpr( T_STRING_EXPR, SIZEBAG_STRINGLEN(GET_LEN_STRING(str)) );
 
     /* copy the string                                                     */
-    memcpy( (void *)ADDR_EXPR(string), ADDR_OBJ(str), 
+    memcpy( ADDR_EXPR(string), CONST_ADDR_OBJ(str),
                         SIZEBAG_STRINGLEN(GET_LEN_STRING(str)) );
 
     /* push the string                                                     */
@@ -1883,170 +1786,165 @@ void CodeStringExpr (
 **
 *F  CodeFloatExpr( <str> ) . . . . . . . .  code literal float expression
 */
-#define FLOAT_0_INDEX 1
-#define FLOAT_1_INDEX 2
-#define MAX_FLOAT_INDEX ((1L<<NR_SMALL_INT_BITS)-2)
-
-static UInt GVAR_SAVED_FLOAT_INDEX;
+enum {
+    FLOAT_0_INDEX = 1,    // reserved for constant 0.0
+    FLOAT_1_INDEX = 2,    // reserved for constant 1.0
+    MAX_FLOAT_INDEX = ((1L << NR_SMALL_INT_BITS) - 2)
+};
 static UInt NextFloatExprNumber = 3;
 
-static UInt NextEagerFloatLiteralNumber = 1;
-
-static Obj EAGER_FLOAT_LITERAL_CACHE = 0;
+Obj        EAGER_FLOAT_LITERAL_CACHE = 0;
 static Obj CONVERT_FLOAT_LITERAL_EAGER;
 
 
-static UInt getNextFloatExprNumber( void ) {
-  UInt next;
-  HashLock(&NextFloatExprNumber);
-  if (NextFloatExprNumber > MAX_FLOAT_INDEX)
-    next = 0;
-  else {
+static UInt getNextFloatExprNumber(void)
+{
+    UInt next;
+    HashLock(&NextFloatExprNumber);
+    assert(NextFloatExprNumber < MAX_FLOAT_INDEX);
     next = NextFloatExprNumber++;
-  }
-  HashUnlock(&NextFloatExprNumber);
-  return next;
+    HashUnlock(&NextFloatExprNumber);
+    return next;
 }
 
-static UInt CheckForCommonFloat(Char *str) {
-  /* skip leading zeros */
-  while (*str == '0')
-    str++;
-  if (*str == '.')
-    /* might be zero literal */
-    {
-      /* skip point */
-      str++;
-      /* skip more zeroes */
-      while (*str == '0')
+static UInt CheckForCommonFloat(Char * str)
+{
+    /* skip leading zeros */
+    while (*str == '0')
         str++;
-      /* if we've got to end of string we've got zero. */
-      if (!IsDigit(*str))
-        return FLOAT_0_INDEX;
+    /* might be zero literal */
+    if (*str == '.') {
+        /* skip point */
+        str++;
+        /* skip more zeroes */
+        while (*str == '0')
+            str++;
+        /* if we've got to end of string we've got zero. */
+        if (!IsDigit(*str))
+            return FLOAT_0_INDEX;
     }
-  if (*str++ !='1')
-    return 0;
-  /* might be one literal */
-  if (*str++ != '.')
-    return 0;
-  /* skip zeros */
-  while (*str == '0')
+    if (*str++ != '1')
+        return 0;
+    /* might be one literal */
+    if (*str++ != '.')
+        return 0;
+    /* skip zeros */
+    while (*str == '0')
+        str++;
+    if (*str == '\0')
+        return FLOAT_1_INDEX;
+    if (IsDigit(*str))
+        return 0;
+    /* must now be an exponent character */
+    assert(IsAlpha(*str));
+    /* skip it */
     str++;
-  if (*str == '\0')
-    return FLOAT_1_INDEX;
-  if (IsDigit(*str))
-    return 0;
-  /* must now be an exponent character */
-  assert(IsAlpha(*str));
-  /* skip it */
-  str++;
-  /*skip + and - in exponent */
-  if (*str == '+' || *str == '-')
-    str++;
-  /* skip leading zeros in the exponent */
-  while (*str == '0')
-    str++;
-  /* if there's anything but leading zeros this isn't 
-     a one literal */
-  if (*str == '\0')
-    return FLOAT_1_INDEX;
-  else
-    return 0;
+    /*skip + and - in exponent */
+    if (*str == '+' || *str == '-')
+        str++;
+    /* skip leading zeros in the exponent */
+    while (*str == '0')
+        str++;
+    /* if there's anything but leading zeros this isn't
+       a one literal */
+    if (*str == '\0')
+        return FLOAT_1_INDEX;
+    else
+        return 0;
 }
 
-static void CodeLazyFloatExpr( Char *str, UInt len) {
+static void CodeLazyFloatExpr(Char * str, UInt len)
+{
     UInt ix;
 
     /* Lazy case, store the string for conversion at run time */
-    Expr fl = NewExpr( T_FLOAT_EXPR_LAZY, 2*sizeof(UInt) +len+1  );
+    Expr fl = NewExpr(T_FLOAT_EXPR_LAZY, 2 * sizeof(UInt) + len + 1);
     /* copy the string                                                     */
-    memcpy( (void *)((char *)ADDR_EXPR(fl)+2*sizeof(UInt)), (void *)str, 
-            len+1 );
-      
+    memcpy((char *)ADDR_EXPR(fl) + 2 * sizeof(UInt), str, len + 1);
+
     *(UInt *)ADDR_EXPR(fl) = len;
     ix = CheckForCommonFloat(str);
-    if (!ix) 
-      ix = getNextFloatExprNumber();
+    if (!ix)
+        ix = getNextFloatExprNumber();
     ((UInt *)ADDR_EXPR(fl))[1] = ix;
-    
-    /* push the expression                                                     */
-    PushExpr( fl );
+
+    /* push the expression */
+    PushExpr(fl);
 }
 
-static void CodeEagerFloatExpr( Obj str, Char mark ) {
-  /* Eager case, do the conversion now */
-  UInt l = GET_LEN_STRING(str);
-  Expr fl = NewExpr( T_FLOAT_EXPR_EAGER, sizeof(UInt)* 3 + l + 1);
-  Obj v = CALL_2ARGS(CONVERT_FLOAT_LITERAL_EAGER, str, ObjsChar[(Int)mark]);
-  assert(EAGER_FLOAT_LITERAL_CACHE);
-  assert(IS_PLIST(EAGER_FLOAT_LITERAL_CACHE));
-  GROW_PLIST(EAGER_FLOAT_LITERAL_CACHE, NextEagerFloatLiteralNumber);
-  SET_ELM_PLIST(EAGER_FLOAT_LITERAL_CACHE, NextEagerFloatLiteralNumber, v);
-  CHANGED_BAG(EAGER_FLOAT_LITERAL_CACHE);
-  SET_LEN_PLIST(EAGER_FLOAT_LITERAL_CACHE, NextEagerFloatLiteralNumber);
-  ADDR_EXPR(fl)[0] = NextEagerFloatLiteralNumber;
-  ADDR_EXPR(fl)[1] = l;
-  ADDR_EXPR(fl)[2] = (UInt)mark;
-  memcpy((void*)(ADDR_EXPR(fl)+3), (void *)CHARS_STRING(str), l+1);
-  NextEagerFloatLiteralNumber++;
-  PushExpr(fl);
-}
-
-void CodeFloatExpr (
-    Char *              str )
+static void CodeEagerFloatExpr(Obj str, Char mark)
 {
-  
-  UInt l = strlen(str);
-  UInt l1 = l;
-  Char mark = '\0'; /* initialize to please compilers */
-  if (str[l-1] == '_' )
-    {
-      l1 = l-1;
-      mark = '\0';
+    /* Eager case, do the conversion now */
+    UInt l = GET_LEN_STRING(str);
+    Expr fl = NewExpr(T_FLOAT_EXPR_EAGER, sizeof(UInt) * 3 + l + 1);
+    Obj v = CALL_2ARGS(CONVERT_FLOAT_LITERAL_EAGER, str, ObjsChar[(Int)mark]);
+    UInt ix;
+    assert(EAGER_FLOAT_LITERAL_CACHE);
+#ifdef HPCGAP
+    assert(TNUM_OBJ(EAGER_FLOAT_LITERAL_CACHE) == T_ALIST);
+    ix = AddAList(EAGER_FLOAT_LITERAL_CACHE, v);
+#else
+    assert(IS_PLIST(EAGER_FLOAT_LITERAL_CACHE));
+    ix = PushPlist(EAGER_FLOAT_LITERAL_CACHE, v);
+#endif
+    ADDR_EXPR(fl)[0] = ix;
+    ADDR_EXPR(fl)[1] = l;
+    ADDR_EXPR(fl)[2] = (UInt)mark;
+    memcpy(ADDR_EXPR(fl) + 3, CHARS_STRING(str), l + 1);
+    PushExpr(fl);
+}
+
+void CodeFloatExpr(Char * str)
+{
+    UInt l = strlen(str);
+    UInt l1 = l;
+    Char mark = '\0'; /* initialize to please compilers */
+    if (str[l - 1] == '_') {
+        l1 = l - 1;
+        mark = '\0';
     }
-  else if (str[l-2] == '_')
-    {
-      l1 = l-2;
-      mark = str[l-1];
+    else if (str[l - 2] == '_') {
+        l1 = l - 2;
+        mark = str[l - 1];
     }
-  if (l1 < l)
-    {
-      Obj s;
-      C_NEW_STRING(s, l1, str);
-      CodeEagerFloatExpr(s,mark);
-    } else {
-    CodeLazyFloatExpr(str, l);
-  }
+    if (l1 < l) {
+        Obj s;
+        C_NEW_STRING(s, l1, str);
+        CodeEagerFloatExpr(s, mark);
+    }
+    else {
+        CodeLazyFloatExpr(str, l);
+    }
 }
 
 /****************************************************************************
 **
-*F  CodeLongFloatExpr( <str> ) . . . . . . .code long literal float expression
+*F  CodeLongFloatExpr( <str> ) . . . . . . code long literal float expression
 */
 
-void CodeLongFloatExpr (
-    Obj              str )
+void CodeLongFloatExpr(Obj s)
 {
-  Char mark = '\0'; /* initialize to please compilers */
+    Char * str = CSTR_STRING(s);
 
-    /* allocate the float expression                                      */
-    UInt l = GET_LEN_STRING(str);
+    UInt l = GET_LEN_STRING(s);
     UInt l1 = l;
-    if (CHARS_STRING(str)[l-1] == '_') {
-      l1 = l-1;
-      mark = '\0';
-    } else if (CHARS_STRING(str)[l-2] == '_') {
-      l1 = l-2;
-      mark = CHARS_STRING(str)[l-1];
+    Char mark = '\0'; /* initialize to please compilers */
+    if (str[l - 1] == '_') {
+        l1 = l - 1;
+        mark = '\0';
+    }
+    else if (str[l - 2] == '_') {
+        l1 = l - 2;
+        mark = str[l - 1];
     }
     if (l1 < l) {
-      CHARS_STRING(str)[l1] = '\0';
-      SET_LEN_STRING(str,l1);
-      CodeEagerFloatExpr(str, mark);
-    } else {
-      CodeLazyFloatExpr((Char *)CHARS_STRING(str), l);
+        str[l1] = '\0';
+        SET_LEN_STRING(s, l1);
+        CodeEagerFloatExpr(s, mark);
     }
-    
+    else {
+        CodeLazyFloatExpr(str, l);
+    }
 }
 
 
@@ -2103,7 +2001,7 @@ void CodeRecExprEnd (
         record = NewExpr( T_REC_EXPR,      nr * 2 * sizeof(Expr) );
     }
     else /* if ( (top && tilde) ) */ {
-        record = NewExpr( T_REC_TILD_EXPR, nr * 2 * sizeof(Expr) );
+        record = NewExpr( T_REC_TILDE_EXPR, nr * 2 * sizeof(Expr) );
     }
 
     /* enter the entries                                                   */
@@ -2138,12 +2036,7 @@ void CodeAssLVar (
     Expr                rhsx;           /* right hand side expression      */
 
     /* allocate the assignment                                             */
-    if ( lvar <= 16 ) {
-        ass = NewStat( T_ASS_LVAR + lvar, 2 * sizeof(Stat) );
-    }
-    else {
-        ass = NewStat( T_ASS_LVAR,        2 * sizeof(Stat) );
-    }
+    ass = NewStat( T_ASS_LVAR,        2 * sizeof(Stat) );
 
     /* enter the right hand side expression                                */
     rhsx = PopExpr();
@@ -2459,17 +2352,12 @@ void CodeAssList ( Int narg )
     Stat                ass;            /* assignment, result              */
 
     /* allocate the assignment                                             */
-    switch (narg) {
-    case 1:
+    if (narg == 1)
       ass = NewStat( T_ASS_LIST, 3 * sizeof(Stat) );
-      break;
-
-    case 2:
-      ass = NewStat(T_ASS2_LIST, 4* sizeof(Stat));
-      break;
-    default:
-      ass  = NewStat(T_ASSX_LIST, (narg + 2)*sizeof(Stat));
-    }
+    else if (narg == 2)
+      ass = NewStat( T_ASS2_LIST, 4 * sizeof(Stat));
+    else
+      ass = NewStat( T_ASSX_LIST, (narg + 2) * sizeof(Stat));
 
     /* let 'CodeAssListUniv' do the rest                                   */
     CodeAssListUniv( ass, narg );
@@ -2492,7 +2380,7 @@ void CodeAssListLevel ( Int narg,
     Stat                ass;            /* assignment, result              */
 
     /* allocate the assignment and enter the level                         */
-    ass = NewStat( T_ASS_LIST_LEV, (narg +3) * sizeof(Stat) );
+    ass = NewStat( T_ASS_LIST_LEV, (narg + 3) * sizeof(Stat) );
     ADDR_STAT(ass)[narg+2] = (Stat)level;
 
     /* let 'CodeAssListUniv' do the rest                                   */
@@ -2519,9 +2407,9 @@ void CodeAsssListLevel (
 */
 void CodeUnbList ( Int narg )
 {
+    Stat                ass;            /* unbind, result                  */
     Expr                list;           /* list expression                 */
     Expr                pos;            /* position expression             */
-    Stat                ass;            /* unbind, result                  */
     Int i;
 
     /* allocate the unbind                                                 */
@@ -2576,17 +2464,16 @@ void CodeElmList ( Int narg )
 {
     Expr                ref;            /* reference, result               */
 
-      /* allocate the reference                                              */
+    /* allocate the reference                                              */
     if (narg == 1)
       ref = NewExpr( T_ELM_LIST, 2 * sizeof(Expr) );
     else if (narg == 2)
       ref = NewExpr( T_ELM2_LIST, 3 * sizeof(Expr) );
     else
-      ref = NewExpr( T_ELMX_LIST, (narg + 1) *sizeof(Expr));
+      ref = NewExpr( T_ELMX_LIST, (narg + 1) * sizeof(Expr));
       
-      /* let 'CodeElmListUniv' to the rest                                   */
+    /* let 'CodeElmListUniv' to the rest                                   */
     CodeElmListUniv( ref, narg );
-      
 }
 
 void CodeElmsList ( void )
@@ -2605,9 +2492,9 @@ void CodeElmListLevel ( Int narg,
 {
     Expr                ref;            /* reference, result               */
 
-    ref = NewExpr( T_ELM_LIST_LEV, (narg+2)*sizeof(Expr));
+    /* allocate the reference and enter the level                          */
+    ref = NewExpr( T_ELM_LIST_LEV, (narg + 2) * sizeof(Expr));
     ADDR_EXPR(ref)[narg+1] = (Stat)level;
-      
 
     /* let 'CodeElmListUniv' do the rest                                   */
     CodeElmListUniv( ref, narg );
@@ -3367,10 +3254,9 @@ void CodeAssertEnd3Args ( void )
 void SaveBody ( Obj body )
 {
   UInt i;
-  UInt *ptr;
-  ptr = (UInt *) ADDR_OBJ(body);
+  const UInt *ptr = (const UInt *) CONST_ADDR_OBJ(body);
   /* Save the new inforation in the body */
-  for (i =0; i < NUMBER_HEADER_ITEMS_BODY; i++)
+  for (i =0; i < sizeof(BodyHeader)/sizeof(Obj); i++)
     SaveSubObj((Obj)(*ptr++));
   /* and the rest */
   for (; i < (SIZE_OBJ(body)+sizeof(UInt)-1)/sizeof(UInt); i++)
@@ -3391,7 +3277,7 @@ void LoadBody ( Obj body )
   UInt i;
   UInt *ptr;
   ptr = (UInt *) ADDR_OBJ(body);
-  for (i =0; i < NUMBER_HEADER_ITEMS_BODY; i++)
+  for (i =0; i < sizeof(BodyHeader)/sizeof(Obj); i++)
     *(Obj *)(ptr++) = LoadSubObj();
   for (; i < (SIZE_OBJ(body)+sizeof(UInt)-1)/sizeof(UInt); i++)
     *ptr++ = LoadUInt();
@@ -3402,6 +3288,17 @@ void LoadBody ( Obj body )
 **
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
+
+/****************************************************************************
+ **
+ *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
+ */
+static StructGVarFunc GVarFuncs [] = {
+
+  GVAR_FUNC(GET_FILENAME_CACHE, 0, ""),
+  { 0, 0, 0, 0, 0 }
+
+};
 
 /****************************************************************************
 **
@@ -3420,18 +3317,22 @@ static Int InitKernel (
     /* Allocate function bodies in the public data space */
     MakeBagTypePublic(T_BODY);
 
+#if !defined(HPCGAP)
     /* make the result variable known to Gasman                            */
-    InitGlobalBag( &CodeResult, "CodeResult" );
-    
+    InitGlobalBag( &STATE(CodeResult), "CodeResult" );
+#endif
+
     InitGlobalBag( &FilenameCache, "FilenameCache" );
 
     /* allocate the statements and expressions stacks                      */
-    InitGlobalBag( &TLS(StackStat), "TLS(StackStat)" );
-    InitGlobalBag( &TLS(StackExpr), "TLS(StackExpr)" );
+    InitGlobalBag( &STATE(StackStat), "STATE(StackStat)" );
+    InitGlobalBag( &STATE(StackExpr), "STATE(StackExpr)" );
 
     /* some functions and globals needed for float conversion */
-    InitCopyGVar( "EAGER_FLOAT_LITERAL_CACHE", &EAGER_FLOAT_LITERAL_CACHE);
+    InitGlobalBag( &EAGER_FLOAT_LITERAL_CACHE, "EAGER_FLOAT_LITERAL_CACHE" );
     InitFopyGVar( "CONVERT_FLOAT_LITERAL_EAGER", &CONVERT_FLOAT_LITERAL_EAGER);
+
+    InitHdlrFuncsFromTable( GVarFuncs );
 
     /* return success                                                      */
     return 0;
@@ -3445,19 +3346,24 @@ static Int InitKernel (
 static Int InitLibrary (
     StructInitInfo *    module )
 {
-  UInt gv;
-  Obj cache;
-    /* allocate the statements and expressions stacks                      */
-    TLS(StackStat) = NewBag( T_BODY, 64*sizeof(Stat) );
-    TLS(StackExpr) = NewBag( T_BODY, 64*sizeof(Expr) );
-    FilenameCache = NEW_PLIST(T_PLIST, 0);
+    Obj cache;
 
-    GVAR_SAVED_FLOAT_INDEX = GVarName("SavedFloatIndex");
-    
-    gv = GVarName("EAGER_FLOAT_LITERAL_CACHE");
+#ifdef HPCGAP
+    FilenameCache = NewAtomicList(T_ALIST, 0);
+#else
+    FilenameCache = NEW_PLIST(T_PLIST, 0);
+#endif
+
+#ifdef HPCGAP
+    cache = NewAtomicList(T_ALIST, 1);
+#else
     cache = NEW_PLIST(T_PLIST+IMMUTABLE, 1000L);
     SET_LEN_PLIST(cache,0);
-    AssGVar(gv, cache);
+#endif
+    EAGER_FLOAT_LITERAL_CACHE = cache;
+
+    /* init filters and functions                                          */
+    InitGVarFuncsFromTable( GVarFuncs );
 
     /* return success                                                      */
     return 0;
@@ -3470,8 +3376,7 @@ static Int InitLibrary (
 static Int PostRestore (
     StructInitInfo *    module )
 {
-  GVAR_SAVED_FLOAT_INDEX = GVarName("SavedFloatIndex");
-  NextFloatExprNumber = INT_INTOBJ(VAL_GVAR(GVAR_SAVED_FLOAT_INDEX));
+  NextFloatExprNumber = INT_INTOBJ(ValGVar(GVarName("SavedFloatIndex")));
   return 0;
 }
 
@@ -3486,50 +3391,59 @@ static Int PreSave (
   UInt i;
 
   /* Can't save in mid-parsing */
-  if (TLS(CountExpr) || TLS(CountStat))
+  if (STATE(CountExpr) || STATE(CountStat))
     return 1;
 
   /* push the FP cache index out into a GAP Variable */
-  AssGVar(GVAR_SAVED_FLOAT_INDEX, INTOBJ_INT(NextFloatExprNumber));
+  AssGVar(GVarName("SavedFloatIndex"), INTOBJ_INT(NextFloatExprNumber));
 
   /* clean any old data out of the statement and expression stacks */
-  for (i = 0; i < SIZE_BAG(TLS(StackStat))/sizeof(UInt); i++)
-    ADDR_OBJ(TLS(StackStat))[i] = (Obj)0;
-  for (i = 0; i < SIZE_BAG(TLS(StackExpr))/sizeof(UInt); i++)
-    ADDR_OBJ(TLS(StackExpr))[i] = (Obj)0;
+  for (i = 0; i < SIZE_BAG(STATE(StackStat))/sizeof(UInt); i++)
+    ADDR_OBJ(STATE(StackStat))[i] = (Obj)0;
+  for (i = 0; i < SIZE_BAG(STATE(StackExpr))/sizeof(UInt); i++)
+    ADDR_OBJ(STATE(StackExpr))[i] = (Obj)0;
   /* return success                                                      */
   return 0;
 }
 
+static void InitModuleState(ModuleStateOffset offset)
+{
+    STATE(OffsBodyCount) = 0;
+    STATE(LoopNesting) = 0;
+    STATE(LoopStackCount) = 0;
 
+    /* allocate the statements and expressions stacks                      */
+    STATE(StackStat) = NewBag( T_BODY, 64*sizeof(Stat) );
+    STATE(StackExpr) = NewBag( T_BODY, 64*sizeof(Expr) );
+
+#ifdef HPCGAP
+    STATE(OffsBodyStack) = AllocateMemoryBlock(MAX_FUNC_EXPR_NESTING*sizeof(Stat));
+    STATE(LoopStack) = AllocateMemoryBlock(MAX_FUNC_EXPR_NESTING*sizeof(UInt));
+#else
+    static Stat MainOffsBodyStack[MAX_FUNC_EXPR_NESTING];
+    static UInt MainLoopStack[MAX_FUNC_EXPR_NESTING];
+    STATE(OffsBodyStack) = MainOffsBodyStack;
+    STATE(LoopStack) = MainLoopStack;
+#endif
+}
 
 /****************************************************************************
 **
 *F  InitInfoCode()  . . . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "code",                             /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                        /* checkInit                      */
-    PreSave,                            /* preSave                        */
-    0,                                  /* postSave                       */
-    PostRestore                        /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "code",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
+    .preSave = PreSave,
+    .postRestore = PostRestore
 };
 
 StructInitInfo * InitInfoCode ( void )
 {
+    RegisterModuleState(0, InitModuleState, 0);
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  code.c  . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

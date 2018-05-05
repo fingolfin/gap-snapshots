@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
 
-set -e
-
 # This script attempts to build all GAP packages contained in the current
 # directory. Normally, you should run this script from the 'pkg'
 # subdirectory of your GAP installation.
 
 # You can also run it from other locations, but then you need to tell the
-# script where your GAP root directory is, by passing it as first argument
-# to the script. By default, the script assumes that the parent of the
-# current working directory is the GAP root directory.
+# script where your GAP root directory is, by passing it as an argument
+# to the script with '--with-gaproot='. By default, the script assumes that
+# the parent of the current working directory is the GAP root directory.
+
+# If arguments are added, then they are considered packages. In that case
+# only these packages will be built, and all others are ignored.
 
 # You need at least 'gzip', GNU 'tar', a C compiler, sed, pdftex to run this.
 # Some packages also need a C++ compiler.
@@ -20,169 +21,249 @@ set -e
 # Even if it doesn't work completely automatically for you, you may get
 # an idea what to do for a complete installation of GAP.
 
-
-if [ $# -eq 0 ]
-  then
-    echo "Assuming default GAP location: ../.."
-    GAPDIR=../..
-  else
-    echo "Using GAP location: $1"
-    GAPDIR="$1"
-fi
+set -e
 
 # Is someone trying to run us from inside the 'bin' directory?
-if [ -f gapicon.bmp ]
-  then
-    echo "This script must be run from inside the pkg directory"
-    echo "Type: cd ../pkg; ../bin/BuildPackages.sh"
-    exit 1
+if [[ -f gapicon.bmp ]]
+then
+  error "This script must be run from inside the pkg directory" \
+        "Type: cd ../pkg; ../bin/BuildPackages.sh"
 fi
 
-# We need any subdirectory, to test if $GAPDIR is right
-SUBDIR=`ls -d */ | head -n 1`
-if ! (cd $SUBDIR && [ -f $GAPDIR/sysinfo.gap ])
-  then
-    echo "$GAPDIR is not the root of a gap installation (no sysinfo.gap)"
-    echo "Please provide the absolute path of your GAP root directory as"
-    echo "first argument to this script."
-    exit 1
+CURDIR="$(pwd)"
+GAPROOT="$(cd .. && pwd)"
+COLORS=yes
+STRICT=no       # exit with non-zero exit code when encountering any failures
+PACKAGES=()
+
+# If output does not go into a terminal (but rather into a log file),
+# turn off colors.
+[[ -t 1 ]] || COLORS=no
+
+while [[ "$#" -ge 1 ]]; do
+  option="$1" ; shift
+  case "$option" in
+    --with-gaproot)   GAPROOT="$1"; shift ;;
+    --with-gaproot=*) GAPROOT=${option#--with-gaproot=}; ;;
+
+    --no-color)       COLORS=no ;;
+    --color)          COLORS=yes ;;
+
+    --no-strict)      STRICT=no ;;
+    --strict)         STRICT=yes ;;
+
+    -*)               echo "ERROR: unsupported argument $option" ; exit 1;;
+    *)                PACKAGES+=("$option") ;;
+  esac
+done
+
+# If user specified no packages to build, build all packages in subdirectories.
+if [[ ${#PACKAGES[@]} == 0 ]]
+then
+  # Put package directory names into a bash array to avoid issues with
+  # spaces in filenames. This code will still break if there are newlines
+  # in the name.
+  old_IFS=$IFS
+  IFS=$'\n' PACKAGES=($(find . -maxdepth 2 -type f -name PackageInfo.g))
+  IFS=$old_IFS
+  PACKAGES=( "${PACKAGES[@]%/PackageInfo.g}" )
 fi
 
-if (cd $SUBDIR && grep 'ABI_CFLAGS=-m32' $GAPDIR/Makefile > /dev/null) ; then
-  echo "Building with 32-bit ABI"
-  ABI32=YES
-  CONFIGFLAGS="CFLAGS=-m32 LDFLAGS=-m32 LOPTS=-m32 CXXFLAGS=-m32"
-fi;
+# Some helper functions for printing user messages
+if [[ "x$COLORS" = xyes ]]
+then
+  # print notices in green, warnings in yellow, errors in read
+  notice()    { printf "\033[32m%s\033[0m\n" "$@" ; }
+  warning()   { printf "\033[33mWARNING: %s\033[0m\n" "$@" ; }
+  error()     { printf "\033[31mERROR: %s\033[0m\n" "$@" ; exit 1 ; }
+  std_error() { printf "\033[31m%s\033[0m\n" "$@" ; }
+else
+  notice()    { printf "%s\n" "$@" ; }
+  warning()   { printf "WARNING: %s\n" "$@" ; }
+  error()     { printf "ERROR: %s\n" "$@" ; exit 1 ; }
+  std_error() { printf "%s\n" "$@" ; }
+fi
+
+
+notice "Using GAP root $GAPROOT"
+
+# Check whether $GAPROOT is valid
+if [[ ! -f "$GAPROOT/sysinfo.gap" ]]
+then
+  error "$GAPROOT is not the root of a gap installation (no sysinfo.gap)" \
+        "Please provide the absolute path of your GAP root directory as" \
+        "first argument with '--with-gaproot=' to this script."
+fi
+
+# read in sysinfo
+source "$GAPROOT/sysinfo.gap"
+
+# detect whether GAP was built in 32bit mode
+# TODO: once all packages have adapted to the new build system,
+# this should no longer be necessary, as package build systems should
+# automatically adjust to 32bit mode.
+case "$GAP_ABI" in
+  32)
+    notice "Building with 32-bit ABI"
+    CONFIGFLAGS="CFLAGS=-m32 LDFLAGS=-m32 LOPTS=-m32 CXXFLAGS=-m32"
+    ;;
+  64)
+    notice "Building with 64-bit ABI"
+    CONFIGFLAGS=""
+    ;;
+  *)
+    error "Unsupported GAP ABI '$GAParch_abi'."
+    ;;
+esac
+
+
+LOGDIR=log
+mkdir -p "$LOGDIR"
+
 
 # Many package require GNU make. So use gmake if available,
 # for improved compatibility with *BSD systems where "make"
 # is BSD make, not GNU make.
-if ! [ x`which gmake` = "x" ] ; then
+if hash gmake 2> /dev/null
+then
   MAKE=gmake
 else
   MAKE=make
 fi
 
-cat <<EOF
-Attempting to build GAP packages.
-Note that many GAP packages require extra programs to be installed,
-and some are quite difficult to build. Please read the documentation for
-packages which fail to build correctly, and only worry about packages
-you require!
-EOF
+notice \
+"Attempting to build GAP packages." \
+"Note that many GAP packages require extra programs to be installed," \
+"and some are quite difficult to build. Please read the documentation for" \
+"packages which fail to build correctly, and only worry about packages" \
+"you require!"
 
-build_carat() {
-(
-# TODO: FIX Carat
-# Installation of Carat produces a lot of data, maybe you want to leave
-# this out until a user complains.
-# It is not possible to move around compiled binaries because these have the
-# path to some data files burned in.
-zcat carat-2.1b1.tgz | tar pxf -
-ln -s carat-2.1b1/bin bin
-cd carat-2.1b1
-make TOPDIR=`pwd`
-chmod -R a+rX .
-cd bin
-aa=`./config.guess`
-for x in "`ls -d1 $GAPDIR/bin/${aa}*`"; do
- ln -s "$aa" "`basename $x`"
-done
-)
-}
-
-build_cohomolo() {
-(
-./configure $GAPDIR
-cd standalone/progs.d
-cp makefile.orig makefile
-cd ../..
-$MAKE
-)
+# print the given command plus arguments, single quoted, then run it
+echo_run() {
+  # when printf is given a format string with only one format specification,
+  # it applies that format string to each argument in sequence
+  notice "Running $(printf "'%s' " "$@")"
+  "$@"
 }
 
 build_fail() {
-  echo "= Failed to build $dir"
+  echo ""
+  warning "Failed to build $PKG"
+  echo "$PKG" >> "$LOGDIR/fail.log"
+  if [[ $STRICT = yes ]]
+  then
+    exit 1
+  fi
 }
 
 run_configure_and_make() {
   # We want to know if this is an autoconf configure script
   # or not, without actually executing it!
-  if [ -f autogen.sh ] && ! [ -f configure ] ; then
+  if [[ -f autogen.sh && ! -f configure ]]
+  then
     ./autogen.sh
-  fi;
-  if [ -f configure ]; then
-    if grep Autoconf ./configure > /dev/null; then
-      ./configure $CONFIGFLAGS --with-gaproot=$GAPDIR
+  fi
+  if [[ -f "configure" ]]
+  then
+    if grep Autoconf ./configure > /dev/null
+    then
+      echo_run ./configure --with-gaproot="$GAPROOT" $CONFIGFLAGS
     else
-      ./configure $GAPDIR
-    fi;
-    $MAKE
+      echo_run ./configure "$GAPROOT"
+    fi
+    echo_run "$MAKE"
   else
-    echo "No building required for $dir"
-  fi;
+    notice "No building required for $PKG"
+  fi
 }
 
-for dir in `ls -d */`
+build_one_package() {
+  # requires one argument which is the package directory
+  PKG="$1"
+  echo ""
+  date
+  echo ""
+  notice "==== Checking $PKG"
+  (  # start subshell
+  set -e
+  cd "$CURDIR/$PKG"
+  case "$PKG" in
+    # All but the last lines should end by '&&', otherwise (for some reason)
+    # some packages that fail to build will not get reported in the logs.
+    atlasrep*)
+      chmod 1777 datagens dataword
+    ;;
+
+    NormalizInterface*)
+      ./build-normaliz.sh "$GAPROOT" && \
+      run_configure_and_make
+    ;;
+
+    pargap*)
+      echo_run ./configure --with-gap="$GAPROOT" && \
+      echo_run "$MAKE" && \
+      cp bin/pargap.sh "$GAPROOT/bin" && \
+      rm -f ALLPKG
+    ;;
+
+    xgap*)
+      echo_run ./configure --with-gaproot="$GAPROOT" && \
+      echo_run "$MAKE" && \
+      rm -f "$GAPROOT/bin/xgap.sh" && \
+      cp bin/xgap.sh "$GAPROOT/bin"
+    ;;
+
+    simpcomp*)
+    ;;
+
+    *)
+      run_configure_and_make
+    ;;
+  esac
+  ) || build_fail
+}
+
+date >> "$LOGDIR/fail.log"
+for PKG in "${PACKAGES[@]}"
 do
-    if [ -e $dir/PackageInfo.g ]; then
-      dir="${dir%/}"
-      echo "==== Checking $dir"
-      (  # start subshell
-      set -e
-      cd $dir
-      case $dir in
-        atlasrep*)
-          chmod 1777 datagens dataword
-        ;;
+  # cut off the ending slash (if exists)
+  PKG="${PKG%/}"
+  # cut off everything before the first slash to only keep the package name
+  # (these two commands are mainly to accomodate the logs better,
+  # as they make no difference with changing directories)
+  PKG="${PKG##*/}"
+  if [[ -e "$CURDIR/$PKG/PackageInfo.g" ]]
+  then
+    (build_one_package "$PKG" \
+     > >(tee "$LOGDIR/$PKG.out") \
+    2> >(while read line
+         do \
+           std_error "$line"
+         done \
+         > >(tee "$LOGDIR/$PKG.err" >&2) \
+         ) \
+    )> >(tee "$LOGDIR/$PKG.log" ) 2>&1
 
-        carat*)
-          build_carat
-        ;;
+    # remove superfluous log files if there was no error message
+    if [[ ! -s "$LOGDIR/$PKG.err" ]]
+    then
+      rm -f "$LOGDIR/$PKG.err"
+      rm -f "$LOGDIR/$PKG.out"
+    fi
 
-        cohomolo*)
-          build_cohomolo
-        ;;
+    # remove log files if package needed no compilation
+    if [[ "$(grep -c 'No building required for' $LOGDIR/$PKG.log)" -ge 1 ]]
+    then
+      rm -f "$LOGDIR/$PKG.err"
+      rm -f "$LOGDIR/$PKG.out"
+      rm -f "$LOGDIR/$PKG.log"
+    fi
+  else
+    echo
+    warning "$PKG does not seem to be a package directory, skipping"
+  fi
+done
 
-        fplsa*)
-          ./configure $GAPDIR &&
-          $MAKE CC="gcc -O2 "
-        ;;
-
-        kbmag*)
-          ./configure $GAPDIR &&
-          $MAKE COPTS="-O2 -g"
-        ;;
-
-        NormalizInterface*)
-          ./build-normaliz.sh $GAPDIR &&
-          run_configure_and_make
-        ;;
-
-        pargap*)
-          ./configure $GAPDIR &&
-          $MAKE &&
-          cp bin/pargap.sh $GAPDIR/bin &&
-          rm -f ALLPKG
-        ;;
-
-        xgap*)
-          ./configure &&
-          $MAKE &&
-          rm -f $GAPDIR/bin/xgap.sh &&
-          cp bin/xgap.sh $GAPDIR/bin
-        ;;
-
-        simpcomp*)
-        ;;
-        
-        *)
-          run_configure_and_make
-        ;;
-      esac;
-      ) || build_fail
-      # end subshell
-    else
-      echo "$dir is not a GAP package -- no PackageInfo.g"
-    fi;
-done;
+echo "" >> "$LOGDIR/fail.log"
+echo ""
+notice "Packages which failed to build are in ./$LOGDIR/fail.log"

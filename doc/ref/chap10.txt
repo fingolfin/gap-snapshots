@@ -136,9 +136,8 @@
   timeout  was specified. All file descriptors in the three lists that are not
   yet ready are replaced by [9Xfail[109X in this function. So the lists are changed![133X
   
-  [33X[0;0YThis  function  is  not  available on the Macintosh architecture and is only
-  available  if  your  operating  system  has [10Xselect[110X, which is detected during
-  compilation of [5XGAP[105X.[133X
+  [33X[0;0YThis  function  is only available if your operating system has [10Xselect[110X, which
+  is detected during compilation of [5XGAP[105X.[133X
   
   
   [1X10.3 [33X[0;0YOperations for Input Streams[133X[101X
@@ -543,7 +542,7 @@
   [33X[0;0Yprints the [3Xarg[103X as a prompt, then waits until a text is typed by the user (or
   from the standard input device if it has been redirected). This text must be
   a  [13Xsingle[113X  expression,  followed  by  one  [13Xenter[113X.  This  is  evaluated  (see
-  [2XEvalString[102X ([14X27.9-3[114X)) and the result is returned.[133X
+  [2XEvalString[102X ([14X27.9-5[114X)) and the result is returned.[133X
   
   
   [1X10.7 [33X[0;0YString Streams[133X[101X
@@ -714,9 +713,8 @@
   [1X10.10 [33X[0;0YHandling of Streams in the Background[133X[101X
   
   [33X[0;0YThis  section  describes  a  feature  of  the [5XGAP[105X kernel that can be used to
-  handle  pending  streams  somehow  [21Xin  the background[121X. This is currently not
-  available  on  the Macintosh architecture and only on operating systems that
-  have [10Xselect[110X.[133X
+  handle  pending streams somehow [21Xin the background[121X. This is only available on
+  operating systems that have [10Xselect[110X.[133X
   
   [33X[0;0YRight  before  [5XGAP[105X  reads  a  keypress  from  the keyboard it calls a little
   subroutine  that can handle streams that are ready to be read or ready to be
@@ -748,8 +746,7 @@
   situation  when  [5XGAP[105X  is  reading  a  character  from  the keyboard. Handler
   functions should not use much time to complete.[133X
   
-  [33X[0;0YThis  functionality  does  not  work  on the Macintosh architecture and only
-  works if the operating system has a [10Xselect[110X function.[133X
+  [33X[0;0YThis functionality only works if the operating system has a [10Xselect[110X function.[133X
   
   [1X10.10-2 UnInstallCharReadHookFunc[101X
   
@@ -759,8 +756,7 @@
   All  instances  are  deinstalled, regardless of the mode of operation (read,
   write, exception).[133X
   
-  [33X[0;0YThis  functionality  does  not  work  on the Macintosh architecture and only
-  works if the operating system has a [10Xselect[110X function.[133X
+  [33X[0;0YThis functionality only works if the operating system has a [10Xselect[110X function.[133X
   
   
   [1X10.11 [33X[0;0YComma separated files[133X[101X

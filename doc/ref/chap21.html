@@ -55,7 +55,8 @@
 </span>
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X79EC565A7DCEC938">21.5-1 IsBound</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X78B72FDF7BD63C0B">21.5-2 Unbind</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X866F45D3797FDA00">21.5-2 GetWithDefault</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X78B72FDF7BD63C0B">21.5-3 Unbind</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap21.html#X7DD65BEA7EDB0CD7">21.6 <span class="Heading">Identical Lists</span></a>
 </span>
@@ -130,12 +131,13 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7D2B25B484591506">21.16-4 PositionNthOccurrence</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7A122E848464E534">21.16-5 PositionSorted</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X78BFE9D78347C0DA">21.16-6 PositionSet</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7E6C763A82C6153B">21.16-7 PositionProperty</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7DA94D278304EC3D">21.16-8 PositionsProperty</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X86C9E5C3863B3C03">21.16-9 PositionBound</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X865EF45D87ED1384">21.16-10 PositionNot</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7F42E5AD87EC9D5A">21.16-11 PositionNonZero</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X87A8C62A867D6DA4">21.16-12 PositionSublist</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7FD9C1D37F300206">21.16-7 PositionMaximum</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7E6C763A82C6153B">21.16-8 PositionProperty</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7DA94D278304EC3D">21.16-9 PositionsProperty</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X86C9E5C3863B3C03">21.16-10 PositionBound</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X865EF45D87ED1384">21.16-11 PositionNot</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X7F42E5AD87EC9D5A">21.16-12 PositionNonZero</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap21.html#X87A8C62A867D6DA4">21.16-13 PositionSublist</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap21.html#X7865747A7CCF5812">21.17 <span class="Heading">Properties and Attributes for Lists</span></a>
 </span>
@@ -371,8 +373,6 @@ false
 
 <p><code class="code">\[\]( <var class="Arg">list</var>, <var class="Arg">ix</var> )</code> is equivalent to <code class="code"><var class="Arg">list</var>[ <var class="Arg">ix</var> ]</code>, which clearly will usually be preferred; the former is useful mainly if one wants to access the operation itself, for example if one wants to install a method for element access in a special kind of lists.</p>
 
-<p>The syntax <code class="code"><var class="Arg">list</var>[ <var class="Arg">ix1</var>, <var class="Arg">ix2</var>,.... <var class="Arg">ixn</var> ]</code>, with two or more indices is treated as a shorthand for <code class="code"><var class="Arg">list</var>[[ <var class="Arg">ix1</var>, <var class="Arg">ix2</var>,.... <var class="Arg">ixn</var>]]</code> This is intended to provide a nicer syntax for accessing elements of matrices and tensors.</p>
-
 <p>Similarly, <code class="func">IsBound\[\]</code> is used explicitly mainly in method installations. In other situations, one can simply call <code class="func">IsBound</code> (<a href="chap21.html#X79EC565A7DCEC938"><span class="RefLink">21.5-1</span></a>), which then delegates to <code class="func">IsBound\[\]</code> if the first argument is a list, and to <code class="func">IsBound\.</code> (<a href="chap29.html#X7821AC097821AC09"><span class="RefLink">29.7-3</span></a>) if the first argument is a record.</p>
 
 <p>Analogous statements hold for <code class="func">\[\]\:\=</code> and <code class="func">Unbind\[\]</code>.</p>
@@ -394,10 +394,6 @@ false
 </pre></div>
 
 <p>If <var class="Arg">list</var> is not a built-in list, or <var class="Arg">ix</var> does not evaluate to a positive integer, method selection is invoked to try and find a way of indexing <var class="Arg">list</var> with index <var class="Arg">ix</var>. If this fails, or the selected method finds that <code class="code"><var class="Arg">list</var>[<var class="Arg">ix</var>]</code> is unbound, an error is signalled.</p>
-
-<p><code class="code"><var class="Arg">list</var>[ <var class="Arg">ix1</var>,<var class="Arg">ix2</var>,...]</code></p>
-
-<p>is a short-hand for <code class="code"><var class="Arg">list</var>[[<var class="Arg">ix1</var>,<var class="Arg">ix2</var>,...]]</code></p>
 
 <p><code class="code"><var class="Arg">list</var>{ <var class="Arg">poss</var> }</code></p>
 
@@ -499,11 +495,7 @@ end;
 
 <p>Note that assigning to a list changes the list, thus this list must be mutable (see <a href="chap12.html#X7F0C119682196D65"><span class="RefLink">12.6</span></a>). See <a href="chap21.html#X7DD65BEA7EDB0CD7"><span class="RefLink">21.6</span></a> for subtleties of changing lists.</p>
 
-<p>If <var class="Arg">list</var> does not evaluate to a list, <var class="Arg">pos</var> does not evaluate to a positive integer or <var class="Arg">object</var> is a call to a function which does not return a value (for example <code class="code">Print</code>) an error is signalled.</p>
-
-<p><code class="code"><var class="Arg">list</var>[ <var class="Arg">ix1</var>,<var class="Arg">ix2</var>,...] := <var class="Arg">obj</var></code></p>
-
-<p>is a short-hand for <code class="code"><var class="Arg">list</var>[[<var class="Arg">ix1</var>,<var class="Arg">ix2</var>,...]] := <var class="Arg">obj</var></code>.</p>
+<p>If <var class="Arg">list</var> does not evaluate to a list, <var class="Arg">pos</var> does not evaluate to a positive integer, method selection is invoked to try and find a way of indexing <var class="Arg">list</var> with index <var class="Arg">pos</var>. If this fails, or the selected method finds that <code class="code"><var class="Arg">list</var>[<var class="Arg">pos</var>]</code> is unbound, or if <var class="Arg">object</var> is a call to a function which does not return a value (for example <code class="code">Print</code>) an error is signalled.</p>
 
 <p><code class="code"><var class="Arg">list</var>{ <var class="Arg">poss</var> } := <var class="Arg">objects</var>;</code></p>
 
@@ -647,8 +639,7 @@ end;
 <h5>21.5-1 IsBound</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBound</code>( <var class="Arg">list</var>[, <var class="Arg">n</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsBound</code>( <var class="Arg">list</var>[, <var class="Arg">ix1</var>, <var class="Arg">ix2</var>, <var class="Arg">...</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p><code class="func">IsBound</code> returns <code class="keyw">true</code> if the list <var class="Arg">list</var> has a element at index <var class="Arg">n</var>, and <code class="keyw">false</code> otherwise. <var class="Arg">list</var> must evaluate to a list, otherwise an error is signalled.</p>
+<p><code class="func">IsBound</code> returns <code class="keyw">true</code> if the list <var class="Arg">list</var> has an element at index <var class="Arg">n</var>, and <code class="keyw">false</code> otherwise. <var class="Arg">list</var> must evaluate to a list, or to an object for which a suitable method for <code class="code">IsBound\[\]</code> has been installed, otherwise an error is signalled.</p>
 
 
 <div class="example"><pre>
@@ -661,15 +652,41 @@ false
 false
 </pre></div>
 
-<p><code class="code">IsBound(<var class="Arg">list</var>[<var class="Arg">ix1</var>,<var class="Arg">ix2</var>,...]</code> is a short-hand for <code class="code">IsBound(<var class="Arg">list</var>[[<var class="Arg">ix1</var>,<var class="Arg">ix2</var>,...]]</code></p>
+<p><a id="X866F45D3797FDA00" name="X866F45D3797FDA00"></a></p>
+
+<h5>21.5-2 GetWithDefault</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; GetWithDefault</code>( <var class="Arg">list</var>, <var class="Arg">n</var>, <var class="Arg">default</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p><code class="func">GetWithDefault</code> returns the <var class="Arg">n</var>th element of the list <var class="Arg">list</var>, if <var class="Arg">list</var> has a value at index <var class="Arg">n</var>, and <var class="Arg">default</var> otherwise.</p>
+
+<p>While this method can be used on any list, it is particularly useful for Weak Pointer lists <a href="chap86.html#X86D963DC7968899B"><span class="RefLink">86.1</span></a> where the value of the list can change.</p>
+
+<p>To distinguish between the <var class="Arg">n</var>th element being unbound, or <var class="Arg">default</var> being in <var class="Arg">list</var>, users can create a new mutable object, such as a string. <code class="func">IsIdenticalObj</code> (<a href="chap12.html#X7961183378DFB902"><span class="RefLink">12.5-1</span></a>) returns <code class="keyw">false</code> for different mutable strings, even if their contents are the same.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">l := [1,2,,"a"];</span>
+[ 1, 2,, "a" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">newobj := "a";</span>
+"a"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GetWithDefault(l, 2, newobj);</span>
+2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GetWithDefault(l, 3, newobj);</span>
+"a"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">GetWithDefault(l, 4, newobj);</span>
+"a"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIdenticalObj(GetWithDefault(l, 3, newobj), newobj);</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsIdenticalObj(GetWithDefault(l, 4, newobj), newobj);</span>
+false
+</pre></div>
 
 <p><a id="X78B72FDF7BD63C0B" name="X78B72FDF7BD63C0B"></a></p>
 
-<h5>21.5-2 Unbind</h5>
+<h5>21.5-3 Unbind</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unbind</code>( <var class="Arg">list</var>[, <var class="Arg">n</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unbind</code>( <var class="Arg">list</var>[, <var class="Arg">ix1</var>, <var class="Arg">ix2</var>, <var class="Arg">...</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p><code class="func">Unbind</code> deletes the element with index <var class="Arg">n</var> in the mutable list <var class="Arg">list</var>. That is, after execution of <code class="func">Unbind</code>, <var class="Arg">list</var> no longer has an assigned value with index <var class="Arg">n</var>. Thus <code class="func">Unbind</code> can be used to produce holes in a list. Note that it is not an error to unbind a nonexistant list element. <var class="Arg">list</var> must evaluate to a list, otherwise an error is signalled.</p>
+<p><code class="func">Unbind</code> deletes the element with index <var class="Arg">n</var> in the mutable list <var class="Arg">list</var>. That is, after execution of <code class="func">Unbind</code>, <var class="Arg">list</var> no longer has an assigned value with index <var class="Arg">n</var>. Thus <code class="func">Unbind</code> can be used to produce holes in a list. Note that it is not an error to unbind a nonexistant list element. <var class="Arg">list</var> must evaluate to a list, or to an object for which a suitable method for <code class="code">Unbind\[\]</code> has been installed, otherwise an error is signalled.</p>
 
 
 <div class="example"><pre>
@@ -680,7 +697,7 @@ false
 [ , 2,,,, 7,,,, 11 ]
 </pre></div>
 
-<p>Note that <code class="func">IsBound</code> (<a href="chap21.html#X79EC565A7DCEC938"><span class="RefLink">21.5-1</span></a>) and <code class="func">Unbind</code> are special in that they do not evaluate their argument, otherwise <code class="func">IsBound</code> (<a href="chap21.html#X79EC565A7DCEC938"><span class="RefLink">21.5-1</span></a>) would always signal an error when it is supposed to return <code class="keyw">false</code> and there would be no way to tell <code class="func">Unbind</code> which component to remove. <code class="code">Unbind(<var class="Arg">list</var>[<var class="Arg">ix1</var>,<var class="Arg">ix2</var>,...]</code> is a short-hand for <code class="code">Unbind(<var class="Arg">list</var>[[<var class="Arg">ix1</var>,<var class="Arg">ix2</var>,...]]</code></p>
+<p>Note that <code class="func">IsBound</code> (<a href="chap21.html#X79EC565A7DCEC938"><span class="RefLink">21.5-1</span></a>) and <code class="func">Unbind</code> are special in that they do not evaluate their argument, otherwise <code class="func">IsBound</code> (<a href="chap21.html#X79EC565A7DCEC938"><span class="RefLink">21.5-1</span></a>) would always signal an error when it is supposed to return <code class="keyw">false</code> and there would be no way to tell <code class="func">Unbind</code> which component to remove.</p>
 
 <p><a id="X7DD65BEA7EDB0CD7" name="X7DD65BEA7EDB0CD7"></a></p>
 
@@ -1504,9 +1521,31 @@ fail
 fail
 </pre></div>
 
+<p><a id="X7FD9C1D37F300206" name="X7FD9C1D37F300206"></a></p>
+
+<h5>21.16-7 PositionMaximum</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionMaximum</code>( <var class="Arg">list</var>[, <var class="Arg">func</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionMinimum</code>( <var class="Arg">list</var>[, <var class="Arg">func</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>returns the position of maximum (with <code class="func">PositionMaximum</code>) or minimum (with <code class="func">PositionMinimum</code>) entry in the list <var class="Arg">list</var>. If a second argument <var class="Arg">func</var> is passed, then return instead the position of the largest/smallest entry in <code class="code">List( <var class="Arg">list</var> , <var class="Arg">func</var> )</code>. If several entries of the list are equal to the maximum/minimum, the first such position is returned.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PositionMaximum( [2,4,-6,2,4] );</span>
+2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PositionMaximum( [2,4,-6,2,4], x -&gt; -x);</span>
+3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PositionMinimum( [2,4,-6,2,4] );</span>
+3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PositionMinimum( [2,4,-6,2,4], x -&gt; -x);</span>
+2
+</pre></div>
+
+<p><code class="func">Maximum</code> (<a href="chap21.html#X82CE0DE8828E4303"><span class="RefLink">21.20-13</span></a>) and <code class="func">Minimum</code> (<a href="chap21.html#X82F133EC7F89665F"><span class="RefLink">21.20-14</span></a>) allow you to find the maximum or minimum element of a list directly.</p>
+
 <p><a id="X7E6C763A82C6153B" name="X7E6C763A82C6153B"></a></p>
 
-<h5>21.16-7 PositionProperty</h5>
+<h5>21.16-8 PositionProperty</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionProperty</code>( <var class="Arg">list</var>, <var class="Arg">func</var>[, <var class="Arg">from</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the position of the first entry in the list <var class="Arg">list</var> for which the property tester function <var class="Arg">func</var> returns <code class="keyw">true</code>, or <code class="keyw">fail</code> if no such entry exists. If a starting index <var class="Arg">from</var> is given, it returns the position of the first entry satisfying <var class="Arg">func</var>, starting the search <em>after</em> position <var class="Arg">from</var>.</p>
@@ -1524,10 +1563,10 @@ fail
 
 <p><a id="X7DA94D278304EC3D" name="X7DA94D278304EC3D"></a></p>
 
-<h5>21.16-8 PositionsProperty</h5>
+<h5>21.16-9 PositionsProperty</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionsProperty</code>( <var class="Arg">list</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>returns the list of all those positions in the dense list <var class="Arg">list</var> for which the property tester function <var class="Arg">func</var> returns <code class="keyw">true</code>.</p>
+<p>returns the list of all those positions in the list <var class="Arg">list</var> which are bound and for which the property tester function <var class="Arg">func</var> returns <code class="keyw">true</code>.</p>
 
 
 <div class="example"><pre>
@@ -1538,11 +1577,11 @@ fail
 [ 1, 3, 4, 8, 9, 11 ]
 </pre></div>
 
-<p><code class="func">PositionProperty</code> (<a href="chap21.html#X7E6C763A82C6153B"><span class="RefLink">21.16-7</span></a>) allows you to extract the position of the first element in a list that satisfies a certain property.</p>
+<p><code class="func">PositionProperty</code> (<a href="chap21.html#X7E6C763A82C6153B"><span class="RefLink">21.16-8</span></a>) allows you to extract the position of the first element in a list that satisfies a certain property.</p>
 
 <p><a id="X86C9E5C3863B3C03" name="X86C9E5C3863B3C03"></a></p>
 
-<h5>21.16-9 PositionBound</h5>
+<h5>21.16-10 PositionBound</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionBound</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the first index for which an element is bound in the list <var class="Arg">list</var>. For the empty list it returns <code class="keyw">fail</code>.</p>
@@ -1557,7 +1596,7 @@ fail
 
 <p><a id="X865EF45D87ED1384" name="X865EF45D87ED1384"></a></p>
 
-<h5>21.16-10 PositionNot</h5>
+<h5>21.16-11 PositionNot</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionNot</code>( <var class="Arg">list</var>, <var class="Arg">val</var>[, <var class="Arg">from</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>For a list <var class="Arg">list</var> and an object <var class="Arg">val</var>, <code class="func">PositionNot</code> returns the smallest nonnegative integer <span class="SimpleMath">n</span> such that <span class="SimpleMath"><var class="Arg">list</var>[n]</span> is either unbound or not equal to <var class="Arg">val</var>. If a starting index <var class="Arg">from</var> is given, it returns the first position with this property starting the search <em>after</em> position <var class="Arg">from</var>.</p>
@@ -1573,14 +1612,14 @@ fail
 
 <p><a id="X7F42E5AD87EC9D5A" name="X7F42E5AD87EC9D5A"></a></p>
 
-<h5>21.16-11 PositionNonZero</h5>
+<h5>21.16-12 PositionNonZero</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionNonZero</code>( <var class="Arg">vec</var>[, <var class="Arg">from</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>For a row vector <var class="Arg">vec</var>, <code class="func">PositionNonZero</code> returns the position of the first non-zero element of <var class="Arg">vec</var>, or <code class="code">Length(</code> <var class="Arg">vec</var> <code class="code">)+1</code> if all entries of <var class="Arg">vec</var> are zero.</p>
 
 <p>If a starting index <var class="Arg">from</var> is given, it returns the position of the first occurrence starting the search <em>after</em> position <var class="Arg">from</var>.</p>
 
-<p><code class="func">PositionNonZero</code> implements a special case of <code class="func">PositionNot</code> (<a href="chap21.html#X865EF45D87ED1384"><span class="RefLink">21.16-10</span></a>). Namely, the element to be avoided is the zero element, and the list must be (at least) homogeneous because otherwise the zero element cannot be specified implicitly.</p>
+<p><code class="func">PositionNonZero</code> implements a special case of <code class="func">PositionNot</code> (<a href="chap21.html#X865EF45D87ED1384"><span class="RefLink">21.16-11</span></a>). Namely, the element to be avoided is the zero element, and the list must be (at least) homogeneous because otherwise the zero element cannot be specified implicitly.</p>
 
 
 <div class="example"><pre>
@@ -1592,7 +1631,7 @@ fail
 
 <p><a id="X87A8C62A867D6DA4" name="X87A8C62A867D6DA4"></a></p>
 
-<h5>21.16-12 PositionSublist</h5>
+<h5>21.16-13 PositionSublist</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionSublist</code>( <var class="Arg">list</var>, <var class="Arg">sub</var>[, <var class="Arg">from</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the smallest index in the list <var class="Arg">list</var> at which a sublist equal to <var class="Arg">sub</var> starts. If <var class="Arg">sub</var> does not occur the operation returns <code class="keyw">fail</code>. The version with given <var class="Arg">from</var> starts searching <em>after</em> position <var class="Arg">from</var>.</p>
@@ -1626,14 +1665,14 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMatchingSublist</code>( <var class="Arg">list</var>, <var class="Arg">sub</var>[, <var class="Arg">at</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns <code class="keyw">true</code> if <var class="Arg">sub</var> matches a sublist of <var class="Arg">list</var> from position <code class="code">1</code> (or position <var class="Arg">at</var>, in the case of three arguments), or <code class="keyw">false</code>, otherwise. If <var class="Arg">sub</var> is empty <code class="keyw">true</code> is returned. If <var class="Arg">list</var> is empty but <var class="Arg">sub</var> is non-empty <code class="keyw">false</code> is returned.</p>
 
-<p>If you actually want to know whether there is an <var class="Arg">at</var> for which <code class="code">IsMatchingSublist( <var class="Arg">list</var>, <var class="Arg">sub</var>, <var class="Arg">at</var> )</code> is true, use a construction like <code class="code">PositionSublist( <var class="Arg">list</var>, <var class="Arg">sub</var> ) &lt;&gt; fail</code> instead (see <code class="func">PositionSublist</code> (<a href="chap21.html#X87A8C62A867D6DA4"><span class="RefLink">21.16-12</span></a>)); it's more efficient.</p>
+<p>If you actually want to know whether there is an <var class="Arg">at</var> for which <code class="code">IsMatchingSublist( <var class="Arg">list</var>, <var class="Arg">sub</var>, <var class="Arg">at</var> )</code> is true, use a construction like <code class="code">PositionSublist( <var class="Arg">list</var>, <var class="Arg">sub</var> ) &lt;&gt; fail</code> instead (see <code class="func">PositionSublist</code> (<a href="chap21.html#X87A8C62A867D6DA4"><span class="RefLink">21.16-13</span></a>)); it's more efficient.</p>
 
 <p><a id="X7FA892828252BB3B" name="X7FA892828252BB3B"></a></p>
 
 <h5>21.17-2 IsDuplicateFree</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDuplicateFree</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDuplicateFreeList</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsDuplicateFreeList</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
 <p><code class="func">IsDuplicateFree</code> returns <code class="keyw">true</code> if <var class="Arg">obj</var> is both a list or collection, and it is duplicate free; otherwise it returns <code class="keyw">false</code>. <code class="func">IsDuplicateFreeList</code> is a synonym for <code class="code">IsDuplicateFree and IsList</code>.</p>
 
 <p>A list is <em>duplicate free</em> if it is dense and does not contain equal entries in different positions. Every domain (see <a href="chap12.html#X7BAF69417BB925F6"><span class="RefLink">12.4</span></a>) is duplicate free.</p>
@@ -1693,22 +1732,32 @@ false
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sort</code>( <var class="Arg">list</var>[, <var class="Arg">func</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SortBy</code>( <var class="Arg">list</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StableSort</code>( <var class="Arg">list</var>[, <var class="Arg">func</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StableSortBy</code>( <var class="Arg">list</var>[, <var class="Arg">func</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p><code class="func">Sort</code> sorts the list <var class="Arg">list</var> in increasing order. In the one argument form <code class="func">Sort</code> uses the operator <code class="code">&lt;</code> to compare the elements. (If the list is not homogeneous it is the users responsibility to ensure that <code class="code">&lt;</code> is defined for all element pairs, see <a href="chap31.html#X7B3BC7BA7BB2646D"><span class="RefLink">31.11</span></a>) In the two argument form <code class="func">Sort</code> uses the function <var class="Arg">func</var> to compare elements. <var class="Arg">func</var> must be a function taking two arguments that returns <code class="keyw">true</code> if the first is regarded as strictly smaller than the second, and <code class="keyw">false</code> otherwise.</p>
 
-<p>Note that, in cases where it is applicable, <code class="func">SortBy</code> is likely to be more efficient.</p>
+<p><code class="func">StableSort</code> behaves identically to <code class="func">Sort</code>, except that <code class="func">StableSort</code> will keep elements which compare equal in the same relative order, while <code class="func">Sort</code> may change their relative order.</p>
 
 <p><code class="func">Sort</code> does not return anything, it just changes the argument <var class="Arg">list</var>. Use <code class="func">ShallowCopy</code> (<a href="chap12.html#X846BC7107C352031"><span class="RefLink">12.7-1</span></a>) if you want to keep <var class="Arg">list</var>. Use <code class="func">Reversed</code> (<a href="chap21.html#X7C4FDB007C3F54A1"><span class="RefLink">21.20-7</span></a>) if you want to get a new list that is sorted in decreasing order.</p>
 
-<p>It is possible to sort lists that contain multiple elements which compare equal. It is not guaranteed that those elements keep their relative order, i.e., <code class="func">Sort</code> is not stable.</p>
+<p><code class="func">SortBy</code> sorts the list <var class="Arg">list</var> into an order such that <code class="code">func(list[i]) &lt;= func(list[i+1])</code> for all relevant <var class="Arg">i</var>. <var class="Arg">func</var> must thus be a function on one argument which returns values that can be compared. Each <code class="code">func(list[i])</code> is computed just once and stored, making this more efficient than using the two-argument version of <code class="func">Sort</code> in many cases.</p>
+
+<p><code class="func">StableSortBy</code> behaves the same as <code class="func">SortBy</code> except that, like <code class="func">StableSort</code>, it keeps pairs of values which compare equal when <code class="code">func</code> is applied to them in the same relative order.</p>
 
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">list := [ 5, 4, 6, 1, 7, 5 ];; Sort( list ); list;</span>
 [ 1, 4, 5, 5, 6, 7 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SortBy(list, x -&gt; x mod 3);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">list; # Sorted by mod 3</span>
+[ 6, 1, 4, 7, 5, 5]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">list := [ [0,6], [1,2], [1,3], [1,5], [0,4], [3,4] ];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Sort( list, function(v,w) return v*v &lt; w*w; end );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">list;  # sorted according to the Euclidean distance from [0,0]</span>
 [ [ 1, 2 ], [ 1, 3 ], [ 0, 4 ], [ 3, 4 ], [ 1, 5 ], [ 0, 6 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SortBy( list, function(v) return v[1] + v[2]; end );</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">list;  # sorted according to Manhattan distance from [0,0]</span>
+[ [ 1, 2 ], [ 1, 3 ], [ 0, 4 ], [ 1, 5 ], [ 0, 6 ], [ 3, 4 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">list := [ [0,6], [1,3], [3,4], [1,5], [1,2], [0,4], ];;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Sort( list, function(v,w) return v[1] &lt; w[1]; end );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># note the random order of the elements with equal first component:</span>
@@ -1716,14 +1765,15 @@ false
 [ [ 0, 6 ], [ 0, 4 ], [ 1, 3 ], [ 1, 5 ], [ 1, 2 ], [ 3, 4 ] ]
 </pre></div>
 
-<p><code class="func">SortBy</code> sorts the list <var class="Arg">list</var> into an order such that <code class="code">func(list[i]) &lt;= func(list[i+1])</code> for all relevant <var class="Arg">i</var>. <var class="Arg">func</var> must thus be a function on one argument which returns values that can be compared. Each <code class="code">func(list[i])</code> is computed just once and stored, making this more efficient than using the two-argument version of <code class="func">Sort</code> in many cases.</p>
-
 <p><a id="X791F2B2C7E9B9A46" name="X791F2B2C7E9B9A46"></a></p>
 
 <h5>21.18-2 SortParallel</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SortParallel</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var>[, <var class="Arg">func</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>sorts the list <var class="Arg">list1</var> in increasing order just as <code class="func">Sort</code> (<a href="chap21.html#X7FE4975F8166884D"><span class="RefLink">21.18-1</span></a>) does. In parallel it applies the same exchanges that are necessary to sort <var class="Arg">list1</var> to the list <var class="Arg">list2</var>, which must of course have at least as many elements as <var class="Arg">list1</var> does.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; StableSortParallel</code>( <var class="Arg">list1</var>, <var class="Arg">list2</var>[, <var class="Arg">func</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p><code class="func">SortParallel</code> sorts the list <var class="Arg">list1</var> in increasing order just as <code class="func">Sort</code> (<a href="chap21.html#X7FE4975F8166884D"><span class="RefLink">21.18-1</span></a>) does. In parallel it applies the same exchanges that are necessary to sort <var class="Arg">list1</var> to the list <var class="Arg">list2</var>, which must of course have at least as many elements as <var class="Arg">list1</var> does.</p>
+
+<p><code class="func">StableSortParallel</code> behaves identically to <code class="func">SortParallel</code>, except it keeps elements in <var class="Arg">list1</var> which compare equal in the same relative order.</p>
 
 
 <div class="example"><pre>
@@ -1736,7 +1786,7 @@ false
 [ 7, 3, 2, 9, 5, 8 ]
 </pre></div>
 
-<p>Note that <code class="code">[ 7, 3, 2, 9, 5, 8 ]</code> or <code class="code">[ 7, 3, 9, 2, 5, 8 ]</code> are possible results.</p>
+<p>Note that <code class="code">[ 7, 3, 2, 9, 5, 8 ]</code> or <code class="code">[ 7, 3, 9, 2, 5, 8 ]</code> are possible results. <code class="func">StableSortParallel</code> will always return <code class="code">[ 7, 3, 2, 9, 5, 8]</code>.</p>
 
 <p><a id="X87287FCA81E2B06A" name="X87287FCA81E2B06A"></a></p>
 
@@ -2140,6 +2190,8 @@ false
 [ 2, -11 ]
 </pre></div>
 
+<p>To get the index of the maximum element use <code class="func">PositionMaximum</code> (<a href="chap21.html#X7FD9C1D37F300206"><span class="RefLink">21.16-7</span></a>)</p>
+
 <p><a id="X82F133EC7F89665F" name="X82F133EC7F89665F"></a></p>
 
 <h5>21.20-14 <span class="Heading">Minimum</span></h5>
@@ -2161,6 +2213,8 @@ false
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Minimum( [ 1, 2 ], [ 0, 15 ], [ 1, 5 ], [ 2, -11 ] );</span>
 [ 0, 15 ]
 </pre></div>
+
+<p>To get the index of the minimum element use <code class="func">PositionMinimum</code> (<a href="chap21.html#X7FD9C1D37F300206"><span class="RefLink">21.16-7</span></a>)</p>
 
 <p><a id="X842851EB7E0969F7" name="X842851EB7E0969F7"></a></p>
 
@@ -2184,7 +2238,7 @@ false
 
 <p>The <em>cartesian product</em> is a list <var class="Arg">cart</var> of lists <var class="Arg">tup</var>, such that the first element of <var class="Arg">tup</var> is an element of <var class="Arg">list1</var>, the second element of <var class="Arg">tup</var> is an element of <var class="Arg">list2</var>, and so on. The total number of elements in <var class="Arg">cart</var> is the product of the lengths of the argument lists. In particular <var class="Arg">cart</var> is empty if and only if at least one of the argument lists is empty. Also <var class="Arg">cart</var> contains duplicates if and only if no argument list is empty and at least one contains duplicates.</p>
 
-<p>The last index runs fastest. That means that the first element <var class="Arg">tup1</var> of <var class="Arg">cart</var> contains the first element from <var class="Arg">list1</var>, from <var class="Arg">list2</var> and so on. The second element <var class="Arg">tup2</var> of <var class="Arg">cart</var> contains the first element from <var class="Arg">list1</var>, the first from <var class="Arg">list2</var>, an so on, but the last element of <var class="Arg">tup2</var> is the second element of the last argument list. This implies that <var class="Arg">cart</var> is a proper set if and only if all argument lists are proper sets (see <a href="chap21.html#X80ABC25582343910"><span class="RefLink">21.19</span></a>).</p>
+<p>The last index runs fastest. That means that the first element <var class="Arg">tup1</var> of <var class="Arg">cart</var> contains the first element from <var class="Arg">list1</var>, from <var class="Arg">list2</var> and so on. The second element <var class="Arg">tup2</var> of <var class="Arg">cart</var> contains the first element from <var class="Arg">list1</var>, the first from <var class="Arg">list2</var>, and so on, but the last element of <var class="Arg">tup2</var> is the second element of the last argument list. This implies that <var class="Arg">cart</var> is a proper set if and only if all argument lists are proper sets (see <a href="chap21.html#X80ABC25582343910"><span class="RefLink">21.19</span></a>).</p>
 
 <p>The function <code class="func">Tuples</code> (<a href="chap16.html#X86A3CA0F7CC8C320"><span class="RefLink">16.2-8</span></a>) computes the <var class="Arg">k</var>-fold cartesian product of a list.</p>
 
@@ -2309,7 +2363,7 @@ false
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; First</code>( <var class="Arg">list</var>, <var class="Arg">func</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p><code class="func">First</code> returns the first element of the list <var class="Arg">list</var> for which the unary function <var class="Arg">func</var> returns <code class="keyw">true</code>. <var class="Arg">list</var> may contain holes. <var class="Arg">func</var> must return either <code class="keyw">true</code> or <code class="keyw">false</code> for each element of <var class="Arg">list</var>, otherwise an error is signalled. If <var class="Arg">func</var> returns <code class="keyw">false</code> for all elements of <var class="Arg">list</var> then <code class="func">First</code> returns <code class="keyw">fail</code>.</p>
 
-<p><code class="func">PositionProperty</code> (<a href="chap21.html#X7E6C763A82C6153B"><span class="RefLink">21.16-7</span></a>) allows you to find the position of the first element in a list that satisfies a certain property.</p>
+<p><code class="func">PositionProperty</code> (<a href="chap21.html#X7E6C763A82C6153B"><span class="RefLink">21.16-8</span></a>) allows you to find the position of the first element in a list that satisfies a certain property.</p>
 
 
 <div class="example"><pre>

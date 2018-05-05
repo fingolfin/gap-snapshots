@@ -1,0 +1,16 @@
+#############################################################################
+##
+#A  trans31.grp                 GAP group library           Alexander Hulpke
+##
+#Y  Copyright (C) 2014, Derek Holt, University of Warwick
+#Y  Converted by Alexander Hulpke
+##
+##  This file contains part of the transitive groups of degree 31
+##
+
+TRANSGRP[31]:=[];
+TRANSPROPERTIES[31]:=[];
+TRANSSELECT[31]:=[];
+TRANSLENGTHS[31]:=12;
+TRANSSIZES[31]:=[31,62,93,155,186,310,465,930,372000,9999360,
+4111419327088961408862781440000000,8222838654177922817725562880000000];

@@ -42,201 +42,29 @@
 **
 **  The  second part  consists  of   the functions  'LenRange',   'ElmRange',
 **  'ElmsRange',   'AssRange',      'AsssRange',   'PosRange',  'PlainRange',
-**  'IsDenseRange',   'IsPossRange', 'PrintRange', 'EqRange', and  'LtRange'.
+**  'IsPossRange', 'PrintRange', 'EqRange', and  'LtRange'.
 **  They  are the  functions required by  the generic   lists package.  Using
 **  these functions the other parts of the {\GAP} kernel can access or modify
 **  ranges without actually being aware that they are dealing with a range.
 **
 **  The  third part consists  ...
 */
-#include        "system.h"              /* system dependent part           */
 
+#include <src/range.h>
 
-#include        "gasman.h"              /* garbage collector               */
-#include        "objects.h"             /* objects                         */
-#include        "scanner.h"             /* scanner                         */
-
-#include        "gap.h"                 /* error handling, initialisation  */
-
-#include        "gvars.h"               /* global variables                */
-
-#include        "calls.h"               /* generic call mechanism          */
-#include        "opers.h"               /* generic operations              */
-
-#include        "ariths.h"              /* basic arithmetic                */
-
-#include        "bool.h"                /* booleans                        */
-
-#include        "records.h"             /* generic records                 */
-#include        "precord.h"             /* plain records                   */
-
-#include        "lists.h"               /* generic lists                   */
-#include        "plist.h"               /* plain lists                     */
-#include        "range.h"               /* ranges                          */
-#include        "string.h"              /* strings                         */
-
-#include        "saveload.h"            /* saving and loading              */
-
-#include	"code.h"		/* coder                           */
-#include	"thread.h"		/* threads			   */
-#include	"tls.h"			/* thread-local storage		   */
+#include <src/ariths.h>
+#include <src/bool.h>
+#include <src/gap.h>
+#include <src/gaputils.h>
+#include <src/io.h>
+#include <src/lists.h>
+#include <src/opers.h>
+#include <src/plist.h>
+#include <src/saveload.h>
 
 
 /****************************************************************************
 **
-
-*F  NEW_RANGE() . . . . . . . . . . . . . . . . . . . . . .  make a new range
-**
-**  'NEW_RANGE' returns a new range.  Note that  you must set the length, the
-**  low value, and the increment before you can use the range.
-**
-**  'NEW_RANGE' is defined in the declaration part of this package as follows
-**
-#define NEW_RANGE_NSORT() NewBag( T_RANGE_NSORT, 3 * sizeof(Obj) )
-#define NEW_RANGE_SSORT() NewBag( T_RANGE_SSORT, 3 * sizeof(Obj) )
-*/
-
-
-/****************************************************************************
-**
-*F  IS_RANGE(<val>) . . . . . . . . . . . . . . .  test if a value is a range
-**
-**  'IS_RANGE' returns 1  if the value  <val> is known  to be a range,  and 0
-**  otherwise.  Note that a list for which 'IS_RANGE' returns  0 may still be
-**  a range, but  the kernel does not know  this yet.  Use  'IsRange' to test
-**  whether a list is a range.
-**
-**  Note that  'IS_RANGE' is a  macro, so do not  call it with arguments that
-**  have side effects.
-**
-**  'IS_RANGE' is defined in the declaration part of this package as follows
-**
-#define IS_RANGE(val)   (TNUM_OBJ(val)==T_RANGE_NSORT || TNUM_OBJ(val)==T_RANGE_SSORT)
-*/
-
-
-/****************************************************************************
-**
-*F  SET_LEN_RANGE(<list>,<len>) . . . . . . . . . . set the length of a range
-**
-**  'SET_LEN_RANGE' sets the length  of the range <list>  to the value <len>,
-**  which must be a C integer larger than 1.
-**
-**  Note that 'SET_LEN_RANGE' is a macro,  so  do not  call it with arguments
-**  that have side effects.
-**
-**  'SET_LEN_RANGE' is  defined in  the declaration part  of  this package as
-**  follows
-**
-#define SET_LEN_RANGE(list,len)         (ADDR_OBJ(list)[0] = INTOBJ_INT(len))
-*/
-
-
-/****************************************************************************
-**
-*F  GET_LEN_RANGE(<list>) . . . . . . . . . . . . . . . . . length of a range
-**
-**  'GET_LEN_RANGE' returns the  logical length of  the range <list>, as  a C
-**  integer.
-**
-**  Note that  'GET_LEN_RANGE' is a macro, so  do not call  it with arguments
-**  that have side effects.
-**
-**  'GET_LEN_RANGE' is  defined in  the declaration part  of this  package as
-**  follows
-**
-#define GET_LEN_RANGE(list)             INT_INTOBJ( ADDR_OBJ(list)[0] )
-*/
-
-
-/****************************************************************************
-**
-*F  SET_LOW_RANGE(<list>,<low>) . . . . . .  set the first element of a range
-**
-**  'SET_LOW_RANGE' sets the  first element of the range  <list> to the value
-**  <low>, which must be a C integer.
-**
-**  Note  that 'SET_LOW_RANGE' is a macro, so do not call  it with  arguments
-**  that have side effects.
-**
-**  'SET_LOW_RANGE' is defined  in the declaration  part  of this package  as
-**  follows
-**
-#define SET_LOW_RANGE(list,low)         (ADDR_OBJ(list)[1] = INTOBJ_INT(low))
-*/
-
-
-/****************************************************************************
-**
-*F  GET_LOW_RANGE(<list>) . . . . . . . . . . . . .  first element of a range
-**
-**  'GET_LOW_RANGE' returns the first  element  of the  range  <list> as a  C
-**  integer.
-**
-**  Note that 'GET_LOW_RANGE' is a  macro, so do not  call it with  arguments
-**  that have side effects.
-**
-**  'GET_LOW_RANGE'  is defined in  the declaration  part  of this package as
-**  follows
-**
-#define GET_LOW_RANGE(list)             INT_INTOBJ( ADDR_OBJ(list)[1] )
-*/
-
-
-/****************************************************************************
-**
-*F  SET_INC_RANGE(<list>,<inc>) . . . . . . . .  set the increment of a range
-**
-**  'SET_INC_RANGE' sets  the  increment of  the range  <list>   to the value
-**  <inc>, which must be a C integer.
-**
-**  Note that  'SET_INC_RANGE' is a macro,  so do  not call it with arguments
-**  that have side effects.
-**
-**  'SET_INC_RANGE' is  defined  in the  declaration part of  this package as
-**  follows
-**
-#define SET_INC_RANGE(list,inc)         (ADDR_OBJ(list)[2] = INTOBJ_INT(inc))
-*/
-
-
-/****************************************************************************
-**
-*F  GET_INC_RANGE(<list>) . . . . . . . . . . . . . . .  increment of a range
-**
-**  'GET_INC_RANGE' returns the increment of the range <list> as a C integer.
-**
-**  Note  that 'GET_INC_RANGE' is  a macro, so  do not call it with arguments
-**  that have side effects.
-**
-**  'GET_INC_RANGE' is  defined  in the  declaration part  of this package as
-**  follows
-**
-#define GET_INC_RANGE(list)             INT_INTOBJ( ADDR_OBJ(list)[2] )
-*/
-
-
-/****************************************************************************
-**
-*F  GET_ELM_RANGE(<list>,<pos>) . . . . . . . . . . . . .  element of a range
-**
-**  'GET_ELM_RANGE' return  the <pos>-th element  of the range <list>.  <pos>
-**  must be a positive integer less than or equal to the length of <list>.
-**
-**  Note that 'GET_ELM_RANGE'  is a macro, so do  not call  it with arguments
-**  that have side effects.
-**
-**  'GET_ELM_RANGE'  is  defined in the  declaration part  of this package as
-**  follows
-**
-#define GET_ELM_RANGE(list,pos)         INTOBJ_INT( GET_LOW_RANGE(list) \
-                                          + ((pos)-1) * GET_INC_RANGE(list) )
-*/
-
-
-/****************************************************************************
-**
-
 *F  TypeRangeNSortImmutable( <range> )  . . . . . . . . . . . type of a range
 **
 **  'TypeRangeNSortMutable' is the   function in 'TypeObjFuncs' for immutable
@@ -296,9 +124,10 @@ Obj TypeRangeSSortMutable (
     return TYPE_RANGE_SSORT_MUTABLE;
 }
     
+#if !defined(USE_THREADSAFE_COPYING)
+
 /****************************************************************************
 **
-
 *F  CopyRange( <list>, <mut> )  . . . . . . . . . . . . . . . .  copy a range
 **
 **  'CopyRange' returns a structural (deep) copy of the range <list>, i.e., a
@@ -334,7 +163,7 @@ Obj CopyRange (
     else {
         copy = NewBag( IMMUTABLE_TNUM( TNUM_OBJ(list) ), SIZE_OBJ(list) );
     }
-    ADDR_OBJ(copy)[0] = ADDR_OBJ(list)[0];
+    ADDR_OBJ(copy)[0] = CONST_ADDR_OBJ(list)[0];
 
     /* leave a forwarding pointer                                          */
     ADDR_OBJ(list)[0] = copy;
@@ -344,8 +173,8 @@ Obj CopyRange (
     RetypeBag( list, TNUM_OBJ(list) + COPYING );
 
     /* copy the subvalues                                                  */
-    ADDR_OBJ(copy)[1] = ADDR_OBJ(list)[1];
-    ADDR_OBJ(copy)[2] = ADDR_OBJ(list)[2];
+    ADDR_OBJ(copy)[1] = CONST_ADDR_OBJ(list)[1];
+    ADDR_OBJ(copy)[2] = CONST_ADDR_OBJ(list)[2];
 
     /* return the copy                                                     */
     return copy;
@@ -382,16 +211,17 @@ void CleanRangeCopy (
     Obj                 list )
 {
     /* remove the forwarding pointer                                       */
-    ADDR_OBJ(list)[0] = ADDR_OBJ( ADDR_OBJ(list)[0] )[0];
+    ADDR_OBJ(list)[0] = CONST_ADDR_OBJ( CONST_ADDR_OBJ(list)[0] )[0];
 
     /* now it is cleaned                                                   */
     RetypeBag( list, TNUM_OBJ(list) - COPYING );
 }
 
+#endif // !defined(USE_THREADSAFE_COPYING)
+
 
 /****************************************************************************
 **
-
 *F  PrintRange(<list>)  . . . . . . . . . . . . . . . . . . . . print a range
 **
 **  'PrintRange' prints the range <list>.
@@ -493,13 +323,6 @@ Int             IsbRange (
     Int                 pos )
 {
     return (pos <= GET_LEN_RANGE(list));
-}
-
-Int             IsbvRange (
-    Obj                 list,
-    Int                 pos )
-{
-    return 1L;
 }
 
 
@@ -769,49 +592,6 @@ void            AsssRangeImm (
 
 /****************************************************************************
 **
-*F  IsDenseRange(<list>)  . . . . . . . . dense list test function for ranges
-**
-**  'IsDenseRange' returns 1, since ranges are always dense.
-**
-**  'IsDenseRange' is the function in 'IsDenseListFuncs' for ranges.
-*/
-Int             IsDenseRange (
-    Obj                 list )
-{
-    return 1;
-}
-
-
-/****************************************************************************
-**
-*F  IsHomogRange(<list>)
-*/
-Int             IsHomogRange (
-    Obj                 list )
-{
-    return 1;
-}
-
-
-/****************************************************************************
-**
-*F  IsSSortRange(<list>)
-*/
-Int             IsSSortRangeNot (
-    Obj                 list )
-{
-    return 0;
-}
-
-Int             IsSSortRangeYes (
-    Obj                 list )
-{
-    return 1;
-}
-
-
-/****************************************************************************
-**
 *F  IsPossRange(<list>) . . . . . . . positions list test function for ranges
 **
 **  'IsPossRange' returns 1  if the range <list>  is a dense list  containing
@@ -874,7 +654,7 @@ Obj             PosRange (
     }
 
     /* look for an integer                                                 */
-    else if ( TNUM_OBJ(val) == T_INT ) {
+    else if ( IS_INTOBJ(val) ) {
         v = INT_INTOBJ(val);
         if ( 0 < inc
           && low + istart * inc <= v && v <= low + (lenList-1) * inc
@@ -986,17 +766,17 @@ Int             IsRange (
     }
 
     /* if <list> is a list with just one integer, it is also a range     */
-    else if ( LEN_LIST(list)==1 && TNUM_OBJ(ELMW_LIST(list,1))==T_INT ) {
+    else if ( LEN_LIST(list)==1 && IS_INTOBJ(ELMW_LIST(list,1)) ) {
         isRange = 1;
     }
 
     /* if the first element is not an integer, it is not a range           */
-    else if ( ELMV0_LIST(list,1)==0 || TNUM_OBJ(ELMW_LIST(list,1))!=T_INT ) {
+    else if ( ELMV0_LIST(list,1)==0 || !IS_INTOBJ(ELMW_LIST(list,1)) ) {
         isRange = 0;
     }
 
     /* if the second element is not an integer, it is not a range          */
-    else if ( ELMV0_LIST(list,2)==0 || TNUM_OBJ(ELMW_LIST(list,2))!=T_INT ) {
+    else if ( ELMV0_LIST(list,2)==0 || !IS_INTOBJ(ELMW_LIST(list,2)) ) {
         isRange = 0;
     }
 
@@ -1071,9 +851,9 @@ Obj FuncIS_RANGE (
 
 void SaveRange( Obj range )
 {
-  SaveSubObj(ADDR_OBJ(range)[0]); /* length */
-  SaveSubObj(ADDR_OBJ(range)[1]); /* base */
-  SaveSubObj(ADDR_OBJ(range)[2]); /* increment */
+  SaveSubObj(CONST_ADDR_OBJ(range)[0]); /* length */
+  SaveSubObj(CONST_ADDR_OBJ(range)[1]); /* base */
+  SaveSubObj(CONST_ADDR_OBJ(range)[2]); /* increment */
 }
 
 /****************************************************************************
@@ -1194,14 +974,11 @@ Obj Range3Check (
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * * GAP level functions  * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
-
 *F  FuncIS_RANGE_REP( <self>, <obj> ) . . . . . test if value is in range rep
 */
 Obj IsRangeRepFilt;
@@ -1332,14 +1109,12 @@ a := [-9,-5..3];; INTER_RANGE(a,[-21,-18..6]); a;
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *V  BagNames  . . . . . . . . . . . . . . . . . . . . . . . list of bag names
 */
 static StructBagNames BagNames[] = {
@@ -1347,10 +1122,12 @@ static StructBagNames BagNames[] = {
   { T_RANGE_NSORT +IMMUTABLE,          "list (range,nsort,imm)"        },
   { T_RANGE_SSORT,                     "list (range,ssort)"            },
   { T_RANGE_SSORT +IMMUTABLE,          "list (range,ssort,imm)"        },
+#if !defined(USE_THREADSAFE_COPYING)
   { T_RANGE_NSORT            +COPYING, "list (range,nsort,copied)"     },
   { T_RANGE_NSORT +IMMUTABLE +COPYING, "list (range,nsort,imm,copied)" },
   { T_RANGE_SSORT            +COPYING, "list (range,ssort,copied)"     },
   { T_RANGE_SSORT +IMMUTABLE +COPYING, "list (range,ssort,imm,copied)" },
+#endif
   { -1,                                ""                              }
 };
 
@@ -1361,9 +1138,7 @@ static StructBagNames BagNames[] = {
 */
 static Int ClearFiltsTab [] = {
     T_RANGE_NSORT,           T_RANGE_NSORT,
-    T_RANGE_NSORT+IMMUTABLE, T_RANGE_NSORT+IMMUTABLE,
     T_RANGE_SSORT,           T_RANGE_SSORT,
-    T_RANGE_SSORT+IMMUTABLE, T_RANGE_SSORT+IMMUTABLE,
     -1,                      -1
 };
 
@@ -1374,53 +1149,27 @@ static Int ClearFiltsTab [] = {
 */
 static Int HasFiltTab [] = {
 
-    /* nsort mutable range                                                 */
-    T_RANGE_NSORT,              FN_IS_MUTABLE,  1,
+    // nsort range
     T_RANGE_NSORT,              FN_IS_EMPTY,    0,
     T_RANGE_NSORT,              FN_IS_DENSE,    1,
     T_RANGE_NSORT,              FN_IS_NDENSE,   0,
     T_RANGE_NSORT,              FN_IS_HOMOG,    1,
     T_RANGE_NSORT,              FN_IS_NHOMOG,   0,
     T_RANGE_NSORT,              FN_IS_TABLE,    0,
-    T_RANGE_NSORT,              FN_IS_RECT,    0,
+    T_RANGE_NSORT,              FN_IS_RECT,     0,
     T_RANGE_NSORT,              FN_IS_SSORT,    0,
     T_RANGE_NSORT,              FN_IS_NSORT,    1,
 
-    /* nsort immutable range                                               */
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_MUTABLE,  0,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_EMPTY,    0,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_DENSE,    1,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_NDENSE,   0,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_HOMOG,    1,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_NHOMOG,   0,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_TABLE,    0,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_RECT,    0,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_SSORT,    0,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_NSORT,    1,
-
-    /* ssort mutable range                                                 */
-    T_RANGE_SSORT,              FN_IS_MUTABLE,  1,
+    // ssort range
     T_RANGE_SSORT,              FN_IS_EMPTY,    0,
     T_RANGE_SSORT,              FN_IS_DENSE,    1,
     T_RANGE_SSORT,              FN_IS_NDENSE,   0,
     T_RANGE_SSORT,              FN_IS_HOMOG,    1,
     T_RANGE_SSORT,              FN_IS_NHOMOG,   0,
     T_RANGE_SSORT,              FN_IS_TABLE,    0,
-    T_RANGE_SSORT,              FN_IS_RECT,    0,
+    T_RANGE_SSORT,              FN_IS_RECT,     0,
     T_RANGE_SSORT,              FN_IS_SSORT,    1,
     T_RANGE_SSORT,              FN_IS_NSORT,    0,
-
-    /* ssort immutable range                                               */
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_MUTABLE,  0,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_EMPTY,    0,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_DENSE,    1,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_NDENSE,   0,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_HOMOG,    1,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_NHOMOG,   0,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_TABLE,    0,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_RECT,    0,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_SSORT,    1,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_NSORT,    0,
 
     -1,                         -1,             -1
 };
@@ -1432,54 +1181,27 @@ static Int HasFiltTab [] = {
 */
 static Int SetFiltTab [] = {
 
-    /* nsort mutable range                                                 */
-    T_RANGE_NSORT,              FN_IS_MUTABLE,  T_RANGE_NSORT,
+    // nsort range
     T_RANGE_NSORT,              FN_IS_EMPTY,    -1,
     T_RANGE_NSORT,              FN_IS_DENSE,    T_RANGE_NSORT,
     T_RANGE_NSORT,              FN_IS_NDENSE,   -1,
     T_RANGE_NSORT,              FN_IS_HOMOG,    T_RANGE_NSORT,
     T_RANGE_NSORT,              FN_IS_NHOMOG,   -1,
     T_RANGE_NSORT,              FN_IS_TABLE,    -1,
-    T_RANGE_NSORT,              FN_IS_RECT,    -1,
+    T_RANGE_NSORT,              FN_IS_RECT,     -1,
     T_RANGE_NSORT,              FN_IS_SSORT,    -1,
     T_RANGE_NSORT,              FN_IS_NSORT,    T_RANGE_NSORT,
 
-    /* nsort immutable range                                               */
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_MUTABLE,  T_RANGE_NSORT,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_EMPTY,    -1,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_DENSE,    T_RANGE_NSORT+IMMUTABLE,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_NDENSE,   -1,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_HOMOG,    T_RANGE_NSORT+IMMUTABLE,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_NHOMOG,   -1,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_TABLE,    -1,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_RECT,    -1,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_SSORT,    -1,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_NSORT,    T_RANGE_NSORT+IMMUTABLE,
-
-    /* ssort mutable range                                                 */
-    T_RANGE_SSORT,              FN_IS_MUTABLE,  T_RANGE_SSORT,
+    // ssort range
     T_RANGE_SSORT,              FN_IS_EMPTY,    T_RANGE_SSORT,
     T_RANGE_SSORT,              FN_IS_DENSE,    T_RANGE_SSORT,
     T_RANGE_SSORT,              FN_IS_NDENSE,   -1,
     T_RANGE_SSORT,              FN_IS_HOMOG,    T_RANGE_SSORT,
     T_RANGE_SSORT,              FN_IS_NHOMOG,   -1,
     T_RANGE_SSORT,              FN_IS_TABLE,    -1,
-    T_RANGE_SSORT,              FN_IS_RECT,    -1,
+    T_RANGE_SSORT,              FN_IS_RECT,     -1,
     T_RANGE_SSORT,              FN_IS_SSORT,    T_RANGE_SSORT,
     T_RANGE_SSORT,              FN_IS_NSORT,    -1,
-
-    /* ssort immutable range                                               */
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_MUTABLE,  T_RANGE_SSORT,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_EMPTY,    T_RANGE_SSORT+IMMUTABLE,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_DENSE,    T_RANGE_SSORT+IMMUTABLE,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_NDENSE,   -1,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_HOMOG,    T_RANGE_SSORT+IMMUTABLE,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_NHOMOG,   -1,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_TABLE,    -1,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_RECT,    -1,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_SSORT,    T_RANGE_SSORT+IMMUTABLE,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_NSORT,    -1,
-
 
     -1,                         -1,             -1
 
@@ -1492,53 +1214,27 @@ static Int SetFiltTab [] = {
 */
 static Int ResetFiltTab [] = {
 
-    /* nsort mutable range                                                 */
-    T_RANGE_NSORT,              FN_IS_MUTABLE,  T_RANGE_NSORT+IMMUTABLE,
+    // nsort range
     T_RANGE_NSORT,              FN_IS_EMPTY,    T_RANGE_NSORT,
     T_RANGE_NSORT,              FN_IS_DENSE,    T_RANGE_NSORT,
     T_RANGE_NSORT,              FN_IS_NDENSE,   T_RANGE_NSORT,
     T_RANGE_NSORT,              FN_IS_HOMOG,    T_RANGE_NSORT,
     T_RANGE_NSORT,              FN_IS_NHOMOG,   T_RANGE_NSORT,
     T_RANGE_NSORT,              FN_IS_TABLE,    T_RANGE_NSORT,
-    T_RANGE_NSORT,              FN_IS_RECT,    T_RANGE_NSORT,
+    T_RANGE_NSORT,              FN_IS_RECT,     T_RANGE_NSORT,
     T_RANGE_NSORT,              FN_IS_SSORT,    T_RANGE_NSORT,
     T_RANGE_NSORT,              FN_IS_NSORT,    T_RANGE_NSORT,
 
-    /* nsort immutable range                                               */
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_MUTABLE,  T_RANGE_NSORT+IMMUTABLE,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_EMPTY,    T_RANGE_NSORT+IMMUTABLE,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_DENSE,    T_RANGE_NSORT+IMMUTABLE,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_NDENSE,   T_RANGE_NSORT+IMMUTABLE,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_HOMOG,    T_RANGE_NSORT+IMMUTABLE,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_NHOMOG,   T_RANGE_NSORT+IMMUTABLE,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_TABLE,    T_RANGE_NSORT+IMMUTABLE,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_RECT,    T_RANGE_NSORT+IMMUTABLE,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_SSORT,    T_RANGE_NSORT+IMMUTABLE,
-    T_RANGE_NSORT+IMMUTABLE,    FN_IS_NSORT,    T_RANGE_NSORT+IMMUTABLE,
-
-    /* ssort mutable range                                                 */
-    T_RANGE_SSORT,              FN_IS_MUTABLE,  T_RANGE_SSORT+IMMUTABLE,
+    // ssort range
     T_RANGE_SSORT,              FN_IS_EMPTY,    T_RANGE_SSORT,
     T_RANGE_SSORT,              FN_IS_DENSE,    T_RANGE_SSORT,
     T_RANGE_SSORT,              FN_IS_NDENSE,   T_RANGE_SSORT,
     T_RANGE_SSORT,              FN_IS_HOMOG,    T_RANGE_SSORT,
     T_RANGE_SSORT,              FN_IS_NHOMOG,   T_RANGE_SSORT,
     T_RANGE_SSORT,              FN_IS_TABLE,    T_RANGE_SSORT,
-    T_RANGE_SSORT,              FN_IS_RECT,    T_RANGE_SSORT,
+    T_RANGE_SSORT,              FN_IS_RECT,     T_RANGE_SSORT,
     T_RANGE_SSORT,              FN_IS_SSORT,    T_RANGE_SSORT,
     T_RANGE_SSORT,              FN_IS_NSORT,    T_RANGE_SSORT,
-
-    /* ssort immutable range                                               */
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_MUTABLE,  T_RANGE_SSORT+IMMUTABLE,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_EMPTY,    T_RANGE_SSORT+IMMUTABLE,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_DENSE,    T_RANGE_SSORT+IMMUTABLE,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_NDENSE,   T_RANGE_SSORT+IMMUTABLE,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_HOMOG,    T_RANGE_SSORT+IMMUTABLE,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_NHOMOG,   T_RANGE_SSORT+IMMUTABLE,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_TABLE,    T_RANGE_SSORT+IMMUTABLE,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_RECT,    T_RANGE_SSORT+IMMUTABLE,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_SSORT,    T_RANGE_SSORT+IMMUTABLE,
-    T_RANGE_SSORT+IMMUTABLE,    FN_IS_NSORT,    T_BLIST_SSORT+IMMUTABLE,
 
     -1,                         -1,             -1
 
@@ -1551,13 +1247,9 @@ static Int ResetFiltTab [] = {
 */
 static StructGVarFilt GVarFilts [] = {
 
-    { "IS_RANGE", "obj", &IsRangeFilt,
-      FuncIS_RANGE, "src/range.c:IS_RANGE" },
-
-    { "IS_RANGE_REP", "obj", &IsRangeRepFilt,
-      FuncIS_RANGE_REP, "src/range.c:IS_RANGE_REP" },
-
-    { 0 }
+    GVAR_FILTER(IS_RANGE, "obj", &IsRangeFilt),
+    GVAR_FILTER(IS_RANGE_REP, "obj", &IsRangeRepFilt),
+    { 0, 0, 0, 0, 0 }
 
 };
 
@@ -1567,26 +1259,19 @@ static StructGVarFilt GVarFilts [] = {
 */
 static StructGVarFunc GVarFuncs [] = {
 
-    { "INTER_RANGE", 2, "range1, range2",
-      FuncINTER_RANGE, "src/range.c:INTER_RANGE" },
-
-
-    { 0 }
+    GVAR_FUNC(INTER_RANGE, 2, "range1, range2"),
+    { 0, 0, 0, 0, 0 }
 
 };
 
 
 /****************************************************************************
 **
-
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel (
     StructInitInfo *    module )
 {
-    /* check dependencies                                                  */
-    RequireModule( module, "lists", 403600000UL );
-
     /* GASMAN marking functions and GASMAN names                           */
     InitBagNamesFromTable( BagNames );
 
@@ -1594,10 +1279,12 @@ static Int InitKernel (
     InitMarkFuncBags(   T_RANGE_NSORT +IMMUTABLE          , MarkAllSubBags );
     InitMarkFuncBags(   T_RANGE_SSORT                     , MarkAllSubBags );
     InitMarkFuncBags(   T_RANGE_SSORT +IMMUTABLE          , MarkAllSubBags );
+#if !defined(USE_THREADSAFE_COPYING)
     InitMarkFuncBags(   T_RANGE_NSORT            +COPYING , MarkAllSubBags );
     InitMarkFuncBags(   T_RANGE_NSORT +IMMUTABLE +COPYING , MarkAllSubBags );
     InitMarkFuncBags(   T_RANGE_SSORT            +COPYING , MarkAllSubBags );
     InitMarkFuncBags(   T_RANGE_SSORT +IMMUTABLE +COPYING , MarkAllSubBags );
+#endif
 
     /* Make immutable bags public                                          */
     MakeBagTypePublic( T_RANGE_NSORT + IMMUTABLE );
@@ -1635,23 +1322,25 @@ static Int InitKernel (
     LoadObjFuncs[T_RANGE_SSORT            ] = LoadRange;
     LoadObjFuncs[T_RANGE_SSORT +IMMUTABLE ] = LoadRange;
 
+#if !defined(USE_THREADSAFE_COPYING)
     /* install the copy methods                                            */
     CopyObjFuncs [ T_RANGE_NSORT                     ] = CopyRange;
-    CopyObjFuncs [ T_RANGE_NSORT            +COPYING ] = CopyRangeCopy;
     CopyObjFuncs [ T_RANGE_NSORT +IMMUTABLE          ] = CopyRange;
+    CopyObjFuncs [ T_RANGE_NSORT            +COPYING ] = CopyRangeCopy;
     CopyObjFuncs [ T_RANGE_NSORT +IMMUTABLE +COPYING ] = CopyRangeCopy;
     CopyObjFuncs [ T_RANGE_SSORT                     ] = CopyRange;
-    CopyObjFuncs [ T_RANGE_SSORT            +COPYING ] = CopyRangeCopy;
     CopyObjFuncs [ T_RANGE_SSORT +IMMUTABLE          ] = CopyRange;
+    CopyObjFuncs [ T_RANGE_SSORT            +COPYING ] = CopyRangeCopy;
     CopyObjFuncs [ T_RANGE_SSORT +IMMUTABLE +COPYING ] = CopyRangeCopy;
     CleanObjFuncs[ T_RANGE_NSORT                     ] = CleanRange;
-    CleanObjFuncs[ T_RANGE_NSORT            +COPYING ] = CleanRangeCopy;
     CleanObjFuncs[ T_RANGE_NSORT +IMMUTABLE          ] = CleanRange;
+    CleanObjFuncs[ T_RANGE_NSORT            +COPYING ] = CleanRangeCopy;
     CleanObjFuncs[ T_RANGE_NSORT +IMMUTABLE +COPYING ] = CleanRangeCopy;
     CleanObjFuncs[ T_RANGE_SSORT                     ] = CleanRange;
-    CleanObjFuncs[ T_RANGE_SSORT            +COPYING ] = CleanRangeCopy;
     CleanObjFuncs[ T_RANGE_SSORT +IMMUTABLE          ] = CleanRange;
+    CleanObjFuncs[ T_RANGE_SSORT            +COPYING ] = CleanRangeCopy;
     CleanObjFuncs[ T_RANGE_SSORT +IMMUTABLE +COPYING ] = CleanRangeCopy;
+#endif
 
     /* Make immutable methods */
     MakeImmutableObjFuncs[ T_RANGE_NSORT ] = MakeImmutableRange;
@@ -1688,10 +1377,6 @@ static Int InitKernel (
     IsbListFuncs    [ T_RANGE_NSORT +IMMUTABLE ] = IsbRange;
     IsbListFuncs    [ T_RANGE_SSORT            ] = IsbRange;
     IsbListFuncs    [ T_RANGE_SSORT +IMMUTABLE ] = IsbRange;
-    IsbvListFuncs   [ T_RANGE_NSORT            ] = IsbvRange;
-    IsbvListFuncs   [ T_RANGE_NSORT +IMMUTABLE ] = IsbvRange;
-    IsbvListFuncs   [ T_RANGE_SSORT            ] = IsbvRange;
-    IsbvListFuncs   [ T_RANGE_SSORT +IMMUTABLE ] = IsbvRange;
     Elm0ListFuncs   [ T_RANGE_NSORT            ] = Elm0Range;
     Elm0ListFuncs   [ T_RANGE_NSORT +IMMUTABLE ] = Elm0Range;
     Elm0ListFuncs   [ T_RANGE_SSORT            ] = Elm0Range;
@@ -1724,18 +1409,18 @@ static Int InitKernel (
     AsssListFuncs   [ T_RANGE_NSORT +IMMUTABLE ] = AsssRangeImm;
     AsssListFuncs   [ T_RANGE_SSORT            ] = AsssRange;
     AsssListFuncs   [ T_RANGE_SSORT +IMMUTABLE ] = AsssRangeImm;
-    IsDenseListFuncs[ T_RANGE_NSORT            ] = IsDenseRange;
-    IsDenseListFuncs[ T_RANGE_NSORT +IMMUTABLE ] = IsDenseRange;
-    IsDenseListFuncs[ T_RANGE_SSORT            ] = IsDenseRange;
-    IsDenseListFuncs[ T_RANGE_SSORT +IMMUTABLE ] = IsDenseRange;
-    IsHomogListFuncs[ T_RANGE_NSORT            ] = IsHomogRange;
-    IsHomogListFuncs[ T_RANGE_NSORT +IMMUTABLE ] = IsHomogRange;
-    IsHomogListFuncs[ T_RANGE_SSORT            ] = IsHomogRange;
-    IsHomogListFuncs[ T_RANGE_SSORT +IMMUTABLE ] = IsHomogRange;
-    IsSSortListFuncs[ T_RANGE_NSORT            ] = IsSSortRangeNot;
-    IsSSortListFuncs[ T_RANGE_NSORT +IMMUTABLE ] = IsSSortRangeNot;
-    IsSSortListFuncs[ T_RANGE_SSORT            ] = IsSSortRangeYes;
-    IsSSortListFuncs[ T_RANGE_SSORT +IMMUTABLE ] = IsSSortRangeYes;
+    IsDenseListFuncs[ T_RANGE_NSORT            ] = AlwaysYes;
+    IsDenseListFuncs[ T_RANGE_NSORT +IMMUTABLE ] = AlwaysYes;
+    IsDenseListFuncs[ T_RANGE_SSORT            ] = AlwaysYes;
+    IsDenseListFuncs[ T_RANGE_SSORT +IMMUTABLE ] = AlwaysYes;
+    IsHomogListFuncs[ T_RANGE_NSORT            ] = AlwaysYes;
+    IsHomogListFuncs[ T_RANGE_NSORT +IMMUTABLE ] = AlwaysYes;
+    IsHomogListFuncs[ T_RANGE_SSORT            ] = AlwaysYes;
+    IsHomogListFuncs[ T_RANGE_SSORT +IMMUTABLE ] = AlwaysYes;
+    IsSSortListFuncs[ T_RANGE_NSORT            ] = AlwaysNo;
+    IsSSortListFuncs[ T_RANGE_NSORT +IMMUTABLE ] = AlwaysNo;
+    IsSSortListFuncs[ T_RANGE_SSORT            ] = AlwaysYes;
+    IsSSortListFuncs[ T_RANGE_SSORT +IMMUTABLE ] = AlwaysYes;
     IsPossListFuncs [ T_RANGE_NSORT            ] = IsPossRange;
     IsPossListFuncs [ T_RANGE_NSORT +IMMUTABLE ] = IsPossRange;
     IsPossListFuncs [ T_RANGE_SSORT            ] = IsPossRange;
@@ -1781,28 +1466,15 @@ static Int InitLibrary (
 *F  InitInfoRange() . . . . . . . . . . . . . . . . . table of init functions
 */
 static StructInitInfo module = {
-    MODULE_BUILTIN,                     /* type                           */
-    "range",                            /* name                           */
-    0,                                  /* revision entry of c file       */
-    0,                                  /* revision entry of h file       */
-    0,                                  /* version                        */
-    0,                                  /* crc                            */
-    InitKernel,                         /* initKernel                     */
-    InitLibrary,                        /* initLibrary                    */
-    0,                                  /* checkInit                      */
-    0,                                  /* preSave                        */
-    0,                                  /* postSave                       */
-    0                                   /* postRestore                    */
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "range",
+    .initKernel = InitKernel,
+    .initLibrary = InitLibrary,
 };
 
 StructInitInfo * InitInfoRange ( void )
 {
     return &module;
 }
-
-
-/****************************************************************************
-**
-
-*E  range.c . . . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

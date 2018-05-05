@@ -12,7 +12,7 @@
   [5XGAP[105X are entered and displayed in cycle notation, such as [10X(1,2,3)(4,5)[110X.[133X
   
   [33X[0;0YThe  preimage of the point [22Xi[122X under the permutation [22Xp[122X can be computed as [22Xi[122X[10X/[110X[22Xp[122X,
-  without constructing the inverse of [22Xp[122X.[133X
+  see [2XPERM_INVERSE_THRESHOLD[102X ([14X42.1-4[114X).[133X
   
   [33X[0;0YFor arithmetic operations for permutations and their precedence, see [14X31.12[114X.[133X
   
@@ -36,6 +36,12 @@
   ...,  m)  *  (1, 2, ..., m)^{-1}[122X also takes [22X4m[122X bytes of storage. It can take
   even  more  because  the  internal  list  has sometimes room for more than [22Xd[122X
   images.[133X
+  
+  [33X[0;0YOn 32-bit systems, the limit on the degree of permutations is, for technical
+  reasons,  [22X2^28-1[122X.  On  64-bit  systems,  it  is [22X2^32-1[122X because only a 32-bit
+  integer is used to represent each image internally. Error messages should be
+  given  if  any  command  would require creating a permutation exceeding this
+  limit.[133X
   
   [33X[0;0YThe  operation  [2XRestrictedPerm[102X  ([14X42.5-4[114X)  reduces  the storage degree of its
   result and therefore can be used to save memory if intermediate calculations
@@ -81,6 +87,18 @@
   [33X[1;0Y[29X[2XPermutationsFamily[102X[32X family[133X
   
   [33X[0;0Yis the family of all permutations.[133X
+  
+  [1X42.1-4 PERM_INVERSE_THRESHOLD[101X
+  
+  [33X[1;0Y[29X[2XPERM_INVERSE_THRESHOLD[102X[32X global variable[133X
+  
+  [33X[0;0YFor permutations of degree up to [10XPERM_INVERSE_THRESHOLD[110X whenever the inverse
+  image  of  a  point  under  a  permutations is needed, the entire inverse is
+  computed  and  stored. Otherwise, if the inverse is not stored, the point is
+  traced  around the cycle it is part of to find the inverse image. This takes
+  time  when  it  happens,  and  uses  memory,  but saves time on a variety of
+  subsequent  computations. This threshold can be adjusted by simply assigning
+  to the variable. The default is 10000.[133X
   
   
   [1X42.2 [33X[0;0YComparison of Permutations[133X[101X
@@ -243,19 +261,20 @@
   =  i[122X  if  [22Xi[122X is larger than the length of the list [3Xlist[103X. [2XPermList[102X will return
   [9Xfail[109X  if  [3Xlist[103X does not define a permutation, i.e., if [3Xlist[103X is not dense, or
   if  [3Xlist[103X  contains  a positive integer twice, or if [3Xlist[103X contains an integer
-  not  in  the  range  [10X[  1  .. Length( [3Xlist[103X[10X ) ][110X. If [3Xlist[103X contains non-integer
-  entries an error is raised.[133X
+  not  in  the  range [10X[ 1 .. Length( [3Xlist[103X[10X ) ][110X, of if [3Xlist[103X contains non-integer
+  entries, etc.[133X
   
   [1X42.5-3 MappingPermListList[101X
   
   [33X[1;0Y[29X[2XMappingPermListList[102X( [3Xsrc[103X, [3Xdst[103X ) [32X function[133X
   
   [33X[0;0YLet  [3Xsrc[103X and [3Xdst[103X be lists of positive integers of the same length, such that
-  neither   may  contain  an  element  twice.  [2XMappingPermListList[102X  returns  a
-  permutation  [22Xπ[122X  such  that  [3Xsrc[103X[10X[[110X[22Xi[122X[10X]^[110X[22Xπ  =[122X  [3Xdst[103X[10X[[110X[22Xi[122X[10X][110X. The permutation [22Xπ[122X fixes all
-  points  larger  than the maximum of the entries in [3Xsrc[103X and [3Xdst[103X. If there are
-  several   such   permutations,   it   is   not   specified   which  of  them
-  [2XMappingPermListList[102X returns.[133X
+  there   is   a   permutation   [22Xπ[122X   such   that   [10XOnTuples([3Xsrc[103X[10X,[110X   [22Xπ[122X[10X)  =  [3Xdst[103X[10X[110X.
+  [2XMappingPermListList[102X  returns  the  permutation [10Xp[110X from the previous sentence,
+  i.e.  [3Xsrc[103X[10X[[110X[22Xi[122X[10X]^[110X[22Xp  =[122X  [3Xdst[103X[10X[[110X[22Xi[122X[10X][110X. The permutation [22Xπ[122X fixes any point which is not in
+  [3Xsrc[103X  or  [3Xdst[103X.  If  there  are several such permutations, it is not specified
+  which  of them [2XMappingPermListList[102X returns. If there is no such permutation,
+  then [2XMappingPermListList[102X returns [9Xfail[109X.[133X
   
   [1X42.5-4 RestrictedPerm[101X
   
@@ -277,7 +296,7 @@
     [4X[25Xgap>[125X [27XPermList([1,2,4,5,3]);[127X[104X
     [4X[28X(3,4,5)[128X[104X
     [4X[25Xgap>[125X [27XMappingPermListList([2,5,1,6],[7,12,8,2]);[127X[104X
-    [4X[28X(1,8,5,12,11,10,9,6,2,7,4,3)[128X[104X
+    [4X[28X(1,8,5,12,6,2,7)[128X[104X
     [4X[25Xgap>[125X [27XRestrictedPerm((1,2)(3,4),[3..5]);[127X[104X
     [4X[28X(3,4)[128X[104X
   [4X[32X[104X

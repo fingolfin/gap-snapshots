@@ -32,6 +32,11 @@
 ##  takes <M>4m</M> bytes of storage.
 ##  It can take even more because the internal list has sometimes room for
 ##  more than <M>d</M> images.
+##  <P/> On 32-bit systems, the limit on the degree of permutations is, for 
+##  technical reasons, <M>2^{28}-1</M>.
+##  On 64-bit systems, it is <M>2^{32}-1</M> because only a 32-bit integer 
+##  is used to represent each image internally. Error messages should be given
+##  if any command would require creating a permutation exceeding this limit. 
 ##  <P/>
 ##  The operation <Ref Func="RestrictedPerm"/> reduces the storage degree of
 ##  its result and therefore can be used to save memory if intermediate
@@ -429,8 +434,8 @@ SetOne( PermutationsFamily, () );
 ##  i.e., if <A>list</A> is not dense,
 ##  or if <A>list</A> contains a positive integer twice,
 ##  or if <A>list</A> contains an
-##  integer not in the range <C>[ 1 .. Length( <A>list</A> ) ]</C>.
-##  If <A>list</A> contains non-integer entries an error is raised.
+##  integer not in the range <C>[ 1 .. Length( <A>list</A> ) ]</C>,
+##  of if <A>list</A> contains non-integer entries, etc.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -505,7 +510,7 @@ end );
 ##  gap> PermList([1,2,4,5,3]);
 ##  (3,4,5)
 ##  gap> MappingPermListList([2,5,1,6],[7,12,8,2]);
-##  (1,8,5,12,11,10,9,6,2,7,4,3)
+##  (1,8,5,12,6,2,7)
 ##  gap> RestrictedPerm((1,2)(3,4),[3..5]);
 ##  (3,4)
 ##  ]]></Example>
@@ -550,38 +555,20 @@ end);
 ##
 ##  <Description>
 ##  Let <A>src</A> and <A>dst</A> be lists of positive integers of the same
-##  length, such that neither may contain an element twice.
-##  <Ref Func="MappingPermListList"/> returns a permutation <M>\pi</M> such
-##  that <A>src</A><C>[</C><M>i</M><C>]^</C><M>\pi =</M>
+##  length, such that there is a permutation <M>\pi</M> such that
+##  <C>OnTuples(<A>src</A>,</C> <M>\pi</M><C>) = <A>dst</A></C>.
+##  <Ref Func="MappingPermListList"/> returns the permutation <C>p</C> from the
+##  previous sentence, i.e.  <A>src</A><C>[</C><M>i</M><C>]^</C><M>p =</M>
 ##  <A>dst</A><C>[</C><M>i</M><C>]</C>.
-##  The permutation <M>\pi</M> fixes all points larger than the maximum of
-##  the entries in <A>src</A> and <A>dst</A>.
+##  The permutation <M>\pi</M> fixes any point which is not in <A>src</A> or
+##  <A>dst</A>.
 ##  If there are several such permutations, it is not specified which of them
-##  <Ref Func="MappingPermListList"/> returns.
+##  <Ref Func="MappingPermListList"/> returns. If there is no such
+##  permutation, then <Ref Func="MappingPermListList"/> returns <K>fail</K>.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-BIND_GLOBAL( "MappingPermListList", function( src, dst )
-
-    if not IsList(src) or not IsList(dst) or Length(src) <> Length(dst)  then
-       Error("usage: MappingPermListList( <lst1>, <lst2> )");
-    fi;
-
-    if IsEmpty( src )  then
-        return ();
-    fi;
-
-    src := Concatenation( src, Difference( [1..Maximum(src)], src ) );
-    dst := Concatenation( dst, Difference( [1..Maximum(dst)], dst ) );
-    src := PermList(src);
-    if src = fail then return fail; fi;
-    dst := PermList(dst);
-    if dst = fail then return fail; fi;
-
-    return LeftQuotient( src, dst );
-end );
-
 
 #############################################################################
 ##
@@ -775,6 +762,29 @@ InstallMethod( DistancePerms, "for general permutations",
         [ IsPerm, IsPerm ],
         function(x,y)
     return NrMovedPoints(x/y); end);
+
+#############################################################################
+##
+#V  PERM_INVERSE_THRESHOLD . . . . cut off for when inverses are computed
+##                                 eagerly
+##
+##  <#GAPDoc Label="PERM_INVERSE_THRESHOLD">
+##  <ManSection>
+##  <Var Name="PERM_INVERSE_THRESHOLD"/>
+##
+##  <Description>
+##  For permutations of degree up to <C>PERM_INVERSE_THRESHOLD</C> whenever
+##  the inverse image of a point under a permutations is needed, the entire
+##  inverse is computed and stored. Otherwise, if the inverse is not stored,
+##  the point is traced around the cycle it is part of to find the inverse
+##  image. This takes time when it happens, and uses memory, but saves time
+##  on a variety of subsequent computations. This threshold can be adjusted
+##  by simply assigning to the variable. The default is 10000.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+
+PERM_INVERSE_THRESHOLD := 10000;
 
 
 

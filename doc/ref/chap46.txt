@@ -603,8 +603,8 @@
     [4X[25Xgap>[125X [27XM := GModuleByMats( mats, GF(2) );;[127X[104X
     [4X[25Xgap>[125X [27XA := AutomorphismGroup( G );;[127X[104X
     [4X[25Xgap>[125X [27XB := GL( 1, 2 );;[127X[104X
-    [4X[25Xgap>[125X [27XD := DirectProduct( A, B );[127X[104X
-    [4X[28X<group of size 6 with 4 generators>[128X[104X
+    [4X[25Xgap>[125X [27XD := DirectProduct( A, B );; Size(D);[127X[104X
+    [4X[28X6[128X[104X
     [4X[25Xgap>[125X [27XP := CompatiblePairs( G, M, D );[127X[104X
     [4X[28X<group of size 6 with 2 generators>[128X[104X
     [4X[25Xgap>[125X [27XExtensionRepresentatives( G, M, P );[127X[104X
@@ -665,8 +665,8 @@
   consuming. Here we introduce a method to code and decode pc presentations by
   integers.  To  decode  a  given  code the size of the underlying pc group is
   needed  as  well.  For  the  full  definition  and  the  coding and decoding
-  procedures  see  [BE99a]. This method is used with the small groups library,
-  see Section [14X50.7[114X.[133X
+  procedures  see  [BE99].  This  method is used with the small groups library
+  (see [14X'smallgrp: The Small Groups Library'[114X.[133X
   
   [1X46.9-1 CodePcgs[101X
   

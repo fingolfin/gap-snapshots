@@ -5,8 +5,6 @@
 ##
 #Y  Copyright (C)  1997,  Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
-##  To be listed in testinstall.g
-##
 gap> START_TEST("vspchom.tst");
 
 #############################################################################
@@ -499,7 +497,7 @@ gap> endoendo:= End( f, endo );
 End( GF(3), End( GF(3), GF(3^3) ) )
 gap> Dimension( endoendo );
 81
-gap> STOP_TEST( "vspchom.tst", 950000);
+gap> STOP_TEST( "vspchom.tst", 1);
 
 #############################################################################
 ##

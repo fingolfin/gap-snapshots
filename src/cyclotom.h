@@ -14,29 +14,19 @@
 #ifndef GAP_CYCLOTOM_H
 #define GAP_CYCLOTOM_H
 
+#include <src/system.h>
 
 /****************************************************************************
 **
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-
 *F  InitInfoCyc() . . . . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoCyc ( void );
 
 
 #endif // GAP_CYCLOTOM_H
-
-/****************************************************************************
-**
-
-*E  cyclotom.h  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/
-
-
-

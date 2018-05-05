@@ -11,10 +11,15 @@
 #ifndef GAP_OBJFGELM_H
 #define GAP_OBJFGELM_H
 
+#include <src/objects.h>
+#include <src/plist.h>
+
+#ifdef HPCGAP
+#include <src/hpc/guards.h>
+#endif
 
 /****************************************************************************
 **
-
 *D  AWP_SOMETHING
 */
 #define AWP_FIRST_ENTRY          5
@@ -29,7 +34,6 @@
 
 /****************************************************************************
 **
-
 *F  BITS_WORDTYPE( <type> )
 */
 #define BITS_WORDTYPE( type ) \
@@ -62,7 +66,6 @@
 
 /****************************************************************************
 **
-
 *F  BITS_WORD( <word> )
 */
 #define BITS_WORD( word ) \
@@ -95,7 +98,7 @@
 **  pairs of <word>.
 */
 #define NPAIRS_WORD( word ) \
-    ( INT_INTOBJ( ADDR_OBJ( (word) )[1]) )
+    ( INT_INTOBJ( CONST_ADDR_OBJ( (word) )[1]) )
 
 
 /****************************************************************************
@@ -116,7 +119,6 @@
 
 /****************************************************************************
 **
-
 *F  NEW_WORD( <word>, <type>, <npairs> )
 **
 **  'NEW_WORD' creates  a new object which has  the given <type> and room for
@@ -125,48 +127,34 @@
 */
 static inline Obj NewWord(Obj type, UInt npairs) {
   Obj word;
+#ifdef HPCGAP
+  ReadGuard(type);
+#endif
   word = NewBag(T_DATOBJ,2*sizeof(Obj)+npairs*BITS_WORDTYPE(type)/8L);
-  (ADDR_OBJ(word)[1] = INTOBJ_INT(npairs));
-  SET_TYPE_DATOBJ( word, type);
+  ADDR_OBJ(word)[1] = INTOBJ_INT(npairs);
+  SetTypeDatObj(word, type);
+#ifdef HPCGAP
+  MakeBagReadOnly( word );
+#endif
   return word;
 }
 
 #define NEW_WORD(word, type, npairs) \
-  ReadGuard(type), \
-  (word) = NewWord((type), (npairs));
+  do { \
+    (word) = NewWord((type), (npairs)); \
+  } while(0)
 
 
 /****************************************************************************
 **
-*F  RESIZE_WORD( <word>, <npairs> )
-*/
-static inline Obj RESIZE_WORD( Obj word, UInt npairs )
-{
-  WriteGuard(word);
-  ResizeBag( (word), 2*sizeof(Obj)+((npairs)*BITS_WORD((word))/8L));
-  (ADDR_OBJ((word))[1] = INTOBJ_INT((npairs)));
-  return word;
-}
-
-
-/****************************************************************************
-**
-
 *F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
-
 *F  InitInfoFreeGroupElements() . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoFreeGroupElements ( void );
 
 
 #endif // GAP_OBJFGELM_H
-
-/****************************************************************************
-**
-
-*E  objfgelm.h  . . . . . . . . . . . . . . . . . . . . . . . . . . ends here
-*/

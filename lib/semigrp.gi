@@ -119,17 +119,27 @@ end);
 
 # ViewString
 
-InstallMethod(ViewString, "for a semigroup with generators",
+InstallMethod(ViewString, "for a semigroup with semigroup generators",
 [IsSemigroup and HasGeneratorsOfSemigroup], _ViewStringForSemigroups);
 
-InstallMethod(ViewString, "for a monoid with generators",
+InstallMethod(ViewString, "for a monoid with monoid generators",
 [IsMonoid and HasGeneratorsOfMonoid], _ViewStringForSemigroups);
 
-InstallMethod(ViewString, "for an inverse semigroup with generators",
+InstallMethod(ViewString, "for an inverse semigroup with semigroup generators",
+[IsInverseSemigroup and HasGeneratorsOfSemigroup],
+_ViewStringForSemigroups);
+
+InstallMethod(ViewString, "for an inverse monoid with semigroup generators",
+[IsInverseMonoid and HasGeneratorsOfSemigroup],
+_ViewStringForSemigroups);
+
+InstallMethod(ViewString, 
+"for an inverse semigroup with inverse semigroup generators",
 [IsInverseSemigroup and HasGeneratorsOfInverseSemigroup],
 _ViewStringForSemigroups);
 
-InstallMethod(ViewString, "for an inverse monoid with generators",
+InstallMethod(ViewString, 
+"for an inverse monoid with inverse monoid generators",
 [IsInverseMonoid and HasGeneratorsOfInverseMonoid],
 _ViewStringForSemigroups);
 
@@ -232,10 +242,9 @@ InstallMethod(InversesOfSemigroupElement,
 [IsSemigroup, IsMultiplicativeElement],
 function(S, x)
   if not x in S then 
-    Error("usage: the 2nd argument must be an element of the 1st,");
-    return;
+    ErrorNoReturn("usage: the 2nd argument must be an element of the 1st,");
   fi;
-  return Filtered(Elements(S), y -> x * y * x = x and y * x * y = y);
+  return Filtered(AsSSortedList(S), y -> x * y * x = x and y * x * y = y);
 end);
 
 #
@@ -247,9 +256,8 @@ function(s, n)
   n:=NameRNam(n);
   n:=Int(n);
   if n=fail or Length(s)<n then
-    Error("usage: the second argument should be a pos int not greater than",
+    ErrorNoReturn("usage: the second argument should be a pos int not greater than",
      " the number of generators of the semigroup in the first argument,");
-    return;
   fi;
   return s[n];
 end);
@@ -263,9 +271,8 @@ function(s, n)
   n:=NameRNam(n);
   n:=Int(n);
   if n=fail or Length(s)<n then
-    Error("usage: the second argument should be a pos int not greater than",
+    ErrorNoReturn("usage: the second argument should be a pos int not greater than",
      " the number of generators of the semigroup in the first argument,");
-    return;
   fi;
   return s[n];
 end);
@@ -415,20 +422,29 @@ InstallMethod(DisplaySemigroup, "for finite semigroups",
     [IsTransformationSemigroup],
 function(S)
 
-    local dc, i, len, sh, D, layer, displayDClass;
+    local dc, i, len, sh, D, layer, displayDClass, n;
 
     displayDClass:= function(D)
-        local h, sh;
+        local h, nrL, nrR;
         h:= GreensHClassOfElement(AssociatedSemigroup(D),Representative(D));
         if IsRegularDClass(D) then
             Print("*");
+        else
+            Print(" ");
         fi;
-        Print("[H size = ", Size(h),", ",
-        Size(GreensRClassOfElement(AssociatedSemigroup(D),
-            Representative(h)))/Size(h), " L classes, ",
-        Size(GreensLClassOfElement(AssociatedSemigroup(D),
-            Representative(h)))/Size(h)," R classes]");
-        Print("\n");
+        nrL := Size(GreensRClassOfElement(AssociatedSemigroup(D),
+                                          Representative(h))) / Size(h);
+        nrR := Size(GreensLClassOfElement(AssociatedSemigroup(D),
+                                          Representative(h))) / Size(h);
+        Print("[H size = ", Size(h), ", ", nrL, " L-class");
+        if nrL > 1 then
+            Print("es");
+        fi;
+        Print(", ", nrR, " R-class");
+        if nrR > 1 then
+            Print("es");
+        fi;
+        Print("]\n");
     end;
 
     #########################################################################
@@ -439,13 +455,22 @@ function(S)
 
     # check finiteness
     if not IsFinite(S) then
-      TryNextMethod();
+        TryNextMethod();
     fi;
 
     # determine D classes and sort according to rank.
-    layer:= List([1..DegreeOfTransformationSemigroup(S)], x->[]);
+    n := DegreeOfTransformationSemigroup(S);
+
+    if n = 0 then
+        # special case for the full transformation monoid on one point
+        Print("Rank 0: ");
+        displayDClass(GreensDClasses(S)[1]);
+        return;
+    fi;
+
+    layer:= List([1 .. n], x->[]);
     for D in GreensDClasses(S) do
-        Add(layer[RankOfTransformation(Representative(D))], D);
+        Add(layer[RankOfTransformation(Representative(D), n)], D);
     od;
 
     # loop over the layers.
