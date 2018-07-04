@@ -31,7 +31,7 @@
 
 <h2>Computing with quasigroups and loops in <strong class="pkg">GAP</strong></h2>
 
-<p>Version 3.3.0</p>
+<p>Version 3.4.0</p>
 
 </div>
 <p><b>Gábor P. Nagy
@@ -50,7 +50,7 @@
 
 <p><a id="X81488B807F2A1CF1" name="X81488B807F2A1CF1"></a></p>
 <h3>Copyright</h3>
-<p>© 2016 Gábor P. Nagy and Petr Vojtěchovský.</p>
+<p>© 2017 Gábor P. Nagy and Petr Vojtěchovský.</p>
 
 <p><a id="X8537FEB07AF2BEC8" name="X8537FEB07AF2BEC8"></a></p>
 
@@ -331,10 +331,12 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X82373C5479574F22">6.11-3 QuasigroupsUpToIsomorphism</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X8308F38283C61B20">6.11-4 LoopsUpToIsomorphism</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X87677B0787B4461A">6.11-5 AutomorphismGroup</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X85B3E22679FD8D81">6.11-6 IsomorphicCopyByPerm</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X8121DE3A78795040">6.11-7 IsomorphicCopyByNormalSubloop</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7D09D8957E4A0973">6.11-8 Discriminator</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X812F0DEE7C896E18">6.11-9 AreEqualDiscriminators</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7A42812B7B027DD4">6.11-6 QuasigroupIsomorph</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7BD1AC32851286EA">6.11-7 LoopIsomorph</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X85B3E22679FD8D81">6.11-8 IsomorphicCopyByPerm</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X8121DE3A78795040">6.11-9 IsomorphicCopyByNormalSubloop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X7D09D8957E4A0973">6.11-10 Discriminator</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6_mj.html#X812F0DEE7C896E18">6.11-11 AreEqualDiscriminators</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6_mj.html#X7E996BDD81E594F9">6.12 <span class="Heading">Isotopisms</span></a>
 </span>
@@ -474,60 +476,66 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X7EE99F647C537994">9.2-1 LeftBolLoop</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X8774304282654C58">9.2-2 RightBolLoop</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9_mj.html#X7953702D84E60AF4">9.3 <span class="Heading">Moufang Loops</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9_mj.html#X8028D69A86B15897">9.3 <span class="Heading">Left Bruck Loops and Right Bruck Loops</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X81E82098822543EE">9.3-1 MoufangLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X8290B01780F0FCD3">9.3-1 LeftBruckLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X798DD7CF871F648F">9.3-2 RightBruckLoop</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9_mj.html#X7BCA6BCB847F79DC">9.4 <span class="Heading">Code Loops</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9_mj.html#X7953702D84E60AF4">9.4 <span class="Heading">Moufang Loops</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X7DB4D3B27BB4D7EE">9.4-1 CodeLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X81E82098822543EE">9.4-1 MoufangLoop</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9_mj.html#X84E941EE7846D3EE">9.5 <span class="Heading">Steiner Loops</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9_mj.html#X7BCA6BCB847F79DC">9.5 <span class="Heading">Code Loops</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X87C235457E859AF4">9.5-1 SteinerLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X7DB4D3B27BB4D7EE">9.5-1 CodeLoop</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9_mj.html#X867E5F0783FEB8B5">9.6 <span class="Heading">Conjugacy Closed Loops</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9_mj.html#X84E941EE7846D3EE">9.6 <span class="Heading">Steiner Loops</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X806B2DE67990E42F">9.6-1 <span class="Heading">RCCLoop and RightConjugacyClosedLoop</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X87C235457E859AF4">9.6-1 SteinerLoop</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9_mj.html#X867E5F0783FEB8B5">9.7 <span class="Heading">Conjugacy Closed Loops</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X80AB8B107D55FB19">9.6-2 <span class="Heading">LCCLoop and LeftConjugacyClosedLoop</span></a>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X806B2DE67990E42F">9.7-1 <span class="Heading">RCCLoop and RightConjugacyClosedLoop</span></a>
 </span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X798BC601843E8916">9.6-3 <span class="Heading">CCLoop and ConjugacyClosedLoop</span></a>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X80AB8B107D55FB19">9.7-2 <span class="Heading">LCCLoop and LeftConjugacyClosedLoop</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X798BC601843E8916">9.7-3 <span class="Heading">CCLoop and ConjugacyClosedLoop</span></a>
 </span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9_mj.html#X7E3A8F2C790F2CA1">9.7 <span class="Heading">Small Loops</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9_mj.html#X7E3A8F2C790F2CA1">9.8 <span class="Heading">Small Loops</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X7C6EE23E84CD87D3">9.7-1 SmallLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X7C6EE23E84CD87D3">9.8-1 SmallLoop</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9_mj.html#X8135C8FD8714C606">9.8 <span class="Heading">Paige Loops</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9_mj.html#X8135C8FD8714C606">9.9 <span class="Heading">Paige Loops</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X7FCF4D6B7AD66D74">9.8-1 PaigeLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X7FCF4D6B7AD66D74">9.9-1 PaigeLoop</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9_mj.html#X86695C577A4D1784">9.9 <span class="Heading">Nilpotent Loops</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9_mj.html#X86695C577A4D1784">9.10 <span class="Heading">Nilpotent Loops</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X7A9C960D86E2AD28">9.9-1 NilpotentLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X7A9C960D86E2AD28">9.10-1 NilpotentLoop</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9_mj.html#X793B22EA8643C667">9.10 <span class="Heading">Automorphic Loops</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9_mj.html#X793B22EA8643C667">9.11 <span class="Heading">Automorphic Loops</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X784FFA9E7FDA9F43">9.10-1 AutomorphicLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X784FFA9E7FDA9F43">9.11-1 AutomorphicLoop</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9_mj.html#X843BD73F788049F7">9.11 <span class="Heading">Interesting Loops</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9_mj.html#X843BD73F788049F7">9.12 <span class="Heading">Interesting Loops</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X87F24AD3811910D3">9.11-1 InterestingLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X87F24AD3811910D3">9.12-1 InterestingLoop</a></span>
 </div></div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9_mj.html#X864839227D5C0A90">9.12 <span class="Heading">Libraries of Loops Up To Isotopism</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap9_mj.html#X864839227D5C0A90">9.13 <span class="Heading">Libraries of Loops Up To Isotopism</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X850C4C01817A098D">9.12-1 ItpSmallLoop</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap9_mj.html#X850C4C01817A098D">9.13-1 ItpSmallLoop</a></span>
 </div></div>
 </div>
 <div class="ContChap"><a href="chapA_mj.html#X7BC4571A79FFB7D0">A <span class="Heading">Files</span></a>

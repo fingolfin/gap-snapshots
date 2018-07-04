@@ -40,8 +40,8 @@
   DeclareRepresentation( "IsLoopElmRep",
       IsPositionalObjectRep and IsMultiplicativeElementWithInverse, [1] );
   ## latin (auxiliary category for GAP to tell apart IsMagma and IsQuasigroup)
-  DeclareCategory( "IsLatin", IsObject );
-  DeclareCategory( "IsQuasigroup", IsMagma and IsLatin );
+  DeclareCategory( "IsLatinMagma", IsObject );
+  DeclareCategory( "IsQuasigroup", IsMagma and IsLatinMagma );
   DeclareCategory( "IsLoop", IsQuasigroup and
       IsMultiplicativeElementWithInverseCollection);
   

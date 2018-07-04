@@ -113,7 +113,7 @@ ExampleFileHeader:= function( filename, pkgname, authors, copyrightyear,
     Append( str, "\n##\n##  " );
     Append( str, ReplacedString( text, "\n", "\n##  " ) );
 
-    Append( str, "\n\ngap> LoadPackage( \"" );
+    Append( str, "\ngap> LoadPackage( \"" );
     Append( str, pkgname );
     Append( str, "\", false );\ntrue" );
     Append( str, "\ngap> save:= SizeScreen();;" );

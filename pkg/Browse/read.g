@@ -35,6 +35,11 @@ ReadPackage("browse", "app/gapdata.g");
 # this app only works with 'readline' 
 if IsBound(GAPInfo.UseReadline) and GAPInfo.UseReadline = true then
   ReadPackage("browse", "app/rldemo.g");
+else
+  # Bind 'LoadDemoFile' to something that shows a meaningful error message.
+  BindGlobal( "LoadDemoFile", function( arg... )
+    Error( "LoadDemoFile is not available without 'readline' support" );
+  end );
 fi;
 
 # applications called by `BrowseGapData'
@@ -53,5 +58,4 @@ ReadPackage("browse", "app/mouse.g");
 
 # support for database attributes
 ReadPackage( "browse", "lib/brdbattr.gi" );
-ReadPackage( "browse", "app/transbrowse.g" );
 

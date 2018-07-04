@@ -111,18 +111,3 @@ subdirectory of  your GAP 4  installation. It creates a  subdirectory called
                             Thomas Breuer (Thomas.Breuer@Math.RWTH-Aachen.De)
                             Frank Lübeck  (Frank.Luebeck@Math.RWTH-Aachen.De)
 
-This hint is probably no longer interesting, we keep it for a while.
--------------------------------------------------------
-Optional:
-
-If you (also) want a statically linked GAP which includes the ncurses module
-proceed as follows.
-
-- Change to the bin/... directory where your GAP executable was created,
-  this contains a script 'gac'.
-- Create the new static GAP executable, say 'gap.new' with
-     gac -o gap.new -p "-DNCURSESSTATIC" -P "-static -lpanel -lncurses" <your_path_to_Browse>/Browse/src/ncurses.c
-  This also works with several kernel modules. For example add the kernel
-  module from the EDIM package as well:
-     gac -o gap.new -p "-DNCURSESSTATIC -DEDIVSTATIC" -P "-static -lpanel -lncurses" <your_path_to_Browse>/Browse/src/ncurses.c <your_path_to_EDIM>/edim/src/ediv.c
--------------------------------------------------------

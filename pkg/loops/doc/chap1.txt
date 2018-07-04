@@ -20,7 +20,7 @@
   
   [1X1.2 [33X[0;0YInstallation[133X[101X
   
-  [33X[0;0YHave [5XGAP 4.7[105X or newer installed on your computer.[133X
+  [33X[0;0YHave [5XGAP 4.8[105X or newer installed on your computer.[133X
   
   [33X[0;0YIf  you do not see the subfolder [11Xpkg/loops[111X in the main directory of [5XGAP[105X then
   download    the    [5XLOOPS[105X    package    from    the    distribution   website
@@ -85,14 +85,15 @@
   
   [33X[0;0YWe  thank  the following people for sending us remarks and comments, and for
   suggesting  new  functionality of the package: Muniru Asiru, Bjoern Assmann,
-  Andreas  Distler, Aleš Drápal, Steve Flammia, Kenneth W. Johnson, Michael K.
-  Kinyon, Alexander Konovalov, Frank Lübeck and Jonathan D.H. Smith.[133X
+  Andreas  Distler,  Aleš  Drápal,  Graham  Ellis,  Steve  Flammia, Kenneth W.
+  Johnson, Michael K. Kinyon, Alexander Konovalov, Frank Lübeck, Jonathan D.H.
+  Smith, David Stanovský and Glen Whitney.[133X
   
   [33X[0;0YThe  library  of Moufang loops of order 243 was generated from data provided
   by Michael C. Slattery and Ashley L. Zenisek. The library of right conjugacy
   closed  loops  of  order  less  than  28 was generated from data provided by
-  Katharina  Artic.  The library of commutative automorphic loops of order 27,
-  81 and 243 was obtained jointly with Izabella Stuhl.[133X
+  Katharina  Artic.  The  library  of  right  Bruck  loops of order 27, 81 was
+  obtained jointly with Izabella Stuhl.[133X
   
   [33X[0;0YGábor  P.  Nagy  was  supported by OTKA grants F042959 and T043758, and Petr
   Vojtěchovský  was  supported  by the 2006 and 2016 University of Denver PROF

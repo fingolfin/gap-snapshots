@@ -147,7 +147,7 @@
 
 <h5>4.2-1 BrowseData.IsBrowseTableCellData</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseData.IsBrowseTableCellData</code>( <var class="Arg">obj</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseData.IsBrowseTableCellData</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> if the argument is a list or a record in a supported format.</p>
 
 <p>A <em>table cell data object</em> describes the input data for the contents of a cell in a browse table. It is represented by either an attribute line (see <code class="func">NCurses.IsAttributeLine</code> (<a href="chap2_mj.html#X81D1FC927C455AEB"><span class="RefLink">2.2-3</span></a>)), for cells of height one, or a list of attribute lines or a record with the components <code class="code">rows</code>, a list of attribute lines, and optionally <code class="code">align</code>, a substring of <code class="code">"bclt"</code>, which describes the alignment of the attribute lines in the table cell -- bottom, horizontally centered, left, and top alignment; the default is right and vertically centered alignment. (Note that the height of a table row and the width of a table column can be larger than the height and width of an individual cell.)</p>
@@ -173,7 +173,7 @@ true
 
 <h5>4.2-2 BrowseData.BlockEntry</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseData.BlockEntry</code>( <var class="Arg">tablecelldata</var>, <var class="Arg">height</var>, <var class="Arg">width</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseData.BlockEntry</code>( <var class="Arg">tablecelldata</var>, <var class="Arg">height</var>, <var class="Arg">width</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: a list of attribute lines.</p>
 
 <p>For a table cell data object <var class="Arg">tablecelldata</var> (see <code class="func">BrowseData.IsBrowseTableCellData</code> (<a href="chap4_mj.html#X82157A2684969A5F"><span class="RefLink">4.2-1</span></a>)) and two positive integers <var class="Arg">height</var> and <var class="Arg">width</var>, <code class="code">BrowseData.BlockEntry</code> returns a list of <var class="Arg">height</var> attribute lines of displayed length <var class="Arg">width</var> each (see <code class="func">NCurses.WidthAttributeLine</code> (<a href="chap2_mj.html#X82C53ACD805EE0C3"><span class="RefLink">2.2-7</span></a>)), that represents the formatted version of <var class="Arg">tablecelldata</var>.</p>
@@ -193,7 +193,7 @@ true
 
 <h5>4.2-3 BrowseData.IsBrowseTable</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseData.IsBrowseTable</code>( <var class="Arg">obj</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseData.IsBrowseTable</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> if the argument record has the required components and is consistent.</p>
 
 <p>A <em>browse table</em> is a <strong class="pkg">GAP</strong> record that can be used as the first argument of the function <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4_mj.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>).</p>
@@ -353,7 +353,7 @@ true
 
 <h5>4.3-1 NCurses.BrowseGeneric</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.BrowseGeneric</code>( <var class="Arg">t</var>[, <var class="Arg">arec</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.BrowseGeneric</code>( <var class="Arg">t</var>[, <var class="Arg">arec</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: an application dependent value, or nothing.</p>
 
 <p><code class="func">NCurses.BrowseGeneric</code> is used to show the browse table <var class="Arg">t</var> (see <code class="func">BrowseData.IsBrowseTable</code> (<a href="chap4_mj.html#X81007E2F8552523B"><span class="RefLink">4.2-3</span></a>)) in a formatted way on a text screen, and allows the user to navigate in this table.</p>

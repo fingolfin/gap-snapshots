@@ -5,6 +5,16 @@
 #Y  Copyright (C) 2006-2007, Lehrstuhl D für Mathematik, RWTH Aachen, Germany
 ##
 
+# 'BASE_SIZE_METHODS_OPER_ENTRY' is new in GAP 4.10;
+# for backwards compatibility, if it is missing set it to 4.
+if not IsBound( BASE_SIZE_METHODS_OPER_ENTRY ) then
+  if not IsBound( BindConstant ) then
+    BindGlobal( "BASE_SIZE_METHODS_OPER_ENTRY", 4 );
+  else
+    BindConstant( "BASE_SIZE_METHODS_OPER_ENTRY", 4 );
+  fi;
+fi;
+
 # make sure that TERM is set in environment, if not we set it to "dumb"
 # (here only in GAP's info about the environment setting, but in kernel
 # code we also change the actual environment)
@@ -59,4 +69,4 @@ ReadPackage( "Browse", "lib/brdbattr.gd" );
 # utilities for Browse applications (must be read before `read.g')
 ReadPackage( "Browse", "lib/brutils.g" );
 
-Browse_svnRevision := "591";
+Browse_svnRevision := "605";

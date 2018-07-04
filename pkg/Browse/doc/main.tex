@@ -95,8 +95,8 @@
 
 \hypersetup{pdftitle=\textsf{Browse}}
 \markright{\scriptsize \mbox{}\hfill \textsf{Browse} \hfill\mbox{}}
-{\Huge ( Version 1.8.7 ) \mbox{}}\\[1cm]
-{July 2017\mbox{}}\\[1cm]
+{\Huge ( Version 1.8.8 ) \mbox{}}\\[1cm]
+{June 2018\mbox{}}\\[1cm]
 \mbox{}\\[2cm]
 {\Large \textbf{ Thomas Breuer   \mbox{}}}\\
 {\Large \textbf{ Frank L{\"u}beck   \mbox{}}}\\
@@ -116,7 +116,7 @@
 {\small 
 \section*{Copyright}
 \logpage{[ 0, 0, 1 ]}
- {\copyright} 2006-2017 by Thomas Breuer and Frank L{\"u}beck 
+ {\copyright} 2006-2018 by Thomas Breuer and Frank L{\"u}beck 
 
   This package may be distributed under the terms and conditions of the GNU
 Public License Version 3 or later, see \href{http://www.gnu.org/licenses} {\texttt{http://www.gnu.org/licenses}}. \mbox{}}\\[1cm]
@@ -3735,24 +3735,25 @@ webpage or a {\LaTeX} document. }
 {
   This application can be used with \textsf{GAP} if the user interface has \texttt{readline} support. The purpose is to simplify the typing during a demonstration of \textsf{GAP} commands. 
 
- The file format to specify \textsf{GAP} code for a demonstration is very simple: it contains blocks of lines with \textsf{GAP} input, separated by lines starting with a \texttt{\%} character. Comments in such a file can be added to one or several lines
-starting with \texttt{\%}. Here is the content of an example file \texttt{demo.demo}: 
+ The file format to specify \textsf{GAP} code for a demonstration is very simple: it contains blocks of lines with \textsf{GAP} input, separated by lines starting with the sequence \texttt{\#\%}. Comments in such a file can be added to one or several lines starting with \texttt{\#\%}. Here is the content of an example file \texttt{demo.demo}: 
 
  
 \begin{verbatim}  
-  % Add comments after a % character at the beginning of a line.
-  % A comment can have several lines.
-  % Here is a multi-line input block:
+  #% Add comments after #% characters at the beginning of a line.
+  #% A comment can have several lines.
+  #% Here is a multi-line input block:
   g := MathieuGroup(11);;
   cl := ConjugacyClasses(g);
-  % Calling a help page
+  #% Calling a help page
   ?MathieuGroup
-  % The next line contains a comment in the GAP session:
+  #% The next line contains a comment in the GAP session:
   a := 12;; b := 13;; # assign two numbers
-  %
+  #%
   a*b;
-  %
+  #%
 \end{verbatim}
+ (Single \texttt{\%} in the beginning of a line will also work as separators.)
+
  A demonstration can be loaded into a \textsf{GAP} session with the command 
 
 \subsection{\textcolor{Chapter }{LoadDemoFile}}

@@ -6,7 +6,7 @@
                   [1XComputing with quasigroups and loops in [5XGAP[105X[101X
   
   
-                                 Version 3.3.0
+                                 Version 3.4.0
   
   
                                  Gábor P. Nagy
@@ -28,7 +28,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2016 Gábor P. Nagy and Petr Vojtěchovský.[133X
+  [33X[0;0Y© 2017 Gábor P. Nagy and Petr Vojtěchovský.[133X
   
   
   -------------------------------------------------------
@@ -167,10 +167,12 @@
       6.11-3 QuasigroupsUpToIsomorphism
       6.11-4 LoopsUpToIsomorphism
       6.11-5 AutomorphismGroup
-      6.11-6 IsomorphicCopyByPerm
-      6.11-7 IsomorphicCopyByNormalSubloop
-      6.11-8 Discriminator
-      6.11-9 AreEqualDiscriminators
+      6.11-6 QuasigroupIsomorph
+      6.11-7 LoopIsomorph
+      6.11-8 IsomorphicCopyByPerm
+      6.11-9 IsomorphicCopyByNormalSubloop
+      6.11-10 Discriminator
+      6.11-11 AreEqualDiscriminators
     6.12 [33X[0;0YIsotopisms[133X
       6.12-1 IsotopismLoops
       6.12-2 LoopsUpToIsotopism
@@ -256,28 +258,31 @@
     9.2 [33X[0;0YLeft Bol Loops and Right Bol Loops[133X
       9.2-1 LeftBolLoop
       9.2-2 RightBolLoop
-    9.3 [33X[0;0YMoufang Loops[133X
-      9.3-1 MoufangLoop
-    9.4 [33X[0;0YCode Loops[133X
-      9.4-1 CodeLoop
-    9.5 [33X[0;0YSteiner Loops[133X
-      9.5-1 SteinerLoop
-    9.6 [33X[0;0YConjugacy Closed Loops[133X
-      9.6-1 [33X[0;0YRCCLoop and RightConjugacyClosedLoop[133X
-      9.6-2 [33X[0;0YLCCLoop and LeftConjugacyClosedLoop[133X
-      9.6-3 [33X[0;0YCCLoop and ConjugacyClosedLoop[133X
-    9.7 [33X[0;0YSmall Loops[133X
-      9.7-1 SmallLoop
-    9.8 [33X[0;0YPaige Loops[133X
-      9.8-1 PaigeLoop
-    9.9 [33X[0;0YNilpotent Loops[133X
-      9.9-1 NilpotentLoop
-    9.10 [33X[0;0YAutomorphic Loops[133X
-      9.10-1 AutomorphicLoop
-    9.11 [33X[0;0YInteresting Loops[133X
-      9.11-1 InterestingLoop
-    9.12 [33X[0;0YLibraries of Loops Up To Isotopism[133X
-      9.12-1 ItpSmallLoop
+    9.3 [33X[0;0YLeft Bruck Loops and Right Bruck Loops[133X
+      9.3-1 LeftBruckLoop
+      9.3-2 RightBruckLoop
+    9.4 [33X[0;0YMoufang Loops[133X
+      9.4-1 MoufangLoop
+    9.5 [33X[0;0YCode Loops[133X
+      9.5-1 CodeLoop
+    9.6 [33X[0;0YSteiner Loops[133X
+      9.6-1 SteinerLoop
+    9.7 [33X[0;0YConjugacy Closed Loops[133X
+      9.7-1 [33X[0;0YRCCLoop and RightConjugacyClosedLoop[133X
+      9.7-2 [33X[0;0YLCCLoop and LeftConjugacyClosedLoop[133X
+      9.7-3 [33X[0;0YCCLoop and ConjugacyClosedLoop[133X
+    9.8 [33X[0;0YSmall Loops[133X
+      9.8-1 SmallLoop
+    9.9 [33X[0;0YPaige Loops[133X
+      9.9-1 PaigeLoop
+    9.10 [33X[0;0YNilpotent Loops[133X
+      9.10-1 NilpotentLoop
+    9.11 [33X[0;0YAutomorphic Loops[133X
+      9.11-1 AutomorphicLoop
+    9.12 [33X[0;0YInteresting Loops[133X
+      9.12-1 InterestingLoop
+    9.13 [33X[0;0YLibraries of Loops Up To Isotopism[133X
+      9.13-1 ItpSmallLoop
   A [33X[0;0YFiles[133X
   B [33X[0;0YFilters[133X
   

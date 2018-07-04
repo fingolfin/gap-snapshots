@@ -26,7 +26,7 @@ BindGlobal( "BrowseConwayPolynomials", function()
         elif coeffs[i] <> 0 then
           Append( str, String( coeffs[i] ) );
           Append( str, " X^" );
-          Append( str, String( i ) );
+          Append( str, String( i-1 ) );
           Append( str, " + " );
         fi;
       od;

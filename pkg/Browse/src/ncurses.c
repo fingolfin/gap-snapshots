@@ -8,7 +8,7 @@
 **
 */
 
-#define VERSION "1.8.7"
+#define VERSION "1.8.8"
 
 const char * Revision_ncurses_c =
    "VERSION";

@@ -55,7 +55,7 @@
 
 <h5>3.1-1 NCurses.Alert</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.Alert</code>( <var class="Arg">messages</var>, <var class="Arg">timeout</var>[, <var class="Arg">attrs</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.Alert</code>( <var class="Arg">messages</var>, <var class="Arg">timeout</var>[, <var class="Arg">attrs</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: the integer corresponding to the character entered, or <code class="keyw">fail</code>.</p>
 
 <p>In visual mode, <code class="func">Print</code> (<a href="../../../doc/ref/chap6.html#X7AFA64D97A1F39A3"><span class="RefLink">Reference: Print</span></a>) cannot be used for messages. An alternative is given by <code class="func">NCurses.Alert</code>.</p>
@@ -82,7 +82,7 @@ fail
 
 <h5>3.1-2 NCurses.Select</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.Select</code>( <var class="Arg">poss</var>[, <var class="Arg">single</var>[, <var class="Arg">none</var>]] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.Select</code>( <var class="Arg">poss</var>[, <var class="Arg">single</var>[, <var class="Arg">none</var>]] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: Position or list of positions, or <code class="keyw">false</code>.</p>
 
 <p>This function allows the user to select one or several items from a given list. In the simplest case <var class="Arg">poss</var> is a list of attribute lines (see <code class="func">NCurses.IsAttributeLine</code> (<a href="chap2.html#X81D1FC927C455AEB"><span class="RefLink">2.2-3</span></a>)), each of which should fit on one line. Then <code class="func">NCurses.Select</code> displays these lines and lets the user browse through them. After pressing the <strong class="button">Return</strong> key the index of the highlighted item is returned. Note that attributes in your lines should be switched on and off separately by <code class="keyw">true</code>/<code class="keyw">false</code> entries such that the lines can be nicely highlighted.</p>
@@ -166,7 +166,7 @@ fail
 
 <h5>3.1-3 NCurses.GetLineFromUser</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.GetLineFromUser</code>( <var class="Arg">pre</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.GetLineFromUser</code>( <var class="Arg">pre</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: User input as string.</p>
 
 <p>This function can be used to get an input string from the user. It opens a one line window and writes the given string <var class="Arg">pre</var> into it. Then it waits for user input. After hitting the <strong class="button">Return</strong> key the typed line is returned as a string to <strong class="pkg">GAP</strong>. If the user exits via hitting the <strong class="button">Esc</strong> key instead of hitting the <strong class="button">Return</strong> key, the function returns <code class="keyw">false</code>. (The <strong class="button">Esc</strong> key may be recognized as input only after a delay of about a second.)</p>
@@ -200,7 +200,7 @@ fail
 
 <h5>3.1-4 NCurses.Pager</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.Pager</code>( <var class="Arg">lines</var>[, <var class="Arg">border</var>[, <var class="Arg">ly</var>, <var class="Arg">lx</var>, <var class="Arg">y</var>, <var class="Arg">x</var>]] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.Pager</code>( <var class="Arg">lines</var>[, <var class="Arg">border</var>[, <var class="Arg">ly</var>, <var class="Arg">lx</var>, <var class="Arg">y</var>, <var class="Arg">x</var>]] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This is a simple pager utility for displaying and scrolling text. The argument <var class="Arg">lines</var> can be a list of attribute lines (see <code class="func">NCurses.IsAttributeLine</code> (<a href="chap2.html#X81D1FC927C455AEB"><span class="RefLink">2.2-3</span></a>)) or a string (the lines are separated by newline characters) or a record. In case of a record the following components are recognized:</p>
 
 
@@ -266,7 +266,7 @@ fail
 
 <h5>3.2-1 NCurses.Demo</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.Demo</code>( [<var class="Arg">inputs</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.Demo</code>( [<var class="Arg">inputs</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">inputs</var> be a list of records, each with the components <code class="code">title</code> (a string), <code class="code">inputblocks</code> (a list of strings, each describing some <strong class="pkg">GAP</strong> statements), and optionally <code class="code">footer</code> (a string) and <code class="code">cleanup</code> (a string describing <strong class="pkg">GAP</strong> statements). The default is <code class="code">NCurses.DemoDefaults</code>.</p>
 
 <p><code class="code">NCurses.Demo</code> lets the user choose an entry from <var class="Arg">inputs</var>, via <code class="func">NCurses.Select</code> (<a href="chap3.html#X833D321E86528981"><span class="RefLink">3.1-2</span></a>), and then executes the <strong class="pkg">GAP</strong> statements in the first entry of the <code class="code">inputblocks</code> list of this entry; these strings, together with the values of <code class="code">title</code> and <code class="code">footer</code>, are shown in a window, at the bottom of the screen. The effects of calls to functions using <code class="code">ncurses</code> are shown in the rest of the screen. After the execution of the statements (which may require user input), the user can continue with the next entry of <code class="code">inputblocks</code>, or return to the <code class="code">inputs</code> selection (and thus cancel the current <code class="code">inputs</code> entry), or return to the execution of the beginning of the current <code class="code">inputs</code> entry. At the end of the current entry of <code class="code">inputs</code>, the user returns to the <code class="code">inputs</code> selection.</p>

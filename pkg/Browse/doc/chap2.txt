@@ -540,11 +540,11 @@
   
   [1X2.2-1 NCurses.ColorAttr[101X
   
-  [29X[2XNCurses.ColorAttr[102X( [3Xfgcolor[103X, [3Xbgcolor[103X ) [32X function
+  [33X[1;0Y[29X[2XNCurses.ColorAttr[102X( [3Xfgcolor[103X, [3Xbgcolor[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Yan attribute for setting the foreground and background color to be
             used on a terminal window (it is a [5XGAP[105X integer).[133X
   
-  [29X[2XNCurses.attrs.has_colors[102X[32X global variable
+  [33X[1;0Y[29X[2XNCurses.attrs.has_colors[102X[32X global variable[133X
   
   [33X[0;0YThe return value can be used like any other attribute as described in [14X2.1-7[114X.
   The arguments [3Xfgcolor[103X and [3Xbgcolor[103X can be given as strings, allowed are those
@@ -579,7 +579,7 @@
   
   [1X2.2-2 NCurses.SetTerm[101X
   
-  [29X[2XNCurses.SetTerm[102X( [[3Xrecord[103X] ) [32X function
+  [33X[1;0Y[29X[2XNCurses.SetTerm[102X( [[3Xrecord[103X] ) [32X function[133X
   
   [33X[0;0YThis  function  provides a unified interface to the various terminal setting
   functions of [10Xncurses[110X listed in [14X2.1-1[114X. The optional argument is a record with
@@ -595,7 +595,7 @@
   
   [1X2.2-3 NCurses.IsAttributeLine[101X
   
-  [29X[2XNCurses.IsAttributeLine[102X( [3Xobj[103X ) [32X function
+  [33X[1;0Y[29X[2XNCurses.IsAttributeLine[102X( [3Xobj[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X if the argument describes a string with attributes.[133X
   
   [33X[0;0YAn  [13Xattribute  line[113X describes a string with attributes. It is represented by
@@ -633,7 +633,7 @@
   
   [1X2.2-4 NCurses.ConcatenationAttributeLines[101X
   
-  [29X[2XNCurses.ConcatenationAttributeLines[102X( [3Xlines[103X[, [3Xkeep[103X] ) [32X function
+  [33X[1;0Y[29X[2XNCurses.ConcatenationAttributeLines[102X( [3Xlines[103X[, [3Xkeep[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Yan attribute line.[133X
   
   [33X[0;0YFor  a  list [3Xlines[103X of attribute lines (see [2XNCurses.IsAttributeLine[102X ([14X2.2-3[114X)),
@@ -662,7 +662,7 @@
   
   [1X2.2-5 NCurses.RepeatedAttributeLine[101X
   
-  [29X[2XNCurses.RepeatedAttributeLine[102X( [3Xline[103X, [3Xwidth[103X ) [32X function
+  [33X[1;0Y[29X[2XNCurses.RepeatedAttributeLine[102X( [3Xline[103X, [3Xwidth[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Yan attribute line.[133X
   
   [33X[0;0YFor  an  attribute  line  [3Xline[103X  (see  [2XNCurses.IsAttributeLine[102X ([14X2.2-3[114X)) and a
@@ -680,7 +680,7 @@
   
   [1X2.2-6 NCurses.PutLine[101X
   
-  [29X[2XNCurses.PutLine[102X( [3Xwin[103X, [3Xy[103X, [3Xx[103X, [3Xlines[103X[, [3Xskip[103X] ) [32X function
+  [33X[1;0Y[29X[2XNCurses.PutLine[102X( [3Xwin[103X, [3Xy[103X, [3Xx[103X, [3Xlines[103X[, [3Xskip[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X if [3Xlines[103X were written, otherwise [9Xfalse[109X.[133X
   
   [33X[0;0YThe   argument   [3Xlines[103X   can   be   a   list   of   attribute   lines   (see
@@ -693,7 +693,7 @@
   
   [1X2.2-7 NCurses.WidthAttributeLine[101X
   
-  [29X[2XNCurses.WidthAttributeLine[102X( [3Xline[103X ) [32X function
+  [33X[1;0Y[29X[2XNCurses.WidthAttributeLine[102X( [3Xline[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ynumber of displayed characters in an attribute line.[133X
   
   [33X[0;0YFor  an  attribute  line  [3Xline[103X  (see  [2XNCurses.IsAttributeLine[102X  ([14X2.2-3[114X)), the
@@ -709,7 +709,7 @@
   
   [1X2.2-8 NCurses.Grid[101X
   
-  [29X[2XNCurses.Grid[102X( [3Xwin[103X, [3Xtrow[103X, [3Xbrow[103X, [3Xlcol[103X, [3Xrcol[103X, [3Xrowinds[103X, [3Xcolinds[103X ) [32X function
+  [33X[1;0Y[29X[2XNCurses.Grid[102X( [3Xwin[103X, [3Xtrow[103X, [3Xbrow[103X, [3Xlcol[103X, [3Xrcol[103X, [3Xrowinds[103X, [3Xcolinds[103X ) [32X function[133X
   
   [33X[0;0YThis  function  draws  a grid of horizontal and vertical lines on the window
   [3Xwin[103X,  using  the  line  drawing  characters  explained  in  [14X2.1-6[114X. The given
@@ -732,7 +732,7 @@
   
   [1X2.2-9 NCurses.WBorder[101X
   
-  [29X[2XNCurses.WBorder[102X( [3Xwin[103X[, [3Xchars[103X] ) [32X function
+  [33X[1;0Y[29X[2XNCurses.WBorder[102X( [3Xwin[103X[, [3Xchars[103X] ) [32X function[133X
   
   [33X[0;0YThis  is  a convenient interface to the [10Xncurses[110X function [10Xwborder[110X. It draws a
   border  around  the  window  [3Xwin[103X. If no second argument is given the default
@@ -747,10 +747,10 @@
   
   [1X2.2-10 [33X[0;0YMouse support in [10Xncurses[110X[101X[1X applications[133X[101X
   
-  [29X[2XNCurses.UseMouse[102X( [3Xon[103X ) [32X function
+  [33X[1;0Y[29X[2XNCurses.UseMouse[102X( [3Xon[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ya record[133X
   
-  [29X[2XNCurses.GetMouseEvent[102X(  ) [32X function
+  [33X[1;0Y[29X[2XNCurses.GetMouseEvent[102X(  ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ya list of records[133X
   
   [33X[0;0Y[10Xncurses[110X  allows on some terminals ([10Xxterm[110X and related) to catch mouse events.
@@ -791,10 +791,10 @@
   
   [1X2.2-11 NCurses.SaveWin[101X
   
-  [29X[2XNCurses.SaveWin[102X( [3Xwin[103X ) [32X function
-  [29X[2XNCurses.StringsSaveWin[102X( [3Xcont[103X ) [32X function
-  [29X[2XNCurses.RestoreWin[102X( [3Xwin[103X, [3Xcont[103X ) [32X function
-  [29X[2XNCurses.ShowSaveWin[102X( [3Xcont[103X ) [32X function
+  [33X[1;0Y[29X[2XNCurses.SaveWin[102X( [3Xwin[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XNCurses.StringsSaveWin[102X( [3Xcont[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XNCurses.RestoreWin[102X( [3Xwin[103X, [3Xcont[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XNCurses.ShowSaveWin[102X( [3Xcont[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ya [5XGAP[105X object describing the contents of a window.[133X
   
   [33X[0;0YThese  functions  can  be  used  to save and restore the contents of [10Xncurses[110X

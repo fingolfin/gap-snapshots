@@ -180,7 +180,7 @@
   
   [1X5.4-1 BrowseData[101X
   
-  [29X[2XBrowseData[102X[32X global variable
+  [33X[1;0Y[29X[2XBrowseData[102X[32X global variable[133X
   
   [33X[0;0YThis  is  the  record  that  contains  the  global data used by the function
   [2XNCurses.BrowseGeneric[102X  ([14X4.3-1[114X).  The  components  are [10Xactions[110X, [10Xdefaults[110X, and
@@ -542,7 +542,7 @@
   
   [1X5.4-2 BrowseData.SetReplay[101X
   
-  [29X[2XBrowseData.SetReplay[102X( [3Xdata[103X ) [32X function
+  [33X[1;0Y[29X[2XBrowseData.SetReplay[102X( [3Xdata[103X ) [32X function[133X
   
   [33X[0;0YThis      function      sets      and      resets      the      value     of
   [10XBrowseData.defaults.dynamic.replay[110X.[133X
@@ -568,7 +568,7 @@
   
   [1X5.4-3 BrowseData.AlertWithReplay[101X
   
-  [29X[2XBrowseData.AlertWithReplay[102X( [3Xt[103X, [3Xmessages[103X[, [3Xattrs[103X] ) [32X function
+  [33X[1;0Y[29X[2XBrowseData.AlertWithReplay[102X( [3Xt[103X, [3Xmessages[103X[, [3Xattrs[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Yan integer representing a (simulated) user input.[133X
   
   [33X[0;0YThe  function  [2XBrowseData.AlertWithReplay[102X  is  a  variant  of  [2XNCurses.Alert[102X
@@ -594,7 +594,7 @@
   
   [1X5.4-4 BrowseData.actions.ShowHelp[101X
   
-  [29X[2XBrowseData.actions.ShowHelp[102X[32X global variable
+  [33X[1;0Y[29X[2XBrowseData.actions.ShowHelp[102X[32X global variable[133X
   
   [33X[0;0YThere  are  two  predefined  ways  for showing an overview of the admissible
   inputs and their meaning in the current mode of a browse table. The function
@@ -628,7 +628,7 @@
   
   [1X5.4-5 BrowseData.actions.SaveWindow[101X
   
-  [29X[2XBrowseData.actions.SaveWindow[102X[32X global variable
+  [33X[1;0Y[29X[2XBrowseData.actions.SaveWindow[102X[32X global variable[133X
   
   [33X[0;0YThe function [10XBrowseData.actions.SaveWindow.action[110X asks the user to enter the
   name  of  a  global  [5XGAP[105X variable, using [2XNCurses.GetLineFromUser[102X ([14X3.1-3[114X). If
@@ -638,8 +638,8 @@
   
   [1X5.4-6 BrowseData.actions.QuitMode[101X
   
-  [29X[2XBrowseData.actions.QuitMode[102X[32X global variable
-  [29X[2XBrowseData.actions.QuitTable[102X[32X global variable
+  [33X[1;0Y[29X[2XBrowseData.actions.QuitMode[102X[32X global variable[133X
+  [33X[1;0Y[29X[2XBrowseData.actions.QuitTable[102X[32X global variable[133X
   
   [33X[0;0YThe  function [10XBrowseData.actions.QuitMode.action[110X unbinds the current mode in
   the  browse  table  that  is given as its argument (see Section [14X5.2[114X), so the
@@ -654,7 +654,7 @@
   
   [1X5.4-7 BrowseData.actions.Error[101X
   
-  [29X[2XBrowseData.actions.Error[102X[32X global variable
+  [33X[1;0Y[29X[2XBrowseData.actions.Error[102X[32X global variable[133X
   
   [33X[0;0YAfter [2XNCurses.BrowseGeneric[102X ([14X4.3-1[114X) has been called, interrupting by hitting
   the  [12XCtrl-C[112X  keys  is  not possible. It is recommended to provide the action

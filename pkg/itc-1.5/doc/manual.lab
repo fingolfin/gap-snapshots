@@ -1,0 +1,88 @@
+\makelabel{itc:What is ITC?}{1}
+\makelabel{itc:Background}{1.1}
+\makelabel{itc:Teaching CE}{1.2}
+\makelabel{itc:Experimenting with CE Strategies}{1.3}
+\makelabel{itc:How does it work?}{1.4}
+\makelabel{itc:Acknowledgements}{1.5}
+\makelabel{itc:How to Start?}{2}
+\makelabel{itc:Starting XGAP}{2.1}
+\makelabel{itc:Starting ITC}{2.2}
+\makelabel{itc:InteractiveTC}{2.2.1}
+\makelabel{itc:The Basic Operations}{3}
+\makelabel{itc:Making a Definition}{3.1}
+\makelabel{itc:Some Definition Strategies}{3.2}
+\makelabel{itc:Handling a Coincidence}{3.3}
+\makelabel{itc:Sorting Definitions}{3.4}
+\makelabel{itc:The Short-cut Method}{3.5}
+\makelabel{itc:The Tables}{4}
+\makelabel{itc:The Coset Table}{4.1}
+\makelabel{itc:Warnings}{4.2}
+\makelabel{itc:The Information Line}{4.3}
+\makelabel{itc:The List of Relators}{4.4}
+\makelabel{itc:The Relation Tables}{4.5}
+\makelabel{itc:The List of Subgroup Generators}{4.6}
+\makelabel{itc:The Subgroup Tables}{4.7}
+\makelabel{itc:The Table of Definitions}{4.8}
+\makelabel{itc:The List of Length 1 Gaps}{4.9}
+\makelabel{itc:The List of Pending Coincidences}{4.10}
+\makelabel{itc:Buttons and Menus}{5}
+\makelabel{itc:The Top Buttons}{5.1}
+\makelabel{itc:save as postscript}{5.1.1}
+\makelabel{itc:close graphic sheet}{5.1.2}
+\makelabel{itc:change default table size}{5.1.3}
+\makelabel{itc:extend table size}{5.1.4}
+\makelabel{itc:coincidence handling off}{5.1.5}
+\makelabel{itc:coincidence handling on}{5.1.5}
+\makelabel{itc:echo on}{5.1.6}
+\makelabel{itc:echo off}{5.1.6}
+\makelabel{itc:gaps strategy 1}{5.1.7}
+\makelabel{itc:gaps strategy 2}{5.1.7}
+\makelabel{itc:gaps strategy 3}{5.1.7}
+\makelabel{itc:show current settings}{5.1.8}
+\makelabel{itc:close table by Felsch}{5.1.9}
+\makelabel{itc:use gaps strategy 1}{5.1.9}
+\makelabel{itc:use gaps strategy 2}{5.1.9}
+\makelabel{itc:use gaps strategy 3}{5.1.9}
+\makelabel{itc:close table by HLT}{5.1.9}
+\makelabel{itc:read definitions from file}{5.1.10}
+\makelabel{itc:write definitions to file}{5.1.11}
+\makelabel{itc:write standardized table to file}{5.1.12}
+\makelabel{itc:The Bottom Buttons}{5.2}
+\makelabel{itc:scroll to}{5.2.1}
+\makelabel{itc:scroll by}{5.2.2}
+\makelabel{itc:Felsch}{5.2.3}
+\makelabel{itc:HLT}{5.2.4}
+\makelabel{itc:fill rows}{5.2.5}
+\makelabel{itc:fill gaps}{5.2.6}
+\makelabel{itc:back to}{5.2.7}
+\makelabel{itc:sort defs}{5.2.8}
+\makelabel{itc:short-cut}{5.2.9}
+\makelabel{itc:show rels}{5.2.10}
+\makelabel{itc:show subgrp}{5.2.11}
+\makelabel{itc:show defs}{5.2.12}
+\makelabel{itc:show gaps}{5.2.13}
+\makelabel{itc:show coincs}{5.2.14}
+\makelabel{itc:mark cosets}{5.2.15}
+\makelabel{itc:clear}{5.2.16}
+\makelabel{itc:reset}{5.2.17}
+\makelabel{itc:quit}{5.2.18}
+\makelabel{itc:Examples}{6}
+\makelabel{itc:A Presentation by A. Cavicchioli}{6.1}
+\makelabel{itc:The Fibonacci Group F(2,7)}{6.2}
+\makelabel{itc:A Presentation by B.H. Neumann}{6.3}
+\makelabel{itc:The Group (8,7;2,3)}{6.4}
+\makelabel{itc:Bibliography}{}
+\setcitlab {Ban56}{Ban56}
+\setcitlab {Cav86}{Cav86}
+\setcitlab {CDHW73}{CDHW73}
+\setcitlab {Ede89}{Ede89}
+\setcitlab {Fel61}{Fel61}
+\setcitlab {Hav91}{Hav91}
+\setcitlab {HR99b}{HR00}
+\setcitlab {HR99a}{HR01}
+\setcitlab {Lee84}{Lee84}
+\setcitlab {Neu79}{Neu79}
+\setcitlab {Neu82}{Neu82}
+\setcitlab {Ram99}{Ram99}
+\setcitlab {Sims94}{Sim94}
+\makelabel{itc:Index}{}

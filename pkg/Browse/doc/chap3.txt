@@ -19,7 +19,7 @@
   
   [1X3.1-1 NCurses.Alert[101X
   
-  [29X[2XNCurses.Alert[102X( [3Xmessages[103X, [3Xtimeout[103X[, [3Xattrs[103X] ) [32X function
+  [33X[1;0Y[29X[2XNCurses.Alert[102X( [3Xmessages[103X, [3Xtimeout[103X[, [3Xattrs[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ythe integer corresponding to the character entered, or [9Xfail[109X.[133X
   
   [33X[0;0YIn  visual  mode,  [2XPrint[102X  ([14XReference: Print[114X) cannot be used for messages. An
@@ -53,7 +53,7 @@
   
   [1X3.1-2 NCurses.Select[101X
   
-  [29X[2XNCurses.Select[102X( [3Xposs[103X[, [3Xsingle[103X[, [3Xnone[103X]] ) [32X function
+  [33X[1;0Y[29X[2XNCurses.Select[102X( [3Xposs[103X[, [3Xsingle[103X[, [3Xnone[103X]] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YPosition or list of positions, or [9Xfalse[109X.[133X
   
   [33X[0;0YThis  function  allows  the user to select one or several items from a given
@@ -151,7 +151,7 @@
   
   [1X3.1-3 NCurses.GetLineFromUser[101X
   
-  [29X[2XNCurses.GetLineFromUser[102X( [3Xpre[103X ) [32X function
+  [33X[1;0Y[29X[2XNCurses.GetLineFromUser[102X( [3Xpre[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YUser input as string.[133X
   
   [33X[0;0YThis  function  can be used to get an input string from the user. It opens a
@@ -190,7 +190,7 @@
   
   [1X3.1-4 NCurses.Pager[101X
   
-  [29X[2XNCurses.Pager[102X( [3Xlines[103X[, [3Xborder[103X[, [3Xly[103X, [3Xlx[103X, [3Xy[103X, [3Xx[103X]] ) [32X function
+  [33X[1;0Y[29X[2XNCurses.Pager[102X( [3Xlines[103X[, [3Xborder[103X[, [3Xly[103X, [3Xlx[103X, [3Xy[103X, [3Xx[103X]] ) [32X function[133X
   
   [33X[0;0YThis  is  a  simple  pager  utility  for  displaying and scrolling text. The
   argument [3Xlines[103X can be a list of attribute lines (see [2XNCurses.IsAttributeLine[102X
@@ -261,7 +261,7 @@
   
   [1X3.2-1 NCurses.Demo[101X
   
-  [29X[2XNCurses.Demo[102X( [[3Xinputs[103X] ) [32X function
+  [33X[1;0Y[29X[2XNCurses.Demo[102X( [[3Xinputs[103X] ) [32X function[133X
   
   [33X[0;0YLet  [3Xinputs[103X be a list of records, each with the components [10Xtitle[110X (a string),
   [10Xinputblocks[110X  (a  list  of strings, each describing some [5XGAP[105X statements), and

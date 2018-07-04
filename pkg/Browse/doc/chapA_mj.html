@@ -248,7 +248,7 @@
 
 <h5>A.1-4 DatabaseIdEnumerator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DatabaseIdEnumerator</code>( <var class="Arg">arec</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DatabaseIdEnumerator</code>( <var class="Arg">arec</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: a shallow copy of the record <var class="Arg">arec</var>, extended by default values.</p>
 
 <p>For a record <var class="Arg">arec</var>, <code class="func">DatabaseIdEnumerator</code> checks whether the mandatory components of a database id enumerator (see Section <a href="chapA_mj.html#X7999CF7F79ACA240"><span class="RefLink">A.1-1</span></a>) are present, initializes the <code class="code">attributes</code> component, sets the defaults for unbound optional components (see <a href="chapA_mj.html#X7A2DD7827CBBD735"><span class="RefLink">A.2-1</span></a>), and returns the resulting record.</p>
@@ -259,14 +259,14 @@
 
 <h5>A.1-5 DatabaseAttributeAdd</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DatabaseAttributeAdd</code>( <var class="Arg">dbidenum</var>, <var class="Arg">arec</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DatabaseAttributeAdd</code>( <var class="Arg">dbidenum</var>, <var class="Arg">arec</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For a database id enumerator <var class="Arg">dbidenum</var> and a record <var class="Arg">arec</var>, <code class="func">DatabaseAttributeAdd</code> checks whether the mandatory components of a database attribute, except <code class="code">idenumerator</code>, are present in <var class="Arg">arec</var> (see Section <a href="chapA_mj.html#X7D2804F97EE18BA5"><span class="RefLink">A.1-2</span></a>), sets the <code class="code">idenumerator</code> component, and sets the defaults for unbound optional components (see <a href="chapA_mj.html#X7A2DD7827CBBD735"><span class="RefLink">A.2-1</span></a>).</p>
 
 <p><a id="X7C8DB23E79567A60" name="X7C8DB23E79567A60"></a></p>
 
 <h5>A.1-6 DatabaseAttributeValueDefault</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DatabaseAttributeValueDefault</code>( <var class="Arg">attr</var>, <var class="Arg">id</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DatabaseAttributeValueDefault</code>( <var class="Arg">attr</var>, <var class="Arg">id</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: the value of the database attribute <var class="Arg">attr</var> at <var class="Arg">id</var>.</p>
 
 <p>For a database attribute <var class="Arg">attr</var> and an entry <var class="Arg">id</var> of the <code class="code">identifiers</code> list of the underlying database id enumerator, <code class="func">DatabaseAttributeValueDefault</code> takes the <code class="code">data</code> entry for <var class="Arg">id</var>, applies the <code class="code">eval</code> function of <var class="Arg">attr</var> to it if available and returns the result.</p>
@@ -287,7 +287,7 @@
 
 <h5>A.1-7 DatabaseIdEnumeratorUpdate</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DatabaseIdEnumeratorUpdate</code>( <var class="Arg">dbidenum</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DatabaseIdEnumeratorUpdate</code>( <var class="Arg">dbidenum</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>For a database id enumerator <var class="Arg">dbidenum</var> (see Section <a href="chapA_mj.html#X7999CF7F79ACA240"><span class="RefLink">A.1-1</span></a>), <code class="func">DatabaseIdEnumeratorUpdate</code> first calls the <code class="code">update</code> function of <var class="Arg">dbidenum</var>. Afterwards, the <code class="code">update</code> components of those of its <code class="code">attributes</code> records are called for which the <code class="code">version</code> component differs from that of <var class="Arg">dbidenum</var>.</p>
@@ -302,7 +302,7 @@
 
 <h5>A.1-8 DatabaseAttributeCompute</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DatabaseAttributeCompute</code>( <var class="Arg">dbidenum</var>, <var class="Arg">attridentifier</var>[, <var class="Arg">what</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DatabaseAttributeCompute</code>( <var class="Arg">dbidenum</var>, <var class="Arg">attridentifier</var>[, <var class="Arg">what</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 <p>This function returns <code class="keyw">false</code> if <var class="Arg">dbidenum</var> is not a database id enumerator, or if it does not have a database attribute with <code class="code">identifier</code> value <var class="Arg">attridentifier</var>, or if this attribute does not have a <code class="code">create</code> function.</p>
@@ -330,7 +330,7 @@
 
 <h5>A.1-9 DatabaseAttributeSetData</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DatabaseAttributeSetData</code>( <var class="Arg">dbidenum</var>, <var class="Arg">attridentifier</var>, <var class="Arg">version</var>, <var class="Arg">data</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DatabaseAttributeSetData</code>( <var class="Arg">dbidenum</var>, <var class="Arg">attridentifier</var>, <var class="Arg">version</var>, <var class="Arg">data</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Let <var class="Arg">dbidenum</var> be a database id enumerator (see Section <a href="chapA_mj.html#X7999CF7F79ACA240"><span class="RefLink">A.1-1</span></a>), <var class="Arg">attridentifier</var> be a string that is the <code class="code">identifier</code> value of a database attribute of <var class="Arg">dbidenum</var>, <var class="Arg">data</var> be the <code class="code">data</code> list or record for the database attribute (depending on its <code class="code">type</code> value), and <var class="Arg">version</var> be the corresponding <code class="code">version</code> value.</p>
 
 <p><code class="func">DatabaseAttributeSetData</code> sets the <code class="code">data</code> and <code class="code">version</code> components of the attribute. This function can be used for example in data files.</p>
@@ -380,7 +380,7 @@
 
 <h5>A.2-2 BrowseTableFromDatabaseIdEnumerator</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseTableFromDatabaseIdEnumerator</code>( <var class="Arg">dbidenum</var>, <var class="Arg">labelids</var>, <var class="Arg">columnids</var>[, <var class="Arg">header</var>[, <var class="Arg">footer</var>[, <var class="Arg">choice</var>]]] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseTableFromDatabaseIdEnumerator</code>( <var class="Arg">dbidenum</var>, <var class="Arg">labelids</var>, <var class="Arg">columnids</var>[, <var class="Arg">header</var>[, <var class="Arg">footer</var>[, <var class="Arg">choice</var>]]] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: a record that can be used as the input of <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4_mj.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>).</p>
 
 <p>For a database id enumerator <var class="Arg">dbidenum</var> (see Section <a href="chapA_mj.html#X7999CF7F79ACA240"><span class="RefLink">A.1-1</span></a>) and two lists <var class="Arg">labelids</var> and <var class="Arg">columnids</var> of <code class="code">identifier</code> values of database attributes stored in <var class="Arg">dbidenum</var>, <code class="func">BrowseTableFromDatabaseIdEnumerator</code> returns a browse table (see <code class="func">BrowseData.IsBrowseTable</code> (<a href="chap4_mj.html#X81007E2F8552523B"><span class="RefLink">4.2-3</span></a>)) whose columns are given by the values of the specified database attributes. The columns listed in <var class="Arg">labelids</var> are used to provide row label columns of the browse table, the columns listed in <var class="Arg">columnids</var> yield main table columns. <var class="Arg">columnids</var> must be nonempty.</p>
@@ -762,7 +762,7 @@ true
 
 <h5>A.4-1 BrowseTomLibInfo</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseTomLibInfo</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseTomLibInfo</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: nothing.</p>
 
 <p>This function shows the contents of the <strong class="pkg">GAP</strong> Library of Tables of Marks (the <strong class="pkg">TomLib</strong> package, see <a href="chapBib_mj.html#biBTomLib">[NMP13]</a>) in a browse table.</p>

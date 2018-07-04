@@ -583,10 +583,10 @@ functions</span></h4>
 
 <h5>2.2-1 NCurses.ColorAttr</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.ColorAttr</code>( <var class="Arg">fgcolor</var>, <var class="Arg">bgcolor</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.ColorAttr</code>( <var class="Arg">fgcolor</var>, <var class="Arg">bgcolor</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: an attribute for setting the foreground and background color to be used on a terminal window (it is a <strong class="pkg">GAP</strong> integer).</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.attrs.has_colors</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.attrs.has_colors</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
 <p>The return value can be used like any other attribute as described in <a href="chap2.html#X793D897483674294"><span class="RefLink">2.1-7</span></a>. The arguments <var class="Arg">fgcolor</var> and <var class="Arg">bgcolor</var> can be given as strings, allowed are those in <code class="code">[ "black", "red", "green", "yellow", "blue", "magenta", "cyan", "white" ]</code>. These are the default foreground colors 0 to 7 on ANSI terminals. Alternatively, the numbers 0 to 7 can be used directly as arguments.</p>
 
 <p>Note that terminals can be configured in a way such that these named colors are not the colors which are actually displayed.</p>
@@ -615,7 +615,7 @@ functions</span></h4>
 
 <h5>2.2-2 NCurses.SetTerm</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.SetTerm</code>( [<var class="Arg">record</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.SetTerm</code>( [<var class="Arg">record</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function provides a unified interface to the various terminal setting functions of <code class="code">ncurses</code> listed in <a href="chap2.html#X8499A3A384BF1F2D"><span class="RefLink">2.1-1</span></a>. The optional argument is a record with components which are assigned to <code class="keyw">true</code> or <code class="keyw">false</code>. Recognised components are: <code class="code">cbreak</code>, <code class="code">echo</code>, <code class="code">nl</code>, <code class="code">intrflush</code>, <code class="code">leaveok</code>, <code class="code">scrollok</code>, <code class="code">keypad</code>, <code class="code">raw</code> (with the obvious meaning if set to <code class="keyw">true</code> or <code class="keyw">false</code>, respectively).</p>
 
 <p>The default, if no argument is given, is <code class="code">rec(cbreak := true, echo := false, nl := false, intrflush := false, leaveok := true, scrollok := false, keypad := true)</code>. (This is a useful setting for many applications.) If there is an argument <var class="Arg">record</var>, then the given components overwrite the corresponding defaults.</p>
@@ -624,7 +624,7 @@ functions</span></h4>
 
 <h5>2.2-3 NCurses.IsAttributeLine</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.IsAttributeLine</code>( <var class="Arg">obj</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.IsAttributeLine</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> if the argument describes a string with attributes.</p>
 
 <p>An <em>attribute line</em> describes a string with attributes. It is represented by either a string or a dense list of strings, integers, and Booleans immediately following integers, where at least one list entry must <em>not</em> be a string. (The reason is that we want to be able to distinguish between an attribute line and a list of such lines, and that the case of plain strings is perhaps the most usual one, so we do not want to force wrapping each string in a list.) The integers denote attribute values such as color or font information, the Booleans denote that the attribute given by the preceding integer is set or reset.</p>
@@ -652,7 +652,7 @@ false
 
 <h5>2.2-4 NCurses.ConcatenationAttributeLines</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.ConcatenationAttributeLines</code>( <var class="Arg">lines</var>[, <var class="Arg">keep</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.ConcatenationAttributeLines</code>( <var class="Arg">lines</var>[, <var class="Arg">keep</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: an attribute line.</p>
 
 <p>For a list <var class="Arg">lines</var> of attribute lines (see <code class="func">NCurses.IsAttributeLine</code> (<a href="chap2.html#X81D1FC927C455AEB"><span class="RefLink">2.2-3</span></a>)), <code class="code">NCurses.ConcatenationAttributeLines</code> returns the attribute line obtained by concatenating the attribute lines in <var class="Arg">lines</var>.</p>
@@ -679,7 +679,7 @@ false
 
 <h5>2.2-5 NCurses.RepeatedAttributeLine</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.RepeatedAttributeLine</code>( <var class="Arg">line</var>, <var class="Arg">width</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.RepeatedAttributeLine</code>( <var class="Arg">line</var>, <var class="Arg">width</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: an attribute line.</p>
 
 <p>For an attribute line <var class="Arg">line</var> (see <code class="func">NCurses.IsAttributeLine</code> (<a href="chap2.html#X81D1FC927C455AEB"><span class="RefLink">2.2-3</span></a>)) and a positive integer <var class="Arg">width</var>, <code class="code">NCurses.RepeatedAttributeLine</code> returns an attribute line with <var class="Arg">width</var> displayed characters (see <code class="func">NCurses.WidthAttributeLine</code> (<a href="chap2.html#X82C53ACD805EE0C3"><span class="RefLink">2.2-7</span></a>)) that is obtained by concatenating sufficiently many copies of <var class="Arg">line</var> and cutting off a tail if applicable.</p>
@@ -696,7 +696,7 @@ false
 
 <h5>2.2-6 NCurses.PutLine</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.PutLine</code>( <var class="Arg">win</var>, <var class="Arg">y</var>, <var class="Arg">x</var>, <var class="Arg">lines</var>[, <var class="Arg">skip</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.PutLine</code>( <var class="Arg">win</var>, <var class="Arg">y</var>, <var class="Arg">x</var>, <var class="Arg">lines</var>[, <var class="Arg">skip</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> if <var class="Arg">lines</var> were written, otherwise <code class="keyw">false</code>.</p>
 
 <p>The argument <var class="Arg">lines</var> can be a list of attribute lines (see <code class="func">NCurses.IsAttributeLine</code> (<a href="chap2.html#X81D1FC927C455AEB"><span class="RefLink">2.2-3</span></a>)) or a single attribute line. This function writes the attribute lines to window <var class="Arg">win</var> at and below of position <var class="Arg">y</var>, <var class="Arg">x</var>.</p>
@@ -707,7 +707,7 @@ false
 
 <h5>2.2-7 NCurses.WidthAttributeLine</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.WidthAttributeLine</code>( <var class="Arg">line</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.WidthAttributeLine</code>( <var class="Arg">line</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: number of displayed characters in an attribute line.</p>
 
 <p>For an attribute line <var class="Arg">line</var> (see <code class="func">NCurses.IsAttributeLine</code> (<a href="chap2.html#X81D1FC927C455AEB"><span class="RefLink">2.2-3</span></a>)), the function returns the number of displayed characters of <var class="Arg">line</var>.</p>
@@ -725,7 +725,7 @@ false
 
 <h5>2.2-8 NCurses.Grid</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.Grid</code>( <var class="Arg">win</var>, <var class="Arg">trow</var>, <var class="Arg">brow</var>, <var class="Arg">lcol</var>, <var class="Arg">rcol</var>, <var class="Arg">rowinds</var>, <var class="Arg">colinds</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.Grid</code>( <var class="Arg">win</var>, <var class="Arg">trow</var>, <var class="Arg">brow</var>, <var class="Arg">lcol</var>, <var class="Arg">rcol</var>, <var class="Arg">rowinds</var>, <var class="Arg">colinds</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function draws a grid of horizontal and vertical lines on the window <var class="Arg">win</var>, using the line drawing characters explained in <a href="chap2.html#X8091936586CCD248"><span class="RefLink">2.1-6</span></a>. The given arguments specify the top and bottom row of the grid, its left and right column, and lists of row and column numbers where lines should be drawn.</p>
 
 
@@ -747,17 +747,17 @@ false
 
 <h5>2.2-9 NCurses.WBorder</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.WBorder</code>( <var class="Arg">win</var>[, <var class="Arg">chars</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.WBorder</code>( <var class="Arg">win</var>[, <var class="Arg">chars</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This is a convenient interface to the <code class="code">ncurses</code> function <code class="code">wborder</code>. It draws a border around the window <var class="Arg">win</var>. If no second argument is given the default line drawing characters are used, see <a href="chap2.html#X8091936586CCD248"><span class="RefLink">2.1-6</span></a>. Otherwise, <var class="Arg">chars</var> must be a list of <strong class="pkg">GAP</strong> characters or integers specifying characters, possibly with attributes. If <var class="Arg">chars</var> has length 8 the characters are used for the left/right/top/bottom sides and top-left/top-right/bottom-left/bottom-right corners. If <var class="Arg">chars</var> contains 2 characters the first is used for the sides and the second for all corners. If <var class="Arg">chars</var> contains just one character it is used for all sides including the corners.</p>
 
 <p><a id="X799C033A7AB582D7" name="X799C033A7AB582D7"></a></p>
 
 <h5>2.2-10 <span class="Heading">Mouse support in <code class="code">ncurses</code> applications</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.UseMouse</code>( <var class="Arg">on</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.UseMouse</code>( <var class="Arg">on</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: a record</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.GetMouseEvent</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.GetMouseEvent</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: a list of records</p>
 
 <p><code class="code">ncurses</code> allows on some terminals (<code class="code">xterm</code> and related) to catch mouse events. In principle a subset of events can be caught, see <code class="code">mousemask</code> in <a href="chap2.html#X86675F5F791FEFEF"><span class="RefLink">2.1-8</span></a>. But this does not seem to work well with proper subsets of possible events (probably due to intermediate processes X, window manager, terminal application, ...). Therefore we suggest to catch either all or no mouse events in applications.</p>
@@ -772,10 +772,10 @@ false
 
 <h5>2.2-11 NCurses.SaveWin</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.SaveWin</code>( <var class="Arg">win</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.StringsSaveWin</code>( <var class="Arg">cont</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.RestoreWin</code>( <var class="Arg">win</var>, <var class="Arg">cont</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.ShowSaveWin</code>( <var class="Arg">cont</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.SaveWin</code>( <var class="Arg">win</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.StringsSaveWin</code>( <var class="Arg">cont</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.RestoreWin</code>( <var class="Arg">win</var>, <var class="Arg">cont</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.ShowSaveWin</code>( <var class="Arg">cont</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: a <strong class="pkg">GAP</strong> object describing the contents of a window.</p>
 
 <p>These functions can be used to save and restore the contents of <code class="code">ncurses</code> windows. <code class="func">NCurses.SaveWin</code> returns a list <code class="code">[nrows, ncols, chars]</code> giving the number of rows, number of columns, and a list of integers describing the content of window <var class="Arg">win</var>. The integers in the latter contain the displayed characters plus the attributes for the display.</p>

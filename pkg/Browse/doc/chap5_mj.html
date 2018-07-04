@@ -142,7 +142,7 @@
 
 <h5>5.4-1 BrowseData</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseData</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseData</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
 <p>This is the record that contains the global data used by the function <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4_mj.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>). The components are <code class="code">actions</code>, <code class="code">defaults</code>, and several capitalized names for which the values are functions.</p>
 
 <p><code class="code">BrowseData.actions</code> is a record containing the action records that are provided by the package, see Section <a href="chap5_mj.html#X853E01C778A73ECB"><span class="RefLink">5.1</span></a>. These actions are used in standard applications of <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4_mj.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>). Of course there is no problem with using actions that are not stored in <code class="code">BrowseData.actions</code>.</p>
@@ -377,7 +377,7 @@
 
 <h5>5.4-2 BrowseData.SetReplay</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseData.SetReplay</code>( <var class="Arg">data</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseData.SetReplay</code>( <var class="Arg">data</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function sets and resets the value of <code class="code">BrowseData.defaults.dynamic.replay</code>.</p>
 
 <p>When <code class="func">BrowseData.SetReplay</code> is called with a list <var class="Arg">data</var> as its argument then the entries are assumed to describe user inputs for a browse table for which <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4_mj.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>) will be called afterwards, such that replay of the inputs runs. (Valid input lists can be obtained from the component <code class="code">dynamic.log</code> of the browse table in question.)</p>
@@ -392,7 +392,7 @@
 
 <h5>5.4-3 BrowseData.AlertWithReplay</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseData.AlertWithReplay</code>( <var class="Arg">t</var>, <var class="Arg">messages</var>[, <var class="Arg">attrs</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseData.AlertWithReplay</code>( <var class="Arg">t</var>, <var class="Arg">messages</var>[, <var class="Arg">attrs</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: an integer representing a (simulated) user input.</p>
 
 <p>The function <code class="func">BrowseData.AlertWithReplay</code> is a variant of <code class="func">NCurses.Alert</code> (<a href="chap3_mj.html#X83E95B4A83BC473E"><span class="RefLink">3.1-1</span></a>) that is adapted for the replay feature of the browse table <var class="Arg">t</var>, see Section <a href="chap4_mj.html#X869EDB308717F199"><span class="RefLink">4.1</span></a>. The arguments <var class="Arg">messages</var> and <var class="Arg">attrs</var> are the same as the corresponding arguments of <code class="func">NCurses.Alert</code> (<a href="chap3_mj.html#X83E95B4A83BC473E"><span class="RefLink">3.1-1</span></a>), the argument <code class="code">timeout</code> of <code class="func">NCurses.Alert</code> (<a href="chap3_mj.html#X83E95B4A83BC473E"><span class="RefLink">3.1-1</span></a>) is taken from the browse table <var class="Arg">t</var>, as follows. If <code class="code">BrowseData.IsDoneReplay</code> returns <code class="keyw">true</code> for <code class="code">t</code> then <code class="code">timeout</code> is zero, so a user input is requested for closing the alert box; otherwise the requested input character is fetched from <code class="code">t.dynamic.replay</code>.</p>
@@ -407,7 +407,7 @@
 
 <h5>5.4-4 BrowseData.actions.ShowHelp</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseData.actions.ShowHelp</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseData.actions.ShowHelp</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
 <p>There are two predefined ways for showing an overview of the admissible inputs and their meaning in the current mode of a browse table. The function <code class="code">BrowseData.ShowHelpTable</code> displays this overview in a browse table (using the <code class="code">help</code> mode), and <code class="code">BrowseData.ShowHelpPager</code> uses <code class="code">NCurses.Pager</code>.</p>
 
 <p>Technically, the only difference between these two functions is that <code class="code">BrowseData.ShowHelpTable</code> supports the replay feature of <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4_mj.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>), whereas <code class="code">BrowseData.ShowHelpPager</code> simply does not call the pager in replay situations.</p>
@@ -432,15 +432,15 @@
 
 <h5>5.4-5 BrowseData.actions.SaveWindow</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseData.actions.SaveWindow</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseData.actions.SaveWindow</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
 <p>The function <code class="code">BrowseData.actions.SaveWindow.action</code> asks the user to enter the name of a global <strong class="pkg">GAP</strong> variable, using <code class="func">NCurses.GetLineFromUser</code> (<a href="chap3_mj.html#X837EFD8A842257EA"><span class="RefLink">3.1-3</span></a>). If this variable name is valid and if no value is bound to this variable yet then the current contents of the window of the browse table that is given as the argument is saved in this variable, using <code class="func">NCurses.SaveWin</code> (<a href="chap2_mj.html#X85FB1D7878A322EB"><span class="RefLink">2.2-11</span></a>).</p>
 
 <p><a id="X860DA4007E23716E" name="X860DA4007E23716E"></a></p>
 
 <h5>5.4-6 BrowseData.actions.QuitMode</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseData.actions.QuitMode</code></td><td class="tdright">( global variable )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseData.actions.QuitTable</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseData.actions.QuitMode</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseData.actions.QuitTable</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
 <p>The function <code class="code">BrowseData.actions.QuitMode.action</code> unbinds the current mode in the browse table that is given as its argument (see Section <a href="chap5_mj.html#X83290BB6864B2DD0"><span class="RefLink">5.2</span></a>), so the browse table returns to the mode from which this mode had been called. If the current mode is the only one, first the user is asked for confirmation whether she really wants to quit the table; only if the <strong class="button">y</strong> key is hit, the last mode is unbound.</p>
 
 <p>The function <code class="code">BrowseData.actions.QuitTable.action</code> unbinds all modes in the browse table that is given as its argument, without asking for confirmation; the effect is to exit the browse application (see Section <a href="chap5_mj.html#X7A4014DB84D16406"><span class="RefLink">5.3</span></a>).</p>
@@ -449,7 +449,7 @@
 
 <h5>5.4-7 BrowseData.actions.Error</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseData.actions.Error</code></td><td class="tdright">( global variable )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseData.actions.Error</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
 <p>After <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4_mj.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>) has been called, interrupting by hitting the <strong class="button">Ctrl-C</strong> keys is not possible. It is recommended to provide the action <code class="func">BrowseData.actions.Error</code> for each mode of a <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4_mj.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>) application, which enters a break loop and admits returning to the application. The recommended user input for this action is the <strong class="button">E</strong> key.</p>
 
 

@@ -262,7 +262,7 @@
   
   [1XA.1-4 DatabaseIdEnumerator[101X
   
-  [29X[2XDatabaseIdEnumerator[102X( [3Xarec[103X ) [32X function
+  [33X[1;0Y[29X[2XDatabaseIdEnumerator[102X( [3Xarec[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ya shallow copy of the record [3Xarec[103X, extended by default values.[133X
   
   [33X[0;0YFor  a  record  [3Xarec[103X,  [2XDatabaseIdEnumerator[102X  checks  whether  the  mandatory
@@ -281,7 +281,7 @@
   
   [1XA.1-5 DatabaseAttributeAdd[101X
   
-  [29X[2XDatabaseAttributeAdd[102X( [3Xdbidenum[103X, [3Xarec[103X ) [32X function
+  [33X[1;0Y[29X[2XDatabaseAttributeAdd[102X( [3Xdbidenum[103X, [3Xarec[103X ) [32X function[133X
   
   [33X[0;0YFor    a    database   id   enumerator   [3Xdbidenum[103X   and   a   record   [3Xarec[103X,
   [2XDatabaseAttributeAdd[102X  checks  whether the mandatory components of a database
@@ -291,7 +291,7 @@
   
   [1XA.1-6 DatabaseAttributeValueDefault[101X
   
-  [29X[2XDatabaseAttributeValueDefault[102X( [3Xattr[103X, [3Xid[103X ) [32X function
+  [33X[1;0Y[29X[2XDatabaseAttributeValueDefault[102X( [3Xattr[103X, [3Xid[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ythe value of the database attribute [3Xattr[103X at [3Xid[103X.[133X
   
   [33X[0;0YFor a database attribute [3Xattr[103X and an entry [3Xid[103X of the [10Xidentifiers[110X list of the
@@ -325,7 +325,7 @@
   
   [1XA.1-7 DatabaseIdEnumeratorUpdate[101X
   
-  [29X[2XDatabaseIdEnumeratorUpdate[102X( [3Xdbidenum[103X ) [32X function
+  [33X[1;0Y[29X[2XDatabaseIdEnumeratorUpdate[102X( [3Xdbidenum[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YFor    a    database   id   enumerator   [3Xdbidenum[103X   (see   Section   [14XA.1-1[114X),
@@ -344,7 +344,7 @@
   
   [1XA.1-8 DatabaseAttributeCompute[101X
   
-  [29X[2XDatabaseAttributeCompute[102X( [3Xdbidenum[103X, [3Xattridentifier[103X[, [3Xwhat[103X] ) [32X function
+  [33X[1;0Y[29X[2XDatabaseAttributeCompute[102X( [3Xdbidenum[103X, [3Xattridentifier[103X[, [3Xwhat[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
   
   [33X[0;0YThis  function returns [9Xfalse[109X if [3Xdbidenum[103X is not a database id enumerator, or
@@ -371,7 +371,7 @@
   
   [1XA.1-9 DatabaseAttributeSetData[101X
   
-  [29X[2XDatabaseAttributeSetData[102X( [3Xdbidenum[103X, [3Xattridentifier[103X, [3Xversion[103X, [3Xdata[103X ) [32X function
+  [33X[1;0Y[29X[2XDatabaseAttributeSetData[102X( [3Xdbidenum[103X, [3Xattridentifier[103X, [3Xversion[103X, [3Xdata[103X ) [32X function[133X
   
   [33X[0;0YLet [3Xdbidenum[103X be a database id enumerator (see Section [14XA.1-1[114X), [3Xattridentifier[103X
   be  a  string  that  is  the  [10Xidentifier[110X  value  of  a database attribute of
@@ -458,7 +458,7 @@
   
   [1XA.2-2 BrowseTableFromDatabaseIdEnumerator[101X
   
-  [29X[2XBrowseTableFromDatabaseIdEnumerator[102X( [3Xdbidenum[103X, [3Xlabelids[103X, [3Xcolumnids[103X[, [3Xheader[103X[, [3Xfooter[103X[, [3Xchoice[103X]]] ) [32X function
+  [33X[1;0Y[29X[2XBrowseTableFromDatabaseIdEnumerator[102X( [3Xdbidenum[103X, [3Xlabelids[103X, [3Xcolumnids[103X[, [3Xheader[103X[, [3Xfooter[103X[, [3Xchoice[103X]]] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ya  record  that  can be used as the input of [2XNCurses.BrowseGeneric[102X
             ([14X4.3-1[114X).[133X
   
@@ -876,7 +876,7 @@
   
   [1XA.4-1 BrowseTomLibInfo[101X
   
-  [29X[2XBrowseTomLibInfo[102X(  ) [32X function
+  [33X[1;0Y[29X[2XBrowseTomLibInfo[102X(  ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ynothing.[133X
   
   [33X[0;0YThis  function shows the contents of the [5XGAP[105X Library of Tables of Marks (the

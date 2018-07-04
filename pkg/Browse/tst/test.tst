@@ -12,7 +12,6 @@
 ##  In order to run the tests, one starts GAP from the `tst' subdirectory
 ##  of the `pkg/Browse' directory, and calls `Test( "test.tst" );'.
 ##  
-
 gap> LoadPackage( "Browse", false );
 true
 gap> save:= SizeScreen();;
@@ -237,7 +236,7 @@ gap> if TestPackageAvailability( "CTblLib" ) = true then
 >      BrowseData.SetReplay( false );
 > fi;
 
-##  doc/../app/ctbldisp.g (685-697)
+##  doc/../app/ctbldisp.g (687-699)
 gap> BrowseData.SetReplay( Concatenation(
 >         # select the first entry
 >         "se",
@@ -490,7 +489,7 @@ gap> Sudoku.SimpleDisplay(sol);
 546|387|192
 379|124|865
 
-##  doc/../app/rldemo.g (55-60)
+##  doc/../app/rldemo.g (57-62)
 gap> dirs := DirectoriesPackageLibrary("Browse");;
 gap> demofile := Filename(dirs, "../app/demo.demo");;
 gap> LoadDemoFile("My first demo", demofile);

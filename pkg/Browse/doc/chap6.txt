@@ -26,7 +26,7 @@
   
   [1X6.1-1 Browse[101X
   
-  [29X[2XBrowse[102X( [3Xobj[103X[, [3Xarec[103X] ) [32X operation
+  [33X[1;0Y[29X[2XBrowse[102X( [3Xobj[103X[, [3Xarec[103X] ) [32X operation[133X
   
   [33X[0;0YThis operation displays the [5XGAP[105X object [3Xobj[103X in a nice, formatted way, similar
   to the operation [2XDisplay[102X ([14XReference: Display[114X). The difference is that [2XBrowse[102X
@@ -53,7 +53,7 @@
   
   [1X6.2-1 NCurses.BrowseDenseList[101X
   
-  [29X[2XNCurses.BrowseDenseList[102X( [3Xlist[103X, [3Xarec[103X ) [32X function
+  [33X[1;0Y[29X[2XNCurses.BrowseDenseList[102X( [3Xlist[103X, [3Xarec[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ynothing.[133X
   
   [33X[0;0YLet  [3Xlist[103X be a dense list whose entries are lists, for example a matrix, and
@@ -93,7 +93,7 @@
   
   [1X6.2-2 Browse[101X
   
-  [29X[2XBrowse[102X( [3Xlist[103X ) [32X method
+  [33X[1;0Y[29X[2XBrowse[102X( [3Xlist[103X ) [32X method[133X
   [6XReturns:[106X  [33X[0;10Ynothing.[133X
   
   [33X[0;0YSeveral  methods for the operation [2XBrowse[102X ([14X6.1-1[114X) are installed for the case
@@ -145,7 +145,7 @@
   
   [1X6.3-1 Browse[101X
   
-  [29X[2XBrowse[102X( [3Xtbl[103X[, [3Xoptions[103X] ) [32X method
+  [33X[1;0Y[29X[2XBrowse[102X( [3Xtbl[103X[, [3Xoptions[103X] ) [32X method[133X
   
   [33X[0;0YThis  method  displays  the  character  table  [3Xtbl[103X in a window. The optional
   record  [3Xoptions[103X  describes what shall be displayed, the supported components
@@ -224,7 +224,7 @@
   
   [1X6.3-2 BrowseDecompositionMatrix[101X
   
-  [29X[2XBrowseDecompositionMatrix[102X( [3Xmodtbl[103X[, [3Xb[103X][, [3Xoptions[103X] ) [32X function
+  [33X[1;0Y[29X[2XBrowseDecompositionMatrix[102X( [3Xmodtbl[103X[, [3Xb[103X][, [3Xoptions[103X] ) [32X function[133X
   
   [33X[0;0YThis  method  displays  the  decomposition matrix of (the [3Xb[103X-th block of) the
   Brauer character table [3Xmodtbl[103X in a window. The arguments are the same as for
@@ -269,7 +269,7 @@
   
   [1X6.4-1 Browse[101X
   
-  [29X[2XBrowse[102X( [3Xtom[103X[, [3Xoptions[103X] ) [32X method
+  [33X[1;0Y[29X[2XBrowse[102X( [3Xtom[103X[, [3Xoptions[103X] ) [32X method[133X
   
   [33X[0;0YThis method displays the table of marks [3Xtom[103X in a window. The optional record
   [3Xoptions[103X  describes what shall be displayed, the supported components and the
@@ -323,8 +323,8 @@
   
   [1X6.5-1 [33X[0;0YBrowseAtlasInfo[133X[101X
   
-  [29X[2XBrowseAtlasInfo[102X( [[3Xlistofnames[103X, ][[3X"contents"[103X, [3Xsources[103X, ][[3X...[103X] ) [32X function
-  [29X[2XBrowseAtlasInfo[102X( [3Xgapname[103X[, [3Xstd[103X][, [3X...[103X] ) [32X function
+  [33X[1;0Y[29X[2XBrowseAtlasInfo[102X( [[3Xlistofnames[103X, ][[3X"contents"[103X, [3Xsources[103X, ][[3X...[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XBrowseAtlasInfo[102X( [3Xgapname[103X[, [3Xstd[103X][, [3X...[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ythe list of [21Xclicked[121X info records.[133X
   
   [33X[0;0YThis  function  shows the information available via the [5XGAP[105X package [5XAtlasRep[105X
@@ -431,7 +431,7 @@
   
   [1X6.6-1 BrowseGapManuals[101X
   
-  [29X[2XBrowseGapManuals[102X( [[3Xstart[103X] ) [32X function
+  [33X[1;0Y[29X[2XBrowseGapManuals[102X( [[3Xstart[103X] ) [32X function[133X
   
   [33X[0;0YThis function displays the contents of the [5XGAP[105X manuals (the main [5XGAP[105X manuals
   as  well  as  the loaded package manuals) in a window. The optional argument
@@ -551,7 +551,7 @@
   
   [1X6.7-1 BrowseBibliography[101X
   
-  [29X[2XBrowseBibliography[102X( [[3Xbibfiles[103X] ) [32X function
+  [33X[1;0Y[29X[2XBrowseBibliography[102X( [[3Xbibfiles[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ya    record    as   returned   by   [2XParseBibXMLExtFiles[102X   ([14XGAPDoc:
             ParseBibXMLextFiles[114X).[133X
   
@@ -718,7 +718,7 @@
   
   [1X6.7-2 BrowseBibliographyGapPackages[101X
   
-  [29X[2XBrowseBibliographyGapPackages[102X(  ) [32X function
+  [33X[1;0Y[29X[2XBrowseBibliographyGapPackages[102X(  ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ya record as returned by [2XBrowseBibliography[102X ([14X6.7-1[114X).[133X
   
   [33X[0;0YThis  function collects the information from the [10X*.bib[110X and [10X*bib.xml[110X files in
@@ -744,7 +744,7 @@
   
   [1X6.7-3 BrowseMSC[101X
   
-  [29X[2XBrowseMSC[102X(  ) [32X function
+  [33X[1;0Y[29X[2XBrowseMSC[102X(  ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ynothing.[133X
   
   [33X[0;0YThis  function shows the currently valid MSC codes in a browse table that is
@@ -764,7 +764,7 @@
   
   [1X6.8-1 BrowseProfile[101X
   
-  [29X[2XBrowseProfile[102X( [[3Xfunctions[103X, ][[3Xmincount[103X, [3Xmintime[103X] ) [32X function
+  [33X[1;0Y[29X[2XBrowseProfile[102X( [[3Xfunctions[103X, ][[3Xmincount[103X, [3Xmintime[103X] ) [32X function[133X
   
   [33X[0;0YThe   arguments  and  their  meaning  are  the  same  as  for  the  function
   [2XDisplayProfile[102X  ([14XReference:  DisplayProfile[114X),  in  the  sense that the lines
@@ -834,7 +834,7 @@
   
   [1X6.9-1 BrowsePackageVariables[101X
   
-  [29X[2XBrowsePackageVariables[102X( [3Xpkgname[103X[, [3Xversion[103X][, [3Xarec[103X] ) [32X function
+  [33X[1;0Y[29X[2XBrowsePackageVariables[102X( [3Xpkgname[103X[, [3Xversion[103X][, [3Xarec[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ynothing.[133X
   
   [33X[0;0YThe  arguments  can  be  the  same  as  for [2XShowPackageVariables[102X ([14XReference:
@@ -889,7 +889,7 @@
   
   [1X6.10-1 BrowseUserPreferences[101X
   
-  [29X[2XBrowseUserPreferences[102X( [3Xpackage1[103X, [3Xpackage2[103X, [3X...[103X ) [32X function
+  [33X[1;0Y[29X[2XBrowseUserPreferences[102X( [3Xpackage1[103X, [3Xpackage2[103X, [3X...[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ynothing.[133X
   
   [33X[0;0YThe   arguments   are   the  same  as  for  [2XShowUserPreferences[102X  ([14XReference:
@@ -954,7 +954,7 @@
   
   [1X6.11-1 BrowseGapData[101X
   
-  [29X[2XBrowseGapData[102X(  ) [32X function
+  [33X[1;0Y[29X[2XBrowseGapData[102X(  ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ythe return value of the chosen application if there is one.[133X
   
   [33X[0;0YThe    function    [2XBrowseGapData[102X    shows    the   choices   in   the   list
@@ -1045,7 +1045,7 @@
   
   [1X6.11-2 BrowseGapDataAdd[101X
   
-  [29X[2XBrowseGapDataAdd[102X( [3Xtitle[103X, [3Xcall[103X, [3Xret[103X, [3Xdocumentation[103X ) [32X function
+  [33X[1;0Y[29X[2XBrowseGapDataAdd[102X( [3Xtitle[103X, [3Xcall[103X, [3Xret[103X, [3Xdocumentation[103X ) [32X function[133X
   
   [33X[0;0YThis  function  extends the list [10XBrowseData.GapDataOverviews[110X by a new entry.
   The list is used by [2XBrowseGapData[102X ([14X6.11-1[114X).[133X
@@ -1070,7 +1070,7 @@
   
   [1X6.12-1 BrowseDirectory[101X
   
-  [29X[2XBrowseDirectory[102X( [[3Xdir[103X] ) [32X function
+  [33X[1;0Y[29X[2XBrowseDirectory[102X( [[3Xdir[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ya list of the [21Xclicked[121X filenames.[133X
   
   [33X[0;0YIf no argument is given then the contents of the current directory is shown,
@@ -1144,7 +1144,7 @@
   
   [1X6.13-1 BrowsePuzzle[101X
   
-  [29X[2XBrowsePuzzle[102X( [[3Xm[103X, [3Xn[103X[, [3Xpi[103X]] ) [32X function
+  [33X[1;0Y[29X[2XBrowsePuzzle[102X( [[3Xm[103X, [3Xn[103X[, [3Xpi[103X]] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ya record describing the initial and final status of the puzzle.[133X
   
   [33X[0;0YThis function shows the rectangle in a window.[133X
@@ -1214,7 +1214,7 @@
   
   [1X6.14-1 PegSolitaire[101X
   
-  [29X[2XPegSolitaire[102X( [[3Xformat[103X, ][[3Xnrholes[103X, ][[3XtwoModes[103X] ) [32X function
+  [33X[1;0Y[29X[2XPegSolitaire[102X( [[3Xformat[103X, ][[3Xnrholes[103X, ][[3XtwoModes[103X] ) [32X function[133X
   
   [33X[0;0YThis function shows the game board in a window.[133X
   
@@ -1306,7 +1306,7 @@
   
   [1X6.15-1 BrowseRubiksCube[101X
   
-  [29X[2XBrowseRubiksCube[102X( [[3Xformat[103X, ][[3Xpi[103X] ) [32X function
+  [33X[1;0Y[29X[2XBrowseRubiksCube[102X( [[3Xformat[103X, ][[3Xpi[103X] ) [32X function[133X
   
   [33X[0;0YThis function shows the model of the cube in a window.[133X
   
@@ -1396,7 +1396,7 @@
   
   [1X6.16-1 BrowseChangeSides[101X
   
-  [29X[2XBrowseChangeSides[102X(  ) [32X function
+  [33X[1;0Y[29X[2XBrowseChangeSides[102X(  ) [32X function[133X
   
   [33X[0;0YThis function shows the game board in a window.[133X
   
@@ -1462,7 +1462,7 @@
   
   [1X6.17-1 Sudoku.Init[101X
   
-  [29X[2XSudoku.Init[102X( [[3Xarg[103X] ) [32X function
+  [33X[1;0Y[29X[2XSudoku.Init[102X( [[3Xarg[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA record describing a Sudoku board or [9Xfail[109X.[133X
   
   [33X[0;0YThis  function constructs a record describing a Sudoku game. This is used by
@@ -1497,8 +1497,8 @@
   
   [1X6.17-2 Sudoku.Place[101X
   
-  [29X[2XSudoku.Place[102X( [3Xgame[103X, [3Xi[103X, [3Xn[103X ) [32X function
-  [29X[2XSudoku.Remove[102X( [3Xgame[103X, [3Xi[103X ) [32X function
+  [33X[1;0Y[29X[2XSudoku.Place[102X( [3Xgame[103X, [3Xi[103X, [3Xn[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSudoku.Remove[102X( [3Xgame[103X, [3Xi[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YThe changed [3Xgame[103X.[133X
   
   [33X[0;0YHere  [3Xgame[103X is a record describing a Sudoku board, as returned by [2XSudoku.Init[102X
@@ -1529,7 +1529,7 @@
   
   [1X6.17-3 Sudoku.RandomGame[101X
   
-  [29X[2XSudoku.RandomGame[102X( [[3Xseed[103X] ) [32X function
+  [33X[1;0Y[29X[2XSudoku.RandomGame[102X( [[3Xseed[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA pair [10X[str, seed][110X of string and seed.[133X
   
   [33X[0;0YThe  optional argument [3Xseed[103X, if given, must be an integer. If not given some
@@ -1551,7 +1551,7 @@
   
   [1X6.17-4 Sudoku.SimpleDisplay[101X
   
-  [29X[2XSudoku.SimpleDisplay[102X( [3Xgame[103X ) [32X function
+  [33X[1;0Y[29X[2XSudoku.SimpleDisplay[102X( [3Xgame[103X ) [32X function[133X
   
   [33X[0;0YDisplays  a Sudoku board on the terminal. (But see [2XPlaySudoku[102X ([14X6.17-8[114X) for a
   fancier interface.)[133X
@@ -1575,7 +1575,7 @@
   
   [1X6.17-5 Sudoku.DisplayString[101X
   
-  [29X[2XSudoku.DisplayString[102X( [3Xgame[103X ) [32X function
+  [33X[1;0Y[29X[2XSudoku.DisplayString[102X( [3Xgame[103X ) [32X function[133X
   
   [33X[0;0YThe string returned by this function can be used to display the Sudoku board
   [3Xgame[103X     on    the    terminal,    using    [2XPrintFormattedString[102X    ([14XGAPDoc:
@@ -1610,7 +1610,7 @@
   
   [1X6.17-6 Sudoku.OneSolution[101X
   
-  [29X[2XSudoku.OneSolution[102X( [3Xgame[103X ) [32X function
+  [33X[1;0Y[29X[2XSudoku.OneSolution[102X( [3Xgame[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA completed Sudoku board that solves [3Xgame[103X, or [9Xfail[109X.[133X
   
   [33X[0;0YHere  [3Xgame[103X must be a Sudoku board as returned by [2XSudoku.Init[102X ([14X6.17-1[114X). It is
@@ -1635,7 +1635,7 @@
   
   [1X6.17-7 Sudoku.UniqueSolution[101X
   
-  [29X[2XSudoku.UniqueSolution[102X( [3Xgame[103X ) [32X function
+  [33X[1;0Y[29X[2XSudoku.UniqueSolution[102X( [3Xgame[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA completed Sudoku board that solves [3Xgame[103X, or [9Xfalse[109X, or [9Xfail[109X.[133X
   
   [33X[0;0YHere  [3Xgame[103X must be a Sudoku board as returned by [2XSudoku.Init[102X ([14X6.17-1[114X). It is
@@ -1663,7 +1663,7 @@
   
   [1X6.17-8 PlaySudoku[101X
   
-  [29X[2XPlaySudoku[102X( [[3Xarg[103X] ) [32X function
+  [33X[1;0Y[29X[2XPlaySudoku[102X( [[3Xarg[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA record describing the latest status of a Sudoku board.[133X
   
   [33X[0;0YThis  function  allows  one to solve Sudoku puzzles interactively. There are
@@ -1705,8 +1705,8 @@
   
   [1X6.17-9 Sudoku.HTMLGame[101X
   
-  [29X[2XSudoku.HTMLGame[102X( [3Xgame[103X ) [32X function
-  [29X[2XSudoku.LaTeXGame[102X( [3Xgame[103X ) [32X function
+  [33X[1;0Y[29X[2XSudoku.HTMLGame[102X( [3Xgame[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XSudoku.LaTeXGame[102X( [3Xgame[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YA string with HTML or LaTeX code, respectively.[133X
   
   [33X[0;0YThe  argument of these functions is a record describing a Sudoku game. These
@@ -1721,28 +1721,30 @@
   commands.[133X
   
   [33X[0;0YThe  file  format to specify [5XGAP[105X code for a demonstration is very simple: it
-  contains  blocks of lines with [5XGAP[105X input, separated by lines starting with a
-  [10X%[110X  character.  Comments  in such a file can be added to one or several lines
-  starting with [10X%[110X. Here is the content of an example file [11Xdemo.demo[111X:[133X
+  contains  blocks  of  lines with [5XGAP[105X input, separated by lines starting with
+  the  sequence  [10X#%[110X.  Comments  in  such a file can be added to one or several
+  lines starting with [10X#%[110X. Here is the content of an example file [11Xdemo.demo[111X:[133X
   
-  % Add comments after a % character at the beginning of a line.
-  % A comment can have several lines.
-  % Here is a multi-line input block:
+  #% Add comments after #% characters at the beginning of a line.
+  #% A comment can have several lines.
+  #% Here is a multi-line input block:
   g := MathieuGroup(11);;
   cl := ConjugacyClasses(g);
-  % Calling a help page
+  #% Calling a help page
   ?MathieuGroup
-  % The next line contains a comment in the GAP session:
+  #% The next line contains a comment in the GAP session:
   a := 12;; b := 13;; # assign two numbers
-  %
+  #%
   a*b;
-  %
+  #%
+  
+  [33X[0;0Y(Single [10X%[110X in the beginning of a line will also work as separators.)[133X
   
   [33X[0;0YA demonstration can be loaded into a [5XGAP[105X session with the command[133X
   
   [1X6.18-1 LoadDemoFile[101X
   
-  [29X[2XLoadDemoFile[102X( [3Xdemoname[103X, [3Xdemofile[103X[, [3Xsingleline[103X] ) [32X function
+  [33X[1;0Y[29X[2XLoadDemoFile[102X( [3Xdemoname[103X, [3Xdemofile[103X[, [3Xsingleline[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10YNothing.[133X
   
   [33X[0;0YThis  function loads a demo file in the format described above. The argument

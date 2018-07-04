@@ -150,7 +150,7 @@
 
 <h5>6.1-1 Browse</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Browse</code>( <var class="Arg">obj</var>[, <var class="Arg">arec</var>] )</td><td class="tdright">( operation )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Browse</code>( <var class="Arg">obj</var>[, <var class="Arg">arec</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>This operation displays the <strong class="pkg">GAP</strong> object <var class="Arg">obj</var> in a nice, formatted way, similar to the operation <code class="func">Display</code> (<a href="../../../doc/ref/chap6_mj.html#X83A5C59278E13248"><span class="RefLink">Reference: Display</span></a>). The difference is that <code class="func">Browse</code> is intended to use <code class="code">ncurses</code> facilities.</p>
 
 <p>Currently there are methods for matrices (see <code class="func">Browse</code> (<a href="chap6_mj.html#X7AD78A0B7BEDBB20"><span class="RefLink">6.2-2</span></a>)), for character tables (see <code class="func">Browse</code> (<a href="chap6_mj.html#X870C744182073CF6"><span class="RefLink">6.3-1</span></a>)) and for tables of marks (see <code class="func">Browse</code> (<a href="chap6_mj.html#X7F4BD9C580BBBAA4"><span class="RefLink">6.4-1</span></a>)).</p>
@@ -169,7 +169,7 @@
 
 <h5>6.2-1 NCurses.BrowseDenseList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.BrowseDenseList</code>( <var class="Arg">list</var>, <var class="Arg">arec</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NCurses.BrowseDenseList</code>( <var class="Arg">list</var>, <var class="Arg">arec</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: nothing.</p>
 
 <p>Let <var class="Arg">list</var> be a dense list whose entries are lists, for example a matrix, and let <var class="Arg">arec</var> be a record. This function displays <var class="Arg">list</var> in a window, as a two-dimensional array with row and column positions as row and column labels, respectively.</p>
@@ -201,7 +201,7 @@
 
 <h5>6.2-2 Browse</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Browse</code>( <var class="Arg">list</var> )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Browse</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <p>Returns: nothing.</p>
 
 <p>Several methods for the operation <code class="func">Browse</code> (<a href="chap6_mj.html#X7FDD696B7DD54A6E"><span class="RefLink">6.1-1</span></a>) are installed for the case that the argument is a list of lists. These methods cover a default method for lists of lists and the <code class="func">Display</code> (<a href="../../../doc/ref/chap6_mj.html#X83A5C59278E13248"><span class="RefLink">Reference: Display</span></a>) methods for matrices over finite fields and residue class rings of the rational integers. Note that matrices over finite prime fields, small extension fields, and large extension fields are displayed differently, and the same holds for the corresponding <code class="func">Browse</code> (<a href="chap6_mj.html#X7FDD696B7DD54A6E"><span class="RefLink">6.1-1</span></a>) methods.</p>
@@ -239,7 +239,7 @@
 
 <h5>6.3-1 Browse</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Browse</code>( <var class="Arg">tbl</var>[, <var class="Arg">options</var>] )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Browse</code>( <var class="Arg">tbl</var>[, <var class="Arg">options</var>] )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <p>This method displays the character table <var class="Arg">tbl</var> in a window. The optional record <var class="Arg">options</var> describes what shall be displayed, the supported components and the default values are described in <a href="../../../doc/ref/chap71_mj.html#X7C1941F17BE9FC21"><span class="RefLink">Reference: Printing Character Tables</span></a>.</p>
 
 <p>The full functionality of the function <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4_mj.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>) is available.</p>
@@ -285,7 +285,7 @@
 
 <h5>6.3-2 BrowseDecompositionMatrix</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseDecompositionMatrix</code>( <var class="Arg">modtbl</var>[, <var class="Arg">b</var>][, <var class="Arg">options</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseDecompositionMatrix</code>( <var class="Arg">modtbl</var>[, <var class="Arg">b</var>][, <var class="Arg">options</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This method displays the decomposition matrix of (the <var class="Arg">b</var>-th block of) the Brauer character table <var class="Arg">modtbl</var> in a window. The arguments are the same as for <code class="func">LaTeXStringDecompositionMatrix</code> (<a href="../../../doc/ref/chap71_mj.html#X83EC921380AF9B3B"><span class="RefLink">Reference: LaTeXStringDecompositionMatrix</span></a>).</p>
 
 <p>The positions of the ordinary and modular irreducible characters are shown in the labels of the rows and columns, respectively, that are indexed by these characters. When an entry in the decomposition matrix is selected then information about the degrees of these characters is shown in the table footer.</p>
@@ -321,7 +321,7 @@
 
 <h5>6.4-1 Browse</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Browse</code>( <var class="Arg">tom</var>[, <var class="Arg">options</var>] )</td><td class="tdright">( method )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Browse</code>( <var class="Arg">tom</var>[, <var class="Arg">options</var>] )</td><td class="tdright">(&nbsp;method&nbsp;)</td></tr></table></div>
 <p>This method displays the table of marks <var class="Arg">tom</var> in a window. The optional record <var class="Arg">options</var> describes what shall be displayed, the supported components and the default values are described in <a href="../../../doc/ref/chap70_mj.html#X7AC0FB9685DCBCFD"><span class="RefLink">Reference: Printing Tables of Marks</span></a>.</p>
 
 <p>The full functionality of the function <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4_mj.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>) is available.</p>
@@ -362,8 +362,8 @@
 
 <h5>6.5-1 <span class="Heading">BrowseAtlasInfo</span></h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseAtlasInfo</code>( [<var class="Arg">listofnames</var>, ][<var class="Arg">"contents"</var>, <var class="Arg">sources</var>, ][<var class="Arg">...</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseAtlasInfo</code>( <var class="Arg">gapname</var>[, <var class="Arg">std</var>][, <var class="Arg">...</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseAtlasInfo</code>( [<var class="Arg">listofnames</var>, ][<var class="Arg">"contents"</var>, <var class="Arg">sources</var>, ][<var class="Arg">...</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseAtlasInfo</code>( <var class="Arg">gapname</var>[, <var class="Arg">std</var>][, <var class="Arg">...</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: the list of "clicked" info records.</p>
 
 <p>This function shows the information available via the <strong class="pkg">GAP</strong> package <strong class="pkg">AtlasRep</strong> in a browse table, cf. Section <a href="../../../pkg/atlasrep/doc/chap3.html#X86B07B4387A02B06"><span class="RefLink">AtlasRep: Accessing Data of the AtlasRep Package</span></a> in the <strong class="pkg">AtlasRep</strong> manual.</p>
@@ -432,7 +432,7 @@
 
 <h5>6.6-1 BrowseGapManuals</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseGapManuals</code>( [<var class="Arg">start</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseGapManuals</code>( [<var class="Arg">start</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function displays the contents of the <strong class="pkg">GAP</strong> manuals (the main <strong class="pkg">GAP</strong> manuals as well as the loaded package manuals) in a window. The optional argument <var class="Arg">start</var> describes the initial status, admissible values are the strings <code class="code">"inline/collapsed"</code>, <code class="code">"inline/expanded"</code>, <code class="code">"pager/collapsed"</code>, and <code class="code">"pager/expanded"</code>.</p>
 
 <p>In the <code class="code">inline</code> cases, the parts of the manuals are shown in the browse table, and in the <code class="code">pager</code> case, the parts of the manuals are shown in a different window when they are "clicked", using the user's favourite help viewer, see <a href="../../../doc/ref/chap2_mj.html#X863FF9087EDA8DF9"><span class="RefLink">Reference: Changing the Help Viewer</span></a>.</p>
@@ -480,7 +480,7 @@
 
 <h4>6.7 <span class="Heading">Overview of Bibliographies</span></h4>
 
-<p>The function <code class="func">BrowseBibliography</code> (<a href="chap6_mj.html#X7F0FE4CC7F46ABF3"><span class="RefLink">6.7-1</span></a>) can be used to turn the contents of bibliography files in BibTeX or BibXMLext format (see <a href="../../../pkg/GAPDoc-1.6/doc/chap7_mj.html#X7FB8F6BD80D859D1"><span class="RefLink">GAPDoc: The BibXMLext Format</span></a>) into a Browse table, such that one can scroll in the list, search for entries, sort by year, sort and categorize by authors etc.</p>
+<p>The function <code class="func">BrowseBibliography</code> (<a href="chap6_mj.html#X7F0FE4CC7F46ABF3"><span class="RefLink">6.7-1</span></a>) can be used to turn the contents of bibliography files in BibTeX or BibXMLext format (see <a href="../../../pkg/GAPDoc-1.6.1/doc/chap7_mj.html#X7FB8F6BD80D859D1"><span class="RefLink">GAPDoc: The BibXMLext Format</span></a>) into a Browse table, such that one can scroll in the list, search for entries, sort by year, sort and categorize by authors etc.</p>
 
 <p>The default bibliography used by <code class="func">BrowseBibliography</code> (<a href="chap6_mj.html#X7F0FE4CC7F46ABF3"><span class="RefLink">6.7-1</span></a>) is the bibliography of <strong class="pkg">GAP</strong> related publications, see <a href="chapBib_mj.html#biBGAPBibliography">[GAP]</a>. The <strong class="pkg">Browse</strong> package contains a (perhaps outdated) version of this bibliography. One can get an updated version as follows.</p>
 
@@ -494,8 +494,8 @@
 
 <h5>6.7-1 BrowseBibliography</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseBibliography</code>( [<var class="Arg">bibfiles</var>] )</td><td class="tdright">( function )</td></tr></table></div>
-<p>Returns: a record as returned by <code class="func">ParseBibXMLExtFiles</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap7_mj.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextFiles</span></a>).</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseBibliography</code>( [<var class="Arg">bibfiles</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: a record as returned by <code class="func">ParseBibXMLExtFiles</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap7_mj.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextFiles</span></a>).</p>
 
 <p>This function shows the list of bibliography entries in the files given by <var class="Arg">bibfiles</var>, which may be a string or a list of strings (denoting a filename or a list of filenames, respectively) or a record (see below for the supported components).</p>
 
@@ -508,13 +508,13 @@
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">file:= Filename( DirectoriesLibrary( "doc" ), "manualbib.xml" );;</span>
 </pre></div>
 
-<p>Both BibTeX format and the <strong class="pkg">XML</strong> based extended format provided by the <strong class="pkg">GAPDoc</strong> package are supported by <code class="func">BrowseBibliography</code>, see Chapter <a href="../../../pkg/GAPDoc-1.6/doc/chap7_mj.html#X7EB94CE97ABF7192"><span class="RefLink">GAPDoc: Utilities for Bibliographies</span></a>.</p>
+<p>Both BibTeX format and the <strong class="pkg">XML</strong> based extended format provided by the <strong class="pkg">GAPDoc</strong> package are supported by <code class="func">BrowseBibliography</code>, see Chapter <a href="../../../pkg/GAPDoc-1.6.1/doc/chap7_mj.html#X7EB94CE97ABF7192"><span class="RefLink">GAPDoc: Utilities for Bibliographies</span></a>.</p>
 
-<p>In the case of BibTeX format input, first a conversion to the extended format takes place, via <code class="func">StringBibAsXMLext</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap7_mj.html#X85F33C64787A00B7"><span class="RefLink">GAPDoc: StringBibAsXMLext</span></a>) and <code class="func">ParseBibXMLextString</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap7_mj.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextString</span></a>). Note that syntactically incorrect entries are rejected in this conversion –this is signaled with <code class="func">InfoBibTools</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap7_mj.html#X85C1D50F7E37A99A"><span class="RefLink">GAPDoc: InfoBibTools</span></a>) warnings– and that only a subset of the possible LaTeX markup is recognized –other markup appears in the browse table except that the leading backslash is removed.</p>
+<p>In the case of BibTeX format input, first a conversion to the extended format takes place, via <code class="func">StringBibAsXMLext</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap7_mj.html#X85F33C64787A00B7"><span class="RefLink">GAPDoc: StringBibAsXMLext</span></a>) and <code class="func">ParseBibXMLextString</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap7_mj.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextString</span></a>). Note that syntactically incorrect entries are rejected in this conversion –this is signaled with <code class="func">InfoBibTools</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap7_mj.html#X85C1D50F7E37A99A"><span class="RefLink">GAPDoc: InfoBibTools</span></a>) warnings– and that only a subset of the possible LaTeX markup is recognized –other markup appears in the browse table except that the leading backslash is removed.</p>
 
-<p>In both cases of input, the problem arises that in visual mode, currently we can show only ASCII characters (and the symbols in <code class="code">NCurses.lineDraw</code>, but these are handled differently, see Section <a href="chap2_mj.html#X8091936586CCD248"><span class="RefLink">2.1-6</span></a>). Therefore, we use the function <code class="func">SimplifiedUnicodeString</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap6_mj.html#X818A31567EB30A39"><span class="RefLink">GAPDoc: SimplifiedUnicodeString</span></a>) for replacing other unicode characters by ASCII text.</p>
+<p>In both cases of input, the problem arises that in visual mode, currently we can show only ASCII characters (and the symbols in <code class="code">NCurses.lineDraw</code>, but these are handled differently, see Section <a href="chap2_mj.html#X8091936586CCD248"><span class="RefLink">2.1-6</span></a>). Therefore, we use the function <code class="func">SimplifiedUnicodeString</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap6_mj.html#X818A31567EB30A39"><span class="RefLink">GAPDoc: SimplifiedUnicodeString</span></a>) for replacing other unicode characters by ASCII text.</p>
 
-<p>The return value is a record as returned by <code class="func">ParseBibXMLExtFiles</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap7_mj.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextFiles</span></a>), its <code class="code">entries</code> component corresponds to the bibliography entries that have been "clicked" in visual mode. This record can be used as input for <code class="func">WriteBibFile</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap7_mj.html#X7C2B2F65851EAA0B"><span class="RefLink">GAPDoc: WriteBibFile</span></a>) or <code class="func">WriteBibXMLextFile</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap7_mj.html#X7811108C7E5B1709"><span class="RefLink">GAPDoc: WriteBibXMLextFile</span></a>), in order to produce a bibliography file, or it can be used as input for <code class="func">StringBibXMLEntry</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap7_mj.html#X790A295680F7CD24"><span class="RefLink">GAPDoc: StringBibXMLEntry</span></a>), in order to produce strings from the entries, in various formats.</p>
+<p>The return value is a record as returned by <code class="func">ParseBibXMLExtFiles</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap7_mj.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextFiles</span></a>), its <code class="code">entries</code> component corresponds to the bibliography entries that have been "clicked" in visual mode. This record can be used as input for <code class="func">WriteBibFile</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap7_mj.html#X7C2B2F65851EAA0B"><span class="RefLink">GAPDoc: WriteBibFile</span></a>) or <code class="func">WriteBibXMLextFile</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap7_mj.html#X7811108C7E5B1709"><span class="RefLink">GAPDoc: WriteBibXMLextFile</span></a>), in order to produce a bibliography file, or it can be used as input for <code class="func">StringBibXMLEntry</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap7_mj.html#X790A295680F7CD24"><span class="RefLink">GAPDoc: StringBibXMLEntry</span></a>), in order to produce strings from the entries, in various formats.</p>
 
 <p>The full functionality of the function <code class="func">NCurses.BrowseGeneric</code> (<a href="chap4_mj.html#X85FC163D87FAFD12"><span class="RefLink">4.3-1</span></a>) is available.</p>
 
@@ -539,13 +539,13 @@
 
 <p>For categorizing by authors (or by MSC codes), the sort parameter <code class="code">"split rows on categorizing"</code> is set to <code class="code">"yes"</code>, so the authors (codes) are distributed to different category rows, hence each entry appears once for each of its authors (or its MSC codes) in the categorized table. When a data row or an entry in a data row is selected, "click" adds the corresponding bibliographhy entry to the result.</p>
 
-<p>The width of the title column is preset; usually titles are too long for one line, and the contents of this column is formatted as a paragraph, using the function <code class="func">FormatParagraph</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap6_mj.html#X812058CE7C8E9022"><span class="RefLink">GAPDoc: FormatParagraph</span></a>). For the authors and journal columns, maximal widths are prescribed, and <code class="func">FormatParagraph</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap6_mj.html#X812058CE7C8E9022"><span class="RefLink">GAPDoc: FormatParagraph</span></a>) is used for longer entries.</p>
+<p>The width of the title column is preset; usually titles are too long for one line, and the contents of this column is formatted as a paragraph, using the function <code class="func">FormatParagraph</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap6_mj.html#X812058CE7C8E9022"><span class="RefLink">GAPDoc: FormatParagraph</span></a>). For the authors and journal columns, maximal widths are prescribed, and <code class="func">FormatParagraph</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap6_mj.html#X812058CE7C8E9022"><span class="RefLink">GAPDoc: FormatParagraph</span></a>) is used for longer entries.</p>
 
 <p>For four columns, the sort parameters are defined as follows: The <em>authors</em> and <em>MSC code</em> columns do not become hidden when the table is categorized according to this column, sorting by the <em>year</em> yields a <em>de</em>scending order, and the category rows arising from these columns and the <em>journal</em> column show the numbers of the data rows that belong to them.</p>
 
 <p>Those standard modes in <code class="func">BrowseData</code> (<a href="chap5_mj.html#X86E80E578085F137"><span class="RefLink">5.4-1</span></a>) where an entry or a row of the table is selected have been extended by three new actions, which open a pager showing the BibTeX, HTML, and Text format of the selected entry, respectively. The corresponding user inputs are the <strong class="button">vb</strong>, <strong class="button">vh</strong>, and <strong class="button">vt</strong>. If the <em>MSC code</em> column is available then also the user input <strong class="button">vm</strong> is admissible; it opens a pager showing the descriptions of the MSC codes attached to the selected entry.</p>
 
-<p>This function requires some of the utilities provided by the <strong class="pkg">GAP</strong> package <strong class="pkg">GAPDoc</strong> (see <a href="chapBib_mj.html#biBGAPDoc">[LN07]</a>), such as <code class="func">FormatParagraph</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap6_mj.html#X812058CE7C8E9022"><span class="RefLink">GAPDoc: FormatParagraph</span></a>), <code class="func">NormalizeNameAndKey</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap7_mj.html#X7C9F0C337A0A0FF0"><span class="RefLink">GAPDoc: NormalizeNameAndKey</span></a>), <code class="func">NormalizedNameAndKey</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap7_mj.html#X7C9F0C337A0A0FF0"><span class="RefLink">GAPDoc: NormalizedNameAndKey</span></a>), <code class="func">ParseBibFiles</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap7_mj.html#X82555C307FDC1817"><span class="RefLink">GAPDoc: ParseBibFiles</span></a>), <code class="func">ParseBibXMLextFiles</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap7_mj.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextFiles</span></a>), <code class="func">ParseBibXMLextString</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap7_mj.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextString</span></a>), <code class="func">RecBibXMLEntry</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap7_mj.html#X786C33ED79F425F1"><span class="RefLink">GAPDoc: RecBibXMLEntry</span></a>), and <code class="func">StringBibAsXMLext</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap7_mj.html#X85F33C64787A00B7"><span class="RefLink">GAPDoc: StringBibAsXMLext</span></a>).</p>
+<p>This function requires some of the utilities provided by the <strong class="pkg">GAP</strong> package <strong class="pkg">GAPDoc</strong> (see <a href="chapBib_mj.html#biBGAPDoc">[LN07]</a>), such as <code class="func">FormatParagraph</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap6_mj.html#X812058CE7C8E9022"><span class="RefLink">GAPDoc: FormatParagraph</span></a>), <code class="func">NormalizeNameAndKey</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap7_mj.html#X7C9F0C337A0A0FF0"><span class="RefLink">GAPDoc: NormalizeNameAndKey</span></a>), <code class="func">NormalizedNameAndKey</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap7_mj.html#X7C9F0C337A0A0FF0"><span class="RefLink">GAPDoc: NormalizedNameAndKey</span></a>), <code class="func">ParseBibFiles</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap7_mj.html#X82555C307FDC1817"><span class="RefLink">GAPDoc: ParseBibFiles</span></a>), <code class="func">ParseBibXMLextFiles</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap7_mj.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextFiles</span></a>), <code class="func">ParseBibXMLextString</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap7_mj.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextString</span></a>), <code class="func">RecBibXMLEntry</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap7_mj.html#X786C33ED79F425F1"><span class="RefLink">GAPDoc: RecBibXMLEntry</span></a>), and <code class="func">StringBibAsXMLext</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap7_mj.html#X85F33C64787A00B7"><span class="RefLink">GAPDoc: StringBibAsXMLext</span></a>).</p>
 
 <p>The code can be found in the file <code class="file">app/gapbibl.g</code> of the package.</p>
 
@@ -570,7 +570,7 @@
 
 </dd>
 <dt><strong class="Mark"><code class="code">columns</code></strong></dt>
-<dd><p>is a list of records that are valid as the second argument of <code class="func">DatabaseAttributeAdd</code> (<a href="chapA_mj.html#X8573522782D939FE"><span class="RefLink">A.1-5</span></a>), where the first argument is a database id enumerator created from the bibliography entries in the files in question. Each entry (and also the corresponding identifier) of this database id enumerator is a list of records obtained from <code class="func">ParseBibXMLextFiles</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap7_mj.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextFiles</span></a>) and <code class="func">RecBibXMLEntry</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap7_mj.html#X786C33ED79F425F1"><span class="RefLink">GAPDoc: RecBibXMLEntry</span></a>), or from <code class="func">ParseBibFiles</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap7_mj.html#X82555C307FDC1817"><span class="RefLink">GAPDoc: ParseBibFiles</span></a>), such that the list elements are regarded as equal, in the sense that their fingerprints (see below) are equal. The records in the <code class="code">columns</code> list are available for constructing the desired browse table, the actual appearance is controlled by the <code class="code">choice</code> component described below. Columns showing authors, title, year, journal, MSC code, and filename are predefined and need not be listed here.</p>
+<dd><p>is a list of records that are valid as the second argument of <code class="func">DatabaseAttributeAdd</code> (<a href="chapA_mj.html#X8573522782D939FE"><span class="RefLink">A.1-5</span></a>), where the first argument is a database id enumerator created from the bibliography entries in the files in question. Each entry (and also the corresponding identifier) of this database id enumerator is a list of records obtained from <code class="func">ParseBibXMLextFiles</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap7_mj.html#X86BD29AE7A453721"><span class="RefLink">GAPDoc: ParseBibXMLextFiles</span></a>) and <code class="func">RecBibXMLEntry</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap7_mj.html#X786C33ED79F425F1"><span class="RefLink">GAPDoc: RecBibXMLEntry</span></a>), or from <code class="func">ParseBibFiles</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap7_mj.html#X82555C307FDC1817"><span class="RefLink">GAPDoc: ParseBibFiles</span></a>), such that the list elements are regarded as equal, in the sense that their fingerprints (see below) are equal. The records in the <code class="code">columns</code> list are available for constructing the desired browse table, the actual appearance is controlled by the <code class="code">choice</code> component described below. Columns showing authors, title, year, journal, MSC code, and filename are predefined and need not be listed here.</p>
 
 </dd>
 <dt><strong class="Mark"><code class="code">choice</code></strong></dt>
@@ -582,7 +582,7 @@
 
 </dd>
 <dt><strong class="Mark"><code class="code">sortKeyFunction</code></strong></dt>
-<dd><p>either <code class="keyw">fail</code> or a function that takes a record as returned by <code class="func">RecBibXMLEntry</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap7_mj.html#X786C33ED79F425F1"><span class="RefLink">GAPDoc: RecBibXMLEntry</span></a>) and returns a list that is used for comparing and thus sorting the records; the default is <code class="keyw">fail</code>, which means that the rows of the table appear in the same ordering as in the source files.</p>
+<dd><p>either <code class="keyw">fail</code> or a function that takes a record as returned by <code class="func">RecBibXMLEntry</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap7_mj.html#X786C33ED79F425F1"><span class="RefLink">GAPDoc: RecBibXMLEntry</span></a>) and returns a list that is used for comparing and thus sorting the records; the default is <code class="keyw">fail</code>, which means that the rows of the table appear in the same ordering as in the source files.</p>
 
 </dd>
 </dl>
@@ -590,7 +590,7 @@
 
 <h5>6.7-2 BrowseBibliographyGapPackages</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseBibliographyGapPackages</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseBibliographyGapPackages</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: a record as returned by <code class="func">BrowseBibliography</code> (<a href="chap6_mj.html#X7F0FE4CC7F46ABF3"><span class="RefLink">6.7-1</span></a>).</p>
 
 <p>This function collects the information from the <code class="code">*.bib</code> and <code class="code">*bib.xml</code> files in those subdirectories of installed <strong class="pkg">GAP</strong> packages which contain the package documentation, and shows it in a Browse table, using the function <code class="func">BrowseBibliography</code> (<a href="chap6_mj.html#X7F0FE4CC7F46ABF3"><span class="RefLink">6.7-1</span></a>).</p>
@@ -616,7 +616,7 @@
 
 <h5>6.7-3 BrowseMSC</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseMSC</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseMSC</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: nothing.</p>
 
 <p>This function shows the currently valid MSC codes in a browse table that is categorized by the <code class="code">..-XX</code> and the <code class="code">...xx</code> codes. (Use <strong class="button">X</strong> for expanding all categories or <strong class="button">x</strong> for expanding the currently selected category.) Due to the categorization, only two columns of the table are visible, showing the codes and their descriptions.</p>
@@ -631,7 +631,7 @@
 
 <h5>6.8-1 BrowseProfile</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseProfile</code>( [<var class="Arg">functions</var>, ][<var class="Arg">mincount</var>, <var class="Arg">mintime</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseProfile</code>( [<var class="Arg">functions</var>, ][<var class="Arg">mincount</var>, <var class="Arg">mintime</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>The arguments and their meaning are the same as for the function <code class="func">DisplayProfile</code> (<a href="../../../doc/ref/chap7_mj.html#X80FEA6A08775A48E"><span class="RefLink">Reference: DisplayProfile</span></a>), in the sense that the lines printed by that function correspond to the rows of the list that is shown by <code class="func">BrowseProfile</code>. Initially, the table is sorted in the same way as the list shown by <code class="func">BrowseProfile</code>; sorting the table by any of the first five columns will yield a non-increasing order of the rows.</p>
 
 <p>The threshold values <var class="Arg">mincount</var> and <var class="Arg">mintime</var> can be changed in visual mode via the user input <strong class="button">e</strong>. If mouse events are enabled (see <code class="func">NCurses.UseMouse</code> (<a href="chap2_mj.html#X799C033A7AB582D7"><span class="RefLink">2.2-10</span></a>)) then one can also use a mouse click on the current parameter value shown in the table header in order to enter the mode for changing the parameters.</p>
@@ -676,7 +676,7 @@
 
 <h5>6.9-1 BrowsePackageVariables</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowsePackageVariables</code>( <var class="Arg">pkgname</var>[, <var class="Arg">version</var>][, <var class="Arg">arec</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowsePackageVariables</code>( <var class="Arg">pkgname</var>[, <var class="Arg">version</var>][, <var class="Arg">arec</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: nothing.</p>
 
 <p>The arguments can be the same as for <code class="func">ShowPackageVariables</code> (<a href="../../../doc/ref/chap76_mj.html#X7D34AC3287611B15"><span class="RefLink">Reference: ShowPackageVariables</span></a>), that is, <var class="Arg">pkgname</var> is the name of a <strong class="pkg">GAP</strong> package, and the optional arguments <var class="Arg">version</var> and <var class="Arg">arec</var> are a version number of this package and a record used for customizing the output, respectively.</p>
@@ -711,7 +711,7 @@
 
 <h5>6.10-1 BrowseUserPreferences</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseUserPreferences</code>( <var class="Arg">package1</var>, <var class="Arg">package2</var>, <var class="Arg">...</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseUserPreferences</code>( <var class="Arg">package1</var>, <var class="Arg">package2</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: nothing.</p>
 
 <p>The arguments are the same as for <code class="func">ShowUserPreferences</code> (<a href="../../../doc/ref/chap3_mj.html#X7B0AD104839B6C3C"><span class="RefLink">Reference: ShowUserPreferences</span></a>), that is, calling the function with no argument yields an overview of all known user preferences, and if one or more strings <var class="Arg">package1</var>, <span class="SimpleMath">\(\ldots\)</span> are given then only the user preferences for these packages are shown.</p>
@@ -768,7 +768,7 @@
 
 <h5>6.11-1 BrowseGapData</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseGapData</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseGapData</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: the return value of the chosen application if there is one.</p>
 
 <p>The function <code class="func">BrowseGapData</code> shows the choices in the list <code class="code">BrowseData.GapDataOverviews</code>, in a browse table with one column. When an entry is "clicked" then the associated function is called, and the table of choices is closed.</p>
@@ -855,7 +855,7 @@
 
 <h5>6.11-2 BrowseGapDataAdd</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseGapDataAdd</code>( <var class="Arg">title</var>, <var class="Arg">call</var>, <var class="Arg">ret</var>, <var class="Arg">documentation</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseGapDataAdd</code>( <var class="Arg">title</var>, <var class="Arg">call</var>, <var class="Arg">ret</var>, <var class="Arg">documentation</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function extends the list <code class="code">BrowseData.GapDataOverviews</code> by a new entry. The list is used by <code class="func">BrowseGapData</code> (<a href="chap6_mj.html#X850C786C87A4877B"><span class="RefLink">6.11-1</span></a>).</p>
 
 <p><var class="Arg">title</var> must be a string of length at most <span class="SimpleMath">\(76\)</span>; it will be shown in the browse table that is opened by <code class="func">BrowseGapData</code> (<a href="chap6_mj.html#X850C786C87A4877B"><span class="RefLink">6.11-1</span></a>). <var class="Arg">call</var> must be a function that takes no arguments; it will be called when <var class="Arg">title</var> is "clicked". <var class="Arg">ret</var> must be <code class="keyw">true</code> if <var class="Arg">call</var> has a return value and if <code class="func">BrowseGapData</code> (<a href="chap6_mj.html#X850C786C87A4877B"><span class="RefLink">6.11-1</span></a>) shall return this value, and <code class="keyw">false</code> otherwise. <var class="Arg">documentation</var> must be a string that describes what happens when the function <var class="Arg">call</var> is called; it will be shown in the footer of the table opened by <code class="func">BrowseGapData</code> (<a href="chap6_mj.html#X850C786C87A4877B"><span class="RefLink">6.11-1</span></a>) when <var class="Arg">title</var> is selected.</p>
@@ -870,7 +870,7 @@
 
 <h5>6.12-1 BrowseDirectory</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseDirectory</code>( [<var class="Arg">dir</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseDirectory</code>( [<var class="Arg">dir</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: a list of the "clicked" filenames.</p>
 
 <p>If no argument is given then the contents of the current directory is shown, see <code class="func">DirectoryCurrent</code> (<a href="../../../doc/ref/chap9_mj.html#X7BAD8036849E8430"><span class="RefLink">Reference: DirectoryCurrent</span></a>). If a directory object <var class="Arg">dir</var> (see <code class="func">Directory</code> (<a href="../../../doc/ref/chap9_mj.html#X86A71E927EEC7EAD"><span class="RefLink">Reference: Directory</span></a>)) is given as the only argument then the contents of this directory is shown; alternatively, <var class="Arg">dir</var> may also be a string which is then understood as a directory path.</p>
@@ -898,7 +898,7 @@
 
 <p>The category hierarchy is computed using <code class="func">DirectoryContents</code> (<a href="../../../doc/ref/chap9_mj.html#X7B225E5282534EDA"><span class="RefLink">Reference: DirectoryContents</span></a>).</p>
 
-<p>This function is available only if the <strong class="pkg">GAP</strong> package <strong class="pkg">IO</strong> (see <a href="chapBib_mj.html#biBIO">[Neu07]</a>) is available, because the check for cycles uses the function <code class="func">IO_stat</code> (<a href="../../../pkg/io-4.4.6/doc/chap3_mj.html#X7F7D23867B45D525"><span class="RefLink">IO: IO_stat</span></a>) from this package.</p>
+<p>This function is available only if the <strong class="pkg">GAP</strong> package <strong class="pkg">IO</strong> (see <a href="chapBib_mj.html#biBIO">[Neu07]</a>) is available, because the check for cycles uses the function <code class="func">IO_stat</code> (<a href="../../../pkg/io-4.5.1/doc/chap3_mj.html#X7F7D23867B45D525"><span class="RefLink">IO: IO_stat</span></a>) from this package.</p>
 
 <p>The code can be found in the file <code class="file">app/filetree.g</code> of the package.</p>
 
@@ -944,7 +944,7 @@
 
 <h5>6.13-1 BrowsePuzzle</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowsePuzzle</code>( [<var class="Arg">m</var>, <var class="Arg">n</var>[, <var class="Arg">pi</var>]] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowsePuzzle</code>( [<var class="Arg">m</var>, <var class="Arg">n</var>[, <var class="Arg">pi</var>]] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: a record describing the initial and final status of the puzzle.</p>
 
 <p>This function shows the rectangle in a window.</p>
@@ -983,7 +983,7 @@
 
 <h5>6.14-1 PegSolitaire</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PegSolitaire</code>( [<var class="Arg">format</var>, ][<var class="Arg">nrholes</var>, ][<var class="Arg">twoModes</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PegSolitaire</code>( [<var class="Arg">format</var>, ][<var class="Arg">nrholes</var>, ][<var class="Arg">twoModes</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function shows the game board in a window.</p>
 
 <p>If the argument <var class="Arg">format</var> is one of the strings <code class="code">"small"</code> or <code class="code">"large"</code> then small or large pegs are shown, the default is <code class="code">"small"</code>.</p>
@@ -1041,7 +1041,7 @@
 
 <h5>6.15-1 BrowseRubiksCube</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseRubiksCube</code>( [<var class="Arg">format</var>, ][<var class="Arg">pi</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseRubiksCube</code>( [<var class="Arg">format</var>, ][<var class="Arg">pi</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function shows the model of the cube in a window.</p>
 
 <p>If the argument <var class="Arg">format</var> is one of the strings <code class="code">"small"</code> or <code class="code">"large"</code> then small or large cells are shown, the default is <code class="code">"small"</code>.</p>
@@ -1096,7 +1096,7 @@
 
 <h5>6.16-1 BrowseChangeSides</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseChangeSides</code>(  )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BrowseChangeSides</code>(  )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>This function shows the game board in a window.</p>
 
 <p>Each move is encoded as a sequence of three arrow keys; there are <span class="SimpleMath">\(24\)</span> admissible inputs.</p>
@@ -1130,7 +1130,7 @@
 
 <h5>6.17-1 Sudoku.Init</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sudoku.Init</code>( [<var class="Arg">arg</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sudoku.Init</code>( [<var class="Arg">arg</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: A record describing a Sudoku board or <code class="keyw">fail</code>.</p>
 
 <p>This function constructs a record describing a Sudoku game. This is used by the other functions described below. There a several possibilities for the argument <var class="Arg">arg</var>.</p>
@@ -1160,8 +1160,8 @@
 
 <h5>6.17-2 Sudoku.Place</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sudoku.Place</code>( <var class="Arg">game</var>, <var class="Arg">i</var>, <var class="Arg">n</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sudoku.Remove</code>( <var class="Arg">game</var>, <var class="Arg">i</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sudoku.Place</code>( <var class="Arg">game</var>, <var class="Arg">i</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sudoku.Remove</code>( <var class="Arg">game</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: The changed <var class="Arg">game</var>.</p>
 
 <p>Here <var class="Arg">game</var> is a record describing a Sudoku board, as returned by <code class="func">Sudoku.Init</code> (<a href="chap6_mj.html#X789D3D4C818F4BC2"><span class="RefLink">6.17-1</span></a>). The argument <var class="Arg">i</var> is the number of an entry, counted row-wise from 1 to 81, and <var class="Arg">n</var> is an integer from 1 to 9 to be placed on the board. These functions change <var class="Arg">game</var>.</p>
@@ -1186,7 +1186,7 @@ false
 
 <h5>6.17-3 Sudoku.RandomGame</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sudoku.RandomGame</code>( [<var class="Arg">seed</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sudoku.RandomGame</code>( [<var class="Arg">seed</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: A pair <code class="code">[str, seed]</code> of string and seed.</p>
 
 <p>The optional argument <var class="Arg">seed</var>, if given, must be an integer. If not given some random integer from the current <strong class="pkg">GAP</strong> session is used. This function returns a random proper Sudoku game, where the board is described by a string <code class="code">str</code>, as explained in <code class="func">Sudoku.Init</code> (<a href="chap6_mj.html#X789D3D4C818F4BC2"><span class="RefLink">6.17-1</span></a>). With the same <var class="Arg">seed</var> the same board is returned.</p>
@@ -1206,7 +1206,7 @@ true
 
 <h5>6.17-4 Sudoku.SimpleDisplay</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sudoku.SimpleDisplay</code>( <var class="Arg">game</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sudoku.SimpleDisplay</code>( <var class="Arg">game</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Displays a Sudoku board on the terminal. (But see <code class="func">PlaySudoku</code> (<a href="chap6_mj.html#X7D19224478E86BB4"><span class="RefLink">6.17-8</span></a>) for a fancier interface.)</p>
 
 
@@ -1231,8 +1231,8 @@ true
 
 <h5>6.17-5 Sudoku.DisplayString</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sudoku.DisplayString</code>( <var class="Arg">game</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<p>The string returned by this function can be used to display the Sudoku board <var class="Arg">game</var> on the terminal, using <code class="func">PrintFormattedString</code> (<a href="../../../pkg/GAPDoc-1.6/doc/chap6_mj.html#X812A8326844BC910"><span class="RefLink">GAPDoc: PrintFormattedString</span></a>). The result depends on the value of <code class="code">GAPInfo.TermEncoding</code>.</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sudoku.DisplayString</code>( <var class="Arg">game</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>The string returned by this function can be used to display the Sudoku board <var class="Arg">game</var> on the terminal, using <code class="func">PrintFormattedString</code> (<a href="../../../pkg/GAPDoc-1.6.1/doc/chap6_mj.html#X812A8326844BC910"><span class="RefLink">GAPDoc: PrintFormattedString</span></a>). The result depends on the value of <code class="code">GAPInfo.TermEncoding</code>.</p>
 
 
 <div class="example"><pre>
@@ -1265,7 +1265,7 @@ true
 
 <h5>6.17-6 Sudoku.OneSolution</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sudoku.OneSolution</code>( <var class="Arg">game</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sudoku.OneSolution</code>( <var class="Arg">game</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: A completed Sudoku board that solves <var class="Arg">game</var>, or <code class="keyw">fail</code>.</p>
 
 <p>Here <var class="Arg">game</var> must be a Sudoku board as returned by <code class="func">Sudoku.Init</code> (<a href="chap6_mj.html#X789D3D4C818F4BC2"><span class="RefLink">6.17-1</span></a>). It is not necessary that <var class="Arg">game</var> describes a proper Sudoku game (has a unique solution). It may have several solutions, then one random solution is returned. Or it may have no solution, then <code class="keyw">fail</code> is returned.</p>
@@ -1290,7 +1290,7 @@ true
 
 <h5>6.17-7 Sudoku.UniqueSolution</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sudoku.UniqueSolution</code>( <var class="Arg">game</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sudoku.UniqueSolution</code>( <var class="Arg">game</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: A completed Sudoku board that solves <var class="Arg">game</var>, or <code class="keyw">false</code>, or <code class="keyw">fail</code>.</p>
 
 <p>Here <var class="Arg">game</var> must be a Sudoku board as returned by <code class="func">Sudoku.Init</code> (<a href="chap6_mj.html#X789D3D4C818F4BC2"><span class="RefLink">6.17-1</span></a>). It is not necessary that <var class="Arg">game</var> describes a proper Sudoku game. If it has several solutions, then <code class="keyw">false</code> is returned. If it has no solution, then <code class="keyw">fail</code> is returned. Otherwise a board with the unique solution is returned.</p>
@@ -1318,7 +1318,7 @@ true
 
 <h5>6.17-8 PlaySudoku</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PlaySudoku</code>( [<var class="Arg">arg</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PlaySudoku</code>( [<var class="Arg">arg</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: A record describing the latest status of a Sudoku board.</p>
 
 <p>This function allows one to solve Sudoku puzzles interactively. There are several possibilities for the optional argument <var class="Arg">arg</var>. It can either be a string, matrix or list of holes and integers as described in <code class="func">Sudoku.Init</code> (<a href="chap6_mj.html#X789D3D4C818F4BC2"><span class="RefLink">6.17-1</span></a>), or a board as returned by <code class="func">Sudoku.Init</code> (<a href="chap6_mj.html#X789D3D4C818F4BC2"><span class="RefLink">6.17-1</span></a>). Furthermore <var class="Arg">arg</var> can be an integer or not be given, in that case <code class="func">Sudoku.RandomGame</code> (<a href="chap6_mj.html#X8401B31A879F9F9F"><span class="RefLink">6.17-3</span></a>) is called to produce a random game.</p>
@@ -1337,8 +1337,8 @@ true
 
 <h5>6.17-9 Sudoku.HTMLGame</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sudoku.HTMLGame</code>( <var class="Arg">game</var> )</td><td class="tdright">( function )</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sudoku.LaTeXGame</code>( <var class="Arg">game</var> )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sudoku.HTMLGame</code>( <var class="Arg">game</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Sudoku.LaTeXGame</code>( <var class="Arg">game</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: A string with HTML or LaTeX code, respectively.</p>
 
 <p>The argument of these functions is a record describing a Sudoku game. These functions return code for including the current status of the board into a webpage or a LaTeX document.</p>
@@ -1349,25 +1349,27 @@ true
 
 <p>This application can be used with <strong class="pkg">GAP</strong> if the user interface has <code class="code">readline</code> support. The purpose is to simplify the typing during a demonstration of <strong class="pkg">GAP</strong> commands.</p>
 
-<p>The file format to specify <strong class="pkg">GAP</strong> code for a demonstration is very simple: it contains blocks of lines with <strong class="pkg">GAP</strong> input, separated by lines starting with a <code class="code">%</code> character. Comments in such a file can be added to one or several lines starting with <code class="code">%</code>. Here is the content of an example file <code class="file">demo.demo</code>:</p>
+<p>The file format to specify <strong class="pkg">GAP</strong> code for a demonstration is very simple: it contains blocks of lines with <strong class="pkg">GAP</strong> input, separated by lines starting with the sequence <code class="code">#%</code>. Comments in such a file can be added to one or several lines starting with <code class="code">#%</code>. Here is the content of an example file <code class="file">demo.demo</code>:</p>
 
 
 <pre class="normal">
 
-% Add comments after a % character at the beginning of a line.
-% A comment can have several lines.
-% Here is a multi-line input block:
+#% Add comments after #% characters at the beginning of a line.
+#% A comment can have several lines.
+#% Here is a multi-line input block:
 g := MathieuGroup(11);;
 cl := ConjugacyClasses(g);
-% Calling a help page
+#% Calling a help page
 ?MathieuGroup
-% The next line contains a comment in the GAP session:
+#% The next line contains a comment in the GAP session:
 a := 12;; b := 13;; # assign two numbers
-%
+#%
 a*b;
-%
+#%
 
 </pre>
+
+<p>(Single <code class="code">%</code> in the beginning of a line will also work as separators.)</p>
 
 <p>A demonstration can be loaded into a <strong class="pkg">GAP</strong> session with the command</p>
 
@@ -1375,7 +1377,7 @@ a*b;
 
 <h5>6.18-1 LoadDemoFile</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoadDemoFile</code>( <var class="Arg">demoname</var>, <var class="Arg">demofile</var>[, <var class="Arg">singleline</var>] )</td><td class="tdright">( function )</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LoadDemoFile</code>( <var class="Arg">demoname</var>, <var class="Arg">demofile</var>[, <var class="Arg">singleline</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: Nothing.</p>
 
 <p>This function loads a demo file in the format described above. The argument <var class="Arg">demoname</var> is a string containing a name for the demo, and <var class="Arg">demofile</var> is the file name containing the demo.</p>

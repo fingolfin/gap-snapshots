@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    lpres
+  </Title>
+  <Subtitle>
+    Nilpotent Quotients of L-Presented Groups
+  </Subtitle>
+  <Version>
+    0.4.3
+  </Version>
+  <Author>
+    René Hartung<Alt Only="LaTeX"><Br/></Alt>
+
+  </Author>
+  <Author>
+    Laurent Bartholdi<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Mathematisches Institut<Br/>
+Bunsenstraße 3-5<Br/>
+D-37073 Göttingen<Br/>
+Germany<Br/>
+</Address>
+<Email>laurent.bartholdi@gmail.com</Email>
+<Homepage>http://www.uni-math.gwdg.de/laurent</Homepage>
+
+  </Author>
+  <Date>
+    14/06/2018
+  </Date>
+  </TitlePage>

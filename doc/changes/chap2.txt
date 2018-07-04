@@ -934,3 +934,62 @@
   in repairing this package and taking over its maintenance, so that it can be
   distributed again, please contact the [5XGAP[105X team.[133X
   
+  
+  [1X2.2 [33X[0;0Y[5XGAP[105X[101X[1X 4.9.2 (July 2018)[133X[101X
+  
+  
+  [1X2.2-1 [33X[0;0YChanges in the core [5XGAP[105X[101X[1X system introduced in [5XGAP[105X[101X[1X 4.9.2[133X[101X
+  
+  [33X[0;0YFixed bugs that could lead to break loops:[133X
+  
+  [30X    [33X[0;6YFixed  a  bug  in  iterating  over  an  empty cartesian product (#2421
+        ([7Xhttps://github.com/gap-system/gap/pull/2421[107X)).      [Reported      by
+        @isadofschi][133X
+  
+  [33X[0;0YFixed bugs that could lead to crashes:[133X
+  
+  [30X    [33X[0;6YFixed  a crash after entering [10Xreturn;[110X in a [21Xmethod not found[121X break loop
+        (#2449 ([7Xhttps://github.com/gap-system/gap/pull/2449[107X)).[133X
+  
+  [30X    [33X[0;6YFixed  a  crash  when  an  error  occurs  and  [2XOutputLogTo[102X ([14XReference:
+        OutputLogTo  for  streams[114X)  points  to  a stream which internally uses
+        another stream (#2596 ([7Xhttps://github.com/gap-system/gap/pull/2596[107X)).[133X
+  
+  [33X[0;0YFixed bugs that could lead to incorrect results:[133X
+  
+  [30X    [33X[0;6YFixed  a  bug  in  computing maximal subgroups, which broke some other
+        calculations,  in particular, computing intermediate subgroups. (#2488
+        ([7Xhttps://github.com/gap-system/gap/pull/2488[107X)).   [Reported  by  Seyed
+        Hassan Alavi][133X
+  
+  [33X[0;0YOther fixed bugs and further improvements:[133X
+  
+  [30X    [33X[0;6YProfiling  now  correctly  handles  calls  to  [10Xlongjmp[110X  and  allows to
+        generate  profiles using version 2.0.1 of the [5XProfiling[105X package (#2444
+        ([7Xhttps://github.com/gap-system/gap/pull/2444[107X)).[133X
+  
+  [30X    [33X[0;6YThe  [11Xbin/gap.sh[111X  script  now respects the [10XGAP_DIR[110X environment variable
+        (#2465 ([7Xhttps://github.com/gap-system/gap/pull/2465[107X)). [Contributed by
+        RussWoodroofe][133X
+  
+  [30X    [33X[0;6YThe  [11Xbin/BuildPackages.sh[111X  script now properly builds binaries for the
+        [5Xsimpcomp[105X                         package                        (#2475
+        ([7Xhttps://github.com/gap-system/gap/pull/2475[107X)).[133X
+  
+  [30X    [33X[0;6YFixed  a bug in restoring a workspace, which prevented [5XGAP[105X from saving
+        the   history   if  a  workspace  was  loaded  during  startup  (#2578
+        ([7Xhttps://github.com/gap-system/gap/pull/2578[107X)).[133X
+  
+  
+  [1X2.2-2 [33X[0;0YNew and updated packages since [5XGAP[105X[101X[1X 4.9.1[133X[101X
+  
+  [33X[0;0YThis  release  contains  updated  versions  of  22  packages  from [5XGAP[105X 4.9.1
+  distribution. Additionally, it has three new packages. The new [5XJupyterKernel[105X
+  package  by  Markus  Pfeiffer  provides  a  so-called [13Xkernel[113X for the Jupyter
+  interactive  document  system  ([7Xhttps://jupyter.org/[107X). This package requires
+  Jupyter  to be installed on your system (see [7Xhttps://jupyter.org/install[107X for
+  instructions).  It also requires [5XGAP[105X packages [5XIO[105X, [5XZeroMQInterface[105X, [5Xjson[105X, and
+  also  two  new  packages  by  Markus  Pfeiffer called [5Xcrypting[105X and [5Xuuid[105X, all
+  included  into  [5XGAP[105X 4.9.2 distribution. The [5XJupyterKernel[105X package is not yet
+  usable on Windows.[133X
+  

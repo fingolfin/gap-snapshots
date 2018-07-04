@@ -18,24 +18,26 @@
 ##  <P/>
 ##  The  file format  to  specify &GAP;  code for  a  demonstration is  very
 ##  simple: it contains blocks of lines with &GAP; input, separated by lines
-##  starting with a <C>%</C> character. Comments in such a file can be added
-##  to one or  several lines starting with <C>%</C>. Here  is the content of
+##  starting with the sequence  <C>#%</C>. Comments in such a file can be added
+##  to one or  several lines starting with <C>#%</C>. Here  is the content of
 ##  an example file <F>demo.demo</F>:
 ##  <P/>
 ##  <Verb>
-##  % Add comments after a % character at the beginning of a line.
-##  % A comment can have several lines.
-##  % Here is a multi-line input block:
+##  #% Add comments after #% characters at the beginning of a line.
+##  #% A comment can have several lines.
+##  #% Here is a multi-line input block:
 ##  g := MathieuGroup(11);;
 ##  cl := ConjugacyClasses(g);
-##  % Calling a help page
+##  #% Calling a help page
 ##  ?MathieuGroup
-##  % The next line contains a comment in the GAP session:
+##  #% The next line contains a comment in the GAP session:
 ##  a := 12;; b := 13;; # assign two numbers
-##  %
+##  #%
 ##  a*b;
-##  %
+##  #%
 ##  </Verb>
+##  (Single <C>%</C> in the beginning of a line will also work as
+##  separators.)<P/>
 ##  A demonstration can be loaded into a &GAP; session with the command
 ##  <ManSection>
 ##  <Func Name="LoadDemoFile" Arg="demoname, demofile[, singleline]" />
@@ -95,17 +97,22 @@ BrowseData.Demos := rec(demos := [], curr := 0, pos := [0,0], cont := false);
 
 # loading demonstrations
 BindGlobal("LoadDemoFile", function(title, fname, single...)
-  local lines, blocks, bl, l;
+  local str, lines, blocks, bl, l;
   if Length(single) > 0 and single[1] = true then
     single := true;
   else
     single := false;
   fi;
-  lines := SplitString(StringFile(fname),"\n","");
+  str:= StringFile( fname );
+  if str = fail then
+    Error( "the file '", fname, "' is not readable" );
+  fi;
+  lines := SplitString(str,"\n","");
   blocks := [];
   bl := [];
   for l in lines do
-    if Length(l) > 0 and l[1] = '%' then
+    if (Length(l) > 1 and l[1]='#' and l[2]='%') 
+        or (Length(l) > 0 and l[1] = '%') then
       if Length(bl) > 0 then
         if single then
           Add(blocks, bl);

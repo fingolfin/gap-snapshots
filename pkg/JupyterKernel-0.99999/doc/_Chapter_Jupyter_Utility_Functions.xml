@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Jupyter_Utility_Functions">
+<Heading>Jupyter Utility Functions</Heading>
+
+<Section Label="Chapter_Jupyter_Utility_Functions_Section_Functions">
+<Heading>Functions</Heading>
+
+<ManSection>
+  <Func Arg="arg" Name="JUPYTER_print" />
+ <Description>
+Jupyter printing
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg" Name="JUPYTER_Complete" />
+ <Description>
+This function is called when the user presses Tab in a code
+cell and produces a list of possible completions. It is passed the
+current code in the cell, and the curser position inside the code.
+<P/>
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Jupyter_Utility_Functions_Section_Additional_Utility_Functions">
+<Heading>Additional Utility Functions</Heading>
+
+<P/>
+<ManSection>
+  <Func Arg="arg" Name="ISO8601Stamp" />
+ <Description>
+Current date and time as ISO8601 timestamp.
+Don't trust this function.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+</Chapter>
+

@@ -35,6 +35,14 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X875343D47A7B5E62">2.1-3 <span class="Heading">New and updated packages since <strong class="pkg">GAP</strong> 4.8.10</span></a>
 </span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X788623D37D59433D">2.2 <span class="Heading"><strong class="pkg">GAP</strong> 4.9.2 (July 2018)</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X80F675A48712F934">2.2-1 <span class="Heading">Changes in the core <strong class="pkg">GAP</strong> system introduced in <strong class="pkg">GAP</strong> 4.9.2</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X85F5CB9C80D89E10">2.2-2 <span class="Heading">New and updated packages since <strong class="pkg">GAP</strong> 4.9.1</span></a>
+</span>
+</div></div>
 </div>
 
 <h3>2 <span class="Heading">Changes between <strong class="pkg">GAP</strong> 4.8 and <strong class="pkg">GAP</strong> 4.9</span></h3>
@@ -759,6 +767,64 @@
 <p>The <strong class="pkg">HAPprime</strong> package by Paul Smith is no longer redistributed with <strong class="pkg">GAP</strong>. Part of the code has been incorporated into the <strong class="pkg">HAP</strong> package. Its source code repository, containing the code of the last distributed version, can still be found at <span class="URL"><a href="https://github.com/gap-packages/happrime">https://github.com/gap-packages/happrime</a></span>.</p>
 
 <p>Also, the <strong class="pkg">ParGAP</strong> package by Gene Cooperman is no longer redistributed with <strong class="pkg">GAP</strong> because it no longer can be compiled with <strong class="pkg">GAP</strong> 4.9 (see <span class="URL"><a href="https://mail.gap-system.org/pipermail/gap/2018-March/001082.html">this announcement</a></span>). Its source code repository, containing the code of the last distributed version, plus some first fixes needed for compatibility for GAP 4.9, can still be found at <span class="URL"><a href="https://github.com/gap-packages/pargap">https://github.com/gap-packages/pargap</a></span>. If somebody is interested in repairing this package and taking over its maintenance, so that it can be distributed again, please contact the <strong class="pkg">GAP</strong> team.</p>
+
+<p><a id="X788623D37D59433D" name="X788623D37D59433D"></a></p>
+
+<h4>2.2 <span class="Heading"><strong class="pkg">GAP</strong> 4.9.2 (July 2018)</span></h4>
+
+<p><a id="X80F675A48712F934" name="X80F675A48712F934"></a></p>
+
+<h5>2.2-1 <span class="Heading">Changes in the core <strong class="pkg">GAP</strong> system introduced in <strong class="pkg">GAP</strong> 4.9.2</span></h5>
+
+<p>Fixed bugs that could lead to break loops:</p>
+
+
+<ul>
+<li><p>Fixed a bug in iterating over an empty cartesian product (<span class="URL"><a href="https://github.com/gap-system/gap/pull/2421">#2421</a></span>). [Reported by @isadofschi]</p>
+
+</li>
+</ul>
+<p>Fixed bugs that could lead to crashes:</p>
+
+
+<ul>
+<li><p>Fixed a crash after entering <code class="code">return;</code> in a "method not found" break loop (<span class="URL"><a href="https://github.com/gap-system/gap/pull/2449">#2449</a></span>).</p>
+
+</li>
+<li><p>Fixed a crash when an error occurs and <code class="func">OutputLogTo</code> (<span class="RefLink">Reference: OutputLogTo for streams</span>) points to a stream which internally uses another stream (<span class="URL"><a href="https://github.com/gap-system/gap/pull/2596">#2596</a></span>).</p>
+
+</li>
+</ul>
+<p>Fixed bugs that could lead to incorrect results:</p>
+
+
+<ul>
+<li><p>Fixed a bug in computing maximal subgroups, which broke some other calculations, in particular, computing intermediate subgroups. (<span class="URL"><a href="https://github.com/gap-system/gap/pull/2488">#2488</a></span>). [Reported by Seyed Hassan Alavi]</p>
+
+</li>
+</ul>
+<p>Other fixed bugs and further improvements:</p>
+
+
+<ul>
+<li><p>Profiling now correctly handles calls to <code class="code">longjmp</code> and allows to generate profiles using version 2.0.1 of the <strong class="pkg">Profiling</strong> package (<span class="URL"><a href="https://github.com/gap-system/gap/pull/2444">#2444</a></span>).</p>
+
+</li>
+<li><p>The <code class="file">bin/gap.sh</code> script now respects the <code class="code">GAP_DIR</code> environment variable (<span class="URL"><a href="https://github.com/gap-system/gap/pull/2465">#2465</a></span>). [Contributed by RussWoodroofe]</p>
+
+</li>
+<li><p>The <code class="file">bin/BuildPackages.sh</code> script now properly builds binaries for the <strong class="pkg">simpcomp</strong> package (<span class="URL"><a href="https://github.com/gap-system/gap/pull/2475">#2475</a></span>).</p>
+
+</li>
+<li><p>Fixed a bug in restoring a workspace, which prevented <strong class="pkg">GAP</strong> from saving the history if a workspace was loaded during startup (<span class="URL"><a href="https://github.com/gap-system/gap/pull/2578">#2578</a></span>).</p>
+
+</li>
+</ul>
+<p><a id="X85F5CB9C80D89E10" name="X85F5CB9C80D89E10"></a></p>
+
+<h5>2.2-2 <span class="Heading">New and updated packages since <strong class="pkg">GAP</strong> 4.9.1</span></h5>
+
+<p>This release contains updated versions of 22 packages from <strong class="pkg">GAP</strong> 4.9.1 distribution. Additionally, it has three new packages. The new <strong class="pkg">JupyterKernel</strong> package by Markus Pfeiffer provides a so-called <em>kernel</em> for the Jupyter interactive document system (<span class="URL"><a href="https://jupyter.org/">https://jupyter.org/</a></span>). This package requires Jupyter to be installed on your system (see <span class="URL"><a href="https://jupyter.org/install">https://jupyter.org/install</a></span> for instructions). It also requires <strong class="pkg">GAP</strong> packages <strong class="pkg">IO</strong>, <strong class="pkg">ZeroMQInterface</strong>, <strong class="pkg">json</strong>, and also two new packages by Markus Pfeiffer called <strong class="pkg">crypting</strong> and <strong class="pkg">uuid</strong>, all included into <strong class="pkg">GAP</strong> 4.9.2 distribution. The <strong class="pkg">JupyterKernel</strong> package is not yet usable on Windows.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Next Chapter]</a>&nbsp;  </div>

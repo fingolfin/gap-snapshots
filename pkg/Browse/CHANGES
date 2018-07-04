@@ -1,6 +1,24 @@
 
         Main CHANGES between versions of the Browse package
 
+1.8.8
+  - Blocks in demo files can now be separated by lines starting with #%
+    which makes testing demo files easier.
+  - Fixed a bug in the 'Browse' method for character tables:
+    The shown centralizer orders and power map information were not correct
+    when a set of characters or class positions was prescribed.
+    (This problem did not occur when the full matrix of irreducibles was
+    shown.)
+  - Fixed a bug in 'BrowseConwayPolynomials':
+    In the displayed polynomials, the exponents of those monomials whose
+    coefficient is different from 1 were erroneously increased by 1.
+    Thanks to a user for reporting this bug.
+  - 'BrowseGapMethod' uses now the filename and startline of the
+    method's *installation* and not the corresponding information of the
+    method itself, provided that this information is available.
+    This information is more appropriate in the context of 'BrowseGapMethods'.
+    Thanks to Max Horn for adding the underlying GAP feature.
+
 1.8.7
   - Removed the example application 'BrowseTransitiveGroupsInfo',
     because of changes in the underlying library of transitive groups.

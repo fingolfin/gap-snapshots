@@ -1,9 +1,9 @@
 SetPackageInfo( rec(
 PackageName := "Browse",
-Version := "1.8.7",
-Date := "21/07/2017",
+Version := "1.8.8",
+Date := "08/06/2018",
 Subtitle := "browsing applications and ncurses interface",
-ArchiveURL := "http://www.math.rwth-aachen.de/~Browse/Browse-1.8.7",
+ArchiveURL := "http://www.math.rwth-aachen.de/~Browse/Browse-1.8.8",
 ArchiveFormats := ".tar.bz2",
 Persons := [
   rec(
@@ -65,7 +65,6 @@ AvailabilityTest := function()
   fi;
   return true;
 end,
-TestFile := "tst/test.tst",
 Keywords := ["Browse", "ncurses"],
 
 ));

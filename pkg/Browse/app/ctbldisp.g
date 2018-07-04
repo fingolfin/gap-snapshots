@@ -378,7 +378,8 @@ InstallMethod( Browse,
                 # We proceed column-wise, like the traditional `Display'.
                 for j in [ 1 .. t.work.n ] do
                   for i in [ 1 .. t.work.m ] do
-                    stringEntry( t.dynamic.chars[i][j], t.work.legend );
+                    stringEntry( t.dynamic.chars[i][ classes[j] ],
+                                 t.work.legend );
                   od;
                 od;
                 str:= legend( t.work.legend );
@@ -463,7 +464,7 @@ InstallMethod( Browse,
             return result;
           end ),
         CategoryValues:= function( t, i, j )
-          return [ Concatenation( nam[ j/2 ], " = ",
+          return [ Concatenation( nam[ classes[ j/2 ] ], " = ",
                        t.work.Main( t, i/2, j/2 ) ) ];
           end,
         availableModes:= modes,
@@ -471,7 +472,8 @@ InstallMethod( Browse,
         # Avoid computing strings for all character values in advance.
         main:= [],
         Main:= function( t, i, j )
-          return stringEntry( t.dynamic.chars[i][j], t.work.legend );
+          return stringEntry( t.dynamic.chars[i][ classes[j] ],
+                              t.work.legend );
         end,
         m:= Length( chars ),
         n:= Length( classes ),
@@ -538,7 +540,7 @@ InstallMethod( Browse,
       Add( table.work.sepLabelsCol, " " );
       Add( table.work.corner, [ "" ] );
       Add( table.work.labelsCol,
-           List( SizesCentralizers( tbl ){ cnr }, String ) );
+           List( SizesCentralizers( tbl ){ classes }, String ) );
 #T admit splitting into two rows!
       Append( hidecollabelspos,
               2 * Length( table.work.labelsCol ) + [ 0, 1 ] );
@@ -546,7 +548,7 @@ InstallMethod( Browse,
       # Add factored centralizer orders to the column labels.
       Add( table.work.sepLabelsCol, " " );
       for p in Set( FactorsInt( Size( tbl ) ) ) do
-        Add( table.work.labelsCol, List( SizesCentralizers( tbl ){ cnr },
+        Add( table.work.labelsCol, List( SizesCentralizers( tbl ){ classes },
                x -> stringEntry( Number( Factors( x ), y -> y = p ),
                                  stringEntryData ) ) );
         Append( hidecollabelspos,
@@ -565,9 +567,9 @@ InstallMethod( Browse,
       Append( table.work.sepLabelsCol, [ " ", "", "", " " ] );
       Append( hidecollabelspos,
               2 * Length( table.work.labelsCol ) + [ 2 .. 7 ] );
-      Append( table.work.labelsCol, [ powermap.power,
-                                      powermap.prime,
-                                      powermap.names ] );
+      Append( table.work.labelsCol, [ powermap.power{ classes },
+                                      powermap.prime{ classes },
+                                      powermap.names{ classes } ] );
       Append( table.work.corner, [ Concatenation( ind, [ "p " ] ),
                                    Concatenation( ind, [ "p'" ] ) ] );
       if   indicator = [] then
@@ -583,11 +585,11 @@ InstallMethod( Browse,
 
       # first class names, then a row for each power map
       Add( table.work.sepLabelsCol, " " );
-      Add( table.work.labelsCol, List( nam, String ) );
+      Add( table.work.labelsCol, List( nam{ classes }, String ) );
       Add( table.work.corner, Concatenation( ind, [ "" ] ) );
 
       for p in powermap do
-        list:= CompositionMaps( nam, tbl_powermap[p] );
+        list:= CompositionMaps( nam, tbl_powermap[p] ){ classes };
         for i in [ 1 .. Length( list ) ] do
           if not IsString( list[i] ) then
             list[i]:= "?";

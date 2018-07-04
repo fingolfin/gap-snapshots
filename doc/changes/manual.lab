@@ -8,6 +8,9 @@
 \makelabel{changes:Changes in the core GAP system introduced in GAP 4.9}{2.1.1}{X87E35B7B7D7B2AF6}
 \makelabel{changes:HPC-GAP}{2.1.2}{X7F52B77B7DBACC17}
 \makelabel{changes:New and updated packages since GAP 4.8.10}{2.1.3}{X875343D47A7B5E62}
+\makelabel{changes:GAP 4.9.2 (July 2018)}{2.2}{X788623D37D59433D}
+\makelabel{changes:Changes in the core GAP system introduced in GAP 4.9.2}{2.2.1}{X80F675A48712F934}
+\makelabel{changes:New and updated packages since GAP 4.9.1}{2.2.2}{X85F5CB9C80D89E10}
 \makelabel{changes:Changes between GAP 4.7 and GAP 4.8}{3}{X78E4871E83067AB2}
 \makelabel{changes:GAP 4.8.2 (February 2016)}{3.1}{X79FD32317A501139}
 \makelabel{changes:Changes in the core GAP system introduced in GAP 4.8}{3.1.1}{X809328727BE7E536}

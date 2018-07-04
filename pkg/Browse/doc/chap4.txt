@@ -207,7 +207,7 @@
   
   [1X4.2-1 BrowseData.IsBrowseTableCellData[101X
   
-  [29X[2XBrowseData.IsBrowseTableCellData[102X( [3Xobj[103X ) [32X function
+  [33X[1;0Y[29X[2XBrowseData.IsBrowseTableCellData[102X( [3Xobj[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X if the argument is a list or a record in a supported format.[133X
   
   [33X[0;0YA [13Xtable cell data object[113X describes the input data for the contents of a cell
@@ -240,7 +240,7 @@
   
   [1X4.2-2 BrowseData.BlockEntry[101X
   
-  [29X[2XBrowseData.BlockEntry[102X( [3Xtablecelldata[103X, [3Xheight[103X, [3Xwidth[103X ) [32X function
+  [33X[1;0Y[29X[2XBrowseData.BlockEntry[102X( [3Xtablecelldata[103X, [3Xheight[103X, [3Xwidth[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ya list of attribute lines.[133X
   
   [33X[0;0YFor       a       table       cell       data      object      [3Xtablecelldata[103X
@@ -264,7 +264,7 @@
   
   [1X4.2-3 BrowseData.IsBrowseTable[101X
   
-  [29X[2XBrowseData.IsBrowseTable[102X( [3Xobj[103X ) [32X function
+  [33X[1;0Y[29X[2XBrowseData.IsBrowseTable[102X( [3Xobj[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X  if  the  argument  record has the required components and is
             consistent.[133X
   
@@ -473,7 +473,7 @@
   
   [1X4.3-1 NCurses.BrowseGeneric[101X
   
-  [29X[2XNCurses.BrowseGeneric[102X( [3Xt[103X[, [3Xarec[103X] ) [32X function
+  [33X[1;0Y[29X[2XNCurses.BrowseGeneric[102X( [3Xt[103X[, [3Xarec[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Yan application dependent value, or nothing.[133X
   
   [33X[0;0Y[2XNCurses.BrowseGeneric[102X    is    used    to    show   the   browse   table   [3Xt[103X

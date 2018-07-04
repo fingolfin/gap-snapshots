@@ -18,7 +18,8 @@ BindGlobal( "BrowseGapMethods", function( arg )
     local opnamewidth, argumentswidth,
           commentwidth, filenamewidth, operations, pkgnames, pkgpaths,
           matrix, methodlist, cats, operation, opname, i, methods, j,
-          argnames, comment, func, filename, pkg, path, len, sel_action, t;
+          len_entry, argnames, comment, func, filename, methinfo, pkg, path,
+          len, sel_action, t;
 
     opnamewidth:= 20;
     argumentswidth:= 25;
@@ -27,7 +28,9 @@ BindGlobal( "BrowseGapMethods", function( arg )
 
     # Get the list of operations, sorted alphabetically.
     if Length( arg ) = 0 then
-      operations:= OPERATIONS{ [ 1, 3 .. Length( OPERATIONS ) - 1 ] };;
+      operations:= Filtered( OPERATIONS, IsFunction );
+#T From GAP 4.9 or 4.10 on, *all* entries in 'OPERATIONS' will be functions;
+#T clean this statement then.
     elif Length( arg ) = 1 and IsList( arg[1] ) then
       operations:= Filtered( arg[1],
          op -> IsFunction( op ) and ForAny( OPERATIONS,
@@ -56,7 +59,8 @@ BindGlobal( "BrowseGapMethods", function( arg )
       opname:= NameFunction( operation );
       for i in [ 0 .. GAPInfo.MaxNrArgsMethod ] do
         methods:= METHODS_OPERATION( operation, i );
-        for j in [ 1, 5+i .. Length( methods ) - 3-i ] do
+        len_entry:= i + BASE_SIZE_METHODS_OPER_ENTRY;
+        for j in [ 1, 1 + len_entry .. Length( methods ) - len_entry + 1 ] do
           argnames:= NamesLocalVariablesFunction( methods[ j + i + 1 ] );
           if argnames = fail then
             argnames:= [ "..." ];
@@ -76,10 +80,19 @@ BindGlobal( "BrowseGapMethods", function( arg )
              or not comment in [ "system setter",
                                  "default method, does nothing" ] then
             func:= methods[ j + i + 1 ];
-            Add( methodlist, func );
 
             # Compute package (if applicable) and filename.
-            filename:= FilenameFunc( func );
+            if BASE_SIZE_METHODS_OPER_ENTRY = 4 then
+              # We know at most the file where the function got defined.
+              filename:= FilenameFunc( func );
+              Add( methodlist, [ func, filename, StartlineFunc( func ) ] );
+            else
+              # We know file and position of the method installation.
+              methinfo:= methods[ j + i + 4 ];
+              filename:= methinfo[1];
+              Add( methodlist, [ func, filename, methinfo[2]-1 ] );
+            fi;
+
             if filename = fail then
               filename:= "(no filename stored)";
               if IsOperation( func ) then
@@ -147,18 +160,18 @@ BindGlobal( "BrowseGapMethods", function( arg )
         if t.dynamic.selectedEntry <> [ 0, 0 ] then
           pos:= t.dynamic.indexRow[ t.dynamic.selectedEntry[1] ] / 2;
           func:= methodlist[ pos ];
-          file:= FilenameFunc( func );
+          file:= func[2];
           if file = fail or file = "*stdin*"
                          or not IsReadableFile( file ) then
             # Show the code in a pager.
             lines:= "";
             stream:= OutputTextString( lines, true );
-            PrintTo( stream, func );
+            PrintTo( stream, func[1] );
             CloseStream( stream );
           else
             # Show the file in a pager.
             lines:= rec( lines:= StringFile( file ),
-                         start:= StartlineFunc( func ) );
+                         start:= func[3] );
           fi;
           if BrowseData.IsDoneReplay( t.dynamic.replay ) then
             NCurses.Pager( lines );

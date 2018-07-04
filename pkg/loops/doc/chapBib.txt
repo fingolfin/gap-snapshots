@@ -42,6 +42,9 @@
   less  than  64[117X,  Nova Science Publishers Inc., Commack, NY (1999), xviii+287
   pages.
   
+  [[20XGre14[120X]  [16XGreer, M.[116X, [17XA class of loops categorically isomorphic to Bruck loops
+  of odd order[117X, [18XComm. Algebra[118X, [19X42[119X, 8 (2014), 3682–3697.
+  
   [[20XGKN14[120X] [16XGrishkov, A., Kinyon, M. and Nagy, G. P.[116X, [17XSolvability of commutative
   automorphic loops[117X, [18XProc. Amer. Math. Soc.[118X, [19X142[119X, 9 (2014), 3029–3037.
   
@@ -88,6 +91,10 @@
   
   [[20XSZ12[120X]   [16XSlattery,   M.  and  Zenisek,  A.[116X,  [17XMoufang  loops  of  order  243[117X,
   [18XCommentationes Mathematicae Universitatis Carolinae[118X, [19X53[119X, 3 (2012), 423–428.
+  
+  [[20XSV17[120X]  [16XStuhl,  I.  and  Vojtěchovský,  P.[116X, [17XInvolutory latin quandles, Bruck
+  loops  and  commutative automorphic loops of odd prime power order[117X, [18X[118X (2017),
+  ((preprint)).
   
   [[20XVoj06[120X]  [16XVojtěchovský,  P.[116X,  [17XToward  the  classification of Moufang loops of
   order 64[117X, [18XEuropean J. Combin.[118X, [19X27[119X, 3 (2006), 444–460.
