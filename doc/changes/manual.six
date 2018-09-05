@@ -49,6 +49,21 @@ X\033[101X\027\033[1X\027 4.9.1\033[133X\033[101X", "2.2-2", [ 2, 2, 2 ],
       983, 19, "new and updated packages since gap 4.9.1", 
       "X85F5CB9C80D89E10" ], 
   [ 
+      "\033[1X\033[33X\033[0;-2Y\033[5XGAP\033[105X\033[101X\027\033[1X\027 4.9.3\
+ (September 2018)\033[133X\033[101X", "2.3", [ 2, 3, 0 ], 996, 19, 
+      "gap 4.9.3 september 2018", "X7DCF1B2984AEB7F0" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YChanges in the core \033[5XGAP\033[105X\033[101X\\
+027\033[1X\027 system introduced in \033[5XGAP\033[105X\033[101X\027\033[1X\
+\027 4.9.3\033[133X\033[101X", "2.3-1", [ 2, 3, 1 ], 999, 19, 
+      "changes in the core gap system introduced in gap 4.9.3", 
+      "X878606AD8708A3AF" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YNew and updated packages since \033[5XGAP\033[105\
+X\033[101X\027\033[1X\027 4.9.2\033[133X\033[101X", "2.3-2", [ 2, 3, 2 ], 
+      1013, 19, "new and updated packages since gap 4.9.2", 
+      "X7C655E8782735518" ], 
+  [ 
       "\033[1X\033[33X\033[0;-2YChanges between \033[5XGAP\033[105X\033[101X\027\\
 033[1X\027 4.7 and \033[5XGAP\033[105X\033[101X\027\033[1X\027 4.8\033[133X\
 \033[101X", "3", [ 3, 0, 0 ], 1, 20, "changes between gap 4.7 and gap 4.8", 

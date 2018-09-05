@@ -15,4 +15,4 @@
 *V  SyBuildDateTime . . . . . . . . . . . . . . . . . date and time of build
 */
 const Char * SyBuildVersion  = "@GAP_VERSION@";
-const Char * SyBuildDateTime = "04-Jul-2018";
+const Char * SyBuildDateTime = "05-Sep-2018";

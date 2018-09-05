@@ -8,12 +8,12 @@ Subtitle := "Transitive Groups Library",
 
 ##  See '?Extending: Version Numbers' in GAP help for an explanation
 ##  of valid version numbers.
-Version := "2.0.2",
+Version := "2.0.4",
 
 ##  Release date of the current version in dd/mm/yyyy format.
-##  Note that the clever package tools cannot deal with single digits, but
-##  will whine.
-Date := "13/11/2017",
+##  Note that the oh-so-clever package tools cannot deal with single digits,
+##  but will whine.
+Date := "31/08/2018",
 
 ##  URL of the archive(s) of the current package release, but *without*
 ##  the format extension(s), like '.zoo', which are given next.
@@ -149,6 +149,8 @@ Dependencies := rec(
 ## tests of other packages, as given above, will be done automatically and
 ## need not be included here.)
 AvailabilityTest := ReturnTrue,
+
+TestFile := "tst/testall.g",
 
 ##  If the default banner does not suffice then provide a string that is
 ##  printed when the package is loaded (not when it is autoloaded or if

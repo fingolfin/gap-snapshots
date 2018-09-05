@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Intro">
+<Heading>Introduction</Heading>
+
+<Section>
+<Heading>Purpose and goals of this package</Heading>
+
+The <Package>datastructures</Package> package for &GAP; has two main goals:
+<List>
+  <Item>Provide abstract interfaces for commonly used datastructures</Item>
+  <Item>Provide good low-level implementations for these datastructures</Item>
+</List>
+
+<Package>datastructures</Package> requires building of a kernel
+module for &GAP; to function, please refer to Chapter <Ref Label="install"/> for
+details; the package is not automatically loaded by &GAP; after it has been installed.
+
+You must load the package with <C>LoadPackage("datastructures");</C>
+before its functions become available.<P/>
+</Section>
+
+
+<Section>
+  <Heading>Overview over this manual</Heading>
+
+  Chapter <Ref Chap="install"/> describes the installation of this package.
+  The remaining chapters describe the available datastructures in this package with
+  a definition of the supported API and details about provided implementations.
+</Section>
+
+
+<Section Label="feedback">
+  <Heading>Feedback</Heading>
+
+  For bug reports, feature requests and suggestions, please use our
+  <URL Text="issue tracker">https://github.com/gap-packages/datastructures/issues</URL>.
+</Section>
+
+</Chapter>

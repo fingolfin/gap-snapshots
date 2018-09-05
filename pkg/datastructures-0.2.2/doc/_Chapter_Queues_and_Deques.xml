@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Queues_and_Deques">
+<Heading>Queues and Deques</Heading>
+
+<P/>
+<Section Label="Chapter_Queues_and_Deques_Section_API">
+<Heading>API</Heading>
+
+<P/>
+<ManSection>
+  <Filt Arg="arg" Name="IsQueue" Label="for IsObject"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+The category of queues.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsDeque" Label="for IsObject"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+The category of deques.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="deque, object" Name="PushBack" Label="for IsDeque, IsObject"/>
+ <Description>
+Add <A>object</A> to the back of <A>deque</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="deque, object" Name="PushFront" Label="for IsDeque, IsObject"/>
+ <Description>
+Add <A>object</A> to the front of <A>deque</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="deque" Name="PopBack" Label="for IsDeque"/>
+ <Returns>object
+</Returns>
+ <Description>
+Remove an element from the back of <A>deque</A> and return it.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="deque" Name="PopFront" Label="for IsDeque"/>
+ <Returns>object
+</Returns>
+ <Description>
+Remove an element from the front of <A>deque</A> and return it.
+ </Description>
+</ManSection>
+
+
+For queues, this is just an alias for PushBack
+<ManSection>
+  <Oper Arg="queue, object" Name="Enqueue" Label="for IsQueue, IsObject"/>
+ <Description>
+Add <A>object</A> to <A>queue</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="queue" Name="Dequeue" Label="for IsQueue, IsObject"/>
+ <Returns>object
+</Returns>
+ <Description>
+Remove an object from the front of <A>queue</A> and return it.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="Capacity" Label="for IsQueue"/>
+ <Description>
+Allocated storage capacity of <A>queue</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="Capacity" Label="for IsDeque"/>
+ <Description>
+Allocated storage capacity of <A>deque</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="Length" Label="for IsQueue"/>
+ <Description>
+Number of elements in <A>queue</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="Length" Label="for IsDeque"/>
+ <Description>
+Number of elements in <A>deque</A>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Queues_and_Deques_Section_Deques_implemented_using_plain_lists">
+<Heading>Deques implemented using plain lists</Heading>
+
+<P/>
+<Package>datastructures</Package> implements deques
+using a circular buffer stored in a &GAP; a plain list,
+wrapped in a positional object (<Ref Filt="IsPositionalObjectRep" BookName="Ref"/>).
+<P/>
+The five positions in such a deque <C>Q</C> have the following purpose
+<P/>
+<List>
+<Item><C>Q![1]</C> - head, the index in <C>Q![5]</C> of the first element in the deque</Item>
+<Item><C>Q![2]</C> - tail, the index in <C>Q![5]</C> of the last element in the deque</Item>
+<Item><C>Q![3]</C> - capacity, the allocated capacity in the deque</Item>
+<Item><C>Q![4]</C> - factor by which storage is increased if capacity is exceeded</Item>
+<Item><C>Q![5]</C> - GAP plain list with storage for capacity many entries</Item>
+</List>
+<P/>
+Global constants <K>QHEAD</K>, <K>QTAIL</K>, <K>QCAPACITY</K>, <K>QFACTOR</K>, and
+<K>QDATA</K> are bound to reflect the above.
+<P/>
+When a push fills the deque, its capacity is resized by a factor of <K>QFACTOR</K> using
+PlistDequeExpand. A new empty plist is allocated and all current entries of
+the deque are copied into the new plist with the head entry at index 1.
+<P/>
+The deque is empty if and only if head = tail and the entry that head and tail
+point to in the storage list is unbound.
+<ManSection>
+  <Func Arg="[capacity, [factor]]" Name="PlistDeque" />
+ <Returns>a deque
+</Returns>
+ <Description>
+Constructor for plist based deques. The optinal argument <A>capacity</A> must be
+a positive integer and is the capacity of the created deque, and the optional
+argument <A>factor</A> must be a rational number greater than one which is
+the factor by which the storage of the deque is increased if it runs out of capacity
+when an object is put on the queue.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="deque, object" Name="PlistDequePushFront" />
+ <Description>
+Push <A>object</A> to the front of <A>deque</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="deque, object" Name="PlistDequePushBack" />
+ <Description>
+Push <A>object</A> to the back of <A>deque</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="deque" Name="PlistDequePopFront" />
+ <Returns>object or fail
+</Returns>
+ <Description>
+Pop object from the front of <A>deque</A> and return it.
+If <A>deque</A> is empty, returns <K>fail</K>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="deque" Name="PlistDequePopBack" />
+ <Returns>object or fail
+</Returns>
+ <Description>
+Pop object from the back of <A>deque</A> and return it.
+If <A>deque</A> is empty, returns <K>fail</K>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="deque" Name="PlistDequePeekFront" />
+ <Returns>object or fail
+</Returns>
+ <Description>
+Returns the object at the front <A>deque</A> without removing it.
+If <A>deque</A> is empty, returns <K>fail</K>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="deque" Name="PlistDequePeekBack" />
+ <Returns>object or fail
+</Returns>
+ <Description>
+Returns the object at the back <A>deque</A> without removing it.
+If <A>deque</A> is empty, returns <K>fail</K>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="deque" Name="PlistDequeExpand" />
+ <Description>
+Helper function to expand the capacity of <A>deque</A> by the
+configured factor.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<P/>
+<E>Queues</E> are linear data structure that allow adding elements at the end of the queue,
+and removing elements from the front.
+A <E>deque</E> is a <E>double-ended queue</E>; a linear data structure that allows access
+to objects at both ends.<P/>
+<P/>
+The API that objects that lie in <Ref Filt="IsQueue"/> and
+<Ref Filt="IsDeque"/> must implement the API set out below.
+<P/>
+<Package>datastructures</Package> provides
+<P/>
+</Chapter>
+

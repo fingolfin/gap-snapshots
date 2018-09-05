@@ -71,10 +71,10 @@ Int enableCodeCoverageAtStartup( Char **argv, void * dummy);
 /****************************************************************************
 **
 *V  SyKernelVersion  . . . . . . . . . . . . . . . hard coded kernel version
-** do not edit the following line. Occurrences of `4.9.2' and `today'
+** do not edit the following line. Occurrences of `4.9.3' and `today'
 ** will be replaced by string matching by distribution wrapping scripts.
 */
-const Char * SyKernelVersion = "4.9.2";
+const Char * SyKernelVersion = "4.9.3";
 
 /****************************************************************************
 **

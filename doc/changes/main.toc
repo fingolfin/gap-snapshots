@@ -7,6 +7,9 @@
 \contentsline {section}{\numberline {2.2}\leavevmode {\color {Chapter }\textsf {GAP} 4.9.2 (July 2018)}}{18}{section.2.2}
 \contentsline {subsection}{\numberline {2.2.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.9.2}}{18}{subsection.2.2.1}
 \contentsline {subsection}{\numberline {2.2.2}\leavevmode {\color {Chapter }New and updated packages since \textsf {GAP} 4.9.1}}{19}{subsection.2.2.2}
+\contentsline {section}{\numberline {2.3}\leavevmode {\color {Chapter }\textsf {GAP} 4.9.3 (September 2018)}}{19}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.9.3}}{19}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}\leavevmode {\color {Chapter }New and updated packages since \textsf {GAP} 4.9.2}}{19}{subsection.2.3.2}
 \contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Changes between \textsf {GAP} 4.7 and \textsf {GAP} 4.8}}{20}{chapter.3}
 \contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }\textsf {GAP} 4.8.2 (February 2016)}}{20}{section.3.1}
 \contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.8}}{20}{subsection.3.1.1}

@@ -147,7 +147,7 @@
 
 <h3>76 <span class="Heading">Using and Developing GAP Packages</span></h3>
 
-<p>The functionality of <strong class="pkg">GAP</strong> can be extended by loading <strong class="pkg">GAP</strong> packages. The <strong class="pkg">GAP</strong> distribution already contains all currently redistributed <strong class="pkg">GAP</strong> packages in the <code class="file">gap-4.9.2/pkg</code> directory.</p>
+<p>The functionality of <strong class="pkg">GAP</strong> can be extended by loading <strong class="pkg">GAP</strong> packages. The <strong class="pkg">GAP</strong> distribution already contains all currently redistributed <strong class="pkg">GAP</strong> packages in the <code class="file">gap-4.9.3/pkg</code> directory.</p>
 
 <p><strong class="pkg">GAP</strong> packages are written by (groups of) <strong class="pkg">GAP</strong> users who may not necessarily be members of the <strong class="pkg">GAP</strong> developer team. The responsibility and copyright of a <strong class="pkg">GAP</strong> package remains with the original author(s).</p>
 
@@ -854,7 +854,7 @@ Pager(StringFile(Filename(DirectoriesLibrary(),
 
 <p>On the other hand, operations and their methods (defined via <code class="func">DeclareOperation</code> (<a href="chap79.html#X843F48137B899BC3"><span class="RefLink">79.18-12</span></a>), <code class="func">InstallMethod</code> (<a href="chap78.html#X837EFDAB7BEF290B"><span class="RefLink">78.2-1</span></a>) etc. pairs) and their relatives do not need this consideration, as they avoid name clashes by allowing for more than one "method" for the same-named object.</p>
 
-<p>To demonstrate the definition of a function via a <code class="code">DeclareOperation</code>/<code class="code">InstallMethod</code> pair, the method <code class="func">Recipe</code> (<a href="../../pkg/Example-4.1.0/doc/chap1.html#X85B83BDB83B1C910"><span class="RefLink">Example: Recipe</span></a>) was included in the <strong class="pkg">Example</strong> package; <code class="code">Recipe( FruitCake );</code> gives a "method" for making a fruit cake (forgive the pun).</p>
+<p>To demonstrate the definition of a function via a <code class="code">DeclareOperation</code>/<code class="code">InstallMethod</code> pair, the method <code class="func">Recipe</code> (<a href="../../pkg/Example-4.1.1/doc/chap1.html#X85B83BDB83B1C910"><span class="RefLink">Example: Recipe</span></a>) was included in the <strong class="pkg">Example</strong> package; <code class="code">Recipe( FruitCake );</code> gives a "method" for making a fruit cake (forgive the pun).</p>
 
 <p><em>Thirdly</em>, functions or variables with <code class="code">Set<var class="Arg">XXX</var></code> or <code class="code">Has<var class="Arg">XXX</var></code> names (even if they are defined as operations) should be avoided as these may clash with objects associated with attributes or properties (attributes and properties <var class="Arg">XXX</var> declared via the <code class="code">DeclareAttribute</code> and <code class="code">DeclareProperty</code> commands have associated with them testers of form <code class="code">Has<var class="Arg">XXX</var></code> and setters of form <code class="code">Set<var class="Arg">XXX</var></code>).</p>
 

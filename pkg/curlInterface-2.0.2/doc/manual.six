@@ -1,0 +1,31 @@
+#SIXFORMAT  GapDocGAP
+HELPBOOKINFOSIXTMP := rec(
+encoding := "UTF-8",
+bookname := "curl",
+entries :=
+[ [ "Title page", ".", [ 0, 0, 0 ], 1, 1, "title page", "X7D2C85EC87DD46E5" ],
+  [ "Table of Contents", ".-1", [ 0, 0, 1 ], 43, 2, "table of contents", 
+      "X8537FEB07AF2BEC8" ], 
+  [ "\033[1X\033[33X\033[0;-2YOverview\033[133X\033[101X", "1", [ 1, 0, 0 ], 
+      1, 3, "overview", "X8389AD927B74BA4A" ], 
+  [ "\033[1X\033[33X\033[0;-2YInstalling curlInterface\033[133X\033[101X", 
+      "1.1", [ 1, 1, 0 ], 8, 3, "installing curlinterface", 
+      "X852847EC87B3F9E4" ], 
+  [ "\033[1X\033[33X\033[0;-2YLinux\033[133X\033[101X", "1.1-1", [ 1, 1, 1 ], 
+      16, 3, "linux", "X8286176B85B6326F" ], 
+  [ "\033[1X\033[33X\033[0;-2YCygwin\033[133X\033[101X", "1.1-2", 
+      [ 1, 1, 2 ], 23, 3, "cygwin", "X7A3117FB8072361E" ], 
+  [ "\033[1X\033[33X\033[0;-2YMac OS X\033[133X\033[101X", "1.1-3", 
+      [ 1, 1, 3 ], 28, 3, "mac os x", "X86D5D9BC839E166F" ], 
+  [ "\033[1X\033[33X\033[0;-2YFunctions\033[133X\033[101X", "1.2", 
+      [ 1, 2, 0 ], 39, 3, "functions", "X86FA580F8055B274" ], 
+  [ "Index", "ind", [ "Ind", 0, 0 ], 1, 6, "index", "X83A0356F839C696F" ], 
+  [ "\033[2XDownloadURL\033[102X", "1.2-1", [ 1, 2, 1 ], 45, 4, 
+      "downloadurl", "X7827F7DE85113D7E" ], 
+  [ "\033[2XPostToURL\033[102X", "1.2-2", [ 1, 2, 2 ], 63, 4, "posttourl", 
+      "X81A7B7017D508BE9" ], 
+  [ "\033[2XDeleteURL\033[102X", "1.2-3", [ 1, 2, 3 ], 82, 4, "deleteurl", 
+      "X84C36A2D86B7975B" ], 
+  [ "\033[2XCurlRequest\033[102X", "1.2-4", [ 1, 2, 4 ], 101, 4, 
+      "curlrequest", "X79B1452982D2B19C" ] ]
+);

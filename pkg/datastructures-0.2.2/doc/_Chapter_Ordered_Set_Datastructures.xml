@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Ordered_Set_Datastructures">
+<Heading>Ordered Set Datastructures</Heading>
+
+<P/>
+In this chapter we deal with datastructures designed to represent sets of
+objects which have an intrinsic ordering. Such datastructures should support
+fast (possibly amortised) <Math>O(\log n)</Math> addition, deletion and membership test
+operations and allow efficient iteration through all the objects in the
+datastructure in the order determined by the given comparison function. Since
+they represent a set, adding an object equal to one already present has no
+effect.
+<P/>
+We refer to these as ordered set <E>datastructure</E> because the differ
+from the &GAP; notion of a set in a number of ways:
+<List>
+<Item> They all lie in a common family <Ref Fam="OrderedSetDSFamily"/>
+and pay no attention to the families of the Objects stored in them.
+</Item>
+<Item> Equality of these structures is by identity, not equality of the represented set
+</Item>
+<Item> The ordering of the objects in the set does not have to be default &GAP;
+ordering "less than", but is determined by the Attribute <C>LessFunction</C>
+</Item>
+</List>
+<P/>
+Three implementations of ordered set data structures are currently included:
+skiplists, binary search trees and (as a specialisation of binary search
+trees) AVL trees. AVL trees seem to be the fastest in general, and memory
+usage is similar. More details to come
+<Section Label="Chapter_Ordered_Set_Datastructures_Section_Usage">
+<Heading>Usage</Heading>
+
+<P/>
+<Example><![CDATA[
+gap> s := OrderedSetDS(IsSkipListRep, {x,y} -> String(x) < String(y));
+<skiplist 0 entries>
+gap> Addset(s, 1);
+gap> AddSet(s, 2);
+gap> AddSet(s, 10);
+gap> AddSet(s, (1,2,3));
+gap> RemoveSet(s, (1,2,3));
+1
+gap> AsListSorted(s);
+[ 1, 10, 2 ]
+
+gap> b := OrderedSetDS(IsBinarySearchTreeRep, Primes);
+<bst size 168>
+gap> 91 in b;
+false
+gap> 97 in b;
+true
+]]></Example>
+
+
+</Section>
+
+
+<Section Label="Chapter_Ordered_Set_Datastructures_Section_API">
+<Heading>API</Heading>
+
+<P/>
+Every implementation of an ordered set datastructure must follow the API set out below
+<P/>
+<ManSection>
+  <Filt Arg="arg" Name="IsOrderedSetDS" Label="for IsObject"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Category of ordered set.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsStandardOrderedSetDS" Label="for IsOrderedSetDS"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Subcategory of ordered sets where the ordering is &GAP;'s default &leq;
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="filter, [lessThan, [initialEntries, [randomSource]]]" Name="OrderedSetDS" Label="for IsOrderedSetDS, IsFunction, IsListOrCollection, IsRandomSource"/>
+ <Returns>an ordered set datastructure
+</Returns>
+ <Description>
+The family that contains all ordered set datastructures.
+Constructors for ordered sets
+<P/>
+The argument <A>filter</A> is a filter that the resulting ordered set
+object will have.<P/>
+The optional argument <A>lessThan</A> must be a binary function that returns <K>true</K> if
+its first argument is less than its second argument, and <K>false</K> otherwise. The default
+<A>lessThan</A> is &GAP;'s built in &leq;.<P/>
+The optional argument <A> initialEntries</A> gives a collection of elements that the ordered
+set is initialised with, and defaults to the empty set.<P/>
+The optional argument <A>randomSource</A > is
+useful in a number of possible implementations that use randomised methods
+to achieve good amortised complexity with high probability and simple data structures. It defaults
+to the global Mersenne twister.
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="arg1,arg2,arg3" Name="OrderedSetDS" Label="for IsOrderedSetDS, IsFunction, IsRandomSource"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="arg1,arg2,arg3" Name="OrderedSetDS" Label="for IsOrderedSetDS, IsListOrCollection, IsRandomSource"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="arg1,arg2,arg3" Name="OrderedSetDS" Label="for IsOrderedSetDS, IsFunction, IsListOrCollection"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="arg1,arg2" Name="OrderedSetDS" Label="for IsOrderedSetDS, IsFunction"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="arg1,arg2" Name="OrderedSetDS" Label="for IsOrderedSetDS, IsListOrCollection"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="arg" Name="OrderedSetDS" Label="for IsOrderedSetDS"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="set, object" Name="AddSet" Label="for IsOrderedSetDS and IsMutable, IsObject"/>
+ <Description>
+<P/>
+Other constructors cover making an ordered set from another ordered set,
+from an iterator, from a function and an iterator, or from a function, an iterator
+and a random source.
+<P/>
+Adds <A>object</A> to <A>set</A>. Does nothing if <A>object</A><C>in</C><A>set</A>set.
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="set, object" Name="RemoveSet" Label="for IsOrderedSetDS and IsMutable, IsObject"/>
+ <Returns><K>0</K> or <K>1</K>
+</Returns>
+ <Description>
+Removes <A>object</A> from <A>set</A> if present, and
+returns the number of copies of <A>object</A> that were in <A>set</A>, that is
+<K>0</K> or <K>1</K>. This for consistency with multisets.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="object, set" Name="\in" Label="for IsObject, IsOrderedSetDS"/>
+ <Description>
+All objects in IsOrderedSetDS must implement \in, which returns <A>true</A>
+if <A>object</A> is present in <A>set</A> and <K>false</K> otherwise.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="set" Name="LessFunction" Label="for IsOrderedSetDS"/>
+ <Description>
+The binary function to perform the comparison for elements of the set.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="set" Name="Size" Label="for IsOrderedSetDS"/>
+ <Description>
+The number of objects in the set
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="set" Name="IteratorSorted" Label="for IsOrderedSetDS"/>
+ <Returns>iterator
+</Returns>
+ <Description>
+Returns an iterator of <A>set</A> that can be used to iterate through the elements
+of <A>set</A> in the order imposed by <Ref Attr="LessFunction"/>.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Ordered_Set_Datastructures_Section_Default_methods">
+<Heading>Default methods</Heading>
+
+<P/>
+Default methods based on <Ref Oper="IteratorSorted"/> are installed for the following
+operations and attributes, but can be overridden for data structures that
+support better algorithms.
+<P/>
+<ManSection>
+  <Oper Arg="arg" Name="Iterator" Label="for IsOrderedSetDS"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="AsSSortedList" Label="for IsOrderedSetDS"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="AsSortedList" Label="for IsOrderedSetDS"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="AsList" Label="for IsOrderedSetDS"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="EnumeratorSorted" Label="for IsOrderedSetDS"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="Enumerator" Label="for IsOrderedSetDS"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Prop Arg="arg" Name="IsEmpty" Label="for IsOrderedSetDS"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="Length" Label="for IsOrderedSetDS"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="arg1,arg2,arg3" Name="Position" Label="for IsOrderedSetDS, IsObject, IsInt"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="arg1,arg2" Name="PositionSortedOp" Label="for IsOrderedSetDS, IsObject"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="arg1,arg2,arg3" Name="PositionSortedOp" Label="for IsOrderedSetDS, IsObject, IsFunction"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+</Chapter>
+

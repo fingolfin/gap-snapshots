@@ -11,6 +11,9 @@
 \makelabel{changes:GAP 4.9.2 (July 2018)}{2.2}{X788623D37D59433D}
 \makelabel{changes:Changes in the core GAP system introduced in GAP 4.9.2}{2.2.1}{X80F675A48712F934}
 \makelabel{changes:New and updated packages since GAP 4.9.1}{2.2.2}{X85F5CB9C80D89E10}
+\makelabel{changes:GAP 4.9.3 (September 2018)}{2.3}{X7DCF1B2984AEB7F0}
+\makelabel{changes:Changes in the core GAP system introduced in GAP 4.9.3}{2.3.1}{X878606AD8708A3AF}
+\makelabel{changes:New and updated packages since GAP 4.9.2}{2.3.2}{X7C655E8782735518}
 \makelabel{changes:Changes between GAP 4.7 and GAP 4.8}{3}{X78E4871E83067AB2}
 \makelabel{changes:GAP 4.8.2 (February 2016)}{3.1}{X79FD32317A501139}
 \makelabel{changes:Changes in the core GAP system introduced in GAP 4.8}{3.1.1}{X809328727BE7E536}

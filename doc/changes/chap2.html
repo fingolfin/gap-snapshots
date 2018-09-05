@@ -40,6 +40,14 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X85F5CB9C80D89E10">2.2-2 <span class="Heading">New and updated packages since <strong class="pkg">GAP</strong> 4.9.1</span></a>
 </span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7DCF1B2984AEB7F0">2.3 <span class="Heading"><strong class="pkg">GAP</strong> 4.9.3 (September 2018)</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X878606AD8708A3AF">2.3-1 <span class="Heading">Changes in the core <strong class="pkg">GAP</strong> system introduced in <strong class="pkg">GAP</strong> 4.9.3</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7C655E8782735518">2.3-2 <span class="Heading">New and updated packages since <strong class="pkg">GAP</strong> 4.9.2</span></a>
+</span>
+</div></div>
 </div>
 
 <h3>2 <span class="Heading">Changes between <strong class="pkg">GAP</strong> 4.8 and <strong class="pkg">GAP</strong> 4.9</span></h3>
@@ -823,6 +831,48 @@
 
 <p>This release contains updated versions of 22 packages from <strong class="pkg">GAP</strong> 4.9.1 distribution. Additionally, it has three new packages. The new <strong class="pkg">JupyterKernel</strong> package by Markus Pfeiffer provides a so-called <em>kernel</em> for the Jupyter interactive document system (<span class="URL"><a href="https://jupyter.org/">https://jupyter.org/</a></span>). This package requires Jupyter to be installed on your system (see <span class="URL"><a href="https://jupyter.org/install">https://jupyter.org/install</a></span> for instructions). It also requires <strong class="pkg">GAP</strong> packages <strong class="pkg">IO</strong>, <strong class="pkg">ZeroMQInterface</strong>, <strong class="pkg">json</strong>, and also two new packages by Markus Pfeiffer called <strong class="pkg">crypting</strong> and <strong class="pkg">uuid</strong>, all included into <strong class="pkg">GAP</strong> 4.9.2 distribution. The <strong class="pkg">JupyterKernel</strong> package is not yet usable on Windows.</p>
 
+<p><a id="X7DCF1B2984AEB7F0" name="X7DCF1B2984AEB7F0"></a></p>
+
+<h4>2.3 <span class="Heading"><strong class="pkg">GAP</strong> 4.9.3 (September 2018)</span></h4>
+
+<p><a id="X878606AD8708A3AF" name="X878606AD8708A3AF"></a></p>
+
+<h5>2.3-1 <span class="Heading">Changes in the core <strong class="pkg">GAP</strong> system introduced in <strong class="pkg">GAP</strong> 4.9.3</span></h5>
+
+<p>Fixed bugs that could lead to break loops:</p>
+
+
+<ul>
+<li><p>Fixed a regression in <code class="func">HighestWeightModule</code> (<span class="RefLink">Reference: HighestWeightModule</span>) caused by changes in sort functions introduced in <strong class="pkg">GAP</strong> 4.9 release (<span class="URL"><a href="https://github.com/gap-system/gap/pull/2617">#2617</a></span>).</p>
+
+</li>
+</ul>
+<p>Other fixed bugs and further improvements:</p>
+
+
+<ul>
+<li><p>Fixed a compile time assertion that caused compiler error on some systems (<span class="URL"><a href="https://github.com/gap-system/gap/pull/2691">#2691</a></span>).</p>
+
+</li>
+</ul>
+<p><a id="X7C655E8782735518" name="X7C655E8782735518"></a></p>
+
+<h5>2.3-2 <span class="Heading">New and updated packages since <strong class="pkg">GAP</strong> 4.9.2</span></h5>
+
+<p>This release contains updated versions of 18 packages from <strong class="pkg">GAP</strong> 4.9.2 distribution. Additionally, it has three new packages:</p>
+
+
+<ul>
+<li><p>The <strong class="pkg">curlInterface</strong> package by Christopher Jefferson and Michael Torpey, which provides a simple wrapper around <strong class="pkg">libcurl</strong> library (<span class="URL"><a href="https://curl.haxx.se/">https://curl.haxx.se/</a></span>) to allow downloading files over http, ftp and https protocols.</p>
+
+</li>
+<li><p>The <strong class="pkg">datastructures</strong> package by Markus Pfeiffer, Max Horn, Christopher Jefferson and Steve Linton, which aims at providing standard datastructures, consolidating existing code and improving on it, in particular in view of <strong class="pkg">HPC-GAP</strong>.</p>
+
+</li>
+<li><p>The <strong class="pkg">DeepThought</strong> package by Nina Wagner and Max Horn, which provides functionality for computations in finitely generated nilpotent groups given by a suitable presentation using Deep Thought polynomials.</p>
+
+</li>
+</ul>
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
 
