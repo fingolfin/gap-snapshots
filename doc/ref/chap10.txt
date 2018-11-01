@@ -471,7 +471,8 @@
   
   [33X[0;0Y[10XInputTextFile(   [3Xfilename[103X[10X   )[110X  returns  an  input  stream  in  the  category
   [2XIsInputTextStream[102X  ([14X10.1-4[114X)  that  delivers  the  characters  from  the file
-  [3Xfilename[103X.[133X
+  [3Xfilename[103X. If [3Xfilename[103X ends in [10X.gz[110X and the file is a valid gzipped file, then
+  the file will be transparently uncompressed.[133X
   
   [1X10.5-2 OutputTextFile[101X
   
@@ -480,7 +481,8 @@
   [33X[0;0Y[10XOutputTextFile(  [3Xfilename[103X[10X, [3Xappend[103X[10X )[110X returns an output stream in the category
   [10XIsOutputTextFile[110X  that  writes  received characters to the file [3Xfilename[103X. If
   [3Xappend[103X  is  [9Xfalse[109X,  then  the  file  is  emptied  first,  otherwise received
-  characters are added at the end of the file.[133X
+  characters  are  added  at the end of the file. If [3Xfilename[103X ends in [10X.gz[110X then
+  the file will be written with gzip compression.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27X# use a temporary directory[127X[104X

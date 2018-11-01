@@ -16,44 +16,34 @@
 **  coder.
 */
 
-#include <src/intrprtr.h>
+#include "intrprtr.h"
 
-#include <src/ariths.h>
-#include <src/bool.h>
-#include <src/calls.h>
-#include <src/code.h>
-#include <src/funcs.h>
-#include <src/gap.h>
-#include <src/gapstate.h>
-#include <src/gvars.h>
-#include <src/integer.h>
-#include <src/lists.h>
-#include <src/opers.h>
-#include <src/permutat.h>
-#include <src/plist.h>
-#include <src/precord.h>
-#include <src/range.h>
-#include <src/read.h>
-#include <src/records.h>
-#include <src/scanner.h>
-#include <src/stringobj.h>
-#include <src/vars.h>
+#include "ariths.h"
+#include "bool.h"
+#include "calls.h"
+#include "code.h"
+#include "error.h"
+#include "funcs.h"
+#include "gapstate.h"
+#include "gvars.h"
+#include "integer.h"
+#include "io.h"
+#include "lists.h"
+#include "modules.h"
+#include "opers.h"
+#include "permutat.h"
+#include "plist.h"
+#include "precord.h"
+#include "range.h"
+#include "read.h"
+#include "records.h"
+#include "stringobj.h"
+#include "vars.h"
 
 #ifdef HPCGAP
-#include <src/hpc/aobjects.h>
-#include <src/hpc/guards.h>
+#include "hpc/aobjects.h"
+#include "hpc/guards.h"
 #endif
-
-/****************************************************************************
-**
-*V  IntrResult  . . . . . . . . . . . . . . . . . result value of interpreter
-**
-**  'IntrResult'  is the result value of  the interpreter, i.e., the value of
-**  the  statement  that  was  last  interpreted (which   might  have been  a
-**  return-value-statement).
-*/
-/* TL: Obj IntrResult; */
-
 
 /****************************************************************************
 **
@@ -91,6 +81,10 @@
 **  directly interpret, such as loops or function bodies.
 */
 /* TL: UInt IntrCoding; */
+
+
+#define SKIP_IF_RETURNING() if ( STATE(IntrReturning) > 0 ) { return; }
+#define SKIP_IF_IGNORING()  if ( STATE(IntrIgnoring)  > 0 ) { return; }
 
 
 /****************************************************************************
@@ -186,11 +180,16 @@ static inline void StartFakeFuncExpr(Int startLine)
 
     // code a function expression (with no arguments and locals)
     Obj nams = NEW_PLIST(T_PLIST, 0);
-    SET_LEN_PLIST(nams, 0);
 
     // If we are in the break loop, then a local variable context may well
     // exist, and we have to create an empty local variable names list to
     // match the function expression that we are creating.
+    //
+    // Without this, access to variables defined in the existing local
+    // variable context will be coded as LVAR accesses; but when we then
+    // execute this code, they will not actually be available in the current
+    // context, but rather one level up, i.e., they really should have been
+    // coded as HVARs.
     //
     // If we are not in a break loop, then this would be a waste of time and
     // effort
@@ -208,17 +207,14 @@ static inline void FinishAndCallFakeFuncExpr(void)
     // code a function expression (with one statement in the body)
     CodeFuncExprEnd(1);
 
-    // switch back to immediate mode
-    CodeEnd(0);
+    // switch back to immediate mode and get the function
+    Obj func = CodeEnd(0);
 
     // If we are in a break loop, then we will have created a "dummy" local
     // variable names list to get the counts right. Remove it.
     const UInt len = LEN_PLIST(STATE(StackNams));
     if (len > 0)
         PopPlist(STATE(StackNams));
-
-    // get the function
-    Obj func = STATE(CodeResult);
 
     // call the function
     CALL_0ARGS(func);
@@ -230,37 +226,33 @@ static inline void FinishAndCallFakeFuncExpr(void)
 /****************************************************************************
 **
 *F  IntrBegin() . . . . . . . . . . . . . . . . . . . .  start an interpreter
-*F  IntrEnd( <error> )  . . . . . . . . . . . . . . . . . stop an interpreter
+*F  IntrEnd(<error>,<result>)  . . . . . . . . . . . . .  stop an interpreter
 **
-**  'IntrBegin' starts a new interpreter.
+**  'IntrBegin' starts a new interpreter in context <frame>. If in doubt,
+**  pass STATE(BottomLVars) as <frame>
 **
-**  'IntrEnd(<error>)' stops the current interpreter.
+**  'IntrEnd' stops the current interpreter.
 **
 **  If <error>  is non-zero a  syntax error was found by  the reader, and the
 **  interpreter only clears up the mess.
 **
-**  If 'IntrEnd' returns  0, then no  return-statement or quit-statement  was
-**  interpreted.  If  'IntrEnd' returns 1,  then a return-value-statement was
-**  interpreted and in this case the  return value is stored in 'STATE(IntrResult)'.
-**  If  'IntrEnd' returns 2, then a  return-void-statement  was  interpreted.
-**  If 'IntrEnd' returns 8, then a quit-statement was interpreted.
+**  If 'IntrEnd' returns 'STATUS_END', then no return-statement or
+**  quit-statement was interpreted. If 'IntrEnd' returns 'STATUS_RETURN_VAL',
+**  then a return-value-statement was interpreted and in this case the return
+**  value is assigned to the address <result> points at (but only if <result>
+**  is not 0). If 'IntrEnd' returns 'STATUS_RETURN_VOID', then a
+**  return-void-statement was interpreted. If 'IntrEnd' returns 'STATUS_QUIT',
+**  then a quit-statement was interpreted.
 */
 void IntrBegin ( Obj frame )
 {
-    Obj                 intrState;      /* old interpreter state           */
-
     /* remember old interpreter state                                      */
-    /* This bag cannot exist at the top-most loop, which is the only
-       place from which we might call SaveWorkspace */
-    intrState = NEW_PLIST( T_PLIST, 2 );
-    SET_LEN_PLIST( intrState, 2 );
-    SET_ELM_PLIST( intrState, 1, STATE(IntrState) );
-    SET_ELM_PLIST( intrState, 2, STATE(StackObj) );
-    STATE(IntrState) = intrState;
+    if (!STATE(IntrState))
+        STATE(IntrState) = NEW_PLIST(T_PLIST, 16);
+    PushPlist(STATE(IntrState), STATE(StackObj));
 
     /* allocate a new values stack                                         */
     STATE(StackObj) = NEW_PLIST( T_PLIST, 64 );
-    SET_LEN_PLIST( STATE(StackObj), 0 );
 
     /* must be in immediate (non-ignoring, non-coding) mode                */
     assert( STATE(IntrIgnoring) == 0 );
@@ -273,8 +265,7 @@ void IntrBegin ( Obj frame )
     ExecBegin(frame);
 }
 
-ExecStatus IntrEnd (
-    UInt                error )
+ExecStatus IntrEnd(UInt error, Obj *result)
 {
     UInt                intrReturning;  /* interpreted return-statement?   */
 
@@ -294,7 +285,8 @@ ExecStatus IntrEnd (
 
         /* and the stack must contain the result value (which may be void) */
         assert( LEN_PLIST(STATE(StackObj)) == 1 );
-        STATE(IntrResult) = PopVoidObj();
+        if (result)
+            *result = PopVoidObj();
 
     }
 
@@ -316,16 +308,25 @@ ExecStatus IntrEnd (
         STATE(IntrCoding)   = 0;
 
         /* dummy result value (probably ignored)                           */
-        STATE(IntrResult) = (Obj)0;
-
+        if (result)
+            *result = 0;
     }
 
     // switch back to the old state
-    STATE(StackObj)  = ELM_PLIST(STATE(IntrState), 2);
-    STATE(IntrState) = ELM_PLIST(STATE(IntrState), 1);
+    STATE(StackObj) = PopPlist(STATE(IntrState));
 
     /* indicate whether a return-statement was interpreted                 */
     return intrReturning;
+}
+
+
+void IntrAbortCoding(Obj lvars)
+{
+    if (STATE(IntrCoding)) {
+        CodeEnd(1);
+        STATE(IntrCoding)--;
+        SWITCH_TO_OLD_LVARS(lvars);
+    }
 }
 
 
@@ -348,8 +349,8 @@ ExecStatus IntrEnd (
 void            IntrFuncCallBegin ( void )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeFuncCallBegin(); return; }
 
 }
@@ -376,8 +377,8 @@ void            IntrFuncCallEnd (
     UInt                i;              /* loop variable                   */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) {
       CodeFuncCallEnd( funccall, options, nr );
       return; }
@@ -473,8 +474,8 @@ void            IntrFuncExprBegin (
     Int                 startLine)
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     if (STATE(IntrCoding) == 0) {
         CodeBegin();
@@ -488,8 +489,8 @@ void            IntrFuncExprBegin (
 void IntrFuncExprEnd(UInt nr)
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
     assert(STATE(IntrCoding) > 0);
@@ -498,11 +499,8 @@ void IntrFuncExprEnd(UInt nr)
     CodeFuncExprEnd(nr);
 
     if (STATE(IntrCoding) == 0) {
-        // switch back to immediate mode
-        CodeEnd(0);
-
-        // get the function
-        Obj func = STATE(CodeResult);
+        // switch back to immediate mode and get the function
+        Obj func = CodeEnd(0);
 
         // push the function
         PushObj(func);
@@ -545,7 +543,14 @@ void IntrFuncExprEnd(UInt nr)
 void            IntrIfBegin ( void )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
+    SKIP_IF_RETURNING();
+
+    // if IntrIgnoring is positive, increment it, as IntrIgnoring == 1 has a
+    // special meaning when parsing if-statements -- it is used to skip
+    // interpreting or coding branches of the if-statement which never will be
+    // executed, either because a previous branch is always executed (i.e., it
+    // has a 'true' condition), or else because the current branch has a
+    // 'false' condition
     if ( STATE(IntrIgnoring)  > 0 ) { STATE(IntrIgnoring)++; return; }
     if ( STATE(IntrCoding)    > 0 ) { CodeIfBegin(); return; }
 
@@ -554,8 +559,8 @@ void            IntrIfBegin ( void )
 void            IntrIfElif ( void )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeIfElif(); return; }
 
 }
@@ -563,8 +568,8 @@ void            IntrIfElif ( void )
 void            IntrIfElse ( void )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeIfElse(); return; }
 
 
@@ -577,9 +582,12 @@ void            IntrIfBeginBody ( void )
     Obj                 cond;           /* value of condition              */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
+    SKIP_IF_RETURNING();
     if ( STATE(IntrIgnoring)  > 0 ) { STATE(IntrIgnoring)++; return; }
-    if ( STATE(IntrCoding)    > 0 ) { CodeIfBeginBody(); return; }
+    if ( STATE(IntrCoding)    > 0 ) {
+        STATE(IntrIgnoring) = CodeIfBeginBody();
+        return;
+    }
 
 
     /* get and check the condition                                         */
@@ -596,21 +604,17 @@ void            IntrIfBeginBody ( void )
     }
 }
 
-void            IntrIfEndBody (
+Int            IntrIfEndBody (
     UInt                nr )
 {
     UInt                i;              /* loop variable                   */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 1 ) { STATE(IntrIgnoring)--; return; }
-    if ( STATE(IntrCoding)    > 0 ) { CodeIfEndBody( nr ); return; }
-
-
-    /* if the condition was 'false', the body was ignored                  */
-    if ( STATE(IntrIgnoring) == 1 ) {
-        STATE(IntrIgnoring) = 0;
-        return;
+    if ( STATE(IntrReturning) > 0 ) { return 0; }
+    if ( STATE(IntrIgnoring)  > 0 ) { STATE(IntrIgnoring)--; return 0; }
+    if ( STATE(IntrCoding)    > 0 ) {
+        STATE(IntrIgnoring) = CodeIfEndBody( nr );
+        return 1;
     }
 
     /* otherwise drop the values for the statements executed in the body   */
@@ -620,27 +624,25 @@ void            IntrIfEndBody (
 
     /* one branch of the if-statement was executed, ignore the others      */
     STATE(IntrIgnoring) = 1;
+
+    return 1;
 }
 
 void            IntrIfEnd (
     UInt                nr )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
+    SKIP_IF_RETURNING();
     if ( STATE(IntrIgnoring)  > 1 ) { STATE(IntrIgnoring)--; return; }
-    if ( STATE(IntrCoding)    > 0 ) { CodeIfEnd( nr ); return; }
 
-
-    /* if one branch was executed (ignoring the others)                    */
+    // if one branch was executed (ignoring the others), reset IntrIgnoring
     if ( STATE(IntrIgnoring) == 1 ) {
         STATE(IntrIgnoring) = 0;
-        PushVoidObj();
     }
 
-    /* if no branch was executed                                           */
-    else {
-        PushVoidObj();
-    }
+    if ( STATE(IntrCoding)    > 0 ) { CodeIfEnd( nr ); return; }
+
+    PushVoidObj();
 }
 
 
@@ -678,8 +680,8 @@ void            IntrIfEnd (
 void IntrForBegin ( void )
 {
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     if (STATE(IntrCoding) == 0)
         StartFakeFuncExpr(0);
@@ -693,8 +695,8 @@ void IntrForBegin ( void )
 void IntrForIn ( void )
 {
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
     assert( STATE(IntrCoding) > 0 );
@@ -704,8 +706,8 @@ void IntrForIn ( void )
 void IntrForBeginBody ( void )
 {
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
     assert( STATE(IntrCoding) > 0 );
@@ -716,8 +718,8 @@ void IntrForEndBody (
     UInt                nr )
 {
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
     assert(STATE(IntrCoding) > 0);
@@ -727,8 +729,8 @@ void IntrForEndBody (
 void IntrForEnd ( void )
 {
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
     assert( STATE(IntrCoding) > 0 );
@@ -770,8 +772,8 @@ void IntrForEnd ( void )
 void            IntrWhileBegin ( void )
 {
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     if (STATE(IntrCoding) == 0)
         StartFakeFuncExpr(0);
@@ -785,8 +787,8 @@ void            IntrWhileBegin ( void )
 void            IntrWhileBeginBody ( void )
 {
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
     assert( STATE(IntrCoding) > 0 );
@@ -797,8 +799,8 @@ void            IntrWhileEndBody (
     UInt                nr )
 {
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
     assert( STATE(IntrCoding) > 0 );
@@ -808,8 +810,8 @@ void            IntrWhileEndBody (
 void            IntrWhileEnd ( void )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
     assert( STATE(IntrCoding) > 0 );
@@ -830,22 +832,26 @@ void            IntrWhileEnd ( void )
 **                                       by readwrite or readonly
 **
 */
-
 void IntrQualifiedExprBegin(UInt qual) 
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { STATE(IntrIgnoring)++; return; }
-    if ( STATE(IntrCoding)    > 0 ) { CodeQualifiedExprBegin(qual); return; }
-    PushObj(INTOBJ_INT(qual));
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
+
+    /* otherwise must be coding                                            */
+    GAP_ASSERT(STATE(IntrCoding) > 0);
+    CodeQualifiedExprBegin(qual);
 }
 
 void IntrQualifiedExprEnd( void ) 
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { STATE(IntrIgnoring)--; return; }
-    if ( STATE(IntrCoding)    > 0 ) { CodeQualifiedExprEnd(); return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
+
+    /* otherwise must be coding                                            */
+    GAP_ASSERT(STATE(IntrCoding) > 0);
+    CodeQualifiedExprEnd();
 }
 
 /****************************************************************************
@@ -878,11 +884,11 @@ void IntrQualifiedExprEnd( void )
 void            IntrAtomicBegin ( void )
 {
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     if (STATE(IntrCoding) == 0)
-        StartFakeFuncExpr(STATE(Input)->number);
+        StartFakeFuncExpr(GetInputLineNumber());
 
     STATE(IntrCoding)++;
 
@@ -892,8 +898,8 @@ void            IntrAtomicBegin ( void )
 void            IntrAtomicBeginBody ( UInt nrexprs )
 {
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
     assert(STATE(IntrCoding) > 0);
@@ -904,8 +910,8 @@ void            IntrAtomicEndBody (
     Int                nrstats )
 {
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     // must be coding
     assert(STATE(IntrCoding) > 0);
@@ -915,8 +921,8 @@ void            IntrAtomicEndBody (
 void            IntrAtomicEnd ( void )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
     assert(STATE(IntrCoding) > 0);
@@ -958,11 +964,11 @@ void            IntrAtomicEnd ( void )
 void            IntrRepeatBegin ( void )
 {
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     if (STATE(IntrCoding) == 0)
-        StartFakeFuncExpr(STATE(Input)->number);
+        StartFakeFuncExpr(GetInputLineNumber());
 
     STATE(IntrCoding)++;
 
@@ -973,8 +979,8 @@ void            IntrRepeatBegin ( void )
 void            IntrRepeatBeginBody ( void )
 {
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
     assert( STATE(IntrCoding) > 0 );
@@ -985,8 +991,8 @@ void            IntrRepeatEndBody (
     UInt                nr )
 {
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
     assert( STATE(IntrCoding) > 0 );
@@ -996,8 +1002,8 @@ void            IntrRepeatEndBody (
 void            IntrRepeatEnd ( void )
 {
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
     assert( STATE(IntrCoding) > 0 );
@@ -1023,14 +1029,12 @@ void            IntrRepeatEnd ( void )
 void            IntrBreak ( void )
 {
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
-    if ( STATE(IntrCoding) == 0 )
-      ErrorQuit("'break' statement can only appear inside a loop",0L,0L);
-    else
-      CodeBreak();
+    GAP_ASSERT(STATE(IntrCoding) > 0);
+    CodeBreak();
 }
 
 
@@ -1047,14 +1051,12 @@ void            IntrBreak ( void )
 void            IntrContinue ( void )
 {
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
-    if ( STATE(IntrCoding) == 0 )
-      ErrorQuit("'continue' statement can only appear inside a loop",0L,0L);
-    else
-      CodeContinue();
+    GAP_ASSERT(STATE(IntrCoding) > 0);
+    CodeContinue();
 }
 
 
@@ -1071,8 +1073,8 @@ void            IntrReturnObj ( void )
     Obj                 val;            /* return value                    */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeReturnObj(); return; }
 
 
@@ -1096,8 +1098,8 @@ void            IntrReturnObj ( void )
 void            IntrReturnVoid ( void )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeReturnVoid(); return; }
 
 
@@ -1120,19 +1122,15 @@ void            IntrReturnVoid ( void )
 void            IntrQuit ( void )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* 'quit' is not allowed in functions (by the reader)                  */
-    /* assert( STATE(IntrCoding) == 0 ); */
-    if ( STATE(IntrCoding) > 0 ) {
-      SyntaxError("'quit;' cannot be used in this context");
-    }
+    assert( STATE(IntrCoding) == 0 );
 
     /* empty the values stack and push the void value                      */
     SET_LEN_PLIST( STATE(StackObj), 0 );
     PushVoidObj();
-
 
     /* indicate that a quit-statement was interpreted                      */
     STATE(IntrReturning) = STATUS_QUIT;
@@ -1148,18 +1146,17 @@ void            IntrQuit ( void )
 void            IntrQUIT ( void )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
-    /* 'quit' is not allowed in functions (by the reader)                  */
+    /* 'QUIT' is not allowed in functions (by the reader)                  */
     assert( STATE(IntrCoding) == 0 );
 
     /* empty the values stack and push the void value                      */
     SET_LEN_PLIST( STATE(StackObj), 0 );
     PushVoidObj();
 
-
-    /* indicate that a quit-statement was interpreted                      */
+    /* indicate that a QUIT-statement was interpreted                      */
     STATE(IntrReturning) = STATUS_QQUIT;
 }
 
@@ -1176,16 +1173,11 @@ void IntrHelp(Obj topic)
     Obj  help;
     Obj  res;
 
-    if (STATE(IntrReturning) > 0) {
-        return;
-    }
-    if (STATE(IntrIgnoring) > 0) {
-        return;
-    }
-    if (STATE(IntrCoding) > 0) {
-        SyntaxError("'?' cannot be used in this context");
-        return;
-    }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
+
+    // '?' is not allowed in functions (by the reader)
+    assert( STATE(IntrCoding) == 0 );
 
     /* FIXME: Hard coded function name */
     hgvar = GVarName("HELP");
@@ -1225,7 +1217,7 @@ void            IntrOrL ( void )
     Obj                 opL;            /* value of left operand           */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
+    SKIP_IF_RETURNING();
     if ( STATE(IntrIgnoring)  > 0 ) { STATE(IntrIgnoring)++; return; }
     if ( STATE(IntrCoding)    > 0 ) { CodeOrL(); return; }
 
@@ -1245,7 +1237,7 @@ void            IntrOr ( void )
     Obj                 opR;            /* value of right operand          */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
+    SKIP_IF_RETURNING();
     if ( STATE(IntrIgnoring)  > 1 ) { STATE(IntrIgnoring)--; return; }
     if ( STATE(IntrCoding)    > 0 ) { CodeOr(); return; }
 
@@ -1299,7 +1291,7 @@ void            IntrAndL ( void )
     Obj                 opL;            /* value of left operand           */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
+    SKIP_IF_RETURNING();
     if ( STATE(IntrIgnoring)  > 0 ) { STATE(IntrIgnoring)++; return; }
     if ( STATE(IntrCoding)    > 0 ) { CodeAndL(); return; }
 
@@ -1319,7 +1311,7 @@ void            IntrAnd ( void )
     Obj                 opR;            /* value of right operand          */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
+    SKIP_IF_RETURNING();
     if ( STATE(IntrIgnoring)  > 1 ) { STATE(IntrIgnoring)--; return; }
     if ( STATE(IntrCoding)    > 0 ) { CodeAnd(); return; }
 
@@ -1349,8 +1341,8 @@ void            IntrAnd ( void )
     }
 
     /* handle the 'and' of two filters                                    */
-    else if ( TNUM_OBJ(opL) == T_FUNCTION ) {
-        if ( TNUM_OBJ(opR) == T_FUNCTION ) {
+    else if ( IS_OPERATION(opL) ) {
+        if ( IS_OPERATION(opR) ) {
             PushObj( NewAndFilter( opL, opR ) );
         }
         else {
@@ -1382,8 +1374,9 @@ void            IntrNot ( void )
     Obj                 op;             /* operand                         */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrIgnoring) > 0 ) { return; }
-    if ( STATE(IntrCoding)   > 0 ) { CodeNot(); return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
+    if ( STATE(IntrCoding)    > 0 ) { CodeNot(); return; }
 
 
     /* get and check the operand                                           */
@@ -1436,8 +1429,8 @@ void            IntrEq ( void )
     Obj                 opR;            /* right operand                   */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeEq(); return; }
 
 
@@ -1455,8 +1448,8 @@ void            IntrEq ( void )
 void            IntrNe ( void )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeNe(); return; }
 
 
@@ -1472,8 +1465,8 @@ void            IntrLt ( void )
     Obj                 opR;            /* right operand                   */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeLt(); return; }
 
 
@@ -1491,8 +1484,8 @@ void            IntrLt ( void )
 void            IntrGe ( void )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeGe(); return; }
 
 
@@ -1504,8 +1497,8 @@ void            IntrGe ( void )
 void            IntrGt ( void )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeGt(); return; }
 
 
@@ -1517,8 +1510,8 @@ void            IntrGt ( void )
 void            IntrLe ( void )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeLe(); return; }
 
 
@@ -1543,8 +1536,8 @@ void            IntrIn ( void )
     Obj                 opR;            /* right operand                   */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeIn(); return; }
 
 
@@ -1581,8 +1574,8 @@ void            IntrSum ( void )
     Obj                 opR;            /* right operand                   */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeSum(); return; }
 
 
@@ -1603,8 +1596,8 @@ void            IntrAInv ( void )
     Obj                 opL;            /* left operand                    */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeAInv(); return; }
 
 
@@ -1625,8 +1618,8 @@ void            IntrDiff ( void )
     Obj                 opR;            /* right operand                   */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeDiff(); return; }
 
 
@@ -1648,8 +1641,8 @@ void            IntrProd ( void )
     Obj                 opR;            /* right operand                   */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeProd(); return; }
 
 
@@ -1671,8 +1664,8 @@ void            IntrQuo ( void )
     Obj                 opR;            /* right operand                   */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeQuo(); return; }
 
 
@@ -1694,8 +1687,8 @@ void            IntrMod ( void )
     Obj                 opR;            /* right operand                   */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeMod(); return; }
 
 
@@ -1717,8 +1710,8 @@ void            IntrPow ( void )
     Obj                 opR;            /* right operand                   */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodePow(); return; }
 
 
@@ -1741,13 +1734,13 @@ void            IntrPow ( void )
 **  'IntrIntExpr' is the action  to  interpret a literal  integer expression.
 **  <str> is the integer as a (null terminated) C character string.
 */
-void IntrIntExpr(Char * str)
+void IntrIntExpr(Obj string, Char * str)
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     
-    Obj val = IntStringInternal(0, str);
+    Obj val = IntStringInternal(string, str);
     GAP_ASSERT(val != Fail);
 
     if (STATE(IntrCoding) > 0) {
@@ -1759,30 +1752,6 @@ void IntrIntExpr(Char * str)
     }
 }
 
-
-/****************************************************************************
-**
-*F  IntrLongIntExpr(<str>)   .  .  interpret literal long integer expression
-**
-**  'IntrLongIntExpr' is the action to  interpret a long literal integer
-**  expression whose digits are stored in a string GAP object.
-*/
-void IntrLongIntExpr(Obj string)
-{
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
-
-    Obj val = IntStringInternal(string, 0);
-    GAP_ASSERT(val != Fail);
-
-    if (STATE(IntrCoding) > 0) {
-        CodeIntExpr(val);
-    }
-    else {
-        // push the integer value
-        PushObj(val);
-    }
-}
 
 /****************************************************************************
 **
@@ -1794,53 +1763,44 @@ void IntrLongIntExpr(Obj string)
 
 static Obj CONVERT_FLOAT_LITERAL_EAGER;
 
-static Obj ConvertFloatLiteralEager(Obj str) {
-  Char *chars = (Char *)CHARS_STRING(str);
-  UInt len = GET_LEN_STRING(str);
-  Char mark = '\0';
-  if (chars[len-1] == '_') {
-    SET_LEN_STRING(str, len-1);
-    chars[len-1] = '\0';
-  } else if (chars[len-2] == '_') {
-    mark = chars[len-1];
-    SET_LEN_STRING(str, len-2);
-    chars[len-2] = '\0';
-  }
-  return CALL_2ARGS(CONVERT_FLOAT_LITERAL_EAGER, str, ObjsChar[(UInt)mark]);
+static Obj ConvertFloatLiteralEager(Obj str)
+{
+    Char * chars = (Char *)CHARS_STRING(str);
+    UInt   len = GET_LEN_STRING(str);
+    Char   mark = '\0';
+    if (chars[len - 1] == '_') {
+        SET_LEN_STRING(str, len - 1);
+        chars[len - 1] = '\0';
+    }
+    else if (chars[len - 2] == '_') {
+        mark = chars[len - 1];
+        SET_LEN_STRING(str, len - 2);
+        chars[len - 2] = '\0';
+    }
+    Obj res = CALL_2ARGS(CONVERT_FLOAT_LITERAL_EAGER, str, ObjsChar[(UInt)mark]);
+    if (res == Fail)
+        ErrorQuit("failed to convert float literal", 0, 0);
+    return res;
 }
 
-void            IntrFloatExpr (
-    Char *              str )
-{
-    Obj                 val;
-
-    /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
-    if ( STATE(IntrCoding)    > 0 ) {  CodeFloatExpr( str );   return; }
-
-    val = MakeString(str);
-    PushObj(ConvertFloatLiteralEager(val));
-}
-
-
-/****************************************************************************
-**
-*F  IntrLongFloatExpr(<str>)   .  .  interpret literal long float expression
-**
-**  'IntrLongFloatExpr' is the action to  interpret a long literal float
-**  expression whose digits are stored in a string GAP object.
-*/
-void            IntrLongFloatExpr (
-    Obj               string )
+void IntrFloatExpr(Obj string, Char * str)
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
-    if ( STATE(IntrCoding)    > 0 ) { CodeLongFloatExpr( string );  return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
+    if ( STATE(IntrCoding)    > 0 ) {
+        if (string)
+            CodeLongFloatExpr(string);
+        else
+            CodeFloatExpr( str );
+        return;
+    }
 
+    if (string == 0)
+        string = MakeString(str);
     PushObj(ConvertFloatLiteralEager(string));
 }
+
 
 /****************************************************************************
 **
@@ -1852,12 +1812,8 @@ void            IntrLongFloatExpr (
 void IntrIntObjExpr(Obj val)
 {
     /* ignore or code                                                      */
-    if (STATE(IntrReturning) > 0) {
-        return;
-    }
-    if (STATE(IntrIgnoring) > 0) {
-        return;
-    }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if (STATE(IntrCoding) > 0) {
         CodeIntExpr(val);
         return;
@@ -1877,8 +1833,8 @@ void IntrIntObjExpr(Obj val)
 void            IntrTrueExpr ( void )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeTrueExpr(); return; }
 
 
@@ -1896,8 +1852,8 @@ void            IntrTrueExpr ( void )
 void            IntrFalseExpr ( void )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeFalseExpr(); return; }
 
 
@@ -1919,8 +1875,8 @@ void            IntrFalseExpr ( void )
 void            IntrTildeExpr ( void )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeTildeExpr(); return; }
 
     if(! (STATE(Tilde)) ) {
@@ -1943,8 +1899,8 @@ void            IntrCharExpr (
     Char                chr )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeCharExpr( chr ); return; }
 
 
@@ -1970,8 +1926,8 @@ void            IntrPermCycle (
     UInt                j, k;           /* loop variable                   */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodePermCycle(nrx,nrc); return; }
 
 
@@ -2053,8 +2009,8 @@ void            IntrPerm (
     UInt                k;              /* loop variable                   */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodePerm(nrc); return; }
 
 
@@ -2107,19 +2063,18 @@ void            IntrListExprBegin (
     Obj                 old;            /* old value of '~'                */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeListExprBegin( top ); return; }
 
 
     /* allocate the new list                                               */
     list = NEW_PLIST( T_PLIST_EMPTY, 0 );
-    SET_LEN_PLIST( list, 0 );
 
     /* if this is an outmost list, save it for reference in '~'            */
     /* (and save the old value of '~' on the values stack)                 */
     if ( top ) {
-        old = STATE( Tilde );
+        old = STATE(Tilde);
         if ( old != 0 ) { PushObj( old ); }
         else            { PushVoidObj();  }
         STATE(Tilde) = list;
@@ -2133,8 +2088,8 @@ void            IntrListExprBeginElm (
     UInt                pos )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeListExprBeginElm( pos ); return; }
 
 
@@ -2150,8 +2105,8 @@ void            IntrListExprEndElm ( void )
     Obj                 val;            /* value to assign into list       */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeListExprEndElm(); return; }
 
 
@@ -2186,8 +2141,8 @@ void            IntrListExprEnd (
     Obj                 val;            /* temporary value                 */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeListExprEnd(nr,range,top,tilde); return; }
 
 
@@ -2249,7 +2204,6 @@ void            IntrListExprEnd (
         /* if <low> is larger than <high> the range is empty               */
         if ( (0 < inc && high < low) || (inc < 0 && low < high) ) {
             list = NEW_PLIST( T_PLIST_EMPTY, 0 );
-            SET_LEN_PLIST( list, 0 );
         }
 
         /* if <low> is equal to <high> the range is a singleton list       */
@@ -2299,8 +2253,8 @@ void           IntrStringExpr (
     Obj               string )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeStringExpr( string ); return; }
 
 
@@ -2323,8 +2277,8 @@ void            IntrRecExprBegin (
     Obj                 old;            /* old value of '~'                */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeRecExprBegin( top ); return; }
 
 
@@ -2334,10 +2288,10 @@ void            IntrRecExprBegin (
     /* if this is an outmost record, save it for reference in '~'          */
     /* (and save the old value of '~' on the values stack)                 */
     if ( top ) {
-        old = STATE( Tilde );
+        old = STATE(Tilde);
         if ( old != 0 ) { PushObj( old ); }
         else            { PushVoidObj();  }
-        STATE( Tilde ) = record;
+        STATE(Tilde) = record;
     }
 
     /* push the record                                                     */
@@ -2348,8 +2302,8 @@ void            IntrRecExprBeginElmName (
     UInt                rnam )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeRecExprBeginElmName( rnam ); return; }
 
 
@@ -2362,8 +2316,8 @@ void            IntrRecExprBeginElmExpr ( void )
     UInt                rnam;           /* record name                     */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeRecExprBeginElmExpr(); return; }
 
 
@@ -2381,8 +2335,8 @@ void            IntrRecExprEndElm ( void )
     Obj                 val;            /* value of record element         */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeRecExprEndElm(); return; }
 
 
@@ -2411,8 +2365,8 @@ void            IntrRecExprEnd (
     Obj                 old;            /* old value of '~'                */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeRecExprEnd(nr,top,tilde); return; }
 
 
@@ -2442,8 +2396,8 @@ void            IntrFuncCallOptionsBegin ( void )
     Obj                 record;         /* new record                      */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeFuncCallOptionsBegin( ); return; }
 
 
@@ -2457,8 +2411,8 @@ void            IntrFuncCallOptionsBeginElmName (
     UInt                rnam )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeFuncCallOptionsBeginElmName( rnam ); return; }
 
 
@@ -2471,8 +2425,8 @@ void            IntrFuncCallOptionsBeginElmExpr ( void )
     UInt                rnam;           /* record name                     */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeFuncCallOptionsBeginElmExpr(); return; }
 
 
@@ -2490,8 +2444,8 @@ void            IntrFuncCallOptionsEndElm ( void )
     Obj                 val;            /* value of record element         */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeFuncCallOptionsEndElm(); return; }
 
 
@@ -2518,8 +2472,8 @@ void            IntrFuncCallOptionsEndElmEmpty ( void )
     Obj                 val;            /* value of record element         */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeFuncCallOptionsEndElmEmpty(); return; }
 
 
@@ -2542,8 +2496,8 @@ void            IntrFuncCallOptionsEndElmEmpty ( void )
 void            IntrFuncCallOptionsEnd ( UInt nr )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeFuncCallOptionsEnd(nr); return; }
 
 
@@ -2559,8 +2513,8 @@ void            IntrAssLVar (
 {
   Obj val;
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
     if ( STATE(IntrCoding) > 0 )
@@ -2578,8 +2532,8 @@ void            IntrUnbLVar (
     UInt                lvar )
 {
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
     if ( STATE(IntrCoding) > 0 )
@@ -2602,8 +2556,8 @@ void            IntrRefLVar (
 {
   Obj val;
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
     if ( STATE(IntrCoding) > 0 )
@@ -2614,7 +2568,7 @@ void            IntrRefLVar (
     else {
         while ((val = OBJ_LVAR(lvar))==0) {
             ErrorReturnVoid(
-                            "Variable: '%s' must have an assigned value",
+                            "Variable: '%g' must have an assigned value",
                             (Int)NAME_LVAR( (UInt)( lvar )), 0L,
                             "you can 'return;' after assigning a value" );
 
@@ -2627,8 +2581,8 @@ void            IntrIsbLVar (
     UInt                lvar )
 {
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
     if( STATE(IntrCoding) > 0 )
@@ -2650,8 +2604,8 @@ void            IntrAssHVar (
 {
   Obj val;
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
     if( STATE(IntrCoding) > 0 )
@@ -2668,8 +2622,8 @@ void            IntrUnbHVar (
     UInt                hvar )
 {
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
     if ( STATE(IntrCoding) > 0 )
@@ -2691,8 +2645,8 @@ void            IntrRefHVar (
 {
   Obj val;
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
     if( STATE(IntrCoding) > 0 )
@@ -2701,7 +2655,7 @@ void            IntrRefHVar (
     else {
         while ((val = OBJ_HVAR(hvar))==0) {
             ErrorReturnVoid(
-                            "Variable: '%s' must have an assigned value",
+                            "Variable: '%g' must have an assigned value",
                             (Int)NAME_HVAR( (UInt)( hvar )), 0L,
                             "you can 'return;' after assigning a value" );
 
@@ -2714,8 +2668,8 @@ void            IntrIsbHVar (
     UInt                hvar )
 {
     /* ignore                                                              */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     /* otherwise must be coding                                            */
     if( STATE(IntrCoding) > 0 )
@@ -2740,14 +2694,12 @@ void            IntrAssDVar (
     Obj                 context;
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
-    /* if ( STATE(IntrCoding)    > 0 ) { CodeAssDVar( gvar ); return; } */
-
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     if ( STATE(IntrCoding) > 0 ) {
         ErrorQuit( "Variable: <debug-variable-%d-%d> cannot be used here",
-                   dvar >> 10, dvar & 0x3FF );
+                   dvar >> MAX_FUNC_LVARS_BITS, dvar & MAX_FUNC_LVARS_MASK );
     }
 
 
@@ -2771,14 +2723,12 @@ void            IntrUnbDVar (
     Obj                 context;
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
-    /* if ( STATE(IntrCoding)    > 0 ) { CodeUnbGVar( gvar ); return; } */
-
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     if ( STATE(IntrCoding) > 0 ) {
         ErrorQuit( "Variable: <debug-variable-%d-%d> cannot be used here",
-                   dvar >> 10, dvar & 0x3FF );
+                   dvar >> MAX_FUNC_LVARS_BITS, dvar & MAX_FUNC_LVARS_MASK );
     }
 
     /* assign the right hand side                                          */
@@ -2804,14 +2754,12 @@ void            IntrRefDVar (
     Obj                 context;
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
-    /* if ( STATE(IntrCoding)    > 0 ) { CodeRefGVar( gvar ); return; } */
-
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
     if ( STATE(IntrCoding) > 0 ) {
         ErrorQuit( "Variable: <debug-variable-%d-%d> cannot be used here",
-                   dvar >> 10, dvar & 0x3FF );
+                   dvar >> MAX_FUNC_LVARS_BITS, dvar & MAX_FUNC_LVARS_MASK );
     }
 
     /* get and check the value                                             */
@@ -2821,7 +2769,7 @@ void            IntrRefDVar (
     val = OBJ_HVAR_WITH_CONTEXT(context, dvar);
     if ( val == 0 ) {
         ErrorQuit( "Variable: <debug-variable-%d-%d> must have a value",
-                   dvar >> 10, dvar & 0xFFFF );
+                   dvar >> MAX_FUNC_LVARS_BITS, dvar & MAX_FUNC_LVARS_MASK );
     }
 
     /* push the value                                                      */
@@ -2836,10 +2784,13 @@ void            IntrIsbDVar (
     Obj                 context;
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
-    /* if ( STATE(IntrCoding)    > 0 ) { CodeIsbGVar( gvar ); return; } */
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
 
+    if ( STATE(IntrCoding) > 0 ) {
+        ErrorQuit( "Variable: <debug-variable-%d-%d> cannot be used here",
+                   dvar >> MAX_FUNC_LVARS_BITS, dvar & MAX_FUNC_LVARS_MASK );
+    }
 
     /* get the value                                                       */
     context = STATE(ErrorLVars);
@@ -2862,8 +2813,8 @@ void            IntrAssGVar (
     Obj                 rhs;            /* right hand side                 */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeAssGVar( gvar ); return; }
 
 
@@ -2881,8 +2832,8 @@ void            IntrUnbGVar (
     UInt                gvar )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeUnbGVar( gvar ); return; }
 
 
@@ -2904,15 +2855,15 @@ void            IntrRefGVar (
     Obj                 val;            /* value, result                   */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeRefGVar( gvar ); return; }
 
 
     /* get and check the value                                             */
     if ( (val = ValAutoGVar( gvar )) == 0 ) {
         ErrorQuit(
-            "Variable: '%s' must have a value",
+            "Variable: '%g' must have a value",
             (Int)NameGVar(gvar), 0L );
     }
 
@@ -2926,8 +2877,8 @@ void            IntrIsbGVar (
     Obj                 val;            /* value, result                   */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeIsbGVar( gvar ); return; }
 
 
@@ -2952,13 +2903,11 @@ void            IntrAssList ( Int narg )
     Obj                 pos;            /* position                        */
     Obj                 rhs;            /* right hand side                 */
 
-    if (narg != 1 && narg != 2) {
-      SyntaxError("[]:= only supports 1 or 2 indices");
-    }
+    GAP_ASSERT(narg == 1 || narg == 2);
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeAssList( narg); return; }
 
     /* get the right hand side                                             */
@@ -2999,31 +2948,19 @@ void            IntrAsssList ( void )
     Obj                 rhss;           /* right hand sides                */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeAsssList(); return; }
 
 
     /* get the right hand sides                                            */
     rhss = PopObj();
-    if ( ! IS_DENSE_LIST( rhss ) ) {
-        ErrorQuit(
-            "List Assignment: <rhss> must be a dense list",
-            0L, 0L );
-    }
+    CheckIsDenseList("List Assignment", "rhss", rhss);
 
     /* get and check the positions                                         */
     poss = PopObj();
-    if ( ! IS_POSS_LIST( poss ) ) {
-        ErrorQuit(
-    "List Assignment: <positions> must be a dense list of positive integers",
-               0L, 0L );
-    }
-    if ( LEN_LIST( poss ) != LEN_LIST( rhss ) ) {
-        ErrorQuit(
-     "List Assignment: <rhss> must have the same length as <positions> (%d)",
-            (Int)LEN_LIST(poss), 0L );
-    }
+    CheckIsPossList("List Assignment", poss);
+    CheckSameLength("List Assignment", "rhss", "positions", rhss, poss);
 
     /* get the list (checking is done by 'ASSS_LIST')                      */
     list = PopObj();
@@ -3046,8 +2983,8 @@ void            IntrAssListLevel (
     Int i;
     
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeAssListLevel( narg, level ); return; }
 
     /* get right hand sides (checking is done by 'AssListLevel')           */
@@ -3081,8 +3018,8 @@ void            IntrAsssListLevel (
     Obj                 rhss;           /* right hand sides, right operand */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeAsssListLevel( level ); return; }
 
 
@@ -3091,11 +3028,7 @@ void            IntrAsssListLevel (
 
     /* get and check the positions                                         */
     poss = PopObj();
-    if ( ! IS_POSS_LIST( poss ) ) {
-        ErrorQuit(
-    "List Assignment: <positions> must be a dense list of positive integers",
-            0L, 0L );
-    }
+    CheckIsPossList("List Assignment", poss);
 
     /* get lists (if this works, then <lists> is nested <level> deep,      */
     /* checking it is nested <level>+1 deep is done by 'AsssListLevel')    */
@@ -3113,13 +3046,11 @@ void            IntrUnbList ( Int narg )
     Obj                 list;           /* list                            */
     Obj                 pos;            /* position                        */
 
-    if (narg != 1 && narg != 2) {
-      SyntaxError("Unbind[] only supports 1 or 2 indices");
-    }
+    GAP_ASSERT(narg == 1 || narg == 2);
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeUnbList( narg); return; }
 
     if (narg == 1) {
@@ -3163,13 +3094,11 @@ void            IntrElmList ( Int narg )
     Obj                 list;           /* list, left operand              */
     Obj                 pos;            /* position, right operand         */
 
-    if (narg != 1 && narg != 2) {
-      SyntaxError("[] only supports 1 or 2 indices");
-    }
+    GAP_ASSERT(narg == 1 || narg == 2);
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeElmList( narg ); return; }
 
     if (narg == 1) {
@@ -3206,18 +3135,14 @@ void            IntrElmsList ( void )
     Obj                 poss;           /* positions, right operand        */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeElmsList(); return; }
 
 
     /* get and check the positions                                         */
     poss = PopObj();
-    if ( ! IS_POSS_LIST( poss ) ) {
-        ErrorQuit(
-      "List Elements: <positions> must be a dense list of positive integers",
-            0L, 0L );
-    }
+    CheckIsPossList("List Elements", poss);
 
     /* get the list (checking is done by 'ELMS_LIST')                      */
     list = PopObj();
@@ -3238,8 +3163,8 @@ void            IntrElmListLevel ( Int narg,
     Int i;
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeElmListLevel( narg, level ); return; }
 
     /* get the positions */
@@ -3277,18 +3202,14 @@ void            IntrElmsListLevel (
     Obj                 poss;           /* positions, right operand        */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeElmsListLevel( level ); return; }
 
 
     /* get and check the positions                                         */
     poss = PopObj();
-    if ( ! IS_POSS_LIST( poss ) ) {
-        ErrorQuit(
-      "List Elements: <positions> must be a dense list of positive integers",
-            0L, 0L );
-    }
+    CheckIsPossList("List Elements", poss);
 
     /* get lists (if this works, then <lists> is nested <level> deep,      */
     /* checking it is nested <level>+1 deep is done by 'ElmsListLevel')    */
@@ -3307,13 +3228,11 @@ void            IntrIsbList ( Int narg )
     Obj                 list;           /* list, left operand              */
     Obj                 pos;            /* position, right operand         */
 
-    if (narg != 1 && narg != 2) {
-      SyntaxError("IsBound[] only supports 1 or 2 indices");
-    }
+    GAP_ASSERT(narg == 1 || narg == 2);
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeIsbList(narg); return; }
 
     if (narg == 1) {
@@ -3356,8 +3275,8 @@ void            IntrAssRecName (
     Obj                 rhs;            /* rhs, right operand              */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeAssRecName( rnam ); return; }
 
 
@@ -3381,8 +3300,8 @@ void            IntrAssRecExpr ( void )
     Obj                 rhs;            /* rhs, right operand              */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeAssRecExpr(); return; }
 
 
@@ -3408,8 +3327,8 @@ void            IntrUnbRecName (
     Obj                 record;         /* record, left operand            */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeUnbRecName( rnam ); return; }
 
 
@@ -3429,8 +3348,8 @@ void            IntrUnbRecExpr ( void )
     UInt                rnam;           /* name, left operand              */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeUnbRecExpr(); return; }
 
 
@@ -3460,8 +3379,8 @@ void            IntrElmRecName (
     Obj                 record;         /* the record, left operand        */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeElmRecName( rnam ); return; }
 
 
@@ -3482,8 +3401,8 @@ void            IntrElmRecExpr ( void )
     UInt                rnam;           /* the name, right operand         */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeElmRecExpr(); return; }
 
 
@@ -3507,8 +3426,8 @@ void            IntrIsbRecName (
     Obj                 record;         /* the record, left operand        */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeIsbRecName( rnam ); return; }
 
 
@@ -3529,8 +3448,8 @@ void            IntrIsbRecExpr ( void )
     UInt                rnam;           /* the name, right operand         */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeIsbRecExpr(); return; }
 
 
@@ -3551,9 +3470,6 @@ void            IntrIsbRecExpr ( void )
 /****************************************************************************
 **
 *F  IntrAssPosObj() . . . . . . . . . . . . .  interpret assignment to a list
-*F  IntrAsssPosObj()  . . . . . . . . interpret multiple assignment to a list
-*F  IntrAssPosObjLevel(<level>) . . . . interpret assignment to several lists
-*F  IntrAsssPosObjLevel(<level>)  . intr multiple assignment to several lists
 */
 void            IntrAssPosObj ( void )
 {
@@ -3563,8 +3479,8 @@ void            IntrAssPosObj ( void )
     Obj                 rhs;            /* right hand side                 */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeAssPosObj(); return; }
 
 
@@ -3611,122 +3527,6 @@ void            IntrAssPosObj ( void )
     PushObj( rhs );
 }
 
-void            IntrAsssPosObj ( void )
-{
-    Obj                 list;           /* list                            */
-    Obj                 poss;           /* positions                       */
-    Obj                 rhss;           /* right hand sides                */
-
-    /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
-    if ( STATE(IntrCoding)    > 0 ) { CodeAsssPosObj(); return; }
-
-
-    /* get the right hand sides                                            */
-    rhss = PopObj();
-    if ( ! IS_DENSE_LIST( rhss ) ) {
-        ErrorQuit(
-            "PosObj Assignment: <rhss> must be a dense list",
-            0L, 0L );
-    }
-
-    /* get and check the positions                                         */
-    poss = PopObj();
-    if ( ! IS_POSS_LIST( poss ) ) {
-        ErrorQuit(
-    "PosObj Assignment: <positions> must be a dense list of positive integers",
-               0L, 0L );
-    }
-    if ( LEN_LIST( poss ) != LEN_LIST( rhss ) ) {
-        ErrorQuit(
-     "PosObj Assignment: <rhss> must have the same length as <positions> (%d)",
-            (Int)LEN_LIST(poss), 0L );
-    }
-
-    /* get the list (checking is done by 'ASSS_LIST')                      */
-    list = PopObj();
-
-    /* assign to several elements of the list                              */
-    if ( TNUM_OBJ(list) == T_POSOBJ
-#ifdef HPCGAP
-    || TNUM_OBJ(list) == T_APOSOBJ
-#endif
-    ) {
-        ErrorQuit( "sorry: <posobj>!{<poss>} not yet implemented", 0L, 0L );
-    }
-    else {
-        ASSS_LIST( list, poss, rhss );
-    }
-
-    /* push the right hand sides again                                     */
-    PushObj( rhss );
-}
-
-void            IntrAssPosObjLevel (
-    UInt                level )
-{
-    Obj                 pos;            /* position, left operand          */
-    Obj                 rhss;           /* right hand sides, right operand */
-
-    /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
-    if ( STATE(IntrCoding)    > 0 ) { CodeAssPosObjLevel( level ); return; }
-
-
-    /* get right hand sides (checking is done by 'AssPosObjLevel')           */
-    rhss = PopObj();
-
-    /* get and check the position                                          */
-    pos = PopObj();
-    if ( ! IS_POS_INTOBJ(pos) ) {
-        ErrorQuit(
-         "PosObj Assignment: <position> must be a positive integer (not a %s)",
-            (Int)TNAM_OBJ(pos), 0L );
-    }
-
-    /* assign the right hand sides to the elements of several lists        */
-    ErrorQuit(
-        "sorry: <lists>{<poss>}![<pos>] not yet implemented",
-        0L, 0L );
-
-    /* push the assigned values again                                      */
-    PushObj( rhss );
-}
-
-void            IntrAsssPosObjLevel (
-    UInt                level )
-{
-    Obj                 poss;           /* position, left operand          */
-    Obj                 rhss;           /* right hand sides, right operand */
-
-    /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
-    if ( STATE(IntrCoding)    > 0 ) { CodeAsssPosObjLevel( level ); return; }
-
-
-    /* get right hand sides (checking is done by 'AsssPosObjLevel')          */
-    rhss = PopObj();
-
-    /* get and check the positions                                         */
-    poss = PopObj();
-    if ( ! IS_POSS_LIST( poss ) ) {
-        ErrorQuit(
-    "PosObj Assignment: <positions> must be a dense list of positive integers",
-            0L, 0L );
-    }
-
-    /* assign the right hand sides to several elements of several lists    */
-    ErrorQuit(
-        "sorry: <lists>{<poss>}!{<poss>} not yet implemented",
-        0L, 0L );
-
-    /* push the assigned values again                                      */
-    PushObj( rhss );
-}
-
 void            IntrUnbPosObj ( void )
 {
     Obj                 list;           /* list                            */
@@ -3734,8 +3534,8 @@ void            IntrUnbPosObj ( void )
     Int                 p;              /* position, as a C integer        */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeUnbPosObj(); return; }
 
 
@@ -3781,9 +3581,6 @@ void            IntrUnbPosObj ( void )
 /****************************************************************************
 **
 *F  IntrElmPosObj() . . . . . . . . . . . . . . interpret selection of a list
-*F  IntrElmsPosObj()  . . . . . . . .  interpret multiple selection of a list
-*F  IntrElmPosObjLevel(<level>) . . . .  interpret selection of several lists
-*F  IntrElmsPosObjLevel(<level>)  .  intr multiple selection of several lists
 */
 void            IntrElmPosObj ( void )
 {
@@ -3793,8 +3590,8 @@ void            IntrElmPosObj ( void )
     Int                 p;              /* position, as C integer          */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeElmPosObj(); return; }
 
 
@@ -3852,112 +3649,6 @@ void            IntrElmPosObj ( void )
     PushObj( elm );
 }
 
-void            IntrElmsPosObj ( void )
-{
-    Obj                 elms;           /* elements, result                */
-    Obj                 list;           /* list, left operand              */
-    Obj                 poss;           /* positions, right operand        */
-
-    /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
-    if ( STATE(IntrCoding)    > 0 ) { CodeElmsPosObj(); return; }
-
-
-    /* get and check the positions                                         */
-    poss = PopObj();
-    if ( ! IS_POSS_LIST( poss ) ) {
-        ErrorQuit(
-      "PosObj Elements: <positions> must be a dense list of positive integers",
-            0L, 0L );
-    }
-
-    /* get the list (checking is done by 'ELMS_LIST')                      */
-    list = PopObj();
-
-    /* select several elements from the list                               */
-    if ( TNUM_OBJ(list) == T_POSOBJ
-#ifdef HPCGAP
-    || TNUM_OBJ(list) == T_APOSOBJ
-#endif
-    ) {
-        elms = 0;
-        ErrorQuit( "sorry: <posobj>!{<poss>} not yet implemented", 0L, 0L );
-    }
-    else {
-        elms = ELMS_LIST( list, poss );
-    }
-
-    /* push the elements                                                   */
-    PushObj( elms );
-}
-
-void            IntrElmPosObjLevel (
-    UInt                level )
-{
-    Obj                 lists;          /* lists, left operand             */
-    Obj                 pos;            /* position, right operand         */
-
-    /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
-    if ( STATE(IntrCoding)    > 0 ) { CodeElmPosObjLevel( level ); return; }
-
-
-    /* get and check the position                                          */
-    pos = PopObj();
-    if ( ! IS_POS_INTOBJ(pos) ) {
-        ErrorQuit(
-            "PosObj Element: <position> must be a positive integer (not a %s)",
-            (Int)TNAM_OBJ(pos), 0L );
-    }
-
-    /* get lists (if this works, then <lists> is nested <level> deep,      */
-    /* checking it is nested <level>+1 deep is done by 'ElmPosObjLevel')     */
-    lists = PopObj();
-
-    /* select the elements from several lists (store them in <lists>)      */
-    ErrorQuit(
-        "sorry: <lists>{<poss>}![<pos>] not yet implemented",
-        0L, 0L );
-
-    /* push the elements                                                   */
-    PushObj( lists );
-}
-
-void            IntrElmsPosObjLevel (
-    UInt                level )
-{
-    Obj                 lists;          /* lists, left operand             */
-    Obj                 poss;           /* positions, right operand        */
-
-    /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
-    if ( STATE(IntrCoding)    > 0 ) { CodeElmsPosObjLevel( level ); return; }
-
-
-    /* get and check the positions                                         */
-    poss = PopObj();
-    if ( ! IS_POSS_LIST( poss ) ) {
-        ErrorQuit(
-      "PosObj Elements: <positions> must be a dense list of positive integers",
-            0L, 0L );
-    }
-
-    /* get lists (if this works, then <lists> is nested <level> deep,      */
-    /* checking it is nested <level>+1 deep is done by 'ElmsPosObjLevel')    */
-    lists = PopObj();
-
-    /* select several elements from several lists (store them in <lists>)  */
-    ErrorQuit(
-        "sorry: <lists>{<poss>}!{<poss>} not yet implemented",
-        0L, 0L );
-
-    /* push the elements                                                   */
-    PushObj( lists );
-}
-
 void            IntrIsbPosObj ( void )
 {
     Obj                 isb;            /* isbound, result                 */
@@ -3966,8 +3657,8 @@ void            IntrIsbPosObj ( void )
     Int                 p;              /* position, as C integer          */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeIsbPosObj(); return; }
 
 
@@ -4026,8 +3717,8 @@ void            IntrAssComObjName (
     Obj                 rhs;            /* rhs, right operand              */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeAssComObjName( rnam ); return; }
 
 
@@ -4063,8 +3754,8 @@ void            IntrAssComObjExpr ( void )
     Obj                 rhs;            /* rhs, right operand              */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeAssComObjExpr(); return; }
 
 
@@ -4102,8 +3793,8 @@ void            IntrUnbComObjName (
     Obj                 record;         /* record, left operand            */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeUnbComObjName( rnam ); return; }
 
 
@@ -4135,8 +3826,8 @@ void            IntrUnbComObjExpr ( void )
     UInt                rnam;           /* name, left operand              */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeUnbComObjExpr(); return; }
 
 
@@ -4178,8 +3869,8 @@ void            IntrElmComObjName (
     Obj                 record;         /* the record, left operand        */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeElmComObjName( rnam ); return; }
 
 
@@ -4213,8 +3904,8 @@ void            IntrElmComObjExpr ( void )
     UInt                rnam;           /* the name, right operand         */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeElmComObjExpr(); return; }
 
 
@@ -4250,8 +3941,8 @@ void            IntrIsbComObjName (
     Obj                 record;         /* the record, left operand        */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeIsbComObjName( rnam ); return; }
 
 
@@ -4284,8 +3975,8 @@ void            IntrIsbComObjExpr ( void )
     UInt                rnam;           /* the name, right operand         */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeIsbComObjExpr(); return; }
 
 
@@ -4323,8 +4014,8 @@ void            IntrIsbComObjExpr ( void )
 void             IntrEmpty ( void )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeEmpty(); return; }
 
 
@@ -4340,7 +4031,6 @@ void             IntrEmpty ( void )
 *F  IntrInfoMiddle()  . . . . . .  shift to interpreting printable statements
 *F  IntrInfoEnd( <narg> ) . . Info statement complete, <narg> things to print
 *V  InfoDecision . . . . . . . . . . .  fopy of the InfoDecision GAP function
-*V  InfoDoPrint  . . . . . . . . . . . . fopy of the InfoDoPrint GAP function
 **
 **  These are the actions which are used to interpret an Info statement:
 **
@@ -4358,27 +4048,50 @@ void             IntrEmpty ( void )
 void            IntrInfoBegin( void )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeInfoBegin(); return; }
 
 }
 
-Obj InfoDecisionFast;
+enum {
+    INFODATA_NUM = 1,
+    INFODATA_CURRENTLEVEL,
+    INFODATA_CLASSNAME,
+    INFODATA_HANDLER,
+    INFODATA_OUTPUT,
+};
+
 Obj InfoDecision;
 static Obj IsInfoClassListRep;
+static Obj DefaultInfoHandler;
+
+void InfoDoPrint(Obj cls, Obj lvl, Obj args)
+{
+    if (IS_PLIST(cls))
+        cls = ELM_PLIST(cls, 1);
+#if defined(HPCGAP)
+    Obj fun = Elm0AList(cls, INFODATA_HANDLER);
+#else
+    Obj fun = ELM_PLIST(cls, INFODATA_HANDLER);
+#endif
+    if (!fun)
+        fun = DefaultInfoHandler;
+
+    CALL_3ARGS(fun, cls, lvl, args);
+}
+
 
 Obj InfoCheckLevel(Obj selectors, Obj level)
 {
     // Fast-path the most common failing case.
     // The fast-path only deals with the case where all arguments are of the
-    // correct type, and were False is returned. In the True case,
-    // InfoData.LastClass and InfoData.LastLevel need to be set.
+    // correct type, and were False is returned.
     if (CALL_1ARGS(IsInfoClassListRep, selectors) == True) {
 #if defined(HPCGAP)
-        Obj index = ElmAList(selectors, 1);
+        Obj index = ElmAList(selectors, INFODATA_CURRENTLEVEL);
 #else
-        Obj index = ELM_PLIST(selectors, 1);
+        Obj index = ELM_PLIST(selectors, INFODATA_CURRENTLEVEL);
 #endif
         if (IS_INTOBJ(index) && IS_INTOBJ(level)) {
             // < on INTOBJs compares the represented integers.
@@ -4400,7 +4113,7 @@ void            IntrInfoMiddle( void )
                         gets printed or not */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
+    SKIP_IF_RETURNING();
     if ( STATE(IntrIgnoring)  > 0 ) { STATE(IntrIgnoring)++; return; }
     if ( STATE(IntrCoding)    > 0 ) { CodeInfoMiddle(); return; }
 
@@ -4412,9 +4125,11 @@ void            IntrInfoMiddle( void )
 
     if (selected == False)
       STATE(IntrIgnoring) = 1;
+    else {
+      PushObj(selectors);
+      PushObj(level);
+    }
 }
-
-Obj             InfoDoPrint;
 
 void            IntrInfoEnd( UInt narg )
 {
@@ -4422,23 +4137,25 @@ void            IntrInfoEnd( UInt narg )
      Obj args;    /* gathers up the arguments to be printed */
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    if ( STATE(IntrIgnoring)  > 1 ) { STATE(IntrIgnoring)--; return; }
     if ( STATE(IntrCoding)    > 0 ) { CodeInfoEnd( narg ); return; }
 
 
     /* print if necessary                                                  */
     if ( STATE(IntrIgnoring)  > 0 )
       STATE(IntrIgnoring)--;
-    else
-      {
+    else {
         args = NEW_PLIST( T_PLIST, narg);
         SET_LEN_PLIST(args, narg);
-
         while (narg > 0)
           SET_ELM_PLIST(args, narg--, PopObj());
 
-        CALL_1ARGS(InfoDoPrint, args);
-      }
+        Obj level = PopObj();
+        Obj selectors = PopObj();
+
+        InfoDoPrint(selectors, level, args);
+    }
 
     /* If we actually executed this statement at all
        (even if we printed nothing) then return a Void */
@@ -4476,8 +4193,8 @@ Obj              CurrentAssertionLevel;
 void              IntrAssertBegin ( void )
 {
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
-    if ( STATE(IntrIgnoring)  > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    SKIP_IF_IGNORING();
     if ( STATE(IntrCoding)    > 0 ) { CodeAssertBegin(); return; }
 
 }
@@ -4488,7 +4205,7 @@ void             IntrAssertAfterLevel ( void )
   Obj level;
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
+    SKIP_IF_RETURNING();
     if ( STATE(IntrIgnoring)  > 0 ) { STATE(IntrIgnoring)++; return; }
     if ( STATE(IntrCoding)    > 0 ) { CodeAssertAfterLevel(); return; }
 
@@ -4504,7 +4221,7 @@ void             IntrAssertAfterCondition ( void )
   Obj condition;
 
     /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
+    SKIP_IF_RETURNING();
     if ( STATE(IntrIgnoring)  > 0 ) { STATE(IntrIgnoring)++; return; }
     if ( STATE(IntrCoding)    > 0 ) { CodeAssertAfterCondition(); return; }
 
@@ -4522,17 +4239,18 @@ void             IntrAssertAfterCondition ( void )
 void             IntrAssertEnd2Args ( void )
 {
       /* ignore or code                                                      */
-    if ( STATE(IntrReturning) > 0 ) { return; }
+    SKIP_IF_RETURNING();
+    if ( STATE(IntrIgnoring)  > 2 ) { STATE(IntrIgnoring) -= 2; return; }
     if ( STATE(IntrCoding)    > 0 ) { CodeAssertEnd2Args(); return; }
 
 
     if ( STATE(IntrIgnoring)  == 0 )
-      ErrorQuit("Assertion Failure", 0, 0);
+      ErrorQuit("Assertion failure", 0, 0);
     else
       STATE(IntrIgnoring) -= 2;
 
-    if (STATE(IntrIgnoring) == 0)
-      PushVoidObj();
+    GAP_ASSERT(STATE(IntrIgnoring) == 0);
+    PushVoidObj();
 }
 
 
@@ -4540,7 +4258,8 @@ void             IntrAssertEnd3Args ( void )
 {
   Obj message;
   /* ignore or code                                                      */
-  if ( STATE(IntrReturning) > 0 ) { return; }
+  SKIP_IF_RETURNING();
+  if ( STATE(IntrIgnoring)  > 2 ) { STATE(IntrIgnoring) -= 2; return; }
   if ( STATE(IntrCoding)    > 0 ) { CodeAssertEnd3Args(); return; }
 
 
@@ -4555,14 +4274,14 @@ void             IntrAssertEnd3Args ( void )
   } else
       STATE(IntrIgnoring) -= 2;
 
-  if (STATE(IntrIgnoring) == 0)
-      PushVoidObj();
+    GAP_ASSERT(STATE(IntrIgnoring) == 0);
+    PushVoidObj();
 }
 
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 
@@ -4574,9 +4293,10 @@ static Int InitKernel (
     StructInitInfo *    module )
 {
 #if !defined(HPCGAP)
-    InitGlobalBag( &STATE(IntrResult), "src/intrprtr.c:IntrResult" );
     InitGlobalBag( &STATE(IntrState),  "src/intrprtr.c:IntrState"  );
     InitGlobalBag( &STATE(StackObj),   "src/intrprtr.c:StackObj"   );
+    InitGlobalBag( &STATE(ErrorLVars), "STATE(ErrorLVars)"         );
+
 
     /* Ensure that the value in '~' does not get garbage collected         */
     InitGlobalBag( &STATE(Tilde), "STATE(Tilde)" );
@@ -4586,8 +4306,8 @@ static Int InitKernel (
     InitFopyGVar( "CONVERT_FLOAT_LITERAL_EAGER", &CONVERT_FLOAT_LITERAL_EAGER);
 
     /* The work of handling Info messages is delegated to the GAP level */
-    ImportFuncFromLibrary( "InfoDecision", &InfoDecision );
-    ImportFuncFromLibrary( "InfoDoPrint",  &InfoDoPrint  );
+    ImportFuncFromLibrary("InfoDecision", &InfoDecision);
+    ImportFuncFromLibrary("DefaultInfoHandler", &DefaultInfoHandler);
     ImportFuncFromLibrary("IsInfoClassListRep", &IsInfoClassListRep);
 
     /* The work of handling Options is also delegated*/
@@ -4612,7 +4332,23 @@ static Int InitLibrary (
     lev = GVarName("CurrentAssertionLevel");
     AssGVar( lev, INTOBJ_INT(0) );
 
+    ExportAsConstantGVar(INFODATA_CURRENTLEVEL);
+    ExportAsConstantGVar(INFODATA_CLASSNAME);
+    ExportAsConstantGVar(INFODATA_HANDLER);
+    ExportAsConstantGVar(INFODATA_OUTPUT);
+    ExportAsConstantGVar(INFODATA_NUM);
+
     /* return success                                                      */
+    return 0;
+}
+
+static Int InitModuleState(void)
+{
+    STATE(IntrCoding) = 0;
+    STATE(IntrIgnoring) = 0;
+    STATE(IntrReturning) = 0;
+
+    // return success
     return 0;
 }
 
@@ -4628,6 +4364,8 @@ static StructInitInfo module = {
     .name = "intrprtr",
     .initKernel = InitKernel,
     .initLibrary = InitLibrary,
+
+    .initModuleState = InitModuleState,
 };
 
 StructInitInfo * InitInfoIntrprtr ( void )

@@ -34,9 +34,9 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XG := Group(List([1..3], i-> Random(SymmetricGroup(53))));;[127X[104X
-    [4X[25Xgap>[125X [27XSize( G ); time > 0; # the time may of course vary on your machine[127X[104X
+    [4X[25Xgap>[125X [27XSize( G ); time; # the time may of course vary on your machine[127X[104X
     [4X[28X4274883284060025564298013753389399649690343788366813724672000000000000[128X[104X
-    [4X[28Xtrue[128X[104X
+    [4X[28X196[128X[104X
     [4X[25Xgap>[125X [27XSize( G ); time;[127X[104X
     [4X[28X4274883284060025564298013753389399649690343788366813724672000000000000[128X[104X
     [4X[28X0[128X[104X

@@ -110,6 +110,7 @@ InstallTrueMethod( IsConstantTimeAccessList, IsList and IsInternalRep );
 ##  </ManSection>
 ##
 DeclareProperty( "IsSmallList", IsList );
+InstallTrueMethod( IsList, IsSmallList );
 
 InstallTrueMethod( IsSmallList, IsList and IsInternalRep );
 InstallTrueMethod( IsFinite, IsList and IsSmallList );
@@ -500,6 +501,8 @@ InstallTrueMethod( IsFinite, IsHomogeneousList and IsInternalRep );
 ##  <#/GAPDoc>
 ##
 DeclareProperty( "IsSortedList", IsList);
+
+InstallTrueMethod( IsList, IsSortedList );
 
 
 #############################################################################
@@ -985,7 +988,7 @@ DeclareOperation( "PositionsProperty", [ IsList, IsFunction ] );
 ##  <Oper Name="PositionBound" Arg='list'/>
 ##
 ##  <Description>
-##  returns the first index for which an element is bound in the list
+##  returns the first bound position of the list
 ##  <A>list</A>.
 ##  For the empty list it returns <K>fail</K>.
 ##  <P/>
@@ -1000,6 +1003,34 @@ DeclareOperation( "PositionsProperty", [ IsList, IsFunction ] );
 ##  <#/GAPDoc>
 ##
 DeclareOperation( "PositionBound", [ IsList ] );
+
+
+#############################################################################
+##
+#O  PositionsBound( <list> ) . . . . . . . . . positions of all bound entries
+##
+##  <#GAPDoc Label="PositionsBound">
+##  <ManSection>
+##  <Oper Name="PositionsBound" Arg='list'/>
+##
+##  <Description>
+##  returns the set of all bound positions in the list
+##  <A>list</A>.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> PositionsBound([1,2,3]);
+##  [ 1 .. 3 ]
+##  gap> PositionsBound([,1,,3]);
+##  [ 2, 4 ]
+##  gap> PositionsBound([]);
+##  []
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction( "PositionsBound", [IsList] );
+
 
 
 #############################################################################
@@ -1634,6 +1665,8 @@ DeclareOperation( "StableSortBy", [IsList and IsMutable, IsFunction ] );
 ##  that can be applied to <A>list</A> to obtain the sorted list.
 ##  The one argument form sorts via the operator <C>&lt;</C>,
 ##  the two argument form sorts w.r.t. the function <A>func</A>.
+##  The permutation returned by <Ref Func="Sortex"/> will keep
+##  elements which compare equal in the same relative order.
 ##  (If the list is not homogeneous it is the user's responsibility to ensure
 ##  that <C>&lt;</C> is defined for all element pairs,
 ##  see&nbsp;<Ref Sect="Comparison Operations for Elements"/>)

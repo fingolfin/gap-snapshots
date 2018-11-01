@@ -666,14 +666,14 @@ BIND_GLOBAL("ProfileMethods",function( arg )
     for op  in arg  do
         name := NameFunction(op);
         for i  in [ 0 .. 6 ]  do
-            meth := METHODS_OPERATION( op, i );
+            meth := MethodsOperation( op, i );
             if meth <> fail  then
-                for j  in [ 0, (4+i) .. Length(meth)-(4+i) ]  do
-                    Add( funcs, meth[j+(2+i)] );
-                    if name = meth[j+(4+i)]  then
+                for j in meth do
+                    Add( funcs, j.func );
+                    if name = j.info  then
                         Add( names, [ "Meth(", name, ")" ] );
                     else
-                        Add( names, meth[j+(4+i)] );
+                        Add( names, j.info );
                     fi;
                 od;
             fi;
@@ -716,10 +716,10 @@ BIND_GLOBAL("UnprofileMethods",function( arg )
     funcs := [];
     for op  in arg  do
         for i  in [ 0 .. 6 ]  do
-            meth := METHODS_OPERATION( op, i );
+            meth := MethodsOperation( op, i );
             if meth <> fail  then
-                for j  in [ 0, (4+i) .. Length(meth)-(4+i) ]  do
-                    Add( funcs, meth[j+(2+i)] );
+                for j in meth do
+                    Add( funcs, j.func );
                 od;
             fi;
         od;
@@ -759,7 +759,11 @@ BIND_GLOBAL("ProfileOperationsOn",function()
     local   prof;
 
     # Note that the list of operations may have grown since the last call.
-    prof := OPERATIONS;
+    if IsHPCGAP then
+        prof := MakeImmutable(FromAtomicList(OPERATIONS));
+    else
+        prof := OPERATIONS;
+    fi;
     PROFILED_OPERATIONS := prof;
     UnprofileMethods(prof);
     ProfileFunctions( prof );
@@ -818,7 +822,11 @@ end);
 BIND_GLOBAL("ProfileOperationsAndMethodsOn",function()
     local   prof;
 
-    prof := OPERATIONS;
+    if IsHPCGAP then
+        prof := MakeImmutable(FromAtomicList(OPERATIONS));
+    else
+        prof := OPERATIONS;
+    fi;
     PROFILED_OPERATIONS := prof;
     ProfileFunctions( prof );
     ProfileMethods(prof);
@@ -872,6 +880,9 @@ end );
 ##  <#/GAPDoc>
 ##
 PROFILED_GLOBAL_FUNCTIONS := [];
+if IsHPCGAP then
+    MakeThreadLocal("PROFILED_GLOBAL_FUNCTIONS");
+fi;
 
 BIND_GLOBAL( "ProfileGlobalFunctions", function( arg )
     local name, func, funcs;
@@ -879,13 +890,15 @@ BIND_GLOBAL( "ProfileGlobalFunctions", function( arg )
         DisplayProfile( PROFILED_GLOBAL_FUNCTIONS );
     elif arg[1] = true then
         PROFILED_GLOBAL_FUNCTIONS  := [];
-        for name in GLOBAL_FUNCTION_NAMES do
-            if IsBoundGlobal(name) then
-                func := ValueGlobal(name);
-                if IsFunction(func) then
-                    Add(PROFILED_GLOBAL_FUNCTIONS, func);
+        atomic readonly GLOBAL_FUNCTION_NAMES do
+            for name in GLOBAL_FUNCTION_NAMES do
+                if IsBoundGlobal(name) then
+                    func := ValueGlobal(name);
+                    if IsFunction(func) then
+                        Add(PROFILED_GLOBAL_FUNCTIONS, func);
+                    fi;
                 fi;
-            fi;
+            od;
         od;
         ProfileFunctions(PROFILED_GLOBAL_FUNCTIONS);
     elif arg[1] = false then
@@ -947,9 +960,14 @@ end);
 ##  <#/GAPDoc>
 ##
 BIND_GLOBAL("DisplayCacheStats",function()
-    local   cache,  names,  pos,  i;
+    local   cache,  names,  i;
 
     cache := ShallowCopy(OPERS_CACHE_INFO());
+
+    # remove two last entries (currently not supported)
+    Remove(cache); Remove(cache);
+
+    # add type cache data
     Append( cache, [
         NEW_TYPE_CACHE_HIT,
         NEW_TYPE_CACHE_MISS,
@@ -960,11 +978,9 @@ BIND_GLOBAL("DisplayCacheStats",function()
         "AND_FLAGS cache miss",
         "AND_FLAGS cache losses",
         "Operation L1 cache hits",
+        "Operation TryNextMethod",
         "Operation cache misses",
         "IS_SUBSET_FLAGS calls",
-        "IS_SUBSET_FLAGS less trues",
-        "IS_SUBSET_FLAGS few trues",
-        "Operation TryNextMethod",
         "WITH_HIDDEN_IMPS hits",
         "WITH_HIDDEN_IMPS misses",
         "WITH_IMPS hits",
@@ -973,16 +989,11 @@ BIND_GLOBAL("DisplayCacheStats",function()
         "NEW_TYPE misses",
     ];
 
-    pos := [ 1, 2, 3, 4, 9, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15 ];
-
-    if Length(pos) <> Length(names)  then
-        Error( "<pos> and <names> have different lengths" );
-    fi;
-    if Length(pos) <> Length(cache)  then
-        Error( "<pos> and <cache> have different lengths" );
+    if Length(names) <> Length(cache)  then
+        Error( "<names> and <cache> have different lengths" );
     fi;
 
-    for i  in pos  do
+    for i  in [1..Length(cache)]  do
         Print( String( Concatenation(names[i],":"), -30 ),
                String( String(cache[i]), 12 ), "\n" );
     od;

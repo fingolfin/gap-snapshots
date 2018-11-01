@@ -164,51 +164,38 @@ which implements concurrent programming, multi-threading, etc..
 
 The HPC-GAP kernel and library were forked from the GAP kernel and library and
 developed semi-independently for several years, with occasional merges between
-the two. In order to recombine the two, we developed the following plan: We
-merged the HPC-GAP fork into a subdirectory `hpcgap` of the GAP repository.
-Then, all files inside `hpcgap` which were identical to their counterparts in
-the GAP repository were deleted  (e.g. `hpcgap/src/ariths.c` was deleted as it
-was identical to `src/ariths.c`). 
+the two. In order to recombine the two, we merged the HPC-GAP fork into a
+subdirectory `hpcgap` of the GAP repository.  Then, all files inside `hpcgap`
+which were identical to their counterparts in the GAP repository were deleted
+(e.g. `hpcgap/src/ariths.c` was deleted as it was identical to `src/ariths.c`).
 
 The new build system was then modified to optionally allow building HPC-GAP
 (when the `--enable-hpcgap` flag is passed to the `configure` script). For
-this work, and the resulting HPC-GAP binary to work, several techniques are
-employed:
+this work, and the resulting HPC-GAP binary to work, two tricks are used:
 
-1. For the kernel C source files, whenever both `src/FOO.c` and `hpcgap/src/FOO.c`
-exist, the latter is compiled, the former ignored.
-
-2. The include paths for C headers are ordered so that files in `hpcgap/src`
-are found before those in `src`
-
-3. However, the C preprocessor directive `#include "FOO.h"` always searches
-first in the current directory. This would lead to incorrect compilation, as
-`src/FOO.h` might get picked up even if there is a `hpcgap/src/FOO.h` header.
-To prevent this, all include directives were changed to the form `#include
-<src/FOO.h>`, which does not search in the current directory first. The `src/`
-prefix was added so that internal headers can be quickly distinguished from
-external headers (e.g. of the standard C library). We expect that this change
-will be undone again in the future, once the GAP and HPC-GAP kernels have been
-merged.
-
-4. In order to get the library to work right, HPC-GAP mode employs multiple
+1. In order to get the library to work right, HPC-GAP mode employs multiple
 GAP root paths. Specifically, the GAP kernel function `SySetGapRootPath` was
 modified so that for every root directory `FOO` that gets added, we first add
 `FOO/hpcgap` to the list of root directories. 
 
-5. Ward (a tool for scanning our C sources and inserting guard statements into
+2. Ward (a tool for scanning our C sources and inserting guard statements into
 it) is integrated as follows: Normally, `src/FOO.c` gets compiled to
-`obj/FOO.o`. With ward in the mix, `src/FOO.c` or (if it exists)
-`hpcgap/src/FOO.c` is first turned into `gen/FOO.c` by ward, and then the
-compiler turns the latter into `obj/FOO.o`. For each conversion, dependencies
-are tracked via `.../.deps/FOO.d` files. In particular, if `hpcgap/src/FOO.c`
-exists and is deleted, then the dependency rules in `gen/.deps/FOO.d` will
-ensure that `gen/FOO.c` is regenerated from `src/FOO.c`.
+`obj/FOO.o` (or rather `obj/FOO.lo`, as we use GNU libtool). With ward in the
+mix, `src/FOO.c` is first turned into `gen/FOO.c` by ward, and then the
+compiler turns the latter into `obj/FOO.lo`. For each conversion, dependencies
+are tracked via `gen/.deps/FOO.d` resp. `obj/.deps/FOO.d` files. In
+particular, if `src/FOO.c` is modified, then the dependency rules in
+`gen/.deps/FOO.d` will ensure that `gen/FOO.c` is regenerated from
+`src/FOO.c`; and the dependency rules in `obj/.deps/FOO.d` ensure that
+`obj/FOO.lo` is regenerated from `gen/FOO.c`
 
 
 ## Open tasks
 
 There are many things that still need to be done in the new build system. For
-a (possibly incomplete) list, please refer to the GAP issue tracker under  the
-label `build system`. For now also refer to
-  <https://github.com/fingolfin/gap/issues>
+an overview, see
+<https://github.com/gap-system/gap/issues?q=is:open+is:issue+label:"build system">
+
+The main open task is to add support for `make install`. There are some
+pitfalls to that, esp. when it comes to handling packages with kernel
+extensions.

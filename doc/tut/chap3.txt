@@ -293,7 +293,7 @@
     [4X[28X[ 1, 2, "threw", [ 4 ] ][128X[104X
     [4X[28X[ 1, 2, "three", [ 4 ] ][128X[104X
     [4X[25Xgap>[125X [27Xcopy[3][5] := 'w';[127X[104X
-    [4X[28XLists Assignment: <list> must be a mutable list[128X[104X
+    [4X[28XList Assignment: <list> must be a mutable list[128X[104X
     [4X[28Xnot in any function[128X[104X
     [4X[28XEntering break read-eval-print loop ...[128X[104X
     [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
@@ -600,10 +600,11 @@
   ([14XReference: Product[114X) executes a loop over all elements of the list.[133X
   
   [33X[0;0YThere  are  other  often  used  loops available as functions. Guess what the
-  function [2XSum[102X ([14XReference: Sum[114X) does. The function [2XList[102X ([14XReference: Lists[114X) may
-  take a list and a function as its arguments. It will then apply the function
-  to  each element of the list and return the corresponding list of results. A
-  list of cubes is produced as follows with the function [10Xcubed[110X from Section [14X4[114X.[133X
+  function  [2XSum[102X  ([14XReference:  Sum[114X)  does.  The  function [2XList[102X ([14XReference: list
+  element  operation[114X) may take a list and a function as its arguments. It will
+  then  apply  the  function  to  each  element  of  the  list  and return the
+  corresponding  list  of results. A list of cubes is produced as follows with
+  the function [10Xcubed[110X from Section [14X4[114X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xcubed:= x -> x^3;;[127X[104X

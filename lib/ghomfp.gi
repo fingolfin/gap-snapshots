@@ -915,21 +915,6 @@ local H, pres,map,mapi,opt;
 
   # perform Tietze transformations.
   opt:=TzOptions(pres);
-  if ValueOption("expandLimit")<>fail then
-    opt.expandLimit:=ValueOption("expandLimit");
-  else
-    opt.expandLimit:=120; # do not grow too much.
-  fi;
-  if ValueOption("eliminationsLimit")<>fail then
-    opt.eliminationsLimit:=ValueOption("eliminationsLimit");
-  else
-    opt.eliminationsLimit:=20; # do not be too greedy
-  fi;
-  if ValueOption("lengthLimit")<>fail then
-    opt.lengthLimit:=ValueOption("lengthLimit");
-  else
-    opt.lengthLimit:=Int(3*pres!.tietze[TZ_TOTAL]); # not too big.
-  fi;
 
   if ValueOption("protected")<>fail then
     opt.expandLimit:=ValueOption("protected");
@@ -937,14 +922,41 @@ local H, pres,map,mapi,opt;
 
   opt.printLevel:=InfoLevel(InfoFpGroup); 
   TzInitGeneratorImages(pres);
-  TzGoGo( pres );
+  if ValueOption("easy")=true then
+    # case of old `SimplifiedFpGroup`, use default strategy parameters
+    TzGo( pres );
+  else
+    # Somewhat tuned strategy parameters
+    if ValueOption("expandLimit")<>fail then
+      opt.expandLimit:=ValueOption("expandLimit");
+    else
+      opt.expandLimit:=120; # do not grow too much.
+    fi;
+    if ValueOption("eliminationsLimit")<>fail then
+      opt.eliminationsLimit:=ValueOption("eliminationsLimit");
+    else
+      opt.eliminationsLimit:=20; # do not be too greedy
+    fi;
+    if ValueOption("lengthLimit")<>fail then
+      opt.lengthLimit:=ValueOption("lengthLimit");
+    else
+      opt.lengthLimit:=Int(3*pres!.tietze[TZ_TOTAL]); # not too big.
+    fi;
+    TzGoGo( pres );
+  fi;
 
   # reconvert the Tietze presentation to a group presentation.
   H := FpGroupPresentation( pres );
-  map:=GroupHomomorphismByImagesNC(G,H,GeneratorsOfGroup(G),
-         List(TzImagesOldGens(pres),
-           i->MappedWord(i,GeneratorsOfPresentation(pres),
-                           GeneratorsOfGroup(H))));
+
+  if Length(GeneratorsOfGroup(H))>0 then
+    map:=List(TzImagesOldGens(pres),
+          i->MappedWord(i,GeneratorsOfPresentation(pres),
+                          GeneratorsOfGroup(H)));
+  else
+    map:=List(TzImagesOldGens(pres),y->One(H));
+  fi;
+
+  map:=GroupHomomorphismByImagesNC(G,H,GeneratorsOfGroup(G),map);
 
   mapi:=GroupHomomorphismByImagesNC(H,G,GeneratorsOfGroup(H),
          List(TzPreImagesNewGens(pres),
@@ -953,9 +965,22 @@ local H, pres,map,mapi,opt;
   SetIsBijective(map,true);
   SetInverseGeneralMapping(map,mapi);
   SetInverseGeneralMapping(mapi,map);
+  ProcessEpimorphismToNewFpGroup(map);
 
   return map;
 end );
+
+#############################################################################
+##
+#M  SimplifiedFpGroup( <FpGroup> ) . . . . . . . . .  simplify the FpGroup by
+#M                                                     Tietze transformations
+##
+##  `SimplifiedFpGroup'  returns a group  isomorphic to the given one  with a
+##  presentation which has been tried to simplify via Tietze transformations.
+##
+InstallGlobalFunction( SimplifiedFpGroup, function ( G )
+  return Range(IsomorphismSimplifiedFpGroup(G:easy));
+end);
 
 #############################################################################
 ##
@@ -1125,12 +1150,11 @@ local v,ma,mau,a,gens,imgs,q,k,co,aiu,aiv,primes,irrel;
     return fail;
   fi;
   # are there irrelevant primes?
-  primes:=Set(Factors(Product(aiu)*Product(aiv)));
+  primes:=Union(List(Union(aiu, aiv), PrimeDivisors));
   irrel:=Filtered(primes,x->Filtered(aiv,z->IsInt(z/x))=
                             Filtered(aiu,z->IsInt(z/x)));
 
-  Info(InfoFpGroup,1,"Larger by factor ",
-    Product(AbelianInvariants(v))/Product(AbelianInvariants(u)),"\n");
+  Info(InfoFpGroup,1,"Larger by factor ",Product(aiv)/Product(aiu),"\n");
   ma:=MaximalAbelianQuotient(v);
   mau:=MaximalAbelianQuotient(u);
   a:=Image(ma);
@@ -1227,6 +1251,46 @@ local F,str;
   fi;
   return 
     GroupHomomorphismByImagesNC(F,G,GeneratorsOfGroup(F),GeneratorsOfGroup(G));
+end);
+
+InstallGlobalFunction(ProcessEpimorphismToNewFpGroup,
+function(hom)
+local s,r,fam,fas,fpf,mapi;
+  if not (HasIsSurjective(hom) and IsSurjective(hom)) then
+    Info(InfoWarning,1,"fp eipimorphism is created in strange way, bail out");
+    return; # hom might be ill defined.
+  fi;
+  s:=Source(hom);
+  r:=Range(hom);
+  mapi:=MappingGeneratorsImages(hom);
+  if mapi[2]<>GeneratorsOfGroup(r) then
+    return; # the method does not apply here. One could try to deal with the
+    #extra generators separately, but that is too much work for what is
+    #intended as a minor hint.
+  fi;
+  s:=SubgroupNC(s,mapi[1]);
+  fam:=FamilyObj(One(r));
+  fas:=FamilyObj(One(s));
+  if IsPermCollection(s) or IsMatrixCollection(s) 
+     or IsPcGroup(s) or CanEasilyCompareElements(s) then
+    # in the long run this should be the inverse of the source restricted
+    # mapping (or the corestricted inverse) but that does not work well with
+    # current homomorphism code, thus build new map.
+    #fpf:=InverseGeneralMapping(hom);
+    fpf:=GroupHomomorphismByImagesNC(r,s,mapi[2],mapi[1]);
+  elif IsFpGroup(s) and HasFPFaithHom(fas) then
+    #fpf:=InverseGeneralMapping(hom)*FPFaithHom(fas);
+    fpf:=GroupHomomorphismByImagesNC(r,s,mapi[2],List(mapi[1],x->Image(FPFaithHom(fas),x)));
+  else
+    fpf:=fail;
+  fi;
+  if fpf<>fail then
+    SetEpimorphismFromFreeGroup(ImagesSource(fpf),fpf);
+    SetFPFaithHom(fam,fpf);
+    SetFPFaithHom(r,fpf);
+    if IsPermGroup(s) then SetIsomorphismPermGroup(r,fpf);fi;
+    if IsPcGroup(s) then SetIsomorphismPcGroup(r,fpf);fi;
+  fi;
 end);
 
 #############################################################################

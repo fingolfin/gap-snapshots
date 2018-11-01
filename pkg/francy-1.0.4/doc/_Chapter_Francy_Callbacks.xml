@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Francy_Callbacks">
+<Heading>Francy Callbacks</Heading>
+
+<P/>
+<C>Callbacks</C> are objects that hold a function, a list of arguments
+and a trigger event. <C>Callbacks</C> are used to execute GAP code
+from a remote client using the <C>Trigger</C> Operation.
+<P/>
+<C>Callbacks</C> can be added directly to <C>Menus</C> and/or <C>Shapes</C>.
+<P/>
+Please see Francy-JS for client implementation.
+<Section Label="Chapter_Francy_Callbacks_Section_Categories">
+<Heading>Categories</Heading>
+
+In this section we show the Francy Callback Categories.
+<ManSection>
+  <Filt Arg="arg" Name="IsCallback" Label="for IsFrancyObject"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Identifies <C>Callback</C> objects.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsRequiredArg" Label="for IsFrancyObject"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Identifies <C>RequiredArg</C> objects.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsArgType" Label="for IsFrancyTypeObject"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Identifies <C>ArgType</C> objects.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsTriggerType" Label="for IsFrancyTypeObject"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Identifies <C>TriggerType</C> objects.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Francy_Callbacks_Section_Families">
+<Heading>Families</Heading>
+
+In this section we show the Francy Callback Families.
+</Section>
+
+
+<Section Label="Chapter_Francy_Callbacks_Section_Representations">
+<Heading>Representations</Heading>
+
+In this section we show the Francy Callback Representations.
+<ManSection>
+  <Filt Arg="arg" Name="IsCallbackRep" Label="for IsComponentObjectRep"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Checks whether an <C>Object</C> has a <C>Callback</C> internal representation.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsRequiredArgRep" Label="for IsComponentObjectRep"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Checks whether an <C>Object</C> has a <C>RequiredArg</C> internal representation.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsArgTypeRep" Label="for IsComponentObjectRep"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Checks whether an <C>Object</C> has a <C>ArgType</C> internal representation.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsTriggerTypeRep" Label="for IsComponentObjectRep"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Checks whether an <C>Object</C> has a <C>TriggerType</C> internal representation.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Francy_Callbacks_Section_Operations">
+<Heading>Operations</Heading>
+
+In this section we show the Francy Callback Operations.
+<ManSection>
+  <Oper Arg="IsTriggerType, IsFunction, IsList(object)" Name="Callback" Label="for IsTriggerType, IsFunction, IsList"/>
+ <Returns><C>Callback</C>
+</Returns>
+ <Description>
+Creates a Callback object that holds a function and args to be executed
+by a trigger based on a trigger type.
+<P/>
+<Emph>Please note, the Function must Return!</Emph>
+<P/>
+Examples:
+<P/>
+Create a simple <C>Callback</C> with no arguments:
+<Example><![CDATA[
+gap> MyFunction := function() return "Hello World!"; end;
+gap> callback := Callback(MyFunction);
+gap> Id(callback);
+]]></Example>
+
+
+
+<P/>
+Create a <C>Callback</C> with one required argument of type string:
+<Example><![CDATA[
+gap> MyFunction := function(str) return Concatenation("Hello", " ", str); end;
+gap> callback := Callback(MyFunction);
+gap> arg := RequiredArg(ArgType.STRING, "Your Name");
+gap> Add(callback, arg);
+]]></Example>
+
+
+
+<P/>
+Create a <C>Callback</C> with one known argument of type string:
+<Example><![CDATA[
+gap> MyFunction := function(args) return args; end;
+gap> callback := Callback(MyFunction, ["Hello World"]);
+]]></Example>
+
+
+
+<P/>
+Create a <C>Callback</C> with one known argument and one required argument of type string:
+<Example><![CDATA[
+gap> MyFunction := function(a,b) return Concatenation(a, b); end;
+gap> callback := Callback(MyFunction, ["Hello "]);
+gap> arg := RequiredArg(ArgType.STRING, "Your Name");
+gap> Add(callback, arg);
+]]></Example>
+
+
+
+<P/>
+Create a <C>Callback</C> with one known argument and one required argument of type string and double click trigger Type:
+<Example><![CDATA[
+gap> MyFunction := function(a,b) return Concatenation(a, b); end;
+gap> callback := Callback(TriggerType.DOUBLE_CLICK, MyFunction, ["Hello "]);
+gap> arg := RequiredArg(ArgType.STRING, "Your Name");
+gap> Add(callback, arg);
+]]></Example>
+
+
+
+<P/>
+In order to see the output of the previous examples, we have to simulate the external call to <C>Trigger</C> operation:
+<Example><![CDATA[
+gap> MyFunction := function(a,b) return Concatenation(a, b); end;
+gap> callback := Callback(TriggerType.DOUBLE_CLICK, MyFunction, ["Hello "]);
+gap> arg := RequiredArg(ArgType.STRING, "Your Name");
+gap> SetTitle(arg, "Enter your name");
+gap> Title(arg);
+gap> Add(callback, arg);
+gap> SetValue(arg, "Manuel"); # simulate the user input
+gap> Value(arg);
+gap> Trigger(GapToJsonString(Sanitize(callback))); # simulate the external trigger
+]]></Example>
+
+
+
+<P/>
+Create a Noop Callback, useful for Menu holders, where no function is required:
+<Example><![CDATA[
+gap> callback := NoopCallback();
+]]></Example>
+
+
+
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="" Name="NoopCallback" />
+ <Returns><C>Callback</C>
+</Returns>
+ <Description>
+Creates an empty Callback object that does nothing.
+Useful to create menu holders.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="IsArgType, IsString(title)" Name="RequiredArg" Label="for IsArgType, IsString"/>
+ <Returns><C>RequiredArg</C>
+</Returns>
+ <Description>
+Creates a <C>Callback</C> <C>RequiredArg</C>.
+<C>RequiredArg</C> is user input driven and required for the execution of a <C>Callback</C>
+This value will be provided by the user.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="IsString(JSON)" Name="Trigger" Label="for IsString"/>
+ <Returns>the result of the execution of the <C>Callback</C> defined <C>Function</C>
+</Returns>
+ <Description>
+Triggers a callback function in GAP.
+Gets a JSON String object representation of the callback to execute.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="IsCallback, [IsRequiredArg, List(IsRequiredArg)]" Name="Add" Label="for IsCallback, IsRequiredArg"/>
+ <Returns><C>Callback</C>
+</Returns>
+ <Description>
+Adds a <C>RequiredArg</C> to a specific <C>Callback</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="IsCallback, [IsRequiredArg, List(IsRequiredArg)]" Name="Remove" Label="for IsCallback, IsRequiredArg"/>
+ <Returns><C>Callback</C>
+</Returns>
+ <Description>
+Removes a <C>RequiredArg</C> from a specific callback.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Francy_Callbacks_Section_Globals">
+<Heading>Globals</Heading>
+
+In this section we show the Global Callback Francy Records for multi purpose.
+</Section>
+
+
+<Section Label="Chapter_Francy_Callbacks_Section_Attributes">
+<Heading>Attributes</Heading>
+
+In this section we show the Francy Callback Attributes
+<ManSection>
+  <Attr Arg="arg" Name="Title" Label="for IsRequiredArg"/>
+ <Returns><C>IsString</C> with the title of the object
+</Returns>
+ <Description>
+A title on a required arg is used to ask the user what is expected from his input.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg1" Name="Title" Label="for IsRequiredArg"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="IsRequiredArg, IsString" Name="SetTitle" Label="for IsRequiredArg, IsString"/>
+ <Description>
+Sets the title of the required arg.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="Value" Label="for IsRequiredArg"/>
+ <Returns><C>IsString</C> with the value of the object
+</Returns>
+ <Description>
+A value on a required arg is the actual input to be passed to gap.
+These values are stored as <C>String</C> for convenience,
+even if the <C>ArgType</C> specified for the <C>RequiredArg</C> is another.
+Explicit conversion is required within the <C>Callback</C>function.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg1" Name="Value" Label="for IsRequiredArg"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="IsRequiredArg, IsString" Name="SetValue" Label="for IsRequiredArg, IsString"/>
+ <Description>
+Sets the value of the required arg.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="ConfirmMessage" Label="for IsCallback"/>
+ <Returns><C>IsString</C> with the value of the object
+</Returns>
+ <Description>
+A value on a required arg is the actual input to be passed to gap.
+These values are stored as <C>String</C> for convenience,
+even if the <C>ArgType</C> specified for the <C>RequiredArg</C> is another.
+Explicit conversion is required within the <C>Callback</C>function.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg1" Name="ConfirmMessage" Label="for IsCallback"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="IsRequiredArg, IsString" Name="SetConfirmMessage" Label="for IsCallback, IsString"/>
+ <Description>
+Sets the value of the required arg.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+</Chapter>
+

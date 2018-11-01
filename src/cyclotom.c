@@ -87,17 +87,19 @@
 **  arithmetic functions need this, but it makes the equality test simpler.
 */
 
-#include <src/cyclotom.h>
+#include "cyclotom.h"
 
-#include <src/ariths.h>
-#include <src/bool.h>
-#include <src/gap.h>
-#include <src/gapstate.h>
-#include <src/integer.h>
-#include <src/lists.h>
-#include <src/opers.h>
-#include <src/plist.h>
-#include <src/saveload.h>
+#include "ariths.h"
+#include "bool.h"
+#include "error.h"
+#include "gapstate.h"
+#include "integer.h"
+#include "io.h"
+#include "lists.h"
+#include "modules.h"
+#include "opers.h"
+#include "plist.h"
+#include "saveload.h"
 
 
 /****************************************************************************
@@ -181,7 +183,7 @@ UInt LastNCyc;
 
 }; // end of struct CycModuleState
 
-static inline struct CycModuleState *CycState(void)
+extern inline struct CycModuleState *CycState(void)
 {
     return (struct CycModuleState *)StateSlotsAtOffset(CycStateOffset);
 }
@@ -238,52 +240,68 @@ void            PrintCyc (
 {
     UInt                n;              /* order of the field              */
     UInt                len;            /* number of terms                 */
-    const Obj *         cfs;            /* pointer to the coefficients     */
-    const UInt4 *       exs;            /* pointer to the exponents        */
     UInt                i;              /* loop variable                   */
 
     n   = INT_INTOBJ( NOF_CYC(cyc) );
     len = SIZE_CYC(cyc);
     Pr("%>",0L,0L);
     for ( i = 1; i < len; i++ ) {
-        /* get pointers, they can change during Pr */
-        cfs = CONST_COEFS_CYC(cyc);
-        exs = CONST_EXPOS_CYC(cyc,len);
-        if (      cfs[i]==INTOBJ_INT(1)    && exs[i]==0 )
+        // Store value in local variable, as they can change during Pr
+        const Obj *   cfs = CONST_COEFS_CYC(cyc);
+        const UInt4 * exs = CONST_EXPOS_CYC(cyc, len);
+        Obj           cfsi = cfs[i];
+        UInt4         exsi = exs[i];
+
+        if (cfsi == INTOBJ_INT(1) && exsi == 0)
             Pr("1",0L,0L);
-        else if ( cfs[i]==INTOBJ_INT(1)    && exs[i]==1 && i==1 )
+        else if (cfsi == INTOBJ_INT(1) && exsi == 1 && i == 1)
             Pr("%>E(%d%<)",n,0L);
-        else if ( cfs[i]==INTOBJ_INT(1)    && exs[i]==1 )
+        else if (cfsi == INTOBJ_INT(1) && exsi == 1)
             Pr("%>+E(%d%<)",n,0L);
-        else if ( cfs[i]==INTOBJ_INT(1)                       && i==1 )
-            Pr("%>E(%d)%>^%2<%d",n,(Int)exs[i]);
-        else if ( cfs[i]==INTOBJ_INT(1) )
-            Pr("%>+E(%d)%>^%2<%d",n,(Int)exs[i]);
-        else if ( LT(INTOBJ_INT(0),cfs[i]) && exs[i]==0 )
-            PrintObj(cfs[i]);
-        else if ( LT(INTOBJ_INT(0),cfs[i]) && exs[i]==1 && i==1 ) {
-            Pr("%>",0L,0L); PrintObj(cfs[i]); Pr("%>*%<E(%d%<)",n,0L); }
-        else if ( LT(INTOBJ_INT(0),cfs[i]) && exs[i]==1 ) {
-            Pr("%>+",0L,0L); PrintObj(cfs[i]); Pr("%>*%<E(%d%<)",n,0L); }
-        else if ( LT(INTOBJ_INT(0),cfs[i])              && i==1 ) {
-            Pr("%>",0L,0L); PrintObj(cfs[i]);
-            Pr("%>*%<E(%d)%>^%2<%d",n,(Int)exs[i]); }
-        else if ( LT(INTOBJ_INT(0),cfs[i]) ) {
-            Pr("%>+",0L,0L); PrintObj(cfs[i]);
-            Pr("%>*%<E(%d)%>^%2<%d",n,(Int)exs[i]); }
-        else if ( cfs[i]==INTOBJ_INT(-1)   && exs[i]==0 )
+        else if (cfsi == INTOBJ_INT(1) && i == 1)
+            Pr("%>E(%d)%>^%2<%d", n, (Int)exsi);
+        else if (cfsi == INTOBJ_INT(1))
+            Pr("%>+E(%d)%>^%2<%d", n, (Int)exsi);
+        else if (LT(INTOBJ_INT(0), cfsi) && exsi == 0)
+            PrintObj(cfsi);
+        else if (LT(INTOBJ_INT(0), cfsi) && exsi == 1 && i == 1) {
+            Pr("%>", 0L, 0L);
+            PrintObj(cfsi);
+            Pr("%>*%<E(%d%<)", n, 0L);
+        }
+        else if (LT(INTOBJ_INT(0), cfsi) && exsi == 1) {
+            Pr("%>+", 0L, 0L);
+            PrintObj(cfsi);
+            Pr("%>*%<E(%d%<)", n, 0L);
+        }
+        else if (LT(INTOBJ_INT(0), cfsi) && i == 1) {
+            Pr("%>", 0L, 0L);
+            PrintObj(cfsi);
+            Pr("%>*%<E(%d)%>^%2<%d", n, (Int)exsi);
+        }
+        else if (LT(INTOBJ_INT(0), cfsi)) {
+            Pr("%>+", 0L, 0L);
+            PrintObj(cfsi);
+            Pr("%>*%<E(%d)%>^%2<%d", n, (Int)exsi);
+        }
+        else if (cfsi == INTOBJ_INT(-1) && exsi == 0)
             Pr("%>-%<1",0L,0L);
-        else if ( cfs[i]==INTOBJ_INT(-1)   && exs[i]==1 )
+        else if (cfsi == INTOBJ_INT(-1) && exsi == 1)
             Pr("%>-E(%d%<)",n,0L);
-        else if ( cfs[i]==INTOBJ_INT(-1) )
-            Pr("%>-E(%d)%>^%2<%d",n,(Int)exs[i]);
-        else if (                             exs[i]==0 )
-            PrintObj(cfs[i]);
-        else if (                             exs[i]==1 ) {
-            Pr("%>",0L,0L); PrintObj(cfs[i]); Pr("%>*%<E(%d%<)",n,0L); }
+        else if (cfsi == INTOBJ_INT(-1))
+            Pr("%>-E(%d)%>^%2<%d", n, (Int)exsi);
+        else if (exsi == 0)
+            PrintObj(cfsi);
+        else if (exsi == 1) {
+            Pr("%>", 0L, 0L);
+            PrintObj(cfsi);
+            Pr("%>*%<E(%d%<)", n, 0L);
+        }
         else {
-            Pr("%>",0L,0L); PrintObj(cfs[i]);
-            Pr("%>*%<E(%d)%>^%2<%d",n,(Int)exs[i]); }
+            Pr("%>", 0L, 0L);
+            PrintObj(cfsi);
+            Pr("%>*%<E(%d)%>^%2<%d", n, (Int)exsi);
+        }
     }
     Pr("%<",0L,0L);
 }
@@ -2068,8 +2086,18 @@ void  LoadCyc ( Obj cyc )
 /****************************************************************************
 **
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
+
+
+/****************************************************************************
+**
+*V  BagNames  . . . . . . . . . . . . . . . . . . . . . . . list of bag names
+*/
+static StructBagNames BagNames[] = {
+  { T_CYC, "cyclotomic" },
+  { -1,    ""           }
+};
 
 
 /****************************************************************************
@@ -2122,6 +2150,7 @@ static StructGVarFunc GVarFuncs [] = {
   { 0, 0, 0, 0, 0 }
 };
 
+
 /****************************************************************************
 **
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
@@ -2129,8 +2158,10 @@ static StructGVarFunc GVarFuncs [] = {
 static Int InitKernel (
     StructInitInfo *    module )
 {
+    // set the bag type names (for error messages and debugging)
+    InitBagNamesFromTable( BagNames );
+
     /* install the marking function                                        */
-    InfoBags[ T_CYC ].name = "cyclotomic";
     InitMarkFuncBags( T_CYC, MarkCycSubBags );
 
     /* create the result buffer                                            */
@@ -2208,7 +2239,9 @@ static Int InitKernel (
     ProdFuncs[ T_CYC    ][ T_RAT    ] = ProdCycInt;
     PowFuncs[  T_CYC    ][ T_INT    ] = PowCyc;
 
+#ifdef HPCGAP
     MakeBagTypePublic(T_CYC);
+#endif
     /* return success                                                      */
     return 0;
 }
@@ -2235,11 +2268,14 @@ static Int InitLibrary (
 }
 
 
-static void InitModuleState(ModuleStateOffset offset)
+static Int InitModuleState(void)
 {
     ResultCyc = 0;
     LastECyc = 0;
     LastNCyc = 0;
+
+    // return success
+    return 0;
 }
 
 
@@ -2254,10 +2290,13 @@ static StructInitInfo module = {
     .name = "cyclotom",
     .initKernel = InitKernel,
     .initLibrary = InitLibrary,
+
+    .moduleStateSize = sizeof(struct CycModuleState),
+    .moduleStateOffsetPtr = &CycStateOffset,
+    .initModuleState = InitModuleState,
 };
 
 StructInitInfo * InitInfoCyc ( void )
 {
-    CycStateOffset = RegisterModuleState(sizeof(struct CycModuleState), InitModuleState, 0);
     return &module;
 }

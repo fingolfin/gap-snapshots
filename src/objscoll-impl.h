@@ -58,14 +58,9 @@ Int VectorWord ( Obj vv, Obj v, Int num )
 
     /* <vv> must be a string                                               */
     if ( TNUM_OBJ(vv) != T_STRING ) {
-        if ( TNUM_OBJ(vv) == IMMUTABLE_TNUM(T_STRING) ) {
-            RetypeBag( vv, T_STRING );
-        }
-        else {
-            ErrorQuit( "collect vector must be a string not a %s", 
-                       (Int)TNAM_OBJ(vv), 0L );
-            return -1;
-        }
+        ErrorQuit( "collect vector must be a mutable string not a %s",
+                   (Int)TNAM_OBJ(vv), 0L );
+        return -1;
     }
 
     /* fix the length                                                      */
@@ -118,7 +113,7 @@ Int VectorWord ( Obj vv, Obj v, Int num )
 */
 #define SC_PUSH_WORD( word, exp ) \
     if ( ++sp == max ) { \
-        STATE(SC_MAX_STACK_SIZE) *= 2; \
+        CollectorsState()->SC_MAX_STACK_SIZE *= 2; \
         return -1; \
     } \
     *++nw = (void*)DATA_WORD(word); \
@@ -255,60 +250,56 @@ Int SingleCollectWord ( Obj sc, Obj vv, Obj w )
     exps = 1UL << (ebits-1);
 
     /* <nw> contains the stack of words to insert                          */
-    vnw = STATE(SC_NW_STACK);
+    vnw = CollectorsState()->SC_NW_STACK;
 
     /* <lw> contains the word end of the word in <nw>                      */
-    vlw = STATE(SC_LW_STACK);
+    vlw = CollectorsState()->SC_LW_STACK;
 
     /* <pw> contains the position of the word in <nw> to look at           */
-    vpw = STATE(SC_PW_STACK);
+    vpw = CollectorsState()->SC_PW_STACK;
 
     /* <ew> contains the unprocessed exponents at position <pw>            */
-    vew = STATE(SC_EW_STACK);
+    vew = CollectorsState()->SC_EW_STACK;
 
     /* <ge> contains the global exponent of the word                       */
-    vge = STATE(SC_GE_STACK);
+    vge = CollectorsState()->SC_GE_STACK;
 
     /* get the maximal stack size                                          */
-    max = STATE(SC_MAX_STACK_SIZE);
+    max = CollectorsState()->SC_MAX_STACK_SIZE;
 
     /* ensure that the stacks are large enough                             */
-    if ( SIZE_OBJ(vnw)/sizeof(Obj) < max+1 ) {
-        ResizeBag( vnw, sizeof(Obj)*(max+1) );
-        RetypeBag( vnw, T_STRING );
+    const UInt desiredStackSize = sizeof(Obj) * (max + 2);
+    if ( SIZE_OBJ(vnw) < desiredStackSize ) {
+        ResizeBag( vnw, desiredStackSize );
         resized = 1;
     }
-    if ( SIZE_OBJ(vlw)/sizeof(Obj) < max+1 ) {
-        ResizeBag( vlw, sizeof(Obj)*(max+1) );
-        RetypeBag( vlw, T_STRING );
+    if ( SIZE_OBJ(vlw) < desiredStackSize ) {
+        ResizeBag( vlw, desiredStackSize );
         resized = 1;
     }
-    if ( SIZE_OBJ(vpw)/sizeof(Obj) < max+1 ) {
-        ResizeBag( vpw, sizeof(Obj)*(max+1) );
-        RetypeBag( vpw, T_STRING );
+    if ( SIZE_OBJ(vpw) < desiredStackSize ) {
+        ResizeBag( vpw, desiredStackSize );
         resized = 1;
     }
-    if ( SIZE_OBJ(vew)/sizeof(Obj) < max+1 ) {
-        ResizeBag( vew, sizeof(Obj)*(max+1) );
-        RetypeBag( vew, T_STRING );
+    if ( SIZE_OBJ(vew) < desiredStackSize ) {
+        ResizeBag( vew, desiredStackSize );
         resized = 1;
     }
-    if ( SIZE_OBJ(vge)/sizeof(Obj) < max+1 ) {
-        ResizeBag( vge, sizeof(Obj)*(max+1) );
-        RetypeBag( vge, T_STRING );
+    if ( SIZE_OBJ(vge) < desiredStackSize ) {
+        ResizeBag( vge, desiredStackSize );
         resized = 1;
     }
     if( resized ) return -1;
 
     /* from now on we use addresses instead of handles most of the time    */
     v  = (Int*)ADDR_OBJ(vv);
-    nw = (UIntN**)ADDR_OBJ(vnw);
-    lw = (UIntN**)ADDR_OBJ(vlw);
-    pw = (UIntN**)ADDR_OBJ(vpw);
-    ew = (UIntN*)ADDR_OBJ(vew);
-    ge = (Int*)ADDR_OBJ(vge);
+    nw = (UIntN**)(ADDR_OBJ(vnw)+1);
+    lw = (UIntN**)(ADDR_OBJ(vlw)+1);
+    pw = (UIntN**)(ADDR_OBJ(vpw)+1);
+    ew = (UIntN*)(ADDR_OBJ(vew)+1);
+    ge = (Int*)(ADDR_OBJ(vge)+1);
 
-    /* conjujagtes, powers, order, generators, avector, inverses           */
+    /* conjuagtes, powers, order, generators, avector, inverses           */
     vpow = SC_POWERS(sc);
     lpow = LEN_PLIST(vpow);
     pow  = CONST_ADDR_OBJ(vpow);
@@ -500,14 +491,9 @@ Int Solution(
 
     /* <ww> must be a string                                               */
     if ( TNUM_OBJ(ww) != T_STRING ) {
-        if ( TNUM_OBJ(ww) == IMMUTABLE_TNUM(T_STRING) ) {
-            RetypeBag( ww, T_STRING );
-        }
-        else {
-            ErrorQuit( "collect vector must be a string not a %s", 
-                       (Int)TNAM_OBJ(ww), 0L );
-            return -1;
-        }
+        ErrorQuit( "collect vector must be a mutable string not a %s",
+                   (Int)TNAM_OBJ(ww), 0L );
+        return -1;
     }
 
     /* fix the length                                                      */
@@ -521,14 +507,9 @@ Int Solution(
 
     /* <uu> must be a string                                               */
     if ( TNUM_OBJ(uu) != T_STRING ) {
-        if ( TNUM_OBJ(uu) == IMMUTABLE_TNUM(T_STRING) ) {
-            RetypeBag( uu, T_STRING );
-        }
-        else {
-            ErrorQuit( "collect vector must be a string not a %s", 
-                       (Int)TNAM_OBJ(uu), 0L );
-            return -1;
-        }
+        ErrorQuit( "collect vector must be a mutable string not a %s",
+                   (Int)TNAM_OBJ(uu), 0L );
+        return -1;
     }
 
     /* fix the length                                                      */

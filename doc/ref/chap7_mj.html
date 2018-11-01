@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (ref) - Chapter 7: Debugging and Profiling Facilities</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -156,11 +156,10 @@
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsNormal(2,2);</span>
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
-Error, no 1st choice method found for `IsNormal' on 2 arguments called from
-&lt;function&gt;( &lt;arguments&gt; ) called from read-eval-loop
-Entering break read-eval-print loop ...
-you can 'quit;' to quit to outer loop, or
-you can 'return;' to continue
+Error, no 1st choice method found for `IsNormal' on 2 arguments at GAPROOT/lib/methsel2.g:250 called from
+&lt;function "HANDLE_METHOD_NOT_FOUND"&gt;( &lt;arguments&gt; )
+ called from read-eval loop at *stdin*:1
+type 'quit;' to quit to outer loop
 <span class="GAPbrkprompt">brk&gt;</span> <span class="GAPinput"></span>
 </pre></div>
 
@@ -311,6 +310,7 @@ you can 'return;' to continue
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TraceImmediateMethods( );</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:= Group( (1,2,3), (1,2) );;</span>
+#I RunImmediateMethods
 #I  immediate: Size
 #I  immediate: IsCyclic
 #I  immediate: IsCommutative
@@ -319,6 +319,8 @@ you can 'return;' to continue
 #I  immediate: IsPerfectGroup
 #I  immediate: IsNonTrivial
 #I  immediate: Size
+#I  immediate: IsFreeAbelian
+#I  immediate: IsTorsionFree
 #I  immediate: IsNonTrivial
 #I  immediate: IsPerfectGroup
 #I  immediate: GeneralizedPcgs
@@ -336,8 +338,34 @@ you can 'return;' to continue
 
 <p>The <code class="func">Info</code> (<a href="chap7_mj.html#X864E4B6886E2697D"><span class="RefLink">7.4-5</span></a>) mechanism permits operations to display intermediate results or information about the progress of the algorithms. Information is always given according to one or more <em>info classes</em>. Each of the info classes defined in the <strong class="pkg">GAP</strong> library usually covers a certain range of algorithms, so for example <code class="code">InfoLattice</code> covers all the cyclic extension algorithms for the computation of a subgroup lattice.</p>
 
-<p>The amount of information to be displayed can be specified by the user for each info class separately by a <em>level</em>, the higher the level the more information will be displayed. Ab initio all info classes have level zero except <code class="func">InfoWarning</code> (<a href="chap7_mj.html#X7A28F77C82D6A3E0"><span class="RefLink">7.4-7</span></a>) which initially has level 1.</p>
+<p>Note that not all info classes defined in the <strong class="pkg">GAP</strong> library are currently documented. Many <strong class="pkg">GAP</strong> packages define additional info classes, which are typically documented in the corresponding package documentation.</p>
 
+<p>The amount of information to be displayed by each info class can be separately specified by the user. This is done by selecting a non-negative integer <em>level</em> for the info class: no information will be displayed at level 0, and the higher the level, the more information that will be displayed. At creation, an info class has level 0. By default, all built-in GAP info classes have level 0, except for the following info classes, which have level 1:</p>
+
+
+<ul>
+<li><p><code class="func">InfoWarning</code> (<a href="chap7_mj.html#X7A28F77C82D6A3E0"><span class="RefLink">7.4-7</span></a>),</p>
+
+</li>
+<li><p><code class="func">InfoPackageLoading</code> (<a href="chap76_mj.html#X7D162DDF813D2BBA"><span class="RefLink">76.2-5</span></a>),</p>
+
+</li>
+<li><p><code class="code">InfoDebug</code>,</p>
+
+</li>
+<li><p><code class="code">InfoPerformance</code>,</p>
+
+</li>
+<li><p><code class="code">InfoTempDirectories</code>,</p>
+
+</li>
+<li><p><code class="code">InfoPrimeInt</code>, and</p>
+
+</li>
+<li><p><code class="code">InfoSLP</code>.</p>
+
+</li>
+</ul>
 <p><a id="X7AA1A1CF79F20790" name="X7AA1A1CF79F20790"></a></p>
 
 <h5>7.4-1 NewInfoClass</h5>
@@ -357,7 +385,7 @@ you can 'return;' to continue
 <h5>7.4-3 SetInfoLevel</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetInfoLevel</code>( <var class="Arg">infoclass</var>, <var class="Arg">level</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Sets the info level for <var class="Arg">infoclass</var> to <var class="Arg">level</var>.</p>
+<p>Sets the info level for <var class="Arg">infoclass</var> to the non-negative integer <var class="Arg">level</var>.</p>
 
 <p><a id="X7B2ADC37783104B9" name="X7B2ADC37783104B9"></a></p>
 
@@ -371,9 +399,11 @@ you can 'return;' to continue
 <h5>7.4-5 Info</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Info</code>( <var class="Arg">infoclass</var>, <var class="Arg">level</var>, <var class="Arg">info</var>[, <var class="Arg">moreinfo</var>, <var class="Arg">...</var>] )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p>If the info level of <var class="Arg">infoclass</var> is at least <var class="Arg">level</var> the remaining arguments, <var class="Arg">info</var> and possibly <var class="Arg">moreinfo</var> and so on, are evaluated. (Technically, <code class="func">Info</code> is a keyword and not a function.)</p>
+<p>If the info level of <var class="Arg">infoclass</var> is at least <var class="Arg">level</var>, then the remaining arguments, <var class="Arg">info</var>, and possibly <var class="Arg">moreinfo</var> and so on, are evaluated. (Technically, <code class="func">Info</code> is a keyword and not a function.)</p>
 
-<p>By default, they are viewed, preceded by the string <code class="code">"#I "</code> and followed by a newline. Otherwise the third and subsequent arguments are not evaluated. (The latter can save substantial time when displaying difficult results.)</p>
+<p>By default, the results of these evaluations are viewed, preceded by the string <code class="code">"#I "</code> and followed by a newline.</p>
+
+<p>If the info level of <var class="Arg">infoclass</var> is strictly less than <var class="Arg">level</var>, then the third and subsequent arguments are not evaluated. (The latter can save substantial time when displaying difficult results.)</p>
 
 <p>The behaviour can be customized with <code class="func">SetInfoHandler</code> (<a href="chap7_mj.html#X877BD99A82CB2643"><span class="RefLink">7.4-6</span></a>).</p>
 
@@ -422,9 +452,9 @@ you can 'return;' to continue
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SetDefaultInfoOutput</code>( <var class="Arg">out</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Returns: nothing</p>
 
-<p>This allows to customize what happens in an <code class="code">Info(<var class="Arg">infoclass</var>, <var class="Arg">level</var>, ...)</code> statement.</p>
+<p>This allows one to customize what happens in an <code class="code">Info(<var class="Arg">infoclass</var>, <var class="Arg">level</var>, ...)</code> statement.</p>
 
-<p>In the first function <var class="Arg">handler</var> must be a function with three arguments <var class="Arg">infoclass</var>, <var class="Arg">level</var>, <var class="Arg">list</var>. Here <var class="Arg">list</var> is the list containing the third to last argument of the <code class="func">Info</code> (<a href="chap7_mj.html#X864E4B6886E2697D"><span class="RefLink">7.4-5</span></a>) call.</p>
+<p>In the first function, <var class="Arg">handler</var> must be a function with three arguments <var class="Arg">infoclass</var>, <var class="Arg">level</var>, <var class="Arg">list</var>. Here <var class="Arg">list</var> is the list containing the third argument and any subsequent optional arguments of the <code class="func">Info</code> (<a href="chap7_mj.html#X864E4B6886E2697D"><span class="RefLink">7.4-5</span></a>) call.</p>
 
 <p>The default handler is the function <code class="code">DefaultInfoHandler</code>. It prints <code class="code">"#I "</code>, then the third and further arguments of the info statement, and finally a <code class="code">"\n"</code>.</p>
 
@@ -1000,9 +1030,9 @@ rec( user_time := 13500, system_time := 440, user_time_children := 1590,
 
 <h4>7.9 <span class="Heading">Information about the version used</span></h4>
 
-<p>The global variable <code class="code">GAPInfo.Version</code> (see <code class="func">GAPInfo</code> (<a href="chap3_mj.html#X8354754E7935F935"><span class="RefLink">3.5-1</span></a>)) contains the version number of the version of <strong class="pkg">GAP</strong>. Its value can be checked other version number using <code class="func">CompareVersionNumbers</code> (<a href="chap76_mj.html#X787DFEB383545A49"><span class="RefLink">76.3-7</span></a>).</p>
+<p>The global variable <code class="code">GAPInfo.Version</code> (see <code class="func">GAPInfo</code> (<a href="chap3_mj.html#X8354754E7935F935"><span class="RefLink">3.5-1</span></a>)) contains the version number of the version of <strong class="pkg">GAP</strong>. Its value can be checked other version number using <code class="func">CompareVersionNumbers</code> (<a href="chap76_mj.html#X787DFEB383545A49"><span class="RefLink">76.3-9</span></a>).</p>
 
-<p>To produce sample citations for the used version of <strong class="pkg">GAP</strong> or for a package available in this <strong class="pkg">GAP</strong> installation, use <code class="func">Cite</code> (<a href="chap76_mj.html#X79637D9A7B1AD7F7"><span class="RefLink">76.3-16</span></a>).</p>
+<p>To produce sample citations for the used version of <strong class="pkg">GAP</strong> or for a package available in this <strong class="pkg">GAP</strong> installation, use <code class="func">Cite</code> (<a href="chap76_mj.html#X79637D9A7B1AD7F7"><span class="RefLink">76.3-17</span></a>).</p>
 
 <p>If you wish to report a problem to <strong class="pkg">GAP</strong> Support or <strong class="pkg">GAP</strong> Forum, it may be useful to not only report the version used, but also to include the <strong class="pkg">GAP</strong> banner displays the information about the architecture for which the <strong class="pkg">GAP</strong> binary is built, used libraries and loaded packages.</p>
 
@@ -1074,7 +1104,7 @@ gaussian.tst              10
 
 <p>The argument <var class="Arg">fname</var> must be the name of a file or an open input stream. The content of this file or stream should contain <strong class="pkg">GAP</strong> input and output. The function <code class="func">Test</code> runs the input lines, compares the actual output with the output stored in <var class="Arg">fname</var> and reports differences. With an optional record as argument <var class="Arg">optrec</var> details of this process can be adjusted.</p>
 
-<p>More precisely, the content of <var class="Arg">fname</var> must have the following format. <br /> Lines starting with <code class="code">"gap&gt; "</code> are considered as <strong class="pkg">GAP</strong> input, they can be followed by lines starting with <code class="code">"&gt; "</code> if the input is continued over several lines. <br /> To allow for comments in <var class="Arg">fname</var> the following lines are ignored by default: lines at the beginning of <var class="Arg">fname</var> that start with <code class="code">"#"</code>, and one empty line together with one or more lines starting with <code class="code">"#"</code>.<br /> All other lines are considered as <strong class="pkg">GAP</strong> output from the preceding <strong class="pkg">GAP</strong> input.</p>
+<p>More precisely, the content of <var class="Arg">fname</var> must have the following format. <br /> Lines starting with <code class="code">"gap&gt; "</code> are considered as <strong class="pkg">GAP</strong> input, they can be followed by lines starting with <code class="code">"&gt; "</code> if the input is continued over several lines. <br /> To allow for comments in <var class="Arg">fname</var> the following lines are ignored by default: lines at the beginning of <var class="Arg">fname</var> that start with <code class="code">"#"</code> or are empty, and one empty line together with one or more lines starting with <code class="code">"#"</code>.<br /> All other lines are considered as <strong class="pkg">GAP</strong> output from the preceding <strong class="pkg">GAP</strong> input.</p>
 
 <p>By default the actual <strong class="pkg">GAP</strong> output is compared exactly with the stored output, and if these are different some information about the differences is printed.</p>
 
@@ -1126,6 +1156,10 @@ gaussian.tst              10
 </dd>
 <dt><strong class="Mark"><code class="code">subsWindowsLineBreaks</code></strong></dt>
 <dd><p>If this is <code class="keyw">true</code> then <strong class="pkg">GAP</strong> substitutes DOS/Windows style line breaks "\r\n" by UNIX style line breaks "\n" after reading the test file. (default is <code class="keyw">true</code>).</p>
+
+</dd>
+<dt><strong class="Mark"><code class="code">returnNumFailures</code></strong></dt>
+<dd><p>If this is <code class="keyw">true</code> then <strong class="pkg">GAP</strong> returns the number of input lines of the test file which had differences in their output, instead of returning <code class="keyw">true</code> or <code class="keyw">false</code>.</p>
 
 </dd>
 </dl>
@@ -1218,7 +1252,7 @@ true
 
 </dd>
 </dl>
-<p>See also <code class="func">TestPackage</code> (<a href="chap76_mj.html#X866ADD4E814A54F0"><span class="RefLink">76.3-3</span></a>) for the information on running standard tests for <strong class="pkg">GAP</strong> packages.</p>
+<p>See also <code class="func">TestPackage</code> (<a href="chap76_mj.html#X866ADD4E814A54F0"><span class="RefLink">76.3-5</span></a>) for the information on running standard tests for <strong class="pkg">GAP</strong> packages.</p>
 
 <p><a id="X85FF55448787CCA0" name="X85FF55448787CCA0"></a></p>
 

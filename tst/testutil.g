@@ -71,7 +71,7 @@ end;
 ##  its `PackageInfo.g' file) and reads this file. The output of all tests 
 ##  is collected in the files <outfile>.<packagename>
 ##  GAP} is started as <gap> (including all command line options).
-##  <other> may be true, false or "auto" to specify whether all available
+##  <other> may be "true", "false" or "auto" to specify whether all available
 ##  packages are loaded, not loaded or only autoloaded packages. This mode
 ##  is actually managed in the Makefile, and is passed to this function 
 ##  just to be printed in the information messages.
@@ -135,7 +135,7 @@ BindGlobal( "CreatePackageTestsInput", function( scriptfile, outfile, gap, other
 ##
 ##  loads the package <pkgname> in version <version>,
 ##  and reads the file <testfile> (a path relative to the package directory).
-##  If <other> is `true' then all other available packages are also loaded.
+##  If <other> is "true" then all other available packages are also loaded.
 ##
 ##  The file <testfile> can either be a file that contains 
 ##  `Test' statements and therefore must be read with `Read',
@@ -155,7 +155,7 @@ BindGlobal( "RunPackageTests", function( pkgname, version, testfile, other )
       LoadAllPackages();
     fi;
     PKGTSTHDR := Concatenation( "\"", pkgname, "\", \"", version, "\", \"",
-           testfile, "\", ", other );
+           testfile, "\", \"", other, "\"" );
     Print( "#I  RunPackageTests(", PKGTSTHDR, ");\n" );
     ShowSystemInformation();
     file:= Filename( DirectoriesPackageLibrary( pkgname, "" ), testfile );
@@ -436,21 +436,20 @@ end);
 ##
 BindGlobal( "CheckOutputDelegations",
 function()
-local rules, name, f, str, ots, met, pos, nargs, r, i,
+local rules, name, f, str, ots, met, pos, nargs, r, i, tmp,
       report, line, m, n, illegal_delegations, checklist;
 
 rules := [ "Display", "ViewObj", "PrintObj", "DisplayString",
            "ViewString", "PrintString", "String" ];
 
-for name in rules do
-
-  pos:=Position( rules, name );
+for pos in [1..Length(rules)] do
+  name := rules[pos];
   report:=[];
 
   for nargs in [1..2] do
-    f:=METHODS_OPERATION( EvalString(name), nargs );
-    for m in [1..Length(f)/(4+nargs)] do
-      met := f[(m-1)*(4+nargs)+2+nargs];
+    f:=MethodsOperation( ValueGlobal(name), nargs );
+    for m in f do
+      met := m.func;
       str := "";
       ots := OutputTextString(str,true);;
       PrintTo( ots, met );
@@ -458,18 +457,30 @@ for name in rules do
       illegal_delegations:=[];
       checklist:=rules{[1..pos-1]};
       for r in checklist do
-        n := POSITION_SUBSTRING(str, r, 0);
-        if n <> fail then
+        # check for all occurrences of the string, but
+        # ignore those which are preceded or followed by a letter
+        n := 0;
+        while true do
+          n := POSITION_SUBSTRING(str, r, n);
+          if n = fail then break; fi;
+          if n > 1 and str[n-1] in LETTERS then continue; fi;
           if Length(str) >= n + Length(r) then
             if not str[n + Length(r)] in LETTERS then
               Add( illegal_delegations, r );
+              break;
             fi;
           fi;
-        fi;
+        od;
       od;
       if Length(illegal_delegations) > 0 then
-        Add( report, [ FILENAME_FUNC( met ), STARTLINE_FUNC( met ),
-                       f[(m-1)*(4+nargs)+4+nargs], illegal_delegations, met ] );
+        tmp := [];
+        if IsBound(m.location) then
+          Add(tmp, m.location);
+        else
+          Add(tmp, [ FILENAME_FUNC( met ), STARTLINE_FUNC( met ) ]);
+        fi;
+        Append(tmp, [ m.info, illegal_delegations, met ]);
+        Add(report, tmp);
       fi;
     od;
   od;
@@ -478,8 +489,8 @@ for name in rules do
     Print("\nDetected incorrect delegations for ", name, "\n");
     for line in report do
       Print("---------------------------------------------------------------\n");
-      Print( line[3], "\n", " delegates to ", line[4], "\n",
-             "Filename: ", line[1], ", line : ", line[2], "\n", line[5], "\n");
+      Print( line[2], "\n", " delegates to ", line[3], "\n",
+             "Filename: ", line[1][1], ":", line[1][2], "\n", line[4], "\n");
     od;
     Print("---------------------------------------------------------------\n");
   else

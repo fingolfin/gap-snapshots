@@ -125,13 +125,25 @@ end );
 ##
 #M  NiceMonomorphism( <ffe-mat-grp> )
 ##
+MakeThreadLocal("FULLGLNICOCACHE"); # avoid recreating same homom. repeatedly
+FULLGLNICOCACHE:=[];
 InstallGlobalFunction( NicomorphismFFMatGroupOnFullSpace, function( grp )
     local   field,  dim,  V,  xset,  nice;
     
     field := FieldOfMatrixGroup( grp );
     dim   := DimensionOfMatrixGroup( grp );
+
+    #check cache
+    V:=Size(field);
+    nice:=First(FULLGLNICOCACHE,x->x[1]=V and x[2]=dim);
+    if nice<>fail then return nice[3];fi;
+
+    if not (HasIsNaturalGL(grp) and IsNaturalGL(grp)) then
+      grp:=GL(dim,field); # enforce map on full GL
+    fi;
     V     := field ^ dim;
     xset := ExternalSet( grp, V );
+
 
     # STILL: reverse the base to get point sorting compatible with lexicographic
     # vector arrangement
@@ -144,22 +156,37 @@ InstallGlobalFunction( NicomorphismFFMatGroupOnFullSpace, function( grp )
     SetFilterObj(nice,IsNiceMonomorphism);
     # because we act on the full space we are canonical.
     SetIsCanonicalNiceMonomorphism(nice,true);
+    if Size(V)>10^5 then 
+      # store only one big one and have it get thrown out quickly
+      FULLGLNICOCACHE[1]:=[Size(field),dim,nice];
+    else
+      if Length(FULLGLNICOCACHE)>4 then
+        FULLGLNICOCACHE:=FULLGLNICOCACHE{[2..5]};
+      fi;
+      Add(FULLGLNICOCACHE,[Size(field),dim,nice]);
+    fi;
+
     return nice;
 end );
 
 InstallMethod( NiceMonomorphism, "falling back on GL", true,
     [ IsFFEMatrixGroup and IsFinite ], 0,
 function( grp )
+local tt;
   # is it GL?
   if (HasIsNaturalGL( grp ) and IsNaturalGL( grp ))
       or (HasIsNaturalSL( grp ) and IsNaturalSL( grp )) then
     return NicomorphismFFMatGroupOnFullSpace(grp);
   fi;
 
-  # is the GL domain small enough to simply use it?
+  # is the GL domain small enough in comparison to the group to simply use it?
+  tt:=2000;
+  if HasSize(grp) and Size(grp)<tt then
+    tt:=Size(grp);
+  fi;
   if IsTrivial(grp) 
-     or Size(FieldOfMatrixGroup(Parent(grp)))^DimensionOfMatrixGroup(grp)
-         >2000 then
+     or Size(FieldOfMatrixGroup(Parent(grp)))^DimensionOfMatrixGroup(grp)>tt 
+         then
     # if the permutation image would be too large, compute the orbit.
     TryNextMethod();
   fi;
@@ -175,8 +202,7 @@ InstallGlobalFunction(ProjectiveActionOnFullSpace,function(g,f,n)
 local o;
   # as the groups are large, we can take all normed vectors
   o:=NormedRowVectors(f^n);
-  o:=ImmutableMatrix(f,o);
-  o:=Set(o);
+  o:=Set(o, r -> ImmutableVector(f, r));
   return Action(g,o,OnLines);
 end);
 
@@ -477,19 +503,15 @@ end);
 ##
 #M  Random( <G> ) . . . . . . . . . . . . . . . . . . . . . .  for natural GL
 ##
-InstallMethod( Random,
-    "for natural GL",
-    true,
-    [ IsFFEMatrixGroup and IsFinite and IsNaturalGL ],
-        0,
-        function(G)
+InstallMethodWithRandomSource( Random,
+    "for a random source and natural GL",
+    [ IsRandomSource, IsFFEMatrixGroup and IsFinite and IsNaturalGL ],
+function(rs, G)
     local m;
-    m := RandomInvertibleMat( DimensionOfMatrixGroup( G ),
+    m := RandomInvertibleMat( rs, DimensionOfMatrixGroup( G ),
                  FieldOfMatrixGroup( G ) );
-    MakeImmutable(m);
-    ConvertToMatrixRep(m, FieldOfMatrixGroup(G));
-    return m;
-    end         );
+    return ImmutableMatrix(FieldOfMatrixGroup(G), m, true);
+end);
 
 
 #############################################################################
@@ -500,20 +522,16 @@ InstallMethod( Random,
 ##  entry in the upper left corner to arbitrary nonzero values in the field
 ##  $F$ form a set of coset representatives of $SL(n,F)$ in $GL(n,F)$.
 ##
-InstallMethod( Random,
-    "for natural SL",
-    true,
-    [ IsFFEMatrixGroup and IsFinite and IsNaturalSL ],
-    0,
-        function( G )
+InstallMethodWithRandomSource( Random,
+    "for a random source and natural SL",
+    [ IsRandomSource, IsFFEMatrixGroup and IsFinite and IsNaturalSL ],
+function(rs, G)
     local m;
-    m:= RandomInvertibleMat( DimensionOfMatrixGroup( G ),
+    m:= RandomInvertibleMat( rs, DimensionOfMatrixGroup( G ),
                 FieldOfMatrixGroup( G ) );
     MultRowVector(m[1], DeterminantMat(m)^-1);
-    MakeImmutable(m);
-    ConvertToMatrixRep(m, FieldOfMatrixGroup(G));
-    return m;
-    end );
+    return ImmutableMatrix(FieldOfMatrixGroup(G), m, true);
+end);
 
 #############################################################################
 ##
@@ -523,7 +541,7 @@ InstallMethod( Random,
 ##  PSL(n,q), SU(n,q) and PSU(n,q)
 ##
 InstallGlobalFunction(Phi2,
-n -> n^2 * Product(Set(Filtered(FactorsInt(n), m -> m <> 1)),
+n -> n^2 * Product(Set(Filtered(Factors(Integers,n), m -> m <> 1)),
                    p -> (1 - 1/p^2)));
 
 #############################################################################

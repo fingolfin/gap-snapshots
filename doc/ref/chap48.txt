@@ -1474,52 +1474,6 @@
   
   [33X[0;0YThis time we end up with a shorter presentation.[133X
   
-  [33X[0;0YAs an example of an implicit call of the function [2XDecodeTree[102X via the command
-  [2XPresentationSubgroupMtc[102X  ([14X48.2-4[114X)  we  handle  a  subgroup of index 240 in a
-  group of order 40320 given by a presentation due to B. H. Neumann. Note that
-  we  increase  the  level  of  [2XInfoFpGroup[102X  ([14X47.1-3[114X)  temporarily to get some
-  additional output.[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XF3 := FreeGroup( "a", "b", "c" );;[127X[104X
-    [4X[25Xgap>[125X [27Xa := F3.1;;  b := F3.2;;  c := F3.3;;[127X[104X
-    [4X[25Xgap>[125X [27XG := F3 / [ a^3, b^3, c^3, (a*b)^5, (a^-1*b)^5, (a*c)^4,[127X[104X
-    [4X[25X>[125X [27X    (a*c^-1)^4, a*b^-1*a*b*c^-1*a*c*a*c^-1, (b*c)^3, (b^-1*c)^4 ];;[127X[104X
-    [4X[25Xgap>[125X [27Xa := G.1;;  b := G.2;;  c := G.3;;[127X[104X
-    [4X[25Xgap>[125X [27XH := Subgroup( G, [ a, c ] );;[127X[104X
-    [4X[25Xgap>[125X [27XSetInfoLevel( InfoFpGroup, 1 );[127X[104X
-    [4X[25Xgap>[125X [27XP := PresentationSubgroupMtc( G, H );;[127X[104X
-    [4X[28X#I  there are 4 generators and 144 relators of total length 4373[128X[104X
-    [4X[28X#I  there are 4 generators and 140 relators of total length 3898[128X[104X
-    [4X[28X#I  there are 4 generators and 137 relators of total length 3715[128X[104X
-    [4X[28X#I  there are 4 generators and 135 relators of total length 3380[128X[104X
-    [4X[28X#I  there are 4 generators and 134 relators of total length 3291[128X[104X
-    [4X[28X#I  there are 4 generators and 133 relators of total length 3212[128X[104X
-    [4X[28X#I  there are 3 generators and 129 relators of total length 6494[128X[104X
-    [4X[28X#I  there are 3 generators and 128 relators of total length 5465[128X[104X
-    [4X[28X#I  there are 3 generators and 127 relators of total length 3722[128X[104X
-    [4X[28X#I  there are 3 generators and 126 relators of total length 3048[128X[104X
-    [4X[28X#I  there are 2 generators and 10 relators of total length 118[128X[104X
-    [4X[28X#I  there are 2 generators and 5 relators of total length 38[128X[104X
-    [4X[25Xgap>[125X [27XTzGoGo( P );[127X[104X
-    [4X[25Xgap>[125X [27XTzPrintGenerators( P );[127X[104X
-    [4X[28X#I  1.  _x1   19 occurrences[128X[104X
-    [4X[28X#I  2.  _x2   19 occurrences[128X[104X
-    [4X[25Xgap>[125X [27XTzPrint( P );[127X[104X
-    [4X[28X#I  generators: [ _x1, _x2 ][128X[104X
-    [4X[28X#I  relators:[128X[104X
-    [4X[28X#I  1.  3  [ 1, 1, 1 ][128X[104X
-    [4X[28X#I  2.  3  [ 2, 2, 2 ][128X[104X
-    [4X[28X#I  3.  8  [ 1, -2, 1, -2, 1, -2, 1, -2 ][128X[104X
-    [4X[28X#I  4.  8  [ 2, 1, 2, 1, 2, 1, 2, 1 ][128X[104X
-    [4X[28X#I  5.  16  [ 2, -1, 2, 1, 2, -1, 2, 1, 2, -1, 2, 1, 2, -1, 2, 1 ][128X[104X
-    [4X[25Xgap>[125X [27XK :=  FpGroupPresentation( P );[127X[104X
-    [4X[28X<fp group on the generators [ _x1, _x2 ]>[128X[104X
-    [4X[25Xgap>[125X [27XSetInfoLevel( InfoFpGroup, 0 );[127X[104X
-    [4X[25Xgap>[125X [27XSize( K );[127X[104X
-    [4X[28X168[128X[104X
-  [4X[32X[104X
-  
   
   [1X48.11 [33X[0;0YTietze Options[133X[101X
   
@@ -1632,7 +1586,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XTzPrintOptions( P );[127X[104X
-    [4X[28X#I  protected          = 2[128X[104X
+    [4X[28X#I  protected          = 0[128X[104X
     [4X[28X#I  eliminationsLimit  = 100[128X[104X
     [4X[28X#I  expandLimit        = 150[128X[104X
     [4X[28X#I  generatorsLimit    = 0[128X[104X

@@ -126,7 +126,7 @@
     [4X[25Xgap>[125X [27XAbelianGroup([1,2,3]);[127X[104X
     [4X[28X<pc group of size 6 with 3 generators>[128X[104X
     [4X[25Xgap>[125X [27XG:=AbelianGroup([0,3]);[127X[104X
-    [4X[28X<fp group on the generators [ f1, f2 ]>[128X[104X
+    [4X[28X<fp group of size infinity on the generators [ f1, f2 ]>[128X[104X
     [4X[25Xgap>[125X [27XAbelianInvariants(G);[127X[104X
     [4X[28X[ 0, 3 ][128X[104X
   [4X[32X[104X
@@ -154,7 +154,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XFreeAbelianGroup(4);[127X[104X
-    [4X[28X<fp group on the generators [ f1, f2, f3, f4 ]>[128X[104X
+    [4X[28X<fp group of size infinity on the generators [ f1, f2, f3, f4 ]>[128X[104X
   [4X[32X[104X
   
   [1X50.1-6 DihedralGroup[101X
@@ -308,16 +308,28 @@
   
   [1X50.2 [33X[0;0YClassical Groups[133X[101X
   
-  [33X[0;0YThe following functions return classical groups. For the linear, symplectic,
-  and  unitary groups (the latter in dimension at least [22X3[122X), the generators are
-  taken  from [Tay87].  For the unitary groups in dimension [22X2[122X, the isomorphism
-  of  SU[22X(2,q)[122X  and SL[22X(2,q)[122X is used, see for example [Hup67]. The generators of
-  the  general and special orthogonal groups are taken from [IE94] and [KL90],
-  except  that  the  generators  of  the  groups  in  odd  dimension  in  even
-  characteristic  are  constructed  via the isomorphism to a symplectic group,
-  see  for  example [Car72].  The generators of the groups [22XΩ^ϵ(d, q)[122X are taken
-  from [RT98],  except  that the generators of SO[22X(5, 2)[122X are taken for [22XΩ(5, 2)[122X.
-  The generators for the semilinear groups are constructed from the generators
+  [33X[0;0YThe following functions return classical groups.[133X
+  
+  [33X[0;0YFor  the  linear, symplectic, and unitary groups (the latter in dimension at
+  least  [22X3[122X),  the generators are taken from [Tay87]. For the unitary groups in
+  dimension  [22X2[122X,  the  isomorphism  of  SU[22X(2,q)[122X  and  SL[22X(2,q)[122X  is used, see for
+  example [Hup67].[133X
+  
+  [33X[0;0YThe  generators  of  the  general  and  special  orthogonal groups are taken
+  from [IE94]  and  [KL90],  except  that  the generators of the groups in odd
+  dimension  in  even  characteristic are constructed via the isomorphism to a
+  symplectic group, see for example [Car72].[133X
+  
+  [33X[0;0YThe generators of the groups [22XΩ^ϵ(d, q)[122X are taken from [RT98], except that in
+  odd  dimension and even characteristic, the generators of SO[22X(d, q)[122X are taken
+  for [22XΩ(d, q)[122X. Note that the generators claimed in [RT98, Section 4.5 and 4.6]
+  do  not  describe  orthogonal  groups,  one  would  have  to transpose these
+  matrices  in  order  to  get  groups  that  respect  the required forms. The
+  matrices  from [RT98] generate groups of the right isomorphism types but not
+  orthogonal  groups,  except  in  the  case [22X(d,q) = (5,2)[122X, where the matrices
+  from [RT98] generate the simple group [22XS_4(2)'[122X and not the group [22XS_4(2)[122X.[133X
+  
+  [33X[0;0YThe generators for the semilinear groups are constructed from the generators
   of  the  corresponding  linear  groups  plus  one  additional generator that
   describes the action of the group of field automorphisms; for prime integers
   [22Xp[122X  and positive integers [22Xf[122X, this yields the matrix groups [22XGamma[122XL[22X(d, p^f)[122X and
@@ -530,10 +542,10 @@
   quadratic  form  (see [2XInvariantQuadraticForm[102X  ([14X44.5-5[114X))  specified by [3Xe[103X, and
   that have square spinor norm in odd characteristic or Dickson invariant [22X0[122X in
   even characteristic, respectively, in the category given by the filter [3Xfilt[103X.
-  This  group  has  always  index  two in the corresponding special orthogonal
-  group, which will be conjugate in [22XGL(d,q)[122X to the group returned by SO( [3Xe[103X, [3Xd[103X,
-  [3Xq[103X  ), see [2XSpecialOrthogonalGroup[102X ([14X50.2-7[114X), but may fix a different form (see
-  [14X50.2[114X).[133X
+  For  odd  [3Xq[103X,  this  group  has always index two in the corresponding special
+  orthogonal  group,  which will be conjugate in [22XGL(d,q)[122X to the group returned
+  by  SO(  [3Xe[103X,  [3Xd[103X,  [3Xq[103X  ),  see  [2XSpecialOrthogonalGroup[102X  ([14X50.2-7[114X), but may fix a
+  different form (see [14X50.2[114X).[133X
   
   [33X[0;0YThe  value  of  [3Xe[103X must be [22X0[122X for odd [3Xd[103X (and can optionally be omitted in this
   case),  respectively  one  of  [22X1[122X  or  [22X-1[122X for even [3Xd[103X. If [3Xfilt[103X is not given it

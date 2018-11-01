@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (ref) - Chapter 54: Partial permutations</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -844,7 +844,7 @@ true</pre></div>
 
 <h4>54.4 <span class="Heading">Changing the representation of a partial permutation</span></h4>
 
-<p>It is possible that a partial permutation in <strong class="pkg">GAP</strong> can be represented by other types of objects, or that other types of <strong class="pkg">GAP</strong> objects can be represented by partial permutations. Partial permutations which are mathematically permutations can be converted into permutations in <strong class="pkg">GAP</strong> using the function <code class="func">AsPermutation</code> (<a href="chap42_mj.html#X8353AB8987E35DF3"><span class="RefLink">42.5-5</span></a>). Similarly, a partial permutation can be converted into a transformation using <code class="func">AsTransformation</code> (<a href="chap53_mj.html#X7C5360B2799943F3"><span class="RefLink">53.3-1</span></a>).</p>
+<p>It is possible that a partial permutation in <strong class="pkg">GAP</strong> can be represented by other types of objects, or that other types of <strong class="pkg">GAP</strong> objects can be represented by partial permutations. Partial permutations which are mathematically permutations can be converted into permutations in <strong class="pkg">GAP</strong> using the function <code class="func">AsPermutation</code> (<a href="chap42_mj.html#X8353AB8987E35DF3"><span class="RefLink">42.5-6</span></a>). Similarly, a partial permutation can be converted into a transformation using <code class="func">AsTransformation</code> (<a href="chap53_mj.html#X7C5360B2799943F3"><span class="RefLink">53.3-1</span></a>).</p>
 
 <p>In this section we describe functions for converting other types of objects in <strong class="pkg">GAP</strong> into partial permutations.</p>
 
@@ -1377,7 +1377,7 @@ false</pre></div>
 
 </dd>
 <dt><strong class="Mark">Permutation groups</strong></dt>
-<dd><p>If <var class="Arg">S</var> is a permutation group, then <code class="code">IsomorphismPartialPermMonoid</code> returns an isomorphism from <var class="Arg">S</var> to an inverse monoid of partial permutations on the set <code class="code">MovedPoints(<var class="Arg">S</var>)</code> obtained using <code class="func">AsPartialPerm</code> (<a href="chap54_mj.html#X81B32CB182489ACA"><span class="RefLink">54.4-1</span></a>). The inverse of this isomorphism is obtained using <code class="func">AsPermutation</code> (<a href="chap42_mj.html#X8353AB8987E35DF3"><span class="RefLink">42.5-5</span></a>).</p>
+<dd><p>If <var class="Arg">S</var> is a permutation group, then <code class="code">IsomorphismPartialPermMonoid</code> returns an isomorphism from <var class="Arg">S</var> to an inverse monoid of partial permutations on the set <code class="code">MovedPoints(<var class="Arg">S</var>)</code> obtained using <code class="func">AsPartialPerm</code> (<a href="chap54_mj.html#X81B32CB182489ACA"><span class="RefLink">54.4-1</span></a>). The inverse of this isomorphism is obtained using <code class="func">AsPermutation</code> (<a href="chap42_mj.html#X8353AB8987E35DF3"><span class="RefLink">42.5-6</span></a>).</p>
 
 </dd>
 <dt><strong class="Mark">Transformation semigroups</strong></dt>

@@ -1,17 +1,19 @@
-#include <src/hpc/serialize.h>
+#include "hpc/serialize.h"
 
-#include <src/bool.h>
-#include <src/calls.h>
-#include <src/gap.h>
-#include <src/gapstate.h>
-#include <src/gvars.h>
-#include <src/objset.h>
-#include <src/plist.h>
-#include <src/precord.h>
-#include <src/records.h>
-#include <src/stringobj.h>
+#include "bool.h"
+#include "calls.h"
+#include "error.h"
+#include "gapstate.h"
+#include "gvars.h"
+#include "modules.h"
+#include "objset.h"
+#include "plist.h"
+#include "precord.h"
+#include "rational.h"
+#include "records.h"
+#include "stringobj.h"
 
-#include <src/hpc/aobjects.h>
+#include "hpc/aobjects.h"
 
 #include <stdio.h>
 
@@ -29,17 +31,6 @@ typedef struct SerializeModuleState {
 
 #define DESERIALIZER                                                         \
     ((DeserializerInterface *)(MODULE_STATE(Serialize).dispatcher))
-
-/**
- *  `POS_NUMB_TYPE`
- *  ---------------
- *
- *  The constant `POS_NUMB_TYPE` must match the definition in lib/type1.g; it
- *  is the offset at which a type's unique numeric id is stored within the
- *  type object.
- */
-
-#define POS_NUMB_TYPE 4
 
 
 #ifndef WARD_ENABLED
@@ -359,6 +350,24 @@ Obj DeserializeInt(UInt tnum)
     }
 }
 
+void SerializeRat(Obj obj)
+{
+    WriteTNum(TNUM_OBJ(obj));
+    SerializeObj(NUM_RAT(obj));
+    SerializeObj(DEN_RAT(obj));
+}
+
+Obj DeserializeRat(UInt tnum)
+{
+    Obj result, n, d;
+    n = DeserializeObj();
+    d = DeserializeObj();
+    result = NewBag(tnum, 2 * sizeof(Obj));
+    SET_NUM_RAT(result, n);
+    SET_DEN_RAT(result, d);
+    return result;
+}
+
 void SerializeFFE(Obj obj)
 {
     UInt ffe = (UInt)obj;
@@ -571,7 +580,7 @@ void SerializeRecord(Obj obj)
     WriteImmediateObj(INTOBJ_INT(len));
     for (i = 1; i <= len; i++) {
         UInt rnam = GET_RNAM_PREC(obj, i);
-        Obj  rnams = NAME_OBJ_RNAM(rnam);
+        Obj  rnams = NAME_RNAM(rnam);
         WriteByteBlock(rnams, sizeof(UInt), GET_LEN_STRING(rnams));
     }
     for (i = 1; i <= len; i++) {
@@ -841,38 +850,7 @@ Obj DeserializeTypedObj(UInt tnum)
     func = ELM_REC(deserialization_rec, rnam);
     if (!func || TNUM_OBJ(func) != T_FUNCTION)
         DeserializationError();
-    switch (len) {
-    case 0:
-        result = CALL_0ARGS(func);
-        break;
-    case 1:
-        result = CALL_1ARGS(func, ELM_PLIST(args, 1));
-        break;
-    case 2:
-        result = CALL_2ARGS(func, ELM_PLIST(args, 1), ELM_PLIST(args, 2));
-        break;
-    case 3:
-        result = CALL_3ARGS(func, ELM_PLIST(args, 1), ELM_PLIST(args, 2),
-                            ELM_PLIST(args, 3));
-        break;
-    case 4:
-        result = CALL_4ARGS(func, ELM_PLIST(args, 1), ELM_PLIST(args, 2),
-                            ELM_PLIST(args, 3), ELM_PLIST(args, 4));
-        break;
-    case 5:
-        result = CALL_5ARGS(func, ELM_PLIST(args, 1), ELM_PLIST(args, 2),
-                            ELM_PLIST(args, 3), ELM_PLIST(args, 4),
-                            ELM_PLIST(args, 5));
-        break;
-    case 6:
-        result = CALL_6ARGS(func, ELM_PLIST(args, 1), ELM_PLIST(args, 2),
-                            ELM_PLIST(args, 3), ELM_PLIST(args, 4),
-                            ELM_PLIST(args, 5), ELM_PLIST(args, 6));
-        break;
-    default:
-        result = CALL_XARGS(func, args);
-        break;
-    }
+    result = CallFuncList(func, args);
     return result;
 }
 
@@ -904,10 +882,11 @@ void SerializeTypedObj(Obj obj)
         "Serialization has encountered an object with a missing type";
     if (SerializedAlready(obj))
         return;
-    type = *(ADDR_OBJ(obj));
+    type = TYPE_OBJ(obj);
     if (!type)
         ErrorQuit(typeerror, 0L, 0L);
-    if ((rep = LookupTypeTag(type))) {
+    rep = LookupTypeTag(type);
+    if (rep) {
         WriteTNum(TNUM_OBJ(obj));
         switch (TNUM_OBJ(rep)) {
         case T_INT:
@@ -1023,7 +1002,7 @@ Obj DeserializeBackRef(UInt tnum)
 void SerializeError(Obj obj)
 {
     char         buf[16];
-    const Char * type = InfoBags[TNUM_OBJ(obj)].name;
+    const Char * type = TNAM_OBJ(obj);
     if (!type) {
         sprintf(buf, "<%d>", (int)TNUM_OBJ(obj));
         type = buf;
@@ -1104,50 +1083,50 @@ static StructGVarFunc GVarFuncs[] = {
 static Int InitKernel(StructInitInfo * module)
 {
     UInt                 i;
-    static const unsigned char binary_serializable_tnums[] = {
-        // FIXME: add T_TRANS2/4, T_PPERM2/4
-        T_INTPOS, T_INTNEG, T_RAT, T_PERM2, T_PERM4, T_MACFLOAT
-    };
-    static const unsigned char typed_serializable_tnums[] = {
-        T_DATOBJ, T_POSOBJ, T_COMOBJ, T_APOSOBJ, T_ACOMOBJ
-    };
+
     for (i = 0; i <= T_BACKREF; i++) {
         RegisterSerializerFunctions(i, SerializeError, DeserializeError);
     }
-    for (i = 0; i < sizeof(binary_serializable_tnums); i++) {
-        RegisterSerializerFunctions(binary_serializable_tnums[i],
-                                    SerializeBinary, DeserializeBinary);
-    }
+
     RegisterSerializerFunctions(T_INT, SerializeInt, DeserializeInt);
+    RegisterSerializerFunctions(T_INTPOS, SerializeBinary, DeserializeBinary);
+    RegisterSerializerFunctions(T_INTNEG, SerializeBinary, DeserializeBinary);
+    RegisterSerializerFunctions(T_RAT, SerializeRat, DeserializeRat);
+    RegisterSerializerFunctions(T_CYC, SerializeCyc, DeserializeCyc);
     RegisterSerializerFunctions(T_FFE, SerializeFFE, DeserializeFFE);
+    RegisterSerializerFunctions(T_MACFLOAT, SerializeBinary, DeserializeBinary);
+    RegisterSerializerFunctions(T_PERM2, SerializeBinary, DeserializeBinary);
+    RegisterSerializerFunctions(T_PERM4, SerializeBinary, DeserializeBinary);
+    // TODO: add support for T_TRANS2/4, T_PPERM2/4
     RegisterSerializerFunctions(T_BOOL, SerializeBool, DeserializeBool);
     RegisterSerializerFunctions(T_CHAR, SerializeChar, DeserializeChar);
-    RegisterSerializerFunctions(T_CYC, SerializeCyc, DeserializeCyc);
-    for (i = FIRST_PLIST_TNUM; i <= LAST_PLIST_TNUM; i++) {
-        RegisterSerializerFunctions(i, SerializeList, DeserializeList);
-    }
+
     for (i = FIRST_RECORD_TNUM; i <= LAST_RECORD_TNUM; i++) {
         RegisterSerializerFunctions(i, SerializeRecord, DeserializeRecord);
     }
-    for (i = T_RANGE_NSORT; i < T_BLIST; i++) {
+    for (i = FIRST_PLIST_TNUM; i <= LAST_PLIST_TNUM; i++) {
+        RegisterSerializerFunctions(i, SerializeList, DeserializeList);
+    }
+    for (i = T_RANGE_NSORT; i <= T_RANGE_SSORT + IMMUTABLE; i++) {
         RegisterSerializerFunctions(i, SerializeRange, DeserializeRange);
     }
-    for (i = T_BLIST; i < T_STRING; i++) {
+    for (i = T_BLIST; i <= T_BLIST_SSORT + IMMUTABLE; i++) {
         RegisterSerializerFunctions(i, SerializeBlist, DeserializeBlist);
     }
     for (i = T_STRING; i <= T_STRING_SSORT + IMMUTABLE; i++) {
         RegisterSerializerFunctions(i, SerializeString, DeserializeString);
     }
-    for (i = 0; i < sizeof(typed_serializable_tnums); i++) {
-        RegisterSerializerFunctions(typed_serializable_tnums[i],
-                                    SerializeTypedObj, DeserializeTypedObj);
-    }
 
     RegisterSerializerFunctions(T_OBJSET, SerializeObjSet, DeserializeObjSet);
     RegisterSerializerFunctions(T_OBJMAP, SerializeObjMap, DeserializeObjMap);
 
-    RegisterSerializerFunctions(T_BACKREF, SerializeError,
-                                DeserializeBackRef);
+    RegisterSerializerFunctions(T_COMOBJ, SerializeTypedObj, DeserializeTypedObj);
+    RegisterSerializerFunctions(T_POSOBJ, SerializeTypedObj, DeserializeTypedObj);
+    RegisterSerializerFunctions(T_DATOBJ, SerializeTypedObj, DeserializeTypedObj);
+    RegisterSerializerFunctions(T_ACOMOBJ, SerializeTypedObj, DeserializeTypedObj);
+    RegisterSerializerFunctions(T_APOSOBJ, SerializeTypedObj, DeserializeTypedObj);
+
+    RegisterSerializerFunctions(T_BACKREF, SerializeError, DeserializeBackRef);
 
     /* gvars */
     DeclareGVar(&SerializableRepresentationGVar,
@@ -1191,12 +1170,13 @@ static StructInitInfo module = {
     .name = "serialize",
     .initKernel = InitKernel,
     .initLibrary = InitLibrary,
+
+    .moduleStateSize = sizeof(SerializeModuleState),
+    .moduleStateOffsetPtr = &SerializeStateOffset,
 };
 
 StructInitInfo * InitInfoSerialize(void)
 {
-    SerializeStateOffset =
-        RegisterModuleState(sizeof(SerializeModuleState), 0, 0);
     return &module;
 }
 

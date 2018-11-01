@@ -24,56 +24,19 @@
 **
 *V  autoconf  . . . . . . . . . . . . . . . . . . . . . . . .  use "config.h"
 */
-#include <gen/config.h>
+#include "config.h"
 
+#include <assert.h>
 #include <ctype.h>
 #include <limits.h>
 #include <setjmp.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "debug.h"
 
-/****************************************************************************
-**
-*D  user edit-able defines
-*/
-
-/* initial amount of memory if '-m' is not given in KB                     */ 
-/* The following tests whether we are in 64-bit mode, note that
- * SYS_IS_64_BIT is only defined later in this file! */
-#if SIZEOF_VOID_P == 8
-#define SY_STOR_MIN		(128L * 1024)
-#else
-#define SY_STOR_MIN		(64L * 1024)
-#endif
-
-
-/****************************************************************************
-**
-*D  debug flags (user edit-able)
-*/
-
-/* * * * * * * * * *  saving/loading the workspace * * * * * * * * * * * * */
-
-/* define to get information while restoring                               */
-/* #undef DEBUG_LOADING */
-
-/* define to debug registering of global bags                              */
-/* #undef DEBUG_GLOBAL_BAGS */
-
-/* define to debug registering of function handlers                        */
-/* #undef DEBUG_HANDLER_REGISTRATION */
-
-
-/* * * * * * * * * * * * * debugging GASMAN  * * * * * * * * * * * * * * * */
-
-/* define to create functions PTR_BAG, etc instead of macros               */
-/* #undef DEBUG_FUNCTIONS_BAGS */
-
-
-/* define to debug masterpointers errors                                   */
-/* #undef DEBUG_MASTERPOINTERS */
 
 /* check if we are on a 64 bit machine                                     */
 #if SIZEOF_VOID_P == 8
@@ -81,6 +44,11 @@
 #elif !defined(SIZEOF_VOID_P)
 # error Something is wrong with this GAP installation: SIZEOF_VOID_P not defined
 #endif
+
+// check that the pointer size detected by configure matches that of the
+// current compiler; this helps prevent kernel extensions from being
+// compiled with the wrong ABI
+GAP_STATIC_ASSERT(sizeof(void *) == SIZEOF_VOID_P, "sizeof(void *) is wrong");
 
 
 #ifndef HAVE_DOTGAPRC
@@ -114,8 +82,8 @@
 **  at least GAP won't be the only program to run into problems.
 */
 enum {
-#ifdef PATH_MAX
-    GAP_PATH_MAX = 4096 > PATH_MAX ? 4096 : PATH_MAX,
+#if defined(PATH_MAX) && PATH_MAX > 4096
+    GAP_PATH_MAX = PATH_MAX,
 #else
     GAP_PATH_MAX = 4096,
 #endif
@@ -129,7 +97,7 @@ enum {
 *T  Wrappers for various compiler attributes
 **
 */
-#ifdef HAVE_FUNC_ATTRIBUTE_ALWAYS_INLINE
+#if defined(HAVE_FUNC_ATTRIBUTE_ALWAYS_INLINE) && !defined(GAP_KERNEL_DEBUG)
 #define ALWAYS_INLINE __attribute__((always_inline)) inline
 #else
 #define ALWAYS_INLINE inline
@@ -183,6 +151,10 @@ typedef Int4     Int;
 typedef UInt4    UInt;
 #endif
 
+GAP_STATIC_ASSERT(sizeof(void *) == sizeof(Int), "sizeof(Int) is wrong");
+GAP_STATIC_ASSERT(sizeof(void *) == sizeof(UInt), "sizeof(UInt) is wrong");
+
+
 /****************************************************************************
 **
 **  'START_ENUM_RANGE' and 'END_ENUM_RANGE' simplify creating "ranges" of
@@ -214,7 +186,9 @@ typedef UInt4    UInt;
 
 /****************************************************************************
 **
-*T  Bag . . . . . . . . . . . . . . . . . . . type of the identifier of a bag
+*t  Bag . . . . . . . . . . . . . . . . . . . type of the identifier of a bag
+**
+**  (The documentation of 'Bag' is contained in 'gasman.h'.)
 */
 typedef UInt * *        Bag;
 
@@ -271,306 +245,6 @@ typedef Stat Expr;
 **
 */
 enum { BIPEB = sizeof(UInt) * 8L, LBIPEB = (BIPEB == 64) ? 6L : 5L };
-
-
-/****************************************************************************
-**
-*F * * * * * * * * * * * command line settable options  * * * * * * * * * * *
-*/
-
-
-/****************************************************************************
-**
-*V  SyArchitecture  . . . . . . . . . . . . . . . .  name of the architecture
-*/
-extern const Char * SyArchitecture;
-
-/****************************************************************************
-**
-*V  SyKernelVersion  . . . . . . . . . . . . . . . .  kernel version number
-*V  SyBuildVersion . . . . . . . . . . . . . . . . .  kernel version number
-*V  SyBuildDateTime  . . . . . . . . . . . . . . . .  kernel build time
-**
-** SyBuildVersion will replace SyKernelVersion
-*/
-extern const Char * SyKernelVersion;
-extern const Char * SyBuildVersion;
-extern const Char * SyBuildDateTime;
-
-/****************************************************************************
-**
-*V  SyCTRD  . . . . . . . . . . . . . . . . . . .  true if '<ctr>-D' is <eof>
-*/
-extern UInt SyCTRD;
-
-
-/****************************************************************************
-**
-*V  SyCompileInput  . . . . . . . . . . . . . . . . . .  from this input file
-*/
-extern Char SyCompileInput[GAP_PATH_MAX];
-
-
-/****************************************************************************
-**
-*V  SyCompileMagic1 . . . . . . . . . . . . . . . . . . and this magic number
-*/
-extern Char * SyCompileMagic1;
-
-
-/****************************************************************************
-**
-*V  SyCompileName . . . . . . . . . . . . . . . . . . . . . .  with this name
-*/
-extern Char SyCompileName[256];
-
-
-/****************************************************************************
-**
-*V  SyCompileOutput . . . . . . . . . . . . . . . . . . into this output file
-*/
-extern Char SyCompileOutput[GAP_PATH_MAX];
-
-
-/****************************************************************************
-**
-*V  SyCompilePlease . . . . . . . . . . . . . . .  tell GAP to compile a file
-*/
-extern Int SyCompilePlease;
-
-/****************************************************************************
-**
-*V  SyDebugLoading  . . . . . . . . .  output messages about loading of files
-*/
-extern Int SyDebugLoading;
-
-/****************************************************************************
-**
-*V  SyGapRootPaths  . . . . . . . . . . . . . . . . . . . array of root paths
-**
-**  'SyGapRootPaths' conatins the  names   of the directories where   the GAP
-**  files are located.
-**
-**  It is modified by the command line option -l.
-**
-**  It  is copied into the GAP  variable  called 'GAP_ROOT_PATHS' and used by
-**  'SyFindGapRootFile'.
-**
-**  Each entry must end  with the pathname seperator, eg.  if 'init.g' is the
-**  name of a library file 'strcat( SyGapRootPaths[i], "lib/init.g" );'  must
-**  be a valid filename.
-**
-**  In addition we store the path to the users ~/.gap directory, if available,
-**  in 'DotGapPath'.
-**  
-**  Put in this package because the command line processing takes place here.
-*/
-enum {
-    MAX_GAP_DIRS = 16
-};
-extern Char SyGapRootPaths[MAX_GAP_DIRS][GAP_PATH_MAX];
-#ifdef HAVE_DOTGAPRC
-extern Char DotGapPath[GAP_PATH_MAX];
-#endif
-
-/****************************************************************************
-**
-*V  SyLineEdit  . . . . . . . . . . . . . . . . . . . .  support line editing
-**
-**  0: no line editing
-**  1: line editing if terminal
-**  2: always line editing (EMACS)
-*/
-extern UInt SyLineEdit;
-
-/****************************************************************************
-**
-*V  SyUseReadline   . . . . . . . . . . . . . . . . . .  support line editing
-**
-**  Switch for not using readline although GAP is compiled with libreadline
-*/
-extern UInt SyUseReadline;
-
-/****************************************************************************
-**
-*V  SyMsgsFlagBags  . . . . . . . . . . . . . . . . .  enable gasman messages
-**
-**  'SyMsgsFlagBags' determines whether garabage collections are reported  or
-**  not.
-**
-**  Per default it is false, i.e. Gasman is silent about garbage collections.
-**  It can be changed by using the  '-g'  option  on the  GAP  command  line.
-**
-**  This is used in the function 'SyMsgsBags' below.
-**
-**  Put in this package because the command line processing takes place here.
-*/
-extern UInt SyMsgsFlagBags;
-
-
-extern Int SyGasmanNumbers[2][9];
-
-/****************************************************************************
-**
-*V  SyNrCols  . . . . . . . . . . . . . . . . . .  length of the output lines
-**
-**  'SyNrCols' is the length of the lines on the standard output  device.
-**
-**  Per default this is 80 characters which is the usual width of  terminals.
-**  It can be changed by the '-x' options for larger terminals  or  printers.
-**
-**  'Pr' uses this to decide where to insert a <newline> on the output lines.
-**  'SyRead' uses it to decide when to start scrolling the echoed input line.
-**
-**  Put in this package because the command line processing takes place here.
-*/
-extern UInt SyNrCols;
-extern UInt SyNrColsLocked;
-
-/****************************************************************************
-**
-*V  SyNrRows  . . . . . . . . . . . . . . . . . number of lines on the screen
-**
-**  'SyNrRows' is the number of lines on the standard output device.
-**
-**  Per default this is 24, which is the  usual  size  of  terminal  screens.
-**  It can be changed with the '-y' option for larger terminals or  printers.
-**
-**  'SyHelp' uses this to decide where to stop with '-- <space> for more --'.
-*/
-extern UInt SyNrRows;
-extern UInt SyNrRowsLocked;
-
-
-/****************************************************************************
-**
-*V  SyQuiet . . . . . . . . . . . . . . . . . . . . . . . . . surpress prompt
-**
-**  'SyQuit' determines whether GAP should print the prompt and  the  banner.
-**
-**  Per default its false, i.e. GAP prints the prompt and  the  nice  banner.
-**  It can be changed by the '-q' option to have GAP operate in silent  mode.
-**
-**  It is used by the functions in 'gap.c' to surpress printing the  prompts.
-**
-**  Put in this package because the command line processing takes place here.
-*/
-extern UInt SyQuiet;
-
-/****************************************************************************
-**
-*V  SyQuitOnBreak . . . . . . . . . . exit GAP instead of entering break loop
-**
-**  'SyQuitOnBreak' determines whether GAP should quit (with non-zero return
-**  value) instead of entering the break loop.
-**
-**  False by default, can be changed with the '--quitonbreak' option.
-**
-**  Put in this package because the command line processing takes place here.
-*/
-extern UInt SyQuitOnBreak;
-
-/****************************************************************************
-**
-*V  SyRestoring . . . . . . . . . . . . . . . . . . . . restoring a workspace
-**
-**  `SyRestoring' determines whether GAP is restoring a workspace or not.  If
-**  it is zero no restoring should take place otherwise it holds the filename
-**  of a workspace to restore.
-**
-*/
-extern Char * SyRestoring;
-
-/****************************************************************************
-**
-*V  SyInitializing                               set to 1 during library init
-**
-**  `SyInitializing' is set to 1 during the library intialization phase of
-**  startup. It supresses some behaviours that may not be possible so early
-**  such as homogeneity tests in the plist code.
-*/
-
-extern UInt SyInitializing;
-
-extern Char **SyOriginalArgv;
-extern UInt SyOriginalArgc;
-
-/****************************************************************************
-**
-*V  SyStorMax . . . . . . . . . . . . . . . . . . . maximal size of workspace
-**
-**  'SyStorMax' is the maximal size of the workspace allocated by Gasman.
-**    this is now in kilobytes.
-**
-**  This is per default 256 MByte,  which is often a  reasonable value.  It is
-**  usually changed with the '-o' option in the script that starts GAP.
-**
-**  This is used in the function 'SyAllocBags'below.
-**
-**  Put in this package because the command line processing takes place here.
-*/
-extern Int SyStorMax;
-extern Int SyStorOverrun;
-
-/****************************************************************************
-**
-*V  SyStorKill . . . . . . . . . . . . . . . . . . maximal size of workspace
-**
-**  'SyStorKill' is really the maximal size of the workspace allocated by 
-**  Gasman. GAP exists before trying to allocate more than this amount
-**  of memory in kilobytes
-**
-**  This is per default disabled (i.e. = 0).
-**  Can be changed with the '-K' option in the script that starts GAP.
-**
-**  This is used in the function 'SyAllocBags'below.
-**
-**  Put in this package because the command line processing takes place here.
-*/
-extern Int SyStorKill;
-
-/****************************************************************************
-**
-*V  SyStorMin . . . . . . . . . . . . . .  default size for initial workspace
-**
-**  'SyStorMin' is the size of the initial workspace allocated by Gasman.
-**  in kilobytes
-**
-**  This is per default  24 Megabyte,  which  is  often  a  reasonable  value.
-**  It is usually changed with the '-m' option in the script that starts GAP.
-**
-**  This value is used in the function 'SyAllocBags' below.
-**
-**  Put in this package because the command line processing takes place here.
-*/
-extern Int SyStorMin;
-
-
-/****************************************************************************
-**
-*V  SyLoadSystemInitFile  . . . . . . should GAP load 'lib/init.g' at startup
-*/
-extern Int SyLoadSystemInitFile;
-
-
-/****************************************************************************
-**
-*V  SyUseModule . . . . . check for dynamic/static modules in 'READ_GAP_ROOT'
-*/
-extern int SyUseModule;
-
-
-/****************************************************************************
-**
-*V  SyWindow  . . . . . . . . . . . . . . . .  running under a window handler
-**
-**  'SyWindow' is 1 if GAP  is running under  a window handler front end such
-**  as 'xgap', and 0 otherwise.
-**
-**  If running under  a window handler front  end, GAP adds various  commands
-**  starting with '@' to the output to let 'xgap' know what is going on.
-*/
-extern UInt SyWindow;
 
 
 /****************************************************************************
@@ -642,15 +316,16 @@ extern UInt SyTimeChildrenSys ( void );
 **
 *F  strlcpy( <dst>, <src>, <len> )
 **
-** Copy src to buffer dst of size len.  At most len-1 characters will be
-** copied. Afterwards, dst is always NUL terminated (unless len == 0).
+**  Copy <src> to buffer <dst> of size <len>. At most <len>-1 characters will
+**  be copied. Afterwards, <dst> is always 'NUL' terminated
+**  (unless <len> == 0).
 **
-** Returns strlen(src); hence if the return value is greater or equal
-** than len, truncation occurred.
+**  Returns 'strlen( <src> )'; hence if the return value is greater or equal
+**  than <len>, truncation occurred.
 **
-** This function is provided by some systems (e.g. OpenBSD, Mac OS X),
-** but not by all, so we provide a fallback implementation for those
-** systems that lack it.
+**  This function is provided by some systems (e.g. OpenBSD, Mac OS X),
+**  but not by all, so we provide a fallback implementation for those
+**  systems that lack it.
 */
 #ifndef HAVE_STRLCPY
 size_t strlcpy (
@@ -663,16 +338,17 @@ size_t strlcpy (
 **
 *F  strlcat( <dst>, <src>, <len> )
 **
-** Appends src to buffer dst of size len (unlike strncat, len is the full
-** size of dst, not space left). At most len-1 characters will be copied.
-** Afterwards, dst is always NUL terminated (unless len == 0).
+**  Appends <src> to buffer <dst> of size <len> (unlike 'strncat', <len> is
+**  the full size of <dst>, not space left).
+**  At most <len>-1 characters will be copied.
+**  Afterwards, <dst> is always 'NUL' terminated (unless <len> == 0).
 **
-** Returns initial length of dst plus strlen(src); hence if the return value
-** is greater or equal than len, truncation occurred.
+**  Returns initial length of <dst> plus 'strlen(<src>)'; hence if the return
+**  value is greater or equal than <len>, truncation occurred.
 **
-** This function is provided by some systems (e.g. OpenBSD, Mac OS X),
-** but not by all, so we provide a fallback implementation for those
-** systems that lack it.
+**  This function is provided by some systems (e.g. OpenBSD, Mac OS X),
+**  but not by all, so we provide a fallback implementation for those
+**  systems that lack it.
 */
 #ifndef HAVE_STRLCAT
 size_t strlcat (
@@ -685,12 +361,13 @@ size_t strlcat (
 **
 *F  strlncat( <dst>, <src>, <len>, <n> )
 **
-** Append at most n characters from src to buffer dst of size len. At most
-** len-1 characters will be copied. Afterwards, dst is always NUL terminated
-** (unless len == 0).
+**  Append at most <n> characters from <src> to buffer <dst> of size <len>.
+**  At most <len>-1 characters will be copied.
+**  Afterwards, <dst> is always 'NUL' terminated (unless <len> == 0).
 **
-** Returns initial length of dst plus the minimum of n and strlen(src); hence
-** if the return value is greater or equal than len, truncation occurred.
+**  Returns initial length of <dst> plus the minimum of <n> and
+**  'strlen(<src>)'; hence if the return value is greater or equal than
+**  <len>, truncation occurred.
 */
 size_t strlncat (
     char *dst,
@@ -702,11 +379,11 @@ size_t strlncat (
 **
 *F  strxcpy( <dst>, <src>, <len> )
 **
-** Copy src to buffer dst of size len. If an overflow would occur, trigger
-** an assertion.
+**  Copy <src> to buffer <dst> of size <len>.
+**  If an overflow would occur, trigger an assertion.
 **
-** This should be used with caution; in general, proper error handling is
-** preferable.
+**  This should be used with caution; in general, proper error handling is
+**  preferable.
 **/
 size_t strxcpy (
     char *dst,
@@ -717,11 +394,11 @@ size_t strxcpy (
 **
 *F  strxcat( <dst>, <src>, <len> )
 **
-** Append src to buffer dst of size len. If an overflow would occur, trigger
-** an assertion.
+**  Append <src> to buffer <dst> of size <len>.
+**  If an overflow would occur, trigger an assertion.
 **
-** This should be used with caution; in general, proper error handling is
-** preferable.
+**  This should be used with caution; in general, proper error handling is
+**  preferable.
 **/
 size_t strxcat (
     char *dst,
@@ -732,11 +409,12 @@ size_t strxcat (
 **
 *F  strxncat( <dst>, <src>, <len>, <n> )
 **
-** Append not more than n characters from src to buffer dst of size len.
-** If an overflow would occur, trigger an assertion.
+**  Append not more than <n> characters from <src> to buffer <dst> of size
+**  <len>.
+**  If an overflow would occur, trigger an assertion.
 **
-** This should be used with caution; in general, proper error handling is
-** preferable.
+**  This should be used with caution; in general, proper error handling is
+**  preferable.
 **/
 size_t strxncat (
     char *dst,
@@ -745,276 +423,13 @@ size_t strxncat (
     size_t n);
 
 
-/****************************************************************************
-**
-*F * * * * * * * * * * * * * * gasman interface * * * * * * * * * * * * * * *
-*/
-
-
-/****************************************************************************
-**
-*F  SyMsgsBags( <full>, <phase>, <nr> ) . . . . . . . display Gasman messages
-**
-**  'SyMsgsBags' is the function that is used by Gasman to  display  messages
-**  during garbage collections.
-*/
-extern void SyMsgsBags (
-            UInt                full,
-            UInt                phase,
-            Int                 nr );
-
-
-/****************************************************************************
-**
-*F  SyMAdviseFree( )  . . . . . . . . . . . . . inform os about unused memory
-**
-**  'SyMAdviseFree' is the function that informs the operating system that
-**  the memory range after the current work space end is not needed by GAP. 
-**  This call is purely advisory and does not actually free pages, but
-**  only affects paging behavior.
-**  This function is called by GASMAN after each successfully completed
-**  garbage collection.
-*/
-extern void SyMAdviseFree ( void );
-
-/****************************************************************************
-**
-*F  SyAllocBags( <size>, <need> ) . . . allocate memory block of <size> bytes
-**
-**  'SyAllocBags' is called from Gasman to get new storage from the operating
-**  system. <size> is the needed amount in kilobytes (it is always a multiple
-**  of 512 KByte), and <need> tells 'SyAllocBags' whether Gasman really needs
-**  the storage or only wants it to have a reasonable amount of free storage.
-**
-**  Currently  Gasman  expects this function to return  immediately  adjacent
-**  areas on subsequent calls.  So 'sbrk' will  work  on  most  systems,  but
-**  'malloc' will not.
-**
-**  If <need> is 0, 'SyAllocBags' must return 0 if it cannot or does not want
-**  to extend the workspace,  and a pointer to the allocated area to indicate
-**  success.   If <need> is 1  and 'SyAllocBags' cannot extend the workspace,
-**  'SyAllocBags' must abort,  because GAP assumes that  'NewBag'  will never
-**  fail.
-**
-**  <size> may also be negative in which case 'SyAllocBags' should return the
-**  storage to the operating system.  In this case  <need>  will always be 0.
-**  'SyAllocBags' can either accept this reduction and  return 1  and  return
-**  the storage to the operating system or refuse the reduction and return 0.
-**
-**  If the operating system does not support dynamic memory managment, simply
-**  give 'SyAllocBags' a static buffer, from where it returns the blocks.
-*/
-extern UInt * * * SyAllocBags (
-            Int                 size,
-            UInt                need );
-
-
-/****************************************************************************
-**
-*F  SyAbortBags(<msg>)  . . . . . . . . . . abort GAP in case of an emergency
-**
-**  'SyAbortBags' is the function called by Gasman in case of an emergency.
-*/
-extern void SyAbortBags(const Char * msg) NORETURN;
-
-
-/****************************************************************************
-**
-*F * * * * * * * * * * * * * loading of modules * * * * * * * * * * * * * * *
-**
-** GAP_KERNEL_API_VERSION gives the version of the GAP kernel. This value
-** is used to check if kernel modules were built with a compatible kernel.
-** This version is not the same as, and not connected to, the GAP version.
-**
-** This is stored as GAP_KERNEL_MAJOR_VERSION*1000 + GAP_KERNEL_MINOR_VERSION
-**
-** The algorithm used is the following:
-**
-** The kernel will not load a module compiled for a newer kernel.
-**
-** The kernel will not load a module compiled for a different major version.
-**
-** The minor version should be incremented when new backwards-compatible
-** functionality is added. The major version should be incremented when
-** a backwards-incompatible change is made.
-**
-** The kernel version is a macro so it can be used by packages
-** to optionally compile support for new functionality.
-**
-*/
-
-#define GAP_KERNEL_MAJOR_VERSION 1
-#define GAP_KERNEL_MINOR_VERSION 1
-#define GAP_KERNEL_API_VERSION                                               \
-    ((GAP_KERNEL_MAJOR_VERSION)*1000 + (GAP_KERNEL_MINOR_VERSION))
-
-enum {
-    /** builtin module */
-    MODULE_BUILTIN = GAP_KERNEL_API_VERSION * 10,
-
-    /** statically loaded compiled module */
-    MODULE_STATIC = GAP_KERNEL_API_VERSION * 10 + 1,
-
-    /** dynamically loaded compiled module */
-    MODULE_DYNAMIC = GAP_KERNEL_API_VERSION * 10 + 2,
-};
-
-static inline Int IS_MODULE_BUILTIN(UInt type)
-{
-    return type % 10 == 0;
-}
-
-static inline Int IS_MODULE_STATIC(UInt type)
-{
-    return type % 10 == 1;
-}
-
-static inline Int IS_MODULE_DYNAMIC(UInt type)
-{
-    return type % 10 == 2;
-}
-
-
-/****************************************************************************
-**
-*T  StructInitInfo  . . . . . . . . . . . . . . . . . module init information
-*/
-typedef struct init_info {
-
-    /* type of the module: MODULE_BUILTIN, MODULE_STATIC, MODULE_DYNAMIC   */
-    UInt             type;               
-
-    /* name of the module: filename with ".c" or library filename          */
-    const Char *     name;
-
-    /* revision entry of c file for MODULE_BUILTIN                         */
-    const Char *     revision_c;
-
-    /* revision entry of h file for MODULE_BUILTIN                         */
-    const Char *     revision_h;
-
-    /* version number for MODULE_BUILTIN                                   */
-    UInt             version;
-
-    /* CRC value for MODULE_STATIC or MODULE_DYNAMIC                       */
-    Int              crc;
-
-    /* initialise kernel data structures                                   */
-    Int              (* initKernel)(struct init_info *);
-
-    /* initialise library data structures                                  */
-    Int              (* initLibrary)(struct init_info *);
-
-    /* sanity check                                                        */
-    Int              (* checkInit)(struct init_info *);
-
-    /* function to call before saving workspace                            */
-    Int              (* preSave)(struct init_info *);
-
-    /* function to call after saving workspace                             */
-    Int              (* postSave)(struct init_info *);
-
-    /* function to call after restoring workspace                          */
-    Int              (* postRestore)(struct init_info *);
-
-} StructInitInfo;
-
+typedef const struct init_info StructInitInfo;
 typedef StructInitInfo* (*InitInfoFunc)(void);
 
 
 /****************************************************************************
 **
-*T  StructBagNames  . . . . . . . . . . . . . . . . . . . . . tnums and names
-*/
-typedef struct {
-    Int             tnum;
-    const Char *    name;
-} StructBagNames;
-
-
-/****************************************************************************
-**
-*T  StructGVarFilt  . . . . . . . . . . . . . . . . . . . . . exported filter
-*/
-typedef struct {
-    const Char *    name;
-    const Char *    argument;
-    Obj *           filter;
-    Obj             (* handler)(/*arguments*/);
-    const Char *    cookie;
-} StructGVarFilt;
-
-// GVAR_FILTER a helper macro for quickly creating table entries in
-// StructGVarFilt, StructGVarAttr and StructGVarProp arrays
-#define GVAR_FILTER(name, argument, filter) \
-  { #name, argument, filter, Func ## name, __FILE__ ":" #name }
-
-
-/****************************************************************************
-**
-*T  StructGVarAttr  . . . . . . . . . . . . . . . . . . .  exported attribute
-*/
-typedef struct {
-    const Char *    name;
-    const Char *    argument;
-    Obj *           attribute;
-    Obj             (* handler)(/*arguments*/);
-    const Char *    cookie;
-} StructGVarAttr;
-
-
-/****************************************************************************
-**
-*T  StructGVarProp  . . . . . . . . . . . . . . . . . . . . exported property
-*/
-typedef struct {
-    const Char *    name;
-    const Char *    argument;
-    Obj *           property;
-    Obj             (* handler)(/*arguments*/);
-    const Char *    cookie;
-} StructGVarProp;
-
-
-/****************************************************************************
-**
-*T  StructGVarOper  . . . . . . . . . . . . . . . . . . .  exported operation
-*/
-typedef struct {
-    const Char *    name;
-    Int             nargs;
-    const Char *    args;
-    Obj *           operation;
-    Obj             (* handler)(/*arguments*/);
-    const Char *    cookie;
-} StructGVarOper;
-
-// GVAR_OPER is a helper macro for quickly creating table entries in
-// StructGVarOper arrays
-#define GVAR_OPER(name, nargs, args, operation) \
-  { #name, nargs, args, operation, Func ## name, __FILE__ ":" #name }
-
-
-/****************************************************************************
-**
-*T  StructGVarFunc  . . . . . . . . . . . . . . . . . . . . exported function
-*/
-typedef struct {
-    const Char *    name;
-    Int             nargs;
-    const Char *    args;
-    Obj             (* handler)(/*arguments*/);
-    const Char *    cookie;
-} StructGVarFunc;
-
-// GVAR_FUNC is a helper macro for quickly creating table entries in
-// StructGVarFunc arrays
-#define GVAR_FUNC(name, nargs, args) \
-  { #name, nargs, args, Func ## name, __FILE__ ":" #name }
-
-/****************************************************************************
-**
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
@@ -1027,6 +442,13 @@ typedef struct {
 **  If ret is 1 'SyExit' should signal a  failure  to  the  calling proccess.
 */
 extern void SyExit(UInt ret) NORETURN;
+
+
+/****************************************************************************
+**
+*F  Panic( <msg> )
+*/
+extern void Panic(const char * msg) NORETURN;
 
 
 /****************************************************************************
@@ -1077,23 +499,11 @@ extern void SyUSleep( UInt msecs );
 
 /****************************************************************************
 **
-*F  getOptionCount ( <key> ) . number of times a command line option was used
-*F  getOptionArg ( <key>, <which> ) get arguments used on <which>'th occurrence
-*F                             of <key> as a command line option NULL if none
-**
+*F  sySetjmp( <jump buffer> )
+*F  syLongjmp( <jump buffer>, <value> )
+** 
+**  macros and functions, defining our selected longjump mechanism
 */
-
-extern Int getOptionCount (Char key);
-extern Char *getOptionArg(Char key, UInt which);
-
-/****************************************************************************
- **
- *F    sySetjmp( <jump buffer> )
- *F    syLongjmp( <jump buffer>, <value>)
- ** 
- **   macros and functions, defining our selected longjump mechanism
- */
-
 
 #if defined(HAVE_SIGSETJMP)
 #define sySetjmp( buff ) (sigsetjmp( (buff), 0))
@@ -1113,8 +523,9 @@ void syLongjmp(syJmp_buf* buf, int val) NORETURN;
 
 /****************************************************************************
 **
-*F RegisterSyLongjmpObserver : register a function to be called before
-**                   longjmp is called.
+*F  RegisterSyLongjmpObserver( <func> )
+**
+**  register a function to be called before longjmp is called.
 */
 
 typedef void (*voidfunc)(void);

@@ -895,7 +895,7 @@ gap&gt; List( last, x -&gt; ColorOfElement( U, Representative(x) ) );
 <h2><a name="SECT010">2.10 Colored AffineCrystGroups</a></h2>
 <p><p>
 If <var>C</var> is a colored <code>AffineCrystGroup</code> whose <code>ColorSubgroup</code> is 
-lattice-equal (translationengleich) with <var>C</var>, the <code>PointGroup</code> of 
+lattice-equal (translationengleich) with <var>C</var>, then the <code>PointGroup</code> of 
 <var>C</var> can consistently be colored. In that case,
 <p>
 <a name = "SSEC010.1"></a>
@@ -929,12 +929,14 @@ For instance, a list of inequivalent index-2 <code>ColorSubgroups</code> of
 gap&gt; sub := MaximalSubgroupClassReps( S, rec( primes := [2] ) );
 [ &lt;matrix group with 4 generators&gt;, &lt;matrix group with 3 generators&gt;, 
   &lt;matrix group with 4 generators&gt; ]
+gap&gt; List( sub, Size );
+[ infinity, infinity, infinity ]
 gap&gt; sub := Filtered( sub, s -&gt; IndexInParent( s ) = 2 );
-[ &lt;matrix group with 4 generators&gt;, &lt;matrix group with 3 generators&gt;, 
-  &lt;matrix group with 4 generators&gt; ]
-gap&gt; sub := AffineInequivalentSubgroups( S, sub );
 [ &lt;matrix group of size infinity with 4 generators&gt;, 
-  &lt;matrix group of size infinity with 3 generators&gt; ]
+  &lt;matrix group of size infinity with 3 generators&gt;, 
+  &lt;matrix group of size infinity with 4 generators&gt; ]
+gap&gt; Length( AffineInequivalentSubgroups( S, sub ) );
+2
 </pre>
 <p>
 Note that <code>AffineInequivalentSubgroups</code> requires the <font face="Gill Sans,Helvetica,Arial">GAP</font> package 
@@ -1011,5 +1013,5 @@ SpaceGroupOnRightIT(3,146,'r')
 <p>
 [<a href = "chapters.htm">Up</a>] [<a href ="CHAP001.htm">Previous</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<address>cryst manual<br>April 2018
+<address>cryst manual<br>Oktober 2018
 </address></body></html>

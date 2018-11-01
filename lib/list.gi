@@ -1694,6 +1694,28 @@ InstallMethod( PositionBound,
 
 #############################################################################
 ##
+#M  PositionsBound( <list> ) . . . . . . . . . positions of all bound entries
+##
+InstallGlobalFunction( PositionsBound, function( list )
+    local i, bound;
+
+    if IsDenseList( list ) then
+        return [ 1 .. Length( list ) ];
+    fi;
+
+    bound := [];
+    for i in [ 1 .. Length( list ) ] do
+        if IsBound( list[i] )  then
+            Add( bound, i );
+        fi;
+    od;
+
+    return bound;
+end );
+
+
+#############################################################################
+##
 #M  PositionSublist( <list>,<sub>[,<ind>] )
 ##
 InstallMethod( PositionSublist,
@@ -2351,7 +2373,7 @@ InstallMethod( Sortex,
     
     n := Length(list);
     index := [1..n];
-    SortParallel(list, index);
+    StableSortParallel(list, index);
     return PermList(index)^-1;
     
     end );
@@ -2369,7 +2391,7 @@ InstallMethod( Sortex,
   
     n := Length(list);
     index := [1..n];
-    SortParallel(list, index, comp);
+    StableSortParallel(list, index, comp);
     return PermList(index)^-1;
 
     end );
@@ -2412,31 +2434,10 @@ end );
 InstallMethod( SortingPerm,
     [ IsDenseList ],
     function( list )
-    local  both, perm, i, l;
+        local copy;
 
-    # {\GAP} supports permutations only up to `MAX_SIZE_LIST_INTERNAL'.
-    if not IsSmallList( list ) then
-      Error( "<list> must have length at most ", MAX_SIZE_LIST_INTERNAL );
-    fi;
-
-    # make a new list that contains the elements of <list> and their indices
-    both := [];
-    l:= Length( list );
-    for i in [ 1 .. l ] do
-        both[i] := [ list[i], i ];
-    od;
-
-    # Sort the new list according to the first item (stable).
-    # This needs more memory than a call of 'Sort' but is much faster.
-    # (The change was proposed by Frank Lübeck.)
-    both := Set( both );
-
-    # Remember the permutation.
-    perm := [];
-    perm{ [ 1 .. l ] }:= both{ [ 1 .. l ] }[2];
-
-    # return the permutation mapping <list> onto the sorted list
-    return PermList( perm )^(-1);
+        copy := ShallowCopy(list);
+        return Sortex(copy);
     end );
 
 InstallMethod( SortingPerm,
@@ -3806,7 +3807,7 @@ InstallMethod( PositionNot, "default method ", [IsList, IsObject, IsInt ],
 InstallOtherMethod( PositionNot, "default value of third argument ",
         [IsList, IsObject],
         function(l,x) 
-    return PositionNot(l,x,0); 
+    return POSITION_NOT(l,x,0); 
 end
   );
     
@@ -3815,7 +3816,7 @@ InstallMethod( PositionNonZero, "default method", [IsHomogeneousList],
     if Length(l) = 0 then
         return 1;
     else
-        return PositionNot(l, Zero(l[1]));
+        return POSITION_NOT(l, Zero(l[1]), 0);
     fi;
 end);
 
@@ -3824,7 +3825,7 @@ InstallMethod( PositionNonZero, "default method with start", [IsHomogeneousList,
     if Length(l) = 0 then
         return from+1;
     fi;
-    return PositionNot(l, Zero(l[1]), from);
+    return POSITION_NOT(l, Zero(l[1]), from);
 end);
 
         

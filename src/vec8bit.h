@@ -9,7 +9,7 @@
 #ifndef GAP_VEC8BIT_H
 #define GAP_VEC8BIT_H
 
-#include <src/system.h>
+#include "system.h"
 
 /****************************************************************************
 **
@@ -179,7 +179,7 @@ extern Obj GetFieldInfo8Bit(UInt q);
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

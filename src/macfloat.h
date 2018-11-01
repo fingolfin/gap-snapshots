@@ -13,18 +13,16 @@
 #ifndef GAP_MACFLOAT_H
 #define GAP_MACFLOAT_H
 
-#include <src/objects.h>
+#include "objects.h"
 
 #ifdef VERY_LONG_DOUBLES
 typedef long double /* __float128 */ Double;
-#define TOPRINTFFORMAT long double
 #define PRINTFDIGITS 20
 #define PRINTFFORMAT "Lg"
 #define STRTOD strtold
 #define MATH(name) name##l
 #else
 typedef double Double;
-#define TOPRINTFFORMAT double
 #define PRINTFDIGITS 16
 #define PRINTFFORMAT "g"
 #define STRTOD strtod
@@ -53,7 +51,7 @@ extern Obj NEW_MACFLOAT(Double val);
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************

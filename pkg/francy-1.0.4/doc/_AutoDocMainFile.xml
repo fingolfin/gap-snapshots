@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<#Include SYSTEM "_Chapter_Francy_Callbacks.xml">
+<#Include SYSTEM "_Chapter_Francy_Canvas.xml">
+<#Include SYSTEM "_Chapter_Francy_Charts.xml">
+<#Include SYSTEM "_Chapter_Francy_Core.xml">
+<#Include SYSTEM "_Chapter_Francy_Graphs.xml">
+<#Include SYSTEM "_Chapter_Francy_Menus.xml">
+<#Include SYSTEM "_Chapter_Francy_Messages.xml">
+<#Include SYSTEM "_Chapter_Francy_Util.xml">

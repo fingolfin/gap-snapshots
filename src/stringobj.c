@@ -29,19 +29,19 @@
 **  object. This allows to use C routines with  strings  directly  with  null 
 **  character free strings (e.g., filenames). 
 **
-**  Note that a list represented by a bag of type  'T_PLIST' or 'T_SET' might
-**  still be a string.  It is just that the kernel does not know this.
+**  Note that a list represented by a bag of type 'T_PLIST' might still be a
+**  string. It is just that the kernel does not know this.
 **
 **  This package consists of three parts.
 **  
 **  The first part consists of the macros 'NEW_STRING', 'CHARS_STRING' (or
 **  'CSTR_STRING'),  'GET_LEN_STRING', 'SET_LEN_STRING', 'GET_ELM_STRING',
 **  'SET_ELM_STRING'  and  'C_NEW_STRING'.  These and  the functions below
-**  use the detailed knowledge about the respresentation of strings.
+**  use the detailed knowledge about the representation of strings.
 **  
 **  The second part  consists  of  the  functions  'LenString',  'ElmString',
 **  'ElmsStrings', 'AssString',  'AsssString', PlainString',
-**  and 'IsPossString'.  They are the functions requried by the generic lists
+**  and 'IsPossString'.  They are the functions required by the generic lists
 **  package.  Using these functions the other  parts of the {\GAP} kernel can
 **  access and  modify strings  without actually  being aware  that they  are
 **  dealing with a string.
@@ -51,21 +51,22 @@
 **  string, and if so converts it into the above format.
 */
 
-#include <src/stringobj.h>
+#include "stringobj.h"
 
-#include <src/ariths.h>
-#include <src/bool.h>
-#include <src/gap.h>
-#include <src/gaputils.h>
-#include <src/io.h>
-#include <src/lists.h>
-#include <src/opers.h>
-#include <src/plist.h>
-#include <src/range.h>
-#include <src/saveload.h>
+#include "ariths.h"
+#include "bool.h"
+#include "error.h"
+#include "gaputils.h"
+#include "io.h"
+#include "lists.h"
+#include "modules.h"
+#include "opers.h"
+#include "plist.h"
+#include "range.h"
+#include "saveload.h"
 
 #ifdef HPCGAP
-#include <src/hpc/guards.h>
+#include "hpc/guards.h"
 #endif
 
 
@@ -197,17 +198,17 @@ void LoadChar( Obj c )
 
 /****************************************************************************
 **
-*F  FuncEmptyString( <self>, <len> ) . . . . . . . empty string with space
-*
-* Returns an empty string, but with space for len characters preallocated.
-*
+*F  FuncEmptyString( <self>, <len> ) . . . . . . . .  empty string with space
+**
+**  Returns an empty string, with space for <len> characters preallocated.
+**
 */
 Obj    FuncEmptyString( Obj self, Obj len )
 {
     Obj                 new;
-    while ( ! IS_INTOBJ(len) ) {
+    while ( ! IS_NONNEG_INTOBJ(len) ) {
         len = ErrorReturnObj(
-            "<len> must be an integer (not a %s)",
+            "<len> must be an non-negative integer (not a %s)",
             (Int)TNAM_OBJ(len), 0L,
             "you can replace <len> via 'return <len>;'" );
     }
@@ -219,11 +220,11 @@ Obj    FuncEmptyString( Obj self, Obj len )
 
 /****************************************************************************
 **
-*F  FuncShrinkAllocationString( <self>, <str> )  . . give back unneeded memory
-*
-*  Shrinks the bag of <str> to minimal possible size (possibly converts to 
-*  compact representation).
-*
+*F  FuncShrinkAllocationString( <self>, <str> ) . . give back unneeded memory
+**
+**  Shrinks the bag of <str> to minimal possible size (possibly converts to
+**  compact representation).
+**
 */
 Obj   FuncShrinkAllocationString( Obj self, Obj str )
 {
@@ -290,7 +291,7 @@ Obj FuncINT_CHAR (
 
 /****************************************************************************
 **
-*F  FuncCHAR_SINT( <self>, <int> ) .. . . . . . . . . . char by signed integer
+*F  FuncCHAR_SINT( <self>, <int> ) . . . . . . . . . . char by signed integer
 */
 Obj FuncCHAR_SINT (
     Obj             self,
@@ -405,19 +406,22 @@ Obj FuncSTRING_SINTLIST (
    * integers ? */
 
   /* general code */
-  if (! IS_RANGE(val) ) {
-    if (! IS_PLIST(val)) {
+  while (!IS_RANGE(val) && !IS_PLIST(val)) {
+again:
        val = ErrorReturnObj(
-           "<val> must be a plain list or range, not a %s)",
+           "<val> must be a plain list of small integers or a range, not a %s",
            (Int)TNAM_OBJ(val), 0L,
            "you can replace <val> via 'return <val>;'" );
-    }
-       
+  }
+  if (! IS_RANGE(val) ) {
     l=LEN_PLIST(val);
     n=NEW_STRING(l);
     p=CHARS_STRING(n);
     for (i=1;i<=l;i++) {
-      *p++=CHAR_SINT(INT_INTOBJ(ELM_PLIST(val,i)));
+      Obj x = ELM_PLIST(val,i);
+      if (!IS_INTOBJ(x))
+        goto again;
+      *p++=CHAR_SINT(INT_INTOBJ(x));
     }
   }
   else {
@@ -433,7 +437,6 @@ Obj FuncSTRING_SINTLIST (
 
   }
 
-  CHANGED_BAG(n);
   return n;
 }
 
@@ -463,12 +466,10 @@ Obj FuncREVNEG_STRING (
   q=CHARS_STRING(n);
   j=l-1;
   for (i=1;i<=l;i++) {
-    /* *q++=CHAR_SINT(-SINT_CHAR(p[j])); */
     *q++=-p[j];
     j--;
   }
 
-  CHANGED_BAG(n);
   return n;
 }
 
@@ -560,9 +561,8 @@ Obj TypeString (
 **
 **  If <list> has not  yet  been copied, it makes   a copy, leaves  a forward
 **  pointer to the copy in  the first entry of  the string, where the size of
-**  the string usually resides,  and copies  all the  entries.  If  the plain
-**  list  has already  been copied, it   returns the value of the  forwarding
-**  pointer.
+**  the string usually resides,  and copies  all the  entries.  If the string
+**  has already been copied, it returns the value of the forwarding pointer.
 **
 **  'CopyString' is the function in 'CopyObjFuncs' for strings.
 **
@@ -600,7 +600,7 @@ Obj CopyString (
 
     /* copy the subvalues                                                  */
     memcpy(ADDR_OBJ(copy)+1, CONST_ADDR_OBJ(list)+1,
-           ((SIZE_OBJ(copy)+sizeof(Obj)-1)/sizeof(Obj)-1) * sizeof(Obj));
+           SIZE_OBJ(list)-sizeof(Obj) );
 
     /* return the copy                                                     */
     return copy;
@@ -755,23 +755,7 @@ void PrintString (
 void PrintString1 (
     Obj                 list )
 {
-  char PrStrBuf[10007];	/* 7 for a \c\123 at the end */
-  UInt len = GET_LEN_STRING(list);
-  UInt scanout, off = 0;
-  UInt1  *p;
-
-  while (off < len)    {
-    for (p = CHARS_STRING(list), scanout=0; 
-         p[off] && off<len && scanout<10000; 
-         off++, scanout++) {
-      PrStrBuf[scanout] = p[off];
-    }
-    PrStrBuf[scanout] = '\0';
-    Pr( "%s", (Int)PrStrBuf, 0L );
-    for (; off<len && CHARS_STRING(list)[off]==0; off++) {
-      Pr("%c", 0L, 0L);
-    }
-  }
+  Pr("%g", (Int)list, 0L);
 }
 
 
@@ -786,15 +770,14 @@ Int EqString (
     Obj                 listL,
     Obj                 listR )
 {
-  UInt lL, lR, i;
+  UInt lL, lR;
   UInt1 *pL, *pR;
   lL = GET_LEN_STRING(listL);
   lR = GET_LEN_STRING(listR);
   if (lR != lL) return 0;
   pL = CHARS_STRING(listL);
   pR = CHARS_STRING(listR);
-  for (i=0; i<lL && pL[i] == pR[i]; i++);
-  return (i == lL);
+  return memcmp(pL, pR, lL) == 0;
 }
 
 
@@ -809,16 +792,25 @@ Int LtString (
     Obj                 listL,
     Obj                 listR )
 {
-  UInt lL, lR, i;
+  UInt lL, lR;
   UInt1 *pL, *pR;
   lL = GET_LEN_STRING(listL);
   lR = GET_LEN_STRING(listR);
   pL = CHARS_STRING(listL);
   pR = CHARS_STRING(listR);
-  for (i=0; i<lL && i<lR && pL[i] == pR[i]; i++);
-  if (i == lL) return (lR > lL);
-  if (i == lR) return 0;
-  return pL[i] < pR[i];
+
+  Int res;
+  if (lL <= lR) {
+    res = memcmp(pL, pR, lL);
+    if (res == 0)
+      return lL < lR;
+  }
+  else {
+    res = memcmp(pL, pR, lR);
+    if (res == 0)
+      return 0;
+  }
+  return res < 0;
 }
 
 
@@ -955,7 +947,6 @@ Obj ElmsString (
     Int                 pos;            /* <position> as integer           */
     Int                 inc;            /* increment in a range            */
     Int                 i;              /* loop variable                   */
-    UInt1               *p, *pn;        /* loop pointer                    */
 
     /* general code                                                        */
     if ( ! IS_RANGE(poss) ) {
@@ -973,7 +964,17 @@ Obj ElmsString (
         for ( i = 1; i <= lenPoss; i++ ) {
 
             /* get <position>                                              */
-            pos = INT_INTOBJ( ELMW_LIST( poss, i ) );
+            Obj p = ELMW_LIST(poss, i);
+            while (!IS_INTOBJ(p)) {
+                p = ErrorReturnObj("List Elements: position is too large for "
+                                   "this type of list",
+                                   0L, 0L,
+                                   "you can supply a new position <pos> via "
+                                   "'return <pos>;'");
+            }
+            pos = INT_INTOBJ(p);
+
+            /* select the element                                          */
             if ( lenList < pos ) {
                 ErrorReturnVoid(
                     "List Elements: <list>[%d] must have an assigned value",
@@ -1023,10 +1024,10 @@ Obj ElmsString (
         elms = NEW_STRING( lenPoss );
 
         /* loop over the entries of <positions> and select                 */
-	p = CHARS_STRING(list);
-	pn = CHARS_STRING(elms);
+        UInt1 * p = CHARS_STRING(list);
+        UInt1 * pn = CHARS_STRING(elms);
         for ( i = 1; i <= lenPoss; i++, pos += inc ) {
-	  pn[i-1] = p[pos-1];
+            pn[i - 1] = p[pos - 1];
         }
 
     }
@@ -1083,21 +1084,8 @@ void AssString (
 
     /* now perform the assignment and return the assigned value            */
     SET_ELM_STRING( list, pos, val ); 
-    /*    CHARS_STRING(list)[pos-1] = CHAR_VALUE(val); */
-    CHANGED_BAG( list );
   }
 }    
-
-void AssStringImm (
-    Obj                 list,
-    Int                 pos,
-    Obj                 val )
-{
-    ErrorReturnVoid(
-        "Lists Assignment: <list> must be a mutable list",
-        0L, 0L,
-        "you can 'return;' and ignore the assignment" );
-}
 
 
 /****************************************************************************
@@ -1125,17 +1113,6 @@ void AsssString (
   for (i = 1; i <= len; i++) {
     ASS_LIST(list, INT_INTOBJ(ELM_LIST(poss, i)), ELM_LIST(vals, i));
   }
-}
-
-void AsssStringImm (
-    Obj                 list,
-    Obj                 poss,
-    Obj                 val )
-{
-    ErrorReturnVoid(
-        "Lists Assignments: <list> must be a mutable list",
-        0L, 0L,
-        "you can 'return;' and ignore the assignment" );
 }
 
 
@@ -1263,7 +1240,7 @@ void PlainString (
 
     /* find the length and allocate a temporary copy                       */
     lenList = GET_LEN_STRING( list );
-    tmp = NEW_PLIST( IS_MUTABLE_OBJ(list) ? T_PLIST : T_PLIST+IMMUTABLE, lenList );
+    tmp = NEW_PLIST_WITH_MUTABILITY(IS_MUTABLE_OBJ(list), T_PLIST, lenList);
     SET_LEN_PLIST( tmp, lenList );
 
     /* copy the characters                                                 */
@@ -1275,13 +1252,6 @@ void PlainString (
     ResizeBag( list, SIZE_OBJ(tmp) );
     RetypeBag( list, TNUM_OBJ(tmp) );
 
-    /*    Why not just copying the data area ? (FL)
-	  SET_LEN_PLIST( list, lenList );
-	  for ( i = 1; i <= lenList; i++ ) {
-	  SET_ELM_PLIST( list, i, ELM_PLIST( tmp, i ) );
-	  CHANGED_BAG( list );
-	  }
-    */
     memcpy(ADDR_OBJ(list), CONST_ADDR_OBJ(tmp), SIZE_OBJ(tmp));
     CHANGED_BAG(list);
 }
@@ -1336,7 +1306,7 @@ Int IsStringObject (
 
 /****************************************************************************
 **
-*F  CopyToStringRep( <string> )  . . copy a string to the string representation
+*F  CopyToStringRep( <string> ) . . .  copy a string to string representation
 **
 **  'CopyToStringRep' copies the string <string> to a new string in string
 **  representation.
@@ -1371,9 +1341,9 @@ Obj CopyToStringRep(
 
 /****************************************************************************
 **
-*F  ConvString( <string> )  . . convert a string to the string representation
+*F  ConvString( <string> ) . . . .  convert a string to string representation
 **
-**  'ConvString' converts the string <list> to the string representation.
+**  'ConvString' converts the string <string> to string representation.
 */
 void ConvString (
     Obj                 string )
@@ -1405,7 +1375,6 @@ void ConvString (
     ResizeBag( string, SIZEBAG_STRINGLEN(lenString) );
     /* copy data area from tmp */
     memcpy(ADDR_OBJ(string), CONST_ADDR_OBJ(tmp), SIZE_OBJ(tmp));
-    CHANGED_BAG(string);
 }
 
 
@@ -1459,27 +1428,9 @@ Obj MakeString2(const Char *cstr1, const Char *cstr2)
   return result;
 }
 
-Obj MakeString3(const Char *cstr1, const Char *cstr2, const Char *cstr3)
-{
-  Obj result;
-  size_t len1 = strlen(cstr1), len2 = strlen(cstr2), len3 = strlen(cstr3);
-  result = NEW_STRING(len1 + len2 + len3);
-  memcpy(CSTR_STRING(result), cstr1, len1);
-  memcpy(CSTR_STRING(result)+len1, cstr2, len2);
-  memcpy(CSTR_STRING(result)+len1+len2, cstr3, len3);
-  return result;
-}
-
 Obj MakeImmString2(const Char *cstr1, const Char *cstr2)
 {
   Obj result = MakeString2(cstr1, cstr2);
-  MakeImmutableString(result);
-  return result;
-}
-
-Obj MakeImmString3(const Char *cstr1, const Char *cstr2, const Char *cstr3)
-{
-  Obj result = MakeString3(cstr1, cstr2, cstr3);
   MakeImmutableString(result);
   return result;
 }
@@ -1539,12 +1490,11 @@ Obj FuncCONV_STRING (
     Obj                 string )
 {
     /* check whether <string> is a string                                  */
-    if ( ! IS_STRING( string ) ) {
+    while ( ! IS_STRING( string ) ) {
         string = ErrorReturnObj(
             "ConvString: <string> must be a string (not a %s)",
             (Int)TNAM_OBJ(string), 0L,
             "you can replace <string> via 'return <string>;'" );
-        return FuncCONV_STRING( self, string );
     }
 
     /* convert to the string representation                                */
@@ -1577,12 +1527,11 @@ Obj FuncCOPY_TO_STRING_REP (
     Obj                 obj )
 {
     /* check whether <obj> is a string                                  */
-    if (!IS_STRING(obj)) {
+    while (!IS_STRING(obj)) {
         obj = ErrorReturnObj(
-            "ConvString: <string> must be a string (not a %s)",
+            "CopyToStringRep: <string> must be a string (not a %s)",
             (Int)TNAM_OBJ(obj), 0L,
             "you can replace <string> via 'return <string>;'" );
-        return FuncCOPY_TO_STRING_REP( self, obj );
     }
     return CopyToStringRep(obj);
 }
@@ -1673,12 +1622,11 @@ Obj FuncNormalizeWhitespace (
   Int i, j, len, white;
 
   /* check whether <string> is a string                                  */
-  if ( ! IsStringConv( string ) ) {
+  while ( ! IsStringConv( string ) ) {
     string = ErrorReturnObj(
 	     "NormalizeWhitespace: <string> must be a string (not a %s)",
 	     (Int)TNAM_OBJ(string), 0L,
 	     "you can replace <string> via 'return <string>;'" );
-    return FuncNormalizeWhitespace( self, string );
   }
   
   len = GET_LEN_STRING(string);
@@ -1729,21 +1677,19 @@ Obj FuncREMOVE_CHARACTERS (
   UInt1 REMCHARLIST[256] = {0};
 
   /* check whether <string> is a string                                  */
-  if ( ! IsStringConv( string ) ) {
+  while ( ! IsStringConv( string ) ) {
     string = ErrorReturnObj(
 	     "RemoveCharacters: first argument <string> must be a string (not a %s)",
 	     (Int)TNAM_OBJ(string), 0L,
 	     "you can replace <string> via 'return <string>;'" );
-    return FuncREMOVE_CHARACTERS( self, string, rem );
   }
   
   /* check whether <rem> is a string                                  */
-  if ( ! IsStringConv( rem ) ) {
+  while ( ! IsStringConv( rem ) ) {
     rem = ErrorReturnObj(
 	     "RemoveCharacters: second argument <rem> must be a string (not a %s)",
 	     (Int)TNAM_OBJ(rem), 0L,
 	     "you can replace <rem> via 'return <rem>;'" );
-    return FuncREMOVE_CHARACTERS( self, string, rem );
   }
   
   /* set REMCHARLIST by setting positions of characters in rem to 1 */
@@ -1785,32 +1731,28 @@ Obj FuncTranslateString (
   Int j, len;
 
   /* check whether <string> is a string                                  */
-  if ( ! IsStringConv( string ) ) {
+  while ( ! IsStringConv( string ) ) {
     string = ErrorReturnObj(
-	     "RemoveCharacters: first argument <string> must be a string (not a %s)",
+	     "TranslateString: first argument <string> must be a string (not a %s)",
 	     (Int)TNAM_OBJ(string), 0L,
 	     "you can replace <string> via 'return <string>;'" );
-    return FuncTranslateString( self, string, trans );
   }
   
-  /* check whether <trans> is a string                                  */
-  if ( ! IsStringConv( trans ) ) {
-    trans = ErrorReturnObj(
-	     "RemoveCharacters: second argument <trans> must be a string (not a %s)",
-	     (Int)TNAM_OBJ(trans), 0L,
-	     "you can replace <trans> via 'return <trans>;'" );
-    return FuncTranslateString( self, string, trans );
+  // check whether <trans> is a string of length at least 256
+  while ( ! IsStringConv( trans ) || GET_LEN_STRING( trans ) < 256 ) {
+    if ( ! IsStringConv( trans ) ) {
+      trans = ErrorReturnObj(
+           "TranslateString: second argument <trans> must be a string (not a %s)",
+           (Int)TNAM_OBJ(trans), 0L,
+           "you can replace <trans> via 'return <trans>;'" );
+    } else if ( GET_LEN_STRING( trans ) < 256 ) {
+      trans = ErrorReturnObj(
+           "TranslateString: second argument <trans> must have length >= 256",
+           0L, 0L,
+           "you can replace <trans> via 'return <trans>;'" );
+    }
   }
- 
-  /* check if string has length at least 256 */
-  if ( GET_LEN_STRING( trans ) < 256 ) {
-    trans = ErrorReturnObj(
-	     "RemoveCharacters: second argument <trans> must have length >= 256",
-	     0L, 0L,
-	     "you can replace <trans> via 'return <trans>;'" );
-    return FuncTranslateString( self, string, trans );
-  }
-  
+
   /* now change string in place */
   len = GET_LEN_STRING(string);
   s = CHARS_STRING(string);
@@ -1844,30 +1786,27 @@ Obj FuncSplitStringInternal (
   UInt1 SPLITSTRINGWSPACE[256] = { 0 };
 
   /* check whether <string> is a string                                  */
-  if ( ! IsStringConv( string ) ) {
+  while ( ! IsStringConv( string ) ) {
     string = ErrorReturnObj(
 	     "SplitString: first argument <string> must be a string (not a %s)",
 	     (Int)TNAM_OBJ(string), 0L,
 	     "you can replace <string> via 'return <string>;'" );
-    return FuncSplitStringInternal( self, string, seps, wspace );
   }
   
   /* check whether <seps> is a string                                  */
-  if ( ! IsStringConv( seps ) ) {
+  while ( ! IsStringConv( seps ) ) {
     seps = ErrorReturnObj(
 	     "SplitString: second argument <seps> must be a string (not a %s)",
 	     (Int)TNAM_OBJ(seps), 0L,
 	     "you can replace <seps> via 'return <seps>;'" );
-    return FuncSplitStringInternal( self, string, seps, wspace );
   }
   
   /* check whether <wspace> is a string                                  */
-  if ( ! IsStringConv( wspace ) ) {
+  while ( ! IsStringConv( wspace ) ) {
     wspace = ErrorReturnObj(
 	     "SplitString: third argument <wspace> must be a string (not a %s)",
 	     (Int)TNAM_OBJ(wspace), 0L,
 	     "you can replace <wspace> via 'return <wspace>;'" );
-    return FuncSplitStringInternal( self, string, seps, wspace );
   }
   
   /* set SPLITSTRINGSEPS by setting positions of characters in rem to 1 */
@@ -1882,7 +1821,6 @@ Obj FuncSplitStringInternal (
  
   /* create the result (list of strings) */
   res = NEW_PLIST(T_PLIST, 2);
-  SET_LEN_PLIST(res, 0);
   pos = 0;
 
   /* now do the splitting */
@@ -2080,7 +2018,7 @@ void UnbString (
   
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * * */
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * * */
 
 /****************************************************************************
 **
@@ -2125,7 +2063,6 @@ static Int ClearFiltsTab [] = {
 static Int HasFiltTab [] = {
 
     // string
-    T_STRING,                  FN_IS_EMPTY,   0,
     T_STRING,                  FN_IS_DENSE,   1,
     T_STRING,                  FN_IS_NDENSE,  0,
     T_STRING,                  FN_IS_HOMOG,   1,
@@ -2136,7 +2073,6 @@ static Int HasFiltTab [] = {
     T_STRING,                  FN_IS_NSORT,   0,
 
     // ssort string
-    T_STRING_SSORT,            FN_IS_EMPTY,   0,
     T_STRING_SSORT,            FN_IS_DENSE,   1,
     T_STRING_SSORT,            FN_IS_NDENSE,  0,
     T_STRING_SSORT,            FN_IS_HOMOG,   1,
@@ -2147,7 +2083,6 @@ static Int HasFiltTab [] = {
     T_STRING_SSORT,            FN_IS_NSORT,   0,
 
     // nsort string
-    T_STRING_NSORT,            FN_IS_EMPTY,   0,
     T_STRING_NSORT,            FN_IS_DENSE,   1,
     T_STRING_NSORT,            FN_IS_NDENSE,  0,
     T_STRING_NSORT,            FN_IS_HOMOG,   1,
@@ -2168,7 +2103,6 @@ static Int HasFiltTab [] = {
 static Int SetFiltTab [] = {
 
     // string
-    T_STRING,                  FN_IS_EMPTY,   T_STRING_SSORT,
     T_STRING,                  FN_IS_DENSE,   T_STRING,
     T_STRING,                  FN_IS_NDENSE,  -1,
     T_STRING,                  FN_IS_HOMOG,   T_STRING,
@@ -2179,7 +2113,6 @@ static Int SetFiltTab [] = {
     T_STRING,                  FN_IS_NSORT,   T_STRING_NSORT,
 
     // ssort string
-    T_STRING_SSORT,            FN_IS_EMPTY,   T_STRING_SSORT,
     T_STRING_SSORT,            FN_IS_DENSE,   T_STRING_SSORT,
     T_STRING_SSORT,            FN_IS_NDENSE,  -1,
     T_STRING_SSORT,            FN_IS_HOMOG,   T_STRING_SSORT,
@@ -2190,7 +2123,6 @@ static Int SetFiltTab [] = {
     T_STRING_SSORT,            FN_IS_NSORT,   -1,
 
     // nsort string
-    T_STRING_NSORT,            FN_IS_EMPTY,   -1,
     T_STRING_NSORT,            FN_IS_DENSE,   T_STRING_NSORT,
     T_STRING_NSORT,            FN_IS_NDENSE,  -1,
     T_STRING_NSORT,            FN_IS_HOMOG,   T_STRING_NSORT,
@@ -2212,7 +2144,6 @@ static Int SetFiltTab [] = {
 static Int ResetFiltTab [] = {
 
     // string
-    T_STRING,                  FN_IS_EMPTY,   T_STRING,
     T_STRING,                  FN_IS_DENSE,   T_STRING,
     T_STRING,                  FN_IS_NDENSE,  T_STRING,
     T_STRING,                  FN_IS_HOMOG,   T_STRING,
@@ -2223,7 +2154,6 @@ static Int ResetFiltTab [] = {
     T_STRING,                  FN_IS_NSORT,   T_STRING,
 
     // ssort string
-    T_STRING_SSORT,            FN_IS_EMPTY,   T_STRING_SSORT,
     T_STRING_SSORT,            FN_IS_DENSE,   T_STRING_SSORT,
     T_STRING_SSORT,            FN_IS_NDENSE,  T_STRING_SSORT,
     T_STRING_SSORT,            FN_IS_HOMOG,   T_STRING_SSORT,
@@ -2234,7 +2164,6 @@ static Int ResetFiltTab [] = {
     T_STRING_SSORT,            FN_IS_NSORT,   T_STRING_SSORT,
 
     // nsort string
-    T_STRING_NSORT,            FN_IS_EMPTY,   T_STRING_NSORT,
     T_STRING_NSORT,            FN_IS_DENSE,   T_STRING_NSORT,
     T_STRING_NSORT,            FN_IS_NDENSE,  T_STRING_NSORT,
     T_STRING_NSORT,            FN_IS_HOMOG,   T_STRING_NSORT,
@@ -2322,11 +2251,13 @@ static Int InitKernel (
         InitMarkFuncBags( t1 +COPYING +IMMUTABLE , MarkNoSubBags );
 #endif
     }
+
+#ifdef HPCGAP
     for ( t1 = T_STRING; t1 <= T_STRING_SSORT; t1 += 2 ) {
       MakeBagTypePublic( t1 + IMMUTABLE );
     }
-
     MakeBagTypePublic(T_CHAR);
+#endif
 
     /* make all the character constants once and for all                   */
     for ( i = 0; i < 256; i++ ) {
@@ -2425,9 +2356,7 @@ static Int InitKernel (
         ElmsListFuncs   [ t1            ] = ElmsString;
         ElmsListFuncs   [ t1 +IMMUTABLE ] = ElmsString;
         AssListFuncs    [ t1            ] = AssString;
-        AssListFuncs    [ t1 +IMMUTABLE ] = AssStringImm;
         AsssListFuncs   [ t1            ] = AsssString;
-        AsssListFuncs   [ t1 +IMMUTABLE ] = AsssStringImm;
         IsDenseListFuncs[ t1            ] = AlwaysYes;
         IsDenseListFuncs[ t1 +IMMUTABLE ] = AlwaysYes;
         IsHomogListFuncs[ t1            ] = IsHomogString;

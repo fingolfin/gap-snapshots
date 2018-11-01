@@ -26,22 +26,34 @@
 #ifndef GAP_PLIST_H
 #define GAP_PLIST_H
 
-#include <src/debug.h>
-#include <src/objects.h>
+#include "objects.h"
 
 /****************************************************************************
 **
 *F  NEW_PLIST(<type>,<plen>)  . . . . . . . . . . . allocate a new plain list
 **
-**  'NEW_PLIST'  allocates    a new plain   list  of  type <type> ('T_PLIST',
-**  'T_SET', 'T_VECTOR') that has room for at least <plen> elements.
+**  'NEW_PLIST'  allocates a new plain list of type <type> that has room for
+**  at least <plen> elements.
 **
 */
 static inline Obj NEW_PLIST(UInt type, Int plen)
 {
     GAP_ASSERT(plen >= 0);
     GAP_ASSERT(plen <= INT_INTOBJ_MAX);
+    GAP_ASSERT(FIRST_PLIST_TNUM <= type && type <= LAST_PLIST_TNUM);
     return NewBag(type, (plen + 1) * sizeof(Obj));
+}
+
+static inline Obj NEW_PLIST_IMM(UInt type, Int plen)
+{
+    return NEW_PLIST(type | IMMUTABLE, plen);
+}
+
+static inline Obj NEW_PLIST_WITH_MUTABILITY(Int mut, UInt type, Int plen)
+{
+    if (!mut)
+        type |= IMMUTABLE;
+    return NEW_PLIST(type, plen);
 }
 
 /****************************************************************************
@@ -62,18 +74,13 @@ static inline Int IS_PLIST(Obj list)
 **  This function is used in a GAP_ASSERT checking if calling functions like
 **  SET_ELM_PLIST is acceptable on an Obj.
 **
-**  Unlike IS_PLIST, this function also accepts plists which are being copied
-**  (and hence have the COPYING flag set), as well as positional objects
+**  Unlike IS_PLIST, this function also accepts positional objects
 **  (which have the same memory layout as plists), as the plist APIs using it
 **  for assertion checks are in practice invoked on such objects, too.
 */
 static inline Int IS_PLIST_OR_POSOBJ(Obj list)
 {
     UInt tnum = TNUM_OBJ(list);
-#if !defined(USE_THREADSAFE_COPYING)
-    if (tnum > COPYING)
-        tnum -= COPYING;
-#endif
     return (FIRST_PLIST_TNUM <= tnum && tnum <= LAST_PLIST_TNUM) ||
            tnum == T_POSOBJ;
 }
@@ -91,7 +98,7 @@ static inline Int CAPACITY_PLIST(Obj list)
     return SIZE_OBJ(list) / sizeof(Obj) - 1;
 }
 
-extern  Int             GrowPlist (
+extern  void             GrowPlist (
             Obj                 list,
             UInt                need );
 
@@ -212,10 +219,10 @@ static inline Obj * BASE_PTR_PLIST(Obj list)
 **
 *F  IS_DENSE_PLIST( <list> )  . . . . . check if <list> is a dense plain list
 **
-** Note that this only checks for plists that are known to be dense.  This is
-** very fast.  If you want  to also handle plists  for which it  is now known
-** whether they  are dense or not  (i.e. of type T_PLIST),  use IS_DENSE_LIST
-** instead.
+**  Note that this only checks for plists that are known to be dense. This is
+**  very fast.  If you want  to also handle plists  for which it is now known
+**  whether they are dense or not (i.e. of type 'T_PLIST'),
+**  use 'IS_DENSE_LIST' instead.
 */
 static inline Int IS_DENSE_PLIST(Obj list)
 {
@@ -225,10 +232,11 @@ static inline Int IS_DENSE_PLIST(Obj list)
 
 /****************************************************************************
 **
-*F  IS_MUTABLE_PLIST( <list> )  . . . . . . . . . . . is a plain list mutable
+*F  IS_PLIST_MUTABLE( <list> )  . . . . . . . . . . . is a plain list mutable
 */
-static inline Int IS_MUTABLE_PLIST(Obj list)
+static inline Int IS_PLIST_MUTABLE(Obj list)
 {
+    GAP_ASSERT(IS_PLIST(list));
     return !((TNUM_OBJ(list) - T_PLIST) % 2);
 }
 
@@ -267,8 +275,11 @@ static inline UInt PushPlist(Obj list, Obj val)
 *F  PopPlist( <list> ) . . . . . . . . .  remove last element of a plain list
 **
 **  Also returns the removed element. Caller is responsible for ensuring that
-**  the list is non-empty. Otherwise, an assertion may be raised, or the plist
+**  the list is non-empty. Otherwise an assertion may be raised or the plist
 **  be left in an invalid state.
+**
+**  Also clear the slot used by the pop'ed object, to avoid stale references
+**  preventing the garbage collector from collecting the pop'ed object.
 **
 */
 static inline Obj PopPlist(Obj list)
@@ -305,7 +316,7 @@ void            UnbPlistImm (
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

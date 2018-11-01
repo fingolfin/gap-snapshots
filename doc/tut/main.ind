@@ -53,9 +53,9 @@
   \indexspace
 
   \item kernel, \hyperpage{53}
-  \item \texttt{KnownAttributesOfObject}, \hyperpage{76}
-  \item \texttt{KnownPropertiesOfObject}, \hyperpage{76}
-  \item \texttt{KnownTruePropertiesOfObject}, \hyperpage{76}
+  \item \texttt{KnownAttributesOfObject}, \hyperpage{75}
+  \item \texttt{KnownPropertiesOfObject}, \hyperpage{75}
+  \item \texttt{KnownTruePropertiesOfObject}, \hyperpage{75}
 
   \indexspace
 
@@ -63,7 +63,7 @@
   \item \texttt{last2}, \hyperpage{15}
   \item \texttt{last3}, \hyperpage{15}
   \item leaving \textsf{GAP}, \hyperpage{9}
-  \item line editing, \hyperpage{11}
+  \item line editing, \hyperpage{11, 12}
   \item lists
     \subitem dense, \hyperpage{22}
     \subitem identical, \hyperpage{23}

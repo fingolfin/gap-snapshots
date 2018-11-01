@@ -654,14 +654,23 @@ LIBATOMIC_OPS_LDFLAGS
 LIBATOMIC_OPS_CPPFLAGS
 BUILD_LIBATOMIC_OPS
 ADDGUARDS2
+JULIA_LIBS
+JULIA_LDFLAGS
+JULIA_CPPFLAGS
+JULIA
 READLINE_LIBS
 READLINE_LDFLAGS
 READLINE_CPPFLAGS
+ZLIB_LIBS
+BUILD_ZLIB
+ZLIB_LDFLAGS
+ZLIB_CPPFLAGS
 GMP_LIBS
 BUILD_GMP
 GMP_LDFLAGS
 GMP_CPPFLAGS
 WARNING_CPPFLAGS
+GC_SOURCES
 HPCGAP
 CXXCPP
 LT_SYS_LIBRARY_PATH
@@ -764,11 +773,16 @@ with_gnu_ld
 with_sysroot
 enable_libtool_lock
 enable_hpcgap
+with_gc
 enable_debug
+enable_memory_checking
+enable_valgrind
 enable_Werror
 enable_popcnt
 with_gmp
+with_zlib
 with_readline
+with_julia
 with_ward
 enable_compat_mode
 enable_largefile
@@ -790,6 +804,8 @@ LT_SYS_LIBRARY_PATH
 CXXCPP
 GMP_CPPFLAGS
 GMP_LDFLAGS
+ZLIB_CPPFLAGS
+ZLIB_LDFLAGS
 READLINE_CPPFLAGS
 READLINE_LDFLAGS'
 
@@ -1412,6 +1428,9 @@ Optional Features:
   --disable-libtool-lock  avoid locking (might break parallel builds)
   --enable-hpcgap         enable HPC-GAP
   --enable-debug          enable debug mode
+  --enable-memory-checking
+                          enable memory checking
+  --enable-valgrind       enable valgrind extensions to GASMAN
   --enable-Werror         treat compiler warnings as errors
   --enable-popcnt         use __builtin_popcntl if available
   --disable-compat-mode   enable compatibility mode
@@ -1428,12 +1447,20 @@ Optional Packages:
   --with-gnu-ld           assume the C compiler uses GNU ld [default=no]
   --with-sysroot[=DIR]    Search for dependent libraries within DIR (or the
                           compiler's sysroot if not specified).
+  --with-gc[=default|gasman|boehm|julia]
+                          specify which garbage collector to use (default:
+                          gasman; for HPC-GAP: boehm)
   --with-gmp[=builtin|PREFIX]
                           prefix of GMP installation. e.g. /usr/local; specify
                           `builtin' to let GAP builds its own version of GMP
+  --with-zlib[=builtin|PREFIX]
+                          prefix of zlib installation. e.g. /usr/local;
+                          specify `builtin' to let GAP builds its own version
+                          of zlib
   --with-readline[=PREFIX]
                           support fancy command line editing via GNU readline;
                           optionally specify a prefix where it can be found
+  --with-julia[=PREFIX]   specify a prefix where julia can be found
   --with-ward[=PREFIX]    prefix to the ward tool (used for building HPC-GAP)
 
 Some influential environment variables:
@@ -1459,6 +1486,10 @@ Some influential environment variables:
   GMP_CPPFLAGS
               C preprocessor flags for GMP headers
   GMP_LDFLAGS linker flags for GMP libraries
+  ZLIB_CPPFLAGS
+              C preprocessor flags for ZLIB headers
+  ZLIB_LDFLAGS
+              linker flags for ZLIB libraries
   READLINE_CPPFLAGS
               C preprocessor flags for READLINE headers
   READLINE_LDFLAGS
@@ -2200,136 +2231,6 @@ fi
   eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
 
 } # ac_fn_c_check_header_mongrel
-
-# ac_fn_c_find_intX_t LINENO BITS VAR
-# -----------------------------------
-# Finds a signed integer type with width BITS, setting cache variable VAR
-# accordingly.
-ac_fn_c_find_intX_t ()
-{
-  as_lineno=${as_lineno-"$1"} as_lineno_stack=as_lineno_stack=$as_lineno_stack
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for int$2_t" >&5
-$as_echo_n "checking for int$2_t... " >&6; }
-if eval \${$3+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  eval "$3=no"
-     # Order is important - never check a type that is potentially smaller
-     # than half of the expected target width.
-     for ac_type in int$2_t 'int' 'long int' \
-	 'long long int' 'short int' 'signed char'; do
-       cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-$ac_includes_default
-	     enum { N = $2 / 2 - 1 };
-int
-main ()
-{
-static int test_array [1 - 2 * !(0 < ($ac_type) ((((($ac_type) 1 << N) << N) - 1) * 2 + 1))];
-test_array [0] = 0;
-return test_array [0];
-
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_compile "$LINENO"; then :
-  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-$ac_includes_default
-	        enum { N = $2 / 2 - 1 };
-int
-main ()
-{
-static int test_array [1 - 2 * !(($ac_type) ((((($ac_type) 1 << N) << N) - 1) * 2 + 1)
-		 < ($ac_type) ((((($ac_type) 1 << N) << N) - 1) * 2 + 2))];
-test_array [0] = 0;
-return test_array [0];
-
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_compile "$LINENO"; then :
-
-else
-  case $ac_type in #(
-  int$2_t) :
-    eval "$3=yes" ;; #(
-  *) :
-    eval "$3=\$ac_type" ;;
-esac
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-       if eval test \"x\$"$3"\" = x"no"; then :
-
-else
-  break
-fi
-     done
-fi
-eval ac_res=\$$3
-	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-$as_echo "$ac_res" >&6; }
-  eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
-
-} # ac_fn_c_find_intX_t
-
-# ac_fn_c_find_uintX_t LINENO BITS VAR
-# ------------------------------------
-# Finds an unsigned integer type with width BITS, setting cache variable VAR
-# accordingly.
-ac_fn_c_find_uintX_t ()
-{
-  as_lineno=${as_lineno-"$1"} as_lineno_stack=as_lineno_stack=$as_lineno_stack
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for uint$2_t" >&5
-$as_echo_n "checking for uint$2_t... " >&6; }
-if eval \${$3+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  eval "$3=no"
-     # Order is important - never check a type that is potentially smaller
-     # than half of the expected target width.
-     for ac_type in uint$2_t 'unsigned int' 'unsigned long int' \
-	 'unsigned long long int' 'unsigned short int' 'unsigned char'; do
-       cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-$ac_includes_default
-int
-main ()
-{
-static int test_array [1 - 2 * !((($ac_type) -1 >> ($2 / 2 - 1)) >> ($2 / 2 - 1) == 3)];
-test_array [0] = 0;
-return test_array [0];
-
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_compile "$LINENO"; then :
-  case $ac_type in #(
-  uint$2_t) :
-    eval "$3=yes" ;; #(
-  *) :
-    eval "$3=\$ac_type" ;;
-esac
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
-       if eval test \"x\$"$3"\" = x"no"; then :
-
-else
-  break
-fi
-     done
-fi
-eval ac_res=\$$3
-	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-$as_echo "$ac_res" >&6; }
-  eval $as_lineno_stack; ${as_lineno_stack:+:} unset as_lineno
-
-} # ac_fn_c_find_uintX_t
 
 # ac_fn_c_check_type LINENO TYPE VAR INCLUDES
 # -------------------------------------------
@@ -16732,11 +16633,8 @@ _ACEOF
 # Check whether --enable-hpcgap was given.
 if test "${enable_hpcgap+set}" = set; then :
   enableval=$enable_hpcgap;
-$as_echo "#define HPCGAP 1" >>confdefs.h
-
 else
   enable_hpcgap=no
-
 fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether to enable HPC-GAP" >&5
@@ -16748,12 +16646,76 @@ HPCGAP=$enable_hpcgap
 
 if test "x$enable_hpcgap" = xyes; then :
 
-    # HACK (see issue #9)
+
+$as_echo "#define HPCGAP 1" >>confdefs.h
+
+
+    # HACK, see https://github.com/fingolfin/gap/issues/9
 
 $as_echo "#define MAX_GC_THREADS 4" >>confdefs.h
 
 
 fi
+
+
+# Check whether --with-gc was given.
+if test "${with_gc+set}" = set; then :
+  withval=$with_gc;
+else
+  with_gc=default
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking which garbage collector to use" >&5
+$as_echo_n "checking which garbage collector to use... " >&6; }
+if test "x$with_gc" = xyes; then :
+  with_gc=default
+fi
+if test "x$with_gc" = xdefault; then :
+
+    if test "x$enable_hpcgap" = xyes; then :
+  with_gc=boehm
+else
+  with_gc=gasman
+fi
+
+fi
+case $with_gc in #(
+  none|no) :
+    as_fn_error $? "cannot run GAP without a garbage collector" "$LINENO" 5 ;; #(
+  boehm) :
+    if test "x$enable_hpcgap" = xno; then :
+  as_fn_error $? "Boehm GC can only be used with HPC-GAP" "$LINENO" 5
+fi
+                 GC_SOURCES=src/boehm_gc.c
+
+
+$as_echo "#define USE_BOEHM_GC 1" >>confdefs.h
+
+                 ;; #(
+  gasman) :
+    if test "x$enable_hpcgap" = xyes; then :
+  as_fn_error $? "GASMAN can not be used with HPC-GAP" "$LINENO" 5
+fi
+                 GC_SOURCES=src/gasman.c
+
+
+$as_echo "#define USE_GASMAN 1" >>confdefs.h
+
+                 ;; #(
+  julia) :
+    GC_SOURCES=src/julia_gc.c
+
+
+$as_echo "#define USE_JULIA_GC 1" >>confdefs.h
+
+                 ;; #(
+  *) :
+    as_fn_error $? "Invalid gc method '$with_gc', use default|none|gasman|boehm|julia" "$LINENO" 5 ;; #(
+  *) :
+     ;;
+esac
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $with_gc" >&5
+$as_echo "$with_gc" >&6; }
 
 # Check whether --enable-debug was given.
 if test "${enable_debug+set}" = set; then :
@@ -16769,6 +16731,46 @@ fi
 $as_echo_n "checking whether to enable debug mode... " >&6; }
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $enable_debug" >&5
 $as_echo "$enable_debug" >&6; }
+
+# Check whether --enable-memory-checking was given.
+if test "${enable_memory_checking+set}" = set; then :
+  enableval=$enable_memory_checking;
+$as_echo "#define GAP_MEM_CHECK 1" >>confdefs.h
+
+else
+  enable_memory_checking=no
+
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether to enable memory checking" >&5
+$as_echo_n "checking whether to enable memory checking... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $enable_memory_checking" >&5
+$as_echo "$enable_memory_checking" >&6; }
+
+# Check whether --enable-valgrind was given.
+if test "${enable_valgrind+set}" = set; then :
+  enableval=$enable_valgrind;
+$as_echo "#define MEMORY_CANARY 1" >>confdefs.h
+
+else
+  enable_valgrind=no
+
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether to enable valgrind extensions to GASMAN" >&5
+$as_echo_n "checking whether to enable valgrind extensions to GASMAN... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $enable_valgrind" >&5
+$as_echo "$enable_valgrind" >&6; }
+
+if test "x$enable_valgrind" != "xno" -a "x$enable_memory_checking" != "xno"; then
+    as_fn_error $? "--enable-valgrind and --enable-memory-checking cannot be used at the same time" "$LINENO" 5
+fi
+
+if test "x$with_gc" != "xgasman"; then
+    if test "x$enable_valgrind" != "xno" -o "x$enable_memory_checking" != "xno"; then
+        as_fn_error $? "--enable-valgrind and --enable-memory-checking are only compatible with GASMAN" "$LINENO" 5
+    fi
+fi
 
 
 # Check whether --enable-Werror was given.
@@ -16809,6 +16811,27 @@ ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
+
+    cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+      #ifndef __cplusplus
+       #error "no C++"
+       #endif
+int
+main ()
+{
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+  ax_compiler_cxx=yes;
+else
+  ax_compiler_cxx=no;
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 
     # Always pass -Werror=unknown-warning-option to get Clang to fail on bad
     # flags, otherwise they are always appended to the warn_cflags variable, and
@@ -16980,7 +17003,7 @@ done
 
 
 
-for flag in              -Wall             -Wextra             -Wundef             -Wnested-externs             -Wwrite-strings             -Wpointer-arith                                                 -Wredundant-decls             -Wno-unused-parameter             -Wmissing-field-initializers             -Wformat=2             -Wold-style-definition                         -Wformat-nonliteral             -Wformat-security             -Wno-sign-compare             -Wstrict-aliasing             -Wshadow             -Winline             -Wpacked             -Wmissing-format-attribute                         -Winit-self             -Wredundant-decls             -Wmissing-include-dirs             -Wunused-but-set-variable             -Warray-bounds             -Wimplicit-function-declaration             -Wreturn-type             -Wswitch-enum                         -Wno-implicit-fallthrough             -Wno-inline                                                             ; do
+for flag in              -Wall             -Wextra             -Wundef             -Wwrite-strings             -Wpointer-arith                         -Wredundant-decls             -Wno-unused-parameter             -Wmissing-field-initializers             -Wformat=2             -Wold-style-definition                         -Wformat-nonliteral             -Wformat-security             -Wno-sign-compare             -Wstrict-aliasing             -Wshadow             -Winline             -Wpacked             -Wmissing-format-attribute                         -Winit-self             -Wredundant-decls             -Wmissing-include-dirs             -Wunused-but-set-variable             -Warray-bounds             -Wreturn-type                                     -Wno-implicit-fallthrough             -Wno-inline             -Wduplicated-cond             -Wduplicated-branches             -Wlogical-op             -Wrestrict                         -Wdouble-promotion             -Wno-cast-function-type                                                             ; do
   as_CACHEVAR=`$as_echo "ax_cv_check_cflags_$ax_compiler_flags_test_$flag" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether C compiler accepts $flag" >&5
 $as_echo_n "checking whether C compiler accepts $flag... " >&6; }
@@ -17051,6 +17074,84 @@ fi
 
 done
 
+        if test "$ax_compiler_cxx" = "no" ; then
+            # C-only flags. Warn in C++
+
+
+
+
+for flag in              -Wnested-externs                                                 -Wimplicit-function-declaration             -Wold-style-definition             -Wjump-misses-init             ; do
+  as_CACHEVAR=`$as_echo "ax_cv_check_cflags_$ax_compiler_flags_test_$flag" | $as_tr_sh`
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether C compiler accepts $flag" >&5
+$as_echo_n "checking whether C compiler accepts $flag... " >&6; }
+if eval \${$as_CACHEVAR+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+
+  ax_check_save_flags=$CFLAGS
+  CFLAGS="$CFLAGS $ax_compiler_flags_test $flag"
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+int
+main ()
+{
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"; then :
+  eval "$as_CACHEVAR=yes"
+else
+  eval "$as_CACHEVAR=no"
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
+  CFLAGS=$ax_check_save_flags
+fi
+eval ac_res=\$$as_CACHEVAR
+	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
+$as_echo "$ac_res" >&6; }
+if eval test \"x\$"$as_CACHEVAR"\" = x"yes"; then :
+
+if ${WARNING_CPPFLAGS+:} false; then :
+
+  case " $WARNING_CPPFLAGS " in #(
+  *" $flag "*) :
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: : WARNING_CPPFLAGS already contains \$flag"; } >&5
+  (: WARNING_CPPFLAGS already contains $flag) 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; } ;; #(
+  *) :
+
+     as_fn_append WARNING_CPPFLAGS " $flag"
+     { { $as_echo "$as_me:${as_lineno-$LINENO}: : WARNING_CPPFLAGS=\"\$WARNING_CPPFLAGS\""; } >&5
+  (: WARNING_CPPFLAGS="$WARNING_CPPFLAGS") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }
+     ;;
+esac
+
+else
+
+  WARNING_CPPFLAGS=$flag
+  { { $as_echo "$as_me:${as_lineno-$LINENO}: : WARNING_CPPFLAGS=\"\$WARNING_CPPFLAGS\""; } >&5
+  (: WARNING_CPPFLAGS="$WARNING_CPPFLAGS") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }
+
+fi
+
+else
+  :
+fi
+
+done
+
+        fi
 
 fi
     if test "$ax_enable_compile_warnings" = "error"; then :
@@ -17465,6 +17566,180 @@ $as_echo "#define USE_GMP 1" >>confdefs.h
 
 
 
+# Check whether --with-zlib was given.
+if test "${with_zlib+set}" = set; then :
+  withval=$with_zlib;
+else
+  with_zlib=yes
+fi
+
+
+BUILD_ZLIB=no
+ZLIB_CPPFLAGS=
+ZLIB_LDFLAGS=
+ZLIB_LIBS="-lz"
+case $with_zlib in #(
+  builtin) :
+
+    # user explicitly requested to use builtin zlib
+    BUILD_ZLIB=yes
+    { $as_echo "$as_me:${as_lineno-$LINENO}: Using bundled zlib" >&5
+$as_echo "$as_me: Using bundled zlib" >&6;}
+   ;; #(
+  no) :
+
+    as_fn_error $? "Building without zlib is not supported" "$LINENO" 5
+   ;; #(
+  system) :
+    with_zlib=yes ;; #(
+    yes) :
+     ;; #(
+  *) :
+
+    ZLIB_CPPFLAGS="-I${with_zlib}/include"
+    ZLIB_LDFLAGS="-L${with_zlib}/lib"
+
+ ;; #(
+  *) :
+     ;;
+esac
+
+
+if test $BUILD_ZLIB = no; then :
+
+    # try to link against zlib
+
+
+
+
+  if ${ax_cv_have_ZLIB+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  save_CPPFLAGS="$CPPFLAGS"
+     save_LDFLAGS="$LDFLAGS"
+     save_LIBS="$LIBS"
+
+     if test "x$ZLIB_CPPFLAGS" != "x"; then :
+  CPPFLAGS="$CPPFLAGS $ZLIB_CPPFLAGS"
+fi
+
+     if test "x$ZLIB_LDFLAGS" != "x"; then :
+  LDFLAGS="$LDFLAGS $ZLIB_LDFLAGS"
+fi
+
+     ac_fn_c_check_header_mongrel "$LINENO" "zlib.h" "ac_cv_header_zlib_h" "$ac_includes_default"
+if test "x$ac_cv_header_zlib_h" = xyes; then :
+
+       { $as_echo "$as_me:${as_lineno-$LINENO}: checking for inflateEnd in -lz" >&5
+$as_echo_n "checking for inflateEnd in -lz... " >&6; }
+if ${ac_cv_lib_z_inflateEnd+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lz  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char inflateEnd ();
+int
+main ()
+{
+return inflateEnd ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_z_inflateEnd=yes
+else
+  ac_cv_lib_z_inflateEnd=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_z_inflateEnd" >&5
+$as_echo "$ac_cv_lib_z_inflateEnd" >&6; }
+if test "x$ac_cv_lib_z_inflateEnd" = xyes; then :
+  ax_cv_have_ZLIB=yes
+else
+  ax_cv_have_ZLIB=no
+fi
+
+
+else
+  ax_cv_have_ZLIB=no
+fi
+
+
+
+     CPPFLAGS="$save_CPPFLAGS"
+     LDFLAGS="$save_LDFLAGS"
+     LIBS="$save_LIBS"
+
+fi
+
+
+  if test "$ax_cv_have_ZLIB" = "yes"; then :
+
+$as_echo "#define HAVE_ZLIB 1" >>confdefs.h
+
+
+fi
+
+    if test $ax_cv_have_ZLIB = no; then :
+
+        if test "x$with_zlib" = "xyes"; then :
+
+          BUILD_ZLIB=yes
+          { $as_echo "$as_me:${as_lineno-$LINENO}: No usable zlib found, switching to included zlib" >&5
+$as_echo "$as_me: No usable zlib found, switching to included zlib" >&6;}
+
+else
+  as_fn_error $? "zlib not found at prefix $with_zlib" "$LINENO" 5
+
+fi
+
+fi
+
+fi
+
+# Use bundled zlib if requested
+if test x$BUILD_ZLIB = xyes; then :
+
+  BUILD_ZLIB=yes
+  ZLIB_CPPFLAGS='-I${abs_builddir}/extern/install/zlib/include'
+  case $host_os in #(
+  *cygwin*) :
+
+      ZLIB_LDFLAGS='-L${abs_builddir}/extern/install/zlib/lib/ -lz'
+     ;; #(
+  *) :
+
+      ZLIB_LDFLAGS='${abs_builddir}/extern/install/zlib/lib/libz.a'
+
+   ;; #(
+  *) :
+     ;;
+esac
+
+  ZLIB_LIBS=
+
+fi
+
+
+
+
+
+
+
+
 # Check whether --with-readline was given.
 if test "${with_readline+set}" = set; then :
   withval=$with_readline;
@@ -17606,6 +17881,113 @@ fi
 
 
 
+
+# Check whether --with-julia was given.
+if test "${with_julia+set}" = set; then :
+  withval=$with_julia;
+else
+  with_julia=no
+
+fi
+
+
+if test "x$with_julia" != xno; then :
+
+  # Extract the first word of "julia", so it can be a program name with args.
+set dummy julia; ac_word=$2
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if ${ac_cv_path_JULIA+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  case $JULIA in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_JULIA="$JULIA" # Let the user override the test with a path.
+  ;;
+  *)
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in ${with_julia}/bin ${PATH}
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
+    ac_cv_path_JULIA="$as_dir/$ac_word$ac_exec_ext"
+    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+  ;;
+esac
+fi
+JULIA=$ac_cv_path_JULIA
+if test -n "$JULIA"; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $JULIA" >&5
+$as_echo "$JULIA" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+
+  if test "x$JULIA" = x; then :
+   as_fn_error $? "no julia executable found" "$LINENO" 5
+fi
+
+  JL_SHARE=$($JULIA -e 'print(joinpath(Sys.BINDIR, Base.DATAROOTDIR, "julia"))')
+  if test -f "${JL_SHARE}/julia-config.jl"; then :
+
+else
+  as_fn_error $? "no julia-config.jl found" "$LINENO" 5
+fi
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for JULIA_CPPFLAGS" >&5
+$as_echo_n "checking for JULIA_CPPFLAGS... " >&6; }
+  JULIA_CPPFLAGS=$(${JULIA} ${JL_SHARE}/julia-config.jl --cflags 2>/dev/null)
+  if  test $? != 0 ; then :
+  as_fn_error $? "failed to obtain JULIA_CPPFLAGS from julia-config.jl" "$LINENO" 5
+fi
+  JULIA_CPPFLAGS=${JULIA_CPPFLAGS/-std=gnu99/}  # need to remove -std=gnu99 for our C++ code
+  # remove apostrophes, they mess up quoting when used in shell code(although
+  # they are fine inside of Makefiles); this could cause problems if any
+  # paths involve spaces, but then we likely will haves problem in other
+  # places; in any case, if anybody ever cares about this, we can work on
+  # finding a better solution.
+  JULIA_CPPFLAGS=${JULIA_CPPFLAGS//\'/}
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${JULIA_CPPFLAGS}" >&5
+$as_echo "${JULIA_CPPFLAGS}" >&6; }
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for JULIA_LDFLAGS" >&5
+$as_echo_n "checking for JULIA_LDFLAGS... " >&6; }
+  JULIA_LDFLAGS=$(${JULIA} ${JL_SHARE}/julia-config.jl --ldflags)
+  if  test $? != 0 ; then :
+  as_fn_error $? "failed to obtain JULIA_LDFLAGS from julia-config.jl" "$LINENO" 5
+fi
+  JULIA_LDFLAGS=${JULIA_LDFLAGS//\'/}
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${JULIA_LDFLAGS}" >&5
+$as_echo "${JULIA_LDFLAGS}" >&6; }
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for JULIA_LIBS" >&5
+$as_echo_n "checking for JULIA_LIBS... " >&6; }
+  JULIA_LIBS=$(${JULIA} ${JL_SHARE}/julia-config.jl --ldlibs)
+  if  test $? != 0 ; then :
+  as_fn_error $? "failed to obtain JULIA_LIBS from julia-config.jl" "$LINENO" 5
+fi
+  JULIA_LIBS=${JULIA_LIBS//\'/}
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${JULIA_LIBS}" >&5
+$as_echo "${JULIA_LIBS}" >&6; }
+
+fi
+
+
+
+
+
+
+
 # Check whether --with-ward was given.
 if test "${with_ward+set}" = set; then :
   withval=$with_ward;
@@ -17693,7 +18075,9 @@ fi
   ATOMIC_OPS_LIBS=$LIBATOMIC_OPS_LDFLAGS
 
 
-$as_echo "#define BOEHM_GC 1" >>confdefs.h
+fi
+
+if test "x$with_gc" = xboehm; then :
 
   BUILD_BOEHM_GC=yes
   BOEHM_GC_CPPFLAGS='-I${abs_builddir}/extern/install/gc/include'
@@ -17712,6 +18096,12 @@ if test "x$enable_hpcgap" = xyes; then :
   GAPARCH="$host-hpcgap${ABI}"
 else
   GAPARCH="$host-default${ABI}"
+fi
+if test "x$ARCHEXT" != "x"; then :
+  GAPARCH="$GAPARCH-$ARCHEXT"
+fi
+if test "x$ARCH" != "x"; then :
+  GAPARCH="$ARCH"
 fi
 
 
@@ -17925,106 +18315,6 @@ SYS_IS_CYGWIN32=$CYGWIN
 
 SYS_IS_DARWIN=$DARWIN
 
-
-
-
-ac_fn_c_find_intX_t "$LINENO" "8" "ac_cv_c_int8_t"
-case $ac_cv_c_int8_t in #(
-  no|yes) ;; #(
-  *)
-
-cat >>confdefs.h <<_ACEOF
-#define int8_t $ac_cv_c_int8_t
-_ACEOF
-;;
-esac
-
-ac_fn_c_find_intX_t "$LINENO" "16" "ac_cv_c_int16_t"
-case $ac_cv_c_int16_t in #(
-  no|yes) ;; #(
-  *)
-
-cat >>confdefs.h <<_ACEOF
-#define int16_t $ac_cv_c_int16_t
-_ACEOF
-;;
-esac
-
-ac_fn_c_find_intX_t "$LINENO" "32" "ac_cv_c_int32_t"
-case $ac_cv_c_int32_t in #(
-  no|yes) ;; #(
-  *)
-
-cat >>confdefs.h <<_ACEOF
-#define int32_t $ac_cv_c_int32_t
-_ACEOF
-;;
-esac
-
-ac_fn_c_find_intX_t "$LINENO" "64" "ac_cv_c_int64_t"
-case $ac_cv_c_int64_t in #(
-  no|yes) ;; #(
-  *)
-
-cat >>confdefs.h <<_ACEOF
-#define int64_t $ac_cv_c_int64_t
-_ACEOF
-;;
-esac
-
-ac_fn_c_find_uintX_t "$LINENO" "8" "ac_cv_c_uint8_t"
-case $ac_cv_c_uint8_t in #(
-  no|yes) ;; #(
-  *)
-
-$as_echo "#define _UINT8_T 1" >>confdefs.h
-
-
-cat >>confdefs.h <<_ACEOF
-#define uint8_t $ac_cv_c_uint8_t
-_ACEOF
-;;
-  esac
-
-ac_fn_c_find_uintX_t "$LINENO" "16" "ac_cv_c_uint16_t"
-case $ac_cv_c_uint16_t in #(
-  no|yes) ;; #(
-  *)
-
-
-cat >>confdefs.h <<_ACEOF
-#define uint16_t $ac_cv_c_uint16_t
-_ACEOF
-;;
-  esac
-
-ac_fn_c_find_uintX_t "$LINENO" "32" "ac_cv_c_uint32_t"
-case $ac_cv_c_uint32_t in #(
-  no|yes) ;; #(
-  *)
-
-$as_echo "#define _UINT32_T 1" >>confdefs.h
-
-
-cat >>confdefs.h <<_ACEOF
-#define uint32_t $ac_cv_c_uint32_t
-_ACEOF
-;;
-  esac
-
-ac_fn_c_find_uintX_t "$LINENO" "64" "ac_cv_c_uint64_t"
-case $ac_cv_c_uint64_t in #(
-  no|yes) ;; #(
-  *)
-
-$as_echo "#define _UINT64_T 1" >>confdefs.h
-
-
-cat >>confdefs.h <<_ACEOF
-#define uint64_t $ac_cv_c_uint64_t
-_ACEOF
-;;
-  esac
 
 
 

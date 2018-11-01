@@ -91,7 +91,7 @@ gap> Info(InfoWarning, 1000, f());
 gap> r.(f());
 Error, Function call: <func> must return a value
 gap> r.(g());
-Error, Record: '<rec>.2' must have an assigned value
+Error, Record Element: '<rec>.2' must have an assigned value
 gap> (function() end)();
 gap> (function() return 2; end)();
 2
@@ -143,7 +143,7 @@ gap> f(2,3);
 gap> f := ({x,y..} -> [x,y]);
 Syntax error: Three dots required for variadic argument list in stream:1
 f := ({x,y..} -> [x,y]);
-           ^
+          ^^
 gap> f := ({x,y...} -> [x,y]);
 function( x, y... ) ... end
 gap> f(2,3);
@@ -186,6 +186,20 @@ end
 #
 gap> InstallGlobalFunction("CheeseCakeFunction123123", function() end);
 Error, global function `CheeseCakeFunction123123' is not declared yet
+
+#
+# test that the arguments in a function call are evaluated in the right order.
+#
+gap> makeCounter:= function() local n; n:=0; return function() n:=n+1; return n; end; end;;
+gap> f:=makeCounter();;
+gap> Print(f(), f(), f(), "\n");
+123
+gap> g:=function(x,y,z) return [x,y,z]; end;;
+gap> g(f(), f(), f());
+[ 4, 5, 6 ]
+gap> h:=function() return g(f(), f(), f()); end;;
+gap> h();
+[ 7, 8, 9 ]
 
 #
 gap> STOP_TEST("function.tst", 1);

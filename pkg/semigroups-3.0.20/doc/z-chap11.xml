@@ -1,0 +1,26 @@
+<Chapter Label = "GraphInverseSemigroups">
+  <Heading>
+    Graph inverse semigroups
+  </Heading>
+
+  In this chapter we describe a class of semigroups arising from directed
+  graphs. <P/>
+
+  The functionality in &Semigroups; for graph inverse semigroups was written
+  jointly by Zak Mesyan (UCCS) and J. D. Mitchell (St Andrews).
+  <P/>
+
+  <Section>
+    <Heading>
+      Creating graph inverse semigroups
+    </Heading>
+
+    <#Include Label = "GraphInverseSemigroup">
+    <#Include Label = "RangeSourceGraphInverseSemigroupElement">
+    <#Include Label = "IsVertex">
+    <#Include Label = "IsGraphInverseSemigroup">
+    <#Include Label = "GraphOfGraphInverseSemigroup">
+    <#Include Label = "IsGraphInverseSemigroupElementCollection">
+    <#Include Label = "IsGraphInverseSubsemigroup">
+  </Section>
+</Chapter>

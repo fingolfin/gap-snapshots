@@ -14,14 +14,14 @@
 **  True and Fail.
 */
 
-#include <src/bool.h>
+#include "bool.h"
 
-#include <src/ariths.h>
-#include <src/calls.h>
-#include <src/gap.h>
-#include <src/gvars.h>
-#include <src/io.h>
-#include <src/opers.h>
+#include "ariths.h"
+#include "calls.h"
+#include "gvars.h"
+#include "io.h"
+#include "modules.h"
+#include "opers.h"
 
 
 /****************************************************************************
@@ -98,9 +98,6 @@ void PrintBool (
     else if ( bool == Fail ) {
         Pr( "fail", 0L, 0L );
     }
-    else if ( bool == Undefined ) {
-        Pr( "Undefined", 0L, 0L );
-    }
     else {
         Pr( "<<very strange boolean value>>", 0L, 0L );
     }
@@ -111,19 +108,14 @@ void PrintBool (
 **
 *F  EqBool( <boolL>, <boolR> )  . . . . . . . . .  test if <boolL> =  <boolR>
 **
-**  'EqBool' returns 'True' if the two boolean values <boolL> and <boolR> are
-**  equal, and 'False' otherwise.
+**  'EqBool' returns '1' if the two boolean values <boolL> and <boolR> are
+**  equal, and '0' otherwise.
 */
 Int EqBool (
     Obj                 boolL,
     Obj                 boolR )
 {
-    if ( boolL == boolR ) {
-        return 1L;
-    }
-    else {
-        return 0L;
-    }
+    return boolL == boolR;
 }
 
 
@@ -131,15 +123,17 @@ Int EqBool (
 **
 *F  LtBool( <boolL>, <boolR> )  . . . . . . . . .  test if <boolL> <  <boolR>
 **
-**  The ordering of Booleans is true < false <= fail (the <= comes from
-**  the fact that Fail may be equal to False in some compatibility modes
+**  The ordering of Booleans is true < false < fail.
 */
 Int LtBool (
     Obj                 boolL,
     Obj                 boolR )
 {
-  return  ( boolL == True && boolR != True) ||
-    ( boolL == False && boolR == Fail && boolL != boolR);
+    if (boolL == True)
+        return boolR != True;
+    if (boolL == False)
+        return boolR == Fail;
+    return 0;
 }
 
 
@@ -324,8 +318,18 @@ void LoadBool( Obj obj )
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
+
+/****************************************************************************
+**
+*V  BagNames  . . . . . . . . . . . . . . . . . . . . . . . list of bag names
+*/
+static StructBagNames BagNames[] = {
+  { T_BOOL, "boolean or fail" },
+  { -1,     "" }
+};
+
 
 /****************************************************************************
 **
@@ -348,8 +352,10 @@ static StructGVarFilt GVarFilts [] = {
 static Int InitKernel (
     StructInitInfo *    module )
 {
+    // set the bag type names (for error messages and debugging)
+    InitBagNamesFromTable( BagNames );
+
     /* install the marking functions for boolean values                    */
-    InfoBags[ T_BOOL ].name = "boolean or fail";
     InitMarkFuncBags( T_BOOL, MarkNoSubBags );
 
     /* init filters and functions                                          */
@@ -393,7 +399,9 @@ static Int InitKernel (
     EqFuncs[ T_BOOL ][ T_BOOL ] = EqBool;
     LtFuncs[ T_BOOL ][ T_BOOL ] = LtBool;
 
+#ifdef HPCGAP
     MakeBagTypePublic(T_BOOL);
+#endif
     /* return success                                                      */
     return 0;
 }

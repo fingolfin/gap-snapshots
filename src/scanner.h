@@ -17,7 +17,7 @@
 #ifndef GAP_SCANNER_H
 #define GAP_SCANNER_H
 
-#include <src/system.h>
+#include "system.h"
 
 /****************************************************************************
 **
@@ -41,7 +41,6 @@ enum SCANNER_SYMBOLS {
     S_LBRACK            = (1UL<< 4)+0,
     S_LBRACE            = (1UL<< 4)+1,
     S_BLBRACK           = (1UL<< 4)+2,
-    S_BLBRACE           = (1UL<< 4)+3,
     S_RBRACK            = (1UL<< 5)+0,
     S_RBRACE            = (1UL<< 5)+1,
     S_DOT               = (1UL<< 6)+0,
@@ -55,33 +54,15 @@ enum SCANNER_SYMBOLS {
     S_READONLY          = (1UL<< 9)+4,
     S_DOTDOTDOT         = (1UL<< 9)+5,
 
-    S_PARTIALINT        = (1UL<<10)+0, // Some digits
-    S_INT               = (1UL<<10)+1,
-    S_FLOAT             = (1UL<<10)+2,
-
-    // A decimal point only, but in a context where we know it's the start of
-    // a number
-    S_PARTIALFLOAT1     = (1UL<<10)+3,
-
-    // Some digits and a decimal point
-    S_PARTIALFLOAT2     = (1UL<<10)+4,
-
-    // Some digits and a decimal point and an exponent indicator and maybe a
-    // sign, but no digits
-    S_PARTIALFLOAT3     = (1UL<<10)+5,
-
-    // Some digits and a decimal point and an exponent indicator and maybe a
-    // sign, and at least one digit
-    S_PARTIALFLOAT4     = (1UL<<10)+6,
+    S_INT               = (1UL<<10)+0,
+    S_FLOAT             = (1UL<<10)+1,
 
     S_TRUE              = (1UL<<11)+0,
     S_FALSE             = (1UL<<11)+1,
     S_CHAR              = (1UL<<11)+2,
     S_STRING            = (1UL<<11)+3,
-    S_PARTIALSTRING     = (1UL<<11)+4,
-    S_PARTIALTRIPSTRING = (1UL<<11)+5,
-    S_TILDE             = (1UL<<11)+6,
-    S_HELP              = (1UL<<11)+7,
+    S_TILDE             = (1UL<<11)+4,
+    S_HELP              = (1UL<<11)+5,
 
     S_REC               = (1UL<<12)+0,
 
@@ -137,7 +118,6 @@ enum SCANNER_SYMBOLS {
 
     S_EOF               = (1UL<<31),
 };
-/* TL: extern  UInt            Symbol; */
 
 
 /****************************************************************************
@@ -163,7 +143,7 @@ enum SCANNER_SYMBOLS {
 **  unsigned long integers, which is typedef-ed to 'TypSymbolSet'.
 **
 **  The classes are as follows, all other symbols are in a class themself:
-**      identifiers, IsBound, UnBind, Info, Assert
+**      identifiers, IsBound, Unbind, Info, Assert
 **      if, for, repeat, while, return
 **      elif, else
 **      not, and, or
@@ -182,9 +162,9 @@ typedef UInt            TypSymbolSet;
 *F  IS_IN( <symbol>, <set> )  . . . . . . . . is a symbol in a set of symbols
 **
 **  'IS_IN' returns non-zero if the symbol <symbol> is in the symbol set
-**  <set> and 0
-**  otherwise.  Due to the grouping into classes some symbol sets may contain
-**  more than mentioned, for  example 'IS_IN(S_POW,S_MULT|S_DIV|S_MOD)' is 1.
+**  <set> and 0 otherwise. Due to the grouping into classes some symbol sets
+**  may contain more than mentioned.
+**  For example 'IS_IN(S_POW,S_MULT|S_DIV|S_MOD)' is 1.
 **
 **  'IS_IN' is defined in the definition file of this package as follows:
 */
@@ -198,7 +178,7 @@ typedef UInt            TypSymbolSet;
 **
 **  'EXPRBEGIN'  is the  set  of  symbols   that might  start  an expression.
 **
-**  'STATBEGIN' is the set of symbols that might start a stament.
+**  'STATBEGIN' is the set of symbols that might start a statement.
 */
 #define EXPRBEGIN  (S_IDENT|S_ISBOUND|S_INT|S_TRUE|S_FALSE|S_TILDE \
                     |S_CHAR|S_STRING|S_LBRACK|S_REC|S_FUNCTION \
@@ -210,30 +190,22 @@ typedef UInt            TypSymbolSet;
 
 /****************************************************************************
 **
-*V  Value . . . . . . . . . . . .  value of the identifier, integer or string
+*V  Value . . . . . . . . . . . . , value of the identifier, float or integer
+*V  ValueObj . . . . . . . . . . . . . . . . . . . . . .  value of the string
 **
-**  If 'Symbol' is 'S_IDENT', 'S_INT' or 'S_STRING' the variable 'Value' holds
-**  the name of the identifier, the digits of the integer or the value of the
-**  string constant.
+**  If 'STATE(Symbol)' is 'S_IDENT', 'S_INT' or 'S_FLOAT' then normally the
+**  variable 'STATE(Value)' holds the name of the identifier, the digits of
+**  the integer or float literal as a C string. For large integer or float
+**  literals that do not fit into 'STATE(Value)', instead 'STATE(ValueObj)'
+**  holds the the literal as a GAP string object. If the symbol is 'S_STRING'
+**  or 'S_HELP', the string literal or help text is always stored in
+**  'STATE(ValueObj)' as a GAP string object.
 **
-**  Note  that  the  size  of  'Value'  limits  the  maximal  number  of
-**  significant  characters of  an identifier.  'GetIdent' truncates  an
-**  identifier after that many characters.
-**
-**  The  only other  symbols  which  may not  fit  into  Value are  long
-**  integers  or strings.  Therefore we  have  to check  in 'GetInt'  and
-**  'GetStr' if  the symbols is  not yet  completely read when  Value is
-**  filled.
-**
-**  We only fill Value up to SAFE_VALUE_SIZE normally. The last few
-**  bytes are used in the floating point parsing code to ensure that we don't
-**  stop the scan just before a non-digit (., E, +,-, etc.) which would make
-**  it hard for the scanner to carry on correctly.
+**  Note that the size of identifiers in GAP is limited to 1023 characters,
+**  hence identifiers are always stored in 'STATE(Value)'. For this reason,
+**  'GetIdent' truncates an identifier after that many characters.
 */
-/* TL: extern  Char            Value [1030]; */
-/* TL: extern  UInt            ValueLen; */
 
-#define         SAFE_VALUE_SIZE 1024
 
 /****************************************************************************
 **
@@ -271,23 +243,8 @@ extern int IsKeyword(const char * str);
 
 /****************************************************************************
 **
-*F  GetSymbol() . . . . . . . . . . . . . . . . .  get the next symbol, local
-**
-**  'GetSymbol' reads  the  next symbol from   the  input,  storing it in the
-**  variable 'Symbol'.  If 'Symbol' is  'T_IDENT', 'T_INT' or 'T_STRING'  the
-**  value of the symbol is stored in the variable 'Value'.  'GetSymbol' first
-**  skips all <space>, <tab> and <newline> characters and comments.
-**
-**  After reading  a  symbol the current  character   is the first  character
-**  beyond that symbol.
-*/
-extern void GetSymbol ( void );
-
-
-/****************************************************************************
-**
-*F  SyntaxError( <msg> )  . . . . . . . . . . . . . . .  raise a syntax error
-*F  SyntaxWarning( <msg> ) ..................display a syntax warning
+*F  SyntaxError( <msg> ) . . . . . . . . . . . . . . . . raise a syntax error
+*F  SyntaxWarning( <msg> ) . . . . . . . . . . . . . . raise a syntax warning
 **
 **  'SyntaxError' prints the current line, followed by the error message:
 **
@@ -311,8 +268,15 @@ extern void GetSymbol ( void );
 **  probabely  just reflect the  fact  that the parser has not resynchronized
 **  yet.  'NrErrLine' is reset to 0 if a new line is read in 'GetLine'.
 ** 
-**  'SyntaxWarning' displays in the same way but does not increase NrError or 
-**  NrErrLine
+**  'SyntaxWarning' displays in the same way but does not increase 'NrError'
+**  or 'NrErrLine'.
+**
+**  Note that unlike 'ErrorQuit', neither function raises an actual error,
+**  so execution continues as normal. Thus you must make sure that subsequent
+**  code can safely recover from the indicated error.
+**
+**  Both functions should only be called from the scanner or reader, but not
+**  from e.g. the interpreter or coder, let alone any other parts of GAP.
 **
 */
 extern  void            SyntaxError (
@@ -327,7 +291,7 @@ extern  void            SyntaxWarning (
 *F  Match( <symbol>, <msg>, <skipto> )  . match current symbol and fetch next
 **
 **  'Match' is the main  interface between the  scanner and the  parser.   It
-**  performs the  4 most common actions in  the scanner  with  just one call.
+**  performs the four most common actions in the scanner with  just one call.
 **  First it checks that  the current symbol stored  in the variable 'Symbol'
 **  is the expected symbol  as passed in the  argument <symbol>.  If  it  is,
 **  'Match' reads the next symbol from input  and returns.  Otherwise 'Match'
@@ -359,7 +323,7 @@ extern  void            SyntaxWarning (
 **  'else' or 'fi' symbol, or a symbol that is  contained in the set <follow>
 **  which is passed to 'ReadIf' and contains all symbols allowing  one of the
 **  calling functions  to resynchronize,  for example 'S_OD' if 'ReadIf'  has
-**  been called from 'ReadFor'.  <follow> always contain 'S_EOF', which 'Read'
+**  been called from 'ReadFor'. <follow> always contain 'S_EOF', which 'Read'
 **  uses to resynchronise.
 **
 **  If 'Match' needs to  read a  new line from  '*stdin*' or '*errin*' to get
@@ -373,7 +337,19 @@ extern void Match (
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F  ScanForFloatAfterDotHACK()
+**
+**  This function is called by 'ReadLiteral' if it encounters a single dot in
+**  form the of the symbol 'S_DOT'. The only legal way this could happen is
+**  if the dot is the start of a float literal like '.123'. As the scanner
+**  cannot detect this without being context aware, we must provide this
+**  function to allow the reader to signal to the scanner about this.
+*/
+extern void ScanForFloatAfterDotHACK(void);
+
+/****************************************************************************
+**
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************

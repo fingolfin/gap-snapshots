@@ -166,31 +166,47 @@
   [33X[1;0Y[29X[2XShowImpliedFilters[102X( [3Xfilter[103X ) [32X function[133X
   
   [33X[0;0YDisplays  information  about the filters that may be implied by [3Xfilter[103X. They
-  are given by their names. [10XShowImpliedFilters[110X first displays the names of all
+  are given by their names. [2XShowImpliedFilters[102X first displays the names of all
   filters  that  are  unconditionally  implied  by  [3Xfilter[103X.  It  then displays
   implications that require further filters to be present (indicating by [10X+[110X the
-  required   further   filters).   The   function  displays  only  first-level
-  implications, implications that follow in turn are not displayed (though [5XGAP[105X
-  will do these).[133X
+  required further filters).[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XShowImpliedFilters(IsMatrix);[127X[104X
+    [4X[25Xgap>[125X [27XShowImpliedFilters(IsNilpotentGroup);[127X[104X
     [4X[28XImplies:[128X[104X
-    [4X[28X   IsNearAdditiveElementWithInverse[128X[104X
-    [4X[28X   IsAdditiveElement[128X[104X
-    [4X[28X   IsMultiplicativeElement[128X[104X
-    [4X[28X   IsGeneralizedRowVector[128X[104X
+    [4X[28X   IsListOrCollection[128X[104X
+    [4X[28X   IsCollection[128X[104X
+    [4X[28X   IsDuplicateFree[128X[104X
+    [4X[28X   IsExtLElement[128X[104X
+    [4X[28X   CategoryCollections(IsExtLElement)[128X[104X
+    [4X[28X   IsExtRElement[128X[104X
+    [4X[28X   CategoryCollections(IsExtRElement)[128X[104X
+    [4X[28X   CategoryCollections(IsMultiplicativeElement)[128X[104X
+    [4X[28X   CategoryCollections(IsMultiplicativeElementWithOne)[128X[104X
+    [4X[28X   CategoryCollections(IsMultiplicativeElementWithInverse)[128X[104X
+    [4X[28X   IsGeneralizedDomain[128X[104X
+    [4X[28X   IsMagma[128X[104X
+    [4X[28X   IsMagmaWithOne[128X[104X
+    [4X[28X   IsMagmaWithInversesIfNonzero[128X[104X
+    [4X[28X   IsMagmaWithInverses[128X[104X
+    [4X[28X   IsAssociative[128X[104X
+    [4X[28X   HasMultiplicativeNeutralElement[128X[104X
+    [4X[28X   IsGeneratorsOfSemigroup[128X[104X
+    [4X[28X   IsSimpleSemigroup[128X[104X
+    [4X[28X   IsRegularSemigroup[128X[104X
+    [4X[28X   IsInverseSemigroup[128X[104X
+    [4X[28X   IsCompletelyRegularSemigroup[128X[104X
+    [4X[28X   IsGroupAsSemigroup[128X[104X
+    [4X[28X   IsMonoidAsSemigroup[128X[104X
+    [4X[28X   IsOrthodoxSemigroup[128X[104X
+    [4X[28X   IsSupersolvableGroup[128X[104X
+    [4X[28X   IsSolvableGroup[128X[104X
+    [4X[28X   IsNilpotentByFinite[128X[104X
     [4X[28X[128X[104X
     [4X[28X[128X[104X
     [4X[28XMay imply with:[128X[104X
-    [4X[28X+IsInternalRep[128X[104X
-    [4X[28X   IsOrdinaryMatrix[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X+CategoryCollections(CategoryCollections(IsAdditivelyCommutativeElement))[128X[104X
-    [4X[28X   IsAdditivelyCommutativeElement[128X[104X
-    [4X[28X[128X[104X
-    [4X[28X+IsGF2MatrixRep[128X[104X
-    [4X[28X   IsOrdinaryMatrix[128X[104X
+    [4X[28X+IsFinitelyGeneratedGroup[128X[104X
+    [4X[28X   IsPolycyclicGroup[128X[104X
     [4X[28X[128X[104X
   [4X[32X[104X
   
@@ -458,8 +474,7 @@
     [4X[25Xgap>[125X [27XKnownAttributesOfObject(g);[127X[104X
     [4X[28X[ "Size", "OneImmutable", "NrMovedPoints", "MovedPoints", [128X[104X
     [4X[28X  "GeneratorsOfMagmaWithInverses", "MultiplicativeNeutralElement", [128X[104X
-    [4X[28X  "HomePcgs", "Pcgs", "GeneralizedPcgs", "StabChainMutable", [128X[104X
-    [4X[28X  "StabChainOptions" ][128X[104X
+    [4X[28X  "HomePcgs", "Pcgs", "StabChainMutable", "StabChainOptions" ][128X[104X
   [4X[32X[104X
   
   
@@ -561,7 +576,8 @@
   the  setter  of  the  attribute  is called, to (possibly) store the computed
   value.  In  special circumstances, this behaviour can be altered dynamically
   on     an     attribute-by-attribute     basis,    using    the    functions
-  [10XDisableAttributeValueStoring[110X and [10XEnableAttributeValueStoring[110X.[133X
+  [2XDisableAttributeValueStoring[102X    ([14X13.6-5[114X)   and   [2XEnableAttributeValueStoring[102X
+  ([14X13.6-6[114X).[133X
   
   [33X[0;0YIn  general,  the  code  in the library assumes, for efficiency, but not for
   correctness,  that attribute values [13Xwill[113X be stored (in suitable objects), so
@@ -590,8 +606,8 @@
   
   [33X[0;0Yenables  the  usual  call of [10XSetter( [3Xattr[103X[10X )[110X when a method for [3Xattr[103X returns a
   value.  In  consequence  the values may be stored. This will usually have no
-  effect  unless  [10XDisableAttributeValueStoring[110X  has  previously  been used for
-  [3Xattr[103X. Note that [3Xattr[103X must be an attribute and [13Xnot[113X a property.[133X
+  effect unless [2XDisableAttributeValueStoring[102X ([14X13.6-5[114X) has previously been used
+  for [3Xattr[103X. Note that [3Xattr[103X must be an attribute and [13Xnot[113X a property.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xg := Group((1,2,3,4,5),(1,2,3));[127X[104X
@@ -672,28 +688,30 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xg:=Group((1,2),(1,2,3));;[127X[104X
     [4X[25Xgap>[125X [27XKnownPropertiesOfObject(g);[127X[104X
-    [4X[28X[ "IsFinite", "CanEasilyCompareElements", "CanEasilySortElements", [128X[104X
-    [4X[28X  "IsDuplicateFree", "IsGeneratorsOfMagmaWithInverses", [128X[104X
-    [4X[28X  "IsAssociative", "IsGeneratorsOfSemigroup", "IsSimpleSemigroup", [128X[104X
-    [4X[28X  "IsRegularSemigroup", "IsInverseSemigroup", [128X[104X
-    [4X[28X  "IsCompletelyRegularSemigroup", "IsCompletelySimpleSemigroup", [128X[104X
-    [4X[28X  "IsGroupAsSemigroup", "IsMonoidAsSemigroup", "IsOrthodoxSemigroup", [128X[104X
-    [4X[28X  "IsFinitelyGeneratedGroup", "IsSubsetLocallyFiniteGroup", [128X[104X
-    [4X[28X  "KnowsHowToDecompose", "IsNilpotentByFinite" ][128X[104X
+    [4X[28X[ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite",[128X[104X
+    [4X[28X  "CanEasilyCompareElements", "CanEasilySortElements",[128X[104X
+    [4X[28X  "IsDuplicateFree", "IsGeneratorsOfMagmaWithInverses",[128X[104X
+    [4X[28X  "IsAssociative", "IsGeneratorsOfSemigroup", "IsSimpleSemigroup",[128X[104X
+    [4X[28X  "IsRegularSemigroup", "IsInverseSemigroup",[128X[104X
+    [4X[28X  "IsCompletelyRegularSemigroup", "IsCompletelySimpleSemigroup",[128X[104X
+    [4X[28X  "IsGroupAsSemigroup", "IsMonoidAsSemigroup", "IsOrthodoxSemigroup",[128X[104X
+    [4X[28X  "IsFinitelyGeneratedGroup", "IsSubsetLocallyFiniteGroup",[128X[104X
+    [4X[28X  "KnowsHowToDecompose", "IsInfiniteAbelianizationGroup",[128X[104X
+    [4X[28X  "IsNilpotentByFinite", "IsTorsionFree", "IsFreeAbelian" ][128X[104X
     [4X[25Xgap>[125X [27XSize(g);[127X[104X
     [4X[28X6[128X[104X
     [4X[25Xgap>[125X [27XKnownPropertiesOfObject(g);[127X[104X
-    [4X[28X[ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", [128X[104X
-    [4X[28X  "CanEasilyCompareElements", "CanEasilySortElements", [128X[104X
-    [4X[28X  "IsDuplicateFree", "IsGeneratorsOfMagmaWithInverses", [128X[104X
-    [4X[28X  "IsAssociative", "IsGeneratorsOfSemigroup", "IsSimpleSemigroup", [128X[104X
-    [4X[28X  "IsRegularSemigroup", "IsInverseSemigroup", [128X[104X
-    [4X[28X  "IsCompletelyRegularSemigroup", "IsCompletelySimpleSemigroup", [128X[104X
-    [4X[28X  "IsGroupAsSemigroup", "IsMonoidAsSemigroup", "IsOrthodoxSemigroup", [128X[104X
-    [4X[28X  "IsFinitelyGeneratedGroup", "IsSubsetLocallyFiniteGroup", [128X[104X
-    [4X[28X  "KnowsHowToDecompose", "IsPerfectGroup", "IsSolvableGroup", [128X[104X
-    [4X[28X  "IsPolycyclicGroup", "IsNilpotentByFinite", "IsTorsionFree", [128X[104X
-    [4X[28X  "IsFreeAbelian" ][128X[104X
+    [4X[28X[ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite",[128X[104X
+    [4X[28X  "CanEasilyCompareElements", "CanEasilySortElements",[128X[104X
+    [4X[28X  "IsDuplicateFree", "IsGeneratorsOfMagmaWithInverses",[128X[104X
+    [4X[28X  "IsAssociative", "IsGeneratorsOfSemigroup", "IsSimpleSemigroup",[128X[104X
+    [4X[28X  "IsRegularSemigroup", "IsInverseSemigroup",[128X[104X
+    [4X[28X  "IsCompletelyRegularSemigroup", "IsCompletelySimpleSemigroup",[128X[104X
+    [4X[28X  "IsGroupAsSemigroup", "IsMonoidAsSemigroup", "IsOrthodoxSemigroup",[128X[104X
+    [4X[28X  "IsFinitelyGeneratedGroup", "IsSubsetLocallyFiniteGroup",[128X[104X
+    [4X[28X  "KnowsHowToDecompose", "IsPerfectGroup", "IsSolvableGroup",[128X[104X
+    [4X[28X  "IsPolycyclicGroup", "IsInfiniteAbelianizationGroup",[128X[104X
+    [4X[28X  "IsNilpotentByFinite", "IsTorsionFree", "IsFreeAbelian" ][128X[104X
     [4X[25Xgap>[125X [27XKnownTruePropertiesOfObject(g);[127X[104X
     [4X[28X[ "IsNonTrivial", "IsFinite", "CanEasilyCompareElements", [128X[104X
     [4X[28X  "CanEasilySortElements", "IsDuplicateFree", [128X[104X

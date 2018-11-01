@@ -12,20 +12,24 @@
 **  throughout the kernel
 */
 
-#include <src/saveload.h>
+#include "saveload.h"
 
-#include <src/bool.h>
-#include <src/calls.h>
-#include <src/compstat.h>
-#include <src/finfield.h>
-#include <src/gap.h>
-#include <src/gvars.h>
-#include <src/io.h>
-#include <src/macfloat.h>
-#include <src/read.h>
-#include <src/streams.h>
-#include <src/stringobj.h>
-#include <src/sysfiles.h>
+#include "bool.h"
+#include "calls.h"
+#include "compstat.h"
+#include "error.h"
+#include "finfield.h"
+#ifdef USE_GASMAN
+#include "gasman_intern.h"
+#endif
+#include "gvars.h"
+#include "io.h"
+#include "modules.h"
+#include "read.h"
+#include "streams.h"
+#include "stringobj.h"
+#include "sysfiles.h"
+#include "sysopt.h"
 
 #include <unistd.h>
 
@@ -43,19 +47,19 @@ static UInt1* LBPointer;
 static UInt1* LBEnd;
 static Obj userHomeExpand;
 
-#if !defined(BOEHM_GC)
+#ifdef USE_GASMAN
 
 static Int OpenForSave( Obj fname ) 
 {
   if (SaveFile != -1)
     {
-      Pr("Already saving",0L,0L);
+      Pr("Already saving\n",0L,0L);
       return 1;
     }
   SaveFile = SyFopen(CSTR_STRING(fname), "wb");
   if (SaveFile == -1)
     {
-      Pr("Couldn't open file %s to save workspace",
+      Pr("Couldn't open file %s to save workspace\n",
 	 (UInt)CSTR_STRING(fname),0L);
       return 1;
     }
@@ -68,13 +72,11 @@ static void CloseAfterSave( void )
 {
   if (SaveFile == -1)
     {
-      Pr("Internal error -- this should never happen",0L,0L);
-      SyExit(2);
+      Panic("Internal error -- this should never happen");
     }
 
-  if (write(syBuf[SaveFile].fp, LoadBuffer, LBPointer-LoadBuffer) < 0)
-    ErrorQuit("Cannot write to file descriptor %d, see 'LastSystemError();'\n",
-               syBuf[SaveFile].fp, 0L);
+  if (SyWrite(SaveFile, LoadBuffer, LBPointer - LoadBuffer) < 0)
+    ErrorQuit("Cannot write to file, see 'LastSystemError();'\n", 0L, 0L);
   SyFclose(SaveFile);
   SaveFile = -1;
 }
@@ -85,8 +87,7 @@ static void OpenForLoad( Char *fname )
 {
   if (LoadFile != -1)
     {
-      Pr("Internal error -- this should never happen\n",0L,0L);
-      SyExit(2);
+      Panic("Internal error -- this should never happen");
     }
   LoadFile = SyFopen(fname, "rb");
   if (LoadFile == -1)
@@ -101,8 +102,7 @@ static void CloseAfterLoad( void )
 {
   if (!LoadFile)
     {
-      Pr("Internal error -- this should never happen\n",0L,0L);
-      SyExit(2);
+      Panic("Internal error -- this should never happen");
     }
   SyFclose(LoadFile);
   LoadFile = -1;
@@ -110,9 +110,8 @@ static void CloseAfterLoad( void )
 
 void SAVE_BYTE_BUF( void )
 {
-  if (write(syBuf[SaveFile].fp, LoadBuffer, LBEnd-LoadBuffer) < 0)
-    ErrorQuit("Cannot write to file descriptor %d, see 'LastSystemError();'\n",
-               syBuf[SaveFile].fp, 0L);
+  if (SyWrite(SaveFile, LoadBuffer, LBEnd - LoadBuffer) < 0)
+    ErrorQuit("Cannot write to file, see 'LastSystemError();'\n", 0L, 0L);
   LBPointer = LoadBuffer;
   return;
 }
@@ -125,7 +124,7 @@ const Char * LoadByteErrorMessage = "Unexpected End of File in Load\n";
 UInt1 LOAD_BYTE_BUF( void )
 {
   Int ret;
-  ret = read(syBuf[LoadFile].fp, LoadBuffer, 100000);
+  ret = SyRead(LoadFile, LoadBuffer, 100000);
   if (ret <= 0)
     {
       Pr(LoadByteErrorMessage, 0L, 0L );
@@ -219,49 +218,24 @@ UInt8 LoadUInt8 ( void )
 
 void SaveUInt( UInt data )
 {
-  SAVE_BYTE( (UInt1) (data & 0xFF) );
-  SAVE_BYTE( (UInt1) ((data >> 8) &0xFF) );
-  SAVE_BYTE( (UInt1) ((data >> 16) &0xFF) );
-  SAVE_BYTE( (UInt1) ((data >> 24) &0xFF) );
-  SAVE_BYTE( (UInt1) ((data >> 32) &0xFF) );
-  SAVE_BYTE( (UInt1) ((data >> 40) &0xFF) );
-  SAVE_BYTE( (UInt1) ((data >> 48) &0xFF) );
-  SAVE_BYTE( (UInt1) ((data >> 56) &0xFF) );
+    SaveUInt8(data);
 }
 
 UInt8 LoadUInt ( void )
 {
-  UInt res;
-  res = (UInt)LOAD_BYTE();
-  res |= (UInt)LOAD_BYTE() << 8;
-  res |= (UInt)LOAD_BYTE() << 16;
-  res |= (UInt)LOAD_BYTE() << 24;
-  res |= (UInt)LOAD_BYTE() << 32;
-  res |= (UInt)LOAD_BYTE() << 40;
-  res |= (UInt)LOAD_BYTE() << 48;
-  res |= (UInt)LOAD_BYTE() << 56;
-
-  return res;
+    return LoadUInt8();
 }
 
 #else
 
 void SaveUInt( UInt data )
 {
-  SAVE_BYTE( (UInt1) (data & 0xFF) );
-  SAVE_BYTE( (UInt1) ((data >> 8) &0xFF) );
-  SAVE_BYTE( (UInt1) ((data >> 16) &0xFF) );
-  SAVE_BYTE( (UInt1) ((data >> 24) &0xFF) );
+    SaveUInt4(data);
 }
 
 UInt LoadUInt ( void )
 {
-  UInt res;
-  res = (UInt)LOAD_BYTE();
-  res |= (UInt)LOAD_BYTE() << 8;
-  res |= (UInt)LOAD_BYTE() << 16;
-  res |= (UInt)LOAD_BYTE() << 24;
-  return res;
+    return LoadUInt4();
 }
 
 #endif
@@ -288,8 +262,7 @@ void LoadCStr( Char *buf, UInt maxsize)
     }
   if (c != '\0')
     {
-      Pr("Buffer overflow reading workspace\n",0L,0L);
-      SyExit(1);
+      Panic("Buffer overflow reading workspace");
     }
 }
 
@@ -328,7 +301,7 @@ void LoadString ( Obj string )
 
 void SaveSubObj( Obj subobj )
 {
-#ifdef BOEHM_GC
+#ifndef USE_GASMAN
   // FIXME: HACK
   assert(0);
 #else
@@ -340,8 +313,8 @@ void SaveSubObj( Obj subobj )
     SaveUInt((UInt) subobj);
   else if ((((UInt)subobj & 3) != 0) || 
            subobj < (Bag)MptrBags || 
-           subobj > (Bag)OldBags ||
-           (Bag *)PTR_BAG(subobj) < OldBags)
+           subobj > (Bag)MptrEndBags ||
+           (Bag *)PTR_BAG(subobj) < MptrEndBags)
     {
       Pr("#W bad bag id %d found, 0 saved\n", (Int)subobj, 0L);
       SaveUInt(0);
@@ -353,7 +326,7 @@ void SaveSubObj( Obj subobj )
 
 Obj LoadSubObj( void )
 {
-#ifdef BOEHM_GC
+#ifndef USE_GASMAN
   // FIXME: HACK
   assert(0);
 #else
@@ -367,61 +340,13 @@ Obj LoadSubObj( void )
 #endif
 }
 
-void SaveHandler( ObjFunc hdlr )
-{
-  const Char * cookie;
-  if (hdlr == (ObjFunc)0)
-    SaveCStr("");
-  else
-    {
-      cookie = CookieOfHandler(hdlr);
-      if (!cookie)
-	{
-	  Pr("No cookie for Handler -- workspace will be corrupt\n",0,0);
-	  SaveCStr("");
-	}
-      SaveCStr(cookie);
-    }
-}
-
-
-ObjFunc LoadHandler( void )
-{
-  Char buf[256];
-  LoadCStr(buf, 256);
-  if (buf[0] == '\0')
-    return (ObjFunc) 0;
-  else
-    return HandlerOfCookie(buf);
-}
-
-
-void SaveDouble( Double d)
-{
-  UInt i;
-  UInt1 buf[sizeof(Double)];
-  memcpy(buf, &d, sizeof(Double));
-  for (i = 0; i < sizeof(Double); i++)
-    SAVE_BYTE(buf[i]);
-}
-
-Double LoadDouble( void )
-{
-  UInt i;
-  UInt1 buf[sizeof(Double)];
-  Double d;
-  for (i = 0; i < sizeof(Double); i++)
-    buf[i] = LOAD_BYTE();
-  memcpy(&d, buf, sizeof(Double));
-  return d;
-}
 
 /***************************************************************************
 **
 **  Bag level saving routines
 */
 
-#if !defined(BOEHM_GC)
+#ifdef USE_GASMAN
 
 static void SaveBagData (Bag bag )
 {
@@ -447,16 +372,11 @@ static void LoadBagData ( void )
   flags = LoadUInt1();
   size = LoadUInt();
 
-#ifdef DEBUG_LOADING
-  {
-    if (InfoBags[type].name == NULL)
+    if (TNAM_TNUM(type) == NULL)
       {
         Pr("Bad type %d, size %d\n",type,size);
         exit(1);
       }
-  }
-  
-#endif  
 
   /* Get GASMAN to set up the bag for me */
   bag = NextBagRestoring( type, flags, size );
@@ -473,7 +393,7 @@ static void LoadBagData ( void )
 **
 */
 
-#if !defined(BOEHM_GC)
+#ifdef USE_GASMAN
 
 static void WriteEndiannessMarker( void )
 {
@@ -515,8 +435,7 @@ static void CheckEndiannessMarker( void )
   if (x != 0x01020304L)
 #endif  
     {
-      Pr("Saved workspace with incompatible byte order\n",0L,0L);
-      SyExit(1);
+      Panic("Saved workspace with incompatible byte order");
     }
 }
 
@@ -525,6 +444,8 @@ static void CheckEndiannessMarker( void )
 **
 **  FuncBagStats
 */
+
+#ifdef USE_GASMAN
 
 static FILE *file;
 
@@ -541,6 +462,9 @@ Obj FuncBagStats(Obj self, Obj filename)
   return (Obj) 0;
 }
 
+#endif
+
+
 /***************************************************************************
 **
 **  Find Bags -- a useful debugging tool -- scan for a bag of specified
@@ -549,6 +473,7 @@ Obj FuncBagStats(Obj self, Obj filename)
 **  a functions body.
 */
 
+#ifdef USE_GASMAN
 
 static UInt fb_minsize, fb_maxsize, fb_tnum;
 static Bag hit;
@@ -572,6 +497,8 @@ Obj FuncFindBag( Obj self, Obj minsize, Obj maxsize, Obj tnum )
   return (hit != (Bag) 0) ? hit : Fail;
 }
 
+#endif
+
 
 /***************************************************************************
 **
@@ -587,7 +514,7 @@ Obj FuncFindBag( Obj self, Obj minsize, Obj maxsize, Obj tnum )
 **  The return value is either True or Fail
 */
 
-#if !defined(BOEHM_GC)
+#ifdef USE_GASMAN
 
 static UInt NextSaveIndex = 1;
 
@@ -601,13 +528,24 @@ static void RemoveSaveIndex( Bag bag)
   LINK_BAG(bag) = bag;
 }
 
+
+static Char * GetKernelDescription(void)
+{
+    static Char SyKernelDescription[256];
+    strcpy(SyKernelDescription, SyKernelVersion);
+    if (SyUseReadline) {
+        strcat(SyKernelDescription, " with readline");
+    }
+    return SyKernelDescription;
+}
+
 static void WriteSaveHeader( void )
 {
   UInt i;
   UInt globalcount = 0;
   
   SaveCStr("GAP workspace");
-  SaveCStr(SyKernelVersion);
+  SaveCStr(GetKernelDescription());
 
 #ifdef SYS_IS_64_BIT             
   SaveCStr("64 bit");
@@ -618,22 +556,15 @@ static void WriteSaveHeader( void )
   WriteEndiannessMarker();
   
   SaveCStr("Counts and Sizes");
-  SaveUInt(NrModules - NrBuiltinModules);
   for (i = 0; i < GlobalBags.nr; i++)
     if (GlobalBags.cookie[i] != NULL)
       globalcount++;
   SaveUInt(globalcount);
   SaveUInt(NextSaveIndex-1);
-  SaveUInt(AllocBags - OldBags);
-  
-  SaveCStr("Loaded Modules");
+  SaveUInt(AllocBags - MptrEndBags);
 
-  for ( i = NrBuiltinModules; i < NrModules; i++)
-    {
-      SaveUInt(Modules[i].info->type);
-      SaveUInt(Modules[i].isGapRootRelative);
-      SaveCStr(Modules[i].filename);
-    }
+  SaveCStr("Loaded Modules");
+  SaveModules();
 
   SaveCStr("Kernel to WS refs");
   for (i = 0; i < GlobalBags.nr; i++)
@@ -649,30 +580,21 @@ static void WriteSaveHeader( void )
 
 Obj SaveWorkspace( Obj fname )
 {
-#ifdef BOEHM_GC
-  Pr("SaveWorkspace is not currently supported when Boehm GC is in use",0,0);
+#ifndef USE_GASMAN
+  Pr("SaveWorkspace is only supported when GASMAN is in use",0,0);
   return Fail;
 
 #else
-  Int i;
   Obj fullname;
-  StructInitInfo * info;
+  Obj result;
 
   if (!IsStringConv(fname))
     ErrorQuit("usage: SaveWorkspace( <filename> )",0,0);
   /* maybe expand fname starting with ~/...   */
   fullname = Call1ArgsInNewReader(userHomeExpand, fname);
   
-  for (i = 0; i < NrModules; i++) {
-    info = Modules[i].info;
-    if (info->preSave != NULL && info->preSave(info)) {
-        Pr("Failed to save workspace -- problem reported in %s\n",
-           (Int)info->name, 0L);
-        for ( i--; i >= 0; i--)
-          info->postSave(info);
-        return Fail;
-    }
-  }
+  if (ModulesPreSave())
+    return Fail;
 
   /* Do a full garbage collection */
   CollectBags( 0, 1);
@@ -682,8 +604,10 @@ Obj SaveWorkspace( Obj fname )
   CallbackForAllBags( AddSaveIndex );
 
   /* Now do the work */
+  result = Fail;
   if (!OpenForSave( fullname ))
     {
+      result = True;
       WriteSaveHeader();
       SaveCStr("Bag data");
       SortHandlers( 1 ); /* Sort by address to speed up CookieOfHandler */
@@ -695,13 +619,9 @@ Obj SaveWorkspace( Obj fname )
   CallbackForAllBags( RemoveSaveIndex );
   
   /* Restore situation by calling all post-save methods */
-  for (i = 0; i < NrModules; i++) {
-    info = Modules[i].info;
-    if (info->postSave != NULL)
-      info->postSave(info);
-  }
+  ModulesPostSave();
 
-  return True;
+  return result;
 #endif
 }
 
@@ -729,16 +649,14 @@ Obj FuncSaveWorkspace(Obj self, Obj filename )
 
 void LoadWorkspace( Char * fname )
 {
-#ifdef BOEHM_GC
-  Pr("LoadWorkspace is not currently supported when Boehm GC is in use",0,0);
-  return;
+#ifndef USE_GASMAN
+  Pr("LoadWorkspace is only supported when GASMAN is in use\n",0,0);
 
 #else
-  UInt nMods, nGlobs, nBags, i, maxSize;
+  UInt nGlobs, nBags, i, maxSize;
   UInt globalcount = 0;
   Char buf[256];
   Obj * glob;
-  Int res;
 
   /* Open saved workspace  */
   OpenForLoad( fname );
@@ -754,10 +672,11 @@ void LoadWorkspace( Char * fname )
   if (strcmp (buf, "GAP workspace") == 0) {
 
      LoadCStr(buf,256);
-     if (strcmp (buf, SyKernelVersion) != 0) {
-        Pr("This workspace is not compatible with GAP kernel (%s, present: %s).\n", 
-           (long)buf, (long)SyKernelVersion);
-        SyExit(1);
+     if (strcmp(buf, GetKernelDescription()) != 0) {
+         Pr("This workspace is not compatible with GAP kernel (%s, present: "
+            "%s).\n",
+            (long)buf, (long)GetKernelDescription());
+         SyExit(1);
      }
 
      LoadCStr(buf,256);
@@ -780,11 +699,9 @@ void LoadWorkspace( Char * fname )
   LoadCStr(buf,256);
   if (strcmp(buf,"Counts and Sizes") != 0)
     {
-      Pr("Bad divider\n",0L,0L);
-      SyExit(1);
+      Panic("Bad divider");
     }
   
-  nMods = LoadUInt();
   nGlobs = LoadUInt();
   nBags = LoadUInt();
   maxSize = LoadUInt();
@@ -798,71 +715,15 @@ void LoadWorkspace( Char * fname )
   LoadCStr(buf,256);
   if (strcmp(buf,"Loaded Modules") != 0)
     {
-      Pr("Bad divider\n",0L,0L);
-      SyExit(1);
+      Panic("Bad divider");
     }
-
-  for (i = 0; i < nMods; i++)
-    {
-      UInt type = LoadUInt();
-      UInt isGapRootRelative = LoadUInt();
-      LoadCStr(buf,256);
-      if (isGapRootRelative)
-        READ_GAP_ROOT( buf);
-      else
-	{
-	  StructInitInfo *info = NULL;
- 	  /* Search for user module static case first */
-          if (IS_MODULE_STATIC(type)) {
-              UInt k;
-              for (k = 0; CompInitFuncs[k]; k++) {
-                  info = (*(CompInitFuncs[k]))();
-                  if (info == 0) {
-                      continue;
-                  }
-                  if (!strcmp(buf, info->name)) {
-                      break;
-                  }
-              }
-              if (CompInitFuncs[k] == 0) {
-                  Pr("Static module %s not found in loading kernel\n",
-                     (Int)buf, 0L);
-                  SyExit(1);
-              }
-	
-	  } else {
-	    /* and dynamic case */
-	    InitInfoFunc init; 
-	
-	    res = SyLoadModule(buf, &init);
-	    
-	    if (res != 0)
-	      {
-		Pr("Failed to load needed dynamic module %s, error code %d\n",
-		   (Int)buf, res);
-		SyExit(1);
-	      }
-	    info = (*init)();
-	     if (info == 0 )
-	       {
-		Pr("Failed to init needed dynamic module %s, error code %d\n",
-		   (Int)buf, (Int) info);
-		SyExit(1);
-	       }
-	  }
-	/* link and init me                                                    */
-	(info->initKernel)(info);
-	RecordLoadedModule(info, 0, buf);
-      }
-      
-    }
+  LoadModules();
 
   /* Now the kernel variables that point into the workspace */
   LoadCStr(buf,256);
   if (strcmp(buf,"Kernel to WS refs") != 0)
     {
-      Pr("Bad divider\n",0L,0L);
-       SyExit(1);
+      Panic("Bad divider");
     }
   SortGlobals(2);               /* globals by cookie for quick
                                  lookup */
@@ -890,16 +751,14 @@ void LoadWorkspace( Char * fname )
           SyExit(1);
         }
       *glob = LoadSubObj();
-#ifdef DEBUG_LOADING
-      Pr("Restored global %s\n",(Int)buf,0L);
-#endif
+      if (SyDebugLoading)
+          Pr("Restored global %s\n", (Int)buf, 0L);
     }
 
   LoadCStr(buf,256);
   if (strcmp(buf,"Bag data") != 0)
     {
-      Pr("Bad divider\n",0L,0L);
-      SyExit(1);
+      Panic("Bad divider");
     }
   
   SortHandlers(2);
@@ -908,10 +767,10 @@ void LoadWorkspace( Char * fname )
 
   FinishedRestoringBags();
 
-  /* Post restore methods are called elsewhere */
-  
   CloseAfterLoad();
 #endif
+
+    ModulesPostRestore();
 }
 
 static void PrSavedObj( UInt x)
@@ -982,7 +841,7 @@ Obj FuncDumpWorkspace( Obj self, Obj fname )
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 
@@ -994,8 +853,10 @@ static StructGVarFunc GVarFuncs [] = {
 
     GVAR_FUNC(SaveWorkspace, 1, "fname"),
     GVAR_FUNC(DumpWorkspace, 1, "fname"),
+#ifdef USE_GASMAN
     GVAR_FUNC(FindBag, 3, "minsize, maxsize, tnum"),
     GVAR_FUNC(BagStats, 1, "filename"),
+#endif
     { 0, 0, 0, 0, 0 }
 
 };
@@ -1029,9 +890,6 @@ static Int InitKernel (
 static Int InitLibrary (
     StructInitInfo *    module )
 {
-    /* Create dummy variable, to support tab-completion */
-    (void)GVarName("SaveWorkspace");
-
     /* init filters and functions                                          */
     InitGVarFuncsFromTable( GVarFuncs );
 

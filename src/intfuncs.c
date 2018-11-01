@@ -13,16 +13,17 @@
 ** large integer representation in use. See integer.c for other things.
 */
 
-#include <src/intfuncs.h>
+#include "intfuncs.h"
 
-#include <src/bool.h>
-#include <src/calls.h>
-#include <src/gap.h>
-#include <src/lists.h>
-#include <src/plist.h>
-#include <src/precord.h>
-#include <src/records.h>
-#include <src/stringobj.h>
+#include "bool.h"
+#include "calls.h"
+#include "error.h"
+#include "lists.h"
+#include "modules.h"
+#include "plist.h"
+#include "precord.h"
+#include "records.h"
+#include "stringobj.h"
 
 
 /****************************************************************************
@@ -61,14 +62,26 @@ void initGRMT(UInt4 *mt, UInt4 s)
     mt[624] = mti;
 }
 
+// Read s[pos], returning 0 if pos is past the error of the array
+static inline UChar checkedReadChar(UChar * s, UInt4 pos, UInt4 len)
+{
+    if (pos < len)
+        return s[pos];
+    else
+        return 0;
+}
+
 /* to read a seed string independently of endianness */
-static inline UInt4 uint4frombytes(UChar *s)
+static inline UInt4 uint4frombytes(UChar * s, UInt4 pos, UInt4 len)
 {
   UInt4 res;
-  res = s[3]; res <<= 8;
-  res += s[2]; res <<= 8;
-  res += s[1]; res <<= 8;
-  res += s[0];
+  res = checkedReadChar(s, pos + 3, len);
+  res <<= 8;
+  res += checkedReadChar(s, pos + 2, len);
+  res <<= 8;
+  res += checkedReadChar(s, pos + 1, len);
+  res <<= 8;
+  res += checkedReadChar(s, pos + 0, len);
   return res;
 }
 
@@ -76,7 +89,7 @@ Obj FuncInitRandomMT( Obj self, Obj initstr)
 {
   Obj str;
   UChar *init_key;
-  UInt4 *mt, key_length, i, j, k, N=624;
+  UInt4 *mt, key_length, byte_key_length, i, j, k, N = 624;
 
   /* check the seed, given as string */
   while (! IsStringConv(initstr)) {
@@ -96,15 +109,16 @@ Obj FuncInitRandomMT( Obj self, Obj initstr)
   i=1; j=0;
   /* Do not set these up until all garbage collection is done   */
   init_key = CHARS_STRING(initstr);
-  key_length = GET_LEN_STRING(initstr) / 4;
+  byte_key_length = GET_LEN_STRING(initstr);
+  key_length = byte_key_length / 4;
   k = (N>key_length ? N : key_length);
   for (; k; k--) {
-      mt[i] = (mt[i] ^ ((mt[i-1] ^ (mt[i-1] >> 30)) * 1664525UL))
-        + uint4frombytes(init_key+4*j) + j;
+      mt[i] = (mt[i] ^ ((mt[i - 1] ^ (mt[i - 1] >> 30)) * 1664525UL)) +
+              uint4frombytes(init_key, 4 * j, byte_key_length) + j;
       mt[i] &= 0xffffffffUL;
       i++; j++;
       if (i>=N) { mt[0] = mt[N-1]; i=1; }
-      if (j>=key_length) j=0;
+      if (4 * j >= byte_key_length) j=0;
   }
   for (k=N-1; k; k--) {
       mt[i] = (mt[i] ^ ((mt[i-1] ^ (mt[i-1] >> 30)) * 1566083941UL)) - i;
@@ -307,10 +321,18 @@ static inline uint64_t rotl64 ( uint64_t x, int8_t r )
 //-----------------------------------------------------------------------------
 // Block read - if your platform needs to do endian-swapping or can only
 // handle aligned reads, do the conversion here
+//
+// The pointer p may not be aligned, which means that directly reading it can 
+// incur a major performance penalty or even trigger a segfault on certain 
+// architectures (e.g. ARM, SPARC). Thus we use memcpy here, with the implicit
+// hope that on archs which don't need this, the compiler will optimize it back
+// into a direct copy (verified to happen with GCC and clang on x86_64)
 
 FORCE_INLINE uint64_t getblock8 ( const uint64_t * p, int i )
 {
-  return p[i];
+  uint64_t val;
+  memcpy(&val, p + i, sizeof(uint64_t));
+  return val;
 }
 
 //-----------------------------------------------------------------------------
@@ -645,11 +667,11 @@ Obj FuncMAKE_BITFIELDS(Obj self, Obj widths)
     if (starts[nfields] > 8 * sizeof(UInt))
         ErrorMayQuit("MAKE_BITFIELDS: total widths too large", 0, 0);
 
-    Obj  setters = NEW_PLIST(T_PLIST_DENSE + IMMUTABLE, nfields);
-    Obj  getters = NEW_PLIST(T_PLIST_DENSE + IMMUTABLE, nfields);
-    Obj  bsetters = NEW_PLIST(T_PLIST + IMMUTABLE, nfields);
+    Obj  setters = NEW_PLIST_IMM(T_PLIST_DENSE, nfields);
+    Obj  getters = NEW_PLIST_IMM(T_PLIST_DENSE, nfields);
+    Obj  bsetters = NEW_PLIST_IMM(T_PLIST, nfields);
     UInt bslen = 0;
-    Obj  bgetters = NEW_PLIST(T_PLIST + IMMUTABLE, nfields);
+    Obj  bgetters = NEW_PLIST_IMM(T_PLIST, nfields);
     for (UInt i = 1; i <= nfields; i++) {
         UInt mask = (1L << starts[i]) - (1L << starts[i - 1]);
         Obj s = NewFunctionC("<field setter>", 2, "data, val", DoFieldSetter);
@@ -700,7 +722,7 @@ Obj FuncMAKE_BITFIELDS(Obj self, Obj widths)
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

@@ -50,6 +50,7 @@ SetString( NonnegativeIntegers, "NonnegativeIntegers" );
 SetSize( NonnegativeIntegers, infinity );
 SetGeneratorsOfSemiringWithZero( NonnegativeIntegers, [ 1 ] );
 SetGeneratorsOfAdditiveMagmaWithZero( NonnegativeIntegers, [ 1 ] );
+SetRepresentativeSmallest( NonnegativeIntegers, 0 );
 SetIsWholeFamily( NonnegativeIntegers, false );
 
 
@@ -67,6 +68,7 @@ SetString( PositiveIntegers, "PositiveIntegers" );
 SetSize( PositiveIntegers, infinity );
 SetGeneratorsOfSemiring( PositiveIntegers, [ 1 ] );
 SetGeneratorsOfAdditiveMagma( PositiveIntegers, [ 1 ] );
+SetRepresentativeSmallest( PositiveIntegers, 1 );
 SetIsWholeFamily( PositiveIntegers, false );
 
 
@@ -472,7 +474,7 @@ InstallGlobalFunction(DivisorsInt,function ( n )
     if n <= Length(DivisorsIntCache)  then 
         return DivisorsIntCache[n];  
     fi;
-    factors := FactorsInt( n );
+    factors := Factors(Integers, n );
 
     # recursive function to compute the divisors
     divs := function ( i, m )
@@ -742,7 +744,7 @@ end);
 ##
 #F  PrimeDivisors( <n> ) . . . . . . . . . . . . . . list of prime divisors
 ##  
-##  delegating to FactorsInt
+##  delegating to Factors
 ##  
 InstallMethod( PrimeDivisors, "for integer", [ IsInt ], function(n)
   if n = 0 then
@@ -754,7 +756,7 @@ InstallMethod( PrimeDivisors, "for integer", [ IsInt ], function(n)
   if n = 1 then
     return [];
   fi;
-  return Set(FactorsInt(n));
+  return Set(Factors(Integers,n));
 end);
 
 
@@ -908,170 +910,62 @@ InstallGlobalFunction( IsOddInt, n -> n mod 2 = 1 );
 
 #############################################################################
 ##
-#F  IsPrimeInt( <n> ) . . . . . . . . . . . . . . . . . . .  test for a prime
-##
-##  `IsPrimeInt' does trial divisions by the primes less  than 1000 to detect
-##  composites with a factor less than 1000 and  primes  less  than  1000000.
-##
-##  `IsPrimeInt' then checks that $n$ is a strong pseudoprime to the  base 2.
-##  This uses Fermats theorem which says $2^{n-1}=1$ mod $n$ for a prime $n$.
-##  If $2^{n-1}\<>1$ mod $n$, $n$ is composite, `IsPrimeInt' returns `false'.
-##  There are composite numbers for which $2^{n-1}=1$,  but they are  seldom.
-##
-##  Then `IsPrimeInt' checks that $n$ is a Lucas pseudoprime for $p$, choosen
-##  so that the discriminant $d=p^2/4-1$ is an  quadratic nonresidue mod $n$.
-##  I.e., `IsPrimeInt' takes the root $a = p/2+\sqrt{d}$ of $x^2 - px + 1$ in
-##  the  ring $Z_n[\sqrt{d}] and computes the  traces of $a^n$ and $a^{n+1}$.
-##  If $n$ is a prime, this  ring is the field of  order $n^2$ and raising to
-##  the $n$th power is conjugation, so $trace(a^n)=p$ and $trace(a^{n+1})=2$.
-##  However, these identities hold only for extremely few composite numbers.
-##
-##  Note that  this  test  for $trace(a^n) = p$  and  $trace(a^{n+1}) = 2$ is
-##  usually formulated using the Lucas sequences  $U_k = (a^k-b^k)/(a-b)$ and
-##  $V_k = (a^k+b^k)=trace(a^k)$, where one tests $U_{n+1} = 0, V_{n+1} = 2$.
-##  However, the trace test is equivalent and requires fewer multiplications.
-##  Thanks to Daniel R. Grayson (dan@symcom.math.uiuc.edu)  for  telling  me.
-##
-##  `IsPrimeInt' can be shown to return the correct answer for $n < 10^{13}$,
-##  by testing against R.G.E. Pinch's list of all pseudoprimes to base 2 less
-##  than $10^{13}$ ('ftp://dpmms.cam.ac.uk/pub/rgep/PSP/psp13.gz').
-##
-##  Better descriptions of the algorithm and related topics can be found  in:
-##  G. Miller, cf. Algorithms and Complexity ed. Traub, AcademPr, 1976, 35-36
-##  C. Pomerance et.al., Pseudoprimes to 25*10^9, MathComp 35 1980, 1003-1026
-##  D. Knuth, Seminumerical Algorithms  (TACP II),  AddiWesl,  1973,  378-380
-##  G. Gonnet, Heuristic Primality Testing, Maple Newsletter 4,  1989,  36-38
-##  R. Baillie, S. Wagstaff, Lucas Pseudoprimes, MathComp 35 1980,  1391-1417
-##  R. Pinch, Some Primality Testing Algorithms, Notic. AMS 9 1993, 1203-1210
-##
-# a non-recursive version,  nowadays the algorithm can be applied to
-# numbers with many thousand digits
-InstallGlobalFunction(TraceModQF, function ( p, k, n )
-  local kb, trc, i;
-  kb := [];
-  while k <> 1 do
-    if k mod 2 = 0 then
-      k := k/2;
-      Add(kb, 0);
-    else
-      k := (k+1)/2;
-      Add(kb, 1);
-    fi;
-  od;
-  trc := [p, 2];
-  i := Length(kb);
-  while i >= 1 do
-    if kb[i] = 0 then
-      trc := [ (trc[1]^2 - 2) mod n, (trc[1]*trc[2] - p) mod n ];
-    else
-      trc := [ (trc[1]*trc[2] - p) mod n, (trc[2]^2 - 2) mod n ];
-    fi;
-    i := i-1;
-  od;
-  return trc;
-end);
-
-##  returns `false' for proven composite, `true' for proven prime and
-##  `fail' for probable prime.
-BindGlobal( "IsProbablyPrimeIntWithFail", function( n )
-    local  p, e, o, x, i;
-
-    # make $n$ positive and handle trivial cases
-    if n < 0         then n := -n;       fi;
-    if n in Primes   then return true;   fi;
-    if n in Primes2  then return true;   fi;
-    if n in ProbablePrimes2  then return fail;   fi;
-    if n <= 1000     then return false;  fi;
-
-    # do trial divisions by the primes less than 1000
-    # faster than anything fancier because $n$ mod <small int> is very fast
-    for p  in Primes  do
-        if n mod p = 0  then return false;  fi;
-        if n < (p+1)^2  then
-            AddSet( Primes2, n );
-            return true;
-        fi;
-    od;
-
-    # do trial division by the other known primes
-    for p  in Primes2  do
-        if n mod p = 0  then return false;  fi;
-    od;
-    # do trial division by the other known probable primes
-    for p  in ProbablePrimes2  do
-        if n mod p = 0  then return false;  fi;
-    od;
-
-    # find $e$ and $o$ odd such that $n-1 = 2^e * o$
-    e := 0;  o := n-1;   while o mod 2 = 0  do e := e+1;  o := o/2;  od;
-
-    # look at the seq $2^o, 2^{2 o}, 2^{4 o}, .., 2^{2^e o}=2^{n-1}$
-    x := PowerModInt( 2, o, n );
-    i := 0;
-    while i < e  and x <> 1  and x <> n-1  do
-        x := x * x mod n;
-        i := i + 1;
-    od;
-
-    # if it is not of the form $.., -1, 1, 1, ..$ then $n$ is composite
-    if not (x = n-1 or (i = 0 and x = 1))  then
-        return false;
-    fi;
-
-##      # there are no strong pseudo-primes to base 2 smaller than 2047
-##  FL: never used
-##      if n < 2047  then
-##          AddSet( Primes2, n );
-##          return true;
-##      fi;
-
-    # make sure that $n$ is not a perfect power (especially not a square)
-    if SmallestRootInt(n) < n  then
-        return false;
-    fi;
-
-    # find a quadratic nonresidue $d = p^2/4-1$ mod $n$
-    p := 2;  while Jacobi( p^2-4, n ) <> -1  do p := p+1;  od;
-
-    # for a prime $n$ the trace of $(p/2+\sqrt{d})^n$ must be $p$
-    # and the trace of $(p/2+\sqrt{d})^{n+1}$ must be 2
-    if TraceModQF( p, n+1, n ) = [ 2, p ]  then
-        # n < 10^13 fulfilling the tests so far are prime
-        if n < 10^13 then
-          return true;
-        else
-          return fail;
-        fi;
-    fi;
-
-    # $n$ is not a prime
-    return false;
-end);
-
-InstallGlobalFunction(IsPrimeIntOld,function ( n )
-  local res;
-  res := IsProbablyPrimeIntWithFail(n);
-  if res = false then
-    return false;
-  else
-    if res = fail then
-      Info(InfoPrimeInt, 1,
-           "IsPrimeInt: probably prime, but not proven: ", n);
-      AddSet( ProbablePrimes2, n );
-    else
-      AddSet( Primes2, n );
-    fi;
-    return true;
-  fi;
-end);
-
-
-#############################################################################
-##
 #F  IsPrimePowerInt( <n> )  . . . . . . . . . . . test for a power of a prime
 ##
-InstallGlobalFunction( IsPrimePowerInt,
-    n -> IsPrimeInt( SmallestRootInt( n ) ) );
+InstallGlobalFunction( IsPrimePowerInt, function(n)
+    local   k, r, s, p, l, q, i;
+
+    # check the argument
+    if   n >  1 then k := 2;  s :=  1;
+    elif n < -1 then k := 3;  s := -1;  n := -n;
+    else return false;
+    fi;
+
+    # exclude small divisors, and thereby large exponents
+    for p in Primes do
+        if p*p > n then return true; fi; # n is prime
+        r := PVALUATION_INT(n, p);
+        if r > 0 then
+            if s = -1 and IsEvenInt(r) then return false; fi;
+            return n = p^r;
+        fi;
+    od;
+    l := LogInt( n, p );
+
+    # loop over the possible prime divisors of exponents
+    # use Fermat's little theorem to cast out impossible ones:
+    # for suppose we had r such that n = r^k. Then by Fermat,
+    # n^((q-1)/k) = r^(q-1) is congruent 0 or 1 mod q
+    i := Position(Primes, k);
+    while k <= l  do
+        q := 2*k+1;  while not IsPrimeInt(q)  do q := q+2*k;  od;
+        if PowerModInt( n, (q-1)/k, q ) <= 1  then
+            r := RootInt( n, k );
+            if r ^ k = n  then
+                n := r;
+                l := QuoInt( l, k );
+                continue;
+            fi;
+        fi;
+        if i <> fail and i < Length(Primes) then
+            i := i + 1;
+            k := Primes[i];
+        else
+            # need more primes...
+            k := NextPrimeInt( k );
+            # since we are now beyond the primes in Primes, for which we
+            # checked whether they divide n, we might now just as well
+            # test if k divides n, too
+            r := PVALUATION_INT(n, k);
+            if r > 0 then
+                if s = -1 and IsEvenInt(r) then return false; fi;
+                return n = k^r;
+            fi;
+        fi;
+    od;
+
+    return IsPrimeInt(n);
+end);
 
 
 #############################################################################
@@ -1196,7 +1090,7 @@ InstallGlobalFunction(PrimePowersInt,function( n )
     elif n < 0  then
     	n := -1 * n;
     fi;
-    return Flat(Collected(FactorsInt(n)));
+    return Flat(Collected(Factors(Integers,n)));
 
 end);
 
@@ -1215,13 +1109,11 @@ InstallGlobalFunction(RootInt,function ( arg )
     else Error("usage: `Root( <n> )' or `Root( <n>, <k> )'");
     fi;
 
-    # check the arguments and handle trivial cases
-    if  k <= 0                  then Error("<k> must be positive");
-    elif k = 1                  then return n;
-    elif n < 0 and k mod 2 = 0  then Error("<n> must be positive");
-    elif n < 0 and k mod 2 = 1  then return -RootInt( -n, k );
-    elif n = 0                  then return 0;
-    elif n <= k                 then return 1;
+    # ask the kernel to compute the root; this can only fail for
+    # huge values of k and enormously huge values of n
+    r := ROOT_INT(n, k);
+    if r <> fail then
+        return r;
     fi;
 
     # r is the first approximation, s the second, we need: root <= s < r
@@ -1265,7 +1157,7 @@ InstallGlobalFunction( SignInt, SIGN_RAT ); # support rationals for backwards co
 #F  SmallestRootInt( <n> )  . . . . . . . . . . . smallest root of an integer
 ##
 InstallGlobalFunction(SmallestRootInt,function ( n )
-    local   k, r, s, p, l, q;
+    local   k, r, s, p, l, q, i;
 
     # check the argument
     if   n > 0  then k := 2;  s :=  1;
@@ -1274,15 +1166,17 @@ InstallGlobalFunction(SmallestRootInt,function ( n )
     fi;
 
     # exclude small divisors, and thereby large exponents
-    if n mod 2 = 0  then
-        p := 2;
-    else
-        p := 3;  while p < 100  and n mod p <> 0  do p := p+2;  od;
-    fi;
+    for p in Primes do
+        if p*p > n then return s * n; fi;
+        if n mod p = 0 then break; fi;
+    od;
     l := LogInt( n, p );
 
     # loop over the possible prime divisors of exponents
-    # use Euler's criterion to cast out impossible ones
+    # use Fermat's little theorem to cast out impossible ones:
+    # for suppose we had r such that n = r^k. Then by Fermat,
+    # n^((q-1)/k) = r^(q-1) is congruent 0 or 1 mod q
+    i := Position(Primes, k);
     while k <= l  do
         q := 2*k+1;  while not IsPrimeInt(q)  do q := q+2*k;  od;
         if PowerModInt( n, (q-1)/k, q ) <= 1  then
@@ -1290,9 +1184,12 @@ InstallGlobalFunction(SmallestRootInt,function ( n )
             if r ^ k = n  then
                 n := r;
                 l := QuoInt( l, k );
-            else
-                k := NextPrimeInt( k );
+                continue;
             fi;
+        fi;
+        if i <> fail and i < Length(Primes) then
+            i := i + 1;
+            k := Primes[i];
         else
             k := NextPrimeInt( k );
         fi;
@@ -1475,19 +1372,6 @@ InstallMethod( Factors,
     [ IsIntegers, IsInt ], 0,
     function ( Integers, n )
     return FactorsInt( n );
-    end );
-
-
-#############################################################################
-##
-#M  GcdOp( Integers, <n>, <m> ) . . . . . . . . . . . . . gcd of two integers
-##
-InstallMethod( GcdOp,
-    "for integers",
-    true,
-    [ IsIntegers, IsInt, IsInt ], 0,
-    function ( Integers, n, m )
-    return GcdInt( n, m );
     end );
 
 

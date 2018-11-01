@@ -12,12 +12,14 @@ SetPackageInfo( rec(
 
 PackageName := "simpcomp",
 Subtitle := "A GAP toolbox for simplicial complexes",
-Version := "2.1.8",
-Date := "05/02/2018",
+Version := "2.1.9",
+Date := "20/10/2018",
 
-PackageWWWHome := "http://raw.githubusercontent.com/simpcomp-team/simpcomp/master/web/",
-README_URL := Concatenation( ~.PackageWWWHome, "README" ),
+PackageWWWHome := "https://simpcomp-team.github.io/simpcomp/",
+README_URL := Concatenation( ~.PackageWWWHome, "README.md" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
+
+
 SourceRepository := rec( 
   Type := "git", 
   URL := "https://github.com/simpcomp-team/simpcomp"
@@ -31,28 +33,27 @@ Persons := [
       LastName      := "Effenberger",
       FirstNames    := "Felix",
       IsAuthor      := true,
-      IsMaintainer  := true,
-      Email         := "felix.effenberger@mis.mpg.de",
-      WWWHome       := "http://personal-homepages.mis.mpg.de/effen/",
+      IsMaintainer  := false,
+      Email         := "exilef@gmail.com",
+      WWWHome       := "https://www.linkedin.com/in/felix-effenberger-26013a146/?originalSubdomain=de",
       PostalAddress := Concatenation( [
-            "Max Planck Institute for\n",
-            "Mathematics in the Sciences\n",
-            "Inselstr. 22" ] ),
-      Place         := "04103 Leipzig",
-      Institution   := "Max Planck Institute for Mathematics in the Sciences"),
+            "Frankfurt Institute for Advanced Studies\n",
+            "Ruth-Moufang-Straße 1" ] ),
+      Place         := "60438 Frankfurt am Main",
+      Institution   := "Frankfurt Institute for Advanced Studies"),
   rec(
       LastName      := "Spreer",
       FirstNames    := "Jonathan",
       IsAuthor      := true,
       IsMaintainer  := true,
-      Email         := "j.spreer@uq.edu.au",
+      Email         := "jonathan.spreer@fu-berlin.de",
       WWWHome       := "http://www.tacet.de/Jonathan",
       PostalAddress := Concatenation( [
-            "Computational Geometry and Topology Group\n",
-            "School of Mathematics and Physics\n",
-            "The University of Queensland" ] ),
-      Place         := "St. Lucia, Queensland, 4072",
-      Institution   := "The University of Queensland")
+            "Discrete Geometry Group\n",
+            "Mathematical Institute\n",
+            "Freie Universität Berlin" ] ),
+      Place         := "Arnimallee 2, 14195 Berlin",
+      Institution   := "Freie Universität Berlin")
     ],
 
 ##  Status information. Currently the following cases are recognized:
@@ -74,7 +75,7 @@ AcceptDate := "11/2013",
 AbstractHTML :=
   "<span class=\"pkgname\">simpcomp</span> is a <span class=\"pkgname\">GAP</span> package for working with simplicial complexes. It allows the computation of many properties of simplicial complexes (such as the f-, g- and h-vectors, the face lattice, the automorphism group, (co-)homology with explicit basis computation, intersection form, etc.) and provides the user with functions to compute new complexes from old (simplex links and stars, connected sums, cartesian products, handle additions, bistellar flips, etc.). Furthermore, it comes with an extensive library of known triangulations of manifolds and provides the user with the possibility to create own complex libraries.<br /> <span class=\"pkgname\">simpcomp</span> caches computed properties of a simplicial complex, thus avoiding unnecessary computations, internally handles the vertex labeling of the complexes and insures the consistency of a simplicial complex throughout all operations.<br /> <span class=\"pkgname\">simpcomp</span> relies on the <span class=\"pkgname\">GAP</span> package <span class=\"pkgname\">homology</span> for its homology computation, but also provides the user with an own (co-)homology algorithm in case the packacke <span class=\"pkgname\">homology</span> is not available. For automorphism group computation the <span class=\"pkgname\">GAP</span> package <span class=\"pkgname\">GRAPE</span> is used, which in turn uses the program <tt>nauty</tt> by Brendan McKay. An internal automorphism group calculation algorithm in used as fallback if the <span class=\"pkgname\">GRAPE</span> package is not available.",
 
-Keywords := ["simplicial topology", "combinatorial manifolds", "PL equivalence", "triangulating manifolds"],
+Keywords := ["simplicial complexes","combinatorial topology", "combinatorial manifolds", "PL equivalence", "triangulating manifolds"],
 
 PackageDoc := rec(
   # use same as in GAP
@@ -125,3 +126,6 @@ end,
 TestFile := "tst/simpcomp.tst"
 
 ));
+
+
+

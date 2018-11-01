@@ -322,6 +322,26 @@ DeclareCategory("IsRightCoset", IsDomain and IsExternalOrbit and
 
 #############################################################################
 ##
+#P  IsBiCoset( <C> )
+##
+##  <#GAPDoc Label="IsBiCoset">
+##  <ManSection>
+##  <Prop Name="IsBiCoset" Arg='C'/>
+##
+##  <Description>
+##  <Index>bicoset</Index>
+##  A (right) coset <M>Ug</M> is considered a <E>bicoset</E> if its set of
+##  elements simultaneously forms a left coset for the same subgroup. This is
+##  the case if and only if the coset representative <M>g</M> normalizes the
+##  subgroup <M>U</M>.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareProperty( "IsBiCoset", IsRightCoset );
+
+#############################################################################
+##
 #O  RightCoset( <U>, <g> )
 ##
 ##  <#GAPDoc Label="RightCoset">
@@ -353,6 +373,8 @@ DeclareCategory("IsRightCoset", IsDomain and IsExternalOrbit and
 ##  6
 ##  gap> AsList(c);
 ##  [ (2,3,4), (1,4,2), (1,3,4,2), (1,3)(2,4), (2,4), (1,4,2,3) ]
+##  gap> IsBiCoset(c);
+##  false
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>

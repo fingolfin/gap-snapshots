@@ -10,9 +10,9 @@ rec( x := 2 )
 gap> Unbind(x.x);
 Error, Record Unbind: <rec> must be a mutable record
 gap> x.y := 2;
-Error, Records Assignment: <rec> must be a mutable record
+Error, Record Assignment: <rec> must be a mutable record
 gap> x.x := 2;
-Error, Records Assignment: <rec> must be a mutable record
+Error, Record Assignment: <rec> must be a mutable record
 gap> r := rec(x := 2, y := 3);
 rec( x := 2, y := 3 )
 gap> r.x;
@@ -33,11 +33,11 @@ gap> r.(str1022a) := 2;
 gap> r.(str1022b) := 3;
 3
 gap> r.(str1023) := 4;
-Error, Record names must consist of less than 1023 characters
+4
 gap> r.(str1024) := 5;
-Error, Record names must consist of less than 1023 characters
+Error, Record names must consist of at most 1023 characters
 gap> names := RecNames(r);;
-gap> SortedList(names) = [str1021, str1022a, str1022b, "x", "y"];
+gap> SortedList(names) = [str1021, str1022a, str1023, str1022b, "x", "y"];
 true
 gap> RecNames( () );
 Error, no method found! For debugging hints type ?Recovery from NoMethodFound
@@ -46,14 +46,6 @@ gap> REC_NAMES( () );
 Error, RecNames: <rec> must be a record (not a permutation (small))
 gap> REC_NAMES_COMOBJ( () );
 Error, RecNames: <rec> must be a component object (not a permutation (small))
-gap> EQ_PREC( rec(), () );
-false
-gap> EQ_PREC( (), rec() );
-false
-gap> LT_PREC( rec(), () );
-false
-gap> LT_PREC( (), rec() );
-true
 gap> rec() < rec(x := 1);
 true
 gap> rec(x := 1) = rec(x := 2);
@@ -70,15 +62,11 @@ gap> aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 2
 gap> aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\
 > aaaxy := 1; # 1023 chars
-Syntax error: Identifiers in GAP must consist of less than 1023 characters. in\
- stream:2
-aaaxy := 1; # 1023 chars
-    ^
+1
 gap> aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\
 > aaaxyz := 1; # 1024 chars
-Syntax error: Identifiers in GAP must consist of less than 1023 characters. in\
- stream:2
+Syntax error: Identifiers in GAP must consist of at most 1023 characters. in s\
+tream:2
 aaaxyz := 1; # 1024 chars
-     ^
+ ^^^^^
 gap> STOP_TEST( "recordname.tst", 1);
-

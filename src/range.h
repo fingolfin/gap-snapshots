@@ -25,7 +25,7 @@
 #ifndef GAP_RANGE_H
 #define GAP_RANGE_H
 
-#include <src/objects.h>
+#include "objects.h"
 
 /****************************************************************************
 **
@@ -196,7 +196,7 @@ extern Obj Range3Check (
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

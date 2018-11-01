@@ -10,7 +10,6 @@ ReadLib( "oper1.g"     );
 ReadLib( "type.g"      );
 ReadLib( "type1.g"     );
 ReadLib( "methsel.g"   );
-ReadLib( "methsel1.g"  );
 ReadLib( "methsel2.g"  );
 
 ReadLib( "random.g"    );
@@ -36,7 +35,10 @@ ReadLib( "set.gd"      );
 
 ReadLib( "record.gd"   );
 
+ReadLib( "random.gd"   );
+
 ReadLib( "cache.gi"    );
+ReadLib( "assert.gd"   );
 ReadLib( "coll.gi"     );
 
 ReadLib( "flag.g"      );
@@ -53,7 +55,6 @@ ReadLib( "filter.gi"   );
 ReadLib( "object.gi"   );
 ReadLib( "listcoef.gd" );
 ReadLib( "info.gd"     );
-ReadLib( "assert.gd"   );
 ReadLib( "files.gd"    );
 ReadLib( "streams.gd"  );
 
@@ -69,8 +70,6 @@ ReadLib( "global.gd"   );
 ReadLib( "info.gi"     );
 ReadLib( "assert.gi"   );
 ReadLib( "global.gi"   );
-
-ReadLib( "random.gd"   );
 
 ReadLib( "options.gd"  );
 ReadLib( "options.gi"  );

@@ -224,7 +224,7 @@ end);
 #M  Pcgs( <G> )
 ##
 InstallMethod( Pcgs, "fail if not solvable", true,
-        [ HasIsSolvableGroup ], 
+        [ IsGroup and HasIsSolvableGroup ],
 	SUM_FLAGS, # for groups for which we know that they are not solvable
 	           # this is the best we can do.
     function( G )
@@ -272,7 +272,10 @@ InstallMethod( Pcgs,
 ##
 #M  GeneralizedPcgs( <G> )
 ##
-InstallImmediateMethod( GeneralizedPcgs, IsGroup and HasPcgs, 0, Pcgs );
+#  This used to be an immediate method. It was replaced by an ordinary
+#  method as the attribute is set when creating pc groups.
+InstallMethod( GeneralizedPcgs,true,[ IsGroup and HasPcgs], 0, Pcgs );
+
 
 #############################################################################
 ##
@@ -339,77 +342,61 @@ end);
 InstallMethod( GroupWithGenerators,
     "method for pc elements collection",
     true, [ IsCollection and
-    IsMultiplicativeElementWithInverseByPolycyclicCollectorCollection] ,
+    IsMultiplicativeElementWithInverseByPolycyclicCollectorCollection and
+    IsFinite] ,
     # override methods for `IsList' or `IsEmpty'.
     10,
-    function( gens )
-    local G,fam,typ,pcgs;
+function( gens )
+local G,fam,typ,id,pcgs;
 
-    fam:=FamilyObj(gens);
-    if IsFinite(gens) then
-      if not IsBound(fam!.defaultFinitelyGeneratedGroupType) then
-	fam!.defaultFinitelyGeneratedGroupType:=
-	  NewType(fam,IsGroup and IsAttributeStoringRep 
-		      and HasGeneratorsOfMagmaWithInverses
-		      and IsFinitelyGeneratedGroup
-		      and HasFamilyPcgs and HasHomePcgs);
-      fi;
-      typ:=fam!.defaultFinitelyGeneratedGroupType;
-    else
-      if not IsBound(fam!.defaultGroupType) then
-        fam!.defaultGroupType:=
-	  NewType(fam,IsGroup and IsAttributeStoringRep 
-		      and HasGeneratorsOfMagmaWithInverses
-		      and HasFamilyPcgs and HasHomePcgs);
-      fi;
-      typ:=fam!.defaultGroupType;
-    fi;
+  fam:=FamilyObj(gens);
+  pcgs:=DefiningPcgs(ElementsFamily(fam));
 
-    pcgs:=DefiningPcgs(ElementsFamily(fam));
- 
-    G:=rec();
-    ObjectifyWithAttributes(G,typ,GeneratorsOfMagmaWithInverses,AsList(gens),
-                            FamilyPcgs,pcgs,HomePcgs,pcgs);
-    SetGroupOfPcgs (pcgs, G);
-    return G;
-    end );
+  # pc groups are always finite and gens is finite.
+  typ:=MakeGroupyType(fam,
+        IsGroup and IsAttributeStoringRep and IsSolvableGroup
+          and HasIsEmpty and HasGeneratorsOfMagmaWithInverses
+          and IsFinite and IsFinitelyGeneratedGroup
+          and HasFamilyPcgs and HasHomePcgs and HasGeneralizedPcgs,
+        gens,One(gens[1]),true);
+
+  G:=rec();
+  ObjectifyWithAttributes(G,typ,GeneratorsOfMagmaWithInverses,AsList(gens),
+                        FamilyPcgs,pcgs,HomePcgs,pcgs,GeneralizedPcgs,pcgs);
+  #SetGroupOfPcgs (pcgs, G); That cannot be true, as pcgs is the family pcgs
+
+  return G;
+end );
 
 InstallOtherMethod( GroupWithGenerators,
     "method for pc collection and identity element",
     IsCollsElms, [ IsCollection and
-    IsMultiplicativeElementWithInverseByPolycyclicCollectorCollection ,
+    IsMultiplicativeElementWithInverseByPolycyclicCollectorCollection 
+    and IsFinite,
     IsMultiplicativeElementWithInverseByPolycyclicCollector] ,
     0,
-    function( gens, id )
-    local G,fam,typ,pcgs;
+function( gens, id )
+local G,fam,typ,pcgs;
 
-    fam:=FamilyObj(gens);
-    if IsFinite(gens) then
-      if not IsBound(fam!.defaultFinitelyGeneratedGroupWithOneType) then
-	fam!.defaultFinitelyGeneratedGroupWithOneType:=
-	  NewType(fam,IsGroup and IsAttributeStoringRep 
-		      and HasGeneratorsOfMagmaWithInverses
-		      and IsFinitelyGeneratedGroup and HasOne
-		      and HasFamilyPcgs and HasHomePcgs);
-      fi;
-      typ:=fam!.defaultFinitelyGeneratedGroupWithOneType;
-    else
-      if not IsBound(fam!.defaultGroupWithOneType) then
-        fam!.defaultGroupWithOneType:=
-	  NewType(fam,IsGroup and IsAttributeStoringRep 
-		      and HasGeneratorsOfMagmaWithInverses and HasOne
-		      and HasFamilyPcgs and HasHomePcgs);
-      fi;
-      typ:=fam!.defaultGroupWithOneType;
-    fi;
+  fam:=FamilyObj(gens);
+  pcgs:=DefiningPcgs(ElementsFamily(fam));
 
-    pcgs:=DefiningPcgs(ElementsFamily(fam));
+  # pc groups are always finite and gens is finite.
+  typ:=MakeGroupyType(fam,
+        IsGroup and IsAttributeStoringRep and IsSolvableGroup
+          and HasIsEmpty and HasGeneratorsOfMagmaWithInverses and HasOne
+          and IsFinite and IsFinitelyGeneratedGroup
+          and HasFamilyPcgs and HasHomePcgs and HasGeneralizedPcgs,
+        gens,id,true);
 
-    G:=rec();
-    ObjectifyWithAttributes(G,typ,GeneratorsOfMagmaWithInverses,AsList(gens),
-                            One,id,FamilyPcgs,pcgs,HomePcgs,pcgs);
-    SetGroupOfPcgs (pcgs, G);
-    return G;
+  G:=rec();
+  ObjectifyWithAttributes(G,typ,GeneratorsOfMagmaWithInverses,AsList(gens),
+                        One,id,
+                        FamilyPcgs,pcgs,HomePcgs,pcgs,GeneralizedPcgs,pcgs);
+
+  #SetGroupOfPcgs (pcgs, G);
+
+  return G;
 end );
 
 InstallOtherMethod( GroupWithGenerators,
@@ -418,29 +405,28 @@ InstallOtherMethod( GroupWithGenerators,
     IsMultiplicativeElementWithInverseByPolycyclicCollector] ,
     # override methods for `IsList' or `IsEmpty'.
     10,
-    function( gens, id )
-    local G,fam,typ,pcgs;
+function( empty, id )
+local G,fam,typ,pcgs;
 
-    fam:= CollectionsFamily( FamilyObj( id ) );
-    if not IsBound(fam!.defaultFinitelyGeneratedGroupWithOneType) then
-      fam!.defaultFinitelyGeneratedGroupWithOneType:=
-	NewType(fam,IsGroup and IsAttributeStoringRep 
-		    and HasGeneratorsOfMagmaWithInverses
-		    and IsFinitelyGeneratedGroup and HasOne
-		    and HasFamilyPcgs and HasHomePcgs);
-    fi;
-    typ:=fam!.defaultFinitelyGeneratedGroupWithOneType;
+  fam:= CollectionsFamily( FamilyObj( id ) );
 
-    pcgs:=DefiningPcgs(ElementsFamily(fam));
+  # pc groups are always finite and gens is finite.
+  typ:=IsGroup and IsAttributeStoringRep 
+        and HasGeneratorsOfMagmaWithInverses and HasOne and IsTrivial
+        and HasFamilyPcgs and HasHomePcgs and HasGeneralizedPcgs;
+  typ:=NewType(fam,typ);
 
-    G:=rec();
-    ObjectifyWithAttributes(G,typ,GeneratorsOfMagmaWithInverses,[],
-                            One,id,FamilyPcgs,pcgs,HomePcgs,pcgs);
+  pcgs:=DefiningPcgs(ElementsFamily(fam));
 
-    SetGroupOfPcgs (pcgs, G);
-    return G;
+  G:= rec();
+  ObjectifyWithAttributes( G, typ,
+                          GeneratorsOfMagmaWithInverses, empty,
+                          One, id,
+                          FamilyPcgs,pcgs,HomePcgs,pcgs,GeneralizedPcgs,pcgs);
+
+  #SetGroupOfPcgs (pcgs, G);
+  return G;
 end );
-
 
 #############################################################################
 ##
@@ -1283,20 +1269,17 @@ end );
 ##
 #M  Random( <pcgrp> )
 ##
-InstallMethod( Random,
-    "pcgs computable groups",
-    true,
-    [ IsGroup and CanEasilyComputePcgs and IsFinite ],
-    0,
-
-function(grp)
+InstallMethodWithRandomSource( Random,
+    "for a random source and a pcgs computable groups",
+    [ IsRandomSource, IsGroup and CanEasilyComputePcgs and IsFinite ],
+function(rs, grp)
     local   p;
 
     p := Pcgs(grp);
     if Length( p ) = 0 then 
         return One( grp );
     else
-        return Product( p, x -> x^Random(1,RelativeOrderOfPcElement(p,x)) );
+        return Product( p, x -> x^Random(rs, 1, RelativeOrderOfPcElement(p,x)) );
     fi;
 end );
 
@@ -1335,8 +1318,8 @@ local  G,  home,  # the supergroup (of <H> and <U>), the home pcgs
   # Calculate a (central)  elementary abelian series  with all pcgs induced
   # w.r.t. <home>.
 
-  if IsPrimePowerInt( Size( G ) )  then
-    p:=FactorsInt( Size( G ) )[ 1 ];
+  if IsPGroup( G )  then
+    p:=PrimePGroup(G);
     home:=PcgsCentralSeries(G);
     eas:=CentralNormalSeriesByPcgs(home);
     cent:=ReturnTrue;
@@ -1534,8 +1517,8 @@ local G,	   # common parent
     # Calculate a (central) elementary abelian series.
 
     eas:=fail;
-    if IsPrimePowerInt( Size( G ) )  then
-        p := FactorsInt( Size( G ) )[ 1 ];
+    if IsPGroup( G ) then
+        p := PrimePGroup(G);
 	home:=PcgsPCentralSeriesPGroup(G);
 	eas:=PCentralNormalSeriesByPcgsPGroup(home);
 	if NT in eas then

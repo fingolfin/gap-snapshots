@@ -9,18 +9,22 @@
 **  This file contains the GAP interface for thread primitives.
 */
 
-#include <src/objset.h>
+#include "objset.h"
 
-#include <src/bool.h>
-#include <src/gap.h>
-#include <src/fibhash.h>
-#include <src/gaputils.h>
-#include <src/gvars.h>
-#include <src/io.h>
-#include <src/lists.h>
-#include <src/plist.h>
-#include <src/saveload.h>
+#include "bool.h"
+#include "error.h"
+#include "fibhash.h"
+#include "gaputils.h"
+#include "gvars.h"
+#include "io.h"
+#include "lists.h"
+#include "modules.h"
+#include "plist.h"
+#include "saveload.h"
 
+#ifdef HPCGAP
+#include "hpc/traverse.h"
+#endif
 
 Obj TYPE_OBJSET;
 Obj TYPE_OBJMAP;
@@ -380,6 +384,28 @@ void LoadObjSet(Obj set)
     }
 }
 
+#ifdef USE_THREADSAFE_COPYING
+void TraverseObjSet(Obj obj)
+{
+    UInt i, len = *(UInt *)(CONST_ADDR_OBJ(obj) + OBJSET_SIZE);
+    for (i = 0; i < len; i++) {
+        Obj item = CONST_ADDR_OBJ(obj)[OBJSET_HDRSIZE + i];
+        if (item && item != Undefined)
+            QueueForTraversal(item);
+    }
+}
+
+void CopyObjSet(Obj copy, Obj original)
+{
+    UInt i, len = *(UInt *)(CONST_ADDR_OBJ(original) + OBJSET_SIZE);
+    for (i = 0; i < len; i++) {
+        Obj item = CONST_ADDR_OBJ(original)[OBJSET_HDRSIZE + i];
+        ADDR_OBJ(copy)[OBJSET_HDRSIZE + i] = ReplaceByCopy(item);
+    }
+}
+#endif
+
+
 /**
  *  `NewObjMap()`
  *  -------------
@@ -665,6 +691,32 @@ void LoadObjMap(Obj map)
     }
 }
 
+#ifdef USE_THREADSAFE_COPYING
+void TraverseObjMap(Obj obj)
+{
+    UInt i, len = *(UInt *)(CONST_ADDR_OBJ(obj) + OBJSET_SIZE);
+    for (i = 0; i < len; i++) {
+        Obj key = CONST_ADDR_OBJ(obj)[OBJSET_HDRSIZE + 2 * i];
+        Obj val = CONST_ADDR_OBJ(obj)[OBJSET_HDRSIZE + 2 * i + 1];
+        if (key && key != Undefined) {
+            QueueForTraversal(key);
+            QueueForTraversal(val);
+        }
+    }
+}
+
+void CopyObjMap(Obj copy, Obj original)
+{
+    UInt i, len = *(UInt *)(CONST_ADDR_OBJ(original) + OBJSET_SIZE);
+    for (i = 0; i < len; i++) {
+        Obj key = CONST_ADDR_OBJ(original)[OBJSET_HDRSIZE + 2 * i];
+        Obj val = CONST_ADDR_OBJ(original)[OBJSET_HDRSIZE + 2 * i + 1];
+        ADDR_OBJ(copy)[OBJSET_HDRSIZE + 2 * i] = ReplaceByCopy(key);
+        ADDR_OBJ(copy)[OBJSET_HDRSIZE + 2 * i + 1] = ReplaceByCopy(val);
+    }
+}
+#endif
+
 /**
  *  `FuncOBJ_SET()`
  *  ---------------
@@ -716,13 +768,13 @@ static void CheckArgument(const char *func, Obj obj, Int t1, Int t2) {
   Int tnum = TNUM_OBJ(obj);
   if (t2 < 0 && tnum == t1+IMMUTABLE) {
     ErrorQuit("%s: First argument must be a mutable %s",
-      (Int) func,
-      (Int) InfoBags[t1].name);
+      (Int)func,
+      (Int)TNAM_TNUM(t1));
   }
   if (tnum != t1 && tnum != t2) {
     ErrorQuit("%s: First argument must be an %s",
-      (Int) func,
-      (Int) InfoBags[t1].name);
+      (Int)func,
+      (Int)TNAM_TNUM(t1));
   }
 }
 
@@ -931,9 +983,27 @@ static Obj FuncOBJ_MAP_KEYS(Obj self, Obj map) {
 
 /****************************************************************************
 **
-*V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
+
+/****************************************************************************
+**
+*V  BagNames  . . . . . . . . . . . . . . . . . . . . . . . list of bag names
+*/
+static StructBagNames BagNames[] = {
+  { T_OBJSET,           "object set" },
+  { T_OBJSET+IMMUTABLE, "immutable object set" },
+  { T_OBJMAP,           "object map" },
+  { T_OBJMAP+IMMUTABLE, "immutable object map" },
+  { -1, "" }
+};
+
+
+/****************************************************************************
+**
+*V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
+*/
 static StructGVarFunc GVarFuncs [] = {
 
     GVAR_FUNC(OBJ_SET, -1, "[list]"),
@@ -962,11 +1032,9 @@ static StructGVarFunc GVarFuncs [] = {
 static Int InitKernel (
     StructInitInfo *    module )
 {
-  /* install info string */
-  InfoBags[T_OBJSET].name = "object set";
-  InfoBags[T_OBJSET+IMMUTABLE].name = "immutable object set";
-  InfoBags[T_OBJMAP].name = "object map";
-  InfoBags[T_OBJMAP+IMMUTABLE].name = "immutable object map";
+  // set the bag type names (for error messages and debugging)
+  InitBagNamesFromTable( BagNames );
+
   /* install kind functions */
   TypeObjFuncs[T_OBJSET          ] = TypeObjSet;
   TypeObjFuncs[T_OBJSET+IMMUTABLE] = TypeObjSet;
@@ -985,11 +1053,11 @@ static Int InitKernel (
   PrintObjFuncs[ T_OBJSET+IMMUTABLE ] = PrintObjSet;
   PrintObjFuncs[ T_OBJMAP           ] = PrintObjMap;
   PrintObjFuncs[ T_OBJMAP+IMMUTABLE ] = PrintObjMap;
-  /* install mutability functions */
-  IsMutableObjFuncs [ T_OBJSET           ] = AlwaysYes;
-  IsMutableObjFuncs [ T_OBJSET+IMMUTABLE ] = AlwaysNo;
-  IsMutableObjFuncs [ T_OBJMAP           ] = AlwaysYes;
-  IsMutableObjFuncs [ T_OBJMAP+IMMUTABLE ] = AlwaysNo;
+
+#ifdef USE_THREADSAFE_COPYING
+  SetTraversalMethod(T_OBJSET, TRAVERSE_BY_FUNCTION, TraverseObjSet, CopyObjSet);
+  SetTraversalMethod(T_OBJMAP, TRAVERSE_BY_FUNCTION, TraverseObjMap, CopyObjMap);
+#endif
 
   // Install saving functions
   SaveObjFuncs[ T_OBJSET            ] = SaveObjSet;

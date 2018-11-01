@@ -1236,7 +1236,13 @@ gap> for m in [1..100] do
 >   for b in [1..100] do
 >     i := INVMODINT(b,m);
 >     g := GcdInt(b,m);
->     Assert(0, (g<>1 and i = fail) or (g=1 and i in [0..m-1] and (i*b-1) mod m = 0));
+>     if g = 1 then
+>       Assert(0, i in [0..m-1]);
+>       Assert(0, (i*b-1) mod m = 0); # formulated this way to support m=1
+>       Assert(0, i = INVMODINT(b,-m));
+>     else
+>       Assert(0, i = fail);
+>     fi;
 >   od;
 > od;
 
@@ -1245,7 +1251,9 @@ gap> INVMODINT(1,0);
 Error, InverseModInt: <mod> must be nonzero
 gap> INVMODINT(2,10);
 fail
-gap> INVMODINT(2,10);
+gap> INVMODINT(2,-10);
+fail
+gap> INVMODINT(2,2^80);
 fail
 gap> INVMODINT(2,1);
 0
@@ -1324,13 +1332,41 @@ gap> for m in [1..100] do
 #
 gap> checkPValuationInt:=function(n,p)
 >   local k, m;
->   if n = 0 then return true; fi;
 >   k:=PVALUATION_INT(n,p);
+>   if n = 0 or p = 1 or p = -1 then return k = 0; fi;
 >   m:=n/p^k;
 >   return IsInt(m) and (m mod p) <> 0;
 > end;;
-gap> ForAll([-10000 .. 10000], n-> ForAll([2,3,5,7,251], p -> checkPValuationInt(n,p)));
+gap> ps := [-2^60-1,-2^60,-2^28-1,-2^28];;
+gap> Append(ps, [-6..-1]);
+gap> Append(ps, [1..20]);
+gap> Append(ps, [250..260]);
+gap> Append(ps, [2^28-1,2^28,2^60-1,2^60]);;
+gap> SetX([-1000 .. 1000], ps, checkPValuationInt);
+[ true ]
+gap> SetX([-1000 .. 1000], ps, {n,p}->checkPValuationInt(n+2^100,p));
+[ true ]
+gap> SetX([-1000 .. 1000], ps, {n,p}->checkPValuationInt(n-2^100,p));
+[ true ]
+
+#
+gap> p:=2^255-19;; # big prime
+gap> ForAll([1..30], k-> PVALUATION_INT((p+1)^k,2)=k);
 true
+gap> ForAll([1..30], k-> PVALUATION_INT((p+1)^k,p)=0);
+true
+gap> ForAll([1..30], k-> PVALUATION_INT(p^k+1,2)=1);
+true
+gap> ForAll([1..30], k-> PVALUATION_INT(p^k+1,p)=0);
+true
+
+#
+gap> SetX(data, dataNonZero, checkPValuationInt);
+[ true ]
+gap> List([2..6], p->List(data, n->PVALUATION_INT(n,p)));
+[ [ 0, 20, 4, 0, 0, 0, 4, 20, 0 ], [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ], 
+  [ 0, 10, 2, 0, 0, 0, 2, 10, 0 ], [ 0, 20, 4, 0, 0, 0, 4, 20, 0 ], 
+  [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] ]
 gap> PVALUATION_INT(10,0);
 Error, PValuation: <p> must be nonzero
 gap> PVALUATION_INT(0,0);
@@ -1339,6 +1375,47 @@ gap> PVALUATION_INT(fail,1);
 Error, PValuation: <n> must be an integer (not a boolean or fail)
 gap> PVALUATION_INT(1,fail);
 Error, PValuation: <p> must be an integer (not a boolean or fail)
+
+#
+# test ROOT_INT
+#
+gap> checkROOT_INT:=function(n,k)
+>   local r;
+>   r:=RootInt(n,k);
+>   return r^k <= n and n < (r+1)^k;
+> end;;
+gap> SetX([0 .. 10000], [1,2,3,5,7,251,256], checkROOT_INT);
+[ true ]
+gap> ForAll([1..70], k -> checkROOT_INT(bigPos,k));
+true
+gap> SetX([1 .. 10000], [3,5,7,251,bigPos+1], {n,k} -> RootInt(n,k) = -RootInt(-n,k));
+[ true ]
+gap> ForAll([1,3..71], k -> RootInt(bigNeg,k) = -RootInt(bigPos,k));
+true
+gap> Set([1 .. 10000], n -> RootInt(n, bigPos));
+[ 1 ]
+gap> Set([1,2^28-1,2^28,2^60-1,2^60,bigPos], k -> RootInt(0, k));
+[ 0 ]
+gap> RootInt(bigPos, bigPos);
+1
+gap> RootInt(bigNeg, bigPos+1);
+-1
+gap> RootInt(bigNeg, bigPos);
+Error, Root: <n> is negative but <k> is even
+gap> RootInt(-2, 2);
+Error, Root: <n> is negative but <k> is even
+gap> RootInt(100, 2^100);
+1
+gap> RootInt(2^100, 2^100);
+1
+gap> RootInt(-2^100, 2^100);
+Error, Root: <n> is negative but <k> is even
+gap> RootInt(0, 0);
+Error, Root: <k> must be a positive integer
+gap> RootInt(fail, 1);
+Error, Root: <n> must be an integer (not a boolean or fail)
+gap> RootInt(1, fail);
+Error, Root: <k> must be an integer (not a boolean or fail)
 
 #
 # test IS_PROBAB_PRIME_INT
@@ -1357,6 +1434,45 @@ gap> IS_PROBAB_PRIME_INT(1, 2^100);
 Error, IsProbablyPrimeInt: <reps> must be a small positive integer
 gap> IS_PROBAB_PRIME_INT(1, 0);
 Error, IsProbablyPrimeInt: <reps> must be a small positive integer
+
+#
+# test SmallestRootInt
+#
+gap> SetX(Primes, [1..30], {p,k}->SmallestRootInt(p^k)=p);
+[ true ]
+gap> SetX(Primes, [1..30], {p,k}->SmallestRootInt(p^k*1009)=p^k*1009);
+[ true ]
+gap> SetX(Primes, [1..30], {p,k}->SmallestRootInt((p*1009)^k)=p*1009);
+[ true ]
+gap> p:=2^255-19;; # big prime
+gap> ForAll([1..30], k-> SmallestRootInt(p^k) = p);
+true
+gap> List([-10..10], SmallestRootInt);
+[ -10, -9, -2, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 2, 5, 6, 7, 2, 3, 10 ]
+gap> List(data, SmallestRootInt);
+[ -100000000000000000001, -10000, -10000, -1, 0, 1, 10, 10, 
+  100000000000000000001 ]
+gap> List([-2^101,-2^100,2^100,2^101], SmallestRootInt);
+[ -2, -16, 2, 2 ]
+
+#
+# test IsPrimePowerInt
+#
+gap> P:=2^255-19;; # big prime
+gap> Filtered([-10..10], IsPrimePowerInt);
+[ -8, -7, -5, -3, -2, 2, 3, 4, 5, 7, 8, 9 ]
+gap> SetX(Primes, [1..30], {p,k}->IsPrimePowerInt(p^k));
+[ true ]
+gap> SetX(Primes, [1..10], {p,k}->IsPrimePowerInt(P*p^k));
+[ false ]
+gap> SetX(Primes, [1..10], {p,k}->IsPrimePowerInt((P*p)^k));
+[ false ]
+gap> ForAll([1..30], k->IsPrimePowerInt(P^k));
+true
+gap> ForAll([1..10], k->not IsPrimePowerInt(1009*P^k));
+true
+gap> ForAll([1..30], k->not IsPrimePowerInt((1009*P)^k));
+true
 
 #
 gap> STOP_TEST( "intarith.tst", 1);

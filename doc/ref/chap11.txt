@@ -34,13 +34,13 @@
   
   [33X[0;0YIf  a program of a [5XGAP[105X package which does not only consist of [5XGAP[105X code needs
   to  be  launched in a directory relative to certain data libraries, then the
-  first  entry  of  [2XDirectoriesPackageLibrary[102X  ([14X76.3-5[114X)  should  be  used. The
-  argument  of  [2XDirectoriesPackageLibrary[102X  ([14X76.3-5[114X)  should be the path to the
+  first  entry  of  [2XDirectoriesPackageLibrary[102X  ([14X76.3-7[114X)  should  be  used. The
+  argument  of  [2XDirectoriesPackageLibrary[102X  ([14X76.3-7[114X)  should be the path to the
   data library relative to the package directory.[133X
   
   [33X[0;0YIf  a  program  calls other programs and needs to be launched in a directory
   containing  the  executables  for such a [5XGAP[105X package then the first entry of
-  [2XDirectoriesPackagePrograms[102X ([14X76.3-6[114X) should be used.[133X
+  [2XDirectoriesPackagePrograms[102X ([14X76.3-8[114X) should be used.[133X
   
   [33X[0;0YThe  latter  two  alternatives  should  only be used if absolutely necessary
   because  otherwise  one  risks accumulating log or core files in the package

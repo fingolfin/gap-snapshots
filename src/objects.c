@@ -10,28 +10,31 @@
 **  This file contains the functions of the objects package.
 */
 
-#include <src/objects.h>
+#include "objects.h"
 
-#include <src/bool.h>
-#include <src/calls.h>
-#include <src/gap.h>
-#include <src/gapstate.h>
-#include <src/gvars.h>
-#include <src/opers.h>
-#include <src/plist.h>
-#include <src/precord.h>
-#include <src/saveload.h>
-#include <src/stringobj.h>
-#include <src/sysfiles.h>
+#include "bool.h"
+#include "calls.h"
+#include "error.h"
+#include "gapstate.h"
+#include "gvars.h"
+#include "io.h"
+#include "modules.h"
+#include "opers.h"
+#include "plist.h"
+#include "precord.h"
+#include "saveload.h"
+#include "stringobj.h"
+#include "sysfiles.h"
 
 #ifdef HPCGAP
-#include <src/hpc/aobjects.h>
-#include <src/hpc/guards.h>
-#include <src/hpc/thread.h>
+#include "hpc/aobjects.h"
+#include "hpc/guards.h"
+#include "hpc/thread.h"
+#include "hpc/traverse.h"
 #endif
 
 #if defined(USE_THREADSAFE_COPYING)
-#include <src/hpc/traverse.h>
+#include "hpc/traverse.h"
 #endif
 
 
@@ -86,6 +89,11 @@ Int RegisterPackageTNUM( const char *name, Obj (*typeObjFunc)(Obj obj) )
     TypeObjFuncs[tnum] = typeObjFunc;
 
     return tnum;
+}
+
+const Char * TNAM_TNUM(UInt tnum)
+{
+    return InfoBags[tnum].name;
 }
 
 
@@ -340,19 +348,14 @@ Obj ShallowCopyObjDefault (
     Obj                 obj )
 {
     Obj                 new;
-    Obj *               o;
+    const Obj *         o;
     Obj *               n;
-    UInt                len;
-    UInt                i;
 
     /* make the new object and copy the contents                           */
-    len = (SIZE_OBJ( obj ) + sizeof(Obj)-1) / sizeof(Obj);
     new = NewBag( MUTABLE_TNUM(TNUM_OBJ(obj)), SIZE_OBJ(obj) );
-    o = ADDR_OBJ( obj );
+    o = CONST_ADDR_OBJ(obj);
     n = ADDR_OBJ( new );
-    for ( i = 0; i < len; i++ ) {
-        *n++ = *o++;
-    }
+    memcpy(n, o, SIZE_OBJ(obj) );
 
     /* 'CHANGED_BAG(new);' not needed, <new> is newest object              */
     return new;
@@ -489,15 +492,21 @@ Obj CopyObjPosObj (
 
     /* make a copy                                                         */
     copy = NewBag( TNUM_OBJ(obj), SIZE_OBJ(obj) );
-    ADDR_OBJ(copy)[0] = ADDR_OBJ(obj)[0];
+    ADDR_OBJ(copy)[0] = CONST_ADDR_OBJ(obj)[0];
     if ( !mut ) {
         CALL_2ARGS( RESET_FILTER_OBJ, copy, IsMutableObjFilt );
     }
 
     /* leave a forwarding pointer                                          */
+    // Note that unlike for plists, ranges etc., we cannot simply restore the
+    // overwritten value (which points to the type of <obj>) by copying the
+    // value from <copy>, as the type may have changed in case we are making
+    // an immutable copy of a mutable object. Hence the forwarding pointer
+    // actually points to a plist with two entries: the overwritten value, and
+    // the actual forwarding pointer.
     tmp = NEW_PLIST( T_PLIST, 2 );
     SET_LEN_PLIST( tmp, 2 );
-    SET_ELM_PLIST( tmp, 1, ADDR_OBJ(obj)[0] );
+    SET_ELM_PLIST(tmp, 1, CONST_ADDR_OBJ(obj)[0]);
     SET_ELM_PLIST( tmp, 2, copy );
     ADDR_OBJ(obj)[0] = tmp;
     CHANGED_BAG(obj);
@@ -507,8 +516,8 @@ Obj CopyObjPosObj (
 
     /* copy the subvalues                                                  */
     for ( i = 1; i < SIZE_OBJ(obj)/sizeof(Obj); i++ ) {
-        if ( ADDR_OBJ(obj)[i] != 0 ) {
-            tmp = COPY_OBJ( ADDR_OBJ(obj)[i], mut );
+        if (CONST_ADDR_OBJ(obj)[i] != 0) {
+            tmp = COPY_OBJ(CONST_ADDR_OBJ(obj)[i], mut);
             ADDR_OBJ(copy)[i] = tmp;
             CHANGED_BAG( copy );
         }
@@ -537,7 +546,7 @@ Obj CopyObjPosObjCopy (
     Obj                 obj,
     Int                 mut )
 {
-    return ELM_PLIST( ADDR_OBJ(obj)[0], 2 );
+    return ELM_PLIST(CONST_ADDR_OBJ(obj)[0], 2);
 }
 
 
@@ -551,7 +560,7 @@ void CleanObjPosObjCopy (
     UInt                i;              /* loop variable                   */
 
     /* remove the forwarding pointer                                       */
-    ADDR_OBJ(obj)[0] = ELM_PLIST( ADDR_OBJ(obj)[0], 1 );
+    ADDR_OBJ(obj)[0] = ELM_PLIST(CONST_ADDR_OBJ(obj)[0], 1);
     CHANGED_BAG(obj);
 
     /* now it is cleaned                                                   */
@@ -559,8 +568,8 @@ void CleanObjPosObjCopy (
 
     /* clean the subvalues                                                 */
     for ( i = 1; i < SIZE_OBJ(obj)/sizeof(Obj); i++ ) {
-        if ( ADDR_OBJ(obj)[i] != 0 )
-            CLEAN_OBJ( ADDR_OBJ(obj)[i] );
+        if (CONST_ADDR_OBJ(obj)[i] != 0)
+            CLEAN_OBJ(CONST_ADDR_OBJ(obj)[i]);
     }
 
 }
@@ -591,16 +600,22 @@ Obj CopyObjComObj (
 
     /* make a copy                                                         */
     copy = NewBag( TNUM_OBJ(obj), SIZE_OBJ(obj) );
-    ADDR_OBJ(copy)[0] = ADDR_OBJ(obj)[0];
+    ADDR_OBJ(copy)[0] = CONST_ADDR_OBJ(obj)[0];
     SET_LEN_PREC(copy,LEN_PREC(obj));
     if ( !mut ) {
         CALL_2ARGS( RESET_FILTER_OBJ, copy, IsMutableObjFilt );
     }
 
     /* leave a forwarding pointer                                          */
+    // Note that unlike for plists, ranges etc., we cannot simply restore the
+    // overwritten value (which points to the type of <obj>) by copying the
+    // value from <copy>, as the type may have changed in case we are making
+    // an immutable copy of a mutable object. Hence the forwarding pointer
+    // actually points to a plist with two entries: the overwritten value, and
+    // the actual forwarding pointer.
     tmp = NEW_PLIST( T_PLIST, 2 );
     SET_LEN_PLIST( tmp, 2 );
-    SET_ELM_PLIST( tmp, 1, ADDR_OBJ(obj)[0] );
+    SET_ELM_PLIST(tmp, 1, CONST_ADDR_OBJ(obj)[0]);
     SET_ELM_PLIST( tmp, 2, copy );
     ADDR_OBJ(obj)[0] = tmp;
     CHANGED_BAG(obj);
@@ -639,7 +654,7 @@ Obj CopyObjComObjCopy (
     Obj                 obj,
     Int                 mut )
 {
-    return ELM_PLIST( ADDR_OBJ(obj)[0], 2 );
+    return ELM_PLIST(CONST_ADDR_OBJ(obj)[0], 2);
 }
 
 
@@ -653,7 +668,7 @@ void CleanObjComObjCopy (
     UInt                i;              /* loop variable                   */
 
     /* remove the forwarding pointer                                       */
-    ADDR_OBJ(obj)[0] = ELM_PLIST( ADDR_OBJ(obj)[0], 1 );
+    ADDR_OBJ(obj)[0] = ELM_PLIST(CONST_ADDR_OBJ(obj)[0], 1);
     CHANGED_BAG(obj);
 
     /* now it is cleaned                                                   */
@@ -677,8 +692,7 @@ Obj CopyObjDatObj (
 {
     Obj                 copy;           /* copy, result                    */
     Obj                 tmp;            /* temporary variable              */
-    UInt                i;              /* loop variable                   */
-    Int               * src;
+    const Int *         src;
     Int               * dst;
 
     /* don't change immutable objects                                      */
@@ -694,15 +708,21 @@ Obj CopyObjDatObj (
 
     /* make a copy                                                         */
     copy = NewBag( TNUM_OBJ(obj), SIZE_OBJ(obj) );
-    ADDR_OBJ(copy)[0] = ADDR_OBJ(obj)[0];
+    ADDR_OBJ(copy)[0] = CONST_ADDR_OBJ(obj)[0];
     if ( !mut ) {
         CALL_2ARGS( RESET_FILTER_OBJ, copy, IsMutableObjFilt );
     }
 
     /* leave a forwarding pointer                                          */
+    // Note that unlike for plists, ranges etc., we cannot simply restore the
+    // overwritten value (which points to the type of <obj>) by copying the
+    // value from <copy>, as the type may have changed in case we are making
+    // an immutable copy of a mutable object. Hence the forwarding pointer
+    // actually points to a plist with two entries: the overwritten value, and
+    // the actual forwarding pointer.
     tmp = NEW_PLIST( T_PLIST, 2 );
     SET_LEN_PLIST( tmp, 2 );
-    SET_ELM_PLIST( tmp, 1, ADDR_OBJ(obj)[0] );
+    SET_ELM_PLIST(tmp, 1, CONST_ADDR_OBJ(obj)[0]);
     SET_ELM_PLIST( tmp, 2, copy );
     ADDR_OBJ(obj)[0] = tmp;
     CHANGED_BAG(obj);
@@ -711,12 +731,9 @@ Obj CopyObjDatObj (
     RetypeBag( obj, TNUM_OBJ(obj) + COPYING );
 
     /* copy the subvalues                                                  */
-    src = (Int*)( ADDR_OBJ(obj) + 1 );
-    dst = (Int*)( ADDR_OBJ(copy) + 1 );
-    i   = (SIZE_OBJ(obj)-sizeof(Obj)+sizeof(Int)-1) / sizeof(Int);
-    for ( ;  0 < i;  i--, src++, dst++ ) {
-        *dst = *src;
-    }
+    src = (const Int *)(CONST_ADDR_OBJ(obj) + 1);
+    dst = (Int *)(ADDR_OBJ(copy) + 1);
+    memcpy(dst, src, SIZE_OBJ(obj)-sizeof(Obj));
     CHANGED_BAG(copy);
 
     /* return the copy                                                     */
@@ -742,7 +759,7 @@ Obj CopyObjDatObjCopy (
     Obj                 obj,
     Int                 mut )
 {
-    return ELM_PLIST( ADDR_OBJ(obj)[0], 2 );
+    return ELM_PLIST(CONST_ADDR_OBJ(obj)[0], 2);
 }
 
 
@@ -754,7 +771,7 @@ void CleanObjDatObjCopy (
     Obj                 obj )
 {
     /* remove the forwarding pointer                                       */
-    ADDR_OBJ(obj)[0] = ELM_PLIST( ADDR_OBJ(obj)[0], 1 );
+    ADDR_OBJ(obj)[0] = ELM_PLIST(CONST_ADDR_OBJ(obj)[0], 1);
     CHANGED_BAG(obj);
 
     /* now it is cleaned                                                   */
@@ -1234,7 +1251,7 @@ void SetTypeComObj( Obj obj, Obj type)
     ReadGuard(obj);
     MEMBAR_WRITE();
 #endif
-    TYPE_COMOBJ(obj) = type;
+    SET_TYPE_COMOBJ(obj, type);
     CHANGED_BAG(obj);
 }
 #endif
@@ -1275,7 +1292,7 @@ Obj FuncSET_TYPE_COMOBJ (
     switch (TNUM_OBJ(obj)) {
       case T_PREC:
         MEMBAR_WRITE();
-        TYPE_COMOBJ( obj ) = type;
+        SET_TYPE_COMOBJ(obj, type);
         RetypeBag( obj, T_COMOBJ );
         CHANGED_BAG( obj );
         break;
@@ -1294,9 +1311,10 @@ Obj FuncSET_TYPE_COMOBJ (
     }
 #else
     if (TNUM_OBJ(obj) == T_PREC+IMMUTABLE)
-      ErrorMayQuit("You can't make a component object from an immutable object",
-                   0L, 0L);
-    TYPE_COMOBJ( obj ) = type;
+        ErrorMayQuit(
+            "You can't make a component object from an immutable object", 0L,
+            0L);
+    SET_TYPE_COMOBJ(obj, type);
     RetypeBag( obj, T_COMOBJ );
     CHANGED_BAG( obj );
 #endif
@@ -1325,7 +1343,7 @@ void SetTypePosObj( Obj obj, Obj type)
     ReadGuard(obj);
     MEMBAR_WRITE();
 #endif
-    TYPE_POSOBJ(obj) = type;
+    SET_TYPE_POSOBJ(obj, type);
     CHANGED_BAG(obj);
 }
 #endif
@@ -1374,14 +1392,14 @@ Obj FuncSET_TYPE_POSOBJ (
         break;
       default:
         MEMBAR_WRITE();
-        TYPE_POSOBJ( obj ) = type;
+        SET_TYPE_POSOBJ(obj, type);
         RetypeBag( obj, T_POSOBJ );
         CHANGED_BAG( obj );
         break;
     }
 #else
-    TYPE_POSOBJ( obj ) = type;
     RetypeBag( obj, T_POSOBJ );
+    SET_TYPE_POSOBJ(obj, type);
     CHANGED_BAG( obj );
 #endif
     return obj;
@@ -1420,7 +1438,7 @@ Obj             TypeDatObj (
 
 void SetTypeDatObj( Obj obj, Obj type)
 {
-    TYPE_DATOBJ(obj) = type;
+    SET_TYPE_DATOBJ(obj, type);
 #ifdef HPCGAP
     if (TNUM_OBJ(obj) == T_DATOBJ &&
         !IsMutableObjObject(obj) && !IsInternallyMutableObj(obj)) {
@@ -1459,7 +1477,7 @@ Obj FuncSET_TYPE_DATOBJ (
 #ifdef HPCGAP
     ReadGuard( obj );
 #endif
-    TYPE_DATOBJ( obj ) = type;
+    SET_TYPE_DATOBJ(obj, type);
 #ifdef HPCGAP
     if (TNUM_OBJ(obj) != T_DATOBJ)
 #endif
@@ -1499,7 +1517,7 @@ Obj FuncIS_IDENTICAL_OBJ (
 **  No saving function may allocate any bag
 */
 
-void (*SaveObjFuncs[256]) ( Obj obj );
+void (*SaveObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 
 void SaveObjError( Obj obj )
 {
@@ -1524,7 +1542,7 @@ void SaveObjError( Obj obj )
 **  No loading function may allocate any bag
 */
 
-void (*LoadObjFuncs[256]) ( Obj obj );
+void (*LoadObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 
 void LoadObjError( Obj obj )
 {
@@ -1565,7 +1583,7 @@ void SavePosObj( Obj posobj)
   len = (SIZE_OBJ(posobj)/sizeof(Obj) - 1);
   for (i = 1; i <= len; i++)
     {
-      SaveSubObj(ADDR_OBJ(posobj)[i]);
+      SaveSubObj(CONST_ADDR_OBJ(posobj)[i]);
     }
 }
 
@@ -1580,10 +1598,10 @@ void SavePosObj( Obj posobj)
 void SaveDatObj( Obj datobj)
 {
   UInt len,i;
-  UInt *ptr;
+  const UInt * ptr;
   SaveSubObj(TYPE_DATOBJ( datobj ));
   len = ((SIZE_OBJ(datobj)+sizeof(UInt)-1)/sizeof(UInt) - 1);
-  ptr = (UInt *)ADDR_OBJ(datobj)+1;
+  ptr = (const UInt *)CONST_ADDR_OBJ(datobj) + 1;
   for (i = 1; i <= len; i++)
     {
       SaveUInt(*ptr++);
@@ -1599,7 +1617,7 @@ void SaveDatObj( Obj datobj)
 void LoadComObj( Obj comobj)
 {
   UInt len,i;
-  TYPE_COMOBJ( comobj) = LoadSubObj( );
+  SET_TYPE_COMOBJ(comobj, LoadSubObj());
   len = LoadUInt();
   SET_LEN_PREC(comobj,len);
   for (i = 1; i <= len; i++)
@@ -1618,7 +1636,7 @@ void LoadComObj( Obj comobj)
 void LoadPosObj( Obj posobj)
 {
   UInt len,i;
-  TYPE_POSOBJ( posobj ) = LoadSubObj();
+  SET_TYPE_POSOBJ(posobj, LoadSubObj());
   len = (SIZE_OBJ(posobj)/sizeof(Obj) - 1);
   for (i = 1; i <= len; i++)
     {
@@ -1638,7 +1656,7 @@ void LoadDatObj( Obj datobj)
 {
   UInt len,i;
   UInt *ptr;
-  TYPE_DATOBJ( datobj ) = LoadSubObj();
+  SET_TYPE_DATOBJ(datobj, LoadSubObj());
   len = ((SIZE_OBJ(datobj)+sizeof(UInt)-1)/sizeof(UInt) - 1);
   ptr = (UInt *)ADDR_OBJ(datobj)+1;
   for (i = 1; i <= len; i++)
@@ -1677,9 +1695,8 @@ Obj FuncCLONE_OBJ (
     Obj             dst,
     Obj             src )
 {
-    Obj *           psrc;
+    const Obj *     psrc;
     Obj *           pdst;
-    Int             i;
 
     /* check <src>                                                         */
     if ( IS_INTOBJ(src) ) {
@@ -1699,7 +1716,7 @@ Obj FuncCLONE_OBJ (
         case T_ACOMOBJ:
         case T_TLREC:
           ErrorReturnVoid( "cannot clone %ss",
-                           (Int)(InfoBags[TNUM_OBJ(src)].name), 0,
+                           (Int)TNAM_OBJ(src), 0,
                            "you can 'return;' to skip the cloning" );
           return 0;
     }
@@ -1740,10 +1757,8 @@ Obj FuncCLONE_OBJ (
     RetypeBag( dst, TNUM_OBJ(src) );
     pdst = ADDR_OBJ(dst);
 #endif
-    psrc = ADDR_OBJ(src);
-    for ( i = (SIZE_OBJ(src)+sizeof(Obj) - 1)/sizeof(Obj);  0 < i;  i-- ) {
-        *pdst++ = *psrc++;
-    }
+    psrc = CONST_ADDR_OBJ(src);
+    memcpy(pdst, psrc, SIZE_OBJ(src));
     CHANGED_BAG(dst);
 #ifdef HPCGAP
     REGION(dst) = REGION(src);
@@ -1868,9 +1883,10 @@ Obj FuncDEBUG_TNUM_NAMES(Obj self)
 {
     UInt indentLvl = 0;
     Char indentStr[20] = "";
-    for (UInt k = 0; k < 256; k++) {
+    for (UInt k = 0; k < NUM_TYPES; k++) {
         START_SYMBOLIC_TNUM(FIRST_REAL_TNUM);
         START_SYMBOLIC_TNUM(FIRST_CONSTANT_TNUM);
+        START_SYMBOLIC_TNUM(FIRST_MULT_TNUM);
         START_SYMBOLIC_TNUM(FIRST_IMM_MUT_TNUM);
         START_SYMBOLIC_TNUM(FIRST_RECORD_TNUM);
         START_SYMBOLIC_TNUM(FIRST_LIST_TNUM);
@@ -1885,9 +1901,10 @@ Obj FuncDEBUG_TNUM_NAMES(Obj self)
         START_SYMBOLIC_TNUM(FIRST_COPYING_TNUM);
         START_SYMBOLIC_TNUM(FIRST_PACKAGE_TNUM + COPYING);
 #endif
-        const char *name = InfoBags[k].name;
+        const char *name = TNAM_TNUM(k);
         Pr("%3d: %s", k, (Int)indentStr);
         Pr("%s%s\n", (Int)indentStr, (Int)(name ? name : "."));
+        STOP_SYMBOLIC_TNUM(LAST_MULT_TNUM);
         STOP_SYMBOLIC_TNUM(LAST_CONSTANT_TNUM);
         STOP_SYMBOLIC_TNUM(LAST_RECORD_TNUM);
         STOP_SYMBOLIC_TNUM(LAST_PLIST_TNUM);
@@ -1913,8 +1930,25 @@ Obj FuncDEBUG_TNUM_NAMES(Obj self)
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
+
+
+/****************************************************************************
+**
+*V  BagNames  . . . . . . . . . . . . . . . . . . . . . . . list of bag names
+*/
+static StructBagNames BagNames[] = {
+  { T_COMOBJ,                         "object (component)"             },
+  { T_POSOBJ,                         "object (positional)"            },
+  { T_DATOBJ,                         "object (data)"                  },
+#if !defined(USE_THREADSAFE_COPYING)
+  { T_COMOBJ      +COPYING,           "object (component,copied)"      },
+  { T_POSOBJ      +COPYING,           "object (positional,copied)"     },
+  { T_DATOBJ      +COPYING,           "object (data,copied)"           },
+#endif
+  { -1,                               ""                               }
+};
 
 
 /****************************************************************************
@@ -2001,19 +2035,17 @@ static Int InitKernel (
 {
     Int                 t;              /* loop variable                   */
 
+    // set the bag type names (for error messages and debugging)
+    InitBagNamesFromTable( BagNames );
+
     /* install the marking methods                                         */
-    InfoBags[         T_COMOBJ          ].name = "object (component)";
-    InitMarkFuncBags( T_COMOBJ          , MarkAllSubBags  );
-    InfoBags[         T_POSOBJ          ].name = "object (positional)";
+    InitMarkFuncBags( T_COMOBJ          , MarkPRecSubBags );
     InitMarkFuncBags( T_POSOBJ          , MarkAllSubBags  );
-    InfoBags[         T_DATOBJ          ].name = "object (data)";
     InitMarkFuncBags( T_DATOBJ          , MarkOneSubBags  );
+
 #if !defined(USE_THREADSAFE_COPYING)
-    InfoBags[         T_COMOBJ +COPYING ].name = "object (component,copied)";
-    InitMarkFuncBags( T_COMOBJ +COPYING , MarkAllSubBags  );
-    InfoBags[         T_POSOBJ +COPYING ].name = "object (positional,copied)";
+    InitMarkFuncBags( T_COMOBJ +COPYING , MarkPRecSubBags );
     InitMarkFuncBags( T_POSOBJ +COPYING , MarkAllSubBags  );
-    InfoBags[         T_DATOBJ +COPYING ].name = "object (data,copied)";
     InitMarkFuncBags( T_DATOBJ +COPYING , MarkOneSubBags  );
 #endif
 
@@ -2075,8 +2107,12 @@ static Int InitKernel (
     for ( t = FIRST_EXTERNAL_TNUM; t <= LAST_EXTERNAL_TNUM; t++ )
         ShallowCopyObjFuncs[ t ] = ShallowCopyObjObject;
 
+#ifdef USE_THREADSAFE_COPYING
+    SetTraversalMethod(T_POSOBJ, TRAVERSE_ALL_BUT_FIRST, 0, 0);
+    SetTraversalMethod(T_COMOBJ, TRAVERSE_BY_FUNCTION, TraversePRecord, CopyPRecord);
+    SetTraversalMethod(T_DATOBJ, TRAVERSE_NONE, 0, 0);
+#else
     /* make and install the 'COPY_OBJ' function                            */
-#if !defined(USE_THREADSAFE_COPYING)
     for ( t = FIRST_REAL_TNUM; t <= LAST_REAL_TNUM; t++ ) {
         assert(CopyObjFuncs [ t ] == 0);
         CopyObjFuncs [ t ] = CopyObjError;
@@ -2168,6 +2204,9 @@ static Int InitLibrary (
 
     ExportAsConstantGVar(FIRST_CONSTANT_TNUM);
     ExportAsConstantGVar(LAST_CONSTANT_TNUM);
+
+    ExportAsConstantGVar(FIRST_MULT_TNUM);
+    ExportAsConstantGVar(LAST_MULT_TNUM);
 
     ExportAsConstantGVar(FIRST_IMM_MUT_TNUM);
     ExportAsConstantGVar(LAST_IMM_MUT_TNUM);
@@ -2279,6 +2318,13 @@ static Int InitLibrary (
     ExportAsConstantGVar(T_TLREC_INNER);
 #endif
 
+    // export positions of data in type objects
+    ExportAsConstantGVar(POS_FAMILY_TYPE);
+    ExportAsConstantGVar(POS_FLAGS_TYPE);
+    ExportAsConstantGVar(POS_DATA_TYPE);
+    ExportAsConstantGVar(POS_NUMB_TYPE);
+    ExportAsConstantGVar(POS_FIRST_FREE_TYPE);
+
     /* return success                                                      */
     return 0;
 }
@@ -2295,10 +2341,12 @@ static StructInitInfo module = {
     .name = "objects",
     .initKernel = InitKernel,
     .initLibrary = InitLibrary,
+
+    .moduleStateSize = sizeof(ObjectsModuleState),
+    .moduleStateOffsetPtr = &ObjectsStateOffset,
 };
 
 StructInitInfo * InitInfoObjects ( void )
 {
-    ObjectsStateOffset = RegisterModuleState(sizeof(ObjectsModuleState), 0, 0);
     return &module;
 }

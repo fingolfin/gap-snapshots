@@ -4,9 +4,8 @@
 ##                                                              John Bamberg
 ##                                                              Jan De Beule
 ##
-##  Copyright 2015, Ghent University
-##  Copyright 2016, Vrije Universiteit Brussel
-##  Copyright 2016, The University of Western Austalia
+##  Copyright 2017, Vrije Universiteit Brussel
+##  Copyright 2017, The University of Western Austalia
 ##
 ##  Implementation of quadratic and sesquilinear forms
 ##
@@ -122,21 +121,22 @@ InstallMethod( FormByMatrix, "for a ffe matrix, a field and a string",
 InstallMethod( BilinearFormByMatrixOp, "for a ffe matrix and a field",
   [IsMatrix and IsFFECollColl, IsField and IsFinite],
   function( m, f )
-    local el;
+    local el, n;
+    n := Length(m);
     if IsZero(m) then
-       el := rec( matrix := m, basefield := f, type := "trivial" );
+       el := rec( matrix := m, basefield := f, type := "trivial", vectorspace := FullRowSpace(f,n) );
        Objectify(NewType( TrivialFormFamily ,  IsFormRep),  el);
  	   return el;
     elif IsSymplecticMatrix(m,f) then
-       el := rec( matrix := m, basefield := f, type := "symplectic" );
+       el := rec( matrix := m, basefield := f, type := "symplectic", vectorspace := FullRowSpace(f,n) );
        Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
 	   return el;
     elif (IsOrthogonalMatrix(m) and IsOddInt(Size(f))) then 
-       el := rec( matrix := m, basefield := f, type := "orthogonal" );
+       el := rec( matrix := m, basefield := f, type := "orthogonal", vectorspace := FullRowSpace(f,n) );
        Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
  	   return el;
     elif (IsOrthogonalMatrix(m) and IsEvenInt(Size(f))) then
-       el := rec( matrix := m, basefield := f, type := "pseudo" );
+       el := rec( matrix := m, basefield := f, type := "pseudo", vectorspace := FullRowSpace(f,n) );
        Objectify(NewType( BilinearFormFamily ,  IsFormRep),  el);
  	   return el; 
     else
@@ -186,8 +186,9 @@ end );
 InstallMethod( QuadraticFormByMatrixOp, "for a ffe matrix and a field",
   [IsMatrix and IsFFECollColl, IsField and IsFinite],
   function( m, f )
-    local el;
-    el := rec( matrix := m, basefield := f, type := "quadratic" );
+    local el, n;
+    n := Length(m);
+    el := rec( matrix := m, basefield := f, type := "quadratic", vectorspace := FullRowSpace(f,n) );
     if IsZero(m) then
        el.type := "trivial";
        Objectify(NewType( TrivialFormFamily ,  IsFormRep),  el);
@@ -242,7 +243,8 @@ end );
 InstallMethod( HermitianFormByMatrix, "for a ffe matrix and a field",
   [IsMatrix and IsFFECollColl, IsField and IsFinite],
   function( m, f )
-    local el,gf;    
+    local el,gf,n;
+    n := Length(m);
     gf := Field(Union(m));
     if not Z(Size(gf)) in f then
       Error("<m> is not a matrix over <f>");
@@ -251,7 +253,7 @@ InstallMethod( HermitianFormByMatrix, "for a ffe matrix and a field",
         Error("No hermitian form exists when the order of <f> is not a square\n" );
     fi;
     if IsHermitianMatrix(m,f) then
-       el := rec( matrix := MutableCopyMat(m), basefield := f, type := "hermitian" );
+       el := rec( matrix := MutableCopyMat(m), basefield := f, type := "hermitian", vectorspace := FullRowSpace(f,n) );
        Objectify(NewType( HermitianFormFamily ,  IsFormRep),  el);
        return el;
     else
@@ -3003,6 +3005,13 @@ InstallMethod( EvaluateForm, "for quadratic forms",
   function(f,v)
     return v*f!.matrix*v;
 end );
+
+InstallMethod( EvaluateForm,
+    "for a quadratic form and an FFE matrix",
+    [ IsQuadraticForm, IsMatrix and IsFFECollColl ],
+    function(f,m)
+        return m * f!.matrix * TransposedMat(m);
+    end );
 
 InstallMethod( EvaluateForm,  "for trivial forms and a pair of vectors",
   [IsTrivialForm, 

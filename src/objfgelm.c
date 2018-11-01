@@ -72,16 +72,17 @@
 **    returns the result type
 */
 
-#include <src/objfgelm.h>
+#include "objfgelm.h"
 
-#include <src/ariths.h>
-#include <src/bool.h>
-#include <src/gap.h>
-#include <src/gvars.h>
-#include <src/lists.h>
-#include <src/opers.h>
-#include <src/plist.h>
-#include <src/stringobj.h>
+#include "ariths.h"
+#include "bool.h"
+#include "error.h"
+#include "gvars.h"
+#include "lists.h"
+#include "modules.h"
+#include "opers.h"
+#include "plist.h"
+#include "stringobj.h"
 
 
 /****************************************************************************
@@ -158,8 +159,7 @@ Obj Func8Bits_ExponentSums3 (
 
     /* <end> must be at least <start>                                      */
     if ( end < start ) {
-        sums = NEW_PLIST( T_PLIST_CYC, 0 );
-        SET_LEN_PLIST( sums, 0 );
+        sums = NEW_PLIST( T_PLIST_EMPTY, 0 );
         return sums;
     }
 
@@ -486,7 +486,7 @@ Obj Func8Bits_Less (
             /* compare the exponents, and check the next generator.  This  */
             /* amounts to stripping off the common prefix  x^|expl-expr|.  */
             if( exl > exr ) {
-                if( nr > 0 ) {
+                if( nr > 1 ) {
                   lexico = (*pl & genm) < (*(pr+1) & genm) ? True : False;
                   break;
                 }
@@ -494,7 +494,7 @@ Obj Func8Bits_Less (
                     /* <r> is now essentially the empty word.             */
                     return False;
             }
-            if( nl > 0 ) {  /* exl < exr                                  */
+            if( nl > 1 ) {  /* exl < exr                                  */
                 lexico = (*(pl+1) & genm) < (*pr & genm) ? True : False;
                 break;
             }
@@ -691,7 +691,7 @@ Obj Func8Bits_Power (
         pr = (UInt1*)DATA_WORD(obj) + (nl-1);
         sl = nl;
 
-        /* exponents are symmtric, so we cannot get an overflow            */
+        /* exponents are symmetric, so we cannot get an overflow            */
         while ( 0 < sl-- ) {
             *pr-- = ( *pl++ ^ invm ) + 1;
         }
@@ -1137,8 +1137,7 @@ Obj Func16Bits_ExponentSums3 (
 
     /* <end> must be at least <start>                                      */
     if ( end < start ) {
-        sums = NEW_PLIST( T_PLIST_CYC, 0 );
-        SET_LEN_PLIST( sums, 0 );
+        sums = NEW_PLIST( T_PLIST_EMPTY, 0 );
         return sums;
     }
 
@@ -1444,7 +1443,7 @@ Obj Func16Bits_Less (
             /* compare the exponents, and check the next generator.  This  */
             /* amounts to stripping off the common prefix  x^|expl-expr|.  */
             if( exl > exr ) {
-                if( nr > 0 ) {
+                if( nr > 1 ) {
                   lexico = (*pl & genm) < (*(pr+1) & genm) ? True : False;
                   break;
                 }
@@ -1452,7 +1451,7 @@ Obj Func16Bits_Less (
                     /* <r> is now essentially the empty word.             */
                     return False;
             }
-            if( nl > 0 ) {  /* exl < exr                                  */
+            if( nl > 1 ) {  /* exl < exr                                  */
                 lexico = (*(pl+1) & genm) < (*pr & genm) ? True : False;
                 break;
             }
@@ -1649,7 +1648,7 @@ Obj Func16Bits_Power (
         pr = (UInt2*)DATA_WORD(obj) + (nl-1);
         sl = nl;
 
-        /* exponents are symmtric, so we cannot get an overflow            */
+        /* exponents are symmetric, so we cannot get an overflow            */
         while ( 0 < sl-- ) {
             *pr-- = ( *pl++ ^ invm ) + 1;
         }
@@ -2095,8 +2094,7 @@ Obj Func32Bits_ExponentSums3 (
 
     /* <end> must be at least <start>                                      */
     if ( end < start ) {
-        sums = NEW_PLIST( T_PLIST_CYC, 0 );
-        SET_LEN_PLIST( sums, 0 );
+        sums = NEW_PLIST( T_PLIST_EMPTY, 0 );
         return sums;
     }
 
@@ -2402,7 +2400,7 @@ Obj Func32Bits_Less (
             /* compare the exponents, and check the next generator.  This  */
             /* amounts to stripping off the common prefix  x^|expl-expr|.  */
             if( exl > exr ) {
-                if( nr > 0 ) {
+                if( nr > 1 ) {
                   lexico = (*pl & genm) < (*(pr+1) & genm) ? True : False;
                   break;
                 }
@@ -2410,7 +2408,7 @@ Obj Func32Bits_Less (
                     /* <r> is now essentially the empty word.             */
                     return False;
             }
-            if( nl > 0 ) {  /* exl < exr                                  */
+            if( nl > 1 ) {  /* exl < exr                                  */
                 lexico = (*(pl+1) & genm) < (*pr & genm) ? True : False;
                 break;
             }
@@ -2607,7 +2605,7 @@ Obj Func32Bits_Power (
         pr = (UInt4*)DATA_WORD(obj) + (nl-1);
         sl = nl;
 
-        /* exponents are symmtric, so we cannot get an overflow            */
+        /* exponents are symmetric, so we cannot get an overflow            */
         while ( 0 < sl-- ) {
             *pr-- = ( *pl++ ^ invm ) + 1;
         }
@@ -3001,8 +2999,8 @@ Obj FuncNBits_NumberSyllables (
 /**************************************************************************
 * letter rep arithmetic */
 /**************************************************************************
-*F  FuncMultWorLettrep( <self>, <a>,<b> ) */
-Obj FuncMultWorLettrep (
+*F  FuncMULT_WOR_LETTREP( <self>, <a>,<b> ) */
+Obj FuncMULT_WOR_LETTREP (
     Obj         self,
     Obj         a,
     Obj         b)
@@ -3115,8 +3113,8 @@ Obj FuncMultWorLettrep (
   return n;
 }
 
-/*F  FuncMultBytLettrep( <self>, <a>,<b> ) */
-Obj FuncMultBytLettrep (
+/*F  FuncMULT_BYT_LETTREP( <self>, <a>,<b> ) */
+Obj FuncMULT_BYT_LETTREP (
     Obj         self,
     Obj         a,
     Obj         b)
@@ -3228,14 +3226,14 @@ Obj FuncMultBytLettrep (
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
 **
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
-static StructGVarFunc GVarFuncs [] = {
+static StructGVarFunc GVarFuncs[] = {
 
     GVAR_FUNC(8Bits_Equal, 2, "8_bits_word, 8_bits_word"),
     GVAR_FUNC(8Bits_ExponentSums1, 1, "8_bits_word"),
@@ -3245,15 +3243,13 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC(8Bits_GeneratorSyllable, 2, "8_bits_word, position"),
     GVAR_FUNC(8Bits_Less, 2, "8_bits_word, 8_bits_word"),
     GVAR_FUNC(8Bits_AssocWord, 2, "type, data"),
-    { "8Bits_NumberSyllables", 1, "8_bits_word",
-      FuncNBits_NumberSyllables, "src/objfgelm.c:8Bits_NumberSyllables" },
-
     GVAR_FUNC(8Bits_ObjByVector, 2, "type, data"),
     GVAR_FUNC(8Bits_HeadByNumber, 2, "16_bits_word, gen_num"),
     GVAR_FUNC(8Bits_Power, 2, "8_bits_word, small_integer"),
     GVAR_FUNC(8Bits_Product, 2, "8_bits_word, 8_bits_word"),
     GVAR_FUNC(8Bits_Quotient, 2, "8_bits_word, 8_bits_word"),
     GVAR_FUNC(8Bits_LengthWord, 1, "8_bits_word"),
+
     GVAR_FUNC(16Bits_Equal, 2, "16_bits_word, 16_bits_word"),
     GVAR_FUNC(16Bits_ExponentSums1, 1, "16_bits_word"),
     GVAR_FUNC(16Bits_ExponentSums3, 3, "16_bits_word, start, end"),
@@ -3262,15 +3258,13 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC(16Bits_GeneratorSyllable, 2, "16_bits_word, pos"),
     GVAR_FUNC(16Bits_Less, 2, "16_bits_word, 16_bits_word"),
     GVAR_FUNC(16Bits_AssocWord, 2, "type, data"),
-    { "16Bits_NumberSyllables", 1, "16_bits_word",
-      FuncNBits_NumberSyllables, "src/objfgelm.c:16Bits_NumberSyllables" },
-
     GVAR_FUNC(16Bits_ObjByVector, 2, "type, data"),
     GVAR_FUNC(16Bits_HeadByNumber, 2, "16_bits_word, gen_num"),
     GVAR_FUNC(16Bits_Power, 2, "16_bits_word, small_integer"),
     GVAR_FUNC(16Bits_Product, 2, "16_bits_word, 16_bits_word"),
     GVAR_FUNC(16Bits_Quotient, 2, "16_bits_word, 16_bits_word"),
     GVAR_FUNC(16Bits_LengthWord, 1, "16_bits_word"),
+
     GVAR_FUNC(32Bits_Equal, 2, "32_bits_word, 32_bits_word"),
     GVAR_FUNC(32Bits_ExponentSums1, 1, "32_bits_word"),
     GVAR_FUNC(32Bits_ExponentSums3, 3, "32_bits_word, start, end"),
@@ -3279,20 +3273,17 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC(32Bits_GeneratorSyllable, 2, "32_bits_word, pos"),
     GVAR_FUNC(32Bits_Less, 2, "32_bits_word, 32_bits_word"),
     GVAR_FUNC(32Bits_AssocWord, 2, "type, data"),
-    { "32Bits_NumberSyllables", 1, "32_bits_word",
-      FuncNBits_NumberSyllables, "src/objfgelm.c:32Bits_NumberSyllables" },
-
     GVAR_FUNC(32Bits_ObjByVector, 2, "type, data"),
     GVAR_FUNC(32Bits_HeadByNumber, 2, "16_bits_word, gen_num"),
     GVAR_FUNC(32Bits_Power, 2, "32_bits_word, small_integer"),
     GVAR_FUNC(32Bits_Product, 2, "32_bits_word, 32_bits_word"),
     GVAR_FUNC(32Bits_Quotient, 2, "32_bits_word, 32_bits_word"),
     GVAR_FUNC(32Bits_LengthWord, 1, "32_bits_word"),
-    { "MULT_WOR_LETTREP", 2, "list,list",
-      FuncMultWorLettrep, "src/objfgelm.c:MULT_WOR_LETTREP" },
 
-    { "MULT_BYT_LETTREP", 2, "string,string",
-      FuncMultBytLettrep, "src/objfgelm.c:MULT_BYT_LETTREP" },
+    GVAR_FUNC(NBits_NumberSyllables, 1, "N_bits_word"),
+
+    GVAR_FUNC(MULT_WOR_LETTREP, 2, "list,list"),
+    GVAR_FUNC(MULT_BYT_LETTREP, 2, "string,string"),
 
     { 0, 0, 0, 0, 0 }
 

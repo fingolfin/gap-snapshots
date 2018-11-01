@@ -1519,7 +1519,7 @@ end );
 ##
 #M  Socle( <G> )  . . . . . . . . . . .  socle of primitive permutation group
 ##
-InstallMethod( Socle,"for permgrp", true, [ IsPermGroup ], 0,
+InstallMethod( Socle,"test primitive", true, [ IsPermGroup ], 0,
     function( G )
     local   Omega,  deg,  shortcut,  coll,  d,  m,  c,  ds,  L,  z,  ord,
             p,  i;
@@ -1539,28 +1539,30 @@ InstallMethod( Socle,"for permgrp", true, [ IsPermGroup ], 0,
     deg := Length( Omega );
     if deg >= 6103515625  then
         TryNextMethod();
-    elif deg < 12960000  then
-        shortcut := true;
-        if deg >= 3125  then
-            coll := Collected( FactorsInt( deg ) );
-            d := Gcd( List( coll, c -> c[ 2 ] ) );
-            if d mod 5 = 0  then
-                m := 1;
-                for c  in coll  do
-                    m := m * c[ 1 ] ^ ( c[ 2 ] / d );
-                od;
-                if m >= 5  then
-                    shortcut := false;
-                fi;
-            fi;
-        fi;
-        if shortcut  then
-            ds := DerivedSeriesOfGroup( G );
-            return ds[ Length( ds ) ];
-        fi;
+    # the normal closure actually seems to be faster than derived series, so
+    # this is not really a shortcut
+    #elif deg < 12960000  then
+    #    shortcut := true;
+    #    if deg >= 3125  then
+    #        coll := Collected( Factors( deg ) );
+    #        d := Gcd( List( coll, c -> c[ 2 ] ) );
+    #        if d mod 5 = 0  then
+    #            m := 1;
+    #            for c  in coll  do
+    #                m := m * c[ 1 ] ^ ( c[ 2 ] / d );
+    #            od;
+    #            if m >= 5  then
+    #                shortcut := false;
+    #            fi;
+    #        fi;
+    #    fi;
+    #    if shortcut  then
+    #        ds := DerivedSeriesOfGroup( G );
+    #        return ds[ Length( ds ) ];
+    #    fi;
     fi;
     
-    coll := Collected( FactorsInt( Size( G ) ) );
+    coll := Collected( Factors(Integers, Size( G ) ) );
     if deg < 78125  then
         p := coll[ Length( coll ) ][ 1 ];
     else
@@ -1577,7 +1579,10 @@ InstallMethod( Socle,"for permgrp", true, [ IsPermGroup ], 0,
         until ord mod p = 0;
         z := z ^ ( ord / p );
     until Index( G, Centralizer( G, z ) ) mod p <> 0;
-    L := NormalClosure( G, SubgroupNC( G, [ z ] ) );
+
+    # immediately add conjugate as this will be needed anyhow and seems to
+    # speed up the closure process
+    L := NormalClosure( G, SubgroupNC( G, [ z,z^Random(G) ] ) );
     if deg >= 78125  then
         ds := DerivedSeriesOfGroup( L );
         L := ds[ Length( ds ) ];
@@ -1892,10 +1897,20 @@ end);
 InstallMethod(SmallGeneratingSet,"random and generators subset, randsims",true,
   [IsPermGroup],0,
 function (G)
-local  i, j, U, gens,o,v,a,sel,min;
+local  i, j, U, gens,o,v,a,sel,min,orb,orp,ok;
+
+  gens := ShallowCopy(Set(GeneratorsOfGroup(G)));
+
+  # try pc methods first. The solvability test should not exceed cost, nor
+  # the number of points.
+  if #Length(MovedPoints(G))<50000 and 
+   #((HasIsSolvableGroup(G) and IsSolvableGroup(G)) or IsAbelian(G))
+      IsSolvableGroup(G) 
+      and Length(gens)>3 then
+    return MinimalGeneratingSet(G);
+  fi;
 
   # remove obvious redundancies
-  gens := ShallowCopy(Set(GeneratorsOfGroup(G)));
   o:=List(gens,Order);
   SortParallel(o,gens,function(a,b) return a>b;end);
   sel:=Filtered([1..Length(gens)],x->o[x]>1);
@@ -1920,26 +1935,32 @@ local  i, j, U, gens,o,v,a,sel,min;
   od;
   gens:=gens{sel};
 
-  # try pc methods first
-  if Length(MovedPoints(G))<1000 and HasIsSolvableGroup(G) 
-     and IsSolvableGroup(G) and Length(gens)>3 then
-    return MinimalGeneratingSet(G);
-  fi;
-
+  # store orbit data
+  orb:=Set(List(Orbits(G,MovedPoints(G)),Set));
+  orp:=Filtered([1..Length(orb)],x->IsPrimitive(Action(G,orb[x])));
 
   min:=2;
   if Length(gens)>2 then
   # minimal: AbelianInvariants
     min:=Maximum(List(Collected(Factors(Size(G)/Size(DerivedSubgroup(G)))),x->x[2]));
+    if min=Length(GeneratorsOfGroup(G)) then return GeneratorsOfGroup(G);fi;
     i:=Maximum(2,min);
     while i<=min+1 and i<Length(gens) do
       # try to find a small generating system by random search
       j:=1;
       while j<=5 and i<Length(gens) do
         U:=Subgroup(G,List([1..i],j->Random(G)));
+        ok:=true;
+        # first test orbits
+        if ok then
+          ok:=Length(orb)=Length(Orbits(U,MovedPoints(U))) and
+              ForAll(orp,x->IsPrimitive(U,orb[x]));
+        fi;
+
+
 	StabChainOptions(U).random:=100; # randomized size
 #Print("A:",i,",",j," ",Size(G)/Size(U),"\n");
-        if Size(U)=Size(G) then
+        if ok and Size(U)=Size(G) then
           gens:=Set(GeneratorsOfGroup(U));
         fi;
         j:=j+1;
@@ -1955,6 +1976,14 @@ local  i, j, U, gens,o,v,a,sel,min;
   while i <= Length(gens) and Length(gens)>min do
     # random did not improve much, try subsets
     U:=Subgroup(G,gens{Difference([1..Length(gens)],[i])});
+
+    ok:=true;
+    # first test orbits
+    if ok then
+      ok:=Length(orb)=Length(Orbits(U,MovedPoints(U))) and
+          ForAll(orp,x->IsPrimitive(U,orb[x]));
+    fi;
+
     StabChainOptions(U).random:=100; # randomized size
 #Print("B:",i," ",Size(G)/Size(U),"\n");
     if Size(U)<Size(G) then

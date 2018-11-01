@@ -8,16 +8,18 @@ Subtitle := "Matric Group Interface Routines",
 
 ##  See '?Extending: Version Numbers' in GAP help for an explanation
 ##  of valid version numbers.
-Version := "0.4",
+Version := "0.51",
 
 ##  Release date of the current version in dd/mm/yyyy format.
-Date := "25/02/2015",
+Date := "17/09/2018",
 
 ##  URL of the archive(s) of the current package release, but *without*
 ##  the format extension(s), like '.zoo', which are given next.
 ##  The archive file name *must be changed* with each version of the archive
 ##  (and probably somehow contain the package name and version).
-ArchiveURL := "http://www.math.colostate.edu/~hulpke/matgrp/matgrp04",
+ArchiveURL := Concatenation(
+  # avoid duplication of version number
+  "http://www.math.colostate.edu/~hulpke/matgrp/matgrp",~.Version),
 
 ##  All provided formats as list of file extensions, separated by white
 ##  space or commas.
@@ -51,10 +53,9 @@ Persons := [
 ##    "accepted"      for successfully refereed packages
 ##    "deposited"     for packages for which the GAP developers agreed 
 ##                    to distribute them with the core GAP system
-##    "dev"           for development versions of packages 
 ##    "other"         for all other packages
 ##
-Status := "dev",
+Status := "deposited",
 
 ##  You must provide the next two entries if and only if the status is 
 ##  "accepted":
@@ -73,8 +74,14 @@ Status := "dev",
 ##  the updating of package information on the GAP Website, and inclusion
 ##  and updating of the package in the GAP distribution.
 ##  
-README_URL := "http://www.math.colostate.edu/~hulpke/matgrp/README",
+README_URL := "http://www.math.colostate.edu/~hulpke/matgrp/README.md",
 PackageInfoURL := "http://www.math.colostate.edu/~hulpke/matgrp/PackageInfo.g",
+
+SourceRepository := rec( 
+  Type := "git", 
+  URL := "https://github.com/hulpke/matgrp/"
+),
+IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
 
 ##  Here you  must provide a short abstract explaining the package content 
 ##  in HTML format (used on the package overview Web page) and an URL 
@@ -110,7 +117,7 @@ PackageWWWHome := "http://www.math.colostate.edu/~hulpke/matgrp",
 PackageDoc := rec(
   # use same as in GAP            
   BookName := "matgrp",
-  ArchiveURLSubset := [ "doc/manual.pdf"],
+  ArchiveURLSubset := [ "doc", "htm" ],
   PDFFile := "doc/manual.pdf",
   HTMLStart:="htm/chapters.htm",
   # the path to the .six file used by GAP's help system
@@ -139,7 +146,6 @@ Dependencies := rec(
     ["genss", ">= 1.3"],
     ["Orb", ">= 3.4"],
     ["AtlasRep", ">= 1.4.0"],
-    ["recogbase", ">= 1.0"],
   ],
   SuggestedOtherPackages := [],
   ExternalConditions := []
@@ -154,6 +160,8 @@ Dependencies := rec(
 ## tests of other packages, as given above, will be done automatically and
 ## need not be included here.)
 AvailabilityTest := ReturnTrue,
+
+TestFile := "tst/testall.g",
 
 ##  Suggest here if the package should be *automatically loaded* when GAP is 
 ##  started.  This should usually be 'false'. Say 'true' only if your package 

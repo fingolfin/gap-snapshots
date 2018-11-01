@@ -26,22 +26,24 @@
 **
 */
 
-#include <src/precord.h>
+#include "precord.h"
 
-#include <src/ariths.h>
-#include <src/bool.h>
-#include <src/funcs.h>
-#include <src/gap.h>
-#include <src/gaputils.h>
-#include <src/io.h>
-#include <src/opers.h>
-#include <src/plist.h>
-#include <src/records.h>
-#include <src/saveload.h>
-#include <src/stringobj.h>
+#include "ariths.h"
+#include "bool.h"
+#include "error.h"
+#include "funcs.h"
+#include "gaputils.h"
+#include "io.h"
+#include "modules.h"
+#include "opers.h"
+#include "plist.h"
+#include "records.h"
+#include "saveload.h"
+#include "stringobj.h"
 
 #ifdef HPCGAP
-#include <src/hpc/aobjects.h>
+#include "hpc/aobjects.h"
+#include "hpc/traverse.h"
 #endif
 
 /****************************************************************************
@@ -59,20 +61,11 @@
 **  'TypePRec' is the function in 'TypeObjFuncs' for plain records.
 */
 Obj TYPE_PREC_MUTABLE;
-
-Obj TypePRecMut (
-    Obj                 prec )
-{
-    return TYPE_PREC_MUTABLE;
-}
-
-
 Obj TYPE_PREC_IMMUTABLE;
 
-Obj TypePRecImm (
-    Obj                 prec )
+Obj TypePRec(Obj prec)
 {
-    return TYPE_PREC_IMMUTABLE;
+    return IS_MUTABLE_PLAIN_OBJ(prec) ? TYPE_PREC_MUTABLE : TYPE_PREC_IMMUTABLE;
 }
 
 /****************************************************************************
@@ -82,8 +75,8 @@ Obj TypePRecImm (
 */
 void SetTypePRecToComObj( Obj rec, Obj kind )
 {
-    TYPE_COMOBJ(rec) = kind;
     RetypeBag(rec, T_COMOBJ);
+    SET_TYPE_COMOBJ(rec, kind);
     CHANGED_BAG(rec);
 }
 
@@ -131,7 +124,22 @@ Int             GrowPRec (
 }
 
 
-#if !defined(USE_THREADSAFE_COPYING)
+#ifdef USE_THREADSAFE_COPYING
+void TraversePRecord(Obj obj)
+{
+    UInt i, len = LEN_PREC(obj);
+    for (i = 1; i <= len; i++)
+        QueueForTraversal((Obj)GET_ELM_PREC(obj, i));
+}
+
+void CopyPRecord(Obj copy, Obj original)
+{
+    UInt i, len = LEN_PREC(original);
+    for (i = 1; i <= len; i++)
+        SET_ELM_PREC(copy, i, ReplaceByCopy(GET_ELM_PREC(original, i)));
+}
+
+#else
 
 /****************************************************************************
 **
@@ -199,7 +207,7 @@ Obj CopyPRecCopy (
     Obj                 rec,
     Int                 mut )
 {
-    return ADDR_OBJ(rec)[0];
+    return CONST_ADDR_OBJ(rec)[0];
 }
 
 void CleanPRec (
@@ -232,19 +240,24 @@ void CleanPRecCopy (
 *F  MakeImmutablePRec( <rec> )
 */
 
-void MakeImmutablePRec( Obj rec)
+void MakeImmutablePRec(Obj rec)
 {
-  UInt len;
-  UInt i;
-  len = LEN_PREC( rec );
-  for ( i = 1; i <= len; i++ )
-    MakeImmutable(GET_ELM_PREC(rec,i));
-  
-  /* Sort the record at this point.
-     This can never hurt, unless the record will never be accessed again anyway
-     for HPCGAP it's essential so that immutable records are actually binary unchanging */
-  SortPRecRNam(rec, 1); 
-  RetypeBag(rec, IMMUTABLE_TNUM(TNUM_OBJ(rec)));
+    // change the tnum first, to avoid infinite recursion for objects that
+    // contain themselves
+    RetypeBag(rec, IMMUTABLE_TNUM(TNUM_OBJ(rec)));
+
+    // FIXME HPC-GAP: there is a potential race here: <rec> becomes public
+    // the moment we change its type, but it's not ready for public access
+    // until the following code completed.
+
+    UInt len = LEN_PREC(rec);
+    for (UInt i = 1; i <= len; i++)
+        MakeImmutable(GET_ELM_PREC(rec, i));
+
+    // Sort the record at this point. This can never hurt, unless the record
+    // will never be accessed again anyway. But for HPC-GAP it is essential so
+    // that immutable records are actually binary unchanging.
+    SortPRecRNam(rec, 1);
 }
 
 
@@ -348,7 +361,7 @@ Obj ElmPRec (
         return GET_ELM_PREC( rec, i );
     else {
         ErrorReturnVoid(
-            "Record: '<rec>.%s' must have an assigned value",
+            "Record Element: '<rec>.%g' must have an assigned value",
             (Int)NAME_RNAM(rnam), 0L,
             "you can 'return;' after assigning a value" );
         return ELM_REC( rec, rnam );
@@ -370,6 +383,14 @@ void UnbPRec (
     UInt                len;            /* length of <rec>                 */
     UInt                i;              /* loop variable                   */
 
+    // Accept T_PREC and T_COMOBJ, reject T_PREC+IMMUTABLE
+    if (TNUM_OBJ(rec) == T_PREC+IMMUTABLE) {
+        ErrorReturnVoid(
+            "Record Unbind: <rec> must be a mutable record",
+            0L, 0L,
+            "you can 'return;' and ignore the unbind" );
+    }
+
     if (FindPRec( rec, rnam, &i, 1 )) {
         /* otherwise move everything forward                               */
         len = LEN_PREC( rec );
@@ -389,16 +410,6 @@ void UnbPRec (
         return;
 }
 
-void            UnbPRecImm (
-    Obj                 rec,
-    UInt                rnam )
-{
-    ErrorReturnVoid(
-        "Record Unbind: <rec> must be a mutable record",
-        0L, 0L,
-        "you can 'return;' and ignore the unbind" );
-}
-
 
 /****************************************************************************
 **
@@ -414,6 +425,14 @@ void AssPRec (
 {
     UInt                len;            /* length of <rec>                 */
     UInt                i;              /* loop variable                   */
+
+    // Accept T_PREC and T_COMOBJ, reject T_PREC+IMMUTABLE
+    if (TNUM_OBJ(rec) == T_PREC+IMMUTABLE) {
+        ErrorReturnVoid(
+            "Record Assignment: <rec> must be a mutable record",
+            0L, 0L,
+            "you can 'return;' and ignore the assignment" );
+    }
 
     /* get the length of the record                                        */
     len = LEN_PREC( rec );
@@ -434,17 +453,6 @@ void AssPRec (
     /* assign the value to the component                                   */
     SET_ELM_PREC( rec, i, val );
     CHANGED_BAG( rec );
-}
-
-void            AssPRecImm (
-    Obj                 rec,
-    UInt                rnam,
-    Obj                 val )
-{
-    ErrorReturnVoid(
-        "Records Assignment: <rec> must be a mutable record",
-        0L, 0L,
-        "you can 'return;' and ignore the assignment" );
 }
 
 /****************************************************************************
@@ -592,7 +600,7 @@ void PrintPathPRec (
     Obj                 rec,
     Int                 indx )
 {
-    Pr( ".%I", (Int)NAME_RNAM( labs((Int)(GET_RNAM_PREC(rec,indx))) ), 0L );
+    Pr( ".%H", (Int)NAME_RNAM( labs((Int)(GET_RNAM_PREC(rec,indx))) ), 0L );
 }
 
 /****************************************************************************
@@ -623,7 +631,7 @@ Obj InnerRecNames( Obj rec )
     for ( i = 1; i <= LEN_PREC(rec); i++ ) {
         rnam = -(Int)(GET_RNAM_PREC( rec, i ));
         /* could have been moved by garbage collection */
-        name = NAME_OBJ_RNAM( rnam );
+        name = NAME_RNAM( rnam );
         string = CopyToStringRep( name );
         SET_ELM_PLIST( list, i, string );
         CHANGED_BAG( list );
@@ -679,25 +687,22 @@ Obj FuncREC_NAMES_COMOBJ (
 
 /****************************************************************************
 **
-*F  FuncEQ_PREC( <self>, <left>, <right> )  . . . . comparison of two records
+*F  EqPRec( <self>, <left>, <right> ) . . . . . . . comparison of two records
 **
-**  'EqRec' returns '1L'  if the two  operands <left> and <right> are equal
+**  'EqPRec' returns '1L'  if the two  operands <left> and <right> are equal
 **  and '0L' otherwise.  At least one operand must be a plain record.
 */
-Obj FuncEQ_PREC (
-    Obj                 self,
-    Obj                 left,
-    Obj                 right )
+Int EqPRec(Obj left, Obj right)
 {
     UInt                i;              /* loop variable                   */
 
     /* quick first checks                                                  */
     if ( ! IS_PREC(left) )
-        return False;
+        return 0;
     if ( ! IS_PREC(right) )
-        return False;
+        return 0;
     if ( LEN_PREC(left) != LEN_PREC(right) )
-        return False;
+        return 0;
 
     /* ensure records are sorted by their RNam */
     SortPRecRNam(left,0);
@@ -711,42 +716,39 @@ Obj FuncEQ_PREC (
         /* compare the names                                               */
         if ( GET_RNAM_PREC(left,i) != GET_RNAM_PREC(right,i) ) {
             DecRecursionDepth();
-            return False;
+            return 0;
         }
 
         /* compare the values                                              */
         if ( ! EQ(GET_ELM_PREC(left,i),GET_ELM_PREC(right,i)) ) {
             DecRecursionDepth();
-            return False;
+            return 0;
         }
     }
 
     /* the records are equal                                               */
     DecRecursionDepth();
-    return True;
+    return 1;
 }
 
 
 /****************************************************************************
 **
-*F  FuncLT_PREC( <self>, <left>, <right> )   . . .  comparison of two records
+*F  LtPRec( <self>, <left>, <right> ) . . . . . . . comparison of two records
 **
-**  'LtRec' returns '1L'  if the operand  <left> is  less than the  operand
+**  'LtPRec' returns '1L'  if the operand  <left> is  less than the  operand
 **  <right>, and '0L'  otherwise.  At least  one operand  must be a  plain
 **  record.
 */
-Obj FuncLT_PREC (
-    Obj                 self,
-    Obj                 left,
-    Obj                 right )
+Int LtPRec(Obj left, Obj right)
 {
     UInt                i;              /* loop variable                   */
     Int                 res;            /* result of comparison            */
 
     /* quick first checks                                                  */
     if ( ! IS_PREC(left) || ! IS_PREC(right) ) {
-        if ( TNUM_OBJ(left ) < TNUM_OBJ(right) )  return True;
-        if ( TNUM_OBJ(left ) > TNUM_OBJ(right) )  return False;
+        if ( TNUM_OBJ(left ) < TNUM_OBJ(right) )  return 1;
+        if ( TNUM_OBJ(left ) > TNUM_OBJ(right) )  return 0;
     }
 
     /* ensure records are sorted by their RNam */
@@ -769,8 +771,8 @@ Obj FuncLT_PREC (
         /* The sense of this comparison is determined by the rule that
            unbound entries compare less than bound ones                    */
         if ( GET_RNAM_PREC(left,i) != GET_RNAM_PREC(right,i) ) {
-            res = ( strcmp( NAME_RNAM( labs((Int)(GET_RNAM_PREC(left,i))) ),
-                   NAME_RNAM( labs((Int)(GET_RNAM_PREC(right,i))) ) ) > 0 );
+            res = !LT( NAME_RNAM( labs((Int)(GET_RNAM_PREC(left,i))) ),
+                   NAME_RNAM( labs((Int)(GET_RNAM_PREC(right,i))) ) );
             break;
         }
 
@@ -784,7 +786,7 @@ Obj FuncLT_PREC (
 
     /* the records are equal or the right is a prefix of the left          */
     DecRecursionDepth();
-    return res ? True : False;
+    return res;
 }
 
 
@@ -826,7 +828,30 @@ void LoadPRec( Obj prec )
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F  MarkPRecSubBags( <bag> ) . . . . marking function for precs and com. objs
+**
+**  'MarkPRecSubBags' is the marking function for bags of type 'T_PREC' or
+**  'T_COMOBJ'.
+*/
+void MarkPRecSubBags(Obj bag)
+{
+    const Bag * data = CONST_PTR_BAG(bag);
+    const UInt count = SIZE_BAG(bag) / sizeof(Bag);
+
+    // while data[0] is unused for regular precords, it used during copying
+    // to store a pointer to the copy; moreover, this mark function is also
+    // used for component objects, which store their type in slot 0
+    MarkBag(data[0]);
+
+    for (UInt i = 3; i < count; i += 2) {
+        MarkBag(data[i]);
+    }
+}
+
+
+/****************************************************************************
+**
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
@@ -852,8 +877,6 @@ static StructGVarFunc GVarFuncs [] = {
 
     GVAR_FUNC(REC_NAMES, 1, "rec"),
     GVAR_FUNC(REC_NAMES_COMOBJ, 1, "rec"),
-    GVAR_FUNC(EQ_PREC, 2, "left, right"),
-    GVAR_FUNC(LT_PREC, 2, "left, right"),
     { 0, 0, 0, 0, 0 }
 
 };
@@ -869,15 +892,17 @@ static Int InitKernel (
     /* GASMAN marking functions and GASMAN names                           */
     InitBagNamesFromTable( BagNames );
 
-    InitMarkFuncBags( T_PREC                     , MarkAllSubBags );
-    InitMarkFuncBags( T_PREC +IMMUTABLE          , MarkAllSubBags );
+    InitMarkFuncBags( T_PREC                     , MarkPRecSubBags );
+    InitMarkFuncBags( T_PREC +IMMUTABLE          , MarkPRecSubBags );
 #if !defined(USE_THREADSAFE_COPYING)
-    InitMarkFuncBags( T_PREC            +COPYING , MarkAllSubBags );
-    InitMarkFuncBags( T_PREC +IMMUTABLE +COPYING , MarkAllSubBags );
+    InitMarkFuncBags( T_PREC            +COPYING , MarkPRecSubBags );
+    InitMarkFuncBags( T_PREC +IMMUTABLE +COPYING , MarkPRecSubBags );
 #endif
 
+#ifdef HPCGAP
     /* Immutable records are public                                        */
     MakeBagTypePublic( T_PREC +IMMUTABLE );
+#endif
 
     /* init filters and functions                                          */
     InitHdlrFuncsFromTable( GVarFuncs );
@@ -894,17 +919,18 @@ static Int InitKernel (
     IsbRecFuncs[ T_PREC            ] = IsbPRec;
     IsbRecFuncs[ T_PREC +IMMUTABLE ] = IsbPRec;
     AssRecFuncs[ T_PREC            ] = AssPRec;
-    AssRecFuncs[ T_PREC +IMMUTABLE ] = AssPRecImm;
+    AssRecFuncs[ T_PREC +IMMUTABLE ] = AssPRec;
     UnbRecFuncs[ T_PREC            ] = UnbPRec;
-    UnbRecFuncs[ T_PREC +IMMUTABLE ] = UnbPRecImm;
+    UnbRecFuncs[ T_PREC +IMMUTABLE ] = UnbPRec;
 
-    /* install mutability test                                             */
-    IsMutableObjFuncs[  T_PREC            ] = AlwaysYes;
-    IsMutableObjFuncs[  T_PREC +IMMUTABLE ] = AlwaysNo;
+    /* install tests for being copyable                                    */
     IsCopyableObjFuncs[ T_PREC            ] = AlwaysYes;
     IsCopyableObjFuncs[ T_PREC +IMMUTABLE ] = AlwaysYes;
 
-#if !defined(USE_THREADSAFE_COPYING)
+#ifdef USE_THREADSAFE_COPYING
+    SetTraversalMethod(T_PREC,            TRAVERSE_BY_FUNCTION, TraversePRecord, CopyPRecord);
+    SetTraversalMethod(T_PREC +IMMUTABLE, TRAVERSE_BY_FUNCTION, TraversePRecord, CopyPRecord);
+#else
     /* install into copy function tables                                  */
     CopyObjFuncs [ T_PREC                     ] = CopyPRec;
     CopyObjFuncs [ T_PREC +IMMUTABLE          ] = CopyPRec;
@@ -914,7 +940,7 @@ static Int InitKernel (
     CleanObjFuncs[ T_PREC +IMMUTABLE          ] = CleanPRec;
     CleanObjFuncs[ T_PREC            +COPYING ] = CleanPRecCopy;
     CleanObjFuncs[ T_PREC +IMMUTABLE +COPYING ] = CleanPRecCopy;
-#endif // !defined(USE_THREADSAFE_COPYING)
+#endif
 
     /* install printer                                                     */
     PrintObjFuncs[  T_PREC            ] = PrintPRec;
@@ -922,12 +948,20 @@ static Int InitKernel (
     PrintPathFuncs[ T_PREC            ] = PrintPathPRec;
     PrintPathFuncs[ T_PREC +IMMUTABLE ] = PrintPathPRec;
 
+    // install the comparison methods
+    for (UInt t1 = T_PREC; t1 <= T_PREC + IMMUTABLE; t1++) {
+        for (UInt t2 = T_PREC; t2 <= T_PREC + IMMUTABLE; t2++) {
+            EqFuncs[t1][t2] = EqPRec;
+            LtFuncs[t1][t2] = LtPRec;
+        }
+    }
+
     /* install the type functions                                          */
     ImportGVarFromLibrary( "TYPE_PREC_MUTABLE",   &TYPE_PREC_MUTABLE   );
     ImportGVarFromLibrary( "TYPE_PREC_IMMUTABLE", &TYPE_PREC_IMMUTABLE );
 
-    TypeObjFuncs[ T_PREC            ] = TypePRecMut;
-    TypeObjFuncs[ T_PREC +IMMUTABLE ] = TypePRecImm;
+    TypeObjFuncs[ T_PREC            ] = TypePRec;
+    TypeObjFuncs[ T_PREC +IMMUTABLE ] = TypePRec;
 
     SetTypeObjFuncs[ T_PREC ] = SetTypePRecToComObj;
 

@@ -12,15 +12,18 @@
 #ifndef GAP_DEBUG_H
 #define GAP_DEBUG_H
 
-#include <src/system.h>
-#include <assert.h>
-
 /* GAP_ASSERT is a version of 'assert' which is enabled by the
 ** configure option --enable-debug
 */
 
 #ifdef GAP_KERNEL_DEBUG
 #define GAP_ASSERT(x) assert(x)
+
+// Enable various GAP debugging features
+#define COUNT_BAGS
+#define COUNT_OPERS
+#define DEBUG_GMP 1
+#define DEBUG_MASTERPOINTERS
 #else
 #define GAP_ASSERT(x)
 #endif

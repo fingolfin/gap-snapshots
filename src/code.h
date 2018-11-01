@@ -16,8 +16,7 @@
 #ifndef GAP_CODE_H
 #define GAP_CODE_H
 
-#include <src/debug.h>
-#include <src/objects.h>
+#include "objects.h"
 
 /****************************************************************************
 **
@@ -43,12 +42,12 @@ typedef struct {
 
 /****************************************************************************
 **
-** Function body headers
+**  Function body headers
 **
-** 'FILENAME_BODY' is a string containing the file of a function
-** 'STARTLINE_BODY' is the line number where a function starts.
-** 'ENDLINE_BODY' is the line number where a function ends.
-** 'LOCATION_BODY' is a string describing the location of a function.
+**  'FILENAME_BODY' is a string containing the file of a function.
+**  'STARTLINE_BODY' is the line number where a function starts.
+**  'ENDLINE_BODY' is the line number where a function ends.
+**  'LOCATION_BODY' is a string describing the location of a function.
 **  Typically this will be the name of a C function implementing it.
 **
 **  These each have a 'GET' and a 'SET' variant, to read or set the value.
@@ -177,7 +176,9 @@ enum STAT_TNUM {
             T_REPEAT2,
             T_REPEAT3,
 
+#ifdef HPCGAP
             T_ATOMIC,
+#endif
 
             END_ENUM_RANGE(LAST_COMPOUND_STAT),
 
@@ -203,7 +204,6 @@ enum STAT_TNUM {
 
         T_ASS_LIST,
         T_ASS2_LIST,
-        T_ASSX_LIST,
         T_ASSS_LIST,
         T_ASS_LIST_LEV,
         T_ASSS_LIST_LEV,
@@ -215,9 +215,6 @@ enum STAT_TNUM {
         T_UNB_REC_EXPR,
 
         T_ASS_POSOBJ,
-        T_ASSS_POSOBJ,
-        T_ASS_POSOBJ_LEV,
-        T_ASSS_POSOBJ_LEV,
         T_UNB_POSOBJ,
 
         T_ASS_COMOBJ_NAME,
@@ -237,6 +234,8 @@ enum STAT_TNUM {
 
 
 #define STAT_HEADER(stat) (((StatHeader *)ADDR_STAT(stat)) - 1)
+#define CONST_STAT_HEADER(stat)                                              \
+    (((const StatHeader *)CONST_ADDR_STAT(stat)) - 1)
 
 
 /****************************************************************************
@@ -245,7 +244,7 @@ enum STAT_TNUM {
 **
 **  'TNUM_STAT' returns the type of the statement <stat>.
 */
-#define TNUM_STAT(stat) (STAT_HEADER(stat)->type)
+#define TNUM_STAT(stat) (CONST_STAT_HEADER(stat)->type)
 
 
 /****************************************************************************
@@ -254,7 +253,7 @@ enum STAT_TNUM {
 **
 **  'SIZE_STAT' returns the size of the statement <stat>.
 */
-#define SIZE_STAT(stat) (STAT_HEADER(stat)->size)
+#define SIZE_STAT(stat) (CONST_STAT_HEADER(stat)->size)
 
 /****************************************************************************
 **
@@ -262,7 +261,7 @@ enum STAT_TNUM {
 **
 **  'LINE_STAT' returns the line number of the statement <stat>.
 */
-#define LINE_STAT(stat) (STAT_HEADER(stat)->line)
+#define LINE_STAT(stat) (CONST_STAT_HEADER(stat)->line)
 
 /****************************************************************************
 **
@@ -271,8 +270,7 @@ enum STAT_TNUM {
 **  'VISITED_STAT' returns true if the statement has ever been executed
 **  while profiling is turned on.
 */
-#define VISITED_STAT(stat) (STAT_HEADER(stat)->visited)
-
+#define VISITED_STAT(stat) (CONST_STAT_HEADER(stat)->visited)
 
 
 /****************************************************************************
@@ -282,8 +280,12 @@ enum STAT_TNUM {
 **  'ADDR_STAT' returns   the  absolute address of the    memory block of the
 **  statement <stat>.
 */
-#define ADDR_STAT(stat) ((Stat*)(((char*)STATE(PtrBody))+(stat)))
+#define ADDR_STAT(stat) ((Stat *)(((char *)STATE(PtrBody)) + (stat)))
+#define CONST_ADDR_STAT(stat)                                                \
+    ((const Stat *)(((const char *)STATE(PtrBody)) + (stat)))
 
+#define READ_STAT(stat, idx) (CONST_ADDR_STAT(stat)[idx])
+#define WRITE_STAT(stat, idx, val) ADDR_STAT(stat)[idx] = val
 
 /****************************************************************************
 **
@@ -406,7 +408,6 @@ enum EXPR_TNUM {
 
     T_ELM_LIST,
     T_ELM2_LIST,
-    T_ELMX_LIST,
     T_ELMS_LIST,
     T_ELM_LIST_LEV,
     T_ELMS_LIST_LEV,
@@ -418,9 +419,6 @@ enum EXPR_TNUM {
     T_ISB_REC_EXPR,
 
     T_ELM_POSOBJ,
-    T_ELMS_POSOBJ,
-    T_ELM_POSOBJ_LEV,
-    T_ELMS_POSOBJ_LEV,
     T_ISB_POSOBJ,
 
     T_ELM_COMOBJ_NAME,
@@ -467,7 +465,10 @@ enum EXPR_TNUM {
 **  'T_REFLVAR' or 'T_INTEXPR'.
 */
 #define ADDR_EXPR(expr) ADDR_STAT(expr)
+#define CONST_ADDR_EXPR(expr) CONST_ADDR_STAT(expr)
 
+#define READ_EXPR(expr, idx) (CONST_ADDR_EXPR(expr)[idx])
+#define WRITE_EXPR(expr, idx, val) ADDR_EXPR(expr)[idx] = val
 
 /****************************************************************************
 **
@@ -490,8 +491,10 @@ enum EXPR_TNUM {
 **  'SIZE_NARG_CALL' returns the size a  function call bag  should have for a
 **  function call bag with <narg> arguments.
 */
-#define FUNC_CALL(call)         (* (ADDR_EXPR((call)) +0     ) )
-#define ARGI_CALL(call,i)       (* (ADDR_EXPR((call)) +0 +(i)) )
+#define SET_FUNC_CALL(call,x)   WRITE_EXPR(call, 0, x)
+#define SET_ARGI_CALL(call,i,x) WRITE_EXPR(call, i, x)
+#define FUNC_CALL(call)         READ_EXPR(call, 0)
+#define ARGI_CALL(call,i)       READ_EXPR(call, i)
 #define NARG_SIZE_CALL(size)    (((size) / sizeof(Expr)) - 1)
 #define SIZE_NARG_CALL(narg)    (((narg) + 1) * sizeof(Expr))
 
@@ -512,7 +515,8 @@ enum EXPR_TNUM {
 **  'SIZE_NARG_INFO' returns the size a  function call bag  should have for a
 **  function call bag with <narg> arguments.
 */
-#define ARGI_INFO(info,i)       (* (ADDR_STAT((info))+(i) -1) )
+#define SET_ARGI_INFO(info,i,x) WRITE_STAT(info, (i) - 1, x)
+#define ARGI_INFO(info,i)       READ_STAT(info, (i) - 1)
 #define NARG_SIZE_INFO(size)    ((size) / sizeof(Expr))
 #define SIZE_NARG_INFO(narg)    ((narg) * sizeof(Expr))
 
@@ -525,28 +529,6 @@ enum EXPR_TNUM {
 **  coded.
 */
 /* TL: extern  Obj             CodeResult; */
-
-
-/****************************************************************************
-**
-*F  PushStat(<stat>)  . . . . . . . . . . . . . push statement onto the stack
-*F  PopStat() . . . . . . . . . . . . . . . . .  pop statement from the stack
-**
-**  'StackStat' is the stack of statements that have been coded.
-**
-**  'CountStat'   is the number   of statements  currently on  the statements
-**  stack.
-**
-**  'PushStat'  pushes the statement  <stat> onto the  statements stack.  The
-**  stack is automatically resized if necessary.
-**
-**  'PopStat' returns the  top statement from the  statements  stack and pops
-**  it.  It is an error if the stack is empty.
-*/
-extern void PushStat (
-            Stat                stat );
-
-extern Stat PopStat ( void );
 
 
 /****************************************************************************
@@ -566,14 +548,14 @@ extern Stat PopStat ( void );
 **  'CodeEnd' stops the coder.  It  is called from the immediate  interpreter
 **  when he is done with the construct  that it cannot immediately interpret.
 **  If <error> is  non-zero, a syntax error  was detected by the  reader, and
-**  the coder should only clean up.
+**  the coder should only clean up. Otherwise, returns the newly coded
+**  function.
 **
 **  ...only function expressions inbetween...
 */
 extern  void            CodeBegin ( void );
 
-extern  UInt            CodeEnd (
-            UInt                error );
+extern Obj CodeEnd(UInt error);
 
 
 /****************************************************************************
@@ -690,9 +672,9 @@ extern  void            CodeIfElif ( void );
 
 extern  void            CodeIfElse ( void );
 
-extern  void            CodeIfBeginBody ( void );
+extern  Int             CodeIfBeginBody ( void );
 
-extern  void            CodeIfEndBody (
+extern  Int             CodeIfEndBody (
             UInt                nr );
 
 extern  void            CodeIfEnd (
@@ -1264,19 +1246,8 @@ extern  void            CodeIsbRecExpr ( void );
 /****************************************************************************
 **
 *F  CodeAssPosObj() . . . . . . . . . . . . . . . . code assignment to a list
-*F  CodeAsssPosObj()  . . . . . . . . . .  code multiple assignment to a list
-*F  CodeAssPosObjLevel(<level>) . . . . . .  code assignment to several lists
-*F  CodeAsssPosObjLevel(<level>)  . code multiple assignment to several lists
 */
 extern  void            CodeAssPosObj ( void );
-
-extern  void            CodeAsssPosObj ( void );
-
-extern  void            CodeAssPosObjLevel (
-            UInt                level );
-
-extern  void            CodeAsssPosObjLevel (
-            UInt                level );
 
 extern  void            CodeUnbPosObj ( void );
 
@@ -1284,19 +1255,8 @@ extern  void            CodeUnbPosObj ( void );
 /****************************************************************************
 **
 *F  CodeElmPosObj() . . . . . . . . . . . . . . . .  code selection of a list
-*F  CodeElmsPosObj()  . . . . . . . . . . . code multiple selection of a list
-*F  CodeElmPosObjLevel(<level>) . . . . . . . code selection of several lists
-*F  CodeElmsPosObjLevel(<level>)  .  code multiple selection of several lists
 */
 extern  void            CodeElmPosObj ( void );
-
-extern  void            CodeElmsPosObj ( void );
-
-extern  void            CodeElmPosObjLevel (
-            UInt                level );
-
-extern  void            CodeElmsPosObjLevel (
-            UInt                level );
 
 extern  void            CodeIsbPosObj ( void );
 
@@ -1378,18 +1338,10 @@ extern  void            CodeAssertEnd3Args ( void );
 /*  CodeContinue() .  . . . . . . . . . . . .  code continue-statement */
 extern  void            CodeContinue ( void );
 
-/****************************************************************************
-**
-*V  FilenameCache . . . . . . . . . . . . . . . . . . list of filenames
-**
-**  'FilenameCache' is a list of previously opened filenames.
-*/
-extern Obj FilenameCache;
-
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************

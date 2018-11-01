@@ -839,9 +839,9 @@ end);
 #M  LatticeViaRadical(<G>[,<H>])  . . . . . . . . . .  lattice of subgroups
 ##
 InstallGlobalFunction(LatticeViaRadical,function(arg)
-  local G,H,HN,HNI,ser, pcgs, u, hom, f, c, nu, nn, nf, a, k, ohom, mpcgs, gf,
-  act, nts, orbs, n, ns, nim, fphom, as, p, isn, isns, lmpc, npcgs, ocr, v,
-  com, cg, i, j, w, ii,first,cgs,cs,presmpcgs,select,fselect,
+  local G,H,HN,HNI,ser,pcgs,u,hom,f,c,nu,nn,nf,a,e,kg,k,ohom,mpcgs,gf,
+  act,nts,orbs,n,ns,nim,fphom,as,p,isn,isns,lmpc,npcgs,ocr,v,
+  com,cg,i,j,w,ii,first,cgs,cs,presmpcgs,select,fselect,
   makesubgroupclasses,cefastersize;
 
   #group order below which cyclic extension is usually faster
@@ -940,12 +940,19 @@ InstallGlobalFunction(LatticeViaRadical,function(arg)
     nu:=[];
     nn:=[];
     nf:=[];
+    kg:=GeneratorsOfGroup(KernelOfMultiplicativeGeneralMapping(hom));
     for i in c do
       a:=Representative(i);
-      k:=PreImage(hom,a);
+      #k:=PreImage(hom,a);
+      # make generators of homomorphism fit nicely to presentation
+      gf:=IsomorphismFpGroup(a);
+      e:=List(MappingGeneratorsImages(gf)[1],x->PreImagesRepresentative(hom,x));
+      k:=ClosureSubgroupNC(KernelOfMultiplicativeGeneralMapping(hom),e);
       Add(nu,k);
       Add(nn,PreImage(hom,Stabilizer(i)));
-      Add(nf,RestrictedMapping(hom,k)*IsomorphismFpGroup(a));
+      Add(nf,GroupHomomorphismByImagesNC(k,Range(gf),Concatenation(e,kg),
+             Concatenation(MappingGeneratorsImages(gf)[2],
+                List(kg,x->One(Range(gf))))));
     od;
     u:=[nu,nn,nf];
   fi;
@@ -1122,9 +1129,8 @@ InstallGlobalFunction(LatticeViaRadical,function(arg)
 	    fi;
 	    ocr:=rec(group:=a,
 		    modulePcgs:=lmpc);
-	    #fphom:=RestrictedMapping(ohom,a)*IsomorphismFpGroup(Image(ohom,a));
-	    #ocr.factorfphom:=fphom;
 	    ocr.factorfphom:=u[3][k];
+
 	    OCOneCocycles(ocr,true);
 	    if IsBound(ocr.complement) then
 #if ForAny(ocr.complementGens,i->SIZE_OBJ(i)>maxsz) then Error("3");fi;
@@ -1513,7 +1519,6 @@ function (L)
 	    maxsz,
 	    mkk,
 	    ppow,
-	    primes,
 	    notperm,
 	    dom,
 	    orbs,
@@ -1529,7 +1534,6 @@ function (L)
       return [[]]; # trivial group
     fi;
     # relevant prime powers
-    primes:=Set(Factors(Size(grp)));
     ppow:=Collected(Factors(Size(grp)));
     ppow:=Union(List(ppow,i->List([1..i[2]],j->i[1]^j)));
 
@@ -2017,7 +2021,7 @@ local G,	# group
 	        
 
 		# try to catch some solvable cases that look awful
-		if Size(vs)>1000 and Length(Set(Factors(Index(j,N))))<=2
+		if Size(vs)>1000 and Length(PrimeDivisors(Index(j,N)))<=2
 		  then
 		  l:=fail;
 		else
@@ -2124,14 +2128,25 @@ local G,	# group
       Info(InfoLattice,2,"Search involution");
 
       # find involution in M/T
+      cnt:=0;
       repeat
-	repeat
-	  inv:=Random(M);
-	until (Order(inv) mod 2 =0) and not inv in T;
-	o:=First([2..Order(inv)],i->inv^i in T);
-      until (o mod 2 =0);
-      Info(InfoLattice,2,"Element of order ",o);
-      inv:=inv^(o/2); # this is an involution in the factor
+        repeat
+          repeat
+            inv:=Random(M);
+          until (Order(inv) mod 2 =0) and not inv in T;
+          o:=First([2..Order(inv)],i->inv^i in T);
+        until (o mod 2 =0);
+        Info(InfoLattice,2,"Element of order ",o);
+        inv:=inv^(o/2); # this is an involution in the factor
+
+        cnt:=cnt+1;
+      # in permgroups try to pick an involution that does not move all
+      # points. This can make the core of C to be computed quicker.
+      until not (IsPermGroup(M) and cnt<10 
+                and Length(MovedPoints(inv))=Length(MovedPoints(M)));
+
+
+
       Assert(1,inv^2 in T and not inv in T);
 
       S:=Normalizer(G,T); # stabilize first component
@@ -2813,6 +2828,22 @@ InstallGlobalFunction("SubgroupsTrivialFitting",function(G)
   local s,a,n,fac,iso,types,t,p,i,map,go,gold,nf,tom,sub,len;
 
   n:=DirectFactorsFittingFreeSocle(G);
+
+  # is it almost simple and stored?
+  if Length(n)=1 then
+    tom:=TomDataAlmostSimpleRecognition(G);
+    if tom<>fail and
+	ValueOption(NO_PRECOMPUTED_DATA_OPTION)<>true then
+      Info(InfoPerformance,2,"Using Table of Marks Library");
+      go:=ImagesSource(tom[1]);
+      Info(InfoLattice,1, "Fetching subgroups of simple ",
+	  Identifier(tom[2])," from table of marks");
+      len:=LengthsTom(tom[2]);
+      sub:=List([1..Length(len)],x->PreImage(tom[1],RepresentativeTom(tom[2],x)));
+      return sub;
+    fi;
+  fi;
+
   s:=Socle(G);
 
   a:=TrivialSubgroup(G);
@@ -2836,14 +2867,15 @@ InstallGlobalFunction("SubgroupsTrivialFitting",function(G)
 	tom:=TomDataAlmostSimpleRecognition(i);
 	if tom<>fail then
 	  go:=ImagesSource(tom[1]);
-	  tom:=tom[2];
-	  if tom<>fail and
+	  if tom[2]<>fail and
 	   ValueOption(NO_PRECOMPUTED_DATA_OPTION)<>true then
 	    Info(InfoPerformance,2,"Using Table of Marks Library");
 	    Info(InfoLattice,1, "Fetching subgroups of simple ",
-	      Identifier(tom)," from table of marks");
-	    len:=LengthsTom(tom);
-	    sub:=List([1..Length(len)],x->RepresentativeTom(tom,x));
+	      Identifier(tom[2])," from table of marks");
+	    len:=LengthsTom(tom[2]);
+            # different than above -- no preimage. We're setting subgroups
+            # of go
+	    sub:=List([1..Length(len)],x->RepresentativeTom(tom[2],x));
 	    sub:=List(sub,x->ConjugacyClassSubgroups(go,x));
 	    SetConjugacyClassesSubgroups(go,sub);
 	  fi;
@@ -2853,7 +2885,6 @@ InstallGlobalFunction("SubgroupsTrivialFitting",function(G)
 	  go:=SimpleGroup(t);
 	fi;
 	Add(gold,go);
-
 
 	p:=Length(types);
       fi;
@@ -3224,5 +3255,73 @@ local l,N,t,gens,i,c,o,rep,r,sub,gen;
     od;
     return l;
   fi;
+end);
+
+InstallMethod(MinimalFaithfulPermutationDegree,"use lattice",true,
+  [IsGroup and IsFinite],0,
+function(G)
+local c,n,deg,ind,core,i,j,sum;
+  if Size(G)=1 then
+    # option allows to calculate actual representation -- maybe access under
+    # different name
+    if ValueOption("representation")<>true then
+      return 1;
+    else
+      return GroupHomomorphismByImages(G,Group(()),[One(G)],[()]);
+    fi;
+  fi;
+  c:=ConjugacyClassesSubgroups(G);
+  # sort by reversed order to get core by inclusion test
+  c:=ShallowCopy(c); # allow sorting
+  SortBy(c,x->-Size(Representative(x))); 
+  n:=Filtered(c,x->Size(x)=1); # normals
+  n:=List(n,Representative); 
+  c:=List(c,Representative); # reps of classes
+
+
+  deg:=List(n,x->[IndexNC(G,x),[Position(c,x)]]); # best known degrees for
+    # factors of each of n and how.
+
+  # determine minimal degrees by descending through lattice
+  for i in [2..Length(c)-1] do # exclude trivial subgroup and whole group
+    ind:=IndexNC(G,c[i]);
+
+    if ind<deg[Length(n)][1] then # otherwise degree too big for new optimal
+      core:=First([2..Length(n)],x->IsSubset(c[i],n[x])); # position of core
+      if ind<deg[core][1] then # new smaller degree from subgroups
+        deg[core]:=[ind,[i]];
+      fi;
+    elif IsNormal(G,c[i]) then # subgroup normal, must be in other case
+      core:=Position(n,c[i]);
+      for j in [2..core-1] do # Intersect with all prior normals
+        sum:=deg[core][1]+deg[j][1];
+        if sum<deg[Length(n)][1] then # otherwise too big for new optimal
+          ind:=Position(n,Intersection(n[j],n[core])); # intersect of normals
+          if sum<deg[ind][1] then # intersection is better
+            deg[ind]:=[deg[core][1]+deg[j][1],Union(deg[core][2],deg[j][2])];
+          fi;
+        fi;
+      od;
+    fi;
+
+  od;
+
+  if ValueOption("representation")<>true then
+    return deg[Length(n)][1]; # smallest degree
+  fi;
+  # calculate the representation
+  deg:=deg[Length(n)][2]; # the subgroups needed
+  deg:=List(deg,x->FactorCosetAction(G,c[x]));
+
+  sum:=List(GeneratorsOfGroup(G),x->Image(deg[1],x));
+  for i in [2..Length(deg)] do
+    sum:=SubdirectDiagonalPerms(sum,List(GeneratorsOfGroup(G),
+      x->Image(deg[i],x)));
+  od;
+
+  ind:=Group(sum); SetSize(ind,Size(G));
+
+  return GroupHomomorphismByImages(G,ind,GeneratorsOfGroup(G),sum);
+
 end);
 

@@ -29,7 +29,7 @@
 #ifndef GAP_GVARS_H
 #define GAP_GVARS_H
 
-#include <src/objects.h>
+#include "objects.h"
 
 /****************************************************************************
 **
@@ -51,7 +51,7 @@ extern Obj ValGVar(UInt gvar);
 *V  ErrorMustEvalToFuncFunc . . . . . . . . .  function that signals an error
 **
 **  'ErrorMustEvalToFuncFunc' is a (variable number of  args)  function  that
-**  signals the error ``Function: <func> be a function''.
+**  signals the error ``Function Calls: <func> must be a function''.
 */
 extern Obj ErrorMustEvalToFuncFunc;
 
@@ -107,20 +107,10 @@ extern  Obj             ValGVarTL (
 **
 *F  NameGVar(<gvar>)  . . . . . . . . . . . . . . . name of a global variable
 **
-**  'NameGVar' returns the name of the global variable <gvar> as a C string.
-*/
-extern  Char *          NameGVar (
-            UInt                gvar );
-
-
-/****************************************************************************
-**
-*F  NameGVarObj(<gvar>)  . . . . . . . . . . . . .  name of a global variable
-**
-**  'NameGVarObj' returns the name of the global variable <gvar> as a GAP
+**  'NameGVar' returns the name of the global variable <gvar> as a GAP
 **  string.
 */
-extern  Obj            NameGVarObj (
+extern  Obj            NameGVar (
             UInt                gvar );
 
 
@@ -307,7 +297,7 @@ extern void SetGVar(GVarDescriptor *gvar, Obj obj);
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

@@ -66,6 +66,7 @@ DeclareAttribute("AutomorphismGroup",IsDomain);
 ##  <#/GAPDoc>
 ##
 DeclareProperty( "IsGroupOfAutomorphisms", IsGroup );
+InstallTrueMethod( IsGroup, IsGroupOfAutomorphisms );
 
 #############################################################################
 ##
@@ -82,6 +83,7 @@ DeclareProperty( "IsGroupOfAutomorphisms", IsGroup );
 ##  </ManSection>
 ##
 DeclareProperty( "IsGroupOfAutomorphismsFiniteGroup", IsGroup );
+InstallTrueMethod( IsGroup, IsGroupOfAutomorphismsFiniteGroup );
 
 InstallTrueMethod( IsGroupOfAutomorphisms,IsGroupOfAutomorphismsFiniteGroup);
 InstallTrueMethod( IsFinite,IsGroupOfAutomorphismsFiniteGroup);
@@ -143,7 +145,6 @@ DeclareAttribute( "AutomorphismDomain", IsGroupOfAutomorphisms );
 ##  <#/GAPDoc>
 ##
 DeclareProperty( "IsAutomorphismGroup", IsGroupOfAutomorphisms );
-
 InstallTrueMethod( IsGroupOfAutomorphisms,IsAutomorphismGroup );
 
 #############################################################################
@@ -507,7 +508,7 @@ DeclareGlobalFunction("IsomorphismGroups");
 ##  gap> h:=Group((1,2,3),(1,2));
 ##  Group([ (1,2,3), (1,2) ])
 ##  gap> quo:=GQuotients(g,h);
-##  [ [ (1,3,2,4), (1,2,3) ] -> [ (2,3), (1,2,3) ] ]
+##  [ [ (1,2,3,4), (1,3,4) ] -> [ (2,3), (1,2,3) ] ]
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>

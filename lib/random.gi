@@ -153,7 +153,7 @@ InstallMethod(Random, [IsGAPRandomSource, IsList], function(rs, list)
     rn := rs!.R_N mod 55 + 1;
     rs!.R_N := rn;
     rx[rn] := (rx[rn] + rx[(rn+30) mod 55+1]) mod R_228;
-    return list[ QUO_INT( rx[rn] * LEN_LIST(list), R_228 ) + 1 ];
+    return list[ QUO_INT( rx[rn] * LEN_LIST(list), -R_228 ) + 1 ];
   else
     return list[Random(rs, 1, Length(list))];
   fi;
@@ -248,3 +248,72 @@ function(low, high)
   return Random(GlobalMersenneTwister, low, high);
 end );
 
+
+(function()
+    local func;
+    func := function(installType)
+        return function(args...)
+            local str, filterpos, filtercopy, i, func, info;
+
+            # Check we understand arguments
+            # Second value must be an info string
+            if not IsString(args[2]) then
+                ErrorNoReturn("Second argument must be an info string");
+            fi;
+
+            # Info strings always tend to begin 'for ', and here we want
+            # to be able to edit it, so we check.
+            if args[2]{[1..23]} <> "for a random source and" then
+                ErrorNoReturn("Info string must begin 'for a random source and'");
+            fi;
+
+            # Filters must start with 'IsRandomSource'
+            for i in [1..Length(args)] do
+                if IsList(args[i]) and args[i][1] = IsRandomSource then
+                    filterpos := i;
+                fi;
+            od;
+
+            if not IsBound(filterpos) then
+                ErrorNoReturn("Must use a list of filters beginning 'IsRandomSource'");
+            fi;
+
+            # Last argument must be the actual method
+            if not IsFunction(args[Length(args)]) then
+                ErrorNoReturn("Argument list must end with the method");
+            fi;
+
+            # Install
+            CallFuncList(installType, args);
+
+            # Install random, wrapping random source argument
+
+            # Remove 'IsRandomSource' from the filter list
+            Remove(args[filterpos], 1);
+
+            # Correct info string by removing 'a random source and'
+            info := "for";
+            APPEND_LIST(info, args[2]{[24..Length(args[2])]});
+            args[2] := info;
+
+            func := Remove(args);
+            if Length(args[filterpos]) = 1 then
+                Add(args, x -> func(GlobalMersenneTwister,x));
+            elif Length(args[filterpos]) = 2 then
+                Add(args, {x,y} -> func(GlobalMersenneTwister,x,y));
+            else
+                Error("Only 2 or 3 argument methods supported");
+            fi;
+
+            CallFuncList(installType, args);
+        end;
+    end;
+    InstallGlobalFunction("InstallMethodWithRandomSource", func(InstallMethod));
+    InstallGlobalFunction("InstallOtherMethodWithRandomSource", func(InstallOtherMethod));
+end)();
+
+# This method must rank below Random(SomeRandomSource, IsList)
+# for any random source SomeRandomSource, to avoid an infinite loop.
+InstallMethodWithRandomSource( Random, "for a random source and a (finite) collection",
+    [ IsRandomSource, IsCollection and IsFinite ], -8,
+    {rs, C} -> RandomList(rs, Enumerator( C ) ) );

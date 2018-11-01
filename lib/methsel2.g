@@ -11,7 +11,7 @@
 ##
 ##  This file defines some functions associated with method selection,
 ##  which do not need to be compiled by default. More performance critical
-##  functions are found in methsel1.g
+##  functions are implemented in the kernel.
 ##
 
 
@@ -247,7 +247,7 @@ end;
       APPEND_LIST(no_method_found, " argument is 'fail' which might point to an earlier problem\n" );
     fi;
   od;
-  Error(no_method_found);
+  ErrorNoReturn(no_method_found);
 end;
 
 ## This is the other part of the above mentioned dirty trick:

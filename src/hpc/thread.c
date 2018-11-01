@@ -1,17 +1,18 @@
-#include <src/hpc/thread.h>
+#include "hpc/thread.h"
 
-#include <src/code.h>
-#include <src/fibhash.h>
-#include <src/gap.h>
-#include <src/gapstate.h>
-#include <src/gvars.h>
-#include <src/plist.h>
-#include <src/stats.h>
-#include <src/stringobj.h>
+#include "code.h"
+#include "error.h"
+#include "fibhash.h"
+#include "gapstate.h"
+#include "gvars.h"
+#include "modules.h"
+#include "plist.h"
+#include "stats.h"
+#include "stringobj.h"
 
-#include <src/hpc/guards.h>
-#include <src/hpc/misc.h>
-#include <src/hpc/threadapi.h>
+#include "hpc/guards.h"
+#include "hpc/misc.h"
+#include "hpc/threadapi.h"
 
 #include <errno.h>
 #include <pthread.h>
@@ -19,7 +20,7 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-#ifdef BOEHM_GC
+#ifdef USE_BOEHM_GC
 # ifdef HPCGAP
 #  define GC_THREADS
 # endif
@@ -231,8 +232,6 @@ void RunThreadedMain(int (*mainFunction)(int, char **, char **),
     RunThreadedMain2(mainFunction, argc, argv, environ);
 }
 
-extern void InitTraversalModule();
-
 static void RunThreadedMain2(int (*mainFunction)(int, char **, char **),
                              int     argc,
                              char ** argv,
@@ -266,9 +265,6 @@ static void RunThreadedMain2(int (*mainFunction)(int, char **, char **),
     InitSignals();
     if (sySetjmp(TLS(threadExit)))
         exit(0);
-    /* Traversal functionality may be needed during the initialization
-     * of some modules, so we set it up now. */
-    InitTraversalModule();
     exit((*mainFunction)(argc, argv, environ));
 }
 
@@ -301,7 +297,7 @@ void * DispatchThread(void * arg)
 #ifndef DISABLE_GC
     AddGCRoots();
 #endif
-    InitGAPState(ActiveGAPState());
+    ModulesInitModuleState();
     TLS(CountActive) = 1;
     TLS(currentRegion) = region = NewRegion();
     TLS(threadRegion) = TLS(currentRegion);
@@ -327,7 +323,7 @@ void * DispatchThread(void * arg)
     thread->status |= THREAD_TERMINATED;
     region->fixed_owner = 0;
     RegionWriteUnlock(region);
-    DestroyGAPState(ActiveGAPState());
+    ModulesDestroyModuleState();
     memset(ActiveGAPState(), 0, sizeof(GAPState));
 #ifndef DISABLE_GC
     RemoveGCRoots();

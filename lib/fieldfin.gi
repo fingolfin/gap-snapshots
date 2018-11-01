@@ -52,12 +52,12 @@ InstallMethod( GeneratorsOfLeftModule,
 ##  primitive root, for efficiency reasons.
 ##  All other cases are handled by the vector space methods.
 ##
-InstallMethod( Random,
+InstallMethodWithRandomSource( Random,
     "for a random source and a finite prime field",
     [ IsRandomSource, IsField and IsPrimeField and IsFinite ],
     { rs, F } -> Random(rs,1,Size(F)) * One( F ) );
 
-InstallMethod( Random,
+InstallMethodWithRandomSource( Random,
     "for a random source and a finite field with known primitive root",
     [ IsRandomSource, IsField and IsFinite and HasPrimitiveRoot ],
     function ( rs, F )
@@ -79,7 +79,14 @@ InstallMethod( Random,
 InstallMethod( Units,
     "for a finite field",
     [ IsField and IsFinite ],
-    F -> GroupByGenerators( [ PrimitiveRoot( F ) ] ) );
+    function ( F )
+    local G;
+    G := GroupByGenerators( [ PrimitiveRoot( F ) ] );
+    if HasSize( F ) then
+      SetSize( G, Size( F )-1 );
+    fi;
+    return G;
+    end );
 
 
 #############################################################################

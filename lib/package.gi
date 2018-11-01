@@ -147,6 +147,14 @@ InstallGlobalFunction( RECORDS_FILE, function( name )
 #F  SetPackageInfo( <record> )
 ##
 InstallGlobalFunction( SetPackageInfo, function( record )
+    local rnam, info;
+    if IsHPCGAP then
+        info := rec();
+        for rnam in REC_NAMES(record) do
+          info.(rnam) := Immutable(record.(rnam));
+        od;
+        record := info;
+    fi;
     GAPInfo.PackageInfoCurrent:= record;
     end );
 
@@ -179,7 +187,7 @@ InstallGlobalFunction( InitializePackagesInfoRecords, function( arg )
       LogPackageLoadingMessage( PACKAGE_DEBUG,
           "exit InitializePackagesInfoRecords (no pkg directories found)",
           "GAP" );
-      GAPInfo.PackagesInfo:= rec();
+      GAPInfo.PackagesInfo:= AtomicRecord();
       return;
     fi;
 
@@ -261,7 +269,7 @@ InstallGlobalFunction( InitializePackagesInfoRecords, function( arg )
                    and GAPInfo.PackagesRestrictions.( pkgname ).OnInitialization(
                            record ) = false then
                   Add( GAPInfo.PackagesInfoRefuseLoad, record );
-                elif LowercaseString( pkgname ) in ignore then
+                elif pkgname in ignore then
                   LogPackageLoadingMessage( PACKAGE_DEBUG,
                       Concatenation( "ignore package ", record.PackageName,
                       " (user preference PackagesToIgnore)" ), "GAP" );
@@ -271,6 +279,13 @@ InstallGlobalFunction( InitializePackagesInfoRecords, function( arg )
                     record.PackageDoc:= [];
                   elif IsRecord( record.PackageDoc ) then
                     record.PackageDoc:= [ record.PackageDoc ];
+                  fi;
+                  if IsHPCGAP then
+                    # FIXME: we make the package info record immutable, to
+                    # allow access from multiple threads; but that in turn
+                    # can break packages, which rely on their package info
+                    # record being readable (see issue #2568)
+                    MakeImmutable(record);
                   fi;
                   Add( GAPInfo.PackagesInfo, record );
                 fi;
@@ -295,8 +310,15 @@ InstallGlobalFunction( InitializePackagesInfoRecords, function( arg )
       else
         record.( name ):= [ r ];
       fi;
+      if IsHPCGAP then
+        # FIXME: we make the package info record immutable, to
+        # allow access from multiple threads; but that in turn
+        # can break packages, which rely on their package info
+        # record being readable (see issue #2568)
+        MakeImmutable( record.( name ) );
+      fi;
     od;
-    GAPInfo.PackagesInfo:= record;
+    GAPInfo.PackagesInfo:= AtomicRecord(record);
 
     GAPInfo.PackagesInfoInitialized:= true;
     LogPackageLoadingMessage( PACKAGE_DEBUG,
@@ -866,7 +888,7 @@ InstallGlobalFunction( PackageAvailabilityInfo,
       record.InstallationPaths:= record_local.InstallationPaths;
       Add( record.InstallationPaths,
            [ name, [ inforec.InstallationPath, inforec.Version,
-                     inforec.PackageName ] ] );
+                     inforec.PackageName, false ] ] );
       record.Dependencies:= record_local.Dependencies;
       record.StrongDependencies:= record_local.StrongDependencies;
       record.AlreadyHandled:= record_local.AlreadyHandled;
@@ -983,6 +1005,25 @@ InstallGlobalFunction( TestPackageAvailability, function( arg )
 
 #############################################################################
 ##
+#F  IsPackageLoaded( <name>[, <version>] )
+##
+InstallGlobalFunction( IsPackageLoaded, function( name, version... )
+    local result;
+
+    if Length(version) > 0 then
+        version := version[1];
+    fi;
+    result := IsPackageMarkedForLoading( name, version );
+    if result then
+        # check if the package actually completed loading
+        result := GAPInfo.PackagesLoaded.( name )[4];
+    fi;
+    return result;
+    end );
+
+
+#############################################################################
+##
 #F  IsPackageMarkedForLoading( <name>, <version> )
 ##
 InstallGlobalFunction( IsPackageMarkedForLoading, function( name, version )
@@ -1009,6 +1050,8 @@ InstallGlobalFunction( DefaultPackageBannerString, function( inforec )
     # Start with a row of `-' signs.
     len:= SizeScreen()[1] - 3;
     if GAPInfo.TermEncoding = "UTF-8" then
+      # The unicode character we use takes up 3 bytes in UTF-8 encoding,
+      # hence we must adjust the length accordingly.
       sep:= "─";
       i:= 1;
       while 2 * i <= len do
@@ -1030,7 +1073,7 @@ InstallGlobalFunction( DefaultPackageBannerString, function( inforec )
     fi;
 
     # Add the long title.
-    if IsBound( inforec.PackageDoc[1] ) and
+    if IsBound( inforec.PackageDoc ) and IsBound( inforec.PackageDoc[1] ) and
        IsBound( inforec.PackageDoc[1].LongTitle ) and
        not IsEmpty( inforec.PackageDoc[1].LongTitle ) then
       Append( str, Concatenation(
@@ -1081,7 +1124,7 @@ InstallGlobalFunction( DefaultPackageBannerString, function( inforec )
       Append( str, inforec.PackageWWWHome );
       Append( str, "\n" );
     fi;
-    
+
     # temporary hack, in some package names with umlauts are in HTML encoding
     str := Concatenation(sep, RecodeForCurrentTerminal(str), sep);
     str:= ReplacedString( str, "&auml;", RecodeForCurrentTerminal("ä") );
@@ -1283,10 +1326,10 @@ BindGlobal( "LoadPackage_ReadImplementationParts",
     local pair, info, bannerstring, fun, u, pkgname, namespace;
 
     for pair in secondrun do
+      namespace := pair[1].PackageName;
+      pkgname := LowercaseString( namespace );
       if pair[2] <> fail then
         GAPInfo.PackageCurrent:= pair[1];
-        namespace := pair[1].PackageName;
-        pkgname := LowercaseString( namespace );
         LogPackageLoadingMessage( PACKAGE_DEBUG,
             "start reading file 'read.g'",
             namespace );
@@ -1298,6 +1341,9 @@ BindGlobal( "LoadPackage_ReadImplementationParts",
             "finish reading file 'read.g'",
             namespace );
       fi;
+      # mark the package as completely loaded
+      GAPInfo.PackagesLoaded.(pkgname)[4] := true;
+      MakeImmutable( GAPInfo.PackagesLoaded.(pkgname) );
     od;
 
     # Show the banners.
@@ -1307,7 +1353,9 @@ BindGlobal( "LoadPackage_ReadImplementationParts",
 
         # If the component `BannerString' is bound in `info' then we print
         # this string, otherwise we print the default banner string.
-        if IsBound( info.BannerString ) then
+        if IsBound( info.BannerFunction ) then
+          bannerstring:= RecodeForCurrentTerminal(info.BannerFunction(info));
+        elif IsBound( info.BannerString ) then
           bannerstring:= RecodeForCurrentTerminal(info.BannerString);
         else
           bannerstring:= DefaultPackageBannerString( info );
@@ -1522,11 +1570,8 @@ InstallGlobalFunction( LoadPackage, function( arg )
       # inside the package code causes the files to be read more than once.
       for pkgname in cycle do
         pos:= PositionSorted( paths[1], pkgname );
+        # the following entry is made immutable in LoadPackage_ReadImplementationParts
         GAPInfo.PackagesLoaded.( pkgname ):= paths[2][ pos ];
-#T Remove the following as soon as the obsolete variable has been removed!
-if IsBoundGlobal( "PACKAGES_VERSIONS" ) then
-  ValueGlobal( "PACKAGES_VERSIONS" ).( pkgname ):= paths[2][ pos ][2];
-fi;
       od;
 
       # If the weight is 1 and the GAP library is not yet loaded
@@ -1556,20 +1601,8 @@ fi;
         info:= First( PackageInfo( pkgname ),
                       r -> r.InstallationPath = paths[2][ pos ][1] );
 
-        # This is the first attempt to read stuff for this package.
-        # So we handle the case of a `PreloadFile' entry.
-        if IsBound( info.PreloadFile ) then
-          filename:= UserHomeExpand( info.PreloadFile );
-          if filename[1] = '/' then
-            read:= READ( filename );
-          else
-            read:= ReadPackage( name, filename );
-          fi;
-          if not read then
-            LogPackageLoadingMessage( PACKAGE_WARNING,
-                Concatenation( "file `", filename, "' cannot be read" ),
-                info.PackageName );
-          fi;
+        if not ValidatePackageInfo(info) then
+           Print("#E Validation of package ", pkgname, " from ", info.InstallationPath, " failed\n");
         fi;
 
         # Notify the documentation (for the available version).
@@ -1693,7 +1726,7 @@ InstallGlobalFunction( ExtendRootDirectories, function( rootpaths )
       GAPInfo.RootPaths:= Immutable( Concatenation( GAPInfo.RootPaths,
           rootpaths ) );
       # Clear the cache.
-      GAPInfo.DirectoriesLibrary:= rec();
+      GAPInfo.DirectoriesLibrary:= AtomicRecord( rec() );
       # Deal with an obsolete variable.
       if IsBoundGlobal( "GAP_ROOT_PATHS" ) then
         MakeReadWriteGlobal( "GAP_ROOT_PATHS" );
@@ -1946,7 +1979,11 @@ InstallGlobalFunction( GAPDocManualLabFromSixFile,
     local stream, entries, SecNumber, esctex, file;
 
     stream:= InputTextFile( sixfilepath );
-    entries:= HELP_BOOK_HANDLER.GapDocGAP.ReadSix( stream ).entries;
+
+    atomic readonly HELP_REGION do
+      entries:= HELP_BOOK_HANDLER.GapDocGAP.ReadSix( stream ).entries;
+    od;
+
     SecNumber:= function( list )
       if IsEmpty( list ) or list[1] = 0 then
         return "";
@@ -2256,10 +2293,9 @@ InstallGlobalFunction( ValidatePackageInfo, function( info )
       fi;
     fi;
     TestMandat( record, "AvailabilityTest", IsFunction, "a function" );
+    TestOption( record, "BannerFunction", IsFunction, "a function" );
     TestOption( record, "BannerString", IsString, "a string" );
     TestOption( record, "TestFile", IsFilename,
-                "a string denoting a relative path to a readable file" );
-    TestOption( record, "PreloadFile", IsFilename,
                 "a string denoting a relative path to a readable file" );
     TestOption( record, "Keywords", IsStringList, "a list of strings" );
 
@@ -2305,8 +2341,8 @@ InstallGlobalFunction( ValidatePackageInfo, function( info )
 ##  </Description>
 ##  </ManSection>
 ##
-GAPInfo.PackagesRestrictions := rec(
-  anupq := rec(
+GAPInfo.PackagesRestrictions := AtomicRecord(rec(
+  anupq := MakeImmutable(rec(
     OnInitialization := function( pkginfo )
         if CompareVersionNumbers( pkginfo.Version, "1.3" ) = false then
           return false;
@@ -2324,9 +2360,9 @@ GAPInfo.PackagesRestrictions := rec(
               "most recent version, see URL\n",
               "      http://www.math.rwth-aachen.de/~Greg.Gamble/ANUPQ\n" );
         fi;
-        end ),
+        end )),
 
-  autpgrp := rec(
+  autpgrp := MakeImmutable(rec(
     OnInitialization := function( pkginfo )
         return true;
         end,
@@ -2341,7 +2377,7 @@ GAPInfo.PackagesRestrictions := rec(
               "most recent version, see URL\n",
               "      https://www.gap-system.org/Packages/autpgrp.html\n" );
         fi;
-        end ) );
+        end )) ));
 
 
 #############################################################################

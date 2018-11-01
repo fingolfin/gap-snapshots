@@ -8,28 +8,26 @@
 **  where the non-boehm versions of these methods live.
 **/
 
-#include <src/system.h>
-#include <src/gapstate.h>
-#include <src/gasman.h>
-#include <src/objects.h>
+#include "system.h"
+#include "gapstate.h"
+#include "gasman.h"
+#include "objects.h"
+#include "sysmem.h"
 
-#include <src/hpc/misc.h>
-#include <src/hpc/thread.h>
-#include <src/hpc/guards.h>
+#include "hpc/misc.h"
+#include "hpc/thread.h"
+#include "hpc/guards.h"
 
 #ifdef TRACK_CREATOR
-#include <src/calls.h>
-#include <src/vars.h>
+#include "calls.h"
+#include "vars.h"
 #endif
 
-#ifndef BOEHM_GC
+#ifndef USE_BOEHM_GC
 #error This file can only be used when the Boehm GC collector is enabled
 #endif
 
 #include <pthread.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
 
 #define LARGE_GC_SIZE (8192 * sizeof(UInt))
 #define TL_GC_SIZE (256 * sizeof(UInt))
@@ -44,9 +42,7 @@
 
 
 
-enum { NTYPES = 256 };
-
-TNumInfoBags InfoBags[NTYPES];
+TNumInfoBags InfoBags[NUM_TYPES];
 
 UInt8 SizeAllBags;
 
@@ -61,7 +57,7 @@ static inline Bag * DATA(BagHeader * bag)
 *V  DSInfoBags[<type>]  . . . .  . . . . . . . . . .  region info for bags
 */
 
-static char DSInfoBags[NTYPES];
+static char DSInfoBags[NUM_TYPES];
 
 #define DSI_TL 0
 #define DSI_PUBLIC 1
@@ -103,7 +99,7 @@ Region * RegionBag(Bag bag)
 *F  InitFreeFuncBag(<type>,<free-func>)
 */
 
-TNumFreeFuncBags TabFreeFuncBags[NTYPES];
+TNumFreeFuncBags TabFreeFuncBags[NUM_TYPES];
 
 void InitFreeFuncBag(UInt type, TNumFreeFuncBags finalizer_func)
 {
@@ -293,7 +289,7 @@ void * AllocateMemoryBlock(UInt size)
     return GC_malloc(size);
 }
 
-int TabMarkTypeBags[NTYPES];
+int TabMarkTypeBags[NUM_TYPES];
 
 void InitMarkFuncBags(UInt type, TNumMarkFuncBags mark_func)
 {
@@ -315,17 +311,14 @@ void InitMarkFuncBags(UInt type, TNumMarkFuncBags mark_func)
     TabMarkTypeBags[type] = mark_type;
 }
 
-void InitBags(TNumAllocFuncBags alloc_func,
-              UInt              initial_size,
-              TNumStackFuncBags stack_func,
+void InitBags(UInt              initial_size,
               Bag *             stack_bottom,
-              UInt              stack_align,
-              TNumAbortFuncBags abort_func)
+              UInt              stack_align)
 {
     UInt i; /* loop variable                   */
 
     /* install the marking functions                                       */
-    for (i = 0; i < 255; i++) {
+    for (i = 0; i < NUM_TYPES; i++) {
         TabMarkTypeBags[i] = -1;
     }
 #ifndef DISABLE_GC
@@ -562,17 +555,10 @@ UInt ResizeBag(Bag bag, UInt new_size)
         header->flags = flags;
         header->size = new_size;
 
-        /* set the masterpointer                                           */
+        // copy data and update the masterpointer
         src = PTR_BAG(bag);
+        memcpy(DATA(header), src, old_size < new_size ? old_size : new_size);
         SET_PTR_BAG(bag, DATA(header));
-
-        if (DATA(header) != src) {
-            memcpy(DATA(header), src,
-                   old_size < new_size ? old_size : new_size);
-        }
-        else if (new_size < old_size) {
-            memset(DATA(header) + new_size, 0, old_size - new_size);
-        }
     }
     /* return success                                                      */
     return 1;
@@ -589,21 +575,16 @@ void InitGlobalBag(Bag * addr, const Char * cookie)
 {
 }
 
-void CallbackForAllBags(void (*func)(Bag))
-{
-}
-
-void InitCollectFuncBags(TNumCollectFuncBags before_func,
-                         TNumCollectFuncBags after_func)
-{
-}
-
 void SwapMasterPoint(Bag bag1, Bag bag2)
 {
     Obj * ptr1 = PTR_BAG(bag1);
     Obj * ptr2 = PTR_BAG(bag2);
     SET_PTR_BAG(bag1, ptr2);
     SET_PTR_BAG(bag2, ptr1);
+}
+
+void MarkBag(Bag bag)
+{
 }
 
 void MarkNoSubBags(Bag bag)
@@ -630,6 +611,10 @@ void MarkAllSubBags(Bag bag)
 {
 }
 
-void MarkArrayOfBags(Bag array[], int count)
+void MarkAllButFirstSubBags(Bag bag)
+{
+}
+
+void MarkArrayOfBags(const Bag array[], UInt count)
 {
 }

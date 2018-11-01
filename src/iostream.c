@@ -21,15 +21,16 @@
 **
 */
 
-#include <src/iostream.h>
+#include "iostream.h"
 
-#include <src/bool.h>
-#include <src/gap.h>
-#include <src/io.h>
-#include <src/lists.h>
-#include <src/stringobj.h>
+#include "bool.h"
+#include "error.h"
+#include "io.h"
+#include "lists.h"
+#include "modules.h"
+#include "stringobj.h"
 
-#include <src/hpc/thread.h>
+#include "hpc/thread.h"
 
 #include <errno.h>
 #include <fcntl.h>
@@ -639,7 +640,7 @@ Obj FuncFD_OF_IOSTREAM(Obj self, Obj stream)
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
@@ -666,16 +667,6 @@ static StructGVarFunc GVarFuncs[] = {
   
 /* FIXME/TODO: should probably do some checks preSave for open files etc and
    refuse to save if any are found */
-
-/****************************************************************************
-**
-*F  postResore( <module> ) . . . . . . .re-initialise library data structures
-*/
-static Int postRestore(StructInitInfo * module)
-{
-    /* return success                                                      */
-    return 0;
-}
 
 /****************************************************************************
 **
@@ -712,7 +703,7 @@ static Int InitLibrary(StructInitInfo * module)
     /* init filters and functions                                          */
     InitGVarFuncsFromTable(GVarFuncs);
 
-    return postRestore(module);
+    return 0;
 }
 
 /****************************************************************************
@@ -726,7 +717,6 @@ static StructInitInfo module = {
     .name = "iostream",
     .initKernel = InitKernel,
     .initLibrary = InitLibrary,
-    .postRestore = postRestore
 };
 
 StructInitInfo * InitInfoIOStream(void)

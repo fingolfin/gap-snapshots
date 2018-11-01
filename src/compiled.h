@@ -14,62 +14,65 @@ extern "C" {
 #define GAP_IN_EXTERN_C
 #endif
 
-#include <src/ariths.h>
-#include <src/blister.h>
-#include <src/bool.h>
-#include <src/calls.h>
-#include <src/code.h>
-#include <src/compiler.h>
-#include <src/compstat.h>
-#include <src/costab.h>
-#include <src/cyclotom.h>
-#include <src/dt.h>
-#include <src/dteval.h>
-#include <src/exprs.h>
-#include <src/finfield.h>
-#include <src/funcs.h>
-#include <src/gap.h>
-#include <src/gapstate.h>
-#include <src/gasman.h>
-#include <src/gvars.h>
-#include <src/integer.h>
-#include <src/intrprtr.h>
-#include <src/io.h>
-#include <src/listfunc.h>
-#include <src/listoper.h>
-#include <src/lists.h>
-#include <src/macfloat.h>
-#include <src/objcftl.h>
-#include <src/objects.h>
-#include <src/objfgelm.h>
-#include <src/objpcgel.h>
-#include <src/objscoll.h>
-#include <src/opers.h>
-#include <src/permutat.h>
-#include <src/plist.h>
-#include <src/pperm.h>
-#include <src/precord.h>
-#include <src/range.h>
-#include <src/rational.h>
-#include <src/read.h>
-#include <src/records.h>
-#include <src/saveload.h>
-#include <src/scanner.h>
-#include <src/sctable.h>
-#include <src/set.h>
-#include <src/stats.h>
-#include <src/streams.h>
-#include <src/stringobj.h>
-#include <src/sysfiles.h>
-#include <src/system.h>
-#include <src/tietze.h>
-#include <src/trans.h>
-#include <src/vars.h>
-#include <src/vector.h>
-#include <src/weakptr.h>
+#include "ariths.h"
+#include "blister.h"
+#include "bool.h"
+#include "calls.h"
+#include "code.h"
+#include "compiler.h"
+#include "compstat.h"
+#include "costab.h"
+#include "cyclotom.h"
+#include "dt.h"
+#include "dteval.h"
+#include "error.h"
+#include "exprs.h"
+#include "finfield.h"
+#include "funcs.h"
+#include "gap.h"
+#include "gapstate.h"
+#include "gasman.h"
+#include "gvars.h"
+#include "integer.h"
+#include "intrprtr.h"
+#include "io.h"
+#include "iostream.h"
+#include "listfunc.h"
+#include "listoper.h"
+#include "lists.h"
+#include "macfloat.h"
+#include "modules.h"
+#include "objcftl.h"
+#include "objects.h"
+#include "objfgelm.h"
+#include "objpcgel.h"
+#include "objscoll.h"
+#include "opers.h"
+#include "permutat.h"
+#include "plist.h"
+#include "pperm.h"
+#include "precord.h"
+#include "range.h"
+#include "rational.h"
+#include "read.h"
+#include "records.h"
+#include "saveload.h"
+#include "scanner.h"
+#include "sctable.h"
+#include "set.h"
+#include "stats.h"
+#include "streams.h"
+#include "stringobj.h"
+#include "sysfiles.h"
+#include "system.h"
+#include "tietze.h"
+#include "trans.h"
+#include "vars.h"
+#include "vector.h"
+#include "weakptr.h"
 
 #ifdef HPCGAP
-#include <src/hpc/aobjects.h>
+#include "hpc/aobjects.h"
 #endif
 
 extern Obj InfoDecision;
@@ -115,55 +118,6 @@ typedef UInt    RNam;
 
 #define SWITCH_TO_NEW_FRAME     SWITCH_TO_NEW_LVARS
 #define SWITCH_TO_OLD_FRAME     SWITCH_TO_OLD_LVARS
-
-#define CURR_FRAME              STATE(CurrLVars)
-#define CURR_FRAME_1UP          ENVI_FUNC( FUNC_LVARS( CURR_FRAME     ) )
-#define CURR_FRAME_2UP          ENVI_FUNC( FUNC_LVARS( CURR_FRAME_1UP ) )
-#define CURR_FRAME_3UP          ENVI_FUNC( FUNC_LVARS( CURR_FRAME_2UP ) )
-#define CURR_FRAME_4UP          ENVI_FUNC( FUNC_LVARS( CURR_FRAME_3UP ) )
-#define CURR_FRAME_5UP          ENVI_FUNC( FUNC_LVARS( CURR_FRAME_4UP ) )
-#define CURR_FRAME_6UP          ENVI_FUNC( FUNC_LVARS( CURR_FRAME_5UP ) )
-#define CURR_FRAME_7UP          ENVI_FUNC( FUNC_LVARS( CURR_FRAME_6UP ) )
-
-/* #define OBJ_LVAR(lvar)  STATE(PtrLVars)[(lvar)+2] */
-#define OBJ_LVAR_0UP(lvar) \
-    OBJ_LVAR(lvar)
-#define OBJ_LVAR_1UP(lvar) \
-    PTR_BAG(CURR_FRAME_1UP)[(lvar)+2]
-#define OBJ_LVAR_2UP(lvar) \
-    PTR_BAG(CURR_FRAME_2UP)[(lvar)+2]
-#define OBJ_LVAR_3UP(lvar) \
-    PTR_BAG(CURR_FRAME_3UP)[(lvar)+2]
-#define OBJ_LVAR_4UP(lvar) \
-    PTR_BAG(CURR_FRAME_4UP)[(lvar)+2]
-#define OBJ_LVAR_5UP(lvar) \
-    PTR_BAG(CURR_FRAME_5UP)[(lvar)+2]
-#define OBJ_LVAR_6UP(lvar) \
-    PTR_BAG(CURR_FRAME_6UP)[(lvar)+2]
-#define OBJ_LVAR_7UP(lvar) \
-    PTR_BAG(CURR_FRAME_7UP)[(lvar)+2]
-#define OBJ_LVAR_8UP(lvar) \
-    PTR_BAG(CURR_FRAME_8UP)[(lvar)+2]
-
-/* #define ASS_LVAR(lvar,obj) do { STATE(PtrLVars)[(lvar)+2] = (obj); } while ( 0 ) */
-#define ASS_LVAR_0UP(lvar,obj) \
-    ASS_LVAR(lvar,obj)
-#define ASS_LVAR_1UP(lvar,obj) \
-    do { PTR_BAG(CURR_FRAME_1UP)[(lvar)+2] = (obj); CHANGED_BAG(CURR_FRAME_1UP); } while ( 0 )
-#define ASS_LVAR_2UP(lvar,obj) \
-    do { PTR_BAG(CURR_FRAME_2UP)[(lvar)+2] = (obj); CHANGED_BAG(CURR_FRAME_2UP); } while ( 0 )
-#define ASS_LVAR_3UP(lvar,obj) \
-    do { PTR_BAG(CURR_FRAME_3UP)[(lvar)+2] = (obj); CHANGED_BAG(CURR_FRAME_3UP); } while ( 0 )
-#define ASS_LVAR_4UP(lvar,obj) \
-    do { PTR_BAG(CURR_FRAME_4UP)[(lvar)+2] = (obj); CHANGED_BAG(CURR_FRAME_4UP); } while ( 0 )
-#define ASS_LVAR_5UP(lvar,obj) \
-    do { PTR_BAG(CURR_FRAME_5UP)[(lvar)+2] = (obj); CHANGED_BAG(CURR_FRAME_5UP); } while ( 0 )
-#define ASS_LVAR_6UP(lvar,obj) \
-    do { PTR_BAG(CURR_FRAME_6UP)[(lvar)+2] = (obj); CHANGED_BAG(CURR_FRAME_6UP); } while ( 0 )
-#define ASS_LVAR_7UP(lvar,obj) \
-    do { PTR_BAG(CURR_FRAME_7UP)[(lvar)+2] = (obj); CHANGED_BAG(CURR_FRAME_7UP); } while ( 0 )
-#define ASS_LVAR_8UP(lvar,obj) \
-    do { PTR_BAG(CURR_FRAME_8UP)[(lvar)+2] = (obj); CHANGED_BAG(CURR_FRAME_8UP); } while ( 0 )
 
 
 /* objects, should into 'objects.c'  * * * * * * * * * * * * * * * * * * * */
@@ -361,18 +315,9 @@ static inline Obj C_NORMALIZE_64BIT(Obj o) {
 
 
 #else
-static inline Obj C_MAKE_MED_INT( Int8 value ) {
-  Obj x;
-  UInt type;
-  if (value < 0) {
-    type = T_INTNEG;
-    value = -value;
-  } else
-    type = T_INTPOS;
-
-  x = C_MAKE_INTEGER_BAG(8,type);
-  C_SET_LIMB8(x,0,(UInt8)value);
-  return x;
+static inline Obj C_MAKE_MED_INT( Int8 value )
+{
+    return ObjInt_Int8(value);
 }
 
 static inline Obj C_NORMALIZE_64BIT( Obj o) {

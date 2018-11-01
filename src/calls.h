@@ -45,8 +45,8 @@
 #ifndef GAP_CALLS_H
 #define GAP_CALLS_H
 
-#include <src/gaputils.h>
-#include <src/objects.h>
+#include "gaputils.h"
+#include "objects.h"
 
 
 typedef Obj (* ObjFunc_0ARGS) (Obj self);
@@ -92,8 +92,8 @@ typedef Obj (* ObjFunc_6ARGS) (Obj self, Obj a1, Obj a2, Obj a3, Obj a4, Obj a5,
 **
 **  'BODY_FUNC(<func>)' is the body.
 **
-**  'ENVI_FUNC(<func>)'  is the  environment  (i.e., the local  variables bag
-**  that was current when <func> was created).
+**  'ENVI_FUNC(<func>)'  is the  environment (i.e., the local  variables bag)
+**  that was current when <func> was created.
 **
 **  'FEXS_FUNC(<func>)'  is the function expressions list (i.e., the list of
 **  the function expressions of the functions defined inside of <func>).
@@ -107,10 +107,10 @@ typedef Obj (* ObjFunc_6ARGS) (Obj self, Obj a1, Obj a2, Obj a3, Obj a4, Obj a5,
 typedef struct {
     ObjFunc handlers[8];
     Obj name;
-    Int nargs;
+    Obj nargs;
     Obj namesOfLocals;
     Obj prof;
-    UInt nloc;
+    Obj nloc;
     Obj body;
     Obj envi;
     Obj fexs;
@@ -118,118 +118,125 @@ typedef struct {
     Obj locks;
 #endif
     // additional data follows for operations
-} FunctionHeader;
+} FuncBag;
 
-static inline FunctionHeader * FUNC_HEADER(Obj func)
+static inline FuncBag * FUNC(Obj func)
 {
     GAP_ASSERT(TNUM_OBJ(func) == T_FUNCTION);
-    return (FunctionHeader *)ADDR_OBJ(func);
+    return (FuncBag *)ADDR_OBJ(func);
 }
+
+static inline const FuncBag * CONST_FUNC(Obj func)
+{
+    GAP_ASSERT(TNUM_OBJ(func) == T_FUNCTION);
+    return (const FuncBag *)CONST_ADDR_OBJ(func);
+}
+
 
 static inline ObjFunc HDLR_FUNC(Obj func, Int i)
 {
-    return FUNC_HEADER(func)->handlers[i];
+    GAP_ASSERT(0 <= i && i < 8);
+    return CONST_FUNC(func)->handlers[i];
 }
 
 static inline Obj NAME_FUNC(Obj func)
 {
-    return FUNC_HEADER(func)->name;
+    return CONST_FUNC(func)->name;
 }
 
 static inline Int NARG_FUNC(Obj func)
 {
-    return FUNC_HEADER(func)->nargs;
+    return INT_INTOBJ(CONST_FUNC(func)->nargs);
 }
 
 static inline Obj NAMS_FUNC(Obj func)
 {
-    return FUNC_HEADER(func)->namesOfLocals;
+    return CONST_FUNC(func)->namesOfLocals;
 }
 
-extern Char * NAMI_FUNC(Obj func, Int i);
+extern Obj NAMI_FUNC(Obj func, Int i);
 
 static inline Obj PROF_FUNC(Obj func)
 {
-    return FUNC_HEADER(func)->prof;
+    return CONST_FUNC(func)->prof;
 }
 
 static inline UInt NLOC_FUNC(Obj func)
 {
-    return FUNC_HEADER(func)->nloc;
+    return INT_INTOBJ(CONST_FUNC(func)->nloc);
 }
 
 static inline Obj BODY_FUNC(Obj func)
 {
-    return FUNC_HEADER(func)->body;
+    return CONST_FUNC(func)->body;
 }
 
 static inline Obj ENVI_FUNC(Obj func)
 {
-    return FUNC_HEADER(func)->envi;
+    return CONST_FUNC(func)->envi;
 }
 
 static inline Obj FEXS_FUNC(Obj func)
 {
-    return FUNC_HEADER(func)->fexs;
+    return CONST_FUNC(func)->fexs;
 }
 
 #ifdef HPCGAP
 static inline Obj LCKS_FUNC(Obj func)
 {
-    return FUNC_HEADER(func)->locks;
+    return CONST_FUNC(func)->locks;
 }
 
 #endif
 
 static inline void SET_HDLR_FUNC(Obj func, Int i, ObjFunc hdlr)
 {
-    FunctionHeader *header = FUNC_HEADER(func);
-    GAP_ASSERT(0 <= i && i < ARRAY_SIZE(header->handlers));
-    header->handlers[i] = hdlr;
+    GAP_ASSERT(0 <= i && i < 8);
+    FUNC(func)->handlers[i] = hdlr;
 }
 
 extern void SET_NAME_FUNC(Obj func, Obj name);
 
 static inline void SET_NARG_FUNC(Obj func, Int nargs)
 {
-    FUNC_HEADER(func)->nargs = nargs;
+    FUNC(func)->nargs = INTOBJ_INT(nargs);
 }
 
 static inline void SET_NAMS_FUNC(Obj func, Obj namesOfLocals)
 {
-    FUNC_HEADER(func)->namesOfLocals = namesOfLocals;
+    FUNC(func)->namesOfLocals = namesOfLocals;
 }
 
 static inline void SET_PROF_FUNC(Obj func, Obj prof)
 {
-    FUNC_HEADER(func)->prof = prof;
+    FUNC(func)->prof = prof;
 }
 
 static inline void SET_NLOC_FUNC(Obj func, UInt nloc)
 {
-    FUNC_HEADER(func)->nloc = nloc;
+    FUNC(func)->nloc = INTOBJ_INT(nloc);
 }
 
 static inline void SET_BODY_FUNC(Obj func, Obj body)
 {
     GAP_ASSERT(TNUM_OBJ(body) == T_BODY);
-    FUNC_HEADER(func)->body = body;
+    FUNC(func)->body = body;
 }
 
 static inline void SET_ENVI_FUNC(Obj func, Obj envi)
 {
-    FUNC_HEADER(func)->envi = envi;
+    FUNC(func)->envi = envi;
 }
 
 static inline void SET_FEXS_FUNC(Obj func, Obj fexs)
 {
-    FUNC_HEADER(func)->fexs = fexs;
+    FUNC(func)->fexs = fexs;
 }
 
 #ifdef HPCGAP
 static inline void SET_LCKS_FUNC(Obj func, Obj locks)
 {
-    FUNC_HEADER(func)->locks = locks;
+    FUNC(func)->locks = locks;
 }
 #endif
 
@@ -354,6 +361,8 @@ extern void InitHandlerFunc (
      ObjFunc            hdlr,
      const Char *       cookie );
 
+#ifdef USE_GASMAN
+
 extern const Char * CookieOfHandler(
      ObjFunc            hdlr );
 
@@ -361,6 +370,10 @@ extern ObjFunc HandlerOfCookie (
      const Char *       cookie );
 
 extern void SortHandlers( UInt byWhat );
+
+extern void CheckAllHandlers(void);
+
+#endif
 
 /****************************************************************************
 **
@@ -419,9 +432,9 @@ extern Obj NewFunctionCT (
 **
 *F  ArgStringToList( <nams_c> )
 **
-** 'ArgStringToList' takes a C string <nams_c> containing a list of comma
-** separated argument names, and turns it into a plist of strings, ready
-** to be passed to 'NewFunction' as <nams>.
+**  'ArgStringToList' takes a C string <nams_c> containing a list of comma
+**  separated argument names, and turns it into a plist of strings, ready
+**  to be passed to 'NewFunction' as <nams>.
 */
 extern Obj ArgStringToList(const Char *nams_c);
 
@@ -457,7 +470,7 @@ extern Obj CallFuncListOper;
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************

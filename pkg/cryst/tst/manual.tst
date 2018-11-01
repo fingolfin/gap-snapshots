@@ -182,13 +182,16 @@ gap> sub := MaximalSubgroupClassReps( S, rec( primes := [2] ) );
 [ <matrix group with 4 generators>, <matrix group with 3 generators>, 
   <matrix group with 4 generators> ]
 
-gap> sub := Filtered( sub, s -> IndexInParent( s ) = 2 );
-[ <matrix group with 4 generators>, <matrix group with 3 generators>, 
-  <matrix group with 4 generators> ]
+gap> List( sub, Size );
+[ infinity, infinity, infinity ]
 
-gap> sub := AffineInequivalentSubgroups( S, sub );
+gap> sub := Filtered( sub, s -> IndexInParent( s ) = 2 );
 [ <matrix group of size infinity with 4 generators>, 
-  <matrix group of size infinity with 3 generators> ]
+  <matrix group of size infinity with 3 generators>, 
+  <matrix group of size infinity with 4 generators> ]
+
+gap> Length( AffineInequivalentSubgroups( S, sub ) );
+2
 
 gap> SpaceGroupSettingsIT( 3, 146 );
 "hr"

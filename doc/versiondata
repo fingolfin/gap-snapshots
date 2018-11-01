@@ -1,6 +1,6 @@
 <!-- Do not edit the following four lines. They will be updated 
      automatically by the distribution wrapper scripts. -->
-<!ENTITY VERSIONNUMBER "4.9.3">
-<!ENTITY RELEASEDAY "05-Sep-2018">
+<!ENTITY VERSIONNUMBER "4.10.0">
+<!ENTITY RELEASEDAY "01-Nov-2018">
 <!ENTITY RELEASEYEAR "2018">
-<!ENTITY GAPDIRNAME "gap-4.9.3">
+<!ENTITY GAPDIRNAME "gap-4.10.0">

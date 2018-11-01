@@ -4,7 +4,21 @@
 ##
 ##
 gap> START_TEST("float.tst");
+
+# make sure we are testing the built-in machine floats
 gap> SetFloats(IEEE754FLOAT);
+
+# some special values we will use again later on
+gap> posinf := 1.0/0.0;
+inf
+gap> neginf := -1.0/0.0;
+-inf
+gap> nan := 0.0/0.0;
+nan
+
+#
+# Convert things to floats
+#
 gap> Float(3);
 3.
 gap> Float(-4);
@@ -13,10 +27,26 @@ gap> Float(2/3);
 0.666667
 gap> Float("-4");
 -4.
+gap> Float("4.1");
+4.1
+gap> Float("4.1e-1");
+0.41
+gap> Float(infinity);
+inf
+gap> Float(-infinity);
+-inf
+
+#
+# input floats directly
+#
 gap> 0.6;
 0.6
 gap> -0.7;
 -0.7
+
+#
+# some arithmetic
+#
 gap> 355.0/113.0;
 3.14159
 gap> last = 355.0/113;
@@ -41,10 +71,26 @@ gap> 355/113.0 - 355.0/113;
 0.
 gap> 355/113.0 = 355.0/113;
 true
-gap> 355.0/113.0;
-3.14159
-gap> Rat(last);
-355/113
+
+#
+gap> 2.0^2;
+4.
+gap> 2.0^-2;
+0.25
+gap> 2.0^2.;
+4.
+gap> 2.0^-2.;
+0.25
+
+#
+gap> LeftQuotient(1.0, 2.0);
+2.
+gap> LeftQuotient(2.0, 1.0);
+0.5
+
+#
+# convert floats to ints
+#
 gap> Int(1.0);
 1
 gap> Int(1.5);
@@ -53,10 +99,36 @@ gap> Int(-1.0);
 -1
 gap> Int(-1.5);
 -1
+gap> Int(1.e22);
+10000000000000000000000
+gap> Int(-1.e22);
+-10000000000000000000000
+
+#
+# convert floats to rationals
+#
+gap> Rat(355.0/113.0);
+355/113
 gap> Rat(0.5);
 1/2
 gap> Rat(0.0);
 0
+
+#
+# Print / View / Display for floats
+#
+gap> l := [ 0.0, -0.0, 1.0, Sqrt(2.0), posinf, neginf, nan ];
+[ 0., -0., 1., 1.41421, inf, -inf, nan ]
+gap> ViewObj(l); Print("\n");
+[ 0., -0., 1., 1.41421, inf, -inf, nan ]
+gap> PrintObj(l); Print("\n");
+[ 0, -0, 1, 1.414213562373095, inf, -inf, nan ]
+gap> Display(l);
+[ 0, -0, 1, 1.414213562373095, inf, -inf, nan ]
+
+#
+#
+#
 gap> Sqrt(2.0);
 1.41421
 gap> MinimalPolynomial(Rationals,last);
@@ -121,16 +193,22 @@ gap> Exp(last);
 0.948683
 gap> last^2;
 0.9
+
+#
+# some tests with infinity
+#
 gap> 1.0/0.0;
 inf
 gap> -1.0/0.0;
 -inf
-gap> -Float(infinity) = Float(-infinity);
+gap> List([posinf, neginf, nan, 0.0, 1.0], IsPInfinity);
+[ true, false, false, false, false ]
+gap> List([posinf, neginf, nan, 0.0, 1.0], IsNInfinity);
+[ false, true, false, false, false ]
+gap> -posinf = neginf;
 true
-gap> posinf := Float(infinity);
-inf
-gap> neginf := Float(-infinity);
--inf
+gap> posinf = -neginf;
+true
 gap> neginf < posinf;
 true
 gap> neginf <> posinf;
@@ -147,6 +225,45 @@ gap> MakeFloat(1.0, -infinity) = neginf;
 true
 
 #
+# test sign handling
+#
+gap> SignBit(posinf);
+false
+gap> SignFloat(posinf);
+1
+gap> SignBit(neginf);
+true
+gap> SignFloat(neginf);
+-1
+gap> SignBit(+0.0);
+false
+gap> SignFloat(+0.0);
+0
+gap> SignBit(-0.0);
+true
+gap> SignFloat(-0.0);
+0
+gap> SignBit(42.0);
+false
+gap> SignFloat(42.0);
+1
+gap> SignBit(-42.0);
+true
+gap> SignFloat(-42.0);
+-1
+
+# sign of NaN is machine specific; but we can still test whether
+# SignBit and SignFloat return consistent results
+gap> SignBit(nan) = (SignFloat(nan) = -1);
+true
+gap> SignBit(-nan) = (SignFloat(-nan) = -1);
+true
+
+#
+# test float comparison
+#
+
+#
 gap> EqFloat(1.0, 1.1);
 false
 gap> EqFloat(1.0, 1.0);
@@ -155,6 +272,27 @@ gap> EqFloat(0.0/0.0,0.0/0.0);
 false
 gap> EqFloat(0.0,0.0/0.0);
 false
+
+#
+# float literals in the REPL
+#
+gap> 1.1;
+1.1
+gap> 1.1_;
+1.1
+gap> 1.x1;
+Syntax error: Badly formed number in stream:1
+1.x1;
+^^^
+gap> 1.1xx;
+Syntax error: Badly formed number in stream:1
+1.1xx;
+^^^^
+
+# The following is potentially correct, *if* there is a conversion handler for
+# 'x' installed, which normally isn't the case.
+gap> 1.1x;
+Error, failed to convert float literal
 
 #
 # float literal expressions in functions
@@ -183,6 +321,90 @@ gap> Display(g);
 function (  )
     return 23.0;
 end
+
+#
+#
+#
+gap> Cos(0.);
+1.
+gap> Sin(0.);
+0.
+gap> Tan(0.);
+0.
+gap> Acos(1.);
+0.
+gap> Asin(0.);
+0.
+gap> Log(1.);
+0.
+gap> Exp(0.);
+1.
+gap> if IsBound(Log2) then Assert(0, Log2(1.) = 0.); fi;
+gap> if IsBound(Log10) then Assert(0, Log10(1.) = 0.); fi;
+gap> if IsBound(Log1p) then Assert(0, Log1p(0.) = 0.); fi;
+gap> if IsBound(Exp2) then Assert(0, Exp2(0.) = 1.); fi;
+gap> if IsBound(Exp10) then Assert(0, Exp10(0.) = 1.); fi;
+gap> if IsBound(Expm1) then Assert(0, Expm1(0.) = 0.); fi;
+
+#
+gap> Round(1.3);
+1.
+gap> Round(1.9);
+2.
+gap> Round(-1.9);
+-2.
+gap> Round(-1.3);
+-1.
+
+#
+gap> Floor(1.3);
+1.
+gap> Floor(1.9);
+1.
+gap> Floor(-1.9);
+-2.
+gap> Floor(-1.3);
+-2.
+
+#
+gap> Ceil(1.3);
+2.
+gap> Ceil(1.9);
+2.
+gap> Ceil(-1.9);
+-1.
+gap> Ceil(-1.3);
+-1.
+
+#
+gap> AbsoluteValue(1.3);
+1.3
+gap> AbsoluteValue(1.9);
+1.9
+gap> AbsoluteValue(-1.9);
+1.9
+gap> AbsoluteValue(-1.3);
+1.3
+
+#
+gap> Atan2(0.,0.);
+0.
+gap> Hypothenuse(3.,4.);
+5.
+
+#
+gap> ComplexConjugate(1.3);
+1.3
+
+#
+gap> Display(1.3);
+1.3
+gap> Display(-.4e6);
+-400000.
+gap> PrintObj(1.3); Print("Q\n");
+1.3Q
+gap> DisplayString(1.3);
+"1.3\n"
 
 #
 gap> STOP_TEST( "float.tst", 1);

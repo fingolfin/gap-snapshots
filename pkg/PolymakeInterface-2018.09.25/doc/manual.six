@@ -1,0 +1,56 @@
+#SIXFORMAT  GapDocGAP
+HELPBOOKINFOSIXTMP := rec(
+encoding := "UTF-8",
+bookname := "PolymakeInterface",
+entries :=
+[ [ "Title page", ".", [ 0, 0, 0 ], 1, 1, "title page", "X7D2C85EC87DD46E5" ],
+  [ "Table of Contents", ".-1", [ 0, 0, 1 ], 45, 2, "table of contents", 
+      "X8537FEB07AF2BEC8" ], 
+  [ "\033[1X\033[33X\033[0;-2YIntroduction\033[133X\033[101X", "1", 
+      [ 1, 0, 0 ], 1, 3, "introduction", "X7DFB63A97E67C0A1" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YWhat is the idea of PolymakeInterface\033[133X\\
+033[101X", "1.1", [ 1, 1, 0 ], 4, 3, "what is the idea of polymakeinterface", 
+      "X7B287B7A86173E0D" ], 
+  [ "\033[1X\033[33X\033[0;-2YInstallation\033[133X\033[101X", "2", 
+      [ 2, 0, 0 ], 1, 4, "installation", "X8360C04082558A12" ], 
+  [ "\033[1X\033[33X\033[0;-2YInstall polymake\033[133X\033[101X", "2.1", 
+      [ 2, 1, 0 ], 4, 4, "install polymake", "X800C29157C1742BE" ], 
+  [ "\033[1X\033[33X\033[0;-2YHow to install this package\033[133X\033[101X", 
+      "2.2", [ 2, 2, 0 ], 12, 4, "how to install this package", 
+      "X81A5946683F0AD7D" ], 
+  [ "\033[1X\033[33X\033[0;-2YSketch\033[133X\033[101X", "3", [ 3, 0, 0 ], 1, 
+      5, "sketch", "X8012482A7EFB8816" ], 
+  [ "\033[1X\033[33X\033[0;-2YSketch methods\033[133X\033[101X", "3.1", 
+      [ 3, 1, 0 ], 4, 5, "sketch methods", "X7FF412A27CB0DD64" ], 
+  [ "Bibliography", "bib", [ "Bib", 0, 0 ], 1, 7, "bibliography", 
+      "X7A6F98FD85F02BFE" ], 
+  [ "References", "bib", [ "Bib", 0, 0 ], 1, 7, "references", 
+      "X7A6F98FD85F02BFE" ], 
+  [ "Index", "ind", [ "Ind", 0, 0 ], 1, 8, "index", "X83A0356F839C696F" ], 
+  [ 
+      "\033[2XPOLYMAKE_SKETCH_WITH_OPTIONS\033[102X for isexternalpolymakeobject,\
+ islist", "3.1-1", [ 3, 1, 1 ], 7, 5, 
+      "polymake_sketch_with_options for isexternalpolymakeobject islist", 
+      "X86AA5EBB7DF8F6AF" ], 
+  [ 
+      "\033[2XPOLYMAKE_SKETCH_WITH_OPTIONS\033[102X for isexternalpolymakeobject,\
+ isstring, islist", "3.1-2", [ 3, 1, 2 ], 20, 5, 
+      "polymake_sketch_with_options for isexternalpolymakeobject isstring isli\
+st", "X810E71BB7F4DFEB1" ], 
+  [ 
+      "\033[2XPOLYMAKE_CREATE_TIKZ_FILE\033[102X for isexternalpolymakeobject, is\
+string", "3.1-3", [ 3, 1, 3 ], 29, 5, 
+      "polymake_create_tikz_file for isexternalpolymakeobject isstring", 
+      "X7A89F4927ACE7AFF" ], 
+  [ 
+      "\033[2XPOLYMAKE_CREATE_TIKZ_FILE\033[102X for isexternalpolymakeobject, is\
+string, islist", "3.1-4", [ 3, 1, 4 ], 37, 6, 
+      "polymake_create_tikz_file for isexternalpolymakeobject isstring islist"
+        , "X7A1AC32B85E95F36" ], 
+  [ 
+      "\033[2XPOLYMAKE_CREATE_TIKZ_FILE_WITH_SKETCH_OPTIONS\033[102X for isextern\
+alpolymakeobject, isstring, islist, isstring", "3.1-5", [ 3, 1, 5 ], 48, 6, 
+      "polymake_create_tikz_file_with_sketch_options for isexternalpolymakeobj\
+ect isstring islist isstring", "X87C54FCB7806A324" ] ]
+);

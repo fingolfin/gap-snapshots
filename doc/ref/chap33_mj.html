@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (ref) - Chapter 33: Relations</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -118,6 +118,12 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BinaryRelationByElements</code>( <var class="Arg">domain</var>, <var class="Arg">elms</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is the binary relation on <var class="Arg">domain</var> and with underlying relation consisting of the tuples collection <var class="Arg">elms</var>. This construction is similar to <code class="func">GeneralMappingByElements</code> (<a href="chap32_mj.html#X79D0D2F07A14D039"><span class="RefLink">32.2-1</span></a>) where the source and range are the same set.</p>
 
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r:=BinaryRelationByElements(Domain([1..3]),[Tuple([1,2]),Tuple([1,3])]);</span>
+&lt;general mapping: &lt;object&gt; -&gt; &lt;object&gt; &gt;
+</pre></div>
+
 <p><a id="X81878EEF873B34D5" name="X81878EEF873B34D5"></a></p>
 
 <h5>33.1-3 <span class="Heading">IdentityBinaryRelation</span></h5>
@@ -126,6 +132,16 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdentityBinaryRelation</code>( <var class="Arg">domain</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is the binary relation which consists of diagonal pairs, i.e., pairs of the form <span class="SimpleMath">\((x,x)\)</span>. In the first form if a positive integer <var class="Arg">degree</var> is given then the domain is the set of the integers <span class="SimpleMath">\(\{ 1, \ldots, \textit{degree} \}\)</span>. In the second form, the objects <span class="SimpleMath">\(x\)</span> are from the domain <var class="Arg">domain</var>.</p>
 
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdentityBinaryRelation(5);</span>
+&lt;equivalence relation on &lt;object&gt; &gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s4:=SymmetricGroup(4);</span>
+Sym( [ 1 .. 4 ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdentityBinaryRelation(s4);</span>
+IdentityMapping( Sym( [ 1 .. 4 ] ) )
+</pre></div>
+
 <p><a id="X80DDCDD387BA23F2" name="X80DDCDD387BA23F2"></a></p>
 
 <h5>33.1-4 EmptyBinaryRelation</h5>
@@ -133,6 +149,12 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EmptyBinaryRelation</code>( <var class="Arg">degree</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EmptyBinaryRelation</code>( <var class="Arg">domain</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>is the relation with <var class="Arg">R</var> empty. In the first form of the command with <var class="Arg">degree</var> an integer, the domain is the set of points <span class="SimpleMath">\(\{ 1, \ldots, \textit{degree} \}\)</span>. In the second form, the domain is that given by the argument <var class="Arg">domain</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">EmptyBinaryRelation(3) = BinaryRelationOnPoints([ [], [], [] ]);</span>
+true
+</pre></div>
 
 <p><a id="X7899E59181C46EBB" name="X7899E59181C46EBB"></a></p>
 
@@ -149,6 +171,14 @@
 
 <p>A reflexive binary relation is necessarily a total endomorphic mapping (tested via <code class="func">IsTotal</code> (<a href="chap32_mj.html#X83C7494E828CC9C8"><span class="RefLink">32.3-1</span></a>)).</p>
 
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsReflexiveBinaryRelation(BinaryRelationOnPoints([[1,3],[2],[3]]));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsReflexiveBinaryRelation(BinaryRelationOnPoints([[2],[2]]));</span>
+false
+</pre></div>
+
 <p><a id="X785916A181555368" name="X785916A181555368"></a></p>
 
 <h5>33.2-2 IsSymmetricBinaryRelation</h5>
@@ -158,6 +188,14 @@
 
 <p>A binary relation <span class="SimpleMath">\(R\)</span> (as a set of pairs) on a set <span class="SimpleMath">\(X\)</span> is <em>symmetric</em> if <span class="SimpleMath">\((x,y) \in R\)</span> then <span class="SimpleMath">\((y,x) \in R\)</span>. Alternatively, <span class="SimpleMath">\(R\)</span> as a mapping is symmetric if for all <span class="SimpleMath">\(x \in X\)</span>, the preimage set of <span class="SimpleMath">\(x\)</span> under <span class="SimpleMath">\(R\)</span> equals the image set <span class="SimpleMath">\(R(x)\)</span>.</p>
 
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSymmetricBinaryRelation(BinaryRelationOnPoints([[2],[1]]));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsSymmetricBinaryRelation(BinaryRelationOnPoints([[2],[2]]));</span>
+false
+</pre></div>
+
 <p><a id="X7823942478124563" name="X7823942478124563"></a></p>
 
 <h5>33.2-3 IsTransitiveBinaryRelation</h5>
@@ -166,6 +204,14 @@
 <p>returns <code class="keyw">true</code> if the binary relation <var class="Arg">R</var> is transitive, and <code class="keyw">false</code> otherwise.</p>
 
 <p>A binary relation <var class="Arg">R</var> (as a set of pairs) on a set <span class="SimpleMath">\(X\)</span> is <em>transitive</em> if <span class="SimpleMath">\((x,y), (y,z) \in R\)</span> implies <span class="SimpleMath">\((x,z) \in R\)</span>. Alternatively, <span class="SimpleMath">\(R\)</span> as a mapping is transitive if for all <span class="SimpleMath">\(x \in X\)</span>, the image set <span class="SimpleMath">\(R(R(x))\)</span> of the image set <span class="SimpleMath">\(R(x)\)</span> of <span class="SimpleMath">\(x\)</span> is a subset of <span class="SimpleMath">\(R(x)\)</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsTransitiveBinaryRelation(BinaryRelationOnPoints([[1,2,3],[2,3],[]]));</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsTransitiveBinaryRelation(BinaryRelationOnPoints([[1,2],[2,3],[]]));</span>
+false
+</pre></div>
 
 <p><a id="X870F72C38550A0A4" name="X870F72C38550A0A4"></a></p>
 
@@ -221,12 +267,25 @@
 
 <p>The <code class="func">Successors</code> of a relation is the adjacency list representation of the relation.</p>
 
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r1:=BinaryRelationOnPoints([[2],[3],[1]]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Successors(r1);</span>
+[ [ 2 ], [ 3 ], [ 1 ] ]
+</pre></div>
+
 <p><a id="X7B4D22A17E752A91" name="X7B4D22A17E752A91"></a></p>
 
 <h5>33.2-10 DegreeOfBinaryRelation</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DegreeOfBinaryRelation</code>( <var class="Arg">R</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns the size of the underlying domain of the binary relation <var class="Arg">R</var>. This is most natural when working with a binary relation on points.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DegreeOfBinaryRelation(r1);</span>
+3
+</pre></div>
 
 <p><a id="X8278E4457C3C3A0D" name="X8278E4457C3C3A0D"></a></p>
 
@@ -249,6 +308,12 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; BinaryRelationOnPointsNC</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>Given a list of <span class="SimpleMath">\(n\)</span> lists, each containing elements from the set <span class="SimpleMath">\(\{ 1, \ldots, n \}\)</span>, this function constructs a binary relation such that <span class="SimpleMath">\(1\)</span> is related to <var class="Arg">list</var><code class="code">[1]</code>, <span class="SimpleMath">\(2\)</span> to <var class="Arg">list</var><code class="code">[2]</code> and so on. The first version checks whether the list supplied is valid. The the <code class="code">NC</code> version skips this check.</p>
 
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R:=BinaryRelationOnPoints([[1,2],[2],[3]]);</span>
+Binary Relation on 3 points
+</pre></div>
+
 <p><a id="X7D9323C283867515" name="X7D9323C283867515"></a></p>
 
 <h5>33.3-2 RandomBinaryRelationOnPoints</h5>
@@ -268,6 +333,17 @@
 <p>Transformations and permutations are special general endomorphic mappings and have a natural representation as a binary relation on points.</p>
 
 <p>In the last form, an isomorphic relation on points is constructed where the points are indices of the elements of the underlying domain in sorted order.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t:=Transformation([2,3,1]);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r1:=AsBinaryRelationOnPoints(t);</span>
+Binary Relation on 3 points
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r2:=AsBinaryRelationOnPoints((1,2,3));</span>
+Binary Relation on 3 points
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r1=r2;</span>
+true
+</pre></div>
 
 <p><a id="X7D9A14AE799142EF" name="X7D9A14AE799142EF"></a></p>
 
@@ -334,6 +410,14 @@
 <p>constructs the equivalence relation over the set <var class="Arg">domain</var> which induces the partition represented by <var class="Arg">list</var>. This representation includes only the non-trivial blocks (or equivalent classes). <var class="Arg">list</var> is a list of lists, each of these lists contain elements of <var class="Arg">domain</var> and are pairwise mutually exclusive.</p>
 
 <p>The list of lists do not need to be in any order nor do the elements in the blocks (see <code class="func">EquivalenceRelationPartition</code> (<a href="chap33_mj.html#X877389B683DD8F1A"><span class="RefLink">33.6-1</span></a>)). a list of elements of <var class="Arg">domain</var> The partition <var class="Arg">list</var> is a list of lists, each of these is a list of elements of <var class="Arg">domain</var> that makes up a block (or equivalent class). The <var class="Arg">domain</var> is the domain over which the relation is defined, and <var class="Arg">list</var> is a list of lists, each of these is a list of elements of <var class="Arg">domain</var> which are related to each other. <var class="Arg">list</var> need only contain the nontrivial blocks and singletons will be ignored. The <code class="code">NC</code> version will not check to see if the lists are pairwise mutually exclusive or that they contain only elements of the domain.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">er:=EquivalenceRelationByPartition(Domain([1..10]),[[1,3,5,7,9],[2,4,6,8,10]]);</span>
+&lt;equivalence relation on &lt;object&gt; &gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsEquivalenceRelation(er);</span>
+true
+</pre></div>
 
 <p><a id="X82CD1C00810F6042" name="X82CD1C00810F6042"></a></p>
 
@@ -414,6 +498,14 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceClasses</code>( <var class="Arg">rel</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>returns a list of all equivalence classes of the equivalence relation <var class="Arg">rel</var>. Note that it is possible for different methods to yield the list in different orders, so that for two equivalence relations <span class="SimpleMath">\(c1\)</span> and <span class="SimpleMath">\(c2\)</span> we may have <span class="SimpleMath">\(c1 = c2\)</span> without having <code class="code">EquivalenceClasses</code><span class="SimpleMath">\(( c1 ) = \)</span><code class="code">EquivalenceClasses</code><span class="SimpleMath">\(( c2 )\)</span>.</p>
 
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">er:=EquivalenceRelationByPartition(Domain([1..10]),[[1,3,5,7,9],[2,4,6,8,10]]);</span>
+&lt;equivalence relation on &lt;object&gt; &gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">classes := EquivalenceClasses(er);</span>
+[ {1}, {2} ]
+</pre></div>
+
 <p><a id="X7BB985BA7FD7A82E" name="X7BB985BA7FD7A82E"></a></p>
 
 <h5>33.7-4 EquivalenceClassOfElement</h5>
@@ -421,6 +513,12 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceClassOfElement</code>( <var class="Arg">rel</var>, <var class="Arg">elt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EquivalenceClassOfElementNC</code>( <var class="Arg">rel</var>, <var class="Arg">elt</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>return the equivalence class of <var class="Arg">elt</var> in the binary relation <var class="Arg">rel</var>, where <var class="Arg">elt</var> is an element (i.e. a pair) of the domain of <var class="Arg">rel</var>. In the <code class="code">NC</code> form, it is not checked that <var class="Arg">elt</var> is in the domain over which <var class="Arg">rel</var> is defined.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">EquivalenceClassOfElement(er,3);</span>
+{3}
+</pre></div>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap32_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap34_mj.html">[Next Chapter]</a>&nbsp;  </div>

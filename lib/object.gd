@@ -216,6 +216,34 @@ DeclareCategoryKernel( "IsCopyable", IsObject, IS_COPYABLE_OBJ );
 ##
 DeclareCategoryKernel( "IsMutable", IsObject, IS_MUTABLE_OBJ );
 
+#############################################################################
+##
+#C  IsInternallyMutable( <obj> )  . . . .  test if an object has mutable state
+##
+##  <#GAPDoc Label="IsInternallyMutable">
+##  <ManSection>
+##  <Filt Name="IsInternallyMutable" Arg='obj' Type='Category'/>
+##
+##  <Description>
+##  tests whether <A>obj</A> has mutable internal state.
+##  <P/>
+##  Unlike <Ref Func="IsMutable">, <Ref Func="IsInternallyMutable"> is
+##  true if and only if the object's internal representation chan change
+##  even though its outwardly visible behavior does not. For example, if
+##  a set of integers were represented internally as a T_DATOBJ containing
+##  an array of integers, the implementation may choose to sort the array
+##  to make membership tests faster. Such an object would be internally
+##  mutable even if elements could not be added and thus it were immutable
+##  per <Ref Func="IsMutable">.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+if IsHPCGAP then
+DeclareCategoryKernel( "IsInternallyMutable",
+    IsObject, IS_INTERNALLY_MUTABLE_OBJ );
+fi;
+
 InstallTrueMethod( IsCopyable, IsMutable);
 
 
@@ -665,8 +693,7 @@ DeclareOperation( "ObjByExtRep", [ IsFamily, IsObject ] );
 ##  gap> KnownAttributesOfObject(g);
 ##  [ "Size", "OneImmutable", "NrMovedPoints", "MovedPoints", 
 ##    "GeneratorsOfMagmaWithInverses", "MultiplicativeNeutralElement", 
-##    "HomePcgs", "Pcgs", "GeneralizedPcgs", "StabChainMutable", 
-##    "StabChainOptions" ]
+##    "HomePcgs", "Pcgs", "StabChainMutable", "StabChainOptions" ]
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -707,28 +734,30 @@ DeclareOperation( "KnownPropertiesOfObject", [ IsObject ] );
 ##  <Example><![CDATA[
 ##  gap> g:=Group((1,2),(1,2,3));;
 ##  gap> KnownPropertiesOfObject(g);
-##  [ "IsFinite", "CanEasilyCompareElements", "CanEasilySortElements", 
-##    "IsDuplicateFree", "IsGeneratorsOfMagmaWithInverses", 
-##    "IsAssociative", "IsGeneratorsOfSemigroup", "IsSimpleSemigroup", 
-##    "IsRegularSemigroup", "IsInverseSemigroup", 
-##    "IsCompletelyRegularSemigroup", "IsCompletelySimpleSemigroup", 
-##    "IsGroupAsSemigroup", "IsMonoidAsSemigroup", "IsOrthodoxSemigroup", 
-##    "IsFinitelyGeneratedGroup", "IsSubsetLocallyFiniteGroup", 
-##    "KnowsHowToDecompose", "IsNilpotentByFinite" ]
+##  [ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite",
+##    "CanEasilyCompareElements", "CanEasilySortElements",
+##    "IsDuplicateFree", "IsGeneratorsOfMagmaWithInverses",
+##    "IsAssociative", "IsGeneratorsOfSemigroup", "IsSimpleSemigroup",
+##    "IsRegularSemigroup", "IsInverseSemigroup",
+##    "IsCompletelyRegularSemigroup", "IsCompletelySimpleSemigroup",
+##    "IsGroupAsSemigroup", "IsMonoidAsSemigroup", "IsOrthodoxSemigroup",
+##    "IsFinitelyGeneratedGroup", "IsSubsetLocallyFiniteGroup",
+##    "KnowsHowToDecompose", "IsInfiniteAbelianizationGroup",
+##    "IsNilpotentByFinite", "IsTorsionFree", "IsFreeAbelian" ]
 ##  gap> Size(g);
 ##  6
 ##  gap> KnownPropertiesOfObject(g);
-##  [ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite", 
-##    "CanEasilyCompareElements", "CanEasilySortElements", 
-##    "IsDuplicateFree", "IsGeneratorsOfMagmaWithInverses", 
-##    "IsAssociative", "IsGeneratorsOfSemigroup", "IsSimpleSemigroup", 
-##    "IsRegularSemigroup", "IsInverseSemigroup", 
-##    "IsCompletelyRegularSemigroup", "IsCompletelySimpleSemigroup", 
-##    "IsGroupAsSemigroup", "IsMonoidAsSemigroup", "IsOrthodoxSemigroup", 
-##    "IsFinitelyGeneratedGroup", "IsSubsetLocallyFiniteGroup", 
-##    "KnowsHowToDecompose", "IsPerfectGroup", "IsSolvableGroup", 
-##    "IsPolycyclicGroup", "IsNilpotentByFinite", "IsTorsionFree", 
-##    "IsFreeAbelian" ]
+##  [ "IsEmpty", "IsTrivial", "IsNonTrivial", "IsFinite",
+##    "CanEasilyCompareElements", "CanEasilySortElements",
+##    "IsDuplicateFree", "IsGeneratorsOfMagmaWithInverses",
+##    "IsAssociative", "IsGeneratorsOfSemigroup", "IsSimpleSemigroup",
+##    "IsRegularSemigroup", "IsInverseSemigroup",
+##    "IsCompletelyRegularSemigroup", "IsCompletelySimpleSemigroup",
+##    "IsGroupAsSemigroup", "IsMonoidAsSemigroup", "IsOrthodoxSemigroup",
+##    "IsFinitelyGeneratedGroup", "IsSubsetLocallyFiniteGroup",
+##    "KnowsHowToDecompose", "IsPerfectGroup", "IsSolvableGroup",
+##    "IsPolycyclicGroup", "IsInfiniteAbelianizationGroup",
+##    "IsNilpotentByFinite", "IsTorsionFree", "IsFreeAbelian" ]
 ##  gap> KnownTruePropertiesOfObject(g);
 ##  [ "IsNonTrivial", "IsFinite", "CanEasilyCompareElements", 
 ##    "CanEasilySortElements", "IsDuplicateFree", 
@@ -819,7 +848,7 @@ DeclareOperation( "RepresentationsOfObject", [ IsObject ] );
 ##  </Description>
 ##  </ManSection>
 ##
-DeclareRepresentation( "IsPackedElementDefaultRep", IsPositionalObjectRep,
+DeclareRepresentation( "IsPackedElementDefaultRep", IsAtomicPositionalObjectRep,
     [ 1 ] );
 
 #############################################################################

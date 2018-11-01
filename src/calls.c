@@ -34,31 +34,36 @@
 **  ...what the other components are...
 */
 
-#include <src/calls.h>
+#include "calls.h"
 
-#include <src/bool.h>
-#include <src/code.h>
-#include <src/gap.h>
-#include <src/gvars.h>
-#include <src/integer.h>
-#include <src/lists.h>
-#include <src/opers.h>
-#include <src/plist.h>
-#include <src/saveload.h>
-#include <src/stats.h>
-#include <src/stringobj.h>
-#include <src/vars.h>
+#include "bool.h"
+#include "code.h"
+#include "error.h"
+#ifdef USE_GASMAN
+#include "gasman_intern.h"
+#endif
+#include "gvars.h"
+#include "integer.h"
+#include "io.h"
+#include "lists.h"
+#include "modules.h"
+#include "opers.h"
+#include "plist.h"
+#include "saveload.h"
+#include "stats.h"
+#include "stringobj.h"
+#include "vars.h"
 
 
 void SET_NAME_FUNC(Obj func, Obj name)
 {
     GAP_ASSERT(name == 0 || IS_STRING_REP(name));
-    FUNC_HEADER(func)->name = name;
+    FUNC(func)->name = name;
 }
 
-Char * NAMI_FUNC(Obj func, Int i)
+Obj NAMI_FUNC(Obj func, Int i)
 {
-    return CSTR_STRING(ELM_LIST(NAMS_FUNC(func),i));
+    return ELM_LIST(NAMS_FUNC(func),i);
 }
 
 
@@ -142,7 +147,6 @@ Obj DoWrap0args (
 
     /* make the arguments list                                             */
     args = NEW_PLIST( T_PLIST, 0 );
-    SET_LEN_PLIST( args, 0 );
 
     /* call the variable number of arguments function                      */
     result = CALL_XARGS( self, args );
@@ -330,7 +334,8 @@ Obj DoWrap6args (
 /* Pull this out to avoid repetition, since it gets a little more complex in 
    the presence of partially variadic functions */
 
-Obj NargError( Obj func, Int actual) {
+Obj NargError(Obj func, Int actual)
+{
   Int narg = NARG_FUNC(func);
 
   if (narg >= 0) {
@@ -482,7 +487,7 @@ Obj DoFailXargs (
 **  'TimeDone' is  the amount of time spent  for all function calls that have
 **  already been completed.
 */
-UInt TimeDone;
+static UInt TimeDone;
 
 
 /****************************************************************************
@@ -492,7 +497,7 @@ UInt TimeDone;
 **  'StorDone' is the amount of storage spent for all function call that have
 **  already been completed.
 */
-UInt8 StorDone;
+static UInt8 StorDone;
 
 
 /****************************************************************************
@@ -505,8 +510,16 @@ UInt8 StorDone;
 **  function.  'DoProf<i>args' are  the primary  handlers  for all  functions
 **  when profiling is requested.
 */
-Obj DoProf0args (
-    Obj                 self )
+static ALWAYS_INLINE Obj DoProfNNNargs (
+    Obj                 self,
+    Int                 n,
+    Obj                 arg1,
+    Obj                 arg2,
+    Obj                 arg3,
+    Obj                 arg4,
+    Obj                 arg5,
+    Obj                 arg6 )
+
 {
     Obj                 result;         /* value of function call, result  */
     Obj                 prof;           /* profiling bag                   */
@@ -527,7 +540,17 @@ Obj DoProf0args (
     storCurr = SizeAllBags - StorDone;
 
     /* call the real function                                              */
-    result = CALL_0ARGS_PROF( self );
+    switch (n) {
+    case  0: result = CALL_0ARGS_PROF( self ); break;
+    case  1: result = CALL_1ARGS_PROF( self, arg1 ); break;
+    case  2: result = CALL_2ARGS_PROF( self, arg1, arg2 ); break;
+    case  3: result = CALL_3ARGS_PROF( self, arg1, arg2, arg3 ); break;
+    case  4: result = CALL_4ARGS_PROF( self, arg1, arg2, arg3, arg4 ); break;
+    case  5: result = CALL_5ARGS_PROF( self, arg1, arg2, arg3, arg4, arg5 ); break;
+    case  6: result = CALL_6ARGS_PROF( self, arg1, arg2, arg3, arg4, arg5, arg6 ); break;
+    case -1: result = CALL_XARGS_PROF( self, arg1 ); break;
+    default: result = 0; GAP_ASSERT(0);
+    }
 
     /* number of invocation of this function                               */
     SET_COUNT_PROF( prof, COUNT_PROF(prof) + 1 );
@@ -546,6 +569,12 @@ Obj DoProf0args (
 
     /* return the result from the function                                 */
     return result;
+}
+
+static Obj DoProf0args (
+    Obj                 self )
+{
+    return DoProfNNNargs(self, 0, 0, 0, 0, 0, 0, 0);
 }
 
 
@@ -553,48 +582,11 @@ Obj DoProf0args (
 **
 *F  DoProf1args( <self>, <arg1>)  . . . . profile a function with 1 arguments
 */
-Obj DoProf1args (
+static Obj DoProf1args (
     Obj                 self,
     Obj                 arg1 )
 {
-    Obj                 result;         /* value of function call, result  */
-    Obj                 prof;           /* profiling bag                   */
-    UInt                timeElse;       /* time    spent elsewhere         */
-    UInt                timeCurr;       /* time    spent in current funcs. */
-    UInt8               storElse;       /* storage spent elsewhere         */
-    UInt8               storCurr;       /* storage spent in current funcs. */ 
-
-    /* get the profiling bag                                               */
-    prof = PROF_FUNC( PROF_FUNC( self ) );
-
-    /* time and storage spent so far while this function what not active   */
-    timeElse = SyTime() - TIME_WITH_PROF(prof);
-    storElse = SizeAllBags - STOR_WITH_PROF(prof);
-
-    /* time and storage spent so far by all currently suspended functions  */
-    timeCurr = SyTime() - TimeDone;
-    storCurr = SizeAllBags - StorDone;
-
-    /* call the real function                                              */
-    result = CALL_1ARGS_PROF( self, arg1 );
-
-    /* number of invocation of this function                               */
-    SET_COUNT_PROF( prof, COUNT_PROF(prof) + 1 );
-
-    /* time and storage spent in this function and its children            */
-    SET_TIME_WITH_PROF( prof, SyTime() - timeElse );
-    SET_STOR_WITH_PROF( prof, SizeAllBags - storElse );
-
-    /* time and storage spent by this invocation of this function          */
-    timeCurr = SyTime() - TimeDone - timeCurr;
-    SET_TIME_WOUT_PROF( prof, TIME_WOUT_PROF(prof) + timeCurr );
-    TimeDone += timeCurr;
-    storCurr = SizeAllBags - StorDone - storCurr;
-    SET_STOR_WOUT_PROF( prof, STOR_WOUT_PROF(prof) + storCurr );
-    StorDone += storCurr;
-
-    /* return the result from the function                                 */
-    return result;
+    return DoProfNNNargs(self, 1, arg1, 0, 0, 0, 0, 0);
 }
 
 
@@ -602,49 +594,12 @@ Obj DoProf1args (
 **
 *F  DoProf2args( <self>, <arg1>, ... )  . profile a function with 2 arguments
 */
-Obj DoProf2args (
+static Obj DoProf2args (
     Obj                 self,
     Obj                 arg1,
     Obj                 arg2 )
 {
-    Obj                 result;         /* value of function call, result  */
-    Obj                 prof;           /* profiling bag                   */
-    UInt                timeElse;       /* time    spent elsewhere         */
-    UInt                timeCurr;       /* time    spent in current funcs. */
-    UInt8               storElse;       /* storage spent elsewhere         */
-    UInt8               storCurr;       /* storage spent in current funcs. */ 
-
-    /* get the profiling bag                                               */
-    prof = PROF_FUNC( PROF_FUNC( self ) );
-
-    /* time and storage spent so far while this function what not active   */
-    timeElse = SyTime() - TIME_WITH_PROF(prof);
-    storElse = SizeAllBags - STOR_WITH_PROF(prof);
-
-    /* time and storage spent so far by all currently suspended functions  */
-    timeCurr = SyTime() - TimeDone;
-    storCurr = SizeAllBags - StorDone;
-
-    /* call the real function                                              */
-    result = CALL_2ARGS_PROF( self, arg1, arg2 );
-
-    /* number of invocation of this function                               */
-    SET_COUNT_PROF( prof, COUNT_PROF(prof) + 1 );
-
-    /* time and storage spent in this function and its children             */
-    SET_TIME_WITH_PROF( prof, SyTime() - timeElse );
-    SET_STOR_WITH_PROF( prof, SizeAllBags - storElse );
-
-    /* time and storage spent by this invocation of this function           */
-    timeCurr = SyTime() - TimeDone - timeCurr;
-    SET_TIME_WOUT_PROF( prof, TIME_WOUT_PROF(prof) + timeCurr );
-    TimeDone += timeCurr;
-    storCurr = SizeAllBags - StorDone - storCurr;
-    SET_STOR_WOUT_PROF( prof, STOR_WOUT_PROF(prof) + storCurr );
-    StorDone += storCurr;
-
-    /* return the result from the function                                 */
-    return result;
+    return DoProfNNNargs(self, 2, arg1, arg2, 0, 0, 0, 0);
 }
 
 
@@ -652,50 +607,13 @@ Obj DoProf2args (
 **
 *F  DoProf3args( <self>, <arg1>, ... )  . profile a function with 3 arguments
 */
-Obj DoProf3args (
+static Obj DoProf3args (
     Obj                 self,
     Obj                 arg1,
     Obj                 arg2,
     Obj                 arg3 )
 {
-    Obj                 result;         /* value of function call, result  */
-    Obj                 prof;           /* profiling bag                   */
-    UInt                timeElse;       /* time    spent elsewhere         */
-    UInt                timeCurr;       /* time    spent in current funcs. */
-    UInt8               storElse;       /* storage spent elsewhere         */
-    UInt8               storCurr;       /* storage spent in current funcs. */ 
-
-    /* get the profiling bag                                               */
-    prof = PROF_FUNC( PROF_FUNC( self ) );
-
-    /* time and storage spent so far while this function what not active   */
-    timeElse = SyTime() - TIME_WITH_PROF(prof);
-    storElse = SizeAllBags - STOR_WITH_PROF(prof);
-
-    /* time and storage spent so far by all currently suspended functions  */
-    timeCurr = SyTime() - TimeDone;
-    storCurr = SizeAllBags - StorDone;
-
-    /* call the real function                                              */
-    result = CALL_3ARGS_PROF( self, arg1, arg2, arg3 );
-
-    /* number of invocation of this function                               */
-    SET_COUNT_PROF( prof, COUNT_PROF(prof) + 1 );
-
-    /* time and storage spent in this function and its children            */
-    SET_TIME_WITH_PROF( prof, SyTime() - timeElse );
-    SET_STOR_WITH_PROF( prof, SizeAllBags - storElse );
-
-    /* time and storage spent by this invocation of this function          */
-    timeCurr = SyTime() - TimeDone - timeCurr;
-    SET_TIME_WOUT_PROF( prof, TIME_WOUT_PROF(prof) + timeCurr );
-    TimeDone += timeCurr;
-    storCurr = SizeAllBags - StorDone - storCurr;
-    SET_STOR_WOUT_PROF( prof, STOR_WOUT_PROF(prof) + storCurr );
-    StorDone += storCurr;
-
-    /* return the result from the function                                 */
-    return result;
+    return DoProfNNNargs(self, 3, arg1, arg2, arg3, 0, 0, 0);
 }
 
 
@@ -703,51 +621,14 @@ Obj DoProf3args (
 **
 *F  DoProf4args( <self>, <arg1>, ... )  . profile a function with 4 arguments
 */
-Obj DoProf4args (
+static Obj DoProf4args (
     Obj                 self,
     Obj                 arg1,
     Obj                 arg2,
     Obj                 arg3,
     Obj                 arg4 )
 {
-    Obj                 result;         /* value of function call, result  */
-    Obj                 prof;           /* profiling bag                   */
-    UInt                timeElse;       /* time    spent elsewhere         */
-    UInt                timeCurr;       /* time    spent in current funcs. */
-    UInt8               storElse;       /* storage spent elsewhere         */
-    UInt8               storCurr;       /* storage spent in current funcs. */ 
-
-    /* get the profiling bag                                               */
-    prof = PROF_FUNC( PROF_FUNC( self ) );
-
-    /* time and storage spent so far while this function what not active   */
-    timeElse = SyTime() - TIME_WITH_PROF(prof);
-    storElse = SizeAllBags - STOR_WITH_PROF(prof);
-
-    /* time and storage spent so far by all currently suspended functions  */
-    timeCurr = SyTime() - TimeDone;
-    storCurr = SizeAllBags - StorDone;
-
-    /* call the real function                                              */
-    result = CALL_4ARGS_PROF( self, arg1, arg2, arg3, arg4 );
-
-    /* number of invocation of this function                               */
-    SET_COUNT_PROF( prof, COUNT_PROF(prof) + 1 );
-
-    /* time and storage spent in this function and its children            */
-    SET_TIME_WITH_PROF( prof, SyTime() - timeElse );
-    SET_STOR_WITH_PROF( prof, SizeAllBags - storElse );
-
-    /* time and storage spent by this invocation of this function          */
-    timeCurr = SyTime() - TimeDone - timeCurr;
-    SET_TIME_WOUT_PROF( prof, TIME_WOUT_PROF(prof) + timeCurr );
-    TimeDone += timeCurr;
-    storCurr = SizeAllBags - StorDone - storCurr;
-    SET_STOR_WOUT_PROF( prof, STOR_WOUT_PROF(prof) + storCurr );
-    StorDone += storCurr;
-
-    /* return the result from the function                                 */
-    return result;
+    return DoProfNNNargs(self, 4, arg1, arg2, arg3, arg4, 0, 0);
 }
 
 
@@ -755,7 +636,7 @@ Obj DoProf4args (
 **
 *F  DoProf5args( <self>, <arg1>, ... )  . profile a function with 5 arguments
 */
-Obj DoProf5args (
+static Obj DoProf5args (
     Obj                 self,
     Obj                 arg1,
     Obj                 arg2,
@@ -763,44 +644,7 @@ Obj DoProf5args (
     Obj                 arg4,
     Obj                 arg5 )
 {
-    Obj                 result;         /* value of function call, result  */
-    Obj                 prof;           /* profiling bag                   */
-    UInt                timeElse;       /* time    spent elsewhere         */
-    UInt                timeCurr;       /* time    spent in current funcs. */
-    UInt8               storElse;       /* storage spent elsewhere         */
-    UInt8               storCurr;       /* storage spent in current funcs. */ 
-
-    /* get the profiling bag                                               */
-    prof = PROF_FUNC( PROF_FUNC( self ) );
-
-    /* time and storage spent so far while this function what not active   */
-    timeElse = SyTime() - TIME_WITH_PROF(prof);
-    storElse = SizeAllBags - STOR_WITH_PROF(prof);
-
-    /* time and storage spent so far by all currently suspended functions  */
-    timeCurr = SyTime() - TimeDone;
-    storCurr = SizeAllBags - StorDone;
-
-    /* call the real function                                              */
-    result = CALL_5ARGS_PROF( self, arg1, arg2, arg3, arg4, arg5 );
-
-    /* number of invocation of this function                               */
-    SET_COUNT_PROF( prof, COUNT_PROF(prof) + 1 );
-
-    /* time and storage spent in this function and its children            */
-    SET_TIME_WITH_PROF( prof, SyTime() - timeElse );
-    SET_STOR_WITH_PROF( prof, SizeAllBags - storElse );
-
-    /* time and storage spent by this invocation of this function          */
-    timeCurr = SyTime() - TimeDone - timeCurr;
-    SET_TIME_WOUT_PROF( prof, TIME_WOUT_PROF(prof) + timeCurr );
-    TimeDone += timeCurr;
-    storCurr = SizeAllBags - StorDone - storCurr;
-    SET_STOR_WOUT_PROF( prof, STOR_WOUT_PROF(prof) + storCurr );
-    StorDone += storCurr;
-
-    /* return the result from the function                                 */
-    return result;
+    return DoProfNNNargs(self, 5, arg1, arg2, arg3, arg4, arg5, 0);
 }
 
 
@@ -808,7 +652,7 @@ Obj DoProf5args (
 **
 *F  DoProf6args( <self>, <arg1>, ... )  . profile a function with 6 arguments
 */
-Obj DoProf6args (
+static Obj DoProf6args (
     Obj                 self,
     Obj                 arg1,
     Obj                 arg2,
@@ -817,44 +661,7 @@ Obj DoProf6args (
     Obj                 arg5,
     Obj                 arg6 )
 {
-    Obj                 result;         /* value of function call, result  */
-    Obj                 prof;           /* profiling bag                   */
-    UInt                timeElse;       /* time    spent elsewhere         */
-    UInt                timeCurr;       /* time    spent in current funcs. */
-    UInt8               storElse;       /* storage spent elsewhere         */
-    UInt8               storCurr;       /* storage spent in current funcs. */ 
-
-    /* get the profiling bag                                               */
-    prof = PROF_FUNC( PROF_FUNC( self ) );
-
-    /* time and storage spent so far while this function what not active   */
-    timeElse = SyTime() - TIME_WITH_PROF(prof);
-    storElse = SizeAllBags - STOR_WITH_PROF(prof);
-
-    /* time and storage spent so far by all currently suspended functions  */
-    timeCurr = SyTime() - TimeDone;
-    storCurr = SizeAllBags - StorDone;
-
-    /* call the real function                                              */
-    result = CALL_6ARGS_PROF( self, arg1, arg2, arg3, arg4, arg5, arg6 );
-
-    /* number of invocation of this function                               */
-    SET_COUNT_PROF( prof, COUNT_PROF(prof) + 1 );
-
-    /* time and storage spent in this function and its children            */
-    SET_TIME_WITH_PROF( prof, SyTime() - timeElse );
-    SET_STOR_WITH_PROF( prof, SizeAllBags - storElse );
-
-    /* time and storage spent by this invocation of this function          */
-    timeCurr = SyTime() - TimeDone - timeCurr;
-    SET_TIME_WOUT_PROF( prof, TIME_WOUT_PROF(prof) + timeCurr );
-    TimeDone += timeCurr;
-    storCurr = SizeAllBags - StorDone - storCurr;
-    SET_STOR_WOUT_PROF( prof, STOR_WOUT_PROF(prof) + storCurr );
-    StorDone += storCurr;
-
-    /* return the result from the function                                 */
-    return result;
+    return DoProfNNNargs(self, 6, arg1, arg2, arg3, arg4, arg5, arg6);
 }
 
 
@@ -862,48 +669,11 @@ Obj DoProf6args (
 **
 *F  DoProfXargs( <self>, <args> ) . . . . profile a function with X arguments
 */
-Obj DoProfXargs (
+static Obj DoProfXargs (
     Obj                 self,
     Obj                 args )
 {
-    Obj                 result;         /* value of function call, result  */
-    Obj                 prof;           /* profiling bag                   */
-    UInt                timeElse;       /* time    spent elsewhere         */
-    UInt                timeCurr;       /* time    spent in current funcs. */
-    UInt8               storElse;       /* storage spent elsewhere         */
-    UInt8               storCurr;       /* storage spent in current funcs. */ 
-
-    /* get the profiling bag                                               */
-    prof = PROF_FUNC( PROF_FUNC( self ) );
-
-    /* time and storage spent so far while this function what not active   */
-    timeElse = SyTime() - TIME_WITH_PROF(prof);
-    storElse = SizeAllBags - STOR_WITH_PROF(prof);
-
-    /* time and storage spent so far by all currently suspended functions  */
-    timeCurr = SyTime() - TimeDone;
-    storCurr = SizeAllBags - StorDone;
-
-    /* call the real function                                              */
-    result = CALL_XARGS_PROF( self, args );
-
-    /* number of invocation of this function                               */
-    SET_COUNT_PROF( prof, COUNT_PROF(prof) + 1 );
-
-    /* time and storage spent in this function and its children            */
-    SET_TIME_WITH_PROF( prof, SyTime() - timeElse );
-    SET_STOR_WITH_PROF( prof, SizeAllBags - storElse );
-
-    /* time and storage spent by this invocation of this function          */
-    timeCurr = SyTime() - TimeDone - timeCurr;
-    SET_TIME_WOUT_PROF( prof, TIME_WOUT_PROF(prof) + timeCurr );
-    TimeDone += timeCurr;
-    storCurr = SizeAllBags - StorDone - storCurr;
-    SET_STOR_WOUT_PROF( prof, STOR_WOUT_PROF(prof) + storCurr );
-    StorDone += storCurr;
-
-    /* return the result from the function                                 */
-    return result;
+    return DoProfNNNargs(self, -1, args, 0, 0, 0, 0, 0);
 }
 
 
@@ -941,17 +711,13 @@ void InitHandlerFunc (
     const Char *        cookie )
 {
     if ( NHandlerFuncs >= MAX_HANDLERS ) {
-        Pr( "No room left for function handler\n", 0L, 0L );
-        SyExit(1);
+        Panic("No room left for function handler");
     }
-#ifdef DEBUG_HANDLER_REGISTRATION
-    {
-      UInt i;
-      for (i = 0; i < NHandlerFuncs; i++)
+
+    for (UInt i = 0; i < NHandlerFuncs; i++)
         if (!strcmp(HandlerFuncs[i].cookie, cookie))
-          Pr("Duplicate cookie %s\n", (Int)cookie, 0L);
-    }
-#endif
+            Pr("Duplicate cookie %s\n", (Int)cookie, 0L);
+
     HandlerFuncs[NHandlerFuncs].hdlr   = hdlr;
     HandlerFuncs[NHandlerFuncs].cookie = cookie;
     HandlerSortingStatus = 0; /* no longer sorted by handler or cookie */
@@ -964,8 +730,7 @@ void InitHandlerFunc (
 **
 *f  CheckHandlersBag( <bag> ) . . . . . . check that handlers are initialised
 */
-
-#ifdef DEBUG_HANDLER_REGISTRATION
+#ifdef USE_GASMAN
 
 static void CheckHandlersBag(
     Bag         bag )
@@ -994,13 +759,10 @@ static void CheckHandlersBag(
     }
 }
 
-void CheckAllHandlers(
-       void )
+void CheckAllHandlers(void)
 {
-  CallbackForAllBags( CheckHandlersBag);
+    CallbackForAllBags(CheckHandlersBag);
 }
-
-#endif
 
 static int IsLessHandlerInfo (
     TypeHandlerInfo *           h1, 
@@ -1104,8 +866,9 @@ ObjFunc HandlerOfCookie(
       return (ObjFunc)0L;
     }
 }
-                                      
-                       
+
+#endif
+
 
 /****************************************************************************
 **
@@ -1124,7 +887,7 @@ Obj NewFunction (
     Obj                 nams,
     ObjFunc             hdlr )
 {
-    return NewFunctionT( T_FUNCTION, sizeof(FunctionHeader), name, narg, nams, hdlr );
+    return NewFunctionT( T_FUNCTION, sizeof(FuncBag), name, narg, nams, hdlr );
 }
     
 
@@ -1141,7 +904,7 @@ Obj NewFunctionC (
     const Char *        nams,
     ObjFunc             hdlr )
 {
-    return NewFunctionCT( T_FUNCTION, sizeof(FunctionHeader), name, narg, nams, hdlr );
+    return NewFunctionCT( T_FUNCTION, sizeof(FuncBag), name, narg, nams, hdlr );
 }
     
 
@@ -1196,7 +959,10 @@ Obj NewFunctionT (
     SET_NAME_FUNC(func, ConvImmString(name));
     SET_NARG_FUNC(func, narg);
     SET_NAMS_FUNC(func, nams);
+    SET_NLOC_FUNC(func, 0);
+#ifdef HPCGAP
     if (nams) MakeBagPublic(nams);
+#endif
     CHANGED_BAG(func);
 
     /* enter the profiling bag                                             */
@@ -1298,8 +1064,8 @@ Obj ArgStringToList(const Char *nams_c) {
 **
 **  'TypeFunction' is the function in 'TypeObjFuncs' for functions.
 */
-Obj TYPE_FUNCTION;
-Obj TYPE_OPERATION;
+static Obj TYPE_FUNCTION;
+static Obj TYPE_OPERATION;
 
 Obj TypeFunction (
     Obj                 func )
@@ -1315,7 +1081,7 @@ Obj TypeFunction (
 **
 */
 
-Obj PrintOperation;
+static Obj PrintOperation;
 
 void PrintFunction (
     Obj                 func )
@@ -1369,7 +1135,7 @@ void PrintFunction (
         }
 #endif
         if ( NAMS_FUNC(func) != 0 )
-            Pr( "%I", (Int)NAMI_FUNC( func, (Int)i ), 0L );
+            Pr( "%H", (Int)NAMI_FUNC( func, (Int)i ), 0L );
         else
             Pr( "<<arg-%d>>", (Int)i, 0L );
         if(isvarg && i == narg) {
@@ -1387,7 +1153,7 @@ void PrintFunction (
             Pr("%>local ",0L,0L);
             for ( i = 1; i <= nloc; i++ ) {
                 if ( NAMS_FUNC(func) != 0 )
-                    Pr( "%I", (Int)NAMI_FUNC( func, (Int)(narg+i) ), 0L );
+                    Pr( "%H", (Int)NAMI_FUNC( func, (Int)(narg+i) ), 0L );
                 else
                     Pr( "<<loc-%d>>", (Int)i, 0L );
                 if ( i != nloc )  Pr("%<, %>",0L,0L);
@@ -1402,14 +1168,14 @@ void PrintFunction (
                 Obj body = BODY_FUNC(func);
                 if ( GET_FILENAME_BODY(body) ) {
                     if ( GET_LOCATION_BODY(body) ) {
-                        Pr("<<kernel code from %s:%s>>",
-                            (Int)CSTR_STRING(GET_FILENAME_BODY(body)),
-                            (Int)CSTR_STRING(GET_LOCATION_BODY(body)));
+                        Pr("<<kernel code from %g:%g>>",
+                            (Int)GET_FILENAME_BODY(body),
+                            (Int)GET_LOCATION_BODY(body));
                             outputtedfunc = 1;
                     }
                     else if ( GET_STARTLINE_BODY(body) ) {
-                        Pr("<<compiled GAP code from %s:%d>>",
-                            (Int)CSTR_STRING(GET_FILENAME_BODY(body)),
+                        Pr("<<compiled GAP code from %g:%d>>",
+                            (Int)GET_FILENAME_BODY(body),
                             GET_STARTLINE_BODY(body));
                             outputtedfunc = 1;
                     }
@@ -1443,7 +1209,7 @@ void PrintFunction (
 **  'IsFunction' returns   'true'  if  <func>   is a function    and  'false'
 **  otherwise.
 */
-Obj IsFunctionFilt;
+static Obj IsFunctionFilt;
 
 Obj FuncIS_FUNCTION (
     Obj                 self,
@@ -1473,7 +1239,7 @@ Obj FuncIS_FUNCTION (
 **  i.e., it is equivalent to '<func>( <list>[1], <list>[2]... )'.
 */
 Obj CallFuncListOper;
-Obj CallFuncListWrapOper;
+static Obj CallFuncListWrapOper;
 
 Obj CallFuncList ( Obj func, Obj list )
 {
@@ -1556,7 +1322,7 @@ Obj FuncCALL_FUNC_LIST_WRAP (
 
     if (retval == 0)
     {
-        retlist = NEW_PLIST(T_PLIST_EMPTY + IMMUTABLE, 0);
+        retlist = NEW_PLIST_IMM(T_PLIST_EMPTY, 0);
     }
     else
     {
@@ -1577,8 +1343,8 @@ Obj FuncCALL_FUNC_LIST_WRAP (
 **
 *F  FuncNAME_FUNC( <self>, <func> ) . . . . . . . . . . .  name of a function
 */
-Obj NAME_FUNC_Oper;
-Obj SET_NAME_FUNC_Oper;
+static Obj NAME_FUNC_Oper;
+static Obj SET_NAME_FUNC_Oper;
 
 Obj FuncNAME_FUNC (
     Obj                 self,
@@ -1622,7 +1388,7 @@ Obj FuncSET_NAME_FUNC(
 **
 *F  FuncNARG_FUNC( <self>, <func> ) . . . . number of arguments of a function
 */
-Obj NARG_FUNC_Oper;
+static Obj NARG_FUNC_Oper;
 
 Obj FuncNARG_FUNC (
     Obj                 self,
@@ -1641,7 +1407,7 @@ Obj FuncNARG_FUNC (
 **
 *F  FuncNAMS_FUNC( <self>, <func> ) . . . . names of local vars of a function
 */
-Obj NAMS_FUNC_Oper;
+static Obj NAMS_FUNC_Oper;
 
 Obj FuncNAMS_FUNC (
     Obj                 self,
@@ -1662,7 +1428,7 @@ Obj FuncNAMS_FUNC (
 *F  FuncLOCKS_FUNC( <self>, <func> ) . . . . locking status of a possibly
 **                                           atomic function
 */
-Obj LOCKS_FUNC_Oper;
+static Obj LOCKS_FUNC_Oper;
 
 Obj FuncLOCKS_FUNC(Obj self, Obj func)
 {
@@ -1688,7 +1454,7 @@ Obj FuncLOCKS_FUNC(Obj self, Obj func)
 **
 *F  FuncPROF_FUNC( <self>, <func> ) . . . . . .  profiling info of a function
 */
-Obj PROF_FUNC_Oper;
+static Obj PROF_FUNC_Oper;
 
 Obj FuncPROF_FUNC (
     Obj                 self,
@@ -1786,6 +1552,7 @@ Obj FuncPROFILE_FUNC(
         SET_NARG_FUNC(copy,   NARG_FUNC(func));
         SET_NAMS_FUNC(copy,   NAMS_FUNC(func));
         SET_PROF_FUNC(copy,   PROF_FUNC(func));
+        SET_NLOC_FUNC(copy,   NLOC_FUNC(func));
         SET_HDLR_FUNC(func,0, DoProf0args);
         SET_HDLR_FUNC(func,1, DoProf1args);
         SET_HDLR_FUNC(func,2, DoProf2args);
@@ -1932,21 +1699,33 @@ Int IsKernelFunction(Obj func)
            (SIZE_OBJ(BODY_FUNC(func)) == sizeof(BodyHeader));
 }
 
-Obj FuncHandlerCookieOfFunction(Obj self, Obj func)
+#ifdef USE_GASMAN
+
+static void SaveHandler(ObjFunc hdlr)
 {
-  Int narg;
-  ObjFunc hdlr;
-  const Char *cookie;
-  Obj cookieStr;
-  if (!IS_FUNC(func))
-    return Fail;
-  narg = NARG_FUNC(func);
-  if (narg == -1)
-    narg = 7;
-  hdlr = HDLR_FUNC(func, narg);
-  cookie = CookieOfHandler(hdlr);
-  cookieStr = MakeString(cookie);
-  return cookieStr;
+    const Char * cookie;
+    if (hdlr == (ObjFunc)0)
+        SaveCStr("");
+    else {
+        cookie = CookieOfHandler(hdlr);
+        if (!cookie) {
+            Pr("No cookie for Handler -- workspace will be corrupt\n", 0, 0);
+            SaveCStr("");
+        }
+        else
+            SaveCStr(cookie);
+    }
+}
+
+
+static ObjFunc LoadHandler( void )
+{
+  Char buf[256];
+  LoadCStr(buf, 256);
+  if (buf[0] == '\0')
+    return (ObjFunc) 0;
+  else
+    return HandlerOfCookie(buf);
 }
 
 /****************************************************************************
@@ -1956,18 +1735,18 @@ Obj FuncHandlerCookieOfFunction(Obj self, Obj func)
 */
 void SaveFunction ( Obj func )
 {
-  FunctionHeader * header = FUNC_HEADER(func);
+  const FuncBag * header = CONST_FUNC(func);
   for (UInt i = 0; i <= 7; i++)
     SaveHandler(header->handlers[i]);
   SaveSubObj(header->name);
-  SaveUInt(header->nargs);
+  SaveSubObj(header->nargs);
   SaveSubObj(header->namesOfLocals);
   SaveSubObj(header->prof);
-  SaveUInt(header->nloc);
+  SaveSubObj(header->nloc);
   SaveSubObj(header->body);
   SaveSubObj(header->envi);
   SaveSubObj(header->fexs);
-  if (SIZE_OBJ(func) != sizeof(FunctionHeader))
+  if (SIZE_OBJ(func) != sizeof(FuncBag))
     SaveOperationExtras( func );
 }
 
@@ -1978,26 +1757,54 @@ void SaveFunction ( Obj func )
 */
 void LoadFunction ( Obj func )
 {
-  FunctionHeader * header = FUNC_HEADER(func);
+  FuncBag * header = FUNC(func);
   for (UInt i = 0; i <= 7; i++)
     header->handlers[i] = LoadHandler();
   header->name = LoadSubObj();
-  header->nargs = LoadUInt();
+  header->nargs = LoadSubObj();
   header->namesOfLocals = LoadSubObj();
   header->prof = LoadSubObj();
-  header->nloc = LoadUInt();
+  header->nloc = LoadSubObj();
   header->body = LoadSubObj();
   header->envi = LoadSubObj();
   header->fexs = LoadSubObj();
-  if (SIZE_OBJ(func) != sizeof(FunctionHeader))
+  if (SIZE_OBJ(func) != sizeof(FuncBag))
     LoadOperationExtras( func );
+}
+
+#endif
+
+/****************************************************************************
+**
+*F  MarkFunctionSubBags( <bag> ) . . . . . . . marking function for functions
+**
+**  'MarkFunctionSubBags' is the marking function for bags of type 'T_FUNCTION'.
+*/
+void MarkFunctionSubBags(Obj func)
+{
+    // the first eight slots are pointers to C functions, so we need
+    // to skip those for marking
+    UInt size = SIZE_BAG(func) / sizeof(Obj) - 8;
+    const Bag * data = CONST_PTR_BAG(func) + 8;
+    MarkArrayOfBags(data, size);
 }
 
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
+
+
+/****************************************************************************
+**
+*V  BagNames  . . . . . . . . . . . . . . . . . . . . . . . list of bag names
+*/
+static StructBagNames BagNames[] = {
+  { T_FUNCTION, "function" },
+  { -1,         ""         }
+};
+
 
 /****************************************************************************
 **
@@ -2041,7 +1848,6 @@ static StructGVarFunc GVarFuncs [] = {
     GVAR_FUNC(PROFILE_FUNC, 1, "func"),
     GVAR_FUNC(UNPROFILE_FUNC, 1, "func"),
     GVAR_FUNC(IsKernelFunction, 1, "func"),
-    GVAR_FUNC(HandlerCookieOfFunction, 1, "func"),
     GVAR_FUNC(FILENAME_FUNC, 1, "func"),
     GVAR_FUNC(LOCATION_FUNC, 1, "func"),
     GVAR_FUNC(STARTLINE_FUNC, 1, "func"),
@@ -2058,10 +1864,16 @@ static StructGVarFunc GVarFuncs [] = {
 static Int InitKernel (
     StructInitInfo *    module )
 {
-  
+    // set the bag type names (for error messages and debugging)
+    InitBagNamesFromTable( BagNames );
+
     /* install the marking functions                                       */
-    InfoBags[ T_FUNCTION ].name = "function";
-    InitMarkFuncBags( T_FUNCTION , MarkAllSubBags );
+    InitMarkFuncBags(T_FUNCTION, MarkFunctionSubBags);
+
+#ifdef HPCGAP
+    /* Allocate functions in the public region */
+    MakeBagTypePublic(T_FUNCTION);
+#endif
 
     /* install the type functions                                          */
     ImportGVarFromLibrary( "TYPE_FUNCTION",  &TYPE_FUNCTION  );
@@ -2073,9 +1885,11 @@ static Int InitKernel (
     InitHdlrOpersFromTable( GVarOpers );
     InitHdlrFuncsFromTable( GVarFuncs );
 
+#ifdef USE_GASMAN
     /* and the saving function                                             */
     SaveObjFuncs[ T_FUNCTION ] = SaveFunction;
     LoadObjFuncs[ T_FUNCTION ] = LoadFunction;
+#endif
 
     /* install the printer                                                 */
     InitFopyGVar( "PRINT_OPERATION", &PrintOperation );

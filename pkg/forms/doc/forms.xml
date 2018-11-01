@@ -1,18 +1,32 @@
-<?xml version="1.2.3" encoding="UTF-8"?>
-
-<!DOCTYPE Book SYSTEM "gapdoc.dtd">
-<?LaTeX ExtraPreamble="\usepackage{url}"?>
-
 <!--
 
-  forms.xml          'Forms' package documentation    
+  forms.xml          'Forms' package documentation
                                                                   John Bamberg
                                                                   Jan De Beule
-                                                                
-  Copyright (C) 2015, The University of Western Australia
-  Copyright (C) 2015, Vrije Universiteit Brussel
+ 
+  Copyright (C) 2018, The University of Western Australia
+  Copyright (C) 2018, Vrije Universiteit Brussel
 
 -->
+
+<?xml version="1.2.3" encoding="UTF-8"?>
+
+<!DOCTYPE Book SYSTEM "gapdoc.dtd"
+    [<!ENTITY pg "\mathrm{PG}">
+    <!ENTITY go "\mathrm{GO}">
+    <!ENTITY gf "\mathrm{GF}">
+    <!ENTITY gl "\mathrm{GL}">
+    <!ENTITY rad "\mathrm{Rad}">
+    <!ENTITY gfq "<Alt Only=&#34;Text&#34;><M>GF(q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gf;(q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gf;(q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GF(q)</Alt>">
+    <!ENTITY gldq "<Alt Only=&#34;Text&#34;><M>GL(d,q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&gl;(d,q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&gl;(d,q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>GL(d,q)</Alt>">
+    <!ENTITY radf "<Alt Only=&#34;Text&#34;><M>Rad(f)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>&rad;(f)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>&rad;(f)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>Rad(f)</Alt>">
+    <!ENTITY vmodradf "<Alt Only=&#34;Text&#34;><M>V/Rad(f)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>V/&rad;(f)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>V/&rad;(f)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>V/Rad(f)</Alt>">
+    <!ENTITY vmodradq "<Alt Only=&#34;Text&#34;><M>V/Rad(Q)</M></Alt><Alt Only=&#34;LaTeX&#34;><M>V/&rad;(Q)</M></Alt><Alt Only=&#34;HTML MathJax&#34;><M>V/&rad;(Q)</M></Alt><Alt Only=&#34;HTML noMathJax&#34;>V/Rad(Q)</Alt>">
+]
+   >
+
+
+<?LaTeX ExtraPreamble="\usepackage{url}"?>
 
 <Book Name="Forms">
 
@@ -43,14 +57,14 @@ Pleinlaan 2,
 B--1050 Brussel,
 Belgium
 </Address>
-<Email>Jan.De.Beule@vub.ac.be</Email>
+<Email>jan@debeule.eu</Email>
 <Homepage>http://www.debeule.eu</Homepage>
 </Author>
   
-<Date>August 2017</Date>
+<Date>September 2018</Date>
 
 <Copyright>
-  &copyright; 2017 by the authors<P/>
+  &copyright; 2018 by the authors<P/>
 
   This package may be distributed under the terms and conditions of the
   GNU Public License Version 2 or higher.

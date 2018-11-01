@@ -24,10 +24,12 @@ InstallMethod( CollectionsFamily,
     coll_req := IsCollection;
     coll_imp := IsObject;
     elms_flags := F!.IMP_FLAGS;
-    for tmp  in CATEGORIES_COLLECTIONS  do
-        if IS_SUBSET_FLAGS( elms_flags, FLAGS_FILTER( tmp[1] ) )  then
-            coll_imp := coll_imp and tmp[2];
-        fi;
+    atomic readonly CATEGORIES_COLLECTIONS do
+        for tmp  in CATEGORIES_COLLECTIONS  do
+            if IS_SUBSET_FLAGS( elms_flags, FLAGS_FILTER( tmp[1] ) )  then
+                coll_imp := coll_imp and tmp[2];
+            fi;
+        od;
     od;
 
     if    ( not HasElementsFamily( F ) )
@@ -118,8 +120,8 @@ InstallMethod( IsTrivial,
     [ IsCollection ],
     C -> Size( C ) = 1 );
 
-InstallImmediateMethod( IsTrivial,
-    IsCollection and HasIsNonTrivial, 0,
+InstallMethod( IsTrivial,
+    [IsCollection and HasIsNonTrivial], 0,
     C -> not IsNonTrivial( C ) );
 
 
@@ -127,8 +129,8 @@ InstallImmediateMethod( IsTrivial,
 ##
 #M  IsNonTrivial( <C> ) . . . . . . . . .  test if a collection is nontrivial
 ##
-InstallImmediateMethod( IsNonTrivial,
-    IsCollection and HasIsTrivial, 0,
+InstallMethod( IsNonTrivial,
+    [IsCollection and HasIsTrivial], 0,
     C -> not IsTrivial( C ) );
 
 InstallMethod( IsNonTrivial,
@@ -167,8 +169,12 @@ InstallMethod( IsWholeFamily,
 ##
 #M  Size( <C> ) . . . . . . . . . . . . . . . . . . . .  size of a collection
 ##
-InstallImmediateMethod( Size,
-    IsCollection and HasIsFinite and IsAttributeStoringRep, 0,
+#  This used to be an immediate method. It was replaced by an ordinary
+#  method, as the immediate method would get called for every group that
+#  knows it is finite but does not know its size -- e.g.  permutation, pc.
+#  The benefit of this is minimal beyond showing off a feature.
+InstallMethod( Size,true, [IsCollection and HasIsFinite], 
+  100, # rank above object-specific methods
     function ( C )
     if IsFinite( C ) then
         TryNextMethod();
@@ -244,16 +250,28 @@ InstallMethod( RepresentativeSmallest,
 ##  an enumerator of <C> and selects a random element of this list using the
 ##  function `RandomList', which is a pseudo random number generator.
 ##
-DeclareGlobalVariable( "GlobalMersenneTwister" );
-InstallGlobalFunction( RandomList, function(list)
-  return list[Random(GlobalMersenneTwister, 1, Length(list))];
+
+# RandomList is not an operation to avoid the (often expensive) cost of
+# dispatch for lists
+InstallGlobalFunction( RandomList, function(args...)
+  local len, source, list;
+  len := Length(args);
+  if len = 1 then
+    source := GlobalMersenneTwister;
+    list := args[1];
+  elif len = 2 then
+    source := args[1];
+    list := args[2];
+  else
+    Error(" Usage: RandomList([rs], list))");
+  fi;
+
+  return list[Random(source, 1, Length(list))];
 end );
-InstallMethod( Random, "for a (finite) collection",
-    [ IsCollection and IsFinite ],
-    C -> RandomList( Enumerator( C ) ) );
+
 
 RedispatchOnCondition(Random,true,[IsCollection],[IsFinite],0);
-
+RedispatchOnCondition(Random,true,[IsRandomSource,IsCollection],[,IsFinite],0);
 
 #############################################################################
 ##
@@ -540,106 +558,6 @@ InstallMethod( PrintObj,
     end );
 
 
-# #############################################################################
-# ##
-# #F  TestConsistencyOfEnumeratorByFunctions( <enum> )
-# ##
-# ##  This (currently undocumented) function is thought for checking newly
-# ##  implemented enumerators in `IsEnumeratorByFunctions'.
-# ##  Whenever a test fails then a message about this is printed, and `false'
-# ##  is returned in the end.
-# ##  If no obvious errors are found then `true' is returned.
-# ##  (Note that for enumerators of length up to 1000, also access to too large
-# ##  positions is checked.)
-# ##
-# BindGlobal( "TestConsistencyOfEnumeratorByFunctions", function( enum )
-#     local bound, filter, result, origlevel, elm, len, list;
-# 
-#     bound:= 1000;
-#     filter:= IsEnumeratorByFunctions;
-#     if not filter( enum ) then
-#       Print( "#E  enumerator is not in `IsEnumeratorByFunctions'\n" );
-#       return false;
-#     fi;
-#     result:= true;
-# 
-#     # Switch off warnings.
-#     origlevel:= InfoLevel( InfoWarning );
-#     SetInfoLevel( InfoWarning, 0 );
-# 
-#     # Check that the right methods are used.
-#     elm:= enum[1];
-#     if not IsIdenticalObj( ApplicableMethod( Position, [ enum, elm, 0 ] ),
-#                ApplicableMethodTypes( Position, [ filter, IsObject,
-#                    IsZeroCyc ] ) ) then
-#       Print( "#E  wrong `Position' method\n" );
-#       result:= false;
-#     fi;
-#     if not IsIdenticalObj( ApplicableMethod( \[\], [ enum, 1 ] ),
-#                ApplicableMethodTypes( \[\], [ filter, IsPosInt ] ) ) then
-#       Print( "#E  wrong `\\[\\]' method\n" );
-#       result:= false;
-#     fi;
-#     if not IsIdenticalObj( ApplicableMethod( IsBound\[\], [ enum, 1 ] ),
-#                ApplicableMethodTypes( IsBound\[\], [ filter, IsPosInt ] ) )
-#        then
-#       Print( "#E  wrong `IsBound\\[\\]' method\n" );
-#       result:= false;
-#     fi;
-#     if not IsIdenticalObj( ApplicableMethod( Length, [ enum ] ),
-#                ApplicableMethodTypes( Length, [ filter ] ) ) and
-#        not HasLength( enum ) then
-#       Print( "#E  wrong `Length' method\n" );
-#       result:= false;
-#     fi;
-#     if not IsIdenticalObj( ApplicableMethod( \in, [ elm, enum ] ),
-#                ApplicableMethodTypes( \in, [ IsObject, filter ] ) ) then
-#       Print( "#E  wrong `\\in' method\n" );
-#       result:= false;
-#     fi;
-#     if not IsIdenticalObj( ApplicableMethod( ViewObj, [ enum ] ),
-#                ApplicableMethodTypes( ViewObj, [ filter ] ) ) then
-#       Print( "#E  wrong `ViewObj' method\n" );
-#       result:= false;
-#     fi;
-#     if not IsIdenticalObj( ApplicableMethod( PrintObj, [ enum ] ),
-#                ApplicableMethodTypes( PrintObj, [ filter ] ) ) then
-#       Print( "#E  wrong `PrintObj' method\n" );
-#       result:= false;
-#     fi;
-# 
-#     # Check that the results computed by the methods are reasonable.
-#     len:= bound;
-#     if Length( enum ) < len then
-#       len:= Length( enum );
-#     fi;
-#     list:= List( [ 1 .. len ], i -> enum[i] );
-#     if List( list, x -> Position( enum, x ) ) <> [ 1 .. len ] then
-#       Print( "#E  `\\[\\]' and `Position' of <enum> do not fit together\n" );
-#       result:= false;
-#     fi;
-#     if not ForAll( list, x -> x in enum ) then
-#       Print( "#E  `\\[\\]' and `\\in' of <enum> do not fit together\n" );
-#       result:= false;
-#     fi;
-# 
-#     if ForAny( list, IsMutable ) then
-#       Print( "#E  the elements of <enum> must be immutable\n" );
-#       result:= false;
-#     fi;
-#     if HasIsSSortedList( enum ) and IsSSortedList( enum ) then
-#       if not IsSSortedList( list ) then
-#         Print( "#E  <enum> is not sorted\n" );
-#         result:= false;
-#       fi;
-#     fi;
-# 
-#     # Reset the info level.
-#     SetInfoLevel( InfoWarning, origlevel );
-#     return result;
-# end );
-
-
 #############################################################################
 ##
 #F  EnumeratorOfSubset( <list>, <blist>[, <ishomog>] )
@@ -709,7 +627,7 @@ InstallGlobalFunction( EnumeratorOfSubset,
     return EnumeratorByFunctions( Fam, rec(
                ElementNumber     := ElementNumber_Subset,
                NumberElement     := NumberElement_Subset,
-               PositionCanonical := NumberElement_Subset,
+               PositionCanonical := PositionCanonical_Subset,
                Length            := Length_Subset,
                AsList            := AsList_Subset,
 
@@ -731,6 +649,7 @@ InstallGlobalFunction( List,
       ErrorNoReturn( "usage: List( <C>[, <func>] )" );
     fi;
     tnum:= TNUM_OBJ( arg[1] );
+    # handle built-in lists directly, to avoid method dispatch overhead
     if FIRST_LIST_TNUM <= tnum and tnum <= LAST_LIST_TNUM then
       C:= arg[1];
       if l = 1 then
@@ -961,9 +880,15 @@ InstallOtherMethod( NextIterator,
 ##
 #F  IteratorByFunctions( <record> )
 ##
+if IsHPCGAP then
+DeclareRepresentation( "IsIteratorByFunctionsRep", IsNonAtomicComponentObjectRep,
+    [ "NextIterator", "IsDoneIterator", "ShallowCopy",
+    , "ViewObj", "PrintObj"] );
+else
 DeclareRepresentation( "IsIteratorByFunctionsRep", IsComponentObjectRep,
     [ "NextIterator", "IsDoneIterator", "ShallowCopy",
     , "ViewObj", "PrintObj"] );
+fi;
 
 DeclareSynonym( "IsIteratorByFunctions",
     IsIteratorByFunctionsRep and IsIterator );
@@ -1042,30 +967,27 @@ end );
 
 #############################################################################
 ##
-#F  ConcatenationIterators( <iters> ) . . . . . . . .combine list of iterators
+#F  ConcatenationIterators( <iters> ) . . . . . . . combine list of iterators
 ##  to one iterator
 ##  
 BIND_GLOBAL("NextIterator_Concatenation", function(it)
-  local it1, res;
-  it1 := it!.iters[it!.i];
+  local i, it1, res;
+  i := it!.i;
+  it1 := it!.iters[i];
   res := NextIterator(it1);
-  if IsDoneIterator(it1) then 
-    if it!.i = Length(it!.iters) then
-      it!.done := true;
-    else
-      it!.i := it!.i+1;
-    fi;
-  fi;
+  while i <= Length(it!.iters) and IsDoneIterator(it!.iters[i]) do
+    i := i+1;
+  od;
+  it!.i := i;
   return res;
 end);
 BIND_GLOBAL("IsDoneIterator_Concatenation", function(it)
-  return it!.done;
+  return it!.i > Length(it!.iters);
 end);
 BIND_GLOBAL("ShallowCopy_Concatenation", function(it)
   return rec(NextIterator := it!.NextIterator,
     IsDoneIterator := it!.IsDoneIterator,
     ShallowCopy := it!.ShallowCopy,
-    done := it!.done,
     i := it!.i,
     iters := List(it!.iters, ShallowCopy)
     );
@@ -1082,7 +1004,6 @@ BIND_GLOBAL("ConcatenationIterators", function(iters)
     ShallowCopy := ShallowCopy_Concatenation,
     i := i,
     iters := iters,
-    done := i > Length(iters)
             ));
 end);  
 
@@ -1098,7 +1019,7 @@ BIND_GLOBAL( "NextIterator_Trivial", function( iter )
     end );
 
 BIND_GLOBAL( "ShallowCopy_Trivial",
-    iter -> rec( element:= iter!.elm, isDone:= iter!.isDone ) );
+    iter -> rec( element:= iter!.element, isDone:= iter!.isDone ) );
 
 InstallGlobalFunction( TrivialIterator, function( elm )
     return IteratorByFunctions( rec(
@@ -1131,6 +1052,7 @@ InstallGlobalFunction( Sum,
       Error( "usage: Sum( <C>[, <func>][, <init>] )" );
     fi;
     tnum:= TNUM_OBJ( arg[1] );
+    # handle built-in lists directly, to avoid method dispatch overhead
     if FIRST_LIST_TNUM <= tnum and tnum <= LAST_LIST_TNUM then
       C:= arg[1];
       if l = 1 then
@@ -1264,6 +1186,7 @@ InstallGlobalFunction( Product,
       Error( "usage: Product( <C>[, <func>][, <init>] )" );
     fi;
     tnum:= TNUM_OBJ( arg[1] );
+    # handle built-in lists directly, to avoid method dispatch overhead
     if FIRST_LIST_TNUM <= tnum and tnum <= LAST_LIST_TNUM then
       C:= arg[1];
       if l = 1 then
@@ -1408,6 +1331,7 @@ InstallGlobalFunction( Filtered,
     function( C, func )
     local tnum, res, i, elm;
     tnum:= TNUM_OBJ( C );
+    # handle built-in lists directly, to avoid method dispatch overhead
     if FIRST_LIST_TNUM <= tnum and tnum <= LAST_LIST_TNUM then
       # start with empty list of same representation
       res := C{[]};
@@ -1473,15 +1397,6 @@ InstallMethod( FilteredOp,
     return res;
     end );
 
-#T Is this useful compared to the previous method? (FL)
-InstallMethod( FilteredOp,
-    "for an empty list/collection, and a function",
-    [ IsEmpty, IsFunction ], 
-    SUM_FLAGS, # there is nothing to do
-    function( list, func )
-    return [];
-    end );
-
 
 #############################################################################
 ##
@@ -1496,6 +1411,7 @@ InstallGlobalFunction( Number,
       Error( "usage: Number( <C>[, <func>] )" );
     fi;
     tnum:= TNUM_OBJ( arg[1] );
+    # handle built-in lists directly, to avoid method dispatch overhead
     if FIRST_LIST_TNUM <= tnum and tnum <= LAST_LIST_TNUM then
       C:= arg[1];
       if l = 1 then
@@ -1569,7 +1485,7 @@ InstallMethod( NumberOp,
 
 #############################################################################
 ##
-#M  NumberOp( <C> ) . . . . . . . . . . . count elements that have a property
+#M  NumberOp( <C> ) . . . . . . . . . . . count elements
 ##
 InstallOtherMethod( NumberOp,
     "for a list/collection",
@@ -1608,6 +1524,7 @@ InstallGlobalFunction( ForAll,
     function( C, func )
     local tnum, elm;
     tnum:= TNUM_OBJ( C );
+    # handle built-in lists directly, to avoid method dispatch overhead
     if FIRST_LIST_TNUM <= tnum and tnum <= LAST_LIST_TNUM then
       for elm in C do
           if not func( elm ) then
@@ -1664,12 +1581,6 @@ InstallMethod( ForAllOp,
     return true;
     end );
 
-InstallOtherMethod( ForAllOp,
-    "for an empty list/collection, and a function",
-    [ IsEmpty, IsFunction ], 
-    SUM_FLAGS, # there is nothing to do
-    ReturnTrue );
-
 
 #############################################################################
 ##
@@ -1679,6 +1590,7 @@ InstallGlobalFunction( ForAny,
     function( C, func )
     local tnum, elm;
     tnum:= TNUM_OBJ( C );
+    # handle built-in lists directly, to avoid method dispatch overhead
     if FIRST_LIST_TNUM <= tnum and tnum <= LAST_LIST_TNUM then
       for elm in C do
           if func( elm ) then
@@ -1735,12 +1647,6 @@ InstallMethod( ForAnyOp,
     od;
     return false;
     end );
-
-InstallOtherMethod( ForAnyOp,
-    "for an empty list/collection, and a function",
-    [ IsEmpty, IsFunction ],
-    SUM_FLAGS, # there is nothing to do
-    ReturnFalse );
 
 
 #############################################################################
@@ -2478,6 +2384,12 @@ InstallGlobalFunction( Intersection, function ( arg )
         fi;
     fi;
 
+    for D in arg do
+        if not IsListOrCollection(D) then
+            Error("Intersection: arguments must be lists or collections");
+        fi;
+    od;
+
     # start with the first domain or list
     I := arg[1];
     copied := false;
@@ -2582,115 +2494,6 @@ InstallMethod( Union2,
     return I;
     end );
 
-AbsInt:="2b defined";
-
-# join ranges
-# [a0,a+da..a1] with [b0,db,b1]
-InstallGlobalFunction(JoinRanges,function(a0,da,a1,b0,db,b1)
-local x;
-
-  # Make ranges run upwards
-  if da < 0 then
-    x:=a1;a1:=a0;a0:=x;da:=-da;
-  fi;
-  
-  if db < 0 then
-    x:=b1;b1:=b0;b0:=x;db:=-db;
-  fi;
-  
-  
-  # ensure a0<=b0
-  if a0>b0 then
-    x:=a0;a0:=b0;b0:=x;
-    x:=a1;a1:=b1;b1:=x;
-    x:=da;da:=db;db:=x;
-  fi;
-
-  # first deal with 1-point ranges
-  if da=0 then
-    if a0=b0 then
-      return [b0,db,b1]; # point a is in b
-    elif db=0 then
-      return [a0,b0-a0,b0]; # new length 2 range from two points
-    else
-      # a is point at proper distance before proper range b
-      if b0-a0=db then
-        return [a0,db,b1];
-      else
-        return fail;
-      fi;
-    fi;
-  elif db=0 then
-    if (b0-a0) mod da=0 then
-      if b0<=a1 then
-        # b is point in a
-        return [a0,da,a1];
-      elif b0-a1=da then
-	# b is point at proper distance after a
-	return [a0,da,b0];
-      else
-        return fail;
-      fi;
-    else
-      # b is point at different distance. The only way this can happen is if
-      # a has length 2 and b splits it. (As a0<=b0 this case can not happen
-      # for da=0)
-      if a1-a0=da and 2*(b0-a0)=da then
-        return [a0,b0-a0,a1];
-      else
-        return fail;
-      fi;
-    fi;
-  fi;
-
-  # now a and b are proper ranges.
-  if da=db then
-    if (b0-a0) mod da=0 then
-      # at compatible pattern.
-      if b0<=a1+da then
-        # and b does not start too late. If subsets, or extends a
-	return [a0,da,Maximum(a1,b1)];
-      else
-        #b starts too late -- there is a gap we cannot fill
-        return fail;
-      fi;
-    else
-      # b is on different pattern. This is only possible if b interleaves a,
-      # at half distance, and the end points must be at most this half
-      # distance away
-      if AbsInt(b0-a0)*2=da and AbsInt(b1-a1)*2=da then
-        return [Minimum(a0,b0),da/2,Maximum(a1,b1)];
-      else
-        # not half step, or leaving gaps at start or end -- will not work
-	return fail;
-      fi;
-    fi;
-  elif IsInt(db/da) then
-    # a steps at distance that properly divides db.
-    # We can join the ranges, if and only if b0 is from a0 on the da grid
-    # and the last element of b is at most da away from a1
-    if (b0-a0) mod da=0 and b1<=a1+da then
-      return [a0,da,Maximum(b1,a1)];
-    else
-      return fail;
-    fi;
-  elif IsInt(da/db) then
-    # b steps at distance that properly divides da
-    # We can join the ranges, if and only if a0 is from b0 on the db grid
-    # and the first element of a is at most db away from b0 and
-    # due to ordering this was not possible in dual case)
-    if (b0-a0) mod db=0 and a0>=b0-db and a1<=b1+db then
-      return [Minimum(a0,b0),db,Maximum(a1,b1)];
-    else
-      return fail;
-    fi;
-  else
-    # distances are incompatible and length is at least 2 for both, no range
-    return fail;
-  fi;
-end);
-
-Unbind(AbsInt);
 
 #############################################################################
 ##
@@ -3119,7 +2922,12 @@ InstallMethod( Difference,
     end );
 
 InstallMethod( Difference,
-    "for two collections",
+    "for two collections in different families",
+    IsNotIdenticalObj, [ IsCollection, IsCollection ],
+    function( C1, C2 ) return C1; end );
+
+InstallMethod( Difference,
+    "for two collections in the same family",
     IsIdenticalObj, [ IsCollection, IsCollection ],
     function ( C1, C2 )
     local   D, elm;
@@ -3142,7 +2950,7 @@ InstallMethod( Difference,
     end );
 
 InstallMethod( Difference,
-    "for two collections, the first being a list",
+    "for two collections in the same family, the first being a list",
     IsIdenticalObj, [ IsCollection and IsList, IsCollection ],
     function ( C1, C2 )
     local   D, elm;
@@ -3161,7 +2969,7 @@ InstallMethod( Difference,
     end );
 
 InstallMethod( Difference,
-    "for two collections, the second being a list",
+    "for two collections in the same family, the second being a list",
     IsIdenticalObj, [ IsCollection, IsCollection and IsList ],
     function ( C1, C2 )
     local   D;
@@ -3250,6 +3058,36 @@ end);
 
 InstallMethod( CanComputeIsSubset,"default: no, unless identical",
   [IsObject,IsObject],IsIdenticalObj);
+
+# This setter method is installed to implement filter settings in response
+# to an objects size as part of setting the size. This used to be handled
+# instead by immediate methods, but in a situation as here it would trigger
+# multiple immediate methods, several of which could apply and each changing
+# the type of the object. Doing so can be costly and thus should be
+# avoided.
+InstallOtherMethod(SetSize,true,[IsObject and IsAttributeStoringRep,IsObject],
+  100, # override system setter
+function(obj,sz)
+local filt;
+  if HasSize(obj) and Size(obj)<>sz then
+    if AssertionLevel()>2 then
+      # Make this an ordinary error (not ErrorNoReturn as suggested) to
+      # preserve all debugging options -- even use `return` to investigate
+      # what would have happened before this methods was introduced.
+      Error("size of ",obj," already set to ",Size(obj),
+        ", cannot be changed to ",sz);
+    fi;
+    return;
+  fi;
+  if sz=0 then filt:=IsEmpty;
+  elif sz=1 then filt:=IsTrivial;
+  elif sz=infinity then filt:=IsNonTrivial and HasIsFinite;
+  else filt:=IsNonTrivial and IsFinite;
+  fi;
+  filt:=filt and HasSize;
+  obj!.Size:=sz;
+  SetFilterObj(obj,filt);
+end);
 
 #############################################################################
 ##

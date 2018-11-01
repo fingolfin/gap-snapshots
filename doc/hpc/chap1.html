@@ -184,7 +184,7 @@ gap&gt;
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t2 := RunTask(x-&gt;x*x, 4);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t := ScheduleTask([t1, t2], function()</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">          return TaskResult(t1) + TaskResult(t2);</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">   end);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">   end);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TaskResult(t);</span>
 25
 </pre></div>
@@ -368,7 +368,7 @@ gap&gt;
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">     while true do</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">       OnTaskCancellation(function() return 314; end);</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">     od;</span>
-<span class="GAPprompt">&gt;</span> <span class="GAPinput">   end);</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">   end);;</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CancelTask(task);</span>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">TaskResult(task);</span>
 314
@@ -379,12 +379,7 @@ gap&gt;
 <h5>1.4-4 OnTaskCancellationReturn</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OnTaskCancellationReturn</code>( <var class="Arg">value</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p><code class="func">OnTaskCancellationReturn</code> is a convenience function that does the same as:</p>
-
-
-<div class="example"><pre>
-OnTaskCancellation(function() return value; end);
-</pre></div>
+<p><code class="func">OnTaskCancellationReturn</code> is a convenience function that does the same as: <code class="code">OnTaskCancellation(function() return value; end);</code></p>
 
 <p><a id="X802FC4C284F68696" name="X802FC4C284F68696"></a></p>
 

@@ -17,9 +17,13 @@
 #V  FILTERS . . . . . . . . . . . . . . . . . . . . . . . list of all filters
 ##
 ##  <FILTERS>  and  <RANK_FILTERS> are  lists containing at position <i>  the
-##  filter with number <i> resp.  its rank.
+##  elementary filter with number <i> resp. its rank. Note that and-filters
+##  are not elementary and hence not contained in this list.
 ##
 BIND_GLOBAL( "FILTERS", [] );
+if IsHPCGAP then
+    LockAndMigrateObj(FILTERS, FILTER_REGION);
+fi;
 
 
 #############################################################################
@@ -30,6 +34,9 @@ BIND_GLOBAL( "FILTERS", [] );
 ##  filter with number <i> resp.  its rank.
 ##
 BIND_GLOBAL( "RANK_FILTERS", [] );
+if IsHPCGAP then
+    LockAndMigrateObj(RANK_FILTERS, FILTER_REGION);
+fi;
 
 
 #############################################################################
@@ -53,12 +60,17 @@ BIND_GLOBAL( "RANK_FILTERS", [] );
 ##  10 = tester of 9
 ##
 BIND_GLOBAL( "INFO_FILTERS", [] );
+if IsHPCGAP then
+    LockAndMigrateObj(INFO_FILTERS, FILTER_REGION);
+fi;
 
 BIND_GLOBAL( "FNUM_CATS", MakeImmutable([ 1,  2 ]) );
 BIND_GLOBAL( "FNUM_REPS", MakeImmutable([ 3,  4 ]) );
 BIND_GLOBAL( "FNUM_ATTS", MakeImmutable([ 5,  6 ]) );
 BIND_GLOBAL( "FNUM_PROS", MakeImmutable([ 7,  9 ]) );
 BIND_GLOBAL( "FNUM_TPRS", MakeImmutable([ 8, 10 ]) );
+
+BIND_GLOBAL( "FNUM_CATS_AND_REPS", MakeImmutable([ 1 .. 4 ]) );
 
 
 #############################################################################
@@ -76,7 +88,6 @@ IMM_FLAGS := FLAGS_FILTER( IS_OBJECT );
 
 #############################################################################
 ##
-
 #F  Setter( <filter> )  . . . . . . . . . . . . . . . .  setter of a <filter>
 ##
 BIND_GLOBAL( "Setter", SETTER_FILTER );
@@ -89,17 +100,16 @@ BIND_GLOBAL( "Setter", SETTER_FILTER );
 BIND_GLOBAL( "Tester", TESTER_FILTER );
 
 
-
 #############################################################################
 ##
-#F  InstallTrueMethodNewFilter( <to>, <from> )
+#F  InstallTrueMethodNewFilter( <tofilt>, <from> )
 ##
 ##  If <from> is a new filter then  it cannot occur in  the cache.  Therefore
 ##  we do not flush the cache.  <from> should a basic  filter not an `and' of
 ##  from. This should only be used in the file "type.g".
 ##
 BIND_GLOBAL( "InstallTrueMethodNewFilter", function ( tofilt, from )
-    local   imp;
+    local   imp, found, imp2;
 
     # Check that no filter implies `IsMutable'.
     # (If this would be allowed then `Immutable' would be able
@@ -110,11 +120,54 @@ BIND_GLOBAL( "InstallTrueMethodNewFilter", function ( tofilt, from )
       Error( "filter <from> must not imply `IsMutable'" );
     fi;
 
+    # If 'tofilt' equals 'IsObject' then do nothing.
+    if IS_IDENTICAL_OBJ( tofilt, IS_OBJECT ) then
+      return;
+    fi;
+
+    # Apply the available implications from 'tofilt and from' to 'tofilt'.
     imp := [];
-    imp[1] := FLAGS_FILTER( tofilt );
+    imp[1] := WITH_IMPS_FLAGS( AND_FLAGS( FLAGS_FILTER( tofilt ),
+                                          FLAGS_FILTER( from ) ) );
     imp[2] := FLAGS_FILTER( from );
-    ADD_LIST( IMPLICATIONS, imp );
-    InstallHiddenTrueMethod( tofilt, from );
+
+    atomic IMPLICATIONS_SIMPLE do
+      # Extend available implications by the new one if applicable.
+      found:= false;
+      for imp2 in IMPLICATIONS_SIMPLE do
+        if IS_SUBSET_FLAGS( imp2[2], imp[2] ) 
+           or IS_SUBSET_FLAGS( imp2[1], imp[2] ) then
+          imp2[1]:= AND_FLAGS( imp2[1], imp[1] );
+          if IS_EQUAL_FLAGS( imp2[2], imp[2] ) then
+            found:= true;
+          fi;
+        fi;
+      od;
+      for imp2 in IMPLICATIONS_COMPOSED do
+        if IS_SUBSET_FLAGS( imp2[2], imp[2] ) 
+           or IS_SUBSET_FLAGS( imp2[1], imp[2] ) then
+          imp2[1]:= AND_FLAGS( imp2[1], imp[1] );
+          if IS_EQUAL_FLAGS( imp2[2], imp[2] ) then
+            found:= true;
+          fi;
+        fi;
+      od;
+
+      if not found then
+        # Extend the list of implications.
+        if IsHPCGAP then
+          MIGRATE_RAW(imp, IMPLICATIONS_SIMPLE);
+        fi;
+        if IS_AND_FILTER(from) then
+          ADD_LIST( IMPLICATIONS_COMPOSED, imp );
+        else
+          IMPLICATIONS_SIMPLE[ TRUES_FLAGS( imp[2] )[1] ]:= imp;
+        fi;
+      fi;
+    od;
+    if not GAPInfo.CommandLineOptions.N then
+      InstallHiddenTrueMethod( tofilt, from );
+    fi;
 end );
 
 
@@ -217,15 +270,18 @@ BIND_GLOBAL( "NewFilter", function( arg )
 
     # Create the filter.
     filter := NEW_FILTER( name );
+
+    # Do some administrational work.
+    atomic FILTER_REGION do
+      FILTERS[ FLAG1_FILTER( filter ) ] := filter;
+      IMM_FLAGS:= AND_FLAGS( IMM_FLAGS, FLAGS_FILTER( filter ) );
+      RANK_FILTERS[ FLAG1_FILTER( filter ) ] := rank;
+      INFO_FILTERS[ FLAG1_FILTER( filter ) ] := 0;
+    od;
+
     if implied <> 0 then
       InstallTrueMethodNewFilter( implied, filter );
     fi;
-
-    # Do some administrational work.
-    FILTERS[ FLAG1_FILTER( filter ) ] := filter;
-    IMM_FLAGS:= AND_FLAGS( IMM_FLAGS, FLAGS_FILTER( filter ) );
-    RANK_FILTERS[ FLAG1_FILTER( filter ) ] := rank;
-    INFO_FILTERS[ FLAG1_FILTER( filter ) ] := 0;
 
     # Return the filter.
     return filter;
@@ -267,17 +323,31 @@ BIND_GLOBAL( "NamesFilter", function( flags )
     else
         bn := SHALLOW_COPY_OBJ(TRUES_FLAGS(flags));
     fi;
-    for i  in  [ 1 .. LEN_LIST(bn) ]  do
-        if not IsBound(FILTERS[ bn[i] ])  then
-            bn[i] := STRING_INT( bn[i] );
-        else
-            bn[i] := NAME_FUNC(FILTERS[ bn[i] ]);
-        fi;
+    atomic readonly FILTER_REGION do
+      for i  in  [ 1 .. LEN_LIST(bn) ]  do
+          if not IsBound(FILTERS[ bn[i] ])  then
+              bn[i] := STRING_INT( bn[i] );
+          else
+              bn[i] := NAME_FUNC(FILTERS[ bn[i] ]);
+          fi;
+      od;
     od;
     return bn;
 
 end );
 
+
+#############################################################################
+##
+#F  IS_ELEMENTARY_FILTER( <x> )
+##
+##  function to test whether <x> is an elementary filter.
+##
+BIND_GLOBAL( "IS_ELEMENTARY_FILTER", function(x)
+    atomic readonly FILTER_REGION do
+       return x in FILTERS;
+    od;
+end);
 
 
 #############################################################################
@@ -289,11 +359,7 @@ end );
 ##  We handle IsObject as a special case, as it is equal to ReturnTrue,
 ##  as all objects satisfy IsObject!
 ##
-BIND_GLOBAL( "IsFilter",
-    x -> IS_IDENTICAL_OBJ(x, IS_OBJECT)
-         or ( IS_OPERATION( x )
-              and ( (FLAG1_FILTER( x ) <> 0 and FLAGS_FILTER(x) <> false)
-                    or x in FILTERS ) ) );
+BIND_GLOBAL( "IsFilter", IS_FILTER );
 
 
 ## Global Rank declarations
@@ -340,7 +406,7 @@ BIND_GLOBAL( "CANONICAL_BASIS_FLAGS", QUO_INT(SUM_FLAGS,5) );
 ##  Compute the rank including the hidden implications.
 ##
 BIND_GLOBAL( "RankFilter", function( filter )
-    local   rank,  flags,  i;
+    local   rank,  flags,  all,  i;
 
     rank  := 0;
     if IS_FUNCTION(filter)  then
@@ -348,7 +414,12 @@ BIND_GLOBAL( "RankFilter", function( filter )
     else
         flags := filter;
     fi;
-    for i  in TRUES_FLAGS(WITH_HIDDEN_IMPS_FLAGS(flags))  do
+    if not GAPInfo.CommandLineOptions.N then
+      all := WITH_HIDDEN_IMPS_FLAGS(flags);
+    else
+      all := WITH_IMPS_FLAGS(flags);
+    fi;
+    for i  in TRUES_FLAGS(all)  do
         if IsBound(RANK_FILTERS[i])  then
             rank := rank + RANK_FILTERS[i];
         else

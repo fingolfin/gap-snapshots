@@ -16,26 +16,27 @@
 **  It uses the function call mechanism defined by the calls package.
 */
 
-#include <src/funcs.h>
+#include "funcs.h"
 
-#include <src/calls.h>
-#include <src/code.h>
-#include <src/exprs.h>
-#include <src/gap.h>
-#include <src/gapstate.h>
-#include <src/hookintrprtr.h>
-#include <src/io.h>
-#include <src/lists.h>
-#include <src/opers.h>
-#include <src/plist.h>
-#include <src/read.h>
-#include <src/stats.h>
-#include <src/stringobj.h>
-#include <src/vars.h>
+#include "calls.h"
+#include "code.h"
+#include "error.h"
+#include "exprs.h"
+#include "gapstate.h"
+#include "hookintrprtr.h"
+#include "io.h"
+#include "lists.h"
+#include "modules.h"
+#include "opers.h"
+#include "plist.h"
+#include "read.h"
+#include "stats.h"
+#include "stringobj.h"
+#include "vars.h"
 
 #ifdef HPCGAP
-#include <src/hpc/guards.h>
-#include <src/hpc/thread.h>
+#include "hpc/guards.h"
+#include "hpc/thread.h"
 #endif
 
 static ModuleStateOffset FuncsStateOffset = -1;
@@ -45,7 +46,7 @@ struct FuncsModuleState {
     Obj ExecState;
 };
 
-static inline struct FuncsModuleState *FuncsState(void)
+extern inline struct FuncsModuleState *FuncsState(void)
 {
     return (struct FuncsModuleState *)StateSlotsAtOffset(FuncsStateOffset);
 }
@@ -88,16 +89,15 @@ void SetRecursionDepth(Int depth)
 static Obj PushOptions;
 static Obj PopOptions;
 
-UInt ExecProccallOpts(
-    Stat                call )
+static UInt ExecProccallOpts(Stat call)
 {
   Obj opts;
   
   SET_BRK_CURR_STAT( call );
-  opts = EVAL_EXPR( ADDR_STAT(call)[0] );
+  opts = EVAL_EXPR(READ_STAT(call, 0));
   CALL_1ARGS(PushOptions, opts);
 
-  EXEC_STAT( ADDR_STAT( call )[1]);
+  EXEC_STAT(READ_STAT(call, 1));
 
   CALL_0ARGS(PopOptions);
   
@@ -123,292 +123,150 @@ UInt ExecProccallOpts(
 **  resulting from the procedure call, which in fact is always 0.
 */
 
-static Obj DispatchFuncCall( Obj func, Int nargs, Obj arg1, Obj arg2, Obj arg3, Obj arg4, Obj arg5, Obj arg6)
-{ 
-  Obj arglist;
-  if (nargs != -1) {
-    arglist = NEW_PLIST(T_PLIST_DENSE, nargs);
-    SET_LEN_PLIST(arglist, nargs);
-    switch(nargs) {
-    case 6: 
-      SET_ELM_PLIST(arglist,6, arg6);
-    case 5:
-      SET_ELM_PLIST(arglist,5, arg5);
-    case 4: 
-      SET_ELM_PLIST(arglist,4, arg4);
-    case 3:
-      SET_ELM_PLIST(arglist,3, arg3);
-    case 2: 
-      SET_ELM_PLIST(arglist,2, arg2);
-    case 1:
-      SET_ELM_PLIST(arglist,1, arg1);
-    case 0:
-      CHANGED_BAG(arglist);
-    }
-  } else {
-    arglist = arg1;
-  }
-  return DoOperation2Args(CallFuncListOper, func, arglist);
-}
-
-
-UInt            ExecProccall0args (
-    Stat                call )
+static ALWAYS_INLINE Obj EvalOrExecCall(Int ignoreResult, UInt nr, Stat call)
 {
-    Obj                 func;           /* function                        */
+    Obj func;
+    Obj a[6] = { 0 };
+    Obj args = 0;
+    Obj result;
 
-    /* evaluate the function                                               */
-    SET_BRK_CURR_STAT( call );
-    func = EVAL_EXPR( FUNC_CALL( call ) );
-
-    /* call the function                                                   */
-    SET_BRK_CALL_TO( call );
-    if (TNUM_OBJ(func) != T_FUNCTION)
-      DispatchFuncCall(func, 0, (Obj) 0L,  (Obj) 0L,  (Obj) 0L,  (Obj) 0L,  (Obj) 0L,  (Obj) 0L);
-    else {
-      CALL_0ARGS( func );
-    }
-    if (STATE(UserHasQuit) || STATE(UserHasQUIT)) /* the procedure must have called
-                                       READ() and the user quit from a break
-                                       loop inside it */
-      ReadEvalError();
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
-UInt            ExecProccall1args (
-    Stat                call )
-{
-    Obj                 func;           /* function                        */
-    Obj                 arg1;           /* first  argument                 */
-
-    /* evaluate the function                                               */
-    SET_BRK_CURR_STAT( call );
-    func = EVAL_EXPR( FUNC_CALL( call ) );
-  
-    /* evaluate the arguments                                              */
-    arg1 = EVAL_EXPR( ARGI_CALL( call, 1 ) );
- 
-    /* call the function                                                   */
-    SET_BRK_CALL_TO( call );
-    if (TNUM_OBJ(func) != T_FUNCTION)
-      DispatchFuncCall(func, 1, (Obj) arg1,  (Obj) 0L,  (Obj) 0L,  (Obj) 0L,  (Obj) 0L,  (Obj) 0L);
-    else {
-      CALL_1ARGS( func, arg1 );
-    } 
-    if (STATE(UserHasQuit) || STATE(UserHasQUIT)) /* the procedure must have called
-                                       READ() and the user quit from a break
-                                       loop inside it */
-      ReadEvalError();
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
-UInt            ExecProccall2args (
-    Stat                call )
-{
-    Obj                 func;           /* function                        */
-    Obj                 arg1;           /* first  argument                 */
-    Obj                 arg2;           /* second argument                 */
-
-    /* evaluate the function                                               */
-    SET_BRK_CURR_STAT( call );
+    // evaluate the function
+    if (ignoreResult)
+        SET_BRK_CURR_STAT( call );
     func = EVAL_EXPR( FUNC_CALL( call ) );
  
-    /* evaluate the arguments                                              */
-    arg1 = EVAL_EXPR( ARGI_CALL( call, 1 ) );
-    arg2 = EVAL_EXPR( ARGI_CALL( call, 2 ) );
-
-    /* call the function                                                   */
-    SET_BRK_CALL_TO( call );
-    if (TNUM_OBJ(func) != T_FUNCTION)
-      DispatchFuncCall(func, 2, (Obj) arg1,  (Obj) arg2,  (Obj) 0L,  (Obj) 0L,  (Obj) 0L,  (Obj) 0L);
+    // evaluate the arguments
+    if (nr <= 6 && TNUM_OBJ(func) == T_FUNCTION) {
+        for (UInt i = 1; i <= nr; i++) {
+            a[i - 1] = EVAL_EXPR(ARGI_CALL(call, i));
+        }
+    }
     else {
-      CALL_2ARGS( func, arg1, arg2 );
-    }
-    if (STATE(UserHasQuit) || STATE(UserHasQUIT)) /* the procedure must have called
-                                       READ() and the user quit from a break
-                                       loop inside it */
-      ReadEvalError();
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
-UInt            ExecProccall3args (
-    Stat                call )
-{
-    Obj                 func;           /* function                        */
-    Obj                 arg1;           /* first  argument                 */
-    Obj                 arg2;           /* second argument                 */
-    Obj                 arg3;           /* third  argument                 */
-
-    /* evaluate the function                                               */
-    SET_BRK_CURR_STAT( call );
-    func = EVAL_EXPR( FUNC_CALL( call ) );
- 
-    /* evaluate the arguments                                              */
-    arg1 = EVAL_EXPR( ARGI_CALL( call, 1 ) );
-    arg2 = EVAL_EXPR( ARGI_CALL( call, 2 ) );
-    arg3 = EVAL_EXPR( ARGI_CALL( call, 3 ) );
-
-    /* call the function                                                   */
-    SET_BRK_CALL_TO( call );
-    if (TNUM_OBJ(func) != T_FUNCTION)
-      DispatchFuncCall(func, 3, (Obj) arg1,  (Obj) arg2,  (Obj) arg3,  (Obj) 0L,  (Obj) 0L,  (Obj) 0L);
-    else {
-      CALL_3ARGS( func, arg1, arg2, arg3 );
-    }
-    if (STATE(UserHasQuit) || STATE(UserHasQUIT)) /* the procedure must have called
-                                       READ() and the user quit from a break
-                                       loop inside it */
-      ReadEvalError();
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
-UInt            ExecProccall4args (
-    Stat                call )
-{
-    Obj                 func;           /* function                        */
-    Obj                 arg1;           /* first  argument                 */
-    Obj                 arg2;           /* second argument                 */
-    Obj                 arg3;           /* third  argument                 */
-    Obj                 arg4;           /* fourth argument                 */
-
-    /* evaluate the function                                               */
-    SET_BRK_CURR_STAT( call );
-    func = EVAL_EXPR( FUNC_CALL( call ) );
- 
-    /* evaluate the arguments                                              */
-    arg1 = EVAL_EXPR( ARGI_CALL( call, 1 ) );
-    arg2 = EVAL_EXPR( ARGI_CALL( call, 2 ) );
-    arg3 = EVAL_EXPR( ARGI_CALL( call, 3 ) );
-    arg4 = EVAL_EXPR( ARGI_CALL( call, 4 ) );
-
-    /* call the function                                                   */
-    SET_BRK_CALL_TO( call );
-    if (TNUM_OBJ(func) != T_FUNCTION)
-      DispatchFuncCall(func, 4, (Obj) arg1,  (Obj) arg2,  (Obj) arg3,  (Obj) arg4,  (Obj) 0,  (Obj) 0);
-    else {
-      CALL_4ARGS( func, arg1, arg2, arg3, arg4 );
-    }
-    if (STATE(UserHasQuit) || STATE(UserHasQUIT)) /* the procedure must have called
-                                       READ() and the user quit from a break
-                                       loop inside it */
-      ReadEvalError();
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
-UInt            ExecProccall5args (
-    Stat                call )
-{
-    Obj                 func;           /* function                        */
-    Obj                 arg1;           /* first  argument                 */
-    Obj                 arg2;           /* second argument                 */
-    Obj                 arg3;           /* third  argument                 */
-    Obj                 arg4;           /* fourth argument                 */
-    Obj                 arg5;           /* fifth  argument                 */
-
-    /* evaluate the function                                               */
-    SET_BRK_CURR_STAT( call );
-    func = EVAL_EXPR( FUNC_CALL( call ) );
-
-    /* evaluate the arguments                                              */
-    arg1 = EVAL_EXPR( ARGI_CALL( call, 1 ) );
-    arg2 = EVAL_EXPR( ARGI_CALL( call, 2 ) );
-    arg3 = EVAL_EXPR( ARGI_CALL( call, 3 ) );
-    arg4 = EVAL_EXPR( ARGI_CALL( call, 4 ) );
-    arg5 = EVAL_EXPR( ARGI_CALL( call, 5 ) );
-
-    /* call the function                                                   */
-    SET_BRK_CALL_TO( call );
-    if (TNUM_OBJ(func) != T_FUNCTION)
-      DispatchFuncCall(func, 5, (Obj) arg1,  (Obj) arg2,  (Obj) arg3,  (Obj) arg4,  (Obj) arg5,  (Obj) 0L);
-    else {
-      CALL_5ARGS( func, arg1, arg2, arg3, arg4, arg5 );
-    }
-    if (STATE(UserHasQuit) || STATE(UserHasQUIT)) /* the procedure must have called
-                                       READ() and the user quit from a break
-                                       loop inside it */
-      ReadEvalError();
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
-UInt            ExecProccall6args (
-    Stat                call )
-{
-    Obj                 func;           /* function                        */
-    Obj                 arg1;           /* first  argument                 */
-    Obj                 arg2;           /* second argument                 */
-    Obj                 arg3;           /* third  argument                 */
-    Obj                 arg4;           /* fourth argument                 */
-    Obj                 arg5;           /* fifth  argument                 */
-    Obj                 arg6;           /* sixth  argument                 */
-
-    /* evaluate the function                                               */
-    SET_BRK_CURR_STAT( call );
-    func = EVAL_EXPR( FUNC_CALL( call ) );
- 
-    /* evaluate the arguments                                              */
-    arg1 = EVAL_EXPR( ARGI_CALL( call, 1 ) );
-    arg2 = EVAL_EXPR( ARGI_CALL( call, 2 ) );
-    arg3 = EVAL_EXPR( ARGI_CALL( call, 3 ) );
-    arg4 = EVAL_EXPR( ARGI_CALL( call, 4 ) );
-    arg5 = EVAL_EXPR( ARGI_CALL( call, 5 ) );
-    arg6 = EVAL_EXPR( ARGI_CALL( call, 6 ) );
-
-    /* call the function                                                   */
-    SET_BRK_CALL_TO( call );
-    if (TNUM_OBJ(func) != T_FUNCTION)
-      DispatchFuncCall(func, 6, (Obj) arg1,  (Obj) arg2,  (Obj) arg3,  (Obj) arg4,  (Obj) arg5,  (Obj) arg6);
-    else {
-      CALL_6ARGS( func, arg1, arg2, arg3, arg4, arg5, arg6 );
-    }
-    if (STATE(UserHasQuit) || STATE(UserHasQUIT)) /* the procedure must have called
-                                       READ() and the user quit from a break
-                                       loop inside it */
-      ReadEvalError();
-    /* return 0 (to indicate that no leave-statement was executed)         */
-    return 0;
-}
-
-UInt            ExecProccallXargs (
-    Stat                call )
-{
-    Obj                 func;           /* function                        */
-    Obj                 args;           /* argument list                   */
-    Obj                 argi;           /* <i>-th argument                 */
-    UInt                i;              /* loop variable                   */
-
-    /* evaluate the function                                               */
-    SET_BRK_CURR_STAT( call );
-    func = EVAL_EXPR( FUNC_CALL( call ) );
- 
-
-    /* evaluate the arguments                                              */
-    args = NEW_PLIST( T_PLIST, NARG_SIZE_CALL(SIZE_STAT(call)) );
-    SET_LEN_PLIST( args, NARG_SIZE_CALL(SIZE_STAT(call)) );
-    for ( i = 1; i <= NARG_SIZE_CALL(SIZE_STAT(call)); i++ ) {
-        argi = EVAL_EXPR( ARGI_CALL( call, i ) );
-        SET_ELM_PLIST( args, i, argi );
-        CHANGED_BAG( args );
+        UInt realNr = NARG_SIZE_CALL(SIZE_STAT(call));
+        args = NEW_PLIST(T_PLIST, realNr);
+        SET_LEN_PLIST(args, realNr);
+        for (UInt i = 1; i <= realNr; i++) {
+            Obj argi = EVAL_EXPR(ARGI_CALL(call, i));
+            SET_ELM_PLIST(args, i, argi);
+            CHANGED_BAG(args);
+        }
     }
 
-    /* call the function                                                   */
+    // call the function
     SET_BRK_CALL_TO( call );
     if (TNUM_OBJ(func) != T_FUNCTION) {
-      DoOperation2Args(CallFuncListOper, func, args);
-    } else {
-      CALL_XARGS( func, args );
+        result = DoOperation2Args(CallFuncListOper, func, args);
+    }
+    else {
+        switch (nr) {
+        case 0:
+            result = CALL_0ARGS(func);
+            break;
+        case 1:
+            result = CALL_1ARGS(func, a[0]);
+            break;
+        case 2:
+            result = CALL_2ARGS(func, a[0], a[1]);
+            break;
+        case 3:
+            result = CALL_3ARGS(func, a[0], a[1], a[2]);
+            break;
+        case 4:
+            result = CALL_4ARGS(func, a[0], a[1], a[2], a[3]);
+            break;
+        case 5:
+            result = CALL_5ARGS(func, a[0], a[1], a[2], a[3], a[4]);
+            break;
+        case 6:
+            result = CALL_6ARGS(func, a[0], a[1], a[2], a[3], a[4], a[5]);
+            break;
+        default:
+            result = CALL_XARGS(func, args);
+        }
+    }
+    if (STATE(UserHasQuit) || STATE(UserHasQUIT)) {
+        // the function must have called READ() and the user quit from
+        // a break loop inside it
+        ReadEvalError();
     }
 
-    if (STATE(UserHasQuit) || STATE(UserHasQUIT)) /* the procedure must have called
-                                       READ() and the user quit from a break
-                                       loop inside it */
-      ReadEvalError();
-    /* return 0 (to indicate that no leave-statement was executed)         */
+    if (ignoreResult) {
+        return 0;
+    }
+
+    while (result == 0) {
+        result =
+            ErrorReturnObj("Function Calls: <func> must return a value", 0, 0,
+                           "you can supply one by 'return <value>;'");
+    }
+    return result;
+}
+
+
+static UInt ExecProccall0args(Stat call)
+{
+    EvalOrExecCall(1, 0, call);
+
+    // return 0 (to indicate that no leave-statement was executed)
+    return 0;
+}
+
+static UInt ExecProccall1args(Stat call)
+{
+    EvalOrExecCall(1, 1, call);
+
+    // return 0 (to indicate that no leave-statement was executed)
+    return 0;
+}
+
+static UInt ExecProccall2args(Stat call)
+{
+    EvalOrExecCall(1, 2, call);
+
+    // return 0 (to indicate that no leave-statement was executed)
+    return 0;
+}
+
+static UInt ExecProccall3args(Stat call)
+{
+    EvalOrExecCall(1, 3, call);
+
+    // return 0 (to indicate that no leave-statement was executed)
+    return 0;
+}
+
+static UInt ExecProccall4args(Stat call)
+{
+    EvalOrExecCall(1, 4, call);
+
+    // return 0 (to indicate that no leave-statement was executed)
+    return 0;
+}
+
+static UInt ExecProccall5args(Stat call)
+{
+    EvalOrExecCall(1, 5, call);
+
+    // return 0 (to indicate that no leave-statement was executed)
+    return 0;
+}
+
+static UInt ExecProccall6args(Stat call)
+{
+    EvalOrExecCall(1, 6, call);
+
+    // return 0 (to indicate that no leave-statement was executed)
+    return 0;
+}
+
+static UInt ExecProccallXargs(Stat call)
+{
+    // pass in 7 (instead of NARG_SIZE_CALL(SIZE_STAT(call)))
+    // to allow the compiler to perform better optimizations
+    // (as we know that the number of arguments is >= 7 here)
+    EvalOrExecCall(1, 7, call);
+
+    // return 0 (to indicate that no leave-statement was executed)
     return 0;
 }
 
@@ -420,17 +278,16 @@ UInt            ExecProccallXargs (
 ** handled here
 */
 
-Obj EvalFunccallOpts(
-    Expr                call )
+static Obj EvalFunccallOpts(Expr call)
 {
   Obj opts;
   Obj res;
-  
-  
-  opts = EVAL_EXPR( ADDR_STAT(call)[0] );
+
+
+  opts = EVAL_EXPR(READ_STAT(call, 0));
   CALL_1ARGS(PushOptions, opts);
 
-  res = EVAL_EXPR( ADDR_STAT( call )[1]);
+  res = EVAL_EXPR(READ_STAT(call, 1));
 
   CALL_0ARGS(PopOptions);
   
@@ -454,301 +311,49 @@ Obj EvalFunccallOpts(
 **  'ARGI_CALL(<call>,<i>)'.  It returns the value returned by the function.
 */
 
-Obj             EvalFunccall0args (
-    Expr                call )
+static Obj EvalFunccall0args(Expr call)
 {
-    Obj                 result;         /* value of function call, result  */
-    Obj                 func;           /* function                        */
-
-    /* evaluate the function                                               */
-    func = EVAL_EXPR( FUNC_CALL( call ) );
-
-    /* call the function and return the result                             */
-    SET_BRK_CALL_TO( call );
-    if (TNUM_OBJ(func) != T_FUNCTION) {
-      result = DispatchFuncCall(func, 0, (Obj) 0, (Obj) 0, (Obj) 0, (Obj) 0, (Obj) 0, (Obj) 0 );
-    } else {
-      result = CALL_0ARGS( func );
-    }
-    if (STATE(UserHasQuit) || STATE(UserHasQUIT)) /* the procedure must have called
-                                       READ() and the user quit from a break
-                                       loop inside it */
-      ReadEvalError();
-    while ( result == 0 ) {
-        result = ErrorReturnObj(
-            "Function Calls: <func> must return a value",
-            0L, 0L,
-            "you can supply one by 'return <value>;'" );
-    }
-    return result;
+    return EvalOrExecCall(0, 0, call);
 }
 
-Obj             EvalFunccall1args (
-    Expr                call )
+static Obj EvalFunccall1args(Expr call)
 {
-    Obj                 result;         /* value of function call, result  */
-    Obj                 func;           /* function                        */
-    Obj                 arg1;           /* first  argument                 */
-
-    /* evaluate the function                                               */
-    func = EVAL_EXPR( FUNC_CALL( call ) );
-      /* evaluate the arguments                                              */
-    arg1 = EVAL_EXPR( ARGI_CALL( call, 1 ) );
-
-    /* call the function and return the result                             */
-    SET_BRK_CALL_TO( call );
-    if (TNUM_OBJ(func) != T_FUNCTION) {
-      result = DispatchFuncCall(func, 1, (Obj) arg1, (Obj) 0, (Obj) 0, (Obj) 0, (Obj) 0, (Obj) 0 );
-    } else {
-      result = CALL_1ARGS( func, arg1 );
-    }
-    if (STATE(UserHasQuit) || STATE(UserHasQUIT)) /* the procedure must have called
-                                       READ() and the user quit from a break
-                                       loop inside it */
-      ReadEvalError();
-    while ( result == 0 ) {
-        result = ErrorReturnObj(
-            "Function Calls: <func> must return a value",
-            0L, 0L,
-            "you can supply one by 'return <value>;'" );
-    }
-    return result;
+    return EvalOrExecCall(0, 1, call);
 }
 
-Obj             EvalFunccall2args (
-    Expr                call )
+static Obj EvalFunccall2args(Expr call)
 {
-    Obj                 result;         /* value of function call, result  */
-    Obj                 func;           /* function                        */
-    Obj                 arg1;           /* first  argument                 */
-    Obj                 arg2;           /* second argument                 */
-
-    /* evaluate the function                                               */
-    func = EVAL_EXPR( FUNC_CALL( call ) );
-
-    /* evaluate the arguments                                              */
-    arg1 = EVAL_EXPR( ARGI_CALL( call, 1 ) );
-    arg2 = EVAL_EXPR( ARGI_CALL( call, 2 ) );
-
-    /* call the function and return the result                             */
-    SET_BRK_CALL_TO( call );
-    if (TNUM_OBJ(func) != T_FUNCTION) {
-      result = DispatchFuncCall(func, 2, (Obj) arg1, (Obj) arg2, (Obj) 0, (Obj) 0, (Obj) 0, (Obj) 0 );
-    } else {
-      result = CALL_2ARGS( func, arg1, arg2 );
-    }
-    if (STATE(UserHasQuit) || STATE(UserHasQUIT)) /* the procedure must have called
-                                       READ() and the user quit from a break
-                                       loop inside it */
-      ReadEvalError();
-    while ( result == 0 ) {
-        result = ErrorReturnObj(
-            "Function Calls: <func> must return a value",
-            0L, 0L,
-            "you can supply one by 'return <value>;'" );
-    }
-    return result;
+    return EvalOrExecCall(0, 2, call);
 }
 
-Obj             EvalFunccall3args (
-    Expr                call )
+static Obj EvalFunccall3args(Expr call)
 {
-    Obj                 result;         /* value of function call, result  */
-    Obj                 func;           /* function                        */
-    Obj                 arg1;           /* first  argument                 */
-    Obj                 arg2;           /* second argument                 */
-    Obj                 arg3;           /* third  argument                 */
-
-    /* evaluate the function                                               */
-    func = EVAL_EXPR( FUNC_CALL( call ) );
-
-    /* evaluate the arguments                                              */
-    arg1 = EVAL_EXPR( ARGI_CALL( call, 1 ) );
-    arg2 = EVAL_EXPR( ARGI_CALL( call, 2 ) );
-    arg3 = EVAL_EXPR( ARGI_CALL( call, 3 ) );
-
-    /* call the function and return the result                             */
-    SET_BRK_CALL_TO( call );
-    if (TNUM_OBJ(func) != T_FUNCTION) {
-      result = DispatchFuncCall(func, 3, (Obj) arg1, (Obj) arg2, (Obj) arg3, (Obj) 0, (Obj) 0, (Obj) 0 );
-    } else {
-      result = CALL_3ARGS( func, arg1, arg2, arg3 );
-    }
-    if (STATE(UserHasQuit) || STATE(UserHasQUIT)) /* the procedure must have called
-                                       READ() and the user quit from a break
-                                       loop inside it */
-      ReadEvalError();
-    while ( result == 0 ) {
-        result = ErrorReturnObj(
-            "Function Calls: <func> must return a value",
-            0L, 0L,
-            "you can supply one by 'return <value>;'" );
-    }
-    return result;
+    return EvalOrExecCall(0, 3, call);
 }
 
-Obj             EvalFunccall4args (
-    Expr                call )
+static Obj EvalFunccall4args(Expr call)
 {
-    Obj                 result;         /* value of function call, result  */
-    Obj                 func;           /* function                        */
-    Obj                 arg1;           /* first  argument                 */
-    Obj                 arg2;           /* second argument                 */
-    Obj                 arg3;           /* third  argument                 */
-    Obj                 arg4;           /* fourth argument                 */
-
-    /* evaluate the function                                               */
-    func = EVAL_EXPR( FUNC_CALL( call ) );
-    /* evaluate the arguments                                              */
-    arg1 = EVAL_EXPR( ARGI_CALL( call, 1 ) );
-    arg2 = EVAL_EXPR( ARGI_CALL( call, 2 ) );
-    arg3 = EVAL_EXPR( ARGI_CALL( call, 3 ) );
-    arg4 = EVAL_EXPR( ARGI_CALL( call, 4 ) );
-
-    /* call the function and return the result                             */
-    SET_BRK_CALL_TO( call );
-    if (TNUM_OBJ(func) != T_FUNCTION) {
-      result = DispatchFuncCall(func, 4, (Obj) arg1, (Obj) arg2, (Obj) arg3, (Obj) arg4, (Obj) 0, (Obj) 0 );
-    } else {
-      result = CALL_4ARGS( func, arg1, arg2, arg3, arg4 );
-    }
-    if (STATE(UserHasQuit) || STATE(UserHasQUIT)) /* the procedure must have called
-                                       READ() and the user quit from a break
-                                       loop inside it */
-      ReadEvalError();
-    while ( result == 0 ) {
-        result = ErrorReturnObj(
-            "Function Calls: <func> must return a value",
-            0L, 0L,
-            "you can supply one by 'return <value>;'" );
-    }
-    return result;
+    return EvalOrExecCall(0, 4, call);
 }
 
-Obj             EvalFunccall5args (
-    Expr                call )
+static Obj EvalFunccall5args(Expr call)
 {
-    Obj                 result;         /* value of function call, result  */
-    Obj                 func;           /* function                        */
-    Obj                 arg1;           /* first  argument                 */
-    Obj                 arg2;           /* second argument                 */
-    Obj                 arg3;           /* third  argument                 */
-    Obj                 arg4;           /* fourth argument                 */
-    Obj                 arg5;           /* fifth  argument                 */
-
-    /* evaluate the function                                               */
-    func = EVAL_EXPR( FUNC_CALL( call ) );
-
-    /* evaluate the arguments                                              */
-    arg1 = EVAL_EXPR( ARGI_CALL( call, 1 ) );
-    arg2 = EVAL_EXPR( ARGI_CALL( call, 2 ) );
-    arg3 = EVAL_EXPR( ARGI_CALL( call, 3 ) );
-    arg4 = EVAL_EXPR( ARGI_CALL( call, 4 ) );
-    arg5 = EVAL_EXPR( ARGI_CALL( call, 5 ) );
-
-    /* call the function and return the result                             */
-    SET_BRK_CALL_TO( call );
-    if (TNUM_OBJ(func) != T_FUNCTION) {
-      result = DispatchFuncCall(func, 5, (Obj) arg1, (Obj) arg2, (Obj) arg3, (Obj) arg4, (Obj) arg5, (Obj) 0 );
-    } else {
-      result = CALL_5ARGS( func, arg1, arg2, arg3, arg4, arg5 );
-    }
-    if (STATE(UserHasQuit) || STATE(UserHasQUIT)) /* the procedure must have called
-                                       READ() and the user quit from a break
-                                       loop inside it */
-      ReadEvalError();
-    while ( result == 0 ) {
-        result = ErrorReturnObj(
-            "Function Calls: <func> must return a value",
-            0L, 0L,
-            "you can supply one by 'return <value>;'" );
-    }
-    return result;
+    return EvalOrExecCall(0, 5, call);
 }
 
-Obj             EvalFunccall6args (
-    Expr                call )
+static Obj EvalFunccall6args(Expr call)
 {
-    Obj                 result;         /* value of function call, result  */
-    Obj                 func;           /* function                        */
-    Obj                 arg1;           /* first  argument                 */
-    Obj                 arg2;           /* second argument                 */
-    Obj                 arg3;           /* third  argument                 */
-    Obj                 arg4;           /* fourth argument                 */
-    Obj                 arg5;           /* fifth  argument                 */
-    Obj                 arg6;           /* sixth  argument                 */
-
-    /* evaluate the function                                               */
-    func = EVAL_EXPR( FUNC_CALL( call ) );
-
-    /* evaluate the arguments                                              */
-    arg1 = EVAL_EXPR( ARGI_CALL( call, 1 ) );
-    arg2 = EVAL_EXPR( ARGI_CALL( call, 2 ) );
-    arg3 = EVAL_EXPR( ARGI_CALL( call, 3 ) );
-    arg4 = EVAL_EXPR( ARGI_CALL( call, 4 ) );
-    arg5 = EVAL_EXPR( ARGI_CALL( call, 5 ) );
-    arg6 = EVAL_EXPR( ARGI_CALL( call, 6 ) );
-
-    /* call the function and return the result                             */
-    SET_BRK_CALL_TO( call );
-    if (TNUM_OBJ(func) != T_FUNCTION) {
-      result = DispatchFuncCall(func, 6, (Obj) arg1, (Obj) arg2, (Obj) arg3, (Obj) arg4, (Obj) arg5, (Obj) arg6 );
-    } else {
-      result = CALL_6ARGS( func, arg1, arg2, arg3, arg4, arg5, arg6 );
-    }
-    if (STATE(UserHasQuit) || STATE(UserHasQUIT)) /* the procedure must have called
-                                       READ() and the user quit from a break
-                                       loop inside it */
-      ReadEvalError();
-    while ( result == 0 ) {
-        result = ErrorReturnObj(
-            "Function Calls: <func> must return a value",
-            0L, 0L,
-            "you can supply one by 'return <value>;'" );
-    }
-    return result;
+    return EvalOrExecCall(0, 6, call);
 }
 
-Obj             EvalFunccallXargs (
-    Expr                call )
+static Obj EvalFunccallXargs(Expr call)
 {
-    Obj                 result;         /* value of function call, result  */
-    Obj                 func;           /* function                        */
-    Obj                 args;           /* argument list                   */
-    Obj                 argi;           /* <i>-th argument                 */
-    UInt                i;              /* loop variable                   */
-
-    /* evaluate the function                                               */
-    func = EVAL_EXPR( FUNC_CALL( call ) );
-
-    /* evaluate the arguments                                              */
-    args = NEW_PLIST( T_PLIST, NARG_SIZE_CALL(SIZE_EXPR(call)) );
-    SET_LEN_PLIST( args, NARG_SIZE_CALL(SIZE_EXPR(call)) );
-    for ( i = 1; i <= NARG_SIZE_CALL(SIZE_EXPR(call)); i++ ) {
-        argi = EVAL_EXPR( ARGI_CALL( call, i ) );
-        SET_ELM_PLIST( args, i, argi );
-        CHANGED_BAG( args );
-    }
-
-    /* call the function and return the result                             */
-    SET_BRK_CALL_TO( call );
-    if (TNUM_OBJ(func) != T_FUNCTION) {
-      result = DispatchFuncCall(func, -1, (Obj) args, (Obj) 0, (Obj) 0, (Obj) 0, (Obj) 0, (Obj) 0 );
-    } else {
-      result = CALL_XARGS( func, args );
-    }
-    if (STATE(UserHasQuit) || STATE(UserHasQUIT)) /* the procedure must have called
-                                       READ() and the user quit from a break
-                                       loop inside it */
-      ReadEvalError();
-    while ( result == 0 ) {
-        result = ErrorReturnObj(
-            "Function Calls: <func> must return a value",
-            0L, 0L,
-            "you can supply one by 'return <value>;'" );
-    }
-    return result;
+    // pass in 7 (instead of NARG_SIZE_CALL(SIZE_EXPR(call)))
+    // to allow the compiler to perform better optimizations
+    // (as we know that the number of arguments is >= 7 here)
+    return EvalOrExecCall(0, 7, call);
 }
+
 
 
 /****************************************************************************
@@ -802,10 +407,6 @@ void RecursionDepthTrap( void )
     }
 }
 
-#ifdef TRACEFRAMES
-Obj STEVES_TRACING;
-#endif
-
 #define CHECK_RECURSION_BEFORE \
             HookedLineIntoFunction(func); \
             CheckRecursionBefore();
@@ -822,14 +423,6 @@ Obj STEVES_TRACING;
 #define CLEAR_LOCK_STACK() \
     if (lockSP != TLS(lockStackPointer)) \
       PopRegionLocks(lockSP)
-
-#else
-
-#define REMEMBER_LOCKSTACK() \
-    do { } while (0)
-
-#define CLEAR_LOCK_STACK() \
-    do { } while (0)
 
 #endif
 
@@ -850,282 +443,16 @@ static Obj PopReturnObjStat(void)
     return returnObjStat;
 }
 
-Obj DoExecFunc0args (
-    Obj                 func )
-{
-    Bag                 oldLvars;       /* old values bag                  */
-    REMEMBER_LOCKSTACK();
-
-    CHECK_RECURSION_BEFORE
-
-    /* switch to a new values bag                                          */
-    SWITCH_TO_NEW_LVARS( func, 0, NLOC_FUNC(func), oldLvars );
-
-    /* execute the statement sequence                                      */
-    ExecFuncHelper();
-    CLEAR_LOCK_STACK();
-
-    /* switch back to the old values bag                                   */
-    SWITCH_TO_OLD_LVARS_AND_FREE( oldLvars );
-
-    CHECK_RECURSION_AFTER
-    
-    /* return the result                                                   */
-    return PopReturnObjStat();
-}
-
-Obj             DoExecFunc1args (
-    Obj                 func,
-    Obj                 arg1 )
-{
-    Bag                 oldLvars;       /* old values bag                  */
-    REMEMBER_LOCKSTACK();
-
-    CHECK_RECURSION_BEFORE
-
-    /* switch to a new values bag                                          */
-    SWITCH_TO_NEW_LVARS( func, 1, NLOC_FUNC(func), oldLvars );
-
-    /* enter the arguments                                                 */
-    ASS_LVAR( 1, arg1 );
-
-    /* execute the statement sequence                                      */
-    ExecFuncHelper();
-    CLEAR_LOCK_STACK();
-
-    /* switch back to the old values bag                                   */
-    SWITCH_TO_OLD_LVARS_AND_FREE( oldLvars );
-
-    CHECK_RECURSION_AFTER
-
-    /* return the result                                                   */
-    return PopReturnObjStat();
-}
-
-Obj             DoExecFunc2args (
-    Obj                 func,
-    Obj                 arg1,
-    Obj                 arg2 )
-{
-    Bag                 oldLvars;       /* old values bag                  */
-    REMEMBER_LOCKSTACK();
-
-    CHECK_RECURSION_BEFORE
-
-    /* switch to a new values bag                                          */
-    SWITCH_TO_NEW_LVARS( func, 2, NLOC_FUNC(func), oldLvars );
-
-    /* enter the arguments                                                 */
-    ASS_LVAR( 1, arg1 );
-    ASS_LVAR( 2, arg2 );
-
-    /* execute the statement sequence                                      */
-    ExecFuncHelper();
-    CLEAR_LOCK_STACK();
-
-    /* switch back to the old values bag                                   */
-    SWITCH_TO_OLD_LVARS_AND_FREE( oldLvars );
-
-    CHECK_RECURSION_AFTER
-
-    /* return the result                                                   */
-    return PopReturnObjStat();
-}
-
-Obj             DoExecFunc3args (
-    Obj                 func,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3 )
-{
-    Bag                 oldLvars;       /* old values bag                  */
-    REMEMBER_LOCKSTACK();
-
-    CHECK_RECURSION_BEFORE
-
-    /* switch to a new values bag                                          */
-    SWITCH_TO_NEW_LVARS( func, 3, NLOC_FUNC(func), oldLvars );
-
-    /* enter the arguments                                                 */
-    ASS_LVAR( 1, arg1 );
-    ASS_LVAR( 2, arg2 );
-    ASS_LVAR( 3, arg3 );
-
-    /* execute the statement sequence                                      */
-    ExecFuncHelper();
-    CLEAR_LOCK_STACK();
-
-    /* switch back to the old values bag                                   */
-    SWITCH_TO_OLD_LVARS_AND_FREE( oldLvars );
-
-    CHECK_RECURSION_AFTER
-
-    /* return the result                                                   */
-    return PopReturnObjStat();
-}
-
-Obj             DoExecFunc4args (
-    Obj                 func,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3,
-    Obj                 arg4 )
-{
-    Bag                 oldLvars;       /* old values bag                  */
-    REMEMBER_LOCKSTACK();
-
-    CHECK_RECURSION_BEFORE
-
-    /* switch to a new values bag                                          */
-    SWITCH_TO_NEW_LVARS( func, 4, NLOC_FUNC(func), oldLvars );
-
-    /* enter the arguments                                                 */
-    ASS_LVAR( 1, arg1 );
-    ASS_LVAR( 2, arg2 );
-    ASS_LVAR( 3, arg3 );
-    ASS_LVAR( 4, arg4 );
-
-    /* execute the statement sequence                                      */
-    ExecFuncHelper();
-    CLEAR_LOCK_STACK();
-
-    /* switch back to the old values bag                                   */
-    SWITCH_TO_OLD_LVARS_AND_FREE( oldLvars );
-
-    CHECK_RECURSION_AFTER
-
-    /* return the result                                                   */
-    return PopReturnObjStat();
-}
-
-Obj             DoExecFunc5args (
-    Obj                 func,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3,
-    Obj                 arg4,
-    Obj                 arg5 )
-{
-    Bag                 oldLvars;       /* old values bag                  */
-    REMEMBER_LOCKSTACK();
-
-    CHECK_RECURSION_BEFORE
-
-    /* switch to a new values bag                                          */
-    SWITCH_TO_NEW_LVARS( func, 5, NLOC_FUNC(func), oldLvars );
-
-    /* enter the arguments                                                 */
-    ASS_LVAR( 1, arg1 );
-    ASS_LVAR( 2, arg2 );
-    ASS_LVAR( 3, arg3 );
-    ASS_LVAR( 4, arg4 );
-    ASS_LVAR( 5, arg5 );
-
-    /* execute the statement sequence                                      */
-    ExecFuncHelper();
-    CLEAR_LOCK_STACK();
-
-    /* switch back to the old values bag                                   */
-    SWITCH_TO_OLD_LVARS_AND_FREE( oldLvars );
-
-    CHECK_RECURSION_AFTER
-
-    /* return the result                                                   */
-    return PopReturnObjStat();
-}
-
-Obj             DoExecFunc6args (
-    Obj                 func,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3,
-    Obj                 arg4,
-    Obj                 arg5,
-    Obj                 arg6 )
-{
-    Bag                 oldLvars;       /* old values bag                  */
-    REMEMBER_LOCKSTACK();
-
-    CHECK_RECURSION_BEFORE
-
-    /* switch to a new values bag                                          */
-    SWITCH_TO_NEW_LVARS( func, 6, NLOC_FUNC(func), oldLvars );
-
-    /* enter the arguments                                                 */
-    ASS_LVAR( 1, arg1 );
-    ASS_LVAR( 2, arg2 );
-    ASS_LVAR( 3, arg3 );
-    ASS_LVAR( 4, arg4 );
-    ASS_LVAR( 5, arg5 );
-    ASS_LVAR( 6, arg6 );
-
-    /* execute the statement sequence                                      */
-    ExecFuncHelper();
-    CLEAR_LOCK_STACK();
-
-    /* switch back to the old values bag                                   */
-    SWITCH_TO_OLD_LVARS_AND_FREE( oldLvars );
-
-    CHECK_RECURSION_AFTER
-
-    /* return the result                                                   */
-    return PopReturnObjStat();
-}
-
-Obj             DoExecFuncXargs (
-    Obj                 func,
-    Obj                 args )
-{
-    Bag                 oldLvars;       /* old values bag                  */
-    REMEMBER_LOCKSTACK();
-    UInt                len;            /* number of arguments             */
-    UInt                i;              /* loop variable                   */
-
-    CHECK_RECURSION_BEFORE
-
-    /* check the number of arguments                                       */
-    len = NARG_FUNC( func );
-    while ( len != LEN_PLIST( args ) ) {
-        args = ErrorReturnObj(
-            "Function Calls: number of arguments must be %d (not %d)",
-            len, LEN_PLIST( args ),
-            "you can replace the <list> of arguments via 'return <list>;'" );
-        PLAIN_LIST( args );
-    }
-
-    /* switch to a new values bag                                          */
-    SWITCH_TO_NEW_LVARS( func, len, NLOC_FUNC(func), oldLvars );
-
-    /* enter the arguments                                                 */
-    for ( i = 1; i <= len; i++ ) {
-        ASS_LVAR( i, ELM_PLIST( args, i ) );
-    }
-
-    /* execute the statement sequence                                      */
-    ExecFuncHelper();
-    CLEAR_LOCK_STACK();
-
-    /* switch back to the old values bag                                   */
-    SWITCH_TO_OLD_LVARS_AND_FREE( oldLvars );
-
-    CHECK_RECURSION_AFTER
-
-    /* return the result                                                   */
-    return PopReturnObjStat();
-}
-
-
 #ifdef HPCGAP
 
-static void LockFuncArgs(Obj func, const Obj * args)
+static void LockFuncArgs(Obj func, Int narg, const Obj * args)
 {
-    Int nargs = NARG_FUNC(func);
     Int i;
     int count = 0;
-    int *mode = alloca(nargs * sizeof(int));
+    int *mode = alloca(narg * sizeof(int));
     UChar *locks = CHARS_STRING(LCKS_FUNC(func));
-    Obj *objects = alloca(nargs * sizeof(Obj));
-    for (i=0; i<nargs; i++) {
+    Obj *objects = alloca(narg * sizeof(Obj));
+    for (i=0; i<narg; i++) {
       Obj obj = args[i];
       switch (locks[i]) {
         case 1:
@@ -1152,53 +479,31 @@ static void LockFuncArgs(Obj func, const Obj * args)
       PushRegionLock((Region *) 0);
 }
 
-Obj             DoExecFunc0argsL (
-    Obj                 func )
+#endif
+
+static ALWAYS_INLINE Obj DoExecFunc(Obj func, Int narg, const Obj *arg)
 {
     Bag                 oldLvars;       /* old values bag                  */
-    REMEMBER_LOCKSTACK();
-    Obj                 args[1];
-    LockFuncArgs(func, args);
-
     CHECK_RECURSION_BEFORE
 
-    /* switch to a new values bag                                          */
-    SWITCH_TO_NEW_LVARS( func, 1, NLOC_FUNC(func), oldLvars );
-
-    /* execute the statement sequence                                      */
-    ExecFuncHelper();
-    CLEAR_LOCK_STACK();
-
-    /* switch back to the old values bag                                   */
-    SWITCH_TO_OLD_LVARS_AND_FREE( oldLvars );
-
-    CHECK_RECURSION_AFTER
-
-    /* return the result                                                   */
-    return PopReturnObjStat();
-}
-
-Obj             DoExecFunc1argsL (
-    Obj                 func,
-    Obj                 arg1 )
-{
-    Bag                 oldLvars;       /* old values bag                  */
+#ifdef HPCGAP
     REMEMBER_LOCKSTACK();
-    Obj                 args[1];
-    args[0] = arg1;
-    LockFuncArgs(func, args);
-
-    CHECK_RECURSION_BEFORE
+    if (LCKS_FUNC(func))
+        LockFuncArgs(func, narg, arg);
+#endif
 
     /* switch to a new values bag                                          */
-    SWITCH_TO_NEW_LVARS( func, 1, NLOC_FUNC(func), oldLvars );
+    SWITCH_TO_NEW_LVARS( func, narg, NLOC_FUNC(func), oldLvars );
 
     /* enter the arguments                                                 */
-    ASS_LVAR( 1, arg1 );
+    for (Int i = 0; i < narg; i++)
+        ASS_LVAR( i+1, arg[i] );
 
     /* execute the statement sequence                                      */
     ExecFuncHelper();
+#ifdef HPCGAP
     CLEAR_LOCK_STACK();
+#endif
 
     /* switch back to the old values bag                                   */
     SWITCH_TO_OLD_LVARS_AND_FREE( oldLvars );
@@ -1209,215 +514,52 @@ Obj             DoExecFunc1argsL (
     return PopReturnObjStat();
 }
 
-Obj             DoExecFunc2argsL (
-    Obj                 func,
-    Obj                 arg1,
-    Obj                 arg2 )
+static Obj DoExecFunc0args(Obj func)
 {
-    Bag                 oldLvars;       /* old values bag                  */
-    REMEMBER_LOCKSTACK();
-    Obj                 args[2];
-    args[0] = arg1;
-    args[1] = arg2;
-    LockFuncArgs(func, args);
-
-    CHECK_RECURSION_BEFORE
-
-    /* switch to a new values bag                                          */
-    SWITCH_TO_NEW_LVARS( func, 2, NLOC_FUNC(func), oldLvars );
-
-    /* enter the arguments                                                 */
-    ASS_LVAR( 1, arg1 );
-    ASS_LVAR( 2, arg2 );
-
-    /* execute the statement sequence                                      */
-    ExecFuncHelper();
-    CLEAR_LOCK_STACK();
-
-    /* switch back to the old values bag                                   */
-    SWITCH_TO_OLD_LVARS_AND_FREE( oldLvars );
-
-    CHECK_RECURSION_AFTER
-
-    /* return the result                                                   */
-    return PopReturnObjStat();
+    return DoExecFunc(func, 0, 0);
 }
 
-Obj             DoExecFunc3argsL (
-    Obj                 func,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3 )
+static Obj DoExecFunc1args(Obj func, Obj a1)
 {
-    Bag                 oldLvars;       /* old values bag                  */
-    REMEMBER_LOCKSTACK();
-    Obj                 args[3];
-    args[0] = arg1;
-    args[1] = arg2;
-    args[2] = arg3;
-    LockFuncArgs(func, args);
-
-
-    CHECK_RECURSION_BEFORE
-
-    /* switch to a new values bag                                          */
-    SWITCH_TO_NEW_LVARS( func, 3, NLOC_FUNC(func), oldLvars );
-
-    /* enter the arguments                                                 */
-    ASS_LVAR( 1, arg1 );
-    ASS_LVAR( 2, arg2 );
-    ASS_LVAR( 3, arg3 );
-
-    /* execute the statement sequence                                      */
-    ExecFuncHelper();
-    CLEAR_LOCK_STACK();
-
-    /* switch back to the old values bag                                   */
-    SWITCH_TO_OLD_LVARS_AND_FREE( oldLvars );
-
-    CHECK_RECURSION_AFTER
-
-    /* return the result                                                   */
-    return PopReturnObjStat();
+    Obj arg[] = { a1 };
+    return DoExecFunc(func, 1, arg);
 }
 
-Obj             DoExecFunc4argsL (
-    Obj                 func,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3,
-    Obj                 arg4 )
+static Obj DoExecFunc2args(Obj func, Obj a1, Obj a2)
 {
-    Bag                 oldLvars;       /* old values bag                  */
-    REMEMBER_LOCKSTACK();
-    Obj                 args[4];
-    args[0] = arg1;
-    args[1] = arg2;
-    args[2] = arg3;
-    args[3] = arg4;
-    LockFuncArgs(func, args);
-
-    CHECK_RECURSION_BEFORE
-
-    /* switch to a new values bag                                          */
-    SWITCH_TO_NEW_LVARS( func, 4, NLOC_FUNC(func), oldLvars );
-
-    /* enter the arguments                                                 */
-    ASS_LVAR( 1, arg1 );
-    ASS_LVAR( 2, arg2 );
-    ASS_LVAR( 3, arg3 );
-    ASS_LVAR( 4, arg4 );
-
-    /* execute the statement sequence                                      */
-    ExecFuncHelper();
-    CLEAR_LOCK_STACK();
-
-    /* switch back to the old values bag                                   */
-    SWITCH_TO_OLD_LVARS_AND_FREE( oldLvars );
-
-    CHECK_RECURSION_AFTER
-
-    /* return the result                                                   */
-    return PopReturnObjStat();
+    Obj arg[] = { a1, a2 };
+    return DoExecFunc(func, 2, arg);
 }
 
-Obj             DoExecFunc5argsL (
-    Obj                 func,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3,
-    Obj                 arg4,
-    Obj                 arg5 )
+static Obj DoExecFunc3args(Obj func, Obj a1, Obj a2, Obj a3)
 {
-    Bag                 oldLvars;       /* old values bag                  */
-    REMEMBER_LOCKSTACK();
-    Obj                 args[5];
-    args[0] = arg1;
-    args[1] = arg2;
-    args[2] = arg3;
-    args[3] = arg4;
-    args[4] = arg5;
-    LockFuncArgs(func, args);
-
-    CHECK_RECURSION_BEFORE
-
-    /* switch to a new values bag                                          */
-    SWITCH_TO_NEW_LVARS( func, 5, NLOC_FUNC(func), oldLvars );
-
-    /* enter the arguments                                                 */
-    ASS_LVAR( 1, arg1 );
-    ASS_LVAR( 2, arg2 );
-    ASS_LVAR( 3, arg3 );
-    ASS_LVAR( 4, arg4 );
-    ASS_LVAR( 5, arg5 );
-
-    /* execute the statement sequence                                      */
-    ExecFuncHelper();
-    CLEAR_LOCK_STACK();
-
-    /* switch back to the old values bag                                   */
-    SWITCH_TO_OLD_LVARS_AND_FREE( oldLvars );
-
-    CHECK_RECURSION_AFTER
-
-    /* return the result                                                   */
-    return PopReturnObjStat();
+    Obj arg[] = { a1, a2, a3 };
+    return DoExecFunc(func, 3, arg);
 }
 
-Obj             DoExecFunc6argsL (
-    Obj                 func,
-    Obj                 arg1,
-    Obj                 arg2,
-    Obj                 arg3,
-    Obj                 arg4,
-    Obj                 arg5,
-    Obj                 arg6 )
+static Obj DoExecFunc4args(Obj func, Obj a1, Obj a2, Obj a3, Obj a4)
 {
-    Bag                 oldLvars;       /* old values bag                  */
-    REMEMBER_LOCKSTACK();
-    Obj                 args[6];
-    args[0] = arg1;
-    args[1] = arg2;
-    args[2] = arg3;
-    args[3] = arg4;
-    args[4] = arg5;
-    args[5] = arg6;
-    LockFuncArgs(func, args);
-
-    CHECK_RECURSION_BEFORE
-
-    /* switch to a new values bag                                          */
-    SWITCH_TO_NEW_LVARS( func, 6, NLOC_FUNC(func), oldLvars );
-
-    /* enter the arguments                                                 */
-    ASS_LVAR( 1, arg1 );
-    ASS_LVAR( 2, arg2 );
-    ASS_LVAR( 3, arg3 );
-    ASS_LVAR( 4, arg4 );
-    ASS_LVAR( 5, arg5 );
-    ASS_LVAR( 6, arg6 );
-
-    /* execute the statement sequence                                      */
-    ExecFuncHelper();
-    CLEAR_LOCK_STACK();
-
-    /* switch back to the old values bag                                   */
-    SWITCH_TO_OLD_LVARS_AND_FREE( oldLvars );
-
-    CHECK_RECURSION_AFTER
-
-    /* return the result                                                   */
-    return PopReturnObjStat();
+    Obj arg[] = { a1, a2, a3, a4 };
+    return DoExecFunc(func, 4, arg);
 }
 
-Obj             DoExecFuncXargsL (
-    Obj                 func,
-    Obj                 args )
+static Obj DoExecFunc5args(Obj func, Obj a1, Obj a2, Obj a3, Obj a4, Obj a5)
+{
+    Obj arg[] = { a1, a2, a3, a4, a5 };
+    return DoExecFunc(func, 5, arg);
+}
+
+static Obj DoExecFunc6args(Obj func, Obj a1, Obj a2, Obj a3, Obj a4, Obj a5, Obj a6)
+{
+    Obj arg[] = { a1, a2, a3, a4, a5, a6 };
+    return DoExecFunc(func, 6, arg);
+}
+
+static Obj DoExecFuncXargs(Obj func, Obj args)
 {
     Bag                 oldLvars;       /* old values bag                  */
     UInt                len;            /* number of arguments             */
     UInt                i;              /* loop variable                   */
-    REMEMBER_LOCKSTACK();
 
     CHECK_RECURSION_BEFORE
 
@@ -1431,7 +573,11 @@ Obj             DoExecFuncXargsL (
         PLAIN_LIST( args );
     }
 
-    LockFuncArgs(func, CONST_ADDR_OBJ(args) + 1);
+#ifdef HPCGAP
+    REMEMBER_LOCKSTACK();
+    if (LCKS_FUNC(func))
+        LockFuncArgs(func, len, CONST_ADDR_OBJ(args) + 1);
+#endif
 
     /* switch to a new values bag                                          */
     SWITCH_TO_NEW_LVARS( func, len, NLOC_FUNC(func), oldLvars );
@@ -1443,7 +589,9 @@ Obj             DoExecFuncXargsL (
 
     /* execute the statement sequence                                      */
     ExecFuncHelper();
+#ifdef HPCGAP
     CLEAR_LOCK_STACK();
+#endif
 
     /* switch back to the old values bag                                   */
     SWITCH_TO_OLD_LVARS_AND_FREE( oldLvars );
@@ -1454,10 +602,8 @@ Obj             DoExecFuncXargsL (
     return PopReturnObjStat();
 }
 
-#endif /* HPCGAP */
 
-
-Obj DoPartialUnWrapFunc(Obj func, Obj args)
+static Obj DoPartialUnWrapFunc(Obj func, Obj args)
 {
     Bag                 oldLvars;       /* old values bag                  */
     UInt                named;          /* number of arguments             */
@@ -1465,6 +611,7 @@ Obj DoPartialUnWrapFunc(Obj func, Obj args)
     UInt len;
     Obj argx;
 
+    CHECK_RECURSION_BEFORE
 
     named = ((UInt)-NARG_FUNC(func))-1;
     len = LEN_PLIST(args);
@@ -1474,7 +621,11 @@ Obj DoPartialUnWrapFunc(Obj func, Obj args)
       return DoOperation2Args(CallFuncListOper, func, argx);
     }
 
-    CHECK_RECURSION_BEFORE
+#ifdef HPCGAP
+    REMEMBER_LOCKSTACK();
+    if (LCKS_FUNC(func))
+        LockFuncArgs(func, len, CONST_ADDR_OBJ(args) + 1);
+#endif
 
     /* switch to a new values bag                                          */
     SWITCH_TO_NEW_LVARS( func, named+1, NLOC_FUNC(func), oldLvars );
@@ -1490,9 +641,10 @@ Obj DoPartialUnWrapFunc(Obj func, Obj args)
     ASS_LVAR(named+1, args);
 
     /* execute the statement sequence                                      */
-    REMEMBER_LOCKSTACK();
     ExecFuncHelper();
+#ifdef HPCGAP
     CLEAR_LOCK_STACK();
+#endif
 
     /* switch back to the old values bag                                   */
     SWITCH_TO_OLD_LVARS_AND_FREE( oldLvars );
@@ -1514,23 +666,7 @@ Obj             MakeFunction (
 {
     Obj                 func;           /* function, result                */
     ObjFunc             hdlr;           /* handler                         */
-#ifdef HPCGAP
-    Obj                 locks;          /* Locks of the function?   */
 
-    locks = LCKS_FUNC(fexp);
-    /* select the right handler                                            */
-    if (locks) {
-        if      ( NARG_FUNC(fexp) ==  0 )  hdlr = DoExecFunc0argsL;
-        else if ( NARG_FUNC(fexp) ==  1 )  hdlr = DoExecFunc1argsL;
-        else if ( NARG_FUNC(fexp) ==  2 )  hdlr = DoExecFunc2argsL;
-        else if ( NARG_FUNC(fexp) ==  3 )  hdlr = DoExecFunc3argsL;
-        else if ( NARG_FUNC(fexp) ==  4 )  hdlr = DoExecFunc4argsL;
-        else if ( NARG_FUNC(fexp) ==  5 )  hdlr = DoExecFunc5argsL;
-        else if ( NARG_FUNC(fexp) ==  6 )  hdlr = DoExecFunc6argsL;
-        else if ( NARG_FUNC(fexp) >=  7 )  hdlr = DoExecFuncXargsL;
-        else   /* NARG_FUNC(fexp) == -1 */ hdlr = DoExecFunc1argsL;
-    } else
-#endif
     if      ( NARG_FUNC(fexp) ==  0 )  hdlr = DoExecFunc0args;
     else if ( NARG_FUNC(fexp) ==  1 )  hdlr = DoExecFunc1args;
     else if ( NARG_FUNC(fexp) ==  2 )  hdlr = DoExecFunc2args;
@@ -1555,7 +691,7 @@ Obj             MakeFunction (
     CHANGED_BAG( STATE(CurrLVars) );
     MakeHighVars(STATE(CurrLVars));
 #ifdef HPCGAP
-    SET_LCKS_FUNC( func, locks );
+    SET_LCKS_FUNC( func, LCKS_FUNC( fexp ) );
 #endif
     SET_FEXS_FUNC( func, FEXS_FUNC( fexp ) );
 
@@ -1578,7 +714,7 @@ Obj             EvalFuncExpr (
 
     /* get the function expression bag                                     */
     fexs = FEXS_FUNC( CURR_FUNC() );
-    fexp = ELM_PLIST( fexs, (Int)(ADDR_EXPR(expr)[0]) );
+    fexp = ELM_PLIST(fexs, READ_EXPR(expr, 0));
 
     /* and make the function                                               */
     return MakeFunction( fexp );
@@ -1599,7 +735,7 @@ void            PrintFuncExpr (
 
     /* get the function expression bag                                     */
     fexs = FEXS_FUNC( CURR_FUNC() );
-    fexp = ELM_PLIST( fexs, (Int)(ADDR_EXPR(expr)[0]) );
+    fexp = ELM_PLIST(fexs, READ_EXPR(expr, 0));
     PrintFunction( fexp );
     /* Pr("function ... end",0L,0L); */
 }
@@ -1672,10 +808,10 @@ void            PrintFunccall (
 void             PrintFunccallOpts (
     Expr                call )
 {
-  PrintFunccall1( ADDR_STAT( call )[1]);
-  Pr(" :%2> ", 0L, 0L);
-  PrintRecExpr1 ( ADDR_STAT( call )[0]);
-  Pr(" %4<)",0L,0L);
+    PrintFunccall1(READ_STAT(call, 1));
+    Pr(" :%2> ", 0L, 0L);
+    PrintRecExpr1(READ_STAT(call, 0));
+    Pr(" %4<)", 0L, 0L);
 }
 
   
@@ -1747,7 +883,7 @@ Obj FuncGetRecursionDepth( Obj self )
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
@@ -1787,9 +923,6 @@ static Int InitKernel (
     StructInitInfo *    module )
 {
     RecursionTrapInterval = 5000;
-#ifdef TRACEFRAMES
-    InitCopyGVar("STEVES_TRACING", &STEVES_TRACING);
-#endif
 
 #if !defined(HPCGAP)
     /* make the global variable known to Gasman                            */
@@ -1803,9 +936,6 @@ static Int InitKernel (
     ImportFuncFromLibrary( "PushOptions", &PushOptions );
     ImportFuncFromLibrary( "PopOptions",  &PopOptions  );
 
-    /* Allocate functions in the public region */
-    MakeBagTypePublic(T_FUNCTION);
-
     /* use short cookies to save space in saved workspace                  */
     InitHandlerFunc( DoExecFunc0args, "i0");
     InitHandlerFunc( DoExecFunc1args, "i1");
@@ -1815,17 +945,6 @@ static Int InitKernel (
     InitHandlerFunc( DoExecFunc5args, "i5");
     InitHandlerFunc( DoExecFunc6args, "i6");
     InitHandlerFunc( DoExecFuncXargs, "iX");
-
-#ifdef HPCGAP
-    InitHandlerFunc( DoExecFunc1argsL, "i1l");
-    InitHandlerFunc( DoExecFunc2argsL, "i2l");
-    InitHandlerFunc( DoExecFunc3argsL, "i3l");
-    InitHandlerFunc( DoExecFunc4argsL, "i4l");
-    InitHandlerFunc( DoExecFunc5argsL, "i5l");
-    InitHandlerFunc( DoExecFunc6argsL, "i6l");
-    InitHandlerFunc( DoExecFuncXargsL, "iXl");
-#endif
-
     InitHandlerFunc( DoPartialUnWrapFunc, "pUW");
 
     /* install the evaluators and executors                                */
@@ -1875,10 +994,13 @@ static Int InitKernel (
     return 0;
 }
 
-static void InitModuleState(ModuleStateOffset offset)
+static Int InitModuleState(void)
 {
     FuncsState()->ExecState = 0;
     FuncsState()->RecursionDepth = 0;
+
+    // return success
+    return 0;
 }
 
 /****************************************************************************
@@ -1892,10 +1014,13 @@ static StructInitInfo module = {
     .name = "funcs",
     .initKernel = InitKernel,
     .initLibrary = InitLibrary,
+
+    .moduleStateSize = sizeof(struct FuncsModuleState),
+    .moduleStateOffsetPtr = &FuncsStateOffset,
+    .initModuleState = InitModuleState,
 };
 
 StructInitInfo * InitInfoFuncs ( void )
 {
-    FuncsStateOffset = RegisterModuleState(sizeof(struct FuncsModuleState), InitModuleState, 0);
     return &module;
 }

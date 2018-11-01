@@ -248,7 +248,7 @@ InstallGlobalFunction(StringPP, function( n )
         str := "";
     fi;
 
-    facs := Collected( FactorsInt( n ) );
+    facs := Collected( Factors(Integers, n ) );
     for i in [ 1 .. Length( facs ) ] do
         if i > 1 then Append( str, "*" ); fi;
         Append( str, String( facs[ i ][ 1 ] ) );
@@ -421,6 +421,31 @@ end );
 ##  output directly. Use PrintObj to get a result which can be safely reread
 ##  by GAP or used for cut and paste.
 ##  
+
+# The first list is sorted and contains special characters. The second list
+# contains characters that should instead be printed after a `\'.
+BindGlobal("SPECIAL_CHARS_VIEW_STRING", MakeImmutable(
+[ List(Concatenation([0..31],[34,92],[127..255]), CHAR_INT), [
+"\\000", "\\>", "\\<", "\\c", "\\004", "\\005", "\\006", "\\007", "\\b", "\\t",
+"\\n", "\\013", "\\014", "\\r", "\\016", "\\017", "\\020", "\\021", "\\022",
+"\\023", "\\024", "\\025", "\\026", "\\027", "\\030", "\\031", "\\032", "\\033",
+"\\034", "\\035", "\\036", "\\037", "\\\"", "\\\\",
+"\\177","\\200","\\201","\\202","\\203","\\204","\\205","\\206","\\207",
+"\\210","\\211","\\212","\\213","\\214","\\215","\\216","\\217","\\220",
+"\\221","\\222","\\223","\\224","\\225","\\226","\\227","\\230","\\231",
+"\\232","\\233","\\234","\\235","\\236","\\237","\\240","\\241","\\242",
+"\\243","\\244","\\245","\\246","\\247","\\250","\\251","\\252","\\253",
+"\\254","\\255","\\256","\\257","\\260","\\261","\\262","\\263","\\264",
+"\\265","\\266","\\267","\\270","\\271","\\272","\\273","\\274","\\275",
+"\\276","\\277","\\300","\\301","\\302","\\303","\\304","\\305","\\306",
+"\\307","\\310","\\311","\\312","\\313","\\314","\\315","\\316","\\317",
+"\\320","\\321","\\322","\\323","\\324","\\325","\\326","\\327","\\330",
+"\\331","\\332","\\333","\\334","\\335","\\336","\\337","\\340","\\341",
+"\\342","\\343","\\344","\\345","\\346","\\347","\\350","\\351","\\352",
+"\\353","\\354","\\355","\\356","\\357","\\360","\\361","\\362","\\363",
+"\\364","\\365","\\366","\\367","\\370","\\371","\\372","\\373","\\374",
+"\\375","\\376","\\377" ]]));
+
 InstallMethod(ViewObj, "IsChar", true, [IsChar], 0,
 function(x)
   local pos;
@@ -1234,8 +1259,139 @@ InstallGlobalFunction(StringOfMemoryAmount, function(m)
     return s;
 end);
 
-        
+InstallGlobalFunction(PrintToFormatted, function(stream, s, data...)
+    local pos, len, outstr, nextbrace, endbrace,
+          argcounter, var,
+          splitReplacementField, toprint, namedIdUsed;
+
+    # Set to true if we ever use a named id in a replacement field
+    namedIdUsed := false;
+
+    # Split a replacement field {..} at [startpos..endpos]
+    splitReplacementField := function(startpos, endpos)
+      local posbang, format;
+      posbang := Position(s, '!', startpos-1);
+      if posbang = fail or posbang > endpos then
+        posbang := endpos + 1;
+      fi;
+      format := s{[posbang + 1 .. endpos]};
+      # If no format, default to "s"
+      if format = "" then
+        format := "s";
+      fi;
+      return rec(id := s{[startpos..posbang-1]}, format := format);
+    end;
+      
+    argcounter := 1;
+    len := Length(s);
+    pos := 0;
+
+    if not (IsOutputStream(stream) or IsString(stream)) or not IsString(s) then
+        ErrorNoReturn("Usage: PrintToFormatted(<stream>, <string>, <data>...)");
+    fi;
+
+    while pos < len do
+        nextbrace := Position(s, '{', pos);
+        endbrace := Position(s, '}', pos);
+        # Scan until we find an '{'.
+        # Produce an error if we find '}', unless it is part of '}}'.
+        while IsInt(endbrace) and (nextbrace = fail or endbrace < nextbrace) do
+            if endbrace + 1 <= len and s[endbrace + 1] = '}' then
+                # Found }} with no { before it, insert everything up to
+                # including the first }, skipping the second.
+                AppendTo(stream, s{[pos+1..endbrace]});
+                pos := endbrace + 1;
+                endbrace := Position(s, '}', pos);
+            else
+                ErrorNoReturn("Mismatched '}' at position ",endbrace);
+            fi;
+        od;
+
+        if nextbrace = fail then
+            # In this case, endbrace = fail, or we would not have left
+            # previous while loop
+            AppendTo(stream, s{[pos+1..len]});
+            return;
+        fi;
+
+        AppendTo(stream, s{[pos+1..nextbrace-1]});
+
+        # If this is {{, then print a { and call 'continue'
+        if nextbrace+1 <= len and s[nextbrace+1] = '{' then
+            AppendTo(stream, "{");
+            pos := nextbrace + 1;
+            continue;
+        fi;
+
+        if endbrace = fail then
+            ErrorNoReturn("Invalid format string, no matching '}' at position ", nextbrace);
+        fi;
+
+        toprint := splitReplacementField(nextbrace+1,endbrace-1);
+
+        # Check if we are mixing giving id, and not giving id.
+        if (argcounter > 1 and toprint.id <> "") or (namedIdUsed and toprint.id = "") then
+            ErrorNoReturn("replacement field must either all have an id, or all have no id");
+        fi;
+
+        if toprint.id = "" then
+            if Length(data) < argcounter then
+                ErrorNoReturn("out of bounds -- used ",argcounter," replacement fields without id when there are only ",Length(data), " arguments");
+            fi;
+            var := data[argcounter];
+            argcounter := argcounter + 1;
+        elif Int(toprint.id) <> fail then
+            namedIdUsed := true;
+            if Int(toprint.id) < 1 or Int(toprint.id) > Length(data) then
+                ErrorNoReturn("out of bounds -- asked for {",Int(toprint.id),"} when there are only ",Length(data), " arguments");
+            fi;
+            var := data[Int(toprint.id)];
+        else
+            namedIdUsed := true;
+            if not IsRecord(data[1]) then
+                ErrorNoReturn("first data argument must be a record when using {",toprint.id,"}");
+            fi;
+            if not IsBound(data[1].(toprint.id)) then
+                ErrorNoReturn("no record member '",toprint[1].id,"'");
+            fi;
+            var := data[1].(toprint.id);
+        fi;
+        pos := endbrace;
+
+        if toprint.format = "s" then
+          if not IsString(var) then
+            var := String(var);
+          fi;
+          AppendTo(stream, var);
+        elif toprint.format = "v" then
+          AppendTo(stream, ViewString(var));
+        elif toprint.format = "d" then
+          AppendTo(stream, DisplayString(var));
+        else ErrorNoReturn("Invalid format: '", toprint.format, "'");
+        fi;
+    od;
+end);
+
+InstallGlobalFunction(StringFormatted, function(s, data...)
+    local str;
+    if not IsString(s) then
+        ErrorNoReturn("Usage: StringFormatted(<string>, <data>...)");
+    fi;
+    str := "";
+    CallFuncList(PrintToFormatted, Concatenation([OutputTextString(str, false), s], data));
+    return str;
+end);
+
+InstallGlobalFunction(PrintFormatted, function(args...)
+    # Do some very baic argument checking
+    if not Length(args) > 1 and IsString(args[1]) then
+        ErrorNoReturn("Usage: PrintFormatted(<string>, <data>...)");
+    fi;
     
+    # We can't use PrintTo, as we do not know where Print is currently
+    # directed
+    Print(CallFuncList(StringFormatted, args));
+end);
 
 #############################################################################
 ##

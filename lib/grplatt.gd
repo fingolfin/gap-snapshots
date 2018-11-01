@@ -439,6 +439,8 @@ DeclareGlobalFunction("TomDataSubgroupsAlmostSimple");
 ##  returned. If also a function <A>dosub</A> is given, maximal subgroups
 ##  are only attempted if this function returns true (this is separated for
 ##  performance reasons).
+##  In the example below, the result would be the same with leaving out the
+##  fourth function, but calculation this way is slightly faster.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -494,6 +496,29 @@ DeclareSynonym("EmbeddedConjugates",ContainedConjugates);
 ##
 DeclareOperation("ContainingConjugates",[IsGroup,IsGroup,IsGroup]);
 DeclareSynonym("EmbeddingConjugates",ContainingConjugates);
+
+#############################################################################
+##
+#O  MinimalFaithfulPermutationDegree(<G>)
+##
+##  <#GAPDoc Label="MinimalFaithfulPermutationDegree">
+##  <ManSection>
+##  <Func Name="MinimalFaithfulPermutationDegree" Arg='G'/>
+##
+##  <Description>
+##  For  a finite group <A>G</A> this operation calculates the least
+##  positive integer <M>n=\mu(G)</M> such that <A>G</A> is isomorphic to a
+##  subgroup of the symmetric group of degree <M>n</M>.
+##  This can require calculating the whole subgroup lattice.
+##  <Example><![CDATA[
+##  gap> MinimalFaithfulPermutationDegree(SmallGroup(96,3));
+##  12
+##  ]]></Example>
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareOperation("MinimalFaithfulPermutationDegree",[IsGroup and IsFinite]);
 
 #############################################################################
 ##

@@ -119,8 +119,8 @@ InstallImmediateMethod( IsTrivial,
     fi;
     end );
 
-InstallImmediateMethod( IsTrivial,
-    IsMagmaWithInverses and HasGeneratorsOfMagmaWithInverses, 0,
+InstallMethod( IsTrivial,
+    [IsMagmaWithInverses and HasGeneratorsOfMagmaWithInverses], 0,
     function( M )
     if IsEmpty( GeneratorsOfMagmaWithInverses( M ) ) then
       return true;
@@ -184,9 +184,11 @@ InstallImmediateMethod( IsCommutative,
     fi;
     end );
 
-InstallImmediateMethod( IsCommutative,
-    IsMagmaWithInverses and IsAssociative
-                        and HasGeneratorsOfMagmaWithInverses, 0,
+#  This used to be an immediate method. It was replaced by an ordinary
+#  method, as the filter is now set when creating groups.
+InstallMethod( IsCommutative,true,
+    [IsMagmaWithInverses and IsAssociative
+                        and HasGeneratorsOfMagmaWithInverses], 0,
     function( M )
     if Length( GeneratorsOfMagmaWithInverses( M ) ) = 1 then
       return true;
@@ -652,18 +654,22 @@ InstallOtherMethod( MagmaWithOneByGenerators,
 #M  MagmaWithInversesByGenerators( <gens> ) . . . . . . . .  for a collection
 ##
 MakeMagmaWithInversesByFiniteGenerators:=function(family,gens)
-local M;
-  if not IsBound(family!.defaultMagmaWithInversesByGeneratorsType) then
-    family!.defaultMagmaWithInversesByGeneratorsType :=
-      NewType( FamilyObj( gens ),
-                IsMagmaWithInverses and IsAttributeStoringRep 
-                and HasGeneratorsOfMagmaWithInverses 
-                and IsFinitelyGeneratedGroup);
-  fi;
+local M,typ,id,fam;
+
+  typ:=MakeGroupyType(FamilyObj(gens),
+            IsMagmaWithInverses and IsAttributeStoringRep 
+              and HasGeneratorsOfMagmaWithInverses
+              and HasIsEmpty,
+              gens,fail,false);
 
   M:=rec();
-  ObjectifyWithAttributes( M,family!.defaultMagmaWithInversesByGeneratorsType,
-    GeneratorsOfMagmaWithInverses, AsList( gens ) );
+
+  ObjectifyWithAttributes( M,typ,
+    GeneratorsOfMagmaWithInverses, AsList( gens ));
+
+  if HasIsAssociative( M ) and IsAssociative( M ) then
+    SetIsFinitelyGeneratedGroup( M, true );
+  fi;
   return M;
 end;
 
@@ -1100,9 +1106,10 @@ InstallMethod( Enumerator,
     [ IsMagma and IsAttributeStoringRep ], 0,
     EnumeratorOfMagma );
 
+
 #############################################################################
 ##
-#M  IsCentral( <M>, <N> ) . . . . . . . . . . . . . . . . . .  for two magmas
+#M  IsCentral( <M>, <N> )
 ##
 InstallMethod( IsCentral,
     "for two magmas",
@@ -1110,11 +1117,6 @@ InstallMethod( IsCentral,
     [ IsMagma, IsMagma ], 0,
     IsCentralFromGenerators( GeneratorsOfMagma, GeneratorsOfMagma ) );
 
-
-#############################################################################
-##
-#M  IsCentral( <M>, <N> ) . . . . . . . . . . . . . . for two magmas with one
-##
 InstallMethod( IsCentral,
     "for two magmas-with-one",
     IsIdenticalObj,
@@ -1122,17 +1124,34 @@ InstallMethod( IsCentral,
     IsCentralFromGenerators( GeneratorsOfMagmaWithOne,
                              GeneratorsOfMagmaWithOne ) );
 
-
-#############################################################################
-##
-#M  IsCentral( <M>, <N> ) . . . . . . . . . . .  for two magmas with inverses
-##
 InstallMethod( IsCentral,
     "for two magmas-with-inverses",
     IsIdenticalObj,
     [ IsMagmaWithInverses, IsMagmaWithInverses ], 0,
     IsCentralFromGenerators( GeneratorsOfMagmaWithInverses,
                              GeneratorsOfMagmaWithInverses ) );
+
+#############################################################################
+##
+#M  IsCentral( <M>, <elm> )
+##
+InstallMethod( IsCentral,
+    "for a magma and an element",
+    IsCollsElms,
+    [ IsMagma, IsObject ], 0,
+    IsCentralElementFromGenerators( GeneratorsOfMagma ) );
+
+InstallMethod( IsCentral,
+    "for a magma-with-one and an element",
+    IsCollsElms,
+    [ IsMagmaWithOne, IsObject ], 0,
+    IsCentralElementFromGenerators( GeneratorsOfMagmaWithOne ) );
+
+InstallMethod( IsCentral,
+    "for a magma-with-inverses and an element",
+    IsCollsElms,
+    [ IsMagmaWithInverses, IsObject ], 0,
+    IsCentralElementFromGenerators( GeneratorsOfMagmaWithInverses ) );
 
 
 #############################################################################

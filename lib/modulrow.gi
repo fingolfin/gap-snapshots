@@ -21,26 +21,36 @@
 #F  FullRowModule( <R>, <n> )
 ##
 InstallGlobalFunction( FullRowModule, function( R, n )
-    local M;   # the free module record, result
+local M,typ;   # the free module record, result
 
     if not ( IsRing( R ) and IsInt( n ) and 0 <= n ) then
       Error( "usage: FullRowModule( <R>, <n> ) for ring <R>" );
     fi;
 
+    typ:=IsFreeLeftModule and IsFullRowModule and IsAttributeStoringRep
+         and HasIsEmpty;
+
     if IsDivisionRing( R ) then
-      M:= Objectify( NewType( CollectionsFamily( FamilyObj( R ) ),
-                                  IsFreeLeftModule
-                              and IsGaussianSpace
-                              and IsFullRowModule
-                              and IsAttributeStoringRep ),
-                     rec() );
-    else
-      M:= Objectify( NewType( CollectionsFamily( FamilyObj( R ) ),
-                                  IsFreeLeftModule
-                              and IsFullRowModule
-                              and IsAttributeStoringRep ),
-                     rec() );
+      typ:=typ and IsGaussianSpace;
     fi;
+
+    if n=0 then
+      typ:=typ and IsTrivial;
+    else
+      typ:=typ and IsNonTrivial;
+    fi;
+
+    if n<>infinity and HasIsFinite(R) and IsFinite(R) then
+      typ:=typ and IsFinite;
+    elif n<>0 and HasIsFinite(R) and not IsFinite(R) then
+      typ:=typ and HasIsFinite;
+    fi;
+
+
+    M:= Objectify( NewType( CollectionsFamily( FamilyObj( R ) ),
+                            typ ),
+                    rec() );
+
     SetLeftActingDomain( M, R );
     SetDimensionOfVectors( M, n );
 
@@ -111,15 +121,21 @@ InstallMethod( Dimension,
 ##
 #M  Random( <M> )
 ##1
-InstallMethod( Random,
-    "for full row module",
-    [ IsFreeLeftModule and IsFullRowModule ],
-    function( M )
+InstallMethodWithRandomSource( Random,
+    "for a random source and a full row module",
+    [ IsRandomSource, IsFreeLeftModule and IsFullRowModule ],
+    function( rs, M )
     local R,v;
     R:= LeftActingDomain( M );
-    v := List( [ 1 .. DimensionOfVectors( M ) ], x -> Random( R ) );
+    v := List( [ 1 .. DimensionOfVectors( M ) ], x -> Random( rs, R ) );
     if IsField(R) then
-      ConvertToVectorRep(v,R);
+      if IsHPCGAP then
+        if Size(R) <= 256 then
+          v := CopyToVectorRep(v,Size(R));
+        fi;
+      else
+        ConvertToVectorRep(v,R);
+      fi;
     fi;
     return v;
     end );
@@ -332,7 +348,8 @@ BindGlobal( "PosVecEnumFF", function( enum, v )
       fi;
     od;
 
-    if ConvertToVectorRep( v, enum!.q ) = fail then
+    v := ImmutableVector( enum!.q, v );
+    if not IsDataObjectRep(v) then
       # cannot convert, wrong type of object
       return NumberElement_FiniteFullRowModule( enum, v );
     fi;
@@ -366,7 +383,7 @@ BindGlobal( "ElementNumber_FiniteFullRowModule", function( enum, n )
       i:= i-1;
     od;
     if IsFFE( enum!.coeffszero ) then
-      ConvertToVectorRep( v, enum!.q );
+      v := ImmutableVector( enum!.q, v );
     fi;
     MakeImmutable( v );
     return v;

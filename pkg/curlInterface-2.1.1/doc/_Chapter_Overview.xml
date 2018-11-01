@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Overview">
+<Heading>Overview</Heading>
+
+<P/>
+CurlInterface allows a user to interact with http and https
+servers on the internet, using the `curl' library.
+Pages can be downloaded from a URL, and http POST requests
+can be sent to the URL for processing.
+<Section Label="Chapter_Overview_Section_Installing_curlInterface">
+<Heading>Installing curlInterface</Heading>
+
+<P/>
+curlInterface requires the 'curl' library, available from
+<URL>https://curl.haxx.se/</URL>. Instructions for building
+and installing curl can be found at
+<URL>https://curl.haxx.se/docs/install.html</URL>, however
+in most systems curl can be installed from your OS's package
+manager.
+<P/>
+<Subsection Label="Chapter_Overview_Section_Installing_curlInterface_Subsection_Linux">
+<Heading>Linux</Heading>
+
+<P/>
+<List>
+<Item>
+On Debian and Ubuntu, call: <C>apt-get install libcurl4-gnutls-dev</C></Item>
+<Item>
+On Redhat and derivatives, call: <C>yum install curl-devel</C></Item>
+</List>
+<P/>
+</Subsection>
+
+
+<Subsection Label="Chapter_Overview_Section_Installing_curlInterface_Subsection_Cygwin">
+<Heading>Cygwin</Heading>
+
+<P/>
+Install <C>libcurl-devel</C> from the cygwin package manager
+<P/>
+</Subsection>
+
+
+<Subsection Label="Chapter_Overview_Section_Installing_curlInterface_Subsection_Mac_OS_X">
+<Heading>Mac OS X</Heading>
+
+<P/>
+curl is installed by default on Macs, but libcurl may be required.
+<List>
+<Item>Homebrew: <C>brew install curl</C></Item>
+<Item>Fink: <C>fink install libcurl4</C></Item>
+<Item>MacPorts: <C>port install curl</C></Item>
+</List>
+</Subsection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Overview_Section_Functions">
+<Heading>Functions</Heading>
+
+<P/>
+curlInterface currently provides the following functions for interacting with
+URLs:
+<ManSection>
+  <Func Arg="URL[, opts]" Name="DownloadURL" />
+ <Returns>a record
+</Returns>
+ <Description>
+Downloads a URL from the internet. <A>URL</A> should be a string
+describing the address, and should start with either "http://" or
+"https://".
+For descriptions of the output and the additional argument <A>opts</A>, see
+<Ref Func="CurlRequest"/>.
+<P/>
+<Example><![CDATA[
+gap> r := DownloadURL("www.gap-system.org");;
+gap> r.success;
+true
+gap> r.result{[1..50]};
+"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n\n<!DOCTYPE "
+]]></Example>
+
+
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="URL, str[, opts]" Name="PostToURL" />
+ <Returns>a record
+</Returns>
+ <Description>
+Sends an HTTP POST request to a URL on the internet. <A>URL</A> should be a
+string describing the address, and should start with either "http://" or
+"https://". <A>str</A> should be the string which will be sent to the
+server as a POST request.
+For descriptions of the output and the additional argument <A>opts</A>, see
+<Ref Func="CurlRequest"/>.
+<P/>
+<Example><![CDATA[
+gap> r := PostToURL("www.httpbin.org/post", "animal=tiger");;
+gap> r.success;
+true
+gap> r.result{[51..100]};
+"\"form\": {\n    \"animal\": \"tiger\"\n  }, \n  \"headers\":"
+]]></Example>
+
+
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="URL[, opts]" Name="DeleteURL" />
+ <Returns>a record
+</Returns>
+ <Description>
+Attempts to delete a file on the internet, by sending an HTTP DELETE
+request to the given URL. <A>URL</A> should be a string describing the
+address to be deleted, and should start with either "http://" or
+"https://".
+For descriptions of the output and the additional argument <A>opts</A>, see
+<Ref Func="CurlRequest"/>.
+<P/>
+<Example><![CDATA[
+gap> r := DeleteURL("www.google.com");;
+gap> r.success;
+true
+gap> r.result{[1471..1540]};
+"<p>The request method <code>DELETE</code> is inappropriate for the URL"
+]]></Example>
+
+
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="URL, type, out_string[, opts]" Name="CurlRequest" />
+ <Returns>a record
+</Returns>
+ <Description>
+Sends an HTTP request of type <A>type</A> to a URL on the internet.
+<A>URL</A>, <A>type</A>, and <A>out_string</A> should all be strings:
+<A>URL</A> is the URL of the server (which should start with "http://" or
+"https://"), <A>type</A> is the type of HTTP request (e.g. "GET"), and
+<A>out_string</A> is the message, if any, to send to the server (in
+requests such as GET this will be ignored).
+<P/>
+An optional fourth argument <A>opts</A> may be included, which should be a
+record specifying additional options for the request. The following
+options are supported:
+<List>
+<Item>
+<C>verifyCert</C>: a boolean describing whether to verify HTTPS
+certificates (default <K>true</K>);
+</Item>
+<Item>
+<C>verbose</C>: a boolean describing whether to print extra information
+to the screen (default <K>false</K>);
+</Item>
+<Item>
+<C>followRedirect</C>: a boolean describing whether to follow
+redirection to another URL (default <K>true</K>).
+</Item>
+</List>
+<P/>
+As output, this function returns a record containing some of the following
+components, which describe the outcome of the request:
+<List>
+<Item>
+<C>success</C>: a boolean describing whether the request was
+successfully received by the server;
+</Item>
+<Item>
+<C>result</C>: body of the information sent by the server (only if
+<C>success = true</C>);
+</Item>
+<Item>
+<C>error</C>: human-readable string saying what went wrong (only if
+<C>success = false</C>).
+</Item>
+</List>
+<P/>
+Most of the standard HTTP request types should work, but currently only
+body information is returned. To see headers, consider using the
+<C>verbose</C> option. For convenience, dedicated functions exist for the
+following request types:
+<List>
+<Item>
+<Ref Func="DownloadURL"/> for GET requests;
+</Item>
+<Item>
+<Ref Func="PostToURL"/> for POST requests;
+</Item>
+<Item>
+<Ref Func="DeleteURL"/> for DELETE requests.
+</Item>
+</List>
+<P/>
+<Example><![CDATA[
+gap> r := CurlRequest("https://www.google.com",
+>                     "HEAD",
+>                     "",
+>                     rec(verifyCert := false));
+rec( result := "", success := true )
+gap> r := CurlRequest("www.httpbin.org/post", "POST", "animal=tiger");;
+gap> r.success;
+true
+gap> r.result{[51..100]};
+"\"form\": {\n    \"animal\": \"tiger\"\n  }, \n  \"headers\":"
+]]></Example>
+
+
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+</Chapter>
+

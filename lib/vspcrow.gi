@@ -54,21 +54,30 @@ InstallMethod( LeftModuleByGenerators,
     IsElmsColls,
     [ IsDivisionRing, IsMatrix ],
     function( F, mat )
-    local V;
+    local V,typ;
 
+    typ:=IsAttributeStoringRep and HasIsEmpty and IsFiniteDimensional;
     if ForAll( mat, row -> IsSubset( F, row ) ) then
-      V:= Objectify( NewType( FamilyObj( mat ),
-                                  IsGaussianRowSpace
-                              and IsAttributeStoringRep ),
-                     rec() );
+      typ:=typ and IsGaussianRowSpace;
     else
-      V:= Objectify( NewType( FamilyObj( mat ),
-                                  IsVectorSpace
-                              and IsNonGaussianRowSpace
-                              and IsRowModule
-                              and IsAttributeStoringRep ),
-                     rec() );
+      typ:=typ and IsVectorSpace and IsRowModule and IsNonGaussianRowSpace;
     fi;
+
+    if Length(mat)>0 and ForAny(mat,x->not IsZero(x)) then
+      typ:=typ and IsNonTrivial;
+    else
+      typ:=typ and IsTrivial;
+    fi;
+
+    if HasIsFinite(F) then
+      if IsFinite(F) then
+        typ:=typ and IsFinite;
+      else
+        typ:=typ and HasIsFinite; # i.e. not finite
+      fi;
+    fi;
+
+    V:= Objectify( NewType( FamilyObj( mat ), typ), rec() );
 
     SetLeftActingDomain( V, F );
     SetGeneratorsOfLeftModule( V, AsList( mat ) );
@@ -81,7 +90,7 @@ InstallMethod( LeftModuleByGenerators,
     "for division ring, empty list, and row vector",
     [ IsDivisionRing, IsList and IsEmpty, IsRowVector ],
     function( F, empty, zero )
-    local V;
+    local V,typ;
 
     # Check whether this method is the right one.
     if not IsIdenticalObj( FamilyObj( F ), FamilyObj( zero ) ) then
@@ -89,9 +98,9 @@ InstallMethod( LeftModuleByGenerators,
     fi;
 #T explicit 2nd argument above!
 
-    V:= Objectify( NewType( CollectionsFamily( FamilyObj( F ) ),
-                                IsGaussianRowSpace
-                            and IsAttributeStoringRep ),
+    typ:=IsAttributeStoringRep and IsGaussianRowSpace and IsTrivial;
+
+    V:= Objectify( NewType( CollectionsFamily( FamilyObj( F ) ),typ),
                    rec() );
     SetLeftActingDomain( V, F );
     SetGeneratorsOfLeftModule( V, empty );
@@ -105,7 +114,7 @@ InstallMethod( LeftModuleByGenerators,
     "for division ring, matrix over it, and row vector",
     [ IsDivisionRing, IsMatrix, IsRowVector ],
     function( F, mat, zero )
-    local V;
+    local V,typ;
 
     # Check whether this method is the right one.
     if not IsElmsColls( FamilyObj( F ), FamilyObj( mat ) ) then
@@ -113,19 +122,28 @@ InstallMethod( LeftModuleByGenerators,
     fi;
 #T explicit 2nd argument above!
 
+    typ:=IsAttributeStoringRep and HasIsEmpty and IsFiniteDimensional;
     if ForAll( mat, row -> IsSubset( F, row ) ) then
-      V:= Objectify( NewType( FamilyObj( mat ),
-                                  IsGaussianRowSpace
-                              and IsAttributeStoringRep ),
-                     rec() );
+      typ:=typ and IsGaussianRowSpace;
     else
-      V:= Objectify( NewType( FamilyObj( mat ),
-                                  IsVectorSpace
-                              and IsNonGaussianRowSpace
-                              and IsRowModule
-                              and IsAttributeStoringRep ),
-                     rec() );
+      typ:=typ and IsVectorSpace and IsRowModule and IsNonGaussianRowSpace;
     fi;
+
+    if Length(mat)>0 and ForAny(mat,x->not IsZero(x)) then
+      typ:=typ and IsNonTrivial;
+    else
+      typ:=typ and IsTrivial;
+    fi;
+
+    if HasIsFinite(F) then
+      if IsFinite(F) then
+        typ:=typ and IsFinite;
+      else
+        typ:=typ and HasIsFinite; # i.e. not finite
+      fi;
+    fi;
+
+    V:= Objectify( NewType( FamilyObj( mat ), typ), rec() );
 
     SetLeftActingDomain( V, F );
     SetGeneratorsOfLeftModule( V, AsList( mat ) );
@@ -300,7 +318,7 @@ InstallMethod( Coefficients,
 
     # Compute the coefficients of the base vectors.
     v:= ShallowCopy( v );
-    i:= PositionNot( v, zero );
+    i:= PositionNonZero( v );
     while i <= len do
       pos:= heads[i];
       if pos <> 0 then
@@ -309,7 +327,7 @@ InstallMethod( Coefficients,
       else
         return fail;
       fi;
-      i:= PositionNot( v, zero );
+      i:= PositionNonZero( v );
     od;
 
     # Return the coefficients.
@@ -396,7 +414,7 @@ HeadsInfoOfSemiEchelonizedMat := function( mat, dim )
       # Loop over the columns.
       for i in [ 1 .. nrows ] do
 
-        j:= PositionNot( mat[i], zero );
+        j:= PositionNonZero( mat[i] );
         if dim < j or mat[i][j] <> one then
           return fail;
         fi;
@@ -745,7 +763,7 @@ local d,z;
   d:=LeftActingDomain(V);
   z:=Zero( d ) * [ 1 .. DimensionOfVectors( V ) ];
   if IsField(d) and IsFinite(d) and Size(d)<=256 then
-    ConvertToVectorRep(z,d);
+    z := ImmutableVector( d, z );
   fi;
   return z;
 end);
@@ -758,7 +776,7 @@ end);
 InstallMethod( IsZero,
     "for a row vector",
     [ IsRowVector ],
-    v -> IsEmpty( v ) or Length( v ) < PositionNot( v, Zero( v[1] ) ) );
+    v -> IsEmpty( v ) or Length( v ) < PositionNonZero( v ) );
 
 
 #############################################################################
@@ -930,7 +948,7 @@ InstallMethod( NormedRowVectors,
         toadd:= base[j+1] + i * base[j];
         for k in [ 1 .. len ] do
           v:= elms2[k] + toadd;
-          ConvertToVectorRep( v, q );
+          v:= ImmutableVector( q, v );
           new[ pos + k ]:= v;
         od;
         pos:= pos + len;
@@ -1557,13 +1575,13 @@ InstallMethod( CloseMutableBasis,
 
       for j in [ 1 .. ncols ] do
         if zero <> v[j] and heads[j] <> 0 then
-#T better loop with `PositionNot'?
+#T better loop with `PositionNonZero'?
           AddRowVector( v, basisvectors[ heads[j] ], - v[j] );
         fi;
       od;
 
       # If necessary add the sifted vector, and update the basis info.
-      j := PositionNot( v, zero );
+      j := PositionNonZero( v );
       if j <= ncols then
         MultRowVector( v, Inverse( v[j] ) );
         Add( basisvectors, v );
@@ -1665,8 +1683,7 @@ InstallOtherMethod( SiftedVector,
 InstallGlobalFunction( OnLines, function( vec, g )
     local c;
     vec:= OnPoints( vec, g );
-    c:= PositionNonZero( vec ); # better than PositionNot, as no `Zero'
-                                # element needs to be created
+    c:= PositionNonZero( vec );
     if c <= Length( vec ) then
 
       # Normalize from the *left* if the matrices act from the right!
@@ -1688,8 +1705,7 @@ function( v )
     local   depth;
 
     if 0 < Length(v)  then
-	depth:=PositionNonZero( v ); # better than PositionNot, as no `Zero'
-				     # element needs to be created
+	depth:=PositionNonZero( v );
         if depth <= Length(v) then
             return Inverse(v[depth]) * v;
         else
@@ -1721,8 +1737,7 @@ BindGlobal( "ElementNumber_ExtendedVectors", function( enum, n )
       Error( "<enum>[", n, "] must have an assigned value" );
     fi;
     n:= Concatenation( enum!.spaceEnumerator[n], [ enum!.one ] );
-    ConvertToVectorRepNC( n, enum!.q );
-    return Immutable( n );
+    return ImmutableVector( enum!.q, n );
 end );
 
 BindGlobal( "NumberElement_ExtendedVectors", function( enum, elm )
@@ -1730,16 +1745,18 @@ BindGlobal( "NumberElement_ExtendedVectors", function( enum, elm )
                          or elm[ enum!.len ] <> enum!.one then
       return fail;
     fi;
+    # special case for dimension 1: here, the truncated vector would be an
+    # empty list, and there are problems with trivial vector spaces over
+    # length 0 vectors (see e.g. issue #2117, PR #2125)
+    if Length( elm ) = 1 then return 1; fi;
     return Position( enum!.spaceEnumerator,
 		     elm{ [ 1 .. Length( elm ) - 1 ] } );
 end );
 
 BindGlobal( "NumberElement_ExtendedVectorsFF", function( enum, elm )
     # test whether the vector is indeed compact over the right finite field
-    if not IsDataObjectRep( elm ) then
-      if ConvertToVectorRepNC( elm, enum!.q ) = fail then
-        return NumberElement_ExtendedVectors( enum, elm );
-      fi;
+    if not IsGF2VectorRep( elm ) and not Is8BitVectorRep( elm ) then
+      return NumberElement_ExtendedVectors( enum, elm );
     fi;
 
     # Problem with GF(4) vectors over GF(2)
@@ -1753,13 +1770,16 @@ BindGlobal( "NumberElement_ExtendedVectorsFF", function( enum, elm )
                          or elm[ enum!.len ] <> enum!.one then
       return fail;
     fi;
+    # We exploit that NumberFFVector is defined by position in a sorted list
+    # of all vectors. Therefore, for coefficients v1, ..., vn, we have
+    # NumberFFVector([v1,...,vn,1],q) = NumberFFVector([v1,...,vn],q)*q+1
     return QuoInt( NumberFFVector( elm, enum!.q ), enum!.q ) + 1;
 end );
 
 BindGlobal( "Length_ExtendedVectors", T -> Length( T!.spaceEnumerator ) );
 
 BindGlobal( "PrintObj_ExtendedVectors", function( T )
-    Print( "A( ", UnderlyingCollection( T!.spaceEnumerator ), " )" );
+    Print( "A( ", T!.space, " )" );
 end );
 
 BindGlobal( "ExtendedVectors", function( V )
@@ -1772,18 +1792,17 @@ BindGlobal( "ExtendedVectors", function( V )
                PrintObj        := PrintObj_ExtendedVectors,
 
                spaceEnumerator := Enumerator( V ),
+               space           := V,
                one             := One( LeftActingDomain( V ) ),
                len             := Length( Zero( V ) ) + 1 ) );
 
+    enum!.q:= Size( LeftActingDomain( V ) );
     if     IsFinite( LeftActingDomain( V ) )
        and IsPrimeInt( Size( LeftActingDomain( V ) ) )
        and Size( LeftActingDomain( V ) ) < 256
        and IsInternalRep( One( LeftActingDomain( V ) ) ) then
       SetFilterObj( enum, IsQuickPositionList );
-      enum!.q:= enum!.spaceEnumerator!.q;
       enum!.NumberElement:= NumberElement_ExtendedVectorsFF;
-    else
-      enum!.q:= Size( LeftActingDomain( V ) );
     fi;
 
     return enum;

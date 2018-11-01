@@ -1470,6 +1470,10 @@ SCIntFunc.MorseFuncToFundGroup := function(Morse,critical)
   down := Filtered(critical,x->Size(x)=2);
   up := Filtered(critical,x->Size(x)=3);
 
+  if down = [] then
+    return FreeGroup([]);
+  fi;
+
   gens:=List(down,x->Concatenation("[ ",String(x[1]),", ",String(x[2])," ]"));
   g:=FreeGroup(gens);
   gens:=GeneratorsOfGroup(g);
@@ -1654,12 +1658,10 @@ function(arg)
         Remove(f[1],Position(f[1],[]));
       fi;
       g:=SCIntFunc.MorseFuncToFundGroup(f[1],f[2]);
-
       if AbelianInvariants(g) <> [] then
         return false;
       fi;
       g:=SimplifiedFpGroup(g);
-
       if GeneratorsOfGroup(g) = [] then
         return true;
       else

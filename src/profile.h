@@ -12,17 +12,17 @@
 #ifndef GAP_PROFILE_H
 #define GAP_PROFILE_H
 
-#include <src/system.h>
+#include "system.h"
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 
 /****************************************************************************
 **
-*F  InitInfoStats() . . . . . . . . . . . . . . . . . table of init functions
+*F  InitInfoProfile() . . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoProfile ( void );
 

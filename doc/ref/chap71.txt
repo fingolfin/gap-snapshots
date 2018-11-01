@@ -350,17 +350,16 @@
   
   [33X[0;0Y[2XSupportedCharacterTableInfo[102X  is  a  list  that  contains at position [22X3i-2[122X an
   attribute  getter function, at position [22X3i-1[122X the name of this attribute, and
-  at  position  [22X3i[122X  a  list  containing  one  or  two  of the strings [10X"class"[110X,
-  [10X"character"[110X, depending on whether the attribute value relies on the ordering
-  of classes or characters. This allows one to set exactly the components with
-  these names in the record that is later converted to the new table, in order
-  to  use  the values as attribute values. So the record components that shall
-  [13Xnot[113X be regarded as attribute values can be ignored. Also other attributes of
-  the old table are ignored.[133X
+  at  position  [22X3i[122X  a  list  containing  a  subset  of [10X[ "character", "class",
+  "mutable" ][110X, depending on whether the attribute value relies on the ordering
+  of  characters  or classes, or whether the attribute value is a mutable list
+  or record.[133X
   
-  [33X[0;0Y[2XSupportedCharacterTableInfo[102X  is  used  when  (ordinary  or Brauer) character
-  table  objects  are  created  from  records,  using  [2XConvertToCharacterTable[102X
-  ([14X71.3-5[114X).[133X
+  [33X[0;0YWhen  (ordinary or Brauer) character table objects are created from records,
+  using    [2XConvertToCharacterTable[102X    ([14X71.3-5[114X),    [2XSupportedCharacterTableInfo[102X
+  specifies  those  record  components that shall be used as attribute values;
+  other  record  components  are  [13Xnot[113X  be  regarded as attribute values in the
+  conversion process.[133X
   
   [33X[0;0YNew attributes and properties can be notified to [2XSupportedCharacterTableInfo[102X
   by  creating  them  with  [10XDeclareAttributeSuppCT[110X  and  [10XDeclarePropertySuppCT[110X
@@ -929,18 +928,22 @@
     [4X[25Xgap>[125X [27XList( tables, Size );[127X[104X
     [4X[28X[ 3, 24, 60 ][128X[104X
     [4X[25Xgap>[125X [27XIsomorphismTypeInfoFiniteSimpleGroup( CharacterTable( "C5" ) );[127X[104X
-    [4X[28Xrec( name := "Z(5)", parameter := 5, series := "Z" )[128X[104X
+    [4X[28Xrec( name := "Z(5)", parameter := 5, series := "Z", shortname := "C5" [128X[104X
+    [4X[28X )[128X[104X
     [4X[25Xgap>[125X [27XIsomorphismTypeInfoFiniteSimpleGroup( CharacterTable( "S3" ) );[127X[104X
     [4X[28Xfail[128X[104X
     [4X[25Xgap>[125X [27XIsomorphismTypeInfoFiniteSimpleGroup( CharacterTable( "S6(3)" ) );[127X[104X
-    [4X[28Xrec( name := "C(3,3) = S(6,3)", parameter := [ 3, 3 ], series := "C" )[128X[104X
+    [4X[28Xrec( name := "C(3,3) = S(6,3)", parameter := [ 3, 3 ], series := "C", [128X[104X
+    [4X[28X  shortname := "S6(3)" )[128X[104X
     [4X[25Xgap>[125X [27XIsomorphismTypeInfoFiniteSimpleGroup( CharacterTable( "O7(3)" ) );[127X[104X
-    [4X[28Xrec( name := "B(3,3) = O(7,3)", parameter := [ 3, 3 ], series := "B" )[128X[104X
+    [4X[28Xrec( name := "B(3,3) = O(7,3)", parameter := [ 3, 3 ], series := "B", [128X[104X
+    [4X[28X  shortname := "O7(3)" )[128X[104X
     [4X[25Xgap>[125X [27XIsomorphismTypeInfoFiniteSimpleGroup( CharacterTable( "A8" ) );[127X[104X
     [4X[28Xrec( name := "A(8) ~ A(3,2) = L(4,2) ~ D(3,2) = O+(6,2)", [128X[104X
-    [4X[28X  parameter := 8, series := "A" )[128X[104X
+    [4X[28X  parameter := 8, series := "A", shortname := "A8" )[128X[104X
     [4X[25Xgap>[125X [27XIsomorphismTypeInfoFiniteSimpleGroup( CharacterTable( "L3(4)" ) );[127X[104X
-    [4X[28Xrec( name := "A(2,4) = L(3,4)", parameter := [ 3, 4 ], series := "L" )[128X[104X
+    [4X[28Xrec( name := "A(2,4) = L(3,4)", parameter := [ 3, 4 ], series := "L", [128X[104X
+    [4X[28X  shortname := "L3(4)" )[128X[104X
   [4X[32X[104X
   
   
@@ -1353,7 +1356,19 @@
     [4X[28X[ [ 1, 3 ], [ 1, 2, 3, 4, 5 ] ][128X[104X
   [4X[32X[104X
   
-  [1X71.10-10 ClassPositionsOfSupersolvableResiduum[101X
+  [1X71.10-10 ClassPositionsOfSolvableRadical[101X
+  
+  [33X[1;0Y[29X[2XClassPositionsOfSolvableRadical[102X( [3Xordtbl[103X ) [32X attribute[133X
+  
+  [33X[0;0Ycorresponds  to  [2XRadicalGroup[102X  ([14X39.12-9[114X)  for  the  group  of  the  ordinary
+  character table [3Xordtbl[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XClassPositionsOfSolvableRadical( CharacterTable( "2.A5" ) );[127X[104X
+    [4X[28X[ 1, 2 ][128X[104X
+  [4X[32X[104X
+  
+  [1X71.10-11 ClassPositionsOfSupersolvableResiduum[101X
   
   [33X[1;0Y[29X[2XClassPositionsOfSupersolvableResiduum[102X( [3Xordtbl[103X ) [32X attribute[133X
   
@@ -1366,7 +1381,7 @@
     [4X[28X[ 1, 3 ][128X[104X
   [4X[32X[104X
   
-  [1X71.10-11 ClassPositionsOfPCore[101X
+  [1X71.10-12 ClassPositionsOfPCore[101X
   
   [33X[1;0Y[29X[2XClassPositionsOfPCore[102X( [3Xordtbl[103X, [3Xp[103X ) [32X operation[133X
   
@@ -1381,7 +1396,7 @@
     [4X[28X[ 1 ][128X[104X
   [4X[32X[104X
   
-  [1X71.10-12 ClassPositionsOfNormalClosure[101X
+  [1X71.10-13 ClassPositionsOfNormalClosure[101X
   
   [33X[1;0Y[29X[2XClassPositionsOfNormalClosure[102X( [3Xordtbl[103X, [3Xclasses[103X ) [32X operation[133X
   
@@ -2072,6 +2087,8 @@
     [4X[28Xtbl:=rec();[128X[104X
     [4X[28Xtbl.Irr:=[128X[104X
     [4X[28X[ [ 1, 1 ], [ 1, -1 ] ];[128X[104X
+    [4X[28Xtbl.IsFinite:=[128X[104X
+    [4X[28Xtrue;[128X[104X
     [4X[28Xtbl.NrConjugacyClasses:=[128X[104X
     [4X[28X2;[128X[104X
     [4X[28Xtbl.Size:=[128X[104X
@@ -2616,7 +2633,7 @@
   [1X71.20 [33X[0;0YConstructing Character Tables from Others[133X[101X
   
   [33X[0;0YThe  following  operations  take  one or more character table arguments, and
-  return  a  character  table.  This holds also for [2XBrauerTable[102X ([14X71.3-2[114X). note
+  return  a  character  table.  This holds also for [2XBrauerTable[102X ([14X71.3-2[114X). Note
   that  the  return value of [2XBrauerTable[102X ([14X71.3-2[114X) will in general not know the
   irreducible  Brauer  characters,  and  [5XGAP[105X  might be unable to compute these
   characters.[133X
@@ -2772,7 +2789,61 @@
     [4X[28X[ CharacterTable( "Dihedral(8)" ), [ 1, 2, 3 ], [ 3 ], 3 ][128X[104X
   [4X[32X[104X
   
-  [1X71.20-5 CharacterTableWreathSymmetric[101X
+  [1X71.20-5 CharacterTableOfNormalSubgroup[101X
+  
+  [33X[1;0Y[29X[2XCharacterTableOfNormalSubgroup[102X( [3Xordtbl[103X, [3Xclasses[103X ) [32X function[133X
+  
+  [33X[0;0YLet [3Xordtbl[103X be the ordinary character table of a group [22XG[122X, say, and [3Xclasses[103X be
+  a  list  of  class positions for this table. If the classes given by [3Xclasses[103X
+  form  a  normal  subgroup  [22XN[122X,  say,  of [22XG[122X and if these classes are conjugacy
+  classes  of  [22XN[122X  then  this function returns the character table of [22XN[122X. In all
+  other cases, the function returns [9Xfail[109X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xt:= CharacterTable( "Symmetric", 4 );[127X[104X
+    [4X[28XCharacterTable( "Sym(4)" )[128X[104X
+    [4X[25Xgap>[125X [27Xnsg:= ClassPositionsOfNormalSubgroups( t );[127X[104X
+    [4X[28X[ [ 1 ], [ 1, 3 ], [ 1, 3, 4 ], [ 1 .. 5 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xrest:= List( nsg, c -> CharacterTableOfNormalSubgroup( t, c ) );[127X[104X
+    [4X[28X[ CharacterTable( "Rest(Sym(4),[ 1 ])" ), fail, fail, [128X[104X
+    [4X[28X  CharacterTable( "Rest(Sym(4),[ 1 .. 5 ])" ) ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YHere  is  a  nontrivial  example.  We use [2XCharacterTableOfNormalSubgroup[102X for
+  computing the two isoclinic variants of [22X2.A_5.2[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg:= SchurCoverOfSymmetricGroup( 5, 3, 1 );;[127X[104X
+    [4X[25Xgap>[125X [27Xc:= CyclicGroup( 4 );;[127X[104X
+    [4X[25Xgap>[125X [27Xdp:= DirectProduct( g, c );;[127X[104X
+    [4X[25Xgap>[125X [27Xdiag:= First( Elements( Centre( dp ) ), [127X[104X
+    [4X[25X>[125X [27X                 x -> Order( x ) = 2 and[127X[104X
+    [4X[25X>[125X [27X                      not x in Image( Embedding( dp, 1 ) ) and[127X[104X
+    [4X[25X>[125X [27X                      not x in Image( Embedding( dp, 2 ) ) );;[127X[104X
+    [4X[25Xgap>[125X [27Xfact:= Image( NaturalHomomorphismByNormalSubgroup( dp, [127X[104X
+    [4X[25X>[125X [27X                     Subgroup( dp, [ diag ] ) ));;[127X[104X
+    [4X[25Xgap>[125X [27Xt:= CharacterTable( fact );;[127X[104X
+    [4X[25Xgap>[125X [27XSize( t );[127X[104X
+    [4X[28X480[128X[104X
+    [4X[25Xgap>[125X [27Xnsg:= ClassPositionsOfNormalSubgroups( t );;[127X[104X
+    [4X[25Xgap>[125X [27Xrest:= List( nsg, c -> CharacterTableOfNormalSubgroup( t, c ) );;[127X[104X
+    [4X[25Xgap>[125X [27Xindex2:= Filtered( rest, x -> x <> fail and Size( x ) = 240 );;[127X[104X
+    [4X[25Xgap>[125X [27XLength( index2 );[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27Xtg:= CharacterTable( g );;[127X[104X
+    [4X[25Xgap>[125X [27XIsRecord([127X[104X
+    [4X[25X>[125X [27X       TransformingPermutationsCharacterTables( index2[1], tg ) );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsRecord([127X[104X
+    [4X[25X>[125X [27X       TransformingPermutationsCharacterTables( index2[2], tg ) );[127X[104X
+    [4X[28Xfalse[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YAlternatively, we could construct the character table of the central product
+  with  character  theoretic  methods. Or we could use [2XCharacterTableIsoclinic[102X
+  ([14X71.20-4[114X).[133X
+  
+  [1X71.20-6 CharacterTableWreathSymmetric[101X
   
   [33X[1;0Y[29X[2XCharacterTableWreathSymmetric[102X( [3Xtbl[103X, [3Xn[103X ) [32X function[133X
   
@@ -3211,11 +3282,11 @@
     [4X[28X  Character( CharacterTable( S4 ), [ 3, 1, -1, 0, -1 ] ), [128X[104X
     [4X[28X  Character( CharacterTable( S4 ), [ 1, 1, 1, 1, 1 ] ) ][128X[104X
     [4X[25Xgap>[125X [27Xkernel:= KernelOfCharacter( irr[3] );[127X[104X
-    [4X[28XGroup([ (1,2)(3,4), (1,3)(2,4) ])[128X[104X
+    [4X[28XGroup([ (1,2)(3,4), (1,4)(2,3) ])[128X[104X
     [4X[25Xgap>[125X [27XHasNormalSubgroupClassesInfo( tbl );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XNormalSubgroupClassesInfo( tbl );[127X[104X
-    [4X[28Xrec( nsg := [ Group([ (1,2)(3,4), (1,3)(2,4) ]) ], [128X[104X
+    [4X[28Xrec( nsg := [ Group([ (1,2)(3,4), (1,4)(2,3) ]) ],[128X[104X
     [4X[28X  nsgclasses := [ [ 1, 3 ] ], nsgfactors := [  ] )[128X[104X
     [4X[25Xgap>[125X [27XClassPositionsOfNormalSubgroup( tbl, kernel );[127X[104X
     [4X[28X[ 1, 3 ][128X[104X

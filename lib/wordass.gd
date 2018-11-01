@@ -349,10 +349,14 @@ DeclareGlobalFunction( "FreelyReducedLetterRepWord" );
 ##  <#/GAPDoc>
 ##
 DeclareProperty("IsFreeSemigroup", IsAssocWordCollection and IsSemigroup);
+InstallTrueMethod(IsSemigroup, IsFreeSemigroup);
+
 DeclareProperty("IsFreeMonoid", IsAssocWordWithOneCollection and IsMonoid);
+InstallTrueMethod(IsMonoid, IsFreeMonoid);
+
 DeclareSynonym( "IsFreeGroup",
     IsAssocWordWithInverseCollection and IsGroup );
-
+InstallTrueMethod(IsGroup, IsFreeGroup);
 
 #############################################################################
 ##
@@ -1016,14 +1020,6 @@ DeclareGlobalFunction( "AssocWord" );
 ##  </ManSection>
 ##
 DeclareGlobalFunction( "ObjByVector" );
-
-
-# is not used anywhere
-# #############################################################################
-# ##
-# #O  CyclicReducedWordList( <word>, <gens> )
-# ##
-# DeclareOperation( "CyclicReducedWordList", [ IsAssocWord, IsList ] );
 
 
 #############################################################################

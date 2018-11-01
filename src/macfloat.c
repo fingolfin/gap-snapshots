@@ -20,25 +20,17 @@
 
 #include <math.h>
 
-#include <src/macfloat.h>
+#include "macfloat.h"
 
-#include <src/ariths.h>
-#include <src/bool.h>
-#include <src/gap.h>
-#include <src/io.h>
-#include <src/plist.h>
-#include <src/stringobj.h>
+#include "ariths.h"
+#include "bool.h"
+#include "error.h"
+#include "io.h"
+#include "modules.h"
+#include "plist.h"
+#include "saveload.h"
+#include "stringobj.h"
 
-
-/* the following two declarations would belong in `saveload.h', but then all
- * files get macfloat dependencies */
-extern Double LoadDouble( void);
-extern void SaveDouble( Double d);
-
-#include <stdio.h>
-#include <stdlib.h>
-
-#define SIZE_MACFLOAT   sizeof(Double)
 
 /****************************************************************************
 **
@@ -57,18 +49,39 @@ Obj TypeMacfloat (
 }
 
 
+// helper function for printing a "decimal" representation of a macfloat
+// into a buffer.
+static void PrintMacfloatToBuf(char *buf, size_t bufsize, Double val, int precision)
+{
+    // handle printing of NaN and infinities ourselves, to ensure
+    // they are printed uniformly across all platforms
+    if (isnan(val)) {
+        strcpy(buf, "nan");
+    }
+    else if (isinf(val)) {
+        if (val > 0)
+            strcpy(buf, "inf");
+        else
+            strcpy(buf, "-inf");
+    }
+    else {
+        snprintf(buf, bufsize, "%.*" PRINTFFORMAT, precision, val);
+    }
+}
+
+
 /****************************************************************************
 **
-*F  PrintMacfloat( <macfloat> ) . . . . . . . . . . . . . . . . print a macfloat value
+*F  PrintMacfloat( <macfloat> ) . . . . . . . . . . .  print a macfloat value
 **
 **  'PrintMacfloat' prints the macfloating value <macfloat>.
 */
-void PrintMacfloat (
-    Obj                 x )
+void PrintMacfloat(Obj x)
 {
-  Char buf[32];
-  snprintf(buf, sizeof(buf), "%.16" PRINTFFORMAT, (TOPRINTFFORMAT) VAL_MACFLOAT(x));
-  Pr("%s",(Int)buf, 0);
+    Char buf[1024];
+    // TODO: should we use PRINTFDIGITS instead of 16?
+    PrintMacfloatToBuf(buf, sizeof(buf), VAL_MACFLOAT(x), 16);
+    Pr("%s", (Int)buf, 0);
 }
 
 
@@ -113,10 +126,11 @@ Int LtMacfloat (
 *F  SaveMacfloat( <macfloat> ) . . . . . . . . . . . . . . . . . . . . save a Macfloatean 
 **
 */
-
 void SaveMacfloat( Obj obj )
 {
-  SaveDouble(VAL_MACFLOAT(obj));
+    const UInt1 *data = (const UInt1 *)CONST_ADDR_OBJ(obj);
+    for (UInt i = 0; i < sizeof(Double); i++)
+        SaveUInt1(data[i]);
 }
 
 /****************************************************************************
@@ -124,18 +138,19 @@ void SaveMacfloat( Obj obj )
 *F  LoadMacfloat( <macfloat> ) . . . . . . . . . . . . . . . . . . . . save a Macfloatean 
 **
 */
-
 void LoadMacfloat( Obj obj )
 {
-  SET_VAL_MACFLOAT(obj, LoadDouble());
+    UInt1 *data = (UInt1 *)ADDR_OBJ(obj);
+    for (UInt i = 0; i < sizeof(Double); i++)
+        data[i] = LoadUInt1();
 }
+
 
 Obj NEW_MACFLOAT( Double val )
 {
-  Obj f;
-  f = NewBag(T_MACFLOAT,SIZE_MACFLOAT);
-  SET_VAL_MACFLOAT(f,val);
-  return f;
+    Obj f = NewBag(T_MACFLOAT, sizeof(Double));
+    SET_VAL_MACFLOAT(f, val);
+    return f;
 }
 
 /****************************************************************************
@@ -297,7 +312,7 @@ Obj FuncMACFLOAT_STRING( Obj self, Obj s )
   while (!IsStringConv(s))
     {
       s = ErrorReturnObj("MACFLOAT_STRING: object to be converted must be a string not a %s",
-			 (Int)(InfoBags[TNUM_OBJ(s)].name),0,"You can return a string to continue" );
+			 (Int)TNAM_OBJ(s),0,"You can return a string to continue" );
     }
   char * endptr;
   UChar *sp = CHARS_STRING(s);
@@ -375,7 +390,7 @@ Obj FuncSIGN_MACFLOAT( Obj self, Obj f )
 {
   Double vf = VAL_MACFLOAT(f);
   
-  return vf == 0. ? INTOBJ_INT(0) : vf > 0. ? INTOBJ_INT(1) : INTOBJ_INT(-1);
+  return vf == 0. ? INTOBJ_INT(0) : signbit(vf) ? INTOBJ_INT(-1) : INTOBJ_INT(1);
 }
 
 Obj FuncSIGNBIT_MACFLOAT( Obj self, Obj f )
@@ -418,19 +433,14 @@ Obj FuncINTFLOOR_MACFLOAT( Obj self, Obj obj )
 
 Obj FuncSTRING_DIGITS_MACFLOAT( Obj self, Obj gapprec, Obj f)
 {
-  Char buf[50];
+  Char buf[1024];
   Obj str;
   int prec = INT_INTOBJ(gapprec);
   if (prec > 40) /* too much anyways, and would risk buffer overrun */
     prec = 40;
-  snprintf(buf, sizeof(buf), "%.*" PRINTFFORMAT, prec, (TOPRINTFFORMAT)VAL_MACFLOAT(f));
+  PrintMacfloatToBuf(buf, sizeof(buf), VAL_MACFLOAT(f), prec);
   str = MakeString(buf);
   return str;
-}
-
-Obj FuncSTRING_MACFLOAT( Obj self, Obj f) /* backwards compatibility */
-{
-  return FuncSTRING_DIGITS_MACFLOAT(self,INTOBJ_INT(PRINTFDIGITS),f);
 }
 
 Obj FuncLDEXP_MACFLOAT( Obj self, Obj f, Obj i)
@@ -451,8 +461,18 @@ Obj FuncFREXP_MACFLOAT( Obj self, Obj f)
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
+
+
+/****************************************************************************
+**
+*V  BagNames  . . . . . . . . . . . . . . . . . . . . . . . list of bag names
+*/
+static StructBagNames BagNames[] = {
+  { T_MACFLOAT, "macfloat" },
+  { -1,    "" }
+};
 
 
 /****************************************************************************
@@ -502,7 +522,6 @@ static StructGVarFunc GVarFuncs [] = {
   GVAR_FUNC(ABS_MACFLOAT, 1, "macfloat"),
   GVAR_FUNC(SIGN_MACFLOAT, 1, "macfloat"),
   GVAR_FUNC(SIGNBIT_MACFLOAT, 1, "macfloat"),
-  GVAR_FUNC(STRING_MACFLOAT, 1, "macfloat"),
 
   GVAR_FUNC(STRING_DIGITS_MACFLOAT, 2, "digits, macfloat"),
   GVAR_FUNC(EQ_MACFLOAT, 2, "x, y"),
@@ -519,10 +538,14 @@ extern Int EqObject (Obj,Obj);
 static Int InitKernel (
     StructInitInfo *    module )
 {
+    // set the bag type names (for error messages and debugging)
+    InitBagNamesFromTable( BagNames );
+
     /* install the marking functions for macfloatean values                    */
-    InfoBags[ T_MACFLOAT ].name = "macfloat";
     InitMarkFuncBags( T_MACFLOAT, MarkNoSubBags );
+#ifdef HPCGAP
     MakeBagTypePublic( T_MACFLOAT );
+#endif
 
     /* init functions */
     InitHdlrFuncsFromTable( GVarFuncs );
@@ -545,11 +568,8 @@ static Int InitKernel (
     LtFuncs[ T_MACFLOAT ][ T_MACFLOAT ] = LtMacfloat;
 
     /* allow method selection to protest against comparisons of float and int */
-    {
-      int t;
-      for (t = T_INT; t <= T_CYC; t++)
-	EqFuncs[T_MACFLOAT][t] = EqFuncs[t][T_MACFLOAT] = EqObject;
-    }
+    for (int t = T_INT; t <= T_CYC; t++)
+        EqFuncs[T_MACFLOAT][t] = EqFuncs[t][T_MACFLOAT] = EqObject;
 
     /* install the unary arithmetic methods                                */
     ZeroFuncs[ T_MACFLOAT ] = ZeroMacfloat;

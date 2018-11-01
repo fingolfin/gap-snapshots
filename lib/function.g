@@ -162,10 +162,10 @@ DeclareOperationKernel("NameFunction", [IS_OBJECT], NAME_FUNC);
 
 #############################################################################
 ##
-#F  SetNameFunction( <func>, <name> )  . . . . . . . .set  name of a function
+#O  SetNameFunction( <func>, <name> )  . . . . . . . .set  name of a function
 ##
 ##  <ManSection>
-##  <Func Name="SetNameFunction" Arg='func, name'/>
+##  <Oper Name="SetNameFunction" Arg='func, name'/>
 ##
 ##  <Description>
 ##  changes the name of a function. This only changes the name stored in
@@ -174,15 +174,12 @@ DeclareOperationKernel("NameFunction", [IS_OBJECT], NAME_FUNC);
 ##  </Description>
 ##  </ManSection>
 ##
-#T  If objects simulate functions this must become an operation, or an attribute
-#T  with the above
-##
 DeclareOperationKernel( "SetNameFunction", [IS_OBJECT, IS_STRING], SET_NAME_FUNC );
 
 
 #############################################################################
 ##
-#F  NumberArgumentsFunction( <func> )
+#O  NumberArgumentsFunction( <func> )
 ##
 ##  <#GAPDoc Label="NumberArgumentsFunction">
 ##  <ManSection>
@@ -216,7 +213,7 @@ DeclareOperationKernel( "NumberArgumentsFunction", [IS_OBJECT], NARG_FUNC );
 
 #############################################################################
 ##
-#F  NamesLocalVariablesFunction( <func> )
+#O  NamesLocalVariablesFunction( <func> )
 ##
 ##  <#GAPDoc Label="NamesLocalVariablesFunction">
 ##  <ManSection>
@@ -229,7 +226,7 @@ DeclareOperationKernel( "NumberArgumentsFunction", [IS_OBJECT], NARG_FUNC );
 ##  <A>func</A>, and the remaining ones are the local variables as given in
 ##  the <K>local</K> statement in <A>func</A>.
 ##  (The number of arguments can be computed with
-##  <Ref Func="NumberArgumentsFunction"/>.)
+##  <Ref Oper="NumberArgumentsFunction"/>.)
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> NamesLocalVariablesFunction(function( a, b ) local c; return 1; end);
@@ -243,7 +240,7 @@ DeclareOperationKernel( "NumberArgumentsFunction", [IS_OBJECT], NARG_FUNC );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-BIND_GLOBAL( "NamesLocalVariablesFunction", NAMS_FUNC );
+DeclareOperationKernel( "NamesLocalVariablesFunction", [IS_OBJECT], NAMS_FUNC );
 
 
 #############################################################################
@@ -344,13 +341,23 @@ BIND_GLOBAL( "LocationFunc", function(x)
     if not(IS_FUNCTION(x)) then
         return "";
     fi;
-    nam := FILENAME_FUNC(x);
-    line := STARTLINE_FUNC(x);
     ret := "";
-    if nam <> fail and line <> fail then
+    nam := FILENAME_FUNC(x);
+    if nam = fail then
+        return ret;
+    fi;
+    line := STARTLINE_FUNC(x);
+    if line <> fail then
         APPEND_LIST(ret, nam);
         APPEND_LIST(ret, ":");
         APPEND_LIST(ret, STRING_INT(line));
+        return ret;
+    fi;
+    line := LOCATION_FUNC(x);
+    if line <> fail then
+        APPEND_LIST(ret, nam);
+        APPEND_LIST(ret, ":");
+        APPEND_LIST(ret, line);
     fi;
     return ret;
 end);
@@ -358,7 +365,7 @@ end);
 
 #############################################################################
 ##
-#F  CallFuncList( <func>, <args> )  . . . . . . . . . . . . . call a function
+#O  CallFuncList( <func>, <args> )  . . . . . . . . . . . . . call a function
 ##
 ##  <#GAPDoc Label="CallFuncList">
 ##  <ManSection>
@@ -379,7 +386,7 @@ end);
 ##  13
 ##  ]]></Example>
 ##  <P/>
-##  A more useful application of <Ref Func="CallFuncList"/> is for a function
+##  A more useful application of <Ref Oper="CallFuncList"/> is for a function
 ##  <C>g</C> that is called in the body of a function <C>f</C> with
 ##  (a sublist of) the arguments of <C>f</C>, where <C>f</C> has been defined
 ##  with a single formal argument <C>arg</C>
@@ -430,8 +437,6 @@ end);
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
-##
-#T  If objects simulate functions this must become an operation.
 ##
 UNBIND_GLOBAL("CallFuncList"); # was declared 2b defined
 DeclareOperationKernel( "CallFuncList", [IS_OBJECT, IS_LIST], CALL_FUNC_LIST );

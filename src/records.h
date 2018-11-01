@@ -16,18 +16,15 @@
 #ifndef GAP_RECORDS_H
 #define GAP_RECORDS_H
 
-#include <src/objects.h>
+#include "objects.h"
 
 /****************************************************************************
 **
-*F  NAME_RNAM(<rnam>) . . . . . . . . . .  name for a record name as C string
-*F  NAME_OBJ_RNAM(<rnam>) . . . . . . . . .  name for a record name as an Obj
+*F  NAME_RNAM(<rnam>) . . . . . . . . . . .  name for a record name as an Obj
 **
-**  'NAME_RNAM' returns the name (as a C string) for the record name <rnam>.
-**  'NAME_OBJ_RNAM' returns the name (as an Obj) for the record name <rnam>.
+**  'NAME_RNAM' returns the name (as an Obj) for the record name <rnam>.
 */
-extern const Char *NAME_RNAM(UInt rnam);
-extern Obj NAME_OBJ_RNAM(UInt rnam);
+extern Obj NAME_RNAM(UInt rnam);
 
 
 /****************************************************************************
@@ -66,16 +63,13 @@ extern  UInt            RNamObj (
 **
 *F  IS_REC(<obj>) . . . . . . . . . . . . . . . . . . . is an object a record
 *V  IsRecFuncs[<type>]  . . . . . . . . . . . . . . . . table of record tests
-**
-**  'IS_REC' returns a nonzero value if the object <obj> is a  record  and  0
-**  otherwise.
-**
-**  Note that 'IS_REC' is a record, so do not call  it  with  arguments  that
-**  side effects.
 */
-#define IS_REC(obj)     ((*IsRecFuncs[ TNUM_OBJ(obj) ])( obj ))
+extern Int (*IsRecFuncs[LAST_REAL_TNUM + 1])(Obj obj);
 
-extern  Int             (*IsRecFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
+static inline Int IS_REC(Obj obj)
+{
+    return (*IsRecFuncs[TNUM_OBJ(obj)])(obj);
+}
 
 
 /****************************************************************************
@@ -85,14 +79,13 @@ extern  Int             (*IsRecFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 **  'ELM_REC' returns the element, i.e., the value of the component, with the
 **  record name <rnam> in  the record <rec>.   An error is signalled if <rec>
 **  is not a record or if <rec> has no component with the record name <rnam>.
-**
-**  Note that 'ELM_REC' is  a macro, so do   not call it with arguments  that
-**  have side effects.
 */
-#define ELM_REC(rec,rnam) \
-                        ((*ElmRecFuncs[ TNUM_OBJ(rec) ])( rec, rnam ))
+extern Obj (*ElmRecFuncs[LAST_REAL_TNUM + 1])(Obj rec, UInt rnam);
 
-extern  Obj             (*ElmRecFuncs[LAST_REAL_TNUM+1]) ( Obj rec, UInt rnam );
+static inline Obj ELM_REC(Obj rec, UInt rnam)
+{
+    return (*ElmRecFuncs[TNUM_OBJ(rec)])(rec, rnam);
+}
 
 
 /****************************************************************************
@@ -102,15 +95,13 @@ extern  Obj             (*ElmRecFuncs[LAST_REAL_TNUM+1]) ( Obj rec, UInt rnam );
 **  'ISB_REC' returns 1 if the record <rec> has a component with  the  record
 **  name <rnam> and 0 otherwise.  An error is signalled if  <rec>  is  not  a
 **  record.
-**
-**  Note  that 'ISB_REC'  is a macro,  so do not call  it with arguments that
-**  have side effects.
 */
-#define ISB_REC(rec,rnam) \
-                        ((*IsbRecFuncs[ TNUM_OBJ(rec) ])( rec, rnam ))
+extern Int (*IsbRecFuncs[LAST_REAL_TNUM + 1])(Obj rec, UInt rnam);
 
-extern  Int             (*IsbRecFuncs[LAST_REAL_TNUM+1]) ( Obj rec, UInt rnam );
-
+static inline Int ISB_REC(Obj rec, UInt rnam)
+{
+    return (*IsbRecFuncs[TNUM_OBJ(rec)])(rec, rnam);
+}
 
 /****************************************************************************
 **
@@ -119,15 +110,13 @@ extern  Int             (*IsbRecFuncs[LAST_REAL_TNUM+1]) ( Obj rec, UInt rnam );
 **  'ASS_REC' assigns the object <obj>  to  the  record  component  with  the
 **  record name <rnam> in the record <rec>.  An error is signalled  if  <rec>
 **  is not a record.
-**
-**  Note that  'ASS_REC' is a  macro, so do not call   it with arguments that
-**  have side effects.
 */
-#define ASS_REC(rec,rnam,obj) \
-                        ((*AssRecFuncs[ TNUM_OBJ(rec) ])( rec, rnam, obj ))
+extern void (*AssRecFuncs[LAST_REAL_TNUM + 1])(Obj rec, UInt rnam, Obj obj);
 
-extern  void            (*AssRecFuncs[LAST_REAL_TNUM+1]) ( Obj rec, UInt rnam, Obj obj );
-
+static inline void ASS_REC(Obj rec, UInt rnam, Obj obj)
+{
+    return (*AssRecFuncs[TNUM_OBJ(rec)])(rec, rnam, obj);
+}
 
 /****************************************************************************
 **
@@ -135,14 +124,13 @@ extern  void            (*AssRecFuncs[LAST_REAL_TNUM+1]) ( Obj rec, UInt rnam, O
 **
 **  'UNB_REC' removes the record component  with the record name <rnam>  from
 **  the record <rec>.
-**
-**  Note that 'UNB_REC' is  a macro, so  do  not call it with  arguments that
-**  have side effects.
 */
-#define UNB_REC(rec,rnam) \
-                        ((*UnbRecFuncs[ TNUM_OBJ(rec) ])( rec, rnam ))
+extern void (*UnbRecFuncs[LAST_REAL_TNUM + 1])(Obj rec, UInt rnam);
 
-extern  void            (*UnbRecFuncs[LAST_REAL_TNUM+1]) ( Obj rec, UInt rnam );
+static inline void UNB_REC(Obj rec, UInt rnam)
+{
+    return (*UnbRecFuncs[TNUM_OBJ(rec)])(rec, rnam);
+}
 
 
 /****************************************************************************
@@ -165,7 +153,7 @@ extern UInt completion_rnam (
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************

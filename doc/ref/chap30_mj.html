@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (ref) - Chapter 30: Collections</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -727,10 +727,10 @@ false
 
 <h5>30.7-3 RandomList</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomList</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RandomList</code>( [<var class="Arg">rs</var>, ]<var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>For a dense list <var class="Arg">list</var>, <code class="func">RandomList</code> returns a (pseudo-)random element with equal distribution.</p>
 
-<p>This function uses the <code class="func">GlobalMersenneTwister</code> (<a href="chap14_mj.html#X7F772E2686B35865"><span class="RefLink">14.7-4</span></a>) to produce the random elements (a source of high quality random numbers).</p>
+<p>The random source <var class="Arg">rs</var> is used to choose a random number. If <var class="Arg">rs</var> is absent, this function uses the <code class="func">GlobalMersenneTwister</code> (<a href="chap14_mj.html#X7F772E2686B35865"><span class="RefLink">14.7-4</span></a>) to produce the random elements (a source of high quality random numbers).</p>
 
 <p><a id="X85A3F00985453F95" name="X85A3F00985453F95"></a></p>
 

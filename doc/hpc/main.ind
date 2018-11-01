@@ -3,12 +3,12 @@
   \item \texttt  {AchieveMilestone}, \hyperpage{11}
   \item \texttt  {AdoptObj}, \hyperpage{23}
   \item \texttt  {AdoptSingleObj}, \hyperpage{23}
-  \item \texttt  {ATOMIC{\textunderscore }ADDITION}, \hyperpage{37}
   \item \texttt  {AtomicIncorporateObj}, \hyperpage{22}
   \item \texttt  {AtomicList}, \hyperpage{36}
     \subitem for a count and an object, \hyperpage{36}
   \item \texttt  {AtomicRecord}, \hyperpage{37}
     \subitem for a record, \hyperpage{37}
+  \item \texttt  {ATOMIC{\textunderscore }ADDITION}, \hyperpage{37}
 
   \indexspace
 
@@ -90,15 +90,15 @@
   \indexspace
 
   \item \texttt  {MakeFixedAtomicList}, \hyperpage{36}
-  \item \texttt  {MAKE{\textunderscore }PUBLIC}, \hyperpage{59}
-  \item \texttt  {MAK}\discretionary {-}{}{}\texttt  {E{\textunderscore }}\discretionary {-}{}{}\texttt  {P}\discretionary {-}{}{}\texttt  {U}\discretionary {-}{}{}\texttt  {B}\discretionary {-}{}{}\texttt  {L}\discretionary {-}{}{}\texttt  {I}\discretionary {-}{}{}\texttt  {C{\textunderscore }}\discretionary {-}{}{}\texttt  {N}\discretionary {-}{}{}\texttt  {O}\discretionary {-}{}{}\texttt  {R}\discretionary {-}{}{}\texttt  {E}\discretionary {-}{}{}\texttt  {C}\discretionary {-}{}{}\texttt  {URSE}, 
-		\hyperpage{59}
   \item \texttt  {MakeReadOnlyObj}, \hyperpage{25}
   \item \texttt  {MakeReadOnlySingleObj}, \hyperpage{25}
   \item \texttt  {MakeReadWriteAtomic}, \hyperpage{39}
   \item \texttt  {MakeStrictWriteOnceAtomic}, \hyperpage{39}
   \item \texttt  {MakeTaskAsync}, \hyperpage{7}
   \item \texttt  {MakeThreadLocal}, \hyperpage{13}
+  \item \texttt  {MAKE{\textunderscore }PUBLIC}, \hyperpage{59}
+  \item \texttt  {MAK}\discretionary {-}{}{}\texttt  {E{\textunderscore }}\discretionary {-}{}{}\texttt  {P}\discretionary {-}{}{}\texttt  {U}\discretionary {-}{}{}\texttt  {B}\discretionary {-}{}{}\texttt  {L}\discretionary {-}{}{}\texttt  {I}\discretionary {-}{}{}\texttt  {C{\textunderscore }}\discretionary {-}{}{}\texttt  {N}\discretionary {-}{}{}\texttt  {O}\discretionary {-}{}{}\texttt  {R}\discretionary {-}{}{}\texttt  {E}\discretionary {-}{}{}\texttt  {C}\discretionary {-}{}{}\texttt  {URSE}, 
+		\hyperpage{59}
   \item \texttt  {MakeWriteOnceAtomic}, \hyperpage{38}
   \item \texttt  {MAX{\textunderscore }INTERRUPT}, \hyperpage{43}
   \item \texttt  {MigrateObj}, \hyperpage{21}

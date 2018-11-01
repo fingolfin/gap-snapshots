@@ -10,7 +10,7 @@
 #ifndef GAP_OBJCCOLL_H
 #define GAP_OBJCCOLL_H
 
-#include <src/system.h>
+#include "system.h"
 
 /****************************************************************************
 **
@@ -52,7 +52,7 @@ Int C32Bits_CombiCollectWord ( Obj, Obj, Obj );
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

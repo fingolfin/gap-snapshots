@@ -468,6 +468,12 @@ InstallMethod( \*,
     [ Is8BitsAssocWord, Is8BitsAssocWord ], 0,
     8Bits_Product );
 
+InstallMethod( \/,
+    "for two 8 bits assoc. words",
+    IsIdenticalObj,
+    [ Is8BitsAssocWord, Is8BitsAssocWord and IsMultiplicativeElementWithInverse ], 0,
+    8Bits_Quotient );
+
 InstallMethod( OneOp,
     "for an 8 bits assoc. word-with-one",
     true,
@@ -512,7 +518,7 @@ InstallMethod( NumberSyllables,
     "for an 8 bits assoc. word",
     true,
     [ Is8BitsAssocWord ], 0,
-    8Bits_NumberSyllables );
+    NBits_NumberSyllables );
 
 InstallMethod( ExponentSums,
     "for an 8 bits assoc. word",
@@ -561,6 +567,12 @@ InstallMethod( \*,
     [ Is16BitsAssocWord, Is16BitsAssocWord ], 0,
     16Bits_Product );
 
+InstallMethod( \/,
+    "for two 16 bits assoc. words",
+    IsIdenticalObj,
+    [ Is16BitsAssocWord, Is16BitsAssocWord and IsMultiplicativeElementWithInverse ], 0,
+    16Bits_Quotient );
+
 InstallMethod( OneOp,
     "for a 16 bits assoc. word-with-one",
     true,
@@ -605,7 +617,7 @@ InstallMethod( NumberSyllables,
     "for a 16 bits assoc. word",
     true,
     [ Is16BitsAssocWord ], 0,
-    16Bits_NumberSyllables );
+    NBits_NumberSyllables );
 
 InstallMethod( ExponentSums,
     "for a 16 bits assoc. word",
@@ -654,6 +666,12 @@ InstallMethod( \*,
     [ Is32BitsAssocWord, Is32BitsAssocWord ], 0,
     32Bits_Product );
 
+InstallMethod( \/,
+    "for two 32 bits assoc. words",
+    IsIdenticalObj,
+    [ Is32BitsAssocWord, Is32BitsAssocWord and IsMultiplicativeElementWithInverse ], 0,
+    32Bits_Quotient );
+
 InstallMethod( OneOp,
     "for a 32 bits assoc. word-with-one",
     true,
@@ -698,7 +716,7 @@ InstallMethod( NumberSyllables,
     "for a 32 bits assoc. word",
     true,
     [ Is32BitsAssocWord ], 0,
-    32Bits_NumberSyllables );
+    NBits_NumberSyllables );
 
 InstallMethod( ExponentSums,
     "for a 32 bits assoc. word",
@@ -874,6 +892,10 @@ InstallMethod( ExponentSums,
 InfBits_ExponentSums3 := function( obj, from, to )
     local expvec, i;
 
+    if from < 1 then Error("<from> must be a positive integer"); fi;
+    if to < 1 then Error("<to> must be a positive integer"); fi;
+    if from > to then return []; fi;
+
     expvec:=ListWithIdenticalEntries(TypeObj( obj )![ AWP_NR_GENS ],0);
 
     # the syllable representation is a sparse representation
@@ -883,7 +905,7 @@ InfBits_ExponentSums3 := function( obj, from, to )
             expvec[ obj[i] ]:= expvec[ obj[i] ] + obj[ i+1 ];
         fi;
     od;
-    return expvec;
+    return expvec{[from..to]};
 end;
 InstallOtherMethod( ExponentSums,
     "for an inf. bits assoc. word, and two integers",
@@ -1013,48 +1035,48 @@ InstallGlobalFunction( StoreInfoFreeMagma, function( F, names, req )
     MakeImmutable(expB);
     F!.expBits := expB;
 
-    F!.expBitsInfo := [ 2^( F!.expBits[1] - 1 ),
-                        2^( F!.expBits[2] - 1 ),
-                        2^( F!.expBits[3] - 1 ),
-                        infinity          ];
+    F!.expBitsInfo := MakeImmutable([ 2^( F!.expBits[1] - 1 ),
+                         2^( F!.expBits[2] - 1 ),
+                         2^( F!.expBits[3] - 1 ),
+                         infinity          ]);
 
     # Store the internal types.
     K:= NewType( F, Is8BitsAssocWord and req );
-    K![ AWP_PURE_TYPE    ]      := K;
-    K![ AWP_NR_BITS_EXP  ]      := F!.expBits[1];
-    K![ AWP_NR_GENS      ]      := rank;
-    K![ AWP_NR_BITS_PAIR ]      := 8;
-    K![ AWP_FUN_OBJ_BY_VECTOR ] := 8Bits_ObjByVector;
-    K![ AWP_FUN_ASSOC_WORD    ] := 8Bits_AssocWord;
+    StrictBindOnce(K, AWP_PURE_TYPE        , K);
+    StrictBindOnce(K, AWP_NR_BITS_EXP      , F!.expBits[1]);
+    StrictBindOnce(K, AWP_NR_GENS          , rank);
+    StrictBindOnce(K, AWP_NR_BITS_PAIR     , 8);
+    StrictBindOnce(K, AWP_FUN_OBJ_BY_VECTOR, 8Bits_ObjByVector);
+    StrictBindOnce(K, AWP_FUN_ASSOC_WORD   , 8Bits_AssocWord);
     typesList[1]:= K;
 
     K:= NewType( F, Is16BitsAssocWord and req );
-    K![ AWP_PURE_TYPE    ]      := K;
-    K![ AWP_NR_BITS_EXP  ]      := F!.expBits[2];
-    K![ AWP_NR_GENS      ]      := rank;
-    K![ AWP_NR_BITS_PAIR ]      := 16;
-    K![ AWP_FUN_OBJ_BY_VECTOR ] := 16Bits_ObjByVector;
-    K![ AWP_FUN_ASSOC_WORD    ] := 16Bits_AssocWord;
+    StrictBindOnce(K, AWP_PURE_TYPE        , K);
+    StrictBindOnce(K, AWP_NR_BITS_EXP      , F!.expBits[2]);
+    StrictBindOnce(K, AWP_NR_GENS          , rank);
+    StrictBindOnce(K, AWP_NR_BITS_PAIR     , 16);
+    StrictBindOnce(K, AWP_FUN_OBJ_BY_VECTOR, 16Bits_ObjByVector);
+    StrictBindOnce(K, AWP_FUN_ASSOC_WORD   , 16Bits_AssocWord);
     typesList[2]:= K;
 
     K:= NewType( F, Is32BitsAssocWord and req );
-    K![ AWP_PURE_TYPE    ]      := K;
-    K![ AWP_NR_BITS_EXP  ]      := F!.expBits[3];
-    K![ AWP_NR_GENS      ]      := rank;
-    K![ AWP_NR_BITS_PAIR ]      := 32;
-    K![ AWP_FUN_OBJ_BY_VECTOR ] := 32Bits_ObjByVector;
-    K![ AWP_FUN_ASSOC_WORD    ] := 32Bits_AssocWord;
+    StrictBindOnce(K, AWP_PURE_TYPE        , K);
+    StrictBindOnce(K, AWP_NR_BITS_EXP      , F!.expBits[3]);
+    StrictBindOnce(K, AWP_NR_GENS          , rank);
+    StrictBindOnce(K, AWP_NR_BITS_PAIR     , 32);
+    StrictBindOnce(K, AWP_FUN_OBJ_BY_VECTOR, 32Bits_ObjByVector);
+    StrictBindOnce(K, AWP_FUN_ASSOC_WORD   , 32Bits_AssocWord);
     typesList[3]:= K;
 
   fi;
 
   K:= NewType( F, IsInfBitsAssocWord and req );
-  K![ AWP_PURE_TYPE    ]      := K;
-  K![ AWP_NR_BITS_EXP  ]      := infinity;
-  K![ AWP_NR_GENS      ]      := Length( names );
-  K![ AWP_NR_BITS_PAIR ]      := infinity;
-  K![ AWP_FUN_OBJ_BY_VECTOR ] := InfBits_ObjByVector;
-  K![ AWP_FUN_ASSOC_WORD    ] := InfBits_AssocWord;
+  StrictBindOnce(K, AWP_PURE_TYPE         , K);
+  StrictBindOnce(K, AWP_NR_BITS_EXP       , infinity);
+  StrictBindOnce(K, AWP_NR_GENS           , Length( names ));
+  StrictBindOnce(K, AWP_NR_BITS_PAIR      , infinity);
+  StrictBindOnce(K, AWP_FUN_OBJ_BY_VECTOR , InfBits_ObjByVector);
+  StrictBindOnce(K, AWP_FUN_ASSOC_WORD    , InfBits_AssocWord);
   typesList[4]:= K;
 
   F!.types := MakeImmutable(typesList);
@@ -1186,6 +1208,9 @@ InstallGlobalFunction( InfiniteListOfNames, function( arg )
                       [ string, init ] );
     SetIsFinite( list, false );
     SetIsEmpty( list, false );
+    if IsHPCGAP then
+      MakeReadOnlyObj( list );    
+    fi;
     SetLength( list, infinity );
 #T meaningless since not attribute storing!
     return list;
@@ -1282,13 +1307,12 @@ InstallMethod( Position,
 ##
 #M  Random( <list> )  . . . . . . . . . .  for an infinite list of generators
 ##
-InstallMethod( Random,
-    "for an infinite list of generators",
-    true,
-    [ IsList and IsInfiniteListOfGeneratorsRep ], 0,
-    function( list )
+InstallMethodWithRandomSource( Random,
+    "for a random source and an infinite list of generators",
+    [ IsRandomSource, IsList and IsInfiniteListOfGeneratorsRep ], 0,
+    function( rs, list )
     local pos;
-    pos:= Random( Integers );
+    pos:= Random( rs, Integers );
     if 0 <= pos then
       return list[ 2 * pos + 1 ];
     else
@@ -1321,6 +1345,9 @@ InstallGlobalFunction( InfiniteListOfGenerators, function( arg )
                       [ F, init ] );
     SetIsFinite( list, false );
     SetIsEmpty( list, false );
+    if IsHPCGAP then
+      MakeReadOnlyObj( list );    
+    fi;
     SetLength( list, infinity );
 #T meaningless since not attribute storing!
     return list;

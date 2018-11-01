@@ -20,6 +20,7 @@
 ##  have been discovered recently.
 ##  So possible consequences of other filters are not checked.
 ##
+RUN_IMMEDIATE_METHODS_RUNS   := 0;
 RUN_IMMEDIATE_METHODS_CHECKS := 0;
 RUN_IMMEDIATE_METHODS_HITS   := 0;
 
@@ -31,7 +32,9 @@ BIND_GLOBAL( "RunImmediateMethods", function ( obj, flags )
             j,          # loop over `flagspos'
             imm,        # immediate methods for filter `j'
             i,          # loop over `imm'
+            meth,
             res,        # result of an immediate method
+            loc,
             newflags;   # newly  found filters
 
     # Avoid recursive calls from inside a setter,
@@ -49,6 +52,11 @@ BIND_GLOBAL( "RunImmediateMethods", function ( obj, flags )
     type     := TYPE_OBJ( obj );
     flags    := type![2];
 
+    RUN_IMMEDIATE_METHODS_RUNS := RUN_IMMEDIATE_METHODS_RUNS + 1;
+    if TRACE_IMMEDIATE_METHODS  then
+        Print( "#I RunImmediateMethods\n");
+    fi;
+
     # Check the immediate methods for all in `flagspos'.
     # (Note that new information is handled via appending to that list.)
     for j  in flagspos  do
@@ -63,7 +71,7 @@ BIND_GLOBAL( "RunImmediateMethods", function ( obj, flags )
         if IsBound( IMMEDIATES[j] ) then
 #T  the `if' statement can disappear when `IMM_FLAGS' is improved ...
             imm := IMMEDIATES[j];
-            for i  in [ 0, 7 .. LEN_LIST(imm)-7 ]  do
+            for i  in [ 0, SIZE_IMMEDIATE_METHOD_ENTRY .. LEN_LIST(imm)-SIZE_IMMEDIATE_METHOD_ENTRY ]  do
 
                 if        IS_SUBSET_FLAGS( flags, imm[i+4] )
                   and not IS_SUBSET_FLAGS( flags, imm[i+3] )
@@ -71,16 +79,17 @@ BIND_GLOBAL( "RunImmediateMethods", function ( obj, flags )
                 then
 
                     # Call the method, and store that it was used.
-                    res := IMMEDIATE_METHODS[ imm[i+6] ]( obj );
+                    meth := IMMEDIATE_METHODS[ imm[i+6] ];
+                    res := meth( obj );
                     ADD_LIST( tried, imm[i+6] );
                     RUN_IMMEDIATE_METHODS_CHECKS :=
                         RUN_IMMEDIATE_METHODS_CHECKS+1;
                     if TRACE_IMMEDIATE_METHODS  then
-                        if imm[i+7] = false then
-                            Print( "#I  immediate: ", NAME_FUNC( imm[i+1] ), "\n");
-                        else
-                            Print( "#I  immediate: ", NAME_FUNC( imm[i+1] ), ": ", imm[i+7], "\n" );
+                        Print( "#I  immediate: ", NAME_FUNC( imm[i+1] ));
+                        if imm[i+7] <> false then
+                            Print( ": ", imm[i+7] );
                         fi;
+                        Print(" at ", imm[i+8][1], ":", imm[i+8][2], "\n");
                     fi;
 
                     if res <> TRY_NEXT_METHOD  then
@@ -118,17 +127,36 @@ end );
 
 #############################################################################
 ##
+#V METHODS_OPERATION_REGION . . . . pseudo lock for updating method lists.
+##
+## We really just need one arbitrary lock here. Any globally shared
+## region will do. This is to prevent concurrent SET_METHODS_OPERATION()
+## calls to overwrite each other. Given that these normally only occur
+## when loading a package, actual concurrent calls should be vanishingly
+## rare.
+if IsHPCGAP then
+    BIND_GLOBAL("METHODS_OPERATION_REGION", NewSpecialRegion("operation methods"));
+fi;
+
+#############################################################################
+##
 #F  INSTALL_METHOD_FLAGS( <opr>, <info>, <rel>, <flags>, <rank>, <method> ) .
 ##
 BIND_GLOBAL( "INSTALL_METHOD_FLAGS",
     function( opr, info, rel, flags, rank, method )
-    local   methods,  narg,  i,  k,  tmp, replace, match, j;
+    local   methods,  narg,  i,  k,  tmp, replace, match, j, lk;
 
+    if IsHPCGAP then
+        # TODO: once the GAP compiler supports 'atomic', use that
+        # to replace the explicit locking and unlocking here.
+        lk := WRITE_LOCK(METHODS_OPERATION_REGION);
+    fi;
     # add the number of filters required for each argument
     if IS_CONSTRUCTOR(opr) then
-        if 0 < LEN_LIST(flags)  then
-            rank := rank - RankFilter( flags[ 1 ] );
+        if 0 = LEN_LIST(flags)  then
+            Error(NAME_FUNC(opr),": constructors must have at least one argument");
         fi;
+        rank := rank - RankFilter( flags[ 1 ] );
     else
         for i  in flags  do
             rank := rank + RankFilter( i );
@@ -138,6 +166,9 @@ BIND_GLOBAL( "INSTALL_METHOD_FLAGS",
     # get the methods list
     narg := LEN_LIST( flags );
     methods := METHODS_OPERATION( opr, narg );
+    if IsHPCGAP then
+        methods := methods{[1..LEN_LIST(methods)]};
+    fi;
 
     # set the name
     if info = false  then
@@ -153,7 +184,7 @@ BIND_GLOBAL( "INSTALL_METHOD_FLAGS",
     # find the place to put the new method
     i := 0;
     while i < LEN_LIST(methods) and rank < methods[i+(narg+3)]  do
-        i := i + (narg+4);
+        i := i + (narg+BASE_SIZE_METHODS_OPER_ENTRY);
     od;
 
     # Now is a good time to see if the method is already there
@@ -175,12 +206,12 @@ BIND_GLOBAL( "INSTALL_METHOD_FLAGS",
                     break;
                 fi;
             fi;
-            k := k+narg+4;
+            k := k+narg+BASE_SIZE_METHODS_OPER_ENTRY;
         od;
     fi;
     # push the other functions back
     if not REREADING or not replace then
-        methods{[narg+4+i+1..narg+4+LEN_LIST(methods)]}
+        methods{[narg+BASE_SIZE_METHODS_OPER_ENTRY+i+1..narg+BASE_SIZE_METHODS_OPER_ENTRY+LEN_LIST(methods)]}
           := methods{[i+1..LEN_LIST(methods)]};
     fi;
 
@@ -229,9 +260,17 @@ BIND_GLOBAL( "INSTALL_METHOD_FLAGS",
     methods[i+(narg+3)] := rank;
 
     methods[i+(narg+4)] := IMMUTABLE_COPY_OBJ(info);
+    if BASE_SIZE_METHODS_OPER_ENTRY >= 5 then
+        methods[i+(narg+5)] := MakeImmutable([INPUT_FILENAME(), READEVALCOMMAND_LINENUMBER, INPUT_LINENUMBER()]);
+    fi;
 
     # flush the cache
-    CHANGED_METHODS_OPERATION( opr, narg );
+    if IsHPCGAP then
+        SET_METHODS_OPERATION( opr, narg, MakeReadOnlySingleObj(methods) );
+        UNLOCK(lk);
+    else
+        CHANGED_METHODS_OPERATION( opr, narg );
+    fi;
 end );
 
 
@@ -333,7 +372,13 @@ BIND_GLOBAL( "INSTALL_METHOD",
           rank,
           method,
           oreqs,
-          req, reqs, match, j, k, imp, notmatch;
+          req, reqs, match, j, k, imp, notmatch, lk;
+
+    if IsHPCGAP then
+        # TODO: once the GAP compiler supports 'atomic', use that
+        # to replace the explicit locking and unlocking here.
+        lk := READ_LOCK( OPERATIONS_REGION );
+    fi;
 
     # Check the arguments.
     len:= LEN_LIST( arglist );
@@ -349,7 +394,7 @@ BIND_GLOBAL( "INSTALL_METHOD",
 
     # Check whether an info string is given,
     # or whether the list of argument filters is given by a list of strings.
-    if IS_STRING_REP( arglist[2] ) then
+    if IS_STRING_REP( arglist[2] ) or arglist[2] = false then
       info:= arglist[2];
       pos:= 3;
     else
@@ -452,7 +497,11 @@ BIND_GLOBAL( "INSTALL_METHOD",
       # do check with implications
       imp := [];
       for i in flags  do
-        ADD_LIST( imp, WITH_HIDDEN_IMPS_FLAGS( i ) );
+        if not GAPInfo.CommandLineOptions.N then
+          ADD_LIST( imp, WITH_HIDDEN_IMPS_FLAGS( i ) );
+        else
+          ADD_LIST( imp, WITH_IMPS_FLAGS( i ) );
+        fi;
       od;
 
       # Check that the requirements of the method match
@@ -483,12 +532,27 @@ BIND_GLOBAL( "INSTALL_METHOD",
         # If the requirements do not match any of the declarations
         # then something is wrong or `InstallOtherMethod' should be used.
         if notmatch=0 then
-          Error("the number of arguments does not match a declaration of ",
-                NAME_FUNC(opr) );
+          if not GAPInfo.CommandLineOptions.N then          
+            Error("the number of arguments does not match a declaration of ",
+                  NAME_FUNC(opr) );
+          else
+            Print("InstallMethod warning:  nr of args does not ",
+                  "match a declaration of ", NAME_FUNC(opr), "\n" );
+          fi;
         else
-          Error("required filters ", NamesFilter(imp[notmatch]),"\nfor ",
-                Ordinal(notmatch)," argument do not match a declaration of ",
-                NAME_FUNC(opr) );
+          if not GAPInfo.CommandLineOptions.N then
+            Error("required filters ", NamesFilter(imp[notmatch]),"\nfor ",
+                  Ordinal(notmatch)," argument do not match a declaration of ",
+                  NAME_FUNC(opr) );
+          else
+            Print("InstallMethod warning: ",  NAME_FUNC(opr), "(\c",INPUT_FILENAME(),"\c +",
+                  INPUT_LINENUMBER(),") \c","required filters \c");
+            for j in NamesFilter(imp[notmatch]) do
+              Print(j,"/\c");
+            od;
+            Print(" for ",Ordinal(notmatch)," argument do not match \ca ",
+                  "declaration\n");
+          fi;
         fi;
 
       else
@@ -520,6 +584,10 @@ BIND_GLOBAL( "INSTALL_METHOD",
 
     # Install the method in the operation.
     INSTALL_METHOD_FLAGS( opr, info, rel, flags, rank, method );
+
+    if IsHPCGAP then
+        UNLOCK( lk );
+    fi;
 end );
 
 
@@ -536,12 +604,12 @@ end );
 ##
 ##  The default setter method does nothing.
 ##
-LENGTH_SETTER_METHODS_2 := LENGTH_SETTER_METHODS_2 + 6;  # one method
+LENGTH_SETTER_METHODS_2 := LENGTH_SETTER_METHODS_2 + (BASE_SIZE_METHODS_OPER_ENTRY+2);  # one method
 
 InstallAttributeFunction(
     function ( name, filter, getter, setter, tester, mutflag )
 
-    local flags, rank, cats, props, i;
+    local flags, rank, cats, props, i, lk;
 
     if not IS_IDENTICAL_OBJ( filter, IS_OBJECT ) then
 
@@ -549,16 +617,22 @@ InstallAttributeFunction(
         rank  := 0;
         cats  := IS_OBJECT;
         props := [];
-        for i in [ 1 .. LEN_FLAGS( flags ) ] do
-            if ELM_FLAGS( flags, i ) then
-                if i in CATS_AND_REPS  then
-                    cats := cats and FILTERS[i];
-                    rank := rank - RankFilter( FILTERS[i] );
-                elif i in NUMBERS_PROPERTY_GETTERS  then
-                    ADD_LIST( props, FILTERS[i] );
-                fi;
+        if IsHPCGAP then
+            # TODO: once the GAP compiler supports 'atomic', use that
+            # to replace the explicit locking and unlocking here.
+            lk := READ_LOCK(FILTER_REGION);
+        fi;
+        for i in TRUES_FLAGS( flags ) do
+            if INFO_FILTERS[i] in FNUM_CATS_AND_REPS  then
+                cats := cats and FILTERS[i];
+                rank := rank - RankFilter( FILTERS[i] );
+            elif INFO_FILTERS[i] in FNUM_PROS  then
+                ADD_LIST( props, FILTERS[i] );
             fi;
         od;
+        if IsHPCGAP then
+            UNLOCK(lk);
+        fi;
 
         # Because the getter function may be called from other
         # threads, <props> needs to be immutable or atomic.
@@ -769,7 +843,7 @@ IsPrimeInt := "2b defined";
 
 BIND_GLOBAL( "KeyDependentOperation",
     function( name, domreq, keyreq, keytest )
-    local str, oper, attr;
+    local str, oper, attr, lk;
 
     if keytest = "prime"  then
       keytest := function( key )
@@ -797,7 +871,16 @@ BIND_GLOBAL( "KeyDependentOperation",
 
     # Create the wrapper operation that mainly calls the operation.
     DeclareOperation( name, [ domreq, keyreq ] );
+
+    if IsHPCGAP then
+        # TODO: once the GAP compiler supports 'atomic', use that
+        # to replace the explicit locking and unlocking here.
+        lk := WRITE_LOCK( OPERATIONS_REGION );
+    fi;
     ADD_LIST( WRAPPER_OPERATIONS, VALUE_GLOBAL( name ) );
+    if IsHPCGAP then
+        UNLOCK( lk );
+    fi;
 
     # Install the default method that uses the attribute.
     # (Use `InstallOtherMethod' in order to avoid the warning

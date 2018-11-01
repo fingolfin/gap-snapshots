@@ -11,11 +11,12 @@
 **  This file contains the functions of the  arithmetic  operations  package.
 */
 
-#include <src/ariths.h>
+#include "ariths.h"
 
-#include <src/bool.h>
-#include <src/gap.h>
-#include <src/opers.h>
+#include "bool.h"
+#include "error.h"
+#include "modules.h"
+#include "opers.h"
 
 
 /****************************************************************************
@@ -34,7 +35,7 @@ ArithMethod1 ZeroFuncs [LAST_REAL_TNUM+1];
 **
 *F  ZeroObject( <obj> ) . . . . . . . . . . . . . . . . . . . .  call methsel
 */
-Obj ZEROOp;
+static Obj ZEROOp;
 
 Obj ZeroObject (
     Obj                 obj )
@@ -70,7 +71,7 @@ Obj VerboseZeroObject (
 **
 *F  InstallZeroObject( <verb> ) . . . . . . . . . . . .  install zero methods
 */
-void InstallZeroObject ( Int verb )
+static void InstallZeroObject ( Int verb )
 {
     UInt                t1;             /* type of left  operand           */
     ArithMethod1        func;           /* zero function                   */
@@ -79,8 +80,6 @@ void InstallZeroObject ( Int verb )
     for ( t1 = FIRST_EXTERNAL_TNUM; t1 <= LAST_EXTERNAL_TNUM; t1++ ) {
         ZeroFuncs[t1] = func;
     }
-    ZeroFuncs[ T_PREC            ] = func;
-    ZeroFuncs[ T_PREC +IMMUTABLE ] = func;
 }
 
 
@@ -106,7 +105,7 @@ ArithMethod1 ZeroMutFuncs [LAST_REAL_TNUM+1];
 **
 *F  ZeroMutObject( <obj> ) . . . . . . . . . . . . . . . . . . . .  call methsel
 */
-Obj ZeroOp;
+static Obj ZeroOp;
 
 Obj ZeroMutObject (
     Obj                 obj )
@@ -142,7 +141,7 @@ Obj VerboseZeroMutObject (
 **
 *F  InstallZeroMutObject( <verb> ) . . . . . . . . . . . .  install zero methods
 */
-void InstallZeroMutObject ( Int verb )
+static void InstallZeroMutObject ( Int verb )
 {
     UInt                t1;             /* type of left  operand           */
     ArithMethod1        func;           /* zero function                   */
@@ -151,8 +150,6 @@ void InstallZeroMutObject ( Int verb )
     for ( t1 = FIRST_EXTERNAL_TNUM; t1 <= LAST_EXTERNAL_TNUM; t1++ ) {
         ZeroMutFuncs[t1] = func;
     }
-    ZeroMutFuncs[ T_PREC            ] = func;
-    ZeroMutFuncs[ T_PREC +IMMUTABLE ] = func;
 }
 
 
@@ -182,7 +179,7 @@ ArithMethod1 AInvMutFuncs[ LAST_REAL_TNUM + 1];
 **
 *F  AInvObj( <obj> )  . . . . . . . . . . . . . . . . . . . . .  call methsel
 */
-Obj AInvOp;
+static Obj AInvOp;
 
 Obj AInvObject (
     Obj                 obj )
@@ -216,7 +213,7 @@ Obj VerboseAInvObject (
 **
 *F  InstallAinvObject( <verb> ) . . . . . .  install additive inverse methods
 */
-void InstallAinvObject ( Int verb )
+static void InstallAinvObject ( Int verb )
 {
     UInt                t1;             /* type of left  operand           */
     ArithMethod1        func;           /* ainv function                   */
@@ -225,8 +222,6 @@ void InstallAinvObject ( Int verb )
     for ( t1 = FIRST_EXTERNAL_TNUM; t1 <= LAST_EXTERNAL_TNUM; t1++ ) {
         AInvFuncs[t1] = func;
     }
-    AInvFuncs[ T_PREC            ] = func;
-    AInvFuncs[ T_PREC +IMMUTABLE ] = func;
 }
 
 
@@ -245,7 +240,7 @@ Obj FuncAINV (
 **
 *F  AInvMutObject( <obj> )  . .. . . . . . . . . . . . . . . . .  call methsel
 */
-Obj AdditiveInverseOp;
+static Obj AdditiveInverseOp;
 
 Obj AInvMutObject (
     Obj                 obj )
@@ -279,7 +274,7 @@ Obj VerboseAInvMutObject (
 **
 *F  InstallAinvMutObject( <verb> ) . . . . . .  install additive inverse methods
 */
-void InstallAinvMutObject ( Int verb )
+static void InstallAinvMutObject ( Int verb )
 {
     UInt                t1;             /* type of left  operand           */
     ArithMethod1        func;           /* ainv function                   */
@@ -288,8 +283,6 @@ void InstallAinvMutObject ( Int verb )
     for ( t1 = FIRST_EXTERNAL_TNUM; t1 <= LAST_EXTERNAL_TNUM; t1++ ) {
         AInvMutFuncs[t1] = func;
     }
-    AInvMutFuncs[ T_PREC            ] = func;
-    AInvMutFuncs[ T_PREC +IMMUTABLE ] = func;
 }
 
 
@@ -316,7 +309,7 @@ ArithMethod1 OneFuncs [LAST_REAL_TNUM+1];
 **
 *F  OneObject( <obj> )  . . . . . . . . . . . . . . . . . . . .  call methsel
 */
-Obj OneOp;
+static Obj OneOp;
 
 Obj OneObject (
     Obj                 obj )
@@ -350,7 +343,7 @@ Obj VerboseOneObject (
 **
 *F  InstallOneObject( <verb> )  . . . . . . . . . . . . . install one methods
 */
-void InstallOneObject ( Int verb )
+static void InstallOneObject ( Int verb )
 {
     UInt                t1;             /* type of left  operand           */
     ArithMethod1        func;           /* one function                    */
@@ -359,8 +352,6 @@ void InstallOneObject ( Int verb )
     for ( t1 = FIRST_EXTERNAL_TNUM; t1 <= LAST_EXTERNAL_TNUM; t1++ ) {
         OneFuncs[t1] = func;
     }
-    OneFuncs[ T_PREC            ] = func;
-    OneFuncs[ T_PREC +IMMUTABLE ] = func;
 }
 
 
@@ -386,7 +377,7 @@ ArithMethod1 OneMutFuncs [LAST_REAL_TNUM+1];
 **
 *F  OneMutObject( <obj> )  . . . . . . . . . . . . . . . . . . . .  call methsel
 */
-Obj OneMutOp;
+static Obj OneMutOp;
 
 Obj OneMutObject (
     Obj                 obj )
@@ -420,7 +411,7 @@ Obj VerboseOneMutObject (
 **
 *F  InstallOneMutObject( <verb> )  . . . . . . . . . . . . . install one methods
 */
-void InstallOneMutObject ( Int verb )
+static void InstallOneMutObject ( Int verb )
 {
     UInt                t1;             /* type of left  operand           */
     ArithMethod1        func;           /* one function                    */
@@ -429,8 +420,6 @@ void InstallOneMutObject ( Int verb )
     for ( t1 = FIRST_EXTERNAL_TNUM; t1 <= LAST_EXTERNAL_TNUM; t1++ ) {
         OneMutFuncs[t1] = func;
     }
-    OneMutFuncs[ T_PREC            ] = func;
-    OneMutFuncs[ T_PREC +IMMUTABLE ] = func;
 }
 
 
@@ -457,7 +446,7 @@ ArithMethod1 InvFuncs [LAST_REAL_TNUM+1];
 **
 *F  InvObject( <obj> )  . . . . . . . . . . . . . . . . . . . .  call methsel
 */
-Obj InvOp;
+static Obj InvOp;
 
 Obj InvObject (
     Obj                 obj )
@@ -491,7 +480,7 @@ Obj VerboseInvObject (
 **
 *F  InstallInvObject( <verb> )  . . . . . . . . . . . install inverse methods
 */
-void InstallInvObject ( Int verb )
+static void InstallInvObject ( Int verb )
 {
     UInt                t1;             /* type of left  operand           */
     ArithMethod1        func;           /* inv function                    */
@@ -500,8 +489,6 @@ void InstallInvObject ( Int verb )
     for ( t1 = FIRST_EXTERNAL_TNUM; t1 <= LAST_EXTERNAL_TNUM; t1++ ) {
         InvFuncs[t1] = func;
     }
-    InvFuncs[ T_PREC            ] = func;
-    InvFuncs[ T_PREC +IMMUTABLE ] = func;
 }
 
 
@@ -528,7 +515,7 @@ ArithMethod1 InvMutFuncs [LAST_REAL_TNUM+1];
 **
 *F  InvMutObject( <obj> )  . . . . . . . . . . . . . . .. . . . .  call methsel
 */
-Obj InvMutOp;
+static Obj InvMutOp;
 
 Obj InvMutObject (
     Obj                 obj )
@@ -562,7 +549,7 @@ Obj VerboseInvMutObject (
 **
 *F  InstallInvMutObject( <verb> ) install mutability preserving inverse methods
 */
-void InstallInvMutObject ( Int verb )
+static void InstallInvMutObject ( Int verb )
 {
     UInt                t1;             /* type of left  operand           */
     ArithMethod1        func;           /* inv function                    */
@@ -571,8 +558,6 @@ void InstallInvMutObject ( Int verb )
     for ( t1 = FIRST_EXTERNAL_TNUM; t1 <= LAST_EXTERNAL_TNUM; t1++ ) {
         InvMutFuncs[t1] = func;
     }
-    InvMutFuncs[ T_PREC            ] = func;
-    InvMutFuncs[ T_PREC +IMMUTABLE ] = func;
 }
 
 
@@ -642,7 +627,7 @@ Int VerboseEqObject (
 **
 *F  InstallEqObject( <verb> ) . . . . . . . . . .  install comparison methods
 */
-void InstallEqObject ( Int verb )
+static void InstallEqObject ( Int verb )
 {
     UInt                t1;             /* type of left  operand           */
     UInt                t2;             /* type of right operand           */
@@ -654,13 +639,6 @@ void InstallEqObject ( Int verb )
             EqFuncs[t1][t2] = func;
             EqFuncs[t2][t1] = func;
         }
-    }
-    for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
-
-        EqFuncs[ t2 ][ T_PREC            ] = func;
-        EqFuncs[ t2 ][ T_PREC +IMMUTABLE ] = func;
-        EqFuncs[ T_PREC            ][ t2 ] = func;
-        EqFuncs[ T_PREC +IMMUTABLE ][ t2 ] = func;
     }
 }
 
@@ -722,7 +700,7 @@ Int VerboseLtObject (
 **
 *F  InstallLtObject( <verb> ) . . . . . . . . . . . install less than methods
 */
-void InstallLtObject ( Int verb )
+static void InstallLtObject ( Int verb )
 {
     UInt                t1;             /* type of left  operand           */
     UInt                t2;             /* type of right operand           */
@@ -734,13 +712,6 @@ void InstallLtObject ( Int verb )
             LtFuncs[t1][t2] = func;
             LtFuncs[t2][t1] = func;
         }
-    }
-    for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
-
-        LtFuncs[ t2 ][ T_PREC            ] = func;
-        LtFuncs[ t2 ][ T_PREC +IMMUTABLE ] = func;
-        LtFuncs[ T_PREC            ][ t2 ] = func;
-        LtFuncs[ T_PREC +IMMUTABLE ][ t2 ] = func;
     }
 }
 
@@ -785,7 +756,7 @@ Int InUndefined (
 **
 *F  InObject( <opL>, <opR> )  . . . . . . . . . . . . . . . . .  call methsel
 */
-Obj InOper;
+static Obj InOper;
 
 Int InObject (
     Obj                 opL,
@@ -811,7 +782,7 @@ Int VerboseInObject (
 **
 *F  InstallInObject( <verb> ) . . . . . . . . . . . . . .  install in methods
 */
-void InstallInObject ( Int verb )
+static void InstallInObject ( Int verb )
 {
     UInt                t1;             /* type of left  operand           */
     UInt                t2;             /* type of right operand           */
@@ -823,11 +794,6 @@ void InstallInObject ( Int verb )
             InFuncs[t1][t2] = func;
             InFuncs[t2][t1] = func;
         }
-    }
-    for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
-
-        InFuncs[ t2 ][ T_PREC            ] = func;
-        InFuncs[ t2 ][ T_PREC +IMMUTABLE ] = func;
     }
 }
 
@@ -897,7 +863,7 @@ Obj VerboseSumObject (
 **
 *F  InstallSumObject( <verb> )  . . . . . . . . . . . . . install sum methods
 */
-void InstallSumObject ( Int verb )
+static void InstallSumObject ( Int verb )
 {
     UInt                t1;             /* type of left  operand           */
     UInt                t2;             /* type of right operand           */
@@ -909,13 +875,6 @@ void InstallSumObject ( Int verb )
             SumFuncs[t1][t2] = func;
             SumFuncs[t2][t1] = func;
         }
-    }
-    for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM; t2++ ) {
-
-        SumFuncs[ t2 ][ T_PREC            ] = func;
-        SumFuncs[ t2 ][ T_PREC +IMMUTABLE ] = func;
-        SumFuncs[ T_PREC            ][ t2 ] = func;
-        SumFuncs[ T_PREC +IMMUTABLE ][ t2 ] = func;
     }
 }
 
@@ -959,7 +918,7 @@ Obj DiffDefault (
 **
 *F  DiffObject( <opL>, <opR> )  . . . . . . . . . . . . . . . .  call methsel
 */
-Obj DiffOper;
+static Obj DiffOper;
 
 Obj DiffObject (
     Obj                 opL,
@@ -995,7 +954,7 @@ Obj VerboseDiffObject (
 **
 *F  InstallDiffObject( <verb> ) . . . . . . . . .  install difference methods
 */
-void InstallDiffObject ( Int verb )
+static void InstallDiffObject ( Int verb )
 {
     UInt                t1;             /* type of left  operand           */
     UInt                t2;             /* type of right operand           */
@@ -1008,13 +967,6 @@ void InstallDiffObject ( Int verb )
             DiffFuncs[t2][t1] = func;
         }
     }
-    for ( t2 = FIRST_REAL_TNUM; t2 <= LAST_REAL_TNUM; t2++ ) {
-
-        DiffFuncs[ t2 ][ T_PREC            ] = func;
-        DiffFuncs[ t2 ][ T_PREC +IMMUTABLE ] = func;
-        DiffFuncs[ T_PREC            ][ t2 ] = func;
-        DiffFuncs[ T_PREC +IMMUTABLE ][ t2 ] = func;
-    }
 }
 
 
@@ -1022,8 +974,6 @@ void InstallDiffObject ( Int verb )
 **
 *F  FuncDIFF_DEFAULT( <self>, <opL>, <opR> )  . . . . . .  call 'DiffDefault'
 */
-Obj DiffDefaultFunc;
-
 Obj FuncDIFF_DEFAULT (
     Obj                 self,
     Obj                 opL,
@@ -1057,7 +1007,7 @@ ArithMethod2    ProdFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 **
 *F  ProdObject( <opL>, <opR> )  . . . . . . . . . . . . . . . .  call methsel
 */
-Obj ProdOper;
+static Obj ProdOper;
 
 Obj ProdObject (
     Obj                 opL,
@@ -1093,7 +1043,7 @@ Obj VerboseProdObject (
 **
 *F  InstallProdObject( <verb> ) . . . . . . . . . . . install product methods
 */
-void InstallProdObject ( Int verb )
+static void InstallProdObject ( Int verb )
 {
     UInt                t1;             /* type of left  operand           */
     UInt                t2;             /* type of right operand           */
@@ -1105,13 +1055,6 @@ void InstallProdObject ( Int verb )
             ProdFuncs[t1][t2] = func;
             ProdFuncs[t2][t1] = func;
         }
-    }
-    for ( t2 = FIRST_REAL_TNUM; t2 <= LAST_REAL_TNUM; t2++ ) {
-
-        ProdFuncs[ t2 ][ T_PREC            ] = func;
-        ProdFuncs[ t2 ][ T_PREC +IMMUTABLE ] = func;
-        ProdFuncs[ T_PREC            ][ t2 ] = func;
-        ProdFuncs[ T_PREC +IMMUTABLE ][ t2 ] = func;
     }
 }
 
@@ -1154,7 +1097,7 @@ Obj QuoDefault (
 **
 *F  QuoObject( <opL>, <opR> ) . . . . . . . . . . . . . . . . .  call methsel
 */
-Obj QuoOper;
+static Obj QuoOper;
 
 Obj QuoObject (
     Obj                 opL,
@@ -1190,7 +1133,7 @@ Obj VerboseQuoObject (
 **
 *F  InstallQuoObject( <verb> )  . . . . . . . . . .  install quotient methods
 */
-void InstallQuoObject ( Int verb )
+static void InstallQuoObject ( Int verb )
 {
     UInt                t1;             /* type of left  operand           */
     UInt                t2;             /* type of right operand           */
@@ -1203,13 +1146,6 @@ void InstallQuoObject ( Int verb )
             QuoFuncs[t2][t1] = func;
         }
     }
-    for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
-
-        QuoFuncs[ t2 ][ T_PREC            ] = func;
-        QuoFuncs[ t2 ][ T_PREC +IMMUTABLE ] = func;
-        QuoFuncs[ T_PREC            ][ t2 ] = func;
-        QuoFuncs[ T_PREC +IMMUTABLE ][ t2 ] = func;
-    }
 }
 
 
@@ -1217,8 +1153,6 @@ void InstallQuoObject ( Int verb )
 **
 *F  FuncQUO_DEFAULT( <self>, <opL>, <opR> ) . . . . . . . . call 'QuoDefault'
 */
-Obj QuoDefaultFunc;
-
 Obj FuncQUO_DEFAULT (
     Obj                 self,
     Obj                 opL,
@@ -1266,7 +1200,7 @@ Obj LQuoDefault (
 **
 *F  LQuoObject( <opL>, <opR> )  . . . . . . . . . . . . . . . .  call methsel
 */
-Obj LQuoOper;
+static Obj LQuoOper;
 
 Obj LQuoObject (
     Obj                 opL,
@@ -1302,7 +1236,7 @@ Obj VerboseLQuoObject (
 **
 *F  InstallLQuoObject( <verb> ) . . . . . . . . install left quotient methods
 */
-void InstallLQuoObject ( Int verb )
+static void InstallLQuoObject ( Int verb )
 {
     UInt                t1;             /* type of left  operand           */
     UInt                t2;             /* type of right operand           */
@@ -1315,12 +1249,6 @@ void InstallLQuoObject ( Int verb )
             LQuoFuncs[t2][t1] = func;
         }
     }
-    for ( t2 = FIRST_REAL_TNUM; t2 <= LAST_REAL_TNUM; t2++ ) {
-        LQuoFuncs[ t2 ][ T_PREC            ] = func;
-        LQuoFuncs[ t2 ][ T_PREC +IMMUTABLE ] = func;
-        LQuoFuncs[ T_PREC            ][ t2 ] = func;
-        LQuoFuncs[ T_PREC +IMMUTABLE ][ t2 ] = func;
-    }
 }
 
 
@@ -1328,8 +1256,6 @@ void InstallLQuoObject ( Int verb )
 **
 *F  FuncLQUO_DEFAULT( <self>, <opL>, <opR> )  . . . . . .  call 'LQuoDefault'
 */
-Obj LQuoDefaultFunc;
-
 Obj FuncLQUO_DEFAULT (
     Obj                 self,
     Obj                 opL,
@@ -1377,7 +1303,7 @@ Obj PowDefault (
 **
 *F  PowObject( <opL>, <opR> ) . . . . . . . . . . . . . . . . .  call methsel
 */
-Obj PowOper;
+static Obj PowOper;
 
 Obj PowObject (
     Obj                 opL,
@@ -1414,7 +1340,7 @@ Obj VerbosePowObject (
 **
 *F  InstallPowObject( <verb> )  . . . . . . . . . . install the power methods
 */
-void InstallPowObject ( Int verb )
+static void InstallPowObject ( Int verb )
 {
     UInt                t1;             /* type of left  operand           */
     UInt                t2;             /* type of right operand           */
@@ -1427,13 +1353,6 @@ void InstallPowObject ( Int verb )
             PowFuncs[t2][t1] = func;
         }
     }
-    for ( t2 = FIRST_REAL_TNUM; t2 <= LAST_REAL_TNUM; t2++ ) {
-
-        PowFuncs[ t2 ][ T_PREC            ] = func;
-        PowFuncs[ t2 ][ T_PREC +IMMUTABLE ] = func;
-        PowFuncs[ T_PREC            ][ t2 ] = func;
-        PowFuncs[ T_PREC +IMMUTABLE ][ t2 ] = func;
-    }
 }
 
 
@@ -1441,8 +1360,6 @@ void InstallPowObject ( Int verb )
 **
 *F  FuncPOW_DEFAULT( <self>, <opL>, <opR> ) . . . . . . . . call 'PowDefault'
 */
-Obj PowDefaultFunc;
-
 Obj FuncPOW_DEFAULT (
     Obj                 self,
     Obj                 opL,
@@ -1492,7 +1409,7 @@ Obj CommDefault (
 **
 *F  CommObject( <opL>, <opR> )  . . . . . . . . . . . . . . . .  call methsel
 */
-Obj CommOper;
+static Obj CommOper;
 
 Obj CommObject (
     Obj                 opL,
@@ -1528,7 +1445,7 @@ Obj VerboseCommObject (
 **
 *F  InstallCommObject( <verb> ) . . . . . . . . .  install commutator methods
 */
-void InstallCommObject ( Int verb )
+static void InstallCommObject ( Int verb )
 {
     UInt                t1;             /* type of left  operand           */
     UInt                t2;             /* type of right operand           */
@@ -1541,13 +1458,6 @@ void InstallCommObject ( Int verb )
             CommFuncs[t2][t1] = func;
         }
     }
-    for ( t2 = FIRST_REAL_TNUM;  t2 <= LAST_REAL_TNUM;  t2++ ) {
-
-        CommFuncs[ t2 ][ T_PREC            ] = func;
-        CommFuncs[ t2 ][ T_PREC +IMMUTABLE ] = func;
-        CommFuncs[ T_PREC            ][ t2 ] = func;
-        CommFuncs[ T_PREC +IMMUTABLE ][ t2 ] = func;
-    }
 }
 
 
@@ -1555,8 +1465,6 @@ void InstallCommObject ( Int verb )
 **
 *F  FuncCOMM_DEFAULT( <self>, <opL>, <opR> )  . . . . . .  call 'CommDefault'
 */
-Obj CommDefaultFunc;
-
 Obj FuncCOMM_DEFAULT (
     Obj                 self,
     Obj                 opL,
@@ -1591,7 +1499,7 @@ ArithMethod2 ModFuncs [LAST_REAL_TNUM+1][LAST_REAL_TNUM+1];
 **
 *F  ModObject( <opL>, <opR> ) . . . . . . . . . . . . . . . . .  call methsel
 */
-Obj ModOper;
+static Obj ModOper;
 
 Obj ModObject (
     Obj                 opL,
@@ -1627,7 +1535,7 @@ Obj VerboseModObject (
 **
 *F  InstallModObject( <verb> )  . . . . . . . . . . . install the mod methods
 */
-void InstallModObject ( Int verb )
+static void InstallModObject ( Int verb )
 {
     UInt                t1;             /* type of left  operand           */
     UInt                t2;             /* type of right operand           */
@@ -1639,13 +1547,6 @@ void InstallModObject ( Int verb )
             ModFuncs[t1][t2] = func;
             ModFuncs[t2][t1] = func;
         }
-    }
-    for ( t2 = FIRST_REAL_TNUM; t2 <= LAST_REAL_TNUM; t2++ ) {
-
-        ModFuncs[ t2 ][ T_PREC            ] = func;
-        ModFuncs[ t2 ][ T_PREC +IMMUTABLE ] = func;
-        ModFuncs[ T_PREC            ][ t2 ] = func;
-        ModFuncs[ T_PREC +IMMUTABLE ][ t2 ] = func;
     }
 }
 
@@ -1665,7 +1566,38 @@ Obj FuncMOD (
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F  ChangeArithDoOperations( <oper>, <verb> )
+*/
+void ChangeArithDoOperations(Obj oper, Int verb)
+{
+    /* catch infix operations                                          */
+    if ( oper == EqOper   )  { InstallEqObject(verb);   }
+    if ( oper == LtOper   )  { InstallLtObject(verb);   }
+    if ( oper == InOper   )  { InstallInObject(verb);   }
+    if ( oper == SumOper  )  { InstallSumObject(verb);  }
+    if ( oper == DiffOper )  { InstallDiffObject(verb); }
+    if ( oper == ProdOper )  { InstallProdObject(verb); }
+    if ( oper == QuoOper  )  { InstallQuoObject(verb);  }
+    if ( oper == LQuoOper )  { InstallLQuoObject(verb); }
+    if ( oper == PowOper  )  { InstallPowObject(verb);  }
+    if ( oper == CommOper )  { InstallCommObject(verb); }
+    if ( oper == ModOper  )  { InstallModObject(verb);  }
+
+    if ( oper == InvOp  )  { InstallInvObject(verb);  }
+    if ( oper == OneOp  )  { InstallOneObject(verb);  }
+    if ( oper == AInvOp )  { InstallAinvObject(verb); }
+    if ( oper == ZEROOp )  { InstallZeroObject(verb); }
+
+    if ( oper == InvMutOp  )  { InstallInvMutObject(verb);  }
+    if ( oper == OneMutOp  )  { InstallOneMutObject(verb);  }
+    if ( oper == AdditiveInverseOp )  { InstallAinvMutObject(verb); }
+    if ( oper == ZeroOp )  { InstallZeroMutObject(verb); }
+}
+
+
+/****************************************************************************
+**
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
@@ -1740,7 +1672,7 @@ static Int InitKernel (
         assert(ZeroMutFuncs[t1] == 0);
         ZeroMutFuncs[t1] = ZeroMutObject;
     }
-    InstallZeroObject(0);
+    InstallZeroMutObject(0);
 
     /* make and install the 'AINV' arithmetic operation                    */
     for ( t1 = FIRST_REAL_TNUM;  t1 <= LAST_REAL_TNUM;  t1++ ) {

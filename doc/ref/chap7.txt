@@ -26,11 +26,10 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XIsNormal(2,2);[127X[104X
     [4X[28XError, no method found! For debugging hints type ?Recovery from NoMethodFound[128X[104X
-    [4X[28XError, no 1st choice method found for `IsNormal' on 2 arguments called from[128X[104X
-    [4X[28X<function>( <arguments> ) called from read-eval-loop[128X[104X
-    [4X[28XEntering break read-eval-print loop ...[128X[104X
-    [4X[28Xyou can 'quit;' to quit to outer loop, or[128X[104X
-    [4X[28Xyou can 'return;' to continue[128X[104X
+    [4X[28XError, no 1st choice method found for `IsNormal' on 2 arguments at GAPROOT/lib/methsel2.g:250 called from[128X[104X
+    [4X[28X<function "HANDLE_METHOD_NOT_FOUND">( <arguments> )[128X[104X
+    [4X[28X called from read-eval loop at *stdin*:1[128X[104X
+    [4X[28Xtype 'quit;' to quit to outer loop[128X[104X
     [4X[26Xbrk>[126X [27X[127X[104X
   [4X[32X[104X
   
@@ -221,6 +220,7 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XTraceImmediateMethods( );[127X[104X
     [4X[25Xgap>[125X [27Xg:= Group( (1,2,3), (1,2) );;[127X[104X
+    [4X[28X#I RunImmediateMethods[128X[104X
     [4X[28X#I  immediate: Size[128X[104X
     [4X[28X#I  immediate: IsCyclic[128X[104X
     [4X[28X#I  immediate: IsCommutative[128X[104X
@@ -229,6 +229,8 @@
     [4X[28X#I  immediate: IsPerfectGroup[128X[104X
     [4X[28X#I  immediate: IsNonTrivial[128X[104X
     [4X[28X#I  immediate: Size[128X[104X
+    [4X[28X#I  immediate: IsFreeAbelian[128X[104X
+    [4X[28X#I  immediate: IsTorsionFree[128X[104X
     [4X[28X#I  immediate: IsNonTrivial[128X[104X
     [4X[28X#I  immediate: IsPerfectGroup[128X[104X
     [4X[28X#I  immediate: GeneralizedPcgs[128X[104X
@@ -255,10 +257,31 @@
   for  example  [10XInfoLattice[110X covers all the cyclic extension algorithms for the
   computation of a subgroup lattice.[133X
   
-  [33X[0;0YThe  amount  of information to be displayed can be specified by the user for
-  each  info  class  separately  by  a  [13Xlevel[113X,  the  higher the level the more
-  information  will  be  displayed. Ab initio all info classes have level zero
-  except [2XInfoWarning[102X ([14X7.4-7[114X) which initially has level 1.[133X
+  [33X[0;0YNote  that  not  all  info  classes defined in the [5XGAP[105X library are currently
+  documented.  Many  [5XGAP[105X  packages  define  additional info classes, which are
+  typically documented in the corresponding package documentation.[133X
+  
+  [33X[0;0YThe  amount  of  information  to  be  displayed  by  each  info class can be
+  separately  specified  by the user. This is done by selecting a non-negative
+  integer  [13Xlevel[113X for the info class: no information will be displayed at level
+  0, and the higher the level, the more information that will be displayed. At
+  creation,  an  info  class  has  level  0. By default, all built-in GAP info
+  classes  have  level  0,  except  for the following info classes, which have
+  level 1:[133X
+  
+  [30X    [33X[0;6Y[2XInfoWarning[102X ([14X7.4-7[114X),[133X
+  
+  [30X    [33X[0;6Y[2XInfoPackageLoading[102X ([14X76.2-5[114X),[133X
+  
+  [30X    [33X[0;6Y[10XInfoDebug[110X,[133X
+  
+  [30X    [33X[0;6Y[10XInfoPerformance[110X,[133X
+  
+  [30X    [33X[0;6Y[10XInfoTempDirectories[110X,[133X
+  
+  [30X    [33X[0;6Y[10XInfoPrimeInt[110X, and[133X
+  
+  [30X    [33X[0;6Y[10XInfoSLP[110X.[133X
   
   [1X7.4-1 NewInfoClass[101X
   
@@ -278,7 +301,7 @@
   
   [33X[1;0Y[29X[2XSetInfoLevel[102X( [3Xinfoclass[103X, [3Xlevel[103X ) [32X operation[133X
   
-  [33X[0;0YSets the info level for [3Xinfoclass[103X to [3Xlevel[103X.[133X
+  [33X[0;0YSets the info level for [3Xinfoclass[103X to the non-negative integer [3Xlevel[103X.[133X
   
   [1X7.4-4 InfoLevel[101X
   
@@ -290,13 +313,16 @@
   
   [33X[1;0Y[29X[2XInfo[102X( [3Xinfoclass[103X, [3Xlevel[103X, [3Xinfo[103X[, [3Xmoreinfo[103X, [3X...[103X] ) [32X function[133X
   
-  [33X[0;0YIf  the  info  level of [3Xinfoclass[103X is at least [3Xlevel[103X the remaining arguments,
-  [3Xinfo[103X and possibly [3Xmoreinfo[103X and so on, are evaluated. (Technically, [2XInfo[102X is a
-  keyword and not a function.)[133X
+  [33X[0;0YIf  the  info  level  of  [3Xinfoclass[103X  is  at  least [3Xlevel[103X, then the remaining
+  arguments,   [3Xinfo[103X,   and   possibly  [3Xmoreinfo[103X  and  so  on,  are  evaluated.
+  (Technically, [2XInfo[102X is a keyword and not a function.)[133X
   
-  [33X[0;0YBy  default, they are viewed, preceded by the string [10X"#I "[110X and followed by a
-  newline.  Otherwise  the  third  and subsequent arguments are not evaluated.
-  (The latter can save substantial time when displaying difficult results.)[133X
+  [33X[0;0YBy  default,  the  results  of these evaluations are viewed, preceded by the
+  string [10X"#I "[110X and followed by a newline.[133X
+  
+  [33X[0;0YIf  the  info level of [3Xinfoclass[103X is strictly less than [3Xlevel[103X, then the third
+  and subsequent arguments are not evaluated. (The latter can save substantial
+  time when displaying difficult results.)[133X
   
   [33X[0;0YThe behaviour can be customized with [2XSetInfoHandler[102X ([14X7.4-6[114X).[133X
   
@@ -348,12 +374,12 @@
   [33X[1;0Y[29X[2XSetDefaultInfoOutput[102X( [3Xout[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ynothing[133X
   
-  [33X[0;0YThis  allows  to  customize  what  happens in an [10XInfo([3Xinfoclass[103X[10X, [3Xlevel[103X[10X, ...)[110X
+  [33X[0;0YThis  allows one to customize what happens in an [10XInfo([3Xinfoclass[103X[10X, [3Xlevel[103X[10X, ...)[110X
   statement.[133X
   
-  [33X[0;0YIn  the  first  function  [3Xhandler[103X  must  be  a function with three arguments
-  [3Xinfoclass[103X,  [3Xlevel[103X,  [3Xlist[103X. Here [3Xlist[103X is the list containing the third to last
-  argument of the [2XInfo[102X ([14X7.4-5[114X) call.[133X
+  [33X[0;0YIn  the  first  function,  [3Xhandler[103X  must  be a function with three arguments
+  [3Xinfoclass[103X,  [3Xlevel[103X, [3Xlist[103X. Here [3Xlist[103X is the list containing the third argument
+  and any subsequent optional arguments of the [2XInfo[102X ([14X7.4-5[114X) call.[133X
   
   [33X[0;0YThe  default  handler  is  the function [10XDefaultInfoHandler[110X. It prints [10X"#I "[110X,
   then  the  third  and further arguments of the info statement, and finally a
@@ -1013,10 +1039,10 @@
   
   [33X[0;0YThe  global  variable  [10XGAPInfo.Version[110X  (see  [2XGAPInfo[102X  ([14X3.5-1[114X)) contains the
   version number of the version of [5XGAP[105X. Its value can be checked other version
-  number using [2XCompareVersionNumbers[102X ([14X76.3-7[114X).[133X
+  number using [2XCompareVersionNumbers[102X ([14X76.3-9[114X).[133X
   
   [33X[0;0YTo  produce  sample  citations  for the used version of [5XGAP[105X or for a package
-  available in this [5XGAP[105X installation, use [2XCite[102X ([14X76.3-16[114X).[133X
+  available in this [5XGAP[105X installation, use [2XCite[102X ([14X76.3-17[114X).[133X
   
   [33X[0;0YIf  you  wish  to  report  a  problem to [5XGAP[105X Support or [5XGAP[105X Forum, it may be
   useful  to  not  only  report  the version used, but also to include the [5XGAP[105X
@@ -1104,8 +1130,8 @@
   followed  by lines starting with [10X"> "[110X if the input is continued over several
   lines.[133X
   [33X[0;0YTo  allow  for comments in [3Xfname[103X the following lines are ignored by default:
-  lines  at  the  beginning  of  [3Xfname[103X that start with [10X"#"[110X, and one empty line
-  together with one or more lines starting with [10X"#"[110X.[133X
+  lines  at  the  beginning of [3Xfname[103X that start with [10X"#"[110X or are empty, and one
+  empty line together with one or more lines starting with [10X"#"[110X.[133X
   [33X[0;0YAll other lines are considered as [5XGAP[105X output from the preceding [5XGAP[105X input.[133X
   
   [33X[0;0YBy default the actual [5XGAP[105X output is compared exactly with the stored output,
@@ -1184,6 +1210,11 @@
         [33X[0;6YIf  this  is  [9Xtrue[109X  then [5XGAP[105X substitutes DOS/Windows style line breaks
         "\r\n"  by  UNIX  style  line breaks "\n" after reading the test file.
         (default is [9Xtrue[109X).[133X
+  
+  [8X[10XreturnNumFailures[110X[8X[108X
+        [33X[0;6YIf this is [9Xtrue[109X then [5XGAP[105X returns the number of input lines of the test
+        file  which had differences in their output, instead of returning [9Xtrue[109X
+        or [9Xfalse[109X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xtnam := Filename(DirectoriesLibrary(), "../doc/ref/demo.tst");;[127X[104X
@@ -1276,7 +1307,7 @@
         GAP set to success or fail, depending on if all tests passed (defaults
         to [9Xfalse[109X).[133X
   
-  [33X[0;0YSee  also [2XTestPackage[102X ([14X76.3-3[114X) for the information on running standard tests
+  [33X[0;0YSee  also [2XTestPackage[102X ([14X76.3-5[114X) for the information on running standard tests
   for [5XGAP[105X packages.[133X
   
   

@@ -50,8 +50,6 @@ gap&gt; Display(AS);
 &lt; a = (a*b^-2, b^3)(1,2),
   b = (b^-1*a, 1) &gt;
 gap&gt; AssignGeneratorVariables(S);
-#I  Global variable `a' is already defined and will be overwritten
-#I  Global variable `b' is already defined and will be overwritten
 #I  Assigned the global variables [ "a", "b" ]
 gap&gt; x := a^3*b*a^-2;
 &lt;2|a^3*b*a^-2&gt;
@@ -83,12 +81,12 @@ gap&gt; DecompositionOfFRElement(FG.2);
 [ [ &lt;2|a&gt;, &lt;2|b&gt; ], [ 1, 2 ] ]
 </pre>
 <pre>
-gap&gt; G := SelfSimilarGroup("a=(a*b^-2,b*a)(1,2),b=(b^-1,a*b*a)");
+gap&gt; G := SelfSimilarGroup("a=(a*b^-2,b)(1,2),b=(b^2,a*b*a^-2)");
 &lt; a, b &gt;
 gap&gt; F := AutomGrp2FR(G);
-&lt;state-closed group over [ 1 .. 2 ] with 1 generator&gt;
+&lt;state-closed group over [ 1 .. 2 ] with 2 generators&gt;
 gap&gt; DecompositionOfFRElement(F.1);
-[ [ &lt;2|a*b^-2&gt;, &lt;2|b*a&gt; ], [ 2, 1 ] ]
+[ [ &lt;2|a*b^-2&gt;, &lt;2|b&gt; ], [ 2, 1 ] ]
 </pre>
 <pre>
 gap&gt; G := AutomatonGroup("a=(b,a)(1,2),b=(a,b),c=(c,a)(1,2)");
@@ -352,5 +350,5 @@ The group is stored in the global variable <code>AG_Groups.UniversalD_omega</cod
 <p>
 [<a href = "chapters.htm">Up</a>] [<a href ="CHAP004.htm">Previous</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<address>automgrp manual<br>March 2016
+<address>automgrp manual<br>September 2018
 </address></body></html>

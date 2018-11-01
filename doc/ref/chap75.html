@@ -361,7 +361,7 @@ rec( comment := "list Delta( G ) contains entry &gt; 1",
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestMonomialQuick</code>( <var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestMonomialQuick</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
-<p><code class="func">TestMonomialQuick</code> does some cheap tests whether the irreducible character <var class="Arg">chi</var> or the group <var class="Arg">G</var>, respectively, is monomial. Here "cheap" means in particular that no computations of character tables are involved. The return value is a record with components</p>
+<p><code class="func">TestMonomialQuick</code> does some cheap tests whether the irreducible character <var class="Arg">chi</var> or the group <var class="Arg">G</var>, respectively, is monomial. Here "cheap" means in particular that no computations of character tables are involved, and it is <em>not</em> checked whether <var class="Arg">chi</var> is a character and irreducible. The return value is a record with components</p>
 
 
 <dl>
@@ -396,7 +396,7 @@ rec( comment := "no decision by cheap tests", isMonomial := "?" )
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; TestSubnormallyMonomial</code>( <var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubnormallyMonomial</code>( <var class="Arg">G</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSubnormallyMonomial</code>( <var class="Arg">chi</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
-<p>A character of the group <span class="SimpleMath">G</span> is called <em>subnormally monomial</em> (SM for short) if it is induced from a linear character of a subnormal subgroup of <span class="SimpleMath">G</span>. A group <span class="SimpleMath">G</span> is called SM if all its irreducible characters are SM.</p>
+<p>An irreducible character of the group <span class="SimpleMath">G</span> is called <em>subnormally monomial</em> (<em>SM</em> for short) if it is induced from a linear character of a subnormal subgroup of <span class="SimpleMath">G</span>. A group <span class="SimpleMath">G</span> is called SM if all its irreducible characters are SM.</p>
 
 <p><code class="func">TestSubnormallyMonomial</code> returns a record with information whether the group <var class="Arg">G</var> or the irreducible character <var class="Arg">chi</var> of <var class="Arg">G</var> is SM.</p>
 

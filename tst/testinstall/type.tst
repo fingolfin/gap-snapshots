@@ -4,6 +4,10 @@ gap> test(IsFinite);
 [ true, false, false, false, true, true ]
 
 #
+gap> test(SetIsFinite);
+[ false, false, false, false, false, true ]
+
+#
 gap> test(IsMagma);
 [ true, true, false, false, false, true ]
 
@@ -14,6 +18,10 @@ gap> test(IsCommutative);
 #
 gap> test(Size);
 [ false, false, false, true, false, true ]
+
+#
+gap> test(SetSize);
+[ false, false, false, false, false, true ]
 
 #
 gap> test(Group);
@@ -36,6 +44,16 @@ gap> FilterByName("IsCommutative");
 <Property "IsCommutative">
 gap> CategoryByName("IsMagma");
 <Category "IsMagma">
+gap> IdOfFilter(IsMutable);
+1
+gap> IdOfFilterByName("IsMutable");
+1
+gap> IsNilpotent;
+<Operation "IsNilpotent">
+gap> PrintObj(IsNilpotent); Print("\n");
+<Operation "IsNilpotent">
+gap> IdOfFilter(IsNilpotent);
+fail
 
 #
 gap> atomic readonly FILTER_REGION do filters := Immutable(FILTERS); od;
@@ -46,9 +64,36 @@ true
 gap> TypeOfOperation(IsFilter);
 Error, <oper> must be an operation
 
-#
-gap> List([IsAbelian, HasIsAbelian, IsMutable, \+, Size, AbelianGroupCons, Setter(IS_MUTABLE_OBJ)], TypeOfOperation);
-[ "Property", "Filter", "Category", "Operation", "Attribute", "Constructor", 
-  "Setter" ]
+# elementary filters: property
+gap> TypeOfOperation(IsAbelian);
+"Property"
+gap> TypeOfOperation(HasIsAbelian);
+"Filter"
+gap> TypeOfOperation(SetIsAbelian);
+"Setter"
+
+# and-filters
+gap> TypeOfOperation(IsPGroup and IsAbelian);
+"Property"
+gap> TypeOfOperation(HasIsPGroup and HasIsAbelian);
+"Filter"
+gap> TypeOfOperation(Tester(IsPGroup and IsAbelian));
+"Filter"
+gap> TypeOfOperation(Setter(IsPGroup and IsAbelian));
+"Setter"
+
+# kernel category
+gap> TypeOfOperation(IsMutable);
+"Category"
+gap> TypeOfOperation(Setter(IsMutable));
+"Setter"
+
+# other
+gap> TypeOfOperation(\+);
+"Operation"
+gap> TypeOfOperation(Size);
+"Attribute"
+gap> TypeOfOperation(AbelianGroupCons);
+"Constructor"
 
 #

@@ -84,3 +84,6 @@
   has  been  changed  to  [11XTest[111X. Finally some LaTeX issues were resolved in the
   documentation.[133X
   
+  [33X[0;0YIn verions 1.2.5, some small changes were made to the recognition part. Some
+  new examples in the documentation explain better the functionality.[133X
+  

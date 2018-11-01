@@ -279,7 +279,7 @@ InstallMethod( Factors,
 
     # loop over all factors of the norm of x
     facs := [];
-    for prm in Set( FactorsInt( EuclideanDegree( GaussianIntegers, x ) ) ) do
+    for prm in PrimeDivisors( EuclideanDegree( GaussianIntegers, x ) ) do
 
         # $p = 2$ and primes $p = 1$ mod 4 split according to $p = x^2 + y^2$
         if prm = 2  or prm mod 4 = 1  then
@@ -313,32 +313,6 @@ InstallMethod( Factors,
     return facs;
     end );
 
-
-#T #############################################################################
-#T ##
-#T #F  GaussianRationalsOps.CharPol(<GaussRat>,<x>)  . .  characteristic polynom
-#T #F                                                     of a Gaussian rational
-#T ##
-#T GaussianRationalsOps.CharPol := function ( GaussRat, x )
-#T     return [ x * GaloisCyc(x,-1), -x-GaloisCyc(x,-1), 1 ];
-#T end;
-#T 
-#T 
-#T #############################################################################
-#T ##
-#T #F  GaussianRationalsOps.MinPol(<GaussRat>,<x>) . . . . . . . minimal polynom
-#T #F                                                     of a Gaussian rational
-#T ##
-#T GaussianRationalsOps.MinPol := function ( GaussRat, x )
-#T     if IsRat( x )  then
-#T         return [ -x, 1 ];
-#T     else
-#T         return [ x * GaloisCyc(x,-1), -x-GaloisCyc(x,-1), 1 ];
-#T     fi;
-#T end;
-
-
 #############################################################################
 ##
 #E
-

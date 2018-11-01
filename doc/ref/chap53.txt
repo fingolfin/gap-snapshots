@@ -339,7 +339,7 @@
   type  of  object, or that another type of [5XGAP[105X object can be represented as a
   transformation.[133X
   
-  [33X[0;0YThe operations [2XAsPermutation[102X ([14X42.5-5[114X) and [2XAsPartialPerm[102X ([14X54.4-2[114X) can be used
+  [33X[0;0YThe operations [2XAsPermutation[102X ([14X42.5-6[114X) and [2XAsPartialPerm[102X ([14X54.4-2[114X) can be used
   to  convert transformations into permutations or partial permutations, where
   appropriate.  In  this  section  we  describe functions for converting other
   types of objects into transformations.[133X

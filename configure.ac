@@ -183,18 +183,52 @@ dnl If on, build an HPCGAP executable instead of standard GAP.
 dnl
 AC_ARG_ENABLE([hpcgap],
     [AS_HELP_STRING([--enable-hpcgap], [enable HPC-GAP])],
-    [AC_DEFINE([HPCGAP], [1], [define if building HPC-GAP])],
-    [enable_hpcgap=no]
-    )
+    [],
+    [enable_hpcgap=no])
 AC_MSG_CHECKING([whether to enable HPC-GAP])
 AC_MSG_RESULT([$enable_hpcgap])
 
 AC_SUBST([HPCGAP], [$enable_hpcgap])
 AS_IF([test "x$enable_hpcgap" = xyes],
     [
-    # HACK (see issue #9)
+    AC_DEFINE([HPCGAP], [1], [define if building HPC-GAP])
+
+    # HACK, see https://github.com/fingolfin/gap/issues/9
     AC_DEFINE([MAX_GC_THREADS], [4], [maximum number of GC threads])
     ])
+
+dnl
+dnl User setting: garbage collector to use
+dnl
+AC_ARG_WITH([gc],
+    [AS_HELP_STRING([--with-gc@<:@=default|gasman|boehm|julia@:>@],
+      [specify which garbage collector to use (default: gasman; for HPC-GAP: boehm)])],
+    [],
+    [with_gc=default])
+AC_MSG_CHECKING([which garbage collector to use])
+AS_IF([test "x$with_gc" = xyes], [with_gc=default])
+AS_IF([test "x$with_gc" = xdefault],
+    [
+    AS_IF([test "x$enable_hpcgap" = xyes], [with_gc=boehm], [with_gc=gasman])
+    ])
+AS_CASE([$with_gc],
+    [none|no],  [AC_MSG_ERROR([cannot run GAP without a garbage collector])],
+    [boehm],    [AS_IF([test "x$enable_hpcgap" = xno],
+                    [AC_MSG_ERROR([Boehm GC can only be used with HPC-GAP])])
+                 AC_SUBST([GC_SOURCES], [src/boehm_gc.c])
+                 AC_DEFINE([USE_BOEHM_GC],  [1], [define as 1 if Boehm GC is used])
+                ],
+    [gasman],   [AS_IF([test "x$enable_hpcgap" = xyes],
+                    [AC_MSG_ERROR([GASMAN can not be used with HPC-GAP])])
+                 AC_SUBST([GC_SOURCES], [src/gasman.c])
+                 AC_DEFINE([USE_GASMAN],    [1], [define as 1 if GASMAN is used])
+                ],
+    [julia],    [AC_SUBST([GC_SOURCES], [src/julia_gc.c])
+                 AC_DEFINE([USE_JULIA_GC],  [1], [define as 1 if the Julia GC is used])
+                ],
+    [*],        [AC_MSG_ERROR([Invalid gc method '$with_gc', use default|none|gasman|boehm|julia])],
+    )
+AC_MSG_RESULT([$with_gc])
 
 dnl
 dnl User setting: Debug mode (off by default)
@@ -206,6 +240,32 @@ AC_ARG_ENABLE([debug],
     )
 AC_MSG_CHECKING([whether to enable debug mode])
 AC_MSG_RESULT([$enable_debug])
+
+AC_ARG_ENABLE([memory-checking],
+    [AS_HELP_STRING([--enable-memory-checking], [enable memory checking])],
+    [AC_DEFINE([GAP_MEM_CHECK], [1], [define if building with memory checking])],
+    [enable_memory_checking=no]
+    )
+AC_MSG_CHECKING([whether to enable memory checking])
+AC_MSG_RESULT([$enable_memory_checking])
+
+AC_ARG_ENABLE([valgrind],
+    [AS_HELP_STRING([--enable-valgrind], [enable valgrind extensions to GASMAN])],
+    [AC_DEFINE([MEMORY_CANARY], [1], [define if building with valgrind extensions])],
+    [enable_valgrind=no]
+    )
+AC_MSG_CHECKING([whether to enable valgrind extensions to GASMAN])
+AC_MSG_RESULT([$enable_valgrind])
+
+if test "x$enable_valgrind" != "xno" -a "x$enable_memory_checking" != "xno"; then
+    AC_MSG_ERROR([--enable-valgrind and --enable-memory-checking cannot be used at the same time])
+fi
+
+if test "x$with_gc" != "xgasman"; then
+    if test "x$enable_valgrind" != "xno" -o "x$enable_memory_checking" != "xno"; then
+        AC_MSG_ERROR([--enable-valgrind and --enable-memory-checking are only compatible with GASMAN])
+    fi
+fi
 
 dnl
 dnl User setting: Enable -Werror (off by default)
@@ -310,6 +370,70 @@ dnl remove this eventually.
 AC_DEFINE([USE_GMP], [1], [for backwards compatibility])
 
 
+dnl Find zlib
+AC_ARG_WITH([zlib],
+  [AS_HELP_STRING([--with-zlib@<:@=builtin|PREFIX@:>@],
+    [prefix of zlib installation. e.g. /usr/local; specify `builtin' to let GAP builds its own version of zlib])],
+    [],[with_zlib=yes])
+
+BUILD_ZLIB=no
+ZLIB_CPPFLAGS=
+ZLIB_LDFLAGS=
+ZLIB_LIBS="-lz"
+AS_CASE([$with_zlib],
+  [builtin],[
+    # user explicitly requested to use builtin zlib
+    BUILD_ZLIB=yes
+    AC_MSG_NOTICE([Using bundled zlib])
+  ],
+  [no],[
+    AC_MSG_ERROR([Building without zlib is not supported])
+  ],
+  [system],[with_zlib=yes],  dnl supported for backwards compatibility with old build system
+  [yes],[],
+  [*],[
+    ZLIB_CPPFLAGS="-I${with_zlib}/include"
+    ZLIB_LDFLAGS="-L${with_zlib}/lib"
+  ]
+)
+
+
+AS_IF([test $BUILD_ZLIB = no],
+  [
+    # try to link against zlib
+    AX_CHECK_LIBRARY([ZLIB], [zlib.h], [z], [inflateEnd])
+    AS_IF([test $ax_cv_have_ZLIB = no],[
+        AS_IF([test "x$with_zlib" = "xyes"],[
+          BUILD_ZLIB=yes
+          AC_MSG_NOTICE([No usable zlib found, switching to included zlib])
+        ],
+        [AC_MSG_ERROR([zlib not found at prefix $with_zlib])]
+        )
+    ])
+  ])
+
+# Use bundled zlib if requested
+AS_IF([test x$BUILD_ZLIB = xyes],[
+  BUILD_ZLIB=yes
+  ZLIB_CPPFLAGS='-I${abs_builddir}/extern/install/zlib/include'
+  AS_CASE([$host_os],
+    [*cygwin*],[
+      ZLIB_LDFLAGS='-L${abs_builddir}/extern/install/zlib/lib/ -lz'
+    ],
+    [*],[
+      ZLIB_LDFLAGS='${abs_builddir}/extern/install/zlib/lib/libz.a'
+    ]
+  )
+
+  ZLIB_LIBS=
+])
+
+AC_SUBST([BUILD_ZLIB])
+AC_SUBST([ZLIB_CPPFLAGS])
+AC_SUBST([ZLIB_LDFLAGS])
+AC_SUBST([ZLIB_LIBS])
+
+
 dnl Find GNU readline
 AC_ARG_WITH([readline],
   [AS_HELP_STRING([--with-readline@<:@=PREFIX@:>@],
@@ -349,6 +473,52 @@ AS_IF([test "x$with_readline" != xno],[
 AC_SUBST([READLINE_CPPFLAGS])
 AC_SUBST([READLINE_LDFLAGS])
 AC_SUBST([READLINE_LIBS])
+
+
+dnl Find julia
+AC_ARG_WITH([julia],
+  [AS_HELP_STRING([--with-julia@<:@=PREFIX@:>@],
+    [specify a prefix where julia can be found])],
+  [],[with_julia=no]
+)
+
+AS_IF([test "x$with_julia" != xno],[
+  AC_PATH_PROG([JULIA], [julia], [], [${with_julia}/bin ${PATH}])
+  AS_IF([test "x$JULIA" = x],[ AC_MSG_ERROR([no julia executable found]) ])
+
+  JL_SHARE=$($JULIA -e 'print(joinpath(Sys.BINDIR, Base.DATAROOTDIR, "julia"))')
+  AS_IF([test -f "${JL_SHARE}/julia-config.jl"], [], [AC_MSG_ERROR([no julia-config.jl found])])
+
+  AC_MSG_CHECKING([for JULIA_CPPFLAGS])
+  JULIA_CPPFLAGS=$(${JULIA} ${JL_SHARE}/julia-config.jl --cflags 2>/dev/null)
+  AS_IF([ test $? != 0 ], [AC_MSG_ERROR([failed to obtain JULIA_CPPFLAGS from julia-config.jl])])
+  JULIA_CPPFLAGS=${JULIA_CPPFLAGS/-std=gnu99/}  # need to remove -std=gnu99 for our C++ code
+  # remove apostrophes, they mess up quoting when used in shell code(although
+  # they are fine inside of Makefiles); this could cause problems if any
+  # paths involve spaces, but then we likely will haves problem in other
+  # places; in any case, if anybody ever cares about this, we can work on
+  # finding a better solution.
+  JULIA_CPPFLAGS=${JULIA_CPPFLAGS//\'/}
+  AC_MSG_RESULT([${JULIA_CPPFLAGS}])
+
+  AC_MSG_CHECKING([for JULIA_LDFLAGS])
+  JULIA_LDFLAGS=$(${JULIA} ${JL_SHARE}/julia-config.jl --ldflags)
+  AS_IF([ test $? != 0 ], [AC_MSG_ERROR([failed to obtain JULIA_LDFLAGS from julia-config.jl])])
+  JULIA_LDFLAGS=${JULIA_LDFLAGS//\'/}
+  AC_MSG_RESULT([${JULIA_LDFLAGS}])
+
+  AC_MSG_CHECKING([for JULIA_LIBS])
+  JULIA_LIBS=$(${JULIA} ${JL_SHARE}/julia-config.jl --ldlibs)
+  AS_IF([ test $? != 0 ], [AC_MSG_ERROR([failed to obtain JULIA_LIBS from julia-config.jl])])
+  JULIA_LIBS=${JULIA_LIBS//\'/}
+  AC_MSG_RESULT([${JULIA_LIBS}])
+])
+AC_SUBST([JULIA])
+AC_SUBST([JULIA_CPPFLAGS])
+AC_SUBST([JULIA_LDFLAGS])
+AC_SUBST([JULIA_LIBS])
+
+dnl TODO: check if $with_gc = julia; if so, error out if julia is not found
 
 dnl Find ward (if HPC-GAP mode is enabled)
 AC_ARG_WITH([ward],
@@ -393,8 +563,11 @@ AS_IF([test "x$enable_hpcgap" = xyes],
 
   ATOMIC_OPS_CFLAGS=$LIBATOMIC_OPS_CPPFLAGS
   ATOMIC_OPS_LIBS=$LIBATOMIC_OPS_LDFLAGS
+  ]
+)
 
-  AC_DEFINE([BOEHM_GC], [1], [Use Boehm garbage collector])
+AS_IF([test "x$with_gc" = xboehm],
+  [
   BUILD_BOEHM_GC=yes
   BOEHM_GC_CPPFLAGS='-I${abs_builddir}/extern/install/gc/include'
   BOEHM_GC_LDFLAGS='${abs_builddir}/extern/install/gc/lib/libgc.la'
@@ -413,6 +586,10 @@ dnl
 AS_IF([test "x$enable_hpcgap" = xyes],
   [GAPARCH="$host-hpcgap${ABI}"],
   [GAPARCH="$host-default${ABI}"])
+AS_IF([test "x$ARCHEXT" != "x"],
+  [GAPARCH="$GAPARCH-$ARCHEXT"])
+AS_IF([test "x$ARCH" != "x"],
+  [GAPARCH="$ARCH"])
 
 AC_DEFINE_UNQUOTED([SYS_ARCH], ["$GAPARCH"], [for backwards compatibility])
 AC_SUBST([GAPARCH])
@@ -496,21 +673,8 @@ dnl
 dnl check for the existence of various header files
 dnl
 
-dnl check for stdint.h and the types int8_t, uint8_t etc. it defines
-AC_TYPE_INT8_T
-AC_TYPE_INT16_T
-AC_TYPE_INT32_T
-AC_TYPE_INT64_T
-AC_TYPE_UINT8_T
-AC_TYPE_UINT16_T
-AC_TYPE_UINT32_T
-AC_TYPE_UINT64_T
-
-dnl
 dnl check for functionality related to child process handling,
 dnl including pseudo TTY support, signals, etc.
-dnl
-
 AC_CHECK_HEADERS([termios.h])
 AC_CHECK_HEADERS([sys/ioctl.h sys/resource.h])
 
@@ -535,7 +699,6 @@ AC_CHECK_FUNCS([select])
 
 dnl various functions to deal with child processes
 AC_HEADER_SYS_WAIT
-AC_TYPE_PID_T
 AC_FUNC_FORK
 AC_CHECK_FUNCS([popen])
 

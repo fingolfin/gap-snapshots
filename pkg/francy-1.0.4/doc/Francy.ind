@@ -1,0 +1,360 @@
+\begin{theindex}
+
+  \item \texttt  {Add}
+    \subitem for IsCallback, IsRequiredArg, \hyperpage{9}
+    \subitem for IsCanvas, IsChart, \hyperpage{12}
+    \subitem for IsCanvas, IsFrancyGraph, \hyperpage{12}
+    \subitem for IsCanvas, IsFrancyMessage, \hyperpage{13}
+    \subitem for IsCanvas, IsMenu, \hyperpage{13}
+    \subitem for IsChart, IsDataset, \hyperpage{19}
+    \subitem for IsFrancyGraph, IsLink, \hyperpage{27}
+    \subitem for IsFrancyGraph, IsShape, \hyperpage{27}
+    \subitem for IsMenu, IsMenu, \hyperpage{37}
+    \subitem for IsShape, IsCallback, \hyperpage{28}
+    \subitem for IsShape, IsFrancyMessage, \hyperpage{29}
+    \subitem for IsShape, IsMenu, \hyperpage{28}
+  \item \texttt  {AxisXDomain}
+    \subitem for IsChart, \hyperpage{21}
+  \item \texttt  {AxisXTitle}
+    \subitem for IsChart, \hyperpage{20}
+  \item \texttt  {AxisYTitle}
+    \subitem for IsChart, \hyperpage{20, 21}
+
+  \indexspace
+
+  \item \texttt  {Callback}
+    \subitem for IsTriggerType, IsFunction, IsList, \hyperpage{7}
+  \item \texttt  {Canvas}
+    \subitem for IsString, IsCanvasDefaults, \hyperpage{12}
+  \item \texttt  {Chart}
+    \subitem for IsChartType, IsChartDefaults, \hyperpage{18}
+  \item \texttt  {Collapsed}
+    \subitem for IsFrancyGraph, \hyperpage{33}
+  \item \texttt  {Color}
+    \subitem for IsLink, \hyperpage{35}
+    \subitem for IsShape, \hyperpage{30}
+  \item \texttt  {ConfirmMessage}
+    \subitem for IsCallback, \hyperpage{10}
+  \item \texttt  {ConjugateId}
+    \subitem for IsShape, \hyperpage{33}
+
+  \indexspace
+
+  \item \texttt  {Dataset}
+    \subitem for IsString, IsList, \hyperpage{19}
+  \item \texttt  {DefaultAxis}
+    \subitem for IsChartType, \hyperpage{19}
+  \item \texttt  {Draw}
+    \subitem for IsCanvas, \hyperpage{13}
+  \item \texttt  {DrawSplash}
+    \subitem for IsCanvas, \hyperpage{13}
+
+  \indexspace
+
+  \item \texttt  {FrancyId}
+    \subitem for IsFrancyObject, \hyperpage{23}
+  \item \texttt  {FrancyMessage}
+    \subitem for IsFrancyMessageType, IsString, IsString, 
+		\hyperpage{39}
+
+  \indexspace
+
+  \item \texttt  {GenerateID}, \hyperpage{41}
+  \item \texttt  {GetLink}
+    \subitem for IsFrancyGraph, IsString, \hyperpage{29}
+  \item \texttt  {GetLinks}
+    \subitem for IsFrancyGraph, \hyperpage{29}
+  \item \texttt  {GetShape}
+    \subitem for IsFrancyGraph, IsString, \hyperpage{28}
+  \item \texttt  {GetShapes}
+    \subitem for IsFrancyGraph, \hyperpage{28}
+  \item \texttt  {Graph}
+    \subitem for IsFrancyGraphType, IsFrancyGraphDefaults, 
+		\hyperpage{26}
+
+  \indexspace
+
+  \item \texttt  {Height}
+    \subitem for IsCanvas, \hyperpage{14}
+
+  \indexspace
+
+  \item \texttt  {Invisible}
+    \subitem for IsLink, \hyperpage{34, 35}
+  \item \texttt  {IsArgType}
+    \subitem for IsFrancyTypeObject, \hyperpage{6}
+  \item \texttt  {IsArgTypeRep}
+    \subitem for IsComponentObjectRep, \hyperpage{7}
+  \item \texttt  {IsAxisRep}
+    \subitem for IsComponentObjectRep, \hyperpage{18}
+  \item \texttt  {IsAxisScaleType}
+    \subitem for IsFrancyTypeObject, \hyperpage{16}
+  \item \texttt  {IsAxisScaleTypeRep}
+    \subitem for IsComponentObjectRep, \hyperpage{18}
+  \item \texttt  {IsCallback}
+    \subitem for IsFrancyObject, \hyperpage{6}
+  \item \texttt  {IsCallbackRep}
+    \subitem for IsComponentObjectRep, \hyperpage{7}
+  \item \texttt  {IsCanvas}
+    \subitem for IsFrancyObject, \hyperpage{11}
+  \item \texttt  {IsCanvasDefaults}
+    \subitem for IsFrancyDefaultObject, \hyperpage{11}
+  \item \texttt  {IsCanvasDefaultsRep}
+    \subitem for IsComponentObjectRep, \hyperpage{12}
+  \item \texttt  {IsCanvasRep}
+    \subitem for IsComponentObjectRep, \hyperpage{11}
+  \item \texttt  {IsChart}
+    \subitem for IsFrancyObject, \hyperpage{16}
+  \item \texttt  {IsChartDefaults}
+    \subitem for IsFrancyDefaultObject, \hyperpage{16}
+  \item \texttt  {IsChartDefaultsRep}
+    \subitem for IsComponentObjectRep, \hyperpage{17}
+  \item \texttt  {IsChartRep}
+    \subitem for IsComponentObjectRep, \hyperpage{17}
+  \item \texttt  {IsChartType}
+    \subitem for IsFrancyTypeObject, \hyperpage{16}
+  \item \texttt  {IsChartTypeRep}
+    \subitem for IsComponentObjectRep, \hyperpage{17}
+  \item \texttt  {IsDataset}
+    \subitem for IsFrancyObject, \hyperpage{17}
+  \item \texttt  {IsDatasetRep}
+    \subitem for IsComponentObjectRep, \hyperpage{18}
+  \item \texttt  {IsFrancyDefaultObject}
+    \subitem for IsObject, \hyperpage{23}
+  \item \texttt  {IsFrancyGraph}
+    \subitem for IsFrancyObject, \hyperpage{24}
+  \item \texttt  {IsFrancyGraphDefaults}
+    \subitem for IsFrancyDefaultObject, \hyperpage{24}
+  \item \texttt  {IsFrancyGraphDefaultsRep}
+    \subitem for IsComponentObjectRep, \hyperpage{25}
+  \item \texttt  {IsFrancyGraphRep}
+    \subitem for IsComponentObjectRep, \hyperpage{25}
+  \item \texttt  {IsFrancyGraphType}
+    \subitem for IsFrancyObject, \hyperpage{24}
+  \item \texttt  {IsFrancyGraphTypeRep}
+    \subitem for IsComponentObjectRep, \hyperpage{26}
+  \item \texttt  {IsFrancyMessage}
+    \subitem for IsFrancyObject, \hyperpage{38}
+  \item \texttt  {IsFrancyMessageRep}
+    \subitem for IsComponentObjectRep, \hyperpage{38}
+  \item \texttt  {IsFrancyMessageType}
+    \subitem for IsFrancyObject, \hyperpage{38}
+  \item \texttt  {IsFrancyMessageTypeRep}
+    \subitem for IsComponentObjectRep, \hyperpage{39}
+  \item \texttt  {IsFrancyObject}
+    \subitem for IsObject, \hyperpage{22}
+  \item \texttt  {IsFrancyTypeObject}
+    \subitem for IsObject, \hyperpage{23}
+  \item \texttt  {IsLink}
+    \subitem for IsFrancyObject, \hyperpage{25}
+  \item \texttt  {IsLinkDefaults}
+    \subitem for IsFrancyDefaultObject, \hyperpage{25}
+  \item \texttt  {IsLinkDefaultsRep}
+    \subitem for IsComponentObjectRep, \hyperpage{26}
+  \item \texttt  {IsLinkRep}
+    \subitem for IsComponentObjectRep, \hyperpage{26}
+  \item \texttt  {IsMenu}
+    \subitem for IsFrancyObject, \hyperpage{36}
+  \item \texttt  {IsMenuRep}
+    \subitem for IsComponentObjectRep, \hyperpage{36}
+  \item \texttt  {IsRequiredArg}
+    \subitem for IsFrancyObject, \hyperpage{6}
+  \item \texttt  {IsRequiredArgRep}
+    \subitem for IsComponentObjectRep, \hyperpage{7}
+  \item \texttt  {IsShape}
+    \subitem for IsFrancyObject, \hyperpage{24}
+  \item \texttt  {IsShapeDefaults}
+    \subitem for IsFrancyDefaultObject, \hyperpage{25}
+  \item \texttt  {IsShapeDefaultsRep}
+    \subitem for IsComponentObjectRep, \hyperpage{26}
+  \item \texttt  {IsShapeRep}
+    \subitem for IsComponentObjectRep, \hyperpage{26}
+  \item \texttt  {IsShapeType}
+    \subitem for IsFrancyObject, \hyperpage{25}
+  \item \texttt  {IsShapeTypeRep}
+    \subitem for IsComponentObjectRep, \hyperpage{26}
+  \item \texttt  {IsTriggerType}
+    \subitem for IsFrancyTypeObject, \hyperpage{6}
+  \item \texttt  {IsTriggerTypeRep}
+    \subitem for IsComponentObjectRep, \hyperpage{7}
+  \item \texttt  {IsXAxis}
+    \subitem for IsFrancyObject, \hyperpage{17}
+  \item \texttt  {IsYAxis}
+    \subitem for IsFrancyObject, \hyperpage{17}
+
+  \indexspace
+
+  \item \texttt  {JUPYTER{\textunderscore }ViewString}
+    \subitem for IsObject, \hyperpage{41}
+
+  \indexspace
+
+  \item \texttt  {Layer}
+    \subitem for IsShape, \hyperpage{31, 32}
+  \item \texttt  {Length}
+    \subitem for IsLink, \hyperpage{34}
+  \item \texttt  {Link}
+    \subitem for IsShape, IsShape, IsLinkDefaults, \hyperpage{29}
+  \item \texttt  {Links}
+    \subitem for IsList, IsList, IsLinkDefaults, \hyperpage{29}
+
+  \indexspace
+
+  \item \texttt  {Menu}
+    \subitem for IsString, IsCallback, \hyperpage{37}
+  \item \texttt  {MergeObjects}
+    \subitem for IsFrancyObject, IsFrancyObject, \hyperpage{41}
+
+  \indexspace
+
+  \item \texttt  {NoopCallback}, \hyperpage{9}
+
+  \indexspace
+
+  \item \texttt  {ParentShape}
+    \subitem for IsShape, \hyperpage{32}
+  \item \texttt  {PosX}
+    \subitem for IsShape, \hyperpage{30}
+  \item \texttt  {PosY}
+    \subitem for IsShape, \hyperpage{31}
+
+  \indexspace
+
+  \item \texttt  {Remove}
+    \subitem for IsCallback, IsRequiredArg, \hyperpage{9}
+    \subitem for IsCanvas, IsChart, \hyperpage{13}
+    \subitem for IsCanvas, IsFrancyGraph, \hyperpage{12}
+    \subitem for IsCanvas, IsFrancyMessage, \hyperpage{13}
+    \subitem for IsCanvas, IsMenu, \hyperpage{13}
+    \subitem for IsChart, IsDataset, \hyperpage{19}
+    \subitem for IsFrancyGraph, IsLink, \hyperpage{27}
+    \subitem for IsFrancyGraph, IsShape, \hyperpage{28}
+    \subitem for IsMenu, IsMenu, \hyperpage{37}
+    \subitem for IsShape, IsCallback, \hyperpage{28}
+    \subitem for IsShape, IsFrancyMessage, \hyperpage{29}
+    \subitem for IsShape, IsMenu, \hyperpage{28}
+  \item \texttt  {RequiredArg}
+    \subitem for IsArgType, IsString, \hyperpage{9}
+
+  \indexspace
+
+  \item \texttt  {Sanitize}
+    \subitem for IsObject, \hyperpage{41}
+  \item \texttt  {Selected}
+    \subitem for IsShape, \hyperpage{33}
+  \item \texttt  {SetAxisXDomain}
+    \subitem for IsChart, IsList, \hyperpage{21}
+  \item \texttt  {SetAxisXTitle}
+    \subitem for IsChart, IsString, \hyperpage{20}
+  \item \texttt  {SetAxisYTitle}
+    \subitem for IsChart, IsString, \hyperpage{21}
+  \item \texttt  {SetCollapsed}
+    \subitem for IsFrancyGraph, IsBool, \hyperpage{33}
+  \item \texttt  {SetColor}
+    \subitem for IsLink, IsString, \hyperpage{35}
+    \subitem for IsShape, IsString, \hyperpage{30}
+  \item \texttt  {SetConfirmMessage}
+    \subitem for IsCallback, IsString, \hyperpage{10}
+  \item \texttt  {SetConjugateId}
+    \subitem for IsShape, IsInt, \hyperpage{34}
+  \item \texttt  {SetFrancyId}
+    \subitem for IsFrancyObject, IsString, \hyperpage{23}
+  \item \texttt  {SetHeight}
+    \subitem for IsCanvas, IsPosInt, \hyperpage{14}
+  \item \texttt  {SetInvisible}
+    \subitem for IsLink, IsBool, \hyperpage{35}
+  \item \texttt  {SetLayer}
+    \subitem for IsShape, IsInt, \hyperpage{32}
+  \item \texttt  {SetLength}
+    \subitem for IsLink, IsInt, \hyperpage{34}
+  \item \texttt  {SetParentShape}
+    \subitem for IsShape, IsShape, \hyperpage{32}
+  \item \texttt  {SetPosX}
+    \subitem for IsShape, IsInt, \hyperpage{31}
+  \item \texttt  {SetPosY}
+    \subitem for IsShape, IsInt, \hyperpage{31}
+  \item \texttt  {SetSelected}
+    \subitem for IsShape, IsBool, \hyperpage{33}
+  \item \texttt  {SetShowLegend}
+    \subitem for IsChart, IsBool, \hyperpage{20}
+  \item \texttt  {SetSimulation}
+    \subitem for IsFrancyGraph, IsBool, \hyperpage{32}
+  \item \texttt  {SetSize}
+    \subitem for IsShape, IsPosInt, \hyperpage{31}
+  \item \texttt  {SetTexTypesetting}
+    \subitem for IsCanvas, IsBool, \hyperpage{15}
+  \item \texttt  {SetTitle}
+    \subitem for IsCanvas, IsString, \hyperpage{15}
+    \subitem for IsFrancyMessage, IsString, \hyperpage{39}
+    \subitem for IsLink, IsString, \hyperpage{35}
+    \subitem for IsMenu, IsString, \hyperpage{37}
+    \subitem for IsRequiredArg, IsString, \hyperpage{10}
+    \subitem for IsShape, IsString, \hyperpage{30}
+  \item \texttt  {SetValue}
+    \subitem for IsFrancyMessage, IsString, \hyperpage{40}
+    \subitem for IsRequiredArg, IsString, \hyperpage{10}
+  \item \texttt  {SetWeight}
+    \subitem for IsLink, IsInt, \hyperpage{34}
+  \item \texttt  {SetWidth}
+    \subitem for IsCanvas, IsPosInt, \hyperpage{14}
+  \item \texttt  {SetZoomToFit}
+    \subitem for IsCanvas, IsBool, \hyperpage{15}
+  \item \texttt  {Shape}
+    \subitem for IsShapeType, IsString, IsShapeDefaults, \hyperpage{28}
+  \item \texttt  {ShowLegend}
+    \subitem for IsChart, \hyperpage{20}
+  \item \texttt  {Simulation}
+    \subitem for IsFrancyGraph, \hyperpage{32}
+  \item \texttt  {Size}
+    \subitem for IsShape, \hyperpage{31}
+
+  \indexspace
+
+  \item \texttt  {TexTypesetting}
+    \subitem for IsCanvas, \hyperpage{15}
+  \item \texttt  {Title}
+    \subitem for IsCanvas, \hyperpage{15}
+    \subitem for IsFrancyMessage, \hyperpage{39}
+    \subitem for IsLink, \hyperpage{35}
+    \subitem for IsMenu, \hyperpage{37}
+    \subitem for IsRequiredArg, \hyperpage{9, 10}
+    \subitem for IsShape, \hyperpage{30}
+  \item \texttt  {Trigger}
+    \subitem for IsString, \hyperpage{9}
+
+  \indexspace
+
+  \item \texttt  {UnsetLinks}
+    \subitem for IsFrancyGraph, \hyperpage{27}
+  \item \texttt  {UnsetNodes}
+    \subitem for IsFrancyGraph, \hyperpage{27}
+
+  \indexspace
+
+  \item \texttt  {Value}
+    \subitem for IsFrancyMessage, \hyperpage{39, 40}
+    \subitem for IsRequiredArg, \hyperpage{10}
+
+  \indexspace
+
+  \item \texttt  {Weight}
+    \subitem for IsLink, \hyperpage{34}
+  \item \texttt  {Width}
+    \subitem for IsCanvas, \hyperpage{14}
+
+  \indexspace
+
+  \item \texttt  {XAxis}
+    \subitem for IsAxisScaleType, IsString, IsList, \hyperpage{19}
+
+  \indexspace
+
+  \item \texttt  {YAxis}
+    \subitem for IsAxisScaleType, IsString, IsList, \hyperpage{19}
+
+  \indexspace
+
+  \item \texttt  {ZoomToFit}
+    \subitem for IsCanvas, \hyperpage{14}
+
+\end{theindex}

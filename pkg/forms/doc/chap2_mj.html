@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (Forms) - Chapter 2: Examples</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -25,10 +25,13 @@
 <p id="mathjaxlink" class="pcenter"><a href="chap2.html">[MathJax off]</a></p>
 <p><a id="X7A489A5D79DA9E5C" name="X7A489A5D79DA9E5C"></a></p>
 <div class="ChapSects"><a href="chap2_mj.html#X7A489A5D79DA9E5C">2 <span class="Heading">Examples</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X83510E647FBB2475">2.1 <span class="Heading">A conic of PG(2,8)</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X83510E647FBB2475">2.1 <span class="Heading">A conic of 
+<span class="SimpleMath">\(\mathrm{PG}(2,8)\)</span>
+</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X781F69578636E8C5">2.2 <span class="Heading">A form for W(5,3)</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X781F69578636E8C5">2.2 <span class="Heading">A form for 
+<span class="SimpleMath">\(\mathrm{W}(5,3)\)</span></span></a>
 </span>
 </div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X78638D21797AC9A0">2.3 <span class="Heading">What is the form preserved by this group?</span></a>
@@ -42,11 +45,15 @@
 
 <p><a id="X83510E647FBB2475" name="X83510E647FBB2475"></a></p>
 
-<h4>2.1 <span class="Heading">A conic of PG(2,8)</span></h4>
+<h4>2.1 <span class="Heading">A conic of 
+<span class="SimpleMath">\(\mathrm{PG}(2,8)\)</span>
+</span></h4>
 
-<p>Consider the three-dimensional vector space <span class="SimpleMath">\(V := V(3,GF(8))\)</span>, and consider the following quadratic polynomial in 3 variables:</p>
+<p>Consider the three-dimensional vector space <span class="SimpleMath">\(V\)</span> over the finite field <span class="SimpleMath">\(\mathrm{GF}(8)\)</span> , and consider the following quadratic polynomial in 3 variables:</p>
 
-<p><center>x<sub>1</sub><sup>2</sup>+x<sub>2</sub>x<sub>3</sub>.</center> Then this polynomial defines a quadratic form on <span class="SimpleMath">\(V\)</span> and the zeros form a <em>conic</em> of the associated projective plane. So in particular, our quadratic form defines a degenerate parabolic quadric of Witt Index 1. We will see now how we can use <strong class="pkg">Forms</strong> to view this example.</p>
+<p class="center">\[x_1^2+x_2x_3.\]</p>
+
+<p>Then this polynomial defines a quadratic form on <span class="SimpleMath">\(V\)</span> and the zeros form a <em>conic</em> of the associated projective plane. So in particular, our quadratic form defines a degenerate parabolic quadric of Witt Index 1. We will see now how we can use <strong class="pkg">Forms</strong> to view this example.</p>
 
 
 <div class="example"><pre>
@@ -80,7 +87,7 @@ true
 &lt;vector space over GF(2^3), with 0 generators&gt;
 </pre></div>
 
-<p>Now our conic is stabilised by a group isomorphic to <span class="SimpleMath">\(GO(3,8)\)</span>, but not identical to the group returned by the GAP command <code class="code">GO(3,8)</code>. However, our conic is the canonical conic given in <strong class="pkg">Forms</strong>.</p>
+<p>Now our conic is stabilised by a group isomorphic to <span class="SimpleMath">\(\mathrm{GO}(3,8)\)</span>, but which is not identical to the group returned by the GAP command <code class="code">GO(3,8)</code>. However, our conic is the canonical conic given in <strong class="pkg">Forms</strong>.</p>
 
 
 <div class="example"><pre>
@@ -115,7 +122,7 @@ Group(
       [ 0*Z(2), Z(2)^0, 0*Z(2) ] ] ])
 </pre></div>
 
-<p>Now we look at the action of our new <span class="SimpleMath">\(GO(3,8)\)</span> on the conic.</p>
+<p>Now we look at the action of our new <span class="SimpleMath">\(\mathrm{GO}(3,8)\)</span> on the conic.</p>
 
 
 <div class="example"><pre>
@@ -131,11 +138,12 @@ Group(
 
 <p><a id="X781F69578636E8C5" name="X781F69578636E8C5"></a></p>
 
-<h4>2.2 <span class="Heading">A form for W(5,3)</span></h4>
+<h4>2.2 <span class="Heading">A form for 
+<span class="SimpleMath">\(\mathrm{W}(5,3)\)</span></span></h4>
 
-<p>The symplectic polar space <span class="SimpleMath">\(W(5,q)\)</span> is defined by an alternating reflexive bilinear form on the six-dimensional vector space GF(q)<sup>6</sup>. Any invertible <span class="SimpleMath">\(6 \times 6\)</span> matrix <span class="SimpleMath">\(A\)</span> which satisfies A+A<sup>T</sup>=0 is a candidate for the Gram matrix of a symplectic polarity. The canonical form we adopt in <strong class="pkg">Forms</strong> for an alternating form is</p>
+<p>The symplectic polar space <span class="SimpleMath">\(\mathrm{W}(5,q)\)</span> is defined by an alternating reflexive bilinear form on the six-dimensional vector space over the finite field <span class="SimpleMath">\(\mathrm{GF}(q)\)</span>. Any invertible <span class="SimpleMath">\(6 \times 6\)</span> matrix <span class="SimpleMath">\(A\)</span> which satisfies <span class="SimpleMath">\(A+A^T=0\)</span> is a candidate for the Gram matrix of a symplectic polarity. The canonical form we adopt in <strong class="pkg">Forms</strong> for an alternating form is</p>
 
-<p><center> f(x,y)=x<sub>1</sub>y<sub>2</sub><font face="symbol">-</font >x<sub>2</sub>y<sub>1</sub>+x<sub>3</sub>y<sub>4</sub><font face="symbol">-</font >x<sub>4</sub>y<sub>3</sub>+ ... +x<sub>2n<font face="symbol">-</font >1</sub>y<sub>2n</sub><font face="symbol">-</font >x<sub>2n</sub>y<sub>2n<font face="symbol">-</font >1</sub></center></p>
+<p class="center">\[f(x,y)=x_1y_2-x_2y_1+x_3y_4-x_4y_3\cdots+x_{2n-1}y_{2n}-x_{2n}y_{2n-1}.\]</p>
 
 
 <div class="example"><pre>
@@ -188,7 +196,7 @@ Gram Matrix:
 
 <h4>2.3 <span class="Heading">What is the form preserved by this group?</span></h4>
 
-<p>Here we start with a matrix group which is available in GAP, namely <span class="SimpleMath">\(GO(5,5)\)</span>. We then conjugate this group by an element of <span class="SimpleMath">\(GL(5,5)\)</span>, and then we find the forms left invariant by this copy of <span class="SimpleMath">\(GO(5,5)\)</span> (which we expect to be a symmetric bilinear form).</p>
+<p>Here we start with a matrix group which is available in GAP, namely <span class="SimpleMath">\(\mathrm{GO}(5,5)\)</span>. We then conjugate this group by an element of <span class="SimpleMath">\(\mathrm{GL}(5,5)\)</span>, and then we find the forms left invariant by this copy of <span class="SimpleMath">\(\mathrm{GO}(5,5)\)</span> (which we expect to be a symmetric bilinear form).</p>
 
 
 <div class="example"><pre>

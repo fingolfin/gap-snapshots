@@ -20,7 +20,7 @@ InstallGlobalFunction(Factorial, FACTORIAL_INT);
 
 #############################################################################
 ##
-#F  Binomial( <n>, <k> )  . . . . . . . . .  binomial coefficient of integers
+#F  GaussianCoefficient( <n>, <k>, <q> ) . . . . . . . .  number of subspaces
 ##
 InstallGlobalFunction(GaussianCoefficient,function ( n, k, q )
 local   gc, i, j;
@@ -34,6 +34,7 @@ local   gc, i, j;
     return gc;
   fi;
 end);
+
 
 #############################################################################
 ##
@@ -798,6 +799,7 @@ BindGlobal( "NextIterator_Cartesian",
 
 BindGlobal( "ShallowCopy_Cartesian", 
             iter -> rec( 
+                      sets := iter!.sets,
                      sizes := iter!.sizes,
                          n := iter!.n,
                       next := ShallowCopy( iter!.next ) ) );
@@ -819,9 +821,8 @@ BindGlobal( "IteratorOfCartesianProduct2",
            NextIterator   := NextIterator_Cartesian,
            ShallowCopy    := ShallowCopy_Cartesian,
            sets           := s,                      # list of sets
-           sizes          := List( s, Size ),        # sizes of sets
+           sizes          := MakeImmutable( List( s, Size ) ),
            n              := n,                      # number of sets
-           nextelts       := List( s, x -> x[1] ),   # list of 1st elements
            next           := 0 * [ 1 .. n ] + 1 ) ); # list of 1's
     end);
     

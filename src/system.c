@@ -19,14 +19,22 @@
 **  The following labels determine which operating system is actually used.
 */
 
-#include <src/system.h>
+#include "system.h"
 
-#include <src/gaputils.h>
-#include <src/stats.h>
-#include <src/sysfiles.h>
+#include "gaputils.h"
+#ifdef GAP_MEM_CHECK
+#include "gasman.h"
+#endif
+#include "sysfiles.h"
+#include "sysmem.h"
+#include "sysopt.h"
 
 #ifdef HPCGAP
-#include <src/hpc/misc.h>
+#include "hpc/misc.h"
+#endif
+
+#ifdef USE_JULIA_GC
+#include "julia.h"
 #endif
 
 #include <assert.h>
@@ -47,21 +55,13 @@
 #include <sys/resource.h>               /* definition of 'struct rusage' */
 #endif
 
-#ifdef HAVE_MADVISE
-#include <sys/mman.h>
-#endif
-
 #ifdef SYS_IS_DARWIN
 #include <mach/mach_time.h>
 #endif
 
-#ifdef HAVE_VM_ALLOCATE
-#include <mach/mach.h>
-#endif
-
 /****************************************************************************
 **  The following function is from profile.c. We put a prototype here
-**  Rather than #include <src/profile.h> to avoid pulling in large chunks
+**  Rather than #include "profile.h" to avoid pulling in large chunks
 **  of the GAP type system
 */    
 Int enableProfilingAtStartup( Char **argv, void * dummy);
@@ -71,10 +71,10 @@ Int enableCodeCoverageAtStartup( Char **argv, void * dummy);
 /****************************************************************************
 **
 *V  SyKernelVersion  . . . . . . . . . . . . . . . hard coded kernel version
-** do not edit the following line. Occurrences of `4.9.3' and `today'
+** do not edit the following line. Occurrences of `4.10.0' and `today'
 ** will be replaced by string matching by distribution wrapping scripts.
 */
-const Char * SyKernelVersion = "4.9.3";
+const Char * SyKernelVersion = "4.10.0";
 
 /****************************************************************************
 **
@@ -271,58 +271,6 @@ UInt SyInitializing;
 
 /****************************************************************************
 **
-*V  SyStorMax . . . . . . . . . . . . . . . . . . . maximal size of workspace
-**
-**  'SyStorMax' is the maximal size of the workspace allocated by Gasman.
-**  in kilobytes
-**
-**  This is per default 1G in 32-bit mode and 2G in 64-bit mode, which
-**  is often a reasonable value. It is usually changed with the '-o'
-**  option in the script that starts GAP.
-**
-**  This is used in the function 'SyAllocBags' below.
-**
-**  Put in this package because the command line processing takes place here.
-*/
-Int SyStorMax;
-Int SyStorOverrun;
-
-/****************************************************************************
-**
-*V  SyStorKill . . . . . . . . . . . . . . . . . . maximal size of workspace
-**
-**  'SyStorKill' is really the maximal size of the workspace allocated by 
-**  Gasman in kB. GAP exits before trying to allocate more than this amount
-**  of memory.
-**
-**  This is per default disabled (i.e. = 0).
-**  Can be changed with the '-K' option in the script that starts GAP.
-**
-**  This is used in the function 'SyAllocBags' below.
-**
-**  Put in this package because the command line processing takes place here.
-*/
-Int SyStorKill;
-
-
-/****************************************************************************
-**
-*V  SyStorMin . . . . . . . . . . . . . .  default size for initial workspace
-**
-**  'SyStorMin' is the size of the initial workspace allocated by Gasman.
-**
-**  This is per default  24 Megabyte,  which  is  often  a  reasonable  value.
-**  It is usually changed with the '-m' option in the script that starts GAP.
-**
-**  This value is used in the function 'SyAllocBags' below.
-**
-**  Put in this package because the command line processing takes place here.
-*/
-Int SyStorMin;
-
-
-/****************************************************************************
-**
 *V  SyLoadSystemInitFile  . . . . . . should GAP load 'lib/init.g' at startup
 */
 Int SyLoadSystemInitFile = 1;
@@ -330,7 +278,7 @@ Int SyLoadSystemInitFile = 1;
 
 /****************************************************************************
 **
-*V  SyUseModule . . . . . check for dynamic/static modules in 'READ_GAP_ROOT'
+*V  SyUseModule . . . . . . . . . check for static modules in 'READ_GAP_ROOT'
 */
 int SyUseModule;
 
@@ -366,8 +314,7 @@ UInt SyTime ( void )
     struct rusage       buf;
 
     if ( getrusage( RUSAGE_SELF, &buf ) ) {
-        fputs("gap: panic 'SyTime' cannot get time!\n",stderr);
-        SyExit( 1 );
+        Panic("gap: panic 'SyTime' cannot get time!");
     }
     return buf.ru_utime.tv_sec*1000 + buf.ru_utime.tv_usec/1000;
 }
@@ -376,8 +323,7 @@ UInt SyTimeSys ( void )
     struct rusage       buf;
 
     if ( getrusage( RUSAGE_SELF, &buf ) ) {
-        fputs("gap: panic 'SyTimeSys' cannot get time!\n",stderr);
-        SyExit( 1 );
+        Panic("gap: panic 'SyTimeSys' cannot get time!");
     }
     return buf.ru_stime.tv_sec*1000 + buf.ru_stime.tv_usec/1000;
 }
@@ -386,8 +332,7 @@ UInt SyTimeChildren ( void )
     struct rusage       buf;
 
     if ( getrusage( RUSAGE_CHILDREN, &buf ) ) {
-        fputs("gap: panic 'SyTimeChildren' cannot get time!\n",stderr);
-        SyExit( 1 );
+        Panic("gap: panic 'SyTimeChildren' cannot get time!");
     }
     return buf.ru_utime.tv_sec*1000 + buf.ru_utime.tv_usec/1000;
 }
@@ -396,8 +341,7 @@ UInt SyTimeChildrenSys ( void )
     struct rusage       buf;
 
     if ( getrusage( RUSAGE_CHILDREN, &buf ) ) {
-        fputs("gap: panic 'SyTimeChildrenSys' cannot get time!\n",stderr);
-        SyExit( 1 );
+        Panic("gap: panic 'SyTimeChildrenSys' cannot get time!");
     }
     return buf.ru_stime.tv_sec*1000 + buf.ru_stime.tv_usec/1000;
 }
@@ -561,607 +505,6 @@ size_t strxncat (
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * * gasman interface * * * * * * * * * * * * * * *
-*/
-
-
-/****************************************************************************
-**
-*F  SyMsgsBags( <full>, <phase>, <nr> ) . . . . . . . display Gasman messages
-**
-**  'SyMsgsBags' is the function that is used by Gasman to  display  messages
-**  during garbage collections.
-*/
-
-Int SyGasmanNumbers[2][9];
-
-void SyMsgsBags (
-    UInt                full,
-    UInt                phase,
-    Int                 nr )
-{
-    Char                cmd [3];        /* command string buffer           */
-    Char                str [32];       /* string buffer                   */
-    Char                ch;             /* leading character               */
-    UInt                i;              /* loop variable                   */
-    Int                 copynr;         /* copy of <nr>                    */
-    UInt                shifted;        /* non-zero if nr > 10^6 and so
-                                           has to be shifted down          */
-    static UInt         tstart = 0;
-
-    /* remember the numbers */
-    if (phase > 0)
-      {
-        SyGasmanNumbers[full][phase] = nr;
-        
-        /* in a full GC clear the partial numbers */
-        if (full)
-          SyGasmanNumbers[0][phase] = 0;
-      }
-    else
-      {
-        SyGasmanNumbers[full][0]++;
-        tstart = SyTime();
-      }
-    if (phase == 6) 
-      {
-        UInt x = SyTime() - tstart;
-        SyGasmanNumbers[full][7] = x;
-        SyGasmanNumbers[full][8] += x;
-      }
-
-    /* convert <nr> into a string with leading blanks                      */
-    copynr = nr;
-    ch = '0';  str[7] = '\0';
-    shifted = (nr >= ((phase % 2) ? 10000000 : 1000000)) ? 1 : 0;
-    if (shifted)
-      {
-        nr /= 1024;
-      }
-    if ((phase % 2) == 1 && shifted && nr > 1000000)
-      {
-        shifted++;
-        nr /= 1024;
-      }
-      
-    for ( i = ((phase % 2) == 1 && shifted) ? 6 : 7 ;
-          i != 0; i-- ) {
-        if      ( 0 < nr ) { str[i-1] = '0' + ( nr) % 10;  ch = ' '; }
-        else if ( nr < 0 ) { str[i-1] = '0' + (-nr) % 10;  ch = '-'; }
-        else               { str[i-1] = ch;                ch = ' '; }
-        nr = nr / 10;
-    }
-    nr = copynr;
-
-    if ((phase % 2) == 1 && shifted == 1)
-      str[6] = 'K';
-    if ((phase % 2) == 1 && shifted == 2)
-      str[6] = 'M';
-
-    
-
-    /* ordinary full garbage collection messages                           */
-    if ( 1 <= SyMsgsFlagBags && full ) {
-        if ( phase == 0 ) { SyFputs( "#G  FULL ", 3 );                     }
-        if ( phase == 1 ) { SyFputs( str, 3 );  SyFputs( "/",         3 ); }
-        if ( phase == 2 ) { SyFputs( str, 3 );  SyFputs( shifted ? "mb live  " : "kb live  ", 3 ); }
-        if ( phase == 3 ) { SyFputs( str, 3 );  SyFputs( "/",         3 ); }
-        if ( phase == 4 ) { SyFputs( str, 3 );  SyFputs( shifted ? "mb dead  " : "kb dead  ", 3 ); }
-        if ( phase == 5 ) { SyFputs( str, 3 );  SyFputs( "/",         3 ); }
-        if ( phase == 6 ) { SyFputs( str, 3 );  SyFputs( shifted ? "mb free\n" : "kb free\n", 3 ); }
-    }
-
-    /* ordinary partial garbage collection messages                        */
-    if ( 2 <= SyMsgsFlagBags && ! full ) {
-        if ( phase == 0 ) { SyFputs( "#G  PART ", 3 );                     }
-        if ( phase == 1 ) { SyFputs( str, 3 );  SyFputs( "/",         3 ); }
-        if ( phase == 2 ) { SyFputs( str, 3 );  SyFputs( shifted ? "mb+live  ":"kb+live  ", 3 ); }
-        if ( phase == 3 ) { SyFputs( str, 3 );  SyFputs( "/",         3 ); }
-        if ( phase == 4 ) { SyFputs( str, 3 );  SyFputs( shifted ? "mb+dead  ":"kb+dead  ", 3 ); }
-        if ( phase == 5 ) { SyFputs( str, 3 );  SyFputs( "/",         3 ); }
-        if ( phase == 6 ) { SyFputs( str, 3 );  SyFputs( shifted ? "mb free\n":"kb free\n", 3 ); }
-    }
-    /* package (window) mode full garbage collection messages              */
-    if ( phase != 0 ) {
-      shifted =   3 <= phase && nr >= (1 << 21);
-      if (shifted)
-        nr *= 1024;
-      cmd[0] = '@';
-      cmd[1] = ( full ? '0' : ' ' ) + phase;
-      cmd[2] = '\0';
-      i = 0;
-      for ( ; 0 < nr; nr /=10 )
-        str[i++] = '0' + (nr % 10);
-      str[i++] = '+';
-      str[i++] = '\0';
-      if (shifted)
-        str[i++] = 'k';
-      syWinPut( 1, cmd, str );
-    }
-}
-
-
-
-/****************************************************************************
-**
-*F  SyAllocBags( <size>, <need> ) . . . allocate memory block of <size> kilobytes
-**
-**  'SyAllocBags' is called from Gasman to get new storage from the operating
-**  system.  <size> is the needed amount in kilobytes (it is always a multiple of
-**  512 KByte),  and <need> tells 'SyAllocBags' whether  Gasman  really needs
-**  the storage or only wants it to have a reasonable amount of free storage.
-**
-**  Currently  Gasman  expects this function to return  immediately  adjacent
-**  areas on subsequent calls.  So 'sbrk' will  work  on  most  systems,  but
-**  'malloc' will not.
-**
-**  If <need> is 0, 'SyAllocBags' must return 0 if it cannot or does not want
-**  to extend the workspace,  and a pointer to the allocated area to indicate
-**  success.   If <need> is 1  and 'SyAllocBags' cannot extend the workspace,
-**  'SyAllocBags' must abort,  because GAP assumes that  'NewBag'  will never
-**  fail.
-**
-**  <size> may also be negative in which case 'SyAllocBags' should return the
-**  storage to the operating system.  In this case  <need>  will always be 0.
-**  'SyAllocBags' can either accept this reduction and  return 1  and  return
-**  the storage to the operating system or refuse the reduction and return 0.
-**
-**  If the operating system does not support dynamic memory management, simply
-**  give 'SyAllocBags' a static buffer, from where it returns the blocks.
-*/
-
-static UInt SyAllocPool;
-
-/****************************************************************************
-**
-*f  SyAllocBags( <size>, <need> )
-**
-**  For UNIX, 'SyAllocBags' calls 'sbrk', which will work on most systems.
-**
-**  Note that   it may  happen that  another   function   has  called  'sbrk'
-**  between  two calls to  'SyAllocBags',  so that the  next  allocation will
-**  not be immediately adjacent to the last one.   In this case 'SyAllocBags'
-**  returns the area to the operating system,  and either returns 0 if <need>
-**  was 0 or aborts GAP if <need> was 1.  'SyAllocBags' will refuse to extend
-**  the workspace beyond 'SyStorMax' or to reduce it below 'SyStorMin'.
-*/
-
-static UInt pagesize = 4096;   /* Will be initialised if SyAllocPool > 0 */
-
-static inline UInt SyRoundUpToPagesize(UInt x)
-{
-    UInt r;
-    r = x % pagesize;
-    return r == 0 ? x : x - r + pagesize;
-}
-
-void *     POOL = NULL;
-UInt * * * syWorkspace = NULL;
-UInt       syWorksize = 0;
-
-
-#ifdef HAVE_MADVISE
-#ifndef MAP_ANONYMOUS
-#define MAP_ANONYMOUS MAP_ANON
-#endif
-
-static void *SyMMapStart = NULL;   /* Start of mmap'ed region for POOL */
-static void *SyMMapEnd;            /* End of mmap'ed region for POOL */
-static void *SyMMapAdvised;        /* We have already advised about non-usage
-                                      up to here. */
-
-void SyMAdviseFree(void) {
-    size_t size;
-    void *from;
-    if (!SyMMapStart) 
-        return;
-    from = (char *) syWorkspace + syWorksize * 1024;
-    from = (void *)SyRoundUpToPagesize((UInt) from);
-    if (from > SyMMapAdvised) {
-        SyMMapAdvised = from;
-        return;
-    }
-    if (from < SyMMapStart || from >= SyMMapEnd || from >= SyMMapAdvised)
-        return;
-    size = (char *)SyMMapAdvised - (char *)from;
-#if defined(MADV_FREE)
-    madvise(from, size, MADV_FREE);
-#elif defined(MADV_DONTNEED)
-    madvise(from, size, MADV_DONTNEED);
-#endif
-    SyMMapAdvised = from;
-    /* On Darwin, MADV_FREE and MADV_DONTNEED will not actually update
-     * a process's resident memory until those pages are explicitly
-     * unmapped or needed elsewhere.
-     *
-     * The following code accomplishes this, but is not portable and
-     * potentially not safe, since the POSIX standard does not make
-     * any sufficiently strong promises with regard to the use of
-     * MAP_FIXED.
-     *
-     * We probably don't want to do this and just live with pages
-     * remaining with a process until reused even if that appears to
-     * inflate the resident set size.
-     *
-     * Maybe we do want to do this until it breaks to avoid questions
-     * by users...
-     */
-#ifndef NO_DIRTY_OSX_MMAP_TRICK
-#ifdef SYS_IS_DARWIN
-    if (mmap(from, size, PROT_NONE,
-            MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED, -1, 0) != from) {
-        fputs("gap: OS X trick to free pages did not work, bye!\n", stderr);
-        SyExit( 2 );
-    }
-    if (mmap(from, size, PROT_READ|PROT_WRITE,
-            MAP_PRIVATE|MAP_ANONYMOUS|MAP_FIXED, -1, 0) != from) {
-        fputs("gap: OS X trick to free pages did not work, bye!\n", stderr);
-        SyExit( 2 );
-    }
-#endif
-#endif
-}
-
-void *SyAnonMMap(size_t size) {
-    void *result;
-    size = SyRoundUpToPagesize(size);
-#ifdef SYS_IS_64_BIT
-    /* The following is at 16 Terabyte: */
-    result = mmap((void *) (16L*1024*1024*1024*1024), size, 
-                  PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
-    if (result == MAP_FAILED) {
-        result = mmap(NULL, size, PROT_READ|PROT_WRITE,
-            MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
-    }
-#else
-    result = mmap(NULL, size, PROT_READ|PROT_WRITE,
-        MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
-#endif
-    if (result == MAP_FAILED)
-        result = NULL;
-    SyMMapStart = result;
-    SyMMapEnd = (char *)result + size;
-    SyMMapAdvised = (char *)result + size;
-    return result;
-}
-
-int SyTryToIncreasePool(void)
-/* This tries to increase the pool size by a factor of 3/2, if this
- * worked, then 0 is returned, otherwise -1. */
-{
-    void *result;
-    size_t size;
-    size_t newchunk;
-
-    size = (Int) SyMMapEnd - (Int) SyMMapStart;
-    newchunk = SyRoundUpToPagesize(size/2);
-    result = mmap(SyMMapEnd, newchunk, PROT_READ|PROT_WRITE,
-                  MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
-    if (result == MAP_FAILED) return -1;
-    if (result != SyMMapEnd) {
-        munmap(result,newchunk);
-        return -1;
-    }
-    /* We actually got an extension! */
-    SyMMapEnd = (void *)((char *)SyMMapEnd + newchunk);
-    SyAllocPool += newchunk;
-    return 0;
-}
-
-#else
-
-void SyMAdviseFree(void) {
-    /* do nothing */
-}
-
-int SyTryToIncreasePool(void)
-{
-    return -1;   /* Refuse */
-}
-
-#endif
-
-int halvingsdone = 0;
-
-void SyInitialAllocPool( void )
-{
-#ifdef HAVE_SYSCONF
-#ifdef _SC_PAGESIZE
-   pagesize = sysconf(_SC_PAGESIZE);
-#endif
-#endif
-   /* Otherwise we take the default of 4k as pagesize. */
-
-   do {
-       /* Always round up to pagesize: */
-       SyAllocPool = SyRoundUpToPagesize(SyAllocPool);
-#ifdef HAVE_MADVISE
-       POOL = SyAnonMMap(SyAllocPool+pagesize);   /* For alignment */
-#else
-       POOL = calloc(SyAllocPool+pagesize,1);   /* For alignment */
-#endif
-       if (POOL != NULL) {
-           /* fprintf(stderr,"Pool size is %lx.\n",SyAllocPool); */
-           break;
-       }
-       SyAllocPool = SyAllocPool / 2;
-       halvingsdone++;
-       if (SyDebugLoading) fputs("gap: halving pool size.\n", stderr);
-       if (SyAllocPool < 16*1024*1024) {
-         fputs("gap: cannot allocate initial memory, bye.\n", stderr);
-         SyExit( 2 );
-       }
-   } while (1);   /* Is left by break */
-
-   /* ensure alignment of start address */
-   syWorkspace = (UInt***)(SyRoundUpToPagesize((UInt) POOL));
-   /* Now both syWorkspace and SyAllocPool are aligned to pagesize */
-}
-
-UInt ***SyAllocBagsFromPool(Int size, UInt need)
-{
-  /* get the storage, but only if we stay within the bounds              */
-  /* if ( (0 < size && syWorksize + size <= SyStorMax) */
-  /* first check if we would get above SyStorKill, if yes exit! */
-  if ( need < 2 && SyStorKill != 0 && 0 < size 
-                && SyStorKill < syWorksize + size ) {
-      fputs("gap: will not extend workspace above -K limit, bye!\n",stderr);
-      SyExit( 2 );
-  }
-  if (size > 0) {
-    while ((syWorksize+size)*1024 > SyAllocPool) {
-        if (SyTryToIncreasePool()) return (UInt***)-1;
-    }
-    return (UInt***)((char*)syWorkspace + syWorksize*1024);
-  }
-  else if  (size < 0 && (need >= 2 || SyStorMin <= syWorksize + size))
-    return (UInt***)((char*)syWorkspace + syWorksize*1024);
-  else
-    return (UInt***)-1;
-}
-
-#if defined(HAVE_SBRK) && !defined(HAVE_VM_ALLOCATE) /* prefer `vm_allocate' over `sbrk' */
-
-UInt * * * SyAllocBags (
-    Int                 size,
-    UInt                need )
-{
-    UInt * * *          ret;
-    UInt adjust = 0;
-
-    if (SyAllocPool > 0) {
-      if (POOL == NULL) SyInitialAllocPool();
-      /* Note that this does abort GAP if it does not succeed! */
-      
-      ret = SyAllocBagsFromPool(size,need);
-    }
-    else {
-
-
-
-        /* force alignment on first call                                       */
-        if ( syWorkspace == (UInt***)0 ) {
-#ifdef SYS_IS_64_BIT
-            syWorkspace = (UInt***)sbrk( 8 - (UInt)sbrk(0) % 8 );
-#else
-            syWorkspace = (UInt***)sbrk( 4 - (UInt)sbrk(0) % 4 );
-#endif
-            syWorkspace = (UInt***)sbrk( 0 );
-        }
-
-        /* get the storage, but only if we stay within the bounds              */
-        /* if ( (0 < size && syWorksize + size <= SyStorMax) */
-        /* first check if we would get above SyStorKill, if yes exit! */
-        if ( need < 2 && SyStorKill != 0 && 0 < size && 
-             SyStorKill < syWorksize + size ) {
-            fputs("gap: will not extend workspace above -K limit, bye!\n",
-                  stderr);
-            SyExit( 2 );
-        }
-        if (0 < size )
-          {
-#ifndef SYS_IS_64_BIT
-            while (size > 1024*1024)
-              {
-                ret = (UInt ***)sbrk(1024*1024*1024);
-                if (ret != (UInt ***)-1  && 
-                    ret != (UInt***)((char*)syWorkspace + syWorksize*1024))
-                  {
-                    sbrk(-1024*1024*1024);
-                    ret = (UInt ***)-1;
-                  }
-                if (ret == (UInt ***)-1)
-                  break;
-                memset((void *)((char *)syWorkspace + syWorksize*1024), 0, 
-                       1024*1024*1024);
-                size -= 1024*1024;
-                syWorksize += 1024*1024;
-                adjust++;
-              }
-#endif
-            ret = (UInt ***)sbrk(size*1024);
-            if (ret != (UInt ***)-1  && 
-                ret != (UInt***)((char*)syWorkspace + syWorksize*1024))
-              {
-                sbrk(-size*1024);
-                ret = (UInt ***)-1;
-              }
-            if (ret != (UInt ***)-1)
-              memset((void *)((char *)syWorkspace + syWorksize*1024), 0, 
-                     1024*size);
-            
-          }
-        else if  (size < 0 && (need >= 2 || SyStorMin <= syWorksize + size))  {
-#ifndef SYS_IS_64_BIT
-          while (size < -1024*1024)
-            {
-              ret = (UInt ***)sbrk(-1024*1024*1024);
-              if (ret == (UInt ***)-1)
-                break;
-              size += 1024*1024;
-              syWorksize -= 1024*1024;
-            }
-#endif
-            ret = (UInt ***)sbrk(size*1024);
-        }
-        else {
-          ret = (UInt***)-1;
-        }
-    }
-
-
-    /* update the size info                                                */
-    if ( ret != (UInt***)-1 ) {
-        syWorksize += size;
-        /* set the overrun flag if we became larger than SyStorMax */
-        if ( SyStorMax != 0 && syWorksize  > SyStorMax)  {
-          SyStorOverrun = -1;
-          SyStorMax=syWorksize*2; /* new maximum */
-          InterruptExecStat(); /* interrupt at the next possible point */
-        }
-    }
-
-    /* test if the allocation failed                                       */
-    if ( ret == (UInt***)-1 && need ) {
-        fputs("gap: cannot extend the workspace any more!\n",stderr);
-        SyExit( 1 );
-    }
-    /* if we de-allocated the whole workspace then remember this */
-    if (syWorksize == 0)
-      syWorkspace = (UInt ***)0;
-
-    /* otherwise return the result (which could be 0 to indicate failure)  */
-    if ( ret == (UInt***)-1 )
-        return 0;
-    else
-      {
-        return (UInt***)(((Char *)ret) - 1024*1024*1024*adjust);
-      }
-
-}
-
-#endif
-
-
-/****************************************************************************
-**
-*f  SyAllocBags( <size>, <need> )
-**
-**  Under MACH virtual memory managment functions are used instead of 'sbrk'.
-*/
-#ifdef HAVE_VM_ALLOCATE
-
-#if (defined(SYS_IS_DARWIN) && SYS_IS_DARWIN) || defined(__gnu_hurd__)
-#define task_self mach_task_self
-#endif
-
-vm_address_t syBase;
- 
-UInt * * * SyAllocBags (
-    Int                 size,
-    UInt                need )
-{
-    UInt * * *          ret = (UInt***)-1;
-    vm_address_t        adr;    
-
-    if (SyAllocPool > 0) {
-      if (POOL == NULL) SyInitialAllocPool();
-      /* Note that this does abort GAP if it does not succeed! */
- 
-      ret = SyAllocBagsFromPool(size,need);
-      if (ret != (UInt ***)-1)
-          syWorksize += size;
-
-    }
-    else {
-        if ( SyStorKill != 0 && 0 < size && SyStorKill < 1024*(syWorksize + size) ) {
-            if (need) {
-                fputs("gap: will not extend workspace above -K limit, bye!\n",stderr);
-                SyExit( 2 );
-            }  
-        }
-        /* check that <size> is divisible by <vm_page_size>                    */
-        else if ( size*1024 % vm_page_size != 0 ) {
-            fputs( "gap: memory block size is not a multiple of vm_page_size",
-                   stderr );
-            SyExit(1);
-        }
-
-        /* check that we don't try to shrink uninitialized memory                */
-        else if ( size <= 0 && syBase == 0 ) {
-            fputs( "gap: trying to shrink uninitialized vm memory\n", stderr );
-            SyExit(1);
-        }
-
-        /* allocate memory anywhere on first call                              */
-        else if ( 0 < size && syBase == 0 ) {
-            if ( vm_allocate(task_self(),&syBase,size*1024,TRUE) == KERN_SUCCESS ) {
-                syWorksize = size;
-                ret = (UInt***) syBase;
-            }
-        }
-
-        /* don't shrink memory but mark it as deactivated                      */
-        else if ( size < 0 && syWorksize + size > SyStorMin) {
-            adr = (vm_address_t)( (char*) syBase + (syWorksize+size)*1024 );
-            if ( vm_deallocate(task_self(),adr,-size*1024) == KERN_SUCCESS ) {
-                ret = (UInt***)( (char*) syBase + syWorksize*1024 );
-                syWorksize += size;
-            }
-        }
-
-        /* get more memory from system                                         */
-        else {
-            adr = (vm_address_t)( (char*) syBase + syWorksize*1024 );
-            if ( vm_allocate(task_self(),&adr,size*1024,FALSE) == KERN_SUCCESS ) {
-                ret = (UInt***) ( (char*) syBase + syWorksize*1024 );
-                syWorksize += size;
-            }
-        }
-
-        /* test if the allocation failed                                       */
-        if ( ret == (UInt***)-1 && need ) {
-            fputs("gap: cannot extend the workspace any more!!\n",stderr);
-            SyExit(1);
-        }
-    }
-
-    /* otherwise return the result (which could be 0 to indicate failure)  */
-    if ( ret == (UInt***)-1 ){
-        if (need) { 
-            fputs("gap: cannot extend the workspace any more!!!\n",stderr);
-            SyExit( 1 );
-        }
-        return (UInt***) 0;
-    } 
-    else {
-        if (syWorksize  > SyStorMax)  {
-            SyStorOverrun = -1;
-            SyStorMax=syWorksize*2; /* new maximum */
-            InterruptExecStat(); /* interrupt at the next possible point */
-       }
-     }
-    return ret;
-}
-
-#endif
-
-
-/****************************************************************************
-**
-*F  SyAbortBags( <msg> )  . . . . . . . . . abort GAP in case of an emergency
-**
-**  'SyAbortBags' is the function called by Gasman in case of an emergency.
-*/
-void SyAbortBags (
-    const Char *        msg )
-{
-    SyFputs( msg, 3 );
-    SyExit( 2 );
-}
-
-/****************************************************************************
-**
 *F  SySleep( <secs> ) . . . . . . . . . . . . . .sleep GAP for <secs> seconds
 **
 **  NB Various OS events (like signals) might wake us up
@@ -1186,7 +529,7 @@ void SyUSleep ( UInt msecs )
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 
@@ -1207,8 +550,24 @@ void SyUSleep ( UInt msecs )
 void SyExit (
     UInt                ret )
 {
-        exit( (int)ret );
+#ifdef USE_JULIA_GC
+    jl_atexit_hook(ret);
+#endif
+    exit( (int)ret );
 }
+
+
+/****************************************************************************
+**
+*F  Panic( <msg> )
+*/
+extern void Panic(const char * msg)
+{
+    fputs(msg, stderr);
+    fputs("\n", stderr);
+    exit(1);
+}
+
 
 /****************************************************************************
 **
@@ -1619,7 +978,7 @@ static Int storePosInteger( Char **argv, void *Where )
   UInt n;
   Char *p = argv[0];
   n = 0;
-  while (isdigit(*p)) {
+  while (IsDigit(*p)) {
     n = n * 10 + (*p-'0');
     p++;
   }
@@ -1681,6 +1040,18 @@ static Int setGapRootPath( Char **argv, void *Dummy)
 }
 
 
+#ifndef GAP_MEM_CHECK
+// Provide stub with helpful error message
+
+static Int enableMemCheck(Char ** argv, void * dummy)
+{
+    SyFputs( "# Error: --enableMemCheck not supported by this copy of GAP\n", 3);
+    SyFputs( "  pass --enable-memory-checking to ./configure\n", 3 );
+    SyExit(2);
+}
+#endif
+
+
 static Int preAllocAmount;
 
 /* These are just the options that need kernel processing. Additional options will be 
@@ -1720,6 +1091,7 @@ struct optInfo options[] = {
   { 0  , "memprof", enableMemoryProfilingAtStartup, 0, 1 }, /* enable memory profiling at startup */
   { 0  , "cover", enableCodeCoverageAtStartup, 0, 1}, /* enable code coverage at startup */
   { 0  , "quitonbreak", toggle, &SyQuitOnBreak, 0}, /* Quit GAP if we enter the break loop */
+  { 0  , "enableMemCheck", enableMemCheck, 0, 0 },
   { 0, "", 0, 0, 0}};
 
 
@@ -1754,9 +1126,11 @@ void InitSystem (
     SyQuiet = 0;
     SyInitializing = 0;
 #ifdef SYS_IS_64_BIT
+    SyStorMin = 128 * 1024L;
     SyStorMax = 2048*1024L;          /* This is in kB! */
     SyAllocPool = 4096L*1024*1024;   /* Note this is in bytes! */
 #else
+    SyStorMin = 64 * 1024L;
     SyStorMax = 1024*1024L;          /* This is in kB! */
 #ifdef SYS_IS_CYGWIN32
     SyAllocPool = 0;                 /* works better on cygwin */
@@ -1766,7 +1140,6 @@ void InitSystem (
 #endif
     SyStorOverrun = 0;
     SyStorKill = 0;
-    SyStorMin = SY_STOR_MIN;         /* see system.h */
     SyUseModule = 1;
     SyWindow = 0;
 
@@ -1777,68 +1150,9 @@ void InitSystem (
       }
     }
 
-#ifdef HAVE_VM_ALLOCATE
-    syBase = 0;
-    syWorksize = 0;
-#elif defined(HAVE_SBRK)
-    syWorkspace = (UInt ***)0;
-#endif
-    /*  nopts = 0;
-    noptvals = 0;
-    lenoptvalsbuff = 0;
-    gaprc = 1; */
-
     preAllocAmount = 4*1024*1024;
-    
-    /* open the standard files                                             */
-    struct stat stat_in, stat_out, stat_err;
-    fstat(fileno(stdin), &stat_in);
-    fstat(fileno(stdout), &stat_out);
-    fstat(fileno(stderr), &stat_err);
 
-    // set up stdin
-    syBuf[0].fp = fileno(stdin);
-    syBuf[0].echo = fileno(stdout);
-    syBuf[0].bufno = -1;
-    syBuf[0].isTTY = isatty(fileno(stdin));
-    if (syBuf[0].isTTY) {
-        // if stdin is on a terminal, make sure stdout in on the same terminal
-        if (stat_in.st_dev != stat_out.st_dev ||
-            stat_in.st_ino != stat_out.st_ino)
-            syBuf[0].echo = open( ttyname(fileno(stdin)), O_WRONLY );
-    }
-
-    // set up stdout
-    syBuf[1].echo = syBuf[1].fp = fileno(stdout); 
-    syBuf[1].bufno = -1;
-    syBuf[1].isTTY = isatty(fileno(stdout));
-
-    // set up errin (defaults to stdin, unless stderr is on a terminal)
-    syBuf[2].fp = fileno(stdin);
-    syBuf[2].echo = fileno(stderr);
-    syBuf[2].bufno = -1;
-    syBuf[2].isTTY = isatty(fileno(stderr));
-    if (syBuf[2].isTTY) {
-        // if stderr is on a terminal, make sure errin in on the same terminal
-        if (stat_in.st_dev != stat_err.st_dev ||
-            stat_in.st_ino != stat_err.st_ino)
-            syBuf[2].fp = open( ttyname(fileno(stderr)), O_RDONLY );
-    }
-
-    // set up errout
-    syBuf[3].fp = fileno(stderr);
-    syBuf[3].bufno = -1;
-
-    // turn off buffering
-    setbuf(stdin, (char *)0);
-    setbuf(stdout, (char *)0);
-    setbuf(stderr, (char *)0);
-
-    for (i = 4; i < ARRAY_SIZE(syBuf); i++)
-        syBuf[i].fp = -1;
-
-    for (i = 0; i < ARRAY_SIZE(syBuffers); i++)
-        syBuffers[i].inuse = 0;
+    InitSysFiles();
 
 #ifdef HAVE_LIBREADLINE
     rl_initialize ();
@@ -1940,8 +1254,7 @@ void InitSystem (
     if ( SyWindow ) {
       /*         SyLineEdit   = 1;
                  SyCTRD       = 1; */
-        syBuf[2].fp = fileno(stdin);  syBuf[2].echo = fileno(stdout);
-        syBuf[3].fp = fileno(stdout);
+        SyRedirectStderrToStdOut();
         syWinPut( 0, "@p", "1." );
     }
    

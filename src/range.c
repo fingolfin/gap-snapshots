@@ -28,9 +28,8 @@
 **
 **  The element at position <pos> is thus simply <first> + (<pos>-1) * <inc>.
 **
-**  Note  that  a list  represented by a   bag of type   'T_LIST', 'T_SET' or
-**  'T_VECTOR' might still  be a range.  It is  just that the kernel does not
-**  know this.
+**  Note that a list represented by a bag of type 'T_PLIST' might still be a
+**  range. It is just that the kernel does not know this.
 **
 **  This package consists of three parts.
 **
@@ -50,80 +49,54 @@
 **  The  third part consists  ...
 */
 
-#include <src/range.h>
+#include "range.h"
 
-#include <src/ariths.h>
-#include <src/bool.h>
-#include <src/gap.h>
-#include <src/gaputils.h>
-#include <src/io.h>
-#include <src/lists.h>
-#include <src/opers.h>
-#include <src/plist.h>
-#include <src/saveload.h>
+#include "ariths.h"
+#include "bool.h"
+#include "error.h"
+#include "gaputils.h"
+#include "io.h"
+#include "lists.h"
+#include "modules.h"
+#include "opers.h"
+#include "plist.h"
+#include "saveload.h"
 
 
 /****************************************************************************
 **
-*F  TypeRangeNSortImmutable( <range> )  . . . . . . . . . . . type of a range
+*F  TypeRangeNSort( <range> ) . . . . . . . . . . . . . . . . type of a range
 **
-**  'TypeRangeNSortMutable' is the   function in 'TypeObjFuncs' for immutable
-**  ranges which are not strictly sorted.
+**  'TypeRangeNSort' is the  function in 'TypeObjFuncs' for ranges which are
+**  not strictly sorted.
 */
 Obj TYPE_RANGE_NSORT_IMMUTABLE;
-
-Obj TypeRangeNSortImmutable (
-    Obj                 list )
-{
-    return TYPE_RANGE_NSORT_IMMUTABLE;
-}
-    
-/****************************************************************************
-**
-*F  TypeRangeNSortMutable( <range> )  . . . . . . . . . . . . type of a range
-**
-**  'TypeRangeNSortMutable' is the   function in 'TypeObjFuncs' for   mutable
-**  ranges which are not strictly sorted.
-*/
 Obj TYPE_RANGE_NSORT_MUTABLE;
 
-Obj TypeRangeNSortMutable (
-    Obj                 list )
+Obj TypeRangeNSort(Obj list)
 {
-    return TYPE_RANGE_NSORT_MUTABLE;
+    return IS_MUTABLE_PLAIN_OBJ(list) ? TYPE_RANGE_NSORT_MUTABLE
+                                      : TYPE_RANGE_NSORT_IMMUTABLE;
 }
+
     
 /****************************************************************************
 **
-*F  TypeRangeSSortImmutable( <range> )  . . . . . . . . . . . type of a range
+*F  TypeRangeSSort( <range> ) . . . . . . . . . . . . . . . . type of a range
 **
-**  'TypeRangeNSortMutable' is the   function in 'TypeObjFuncs' for immutable
-**  ranges which are strictly sorted.
+**  'TypeRangeSSort' is the function in 'TypeObjFuncs' for ranges which are
+**  strictly sorted.
 */
 Obj TYPE_RANGE_SSORT_IMMUTABLE;
-
-Obj TypeRangeSSortImmutable (
-    Obj                 list )
-{
-    return TYPE_RANGE_SSORT_IMMUTABLE;
-}
-
-
-/****************************************************************************
-**
-*F  TypeRangeSSortMutable( <range> )  . . . . . . . . . . . . type of a range
-**
-**  'TypeRangeNSortMutable' is the   function in 'TypeObjFuncs' for   mutable
-**  ranges which are strictly sorted.
-*/
 Obj TYPE_RANGE_SSORT_MUTABLE;
 
-Obj TypeRangeSSortMutable (
-    Obj                 list )
+Obj TypeRangeSSort(Obj list)
 {
-    return TYPE_RANGE_SSORT_MUTABLE;
+    return IS_MUTABLE_PLAIN_OBJ(list) ? TYPE_RANGE_SSORT_MUTABLE
+                                      : TYPE_RANGE_SSORT_IMMUTABLE;
 }
-    
+
+
 #if !defined(USE_THREADSAFE_COPYING)
 
 /****************************************************************************
@@ -189,7 +162,7 @@ Obj CopyRangeCopy (
     Obj                 list,
     Int                 mut )
 {
-    return ADDR_OBJ(list)[0];
+    return CONST_ADDR_OBJ(list)[0];
 }
 
 
@@ -441,7 +414,17 @@ Obj             ElmsRange (
         for ( i = 1; i <= lenPoss; i++ ) {
 
             /* get <position>                                              */
-            pos = INT_INTOBJ( ELMW_LIST( poss, i ) );
+            Obj p = ELMW_LIST(poss, i);
+            while (!IS_INTOBJ(p)) {
+                p = ErrorReturnObj("List Elements: position is too large for "
+                                   "this type of list",
+                                   0L, 0L,
+                                   "you can supply a new position <pos> via "
+                                   "'return <pos>;'");
+            }
+            pos = INT_INTOBJ(p);
+
+            /* select the element                                          */
             if ( lenList < pos ) {
                 ErrorReturnVoid(
                     "List Elements: <list>[%d] must have an assigned value",
@@ -537,17 +520,6 @@ void            AssRange (
     CHANGED_BAG( list );
 }
 
-void            AssRangeImm (
-    Obj                 list,
-    Int                 pos,
-    Obj                 val )
-{
-    ErrorReturnVoid(
-        "Lists Assignment: <list> must be a mutable list",
-        0L, 0L,
-        "you can 'return;' and ignore the assignment" );
-}
-
 
 /****************************************************************************
 **
@@ -576,17 +548,6 @@ void            AsssRange (
 
     /* and delegate                                                        */
     ASSS_LIST( list, poss, vals );
-}
-
-void            AsssRangeImm (
-    Obj                 list,
-    Obj                 poss,
-    Obj                 val )
-{
-    ErrorReturnVoid(
-        "Lists Assignments: <list> must be a mutable list",
-        0L, 0L,
-        "you can 'return;' and ignore the assignment" );
 }
 
 
@@ -648,13 +609,8 @@ Obj             PosRange (
     low     = GET_LOW_RANGE(list);
     inc     = GET_INC_RANGE(list);
 
-    /* look just beyond the end                                            */
-    if ( istart == lenList ) {
-        k = 0;
-    }
-
-    /* look for an integer                                                 */
-    else if ( IS_INTOBJ(val) ) {
+    // look for an integer, and not beyond the list end
+    if ( IS_INTOBJ(val) && istart < lenList ) {
         v = INT_INTOBJ(val);
         if ( 0 < inc
           && low + istart * inc <= v && v <= low + (lenList-1) * inc
@@ -670,21 +626,6 @@ Obj             PosRange (
             k = 0;
         }
     }
-
- /* I have no idea how a record can ever be equal to an integer. I'll leave
-  * the code in comments for a while, in case someone digs out what this is
-  * good for. FL
-  * */
-    /* for a record compare every entry                                    */
-/*    else if ( TNUM_OBJ(val) == T_PREC ) {
-        for ( k = istart+1; k <= lenList; k++ ) {
-            if ( EQ( INTOBJ_INT( low + (k-1) * inc ), val ) )
-                break;
-        }
-        if ( lenList < k ) {
-            k = 0;
-        }
-    }  */
 
     /* otherwise it can not be an element of the range                     */
     else {
@@ -894,7 +835,6 @@ Obj Range2Check (
     l = INT_INTOBJ(last);
     if ( f > l ) {
         range = NEW_PLIST( T_PLIST, 0 );
-        SET_LEN_PLIST( range, 0 );
     }
     else if ( f == l ) {
         range = NEW_PLIST( T_PLIST, 1 );
@@ -952,7 +892,6 @@ Obj Range3Check (
     }
     if ( (0 < i && f > l) || (i < 0 && f < l) ) {
         range = NEW_PLIST( T_PLIST, 0 );
-        SET_LEN_PLIST( range, 0 );
     }
     else if ( f == l ) {
         range = NEW_PLIST( T_PLIST, 1 );
@@ -1088,28 +1027,11 @@ Obj FuncINTER_RANGE( Obj self, Obj r1, Obj r2)
   SET_LEN_PLIST(r1, 0L);
   return (Obj) 0;
 }
-/* torture:
-a := [-10..10];; INTER_RANGE(a,[-10..10]); a;
-a := [-10..10];; INTER_RANGE(a,[-11..10]); a;
-a := [-10..10];; INTER_RANGE(a,[-10..11]); a;
-a := [-10..10];; INTER_RANGE(a,[-11..9]); a;
-a := [-10..10];; INTER_RANGE(a,[-9..11]); a;
-a := [-10..10];; INTER_RANGE(a,[-21,-18..21]); a;
-a := [-10..10];; INTER_RANGE(a,[-6,-3..21]); a;
-a := [-10..10];; INTER_RANGE(a,[-21,-18..6]); a;
-a := [-10,-7..20];; INTER_RANGE(a,[-21,-18..6]); a;
-a := [-9,-6..21];; INTER_RANGE(a,[-21,-18..6]); a;
-a := [-12,-10..20];; INTER_RANGE(a,[-21,-18..6]); a;
-a := [-15,-12..3];; INTER_RANGE(a,[-21,-18..6]); a;
-a := [-12,-9..3];; INTER_RANGE(a,[-21,-18..6]); a;
-a := [-9,-6..3];; INTER_RANGE(a,[-21,-18..6]); a;
-a := [-9,-3..3];; INTER_RANGE(a,[-21,-18..6]); a;
-a := [-9,-5..3];; INTER_RANGE(a,[-21,-18..6]); a;
-*/    
+
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 
@@ -1150,7 +1072,6 @@ static Int ClearFiltsTab [] = {
 static Int HasFiltTab [] = {
 
     // nsort range
-    T_RANGE_NSORT,              FN_IS_EMPTY,    0,
     T_RANGE_NSORT,              FN_IS_DENSE,    1,
     T_RANGE_NSORT,              FN_IS_NDENSE,   0,
     T_RANGE_NSORT,              FN_IS_HOMOG,    1,
@@ -1161,7 +1082,6 @@ static Int HasFiltTab [] = {
     T_RANGE_NSORT,              FN_IS_NSORT,    1,
 
     // ssort range
-    T_RANGE_SSORT,              FN_IS_EMPTY,    0,
     T_RANGE_SSORT,              FN_IS_DENSE,    1,
     T_RANGE_SSORT,              FN_IS_NDENSE,   0,
     T_RANGE_SSORT,              FN_IS_HOMOG,    1,
@@ -1182,7 +1102,6 @@ static Int HasFiltTab [] = {
 static Int SetFiltTab [] = {
 
     // nsort range
-    T_RANGE_NSORT,              FN_IS_EMPTY,    -1,
     T_RANGE_NSORT,              FN_IS_DENSE,    T_RANGE_NSORT,
     T_RANGE_NSORT,              FN_IS_NDENSE,   -1,
     T_RANGE_NSORT,              FN_IS_HOMOG,    T_RANGE_NSORT,
@@ -1193,7 +1112,6 @@ static Int SetFiltTab [] = {
     T_RANGE_NSORT,              FN_IS_NSORT,    T_RANGE_NSORT,
 
     // ssort range
-    T_RANGE_SSORT,              FN_IS_EMPTY,    T_RANGE_SSORT,
     T_RANGE_SSORT,              FN_IS_DENSE,    T_RANGE_SSORT,
     T_RANGE_SSORT,              FN_IS_NDENSE,   -1,
     T_RANGE_SSORT,              FN_IS_HOMOG,    T_RANGE_SSORT,
@@ -1215,7 +1133,6 @@ static Int SetFiltTab [] = {
 static Int ResetFiltTab [] = {
 
     // nsort range
-    T_RANGE_NSORT,              FN_IS_EMPTY,    T_RANGE_NSORT,
     T_RANGE_NSORT,              FN_IS_DENSE,    T_RANGE_NSORT,
     T_RANGE_NSORT,              FN_IS_NDENSE,   T_RANGE_NSORT,
     T_RANGE_NSORT,              FN_IS_HOMOG,    T_RANGE_NSORT,
@@ -1226,7 +1143,6 @@ static Int ResetFiltTab [] = {
     T_RANGE_NSORT,              FN_IS_NSORT,    T_RANGE_NSORT,
 
     // ssort range
-    T_RANGE_SSORT,              FN_IS_EMPTY,    T_RANGE_SSORT,
     T_RANGE_SSORT,              FN_IS_DENSE,    T_RANGE_SSORT,
     T_RANGE_SSORT,              FN_IS_NDENSE,   T_RANGE_SSORT,
     T_RANGE_SSORT,              FN_IS_HOMOG,    T_RANGE_SSORT,
@@ -1286,9 +1202,11 @@ static Int InitKernel (
     InitMarkFuncBags(   T_RANGE_SSORT +IMMUTABLE +COPYING , MarkAllSubBags );
 #endif
 
+#ifdef HPCGAP
     /* Make immutable bags public                                          */
     MakeBagTypePublic( T_RANGE_NSORT + IMMUTABLE );
     MakeBagTypePublic( T_RANGE_SSORT + IMMUTABLE );
+#endif
 
     /* install the type function                                           */
     ImportGVarFromLibrary( "TYPE_RANGE_NSORT_MUTABLE",
@@ -1303,10 +1221,10 @@ static Int InitKernel (
     ImportGVarFromLibrary( "TYPE_RANGE_SSORT_IMMUTABLE",
                            &TYPE_RANGE_SSORT_IMMUTABLE );
 
-    TypeObjFuncs[ T_RANGE_NSORT            ] = TypeRangeNSortMutable;
-    TypeObjFuncs[ T_RANGE_NSORT +IMMUTABLE ] = TypeRangeNSortImmutable;
-    TypeObjFuncs[ T_RANGE_SSORT            ] = TypeRangeSSortMutable;
-    TypeObjFuncs[ T_RANGE_SSORT +IMMUTABLE ] = TypeRangeSSortImmutable;
+    TypeObjFuncs[ T_RANGE_NSORT            ] = TypeRangeNSort;
+    TypeObjFuncs[ T_RANGE_NSORT +IMMUTABLE ] = TypeRangeNSort;
+    TypeObjFuncs[ T_RANGE_SSORT            ] = TypeRangeSSort;
+    TypeObjFuncs[ T_RANGE_SSORT +IMMUTABLE ] = TypeRangeSSort;
 
     /* init filters and functions                                          */
     InitHdlrFiltsFromTable( GVarFilts );
@@ -1402,13 +1320,9 @@ static Int InitKernel (
     ElmsListFuncs   [ T_RANGE_SSORT            ] = ElmsRange;
     ElmsListFuncs   [ T_RANGE_SSORT +IMMUTABLE ] = ElmsRange;
     AssListFuncs    [ T_RANGE_NSORT            ] = AssRange;
-    AssListFuncs    [ T_RANGE_NSORT +IMMUTABLE ] = AssRangeImm;
     AssListFuncs    [ T_RANGE_SSORT            ] = AssRange;
-    AssListFuncs    [ T_RANGE_SSORT +IMMUTABLE ] = AssRangeImm;
     AsssListFuncs   [ T_RANGE_NSORT            ] = AsssRange;
-    AsssListFuncs   [ T_RANGE_NSORT +IMMUTABLE ] = AsssRangeImm;
     AsssListFuncs   [ T_RANGE_SSORT            ] = AsssRange;
-    AsssListFuncs   [ T_RANGE_SSORT +IMMUTABLE ] = AsssRangeImm;
     IsDenseListFuncs[ T_RANGE_NSORT            ] = AlwaysYes;
     IsDenseListFuncs[ T_RANGE_NSORT +IMMUTABLE ] = AlwaysYes;
     IsDenseListFuncs[ T_RANGE_SSORT            ] = AlwaysYes;
@@ -1433,12 +1347,6 @@ static Int InitKernel (
     PlainListFuncs  [ T_RANGE_NSORT +IMMUTABLE ] = PlainRange;
     PlainListFuncs  [ T_RANGE_SSORT            ] = PlainRange;
     PlainListFuncs  [ T_RANGE_SSORT +IMMUTABLE ] = PlainRange;
-
-    /* initialise list tables                                              */
-    InitClearFiltsTNumsFromTable   ( ClearFiltsTab );
-    InitHasFiltListTNumsFromTable  ( HasFiltTab    );
-    InitSetFiltListTNumsFromTable  ( SetFiltTab    );
-    InitResetFiltListTNumsFromTable( ResetFiltTab  );
 
     /* return success                                                      */
     return 0;

@@ -9,29 +9,31 @@
 **  This file contains the GAP interface for thread primitives.
 */
 
-#include <src/hpc/threadapi.h>
+#include "hpc/threadapi.h"
 
-#include <src/bool.h>
-#include <src/calls.h>
-#include <src/code.h>
-#include <src/funcs.h>
-#include <src/gap.h>
-#include <src/gapstate.h>
-#include <src/gvars.h>
-#include <src/lists.h>
-#include <src/objects.h>
-#include <src/plist.h>
-#include <src/read.h>
-#include <src/records.h>
-#include <src/set.h>
-#include <src/stringobj.h>
+#include "bool.h"
+#include "calls.h"
+#include "code.h"
+#include "error.h"
+#include "funcs.h"
+#include "gapstate.h"
+#include "gvars.h"
+#include "io.h"
+#include "lists.h"
+#include "modules.h"
+#include "objects.h"
+#include "plist.h"
+#include "read.h"
+#include "records.h"
+#include "set.h"
+#include "stringobj.h"
 
-#include <src/hpc/guards.h>
-#include <src/hpc/misc.h>
-#include <src/hpc/region.h>
-#include <src/hpc/thread.h>
-#include <src/hpc/tls.h>
-#include <src/hpc/traverse.h>
+#include "hpc/guards.h"
+#include "hpc/misc.h"
+#include "hpc/region.h"
+#include "hpc/thread.h"
+#include "hpc/tls.h"
+#include "hpc/traverse.h"
 
 #include <stdio.h>
 #include <signal.h>
@@ -134,22 +136,22 @@ Obj NewMonitor(void)
     return monitorBag;
 }
 
-void LockThread(ThreadLocalStorage * thread)
+static void LockThread(ThreadLocalStorage * thread)
 {
     pthread_mutex_lock(thread->threadLock);
 }
 
-void UnlockThread(ThreadLocalStorage * thread)
+static void UnlockThread(ThreadLocalStorage * thread)
 {
     pthread_mutex_unlock(thread->threadLock);
 }
 
-void SignalThread(ThreadLocalStorage * thread)
+static void SignalThread(ThreadLocalStorage * thread)
 {
     pthread_cond_signal(thread->threadSignal);
 }
 
-void WaitThreadSignal(void)
+static void WaitThreadSignal(void)
 {
     int id = TLS(threadID);
     if (!UpdateThreadState(id, TSTATE_RUNNING, TSTATE_BLOCKED))
@@ -322,22 +324,18 @@ UInt WaitForAnyMonitor(UInt count, Monitor ** monitors)
 
 void SignalMonitor(Monitor * monitor)
 {
-    struct WaitList *    queue;
-    ThreadLocalStorage * thread = NULL;
-    queue = monitor->head;
-    if (queue != NULL) {
-        do {
-            thread = queue->thread;
-            LockThread(thread);
-            if (!thread->acquiredMonitor) {
-                thread->acquiredMonitor = monitor;
-                SignalThread(thread);
-                UnlockThread(thread);
-                break;
-            }
+    struct WaitList * queue = monitor->head;
+    while (queue != NULL) {
+        ThreadLocalStorage * thread = queue->thread;
+        LockThread(thread);
+        if (!thread->acquiredMonitor) {
+            thread->acquiredMonitor = monitor;
+            SignalThread(thread);
             UnlockThread(thread);
-            queue = queue->next;
-        } while (queue != NULL);
+            break;
+        }
+        UnlockThread(thread);
+        queue = queue->next;
     }
 }
 
@@ -778,7 +776,7 @@ Obj FuncHASH_SYNCHRONIZED(Obj self, Obj target, Obj function)
     volatile int locked = 0;
     jmp_buf      readJmpError;
     memcpy(readJmpError, STATE(ReadJmpError), sizeof(jmp_buf));
-    TRY_READ
+    TRY_IF_NO_ERROR
     {
         HashLock(target);
         locked = 1;
@@ -797,7 +795,7 @@ Obj FuncHASH_SYNCHRONIZED_SHARED(Obj self, Obj target, Obj function)
     volatile int locked = 0;
     jmp_buf      readJmpError;
     memcpy(readJmpError, STATE(ReadJmpError), sizeof(jmp_buf));
-    TRY_READ
+    TRY_IF_NO_ERROR
     {
         HashLockShared(target);
         locked = 1;
@@ -820,7 +818,7 @@ Obj FuncHASH_SYNCHRONIZED_SHARED(Obj self, Obj target, Obj function)
 Obj FuncCREATOR_OF(Obj self, Obj obj)
 {
 #ifdef TRACK_CREATOR
-    Obj result = NEW_PLIST(T_PLIST + IMMUTABLE, 2);
+    Obj result = NEW_PLIST_IMM(T_PLIST, 2);
     SET_LEN_PLIST(result, 2);
     if (!IS_BAG_REF(obj)) {
         SET_ELM_PLIST(result, 1, Fail);
@@ -918,7 +916,7 @@ Obj TypeRegion(Obj obj)
     return TYPE_REGION;
 }
 
-#ifndef BOEHM_GC
+#ifdef USE_GASMAN
 static void MarkSemaphoreBag(Bag);
 static void MarkChannelBag(Bag);
 static void MarkBarrierBag(Bag);
@@ -942,7 +940,7 @@ static UInt RNAM_SIGVTALRM;
 static UInt RNAM_SIGWINCH;
 #endif
 
-#ifndef BOEHM_GC
+#ifdef USE_GASMAN
 static void MarkSemaphoreBag(Bag bag)
 {
     Semaphore * sem = (Semaphore *)(PTR_BAG(bag));
@@ -1003,17 +1001,16 @@ static void WaitChannel(Channel * channel)
 static void ExpandChannel(Channel * channel)
 {
     /* Growth ratio should be less than the golden ratio */
-    UInt oldCapacity = channel->capacity;
-    UInt newCapacity = ((oldCapacity * 25 / 16) | 1) + 1;
+    const UInt oldCapacity = channel->capacity;
+    const UInt newCapacity = ((oldCapacity * 25 / 16) | 1) + 1;
+    GAP_ASSERT(newCapacity > oldCapacity);
+
     UInt i, tail;
     Obj  newqueue;
-    if (newCapacity == oldCapacity)
-        newCapacity += 2;
     newqueue = NEW_PLIST(T_PLIST, newCapacity);
     SET_LEN_PLIST(newqueue, newCapacity);
     REGION(newqueue) = REGION(channel->queue);
     channel->capacity = newCapacity;
-    /* assert(channel->head == channel->tail); */
     for (i = channel->head; i < oldCapacity; i++)
         ADDR_OBJ(newqueue)[i + 1] = ADDR_OBJ(channel->queue)[i + 1];
     for (i = 0; i < channel->tail; i++) {
@@ -1082,32 +1079,19 @@ static Int TallyChannel(Channel * channel)
     return result;
 }
 
-static void SendChannel(Channel * channel, Obj obj)
+static void SendChannel(Channel * channel, Obj obj, int migrate)
 {
     LockChannel(channel);
     if (channel->size == channel->capacity && channel->dynamic)
         ExpandChannel(channel);
     while (channel->size == channel->capacity)
         WaitChannel(channel);
-    AddToChannel(channel, obj, 1);
+    AddToChannel(channel, obj, migrate);
     SignalChannel(channel);
     UnlockChannel(channel);
 }
 
-static void TransmitChannel(Channel * channel, Obj obj)
-{
-    LockChannel(channel);
-    if (channel->size == channel->capacity && channel->dynamic)
-        ExpandChannel(channel);
-    while (channel->size == channel->capacity)
-        WaitChannel(channel);
-    AddToChannel(channel, obj, 0);
-    SignalChannel(channel);
-    UnlockChannel(channel);
-}
-
-
-static void MultiSendChannel(Channel * channel, Obj list)
+static void MultiSendChannel(Channel * channel, Obj list, int migrate)
 {
     int listsize = LEN_LIST(list);
     int i;
@@ -1119,31 +1103,13 @@ static void MultiSendChannel(Channel * channel, Obj list)
         while (channel->size == channel->capacity)
             WaitChannel(channel);
         obj = ELM_LIST(list, i);
-        AddToChannel(channel, obj, 1);
+        AddToChannel(channel, obj, migrate);
     }
     SignalChannel(channel);
     UnlockChannel(channel);
 }
 
-static void MultiTransmitChannel(Channel * channel, Obj list)
-{
-    int listsize = LEN_LIST(list);
-    int i;
-    Obj obj;
-    LockChannel(channel);
-    for (i = 1; i <= listsize; i++) {
-        if (channel->size == channel->capacity && channel->dynamic)
-            ExpandChannel(channel);
-        while (channel->size == channel->capacity)
-            WaitChannel(channel);
-        obj = ELM_LIST(list, i);
-        AddToChannel(channel, obj, 0);
-    }
-    SignalChannel(channel);
-    UnlockChannel(channel);
-}
-
-static int TryMultiSendChannel(Channel * channel, Obj list)
+static int TryMultiSendChannel(Channel * channel, Obj list, int migrate)
 {
     int result = 0;
     int listsize = LEN_LIST(list);
@@ -1156,7 +1122,7 @@ static int TryMultiSendChannel(Channel * channel, Obj list)
         if (channel->size == channel->capacity)
             break;
         obj = ELM_LIST(list, i);
-        AddToChannel(channel, obj, 1);
+        AddToChannel(channel, obj, migrate);
         result++;
     }
     SignalChannel(channel);
@@ -1164,28 +1130,7 @@ static int TryMultiSendChannel(Channel * channel, Obj list)
     return result;
 }
 
-static int TryMultiTransmitChannel(Channel * channel, Obj list)
-{
-    int result = 0;
-    int listsize = LEN_LIST(list);
-    int i;
-    Obj obj;
-    LockChannel(channel);
-    for (i = 1; i <= listsize; i++) {
-        if (channel->size == channel->capacity && channel->dynamic)
-            ExpandChannel(channel);
-        if (channel->size == channel->capacity)
-            break;
-        obj = ELM_LIST(list, i);
-        AddToChannel(channel, obj, 0);
-        result++;
-    }
-    SignalChannel(channel);
-    UnlockChannel(channel);
-    return result;
-}
-
-static int TrySendChannel(Channel * channel, Obj obj)
+static int TrySendChannel(Channel * channel, Obj obj, int migrate)
 {
     LockChannel(channel);
     if (channel->size == channel->capacity && channel->dynamic)
@@ -1194,22 +1139,7 @@ static int TrySendChannel(Channel * channel, Obj obj)
         UnlockChannel(channel);
         return 0;
     }
-    AddToChannel(channel, obj, 1);
-    SignalChannel(channel);
-    UnlockChannel(channel);
-    return 1;
-}
-
-static int TryTransmitChannel(Channel * channel, Obj obj)
-{
-    LockChannel(channel);
-    if (channel->size == channel->capacity && channel->dynamic)
-        ExpandChannel(channel);
-    if (channel->size == channel->capacity) {
-        UnlockChannel(channel);
-        return 0;
-    }
-    AddToChannel(channel, obj, 0);
+    AddToChannel(channel, obj, migrate);
     SignalChannel(channel);
     UnlockChannel(channel);
     return 1;
@@ -1314,12 +1244,11 @@ static Obj MultiReceiveChannel(Channel * channel, UInt max)
 
 static Obj InspectChannel(Channel * channel)
 {
-    Obj result;
-    int i, p;
     LockChannel(channel);
-    result = NEW_PLIST(T_PLIST, channel->size / 2);
-    SET_LEN_PLIST(result, channel->size / 2);
-    for (i = 0, p = channel->head; i < channel->size; i++) {
+    const UInt count = channel->size / 2;
+    Obj result = NEW_PLIST(T_PLIST, count);
+    SET_LEN_PLIST(result, count);
+    for (UInt i = 0, p = channel->head; i < count; i++) {
         SET_ELM_PLIST(result, i + 1, ELM_PLIST(channel->queue, p + 1));
         p += 2;
         if (p == channel->capacity)
@@ -1415,7 +1344,7 @@ Obj FuncSendChannel(Obj self, Obj channel, Obj obj)
 {
     if (!IsChannel(channel))
         return ArgumentError("SendChannel: First argument must be a channel");
-    SendChannel(ObjPtr(channel), obj);
+    SendChannel(ObjPtr(channel), obj, 1);
     return (Obj)0;
 }
 
@@ -1424,7 +1353,7 @@ Obj FuncTransmitChannel(Obj self, Obj channel, Obj obj)
     if (!IsChannel(channel))
         return ArgumentError(
             "TransmitChannel: First argument must be a channel");
-    TransmitChannel(ObjPtr(channel), obj);
+    SendChannel(ObjPtr(channel), obj, 0);
     return (Obj)0;
 }
 
@@ -1433,10 +1362,8 @@ Obj FuncMultiSendChannel(Obj self, Obj channel, Obj list)
     if (!IsChannel(channel))
         return ArgumentError(
             "MultiSendChannel: First argument must be a channel");
-    if (!IS_DENSE_LIST(list))
-        return ArgumentError(
-            "MultiSendChannel: Second argument must be a dense list");
-    MultiSendChannel(ObjPtr(channel), list);
+    CheckIsDenseList("MultiSendChannel", "list", list);
+    MultiSendChannel(ObjPtr(channel), list, 1);
     return (Obj)0;
 }
 
@@ -1445,10 +1372,8 @@ Obj FuncMultiTransmitChannel(Obj self, Obj channel, Obj list)
     if (!IsChannel(channel))
         return ArgumentError(
             "MultiTransmitChannel: First argument must be a channel");
-    if (!IS_DENSE_LIST(list))
-        return ArgumentError(
-            "MultiTransmitChannel: Second argument must be a dense list");
-    MultiTransmitChannel(ObjPtr(channel), list);
+    CheckIsDenseList("MultiTransmitChannel", "list", list);
+    MultiSendChannel(ObjPtr(channel), list, 0);
     return (Obj)0;
 }
 
@@ -1457,10 +1382,8 @@ Obj FuncTryMultiSendChannel(Obj self, Obj channel, Obj list)
     if (!IsChannel(channel))
         return ArgumentError(
             "TryMultiSendChannel: First argument must be a channel");
-    if (!IS_DENSE_LIST(list))
-        return ArgumentError(
-            "TryMultiSendChannel: Second argument must be a dense list");
-    return INTOBJ_INT(TryMultiSendChannel(ObjPtr(channel), list));
+    CheckIsDenseList("TryMultiSendChannel", "list", list);
+    return INTOBJ_INT(TryMultiSendChannel(ObjPtr(channel), list, 1));
 }
 
 
@@ -1469,10 +1392,8 @@ Obj FuncTryMultiTransmitChannel(Obj self, Obj channel, Obj list)
     if (!IsChannel(channel))
         return ArgumentError(
             "TryMultiTransmitChannel: First argument must be a channel");
-    if (!IS_DENSE_LIST(list))
-        return ArgumentError(
-            "TryMultiTransmitChannel: Second argument must be a dense list");
-    return INTOBJ_INT(TryMultiTransmitChannel(ObjPtr(channel), list));
+    CheckIsDenseList("TryMultiTransmitChannel", "list", list);
+    return INTOBJ_INT(TryMultiSendChannel(ObjPtr(channel), list, 0));
 }
 
 
@@ -1480,14 +1401,14 @@ Obj FuncTrySendChannel(Obj self, Obj channel, Obj obj)
 {
     if (!IsChannel(channel))
         return ArgumentError("TrySendChannel: Argument is not a channel");
-    return TrySendChannel(ObjPtr(channel), obj) ? True : False;
+    return TrySendChannel(ObjPtr(channel), obj, 1) ? True : False;
 }
 
 Obj FuncTryTransmitChannel(Obj self, Obj channel, Obj obj)
 {
     if (!IsChannel(channel))
         return ArgumentError("TryTransmitChannel: Argument is not a channel");
-    return TryTransmitChannel(ObjPtr(channel), obj) ? True : False;
+    return TrySendChannel(ObjPtr(channel), obj, 0) ? True : False;
 }
 
 Obj FuncReceiveChannel(Obj self, Obj channel)
@@ -1949,7 +1870,7 @@ static void PrintRegion(Obj obj)
     Obj      name = GetRegionName(region);
 
     if (name) {
-        Pr("<region: %s", (Int)(CSTR_STRING(name)), 0L);
+        Pr("<region: %g", (Int)name, 0L);
     }
     else {
         snprintf(buffer, 32, "<region %p", (void *)GetRegionOf(obj));
@@ -2323,7 +2244,7 @@ Obj FuncMakeThreadLocal(Obj self, Obj var)
             "MakeThreadLocal: Argument must be a variable name");
     name = CSTR_STRING(var);
     gvar = GVarName(name);
-    name = NameGVar(gvar); /* to apply namespace scopes where needed. */
+    name = CSTR_STRING(NameGVar(gvar)); /* to apply namespace scopes where needed. */
     MakeThreadLocalVar(gvar, RNamName(name));
     return (Obj)0;
 }
@@ -2605,6 +2526,29 @@ Obj FuncTHREAD_COUNTERS_GET(Obj self)
 
 /****************************************************************************
 **
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
+*/
+
+
+/****************************************************************************
+**
+*V  BagNames  . . . . . . . . . . . . . . . . . . . . . . . list of bag names
+*/
+static StructBagNames BagNames[] = {
+    // install info string
+    { T_THREAD, "thread" },
+    { T_MONITOR, "monitor" },
+    { T_REGION, "region" },
+    { T_SEMAPHORE, "semaphore" },
+    { T_CHANNEL, "channel" },
+    { T_BARRIER, "barrier" },
+    { T_SYNCVAR, "syncvar" },
+    { -1,    "" }
+};
+
+
+/****************************************************************************
+**
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
 static StructGVarFunc GVarFuncs[] = {
@@ -2724,14 +2668,8 @@ static StructGVarFunc GVarFuncs[] = {
 */
 static Int InitKernel(StructInitInfo * module)
 {
-    // install info string
-    InfoBags[T_THREAD].name = "thread";
-    InfoBags[T_MONITOR].name = "monitor";
-    InfoBags[T_REGION].name = "region";
-    InfoBags[T_SEMAPHORE].name = "semaphore";
-    InfoBags[T_CHANNEL].name = "channel";
-    InfoBags[T_BARRIER].name = "barrier";
-    InfoBags[T_SYNCVAR].name = "syncvar";
+    // set the bag type names (for error messages and debugging)
+    InitBagNamesFromTable(BagNames);
 
     // install the type methods
     TypeObjFuncs[T_THREAD] = TypeThread;
@@ -2756,7 +2694,7 @@ static Int InitKernel(StructInitInfo * module)
     InitMarkFuncBags(T_THREAD, MarkNoSubBags);
     InitMarkFuncBags(T_MONITOR, MarkNoSubBags);
     InitMarkFuncBags(T_REGION, MarkAllSubBags);
-#ifndef BOEHM_GC
+#ifdef USE_GASMAN
     InitMarkFuncBags(T_SEMAPHORE, MarkSemaphoreBag);
     InitMarkFuncBags(T_CHANNEL, MarkChannelBag);
     InitMarkFuncBags(T_BARRIER, MarkBarrierBag);

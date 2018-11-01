@@ -81,11 +81,13 @@ gap&gt; Decompose(r);
 <p>
 <h2><a name="SECT002">3.2 Properties and attributes of tree automorphisms and homomorphisms</a></h2>
 <p><p>
-<li><code>IsSphericallyTransitive( </code><var>a</var><code> ) [treehom] P</code>
+<a name = "SSEC002.1"></a>
+<li><code>IsSphericallyTransitive( </code><var>a</var><code> ) P</code>
 <p>
 Returns whether the action of <var>a</var> is spherically transitive (see <a href="CHAP001.htm#SECT001">Short math background</a>).
 <p>
-<li><code>IsTransitiveOnLevel( </code><var>a</var><code>, </code><var>lev</var><code> ) [treehom] O</code>
+<a name = "SSEC002.2"></a>
+<li><code>IsTransitiveOnLevel( </code><var>a</var><code>, </code><var>lev</var><code> ) O</code>
 <p>
 Returns whether <var>a</var> acts transitively on level <var>lev</var> of the tree.
 <p>
@@ -263,7 +265,8 @@ gap&gt; [1, 2, 2, 1, 2, 1]^(p*q^2);
 <p>
 The operations below describe how to work with sections of tree homomorphisms.
 <p>
-<li><code>Section( </code><var>a</var><code>, </code><var>v</var><code> ) [treehom] O</code>
+<a name = "SSEC003.3"></a>
+<li><code>Section( </code><var>a</var><code>, </code><var>v</var><code> ) O</code>
 <p>
 Returns the section of the automorphism (homomorphism) <var>a</var> at the vertex <var>v</var>.
 The vertex <var>v</var> can be a list representing the vertex, or a positive integer
@@ -384,7 +387,8 @@ gap&gt; PermActionOnLevel((1,13,5,9,3,15,7,11)(2,14,6,10,4,16,8,12), 4, 2, 2);
 <p>
 <h2><a name="SECT004">3.4 Elements of groups and semigroups defined by wreath recursion</a></h2>
 <p><p>
-<li><code>IsFiniteState( </code><var>a</var><code> ) [selfsim] P</code>
+<a name = "SSEC004.1"></a>
+<li><code>IsFiniteState( </code><var>a</var><code> ) P</code>
 <p>
 Returns <code>true</code> if <var>a</var> has finitely many different sections.
 It will never stop if the free reduction of words is not sufficient
@@ -477,5 +481,5 @@ gap&gt; AutomPortraitDepth(u^3*v^-2*u^3);
 <p>
 [<a href = "chapters.htm">Up</a>] [<a href ="CHAP002.htm">Previous</a>] [<a href ="CHAP004.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<address>automgrp manual<br>March 2016
+<address>automgrp manual<br>September 2018
 </address></body></html>

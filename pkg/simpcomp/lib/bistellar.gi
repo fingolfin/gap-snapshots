@@ -156,17 +156,13 @@ SCIntFunc.IRawBistellarRMoves:=function(arg)
   
   idx:=Combinations([1..max],max-r);  
 
-  #tmp:=Runtime();
   for i in [1..Size(faces[max])] do
     for j in idx do
       base:=faces[max][i]{j};
       Add(hd[PositionSorted(faces[max-r],base)],i);
     od;
   od;
-  #tmp:=Runtime()-tmp;
-  #Print(tmp,"\n");
 
-  #tmp:=Runtime();
   for i in [1..Size(hd)] do
     if Size(hd[i]) <> r+1 then continue; fi;
     linkface:=Union(faces[max]{hd[i]});
@@ -180,8 +176,6 @@ SCIntFunc.IRawBistellarRMoves:=function(arg)
         fi;
     fi;
   od;
-  #tmp:=Runtime()-tmp;
-  #Print(tmp,"\n");
 
   return rawOptions;
 end;
@@ -1271,10 +1265,8 @@ end);
 ## <Example> NOEXECUTE
 ## Greetings master,
 ## 
-## this is simpcomp 2.1.8 running on igt215.mathematik.uni-stuttgart.de
-## (Linux igt215 2.6.26-2-amd64 #1 SMP Thu Nov 5 02:23:12 UTC 2009 x86_64
-## GNU/Linux), GAP 4.4.12.
-## 
+## this is simpcomp 2.1.9 running on comp01.maths.fancytown.edu
+##
 ## I have been working hard for 0 seconds and have a message for you, see below.
 ## 
 ## #### START MESSAGE ####
@@ -2721,8 +2713,6 @@ SCIntFunc.SCMakeFlagComplex:=
       return fail;
     fi;
     
-    #Print("\nF=",result[2].F,"\n");
-    #Print("Non-faces:\n",SCMinimalNonFaces(result[2]),"\n\n");
   od;
   
   SCBistellarOptions.MaxInterval:=maxrounds;

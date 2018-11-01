@@ -24,18 +24,18 @@
 **  is 0 if also the polynomials f_{m1},...,f_{mn} for (m > i) are trivial .
 */
 
-#include <src/dteval.h>
+#include "dteval.h"
 
-#include <src/dt.h>
-#include <src/gap.h>
-#include <src/integer.h>
-#include <src/objcftl.h>
-#include <src/plist.h>
-#include <src/precord.h>
-#include <src/records.h>
+#include "dt.h"
+#include "integer.h"
+#include "modules.h"
+#include "objcftl.h"
+#include "plist.h"
+#include "precord.h"
+#include "records.h"
 
 #ifdef HPCGAP
-#include <src/hpc/guards.h>
+#include "hpc/guards.h"
 #endif
 
 #define   CELM(list, pos)      (  INT_INTOBJ( ELM_PLIST(list, pos) ) )
@@ -132,7 +132,7 @@ Obj     Evaluation(
     if ( IS_INTOBJ(power)  &&  INT_INTOBJ(power) > 0  &&  
          power < ELM_PLIST(vec, 6)     )
         return INTOBJ_INT(0);
-    prod = binomial(power, ELM_PLIST(vec, 6) );
+    prod = BinomialInt(power, ELM_PLIST(vec, 6) );
     len = LEN_PLIST(vec);
     for (i=7; i < len; i+=2)
     {
@@ -141,7 +141,7 @@ Obj     Evaluation(
              ( INT_INTOBJ(help) == 0                 ||
                ( INT_INTOBJ(help) > 0  &&  help < ELM_PLIST(vec, i+1) )  ) )
             return INTOBJ_INT(0);
-        prod = ProdInt( prod, binomial( help, ELM_PLIST(vec, i+1) ) );
+        prod = ProdInt( prod, BinomialInt(help, ELM_PLIST(vec, i+1) ) );
     }
     return prod;
 }
@@ -331,12 +331,9 @@ Obj      Power(
     if ( IS_NEG_INT(n) )
     {
         y = NEW_PLIST( T_PLIST, 0);
-        SET_LEN_PLIST(y, 0);
-        return  Power( Solution(x, y, dtpols), 
-                       ProdInt(INTOBJ_INT(-1), n),   dtpols  );    
+        return  Power( Solution(x, y, dtpols), AInvInt(n), dtpols );
     }
     res = NEW_PLIST(T_PLIST, 2);
-    SET_LEN_PLIST(res, 0);
     if ( n == INTOBJ_INT(0) )
         return res;
     /* now use the russian peasant rule to get the result               */
@@ -398,7 +395,7 @@ Obj      Solution( Obj       x,
             }
             else if ( CELM(x, j) < CELM(y, k) )
             {
-                m = ProdInt( INTOBJ_INT(-1), ELM_PLIST(x, j+1) );
+                m = AInvInt( ELM_PLIST(x, j+1) );
                 SET_ELM_PLIST( res, i, ELM_PLIST(x, j) );
                 SET_ELM_PLIST( res, i+1, m );
                 CHANGED_BAG( res );
@@ -415,7 +412,7 @@ Obj      Solution( Obj       x,
         if ( j < len1 )
             while( j < len1 )
             {
-                m = ProdInt( INTOBJ_INT(-1), ELM_PLIST( x, j+1 ) );
+                m = AInvInt( ELM_PLIST( x, j+1 ) );
                 SET_ELM_PLIST( res, i, ELM_PLIST(x, j) );
                 SET_ELM_PLIST( res, i+1, m );
                 CHANGED_BAG( res );
@@ -469,7 +466,7 @@ Obj      Solution( Obj       x,
         }
         else if ( !IS_INTOBJ( ELM_PLIST(xk, i) )  ||  CELM( xk, i ) != 0 )
         {
-            m = ProdInt( INTOBJ_INT(-1), ELM_PLIST(xk, i) );
+            m = AInvInt( ELM_PLIST(xk, i) );
             SET_ELM_PLIST( res, j, INTOBJ_INT(i) );
             SET_ELM_PLIST( res, j+1, m );
             CHANGED_BAG(res);
@@ -770,7 +767,7 @@ void     ReduceWord( Obj      x,
     powers = ELM_PLIST(pcp, PC_POWERS);
     exponent = ELM_PLIST(pcp, PC_EXPONENTS);
     deepthoughtpols = ELM_PLIST(pcp, PC_DEEP_THOUGHT_POLS);
-    len = **deepthoughtpols;
+    len = LEN_PLIST(deepthoughtpols);
     lenexp = LEN_PLIST(exponent);
     lenpow = LEN_PLIST(powers);
     GROW_PLIST(x, 2*len );
@@ -982,7 +979,6 @@ Obj       FuncDTQuotient( Obj      self,
     if  ( LEN_PLIST(y) == 0 )
         return x;
     help = NEW_PLIST( T_PLIST, 0 );
-    SET_LEN_PLIST(help, 0);
     res = Solutionred(y, help, pcp);
     res = Multiplyboundred(x, res, 1, LEN_PLIST(res), pcp);
     ReduceWord(res, pcp);
@@ -993,7 +989,7 @@ Obj       FuncDTQuotient( Obj      self,
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

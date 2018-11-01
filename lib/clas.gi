@@ -725,7 +725,7 @@ InstallGlobalFunction( RationalClassesTry, function(  G, classes, elm  )
         Add( classes, C );
 
         # try the powers of this element that reduce the order
-        for i  in Set(FactorsInt(Order(elm)))  do
+        for i in PrimeDivisors(Order(elm)) do
             RationalClassesTry( G, classes, elm ^ i );
         od;
 
@@ -761,7 +761,7 @@ local rcls, cl, mark, rep, c, o, cop, same, sub, pow, p, i, j,closure,
   rcls:=[];
   cl:=ConjugacyClasses(G);
 
-  if Length(Filtered(cl,x->Size(x)<10))<10000 then
+  if Number(cl,x->Size(x)<10)<10000 then
     # trigger for cheap element test
     for i in [1..Length(cl)] do
       if Size(cl[i])<10 then AsSSortedList(cl[i]);fi;

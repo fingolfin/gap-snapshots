@@ -20,21 +20,21 @@
 
 BIND_GLOBAL( "GAPInfo", rec(
 
-# do not edit the following three lines. Occurences of `4.9.3' and `05-Sep-2018'
+# do not edit the following three lines. Occurences of `4.10.0' and `01-Nov-2018'
 # will be replaced by string matching by distribution wrapping scripts.
-    Version := MakeImmutable("4.9.3"),
-    Date := MakeImmutable("05-Sep-2018"),
-    NeedKernelVersion := MakeImmutable("4.9.3"),
+    Version := MakeImmutable("4.10.0"),
+    Date := MakeImmutable("01-Nov-2018"),
+    NeedKernelVersion := MakeImmutable("4.10.0"),
 
 # Without the needed packages, GAP does not start.
-    Dependencies := rec(
+    Dependencies := MakeImmutable(rec(
       NeededOtherPackages := [
         [ "gapdoc", ">= 1.2" ],
         [ "primgrp", ">= 3.1.0" ],
         [ "smallgrp", ">= 1.0" ],
         [ "transgrp", ">= 1.0" ],
       ],
-    ),
+    )),
 # There is no SuggestedOtherPackages here because the default value of
 # the user preference PackagesToLoad does the job      
 
@@ -77,7 +77,7 @@ BIND_GLOBAL( "GAPInfo", rec(
            help := [ "set hint for maximal workspace size (GAP may", "allocate more)"] ),
       rec( short:= "K", long := "limitworkspace", default := "0", arg := "<mem>",
            help := [ "set maximal workspace size (GAP never", "allocates more)"] ),
-      rec( short:= "s", default := "4g", arg := "<mem", help := [ "set the initially mapped virtual memory" ] ),
+      rec( short:= "s", default := "4g", arg := "<mem>", help := [ "set the initially mapped virtual memory" ] ),
       rec( short:= "a", default := "0",  arg := "<mem>",help := [ "set amount to pre-malloc-ate",
              "postfix 'k' = *1024, 'm' = *1024*1024,", "'g' = *1024*1024*1024"] ),
       ,
@@ -92,9 +92,10 @@ BIND_GLOBAL( "GAPInfo", rec(
       rec( short:= "B", default := "",    arg := "<name>", help := [ "current architecture"] ),
       rec( short:= "D", default := false, help := ["enable/disable debugging the loading of files"] ),
       rec( short:= "M", default := false, help := ["disable/enable loading of compiled modules"] ),
-      rec( short:= "N", default := false, help := ["unused, for backward compatibility only"] ),
+      rec( short:= "N", default := false, help := ["do not use hidden implications"] ),
       rec( short:= "O", default := false, help := ["disable/enable loading of obsolete files"] ),
-      rec( short:= "T", default := false, help := ["disable/enable break loop"] ),
+      rec( short:= "T", long := "nobreakloop", default := false, help := ["disable/enable break loop and error traceback"] ),
+      rec( long := "alwaystrace", default := false, help := ["always print error traceback (overrides behaviour of -T)"] ),
       rec( long := "quitonbreak", default := false, help := ["quit GAP with non-zero return value instead of entering break loop"]),
       ,
       rec( short:= "L", default := "", arg := "<file>", help := [ "restore a saved workspace"] ),
@@ -110,7 +111,12 @@ BIND_GLOBAL( "GAPInfo", rec(
            help := [ "Run ProfileLineByLine(<filename>) with recordMem := true on GAP start"] ),
       rec( long := "cover", default := "", arg := "<file>",
            help := [ "Run CoverageLineByLine(<filename>) on GAP start"] ),
-          ],
+      rec( long := "enableMemCheck", default := false),
+      rec( long := "norepl", default := false,
+           help := [ "Disable the GAP read-evaluate-print loop (REPL)" ] ),
+      rec( long := "nointeract", default := false,
+           help := [ "Start GAP in non-interactive mode (disable read-evaluate-print loop (REPL) and break loop)" ] )
+    ],
     ) );
 
 
@@ -135,6 +141,56 @@ while TNUM_OBJ( 2^((GAPInfo.BytesPerVariable-1)*8) )
     = TNUM_OBJ( 2^((GAPInfo.BytesPerVariable+1)*8) ) do
   GAPInfo.BytesPerVariable:= GAPInfo.BytesPerVariable + 4;
 od;
+
+
+#############################################################################
+##
+##  On 32-bit we have to adjust some command line default values
+##
+if GAPInfo.BytesPerVariable = 4 then
+    CALL_FUNC_LIST(function()
+    local i;
+    i := 1;
+    while not(IsBound(GAPInfo.CommandLineOptionData[i])) or
+          not(IsBound(GAPInfo.CommandLineOptionData[i].short)) or
+          GAPInfo.CommandLineOptionData[i].short <> "m" do i := i + 1; od;
+    GAPInfo.CommandLineOptionData[i].default := "64m";
+    i := 1;
+    while not(IsBound(GAPInfo.CommandLineOptionData[i])) or
+          not(IsBound(GAPInfo.CommandLineOptionData[i].short)) or
+          GAPInfo.CommandLineOptionData[i].short <> "o" do i := i + 1; od;
+    GAPInfo.CommandLineOptionData[i].default := "1g";
+    i := 1;
+    while not(IsBound(GAPInfo.CommandLineOptionData[i])) or
+          not(IsBound(GAPInfo.CommandLineOptionData[i].short)) or
+          GAPInfo.CommandLineOptionData[i].short <> "s" do i := i + 1; od;
+    GAPInfo.CommandLineOptionData[i].default := "1500m";
+    end, []);
+fi;
+
+
+#############################################################################
+##
+##  For HPC-GAP, we want GAPInfo and its members to be accessible from all
+##  threads, so make members atomic or immutable.
+##
+if IsHPCGAP then
+    MakeReadWriteGVar("GAPInfo");
+    GAPInfo := AtomicRecord(GAPInfo);
+    MakeReadOnlyGVar("GAPInfo");
+    GAPInfo.AtExitFuncs:= AtomicList([]);
+    GAPInfo.PostRestoreFuncs:= AtomicList([]);
+    GAPInfo.TestData:= ThreadLocalRecord( rec() );
+    APPEND_LIST_INTR(GAPInfo.CommandLineOptionData, [
+        ,
+        rec( short:= "S", default := false, help := ["disable/enable multi-threaded interface"] ),
+        rec( short:= "P", default := "0", arg := "<num>", help := ["set number of logical processors"] ),
+        rec( short:= "G", default := "0", arg := "<num>", help := ["set number of GC threads"] ),
+        rec( short:= "Z", default := false, help := ["enforce ordering of region locks"] ),
+      ]);
+
+    MakeImmutable(GAPInfo.CommandLineOptionData);
+fi;
 
 
 #############################################################################
@@ -219,24 +275,6 @@ CallAndInstallPostRestore( function()
     GAPInfo.BuildVersion:= GAPInfo.KernelInfo.BUILD_VERSION;
     GAPInfo.BuildDateTime:= GAPInfo.KernelInfo.BUILD_DATETIME;
     GAPInfo.Architecture:= GAPInfo.KernelInfo.GAP_ARCHITECTURE;
-    # On 32-bit we have to adjust some values:
-    if GAPInfo.BytesPerVariable = 4 then
-      i := 1;
-      while not(IsBound(GAPInfo.CommandLineOptionData[i])) or
-            not(IsBound(GAPInfo.CommandLineOptionData[i].short)) or
-            GAPInfo.CommandLineOptionData[i].short <> "m" do i := i + 1; od;
-      GAPInfo.CommandLineOptionData[i].default := "64m";
-      i := 1;
-      while not(IsBound(GAPInfo.CommandLineOptionData[i])) or
-            not(IsBound(GAPInfo.CommandLineOptionData[i].short)) or
-            GAPInfo.CommandLineOptionData[i].short <> "o" do i := i + 1; od;
-      GAPInfo.CommandLineOptionData[i].default := "1g";
-      i := 1;
-      while not(IsBound(GAPInfo.CommandLineOptionData[i])) or
-            not(IsBound(GAPInfo.CommandLineOptionData[i].short)) or
-            GAPInfo.CommandLineOptionData[i].short <> "s" do i := i + 1; od;
-      GAPInfo.CommandLineOptionData[i].default := "1500m";
-    fi;
 
     # The exact command line which called GAP as list of strings;
     # first entry is the executable followed by the options.
@@ -259,26 +297,32 @@ CallAndInstallPostRestore( function()
     fi;
 
     # directory caches
-    GAPInfo.DirectoriesLibrary:= rec();
     GAPInfo.DirectoriesPrograms:= false;
-    GAPInfo.DirectoriesTemporary:= [];
     GAPInfo.DirectoryCurrent:= false;
-    GAPInfo.DirectoriesSystemPrograms:= [];
+    if IsHPCGAP then
+        GAPInfo.DirectoriesLibrary:= AtomicRecord( rec() );
+        GAPInfo.DirectoriesTemporary:= AtomicList([]);
+        GAPInfo.DirectoriesSystemPrograms:= AtomicList([]);
+    else
+        GAPInfo.DirectoriesLibrary:= rec();
+        GAPInfo.DirectoriesTemporary:= [];
+        GAPInfo.DirectoriesSystemPrograms:= [];
+    fi;
     if IsBound(GAPInfo.SystemEnvironment.PATH) then
       j:= 1;
       for i in [1..LENGTH(GAPInfo.SystemEnvironment.PATH)] do
         if GAPInfo.SystemEnvironment.PATH[i] = ':' then
           if i > j then
             ADD_LIST_DEFAULT(GAPInfo.DirectoriesSystemPrograms,
-                  GAPInfo.SystemEnvironment.PATH{[j..i-1]});
+                  MakeImmutable(GAPInfo.SystemEnvironment.PATH{[j..i-1]}));
           fi;
           j := i+1;
         fi;
       od;
       if j <= LENGTH( GAPInfo.SystemEnvironment.PATH ) then
         ADD_LIST_DEFAULT( GAPInfo.DirectoriesSystemPrograms,
-            GAPInfo.SystemEnvironment.PATH{ [ j ..
-                LENGTH( GAPInfo.SystemEnvironment.PATH ) ] } );
+            MakeImmutable(GAPInfo.SystemEnvironment.PATH{ [ j ..
+                LENGTH( GAPInfo.SystemEnvironment.PATH ) ] } ));
       fi;
     fi;
 
@@ -299,7 +343,9 @@ CallAndInstallPostRestore( function()
     while i <= LENGTH( line ) do
       word:= line[i];
       i:= i+1;
-      if word[1] = '-' and (LENGTH( word ) = 2 or word[2] = '-') then
+      if word = "" then
+        PRINT_TO( "*errout*", "Ignoring empty command line argument\n");
+      elif word[1] = '-' and (LENGTH( word ) = 2 or word[2] = '-') then
         opt:= word{[2..LENGTH(word)]};
         if opt[1] = '-' then
           opt := opt{[2..LENGTH(opt)]};
@@ -335,6 +381,13 @@ CallAndInstallPostRestore( function()
     CommandLineOptions.g:= CommandLineOptions.g mod 3;
     # use the same as the kernel
     CommandLineOptions.E:= GAPInfo.KernelInfo.HAVE_LIBREADLINE;
+
+    # --nointeract implies no break loop and no repl
+    if CommandLineOptions.nointeract then
+      CommandLineOptions.T := true;
+      CommandLineOptions.norepl := true;
+    fi;
+
     MakeImmutable( CommandLineOptions );
     MakeImmutable( InitFiles );
 
@@ -423,6 +476,7 @@ CallAndInstallPostRestore( function()
       od;
 
       PRINT_TO("*errout*",
+       "\n",
        "  Boolean options (b,q,e,r,A,D,E,M,N,T,X,Y) toggle the current value\n",
        "  each time they are called. Default actions are indicated first.\n",
        "\n" );

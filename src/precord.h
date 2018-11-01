@@ -13,7 +13,7 @@
 #ifndef GAP_PRECORD_H
 #define GAP_PRECORD_H
 
-#include <src/objects.h>
+#include "objects.h"
 
 /****************************************************************************
 **
@@ -74,7 +74,7 @@ static inline Int IS_PREC_OR_COMOBJ(Obj rec)
 **  'CAPACITY_PREC' returns the maximum capacity of a PREC.
 **
 */
-static inline Int CAPACITY_PREC(Obj rec)
+static inline UInt CAPACITY_PREC(Obj rec)
 {
     return SIZE_OBJ(rec) / (2 * sizeof(Obj)) - 1;
 }
@@ -173,13 +173,14 @@ static inline Obj GET_ELM_PREC(Obj rec, UInt i)
 
 /****************************************************************************
 **
-*F FindPRec( <rec>, <rnam>, <pos>, <cleanup> )
-**   . . . . . . . . . . . . . . . . . find a component name by binary search
+*F  FindPRec( <rec>, <rnam>, <pos>, <cleanup> )
+*F   . . . . . . . . . . . . . . . . . find a component name by binary search
 **
-** Searches rnam in rec, sets pos to the position where it is found (return
-** value 1) or where it should be inserted if it is not found (return val 0).
-** If cleanup is nonzero, a dirty record is automatically cleaned up.
-** If cleanup is 0, this does not happen.
+**  Searches <rnam> in <rec>, sets <pos> to the position where it is found
+**  (return value 1) or where it should be inserted if it is not found
+**  (return value 0).
+**  If <cleanup> is nonzero, a dirty record is automatically cleaned up.
+**  If <cleanup> is 0, this does not happen.
 **/
 
 extern UInt FindPRec( Obj rec, UInt rnam, UInt *pos, int cleanup );
@@ -253,9 +254,19 @@ extern  void            SortPRecRNam (
             int                 inplace );
 
 
+#ifdef USE_THREADSAFE_COPYING
+extern void TraversePRecord(Obj obj);
+extern void CopyPRecord(Obj copy, Obj original);
+#endif
+
+
+
+extern void MarkPRecSubBags(Obj bag);
+
+
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************

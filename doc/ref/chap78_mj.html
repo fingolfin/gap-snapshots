@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (ref) - Chapter 78: Method Selection</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -212,7 +212,7 @@
 <h5>78.6-1 InstallImmediateMethod</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; InstallImmediateMethod</code>( <var class="Arg">opr</var>[, <var class="Arg">info</var>], <var class="Arg">filter</var>, <var class="Arg">rank</var>, <var class="Arg">method</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
-<p><code class="func">InstallImmediateMethod</code> installs <var class="Arg">method</var> as an immediate method for <var class="Arg">opr</var>, which must be an attribute or a property, with requirement <var class="Arg">filter</var> and rank <var class="Arg">rank</var>. The rank must be an integer value that measures the priority of <var class="Arg">method</var> among the immediate methods for <var class="Arg">opr</var>. If supplied, <var class="Arg">info</var> should be a short but informative string that describes the situation in which the method is called.</p>
+<p><code class="func">InstallImmediateMethod</code> installs <var class="Arg">method</var> as an immediate method for <var class="Arg">opr</var>, which must be an attribute or a property, with requirement <var class="Arg">filter</var> and rank <var class="Arg">rank</var> (the rank can be omitted, in which case 0 is used as rank). The rank must be an integer value that measures the priority of <var class="Arg">method</var> among the immediate methods for <var class="Arg">opr</var>. If supplied, <var class="Arg">info</var> should be a short but informative string that describes the situation in which the method is called.</p>
 
 <p>An immediate method is called automatically as soon as the object lies in <var class="Arg">filter</var>, provided that the value is not yet known. Afterwards the attribute setter is called in order to store the value, unless the method exits via <code class="func">TryNextMethod</code> (<a href="chap78_mj.html#X7EED949B83046A7F"><span class="RefLink">78.4-1</span></a>).</p>
 

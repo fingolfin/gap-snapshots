@@ -8,23 +8,26 @@
 *Y  Copyright (C) 2002 The GAP Group
 */
 
-#include <src/vecgf2.h>
+#include "vecgf2.h"
 
-#include <src/ariths.h>
-#include <src/blister.h>
-#include <src/bool.h>
-#include <src/finfield.h>
-#include <src/gap.h>
-#include <src/gvars.h>
-#include <src/integer.h>
-#include <src/lists.h>
-#include <src/opers.h>
-#include <src/plist.h>
-#include <src/precord.h>
-#include <src/range.h>
-#include <src/records.h>
-#include <src/stats.h>
-#include <src/vec8bit.h>
+#include "ariths.h"
+#include "blister.h"
+#include "bool.h"
+#include "error.h"
+#include "finfield.h"
+#include "gvars.h"
+#include "integer.h"
+#include "lists.h"
+#include "modules.h"
+#include "opers.h"
+#include "plist.h"
+#include "precord.h"
+#include "range.h"
+#include "records.h"
+#include "stats.h"
+#include "vec8bit.h"
+
+#include <gmp.h>
 
 
 /****************************************************************************
@@ -154,7 +157,7 @@ Obj AddCoeffsGF2VecGF2Vec (
     
     /* grow <sum> is necessary                                             */
     if ( LEN_GF2VEC(sum) < len ) {
-        ResizeBag( sum, SIZE_PLEN_GF2VEC(len) );
+        ResizeWordSizedBag( sum, SIZE_PLEN_GF2VEC(len) );
         SET_LEN_GF2VEC( sum, len );
     }
 
@@ -509,7 +512,7 @@ Obj ProdGF2MatGF2MatSimple( Obj ml, Obj mr )
   SET_LEN_GF2MAT(prod,len);
   if (IS_MUTABLE_OBJ(ml) || IS_MUTABLE_OBJ(mr))
     {
-      TYPE_POSOBJ(prod) = TYPE_LIST_GF2MAT;
+      SET_TYPE_POSOBJ(prod, TYPE_LIST_GF2MAT);
       if (IS_MUTABLE_OBJ(ELM_GF2MAT(ml,1)) || IS_MUTABLE_OBJ(ELM_GF2MAT(mr,1)))
 	rtype = TYPE_LIST_GF2VEC_LOCKED;
       else
@@ -517,7 +520,7 @@ Obj ProdGF2MatGF2MatSimple( Obj ml, Obj mr )
     }
   else
     {
-      TYPE_POSOBJ(prod) = TYPE_LIST_GF2MAT_IMM;
+      SET_TYPE_POSOBJ(prod, TYPE_LIST_GF2MAT_IMM);
       rtype = TYPE_LIST_GF2VEC_IMM_LOCKED;
     }
   for (i = 1; i <= len; i++)
@@ -661,7 +664,7 @@ Obj ProdGF2MatGF2MatAdvanced( Obj ml, Obj mr, UInt greasesize , UInt blocksize)
   SET_LEN_GF2MAT(prod,len);
   if (IS_MUTABLE_OBJ(ml) || IS_MUTABLE_OBJ(mr))
     {
-     TYPE_POSOBJ(prod) = TYPE_LIST_GF2MAT;
+      SET_TYPE_POSOBJ(prod, TYPE_LIST_GF2MAT);
       if (IS_MUTABLE_OBJ(ELM_GF2MAT(ml,1)) || IS_MUTABLE_OBJ(ELM_GF2MAT(mr,1)))
 	rtype = TYPE_LIST_GF2VEC_LOCKED;
       else
@@ -669,7 +672,7 @@ Obj ProdGF2MatGF2MatAdvanced( Obj ml, Obj mr, UInt greasesize , UInt blocksize)
     }
   else
     {
-      TYPE_POSOBJ(prod) = TYPE_LIST_GF2MAT_IMM;
+      SET_TYPE_POSOBJ(prod, TYPE_LIST_GF2MAT_IMM);
       rtype = TYPE_LIST_GF2VEC_IMM_LOCKED;
     }
 
@@ -1041,8 +1044,9 @@ Obj InverseGF2Mat (
     }
     SET_LEN_GF2MAT( inv, len );
     RetypeBag( inv, T_POSOBJ );
-    TYPE_POSOBJ( inv ) = (mut == 2 || (mut == 1 && IS_MUTABLE_OBJ(mat)))
-      ? TYPE_LIST_GF2MAT : TYPE_LIST_GF2MAT_IMM;
+    SET_TYPE_POSOBJ(inv, (mut == 2 || (mut == 1 && IS_MUTABLE_OBJ(mat)))
+                             ? TYPE_LIST_GF2MAT
+                             : TYPE_LIST_GF2MAT_IMM);
     return inv;
 }
 
@@ -1100,14 +1104,11 @@ Obj SemiEchelonListGF2Vecs( Obj mat, UInt TransformationsNeeded )
   heads = NEW_PLIST(T_PLIST_CYC, ncols);
   SET_LEN_PLIST(heads, ncols);
   vectors = NEW_PLIST(T_PLIST_TAB_RECT, nrows);
-  SET_LEN_PLIST(vectors, 0);
   nvecs = 0;
   if (TransformationsNeeded)
     {
       coeffs = NEW_PLIST(T_PLIST_TAB_RECT, nrows);
-      SET_LEN_PLIST(coeffs, 0);
       relns  = NEW_PLIST(T_PLIST_TAB_RECT, nrows);
-      SET_LEN_PLIST(relns, 0);
       nrels = 0;
     }
   for (i = 1; i <= ncols; i++)
@@ -1399,8 +1400,8 @@ void ConvGF2Vec (
 	  /* might be GF(2) elt written over bigger field */
 	  if (EQ(x, GF2One))
 	    block |= bit;
-	  else
-	    assert(EQ(x, GF2Zero));
+	  else if (!EQ(x, GF2Zero))
+	    ErrorMayQuit("COPY_GF2VEC: argument must be a list of GF2 elements", 0L, 0L);
 	}
       
       bit = bit << 1;
@@ -1412,9 +1413,9 @@ void ConvGF2Vec (
     }
 
     /* retype and resize bag                                               */
-    ResizeBag( list, SIZE_PLEN_GF2VEC(len) );
+    ResizeWordSizedBag( list, SIZE_PLEN_GF2VEC(len) );
     SET_LEN_GF2VEC( list, len );
-    if ( IS_MUTABLE_PLIST( list ) ) {
+    if ( IS_PLIST_MUTABLE( list ) ) {
         SetTypeDatObj( list, TYPE_LIST_GF2VEC);
     } else {
         SetTypeDatObj( list, TYPE_LIST_GF2VEC_IMM);
@@ -1462,20 +1463,21 @@ Obj NewGF2Vec (
           SetTypeDatObj(res, TYPE_LIST_GF2VEC_IMM);
         return res;
     }
+
+    if (!IS_LIST(list)) {
+        ErrorMayQuit("COPY_GF2VEC: argument must be a list of GF2 elements", 0L, 0L);
+    }
+    if (!IS_PLIST(list)) {
+        list = SHALLOW_COPY_OBJ(list);
+        // TODO: if list is in 8bit rep, we could do better
+        if (IS_VEC8BIT_REP(list))
+            PlainVec8Bit(list);
+        else
+            PLAIN_LIST( list );
+    }
     
     len = LEN_PLIST(list);
     NEW_GF2VEC( res, TYPE_LIST_GF2VEC, len );
-    
-    /* Otherwise make it a plain list so that we will know where it keeps
-       its data -- could do much better in the case of GF(2^n) vectors that actually
-       lie over GF(2)
-       AK: for now, comment this out - these will destroy the argument. 
-       We will just test it on plain lists first 
-    if (IS_VEC8BIT_REP(list))
-      PlainVec8Bit(list);
-    else
-      PLAIN_LIST( list );
-    */
     
     /* now do the work */
     block = 0;
@@ -1489,8 +1491,8 @@ Obj NewGF2Vec (
 	      /* might be GF(2) elt written over bigger field */
 	      if (EQ(x, GF2One))
 	        block |= bit;
-	      else
-	        assert(EQ(x, GF2Zero));
+	      else if (!EQ(x, GF2Zero))
+            ErrorMayQuit("COPY_GF2VEC: argument must be a list of GF2 elements", 0L, 0L);
 	    }
       
       bit = bit << 1;
@@ -1502,7 +1504,7 @@ Obj NewGF2Vec (
     }
 
     /* mutability should be inherited from the argument */
-    if ( IS_MUTABLE_PLIST( list ) )
+    if ( IS_PLIST_MUTABLE( list ) )
         SetTypeDatObj( res , TYPE_LIST_GF2VEC);
     else
         SetTypeDatObj( res , TYPE_LIST_GF2VEC_IMM);
@@ -1562,7 +1564,7 @@ Obj FuncCONV_GF2MAT( Obj self, Obj list)
       SET_ELM_PLIST(list, i+1, tmp);
     }
   SET_ELM_PLIST(list,1,INTOBJ_INT(len));
-  mut = IS_MUTABLE_PLIST(list);
+  mut = IS_PLIST_MUTABLE(list);
   RetypeBag(list, T_POSOBJ);
   SET_TYPE_POSOBJ(list, mut ? TYPE_LIST_GF2MAT : TYPE_LIST_GF2MAT_IMM);
   return (Obj) 0;
@@ -1930,7 +1932,7 @@ Obj FuncASS_GF2VEC (
     /* check that <list> is mutable                                        */
     if ( ! IS_MUTABLE_OBJ(list) ) {
         ErrorReturnVoid(
-            "Lists Assignment: <list> must be a mutable list",
+            "List Assignment: <list> must be a mutable list",
             0L, 0L,
             "you can 'return;' and ignore the assignment" );
         return 0;
@@ -1947,7 +1949,7 @@ Obj FuncASS_GF2VEC (
         if ( LEN_GF2VEC(list)+1 == p ) {
 	  if (DoFilter(IsLockedRepresentationVector, list) == True)
 	    ErrorMayQuit("Assignment forbidden beyond the end of locked GF2 vector", 0, 0);
-	  ResizeBag( list, SIZE_PLEN_GF2VEC(p) );
+	  ResizeWordSizedBag( list, SIZE_PLEN_GF2VEC(p) );
 	  SET_LEN_GF2VEC( list, p );
         }
         if ( EQ(GF2One,elm) ) {
@@ -2013,7 +2015,7 @@ Obj FuncASS_GF2MAT (
     /* check that <list> is mutable                                        */
     if ( ! IS_MUTABLE_OBJ(list) ) {
         ErrorReturnVoid(
-            "Lists Assignment: <list> must be a mutable list",
+            "List Assignment: <list> must be a mutable list",
             0L, 0L,
             "you can 'return;' and ignore the assignment" );
         return 0;
@@ -2095,9 +2097,9 @@ Obj FuncUNB_GF2VEC (
     /* check that <list> is mutable                                        */
     if ( ! IS_MUTABLE_OBJ(list) ) {
         ErrorReturnVoid(
-            "Unbind: <list> must be a mutable list",
+            "List Unbind: <list> must be a mutable list",
             0L, 0L,
-            "you can 'return;' and ignore the operation" );
+            "you can 'return;' and ignore the unbind" );
         return 0;
     }
 
@@ -2120,7 +2122,7 @@ Obj FuncUNB_GF2VEC (
         ;
     }
     else if ( LEN_GF2VEC(list) == p ) {
-        ResizeBag( list, SIZE_PLEN_GF2VEC(p-1) );
+        ResizeWordSizedBag( list, SIZE_PLEN_GF2VEC(p-1) );
         SET_LEN_GF2VEC( list, p-1 );
     }
     else {
@@ -2150,9 +2152,9 @@ Obj FuncUNB_GF2MAT (
     /* check that <list> is mutable                                        */
     if ( ! IS_MUTABLE_OBJ(list) ) {
         ErrorReturnVoid(
-            "Lists Assignment: <list> must be a mutable list",
+            "List Unbind: <list> must be a mutable list",
             0L, 0L,
-            "you can 'return;' and ignore the assignment" );
+            "you can 'return;' and ignore the unbind" );
         return 0;
     }
 
@@ -2373,8 +2375,8 @@ Obj FuncSUM_GF2VEC_GF2VEC (
       }
 
     if (!IS_MUTABLE_OBJ(vl) && !IS_MUTABLE_OBJ(vr))
-      TYPE_POSOBJ(sum) = TYPE_LIST_GF2VEC_IMM;
-    
+        SET_TYPE_POSOBJ(sum, TYPE_LIST_GF2VEC_IMM);
+
     return sum;
 }
 
@@ -2634,7 +2636,7 @@ Obj FuncSHRINKCOEFFS_GF2VEC (
     while ( 0 < len && ! ( *ptr & MASK_POS_GF2VEC(len) ) ) {
         len--;
     }
-    ResizeBag( vec, SIZE_PLEN_GF2VEC(len) );
+    ResizeWordSizedBag( vec, SIZE_PLEN_GF2VEC(len) );
     SET_LEN_GF2VEC( vec, len );
     return INTOBJ_INT(len);
 }
@@ -2762,7 +2764,7 @@ Obj FuncAPPEND_GF2VEC( Obj self, Obj vecl, Obj vecr )
       ErrorMayQuit("Append to locked compressed vector is forbidden", 0, 0);
       return 0;
     }
-  ResizeBag(vecl, SIZE_PLEN_GF2VEC(lenl+lenr));
+  ResizeWordSizedBag(vecl, SIZE_PLEN_GF2VEC(lenl+lenr));
   CopySection_GF2Vecs(vecr, vecl, 1, lenl+1, lenr);
   SET_LEN_GF2VEC(vecl,lenl+lenr);
   return (Obj) 0;
@@ -2828,7 +2830,7 @@ Obj FuncSUM_GF2MAT_GF2MAT( Obj self, Obj matl, Obj matr)
   sum = NewBag(T_POSOBJ, SIZE_PLEN_GF2MAT( ls ));
   if (IS_MUTABLE_OBJ(matl) || IS_MUTABLE_OBJ(matr))
     {
-      TYPE_POSOBJ(sum) = TYPE_LIST_GF2MAT;
+      SET_TYPE_POSOBJ(sum, TYPE_LIST_GF2MAT);
       if (IS_MUTABLE_OBJ(ELM_GF2MAT(matl,1)) || IS_MUTABLE_OBJ(ELM_GF2MAT(matr,1)))
 	rtype = TYPE_LIST_GF2VEC_LOCKED;
       else
@@ -2836,7 +2838,7 @@ Obj FuncSUM_GF2MAT_GF2MAT( Obj self, Obj matl, Obj matr)
     }
   else
     {
-      TYPE_POSOBJ(sum) = TYPE_LIST_GF2MAT_IMM;
+      SET_TYPE_POSOBJ(sum, TYPE_LIST_GF2MAT_IMM);
       rtype = TYPE_LIST_GF2VEC_IMM_LOCKED;
     }
   
@@ -2915,8 +2917,8 @@ Obj FuncTRANSPOSED_GF2MAT( Obj self, Obj mat)
   nrb=NUMBER_BLOCKS_GF2VEC(r1);
 
   tra = NewBag(T_POSOBJ, SIZE_PLEN_GF2MAT( w ));
-  TYPE_POSOBJ(tra) = typ;
-  
+  SET_TYPE_POSOBJ(tra, typ);
+
   /* type for rows */
   typ = TYPE_LIST_GF2VEC_LOCKED;
   
@@ -2987,6 +2989,8 @@ Obj FuncNUMBER_GF2VEC( Obj self, Obj vec )
   UInt *num;
   mp_limb_t *vp;
   len = LEN_GF2VEC(vec);
+  if (len == 0)
+    return INTOBJ_INT(1);
   num = BLOCKS_GF2VEC(vec) + (len-1)/BIPEB;
   off = (len -1) % BIPEB + 1; /* number of significant bits in last word */
   off2 = BIPEB - off;         /* number of insignificant bits in last word */
@@ -3581,7 +3585,7 @@ void ResizeGF2Vec( Obj vec, UInt newlen )
   
   if (newlen > len)
     {
-      ResizeBag(vec,SIZE_PLEN_GF2VEC(newlen));
+      ResizeWordSizedBag(vec,SIZE_PLEN_GF2VEC(newlen));
 
       /* now clean remainder of last block */
       if (len == 0)
@@ -3622,7 +3626,7 @@ void ResizeGF2Vec( Obj vec, UInt newlen )
 #endif
 	}
       SET_LEN_GF2VEC(vec, newlen);
-      ResizeBag(vec, SIZE_PLEN_GF2VEC(newlen));
+      ResizeWordSizedBag(vec, SIZE_PLEN_GF2VEC(newlen));
       return;
     }
 }
@@ -3686,12 +3690,17 @@ void ShiftLeftGF2Vec( Obj vec, UInt amount )
       ptr1 = BLOCKS_GF2VEC(vec);
       ptr2 = ptr1 + amount/BIPEB;
       off = amount % BIPEB;
-      for (i = 0; i < (len - amount + BIPEB - 1)/BIPEB; i++)
-	{
-	  block = (*ptr2++) >> off;
-	  block |= (*ptr2) << (BIPEB - off);
-	  *ptr1++ = block;
-	}
+      for (i = 0; i < (len - amount + BIPEB - 1)/BIPEB - 1; i++)
+      {
+        block = (*ptr2++) >> off;
+        block |= (*ptr2) << (BIPEB - off);
+        *ptr1++ = block;
+      }
+      // Handle last block seperately to avoid reading off end of Bag
+      block = (*ptr2++) >> off;
+      if(ptr2 < BLOCKS_GF2VEC(vec) + NUMBER_BLOCKS_GF2VEC(vec))
+        block |= (*ptr2) << (BIPEB - off);
+      *ptr1 = block;
     }
   ResizeGF2Vec(vec, len-amount);
 }
@@ -4304,11 +4313,11 @@ Obj FuncKRONECKERPRODUCT_GF2MAT_GF2MAT( Obj self, Obj matl, Obj matr)
   mat = NewBag(T_POSOBJ, SIZE_PLEN_GF2MAT(nrowp));
   SET_LEN_GF2MAT(mat,nrowp);
   if (mutable) {
-    TYPE_POSOBJ(mat) = TYPE_LIST_GF2MAT;
-    type = TYPE_LIST_GF2VEC_LOCKED;
+      SET_TYPE_POSOBJ(mat, TYPE_LIST_GF2MAT);
+      type = TYPE_LIST_GF2VEC_LOCKED;
   } else {
-    TYPE_POSOBJ(mat) = TYPE_LIST_GF2MAT_IMM;
-    type = TYPE_LIST_GF2VEC_IMM_LOCKED;
+      SET_TYPE_POSOBJ(mat, TYPE_LIST_GF2MAT_IMM);
+      type = TYPE_LIST_GF2VEC_IMM_LOCKED;
   }
 
   /* allocate 0 matrix */
@@ -4449,7 +4458,7 @@ Obj FuncSET_MAT_ELM_GF2MAT( Obj self, Obj mat, Obj row, Obj col, Obj elm )
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

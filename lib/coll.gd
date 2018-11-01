@@ -193,6 +193,9 @@ DeclareAttribute( "ElementsFamily", IsFamily );
 ##  </ManSection>
 ##
 BIND_GLOBAL( "CATEGORIES_COLLECTIONS", [] );
+if IsHPCGAP then
+  ShareSpecialObj(CATEGORIES_COLLECTIONS, "CATEGORIES_COLLECTIONS");
+fi;
 
 
 #############################################################################
@@ -227,15 +230,34 @@ BIND_GLOBAL( "CATEGORIES_COLLECTIONS", [] );
 ##  <#/GAPDoc>
 ##
 BIND_GLOBAL( "CategoryCollections", function ( elms_filter )
-    local    pair, super, flags, name, coll_filter;
-
+    local    pair, super, flags, name, coll_filter, len;
+    
+    # check once with read lock -- common case 
+    atomic readonly CATEGORIES_COLLECTIONS do
     # Check whether the collections category is already defined.
     for pair in CATEGORIES_COLLECTIONS do
       if IsIdenticalObj( pair[1], elms_filter ) then
         return pair[2];
       fi;
     od;
-
+    if IsHPCGAP then
+      len := LENGTH(CATEGORIES_COLLECTIONS);
+    fi;
+    od; # end atomic
+    
+    # that failed, so get exclusive lock as we may need to modify
+    atomic readwrite CATEGORIES_COLLECTIONS do
+    if IsHPCGAP then
+      # Check whether in the meantime another thread defined the collections category
+      if LENGTH(CATEGORIES_COLLECTIONS) > len then
+        for pair in CATEGORIES_COLLECTIONS do
+          if IsIdenticalObj( pair[1], elms_filter ) then
+            return pair[2];
+          fi;
+        od;
+      fi;
+    fi;
+    
     # Find the super category among the known collections categories.
     super := IsCollection;
     flags := WITH_IMPS_FLAGS( FLAGS_FILTER( elms_filter ) );
@@ -253,8 +275,9 @@ BIND_GLOBAL( "CategoryCollections", function ( elms_filter )
 
     # Construct the collections category.
     coll_filter:= NewCategory( name, super );
-    ADD_LIST( CATEGORIES_COLLECTIONS, [ elms_filter, coll_filter ] );
+    ADD_LIST( CATEGORIES_COLLECTIONS, MakeImmutable([ elms_filter, coll_filter ]) );
     return coll_filter;
+    od; # end atomic
 end );
 
 
@@ -431,6 +454,9 @@ end );
 ##  </ManSection>
 ##
 BIND_GLOBAL( "SUBSET_MAINTAINED_INFO", [ [], [] ] );
+if IsHPCGAP then
+  ShareSpecialObj(SUBSET_MAINTAINED_INFO, "SUBSET_MAINTAINED_INFO");
+fi;
 
 
 #############################################################################
@@ -480,11 +506,13 @@ InstallMethod( UseSubsetRelation,
 
     local entry;
 
+    atomic readonly SUBSET_MAINTAINED_INFO do
     for entry in SUBSET_MAINTAINED_INFO[1] do
       if entry[1]( super ) and entry[2]( sub ) and not entry[4]( sub ) then
         entry[5]( sub, entry[3]( super ) );
       fi;
     od;
+    od; # end atomic
 
     return true;
     end );
@@ -552,8 +580,9 @@ BIND_GLOBAL( "InstallSubsetMaintenance",
     # (We must not call `SUBTR_SET' here because the lists types may be
     # not yet defined.)
     filtssub:= [];
+    atomic readwrite SUBSET_MAINTAINED_INFO do
     for flag in TRUES_FLAGS( FLAGS_FILTER( sub_req ) ) do
-      if not flag in CATS_AND_REPS then
+      if not INFO_FILTERS[flag] in FNUM_CATS_AND_REPS then
         ADD_LIST_DEFAULT( filtssub, flag );
       fi;
     od;
@@ -589,7 +618,7 @@ BIND_GLOBAL( "InstallSubsetMaintenance",
     # not yet defined.)
     filtsopr:= [];
     for flag in TRUES_FLAGS( filt1 ) do
-      if not flag in CATS_AND_REPS then
+      if not INFO_FILTERS[flag] in FNUM_CATS_AND_REPS then
         ADD_LIST_DEFAULT( filtsopr, flag );
       fi;
     od;
@@ -620,17 +649,19 @@ BIND_GLOBAL( "InstallSubsetMaintenance",
       SUBSET_MAINTAINED_INFO[2][ i+1 ]:= SUBSET_MAINTAINED_INFO[2][ i ];
       i:= i-1;
     od;
-    SUBSET_MAINTAINED_INFO[2][ i+1 ]:= [ filtsopr, filtssub, rank ];
+    SUBSET_MAINTAINED_INFO[2][ i+1 ]:=
+                MakeImmutable([ filtsopr, filtssub, rank ]);
     if attrprop then
       SUBSET_MAINTAINED_INFO[1][ i+1 ]:=
-                [ filt1, filt2, operation, tester, setter ];
+                MakeImmutable([ filt1, filt2, operation, tester, setter ]);
     else
-      SUBSET_MAINTAINED_INFO[1][ i+1 ]:=
+      SUBSET_MAINTAINED_INFO[1][ i+1 ]:= MakeImmutable(
                 [ filt1, filt2, operation, operation,
                   function( sub, val )
                       SetFeatureObj( sub, operation, val );
-                  end ];
+                  end ]);
     fi;
+    od; # end atomic
 
 #T missing in new implementation!
 #     # Install the method.
@@ -698,6 +729,9 @@ end );
 ##  </ManSection>
 ##
 BIND_GLOBAL( "ISOMORPHISM_MAINTAINED_INFO", [] );
+if IsHPCGAP then
+  ShareSpecialObj(ISOMORPHISM_MAINTAINED_INFO, "ISOMORPHISM_MAINTAINED_INFO");
+fi;
 
 
 #############################################################################
@@ -747,53 +781,16 @@ InstallMethod( UseIsomorphismRelation,
     function( old, new )
     local entry;
 
+    atomic readonly ISOMORPHISM_MAINTAINED_INFO do
     for entry in ISOMORPHISM_MAINTAINED_INFO do
       if entry[1]( old ) and entry[2]( new ) and not entry[4]( new ) then
         entry[5]( new, entry[3]( old ) );
       fi;
     od;
+    od; # end atomic
 
     return true;
     end );
-
-
-#############################################################################
-##
-#F  InstallIsomorphismMaintenanceFunction( <func> )
-##
-##  <ManSection>
-##  <Func Name="InstallIsomorphismMaintenanceFunction" Arg='func'/>
-##
-##  <Description>
-##  <C>InstallIsomorphismMaintenanceFunction</C> installs <A>func</A>, so that
-##  <C><A>func</A>( <A>filtsold</A>, <A>filtsnew</A>, <A>opr</A>, <A>testopr</A>, <A>settopr</A>, <A>old_req</A>,
-##  <A>new-req</A> )</C> is called for each isomorphism maintenance.
-##  More precisely, <A>func</A> is called for each entry in the global list
-##  <C>ISOMORPHISM_MAINTAINED_INFO</C>, also to those that are entered into this
-##  list after the installation of <A>func</A>.
-##  (The mechanism is the same as for attributes, which is installed in the
-##  file <C>lib/oper.g</C>.)
-##  </Description>
-##  </ManSection>
-##
-BIND_GLOBAL( "ISOM_MAINT_FUNCS", [] );
-
-BIND_GLOBAL( "InstallIsomorphismMaintenanceFunction", function( func )
-    local entry;
-    for entry in ISOMORPHISM_MAINTAINED_INFO do
-      CallFuncList( func, entry );
-    od;
-    ADD_LIST( ISOM_MAINT_FUNCS, func );
-end );
-
-BIND_GLOBAL( "RUN_ISOM_MAINT_FUNCS",
-    function( arglist )
-    local func;
-    for func in ISOM_MAINT_FUNCS do
-      CallFuncList( func, arglist );
-    od;
-    ADD_LIST( ISOMORPHISM_MAINTAINED_INFO, arglist );
-end );
 
 
 #############################################################################
@@ -830,14 +827,16 @@ BIND_GLOBAL( "InstallIsomorphismMaintenance",
 
     tester:= Tester( opr );
 
-    RUN_ISOM_MAINT_FUNCS(
+    atomic ISOMORPHISM_MAINTAINED_INFO do
+    ADD_LIST( ISOMORPHISM_MAINTAINED_INFO, MakeImmutable(
         [ IsCollection and Tester( old_req ) and old_req and tester,
           IsCollection and Tester( new_req ) and new_req,
           opr,
           tester,
           Setter( opr ),
           old_req,
-          new_req ] );
+          new_req ] ) );
+    od; # end atomic
 end );
 
 
@@ -885,6 +884,9 @@ end );
 ##  </ManSection>
 ##
 BIND_GLOBAL( "FACTOR_MAINTAINED_INFO", [] );
+if IsHPCGAP then
+  ShareSpecialObj(FACTOR_MAINTAINED_INFO, "FACTOR_MAINTAINED_INFO");
+fi;
 
 
 #############################################################################
@@ -944,12 +946,14 @@ InstallMethod( UseFactorRelation,
 
     local entry;
 
+    atomic readonly FACTOR_MAINTAINED_INFO do
     for entry in FACTOR_MAINTAINED_INFO do
       if entry[1]( num ) and entry[2]( den ) and entry[3]( fac )
                          and not entry[5]( fac ) then
         entry[6]( fac, entry[4]( num ) );
       fi;
     od;
+    od; # end atomic
 
     return true;
     end );
@@ -1006,13 +1010,15 @@ BIND_GLOBAL( "InstallFactorMaintenance",
 
     tester:= Tester( opr );
 
-    ADD_LIST( FACTOR_MAINTAINED_INFO,
+    atomic FACTOR_MAINTAINED_INFO do
+    ADD_LIST( FACTOR_MAINTAINED_INFO, MakeImmutable(
         [ IsCollection and Tester( numer_req ) and numer_req and tester,
           Tester( denom_req ) and denom_req,
           IsCollection and Tester( factor_req ) and factor_req,
           opr,
           tester,
-          Setter( opr ) ] );
+          Setter( opr ) ] ) );
+    od; # end atomic
 
 #T not yet available in the new implementation
 #     if     FLAGS_FILTER( opr ) <> false
@@ -1409,6 +1415,11 @@ InstallFactorMaintenance( IsTrivial,
 ##
 DeclareProperty( "IsNonTrivial", IsCollection );
 
+InstallTrueMethod( IsNonTrivial, IsEmpty );
+InstallTrueMethod( HasIsTrivial, IsNonTrivial );
+InstallTrueMethod( HasIsEmpty, IsTrivial );
+InstallTrueMethod( HasIsNonTrivial, IsTrivial );
+
 
 #############################################################################
 ##
@@ -1433,7 +1444,7 @@ DeclareProperty( "IsNonTrivial", IsCollection );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareProperty( "IsFinite", IsCollection );
+DeclareProperty( "IsFinite", IsListOrCollection );
 
 InstallSubsetMaintenance( IsFinite,
     IsCollection and IsFinite, IsCollection );
@@ -1441,6 +1452,7 @@ InstallFactorMaintenance( IsFinite,
     IsCollection and IsFinite, IsObject, IsCollection );
 
 InstallTrueMethod( IsFinite, IsTrivial );
+InstallTrueMethod( IsFinite, IsEmpty );
 
 
 #############################################################################
@@ -1659,22 +1671,6 @@ DeclareOperation( "Random", [ IS_INT, IS_INT ] );
 ##  See <Ref Oper="Reset"/> for a description of how to reset the
 ##  random number generator to a previous state.
 ##  <P/>
-##  
-##  <!-- all outdated? (FL)
-##  Many random methods in the library are eventually based on the function
-##  <Ref Func="RandomList"/>.
-##  As <Ref Func="RandomList"/> is restricted to lists of  <M>2^{28}</M>
-##  elements, this may create problems for very large collections. Also note
-##  that the method used by <Ref Func="RandomList"/> is intended to provide
-##  a fast algorithm rather than to produce high quality randomness for
-##  statistical purposes.
-##  <P/>
-##  If you implement your own
-##  <Ref Func="Random" Label="for a list or collection"/> methods we recommend
-##  that they initialize their seed to a defined value when they are loaded
-##  to permit to reproduce calculations even if they involved random
-##  elements.
-##  -->
 ##  <#/GAPDoc>
 ##
 
@@ -1685,7 +1681,7 @@ DeclareOperation( "Random", [ IS_INT, IS_INT ] );
 ##
 ##  <#GAPDoc Label="RandomList">
 ##  <ManSection>
-##  <Func Name="RandomList" Arg='list'/>
+##  <Func Name="RandomList" Arg='[rs,] list'/>
 ##
 ##  <Description>
 ##  <Index>random seed</Index>
@@ -1693,7 +1689,9 @@ DeclareOperation( "Random", [ IS_INT, IS_INT ] );
 ##  <Ref Func="RandomList"/> returns a (pseudo-)random element with equal
 ##  distribution.
 ##  <P/>
-##  This function uses the <Ref Var="GlobalMersenneTwister"/> to produce the
+##  The random source <A>rs</A> is used to choose a random number.
+##  If <A>rs</A> is absent,
+##  this function uses the <Ref Var="GlobalMersenneTwister"/> to produce the
 ##  random elements (a source of high quality random numbers).
 ##  <P/>
 ##  </Description>
@@ -3248,9 +3246,6 @@ DeclareOperation( "CanComputeIsSubset", [IsObject,IsObject] );
 DeclareFilter( "CanComputeSize" );
 
 InstallTrueMethod( CanComputeSize, HasSize );
-
-# to allow for recusive calls
-DeclareGlobalFunction("JoinRanges");
 
 #############################################################################
 ##

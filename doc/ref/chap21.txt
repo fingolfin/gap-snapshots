@@ -1639,8 +1639,8 @@
   
   [33X[1;0Y[29X[2XPositionBound[102X( [3Xlist[103X ) [32X operation[133X
   
-  [33X[0;0Yreturns  the first index for which an element is bound in the list [3Xlist[103X. For
-  the empty list it returns [9Xfail[109X.[133X
+  [33X[0;0Yreturns  the  first  bound  position of the list [3Xlist[103X. For the empty list it
+  returns [9Xfail[109X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27XPositionBound([1,2,3]);[127X[104X
@@ -1649,7 +1649,22 @@
     [4X[28X2[128X[104X
   [4X[32X[104X
   
-  [1X21.16-11 PositionNot[101X
+  [1X21.16-11 PositionsBound[101X
+  
+  [33X[1;0Y[29X[2XPositionsBound[102X( [3Xlist[103X ) [32X operation[133X
+  
+  [33X[0;0Yreturns the set of all bound positions in the list [3Xlist[103X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XPositionsBound([1,2,3]);[127X[104X
+    [4X[28X[ 1 .. 3 ][128X[104X
+    [4X[25Xgap>[125X [27XPositionsBound([,1,,3]);[127X[104X
+    [4X[28X[ 2, 4 ][128X[104X
+    [4X[25Xgap>[125X [27XPositionsBound([]);[127X[104X
+    [4X[28X[][128X[104X
+  [4X[32X[104X
+  
+  [1X21.16-12 PositionNot[101X
   
   [33X[1;0Y[29X[2XPositionNot[102X( [3Xlist[103X, [3Xval[103X[, [3Xfrom[103X] ) [32X operation[133X
   
@@ -1666,7 +1681,7 @@
     [4X[28X6[128X[104X
   [4X[32X[104X
   
-  [1X21.16-12 PositionNonZero[101X
+  [1X21.16-13 PositionNonZero[101X
   
   [33X[1;0Y[29X[2XPositionNonZero[102X( [3Xvec[103X[, [3Xfrom[103X] ) [32X operation[133X
   
@@ -1676,7 +1691,7 @@
   [33X[0;0YIf  a  starting  index  [3Xfrom[103X  is given, it returns the position of the first
   occurrence starting the search [13Xafter[113X position [3Xfrom[103X.[133X
   
-  [33X[0;0Y[2XPositionNonZero[102X implements a special case of [2XPositionNot[102X ([14X21.16-11[114X). Namely,
+  [33X[0;0Y[2XPositionNonZero[102X implements a special case of [2XPositionNot[102X ([14X21.16-12[114X). Namely,
   the  element  to  be  avoided  is the zero element, and the list must be (at
   least)  homogeneous  because  otherwise the zero element cannot be specified
   implicitly.[133X
@@ -1688,7 +1703,7 @@
     [4X[28X2[128X[104X
   [4X[32X[104X
   
-  [1X21.16-13 PositionSublist[101X
+  [1X21.16-14 PositionSublist[101X
   
   [33X[1;0Y[29X[2XPositionSublist[102X( [3Xlist[103X, [3Xsub[103X[, [3Xfrom[103X] ) [32X operation[133X
   
@@ -1736,7 +1751,7 @@
   [33X[0;0YIf   you   actually   want  to  know  whether  there  is  an  [3Xat[103X  for  which
   [10XIsMatchingSublist(  [3Xlist[103X[10X,  [3Xsub[103X[10X,  [3Xat[103X[10X  )[110X  is  true,  use  a  construction like
   [10XPositionSublist(   [3Xlist[103X[10X,   [3Xsub[103X[10X   )  <>  fail[110X  instead  (see  [2XPositionSublist[102X
-  ([14X21.16-13[114X)); it's more efficient.[133X
+  ([14X21.16-14[114X)); it's more efficient.[133X
   
   [1X21.17-2 IsDuplicateFree[101X
   
@@ -1815,6 +1830,15 @@
   
   
   [1X21.18 [33X[0;0YSorting Lists[133X[101X
+  
+  [33X[0;0YGAP  implements  three different families of sorting algorithms. The default
+  algorithm  is  pattern-defeating  quicksort,  a  variant  of quicksort which
+  performs better on partially sorted lists and has good worst-case behaviour.
+  The  functions  which  begin [10XStable[110X are stable (equal elements keep the same
+  relative  order  in  the  sorted  list)  and  use  merge  sort. Finally, the
+  functions  which  begin  [10XShell[110X  use  the  shell sort which was GAP's default
+  search  algorithm before 4.9. [2XSortex[102X ([14X21.18-3[114X) and [2XSortingPerm[102X ([14X21.18-4[114X) are
+  also stable.[133X
   
   [1X21.18-1 Sort[101X
   
@@ -1901,9 +1925,10 @@
   
   [33X[0;0Ysorts the list [3Xlist[103X and returns a permutation that can be applied to [3Xlist[103X to
   obtain  the sorted list. The one argument form sorts via the operator [10X<[110X, the
-  two  argument  form  sorts  w.r.t.  the  function  [3Xfunc[103X. (If the list is not
-  homogeneous  it is the user's responsibility to ensure that [10X<[110X is defined for
-  all element pairs, see [14X31.11[114X)[133X
+  two  argument  form sorts w.r.t. the function [3Xfunc[103X. The permutation returned
+  by [2XSortex[102X will keep elements which compare equal in the same relative order.
+  (If  the  list  is not homogeneous it is the user's responsibility to ensure
+  that [10X<[110X is defined for all element pairs, see [14X31.11[114X)[133X
   
   [33X[0;0Y[2XPermuted[102X  ([14X21.20-18[114X)  allows  you  to  rearrange a list according to a given
   permutation.[133X
@@ -1936,10 +1961,6 @@
     [4X[25Xgap>[125X [27XPermuted( list2, perm );[127X[104X
     [4X[28X[ 1, 4, 5, 5, 6, 7 ][128X[104X
   [4X[32X[104X
-  
-  [33X[0;0YThe  default methods for all of these sorting operations currently use Shell
-  sort  as it has a comparable performance to Quicksort for lists of length at
-  most a few thousands, and has better worst-case behaviour.[133X
   
   
   [1X21.19 [33X[0;0YSorted Lists and Sets[133X[101X

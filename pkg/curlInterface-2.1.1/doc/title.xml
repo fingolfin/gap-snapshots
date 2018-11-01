@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    curlInterface
+  </Title>
+  <Subtitle>
+    Simple Web Access
+  </Subtitle>
+  <Version>
+    2.1.1
+  </Version>
+  <Author>
+    Christopher Jefferson<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+School of Computer Science<Br/>
+University of St Andrews<Br/>
+Jack Cole Building, North Haugh<Br/>
+St Andrews, Fife, KY16 9SX<Br/>
+United Kingdom<Br/>
+</Address>
+<Email>caj21@st-andrews.ac.uk</Email>
+<Homepage>http://caj.host.cs.st-andrews.ac.uk/</Homepage>
+
+  </Author>
+  <Author>
+    Michael Torpey<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+School of Computer Science<Br/>
+University of St Andrews<Br/>
+Jack Cole Building, North Haugh<Br/>
+St Andrews, Fife, KY16 9SX<Br/>
+United Kingdom<Br/>
+</Address>
+<Email>mct25@st-andrews.ac.uk</Email>
+<Homepage>http://www-groups.mcs.st-andrews.ac.uk/~mct25/</Homepage>
+
+  </Author>
+  <Date>
+    26 October 2018
+  </Date>
+  </TitlePage>

@@ -111,8 +111,7 @@
   usage returns an indeterminate called [3Xname[103X (also avoiding the indeterminates
   in [3Xavoid[103X if given).[133X
   
-  [33X[0;0Y[2XX[102X is simply a synonym for [2XIndeterminate[102X. However, we do not recommend to use
-  this synonym which is supported only for the backwards compatibility.[133X
+  [33X[0;0Y[2XX[102X is simply a synonym for [2XIndeterminate[102X.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xx:=Indeterminate(GF(3),"x");[127X[104X
@@ -594,7 +593,7 @@
     [4X[25Xgap>[125X [27XUnivariatenessTestRationalFunction( (-6*y^2+y^3) / (y+1) );[127X[104X
     [4X[28X[ true, 2, false, [ [ -6, 1 ], [ 1, 1 ], 2 ] ][128X[104X
     [4X[25Xgap>[125X [27XUnivariatenessTestRationalFunction( (-6*y^2+y^3) / (x+1));[127X[104X
-    [4X[28X[ fail, fail, fail, fail ][128X[104X
+    [4X[28X[ false, fail, false, fail ][128X[104X
     [4X[25Xgap>[125X [27XUnivariatenessTestRationalFunction( ((y+2)*(x+1)) / ((y-1)*(x+1)) );[127X[104X
     [4X[28X[ fail, fail, fail, fail ][128X[104X
   [4X[32X[104X

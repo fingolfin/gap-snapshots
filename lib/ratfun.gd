@@ -252,6 +252,7 @@ DeclareAttribute( "DenominatorOfRationalFunction", IsRationalFunction );
 ##  <#/GAPDoc>
 ##
 DeclareProperty( "IsPolynomial", IsPolynomialFunction );
+InstallTrueMethod( IsPolynomialFunction, IsPolynomial );
 
 
 #############################################################################
@@ -295,6 +296,7 @@ DeclareAttribute( "AsPolynomial",
 ##  <#/GAPDoc>
 ##
 DeclareProperty( "IsUnivariateRationalFunction", IsRationalFunction );
+InstallTrueMethod( IsRationalFunction, IsUnivariateRationalFunction );
 
 #############################################################################
 ##
@@ -334,7 +336,7 @@ DeclareSynonymAttr("IsUnivariatePolynomial",
 ##
 DeclareProperty( "IsLaurentPolynomial", IsPolynomialFunction );
 
-InstallTrueMethod( IsUnivariateRationalFunction,IsLaurentPolynomial );
+InstallTrueMethod( IsUnivariateRationalFunction, IsLaurentPolynomial );
 InstallTrueMethod( IsLaurentPolynomial, IsUnivariatePolynomial );
 
 #############################################################################
@@ -1576,7 +1578,7 @@ DeclareGlobalFunction("GcdCoeffs");
 ##  gap> UnivariatenessTestRationalFunction( (-6*y^2+y^3) / (y+1) );
 ##  [ true, 2, false, [ [ -6, 1 ], [ 1, 1 ], 2 ] ]
 ##  gap> UnivariatenessTestRationalFunction( (-6*y^2+y^3) / (x+1));
-##  [ fail, fail, fail, fail ]
+##  [ false, fail, false, fail ]
 ##  gap> UnivariatenessTestRationalFunction( ((y+2)*(x+1)) / ((y-1)*(x+1)) );
 ##  [ fail, fail, fail, fail ]
 ##  ]]></Example>

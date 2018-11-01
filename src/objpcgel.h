@@ -11,8 +11,8 @@
 #ifndef GAP_OBJPCGEL_H
 #define GAP_OBJPCGEL_H
 
-#include <src/system.h>
-#include <src/objfgelm.h>
+#include "system.h"
+#include "objfgelm.h"
 
 /****************************************************************************
 **
@@ -44,7 +44,7 @@
 
 /****************************************************************************
 **
-*V  COLLECTOR_PCWORD( <obj> ) . . . . . . . . . . . . . .  collector of <obj>
+*F  COLLECTOR_PCWORD( <obj> ) . . . . . . . . . . . . . .  collector of <obj>
 */
 #define COLLECTOR_PCWORD(obj) \
     ( ELM_PLIST( TYPE_DATOBJ(obj), PCWP_COLLECTOR ) )
@@ -52,7 +52,7 @@
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

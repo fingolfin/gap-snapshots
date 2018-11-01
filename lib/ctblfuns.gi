@@ -640,7 +640,7 @@ InstallMethod( GlobalPartitionOfClasses,
       # The number of root classes is by definition invariant under
       # table automorphisms.
       for map in Compacted( ComputedPowerMaps( tbl ) ) do
-        inv:= 0 * map;
+        inv:= ZeroMutable( map );
         for j in map do
           inv[j]:= inv[j] + 1;
         od;
@@ -775,7 +775,7 @@ InstallMethod( CorrespondingPermutations,
           # Note that if we have taken away a union of orbits such that the
           # number of remaining points is smaller than the smallest prime
           # divisor of the order of `g' then all these points must be fixed.
-          min:= FactorsInt( Order( g ) )[1];
+          min:= Factors(Integers, Order( g ) )[1];
           images:= [];
 
           for list in part do
@@ -942,7 +942,7 @@ InstallOtherMethod( CorrespondingPermutations,
           # Note that if we have taken away a union of orbits such that the
           # number of remaining points is smaller than the smallest prime
           # divisor of the order of `g' then all these points must be fixed.
-          min:= FactorsInt( Order( g ) )[1];
+          min:= Factors(Integers, Order( g ) )[1];
           images:= [];
 
           for list in part do
@@ -3616,7 +3616,7 @@ InstallOtherMethod( Symmetrizations,
     [ IsCharacterTable, IsHomogeneousList, IsRecord ],
     function( tbl, characters, arec )
     local i, j, l, n,
-          tbl_powermap,     # computed power maps of 'tbl'
+          powermap,
           cyclestruct,
           classparam,
           symmirreds,
@@ -3626,7 +3626,6 @@ InstallOtherMethod( Symmetrizations,
           symmetrizations,
           chi,
           psi,
-          powermap,
           prodmatrix,
           single,
           value,
@@ -3651,17 +3650,14 @@ InstallOtherMethod( Symmetrizations,
       od;
     od;
 
-    tbl_powermap:= ShallowCopy( ComputedPowerMaps( tbl ) );
-#T better do the computation of necessary power maps only once!
-
     # Compute necessary power maps.
+    powermap:= ComputedPowerMaps( tbl );
     for i in [ 1 .. n ] do
-      if not IsBound( tbl_powermap[i] ) then
-        tbl_powermap[i]:= PowerMap( tbl, i );
+      if not IsBound( powermap[i] ) then
+        powermap[i]:= MakeImmutable( PowerMap( tbl, i ) );
       fi;
     od;
 
-    powermap:= tbl_powermap;
     symmetrizations:= [];
     for chi in characters do
 
@@ -3761,7 +3757,7 @@ InstallGlobalFunction( SymmetricParts, function( tbl, characters, n )
     powermap:= ComputedPowerMaps( tbl );
     for i in [ 1 .. n ] do
       if not IsBound( powermap[i] ) then
-        powermap[i]:= PowerMap( tbl, i );
+        powermap[i]:= MakeImmutable( PowerMap( tbl, i ) );
       fi;
     od;
 
@@ -3843,7 +3839,7 @@ InstallGlobalFunction( AntiSymmetricParts, function( tbl, characters, n )
     powermap:= ComputedPowerMaps( tbl );
     for i in [ 1 .. n ] do
       if not IsBound( powermap[i] ) then
-        powermap[i]:= PowerMap( tbl, i );
+        powermap[i]:= MakeImmutable( PowerMap( tbl, i ) );
       fi;
     od;
 
@@ -4323,7 +4319,7 @@ InstallGlobalFunction( ReductionToFiniteField, function( value, p )
 
     if k <> 1 then
 
-      primes:= Set( Factors( m ) );
+      primes:= PrimeDivisors( m );
       sol:= fail;
 
       while not IsEmpty( primes ) do

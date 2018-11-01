@@ -40,6 +40,62 @@ gap> ClassPositionsOfCentre( TrivialCharacter( t ) );
 [ 1 ]
 gap> ClassPositionsOfKernel( TrivialCharacter( t ) );
 [ 1 ]
+
+# Display for the table of the trivial group
+gap> Display( CharacterTable( CyclicGroup( 1 ) ) );
+CT1
+
+
+       1a
+
+X.1     1
+
+# viewing and printing of character tables with stored groups
+gap> t:= CharacterTable( DihedralGroup( 8 ) );;
+gap> View( t ); Print( "\n" );
+CharacterTable( <pc group of size 8 with 3 generators> )
+gap> Print( t, "\n" );
+CharacterTable( Group( [ f1, f2, f3 ] ) )
+gap> ViewString( t );
+"CharacterTable( <group of size 8 with 3 generators> )"
+gap> PrintString( t );
+"CharacterTable( \"Group( \>[ f1, f2, f3 ]\<\> )\< )"
+gap> t:= CharacterTable( SymmetricGroup( 5 ) );;
+gap> View( t ); Print( "\n" );
+CharacterTable( Sym( [ 1 .. 5 ] ) )
+gap> Print( t, "\n" );
+CharacterTable( SymmetricGroup( [ 1 .. 5 ] ) )
+gap> ViewString( t );
+"CharacterTable( Sym( [ 1 .. 5 ] ) )"
+gap> PrintString( t );
+"CharacterTable( \"Group( \>[ (1,2,3,4,5), (1,2) ]\<\> )\< )"
+
+# entries of mutable attributes are immutable
+gap> t:= CharacterTable( SymmetricGroup( 5 ) );
+CharacterTable( Sym( [ 1 .. 5 ] ) )
+gap> PowerMap( t, 2 );;  PowerMap( t, 3 );;
+gap> Length( ComputedPowerMaps( t ) );
+3
+gap> IsMutable( ComputedPowerMaps( t ) );
+true
+gap> ForAny( ComputedPowerMaps( t ), IsMutable );
+false
+gap> Indicator( t, 2 );;
+gap> Length( ComputedIndicators( t ) );
+2
+gap> IsMutable( ComputedIndicators( t ) );
+true
+gap> ForAny( ComputedIndicators( t ), IsMutable );
+false
+gap> PrimeBlocks( t, 2 );;
+gap> Length( ComputedPrimeBlockss( t ) );
+2
+gap> IsMutable( ComputedPrimeBlockss( t ) );
+true
+gap> ForAny( ComputedPrimeBlockss( t ), IsMutable );
+false
+
+##
 gap> STOP_TEST( "ctbl.tst", 1);
 
 #############################################################################

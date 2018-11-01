@@ -19,19 +19,8 @@
 #ifndef GAP_INTRPRTR_H
 #define GAP_INTRPRTR_H
 
-#include <src/system.h>
-#include <src/gap.h>
-
-/****************************************************************************
-**
-*V  IntrResult  . . . . . . . . . . . . . . . . . result value of interpreter
-**
-**  'IntrResult'  is the result value of  the interpreter, i.e., the value of
-**  the  statement  that  was  last  interpreted (which   might  have been  a
-**  return-value-statement).
-*/
-/* TL: extern  Obj             IntrResult; */
-
+#include "system.h"
+#include "gap.h"
 
 /****************************************************************************
 **
@@ -71,26 +60,37 @@
 /****************************************************************************
 **
 *F  IntrBegin() . . . . . . . . . . . . . . . . . . . .  start an interpreter
-*F  IntrEnd(<error>)  . . . . . . . . . . . . . . . . . . stop an interpreter
+*F  IntrEnd(<error>,<result>)  . . . . . . . . . . . . .  stop an interpreter
 **
-**  'IntrBegin( <frame> )' starts a new interpreter in context <frame>
-**  if in doubt, pass STATE(BottomLVars) as <frame>
+**  'IntrBegin' starts a new interpreter in context <frame>. If in doubt,
+**  pass STATE(BottomLVars) as <frame>
 **
-**  'IntrEnd(<error>)' stops the current interpreter.
+**  'IntrEnd' stops the current interpreter.
 **
 **  If <error>  is non-zero a  syntax error was found by  the reader, and the
 **  interpreter only clears up the mess.
 **
-**  If 'IntrEnd' returns  0, then no  return-statement or quit-statement  was
-**  interpreted.  If  'IntrEnd' returns 1,  then a return-value-statement was
-**  interpreted and in this case the  return value is stored in 'IntrResult'.
-**  If  'IntrEnd' returns 2, then a  return-void-statement  was  interpreted.
-**  If 'IntrEnd' returns 8, then a quit-statement was interpreted.
+**  If 'IntrEnd' returns 'STATUS_END', then no return-statement or
+**  quit-statement was interpreted. If 'IntrEnd' returns 'STATUS_RETURN_VAL',
+**  then a return-value-statement was interpreted and in this case the return
+**  value is assigned to the address <result> points at (but only if <result>
+**  is not 0). If 'IntrEnd' returns 'STATUS_RETURN_VOID', then a
+**  return-void-statement was interpreted. If 'IntrEnd' returns 'STATUS_QUIT',
+**  then a quit-statement was interpreted.
 */
 extern  void            IntrBegin ( Obj frame );
 
-extern  ExecStatus             IntrEnd (
-            UInt                error );
+extern ExecStatus IntrEnd(UInt error, Obj *result);
+
+
+/****************************************************************************
+**
+*F  IntrAbortCoding(<lvars>) . . . . . . . . . . . . . . . . . . abort coding
+**
+**  'IntrAbortCoding' aborts coding, if it is active, and resets the active
+**  lvars to <lvars>.
+*/
+extern void IntrAbortCoding(Obj lvars);
 
 
 /****************************************************************************
@@ -204,7 +204,7 @@ extern  void            IntrIfElse ( void );
 
 extern  void            IntrIfBeginBody ( void );
 
-extern  void            IntrIfEndBody (
+extern  Int             IntrIfEndBody (
             UInt                nr );
 
 extern  void            IntrIfEnd (
@@ -347,7 +347,7 @@ enum {
 *F  IntrRepeatEndBody(<nr>) . . . . . interpret repeat-statement, end of body
 *F  IntrRepeatEnd() . . . . . .  interpret repeat-statement, end of statement
 **
-**  'IntrRepeatBegin"  is an action to interpret  a  repeat-statement.  It is
+**  'IntrRepeatBegin'  is an action to interpret  a  repeat-statement.  It is
 **  called when the read encounters the 'repeat'.
 **
 **  'IntrRepeatBeginBody' is an action  to interpret a  repeat-statement.  It
@@ -542,17 +542,20 @@ extern  void            IntrPow ( void );
 
 /****************************************************************************
 **
+*F  IntrIntObjExpr(<val>)
+*/
+extern void IntrIntObjExpr(Obj val);
+
+
+/****************************************************************************
+**
 *F  IntrIntExpr(<str>)  . . . . . . . .  interpret literal integer expression
 **
 **  'IntrIntExpr' is the action  to  interpret a literal  integer expression.
 **  <str> is the integer as a (null terminated) C character string.
 */
+extern void IntrIntExpr(Obj string, Char * str);
 
-extern void             IntrIntObjExpr(Obj val);
-extern  void            IntrIntExpr (
-            Char *              str );
-extern  void            IntrLongIntExpr (
-            Obj                 string );
 
 /****************************************************************************
 **
@@ -561,10 +564,8 @@ extern  void            IntrLongIntExpr (
 **  'IntrFloatExpr' is the action  to  interpret a literal  float expression.
 **  <str> is the float as a (null terminated) C character string.
 */
-extern  void            IntrFloatExpr (
-            Char *              str );
-extern  void            IntrLongFloatExpr (
-            Obj                 string );
+extern void IntrFloatExpr(Obj string, Char * str);
+
 
 /****************************************************************************
 **
@@ -838,19 +839,8 @@ extern  void            IntrIsbRecExpr ( void );
 /****************************************************************************
 **
 *F  IntrAssPosObj() . . . . . . . . . . . .  interpret assignment to a posobj
-*F  IntrAsssPosObj() . . . . . . .  interpret multiple assignment to a posobj
-*F  IntrAssPosObjLevel(<level>) . . . interpret assignment to several posobjs
-*F  IntrAsssPosObjLevel(<level>)  intr multiple assignment to several posobjs
 */
 extern  void            IntrAssPosObj ( void );
-
-extern  void            IntrAsssPosObj ( void );
-
-extern  void            IntrAssPosObjLevel (
-            UInt                level );
-
-extern  void            IntrAsssPosObjLevel (
-            UInt                level );
 
 extern  void            IntrUnbPosObj ( void );
 
@@ -858,19 +848,8 @@ extern  void            IntrUnbPosObj ( void );
 /****************************************************************************
 **
 *F  IntrElmPosObj() . . . . . . . . . . . . . interpret selection of a posobj
-*F  IntrElmsPosObj() . . . . . . . . interpret multiple selection of a posobj
-*F  IntrElmPosObjLevel(<level>) . . .  interpret selection of several posobjs
-*F  IntrElmsPosObjLevel(<level>) . intr multiple selection of several posobjs
 */
 extern  void            IntrElmPosObj ( void );
-
-extern  void            IntrElmsPosObj ( void );
-
-extern  void            IntrElmPosObjLevel (
-            UInt                level );
-
-extern  void            IntrElmsPosObjLevel (
-            UInt                level );
 
 extern  void            IntrIsbPosObj ( void );
 
@@ -918,8 +897,7 @@ extern void             IntrEmpty ( void );
 *F  IntrInfoBegin() . . . . . . . . .  start interpretation of Info statement
 *F  IntrInfoMiddle() . . . . . . .  shift to interpreting printable arguments
 *F  IntrInfoEnd( <narg> ) . . Info statement complete, <narg> things to print
-*V  InfoCheckLevel(<selectors>,<level>) . . . . . check if Info should output
-*V  InfoDoPrint . . . . . . . . . . . .  fopy of the InfoDoPrint GAP function
+*F  InfoCheckLevel( <selectors>, <level> )  . . . check if Info should output
 */
 
 extern void             IntrInfoBegin ( void );
@@ -927,7 +905,8 @@ extern void             IntrInfoMiddle( void );
 extern void             IntrInfoEnd   (
            UInt                   narg );
 extern Obj              InfoCheckLevel(Obj, Obj);
-extern Obj              InfoDoPrint;
+
+extern void InfoDoPrint(Obj cls, Obj lvl, Obj args);
 
 
 /****************************************************************************
@@ -983,7 +962,7 @@ extern void            PushVoidObj ( void );
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

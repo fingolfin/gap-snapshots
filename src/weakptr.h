@@ -20,11 +20,11 @@
 #ifndef GAP_WEAKPTR_H
 #define GAP_WEAKPTR_H
 
-#include <src/system.h>
+#include "system.h"
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 
@@ -33,11 +33,6 @@
 *F  InitInfoWeakPtr() . . . . . . . . . . . . . . . . table of init functions
 */
 StructInitInfo * InitInfoWeakPtr ( void );
-
-#ifdef BOEHM_GC
-void RegisterWeakReference(Bag *bag);
-void UnregisterWeakReference(Bag *bag);
-#endif
 
 
 #endif // GAP_WEAKPTR_H

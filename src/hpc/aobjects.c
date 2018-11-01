@@ -9,26 +9,28 @@
 **  This file contains the GAP interface for thread primitives.
 */
 
-#include <src/hpc/aobjects.h>
+#include "hpc/aobjects.h"
 
-#include <src/hpc/guards.h>
-#include <src/hpc/thread.h>
-#include <src/hpc/traverse.h>
+#include "hpc/guards.h"
+#include "hpc/thread.h"
+#include "hpc/traverse.h"
 
-#include <src/ariths.h>
-#include <src/bool.h>
-#include <src/calls.h>
-#include <src/fibhash.h>
-#include <src/gap.h>
-#include <src/gaputils.h>
-#include <src/gapstate.h>
-#include <src/gvars.h>
-#include <src/lists.h>
-#include <src/objects.h>
-#include <src/plist.h>
-#include <src/precord.h>
-#include <src/records.h>
-#include <src/stringobj.h>
+#include "ariths.h"
+#include "bool.h"
+#include "calls.h"
+#include "error.h"
+#include "fibhash.h"
+#include "gaputils.h"
+#include "gapstate.h"
+#include "gvars.h"
+#include "io.h"
+#include "lists.h"
+#include "modules.h"
+#include "objects.h"
+#include "plist.h"
+#include "precord.h"
+#include "records.h"
+#include "stringobj.h"
 
 
 Obj TYPE_ALIST;
@@ -584,7 +586,7 @@ static void PrintTLRecord(Obj obj)
   if (record) {
     for (i = 1; i <= LEN_PREC(record); i++) {
       Obj val = GET_ELM_PREC(record, i);
-      Pr("%I", (Int)NAME_RNAM(labs((Int)GET_RNAM_PREC(record, i))), 0L);
+      Pr("%H", (Int)NAME_RNAM(labs((Int)GET_RNAM_PREC(record, i))), 0L);
       Pr ("%< := %>", 0L, 0L);
       if (val)
 	PrintObj(val);
@@ -605,7 +607,7 @@ static void PrintTLRecord(Obj obj)
     if (key && (!record || !FindPRec(record, key, &dummy, 0))) {
       if (comma)
 	Pr("%2<, %2>", 0L, 0L);
-      Pr("%I", (Int)(NAME_RNAM(key)), 0L);
+      Pr("%H", (Int)(NAME_RNAM(key)), 0L);
       Pr ("%< := %>", 0L, 0L);
       PrintObj(CopyTraversed(value));
       comma = 1;
@@ -924,7 +926,7 @@ Obj ElmARecord(Obj record, UInt rnam)
     result = GetARecordField(record, rnam);
     if (result)
       return result;
-    ErrorReturnVoid("Record: '<atomic record>.%s' must have an assigned value",
+    ErrorReturnVoid("Record: '<atomic record>.%g' must have an assigned value",
       (UInt)NAME_RNAM(rnam), 0L,
       "you can 'return;' after assigning a value" );
   }
@@ -934,7 +936,7 @@ void AssARecord(Obj record, UInt rnam, Obj value)
 {
    Obj result = SetARecordField(record, rnam, value);
    if (!result)
-     ErrorReturnVoid("Record: '<atomic record>.%s' already has an assigned value",
+     ErrorReturnVoid("Record: '<atomic record>.%g' already has an assigned value",
        (UInt)NAME_RNAM(rnam), 0L,
        "you can 'return';");
 
@@ -964,29 +966,6 @@ Obj ShallowCopyARecord(Obj obj)
   CHANGED_BAG(copy);
   return copy;
 }
-
-#if !defined(USE_THREADSAFE_COPYING)
-
-Obj CopyARecord(Obj obj, Int mutable)
-{
-  return obj;
-}
-
-Obj CopyAList(Obj obj, Int mutable)
-{
-  return obj;
-}
-
-void CleanARecord(Obj obj)
-{
-}
-
-void CleanAList(Obj obj)
-{
-}
-
-#endif // !defined(USE_THREADSAFE_COPYING)
-
 
 static void UpdateThreadRecord(Obj record, Obj tlrecord)
 {
@@ -1069,7 +1048,7 @@ Obj ElmTLRecord(Obj record, UInt rnam)
     result = GetTLRecordField(record, rnam);
     if (result)
       return result;
-    ErrorReturnVoid("Record: '<thread-local record>.%s' must have an assigned value",
+    ErrorReturnVoid("Record: '<thread-local record>.%g' must have an assigned value",
       (UInt)NAME_RNAM(rnam), 0L,
       "you can 'return;' after assigning a value" );
   }
@@ -1556,12 +1535,13 @@ void UnbAList(Obj list, Int pos)
   HashUnlockShared(list);
 }
 
-void InitAObjectsState(ModuleStateOffset offset)
+Int InitAObjectsState(void)
 {
     TLS(tlRecords) = (Obj)0;
+    return 0;
 }
 
-void DestroyAObjectsState(void)
+Int DestroyAObjectsState(void)
 {
     Obj  records;
     UInt i, len;
@@ -1571,6 +1551,7 @@ void DestroyAObjectsState(void)
         for (i = 1; i <= len; i++)
             UpdateThreadRecord(ELM_PLIST(records, i), (Obj)0);
     }
+    return 0;
 }
 
 #endif /* WARD_ENABLED */
@@ -1806,6 +1787,27 @@ Obj FuncTestBindOnceExpr(Obj self, Obj obj, Obj index, Obj new) {
 
 /****************************************************************************
 **
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
+*/
+
+
+/****************************************************************************
+**
+*V  BagNames  . . . . . . . . . . . . . . . . . . . . . . . list of bag names
+*/
+static StructBagNames BagNames[] = {
+    { T_ALIST, "atomic list" },
+    { T_FIXALIST, "fixed atomic list" },
+    { T_APOSOBJ, "atomic positional object" },
+    { T_AREC, "atomic record" },
+    { T_ACOMOBJ, "atomic component object" },
+    { T_TLREC, "thread-local record" },
+    { -1,    "" }
+};
+
+
+/****************************************************************************
+**
 *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
 */
 
@@ -1894,13 +1896,9 @@ static Int InitKernel (
   UsageCap[7] = 96;
   for (i=8; i<sizeof(UInt)*8; i++)
     UsageCap[i] = (1<<i)/3 * 2;
-  /* install info string */
-  InfoBags[T_ALIST].name = "atomic list";
-  InfoBags[T_FIXALIST].name = "fixed atomic list";
-  InfoBags[T_APOSOBJ].name = "atomic positional object";
-  InfoBags[T_AREC].name = "atomic record";
-  InfoBags[T_ACOMOBJ].name = "atomic component object";
-  InfoBags[T_TLREC].name = "thread-local record";
+
+  // set the bag type names (for error messages and debugging)
+  InitBagNamesFromTable(BagNames);
   
   /* install the kind methods */
   TypeObjFuncs[ T_ALIST ] = TypeAList;
@@ -1959,10 +1957,6 @@ static Int InitKernel (
       ElmwListFuncs[type] = ElmAList;
       UnbListFuncs[type] = UnbAList;
       IsbListFuncs[type] = IsbAList;
-#if !defined(USE_THREADSAFE_COPYING)
-      CopyObjFuncs[type] = CopyAList;
-      CleanObjFuncs[type] = CleanAList;
-#endif
   }
 
   AssListFuncs[T_FIXALIST] = AssFixAList;
@@ -1975,16 +1969,8 @@ static Int InitKernel (
   IsbRecFuncs[ T_AREC ] = IsbARecord;
   AssRecFuncs[ T_AREC ] = AssARecord;
   ShallowCopyObjFuncs[ T_AREC ] = ShallowCopyARecord;
-#if !defined(USE_THREADSAFE_COPYING)
-  CopyObjFuncs[ T_AREC ] = CopyARecord;
-  CleanObjFuncs[ T_AREC ] = CleanARecord;
-#endif // !defined(USE_THREADSAFE_COPYING)
   IsRecFuncs[ T_AREC ] = AlwaysYes;
   UnbRecFuncs[ T_AREC ] = UnbARecord;
-#if !defined(USE_THREADSAFE_COPYING)
-  CopyObjFuncs[ T_ACOMOBJ ] = CopyARecord;
-  CleanObjFuncs[ T_ACOMOBJ ] = CleanARecord;
-#endif // !defined(USE_THREADSAFE_COPYING)
   IsRecFuncs[ T_ACOMOBJ ] = AlwaysNo;
   ElmRecFuncs[ T_TLREC ] = ElmTLRecord;
   IsbRecFuncs[ T_TLREC ] = IsbTLRecord;
@@ -2071,10 +2057,11 @@ static StructInitInfo module = {
     .name = "aobjects",
     .initKernel = InitKernel,
     .initLibrary = InitLibrary,
+    .initModuleState = InitAObjectsState,
+    .destroyModuleState = DestroyAObjectsState,
 };
 
 StructInitInfo * InitInfoAObjects ( void )
 {
-    RegisterModuleState(0, InitAObjectsState, DestroyAObjectsState);
     return &module;
 }

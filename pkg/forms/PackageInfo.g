@@ -10,8 +10,8 @@
 SetPackageInfo( rec( 
   PackageName := "Forms", 
   Subtitle := "Sesquilinear and Quadratic",
-  Version := "1.2.4",
-  Date := "26/08/2017",
+  Version := "1.2.5",
+  Date := "27/09/2018",
 
 ##  URL of the archive(s) of the current package release, but *without*
 ##  the format extension(s), like '.zoo', which are given next.
@@ -21,7 +21,7 @@ SetPackageInfo( rec(
 ##  directory containing the package (in our "example" probably:
 ##  example/init.g, ...    or  example-1.3/init.g, ...  )
 # 
-ArchiveURL := "http://cage.ugent.be/geometry/software/forms/forms-1.2.4",
+ArchiveURL := "http://cage.ugent.be/geometry/software/forms/forms-1.2.5",
 ArchiveFormats := ".tar.gz -win.zip .tar.bz2",
 Persons := [
   rec( 
@@ -79,7 +79,7 @@ PackageDoc := rec(
 
 Dependencies := rec(
   GAP := ">=4.8",
-  NeededOtherPackages := [["GAPDoc", ">= 1.5.1"]],
+  NeededOtherPackages := [["GAPDoc", ">= 1.6"]],
   SuggestedOtherPackages := [],
   ExternalConditions := []),
 

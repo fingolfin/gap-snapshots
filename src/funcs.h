@@ -17,7 +17,7 @@
 #ifndef GAP_FUNCS_H
 #define GAP_FUNCS_H
 
-#include <src/system.h>
+#include "system.h"
 
 /****************************************************************************
 **
@@ -29,7 +29,7 @@ extern Obj MakeFunction(Obj fexp);
 
 /****************************************************************************
 **
-*F  ExecBegin( <frame> ) . . . . . . . . .begin an execution in context frame
+*F  ExecBegin( <frame> ) . . . . . . . .  begin an execution in context frame
 **  if in doubt, pass STATE(BottomLVars) as <frame>
 **
 *F  ExecEnd(<error>)  . . . . . . . . . . . . . . . . . . .  end an execution
@@ -64,7 +64,7 @@ static inline void CheckRecursionBefore( void )
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

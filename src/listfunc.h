@@ -13,7 +13,7 @@
 #ifndef GAP_LISTFUNC_H
 #define GAP_LISTFUNC_H
 
-#include <src/system.h>
+#include "system.h"
 
 /****************************************************************************
 **
@@ -69,6 +69,7 @@ extern  UInt            PositionSortedDensePlist (
 *F  SORT_PARA_LISTComp(<list>,<shadow>,<func>)  . . . sort a list with shadow
 *F  SortParaDensePlistComp(<list>,<shadow>,<func>)  . sort a list with shadow
 **
+*F  SortPlistByRawObj(<list>) . . . . . . . .  sort a list by raw obj pointer
 **  'SortList' sorts the list <list> in increasing  order.
 */
 extern  void SORT_LIST (
@@ -103,6 +104,9 @@ extern  void SortParaDensePlistComp (
         Obj  shadow,
         Obj  func );
 
+extern void SortPlistByRawObj (
+        Obj list );
+
 /****************************************************************************
 **
 *F  RemoveDupsDensePlist(<list>)  . . . . remove duplicates from a plain list
@@ -118,7 +122,7 @@ extern  UInt            RemoveDupsDensePlist (
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

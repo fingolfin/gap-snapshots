@@ -119,14 +119,14 @@ end);
 ##  <#/GAPDoc>
 ##
 BIND_GLOBAL("ApplicableMethodTypes",function(arg)
-local oper,l,obj,skip,verbos,fams,flags,i,j,methods,flag,flag2,
-      lent,nam,val,erg,has,need,isconstructor;
+local oper,narg,args,skip,verbos,fams,flags,i,j,methods,flag,flag2,
+      m,nam,val,erg,has,need,isconstructor;
   if Length(arg)<2 or not IsList(arg[2]) or not IsFunction(arg[1]) then
     Error("usage: ApplicableMethodTypes(<opr>,<arglist>[,<verbosity>[,<nr>]])");
   fi;
   oper:=arg[1];
   isconstructor:=IS_CONSTRUCTOR(oper);
-  obj:=arg[2];
+  args:=arg[2];
   if Length(arg)>2 then
     verbos:=arg[3];
   else
@@ -142,12 +142,12 @@ local oper,l,obj,skip,verbos,fams,flags,i,j,methods,flag,flag2,
   else
     skip:=0;
   fi;
-  l:=Length(obj);
+  narg:=Length(args);
 
   # get families and filters
   flags:=[];
   fams:=[];
-  for i in obj do
+  for i in args do
     if IsFilter(i) then
       Add(flags,FLAGS_FILTER(i));
       Add(fams,fail);
@@ -164,22 +164,24 @@ local oper,l,obj,skip,verbos,fams,flags,i,j,methods,flag,flag2,
     Info(InfoWarning,1,"Family predicate cannot be tested");
   fi;
 
-  methods:=METHODS_OPERATION(oper,l);
+  methods:=MethodsOperation(oper,narg);
   if verbos > 0 then
-    Print("#I  Searching Method for ",NameFunction(oper)," with ",l,
+    Print("#I  Searching Method for ",NameFunction(oper)," with ",narg,
 	  " arguments:\n");
   fi;
-  lent:=4+l; #length of one entry
   if verbos > 0 then 
-    Print("#I  Total: ", Length(methods)/lent," entries\n");
+    Print("#I  Total: ", Length(methods)," entries\n");
   fi;
-  for i in [1..Length(methods)/lent] do
-    nam:=methods[lent*(i-1)+l+4];
-    val:=methods[lent*(i-1)+l+3];
-    oper:=methods[lent*(i-1)+l+2];
+  for i in [1..Length(methods)] do
+    m := methods[i];
+    nam:=m.info;
+    val:=m.rank;
+    oper:=m.func;
     if verbos>1 then
       Print("#I  Method ",i,": ``",nam,"''");
-      if LocationFunc(oper) <> "" then
+      if IsBound(m.location) then
+        Print(" at ", m.location[1], ":", m.location[2]);
+      elif LocationFunc(oper) <> "" then
         Print(" at ",LocationFunc(oper));
       fi;
       Print(", value: ");
@@ -188,15 +190,15 @@ local oper,l,obj,skip,verbos,fams,flags,i,j,methods,flag,flag2,
     fi;
     flag:=true;
     j:=1;
-    while j<=l and (flag or verbos>3) do
+    while j<=narg and (flag or verbos>3) do
       if j=1 and isconstructor then
-	flag2:=IS_SUBSET_FLAGS(methods[lent*(i-1)+1+j],flags[j]);
+	flag2:=IS_SUBSET_FLAGS(m.argFilt[j],flags[j]);
       else
-	flag2:=IS_SUBSET_FLAGS(flags[j],methods[lent*(i-1)+1+j]);
+	flag2:=IS_SUBSET_FLAGS(flags[j],m.argFilt[j]);
       fi;
       flag:=flag and flag2;
       if flag2=false and verbos>2 then
-	need:=NamesFilter(methods[lent*(i-1)+1+j]);
+	need:=NamesFilter(m.argFilt[j]);
 	if j=1 and isconstructor then
 	  Print("#I   - ",Ordinal(j)," argument must be ",
 		need,"\n");
@@ -209,11 +211,12 @@ local oper,l,obj,skip,verbos,fams,flags,i,j,methods,flag,flag2,
       j:=j+1;
     od;
     if flag then
-      if fams=fail or CallFuncList(methods[lent*(i-1)+1],fams) then
-	oper:=methods[lent*(i-1)+j+1];
+      if fams=fail or CallFuncList(m.famPred,fams) then
 	if verbos=1 then
 	  Print("#I  Method ",i,": ``",nam,"''");
-	  if LocationFunc(oper) <> "" then
+          if IsBound(m.location) then
+            Print(" at ", m.location[1], ":", m.location[2]);
+	  elif LocationFunc(oper) <> "" then
 	    Print(" at ",LocationFunc(oper));
 	  fi;
 	  Print(" , value: ");
@@ -271,69 +274,113 @@ end);
 ##  <Func Name="ShowImpliedFilters" Arg='filter'/>
 ##
 ##  <Description>
-##  Displays information about the filters that may be implied by 
-##  <A>filter</A>. They are given by their names. <C>ShowImpliedFilters</C> first
-##  displays the names of all filters that are unconditionally implied by
-##  <A>filter</A>. It then displays implications that require further filters to
-##  be present (indicating by <C>+</C> the required further filters).
-##  The function displays only first-level implications, implications that
-##  follow in turn are not displayed (though &GAP; will do these).
+##  Displays information about the filters that may be
+##  implied by <A>filter</A>. They are given by their names.
+##  <Ref Func="ShowImpliedFilters"/> first displays the names of all filters
+##  that are unconditionally implied by <A>filter</A>. It then displays
+##  implications that require further filters to be present (indicating
+##  by <C>+</C> the required further filters).
 ##  <Example><![CDATA[
-##  gap> ShowImpliedFilters(IsMatrix);
+##  gap> ShowImpliedFilters(IsNilpotentGroup);
 ##  Implies:
-##     IsNearAdditiveElementWithInverse
-##     IsAdditiveElement
-##     IsMultiplicativeElement
-##     IsGeneralizedRowVector
+##     IsListOrCollection
+##     IsCollection
+##     IsDuplicateFree
+##     IsExtLElement
+##     CategoryCollections(IsExtLElement)
+##     IsExtRElement
+##     CategoryCollections(IsExtRElement)
+##     CategoryCollections(IsMultiplicativeElement)
+##     CategoryCollections(IsMultiplicativeElementWithOne)
+##     CategoryCollections(IsMultiplicativeElementWithInverse)
+##     IsGeneralizedDomain
+##     IsMagma
+##     IsMagmaWithOne
+##     IsMagmaWithInversesIfNonzero
+##     IsMagmaWithInverses
+##     IsAssociative
+##     HasMultiplicativeNeutralElement
+##     IsGeneratorsOfSemigroup
+##     IsSimpleSemigroup
+##     IsRegularSemigroup
+##     IsInverseSemigroup
+##     IsCompletelyRegularSemigroup
+##     IsGroupAsSemigroup
+##     IsMonoidAsSemigroup
+##     IsOrthodoxSemigroup
+##     IsSupersolvableGroup
+##     IsSolvableGroup
+##     IsNilpotentByFinite
 ##  
 ##  
 ##  May imply with:
-##  +IsInternalRep
-##     IsOrdinaryMatrix
-##  
-##  +CategoryCollections(CategoryCollections(IsAdditivelyCommutativeElement))
-##     IsAdditivelyCommutativeElement
-##  
-##  +IsGF2MatrixRep
-##     IsOrdinaryMatrix
+##  +IsFinitelyGeneratedGroup
+##     IsPolycyclicGroup
 ##  
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-BIND_GLOBAL("ShowImpliedFilters",function(fil)
-local flags,f,i,j,l,m,n;
-  flags:=FLAGS_FILTER(fil);
-  atomic readonly IMPLICATIONS do
-    f:=Filtered(IMPLICATIONS,x->IS_SUBSET_FLAGS(x[2],flags));
-    l:=[];
-    m:=[];
-    for i in f do
-      n:=SUB_FLAGS(i[2],flags); # the additional requirements
-      if SIZE_FLAGS(n)=0 then
-        Add(l,i[1]);
-      else
-        Add(m,[n,i[1]]);
-      fi;
-    od;
+BIND_GLOBAL("ShowImpliedFilters",function(filter)
+  local flags, implied, f, extra_implications, implication, name, diff_reqs,
+        diff_impls, reduced;
+
+  flags:=FLAGS_FILTER(filter);
+  implied := WITH_IMPS_FLAGS(flags);
+  atomic readonly IMPLICATIONS_SIMPLE do
+    # select all implications which involved <filter> in the requirements
+    f:=Filtered(IMPLICATIONS_SIMPLE, x->IS_SUBSET_FLAGS(x[2],flags));
+    Append(f, Filtered(IMPLICATIONS_COMPOSED, x->IS_SUBSET_FLAGS(x[2],flags)));
   od; # end atomic
-  if Length(l)>0 then
+
+  extra_implications:=[];
+  for implication in f do
+    # the additional requirements
+    diff_reqs:=SUB_FLAGS(implication[2],flags);
+    if SIZE_FLAGS(diff_reqs) = 0 then
+      Assert(0, IS_SUBSET_FLAGS(implied,implication[1]));
+      continue;
+    fi;
+    # the combined implications...
+    diff_impls:=implication[1];
+    # ... minus those implications that already follow from <filter>
+    diff_impls:=SUB_FLAGS(diff_impls,implied);
+    # ... minus those implications that already follow from diff_reqs
+    diff_impls:=SUB_FLAGS(diff_impls,WITH_IMPS_FLAGS(diff_reqs));
+    if SIZE_FLAGS(diff_impls) > 0 then
+      Add(extra_implications, [diff_reqs, diff_impls]);
+    fi;
+  od;
+
+  # remove "obvious" implications
+  if IS_ELEMENTARY_FILTER(filter) then
+    implied := SUB_FLAGS(implied, flags);
+  fi;
+
+  reduced:= function( trues )
+    atomic readonly FILTER_REGION do
+      return Filtered( trues,
+      i -> not ( INFO_FILTERS[i] in FNUM_TPRS
+                 and FLAG1_FILTER( FILTERS[i] ) in trues ) );
+    od;
+  end;
+
+  if SIZE_FLAGS(implied) > 0 then
     Print("Implies:\n");
-    for i in l do
-      for j in NamesFilter(i) do
-	Print("   ",j,"\n");
-      od;
+    for name in NamesFilter( reduced( TRUES_FLAGS( implied ) ) ) do
+      Print("   ",name,"\n");
     od;
   fi;
-  if Length(m)>0 then
+
+  if Length(extra_implications) > 0 then
     Print("\n\nMay imply with:\n");
-    for i in m do
-      for j in NamesFilter(i[1]) do
-        Print("+",j,"\n");
+    for implication in extra_implications do
+      for name in NamesFilter( reduced( TRUES_FLAGS( implication[1] ) ) ) do
+        Print("+",name,"\n");
       od;
-      for j in NamesFilter(i[2]) do
-        Print("   ",j,"\n");
+      for name in NamesFilter( reduced( TRUES_FLAGS( implication[2] ) ) ) do
+        Print("   ",name,"\n");
       od;
       Print("\n");
     od;
@@ -384,13 +431,16 @@ BIND_GLOBAL("PageSource", function ( fun, nr... )
     l := fail;
     f := FILENAME_FUNC( fun );
     if IsString(f) and Length(f)>0 and f[1] <> '/' then
-      if Length(f) > 7 and f{[1..8]} = "GAPROOT/" then
-        f := f{[9..Length(f)]};
+      # first assume it is a local path, otherwise look in GAP roots
+      if not IsReadableFile(f) then
+        if Length(f) > 7 and f{[1..8]} = "GAPROOT/" then
+          f := f{[9..Length(f)]};
+        fi;
+        f := Filename(List(GAPInfo.RootPaths, Directory), f);
       fi;
-      f := Filename(List(GAPInfo.RootPaths, Directory), f);
     fi;
     if f = fail and fun in OPERATIONS then
-      # for operations we show the location(s) of their operation
+      # for operations we show the location(s) of their declaration
       locs := GET_DECLARATION_LOCATIONS(fun);
       if n > Length(locs) then
         Print("Operation ", NameFunction(fun), " has only ",

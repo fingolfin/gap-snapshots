@@ -97,6 +97,8 @@ InstallGlobalFunction( CharacterTableWithStoredGroup, function( arg )
               rec( UnderlyingCharacteristic := 0 ) );
 
     # Set the supported attribute values.
+    # We may assume that the subobjects of mutable attribute values
+    # are already immutable.
     for i in [ 3, 6 .. Length( SupportedCharacterTableInfo ) ] do
       if Tester( SupportedCharacterTableInfo[ i-2 ] )( tbl )
          and SupportedCharacterTableInfo[ i-1 ] <> "Irr" then
@@ -353,7 +355,7 @@ InstallGlobalFunction( CompatibleConjugacyClassesDefault,
     fi;
 
     # Use power maps.
-    primes:= Set( Factors( Size( tbl ) ) );
+    primes:= PrimeDivisors( Size( tbl ) );
 
     # store power maps of the group, in order to identify the class
     # of the power only once.
@@ -1130,7 +1132,7 @@ InstallMethod( AbelianInvariants,
 
       # For all prime divisors $p$ of the size,
       # compute the element of maximal $p$ power order.
-      primes:= Set( FactorsInt( Size( tbl ) ) );
+      primes:= PrimeDivisors( Size( tbl ) );
       max:= List( primes, x -> 1 );
       pos:= [];
       orders:= OrdersClassRepresentatives( tbl );
@@ -1230,39 +1232,6 @@ InstallGlobalFunction( CharacterTable_IsNilpotentFactor, function( tbl, N )
     local series;
     series:= CharacterTable_UpperCentralSeriesFactor( tbl, N );
     return Length( series[ Length( series ) ] ) = NrConjugacyClasses( tbl );
-    end );
-
-
-#############################################################################
-##
-#F  CharacterTable_IsNilpotentNormalSubgroup( <tbl>, <N> )
-##
-InstallGlobalFunction( CharacterTable_IsNilpotentNormalSubgroup,
-    function( tbl, N )
-
-    local classlengths,  # class lengths
-          orders,        # orders of class representatives
-          ppow,          # list of classes of prime power order
-          part,          # one pair `[ prime, exponent ]'
-          classes;       # classes of p power order for a prime p
-
-    # Take the classes of prime power order.
-    classlengths:= SizesConjugacyClasses( tbl );
-    orders:= OrdersClassRepresentatives( tbl );
-    ppow:= Filtered( N, i -> IsPrimePowerInt( orders[i] ) );
-
-    for part in Collected( FactorsInt( Sum( classlengths{ N }, 0 ) ) ) do
-
-      # Check whether the Sylow p subgroup of `N' is normal in `N',
-      # i.e., whether the number of elements of p-power is equal to
-      # the size of a Sylow p subgroup.
-      classes:= Filtered( ppow, i -> orders[i] mod part[1] = 0 );
-      if part[1] ^ part[2] <> Sum( classlengths{ classes }, 0 ) + 1 then
-        return false;
-      fi;
-
-    od;
-    return true;
     end );
 
 
@@ -1419,7 +1388,7 @@ InstallMethod( IsSupersolvableCharacterTable,
 ##  and the groups in the two infinite series <M>O(2n+1,q)</M> and
 ##  <M>S(2n,q)</M>, where <M>q</M> is a power of the (odd) prime <M>p</M>,
 ##  can be distinguished by the fact that in the latter group, any
-##  element of order <M>p</M> in the centre of the Sylow <M>p</M> subgroup
+##  element of order <M>p</M> in the centre of the Sylow <M>p</M>-subgroup
 ##  has centralizer order divisible by <M>q^{{2n-2}} - 1</M>, whereas no such
 ##  elements exist in the former group.
 ##  (Note that <M>n</M> and <M>p</M> can be computed from the order of
@@ -1456,23 +1425,29 @@ InstallMethod( IsomorphismTypeInfoFiniteSimpleGroup,
                       parameter:= [ n, q ],
                       name:= Concatenation( "B(", String(n), ",", String(q),
                                             ") ", "= O(", String(2*n+1), ",",
-                                            String(q), ")" ) );
+                                            String(q), ")" ),
+                      shortname:= Concatenation( "O", String( 2*n+1 ), "(",
+                                                 String(q), ")" ) );
         else
           type:= rec( series:= "C",
                       parameter:= [ n, q ],
                       name:= Concatenation( "C(", String(n), ",", String(q),
                                             ") ", "= S(", String(2*n), ",",
-                                            String(q), ")" ) );
+                                            String(q), ")" ),
+                      shortname:= Concatenation( "S", String( 2*n ), "(",
+                                                 String( q ), ")" ) );
         fi;
       elif 15 in SizesCentralizers( tbl ) then
         type:= rec( series:= "A",
                     parameter:= 8,
                     name:= Concatenation( "A(8) ", "~ A(3,2) = L(4,2) ",
-                                          "~ D(3,2) = O+(6,2)" ) );
+                                          "~ D(3,2) = O+(6,2)" ),
+                    shortname:= "A8" );
       else
         type:= rec( series:= "L",
                     parameter:= [ 3, 4 ],
-                    name:= "A(2,4) = L(3,4)" );
+                    name:= "A(2,4) = L(3,4)",
+                    shortname:= "L3(4)" );
       fi;
     fi;
     return type;
@@ -1618,7 +1593,7 @@ InstallMethod( OrdersClassRepresentatives,
 
     # If these maps do not suffice, compute the missing power maps
     # and then try again.
-    for p in Set( Factors( Size( tbl ) ) ) do
+    for p in PrimeDivisors( Size( tbl ) ) do
       PowerMap( tbl, p );
     od;
     ord:= ElementOrdersPowerMap( ComputedPowerMaps( tbl ) );
@@ -2659,7 +2634,7 @@ InstallMethod( ClassRoots,
     orders := OrdersClassRepresentatives( tbl );
     root   := List([1..nccl], x->[]);
 
-    for p in Set( Factors( Size( tbl ) ) ) do
+    for p in PrimeDivisors( Size( tbl ) ) do
        pmap:= PowerMap( tbl, p );
        for i in [1..nccl] do
           if i <> pmap[i] and orders[i] <> orders[pmap[i]] then
@@ -2746,7 +2721,7 @@ InstallMethod( PrimeBlocks,
     # This avoids errors if a calculation had been interrupted.
     if not IsBound( known[p] ) then
       erg:= PrimeBlocksOp( tbl, p );
-      known[p]:= erg;
+      known[p]:= MakeImmutable( erg );
     fi;
 
     return known[p];
@@ -2897,7 +2872,7 @@ InstallMethod( PrimeBlocksOp,
         if d = ppart then
           d:= 0;
         else
-          d:= Length( FactorsInt( ppart / d ) );              # the defect
+          d:= Length( Factors(Integers, ppart / d ) );              # the defect
         fi;
         Add( primeblocks.defect, d );
 
@@ -3495,7 +3470,7 @@ InstallMethod( IsInternallyConsistent,
       # If the power maps of all prime divisors of the order are stored,
       # check if they are consistent with the representative orders.
       if     IsBound( orders )
-         and ForAll( Set( FactorsInt( order ) ), x -> IsBound(powermap[x]) )
+         and ForAll( PrimeDivisors( order ), x -> IsBound(powermap[x]) )
          and orders <> ElementOrdersPowerMap( powermap ) then
         Info( InfoWarning, 1,
               "IsInternallyConsistent(", tbl, "):\n",
@@ -3656,7 +3631,7 @@ InstallMethod( IsInternallyConsistent,
       # If the power maps of all prime divisors of the order are stored,
       # check if they are consistent with the representative orders.
       if     IsBound( orders )
-         and ForAll( Set( FactorsInt( order ) ), x -> IsBound(powermap[x]) )
+         and ForAll( PrimeDivisors( order ), x -> IsBound(powermap[x]) )
          and orders <> ElementOrdersPowerMap( powermap ) then
         flag:= false;
         Info( InfoWarning, 1,
@@ -3775,7 +3750,7 @@ InstallMethod( IsPSolvableCharacterTableOp,
       # \ldots and its size.
       nextsize:= Sum( classes{ nsg[i] }, 0 );
 
-      facts:= Set( FactorsInt( nextsize / size ) );
+      facts:= PrimeDivisors( nextsize / size );
       if 1 < Length( facts ) and ( p = 0 or p in facts ) then
 
         # The chief factor `nsg[i] / n' is not a prime power,
@@ -3853,7 +3828,7 @@ InstallMethod( Indicator,
     # This avoids errors if a calculation had been interrupted.
     if not IsBound( known[n] ) then
       erg:= IndicatorOp( tbl, Irr( tbl ), n );
-      known[n]:= erg;
+      known[n]:= MakeImmutable( erg );
     fi;
 
     return known[n];
@@ -4254,7 +4229,6 @@ InstallMethod( ComputedBrauerTables,
 ##
 InstallGlobalFunction( CharacterTableRegular,
     function( ordtbl, prime )
-
     local fusion,
           inverse,
           orders,
@@ -4294,12 +4268,14 @@ InstallGlobalFunction( CharacterTableRegular,
     power:= ComputedPowerMaps( ordtbl );
     for i in [ 1 .. Length( power ) ] do
       if IsBound( power[i] ) then
-        regular.ComputedPowerMaps[i]:= inverse{ power[i]{ fusion } };
+        regular.ComputedPowerMaps[i]:= MakeImmutable(
+            inverse{ power[i]{ fusion } } );
       fi;
     od;
 
     regular:= ConvertToCharacterTableNC( regular );
-    StoreFusion( regular, rec( map:= fusion, type:= "choice" ), ordtbl );
+    StoreFusion( regular,
+        rec( map:= MakeImmutable( fusion ), type:= "choice" ), ordtbl );
 
     return regular;
     end );
@@ -4311,9 +4287,7 @@ InstallGlobalFunction( CharacterTableRegular,
 #F  ConvertToCharacterTableNC( <record> ) . . . create character table object
 ##
 InstallGlobalFunction( ConvertToCharacterTableNC, function( record )
-
-    local names,    # list of component names
-          i;        # loop over `SupportedCharacterTableInfo'
+    local names, i, name, val, entry;
 
     names:= RecNames( record );
 
@@ -4331,18 +4305,32 @@ InstallGlobalFunction( ConvertToCharacterTableNC, function( record )
     fi;
 
     # Enter the properties and attributes.
+    # For mutable attributes, if the value is a list but not a string
+    # then make the list entries immutable.
     for i in [ 1, 4 .. Length( SupportedCharacterTableInfo ) - 2 ] do
-      if     SupportedCharacterTableInfo[ i+1 ] in names
-         and SupportedCharacterTableInfo[ i+1 ] <> "Irr" then
-        Setter( SupportedCharacterTableInfo[i] )( record,
-            record!.( SupportedCharacterTableInfo[ i+1 ] ) );
+      name:= SupportedCharacterTableInfo[ i+1 ];
+      if name in names and name <> "Irr" then
+        val:= record!.( name );
+        if "mutable" in SupportedCharacterTableInfo[ i+2 ] then
+          if IsList( val ) and not IsString( val ) then
+            # Store a mutable list with immutable entries.
+            for entry in val do
+              MakeImmutable( entry );
+            od;
+          fi;
+        else
+          # Avoid making a copy.
+          MakeImmutable( val );
+        fi;
+        Setter( SupportedCharacterTableInfo[i] )( record, val );
       fi;
     od;
 
-    # Make the lists of character values into character objects.
+    # Turn the lists of character values into character objects.
     if "Irr" in names then
-      SetIrr( record, List( record!.Irr,
-                            chi -> Character( record, chi ) ) );
+      SetIrr( record, MakeImmutable( List( record!.Irr,
+                            chi -> Character( record,
+                                              MakeImmutable( chi ) ) ) ) );
     fi;
 
     # Return the object.
@@ -4467,6 +4455,74 @@ InstallMethod( PrintObj,
     else
       Print( "BrauerTable( \"", Identifier( ordtbl ),
              "\", ", UnderlyingCharacteristic( tbl ), " )" );
+    fi;
+    end );
+
+
+#############################################################################
+##
+#M  ViewString( <tbl> ) . . . . . . . . . . . . . . . . for a character table
+##
+InstallMethod( ViewString,
+    "for an ordinary table",
+    [ IsOrdinaryTable ],
+    function( tbl )
+    if HasUnderlyingGroup( tbl ) then
+      return Concatenation( "CharacterTable( ",
+                 ViewString( UnderlyingGroup( tbl ) ), " )" );
+    else
+      return Concatenation( "CharacterTable( \"", Identifier( tbl ),
+                 "\" )" );
+    fi;
+    end );
+
+InstallMethod( ViewString,
+    "for a Brauer table",
+    [ IsBrauerTable ],
+    function( tbl )
+    local ordtbl;
+    ordtbl:= OrdinaryCharacterTable( tbl );
+    if HasUnderlyingGroup( ordtbl ) then
+      return Concatenation( "BrauerTable( ",
+                 ViewString( UnderlyingGroup( ordtbl ) ), ", ",
+                 String( UnderlyingCharacteristic( tbl ) ), " )" );
+    else
+      return Concatenation( "BrauerTable( \"", Identifier( ordtbl ),
+                 "\", ", String( UnderlyingCharacteristic( tbl ) ), " )" );
+    fi;
+    end );
+
+
+#############################################################################
+##
+#M  PrintString( <tbl> )  . . . . . . . . . . . . . . . for a character table
+##
+InstallMethod( PrintString,
+    "for an ordinary table",
+    [ IsOrdinaryTable ],
+    function( tbl )
+    if HasUnderlyingGroup( tbl ) then
+      return Concatenation( "CharacterTable( \"",
+                 PrintString( UnderlyingGroup( tbl ) ), " )" );
+    else
+      return Concatenation( "CharacterTable( \"", Identifier( tbl ),
+                 "\" )" );
+    fi;
+    end );
+
+InstallMethod( PrintString,
+    "for a Brauer table",
+    [ IsBrauerTable ],
+    function( tbl )
+    local ordtbl;
+    ordtbl:= OrdinaryCharacterTable( tbl );
+    if HasUnderlyingGroup( ordtbl ) then
+      return Concatenation( "BrauerTable( ",
+                 PrintString( UnderlyingGroup( ordtbl ) ), ", ",
+                 String( UnderlyingCharacteristic( tbl ) ), " )" );
+    else
+      return Concatenation( "BrauerTable( \"", Identifier( ordtbl ),
+                 "\", ", String( UnderlyingCharacteristic( tbl ) ), " )" );
     fi;
     end );
 
@@ -4820,7 +4876,7 @@ BindGlobal( "CharacterTableDisplayDefault", function( tbl, options )
       tbl_centralizers:= SizesCentralizers( tbl );
     elif centralizers = true then
       tbl_centralizers:= SizesCentralizers( tbl );
-      primes:= Set( FactorsInt( Size( tbl ) ) );
+      primes:= PrimeDivisors( Size( tbl ) );
       cen:= [];
       for prime in primes do
         cen[ prime ]:= [];
@@ -4917,9 +4973,11 @@ BindGlobal( "CharacterTableDisplayDefault", function( tbl, options )
        elif centralizers = true then
           Print( "\n" );
           for i in [col..col+acol-1] do
-             fak:= FactorsInt( tbl_centralizers[classes[i]] );
+             fak:= Factors( Integers, tbl_centralizers[ classes[i] ] );
              for prime in Set( fak ) do
-                cen[prime][i]:= Number( fak, x -> x = prime );
+               if prime <> 1 then
+                 cen[prime][i]:= Number( fak, x -> x = prime );
+               fi;
              od;
           od;
           for j in [1..Length(cen)] do
@@ -5273,8 +5331,8 @@ InstallMethod( CharacterTableDirectProduct,
 
     # Compute power maps for all prime divisors of the result order.
     vals_direct:= ComputedPowerMaps( direct );
-    for k in Union( FactorsInt( Size( tbl1 ) ),
-                    FactorsInt( Size( tbl2 ) ) ) do
+    for k in Union( Factors(Integers, Size( tbl1 ) ),
+                    Factors(Integers, Size( tbl2 ) ) ) do
       powermap_k:= [];
       vals1:= PowerMap( tbl1, k );
       vals2:= PowerMap( tbl2, k );
@@ -5284,14 +5342,15 @@ InstallMethod( CharacterTableDirectProduct,
           powermap_k[ j + ncc2_i ]:= vals2[j] + ncc2 * ( vals1[i] - 1 );
         od;
       od;
-      vals_direct[k]:= powermap_k;
+      vals_direct[k]:= MakeImmutable( powermap_k );
     od;
 
     # Compute the irreducibles.
     SetIrr( direct, List( KroneckerProduct(
                                 List( Irr( tbl1 ), ValuesOfClassFunction ),
                                 List( Irr( tbl2 ), ValuesOfClassFunction ) ),
-                          vals -> Character( direct, vals ) ) );
+                          vals -> Character( direct,
+                                             MakeImmutable( vals ) ) ) );
 
     # Form character parameters if they exist for the irreducibles
     # in both tables.
@@ -5313,7 +5372,7 @@ InstallMethod( CharacterTableDirectProduct,
       for j in [ 1 .. ncc2 ] do fus[ ( i - 1 ) * ncc2 + j ]:= i; od;
     od;
     StoreFusion( direct,
-                 rec( map := fus, specification := "1" ),
+                 rec( map := MakeImmutable( fus ), specification := "1" ),
                  tbl1 );
 
     fus:= [];
@@ -5321,18 +5380,18 @@ InstallMethod( CharacterTableDirectProduct,
       for j in [ 1 .. ncc2 ] do fus[ ( i - 1 ) * ncc2 + j ]:= j; od;
     od;
     StoreFusion( direct,
-                 rec( map := fus, specification := "2" ),
+                 rec( map := MakeImmutable( fus ), specification := "2" ),
                  tbl2 );
 
     # Store embeddings.
     StoreFusion( tbl1,
-                 rec( map := [ 1, ncc2+1 .. (ncc1-1)*ncc2+1 ],
+                 rec( map := MakeImmutable( [ 1, ncc2+1 .. (ncc1-1)*ncc2+1 ] ),
                       specification := "1" ),
                  direct );
 
     StoreFusion( tbl2,
-                 rec( map := [ 1 .. ncc2 ],
-                      specification := "2" ),
+                 rec( map := MakeImmutable( [ 1 .. ncc2 ] ),
+                                specification := "2" ),
                  direct );
 
     # Store the argument list as the value of `FactorsOfDirectProduct'.
@@ -5382,22 +5441,22 @@ InstallMethod( CharacterTableDirectProduct,
     for i in [ 1 .. ncc1 ] do
       for j in [ 1 .. ncc2 ] do fus[ ( i - 1 ) * ncc2 + j ]:= i; od;
     od;
-    StoreFusion( reg, fus, tbl1 );
+    StoreFusion( reg, MakeImmutable( fus ), tbl1 );
 
     fus:= [];
     for i in [ 1 .. ncc1 ] do
       for j in [ 1 .. ncc2 ] do fus[ ( i - 1 ) * ncc2 + j ]:= j; od;
     od;
-    StoreFusion( reg, fus, tbl2 );
+    StoreFusion( reg, MakeImmutable( fus ), tbl2 );
 
     StoreFusion( tbl1,
-                 rec( map := [ 1, ncc2+1 .. (ncc1-1)*ncc2+1 ],
-                      specification := "1" ),
+                 MakeImmutable( rec( map := [ 1, ncc2+1 .. (ncc1-1)*ncc2+1 ],
+                                     specification := "1" ) ),
                  reg );
 
     StoreFusion( tbl2,
-                 rec( map := [ 1 .. ncc2 ],
-                      specification := "2" ),
+                 MakeImmutable( rec( map := [ 1 .. ncc2 ],
+                                     specification := "2" ) ),
                  reg );
 
     # Return the table.
@@ -5444,22 +5503,22 @@ InstallMethod( CharacterTableDirectProduct,
     for i in [ 1 .. ncc1 ] do
       for j in [ 1 .. ncc2 ] do fus[ ( i - 1 ) * ncc2 + j ]:= i; od;
     od;
-    StoreFusion( reg, fus, tbl1 );
+    StoreFusion( reg, MakeImmutable( fus ), tbl1 );
 
     fus:= [];
     for i in [ 1 .. ncc1 ] do
       for j in [ 1 .. ncc2 ] do fus[ ( i - 1 ) * ncc2 + j ]:= j; od;
     od;
-    StoreFusion( reg, fus, tbl2 );
+    StoreFusion( reg, MakeImmutable( fus ), tbl2 );
 
     StoreFusion( tbl1,
-                 rec( map := [ 1, ncc2+1 .. (ncc1-1)*ncc2+1 ],
-                      specification := "1" ),
+                 MakeImmutable( rec( map := [ 1, ncc2+1 .. (ncc1-1)*ncc2+1 ],
+                                     specification := "1" ) ),
                  reg );
 
     StoreFusion( tbl2,
-                 rec( map := [ 1 .. ncc2 ],
-                      specification := "2" ),
+                 MakeImmutable( rec( map := [ 1 .. ncc2 ],
+                                     specification := "2" ) ),
                  reg );
 
     # Return the table.
@@ -5509,27 +5568,27 @@ InstallMethod( CharacterTableDirectProduct,
       for j in [ 1 .. ncc2 ] do fus[ ( i - 1 ) * ncc2 + j ]:= i; od;
     od;
     StoreFusion( reg,
-                 rec( map := fus,
-                      specification := "1" ),
+                 MakeImmutable( rec( map := fus,
+                                     specification := "1" ) ),
                  tbl1 );
     fus:= [];
     for i in [ 1 .. ncc1 ] do
       for j in [ 1 .. ncc2 ] do fus[ ( i - 1 ) * ncc2 + j ]:= j; od;
     od;
     StoreFusion( reg,
-                 rec( map := fus,
-                      specification := "2" ),
+                 MakeImmutable( rec( map := fus,
+                                     specification := "2" ) ),
                  tbl2 );
 
     # Store embeddings.
     StoreFusion( tbl1,
-                 rec( map := [ 1, ncc2+1 .. (ncc1-1)*ncc2+1 ],
-                      specification := "1" ),
+                 MakeImmutable( rec( map := [ 1, ncc2+1 .. (ncc1-1)*ncc2+1 ],
+                                     specification := "1" ) ),
                  reg );
 
     StoreFusion( tbl2,
-                 rec( map := [ 1 .. ncc2 ],
-                      specification := "2" ),
+                 MakeImmutable( rec( map := [ 1 .. ncc2 ],
+                                     specification := "2" ) ),
                  reg );
 
     # Return the table.
@@ -5597,7 +5656,8 @@ InstallGlobalFunction( CharacterTableHeadOfFactorGroupByFusion,
     for p in [ 1 .. Length( ComputedPowerMaps( tbl ) ) ] do
       if IsBound( ComputedPowerMaps( tbl )[p] ) then
         map:= ComputedPowerMaps( tbl )[p];
-        F.ComputedPowerMaps[p]:= factorfusion{ map{ inverse } };
+        F.ComputedPowerMaps[p]:= MakeImmutable(
+                                     factorfusion{ map{ inverse } } );
       fi;
     od;
 
@@ -5645,14 +5705,15 @@ InstallMethod( CharacterTableFactorGroup,
     F:= CharacterTableHeadOfFactorGroupByFusion( tbl, factorfusion );
 
     # Set the irreducibles.
-    SetIrr( F, List( factirr, chi -> Character( F, chi ) ) );
+    SetIrr( F, List( factirr, chi -> Character( F, MakeImmutable( chi ) ) ) );
 
     # Transfer necessary power maps of `tbl' to `F'.
     inverse:= ProjectionMap( factorfusion );
     maps:= ComputedPowerMaps( F );
-    for p in Set( Factors( Size( F ) ) ) do
+    for p in PrimeDivisors( Size( F ) ) do
       if not IsBound( maps[p] ) then
-        maps[p]:= factorfusion{ PowerMap( tbl, p ){ inverse } };
+        maps[p]:= MakeImmutable(
+                      factorfusion{ PowerMap( tbl, p ){ inverse } } );
       fi;
     od;
 
@@ -5692,7 +5753,8 @@ InstallMethod( CharacterTableFactorGroup,
     factirr:= Filtered( List( Irr( modtbl ), ValuesOfClassFunction ),
                         x -> Length( Set( x{ kernel } ) ) = 1 );
     proj:= ProjectionMap( fus );
-    SetIrr( modfact, List( factirr, x -> Character( modfact, x{ proj } ) ) );
+    SetIrr( modfact, List( factirr, x -> Character( modfact,
+                                           MakeImmutable( x{ proj } ) ) ) );
 
     # Return the result.
     return modfact;
@@ -5914,7 +5976,7 @@ InstallOtherMethod( CharacterTableIsoclinic,
         OrdersClassRepresentatives := orders,
         ComputedClassFusions       := [],
         ComputedPowerMaps          := [],
-        Irr                        := irreds.all );
+        Irr                        := List( irreds.all, MakeImmutable ) );
 
     # Get the fusion map onto the factor group modulo the central subgroup.
     # We assume that the first class of element order two or four in the
@@ -5923,7 +5985,7 @@ InstallOtherMethod( CharacterTableIsoclinic,
     invfusion:= InverseMap( factorfusion );
 
     # Adjust the power maps.
-    for p in Set( Factors( size ) ) do
+    for p in PrimeDivisors( size ) do
 
       map:= ShallowCopy( PowerMap( tbl, p ) );
 
@@ -5978,7 +6040,7 @@ InstallOtherMethod( CharacterTableIsoclinic,
         od;
       fi;
 
-      isoclinic.ComputedPowerMaps[p]:= map;
+      isoclinic.ComputedPowerMaps[p]:= MakeImmutable( map );
 
     od;
 
@@ -6087,7 +6149,8 @@ InstallOtherMethod( CharacterTableIsoclinic,
       irreducibles:= List( irreducibles, x -> Permuted( x, pi ) );
     fi;
 
-    SetIrr( reg, List( irreducibles, vals -> Character( reg, vals ) ) );
+    SetIrr( reg, List( irreducibles,
+                       vals -> Character( reg, MakeImmutable( vals ) ) ) );
 
     # Return the result.
     return reg;
@@ -6105,13 +6168,13 @@ InstallGlobalFunction( CharacterTableOfNormalSubgroup,
           nccl,           # no. of classes
           orders,         # repr. orders of the result
           centralizers,   # centralizer orders of the result
-          result,         # result table
           err,            # list of classes that must split
-          inverse,        # inverse map of `classes'
-          p,              # loop over primes
           irreducibles,   # list of irred. characters
           chi,            # loop over irreducibles of `tbl'
-          char;           # one character values list for `result'
+          char,           # one character values list for `result'
+          result,         # result table
+          inverse,        # inverse map of `classes'
+          p;              # loop over primes
 
     if not IsOrdinaryTable( tbl ) then
       Error( "<tbl> must be an ordinary character table" );
@@ -6121,68 +6184,36 @@ InstallGlobalFunction( CharacterTableOfNormalSubgroup,
     size:= Sum( sizesclasses );
 
     if Size( tbl ) mod size <> 0 then
-      Error( "<classes> is not a normal subgroup" );
+      # <classes> does not form a normal subgroup.
+      return fail;
     fi;
 
     nccl:= Length( classes );
     orders:= OrdersClassRepresentatives( tbl ){ classes };
     centralizers:= List( sizesclasses, x -> size / x );
 
-    result:= Concatenation( "Rest(", Identifier( tbl ), ",",
-                            String( classes ), ")" );
-    ConvertToStringRep( result );
-
-    result:= rec(
-        UnderlyingCharacteristic   := 0,
-        Identifier                 := result,
-        Size                       := size,
-        SizesCentralizers          := centralizers,
-        SizesConjugacyClasses      := sizesclasses,
-        OrdersClassRepresentatives := orders,
-        ComputedPowerMaps          := []             );
-
     err:= Filtered( [ 1 .. nccl ],
-                    x-> centralizers[x] mod orders[x] <> 0 );
+                    x -> not IsInt( centralizers[x] / orders[x] ) );
     if not IsEmpty( err ) then
       Info( InfoCharacterTable, 2,
             "CharacterTableOfNormalSubgroup: classes in " , err,
             " necessarily split" );
+      return fail;
     fi;
-    inverse:= InverseMap( classes );
 
-    for p in [ 1 .. Length( ComputedPowerMaps( tbl ) ) ] do
-      if IsBound( ComputedPowerMaps( tbl )[p] ) then
-        result.ComputedPowerMaps[p]:=
-            CompositionMaps( inverse,
-                CompositionMaps( ComputedPowerMaps( tbl )[p], classes ) );
+    # Compute the irreducibles.
+    irreducibles:= [];
+    for chi in Irr( tbl ) do
+      char:= ValuesOfClassFunction( chi ){ classes };
+      if     Sum( [ 1 .. nccl ],
+                i -> sizesclasses[i] * char[i] * GaloisCyc(char[i],-1), 0 )
+             = size
+         and not char in irreducibles then
+        Add( irreducibles, MakeImmutable( char ) );
       fi;
     od;
 
-    # Compute the irreducibles if known.
-    irreducibles:= [];
-    if HasIrr( tbl ) then
-
-      for chi in Irr( tbl ) do
-        char:= ValuesOfClassFunction( chi ){ classes };
-        if     Sum( [ 1 .. nccl ],
-                  i -> sizesclasses[i] * char[i] * GaloisCyc(char[i],-1), 0 )
-               = size
-           and not char in irreducibles then
-          Add( irreducibles, char );
-        fi;
-      od;
-
-    fi;
-
-    if Length( irreducibles ) = nccl then
-
-      result.Irr:= irreducibles;
-
-      # Convert the record into a library table.
-      ConvertToLibraryCharacterTableNC( result );
-
-    else
-
+    if Length( irreducibles ) <> nccl then
       p:= Size( tbl ) / size;
       if IsPrimeInt( p ) and not IsEmpty( irreducibles ) then
         Info( InfoCharacterTable, 2,
@@ -6192,11 +6223,35 @@ InstallGlobalFunction( CharacterTableOfNormalSubgroup,
               "#I   (now ", Length( classes ), ", after nec. splitting ",
               Length( classes ) + (p-1) * Length( err ), ")" );
       fi;
-
-      Error( "tables in progress not yet supported" );
-#T !!
-
+      return fail;
     fi;
+
+    result:= Concatenation( "Rest(", Identifier( tbl ), ",",
+                            String( classes ), ")" );
+    ConvertToStringRep( result );
+
+    result:= rec(
+        UnderlyingCharacteristic   := 0,
+        Identifier                 := MakeImmutable( result ),
+        Size                       := size,
+        SizesCentralizers          := MakeImmutable( centralizers ),
+        SizesConjugacyClasses      := MakeImmutable( sizesclasses ),
+        OrdersClassRepresentatives := MakeImmutable( orders ),
+        ComputedPowerMaps          := [],
+        Irr                        := irreducibles );
+
+    inverse:= InverseMap( classes );
+
+    for p in [ 1 .. Length( ComputedPowerMaps( tbl ) ) ] do
+      if IsBound( ComputedPowerMaps( tbl )[p] ) then
+        result.ComputedPowerMaps[p]:= MakeImmutable(
+            CompositionMaps( inverse,
+                CompositionMaps( ComputedPowerMaps( tbl )[p], classes ) ) );
+      fi;
+    od;
+
+    # Convert the record into a library table.
+    ConvertToLibraryCharacterTableNC( result );
 
     # Store the fusion into `tbl'.
     StoreFusion( result, classes, tbl );
@@ -6477,8 +6532,7 @@ InstallMethod( CharacterTableWithSortedClasses,
     "for an ordinary character table, and a permutation",
     [ IsOrdinaryTable, IsPerm ],
     function( tbl, perm )
-
-    local new, i, attr, fus, tblmaps, permmap, inverse, k;
+    local new, i, attr, fus, copy, tblmaps, permmap, inverse, k;
 
     # Catch trivial cases.
     if 1^perm <> 1 then
@@ -6509,21 +6563,24 @@ InstallMethod( CharacterTableWithSortedClasses,
                   SizesConjugacyClasses,
                 ] do
       if Tester( attr )( tbl ) then
-        Setter( attr )( new, Permuted( attr( tbl ), perm ) );
+        Setter( attr )( new, MakeImmutable( Permuted( attr( tbl ), perm ) ) );
       fi;
     od;
 
     # For each fusion, the map must be permuted.
     for fus in ComputedClassFusions( tbl ) do
-      Add( ComputedClassFusions( new ),
-           rec( name:= fus.name, map:= Permuted( fus.map, perm ) ) );
+      copy:= ShallowCopy( fus );
+      copy.map:= MakeImmutable( Permuted( fus.map, perm ) );
+      Add( ComputedClassFusions( new ), MakeImmutable( copy ) );
     od;
 
     # Each irreducible character must be permuted.
     if HasIrr( tbl ) then
       SetIrr( new,
-          List( Irr( tbl ), chi -> Character( new,
-                Permuted( ValuesOfClassFunction( chi ), perm ) ) ) );
+          List( Irr( tbl ),
+                chi -> Character( new,
+                           MakeImmutable( Permuted(
+                               ValuesOfClassFunction( chi ), perm ) ) ) ) );
     fi;
 
     # Power maps must be ``conjugated''.
@@ -6538,8 +6595,9 @@ InstallMethod( CharacterTableWithSortedClasses,
       od;
       for k in [ 1 .. Length( tblmaps ) ] do
         if IsBound( tblmaps[k] ) then
-          ComputedPowerMaps( new )[k]:= CompositionMaps( permmap,
-              CompositionMaps( tblmaps[k], inverse ) );
+          ComputedPowerMaps( new )[k]:= MakeImmutable(
+              CompositionMaps( permmap,
+                  CompositionMaps( tblmaps[k], inverse ) ) );
         fi;
       od;
 

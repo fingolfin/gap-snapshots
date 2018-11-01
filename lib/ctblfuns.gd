@@ -1140,6 +1140,7 @@ DeclareOperation( "IsCharacter", [ IsCharacterTable, IsHomogeneousList ] );
 ##  <#/GAPDoc>
 ##
 DeclareProperty( "IsVirtualCharacter", IsClassFunction );
+InstallTrueMethod( IsClassFunction, IsVirtualCharacter );
 DeclareOperation( "IsVirtualCharacter",
     [ IsCharacterTable, IsHomogeneousList ] );
 
@@ -1150,7 +1151,7 @@ DeclareOperation( "IsVirtualCharacter",
 ##
 ##  Each character is of course a virtual character.
 ##
-InstallTrueMethod( IsVirtualCharacter, IsCharacter and IsClassFunction );
+InstallTrueMethod( IsVirtualCharacter, IsCharacter );
 
 
 #############################################################################
@@ -1344,7 +1345,7 @@ DeclareOperation( "Norm", [ IsOrdinaryTable, IsHomogeneousList ] );
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> List( Irr( S4 ), CentreOfCharacter );
-##  [ Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]), Group(()), 
+##  [ Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]), Group(()),
 ##    Group([ (1,2)(3,4), (1,4)(2,3) ]), Group(()), Group([ (), (1,2), (1,
 ##     2)(3,4), (1,2,3), (1,2,3,4) ]) ]
 ##  ]]></Example>

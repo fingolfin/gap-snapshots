@@ -15,7 +15,7 @@
 #ifndef GAP_SAVELOAD_H
 #define GAP_SAVELOAD_H
 
-#include <src/system.h>
+#include "system.h"
 
 /***************************************************************************
 **
@@ -46,7 +46,6 @@ extern void SaveCStr(const Char *s);
 extern void SaveString(Obj string);
 extern void LoadString(Obj string);
 extern void SaveSubObj(Obj o);
-extern void SaveHandler(ObjFunc hdlr);
 
 extern UInt1 LoadUInt1( void );
 extern UInt2 LoadUInt2( void );
@@ -57,13 +56,12 @@ extern UInt8 LoadUInt8( void);
 #endif
 extern void LoadCStr(Char *buf, UInt maxlen );
 extern Obj LoadSubObj( void );
-extern ObjFunc LoadHandler();
 
 
 
 /***************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

@@ -131,7 +131,7 @@
     [4X[25Xgap>[125X [27Xt2 := RunTask(x->x*x, 4);;[127X[104X
     [4X[25Xgap>[125X [27Xt := ScheduleTask([t1, t2], function()[127X[104X
     [4X[25X>[125X [27X          return TaskResult(t1) + TaskResult(t2);[127X[104X
-    [4X[25X>[125X [27X   end);[127X[104X
+    [4X[25X>[125X [27X   end);;[127X[104X
     [4X[25Xgap>[125X [27XTaskResult(t);[127X[104X
     [4X[28X25[128X[104X
   [4X[32X[104X
@@ -328,7 +328,7 @@
     [4X[25X>[125X [27X     while true do[127X[104X
     [4X[25X>[125X [27X       OnTaskCancellation(function() return 314; end);[127X[104X
     [4X[25X>[125X [27X     od;[127X[104X
-    [4X[25X>[125X [27X   end);[127X[104X
+    [4X[25X>[125X [27X   end);;[127X[104X
     [4X[25Xgap>[125X [27XCancelTask(task);[127X[104X
     [4X[25Xgap>[125X [27XTaskResult(task);[127X[104X
     [4X[28X314[128X[104X
@@ -338,11 +338,8 @@
   
   [33X[1;0Y[29X[2XOnTaskCancellationReturn[102X( [3Xvalue[103X ) [32X function[133X
   
-  [33X[0;0Y[2XOnTaskCancellationReturn[102X is a convenience function that does the same as:[133X
-  
-  [4X[32X  Example  [32X[104X
-    [4X[28XOnTaskCancellation(function() return value; end);[128X[104X
-  [4X[32X[104X
+  [33X[0;0Y[2XOnTaskCancellationReturn[102X  is  a  convenience function that does the same as:
+  [10XOnTaskCancellation(function() return value; end);[110X[133X
   
   
   [1X1.5 [33X[0;0YConditions[133X[101X

@@ -53,8 +53,8 @@
 #ifndef GAP_FINFIELD_H
 #define GAP_FINFIELD_H
 
-#include <src/ffdata.h>
-#include <src/system.h>
+#include "ffdata.h"
+#include "system.h"
 
 /****************************************************************************
 **
@@ -136,9 +136,6 @@ extern  Obj             SuccFF;
 
 extern  Obj             TypeFF;
 extern  Obj             TypeFF0;
-
-extern  Obj             TYPE_FFE;
-extern  Obj             TYPE_FFE0;
 
 
 /****************************************************************************
@@ -278,8 +275,7 @@ typedef UInt2           FFV;
 **  'unsigned short'.
 **
 **  Note  that 'POW_FFV' is a macro,  so do not call  it  with arguments that
-**  have side effects.  For optimal performance  put the operands in registers
-**  before calling 'POW_FFV'.
+**  have side effects.
 **
 **  If the finite field element is 0 the power is also 0, otherwise  we  have
 **  $a^n ~ (z^{a-1})^n = z^{(a-1)*n} = z^{(a-1)*n % (o-1)} ~ (a-1)*n % (o-1)$
@@ -398,7 +394,7 @@ extern  Obj             TypeFFE (
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

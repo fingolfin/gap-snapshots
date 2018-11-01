@@ -1,0 +1,224 @@
+<html><head><title>[aclib] 4 Example computations with almost crystallographic groups</title></head>
+<body text="#000000" bgcolor="#ffffff">
+[<a href = "chapters.htm">Up</a>] [<a href ="CHAP003.htm">Previous</a>] [<a href = "theindex.htm">Index</a>]
+<h1>4 Example computations with almost crystallographic groups</h1><p>
+<P>
+<H3>Sections</H3>
+<oL>
+<li> <A HREF="CHAP004.htm#SECT001">Example computations I</a>
+<li> <A HREF="CHAP004.htm#SECT002">Example computations II</a>
+<li> <A HREF="CHAP004.htm#SECT003">Example computations III</a>
+</ol><p>
+<p>
+<p>
+<h2><a name="SECT001">4.1 Example computations I</a></h2>
+<p><p>
+Using the functions available for pcp groups in the share package 
+<font face="Gill Sans,Helvetica,Arial">polycyclic</font> it is now easy to redo some of the calculations of 
+<a href="biblio.htm#KD"><cite>KD</cite></a>. As a first example we check whether the groups indicated 
+as torsion free in <a href="biblio.htm#KD"><cite>KD</cite></a> are also determined as torsion free
+ones by <font face="Gill Sans,Helvetica,Arial">GAP</font>. In <a href="biblio.htm#KD"><cite>KD</cite></a> these almost Bieberbach groups are listed as 
+``AB-groups''. So for type ``013'' these are the groups with parameters 
+(<i>k</i>,0,1,0,1,0) where <i>k</i> is an even integer. Let's look at some examples 
+in <font face="Gill Sans,Helvetica,Arial">GAP</font>:
+<p>
+<pre>
+gap&gt; G:=AlmostCrystallographicPcpDim4("013",[8,0,1,0,1,0]);
+Pcp-group with orders [ 2, 2, 0, 0, 0, 0 ]
+gap&gt; IsTorsionFree(G);
+true
+gap&gt; G:=AlmostCrystallographicPcpDim4("013",[9,0,1,0,1,0]);
+Pcp-group with orders [ 2, 2, 0, 0, 0, 0 ]
+gap&gt; IsTorsionFree(G);
+false
+</pre>
+<p>
+Further, there is also some cohomology information in the tables 
+of <a href="biblio.htm#KD"><cite>KD</cite></a>. In fact, the groups in this library were obtained
+as extensions <i>E</i> of the form
+<p>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> 1 &#8594; <b>Z</b>&#8594; <i>E</i> &#8594; <i>Q</i> &#8594; 1 </td></tr></table></td></tr></table>
+<p>
+where, in the 4-dimensional case <i>Q</i> = <i>E</i>/&#9001;<i>d</i> &#9002;. The 
+cohomology information for the particular example above shows that 
+the groups determined by a parameter set (<i>k</i><sub>1</sub>,<i>k</i><sub>2</sub>,<i>k</i><sub>3</sub>,<i>k</i><sub>4</sub>,<i>k</i><sub>4</sub>,<i>k</i><sub>6</sub>) 
+are equivalent as extensions to the groups determined by the parameters 
+(<i>k</i><sub>1</sub>, <i>k</i><sub>2</sub>  mod 2, <i>k</i><sub>3</sub>  mod 2, <i>k</i><sub>4</sub>  mod 2, <i>k</i><sub>5</sub>  mod 2, 0). This is 
+also visible in finding torsion:
+<p>
+<pre>
+gap&gt; G:=AlmostCrystallographicPcpDim4("013",[10,0,2,0,1,0]);
+Pcp-group with orders [ 2, 2, 0, 0, 0, 0 ]
+gap&gt; IsTorsionFree(G);
+false
+gap&gt; G:=AlmostCrystallographicPcpDim4("013",[10,0,3,0,1,9]);
+Pcp-group with orders [ 2, 2, 0, 0, 0, 0 ]
+gap&gt; IsTorsionFree(G);
+true
+</pre>
+<p>
+<p>
+<h2><a name="SECT002">4.2 Example computations II</a></h2>
+<p><p>
+The computation of cohomology groups played an important role in the 
+classification of the almost Bieberbach groups in <a href="biblio.htm#KD"><cite>KD</cite></a>. Using 
+<font face="Gill Sans,Helvetica,Arial">GAP</font>, it is now possible to check these computations. As an example we 
+consider the 4-dimensional almost crystallographic groups of type 85 on 
+page 202 of <a href="biblio.htm#KD"><cite>KD</cite></a>. This group <i>E</i> has 6 generators. In the table, one 
+also finds the information
+<p>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>H</i><sup>2</sup>(<i>Q</i>,<b>Z</b>) = <b>Z</b>&#8853;(<b>Z</b><sub>2</sub>)<sup>2</sup> &#8853;<b>Z</b><sub>4</sub> </td></tr></table></td></tr></table>
+<p>
+for <i>Q</i>=<i>E</i>/&#9001;<i>d</i> &#9002; as above. Moreover, the <i>Q</i>--module <b>Z</b> is 
+in fact the group &#9001;<i>d</i> &#9002;, where the <i>Q</i>-action comes from 
+conjugation inside <i>E</i>. In the case of groups of type 85, <b>Z</b> is a 
+trivial <i>Q</i>-module. The following example demonstrates how to (re)compute 
+this two-cohomology group <i>H</i><sup>2</sup>(<i>Q</i>,<b>Z</b>). 
+<p>
+<pre>
+gap&gt; G:=AlmostCrystallographicPcpGroup(4, "085", false);
+Pcp group with orders [ 2, 4, 0, 0, 0, 0 ]
+gap&gt; GroupGeneratedByd:=Subgroup(G, [G.6] );
+Pcp group with orders [ 0 ]
+gap&gt; Q:=G/GroupGeneratedByd;
+Pcp group with orders [ 2, 4, 0, 0, 0 ]
+gap&gt; action:=List( Pcp(Q), x -&gt; [[1]] );
+[ [ [ 1 ] ], [ [ 1 ] ], [ [ 1 ] ], [ [ 1 ] ], [ [ 1 ] ] ]
+gap&gt; C:=CRRecordByMats( Q, action);;
+gap&gt; TwoCohomologyCR( C ).factor.rels;
+[ 2, 2, 4, 0 ]
+</pre>
+<p>
+This last line gives us the abelian invariants of the second 
+cohomology group <i>H</i><sup>2</sup>(<i>Q</i>,<b>Z</b>). So we should read this line as 
+<p>
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> <i>H</i><sup>2</sup>(<i>Q</i>,<b>Z</b>) = <b>Z</b><sub>2</sub> &#8853;<b>Z</b><sub>2</sub> &#8853;<b>Z</b><sub>4</sub> &#8853;<b>Z</b></td></tr></table></td></tr></table>
+<p>
+which indeed coincides with the information in <a href="biblio.htm#KD"><cite>KD</cite></a>.
+<p>
+<p>
+<h2><a name="SECT003">4.3 Example computations III</a></h2>
+<p><p>
+As another application of the capabilities of the combination of
+<code>aclib</code> and <font face="Gill Sans,Helvetica,Arial">polycyclic</font> we check some computations of <a href="biblio.htm#DM"><cite>DM</cite></a>.
+<p>
+Section 5 of the paper <a href="biblio.htm#DM"><cite>DM</cite></a> is completely devoted to an example
+of the computation of the <i>P</i>-localization of a virtually nilpotent group,
+where <i>P</i> is a set of primes. Although it is not our intention to 
+develop the theory of <i>P</i>-localization of groups at this place, let us
+summarize some of the main results concerning this topic here.
+<p>
+For a set of primes <i>P</i>, we say that <i>n</i>  &#8712; <i>P</i> if and only if <i>n</i> is
+a product of primes in <i>P</i>. A group <i>G</i> is said to be <i>P</i>-local if and 
+only if the map &#956;<sub><i>n</i></sub>:<i>G</i>&#8594; <i>G</i>: <i>g</i> &#8594; <i>g</i><sup><i>n</i></sup> is bijective for 
+all <i>n</i>  &#8712; <i>P</i>&#8242;, where <i>P</i>&#8242; is the set of all primes not in <i>P</i>. The 
+<i>P</i>-localization of a group <i>G</i>, is a <i>P</i>-local group <i>G</i><sub><i>P</i></sub> together 
+with a morphism &#945;:<i>G</i> &#8594; <i>G</i><sub><i>P</i></sub> which satisfy the following 
+universal property: For each <i>P</i>-local group <i>L</i> and any morphism 
+&#981;: <i>G</i> &#8594; <i>L</i>, there exists a unique morphism &#968;:<i>G</i><sub><i>P</i></sub> &#8594; <i>L</i>, such that &#968;&#176;&#945; =  &#981;.
+<p>
+This concept of localization is well developed for finite groups and 
+for nilpotent groups. For a finite group <i>G</i>, the <i>P</i>-localization is 
+the largest quotient of <i>G</i>, having no elements with an order belonging to 
+<i>P</i>&#8242; (the morphism &#945;, mentioned above is the natural projection).
+<p>
+In <a href="biblio.htm#DM"><cite>DM</cite></a> a contribution is made towards the localization of virtually 
+nilpotent groups. The theory developed in the paper is then illustrated 
+in the last section of the paper by means of the computation of the 
+<i>P</i>-localization of an almost crystallographic group. For their example
+the authors have chosen an almost crystallographic group <i>G</i> of dimension 3
+and type 17. For the set of parameters (<i>k</i><sub>1</sub>,<i>k</i><sub>2</sub>,<i>k</i><sub>3</sub>,<i>k</i><sub>4</sub>) they have
+considered all cases of the form (<i>k</i><sub>1</sub>,<i>k</i><sub>2</sub>,<i>k</i><sub>3</sub>,<i>k</i><sub>4</sub>)=(2,0,0,<i>k</i><sub>4</sub>). 
+<p>
+Here we will check their computations in two cases <i>k</i><sub>4</sub>=0 and <i>k</i><sub>4</sub>=1
+using the set of primes <i>P</i>={2}. The holonomy group of these almost 
+crystallographic groups <i>G</i> is the dihedral group <font face="helvetica"><i>D</i></font><sub>6</sub> of order 
+12. Thus there is a short exact sequence of the form 
+<br clear="all" /><table border="0" width="100%"><tr><td><table align="center" cellspacing="0"  cellpadding="2"><tr><td nowrap="nowrap" align="center"> 1 &#8594; <span class="roman">Fitt</span>(<i>G</i>) &#8594; <i>G</i> &#8594; <font face="helvetica"><i>D</i></font><sub>6</sub> &#8594; 1&#183;</td></tr></table></td></tr></table>
+<p>
+As a first step in their computation, Descheemaeker and Malfait determine
+the group <i>I</i><sub><i>P</i>&#8242;</sub><font face="helvetica"><i>D</i></font><sub>6</sub>, which is the unique subgroup of order 3 in
+<font face="helvetica"><i>D</i></font><sub>6</sub>. One of the main objects in <a href="biblio.htm#DM"><cite>DM</cite></a> is the group <i>K</i>=<i>p</i><sup>&#8722;1</sup> (<i>I</i><sub><i>P</i>&#8242;</sub><font face="helvetica"><i>D</i></font><sub>6</sub>), where <i>p</i> is the natural projection of <i>G</i> onto its 
+holonomy group. It is known that the <i>P</i>-localization of <i>G</i> coincides 
+with the <i>P</i>-localization of <i>G</i>/&#947;<sub>3</sub>(<i>K</i>), where &#947;<sub>3</sub>(<i>K</i>) is the 
+third term in the lower central series of <i>K</i>. As <i>G</i>/&#947;<sub>3</sub>(<i>K</i>) is 
+finite in this example, we exactly know what this <i>P</i>-localization is. 
+Let us now show, how GAP can be used to compute this <i>P</i>-localization in 
+two cases:
+<p>
+<p>
+First case: The parameters are (<i>k</i><sub>1</sub>,<i>k</i><sub>2</sub>,<i>k</i><sub>3</sub>,<i>k</i><sub>4</sub>)=(2,0,0,0)
+<pre>
+gap&gt; G := AlmostCrystallographicPcpGroup(3, 17, [2,0,0,0] );
+Pcp group with orders [ 2, 6, 0, 0, 0 ]
+gap&gt; projection := NaturalHomomorphismOnHolonomyGroup( G );
+[ g1, g2, g3, g4, g5 ] -&gt; [ g1, g2, identity, identity, identity ]
+gap&gt; F := HolonomyGroup( G );
+Pcp group with orders [ 2, 6 ]
+gap&gt; IPprimeD6 := Subgroup( F , [F.2^2] );
+Pcp group with orders [ 3 ]
+gap&gt; K := PreImage( projection, IPprimeD6 );
+Pcp group with orders [ 3, 0, 0, 0 ]
+gap&gt; PrintPcpPresentation( K );
+pcp presentation on generators [ g2^2, g3, g4, g5 ]
+g2^2 ^ 3 = identity
+g3 ^ g2^2 = g3^-1*g4^-1
+g3 ^ g2^2^-1 = g4*g5^-2
+g4 ^ g2^2 = g3*g5^2
+g4 ^ g2^2^-1 = g3^-1*g4^-1*g5^2
+g4 ^ g3 = g4*g5^2
+g4 ^ g3^-1 = g4*g5^-2
+gap&gt; Gamma3K := CommutatorSubgroup( K, CommutatorSubgroup( K, K ));
+Pcp group with orders [ 0, 0, 0 ]
+gap&gt; quotient := G/Gamma3K;
+Pcp group with orders [ 2, 6, 3, 3, 2 ]
+gap&gt; S := SylowSubgroup( quotient, 3);
+Pcp group with orders [ 3, 3, 3 ]
+gap&gt; N := NormalClosure( quotient, S);
+Pcp group with orders [ 3, 3, 3 ]
+gap&gt; localization := quotient/N;
+Pcp group with orders [ 2, 2, 2 ]
+gap&gt; PrintPcpPresentation( localization );
+pcp presentation on generators [ g1, g2, g3 ]
+g1 ^ 2 = identity
+g2 ^ 2 = identity
+g3 ^ 2 = identity
+</pre>
+This shows that <i>G</i><sub><i>P</i></sub> &#8773; <b>Z</b><sub>2</sub><sup>3</sup>.
+<p>
+<p>
+Second case: The parameters are (<i>k</i><sub>1</sub>,<i>k</i><sub>2</sub>,<i>k</i><sub>3</sub>,<i>k</i><sub>4</sub>)=(2,0,0,1)
+<pre>
+gap&gt; G := AlmostCrystallographicPcpGroup(3, 17, [2,0,0,1]);;
+gap&gt; projection := NaturalHomomorphismOnHolonomyGroup( G );;
+gap&gt; F := HolonomyGroup( G );;
+gap&gt; IPprimeD6 := Subgroup( F , [F.2^2] );;
+gap&gt; K := PreImage( projection, IPprimeD6 );;
+gap&gt; Gamma3K := CommutatorSubgroup( K, CommutatorSubgroup( K, K ));;
+gap&gt; quotient := G/Gamma3K;;
+gap&gt; S := SylowSubgroup( quotient, 3);;
+gap&gt; N := NormalClosure( quotient, S);;
+gap&gt; localization := quotient/N;
+Pcp group with orders [ 2, 2, 2 ]
+gap&gt; PrintPcpPresentation( localization );
+pcp presentation on generators [ g1, g2, g3 ]
+g1 ^ 2 = identity
+g2 ^ 2 = g3
+g3 ^ 2 = identity
+g2 ^ g1 = g2*g3
+g2 ^ g1^-1 = g2*g3
+</pre>
+<p>
+In this case, we see that <i>G</i><sub><i>P</i></sub>=<font face="helvetica"><i>D</i></font><sub>4</sub>.
+<p>
+<p>
+The reader can check that these results coincide with those obtained in 
+<a href="biblio.htm#DM"><cite>DM</cite></a>. Note also that we used a somewhat different scheme to compute 
+this localization than the one used in <a href="biblio.htm#DM"><cite>DM</cite></a>. We invite the reader to
+check the same computations, tracing exactly the steps made in <a href="biblio.htm#DM"><cite>DM</cite></a>.
+<p>
+<p>
+[<a href = "chapters.htm">Up</a>] [<a href ="CHAP003.htm">Previous</a>] [<a href = "theindex.htm">Index</a>]
+<P>
+<address>aclib manual<br>October 2018
+</address></body></html>

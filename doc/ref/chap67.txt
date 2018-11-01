@@ -122,3 +122,38 @@
   
   [33X[0;0Yis the category for elements of an algebraic extension.[133X
   
+  
+  [1X67.3 [33X[0;0YFinding Subfields[133X[101X
+  
+  [1X67.3-1 IdealDecompositionsOfPolynomial[101X
+  
+  [33X[1;0Y[29X[2XIdealDecompositionsOfPolynomial[102X( [3Xpol[103X ) [32X function[133X
+  
+  [33X[0;0YLet  [22Xf[122X  be  a  univariate,  rational, irreducible, polynomial. A pair [22Xg[122X,[22Xh[122X of
+  polynomials   of   degree  strictly  smaller  than  that  of  [22Xf[122X,  such  that
+  [22Xf(x)|g(h(x))[122X  is  called  an  ideal  decomposition.  In the context of field
+  extensions,  if  [22Xα[122X is a root of [22Xf[122X in a suitable extension and [22XQ[122X the field of
+  rational  numbers.  Such decompositions correspond to (proper) subfields [22XQ <
+  Q(β)  <  Q(α)[122X,  where  [22Xg[122X  is  the  minimal  polynomial  of  [22Xβ[122X. This function
+  determines  such  decompositions  up to equality of the subfields [22XQ(β)[122X, thus
+  determining  subfields  of a given algebraic extension. It returns a list of
+  pairs  [22X[g,h][122X  (and  an  empty  list if no such decomposition exists). If the
+  option  [3Xonlyone[103X  is  given  it  returns  at most one such decomposition (and
+  performs faster).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx:=X(Rationals,"x");;pol:=x^8-24*x^6+144*x^4-288*x^2+144;;[127X[104X
+    [4X[25Xgap>[125X [27Xl:=IdealDecompositionsOfPolynomial(pol);[127X[104X
+    [4X[28X[ [ x^2+72*x+144, x^6-20*x^4+60*x^2-36 ],[128X[104X
+    [4X[28X  [ x^2-48*x+144, x^6-21*x^4+84*x^2-48 ],[128X[104X
+    [4X[28X  [ x^2+288*x+17280, x^6-24*x^4+132*x^2-288 ],[128X[104X
+    [4X[28X  [ x^4-24*x^3+144*x^2-288*x+144, x^2 ] ][128X[104X
+    [4X[25Xgap>[125X [27XList(l,x->Value(x[1],x[2])/pol);[127X[104X
+    [4X[28X[ x^4-16*x^2-8, x^4-18*x^2+33, x^4-24*x^2+120, 1 ][128X[104X
+    [4X[25Xgap>[125X [27XIdealDecompositionsOfPolynomial(pol:onlyone);[127X[104X
+    [4X[28X[ [ x^2+72*x+144, x^6-20*x^4+60*x^2-36 ] ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIn  this  example  the given polynomial is regular with Galois group [22XQ_8[122X, as
+  expected we get four proper subfields.[133X
+  

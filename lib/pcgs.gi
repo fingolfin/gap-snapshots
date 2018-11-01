@@ -20,7 +20,7 @@ InstallGlobalFunction( PcgsByIndependentGeneratorsOfAbelianGroup, function( A )
     pcs := [  ];
     rel := [  ];
     for gen  in IndependentGeneratorsOfAbelianGroup( A )  do
-        for f  in FactorsInt( Order( gen ) )  do
+        for f  in Factors(Integers, Order( gen ) )  do
             Add( pcs, gen );
             Add( rel, f );
             gen := gen ^ f;
@@ -283,7 +283,7 @@ function( G )
     ord := [];
     map := [];
     for i in [1..Length(pcgs)] do
-        facs := FactorsInt( rels[i] );
+        facs := Factors(Integers, rels[i] );
         g    := pcgs[i];
         for f in facs do
             Add( new, g );
@@ -354,7 +354,7 @@ InstallMethod( DepthOfPcElement,
     0,
 
 function( pcgs, elm )
-    return PositionNot( ExponentsOfPcElement( pcgs, elm ), 0 );
+    return PositionNonZero( ExponentsOfPcElement( pcgs, elm ) );
 end );
 
 #############################################################################
@@ -367,7 +367,7 @@ InstallMethod( DepthAndLeadingExponentOfPcElement,
 function( pcgs, elm )
 local e,p;
     e:=ExponentsOfPcElement( pcgs, elm );
-    p:=PositionNot( e, 0 );
+    p:=PositionNonZero( e );
     if p>Length(e) then
       return [p,0];
     else
@@ -528,7 +528,7 @@ function( pcgs, elm )
     local   exp,  dep;
 
     exp := ExponentsOfPcElement( pcgs, elm );
-    dep := PositionNot( exp, 0 );
+    dep := PositionNonZero( exp );
     if Length(exp) < dep  then
         return fail;
     else

@@ -155,7 +155,7 @@ SplitUpSublistsByFpFunc := function( list )
       fi;
    od;
    Info( InfoRandIso, 2, "   Iso: found ", Length(result)," classes incl. ",
-          Length( Filtered( result, IsRecord ) )," unique groups");
+          Number( result, IsRecord )," unique groups");
    return result;
 end;
 
@@ -195,7 +195,7 @@ CodeGenerators := function( gens, spcgs )
                sgrps[ tpos ] := GroupByGenerators( Concatenation( [ e ],
                                 pcgs{[ tpos + 1 .. first[ lay + 1 ] - 1 ]},
                                 spcgs{[ first[lay+1] .. Length(spcgs) ]} ) );
-               for p in Set( FactorsInt( Order( e ) ) ) do
+               for p in PrimeDivisors( Order( e ) ) do
                   et := e ^ p;
                   if et <> one and not et in gens then
                      Add( gens, et );
@@ -286,7 +286,7 @@ IsomorphismSolvableSmallGroups := function( g, h )
    lmin := Length( MinimalGeneratingSet( G ) );
    qual := size ^ lmin;
    poses := fail;
-   i := - Length( FactorsInt( size ) ) * 5 - lcoc * 8 - lmin * 12;
+   i := - Length( Factors(Integers, size ) ) * 5 - lcoc * 8 - lmin * 12;
    Info( InfoRandIso, 3, "testing ", -i, " generating strategies" );
    while poses = fail or i < 0 do
       i := i + 1;

@@ -13,14 +13,13 @@ PackageName := "AutomGrp",
 ##  one line.
 Subtitle := "Automata groups",
 
-Version := "1.3",
+Version := "1.3.1",
 
 ##  Release date of the current version in dd/mm/yyyy format.
 #
-Date := "28/03/2016",
+Date := "30/09/2018",
 
-ArchiveURL := "http://sourceforge.net/projects/finautom/files/automgrp/1.3/automgrp-1.3",
-
+ArchiveURL := "http://sourceforge.net/projects/finautom/files/automgrp/1.3.1/automgrp-1.3.1",
 ArchiveFormats := ".tar.bz2 .tar.gz -win.zip",
 
 Persons := [
@@ -92,7 +91,7 @@ PackageDoc := rec(
 Dependencies := rec(
   # GAP version, use version strings for specifying exact versions,
   # prepend a '>=' for specifying a least version.
-  GAP := ">=4.4.6",
+  GAP := ">=4.9.1",
   # list of pairs [package name, (least) version],  package name is case
   # insensitive, least version denoted with '>=' prepended to version string.
   # without these, the package will not load

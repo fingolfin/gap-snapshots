@@ -3,7 +3,7 @@
                              [1XGAP - Reference Manual[101X
   
   
-                           Release 4.9.3, 05-Sep-2018
+                          Release 4.10.0, 01-Nov-2018
   
   
                                  The GAP Group
@@ -684,9 +684,10 @@
       21.16-8 PositionProperty
       21.16-9 PositionsProperty
       21.16-10 PositionBound
-      21.16-11 PositionNot
-      21.16-12 PositionNonZero
-      21.16-13 PositionSublist
+      21.16-11 PositionsBound
+      21.16-12 PositionNot
+      21.16-13 PositionNonZero
+      21.16-14 PositionSublist
     21.17 [33X[0;0YProperties and Attributes for Lists[133X
       21.17-1 IsMatchingSublist
       21.17-2 IsDuplicateFree
@@ -922,13 +923,24 @@
     25.6 [33X[0;0YOrthogonal Embeddings[133X
       25.6-1 OrthogonalEmbeddings
       25.6-2 ShortestVectors
-  26 [33X[0;0YVector and matrix objects[133X
-    26.1 [33X[0;0YFundamental ideas and rules[133X
-    26.2 [33X[0;0YCategories of vectors and matrices[133X
-    26.3 [33X[0;0YConstructing vector and matrix objects[133X
-    26.4 [33X[0;0YOperations for row vector objects[133X
-    26.5 [33X[0;0YOperations for row list matrix objects[133X
-    26.6 [33X[0;0YOperations for flat matrix objects[133X
+  26 [33X[0;0YVector and Matrix Objects[133X
+    26.1 [33X[0;0YFundamental Ideas and Rules[133X
+    26.2 [33X[0;0YCategories of Vectors and Matrices[133X
+    26.3 [33X[0;0YConstructing Vector and Matrix Objects[133X
+    26.4 [33X[0;0YOperations for Vector Objects[133X
+      26.4-1 PositionNonZero
+      26.4-2 PositionLastNonZero
+      26.4-3 ListOp
+      26.4-4 Unpack
+      26.4-5 ConcatenationOfVectors
+      26.4-6 ExtractSubVector
+      26.4-7 ZeroVector
+      26.4-8 ConstructingFilter
+      26.4-9 Randomize
+      26.4-10 WeightOfVector
+      26.4-11 DistanceOfVectors
+    26.5 [33X[0;0YOperations for Row List Matrix Objects[133X
+    26.6 [33X[0;0YOperations for Flat Matrix Objects[133X
   27 [33X[0;0YStrings and Characters[133X
     27.1 [33X[0;0YIsChar and IsString[133X
       27.1-1 IsChar
@@ -975,9 +987,10 @@
       27.7-20 JoinStringsWithSeparator
       27.7-21 Chomp
       27.7-22 StartsWith
-      27.7-23 NumbersString
-      27.7-24 StringNumbers
-      27.7-25 StringOfMemoryAmount
+      27.7-23 StringFormatted
+      27.7-24 NumbersString
+      27.7-25 StringNumbers
+      27.7-26 StringOfMemoryAmount
     27.8 [33X[0;0YCharacter Conversion[133X
       27.8-1 IntChar
       27.8-2 CharInt
@@ -1489,7 +1502,8 @@
       39.7-2 RightCosets
       39.7-3 CanonicalRightCosetElement
       39.7-4 IsRightCoset
-      39.7-5 CosetDecomposition
+      39.7-5 IsBiCoset
+      39.7-6 CosetDecomposition
     39.8 [33X[0;0YTransversals[133X
       39.8-1 RightTransversal
     39.9 [33X[0;0YDouble Cosets[133X
@@ -1619,10 +1633,11 @@
       39.20-6 LowLayerSubgroups
       39.20-7 ContainedConjugates
       39.20-8 ContainingConjugates
-      39.20-9 RepresentativesPerfectSubgroups
-      39.20-10 ConjugacyClassesPerfectSubgroups
-      39.20-11 Zuppos
-      39.20-12 InfoLattice
+      39.20-9 MinimalFaithfulPermutationDegree
+      39.20-10 RepresentativesPerfectSubgroups
+      39.20-11 ConjugacyClassesPerfectSubgroups
+      39.20-12 Zuppos
+      39.20-13 InfoLattice
     39.21 [33X[0;0YSpecific Methods for Subgroup Lattice Computations[133X
       39.21-1 LatticeByCyclicExtension
       39.21-2 InvariantSubgroupsElementaryAbelianGroup
@@ -1663,6 +1678,8 @@
       39.25-5 CanComputeIndex
       39.25-6 CanComputeIsSubset
       39.25-7 KnowsHowToDecompose
+    39.26 [33X[0;0YSpecific functions for Normalizer calculation[133X
+      39.26-1 NormalizerViaRadical
   40 [33X[0;0YGroup Homomorphisms[133X
     40.1 [33X[0;0YCreating Group Homomorphisms[133X
       40.1-1 GroupHomomorphismByImages
@@ -1820,7 +1837,8 @@
       42.5-2 PermList
       42.5-3 MappingPermListList
       42.5-4 RestrictedPerm
-      42.5-5 AsPermutation
+      42.5-5 CycleFromList
+      42.5-6 AsPermutation
   43 [33X[0;0YPermutation Groups[133X
     43.1 [33X[0;0YIsPermGroup (Filter)[133X
       43.1-1 IsPermGroup
@@ -3119,6 +3137,8 @@
       67.1-2 IsAlgebraicExtension
     67.2 [33X[0;0YElements in Algebraic Extensions[133X
       67.2-1 IsAlgebraicElement
+    67.3 [33X[0;0YFinding Subfields[133X
+      67.3-1 IdealDecompositionsOfPolynomial
   68 [33X[0;0Yp-adic Numbers (preliminary)[133X
     68.1 [33X[0;0YPure p-adic Numbers[133X
       68.1-1 PurePadicNumberFamily
@@ -3323,9 +3343,10 @@
       71.10-7 ClassPositionsOfFittingSubgroup
       71.10-8 ClassPositionsOfLowerCentralSeries
       71.10-9 ClassPositionsOfUpperCentralSeries
-      71.10-10 ClassPositionsOfSupersolvableResiduum
-      71.10-11 ClassPositionsOfPCore
-      71.10-12 ClassPositionsOfNormalClosure
+      71.10-10 ClassPositionsOfSolvableRadical
+      71.10-11 ClassPositionsOfSupersolvableResiduum
+      71.10-12 ClassPositionsOfPCore
+      71.10-13 ClassPositionsOfNormalClosure
     71.11 [33X[0;0YOperations Concerning Blocks[133X
       71.11-1 PrimeBlocks
       71.11-2 SameBlock
@@ -3375,7 +3396,8 @@
       71.20-2 FactorsOfDirectProduct
       71.20-3 CharacterTableFactorGroup
       71.20-4 CharacterTableIsoclinic
-      71.20-5 CharacterTableWreathSymmetric
+      71.20-5 CharacterTableOfNormalSubgroup
+      71.20-6 CharacterTableWreathSymmetric
     71.21 [33X[0;0YSorted Character Tables[133X
       71.21-1 CharacterTableWithSortedCharacters
       71.21-2 SortedCharacters
@@ -3571,20 +3593,21 @@
     76.3 [33X[0;0YFunctions for GAP Packages[133X
       76.3-1 ReadPackage
       76.3-2 TestPackageAvailability
-      76.3-3 TestPackage
-      76.3-4 InstalledPackageVersion
-      76.3-5 DirectoriesPackageLibrary
-      76.3-6 DirectoriesPackagePrograms
-      76.3-7 CompareVersionNumbers
-      76.3-8 IsPackageMarkedForLoading
-      76.3-9 DeclareAutoreadableVariables
-      76.3-10 [33X[0;0YKernel modules in [5XGAP[105X packages[133X
-      76.3-11 LoadDynamicModule
-      76.3-12 [33X[0;0YThe PackageInfo.g File[133X
-      76.3-13 ValidatePackageInfo
-      76.3-14 ShowPackageVariables
-      76.3-15 BibEntry
-      76.3-16 Cite
+      76.3-3 IsPackageLoaded
+      76.3-4 IsPackageMarkedForLoading
+      76.3-5 TestPackage
+      76.3-6 InstalledPackageVersion
+      76.3-7 DirectoriesPackageLibrary
+      76.3-8 DirectoriesPackagePrograms
+      76.3-9 CompareVersionNumbers
+      76.3-10 DeclareAutoreadableVariables
+      76.3-11 [33X[0;0YKernel modules in [5XGAP[105X packages[133X
+      76.3-12 LoadDynamicModule
+      76.3-13 [33X[0;0YThe PackageInfo.g File[133X
+      76.3-14 ValidatePackageInfo
+      76.3-15 ShowPackageVariables
+      76.3-16 BibEntry
+      76.3-17 Cite
     76.4 [33X[0;0YGuidelines for Writing a GAP Package[133X
     76.5 [33X[0;0YStructure of a GAP Package[133X
     76.6 [33X[0;0YWriting Documentation and Tools Needed[133X

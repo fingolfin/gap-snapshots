@@ -33,6 +33,11 @@
 <div class="ContSSBlock">
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap67.html#X79695C887FD0AEAB">67.2-1 IsAlgebraicElement</a></span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap67.html#X8529BB22865273B1">67.3 <span class="Heading">Finding Subfields</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap67.html#X7FCAEFBC87651BDD">67.3-1 IdealDecompositionsOfPolynomial</a></span>
+</div></div>
 </div>
 
 <h3>67 <span class="Heading">Algebraic extensions of fields</span></h3>
@@ -139,6 +144,33 @@ true
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsAlgebraicElement</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>is the category for elements of an algebraic extension.</p>
+
+<p><a id="X8529BB22865273B1" name="X8529BB22865273B1"></a></p>
+
+<h4>67.3 <span class="Heading">Finding Subfields</span></h4>
+
+<p><a id="X7FCAEFBC87651BDD" name="X7FCAEFBC87651BDD"></a></p>
+
+<h5>67.3-1 IdealDecompositionsOfPolynomial</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IdealDecompositionsOfPolynomial</code>( <var class="Arg">pol</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Let <span class="SimpleMath">f</span> be a univariate, rational, irreducible, polynomial. A pair <span class="SimpleMath">g</span>,<span class="SimpleMath">h</span> of polynomials of degree strictly smaller than that of <span class="SimpleMath">f</span>, such that <span class="SimpleMath">f(x)|g(h(x))</span> is called an ideal decomposition. In the context of field extensions, if <span class="SimpleMath">α</span> is a root of <span class="SimpleMath">f</span> in a suitable extension and <span class="SimpleMath">Q</span> the field of rational numbers. Such decompositions correspond to (proper) subfields <span class="SimpleMath">Q &lt; Q(β) &lt; Q(α)</span>, where <span class="SimpleMath">g</span> is the minimal polynomial of <span class="SimpleMath">β</span>. This function determines such decompositions up to equality of the subfields <span class="SimpleMath">Q(β)</span>, thus determining subfields of a given algebraic extension. It returns a list of pairs <span class="SimpleMath">[g,h]</span> (and an empty list if no such decomposition exists). If the option <var class="Arg">onlyone</var> is given it returns at most one such decomposition (and performs faster).</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x:=X(Rationals,"x");;pol:=x^8-24*x^6+144*x^4-288*x^2+144;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">l:=IdealDecompositionsOfPolynomial(pol);</span>
+[ [ x^2+72*x+144, x^6-20*x^4+60*x^2-36 ],
+  [ x^2-48*x+144, x^6-21*x^4+84*x^2-48 ],
+  [ x^2+288*x+17280, x^6-24*x^4+132*x^2-288 ],
+  [ x^4-24*x^3+144*x^2-288*x+144, x^2 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List(l,x-&gt;Value(x[1],x[2])/pol);</span>
+[ x^4-16*x^2-8, x^4-18*x^2+33, x^4-24*x^2+120, 1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IdealDecompositionsOfPolynomial(pol:onlyone);</span>
+[ [ x^2+72*x+144, x^6-20*x^4+60*x^2-36 ] ]
+</pre></div>
+
+<p>In this example the given polynomial is regular with Galois group <span class="SimpleMath">Q_8</span>, as expected we get four proper subfields.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap66.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap68.html">[Next Chapter]</a>&nbsp;  </div>

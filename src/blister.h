@@ -20,8 +20,8 @@
 #ifndef GAP_BLISTER_H
 #define GAP_BLISTER_H
 
-#include <src/bool.h>
-#include <src/objects.h>
+#include "bool.h"
+#include "objects.h"
 
 /****************************************************************************
 **
@@ -31,40 +31,6 @@ static inline Int IS_BLIST_REP(Obj list)
 {
     return T_BLIST <= TNUM_OBJ(list) &&
            TNUM_OBJ(list) <= T_BLIST_SSORT + IMMUTABLE;
-}
-
-/****************************************************************************
-**
-*F  IS_BLIST_REP_WITH_COPYING( <list> )  . . . . .check if <list> is a blist
-**
-**  This version of IS_PLIST also checks if 'COPYING' is set, which happens
-**  during copying of object. This is only used in assertion checks, as it is
-**  a (little) slower.
-*/
-
-static inline Int IS_BLIST_REP_WITH_COPYING(Obj list)
-{
-    UInt tnum = TNUM_OBJ(list);
-#if !defined(USE_THREADSAFE_COPYING)
-    if (tnum > COPYING)
-        tnum -= COPYING;
-#endif
-    return T_BLIST <= tnum && tnum <= T_BLIST_SSORT + IMMUTABLE;
-}
-
-/****************************************************************************
-**
-*F  PLEN_SIZE_BLIST( <size> ) .  physical length from size for a boolean list
-**
-**  'PLEN_SIZE_BLIST'  computes  the  physical  length  (e.g.  the  number of
-**  elements that could be stored  in a list) from the <size> (as reported by
-**  'SIZE') for a boolean list.
-**
-*/
-static inline Int PLEN_SIZE_BLIST(Int size)
-{
-    GAP_ASSERT(size >= 0);
-    return ((size - sizeof(Obj)) / sizeof(UInt)) * BIPEB;
 }
 
 
@@ -92,7 +58,7 @@ static inline Int SIZE_PLEN_BLIST(Int plen)
 */
 static inline Int LEN_BLIST(Obj list)
 {
-    GAP_ASSERT(IS_BLIST_REP_WITH_COPYING(list));
+    GAP_ASSERT(IS_BLIST_REP(list));
     return INT_INTOBJ(CONST_ADDR_OBJ(list)[0]);
 }
 
@@ -104,7 +70,7 @@ static inline Int LEN_BLIST(Obj list)
 */
 static inline Int NUMBER_BLOCKS_BLIST(Obj blist)
 {
-    GAP_ASSERT(IS_BLIST_REP_WITH_COPYING(blist));
+    GAP_ASSERT(IS_BLIST_REP(blist));
     return (LEN_BLIST(blist) + BIPEB - 1) / BIPEB;
 }
 
@@ -119,7 +85,7 @@ static inline Int NUMBER_BLOCKS_BLIST(Obj blist)
 */
 static inline void SET_LEN_BLIST(Obj list, Int len)
 {
-    GAP_ASSERT(IS_BLIST_REP_WITH_COPYING(list));
+    GAP_ASSERT(IS_BLIST_REP(list));
     GAP_ASSERT(len >= 0);
     ADDR_OBJ(list)[0] = INTOBJ_INT(len);
 }
@@ -164,8 +130,9 @@ static inline const UInt * CONST_BLOCK_ELM_BLIST_PTR(Obj list, UInt pos)
 **
 *F  MASK_POS_BLIST( <pos> )  . . . .  bit mask for position of a Boolean list
 **
-**  MASK_POS_BLIST(<pos>) returns a UInt with   a single set bit in  position
-**  (pos-1) % BIPEB, useful for accessing the pos'th element of a blist
+**  'MASK_POS_BLIST(<pos>)' returns a UInt with a single set bit in  position
+**  '(<pos>-1) % BIPEB',
+**  useful for accessing the <pos>-th element of a blist.
 */
 static inline UInt MASK_POS_BLIST(UInt pos)
 {
@@ -221,7 +188,7 @@ static inline void CLEAR_BIT_BLIST(Obj list, UInt pos)
 **
 *F  COUNT_TRUES_BLOCK( <block> ) . . . . . . . . . . .  count number of trues
 **
-** 'COUNT_TRUES_BLOCK( <block> )' returns the number of 1 bits in the
+**  'COUNT_TRUES_BLOCK( <block> )' returns the number of 1 bits in the
 **  UInt <block>. Two implementations are included below. One uses the
 **  gcc builtin __builtin_popcount which usually generates the popcntl
 **  or popcntq instruction on sufficiently recent CPUs. The other uses
@@ -353,7 +320,7 @@ extern void AssBlist (
 **
 *F  ConvBlist( <list> ) . . . . . . . . .  convert a list into a boolean list
 **
-**  `ConvBlist' changes the representation of boolean  lists into the compact
+**  'ConvBlist' changes the representation of boolean  lists into the compact
 **  representation of type 'T_BLIST' described above.
 */
 extern void ConvBlist (
@@ -365,7 +332,7 @@ extern void ConvBlist (
 *F  CopyBits( <fromblock>, <from-starting-bit>, <toblock>, <to-starting-bit>,
 **            <numbits> )
 **
-**  `CopyBits' copies <numbits> bits (numbering bits within a UInt
+**  'CopyBits' copies <numbits> bits (numbering bits within a UInt
 **   from the least significant to the most significant) starting with
 **   bit number <from-starting-bit> of UInt *<fromblock> to a destination
 **   starting at bit <to-starting-bit> of *<toblock>. The source and 
@@ -501,7 +468,7 @@ static ALWAYS_INLINE void CopyBits(const UInt * fromblock,
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************

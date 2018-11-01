@@ -243,6 +243,26 @@ function(o)
   fi;
 end);
 
+InstallOtherMethod(IsConstantRationalFunction,"fallback for non-ratfun",true,
+  [IsObject],0,
+function(o)
+  if IsRationalFunction(o) then
+    TryNextMethod();
+  else
+    return false;
+  fi;
+end);
+
+InstallOtherMethod(IsUnivariateRationalFunction,"fallback for non-ratfun",true,
+  [IsObject],0,
+function(o)
+  if IsRationalFunction(o) then
+    TryNextMethod();
+  else
+    return false;
+  fi;
+end);
+
 #############################################################################
 ##
 #M  ExtRepPolynomialRatFun(<ulaurent>)
@@ -1025,6 +1045,19 @@ function(r, c)
   return ProdCoefRatfun(c,r);
 end);
 
+InstallMethod( \*, "ratfun * rat", true,
+    [ IsPolynomialFunction, IsRat ],-RankFilter(IsRat),
+function( left, right )
+  return left * (right*FamilyObj(left)!.oneCoefficient);
+end );
+
+InstallMethod( \*, "rat * ratfun ", true,
+    [ IsRat, IsPolynomialFunction], -RankFilter(IsRat),
+function( left, right )
+  return (left*FamilyObj(right)!.oneCoefficient) * right;
+end);
+
+
 #############################################################################
 ##
 #M  <polynomial>     + <coeff>
@@ -1304,18 +1337,19 @@ end);
 ##  the methods are implemented.
 ##  
 ##
-InstallMethod( GcdOp,"Gcd(Polyring, Pol,Pol)",
-    IsCollsElmsElms,[IsEuclideanRing,
-                IsRationalFunction,IsRationalFunction],0,
-function(R,f,g)
+InstallRingAgnosticGcdMethod("test polynomials for univar. and same variable",
+  IsCollsElmsElms,IsIdenticalObj,
+  [IsEuclideanRing,IsRationalFunction,IsRationalFunction],0,
+function(f,g)
 
-	if IsUnivariatePolynomial(f) and IsUnivariatePolynomial(g) 
-		and IndeterminateNumberOfUnivariateRationalFunction(f) = 
-		IndeterminateNumberOfUnivariateRationalFunction(g) then
-		return GcdOp(R,f,g);
-	fi;
+  if not (HasIsUnivariatePolynomial(f) and HasIsUnivariatePolynomial(g)) 
+    and IsUnivariatePolynomial(f) and IsUnivariatePolynomial(g) 
+    and IndeterminateNumberOfUnivariateRationalFunction(f) = 
+    IndeterminateNumberOfUnivariateRationalFunction(g) then
+    return GcdOp(f,g);
+  fi;
 
-	return fail;
+  TryNextMethod();
 end);
 
 #############################################################################

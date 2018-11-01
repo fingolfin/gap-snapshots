@@ -22,6 +22,12 @@ InstallMethod( \=,
     IsIdenticalObj,
     [ IsCollection and IsList, IsDomain ],
     function( C, D )
+    if IsFinite(C) <> IsFinite(D) then
+      return false;
+    fi;
+    if not IsFinite(D) then
+        Error("no method found for comparing an infinite domain and an infinite list");
+    fi;
     return IsSSortedList( C ) and AsSSortedList( D ) = C;
     end );
 
@@ -37,6 +43,12 @@ InstallMethod( \=,
     IsIdenticalObj,
     [ IsDomain, IsCollection and IsList ],
     function( D, C )
+    if IsFinite(C) <> IsFinite(D) then
+      return false;
+    fi;
+    if not IsFinite(C) then
+        Error("no method found for comparing an infinite domain and an infinite list");
+    fi;
     return IsSSortedList( C ) and AsSSortedList( D ) = C;
     end );
 
@@ -52,6 +64,12 @@ InstallMethod( \=,
     IsIdenticalObj,
     [ IsDomain, IsDomain ],
     function( D1, D2 )
+    if IsFinite(D1) <> IsFinite(D2) then
+      return false;
+    fi;
+    if not IsFinite(D1) then
+        Error("no method found for comparing two infinite domains");
+    fi;
     return AsSSortedList( D1 ) = AsSSortedList( D2 );
     end );
 

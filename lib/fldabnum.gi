@@ -823,7 +823,7 @@ InstallGlobalFunction( ZumbroichBase, function( n, m )
       Error( "<m> must be a divisor of <n>" );
     fi;
 
-    factsn:= FactorsInt( n );
+    factsn:= Factors(Integers, n );
     primes:= Set( factsn );
     exponsn:= List( primes, x -> 0 );   # Product(List( [1..Length(primes)],
                                         #         x->primes[i]^exponsn[i]))=n
@@ -837,7 +837,7 @@ InstallGlobalFunction( ZumbroichBase, function( n, m )
       exponsn[ pos ]:= exponsn[ pos ] + 1;
     od;
 
-    factsm:= FactorsInt( m );
+    factsm:= Factors(Integers, m );
     exponsm:= List( primes, x -> 0 );    # Product(List( [1..Length(primes)],
                                          #         x->primes[i]^exponsm[i]))=m
     if m <> 1 then
@@ -960,7 +960,7 @@ InstallGlobalFunction( LenstraBase, function( n, stabilizer, supergroup, m )
       m:= m / 2;
     fi;
 
-    factors  := FactorsInt( n );
+    factors  := Factors(Integers, n );
     primes   := Set( factors );
     coprimes := Filtered( primes, x -> m mod x <> 0 );
     nprime   := Product( Filtered( factors, x -> m mod x <> 0 ) );
@@ -1633,101 +1633,6 @@ InstallMethod( Coefficients,
     # Return the list of coefficients.
     return coeffs;
     end );
-
-
-#T ##########################################################################
-#T ##
-#T #F  NumberRing( gens )  . . . . . . . . . . . integral ring in a number field
-#T #F  CyclotomicRing( gens )  . . . . . . . integral ring in a cyclotomic field
-#T #V  NumberRingOps . . . . . . . . . . . . operations records for number rings
-#T ##
-#T NumberRingOps := OperationsRecord( "NumberRingOps", RingOps );
-#T
-#T NumberRingOps.\in := function( z, R )
-#T     return IsCycInt( z )
-#T            and Conductor( R.generators ) mod Conductor( z ) = 0
-#T            and ForAll( GaloisStabilizer( R ), x -> GaloisCyc( z, x ) = z );
-#T     end;
-#T
-#T NumberRingOps.Quotient := function( R, x, y )
-#T     local q;
-#T     q:= x/y;
-#T     if q in R then return x / y; else return fail; fi;
-#T     end;
-#T
-#T NumberRingOps.IsUnit := function( R, z ) return 1 / z in R; end;
-#T
-#T NumberRingOps.Random := function( R )
-#T     return List( BasisVectors( Basis( R ) ),
-#T            x -> Random( Integers ) ) * BasisVectors( R.basis );
-#T #T no relative extension ?
-#T     end;
-#T
-#T NumberRing := function( gens )
-#T     local F;
-#T     if ForAll( gens, IsCycInt ) then
-#T
-#T       if Conductor( gens ) = 4 then
-#T         return GaussianIntegers;
-#T       fi;
-#T
-#T       F:= NF( gens );
-#T       return rec(
-#T                   isDomain       := true,
-#T                   isRing         := true,
-#T
-#T                   generators     := gens,
-#T                   zero           := 0,
-#T                   one            := 1,
-#T
-#T                   universe       := Cyclotomics,
-#T
-#T                   size           := "infinity",
-#T                   isFinite       := false,
-#T                   isCommutative  := true,
-#T                   isIntegralRing := true,
-#T
-#T                   stabilizer     := GaloisStabilizer( F ),
-#T                   rank           := F.dimension,
-#T
-#T                   operations     := NumberRingOps  );
-#T     else
-#T       Error( "<gens> must be cyclotomic integers" );
-#T     fi;
-#T     end;
-#T
-#T CyclotomicRing := function( gens )
-#T     local F;
-#T     if ForAll( gens, IsCycInt ) then
-#T
-#T       if Conductor( gens ) = 4 then
-#T         return GaussianIntegers;
-#T       fi;
-#T
-#T       F:= CF( gens );
-#T       return rec(
-#T                   isDomain       := true,
-#T                   isRing         := true,
-#T
-#T                   generators     := GeneratorsOfField( F ),
-#T                   zero           := 0,
-#T                   one            := 1,
-#T
-#T                   universe       := Cyclotomics,
-#T
-#T                   size           := "infinity",
-#T                   isFinite       := false,
-#T                   isCommutative  := true,
-#T                   isIntegralRing := true,
-#T
-#T                   stabilizer     := GaloisStabilizer( F ),
-#T                   rank           := F.dimension,
-#T
-#T                   operations     := NumberRingOps  );
-#T       else
-#T         Error( "<gens> must be cyclotomic integers" );
-#T       fi;
-#T     end;
 
 
 #############################################################################

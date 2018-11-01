@@ -16,9 +16,6 @@
 all: gap$(EXEEXT) gac
 .PHONY: all
 
-libgap: libgap.la
-.PHONY: libgap
-
 # Backwards compatibility: add "default" target as alias for "all"
 default: all
 .PHONY: default
@@ -34,9 +31,13 @@ SOURCES =
 SOURCES += src/ariths.c
 SOURCES += src/blister.c
 SOURCES += src/bool.c
-SOURCES += src/c_methsel1.c
+ifeq ($(HPCGAP),yes)
+SOURCES += src/hpc/c_oper1.c
+SOURCES += src/hpc/c_type1.c
+else
 SOURCES += src/c_oper1.c
 SOURCES += src/c_type1.c
+endif
 SOURCES += src/calls.c
 SOURCES += src/code.c
 SOURCES += src/compiler.c
@@ -46,13 +47,13 @@ SOURCES += src/cyclotom.c
 SOURCES += src/debug.c
 SOURCES += src/dt.c
 SOURCES += src/dteval.c
+SOURCES += src/error.c
 SOURCES += src/exprs.c
 SOURCES += src/ffdata.c
 SOURCES += src/finfield.c
 SOURCES += src/funcs.c
 SOURCES += src/gap.c
 SOURCES += gen/gap_version.c	# generated source file
-SOURCES += src/gapstate.c
 SOURCES += src/gvars.c
 SOURCES += src/hookintrprtr.c
 SOURCES += src/integer.c
@@ -60,12 +61,15 @@ SOURCES += src/intfuncs.c
 SOURCES += src/intrprtr.c
 SOURCES += src/io.c
 SOURCES += src/iostream.c
+ifeq ($(HPCGAP),no)             # we don't support a kernel API in HPC-GAP atm
+SOURCES += src/libgap-api.c
+endif
 SOURCES += src/listfunc.c
 SOURCES += src/listoper.c
 SOURCES += src/lists.c
 SOURCES += src/macfloat.c
+SOURCES += src/modules.c
 SOURCES += src/modules-builtin.c
-SOURCES += src/objccoll.c
 SOURCES += src/objcftl.c
 SOURCES += src/objects.c
 SOURCES += src/objfgelm.c
@@ -90,6 +94,7 @@ SOURCES += src/stats.c
 SOURCES += src/streams.c
 SOURCES += src/stringobj.c
 SOURCES += src/sysfiles.c
+SOURCES += src/sysmem.c
 SOURCES += src/system.c
 SOURCES += src/tietze.c
 SOURCES += src/trans.c
@@ -100,12 +105,7 @@ SOURCES += src/vecgf2.c
 SOURCES += src/vector.c
 SOURCES += src/weakptr.c
 
-# TODO: Change the following to check for a new USE_BOEHM flag
-ifeq ($(HPCGAP),yes)
-  SOURCES += src/boehm_gc.c
-else
-  SOURCES += src/gasman.c
-endif
+SOURCES += $(GC_SOURCES)
 
 ifeq ($(GAPMPI),yes)
   SOURCES += src/hpc/gapmpi.c
@@ -121,7 +121,6 @@ ifeq ($(HPCGAP),yes)
   SOURCES += src/hpc/traverse.c
 endif
 
-
 ########################################################################
 # Preprocessor flags
 #
@@ -135,16 +134,17 @@ GAP_PKG_CPPFLAGS =
 
 # First add include paths
 
-# If this is an out-of-tree build, then first add the builddir to the list of
-# include directories, so that the correct gen/config.h is picked up (even if
-# the user also has an active in-tree build)
-ifneq ($(builddir),$(srcdir))
-  GAP_CPPFLAGS += -I$(builddir)
-  GAP_PKG_CPPFLAGS += -I$(abs_builddir)
-endif
+# The "gen" directory contains generated files and thus is placed into
+# the build directory.
+GAP_CPPFLAGS += -I$(builddir)/gen
+GAP_PKG_CPPFLAGS += -I$(abs_builddir)/gen
 
-# Finally look into srcdir
-GAP_CPPFLAGS += -I$(srcdir)
+# The other source files are relative to the srcdir
+GAP_CPPFLAGS += -I$(srcdir)/src
+GAP_PKG_CPPFLAGS += -I$(abs_srcdir)/src
+
+# For backwards compatibility with certain packages and their kernel
+# extensions, also add the root of the srcdir to the package CPPFLAGS
 GAP_PKG_CPPFLAGS += -I$(abs_srcdir)
 
 # Add DEFS (from autoconf, contains -D flags)
@@ -153,12 +153,16 @@ GAP_PKG_CPPFLAGS += $(DEFS)
 
 # Add flags for dependencies
 GAP_CPPFLAGS += $(GMP_CPPFLAGS)
+GAP_CPPFLAGS += $(ZLIB_CPPFLAGS)
 GAP_CPPFLAGS += $(READLINE_CPPFLAGS)
+GAP_CPPFLAGS += $(JULIA_CPPFLAGS)
 GAP_CPPFLAGS += $(BOEHM_GC_CPPFLAGS)
 GAP_CPPFLAGS += $(LIBATOMIC_OPS_CPPFLAGS)
 
 GAP_PKG_CPPFLAGS += $(GMP_CPPFLAGS)
+GAP_PKG_CPPFLAGS += $(ZLIB_CPPFLAGS)
 GAP_PKG_CPPFLAGS += $(READLINE_CPPFLAGS)
+GAP_PKG_CPPFLAGS += $(JULIA_CPPFLAGS)
 GAP_PKG_CPPFLAGS += $(BOEHM_GC_CPPFLAGS)
 GAP_PKG_CPPFLAGS += $(LIBATOMIC_OPS_CPPFLAGS)
 
@@ -190,7 +194,9 @@ GAP_LDFLAGS = $(ABI_CFLAGS)
 
 # Add flags for dependencies
 GAP_LDFLAGS += $(GMP_LDFLAGS)
+GAP_LDFLAGS += $(ZLIB_LDFLAGS)
 GAP_LDFLAGS += $(READLINE_LDFLAGS)
+GAP_LDFLAGS += $(JULIA_LDFLAGS)
 GAP_LDFLAGS += $(BOEHM_GC_LDFLAGS)
 GAP_LDFLAGS += $(LIBATOMIC_OPS_LDFLAGS)
 
@@ -207,7 +213,9 @@ GAP_LIBS =
 
 # Add flags for dependencies
 GAP_LIBS += $(GMP_LIBS)
+GAP_LIBS += $(ZLIB_LIBS)
 GAP_LIBS += $(READLINE_LIBS)
+GAP_LIBS += $(JULIA_LIBS)
 GAP_LIBS += $(BOEHM_GC_LIBS)
 GAP_LIBS += $(LIBATOMIC_OPS_LIBS)
 
@@ -219,11 +227,7 @@ GAP_LIBS += $(LIBS)
 # HPC-GAP: transform code using ward
 #
 # For HPC-GAP, we must use ward as a preprocessor before invoking the C
-# compiler. Moreover, some source files come in two versions: One which is
-# located in src/, and another in hpcgap/src/, which is to be used instead
-# when building in HPC-GAP mode.
-#
-# The following build rules achieve this.
+# compiler. The following build rules achieve this.
 ########################################################################
 ifeq ($(HPCGAP),yes)
 
@@ -231,27 +235,12 @@ ifeq ($(HPCGAP),yes)
 ORIGINAL_SOURCES := $(SOURCES)
 SOURCES := $(patsubst src/%,gen/%,$(ORIGINAL_SOURCES))
 
-# Determine which sources have a version in "hpcgap/src".
-# This uses the fact that "wildcard" only returns paths which refer
-# to existing files.
-HPCGAP_SOURCES := $(wildcard $(addprefix $(srcdir)/hpcgap/,$(ORIGINAL_SOURCES)))
-HPCGAP_SOURCES := $(subst $(srcdir)/hpcgap/src/,,$(HPCGAP_SOURCES))
-HPCGAP_SOURCES := $(addprefix gen/,$(HPCGAP_SOURCES))
-
-# static pattern rule for sources with an HPCGAP-version
-# (note that ward needs to parse the sources, hence gen/config.h must already be made)
-$(HPCGAP_SOURCES): gen/%.c: hpcgap/src/%.c gen/config.h
-	@$(MKDIR_P) $(@D)/$(DEPDIRNAME)
-	@echo "$@: $<" > $(DEPFILE)
-	@echo "$<:" >> $(DEPFILE)
-	$(QUIET_WARD) CPP="$(CPP)" $(ADDGUARDS2) -cpp $(GAP_CPPFLAGS) -- $< > $@
-
-# static pattern rule for sources without an HPCGAP-version
+# static pattern rule for translating sources via ward
 # (note that ward needs to parse the sources, hence gen/config.h must already be made)
 gen/%.c: src/%.c gen/config.h
 	@$(MKDIR_P) $(@D)/$(DEPDIRNAME)
-	@echo "$@: $<" > $(DEPFILE)
-	@echo "$<:" >> $(DEPFILE)
+	@echo "$@: $<" > $(DEPFILE)       # add dependency from gen/*.c to src/*.c
+	@echo "$<:" >> $(DEPFILE)         # add empty rule for src/*.c, to avoid errors if a source file is renamed or removed
 	$(QUIET_WARD) CPP="$(CPP)" $(ADDGUARDS2) -cpp $(GAP_CPPFLAGS) -- $< > $@
 
 # Normally, GNU make deletes intermediate build files, such as the gen/*.c
@@ -273,8 +262,8 @@ endif # end of HPCGAP specific code
 ########################################################################
 
 # OBJS shall contain the names of all object files that constitute GAP.
-# So turn all src/*.c and gen/*.c file names in SOURCES into obj/*.lo
-OBJS = $(patsubst gen/%.c,obj/%.lo,$(patsubst src/%.c,obj/%.lo,$(SOURCES)))
+# So turn all FOO/*.c file names in SOURCES into obj/FOO/*.lo
+OBJS = $(patsubst %.c,obj/%.lo,$(SOURCES))
 
 # ensure config.h is built before the compilers gets invoked
 $(OBJS): gen/config.h
@@ -322,10 +311,10 @@ endif
 # Name of subdirectories in which the generated dependencies are stored.
 DEPDIRNAME := .deps
 
-# List of all dependency directories. For now, we hardcode this list.
-# TODO: derive this from the value of the SOURCES variable, so that
-#       adding new src/ subdirectories works
-DEPDIRS = $(addsuffix /$(DEPDIRNAME),obj obj/hpc gen gen/hpc)
+# List of all (potential) dependency directories, derived from OBJS
+# and SOURCES (the latter for generated sources, which may also involve
+# dependency tracking)
+DEPDIRS = $(addsuffix $(DEPDIRNAME),$(sort $(dir $(SOURCES) $(OBJS))))
 
 # Include the dependency tracking files.
 -include $(wildcard $(addsuffix /*.d,$(DEPDIRS)))
@@ -354,16 +343,7 @@ DEPFLAGS = -MQ "$@" -MMD -MP -MF $(DEPFILE)
 COMPILE=$(LIBTOOL) --mode=compile $(CC)
 
 # Build rule for C source files
-# Disabled for HPC-GAP, to ensure we always use the output of ward
-# and not the original source files
-ifeq ($(HPCGAP),no)
-obj/%.lo: src/%.c cnf/GAP-CFLAGS cnf/GAP-CPPFLAGS
-	@$(MKDIR_P) $(@D)/$(DEPDIRNAME)
-	$(QUIET_CC)$(COMPILE) $(DEPFLAGS) $(GAP_CFLAGS) $(GAP_CPPFLAGS) -c $< -o $@
-endif
-
-# Build rule for generated C source files
-obj/%.lo: gen/%.c cnf/GAP-CFLAGS cnf/GAP-CPPFLAGS
+obj/%.lo: %.c cnf/GAP-CFLAGS cnf/GAP-CPPFLAGS libtool
 	@$(MKDIR_P) $(@D)/$(DEPDIRNAME)
 	$(QUIET_CC)$(COMPILE) $(DEPFLAGS) $(GAP_CFLAGS) $(GAP_CPPFLAGS) -c $< -o $@
 
@@ -414,22 +394,18 @@ gap$(EXEEXT): $(OBJS) cnf/GAP-LDFLAGS cnf/GAP-LIBS cnf/GAP-OBJS
 
 endif
 
-
 ########################################################################
 # The "docomp" target regenerates the various src/c_*.c files, and
 # replaces the old "etc/docomp" script.
 ########################################################################
 ifeq ($(HPCGAP),yes)
-DOCOMP_PREFIX = $(abs_srcdir)/hpcgap
+DOCOMP_PREFIX = $(abs_srcdir)/src/hpc
 else
-DOCOMP_PREFIX = $(abs_srcdir)
+DOCOMP_PREFIX = $(abs_srcdir)/src
 endif
 docomp: #gap$(EXEEXT)
-	@for file in methsel1 oper1 type1 ; do \
-	  if test -e $(DOCOMP_PREFIX)/lib/$$file.g ; then \
-	    "$(abs_srcdir)"/cnf/GAP-C-GEN $(DOCOMP_PREFIX) $$file ./gap$(EXEEXT) ; \
-	  fi \
-	done
+	@"$(abs_srcdir)"/cnf/GAP-C-GEN $(abs_srcdir)/lib $(DOCOMP_PREFIX) oper1 ./gap$(EXEEXT)
+	@"$(abs_srcdir)"/cnf/GAP-C-GEN $(abs_srcdir)/lib $(DOCOMP_PREFIX) type1 ./gap$(EXEEXT)
 
 .PHONY: docomp
 
@@ -504,8 +480,6 @@ install-headers:
 	$(QUIET_INSTALL)$(INSTALL) -d -m 0755 $(DESTDIR)$(includedir)/gap/hpc
 	$(QUIET_INSTALL)$(INSTALL) -m 0644 $(srcdir)/src/*.h $(DESTDIR)$(includedir)/gap
 	$(QUIET_INSTALL)$(INSTALL) -m 0644 $(srcdir)/src/hpc/*.h $(DESTDIR)$(includedir)/gap/hpc
-	sed -i -E -e 's;#include <src/([^>]+)>;#include "\1";' $(DESTDIR)$(includedir)/gap/*.h
-	sed -i -E -e 's;#include <src/([^>]+)>;#include "\1";' $(DESTDIR)$(includedir)/gap/hpc/*.h
 	# TODO: take care of config.h
 
 install-libgap: libgap.la
@@ -559,6 +533,44 @@ gmp:
 	echo "Using external GMP, nothing to do be done"
 
 endif # BUILD_GMP
+
+
+#
+# ZLIB
+#
+ifeq ($(BUILD_ZLIB),yes)
+
+ZLIB_BUILDDIR := extern/build/zlib
+ZLIB_PREFIX := extern/install/zlib
+# ZLIB_PREREQ := $(ZLIB_BUILDDIR)/config.status
+ZLIB_FILES := $(ZLIB_PREFIX)/include/zlib.h
+
+EXTERN_FILES += $(ZLIB_FILES)
+
+zlib: $(ZLIB_FILES)
+ifeq ($(SYS_IS_CYGWIN32),yes)
+$(ZLIB_FILES):
+	MAKE=$(MAKE) CFLAGS="$(CFLAGS) $(ABI_CFLAGS)" $(srcdir)/cnf/build-cygwin-zlib.sh
+
+else
+
+$(ZLIB_FILES):
+	MAKE=$(MAKE) CFLAGS="$(CFLAGS) $(ABI_CFLAGS)" $(srcdir)/cnf/build-extern.sh zlib "$(abs_srcdir)/extern/zlib"
+
+endif # SYS_IS_CYGWIN32
+
+.PHONY: zlib
+
+# TODO: add clean, distclean, check targets?
+# TODO: pass on cachfile?
+# TODO: pass on certain *FLAGS ?
+
+else
+
+zlib:
+	echo "Using external zlib, nothing to do be done"
+
+endif # BUILD_ZLIB
 
 
 #
@@ -618,7 +630,7 @@ $(BOEHM_GC_FILES):
 	LDFLAGS=$(ABI_CFLAGS) \
 	ATOMIC_OPS_CFLAGS=$(LIBATOMIC_OPS_CPPFLAGS) \
 	ATOMIC_OPS_LIBS=$(LIBATOMIC_OPS_LDFLAGS) \
-	$(srcdir)/cnf/build-extern.sh gc "$(abs_srcdir)/hpcgap/extern/gc" --disable-static --enable-shared
+	$(srcdir)/cnf/build-extern.sh gc "$(abs_srcdir)/hpcgap/extern/gc" --disable-static --enable-shared --enable-large-config
 
 ifeq ($(BUILD_LIBATOMIC_OPS),yes)
 $(BOEHM_GC_FILES): $(LIBATOMIC_OPS_FILES)
@@ -659,6 +671,8 @@ sysinfo.gap: config.status $(srcdir)/Makefile.rules cnf/GAP-CFLAGS cnf/GAP-CPPFL
 	@echo "# do not edit manually!" >> $@
 	@echo "GAParch=$(GAPARCH)" >> $@
 	@echo "GAP_ABI=$(ABI)" >> $@
+	@echo "GAP_HPCGAP=$(HPCGAP)" >> $@
+	@echo "GAP_ADDGUARDS2=$(ADDGUARDS2)" >> $@
 	@echo "" >> $@
 	@echo "GAP_BIN_DIR=\"$(abs_builddir)\"" >> $@
 	@echo "GAP_LIB_DIR=\"$(abs_srcdir)\"" >> $@
@@ -670,6 +684,8 @@ sysinfo.gap: config.status $(srcdir)/Makefile.rules cnf/GAP-CFLAGS cnf/GAP-CPPFL
 	@echo "GAP_LIBS=\"$(GAP_LIBS)\"" >> $@
 	@echo "" >> $@
 	@echo "GAP_OBJS=\"$(OBJS)\"" >> $@
+	@echo "" >> $@
+	@echo "JULIA=\"$(JULIA)\"" >> $@
 
 # regenerate bin/gap.sh if necessary
 all: bin/gap.sh
@@ -970,6 +986,12 @@ testbugfix: all
           ReadGapRoot( "tst/testbugfix.g" );' | $(TESTGAP) | \
             tee `date -u +dev/log/testbugfix2_%Y-%m-%d-%H-%M` )
 
+testlibgap: libgap.la obj/tst/testlibgap/basic.lo 
+	$(QUIET_LINK)$(LINK) $(GAP_LDFLAGS) obj/tst/testlibgap/basic.lo libgap.la -o test-libgap
+	./test-libgap -A -l $(top_srcdir) -m 32m -q -T --nointeract > basic.out
+	diff $(top_srcdir)/tst/testlibgap/basic.expect basic.out
+.PHONY: testlibgap
+
 coverage:
 	gcov -o . $(SOURCES)
 
@@ -982,7 +1004,7 @@ coverage:
 ########################################################################
 
 # change PKG_BRANCH to stable-X.Y in the stable branch
-PKG_BRANCH = stable-4.9
+PKG_BRANCH = stable-4.10
 PKG_BOOTSTRAP_URL = https://www.gap-system.org/pub/gap/gap4pkgs/
 PKG_MINIMAL = packages-required-$(PKG_BRANCH).tar.gz
 PKG_FULL = packages-$(PKG_BRANCH).tar.gz
@@ -1148,6 +1170,9 @@ $(srcdir)/src/config.h.in: $(configure_deps)
 GNUmakefile: $(srcdir)/GNUmakefile.in config.status
 	$(SHELL) ./config.status $@
 
+libtool: config.status
+	$(SHELL) ./config.status $@
+
 doc/make_doc: $(srcdir)/doc/make_doc.in config.status
 	$(SHELL) ./config.status $@
 
@@ -1160,3 +1185,10 @@ gac: $(srcdir)/cnf/gac.in config.status
 # considered dirty by target, hence are forced to be re-run
 ########################################################################
 .PHONY: FORCE
+
+########################################################################
+# Makefile debugging trick:
+# call print-VARIABLE to see the runtime value of any variable
+########################################################################
+print-%:
+	@echo '$*=$($*)'

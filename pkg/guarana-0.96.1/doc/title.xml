@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    Guarana
+  </Title>
+  <Subtitle>
+    Applications of Lie methods for computations with infinite polycyclic groups
+  </Subtitle>
+  <Version>
+    0.96.1
+  </Version>
+  <Author>
+    Björn Assmann<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Mathematical Institute<Br/>
+University of St. Andrews<Br/>
+North Haugh, St. Andrews<Br/>
+ Fife, KY 16 9SS, Scotland<Br/>
+</Address>
+<Email>bjoern@mcs.st-and.ac.uk</Email>
+
+  </Author>
+  <Author>
+    John McDermott<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Mathematical Institute<Br/>
+University of St. Andrews<Br/>
+North Haugh, St. Andrews<Br/>
+ Fife, KY 16 9SS, Scotland<Br/>
+</Address>
+<Email>jjm@mcs.st-and.ac.uk</Email>
+
+  </Author>
+  <Author>
+    The GAP Team<Alt Only="LaTeX"><Br/></Alt>
+<Email>support@gap-system.org</Email>
+
+  </Author>
+  <Date>
+    21 September 2018
+  </Date>
+  <Copyright>
+    &copyright; 2007 Björn Assmann.
+  </Copyright>
+  </TitlePage>

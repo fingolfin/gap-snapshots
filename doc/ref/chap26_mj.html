@@ -6,9 +6,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
-<title>GAP (ref) - Chapter 26: Vector and matrix objects</title>
+<title>GAP (ref) - Chapter 26: Vector and Matrix Objects</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -24,28 +24,40 @@
 
 <p id="mathjaxlink" class="pcenter"><a href="chap26.html">[MathJax off]</a></p>
 <p><a id="X856C23B87E50F118" name="X856C23B87E50F118"></a></p>
-<div class="ChapSects"><a href="chap26_mj.html#X856C23B87E50F118">26 <span class="Heading">Vector and matrix objects</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap26_mj.html#X81975083855CA9A1">26.1 <span class="Heading">Fundamental ideas and rules</span></a>
+<div class="ChapSects"><a href="chap26_mj.html#X856C23B87E50F118">26 <span class="Heading">Vector and Matrix Objects</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap26_mj.html#X81975083855CA9A1">26.1 <span class="Heading">Fundamental Ideas and Rules</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap26_mj.html#X7CF9CC0082C7AFF8">26.2 <span class="Heading">Categories of vectors and matrices</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap26_mj.html#X7CF9CC0082C7AFF8">26.2 <span class="Heading">Categories of Vectors and Matrices</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap26_mj.html#X7BD7D2837BFDE649">26.3 <span class="Heading">Constructing vector and matrix objects</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap26_mj.html#X7BD7D2837BFDE649">26.3 <span class="Heading">Constructing Vector and Matrix Objects</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap26_mj.html#X7AB6FE5B82E582E0">26.4 <span class="Heading">Operations for row vector objects</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap26_mj.html#X7BE9D278852C13BC">26.4 <span class="Heading">Operations for Vector Objects</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26_mj.html#X78770C0786B34B06">26.4-1 PositionNonZero</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26_mj.html#X8370979D7F451279">26.4-2 PositionLastNonZero</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26_mj.html#X7D175D467BDE1F17">26.4-3 ListOp</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26_mj.html#X86B5B08079CFA8E8">26.4-4 Unpack</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26_mj.html#X827BDFCA7E67F479">26.4-5 ConcatenationOfVectors</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26_mj.html#X7B9B66B37DD46D81">26.4-6 ExtractSubVector</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26_mj.html#X7F45D5C57C8EDDF3">26.4-7 ZeroVector</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26_mj.html#X8253FF0C7E5329C6">26.4-8 ConstructingFilter</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26_mj.html#X828688CC860F1E9C">26.4-9 Randomize</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26_mj.html#X7E0158697A7C6D17">26.4-10 WeightOfVector</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap26_mj.html#X837216A77EBEA0B3">26.4-11 DistanceOfVectors</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap26_mj.html#X7D40EE2084A6C976">26.5 <span class="Heading">Operations for Row List Matrix Objects</span></a>
 </span>
 </div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap26_mj.html#X7D40EE2084A6C976">26.5 <span class="Heading">Operations for row list matrix objects</span></a>
-</span>
-</div>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap26_mj.html#X7C03C92985B58F58">26.6 <span class="Heading">Operations for flat matrix objects</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap26_mj.html#X7C03C92985B58F58">26.6 <span class="Heading">Operations for Flat Matrix Objects</span></a>
 </span>
 </div>
 </div>
 
-<h3>26 <span class="Heading">Vector and matrix objects</span></h3>
+<h3>26 <span class="Heading">Vector and Matrix Objects</span></h3>
 
 <p>This chapter is work in progress. It will eventually describe the new interface to vector and matrix objects.</p>
 
@@ -53,7 +65,7 @@
 
 <p><a id="X81975083855CA9A1" name="X81975083855CA9A1"></a></p>
 
-<h4>26.1 <span class="Heading">Fundamental ideas and rules</span></h4>
+<h4>26.1 <span class="Heading">Fundamental Ideas and Rules</span></h4>
 
 <p>The whole idea of this interface is that vectors and matrices must be proper objects with a stored type (i.e. created by Objectify allowing inheritance) to benefit from method selection. We therefore refer to the new style vectors and matrices as "vector objects" and "matrix objects" respectively.</p>
 
@@ -88,23 +100,122 @@
 
 <p><a id="X7CF9CC0082C7AFF8" name="X7CF9CC0082C7AFF8"></a></p>
 
-<h4>26.2 <span class="Heading">Categories of vectors and matrices</span></h4>
+<h4>26.2 <span class="Heading">Categories of Vectors and Matrices</span></h4>
 
 <p><a id="X7BD7D2837BFDE649" name="X7BD7D2837BFDE649"></a></p>
 
-<h4>26.3 <span class="Heading">Constructing vector and matrix objects</span></h4>
+<h4>26.3 <span class="Heading">Constructing Vector and Matrix Objects</span></h4>
 
-<p><a id="X7AB6FE5B82E582E0" name="X7AB6FE5B82E582E0"></a></p>
+<p><a id="X7BE9D278852C13BC" name="X7BE9D278852C13BC"></a></p>
 
-<h4>26.4 <span class="Heading">Operations for row vector objects</span></h4>
+<h4>26.4 <span class="Heading">Operations for Vector Objects</span></h4>
+
+<p><a id="X78770C0786B34B06" name="X78770C0786B34B06"></a></p>
+
+<h5>26.4-1 PositionNonZero</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionNonZero</code>( <var class="Arg">V</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: An integer</p>
+
+<p>Returns the index of the first entry in the vector <var class="Arg">V</var> which is not zero. If all entries are zero, the function returns <code class="code">Length(<var class="Arg">V</var>) + 1</code>.</p>
+
+<p><a id="X8370979D7F451279" name="X8370979D7F451279"></a></p>
+
+<h5>26.4-2 PositionLastNonZero</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; PositionLastNonZero</code>( <var class="Arg">V</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: An integer</p>
+
+<p>Returns the index of the last entry in the vector <var class="Arg">V</var> which is not zero. If all entries are zero, the function returns 0.</p>
+
+<p><a id="X7D175D467BDE1F17" name="X7D175D467BDE1F17"></a></p>
+
+<h5>26.4-3 ListOp</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ListOp</code>( <var class="Arg">V</var>[, <var class="Arg">func</var>] )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: A plain list</p>
+
+<p>Applies <var class="Arg">func</var> to each entry of the vector <var class="Arg">V</var> and returns the results as a plain list. This allows for calling <code class="func">List</code> (<a href="chap30_mj.html#X7F12F40E87F3C3A7"><span class="RefLink">30.3-5</span></a>) on vectors. If the argument <var class="Arg">func</var> is not provided, applies <code class="func">IdFunc</code> (<a href="chap5_mj.html#X810325697BDEF899"><span class="RefLink">5.4-6</span></a>) to all entries.</p>
+
+<p><a id="X86B5B08079CFA8E8" name="X86B5B08079CFA8E8"></a></p>
+
+<h5>26.4-4 Unpack</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Unpack</code>( <var class="Arg">V</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: A plain list</p>
+
+<p>Returns a new plain list containing the entries of <var class="Arg">V</var>. Guarantees to return a new list which can be manipulated without changing <var class="Arg">V</var>. The entries itself are not copied.</p>
+
+<p><a id="X827BDFCA7E67F479" name="X827BDFCA7E67F479"></a></p>
+
+<h5>26.4-5 ConcatenationOfVectors</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConcatenationOfVectors</code>( <var class="Arg">V1</var>, <var class="Arg">V2</var>, <var class="Arg">...</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConcatenationOfVectors</code>( <var class="Arg">Vlist</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: a vector object</p>
+
+<p>Returns a new vector containing the entries of <var class="Arg">V1</var>, <var class="Arg">V2</var>, etc. As prototype <var class="Arg">V1</var> is used.</p>
+
+<p><a id="X7B9B66B37DD46D81" name="X7B9B66B37DD46D81"></a></p>
+
+<h5>26.4-6 ExtractSubVector</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ExtractSubVector</code>( <var class="Arg">V</var>, <var class="Arg">l</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: a vector object</p>
+
+<p>Returns a new vector containing the entries of <var class="Arg">V</var> at the positions in <var class="Arg">l</var>.</p>
+
+<p><a id="X7F45D5C57C8EDDF3" name="X7F45D5C57C8EDDF3"></a></p>
+
+<h5>26.4-7 ZeroVector</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ZeroVector</code>( <var class="Arg">l</var>, <var class="Arg">V</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a vector object</p>
+
+<p>Returns a new vector of length <var class="Arg">l</var> in the same representation as <var class="Arg">V</var> containing only zeros.</p>
+
+<p><a id="X8253FF0C7E5329C6" name="X8253FF0C7E5329C6"></a></p>
+
+<h5>26.4-8 ConstructingFilter</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConstructingFilter</code>( <var class="Arg">V</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a filter</p>
+
+<p>Returns a filter <code class="code">f</code> such that if <code class="code">NewVector</code> is called with <code class="code">f</code> a vector in the same representation as <var class="Arg">V</var> is produced.</p>
+
+<p><a id="X828688CC860F1E9C" name="X828688CC860F1E9C"></a></p>
+
+<h5>26.4-9 Randomize</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Randomize</code>( <var class="Arg">V</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Randomize</code>( <var class="Arg">V</var>, <var class="Arg">Rs</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Replaces every entry in <var class="Arg">V</var> with a random one from the base domain. If given, the random source <var class="Arg">Rs</var> is used to compute the random elements. Note that in this case, the random function for the base domain must support the random source argument.</p>
+
+<p><a id="X7E0158697A7C6D17" name="X7E0158697A7C6D17"></a></p>
+
+<h5>26.4-10 WeightOfVector</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; WeightOfVector</code>( <var class="Arg">V</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an integer</p>
+
+<p>Computes the Hamming weight of the vector <var class="Arg">V</var>, i.e., the number of nonzero entries.</p>
+
+<p><a id="X837216A77EBEA0B3" name="X837216A77EBEA0B3"></a></p>
+
+<h5>26.4-11 DistanceOfVectors</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DistanceOfVectors</code>( <var class="Arg">V1</var>, <var class="Arg">V2</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an integer</p>
+
+<p>Computes the Hamming distance of the vectors <var class="Arg">V1</var> and <var class="Arg">V2</var>, i.e., the number of entries in which the vectors differ. The vectors must be of equal length.</p>
 
 <p><a id="X7D40EE2084A6C976" name="X7D40EE2084A6C976"></a></p>
 
-<h4>26.5 <span class="Heading">Operations for row list matrix objects</span></h4>
+<h4>26.5 <span class="Heading">Operations for Row List Matrix Objects</span></h4>
 
 <p><a id="X7C03C92985B58F58" name="X7C03C92985B58F58"></a></p>
 
-<h4>26.6 <span class="Heading">Operations for flat matrix objects</span></h4>
+<h4>26.6 <span class="Heading">Operations for Flat Matrix Objects</span></h4>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap25_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap27_mj.html">[Next Chapter]</a>&nbsp;  </div>

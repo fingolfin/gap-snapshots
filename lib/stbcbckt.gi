@@ -30,32 +30,6 @@ BindGlobal("STBBCKT_STRING_SUBORBITS2",MakeImmutable("Suborbits2"));
 BindGlobal("STBBCKT_STRING_SUBORBITS3",MakeImmutable("Suborbits3"));
 BindGlobal("STBBCKT_STRING_TWOCLOSURE",MakeImmutable("TwoClosure"));
 
-# #############################################################################
-# ##
-# #F  YndexSymmetricGroup( <S>, <U> ) . . . . . . . . . . . yndex of <U> in <S>
-# ##
-# InstallGlobalFunction( YndexSymmetricGroup, function( S, U )
-#     local   deg,  p,  e,  i,  f,  log;
-#     
-#     deg := NrMovedPoints( S );
-#     if not IsTrivial( U )  then
-#         for p  in Collected( FactorsInt( Size( U ) ) )  do
-#             e := 0;
-#             f := deg;  log := 0;
-#             while f mod p[ 1 ] = 0  do
-#                 f := f / p[ 1 ];  log := log + 1;
-#             od;
-#             for i  in [ 1 .. log ]  do
-#                 e := e + QuoInt( deg, p[ 1 ] ^ i );
-#                 if e > p[ 2 ]  then
-#                     return p[ 1 ];
-#                 fi;
-#             od;
-#         od;
-#     fi;
-#     return 1;
-# end );
-
 #############################################################################
 ##
 #F  IsSlicedPerm( <perm> )  . . . . . . . . . . . . . . . sliced permutations
@@ -463,7 +437,7 @@ InstallGlobalFunction( Suborbits, function( arg )
       suborbits:=[];
     else
       if not IsBound( H!.suborbits )  then
-	H!.suborbits := [  ];
+        H!.suborbits := [  ];
       fi;
       suborbits := H!.suborbits;
     fi;
@@ -2382,8 +2356,26 @@ local  Omega,      # a common operation domain for <G>, <E> and <F>
   od;
   
   # Find the order in which to process the points in the base choice.
-  order := cycles.points{ cycles.firsts };
-  SortParallel( ShallowCopy( -cycles.lengths ), order );
+  #SortParallel( ShallowCopy( -cycles.lengths ), order );
+
+  # The criterion for selection of base points is to select them according
+  # to (descending) cycle length of the permutation to be conjugated. At the
+  # moment no other criterion is used (though experiments can observe a
+  # significant impact on run time -- there is work TODO).
+  # Beyond this choice, the base point order is determined as a side effect
+  # of the sorting algorithm.
+  # To avoid particular configurations falling repeatedly into a bad case,
+  # we permute the base points to obtain a random ordering beyond the
+  # criterion used. This can be turned off through an option for debugging
+  # purposes.
+  if ValueOption("norandom")=true then
+    i:=[1..Length(cycles.firsts)];
+  else
+    i:=FLOYDS_ALGORITHM(RandomSource(IsMersenneTwister),
+         Length(cycles.firsts),false);
+  fi;
+  order := cycles.points{ cycles.firsts{i} };
+  SortParallel( -(cycles.lengths{i}), order );
 
   repeat
 
@@ -2643,8 +2635,8 @@ local Pr, div, B, rbase, data, N;
     N := ShallowCopy( G );
   fi;
   # remove cached information
-  Unbind(G!.suborbits);
-  Unbind(E!.suborbits);
+  G!.suborbits:=[];
+  E!.suborbits:=[];
 
   # bring the stabilizer chains back into a decent form
   ReduceStabChain(StabChainMutable(G));
@@ -2660,8 +2652,8 @@ Eh, Lh, Nh,G0;
 
   G := arg[ 1 ];
   E := arg[ 2 ];
-  Unbind(G!.suborbits); # in case any remained from interruption
-  Unbind(E!.suborbits);
+  G!.suborbits:=[]; # in case any remained from interruption
+  E!.suborbits:=[];
   if IsTrivial( E ) or IsTrivial( G ) then
       return G;
   elif Size( E ) = 2  then

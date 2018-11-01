@@ -20,16 +20,18 @@
 **  union, intersection, or difference of two sets.
 */
 
-#include <src/set.h>
+#include "set.h"
 
-#include <src/ariths.h>
-#include <src/bool.h>
-#include <src/gap.h>
-#include <src/io.h>
-#include <src/listfunc.h>
-#include <src/lists.h>
-#include <src/plist.h>
-#include <src/sysfiles.h>
+#include "ariths.h"
+#include "bool.h"
+#include "error.h"
+#include "io.h"
+#include "listfunc.h"
+#include "lists.h"
+#include "modules.h"
+#include "plist.h"
+#include "sysfiles.h"
+#include "sysopt.h"    // for SyInitializing
 
 
 /****************************************************************************
@@ -59,13 +61,13 @@ Int IsSet (
     /* if <list> is a plain list                                           */
     if ( IS_PLIST( list ) ) {
 
-        /* if <list> is the empty list, its a set (:-)                     */
+        /* if <list> is the empty list, it is a set (:-)                     */
         if ( LEN_PLIST(list) == 0 ) {
-            SET_FILT_LIST( list, FN_IS_EMPTY );
+            RetypeBagIfWritable(list, IS_MUTABLE_OBJ(list) ? T_PLIST_EMPTY : T_PLIST_EMPTY+IMMUTABLE);
             isSet = 1;
         }
 
-        /* if <list>  strictly sorted, its a set            */
+        /* if <list>  strictly sorted, it is a set            */
         else if ( IS_SSORT_LIST(list) ) {
             isSet = 1;
         }
@@ -80,14 +82,14 @@ Int IsSet (
     /* if it is another small list                                         */
     else if ( IS_SMALL_LIST(list) ) {
 
-        /* if <list> is the empty list, its a set (:-)                     */
+        /* if <list> is the empty list, it is a set (:-)                     */
         if ( LEN_LIST(list) == 0 ) {
             PLAIN_LIST( list );
-            SET_FILT_LIST( list, FN_IS_EMPTY );
+            RetypeBagIfWritable(list, IS_MUTABLE_OBJ(list) ? T_PLIST_EMPTY : T_PLIST_EMPTY+IMMUTABLE);
             isSet = 1;
         }
 
-        /* if <list> strictly sorted, its a set            */
+        /* if <list> strictly sorted, it is a set            */
         else if (  IS_SSORT_LIST(list) ) {
             PLAIN_LIST( list );
             /* SET_FILT_LIST( list, FN_IS_HOMOG ); */
@@ -574,15 +576,13 @@ Obj FuncREM_SET (
         for ( i = pos; i < len; i++ ) {
 	    *ptr = *(ptr+1);
 	    ptr ++;
-	    /*             SET_ELM_PLIST( set, i, ELM_PLIST(set,i+1) ); */
         }
         SET_ELM_PLIST( set, len, 0 );
         SET_LEN_PLIST( set, len-1 );
 
         /* fix up the type of the result                                   */
         if ( len-1 == 0 ) {
-            CLEAR_FILTS_LIST(set);
-            SET_FILT_LIST( set, FN_IS_EMPTY );
+            RetypeBag(set, T_PLIST_EMPTY);
         }
     }
 
@@ -593,7 +593,6 @@ Obj FuncREM_SET (
 
 /****************************************************************************
 **
-*V  TmpUnion  . . . . . . . . . . . . . . . . . . buffer for the union, local
 *F  FuncUNITE_SET( <self>, <set1>, <set2> ) . . .  unite one set with another
 **
 **  'FuncUNITE_SET' implements the internal function 'UniteSet'.
@@ -609,11 +608,6 @@ Obj FuncREM_SET (
 **  'FuncUNITE_SET' merges <set1> and <set2> into a  buffer that is allocated
 **  at initialization time.
 **
-**  'TmpUnion' is the global  bag that serves as  temporary bag for the union.
-**  It is created in 'InitSet' and is resized when necessary.
-**
-**   This doesn't work, because UniteSet calls EQ, which can result in a nested call to
-** UniteSet, which must accordingly be re-entrant.
 */
 
 Obj FuncUNITE_SET (
@@ -649,7 +643,6 @@ Obj FuncUNITE_SET (
     len1 = LEN_PLIST( set1 );
     len2 = LEN_PLIST( set2 );
     TmpUnion = NEW_PLIST(T_PLIST,len1+len2);
-    /*     GROW_PLIST( TmpUnion, len1 + len2 );*/
     lenr = 0;
     i1 = 1;
     i2 = 1;
@@ -864,8 +857,7 @@ Obj FuncINTER_SET (
 
     /* fix up the type of the result                                       */
     if ( lenr == 0 ) {
-      CLEAR_FILTS_LIST(set1);
-      SET_FILT_LIST( set1, FN_IS_EMPTY );
+        RetypeBag(set1, T_PLIST_EMPTY);
     }
     else if ( lenr == 1) {
       if (TNUM_OBJ(ELM_PLIST(set1,1)) <= T_CYC)
@@ -1025,8 +1017,7 @@ Obj FuncSUBTR_SET (
 
     /* fix up the type of the result                                       */
     if ( lenr == 0 ) {
-        CLEAR_FILTS_LIST(set1);
-        SET_FILT_LIST( set1, FN_IS_EMPTY );
+        RetypeBag(set1, T_PLIST_EMPTY);
     }
     else if ( lenr == 1) {
       if (TNUM_OBJ(ELM_PLIST(set1,1)) <= T_CYC)
@@ -1044,7 +1035,7 @@ Obj FuncSUBTR_SET (
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
@@ -1054,7 +1045,7 @@ Obj FuncSUBTR_SET (
 static StructGVarFunc GVarFuncs [] = {
 
     GVAR_FUNC(LIST_SORTED_LIST, 1, "list"),
-    GVAR_FUNC(IS_EQUAL_SET, 2, "set1, set2"),
+    GVAR_FUNC(IS_EQUAL_SET, 2, "list1, list2"),
     GVAR_FUNC(IS_SUBSET_SET, 2, "set1, set2"),
     GVAR_FUNC(ADD_SET, 2, "set, val"),
     GVAR_FUNC(REM_SET, 2, "set, val"),
@@ -1073,9 +1064,6 @@ static StructGVarFunc GVarFuncs [] = {
 static Int InitKernel (
     StructInitInfo *    module )
 {
-    /* create the temporary union bag                                      */
-  /*    InitGlobalBag( &TmpUnion, "src/set.c:TmpUnion" ); */
-
     /* init filters and functions                                          */
     InitHdlrFuncsFromTable( GVarFuncs );
 
@@ -1091,10 +1079,6 @@ static Int InitKernel (
 static Int InitLibrary (
     StructInitInfo *    module )
 {
-    /* create the temporary union bag                                      */
-  /*     TmpUnion = NEW_PLIST( T_PLIST, 1024 );
-	 SET_LEN_PLIST( TmpUnion, 1024 ); */
-
     /* init filters and functions                                          */
     InitGVarFuncsFromTable( GVarFuncs );
 

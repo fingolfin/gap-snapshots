@@ -1,5 +1,5 @@
   
-  [1X26 [33X[0;0YVector and matrix objects[133X[101X
+  [1X26 [33X[0;0YVector and Matrix Objects[133X[101X
   
   [33X[0;0YThis  chapter  is  work  in  progress.  It  will eventually describe the new
   interface to vector and matrix objects.[133X
@@ -13,7 +13,7 @@
   chapter describes a new programming interface to vectors and matrices.[133X
   
   
-  [1X26.1 [33X[0;0YFundamental ideas and rules[133X[101X
+  [1X26.1 [33X[0;0YFundamental Ideas and Rules[133X[101X
   
   [33X[0;0YThe whole idea of this interface is that vectors and matrices must be proper
   objects  with a stored type (i.e. created by Objectify allowing inheritance)
@@ -76,17 +76,109 @@
   are marked with the word "Rule". FIXME: Collect all rules here.[133X
   
   
-  [1X26.2 [33X[0;0YCategories of vectors and matrices[133X[101X
+  [1X26.2 [33X[0;0YCategories of Vectors and Matrices[133X[101X
   
   
-  [1X26.3 [33X[0;0YConstructing vector and matrix objects[133X[101X
+  [1X26.3 [33X[0;0YConstructing Vector and Matrix Objects[133X[101X
   
   
-  [1X26.4 [33X[0;0YOperations for row vector objects[133X[101X
+  [1X26.4 [33X[0;0YOperations for Vector Objects[133X[101X
+  
+  [1X26.4-1 PositionNonZero[101X
+  
+  [33X[1;0Y[29X[2XPositionNonZero[102X( [3XV[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YAn integer[133X
+  
+  [33X[0;0YReturns  the  index of the first entry in the vector [3XV[103X which is not zero. If
+  all entries are zero, the function returns [10XLength([3XV[103X[10X) + 1[110X.[133X
+  
+  [1X26.4-2 PositionLastNonZero[101X
+  
+  [33X[1;0Y[29X[2XPositionLastNonZero[102X( [3XV[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YAn integer[133X
+  
+  [33X[0;0YReturns  the  index  of the last entry in the vector [3XV[103X which is not zero. If
+  all entries are zero, the function returns 0.[133X
+  
+  [1X26.4-3 ListOp[101X
+  
+  [33X[1;0Y[29X[2XListOp[102X( [3XV[103X[, [3Xfunc[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA plain list[133X
+  
+  [33X[0;0YApplies  [3Xfunc[103X  to  each  entry  of the vector [3XV[103X and returns the results as a
+  plain  list.  This  allows  for  calling  [2XList[102X  ([14X30.3-5[114X)  on vectors. If the
+  argument [3Xfunc[103X is not provided, applies [2XIdFunc[102X ([14X5.4-6[114X) to all entries.[133X
+  
+  [1X26.4-4 Unpack[101X
+  
+  [33X[1;0Y[29X[2XUnpack[102X( [3XV[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA plain list[133X
+  
+  [33X[0;0YReturns a new plain list containing the entries of [3XV[103X. Guarantees to return a
+  new list which can be manipulated without changing [3XV[103X. The entries itself are
+  not copied.[133X
+  
+  [1X26.4-5 ConcatenationOfVectors[101X
+  
+  [33X[1;0Y[29X[2XConcatenationOfVectors[102X( [3XV1[103X, [3XV2[103X, [3X...[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XConcatenationOfVectors[102X( [3XVlist[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya vector object[133X
+  
+  [33X[0;0YReturns  a new vector containing the entries of [3XV1[103X, [3XV2[103X, etc. As prototype [3XV1[103X
+  is used.[133X
+  
+  [1X26.4-6 ExtractSubVector[101X
+  
+  [33X[1;0Y[29X[2XExtractSubVector[102X( [3XV[103X, [3Xl[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya vector object[133X
+  
+  [33X[0;0YReturns a new vector containing the entries of [3XV[103X at the positions in [3Xl[103X.[133X
+  
+  [1X26.4-7 ZeroVector[101X
+  
+  [33X[1;0Y[29X[2XZeroVector[102X( [3Xl[103X, [3XV[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya vector object[133X
+  
+  [33X[0;0YReturns  a new vector of length [3Xl[103X in the same representation as [3XV[103X containing
+  only zeros.[133X
+  
+  [1X26.4-8 ConstructingFilter[101X
+  
+  [33X[1;0Y[29X[2XConstructingFilter[102X( [3XV[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya filter[133X
+  
+  [33X[0;0YReturns  a  filter [10Xf[110X such that if [10XNewVector[110X is called with [10Xf[110X a vector in the
+  same representation as [3XV[103X is produced.[133X
+  
+  [1X26.4-9 Randomize[101X
+  
+  [33X[1;0Y[29X[2XRandomize[102X( [3XV[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XRandomize[102X( [3XV[103X, [3XRs[103X ) [32X operation[133X
+  
+  [33X[0;0YReplaces  every entry in [3XV[103X with a random one from the base domain. If given,
+  the  random  source  [3XRs[103X is used to compute the random elements. Note that in
+  this  case,  the random function for the base domain must support the random
+  source argument.[133X
+  
+  [1X26.4-10 WeightOfVector[101X
+  
+  [33X[1;0Y[29X[2XWeightOfVector[102X( [3XV[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan integer[133X
+  
+  [33X[0;0YComputes  the  Hamming  weight  of the vector [3XV[103X, i.e., the number of nonzero
+  entries.[133X
+  
+  [1X26.4-11 DistanceOfVectors[101X
+  
+  [33X[1;0Y[29X[2XDistanceOfVectors[102X( [3XV1[103X, [3XV2[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan integer[133X
+  
+  [33X[0;0YComputes  the Hamming distance of the vectors [3XV1[103X and [3XV2[103X, i.e., the number of
+  entries in which the vectors differ. The vectors must be of equal length.[133X
   
   
-  [1X26.5 [33X[0;0YOperations for row list matrix objects[133X[101X
+  [1X26.5 [33X[0;0YOperations for Row List Matrix Objects[133X[101X
   
   
-  [1X26.6 [33X[0;0YOperations for flat matrix objects[133X[101X
+  [1X26.6 [33X[0;0YOperations for Flat Matrix Objects[133X[101X
   

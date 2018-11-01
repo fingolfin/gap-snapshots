@@ -885,7 +885,7 @@
   types  of  objects, or that other types of [5XGAP[105X objects can be represented by
   partial   permutations.   Partial   permutations  which  are  mathematically
   permutations  can  be  converted into permutations in [5XGAP[105X using the function
-  [2XAsPermutation[102X  ([14X42.5-5[114X).  Similarly,  a partial permutation can be converted
+  [2XAsPermutation[102X  ([14X42.5-6[114X).  Similarly,  a partial permutation can be converted
   into a transformation using [2XAsTransformation[102X ([14X53.3-1[114X).[133X
   
   [33X[0;0YIn  this section we describe functions for converting other types of objects
@@ -1487,7 +1487,7 @@
         [33X[0;6YIf [3XS[103X is a permutation group, then [10XIsomorphismPartialPermMonoid[110X returns
         an  isomorphism from [3XS[103X to an inverse monoid of partial permutations on
         the  set  [10XMovedPoints([3XS[103X[10X)[110X  obtained  using  [2XAsPartialPerm[102X ([14X54.4-1[114X). The
-        inverse of this isomorphism is obtained using [2XAsPermutation[102X ([14X42.5-5[114X).[133X
+        inverse of this isomorphism is obtained using [2XAsPermutation[102X ([14X42.5-6[114X).[133X
   
   [8XTransformation semigroups[108X
         [33X[0;6YIf  [3XS[103X  is  a transformation semigroup which is mathematically a monoid

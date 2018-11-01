@@ -314,10 +314,9 @@ make_compstat () {
     temps_c="${temps_c} ${gactmp}/$$compstat.c"
     (
         echo     "/* made by 'gac', can be thrown away */"
-        echo     "#include <src/compiled.h>"
+        echo     "#include \"compiled.h\""
 
         echo     "#ifndef AVOID_PRECOMPILED"
-        echo     "extern StructInitInfo * Init__methsel1 ( void );"
         echo     "extern StructInitInfo * Init__type1 ( void );"
         echo     "extern StructInitInfo * Init__oper1( void );"
         echo     "#endif"
@@ -328,7 +327,6 @@ make_compstat () {
 
         echo     "InitInfoFunc CompInitFuncs [] = {"
         echo     "#ifndef AVOID_PRECOMPILED"
-        echo     "    Init__methsel1,"
         echo     "    Init__type1,"
         echo     "    Init__oper1,"
         echo     "#endif"
@@ -410,7 +408,7 @@ if [ $comp_howfar = "link" ]; then
         if [ "X${output}" = "X" ]; then output="gacout"; fi
 
         for object in $GAP_OBJS;  do
-            if [ ${object} != "obj/compstat.lo" ]; then
+            if [ ${object} != "obj/src/compstat.lo" ]; then
                 objects="${abs_top_builddir}/${object} ${objects}"
             fi
         done

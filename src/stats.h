@@ -16,8 +16,7 @@
 #ifndef GAP_STATS_H
 #define GAP_STATS_H
 
-#include <src/code.h>
-#include <src/gapstate.h>
+#include "gapstate.h"
 
 /****************************************************************************
 **
@@ -47,11 +46,7 @@ extern  UInt            (* ExecStatFuncs[256]) ( Stat stat );
 **  executor, i.e., to the  function that executes statements  of the type of
 **  <stat>.
 */
-static inline UInt EXEC_STAT(Stat stat)
-{
-    UInt tnum = TNUM_STAT(stat);
-    return (*STATE(CurrExecStatFuncs)[ tnum ]) ( stat );
-}
+extern UInt EXEC_STAT(Stat stat);
 
 
 /****************************************************************************
@@ -162,7 +157,7 @@ extern void ClearError ( void );
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

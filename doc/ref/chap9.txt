@@ -531,7 +531,7 @@
   
   [33X[0;0YAn  additional  use  of [2XReread[102X is to load the compiled version of a file for
   which  the  [5XGAP[105X  language  version  had previously been read (or perhaps was
-  included in a saved workspace). See [14X76.3-10[114X and [14X3.3[114X for more information.[133X
+  included in a saved workspace). See [14X76.3-11[114X and [14X3.3[114X for more information.[133X
   
   [33X[0;0YIt  is  not advisable to use [2XReread[102X programmatically. For example, if a file
   that  contains  calls  to  [2XReread[102X  is read with [2XReread[102X then [2XREREADING[102X may be

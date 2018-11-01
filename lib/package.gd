@@ -43,9 +43,10 @@
 ##  <Ref Var="GAPInfo.PackagesLoaded"/> is a mutable record,
 ##  its component names are the names of those &GAP; packages that are
 ##  already loaded.
-##  The component for each package is a list of length three, the entries
+##  The component for each package is a list of length four, the entries
 ##  being the path to the &GAP; root directory that contains the package,
-##  the package version, and the package name.
+##  the package version, the package name, and a boolean indicating whether
+##  the package finished loading.
 ##  For each package, the value gets bound in the <Ref Func="LoadPackage"/>
 ##  call.
 ##  <P/>
@@ -349,6 +350,31 @@ DeclareGlobalFunction( "PackageAvailabilityInfo" );
 ##  <#/GAPDoc>
 ##
 DeclareGlobalFunction( "TestPackageAvailability" );
+
+
+#############################################################################
+##
+#F  IsPackageLoaded( <name>[, <version>] )
+##
+##  <#GAPDoc Label="IsPackageLoaded">
+##  <ManSection>
+##  <Func Name="IsPackageLoaded" Arg='name[, version]'/>
+##
+##  <Description>
+##  For strings <A>name</A> and <A>version</A>, this function tests
+##  whether the &GAP; package <A>name</A> is already loaded in a
+##  version that is at least <A>version</A>, or equal to <A>version</A>
+##  if the first character of <A>version</A> is <C>=</C>
+##  (see <Ref Func="CompareVersionNumbers"/> for further
+##  details about version numbers).
+##  <P/>
+##  The result is <K>true</K> if the package is already loaded,
+##  <K>false</K> otherwise.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction( "IsPackageLoaded" );
 
 
 #############################################################################

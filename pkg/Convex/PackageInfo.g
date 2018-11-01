@@ -8,16 +8,14 @@ PackageName := "Convex",
 Subtitle := "A package for fan combinatorics",
 
 Version :=  Maximum( [
-  "2013.12.05", ## Sebas' version
+  "2014.08.29", ## Sebas' version
+## this line prevents merge conflicts
+"2015.11.06", ## Homepage update version, to be removed
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
 Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1 .. 4 ]} ),
 
-ArchiveURL := 
-          Concatenation( "http://wwwb.math.rwth-aachen.de/~gutsche/gap_packages/Convex/Convex-", ~.Version ),
-
-ArchiveFormats := ".tar.gz",
 
 
 
@@ -41,12 +39,12 @@ rec(
 ],
 
 Status := "deposited",
+PackageWWWHome := "http://homalg-project.github.io/homalg_project/Convex/",
+ArchiveFormats := ".tar.gz .zip",
+ArchiveURL     := Concatenation( "https://github.com/homalg-project/homalg_project/releases/download/Convex-", ~.Version, "/Convex-", ~.Version ),
+README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
+PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
-
-README_URL := 
-  "http://wwwb.math.rwth-aachen.de/~gutsche/gap_packages/Convex/README.Convex",
-PackageInfoURL := 
-  "http://wwwb.math.rwth-aachen.de/~gutsche/gap_packages/Convex/PackageInfo.g",
 
 AbstractHTML := 
   Concatenation( "Convex provides structures and algorithms for convex geometry. It can handle convex, ",
@@ -55,7 +53,6 @@ AbstractHTML :=
                  "It is capable of communicating with the CAS polymake via the package PolymakeInterface",
                  " and also provides several methods by itself." ),
 
-PackageWWWHome := "http://wwwb.math.rwth-aachen.de/~gutsche/gap_packages/Convex/",
                
 PackageDoc := rec(
   BookName  := "Convex",
@@ -69,9 +66,9 @@ PackageDoc := rec(
 
 
 Dependencies := rec(
-  GAP := ">=4.5",
+  GAP := ">=4.7",
   NeededOtherPackages := [ [ "Modules", ">=2011.08.01" ] ],
-  SuggestedOtherPackages := [ [ "PolymakeInterface", ">=2013.07.29" ] ],
+  SuggestedOtherPackages := [ [ "PolymakeInterface", ">=2014.08.28" ] ],
   ExternalConditions := []
                       
 ),
@@ -97,15 +94,6 @@ function()
     
 end,
 
-# BannerString := Concatenation( 
-#   "----------------------------------------------------------------\n",
-#   "Loading  Convex ", ~.Version, "\n",
-#   "by ", ~.Persons[1].FirstNames, " ", ~.Persons[1].LastName,
-#         " (", ~.Persons[1].WWWHome, ")\n",
-#   "Type:\n",
-#   "  ?Convex:                   ## for the contents of the manual\n",
-#   "  ?Convex:x                  ## for chapter/section/topic x\n",
-#   "----------------------------------------------------------------\n" ),
 
 Autoload := false,
 

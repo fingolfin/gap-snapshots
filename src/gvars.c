@@ -27,25 +27,25 @@
 **  Otherwise the internal copies reference functions that signal an error.
 */
 
-#include <src/gvars.h>
+#include "gvars.h"
 
-#include <src/bool.h>
-#include <src/calls.h>
-#include <src/gap.h>
-#include <src/gapstate.h>
-#include <src/integer.h>
-#include <src/lists.h>
-#include <src/plist.h>
-#include <src/stringobj.h>
+#include "bool.h"
+#include "calls.h"
+#include "error.h"
+#include "gapstate.h"
+#include "integer.h"
+#include "io.h"
+#include "lists.h"
+#include "modules.h"
+#include "plist.h"
+#include "stringobj.h"
 
 #ifdef HPCGAP
-#include <src/hpc/aobjects.h>
-#include <src/hpc/guards.h>
-#include <src/hpc/thread.h>
+#include "hpc/aobjects.h"
+#include "hpc/guards.h"
+#include "hpc/thread.h"
 #include <pthread.h>
 #endif
-
-#include <stdio.h>
 
 
 #ifdef HPCGAP
@@ -319,14 +319,14 @@ void            AssGVar (
 
     // Make certain variable is not constant
     if (writeval == INTOBJ_INT(-1)) {
-        ErrorMayQuit("Variable: '%s' is constant", (Int)NameGVar(gvar), 0L);
+        ErrorMayQuit("Variable: '%g' is constant", (Int)NameGVar(gvar), 0L);
     }
 
     /* make certain that the variable is not read only                     */
     while ( (REREADING != True) &&
             (ELM_GVAR_LIST( WriteGVars, gvar ) == INTOBJ_INT(0)) ) {
         ErrorReturnVoid(
-            "Variable: '%s' is read only",
+            "Variable: '%g' is read only",
             (Int)NameGVar(gvar), 0L,
             "you can 'return;' after making it writable" );
     }
@@ -393,7 +393,7 @@ void            AssGVar (
     if (IS_BAG_REF(val) && REGION(val) == 0) { /* public region? */
 #endif
     if ( val != 0 && TNUM_OBJ(val) == T_FUNCTION && NAME_FUNC(val) == 0 ) {
-        onam = CopyToStringRep(NameGVarObj(gvar));
+        onam = CopyToStringRep(NameGVar(gvar));
         MakeImmutableString(onam);
         SET_NAME_FUNC(val, onam);
         CHANGED_BAG(val);
@@ -439,7 +439,7 @@ Obj             ValAutoGVar (
         /* if this is still an automatic variable, this is an error        */
         while ( (val = ValGVar(gvar)) == 0 ) {
             ErrorReturnVoid(
-       "Variable: automatic variable '%s' must get a value by function call",
+       "Variable: automatic variable '%g' must get a value by function call",
                 (Int)NameGVar(gvar), 0L,
                 "you can 'return;' after assigning a value" );
         }
@@ -490,18 +490,6 @@ Obj FuncIsThreadLocalGVar( Obj self, Obj name) {
 #endif
 
 
-/****************************************************************************
-**
-*F  NameGVar(<gvar>)  . . . . . . . . . . . . . . . name of a global variable
-**
-**  'NameGVar' returns the name of the global variable <gvar> as a C string.
-*/
-Char *          NameGVar (
-    UInt                gvar )
-{
-    return CSTR_STRING( ELM_GVAR_LIST( NameGVars, gvar ) );
-}
-
 #ifdef USE_GVAR_BUCKETS
 Obj NewGVarBucket(void) {
     Obj result = NEW_PLIST(T_PLIST, GVAR_BUCKET_SIZE);
@@ -513,7 +501,7 @@ Obj NewGVarBucket(void) {
 }
 #endif
 
-Obj NameGVarObj ( UInt gvar )
+Obj NameGVar ( UInt gvar )
 {
     return ELM_GVAR_LIST( NameGVars, gvar );
 }
@@ -589,7 +577,7 @@ UInt GVarName (
     sizeGVars = LEN_PLIST(TableGVars);
     pos = (hash % sizeGVars) + 1;
     while ( (gvar = ELM_PLIST( TableGVars, pos )) != 0
-         && strncmp( NameGVar( INT_INTOBJ(gvar) ), name, 1023 ) ) {
+         && strncmp( CSTR_STRING( NameGVar( INT_INTOBJ(gvar) ) ), name, 1023 ) ) {
         pos = (pos % sizeGVars) + 1;
     }
 
@@ -603,7 +591,7 @@ UInt GVarName (
         sizeGVars = LEN_PLIST(TableGVars);
         pos = (hash % sizeGVars) + 1;
         while ( (gvar = ELM_PLIST( TableGVars, pos )) != 0
-             && strncmp( NameGVar( INT_INTOBJ(gvar) ), name, 1023 ) ) {
+             && strncmp( CSTR_STRING( NameGVar( INT_INTOBJ(gvar) ) ), name, 1023 ) ) {
             pos = (pos % sizeGVars) + 1;
         }
     }
@@ -666,7 +654,7 @@ UInt GVarName (
             for ( i = 1; i <= (sizeGVars-1)/2; i++ ) {
                 gvar2 = ELM_PLIST( table, i );
                 if ( gvar2 == 0 )  continue;
-                pos = HashString( NameGVar( INT_INTOBJ(gvar2) ) );
+                pos = HashString( CSTR_STRING( NameGVar( INT_INTOBJ(gvar2) ) ) );
                 pos = (pos % sizeGVars) + 1;
                 while ( ELM_PLIST( TableGVars, pos ) != 0 ) {
                     pos = (pos % sizeGVars) + 1;
@@ -693,7 +681,7 @@ void MakeReadOnlyGVar (
     UInt                gvar )
 {
     if (ELM_GVAR_LIST(WriteGVars, gvar) == INTOBJ_INT(-1)) {
-        ErrorMayQuit("Variable: '%s' is constant", (Int)NameGVar(gvar), 0L);
+        ErrorMayQuit("Variable: '%g' is constant", (Int)NameGVar(gvar), 0L);
     }
     SET_ELM_GVAR_LIST( WriteGVars, gvar, INTOBJ_INT(0) );
     CHANGED_GVAR_LIST( WriteGVars, gvar );
@@ -708,7 +696,7 @@ void MakeConstantGVar(UInt gvar)
     Obj val = ValGVar(gvar);
     if (!IS_INTOBJ(val) && val != True && val != False) {
         ErrorMayQuit(
-            "Variable: '%s' must be assigned a small integer, true or false",
+            "Variable: '%g' must be assigned a small integer, true or false",
             (Int)NameGVar(gvar), 0L);
     }
     SET_ELM_GVAR_LIST(WriteGVars, gvar, INTOBJ_INT(-1));
@@ -802,7 +790,7 @@ void MakeReadWriteGVar (
     UInt                gvar )
 {
     if (ELM_GVAR_LIST(WriteGVars, gvar) == INTOBJ_INT(-1)) {
-        ErrorMayQuit("Variable: '%s' is constant", (Int)NameGVar(gvar), 0L);
+        ErrorMayQuit("Variable: '%g' is constant", (Int)NameGVar(gvar), 0L);
     }
     SET_ELM_GVAR_LIST( WriteGVars, gvar, INTOBJ_INT(1) );
     CHANGED_GVAR_LIST( WriteGVars, gvar );
@@ -987,7 +975,7 @@ UInt            iscomplete_gvar (
 
     numGVars = INT_INTOBJ(CountGVars);
     for ( i = 1; i <= numGVars; i++ ) {
-        curr = NameGVar( i );
+        curr = CSTR_STRING( NameGVar( i ) );
         for ( k = 0; name[k] != 0 && curr[k] == name[k]; k++ ) ;
         if ( k == len && curr[k] == '\0' )  return 1;
     }
@@ -1008,7 +996,7 @@ UInt            completion_gvar (
     for ( i = 1; i <= numGVars; i++ ) {
         /* consider only variables which are currently bound for completion */
         if ( VAL_GVAR_INTERN( i ) || ELM_GVAR_LIST( ExprGVars, i )) {
-            curr = NameGVar( i );
+            curr = CSTR_STRING( NameGVar( i ) );
             for ( k = 0; name[k] != 0 && curr[k] == name[k]; k++ ) ;
             if ( k < len || curr[k] <= name[k] )  continue;
             if ( next != 0 ) {
@@ -1049,11 +1037,11 @@ Obj FuncIDENTS_GVAR (
     numGVars = INT_INTOBJ(CountGVars);
 #endif
 
-    copy = NEW_PLIST( T_PLIST+IMMUTABLE, numGVars );
+    copy = NEW_PLIST_IMM( T_PLIST, numGVars );
     for ( i = 1;  i <= numGVars;  i++ ) {
         /* Copy the string here, because we do not want members of NameGVars
          * accessible to users, as these strings must not be changed */
-        strcopy = CopyToStringRep( NameGVarObj( i ) );
+        strcopy = CopyToStringRep( NameGVar( i ) );
         SET_ELM_PLIST( copy, i, strcopy );
         CHANGED_BAG( copy );
     }
@@ -1077,13 +1065,13 @@ Obj FuncIDENTS_BOUND_GVARS (
     numGVars = INT_INTOBJ(CountGVars);
 #endif
 
-    copy = NEW_PLIST( T_PLIST+IMMUTABLE, numGVars );
+    copy = NEW_PLIST_IMM( T_PLIST, numGVars );
     for ( i = 1, j = 1;  i <= numGVars;  i++ ) {
         if ( VAL_GVAR_INTERN( i ) || ELM_GVAR_LIST( ExprGVars, i ) ) {
            /* Copy the string here, because we do not want members of
             * NameGVars accessible to users, as these strings must not be
             * changed */
-           strcopy = CopyToStringRep( NameGVarObj( i ) );
+           strcopy = CopyToStringRep( NameGVar( i ) );
            SET_ELM_PLIST( copy, j, strcopy );
            CHANGED_BAG( copy );
            j++;
@@ -1169,8 +1157,8 @@ Obj FuncVAL_GVAR (
     val = ValAutoGVar( GVarName( CSTR_STRING(gvar) ) );
 
     while (val == (Obj) 0)
-      val = ErrorReturnObj("VAL_GVAR: No value bound to %s",
-                           (Int)CSTR_STRING(gvar), (Int) 0,
+      val = ErrorReturnObj("VAL_GVAR: No value bound to %g",
+                           (Int)gvar, (Int) 0,
                            "you can return a value" );
     return val;
 }
@@ -1253,8 +1241,7 @@ void InitCopyGVar (
 #ifdef HPCGAP
         UnlockGVars();
 #endif
-        Pr( "Panic, no room to record CopyGVar\n", 0L, 0L );
-        SyExit(1);
+        Panic("Panic, no room to record CopyGVar");
     }
     CopyAndFopyGVars[NCopyAndFopyGVars].copy = copy;
     CopyAndFopyGVars[NCopyAndFopyGVars].isFopy = 0;
@@ -1291,8 +1278,7 @@ void InitFopyGVar (
 #ifdef HPCGAP
         UnlockGVars();
 #endif
-        Pr( "Panic, no room to record FopyGVar\n", 0L, 0L );
-        SyExit(1);
+        Panic("Panic, no room to record FopyGVar");
     }
     CopyAndFopyGVars[NCopyAndFopyGVars].copy = copy;
     CopyAndFopyGVars[NCopyAndFopyGVars].isFopy = 1;
@@ -1546,7 +1532,7 @@ void SetGVar(GVarDescriptor *gvar, Obj obj)
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 
@@ -1723,22 +1709,11 @@ static Int InitLibrary (
 #if !defined(USE_GVAR_BUCKETS)
     /* make the lists for global variables                                 */
     ValGVars = NEW_PLIST( T_PLIST, 0 );
-    SET_LEN_PLIST( ValGVars, 0 );
-
     NameGVars = NEW_PLIST( T_PLIST, 0 );
-    SET_LEN_PLIST( NameGVars, 0 );
-
     WriteGVars = NEW_PLIST( T_PLIST, 0 );
-    SET_LEN_PLIST( WriteGVars, 0 );
-
     ExprGVars = NEW_PLIST( T_PLIST, 0 );
-    SET_LEN_PLIST( ExprGVars, 0 );
-
     CopiesGVars = NEW_PLIST( T_PLIST, 0 );
-    SET_LEN_PLIST( CopiesGVars, 0 );
-
     FopiesGVars = NEW_PLIST( T_PLIST, 0 );
-    SET_LEN_PLIST( FopiesGVars, 0 );
 #endif
 
     /* make the list of global variables                                   */
@@ -1778,11 +1753,14 @@ static Int CheckInit (
 }
 
 
-static void InitModuleState(ModuleStateOffset offset)
+static Int InitModuleState(void)
 {
     /* Create the current namespace: */
     STATE(CurrNamespace) = NEW_STRING(0);
     SET_LEN_STRING(STATE(CurrNamespace), 0);
+
+    // return success
+    return 0;
 }
 
 
@@ -1800,11 +1778,11 @@ static StructInitInfo module = {
     .checkInit = CheckInit,
     .preSave = PreSave,
     .postSave = PostSave,
-    .postRestore = PostRestore
+    .postRestore = PostRestore,
+    .initModuleState = InitModuleState,
 };
 
 StructInitInfo * InitInfoGVars ( void )
 {
-    RegisterModuleState(0, InitModuleState, 0);
     return &module;
 }

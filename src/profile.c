@@ -9,23 +9,23 @@
 **
 */
 
-#include <src/profile.h>
+#include "profile.h"
 
-#include <src/bool.h>
-#include <src/calls.h>
-#include <src/code.h>
-#include <src/funcs.h>
-#include <src/gap.h>
-#include <src/hookintrprtr.h>
-#include <src/io.h>
-#include <src/lists.h>
-#include <src/plist.h>
-#include <src/stringobj.h>
-#include <src/vars.h>
+#include "bool.h"
+#include "calls.h"
+#include "code.h"
+#include "funcs.h"
+#include "error.h"
+#include "hookintrprtr.h"
+#include "io.h"
+#include "lists.h"
+#include "modules.h"
+#include "plist.h"
+#include "stringobj.h"
+#include "vars.h"
 
-#include <src/hpc/thread.h>
+#include "hpc/thread.h"
 
-#include <stdio.h>
 #include <sys/time.h>                   // for gettimeofday
 #ifdef HAVE_SYS_RESOURCE_H
 #include <sys/resource.h>               // definition of 'struct rusage'
@@ -205,7 +205,7 @@ static inline void outputFilenameIdIfRequired(UInt id)
         AssPlist(OutputtedFilenameList, id, True);
         fprintf(profileState.Stream,
                 "{\"Type\":\"S\",\"File\":\"%s\",\"FileId\":%d}\n",
-                CSTR_STRING(ELM_LIST(FilenameCache, id)), (int)id);
+                CSTR_STRING(GetCachedFilename(id)), (int)id);
     }
 }
 
@@ -307,10 +307,12 @@ static void fopenMaybeCompressed(char* name, struct ProfileState* ps)
 {
 #ifdef HAVE_POPEN
   char popen_buf[4096];
-  if(endsWithgz(name) && strlen(name) < 3000)
+  // Need space for "gzip < '", ".gz'" and terminating \0.
+  if(endsWithgz(name) && strlen(name) < sizeof(popen_buf) - 8 - 4 - 1)
   {
-    strcpy(popen_buf, "gzip > ");
-    strcat(popen_buf, name);
+    strxcpy(popen_buf, "gzip > '", sizeof(popen_buf));
+    strxcat(popen_buf, name, sizeof(popen_buf));
+    strxcat(popen_buf, "'", sizeof(popen_buf));
     ps->Stream = popen(popen_buf, "w");
     ps->StreamWasPopened = 1;
     return;
@@ -828,7 +830,7 @@ Obj FuncACTIVATE_COLOR_PROFILING(Obj self, Obj arg)
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************

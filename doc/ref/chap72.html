@@ -905,7 +905,7 @@ Character( CharacterTable( S4 ), [ 4, 2, 0, 1, 0 ] )
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List( Irr( S4 ), CentreOfCharacter );</span>
-[ Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]), Group(()), 
+[ Group([ (), (1,2), (1,2)(3,4), (1,2,3), (1,2,3,4) ]), Group(()),
   Group([ (1,2)(3,4), (1,4)(2,3) ]), Group(()), Group([ (), (1,2), (1,
    2)(3,4), (1,2,3), (1,2,3,4) ]) ]
 </pre></div>
@@ -1738,6 +1738,10 @@ Character( CharacterTable( "U3(3)" ),
 <dd><p>a list of records, each with the components <code class="code">numer</code>, <code class="code">r</code>, and <code class="code">k</code>, describing the summand <code class="code">numer</code><span class="SimpleMath">/ (1-z^r)^k</span>,</p>
 
 </dd>
+<dt><strong class="Mark"><code class="code">pol</code></strong></dt>
+<dd><p>a list of coefficients, describing a final polynomial which is added to those described by <code class="code">summands</code>,</p>
+
+</dd>
 <dt><strong class="Mark"><code class="code">size</code></strong></dt>
 <dd><p>the order of the underlying matrix group,</p>
 
@@ -1757,7 +1761,7 @@ rec( degree := 3,
 +1, denominfo := [ 5, 1, 3, 1, 2, 2 ], 
   denomstring := "(1-z^5)*(1-z^3)*(1-z^2)^2", 
   numer := -x_1^9+x_1^7+x_1^6-x_1^3-x_1^2+1, 
-  numerstring := "1-z^2-z^3+z^6+z^7-z^9", 
+  numerstring := "1-z^2-z^3+z^6+z^7-z^9", pol := [  ], 
   ratfun := ( 1-z^2-z^3+z^6+z^7-z^9 ) / ( (1-z^5)*(1-z^3)*(1-z^2)^2 ),
   size := 60, 
   summands := [ rec( k := 1, numer := [ -24, -12, -24 ], r := 5 ), 

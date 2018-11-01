@@ -236,6 +236,8 @@ fi;
 ##
 ##  - Unbind `DEBUG_LOADING', since later the `-D' option can be checked.
 ##  - Set or disable break loop according to the `-T' option.
+##  - Set whether traceback may be suppressed (e.g. by `-T') according to the
+##    `--alwaystrace' option.
 ##
 CallAndInstallPostRestore( function()
     if DEBUG_LOADING then
@@ -246,15 +248,23 @@ CallAndInstallPostRestore( function()
     MAKE_READ_WRITE_GLOBAL( "DEBUG_LOADING" );
     UNBIND_GLOBAL( "DEBUG_LOADING" );
 
-    MAKE_READ_WRITE_GLOBAL( "TEACHING_MODE" );
-    UNBIND_GLOBAL( "TEACHING_MODE" );
-    BIND_GLOBAL( "TEACHING_MODE", GAPInfo.CommandLineOptions.T );
     if IsHPCGAP then
+      # In HPC-GAP we want to decide how to handle errors on a per thread
+      # basis. E.g. the break loop can be disabled in a worker thread that
+      # runs tasks.
       BindThreadLocal( "BreakOnError", not GAPInfo.CommandLineOptions.T );
-      BindThreadLocal( "SilentErrors", false );
+      BindThreadLocal(
+        "AlwaysPrintTracebackOnError",
+        GAPInfo.CommandLineOptions.alwaystrace
+      );
+      BindThreadLocal( "SilentNonInteractiveErrors", false );
+      # We store the error messages on a per thread basis to be able to
+      # e.g. access them independently from the main thread.
       BindThreadLocal( "LastErrorMessage", "" );
     else
       ASS_GVAR( "BreakOnError", not GAPInfo.CommandLineOptions.T );
+      ASS_GVAR( "AlwaysPrintTracebackOnError", GAPInfo.CommandLineOptions.alwaystrace );
+      ASS_GVAR( "SilentNonInteractiveErrors", false );
     fi;
 end);
 
@@ -375,15 +385,9 @@ end);
 ##
 #F  ReadLib( <name> ) . . . . . . . . . . . . . . . . . . . . . library files
 #F  ReadGrp( <name> ) . . . . . . . . . . . . . . . . . . group library files
-#F  ReadSmall( <name> ) . . . . . . . . . . . . .  small groups library files
-#F  ReadTrans( <name> ) . . . . . . . .  transitive perm groups library files
-#F  ReadPrim( <name> )  . . . . . . . . . primitive perm groups library files
 ##
 BIND_GLOBAL("ReadLib",ReadAndCheckFunc("lib"));
 BIND_GLOBAL("ReadGrp",ReadAndCheckFunc("grp"));
-BIND_GLOBAL("ReadSmall",ReadAndCheckFunc("small"));
-BIND_GLOBAL("ReadTrans",ReadAndCheckFunc("trans"));
-BIND_GLOBAL("ReadPrim",ReadAndCheckFunc("prim"));
 
 
 #############################################################################
@@ -428,15 +432,6 @@ ID_AVAILABLE := x -> fail;
 #V  TRANS_AVAILABLE
 PRIM_AVAILABLE:=false;
 TRANS_AVAILABLE:=false;
-
-#############################################################################
-##
-#F  DeclareComponent(<componentname>,<versionstring>)
-##
-GAPInfo.LoadedComponents:= rec();
-BIND_GLOBAL("DeclareComponent",function(name,version)
-  GAPInfo.LoadedComponents.( name ):= version;
-end);
 
 #############################################################################
 ##
@@ -569,11 +564,19 @@ BindGlobal( "ShowKernelInformation", function()
     fi;
     Add( config, str );
   fi;
+  if IsBound( GAPInfo.KernelInfo.JULIA_VERSION ) then
+    str := "Julia ";
+    Append(str, GAPInfo.KernelInfo.JULIA_VERSION);
+    Add( config, str );
+  fi;
   if IsBound( GAPInfo.UseReadline ) then
     Add( config, "readline" );
   fi;
   if GAPInfo.KernelInfo.KernelDebug then
     Add( config, "KernelDebug" );
+  fi;
+  if GAPInfo.KernelInfo.MemCheck then
+    Add(config, "MemCheck");
   fi;
   if config <> [] then
     print_info( " Configuration:  ", config, "\n" );
@@ -642,41 +645,8 @@ BindGlobal( "NamesGVars", function()
 end );
 
 
-# we cannot complete the following command because printing may mess up the
-# backslash-masked characters!
-BIND_GLOBAL("VIEW_STRING_SPECIAL_CHARACTERS_OLD",
-  # The first list is sorted and contains special characters. The second list
-  # contains characters that should instead be printed after a `\'.
-  Immutable([ "\c\b\n\r\"\\", "cbnr\"\\" ]));
-BIND_GLOBAL("SPECIAL_CHARS_VIEW_STRING",
-MakeImmutable(
-[ List(Concatenation([0..31],[34,92],[127..255]), CHAR_INT), [
-"\\000", "\\>", "\\<", "\\c", "\\004", "\\005", "\\006", "\\007", "\\b", "\\t",
-"\\n", "\\013", "\\014", "\\r", "\\016", "\\017", "\\020", "\\021", "\\022",
-"\\023", "\\024", "\\025", "\\026", "\\027", "\\030", "\\031", "\\032", "\\033",
-"\\034", "\\035", "\\036", "\\037", "\\\"", "\\\\",
-"\\177","\\200","\\201","\\202","\\203","\\204","\\205","\\206","\\207",
-"\\210","\\211","\\212","\\213","\\214","\\215","\\216","\\217","\\220",
-"\\221","\\222","\\223","\\224","\\225","\\226","\\227","\\230","\\231",
-"\\232","\\233","\\234","\\235","\\236","\\237","\\240","\\241","\\242",
-"\\243","\\244","\\245","\\246","\\247","\\250","\\251","\\252","\\253",
-"\\254","\\255","\\256","\\257","\\260","\\261","\\262","\\263","\\264",
-"\\265","\\266","\\267","\\270","\\271","\\272","\\273","\\274","\\275",
-"\\276","\\277","\\300","\\301","\\302","\\303","\\304","\\305","\\306",
-"\\307","\\310","\\311","\\312","\\313","\\314","\\315","\\316","\\317",
-"\\320","\\321","\\322","\\323","\\324","\\325","\\326","\\327","\\330",
-"\\331","\\332","\\333","\\334","\\335","\\336","\\337","\\340","\\341",
-"\\342","\\343","\\344","\\345","\\346","\\347","\\350","\\351","\\352",
-"\\353","\\354","\\355","\\356","\\357","\\360","\\361","\\362","\\363",
-"\\364","\\365","\\366","\\367","\\370","\\371","\\372","\\373","\\374",
-"\\375","\\376","\\377" ]]));
-
-
 # help system, profiling
 ReadOrComplete( "lib/read4.g" );
-#  moved here from read4.g, because completion doesn't work with if-statements
-#  around function definitions!
-ReadLib( "helpview.gi"  );
 
 # Here are a few general user preferences which may be useful for 
 # various purposes. They are self-explaining.
@@ -738,23 +708,6 @@ function()
         return Runtime;
     fi;
 end);
-
-DeclareUserPreference( rec(
-  name := "Autocompleter",
-  description := [
-                   "Set how names are filtered during tab-autocomplete, \
-this can be: \"default\": case-sensitive matching. \"case-insensitive\": \
-case-insensitive matching, or a record with two components named 'filter' and \
-'completer', which are both functions which take two arguments. \
-'filter' takes a list of names and a partial identifier and returns \
-all the members of 'names' which are a valid extension of the partial \
-identifier. 'completer' takes a list of names and a partial identifier and \
-returns the partial identifier as extended as possible (it may also change \
-the identifier, for example to correct the case, or spelling mistakes), or \
-returns 'fail' to leave the existing partial identifier."],
-  default := "default",
-  ) );
-
 
 CallAndInstallPostRestore( function()
     READ_GAP_ROOT( "gap.ini" );
@@ -925,7 +878,7 @@ end );
 
 #############################################################################
 ##
-##  Display version, loaded components and packages
+##  Display loaded packages
 ##
 
 BindGlobal( "ShowPackageInformation", function()
@@ -958,30 +911,6 @@ BindGlobal( "ShowPackageInformation", function()
 
   indent := "             ";
 
-  # For each loaded component, print name and version number.
-  # We use an abbreviation for the distributed combination of
-  # idX and smallX components.
-  if GAPInfo.LoadedComponents <> rec() then
-    cmpdist := rec(id10:="0.1",id2:="3.0",id3:="2.1",id4:="1.0",id5:="1.0",
-               id6:="1.0",id9:="1.0",small:="2.1",small10:="0.2",
-               small11:="0.1",small2:="2.0",small3:="2.0",small4:="1.0",
-               small5:="1.0",small6:="1.0",small7:="1.0",small8:="1.0",
-               small9:="1.0");
-    ld := ShallowCopy(GAPInfo.LoadedComponents);
-    if ForAll(RecNames(cmpdist), f-> IsBound(ld.(f))
-                                      and ld.(f) = cmpdist.(f)) then
-      for f in RecNames(cmpdist) do
-        Unbind(ld.(f));
-      od;
-      ld.("small*") := "1.0";
-      ld.("id*") := "1.0";
-    fi;
-    print_info( " Components: ",
-                List( RecNames( ld ), name -> Concatenation( name, " ",
-                                  ld.( name ) ) ),
-                "\n");
-  fi;
-
   # For each loaded package, print name and version number.
   packagenames := SortedList( RecNames( GAPInfo.PackagesLoaded ) );
   if not IsEmpty(packagenames) then
@@ -1012,6 +941,7 @@ BindGlobal ("ShowSystemInformation", function ()
     ShowKernelInformation();
     ShowPackageInformation();
 end );
+
 
 #############################################################################
 ##
@@ -1102,7 +1032,10 @@ InstallAndCallPostRestore( function()
     od;
 end );
 
-if IsHPCGAP and THREAD_UI() then
+
+if GAPInfo.CommandLineOptions.norepl then
+  # do not start an interactive session
+elif IsHPCGAP and THREAD_UI() then
   ReadLib("hpc/consoleui.g");
   MULTI_SESSION();
 else

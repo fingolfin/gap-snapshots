@@ -11,14 +11,15 @@
 **  This file contains the functions for computing with finite presentations.
 */
 
-#include <src/tietze.h>
+#include "tietze.h"
 
-#include <src/bool.h>
-#include <src/gap.h>
-#include <src/lists.h>
-#include <src/plist.h>
-#include <src/stats.h>
-#include <src/stringobj.h>
+#include "bool.h"
+#include "error.h"
+#include "lists.h"
+#include "modules.h"
+#include "plist.h"
+#include "stats.h"
+#include "stringobj.h"
 
 
 /****************************************************************************
@@ -240,7 +241,7 @@ Obj FuncTzSortC (
         SET_LEN_PLIST( rels,  i );  SHRINK_PLIST( rels,  i );
         SET_LEN_PLIST( lens,  i );  SHRINK_PLIST( lens,  i );
         SET_LEN_PLIST( flags, i );  SHRINK_PLIST( flags, i );
-        ptTietze[TZ_NUMRELS] = INTOBJ_INT(i);
+        SET_ELM_PLIST( tietze, TZ_NUMRELS, INTOBJ_INT(i) );
         CHANGED_BAG(tietze);
     }
 
@@ -517,7 +518,6 @@ Obj FuncTzSubstituteGen (
     alen=20;
     Idx=NEW_PLIST( T_PLIST, alen );
     SET_LEN_PLIST(Idx,alen);
-    ptIdx=ADDR_OBJ(Idx);
 
     /* allocate a bag for the inverse of the replacing word                */
     iwrd   = NEW_PLIST( T_PLIST, wleng );
@@ -526,6 +526,7 @@ Obj FuncTzSubstituteGen (
     ptInvs = ADDR_OBJ( invs ) + (numgens + 1);
     ptWrd  = ADDR_OBJ( word );
     ptIwrd = ADDR_OBJ( iwrd );
+    ptIdx  = ADDR_OBJ( Idx );
 
     /* invert the replacing word                                           */
     SET_LEN_PLIST( iwrd, wleng );
@@ -716,10 +717,8 @@ Obj FuncTzOccurrences (
         ADDR_OBJ(cnts)[k] = INTOBJ_INT(0);
 
     mins = NEW_PLIST( T_PLIST, numgens );
-    SET_LEN_PLIST( mins, 0 );
 
     lens = NEW_PLIST( T_PLIST, numgens );
-    SET_LEN_PLIST( lens, 0 );
     
     res = NEW_PLIST( T_PLIST, 3 );
     SET_LEN_PLIST( res, 3 );
@@ -1672,7 +1671,7 @@ Obj  FuncREDUCE_LETREP_WORDS_REW_SYS (
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************

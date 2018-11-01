@@ -2,9 +2,9 @@
 ##
 #W  automaton.gd              automgrp package                 Yevgen Muntyan
 #W                                                             Dmytro Savchuk
-##  automgrp v 1.3
+##  automgrp v 1.3.1
 ##
-#Y  Copyright (C) 2003 - 2016 Yevgen Muntyan, Dmytro Savchuk
+#Y  Copyright (C) 2003 - 2018 Yevgen Muntyan, Dmytro Savchuk
 ##
 
 
@@ -19,6 +19,8 @@ DeclareCategory("IsMealyAutomaton", IsMultiplicativeElement and
                                IsAssociativeElement);
 DeclareCategoryFamily("IsMealyAutomaton");
 DeclareCategoryCollections("IsMealyAutomaton");
+
+
 
 
 ###############################################################################
@@ -512,6 +514,12 @@ DeclareAttribute("AdjacencyMatrix", IsMealyAutomaton);
 ##  \endexample
 ##
 DeclareProperty("IsAcyclic", IsMealyAutomaton);
+
+
+DeclareOperation("\/", [IsMealyAutomaton, IsMealyAutomaton]);
+DeclareAttribute("Inverse", IsMealyAutomaton);
+
+
 
 ##  PassToPowerOfAlphabet ( <A>, <power> )
 

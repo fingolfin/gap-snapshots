@@ -1,0 +1,122 @@
+  
+  [1X9 [33X[0;0YChanges from Earlier Versions[133X[101X
+  
+  
+  [1X9.1 [33X[0;0YEarlier Changes[133X[101X
+  
+  [33X[0;0YThe most important changes between [5XGAP[105X 4.2 and [5XGAP[105X 4.3 were:[133X
+  
+  [30X    [33X[0;6YThe performance of several routines has been substantially improved.[133X
+  
+  [30X    [33X[0;6YThe  functionality  in  the  areas of finitely presented groups, Schur
+        covers and the calculation of representations has been extended.[133X
+  
+  [30X    [33X[0;6YThe  data  libraries  of  transitive  groups,  finite  integral matrix
+        groups, character tables and tables of marks have been extended.[133X
+  
+  [30X    [33X[0;6YThe  Windows  installation  has been simplified for the case where you
+        are installing [5XGAP[105X in its standard location.[133X
+  
+  [30X    [33X[0;6YMany bugs have been fixed.[133X
+  
+  [33X[0;0YThe most important changes between [5XGAP[105X 4.1 and [5XGAP[105X 4.2 were:[133X
+  
+  [30X    [33X[0;6YA  much  extended  and  improved  library  of  small groups as well as
+        associated [2XIdGroup[102X ([14Xsmallgrp: IdGroup[114X) routines.[133X
+  
+  [30X    [33X[0;6YThe  primitive  groups  library  has been made more independent of the
+        rest of [5XGAP[105X, some errors were corrected.[133X
+  
+  [30X    [33X[0;6YNew  (and  often  much  faster)  infrastructure for orbit computation,
+        based on a general [21Xdictionary[121X abstraction.[133X
+  
+  [30X    [33X[0;6YNew functionality for dealing with representations of algebras, and in
+        particular for semisimple Lie algebras.[133X
+  
+  [30X    [33X[0;6YNew  functionality  for binary relations on arbitrary sets, magmas and
+        semigroups.[133X
+  
+  [30X    [33X[0;6YBidirectional  streams, allowing an external process to be started and
+        then controlled [21Xinteractively[121X by [5XGAP[105X[133X
+  
+  [30X    [33X[0;6YA  prototype  implementation  of  algorithms  using  general  subgroup
+        chains.[133X
+  
+  [30X    [33X[0;6YChanges in the behavior of vectors over small finite fields.[133X
+  
+  [30X    [33X[0;6YA  fifth  book  [21XNew  features for Developers[121X has been added to the [5XGAP[105X
+        manual.[133X
+  
+  [30X    [33X[0;6YNumerous bug fixes and performance improvements[133X
+  
+  [33X[0;0YThe changes between the final release of [5XGAP[105X 3 (version 3.4.4) and [5XGAP[105X 4 are
+  wide-ranging.  The  general  philosophy of the changes is two-fold. Firstly,
+  many  assumptions  in  the  design  of  [5XGAP[105X  3 revealed its authors' primary
+  interest  in  group theory, and indeed in finite group theory. Although much
+  of  the  [5XGAP[105X 4 library is concerned with groups, the basic design now allows
+  extension  to  other  algebraic structures, as witnessed by the inclusion of
+  substantial  bodies  of  algorithms  for computation with semigroups and Lie
+  algebras.  Secondly,  as  the  scale of the system, and the number of people
+  using  and  contributing  to  it  has  grown, some aspects of the underlying
+  system  have  proved to be restricting, and these have been improved as part
+  of  comprehensive  re-engineering  of  the system. This has included the new
+  method  selection  system, which underpins the library, and a new, much more
+  flexible, [5XGAP[105X package interface.[133X
+  
+  [33X[0;0YDetails  of  these  changes  can be found in the document [21XMigrating to GAP 4[121X
+  available          at          the          [5XGAP[105X         website,         see
+  [7Xhttps://www.gap-system.org/Gap3/migratedoc.pdf[107X.[133X
+  
+  [33X[0;0YIt is perhaps worth mentioning a few points here.[133X
+  
+  [33X[0;0YFirstly,  much  remains  unchanged, from the perspective of the mathematical
+  user:[133X
+  
+  [30X    [33X[0;6YThe  syntax  of that part of the [5XGAP[105X language that most users need for
+        investigating mathematical problems.[133X
+  
+  [30X    [33X[0;6YThe great majority of function names.[133X
+  
+  [30X    [33X[0;6YData libraries and the access to them.[133X
+  
+  [33X[0;0YA number of visible aspects have changed:[133X
+  
+  [30X    [33X[0;6YSome  function names that need finer specifications now that there are
+        more structures available in [5XGAP[105X.[133X
+  
+  [30X    [33X[0;6YThe  access  to  information  already  obtained  about  a mathematical
+        structure.  In [5XGAP[105X 3 such information about a group could be looked up
+        by  directly  inspecting  the group record, whereas in [5XGAP[105X 4 functions
+        must be used to access such information.[133X
+  
+  [33X[0;0YBehind the scenes, much has changed:[133X
+  
+  [30X    [33X[0;6YA  new  kernel,  with  improvements  in  memory  management and in the
+        language  interpreter,  as  well  as  new  features  such as saving of
+        workspaces and the possibility of compilation of [5XGAP[105X code into C.[133X
+  
+  [30X    [33X[0;6YA  new  structure  to  the  library,  based upon a new type and method
+        selection  system,  which  is  able  to  support  a  broader  range of
+        algebraic computation and to make the structure of the library simpler
+        and more modular.[133X
+  
+  [30X    [33X[0;6YNew and faster algorithms in many mathematical areas.[133X
+  
+  [30X    [33X[0;6YData  structures  and algorithms for new mathematical objects, such as
+        algebras and semigroups.[133X
+  
+  [30X    [33X[0;6YA  new  and  more  flexible  structure  for  the  [5XGAP[105X installation and
+        documentation,  which  means,  for example, that a [5XGAP[105X package and its
+        documentation can be installed and be fully usable without any changes
+        to the [5XGAP[105X system.[133X
+  
+  [33X[0;0YVery few features of [5XGAP[105X 3 are not yet available in [5XGAP[105X 4.[133X
+  
+  [30X    [33X[0;6YNot  all  of  the  [5XGAP[105X 3 packages have yet been converted for use with
+        [5XGAP[105X 4.[133X
+  
+  [30X    [33X[0;6YThe  library  of crystallographic groups which was present in [5XGAP[105X 3 is
+        now       part       of       a       [5XGAP[105X 4      package      [5XCrystCat[105X
+        ([7Xhttps://www.gap-system.org/Packages/crystcat.html[107X)  by  V. Felsch and
+        F. Gähler.[133X
+  

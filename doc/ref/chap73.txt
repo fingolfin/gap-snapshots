@@ -612,12 +612,13 @@
         very time consuming, compared with checking the other criteria),[133X
   
   [8X[10Xparameters[110X[8X[108X
-        [33X[0;6Ya  record  with components [10Xmaxamb[110X, [10Xminamb[110X and [10Xmaxlen[110X which control the
-        subroutine   [2XFusionsAllowedByRestrictions[102X   ([14X73.7-4[114X);   it  only  uses
-        characters   with   current  indeterminateness  up  to  [10Xmaxamb[110X,  tests
-        decomposability  only for characters with current indeterminateness at
-        least  [10Xminamb[110X,  and  admits  a branch according to a character only if
-        there is one with at most [10Xmaxlen[110X possible restrictions.[133X
+        [33X[0;6Ya  record  with components [10Xmaxamb[110X, [10Xminamb[110X and [10Xmaxlen[110X (and perhaps some
+        optional      components)     which     control     the     subroutine
+        [2XFusionsAllowedByRestrictions[102X  ([14X73.7-4[114X);  it  only uses characters with
+        current indeterminateness up to [10Xmaxamb[110X, tests decomposability only for
+        characters  with current indeterminateness at least [10Xminamb[110X, and admits
+        a  branch  according  to a character only if there is one with at most
+        [10Xmaxlen[110X possible restrictions.[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xsubtbl:= CharacterTable( "U3(3)" );;  tbl:= CharacterTable( "J4" );;[127X[104X
@@ -1495,10 +1496,16 @@
   [33X[0;0YLet  [3Xsubtbl[103X  and  [3Xtbl[103X  be  ordinary character tables, [3Xsubchars[103X and [3Xchars[103X two
   lists  of  (values  lists  of)  characters  of [3Xsubtbl[103X and [3Xtbl[103X, respectively,
   [3Xapproxmap[103X a parametrized map that is an approximation of the class fusion of
-  [3Xsubtbl[103X  in  [3Xtbl[103X,  and  [3Xparameters[103X  a  record with components [10Xmaxlen[110X, [10Xminamb[110X,
-  [10Xmaxamb[110X  (three  integers),  [10Xquick[110X  (a  Boolean), and [10Xcontained[110X (a function).
-  Usual   values   of   [10Xcontained[110X   are   [2XContainedCharacters[102X   ([14X73.5-17[114X)   or
-  [2XContainedPossibleCharacters[102X ([14X73.5-15[114X).[133X
+  [3Xsubtbl[103X in [3Xtbl[103X, and [3Xparameters[103X a record with the mandatory components [10Xmaxlen[110X,
+  [10Xminamb[110X,  [10Xmaxamb[110X  (three  integers),  [10Xquick[110X  (a  Boolean),  and  [10Xcontained[110X (a
+  function,    usual    values    are    [2XContainedCharacters[102X    ([14X73.5-17[114X)   or
+  [2XContainedPossibleCharacters[102X   ([14X73.5-15[114X));   optional   components   of   the
+  [3Xparameters[103X  record are [10Xtestdec[110X (the function that tests the decomposability,
+  the default is [2XNonnegIntScalarProducts[102X ([14X73.5-15[114X)), [10Xpowermaps[110X (the power paps
+  of  [3Xsubtbl[103X  that  shall be used for compatibility checks, the default is the
+  [2XComputedPowerMaps[102X  ([14X73.1-1[114X) value), [10Xsubpowermaps[110X (the power paps of [3Xtbl[103X that
+  shall be used for compatibility checks, the default is the [2XComputedPowerMaps[102X
+  ([14X73.1-1[114X) value).[133X
   
   [33X[0;0Y[2XFusionsAllowedByRestrictions[102X  replaces  the entries of [3Xapproxmap[103X by improved
   values,   according   to   condition   5. listed   in   the  description  of

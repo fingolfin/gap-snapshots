@@ -16,7 +16,7 @@
 #ifndef GAP_EXPRS_H
 #define GAP_EXPRS_H
 
-#include <src/system.h>
+#include "system.h"
 
 /****************************************************************************
 **
@@ -132,7 +132,7 @@ extern  void            (* PrintExprFuncs [256] ) ( Expr expr );
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (ref) - Chapter 66: Polynomials and Rational Functions</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -291,7 +291,7 @@ GF(3)[z]
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; X</code>( <var class="Arg">fam</var>, <var class="Arg">nr</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>returns the indeterminate number <var class="Arg">nr</var> over the ring <var class="Arg">R</var>. If <var class="Arg">nr</var> is not given it defaults to 1. If the number is not specified a list <var class="Arg">avoid</var> of indeterminates may be given. The function will return an indeterminate that is guaranteed to be different from all the indeterminates in the list <var class="Arg">avoid</var>. The third usage returns an indeterminate called <var class="Arg">name</var> (also avoiding the indeterminates in <var class="Arg">avoid</var> if given).</p>
 
-<p><code class="func">X</code> is simply a synonym for <code class="func">Indeterminate</code>. However, we do not recommend to use this synonym which is supported only for the backwards compatibility.</p>
+<p><code class="func">X</code> is simply a synonym for <code class="func">Indeterminate</code>.</p>
 
 
 <div class="example"><pre>
@@ -728,7 +728,7 @@ x^4-1
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UnivariatenessTestRationalFunction( (-6*y^2+y^3) / (y+1) );</span>
 [ true, 2, false, [ [ -6, 1 ], [ 1, 1 ], 2 ] ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UnivariatenessTestRationalFunction( (-6*y^2+y^3) / (x+1));</span>
-[ fail, fail, fail, fail ]
+[ false, fail, false, fail ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UnivariatenessTestRationalFunction( ((y+2)*(x+1)) / ((y-1)*(x+1)) );</span>
 [ fail, fail, fail, fail ]
 </pre></div>

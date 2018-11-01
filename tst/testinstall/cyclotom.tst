@@ -224,6 +224,8 @@ rec( galoisfams := [ [ [ 1, 5 ], [ 1, 10321 ] ], [ [ 2, 6 ], [ 1, 9031 ] ],
 gap> Print(RationalizedMat( gm.mat ),"\n");
 [ [ 2666, -1, -2, 0, 0 ], [ 519550080, 0, 0, 0, 0 ], 
   [ 1770515712, 0, -2, 0, 0 ], [ 4337827830, 0, 0, 0, -1 ] ]
+gap> GaloisMat( [ [ E(3) ], [ E(3) ] ] );;
+#I  GaloisMat: row 1 is equal to row 2
 gap> a := -E(4)*2^(8*GAPInfo.BytesPerVariable-4);;
 gap> TNUM_OBJ(COEFFS_CYC(-a)[2]) = T_INTPOS;
 true
@@ -314,6 +316,35 @@ Error, COEFFSCYC: <cyc> must be a cyclotomic (not a boolean or fail)
 #
 gap> CycList([1,fail]);
 Error, CycList: each entry must be a rational (not a boolean or fail)
+
+#
+# Some tests for some operations on certain pre-defined infinite collections
+# of cyclotomics, which are implemented using CompareCyclotomicCollectionHelper.
+# For the tests, we exploit that the supported collections can be grouped into
+# two totally ordered chains.
+#
+gap> sets:=[ PositiveIntegers, NonnegativeIntegers, Integers, Rationals, GaussianRationals, Cyclotomics ];;
+gap> r:=[1..Length(sets)];;
+gap> SetX(r, r, {i,j} -> Intersection(sets[i],sets[j]) = sets[Minimum(i,j)]);
+[ true ]
+gap> SetX(r, r, {i,j} -> Union(sets[i],sets[j]) = sets[Maximum(i,j)]);
+[ true ]
+gap> SetX(r, r, {i,j} -> IsSubset(sets[i],sets[j]) = (i>=j));
+[ true ]
+gap> SetX(r, r, {i,j} -> (sets[i]=sets[j]) = (i=j));
+[ true ]
+
+#
+gap> sets:=[ PositiveIntegers, NonnegativeIntegers, Integers, GaussianIntegers, GaussianRationals, Cyclotomics ];;
+gap> r:=[1..Length(sets)];;
+gap> SetX(r, r, {i,j} -> Intersection(sets[i],sets[j]) = sets[Minimum(i,j)]);
+[ true ]
+gap> SetX(r, r, {i,j} -> Union(sets[i],sets[j]) = sets[Maximum(i,j)]);
+[ true ]
+gap> SetX(r, r, {i,j} -> IsSubset(sets[i],sets[j]) = (i>=j));
+[ true ]
+gap> SetX(r, r, {i,j} -> (sets[i]=sets[j]) = (i=j));
+[ true ]
 
 #
 gap> STOP_TEST( "cyclotom.tst", 1);

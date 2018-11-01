@@ -8,113 +8,140 @@
 *Y  Copyright (C) 2002 The GAP Group
 **
 **  This file contains the functions of the scanner, which provides a very
-**  abstractions, namely the concept that an input file is a stream of
-**  symbols, such nasty things as <space>, <tab>, <newline> characters or
-**  comments (they are worst :-), characters making up identifiers or digits
-**  that make up integers are hidden from the rest of GAP.
+**  important abstraction, namely the concept that an input file is a stream
+**  of symbols, while it hides such nasty things as <space>, <tab>, <newline>
+**  characters, comments (they are worst :-), characters making up
+**  identifiers or digits that make up integers from the rest of GAP.
 */
 
-#include <src/scanner.h>
+#include "scanner.h"
 
-#include <src/gap.h>
-#include <src/gapstate.h>
-#include <src/gaputils.h>
-#include <src/io.h>
-#include <src/lists.h>
-#include <src/plist.h>
-#include <src/stringobj.h>
+#include "gapstate.h"
+#include "gaputils.h"
+#include "io.h"
+#include "lists.h"
+#include "modules.h"
+#include "plist.h"
+#include "stringobj.h"
+#include "sysopt.h"
+
+
+static UInt NextSymbol(void);
 
 
 /****************************************************************************
 **
-*F  SyntaxError( <msg> )  . . . . . . . . . . . . . . .  raise a syntax error
+*F  SyntaxErrorOrWarning( <msg> ) . . . . . . raise a syntax error or warning
+**
+**  Helper function used by 'SyntaxError' and 'SyntaxWarning'.
 **
 */
-void            SyntaxError (
-    const Char *        msg )
+static void SyntaxErrorOrWarning(const Char * msg, UInt error)
 {
-    Int                 i;
+    // do not print a message if we found one already on the current line
+    if (STATE(NrErrLine) == 0) {
 
-    /* open error output                                                   */
-    OpenOutput( "*errout*" );
-    assert(STATE(Output));
+        // open error output
+        OpenOutput("*errout*");
 
-    /* do not print a message if we found one already on the current line  */
-    if ( STATE(NrErrLine) == 0 )
+        // print the message ...
+        if (error)
+            Pr("Syntax error: %s", (Int)msg, 0);
+        else
+            Pr("Syntax warning: %s", (Int)msg, 0);
 
-      {
-        /* print the message and the filename, unless it is '*stdin*'          */
-        Pr( "Syntax error: %s", (Int)msg, 0L );
-        if ( strcmp( "*stdin*", STATE(Input)->name ) != 0 )
-          Pr( " in %s:%d", (Int)STATE(Input)->name, (Int)STATE(Input)->number );
-        Pr( "\n", 0L, 0L );
+        // ... and the filename + line, unless it is '*stdin*'
+        if (strcmp("*stdin*", GetInputFilename()) != 0)
+            Pr(" in %s:%d", (Int)GetInputFilename(), GetInputLineNumber());
+        Pr("\n", 0, 0);
 
-        /* print the current line                                              */
-        Pr( "%s", (Int)STATE(Input)->line, 0L );
+        // print the current line
+        const char * line = GetInputLineBuffer();
+        const UInt len = strlen(line);
+        if (len > 0 && line[len-1] != '\n')
+            Pr("%s\n", (Int)line, 0);
+        else
+            Pr("%s", (Int)line, 0);
 
-        /* print a '^' pointing to the current position                        */
-        Int pos = GetLinePosition();
-        for (i = 0; i < pos; i++) {
-            if (STATE(Input)->line[i] == '\t')
-                Pr("\t", 0L, 0L);
-            else
-                Pr(" ", 0L, 0L);
+        // print a '^' pointing to the current position
+        Int startPos = STATE(SymbolStartPos);
+        Int pos = GetInputLinePosition();
+        if (STATE(SymbolStartLine) != GetInputLineNumber())
+            startPos = 0;
+        if (startPos <= pos) {
+            Int i;
+            for (i = 0; i <= startPos; i++) {
+                if (line[i] == '\t')
+                    Pr("\t", 0, 0);
+                else
+                    Pr(" ", 0, 0);
+            }
+
+            for (; i <= pos; i++)
+                Pr("^", 0, 0);
+            Pr("\n", 0, 0);
         }
-        Pr( "^\n", 0L, 0L );
-      }
-    /* close error output                                                  */
-    assert(STATE(Output));
-    CloseOutput();
-    assert(STATE(Output));
 
-    /* one more error                                                      */
-    STATE(NrError)++;
-    STATE(NrErrLine)++;
+        // close error output
+        CloseOutput();
+    }
 
+    if (error) {
+        // one more error
+        STATE(NrError)++;
+        STATE(NrErrLine)++;
+    }
+}
+
+
+/****************************************************************************
+**
+*F  SyntaxError( <msg> ) . . . . . . . . . . . . . . . . raise a syntax error
+**
+*/
+void SyntaxError(const Char * msg)
+{
+    SyntaxErrorOrWarning(msg, 1);
 }
 
 /****************************************************************************
 **
-*F  SyntaxWarning( <msg> )  . . . . . . . . . . . . . . raise a syntax warning
+*F  SyntaxWarning( <msg> ) . . . . . . . . . . . . . . raise a syntax warning
 **
 */
-void            SyntaxWarning (
-    const Char *        msg )
+void SyntaxWarning(const Char * msg)
 {
-    Int                 i;
-
-    /* open error output                                                   */
-    OpenOutput( "*errout*" );
-    assert(STATE(Output));
+    SyntaxErrorOrWarning(msg, 0);
+}
 
 
-    /* do not print a message if we found one already on the current line  */
-    if ( STATE(NrErrLine) == 0 )
-
-      {
-        /* print the message and the filename, unless it is '*stdin*'          */
-        Pr( "Syntax warning: %s", (Int)msg, 0L );
-        if ( strcmp( "*stdin*", STATE(Input)->name ) != 0 )
-          Pr( " in %s:%d", (Int)STATE(Input)->name, (Int)STATE(Input)->number );
-        Pr( "\n", 0L, 0L );
-
-        /* print the current line                                              */
-        Pr( "%s", (Int)STATE(Input)->line, 0L );
-
-        /* print a '^' pointing to the current position                        */
-        Int pos = GetLinePosition();
-        for (i = 0; i < pos; i++) {
-            if (STATE(Input)->line[i] == '\t')
-                Pr("\t", 0L, 0L);
-            else
-                Pr(" ", 0L, 0L);
-        }
-        Pr( "^\n", 0L, 0L );
-      }
-    /* close error output                                                  */
-    assert(STATE(Output));
-    CloseOutput();
-    assert(STATE(Output));
+/****************************************************************************
+**
+*F  AppendBufToString()
+**
+**  Append 'bufsize' bytes from the string buffer 'buf' to the string object
+**  'string'. If 'string' is 0, then a new string object is allocated first.
+**
+**  The string object is returned at the end, regardless of whether it was
+**  given as an argument, or created from scratch.
+**
+*/
+static Obj AppendBufToString(Obj string, const char * buf, UInt bufsize)
+{
+    char *s;
+    if (string == 0) {
+        string = NEW_STRING(bufsize);
+        s = CSTR_STRING(string);
+    }
+    else {
+        const UInt len = GET_LEN_STRING(string);
+        GROW_STRING(string, len + bufsize);
+        SET_LEN_STRING(string, len + bufsize);
+        s = CSTR_STRING(string) + len;
+    }
+    memcpy(s, buf, bufsize);
+    s[bufsize] = '\0';
+    return string;
 }
 
 
@@ -123,7 +150,7 @@ void            SyntaxWarning (
 *F  Match( <symbol>, <msg>, <skipto> )  . match current symbol and fetch next
 **
 **  'Match' is the main  interface between the  scanner and the  parser.   It
-**  performs the  4 most common actions in  the scanner  with  just one call.
+**  performs the four most common actions in the scanner with  just one call.
 **  First it checks that  the current symbol stored  in the variable 'Symbol'
 **  is the expected symbol  as passed in the  argument <symbol>.  If  it  is,
 **  'Match' reads the next symbol from input  and returns.  Otherwise 'Match'
@@ -170,7 +197,7 @@ void Match (
 
     // if 'STATE(Symbol)' is the expected symbol match it away
     if ( symbol == STATE(Symbol) ) {
-        GetSymbol();
+        STATE(Symbol) = NextSymbol();
     }
 
     /* else generate an error message and skip to a symbol in <skipto>     */
@@ -179,7 +206,7 @@ void Match (
         strlcat( errmsg, " expected", sizeof(errmsg) );
         SyntaxError( errmsg );
         while ( ! IS_IN( STATE(Symbol), skipto ) )
-            GetSymbol();
+            STATE(Symbol) = NextSymbol();
     }
 }
 
@@ -195,16 +222,15 @@ void Match (
 **  If the characters make up a keyword 'GetIdent' will set 'Symbol' to the
 **  corresponding value. The parser will ignore 'STATE(Value)' in this case.
 **
-**  An  identifier consists of a letter  followed by more letters, digits and
-**  underscores '_'.  An identifier is terminated by the first  character not
-**  in this  class.  The escape sequence '\<newline>'  is ignored,  making it
-**  possible to split  long identifiers  over multiple lines.  The  backslash
-**  '\' can be used  to include special characters like  '('  in identifiers.
-**  For example 'G\(2\,5\)' is an identifier not a call to a function 'G'.
+**  An identifier consists of a letter followed by more letters, digits and
+**  underscores '_'. An identifier is terminated by the first character not
+**  in this class. The backslash '\' can be used to include special
+**  characters like '(' in identifiers. For example 'G\(2\,5\)' is an
+**  identifier not a call to a function 'G'.
 **
 **  The size of 'STATE(Value)' limits the number of significant characters in
-**  an identifier. If an identifier has more characters 'GetIdent' will
-**  silently truncate it.
+**  an identifier. If an identifier has more characters 'GetIdent' truncates
+**  it and signal a syntax error.
 **
 **  After reading the identifier 'GetIdent'  looks at the  first and the last
 **  character of 'STATE(Value)' to see if it could possibly be a keyword. For
@@ -217,111 +243,88 @@ void Match (
 **  'GetIdent' can decide with one string comparison if 'STATE(Value)' holds
 **  a keyword or not.
 */
-void GetIdent ( void )
+static UInt GetIdent(Int i)
 {
-    Int                 i, fetch;
-    Int                 isQuoted;
+    // initially it could be a keyword
+    Int isQuoted = 0;
 
-    /* initially it could be a keyword                                     */
-    isQuoted = 0;
+    // read all characters into 'STATE(Value)'
+    Char c = PEEK_CURR_CHAR();
+    for (; IsIdent(c) || IsDigit(c) || c == '\\'; i++) {
 
-    /* read all characters into 'STATE(Value)'                                    */
-    for ( i=0; IsIdent(*STATE(In)) || IsDigit(*STATE(In)) || *STATE(In)=='\\'; i++ ) {
-
-        fetch = 1;
-        /* handle escape sequences                                         */
-        /* we ignore '\ newline' by decrementing i, except at the
-           very start of the identifier, when we cannot do that
-           so we recurse instead                                           */
-        if ( *STATE(In) == '\\' ) {
-            GET_CHAR();
-            if      ( *STATE(In) == '\n' && i == 0 )  { GetSymbol();  return; }
-            else if ( *STATE(In) == '\r' )  {
-                GET_CHAR();
-                if  ( *STATE(In) == '\n' )  {
-                     if (i == 0) { GetSymbol();  return; }
-                     else i--;
-                }
-                else  {STATE(Value)[i] = '\r'; fetch = 0;}
-            }
-            else if ( *STATE(In) == '\n' && i < SAFE_VALUE_SIZE-1 )  i--;
-            else if ( *STATE(In) == 'n'  && i < SAFE_VALUE_SIZE-1 )  STATE(Value)[i] = '\n';
-            else if ( *STATE(In) == 't'  && i < SAFE_VALUE_SIZE-1 )  STATE(Value)[i] = '\t';
-            else if ( *STATE(In) == 'r'  && i < SAFE_VALUE_SIZE-1 )  STATE(Value)[i] = '\r';
-            else if ( *STATE(In) == 'b'  && i < SAFE_VALUE_SIZE-1 )  STATE(Value)[i] = '\b';
-            else if ( i < SAFE_VALUE_SIZE-1 )  {
-                STATE(Value)[i] = *STATE(In);
+        // handle escape sequences
+        if (c == '\\') {
+            c = GET_NEXT_CHAR();
+            switch(c) {
+            case 'n': c = '\n'; break;
+            case 't': c = '\t'; break;
+            case 'r': c = '\r'; break;
+            case 'b': c = '\b'; break;
+            default:
                 isQuoted = 1;
             }
         }
 
-        /* put normal chars into 'STATE(Value)' but only if there is room         */
-        else {
-            if ( i < SAFE_VALUE_SIZE-1 )  STATE(Value)[i] = *STATE(In);
-        }
+        /// put char into 'STATE(Value)' but only if there is room
+        if (i < MAX_VALUE_LEN - 1)
+            STATE(Value)[i] = c;
 
-        /* read the next character                                         */
-        if (fetch) GET_CHAR();
-
+        // read the next character
+        c = GET_NEXT_CHAR();
     }
 
-    /* terminate the identifier and lets assume that it is not a keyword   */
-    if ( i < SAFE_VALUE_SIZE-1 )
-        STATE(Value)[i] = '\0';
-    else {
-        SyntaxError("Identifiers in GAP must consist of less than 1023 characters.");
-        i =  SAFE_VALUE_SIZE-1;
-        STATE(Value)[i] = '\0';
+    // terminate the identifier and lets assume that it is not a keyword
+    if (i > MAX_VALUE_LEN - 1) {
+        SyntaxError("Identifiers in GAP must consist of at most 1023 characters.");
+        i = MAX_VALUE_LEN - 1;
     }
-    STATE(Symbol) = S_IDENT;
+    STATE(Value)[i] = '\0';
 
-    /* now check if 'STATE(Value)' holds a keyword                                */
-    switch ( 256*STATE(Value)[0]+STATE(Value)[i-1] ) {
-    case 256*'a'+'d': if(!strcmp(STATE(Value),"and"))     STATE(Symbol)=S_AND;     break;
-    case 256*'a'+'c': if(!strcmp(STATE(Value),"atomic"))  STATE(Symbol)=S_ATOMIC;  break;
-    case 256*'b'+'k': if(!strcmp(STATE(Value),"break"))   STATE(Symbol)=S_BREAK;   break;
-    case 256*'c'+'e': if(!strcmp(STATE(Value),"continue"))   STATE(Symbol)=S_CONTINUE;   break;
-    case 256*'d'+'o': if(!strcmp(STATE(Value),"do"))      STATE(Symbol)=S_DO;      break;
-    case 256*'e'+'f': if(!strcmp(STATE(Value),"elif"))    STATE(Symbol)=S_ELIF;    break;
-    case 256*'e'+'e': if(!strcmp(STATE(Value),"else"))    STATE(Symbol)=S_ELSE;    break;
-    case 256*'e'+'d': if(!strcmp(STATE(Value),"end"))     STATE(Symbol)=S_END;     break;
-    case 256*'f'+'e': if(!strcmp(STATE(Value),"false"))   STATE(Symbol)=S_FALSE;   break;
-    case 256*'f'+'i': if(!strcmp(STATE(Value),"fi"))      STATE(Symbol)=S_FI;      break;
-    case 256*'f'+'r': if(!strcmp(STATE(Value),"for"))     STATE(Symbol)=S_FOR;     break;
-    case 256*'f'+'n': if(!strcmp(STATE(Value),"function"))STATE(Symbol)=S_FUNCTION;break;
-    case 256*'i'+'f': if(!strcmp(STATE(Value),"if"))      STATE(Symbol)=S_IF;      break;
-    case 256*'i'+'n': if(!strcmp(STATE(Value),"in"))      STATE(Symbol)=S_IN;      break;
-    case 256*'l'+'l': if(!strcmp(STATE(Value),"local"))   STATE(Symbol)=S_LOCAL;   break;
-    case 256*'m'+'d': if(!strcmp(STATE(Value),"mod"))     STATE(Symbol)=S_MOD;     break;
-    case 256*'n'+'t': if(!strcmp(STATE(Value),"not"))     STATE(Symbol)=S_NOT;     break;
-    case 256*'o'+'d': if(!strcmp(STATE(Value),"od"))      STATE(Symbol)=S_OD;      break;
-    case 256*'o'+'r': if(!strcmp(STATE(Value),"or"))      STATE(Symbol)=S_OR;      break;
-    case 256*'r'+'e': if(!strcmp(STATE(Value),"readwrite")) STATE(Symbol)=S_READWRITE;     break;
-    case 256*'r'+'y': if(!strcmp(STATE(Value),"readonly"))  STATE(Symbol)=S_READONLY;     break;
-    case 256*'r'+'c': if(!strcmp(STATE(Value),"rec"))     STATE(Symbol)=S_REC;     break;
-    case 256*'r'+'t': if(!strcmp(STATE(Value),"repeat"))  STATE(Symbol)=S_REPEAT;  break;
-    case 256*'r'+'n': if(!strcmp(STATE(Value),"return"))  STATE(Symbol)=S_RETURN;  break;
-    case 256*'t'+'n': if(!strcmp(STATE(Value),"then"))    STATE(Symbol)=S_THEN;    break;
-    case 256*'t'+'e': if(!strcmp(STATE(Value),"true"))    STATE(Symbol)=S_TRUE;    break;
-    case 256*'u'+'l': if(!strcmp(STATE(Value),"until"))   STATE(Symbol)=S_UNTIL;   break;
-    case 256*'w'+'e': if(!strcmp(STATE(Value),"while"))   STATE(Symbol)=S_WHILE;   break;
-    case 256*'q'+'t': if(!strcmp(STATE(Value),"quit"))    STATE(Symbol)=S_QUIT;    break;
-    case 256*'Q'+'T': if(!strcmp(STATE(Value),"QUIT"))    STATE(Symbol)=S_QQUIT;   break;
+    // if it is quoted then it is an identifier
+    if (isQuoted)
+        return S_IDENT;
 
-    case 256*'I'+'d': if(!strcmp(STATE(Value),"IsBound")) STATE(Symbol)=S_ISBOUND; break;
-    case 256*'U'+'d': if(!strcmp(STATE(Value),"Unbind"))  STATE(Symbol)=S_UNBIND;  break;
-    case 256*'T'+'d': if(!strcmp(STATE(Value),"TryNextMethod"))
-                                                     STATE(Symbol)=S_TRYNEXT; break;
-    case 256*'I'+'o': if(!strcmp(STATE(Value),"Info"))    STATE(Symbol)=S_INFO;    break;
-    case 256*'A'+'t': if(!strcmp(STATE(Value),"Assert"))  STATE(Symbol)=S_ASSERT;  break;
-
-    default: ;
+    // now check if 'STATE(Value)' holds a keyword
+    const Char *v = STATE(Value);
+    switch ( 256*v[0]+v[i-1] ) {
+    case 256*'a'+'d': if(!strcmp(v,"and"))           return S_AND;
+    case 256*'a'+'c': if(!strcmp(v,"atomic"))        return S_ATOMIC;
+    case 256*'b'+'k': if(!strcmp(v,"break"))         return S_BREAK;
+    case 256*'c'+'e': if(!strcmp(v,"continue"))      return S_CONTINUE;
+    case 256*'d'+'o': if(!strcmp(v,"do"))            return S_DO;
+    case 256*'e'+'f': if(!strcmp(v,"elif"))          return S_ELIF;
+    case 256*'e'+'e': if(!strcmp(v,"else"))          return S_ELSE;
+    case 256*'e'+'d': if(!strcmp(v,"end"))           return S_END;
+    case 256*'f'+'e': if(!strcmp(v,"false"))         return S_FALSE;
+    case 256*'f'+'i': if(!strcmp(v,"fi"))            return S_FI;
+    case 256*'f'+'r': if(!strcmp(v,"for"))           return S_FOR;
+    case 256*'f'+'n': if(!strcmp(v,"function"))      return S_FUNCTION;
+    case 256*'i'+'f': if(!strcmp(v,"if"))            return S_IF;
+    case 256*'i'+'n': if(!strcmp(v,"in"))            return S_IN;
+    case 256*'l'+'l': if(!strcmp(v,"local"))         return S_LOCAL;
+    case 256*'m'+'d': if(!strcmp(v,"mod"))           return S_MOD;
+    case 256*'n'+'t': if(!strcmp(v,"not"))           return S_NOT;
+    case 256*'o'+'d': if(!strcmp(v,"od"))            return S_OD;
+    case 256*'o'+'r': if(!strcmp(v,"or"))            return S_OR;
+    case 256*'r'+'e': if(!strcmp(v,"readwrite"))     return S_READWRITE;
+    case 256*'r'+'y': if(!strcmp(v,"readonly"))      return S_READONLY;
+    case 256*'r'+'c': if(!strcmp(v,"rec"))           return S_REC;
+    case 256*'r'+'t': if(!strcmp(v,"repeat"))        return S_REPEAT;
+    case 256*'r'+'n': if(!strcmp(v,"return"))        return S_RETURN;
+    case 256*'t'+'n': if(!strcmp(v,"then"))          return S_THEN;
+    case 256*'t'+'e': if(!strcmp(v,"true"))          return S_TRUE;
+    case 256*'u'+'l': if(!strcmp(v,"until"))         return S_UNTIL;
+    case 256*'w'+'e': if(!strcmp(v,"while"))         return S_WHILE;
+    case 256*'q'+'t': if(!strcmp(v,"quit"))          return S_QUIT;
+    case 256*'Q'+'T': if(!strcmp(v,"QUIT"))          return S_QQUIT;
+    case 256*'I'+'d': if(!strcmp(v,"IsBound"))       return S_ISBOUND;
+    case 256*'U'+'d': if(!strcmp(v,"Unbind"))        return S_UNBIND;
+    case 256*'T'+'d': if(!strcmp(v,"TryNextMethod")) return S_TRYNEXT;
+    case 256*'I'+'o': if(!strcmp(v,"Info"))          return S_INFO;
+    case 256*'A'+'t': if(!strcmp(v,"Assert"))        return S_ASSERT;
     }
 
-    /* if it is quoted it is an identifier                                 */
-    if ( isQuoted )  STATE(Symbol) = S_IDENT;
-
-
+    return S_IDENT;
 }
 
 
@@ -330,295 +333,302 @@ void GetIdent ( void )
 *F  GetNumber()  . . . . . . . . . . . . . .  get an integer or float literal
 **
 **  'GetNumber' reads a number from the current input file into the variable
-**  'STATE(Value)' and sets 'Symbol' to 'S_INT', 'S_PARTIALINT', 'S_FLOAT' or
-**  'S_PARTIALFLOAT'. The first character of the number is the current
-**  character pointed to by 'In'.
+**  'STATE(Value)' or 'STATE(ValueObj)' and sets 'STATE(Symbol)' to 'S_INT' or
+**  'S_FLOAT'. The first character of the number is the current character
+**  pointed to by 'In'.
 **
 **  If the sequence contains characters which do not match the regular
 **  expression [0-9]+.?[0-9]*([edqEDQ][+-]?[0-9]+)? 'GetNumber'  will
-**  interpret the sequence as an identifier and set 'Symbol' to 'S_IDENT'.
+**  interpret the sequence as an identifier by delegating to 'GetIdent'.
 **
 **  As we read, we keep track of whether we have seen a . or exponent
-**  notation and so whether we will return S_[PARTIAL]INT or
-**  S_[PARTIAL]FLOAT.
+**  notation and so whether we will return 'S_INT' or 'S_FLOAT'.
 **
-**  When STATE(Value) is completely filled we have to check if the reading of
-**  the number is complete or not to decide whether to return a PARTIAL type.
+**  When 'STATE(Value)' is completely filled, then a GAP string object is
+**  created in 'STATE(ValueObj)' and all data is stored there.
 **
-**  The argument reflects how far we are through reading a possibly very long
-**  number literal. 0 indicates that nothing has been read. 1 that at least
-**  one digit has been read, but no decimal point. 2 that a decimal point has
-**  been read with no digits before or after it. 3 a decimal point and at
-**  least one digit, but no exponential indicator 4 an exponential indicator
-**  but no exponent digits and 5 an exponential indicator and at least one
-**  exponent digit.
+**  The argument is used to signal if a decimal point was already read,
+**  or whether we are starting from scratch..
 **
 */
-static Char GetCleanedChar( UInt *wasEscaped ) {
-  GET_CHAR();
-  *wasEscaped = 0;
-  if (*STATE(In) == '\\') {
-    GET_CHAR();
-    if      ( *STATE(In) == '\n')
-      return GetCleanedChar(wasEscaped);
-    else if ( *STATE(In) == '\r' )  {
-      if ( PEEK_CHAR() == '\n' ) {
-        GET_CHAR();
-        return GetCleanedChar(wasEscaped);
-      }
-      else {
-        *wasEscaped = 1;
-        return '\r';
-      }
+static UInt AddCharToBuf(Obj * string, Char * buf, UInt bufsize, UInt pos, Char c)
+{
+    if (pos >= bufsize) {
+        *string = AppendBufToString(*string, buf, pos);
+        pos = 0;
     }
-    else {
-      *wasEscaped = 1;
-      if ( *STATE(In) == 'n')  return '\n';
-      else if ( *STATE(In) == 't')  return '\t';
-      else if ( *STATE(In) == 'r')  return '\r';
-      else if ( *STATE(In) == 'b')  return '\b';
-      else if ( *STATE(In) == '>')  return '\01';
-      else if ( *STATE(In) == '<')  return '\02';
-      else if ( *STATE(In) == 'c')  return '\03';
-    }
-  }
-  return *STATE(In);
+    buf[pos++] = c;
+    return pos;
 }
 
-
-void GetNumber ( UInt StartingStatus )
+static UInt AddCharToValue(UInt pos, Char c)
 {
-  Int                 i=0;
-  Char                c;
+    return AddCharToBuf(&STATE(ValueObj), STATE(Value), MAX_VALUE_LEN - 1, pos, c);
+}
+
+static UInt GetNumber(Int readDecimalPoint)
+{
+  UInt symbol = S_ILLEGAL;
+  UInt i = 0;
+  Char c;
+  UInt seenADigit = 0;
   UInt seenExp = 0;
-  UInt wasEscaped = 0;
-  UInt seenADigit = (StartingStatus != 0 && StartingStatus != 2);
-  UInt seenExpDigit = (StartingStatus ==5);
+  UInt seenExpDigit = 0;
 
-  c = *STATE(In);
-  if (StartingStatus  <  2) {
-    /* read initial sequence of digits into 'Value'             */
-    for (i = 0; !wasEscaped && IsDigit(c) && i < SAFE_VALUE_SIZE-1; i++) {
-      STATE(Value)[i] = c;
+  STATE(ValueObj) = 0;
+
+  c = PEEK_CURR_CHAR();
+  if (readDecimalPoint) {
+    STATE(Value)[i++] = '.';
+  }
+  else {
+    // read initial sequence of digits into 'Value'
+    while (IsDigit(c)) {
+      i = AddCharToValue(i, c);
       seenADigit = 1;
-      c = GetCleanedChar(&wasEscaped);
+      c = GET_NEXT_CHAR();
     }
 
-    /* So why did we run off the end of that loop */
-    /* maybe we saw an identifier character and realised that this is an identifier we are reading */
-    if (wasEscaped || IsIdent(c)) {
-      /* Now we know we have an identifier read the rest of it */
-      STATE(Value)[i++] = c;
-      c = GetCleanedChar(&wasEscaped);
-      for (; wasEscaped || IsIdent(c) || IsDigit(c); i++) {
-        if (i < SAFE_VALUE_SIZE -1)
-          STATE(Value)[i] = c;
-        c = GetCleanedChar(&wasEscaped);
+    // maybe we saw an identifier character and realised that this is an
+    // identifier we are reading
+    if (IsIdent(c) || c == '\\') {
+      // if necessary, copy back from STATE(ValueObj) to STATE(Value)
+      if (STATE(ValueObj)) {
+        i = GET_LEN_STRING(STATE(ValueObj));
+        GAP_ASSERT(i >= MAX_VALUE_LEN - 1);
+        memcpy(STATE(Value), CSTR_STRING(STATE(ValueObj)), MAX_VALUE_LEN);
+        STATE(ValueObj) = 0;
       }
-      if (i < SAFE_VALUE_SIZE -1)
-        STATE(Value)[i] = '\0';
-      else
-        STATE(Value)[SAFE_VALUE_SIZE-1] = '\0';
-      STATE(Symbol) = S_IDENT;
-      return;
+      // this looks like an identifier, scan the rest of it
+      return GetIdent(i);
     }
 
-    /* Or maybe we just ran out of space */
-    if (IsDigit(c)) {
-      assert(i >= SAFE_VALUE_SIZE-1);
-      STATE(Symbol) = S_PARTIALINT;
-      STATE(Value)[SAFE_VALUE_SIZE-1] = '\0';
-      return;
-    }
-
-    /* Or maybe we saw a . which could indicate one of two things:
-       a float literal or .. */
+    // Or maybe we saw a '.' which could indicate one of two things: a
+    // float literal or S_DOT, i.e., '.' used to access a record entry.
     if (c == '.') {
-      /* If the symbol before this integer was S_DOT then 
-         we must be in a nested record element expression, so don't 
-         look for a float.
+      GAP_ASSERT(i < MAX_VALUE_LEN - 1);
 
-      This is a bit fragile  */
+      // If the symbol before this integer was S_DOT then we must be in
+      // a nested record element expression, so don't look for a float.
+      // This is a bit fragile
       if (STATE(Symbol) == S_DOT || STATE(Symbol) == S_BDOT) {
-        STATE(Value)[i]  = '\0';
-        STATE(Symbol) = S_INT;
-        return;
-      }
-      
-      /* peek ahead to decide which */
-      if (PEEK_CHAR() == '.') {
-        /* It was .. */
-        STATE(Symbol) = S_INT;
-        STATE(Value)[i] = '\0';
-        return;
+        symbol = S_INT;
+        goto finish;
       }
 
-      /* Now the . must be part of our number
-         store it and move on */
-      STATE(Value)[i++] = '.';
-      c = GetCleanedChar(&wasEscaped);
+      // peek ahead to decide which
+      if (PEEK_NEXT_CHAR() == '.') {
+        // It was '.', so this looks like '..' and we are probably
+        // inside a range expression.
+        symbol = S_INT;
+        goto finish;
+      }
+
+      // Now the '.' must be part of our number; store it and move on
+      i = AddCharToValue(i, '.');
+      c = GET_NEXT_CHAR();
     }
 
     else {
-      /* Anything else we see tells us that the token is done */
-      STATE(Value)[i]  = '\0';
-      STATE(Symbol) = S_INT;
-      return;
+      // Anything else we see tells us that the token is done
+      symbol = S_INT;
+      goto finish;
     }
   }
 
 
+  // When we get here we have read possibly some digits, a . and possibly
+  // some more digits, but not an e,E,d,D,q or Q
 
-  /* The only case in which we fall through to here is when
-     we have read zero or more digits, followed by . which is not part of a .. token
-     or we were called with StartingStatus >= 2 so we read at least that much in
-     a previous token */
-
-
-  if (StartingStatus< 4) {
-    /* When we get here we have read (either in this token or a previous S_PARTIALFLOAT*)
-       possibly some digits, a . and possibly some more digits, but not an e,E,d,D,q or Q */
-
-    /* read digits */
-    for (; !wasEscaped && IsDigit(c) && i < SAFE_VALUE_SIZE-1; i++) {
-      STATE(Value)[i] = c;
+    // read digits
+    while (IsDigit(c)) {
+      i = AddCharToValue(i, c);
       seenADigit = 1;
-      c = GetCleanedChar(&wasEscaped);
+      c = GET_NEXT_CHAR();
     }
-    /* If we found an identifier type character in this context could be an error
-      or the start of one of the allowed trailing marker sequences */
-    if (wasEscaped || (IsIdent(c)  && c != 'e' && c != 'E' && c != 'D' && c != 'q' &&
-                       c != 'd' && c != 'Q')) {
+    if (!seenADigit)
+      SyntaxError("Badly formed number: need a digit before or after the "
+                  "decimal point");
+    if (c == '\\')
+      SyntaxError("Badly formed number");
 
-      if (!seenADigit)
-        SyntaxError("Badly formed number: need a digit before or after the decimal point");
-      /* We allow one letter on the end of the numbers -- could be an i,
-       C99 style */
-      if (!wasEscaped) {
+    // If we found an identifier type character in this context could be an
+    // error or the start of one of the allowed trailing marker sequences
+    if (IsIdent(c) && c != 'e' && c != 'E' && c != 'd' && c != 'D' &&
+        c != 'q' && c != 'Q') {
+
+      // Allow one letter on the end of the numbers -- could be an i, C99
+      // style
+      if (IsAlpha(c)) {
+        i = AddCharToValue(i, c);
+        c = GET_NEXT_CHAR();
+      }
+      // independently of that, we allow an _ signalling immediate conversion
+      if (c == '_') {
+        i = AddCharToValue(i, c);
+        c = GET_NEXT_CHAR();
+        // After which there may be one character signifying the
+        // conversion style
         if (IsAlpha(c)) {
-          STATE(Value)[i++] = c;
-          c = GetCleanedChar(&wasEscaped);
+          i = AddCharToValue(i, c);
+          c = GET_NEXT_CHAR();
         }
-        /* independently of that, we allow an _ signalling immediate conversion */
-        if (c == '_') {
-          STATE(Value)[i++] = c;
-          c = GetCleanedChar(&wasEscaped);
-          /* After which there may be one character signifying the conversion style */
-          if (IsAlpha(c)) {
-            STATE(Value)[i++] = c;
-            c = GetCleanedChar(&wasEscaped);
-          }
-        }
-        /* Now if the next character is alphanumerical, or an identifier type symbol then we
-           really do have an error, otherwise we return a result */
-        if (!IsIdent(c) && !IsDigit(c)) {
-          STATE(Value)[i] = '\0';
-          STATE(Symbol) = S_FLOAT;
-          return;
-        }
+      }
+      // Now if the next character is alphanumerical, or an identifier type
+      // symbol then we really do have an error, otherwise we return a result
+      if (IsIdent(c) || IsDigit(c)) {
+        SyntaxError("Badly formed number");
+      }
+      else {
+        symbol = S_FLOAT;
+        goto finish;
+      }
+    }
+
+    // If the next thing is the start of the exponential notation, read it now.
+
+    if (IsAlpha(c)) {
+      if (!seenADigit)
+        SyntaxError("Badly formed number: need a digit before or after "
+                    "the decimal point");
+      seenExp = 1;
+      i = AddCharToValue(i, c);
+      c = GET_NEXT_CHAR();
+      if (c == '+' || c == '-') {
+        i = AddCharToValue(i, c);
+        c = GET_NEXT_CHAR();
+      }
+    }
+
+    // Either we saw an exponent indicator, or we hit end of token deal with
+    // the end of token case
+    if (!seenExp) {
+      if (!seenADigit)
+        SyntaxError("Badly formed number: need a digit before or after "
+                    "the decimal point");
+      // Might be a conversion marker
+      if (IsAlpha(c) && c != 'e' && c != 'E' && c != 'd' && c != 'D' &&
+          c != 'q' && c != 'Q') {
+        i = AddCharToValue(i, c);
+        c = GET_NEXT_CHAR();
+      }
+      // independently of that, we allow an _ signalling immediate conversion
+      if (c == '_') {
+        i = AddCharToValue(i, c);
+        c = GET_NEXT_CHAR();
+        // After which there may be one character signifying the
+        // conversion style
+        if (IsAlpha(c))
+          i = AddCharToValue(i, c);
+        c = GET_NEXT_CHAR();
+      }
+      // Now if the next character is alphanumerical, or an identifier type
+      // symbol then we really do have an error, otherwise we return a result
+      if (!IsIdent(c) && !IsDigit(c)) {
+        symbol = S_FLOAT;
+        goto finish;
       }
       SyntaxError("Badly formed number");
     }
-    /* If the next thing is the start of the exponential notation,
-       read it now -- we have left enough space at the end of the buffer even if we
-       left the previous loop because of overflow */
-    if (IsAlpha(c)) {
-        if (!seenADigit)
-          SyntaxError("Badly formed number: need a digit before or after the decimal point");
-        seenExp = 1;
-        STATE(Value)[i++] = c;
-        c = GetCleanedChar(&wasEscaped);
-        if (!wasEscaped && (c == '+' || c == '-'))
-          {
-            STATE(Value)[i++] = c;
-            c = GetCleanedChar(&wasEscaped);
-          }
-      }
 
-    /* Now deal with full buffer case */
-    if (i >= SAFE_VALUE_SIZE -1) {
-      STATE(Symbol) = seenExp ? S_PARTIALFLOAT3 : S_PARTIALFLOAT2;
-      STATE(Value)[i] = '\0';
-      return;
-    }
+  // Here we are into the unsigned exponent of a number in scientific
+  // notation, so we just read digits
 
-    /* Either we saw an exponent indicator, or we hit end of token
-       deal with the end of token case */
-    if (!seenExp) {
-      if (!seenADigit)
-        SyntaxError("Badly formed number: need a digit before or after the decimal point");
-      /* Might be a conversion marker */
-      if (!wasEscaped) {
-        if (IsAlpha(c) && c != 'e' && c != 'E' && c != 'd' && c != 'D' && c != 'q' && c != 'Q') {
-          STATE(Value)[i++] = c;
-          c = GetCleanedChar(&wasEscaped);
-        }
-        /* independently of that, we allow an _ signalling immediate conversion */
-        if (c == '_') {
-          STATE(Value)[i++] = c;
-          c = GetCleanedChar(&wasEscaped);
-          /* After which there may be one character signifying the conversion style */
-          if (IsAlpha(c))
-            STATE(Value)[i++] = c;
-          c = GetCleanedChar(&wasEscaped);
-        }
-        /* Now if the next character is alphanumerical, or an identifier type symbol then we
-           really do have an error, otherwise we return a result */
-        if (!IsIdent(c) && !IsDigit(c)) {
-          STATE(Value)[i] = '\0';
-          STATE(Symbol) = S_FLOAT;
-          return;
-        }
-      }
-      SyntaxError("Badly Formed Number");
-    }
-
-  }
-
-  /* Here we are into the unsigned exponent of a number
-     in scientific notation, so we just read digits */
-  for (; !wasEscaped && IsDigit(c) && i < SAFE_VALUE_SIZE-1; i++) {
-    STATE(Value)[i] = c;
+  while (IsDigit(c)) {
+    i = AddCharToValue(i, c);
     seenExpDigit = 1;
-    c = GetCleanedChar(&wasEscaped);
+    c = GET_NEXT_CHAR();
   }
 
-  /* Look out for a single alphabetic character on the end
-     which could be a conversion marker */
+  // Look out for a single alphabetic character on the end
+  // which could be a conversion marker
   if (seenExpDigit) {
     if (IsAlpha(c)) {
-      STATE(Value)[i] = c;
-      c = GetCleanedChar(&wasEscaped);
-      STATE(Value)[i+1] = '\0';
-      STATE(Symbol) = S_FLOAT;
-      return;
+      i = AddCharToValue(i, c);
+      c = GET_NEXT_CHAR();
+      symbol = S_FLOAT;
+      goto finish;
     }
     if (c == '_') {
-      STATE(Value)[i++] = c;
-      c = GetCleanedChar(&wasEscaped);
-      /* After which there may be one character signifying the conversion style */
+      i = AddCharToValue(i, c);
+      c = GET_NEXT_CHAR();
+      // After which there may be one character signifying the
+      // conversion style
       if (IsAlpha(c)) {
-        STATE(Value)[i++] = c;
-        c = GetCleanedChar(&wasEscaped);
+        i = AddCharToValue(i, c);
+        c = GET_NEXT_CHAR();
       }
-      STATE(Value)[i] = '\0';
-      STATE(Symbol) = S_FLOAT;
-      return;
+      symbol = S_FLOAT;
+      goto finish;
     }
   }
 
-  /* If we ran off the end */
-  if (i >= SAFE_VALUE_SIZE -1) {
-    STATE(Symbol) = seenExpDigit ? S_PARTIALFLOAT4 : S_PARTIALFLOAT3;
-    STATE(Value)[i] = '\0';
-    return;
-  }
-
-  /* Otherwise this is the end of the token */
+  // Otherwise this is the end of the token
   if (!seenExpDigit)
-    SyntaxError("Badly Formed Number: need at least one digit in the exponent");
-  STATE(Symbol) = S_FLOAT;
-  STATE(Value)[i] = '\0';
+    SyntaxError(
+        "Badly formed number: need at least one digit in the exponent");
+  symbol = S_FLOAT;
+
+finish:
+  i = AddCharToValue(i, '\0');
+  if (STATE(ValueObj)) {
+    // flush buffer
+    AppendBufToString(STATE(ValueObj), STATE(Value), i - 1);
+  }
+  return symbol;
+}
+
+
+/****************************************************************************
+**
+*F  ScanForFloatAfterDotHACK()
+**
+*/
+void ScanForFloatAfterDotHACK(void)
+{
+    STATE(Symbol) = GetNumber(1);
+}
+
+
+/****************************************************************************
+**
+*F  GetOctalDigits()
+**
+*/
+static inline Char GetOctalDigits( void )
+{
+    Char result;
+    Char c = PEEK_CURR_CHAR();
+    if ( c < '0' || c > '7' )
+        SyntaxError("Expecting octal digit");
+    result = 8 * (c - '0');
+    c = GET_NEXT_CHAR();
+    if ( c < '0' || c > '7' )
+        SyntaxError("Expecting octal digit");
+    result = result + (c - '0');
+
+    return result;
+}
+
+
+/****************************************************************************
+**
+*F  CharHexDigit( <ch> ) . . . . . . . . .  turn a single hex digit into Char
+**
+*/
+static inline Char CharHexDigit( Char c )
+{
+    c = GET_NEXT_CHAR();
+    if (!IsHexDigit(c)) {
+        SyntaxError("Expecting hexadecimal digit");
+    }
+    if (c >= 'a') {
+        return (c - 'a' + 10);
+    } else if (c >= 'A') {
+        return (c - 'A' + 10);
+    } else {
+        return (c - '0');
+    }
 }
 
 
@@ -630,98 +640,59 @@ void GetNumber ( UInt StartingStatus )
 **  into the variable *dst.
 **
 */
-static inline Char GetOctalDigits( void )
+static Char GetEscapedChar(void)
 {
-    Char c;
+  Char result = 0;
+  Char c = GET_NEXT_CHAR();
 
-    if ( *STATE(In) < '0' || *STATE(In) > '7' )
-        SyntaxError("Expecting octal digit");
-    c = 8 * (*STATE(In) - '0');
-    GET_CHAR();
-    if ( *STATE(In) < '0' || *STATE(In) > '7' )
-        SyntaxError("Expecting octal digit");
-    c = c + (*STATE(In) - '0');
-
-    return c;
-}
-
-
-/****************************************************************************
-**
-*F  CharHexDigit( <ch> ) . . . . . . . . .  turn a single hex digit into Char
-**
-*/
-static inline Char CharHexDigit( const Char ch ) {
-    if (ch >= 'a') {
-        return (ch - 'a' + 10);
-    } else if (ch >= 'A') {
-        return (ch - 'A' + 10);
-    } else {
-        return (ch - '0');
-    }
-}
-
-Char GetEscapedChar( void )
-{
-  Char c;
-
-  c = 0;
-
-  if ( *STATE(In) == 'n'  )       c = '\n';
-  else if ( *STATE(In) == 't'  )  c = '\t';
-  else if ( *STATE(In) == 'r'  )  c = '\r';
-  else if ( *STATE(In) == 'b'  )  c = '\b';
-  else if ( *STATE(In) == '>'  )  c = '\01';
-  else if ( *STATE(In) == '<'  )  c = '\02';
-  else if ( *STATE(In) == 'c'  )  c = '\03';
-  else if ( *STATE(In) == '"'  )  c = '"';
-  else if ( *STATE(In) == '\\' )  c = '\\';
-  else if ( *STATE(In) == '\'' )  c = '\'';
-  else if ( *STATE(In) == '0'  ) {
+  if ( c == 'n'  )       result = '\n';
+  else if ( c == 't'  )  result = '\t';
+  else if ( c == 'r'  )  result = '\r';
+  else if ( c == 'b'  )  result = '\b';
+  else if ( c == '>'  )  result = '\01';
+  else if ( c == '<'  )  result = '\02';
+  else if ( c == 'c'  )  result = '\03';
+  else if ( c == '"'  )  result = '"';
+  else if ( c == '\\' )  result = '\\';
+  else if ( c == '\'' )  result = '\'';
+  else if ( c == '0'  ) {
     /* from here we can either read a hex-escape or three digit
        octal numbers */
-    GET_CHAR();
-    if (*STATE(In) == 'x') {
-        GET_CHAR();
-        if (!IsHexDigit(*STATE(In))) {
-            SyntaxError("Expecting hexadecimal digit");
-        }
-        c = 16 * CharHexDigit(*STATE(In));
-        GET_CHAR();
-        if (!IsHexDigit(*STATE(In))) {
-            SyntaxError("Expecting hexadecimal digit");
-        }
-        c += CharHexDigit(*STATE(In));
-    } else if (*STATE(In) >= '0' && *STATE(In) <= '7' ) {
-        c += GetOctalDigits();
+    c = GET_NEXT_CHAR();
+    if (c == 'x') {
+        result = 16 * CharHexDigit(c);
+        result += CharHexDigit(c);
+    } else if (c >= '0' && c <= '7' ) {
+        result += GetOctalDigits();
     } else {
         SyntaxError("Expecting hexadecimal escape, or two more octal digits");
     }
-  } else if ( *STATE(In) >= '1' && *STATE(In) <= '7' ) {
+  } else if ( c >= '1' && c <= '7' ) {
     /* escaped three digit octal numbers are allowed in input */
-    c = 64 * (*STATE(In) - '0');
-    GET_CHAR();
-    c += GetOctalDigits();
+    result = 64 * (c - '0');
+    c = GET_NEXT_CHAR();
+    result += GetOctalDigits();
   } else {
       /* Following discussions on pull-request #612, this warning is currently
          disabled for backwards compatibility; some code relies on this behaviour
          and tests break with the warning enabled */
       /*
-      if (IsAlpha(*STATE(In)))
+      if (IsAlpha(c))
           SyntaxWarning("Alphabet letter after \\");
       */
-      c = *STATE(In);
+      result = c;
   }
-  return c;
+  return result;
 }
+
 
 /****************************************************************************
 **
 *F  GetStr()  . . . . . . . . . . . . . . . . . . . . .  get a string, local
 **
 **  'GetStr' reads  a  string from the  current input file into  the variable
-**  'STATE(Value)' and sets 'Symbol'   to  'S_STRING'.  The opening double quote '"'
-**  of the string is the current character pointed to by 'In'.
+**  'STATE(ValueObj)' and sets 'Symbol' to  'S_STRING'. The opening double
+**  quote '"' of the string is the current character pointed to by 'In'.
 **
 **  A string is a sequence of characters delimited  by double quotes '"'.  It
 **  must not include  '"' or <newline>  characters, but the  escape sequences
@@ -730,73 +701,39 @@ Char GetEscapedChar( void )
 **
 **  An error is raised if the string includes a <newline> character or if the
 **  file ends before the closing '"'.
-**
-**  When STATE(Value) is  completely filled we have to check  if the reading of
-**  the string is  complete or not to decide  between Symbol=S_STRING or
-**  S_PARTIALSTRING.
 */
-void GetStr ( void )
+static void GetStr(void)
 {
-  Int                 i = 0, fetch;
+    Obj  string = 0;
+    Char buf[1024];
+    UInt i = 0;
+    Char c = PEEK_CURR_CHAR();
 
+    while (c != '"' && c != '\n' && c != '\377') {
+        if (c == '\\') {
+            c = GetEscapedChar();
+        }
+        i = AddCharToBuf(&string, buf, sizeof(buf), i, c);
 
-  /* read all characters into 'Value'                                    */
-  for ( i = 0; i < SAFE_VALUE_SIZE-1 && *STATE(In) != '"'
-           && *STATE(In) != '\n' && *STATE(In) != '\377'; i++ ) {
-
-    fetch = 1;
-    /* handle escape sequences                                         */
-    if ( *STATE(In) == '\\' ) {
-      GET_CHAR();
-      /* if next is another '\\' followed by '\n' it must be ignored */
-      while ( *STATE(In) == '\\' && PEEK_CHAR() == '\n' ) {
-          GET_CHAR();
-          GET_CHAR();
-      }
-      if      ( *STATE(In) == '\n' )  i--;
-      else if ( *STATE(In) == '\r' )  {
-        GET_CHAR();
-        if  ( *STATE(In) == '\n' )  i--;
-        else  {STATE(Value)[i] = '\r'; fetch = 0;}
-      } else {
-          STATE(Value)[i] = GetEscapedChar();
-      }
+        // read the next character
+        c = GET_NEXT_CHAR();
     }
 
-    /* put normal chars into 'Value' but only if there is room         */
-    else {
-      STATE(Value)[i] = *STATE(In);
+    // append any remaining data to STATE(ValueObj)
+    STATE(ValueObj) = AppendBufToString(string, buf, i);
+
+    if (c == '\n')
+        SyntaxError("String must not include <newline>");
+
+    if (c == '\377') {
+        *STATE(In) = '\0';
+        SyntaxError("String must end with \" before end of file");
     }
-
-    /* read the next character                                         */
-    if (fetch) GET_CHAR();
-
-  }
-
-  /* XXX although we have ValueLen we need trailing \000 here,
-     in gap.c, function FuncMAKE_INIT this is still used as C-string
-     and long integers and strings are not yet supported!    */
-  STATE(Value)[i] = '\0';
-
-  /* check for error conditions                                          */
-  if ( *STATE(In) == '\n'  )
-    SyntaxError("String must not include <newline>");
-  if ( *STATE(In) == '\377' )
-    SyntaxError("String must end with \" before end of file");
-
-  /* set length of string, set 'Symbol' and skip trailing '"'            */
-  STATE(ValueLen) = i;
-  if ( i < SAFE_VALUE_SIZE-1 )  {
-    STATE(Symbol) = S_STRING;
-    if ( *STATE(In) == '"' )  GET_CHAR();
-  }
-  else
-    STATE(Symbol) = S_PARTIALSTRING;
 }
 
 /****************************************************************************
 **
-*F  GetTripStr()  . . . . . . . . . . . . .get a triple quoted string, local
+*F  GetTripStr() . . . . . . . . . . . . .  get a triple quoted string, local
 **
 **  'GetTripStr' reads a triple-quoted string from the  current input file
 **  into  the variable 'Value' and sets 'Symbol'   to  'S_STRING'.
@@ -807,91 +744,83 @@ void GetStr ( void )
 **  by """. No escaping is performed.
 **
 **  An error is raised if the file ends before the closing """.
-**
-**  When Value is  completely filled we have to check  if the reading of
-**  the string is  complete or not to decide  between Symbol=S_STRING or
-**  S_PARTIALTRIPLESTRING.
 */
-void GetTripStr ( void )
+static void GetTripStr(void)
 {
-  Int                 i = 0;
+    Obj  string = 0;
+    Char buf[1024];
+    UInt i = 0;
+    Char c = PEEK_CURR_CHAR();
 
-  /* print only a partial prompt while reading a triple string           */
-  if ( !SyQuiet )
-    STATE(Prompt) = "> ";
-  else
-    STATE(Prompt) = "";
-  
-  /* read all characters into 'Value'                                    */
-  for ( i = 0; i < SAFE_VALUE_SIZE-1 && *STATE(In) != '\377'; i++ ) {
-    // Only thing to check for is a triple quote.
-    
-    if ( *STATE(In) == '"') {
-        GET_CHAR();
-        if (*STATE(In) == '"') {
-            GET_CHAR();
-            if(*STATE(In) == '"' ) {
-                break;
+    // print only a partial prompt while reading a triple string
+    STATE(Prompt) = SyQuiet ? "" : "> ";
+
+    while (c != '\377') {
+        // only thing to check for is a triple quote
+        if (c == '"') {
+            c = GET_NEXT_CHAR();
+            if (c == '"') {
+                c = GET_NEXT_CHAR();
+                if (c == '"') {
+                    break;
+                }
+                i = AddCharToBuf(&string, buf, sizeof(buf), i, '"');
             }
-            STATE(Value)[i] = '"';
-            i++;
+            i = AddCharToBuf(&string, buf, sizeof(buf), i, '"');
         }
-        STATE(Value)[i] = '"';
-        i++;
+        i = AddCharToBuf(&string, buf, sizeof(buf), i, c);
+
+        // read the next character
+        c = GET_NEXT_CHAR();
     }
-    STATE(Value)[i] = *STATE(In);
 
+    // append any remaining data to STATE(ValueObj)
+    STATE(ValueObj) = AppendBufToString(string, buf, i);
 
-    /* read the next character                                         */
-    GET_CHAR();
-  }
-
-  /* XXX although we have ValueLen we need trailing \000 here,
-     in gap.c, function FuncMAKE_INIT this is still used as C-string
-     and long integers and strings are not yet supported!    */
-  STATE(Value)[i] = '\0';
-
-  /* check for error conditions                                          */
-  if ( *STATE(In) == '\377' )
-    SyntaxError("String must end with \" before end of file");
-
-  /* set length of string, set 'Symbol' and skip trailing '"'            */
-  STATE(ValueLen) = i;
-  if ( i < SAFE_VALUE_SIZE-1 )  {
-    STATE(Symbol) = S_STRING;
-    if ( *STATE(In) == '"' )  GET_CHAR();
-  }
-  else
-    STATE(Symbol) = S_PARTIALTRIPSTRING;
+    if (c == '\377') {
+        *STATE(In) = '\0';
+        SyntaxError("String must end with \"\"\" before end of file");
+    }
 }
 
 /****************************************************************************
 **
-*F  GetMaybeTripStr()  . . . . . . . . . . . . . . . . . get a string, local
+*F  GetString()  . . . . . . . . . . . . . . . . . . . .  get a string, local
 **
-**  'GetMaybeTripStr' decides if we are reading a single quoted string,
-**  or a triple quoted string.
+**  'GetString' decides if we are reading a single quoted string, or a triple
+**  quoted string, and then reads it. The opening quote '"' of the string is
+**  the current character pointed to by 'In'.
 */
-void GetMaybeTripStr ( void )
+static void GetString(void)
 {
-    /* This is just a normal string! */
-    if ( *STATE(In) != '"' ) {
+    Int  isTripleQuoted = 0;
+    Char c = GET_NEXT_CHAR();
+
+    if (c == '"') {
+        c = GET_NEXT_CHAR();
+        if (c == '"') {
+            isTripleQuoted = 1;
+            c = GET_NEXT_CHAR();
+        }
+        else {
+            // we read two '"' followed by something else, so this was
+            // just an empty string!
+            STATE(ValueObj) = NEW_STRING(0);
+            return;
+        }
+    }
+
+    if (isTripleQuoted)
+        GetTripStr();
+    else
         GetStr();
-        return;
-    }
-    
-    GET_CHAR();
-    /* This was just an empty string! */
-    if ( *STATE(In) != '"' ) {
-        STATE(Value)[0] = '\0';
-        STATE(ValueLen) = 0;
-        STATE(Symbol) = S_STRING;
-        return;
-    }
-    
-    GET_CHAR();
-    /* Now we know we are reading a triple string */
-    GetTripStr();
+
+    c = PEEK_CURR_CHAR();
+
+
+    // skip trailing '"'
+    if (c == '"')
+        c = GET_NEXT_CHAR();
 }
 
 
@@ -907,181 +836,156 @@ void GetMaybeTripStr ( void )
 **  must not  be '\'' or <newline>, but  the escape  sequences '\\\'' or '\n'
 **  can be used instead.
 */
-void GetChar ( void )
+static void GetChar(void)
 {
   /* skip '\''                                                           */
-  GET_CHAR();
-
-  /* Make sure symbol is set */
-  STATE(Symbol) = S_CHAR;
+  Char c = GET_NEXT_CHAR();
 
   /* handle escape equences                                              */
-  if ( *STATE(In) == '\n' ) {
+  if ( c == '\n' ) {
     SyntaxError("Character literal must not include <newline>");
   } else {
-    if ( *STATE(In) == '\\' ) {
-      GET_CHAR();
+    if ( c == '\\' ) {
       STATE(Value)[0] = GetEscapedChar();
     } else {
       /* put normal chars into 'STATE(Value)' */
-      STATE(Value)[0] = *STATE(In);
+      STATE(Value)[0] = c;
     }
 
     /* read the next character */
-    GET_CHAR();
+    c = GET_NEXT_CHAR();
 
     /* check for terminating single quote, and skip */
-    if ( *STATE(In) == '\'' ) {
-      GET_CHAR();
+    if ( c == '\'' ) {
+      c = GET_NEXT_CHAR();
     } else {
       SyntaxError("Missing single quote in character constant");
     }
   }
 }
 
-void GetHelp( void )
+static void GetHelp(void)
 {
-    Int i = 0;
+    Obj  string = 0;
+    Char buf[1024];
+    UInt i = 0;
 
-    /* Skip the first ? */
-    GET_CHAR();
-    while (i < SAFE_VALUE_SIZE-1 &&
-           *STATE(In) != '\n' &&
-           *STATE(In) != '\r' &&
-           *STATE(In) != '\377') {
-        STATE(Value)[i] = *STATE(In);
-        i++;
-        GET_CHAR();
+    // Skip the leading '?'
+    Char c = GET_NEXT_CHAR();
+
+    while (c != '\n' && c != '\r' && c != '\377') {
+        i = AddCharToBuf(&string, buf, sizeof(buf), i, c);
+        c = GET_NEXT_CHAR();
     }
-    STATE(Value)[i] = '\0';
-    STATE(ValueLen) = i;
+
+    // append any remaining data to STATE(ValueObj)
+    STATE(ValueObj) = AppendBufToString(string, buf, i);
 }
 
 /****************************************************************************
 **
-*F  GetSymbol() . . . . . . . . . . . . . . . . .  get the next symbol, local
+*F  NextSymbol() . . . . . . . . . . . . . . . . . get the next symbol, local
 **
-**  'GetSymbol' reads  the  next symbol from   the  input,  storing it in the
-**  variable 'Symbol'.  If 'Symbol' is  'S_IDENT', 'S_INT' or 'S_STRING'  the
-**  value of the symbol is stored in the variable 'STATE(Value)'.  'GetSymbol' first
-**  skips all <space>, <tab> and <newline> characters and comments.
+**  'NextSymbol' reads  the  next symbol from  the  input,  storing it in the
+**  variable 'STATE(Symbol)'. If 'STATE(Symbol)' is 'S_IDENT', 'S_INT',
+**  'S_FLOAT' or 'S_STRING' the value of the symbol is stored in
+**  'STATE(Value)' or  'STATE(ValueObj)'. 'NextSymbol' first skips all
+**  <space>, <tab> and <newline> characters and comments.
 **
 **  After reading  a  symbol the current  character   is the first  character
 **  beyond that symbol.
 */
-void GetSymbol ( void )
+static UInt NextSymbol(void)
 {
-    /* special case if reading of a long token is not finished */
-    switch (STATE(Symbol)) {
-    case S_PARTIALSTRING:     GetStr();     return;
-    case S_PARTIALTRIPSTRING: GetTripStr(); return;
-    case S_PARTIALINT:        GetNumber(STATE(Value)[0] == '\0' ? 0 : 1); return;
-    case S_PARTIALFLOAT1:     GetNumber(2); return;
-    case S_PARTIALFLOAT2:     GetNumber(3); return;
-    case S_PARTIALFLOAT3:     GetNumber(4); return;
-    case S_PARTIALFLOAT4:     GetNumber(5); return;
+    STATE(SymbolStartLine) = GetInputLineNumber();
+    STATE(SymbolStartPos) = GetInputLinePosition();
+
+    Char c = PEEK_CURR_CHAR();
+
+    // if no character is available then get one
+    if (c == '\0') {
+        STATE(In)--;
+        c = GET_NEXT_CHAR();
     }
 
-
-  /* if no character is available then get one                           */
-  if ( *STATE(In) == '\0' )
-    { STATE(In)--;
-      GET_CHAR();
+    // skip over <spaces>, <tabs>, <newlines> and comments
+    while (c == ' ' || c == '\t' || c== '\n' || c== '\r' || c == '\f' || c=='#') {
+        if (c == '#')
+            SKIP_TO_END_OF_LINE();
+        c = GET_NEXT_CHAR();
     }
 
-  /* skip over <spaces>, <tabs>, <newlines> and comments                 */
-  while (*STATE(In)==' '||*STATE(In)=='\t'||*STATE(In)=='\n'||*STATE(In)=='\r'||*STATE(In)=='\f'||*STATE(In)=='#') {
-    if ( *STATE(In) == '#' ) {
-      while ( *STATE(In) != '\n' && *STATE(In) != '\r' && *STATE(In) != '\377' )
-        GET_CHAR();
+  STATE(SymbolStartLine) = GetInputLineNumber();
+  STATE(SymbolStartPos) = GetInputLinePosition();
+
+    // switch according to the character
+    if (IsAlpha(c)) {
+        return GetIdent(0);
     }
-    GET_CHAR();
-  }
 
-  /* switch according to the character                                   */
-  switch ( *STATE(In) ) {
+    UInt symbol;
 
-  case '.':   STATE(Symbol) = S_DOT;                         GET_CHAR();
-    /*            if ( *STATE(In) == '\\' ) { GET_CHAR();
-            if ( *STATE(In) == '\n' ) { GET_CHAR(); } }   */
-    if ( *STATE(In) == '.' ) { 
-            STATE(Symbol) = S_DOTDOT; GET_CHAR();
-            if ( *STATE(In) == '.') {
-                    STATE(Symbol) = S_DOTDOTDOT; GET_CHAR();
-            }
+    switch (c) {
+    case '.':         symbol = S_DOT;           c = GET_NEXT_CHAR();
+      if (c == '.') { symbol = S_DOTDOT;        c = GET_NEXT_CHAR();
+          if (c == '.') { symbol = S_DOTDOTDOT; c = GET_NEXT_CHAR(); }
+      }
+      break;
+
+    case '!':         symbol = S_ILLEGAL;       c = GET_NEXT_CHAR();
+      if (c == '.') { symbol = S_BDOT;              GET_NEXT_CHAR(); break; }
+      if (c == '[') { symbol = S_BLBRACK;           GET_NEXT_CHAR(); break; }
+      break;
+    case '[':         symbol = S_LBRACK;            GET_NEXT_CHAR(); break;
+    case ']':         symbol = S_RBRACK;            GET_NEXT_CHAR(); break;
+    case '{':         symbol = S_LBRACE;            GET_NEXT_CHAR(); break;
+    case '}':         symbol = S_RBRACE;            GET_NEXT_CHAR(); break;
+    case '(':         symbol = S_LPAREN;            GET_NEXT_CHAR(); break;
+    case ')':         symbol = S_RPAREN;            GET_NEXT_CHAR(); break;
+    case ',':         symbol = S_COMMA;             GET_NEXT_CHAR(); break;
+
+    case ':':         symbol = S_COLON;         c = GET_NEXT_CHAR();
+      if (c == '=') { symbol = S_ASSIGN;            GET_NEXT_CHAR(); break; }
+      break;
+
+    case ';':         symbol = S_SEMICOLON;     c = GET_NEXT_CHAR();
+      if (c == ';') { symbol = S_DUALSEMICOLON;     GET_NEXT_CHAR(); break; }
+      break;
+
+    case '=':         symbol = S_EQ;                GET_NEXT_CHAR(); break;
+    case '<':         symbol = S_LT;            c = GET_NEXT_CHAR();
+      if (c == '=') { symbol = S_LE;                GET_NEXT_CHAR(); break; }
+      if (c == '>') { symbol = S_NE;                GET_NEXT_CHAR(); break; }
+      break;
+    case '>':         symbol = S_GT;            c = GET_NEXT_CHAR();
+      if (c == '=') { symbol = S_GE;                GET_NEXT_CHAR(); break; }
+      break;
+
+    case '+':         symbol = S_PLUS;              GET_NEXT_CHAR(); break;
+    case '-':         symbol = S_MINUS;         c = GET_NEXT_CHAR();
+      if (c == '>') { symbol = S_MAPTO;             GET_NEXT_CHAR(); break; }
+      break;
+    case '*':         symbol = S_MULT;              GET_NEXT_CHAR(); break;
+    case '/':         symbol = S_DIV;               GET_NEXT_CHAR(); break;
+    case '^':         symbol = S_POW;               GET_NEXT_CHAR(); break;
+
+    case '~':         symbol = S_TILDE;             GET_NEXT_CHAR(); break;
+    case '?':         symbol = S_HELP;              GetHelp(); break;
+    case '"':         symbol = S_STRING;            GetString(); break;
+    case '\'':        symbol = S_CHAR;              GetChar(); break;
+    case '\\':        return GetIdent(0);
+    case '_':         return GetIdent(0);
+    case '@':         return GetIdent(0);
+
+    case '0': case '1': case '2': case '3': case '4':
+    case '5': case '6': case '7': case '8': case '9':
+                      return GetNumber(0);
+
+    case '\377':      symbol = S_EOF;           *STATE(In) = '\0'; break;
+
+    default:          symbol = S_ILLEGAL;       GET_NEXT_CHAR(); break;
     }
-    break;
-
-  case '!':   STATE(Symbol) = S_ILLEGAL;                     GET_CHAR();
-    if ( *STATE(In) == '\\' ) { GET_CHAR();
-      if ( *STATE(In) == '\n' ) { GET_CHAR(); } }
-    if ( *STATE(In) == '.' ) { STATE(Symbol) = S_BDOT;    GET_CHAR();  break; }
-    if ( *STATE(In) == '[' ) { STATE(Symbol) = S_BLBRACK; GET_CHAR();  break; }
-    if ( *STATE(In) == '{' ) { STATE(Symbol) = S_BLBRACE; GET_CHAR();  break; }
-    break;
-  case '[':   STATE(Symbol) = S_LBRACK;                      GET_CHAR();  break;
-  case ']':   STATE(Symbol) = S_RBRACK;                      GET_CHAR();  break;
-  case '{':   STATE(Symbol) = S_LBRACE;                      GET_CHAR();  break;
-  case '}':   STATE(Symbol) = S_RBRACE;                      GET_CHAR();  break;
-  case '(':   STATE(Symbol) = S_LPAREN;                      GET_CHAR();  break;
-  case ')':   STATE(Symbol) = S_RPAREN;                      GET_CHAR();  break;
-  case ',':   STATE(Symbol) = S_COMMA;                       GET_CHAR();  break;
-
-  case ':':   STATE(Symbol) = S_COLON;                       GET_CHAR();
-    if ( *STATE(In) == '\\' ) {
-      GET_CHAR();
-      if ( *STATE(In) == '\n' )
-        { GET_CHAR(); }
-    }
-    if ( *STATE(In) == '=' ) { STATE(Symbol) = S_ASSIGN;  GET_CHAR(); break; }
-    break;
-
-  case ';':   STATE(Symbol) = S_SEMICOLON;                   GET_CHAR();
-    if ( *STATE(In) == ';' ) {
-        STATE(Symbol) = S_DUALSEMICOLON; GET_CHAR();
-    }
-    break;
-
-  case '=':   STATE(Symbol) = S_EQ;                          GET_CHAR();  break;
-  case '<':   STATE(Symbol) = S_LT;                          GET_CHAR();
-    if ( *STATE(In) == '\\' ) { GET_CHAR();
-      if ( *STATE(In) == '\n' ) { GET_CHAR(); } }
-    if ( *STATE(In) == '=' ) { STATE(Symbol) = S_LE;      GET_CHAR();  break; }
-    if ( *STATE(In) == '>' ) { STATE(Symbol) = S_NE;      GET_CHAR();  break; }
-    break;
-  case '>':   STATE(Symbol) = S_GT;                          GET_CHAR();
-    if ( *STATE(In) == '\\' ) { GET_CHAR();
-      if ( *STATE(In) == '\n' ) { GET_CHAR(); } }
-    if ( *STATE(In) == '=' ) { STATE(Symbol) = S_GE;      GET_CHAR();  break; }
-    break;
-
-  case '+':   STATE(Symbol) = S_PLUS;                        GET_CHAR();  break;
-  case '-':   STATE(Symbol) = S_MINUS;                       GET_CHAR();
-    if ( *STATE(In) == '\\' ) { GET_CHAR();
-      if ( *STATE(In) == '\n' ) { GET_CHAR(); } }
-    if ( *STATE(In) == '>' ) { STATE(Symbol)=S_MAPTO;     GET_CHAR();  break; }
-    break;
-  case '*':   STATE(Symbol) = S_MULT;                        GET_CHAR();  break;
-  case '/':   STATE(Symbol) = S_DIV;                         GET_CHAR();  break;
-  case '^':   STATE(Symbol) = S_POW;                         GET_CHAR();  break;
-
-  case '"':                        GET_CHAR(); GetMaybeTripStr();  break;
-  case '\'':                                          GetChar();   break;
-  case '\\':                                          GetIdent();  break;
-  case '_':                                           GetIdent();  break;
-  case '@':                                           GetIdent();  break;
-  case '~':   STATE(Symbol) = S_TILDE;                GET_CHAR();  break;
-  case '?':   STATE(Symbol) = S_HELP;                 GetHelp();   break;
-
-  case '0': case '1': case '2': case '3': case '4':
-  case '5': case '6': case '7': case '8': case '9':
-    GetNumber(0);    break;
-
-  case '\377': STATE(Symbol) = S_EOF;                        *STATE(In) = '\0';  break;
-
-  default :   if ( IsAlpha(*STATE(In)) )                   { GetIdent();  break; }
-    STATE(Symbol) = S_ILLEGAL;                     GET_CHAR();  break;
-  }
+    return symbol;
 }
 
 static const char * AllKeywords[] = {
@@ -1106,7 +1010,6 @@ int IsKeyword(const char * str)
 Obj FuncALL_KEYWORDS(Obj self)
 {
     Obj l = NEW_PLIST(T_PLIST_EMPTY, 0);
-    SET_LEN_PLIST(l,0);
     for (UInt i = 0; i < ARRAY_SIZE(AllKeywords); i++) {
         Obj s = MakeImmString(AllKeywords[i]);
         ASS_LIST(l, i+1, s);
@@ -1124,7 +1027,7 @@ static StructGVarFunc GVarFuncs [] = {
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
@@ -1146,11 +1049,9 @@ static Int InitKernel (
     StructInitInfo *    module )
 {
     InitHdlrFuncsFromTable( GVarFuncs );
-    return 0;
-}
 
-static void InitModuleState(ModuleStateOffset offset)
-{
+    InitGlobalBag( &STATE(ValueObj), "STATE(ValueObj)");
+    return 0;
 }
 
 /****************************************************************************
@@ -1168,6 +1069,5 @@ static StructInitInfo module = {
 
 StructInitInfo * InitInfoScanner ( void )
 {
-    RegisterModuleState(0, InitModuleState, 0);
     return &module;
 }

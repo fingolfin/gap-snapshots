@@ -18,12 +18,16 @@
 #ifndef GAP_IO_H
 #define GAP_IO_H
 
-#include <src/system.h>
+#include "system.h"
 
-extern Int  GetLinePosition(void);
-extern void GET_CHAR(void);
-extern Char PEEK_CHAR(void);
 
+extern Char GET_NEXT_CHAR(void);
+extern Char PEEK_NEXT_CHAR(void);
+extern Char PEEK_CURR_CHAR(void);
+
+// skip the rest of the current line, ignoring line continuations
+// (used to handle comments)
+extern void SKIP_TO_END_OF_LINE(void);
 
 /****************************************************************************
 **
@@ -70,12 +74,11 @@ extern UInt OpenInput (
 
 /****************************************************************************
 **
-*F  OpenInputStream( <stream> ) . . . . . . .  open a stream as current input
+*F  OpenInputStream( <stream>, <echo> ) . . .  open a stream as current input
 **
 **  The same as 'OpenInput' but for streams.
 */
-extern UInt OpenInputStream (
-    Obj                 stream );
+extern UInt OpenInputStream(Obj stream, UInt echo);
 
 
 /****************************************************************************
@@ -200,8 +203,8 @@ extern UInt CloseInputLog ( void );
  *V  EndLineHook . . . . . . . . . . . function called at end of command line
  **  
  **  These functions can be set on GAP-level. If they are not bound  the 
- **  default is: Instead of `PrintPromptHook' the `Prompt' is printed and
- **  instead of `EndLineHook' nothing is done.
+ **  default is: Instead of 'PrintPromptHook' the 'Prompt' is printed and
+ **  instead of 'EndLineHook' nothing is done.
  */
 /* TL: extern Obj  PrintPromptHook; */
 extern Obj  EndLineHook;
@@ -273,7 +276,8 @@ extern UInt CloseOutputLog ( void );
 **  they are just a convention between the main and the system package.
 **
 **  The function does nothing and returns success for '*stdout*' and
-**  '*errout*' when IgnoreStdoutErrout is true (useful for testing purposes).
+**  '*errout*' when 'LockCurrentOutput(1)' is in effect (used for testing
+**  purposes).
 **
 **  It is not neccessary to open the initial output file, 'InitScanner' opens
 **  '*stdout*' for that purpose.  This  file  on the other hand   can not  be
@@ -330,112 +334,49 @@ extern UInt OpenAppend (
 
 /****************************************************************************
 **
-*T  TypInputFile  . . . . . . . . . .  structure of an open input file, local
-**
-**  'TypInputFile' describes the  information stored  for  open input  files:
-**
-**  'isstream' is 'true' if input come from a stream.
-**
-**  'file'  holds the  file identifier  which  is received from 'SyFopen' and
-**  which is passed to 'SyFgets' and 'SyFclose' to identify this file.
-**
-**  'name' is the name of the file, this is only used in error messages.
-**
-**  'line' is a  buffer that holds the  current input  line.  This is  always
-**  terminated by the character '\0'.  Because 'line' holds  only part of the
-**  line for very long lines the last character need not be a <newline>.
-**
-**  'ptr' points to the current character within that line.  This is not used
-**  for the current input file, where 'In' points to the  current  character.
-**
-**  'number' is the number of the current line, is used in error messages.
-**
-**  'stream' is none zero if the input points to a stream.
-**
-**  'sline' contains the next line from the stream as GAP string.
-**
-*/
-typedef struct {
-  UInt        isstream;
-  Int         file;
-  Char        name [256];
-  UInt        gapnameid;
-  Char        line [32768];
-  Char *      ptr;
-  UInt        symbol;
-  Int         number;
-  Obj         stream;
-  UInt        isstringstream;
-  Obj         sline;
-  Int         spos;
-  UInt        echo;
-} TypInputFile;
-
-
-
-/****************************************************************************
-**
-*V  InputFiles[]  . . . . . . . . . . . . .  stack of open input files, local
-*V  Input . . . . . . . . . . . . . . .  pointer to current input file, local
 *V  In  . . . . . . . . . . . . . . . . . pointer to current character, local
-**
-**  'InputFiles' is the stack of the open input  files.  It is represented as
-**  an array of structures of type 'TypInputFile'.
-**
-**  'Input' is a pointer to the current input file.   It points to the top of
-**  the stack 'InputFiles'.
 **
 **  'In' is a  pointer to  the current  input character, i.e.,  '*In' is  the
 **  current input character.  It points into the buffer 'Input->line'.
 */
 
-/* TL: extern TypInputFile    InputFiles [16]; */
-/* TL: extern TypInputFile *  Input; */
 /* TL: extern Char *          In; */
 
 
-/****************************************************************************
-**
-*T  TypOutputFiles  . . . . . . . . . structure of an open output file, local
-*V  OutputFiles . . . . . . . . . . . . . . stack of open output files, local
-*V  Output  . . . . . . . . . . . . . . pointer to current output file, local
-**
-**  'TypOutputFile' describes the information stored for open  output  files:
-**  'file' holds the file identifier which is  received  from  'SyFopen'  and
-**  which is passed to  'SyFputs'  and  'SyFclose'  to  identify  this  file.
-**  'line' is a buffer that holds the current output line.
-**  'pos' is the position of the current character on that line.
-**
-**  'OutputFiles' is the stack of open output files.  It  is  represented  as
-**  an array of structures of type 'TypOutputFile'.
-**
-**  'Output' is a pointer to the current output file.  It points to  the  top
-**  of the stack 'OutputFiles'.
-*/
+// get the filename of the current input
+extern const Char * GetInputFilename(void);
+
+// get the number of the current line in the current thread's input
+extern Int GetInputLineNumber(void);
+
+//
+extern const Char * GetInputLineBuffer(void);
+
+//
+extern Int GetInputLinePosition(void);
+
+// get the filenameid (if any) of the current input
+extern UInt GetInputFilenameID(void);
+
+// get the filename (as GAP string object) with the given id
+extern Obj GetCachedFilename(UInt id);
+
+
 /* the widest allowed screen width */
 #define MAXLENOUTPUTLINE  4096
-/* the maximal number of used line break hints */ 
-#define MAXHINTS 100
-typedef struct {
-    UInt        isstream;
-    UInt        isstringstream;
-    Int         file;
-    Char        line [MAXLENOUTPUTLINE];
-    Int         pos;
-    Int         format;
-    Int         indent;
-    /* each hint is a tripel (position, value, indent) */
-    Int         hints[3*MAXHINTS+1];
-    Obj         stream;
-} TypOutputFile;
 
-/****************************************************************************
-**
-*F  GetCurrentOutput()  . . . . . . . . . . . get the current thread's output
-**
-**  The same as 'OpenOutput' but for streams.
-*/
-extern TypOutputFile *GetCurrentOutput ( void );
+
+// Reset the indentation level of the current output to zero. The indentation
+// level can be modified via the '%>' and '%<' formats of 'Pr' resp. 'PrTo'.
+extern void ResetOutputIndent(void);
+
+// If 'lock' is non-zero, then "lock" the current output, i.e., prevent calls
+// to 'OpenOutput' or 'CloseOutput' from changing it. If 'lock' is zero, then
+// release this lock again.
+//
+// This is used to allow the 'Test' function of the GAP library to
+// consistently capture all output during testing, see 'FuncREAD_STREAM_LOOP'.
+extern void LockCurrentOutput(Int lock);
 
 /****************************************************************************
 **
@@ -472,12 +413,6 @@ extern  void            Pr (
             Int                 arg2 );
 
 
-extern  void            PrTo (
-            TypOutputFile *   stream,
-            const Char *    format,
-            Int                 arg1,
-            Int                 arg2 );
-
 extern  void            SPrTo (
 			       Char * buffer,
 			       UInt maxlen,
@@ -485,28 +420,6 @@ extern  void            SPrTo (
             Int                 arg1,
             Int                 arg2 );
 
-
-
-/****************************************************************************
-**
-*V  InputLog  . . . . . . . . . . . . . . . file identifier of logfile, local
-**
-**  'InputLog' is the file identifier of the current input logfile.  If it is
-**  not 0  the    scanner echoes all input   from  the files  '*stdin*'   and
-**  '*errin*' to this file.
-*/
-/* TL: extern TypOutputFile * InputLog; */
-
-
-/****************************************************************************
-**
-*V  OutputLog . . . . . . . . . . . . . . . file identifier of logfile, local
-**
-**  'OutputLog' is the file identifier of  the current output logfile.  If it
-**  is  not  0  the  scanner echoes  all output  to  the files '*stdout*' and
-**  '*errout*' to this file.
-*/
-/* TL: extern TypOutputFile * OutputLog; */
 
 
 /****************************************************************************

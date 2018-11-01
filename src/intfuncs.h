@@ -15,7 +15,7 @@
 #ifndef GAP_INTFUNCS_H
 #define GAP_INTFUNCS_H
 
-#include <src/system.h>
+#include "system.h"
 
 /* link between Mersenne Twister randim numbers and
    representation specific large integer codes */
@@ -51,7 +51,7 @@ Int HASHKEY_BAG_NC (Obj obj, UInt4 seed, Int skip, int read);
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************

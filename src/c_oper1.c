@@ -1,7 +1,7 @@
 #ifndef AVOID_PRECOMPILED
 /* C file produced by GAC */
-#include <src/compiled.h>
-#define FILE_CRC  "-80821248"
+#include "compiled.h"
+#define FILE_CRC  "32938550"
 
 /* global variables used in handlers */
 static GVar G_REREADING;
@@ -40,6 +40,10 @@ static GVar G_IS__IDENTICAL__OBJ;
 static Obj  GF_IS__IDENTICAL__OBJ;
 static GVar G_MakeImmutable;
 static Obj  GF_MakeImmutable;
+static GVar G_INPUT__FILENAME;
+static Obj  GF_INPUT__FILENAME;
+static GVar G_INPUT__LINENUMBER;
+static Obj  GF_INPUT__LINENUMBER;
 static GVar G_IS__OBJECT;
 static Obj  GC_IS__OBJECT;
 static GVar G_TRY__NEXT__METHOD;
@@ -48,14 +52,12 @@ static GVar G_SUB__FLAGS;
 static Obj  GF_SUB__FLAGS;
 static GVar G_WITH__HIDDEN__IMPS__FLAGS;
 static Obj  GF_WITH__HIDDEN__IMPS__FLAGS;
+static GVar G_WITH__IMPS__FLAGS;
+static Obj  GF_WITH__IMPS__FLAGS;
 static GVar G_IS__SUBSET__FLAGS;
 static Obj  GF_IS__SUBSET__FLAGS;
 static GVar G_TRUES__FLAGS;
 static Obj  GF_TRUES__FLAGS;
-static GVar G_LEN__FLAGS;
-static Obj  GF_LEN__FLAGS;
-static GVar G_ELM__FLAGS;
-static Obj  GF_ELM__FLAGS;
 static GVar G_FLAG1__FILTER;
 static Obj  GF_FLAG1__FILTER;
 static GVar G_FLAGS__FILTER;
@@ -66,6 +68,8 @@ static GVar G_CHANGED__METHODS__OPERATION;
 static Obj  GF_CHANGED__METHODS__OPERATION;
 static GVar G_DO__NOTHING__SETTER;
 static Obj  GC_DO__NOTHING__SETTER;
+static GVar G_IS__CONSTRUCTOR;
+static Obj  GF_IS__CONSTRUCTOR;
 static GVar G_QUO__INT;
 static Obj  GF_QUO__INT;
 static GVar G_fail;
@@ -84,6 +88,8 @@ static GVar G_Print;
 static Obj  GF_Print;
 static GVar G_ViewObj;
 static Obj  GC_ViewObj;
+static GVar G_RUN__IMMEDIATE__METHODS__RUNS;
+static Obj  GC_RUN__IMMEDIATE__METHODS__RUNS;
 static GVar G_RUN__IMMEDIATE__METHODS__CHECKS;
 static Obj  GC_RUN__IMMEDIATE__METHODS__CHECKS;
 static GVar G_RUN__IMMEDIATE__METHODS__HITS;
@@ -94,18 +100,20 @@ static GVar G_IGNORE__IMMEDIATE__METHODS;
 static Obj  GC_IGNORE__IMMEDIATE__METHODS;
 static GVar G_IMM__FLAGS;
 static Obj  GC_IMM__FLAGS;
-static GVar G_IMMEDIATES;
-static Obj  GC_IMMEDIATES;
-static GVar G_IMMEDIATE__METHODS;
-static Obj  GC_IMMEDIATE__METHODS;
 static GVar G_TRACE__IMMEDIATE__METHODS;
 static Obj  GC_TRACE__IMMEDIATE__METHODS;
-static GVar G_IS__CONSTRUCTOR;
-static Obj  GF_IS__CONSTRUCTOR;
+static GVar G_IMMEDIATES;
+static Obj  GC_IMMEDIATES;
+static GVar G_SIZE__IMMEDIATE__METHOD__ENTRY;
+static Obj  GC_SIZE__IMMEDIATE__METHOD__ENTRY;
+static GVar G_IMMEDIATE__METHODS;
+static Obj  GC_IMMEDIATE__METHODS;
 static GVar G_RankFilter;
 static Obj  GF_RankFilter;
 static GVar G_CHECK__INSTALL__METHOD;
 static Obj  GC_CHECK__INSTALL__METHOD;
+static GVar G_READEVALCOMMAND__LINENUMBER;
+static Obj  GC_READEVALCOMMAND__LINENUMBER;
 static GVar G_INSTALL__METHOD;
 static Obj  GF_INSTALL__METHOD;
 static GVar G_DeclareGlobalFunction;
@@ -128,12 +136,14 @@ static GVar G_LENGTH__SETTER__METHODS__2;
 static Obj  GC_LENGTH__SETTER__METHODS__2;
 static GVar G_InstallAttributeFunction;
 static Obj  GF_InstallAttributeFunction;
-static GVar G_CATS__AND__REPS;
-static Obj  GC_CATS__AND__REPS;
+static GVar G_INFO__FILTERS;
+static Obj  GC_INFO__FILTERS;
+static GVar G_FNUM__CATS__AND__REPS;
+static Obj  GC_FNUM__CATS__AND__REPS;
 static GVar G_FILTERS;
 static Obj  GC_FILTERS;
-static GVar G_NUMBERS__PROPERTY__GETTERS;
-static Obj  GC_NUMBERS__PROPERTY__GETTERS;
+static GVar G_FNUM__PROS;
+static Obj  GC_FNUM__PROS;
 static GVar G_InstallOtherMethod;
 static Obj  GF_InstallOtherMethod;
 static GVar G_Tester;
@@ -155,6 +165,8 @@ static Obj  GF_CallFuncList;
 
 /* record names used in handlers */
 static RNam R_MaxNrArgsMethod;
+static RNam R_CommandLineOptions;
+static RNam R_N;
 
 /* information for the functions */
 static Obj  NameFunc[19];
@@ -172,7 +184,9 @@ static Obj  HdlrFunc2 (
  Obj l_j = 0;
  Obj l_imm = 0;
  Obj l_i = 0;
+ Obj l_meth = 0;
  Obj l_res = 0;
+ Obj l_loc = 0;
  Obj l_newflags = 0;
  Obj t_1 = 0;
  Obj t_2 = 0;
@@ -191,6 +205,16 @@ static Obj  HdlrFunc2 (
  Obj t_15 = 0;
  Obj t_16 = 0;
  Obj t_17 = 0;
+ (void)l_flagspos;
+ (void)l_tried;
+ (void)l_type;
+ (void)l_j;
+ (void)l_imm;
+ (void)l_i;
+ (void)l_meth;
+ (void)l_res;
+ (void)l_loc;
+ (void)l_newflags;
  Bag oldFrame;
  OLD_BRK_CURR_STAT
  
@@ -264,6 +288,27 @@ static Obj  HdlrFunc2 (
  C_ELM_POSOBJ_NLE( t_1, l_type, 2 );
  a_flags = t_1;
  
+ /* RUN_IMMEDIATE_METHODS_RUNS := RUN_IMMEDIATE_METHODS_RUNS + 1; */
+ t_2 = GC_RUN__IMMEDIATE__METHODS__RUNS;
+ CHECK_BOUND( t_2, "RUN_IMMEDIATE_METHODS_RUNS" )
+ C_SUM_FIA( t_1, t_2, INTOBJ_INT(1) )
+ AssGVar( G_RUN__IMMEDIATE__METHODS__RUNS, t_1 );
+ 
+ /* if TRACE_IMMEDIATE_METHODS then */
+ t_2 = GC_TRACE__IMMEDIATE__METHODS;
+ CHECK_BOUND( t_2, "TRACE_IMMEDIATE_METHODS" )
+ CHECK_BOOL( t_2 )
+ t_1 = (Obj)(UInt)(t_2 != False);
+ if ( t_1 ) {
+  
+  /* Print( "#I RunImmediateMethods\n" ); */
+  t_1 = GF_Print;
+  t_2 = MakeString( "#I RunImmediateMethods\n" );
+  CALL_1ARGS( t_1, t_2 );
+  
+ }
+ /* fi */
+ 
  /* for j in flagspos do */
  t_4 = l_flagspos;
  if ( IS_SMALL_LIST(t_4) ) {
@@ -301,12 +346,16 @@ static Obj  HdlrFunc2 (
    C_ELM_LIST_FPL( t_5, t_6, l_j )
    l_imm = t_5;
    
-   /* for i in [ 0, 7 .. LEN_LIST( imm ) - 7 ] do */
-   t_11 = GF_LEN__LIST;
-   t_10 = CALL_1ARGS( t_11, l_imm );
-   CHECK_FUNC_RESULT( t_10 )
-   C_DIFF_FIA( t_9, t_10, INTOBJ_INT(7) )
-   t_8 = Range3Check( INTOBJ_INT(0), INTOBJ_INT(7), t_9 );
+   /* for i in [ 0, SIZE_IMMEDIATE_METHOD_ENTRY .. LEN_LIST( imm ) - SIZE_IMMEDIATE_METHOD_ENTRY ] do */
+   t_9 = GC_SIZE__IMMEDIATE__METHOD__ENTRY;
+   CHECK_BOUND( t_9, "SIZE_IMMEDIATE_METHOD_ENTRY" )
+   t_12 = GF_LEN__LIST;
+   t_11 = CALL_1ARGS( t_12, l_imm );
+   CHECK_FUNC_RESULT( t_11 )
+   t_12 = GC_SIZE__IMMEDIATE__METHOD__ENTRY;
+   CHECK_BOUND( t_12, "SIZE_IMMEDIATE_METHOD_ENTRY" )
+   C_DIFF_FIA( t_10, t_11, t_12 )
+   t_8 = Range3Check( INTOBJ_INT(0), t_9, t_10 );
    if ( IS_SMALL_LIST(t_8) ) {
     t_7 = (Obj)(UInt)1;
     t_5 = INTOBJ_INT(1);
@@ -361,16 +410,19 @@ static Obj  HdlrFunc2 (
     }
     if ( t_9 ) {
      
-     /* res := IMMEDIATE_METHODS[imm[i + 6]]( obj ); */
-     t_11 = GC_IMMEDIATE__METHODS;
-     CHECK_BOUND( t_11, "IMMEDIATE_METHODS" )
-     C_SUM_FIA( t_13, l_i, INTOBJ_INT(6) )
-     CHECK_INT_POS( t_13 )
-     C_ELM_LIST_FPL( t_12, l_imm, t_13 )
+     /* meth := IMMEDIATE_METHODS[imm[i + 6]]; */
+     t_10 = GC_IMMEDIATE__METHODS;
+     CHECK_BOUND( t_10, "IMMEDIATE_METHODS" )
+     C_SUM_FIA( t_12, l_i, INTOBJ_INT(6) )
      CHECK_INT_POS( t_12 )
-     C_ELM_LIST_FPL( t_10, t_11, t_12 )
-     CHECK_FUNC( t_10 )
-     t_9 = CALL_1ARGS( t_10, a_obj );
+     C_ELM_LIST_FPL( t_11, l_imm, t_12 )
+     CHECK_INT_POS( t_11 )
+     C_ELM_LIST_FPL( t_9, t_10, t_11 )
+     l_meth = t_9;
+     
+     /* res := meth( obj ); */
+     CHECK_FUNC( l_meth )
+     t_9 = CALL_1ARGS( l_meth, a_obj );
      CHECK_FUNC_RESULT( t_9 )
      l_res = t_9;
      
@@ -394,49 +446,50 @@ static Obj  HdlrFunc2 (
      t_9 = (Obj)(UInt)(t_10 != False);
      if ( t_9 ) {
       
-      /* if imm[i + 7] = false then */
+      /* Print( "#I  immediate: ", NAME_FUNC( imm[i + 1] ) ); */
+      t_9 = GF_Print;
+      t_10 = MakeString( "#I  immediate: " );
+      t_12 = GF_NAME__FUNC;
+      C_SUM_FIA( t_14, l_i, INTOBJ_INT(1) )
+      CHECK_INT_POS( t_14 )
+      C_ELM_LIST_FPL( t_13, l_imm, t_14 )
+      t_11 = CALL_1ARGS( t_12, t_13 );
+      CHECK_FUNC_RESULT( t_11 )
+      CALL_2ARGS( t_9, t_10, t_11 );
+      
+      /* if imm[i + 7] <> false then */
       C_SUM_FIA( t_11, l_i, INTOBJ_INT(7) )
       CHECK_INT_POS( t_11 )
       C_ELM_LIST_FPL( t_10, l_imm, t_11 )
       t_11 = False;
-      t_9 = (Obj)(UInt)(EQ( t_10, t_11 ));
+      t_9 = (Obj)(UInt)( ! EQ( t_10, t_11 ));
       if ( t_9 ) {
        
-       /* Print( "#I  immediate: ", NAME_FUNC( imm[i + 1] ), "\n" ); */
+       /* Print( ": ", imm[i + 7] ); */
        t_9 = GF_Print;
-       t_10 = MakeString( "#I  immediate: " );
-       t_12 = GF_NAME__FUNC;
-       C_SUM_FIA( t_14, l_i, INTOBJ_INT(1) )
-       CHECK_INT_POS( t_14 )
-       C_ELM_LIST_FPL( t_13, l_imm, t_14 )
-       t_11 = CALL_1ARGS( t_12, t_13 );
-       CHECK_FUNC_RESULT( t_11 )
-       t_12 = MakeString( "\n" );
-       CALL_3ARGS( t_9, t_10, t_11, t_12 );
-       
-      }
-      
-      /* else */
-      else {
-       
-       /* Print( "#I  immediate: ", NAME_FUNC( imm[i + 1] ), ": ", imm[i + 7], "\n" ); */
-       t_9 = GF_Print;
-       t_10 = MakeString( "#I  immediate: " );
-       t_12 = GF_NAME__FUNC;
-       C_SUM_FIA( t_14, l_i, INTOBJ_INT(1) )
-       CHECK_INT_POS( t_14 )
-       C_ELM_LIST_FPL( t_13, l_imm, t_14 )
-       t_11 = CALL_1ARGS( t_12, t_13 );
-       CHECK_FUNC_RESULT( t_11 )
-       t_12 = MakeString( ": " );
-       C_SUM_FIA( t_14, l_i, INTOBJ_INT(7) )
-       CHECK_INT_POS( t_14 )
-       C_ELM_LIST_FPL( t_13, l_imm, t_14 )
-       t_14 = MakeString( "\n" );
-       CALL_5ARGS( t_9, t_10, t_11, t_12, t_13, t_14 );
+       t_10 = MakeString( ": " );
+       C_SUM_FIA( t_12, l_i, INTOBJ_INT(7) )
+       CHECK_INT_POS( t_12 )
+       C_ELM_LIST_FPL( t_11, l_imm, t_12 )
+       CALL_2ARGS( t_9, t_10, t_11 );
        
       }
       /* fi */
+      
+      /* Print( " at ", imm[i + 8][1], ":", imm[i + 8][2], "\n" ); */
+      t_9 = GF_Print;
+      t_10 = MakeString( " at " );
+      C_SUM_FIA( t_13, l_i, INTOBJ_INT(8) )
+      CHECK_INT_POS( t_13 )
+      C_ELM_LIST_FPL( t_12, l_imm, t_13 )
+      C_ELM_LIST_FPL( t_11, t_12, INTOBJ_INT(1) )
+      t_12 = MakeString( ":" );
+      C_SUM_FIA( t_15, l_i, INTOBJ_INT(8) )
+      CHECK_INT_POS( t_15 )
+      C_ELM_LIST_FPL( t_14, l_imm, t_15 )
+      C_ELM_LIST_FPL( t_13, t_14, INTOBJ_INT(2) )
+      t_14 = MakeString( "\n" );
+      CALL_5ARGS( t_9, t_10, t_11, t_12, t_13, t_14 );
       
      }
      /* fi */
@@ -559,6 +612,7 @@ static Obj  HdlrFunc3 (
  Obj l_replace = 0;
  Obj l_match = 0;
  Obj l_j = 0;
+ Obj l_lk = 0;
  Obj t_1 = 0;
  Obj t_2 = 0;
  Obj t_3 = 0;
@@ -567,6 +621,15 @@ static Obj  HdlrFunc3 (
  Obj t_6 = 0;
  Obj t_7 = 0;
  Obj t_8 = 0;
+ (void)l_methods;
+ (void)l_narg;
+ (void)l_i;
+ (void)l_k;
+ (void)l_tmp;
+ (void)l_replace;
+ (void)l_match;
+ (void)l_j;
+ (void)l_lk;
  Bag oldFrame;
  OLD_BRK_CURR_STAT
  
@@ -583,23 +646,31 @@ static Obj  HdlrFunc3 (
  t_1 = (Obj)(UInt)(t_2 != False);
  if ( t_1 ) {
   
-  /* if 0 < LEN_LIST( flags ) then */
+  /* if 0 = LEN_LIST( flags ) then */
   t_3 = GF_LEN__LIST;
   t_2 = CALL_1ARGS( t_3, a_flags );
   CHECK_FUNC_RESULT( t_2 )
-  t_1 = (Obj)(UInt)(LT( INTOBJ_INT(0), t_2 ));
+  t_1 = (Obj)(UInt)(EQ( INTOBJ_INT(0), t_2 ));
   if ( t_1 ) {
    
-   /* rank := rank - RankFilter( flags[1] ); */
-   t_3 = GF_RankFilter;
-   C_ELM_LIST_FPL( t_4, a_flags, INTOBJ_INT(1) )
-   t_2 = CALL_1ARGS( t_3, t_4 );
+   /* Error( NAME_FUNC( opr ), ": constructors must have at least one argument" ); */
+   t_1 = GF_Error;
+   t_3 = GF_NAME__FUNC;
+   t_2 = CALL_1ARGS( t_3, a_opr );
    CHECK_FUNC_RESULT( t_2 )
-   C_DIFF_FIA( t_1, a_rank, t_2 )
-   a_rank = t_1;
+   t_3 = MakeString( ": constructors must have at least one argument" );
+   CALL_2ARGS( t_1, t_2, t_3 );
    
   }
   /* fi */
+  
+  /* rank := rank - RankFilter( flags[1] ); */
+  t_3 = GF_RankFilter;
+  C_ELM_LIST_FPL( t_4, a_flags, INTOBJ_INT(1) )
+  t_2 = CALL_1ARGS( t_3, t_4 );
+  CHECK_FUNC_RESULT( t_2 )
+  C_DIFF_FIA( t_1, a_rank, t_2 )
+  a_rank = t_1;
   
  }
  
@@ -718,8 +789,8 @@ static Obj  HdlrFunc3 (
   }
   if ( ! t_1 ) break;
   
-  /* i := i + (narg + 4); */
-  C_SUM_FIA( t_2, l_narg, INTOBJ_INT(4) )
+  /* i := i + (narg + 5); */
+  C_SUM_FIA( t_2, l_narg, INTOBJ_INT(5) )
   C_SUM_FIA( t_1, l_i, t_2 )
   l_i = t_1;
   
@@ -827,9 +898,9 @@ static Obj  HdlrFunc3 (
    }
    /* fi */
    
-   /* k := k + narg + 4; */
+   /* k := k + narg + 5; */
    C_SUM_FIA( t_2, l_k, l_narg )
-   C_SUM_FIA( t_1, t_2, INTOBJ_INT(4) )
+   C_SUM_FIA( t_1, t_2, INTOBJ_INT(5) )
    l_k = t_1;
    
   }
@@ -852,11 +923,11 @@ static Obj  HdlrFunc3 (
  }
  if ( t_1 ) {
   
-  /* methods{[ narg + 4 + i + 1 .. narg + 4 + LEN_LIST( methods ) ]} := methods{[ i + 1 .. LEN_LIST( methods ) ]}; */
-  C_SUM_FIA( t_4, l_narg, INTOBJ_INT(4) )
+  /* methods{[ narg + 5 + i + 1 .. narg + 5 + LEN_LIST( methods ) ]} := methods{[ i + 1 .. LEN_LIST( methods ) ]}; */
+  C_SUM_FIA( t_4, l_narg, INTOBJ_INT(5) )
   C_SUM_FIA( t_3, t_4, l_i )
   C_SUM_FIA( t_2, t_3, INTOBJ_INT(1) )
-  C_SUM_FIA( t_4, l_narg, INTOBJ_INT(4) )
+  C_SUM_FIA( t_4, l_narg, INTOBJ_INT(5) )
   t_6 = GF_LEN__LIST;
   t_5 = CALL_1ARGS( t_6, l_methods );
   CHECK_FUNC_RESULT( t_5 )
@@ -1133,6 +1204,38 @@ static Obj  HdlrFunc3 (
  CHECK_FUNC_RESULT( t_2 )
  C_ASS_LIST_FPL( l_methods, t_1, t_2 )
  
+ /* if 5 >= 5 then */
+ t_1 = (Obj)(UInt)(((Int)INTOBJ_INT(5)) >= ((Int)INTOBJ_INT(5)));
+ if ( t_1 ) {
+  
+  /* methods[i + (narg + 5)] := MakeImmutable( [ INPUT_FILENAME(  ), READEVALCOMMAND_LINENUMBER, INPUT_LINENUMBER(  ) ] ); */
+  C_SUM_INTOBJS( t_2, l_narg, INTOBJ_INT(5) )
+  C_SUM_FIA( t_1, l_i, t_2 )
+  CHECK_INT_POS( t_1 )
+  t_3 = GF_MakeImmutable;
+  t_4 = NEW_PLIST( T_PLIST, 3 );
+  SET_LEN_PLIST( t_4, 3 );
+  t_6 = GF_INPUT__FILENAME;
+  t_5 = CALL_0ARGS( t_6 );
+  CHECK_FUNC_RESULT( t_5 )
+  SET_ELM_PLIST( t_4, 1, t_5 );
+  CHANGED_BAG( t_4 );
+  t_5 = GC_READEVALCOMMAND__LINENUMBER;
+  CHECK_BOUND( t_5, "READEVALCOMMAND_LINENUMBER" )
+  SET_ELM_PLIST( t_4, 2, t_5 );
+  CHANGED_BAG( t_4 );
+  t_6 = GF_INPUT__LINENUMBER;
+  t_5 = CALL_0ARGS( t_6 );
+  CHECK_FUNC_RESULT( t_5 )
+  SET_ELM_PLIST( t_4, 3, t_5 );
+  CHANGED_BAG( t_4 );
+  t_2 = CALL_1ARGS( t_3, t_4 );
+  CHECK_FUNC_RESULT( t_2 )
+  C_ASS_LIST_FPL( l_methods, t_1, t_2 )
+  
+ }
+ /* fi */
+ 
  /* CHANGED_METHODS_OPERATION( opr, narg ); */
  t_1 = GF_CHANGED__METHODS__OPERATION;
  CALL_2ARGS( t_1, a_opr, l_narg );
@@ -1236,6 +1339,7 @@ static Obj  HdlrFunc6 (
  Obj l_k = 0;
  Obj l_imp = 0;
  Obj l_notmatch = 0;
+ Obj l_lk = 0;
  Obj t_1 = 0;
  Obj t_2 = 0;
  Obj t_3 = 0;
@@ -1247,6 +1351,27 @@ static Obj  HdlrFunc6 (
  Obj t_9 = 0;
  Obj t_10 = 0;
  Obj t_11 = 0;
+ (void)l_len;
+ (void)l_opr;
+ (void)l_info;
+ (void)l_pos;
+ (void)l_rel;
+ (void)l_filters;
+ (void)l_info1;
+ (void)l_isstr;
+ (void)l_flags;
+ (void)l_i;
+ (void)l_rank;
+ (void)l_method;
+ (void)l_oreqs;
+ (void)l_req;
+ (void)l_reqs;
+ (void)l_match;
+ (void)l_j;
+ (void)l_k;
+ (void)l_imp;
+ (void)l_notmatch;
+ (void)l_lk;
  Bag oldFrame;
  OLD_BRK_CURR_STAT
  
@@ -1294,13 +1419,20 @@ static Obj  HdlrFunc6 (
  }
  /* fi */
  
- /* if IS_STRING_REP( arglist[2] ) then */
- t_3 = GF_IS__STRING__REP;
- C_ELM_LIST_FPL( t_4, a_arglist, INTOBJ_INT(2) )
- t_2 = CALL_1ARGS( t_3, t_4 );
- CHECK_FUNC_RESULT( t_2 )
- CHECK_BOOL( t_2 )
- t_1 = (Obj)(UInt)(t_2 != False);
+ /* if IS_STRING_REP( arglist[2] ) or arglist[2] = false then */
+ t_4 = GF_IS__STRING__REP;
+ C_ELM_LIST_FPL( t_5, a_arglist, INTOBJ_INT(2) )
+ t_3 = CALL_1ARGS( t_4, t_5 );
+ CHECK_FUNC_RESULT( t_3 )
+ CHECK_BOOL( t_3 )
+ t_2 = (Obj)(UInt)(t_3 != False);
+ t_1 = t_2;
+ if ( ! t_1 ) {
+  C_ELM_LIST_FPL( t_4, a_arglist, INTOBJ_INT(2) )
+  t_5 = False;
+  t_3 = (Obj)(UInt)(EQ( t_4, t_5 ));
+  t_1 = t_3;
+ }
  if ( t_1 ) {
   
   /* info := arglist[2]; */
@@ -1778,12 +1910,37 @@ static Obj  HdlrFunc6 (
    }
    l_i = t_2;
    
-   /* ADD_LIST( imp, WITH_HIDDEN_IMPS_FLAGS( i ) ); */
-   t_5 = GF_ADD__LIST;
-   t_7 = GF_WITH__HIDDEN__IMPS__FLAGS;
-   t_6 = CALL_1ARGS( t_7, l_i );
-   CHECK_FUNC_RESULT( t_6 )
-   CALL_2ARGS( t_5, l_imp, t_6 );
+   /* if not GAPInfo.CommandLineOptions.N then */
+   t_9 = GC_GAPInfo;
+   CHECK_BOUND( t_9, "GAPInfo" )
+   t_8 = ELM_REC( t_9, R_CommandLineOptions );
+   t_7 = ELM_REC( t_8, R_N );
+   CHECK_BOOL( t_7 )
+   t_6 = (Obj)(UInt)(t_7 != False);
+   t_5 = (Obj)(UInt)( ! ((Int)t_6) );
+   if ( t_5 ) {
+    
+    /* ADD_LIST( imp, WITH_HIDDEN_IMPS_FLAGS( i ) ); */
+    t_5 = GF_ADD__LIST;
+    t_7 = GF_WITH__HIDDEN__IMPS__FLAGS;
+    t_6 = CALL_1ARGS( t_7, l_i );
+    CHECK_FUNC_RESULT( t_6 )
+    CALL_2ARGS( t_5, l_imp, t_6 );
+    
+   }
+   
+   /* else */
+   else {
+    
+    /* ADD_LIST( imp, WITH_IMPS_FLAGS( i ) ); */
+    t_5 = GF_ADD__LIST;
+    t_7 = GF_WITH__IMPS__FLAGS;
+    t_6 = CALL_1ARGS( t_7, l_i );
+    CHECK_FUNC_RESULT( t_6 )
+    CALL_2ARGS( t_5, l_imp, t_6 );
+    
+   }
+   /* fi */
    
   }
   /* od */
@@ -1897,36 +2054,163 @@ static Obj  HdlrFunc6 (
    t_1 = (Obj)(UInt)(((Int)l_notmatch) == ((Int)INTOBJ_INT(0)));
    if ( t_1 ) {
     
-    /* Error( "the number of arguments does not match a declaration of ", NAME_FUNC( opr ) ); */
-    t_1 = GF_Error;
-    t_2 = MakeString( "the number of arguments does not match a declaration of " );
-    t_4 = GF_NAME__FUNC;
-    t_3 = CALL_1ARGS( t_4, l_opr );
-    CHECK_FUNC_RESULT( t_3 )
-    CALL_2ARGS( t_1, t_2, t_3 );
+    /* if not GAPInfo.CommandLineOptions.N then */
+    t_5 = GC_GAPInfo;
+    CHECK_BOUND( t_5, "GAPInfo" )
+    t_4 = ELM_REC( t_5, R_CommandLineOptions );
+    t_3 = ELM_REC( t_4, R_N );
+    CHECK_BOOL( t_3 )
+    t_2 = (Obj)(UInt)(t_3 != False);
+    t_1 = (Obj)(UInt)( ! ((Int)t_2) );
+    if ( t_1 ) {
+     
+     /* Error( "the number of arguments does not match a declaration of ", NAME_FUNC( opr ) ); */
+     t_1 = GF_Error;
+     t_2 = MakeString( "the number of arguments does not match a declaration of " );
+     t_4 = GF_NAME__FUNC;
+     t_3 = CALL_1ARGS( t_4, l_opr );
+     CHECK_FUNC_RESULT( t_3 )
+     CALL_2ARGS( t_1, t_2, t_3 );
+     
+    }
+    
+    /* else */
+    else {
+     
+     /* Print( "InstallMethod warning:  nr of args does not ", "match a declaration of ", NAME_FUNC( opr ), "\n" ); */
+     t_1 = GF_Print;
+     t_2 = MakeString( "InstallMethod warning:  nr of args does not " );
+     t_3 = MakeString( "match a declaration of " );
+     t_5 = GF_NAME__FUNC;
+     t_4 = CALL_1ARGS( t_5, l_opr );
+     CHECK_FUNC_RESULT( t_4 )
+     t_5 = MakeString( "\n" );
+     CALL_4ARGS( t_1, t_2, t_3, t_4, t_5 );
+     
+    }
+    /* fi */
     
    }
    
    /* else */
    else {
     
-    /* Error( "required filters ", NamesFilter( imp[notmatch] ), "\nfor ", Ordinal( notmatch ), " argument do not match a declaration of ", NAME_FUNC( opr ) ); */
-    t_1 = GF_Error;
-    t_2 = MakeString( "required filters " );
-    t_4 = GF_NamesFilter;
-    CHECK_INT_POS( l_notmatch )
-    C_ELM_LIST_FPL( t_5, l_imp, l_notmatch )
-    t_3 = CALL_1ARGS( t_4, t_5 );
-    CHECK_FUNC_RESULT( t_3 )
-    t_4 = MakeString( "\nfor " );
-    t_6 = GF_Ordinal;
-    t_5 = CALL_1ARGS( t_6, l_notmatch );
-    CHECK_FUNC_RESULT( t_5 )
-    t_6 = MakeString( " argument do not match a declaration of " );
-    t_8 = GF_NAME__FUNC;
-    t_7 = CALL_1ARGS( t_8, l_opr );
-    CHECK_FUNC_RESULT( t_7 )
-    CALL_6ARGS( t_1, t_2, t_3, t_4, t_5, t_6, t_7 );
+    /* if not GAPInfo.CommandLineOptions.N then */
+    t_5 = GC_GAPInfo;
+    CHECK_BOUND( t_5, "GAPInfo" )
+    t_4 = ELM_REC( t_5, R_CommandLineOptions );
+    t_3 = ELM_REC( t_4, R_N );
+    CHECK_BOOL( t_3 )
+    t_2 = (Obj)(UInt)(t_3 != False);
+    t_1 = (Obj)(UInt)( ! ((Int)t_2) );
+    if ( t_1 ) {
+     
+     /* Error( "required filters ", NamesFilter( imp[notmatch] ), "\nfor ", Ordinal( notmatch ), " argument do not match a declaration of ", NAME_FUNC( opr ) ); */
+     t_1 = GF_Error;
+     t_2 = MakeString( "required filters " );
+     t_4 = GF_NamesFilter;
+     CHECK_INT_POS( l_notmatch )
+     C_ELM_LIST_FPL( t_5, l_imp, l_notmatch )
+     t_3 = CALL_1ARGS( t_4, t_5 );
+     CHECK_FUNC_RESULT( t_3 )
+     t_4 = MakeString( "\nfor " );
+     t_6 = GF_Ordinal;
+     t_5 = CALL_1ARGS( t_6, l_notmatch );
+     CHECK_FUNC_RESULT( t_5 )
+     t_6 = MakeString( " argument do not match a declaration of " );
+     t_8 = GF_NAME__FUNC;
+     t_7 = CALL_1ARGS( t_8, l_opr );
+     CHECK_FUNC_RESULT( t_7 )
+     CALL_6ARGS( t_1, t_2, t_3, t_4, t_5, t_6, t_7 );
+     
+    }
+    
+    /* else */
+    else {
+     
+     /* Print( "InstallMethod warning: ", NAME_FUNC( opr ), "(\c", INPUT_FILENAME(  ), "\c +", INPUT_LINENUMBER(  ), ") \c", "required filters \c" ); */
+     t_1 = GF_Print;
+     t_2 = NEW_PLIST( T_PLIST, 8 );
+     SET_LEN_PLIST( t_2, 8 );
+     t_3 = MakeString( "InstallMethod warning: " );
+     SET_ELM_PLIST( t_2, 1, t_3 );
+     CHANGED_BAG( t_2 );
+     t_4 = GF_NAME__FUNC;
+     t_3 = CALL_1ARGS( t_4, l_opr );
+     CHECK_FUNC_RESULT( t_3 )
+     SET_ELM_PLIST( t_2, 2, t_3 );
+     CHANGED_BAG( t_2 );
+     t_3 = MakeString( "(\03" );
+     SET_ELM_PLIST( t_2, 3, t_3 );
+     CHANGED_BAG( t_2 );
+     t_4 = GF_INPUT__FILENAME;
+     t_3 = CALL_0ARGS( t_4 );
+     CHECK_FUNC_RESULT( t_3 )
+     SET_ELM_PLIST( t_2, 4, t_3 );
+     CHANGED_BAG( t_2 );
+     t_3 = MakeString( "\03 +" );
+     SET_ELM_PLIST( t_2, 5, t_3 );
+     CHANGED_BAG( t_2 );
+     t_4 = GF_INPUT__LINENUMBER;
+     t_3 = CALL_0ARGS( t_4 );
+     CHECK_FUNC_RESULT( t_3 )
+     SET_ELM_PLIST( t_2, 6, t_3 );
+     CHANGED_BAG( t_2 );
+     t_3 = MakeString( ") \03" );
+     SET_ELM_PLIST( t_2, 7, t_3 );
+     CHANGED_BAG( t_2 );
+     t_3 = MakeString( "required filters \03" );
+     SET_ELM_PLIST( t_2, 8, t_3 );
+     CHANGED_BAG( t_2 );
+     CALL_XARGS( t_1, t_2 );
+     
+     /* for j in NamesFilter( imp[notmatch] ) do */
+     t_5 = GF_NamesFilter;
+     CHECK_INT_POS( l_notmatch )
+     C_ELM_LIST_FPL( t_6, l_imp, l_notmatch )
+     t_4 = CALL_1ARGS( t_5, t_6 );
+     CHECK_FUNC_RESULT( t_4 )
+     if ( IS_SMALL_LIST(t_4) ) {
+      t_3 = (Obj)(UInt)1;
+      t_1 = INTOBJ_INT(1);
+     }
+     else {
+      t_3 = (Obj)(UInt)0;
+      t_1 = CALL_1ARGS( GF_ITERATOR, t_4 );
+     }
+     while ( 1 ) {
+      if ( t_3 ) {
+       if ( LEN_LIST(t_4) < INT_INTOBJ(t_1) )  break;
+       t_2 = ELMV0_LIST( t_4, INT_INTOBJ(t_1) );
+       t_1 = (Obj)(((UInt)t_1)+4);
+       if ( t_2 == 0 )  continue;
+      }
+      else {
+       if ( CALL_1ARGS( GF_IS_DONE_ITER, t_1 ) != False )  break;
+       t_2 = CALL_1ARGS( GF_NEXT_ITER, t_1 );
+      }
+      l_j = t_2;
+      
+      /* Print( j, "/\c" ); */
+      t_5 = GF_Print;
+      t_6 = MakeString( "/\03" );
+      CALL_2ARGS( t_5, l_j, t_6 );
+      
+     }
+     /* od */
+     
+     /* Print( " for ", Ordinal( notmatch ), " argument do not match \ca ", "declaration\n" ); */
+     t_1 = GF_Print;
+     t_2 = MakeString( " for " );
+     t_4 = GF_Ordinal;
+     t_3 = CALL_1ARGS( t_4, l_notmatch );
+     CHECK_FUNC_RESULT( t_3 )
+     t_4 = MakeString( " argument do not match \03a " );
+     t_5 = MakeString( "declaration\n" );
+     CALL_4ARGS( t_1, t_2, t_3, t_4, t_5 );
+     
+    }
+    /* fi */
     
    }
    /* fi */
@@ -2071,6 +2355,8 @@ static Obj  HdlrFunc8 (
  Obj t_9 = 0;
  Obj t_10 = 0;
  Obj t_11 = 0;
+ (void)l_found;
+ (void)l_prop;
  Bag oldFrame;
  OLD_BRK_CURR_STAT
  
@@ -2084,7 +2370,7 @@ static Obj  HdlrFunc8 (
  l_found = t_1;
  
  /* for prop in props do */
- t_4 = OBJ_LVAR_1UP( 2 );
+ t_4 = OBJ_HVAR( (1 << 16) | 2 );
  CHECK_BOUND( t_4, "props" )
  if ( IS_SMALL_LIST(t_4) ) {
   t_3 = (Obj)(UInt)1;
@@ -2165,7 +2451,7 @@ static Obj  HdlrFunc8 (
  if ( t_1 ) {
   
   /* return getter( obj ); */
-  t_2 = OBJ_LVAR_1UP( 1 );
+  t_2 = OBJ_HVAR( (1 << 16) | 1 );
   CHECK_BOUND( t_2, "getter" )
   CHECK_FUNC( t_2 )
   t_1 = CALL_1ARGS( t_2, a_obj );
@@ -2214,6 +2500,7 @@ static Obj  HdlrFunc7 (
  Obj l_rank = 0;
  Obj l_cats = 0;
  Obj l_i = 0;
+ Obj l_lk = 0;
  Obj t_1 = 0;
  Obj t_2 = 0;
  Obj t_3 = 0;
@@ -2221,6 +2508,13 @@ static Obj  HdlrFunc7 (
  Obj t_5 = 0;
  Obj t_6 = 0;
  Obj t_7 = 0;
+ Obj t_8 = 0;
+ Obj t_9 = 0;
+ (void)l_flags;
+ (void)l_rank;
+ (void)l_cats;
+ (void)l_i;
+ (void)l_lk;
  Bag oldFrame;
  OLD_BRK_CURR_STAT
  
@@ -2260,83 +2554,94 @@ static Obj  HdlrFunc7 (
   SET_LEN_PLIST( t_1, 0 );
   ASS_LVAR( 2, t_1 );
   
-  /* for i in [ 1 .. LEN_FLAGS( flags ) ] do */
-  t_3 = GF_LEN__FLAGS;
-  t_2 = CALL_1ARGS( t_3, l_flags );
-  CHECK_FUNC_RESULT( t_2 )
-  CHECK_INT_SMALL( t_2 )
-  for ( t_1 = INTOBJ_INT(1);
-        ((Int)t_1) <= ((Int)t_2);
-        t_1 = (Obj)(((UInt)t_1)+4) ) {
-   l_i = t_1;
-   
-   /* if ELM_FLAGS( flags, i ) then */
-   t_5 = GF_ELM__FLAGS;
-   t_4 = CALL_2ARGS( t_5, l_flags, l_i );
-   CHECK_FUNC_RESULT( t_4 )
-   CHECK_BOOL( t_4 )
-   t_3 = (Obj)(UInt)(t_4 != False);
+  /* for i in TRUES_FLAGS( flags ) do */
+  t_5 = GF_TRUES__FLAGS;
+  t_4 = CALL_1ARGS( t_5, l_flags );
+  CHECK_FUNC_RESULT( t_4 )
+  if ( IS_SMALL_LIST(t_4) ) {
+   t_3 = (Obj)(UInt)1;
+   t_1 = INTOBJ_INT(1);
+  }
+  else {
+   t_3 = (Obj)(UInt)0;
+   t_1 = CALL_1ARGS( GF_ITERATOR, t_4 );
+  }
+  while ( 1 ) {
    if ( t_3 ) {
+    if ( LEN_LIST(t_4) < INT_INTOBJ(t_1) )  break;
+    t_2 = ELMV0_LIST( t_4, INT_INTOBJ(t_1) );
+    t_1 = (Obj)(((UInt)t_1)+4);
+    if ( t_2 == 0 )  continue;
+   }
+   else {
+    if ( CALL_1ARGS( GF_IS_DONE_ITER, t_1 ) != False )  break;
+    t_2 = CALL_1ARGS( GF_NEXT_ITER, t_1 );
+   }
+   l_i = t_2;
+   
+   /* if INFO_FILTERS[i] in FNUM_CATS_AND_REPS then */
+   t_7 = GC_INFO__FILTERS;
+   CHECK_BOUND( t_7, "INFO_FILTERS" )
+   CHECK_INT_POS( l_i )
+   C_ELM_LIST_FPL( t_6, t_7, l_i )
+   t_7 = GC_FNUM__CATS__AND__REPS;
+   CHECK_BOUND( t_7, "FNUM_CATS_AND_REPS" )
+   t_5 = (Obj)(UInt)(IN( t_6, t_7 ));
+   if ( t_5 ) {
     
-    /* if i in CATS_AND_REPS then */
-    t_4 = GC_CATS__AND__REPS;
-    CHECK_BOUND( t_4, "CATS_AND_REPS" )
-    t_3 = (Obj)(UInt)(IN( l_i, t_4 ));
-    if ( t_3 ) {
-     
-     /* cats := cats and FILTERS[i]; */
-     if ( l_cats == False ) {
-      t_3 = l_cats;
-     }
-     else if ( l_cats == True ) {
-      t_5 = GC_FILTERS;
-      CHECK_BOUND( t_5, "FILTERS" )
-      C_ELM_LIST_FPL( t_4, t_5, l_i )
-      CHECK_BOOL( t_4 )
-      t_3 = t_4;
-     }
-     else {
-      CHECK_FUNC( l_cats )
-      t_6 = GC_FILTERS;
-      CHECK_BOUND( t_6, "FILTERS" )
-      C_ELM_LIST_FPL( t_5, t_6, l_i )
-      CHECK_FUNC( t_5 )
-      t_3 = NewAndFilter( l_cats, t_5 );
-     }
-     l_cats = t_3;
-     
-     /* rank := rank - RankFilter( FILTERS[i] ); */
-     t_5 = GF_RankFilter;
+    /* cats := cats and FILTERS[i]; */
+    if ( l_cats == False ) {
+     t_5 = l_cats;
+    }
+    else if ( l_cats == True ) {
      t_7 = GC_FILTERS;
      CHECK_BOUND( t_7, "FILTERS" )
      C_ELM_LIST_FPL( t_6, t_7, l_i )
-     t_4 = CALL_1ARGS( t_5, t_6 );
-     CHECK_FUNC_RESULT( t_4 )
-     C_DIFF_FIA( t_3, l_rank, t_4 )
-     l_rank = t_3;
+     CHECK_BOOL( t_6 )
+     t_5 = t_6;
+    }
+    else {
+     CHECK_FUNC( l_cats )
+     t_8 = GC_FILTERS;
+     CHECK_BOUND( t_8, "FILTERS" )
+     C_ELM_LIST_FPL( t_7, t_8, l_i )
+     CHECK_FUNC( t_7 )
+     t_5 = NewAndFilter( l_cats, t_7 );
+    }
+    l_cats = t_5;
+    
+    /* rank := rank - RankFilter( FILTERS[i] ); */
+    t_7 = GF_RankFilter;
+    t_9 = GC_FILTERS;
+    CHECK_BOUND( t_9, "FILTERS" )
+    C_ELM_LIST_FPL( t_8, t_9, l_i )
+    t_6 = CALL_1ARGS( t_7, t_8 );
+    CHECK_FUNC_RESULT( t_6 )
+    C_DIFF_FIA( t_5, l_rank, t_6 )
+    l_rank = t_5;
+    
+   }
+   
+   /* elif INFO_FILTERS[i] in FNUM_PROS then */
+   else {
+    t_7 = GC_INFO__FILTERS;
+    CHECK_BOUND( t_7, "INFO_FILTERS" )
+    C_ELM_LIST_FPL( t_6, t_7, l_i )
+    t_7 = GC_FNUM__PROS;
+    CHECK_BOUND( t_7, "FNUM_PROS" )
+    t_5 = (Obj)(UInt)(IN( t_6, t_7 ));
+    if ( t_5 ) {
+     
+     /* ADD_LIST( props, FILTERS[i] ); */
+     t_5 = GF_ADD__LIST;
+     t_6 = OBJ_LVAR( 2 );
+     CHECK_BOUND( t_6, "props" )
+     t_8 = GC_FILTERS;
+     CHECK_BOUND( t_8, "FILTERS" )
+     C_ELM_LIST_FPL( t_7, t_8, l_i )
+     CALL_2ARGS( t_5, t_6, t_7 );
      
     }
-    
-    /* elif i in NUMBERS_PROPERTY_GETTERS then */
-    else {
-     t_4 = GC_NUMBERS__PROPERTY__GETTERS;
-     CHECK_BOUND( t_4, "NUMBERS_PROPERTY_GETTERS" )
-     t_3 = (Obj)(UInt)(IN( l_i, t_4 ));
-     if ( t_3 ) {
-      
-      /* ADD_LIST( props, FILTERS[i] ); */
-      t_3 = GF_ADD__LIST;
-      t_4 = OBJ_LVAR( 2 );
-      CHECK_BOUND( t_4, "props" )
-      t_6 = GC_FILTERS;
-      CHECK_BOUND( t_6, "FILTERS" )
-      C_ELM_LIST_FPL( t_5, t_6, l_i )
-      CALL_2ARGS( t_3, t_4, t_5 );
-      
-     }
-    }
-    /* fi */
-    
    }
    /* fi */
    
@@ -2388,8 +2693,8 @@ static Obj  HdlrFunc7 (
    t_6 = NewFunction( NameFunc[8], 1, 0, HdlrFunc8 );
    SET_ENVI_FUNC( t_6, STATE(CurrLVars) );
    t_7 = NewBag( T_BODY, sizeof(BodyHeader) );
-   SET_STARTLINE_BODY(t_7, 578);
-   SET_ENDLINE_BODY(t_7, 596);
+   SET_STARTLINE_BODY(t_7, 652);
+   SET_ENDLINE_BODY(t_7, 670);
    SET_FILENAME_BODY(t_7, FileName);
    SET_BODY_FUNC(t_6, t_7);
    CHANGED_BAG( STATE(CurrLVars) );
@@ -2479,6 +2784,9 @@ static Obj  HdlrFunc10 (
  Obj t_4 = 0;
  Obj t_5 = 0;
  Obj t_6 = 0;
+ (void)l_i;
+ (void)l_j;
+ (void)l_k;
  Bag oldFrame;
  OLD_BRK_CURR_STAT
  
@@ -2587,7 +2895,7 @@ static Obj  HdlrFunc12 (
   
   /* Error( name, ": <p> must be a prime" ); */
   t_1 = GF_Error;
-  t_2 = OBJ_LVAR_1UP( 1 );
+  t_2 = OBJ_HVAR( (1 << 16) | 1 );
   CHECK_BOUND( t_2, "name" )
   t_3 = MakeString( ": <p> must be a prime" );
   CALL_2ARGS( t_1, t_2, t_3 );
@@ -2647,6 +2955,9 @@ static Obj  HdlrFunc14 (
  Obj t_3 = 0;
  Obj t_4 = 0;
  Obj t_5 = 0;
+ (void)l_known;
+ (void)l_i;
+ (void)l_erg;
  Bag oldFrame;
  OLD_BRK_CURR_STAT
  
@@ -2656,13 +2967,13 @@ static Obj  HdlrFunc14 (
  SET_BRK_CURR_STAT(0);
  
  /* keytest( key ); */
- t_1 = OBJ_LVAR_1UP( 2 );
+ t_1 = OBJ_HVAR( (1 << 16) | 2 );
  CHECK_BOUND( t_1, "keytest" )
  CHECK_FUNC( t_1 )
  CALL_1ARGS( t_1, a_key );
  
  /* known := attr( D ); */
- t_2 = OBJ_LVAR_1UP( 4 );
+ t_2 = OBJ_HVAR( (1 << 16) | 4 );
  CHECK_BOUND( t_2, "attr" )
  CHECK_FUNC( t_2 )
  t_1 = CALL_1ARGS( t_2, a_D );
@@ -2690,7 +3001,7 @@ static Obj  HdlrFunc14 (
  if ( t_1 ) {
   
   /* erg := oper( D, key ); */
-  t_2 = OBJ_LVAR_1UP( 3 );
+  t_2 = OBJ_HVAR( (1 << 16) | 3 );
   CHECK_BOUND( t_2, "oper" )
   CHECK_FUNC( t_2 )
   t_1 = CALL_2ARGS( t_2, a_D, a_key );
@@ -2779,6 +3090,8 @@ static Obj  HdlrFunc15 (
  Obj t_3 = 0;
  Obj t_4 = 0;
  Obj t_5 = 0;
+ (void)l_known;
+ (void)l_i;
  Bag oldFrame;
  OLD_BRK_CURR_STAT
  
@@ -2788,13 +3101,13 @@ static Obj  HdlrFunc15 (
  SET_BRK_CURR_STAT(0);
  
  /* keytest( key ); */
- t_1 = OBJ_LVAR_1UP( 2 );
+ t_1 = OBJ_HVAR( (1 << 16) | 2 );
  CHECK_BOUND( t_1, "keytest" )
  CHECK_FUNC( t_1 )
  CALL_1ARGS( t_1, a_key );
  
  /* known := attr( D ); */
- t_2 = OBJ_LVAR_1UP( 4 );
+ t_2 = OBJ_HVAR( (1 << 16) | 4 );
  CHECK_BOUND( t_2, "attr" )
  CHECK_FUNC( t_2 )
  t_1 = CALL_1ARGS( t_2, a_D );
@@ -2852,6 +3165,8 @@ static Obj  HdlrFunc16 (
  Obj t_3 = 0;
  Obj t_4 = 0;
  Obj t_5 = 0;
+ (void)l_known;
+ (void)l_i;
  Bag oldFrame;
  OLD_BRK_CURR_STAT
  
@@ -2861,13 +3176,13 @@ static Obj  HdlrFunc16 (
  SET_BRK_CURR_STAT(0);
  
  /* keytest( key ); */
- t_1 = OBJ_LVAR_1UP( 2 );
+ t_1 = OBJ_HVAR( (1 << 16) | 2 );
  CHECK_BOUND( t_1, "keytest" )
  CHECK_FUNC( t_1 )
  CALL_1ARGS( t_1, a_key );
  
  /* known := attr( D ); */
- t_2 = OBJ_LVAR_1UP( 4 );
+ t_2 = OBJ_HVAR( (1 << 16) | 4 );
  CHECK_BOUND( t_2, "attr" )
  CHECK_FUNC( t_2 )
  t_1 = CALL_1ARGS( t_2, a_D );
@@ -2946,6 +3261,7 @@ static Obj  HdlrFunc11 (
  Obj  a_keytest )
 {
  Obj l_str = 0;
+ Obj l_lk = 0;
  Obj t_1 = 0;
  Obj t_2 = 0;
  Obj t_3 = 0;
@@ -2953,6 +3269,8 @@ static Obj  HdlrFunc11 (
  Obj t_5 = 0;
  Obj t_6 = 0;
  Obj t_7 = 0;
+ (void)l_str;
+ (void)l_lk;
  Bag oldFrame;
  OLD_BRK_CURR_STAT
  
@@ -2979,8 +3297,8 @@ static Obj  HdlrFunc11 (
   t_1 = NewFunction( NameFunc[12], 1, 0, HdlrFunc12 );
   SET_ENVI_FUNC( t_1, STATE(CurrLVars) );
   t_2 = NewBag( T_BODY, sizeof(BodyHeader) );
-  SET_STARTLINE_BODY(t_2, 775);
-  SET_ENDLINE_BODY(t_2, 779);
+  SET_STARTLINE_BODY(t_2, 849);
+  SET_ENDLINE_BODY(t_2, 853);
   SET_FILENAME_BODY(t_2, FileName);
   SET_BODY_FUNC(t_1, t_2);
   CHANGED_BAG( STATE(CurrLVars) );
@@ -3059,8 +3377,8 @@ static Obj  HdlrFunc11 (
  t_6 = NewFunction( NameFunc[13], 1, 0, HdlrFunc13 );
  SET_ENVI_FUNC( t_6, STATE(CurrLVars) );
  t_7 = NewBag( T_BODY, sizeof(BodyHeader) );
- SET_STARTLINE_BODY(t_7, 796);
- SET_ENDLINE_BODY(t_7, 796);
+ SET_STARTLINE_BODY(t_7, 870);
+ SET_ENDLINE_BODY(t_7, 870);
  SET_FILENAME_BODY(t_7, FileName);
  SET_BODY_FUNC(t_6, t_7);
  CHANGED_BAG( STATE(CurrLVars) );
@@ -3122,8 +3440,8 @@ static Obj  HdlrFunc11 (
  t_6 = NewFunction( NameFunc[14], 2, 0, HdlrFunc14 );
  SET_ENVI_FUNC( t_6, STATE(CurrLVars) );
  t_7 = NewBag( T_BODY, sizeof(BodyHeader) );
- SET_STARTLINE_BODY(t_7, 809);
- SET_ENDLINE_BODY(t_7, 832);
+ SET_STARTLINE_BODY(t_7, 892);
+ SET_ENDLINE_BODY(t_7, 915);
  SET_FILENAME_BODY(t_7, FileName);
  SET_BODY_FUNC(t_6, t_7);
  CHANGED_BAG( STATE(CurrLVars) );
@@ -3171,8 +3489,8 @@ static Obj  HdlrFunc11 (
  t_6 = NewFunction( NameFunc[15], 2, 0, HdlrFunc15 );
  SET_ENVI_FUNC( t_6, STATE(CurrLVars) );
  t_7 = NewBag( T_BODY, sizeof(BodyHeader) );
- SET_STARTLINE_BODY(t_7, 842);
- SET_ENDLINE_BODY(t_7, 850);
+ SET_STARTLINE_BODY(t_7, 925);
+ SET_ENDLINE_BODY(t_7, 933);
  SET_FILENAME_BODY(t_7, FileName);
  SET_BODY_FUNC(t_6, t_7);
  CHANGED_BAG( STATE(CurrLVars) );
@@ -3233,8 +3551,8 @@ static Obj  HdlrFunc11 (
  t_6 = NewFunction( NameFunc[16], 3, 0, HdlrFunc16 );
  SET_ENVI_FUNC( t_6, STATE(CurrLVars) );
  t_7 = NewBag( T_BODY, sizeof(BodyHeader) );
- SET_STARTLINE_BODY(t_7, 859);
- SET_ENDLINE_BODY(t_7, 872);
+ SET_STARTLINE_BODY(t_7, 942);
+ SET_ENDLINE_BODY(t_7, 955);
  SET_FILENAME_BODY(t_7, FileName);
  SET_BODY_FUNC(t_6, t_7);
  CHANGED_BAG( STATE(CurrLVars) );
@@ -3284,11 +3602,11 @@ static Obj  HdlrFunc18 (
  
  /* re := false; */
  t_1 = False;
- ASS_LVAR_1UP( 4, t_1 );
+ ASS_HVAR( (1 << 16) | 4, t_1 );
  
  /* for i in [ 1 .. LEN_LIST( reqs ) ] do */
  t_6 = GF_LEN__LIST;
- t_7 = OBJ_LVAR_1UP( 2 );
+ t_7 = OBJ_HVAR( (1 << 16) | 2 );
  CHECK_BOUND( t_7, "reqs" )
  t_5 = CALL_1ARGS( t_6, t_7 );
  CHECK_FUNC_RESULT( t_5 )
@@ -3312,18 +3630,18 @@ static Obj  HdlrFunc18 (
    if ( CALL_1ARGS( GF_IS_DONE_ITER, t_1 ) != False )  break;
    t_2 = CALL_1ARGS( GF_NEXT_ITER, t_1 );
   }
-  ASS_LVAR_1UP( 5, t_2 );
+  ASS_HVAR( (1 << 16) | 5, t_2 );
   
   /* re := re or IsBound( cond[i] ) and not Tester( cond[i] )( arg[i] ) and cond[i]( arg[i] ) and Tester( cond[i] )( arg[i] ); */
-  t_7 = OBJ_LVAR_1UP( 4 );
+  t_7 = OBJ_HVAR( (1 << 16) | 4 );
   CHECK_BOUND( t_7, "re" )
   CHECK_BOOL( t_7 )
   t_6 = (Obj)(UInt)(t_7 != False);
   t_5 = (t_6 ? True : False);
   if ( t_5 == False ) {
-   t_12 = OBJ_LVAR_1UP( 3 );
+   t_12 = OBJ_HVAR( (1 << 16) | 3 );
    CHECK_BOUND( t_12, "cond" )
-   t_13 = OBJ_LVAR_1UP( 5 );
+   t_13 = OBJ_HVAR( (1 << 16) | 5 );
    CHECK_BOUND( t_13, "i" )
    CHECK_INT_POS( t_13 )
    t_11 = C_ISB_LIST( t_12, t_13 );
@@ -3331,16 +3649,16 @@ static Obj  HdlrFunc18 (
    t_9 = t_10;
    if ( t_9 ) {
     t_15 = GF_Tester;
-    t_17 = OBJ_LVAR_1UP( 3 );
+    t_17 = OBJ_HVAR( (1 << 16) | 3 );
     CHECK_BOUND( t_17, "cond" )
-    t_18 = OBJ_LVAR_1UP( 5 );
+    t_18 = OBJ_HVAR( (1 << 16) | 5 );
     CHECK_BOUND( t_18, "i" )
     CHECK_INT_POS( t_18 )
     C_ELM_LIST_FPL( t_16, t_17, t_18 )
     t_14 = CALL_1ARGS( t_15, t_16 );
     CHECK_FUNC_RESULT( t_14 )
     CHECK_FUNC( t_14 )
-    t_16 = OBJ_LVAR_1UP( 5 );
+    t_16 = OBJ_HVAR( (1 << 16) | 5 );
     CHECK_BOUND( t_16, "i" )
     CHECK_INT_POS( t_16 )
     C_ELM_LIST_FPL( t_15, a_arg, t_16 )
@@ -3353,14 +3671,14 @@ static Obj  HdlrFunc18 (
    }
    t_8 = t_9;
    if ( t_8 ) {
-    t_13 = OBJ_LVAR_1UP( 3 );
+    t_13 = OBJ_HVAR( (1 << 16) | 3 );
     CHECK_BOUND( t_13, "cond" )
-    t_14 = OBJ_LVAR_1UP( 5 );
+    t_14 = OBJ_HVAR( (1 << 16) | 5 );
     CHECK_BOUND( t_14, "i" )
     CHECK_INT_POS( t_14 )
     C_ELM_LIST_FPL( t_12, t_13, t_14 )
     CHECK_FUNC( t_12 )
-    t_14 = OBJ_LVAR_1UP( 5 );
+    t_14 = OBJ_HVAR( (1 << 16) | 5 );
     CHECK_BOUND( t_14, "i" )
     CHECK_INT_POS( t_14 )
     C_ELM_LIST_FPL( t_13, a_arg, t_14 )
@@ -3373,16 +3691,16 @@ static Obj  HdlrFunc18 (
    t_7 = t_8;
    if ( t_7 ) {
     t_12 = GF_Tester;
-    t_14 = OBJ_LVAR_1UP( 3 );
+    t_14 = OBJ_HVAR( (1 << 16) | 3 );
     CHECK_BOUND( t_14, "cond" )
-    t_15 = OBJ_LVAR_1UP( 5 );
+    t_15 = OBJ_HVAR( (1 << 16) | 5 );
     CHECK_BOUND( t_15, "i" )
     CHECK_INT_POS( t_15 )
     C_ELM_LIST_FPL( t_13, t_14, t_15 )
     t_11 = CALL_1ARGS( t_12, t_13 );
     CHECK_FUNC_RESULT( t_11 )
     CHECK_FUNC( t_11 )
-    t_13 = OBJ_LVAR_1UP( 5 );
+    t_13 = OBJ_HVAR( (1 << 16) | 5 );
     CHECK_BOUND( t_13, "i" )
     CHECK_INT_POS( t_13 )
     C_ELM_LIST_FPL( t_12, a_arg, t_13 )
@@ -3394,13 +3712,13 @@ static Obj  HdlrFunc18 (
    }
    t_5 = (t_7 ? True : False);
   }
-  ASS_LVAR_1UP( 4, t_5 );
+  ASS_HVAR( (1 << 16) | 4, t_5 );
   
  }
  /* od */
  
  /* if re then */
- t_2 = OBJ_LVAR_1UP( 4 );
+ t_2 = OBJ_HVAR( (1 << 16) | 4 );
  CHECK_BOUND( t_2, "re" )
  CHECK_BOOL( t_2 )
  t_1 = (Obj)(UInt)(t_2 != False);
@@ -3408,7 +3726,7 @@ static Obj  HdlrFunc18 (
   
   /* return CallFuncList( oper, arg ); */
   t_2 = GF_CallFuncList;
-  t_3 = OBJ_LVAR_1UP( 1 );
+  t_3 = OBJ_HVAR( (1 << 16) | 1 );
   CHECK_BOUND( t_3, "oper" )
   t_1 = CALL_2ARGS( t_2, t_3, a_arg );
   CHECK_FUNC_RESULT( t_1 )
@@ -3458,6 +3776,9 @@ static Obj  HdlrFunc17 (
  Obj t_6 = 0;
  Obj t_7 = 0;
  Obj t_8 = 0;
+ (void)l_info;
+ (void)l_fampred;
+ (void)l_val;
  Bag oldFrame;
  OLD_BRK_CURR_STAT
  
@@ -3604,8 +3925,8 @@ static Obj  HdlrFunc17 (
  t_4 = NewFunction( NameFunc[18], -1, 0, HdlrFunc18 );
  SET_ENVI_FUNC( t_4, STATE(CurrLVars) );
  t_5 = NewBag( T_BODY, sizeof(BodyHeader) );
- SET_STARTLINE_BODY(t_5, 938);
- SET_ENDLINE_BODY(t_5, 954);
+ SET_STARTLINE_BODY(t_5, 1021);
+ SET_ENDLINE_BODY(t_5, 1037);
  SET_FILENAME_BODY(t_5, FileName);
  SET_BODY_FUNC(t_4, t_5);
  CHANGED_BAG( STATE(CurrLVars) );
@@ -3640,6 +3961,9 @@ static Obj  HdlrFunc1 (
  REM_BRK_CURR_STAT();
  SET_BRK_CURR_STAT(0);
  
+ /* RUN_IMMEDIATE_METHODS_RUNS := 0; */
+ AssGVar( G_RUN__IMMEDIATE__METHODS__RUNS, INTOBJ_INT(0) );
+ 
  /* RUN_IMMEDIATE_METHODS_CHECKS := 0; */
  AssGVar( G_RUN__IMMEDIATE__METHODS__CHECKS, INTOBJ_INT(0) );
  
@@ -3647,7 +3971,7 @@ static Obj  HdlrFunc1 (
  AssGVar( G_RUN__IMMEDIATE__METHODS__HITS, INTOBJ_INT(0) );
  
  /* BIND_GLOBAL( "RunImmediateMethods", function ( obj, flags )
-      local flagspos, tried, type, j, imm, i, res, newflags;
+      local flagspos, tried, type, j, imm, i, meth, res, loc, newflags;
       if IGNORE_IMMEDIATE_METHODS then
           return;
       fi;
@@ -3659,20 +3983,25 @@ static Obj  HdlrFunc1 (
       tried := [  ];
       type := TYPE_OBJ( obj );
       flags := type![2];
+      RUN_IMMEDIATE_METHODS_RUNS := RUN_IMMEDIATE_METHODS_RUNS + 1;
+      if TRACE_IMMEDIATE_METHODS then
+          Print( "#I RunImmediateMethods\n" );
+      fi;
       for j in flagspos do
           if IsBound( IMMEDIATES[j] ) then
               imm := IMMEDIATES[j];
-              for i in [ 0, 7 .. LEN_LIST( imm ) - 7 ] do
+              for i in [ 0, SIZE_IMMEDIATE_METHOD_ENTRY .. LEN_LIST( imm ) - SIZE_IMMEDIATE_METHOD_ENTRY ] do
                   if IS_SUBSET_FLAGS( flags, imm[i + 4] ) and not IS_SUBSET_FLAGS( flags, imm[i + 3] ) and not imm[i + 6] in tried then
-                      res := IMMEDIATE_METHODS[imm[i + 6]]( obj );
+                      meth := IMMEDIATE_METHODS[imm[i + 6]];
+                      res := meth( obj );
                       ADD_LIST( tried, imm[i + 6] );
                       RUN_IMMEDIATE_METHODS_CHECKS := RUN_IMMEDIATE_METHODS_CHECKS + 1;
                       if TRACE_IMMEDIATE_METHODS then
-                          if imm[i + 7] = false then
-                              Print( "#I  immediate: ", NAME_FUNC( imm[i + 1] ), "\n" );
-                          else
-                              Print( "#I  immediate: ", NAME_FUNC( imm[i + 1] ), ": ", imm[i + 7], "\n" );
+                          Print( "#I  immediate: ", NAME_FUNC( imm[i + 1] ) );
+                          if imm[i + 7] <> false then
+                              Print( ": ", imm[i + 7] );
                           fi;
+                          Print( " at ", imm[i + 8][1], ":", imm[i + 8][2], "\n" );
                       fi;
                       if res <> TRY_NEXT_METHOD then
                           IGNORE_IMMEDIATE_METHODS := true;
@@ -3698,19 +4027,21 @@ static Obj  HdlrFunc1 (
  t_3 = NewFunction( NameFunc[2], 2, 0, HdlrFunc2 );
  SET_ENVI_FUNC( t_3, STATE(CurrLVars) );
  t_4 = NewBag( T_BODY, sizeof(BodyHeader) );
- SET_STARTLINE_BODY(t_4, 26);
- SET_ENDLINE_BODY(t_4, 117);
+ SET_STARTLINE_BODY(t_4, 27);
+ SET_ENDLINE_BODY(t_4, 126);
  SET_FILENAME_BODY(t_4, FileName);
  SET_BODY_FUNC(t_3, t_4);
  CHANGED_BAG( STATE(CurrLVars) );
  CALL_2ARGS( t_1, t_2, t_3 );
  
  /* BIND_GLOBAL( "INSTALL_METHOD_FLAGS", function ( opr, info, rel, flags, rank, method )
-      local methods, narg, i, k, tmp, replace, match, j;
+      local methods, narg, i, k, tmp, replace, match, j, lk;
+      ;
       if IS_CONSTRUCTOR( opr ) then
-          if 0 < LEN_LIST( flags ) then
-              rank := rank - RankFilter( flags[1] );
+          if 0 = LEN_LIST( flags ) then
+              Error( NAME_FUNC( opr ), ": constructors must have at least one argument" );
           fi;
+          rank := rank - RankFilter( flags[1] );
       else
           for i in flags do
               rank := rank + RankFilter( i );
@@ -3718,6 +4049,7 @@ static Obj  HdlrFunc1 (
       fi;
       narg := LEN_LIST( flags );
       methods := METHODS_OPERATION( opr, narg );
+      ;
       if info = false then
           info := NAME_FUNC( opr );
       else
@@ -3729,7 +4061,7 @@ static Obj  HdlrFunc1 (
       fi;
       i := 0;
       while i < LEN_LIST( methods ) and rank < methods[i + (narg + 3)] do
-          i := i + (narg + 4);
+          i := i + (narg + 5);
       od;
       replace := false;
       if REREADING then
@@ -3746,11 +4078,11 @@ static Obj  HdlrFunc1 (
                       break;
                   fi;
               fi;
-              k := k + narg + 4;
+              k := k + narg + 5;
           od;
       fi;
       if not REREADING or not replace then
-          methods{[ narg + 4 + i + 1 .. narg + 4 + LEN_LIST( methods ) ]} := methods{[ i + 1 .. LEN_LIST( methods ) ]};
+          methods{[ narg + 5 + i + 1 .. narg + 5 + LEN_LIST( methods ) ]} := methods{[ i + 1 .. LEN_LIST( methods ) ]};
       fi;
       if rel = true then
           methods[i + 1] := RETURN_TRUE;
@@ -3787,6 +4119,9 @@ static Obj  HdlrFunc1 (
       fi;
       methods[i + (narg + 3)] := rank;
       methods[i + (narg + 4)] := IMMUTABLE_COPY_OBJ( info );
+      if 5 >= 5 then
+          methods[i + (narg + 5)] := MakeImmutable( [ INPUT_FILENAME(  ), READEVALCOMMAND_LINENUMBER, INPUT_LINENUMBER(  ) ] );
+      fi;
       CHANGED_METHODS_OPERATION( opr, narg );
       return;
   end ); */
@@ -3795,8 +4130,8 @@ static Obj  HdlrFunc1 (
  t_3 = NewFunction( NameFunc[3], 6, 0, HdlrFunc3 );
  SET_ENVI_FUNC( t_3, STATE(CurrLVars) );
  t_4 = NewBag( T_BODY, sizeof(BodyHeader) );
- SET_STARTLINE_BODY(t_4, 124);
- SET_ENDLINE_BODY(t_4, 235);
+ SET_STARTLINE_BODY(t_4, 146);
+ SET_ENDLINE_BODY(t_4, 274);
  SET_FILENAME_BODY(t_4, FileName);
  SET_BODY_FUNC(t_3, t_4);
  CHANGED_BAG( STATE(CurrLVars) );
@@ -3811,8 +4146,8 @@ static Obj  HdlrFunc1 (
  t_3 = NewFunction( NameFunc[4], -1, 0, HdlrFunc4 );
  SET_ENVI_FUNC( t_3, STATE(CurrLVars) );
  t_4 = NewBag( T_BODY, sizeof(BodyHeader) );
- SET_STARTLINE_BODY(t_4, 282);
- SET_ENDLINE_BODY(t_4, 284);
+ SET_STARTLINE_BODY(t_4, 321);
+ SET_ENDLINE_BODY(t_4, 323);
  SET_FILENAME_BODY(t_4, FileName);
  SET_BODY_FUNC(t_3, t_4);
  CHANGED_BAG( STATE(CurrLVars) );
@@ -3827,8 +4162,8 @@ static Obj  HdlrFunc1 (
  t_3 = NewFunction( NameFunc[5], -1, 0, HdlrFunc5 );
  SET_ENVI_FUNC( t_3, STATE(CurrLVars) );
  t_4 = NewBag( T_BODY, sizeof(BodyHeader) );
- SET_STARTLINE_BODY(t_4, 309);
- SET_ENDLINE_BODY(t_4, 311);
+ SET_STARTLINE_BODY(t_4, 348);
+ SET_ENDLINE_BODY(t_4, 350);
  SET_FILENAME_BODY(t_4, FileName);
  SET_BODY_FUNC(t_3, t_4);
  CHANGED_BAG( STATE(CurrLVars) );
@@ -3843,7 +4178,8 @@ static Obj  HdlrFunc1 (
  AssGVar( G_INSTALL__METHOD, 0 );
  
  /* BIND_GLOBAL( "INSTALL_METHOD", function ( arglist, check )
-      local len, opr, info, pos, rel, filters, info1, isstr, flags, i, rank, method, oreqs, req, reqs, match, j, k, imp, notmatch;
+      local len, opr, info, pos, rel, filters, info1, isstr, flags, i, rank, method, oreqs, req, reqs, match, j, k, imp, notmatch, lk;
+      ;
       len := LEN_LIST( arglist );
       if len < 3 then
           Error( "too few arguments given in <arglist>" );
@@ -3852,7 +4188,7 @@ static Obj  HdlrFunc1 (
       if not IS_OPERATION( opr ) then
           Error( "<opr> is not an operation" );
       fi;
-      if IS_STRING_REP( arglist[2] ) then
+      if IS_STRING_REP( arglist[2] ) or arglist[2] = false then
           info := arglist[2];
           pos := 3;
       else
@@ -3924,7 +4260,11 @@ static Obj  HdlrFunc1 (
           fi;
           imp := [  ];
           for i in flags do
-              ADD_LIST( imp, WITH_HIDDEN_IMPS_FLAGS( i ) );
+              if not GAPInfo.CommandLineOptions.N then
+                  ADD_LIST( imp, WITH_HIDDEN_IMPS_FLAGS( i ) );
+              else
+                  ADD_LIST( imp, WITH_IMPS_FLAGS( i ) );
+              fi;
           od;
           j := 0;
           match := false;
@@ -3948,9 +4288,21 @@ static Obj  HdlrFunc1 (
           od;
           if not match then
               if notmatch = 0 then
-                  Error( "the number of arguments does not match a declaration of ", NAME_FUNC( opr ) );
+                  if not GAPInfo.CommandLineOptions.N then
+                      Error( "the number of arguments does not match a declaration of ", NAME_FUNC( opr ) );
+                  else
+                      Print( "InstallMethod warning:  nr of args does not ", "match a declaration of ", NAME_FUNC( opr ), "\n" );
+                  fi;
               else
-                  Error( "required filters ", NamesFilter( imp[notmatch] ), "\nfor ", Ordinal( notmatch ), " argument do not match a declaration of ", NAME_FUNC( opr ) );
+                  if not GAPInfo.CommandLineOptions.N then
+                      Error( "required filters ", NamesFilter( imp[notmatch] ), "\nfor ", Ordinal( notmatch ), " argument do not match a declaration of ", NAME_FUNC( opr ) );
+                  else
+                      Print( "InstallMethod warning: ", NAME_FUNC( opr ), "(\c", INPUT_FILENAME(  ), "\c +", INPUT_LINENUMBER(  ), ") \c", "required filters \c" );
+                      for j in NamesFilter( imp[notmatch] ) do
+                          Print( j, "/\c" );
+                      od;
+                      Print( " for ", Ordinal( notmatch ), " argument do not match \ca ", "declaration\n" );
+                  fi;
               fi;
           else
               oreqs := reqs;
@@ -3972,6 +4324,7 @@ static Obj  HdlrFunc1 (
           fi;
       fi;
       INSTALL_METHOD_FLAGS( opr, info, rel, flags, rank, method );
+      ;
       return;
   end ); */
  t_1 = GF_BIND__GLOBAL;
@@ -3979,36 +4332,37 @@ static Obj  HdlrFunc1 (
  t_3 = NewFunction( NameFunc[6], 2, 0, HdlrFunc6 );
  SET_ENVI_FUNC( t_3, STATE(CurrLVars) );
  t_4 = NewBag( T_BODY, sizeof(BodyHeader) );
- SET_STARTLINE_BODY(t_4, 322);
- SET_ENDLINE_BODY(t_4, 523);
+ SET_STARTLINE_BODY(t_4, 361);
+ SET_ENDLINE_BODY(t_4, 591);
  SET_FILENAME_BODY(t_4, FileName);
  SET_BODY_FUNC(t_3, t_4);
  CHANGED_BAG( STATE(CurrLVars) );
  CALL_2ARGS( t_1, t_2, t_3 );
  
- /* LENGTH_SETTER_METHODS_2 := LENGTH_SETTER_METHODS_2 + 6; */
+ /* LENGTH_SETTER_METHODS_2 := LENGTH_SETTER_METHODS_2 + (5 + 2); */
  t_2 = GC_LENGTH__SETTER__METHODS__2;
  CHECK_BOUND( t_2, "LENGTH_SETTER_METHODS_2" )
- C_SUM_FIA( t_1, t_2, INTOBJ_INT(6) )
+ C_SUM_INTOBJS( t_3, INTOBJ_INT(5), INTOBJ_INT(2) )
+ C_SUM_FIA( t_1, t_2, t_3 )
  AssGVar( G_LENGTH__SETTER__METHODS__2, t_1 );
  
  /* InstallAttributeFunction( function ( name, filter, getter, setter, tester, mutflag )
-      local flags, rank, cats, props, i;
+      local flags, rank, cats, props, i, lk;
       if not IS_IDENTICAL_OBJ( filter, IS_OBJECT ) then
           flags := FLAGS_FILTER( filter );
           rank := 0;
           cats := IS_OBJECT;
           props := [  ];
-          for i in [ 1 .. LEN_FLAGS( flags ) ] do
-              if ELM_FLAGS( flags, i ) then
-                  if i in CATS_AND_REPS then
-                      cats := cats and FILTERS[i];
-                      rank := rank - RankFilter( FILTERS[i] );
-                  elif i in NUMBERS_PROPERTY_GETTERS then
-                      ADD_LIST( props, FILTERS[i] );
-                  fi;
+          ;
+          for i in TRUES_FLAGS( flags ) do
+              if INFO_FILTERS[i] in FNUM_CATS_AND_REPS then
+                  cats := cats and FILTERS[i];
+                  rank := rank - RankFilter( FILTERS[i] );
+              elif INFO_FILTERS[i] in FNUM_PROS then
+                  ADD_LIST( props, FILTERS[i] );
               fi;
           od;
+          ;
           MakeImmutable( props );
           if 0 < LEN_LIST( props ) then
               InstallOtherMethod( getter, "default method requiring categories and checking properties", true, [ cats ], rank, function ( obj )
@@ -4037,8 +4391,8 @@ static Obj  HdlrFunc1 (
  t_2 = NewFunction( NameFunc[7], 6, 0, HdlrFunc7 );
  SET_ENVI_FUNC( t_2, STATE(CurrLVars) );
  t_3 = NewBag( T_BODY, sizeof(BodyHeader) );
- SET_STARTLINE_BODY(t_3, 542);
- SET_ENDLINE_BODY(t_3, 600);
+ SET_STARTLINE_BODY(t_3, 610);
+ SET_ENDLINE_BODY(t_3, 674);
  SET_FILENAME_BODY(t_3, FileName);
  SET_BODY_FUNC(t_2, t_3);
  CHANGED_BAG( STATE(CurrLVars) );
@@ -4052,8 +4406,8 @@ static Obj  HdlrFunc1 (
  t_2 = NewFunction( NameFunc[9], 6, 0, HdlrFunc9 );
  SET_ENVI_FUNC( t_2, STATE(CurrLVars) );
  t_3 = NewBag( T_BODY, sizeof(BodyHeader) );
- SET_STARTLINE_BODY(t_3, 603);
- SET_ENDLINE_BODY(t_3, 609);
+ SET_STARTLINE_BODY(t_3, 677);
+ SET_ENDLINE_BODY(t_3, 683);
  SET_FILENAME_BODY(t_3, FileName);
  SET_BODY_FUNC(t_2, t_3);
  CHANGED_BAG( STATE(CurrLVars) );
@@ -4081,8 +4435,8 @@ static Obj  HdlrFunc1 (
  t_3 = NewFunction( NameFunc[10], 2, 0, HdlrFunc10 );
  SET_ENVI_FUNC( t_3, STATE(CurrLVars) );
  t_4 = NewBag( T_BODY, sizeof(BodyHeader) );
- SET_STARTLINE_BODY(t_4, 622);
- SET_ENDLINE_BODY(t_4, 646);
+ SET_STARTLINE_BODY(t_4, 696);
+ SET_ENDLINE_BODY(t_4, 720);
  SET_FILENAME_BODY(t_4, FileName);
  SET_BODY_FUNC(t_3, t_4);
  CHANGED_BAG( STATE(CurrLVars) );
@@ -4093,7 +4447,7 @@ static Obj  HdlrFunc1 (
  AssGVar( G_IsPrimeInt, t_1 );
  
  /* BIND_GLOBAL( "KeyDependentOperation", function ( name, domreq, keyreq, keytest )
-      local str, oper, attr;
+      local str, oper, attr, lk;
       if keytest = "prime" then
           keytest := function ( key )
                 if not IsPrimeInt( key ) then
@@ -4115,7 +4469,9 @@ static Obj  HdlrFunc1 (
             return [  ];
         end );
       DeclareOperation( name, [ domreq, keyreq ] );
+      ;
       ADD_LIST( WRAPPER_OPERATIONS, VALUE_GLOBAL( name ) );
+      ;
       InstallOtherMethod( VALUE_GLOBAL( name ), "default method", true, [ domreq, keyreq ], 0, function ( D, key )
             local known, i, erg;
             keytest( key );
@@ -4164,8 +4520,8 @@ static Obj  HdlrFunc1 (
  t_3 = NewFunction( NameFunc[11], 4, 0, HdlrFunc11 );
  SET_ENVI_FUNC( t_3, STATE(CurrLVars) );
  t_4 = NewBag( T_BODY, sizeof(BodyHeader) );
- SET_STARTLINE_BODY(t_4, 771);
- SET_ENDLINE_BODY(t_4, 873);
+ SET_STARTLINE_BODY(t_4, 845);
+ SET_ENDLINE_BODY(t_4, 956);
  SET_FILENAME_BODY(t_4, FileName);
  SET_BODY_FUNC(t_3, t_4);
  CHANGED_BAG( STATE(CurrLVars) );
@@ -4216,8 +4572,8 @@ static Obj  HdlrFunc1 (
  t_3 = NewFunction( NameFunc[17], -1, 0, HdlrFunc17 );
  SET_ENVI_FUNC( t_3, STATE(CurrLVars) );
  t_4 = NewBag( T_BODY, sizeof(BodyHeader) );
- SET_STARTLINE_BODY(t_4, 908);
- SET_ENDLINE_BODY(t_4, 955);
+ SET_STARTLINE_BODY(t_4, 991);
+ SET_ENDLINE_BODY(t_4, 1038);
  SET_FILENAME_BODY(t_4, FileName);
  SET_BODY_FUNC(t_3, t_4);
  CHANGED_BAG( STATE(CurrLVars) );
@@ -4273,19 +4629,21 @@ static Int PostRestore ( StructInitInfo * module )
  G_IMMUTABLE__COPY__OBJ = GVarName( "IMMUTABLE_COPY_OBJ" );
  G_IS__IDENTICAL__OBJ = GVarName( "IS_IDENTICAL_OBJ" );
  G_MakeImmutable = GVarName( "MakeImmutable" );
+ G_INPUT__FILENAME = GVarName( "INPUT_FILENAME" );
+ G_INPUT__LINENUMBER = GVarName( "INPUT_LINENUMBER" );
  G_IS__OBJECT = GVarName( "IS_OBJECT" );
  G_TRY__NEXT__METHOD = GVarName( "TRY_NEXT_METHOD" );
  G_SUB__FLAGS = GVarName( "SUB_FLAGS" );
  G_WITH__HIDDEN__IMPS__FLAGS = GVarName( "WITH_HIDDEN_IMPS_FLAGS" );
+ G_WITH__IMPS__FLAGS = GVarName( "WITH_IMPS_FLAGS" );
  G_IS__SUBSET__FLAGS = GVarName( "IS_SUBSET_FLAGS" );
  G_TRUES__FLAGS = GVarName( "TRUES_FLAGS" );
- G_LEN__FLAGS = GVarName( "LEN_FLAGS" );
- G_ELM__FLAGS = GVarName( "ELM_FLAGS" );
  G_FLAG1__FILTER = GVarName( "FLAG1_FILTER" );
  G_FLAGS__FILTER = GVarName( "FLAGS_FILTER" );
  G_METHODS__OPERATION = GVarName( "METHODS_OPERATION" );
  G_CHANGED__METHODS__OPERATION = GVarName( "CHANGED_METHODS_OPERATION" );
  G_DO__NOTHING__SETTER = GVarName( "DO_NOTHING_SETTER" );
+ G_IS__CONSTRUCTOR = GVarName( "IS_CONSTRUCTOR" );
  G_QUO__INT = GVarName( "QUO_INT" );
  G_fail = GVarName( "fail" );
  G_RETURN__TRUE = GVarName( "RETURN_TRUE" );
@@ -4295,17 +4653,19 @@ static Int PostRestore ( StructInitInfo * module )
  G_CONV__STRING = GVarName( "CONV_STRING" );
  G_Print = GVarName( "Print" );
  G_ViewObj = GVarName( "ViewObj" );
+ G_RUN__IMMEDIATE__METHODS__RUNS = GVarName( "RUN_IMMEDIATE_METHODS_RUNS" );
  G_RUN__IMMEDIATE__METHODS__CHECKS = GVarName( "RUN_IMMEDIATE_METHODS_CHECKS" );
  G_RUN__IMMEDIATE__METHODS__HITS = GVarName( "RUN_IMMEDIATE_METHODS_HITS" );
  G_BIND__GLOBAL = GVarName( "BIND_GLOBAL" );
  G_IGNORE__IMMEDIATE__METHODS = GVarName( "IGNORE_IMMEDIATE_METHODS" );
  G_IMM__FLAGS = GVarName( "IMM_FLAGS" );
- G_IMMEDIATES = GVarName( "IMMEDIATES" );
- G_IMMEDIATE__METHODS = GVarName( "IMMEDIATE_METHODS" );
  G_TRACE__IMMEDIATE__METHODS = GVarName( "TRACE_IMMEDIATE_METHODS" );
- G_IS__CONSTRUCTOR = GVarName( "IS_CONSTRUCTOR" );
+ G_IMMEDIATES = GVarName( "IMMEDIATES" );
+ G_SIZE__IMMEDIATE__METHOD__ENTRY = GVarName( "SIZE_IMMEDIATE_METHOD_ENTRY" );
+ G_IMMEDIATE__METHODS = GVarName( "IMMEDIATE_METHODS" );
  G_RankFilter = GVarName( "RankFilter" );
  G_CHECK__INSTALL__METHOD = GVarName( "CHECK_INSTALL_METHOD" );
+ G_READEVALCOMMAND__LINENUMBER = GVarName( "READEVALCOMMAND_LINENUMBER" );
  G_INSTALL__METHOD = GVarName( "INSTALL_METHOD" );
  G_DeclareGlobalFunction = GVarName( "DeclareGlobalFunction" );
  G_EvalString = GVarName( "EvalString" );
@@ -4317,9 +4677,10 @@ static Int PostRestore ( StructInitInfo * module )
  G_INSTALL__METHOD__FLAGS = GVarName( "INSTALL_METHOD_FLAGS" );
  G_LENGTH__SETTER__METHODS__2 = GVarName( "LENGTH_SETTER_METHODS_2" );
  G_InstallAttributeFunction = GVarName( "InstallAttributeFunction" );
- G_CATS__AND__REPS = GVarName( "CATS_AND_REPS" );
+ G_INFO__FILTERS = GVarName( "INFO_FILTERS" );
+ G_FNUM__CATS__AND__REPS = GVarName( "FNUM_CATS_AND_REPS" );
  G_FILTERS = GVarName( "FILTERS" );
- G_NUMBERS__PROPERTY__GETTERS = GVarName( "NUMBERS_PROPERTY_GETTERS" );
+ G_FNUM__PROS = GVarName( "FNUM_PROS" );
  G_InstallOtherMethod = GVarName( "InstallOtherMethod" );
  G_Tester = GVarName( "Tester" );
  G_IsPrimeInt = GVarName( "IsPrimeInt" );
@@ -4332,6 +4693,8 @@ static Int PostRestore ( StructInitInfo * module )
  
  /* record names used in handlers */
  R_MaxNrArgsMethod = RNamName( "MaxNrArgsMethod" );
+ R_CommandLineOptions = RNamName( "CommandLineOptions" );
+ R_N = RNamName( "N" );
  
  /* information for the functions */
  NameFunc[1] = 0;
@@ -4382,19 +4745,21 @@ static Int InitKernel ( StructInitInfo * module )
  InitFopyGVar( "IMMUTABLE_COPY_OBJ", &GF_IMMUTABLE__COPY__OBJ );
  InitFopyGVar( "IS_IDENTICAL_OBJ", &GF_IS__IDENTICAL__OBJ );
  InitFopyGVar( "MakeImmutable", &GF_MakeImmutable );
+ InitFopyGVar( "INPUT_FILENAME", &GF_INPUT__FILENAME );
+ InitFopyGVar( "INPUT_LINENUMBER", &GF_INPUT__LINENUMBER );
  InitCopyGVar( "IS_OBJECT", &GC_IS__OBJECT );
  InitCopyGVar( "TRY_NEXT_METHOD", &GC_TRY__NEXT__METHOD );
  InitFopyGVar( "SUB_FLAGS", &GF_SUB__FLAGS );
  InitFopyGVar( "WITH_HIDDEN_IMPS_FLAGS", &GF_WITH__HIDDEN__IMPS__FLAGS );
+ InitFopyGVar( "WITH_IMPS_FLAGS", &GF_WITH__IMPS__FLAGS );
  InitFopyGVar( "IS_SUBSET_FLAGS", &GF_IS__SUBSET__FLAGS );
  InitFopyGVar( "TRUES_FLAGS", &GF_TRUES__FLAGS );
- InitFopyGVar( "LEN_FLAGS", &GF_LEN__FLAGS );
- InitFopyGVar( "ELM_FLAGS", &GF_ELM__FLAGS );
  InitFopyGVar( "FLAG1_FILTER", &GF_FLAG1__FILTER );
  InitFopyGVar( "FLAGS_FILTER", &GF_FLAGS__FILTER );
  InitFopyGVar( "METHODS_OPERATION", &GF_METHODS__OPERATION );
  InitFopyGVar( "CHANGED_METHODS_OPERATION", &GF_CHANGED__METHODS__OPERATION );
  InitCopyGVar( "DO_NOTHING_SETTER", &GC_DO__NOTHING__SETTER );
+ InitFopyGVar( "IS_CONSTRUCTOR", &GF_IS__CONSTRUCTOR );
  InitFopyGVar( "QUO_INT", &GF_QUO__INT );
  InitCopyGVar( "fail", &GC_fail );
  InitCopyGVar( "RETURN_TRUE", &GC_RETURN__TRUE );
@@ -4404,17 +4769,19 @@ static Int InitKernel ( StructInitInfo * module )
  InitFopyGVar( "CONV_STRING", &GF_CONV__STRING );
  InitFopyGVar( "Print", &GF_Print );
  InitCopyGVar( "ViewObj", &GC_ViewObj );
+ InitCopyGVar( "RUN_IMMEDIATE_METHODS_RUNS", &GC_RUN__IMMEDIATE__METHODS__RUNS );
  InitCopyGVar( "RUN_IMMEDIATE_METHODS_CHECKS", &GC_RUN__IMMEDIATE__METHODS__CHECKS );
  InitCopyGVar( "RUN_IMMEDIATE_METHODS_HITS", &GC_RUN__IMMEDIATE__METHODS__HITS );
  InitFopyGVar( "BIND_GLOBAL", &GF_BIND__GLOBAL );
  InitCopyGVar( "IGNORE_IMMEDIATE_METHODS", &GC_IGNORE__IMMEDIATE__METHODS );
  InitCopyGVar( "IMM_FLAGS", &GC_IMM__FLAGS );
- InitCopyGVar( "IMMEDIATES", &GC_IMMEDIATES );
- InitCopyGVar( "IMMEDIATE_METHODS", &GC_IMMEDIATE__METHODS );
  InitCopyGVar( "TRACE_IMMEDIATE_METHODS", &GC_TRACE__IMMEDIATE__METHODS );
- InitFopyGVar( "IS_CONSTRUCTOR", &GF_IS__CONSTRUCTOR );
+ InitCopyGVar( "IMMEDIATES", &GC_IMMEDIATES );
+ InitCopyGVar( "SIZE_IMMEDIATE_METHOD_ENTRY", &GC_SIZE__IMMEDIATE__METHOD__ENTRY );
+ InitCopyGVar( "IMMEDIATE_METHODS", &GC_IMMEDIATE__METHODS );
  InitFopyGVar( "RankFilter", &GF_RankFilter );
  InitCopyGVar( "CHECK_INSTALL_METHOD", &GC_CHECK__INSTALL__METHOD );
+ InitCopyGVar( "READEVALCOMMAND_LINENUMBER", &GC_READEVALCOMMAND__LINENUMBER );
  InitFopyGVar( "INSTALL_METHOD", &GF_INSTALL__METHOD );
  InitFopyGVar( "DeclareGlobalFunction", &GF_DeclareGlobalFunction );
  InitFopyGVar( "EvalString", &GF_EvalString );
@@ -4426,9 +4793,10 @@ static Int InitKernel ( StructInitInfo * module )
  InitFopyGVar( "INSTALL_METHOD_FLAGS", &GF_INSTALL__METHOD__FLAGS );
  InitCopyGVar( "LENGTH_SETTER_METHODS_2", &GC_LENGTH__SETTER__METHODS__2 );
  InitFopyGVar( "InstallAttributeFunction", &GF_InstallAttributeFunction );
- InitCopyGVar( "CATS_AND_REPS", &GC_CATS__AND__REPS );
+ InitCopyGVar( "INFO_FILTERS", &GC_INFO__FILTERS );
+ InitCopyGVar( "FNUM_CATS_AND_REPS", &GC_FNUM__CATS__AND__REPS );
  InitCopyGVar( "FILTERS", &GC_FILTERS );
- InitCopyGVar( "NUMBERS_PROPERTY_GETTERS", &GC_NUMBERS__PROPERTY__GETTERS );
+ InitCopyGVar( "FNUM_PROS", &GC_FNUM__PROS );
  InitFopyGVar( "InstallOtherMethod", &GF_InstallOtherMethod );
  InitFopyGVar( "Tester", &GF_Tester );
  InitFopyGVar( "IsPrimeInt", &GF_IsPrimeInt );
@@ -4512,7 +4880,7 @@ static Int InitLibrary ( StructInitInfo * module )
 static StructInitInfo module = {
  .type        = MODULE_STATIC,
  .name        = "GAPROOT/lib/oper1.g",
- .crc         = -80821248,
+ .crc         = 32938550,
  .initKernel  = InitKernel,
  .initLibrary = InitLibrary,
  .postRestore = PostRestore,

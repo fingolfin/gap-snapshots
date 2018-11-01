@@ -730,6 +730,8 @@
     [4X[28X6[128X[104X
     [4X[25Xgap>[125X [27XAsList(c);[127X[104X
     [4X[28X[ (2,3,4), (1,4,2), (1,3,4,2), (1,3)(2,4), (2,4), (1,4,2,3) ][128X[104X
+    [4X[25Xgap>[125X [27XIsBiCoset(c);[127X[104X
+    [4X[28Xfalse[128X[104X
   [4X[32X[104X
   
   [1X39.7-2 RightCosets[101X
@@ -778,7 +780,15 @@
   [22XUg^{-1}[122X  calculations with left cosets can be emulated using right cosets by
   inverting the representatives.[133X
   
-  [1X39.7-5 CosetDecomposition[101X
+  [1X39.7-5 IsBiCoset[101X
+  
+  [33X[1;0Y[29X[2XIsBiCoset[102X( [3XC[103X ) [32X property[133X
+  
+  [33X[0;0YA  (right)  coset  [22XUg[122X  is  considered  a  [13Xbicoset[113X  if  its  set  of elements
+  simultaneously forms a left coset for the same subgroup. This is the case if
+  and only if the coset representative [22Xg[122X normalizes the subgroup [22XU[122X.[133X
+  
+  [1X39.7-6 CosetDecomposition[101X
   
   [33X[1;0Y[29X[2XCosetDecomposition[102X( [3XG[103X, [3XS[103X ) [32X function[133X
   
@@ -1169,11 +1179,23 @@
   [33X[1;0Y[29X[2XPCore[102X( [3XG[103X, [3Xp[103X ) [32X operation[133X
   
   [33X[0;0YThe  [13X[3Xp[103X-core[113X  of [3XG[103X is the largest normal [3Xp[103X-subgroup of [3XG[103X. It is the core of a
-  Sylow [3Xp[103X subgroup of [3XG[103X, see [2XCore[102X ([14X39.11-2[114X).[133X
+  Sylow [3Xp[103X-subgroup of [3XG[103X, see [2XCore[102X ([14X39.11-2[114X).[133X
   
   [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg:=QuaternionGroup(12);;[127X[104X
+    [4X[25Xgap>[125X [27XPCore(g,2);[127X[104X
+    [4X[28XGroup([ y3 ])[128X[104X
+    [4X[25Xgap>[125X [27XPCore(g,2) = Core(g,SylowSubgroup(g,2));[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XPCore(g,3);[127X[104X
+    [4X[28XGroup([ y*y3 ])[128X[104X
+    [4X[25Xgap>[125X [27XPCore(g,5);[127X[104X
+    [4X[28XGroup([  ])[128X[104X
+    [4X[25Xgap>[125X [27Xg:=SymmetricGroup(4);;[127X[104X
     [4X[25Xgap>[125X [27XPCore(g,2);[127X[104X
     [4X[28XGroup([ (1,4)(2,3), (1,2)(3,4) ])[128X[104X
+    [4X[25Xgap>[125X [27XPCore(g,2) = Core(g,SylowSubgroup(g,2));[127X[104X
+    [4X[28Xtrue[128X[104X
   [4X[32X[104X
   
   [1X39.11-4 NormalClosure[101X
@@ -1388,9 +1410,18 @@
   
   [33X[1;0Y[29X[2XPRump[102X( [3XG[103X, [3Xp[103X ) [32X operation[133X
   
-  [33X[0;0YFor a prime [22Xp[122X, the [13X[3Xp[103X-rump[113X of a group [3XG[103X is the subgroup [22X[3XG[103X' [3XG[103X^[3Xp[103X[122X.[133X
+  [33X[0;0YFor  a  prime  [22Xp[122X,  the [13X[3Xp[103X-rump[113X of a group [3XG[103X is the subgroup [22X[3XG[103X' [3XG[103X^[3Xp[103X[122X. Unless it
+  equals [3XG[103X itself (which is the e.g. the case if [3XG[103X is perfect), it is equal to
+  the second term of the [3Xp[103X-central series of [3XG[103X, see [2XPCentralSeries[102X ([14X39.17-13[114X).[133X
   
-  [33X[0;0Y[13X@example missing!@[113X[133X
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg:=QuaternionGroup(12);;[127X[104X
+    [4X[25Xgap>[125X [27XPRump(g,2) = PCentralSeries(g,2)[2];[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xg:=SymmetricGroup(4);;[127X[104X
+    [4X[25Xgap>[125X [27XPRump(g,2) = AlternatingGroup(4);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
   
   
   [1X39.13 [33X[0;0YSylow Subgroups and Hall Subgroups[133X[101X
@@ -1413,7 +1444,7 @@
   
   [33X[1;0Y[29X[2XSylowSubgroup[102X( [3XG[103X, [3Xp[103X ) [32X operation[133X
   
-  [33X[0;0Yreturns  a Sylow [3Xp[103X subgroup of the finite group [3XG[103X. This is a [3Xp[103X-subgroup of [3XG[103X
+  [33X[0;0Yreturns  a Sylow [3Xp[103X-subgroup of the finite group [3XG[103X. This is a [3Xp[103X-subgroup of [3XG[103X
   whose index in [3XG[103X is coprime to [3Xp[103X. [2XSylowSubgroup[102X computes Sylow subgroups via
   the operation [10XSylowSubgroupOp[110X.[133X
   
@@ -1683,9 +1714,13 @@
   [33X[1;0Y[29X[2XIsomorphismTypeInfoFiniteSimpleGroup[102X( [3Xn[103X ) [32X attribute[133X
   
   [33X[0;0YFor  a finite simple group [3XG[103X, [2XIsomorphismTypeInfoFiniteSimpleGroup[102X returns a
-  record  with  the components [10Xseries[110X, [10Xname[110X and possibly [10Xparameter[110X, describing
-  the isomorphism type of [3XG[103X. The component [10Xname[110X is a string that gives name(s)
-  for [3XG[103X, and [10Xseries[110X is a string that describes the following series.[133X
+  record  with the components [10Xname[110X, [10Xshortname[110X, [10Xseries[110X, and possibly [10Xparameter[110X,
+  describing the isomorphism type of [3XG[103X.[133X
+  
+  [33X[0;0YThe  values  of the components [10Xname[110X, [10Xshortname[110X, and [10Xseries[110X are strings, [10Xname[110X
+  gives  name(s) for [3XG[103X, [10Xshortname[110X gives one name for [3XG[103X that is compatible with
+  the  naming scheme used in the [5XGAP[105X packages [5XCTblLib[105X and [5XAtlasRep[105X (and in the
+  [5XAtlas[105X of Finite Groups [CCN+85]), and [10Xseries[110X describes the following series.[133X
   
   [33X[0;0Y(If  different  characterizations  of  [3XG[103X  are  possible only one is given by
   [10Xseries[110X and [10Xparameter[110X, while [10Xname[110X may give several names.)[133X
@@ -1761,7 +1796,8 @@
     [4X[25X>[125X [27X                            Group((4,5)(6,7),(1,2,4)(3,5,6)));[127X[104X
     [4X[28Xrec( [128X[104X
     [4X[28X  name := "A(1,7) = L(2,7) ~ B(1,7) = O(3,7) ~ C(1,7) = S(2,7) ~ 2A(1,\[128X[104X
-    [4X[28X7) = U(2,7) ~ A(2,2) = L(3,2)", parameter := [ 2, 7 ], series := "L" )[128X[104X
+    [4X[28X7) = U(2,7) ~ A(2,2) = L(3,2)", parameter := [ 2, 7 ], series := "L", [128X[104X
+    [4X[28X  shortname := "L3(2)" )[128X[104X
   [4X[32X[104X
   
   [33X[0;0YFor  a positive integer [3Xn[103X, [2XIsomorphismTypeInfoFiniteSimpleGroup[102X returns [9Xfail[109X
@@ -1772,8 +1808,9 @@
   order.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27XIsomorphismTypeInfoFiniteSimpleGroup( 5 );    [127X[104X
-    [4X[28Xrec( name := "Z(5)", parameter := 5, series := "Z" )[128X[104X
+    [4X[25Xgap>[125X [27XIsomorphismTypeInfoFiniteSimpleGroup( 5 );[127X[104X
+    [4X[28Xrec( name := "Z(5)", parameter := 5, series := "Z", shortname := "C5" [128X[104X
+    [4X[28X )[128X[104X
     [4X[25Xgap>[125X [27XIsomorphismTypeInfoFiniteSimpleGroup( 6 );[127X[104X
     [4X[28Xfail[128X[104X
     [4X[25Xgap>[125X [27XIsomorphismTypeInfoFiniteSimpleGroup(Size(SymplecticGroup(6,3))/2);[127X[104X
@@ -1898,9 +1935,15 @@
   
   [33X[1;0Y[29X[2XIsPGroup[102X( [3XG[103X ) [32X property[133X
   
-  [33X[0;0YA  [13X[22Xp[122X-group[113X  is a finite group whose order (see [2XSize[102X ([14X30.4-6[114X)) is of the form
-  [22Xp^n[122X for a prime integer [22Xp[122X and a nonnegative integer [22Xn[122X. [2XIsPGroup[102X returns [9Xtrue[109X
-  if [3XG[103X is a [22Xp[122X-group, and [9Xfalse[109X otherwise.[133X
+  [33X[0;0YA  [13X[22Xp[122X-group[113X  is  a  group  in which the order (see [2XOrder[102X ([14X31.10-10[114X)) of every
+  element  is  of the form [22Xp^n[122X for a prime integer [22Xp[122X and a nonnegative integer
+  [22Xn[122X. [2XIsPGroup[102X returns [9Xtrue[109X if [3XG[103X is a [22Xp[122X-group, and [9Xfalse[109X otherwise.[133X
+  
+  [33X[0;0YFinite  [22Xp[122X-groups  are precisely those groups whose order (see [2XSize[102X ([14X30.4-6[114X))
+  is a prime power, and are always nilpotent.[133X
+  
+  [33X[0;0YNote  that  [22Xp[122X-groups  can  also  be  infinite, and in that case, need not be
+  nilpotent.[133X
   
   [1X39.15-20 IsPowerfulPGroup[101X
   
@@ -2220,6 +2263,15 @@
   [33X[0;0YThe  [3Xp[103X-central  series  of  [3XG[103X  is  defined  by  [22XU_1:=  [3XG[103X[122X, [22XU_i:= [[3XG[103X, U_{i-1}]
   U_{i-1}^[3Xp[103X[122X.[133X
   
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg:=QuaternionGroup(12);;[127X[104X
+    [4X[25Xgap>[125X [27XPCentralSeries(g,2);[127X[104X
+    [4X[28X[ <pc group of size 12 with 3 generators>, Group([ y3, y*y3 ]), Group([ y*y3 ]) ][128X[104X
+    [4X[25Xgap>[125X [27Xg:=SymmetricGroup(4);;[127X[104X
+    [4X[25Xgap>[125X [27XPCentralSeries(g,2);[127X[104X
+    [4X[28X[ Sym( [ 1 .. 4 ] ), Group([ (1,2,3), (2,3,4) ]) ][128X[104X
+  [4X[32X[104X
+  
   [1X39.17-14 JenningsSeries[101X
   
   [33X[1;0Y[29X[2XJenningsSeries[102X( [3XG[103X ) [32X attribute[133X
@@ -2517,8 +2569,8 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xg:=SymmetricGroup(4);;NormalSubgroups(g);[127X[104X
-    [4X[28X[ Sym( [ 1 .. 4 ] ), Group([ (2,4,3), (1,4)(2,3), (1,3)(2,4) ]), [128X[104X
-    [4X[28X  Group([ (1,4)(2,3), (1,3)(2,4) ]), Group(()) ][128X[104X
+    [4X[28X[ Sym( [ 1 .. 4 ] ), Alt( [ 1 .. 4 ] ), Group([ (1,4)(2,3), (1,3)[128X[104X
+    [4X[28X  (2,4) ]), Group(()) ][128X[104X
   [4X[32X[104X
   
   [33X[0;0YThe  algorithm  for  the  computation  of  normal  subgroups is described in
@@ -2697,7 +2749,8 @@
   which this function returns true (also for their intermediate overgroups) is
   returned.  If  also  a  function  [3Xdosub[103X is given, maximal subgroups are only
   attempted  if  this function returns true (this is separated for performance
-  reasons).[133X
+  reasons).  In  the  example below, the result would be the same with leaving
+  out the fourth function, but calculation this way is slightly faster.[133X
   
   [1X39.20-7 ContainedConjugates[101X
   
@@ -2728,7 +2781,20 @@
     [4X[28X[ [ Group([ (1,3,5,7), (3,5), (1,4)(2,7)(3,6)(5,8) ]), (2,3,5,4)(7,8) ] ][128X[104X
   [4X[32X[104X
   
-  [1X39.20-9 RepresentativesPerfectSubgroups[101X
+  [1X39.20-9 MinimalFaithfulPermutationDegree[101X
+  
+  [33X[1;0Y[29X[2XMinimalFaithfulPermutationDegree[102X( [3XG[103X ) [32X function[133X
+  
+  [33X[0;0YFor  a  finite  group [3XG[103X this operation calculates the least positive integer
+  [22Xn=μ(G)[122X  such  that  [3XG[103X  is isomorphic to a subgroup of the symmetric group of
+  degree [22Xn[122X. This can require calculating the whole subgroup lattice.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XMinimalFaithfulPermutationDegree(SmallGroup(96,3));[127X[104X
+    [4X[28X12[128X[104X
+  [4X[32X[104X
+  
+  [1X39.20-10 RepresentativesPerfectSubgroups[101X
   
   [33X[1;0Y[29X[2XRepresentativesPerfectSubgroups[102X( [3XG[103X ) [32X attribute[133X
   [33X[1;0Y[29X[2XRepresentativesSimpleSubgroups[102X( [3XG[103X ) [32X attribute[133X
@@ -2748,12 +2814,12 @@
     [4X[28X[ "A5", "A5", "A6", "PSL(2,11)", "M11", "1" ][128X[104X
   [4X[32X[104X
   
-  [1X39.20-10 ConjugacyClassesPerfectSubgroups[101X
+  [1X39.20-11 ConjugacyClassesPerfectSubgroups[101X
   
   [33X[1;0Y[29X[2XConjugacyClassesPerfectSubgroups[102X( [3XG[103X ) [32X attribute[133X
   
   [33X[0;0Yreturns  a  list  of  the  conjugacy classes of perfect subgroups of [3XG[103X. (see
-  [2XRepresentativesPerfectSubgroups[102X ([14X39.20-9[114X).)[133X
+  [2XRepresentativesPerfectSubgroups[102X ([14X39.20-10[114X).)[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xr := ConjugacyClassesPerfectSubgroups(m11);;[127X[104X
@@ -2763,7 +2829,7 @@
     [4X[28X[ 1, 1, 11, 12, 66, 132 ][128X[104X
   [4X[32X[104X
   
-  [1X39.20-11 Zuppos[101X
+  [1X39.20-12 Zuppos[101X
   
   [33X[1;0Y[29X[2XZuppos[102X( [3XG[103X ) [32X attribute[133X
   
@@ -2773,7 +2839,7 @@
   subgroups of a group [3XG[103X. That is all elements of [3XG[103X of prime power order up to
   the equivalence that they generate the same cyclic subgroup.[133X
   
-  [1X39.20-12 InfoLattice[101X
+  [1X39.20-13 InfoLattice[101X
   
   [33X[1;0Y[29X[2XInfoLattice[102X[32X info class[133X
   
@@ -2857,9 +2923,17 @@
   subgroups  of  a  solvable  group  [3XG[103X,  using  the homomorphism principle. It
   returns a list of representatives up to [3XG[103X-conjugacy.[133X
   
-  [33X[0;0YThe optional argument [3Xopt[103X is a record, which may be used to put restrictions
-  on  the  subgroups  computed.  The  following  record  components of [3Xopt[103X are
-  recognized and have the following effects:[133X
+  [33X[0;0YThe  optional  argument  [3Xopt[103X  is  a  record,  which  may  be used to suggest
+  restrictions  on  the subgroups computed. The following record components of
+  [3Xopt[103X  are  recognized  and  have  the following effects. Note that all of the
+  following restrictions to subgroups with particular properties are only used
+  to  speed  up  the calculation, but the result might still contain subgroups
+  (that had to be computed in any case) that do not satisfy the properties. If
+  this  is  not  desired, the calculation must be followed by an explicit test
+  for  the  desired properties (which is not done by default, as it would be a
+  general  slowdown).  The  function  guarantees  that  representatives of all
+  subgroups  that  satisfy  the  properties  are found, i.e. there can be only
+  false positives.[133X
   
   [8X[10Xactions[110X[8X[108X
         [33X[0;6Ymust  be a list of automorphisms of [3XG[103X. If given, only groups which are
@@ -3510,4 +3584,29 @@
   [33X[0;0YThis  property can be used for example to check whether a group homomorphism
   by images (see [2XGroupHomomorphismByImages[102X ([14X40.1-1[114X)) can be reasonably defined
   from this group.[133X
+  
+  
+  [1X39.26 [33X[0;0YSpecific functions for Normalizer calculation[133X[101X
+  
+  [1X39.26-1 NormalizerViaRadical[101X
+  
+  [33X[1;0Y[29X[2XNormalizerViaRadical[102X( [3XG[103X, [3XS[103X ) [32X function[133X
+  
+  [33X[0;0YThis    function   implements   a   particular   approach,   following   the
+  SolvableRadical  paradigm, for calculating the normalizer of a subgroup [3XS[103X in
+  [3XG[103X.  It  is  at  the  moment provided only as a separate function, and not as
+  method  for  the  operation [10XNormalizer[110X, as it can often be slower than other
+  built-in   routines.   In  certain  hard  cases  (non-solvable  groups  with
+  nontrivial  radical), however its performance is substantially superior. The
+  function thus is provided as a non-automated tool for advanced users.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xg:=TransitiveGroup(30,2030);;[127X[104X
+    [4X[25Xgap>[125X [27Xs:=SylowSubgroup(g,5);;[127X[104X
+    [4X[25Xgap>[125X [27XSize(NormalizerViaRadical(g,s));[127X[104X
+    [4X[28X28800[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YNote  that  this  example  only demonstrates usage, but that in this case in
+  fact the ordinary [10XNormalizer[110X routine performs faster.[133X
   

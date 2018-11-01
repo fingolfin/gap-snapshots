@@ -1002,14 +1002,16 @@
   known state as in the following example.[133X
   
   [4X[32X  Example  [32X[104X
-    [4X[25Xgap>[125X [27Xseed := State(GlobalMersenneTwister);;[127X[104X
+    [4X[25Xgap>[125X [27Xseed := Reset(GlobalMersenneTwister);;[127X[104X
+    [4X[25Xgap>[125X [27Xseed = State(GlobalMersenneTwister);[127X[104X
+    [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27XList([1..10],i->Random(Integers));[127X[104X
-    [4X[28X[ 2, -1, -2, -1, -1, 1, -4, 1, 0, -1 ][128X[104X
+    [4X[28X[ -3, 2, -1, -2, -1, -1, 1, -4, 1, 0 ][128X[104X
     [4X[25Xgap>[125X [27XList([1..10],i->Random(Integers));[127X[104X
-    [4X[28X[ -1, -1, 1, -1, 1, -2, -1, -2, 0, -1 ][128X[104X
+    [4X[28X[ -1, -1, -1, 1, -1, 1, -2, -1, -2, 0 ][128X[104X
     [4X[25Xgap>[125X [27XReset(GlobalMersenneTwister, seed);;[127X[104X
     [4X[25Xgap>[125X [27XList([1..10],i->Random(Integers));[127X[104X
-    [4X[28X[ 2, -1, -2, -1, -1, 1, -4, 1, 0, -1 ][128X[104X
+    [4X[28X[ -3, 2, -1, -2, -1, -1, 1, -4, 1, 0 ][128X[104X
   [4X[32X[104X
   
   [1X14.7-4 IsMersenneTwister[101X

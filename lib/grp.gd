@@ -215,6 +215,7 @@ InstallTrueMethod( IsCommutative, IsGroup and IsElementaryAbelian );
 ##  <#/GAPDoc>
 ##
 DeclareProperty( "IsFinitelyGeneratedGroup", IsGroup );
+InstallTrueMethod( IsGroup, IsFinitelyGeneratedGroup );
 
 InstallFactorMaintenance( IsFinitelyGeneratedGroup,
     IsGroup and IsFinitelyGeneratedGroup, IsObject, IsGroup );
@@ -253,9 +254,10 @@ InstallSubsetMaintenance( IsSubsetLocallyFiniteGroup,
 
 #############################################################################
 ##
-#M  IsSubsetLocallyFiniteGroup( <G> ) . . . . . . . . . .  for magmas of FFEs
+#M  IsSubsetLocallyFiniteGroup( <G> ) . . .  for magmas with inverses of FFEs
 ##
-InstallTrueMethod( IsSubsetLocallyFiniteGroup, IsFFECollection and IsMagma );
+InstallTrueMethod( IsSubsetLocallyFiniteGroup,
+    IsFFECollection and IsMagmaWithInverses );
 
 
 #############################################################################
@@ -415,16 +417,24 @@ DeclareOperation( "KnowsHowToDecompose", [ IsGroup, IsList ] );
 ##
 ##  <Description>
 ##  <Index Key="p-group"><M>p</M>-group</Index>
-##  A <E><M>p</M>-group</E> is a finite group whose order
-##  (see&nbsp;<Ref Func="Size"/>) is of the form <M>p^n</M> for a prime
-##  integer <M>p</M> and a nonnegative integer <M>n</M>.
+##  A <E><M>p</M>-group</E> is a group in which the order
+##  (see&nbsp;<Ref Func="Order"/>) of every element is of the form <M>p^n</M>
+##  for a prime integer <M>p</M> and a nonnegative integer <M>n</M>.
 ##  <Ref Prop="IsPGroup"/> returns <K>true</K> if <A>G</A> is a
 ##  <M>p</M>-group, and <K>false</K> otherwise.
+##  <P/>
+##  Finite <M>p</M>-groups are precisely those groups whose order
+##  (see&nbsp;<Ref Func="Size"/>) is a prime power, and are always
+##  nilpotent.
+##  <P/>
+##  Note that <M>p</M>-groups can also be infinite, and in that case,
+##  need not be nilpotent.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
 DeclareProperty( "IsPGroup", IsGroup );
+InstallTrueMethod( IsGroup, IsPGroup );
 
 InstallSubsetMaintenance( IsPGroup,
     IsGroup and IsPGroup, IsGroup );
@@ -460,6 +470,7 @@ InstallTrueMethod( IsPGroup, IsGroup and IsElementaryAbelian );
 ##  <#/GAPDoc>
 ##
 DeclareProperty( "IsPowerfulPGroup", IsGroup );
+InstallTrueMethod( IsPGroup, IsPowerfulPGroup );
 
 #Quotients of powerful of powerful p groups are powerful
 InstallFactorMaintenance( IsPowerfulPGroup,
@@ -559,6 +570,7 @@ DeclareAttribute( "RankPGroup", IsPGroup );
 ##  <#/GAPDoc>
 ##
 DeclareProperty( "IsNilpotentGroup", IsGroup );
+InstallTrueMethod( IsGroup, IsNilpotentGroup );
 
 InstallSubsetMaintenance( IsNilpotentGroup,
     IsGroup and IsNilpotentGroup, IsGroup );
@@ -569,7 +581,6 @@ InstallFactorMaintenance( IsNilpotentGroup,
 InstallTrueMethod( IsNilpotentGroup, IsGroup and IsCommutative );
 
 InstallTrueMethod( IsNilpotentGroup, IsGroup and IsPGroup and IsFinite );
-
 
 #############################################################################
 ##
@@ -587,10 +598,12 @@ InstallTrueMethod( IsNilpotentGroup, IsGroup and IsPGroup and IsFinite );
 ##  <#/GAPDoc>
 ##
 DeclareProperty( "IsPerfectGroup", IsGroup );
+InstallTrueMethod( IsGroup, IsPerfectGroup );
 
 InstallFactorMaintenance( IsPerfectGroup,
     IsGroup and IsPerfectGroup, IsObject, IsGroup );
 
+InstallTrueMethod( IsPerfectGroup, IsGroup and IsTrivial );
 
 #############################################################################
 ##
@@ -616,10 +629,10 @@ InstallFactorMaintenance( IsPerfectGroup,
 ##  </ManSection>
 ##
 DeclareProperty( "IsSporadicSimpleGroup", IsGroup );
+InstallTrueMethod( IsGroup, IsSporadicSimpleGroup );
 
 InstallIsomorphismMaintenance( IsSporadicSimpleGroup,
     IsGroup and IsSporadicSimpleGroup, IsGroup );
-
 
 #############################################################################
 ##
@@ -637,12 +650,12 @@ InstallIsomorphismMaintenance( IsSporadicSimpleGroup,
 ##  <#/GAPDoc>
 ##
 DeclareProperty( "IsSimpleGroup", IsGroup );
+InstallTrueMethod( IsGroup, IsSimpleGroup );
 
 InstallIsomorphismMaintenance( IsSimpleGroup,
     IsGroup and IsSimpleGroup, IsGroup );
 
-InstallTrueMethod( IsSimpleGroup, IsGroup and IsSporadicSimpleGroup );
-
+InstallTrueMethod( IsSimpleGroup, IsSporadicSimpleGroup );
 
 #############################################################################
 ##
@@ -695,6 +708,10 @@ InstallTrueMethod( IsSimpleGroup, IsGroup and IsSporadicSimpleGroup );
 ##  <#/GAPDoc>
 ##
 DeclareProperty( "IsAlmostSimpleGroup", IsGroup );
+InstallTrueMethod( IsGroup, IsAlmostSimpleGroup );
+
+# a simple group is almost simple
+InstallTrueMethod( IsAlmostSimpleGroup, IsSimpleGroup );
 
 
 #############################################################################
@@ -713,6 +730,7 @@ DeclareProperty( "IsAlmostSimpleGroup", IsGroup );
 ##  <#/GAPDoc>
 ##
 DeclareProperty( "IsSupersolvableGroup", IsGroup );
+InstallTrueMethod( IsGroup, IsSupersolvableGroup );
 
 InstallSubsetMaintenance( IsSupersolvableGroup,
     IsGroup and IsSupersolvableGroup, IsGroup );
@@ -739,6 +757,7 @@ InstallTrueMethod( IsSupersolvableGroup, IsNilpotentGroup );
 ##  <#/GAPDoc>
 ##
 DeclareProperty( "IsMonomialGroup", IsGroup );
+InstallTrueMethod( IsGroup, IsMonomialGroup );
 
 InstallFactorMaintenance( IsMonomialGroup,
     IsGroup and IsMonomialGroup, IsObject, IsGroup );
@@ -768,6 +787,7 @@ InstallTrueMethod( IsMonomialGroup, IsSupersolvableGroup and IsFinite );
 ##  <#/GAPDoc>
 ##
 DeclareProperty( "IsSolvableGroup", IsGroup );
+InstallTrueMethod( IsGroup, IsSolvableGroup );
 
 InstallSubsetMaintenance( IsSolvableGroup,
     IsGroup and IsSolvableGroup, IsGroup );
@@ -781,6 +801,8 @@ InstallFactorMaintenance( IsSolvableGroup,
 ##  we need the direct implication from supersolvability to solvability.
 InstallTrueMethod( IsSolvableGroup, IsMonomialGroup );
 InstallTrueMethod( IsSolvableGroup, IsSupersolvableGroup );
+
+InstallTrueMethod( HasIsPerfectGroup, IsGroup and IsSolvableGroup and IsNonTrivial );
 
 
 #############################################################################
@@ -800,6 +822,7 @@ InstallTrueMethod( IsSolvableGroup, IsSupersolvableGroup );
 ##  <#/GAPDoc>
 ##
 DeclareProperty( "IsPolycyclicGroup", IsGroup );
+InstallTrueMethod( IsGroup, IsPolycyclicGroup );
 InstallTrueMethod( IsSolvableGroup, IsPolycyclicGroup );
 InstallTrueMethod( IsPolycyclicGroup, IsSolvableGroup and IsFinite );
 InstallTrueMethod( IsPolycyclicGroup, 
@@ -838,6 +861,10 @@ InstallTrueMethod( IsPolycyclicGroup,
 ##
 DeclareAttribute( "AbelianInvariants", IsGroup );
 
+# minimal number of generators for abelianization. Used internally to check
+# whether it is worth to attempt to reduce generator number
+DeclareAttribute( "AbelianRank", IsGroup );
+
 #############################################################################
 ##
 #A  IsInfiniteAbelianizationGroup( <G> )
@@ -856,7 +883,12 @@ DeclareAttribute( "AbelianInvariants", IsGroup );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareAttribute( "IsInfiniteAbelianizationGroup", IsGroup );
+DeclareProperty( "IsInfiniteAbelianizationGroup", IsGroup );
+
+# finite groups never have infinite abelianization
+InstallTrueMethod( HasIsInfiniteAbelianizationGroup, IsGroup and IsFinite );
+
+#InstallTrueMethod( IsInfiniteAbelianizationGroup, IsSolvableGroup and IsTorsionFree );
 
 
 #############################################################################
@@ -1196,7 +1228,9 @@ DeclareAttribute("TryMaximalSubgroupClassReps",IsGroup,"mutable");
 # utility function in maximal subgroups code
 DeclareGlobalFunction("TryMaxSubgroupTainter");
 DeclareGlobalFunction("DoMaxesTF");
-DeclareGlobalFunction("MaxesAlmostSimple");
+
+# make this an operation to allow for overloading and TryNextMethod();
+DeclareOperation("MaxesAlmostSimple",[IsGroup]);
 
 #############################################################################
 ##
@@ -1843,8 +1877,8 @@ DeclareAttribute( "MinimalNormalSubgroups", IsGroup );
 ##  returns a list of all normal subgroups of <A>G</A>.
 ##  <Example><![CDATA[
 ##  gap> g:=SymmetricGroup(4);;NormalSubgroups(g);
-##  [ Sym( [ 1 .. 4 ] ), Group([ (2,4,3), (1,4)(2,3), (1,3)(2,4) ]), 
-##    Group([ (1,4)(2,3), (1,3)(2,4) ]), Group(()) ]
+##  [ Sym( [ 1 .. 4 ] ), Alt( [ 1 .. 4 ] ), Group([ (1,4)(2,3), (1,3)
+##    (2,4) ]), Group(()) ]
 ##  ]]></Example>
 ##  <P/>
 ##  The algorithm for the computation of normal subgroups is described in
@@ -3194,6 +3228,14 @@ DeclareOperation("CentralizerModulo", [IsGroup,IsGroup,IsObject]);
 ##  The <A>p</A>-central series of <A>G</A> is defined by
 ##  <M>U_1:= <A>G</A></M>,
 ##  <M>U_i:= [<A>G</A>, U_{{i-1}}] U_{{i-1}}^{<A>p</A>}</M>.
+##  <Example><![CDATA[
+##  gap> g:=QuaternionGroup(12);;
+##  gap> PCentralSeries(g,2);
+##  [ <pc group of size 12 with 3 generators>, Group([ y3, y*y3 ]), Group([ y*y3 ]) ]
+##  gap> g:=SymmetricGroup(4);;
+##  gap> PCentralSeries(g,2);
+##  [ Sym( [ 1 .. 4 ] ), Group([ (1,2,3), (2,3,4) ]) ]
+##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -3210,10 +3252,20 @@ KeyDependentOperation( "PCentralSeries", IsGroup, IsPosInt, "prime" );
 ##  <Oper Name="PRump" Arg='G, p'/>
 ##
 ##  <Description>
-##  For a prime <M>p</M>, the <E><A>p</A>-rump</E> of a group <A>G</A> is
-##  the subgroup <M><A>G</A>' <A>G</A>^{<A>p</A>}</M>.
+##  For a prime <M>p</M>, the <E><A>p</A>-rump</E> of a group <A>G</A> is the
+##  subgroup <M><A>G</A>' <A>G</A>^{<A>p</A>}</M>. Unless it equals <A>G</A>
+##  itself (which is the e.g. the case if <A>G</A> is perfect), it is equal
+##  to the second term of the <A>p</A>-central series of <A>G</A>, see
+##  <Ref Func="PCentralSeries"/>.
 ##  <P/>
-##  <E>@example missing!@</E>
+##  <Example><![CDATA[
+##  gap> g:=QuaternionGroup(12);;
+##  gap> PRump(g,2) = PCentralSeries(g,2)[2];
+##  true
+##  gap> g:=SymmetricGroup(4);;
+##  gap> PRump(g,2) = AlternatingGroup(4);
+##  true
+##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -3233,11 +3285,23 @@ KeyDependentOperation( "PRump", IsGroup, IsPosInt, "prime" );
 ##  <Index Key="Op(G)" Subkey="see PCore"><M>O_p(G)</M></Index>
 ##  The <E><A>p</A>-core</E> of <A>G</A> is the largest normal
 ##  <A>p</A>-subgroup of <A>G</A>.
-##  It is the core of a Sylow <A>p</A> subgroup of <A>G</A>,
+##  It is the core of a Sylow <A>p</A>-subgroup of <A>G</A>,
 ##  see <Ref Func="Core"/>.
 ##  <Example><![CDATA[
+##  gap> g:=QuaternionGroup(12);;
+##  gap> PCore(g,2);
+##  Group([ y3 ])
+##  gap> PCore(g,2) = Core(g,SylowSubgroup(g,2));
+##  true
+##  gap> PCore(g,3);
+##  Group([ y*y3 ])
+##  gap> PCore(g,5);
+##  Group([  ])
+##  gap> g:=SymmetricGroup(4);;
 ##  gap> PCore(g,2);
 ##  Group([ (1,4)(2,3), (1,2)(3,4) ])
+##  gap> PCore(g,2) = Core(g,SylowSubgroup(g,2));
+##  true
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -3281,7 +3345,7 @@ InParentFOA( "SubnormalSeries", IsGroup, IsGroup, DeclareAttribute );
 ##  <Oper Name="SylowSubgroup" Arg='G, p'/>
 ##
 ##  <Description>
-##  returns a Sylow <A>p</A> subgroup of the finite group <A>G</A>.
+##  returns a Sylow <A>p</A>-subgroup of the finite group <A>G</A>.
 ##  This is a <A>p</A>-subgroup of <A>G</A> whose index in <A>G</A> is
 ##  coprime to <A>p</A>.
 ##  <Ref Oper="SylowSubgroup"/> computes Sylow subgroups via the operation
@@ -3533,7 +3597,7 @@ DeclareOperation( "GrowthFunctionOfGroup",
 ##
 DeclareOperation( "GroupByGenerators", [ IsCollection ] );
 DeclareOperation( "GroupByGenerators",
-    [ IsCollection, IsMultiplicativeElementWithInverse ] );
+    [ IsListOrCollection, IsMultiplicativeElementWithInverse ] );
 
 
 #############################################################################
@@ -3557,7 +3621,13 @@ DeclareOperation( "GroupByGenerators",
 ##
 DeclareOperation( "GroupWithGenerators", [ IsCollection ] );
 DeclareOperation( "GroupWithGenerators",
-    [ IsCollection, IsMultiplicativeElementWithInverse ] );
+    [ IsListOrCollection, IsMultiplicativeElementWithInverse ] );
+
+
+#F  MakeGroupyType( <fam>, <filt>, <gens>, <isgroup> )
+# type creator function to incorporate basic deductions so immediate methods
+# are not needed
+DeclareGlobalFunction("MakeGroupyType");
 
 
 #############################################################################
@@ -3821,11 +3891,18 @@ DeclareOperation( "IntermediateSubgroups", [IsGroup, IsGroup] );
 ##  <Description>
 ##  For a finite simple group <A>G</A>,
 ##  <Ref Func="IsomorphismTypeInfoFiniteSimpleGroup" Label="for a group"/>
-##  returns a record with the components <C>series</C>, <C>name</C>
-##  and possibly <C>parameter</C>,
+##  returns a record with the components <C>name</C>, <C>shortname</C>,
+##  <C>series</C>, and possibly <C>parameter</C>,
 ##  describing the isomorphism type of <A>G</A>.
-##  The component <C>name</C> is a string that gives name(s) for <A>G</A>,
-##  and <C>series</C> is a string that describes the following series.
+##  <P/>
+##  The values of the components <C>name</C>, <C>shortname</C>,
+##  and <C>series</C> are strings,
+##  <C>name</C> gives name(s) for <A>G</A>,
+##  <C>shortname</C> gives one name for <A>G</A> that is compatible with the
+##  naming scheme used in the &GAP; packages <Package>CTblLib</Package> and
+##  <Package>AtlasRep</Package>
+##  (and in the &ATLAS; of Finite Groups&nbsp;<Cite Key="CCN85"/>),
+##  and <C>series</C> describes the following series.
 ##  <P/>
 ##  (If different characterizations of <A>G</A> are possible
 ##  only one is given by <C>series</C> and <C>parameter</C>,
@@ -3932,7 +4009,8 @@ DeclareOperation( "IntermediateSubgroups", [IsGroup, IsGroup] );
 ##  >                             Group((4,5)(6,7),(1,2,4)(3,5,6)));
 ##  rec( 
 ##    name := "A(1,7) = L(2,7) ~ B(1,7) = O(3,7) ~ C(1,7) = S(2,7) ~ 2A(1,\
-##  7) = U(2,7) ~ A(2,2) = L(3,2)", parameter := [ 2, 7 ], series := "L" )
+##  7) = U(2,7) ~ A(2,2) = L(3,2)", parameter := [ 2, 7 ], series := "L", 
+##    shortname := "L3(2)" )
 ##  ]]></Example>
 ##  <P/>
 ##  For a positive integer <A>n</A>,
@@ -3945,8 +4023,9 @@ DeclareOperation( "IntermediateSubgroups", [IsGroup, IsGroup] );
 ##  two possible isomorphism types of simple groups of this order.
 ##  <P/>
 ##  <Example><![CDATA[
-##  gap> IsomorphismTypeInfoFiniteSimpleGroup( 5 );    
-##  rec( name := "Z(5)", parameter := 5, series := "Z" )
+##  gap> IsomorphismTypeInfoFiniteSimpleGroup( 5 );
+##  rec( name := "Z(5)", parameter := 5, series := "Z", shortname := "C5" 
+##   )
 ##  gap> IsomorphismTypeInfoFiniteSimpleGroup( 6 );
 ##  fail
 ##  gap> IsomorphismTypeInfoFiniteSimpleGroup(Size(SymplecticGroup(6,3))/2);
@@ -4165,12 +4244,14 @@ DeclareAttribute( "IsomorphismFpGroup", IsGroup );
 ##  <Example><![CDATA[
 ##  gap> SetInfoLevel( InfoFpGroup, 1 );
 ##  gap> iso := IsomorphismFpGroupByGenerators( g, [ (1,2), (1,2,3,4,5) ] );
-##  #I  the image group has 2 gens and 5 rels of total length 39
+##  #I  the image group has 2 gens and 4 rels of total length 50
 ##  [ (1,2), (1,2,3,4,5) ] -> [ F1, F2 ]
 ##  gap> fp := Image( iso );
 ##  <fp group of size 120 on the generators [ F1, F2 ]>
 ##  gap> RelatorsOfFpGroup( fp );
-##  [ F1^2, F2^5, (F2^-1*F1)^4, (F1*F2^-1*F1*F2)^3, (F1*F2^2*F1*F2^-2)^2 ]
+##  [ F1^2, (F2*F1*F2^-2*F1)^3, 
+##    F2*F1*F2^-1*(F1*F2)^2*F2^2*(F1*F2^-1)^2*F2^-1*F1, 
+##    (F2*F1*F2^-1*F1)^2*F2^-1*F1*F2^2*F1*F2^-2*F1*F2*F1 ]
 ##  ]]></Example>
 ##  <P/>
 ##  The main task of the function
@@ -4197,9 +4278,9 @@ DeclareAttribute( "IsomorphismFpGroup", IsGroup );
 ##    (1,12)(2,11)(3,6)(4,8)(5,9)(7,10) ])
 ##  gap> gens := GeneratorsOfGroup( M12 );;
 ##  gap> iso := IsomorphismFpGroupByGenerators( M12, gens );;
-##  #I  the image group has 3 gens and 20 rels of total length 464
+##  #I  the image group has 3 gens and 20 rels of total length 554
 ##  gap> iso := IsomorphismFpGroupByGenerators( M12, gens );;
-##  #I  the image group has 3 gens and 19 rels of total length 491
+##  #I  the image group has 3 gens and 19 rels of total length 427
 ##  ]]></Example>
 ##  <P/>
 ##  Also in the case of a permutation group <A>G</A>, the function
@@ -4248,7 +4329,7 @@ DeclareAttribute( "IsomorphismFpGroup", IsGroup );
 ##  #I  the image group has 3 gens and 11 rels of total length 92
 ##  gap> iso := IsomorphismFpGroupByGenerators( M12, gens : 
 ##  >                                           method := "fast" );;
-##  #I  the image group has 3 gens and 179 rels of total length 4099
+##  #I  the image group has 3 gens and 136 rels of total length 3215
 ##  ]]></Example>
 ##  <P/>
 ##  Though the option <C>method := "regular"</C> is only checked in the case
@@ -4270,7 +4351,7 @@ DeclareAttribute( "IsomorphismFpGroup", IsGroup );
 ##    [ [ 0, 1, 0, 0, 0 ], [ 0, 0, 1, 0, 0 ], [ 0, 0, 0, 1, 0 ], 
 ##        [ 1, 0, 0, 0, 0 ], [ 0, 0, 0, 0, 1 ] ] ]
 ##  gap> iso := IsomorphismFpGroupByGenerators( G, gens );;
-##  #I  the image group has 2 gens and 9 rels of total length 94
+##  #I  the image group has 2 gens and 10 rels of total length 126
 ##  gap> iso := IsomorphismFpGroupByGenerators( G, gens : 
 ##  >                                           method := "regular");;
 ##  #I  the image group has 2 gens and 6 rels of total length 56
@@ -4282,15 +4363,7 @@ DeclareAttribute( "IsomorphismFpGroup", IsGroup );
 ##  , 0, 0, 0, 1 ] ] ]->[ F1, F2 ]>
 ##  gap> ConstituentsCompositionMapping(iso);
 ##  [ <action isomorphism>, 
-##    [ (2,3,5,9,16,29)(4,7,13,24,19,32)(6,11,20,34,40,57)(8,15,28,46,42,
-##          59)(10,18,25,41,49,67)(12,22,37,53,48,66)(14,26,31)(17,30,35,
-##          50,58,38)(21,36,33)(23,39,56)(27,44,61,72,43,60)(45,62,51,68,
-##          54,70)(47,64,73)(52,69)(55,71,75,78,77,76)(65,74), 
-##        (1,2,4,8)(3,6,12,23)(5,10,19,33)(7,14,27,45)(9,17,18,31)(11,21,
-##          16,28)(13,25,42,57)(20,35,51,67)(22,38,55,70)(24,40,26,43)(29,
-##          37,54,39)(30,47,65,68)(32,48)(34,49,36,52)(41,58,56,61)(44,50,
-##          53,64)(46,63,69,59)(60,66,75,79)(62,73,72,77)(71,76,80,74) 
-##       ] -> [ F1, F2 ] ]
+##    [ (2,3,4)(5,6)(8,9,10), (1,2,3,5)(6,7,8,9) ] -> [ F1, F2 ] ]
 ##  ]]></Example>
 ##  <P/>
 ##  Since &GAP; cannot decompose elements of a matrix group into generators,
@@ -4517,6 +4590,38 @@ DeclareGlobalFunction("GroupEnumeratorByClosure");
 ##
 DeclareOperation( "LowIndexSubgroups",
     [ IsGroup, IsPosInt ] );
+
+#############################################################################
+##
+#F  NormalizerViaRadical(<G>,<S>)
+##
+##  <#GAPDoc Label="NormalizerViaRadical">
+##  <ManSection>
+##  <Func Name="NormalizerViaRadical" Arg='G,S'/>
+##
+##  <Description>
+##  This function implements a particular approach, following the
+##  SolvableRadical paradigm, for calculating the
+##  normalizer of a subgroup <A>S</A> in <A>G</A>. It is at the moment
+##  provided only as a separate function, and not as method for the operation
+##  <C>Normalizer</C>, as it can often be slower than other built-in routines.
+##  In certain hard cases (non-solvable groups with nontrivial radical), however
+##  its performance is substantially superior.
+##  The function thus is provided as a
+##  non-automated tool for advanced users.
+##  <Example><![CDATA[
+##  gap> g:=TransitiveGroup(30,2030);;
+##  gap> s:=SylowSubgroup(g,5);;
+##  gap> Size(NormalizerViaRadical(g,s));
+##  28800
+##  ]]></Example>
+##  Note that this example only demonstrates usage, but that in this case
+##  in fact the ordinary <C>Normalizer</C> routine performs faster.
+##  </Description>
+##  </ManSection>
+##  <#/GAPDoc>
+##
+DeclareGlobalFunction("NormalizerViaRadical");
 
 #############################################################################
 ##

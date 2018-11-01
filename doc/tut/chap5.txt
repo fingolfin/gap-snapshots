@@ -3,7 +3,7 @@
   
   [33X[0;0YIn  this  chapter  we  will show some computations with groups. The examples
   deal  mostly with permutation groups, because they are the easiest to input.
-  The   functions   mentioned  here,  like  [2XGroup[102X  ([14XReference:  Groups[114X),  [2XSize[102X
+  The  functions mentioned here, like [2XGroup[102X ([14XReference: Group Libraries[114X), [2XSize[102X
   ([14XReference:  Size[114X) or [2XSylowSubgroup[102X ([14XReference: SylowSubgroup[114X), however, are
   the  same for all kinds of groups, although the algorithms which compute the
   information of course will be different in most cases.[133X
@@ -168,7 +168,8 @@
     [4X[28Xtrue[128X[104X
     [4X[28Xrec( [128X[104X
     [4X[28X  name := "A(1,7) = L(2,7) ~ B(1,7) = O(3,7) ~ C(1,7) = S(2,7) ~ 2A(1,\[128X[104X
-    [4X[28X7) = U(2,7) ~ A(2,2) = L(3,2)", parameter := [ 2, 7 ], series := "L" )[128X[104X
+    [4X[28X7) = U(2,7) ~ A(2,2) = L(3,2)", parameter := [ 2, 7 ], series := "L", [128X[104X
+    [4X[28X  shortname := "L3(2)" )[128X[104X
     [4X[25Xgap>[125X [27XSetName( f, "L_3(2)" );[127X[104X
   [4X[32X[104X
   
@@ -726,10 +727,10 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xblocks := Blocks( a8, orb );; Length( blocks );[127X[104X
     [4X[28X15[128X[104X
-    [4X[25Xgap>[125X [27Xblocks[1];[127X[104X
-    [4X[28X[ (1,2)(3,4)(5,6)(7,8), (1,3)(2,4)(5,8)(6,7), (1,4)(2,3)(5,7)(6,8), [128X[104X
-    [4X[28X  (1,5)(2,6)(3,8)(4,7), (1,6)(2,5)(3,7)(4,8), (1,7)(2,8)(3,6)(4,5), [128X[104X
-    [4X[28X  (1,8)(2,7)(3,5)(4,6) ][128X[104X
+    [4X[25Xgap>[125X [27XSet(blocks[1]);[127X[104X
+    [4X[28X[ (1,2)(3,4)(5,6)(7,8), (1,3)(2,4)(5,7)(6,8), (1,4)(2,3)(5,8)(6,7),[128X[104X
+    [4X[28X  (1,5)(2,6)(3,7)(4,8), (1,6)(2,5)(3,8)(4,7), (1,7)(2,8)(3,5)(4,6),[128X[104X
+    [4X[28X  (1,8)(2,7)(3,6)(4,5) ][128X[104X
   [4X[32X[104X
   
   [33X[0;0YTo  find  the  subgroup  of  index 15 we again use closure. Now we must be a
@@ -752,7 +753,7 @@
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xrep := RepresentativeAction( a8, (1,2)(3,4)(5,6)(7,8),[127X[104X
     [4X[25X>[125X [27X                                       (1,3)(2,4)(5,8)(6,7) );[127X[104X
-    [4X[28X(2,3)(6,8)[128X[104X
+    [4X[28X(1,5,7,2,8,4,3)[128X[104X
     [4X[25Xgap>[125X [27Xu15 := ClosureGroup( u105, rep );; Index( a8, u15 );[127X[104X
     [4X[28X15[128X[104X
   [4X[32X[104X
@@ -1025,8 +1026,8 @@
     [4X[25Xgap>[125X [27Xniceaut := NiceObject( aut );[127X[104X
     [4X[28XGroup([ (1,4,2,3), (1,5,4)(2,6,3), (1,2)(3,4), (3,4)(5,6) ])[128X[104X
     [4X[25Xgap>[125X [27XIsomorphismGroups( niceaut, SymmetricGroup( 4 ) );[127X[104X
-    [4X[28X[ (1,4,2,3), (1,5,4)(2,6,3), (1,2)(3,4), (3,4)(5,6) ] -> [128X[104X
-    [4X[28X[ (1,4,3,2), (1,4,2), (1,3)(2,4), (1,4)(2,3) ][128X[104X
+    [4X[28X[ (1,4,2,3), (1,5,4)(2,6,3), (1,2)(3,4), (3,4)(5,6) ] ->[128X[104X
+    [4X[28X[ (1,4,2,3), (1,2,3), (1,2)(3,4), (1,3)(2,4) ][128X[104X
   [4X[32X[104X
   
   [33X[0;0YThe  range  of  a  nice  monomorphism  is in most cases a permutation group,

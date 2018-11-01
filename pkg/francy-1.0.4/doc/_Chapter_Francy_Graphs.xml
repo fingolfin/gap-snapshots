@@ -1,0 +1,869 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Francy_Graphs">
+<Heading>Francy Graphs</Heading>
+
+It is possible to build <C>Graphs</C>, direct or indirect.
+<P/>
+Please see examples section.
+<P/>
+Please see Francy-JS for client implementation.
+<Section Label="Chapter_Francy_Graphs_Section_Categories">
+<Heading>Categories</Heading>
+
+In this section we show the Francy Graph Categories.
+<ManSection>
+  <Filt Arg="arg" Name="IsFrancyGraph" Label="for IsFrancyObject"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Identifies <C>Graph</C> objects.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsFrancyGraphType" Label="for IsFrancyObject"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Identifies <C>GraphType</C> objects.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsFrancyGraphDefaults" Label="for IsFrancyDefaultObject"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Identifies <C>GraphDefaults</C> objects.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsShape" Label="for IsFrancyObject"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Identifies <C>Shape</C> objects.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsShapeType" Label="for IsFrancyObject"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Identifies <C>ShapeType</C> objects.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsShapeDefaults" Label="for IsFrancyDefaultObject"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Identifies <C>ShapeDefaults</C> objects.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsLink" Label="for IsFrancyObject"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Identifies <C>Link</C> objects.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsLinkDefaults" Label="for IsFrancyDefaultObject"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Identifies <C>LinkDefaults</C> objects.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Francy_Graphs_Section_Families">
+<Heading>Families</Heading>
+
+In this section we show the Francy Graph Families.
+</Section>
+
+
+<Section Label="Chapter_Francy_Graphs_Section_Representations">
+<Heading>Representations</Heading>
+
+In this section we show the Francy Graph Representations.
+<ManSection>
+  <Filt Arg="arg" Name="IsFrancyGraphRep" Label="for IsComponentObjectRep"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Checks whether an <C>Object</C> has a <C>Graph</C> internal representation.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsFrancyGraphDefaultsRep" Label="for IsComponentObjectRep"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Checks whether an <C>Object</C> has a <C>GraphDefaults</C> internal representation.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsFrancyGraphTypeRep" Label="for IsComponentObjectRep"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Checks whether an <C>Object</C> has a <C>GraphType</C> internal representation.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsShapeRep" Label="for IsComponentObjectRep"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Checks whether an <C>Object</C> has a <C>Shape</C> internal representation.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsShapeDefaultsRep" Label="for IsComponentObjectRep"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Checks whether an <C>Object</C> has a <C>ShapeDeafults</C> internal representation.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsShapeTypeRep" Label="for IsComponentObjectRep"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Checks whether an <C>Object</C> has a <C>ShapeType</C> internal representation.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsLinkRep" Label="for IsComponentObjectRep"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Checks whether an <C>Object</C> has a <C>Link</C> internal representation.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Filt Arg="arg" Name="IsLinkDefaultsRep" Label="for IsComponentObjectRep"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Checks whether an <C>Object</C> has a <C>LinkDeafults</C> internal representation.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Francy_Graphs_Section_Operations">
+<Heading>Operations</Heading>
+
+In this section we show the Francy Graph Operations.
+<ManSection>
+  <Oper Arg="IsFrancyGraphType[, IsFrancyGraphDefaults]" Name="Graph" Label="for IsFrancyGraphType, IsFrancyGraphDefaults"/>
+ <Returns><C>Graph</C>
+</Returns>
+ <Description>
+Every object to draw will be a subclass of this object. This will allow
+all the objects to contain the same base information.
+<P/>
+Examples:
+<P/>
+Create a simple <C>Graph</C> of type <C>GraphType.DIRECTED</C> and simple <C>Shapes</C> connected with <C>Links</C>:
+<Example><![CDATA[
+gap> graph := Graph(GraphType.DIRECTED);
+gap> SetSimulation(graph, false);
+gap> shape1 := Shape(ShapeType.SQUARE);
+gap> shape1!.layer := 1;
+gap> shape2 := Shape(ShapeType.TRIANGLE);
+gap> shape2!.layer := 3;
+gap> link := Link(shape1, shape2);
+gap> Add(graph, link);
+gap> Add(graph, [shape1, shape2]);
+]]></Example>
+
+
+
+<P/>
+Create a simple <C>Graph</C> of type <C>GraphType.UNDIRECTED</C> and a simple <C>Shape</C> with a <C>TriggerEvent.RIGHT_CLICK</C> <C>Callback</C>:
+<Example><![CDATA[
+gap> graph := Graph(GraphType.UNDIRECTED);
+gap> shape := Shape(ShapeType.SQUARE);
+gap> MyFunction := function() Add(graph, Shape(ShapeType.Circle)); return graph; end;
+gap> callback := Callback(TriggerType.RIGHT_CLICK, MyFunction);
+gap> Add(shape, callback);
+gap> Add(graph, shape);
+]]></Example>
+
+
+
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="arg" Name="UnsetNodes" Label="for IsFrancyGraph"/>
+ <Description>
+Removes all nodes from gaph
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="arg" Name="UnsetLinks" Label="for IsFrancyGraph"/>
+ <Description>
+Removes all nodes from gaph
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="IsFrancyGraph, [IsLink, List(IsLink)]" Name="Add" Label="for IsFrancyGraph, IsLink"/>
+ <Returns><C>Graph</C>
+</Returns>
+ <Description>
+Add <C>IsLink</C> to a specific <C>Graph</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="IsFrancyGraph, [IsLink, List(IsLink)]" Name="Remove" Label="for IsFrancyGraph, IsLink"/>
+ <Returns><C>Graph</C>
+</Returns>
+ <Description>
+Remove <C>IsLink</C> from a specific <C>Graph</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="IsFrancyGraph, [IsShape, List(IsShape)]" Name="Add" Label="for IsFrancyGraph, IsShape"/>
+ <Returns><C>Graph</C>
+</Returns>
+ <Description>
+Add <C>IsShape</C> to a specific <C>Graph</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="IsFrancyGraph, [IsShape, List(IsShape)]" Name="Remove" Label="for IsFrancyGraph, IsShape"/>
+ <Returns><C>Graph</C>
+</Returns>
+ <Description>
+Remove <C>IsShape</C> from a specific <C>Graph</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="IsShapeType[, IsString(title), IsShapeDefaults]" Name="Shape" Label="for IsShapeType, IsString, IsShapeDefaults"/>
+ <Returns><C>Shape</C>
+</Returns>
+ <Description>
+Every object to draw will be a subclass of this object. This will allow
+all the objects to contain the same base information.
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="IsFrancyGraph, IsString" Name="GetShape" Label="for IsFrancyGraph, IsString"/>
+ <Returns><C>Shape</C>
+</Returns>
+ <Description>
+Gets a <C>Shape</C> node from a graph by ID.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="IsFrancyGraph, IsString" Name="GetShapes" Label="for IsFrancyGraph"/>
+ <Returns><C>List(Shape)</C>
+</Returns>
+ <Description>
+Gets a <C>Shape</C> node from a graph by ID.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="IsShape, [IsMenu, List(IsMenu)]" Name="Add" Label="for IsShape, IsMenu"/>
+ <Returns><C>Shape</C>
+</Returns>
+ <Description>
+Add <C>Menu</C> to a specific <C>Shape</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="IsShape, [IsMenu, List(IsMenu)]" Name="Remove" Label="for IsShape, IsMenu"/>
+ <Returns><C>Shape</C>
+</Returns>
+ <Description>
+Remove <C>Menu</C> from a specific <C>Shape</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="IsShape, [IsCallback, List(IsCallback)]" Name="Add" Label="for IsShape, IsCallback"/>
+ <Returns><C>Shape</C>
+</Returns>
+ <Description>
+Add <C>Callback</C> to a specific <C>Shape</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="IsShape, [IsCallback, List(IsCallback)]" Name="Remove" Label="for IsShape, IsCallback"/>
+ <Returns><C>Shape</C>
+</Returns>
+ <Description>
+Remove <C>Callback</C> from a specific <C>Shape</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="IsShape, [IsFrancyMessage, List(IsFrancyMessage)]" Name="Add" Label="for IsShape, IsFrancyMessage"/>
+ <Returns><C>Shape</C>
+</Returns>
+ <Description>
+Add <C>Callback</C> to a specific <C>Shape</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="IsShape, [IsFrancyMessage, List(IsFrancyMessage)]" Name="Remove" Label="for IsShape, IsFrancyMessage"/>
+ <Returns><C>Shape</C>
+</Returns>
+ <Description>
+Remove <C>Callback</C> from a specific <C>Shape</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="IsShape IsShape" Name="Link" Label="for IsShape, IsShape, IsLinkDefaults"/>
+ <Returns><C>Link</C>
+</Returns>
+ <Description>
+Creates a <C>Link</C> between the two <C>Shape</C>.
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="List(IsShape), List(IsShape)" Name="Links" Label="for IsList, IsList, IsLinkDefaults"/>
+ <Returns><C>List(Link)</C>
+</Returns>
+ <Description>
+Creates a <C>Link</C> between the <C>Shape</C> of the first list and the second list.
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="IsFrancyGraph, IsString" Name="GetLink" Label="for IsFrancyGraph, IsString"/>
+ <Returns><C>Link</C>
+</Returns>
+ <Description>
+Gets a <C>Link</C> from a graph by ID.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="IsFrancyGraph, IsString" Name="GetLinks" Label="for IsFrancyGraph"/>
+ <Returns><C>List(Link)</C>
+</Returns>
+ <Description>
+Gets a <C>Link</C> from a graph.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+<Section Label="Chapter_Francy_Graphs_Section_Global">
+<Heading>Global</Heading>
+
+In this section we show the Global Callback Francy Records for multi purpose.
+</Section>
+
+
+<Section Label="Chapter_Francy_Graphs_Section_Attributes">
+<Heading>Attributes</Heading>
+
+In this section we show the Francy Core Attributes
+<ManSection>
+  <Attr Arg="arg" Name="Title" Label="for IsShape"/>
+ <Returns><C>IsString</C> with the title of the object
+</Returns>
+ <Description>
+Sets the title on the Shape.
+Supports LaTex syntax that gets translated, if enabled on the client.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg1" Name="Title" Label="for IsShape"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="IsRequiredArg, IsString" Name="SetTitle" Label="for IsShape, IsString"/>
+ <Description>
+Sets the title of the Shape.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="Color" Label="for IsShape"/>
+ <Returns><C>IsInt</C>
+</Returns>
+ <Description>
+The <C>Color</C> of the current shape.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg1" Name="Color" Label="for IsShape"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="IsShape, IsString" Name="SetColor" Label="for IsShape, IsString"/>
+ <Description>
+Sets the <C>Color</C> value.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="PosX" Label="for IsShape"/>
+ <Returns><C>IsInt</C>
+</Returns>
+ <Description>
+The Position in the X Axis of the Shape in the Canvas in pixels
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg1" Name="PosX" Label="for IsShape"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="IsShape, IsInt" Name="SetPosX" Label="for IsShape, IsInt"/>
+ <Description>
+Sets the Position in the X Axis of the Shape in the Canvas in pixels
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="PosY" Label="for IsShape"/>
+ <Returns><C>IsInt</C>
+</Returns>
+ <Description>
+The Position in the Y Axis of the Shape in the Canvas in pixels
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg1" Name="PosY" Label="for IsShape"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="IsShape, IsInt" Name="SetPosY" Label="for IsShape, IsInt"/>
+ <Description>
+Sets the Position in the Y Axis of the Shape in the Canvas in pixels
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="Size" Label="for IsShape"/>
+ <Returns><C>IsPosInt</C>
+</Returns>
+ <Description>
+The <C>Size</C> of the Shape
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg1" Name="Size" Label="for IsShape"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="IsShape, IsPosInt" Name="SetSize" Label="for IsShape, IsPosInt"/>
+ <Description>
+Sets the Size of the Shape
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="Layer" Label="for IsShape"/>
+ <Returns><C>IsInt</C>
+</Returns>
+ <Description>
+The <C>Layer</C> in which the node will be placed.
+This property is also used to apply a color based on a scale
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg1" Name="Layer" Label="for IsShape"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="IsShape, IsInt" Name="SetLayer" Label="for IsShape, IsInt"/>
+ <Description>
+Sets the <C>Layer</C> number.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="ParentShape" Label="for IsShape"/>
+ <Returns><C>IsShape</C>
+</Returns>
+ <Description>
+The <C>ParentShape</C> in which the node will be placed.
+This property is also used to apply a color based on a scale
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg1" Name="ParentShape" Label="for IsShape"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="IsShape, IsShape" Name="SetParentShape" Label="for IsShape, IsShape"/>
+ <Description>
+Sets the <C>ParentShape</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="Simulation" Label="for IsFrancyGraph"/>
+ <Returns><C>IsBool</C> True if enabled otherwise False
+</Returns>
+ <Description>
+<C>Simulation</C> is a property that sets the simulation behavior by
+applying forces to organize the graphics, without the need to provide
+custom positions, in the client implementation.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg1" Name="Simulation" Label="for IsFrancyGraph"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="IsCanvas, IsBool" Name="SetSimulation" Label="for IsFrancyGraph, IsBool"/>
+ <Description>
+Sets the <C>Simulation</C> behavior.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="Collapsed" Label="for IsFrancyGraph"/>
+ <Returns><C>IsBool</C> True if enabled otherwise False
+</Returns>
+ <Description>
+<C>Collapsed</C> is a property that sets to collapsed the graphic structure by default
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg1" Name="Collapsed" Label="for IsFrancyGraph"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="IsCanvas, IsBool" Name="SetCollapsed" Label="for IsFrancyGraph, IsBool"/>
+ <Description>
+Sets the <C>Collapsed</C> behavior.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="Selected" Label="for IsShape"/>
+ <Returns><C>IsBool</C> True if enabled otherwise False
+</Returns>
+ <Description>
+<C>Collapsed</C> is a property that sets to collapsed the graphic structure by default
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg1" Name="Selected" Label="for IsShape"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="IsCanvas, IsBool" Name="SetSelected" Label="for IsShape, IsBool"/>
+ <Description>
+Sets the <C>Collapsed</C> behavior.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="ConjugateId" Label="for IsShape"/>
+ <Returns><C>IsBool</C> True if enabled otherwise False
+</Returns>
+ <Description>
+<C>Collapsed</C> is a property that sets to collapsed the graphic structure by default
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg1" Name="ConjugateId" Label="for IsShape"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="IsCanvas, IsBool" Name="SetConjugateId" Label="for IsShape, IsInt"/>
+ <Description>
+Sets the <C>Collapsed</C> behavior.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="Weight" Label="for IsLink"/>
+ <Returns><C>IsInt</C>
+</Returns>
+ <Description>
+The <C>Weight</C> of the current link.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg1" Name="Weight" Label="for IsLink"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="IsLink, IsInt" Name="SetWeight" Label="for IsLink, IsInt"/>
+ <Description>
+Sets the <C>Weight</C> value.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="Length" Label="for IsLink"/>
+ <Returns><C>IsInt</C>
+</Returns>
+ <Description>
+The <C>Length</C> of the current link.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg1" Name="Length" Label="for IsLink"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="IsLink, IsInt" Name="SetLength" Label="for IsLink, IsInt"/>
+ <Description>
+Sets the <C>Length</C> value.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="Invisible" Label="for IsLink"/>
+ <Returns><C>IsBoolean</C>
+</Returns>
+ <Description>
+The <C>Invisible</C> of the current link.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg1" Name="Invisible" Label="for IsLink"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="IsLink, IsBool" Name="SetInvisible" Label="for IsLink, IsBool"/>
+ <Description>
+Sets the <C>Invisible</C> value.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="Color" Label="for IsLink"/>
+ <Returns><C>IsInt</C>
+</Returns>
+ <Description>
+The <C>Color</C> of the current link.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg1" Name="Color" Label="for IsLink"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="IsShape, IsString" Name="SetColor" Label="for IsLink, IsString"/>
+ <Description>
+Sets the <C>Color</C> value.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="arg" Name="Title" Label="for IsLink"/>
+ <Returns><C>IsInt</C>
+</Returns>
+ <Description>
+The <C>Title</C> of the current link.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="arg1" Name="Title" Label="for IsLink"/>
+ <Description>
+<P/>
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Func Arg="IsShape, IsString" Name="SetTitle" Label="for IsLink, IsString"/>
+ <Description>
+Sets the <C>Title</C> value.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+</Chapter>
+

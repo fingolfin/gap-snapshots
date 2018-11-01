@@ -28,34 +28,22 @@ gap> f(1);
 2
 gap> Print(f,"\n");
 function ( x )
-    atomic L do
-        return x + 1;
-    od;
-    return;
+    return x + 1;
 end
 gap> g := function(x) atomic readwrite L do return x+1; od; end;;
 gap> Print(g,"\n");
 function ( x )
-    atomic readwrite L do
-        return x + 1;
-    od;
-    return;
+    return x + 1;
 end
 gap> h := function(x) atomic readonly L do return x+1; od; end;;
 gap> Print(h,"\n");
 function ( x )
-    atomic readonly L do
-        return x + 1;
-    od;
-    return;
+    return x + 1;
 end
 gap> h2 := function(x) atomic readonly L,M do return x+1; od; end;;
 gap> Print(h2,"\n");
 function ( x )
-    atomic readonly L, M do
-        return x + 1;
-    od;
-    return;
+    return x + 1;
 end
 gap> h3 := atomic function(x) end;;
 gap> # We do not preserve atomic functions in non-HPC gap, just want them to parse
@@ -71,37 +59,37 @@ end
 gap> h5 := function(readwrite x, readonly y, z) end;;
 Syntax error: 'readwrite' argument of non-atomic function in stream:1
 h5 := function(readwrite x, readonly y, z) end;;
-                       ^
+               ^^^^^^^^^
 gap> h5 := function(readonly x, readonly y, z) end;;
 Syntax error: 'readonly' argument of non-atomic function in stream:1
 h5 := function(readonly x, readonly y, z) end;;
-                      ^
+               ^^^^^^^^
 gap> h5 := {readonly x} -> x;
 Syntax error: 'readonly' argument of non-atomic function in stream:1
 h5 := {readonly x} -> x;
-              ^
+       ^^^^^^^^
 gap> h5 := {readonly x} -> x;
 Syntax error: 'readonly' argument of non-atomic function in stream:1
 h5 := {readonly x} -> x;
-              ^
+       ^^^^^^^^
 gap> h5 := {x, readonly y} -> x;
 Syntax error: 'readonly' argument of non-atomic function in stream:1
 h5 := {x, readonly y} -> x;
-                 ^
+          ^^^^^^^^
 gap> h5 := {readwrite x, y} -> x;
 Syntax error: 'readwrite' argument of non-atomic function in stream:1
 h5 := {readwrite x, y} -> x;
-               ^
+       ^^^^^^^^^
 gap> h5 := {x, readwrite y} -> x;
 Syntax error: 'readwrite' argument of non-atomic function in stream:1
 h5 := {x, readwrite y} -> x;
-                  ^
+          ^^^^^^^^^
 gap> h5 := {readwrite} -> x;
 Syntax error: 'readwrite' argument of non-atomic function in stream:1
 h5 := {readwrite} -> x;
-               ^
+       ^^^^^^^^^
 gap> h5 := {readwrite readonly x} -> x;
 Syntax error: 'readwrite' argument of non-atomic function in stream:1
 h5 := {readwrite readonly x} -> x;
-               ^
+       ^^^^^^^^^
 gap> STOP_TEST("atomic_basic.tst", 1);

@@ -16,7 +16,7 @@
 ##  Return list of filters set in the given type.
 ##
 InstallMethod(FiltersType, "for a type", [ IsType ],
-    type -> FILTERS{ TRUES_FLAGS(type![2]) });
+    type -> FILTERS{ TRUES_FLAGS(type![POS_FLAGS_TYPE]) });
 
 #############################################################################
 ##
@@ -101,11 +101,11 @@ function ( type )
     local  res, family, flags, data, fnams;
 
     res := "<Type: (";
-    family := type![1];
+    family := type![POS_FAMILY_TYPE];
     Append(res, family!.NAME);
     Append(res, ", ");
 
-    flags := type![2];
+    flags := type![POS_FLAGS_TYPE];
     Append(res, NamesFilterShort(flags, 3) );
     Append(res, ")");
 
@@ -130,8 +130,8 @@ function ( type )
     local  res, family, flags, data, fnams;
 
     res := "";
-    family := type![1];
-    flags := type![2];
+    family := type![POS_FAMILY_TYPE];
+    flags := type![POS_FLAGS_TYPE];
     data := type![POS_DATA_TYPE];
 
     Append(res, STRINGIFY("family:\n    ", family!.NAME));
@@ -164,7 +164,10 @@ function(oper)
         flags := FLAGS_FILTER(oper);
         if flags <> false then
             flags := TRUES_FLAGS(flags);
-            types := INFO_FILTERS{flags};
+            types := [];
+            for t in flags do
+                AddSet(types, INFO_FILTERS[t]);
+            od;
             catok := true;
             repok := true;
             propok := true;
@@ -191,7 +194,11 @@ function(oper)
                 type := "Representation";
             fi;
         fi;
+    elif IsOperation(FLAG1_FILTER(oper)) and IsOperation(FLAG1_FILTER(oper)) then
+        # this is a setter for an and-filter
+        type := "Setter";
     elif FLAG1_FILTER(oper) > 0 then
+        # this is a setter for an elementary filter
         type := "Setter";
     elif Tester(oper) <> false  then
         # oper is an attribute

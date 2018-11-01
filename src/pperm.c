@@ -1,28 +1,32 @@
 /*****************************************************************************
-*
-* A partial perm is of the form:
-*
-* [image set, domain, codegree, entries of image list]
-*
-* An element of the internal rep of a partial perm in T_PPERM2 must be
-* at most 65535 and be of UInt2. The <codegree> is just the degree of
-* the inverse or equivalently the maximum element of the image.
-*
-*****************************************************************************/
+ *
+ * A partial perm is of the form:
+ *
+ * [image set, domain, codegree, entries of image list]
+ *
+ * An element of the internal rep of a partial perm in T_PPERM2 must be
+ * at most 65535 and be of UInt2. The <codegree> is just the degree of
+ * the inverse or equivalently the maximum element of the image.
+ *
+ *****************************************************************************/
 
-#include <src/pperm.h>
+#include "pperm.h"
 
-#include <src/ariths.h>
-#include <src/bool.h>
-#include <src/gap.h>
-#include <src/gapstate.h>
-#include <src/integer.h>
-#include <src/intfuncs.h>
-#include <src/lists.h>
-#include <src/opers.h>
-#include <src/permutat.h>
-#include <src/plist.h>
-#include <src/saveload.h>
+#include "ariths.h"
+#include "bool.h"
+#include "error.h"
+#include "gapstate.h"
+#include "gvars.h"
+#include "integer.h"
+#include "intfuncs.h"
+#include "io.h"
+#include "listfunc.h"
+#include "lists.h"
+#include "modules.h"
+#include "opers.h"
+#include "permutat.h"
+#include "plist.h"
+#include "saveload.h"
 
 
 #define MAX(a, b) (a < b ? b : a)
@@ -37,19 +41,19 @@ static ModuleStateOffset PPermStateOffset = -1;
 
 typedef struct {
 
-/**************************************************************************
-*
-*V TmpPPerm . . . . . . . handle of the buffer bag of the pperm package
-*
-* 'TmpPPerm' is the handle of a bag of type 'T_PPERM4', which is
-* created at initialization time of this package.  Functions in this
-* package can use this bag for  whatever purpose they want.  They have
-* to make sure of course that it is large enough.
-*
-* The buffer is *not* guaranteed to have any particular value, routines
-* that require a zero-initialization need to do this at the start.
-*/
-Obj TmpPPerm;
+    /**************************************************************************
+     *
+     *V TmpPPerm . . . . . . . handle of the buffer bag of the pperm package
+     *
+     * 'TmpPPerm' is the handle of a bag of type 'T_PPERM4', which is
+     * created at initialization time of this package.  Functions in this
+     * package can use this bag for  whatever purpose they want.  They have
+     * to make sure of course that it is large enough.
+     *
+     * The buffer is *not* guaranteed to have any particular value, routines
+     * that require a zero-initialization need to do this at the start.
+     */
+    Obj TmpPPerm;
 
 } PPermModuleState;
 
@@ -69,8 +73,8 @@ static inline void ResizeTmpPPerm(UInt len)
 }
 
 /*****************************************************************************
-* Static functions for partial perms
-*****************************************************************************/
+ * Static functions for partial perms
+ *****************************************************************************/
 
 static inline UInt GET_CODEG_PPERM2(Obj f)
 {
@@ -88,15 +92,16 @@ UInt CODEG_PPERM2(Obj f)
 {
     GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
     if (GET_CODEG_PPERM2(f) != 0) {
-      return GET_CODEG_PPERM2(f);
+        return GET_CODEG_PPERM2(f);
     }
-    UInt codeg = 0;
-    UInt i;
-    UInt2* ptf = ADDR_PPERM2(f);
+    // The following is only ever entered by the EmptyPartialPerm.
+    UInt    codeg = 0;
+    UInt    i;
+    UInt2 * ptf = ADDR_PPERM2(f);
     for (i = 0; i < DEG_PPERM2(f); i++) {
-      if (ptf[i] > codeg) {
-        codeg = ptf[i];
-      }
+        if (ptf[i] > codeg) {
+            codeg = ptf[i];
+        }
     }
     SET_CODEG_PPERM2(f, codeg);
     return codeg;
@@ -118,15 +123,16 @@ UInt CODEG_PPERM4(Obj f)
 {
     GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
     if (GET_CODEG_PPERM4(f) != 0) {
-      return GET_CODEG_PPERM4(f);
+        return GET_CODEG_PPERM4(f);
     }
-    UInt codeg = 0;
-    UInt i;
-    UInt4* ptf = ADDR_PPERM4(f);
+    // The following is only ever entered by the EmptyPartialPerm.
+    UInt    codeg = 0;
+    UInt    i;
+    UInt4 * ptf = ADDR_PPERM4(f);
     for (i = 0; i < DEG_PPERM4(f); i++) {
-      if (ptf[i] > codeg) {
-        codeg = ptf[i];
-      }
+        if (ptf[i] > codeg) {
+            codeg = ptf[i];
+        }
     }
     SET_CODEG_PPERM4(f, codeg);
     return codeg;
@@ -159,20 +165,20 @@ static inline Obj DOM_PPERM(Obj f)
 static inline void SET_IMG_PPERM(Obj f, Obj img)
 {
     GAP_ASSERT(IS_PPERM(f));
-    GAP_ASSERT(IS_PLIST(img) && !IS_MUTABLE_PLIST(img));
+    GAP_ASSERT(IS_PLIST(img) && !IS_PLIST_MUTABLE(img));
     GAP_ASSERT(DOM_PPERM(f) == NULL ||
                LEN_PLIST(img) == LEN_PLIST(DOM_PPERM(f)));
-    // TODO Could check entries of img are valid
+    // TODO check entries of img are valid
     ADDR_OBJ(f)[0] = img;
 }
 
 static inline void SET_DOM_PPERM(Obj f, Obj dom)
 {
     GAP_ASSERT(IS_PPERM(f));
-    GAP_ASSERT(IS_PLIST(dom) && !IS_MUTABLE_PLIST(dom));
+    GAP_ASSERT(IS_PLIST(dom) && !IS_PLIST_MUTABLE(dom));
     GAP_ASSERT(IMG_PPERM(f) == NULL ||
                LEN_PLIST(dom) == LEN_PLIST(IMG_PPERM(f)));
-    // TODO Could check entries of img are valid
+    // TODO check entries of img are valid
     ADDR_OBJ(f)[1] = dom;
 }
 
@@ -180,6 +186,8 @@ static inline void SET_DOM_PPERM(Obj f, Obj dom)
 
 static UInt INIT_PPERM2(Obj f)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+
     UInt    deg, rank, i;
     UInt2 * ptf;
     Obj     img, dom;
@@ -187,16 +195,15 @@ static UInt INIT_PPERM2(Obj f)
     deg = DEG_PPERM2(f);
 
     if (deg == 0) {
-        dom = NEW_PLIST(T_PLIST_EMPTY + IMMUTABLE, 0);
-        SET_LEN_PLIST(dom, 0);
+        dom = NEW_PLIST_IMM(T_PLIST_EMPTY, 0);
         SET_DOM_PPERM(f, dom);
         SET_IMG_PPERM(f, dom);
         CHANGED_BAG(f);
         return deg;
     }
 
-    dom = NEW_PLIST(T_PLIST_CYC_SSORT + IMMUTABLE, deg);
-    img = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, deg);
+    dom = NEW_PLIST_IMM(T_PLIST_CYC_SSORT, deg);
+    img = NEW_PLIST_IMM(T_PLIST_CYC, deg);
 
     /* renew the ptr in case of garbage collection */
     ptf = ADDR_PPERM2(f);
@@ -209,11 +216,7 @@ static UInt INIT_PPERM2(Obj f)
             SET_ELM_PLIST(img, rank, INTOBJ_INT(ptf[i]));
         }
     }
-
-    if (rank == 0) {
-        RetypeBag(img, T_PLIST_EMPTY + IMMUTABLE);
-        RetypeBag(dom, T_PLIST_EMPTY + IMMUTABLE);
-    }
+    GAP_ASSERT(rank != 0);    // rank = 0 => deg = 0, so this is not allowed
 
     SHRINK_PLIST(img, (Int)rank);
     SET_LEN_PLIST(img, (Int)rank);
@@ -228,6 +231,8 @@ static UInt INIT_PPERM2(Obj f)
 
 static UInt INIT_PPERM4(Obj f)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+
     UInt    deg, rank, i;
     UInt4 * ptf;
     Obj     img, dom;
@@ -235,16 +240,15 @@ static UInt INIT_PPERM4(Obj f)
     deg = DEG_PPERM4(f);
 
     if (deg == 0) {
-        dom = NEW_PLIST(T_PLIST_EMPTY + IMMUTABLE, 0);
-        SET_LEN_PLIST(dom, 0);
+        dom = NEW_PLIST_IMM(T_PLIST_EMPTY, 0);
         SET_DOM_PPERM(f, dom);
         SET_IMG_PPERM(f, dom);
         CHANGED_BAG(f);
         return deg;
     }
 
-    dom = NEW_PLIST(T_PLIST_CYC_SSORT + IMMUTABLE, deg);
-    img = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, deg);
+    dom = NEW_PLIST_IMM(T_PLIST_CYC_SSORT, deg);
+    img = NEW_PLIST_IMM(T_PLIST_CYC, deg);
 
     ptf = ADDR_PPERM4(f);
 
@@ -256,11 +260,7 @@ static UInt INIT_PPERM4(Obj f)
             SET_ELM_PLIST(img, rank, INTOBJ_INT(ptf[i]));
         }
     }
-
-    if (rank == 0) {
-        RetypeBag(img, T_PLIST_EMPTY + IMMUTABLE);
-        RetypeBag(dom, T_PLIST_EMPTY + IMMUTABLE);
-    }
+    GAP_ASSERT(rank != 0);    // rank = 0 => deg = 0, so this is not allowed
 
     SHRINK_PLIST(img, (Int)rank);
     SET_LEN_PLIST(img, (Int)rank);
@@ -285,37 +285,22 @@ UInt RANK_PPERM4(Obj f)
     return (IMG_PPERM(f) == NULL ? INIT_PPERM4(f) : LEN_PLIST(IMG_PPERM(f)));
 }
 
-static Obj SORT_PLIST_CYC(Obj res)
+static Obj SORT_PLIST_INTOBJ(Obj res)
 {
-    Obj  tmp;
-    UInt h, i, k, len;
-
-    len = LEN_PLIST(res);
-    if (len == 0)
+    GAP_ASSERT(IS_PLIST(res));
+    if (LEN_PLIST(res) == 0)
         return res;
 
-    h = 1;
-    while (9 * h + 4 < len)
-        h = 3 * h + 1;
-    while (0 < h) {
-        for (i = h + 1; i <= len; i++) {
-            tmp = CONST_ADDR_OBJ(res)[i];
-            k = i;
-            while (h < k && ((Int)tmp < (Int)(CONST_ADDR_OBJ(res)[k - h]))) {
-                ADDR_OBJ(res)[k] = CONST_ADDR_OBJ(res)[k - h];
-                k -= h;
-            }
-            ADDR_OBJ(res)[k] = tmp;
-        }
-        h = h / 3;
-    }
+    SortPlistByRawObj(res);
     RetypeBag(res, T_PLIST_CYC_SSORT + IMMUTABLE);
-    CHANGED_BAG(res);
     return res;
 }
 
 static Obj PreImagePPermInt(Obj pt, Obj f)
 {
+    GAP_ASSERT(IS_INTOBJ(pt));
+    GAP_ASSERT(IS_PPERM(f));
+
     UInt2 * ptf2;
     UInt4 * ptf4;
     UInt    i, cpt, deg;
@@ -330,26 +315,25 @@ static Obj PreImagePPermInt(Obj pt, Obj f)
     if (TNUM_OBJ(f) == T_PPERM2) {
         ptf2 = ADDR_PPERM2(f);
         deg = DEG_PPERM2(f);
-        while (ptf2[i] != cpt && i < deg)
+        while (i < deg && ptf2[i] != cpt)
             i++;
-        if (ptf2[i] != cpt)
+        if (i == deg || ptf2[i] != cpt)
             return Fail;
     }
     else {
         ptf4 = ADDR_PPERM4(f);
         deg = DEG_PPERM4(f);
-        while (ptf4[i] != cpt && i < deg)
+        while (i < deg && ptf4[i] != cpt)
             i++;
-        if (ptf4[i] != cpt)
+        if (i == deg || ptf4[i] != cpt)
             return Fail;
     }
     return INTOBJ_INT(i + 1);
 }
 
 /*****************************************************************************
-* GAP functions for partial perms
-*****************************************************************************/
-
+ * GAP functions for partial perms
+ *****************************************************************************/
 
 Obj FuncEmptyPartialPerm(Obj self)
 {
@@ -359,6 +343,8 @@ Obj FuncEmptyPartialPerm(Obj self)
 /* method for creating a partial perm */
 Obj FuncDensePartialPermNC(Obj self, Obj img)
 {
+    GAP_ASSERT(IS_LIST(img));
+
     UInt    deg, i, j, codeg;
     UInt2 * ptf2;
     UInt4 * ptf4;
@@ -409,6 +395,10 @@ Obj FuncDensePartialPermNC(Obj self, Obj img)
 /* assumes that dom is a set and that img is duplicatefree */
 Obj FuncSparsePartialPermNC(Obj self, Obj dom, Obj img)
 {
+    GAP_ASSERT(IS_LIST(dom));
+    GAP_ASSERT(IS_LIST(img));
+    GAP_ASSERT(LEN_LIST(dom) == LEN_LIST(img));
+
     UInt    rank, deg, i, j, codeg;
     Obj     f;
     UInt2 * ptf2;
@@ -477,7 +467,7 @@ Obj FuncDegreeOfPartialPerm(Obj self, Obj f)
     else if (TNUM_OBJ(f) == T_PPERM4) {
         return INTOBJ_INT(DEG_PPERM4(f));
     }
-    ErrorQuit("usage: the argument should be a partial perm,", 0L, 0L);
+    ErrorQuit("DegreeOfPartialPerm: <f> must be a partial perm,", 0L, 0L);
     return Fail;
 }
 
@@ -491,7 +481,7 @@ Obj FuncCoDegreeOfPartialPerm(Obj self, Obj f)
     else if (TNUM_OBJ(f) == T_PPERM4) {
         return INTOBJ_INT(CODEG_PPERM4(f));
     }
-    ErrorQuit("usage: the argument should be a partial perm,", 0L, 0L);
+    ErrorQuit("CoDegreeOfPartialPerm: <f> must be a partial perm,", 0L, 0L);
     return Fail;
 }
 
@@ -504,13 +494,15 @@ Obj FuncRankOfPartialPerm(Obj self, Obj f)
     else if (TNUM_OBJ(f) == T_PPERM4) {
         return INTOBJ_INT(RANK_PPERM4(f));
     }
-    ErrorQuit("usage: the argument should be a partial perm,", 0L, 0L);
+    ErrorQuit("RankOfPartialPerm: <f> must be a partial perm,", 0L, 0L);
     return Fail;
 }
 
 /* domain of a partial perm */
 Obj FuncDOMAIN_PPERM(Obj self, Obj f)
 {
+    GAP_ASSERT(IS_PPERM(f));
+
     if (DOM_PPERM(f) == NULL) {
         if (TNUM_OBJ(f) == T_PPERM2) {
             INIT_PPERM2(f);
@@ -525,6 +517,8 @@ Obj FuncDOMAIN_PPERM(Obj self, Obj f)
 /* image list of pperm */
 Obj FuncIMAGE_PPERM(Obj self, Obj f)
 {
+    GAP_ASSERT(IS_PPERM(f));
+
     UInt2 * ptf2;
     UInt4 * ptf4;
     UInt    i, rank;
@@ -539,11 +533,10 @@ Obj FuncIMAGE_PPERM(Obj self, Obj f)
         }
         rank = RANK_PPERM2(f);
         if (rank == 0) {
-            out = NEW_PLIST(T_PLIST_EMPTY + IMMUTABLE, 0);
-            SET_LEN_PLIST(out, 0);
+            out = NEW_PLIST_IMM(T_PLIST_EMPTY, 0);
             return out;
         }
-        out = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, rank);
+        out = NEW_PLIST_IMM(T_PLIST_CYC, rank);
         SET_LEN_PLIST(out, rank);
         ptf2 = ADDR_PPERM2(f);
         dom = DOM_PPERM(f);
@@ -562,11 +555,10 @@ Obj FuncIMAGE_PPERM(Obj self, Obj f)
         }
         rank = RANK_PPERM4(f);
         if (rank == 0) {
-            out = NEW_PLIST(T_PLIST_EMPTY + IMMUTABLE, 0);
-            SET_LEN_PLIST(out, 0);
+            out = NEW_PLIST_IMM(T_PLIST_EMPTY, 0);
             return out;
         }
-        out = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, rank);
+        out = NEW_PLIST_IMM(T_PLIST_CYC, rank);
         SET_LEN_PLIST(out, rank);
         ptf4 = ADDR_PPERM4(f);
         dom = DOM_PPERM(f);
@@ -584,27 +576,27 @@ Obj FuncIMAGE_SET_PPERM(Obj self, Obj f)
     if (TNUM_OBJ(f) == T_PPERM2) {
         if (IMG_PPERM(f) == NULL) {
             INIT_PPERM2(f);
-            return SORT_PLIST_CYC(IMG_PPERM(f));
+            return SORT_PLIST_INTOBJ(IMG_PPERM(f));
         }
         else if (!IS_SSORT_LIST(IMG_PPERM(f))) {
-            return SORT_PLIST_CYC(IMG_PPERM(f));
+            return SORT_PLIST_INTOBJ(IMG_PPERM(f));
         }
         return IMG_PPERM(f);
     }
     else if (TNUM_OBJ(f) == T_PPERM4) {
         if (IMG_PPERM(f) == NULL) {
             INIT_PPERM4(f);
-            return SORT_PLIST_CYC(IMG_PPERM(f));
+            return SORT_PLIST_INTOBJ(IMG_PPERM(f));
         }
         else if (!IS_SSORT_LIST(IMG_PPERM(f))) {
-            return SORT_PLIST_CYC(IMG_PPERM(f));
+            return SORT_PLIST_INTOBJ(IMG_PPERM(f));
         }
         return IMG_PPERM(f);
     }
     else {
         ErrorQuit("usage: the argument must be a partial perm,", 0L, 0L);
+        return 0L;
     }
-    return Fail;
 }
 
 /* preimage under a partial perm */
@@ -613,10 +605,30 @@ Obj FuncPREIMAGE_PPERM_INT(Obj self, Obj f, Obj pt)
     return PreImagePPermInt(pt, f);
 }
 
+// find img(f)
+static UInt4 * FindImg(UInt n, UInt rank, Obj img)
+{
+    GAP_ASSERT(IS_PLIST(img));
+
+    UInt    i;
+    UInt4 * ptseen;
+
+    ResizeTmpPPerm(n);
+    ptseen = ADDR_PPERM4(TmpPPerm);
+    memset(ptseen, 0, n * sizeof(UInt4));
+
+    for (i = 1; i <= rank; i++)
+        ptseen[INT_INTOBJ(ELM_PLIST(img, i)) - 1] = 1;
+
+    return ptseen;
+}
+
 // the least m, r such that f^m=f^m+r
 Obj FuncINDEX_PERIOD_PPERM(Obj self, Obj f)
 {
-    UInt    i, len, j, pow, gcd, rank, k, deg, n;
+    GAP_ASSERT(IS_PPERM(f));
+
+    UInt    i, len, j, pow, rank, k, deg, n;
     UInt2 * ptf2;
     UInt4 * ptseen, *ptf4;
     Obj     dom, img, ord, out;
@@ -625,18 +637,9 @@ Obj FuncINDEX_PERIOD_PPERM(Obj self, Obj f)
     ord = INTOBJ_INT(1);
     n = MAX(DEG_PPERM(f), CODEG_PPERM(f));
 
-    ResizeTmpPPerm(n);
-    ptseen = (UInt4 *)(ADDR_OBJ(TmpPPerm));
-    for (i = 0; i < n; i++)
-        ptseen[i] = 0;
-
     rank = RANK_PPERM(f);
     img = IMG_PPERM(f);
-    ptseen = (UInt4 *)(ADDR_OBJ(TmpPPerm));
-
-    // find img(f)
-    for (i = 1; i <= rank; i++)
-        ptseen[INT_INTOBJ(ELM_PLIST(img, i)) - 1] = 1;
+    ptseen = FindImg(n, rank, img);
 
     if (TNUM_OBJ(f) == T_PPERM2) {
         deg = DEG_PPERM2(f);
@@ -669,14 +672,9 @@ Obj FuncINDEX_PERIOD_PPERM(Obj self, Obj f)
                     len++;
                     ptseen[k - 1] = 0;
                 }
-                gcd = len;
-                j = INT_INTOBJ(ModInt(ord, INTOBJ_INT(len)));
-                while (j != 0) {
-                    k = j;
-                    j = gcd % j;
-                    gcd = k;
-                }
-                ord = ProdInt(ord, INTOBJ_INT(len / gcd));
+                ord = LcmInt(ord, INTOBJ_INT(len));
+                // update ptseen, in case a garbage collection happened
+                ptseen = ADDR_PPERM4(TmpPPerm);
             }
         }
     }
@@ -711,14 +709,9 @@ Obj FuncINDEX_PERIOD_PPERM(Obj self, Obj f)
                     len++;
                     ptseen[k - 1] = 0;
                 }
-                gcd = len;
-                j = INT_INTOBJ(ModInt(ord, INTOBJ_INT(len)));
-                while (j != 0) {
-                    k = j;
-                    j = gcd % j;
-                    gcd = k;
-                }
-                ord = ProdInt(ord, INTOBJ_INT(len / gcd));
+                ord = LcmInt(ord, INTOBJ_INT(len));
+                // update ptseen, in case a garbage collection happened
+                ptseen = ADDR_PPERM4(TmpPPerm);
             }
         }
     }
@@ -732,6 +725,8 @@ Obj FuncINDEX_PERIOD_PPERM(Obj self, Obj f)
 // the least power of <f> which is an idempotent
 Obj FuncSMALLEST_IDEM_POW_PPERM(Obj self, Obj f)
 {
+    GAP_ASSERT(IS_PPERM(f));
+
     Obj x, ind, per, pow;
 
     x = FuncINDEX_PERIOD_PPERM(self, f);
@@ -747,6 +742,8 @@ Obj FuncSMALLEST_IDEM_POW_PPERM(Obj self, Obj f)
  * there exists <j> in <out> and a pos int <k> such that <j^(f^k)=i>. */
 Obj FuncCOMPONENT_REPS_PPERM(Obj self, Obj f)
 {
+    GAP_ASSERT(IS_PPERM(f));
+
     UInt    i, j, rank, k, deg, nr, n;
     UInt2 * ptf2;
     UInt4 * ptseen, *ptf4;
@@ -756,27 +753,16 @@ Obj FuncCOMPONENT_REPS_PPERM(Obj self, Obj f)
 
     if (n == 0) {
         out = NEW_PLIST(T_PLIST_EMPTY, 0);
-        SET_LEN_PLIST(out, 0);
         return out;
     }
-
-    ResizeTmpPPerm(n);
-    ptseen = (UInt4 *)(ADDR_OBJ(TmpPPerm));
-    for (i = 0; i < n; i++)
-        ptseen[i] = 0;
-
-    rank = RANK_PPERM(f);
-    img = IMG_PPERM(f);
-    ptseen = (UInt4 *)(ADDR_OBJ(TmpPPerm));
-
-    // find img(f)
-    for (i = 1; i <= rank; i++)
-        ptseen[INT_INTOBJ(ELM_PLIST(img, i)) - 1] = 1;
 
     deg = DEG_PPERM(f);
     nr = 0;
     out = NEW_PLIST(T_PLIST_CYC, deg);
-    ptseen = (UInt4 *)(ADDR_OBJ(TmpPPerm));
+
+    rank = RANK_PPERM(f);
+    img = IMG_PPERM(f);
+    ptseen = FindImg(n, rank, img);
 
     if (TNUM_OBJ(f) == T_PPERM2) {
         dom = DOM_PPERM(f);
@@ -839,26 +825,19 @@ Obj FuncCOMPONENT_REPS_PPERM(Obj self, Obj f)
 /* the number of components of a partial perm (as a functional digraph) */
 Obj FuncNR_COMPONENTS_PPERM(Obj self, Obj f)
 {
+    GAP_ASSERT(IS_PPERM(f));
+
     UInt    i, j, n, rank, k, deg, nr;
     UInt2 * ptf2;
     UInt4 * ptseen, *ptf4;
     Obj     dom, img;
 
     n = MAX(DEG_PPERM(f), CODEG_PPERM(f));
-    ResizeTmpPPerm(n);
-    ptseen = (UInt4 *)(ADDR_OBJ(TmpPPerm));
-    for (i = 0; i < n; i++)
-        ptseen[i] = 0;
+    nr = 0;
 
     rank = RANK_PPERM(f);
     img = IMG_PPERM(f);
-    ptseen = (UInt4 *)(ADDR_OBJ(TmpPPerm));
-
-    // find img(f)
-    for (i = 1; i <= rank; i++)
-        ptseen[INT_INTOBJ(ELM_PLIST(img, i)) - 1] = 1;
-
-    nr = 0;
+    ptseen = FindImg(n, rank, img);
 
     if (TNUM_OBJ(f) == T_PPERM2) {
         deg = DEG_PPERM2(f);
@@ -872,7 +851,7 @@ Obj FuncNR_COMPONENTS_PPERM(Obj self, Obj f)
                 nr++;
                 for (k = j; (k <= deg && ptf2[k - 1] != 0); k = ptf2[k - 1])
                     ptseen[k - 1] = 2;
-                ptseen[k - 1] = 2;    // JDM really required?
+                ptseen[k - 1] = 2;
             }
         }
 
@@ -899,7 +878,7 @@ Obj FuncNR_COMPONENTS_PPERM(Obj self, Obj f)
                 nr++;
                 for (k = j; (k <= deg && ptf4[k - 1] != 0); k = ptf4[k - 1])
                     ptseen[k - 1] = 2;
-                ptseen[k - 1] = 2;    // REALLY REQUIRED?? JDM
+                ptseen[k - 1] = 2;
             }
         }
 
@@ -908,7 +887,7 @@ Obj FuncNR_COMPONENTS_PPERM(Obj self, Obj f)
             j = INT_INTOBJ(ELM_PLIST(dom, i)) - 1;
             if (ptseen[j] == 1) {
                 nr++;
-                ptseen[j] = 0;    // REALLY REQUIRED??? JDM
+                ptseen[j] = 0;
                 for (k = ptf4[j]; k != j + 1; k = ptf4[k - 1])
                     ptseen[k - 1] = 0;
             }
@@ -920,33 +899,24 @@ Obj FuncNR_COMPONENTS_PPERM(Obj self, Obj f)
 /* the components of a partial perm (as a functional digraph) */
 Obj FuncCOMPONENTS_PPERM(Obj self, Obj f)
 {
-    UInt    i, j, n, rank, k, deg, nr, len;
-    UInt4 * ptseen;
-    Obj     dom, img, out;
+    GAP_ASSERT(IS_PPERM(f));
+
+    UInt i, j, n, rank, k, deg, nr, len;
+    Obj  dom, img, out;
 
     n = MAX(DEG_PPERM(f), CODEG_PPERM(f));
 
     if (n == 0) {
         out = NEW_PLIST(T_PLIST_EMPTY, 0);
-        SET_LEN_PLIST(out, 0);
         return out;
     }
 
-    // init the buffer
-    ResizeTmpPPerm(n);
-    ptseen = (UInt4 *)(ADDR_OBJ(TmpPPerm));
-    for (i = 0; i < n; i++)
-        ptseen[i] = 0;
+    nr = 0;
 
-    // find img(f)
     rank = RANK_PPERM(f);
     img = IMG_PPERM(f);
-    ptseen = (UInt4 *)(ADDR_OBJ(TmpPPerm));
-    for (i = 1; i <= rank; i++)
-        ptseen[INT_INTOBJ(ELM_PLIST(img, i)) - 1] = 1;
-
-    nr = 0;
     out = NEW_PLIST(T_PLIST_CYC, rank);
+    FindImg(n, rank, img);
 
     if (TNUM_OBJ(f) == T_PPERM2) {
         deg = DEG_PPERM2(f);
@@ -955,14 +925,14 @@ Obj FuncCOMPONENTS_PPERM(Obj self, Obj f)
         // find chains
         for (i = 1; i <= rank; i++) {
             j = INT_INTOBJ(ELM_PLIST(dom, i));
-            if (((const UInt4 *)(CONST_ADDR_OBJ(TmpPPerm)))[j - 1] == 0) {
+            if (CONST_ADDR_PPERM4(TmpPPerm)[j - 1] == 0) {
                 SET_ELM_PLIST(out, ++nr, NEW_PLIST(T_PLIST_CYC, 30));
                 CHANGED_BAG(out);
                 len = 0;
                 k = j;
                 do {
                     AssPlist(ELM_PLIST(out, nr), ++len, INTOBJ_INT(k));
-                    ((UInt4 *)(ADDR_OBJ(TmpPPerm)))[k - 1] = 2;
+                    ADDR_PPERM4(TmpPPerm)[k - 1] = 2;
                     k = IMAGEPP(k, ADDR_PPERM2(f), deg);
                 } while (k != 0);
                 SHRINK_PLIST(ELM_PLIST(out, nr), len);
@@ -974,14 +944,14 @@ Obj FuncCOMPONENTS_PPERM(Obj self, Obj f)
         // find cycles
         for (i = 1; i <= rank; i++) {
             j = INT_INTOBJ(ELM_PLIST(dom, i));
-            if (((const UInt4 *)(CONST_ADDR_OBJ(TmpPPerm)))[j - 1] == 1) {
+            if (CONST_ADDR_PPERM4(TmpPPerm)[j - 1] == 1) {
                 SET_ELM_PLIST(out, ++nr, NEW_PLIST(T_PLIST_CYC, 30));
                 CHANGED_BAG(out);
                 len = 0;
                 k = j;
                 do {
                     AssPlist(ELM_PLIST(out, nr), ++len, INTOBJ_INT(k));
-                    ((UInt4 *)(ADDR_OBJ(TmpPPerm)))[k - 1] = 0;
+                    ADDR_PPERM4(TmpPPerm)[k - 1] = 0;
                     k = ADDR_PPERM2(f)[k - 1];
                 } while (k != j);
                 SHRINK_PLIST(ELM_PLIST(out, nr), len);
@@ -997,14 +967,14 @@ Obj FuncCOMPONENTS_PPERM(Obj self, Obj f)
         // find chains
         for (i = 1; i <= rank; i++) {
             j = INT_INTOBJ(ELM_PLIST(dom, i));
-            if (((const UInt4 *)(CONST_ADDR_OBJ(TmpPPerm)))[j - 1] == 0) {
+            if (CONST_ADDR_PPERM4(TmpPPerm)[j - 1] == 0) {
                 SET_ELM_PLIST(out, ++nr, NEW_PLIST(T_PLIST_CYC, 30));
                 CHANGED_BAG(out);
                 len = 0;
                 k = j;
                 do {
                     AssPlist(ELM_PLIST(out, nr), ++len, INTOBJ_INT(k));
-                    ((UInt4 *)(ADDR_OBJ(TmpPPerm)))[k - 1] = 2;
+                    ADDR_PPERM4(TmpPPerm)[k - 1] = 2;
                     k = IMAGEPP(k, ADDR_PPERM4(f), deg);
                 } while (k != 0);
                 SHRINK_PLIST(ELM_PLIST(out, nr), len);
@@ -1016,14 +986,14 @@ Obj FuncCOMPONENTS_PPERM(Obj self, Obj f)
         // find cycles
         for (i = 1; i <= rank; i++) {
             j = INT_INTOBJ(ELM_PLIST(dom, i));
-            if (((const UInt4 *)(CONST_ADDR_OBJ(TmpPPerm)))[j - 1] == 1) {
+            if (CONST_ADDR_PPERM4(TmpPPerm)[j - 1] == 1) {
                 SET_ELM_PLIST(out, ++nr, NEW_PLIST(T_PLIST_CYC, 30));
                 CHANGED_BAG(out);
                 len = 0;
                 k = j;
                 do {
                     AssPlist(ELM_PLIST(out, nr), ++len, INTOBJ_INT(k));
-                    ((UInt4 *)(ADDR_OBJ(TmpPPerm)))[k - 1] = 0;
+                    ADDR_PPERM4(TmpPPerm)[k - 1] = 0;
                     k = ADDR_PPERM4(f)[k - 1];
                 } while (k != j);
                 SHRINK_PLIST(ELM_PLIST(out, nr), len);
@@ -1041,6 +1011,9 @@ Obj FuncCOMPONENTS_PPERM(Obj self, Obj f)
 // the points that can be obtained from <pt> by successively applying <f>.
 Obj FuncCOMPONENT_PPERM_INT(Obj self, Obj f, Obj pt)
 {
+    GAP_ASSERT(IS_PPERM(f));
+    GAP_ASSERT(IS_INTOBJ(pt));
+
     UInt i, j, deg, len;
     Obj  out;
 
@@ -1051,7 +1024,6 @@ Obj FuncCOMPONENT_PPERM_INT(Obj self, Obj f, Obj pt)
 
         if (i > deg || (ADDR_PPERM2(f))[i - 1] == 0) {
             out = NEW_PLIST(T_PLIST_EMPTY, 0);
-            SET_LEN_PLIST(out, 0);
             return out;
         }
 
@@ -1069,7 +1041,6 @@ Obj FuncCOMPONENT_PPERM_INT(Obj self, Obj f, Obj pt)
 
         if (i > deg || (ADDR_PPERM4(f))[i - 1] == 0) {
             out = NEW_PLIST(T_PLIST_EMPTY, 0);
-            SET_LEN_PLIST(out, 0);
             return out;
         }
 
@@ -1090,6 +1061,8 @@ Obj FuncCOMPONENT_PPERM_INT(Obj self, Obj f, Obj pt)
 // the fixed points of a partial perm
 Obj FuncFIXED_PTS_PPERM(Obj self, Obj f)
 {
+    GAP_ASSERT(IS_PPERM(f));
+
     UInt    len, i, j, deg, rank;
     Obj     out, dom;
     UInt2 * ptf2;
@@ -1155,6 +1128,8 @@ Obj FuncFIXED_PTS_PPERM(Obj self, Obj f)
 
 Obj FuncNR_FIXED_PTS_PPERM(Obj self, Obj f)
 {
+    GAP_ASSERT(IS_PPERM(f));
+
     UInt    nr, i, j, deg, rank;
     Obj     dom;
     UInt2 * ptf2;
@@ -1203,6 +1178,8 @@ Obj FuncNR_FIXED_PTS_PPERM(Obj self, Obj f)
 // the moved points of a partial perm
 Obj FuncMOVED_PTS_PPERM(Obj self, Obj f)
 {
+    GAP_ASSERT(IS_PPERM(f));
+
     UInt    len, i, j, deg, rank;
     Obj     out, dom;
     UInt2 * ptf2;
@@ -1266,6 +1243,8 @@ Obj FuncMOVED_PTS_PPERM(Obj self, Obj f)
 
 Obj FuncNR_MOVED_PTS_PPERM(Obj self, Obj f)
 {
+    GAP_ASSERT(IS_PPERM(f));
+
     UInt    nr, i, j, deg, rank;
     Obj     dom;
     UInt2 * ptf2;
@@ -1313,6 +1292,8 @@ Obj FuncNR_MOVED_PTS_PPERM(Obj self, Obj f)
 
 Obj FuncLARGEST_MOVED_PT_PPERM(Obj self, Obj f)
 {
+    GAP_ASSERT(IS_PPERM(f));
+
     UInt    i, j, deg;
     Obj     dom;
     UInt2 * ptf2;
@@ -1359,6 +1340,8 @@ Obj FuncLARGEST_MOVED_PT_PPERM(Obj self, Obj f)
 
 Obj FuncSMALLEST_MOVED_PT_PPERM(Obj self, Obj f)
 {
+    GAP_ASSERT(IS_PPERM(f));
+
     UInt    i, j, deg, rank;
     Obj     dom;
     UInt2 * ptf2;
@@ -1408,6 +1391,8 @@ Obj FuncSMALLEST_MOVED_PT_PPERM(Obj self, Obj f)
 // convert a T_PPERM4 with codeg<65536 to a T_PPERM2
 Obj FuncTRIM_PPERM(Obj self, Obj f)
 {
+    GAP_ASSERT(IS_PPERM(f));
+
     UInt    deg, i;
     UInt4 * ptf;
 
@@ -1445,13 +1430,16 @@ Int HashFuncForPPerm(Obj f)
                           (int)2 * DEG_PPERM2(f));
 }
 
-Obj FuncHASH_FUNC_FOR_PPERM(Obj self, Obj f, Obj data) {
+Obj FuncHASH_FUNC_FOR_PPERM(Obj self, Obj f, Obj data)
+{
     return INTOBJ_INT(HashFuncForPPerm(f) % INT_INTOBJ(data) + 1);
 }
 
 // test if a partial perm is an idempotent
 Obj FuncIS_IDEM_PPERM(Obj self, Obj f)
 {
+    GAP_ASSERT(IS_PPERM(f));
+
     UInt2 * ptf2;
     UInt4 * ptf4;
     UInt    deg, i, j, rank;
@@ -1501,6 +1489,8 @@ Obj FuncIS_IDEM_PPERM(Obj self, Obj f)
 /* an idempotent partial perm <e> with ker(e)=ker(f) */
 Obj FuncLEFT_ONE_PPERM(Obj self, Obj f)
 {
+    GAP_ASSERT(IS_PPERM(f));
+
     Obj     dom, g;
     UInt    deg, i, j, rank;
     UInt2 * ptg2;
@@ -1546,6 +1536,8 @@ Obj FuncLEFT_ONE_PPERM(Obj self, Obj f)
 // an idempotent partial perm <e> with im(e)=im(f)
 Obj FuncRIGHT_ONE_PPERM(Obj self, Obj f)
 {
+    GAP_ASSERT(IS_PPERM(f));
+
     Obj     g, img;
     UInt    i, j, codeg, rank;
     UInt2 * ptg2;
@@ -1600,6 +1592,9 @@ Obj FuncNaturalLeqPartialPerm(Obj self, Obj f, Obj g)
     UInt4 *ptf4, *ptg4;
     Obj    dom;
 
+    if (!IS_PPERM(f) || !IS_PPERM(g))
+        ErrorQuit("usage: the arguments must be partial perms,", 0L, 0L);
+
     if (TNUM_OBJ(f) == T_PPERM2) {
         def = DEG_PPERM2(f);
         ptf2 = ADDR_PPERM2(f);
@@ -1625,7 +1620,7 @@ Obj FuncNaturalLeqPartialPerm(Obj self, Obj f, Obj g)
                 }
             }
         }
-        else if (TNUM_OBJ(g) == T_PPERM4) {
+        else {
             deg = DEG_PPERM4(g);
             ptg4 = ADDR_PPERM4(g);
             if (DOM_PPERM(f) == NULL) {
@@ -1643,9 +1638,6 @@ Obj FuncNaturalLeqPartialPerm(Obj self, Obj f, Obj g)
                         return False;
                 }
             }
-        }
-        else {
-            ErrorQuit("usage: the arguments must be partial perms,", 0L, 0L);
         }
     }
     else if (TNUM_OBJ(f) == T_PPERM4) {
@@ -1673,7 +1665,7 @@ Obj FuncNaturalLeqPartialPerm(Obj self, Obj f, Obj g)
                 }
             }
         }
-        else if (TNUM_OBJ(g) == T_PPERM4) {
+        else {
             deg = DEG_PPERM4(g);
             ptg4 = ADDR_PPERM4(g);
             if (DOM_PPERM(f) == NULL) {
@@ -1692,128 +1684,81 @@ Obj FuncNaturalLeqPartialPerm(Obj self, Obj f, Obj g)
                 }
             }
         }
-        else {
-            ErrorQuit("usage: the arguments must be partial perms,", 0L, 0L);
-        }
-    }
-    else {
-        ErrorQuit("usage: the arguments must be partial perms,", 0L, 0L);
     }
     return True;
 }
 
-// could add use of rank to improve things here. JDM
 Obj FuncJOIN_IDEM_PPERMS(Obj self, Obj f, Obj g)
 {
-    UInt   def, deg, dej, i;
-    Obj    join;
+    GAP_ASSERT(IS_PPERM(f));
+    GAP_ASSERT(IS_PPERM(g));
+
+    UInt   def, deg, i;
+    Obj    join = NULL;
     UInt2 *ptjoin2, *ptf2, *ptg2;
     UInt4 *ptjoin4, *ptf4, *ptg4;
 
-    if (EQ(f, g))
+    if (EQ(f, g)) {
         return f;
+    }
 
     def = DEG_PPERM(f);
     deg = DEG_PPERM(g);
-    dej = MAX(def, deg);
-    if (dej < 65536) {
-        join = NEW_PPERM2(dej);
-        SET_CODEG_PPERM2(join, dej);
+
+    if (def > deg) {
+        SWAP(Obj, f, g);
+        SWAP(UInt, def, deg);
+    }
+
+    if (TNUM_OBJ(f) == T_PPERM2 && TNUM_OBJ(g) == T_PPERM2) {
+        join = NEW_PPERM2(deg);
+        SET_CODEG_PPERM2(join, deg);
         ptjoin2 = ADDR_PPERM2(join);
         ptf2 = ADDR_PPERM2(f);
         ptg2 = ADDR_PPERM2(g);
-        if (def < deg) {
-            for (i = 0; i < def; i++) {
-                if (ptf2[i] != 0) {
-                    ptjoin2[i] = ptf2[i];
-                }
-                else if (ptg2[i] != 0) {
-                    ptjoin2[i] = ptg2[i];
-                }
-            }
-            for (; i < deg; i++) {
-                if (ptg2[i] != 0)
-                    ptjoin2[i] = ptg2[i];
-            }
+        for (i = 0; i < def; i++) {
+            ptjoin2[i] = (ptf2[i] != 0 ? ptf2[i] : ptg2[i]);
         }
-        else {
-            for (i = 0; i < deg; i++) {
-                if (ptg2[i] != 0) {
-                    ptjoin2[i] = ptg2[i];
-                }
-                else if (ptf2[i] != 0) {
-                    ptjoin2[i] = ptf2[i];
-                }
-            }
-            for (; i < def; i++) {
-                if (ptf2[i] != 0)
-                    ptjoin2[i] = ptf2[i];
-            }
+        for (; i < deg; i++) {
+            ptjoin2[i] = ptg2[i];
         }
     }
-    else if (def >= 65536 && deg >= 65536) {    // 3 more cases required
-        join = NEW_PPERM4(dej);
-        SET_CODEG_PPERM4(join, dej);
+    else if (TNUM_OBJ(f) == T_PPERM2 && TNUM_OBJ(g) == T_PPERM4) {
+        join = NEW_PPERM4(deg);
+        SET_CODEG_PPERM4(join, deg);
+        ptjoin4 = ADDR_PPERM4(join);
+        ptf2 = ADDR_PPERM2(f);
+        ptg4 = ADDR_PPERM4(g);
+        for (i = 0; i < def; i++) {
+            ptjoin4[i] = (ptf2[i] != 0 ? ptf2[i] : ptg4[i]);
+        }
+        for (; i < deg; i++) {
+            ptjoin4[i] = ptg4[i];
+        }
+    }
+    else if (TNUM_OBJ(f) == T_PPERM4 && TNUM_OBJ(g) == T_PPERM4) {
+        join = NEW_PPERM4(deg);
+        SET_CODEG_PPERM4(join, deg);
         ptjoin4 = ADDR_PPERM4(join);
         ptf4 = ADDR_PPERM4(f);
         ptg4 = ADDR_PPERM4(g);
-        if (def < deg) {
-            for (i = 0; i < def; i++) {
-                if (ptf4[i] != 0) {
-                    ptjoin4[i] = ptf4[i];
-                }
-                else if (ptg4[i] != 0) {
-                    ptjoin4[i] = ptg4[i];
-                }
-            }
-            for (; i < deg; i++) {
-                if (ptg4[i] != 0)
-                    ptjoin4[i] = ptg4[i];
-            }
+        for (i = 0; i < def; i++) {
+            ptjoin4[i] = (ptf4[i] != 0 ? ptf4[i] : ptg4[i]);
         }
-        else {
-            for (i = 0; i < deg; i++) {
-                if (ptg4[i] != 0) {
-                    ptjoin4[i] = ptg4[i];
-                }
-                else if (ptf4[i] != 0) {
-                    ptjoin4[i] = ptf4[i];
-                }
-            }
-            for (; i < def; i++) {
-                if (ptf4[i] != 0)
-                    ptjoin4[i] = ptf4[i];
-            }
+        for (; i < deg; i++) {
+            ptjoin4[i] = ptg4[i];
         }
     }
-    else if (def > deg) {    // def>=65536>deg
-        join = NEW_PPERM4(dej);
-        SET_CODEG_PPERM4(join, dej);
-        ptjoin4 = ADDR_PPERM4(join);
-        ptf4 = ADDR_PPERM4(f);
-        ptg2 = ADDR_PPERM2(g);
-        for (i = 0; i < deg; i++) {
-            if (ptg2[i] != 0) {
-                ptjoin4[i] = ptg2[i];
-            }
-            else if (ptf4[i] != 0) {
-                ptjoin4[i] = ptf4[i];
-            }
-        }
-        for (; i < def; i++) {
-            if (ptf4[i] != 0)
-                ptjoin4[i] = ptf4[i];
-        }
-    }
-    else {
-        return FuncJOIN_IDEM_PPERMS(self, g, f);
-    }
+    GAP_ASSERT(join != NULL);
     return join;
 }
 
 // the union of f and g where this defines an injective function
 Obj FuncJOIN_PPERMS(Obj self, Obj f, Obj g)
 {
+    GAP_ASSERT(IS_PPERM(f));
+    GAP_ASSERT(IS_PPERM(g));
+
     UInt   deg, i, j, degf, degg, codeg, rank;
     UInt2 *ptf2, *ptg2, *ptjoin2;
     UInt4 *ptf4, *ptg4, *ptjoin4, *ptseen;
@@ -1825,7 +1770,7 @@ Obj FuncJOIN_PPERMS(Obj self, Obj f, Obj g)
     // init the buffer
     codeg = MAX(CODEG_PPERM(f), CODEG_PPERM(g));
     ResizeTmpPPerm(codeg);
-    ptseen = (UInt4 *)(ADDR_OBJ(TmpPPerm));
+    ptseen = ADDR_PPERM4(TmpPPerm);
     for (i = 0; i < codeg; i++)
         ptseen[i] = 0;
 
@@ -1839,7 +1784,7 @@ Obj FuncJOIN_PPERMS(Obj self, Obj f, Obj g)
         ptjoin4 = ADDR_PPERM4(join);
         ptf4 = ADDR_PPERM4(f);
         ptg4 = ADDR_PPERM4(g);
-        ptseen = (UInt4 *)(ADDR_OBJ(TmpPPerm));
+        ptseen = ADDR_PPERM4(TmpPPerm);
 
         if (DOM_PPERM(f) != NULL) {
             dom = DOM_PPERM(f);
@@ -1919,7 +1864,7 @@ Obj FuncJOIN_PPERMS(Obj self, Obj f, Obj g)
         ptjoin4 = ADDR_PPERM4(join);
         ptf4 = ADDR_PPERM4(f);
         ptg2 = ADDR_PPERM2(g);
-        ptseen = (UInt4 *)(ADDR_OBJ(TmpPPerm));
+        ptseen = ADDR_PPERM4(TmpPPerm);
 
         if (DOM_PPERM(f) != NULL) {
             dom = DOM_PPERM(f);
@@ -2002,7 +1947,7 @@ Obj FuncJOIN_PPERMS(Obj self, Obj f, Obj g)
         ptjoin2 = ADDR_PPERM2(join);
         ptf2 = ADDR_PPERM2(f);
         ptg2 = ADDR_PPERM2(g);
-        ptseen = (UInt4 *)(ADDR_OBJ(TmpPPerm));
+        ptseen = ADDR_PPERM4(TmpPPerm);
 
         if (DOM_PPERM(f) != NULL) {
             dom = DOM_PPERM(f);
@@ -2077,6 +2022,9 @@ Obj FuncJOIN_PPERMS(Obj self, Obj f, Obj g)
 
 Obj FuncMEET_PPERMS(Obj self, Obj f, Obj g)
 {
+    GAP_ASSERT(IS_PPERM(f));
+    GAP_ASSERT(IS_PPERM(g));
+
     UInt   deg, i, j, degf, degg, codeg;
     UInt2 *ptf2, *ptg2, *ptmeet2;
     UInt4 *ptf4, *ptg4, *ptmeet4;
@@ -2201,6 +2149,8 @@ Obj FuncMEET_PPERMS(Obj self, Obj f, Obj g)
 // restricted partial perm where set is assumed to be a set of positive ints
 Obj FuncRESTRICTED_PPERM(Obj self, Obj f, Obj set)
 {
+    GAP_ASSERT(IS_LIST(set));
+
     UInt   i, j, n, codeg, deg;
     UInt2 *ptf2, *ptg2;
     UInt4 *ptf4, *ptg4;
@@ -2262,10 +2212,12 @@ Obj FuncRESTRICTED_PPERM(Obj self, Obj f, Obj set)
 }
 
 // convert a permutation <p> to a partial perm on <set>, which is assumed to
-// be
-// a set of positive integers
+// be a set of positive integers
 Obj FuncAS_PPERM_PERM(Obj self, Obj p, Obj set)
 {
+    GAP_ASSERT(IS_PERM2(p) || IS_PERM4(p));
+    GAP_ASSERT(IS_LIST(set));
+
     UInt   i, j, n, deg, codeg, dep;
     UInt2 *ptf2, *ptp2;
     UInt4 *ptf4, *ptp4;
@@ -2281,7 +2233,6 @@ Obj FuncAS_PPERM_PERM(Obj self, Obj p, Obj set)
         dep = DEG_PERM2(p);
         if (deg < 65536) {
             if (dep < deg) {
-                // Pr("Case 1\n", 0L, 0L);
                 f = NEW_PPERM2(deg);
                 ptf2 = ADDR_PPERM2(f);
                 ptp2 = ADDR_PERM2(p);
@@ -2292,7 +2243,6 @@ Obj FuncAS_PPERM_PERM(Obj self, Obj p, Obj set)
                 SET_CODEG_PPERM2(f, deg);
             }
             else {    // deg(f)<=deg(p)<=65536
-                // Pr("Case 2\n", 0L, 0L);
                 f = NEW_PPERM2(deg);
                 ptf2 = ADDR_PPERM2(f);
                 ptp2 = ADDR_PERM2(p);
@@ -2306,7 +2256,6 @@ Obj FuncAS_PPERM_PERM(Obj self, Obj p, Obj set)
             }
         }
         else {    // deg(p)<=65536<=deg(f)
-            // Pr("Case 3\n", 0L, 0L);
             f = NEW_PPERM4(deg);
             ptf4 = ADDR_PPERM4(f);
             ptp2 = ADDR_PERM2(p);
@@ -2320,7 +2269,6 @@ Obj FuncAS_PPERM_PERM(Obj self, Obj p, Obj set)
     else {    // p is PERM4
         dep = DEG_PERM4(p);
         if (dep < deg) {
-            // Pr("Case 4\n", 0L, 0L);
             f = NEW_PPERM4(deg);
             ptf4 = ADDR_PPERM4(f);
             ptp4 = ADDR_PERM4(p);
@@ -2340,8 +2288,6 @@ Obj FuncAS_PPERM_PERM(Obj self, Obj p, Obj set)
                     codeg = j;
             }
             if (codeg < 65536) {
-
-                // Pr("Case 5\n", 0L, 0L);
                 f = NEW_PPERM2(deg);
                 ptf2 = ADDR_PPERM2(f);
                 ptp4 = ADDR_PERM4(p);
@@ -2352,7 +2298,6 @@ Obj FuncAS_PPERM_PERM(Obj self, Obj p, Obj set)
                 SET_CODEG_PPERM2(f, codeg);
             }
             else {
-                // Pr("Case 6\n", 0L, 0L);
                 f = NEW_PPERM4(deg);
                 ptf4 = ADDR_PPERM4(f);
                 ptp4 = ADDR_PERM4(p);
@@ -2372,18 +2317,21 @@ Obj FuncAS_PPERM_PERM(Obj self, Obj p, Obj set)
 // for a partial perm with equal dom and img
 Obj FuncAS_PERM_PPERM(Obj self, Obj f)
 {
+    GAP_ASSERT(IS_PPERM(f));
+
     UInt2 *ptf2, *ptp2;
     UInt4 *ptf4, *ptp4;
     UInt   deg, i, j, rank;
-    Obj    p, dom;
+    Obj    p, dom, img;
 
+    img = FuncIMAGE_SET_PPERM(self, f);
+    dom = DOM_PPERM(f);
+    if (!EQ(img, dom)) {
+        return Fail;
+    }
     if (TNUM_OBJ(f) == T_PPERM2) {
-        if (!EQ(FuncIMAGE_SET_PPERM(self, f), DOM_PPERM(f))) {
-            return Fail;
-        }
         deg = DEG_PPERM2(f);
         p = NEW_PERM2(deg);
-        dom = DOM_PPERM(f);
         ptp2 = ADDR_PERM2(p);
         ptf2 = ADDR_PPERM2(f);
         for (i = 0; i < deg; i++)
@@ -2395,12 +2343,8 @@ Obj FuncAS_PERM_PPERM(Obj self, Obj f)
         }
     }
     else {
-        if (!EQ(FuncIMAGE_SET_PPERM(self, f), DOM_PPERM(f))) {
-            return Fail;
-        }
         deg = DEG_PPERM4(f);
         p = NEW_PERM4(deg);
-        dom = DOM_PPERM(f);
         ptp4 = ADDR_PERM4(p);
         ptf4 = ADDR_PPERM4(f);
         for (i = 0; i < deg; i++)
@@ -2418,6 +2362,9 @@ Obj FuncAS_PERM_PPERM(Obj self, Obj f)
 // and dom(f)=dom(g), no checking
 Obj FuncPERM_LEFT_QUO_PPERM_NC(Obj self, Obj f, Obj g)
 {
+    GAP_ASSERT(IS_PPERM(f));
+    GAP_ASSERT(IS_PPERM(g));
+
     UInt   deg, i, j, rank;
     Obj    perm, dom;
     UInt2 *ptf2, *ptp2, *ptg2;
@@ -2512,7 +2459,7 @@ Obj FuncShortLexLeqPartialPerm(Obj self, Obj f, Obj g)
         if (DEG_PPERM4(g) == 0)
             return False;
         rankg = RANK_PPERM4(g);
-        domg = DOM_PPERM(f);
+        domg = DOM_PPERM(g);
     }
 
     if (rankf != rankg)
@@ -2601,6 +2548,8 @@ Obj FuncHAS_IMG_PPERM(Obj self, Obj f)
 // an idempotent partial perm on the union of the domain and image
 Obj OnePPerm(Obj f)
 {
+    GAP_ASSERT(IS_PPERM(f));
+
     Obj     g, img, dom;
     UInt    i, j, deg, rank;
     UInt2 * ptg2;
@@ -2644,124 +2593,12 @@ Obj OnePPerm(Obj f)
     return g;
 }
 
-// print a partial perm in disjoint cycle and chain notation
-Obj FuncPrintPPerm2(Obj self, Obj f)
-{
-    UInt    i, j, n, rank, k, deg;
-    UInt4 * ptseen;
-    UInt2 * ptf2;
-    Obj     dom, img;
-
-    deg = DEG_PPERM2(f);
-    if (deg == 0)
-        Pr("<empty partial perm>", 0L, 0L);
-
-    n = MAX(deg, CODEG_PPERM2(f));
-    ResizeTmpPPerm(n);
-    ptseen = (UInt4 *)(ADDR_OBJ(TmpPPerm));
-    for (i = 0; i < n; i++)
-        ptseen[i] = 0;
-
-    rank = RANK_PPERM2(f);    // finds dom and img too
-    dom = DOM_PPERM(f);
-    img = IMG_PPERM(f);
-
-    ptf2 = ADDR_PPERM2(f);
-    ptseen = (UInt4 *)(ADDR_OBJ(TmpPPerm));
-    // find img(f)
-    for (i = 1; i <= rank; i++)
-        ptseen[INT_INTOBJ(ELM_PLIST(img, i)) - 1] = 1;
-
-    // find chains
-    for (i = 1; i <= rank; i++) {
-        j = INT_INTOBJ(ELM_PLIST(dom, i)) - 1;
-        if (ptseen[j] == 0) {
-            Pr("%>[%>%d%<", (Int)j + 1, 0L);
-            ptseen[j] = 2;
-            for (k = ptf2[j]; (k <= deg && ptf2[k - 1] != 0);
-                 k = ptf2[k - 1]) {
-                Pr(",%>%d%<", (Int)k, 0L);
-                ptseen[k - 1] = 2;
-            }
-            ptseen[k - 1] = 2;
-            Pr(",%>%d%<%<]", (Int)k, 0L);
-        }
-    }
-
-    // find cycles
-    for (i = 1; i <= rank; i++) {
-        j = INT_INTOBJ(ELM_PLIST(dom, i)) - 1;
-        if (ptseen[j] == 1) {
-            Pr("%>(%>%d%<", (Int)j + 1, 0L);
-            for (k = ptf2[j]; k != j + 1; k = ptf2[k - 1]) {
-                Pr(",%>%d%<", (Int)k, 0L);
-                ptseen[k - 1] = 0;
-            }
-            Pr("%<)", 0L, 0L);
-        }
-    }
-    return 0L;
-}
-
-Obj FuncPrintPPerm4(Obj self, Obj f)
-{
-    UInt   i, j, n, rank, k, deg;
-    UInt4 *ptseen, *ptf4;
-    Obj    dom, img;
-
-    deg = DEG_PPERM4(f);
-    if (deg == 0)
-        Pr("<empty partial perm>", 0L, 0L);
-    n = MAX(deg, CODEG_PPERM4(f));
-    ResizeTmpPPerm(n);
-    ptseen = (UInt4 *)(ADDR_OBJ(TmpPPerm));
-    for (i = 0; i < n; i++)
-        ptseen[i] = 0;
-
-    rank = RANK_PPERM4(f);    // finds dom and img too
-    dom = DOM_PPERM(f);
-    img = IMG_PPERM(f);
-
-    ptseen = (UInt4 *)(ADDR_OBJ(TmpPPerm));
-    ptf4 = ADDR_PPERM4(f);
-    // find img(f)
-    for (i = 1; i <= rank; i++)
-        ptseen[INT_INTOBJ(ELM_PLIST(img, i)) - 1] = 1;
-
-    // find chains
-    for (i = 1; i <= rank; i++) {
-        j = INT_INTOBJ(ELM_PLIST(dom, i)) - 1;
-        if (ptseen[j] == 0) {
-            Pr("%>[%>%d%<", (Int)j + 1, 0L);
-            ptseen[j] = 2;
-            for (k = ptf4[j]; (k <= deg && ptf4[k - 1] != 0);
-                 k = ptf4[k - 1]) {
-                Pr(",%>%d%<", (Int)k, 0L);
-                ptseen[k - 1] = 2;
-            }
-            ptseen[k - 1] = 2;
-            Pr(",%>%d%<%<]", (Int)k, 0L);
-        }
-    }
-
-    // find cycles
-    for (i = 1; i <= rank; i++) {
-        j = INT_INTOBJ(ELM_PLIST(dom, i)) - 1;
-        if (ptseen[j] == 1) {
-            Pr("%>(%>%d%<", (Int)j + 1, 0L);
-            for (k = ptf4[j]; k != j + 1; k = ptf4[k - 1]) {
-                Pr(",%>%d%<", (Int)k, 0L);
-                ptseen[k - 1] = 0;
-            }
-            Pr("%<)", 0L, 0L);
-        }
-    }
-    return 0L;
-}
-
 /* equality for partial perms */
 Int EqPPerm22(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM2);
+
     UInt2 * ptf = ADDR_PPERM2(f);
     UInt2 * ptg = ADDR_PPERM2(g);
     UInt    deg = DEG_PPERM2(f);
@@ -2794,6 +2631,9 @@ Int EqPPerm22(Obj f, Obj g)
 
 Int EqPPerm24(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM4);
+
     UInt2 * ptf = ADDR_PPERM2(f);
     UInt4 * ptg = ADDR_PPERM4(g);
     UInt    deg = DEG_PPERM2(f);
@@ -2825,37 +2665,14 @@ Int EqPPerm24(Obj f, Obj g)
 
 Int EqPPerm42(Obj f, Obj g)
 {
-    UInt4 * ptf = ADDR_PPERM4(f);
-    UInt2 * ptg = ADDR_PPERM2(g);
-    UInt    deg = DEG_PPERM4(f);
-    UInt    i, j, rank;
-    Obj     dom;
-
-    if (deg != DEG_PPERM2(g) || CODEG_PPERM4(f) != CODEG_PPERM2(g))
-        return 0L;
-
-    if (DOM_PPERM(f) == NULL || DOM_PPERM(g) == NULL) {
-        for (i = 0; i < deg; i++)
-            if (*(ptf++) != *(ptg++))
-                return 0L;
-        return 1L;
-    }
-
-    if (RANK_PPERM4(f) != RANK_PPERM2(g))
-        return 0L;
-    dom = DOM_PPERM(f);
-    rank = RANK_PPERM4(f);
-
-    for (i = 1; i <= rank; i++) {
-        j = INT_INTOBJ(ELM_PLIST(dom, i)) - 1;
-        if (ptf[j] != ptg[j])
-            return 0L;
-    }
-    return 1L;
+    return EqPPerm24(g, f);
 }
 
 Int EqPPerm44(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM4);
+
     UInt4 * ptf = ADDR_PPERM4(f);
     UInt4 * ptg = ADDR_PPERM4(g);
     UInt    i, j, rank;
@@ -2886,9 +2703,11 @@ Int EqPPerm44(Obj f, Obj g)
 }
 
 /* less than for partial perms */
-// beware this is different than it used to be...
 Int LtPPerm22(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM2);
+
     UInt2 * ptf = ADDR_PPERM2(f);
     UInt2 * ptg = ADDR_PPERM2(g);
     UInt    deg, i;
@@ -2916,6 +2735,9 @@ Int LtPPerm22(Obj f, Obj g)
 
 Int LtPPerm24(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM4);
+
     UInt2 * ptf = ADDR_PPERM2(f);
     UInt4 * ptg = ADDR_PPERM4(g);
     UInt    deg, i;
@@ -2943,6 +2765,9 @@ Int LtPPerm24(Obj f, Obj g)
 
 Int LtPPerm42(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM2);
+
     UInt4 * ptf = ADDR_PPERM4(f);
     UInt2 * ptg = ADDR_PPERM2(g);
     UInt    deg, i;
@@ -2970,6 +2795,9 @@ Int LtPPerm42(Obj f, Obj g)
 
 Int LtPPerm44(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM4);
+
     UInt4 * ptf = ADDR_PPERM4(f);
     UInt4 * ptg = ADDR_PPERM4(g);
     UInt    deg, i;
@@ -2998,6 +2826,9 @@ Int LtPPerm44(Obj f, Obj g)
 /* product of partial perm and partial perm */
 Obj ProdPPerm22(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM2);
+
     UInt   deg, degg, i, j, rank;
     UInt2 *ptf, *ptg, *ptfg, codeg;
     Obj    fg, dom;
@@ -3039,8 +2870,6 @@ Obj ProdPPerm22(Obj f, Obj g)
     else {
         // compose in deg operations
         for (i = 0; i < deg; i++) {
-            // JDM could have additional case so that we don't have to check
-            // ptf[i]<=degg
             if (ptf[i] != 0 && ptf[i] <= degg) {
                 ptfg[i] = ptg[ptf[i] - 1];
                 if (ptfg[i] > codeg)
@@ -3055,6 +2884,9 @@ Obj ProdPPerm22(Obj f, Obj g)
 // the product is always pperm2
 Obj ProdPPerm42(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM2);
+
     UInt    deg, degg, i, j, rank;
     UInt4 * ptf;
     UInt2 * ptg, *ptfg, codeg;
@@ -3111,11 +2943,14 @@ Obj ProdPPerm42(Obj f, Obj g)
 // it is possible that f*g could be represented as a PPERM2
 Obj ProdPPerm44(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM4);
+
     UInt   deg, degg, codeg, i, j, rank;
     UInt4 *ptf, *ptg, *ptfg;
     Obj    fg, dom;
 
-    if (DEG_PPERM4(g) == 0) {
+    if (DEG_PPERM4(f) == 0 || DEG_PPERM4(g) == 0) {
         return EmptyPartialPerm;
     }
 
@@ -3172,6 +3007,9 @@ Obj ProdPPerm44(Obj f, Obj g)
 // it is possible that f*g could be represented as a PPERM2
 Obj ProdPPerm24(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM4);
+
     UInt    deg, degg, i, j, codeg, rank;
     UInt2 * ptf;
     UInt4 * ptg, *ptfg;
@@ -3236,6 +3074,9 @@ Obj ProdPPerm24(Obj f, Obj g)
 // compose partial perms and perms
 Obj ProdPPerm2Perm2(Obj f, Obj p)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+    GAP_ASSERT(TNUM_OBJ(p) == T_PERM2);
+
     UInt2 * ptf, *ptp, *ptfp2;
     UInt4 * ptfp4;
     Obj     fp, dom;
@@ -3260,7 +3101,6 @@ Obj ProdPPerm2Perm2(Obj f, Obj p)
         if (codeg <= dep) {
             codeg = 0;
             if (DOM_PPERM(f) == NULL) {
-                // Pr("Case 2\n", 0L, 0L);
                 for (i = 0; i < deg; i++) {
                     if (ptf[i] != 0) {
                         ptfp2[i] = ptp[ptf[i] - 1] + 1;
@@ -3270,7 +3110,6 @@ Obj ProdPPerm2Perm2(Obj f, Obj p)
                 }
             }
             else {
-                // Pr("Case 1\n", 0L, 0L);
                 dom = DOM_PPERM(f);
                 rank = RANK_PPERM2(f);
                 for (i = 1; i <= rank; i++) {
@@ -3283,7 +3122,6 @@ Obj ProdPPerm2Perm2(Obj f, Obj p)
         }
         else {
             if (DOM_PPERM(f) == NULL) {
-                // Pr("Case 4\n", 0L, 0L);
                 for (i = 0; i < deg; i++) {
                     if (ptf[i] != 0) {
                         ptfp2[i] = IMAGE(ptf[i] - 1, ptp, dep) + 1;
@@ -3291,7 +3129,6 @@ Obj ProdPPerm2Perm2(Obj f, Obj p)
                 }
             }
             else {
-                // Pr("Case 3\n", 0L, 0L);
                 dom = DOM_PPERM(f);
                 rank = RANK_PPERM2(f);
                 for (i = 1; i <= rank; i++) {
@@ -3306,7 +3143,6 @@ Obj ProdPPerm2Perm2(Obj f, Obj p)
         ptfp4 = ADDR_PPERM4(fp);
         codeg = 0;
         if (DOM_PPERM(f) == NULL) {
-            // Pr("Case 6\n", 0L, 0L);
             for (i = 0; i < deg; i++) {
                 if (ptf[i] != 0) {
                     ptfp4[i] = ptp[ptf[i] - 1] + 1;
@@ -3316,7 +3152,6 @@ Obj ProdPPerm2Perm2(Obj f, Obj p)
             }
         }
         else {
-            // Pr("Case 5\n", 0L, 0L);
             dom = DOM_PPERM(f);
             rank = RANK_PPERM2(f);
             for (i = 1; i <= rank; i++) {
@@ -3333,6 +3168,9 @@ Obj ProdPPerm2Perm2(Obj f, Obj p)
 
 Obj ProdPPerm4Perm4(Obj f, Obj p)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+    GAP_ASSERT(TNUM_OBJ(p) == T_PERM4);
+
     UInt4 *ptf, *ptp, *ptfp;
     Obj    fp, dom;
     UInt   codeg, dep, deg, i, j, rank;
@@ -3350,7 +3188,6 @@ Obj ProdPPerm4Perm4(Obj f, Obj p)
     if (codeg <= dep) {
         codeg = 0;
         if (DOM_PPERM(f) == NULL) {
-            // Pr("case 1\n", 0L, 0L);
             for (i = 0; i < deg; i++) {
                 if (ptf[i] != 0) {
                     ptfp[i] = ptp[ptf[i] - 1] + 1;
@@ -3360,7 +3197,6 @@ Obj ProdPPerm4Perm4(Obj f, Obj p)
             }
         }
         else {
-            // Pr("case 2\n", 0L, 0L);
             dom = DOM_PPERM(f);
             rank = RANK_PPERM4(f);
             for (i = 1; i <= rank; i++) {
@@ -3373,7 +3209,6 @@ Obj ProdPPerm4Perm4(Obj f, Obj p)
     }
     else {
         if (DOM_PPERM(f) == NULL) {
-            // Pr("case 3\n", 0L, 0L);
             for (i = 0; i < deg; i++) {
                 if (ptf[i] != 0) {
                     ptfp[i] = IMAGE(ptf[i] - 1, ptp, dep) + 1;
@@ -3381,7 +3216,6 @@ Obj ProdPPerm4Perm4(Obj f, Obj p)
             }
         }
         else {
-            // Pr("case 4\n", 0L, 0L);
             dom = DOM_PPERM(f);
             rank = RANK_PPERM4(f);
             for (i = 1; i <= rank; i++) {
@@ -3396,6 +3230,9 @@ Obj ProdPPerm4Perm4(Obj f, Obj p)
 
 Obj ProdPPerm2Perm4(Obj f, Obj p)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+    GAP_ASSERT(TNUM_OBJ(p) == T_PERM4);
+
     UInt2 * ptf;
     UInt4 * ptp, *ptfp;
     Obj     fp, dom;
@@ -3433,6 +3270,9 @@ Obj ProdPPerm2Perm4(Obj f, Obj p)
 
 Obj ProdPPerm4Perm2(Obj f, Obj p)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+    GAP_ASSERT(TNUM_OBJ(p) == T_PERM2);
+
     UInt4 *ptf, *ptfp;
     UInt2 *ptp, dep;
     Obj    fp, dom;
@@ -3449,7 +3289,6 @@ Obj ProdPPerm4Perm2(Obj f, Obj p)
     ptfp = ADDR_PPERM4(fp);
 
     if (DOM_PPERM(f) == NULL) {
-        // Pr("case 1\n", 0L, 0L);
         for (i = 0; i < deg; i++) {
             if (ptf[i] != 0) {
                 ptfp[i] = IMAGE(ptf[i] - 1, ptp, dep) + 1;
@@ -3457,7 +3296,6 @@ Obj ProdPPerm4Perm2(Obj f, Obj p)
         }
     }
     else {
-        // Pr("case 2\n", 0L, 0L);
         dom = DOM_PPERM(f);
         rank = RANK_PPERM4(f);
         for (i = 1; i <= rank; i++) {
@@ -3472,6 +3310,9 @@ Obj ProdPPerm4Perm2(Obj f, Obj p)
 // product of a perm and a partial perm
 Obj ProdPerm2PPerm2(Obj p, Obj f)
 {
+    GAP_ASSERT(TNUM_OBJ(p) == T_PERM2);
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+
     UInt2 deg, *ptp, *ptf, *ptpf;
     UInt  degf, i;
     Obj   pf;
@@ -3483,7 +3324,6 @@ Obj ProdPerm2PPerm2(Obj p, Obj f)
     degf = DEG_PPERM2(f);
 
     if (deg < degf) {
-        // Pr("case 1\n", 0L, 0L);
         pf = NEW_PPERM2(degf);
         ptpf = ADDR_PPERM2(pf);
         ptp = ADDR_PERM2(p);
@@ -3494,7 +3334,6 @@ Obj ProdPerm2PPerm2(Obj p, Obj f)
             *ptpf++ = ptf[i];
     }
     else {    // deg(f)<=deg(p)
-        // Pr("case 2\n", 0L, 0L);
         // find the degree
         ptp = ADDR_PERM2(p);
         ptf = ADDR_PPERM2(f);
@@ -3514,6 +3353,9 @@ Obj ProdPerm2PPerm2(Obj p, Obj f)
 
 Obj ProdPerm4PPerm4(Obj p, Obj f)
 {
+    GAP_ASSERT(TNUM_OBJ(p) == T_PERM4);
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+
     UInt4 deg, *ptp, *ptf, *ptpf;
     UInt  degf, i;
     Obj   pf;
@@ -3525,7 +3367,6 @@ Obj ProdPerm4PPerm4(Obj p, Obj f)
     degf = DEG_PPERM4(f);
 
     if (deg < degf) {
-        // Pr("case 1\n", 0L, 0L);
         pf = NEW_PPERM4(degf);
         ptpf = ADDR_PPERM4(pf);
         ptp = ADDR_PERM4(p);
@@ -3536,8 +3377,7 @@ Obj ProdPerm4PPerm4(Obj p, Obj f)
             *ptpf++ = ptf[i];
     }
     else {    // deg(f)<deg(p)
-        // Pr("case 2\n", 0L, 0L);
-        // fin the degree
+        // find the degree
         ptp = ADDR_PERM4(p);
         ptf = ADDR_PPERM4(f);
         while (ptp[deg - 1] >= degf || ptf[ptp[deg - 1]] == 0)
@@ -3556,6 +3396,9 @@ Obj ProdPerm4PPerm4(Obj p, Obj f)
 
 Obj ProdPerm4PPerm2(Obj p, Obj f)
 {
+    GAP_ASSERT(TNUM_OBJ(p) == T_PERM4);
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+
     UInt4  deg, *ptp;
     UInt2 *ptf, *ptpf;
     UInt   degf, i;
@@ -3567,7 +3410,6 @@ Obj ProdPerm4PPerm2(Obj p, Obj f)
     deg = DEG_PERM4(p);
     degf = DEG_PPERM2(f);
     if (deg < degf) {
-        // Pr("case 1\n", 0L, 0L);
         pf = NEW_PPERM2(degf);
         ptpf = ADDR_PPERM2(pf);
         ptp = ADDR_PERM4(p);
@@ -3578,7 +3420,6 @@ Obj ProdPerm4PPerm2(Obj p, Obj f)
             *ptpf++ = ptf[i];
     }
     else {    // deg(f)<=deg(p)
-        // Pr("case 2\n", 0L, 0L);
         // find the degree
         ptp = ADDR_PERM4(p);
         ptf = ADDR_PPERM2(f);
@@ -3599,6 +3440,9 @@ Obj ProdPerm4PPerm2(Obj p, Obj f)
 
 Obj ProdPerm2PPerm4(Obj p, Obj f)
 {
+    GAP_ASSERT(TNUM_OBJ(p) == T_PERM2);
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+
     UInt2 * ptp;
     UInt4 * ptf, *ptpf;
     UInt    deg, degf, i;
@@ -3610,7 +3454,6 @@ Obj ProdPerm2PPerm4(Obj p, Obj f)
     deg = DEG_PERM2(p);
     degf = DEG_PPERM4(f);
     if (deg < degf) {
-        // Pr("case 1\n", 0L, 0L);
         pf = NEW_PPERM4(degf);
         ptpf = ADDR_PPERM4(pf);
         ptp = ADDR_PERM2(p);
@@ -3621,7 +3464,6 @@ Obj ProdPerm2PPerm4(Obj p, Obj f)
             *ptpf++ = ptf[i];
     }
     else {    // deg(f)<deg(p)
-        // Pr("case 2\n", 0L, 0L);
         // find the degree
         ptp = ADDR_PERM2(p);
         ptf = ADDR_PPERM4(f);
@@ -3643,6 +3485,8 @@ Obj ProdPerm2PPerm4(Obj p, Obj f)
 // the inverse of a partial perm
 Obj InvPPerm2(Obj f)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+
     UInt    deg, codeg, i, j, rank;
     UInt2 * ptf, *ptinv2;
     UInt4 * ptinv4;
@@ -3694,6 +3538,8 @@ Obj InvPPerm2(Obj f)
 
 Obj InvPPerm4(Obj f)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+
     UInt    deg, codeg, i, j, rank;
     UInt2 * ptinv2;
     UInt4 * ptf, *ptinv4;
@@ -3743,11 +3589,12 @@ Obj InvPPerm4(Obj f)
     return inv;
 }
 
-// Conjugation: p^-1*f*p
-// lose the assumption that dom is known and renovate as per LquoPermPPerm
-// JDM
+// Conjugation: p ^ -1 * f * p
 Obj PowPPerm2Perm2(Obj f, Obj p)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+    GAP_ASSERT(TNUM_OBJ(p) == T_PERM2);
+
     UInt   deg, rank, degconj, i, j, k, codeg;
     UInt2 *ptf, *ptp, *ptconj, dep;
     Obj    conj, dom;
@@ -3804,6 +3651,9 @@ Obj PowPPerm2Perm2(Obj f, Obj p)
 
 Obj PowPPerm2Perm4(Obj f, Obj p)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+    GAP_ASSERT(TNUM_OBJ(p) == T_PERM4);
+
     UInt    deg, rank, degconj, i, j, k, codeg;
     UInt2 * ptf;
     UInt4 * ptp, *ptconj, dep;
@@ -3850,6 +3700,9 @@ Obj PowPPerm2Perm4(Obj f, Obj p)
 
 Obj PowPPerm4Perm2(Obj f, Obj p)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+    GAP_ASSERT(TNUM_OBJ(p) == T_PERM2);
+
     UInt    deg, rank, degconj, i, j, k, codeg;
     UInt4 * ptf, *ptconj, dep;
     UInt2 * ptp;
@@ -3906,6 +3759,9 @@ Obj PowPPerm4Perm2(Obj f, Obj p)
 
 Obj PowPPerm4Perm4(Obj f, Obj p)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+    GAP_ASSERT(TNUM_OBJ(p) == T_PERM4);
+
     UInt   deg, rank, degconj, i, j, k, codeg;
     UInt4 *ptf, *ptp, *ptconj, dep;
     Obj    conj, dom;
@@ -3939,7 +3795,6 @@ Obj PowPPerm4Perm4(Obj f, Obj p)
     codeg = CODEG_PPERM4(f);
 
     if (codeg > dep) {
-        // Pr("case 1\n", 0L, 0L);
         SET_CODEG_PPERM4(conj, codeg);
         for (i = 1; i <= rank; i++) {
             j = INT_INTOBJ(ELM_PLIST(dom, i)) - 1;
@@ -3947,7 +3802,6 @@ Obj PowPPerm4Perm4(Obj f, Obj p)
         }
     }
     else {    // codeg(f)<=deg(p)
-        // Pr("case 2"\n, 0L, 0L);
         codeg = 0;
         for (i = 1; i <= rank; i++) {
             j = INT_INTOBJ(ELM_PLIST(dom, i)) - 1;
@@ -3961,10 +3815,12 @@ Obj PowPPerm4Perm4(Obj f, Obj p)
     return conj;
 }
 
-// g^-1*f*g
-// JDM not sure this is worth it...
+// g ^ -1 * f * g
 Obj PowPPerm22(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM2);
+
     UInt2 *ptg, *ptf, *ptconj, img;
     UInt   i, j, def, deg, dec, codeg, codec, min, len;
     Obj    dom, conj;
@@ -4183,6 +4039,9 @@ Obj PowPPerm22(Obj f, Obj g)
 
 Obj PowPPerm24(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM4);
+
     UInt4 * ptg, *ptconj;
     UInt2 * ptf;
     UInt    i, j, def, deg, dec, codeg, codec, min, img, len;
@@ -4402,6 +4261,9 @@ Obj PowPPerm24(Obj f, Obj g)
 
 Obj PowPPerm42(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM2);
+
     UInt4 * ptf, *ptconj;
     UInt2 * ptg;
     UInt    i, j, def, deg, dec, codeg, codec, min, img, len;
@@ -4621,6 +4483,9 @@ Obj PowPPerm42(Obj f, Obj g)
 
 Obj PowPPerm44(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM4);
+
     UInt4 *ptg, *ptf, *ptconj, img;
     UInt   i, j, def, deg, dec, codeg, codec, min, len;
     Obj    dom, conj;
@@ -4840,6 +4705,9 @@ Obj PowPPerm44(Obj f, Obj g)
 // f*p^-1
 Obj QuoPPerm2Perm2(Obj f, Obj p)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+    GAP_ASSERT(TNUM_OBJ(p) == T_PERM2);
+
     UInt2 *ptf, *ptp, *ptquo2;
     UInt4 *ptquo4, *pttmp;
     Obj    quo, dom;
@@ -4858,7 +4726,7 @@ Obj QuoPPerm2Perm2(Obj f, Obj p)
 
     // invert the permutation into the buffer bag
     ResizeTmpPPerm(lmp);
-    pttmp = ((UInt4 *)ADDR_OBJ(TmpPPerm));
+    pttmp = ADDR_PPERM4(TmpPPerm);
     ptp = ADDR_PERM2(p);
     for (i = 0; i < lmp; i++)
         pttmp[*ptp++] = i;
@@ -4871,12 +4739,11 @@ Obj QuoPPerm2Perm2(Obj f, Obj p)
     if (lmp < 65536) {
         quo = NEW_PPERM2(deg);
         ptf = ADDR_PPERM2(f);
-        pttmp = ((UInt4 *)ADDR_OBJ(TmpPPerm));
+        pttmp = ADDR_PPERM4(TmpPPerm);
         ptquo2 = ADDR_PPERM2(quo);
         if (codeg <= lmp) {
             codeg = 0;
             if (DOM_PPERM(f) == NULL) {
-                // Pr("Case 2\n", 0L, 0L);
                 for (i = 0; i < deg; i++) {
                     if (ptf[i] != 0) {
                         ptquo2[i] = pttmp[ptf[i] - 1] + 1;
@@ -4886,7 +4753,6 @@ Obj QuoPPerm2Perm2(Obj f, Obj p)
                 }
             }
             else {
-                // Pr("Case 1\n", 0L, 0L);
                 dom = DOM_PPERM(f);
                 rank = RANK_PPERM2(f);
                 for (i = 1; i <= rank; i++) {
@@ -4899,7 +4765,6 @@ Obj QuoPPerm2Perm2(Obj f, Obj p)
         }
         else {
             if (DOM_PPERM(f) == NULL) {
-                // Pr("Case 4\n", 0L, 0L);
                 for (i = 0; i < deg; i++) {
                     if (ptf[i] != 0) {
                         ptquo2[i] = IMAGE(ptf[i] - 1, pttmp, lmp) + 1;
@@ -4907,7 +4772,6 @@ Obj QuoPPerm2Perm2(Obj f, Obj p)
                 }
             }
             else {
-                // Pr("Case 3\n", 0L, 0L);
                 dom = DOM_PPERM(f);
                 rank = RANK_PPERM2(f);
                 for (i = 1; i <= rank; i++) {
@@ -4922,11 +4786,10 @@ Obj QuoPPerm2Perm2(Obj f, Obj p)
         quo = NEW_PPERM4(deg);
         ptquo4 = ADDR_PPERM4(quo);
         ptf = ADDR_PPERM2(f);
-        pttmp = ((UInt4 *)ADDR_OBJ(TmpPPerm));
+        pttmp = ADDR_PPERM4(TmpPPerm);
         ptquo4 = ADDR_PPERM4(quo);
         codeg = 0;
         if (DOM_PPERM(f) == NULL) {
-            // Pr("Case 6\n", 0L, 0L);
             for (i = 0; i < deg; i++) {
                 if (ptf[i] != 0) {
                     ptquo4[i] = pttmp[ptf[i] - 1] + 1;
@@ -4936,7 +4799,6 @@ Obj QuoPPerm2Perm2(Obj f, Obj p)
             }
         }
         else {
-            // Pr("Case 5\n", 0L, 0L);
             dom = DOM_PPERM(f);
             rank = RANK_PPERM2(f);
             for (i = 1; i <= rank; i++) {
@@ -4953,6 +4815,9 @@ Obj QuoPPerm2Perm2(Obj f, Obj p)
 
 Obj QuoPPerm4Perm4(Obj f, Obj p)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+    GAP_ASSERT(TNUM_OBJ(p) == T_PERM4);
+
     UInt4 *ptf, *ptp, *ptquo, *pttmp;
     Obj    quo, dom;
     UInt   codeg, lmp, deg, i, j, rank;
@@ -4970,7 +4835,7 @@ Obj QuoPPerm4Perm4(Obj f, Obj p)
 
     // invert the permutation into the buffer bag
     ResizeTmpPPerm(lmp);
-    pttmp = ((UInt4 *)ADDR_OBJ(TmpPPerm));
+    pttmp = ADDR_PPERM4(TmpPPerm);
     ptp = ADDR_PERM4(p);
     for (i = 0; i < lmp; i++)
         pttmp[*ptp++] = i;
@@ -4982,14 +4847,13 @@ Obj QuoPPerm4Perm4(Obj f, Obj p)
 
     // renew pointers
     ptf = ADDR_PPERM4(f);
-    pttmp = ((UInt4 *)ADDR_OBJ(TmpPPerm));
+    pttmp = ADDR_PPERM4(TmpPPerm);
     ptquo = ADDR_PPERM4(quo);
 
     // multiply the partial perm with the inverse
     if (codeg <= lmp) {
         codeg = 0;
         if (DOM_PPERM(f) == NULL) {
-            // Pr("case 1\n", 0L, 0L);
             for (i = 0; i < deg; i++) {
                 if (ptf[i] != 0) {
                     ptquo[i] = pttmp[ptf[i] - 1] + 1;
@@ -4999,7 +4863,6 @@ Obj QuoPPerm4Perm4(Obj f, Obj p)
             }
         }
         else {
-            // Pr("case 2\n", 0L, 0L);
             dom = DOM_PPERM(f);
             rank = RANK_PPERM4(f);
             for (i = 1; i <= rank; i++) {
@@ -5012,7 +4875,6 @@ Obj QuoPPerm4Perm4(Obj f, Obj p)
     }
     else {
         if (DOM_PPERM(f) == NULL) {
-            // Pr("case 3\n", 0L, 0L);
             for (i = 0; i < deg; i++) {
                 if (ptf[i] != 0) {
                     ptquo[i] = IMAGE(ptf[i] - 1, pttmp, lmp) + 1;
@@ -5020,7 +4882,6 @@ Obj QuoPPerm4Perm4(Obj f, Obj p)
             }
         }
         else {
-            // Pr("case 4\n", 0L, 0L);
             dom = DOM_PPERM(f);
             rank = RANK_PPERM4(f);
             for (i = 1; i <= rank; i++) {
@@ -5035,6 +4896,9 @@ Obj QuoPPerm4Perm4(Obj f, Obj p)
 
 Obj QuoPPerm2Perm4(Obj f, Obj p)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+    GAP_ASSERT(TNUM_OBJ(p) == T_PERM4);
+
     UInt4 * ptp, *ptquo, *pttmp;
     UInt2 * ptf;
     Obj     quo, dom;
@@ -5053,7 +4917,7 @@ Obj QuoPPerm2Perm4(Obj f, Obj p)
 
     // invert the permutation into the buffer bag
     ResizeTmpPPerm(lmp);
-    pttmp = ((UInt4 *)ADDR_OBJ(TmpPPerm));
+    pttmp = ADDR_PPERM4(TmpPPerm);
     ptp = ADDR_PERM4(p);
     for (i = 0; i < lmp; i++)
         pttmp[*ptp++] = i;
@@ -5064,7 +4928,7 @@ Obj QuoPPerm2Perm4(Obj f, Obj p)
 
     // renew pointers
     ptf = ADDR_PPERM2(f);
-    pttmp = ((UInt4 *)ADDR_OBJ(TmpPPerm));
+    pttmp = ADDR_PPERM4(TmpPPerm);
     ptquo = ADDR_PPERM4(quo);
 
     // multiply the partial perm with the inverse
@@ -5094,6 +4958,9 @@ Obj QuoPPerm2Perm4(Obj f, Obj p)
 
 Obj QuoPPerm4Perm2(Obj f, Obj p)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+    GAP_ASSERT(TNUM_OBJ(p) == T_PERM2);
+
     UInt4 * ptf, *ptquo, *pttmp;
     UInt2 * ptp;
     Obj     quo, dom;
@@ -5112,7 +4979,7 @@ Obj QuoPPerm4Perm2(Obj f, Obj p)
 
     // invert the permutation into the buffer bag
     ResizeTmpPPerm(lmp);
-    pttmp = ((UInt4 *)ADDR_OBJ(TmpPPerm));
+    pttmp = ADDR_PPERM4(TmpPPerm);
     ptp = ADDR_PERM2(p);
     for (i = 0; i < lmp; i++)
         pttmp[*ptp++] = i;
@@ -5123,12 +4990,11 @@ Obj QuoPPerm4Perm2(Obj f, Obj p)
 
     // renew pointers
     ptf = ADDR_PPERM4(f);
-    pttmp = ((UInt4 *)ADDR_OBJ(TmpPPerm));
+    pttmp = ADDR_PPERM4(TmpPPerm);
     ptquo = ADDR_PPERM4(quo);
 
     // multiply the partial perm with the inverse
     if (DOM_PPERM(f) == NULL) {
-        // Pr("case 1\n", 0L, 0L);
         for (i = 0; i < deg; i++) {
             if (ptf[i] != 0) {
                 ptquo[i] = IMAGE(ptf[i] - 1, pttmp, lmp) + 1;
@@ -5136,7 +5002,6 @@ Obj QuoPPerm4Perm2(Obj f, Obj p)
         }
     }
     else {
-        // Pr("case 2\n", 0L, 0L);
         dom = DOM_PPERM(f);
         rank = RANK_PPERM4(f);
         for (i = 1; i <= rank; i++) {
@@ -5151,6 +5016,9 @@ Obj QuoPPerm4Perm2(Obj f, Obj p)
 // f*g^-1 for partial perms
 Obj QuoPPerm22(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM2);
+
     UInt   deg, i, j, deginv, codeg, rank;
     UInt2 *ptf, *ptg;
     UInt4 *ptquo, *pttmp;
@@ -5163,7 +5031,7 @@ Obj QuoPPerm22(Obj f, Obj g)
     // init the buffer bag
     deginv = CODEG_PPERM2(g);
     ResizeTmpPPerm(deginv);
-    pttmp = ((UInt4 *)ADDR_OBJ(TmpPPerm));
+    pttmp = ADDR_PPERM4(TmpPPerm);
     for (i = 0; i < deginv; i++)
         pttmp[i] = 0;
 
@@ -5197,7 +5065,7 @@ Obj QuoPPerm22(Obj f, Obj g)
     quo = NEW_PPERM4(deg);
     ptquo = ADDR_PPERM4(quo);
     ptf = ADDR_PPERM2(f);
-    pttmp = ((UInt4 *)ADDR_OBJ(TmpPPerm));
+    pttmp = ADDR_PPERM4(TmpPPerm);
     codeg = 0;
 
     // compose f with g^-1 in rank operations
@@ -5229,6 +5097,9 @@ Obj QuoPPerm22(Obj f, Obj g)
 
 Obj QuoPPerm24(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM4);
+
     UInt    deg, i, j, deginv, codeg, rank;
     UInt2 * ptf;
     UInt4 * ptg, *ptquo, *pttmp;
@@ -5241,7 +5112,7 @@ Obj QuoPPerm24(Obj f, Obj g)
     // init the buffer bag
     deginv = CODEG_PPERM4(g);
     ResizeTmpPPerm(deginv);
-    pttmp = ((UInt4 *)ADDR_OBJ(TmpPPerm));
+    pttmp = ADDR_PPERM4(TmpPPerm);
     for (i = 0; i < deginv; i++)
         pttmp[i] = 0;
 
@@ -5282,7 +5153,7 @@ Obj QuoPPerm24(Obj f, Obj g)
     quo = NEW_PPERM4(deg);
     ptquo = ADDR_PPERM4(quo);
     ptf = ADDR_PPERM2(f);
-    pttmp = ((UInt4 *)ADDR_OBJ(TmpPPerm));
+    pttmp = ADDR_PPERM4(TmpPPerm);
     codeg = 0;
 
     // compose f with g^-1 in rank operations
@@ -5314,6 +5185,9 @@ Obj QuoPPerm24(Obj f, Obj g)
 
 Obj QuoPPerm42(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM2);
+
     UInt    deg, i, j, deginv, codeg, rank;
     UInt2 * ptg;
     UInt4 * ptf, *ptquo, *pttmp;
@@ -5326,7 +5200,7 @@ Obj QuoPPerm42(Obj f, Obj g)
     // init the buffer bag
     deginv = CODEG_PPERM2(g);
     ResizeTmpPPerm(deginv);
-    pttmp = ((UInt4 *)ADDR_OBJ(TmpPPerm));
+    pttmp = ADDR_PPERM4(TmpPPerm);
     for (i = 0; i < deginv; i++)
         pttmp[i] = 0;
 
@@ -5367,7 +5241,7 @@ Obj QuoPPerm42(Obj f, Obj g)
     quo = NEW_PPERM4(deg);
     ptquo = ADDR_PPERM4(quo);
     ptf = ADDR_PPERM4(f);
-    pttmp = ((UInt4 *)ADDR_OBJ(TmpPPerm));
+    pttmp = ADDR_PPERM4(TmpPPerm);
     codeg = 0;
 
     // compose f with g^-1 in rank operations
@@ -5399,6 +5273,9 @@ Obj QuoPPerm42(Obj f, Obj g)
 
 Obj QuoPPerm44(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM4);
+
     UInt   deg, i, j, deginv, codeg, rank;
     UInt4 *ptf, *ptg, *ptquo, *pttmp;
     Obj    quo, dom;
@@ -5410,7 +5287,7 @@ Obj QuoPPerm44(Obj f, Obj g)
     // init the buffer bag
     deginv = CODEG_PPERM4(g);
     ResizeTmpPPerm(deginv);
-    pttmp = ((UInt4 *)ADDR_OBJ(TmpPPerm));
+    pttmp = ADDR_PPERM4(TmpPPerm);
     for (i = 0; i < deginv; i++)
         pttmp[i] = 0;
 
@@ -5444,7 +5321,7 @@ Obj QuoPPerm44(Obj f, Obj g)
     quo = NEW_PPERM4(deg);
     ptquo = ADDR_PPERM4(quo);
     ptf = ADDR_PPERM4(f);
-    pttmp = ((UInt4 *)ADDR_OBJ(TmpPPerm));
+    pttmp = ADDR_PPERM4(TmpPPerm);
     codeg = 0;
 
     // compose f with g^-1 in rank operations
@@ -5477,9 +5354,10 @@ Obj QuoPPerm44(Obj f, Obj g)
 // i^f
 Obj PowIntPPerm2(Obj i, Obj f)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
 
     if (!IS_INTOBJ(i) || INT_INTOBJ(i) <= 0) {
-        ErrorQuit("usage: the first argument should be a positive integer,",
+        ErrorQuit("usage: the first argument must be a positive integer,",
                   0L, 0L);
         return 0L;
     }
@@ -5489,9 +5367,10 @@ Obj PowIntPPerm2(Obj i, Obj f)
 
 Obj PowIntPPerm4(Obj i, Obj f)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
 
     if (!IS_INTOBJ(i) || INT_INTOBJ(i) <= 0) {
-        ErrorQuit("usage: the first argument should be a positive integer,",
+        ErrorQuit("usage: the first argument must be a positive integer,",
                   0L, 0L);
         return 0L;
     }
@@ -5502,6 +5381,9 @@ Obj PowIntPPerm4(Obj i, Obj f)
 // p^-1*f
 Obj LQuoPerm2PPerm2(Obj p, Obj f)
 {
+    GAP_ASSERT(TNUM_OBJ(p) == T_PERM2);
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+
     UInt2 *ptp, *ptf, *ptlquo, dep;
     UInt   def, i, j, del, len;
     Obj    dom, lquo;
@@ -5583,6 +5465,9 @@ Obj LQuoPerm2PPerm2(Obj p, Obj f)
 
 Obj LQuoPerm2PPerm4(Obj p, Obj f)
 {
+    GAP_ASSERT(TNUM_OBJ(p) == T_PERM2);
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+
     UInt2 *ptp, dep;
     UInt4 *ptf, *ptlquo;
     UInt   def, i, j, del, len;
@@ -5664,6 +5549,9 @@ Obj LQuoPerm2PPerm4(Obj p, Obj f)
 
 Obj LQuoPerm4PPerm2(Obj p, Obj f)
 {
+    GAP_ASSERT(TNUM_OBJ(p) == T_PERM4);
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+
     UInt4 *ptp, dep;
     UInt2 *ptf, *ptlquo;
     UInt   def, i, j, del, len;
@@ -5746,6 +5634,9 @@ Obj LQuoPerm4PPerm2(Obj p, Obj f)
 
 Obj LQuoPerm4PPerm4(Obj p, Obj f)
 {
+    GAP_ASSERT(TNUM_OBJ(p) == T_PERM4);
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+
     UInt4 *ptp, *ptf, *ptlquo, dep;
     UInt   def, i, j, del, len;
     Obj    dom, lquo;
@@ -5828,6 +5719,9 @@ Obj LQuoPerm4PPerm4(Obj p, Obj f)
 // f^-1*g
 Obj LQuoPPerm22(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM2);
+
     UInt2 *ptg, *ptf, *ptlquo;
     UInt   i, j, def, deg, del, codef, codel, min, len;
     Obj    dom, lquo;
@@ -5934,6 +5828,9 @@ Obj LQuoPPerm22(Obj f, Obj g)
 
 Obj LQuoPPerm24(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM4);
+
     UInt4 * ptg, *ptlquo;
     UInt2 * ptf;
     UInt    i, j, def, deg, del, codef, codel, min, len;
@@ -6041,6 +5938,9 @@ Obj LQuoPPerm24(Obj f, Obj g)
 
 Obj LQuoPPerm42(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM2);
+
     UInt2 * ptg, *ptlquo;
     UInt4 * ptf;
     UInt    i, j, def, deg, del, codef, codel, min, len;
@@ -6148,6 +6048,9 @@ Obj LQuoPPerm42(Obj f, Obj g)
 
 Obj LQuoPPerm44(Obj f, Obj g)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+    GAP_ASSERT(TNUM_OBJ(g) == T_PPERM4);
+
     UInt4 *ptg, *ptf, *ptlquo;
     UInt   i, j, def, deg, del, codef, codel, min, len;
     Obj    dom, lquo;
@@ -6252,43 +6155,61 @@ Obj LQuoPPerm44(Obj f, Obj g)
     return lquo;
 }
 
+/****************************************************************************
+**
+*F  OnSetsPPerm( <set>, <f> ) . . . . . . . . .  operations on sets of points
+**
+**  'OnSetsPPerm' returns the  image of the  tuple <set> under the partial
+**  permutation <f>.  It is called from 'FuncOnSets'.
+**
+**  The input <set> must be a non-empty set, i.e., plain, dense and strictly
+**  sorted. This is is not verified.
+*/
 Obj OnSetsPPerm(Obj set, Obj f)
 {
-    UInt2 * ptf2;
-    UInt4 * ptf4;
-    UInt    deg;
+    UInt2 *     ptf2;
+    UInt4 *     ptf4;
+    UInt        deg;
     const Obj * ptset;
-    Obj *   ptres, tmp, res;
-    UInt    i, isint, k, h, len;
+    Obj *       ptres, tmp, res;
+    UInt        i, isint, k, reslen;
 
-    if (LEN_LIST(set) == 0)
-        return set;
+    GAP_ASSERT(IS_PLIST(set));
+    GAP_ASSERT(LEN_PLIST(set) > 0);
+    GAP_ASSERT(IS_PPERM(f));
 
-    res = NEW_PLIST(IS_MUTABLE_PLIST(set) ? T_PLIST : T_PLIST + IMMUTABLE,
-                    LEN_LIST(set));
+    const UInt len = LEN_PLIST(set);
+
+    res = NEW_PLIST_WITH_MUTABILITY(IS_PLIST_MUTABLE(set), T_PLIST, len);
 
     /* get the pointer                                                 */
-    ptset = CONST_ADDR_OBJ(set) + LEN_LIST(set);
+    ptset = CONST_ADDR_OBJ(set) + len;
     ptres = ADDR_OBJ(res) + 1;
-    len = 0;
+    reslen = 0;
+    isint = 1;
 
     if (TNUM_OBJ(f) == T_PPERM2) {
         ptf2 = ADDR_PPERM2(f);
         deg = DEG_PPERM2(f);
+
         /* loop over the entries of the tuple                              */
-        isint = 1;
-        for (i = LEN_LIST(set); 1 <= i; i--, ptset--) {
+        for (i = len; 1 <= i; i--, ptset--) {
             if (IS_INTOBJ(*ptset) && 0 < INT_INTOBJ(*ptset)) {
                 k = INT_INTOBJ(*ptset);
                 if (k <= deg && ptf2[k - 1] != 0) {
                     tmp = INTOBJ_INT(ptf2[k - 1]);
-                    len++;
+                    reslen++;
                     *ptres++ = tmp;
                 }
             }
-            else { /* this case cannot occur since I think POW is not defined
-                      */
-                ErrorQuit("not yet implemented!", 0L, 0L);
+            else {
+                // This case currently does not work since PowIntPPerm2/4 only
+                // works for small integers, and returns an error for non-small
+                // integers. The analogous code in permutat.c uses the macro
+                // POW, which calls PowIntPerm2/4, which if called with a
+                // non-small positive integer returns that integer, since every
+                // permutation fixes every non-small positive integer.
+                ErrorQuit("<set> must be a list of small integers", 0, 0);
             }
         }
     }
@@ -6297,95 +6218,99 @@ Obj OnSetsPPerm(Obj set, Obj f)
         deg = DEG_PPERM4(f);
 
         /* loop over the entries of the tuple                              */
-        isint = 1;
-        for (i = LEN_LIST(set); 1 <= i; i--, ptset--) {
+        for (i = len; 1 <= i; i--, ptset--) {
             if (IS_INTOBJ(*ptset) && 0 < INT_INTOBJ(*ptset)) {
                 k = INT_INTOBJ(*ptset);
                 if (k <= deg && ptf4[k - 1] != 0) {
                     tmp = INTOBJ_INT(ptf4[k - 1]);
-                    len++;
+                    reslen++;
                     *ptres++ = tmp;
                 }
             }
-            else { /* this case cannot occur since I think POW is not defined
-                      */
-                ErrorQuit("not yet implemented!", 0L, 0L);
+            else {
+                // This case currently does not work since PowIntPPerm2/4 only
+                // works for small integers, and returns an error for non-small
+                // integers. The analogous code in permutat.c uses the macro
+                // POW, which calls PowIntPerm2/4, which if called with a
+                // non-small positive integer returns that integer, since every
+                // permutation fixes every non-small positive integer.
+                ErrorQuit("<set> must be a list of small integers", 0, 0);
             }
         }
     }
-    // maybe a problem here if the result <res> has length 0, this certainly
-    // caused a problem in OnPosIntSetsPPerm...
-    if (len == 0) {
-        RetypeBag(res, IS_MUTABLE_PLIST(set) ? T_PLIST_EMPTY
+    if (reslen == 0) {
+        RetypeBag(res, IS_PLIST_MUTABLE(set) ? T_PLIST_EMPTY
                                              : T_PLIST_EMPTY + IMMUTABLE);
         return res;
     }
-    ResizeBag(res, (len + 1) * sizeof(Obj));
-    SET_LEN_PLIST(res, len);
+    ResizeBag(res, (reslen + 1) * sizeof(Obj));
+    SET_LEN_PLIST(res, reslen);
 
-    /* sort the result */
-    h = 1;
-    while (9 * h + 4 < len)
-        h = 3 * h + 1;
-    while (0 < h) {
-        for (i = h + 1; i <= len; i++) {
-            tmp = CONST_ADDR_OBJ(res)[i];
-            k = i;
-            while (h < k && ((Int)tmp < (Int)(CONST_ADDR_OBJ(res)[k - h]))) {
-                ADDR_OBJ(res)[k] = CONST_ADDR_OBJ(res)[k - h];
-                k -= h;
-            }
-            ADDR_OBJ(res)[k] = tmp;
-        }
-        h = h / 3;
-    }
-
-    /* retype if we only have integers */
+    // sort the result
     if (isint) {
-        RetypeBag(res, IS_MUTABLE_PLIST(set) ? T_PLIST_CYC_SSORT
+        SortPlistByRawObj(res);
+        RetypeBag(res, IS_PLIST_MUTABLE(set) ? T_PLIST_CYC_SSORT
                                              : T_PLIST_CYC_SSORT + IMMUTABLE);
+    }
+    else {
+        SortDensePlist(res);
     }
 
     return res;
 }
 
+/****************************************************************************
+**
+*F  OnTuplesPPerm( <tup>, <f> ) . . . . . . .  operations on tuples of points
+**
+**  'OnTuplesPPerm'  returns  the  image  of  the  tuple  <tup>   under  the
+**  partial permutation <f>.  It is called from 'FuncOnTuples'.
+**
+**  The input <tup> must be a non-empty and dense plain list. This is is not
+**  verified.
+*/
 Obj OnTuplesPPerm(Obj tup, Obj f)
 {
-    UInt2 * ptf2;
-    UInt4 * ptf4;
-    UInt    deg;
+    UInt2 *     ptf2;
+    UInt4 *     ptf4;
+    UInt        deg;
     const Obj * pttup;
-    Obj *   ptres, res;
-    UInt    i, k, lentup, len;
+    Obj *       ptres, res;
+    UInt        i, k, reslen;
 
-    if (LEN_LIST(tup) == 0)
-        return tup;
+    GAP_ASSERT(IS_PLIST(tup));
+    GAP_ASSERT(LEN_PLIST(tup) > 0);
+    GAP_ASSERT(IS_PPERM(f));
 
-    res = NEW_PLIST(IS_MUTABLE_PLIST(tup) ? T_PLIST_CYC
-                                          : T_PLIST_CYC + IMMUTABLE,
-                    LEN_LIST(tup));
+    const UInt len = LEN_PLIST(tup);
+
+    res = NEW_PLIST_WITH_MUTABILITY(IS_PLIST_MUTABLE(tup), T_PLIST_CYC, len);
 
     /* get the pointer                                                 */
     pttup = CONST_ADDR_OBJ(tup) + 1;
     ptres = ADDR_OBJ(res) + 1;
-    len = 0;
+    reslen = 0;
 
     if (TNUM_OBJ(f) == T_PPERM2) {
         ptf2 = ADDR_PPERM2(f);
         deg = DEG_PPERM2(f);
         /* loop over the entries of the tuple                              */
-        lentup = LEN_LIST(tup);
-        for (i = 1; i <= lentup; i++, pttup++) {
+        for (i = 1; i <= len; i++, pttup++) {
             if (IS_INTOBJ(*pttup) && 0 < INT_INTOBJ(*pttup)) {
                 k = INT_INTOBJ(*pttup);
                 if (k <= deg && ptf2[k - 1] != 0) {
-                    len++;
+                    reslen++;
                     *(ptres++) = INTOBJ_INT(ptf2[k - 1]);
                 }
             }
-            else { /* this case cannot occur since I think POW is not defined
-                      */
-                ErrorQuit("not yet implemented!", 0L, 0L);
+            else {
+                // This case currently does not work since PowIntPPerm2/4 only
+                // works for small integers, and returns an error for non-small
+                // integers. The analogous code in permutat.c uses the macro
+                // POW, which calls PowIntPerm2/4, which if called with a
+                // non-small positive integer returns that integer, since every
+                // permutation fixes every non-small positive integer.
+                ErrorQuit("<tup> must be a list of small integers", 0, 0);
             }
         }
     }
@@ -6393,35 +6318,42 @@ Obj OnTuplesPPerm(Obj tup, Obj f)
         ptf4 = ADDR_PPERM4(f);
         deg = DEG_PPERM4(f);
         /* loop over the entries of the tuple                              */
-        lentup = LEN_LIST(tup);
-        for (i = 1; i <= lentup; i++, pttup++) {
+        for (i = 1; i <= len; i++, pttup++) {
             if (IS_INTOBJ(*pttup) && 0 < INT_INTOBJ(*pttup)) {
                 k = INT_INTOBJ(*pttup);
                 if (k <= deg && ptf4[k - 1] != 0) {
-                    len++;
+                    reslen++;
                     *(ptres++) = INTOBJ_INT(ptf4[k - 1]);
                 }
             }
-            else { /* this case cannot occur since I think POW is not defined
-                      */
-                ErrorQuit("not yet implemented!", 0L, 0L);
+            else {
+                // This case currently does not work since PowIntPPerm2/4 only
+                // works for small integers, and returns an error for non-small
+                // integers. The analogous code in permutat.c uses the macro
+                // POW, which calls PowIntPerm2/4, which if called with a
+                // non-small positive integer returns that integer, since every
+                // permutation fixes every non-small positive integer.
+                ErrorQuit("<tup> must be a list of small integers", 0, 0);
             }
         }
     }
-    SET_LEN_PLIST(res, (Int)len);
-    SHRINK_PLIST(res, (Int)len);
+    SET_LEN_PLIST(res, (Int)reslen);
+    SHRINK_PLIST(res, (Int)reslen);
 
     return res;
 }
 
 Obj FuncOnPosIntSetsPartialPerm(Obj self, Obj set, Obj f)
 {
-    UInt2 * ptf2;
-    UInt4 * ptf4;
-    UInt    deg;
+    GAP_ASSERT(IS_LIST(set));
+    GAP_ASSERT(IS_PPERM(f));
+
+    UInt2 *     ptf2;
+    UInt4 *     ptf4;
+    UInt        deg;
     const Obj * ptset;
-    Obj *   ptres, tmp, res;
-    UInt    i, k, h, len;
+    Obj *       ptres, tmp, res;
+    UInt        i, k, reslen;
 
     if (LEN_LIST(set) == 0)
         return set;
@@ -6431,14 +6363,13 @@ Obj FuncOnPosIntSetsPartialPerm(Obj self, Obj set, Obj f)
     }
 
     PLAIN_LIST(set);
-    res = NEW_PLIST(IS_MUTABLE_PLIST(set) ? T_PLIST_CYC_SSORT
-                                          : T_PLIST_CYC_SSORT + IMMUTABLE,
-                    LEN_LIST(set));
+    res = NEW_PLIST_WITH_MUTABILITY(IS_PLIST_MUTABLE(set), T_PLIST_CYC_SSORT,
+                                    LEN_PLIST(set));
 
     /* get the pointer                                                 */
     ptset = CONST_ADDR_OBJ(set) + LEN_LIST(set);
     ptres = ADDR_OBJ(res) + 1;
-    len = 0;
+    reslen = 0;
 
     if (TNUM_OBJ(f) == T_PPERM2) {
         ptf2 = ADDR_PPERM2(f);
@@ -6448,7 +6379,7 @@ Obj FuncOnPosIntSetsPartialPerm(Obj self, Obj set, Obj f)
             k = INT_INTOBJ(*ptset);
             if (k <= deg && ptf2[k - 1] != 0) {
                 tmp = INTOBJ_INT(ptf2[k - 1]);
-                len++;
+                reslen++;
                 *ptres++ = tmp;
             }
         }
@@ -6461,38 +6392,24 @@ Obj FuncOnPosIntSetsPartialPerm(Obj self, Obj set, Obj f)
             k = INT_INTOBJ(*ptset);
             if (k <= deg && ptf4[k - 1] != 0) {
                 tmp = INTOBJ_INT(ptf4[k - 1]);
-                len++;
+                reslen++;
                 *ptres++ = tmp;
             }
         }
     }
-    ResizeBag(res, (len + 1) * sizeof(Obj));
-    SET_LEN_PLIST(res, len);
+    ResizeBag(res, (reslen + 1) * sizeof(Obj));
+    SET_LEN_PLIST(res, reslen);
 
-    if (len == 0) {
-        RetypeBag(res, IS_MUTABLE_PLIST(set) ? T_PLIST_EMPTY
+    if (reslen == 0) {
+        RetypeBag(res, IS_PLIST_MUTABLE(set) ? T_PLIST_EMPTY
                                              : T_PLIST_EMPTY + IMMUTABLE);
-        return res;
+    }
+    else {
+        SortPlistByRawObj(res);
+        RetypeBag(res, IS_PLIST_MUTABLE(set) ? T_PLIST_CYC_SSORT
+                                             : T_PLIST_CYC_SSORT + IMMUTABLE);
     }
 
-    /* sort the result */
-    h = 1;
-    while (9 * h + 4 < len)
-        h = 3 * h + 1;
-    while (0 < h) {
-        for (i = h + 1; i <= len; i++) {
-            tmp = CONST_ADDR_OBJ(res)[i];
-            k = i;
-            while (h < k && ((Int)tmp < (Int)(CONST_ADDR_OBJ(res)[k - h]))) {
-                ADDR_OBJ(res)[k] = CONST_ADDR_OBJ(res)[k - h];
-                k -= h;
-            }
-            ADDR_OBJ(res)[k] = tmp;
-        }
-        h = h / 3;
-    }
-
-    /* retype if we only have integers */
     return res;
 }
 
@@ -6504,6 +6421,8 @@ Obj FuncOnPosIntSetsPartialPerm(Obj self, Obj set, Obj f)
 /* Save and load */
 void SavePPerm2(Obj f)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+
     UInt2 * ptr;
     UInt    len, i;
     len = DEG_PPERM2(f);
@@ -6514,6 +6433,8 @@ void SavePPerm2(Obj f)
 
 void LoadPPerm2(Obj f)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
+
     UInt2 * ptr;
     UInt    len, i;
     len = DEG_PPERM2(f);
@@ -6524,6 +6445,8 @@ void LoadPPerm2(Obj f)
 
 void SavePPerm4(Obj f)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+
     UInt4 * ptr;
     UInt    len, i;
     len = DEG_PPERM4(f);
@@ -6534,6 +6457,8 @@ void SavePPerm4(Obj f)
 
 void LoadPPerm4(Obj f)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
+
     UInt4 * ptr;
     UInt    len, i;
     len = DEG_PPERM4(f);
@@ -6546,6 +6471,7 @@ Obj TYPE_PPERM2;
 
 Obj TypePPerm2(Obj f)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM2);
     return TYPE_PPERM2;
 }
 
@@ -6553,6 +6479,7 @@ Obj TYPE_PPERM4;
 
 Obj TypePPerm4(Obj f)
 {
+    GAP_ASSERT(TNUM_OBJ(f) == T_PPERM4);
     return TYPE_PPERM4;
 }
 
@@ -6572,8 +6499,22 @@ Obj IsPPermHandler(Obj self, Obj val)
     }
 }
 
-/*F * * * * * * * * * * * * initialize package * * * * * * * * * * * * * *
- */
+/****************************************************************************
+**
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
+*/
+
+
+/****************************************************************************
+**
+*V  BagNames  . . . . . . . . . . . . . . . . . . . . . . . list of bag names
+*/
+static StructBagNames BagNames[] = {
+  { T_PPERM2,                         "partial perm (small)"           },
+  { T_PPERM4,                         "partial perm (large)"           },
+  { -1,                               ""                               }
+};
+
 
 /**************************************************************************
 **
@@ -6588,9 +6529,10 @@ static StructGVarFilt GVarFilts[] = {
 
 };
 
+
 /****************************************************************************
-*V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
-*/
+ *V  GVarFuncs . . . . . . . . . . . . . . . . . . list of functions to export
+ */
 static StructGVarFunc GVarFuncs[] = {
 
     GVAR_FUNC(EmptyPartialPerm, 0, ""),
@@ -6632,27 +6574,27 @@ static StructGVarFunc GVarFuncs[] = {
     GVAR_FUNC(HAS_DOM_PPERM, 1, "f"),
     GVAR_FUNC(HAS_IMG_PPERM, 1, "f"),
     GVAR_FUNC(OnPosIntSetsPartialPerm, 2, "set, f"),
-    GVAR_FUNC(PrintPPerm2, 1, "f"),
-    GVAR_FUNC(PrintPPerm4, 1, "f"),
     { 0, 0, 0, 0, 0 }
 
 };
 
 
 /****************************************************************************
-*F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
-*/
+ *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
+ */
 static Int InitKernel(StructInitInfo * module)
 {
+    // set the bag type names (for error messages and debugging)
+    InitBagNamesFromTable( BagNames );
 
     /* install the marking function                                        */
-    InfoBags[T_PPERM2].name = "partial perm (small)";
-    InfoBags[T_PPERM4].name = "partial perm (large)";
     InitMarkFuncBags(T_PPERM2, MarkTwoSubBags);
     InitMarkFuncBags(T_PPERM4, MarkTwoSubBags);
 
+#ifdef HPCGAP
     MakeBagTypePublic(T_PPERM2);
     MakeBagTypePublic(T_PPERM4);
+#endif
 
     /* install the type function                                           */
     ImportGVarFromLibrary("TYPE_PPERM2", &TYPE_PPERM2);
@@ -6757,14 +6699,33 @@ static Int InitLibrary(StructInitInfo * module)
 
     EmptyPartialPerm = NEW_PPERM2(0);
 
+    // We make the following partial perms to allow testing of some parts of
+    // the code which would not otherwise be accessible, since no partial perm
+    // created in this file is a T_PPERM4 can have degree 0, for example. Such
+    // partial perm can be created by packages with a kernel module, and so we
+    // introduce these partial perms for testing purposes.
+    Obj EMPTY_PPERM4 = NEW_PPERM4(0);
+    AssReadOnlyGVar(GVarName("EMPTY_PPERM4"), EMPTY_PPERM4);
+
+    Obj ID_PPERM2 = NEW_PPERM2(1);
+    ADDR_PPERM2(ID_PPERM2)[0] = 1;
+    AssReadOnlyGVar(GVarName("ID_PPERM2"), ID_PPERM2);
+
+    Obj ID_PPERM4 = NEW_PPERM4(1);
+    ADDR_PPERM4(ID_PPERM4)[0] = 1;
+    AssReadOnlyGVar(GVarName("ID_PPERM4"), ID_PPERM4);
+
     /* return success                                                      */
     return 0;
 }
 
 
-static void InitModuleState(ModuleStateOffset offset)
+static Int InitModuleState(void)
 {
     TmpPPerm = 0;
+
+    // return success
+    return 0;
 }
 
 
@@ -6779,10 +6740,13 @@ static StructInitInfo module = {
     .name = "pperm",
     .initKernel = InitKernel,
     .initLibrary = InitLibrary,
+
+    .moduleStateSize = sizeof(PPermModuleState),
+    .moduleStateOffsetPtr = &PPermStateOffset,
+    .initModuleState = InitModuleState,
 };
 
 StructInitInfo * InitInfoPPerm(void)
 {
-    PPermStateOffset = RegisterModuleState(sizeof(PPermModuleState), InitModuleState, 0);
     return &module;
 }

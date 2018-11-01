@@ -363,6 +363,7 @@ DeclareAttribute( "FamiliesOfGeneralMappingsAndRanges",
 ##  <#/GAPDoc>
 ##
 DeclareProperty( "IsConstantTimeAccessGeneralMapping", IsGeneralMapping );
+InstallTrueMethod( IsGeneralMapping, IsConstantTimeAccessGeneralMapping );
 
 
 #############################################################################
@@ -381,6 +382,8 @@ DeclareProperty( "IsConstantTimeAccessGeneralMapping", IsGeneralMapping );
 ##  <#/GAPDoc>
 ##
 DeclareProperty( "IsEndoGeneralMapping", IsGeneralMapping );
+InstallTrueMethod( IsGeneralMapping, IsEndoGeneralMapping );
+
 
 #############################################################################
 ##
@@ -450,7 +453,6 @@ DeclareSynonymAttr( "IsMapping",
     IsGeneralMapping and IsTotal and IsSingleValued );
 
 
-
 #############################################################################
 ##
 #P  IsEndoMapping( <obj> )
@@ -491,6 +493,7 @@ DeclareSynonymAttr( "IsEndoMapping", IsMapping and IsEndoGeneralMapping );
 ##
 DeclareProperty( "IsInjective", IsGeneralMapping );
 DeclareSynonym("IsOneToOne",IsInjective);
+
 
 #############################################################################
 ##
@@ -827,7 +830,7 @@ DeclareOperation( "ImagesRepresentative", [ IsGeneralMapping, IsObject ] );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareOperation( "ImagesSet", [ IsGeneralMapping, IsCollection ] );
+DeclareOperation( "ImagesSet", [ IsGeneralMapping, IsListOrCollection ] );
 
 
 #############################################################################
@@ -1049,7 +1052,7 @@ DeclareOperation( "PreImagesRepresentative",
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareOperation( "PreImagesSet", [ IsGeneralMapping, IsCollection ] );
+DeclareOperation( "PreImagesSet", [ IsGeneralMapping, IsListOrCollection ] );
 
 
 #############################################################################

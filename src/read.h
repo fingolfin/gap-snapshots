@@ -13,39 +13,45 @@
 #ifndef GAP_READ_H
 #define GAP_READ_H
 
-#include <src/system.h>
+#include "system.h"
 
 /****************************************************************************
 **
-*F  TRY_READ / CATCH_READ_ERROR
+*F  TRY_IF_NO_ERROR / CATCH_ERROR
 **
 **  To deal with errors found by the reader, we implement a kind of exception
 **  handling using setjmp, with the help of two macros.
 **
 **  To use these constructs, write code like this:
-**    TRY_READ {
+**    TRY_IF_NO_ERROR {
 **       ... code which might trigger reader error ...
 **    }
 **  or
-**    TRY_READ {
+**    TRY_IF_NO_ERROR {
 **       ... code which might trigger reader error ...
 **    }
-**    CATCH_READ_ERROR {
+**    CATCH_ERROR {
 **       ... error handler ...
 **    }
 **
 **  Then, if the reader encounters an error, or if the interpretation of an
-**  expression or statement leads to an error, then 'ReadEvalError' is
-**  invoked which in turn calls 'longjmp' to return to right after the block
-**  following TRY_READ.
+**  expression or statement leads to an error, 'ReadEvalError' is invoked,
+**  which in turn calls 'longjmp' to return to right after the block
+**  following TRY_IF_NO_ERROR.
 **
-**  Note that while you can in principle nest TRY_READ constructs, to do this
-**  correctly, you must backup ReadJmpError before TRY_READ, and restore it
-**  in a matching CATCH_READ_ERROR block.
+**  A second effect of 'TRY_IF_NO_ERROR' is that it prevents the execution of the
+**  code it wraps if 'STATE(NrError)' is non-zero, i.e. if any errors
+**  occurred. This is key for enabling graceful error recovery in the reader,
+**  and for this reason it is crucial that all calls from the reader into
+**  the interpreter are wrapped into 'TRY_IF_NO_ERROR' blocks.
+**
+**  Note that while you can in principle nest TRY_IF_NO_ERROR constructs, to do this
+**  correctly, you must backup ReadJmpError before TRY_IF_NO_ERROR, and restore it
+**  in a matching CATCH_ERROR block.
 */
 /* TL: extern syJmp_buf ReadJmpError; */
 
-#define TRY_READ \
+#define TRY_IF_NO_ERROR \
     if (!STATE(NrError)) { \
         volatile Int recursionDepth = GetRecursionDepth();  \
         if (sySetjmp(STATE(ReadJmpError))) { \
@@ -55,7 +61,7 @@
     }\
     if (!STATE(NrError))
 
-#define CATCH_READ_ERROR \
+#define CATCH_ERROR \
     else
 
 
@@ -102,8 +108,6 @@ extern UInt ReadEvalFile(Obj *evalResult);
 */
 extern void ReadEvalError ( void ) NORETURN;
 
-/* extern ExecStatus ReadEvalDebug ( void ); */
-
 /****************************************************************************
 **
 *V  StackNams . . . . . . . . . . . .  stack of lists of local variable names
@@ -118,8 +122,6 @@ extern void ReadEvalError ( void ) NORETURN;
 extern void PushGlobalForLoopVariable( UInt var);
 
 extern void PopGlobalForLoopVariable( void );
-
-extern UInt GlobalComesFromEnclosingForLoop (UInt var);
 
 
 /****************************************************************************
@@ -141,7 +143,7 @@ Obj Call1ArgsInNewReader(Obj f,Obj a);
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************

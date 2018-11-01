@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (ref) - Chapter 4: The Programming Language</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -1091,8 +1091,7 @@ Group([ (1,2,3,4,5), (1,2)(3,4)(5,6) ])
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">break;</span>
-Error, A break statement can only appear inside a loop
-not in any function
+Syntax error: 'break' statement not enclosed in a loop
 </pre></div>
 
 <p><a id="X7CCBA2247AA366BD" name="X7CCBA2247AA366BD"></a></p>
@@ -1122,8 +1121,7 @@ Group([ (1,2,3), (1,2) ])
 
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">continue;</span>
-Error, A continue statement can only appear inside a loop
-not in any function
+Syntax error: 'continue' statement not enclosed in a loop
 </pre></div>
 
 <p><a id="X815F71EA7BC0EB6F" name="X815F71EA7BC0EB6F"></a></p>

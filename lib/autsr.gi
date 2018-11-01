@@ -254,7 +254,7 @@ local ff,r,d,ser,u,v,i,j,k,p,bd,e,gens,lhom,M,N,hom,Q,Mim,q,ocr,split,MPcgs,
 	d:=RefinedSubnormalSeries(d,i);
       od;
     fi;
-    for i in Set(Factors(Size(r))) do
+    for i in PrimeDivisors(Size(r)) do
       u:=PCore(r,i);
       if Size(u)>1 then
 	d:=RefinedSubnormalSeries(d,u);
@@ -288,7 +288,7 @@ local ff,r,d,ser,u,v,i,j,k,p,bd,e,gens,lhom,M,N,hom,Q,Mim,q,ocr,split,MPcgs,
   ser:=[TrivialSubgroup(G)];
   for i in d{[2..Length(d)]} do
     u:=ser[Length(ser)];
-    for p in Set(Factors(Size(i)/Size(u))) do
+    for p in PrimeDivisors(Size(i)/Size(u)) do
       bd:=PValuation(Size(i)/Size(u),p); # max p-exponent
       u:=ClosureSubgroup(u,SylowSubgroup(i,p));
       v:=ser[Length(ser)];
@@ -620,8 +620,7 @@ local ff,r,d,ser,u,v,i,j,k,p,bd,e,gens,lhom,M,N,hom,Q,Mim,q,ocr,split,MPcgs,
 
     # do we use induced radical automorphisms to help next step?
     if Size(KernelOfMultiplicativeGeneralMapping(hom))>1 and
-      Size(A)>10^8 and (IsAbelian(r) or
-      Length(AbelianInvariants(r))<10)
+      Size(A)>10^8 and (IsAbelian(r) or AbelianRank(r)<10)
       #(
       ## potentially large GL
       #Size(GL(Length(MPcgs),RelativeOrders(MPcgs)[1]))>10^10 and
@@ -941,7 +940,11 @@ local d,a,map,possibly,cG,cH,nG,nH,i,j,sel,u,v,asAutomorphism,K,L,conj,e1,e2,
     u:=ClosureGroup(i,K);
     v:=ClosureGroup(i,L);
     if u<>v then
-      gens:=SmallGeneratingSet(api);
+      if IsSolvableGroup(api) then
+        gens:=Pcgs(api);
+      else
+        gens:=SmallGeneratingSet(api);
+      fi;
       pre:=List(gens,x->PreImagesRepresentative(iso,x));
       map:=RepresentativeAction(SubgroupNC(a,pre),u,v,asAutomorphism);
       if map=fail then

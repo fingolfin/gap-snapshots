@@ -77,7 +77,7 @@ InstallGlobalFunction( TestPerm2, function(tbl, char)
    od;
 
    # TEST 5:
-   subfak:= Set(Factors(subord));
+   subfak:= PrimeDivisors(subord);
    for prime in subfak do
       if subord mod prime^2 <> 0 then
 
@@ -205,7 +205,7 @@ InstallGlobalFunction( TestPerm4, function( tbl, chars )
     size:= Size( tbl );
     orders:= OrdersClassRepresentatives( tbl );
 
-    for p in Set( Factors( Size( tbl ) ) ) do
+    for p in PrimeDivisors( Size( tbl ) ) do
 
       # Compute the distribution of characters to blocks.
       bl:= PrimeBlocks( tbl, p );
@@ -1384,7 +1384,8 @@ InstallGlobalFunction( PermCandidates,
           # delete zero rows:
           shrink:= [];
           for i in matrix do
-            if PositionNot( i, 0 ) <= Length( i ) then
+            if PositionNonZero( i ) <= Length( i ) then
+#T better call IsZero?
               Add( shrink, i );
             fi;
           od;
@@ -1494,7 +1495,7 @@ InstallGlobalFunction( PermCandidates,
 
     Info( InfoCharacterTable, 2,
           "PermCandidates: unique columns erased, there are ",
-          Length( Filtered( nonzerocol, x -> x ) ), " columns left,\n",
+          Number( nonzerocol, x -> x ), " columns left,\n",
           "#I    the number of constituents is ", Length( matrix ), "." );
 
     # step 3: collapse
@@ -1888,7 +1889,7 @@ InstallGlobalFunction( PermCandidatesFaithful,
     od;
     # `primes': prime divisors of $|U|$ for which there is only one $G$-family
     # of that element order in $UN$:
-    factors:= FactorsInt( tbl_size / torso[1] );
+    factors:= Factors(Integers, tbl_size / torso[1] );
     primes:= Set( factors );
     orbits:= List( primes, p -> [] );
     for i in [ 1 .. nccl ] do
@@ -2018,8 +2019,8 @@ InstallGlobalFunction( PermCandidatesFaithful,
           "PermCandidatesFaithful: There are ",
           Length( matrix ), " possible constituents,\n",
           "#I    the number of unknown values is ",
-          Length( Filtered( [ 1 .. nccl ],
-                  x -> not IsBound( faithful[x] ) ) ),
+          Number( [ 1 .. nccl ],
+                  x -> not IsBound( faithful[x] ) ),
           ";\n",
           "#I    now trying to collapse the matrix" );
 
@@ -2156,7 +2157,8 @@ InstallGlobalFunction( PermCandidatesFaithful,
             # delete zero rows:
             shrink:= [];
             for i in matrix do
-               if PositionNot( i, 0 ) <= Length( i ) then
+               if PositionNonZero( i ) <= Length( i ) then
+#T better call IsZero?
                  Add( shrink, i );
                fi;
             od;

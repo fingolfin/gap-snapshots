@@ -11,35 +11,36 @@
 **
 **  This package provides a uniform   interface to the functions that  access
 **  lists and their elements  for the other packages  in the GAP kernel.  For
-**  example, 'ExecFor' can loop over the elements  in a list using the macros
-**  'LEN_LIST' and 'ELM_LIST' independently of the type of the list.
+**  example, 'ExecFor' can loop over the elements  in a list using  'LEN_LIST'
+**  and 'ELM_LIST' independently of the type of the list.
 **
 **  This package uses plain lists (of type 'T_PLIST') and  assumes that it is
-**  possible to put values of any type into plain  lists.  It uses the macros
+**  possible to put values of any type into these. It uses the functions
 **  'LEN_PLIST', 'SET_LEN_PLIST',   'ELM_PLIST', and 'SET_ELM_PLIST' exported
 **  by the plain list package to access and modify plain lists.
 */
 
-#include <src/lists.h>
+#include "lists.h"
 
-#include <src/ariths.h>
-#include <src/bool.h>
-#include <src/calls.h>
-#include <src/gap.h>
-#include <src/gapstate.h>
-#include <src/gaputils.h>
-#include <src/integer.h>
-#include <src/io.h>
-#include <src/opers.h>
-#include <src/plist.h>
-#include <src/precord.h>
-#include <src/range.h>
-#include <src/records.h>
-#include <src/stringobj.h>
+#include "ariths.h"
+#include "bool.h"
+#include "calls.h"
+#include "error.h"
+#include "gapstate.h"
+#include "gaputils.h"
+#include "integer.h"
+#include "io.h"
+#include "modules.h"
+#include "opers.h"
+#include "plist.h"
+#include "precord.h"
+#include "range.h"
+#include "records.h"
+#include "stringobj.h"
 
 #ifdef HPCGAP
-#include <src/hpc/aobjects.h>
-#include <src/hpc/guards.h>
+#include "hpc/aobjects.h"
+#include "hpc/guards.h"
 #endif
 
 /****************************************************************************
@@ -49,10 +50,6 @@
 **
 **  'IS_LIST' only calls the function pointed  to  by  'IsListFuncs[<type>]',
 **  passing <obj> as argument.
-**
-**  'IS_LIST' is defined in the declaration part of this package as follows
-**
-#define IS_LIST(obj)    (*IsListFuncs[ TNUM_OBJ( (obj) ) ])( obj )
 */
 Int             (*IsListFuncs [LAST_REAL_TNUM+1]) ( Obj obj );
 
@@ -80,12 +77,8 @@ Int             IsListObject (
 **  'IS_SMALL_LIST' only calls the function pointed  to  by  'IsListFuncs[<type>]',
 **  passing <obj> as argument.
 **
-**  'IS_SMALL_LIST' is defined in the declaration part of this package as follows
-**
 **  This is, in some sense, a workaround for the not yet implemented features
 **  below (see LENGTH).
-** 
-#define IS_SMALL_LIST(obj)    (*IsSmallListFuncs[ TNUM_OBJ( (obj) ) ])( obj )
 */
 Int             (*IsSmallListFuncs [LAST_REAL_TNUM+1]) ( Obj obj );
 
@@ -188,10 +181,6 @@ Obj FuncLENGTH (
 **  'LenListFuncs[<type>]'  points to  'LenListError', which  just signals an
 **  error.
 **
-**  'LEN_LIST' is defined in the declaration part of this package as follows
-**
-#define LEN_LIST(list)  ((*LenListFuncs[ TNUM_OBJ((list)) ])( (list) ))
-**
 **  At the  moment  this also handles external    types but this   is a hack,
 **  because external  lists can have large  length or even  be infinite.  See
 **  'FuncLENGTH'.
@@ -248,13 +237,8 @@ Int LenListObject (
 **  'LENGTH' returns the logical length of the list <list>  as a GAP object
 **  An error is signalled if <list> is not a list.
 **
-**  Note that  'LENGTH' is a  macro, so do  not call it with arguments that
-**  have side effects.
-**
 **  A package  implementing a list type <type>  must  provide such a function
 **  and install it in 'LengthFuncs[<type>]'.
-
-#define LENGTH(list)  ((*LengthFuncs[ TNUM_OBJ(list) ])( list )) 
 */
 
 Obj             (*LengthFuncs[LAST_REAL_TNUM+1]) ( Obj list );
@@ -294,12 +278,6 @@ Obj LengthInternal (
 **  passing <list> and <pos> as arguments.  If <type> is not the  type  of  a
 **  list, then 'IsbListFuncs[<type>]' points to 'IsbListError', which signals
 **  the error.
-**
-**  'ISB_LIST' is defined in  the declaration  part of this
-**  package as follows
-**
-#define ISB_LIST(list,pos) \
-                        ((*IsbListFuncs[TNUM_OBJ(list)])(list,pos))
 */
 Int             (*IsbListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 
@@ -693,7 +671,7 @@ Obj FuncELMS_LIST (
     Obj                 list,
     Obj                 poss )
 {
-    return ELMS_LIST( list, poss );
+    return ElmsListCheck( list, poss );
 }
 
 
@@ -714,7 +692,6 @@ Obj ElmsListDefault (
     Int                 pos;            /* <position> as integer           */
     Int                 inc;            /* increment in a range            */
     Int                 i;              /* loop variable                   */
-    Obj                 p;
 
     /* general code                                                        */
     if ( ! IS_RANGE(poss) ) {
@@ -734,14 +711,15 @@ Obj ElmsListDefault (
         for ( i = 1; i <= lenPoss; i++ ) {
 
             /* get <position>                                              */
-          p = ELMW_LIST( poss, i);
-          while (!IS_INTOBJ(p))
-            {
-              p = ErrorReturnObj("List Elements: position is too large for this type of list",
-                                 0L, 0L, 
-                                 "you can supply a new position <pos> via 'return <pos>;'" );
+            Obj p = ELMW_LIST(poss, i);
+            while (!IS_INTOBJ(p)) {
+                p = ErrorReturnObj("List Elements: position is too large for "
+                                   "this type of list",
+                                   0L, 0L,
+                                   "you can supply a new position <pos> via "
+                                   "'return <pos>;'");
             }
-            pos = INT_INTOBJ( p );
+            pos = INT_INTOBJ(p);
 
             /* select the element                                          */
             elm = ELM0_LIST( list, pos );
@@ -846,11 +824,7 @@ Obj ElmsListCheck (
     Obj                 list,
     Obj                 poss )
 {
-    if ( ! IS_POSS_LIST(poss) ) {
-        ErrorQuit(
-      "List Elements: <positions> must be a dense list of positive integers",
-            0L, 0L );
-    }
+    CheckIsPossList("List Elements", poss);
     return ELMS_LIST( list, poss );
 }
 
@@ -867,11 +841,7 @@ void ElmsListLevelCheck (
     Obj                 poss,
     Int                 level )
 {
-    if ( ! IS_POSS_LIST(poss) ) {
-        ErrorQuit(
-      "List Elements: <positions> must be a dense list of positive integers",
-            0L, 0L );
-    }
+    CheckIsPossList("List Elements", poss);
     ElmsListLevel( lists, poss, level );
 }
 
@@ -950,10 +920,6 @@ void UNB2_LIST(Obj list, Obj pos1, Obj pos2)
 **  of  a list, then 'AssListFuncs[<type>]'  points to 'AssListError',  which
 **  just signals an error.
 **
-**  'ASS_LIST' is defined in the declaration part of this package as follows.
-**
-#define ASS_LIST(list,pos,obj) \
-                        ((*AssListFuncs[TNUM_OBJ(list)])(list,pos,obj))
 */
 void            (*AssListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos, Obj obj );
 
@@ -1045,12 +1011,6 @@ void ASS2_LIST(Obj list, Obj pos1, Obj pos2, Obj obj)
 **  'AsssListFuncs[<type>]', passing <list>, <poss>, and <objs> as arguments.
 **  If <type> is not the type of  a list, then 'AsssListFuncs[<type>]' points
 **  to 'AsssListError', which just signals an error.
-**
-**  'ASSS_LIST'  is  defined in the  declaration  part  of  this  package  as
-**  follows
-**
-#define ASSS_LIST(list,poss,objs) \
-                        ((*AsssListFuncs[TNUM_OBJ(list)])(list,poss,objs))
 */
 void            (*AsssListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Obj poss, Obj objs );
 
@@ -1062,7 +1022,7 @@ Obj             FuncASSS_LIST (
     Obj                 poss,
     Obj                 objs )
 {
-    ASSS_LIST( list, poss, objs );
+    AsssListCheck( list, poss, objs );
     return 0;
 }
 
@@ -1089,6 +1049,10 @@ void            AsssListDefault (
     Int                 inc;            /* increment in a range            */
     Obj                 obj;            /* one element from <objs>         */
     Int                 i;              /* loop variable                   */
+
+    CheckIsPossList("List Assignment", poss);
+    CheckIsDenseList("List Assignment", "rhss", objs);
+    CheckSameLength("List Assignment", "rhss", "positions", objs, poss);
 
     /* general code                                                        */
     if ( ! IS_RANGE(poss) ) {
@@ -1167,12 +1131,6 @@ Obj FuncASSS_LIST_DEFAULT (
 **  'IsDenseListFuncs[<type>]', passing <list> as argument.  If <type> is not
 **  the   type  of  a    list,  then  'IsDenseListFuncs[<type>]'  points   to
 **  'AlwaysNo', which just returns 0.
-**
-**  'IS_DENSE_LIST'  is defined in the declaration  part  of this  package as
-**  follows
-**
-#define IS_DENSE_LIST(list) \
-                        ((*IsDenseListFuncs[TNUM_OBJ(list)])(list))
 */
 Int             (*IsDenseListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 
@@ -1227,11 +1185,6 @@ Int             IsDenseListObject (
 **  the type of a list, then 'IsHomogListFuncs[<type>]' points to
 **  'AlwaysNo', which just returns 0.
 **
-**  'IS_HOMOG_LIST' is defined in the declaration part  of  this  package  as
-**  follows
-**
-#define IS_HOMOG_LIST(list) \
-                        ((*IsHomogListFuncs[TNUM_OBJ(list)])(list))
 */
 Int             (*IsHomogListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 
@@ -1265,12 +1218,12 @@ Int             IsHomogListDefault (
     if ( elm == 0 ) {
         return 0L;
     }
-    fam = FAMILY_TYPE( TYPE_OBJ( elm ) );
+    fam = FAMILY_OBJ( elm );
 
     /* loop over the entries of the list                                   */
     for ( i = 2; i <= lenList; i++ ) {
         elm = ELMV0_LIST( list, i );
-        if ( elm == 0 || fam != FAMILY_TYPE( TYPE_OBJ( elm ) ) ) {
+        if ( elm == 0 || fam != FAMILY_OBJ( elm ) ) {
             return 0L;
         }
     }
@@ -1295,12 +1248,6 @@ Int             IsHomogListObject (
 **  'IsTableListFuncs[<type>]', passing <list> as argument.  If <type> is not
 **  the type of a list, then 'IsTableListFuncs[<type>]' points to
 **  'AlwaysNo', which just returns 0.
-**
-**  'IS_TABLE_LIST' is defined in the declaration part  of  this  package  as
-**  follows
-**
-#define IS_TABLE_LIST(list) \
-                        ((*IsTableListFuncs[TNUM_OBJ(list)])(list))
 */
 Int             (*IsTableListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 
@@ -1338,13 +1285,13 @@ Int             IsTableListDefault (
     if ( ! IS_HOMOG_LIST( elm ) ) {
         return 0L;
     }
-    fam = FAMILY_TYPE( TYPE_OBJ( elm ) );
+    fam = FAMILY_OBJ( elm );
     /*     len = LEN_LIST( elm ); */
 
     /* loop over the entries of the list                                   */
     for ( i = 2; i <= lenList; i++ ) {
         elm = ELMV0_LIST( list, i );
-        if ( elm == 0 || fam != FAMILY_TYPE( TYPE_OBJ( elm ) ) ) {
+        if ( elm == 0 || fam != FAMILY_OBJ( elm ) ) {
             return 0L;
         }
         /*        if ( ! IS_LIST( elm ) || LEN_LIST( elm ) != len ) {
@@ -1373,11 +1320,6 @@ Int             IsTableListObject (
 **  If <type> is not the type of a list, then 'IsSSortListFuncs[<type>]'
 **  points to 'AlwaysNo', which just returns 0.
 **
-**  'IS_SSORTED_LIST'  is defined in the  declaration part of this package as
-**  follows
-**
-#define IS_SSORTED_LIST(list) \
-                        ((*IsSSortListFuncs[TNUM_OBJ(list)])(list))
 */
 Int (*IsSSortListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 
@@ -1466,12 +1408,6 @@ Obj FuncIS_NSORT_LIST (
 **  'IsPossListFuncs[<type>]', passing <list> as  argument.  If <type> is not
 **  the   type    of a   list,    then  'IsPossListFuncs[<type>]'   points to
 **  'NotIsPossList', which just returns 0.
-**
-**  'IS_POSS_LIST' is  defined  in the  declaration  part of this  package as
-**  follows
-**
-#define IS_POSS_LIST(list) \
-                        ((*IsPossListFuncs[TNUM_OBJ(list)])(list))
 */
 Int             (*IsPossListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 
@@ -1542,11 +1478,6 @@ Obj FuncIS_POSS_LIST_DEFAULT (
 **  passing <list>, <obj>,  and <start> as arguments.  If  <type>  is not the
 **  type  of  a list, then  'PosListFuncs[<type>]'  points to 'PosListError',
 **  which just signals an error.
-**
-**  'POS_LIST' is defined in the declaration part of this package as follows
-**
-#define POS_LIST(list,obj,start) \
-                        ((*PosListFuncs[TNUM_OBJ(list)])(list,obj,start))
 */
 Obj             (*PosListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Obj obj, Obj start );
 
@@ -1825,20 +1756,8 @@ void            AssListLevel (
     Obj pos,pos1,pos2;
 
     /* check <objs>                                                        */
-    while ( ! IS_DENSE_LIST(objs) || LEN_LIST(lists) != LEN_LIST(objs) ) {
-        if ( ! IS_DENSE_LIST(objs) ) {
-            objs = ErrorReturnObj(
-                "List Assignment: <objs> must be a dense list (not a %s)",
-                (Int)TNAM_OBJ(objs), 0L,
-                "you can replace <objs> via 'return <objs>;'" );
-        }
-        if ( LEN_LIST(lists) != LEN_LIST(objs) ) {
-            objs = ErrorReturnObj(
-         "List Assignment: <objs> must have the same length as <lists> (%d)",
-                LEN_LIST(lists), 0L,
-                "you can replace <objs> via 'return <objs>;'" );
-        }
-    }
+    CheckIsDenseList("List Assignment", "objs", objs);
+    CheckSameLength("List Assignment", "objs", "lists", objs, lists);
 
     /* if <level> is one, perform the assignments                          */
     if ( level == 1 ) {
@@ -1920,20 +1839,8 @@ void            AsssListLevel (
     Int                 i;              /* loop variable                   */
 
     /* check <objs>                                                        */
-    while ( ! IS_DENSE_LIST(objs) || LEN_LIST(lists) != LEN_LIST(objs) ) {
-        if ( ! IS_DENSE_LIST(objs) ) {
-            objs = ErrorReturnObj(
-                "List Assignment: <objs> must be a dense list (not a %s)",
-                (Int)TNAM_OBJ(objs), 0L,
-                "you can replace <objs> via 'return <objs>;'" );
-        }
-        if ( LEN_LIST(lists) != LEN_LIST(objs) ) {
-            objs = ErrorReturnObj(
-         "List Assignment: <objs> must have the same length as <lists> (%d)",
-                LEN_LIST(lists), 0L,
-                "you can replace <objs> via 'return <objs>;'" );
-        }
-    }
+    CheckIsDenseList("List Assignment", "objs", objs);
+    CheckSameLength("List Assignment", "objs", "lists", objs, lists);
 
     /* if <lev> is one, loop over all the lists and assign the value       */
     if ( lev == 1 ) {
@@ -1947,21 +1854,8 @@ void            AsssListLevel (
 
             /* select the elements to assign                               */
             obj = ELMW_LIST( objs, i );
-            while ( ! IS_DENSE_LIST( obj )
-                 || LEN_LIST( poss ) != LEN_LIST( obj ) ) {
-                if ( ! IS_DENSE_LIST( obj ) ) {
-                    obj = ErrorReturnObj(
-                  "List Assignments: <objs> must be a dense list (not a %s)",
-                        (Int)TNAM_OBJ(obj), 0L,
-                        "you can replace <objs> via 'return <objs>;'" );
-                }
-                if ( LEN_LIST( poss ) != LEN_LIST( obj ) ) {
-                    obj = ErrorReturnObj(
-     "List Assignments: <objs> must have the same length as <positions> (%d)",
-                        LEN_LIST( poss ), 0L,
-                        "you can replace <objs> via 'return <objs>;'" );
-                }
-            }
+            CheckIsDenseList("List Assignments", "objs", obj);
+            CheckSameLength("List Assignments", "objs", "positions", obj, poss);
 
             /* assign the elements                                         */
             ASSS_LIST( list, poss, obj );
@@ -2003,12 +1897,6 @@ void            AsssListLevel (
 **  'PlainListFuncs[<type>]', passing <list>  as argument.  If  <type> is not
 **  the     type of   a    list,  then    'PlainListFuncs[<type>]'  points to
 **  'PlainListError', which just signals an error.
-**
-**  'PLAIN_LIST'  is defined in  the  declaration  part  of  this  package as
-**  follows
-**
-#define PLAIN_LIST(list) \
-                        ((*PlainListFuncs[TNUM_OBJ(list)])(list))
 */
 void            (*PlainListFuncs[LAST_REAL_TNUM+1]) ( Obj list );
 
@@ -2065,14 +1953,17 @@ void            PrintListDefault (
     }
 
     Pr("%2>[ %2>",0L,0L);
-    for ( STATE(PrintObjIndex)=1; STATE(PrintObjIndex)<=LEN_LIST(list); STATE(PrintObjIndex)++ ) {
-        elm = ELMV0_LIST( list, STATE(PrintObjIndex) );
+    for (UInt i = 1; i <= LEN_LIST(list); i++) {
+        elm = ELMV0_LIST(list, i);
         if ( elm != 0 ) {
-            if ( 1 < STATE(PrintObjIndex) )  Pr( "%<,%< %2>", 0L, 0L );
+            if (1 < i)
+                Pr("%<,%< %2>", 0L, 0L);
+            STATE(PrintObjIndex) = i;
             PrintObj( elm );
         }
         else {
-            if ( 1 < STATE(PrintObjIndex) )  Pr( "%2<,%2>", 0L, 0L );
+            if (1 < i)
+                Pr("%2<,%2>", 0L, 0L);
         }
     }
     Pr(" %4<]",0L,0L);
@@ -2230,55 +2121,10 @@ void AsssListCheck (
     Obj                 poss,
     Obj                 rhss )
 {
-    if ( ! IS_POSS_LIST(poss) ) {
-        ErrorQuit(
-    "List Assignment: <positions> must be a dense list of positive integers",
-            0L, 0L );
-    }
-    if ( ! IS_DENSE_LIST(rhss) ) {
-        ErrorQuit(
-            "List Assignment: <rhss> must be a dense list",
-            0L, 0L );
-    }
-    if ( LEN_LIST( poss ) != LEN_LIST( rhss ) ) {
-        ErrorQuit(
-     "List Assignment: <rhss> must have the same length as <positions> (%d)",
-            (Int)LEN_LIST(poss), 0L );
-    }
+    CheckIsPossList("List Assignment", poss);
+    CheckIsDenseList("List Assignment", "rhss", rhss);
+    CheckSameLength("List Assignment", "rhss", "positions", rhss, poss);
     ASSS_LIST( list, poss, rhss );
-}
-
-
-/****************************************************************************
-**
-*F  AsssPosObjCheck( <list>, <poss>, <rhss> ) . . . . . . . . . . . ASSS_LIST
-*/
-void AsssPosObjCheck (
-    Obj                 list,
-    Obj                 poss,
-    Obj                 rhss )
-{
-    if ( ! IS_POSS_LIST(poss) ) {
-        ErrorQuit(
-    "List Assignment: <positions> must be a dense list of positive integers",
-            0L, 0L );
-    }
-    if ( ! IS_DENSE_LIST(rhss) ) {
-        ErrorQuit(
-            "List Assignment: <rhss> must be a dense list",
-            0L, 0L );
-    }
-    if ( LEN_LIST( poss ) != LEN_LIST( rhss ) ) {
-        ErrorQuit(
-     "List Assignment: <rhss> must have the same length as <positions> (%d)",
-            (Int)LEN_LIST(poss), 0L );
-    }
-    if ( TNUM_OBJ(list) == T_POSOBJ ) {
-        ErrorQuit( "sorry: <posobj>!{<poss>} not yet implemented", 0L, 0L );
-    }
-    else {
-        ASSS_LIST( list, poss, rhss );
-    }
 }
 
 
@@ -2292,18 +2138,14 @@ void AsssListLevelCheck (
     Obj                 rhss,
     Int                 level )
 {
-    if ( ! IS_POSS_LIST(poss) ) {
-        ErrorQuit(
-    "List Assignment: <positions> must be a dense list of positive integers",
-            0L, 0L );
-    }
+    CheckIsPossList("List Assignment", poss);
     AsssListLevel( lists, poss, rhss, level );
 }
 
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 
@@ -2651,10 +2493,8 @@ static Int InitKernel (
     }
 
 
-    /* install the generic mutability test function                        */
+    /* install tests for being copyable                                    */
     for ( type = FIRST_LIST_TNUM; type <= LAST_LIST_TNUM; type += 2 ) {
-        IsMutableObjFuncs[  type           ] = AlwaysYes;
-        IsMutableObjFuncs[  type+IMMUTABLE ] = AlwaysNo;
         IsCopyableObjFuncs[ type           ] = AlwaysYes;
         IsCopyableObjFuncs[ type+IMMUTABLE ] = AlwaysYes;
     }
@@ -2734,29 +2574,27 @@ static Int CheckInit (
     Int         j;              /* loop variable                           */
     Int         success = 1;
 
-    Int         fnums[] = { FN_IS_EMPTY, FN_IS_DENSE,
-                            FN_IS_NDENSE, FN_IS_HOMOG, FN_IS_NHOMOG,
-                            FN_IS_TABLE, FN_IS_SSORT, FN_IS_NSORT };
-    const Char *fnams[] = { "empty", "dense", "ndense",
-                            "homog", "nhomog", "table", "ssort",
-                            "nsort" };
+    Int         fnums[] = { FN_IS_DENSE, FN_IS_NDENSE,
+                            FN_IS_HOMOG, FN_IS_NHOMOG,
+                            FN_IS_TABLE,
+                            FN_IS_SSORT, FN_IS_NSORT };
+    const Char *fnams[] = { "dense", "ndense",
+                            "homog", "nhomog",
+                            "table",
+                            "ssort", "nsort" };
 
 
     /* fix unknown list types                                              */
     for ( i = FIRST_LIST_TNUM;  i <= LAST_LIST_TNUM;  i +=2 ) {
-        if ( InfoBags[i].name == 0 ) {
-            InfoBags[i].name = "unknown list type";
-        }
-        if ( InfoBags[i+IMMUTABLE].name == 0 ) {
-            InfoBags[i+IMMUTABLE].name = "unknown immutable list type";
-        }
+        GAP_ASSERT( TNAM_TNUM(i) );
+        GAP_ASSERT( TNAM_TNUM(i + IMMUTABLE) );
     }
 
     /* check that all relevant `ClearFiltListTNums' are installed          */
     for ( i = FIRST_LIST_TNUM;  i <= LAST_LIST_TNUM;  i++ ) {
         if ( ClearFiltsTNums[i] == 0 ) {
             Pr( "#W  ClearFiltsListTNums [%s] missing\n",
-                    (Int)(InfoBags[i].name), 0L );
+                    (Int)TNAM_TNUM(i), 0L );
             success = 0;
         }
     }
@@ -2767,7 +2605,7 @@ static Int CheckInit (
         for ( j = 0;  j < ARRAY_SIZE(fnums);  j++ ) {
             if ( HasFiltListTNums[i][fnums[j]] == -1 ) {
                 Pr( "#W  HasFiltListTNums [%s] [%s] missing\n",
-                    (Int)(InfoBags[i].name), (Int)fnams[j] );
+                    (Int)TNAM_TNUM(i), (Int)fnams[j] );
                 success = 0;
                 HasFiltListTNums[i][fnums[j]] = 0;
             }
@@ -2780,7 +2618,7 @@ static Int CheckInit (
         for ( j = 0;  j < ARRAY_SIZE(fnums);  j++ ) {
             if ( SetFiltListTNums[i][fnums[j]] == 0 ) {
                 Pr( "#W  SetFiltListTNums [%s] [%s] missing\n",
-                    (Int)(InfoBags[i].name), (Int)fnams[j] );
+                    (Int)TNAM_TNUM(i), (Int)fnams[j] );
                 success = 0;
             }
         }
@@ -2792,7 +2630,7 @@ static Int CheckInit (
         for ( j = 0;  j < ARRAY_SIZE(fnums);  j++ ) {
             if ( ResetFiltListTNums[i][fnums[j]] == 0 ) {
                 Pr( "#W  ResetFiltListTNums [%s] [%s] missing\n",
-                    (Int)(InfoBags[i].name), (Int)fnams[j] );
+                    (Int)TNAM_TNUM(i), (Int)fnams[j] );
                 success = 0;
             }
         }
@@ -2811,7 +2649,7 @@ static Int CheckInit (
                 else if ( new != -1 && HasFiltListTNums[new][fnums[j]] ) {
                     Pr(
                      "#W  ResetFiltListTNums [%s] [%s] failed to reset\n",
-                     (Int)(InfoBags[i].name), (Int)fnams[j] );
+                     (Int)TNAM_TNUM(i), (Int)fnams[j] );
                     success = 0;
                 }
             }
@@ -2827,7 +2665,7 @@ static Int CheckInit (
                 if ( new != -1 && new != i ) {
                     Pr(
                      "#W  SetFiltListTNums [%s] [%s] must not change\n",
-                     (Int)(InfoBags[i].name), (Int)fnams[j] );
+                     (Int)TNAM_TNUM(i), (Int)fnams[j] );
                     success = 0;
                 }
             }
@@ -2840,7 +2678,7 @@ static Int CheckInit (
         if ( (i & IMMUTABLE) == 0 ) {
             if ( ClearFiltsTNums[i]+IMMUTABLE != ClearFiltsTNums[i+IMMUTABLE]) {
                 Pr( "#W  ClearFiltsTNums [%s] mismatch between mutable and immutable\n",
-                    (Int)(InfoBags[i].name), 0 );
+                    (Int)TNAM_TNUM(i), 0 );
                 success = 0;
             }
             for ( j = 0;  j < ARRAY_SIZE(fnums);  j++ ) {
@@ -2848,68 +2686,68 @@ static Int CheckInit (
                 if ( HasFiltListTNums[i][fnums[j]] !=
                      HasFiltListTNums[i+IMMUTABLE][fnums[j]]) {
                     Pr( "#W  HasFiltListTNums [%s] [%s] mismatch between mutable and immutable\n",
-                        (Int)(InfoBags[i].name), (Int)fnams[j] );
+                        (Int)TNAM_TNUM(i), (Int)fnams[j] );
                     success = 0;
                 }
 
                 if ( (SetFiltListTNums[i][fnums[j]] | IMMUTABLE) !=
                      SetFiltListTNums[i+IMMUTABLE][fnums[j]]) {
                     Pr( "#W  SetFiltListTNums [%s] [%s] mismatch between mutable and immutable\n",
-                        (Int)(InfoBags[i].name), (Int)fnams[j] );
+                        (Int)TNAM_TNUM(i), (Int)fnams[j] );
                     success = 0;
                 }
 
                 if ( (ResetFiltListTNums[i][fnums[j]] | IMMUTABLE) !=
                      ResetFiltListTNums[i+IMMUTABLE][fnums[j]]) {
                     Pr( "#W  ResetFiltListTNums [%s] [%s] mismatch between mutable and immutable\n",
-                        (Int)(InfoBags[i].name), (Int)fnams[j] );
+                        (Int)TNAM_TNUM(i), (Int)fnams[j] );
                     success = 0;
                 }
 
             }
         }
 
-        if ( HasFiltListTNums[i][FN_IS_EMPTY] ) {
+        if ( i == T_PLIST_EMPTY || i == T_PLIST_EMPTY+IMMUTABLE ) {
             if ( ! HasFiltListTNums[i][FN_IS_DENSE] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ empty -> dense ] missing\n",
-                 (Int)(InfoBags[i].name), 0L );   
+                 (Int)TNAM_TNUM(i), 0L );
                 success = 0;
             }
             if ( HasFiltListTNums[i][FN_IS_NDENSE] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ empty + ndense ] illegal\n",
-                 (Int)(InfoBags[i].name), 0L );   
+                 (Int)TNAM_TNUM(i), 0L );
                 success = 0;
             }
             if ( ! HasFiltListTNums[i][FN_IS_HOMOG] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ empty -> homog ] missing\n",
-                 (Int)(InfoBags[i].name), 0L );
+                 (Int)TNAM_TNUM(i), 0L );
                 success = 0;
             }
             if ( HasFiltListTNums[i][FN_IS_NHOMOG] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ empty + nhomog ] illegal\n",
-                 (Int)(InfoBags[i].name), 0L );   
+                 (Int)TNAM_TNUM(i), 0L );
                 success = 0;
             }
             if ( ! HasFiltListTNums[i][FN_IS_SSORT] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ empty -> ssort ] missing\n",
-                 (Int)(InfoBags[i].name), 0L );   
+                 (Int)TNAM_TNUM(i), 0L );
                 success = 0;
             }
             if ( HasFiltListTNums[i][FN_IS_NSORT] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ empty + nsort ] illegal\n",
-                 (Int)(InfoBags[i].name), 0L );   
+                 (Int)TNAM_TNUM(i), 0L );
                 success = 0;
             }
             if ( HasFiltListTNums[i][FN_IS_TABLE] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ empty + table ] illegal\n",
-                 (Int)(InfoBags[i].name), 0L );   
+                 (Int)TNAM_TNUM(i), 0L );
                 success = 0;
             }
         }
@@ -2918,7 +2756,7 @@ static Int CheckInit (
             if ( HasFiltListTNums[i][FN_IS_NDENSE] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ dense + ndense ] illegal\n",
-                 (Int)(InfoBags[i].name), 0L );   
+                 (Int)TNAM_TNUM(i), 0L );
                 success = 0;
             }
         }
@@ -2927,13 +2765,13 @@ static Int CheckInit (
             if ( HasFiltListTNums[i][FN_IS_HOMOG] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ ndense + homog ] illegal\n",
-                 (Int)(InfoBags[i].name), 0L );   
+                 (Int)TNAM_TNUM(i), 0L );
                 success = 0;
             }
             if ( HasFiltListTNums[i][FN_IS_TABLE] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ ndense + table ] illegal\n",
-                 (Int)(InfoBags[i].name), 0L );   
+                 (Int)TNAM_TNUM(i), 0L );
                 success = 0;
             }
         }
@@ -2942,19 +2780,19 @@ static Int CheckInit (
             if ( HasFiltListTNums[i][FN_IS_NHOMOG] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ homog + nhomog ] illegal\n",
-                 (Int)(InfoBags[i].name), 0L );   
+                 (Int)TNAM_TNUM(i), 0L );
                 success = 0;
             }
             if ( ! HasFiltListTNums[i][FN_IS_DENSE] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ homog -> dense ] missing\n",
-                 (Int)(InfoBags[i].name), 0L );   
+                 (Int)TNAM_TNUM(i), 0L );
                 success = 0;
             }
             if ( HasFiltListTNums[i][FN_IS_NDENSE] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ homog + ndense ] illegal\n",
-                 (Int)(InfoBags[i].name), 0L );   
+                 (Int)TNAM_TNUM(i), 0L );
                 success = 0;
             }
         }
@@ -2963,7 +2801,7 @@ static Int CheckInit (
             if ( HasFiltListTNums[i][FN_IS_TABLE] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ nhomog + table ] illegal\n",
-                 (Int)(InfoBags[i].name), 0L );   
+                 (Int)TNAM_TNUM(i), 0L );
                 success = 0;
             }
         }
@@ -2972,13 +2810,13 @@ static Int CheckInit (
             if ( ! HasFiltListTNums[i][FN_IS_HOMOG] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ table -> homog ] missing\n",
-                 (Int)(InfoBags[i].name), 0L );   
+                 (Int)TNAM_TNUM(i), 0L );
                 success = 0;
             }
             if ( ! HasFiltListTNums[i][FN_IS_DENSE] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ table -> dense ] missing\n",
-                 (Int)(InfoBags[i].name), 0L );   
+                 (Int)TNAM_TNUM(i), 0L );
                 success = 0;
             }
         }
@@ -2987,7 +2825,7 @@ static Int CheckInit (
             if ( HasFiltListTNums[i][FN_IS_NSORT] ) {
                 Pr(
                  "#W  HasFiltListTNums [%s] [ ssort + nsort ] illegal\n",
-                 (Int)(InfoBags[i].name), 0L );   
+                 (Int)TNAM_TNUM(i), 0L );
                 success = 0;
             }
         }           

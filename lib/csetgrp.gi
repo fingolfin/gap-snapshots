@@ -415,18 +415,17 @@ end);
 InstallOtherMethod(DoubleCoset,"with size",true,
   [IsGroup,IsObject,IsGroup,IsPosInt],0,
 function(U,g,V,sz)
-local d,fam;
+local d,fam,typ;
   fam:=FamilyObj(U);
-  if not IsBound(fam!.doubleCosetsDefaultSizeType) then
-    fam!.doubleCosetsDefaultSizeType:=NewType(fam,IsDoubleCosetDefaultRep
-	  and HasSize and HasIsFinite and IsFinite
+  typ:=NewType(fam,IsDoubleCosetDefaultRep
+	  and HasIsFinite and IsFinite
           and HasLeftActingGroup and HasRightActingGroup
 	  and HasRepresentative);
-  fi;
   d:=rec();
-  ObjectifyWithAttributes(d,fam!.doubleCosetsDefaultSizeType,
-    LeftActingGroup,U,RightActingGroup,V,Representative,g,
-    Size,sz);
+  ObjectifyWithAttributes(d,typ,
+    LeftActingGroup,U,RightActingGroup,V,Representative,g);
+  SetSize(d,sz); # Size has private setter which will cause problems with
+  # HasSize triggering an immediate method.
   return d;
 end);
 
@@ -578,21 +577,25 @@ end);
 InstallMethod(RightCoset,"use subgroup size",IsCollsElms,
   [IsGroup and HasSize,IsObject],0,
 function(U,g)
-local d,fam;
+local d,fam,typ;
   # noch tests...
 
   fam:=FamilyObj(U);
-  if not IsBound(fam!.rightCosetsDefaultSizeType) then
-    fam!.rightCosetsDefaultSizeType:=NewType(fam,IsRightCosetDefaultRep and
-          HasActingDomain and HasFunctionAction and HasRepresentative and
-	  HasSize and HasCanonicalRepresentativeDeterminatorOfExternalSet);
-  fi;
+  typ:=NewType(fam,IsRightCosetDefaultRep and
+          HasActingDomain and HasFunctionAction and HasRepresentative
+	  and HasCanonicalRepresentativeDeterminatorOfExternalSet);
 
   d:=rec();
-  ObjectifyWithAttributes(d,fam!.rightCosetsDefaultSizeType,
+  ObjectifyWithAttributes(d,typ,
     ActingDomain,U,FunctionAction,OnLeftInverse,Representative,g,
-    Size,Size(U),CanonicalRepresentativeDeterminatorOfExternalSet,
+    CanonicalRepresentativeDeterminatorOfExternalSet,
     RightCosetCanonicalRepresentativeDeterminator);
+  # We cannot set the size in the previous ObjectifyWithAttributes as there is
+  # a custom setter method (the one added in this commit). In such a case
+  # ObjectifyWith Attributes just does `Objectify` and calls all setters
+  # separately which is what we want to avoid here.
+  SetSize(d,Size(U)); 
+
   return d;
 end);
 
@@ -626,6 +629,14 @@ function(d)
   Print(ViewString(d));
 end);
 
+InstallMethod(IsBiCoset,"test property",true,[IsRightCoset],0,
+function(c)
+local s,r;
+  s:=ActingDomain(c);
+  r:=Representative(c);
+  return ForAll(GeneratorsOfGroup(s),x->x^r in s);
+end);
+
 InstallMethodWithRandomSource(Random,
   "for a random source and a RightCoset",
   [IsRandomSource, IsRightCoset],0,
@@ -653,10 +664,17 @@ end);
 InstallOtherMethod(\*,"RightCosets",IsIdenticalObj,
         [IsRightCoset,IsRightCoset],0,
 function(a,b)
-  if ActingDomain(a)<>ActingDomain(b) then
-    Error("no multiplication defined for cosets of different subgroups");
+local c;
+  if ActingDomain(a)<>ActingDomain(b) then TryNextMethod();fi;
+  if not IsBiCoset(a) then # product does not require b to be bicoset
+    ErrorNoReturn("right cosets can only be multiplied if the left operand is a bicoset");
+  fi; 
+  c:=RightCoset(ActingDomain(a), Representative(a) * Representative(b) );
+  if HasIsBiCoset(b) then
+    SetIsBiCoset(c,IsBiCoset(b));
   fi;
-  return RightCoset(ActingDomain(a), Representative(a) * Representative(b) );
+
+  return c;
 end);
 
 InstallOtherMethod(InverseOp,"Right cosets",true,
@@ -665,10 +683,12 @@ function(a)
 local s,r;
   s:=ActingDomain(a);
   r:=Representative(a);
-  if ForAny(GeneratorsOfGroup(s),x->not x^r in s) then
-    Error("Inversion only works for cosets of normal subgroups");
+  if not IsBiCoset(a) then
+    ErrorNoReturn("only right cosets which are bicosets can be inverted");
   fi;
-  return RightCoset(s,Inverse(r));
+  r:=RightCoset(s,Inverse(r));
+  SetIsBiCoset(r,true);
+  return r;
 end);
 
 InstallOtherMethod(OneOp,"Right cosets",true,

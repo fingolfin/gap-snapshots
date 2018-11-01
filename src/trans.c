@@ -39,21 +39,22 @@
 *
 *****************************************************************************/
 
-#include <src/trans.h>
+#include "trans.h"
 
-#include <src/ariths.h>
-#include <src/bool.h>
-#include <src/gap.h>
-#include <src/gapstate.h>
-#include <src/gvars.h>
-#include <src/integer.h>
-#include <src/intfuncs.h>
-#include <src/listfunc.h>
-#include <src/lists.h>
-#include <src/opers.h>
-#include <src/permutat.h>
-#include <src/plist.h>
-#include <src/saveload.h>
+#include "ariths.h"
+#include "bool.h"
+#include "error.h"
+#include "gapstate.h"
+#include "gvars.h"
+#include "integer.h"
+#include "intfuncs.h"
+#include "listfunc.h"
+#include "lists.h"
+#include "modules.h"
+#include "opers.h"
+#include "permutat.h"
+#include "plist.h"
+#include "saveload.h"
 
 #define MIN(a, b) (a < b ? a : b)
 #define MAX(a, b) (a < b ? b : a)
@@ -102,14 +103,14 @@ static inline Obj EXT_TRANS(Obj f)
 static inline void SET_IMG_TRANS(Obj f, Obj img)
 {
     GAP_ASSERT(IS_TRANS(f));
-    GAP_ASSERT(img == NULL || (IS_PLIST(img) && !IS_MUTABLE_PLIST(img)));
+    GAP_ASSERT(img == NULL || (IS_PLIST(img) && !IS_PLIST_MUTABLE(img)));
     ADDR_OBJ(f)[0] = img;
 }
 
 static inline void SET_KER_TRANS(Obj f, Obj ker)
 {
     GAP_ASSERT(IS_TRANS(f));
-    GAP_ASSERT(ker == NULL || (IS_PLIST(ker) && !IS_MUTABLE_PLIST(ker) &&
+    GAP_ASSERT(ker == NULL || (IS_PLIST(ker) && !IS_PLIST_MUTABLE(ker) &&
                                LEN_PLIST(ker) == DEG_TRANS(f)));
     ADDR_OBJ(f)[1] = ker;
 }
@@ -165,16 +166,15 @@ UInt INIT_TRANS2(Obj f)
 
     if (deg == 0) {
         // special case for degree 0
-        img = NEW_PLIST(T_PLIST_EMPTY + IMMUTABLE, 0);
-        SET_LEN_PLIST(img, 0);
+        img = NEW_PLIST_IMM(T_PLIST_EMPTY, 0);
         SET_IMG_TRANS(f, img);
         SET_KER_TRANS(f, img);
         CHANGED_BAG(f);
         return 0;
     }
 
-    img = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, deg);
-    ker = NEW_PLIST(T_PLIST_CYC_NSORT + IMMUTABLE, deg);
+    img = NEW_PLIST_IMM(T_PLIST_CYC, deg);
+    ker = NEW_PLIST_IMM(T_PLIST_CYC_NSORT, deg);
     SET_LEN_PLIST(ker, (Int)deg);
 
     pttmp = ResizeInitTmpTrans(deg);
@@ -218,16 +218,15 @@ UInt INIT_TRANS4(Obj f)
         // T_TRANS4 and that does not have (internal) degree 65537 or greater
         // is ID_TRANS4.
 
-        img = NEW_PLIST(T_PLIST_EMPTY + IMMUTABLE, 0);
-        SET_LEN_PLIST(img, 0);
+        img = NEW_PLIST_IMM(T_PLIST_EMPTY, 0);
         SET_IMG_TRANS(f, img);
         SET_KER_TRANS(f, img);
         CHANGED_BAG(f);
         return 0;
     }
 
-    img = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, deg);
-    ker = NEW_PLIST(T_PLIST_CYC_NSORT + IMMUTABLE, deg);
+    img = NEW_PLIST_IMM(T_PLIST_CYC, deg);
+    ker = NEW_PLIST_IMM(T_PLIST_CYC_NSORT, deg);
     SET_LEN_PLIST(ker, (Int)deg);
 
     pttmp = ResizeInitTmpTrans(deg);
@@ -264,56 +263,26 @@ UInt RANK_TRANS4(Obj f)
     return (IMG_TRANS(f) == NULL ? INIT_TRANS4(f) : LEN_PLIST(IMG_TRANS(f)));
 }
 
-// TODO should this use the newer sorting algorithm by CAJ in PR #609?
-//
-// Retyping is the responsibility of the caller.
-
-static void SORT_PLIST_CYC(Obj res)
-{
-    Obj  tmp;
-    UInt h, i, k, len;
-
-    len = LEN_PLIST(res);
-
-    if (0 < len) {
-        h = 1;
-        while (9 * h + 4 < len) {
-            h = 3 * h + 1;
-        }
-        while (0 < h) {
-            for (i = h + 1; i <= len; i++) {
-                tmp = CONST_ADDR_OBJ(res)[i];
-                k = i;
-                while (h < k && ((Int)tmp < (Int)(CONST_ADDR_OBJ(res)[k - h]))) {
-                    ADDR_OBJ(res)[k] = CONST_ADDR_OBJ(res)[k - h];
-                    k -= h;
-                }
-                ADDR_OBJ(res)[k] = tmp;
-            }
-            h = h / 3;
-        }
-        CHANGED_BAG(res);
-    }
-}
-
 // Retyping is the responsibility of the caller, this should only be called
-// after a call to SORT_PLIST_CYC.
+// after a call to SortPlistByRawObj.
 
-static void REMOVE_DUPS_PLIST_CYC(Obj res)
+static void REMOVE_DUPS_PLIST_INTOBJ(Obj res)
 {
     Obj  tmp;
     UInt i, k, len;
+    Obj  *data;
 
     len = LEN_PLIST(res);
 
     if (0 < len) {
-        tmp = CONST_ADDR_OBJ(res)[1];
+        data = ADDR_OBJ(res);
+        tmp = data[1];
         k = 1;
         for (i = 2; i <= len; i++) {
-            if (tmp != CONST_ADDR_OBJ(res)[i]) {
+            if (tmp != data[i]) {
                 k++;
-                tmp = CONST_ADDR_OBJ(res)[i];
-                ADDR_OBJ(res)[k] = tmp;
+                tmp = data[i];
+                data[k] = tmp;
             }
         }
         if (k < len) {
@@ -940,7 +909,6 @@ Obj FuncFLAT_KERNEL_TRANS_INT(Obj self, Obj f, Obj n)
         }
         else if (m == 0) {
             new = NEW_PLIST(T_PLIST_EMPTY, 0);
-            SET_LEN_PLIST(new, 0);
             return new;
         }
         else {
@@ -981,7 +949,6 @@ Obj FuncFLAT_KERNEL_TRANS_INT(Obj self, Obj f, Obj n)
         }
         else if (m == 0) {
             new = NEW_PLIST(T_PLIST_EMPTY, 0);
-            SET_LEN_PLIST(new, 0);
             return new;
         }
         else {
@@ -1041,7 +1008,6 @@ Obj FuncKERNEL_TRANS(Obj self, Obj f, Obj n)
     // special case for the identity
     if (m == 0) {
         ker = NEW_PLIST(T_PLIST_EMPTY, 0);
-        SET_LEN_PLIST(ker, 0);
         return ker;
     }
 
@@ -1172,9 +1138,8 @@ Obj FuncIMAGE_SET_TRANS(Obj self, Obj f)
     Obj out = FuncUNSORTED_IMAGE_SET_TRANS(self, f);
 
     if (!IS_SSORT_LIST(out)) {
-        SORT_PLIST_CYC(out);
+        SortPlistByRawObj(out);
         RetypeBag(out, T_PLIST_CYC_SSORT + IMMUTABLE);
-        CHANGED_BAG(out);
         return out;
     }
     return out;
@@ -1210,14 +1175,12 @@ Obj FuncIMAGE_SET_TRANS_INT(Obj self, Obj f, Obj n)
         return FuncIMAGE_SET_TRANS(self, f);
     }
     else if (m == 0) {
-        new = NEW_PLIST(T_PLIST_EMPTY + IMMUTABLE, 0);
-        SET_LEN_PLIST(new, 0);
+        new = NEW_PLIST_IMM(T_PLIST_EMPTY, 0);
         return new;
     }
     else if (m < deg) {
+        new = NEW_PLIST_IMM(T_PLIST_CYC, m);
         pttmp = ResizeInitTmpTrans(deg);
-        new = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, m);
-        pttmp = ADDR_TRANS4(TmpTrans);
 
         if (TNUM_OBJ(f) == T_TRANS2) {
             ptf2 = CONST_ADDR_TRANS2(f);
@@ -1243,9 +1206,8 @@ Obj FuncIMAGE_SET_TRANS_INT(Obj self, Obj f, Obj n)
         }
         SHRINK_PLIST(new, (Int)rank);
         SET_LEN_PLIST(new, (Int)rank);
-        SORT_PLIST_CYC(new);
-        RetypeBag(new, T_PLIST_CYC_SSORT);
-        CHANGED_BAG(new);
+        SortPlistByRawObj(new);
+        RetypeBag(new, T_PLIST_CYC_SSORT + IMMUTABLE);
     }
     else {
         // m > deg and so m is at least 1!
@@ -1292,12 +1254,11 @@ Obj FuncIMAGE_LIST_TRANS_INT(Obj self, Obj f, Obj n)
     m = INT_INTOBJ(n);
 
     if (m == 0) {
-        out = NEW_PLIST(T_PLIST_EMPTY + IMMUTABLE, 0);
-        SET_LEN_PLIST(out, 0);
+        out = NEW_PLIST_IMM(T_PLIST_EMPTY, 0);
         return out;
     }
 
-    out = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, m);
+    out = NEW_PLIST_IMM(T_PLIST_CYC, m);
 
     if (TNUM_OBJ(f) == T_TRANS2) {
         ptf2 = CONST_ADDR_TRANS2(f);
@@ -1406,7 +1367,7 @@ Obj FuncIndexPeriodOfTransformation(Obj self, Obj f)
     UInt4 * seen;
     UInt    deg, i, pt, dist, pow, len, last_pt;
     Obj     ord, out;
-    Int     s, t, gcd, cyc;
+    Int     cyc;
 
     if (!IS_TRANS(f)) {
         ErrorQuit("IndexPeriodOfTransformation: the argument must be a "
@@ -1464,18 +1425,14 @@ Obj FuncIndexPeriodOfTransformation(Obj self, Obj f)
                         seen[pt] = 1;
                     }
 
-                    // compute the gcd of the cycle length with the previous
-                    // order ord
-                    gcd = cyc;
-                    s = INT_INTOBJ(ModInt(ord, INTOBJ_INT(cyc)));
-                    while (s != 0) {
-                        t = s;
-                        s = gcd % s;
-                        gcd = t;
-                    }
-                    ord = ProdInt(ord, INTOBJ_INT(cyc / gcd));
-                    dist = len - cyc + 1;
+                    ord = LcmInt(ord, INTOBJ_INT(cyc));
+
                     // the distance of i from the cycle in its component + 1
+                    dist = len - cyc + 1;
+
+                    // update bag pointers, in case a garbage collection happened
+                    ptf2 = CONST_ADDR_TRANS2(f);
+                    seen = ADDR_TRANS4(TmpTrans);
                 }
                 if (dist > pow) {
                     pow = dist;
@@ -1513,18 +1470,14 @@ Obj FuncIndexPeriodOfTransformation(Obj self, Obj f)
                         seen[pt] = 1;
                     }
 
-                    // compute the gcd of the cycle length with the previous
-                    // order ord
-                    gcd = cyc;
-                    s = INT_INTOBJ(ModInt(ord, INTOBJ_INT(cyc)));
-                    while (s != 0) {
-                        t = s;
-                        s = gcd % s;
-                        gcd = t;
-                    }
-                    ord = ProdInt(ord, INTOBJ_INT(cyc / gcd));
-                    dist = len - cyc + 1;
+                    ord = LcmInt(ord, INTOBJ_INT(cyc));
+
                     // the distance of i from the cycle in its component + 1
+                    dist = len - cyc + 1;
+
+                    // update bag pointers, in case a garbage collection happened
+                    ptf4 = CONST_ADDR_TRANS4(f);
+                    seen = ADDR_TRANS4(TmpTrans);
                 }
                 if (dist > pow) {
                     pow = dist;
@@ -1751,11 +1704,10 @@ Obj FuncON_KERNEL_ANTI_ACTION(Obj self, Obj ker, Obj f, Obj n)
         deg = INT_INTOBJ(FuncDegreeOfTransformation(self, f));
         if (len >= deg) {
             if (len == 0) {
-                out = NEW_PLIST(T_PLIST_EMPTY + IMMUTABLE, 0);
-                SET_LEN_PLIST(out, 0);
+                out = NEW_PLIST_IMM(T_PLIST_EMPTY, 0);
                 return out;
             }
-            out = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, len);
+            out = NEW_PLIST_IMM(T_PLIST_CYC, len);
             SET_LEN_PLIST(out, len);
             pttmp = ResizeInitTmpTrans(len);
             ptf2 = CONST_ADDR_TRANS2(f);
@@ -1787,11 +1739,10 @@ Obj FuncON_KERNEL_ANTI_ACTION(Obj self, Obj ker, Obj f, Obj n)
         deg = INT_INTOBJ(FuncDegreeOfTransformation(self, f));
         if (len >= deg) {
             if (len == 0) {
-                out = NEW_PLIST(T_PLIST_EMPTY + IMMUTABLE, 0);
-                SET_LEN_PLIST(out, 0);
+                out = NEW_PLIST_IMM(T_PLIST_EMPTY, 0);
                 return out;
             }
-            out = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, len);
+            out = NEW_PLIST_IMM(T_PLIST_CYC, len);
             SET_LEN_PLIST(out, len);
             pttmp = ResizeInitTmpTrans(len);
             ptf4 = CONST_ADDR_TRANS4(f);
@@ -2741,7 +2692,6 @@ Obj FuncCOMPONENT_REPS_TRANS(Obj self, Obj f)
 
     if (deg == 0) {
         out = NEW_PLIST(T_PLIST_EMPTY, 0);
-        SET_LEN_PLIST(out, 0);
         return out;
     }
 
@@ -2935,12 +2885,11 @@ Obj FuncCOMPONENTS_TRANS(Obj self, Obj f)
 
     if (deg == 0) {
         out = NEW_PLIST(T_PLIST_EMPTY, 0);
-        SET_LEN_PLIST(out, 0);
         return out;
     }
 
-    seen = ResizeInitTmpTrans(deg);
     out = NEW_PLIST(T_PLIST, 1);
+    seen = ResizeInitTmpTrans(deg);
     nr = 0;
 
     if (TNUM_OBJ(f) == T_TRANS2) {
@@ -3144,6 +3093,7 @@ Obj FuncCYCLE_TRANS_INT(Obj self, Obj f, Obj pt)
         i = cpt;
         do {
             AssPlist(out, ++len, INTOBJ_INT(i + 1));
+            ptf2 = CONST_ADDR_TRANS2(f);
             i = ptf2[i];
         } while (i != cpt);
     }
@@ -3158,6 +3108,7 @@ Obj FuncCYCLE_TRANS_INT(Obj self, Obj f, Obj pt)
         i = cpt;
         do {
             AssPlist(out, ++len, INTOBJ_INT(i + 1));
+            ptf4 = CONST_ADDR_TRANS4(f);
             i = ptf4[i];
         } while (i != cpt);
     }
@@ -3185,13 +3136,13 @@ Obj FuncCYCLES_TRANS(Obj self, Obj f)
 
     if (deg == 0) {
         out = NEW_PLIST(T_PLIST_EMPTY, 0);
-        SET_LEN_PLIST(out, 0);
         return out;
     }
 
-    seen = ResizeInitTmpTrans(deg);
     out = NEW_PLIST(T_PLIST, 0);
     nr = 0;
+
+    seen = ResizeInitTmpTrans(deg);
 
     if (TNUM_OBJ(f) == T_TRANS2) {
         ptf2 = CONST_ADDR_TRANS2(f);
@@ -3286,7 +3237,6 @@ Obj FuncCYCLES_TRANS_LIST(Obj self, Obj f, Obj list)
 
     if (LEN_LIST(list) == 0) {
         out = NEW_PLIST(T_PLIST_EMPTY, 0);
-        SET_LEN_PLIST(out, 0);
         return out;
     }
 
@@ -3648,12 +3598,12 @@ Obj FuncPOW_KER_PERM(Obj self, Obj ker, Obj p)
     len = LEN_LIST(ker);
 
     if (len == 0) {
-        out = NEW_PLIST(T_PLIST_EMPTY + IMMUTABLE, len);
+        out = NEW_PLIST_IMM(T_PLIST_EMPTY, len);
         SET_LEN_PLIST(out, len);
         return out;
     }
 
-    out = NEW_PLIST(T_PLIST_CYC + IMMUTABLE, len);
+    out = NEW_PLIST_IMM(T_PLIST_CYC, len);
     SET_LEN_PLIST(out, len);
 
     ResizeTmpTrans(2 * len);
@@ -3876,40 +3826,41 @@ Obj FuncOnPosIntSetsTrans(Obj self, Obj set, Obj f, Obj n)
     }
 
     PLAIN_LIST(set);
-    res = NEW_PLIST(IS_MUTABLE_PLIST(set) ? T_PLIST_CYC_SSORT
-                                          : T_PLIST_CYC_SSORT + IMMUTABLE,
-                    LEN_LIST(set));
-    ADDR_OBJ(res)[0] = CONST_ADDR_OBJ(set)[0];
 
-    ptset = CONST_ADDR_OBJ(set) + LEN_LIST(set);
-    ptres = ADDR_OBJ(res) + LEN_LIST(set);
+    const UInt len = LEN_PLIST(set);
+
+    res = NEW_PLIST_WITH_MUTABILITY(IS_PLIST_MUTABLE(set), T_PLIST_CYC_SSORT, len);
+    SET_LEN_PLIST(res, len);
+
+    ptset = CONST_ADDR_OBJ(set) + len;
+    ptres = ADDR_OBJ(res) + len;
 
     if (TNUM_OBJ(f) == T_TRANS2) {
         ptf2 = CONST_ADDR_TRANS2(f);
         deg = DEG_TRANS2(f);
-        for (i = LEN_LIST(set); 1 <= i; i--, ptset--, ptres--) {
+        for (i = len; 1 <= i; i--, ptset--, ptres--) {
             k = INT_INTOBJ(*ptset);
             if (k <= deg) {
                 k = ptf2[k - 1] + 1;
             }
             *ptres = INTOBJ_INT(k);
         }
-        SORT_PLIST_CYC(res);
-        REMOVE_DUPS_PLIST_CYC(res);
+        SortPlistByRawObj(res);
+        REMOVE_DUPS_PLIST_INTOBJ(res);
         return res;
     }
     else if (TNUM_OBJ(f) == T_TRANS4) {
         ptf4 = CONST_ADDR_TRANS4(f);
         deg = DEG_TRANS4(f);
-        for (i = LEN_LIST(set); 1 <= i; i--, ptset--, ptres--) {
+        for (i = len; 1 <= i; i--, ptset--, ptres--) {
             k = INT_INTOBJ(*ptset);
             if (k <= deg) {
                 k = ptf4[k - 1] + 1;
             }
             *ptres = INTOBJ_INT(k);
         }
-        SORT_PLIST_CYC(res);
-        REMOVE_DUPS_PLIST_CYC(res);
+        SortPlistByRawObj(res);
+        REMOVE_DUPS_PLIST_INTOBJ(res);
         return res;
     }
     ErrorQuit("OnPosIntSetsTrans: the argument must be a "
@@ -4097,45 +4048,7 @@ Int EqTrans24(Obj f, Obj g)
 
 Int EqTrans42(Obj f, Obj g)
 {
-    UInt    i, def, deg;
-    const UInt4 * ptf;
-    const UInt2 * ptg;
-
-    ptf = CONST_ADDR_TRANS4(f);
-    ptg = CONST_ADDR_TRANS2(g);
-    def = DEG_TRANS4(f);
-    deg = DEG_TRANS2(g);
-
-    if (def <= deg) {
-        // The only transformation created within this file that is of type
-        // T_TRANS4 and that does not have (internal) degree 65537 or greater
-        // is ID_TRANS4.
-
-        for (i = 0; i < def; i++) {
-            if (*(ptf++) != *(ptg++)) {
-                return 0L;
-            }
-        }
-        for (; i < deg; i++) {
-            if (*(ptg++) != i) {
-                return 0L;
-            }
-        }
-    }
-    else {
-        for (i = 0; i < deg; i++) {
-            if (*(ptf++) != *(ptg++)) {
-                return 0L;
-            }
-        }
-        for (; i < def; i++) {
-            if (*(ptf++) != i) {
-                return 0L;
-            }
-        }
-    }
-
-    return 1L;
+    return EqTrans24(g, f);
 }
 
 /*******************************************************************************
@@ -5298,12 +5211,16 @@ Obj PowIntTrans4(Obj i, Obj f)
     return INTOBJ_INT(img);
 }
 
-/*******************************************************************************
-** Apply a transformation to a set or tuple
-*******************************************************************************/
-
-// OnSetsTrans for use in FuncOnSets.
-
+/****************************************************************************
+**
+*F  OnSetsTrans( <set>, <f> ) . . . . . . . . .  operations on sets of points
+**
+**  'OnSetsTrans' returns the  image of the tuple <set> under the
+**  transformation <f>.  It is called from 'FuncOnSets'.
+**
+**  The input <set> must be a non-empty set, i.e., plain, dense and strictly
+**  sorted. This is is not verified.
+*/
 Obj OnSetsTrans(Obj set, Obj f)
 {
     const UInt2 * ptf2;
@@ -5313,19 +5230,22 @@ Obj OnSetsTrans(Obj set, Obj f)
     Obj *   ptres, tmp, res;
     UInt    i, isint, k;
 
-    res = NEW_PLIST(IS_MUTABLE_PLIST(set) ? T_PLIST : T_PLIST + IMMUTABLE,
-                    LEN_LIST(set));
+    GAP_ASSERT(IS_PLIST(set));
+    GAP_ASSERT(LEN_PLIST(set) > 0);
 
-    ADDR_OBJ(res)[0] = CONST_ADDR_OBJ(set)[0];
+    const UInt len = LEN_PLIST(set);
 
-    ptset = CONST_ADDR_OBJ(set) + LEN_LIST(set);
-    ptres = ADDR_OBJ(res) + LEN_LIST(set);
+    res = NEW_PLIST_WITH_MUTABILITY(IS_PLIST_MUTABLE(set), T_PLIST, len);
+    SET_LEN_PLIST(res, len);
+
+    ptset = CONST_ADDR_OBJ(set) + len;
+    ptres = ADDR_OBJ(res) + len;
     if (TNUM_OBJ(f) == T_TRANS2) {
         ptf2 = CONST_ADDR_TRANS2(f);
         deg = DEG_TRANS2(f);
         // loop over the entries of the tuple
         isint = 1;
-        for (i = LEN_LIST(set); 1 <= i; i--, ptset--, ptres--) {
+        for (i = len; 1 <= i; i--, ptset--, ptres--) {
             if (IS_INTOBJ(*ptset) && 0 < INT_INTOBJ(*ptset)) {
                 k = INT_INTOBJ(*ptset);
                 if (k <= deg) {
@@ -5350,7 +5270,7 @@ Obj OnSetsTrans(Obj set, Obj f)
 
         // loop over the entries of the tuple
         isint = 1;
-        for (i = LEN_LIST(set); 1 <= i; i--, ptset--, ptres--) {
+        for (i = len; 1 <= i; i--, ptset--, ptres--) {
             if (IS_INTOBJ(*ptset) && 0 < INT_INTOBJ(*ptset)) {
                 k = INT_INTOBJ(*ptset);
                 if (k <= deg) {
@@ -5372,10 +5292,10 @@ Obj OnSetsTrans(Obj set, Obj f)
 
     // sort the result and remove dups
     if (isint) {
-        SORT_PLIST_CYC(res);
-        REMOVE_DUPS_PLIST_CYC(res);
+        SortPlistByRawObj(res);
+        REMOVE_DUPS_PLIST_INTOBJ(res);
 
-        RetypeBag(res, IS_MUTABLE_PLIST(set) ? T_PLIST_CYC_SSORT
+        RetypeBag(res, IS_PLIST_MUTABLE(set) ? T_PLIST_CYC_SSORT
                                              : T_PLIST_CYC_SSORT + IMMUTABLE);
     }
     else {
@@ -5386,8 +5306,16 @@ Obj OnSetsTrans(Obj set, Obj f)
     return res;
 }
 
-// OnTuplesTrans for use in FuncOnTuples
-
+/****************************************************************************
+**
+*F  OnTuplesTrans( <tup>, <f> ) . . . . . . .  operations on tuples of points
+**
+**  'OnTuplesTrans'  returns  the  image  of  the  tuple  <tup>   under  the
+**  transformation <f>.  It is called from 'FuncOnTuples'.
+**
+**  The input <tup> must be a non-empty and dense plain list. This is is not
+**  verified.
+*/
 Obj OnTuplesTrans(Obj tup, Obj f)
 {
     const UInt2 * ptf2;
@@ -5396,20 +5324,23 @@ Obj OnTuplesTrans(Obj tup, Obj f)
     const Obj *   pttup;
     Obj *   ptres, res, tmp;
 
-    res = NEW_PLIST(IS_MUTABLE_PLIST(tup) ? T_PLIST : T_PLIST + IMMUTABLE,
-                    LEN_LIST(tup));
+    GAP_ASSERT(IS_PLIST(tup));
+    GAP_ASSERT(LEN_PLIST(tup) > 0);
 
-    ADDR_OBJ(res)[0] = CONST_ADDR_OBJ(tup)[0];
+    const UInt len = LEN_PLIST(tup);
 
-    pttup = CONST_ADDR_OBJ(tup) + LEN_LIST(tup);
-    ptres = ADDR_OBJ(res) + LEN_LIST(tup);
+    res = NEW_PLIST_WITH_MUTABILITY(IS_PLIST_MUTABLE(tup), T_PLIST, len);
+    SET_LEN_PLIST(res, len);
+
+    pttup = CONST_ADDR_OBJ(tup) + len;
+    ptres = ADDR_OBJ(res) + len;
 
     if (TNUM_OBJ(f) == T_TRANS2) {
         ptf2 = CONST_ADDR_TRANS2(f);
         deg = DEG_TRANS2(f);
 
         // loop over the entries of the tuple
-        for (i = LEN_LIST(tup); 1 <= i; i--, pttup--, ptres--) {
+        for (i = len; 1 <= i; i--, pttup--, ptres--) {
             if (IS_INTOBJ(*pttup) && 0 < INT_INTOBJ(*pttup)) {
                 k = INT_INTOBJ(*pttup);
                 if (k <= deg) {
@@ -5437,7 +5368,7 @@ Obj OnTuplesTrans(Obj tup, Obj f)
         deg = DEG_TRANS4(f);
 
         // loop over the entries of the tuple
-        for (i = LEN_LIST(tup); 1 <= i; i--, pttup--, ptres--) {
+        for (i = len; 1 <= i; i--, pttup--, ptres--) {
             if (IS_INTOBJ(*pttup) && 0 < INT_INTOBJ(*pttup)) {
                 k = INT_INTOBJ(*pttup);
                 if (k <= deg) {
@@ -5541,8 +5472,20 @@ Obj IsTransHandler(Obj self, Obj val)
     }
 }
 
-/*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * *
- */
+/****************************************************************************
+**
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
+*/
+
+/****************************************************************************
+**
+*V  BagNames  . . . . . . . . . . . . . . . . . . . . . . . list of bag names
+*/
+static StructBagNames BagNames[] = {
+  { T_TRANS2, "transformation (small)" },
+  { T_TRANS4, "transformation (large)" },
+  { -1, "" }
+};
 
 /****************************************************************************
 **
@@ -5622,20 +5565,24 @@ static StructGVarFunc GVarFuncs[] = {
     { 0, 0, 0, 0, 0 }
 
 };
+
+
 /******************************************************************************
 *F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
 */
 static Int InitKernel(StructInitInfo * module)
 {
+    // set the bag type names (for error messages and debugging)
+    InitBagNamesFromTable( BagNames );
 
     /* install the marking functions                                       */
-    InfoBags[T_TRANS2].name = "transformation (small)";
-    InfoBags[T_TRANS4].name = "transformation (large)";
     InitMarkFuncBags(T_TRANS2, MarkThreeSubBags);
     InitMarkFuncBags(T_TRANS4, MarkThreeSubBags);
 
+#ifdef HPCGAP
     MakeBagTypePublic(T_TRANS2);
     MakeBagTypePublic(T_TRANS4);
+#endif
 
     /* install the type functions                                          */
     ImportGVarFromLibrary("TYPE_TRANS2", &TYPE_TRANS2);
@@ -5736,9 +5683,12 @@ static Int InitLibrary(StructInitInfo * module)
     return 0;
 }
 
-static void InitModuleState(ModuleStateOffset offset)
+static Int InitModuleState(void)
 {
     TmpTrans = 0;
+
+    // return success
+    return 0;
 }
 
 /****************************************************************************
@@ -5752,10 +5702,12 @@ static StructInitInfo module = {
     .name = "trans",
     .initKernel = InitKernel,
     .initLibrary = InitLibrary,
+    .moduleStateSize = sizeof(TransModuleState),
+    .moduleStateOffsetPtr = &TransStateOffset,
+    .initModuleState = InitModuleState,
 };
 
 StructInitInfo * InitInfoTrans(void)
 {
-    TransStateOffset = RegisterModuleState(sizeof(TransModuleState), InitModuleState, 0);
     return &module;
 }

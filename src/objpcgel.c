@@ -8,14 +8,14 @@
 *Y  Copyright (C) 2002 The GAP Group
 */
 
-#include <src/objpcgel.h>
+#include "objpcgel.h"
 
-#include <src/bool.h>
-#include <src/gap.h>
-#include <src/gvars.h>
-#include <src/lists.h>
-#include <src/objscoll.h>
-#include <src/plist.h>
+#include "bool.h"
+#include "gvars.h"
+#include "lists.h"
+#include "modules.h"
+#include "objscoll.h"
+#include "plist.h"
 
 
 /****************************************************************************
@@ -554,7 +554,7 @@ Obj Func32Bits_ExponentsOfPcElement ( Obj self, Obj pcgs, Obj w)
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

@@ -935,7 +935,7 @@ InstallMethod( Earns, "G, ints, gens, perms, act", true,
 #        fi;
 #    fi;
 
-    fac := FactorsInt( n );  p := fac[ 1 ];  d := Length( fac );
+    fac := Factors(Integers, n );  p := fac[ 1 ];  d := Length( fac );
     alpha := BasePoint( StabChainMutable( G ) );
     G1 := Stabilizer( G, alpha );
 
@@ -952,7 +952,7 @@ InstallMethod( Earns, "G, ints, gens, perms, act", true,
             if not IsTrivial( G2 )  then
                 Gamma := Filtered( D, p -> ForAll( GeneratorsOfGroup( G2 ),
                                  g -> p ^ g = p ) );
-                if Set( FactorsInt( Length( Gamma ) ) ) <> [ p ]  then
+                if PrimeDivisors( Length( Gamma ) ) <> [ p ]  then
                     return fail;
                 fi;
                 C := Centralizer( G, G2 );

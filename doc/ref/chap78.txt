@@ -253,11 +253,11 @@
   [33X[1;0Y[29X[2XInstallImmediateMethod[102X( [3Xopr[103X[, [3Xinfo[103X], [3Xfilter[103X, [3Xrank[103X, [3Xmethod[103X ) [32X function[133X
   
   [33X[0;0Y[2XInstallImmediateMethod[102X installs [3Xmethod[103X as an immediate method for [3Xopr[103X, which
-  must  be  an attribute or a property, with requirement [3Xfilter[103X and rank [3Xrank[103X.
-  The rank must be an integer value that measures the priority of [3Xmethod[103X among
-  the  immediate  methods  for  [3Xopr[103X.  If  supplied, [3Xinfo[103X should be a short but
-  informative  string  that  describes  the  situation  in which the method is
-  called.[133X
+  must  be  an  attribute or a property, with requirement [3Xfilter[103X and rank [3Xrank[103X
+  (the rank can be omitted, in which case 0 is used as rank). The rank must be
+  an  integer  value  that measures the priority of [3Xmethod[103X among the immediate
+  methods  for [3Xopr[103X. If supplied, [3Xinfo[103X should be a short but informative string
+  that describes the situation in which the method is called.[133X
   
   [33X[0;0YAn  immediate  method  is called automatically as soon as the object lies in
   [3Xfilter[103X,  provided  that the value is not yet known. Afterwards the attribute

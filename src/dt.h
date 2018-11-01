@@ -15,7 +15,7 @@
 #ifndef GAP_DT_H
 #define GAP_DT_H
 
-#include <src/system.h>
+#include "system.h"
 
 extern void  UnmarkTree(
                   Obj   z );
@@ -57,11 +57,6 @@ extern UInt    FindTree(
 extern Obj    MakeFormulaVector(
                           Obj    tree,
                           Obj    pr   );
-
-
-extern Obj  binomial(
-               Obj     n,
-               Obj     k    );
 
 
 extern Int     Leftof(
@@ -151,7 +146,7 @@ extern Obj Power(
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

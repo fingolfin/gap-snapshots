@@ -11,14 +11,15 @@
 **
 **  This package provides a uniform   interface to the functions that  access
 **  lists and their elements  for the other packages  in the GAP kernel.  For
-**  example, 'ExecFor' can loop over the elements  in a list using the macros
-**  'LEN_LIST' and 'ELM_LIST' independently of the type of the list.
+**  example, 'ExecFor' can loop over the elements  in a list using 'LEN_LIST'
+**  and 'ELM_LIST' independently of the type of the list.
 */
 
 #ifndef GAP_LISTS_H
 #define GAP_LISTS_H
 
-#include <src/objects.h>
+#include "error.h"
+#include "objects.h"
 
 /****************************************************************************
 **
@@ -141,9 +142,6 @@ static inline Int IS_POSS_LIST(Obj list)
 *F  LEN_LIST(<list>)  . . . . . . . . . . . . . . . . . . .  length of a list
 *V  LenListFuncs[<type>]  . . . . . . . . . . . . . table of length functions
 **
-**  Note that  'LEN_LIST' is a  macro, so do  not call it with arguments that
-**  have side effects.
-**
 **  A package  implementing a list type <type>  must  provide such a function
 **  and install it in 'LenListFuncs[<type>]'.
 */
@@ -262,9 +260,9 @@ static inline Obj ELM_DEFAULT_LIST(Obj list, Int pos, Obj def)
 *V  Elmv0ListFuncs[ <type> ]  . . . . . . . . .  table of selection functions
 **
 **  A package implementing  a lists type  <type> must provide a function  for
-**  'ELMV0_LIST' and install it  in 'Elmv0ListFuncs[<type>]'.   This function
-**  need not test   whether <pos> is less  than   or equal to  the  length of
-**  <list>.
+**  'ELMV0_LIST( <list>, <pos> )' and install it in 'Elmv0ListFuncs[<type>]'.
+**  This function need not test whether <pos> is less than or equal to the
+**  length of <list>.
 */
 extern  Obj (*Elm0vListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 
@@ -290,9 +288,9 @@ static inline Obj ELMV0_LIST(Obj list, Int pos)
 *V  ElmListFuncs[ <type> ]  . . . . . . . . . .  table of selection functions
 **
 **  A package implementing a  list  type <type> must  provide a  function for
-**  'ELM_LIST' and install it  in 'ElmListFuncs[<type>]'.  This function must
-**  signal an error if <pos> is larger than the length of <list> or if <list>
-**  has no assigned object at <pos>.
+**  'ELM_LIST( <list>, <pos> )' and install it in 'ElmListFuncs[<type>]'.
+**  This function must signal an error if <pos> is larger than the length of
+**  <list> or if <list> has no assigned object at <pos>.
 */
 extern Obj (*ElmListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 
@@ -308,8 +306,8 @@ extern Obj (*ElmListFuncs[LAST_REAL_TNUM+1]) ( Obj list, Int pos );
 **  is the responsibility  of the caller to  ensure that <pos>  is a positive
 **  integer.
 **
-**  The difference between ELM_LIST and ELMB_LIST is that ELMB_LIST accepts
-**  an object as the second argument
+**  The difference between 'ELM_LIST' and 'ELMB_LIST' is that 'ELMB_LIST'
+**  accepts an object as the second argument.
 **  It is intended as an interface for access to elements of large external
 **  lists, on the rare occasions when the kernel needs to do this.
 */
@@ -431,7 +429,7 @@ static inline Obj ELMS_LIST(Obj list, Obj poss)
 
 /****************************************************************************
 **
-*F  ElmsListDefault( <list>, <poss> ) . . .  default function for `ELMS_LIST'
+*F  ElmsListDefault( <list>, <poss> ) . . .  default function for 'ELMS_LIST'
 */
 extern Obj ElmsListDefault (
             Obj                 list,
@@ -440,7 +438,7 @@ extern Obj ElmsListDefault (
 
 /****************************************************************************
 **
-*F  ElmsListCheck( <list>, <poss> ) . . . . . . . . .  `ELMS_LIST' with check
+*F  ElmsListCheck( <list>, <poss> ) . . . . . . . . .  'ELMS_LIST' with check
 */
 extern Obj ElmsListCheck (
     Obj                 list,
@@ -449,7 +447,7 @@ extern Obj ElmsListCheck (
 
 /****************************************************************************
 **
-*F  ElmsListLevelCheck( <lists>, <poss>, <level> ) `ElmsListLevel' with check
+*F  ElmsListLevelCheck( <lists>, <poss>, <level> ) 'ElmsListLevel' with check
 */
 extern void ElmsListLevelCheck (
     Obj                 lists,
@@ -513,6 +511,12 @@ static inline void ASS_LIST(Obj list, Int pos, Obj obj)
 {
     GAP_ASSERT(pos > 0);
     GAP_ASSERT(obj != 0);
+    UInt tnum = TNUM_OBJ(list);
+    if (FIRST_LIST_TNUM <= tnum && tnum <= LAST_LIST_TNUM &&
+        (tnum & IMMUTABLE)) {
+        ErrorReturnVoid("List Assignment: <list> must be a mutable list", 0,
+                        0, "you can 'return;' and ignore the assignment");
+    }
     (*AssListFuncs[TNUM_OBJ(list)])(list, pos, obj);
 }
 
@@ -559,6 +563,12 @@ static inline void ASSS_LIST(Obj list, Obj poss, Obj objs)
     GAP_ASSERT(IS_POSS_LIST(poss));
     GAP_ASSERT(IS_DENSE_LIST(objs));
     GAP_ASSERT(LEN_LIST(poss) == LEN_LIST(objs));
+    UInt tnum = TNUM_OBJ(list);
+    if (FIRST_LIST_TNUM <= tnum && tnum <= LAST_LIST_TNUM &&
+        (tnum & IMMUTABLE)) {
+        ErrorReturnVoid("List Assignments: <list> must be a mutable list", 0,
+                        0, "you can 'return;' and ignore the assignment");
+    }
     (*AsssListFuncs[TNUM_OBJ(list)])(list, poss, objs);
 }
 
@@ -777,9 +787,7 @@ extern  void            AsssListLevel (
 *V  PlainListFuncs[<type>]  . . . . . . . . . . table of conversion functions
 **
 **  'PLAIN_LIST' changes  the representation of the  list <list> to that of a
-**  plain list Note that the type of <list> need not be 'T_PLIST' afterwards,
-**  it could also be 'T_SET' or 'T_VECTOR'.  An  error is signalled if <list>
-**  is not a list.
+**  plain list. An error is signalled if <list> is not a list.
 **
 **  A package implementing a  list type <type>  must provide such  a function
 **  and install it in 'PlainListFuncs[<type>]'.
@@ -807,31 +815,28 @@ extern  Obj             TYPES_LIST_FAM (
 */
 
 enum {
-    /** filter number for `IsEmpty' */
-    FN_IS_EMPTY,
-
-    /** filter number for `IsSSortedList' */
+    /** filter number for 'IsSSortedList' */
     FN_IS_SSORT,
 
-    /** filter number for `IsNSortedList' */
+    /** filter number for 'IsNSortedList' */
     FN_IS_NSORT,
 
-    /** filter number for `IsDenseList' */
+    /** filter number for 'IsDenseList' */
     FN_IS_DENSE,
 
-    /** filter number for `IsNDenseList' */
+    /** filter number for 'IsNDenseList' */
     FN_IS_NDENSE,
 
-    /** filter number for `IsHomogeneousList' */
+    /** filter number for 'IsHomogeneousList' */
     FN_IS_HOMOG,
 
-    /** filter number for `IsNonHomogeneousList' */
+    /** filter number for 'IsNonHomogeneousList' */
     FN_IS_NHOMOG,
 
-    /** filter number for `IsTable' */
+    /** filter number for 'IsTable' */
     FN_IS_TABLE,
 
-    /** filter number for `IsRectangularTable' */
+    /** filter number for 'IsRectangularTable' */
     FN_IS_RECT,
 
     LAST_FN = FN_IS_RECT
@@ -845,9 +850,9 @@ enum {
 **  If a list  with type number <tnum>  gains  the filter  with filter number
 **  <fnum>, then the new type number is stored in:
 **
-**  `SetFiltListTNums[<tnum>][<fnum>]'
+**  'SetFiltListTNums[<tnum>][<fnum>]'
 **
-**  The macro  `SET_FILT_LIST' is  used  to  set  the filter  for a  list  by
+**  The macro  'SET_FILT_LIST' is  used  to  set  the filter  for a  list  by
 **  changing its type number.
 */
 extern UInt SetFiltListTNums [ LAST_REAL_TNUM ] [ LAST_FN + 1 ];
@@ -882,9 +887,9 @@ extern Obj FuncSET_FILTER_LIST ( Obj self, Obj list, Obj filter );
 **  If a list  with type number <tnum>  loses  the filter  with filter number
 **  <fnum>, then the new type number is stored in:
 **
-**  `ResetFiltListTNums[<tnum>][<fnum>]'
+**  'ResetFiltListTNums[<tnum>][<fnum>]'
 **
-**  The macro `RESET_FILT_LIST' is used  to  set  the filter  for a  list  by
+**  The macro 'RESET_FILT_LIST' is used  to  set  the filter  for a  list  by
 **  changing its type number.
 */
 extern UInt ResetFiltListTNums [ LAST_REAL_TNUM ] [ LAST_FN + 1 ];
@@ -928,9 +933,9 @@ extern Int HasFiltListTNums [ LAST_REAL_TNUM ] [ LAST_FN + 1 ];
 **  The type  number without any  known properties  of a  list of type number
 **  <tnum> is stored in:
 **
-**  `ClearPropsTNums[<tnum>]'
+**  'ClearPropsTNums[<tnum>]'
 **
-**  The macro `CLEAR_PROPS_LIST' is used to clear all properties of a list.
+**  The macro 'CLEAR_PROPS_LIST' is used to clear all properties of a list.
 */
 extern UInt ClearFiltsTNums [ LAST_REAL_TNUM ];
 
@@ -970,16 +975,6 @@ extern void AsssListCheck (
 
 /****************************************************************************
 **
-*F  AsssPosObjCheck( <list>, <poss>, <rhss> ) . . . . . . . . . . . ASSS_LIST
-*/
-extern void AsssPosObjCheck (
-    Obj                 list,
-    Obj                 poss,
-    Obj                 rhss );
-
-
-/****************************************************************************
-**
 *F  AsssListLevelCheck( <lists>, <poss>, <rhss>, <level> )  . . AsssListLevel
 */
 extern void AsssListLevelCheck (
@@ -991,7 +986,7 @@ extern void AsssListLevelCheck (
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

@@ -2,13 +2,13 @@
 ##
 #W  testall.tst              automgrp package                  Dmytro Savchuk
 #W                                                             Yevgen Muntyan
-##  automgrp v 1.3
+##  automgrp v 1.3.1
 ##
-#Y  Copyright (C) 2003 - 2016 Dmytro Savchuk, Yevgen Muntyan
+#Y  Copyright (C) 2003 - 2018 Dmytro Savchuk, Yevgen Muntyan
 ##
 
 # Do this to run tests:
-# ReadTest(Filename(DirectoriesLibrary("pkg/automgrp/tst"), "testall.tst"));
+# Test(Filename(DirectoriesLibrary("pkg/automgrp/tst"), "testall.tst"), rec( compareFunction := "uptowhitespace" ));
 
 gap> START_TEST("automgrp");
 gap> __save_AG_Globals_unit_test_dots := AG_Globals.unit_test_dots;

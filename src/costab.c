@@ -13,14 +13,15 @@
 **  This file contains the functions of for coset tables.
 */
 
-#include <src/costab.h>
+#include "costab.h"
 
-#include <src/bool.h>
-#include <src/gap.h>
-#include <src/integer.h>
-#include <src/io.h>
-#include <src/lists.h>
-#include <src/plist.h>
+#include "bool.h"
+#include "error.h"
+#include "integer.h"
+#include "io.h"
+#include "lists.h"
+#include "modules.h"
+#include "plist.h"
 
 
 /****************************************************************************
@@ -2322,9 +2323,8 @@ Obj FuncLOWINDEX_PREPARE_RELS (
       for (k=1;k<=l;k++) 
         rp[k]=INT_INTOBJ((Obj)rp[k]); /* convert relator entries to C-integers */
       /* change type */
-      TYPE_DATOBJ(rel) = TYPE_LOWINDEX_DATA;
       RetypeBag(rel,T_DATOBJ);
-
+      SET_TYPE_DATOBJ(rel, TYPE_LOWINDEX_DATA);
     }
    }
    return (Obj) 0;
@@ -2394,7 +2394,7 @@ Obj FuncTC_QUICK_SCAN (
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************

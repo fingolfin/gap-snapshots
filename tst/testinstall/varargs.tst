@@ -56,7 +56,7 @@ gap> f(1,2,3);
 gap> function(a,b..) end;
 Syntax error: Three dots required for variadic argument list in stream:1
 function(a,b..) end;
-             ^
+            ^^
 gap> function(a...,b) end;
 Syntax error: Only final argument can be variadic in stream:1
 function(a...,b) end;
@@ -64,7 +64,7 @@ function(a...,b) end;
 gap> function(a..,b) end;
 Syntax error: Three dots required for variadic argument list in stream:1
 function(a..,b) end;
-           ^
+          ^^
 gap> function(a....,b) end;
 Syntax error: ) expected in stream:1
 function(a....,b) end;
@@ -76,25 +76,25 @@ function(a,b....) end;
 gap> f := function(a,b..) end;
 Syntax error: Three dots required for variadic argument list in stream:1
 f := function(a,b..) end;
-                  ^
+                 ^^
 gap> Display(RETURN_FIRST);
 function ( object... )
     <<kernel code from src/gap.c:RETURN_FIRST>>
 end
-gap> Print(NEXT_METHOD_0ARGS,"\n");
-function ( <<arg-1>>, <<arg-2>> )
-    <<compiled GAP code from GAPROOT/lib/methsel1.g:189>>
+gap> Print(INSTALL_METHOD_FLAGS,"\n");
+function ( <<arg-1>>, <<arg-2>>, <<arg-3>>, <<arg-4>>, <<arg-5>>, <<arg-6>> )
+    <<compiled GAP code from GAPROOT/lib/oper1.g:146>>
 end
-gap> Display(METHOD_XARGS);
+gap> Display(InstallMethod);
 function ( <<arg-1>>... )
-    <<compiled GAP code from GAPROOT/lib/methsel1.g:172>>
+    <<compiled GAP code from GAPROOT/lib/oper1.g:321>>
 end
 gap> [1..2];
 [ 1, 2 ]
 gap> [1...2];
 Syntax error: Only two dots in a range in stream:1
 [1...2];
-    ^
+  ^^^
 gap> f := function(a,arg) return [a,arg]; end;
 function( a, arg ) ... end
 gap> f(1,2);

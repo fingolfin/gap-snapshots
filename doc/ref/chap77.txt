@@ -53,12 +53,13 @@
   [33X[0;0YThe    following   functions   are   no   longer   needed:   [10XDeclarePackage[110X,
   [10XDeclareAutoPackage[110X,              [10XDeclarePackageDocumentation[110X             and
   [10XDeclarePackageAutoDocumentation[110X.  They  are  substituted  by  entries in the
-  packages' [11XPackageInfo.g[111X files, see [14X76.3-12[114X.[133X
+  packages' [11XPackageInfo.g[111X files, see [14X76.3-13[114X.[133X
   
   [33X[0;0YFurthermore,  the  global  variable  [10XPACKAGES_VERSIONS[110X  is no longer needed,
   since  this  information is now contained in the [10XGAPInfo.PackagesInfo[110X record
   (see  [14X3.5-1[114X).  The global variable [10XRevisions[110X is also no longer needed, since
-  the function [10XDisplayRevision[110X was made obsolete in [5XGAP[105X 4.5.[133X
+  the  function  [10XDisplayRevision[110X  was  made obsolete in [5XGAP[105X 4.5 and removed in
+  [5XGAP[105X 4.7.[133X
   
   [33X[0;0YThe following function names were changed.[133X
   

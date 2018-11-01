@@ -2,9 +2,9 @@
 ##
 #W  automgroup.gi             automgrp package                 Yevgen Muntyan
 #W                                                             Dmytro Savchuk
-##  automgrp v 1.3
+##  automgrp v 1.3.1
 ##
-#Y  Copyright (C) 2003 - 2016 Yevgen Muntyan, Dmytro Savchuk
+#Y  Copyright (C) 2003 - 2018 Yevgen Muntyan, Dmytro Savchuk
 ##
 
 
@@ -156,7 +156,7 @@ function(G, gens, level)
   return SubgroupNC(overgroup, gens);
 end);
 
-InstallMethod(__AG_SubgroupOnLevel, [IsAutomGroup, IsList and IsEmpty, IsPosInt],
+InstallOtherMethod(__AG_SubgroupOnLevel, [IsAutomGroup, IsList and IsEmpty, IsPosInt],
 function(G, gens, level)
   return TrivialSubgroup(G);
 end);
@@ -690,20 +690,20 @@ end);
 ##
 #M  Random(<G>)
 ##
-InstallMethod(Random, "for [IsAutomGroup]",
-              [IsAutomGroup],
-function(G)
+InstallMethodWithRandomSource(Random, "for a random source and [IsAutomGroup]",
+              [IsRandomSource, IsAutomGroup],
+function(rs, G)
   local F, gens, pi;
 
   if IsTrivial(G) then
     return One(G);
   elif IsAutomatonGroup(G) then
-    return Autom(Random(UnderlyingFreeGroup(G)), UnderlyingAutomFamily(G));
+    return Autom(Random(rs, UnderlyingFreeGroup(G)), UnderlyingAutomFamily(G));
   else
     gens := GeneratorsOfGroup(G);
     F := FreeGroup(Length(gens));
     pi := GroupHomomorphismByImagesNC(F, G,  GeneratorsOfGroup(F), gens);
-    return Random(F)^pi;
+    return Random(rs, F)^pi;
   fi;
 end);
 

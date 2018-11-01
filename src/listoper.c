@@ -11,19 +11,20 @@
 **  generic lists.
 */
 
-#include <src/listoper.h>
+#include "listoper.h"
 
-#include <src/ariths.h>
-#include <src/bool.h>
-#include <src/calls.h>
-#include <src/gap.h>
-#include <src/gvars.h>
-#include <src/io.h>
-#include <src/listfunc.h>
-#include <src/lists.h>
-#include <src/opers.h>
-#include <src/plist.h>
-#include <src/range.h>
+#include "ariths.h"
+#include "bool.h"
+#include "calls.h"
+#include "error.h"
+#include "gvars.h"
+#include "io.h"
+#include "listfunc.h"
+#include "lists.h"
+#include "modules.h"
+#include "opers.h"
+#include "plist.h"
+#include "range.h"
 
 
 #ifndef HPCGAP
@@ -160,17 +161,9 @@ Obj FuncIN_LIST_DEFAULT (
 
 /****************************************************************************
 **
-*F  SumList(<listL>,<listR>)  . . . . . . . . . . . . . . . . .  sum of lists
 *F  SumSclList(<listL>,<listR>) . . . . . . . . .  sum of a scalar and a list
 *F  SumListScl(<listL>,<listR>) . . . . . . . . .  sum of a list and a scalar
 *F  SumListList<listL>,<listR>)  . . . . . . . . . . . . .  sum of two lists
-**
-**  'SumList' is the extended dispatcher for the  sums involving lists.  That
-**  is, whenever  two operands are  added and at  least one operand is a list
-**  and 'SumFuncs'  does not point to  a special  function, then 'SumList' is
-**  called.  'SumList' determines the extended  types of the operands  (e.g.,
-**  'T_INT', 'T_VECTOR',  'T_MATRIX', 'T_LISTX') and then  dispatches through
-**  'SumFuncs' again.
 **
 **  'SumSclList' is a generic function  for the first kind  of sum, that of a
 **  scalar and a list.
@@ -195,8 +188,8 @@ Obj             SumSclList (
 
     /* make the result list                                                */
     len = LEN_LIST( listR );
-    listS = NEW_PLIST( IS_MUTABLE_OBJ(listL) ||  IS_MUTABLE_OBJ(listR) ?
-                       T_PLIST : (T_PLIST + IMMUTABLE), len );
+    listS = NEW_PLIST_WITH_MUTABILITY( IS_MUTABLE_OBJ(listL) ||  IS_MUTABLE_OBJ(listR),
+                           T_PLIST, len );
     SET_LEN_PLIST( listS, len );
 
     /* loop over the entries and add                                       */
@@ -226,8 +219,8 @@ Obj             SumListScl (
 
     /* make the result list                                                */
     len = LEN_LIST( listL );
-    listS = NEW_PLIST( IS_MUTABLE_OBJ(listR) || IS_MUTABLE_OBJ(listL) ?
-                       T_PLIST : T_PLIST+IMMUTABLE, len );
+    listS = NEW_PLIST_WITH_MUTABILITY( IS_MUTABLE_OBJ(listR) || IS_MUTABLE_OBJ(listL),
+                           T_PLIST, len );
     SET_LEN_PLIST( listS, len );
 
     /* loop over the entries and add                                       */
@@ -261,8 +254,8 @@ Obj             SumListList (
     lenL = LEN_LIST( listL );
     lenR = LEN_LIST( listR );
     lenS = (lenR > lenL) ? lenR : lenL;
-    listS = NEW_PLIST( (IS_MUTABLE_OBJ(listL) || IS_MUTABLE_OBJ(listR)) ?
-                       T_PLIST : T_PLIST+IMMUTABLE, lenS );
+    listS = NEW_PLIST_WITH_MUTABILITY( IS_MUTABLE_OBJ(listL) || IS_MUTABLE_OBJ(listR),
+                           T_PLIST, lenS );
     SET_LEN_PLIST( listS, lenS );
 
     /* Sort out mutability */
@@ -335,9 +328,6 @@ Obj FuncSUM_LIST_LIST_DEFAULT (
 **
 **  'ZeroListDefault' is a generic function for the zero.
 */
-
-
-
 Obj             ZeroListDefault (
     Obj                 list )
 {
@@ -348,7 +338,10 @@ Obj             ZeroListDefault (
 
     /* make the result list -- same mutability as argument */
     len = LEN_LIST( list );
-    res = NEW_PLIST( IS_MUTABLE_OBJ(list) ? T_PLIST : T_PLIST+IMMUTABLE, len );
+    if (len == 0) {
+        return NEW_PLIST_WITH_MUTABILITY(IS_MUTABLE_OBJ(list), T_PLIST_EMPTY, 0);
+    }
+    res = NEW_PLIST_WITH_MUTABILITY( IS_MUTABLE_OBJ(list), T_PLIST, len );
     SET_LEN_PLIST( res, len );
 
     /* enter zeroes everywhere                                             */
@@ -364,9 +357,7 @@ Obj             ZeroListDefault (
       }
     /* Now adjust the result TNUM info */
 
-    if (len == 0)
-      SET_FILT_LIST( res, FN_IS_EMPTY );
-    else if (IS_PLIST( list ))
+    if (IS_PLIST( list ))
       {
         if (TNUM_OBJ(list) == T_PLIST_FFE ||
             TNUM_OBJ(list) == T_PLIST_FFE+IMMUTABLE)
@@ -414,6 +405,9 @@ Obj             ZeroListMutDefault (
 
     /* make the result list -- always mutable */
     len = LEN_LIST( list );
+    if (len == 0) {
+        return NEW_PLIST(T_PLIST_EMPTY, 0);
+    }
     res = NEW_PLIST(  T_PLIST ,len );
     SET_LEN_PLIST( res, len );
 
@@ -430,9 +424,7 @@ Obj             ZeroListMutDefault (
       }
     /* Now adjust the result TNUM info */
 
-    if (len == 0)
-      SET_FILT_LIST( res, FN_IS_EMPTY );
-    else if (IS_PLIST( list ))
+    if (IS_PLIST( list ))
       {
         if (TNUM_OBJ(list) == T_PLIST_FFE ||
             TNUM_OBJ(list) == T_PLIST_FFE+IMMUTABLE)
@@ -480,10 +472,10 @@ Obj FuncZERO_ATTR_MAT( Obj self, Obj mat )
   Obj res;
   len = LEN_LIST(mat);
   if (len == 0)
-    return NEW_PLIST(T_PLIST_EMPTY + IMMUTABLE, 0);
+    return NEW_PLIST_IMM(T_PLIST_EMPTY, 0);
   zrow = ZERO(ELM_LIST(mat,1));
   CheckedMakeImmutable(zrow);
-  res = NEW_PLIST(T_PLIST_TAB_RECT+IMMUTABLE, len);
+  res = NEW_PLIST_IMM(T_PLIST_TAB_RECT, len);
   SET_LEN_PLIST(res,len);
   for (i = 1; i <= len; i++)
     SET_ELM_PLIST(res,i,zrow);
@@ -515,6 +507,9 @@ Obj AInvMutListDefault (
     /* make the result list -- always mutable, since this might be a method for
        AdditiveInverseOp */
     len = LEN_LIST( list );
+    if (len == 0) {
+        return NEW_PLIST(T_PLIST_EMPTY, 0);
+    }
     res = NEW_PLIST( T_PLIST , len );
     SET_LEN_PLIST( res, len );
 
@@ -530,10 +525,7 @@ Obj AInvMutListDefault (
 
     /* Now adjust the result TNUM info */
 
-    if (len == 0)
-      SET_FILT_LIST( res, FN_IS_EMPTY );
-    else if (IS_PLIST( list ))
-      {
+    if (IS_PLIST(list)) {
         if (TNUM_OBJ(list) == T_PLIST_FFE ||
             TNUM_OBJ(list) == T_PLIST_FFE+IMMUTABLE)
           RetypeBag(res, T_PLIST_FFE);
@@ -574,7 +566,10 @@ Obj AInvListDefault (
 
     /* make the result list -- same mutability as input */
     len = LEN_LIST( list );
-    res = NEW_PLIST( IS_MUTABLE_OBJ(list) ? T_PLIST : T_PLIST+IMMUTABLE , len );
+    if (len == 0) {
+        return NEW_PLIST_WITH_MUTABILITY(IS_MUTABLE_OBJ(list), T_PLIST_EMPTY, 0);
+    }
+    res = NEW_PLIST_WITH_MUTABILITY( IS_MUTABLE_OBJ(list), T_PLIST, len );
     SET_LEN_PLIST( res, len );
 
     /* enter the additive inverses everywhere                              */
@@ -589,10 +584,7 @@ Obj AInvListDefault (
 
     /* Now adjust the result TNUM info */
 
-    if (len == 0)
-      SET_FILT_LIST( res, FN_IS_EMPTY );
-    else if (IS_PLIST( list ))
-      {
+    if (IS_PLIST(list)) {
         if (TNUM_OBJ(list) == T_PLIST_FFE ||
             TNUM_OBJ(list) == T_PLIST_FFE+IMMUTABLE)
           RetypeBag(res, TNUM_OBJ(list));
@@ -630,17 +622,9 @@ Obj FuncAINV_LIST_DEFAULT (
 
 /****************************************************************************
 **
-*F  DiffList(<listL>,<listR>) . . . . . . . . . . . . . . difference of lists
 *F  DiffSclList(<listL>,<listR>)  . . . . . difference of a scalar and a list
 *F  DiffListScl(<listL>,<listR>)  . . . . . difference of a list and a scalar
 *F  DiffListList(<listL>,<listR>) . . . . . . . . . . difference of two lists
-**
-**  'DiffList' is  the   extended dispatcher for   the  differences involving
-**  lists.  That  is, whenever two operands are  subtracted and at  least one
-**  operand is a list and  'DiffFuncs' does not  point to a special function,
-**  then 'DiffList' is called.   'DiffList' determines the extended  types of
-**  the operands (e.g.,  'T_INT', 'T_VECTOR', 'T_MATRIX', 'T_LISTX') and then
-**  dispatches through 'DiffFuncs' again.
 **
 **  'DiffSclList' is a  generic function  for  the first  kind of difference,
 **  that of a scalar and a list.
@@ -662,11 +646,15 @@ Obj             DiffSclList (
     Obj                 elmR;           /* one element of right operand    */
     Int                 len;            /* length                          */
     Int                 i;              /* loop variable                   */
+    Int                 mut;
 
     /* make the result list                                                */
     len = LEN_LIST( listR );
-    listD = NEW_PLIST(IS_MUTABLE_OBJ(listL) || IS_MUTABLE_OBJ(listR) ? T_PLIST :
-                      T_PLIST+IMMUTABLE, len );
+    mut = IS_MUTABLE_OBJ(listL) || IS_MUTABLE_OBJ(listR);
+    if (len == 0) {
+        return NEW_PLIST_WITH_MUTABILITY(mut, T_PLIST_EMPTY, 0);
+    }
+    listD = NEW_PLIST_WITH_MUTABILITY(mut, T_PLIST, len);
     SET_LEN_PLIST( listD, len );
 
     /* loop over the entries and subtract                                  */
@@ -682,9 +670,7 @@ Obj             DiffSclList (
 
     /* Now adjust the result TNUM info */
 
-    if (len == 0)
-      SET_FILT_LIST( listD, FN_IS_EMPTY );
-    else if (IS_PLIST( listR ))
+    if (IS_PLIST( listR ))
       {
          if (HAS_FILT_LIST(listR, FN_IS_DENSE))
            SET_FILT_LIST( listD, FN_IS_DENSE );
@@ -704,11 +690,15 @@ Obj             DiffListScl (
     Obj                 elmL;           /* one element of left operand     */
     Int                 len;            /* length                          */
     Int                 i;              /* loop variable                   */
+    Int                 mut;
 
     /* make the result list                                                */
     len = LEN_LIST( listL );
-    listD = NEW_PLIST( IS_MUTABLE_OBJ(listL)|| IS_MUTABLE_OBJ(listR) ? T_PLIST :
-                       T_PLIST+IMMUTABLE, len );
+    mut = IS_MUTABLE_OBJ(listL) || IS_MUTABLE_OBJ(listR);
+    if (len == 0) {
+        return NEW_PLIST_WITH_MUTABILITY(mut, T_PLIST_EMPTY, 0);
+    }
+    listD = NEW_PLIST_WITH_MUTABILITY(mut, T_PLIST, len);
     SET_LEN_PLIST( listD, len );
 
     /* loop over the entries and subtract                                  */
@@ -725,9 +715,7 @@ Obj             DiffListScl (
 
     /* Now adjust the result TNUM info */
 
-    if (len == 0)
-      SET_FILT_LIST( listD, FN_IS_EMPTY );
-    else if (IS_PLIST( listL ))
+    if (IS_PLIST( listL ))
       {
          if (HAS_FILT_LIST(listL, FN_IS_DENSE))
            SET_FILT_LIST( listD, FN_IS_DENSE );
@@ -746,16 +734,19 @@ Obj             DiffListList (
     Obj                 elmD;           /* one element of the difference   */
     Obj                 elmL;           /* one element of the left list    */
     Obj                 elmR;           /* one element of the right list   */
-    Int                 lenL,lenR,lenD; /* length                          */
     Int                 i;              /* loop variable                   */
     UInt                mutD;
+    Int                 mut;
 
     /* get and check the length                                            */
-    lenL = LEN_LIST( listL );
-    lenR = LEN_LIST( listR );
-    lenD = (lenR > lenL) ? lenR : lenL;
-    listD = NEW_PLIST( (IS_MUTABLE_OBJ(listL) || IS_MUTABLE_OBJ(listR)) ?
-                       T_PLIST : T_PLIST+IMMUTABLE, lenD );
+    const UInt lenL = LEN_LIST(listL);
+    const UInt lenR = LEN_LIST(listR);
+    const UInt lenD = (lenR > lenL) ? lenR : lenL;
+    mut = IS_MUTABLE_OBJ(listL) || IS_MUTABLE_OBJ(listR);
+    if (lenD == 0) {
+        return NEW_PLIST_WITH_MUTABILITY(mut, T_PLIST_EMPTY, 0);
+    }
+    listD = NEW_PLIST_WITH_MUTABILITY(mut, T_PLIST, lenD);
     SET_LEN_PLIST( listD, lenD );
 
     /* Sort out mutability */
@@ -809,9 +800,7 @@ Obj             DiffListList (
     /* Now adjust the result TNUM info. There's not so much we
        can say here with total reliability */
 
-    if (lenD == 0)
-      SET_FILT_LIST( listD, FN_IS_EMPTY );
-    else if (IS_PLIST( listR ) && IS_PLIST(listL) &&
+    if (IS_PLIST( listR ) && IS_PLIST(listL) &&
              HAS_FILT_LIST(listR, FN_IS_DENSE) &&
              HAS_FILT_LIST(listL, FN_IS_DENSE))
       SET_FILT_LIST( listD, FN_IS_DENSE );
@@ -847,17 +836,9 @@ Obj FuncDIFF_LIST_LIST_DEFAULT (
 
 /****************************************************************************
 **
-*F  ProdList(<listL>,<listR>) . . . . . . . . . . . . . . .  product of lists
 *F  ProdSclList(<listL>,<listR>)  . . . . . .  product of a scalar and a list
 *F  ProdListScl(<listL>,<listR>)  . . . . . .  product of a list and a scalar
 *F  ProdListList(<listL>,<listR>) . . . . . . . . . . .  product of two lists
-**
-**  'ProdList' is the extended  dispatcher for the products  involving lists.
-**  That is, whenever two operands are multiplied and at least one operand is
-**  a list   and  'ProdFuncs' does not    point to a  special function,  then
-**  'ProdList' is called.  'ProdList'   determines the extended types  of the
-**  operands (e.g.,   'T_INT',  'T_VECTOR', 'T_MATRIX',  'T_LISTX')  and then
-**  dispatches through 'ProdFuncs' again.
 **
 **  'ProdSclList' is a generic  function for the first  kind of product, that
 **  of a scalar and a list.  Note that this  includes kind of product defines
@@ -883,11 +864,15 @@ Obj             ProdSclList (
     Obj                 elmR;           /* one element of right operand    */
     Int                 len;            /* length                          */
     Int                 i;              /* loop variable                   */
+    Int                 mut;
 
     /* make the result list                                                */
     len = LEN_LIST( listR );
-    listP = NEW_PLIST( IS_MUTABLE_OBJ(listL) || IS_MUTABLE_OBJ(listR) ?
-                       T_PLIST :T_PLIST+IMMUTABLE, len );
+    mut = IS_MUTABLE_OBJ(listL) || IS_MUTABLE_OBJ(listR);
+    if (len == 0) {
+        return NEW_PLIST_WITH_MUTABILITY(mut, T_PLIST_EMPTY, 0);
+    }
+    listP = NEW_PLIST_WITH_MUTABILITY(mut, T_PLIST, len);
     SET_LEN_PLIST( listP, len );
 
     /* loop over the entries and multiply                                  */
@@ -900,9 +885,7 @@ Obj             ProdSclList (
             CHANGED_BAG( listP );
           }
     }
-    if (len == 0)
-      SET_FILT_LIST( listP, FN_IS_EMPTY );
-    else if (IS_PLIST( listR ))
+    if (IS_PLIST( listR ))
       {
          if (HAS_FILT_LIST(listR, FN_IS_DENSE))
            SET_FILT_LIST( listP, FN_IS_DENSE );
@@ -923,11 +906,15 @@ Obj             ProdListScl (
     Obj                 elmL;           /* one element of left operand     */
     Int                 len;            /* length                          */
     Int                 i;              /* loop variable                   */
+    Int                 mut;
 
     /* make the result list                                                */
     len = LEN_LIST( listL );
-    listP = NEW_PLIST( (IS_MUTABLE_OBJ(listL) || IS_MUTABLE_OBJ(listR))
-                       ? T_PLIST :T_PLIST+IMMUTABLE, len );
+    mut = IS_MUTABLE_OBJ(listL) || IS_MUTABLE_OBJ(listR);
+    if (len == 0) {
+        return NEW_PLIST_WITH_MUTABILITY(mut, T_PLIST_EMPTY, 0);
+    }
+    listP = NEW_PLIST_WITH_MUTABILITY(mut, T_PLIST, len);
     SET_LEN_PLIST( listP, len );
 
     /* loop over the entries and multiply                                  */
@@ -940,9 +927,7 @@ Obj             ProdListScl (
         }
     }
 
-    if (len == 0)
-      SET_FILT_LIST( listP, FN_IS_EMPTY );
-    else if (IS_PLIST( listL ))
+    if (IS_PLIST( listL ))
       {
          if (HAS_FILT_LIST(listL, FN_IS_DENSE))
            SET_FILT_LIST( listP, FN_IS_DENSE );
@@ -2072,7 +2057,6 @@ static Obj  FuncZIPPED_SUM_LISTS( Obj self, Obj z1, Obj  z2, Obj zero, Obj f ) {
   cmpfun=ELM_LIST(f,1);
   sumfun=ELM_LIST(f,2);
   sum=NEW_PLIST(T_PLIST,0);
-  SET_LEN_PLIST(sum,0);
   i1=1;
   i2=1;
   while ((i1<=l1) && (i2<=l2)) {
@@ -2146,7 +2130,6 @@ static Obj  FuncMONOM_PROD( Obj self, Obj m1, Obj m2 ) {
    Obj e,f,c,prod;
 
    prod=NEW_PLIST(T_PLIST,0);
-   SET_LEN_PLIST(prod,0);
    l1=LEN_LIST(m1);
    l2=LEN_LIST(m2);
    i1=1;
@@ -2197,7 +2180,7 @@ static Obj  FuncMONOM_PROD( Obj self, Obj m1, Obj m2 ) {
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * * */
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * * */
 
 
 /****************************************************************************

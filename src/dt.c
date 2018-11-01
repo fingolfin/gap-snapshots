@@ -52,13 +52,14 @@
 **  for pos( <b> ) for all trees <b> which are represented by <a>.
 */
 
-#include <src/dt.h>
+#include "dt.h"
 
-#include <src/calls.h>
-#include <src/gap.h>
-#include <src/gvars.h>
-#include <src/integer.h>
-#include <src/plist.h>
+#include "calls.h"
+#include "error.h"
+#include "gvars.h"
+#include "integer.h"
+#include "modules.h"
+#include "plist.h"
 
 
 /****************************************************************************
@@ -449,7 +450,6 @@ Obj    Mark2(
 
     /*  initialize <list>                                                 */
     list = NEW_PLIST(T_PLIST, 0);
-    SET_LEN_PLIST(list, 0);
     i = index1;
     len = index1 + DT_LENGTH(tree, index1) - 1;
     refgen = DT_GEN(reftree, index2);
@@ -639,7 +639,7 @@ Obj    MakeFormulaVector(
                 if ( ELM_PLIST(rel, j) == gen  )
                 {
                     prod = ProdInt(ELM_PLIST(vec, 2),
-                                   binomial(ELM_PLIST(rel, j+1), 
+                                   BinomialInt(ELM_PLIST(rel, j+1), 
                                             INTOBJ_INT(i)        )        );
                     SET_ELM_PLIST(vec,  2, prod);
                     /*  tell gasman that vec has changed                     */
@@ -678,34 +678,6 @@ Obj    FuncMakeFormulaVector(
                         "you can 'return;'");
     return  MakeFormulaVector(tree, pr);
 }
-
-
-/*****************************************************************************
-**
-*F  binomial(<n>, <k>) . . . . . . . . . binomial coefficient of <n> and <k>
-**
-**  'binomial' returns the binomial coefficient of the integers <n> and <k>.
-*/
-Obj  binomial( Obj   n,
-               Obj   k  )
-{
-    UInt    j, kc;
-    Obj     bin, help;
-
-    if ( LtInt( INTOBJ_INT(0), n)  &&  LtInt(n, k)  )
-        return INTOBJ_INT(0);
-    if ( IS_INTOBJ(n)  &&  n == k )
-        return INTOBJ_INT(1);
-    kc = INT_INTOBJ(k);
-    bin = INTOBJ_INT(1);
-    help = DiffInt(n, k);
-    for (j=1; j<=kc; j++)
-        bin = ProdInt( bin, SumInt(help, INTOBJ_INT(j) )  );
-    for (j=1; j<=kc; j++)
-        bin = QuoInt(bin, INTOBJ_INT(j) );
-    return  bin;
-}
-    
 
 
 /****************************************************************************
@@ -848,8 +820,6 @@ void    GetPols(
 
     lreps = NEW_PLIST(T_PLIST, 2);
     rreps = NEW_PLIST(T_PLIST, 2);
-    SET_LEN_PLIST(lreps, 0);
-    SET_LEN_PLIST(rreps, 0);
     /*  get the representatives that are represented by <list>[1] and those
     **  which are represented by <list>[2].                                 */
     GetReps( ELM_PLIST(list, 1), lreps );
@@ -938,8 +908,6 @@ void    GetReps(
     }
     lreps = NEW_PLIST(T_PLIST, 2);
     rreps = NEW_PLIST(T_PLIST, 2);
-    SET_LEN_PLIST(lreps, 0);
-    SET_LEN_PLIST(rreps, 0);
     /* now get all representatives which are represented by <list>[1] and
     ** all representatives which are represented by <list>[2].           */
     GetReps( ELM_PLIST(list, 1), lreps );
@@ -1746,7 +1714,7 @@ Obj    FuncDT_evaluation(Obj      self,
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

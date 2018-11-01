@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <script type="text/javascript"
-  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 <title>GAP (ref) - Chapter 77: Replaced and Removed Command Names</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
@@ -97,9 +97,9 @@
 
 <p>With <strong class="pkg">GAP</strong> 4.4 the package interface was changed. Thereby some functions became obsolete and the names of some others were made more consistent.</p>
 
-<p>The following functions are no longer needed: <code class="code">DeclarePackage</code>, <code class="code">DeclareAutoPackage</code>, <code class="code">DeclarePackageDocumentation</code> and <code class="code">DeclarePackageAutoDocumentation</code>. They are substituted by entries in the packages' <code class="file">PackageInfo.g</code> files, see <a href="chap76_mj.html#X85C8DE357EE424D8"><span class="RefLink">76.3-12</span></a>.</p>
+<p>The following functions are no longer needed: <code class="code">DeclarePackage</code>, <code class="code">DeclareAutoPackage</code>, <code class="code">DeclarePackageDocumentation</code> and <code class="code">DeclarePackageAutoDocumentation</code>. They are substituted by entries in the packages' <code class="file">PackageInfo.g</code> files, see <a href="chap76_mj.html#X85C8DE357EE424D8"><span class="RefLink">76.3-13</span></a>.</p>
 
-<p>Furthermore, the global variable <code class="code">PACKAGES_VERSIONS</code> is no longer needed, since this information is now contained in the <code class="code">GAPInfo.PackagesInfo</code> record (see <a href="chap3_mj.html#X8354754E7935F935"><span class="RefLink">3.5-1</span></a>). The global variable <code class="code">Revisions</code> is also no longer needed, since the function <code class="code">DisplayRevision</code> was made obsolete in <strong class="pkg">GAP</strong> 4.5.</p>
+<p>Furthermore, the global variable <code class="code">PACKAGES_VERSIONS</code> is no longer needed, since this information is now contained in the <code class="code">GAPInfo.PackagesInfo</code> record (see <a href="chap3_mj.html#X8354754E7935F935"><span class="RefLink">3.5-1</span></a>). The global variable <code class="code">Revisions</code> is also no longer needed, since the function <code class="code">DisplayRevision</code> was made obsolete in <strong class="pkg">GAP</strong> 4.5 and removed in <strong class="pkg">GAP</strong> 4.7.</p>
 
 <p>The following function names were changed.</p>
 
@@ -201,7 +201,7 @@
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSemilatticeAsSemigroup</code>( <var class="Arg">S</var> )</td><td class="tdright">(&nbsp;property&nbsp;)</td></tr></table></div>
 <p><code class="code">IsSemilatticeAsSemigroup</code> returns <code class="keyw">true</code> if the semigroup <var class="Arg">S</var> is a semilattice and <code class="keyw">false</code> if it is not.</p>
 
-<p>A semigroup is a <em>semilattice</em> if it is commutative and every element is an idempotent. The idempotents of an inverse semigroup form a semilattice. This is identical to <code class="func">IsSemilattice</code> (<a href="../../pkg/semigroups-3.0.16/doc/chap14_mj.html#X833D24AE7C900B85"><span class="RefLink">Semigroups: IsSemilattice</span></a>) # and is present in <strong class="pkg">GAP</strong> 4.8 # only for the sake of compatibility with beta-releases. # It should <em>not</em> be used in new code.</p>
+<p>A semigroup is a <em>semilattice</em> if it is commutative and every element is an idempotent. The idempotents of an inverse semigroup form a semilattice. This is identical to <code class="func">IsSemilattice</code> (<a href="../../pkg/semigroups-3.0.20/doc/chap14_mj.html#X833D24AE7C900B85"><span class="RefLink">Semigroups: IsSemilattice</span></a>) # and is present in <strong class="pkg">GAP</strong> 4.8 # only for the sake of compatibility with beta-releases. # It should <em>not</em> be used in new code.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap76_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap78_mj.html">[Next Chapter]</a>&nbsp;  </div>

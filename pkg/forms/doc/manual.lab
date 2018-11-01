@@ -27,7 +27,7 @@
 \makelabel{forms:Evaluating forms}{4.5}{X8110213A7B303D1C}
 \makelabel{forms:Orthogonality, totally isotropic subspaces, and totally singular subspaces}{4.6}{X7A0825A987C88978}
 \makelabel{forms:Attributes and properties of forms}{4.7}{X813A02878352E9E5}
-\makelabel{forms:Recognition of sesquilinear forms preserved by a classical group}{4.8}{X79E3749C7A023189}
+\makelabel{forms:Recognition of forms preserved by a classical group}{4.8}{X8400E22D7D51FCCE}
 \makelabel{forms:The trivial form and some of its properties}{4.9}{X836A21687A685839}
 \makelabel{forms:Morphisms of forms}{5}{X7B9AF2E784EB8481}
 \makelabel{forms:Morphisms of sesquilinear forms}{5.1}{X784D3B338055EC9D}
@@ -91,6 +91,7 @@
 \makelabel{forms:EvaluateForm}{4.5.1}{X808AB7B9840ABC27}
 \makelabel{forms:EvaluateForm}{4.5.1}{X808AB7B9840ABC27}
 \makelabel{forms:OrthogonalSubspaceMat}{4.6.1}{X78F2409184D192D3}
+\makelabel{forms:OrthogonalSubspaceMat}{4.6.1}{X78F2409184D192D3}
 \makelabel{forms:IsIsotropicVector}{4.6.2}{X8394CCAD798053C6}
 \makelabel{forms:IsSingularVector}{4.6.3}{X855E539185D7D3C7}
 \makelabel{forms:IsTotallyIsotropicSubspace}{4.6.4}{X8141325085AAC0CD}
@@ -114,7 +115,9 @@
 \makelabel{forms:RadicalOfForm}{4.7.11}{X7855C3C07AAA1A68}
 \makelabel{forms:PolynomialOfForm}{4.7.12}{X82E7367F817C6BD0}
 \makelabel{forms:DiscriminantOfForm}{4.7.13}{X87B652A28534E0D2}
-\makelabel{forms:PreservedSesquilinearForms}{4.8.1}{X84056A357E5447AF}
+\makelabel{forms:PreservedForms}{4.8.1}{X784481E57E207B3D}
+\makelabel{forms:PreservedSesquilinearForms}{4.8.2}{X84056A357E5447AF}
+\makelabel{forms:PreservedQuadraticForms}{4.8.3}{X7D6F72B682E405E1}
 \makelabel{forms:Isometry}{5.1}{X784D3B338055EC9D}
 \makelabel{forms:Similarity}{5.1}{X784D3B338055EC9D}
 \makelabel{forms:Semi-similarity}{5.1}{X784D3B338055EC9D}

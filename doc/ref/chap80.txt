@@ -285,8 +285,7 @@
     [4X[28XInstallMethod(PrimesDividingSize,"for finite groups",[128X[104X
     [4X[28X  [IsGroup and IsFinite],[128X[104X
     [4X[28Xfunction(G)[128X[104X
-    [4X[28X  if Size(G)=1 then return [];[128X[104X
-    [4X[28X  else return Set(Factors(Size(G)));fi;[128X[104X
+    [4X[28X  return PrimeDivisors(Size(G));[128X[104X
     [4X[28Xend);[128X[104X
   [4X[32X[104X
   

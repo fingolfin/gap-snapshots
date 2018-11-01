@@ -5,9 +5,8 @@
                                                                and Jan De Beule
                                                                   
 
-  Copyright (C) 2015, The University of Western Australia
-  Copyright (C) 2015, Ghent University
-  Copyright (C) 2015, Vrije Universiteit Brussel
+  Copyright (C) 2018, The University of Western Australia
+  Copyright (C) 2018, Vrije Universiteit Brussel
 
 This chapter gives a short introduction to the package.
 
@@ -30,7 +29,7 @@ geometry. The functionality of the package includes:
  <Item>operations which allow a user to change coordinates, that is,
 to ``change form'' and work in an isometric (or similar)
 formed vector space; and</Item>
- <Item>a way to determine the form(s) left invariant by a matrix group (up to a scalar).</Item>
+<Item>a way to determine the form(s) left invariant by a matrix group (up to a scalar).</Item>
 </List>
 
 </Section>
@@ -95,6 +94,8 @@ into GAPInfo.RootPaths in version 1.2.4. More tests have been added to reach a b
 Due to these tests, a bug in one of the methods for <C>EvaluateForm</C> was discovered and fixed.
 Alexander Konovalov noted that we used the deprecated <F>ReadTest</F> in our test files. This has
 been changed to <F>Test</F>. Finally some LaTeX issues were resolved in the documentation.
+<P/>In verions 1.2.5, some small changes were made to the recognition part.
+Some new examples in the documentation explain better the functionality.
 </Section>
 <!-- ############################################################ -->
 

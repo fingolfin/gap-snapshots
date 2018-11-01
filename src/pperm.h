@@ -1,7 +1,7 @@
 #ifndef GAP_PPERM_H
 #define GAP_PPERM_H
 
-#include <src/objects.h>
+#include "objects.h"
 
 static inline int IS_PPERM(Obj f)
 {
@@ -96,16 +96,16 @@ extern Obj OnSetsPPerm(Obj set, Obj f);
 
 /****************************************************************************
 **
-*F HashFuncForPPerm( <f>) . . . hash pperm
+*F  HashFuncForPPerm( <f> ) . . . hash pperm
 **
-** Returns a hash value for a partial permutation
+**  Returns a hash value for a partial permutation
 */
 
 Int HashFuncForPPerm(Obj f);
 
 /****************************************************************************
 
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * */
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * */
 
 /****************************************************************************
 

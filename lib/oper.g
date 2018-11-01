@@ -49,22 +49,9 @@ end );
 ##  </ManSection>
 ##
 BIND_GLOBAL( "CATS_AND_REPS", [] );
-
-
-#############################################################################
-##
-#V  CONSTRUCTORS
-##
-##  <ManSection>
-##  <Var Name="CONSTRUCTORS"/>
-##
-##  <Description>
-##  </Description>
-##  </ManSection>
-##
-BIND_GLOBAL( "CONSTRUCTORS", [] );
-
-BIND_GLOBAL( "IS_CONSTRUCTOR", op -> op in CONSTRUCTORS );
+if IsHPCGAP then
+    ShareSpecialObj(CATS_AND_REPS);
+fi;
 
 
 #############################################################################
@@ -96,7 +83,11 @@ BIND_GLOBAL( "IS_CONSTRUCTOR", op -> op in CONSTRUCTORS );
 ##  </Description>
 ##  </ManSection>
 ##
-BIND_GLOBAL( "IMMEDIATES", [] );
+if IsHPCGAP then
+    BIND_GLOBAL( "IMMEDIATES", AtomicList([]) );
+else
+    BIND_GLOBAL( "IMMEDIATES", [] );
+fi;
 
 
 #############################################################################
@@ -111,21 +102,11 @@ BIND_GLOBAL( "IMMEDIATES", [] );
 ##  </Description>
 ##  </ManSection>
 ##
-BIND_GLOBAL( "IMMEDIATE_METHODS", [] );
-
-
-#############################################################################
-##
-#V  NUMBERS_PROPERTY_GETTERS
-##
-##  <ManSection>
-##  <Var Name="NUMBERS_PROPERTY_GETTERS"/>
-##
-##  <Description>
-##  </Description>
-##  </ManSection>
-##
-BIND_GLOBAL( "NUMBERS_PROPERTY_GETTERS", [] );
+if IsHPCGAP then
+    BIND_GLOBAL( "IMMEDIATE_METHODS", AtomicList([]) );
+else
+    BIND_GLOBAL( "IMMEDIATE_METHODS", [] );
+fi;
 
 
 #############################################################################
@@ -147,20 +128,31 @@ BIND_GLOBAL( "NUMBERS_PROPERTY_GETTERS", [] );
 ##  </Description>
 ##  </ManSection>
 ##
-BIND_GLOBAL( "OPERATIONS", [] );
-BIND_GLOBAL( "OPER_FLAGS", rec() );
+if IsHPCGAP then
+    OPERATIONS_REGION := ShareSpecialObj("OPERATIONS_REGION");  # FIXME: remove
+    BIND_GLOBAL( "OPERATIONS", MakeStrictWriteOnceAtomic( [] ) );
+    BIND_GLOBAL( "OPER_FLAGS", MakeStrictWriteOnceAtomic( rec() ) );
+else
+    BIND_GLOBAL( "OPERATIONS", [] );
+    BIND_GLOBAL( "OPER_FLAGS", rec() );
+fi;
 BIND_GLOBAL( "STORE_OPER_FLAGS",
 function(oper, flags)
   local nr, info;
   nr := MASTER_POINTER_NUMBER(oper);
   if not IsBound(OPER_FLAGS.(nr)) then
     # we need a back link to oper for the post-restore function
-    OPER_FLAGS.(nr) := [oper, [], []];
+    if IsHPCGAP then
+        OPER_FLAGS.(nr) := FixedAtomicList([oper,
+            MakeWriteOnceAtomic([]), MakeWriteOnceAtomic([])]);
+    else
+        OPER_FLAGS.(nr) := [oper, [], []];
+    fi;
     ADD_LIST(OPERATIONS, oper);
   fi;
   info := OPER_FLAGS.(nr);
   ADD_LIST(info[2], MakeImmutable(flags));
-  ADD_LIST(info[3], MakeImmutable([INPUT_FILENAME(), INPUT_LINENUMBER()]));
+  ADD_LIST(info[3], MakeImmutable([INPUT_FILENAME(), READEVALCOMMAND_LINENUMBER, INPUT_LINENUMBER()]));
 end);
 
 BIND_GLOBAL( "GET_OPER_FLAGS", function(oper)
@@ -210,6 +202,9 @@ end);
 ##  </ManSection>
 ##
 BIND_GLOBAL( "WRAPPER_OPERATIONS", [] );
+if IsHPCGAP then
+    LockAndMigrateObj( WRAPPER_OPERATIONS, OPERATIONS_REGION);
+fi;
 
 
 #############################################################################
@@ -261,6 +256,7 @@ IGNORE_IMMEDIATE_METHODS := false;
 ##  </Description>
 ##  </ManSection>
 ##
+BIND_CONSTANT("SIZE_IMMEDIATE_METHOD_ENTRY", 8);
 BIND_GLOBAL( "INSTALL_IMMEDIATE_METHOD",
     function( oper, info, filter, rank, method )
 
@@ -297,7 +293,7 @@ BIND_GLOBAL( "INSTALL_IMMEDIATE_METHOD",
     fi;
     relev := [];
     for i  in flags  do
-        if not i in CATS_AND_REPS  then
+        if not INFO_FILTERS[i] in FNUM_CATS_AND_REPS  then
             ADD_LIST( relev, i );
         fi;
     od;
@@ -308,6 +304,8 @@ BIND_GLOBAL( "INSTALL_IMMEDIATE_METHOD",
         relev:= [ flags[1] ];
     fi;
     flags:= relev;
+
+    atomic FILTER_REGION do
 
     # Remove requirements that are implied by the remaining ones.
     # (Note that it is possible to have implications from a filter
@@ -345,7 +343,13 @@ BIND_GLOBAL( "INSTALL_IMMEDIATE_METHOD",
     od;
 
     # We install the method for the requirements in `relev'.
-    ADD_LIST( IMMEDIATE_METHODS, method );
+    if IsHPCGAP then
+        # 'pos' is saved for modifying 'imm' below.
+        pos:=AddAtomicList( IMMEDIATE_METHODS, method );
+    else
+        ADD_LIST( IMMEDIATE_METHODS, method );
+        pos := LEN_LIST( IMMEDIATE_METHODS );
+    fi;
 
     for j  in relev  do
 
@@ -358,35 +362,43 @@ BIND_GLOBAL( "INSTALL_IMMEDIATE_METHOD",
 #T (This would make an if statement in `RunImmediateMethods' unnecessary!)
 
       # Find the place to put the new method.
-      if not IsBound( IMMEDIATES[j] ) then
-          IMMEDIATES[j]:= [];
+      if not IsHPCGAP then
+          if IsBound( IMMEDIATES[j] ) then
+              imm := IMMEDIATES[j];
+          else
+              imm := [];
+              IMMEDIATES[j] := imm;
+          fi;
+      else
+          if IsBound( IMMEDIATES[j] ) then
+              imm := SHALLOW_COPY_OBJ(IMMEDIATES[j]);
+          else
+              imm := [];
+          fi;
       fi;
       i := 0;
-      while i < LEN_LIST(IMMEDIATES[j]) and rank < IMMEDIATES[j][i+5]  do
-          i := i + 7;
+      while i < LEN_LIST(imm) and rank < imm[i+5]  do
+          i := i + SIZE_IMMEDIATE_METHOD_ENTRY;
       od;
 
       # Now is a good time to see if the method is already there 
       if REREADING then
           replace := false;
           k := i;
-          while k < LEN_LIST(IMMEDIATES[j]) and 
-            rank = IMMEDIATES[j][k+5] do
-              if info = IMMEDIATES[j][k+7] and
-                 oper = IMMEDIATES[j][k+1] and
-                 FLAGS_FILTER( filter ) = IMMEDIATES[j][k+4] then
+          while k < LEN_LIST(imm) and rank = imm[k+5] do
+              if info = imm[k+7] and oper = imm[k+1] and
+                 FLAGS_FILTER( filter ) = imm[k+4] then
                   replace := true;
                   i := k;
                   break;
               fi;
-              k := k+7;
+              k := k+SIZE_IMMEDIATE_METHOD_ENTRY;
           od;
       fi;
       
       # push the other functions back
-      imm:=IMMEDIATES[j];
       if not REREADING or not replace then
-          imm{[i+8..7+LEN_LIST(imm)]} := imm{[i+1..LEN_LIST(imm)]};
+          imm{[SIZE_IMMEDIATE_METHOD_ENTRY+i+1..SIZE_IMMEDIATE_METHOD_ENTRY+LEN_LIST(imm)]} := imm{[i+1..LEN_LIST(imm)]};
       fi;
 
       # install the new method
@@ -395,9 +407,16 @@ BIND_GLOBAL( "INSTALL_IMMEDIATE_METHOD",
       imm[i+3] := FLAGS_FILTER( TESTER_FILTER( oper ) );
       imm[i+4] := FLAGS_FILTER( filter );
       imm[i+5] := rank;
-      imm[i+6] := LEN_LIST( IMMEDIATE_METHODS );
+      imm[i+6] := pos;
       imm[i+7] := IMMUTABLE_COPY_OBJ(info);
+      if SIZE_IMMEDIATE_METHOD_ENTRY >= 8 then
+          imm[i+8] := MakeImmutable([INPUT_FILENAME(), READEVALCOMMAND_LINENUMBER, INPUT_LINENUMBER()]);
+      fi;
 
+      if IsHPCGAP then
+          IMMEDIATES[j]:=MakeImmutable(imm);
+      fi;
+    od;
     od;
 
 end );
@@ -405,7 +424,7 @@ end );
 
 #############################################################################
 ##
-#F  InstallImmediateMethod( <opr>[, <info>], <filter>, <rank>, <method> )
+#F  InstallImmediateMethod( <opr>[, <info>], <filter>[, <rank>], <method> )
 ##
 ##  <#GAPDoc Label="InstallImmediateMethod">
 ##  <ManSection>
@@ -415,7 +434,8 @@ end );
 ##  <Description>
 ##  <Ref Func="InstallImmediateMethod"/> installs <A>method</A> as an
 ##  immediate method for <A>opr</A>, which must be an attribute or a
-##  property, with requirement <A>filter</A> and rank <A>rank</A>.
+##  property, with requirement <A>filter</A> and rank <A>rank</A>
+##  (the rank can be omitted, in which case 0 is used as rank).
 ##  The rank must be an integer value that measures the priority of
 ##  <A>method</A> among the immediate methods for <A>opr</A>.
 ##  If supplied, <A>info</A> should be a short but informative string
@@ -473,25 +493,52 @@ end );
 ##  <#/GAPDoc>
 ##
 BIND_GLOBAL( "InstallImmediateMethod", function( arg )
+    local pos, opr, info, filter, rank, method;
 
-    if     LEN_LIST( arg ) = 4
-       and IS_OPERATION( arg[1] )
-       and IsFilter( arg[2] )
-       and IS_RAT( arg[3] )
-       and IS_FUNCTION( arg[4] ) then
-        INSTALL_IMMEDIATE_METHOD( arg[1], false, arg[2], arg[3], arg[4] );
-        INSTALL_METHOD( [ arg[1], [ arg[2] ], arg[4] ], false );
-    elif   LEN_LIST( arg ) = 5
-       and IS_OPERATION( arg[1] )
-       and IS_STRING( arg[2] )
-       and IsFilter( arg[3] )
-       and IS_RAT( arg[4] )
-       and IS_FUNCTION( arg[5] ) then
-        INSTALL_IMMEDIATE_METHOD( arg[1], arg[2], arg[3], arg[4], arg[5] );
-        INSTALL_METHOD( [ arg[1], arg[2], [ arg[3] ], arg[5] ], false );
+    pos := 1;
+
+    if pos <= LEN_LIST( arg ) and IS_OPERATION( arg[pos] ) then
+        opr := arg[pos];
+        pos := pos + 1;
     else
-      Error("usage: InstallImmediateMethod(<opr>,<filter>,<rank>,<method>)");
+        pos := -1;
     fi;
+
+    if pos <= LEN_LIST( arg ) and IS_STRING( arg[pos] ) then
+        info := arg[pos];
+        pos := pos + 1;
+    else
+        info := false;
+    fi;
+
+    if pos <= LEN_LIST( arg ) and IsFilter( arg[pos] ) then
+        filter := arg[pos];
+        pos := pos + 1;
+    else
+        pos := -1;
+    fi;
+
+    if pos <= LEN_LIST( arg ) and IS_RAT( arg[pos] ) then
+        rank := arg[pos];
+        pos := pos + 1;
+    else
+        rank := 0;
+    fi;
+
+    if pos <= LEN_LIST( arg ) and IS_FUNCTION( arg[pos] ) then
+        method := arg[pos];
+        pos := pos + 1;
+    else
+        pos := -1;
+    fi;
+
+    if pos = LEN_LIST( arg ) + 1 then
+        INSTALL_IMMEDIATE_METHOD( opr, info, filter, rank, method );
+        INSTALL_METHOD( [ opr, info, [ filter ], method ], false );
+    else
+        Error("usage: InstallImmediateMethod( <opr>[, <info>], <filter>, <rank>, <method> )");
+    fi;
+
 end );
 
 
@@ -510,9 +557,10 @@ end );
 ##  <Ref Func="UntraceImmediateMethods"/>, or <Ref Func="TraceImmediateMethods"/>
 ##  with <A>flag</A> equal <K>false</K> turns tracing off.
 ##  (There is no facility to trace <E>specific</E> immediate methods.)
-##  <Example><![CDATA[
+##  <Log><![CDATA[
 ##  gap> TraceImmediateMethods( );
 ##  gap> g:= Group( (1,2,3), (1,2) );;
+##  #I RunImmediateMethods
 ##  #I  immediate: Size
 ##  #I  immediate: IsCyclic
 ##  #I  immediate: IsCommutative
@@ -521,6 +569,8 @@ end );
 ##  #I  immediate: IsPerfectGroup
 ##  #I  immediate: IsNonTrivial
 ##  #I  immediate: Size
+##  #I  immediate: IsFreeAbelian
+##  #I  immediate: IsTorsionFree
 ##  #I  immediate: IsNonTrivial
 ##  #I  immediate: IsPerfectGroup
 ##  #I  immediate: GeneralizedPcgs
@@ -528,7 +578,7 @@ end );
 ##  6
 ##  gap> UntraceImmediateMethods( );
 ##  gap> UntraceMethods( [ Size ] );
-##  ]]></Example>
+##  ]]></Log>
 ##  <P/>
 ##  This example gives an explanation for the two calls of the
 ##  <Q>system getter</Q> for <Ref Func="Size"/>.
@@ -723,6 +773,9 @@ end );
 BIND_GLOBAL( "NewConstructor", function ( name, filters )
     local   oper,  filt,  filter;
 
+    if LEN_LIST( filters ) = 0 then
+      Error( "constructors must have at least one argument" );
+    fi;
     if GAPInfo.MaxNrArgsMethod < LEN_LIST( filters ) then
       Error( "methods can have at most ", GAPInfo.MaxNrArgsMethod,
              " arguments" );
@@ -735,7 +788,6 @@ BIND_GLOBAL( "NewConstructor", function ( name, filters )
         fi;
         ADD_LIST( filt, FLAGS_FILTER( filter ) );
     od;
-    ADD_LIST( CONSTRUCTORS, oper );
     STORE_OPER_FLAGS(oper, filt);
     return oper;
 end );
@@ -814,6 +866,9 @@ BIND_GLOBAL( "DeclareOperation", function ( name, filters )
       od;
       
       req := GET_OPER_FLAGS(gvar);
+      if IsHPCGAP then
+        req := FromAtomicList(req);  # so that we can search in it
+      fi;
       if filt in req then
         if not REREADING then
           INFO_DEBUG( 1, "equal requirements in multiple declarations ",
@@ -892,7 +947,9 @@ BIND_GLOBAL( "DeclareConstructor", function ( name, filters )
 
     local gvar, req, filt, filter;
 
-    if GAPInfo.MaxNrArgsMethod < LEN_LIST( filters ) then
+    if LEN_LIST( filters ) = 0 then
+      Error( "constructors must have at least one argument" );
+    elif GAPInfo.MaxNrArgsMethod < LEN_LIST( filters ) then
       Error( "methods can have at most ", GAPInfo.MaxNrArgsMethod,
              " arguments" );
     elif ISB_GVAR( name ) then
@@ -964,7 +1021,6 @@ BIND_GLOBAL( "DeclareConstructorKernel", function ( name, filters, oper )
         ADD_LIST( filt, FLAGS_FILTER( filter ) );
     od;
 
-    ADD_LIST( CONSTRUCTORS, oper );
     STORE_OPER_FLAGS(oper, filt);
 end );
 
@@ -983,9 +1039,13 @@ end );
 ##  </Description>
 ##  </ManSection>
 ##
-BIND_GLOBAL( "ATTRIBUTES", [] );
-
-BIND_GLOBAL( "ATTR_FUNCS", [] );
+if IsHPCGAP then
+    BIND_GLOBAL( "ATTRIBUTES", MakeStrictWriteOnceAtomic( [] ) );
+    BIND_GLOBAL( "ATTR_FUNCS", MakeStrictWriteOnceAtomic( [] ) );
+else
+    BIND_GLOBAL( "ATTRIBUTES", [] );
+    BIND_GLOBAL( "ATTR_FUNCS", [] );
+fi;
 
 BIND_GLOBAL( "InstallAttributeFunction", function ( func )
     local   attr;
@@ -1009,6 +1069,18 @@ end );
 
 #############################################################################
 ##
+BIND_GLOBAL( "BIND_SETTER_TESTER",
+function( name, setter, tester)
+    local nname;
+    nname:= "Set"; APPEND_LIST_INTR( nname, name );
+    BIND_GLOBAL( nname, setter );
+    nname:= "Has"; APPEND_LIST_INTR( nname, name );
+    BIND_GLOBAL( nname, tester );
+end );
+
+
+#############################################################################
+##
 #F  DeclareAttributeKernel( <name>, <filter>, <getter> )  . . . new attribute
 ##
 ##  <ManSection>
@@ -1021,7 +1093,7 @@ end );
 ##  </ManSection>
 ##
 BIND_GLOBAL( "DeclareAttributeKernel", function ( name, filter, getter )
-    local setter, tester, nname;
+    local setter, tester;
 
     # This will yield an error if `name' is already bound.
     BIND_GLOBAL( name, getter );
@@ -1037,32 +1109,35 @@ BIND_GLOBAL( "DeclareAttributeKernel", function ( name, filter, getter )
     STORE_OPER_FLAGS(tester, [ FLAGS_FILTER(filter) ]);
 
     # store the information about the filter
+    atomic FILTER_REGION do
     FILTERS[ FLAG2_FILTER( tester ) ] := tester;
     IMM_FLAGS:= AND_FLAGS( IMM_FLAGS, FLAGS_FILTER( tester ) );
     INFO_FILTERS[ FLAG2_FILTER( tester ) ] := 5;
+    od;
 
     # clear the cache because <filter> is something old
-    InstallHiddenTrueMethod( filter, tester );
+    if not GAPInfo.CommandLineOptions.N then
+      InstallHiddenTrueMethod( filter, tester );
+    fi;
     CLEAR_HIDDEN_IMP_CACHE( tester );
 
     # run the attribute functions
     RUN_ATTR_FUNCS( filter, getter, setter, tester, false );
 
     # store the ranks
+    atomic FILTER_REGION do
     RANK_FILTERS[ FLAG2_FILTER( tester ) ] := 1;
+    od;
 
     # and make the remaining assignments
-    nname:= "Set"; APPEND_LIST_INTR( nname, name );
-    BIND_GLOBAL( nname, setter );
-    nname:= "Has"; APPEND_LIST_INTR( nname, name );
-    BIND_GLOBAL( nname, tester );
+    BIND_SETTER_TESTER( name, setter, tester );
 
 end );
 
 
 #############################################################################
 ##
-#F  NewAttribute( <name>, <filter>[, "mutable"][, <rank>] ) . . new attribute
+#F  NewAttribute( <name>, <filter>[, <mutable>][, <rank>] ) . . new attribute
 ##
 ##  <#GAPDoc Label="NewAttribute">
 ##  <ManSection>
@@ -1084,16 +1159,23 @@ end );
 ##  applicable to a character table,
 ##  which is neither a list nor a collection.
 ##  <P/>
-##  If the optional third argument is given then there are two possibilities.
-##  Either it is an integer <A>rank</A>,
-##  then the attribute tester has this incremental rank
-##  (see&nbsp;<Ref Sect="Filters"/>).
-##  Or it is the string <C>"mutable"</C>,
-##  then the values of the attribute shall be mutable;
-##  more precisely, when a value of such a mutable attribute is set
-##  then this value itself is stored, not an immutable copy of it.
-##  (So it is the user's responsibility to set an object that is in fact
-##  mutable.)
+##  For the optional third and fourth arguments, there are the following
+##  possibilities.
+##  <List>
+##  <Item> The integer argument <A>rank</A> causes the attribute tester to have
+##  this incremental rank (see&nbsp;<Ref Sect="Filters"/>),
+##  </Item>
+##  <Item> If the argument <A>mutable</A> is the string <C>"mutable"</C> or
+##  the boolean <C>true</C>, then the values of the attribute are mutable.
+##  </Item>
+##  <Item> If the argument <A>mutable</A> is the boolean <C>false</C>, then
+##  the values of the attribute are immutable.
+##  </Item>
+##  </List>
+##  <P/>
+##  When a value of such mutable attribute is set
+##  then this value itself is stored, not an immutable copy of it, 
+##  and it is the user's responsibility to set an object that is mutable.
 ##  This is useful for an attribute whose value is some partial information
 ##  that may be completed later.
 ##  For example, there is an attribute <C>ComputedSylowSubgroups</C>
@@ -1106,7 +1188,7 @@ end );
 ##  <!-- attributes; is this really intended?-->
 ##  <!-- if yes then it should be documented!-->
 ##  <P/>
-##  If no third argument is given then the rank of the tester is 1.
+##  If no argument for <A>rank</A> is given, then the rank of the tester is 1.
 ##  <P/>
 ##  Each method for the new attribute that does <E>not</E> require
 ##  its argument to lie in <A>filter</A> must be installed using
@@ -1117,50 +1199,65 @@ end );
 ##
 BIND_GLOBAL( "OPER_SetupAttribute", function(getter, flags, mutflag, filter, rank, name)
     local   setter,  tester,   nname;
-              # store the information about the filter
-          INFO_FILTERS[ FLAG2_FILTER(getter) ] := 6;
 
-          # add  setter and tester to the list of operations
-          setter := SETTER_FILTER( getter );
-          tester := TESTER_FILTER( getter );
+    # store the information about the filter
+    INFO_FILTERS[ FLAG2_FILTER(getter) ] := 6;
 
-          STORE_OPER_FLAGS(setter, [ flags, FLAGS_FILTER( IS_OBJECT ) ]);
-          STORE_OPER_FLAGS(tester, [ flags ]);
+    # add  setter and tester to the list of operations
+    setter := SETTER_FILTER( getter );
+    tester := TESTER_FILTER( getter );
 
-          # install the default functions
-          FILTERS[ FLAG2_FILTER( tester ) ] := tester;
-          IMM_FLAGS:= AND_FLAGS( IMM_FLAGS, FLAGS_FILTER( tester ) );
+    STORE_OPER_FLAGS(setter, [ flags, FLAGS_FILTER( IS_OBJECT ) ]);
+    STORE_OPER_FLAGS(tester, [ flags ]);
 
-          # the <tester> is newly made, therefore  the cache cannot contain a  flag
-          # list involving <tester>
-          InstallHiddenTrueMethod( filter, tester );
-          # CLEAR_HIDDEN_IMP_CACHE();
+    # install the default functions
+    FILTERS[ FLAG2_FILTER( tester ) ] := tester;
+    IMM_FLAGS:= AND_FLAGS( IMM_FLAGS, FLAGS_FILTER( tester ) );
 
-          # run the attribute functions
-          RUN_ATTR_FUNCS( filter, getter, setter, tester, mutflag );
-
-          # store the rank
-          RANK_FILTERS[ FLAG2_FILTER( tester ) ] := rank;
-          
-          
-          return;
-      end);
-
-
-BIND_GLOBAL( "NewAttribute", function ( arg )
-    local   name, filter, flags, mutflag, getter, rank;
-
-    # construct getter, setter and tester
-    name   := arg[1];
-    filter := arg[2];
-
-    if not IS_OPERATION( filter ) then
-      Error( "<filter> must be an operation" );
+    # the <tester> is newly made, therefore  the cache cannot contain a  flag
+    # list involving <tester>
+    if not GAPInfo.CommandLineOptions.N then
+      InstallHiddenTrueMethod( filter, tester );
     fi;
-    flags:= FLAGS_FILTER( filter );
+    # CLEAR_HIDDEN_IMP_CACHE();
 
-    # the mutability flags is the third one (which can also be the rank)
-    mutflag := LEN_LIST(arg) = 3 and arg[3] = "mutable";
+    # run the attribute functions
+    RUN_ATTR_FUNCS( filter, getter, setter, tester, mutflag );
+
+    # store the rank
+    RANK_FILTERS[ FLAG2_FILTER( tester ) ] := rank;
+end);
+
+# construct getter, setter and tester
+BIND_GLOBAL( "NewAttribute", function ( name, filter, args... )
+    local  flags, mutflag, getter, rank;
+
+    if not IS_STRING( name ) then
+        Error( "<name> must be a string");
+    fi;
+
+    if not IsFilter( filter ) then
+        Error( "<filter> must be a filter" );
+    fi;
+
+    rank := 1;
+    mutflag := false;
+    if LEN_LIST(args) = 0 then
+        # this is fine, but does nothing
+    elif LEN_LIST(args) = 1 and args[1] in [ "mutable", true, false ] then
+        mutflag := args[1] in [ "mutable", true];
+    elif LEN_LIST(args) = 1 and IS_INT(args[1]) then
+        rank := args[1];
+    elif LEN_LIST(args) = 2
+         and args[1] in [ "mutable", true, false ]
+         and IS_INT(args[2]) then
+        mutflag := args[1] in [ "mutable", true ];
+        rank := args[2];
+    else
+        Error("Usage: NewAttribute( <name>, <filter>[, <mutable>][, <rank>] )");
+    fi;
+
+    flags:= FLAGS_FILTER( filter );
 
     # construct a new attribute
     if mutflag then
@@ -1168,14 +1265,11 @@ BIND_GLOBAL( "NewAttribute", function ( arg )
     else
         getter := NEW_ATTRIBUTE( name );
     fi;
-    if LEN_LIST(arg) = 3 and IS_INT(arg[3]) then
-        rank := arg[3];
-    else
-        rank := 1;
-    fi;
     STORE_OPER_FLAGS(getter, [ flags ]);
 
+    atomic FILTER_REGION do
     OPER_SetupAttribute(getter, flags, mutflag, filter, rank, name);
+    od;
 
     # And return the getter
     return getter;
@@ -1202,100 +1296,97 @@ end );
 ##  <#/GAPDoc>
 ##
 
-BIND_GLOBAL( "DeclareAttribute", function ( arg )
-    local   name,  gvar,  req,  reqs,  filter,  setter,  tester,  
-              attr,  nname, mutflag, flags, rank;
+BIND_GLOBAL( "ConvertToAttribute",
+function(name, op, filter, rank, mutable)
+    local req, reqs, flags;
+    # `op' is not an attribute (tester) and not a property (tester),
+    # or `op' is a filter; in any case, `op' is not an attribute.
 
-    name:= arg[1];
+    # if `op' has no one argument declarations we can turn it into 
+    # an attribute
+    req := GET_OPER_FLAGS(op);
+    for reqs in req do
+        if LENGTH(reqs)  = 1 then
+            Error( "operation `", name, "' has been declared as a one ",
+                   "argument Operation and cannot also be an Attribute");
+        fi;
+    od;
+
+    flags := FLAGS_FILTER(filter);
+    STORE_OPER_FLAGS( op, [ FLAGS_FILTER( filter ) ] );
+
+    # kernel magic for the conversion
+    if mutable then
+        OPER_TO_MUTABLE_ATTRIBUTE(op);
+    else
+        OPER_TO_ATTRIBUTE(op);
+    fi;
+
+    OPER_SetupAttribute(op, flags, mutable, filter, rank, name);
+
+    # and make the remaining assignments
+    BIND_SETTER_TESTER( name, SETTER_FILTER(op), TESTER_FILTER(op) );
+end);
+
+BIND_GLOBAL( "DeclareAttribute", function ( name, filter, args... )
+    local gvar, req, reqs, setter, tester,
+              attr, mutflag, flags, rank;
+
+    if not IS_STRING( name ) then
+        Error( "<name> must be a string");
+    fi;
+
+    if not IsFilter( filter ) then
+        Error( "<filter> must be a filter" );
+    fi;
+
+    rank := 1;
+    mutflag := false;
+    if LEN_LIST(args) = 0 then
+        # this is fine, but does nothing
+    elif LEN_LIST(args) = 1 and args[1] in [ "mutable", true, false ] then
+        mutflag := args[1] in [ "mutable", true];
+    elif LEN_LIST(args) = 1 and IS_INT(args[1]) then
+        rank := args[1];
+    elif LEN_LIST(args) = 2
+         and args[1] in [ "mutable", true, false ]
+         and IS_INT(args[2]) then
+        mutflag := args[1] in [ "mutable", true ];
+        rank := args[2];
+    else
+        Error("Usage: DeclareAttribute( <name>, <filter>[, <mutable>][, <rank>] )");
+    fi;
 
     if ISB_GVAR( name ) then
+      atomic FILTER_REGION do
+        # The variable exists already.
+        gvar := VALUE_GLOBAL( name );
 
-      # The variable exists already.
-      gvar:= VALUE_GLOBAL( name );
+        # Check that the variable is in fact bound to an operation.
+        if not IS_OPERATION( gvar ) then
+            Error( "variable `", name, "' is not bound to an operation" );
+        fi;
 
-      # Check that the variable is in fact bound to an operation.
-      if not IS_OPERATION( gvar ) then
-        Error( "variable `", name, "' is not bound to an operation" );
-      fi;
+        # The attribute has already been declared.
+        # If it was not created as an attribute
+        # then we may be able to convert it
+        if FLAG2_FILTER( gvar ) = 0 or IS_ELEMENTARY_FILTER(gvar) then
+            ConvertToAttribute(name, gvar, filter, rank, mutflag);
+        else
+            STORE_OPER_FLAGS( gvar, [ FLAGS_FILTER( filter ) ] );
 
-      # The attribute has already been declared.
-      # If it was not created as an attribute
-      # then we may be able to convert it
-      if FLAG2_FILTER( gvar ) = 0 or gvar in FILTERS then
-
-          # `gvar' is not an attribute (tester) and not a property (tester),
-          # or `gvar' is a filter;
-          # in any case, `gvar' is not an attribute.
-          
-          # if `gvar' has no one argument declarations we can turn it into 
-          # an attribute
-          req := GET_OPER_FLAGS(gvar);
-          for reqs in req do
-              if LENGTH(reqs)  = 1 then
-                  Error( "operation `", name, "' has been declared as a one ",
-                         "argument Operation and cannot also be an Attribute");
-              fi;
-          od;
-          mutflag := LEN_LIST(arg) = 3 and arg[3] = "mutable";
-          
-          # add the new set of requirements 
-          filter:= arg[2];
-          if not IS_OPERATION( filter ) then
-              Error( "<filter> must be an operation" );
-          fi;
-          
-          flags := FLAGS_FILTER(filter);
-          STORE_OPER_FLAGS( gvar, [ FLAGS_FILTER( filter ) ] );
-          
-          # kernel magic for the conversion
-          if mutflag then
-              OPER_TO_MUTABLE_ATTRIBUTE(gvar);
-          else
-              OPER_TO_ATTRIBUTE(gvar);
-          fi;
-          
-          # now we have to adjust the data structures
-          
-          if LEN_LIST(arg) = 3 and IS_INT(arg[3]) then
-              rank := arg[3];
-          else
-              rank := 1;
-          fi;
-          OPER_SetupAttribute(gvar, flags, mutflag, filter, rank, name);         
-          # and make the remaining assignments
-          nname:= "Set"; APPEND_LIST_INTR( nname, name );
-          BIND_GLOBAL( nname, SETTER_FILTER(gvar) );
-          nname:= "Has"; APPEND_LIST_INTR( nname, name );
-          BIND_GLOBAL( nname, TESTER_FILTER(gvar) );
-          
-          return;      
-    
-              
-      fi;
-
-      # Add the new requirements.
-      filter:= arg[2];
-      if not IS_OPERATION( filter ) then
-        Error( "<filter> must be an operation" );
-      fi;
-      STORE_OPER_FLAGS( gvar, [ FLAGS_FILTER( filter ) ] );
-
-      # also set the extended range for the setter
-      req := GET_OPER_FLAGS( Setter(gvar) );
-      STORE_OPER_FLAGS( Setter(gvar), [ FLAGS_FILTER( filter), req[1][2] ] );
-
+            # also set the extended range for the setter
+            req := GET_OPER_FLAGS( Setter(gvar) );
+            STORE_OPER_FLAGS( Setter(gvar), [ FLAGS_FILTER( filter), req[1][2] ] );
+        fi;
+      od;
     else
+        # The attribute is new.
+        attr := NewAttribute(name, filter, mutflag, rank);
+        BIND_GLOBAL( name, attr );
 
-      # The attribute is new.
-      attr:= CALL_FUNC_LIST( NewAttribute, arg );
-      BIND_GLOBAL( name, attr );
-      
-      # and make the remaining assignments
-      nname:= "Set"; APPEND_LIST_INTR( nname, name );
-      BIND_GLOBAL( nname, SETTER_FILTER(attr) );
-      nname:= "Has"; APPEND_LIST_INTR( nname, name );
-      BIND_GLOBAL( nname, TESTER_FILTER( attr ) );
-
+        # and make the remaining assignments
+        BIND_SETTER_TESTER( name, SETTER_FILTER(attr), TESTER_FILTER(attr) );
     fi;
 end );
 
@@ -1332,7 +1423,7 @@ LENGTH_SETTER_METHODS_2 := 0;
 ##  </ManSection>
 ##
 BIND_GLOBAL( "DeclarePropertyKernel", function ( name, filter, getter )
-    local setter, tester, nname;
+    local setter, tester;
 
     # This will yield an error if `name' is already bound.
     BIND_GLOBAL( name, getter );
@@ -1341,9 +1432,6 @@ BIND_GLOBAL( "DeclarePropertyKernel", function ( name, filter, getter )
     # construct setter and tester
     setter := SETTER_FILTER( getter );
     tester := TESTER_FILTER( getter );
-
-    # store the property getters
-    ADD_LIST( NUMBERS_PROPERTY_GETTERS, FLAG1_FILTER( getter ) );
 
     # add getter, setter and tester to the list of operations
     STORE_OPER_FLAGS(getter, [ FLAGS_FILTER(filter) ]);
@@ -1358,10 +1446,12 @@ BIND_GLOBAL( "DeclarePropertyKernel", function ( name, filter, getter )
     INFO_FILTERS[ FLAG2_FILTER( getter ) ]:= 8;
 
     # clear the cache because <filter> is something old
-    InstallHiddenTrueMethod( tester, getter );
-    CLEAR_HIDDEN_IMP_CACHE( getter );
-    InstallHiddenTrueMethod( filter, tester );
-    CLEAR_HIDDEN_IMP_CACHE( tester );
+    if not GAPInfo.CommandLineOptions.N then
+      InstallHiddenTrueMethod( tester, getter );
+      CLEAR_HIDDEN_IMP_CACHE( getter );
+      InstallHiddenTrueMethod( filter, tester );
+      CLEAR_HIDDEN_IMP_CACHE( tester );
+    fi;
 
     # run the attribute functions
     RUN_ATTR_FUNCS( filter, getter, setter, tester, false );
@@ -1371,10 +1461,7 @@ BIND_GLOBAL( "DeclarePropertyKernel", function ( name, filter, getter )
     RANK_FILTERS[ FLAG2_FILTER( getter ) ] := 1;
 
     # and make the remaining assignments
-    nname:= "Set"; APPEND_LIST_INTR( nname, name );
-    BIND_GLOBAL( nname, setter );
-    nname:= "Has"; APPEND_LIST_INTR( nname, name );
-    BIND_GLOBAL( nname, tester );
+    BIND_SETTER_TESTER( name, setter, tester );
 end );
 
 
@@ -1422,32 +1509,35 @@ BIND_GLOBAL( "NewProperty", function ( arg )
     STORE_OPER_FLAGS(setter, [ flags, FLAGS_FILTER(IS_BOOL) ]);
     STORE_OPER_FLAGS(tester, [ flags ]);
 
-    # store the property getters
-    ADD_LIST( NUMBERS_PROPERTY_GETTERS, FLAG1_FILTER( getter ) );
-
     # install the default functions
+    atomic FILTER_REGION do
     FILTERS[ FLAG1_FILTER( getter ) ] := getter;
     IMM_FLAGS:= AND_FLAGS( IMM_FLAGS, FLAGS_FILTER( getter ) );
     FILTERS[ FLAG2_FILTER( getter ) ] := tester;
     INFO_FILTERS[ FLAG1_FILTER( getter ) ] := 9;
     INFO_FILTERS[ FLAG2_FILTER( getter ) ] := 10;
+    od;
 
     # the <tester> and  <getter> are newly  made, therefore the cache cannot
     # contain a flag list involving <tester> or <getter>
-    InstallHiddenTrueMethod( tester, getter );
-    InstallHiddenTrueMethod( filter, tester );
+    if not GAPInfo.CommandLineOptions.N then
+      InstallHiddenTrueMethod( tester, getter );
+      InstallHiddenTrueMethod( filter, tester );
+    fi;
     # CLEAR_HIDDEN_IMP_CACHE();
 
     # run the attribute functions
     RUN_ATTR_FUNCS( filter, getter, setter, tester, false );
 
     # store the rank
+    atomic FILTER_REGION do
     if LEN_LIST( arg ) = 3 and IS_INT( arg[3] ) then
         RANK_FILTERS[ FLAG1_FILTER( getter ) ]:= arg[3];
     else
         RANK_FILTERS[ FLAG1_FILTER( getter ) ]:= 1;
     fi;
     RANK_FILTERS[ FLAG2_FILTER( tester ) ]:= 1;
+    od;
 
     # and return the getter
     return getter;
@@ -1475,7 +1565,7 @@ end );
 ##
 BIND_GLOBAL( "DeclareProperty", function ( arg )
 
-    local prop, name, nname, gvar, req, filter;
+    local prop, name, gvar, req, filter;
 
     name:= arg[1];
 
@@ -1514,10 +1604,7 @@ BIND_GLOBAL( "DeclareProperty", function ( arg )
       # The property is new.
       prop:= CALL_FUNC_LIST( NewProperty, arg );
       BIND_GLOBAL( name, prop );
-      nname:= "Set"; APPEND_LIST_INTR( nname, name );
-      BIND_GLOBAL( nname, SETTER_FILTER( prop ) );
-      nname:= "Has"; APPEND_LIST_INTR( nname, name );
-      BIND_GLOBAL( nname, TESTER_FILTER( prop ) );
+      BIND_SETTER_TESTER( name, SETTER_FILTER( prop ), TESTER_FILTER( prop ) );
 
     fi;
 end );
@@ -1704,7 +1791,7 @@ end );
 BIND_GLOBAL( "UntraceMethods", function( arg )
     local   fun;
     if LEN_LIST( arg ) = 0 then
-      Error("`TraceMethods' require at least one argument");
+      Error("`UntraceMethods' require at least one argument");
     fi;
     if IS_LIST(arg[1])  then
         arg := arg[1];
@@ -1789,13 +1876,19 @@ end );
 ##  global variables (see <C>variable.g</C>) because of the completion
 ##  mechanism.
 ##
-BIND_GLOBAL( "GLOBAL_FUNCTION_NAMES", [] );
+if IsHPCGAP then
+    BIND_GLOBAL( "GLOBAL_FUNCTION_NAMES", ShareSpecialObj([], "GLOBAL_FUNCTION_NAMES") );
+else
+    BIND_GLOBAL( "GLOBAL_FUNCTION_NAMES", [] );
+fi;
 
 BIND_GLOBAL( "DeclareGlobalFunction", function( arg )
     local   name;
 
     name := arg[1];
+    atomic GLOBAL_FUNCTION_NAMES do
     ADD_SET( GLOBAL_FUNCTION_NAMES, IMMUTABLE_COPY_OBJ(name) );
+    od;
     BIND_GLOBAL( name, NEW_GLOBAL_FUNCTION( name ) );
 end );
 
@@ -1816,13 +1909,16 @@ BIND_GLOBAL( "InstallGlobalFunction", function( arg )
       fi;
       oper:= VALUE_GLOBAL( oper );
     fi;
+    atomic readonly GLOBAL_FUNCTION_NAMES do
     if NAME_FUNC(func) in GLOBAL_FUNCTION_NAMES then
       Error("you cannot install a global function for another global ",
             "function,\nuse `DeclareSynonym' instead!");
     fi;
     INSTALL_GLOBAL_FUNCTION( oper, func );
+    od;
 end );
 
+if not IsHPCGAP then
 
 BIND_GLOBAL( "FLUSH_ALL_METHOD_CACHES", function()
     local oper,j;
@@ -1832,7 +1928,38 @@ BIND_GLOBAL( "FLUSH_ALL_METHOD_CACHES", function()
         od;
     od;
 end);
-        
+
+fi;
+
+if BASE_SIZE_METHODS_OPER_ENTRY <> 5 then
+    Error("MethodsOperation must be updated for new BASE_SIZE_METHODS_OPER_ENTRY");
+fi;
+
+# TODO: document this?!
+BIND_GLOBAL("MethodsOperation", function(oper, nargs)
+    local meths, len, result, i, m;
+
+    meths := METHODS_OPERATION(oper, nargs);
+    if meths = fail then
+        return fail;
+    fi;
+    len := BASE_SIZE_METHODS_OPER_ENTRY + nargs;
+    result := [];
+    for i in [0, len .. LENGTH(meths) - len] do
+        m := rec(
+            famPred := meths[i + 1],
+            argFilt := meths{[i + 2 .. i + nargs + 1]},
+            func    := meths[i + nargs + 2],
+            rank    := meths[i + nargs + 3],
+            info    := meths[i + nargs + 4],
+            );
+        ADD_LIST(result, m);
+        if IsBound(meths[i + nargs + 5]) then
+            m.location := meths[i + nargs + 5];
+        fi;
+    od;
+    return result;
+end );
 
 #############################################################################
 ##

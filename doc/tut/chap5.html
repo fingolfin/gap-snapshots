@@ -44,7 +44,7 @@
 
 <h3>5 <span class="Heading">Groups and Homomorphisms</span></h3>
 
-<p>In this chapter we will show some computations with groups. The examples deal mostly with permutation groups, because they are the easiest to input. The functions mentioned here, like <code class="func">Group</code> (<span class="RefLink">Reference: Groups</span>), <code class="func">Size</code> (<span class="RefLink">Reference: Size</span>) or <code class="func">SylowSubgroup</code> (<span class="RefLink">Reference: SylowSubgroup</span>), however, are the same for all kinds of groups, although the algorithms which compute the information of course will be different in most cases.</p>
+<p>In this chapter we will show some computations with groups. The examples deal mostly with permutation groups, because they are the easiest to input. The functions mentioned here, like <code class="func">Group</code> (<span class="RefLink">Reference: Group Libraries</span>), <code class="func">Size</code> (<span class="RefLink">Reference: Size</span>) or <code class="func">SylowSubgroup</code> (<span class="RefLink">Reference: SylowSubgroup</span>), however, are the same for all kinds of groups, although the algorithms which compute the information of course will be different in most cases.</p>
 
 <p><a id="X85ED46007CED6191" name="X85ED46007CED6191"></a></p>
 
@@ -156,7 +156,8 @@ true
 true
 rec( 
   name := "A(1,7) = L(2,7) ~ B(1,7) = O(3,7) ~ C(1,7) = S(2,7) ~ 2A(1,\
-7) = U(2,7) ~ A(2,2) = L(3,2)", parameter := [ 2, 7 ], series := "L" )
+7) = U(2,7) ~ A(2,2) = L(3,2)", parameter := [ 2, 7 ], series := "L", 
+  shortname := "L3(2)" )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SetName( f, "L_3(2)" );</span>
 </pre></div>
 
@@ -565,10 +566,10 @@ true
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blocks := Blocks( a8, orb );; Length( blocks );</span>
 15
-<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">blocks[1];</span>
-[ (1,2)(3,4)(5,6)(7,8), (1,3)(2,4)(5,8)(6,7), (1,4)(2,3)(5,7)(6,8), 
-  (1,5)(2,6)(3,8)(4,7), (1,6)(2,5)(3,7)(4,8), (1,7)(2,8)(3,6)(4,5), 
-  (1,8)(2,7)(3,5)(4,6) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Set(blocks[1]);</span>
+[ (1,2)(3,4)(5,6)(7,8), (1,3)(2,4)(5,7)(6,8), (1,4)(2,3)(5,8)(6,7),
+  (1,5)(2,6)(3,7)(4,8), (1,6)(2,5)(3,8)(4,7), (1,7)(2,8)(3,5)(4,6),
+  (1,8)(2,7)(3,6)(4,5) ]
 </pre></div>
 
 <p>To find the subgroup of index 15 we again use closure. Now we must be a little bit careful to avoid confusion. <code class="code">u105</code> is the stabilizer of <code class="code">(1,2)(3,4)(5,6)(7,8)</code>. We know that there is a correspondence between the points of the orbit and the cosets of <code class="code">u105</code>. The point <code class="code">(1,2)(3,4)(5,6)(7,8)</code> corresponds to <code class="code">u105</code>. To get the subgroup above <code class="code">u105</code> that has index 15 in <code class="code">a8</code>, we must form the closure of <code class="code">u105</code> with an element of the coset that corresponds to any other point in the first block. If we choose the point <code class="code">(1,3)(2,4)(5,8)(6,7)</code>, we must use an element of <code class="code">a8</code> that maps <code class="code">(1,2)(3,4)(5,6)(7,8)</code> to <code class="code">(1,3)(2,4)(5,8)(6,7)</code>. The function <code class="func">RepresentativeAction</code> (<span class="RefLink">Reference: RepresentativeAction</span>) does what we need. It takes a group and two points and returns an element of the group that maps the first point to the second. In fact it also allows you to specify the action as an optional fourth argument as usual, but we do not need this here. If no such element exists in the group, i.e., if the two points do not lie in one orbit under the group, <code class="func">RepresentativeAction</code> (<span class="RefLink">Reference: RepresentativeAction</span>) returns <code class="keyw">fail</code>.</p>
@@ -577,7 +578,7 @@ true
 <div class="example"><pre>
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rep := RepresentativeAction( a8, (1,2)(3,4)(5,6)(7,8),</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">                                       (1,3)(2,4)(5,8)(6,7) );</span>
-(2,3)(6,8)
+(1,5,7,2,8,4,3)
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">u15 := ClosureGroup( u105, rep );; Index( a8, u15 );</span>
 15
 </pre></div>
@@ -772,8 +773,8 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">niceaut := NiceObject( aut );</span>
 Group([ (1,4,2,3), (1,5,4)(2,6,3), (1,2)(3,4), (3,4)(5,6) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismGroups( niceaut, SymmetricGroup( 4 ) );</span>
-[ (1,4,2,3), (1,5,4)(2,6,3), (1,2)(3,4), (3,4)(5,6) ] -&gt; 
-[ (1,4,3,2), (1,4,2), (1,3)(2,4), (1,4)(2,3) ]
+[ (1,4,2,3), (1,5,4)(2,6,3), (1,2)(3,4), (3,4)(5,6) ] -&gt;
+[ (1,4,2,3), (1,2,3), (1,2)(3,4), (1,3)(2,4) ]
 </pre></div>
 
 <p>The range of a nice monomorphism is in most cases a permutation group, because nice monomorphisms are mostly action homomorphisms. In some cases, like in our last example, the group is solvable and you might prefer a pc group as nice object. You cannot change the nice monomorphism of the automorphism group (because it is the value of the attribute <code class="func">NiceMonomorphism</code> (<span class="RefLink">Reference: NiceMonomorphism</span>)), but you can compose it with an isomorphism from the permutation group to a pc group to obtain your personal nicer monomorphism. If you reconstruct the automorphism group, you can even prescribe it this nicer monomorphism as its <code class="func">NiceMonomorphism</code> (<span class="RefLink">Reference: NiceMonomorphism</span>), because a newly-constructed group will not yet have a <code class="func">NiceMonomorphism</code> (<span class="RefLink">Reference: NiceMonomorphism</span>) set.</p>

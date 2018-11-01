@@ -1,9 +1,13 @@
 #ifndef GAP_THREADAPI_H
 #define GAP_THREADAPI_H
 
-#include <src/objects.h>
+#include "objects.h"
 
 #include <pthread.h>
+
+#if !defined(HPCGAP)
+#error This header is only meant to be used with HPC-GAP
+#endif
 
 
 enum ThreadObjectStatus {
@@ -48,8 +52,5 @@ void LockMonitors(UInt count, Monitor **monitors);
 void UnlockMonitors(UInt count, Monitor **monitors);
 
 void InitSignals(void);
-
-void InitThreadAPIState(void);
-void DestroyThreadAPIState(void);
 
 #endif // GAP_THREADAPI_H

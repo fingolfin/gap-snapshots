@@ -25,7 +25,7 @@ InstallAttributeFunction(
         GETTER_FUNCTION(name) );
     end );
 
-LENGTH_SETTER_METHODS_2 := LENGTH_SETTER_METHODS_2 + 6;
+LENGTH_SETTER_METHODS_2 := LENGTH_SETTER_METHODS_2 + (BASE_SIZE_METHODS_OPER_ENTRY+2);
 
 InstallAttributeFunction(
     function ( name, filter, getter, setter, tester, mutflag )
@@ -83,36 +83,61 @@ InstallAttributeFunction(
 ##  <#/GAPDoc>
 ##
 Subtype := "defined below";
-
+if IsHPCGAP then
+    DS_TYPE_CACHE := ShareSpecialObj([]);
+fi;
 
 BIND_GLOBAL( "NEW_FAMILY",
     function ( typeOfFamilies, name, req_filter, imp_filter )
-    local   type, pair, family;
+    local   lock, type, pair, family;
 
     # Look whether the category of the desired family can be improved
     # using the categories defined by 'CategoryFamily'.
     imp_filter := WITH_IMPS_FLAGS( AND_FLAGS( imp_filter, req_filter ) );
     type := Subtype( typeOfFamilies, IsAttributeStoringRep );
+    if IsHPCGAP then
+        # TODO: once the GAP compiler supports 'atomic', use that
+        # to replace the explicit locking and unlocking here.
+        lock := READ_LOCK(CATEGORIES_FAMILY);
+    fi;
     for pair in CATEGORIES_FAMILY do
         if IS_SUBSET_FLAGS( imp_filter, pair[1] ) then
             type:= Subtype( type, pair[2] );
         fi;
     od;
+    if IsHPCGAP then
+        UNLOCK(lock);
+    fi;
 
     # cannot use 'Objectify', because 'IsList' may not be defined yet
-    family := rec();
+    if IsHPCGAP then
+        family := AtomicRecord();
+    else
+        family := rec();
+    fi;
     SET_TYPE_COMOBJ( family, type );
     family!.NAME            := IMMUTABLE_COPY_OBJ(name);
     family!.REQ_FLAGS       := req_filter;
     family!.IMP_FLAGS       := imp_filter;
-    family!.TYPES           := [];
     family!.nTYPES          := 0;
     family!.HASH_SIZE       := 32;
-    # for chaching types of homogeneous lists (see TYPE_LIST_HOM in list.g), 
-    # assigned in kernel when needed 
-    family!.TYPES_LIST_FAM  := [];
-    # for efficiency
-    family!.TYPES_LIST_FAM[27] := 0;
+    if IsHPCGAP then
+        # TODO: once the GAP compiler supports 'atomic', use that
+        # to replace the explicit locking and unlocking here.
+        lock := WRITE_LOCK(DS_TYPE_CACHE);
+        family!.TYPES           := MIGRATE_RAW([], DS_TYPE_CACHE);
+        UNLOCK(lock);
+        # for chaching types of homogeneous lists (see TYPE_LIST_HOM in list.g),
+        # assigned in kernel when needed
+        family!.TYPES_LIST_FAM  := MakeWriteOnceAtomic(AtomicList(27));
+    else
+        family!.TYPES           := [];
+        # for chaching types of homogeneous lists (see TYPE_LIST_HOM in list.g),
+        # assigned in kernel when needed
+        family!.TYPES_LIST_FAM  := [];
+        # for efficiency
+        family!.TYPES_LIST_FAM[27] := 0;
+    fi;
     return family;
 end );
 
@@ -170,7 +195,7 @@ BIND_GLOBAL( "NewFamily", function ( arg )
 
     # signal error
     else
-        Error( "usage: NewFamily( <name>, [ <req> [, <imp> ]] )" );
+        Error( "usage: NewFamily( <name> [, <req> [, <imp> [, <famfilter> ] ] ] )" );
     fi;
 
 end );
@@ -202,15 +227,20 @@ NEW_TYPE_CACHE_MISS  := 0;
 NEW_TYPE_CACHE_HIT   := 0;
 
 BIND_GLOBAL( "NEW_TYPE", function ( typeOfTypes, family, flags, data, parent )
-    local   hash,  cache,  cached,  type, ncache, ncl, t, i, match;
+    local   lock, hash,  cache,  cached,  type, ncache, ncl, t, i, match;
 
     # maybe it is in the type cache
+    if IsHPCGAP then
+        # TODO: once the GAP compiler supports 'atomic', use that
+        # to replace the explicit locking and unlocking here.
+        lock := WRITE_LOCK(DS_TYPE_CACHE);
+    fi;
     cache := family!.TYPES;
     hash  := HASH_FLAGS(flags) mod family!.HASH_SIZE + 1;
     if IsBound( cache[hash] ) then
         cached := cache[hash];
-        if IS_EQUAL_FLAGS( flags, cached![2] )  then
-            flags := cached![2];
+        if IS_EQUAL_FLAGS( flags, cached![POS_FLAGS_TYPE] )  then
+            flags := cached![POS_FLAGS_TYPE];
             if    IS_IDENTICAL_OBJ(  data,  cached![ POS_DATA_TYPE ] )
               and IS_IDENTICAL_OBJ(  typeOfTypes, TYPE_OBJ(cached) )
             then
@@ -227,6 +257,9 @@ BIND_GLOBAL( "NEW_TYPE", function ( typeOfTypes, family, flags, data, parent )
                     od;
                     if match then
                         NEW_TYPE_CACHE_HIT := NEW_TYPE_CACHE_HIT + 1;
+                        if IsHPCGAP then
+                            UNLOCK(lock);
+                        fi;
                         return cached;
                     fi;
                 fi;
@@ -247,6 +280,9 @@ BIND_GLOBAL( "NEW_TYPE", function ( typeOfTypes, family, flags, data, parent )
                     od;
                     if match then
                         NEW_TYPE_CACHE_HIT := NEW_TYPE_CACHE_HIT + 1;
+                        if IsHPCGAP then
+                            UNLOCK(lock);
+                        fi;
                         return cached;
                     fi;
                 fi;
@@ -267,6 +303,9 @@ BIND_GLOBAL( "NEW_TYPE", function ( typeOfTypes, family, flags, data, parent )
     # make the new type
     # cannot use 'Objectify', because 'IsList' may not be defined yet
     type := [ family, flags ];
+    if IsHPCGAP then
+        data := MakeReadOnlyObj(data);
+    fi;
     type[POS_DATA_TYPE] := data;
     type[POS_NUMB_TYPE] := NEW_TYPE_NEXT_ID;
 
@@ -283,9 +322,12 @@ BIND_GLOBAL( "NEW_TYPE", function ( typeOfTypes, family, flags, data, parent )
     # check the size of the cache before storing this type
     if 3*family!.nTYPES > family!.HASH_SIZE then
         ncache := [];
+        if IsHPCGAP then
+            MIGRATE_RAW(ncache, DS_TYPE_CACHE);
+        fi;
         ncl := 3*family!.HASH_SIZE+1;
         for t in cache do
-            ncache[ HASH_FLAGS(t![2]) mod ncl + 1] := t;
+            ncache[ HASH_FLAGS(t![POS_FLAGS_TYPE]) mod ncl + 1] := t;
         od;
         family!.HASH_SIZE := ncl;
         family!.TYPES := ncache;
@@ -294,6 +336,10 @@ BIND_GLOBAL( "NEW_TYPE", function ( typeOfTypes, family, flags, data, parent )
         cache[hash] := type;
     fi;
     family!.nTYPES := family!.nTYPES + 1;
+    if IsHPCGAP then
+        MakeReadOnlySingleObj(type);
+        UNLOCK(lock);
+    fi;
 
     # return the type
     return type;
@@ -360,9 +406,9 @@ end );
 ##
 BIND_GLOBAL( "Subtype2", function ( type, filter )
     return NEW_TYPE( TypeOfTypes,
-                     type![1],
+                     type![POS_FAMILY_TYPE],
                      WITH_IMPS_FLAGS( AND_FLAGS(
-                        type![2],
+                        type![POS_FLAGS_TYPE],
                         FLAGS_FILTER( filter ) ) ),
                      type![ POS_DATA_TYPE ], type );
 end );
@@ -370,9 +416,9 @@ end );
 
 BIND_GLOBAL( "Subtype3", function ( type, filter, data )
     return NEW_TYPE( TypeOfTypes,
-                     type![1],
+                     type![POS_FAMILY_TYPE],
                      WITH_IMPS_FLAGS( AND_FLAGS(
-                        type![2],
+                        type![POS_FLAGS_TYPE],
                         FLAGS_FILTER( filter ) ) ),
                      data, type );
 end );
@@ -380,7 +426,12 @@ end );
 
 Unbind( Subtype );
 BIND_GLOBAL( "Subtype", function ( arg )
-
+    local p, type;
+    if IsHPCGAP then
+        # TODO: once the GAP compiler supports 'atomic', use that
+        # to replace the explicit locking and unlocking here.
+        p := READ_LOCK(arg);
+    fi;
     # check argument
     if not IsType( arg[1] )  then
         Error("<type> must be a type");
@@ -388,11 +439,14 @@ BIND_GLOBAL( "Subtype", function ( arg )
 
     # delegate
     if LEN_LIST(arg) = 2  then
-        return Subtype2( arg[1], arg[2] );
+        type := Subtype2( arg[1], arg[2] );
     else
-        return Subtype3( arg[1], arg[2], arg[3] );
+        type := Subtype3( arg[1], arg[2], arg[3] );
     fi;
-
+    if IsHPCGAP then
+        UNLOCK(p);
+    fi;
+    return type;
 end );
 
 
@@ -409,9 +463,9 @@ end );
 ##
 BIND_GLOBAL( "SupType2", function ( type, filter )
     return NEW_TYPE( TypeOfTypes,
-                     type![1],
+                     type![POS_FAMILY_TYPE],
                      SUB_FLAGS(
-                        type![2],
+                        type![POS_FLAGS_TYPE],
                         FLAGS_FILTER( filter ) ),
                      type![ POS_DATA_TYPE ], type );
 end );
@@ -419,9 +473,9 @@ end );
 
 BIND_GLOBAL( "SupType3", function ( type, filter, data )
     return NEW_TYPE( TypeOfTypes,
-                     type![1],
+                     type![POS_FAMILY_TYPE],
                      SUB_FLAGS(
-                        type![2],
+                        type![POS_FLAGS_TYPE],
                         FLAGS_FILTER( filter ) ),
                      data, type );
 end );
@@ -455,7 +509,7 @@ end );
 ##  </Description>
 ##  </ManSection>
 ##
-BIND_GLOBAL( "FamilyType", K -> K![1] );
+BIND_GLOBAL( "FamilyType", K -> K![POS_FAMILY_TYPE] );
 
 
 #############################################################################
@@ -469,7 +523,7 @@ BIND_GLOBAL( "FamilyType", K -> K![1] );
 ##  </Description>
 ##  </ManSection>
 ##
-BIND_GLOBAL( "FlagsType", K -> K![2] );
+BIND_GLOBAL( "FlagsType", K -> K![POS_FLAGS_TYPE] );
 
 
 #############################################################################
@@ -488,7 +542,11 @@ BIND_GLOBAL( "FlagsType", K -> K![2] );
 BIND_GLOBAL( "DataType", K -> K![ POS_DATA_TYPE ] );
 
 BIND_GLOBAL( "SetDataType", function ( K, data )
-    K![ POS_DATA_TYPE ]:= data;
+    if IsHPCGAP then
+        StrictBindOnce(K, POS_DATA_TYPE, MakeImmutable(data));
+    else
+        K![ POS_DATA_TYPE ]:= data;
+    fi;
 end );
 
 
@@ -624,8 +682,25 @@ BIND_GLOBAL( "IsReadOnlyPositionalObjectRepFlags",
 ##  </ManSection>
 ##
 BIND_GLOBAL( "Objectify", function ( type, obj )
+    local flags;
     if not IsType( type )  then
         Error("<type> must be a type");
+    fi;
+    if IsHPCGAP then
+        flags := FlagsType(type);
+        if IS_LIST( obj )  then
+            if IS_SUBSET_FLAGS(flags, IsAtomicPositionalObjectRepFlags) then
+                FORCE_SWITCH_OBJ( obj, FixedAtomicList(obj) );
+            fi;
+        elif IS_REC( obj )  then
+            if IS_ATOMIC_RECORD(obj) then
+                if IS_SUBSET_FLAGS(flags, IsNonAtomicComponentObjectRepFlags) then
+                    FORCE_SWITCH_OBJ( obj, FromAtomicRecord(obj) );
+                fi;
+            elif not IS_SUBSET_FLAGS(flags, IsNonAtomicComponentObjectRepFlags) then
+                FORCE_SWITCH_OBJ( obj, AtomicRecord(obj) );
+            fi;
+        fi;
     fi;
     if IS_LIST( obj )  then
         SET_TYPE_POSOBJ( obj, type );
@@ -633,7 +708,12 @@ BIND_GLOBAL( "Objectify", function ( type, obj )
         SET_TYPE_COMOBJ( obj, type );
     fi;
     if not IsNoImmediateMethodsObject(obj) then
-      RunImmediateMethods( obj, type![2] );
+      RunImmediateMethods( obj, type![POS_FLAGS_TYPE] );
+    fi;
+    if IsHPCGAP then
+      if IsReadOnlyPositionalObjectRep(obj) then
+        MakeReadOnlySingleObj(obj);
+      fi;
     fi;
     return obj;
 end );
@@ -667,7 +747,7 @@ local type, newtype;
       SET_TYPE_POSOBJ( obj, newtype );
       if not ( IGNORE_IMMEDIATE_METHODS
                or IsNoImmediateMethodsObject(obj) ) then
-        RunImmediateMethods( obj, SUB_FLAGS( newtype![2], type![2] ) );
+        RunImmediateMethods( obj, SUB_FLAGS( newtype![POS_FLAGS_TYPE], type![POS_FLAGS_TYPE] ) );
       fi;
     elif IS_COMOBJ( obj ) then
       type:= TYPE_OBJ( obj );
@@ -675,7 +755,7 @@ local type, newtype;
       SET_TYPE_COMOBJ( obj, newtype );
       if not ( IGNORE_IMMEDIATE_METHODS
                or IsNoImmediateMethodsObject(obj) ) then
-        RunImmediateMethods( obj, SUB_FLAGS( newtype![2], type![2] ) );
+        RunImmediateMethods( obj, SUB_FLAGS( newtype![POS_FLAGS_TYPE], type![POS_FLAGS_TYPE] ) );
       fi;
     elif IS_DATOBJ( obj ) then
       type:= TYPE_OBJ( obj );
@@ -683,7 +763,7 @@ local type, newtype;
       SET_TYPE_DATOBJ( obj, newtype );
       if not ( IGNORE_IMMEDIATE_METHODS
                or IsNoImmediateMethodsObject(obj) ) then
-        RunImmediateMethods( obj, SUB_FLAGS( newtype![2], type![2] ) );
+        RunImmediateMethods( obj, SUB_FLAGS( newtype![POS_FLAGS_TYPE], type![POS_FLAGS_TYPE] ) );
       fi;
     elif IS_PLIST_REP( obj )  then
         SET_FILTER_LIST( obj, filter );

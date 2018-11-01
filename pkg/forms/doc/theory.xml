@@ -4,9 +4,8 @@
                                                                    John Bamberg
                                                                and Jan De Beule
                                                            
-  Copyright (C) 2015, Ghent University
-  Copyright (C) 2015, Vrije Universiteit Brussel
-  Copyright (C) 2015, The University of Western Australia
+  Copyright (C) 2018, Vrije Universiteit Brussel
+  Copyright (C) 2018, The University of Western Australia
 
 This is the chapter of the documentation describing background theory of forms and preliminary examples.
 -->
@@ -25,13 +24,15 @@ A <E>sesquilinear form</E><Index Key="Form" Subkey="sesquilinear">Form</Index>
 on an <M>n</M>-dimensional vector space <M>V</M> over a field <M>F</M>, is a map
 <M>f</M> from <M>V\times V</M> to <M>F</M> which is linear in the first coordinate, but
 semilinear<Index>Semilinear</Index> in the second coordinate; that is, there is a field
-automorphism <Alt Not="HTML"><M>\alpha</M></Alt><Alt Only="HTML">&#945;</Alt>
+automorphism <M>\alpha</M><!--<Alt Not="HTML"><M>\alpha</M></Alt><Alt Only="HTML">&#945;</Alt>-->
 (the <E>companion automorphism</E><Index>Companion
-Automorphism</Index> of <M>f</M>) such that <Alt Not="HTML"><M>f(v,\lambda w)=\lambda^\alpha
-f(v,w)</M></Alt><Alt Only="HTML">f(v,&#955;w)=&#955;&lt;sup>&#945;&lt;/sup>f(v,w)</Alt>
-for all <M>v,w \in V</M> and <Alt Not="HTML"><M>\lambda \in F</M></Alt><Alt
-Only="HTML">&#955; in F</Alt>. If <Alt Not="HTML"><M>\alpha</M></Alt><Alt
-Only="HTML">&#945;</Alt> is the identity, then <M>f</M> is <E>bilinear</E><Index
+Automorphism</Index> of <M>f</M>) such that
+<Alt Only="Text"><Display>f(v,\lambda w)=\lambda^\alpha f(v,w),</Display></Alt>
+<Alt Only="LaTeX"><Display>f(v,\lambda w)=\lambda^\alpha f(v,w),</Display></Alt>
+<Alt Only="HTML MathJax"><Display>f(v,\lambda w)=\lambda^\alpha f(v,w),</Display></Alt>
+<Alt Only="HTML noMathJax"><Display>f(v,&#955;w)=&#955;&lt;sup>&#945;&lt;/sup>f(v,w),</Display></Alt>
+for all <M>v,w \in V</M> and <M>\lambda \in F</M>.
+If <M>\alpha</M> is the identity, then <M>f</M> is <E>bilinear</E><Index
 Key="Form" Subkey="bilinear">Form</Index>.
 <P/>
 A bilinear form is <E>reflexive</E><Index Key="Form"
@@ -49,46 +50,48 @@ bilinear forms.
 <P/>
 For a given sesquilinear form <M>f</M>, the choice of the basis determines
 uniquely an <M>n\times n</M> matrix <M>M</M> such that 
-<Alt Not="HTML"><M>f(v, w) = v M {w^{\alpha}}^T.</M></Alt><Alt Only="HTML">f(v, w) = v M w&lt;sup>&#945;T&lt;/sup>.</Alt>
+<Alt Only="Text"><M>f(v, w) = v M {w^{\alpha}}^T.</M></Alt>
+<Alt Only="LaTeX"><M>f(v, w) = v M {w^{\alpha}}^T.</M></Alt>
+<Alt Only="HTML MathJax"><M>f(v, w) = v M {w^{\alpha}}^T.</M></Alt>
+<Alt Only="HTML noMathJax">f(v, w) = v M w&lt;sup>&#945;T&lt;/sup>.</Alt>
 <P/>
 This matrix is also called the <E>Gram matrix</E> of <M>f</M>.
-Given a sesquilinear form <M>f</M>, we will denote its Gram matrix by <Alt Not="HTML"><M>M_f</M></Alt>
-<Alt Only="HTML">M&lt;sub>f&lt;/sub></Alt>. In
+Given a sesquilinear form <M>f</M>, we will denote its Gram matrix by
+<Alt Only="Text"><M>M_f.</M></Alt><Alt Only="LaTeX"><M>M_f.</M></Alt><Alt Only="HTML MathJax"><M>M_f.</M></Alt>
+<Alt Only="HTML noMathJax">M&lt;sub>f&lt;/sub>.</Alt> In
 <Package>Forms</Package>, sesquilinear forms can be constructed using matrices
 or polynomials, where we always suppose that the basis of the vector space is the
 standard basis (i.e., the rows of the identity matrix).
 <P/>
 One proves easily that a bilinear form <M>f</M> is symmetric if and only if
-<Alt Not="HTML"><M>M_f</M></Alt><Alt Only="HTML">M&lt;sub>f&lt;/sub></Alt> is a
-symmetric matrix, i.e., <Alt Not="HTML"><M>M_f^T=M_f</M></Alt>
-<Alt
-Only="HTML">M&lt;sub>f&lt;/sub>&lt;sup>T&lt;/sup>=M&lt;sub>f&lt;/sub></Alt>,
-and that a bilinear 
-form <M>f</M> is alternating if and only if <Alt Not="HTML"><M>M_f</M></Alt><Alt
-Only="HTML">M&lt;sub>f&lt;/sub></Alt> is a skew symmetric matrix,
-i.e., <Alt Not="HTML"><M>M_f^T=-M_f</M></Alt>
-<Alt
-Only="HTML">M&lt;sub>f&lt;/sub>&lt;sup>T&lt;/sup>=-M&lt;sub>f&lt;/sub></Alt>.
-When the characteristic of the field is two, the 
-condition that <M>f(v,v)=0</M> for all <M>v \in V</M> implies <Alt Not="HTML"><M>M_f^T=M_f</M></Alt>
-<Alt Only="HTML">M&lt;sub>f&lt;/sub>&lt;sup>T&lt;/sup>=M&lt;sub>f&lt;/sub></Alt>
-<B>and</B> <Alt Not="HTML"><M>(M_{ii})=0</M></Alt><Alt
-Only="HTML">(M&lt;sub>ii&lt;/sub>)=0</Alt>
-(denoting the matrix <Alt Not="HTML"><M>M_f = (M_{ij}))</M></Alt><Alt
-Only="HTML">M&lt;sub>f&lt;/sub> = (M&lt;sub>ij&lt;/sub>)</Alt>.
+<Alt Only="Text"><M>M_f</M></Alt><Alt Only="LaTeX"><M>M_f</M></Alt><Alt Only="HTML MathJax"><M>M_f</M></Alt>
+<Alt Only="HTML noMathJax">M&lt;sub>f&lt;/sub></Alt> is a
+symmetric matrix, i.e., <Alt Only="Text"><M>M_f^T=M_f,</M></Alt><Alt Only="LaTeX"><M>M_f^T=M_f,</M></Alt>
+<Alt Only="HTML MathJax"><M>M_f^T=M_f,</M></Alt><Alt Only="HTML noMathJax">M&lt;sub>f&lt;/sub>&lt;sup>T&lt;/sup>=M&lt;sub>f&lt;/sub>,</Alt>
+and that a bilinear form <M>f</M> is alternating if and only if <Alt Only="Text"><M>M_f</M></Alt>
+<Alt Only="LaTeX"><M>M_f</M></Alt><Alt Only="HTML MathJax"><M>M_f</M></Alt><Alt Only="HTML noMathJax">M&lt;sub>f&lt;/sub></Alt>
+is a skew symmetric matrix, i.e., <Alt Only="Text"><M>M_f^T=-M_f</M></Alt><Alt Only="LaTeX"><M>M_f^T=-M_f</M></Alt>
+<Alt Only="HTML MathJax"><M>M_f^T=-M_f</M></Alt><Alt Only="HTML noMathJax">M&lt;sub>f&lt;/sub>&lt;sup>T&lt;/sup>=-M&lt;sub>f&lt;/sub></Alt>.
+When the characteristic of the field is two, the condition that <M>f(v,v)=0</M> for all <M>v \in V</M> implies
+<Alt Only="Text"><M>M_f^T=M_f</M></Alt><Alt Only="LaTeX"><M>M_f^T=M_f</M></Alt><Alt Only="HTML MathJax"><M>M_f^T=M_f</M></Alt>
+<Alt Only="HTML noMathJax">M&lt;sub>f&lt;/sub>&lt;sup>T&lt;/sup>=M&lt;sub>f&lt;/sub></Alt>
+<B>and</B> <Alt Only="Text"><M>(M_{ii})=0</M></Alt><Alt Only="LaTeX"><M>(M_{ii})=0</M></Alt>
+<Alt Only="HTML MathJax"><M>(M_{ii})=0</M></Alt><Alt Only="HTML noMathJax">(M&lt;sub>ii&lt;/sub>)=0</Alt> for
+all <M>i</M> (and where the matrix <Alt Only="Text"><M>M_f = (M_{ij})</M></Alt>
+<Alt Only="LaTeX"><M>M_f = (M_{ij})</M></Alt><Alt Only="HTML MathJax"><M>M_f = (M_{ij})</M></Alt>
+<Alt Only="HTML noMathJax">M&lt;sub>f&lt;/sub> = (M&lt;sub>ij&lt;/sub>)</Alt>).
 Since any skew symmetric odd dimensional matrix is singular, it follows that an alternating
 form of an odd dimensional vector space is degenerate.
 <P/>
 A sesquilinear form <M>f</M> is <E>hermitian</E><Index Key="Form"
 Subkey="hermitian">Form</Index> (n.b., <E>conjugate-symmetric</E> in <Cite Key="Atlas"/>) 
-if <Alt Not="HTML"><M>f(v,w)=f(w,v)^\alpha</M></Alt>
-<Alt Only="HTML">f(v,w)=f(w,v)&lt;sup>&#945;&lt;/sup></Alt> 
-holds for all vectors <Alt Not="HTML"><M>v,w</M></Alt>
-<Alt Only="HTML">v,w&lt;sup>&#945;&lt;/sup></Alt>
-and <Alt Not="HTML"><M>\alpha</M></Alt><Alt Only="HTML">&#945;</Alt>
-has order 2. Again, it can be easily proved that a sesquilinear
-form <M>f</M> is hermitian if and only if <Alt Not="HTML"><M>m_f^T = m_f^{\alpha}</M></Alt>
-<Alt Only="HTML">m&lt;sub>f&lt;/sub>&lt;sup>T&lt;/sup>=m&lt;sub>f&lt;/sub>&lt;sup>&#945;&lt;/sup></Alt>
+if <Alt Only="Text"><M>f(v,w)=f(w,v)^\alpha</M></Alt><Alt Only="LaTeX"><M>f(v,w)=f(w,v)^\alpha</M></Alt>
+<Alt Only="HTML MathJax"><M>f(v,w)=f(w,v)^\alpha</M></Alt><Alt Only="HTML noMathJax">f(v,w)=f(w,v)&lt;sup>&#945;&lt;/sup></Alt>
+holds for all vectors <M>v,w</M>, with <M>\alpha</M> an involutory field automorphism only dependent on <M>f</M>.
+Again, it can be easily proved that a sesquilinear
+form <M>f</M> is hermitian if and only if <Alt Only="Text"><M>M_f^T = M_f^{\alpha}</M></Alt>
+<Alt Only="LaTeX"><M>M_f^T = M_f^{\alpha}</M></Alt><Alt Only="HTML MathJax"><M>M_f^T = M_f^{\alpha}</M></Alt>
+<Alt Only="HTML noMathJax">M&lt;sub>f&lt;/sub>&lt;sup>T&lt;/sup>=M&lt;sub>f&lt;/sub>&lt;sup>&#945;&lt;/sup></Alt>
 (i.e., a hermitian matix). It is proved (see Chapter 7 of <Cite Key="Taylor"/>)
 that hermitian forms are the only reflexive
 sesquilinear forms that are not bilinear. Hence, in general, all reflexive
@@ -108,21 +111,25 @@ Given a sesquilinear form <M>f</M>, two vectors <M>v</M> and <M>w</M> are
 symmetric relation. A vector <M>v</M> is called <E>isotropic</E><Index>isotropic</Index> if <M>f(v,v)=0</M>.
 The <E>radical</E><Index>Radical</Index> of <M>f</M> (n.b., <E>kernel</E> in <Cite Key="Atlas"/>) 
 is the subspace consisting of vectors which are orthogonal to every vector. That is,
-<Alt Not="HTML"><Display>Rad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in
-V\},</Display></Alt><Alt Only="HTML">&lt;center>Rad(f) = {v &#8712; V | f(v,w) = 0
-for all w &#8712; V},&lt;/center></Alt> and we say that <M>f</M> is
+<Alt Only="Text"><Display>Rad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\},</Display></Alt>
+<Alt Only="LaTeX"><Display>&rad;(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\},</Display></Alt>
+<Alt Only="HTML MathJax"><Display>&rad;(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\},</Display></Alt>
+<Alt Only="HTML noMathJax">&lt;center>Rad(f) = {v &#8712; V | f(v,w) = 0 for all w &#8712; V},&lt;/center></Alt>
+and we say that <M>f</M> is
 <E>non-degenerate</E><Index Key="Form" Subkey="sesquilinear">Non-degenerate</Index> if
 its radical is trivial (and <E>degenerate</E> otherwise).
 <P/>Given a subspace <M>W</M>, we denote the 
 set of vectors of <M>V</M> orthogonal with all vectors of <M>W</M> by
-<Alt Not="HTML"><M>W^\perp</M></Alt><Alt
-Only="HTML">W&lt;sup>&#8869;&lt;/sup></Alt>.
+<Alt Only="Text"><M>W^\perp</M></Alt><Alt Only="LaTeX"><M>W^\perp</M></Alt><Alt Only="HTML MathJax"><M>W^\perp</M></Alt>
+<Alt Only="HTML noMathJax">W&lt;sup>&#8869;&lt;/sup></Alt>.
 We call a subspace <M>W</M> <E>totally isotropic</E><Index Key="Form"
 Subkey="sesquilinear">Totally Isotropic</Index> with respect to <M>f</M> if
-<M>W</M> is contained in <Alt Not="HTML"><M>W^\perp</M></Alt><Alt
-Only="HTML">W&lt;sup>&#8869;&lt;/sup></Alt>, i.e.
-<Alt Not="HTML"><Display>f(v,w) = 0,\, \mbox{\rm for all } v,w \in W.</Display></Alt><Alt
-Only="HTML">&lt;center>f(v,w) = 0 for all v,w &#8712; W.&lt;/center></Alt>
+<M>W</M> is contained in <Alt Only="Text"><M>W^\perp</M></Alt><Alt Only="LaTeX"><M>W^\perp</M></Alt><Alt Only="HTML MathJax"><M>W^\perp</M></Alt>
+<Alt Only="HTML">W&lt;sup>&#8869;&lt;/sup></Alt>, i.e.
+<Alt Only="Text"><Display>f(v,w) = 0,\, \forall v,w \in W.</Display></Alt>
+<Alt Only="LaTeX"><Display>f(v,w) = 0,\, \forall v,w \in W.</Display></Alt>
+<Alt Only="HTML MathJax"><Display>f(v,w) = 0,\, \forall v,w \in W.</Display></Alt>
+<Alt Only="HTML noMathJax">&lt;center>f(v,w) = 0 for all v,w &#8712; W.&lt;/center></Alt>
 <P/>Suppose that <M>f</M> is a non-degenerate sesquilinear form. The <E>Witt
 index</E><Index Key="Form" Subkey="sesquilinear">Witt Index</Index> of <M>f</M>
 is the maximum dimension of a totally isotropic subspace with respect to
@@ -156,13 +163,13 @@ of the <B>induced non-degenerate form</B> <M>g</M> when <M>f</M> is degenerate.
 <Caption>Posibilites for an orthogonal form <M>f</M> on a vector space <M>V</M></Caption>
 <HorLine/>
 <Row>
-  <Item>Hyperbolic</Item><Item>Orthogonal of + type</Item><Item><M>V/Rad(f)</M> has even dimension, <M>g</M> has maximal Witt index</Item>
+  <Item>Hyperbolic</Item><Item>Orthogonal of + type</Item><Item>&vmodradf; has even dimension, <M>g</M> has maximal Witt index</Item>
 </Row>
 <Row>
-  <Item>Elliptic</Item><Item>Orthogonal of - type</Item><Item><M>V/Rad(f)</M> has even dimension, <M>g</M> has non-maximal Witt index</Item>
+  <Item>Elliptic</Item><Item>Orthogonal of - type</Item><Item>&vmodradf; has even dimension, <M>g</M> has non-maximal Witt index</Item>
 </Row>
 <Row>
-  <Item>Parabolic</Item><Item>Orthogonal of o type</Item><Item><M>V/Rad(f)</M> has odd dimension</Item>
+  <Item>Parabolic</Item><Item>Orthogonal of o type</Item><Item>&vmodradf; has odd dimension</Item>
 </Row>
 <HorLine/>
 </Table>
@@ -302,9 +309,10 @@ gap> WittIndex(form);
 A <E>quadratic form</E><Index Key="Form" Subkey="quadratic">Quadratic Form</Index>
 on an <M>n</M>-dimensional vector space <M>V</M> over a field <M>F</M>, is a map
 <M>Q</M> from <M>V</M> to <M>F</M> satisfying the following two conditions:
-<Alt Not="HTML"><Display>Q(\lambda v) = \lambda^2 Q(v),\, \forall \lambda \in F, \forall v \in
-V,</Display></Alt><Alt Only="HTML"><Display>Q(&#955; v) = &#955;&lt;sup>2&lt;/sup>
-Q(v), for all &#955; in F, for all v in V,</Display></Alt>
+<Alt Only="Text"><Display>Q(\lambda v) = \lambda^2 Q(v),\, \forall \lambda \in F, \forall v \in V,</Display></Alt>
+<Alt Only="LaTeX"><Display>Q(\lambda v) = \lambda^2 Q(v),\, \forall \lambda \in F, \forall v \in V,</Display></Alt>
+<Alt Only="HTML MathJax"><Display>Q(\lambda v) = \lambda^2 Q(v),\, \forall \lambda \in F, \forall v \in V,</Display></Alt>
+<Alt Only="HTML noMathJax"><Display>Q(&#955; v) = &#955;&lt;sup>2&lt;/sup> Q(v), for all &#955; in F, for all v in V,</Display></Alt>
 and, the map <M>f</M> defined from <M>V\times V</M> to <M>F</M> as follows,
 <Display>f(v,w) := Q(v+w) - Q(v) - Q(w),</Display>
 is a bilinear form on <M>V</M>. From this definition it follows that <M>f(v,v) =
@@ -325,16 +333,18 @@ form. Chosing a basis of the vector space <M>V</M>, it is clear that an <M>n
 \times n</M> matrix determines the quadratic form completely. In
 <Package>Forms</Package>, the <E>Gram matrix</E> of a quadratic form is always an upper
 triangle matrix <M>M</M>, such that
-<Alt Not="HTML"><Display>Q(v) = vMv^T,</Display></Alt><Alt
-Only="HTML">&lt;center>Q(v)=vMv&lt;sup>T&lt;/sup>,&lt;/center></Alt>
+<Alt Only="Text"><Display>Q(v) = vMv^T,</Display></Alt><Alt Only="LaTeX"><Display>Q(v) = vMv^T,</Display></Alt>
+<Alt Only="HTML MathJax"><Display>Q(v) = vMv^T,</Display></Alt><Alt Only="HTML noMathJax">&lt;center>Q(v)=vMv&lt;sup>T&lt;/sup>,&lt;/center></Alt>
 where the basis of <M>V</M> is the standard basis. Although the Gram matrix
 stored with the quadratic form is always an upper triangle matrix, the user is
 allowed to use any matrix to define the quadratic form, since any matrix
-<M>M</M> defines a quadratic form <Alt Not="HTML"><M>Q(v) := vMv^T</M></Alt><Alt
-Only="HTML">Q(v):=vMv&lt;sup>T&lt;/sup></Alt>. During the construction,
+<M>M</M> defines a quadratic form <Alt Only="Text"><M>Q(v) := vMv^T</M></Alt>
+<Alt Only="LaTeX"><M>Q(v) := vMv^T</M></Alt><Alt Only="HTML MathJax"><M>Q(v) := vMv^T</M></Alt>
+<Alt Only="HTML noMathJax">Q(v):=vMv&lt;sup>T&lt;/sup></Alt>. During the construction,
 an appopriate upper triangle matrix is computed and stored as the Gram matrix. 
-So the Gram matrix of the associated bilinear form is <Alt
-Not="HTML"><M>M+M^T</M></Alt><Alt Only="HTML">M+M&lt;sup>T&lt;/sup></Alt>.
+So the Gram matrix of the associated bilinear form is <Alt Only="Text"><M>M+M^T</M>.</Alt>
+<Alt Only="LaTeX"><M>M+M^T</M>.</Alt><Alt Only="HTML MathJax"><M>M+M^T</M>.</Alt>
+<Alt Only="HTML noMathJax">M+M&lt;sup>T&lt;/sup>.</Alt>
 <P/>
 The associated bilinear form could be used to define the notions ``isotropic'',
 ``totally isotropic'' and ``non-degenerate'', however, under these restrictions
@@ -356,8 +366,10 @@ if and only if they are orthogonal with respect to the associated bilinear form
 <M>f</M>. The <E>radical</E> of the quadratic form <M>Q</M>, is the intersection
 of the set of all singular vectors with relation to <M>Q</M> and the radical of
 the associated bilinear form <M>f</M>, i.e.
-<Alt Not="HTML"><Display>Rad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.</Display></Alt>
-<Alt Only="HTML">&lt;center>Rad(Q) = {v &#8712; V | Q(v) = 0 and v &#8712; Rad(f)}.&lt;/center></Alt>
+<Alt Only="Text"><Display>Rad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.</Display></Alt>
+<Alt Only="LaTeX"><Display>&rad;(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in &rad;(f)\}.</Display></Alt>
+<Alt Only="HTML MathJax"><Display>&rad;(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in &rad;(f)\}.</Display></Alt>
+<Alt Only="HTML noMathJax">&lt;center>Rad(Q) = {v &#8712; V | Q(v) = 0 and v &#8712; Rad(f)}.&lt;/center></Alt>
 We call a quadratic form <M>Q</M> <E>non-singular</E> if and only if the radical
 contains only the zero vector, and <E>singular</E> otherwise.
 <P/>
@@ -394,13 +406,13 @@ of the <B>induced non-singular form</B> <M>Q</M> when <M>Q'</M> is singular.
 <Caption>Posibilites for a quadratic form <M>Q</M> on a vector space <M>V</M></Caption>
 <HorLine/>
 <Row>
-  <Item>Hyperbolic</Item><Item>Orthogonal of + type</Item><Item><M>V/Rad(Q)</M> has even dimension, <M>Q'</M> has maximal Witt index</Item>
+  <Item>Hyperbolic</Item><Item>Orthogonal of + type</Item><Item>&vmodradq; has even dimension, <M>Q'</M> has maximal Witt index</Item>
 </Row>
 <Row>
-  <Item>Elliptic</Item><Item>Orthogonal of - type</Item><Item><M>V/Rad(Q)</M> has even dimension, <M>Q'</M> has non-maximal Witt index</Item>
+  <Item>Elliptic</Item><Item>Orthogonal of - type</Item><Item>&vmodradq; has even dimension, <M>Q'</M> has non-maximal Witt index</Item>
 </Row>
 <Row>
-  <Item>Parabolic</Item><Item>Orthogonal of o type</Item><Item><M>V/Rad(Q)</M> has odd dimension</Item>
+  <Item>Parabolic</Item><Item>Orthogonal of o type</Item><Item>&vmodradq; has odd dimension</Item>
 </Row>
 <HorLine/>
 </Table>

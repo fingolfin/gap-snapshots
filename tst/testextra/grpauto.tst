@@ -6,9 +6,9 @@
 ##
 #Y  Copyright (C)  2016
 ##
-## Warning: Later tests need more than the default memory allocation
+##  Warning: Later tests need more than the default memory allocation
 
-
+#
 gap> START_TEST("grpauto.tst");
 
 #
@@ -92,6 +92,18 @@ gap> G:=Group((1,3,8,21,37,43,36,35)(2,6,15,30,41,29,19,4)(5,7,18,34,46,
 > (49,50,52,51,53));;
 gap> Size(AutomorphismGroup(G)); 
 2880000
+
+#
+# hard-iso4
+#
+gap> G:=PcGroupCode(
+> 741231213963541373679312045151639276850536621925972119311,11664);;
+gap> H:=PcGroupCode(
+> 888658311993669104086576972570546890038187728096037768975,11664);;
+gap> IsomorphismGroups(G,H);
+fail
+gap> IsomorphismGroups(G,PcGroupCode(CodePcGroup(G),Size(G)))=fail;
+false
 
 # permutation example
 gap> gp1:=Group(

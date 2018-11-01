@@ -13,17 +13,18 @@
 **  records and the elements for the other packages in the GAP kernel.
 */
 
-#include <src/records.h>
+#include "records.h"
 
-#include <src/bool.h>
-#include <src/gap.h>
-#include <src/gaputils.h>
-#include <src/opers.h>
-#include <src/plist.h>
-#include <src/stringobj.h>
+#include "bool.h"
+#include "error.h"
+#include "gaputils.h"
+#include "modules.h"
+#include "opers.h"
+#include "plist.h"
+#include "stringobj.h"
 
 #ifdef HPCGAP
-#include <src/hpc/thread.h>
+#include "hpc/thread.h"
 #include <pthread.h>
 #endif
 
@@ -32,12 +33,7 @@ static Obj HashRNam;
 
 static Obj NamesRNam;
 
-inline const Char *NAME_RNAM(UInt rnam)
-{
-    return CSTR_STRING(ELM_PLIST(NamesRNam, rnam));
-}
-
-inline extern Obj NAME_OBJ_RNAM(UInt rnam)
+inline extern Obj NAME_RNAM(UInt rnam)
 {
     return ELM_PLIST(NamesRNam, rnam);
 }
@@ -100,9 +96,9 @@ UInt            RNamName (
     UInt                i;              /* loop variable                   */
     UInt                sizeRNam;
 
-    if (strlen(name) >= 1023) {
+    if (strlen(name) > 1023) {
         // Note: We can't pass 'name' here, as it might get moved by garbage collection
-        ErrorQuit("Record names must consist of less than 1023 characters", 0, 0);
+        ErrorQuit("Record names must consist of at most 1023 characters", 0, 0);
         return 0;
     }
 
@@ -117,7 +113,7 @@ UInt            RNamName (
     sizeRNam = LEN_PLIST(HashRNam);
     pos = (hash % sizeRNam) + 1;
     while ( (rnam = ELM_PLIST( HashRNam, pos )) != 0
-         && strncmp( NAME_RNAM( INT_INTOBJ(rnam) ), name, 1023 ) ) {
+         && strncmp( CSTR_STRING( NAME_RNAM( INT_INTOBJ(rnam) ) ), name, 1023 ) ) {
         pos = (pos % sizeRNam) + 1;
     }
     if (rnam != 0) {
@@ -134,7 +130,7 @@ UInt            RNamName (
       sizeRNam = LEN_PLIST(HashRNam);
       pos = (hash % sizeRNam) + 1;
       while ( (rnam = ELM_PLIST( HashRNam, pos )) != 0
-           && strncmp( NAME_RNAM( INT_INTOBJ(rnam) ), name, 1023 ) ) {
+           && strncmp( CSTR_STRING( NAME_RNAM( INT_INTOBJ(rnam) ) ), name, 1023 ) ) {
           pos = (pos % sizeRNam) + 1;
       }
     }
@@ -168,7 +164,7 @@ UInt            RNamName (
         for ( i = 1; i <= (sizeRNam-1)/2; i++ ) {
             rnam2 = ELM_PLIST( table, i );
             if ( rnam2 == 0 )  continue;
-            pos = HashString( NAME_RNAM( INT_INTOBJ(rnam2) ) );
+            pos = HashString( CSTR_STRING( NAME_RNAM( INT_INTOBJ(rnam2) ) ) );
             pos = (pos % sizeRNam) + 1;
             while ( ELM_PLIST( HashRNam, pos ) != 0 ) {
                 pos = (pos % sizeRNam) + 1;
@@ -293,7 +289,7 @@ Obj             FuncNameRNam (
             (Int)TNAM_OBJ(rnam), 0L,
             "you can replace <rnam> via 'return <rnam>;'" );
     }
-    oname = NAME_OBJ_RNAM( INT_INTOBJ(rnam) );
+    oname = NAME_RNAM( INT_INTOBJ(rnam) );
     name = CopyToStringRep(oname);
     return name;
 }
@@ -418,7 +414,7 @@ Int             IsbRecError (
     UInt                rnam )
 {
     rec = ErrorReturnObj(
-        "IsBound: <rec> must be a record (not a %s)",
+        "Record IsBound: <rec> must be a record (not a %s)",
         (Int)TNAM_OBJ(rec), 0L,
         "you can replace <rec> via 'return <rec>;'" );
     return ISB_REC( rec, rnam );
@@ -513,7 +509,7 @@ void            UnbRecError (
     UInt                rnam )
 {
     rec = ErrorReturnObj(
-        "Unbind: <rec> must be a record (not a %s)",
+        "Record Unbind: <rec> must be a record (not a %s)",
         (Int)TNAM_OBJ(rec), 0L,
         "you can replace <rec> via 'return <rec>;'" );
     UNB_REC( rec, rnam );
@@ -541,7 +537,7 @@ UInt            iscomplete_rnam (
     const UInt          countRNam = LEN_PLIST(NamesRNam);
 
     for ( i = 1; i <= countRNam; i++ ) {
-        curr = NAME_RNAM( i );
+        curr = CSTR_STRING( NAME_RNAM( i ) );
         for ( k = 0; name[k] != 0 && curr[k] == name[k]; k++ ) ;
         if ( k == len && curr[k] == '\0' )  return 1;
     }
@@ -559,7 +555,7 @@ UInt            completion_rnam (
 
     next = 0;
     for ( i = 1; i <= countRNam; i++ ) {
-        curr = NAME_RNAM( i );
+        curr = CSTR_STRING( NAME_RNAM( i ) );
         for ( k = 0; name[k] != 0 && curr[k] == name[k]; k++ ) ;
         if ( k < len || curr[k] <= name[k] )  continue;
         if ( next != 0 ) {
@@ -586,9 +582,9 @@ Obj FuncALL_RNAMES (
     Obj                 name;
     const UInt          countRNam = LEN_PLIST(NamesRNam);
 
-    copy = NEW_PLIST( T_PLIST+IMMUTABLE, countRNam );
+    copy = NEW_PLIST_IMM( T_PLIST, countRNam );
     for ( i = 1;  i <= countRNam;  i++ ) {
-        name = NAME_OBJ_RNAM( i );
+        name = NAME_RNAM( i );
         s = CopyToStringRep(name);
         SET_ELM_PLIST( copy, i, s );
     }
@@ -598,7 +594,7 @@ Obj FuncALL_RNAMES (
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
@@ -738,13 +734,16 @@ static Int InitLibrary (
 {
     /* make the list of names of record names                              */
     NamesRNam = NEW_PLIST( T_PLIST, 0 );
-    SET_LEN_PLIST( NamesRNam, 0 );
+#ifdef HPCGAP
     MakeBagPublic(NamesRNam);
+#endif
 
     /* make the hash list of record names                                  */
     HashRNam = NEW_PLIST( T_PLIST, 14033 );
     SET_LEN_PLIST( HashRNam, 14033 );
+#ifdef HPCGAP
     MakeBagPublic(HashRNam);
+#endif
 
     /* init filters and functions                                          */
     InitGVarFiltsFromTable( GVarFilts );

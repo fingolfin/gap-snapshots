@@ -168,6 +168,9 @@ InstallOtherMethod(ZOp,
         [IsPosInt, IsPosInt],
         function(p,d)
     local   q;
+    if not IsPrimeInt(p) then
+        Error("Z: <p> must be a prime");
+    fi;
     q := p^d;
     if q <= MAXSIZE_GF_INTERNAL or d =1 then
         return Z(q);
@@ -185,7 +188,9 @@ InstallMethod(ZOp,
     p := SmallestRootInt(q);
     d := LogInt(q,p);
     Assert(1, q=p^d);
-    Assert(2, IsProbablyPrimeInt(p));
+    if not IsPrimeInt(p) then
+        Error("Z: <q> must be a positive prime power");
+    fi;
     if d > 1 then
         return FFECONWAY.ZNC(p,d);
     fi;
@@ -546,7 +551,7 @@ FFECONWAY.WriteOverSmallestField := function(x)
         return x![3];
     fi;
     d := x![2];
-    f := Collected(FactorsInt(d));
+    f := Collected(Factors(Integers,d));
     for fac in f do
         l := fac[1];
         d1 := d/l;
@@ -1385,7 +1390,7 @@ FFECONWAY.DoLogFFE :=
     fi;
     
     # use rho method
-    f:=FactorsInt(q-1:quiet); # Quick factorization, don't stop if its too hard
+    f:=Factors(Integers,q-1:quiet); # Quick factorization, don't stop if its too hard
      return FFECONWAY.DoLogFFERho(y,z,q-1,f,q);
  end;
  
@@ -1422,7 +1427,7 @@ InstallMethod( Order,
     p := Characteristic(z);
     d := DegreeFFE(z);
     ord := p^d-1;
-    facs := Collected(FactorsInt(ord));
+    facs := Collected(Factors(Integers,ord));
     for f in facs do
         for i in [1..f[2]] do
             o := ord/f[1];
@@ -1562,9 +1567,10 @@ end);
 #M  Random -- use Rowspace
 ##
 
-InstallMethod(Random, 
-        [IsField and IsFFECollection and IsFinite],
-        function(f)
+InstallMethodWithRandomSource( Random,
+        "for a random source and a large non-prime finite field",
+        [IsRandomSource, IsField and IsFFECollection and IsFinite],
+        function(rs, f)
     local   d,  p,  v,  fam;
     if Size(f) <= MAXSIZE_GF_INTERNAL then
         TryNextMethod();
@@ -1574,7 +1580,7 @@ InstallMethod(Random,
     fi;
     d := DegreeOverPrimeField(f);
     p := Characteristic(f);
-    v := Random(RowSpace(GF(p,1),d));
+    v := Random(rs, RowSpace(GF(p,1),d));
     fam := FFEFamily(Characteristic(f));
     return Objectify(fam!.ConwayFldEltDefaultType, [v,d,fail]);
 end);

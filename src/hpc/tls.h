@@ -1,11 +1,13 @@
 #ifndef GAP_TLS_H
 #define GAP_TLS_H
 
-#include <src/system.h>
+#include "system.h"
 
-#ifdef HPCGAP
+#if !defined(HPCGAP)
+#error This header is only meant to be used with HPC-GAP
+#endif
 
-#include <src/hpc/tlsconfig.h>
+#include "hpc/tlsconfig.h"
 
 typedef struct ThreadLocalStorage
 {
@@ -70,7 +72,5 @@ static ALWAYS_INLINE ThreadLocalStorage *GetTLS(void)
 #define TLS(x) GetTLS()->x
 
 void InitializeTLS(void);
-
-#endif // HPCGAP
 
 #endif // GAP_TLS_H

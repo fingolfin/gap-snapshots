@@ -3,32 +3,29 @@
   
   <Subtitle>A &GAP; toolbox for simplicial complexes</Subtitle>
   
-  <Version>Version 2.1.8</Version>
+  <Version>Version 2.1.9</Version>
 
   <Author>
   	Felix Effenberger
-    <Email>felix.effenberger@mis.mpg.de</Email>
-    <Address>
-  	Max Planck Institute for Mathematics in the Sciences<Br/>
-	Inselstr. 22<Br/>
-	D-04103 Leipzig, Germany
-    </Address>
+    <Email>exilef@gmail.com</Email>
 
   </Author>
 
   <Author>
   	Jonathan Spreer
-    <Email>j.spreer@uq.edu.au</Email>
+    <Email>jonathan.spreer@fu-berlin.de</Email>
     <Address>
-  	University of Queensland<Br/>
+        Discrete Geometry Group<Br/>
+        Mathematical Institute<Br/>
+  	Freie Universitaet Berlin<Br/>
 	School of Mathematics and Physics<Br/>
-	Brisbane QLD 4072 Australia
+	Arnimallee 2, 14195 Berlin, Germany
     </Address>
 
   </Author>
 
   
-  <Date>February 2018
+  <Date>October 2018
 	<Alt Only="LaTeX"><![CDATA[
 	\begin{center}
 	\vspace*{1cm}

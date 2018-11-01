@@ -35,35 +35,23 @@
 ##  An InfoClass is represented as a positional object with the following
 ##  members:
 ##
-##  1 : Current level (A positive integer)
-##  2 : ClassName     (String)
-##  3 : Handler       (Optional, handler for InfoDoPrint)
-##  4 : Output        (Optional, output stream)
-##  5 : ClassNum      (An integer identifying the class)
-##
-##  In HPC-GAP, positional objects cannot change length, so we put a
-##  a non-optional member last, so the list of arguments always has
-##  fixed length.
+##  INFODATA_NUM            an integer identifying the class
+##  INFODATA_CURRENTLEVEL   a positive integer
+##  INFODATA_CLASSNAME      a string
+##  INFODATA_HANDLER        optional, handler function taking three arguments
+##  INFODATA_OUTPUT         optional, output stream
 
 DeclareRepresentation("IsInfoClassListRep", IsAtomicPositionalObjectRep,[]);
-
-# Define constants for the positions in InfoClassListRep
-BIND_CONSTANT("INFODATA_CURRENTLEVEL", 1);
-BIND_CONSTANT("INFODATA_CLASSNAME", 2);
-BIND_CONSTANT("INFODATA_HANDLER", 3);
-BIND_CONSTANT("INFODATA_OUTPUT", 4);
-BIND_CONSTANT("INFODATA_NUM", 5);
 
 # A list of all created InfoClassListReps
 INFO_CLASSES := [];
 
-# This variable contains the level and (first) selector of the most recent
-# successful Info statement
+# InfoData is unused, but we keep it for now, to avoid warnings in GAPDoc.
+# TODO: remove InfoData
 InfoData := rec();
 
 if IsHPCGAP then
     ShareInternalObj(INFO_CLASSES);
-    MakeThreadLocal("InfoData");
 fi;
 
 InstallGlobalFunction( "SetDefaultInfoOutput", function( out )
@@ -129,8 +117,13 @@ InstallMethod(NewInfoClass, true, [IsString], 0,
         fi;
         
         pos := Length(INFO_CLASSES) + 1;
-        ic := Objectify(NewType(InfoClassFamily,IsInfoClassListRep),
-                  [0, name, , ,pos]);
+        # make sure to always allocate a length big enough, even for the optional
+        # members, because in HPC-GAP, positional objects cannot be resized
+        ic := FixedAtomicList(5);
+        ic[INFODATA_CURRENTLEVEL] := 0;
+        ic[INFODATA_CLASSNAME] := Immutable(name);
+        ic[INFODATA_NUM] := pos;
+        ic := Objectify(NewType(InfoClassFamily,IsInfoClassListRep), ic);
         INFO_CLASSES[pos] := ic;
         return ic;
     od;
@@ -223,21 +216,21 @@ end);
 
 InstallOtherMethod(\+,
     "for info class and info selector",
-    true, [IsInfoClass, IsInfoSelector], 0,
+    true, [IsInfoClass, IsInfoSelector], 20,
         function(ic,is)
     return Union(is,[ic]);
 end);
 
 InstallOtherMethod(\+,
     "for info selector and info class",
-    true, [IsInfoSelector, IsInfoClass], 0,
+    true, [IsInfoSelector, IsInfoClass], 20,
         function(is,ic)
     return Union(is,[ic]);
 end);
 
 InstallOtherMethod(\+,
     "for two info selectors",
-    IsIdenticalObj, [IsInfoSelector, IsInfoSelector], 0,
+    IsIdenticalObj, [IsInfoSelector, IsInfoSelector], 20,
         function(is1,is2)
     return Union(is1,is2);
 end);
@@ -317,56 +310,8 @@ BIND_GLOBAL( "InfoDecision", function(selectors, level)
         Error(usage);
     fi;
 
-    if ret then
-        # store the class and level
-        if IsInfoClass(selectors) then
-            InfoData.LastClass := selectors;
-        else
-            InfoData.LastClass := selectors[1];
-        fi;
-        InfoData.LastLevel := level;
-    fi;
-
     return ret;
 end );
-
-#############################################################################
-##
-#F  InfoDoPrint( arglist )  . . . . . . . . . . . . . . Print an info message
-##
-##  This is called by the kernel to actually produce the message
-##
-
-BIND_GLOBAL( "InfoDoPrint", function(arglist)
-    local fun;
-    if IsBound(InfoData.LastClass![INFODATA_HANDLER])  then
-      fun := InfoData.LastClass![INFODATA_HANDLER];
-    else
-      fun := DefaultInfoHandler;
-    fi;
-    fun(InfoData.LastClass, InfoData.LastLevel, arglist);
-end );
-
-
-##
-## Former GAP Info function, now replaced by the keyword Info.
-##
-###Info := function(arg)
-##    local usage;
-##   
-##    # Check and unpack the arguments
-##   usage := "Usage : Info(<selectors>, <level>, <data>...)";
-##    if Length(arg) < 2 then
-##        Error(usage);
-##    fi;
-##    if InfoDecision(arg[1], arg[2]) then
-##        InfoDoPrint(arg{[3..Length(arg)]});
-##    fi;
-##end;
-
-
-#N  Probably this file should also define InfoClasses for a range of purposes
-#N  which cut across files
 
 
 #############################################################################
@@ -439,20 +384,6 @@ fi;
 ##
 DeclareInfoClass( "InfoPerformance" );
 SetInfoLevel( InfoPerformance, 1 );
-
-#############################################################################
-##
-#V  InfoTeaching
-##
-##  This info class has a default level of 1.
-##  Warnings can be switched off by setting its level to zero
-##
-if not IsBound(InfoTeaching) then
-  DeclareInfoClass( "InfoTeaching" );
-  if not TEACHING_MODE then
-    SetInfoLevel( InfoTeaching, 1 );
-  fi;
-fi;
 
 LAST_COMPLETIONBAR_STRING:=fail;
 LAST_COMPLETIONBAR_VAL:=0;

@@ -44,7 +44,11 @@
 
 <h4>3.1 <span class="Heading">Sesquilinear forms</span></h4>
 
-<p>A <em>sesquilinear form</em> on an <span class="SimpleMath">n</span>-dimensional vector space <span class="SimpleMath">V</span> over a field <span class="SimpleMath">F</span>, is a map <span class="SimpleMath">f</span> from <span class="SimpleMath">V× V</span> to <span class="SimpleMath">F</span> which is linear in the first coordinate, but semilinear in the second coordinate; that is, there is a field automorphism α (the <em>companion automorphism</em> of <span class="SimpleMath">f</span>) such that f(v,λw)=λ<sup>α</sup>f(v,w) for all <span class="SimpleMath">v,w ∈ V</span> and λ in F. If α is the identity, then <span class="SimpleMath">f</span> is <em>bilinear</em>.</p>
+<p>A <em>sesquilinear form</em> on an <span class="SimpleMath">n</span>-dimensional vector space <span class="SimpleMath">V</span> over a field <span class="SimpleMath">F</span>, is a map <span class="SimpleMath">f</span> from <span class="SimpleMath">V× V</span> to <span class="SimpleMath">F</span> which is linear in the first coordinate, but semilinear in the second coordinate; that is, there is a field automorphism <span class="SimpleMath">α</span> (the <em>companion automorphism</em> of <span class="SimpleMath">f</span>) such that</p>
+
+<p class="pcenter">f(v,λw)=λ<sup>α</sup>f(v,w),</p>
+
+<p>for all <span class="SimpleMath">v,w ∈ V</span> and <span class="SimpleMath">λ ∈ F</span>. If <span class="SimpleMath">α</span> is the identity, then <span class="SimpleMath">f</span> is <em>bilinear</em>.</p>
 
 <p>A bilinear form is <em>reflexive</em> if <span class="SimpleMath">f(v,w)=0 ⇒ f(w,v)=0</span> for all <span class="SimpleMath">v,w ∈ V</span>. A bilinear form is <em>symmetric</em> if <span class="SimpleMath">f(v,w)=f(w,v)</span> for all <span class="SimpleMath">v,w ∈ V</span>. It is clear that a symmetric bilinear form is reflexive. A bilinear form is <em>alternating</em> if <span class="SimpleMath">f(v,v)=0</span> for all <span class="SimpleMath">v ∈ V</span>. Using the linearity to compute <span class="SimpleMath">f(v+w,v+w)</span>, we see that an alternating form is also reflexive. When the characteristic of the field differs from 2, an alternating form <span class="SimpleMath">f</span> can also be characterised as <span class="SimpleMath">f(v,w) = -f(w,v)</span> for all <span class="SimpleMath">v,w ∈ V</span>. It can be proved (see Chapter 7 of <a href="chapBib.html#biBTaylor">[Tay92]</a>) that symmetric and alternating bilinear forms are the only reflexive bilinear forms.</p>
 
@@ -52,13 +56,13 @@
 
 <p>This matrix is also called the <em>Gram matrix</em> of <span class="SimpleMath">f</span>. Given a sesquilinear form <span class="SimpleMath">f</span>, we will denote its Gram matrix by M<sub>f</sub>. In <strong class="pkg">Forms</strong>, sesquilinear forms can be constructed using matrices or polynomials, where we always suppose that the basis of the vector space is the standard basis (i.e., the rows of the identity matrix).</p>
 
-<p>One proves easily that a bilinear form <span class="SimpleMath">f</span> is symmetric if and only if M<sub>f</sub> is a symmetric matrix, i.e., M<sub>f</sub><sup>T</sup>=M<sub>f</sub>, and that a bilinear form <span class="SimpleMath">f</span> is alternating if and only if M<sub>f</sub> is a skew symmetric matrix, i.e., M<sub>f</sub><sup>T</sup>=-M<sub>f</sub>. When the characteristic of the field is two, the condition that <span class="SimpleMath">f(v,v)=0</span> for all <span class="SimpleMath">v ∈ V</span> implies M<sub>f</sub><sup>T</sup>=M<sub>f</sub> <strong class="button">and</strong> (M<sub>ii</sub>)=0 (denoting the matrix M<sub>f</sub> = (M<sub>ij</sub>). Since any skew symmetric odd dimensional matrix is singular, it follows that an alternating form of an odd dimensional vector space is degenerate.</p>
+<p>One proves easily that a bilinear form <span class="SimpleMath">f</span> is symmetric if and only if M<sub>f</sub> is a symmetric matrix, i.e., M<sub>f</sub><sup>T</sup>=M<sub>f</sub>, and that a bilinear form <span class="SimpleMath">f</span> is alternating if and only if M<sub>f</sub> is a skew symmetric matrix, i.e., M<sub>f</sub><sup>T</sup>=-M<sub>f</sub>. When the characteristic of the field is two, the condition that <span class="SimpleMath">f(v,v)=0</span> for all <span class="SimpleMath">v ∈ V</span> implies M<sub>f</sub><sup>T</sup>=M<sub>f</sub> <strong class="button">and</strong> (M<sub>ii</sub>)=0 for all <span class="SimpleMath">i</span> (and where the matrix M<sub>f</sub> = (M<sub>ij</sub>)). Since any skew symmetric odd dimensional matrix is singular, it follows that an alternating form of an odd dimensional vector space is degenerate.</p>
 
-<p>A sesquilinear form <span class="SimpleMath">f</span> is <em>hermitian</em> (n.b., <em>conjugate-symmetric</em> in <a href="chapBib.html#biBAtlas">[CCNPW85]</a>) if f(v,w)=f(w,v)<sup>α</sup> holds for all vectors v,w<sup>α</sup> and α has order 2. Again, it can be easily proved that a sesquilinear form <span class="SimpleMath">f</span> is hermitian if and only if m<sub>f</sub><sup>T</sup>=m<sub>f</sub><sup>α</sup> (i.e., a hermitian matix). It is proved (see Chapter 7 of <a href="chapBib.html#biBTaylor">[Tay92]</a>) that hermitian forms are the only reflexive sesquilinear forms that are not bilinear. Hence, in general, all reflexive sesquilinear forms are known, they are either hermitian or bilinear, and in the latter case, they are either symmetric or alternating (again, see Chapter 7 of <a href="chapBib.html#biBTaylor">[Tay92]</a>).</p>
+<p>A sesquilinear form <span class="SimpleMath">f</span> is <em>hermitian</em> (n.b., <em>conjugate-symmetric</em> in <a href="chapBib.html#biBAtlas">[CCN+85]</a>) if f(v,w)=f(w,v)<sup>α</sup> holds for all vectors <span class="SimpleMath">v,w</span>, with <span class="SimpleMath">α</span> an involutory field automorphism only dependent on <span class="SimpleMath">f</span>. Again, it can be easily proved that a sesquilinear form <span class="SimpleMath">f</span> is hermitian if and only if M<sub>f</sub><sup>T</sup>=M<sub>f</sub><sup>α</sup> (i.e., a hermitian matix). It is proved (see Chapter 7 of <a href="chapBib.html#biBTaylor">[Tay92]</a>) that hermitian forms are the only reflexive sesquilinear forms that are not bilinear. Hence, in general, all reflexive sesquilinear forms are known, they are either hermitian or bilinear, and in the latter case, they are either symmetric or alternating (again, see Chapter 7 of <a href="chapBib.html#biBTaylor">[Tay92]</a>).</p>
 
 <p>In <strong class="pkg">Forms</strong>, only the construction of <strong class="button">reflexive</strong> sesquilinear forms is allowed. An error message will be displayed if any attempt to construct a non-reflexive sesquilinear form is made. As a consequence, the Gram Matrix of a sesquilinear form is always a symmetric, a skew symmetric or a hermitian matrix. From now on, the notion of a ``sesquilinear form'' will always refer to a ``reflexive sesquilinear form''.</p>
 
-<p>Given a sesquilinear form <span class="SimpleMath">f</span>, two vectors <span class="SimpleMath">v</span> and <span class="SimpleMath">w</span> are <em>orthogonal</em> with respect to <span class="SimpleMath">f</span> if <span class="SimpleMath">f(v,w) = 0</span>. Note that the reflexivity makes orthogonality between two vectors a symmetric relation. A vector <span class="SimpleMath">v</span> is called <em>isotropic</em> if <span class="SimpleMath">f(v,v)=0</span>. The <em>radical</em> of <span class="SimpleMath">f</span> (n.b., <em>kernel</em> in <a href="chapBib.html#biBAtlas">[CCNPW85]</a>) is the subspace consisting of vectors which are orthogonal to every vector. That is,</p>
+<p>Given a sesquilinear form <span class="SimpleMath">f</span>, two vectors <span class="SimpleMath">v</span> and <span class="SimpleMath">w</span> are <em>orthogonal</em> with respect to <span class="SimpleMath">f</span> if <span class="SimpleMath">f(v,w) = 0</span>. Note that the reflexivity makes orthogonality between two vectors a symmetric relation. A vector <span class="SimpleMath">v</span> is called <em>isotropic</em> if <span class="SimpleMath">f(v,v)=0</span>. The <em>radical</em> of <span class="SimpleMath">f</span> (n.b., <em>kernel</em> in <a href="chapBib.html#biBAtlas">[CCN+85]</a>) is the subspace consisting of vectors which are orthogonal to every vector. That is,</p>
 
 <p><center>Rad(f) = {v ∈ V | f(v,w) = 0 for all w ∈ V},</center> and we say that <span class="SimpleMath">f</span> is <em>non-degenerate</em> if its radical is trivial (and <em>degenerate</em> otherwise).</p>
 
@@ -77,17 +81,17 @@
 <tr>
 <td class="tdleft">Hyperbolic</td>
 <td class="tdleft">Orthogonal of + type</td>
-<td class="tdleft"><span class="SimpleMath">V/Rad(f)</span> has even dimension, <span class="SimpleMath">g</span> has maximal Witt index</td>
+<td class="tdleft">V/Rad(f) has even dimension, <span class="SimpleMath">g</span> has maximal Witt index</td>
 </tr>
 <tr>
 <td class="tdleft">Elliptic</td>
 <td class="tdleft">Orthogonal of - type</td>
-<td class="tdleft"><span class="SimpleMath">V/Rad(f)</span> has even dimension, <span class="SimpleMath">g</span> has non-maximal Witt index</td>
+<td class="tdleft">V/Rad(f) has even dimension, <span class="SimpleMath">g</span> has non-maximal Witt index</td>
 </tr>
 <tr>
 <td class="tdleft">Parabolic</td>
 <td class="tdleft">Orthogonal of o type</td>
-<td class="tdleft"><span class="SimpleMath">V/Rad(f)</span> has odd dimension</td>
+<td class="tdleft">V/Rad(f) has odd dimension</td>
 </tr>
 </table><br /><p>&nbsp;</p><br />
 </div>
@@ -304,8 +308,7 @@ Z(5)
 
 <p>A <em>quadratic form</em> on an <span class="SimpleMath">n</span>-dimensional vector space <span class="SimpleMath">V</span> over a field <span class="SimpleMath">F</span>, is a map <span class="SimpleMath">Q</span> from <span class="SimpleMath">V</span> to <span class="SimpleMath">F</span> satisfying the following two conditions:</p>
 
-<p class="pcenter">Q(λ v) = λ<sup>2</sup>
-Q(v), for all λ in F, for all v in V,</p>
+<p class="pcenter">Q(λ v) = λ<sup>2</sup> Q(v), for all λ in F, for all v in V,</p>
 
 <p>and, the map <span class="SimpleMath">f</span> defined from <span class="SimpleMath">V× V</span> to <span class="SimpleMath">F</span> as follows,</p>
 
@@ -313,7 +316,7 @@ Q(v), for all λ in F, for all v in V,</p>
 
 <p>is a bilinear form on <span class="SimpleMath">V</span>. From this definition it follows that <span class="SimpleMath">f(v,v) = Q(2v) - 2Q(v) = 2Q(v)</span>.</p>
 
-<p>The associated bilinear form <span class="SimpleMath">f</span> (which is called the <em>polar form</em> of <span class="SimpleMath">Q</span> in <a href="chapBib.html#biBAtlas">[CCNPW85]</a>) is clearly reflexive. When the characteristic of the field is odd, it is clear that <span class="SimpleMath">f</span> is a symmetric bilinear form. The equation <span class="SimpleMath">f(v,v) = 2Q(v)</span> allows us to reconstruct the quadratic form from the bilinear form, and hence there is a one-to-one correspondence between quadratic forms and symmetric bilinear forms. When the characteristic of the field equals 2, the bilinear form <span class="SimpleMath">f</span> is alternating (from the fact that <span class="SimpleMath">f(v,v) = 2Q(v) = 0</span>). Note, however, that different quadratic forms can determine the same alternating form.</p>
+<p>The associated bilinear form <span class="SimpleMath">f</span> (which is called the <em>polar form</em> of <span class="SimpleMath">Q</span> in <a href="chapBib.html#biBAtlas">[CCN+85]</a>) is clearly reflexive. When the characteristic of the field is odd, it is clear that <span class="SimpleMath">f</span> is a symmetric bilinear form. The equation <span class="SimpleMath">f(v,v) = 2Q(v)</span> allows us to reconstruct the quadratic form from the bilinear form, and hence there is a one-to-one correspondence between quadratic forms and symmetric bilinear forms. When the characteristic of the field equals 2, the bilinear form <span class="SimpleMath">f</span> is alternating (from the fact that <span class="SimpleMath">f(v,v) = 2Q(v) = 0</span>). Note, however, that different quadratic forms can determine the same alternating form.</p>
 
 <p>As in the case of sesquilinear forms, we will associate a matrix to a quadratic form. Chosing a basis of the vector space <span class="SimpleMath">V</span>, it is clear that an <span class="SimpleMath">n × n</span> matrix determines the quadratic form completely. In <strong class="pkg">Forms</strong>, the <em>Gram matrix</em> of a quadratic form is always an upper triangle matrix <span class="SimpleMath">M</span>, such that</p>
 
@@ -340,17 +343,17 @@ Q(v), for all λ in F, for all v in V,</p>
 <tr>
 <td class="tdleft">Hyperbolic</td>
 <td class="tdleft">Orthogonal of + type</td>
-<td class="tdleft"><span class="SimpleMath">V/Rad(Q)</span> has even dimension, <span class="SimpleMath">Q'</span> has maximal Witt index</td>
+<td class="tdleft">V/Rad(Q) has even dimension, <span class="SimpleMath">Q'</span> has maximal Witt index</td>
 </tr>
 <tr>
 <td class="tdleft">Elliptic</td>
 <td class="tdleft">Orthogonal of - type</td>
-<td class="tdleft"><span class="SimpleMath">V/Rad(Q)</span> has even dimension, <span class="SimpleMath">Q'</span> has non-maximal Witt index</td>
+<td class="tdleft">V/Rad(Q) has even dimension, <span class="SimpleMath">Q'</span> has non-maximal Witt index</td>
 </tr>
 <tr>
 <td class="tdleft">Parabolic</td>
 <td class="tdleft">Orthogonal of o type</td>
-<td class="tdleft"><span class="SimpleMath">V/Rad(Q)</span> has odd dimension</td>
+<td class="tdleft">V/Rad(Q) has odd dimension</td>
 </tr>
 </table><br /><p>&nbsp;</p><br />
 </div>

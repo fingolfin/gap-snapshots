@@ -10,13 +10,13 @@
   
   [1X4.1-1 [33X[0;0YCategories for forms[133X[101X
   
-  [29X[2XIsBilinearForm[102X[32X Category
-  [29X[2XIsHermitianForm[102X[32X Category
-  [29X[2XIsSesquilinearForm[102X[32X Category
-  [29X[2XIsQuadraticForm[102X[32X Category
-  [29X[2XIsForm[102X[32X Category
-  [29X[2XIsForm[102X[32X Category
-  [29X[2XIsTrivialForm[102X[32X Category
+  [33X[1;0Y[29X[2XIsBilinearForm[102X[32X Category[133X
+  [33X[1;0Y[29X[2XIsHermitianForm[102X[32X Category[133X
+  [33X[1;0Y[29X[2XIsSesquilinearForm[102X[32X Category[133X
+  [33X[1;0Y[29X[2XIsQuadraticForm[102X[32X Category[133X
+  [33X[1;0Y[29X[2XIsForm[102X[32X Category[133X
+  [33X[1;0Y[29X[2XIsForm[102X[32X Category[133X
+  [33X[1;0Y[29X[2XIsTrivialForm[102X[32X Category[133X
   
   [33X[0;0YThe   categories  [10XIsBilinearForm[110X  and  [10XIsHermitianForm[110X  are  categories  for
   bilinear  and  hermitian forms, respectively. They are disjoint and are both
@@ -34,7 +34,7 @@
   
   [1X4.1-2 [33X[0;0YRepresentation for forms[133X[101X
   
-  [29X[2XIsFormRep[102X[32X Representation
+  [33X[1;0Y[29X[2XIsFormRep[102X[32X Representation[133X
   
   [33X[0;0YEvery  form  is  represented  by  a  matrix,  the  base  field  and a string
   describing the ``type'' of the form.[133X
@@ -44,8 +44,8 @@
   
   [1X4.2-1 BilinearFormByMatrix[101X
   
-  [29X[2XBilinearFormByMatrix[102X( [3Xmatrix[103X, [3Xfield[103X ) [32X operation
-  [29X[2XBilinearFormByMatrix[102X( [3Xmatrix[103X ) [32X operation
+  [33X[1;0Y[29X[2XBilinearFormByMatrix[102X( [3Xmatrix[103X, [3Xfield[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XBilinearFormByMatrix[102X( [3Xmatrix[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya bilinear form[133X
   
   [33X[0;0YThe  argument  [3Xmatrix[103X  must be a symmetric, or skew-symmetric, square matrix
@@ -109,8 +109,8 @@
   
   [1X4.2-2 QuadraticFormByMatrix[101X
   
-  [29X[2XQuadraticFormByMatrix[102X( [3Xmatrix[103X, [3Xfield[103X ) [32X operation
-  [29X[2XQuadraticFormByMatrix[102X( [3Xmatrix[103X ) [32X operation
+  [33X[1;0Y[29X[2XQuadraticFormByMatrix[102X( [3Xmatrix[103X, [3Xfield[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XQuadraticFormByMatrix[102X( [3Xmatrix[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya quadratic form[133X
   
   [33X[0;0YThe argument [3Xmatrix[103X must be a square matrix over the finite field [3Xfield[103X. The
@@ -174,7 +174,7 @@
   
   [1X4.2-3 HermitianFormByMatrix[101X
   
-  [29X[2XHermitianFormByMatrix[102X( [3Xmatrix[103X, [3Xfield[103X ) [32X operation
+  [33X[1;0Y[29X[2XHermitianFormByMatrix[102X( [3Xmatrix[103X, [3Xfield[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya quadratic form[133X
   
   [33X[0;0YThe  argument [3Xmatrix[103X must be a hermitian square matrix over the finite field
@@ -234,8 +234,8 @@
   
   [1X4.3-1 BilinearFormByPolynomial[101X
   
-  [29X[2XBilinearFormByPolynomial[102X( [3Xpoly[103X, [3Xr[103X, [3Xn[103X ) [32X operation
-  [29X[2XBilinearFormByPolynomial[102X( [3Xpoly[103X, [3Xr[103X ) [32X operation
+  [33X[1;0Y[29X[2XBilinearFormByPolynomial[102X( [3Xpoly[103X, [3Xr[103X, [3Xn[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XBilinearFormByPolynomial[102X( [3Xpoly[103X, [3Xr[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya bilinear form[133X
   
   [33X[0;0YThe  argument  [3Xpoly[103X  must  be  a  polynomial  in  the polynomial ring [3Xr[103X. The
@@ -284,8 +284,8 @@
   
   [1X4.3-2 QuadraticFormByPolynomial[101X
   
-  [29X[2XQuadraticFormByPolynomial[102X( [3Xpoly[103X, [3Xr[103X, [3Xn[103X ) [32X operation
-  [29X[2XQuadraticFormByPolynomial[102X( [3Xpoly[103X, [3Xr[103X ) [32X operation
+  [33X[1;0Y[29X[2XQuadraticFormByPolynomial[102X( [3Xpoly[103X, [3Xr[103X, [3Xn[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XQuadraticFormByPolynomial[102X( [3Xpoly[103X, [3Xr[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya quadratic form[133X
   
   [33X[0;0YThe  argument  [3Xpoly[103X  must  be  a  polynomial  in  the polynomial ring [3Xr[103X. The
@@ -323,8 +323,8 @@
   
   [1X4.3-3 HermitianFormByPolynomial[101X
   
-  [29X[2XHermitianFormByPolynomial[102X( [3Xpoly[103X, [3Xr[103X, [3Xn[103X ) [32X operation
-  [29X[2XHermitianFormByPolynomial[102X( [3Xpoly[103X, [3Xr[103X ) [32X operation
+  [33X[1;0Y[29X[2XHermitianFormByPolynomial[102X( [3Xpoly[103X, [3Xr[103X, [3Xn[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XHermitianFormByPolynomial[102X( [3Xpoly[103X, [3Xr[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Yan hermitian form[133X
   
   [33X[0;0YThe argument [3Xpoly[103X must be a polynomial in the polynomial ring [3Xr[103X defined over
@@ -369,7 +369,7 @@
   
   [1X4.4-1 QuadraticFormByBilinearForm[101X
   
-  [29X[2XQuadraticFormByBilinearForm[102X( [3Xform[103X ) [32X operation
+  [33X[1;0Y[29X[2XQuadraticFormByBilinearForm[102X( [3Xform[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya quadratic form[133X
   
   [33X[0;0YThe  argument  [22Xform[122X  is  an orthogonal bilinear form (and thus it belongs to
@@ -431,7 +431,7 @@
   
   [1X4.4-2 BilinearFormByQuadraticForm[101X
   
-  [29X[2XBilinearFormByQuadraticForm[102X( [3XQ[103X ) [32X operation
+  [33X[1;0Y[29X[2XBilinearFormByQuadraticForm[102X( [3XQ[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya bilinear form[133X
   
   [33X[0;0YThe   argument  [22XQ[122X  must  be  a  quadratic  form  (and  thus  it  belongs  to
@@ -477,7 +477,7 @@
   
   [1X4.4-3 AssociatedBilinearForm[101X
   
-  [29X[2XAssociatedBilinearForm[102X( [3XQ[103X ) [32X operation
+  [33X[1;0Y[29X[2XAssociatedBilinearForm[102X( [3XQ[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya bilinear form[133X
   
   [33X[0;0YThe   argument  [22XQ[122X  must  be  a  quadratic  form  (and  thus  it  belongs  to
@@ -511,18 +511,19 @@
   
   [1X4.5-1 EvaluateForm[101X
   
-  [29X[2XEvaluateForm[102X( [3Xf[103X, [3Xu[103X, [3Xv[103X ) [32X operation
-  [29X[2XEvaluateForm[102X( [3Xf[103X, [3Xu[103X ) [32X operation
+  [33X[1;0Y[29X[2XEvaluateForm[102X( [3Xf[103X, [3Xu[103X, [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XEvaluateForm[102X( [3Xf[103X, [3Xu[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya finite field element[133X
   
   [33X[0;0YThe  argument  [3Xf[103X  is  either a sesquilinear or quadratic form defined over a
   finite  field [22XGF(q)[122X. The other argument is a pair of vectors or matrices, or
-  a  single  vector or matrix, which represent the bases of given subspaces of
-  [22XGF(q)^d[122X.  This  operation  evaluates the form on the given vector or pair of
-  vectors and returns an element in [22XGF(q)[122X. There is also an overloading of the
-  operation  [3X\^[103X  where  [22X(u,v)^f[122X  represents  [22Xf(u,v)[122X  in  the  case  that  [3Xf[103X is
-  sesquilinear,  and  [22Xu^f[122X  stands  for  [22Xf(u)[122X  in  the  quadratic  case. So for
-  convenience,  the  user  may  use this compressed version of this operation,
+  a single vector or matrix. In case that [3Xu[103X (and [3Xv[103X when using three arguments)
+  is  a  matrix,  its  rows  represent a basis for the subspace (or subspaces)
+  where  [22Xf[122X  is  evaluated  in.  This operation evaluates the form on the given
+  vector  or pair of vectors and returns an element in [22XGF(q)[122X. There is also an
+  overloading  of the operation [3X\^[103X where [11X(u,v)^f[111X represents [22Xf(u,v)[122X in the case
+  that  [3Xf[103X  is  sesquilinear, and [11Xu^f[111X stands for [22Xf(u)[122X in the quadratic case. So
+  for convenience, the user may use this compressed version of this operation,
   which we show in the following example:[133X
   
   [4X[32X  Example  [32X[104X
@@ -555,22 +556,65 @@
   
   [1X4.6-1 OrthogonalSubspaceMat[101X
   
-  [29X[2XOrthogonalSubspaceMat[102X( [3Xform[103X, [3Xv[103X ) [32X operation
-  [6XReturns:[106X  [33X[0;10Ya  base  of  the  subspace  orthogonal  to  the  given vector with
-            relation to the given form[133X
+  [33X[1;0Y[29X[2XOrthogonalSubspaceMat[102X( [3Xform[103X, [3Xv[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XOrthogonalSubspaceMat[102X( [3Xform[103X, [3Xmat[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya  base of the subspace orthogonal to the given vector or subspace
+            with relation to the given form[133X
   
-  [33X[0;0YThe argument [3Xform[103X is a sesquilinear or quadratic form. The operation returns
-  a base of the subspace orthogonal to the given vector [3Xv[103X with relation to the
-  sesquilinear  [3Xform[103X  or  with relation to the associated bilinear form of the
-  quadratic form [3Xform[103X[133X
+  [33X[0;0YThe argument [3Xform[103X is a sesquilinear or quadratic form. For a given vector [3Xv[103X,
+  this  operation returns a base of the subspace orthogonal to [3Xv[103X with relation
+  to the sesquilinear [3Xform[103X or with relation to the associated bilinear form of
+  the  quadratic  form  [3Xform[103X. For a given matrix [3Xmat[103X, this operation returns a
+  base  of  the subspace orthogonal to the subspace spanned by the rows of [3Xmat[103X
+  with  relation  to  the sesquilinear [3Xform[103X or with relation to the associated
+  bilinear form of the quadratic form [3Xform[103X[133X
   
   [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xmat := [[0,0,0,-2],[0,0,-3,0],[0,3,0,0],[2,0,0,0]]*Z(7)^0;[127X[104X
+    [4X[28X[ [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^5 ], [ 0*Z(7), 0*Z(7), Z(7)^4, 0*Z(7) ], [128X[104X
+    [4X[28X  [ 0*Z(7), Z(7), 0*Z(7), 0*Z(7) ], [ Z(7)^2, 0*Z(7), 0*Z(7), 0*Z(7) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform := BilinearFormByMatrix(mat);[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27Xv := [0*Z(7),Z(7)^0,Z(7)^3,Z(7)^5];[127X[104X
+    [4X[28X[ 0*Z(7), Z(7)^0, Z(7)^3, Z(7)^5 ][128X[104X
+    [4X[25Xgap>[125X [27Xvperp := OrthogonalSubspaceMat(form,v);[127X[104X
+    [4X[28X[ [ Z(7)^0, Z(7)^0, 0*Z(7), 0*Z(7) ], [ Z(7)^0, 0*Z(7), Z(7)^0, 0*Z(7) ], [128X[104X
+    [4X[28X  [ 0*Z(7), 0*Z(7), 0*Z(7), Z(7)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27XList(vperp,x->[x,v]^form);[127X[104X
+    [4X[28X[ 0*Z(7), 0*Z(7), 0*Z(7) ][128X[104X
+    [4X[25Xgap>[125X [27Xsub := [[1,1,0,0],[0,0,1,2]]*Z(7)^0;[127X[104X
+    [4X[28X[ [ Z(7)^0, Z(7)^0, 0*Z(7), 0*Z(7) ], [ 0*Z(7), 0*Z(7), Z(7)^0, Z(7)^2 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xsubperp := OrthogonalSubspaceMat(form,sub);[127X[104X
+    [4X[28X[ [ Z(7)^0, Z(7)^0, 0*Z(7), 0*Z(7) ], [ 0*Z(7), 0*Z(7), Z(7)^4, Z(7)^0 ] ][128X[104X
+    [4X[25Xgap>[125X [27XList(subperp,x->List(sub,y->[x,y]^form));[127X[104X
+    [4X[28X[ [ 0*Z(7), 0*Z(7) ], [ 0*Z(7), 0*Z(7) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xmat := [[1,0,0],[0,0,1],[0,0,0]]*Z(2)^0;[127X[104X
+    [4X[28X[ [ Z(2)^0, 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2), Z(2)^0 ], [128X[104X
+    [4X[28X  [ 0*Z(2), 0*Z(2), 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xform := QuadraticFormByMatrix(mat);[127X[104X
+    [4X[28X< quadratic form >[128X[104X
+    [4X[25Xgap>[125X [27Xv := [Z(2)^0,Z(2)^0,0*Z(2)];[127X[104X
+    [4X[28X[ Z(2)^0, Z(2)^0, 0*Z(2) ][128X[104X
+    [4X[25Xgap>[125X [27Xvperp := OrthogonalSubspaceMat(form,v);[127X[104X
+    [4X[28X[ <an immutable GF2 vector of length 3>, <an immutable GF2 vector of length [128X[104X
+    [4X[28X    3> ][128X[104X
+    [4X[25Xgap>[125X [27Xbil_form := AssociatedBilinearForm(form);[127X[104X
+    [4X[28X< bilinear form >[128X[104X
+    [4X[25Xgap>[125X [27XList(vperp,x->[x,v]^bil_form);[127X[104X
+    [4X[28X[ 0*Z(2), 0*Z(2) ][128X[104X
+    [4X[25Xgap>[125X [27Xsub := [[1,0,1],[1,0,0]]*Z(2)^0;[127X[104X
+    [4X[28X[ [ Z(2)^0, 0*Z(2), Z(2)^0 ], [ Z(2)^0, 0*Z(2), 0*Z(2) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xsubperp := OrthogonalSubspaceMat(form,sub);[127X[104X
+    [4X[28X[ <an immutable GF2 vector of length 3>, <an immutable GF2 vector of length [128X[104X
+    [4X[28X    3> ][128X[104X
+    [4X[25Xgap>[125X [27XList(subperp,x->List(sub,y->[x,y]^bil_form));[127X[104X
+    [4X[28X[ [ 0*Z(2), 0*Z(2) ], [ 0*Z(2), 0*Z(2) ] ][128X[104X
     [4X[28X [128X[104X
   [4X[32X[104X
   
   [1X4.6-2 IsIsotropicVector[101X
   
-  [29X[2XIsIsotropicVector[102X( [3Xform[103X, [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsIsotropicVector[102X( [3Xform[103X, [3Xv[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0YThe operation return [3Xtrue[103X if and only if [3Xv[103X is isotropic with relation to the
@@ -609,7 +653,7 @@
   
   [1X4.6-3 IsSingularVector[101X
   
-  [29X[2XIsSingularVector[102X( [3Xform[103X, [3Xv[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsSingularVector[102X( [3Xform[103X, [3Xv[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0YThe  operation return [3Xtrue[103X if and only if [3Xv[103X is singular with relation to the
@@ -643,7 +687,7 @@
   
   [1X4.6-4 IsTotallyIsotropicSubspace[101X
   
-  [29X[2XIsTotallyIsotropicSubspace[102X( [3Xform[103X, [3Xsub[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsTotallyIsotropicSubspace[102X( [3Xform[103X, [3Xsub[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0YThe operation return [3Xtrue[103X if and only if the subspace spanned by the vectors
@@ -681,7 +725,7 @@
   
   [1X4.6-5 IsTotallySingularSubspace[101X
   
-  [29X[2XIsTotallySingularSubspace[102X( [3Xform[103X, [3Xsub[103X ) [32X operation
+  [33X[1;0Y[29X[2XIsTotallySingularSubspace[102X( [3Xform[103X, [3Xsub[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false[133X
   
   [33X[0;0YThe operation return [3Xtrue[103X if and only if the subspace spanned by the vectors
@@ -714,7 +758,7 @@
   
   [1X4.7-1 IsReflexiveForm[101X
   
-  [29X[2XIsReflexiveForm[102X( [3Xf[103X ) [32X property
+  [33X[1;0Y[29X[2XIsReflexiveForm[102X( [3Xf[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false.[133X
   
   [33X[0;0YA  sesquilinear  form  [22Xf[122X  on  a  vector  space  [22XV[122X is [13Xreflexive[113X if [22Xf(v,w)=0 ⇒
@@ -728,7 +772,7 @@
   
   [1X4.7-2 IsAlternatingForm[101X
   
-  [29X[2XIsAlternatingForm[102X( [3Xf[103X ) [32X property
+  [33X[1;0Y[29X[2XIsAlternatingForm[102X( [3Xf[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false.[133X
   
   [33X[0;0YA sesquilinear form [22Xf[122X on a vector space [22XV[122X is [13Xalternating[113X if [22Xf(v,v)=0[122X for all
@@ -740,7 +784,7 @@
   
   [1X4.7-3 IsSymmetricForm[101X
   
-  [29X[2XIsSymmetricForm[102X( [3Xf[103X ) [32X property
+  [33X[1;0Y[29X[2XIsSymmetricForm[102X( [3Xf[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false.[133X
   
   [33X[0;0YA  sesquilinear form [22Xf[122X on a vector space [22XV[122X is [13Xsymmetric[113X if [22Xf(v,w)=f(w,v)[122X for
@@ -752,7 +796,7 @@
   
   [1X4.7-4 IsOrthogonalForm[101X
   
-  [29X[2XIsOrthogonalForm[102X( [3Xf[103X ) [32X property
+  [33X[1;0Y[29X[2XIsOrthogonalForm[102X( [3Xf[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false.[133X
   
   [33X[0;0YThe  argument  [22Xf[122X  must  be  a  sesquilinear  form  (and  thus  it belongs to
@@ -764,7 +808,7 @@
   
   [1X4.7-5 IsPseudoForm[101X
   
-  [29X[2XIsPseudoForm[102X( [3Xf[103X ) [32X property
+  [33X[1;0Y[29X[2XIsPseudoForm[102X( [3Xf[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false.[133X
   
   [33X[0;0YWhen  the characteristic of the field is odd, we call a form [22Xf[122X [13Xorthogonal[113X if
@@ -777,7 +821,7 @@
   
   [1X4.7-6 IsSymplecticForm[101X
   
-  [29X[2XIsSymplecticForm[102X( [3Xf[103X ) [32X property
+  [33X[1;0Y[29X[2XIsSymplecticForm[102X( [3Xf[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false.[133X
   
   [33X[0;0YWe  call  a  bilinear form [22Xf[122X [13Xsymplectic[113X if and only if [22Xf[122X is alternating. The
@@ -788,7 +832,7 @@
   
   [1X4.7-7 IsDegenerateForm[101X
   
-  [29X[2XIsDegenerateForm[102X( [3Xf[103X ) [32X property
+  [33X[1;0Y[29X[2XIsDegenerateForm[102X( [3Xf[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false.[133X
   
   [33X[0;0YThe  argument  [22Xf[122X  must  be  a  form  (and  thus  it  belongs  to  [10XIsForm[110X). A
@@ -801,7 +845,7 @@
   
   [1X4.7-8 IsSingularForm[101X
   
-  [29X[2XIsSingularForm[102X( [3Xf[103X ) [32X property
+  [33X[1;0Y[29X[2XIsSingularForm[102X( [3Xf[103X ) [32X property[133X
   [6XReturns:[106X  [33X[0;10Ytrue or false.[133X
   
   [33X[0;0YThe   argument  [22Xf[122X  must  be  a  quadratic  form  (and  thus  it  belongs  to
@@ -814,7 +858,7 @@
   
   [1X4.7-9 BaseField[101X
   
-  [29X[2XBaseField[102X( [3Xf[103X ) [32X attribute
+  [33X[1;0Y[29X[2XBaseField[102X( [3Xf[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ythe underlying field of [3Xf[103X.[133X
   
   [33X[0;0YThe  argument  [22Xf[122X  must be a form (and thus it belongs to [10XIsForm[110X). The method
@@ -831,7 +875,7 @@
   
   [1X4.7-10 GramMatrix[101X
   
-  [29X[2XGramMatrix[102X( [3Xf[103X ) [32X attribute
+  [33X[1;0Y[29X[2XGramMatrix[102X( [3Xf[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ythe Gram matrix of [3Xf[103X.[133X
   
   [33X[0;0YThe  argument  [22Xf[122X must be a form (and thus it belongs to [10XIsForm[110X). This method
@@ -839,16 +883,26 @@
   
   [1X4.7-11 RadicalOfForm[101X
   
-  [29X[2XRadicalOfForm[102X( [3Xf[103X ) [32X attribute
+  [33X[1;0Y[29X[2XRadicalOfForm[102X( [3Xf[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10YThe radical of the form [3Xf[103X[133X
   
   [33X[0;0YThe argument [22Xf[122X must be a form (and thus it belongs to [10XIsForm[110X) on some vector
-  space [22XV[122X. The radical of a form [22Xf[122X is the subspace consisting of vectors which
-  are orthogonal to every vector, i.e.,[133X
+  space  [22XV[122X. The radical of a sesquilinear form [22Xf[122X is the subspace consisting of
+  vectors which are orthogonal to every vector, i.e.,[133X
   
   
-        [33X[1;6Y[24X[33X[0;0YRad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\}.[133X [124X[133X
+  [24X[33X[0;6YRad(f) = \{v \in V | f(v,w) = 0,\, \forall w \in V\}.[133X
   
+  [124X
+  
+  [33X[0;0YThe  [13Xradical[113X  of the quadratic form [22XQ[122X, is the intersection of the set of all
+  singular  vectors  with  relation  to  [22XQ[122X  and  the radical of the associated
+  bilinear form [22Xf[122X (see [2XAssociatedBilinearForm[102X ([14X4.4-3[114X)), i.e.[133X
+  
+  
+  [24X[33X[0;6YRad(Q) = \{v \in V | Q(v) = 0\,\, \mathrm{and}\,\, v \in Rad(f)\}.[133X
+  
+  [124X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xr := PolynomialRing( GF(8), 3 );[127X[104X
@@ -865,7 +919,7 @@
   
   [1X4.7-12 PolynomialOfForm[101X
   
-  [29X[2XPolynomialOfForm[102X( [3Xf[103X ) [32X attribute
+  [33X[1;0Y[29X[2XPolynomialOfForm[102X( [3Xf[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ythe polynomial associated with [3Xf[103X.[133X
   
   [33X[0;0YThe  argument  [3Xf[103X  must be a form (and thus it belongs to [10XIsForm[110X). All forms,
@@ -888,14 +942,14 @@
   
   [1X4.7-13 DiscriminantOfForm[101X
   
-  [29X[2XDiscriminantOfForm[102X( [3Xf[103X ) [32X attribute
+  [33X[1;0Y[29X[2XDiscriminantOfForm[102X( [3Xf[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Ya string[133X
   
   [33X[0;0YThe  argument  [22Xf[122X  must  be  a  form (and thus it belongs to [10XIsForm[110X). Given a
   quadratic  or  bilinear  form  [3Xf[103X of even dimension, this operation returns a
   string: ``square'' or ``nonsquare''. More specifically, let [22Xf[122X be a from over
   [22XGF(q)[122X,  and  let  [22XM[122X  be  the  Gram matrix of [22Xf[122X. Define the [13Xdiscriminant[113X of [22XQ[122X
-  (n.b.,  [13Xquasideterminant[113X  in [CCNPW85]) as `square' if [22Xdet(M)[122X is a square of
+  (n.b.,  [13Xquasideterminant[113X  in  [CCN+85]) as `square' if [22Xdet(M)[122X is a square of
   [22XGF(q)[122X,  and  `non-square'  otherwise.  The  discriminant  is an invariant of
   nondegenerate  orthogonal  spaces  over  finite  fields  of odd order, up to
   isometry.  Thus, discriminants can be used to delineate the isometry type of
@@ -912,21 +966,89 @@
   [4X[32X[104X
   
   
-  [1X4.8 [33X[0;0YRecognition of sesquilinear forms preserved by a classical group[133X[101X
+  [1X4.8 [33X[0;0YRecognition of forms preserved by a classical group[133X[101X
   
   [33X[0;0YIn  this  section,  we  describe  a function that was initially developed by
   Frank  Celler  (and which has now been adapted to [5XForms[105X) for the recognition
-  of sesquilinear forms left invariant by a matrix group. More importantly, we
-  should  stress  that  this  routine  differs  to that already offered by the
-  [5XMeatAxe[105X  in  that  it  finds  sesquilinear  forms  preserved  up to [12Xscalars[112X.
-  Eventually, the procedure used for finding preserved sesquilinear forms does
-  use the [5XMeatAxe[105X but in some cases it can rule out the existence of preserved
-  forms  without  calling  the [5XMeatAxe[105X. For more information on the algorithm,
-  please see [CLNNPP08].[133X
+  of  quadratic  and sesquilinear forms left invariant by a matrix group. More
+  importantly,  we  should  stress  that  this routine differs to that already
+  offered  by  the [5XMeatAxe[105X in that it finds sesquilinear forms preserved up to
+  [12Xscalars[112X.  Eventually,  the procedure used for finding preserved sesquilinear
+  forms  does  use the [5XMeatAxe[105X but in some cases it can rule out the existence
+  of  preserved forms without calling the [5XMeatAxe[105X. For more information on the
+  algorithm, please see [CLGN+08].[133X
   
-  [1X4.8-1 PreservedSesquilinearForms[101X
+  [1X4.8-1 PreservedForms[101X
   
-  [29X[2XPreservedSesquilinearForms[102X( [3Xgroup[103X ) [32X operation
+  [33X[1;0Y[29X[2XPreservedForms[102X( [3Xgroup[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list of forms[133X
+  
+  [33X[0;0YThe  argument  [3Xgroup[103X  is a matrix group. The function uses random methods to
+  find all of the bilinear, unitary or quadratic forms preserved by [3Xgroup[103X (the
+  trivial  form  is  also  a  possibility) up to a scalar. Since the procedure
+  relies  on  a  pseudo-random  generator,  the  user  may need to execute the
+  operation more than once to find all invariant sesquilinear forms. Note that
+  when possible, a quadratic form will be given.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgroup := GO(-1,4,4);[127X[104X
+    [4X[28XGO(-1,4,4)[128X[104X
+    [4X[25Xgap>[125X [27Xpres_forms := PreservedForms(group);[127X[104X
+    [4X[28X[ < quadratic form > ][128X[104X
+    [4X[25Xgap>[125X [27Xgroup := GO(1,6,9);[127X[104X
+    [4X[28XGO(+1,6,9)[128X[104X
+    [4X[25Xgap>[125X [27Xpres_forms := PreservedForms(group);[127X[104X
+    [4X[28X[ < quadratic form > ][128X[104X
+    [4X[25Xgap>[125X [27Xgroup := SU(4,16);[127X[104X
+    [4X[28XSU(4,16)[128X[104X
+    [4X[25Xgap>[125X [27Xpres_forms := PreservedForms(group);[127X[104X
+    [4X[28X[ < hermitian form > ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YThe next example demonstrates the impact of randomized methods on the number
+  of  preserved forms returned. For the particular matrix group, two preserved
+  forms are returned after four calls of the operation.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgens := [ [ [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ], [127X[104X
+    [4X[25X>[125X [27X	[ 0*Z(5), 0*Z(5), Z(5)^3, Z(5^2)^21 ],[127X[104X
+    [4X[25X>[125X [27X	[ 0*Z(5), Z(5), Z(5), Z(5^2)^3 ], [127X[104X
+    [4X[25X>[125X [27X     	[ 0*Z(5), Z(5^2)^21, Z(5^2)^15, Z(5)^2 ] ], [127X[104X
+    [4X[25X>[125X [27X  [ [ Z(5)^3, Z(5^2)^7, Z(5^2)^16, Z(5^2)^15 ], [127X[104X
+    [4X[25X>[125X [27X      	[ 0*Z(5), Z(5)^0, Z(5^2)^4, Z(5)^3 ], [127X[104X
+    [4X[25X>[125X [27X      	[ Z(5^2)^22, Z(5^2)^10, Z(5^2)^21, Z(5)^2 ], [127X[104X
+    [4X[25X>[125X [27X      	[ Z(5^2)^7, Z(5^2)^23, Z(5^2)^9, Z(5^2)^11 ] ], [127X[104X
+    [4X[25X>[125X [27X  [ [ 0*Z(5), Z(5^2), 0*Z(5), 0*Z(5) ], [127X[104X
+    [4X[25X>[125X [27X	[ Z(5^2)^5, 0*Z(5), 0*Z(5), 0*Z(5) ], [127X[104X
+    [4X[25X>[125X [27X      	[ 0*Z(5), 0*Z(5), Z(5)^0, Z(5^2)^4 ], [127X[104X
+    [4X[25X>[125X [27X      	[ 0*Z(5), 0*Z(5), Z(5^2)^20, Z(5)^2 ] ] ];[127X[104X
+    [4X[28X[ [ [ Z(5)^0, 0*Z(5), 0*Z(5), 0*Z(5) ], [ 0*Z(5), 0*Z(5), Z(5)^3, Z(5^2)^21 ],[128X[104X
+    [4X[28X      [ 0*Z(5), Z(5), Z(5), Z(5^2)^3 ], [128X[104X
+    [4X[28X      [ 0*Z(5), Z(5^2)^21, Z(5^2)^15, Z(5)^2 ] ], [128X[104X
+    [4X[28X  [ [ Z(5)^3, Z(5^2)^7, Z(5^2)^16, Z(5^2)^15 ], [128X[104X
+    [4X[28X      [ 0*Z(5), Z(5)^0, Z(5^2)^4, Z(5)^3 ], [128X[104X
+    [4X[28X      [ Z(5^2)^22, Z(5^2)^10, Z(5^2)^21, Z(5)^2 ], [128X[104X
+    [4X[28X      [ Z(5^2)^7, Z(5^2)^23, Z(5^2)^9, Z(5^2)^11 ] ], [128X[104X
+    [4X[28X  [ [ 0*Z(5), Z(5^2), 0*Z(5), 0*Z(5) ], [ Z(5^2)^5, 0*Z(5), 0*Z(5), 0*Z(5) ], [128X[104X
+    [4X[28X      [ 0*Z(5), 0*Z(5), Z(5)^0, Z(5^2)^4 ], [128X[104X
+    [4X[28X      [ 0*Z(5), 0*Z(5), Z(5^2)^20, Z(5)^2 ] ] ][128X[104X
+    [4X[25Xgap>[125X [27Xgroup := Group(gens);[127X[104X
+    [4X[28X<matrix group with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XPreservedForms(group);[127X[104X
+    [4X[28X[ < quadratic form > ][128X[104X
+    [4X[25Xgap>[125X [27XPreservedForms(group);[127X[104X
+    [4X[28X[ < quadratic form > ][128X[104X
+    [4X[25Xgap>[125X [27XPreservedForms(group);[127X[104X
+    [4X[28X[ < quadratic form > ][128X[104X
+    [4X[25Xgap>[125X [27XPreservedForms(group);[127X[104X
+    [4X[28X[ < quadratic form >, < hermitian form > ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X4.8-2 PreservedSesquilinearForms[101X
+  
+  [33X[1;0Y[29X[2XPreservedSesquilinearForms[102X( [3Xgroup[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ya list of forms[133X
   
   [33X[0;0YThe  argument  [3Xgroup[103X  is a matrix group. The function uses random methods to
@@ -951,8 +1073,8 @@
   
   [33X[0;0YHere  is another example which shows that this procedure is suitable in some
   cases  where  using the [5XMeatAxe[105X is not applicable. Here, our matrix group is
-  the  group  of  similarities  preserving  a  (hyperbolic)  bilinear  form on
-  [22XGF(3)^6[122X.[133X
+  the  group  of  similarities  preserving  a  (hyperbolic) bilinear form on a
+  6-dimensional vector space over [22XGF(3)[122X .[133X
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xa := [ [ -1, 0, 0, -1, 0, 1 ], [ 0, -1, -1, 0, 0, 1 ], [127X[104X
@@ -977,6 +1099,28 @@
     [4X[25Xgap>[125X [27Xm := GModuleByMats( [a,b], GF(3) );;[127X[104X
     [4X[25Xgap>[125X [27Xusemeataxe := MTX.InvariantBilinearForm(m);[127X[104X
     [4X[28Xfail [128X[104X
+  [4X[32X[104X
+  
+  [1X4.8-3 PreservedQuadraticForms[101X
+  
+  [33X[1;0Y[29X[2XPreservedQuadraticForms[102X( [3Xgroup[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list of forms[133X
+  
+  [33X[0;0YThe  argument  [3Xgroup[103X  is a matrix group. The function uses random methods to
+  find all of the quadratic forms preserved by [3Xgroup[103X up to a scalar. Since the
+  procedure  relies on a pseudo-random generator, the user may need to execute
+  the operation more than once to find all invariant sesquilinear forms.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xgroup := GO(-1,4,8);[127X[104X
+    [4X[28XGO(-1,4,8)[128X[104X
+    [4X[25Xgap>[125X [27Xpres_forms := PreservedQuadraticForms(group);[127X[104X
+    [4X[28X[ < quadratic form > ][128X[104X
+    [4X[25Xgap>[125X [27Xgroup := GO(1,6,9);[127X[104X
+    [4X[28XGO(+1,6,9)[128X[104X
+    [4X[25Xgap>[125X [27Xpres_forms := PreservedQuadraticForms(group);[127X[104X
+    [4X[28X[ < quadratic form > ][128X[104X
+    [4X[28X[128X[104X
   [4X[32X[104X
   
   

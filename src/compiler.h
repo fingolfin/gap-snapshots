@@ -14,23 +14,23 @@
 #ifndef GAP_COMPILER_H
 #define GAP_COMPILER_H
 
-#include <src/system.h>
+#include "system.h"
 
 /****************************************************************************
 **
 *F  CompileFunc(<output>,<func>,<name>,<magic1>,<magic2>) . . . . . . compile
 */
 extern Int CompileFunc (
-            Char *              output,
+            Obj                 output,
             Obj                 func,
-            Char *              name,
+            Obj                 name,
             Int                 magic1,
-            Char *              magic2 );
+            Obj                 magic2 );
 
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************

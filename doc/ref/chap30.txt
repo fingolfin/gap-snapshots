@@ -777,12 +777,13 @@
   
   [1X30.7-3 RandomList[101X
   
-  [33X[1;0Y[29X[2XRandomList[102X( [3Xlist[103X ) [32X function[133X
+  [33X[1;0Y[29X[2XRandomList[102X( [[3Xrs[103X, ][3Xlist[103X ) [32X function[133X
   
   [33X[0;0YFor  a  dense  list  [3Xlist[103X, [2XRandomList[102X returns a (pseudo-)random element with
   equal distribution.[133X
   
-  [33X[0;0YThis  function uses the [2XGlobalMersenneTwister[102X ([14X14.7-4[114X) to produce the random
+  [33X[0;0YThe  random  source  [3Xrs[103X  is used to choose a random number. If [3Xrs[103X is absent,
+  this  function uses the [2XGlobalMersenneTwister[102X ([14X14.7-4[114X) to produce the random
   elements (a source of high quality random numbers).[133X
   
   

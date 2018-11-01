@@ -307,4 +307,97 @@ gap> m[4,1];
 Error, row index 4 exceeds 3, the number of rows
 
 #
+# some tests for GF(2) rep
+#
+gap> F := GF(2);;
+gap> m := ImmutableMatrix( F, IdentityMat( 3, F ) );
+<an immutable 3x3 matrix over GF2>
+gap> v := ImmutableVector( F, [1,0,1] * One(F) );
+<an immutable GF2 vector of length 3>
+gap> m * v = v;
+true
+gap> v * m = v;
+true
+gap> v * v;
+0*Z(2)
+gap> m * m = m;
+true
+
+# test greased matrix mult
+gap> m := ImmutableMatrix( F, IdentityMat( 150, F ) );
+<an immutable 150x150 matrix over GF2>
+gap> m * m = m;
+true
+gap> PROD_GF2MAT_GF2MAT_SIMPLE(m,m) = m;
+true
+gap> PROD_GF2MAT_GF2MAT_ADVANCED(m,m,8,1) = m;
+true
+
+#
+#
+#
+gap> F:=GF(3);;
+gap> v:=[ Z(3)^0, Z(3), Z(3)^0, 0*Z(3), Z(3)^0, Z(3)^0, Z(3)^0, Z(3)^0 ];;
+gap> vecs:=[ 
+>   [ Z(3)^0, 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
+>   [ 0*Z(3), Z(3)^0, 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3) ], 
+>   [ 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3), 0*Z(3) ], 
+>   [ 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3), Z(3)^0, 0*Z(3), 0*Z(3) ], 
+>   [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3), Z(3)^0, 0*Z(3) ], 
+>   [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3), Z(3)^0 ] ];;
+gap> AClosestVectorCombinationsMatFFEVecFFE(vecs,F,v,1,1);
+[ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3), Z(3)^0 ]
+gap> AClosestVectorCombinationsMatFFEVecFFECoords(vecs,F,v,1,1);
+[ [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0, 0*Z(3), Z(3)^0 ], 
+  [ 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), 0*Z(3), Z(3)^0 ] ]
+gap> DistancesDistributionMatFFEVecFFE(vecs,F,v);
+[ 0, 4, 6, 60, 109, 216, 192, 112, 30 ]
+gap> DistancesDistributionVecFFEsVecFFE(vecs,v);
+[ 0, 0, 0, 0, 0, 4, 0, 1, 1 ]
+
+#
+gap> v1:=[ Z(3)^0, Z(3), Z(3)^0, 0*Z(3), Z(3)^0, Z(3)^0, Z(3)^0, Z(3)^0 ];;
+gap> v2:=[ Z(3), Z(3)^0, Z(3)^0, 0*Z(3), Z(3)^0, Z(3)^0, Z(3)^0, Z(3)^0 ];;
+gap> DistanceVecFFE(v1,v2);
+2
+
+#
+gap> checkShift := function(filt, field, length, shift)
+> local w;
+> w := NewVector(filt, field, List([1..length], x -> Random(field)));
+> v := StructuralCopy(w);
+> LeftShiftRowVector(v, shift);
+> if Length(v) <> Maximum(0, length - shift) then
+>   Print("failed left shift\n");
+> fi;
+> if ForAny([1..length-shift], i -> (w[i+shift] <> v[i])) then
+>   Print("failed left shift\n");
+> fi;
+> v := StructuralCopy(w);
+> RightShiftRowVector(v, shift, Zero(field));
+> if Length(v) <> length + shift then
+>   Print("failed right shift\n");
+> fi;
+> if ForAny([1..length], i -> (w[i] <> v[i+shift])) then
+>   Print("failed right shift\n");
+> fi;
+> if ForAny([1..shift], i -> (v[i] <> Zero(field))) then
+>   Print("failed right shift\n");
+> fi;
+> end;;
+
+# Check around powers of two
+gap> testlens := [0,1,2,7,8,9,15,16,17,31,32,33,62,63,64,65,66,126,127,128,129];;
+gap> for types in [[IsGF2VectorRep, GF(2)],
+>                  [IsPlistVectorRep, Integers],
+>                  [Is8BitVectorRep, GF(2)],
+>                  [Is8BitVectorRep, GF(9)]] do
+>      for i in testlens do
+>        for j in testlens do
+>          checkShift(IsGF2VectorRep, GF(2), i, j);
+>        od;
+>      od;
+>    od;
+
+#
 gap> STOP_TEST("vecmat.tst");

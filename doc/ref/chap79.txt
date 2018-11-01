@@ -123,20 +123,28 @@
   list  or  a collection, but there is also a method for [2XSize[102X ([14X30.4-6[114X) that is
   applicable to a character table, which is neither a list nor a collection.[133X
   
-  [33X[0;0YIf  the  optional  third argument is given then there are two possibilities.
-  Either it is an integer [3Xrank[103X, then the attribute tester has this incremental
-  rank  (see [14X13.2[114X).  Or  it  is  the  string [10X"mutable"[110X, then the values of the
-  attribute  shall  be mutable; more precisely, when a value of such a mutable
-  attribute  is set then this value itself is stored, not an immutable copy of
-  it.  (So  it  is  the user's responsibility to set an object that is in fact
-  mutable.)  This  is  useful  for  an  attribute  whose value is some partial
-  information  that may be completed later. For example, there is an attribute
-  [10XComputedSylowSubgroups[110X for the list holding those Sylow subgroups of a group
-  that have been computed already by the function [2XSylowSubgroup[102X ([14X39.13-1[114X), and
-  this  list  is  mutable because one may want to enter groups into it as they
-  are computed.[133X
+  [33X[0;0YFor  the  optional  third  and  fourth  arguments,  there  are the following
+  possibilities.[133X
   
-  [33X[0;0YIf no third argument is given then the rank of the tester is 1.[133X
+  [30X    [33X[0;6YThe  integer  argument  [3Xrank[103X  causes the attribute tester to have this
+        incremental rank (see [14X13.2[114X),[133X
+  
+  [30X    [33X[0;6YIf  the  argument [3Xmutable[103X is the string [10X"mutable"[110X or the boolean [10Xtrue[110X,
+        then the values of the attribute are mutable.[133X
+  
+  [30X    [33X[0;6YIf  the  argument [3Xmutable[103X is the boolean [10Xfalse[110X, then the values of the
+        attribute are immutable.[133X
+  
+  [33X[0;0YWhen  a  value  of  such  mutable attribute is set then this value itself is
+  stored,  not an immutable copy of it, and it is the user's responsibility to
+  set  an  object that is mutable. This is useful for an attribute whose value
+  is  some partial information that may be completed later. For example, there
+  is  an  attribute  [10XComputedSylowSubgroups[110X  for  the list holding those Sylow
+  subgroups  of  a  group  that  have  been  computed  already by the function
+  [2XSylowSubgroup[102X  ([14X39.13-1[114X),  and  this list is mutable because one may want to
+  enter groups into it as they are computed.[133X
+  
+  [33X[0;0YIf no argument for [3Xrank[103X is given, then the rank of the tester is 1.[133X
   
   [33X[0;0YEach  method for the new attribute that does [13Xnot[113X require its argument to lie
   in [3Xfilter[103X must be installed using [2XInstallOtherMethod[102X ([14X78.2-2[114X).[133X
@@ -1070,7 +1078,7 @@
     [4X[25Xgap>[125X [27XMakeImmutable(l);[127X[104X
     [4X[28X[ 1, 2, 4 ][128X[104X
     [4X[25Xgap>[125X [27Xl[3] := 5;[127X[104X
-    [4X[28XError, Lists Assignment: <list> must be a mutable list[128X[104X
+    [4X[28XError, List Assignment: <list> must be a mutable list[128X[104X
   [4X[32X[104X
   
   [33X[0;0YFor  external  objects, the situation is different. An external object which

@@ -1,0 +1,198 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdftex 2017.5.16)  7 OCT 2018 20:24
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**manual
+(./manual.tex (../gapmacro.tex
+(/usr/local/texlive/2016/texmf-dist/tex/plain/amsfonts/amssym.tex
+(/usr/local/texlive/2016/texmf-dist/tex/plain/amsfonts/amssym.def
+\msafam=\fam8
+\msbfam=\fam9
+\eufmfam=\fam10
+))
+Running PDFTeX
+\pagewidth=\dimen16
+\pageheight=\dimen17
+\colwidth=\dimen18
+\partialpage=\box16
+\origvsize=\dimen19
+\manindent=\dimen20
+\smallmanindent=\dimen21
+\itfam=\fam11
+\slfam=\fam12
+\bffam=\fam13
+\ttfam=\fam14
+\msbfam=\fam15
+\ttindent=\dimen22
+\labelout=\write0
+\indexout=\write1
+\secindout=\write2
+\tocout=\write3
+\citeout=\write4
+\ans=\write5
+\exampleout=\write6
+\labelin=\read1
+\indexin=\read2
+\tocin=\read3
+\citein=\read4
+\secno=\count27
+\subsecno=\count28
+\exno=\count29
+\indentno=\count30
+\chapnum=\count31
+\ortoks=\toks13
+\bibindent=\dimen23
+) [1{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+\makelabel{etudes:Contents}{{\setbox 0=\hbox {1}\vrule width 0pt height\ht 0}}
+Chapter `Contents' .
+(./manual.toc) [2.1
+\chapcontents {\tocstrut }{Contents}{2}
+] (./manual.lab)
+\openout3 = `manual.toc'.
+
+\openout0 = `manual.lab'.
+
+\openout1 = `manual.idx'.
+
+\openout2 = `manual.six'.
+
+\openout4 = `manual.aux'.
+
+ (./authors.tex
+Chapter `The authors' .
+) [3.2] (./grpsupp.tex
+Chapter `Groups' .
+\openout6 = `manual.example-1.tst'.
+
+[4.1] [5.1]) (./nr.tex [6.1]
+Chapter `Nearrings' .
+Reference `meldrum85:NATLWG' undefined.
+Reference `Clay:Nearrings' undefined.
+Reference `Ferrero:Nearrings' undefined.
+Reference `Pilz:Nearrings' undefined.
+Reference `Pilz:Nearrings' undefined.
+\openout6 = `manual.example-2.tst'.
+
+
+Overfull \hbox (0.72127pt too wide) in paragraph at lines 74--81
+[]\tenr Now for en-ter-ing the near-ring mul-ti-pli-ca-tion: We will use the fu
+nc-tion \tentt Nr-Mul-ti-pli-ca-tion-By-Op-er-a-tionTable\tenr .|
+
+\hbox(6.94444+2.22223)x468.0, glue set - 1.0
+.\hbox(0.0+0.0)x0.0
+.\tenr N
+.\tenr o
+.\kern-0.27779
+.\tenr w
+.etc.
+
+[7.2]
+Reference `Waehling:Fastkoerper' undefined.
+Reference `Pilz:Nearrings' undefined.
+[8.2]) (./libnr.tex [9.2]
+Chapter `The nearring library' .
+\openout6 = `manual.example-3.tst'.
+
+[10.3]
+Reference `Pilz:Nearrings' undefined.
+[11.3]
+Reference `Pilz:Nearrings' undefined.
+Reference `Pilz:Nearrings' undefined.
+
+Overfull \hbox (20.3064pt too wide) in paragraph at lines 164--167
+[]\tenr For those who got in-ter-ested in boolean near-rings: many re-sults abo
+ut them have been col-lected in [][][][Pilz:Nearrings][][],|
+
+\hbox(7.5+2.5)x468.0, glue set - 1.0
+.\hbox(0.0+0.0)x0.0
+.\tenr F
+.\kern-0.83334
+.\tenr o
+.\tenr r
+.etc.
+
+) (./tfms.tex [12.3]
+Chapter `Nearrings of transformations on groups' .
+\openout6 = `manual.example-4.tst'.
+
+[13.4]) (./tfmnr.tex [14.4]
+Chapter `Some interesting nearrings' .
+Reference `meldrum85:NATLWG' undefined.
+\openout6 = `manual.example-5.tst'.
+
+[15.5] [16.5]
+Reference `thomaswood80:GT' undefined.
+Reference `Pilz:Nearrings' undefined.
+[17.5]) (./ideals.tex [18.5]
+Chapter `Ideals, factors, and direct products of nearrings' .
+\openout6 = `manual.example-6.tst'.
+
+[19.6] [20.6]) (./plnr.tex [21.6]
+Chapter `Planar nearrings' .
+Reference `Clay:Nearrings' undefined.
+\openout6 = `manual.example-7.tst'.
+
+[22.7]) (./design.tex [23.7]
+Chapter `Designs' .
+Reference `Clay:Nearrings' undefined.
+\openout6 = `manual.example-8.tst'.
+
+[24.8]) [25.8]
+Chapter `Bibliography' .
+No file manual.bbl.
+[26.9]
+Chapter `Index' .
+No file manual.ind.
+##
+## Citations for BibTeX written on manual.aux.
+## Index entries for makeindex written on manual.idx.
+## Section index entries written on manual.six.
+## Label definitions written on manual.lab.
+## Table of contents written on manual.toc.
+## Examples written to manual.example-XX.tst.
+## There were undefined labels or references.
+## Labels have changed, run again. (Or they were multiply defined.)
+##
+[27.10] )pdfTeX warning (dest): name{index} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{citation@thomaswood80:GT} has been referenced but d
+oes not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{citation@Waehling:Fastkoerper} has been referenced 
+but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{citation@Pilz:Nearrings} has been referenced but do
+es not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{citation@Ferrero:Nearrings} has been referenced but
+ does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{citation@Clay:Nearrings} has been referenced but do
+es not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{citation@meldrum85:NATLWG} has been referenced but 
+does not exist, replaced by a fixed one
+
+</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><
+/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></
+usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cminch.pfb></u
+sr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
+r/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/
+local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/lo
+cal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local
+/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/te
+xlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/tex
+live/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmssdc10.pfb></usr/local/te
+xlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/tex
+live/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texli
+ve/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texliv
+e/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive
+/2016/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on manual.pdf (27 pages, 221291 bytes).
+PDF statistics:
+ 326 PDF objects out of 1000 (max. 8388607)
+ 279 compressed objects within 3 object streams
+ 35 named destinations out of 1000 (max. 500000)
+ 233 words of extra memory for PDF output out of 10000 (max. 10000000)
+

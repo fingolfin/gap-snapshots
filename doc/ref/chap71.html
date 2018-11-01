@@ -107,9 +107,10 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X7D2A55A584F955DB">71.10-7 ClassPositionsOfFittingSubgroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X79AEFC4384769B72">71.10-8 ClassPositionsOfLowerCentralSeries</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X86065D217A36CD9B">71.10-9 ClassPositionsOfUpperCentralSeries</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X8392DD5B813250A4">71.10-10 ClassPositionsOfSupersolvableResiduum</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X7BBE7EBA7A64A6B0">71.10-11 ClassPositionsOfPCore</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X7FCF905D7FD7CC40">71.10-12 ClassPositionsOfNormalClosure</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X877FDE8A84A9F52C">71.10-10 ClassPositionsOfSolvableRadical</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X8392DD5B813250A4">71.10-11 ClassPositionsOfSupersolvableResiduum</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X7BBE7EBA7A64A6B0">71.10-12 ClassPositionsOfPCore</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X7FCF905D7FD7CC40">71.10-13 ClassPositionsOfNormalClosure</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap71.html#X8733F0EA801785D4">71.11 <span class="Heading">Operations Concerning Blocks</span></a>
 </span>
@@ -186,7 +187,8 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X7C97CF727FBDFCAB">71.20-2 FactorsOfDirectProduct</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X7C3A4E5283B240BE">71.20-3 CharacterTableFactorGroup</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X85BE46F784B83938">71.20-4 CharacterTableIsoclinic</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X79B75C8582426BC5">71.20-5 CharacterTableWreathSymmetric</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X806E55A58397B11B">71.20-5 CharacterTableOfNormalSubgroup</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap71.html#X79B75C8582426BC5">71.20-6 CharacterTableWreathSymmetric</a></span>
 </div></div>
 <div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap71.html#X816FCD5A805F9FE8">71.21 <span class="Heading">Sorted Character Tables</span></a>
 </span>
@@ -417,9 +419,9 @@ CharacterTable( "Sym(4)" )
 <h5>71.3-4 SupportedCharacterTableInfo</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SupportedCharacterTableInfo</code></td><td class="tdright">(&nbsp;global variable&nbsp;)</td></tr></table></div>
-<p><code class="func">SupportedCharacterTableInfo</code> is a list that contains at position <span class="SimpleMath">3i-2</span> an attribute getter function, at position <span class="SimpleMath">3i-1</span> the name of this attribute, and at position <span class="SimpleMath">3i</span> a list containing one or two of the strings <code class="code">"class"</code>, <code class="code">"character"</code>, depending on whether the attribute value relies on the ordering of classes or characters. This allows one to set exactly the components with these names in the record that is later converted to the new table, in order to use the values as attribute values. So the record components that shall <em>not</em> be regarded as attribute values can be ignored. Also other attributes of the old table are ignored.</p>
+<p><code class="func">SupportedCharacterTableInfo</code> is a list that contains at position <span class="SimpleMath">3i-2</span> an attribute getter function, at position <span class="SimpleMath">3i-1</span> the name of this attribute, and at position <span class="SimpleMath">3i</span> a list containing a subset of <code class="code">[ "character", "class", "mutable" ]</code>, depending on whether the attribute value relies on the ordering of characters or classes, or whether the attribute value is a mutable list or record.</p>
 
-<p><code class="func">SupportedCharacterTableInfo</code> is used when (ordinary or Brauer) character table objects are created from records, using <code class="func">ConvertToCharacterTable</code> (<a href="chap71.html#X8195BC057B1DFAD5"><span class="RefLink">71.3-5</span></a>).</p>
+<p>When (ordinary or Brauer) character table objects are created from records, using <code class="func">ConvertToCharacterTable</code> (<a href="chap71.html#X8195BC057B1DFAD5"><span class="RefLink">71.3-5</span></a>), <code class="func">SupportedCharacterTableInfo</code> specifies those record components that shall be used as attribute values; other record components are <em>not</em> be regarded as attribute values in the conversion process.</p>
 
 <p>New attributes and properties can be notified to <code class="func">SupportedCharacterTableInfo</code> by creating them with <code class="code">DeclareAttributeSuppCT</code> and <code class="code">DeclarePropertySuppCT</code> instead of <code class="func">DeclareAttribute</code> (<a href="chap79.html#X7A00FC8A7A677A56"><span class="RefLink">79.18-9</span></a>) and <code class="func">DeclareProperty</code> (<a href="chap79.html#X7F4602F082682A04"><span class="RefLink">79.18-10</span></a>).</p>
 
@@ -862,18 +864,22 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">List( tables, Size );</span>
 [ 3, 24, 60 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismTypeInfoFiniteSimpleGroup( CharacterTable( "C5" ) );</span>
-rec( name := "Z(5)", parameter := 5, series := "Z" )
+rec( name := "Z(5)", parameter := 5, series := "Z", shortname := "C5" 
+ )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismTypeInfoFiniteSimpleGroup( CharacterTable( "S3" ) );</span>
 fail
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismTypeInfoFiniteSimpleGroup( CharacterTable( "S6(3)" ) );</span>
-rec( name := "C(3,3) = S(6,3)", parameter := [ 3, 3 ], series := "C" )
+rec( name := "C(3,3) = S(6,3)", parameter := [ 3, 3 ], series := "C", 
+  shortname := "S6(3)" )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismTypeInfoFiniteSimpleGroup( CharacterTable( "O7(3)" ) );</span>
-rec( name := "B(3,3) = O(7,3)", parameter := [ 3, 3 ], series := "B" )
+rec( name := "B(3,3) = O(7,3)", parameter := [ 3, 3 ], series := "B", 
+  shortname := "O7(3)" )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismTypeInfoFiniteSimpleGroup( CharacterTable( "A8" ) );</span>
 rec( name := "A(8) ~ A(3,2) = L(4,2) ~ D(3,2) = O+(6,2)", 
-  parameter := 8, series := "A" )
+  parameter := 8, series := "A", shortname := "A8" )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsomorphismTypeInfoFiniteSimpleGroup( CharacterTable( "L3(4)" ) );</span>
-rec( name := "A(2,4) = L(3,4)", parameter := [ 3, 4 ], series := "L" )
+rec( name := "A(2,4) = L(3,4)", parameter := [ 3, 4 ], series := "L", 
+  shortname := "L3(4)" )
 </pre></div>
 
 <p><a id="X7995A2AD83BC58A0" name="X7995A2AD83BC58A0"></a></p>
@@ -1244,9 +1250,22 @@ fail
 [ [ 1, 3 ], [ 1, 2, 3, 4, 5 ] ]
 </pre></div>
 
+<p><a id="X877FDE8A84A9F52C" name="X877FDE8A84A9F52C"></a></p>
+
+<h5>71.10-10 ClassPositionsOfSolvableRadical</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ClassPositionsOfSolvableRadical</code>( <var class="Arg">ordtbl</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>corresponds to <code class="func">RadicalGroup</code> (<a href="chap39.html#X787F5F14844FAACE"><span class="RefLink">39.12-9</span></a>) for the group of the ordinary character table <var class="Arg">ordtbl</var>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ClassPositionsOfSolvableRadical( CharacterTable( "2.A5" ) );</span>
+[ 1, 2 ]
+</pre></div>
+
 <p><a id="X8392DD5B813250A4" name="X8392DD5B813250A4"></a></p>
 
-<h5>71.10-10 ClassPositionsOfSupersolvableResiduum</h5>
+<h5>71.10-11 ClassPositionsOfSupersolvableResiduum</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ClassPositionsOfSupersolvableResiduum</code>( <var class="Arg">ordtbl</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>corresponds to <code class="func">SupersolvableResiduum</code> (<a href="chap39.html#X8440C61080CDAA14"><span class="RefLink">39.12-11</span></a>) for the group of the ordinary character table <var class="Arg">ordtbl</var>.</p>
@@ -1260,7 +1279,7 @@ fail
 
 <p><a id="X7BBE7EBA7A64A6B0" name="X7BBE7EBA7A64A6B0"></a></p>
 
-<h5>71.10-11 ClassPositionsOfPCore</h5>
+<h5>71.10-12 ClassPositionsOfPCore</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ClassPositionsOfPCore</code>( <var class="Arg">ordtbl</var>, <var class="Arg">p</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>corresponds to <code class="func">PCore</code> (<a href="chap39.html#X7CF497C77B1E8938"><span class="RefLink">39.11-3</span></a>) for the group of the ordinary character table <var class="Arg">ordtbl</var>.</p>
@@ -1276,7 +1295,7 @@ fail
 
 <p><a id="X7FCF905D7FD7CC40" name="X7FCF905D7FD7CC40"></a></p>
 
-<h5>71.10-12 ClassPositionsOfNormalClosure</h5>
+<h5>71.10-13 ClassPositionsOfNormalClosure</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ClassPositionsOfNormalClosure</code>( <var class="Arg">ordtbl</var>, <var class="Arg">classes</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
 <p>is the sorted list of the positions of all conjugacy classes of the ordinary character table <var class="Arg">ordtbl</var> that form the normal closure (see <code class="func">NormalClosure</code> (<a href="chap39.html#X7BDEA0A98720D1BB"><span class="RefLink">39.11-4</span></a>)) of the conjugacy classes at positions in the list <var class="Arg">classes</var>.</p>
@@ -1713,7 +1732,7 @@ rec( number := 21, type := "D8" )
 
 <p>The default <code class="func">Display</code> (<a href="chap6.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) method prepares the data in <var class="Arg">tbl</var> for a columnwise output. The number of columns printed at one time depends on the actual line length, which can be accessed and changed by the function <code class="func">SizeScreen</code> (<a href="chap6.html#X8723E0A1837894F3"><span class="RefLink">6.12-1</span></a>).</p>
 
-<p>An interesting variant of <code class="func">Display</code> (<a href="chap6.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) is the function <code class="func">PageDisplay</code> (<a href="../../pkg/GAPDoc-1.6.1/doc/chap6.html#X7BB6731F7E3AAA98"><span class="RefLink">GAPDoc: PageDisplay</span></a>). Convenient ways to print the <code class="func">Display</code> (<a href="chap6.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) format to a file are given by the function <code class="func">PrintTo1</code> (<a href="../../pkg/GAPDoc-1.6.1/doc/chap6.html#X8603B90C7C3F0AB1"><span class="RefLink">GAPDoc: PrintTo1</span></a>) or by using <code class="func">PageDisplay</code> (<a href="../../pkg/GAPDoc-1.6.1/doc/chap6.html#X7BB6731F7E3AAA98"><span class="RefLink">GAPDoc: PageDisplay</span></a>) and the facilities of the pager used, cf. <code class="func">Pager</code> (<a href="chap2.html#X7ED03E41792C3840"><span class="RefLink">2.4-1</span></a>).</p>
+<p>An interesting variant of <code class="func">Display</code> (<a href="chap6.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) is the function <code class="func">PageDisplay</code> (<a href="../../pkg/GAPDoc-1.6.2/doc/chap6.html#X7BB6731F7E3AAA98"><span class="RefLink">GAPDoc: PageDisplay</span></a>). Convenient ways to print the <code class="func">Display</code> (<a href="chap6.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) format to a file are given by the function <code class="func">PrintTo1</code> (<a href="../../pkg/GAPDoc-1.6.2/doc/chap6.html#X8603B90C7C3F0AB1"><span class="RefLink">GAPDoc: PrintTo1</span></a>) or by using <code class="func">PageDisplay</code> (<a href="../../pkg/GAPDoc-1.6.2/doc/chap6.html#X7BB6731F7E3AAA98"><span class="RefLink">GAPDoc: PageDisplay</span></a>) and the facilities of the pager used, cf. <code class="func">Pager</code> (<a href="chap2.html#X7ED03E41792C3840"><span class="RefLink">2.4-1</span></a>).</p>
 
 <p>An interactive variant of <code class="func">Display</code> (<a href="chap6.html#X83A5C59278E13248"><span class="RefLink">6.3-6</span></a>) is the <code class="func">Browse</code> (<a href="../../pkg/Browse/doc/chap6.html#X7FDD696B7DD54A6E"><span class="RefLink">Browse: Browse</span></a>) method for character tables that is provided by the <strong class="pkg">GAP</strong> package <strong class="pkg">Browse</strong>, see <code class="func">Browse</code> (<a href="../../pkg/Browse/doc/chap6.html#X870C744182073CF6"><span class="RefLink">Browse: Browse for character tables</span></a>).</p>
 
@@ -1876,6 +1895,8 @@ local tbl, i;
 tbl:=rec();
 tbl.Irr:=
 [ [ 1, 1 ], [ 1, -1 ] ];
+tbl.IsFinite:=
+true;
 tbl.NrConjugacyClasses:=
 2;
 tbl.Size:=
@@ -2319,7 +2340,7 @@ Character( CharacterTable( PSL(4, 3) ),
 
 <h4>71.20 <span class="Heading">Constructing Character Tables from Others</span></h4>
 
-<p>The following operations take one or more character table arguments, and return a character table. This holds also for <code class="func">BrauerTable</code> (<a href="chap71.html#X8476B25A79D7A7FC"><span class="RefLink">71.3-2</span></a>). note that the return value of <code class="func">BrauerTable</code> (<a href="chap71.html#X8476B25A79D7A7FC"><span class="RefLink">71.3-2</span></a>) will in general not know the irreducible Brauer characters, and <strong class="pkg">GAP</strong> might be unable to compute these characters.</p>
+<p>The following operations take one or more character table arguments, and return a character table. This holds also for <code class="func">BrauerTable</code> (<a href="chap71.html#X8476B25A79D7A7FC"><span class="RefLink">71.3-2</span></a>). Note that the return value of <code class="func">BrauerTable</code> (<a href="chap71.html#X8476B25A79D7A7FC"><span class="RefLink">71.3-2</span></a>) will in general not know the irreducible Brauer characters, and <strong class="pkg">GAP</strong> might be unable to compute these characters.</p>
 
 <p><em>Note</em> that whenever fusions between input and output tables occur in these operations, they are stored on the concerned tables, and the <code class="func">NamesOfFusionSources</code> (<a href="chap73.html#X7F6569D5786A9D49"><span class="RefLink">73.3-5</span></a>) values are updated.</p>
 
@@ -2447,9 +2468,59 @@ X.5     2  . -2  .  .
 [ CharacterTable( "Dihedral(8)" ), [ 1, 2, 3 ], [ 3 ], 3 ]
 </pre></div>
 
+<p><a id="X806E55A58397B11B" name="X806E55A58397B11B"></a></p>
+
+<h5>71.20-5 CharacterTableOfNormalSubgroup</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CharacterTableOfNormalSubgroup</code>( <var class="Arg">ordtbl</var>, <var class="Arg">classes</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Let <var class="Arg">ordtbl</var> be the ordinary character table of a group <span class="SimpleMath">G</span>, say, and <var class="Arg">classes</var> be a list of class positions for this table. If the classes given by <var class="Arg">classes</var> form a normal subgroup <span class="SimpleMath">N</span>, say, of <span class="SimpleMath">G</span> and if these classes are conjugacy classes of <span class="SimpleMath">N</span> then this function returns the character table of <span class="SimpleMath">N</span>. In all other cases, the function returns <code class="keyw">fail</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t:= CharacterTable( "Symmetric", 4 );</span>
+CharacterTable( "Sym(4)" )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">nsg:= ClassPositionsOfNormalSubgroups( t );</span>
+[ [ 1 ], [ 1, 3 ], [ 1, 3, 4 ], [ 1 .. 5 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rest:= List( nsg, c -&gt; CharacterTableOfNormalSubgroup( t, c ) );</span>
+[ CharacterTable( "Rest(Sym(4),[ 1 ])" ), fail, fail, 
+  CharacterTable( "Rest(Sym(4),[ 1 .. 5 ])" ) ]
+</pre></div>
+
+<p>Here is a nontrivial example. We use <code class="func">CharacterTableOfNormalSubgroup</code> for computing the two isoclinic variants of <span class="SimpleMath">2.A_5.2</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g:= SchurCoverOfSymmetricGroup( 5, 3, 1 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">c:= CyclicGroup( 4 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dp:= DirectProduct( g, c );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">diag:= First( Elements( Centre( dp ) ), </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                 x -&gt; Order( x ) = 2 and</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                      not x in Image( Embedding( dp, 1 ) ) and</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                      not x in Image( Embedding( dp, 2 ) ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">fact:= Image( NaturalHomomorphismByNormalSubgroup( dp, </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                     Subgroup( dp, [ diag ] ) ));;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">t:= CharacterTable( fact );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Size( t );</span>
+480
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">nsg:= ClassPositionsOfNormalSubgroups( t );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rest:= List( nsg, c -&gt; CharacterTableOfNormalSubgroup( t, c ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">index2:= Filtered( rest, x -&gt; x &lt;&gt; fail and Size( x ) = 240 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Length( index2 );</span>
+2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">tg:= CharacterTable( g );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRecord(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       TransformingPermutationsCharacterTables( index2[1], tg ) );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsRecord(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">       TransformingPermutationsCharacterTables( index2[2], tg ) );</span>
+false
+</pre></div>
+
+<p>Alternatively, we could construct the character table of the central product with character theoretic methods. Or we could use <code class="func">CharacterTableIsoclinic</code> (<a href="chap71.html#X85BE46F784B83938"><span class="RefLink">71.20-4</span></a>).</p>
+
 <p><a id="X79B75C8582426BC5" name="X79B75C8582426BC5"></a></p>
 
-<h5>71.20-5 CharacterTableWreathSymmetric</h5>
+<h5>71.20-6 CharacterTableWreathSymmetric</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CharacterTableWreathSymmetric</code>( <var class="Arg">tbl</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
 <p>returns the character table of the wreath product of a group <span class="SimpleMath">G</span> with the full symmetric group on <var class="Arg">n</var> points, where <var class="Arg">tbl</var> is the character table of <span class="SimpleMath">G</span>.</p>
@@ -2800,11 +2871,11 @@ CharacterTable( S4 )
   Character( CharacterTable( S4 ), [ 3, 1, -1, 0, -1 ] ), 
   Character( CharacterTable( S4 ), [ 1, 1, 1, 1, 1 ] ) ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">kernel:= KernelOfCharacter( irr[3] );</span>
-Group([ (1,2)(3,4), (1,3)(2,4) ])
+Group([ (1,2)(3,4), (1,4)(2,3) ])
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">HasNormalSubgroupClassesInfo( tbl );</span>
 true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NormalSubgroupClassesInfo( tbl );</span>
-rec( nsg := [ Group([ (1,2)(3,4), (1,3)(2,4) ]) ], 
+rec( nsg := [ Group([ (1,2)(3,4), (1,4)(2,3) ]) ],
   nsgclasses := [ [ 1, 3 ] ], nsgfactors := [  ] )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ClassPositionsOfNormalSubgroup( tbl, kernel );</span>
 [ 1, 3 ]

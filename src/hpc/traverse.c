@@ -1,24 +1,17 @@
 /*
  * Functionality to traverse nested object structures.
  */
-#include <src/hpc/traverse.h>
+#include "hpc/traverse.h"
 
-#include <src/bool.h>
-#include <src/fibhash.h>
-#include <src/gap.h>
-#include <src/objset.h>
-#include <src/plist.h>
-#include <src/precord.h>
+#include "bool.h"
+#include "error.h"
+#include "fibhash.h"
+#include "gaputils.h"
+#include "modules.h"
+#include "plist.h"
 
-#include <src/hpc/guards.h>
-#include <src/hpc/thread.h>
-
-#ifdef BOEHM_GC
-# ifdef HPCGAP
-#  define GC_THREADS
-# endif
-# include <gc/gc.h>
-#endif
+#include "hpc/guards.h"
+#include "hpc/thread.h"
 
 #ifndef WARD_ENABLED
 
@@ -52,53 +45,17 @@ static Obj NewList(UInt size)
 }
 
 
-void QueueForTraversal(Obj obj);
-
-typedef enum {
-    TRAVERSE_BY_FUNCTION,
-    TRAVERSE_NONE,
-    TRAVERSE_ALL,
-    TRAVERSE_ALL_BUT_FIRST,
-} TraversalMethodEnum;
-
-typedef void (*TraversalCopyFunction)(Obj copy, Obj original);
-
 TraversalFunction     TraversalFunc[LAST_REAL_TNUM + 1];
 TraversalCopyFunction TraversalCopyFunc[LAST_REAL_TNUM + 1];
 TraversalMethodEnum   TraversalMethod[LAST_REAL_TNUM + 1];
 
-void TraversePList(Obj obj)
-{
-    UInt  len = LEN_PLIST(obj);
-    Obj * ptr = ADDR_OBJ(obj) + 1;
-    while (len) {
-        QueueForTraversal(*ptr++);
-        len--;
-    }
-}
-
-void TraverseWPObj(Obj obj)
-{
-    /* This is a hack, we rely on weak pointer objects
-     * having the same layout as plain lists, so we don't
-     * have to replicate the macro here.
-     */
-    UInt  len = LEN_PLIST(obj);
-    Obj * ptr = ADDR_OBJ(obj) + 1;
-    while (len) {
-        volatile Obj tmp = *ptr;
-        MEMBAR_READ();
-        if (tmp && *ptr)
-            QueueForTraversal(*ptr);
-        ptr++;
-        len--;
-    }
-}
-
 static UInt FindTraversedObj(Obj);
 
-static inline Obj ReplaceByCopy(Obj obj)
+inline Obj ReplaceByCopy(Obj obj)
 {
+    if (!IS_BAG_REF(obj))
+        return obj;
+
     TraversalState * traversal = currentTraversal();
     UInt             found = FindTraversedObj(obj);
     if (found)
@@ -114,136 +71,15 @@ static inline Obj ReplaceByCopy(Obj obj)
         return obj;
 }
 
-void CopyPList(Obj copy, Obj original)
+void SetTraversalMethod(UInt tnum,
+                        TraversalMethodEnum meth,
+                        TraversalFunction tf,
+                        TraversalCopyFunction cf)
 {
-    UInt  len = LEN_PLIST(original);
-    Obj * ptr = ADDR_OBJ(original) + 1;
-    Obj * copyptr = ADDR_OBJ(copy) + 1;
-    while (len) {
-        *copyptr++ = ReplaceByCopy(*ptr++);
-        len--;
-    }
-}
-
-void CopyWPObj(Obj copy, Obj original)
-{
-    /* This is a hack, we rely on weak pointer objects
-     * having the same layout as plain lists, so we don't
-     * have to replicate the macro here.
-     */
-    UInt  len = LEN_PLIST(original);
-    Obj * ptr = ADDR_OBJ(original) + 1;
-    Obj * copyptr = ADDR_OBJ(copy) + 1;
-    while (len) {
-        volatile Obj tmp = *ptr;
-        MEMBAR_READ();
-        if (tmp && *ptr)
-            *copyptr = ReplaceByCopy(tmp);
-        REGISTER_WP(copyptr, tmp);
-        ptr++;
-        copyptr++;
-    }
-}
-
-void TraversePRecord(Obj obj)
-{
-    UInt i, len = LEN_PREC(obj);
-    for (i = 1; i <= len; i++)
-        QueueForTraversal((Obj)GET_ELM_PREC(obj, i));
-}
-
-void CopyPRecord(Obj copy, Obj original)
-{
-    UInt i, len = LEN_PREC(original);
-    for (i = 1; i <= len; i++)
-        SET_ELM_PREC(copy, i, ReplaceByCopy(GET_ELM_PREC(original, i)));
-}
-
-void TraverseObjSet(Obj obj)
-{
-    UInt i, len = *(UInt *)(ADDR_OBJ(obj) + OBJSET_SIZE);
-    for (i = 0; i < len; i++) {
-        Obj item = ADDR_OBJ(obj)[OBJSET_HDRSIZE + i];
-        if (item && item != Undefined)
-            QueueForTraversal(item);
-    }
-}
-
-void CopyObjSet(Obj copy, Obj original)
-{
-    UInt i, len = *(UInt *)(ADDR_OBJ(original) + OBJSET_SIZE);
-    for (i = 0; i < len; i++) {
-        Obj item = ADDR_OBJ(original)[OBJSET_HDRSIZE + i];
-        ADDR_OBJ(copy)[OBJSET_HDRSIZE + i] = ReplaceByCopy(item);
-    }
-}
-
-void TraverseObjMap(Obj obj)
-{
-    UInt i, len = *(UInt *)(ADDR_OBJ(obj) + OBJSET_SIZE);
-    for (i = 0; i < len; i++) {
-        Obj key = ADDR_OBJ(obj)[OBJSET_HDRSIZE + 2 * i];
-        Obj val = ADDR_OBJ(obj)[OBJSET_HDRSIZE + 2 * i + 1];
-        if (key && key != Undefined) {
-            QueueForTraversal(key);
-            QueueForTraversal(val);
-        }
-    }
-}
-
-void CopyObjMap(Obj copy, Obj original)
-{
-    UInt i, len = *(UInt *)(ADDR_OBJ(original) + OBJSET_SIZE);
-    for (i = 0; i < len; i++) {
-        Obj key = ADDR_OBJ(original)[OBJSET_HDRSIZE + 2 * i];
-        Obj val = ADDR_OBJ(original)[OBJSET_HDRSIZE + 2 * i + 1];
-        ADDR_OBJ(copy)[OBJSET_HDRSIZE + 2 * i] = ReplaceByCopy(key);
-        ADDR_OBJ(copy)[OBJSET_HDRSIZE + 2 * i + 1] = ReplaceByCopy(val);
-    }
-}
-
-void InitTraversalModule(void)
-{
-    int i;
-    for (i = FIRST_REAL_TNUM; i <= LAST_REAL_TNUM; i++) {
-        assert(TraversalMethod[i] == 0);
-        TraversalMethod[i] = TRAVERSE_NONE;
-    }
-    TraversalMethod[T_PREC           ] = TRAVERSE_BY_FUNCTION;
-    TraversalMethod[T_PREC +IMMUTABLE] = TRAVERSE_BY_FUNCTION;
-    TraversalFunc[T_PREC           ] = TraversePRecord;
-    TraversalFunc[T_PREC +IMMUTABLE] = TraversePRecord;
-    TraversalCopyFunc[T_PREC           ] = CopyPRecord;
-    TraversalCopyFunc[T_PREC +IMMUTABLE] = CopyPRecord;
-    for (i = FIRST_PLIST_TNUM; i <= LAST_PLIST_TNUM; i++) {
-        TraversalMethod[i] = TRAVERSE_BY_FUNCTION;
-        TraversalFunc[i] = TraversePList;
-        TraversalCopyFunc[i] = CopyPList;
-    }
-    TraversalMethod[T_PLIST_CYC] = TRAVERSE_NONE;
-    TraversalMethod[T_PLIST_CYC_NSORT] = TRAVERSE_NONE;
-    TraversalMethod[T_PLIST_CYC_SSORT] = TRAVERSE_NONE;
-    TraversalMethod[T_PLIST_FFE] = TRAVERSE_NONE;
-
-    TraversalMethod[T_POSOBJ] = TRAVERSE_ALL_BUT_FIRST;
-
-    TraversalMethod[T_COMOBJ] = TRAVERSE_BY_FUNCTION;
-    TraversalFunc[T_COMOBJ] = TraversePRecord;
-    TraversalCopyFunc[T_COMOBJ] = CopyPRecord;
-
-    // FIXME: no TraversalMethod for T_WPOBJ ?!
-    TraversalFunc[T_WPOBJ] = TraverseWPObj;
-    TraversalCopyFunc[T_WPOBJ] = CopyWPObj;
-
-    TraversalMethod[T_DATOBJ] = TRAVERSE_NONE;
-
-    TraversalMethod[T_OBJSET] = TRAVERSE_BY_FUNCTION;
-    TraversalFunc[T_OBJSET] = TraverseObjSet;
-    TraversalCopyFunc[T_OBJSET] = CopyObjSet;
-
-    TraversalMethod[T_OBJMAP] = TRAVERSE_BY_FUNCTION;
-    TraversalFunc[T_OBJMAP] = TraverseObjMap;
-    TraversalCopyFunc[T_OBJMAP] = CopyObjMap;
+    GAP_ASSERT(tnum < ARRAY_SIZE(TraversalMethod));
+    TraversalMethod[tnum] = meth;
+    TraversalFunc[tnum] = tf;
+    TraversalCopyFunc[tnum] = cf;
 }
 
 static void BeginTraversal(TraversalState * traversal)
@@ -319,7 +155,7 @@ static void TraversalRehash(TraversalState * traversal)
     traversal->hashSize = 0;
     traversal->hashBits++;
     for (i = 1; i <= oldsize; i++) {
-        Obj obj = ADDR_OBJ(oldlist)[i];
+        Obj obj = CONST_ADDR_OBJ(oldlist)[i];
         if (obj != NULL)
             SeenDuringTraversal(obj);
     }
@@ -343,18 +179,20 @@ void QueueForTraversal(Obj obj)
         Obj oldlist = traversal->list;
         Obj list = NewList(newcapacity);
         for (i = 1; i <= oldcapacity; i++)
-            ADDR_OBJ(list)[i] = ADDR_OBJ(oldlist)[i];
+            ADDR_OBJ(list)[i] = CONST_ADDR_OBJ(oldlist)[i];
         traversal->list = list;
         traversal->listCapacity = newcapacity;
     }
     ADDR_OBJ(traversal->list)[++traversal->listSize] = obj;
 }
 
-void TraverseRegionFrom(TraversalState * traversal,
+static void TraverseRegionFrom(TraversalState * traversal,
                         Obj              obj,
                         int (*traversalCheck)(Obj))
 {
-    if (!IS_BAG_REF(obj) || !REGION(obj) || !CheckReadAccess(obj)) {
+    GAP_ASSERT(IS_BAG_REF(obj));
+    GAP_ASSERT(REGION(obj) != NULL);
+    if (!CheckReadAccess(obj)) {
         traversal->list = NewList(0);
         return;
     }
@@ -364,7 +202,7 @@ void TraverseRegionFrom(TraversalState * traversal,
     while (traversal->listCurrent < traversal->listSize) {
         Obj current = ADDR_OBJ(traversal->list)[++traversal->listCurrent];
         int tnum = TNUM_BAG(current);
-        const TraversalMethodEnum method = TraversalMethod[TNUM_BAG(current)];
+        const TraversalMethodEnum method = TraversalMethod[tnum];
         int                       size;
         Obj *                     ptr;
         switch (method) {
@@ -422,7 +260,6 @@ Obj ReachableObjectsFrom(Obj obj)
     if (!IS_BAG_REF(obj) || REGION(obj) == NULL)
         return NewList(0);
     BeginTraversal(&traversal);
-    traversal.traversalCheck = IsSameRegion;
     TraverseRegionFrom(&traversal, obj, IsSameRegion);
     EndTraversal();
     return traversal.list;
@@ -434,7 +271,7 @@ static Obj CopyBag(Obj copy, Obj original)
     UInt                      type = TNUM_BAG(original);
     const TraversalMethodEnum method = TraversalMethod[type];
     Obj *                     ptr = ADDR_OBJ(copy);
-    memcpy(ptr, ADDR_OBJ(original), size);
+    memcpy(ptr, CONST_ADDR_OBJ(original), size);
 
     switch (method) {
     case TRAVERSE_BY_FUNCTION:
@@ -468,10 +305,8 @@ int PreMakeImmutableCheck(Obj obj)
         return 1;
     if (!CheckExclusiveWriteAccess(obj))
         return 0;
-    switch (TNUM_OBJ(obj)) {
-    case T_STRING:
+    if (TraversalMethod[TNUM_OBJ(obj)] == TRAVERSE_NONE)
         return 1;
-    }
     BeginTraversal(&traversal);
     traversal.border = 0;
     TraverseRegionFrom(&traversal, obj, IsWritableOrImmutable);
@@ -479,9 +314,16 @@ int PreMakeImmutableCheck(Obj obj)
     return !traversal.border;
 }
 
+static Obj WrappedInList(Obj obj)
+{
+    Obj list = NewList(1);
+    SET_ELM_PLIST(list, 1, obj);
+    return list;
+}
+
 Obj CopyReachableObjectsFrom(Obj obj, int delimited, int asList, int imm)
 {
-    Obj *          traversed, *copies, copyList;
+    Obj            copyList;
     TraversalState traversal;
     UInt           len, i;
     if (!IS_BAG_REF(obj) || REGION(obj) == NULL) {
@@ -491,31 +333,25 @@ Obj CopyReachableObjectsFrom(Obj obj, int delimited, int asList, int imm)
             ErrorQuit("atomic objects cannot be copied", 0, 0);
         }
 
-        if (asList) {
-            copyList = NewList(1);
-            SET_ELM_PLIST(copyList, 1, obj);
-            return copyList;
-        }
-        else
-            return obj;
+        return asList ? WrappedInList(obj) : obj;
     }
+    if (imm && !IS_MUTABLE_OBJ(obj))
+        return asList ? WrappedInList(obj) : obj;
+
     BeginTraversal(&traversal);
-    if (imm) {
-        if (!IS_MUTABLE_OBJ(obj))
-            return obj;
-        TraverseRegionFrom(&traversal, obj, IsMutable);
-    }
-    else
-        TraverseRegionFrom(&traversal, obj, IsSameRegion);
-    traversed = ADDR_OBJ(traversal.list);
+    TraverseRegionFrom(&traversal, obj, imm ? IsMutable : IsSameRegion);
+
+    const Obj * traversed = CONST_ADDR_OBJ(traversal.list);
     len = LEN_PLIST(traversal.list);
     copyList = NewList(len);
-    copies = ADDR_OBJ(copyList);
+    Obj * copies = ADDR_OBJ(copyList);
     traversal.border = delimited;
     if (len == 0) {
         EndTraversal();
-        if (delimited)
+        if (delimited) {
+            // FIXME: honor asList
             return GetRegionOf(obj)->obj;
+        }
         ErrorQuit("Object not in a readable region", 0L, 0L);
     }
     traversal.copyMap = NewList(LEN_PLIST(traversal.hashTable));
@@ -547,10 +383,9 @@ Obj CopyReachableObjectsFrom(Obj obj, int delimited, int asList, int imm)
 
 Obj CopyTraversed(Obj traversedList)
 {
-    Obj            copyList, *copies, *traversed;
     TraversalState traversal;
     UInt           len, i;
-    traversed = ADDR_OBJ(traversedList);
+    const Obj *    traversed = CONST_ADDR_OBJ(traversedList);
     BeginTraversal(&traversal);
     len = LEN_PLIST(traversedList);
     if (len == 1) {
@@ -560,8 +395,8 @@ Obj CopyTraversed(Obj traversedList)
     }
     for (i = 1; i <= len; i++)
         SeenDuringTraversal(traversed[i]);
-    copyList = NewList(len);
-    copies = ADDR_OBJ(copyList);
+    Obj   copyList = NewList(len);
+    Obj * copies = ADDR_OBJ(copyList);
     traversal.copyMap = NewList(LEN_PLIST(traversal.hashTable));
     for (i = 1; i <= len; i++) {
         Obj  original = traversed[i];
@@ -575,6 +410,40 @@ Obj CopyTraversed(Obj traversedList)
         CopyBag(copies[i], traversed[i]);
     EndTraversal();
     return copies[1];
+}
+
+
+/****************************************************************************
+**
+*F  InitKernel( <module> )  . . . . . . . . initialise kernel data structures
+*/
+static Int InitKernel ( StructInitInfo * module )
+{
+    int i;
+    for (i = FIRST_REAL_TNUM; i <= LAST_REAL_TNUM; i++) {
+        assert(TraversalMethod[i] == 0);
+        TraversalMethod[i] = TRAVERSE_NONE;
+    }
+
+    return 0;
+}
+
+
+/****************************************************************************
+**
+*F  InitInfoGVars() . . . . . . . . . . . . . . . . . table of init functions
+*/
+static StructInitInfo module = {
+    // init struct using C99 designated initializers; for a full list of
+    // fields, please refer to the definition of StructInitInfo
+    .type = MODULE_BUILTIN,
+    .name = "traverse",
+    .initKernel = InitKernel,
+};
+
+StructInitInfo * InitInfoTraverse ( void )
+{
+    return &module;
 }
 
 #endif

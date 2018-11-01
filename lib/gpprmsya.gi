@@ -346,6 +346,7 @@ local   F,      # free group
     # return the isomorphism to the finitely presented group
     hom:= GroupHomomorphismByImagesNC(G,F,imgs,GeneratorsOfGroup(F));
     SetIsBijective( hom, true );
+    ProcessEpimorphismToNewFpGroup(hom);
     return hom;
 end);
 
@@ -1187,7 +1188,7 @@ syll, act, typ, sel, bas, wdom, comp, lperm, other, away, i, j,b0,opg,bp;
   Info(InfoGroup,1,"SymmAlt normalizer: orbits ",List(o,Length));
 
   if Length(o)=1 and IsAbelian(u) then
-    b:=List(Set(Factors(Size(u))),p->Omega(SylowSubgroup(u,p),p,1));
+    b:=List(PrimeDivisors(Size(u)),p->Omega(SylowSubgroup(u,p),p,1));
     if Length(b)=1 and IsTransitive(b[1],dom) then
       # elementary abelian, regular -- construct the correct AGL
       b:=b[1];
@@ -1364,7 +1365,7 @@ syll, act, typ, sel, bas, wdom, comp, lperm, other, away, i, j,b0,opg,bp;
   if not issym then 
     pg:=AlternatingSubgroup(pg);
   fi;
-  if IsSolvableGroup(pg) then
+  if (Size(pg)/Size(u))>10000 and IsSolvableGroup(pg) then
     perm:=IsomorphismPcGroup(pg);
     pg:=PreImage(perm,Normalizer(Image(perm,pg),Image(perm,u)));
   fi;
@@ -1778,6 +1779,7 @@ local   F,      # free group
     # return the isomorphism to the finitely presented group
     hom:= GroupHomomorphismByImagesNC(G,F,imgs,GeneratorsOfGroup(F));
     SetIsBijective( hom, true );
+    ProcessEpimorphismToNewFpGroup(hom);
     return hom;
 end);
 
@@ -2224,7 +2226,7 @@ local G,max,dom,n,A,S,issn,p,i,j,m,k,powdec,pd,gps,v,invol,sel,mf,l,prim;
     m:=ClosureGroup(m,PermList(List(v,i->Position(v,i+k))));
     if Size(m)<Size(S) then
       if SignPermGroup(m)=1 then
-	#its a subgroup of A_n, but there are two classes
+	# it's a subgroup of A_n, but there are two classes
 	# (the normalizer in S_n cannot increase)
 	if not issn then
 	  Add(max,m);
@@ -2317,6 +2319,8 @@ local G,max,dom,n,A,S,issn,p,i,j,m,k,powdec,pd,gps,v,invol,sel,mf,l,prim;
       fi;
     fi;
   od;
+
+  Info(InfoPerformance,2,"Using Primitive Groups Library");
 
   # type (f): Almost simple
   if not PrimitiveGroupsAvailable(n) then
@@ -2445,6 +2449,30 @@ InstallMethod( RadicalGroup, "symmetric", true,
 InstallMethod( RadicalGroup, "alternating", true,
     [ IsNaturalAlternatingGroup and IsFinite], 0,RadicalSymmAlt);
 
+InstallMethod(NormalSubgroups,
+"for a symmetric group",
+[IsSymmetricGroup],
+RankFilter(IsPermGroup),
+function(S)
+  if SymmetricDegree(S) <= 4 then
+    # S is soluble, so this includes the trivial group (and Klein 4)
+    return DerivedSeriesOfGroup(S);
+  fi;
+  # DerivedSubgroup is the alternating group
+  return [S, DerivedSubgroup(S), TrivialSubgroup(S)];
+end);
+
+InstallMethod(NormalSubgroups,
+"for an alternating group",
+[IsAlternatingGroup],
+RankFilter(IsPermGroup),
+function(A)
+  if AlternatingDegree(A) <= 4 then
+    # S is soluble, so this includes the trivial group (and Klein 4)
+    return DerivedSeriesOfGroup(A);
+  fi;
+  return [A, TrivialSubgroup(A)];
+end);
 
 #############################################################################
 ##

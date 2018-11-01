@@ -51,20 +51,20 @@ gap> "\0yab";
 Syntax error: Expecting hexadecimal escape, or two more octal digits in stream\
 :1
 "\0yab";
-  ^
+^^^
 gap> "\090";
 Syntax error: Expecting hexadecimal escape, or two more octal digits in stream\
 :1
 "\090";
-  ^
+^^^
 gap> "\0x1g";
 Syntax error: Expecting hexadecimal digit in stream:1
 "\0x1g";
-    ^
+^^^^^
 gap> '\0x1bc';
 Syntax error: Missing single quote in character constant in stream:1
 '\0x1bc';
-     ^
+^^^^^^
 gap> "\0x1bc";
 "\033c"
 gap> '
@@ -251,6 +251,26 @@ true
 gap> """x
 > x""" = "x\nx";
 true
+
+# Working with CSV files
+gap> dir := DirectoriesLibrary("tst/testinstall/files");;
+gap> s := ReadCSV( Filename(dir, "example.csv"), ';' );
+[ rec( f := 2, f1 := 1, f_2 := 3 ), rec( f1 := 4, f_2 := 6 ), rec( f1 := 7 ), 
+  rec( f := 11, f_2 := 12 ), rec( f := "yy", f1 := "x", f_2 := "zzz" ) ]
+gap> tmpdir := DirectoryTemporary();;
+gap> fname := Filename(tmpdir, "output.csv");;
+gap> PrintCSV( fname, s );
+gap> s = ReadCSV( fname );
+true
+gap> s[2].emil:="\"Alas, poor Yorick\", the call went";;
+gap> s[3].empty:="";;
+gap> PrintCSV(fname,s);
+gap> ReadCSV(fname,true);
+[ rec( field1 := "emil", field2 := "empty", field3 := "f", field4 := "f1", 
+      field5 := "f 2" ), rec( field3 := 2, field4 := 1, field5 := 3 ), 
+  rec( field1 := "\"Alas, poor Yorick\", the call went", field4 := 4, 
+      field5 := 6 ), rec( field4 := 7 ), rec( field3 := 11, field5 := 12 ), 
+  rec( field3 := "yy", field4 := "x", field5 := "zzz" ) ]
 
 # Long Strings
 # All these strings are 2000 or 3000 characters long, to make sure we fill the string buffer at least once or twice
@@ -5273,4 +5293,3 @@ gap> ret3000 := """
 gap> ret3000 = List([1..3000], x -> '\n');
 true
 gap> STOP_TEST( "strings.tst", 1);
-

@@ -16,9 +16,7 @@
 #ifndef GAP_SYSFILES_H
 #define GAP_SYSFILES_H
 
-#include <src/system.h>
-
-#include <stdio.h>  // for FILE
+#include "system.h"
 
 /****************************************************************************
 **
@@ -31,21 +29,20 @@
 *F  SyFindOrLinkGapRootFile( <filename>, <result> ) . . . . . .  load or link
 **
 **  'SyFindOrLinkGapRootFile'  tries to find a GAP  file in the root area and
-**  check  if   there is a corresponding    statically  or dynamically linked
-**  module.  If the CRC matches this module  is loaded otherwise the filename
-**  is returned.
+**  check if there is a corresponding statically linked module. If the CRC
+**  matches the statically linked module is loaded, and <result->module_info>
+**  is set to point to its StructInitInfo instance.
 **
 **  The function returns:
 **
 **  0: no file or module was found
-**  1: if a dynamically linked module was found
-**  2: if a statically linked module was found
-**  3: a GAP file was found
+**  2: a statically linked module was found
+**  3: only a GAP file was found; its path is stored in  <result->path>
 */
 
 typedef union {
-  Char pathname[GAP_PATH_MAX];
-  StructInitInfo * module_info;
+    Char             path[GAP_PATH_MAX];
+    StructInitInfo * module_info;
 } TypGRF_Data;
 
 extern Int SyFindOrLinkGapRootFile (
@@ -133,51 +130,29 @@ extern const Char * SyWinCmd (
 */
 
 
-/****************************************************************************
-**
-*V  syBuf . . . . . . . . . . . . . .  buffer and other info for files, local
-**
-**  'syBuf' is  a array used as  buffers for  file I/O to   prevent the C I/O
-**  routines  from   allocating their  buffers  using  'malloc',  which would
-**  otherwise confuse Gasman.
-*/
-typedef struct {
-  int         fp;          /* file descriptor for this file */
-  int         echo;        /* file descriptor for the echo */
-  UInt        pipe;        /* file is really a pipe */
-  FILE       *pipehandle;  /* for pipes we need to remember the file handle */
-  UInt        ateof;       /* set to 1 by any read operation that hits eof
-                              reset to 0 by a subsequent successful read */
-  UInt        crlast;      /* records that last character read was \r for
-                              cygwin and othger systems that need end-of-line
-                              hackery */
-  Int         bufno;       /* if non-negative then this file has a buffer in
-                              syBuffers[bufno]; If negative, this file may not
-                              be buffered */
-  UInt        isTTY;       /* set in Fopen when this fid is a *stdin* or *errin*
-                              and really is a tty*/
-} SYS_SY_BUF;
+extern UInt SySetBuffering(UInt fid);
 
-#define SYS_FILE_BUF_SIZE 20000
-
-typedef struct {
-  Char buf[SYS_FILE_BUF_SIZE];
-  UInt inuse;
-  UInt bufstart;
-  UInt buflen;
-} SYS_SY_BUFFER;
-
-extern SYS_SY_BUF syBuf [256];
-
-extern SYS_SY_BUFFER syBuffers[32];
-
-extern UInt SySetBuffering( UInt fid );
+extern void SyRedirectStderrToStdOut(void);
 
 /****************************************************************************
 **
-*F  SyFileno( <fid> ) . . . . . . . . . . . . . . get operating system fileno
+*F  SyBufFileno( <fid> ) . . . . . . . . . . . .  get operating system fileno
+**
+**  Given a 'syBuf' buffer id, return the associated file descriptor, if any.
 */
-#define SyFileno(fid)   (fid==-1?-1:syBuf[fid].fp)
+extern int SyBufFileno(Int fid);
+
+/****************************************************************************
+**
+*F  SyBufIsTTY( <fid> ) . . . . . . . . . . . . determine if handle for a tty
+**
+**  Given a 'syBuf' buffer id, return 1 if it references a TTY, else 0
+*/
+extern Int SyBufIsTTY(Int fid);
+
+
+// HACK: set 'ateof' to true for the given 'syBuf' entry
+extern void SyBufSetEOF(Int fid);
 
 
 /****************************************************************************
@@ -329,6 +304,11 @@ extern void SyFputs (
             const Char *        line,
             Int                 fid );
 
+
+Int SyRead(Int fid, void * ptr, size_t len);
+Int SyWrite(Int fid, const void * ptr, size_t len);
+
+Int SyReadWithBuffer(Int fid, void * ptr, size_t len);
 
 /****************************************************************************
 **
@@ -627,8 +607,12 @@ void * SyMemmove(void * dst, const void * src, size_t size);
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
+
+// This function is called by 'InitSystem', before the usual module
+// initialization.
+extern void InitSysFiles(void);
 
 /****************************************************************************
 **

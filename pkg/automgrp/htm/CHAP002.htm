@@ -282,7 +282,8 @@ group for each stabilizer, and the <var>G</var> acts transitively on the first l
 This is sufficient but not necessary condition for <var>G</var> to be fractal. See also
 <code>IsFractal</code> (<a href="CHAP002.htm#SSEC002.3">IsFractal</a>).
 <p>
-<li><code>IsSphericallyTransitive( </code><var>G</var><code> ) [treehomsg] P</code>
+<a name = "SSEC002.5"></a>
+<li><code>IsSphericallyTransitive( </code><var>G</var><code> ) P</code>
 <p>
 Returns whether the group <var>G</var> is spherically transitive (see&nbsp;<a href="CHAP001.htm#SECT001">Short math background</a>).
 <pre>
@@ -309,7 +310,8 @@ gap&gt; ContainsSphericallyTransitiveElement(G);
 false
 </pre>
 <p>
-<li><code>IsTransitiveOnLevel( </code><var>G</var><code>, </code><var>lev</var><code> ) [treehomsg] O</code>
+<a name = "SSEC002.7"></a>
+<li><code>IsTransitiveOnLevel( </code><var>G</var><code>, </code><var>lev</var><code> ) O</code>
 <p>
 Returns whether the group (semigroup) <var>G</var> acts transitively on level <var>lev</var>.
 <p>
@@ -493,7 +495,8 @@ gap&gt; Display(UnderlyingAutomaton(H));
 a1 = (a1, a1), a2 = (a3, a1)(1,2), a3 = (a2, a1)
 </pre>
 <p>
-<li><code>AutomatonList( </code><var>G</var><code> ) [automsg] AM</code>
+<a name = "SSEC002.17"></a>
+<li><code>AutomatonList( </code><var>G</var><code> ) AM</code>
 <p>
 Returns an <code>AutomatonList</code> of <code>UnderlyingAutomaton</code>(<var>G</var>) (see <a href="CHAP002.htm#SSEC002.16">UnderlyingAutomaton</a>).
 <pre>
@@ -503,7 +506,8 @@ gap&gt; AutomatonList(Basilica);
 [ [ 2, 5, (1,2) ], [ 1, 5, () ], [ 5, 4, (1,2) ], [ 3, 5, () ], [ 5, 5, () ] ]
 </pre>
 <p>
-<li><code>RecurList( </code><var>G</var><code> ) [selfsimsg] AM</code>
+<a name = "SSEC002.18"></a>
+<li><code>RecurList( </code><var>G</var><code> ) AM</code>
 <p>
 Returns an internal representation of the wreath recursion of the
 self-similar group (semigroup) containing <var>G</var>.
@@ -977,7 +981,8 @@ gap&gt; MarkovOperator(S,3,[1/3,2/3]);
   [ 1/3, 2/3, 0, 0, 0, 0, 0, 0 ], [ 1, 0, 0, 0, 0, 0, 0, 0 ] ]
 </pre>
 <p>
-<li><code>MihailovaSystem( </code><var>G</var><code> ) [automgroup] AM</code>
+<a name = "SSEC003.23"></a>
+<li><code>MihailovaSystem( </code><var>G</var><code> ) AM</code>
 <p>
 In the case when <var>G</var> is an automaton fractal group acting on a binary
 tree, computes the generating set for the first level stabilizer in G
@@ -1437,5 +1442,5 @@ gap&gt; AG_RewritingSystemRules(G);
 <p>
 [<a href = "chapters.htm">Up</a>] [<a href ="CHAP001.htm">Previous</a>] [<a href ="CHAP003.htm">Next</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<address>automgrp manual<br>March 2016
+<address>automgrp manual<br>September 2018
 </address></body></html>

@@ -10,26 +10,27 @@
 **  This file contains the functions for generic lists.
 */
 
-#include <src/listfunc.h>
+#include "listfunc.h"
 
-#include <src/ariths.h>
-#include <src/blister.h>
-#include <src/bool.h>
-#include <src/calls.h>
-#include <src/gap.h>
-#include <src/io.h>
-#include <src/lists.h>
-#include <src/opers.h>
-#include <src/permutat.h>
-#include <src/plist.h>
-#include <src/pperm.h>
-#include <src/set.h>
-#include <src/stringobj.h>
-#include <src/sysfiles.h>
-#include <src/trans.h>
+#include "ariths.h"
+#include "blister.h"
+#include "bool.h"
+#include "calls.h"
+#include "error.h"
+#include "io.h"
+#include "lists.h"
+#include "modules.h"
+#include "opers.h"
+#include "permutat.h"
+#include "plist.h"
+#include "pperm.h"
+#include "set.h"
+#include "stringobj.h"
+#include "sysfiles.h"
+#include "trans.h"
 
 #ifdef HPCGAP
-#include <src/hpc/aobjects.h>
+#include "hpc/aobjects.h"
 #endif
 
 /****************************************************************************
@@ -82,9 +83,9 @@ void            AddPlist3 (
 {
   UInt len;
 
-    if ( ! IS_MUTABLE_PLIST(list) ) {
+    if ( ! IS_PLIST_MUTABLE(list) ) {
         list = ErrorReturnObj(
-                "Lists Assignment: <list> must be a mutable list",
+                "List Assignment: <list> must be a mutable list",
                 0L, 0L,
                 "you may replace <list> via 'return <list>;'" );
         FuncADD_LIST( 0, list, obj );
@@ -166,10 +167,10 @@ Obj FuncADD_LIST (
 
 /****************************************************************************
 **
-*F  RemList(<list>) . . . . . . . .  add an object to the end of a list
+*F  RemList(<list>) . . . . . . . .  remove an object from the end of a list
 **
-**  'RemList' removes the last object <obj> from the end  of  the  list  
-** <list>,  and returns it.
+**  'RemList' removes the last object <obj> from the end of the list <list>,
+**  and returns it.
 */
 Obj            RemList (
     Obj                 list)
@@ -199,7 +200,7 @@ Obj            RemPlist (
     Int                 pos;           
     Obj removed; 
 
-    if ( ! IS_MUTABLE_PLIST(list) ) {
+    if ( ! IS_PLIST_MUTABLE(list) ) {
         list = ErrorReturnObj(
                 "Remove: <list> must be a mutable list",
                 0L, 0L,
@@ -268,8 +269,6 @@ Obj             FuncAPPEND_LIST_INTR (
 {
     UInt                len1;           /* length of the first list        */
     UInt                len2;           /* length of the second list       */
-    Obj *               ptr1;           /* pointer into the first list     */
-    const Obj *         ptr2;           /* pointer into the second list    */
     Obj                 elm;            /* one element of the second list  */
     Int                 i;              /* loop variable                   */
 
@@ -282,19 +281,17 @@ Obj             FuncAPPEND_LIST_INTR (
     
 
     /* handle the case of strings now */
-    if ( IS_STRING_REP(list1) && IS_STRING_REP(list2))
-      {
+    if (IS_STRING_REP(list1) && IS_STRING_REP(list2)) {
         len1 = GET_LEN_STRING(list1);
         len2 = GET_LEN_STRING(list2);
         GROW_STRING(list1, len1 + len2);
         SET_LEN_STRING(list1, len1 + len2);
         CLEAR_FILTS_LIST(list1);
-        SyMemmove( CHARS_STRING(list1) + len1, CHARS_STRING(list2), len2 + 1);
-        /* ensure trailing zero */
-        *(CHARS_STRING(list1) + len1 + len2) = 0;    
+        // copy data, including terminating zero byte
+        memcpy(CHARS_STRING(list1) + len1, CHARS_STRING(list2), len2 + 1);
         return (Obj) 0;
-      }
-    
+    }
+
     /* check the type of the first argument                                */
     if ( TNUM_OBJ( list1 ) != T_PLIST ) {
         while ( ! IS_SMALL_LIST( list1 ) ) {
@@ -332,12 +329,10 @@ Obj             FuncAPPEND_LIST_INTR (
 
     /* add the elements                                                    */
     if ( IS_PLIST(list2) ) {
-        ptr1 = ADDR_OBJ(list1) + len1;
-        ptr2 = CONST_ADDR_OBJ(list2);
-        for ( i = 1; i <= len2; i++ ) {
-            ptr1[i] = ptr2[i];
-            /* 'CHANGED_BAG(list1);' not needed, ELM_PLIST does not NewBag */
-        }
+        // note that the two memory regions can never overlap, even
+        // if list1 and list2 are identical
+        memcpy(ADDR_OBJ(list1) + 1 + len1, CONST_ADDR_OBJ(list2) + 1,
+               len2 * sizeof(Obj));
         CHANGED_BAG( list1 );
     }
     else {
@@ -619,7 +614,7 @@ Obj             FuncPOSITION_FIRST_COMPONENT_SORTED (
   if(IS_PLIST(list)) \
     RESET_FILT_LIST(list, FN_IS_NSORT);
 
-#include <src/sortbase.h>
+#include "sortbase.h"
 
 #define SORT_FUNC_NAME SortDensePlist
 #define SORT_FUNC_ARGS Obj list
@@ -634,7 +629,25 @@ Obj             FuncPOSITION_FIRST_COMPONENT_SORTED (
 #define SORT_FILTER_CHECKS() \
   RESET_FILT_LIST(list, FN_IS_NSORT);
 
-#include <src/sortbase.h>
+#include "sortbase.h"
+
+// This is a variant of SortDensePlist, which sorts plists by
+// Obj pointer. It works on non-dense plists, and can be
+// used to efficiently sort lists of small integers.
+
+#define SORT_FUNC_NAME SortPlistByRawObj
+#define SORT_FUNC_ARGS Obj list
+#define SORT_ARGS list
+#define SORT_CREATE_LOCAL(name) Obj name;
+#define SORT_LEN_LIST() LEN_PLIST(list)
+#define SORT_ASS_LIST_TO_LOCAL(t, i) t = ELM_PLIST(list, i)
+#define SORT_ASS_LOCAL_TO_LIST(i, j) SET_ELM_PLIST(list, i, j);
+#define SORT_COMP(v, w) ((v) < (w))
+#define SORT_FILTER_CHECKS() \
+    RESET_FILT_LIST(list, FN_IS_NSORT); \
+    RESET_FILT_LIST(list, FN_IS_SSORT);
+
+#include "sortbase.h"
 
 /****************************************************************************
 **
@@ -657,7 +670,7 @@ Obj             FuncPOSITION_FIRST_COMPONENT_SORTED (
   RESET_FILT_LIST(list, FN_IS_SSORT); \
   RESET_FILT_LIST(list, FN_IS_NSORT);
 
-#include <src/sortbase.h>
+#include "sortbase.h"
 
 #define SORT_FUNC_NAME SortDensePlistComp
 #define SORT_FUNC_ARGS Obj list, Obj func
@@ -674,7 +687,7 @@ Obj             FuncPOSITION_FIRST_COMPONENT_SORTED (
   RESET_FILT_LIST(list, FN_IS_SSORT); \
   RESET_FILT_LIST(list, FN_IS_NSORT);
 
-#include <src/sortbase.h>
+#include "sortbase.h"
 
 /****************************************************************************
 **
@@ -729,7 +742,7 @@ Obj             FuncPOSITION_FIRST_COMPONENT_SORTED (
   RESET_FILT_LIST(shadow, FN_IS_SSORT); \
   RESET_FILT_LIST(shadow, FN_IS_NSORT);
 
-#include <src/sortbase.h>
+#include "sortbase.h"
 
 #define SORT_FUNC_NAME SortParaDensePlist
 #define SORT_FUNC_ARGS Obj list, Obj shadow
@@ -752,7 +765,7 @@ Obj             FuncPOSITION_FIRST_COMPONENT_SORTED (
   RESET_FILT_LIST(shadow, FN_IS_SSORT); \
   RESET_FILT_LIST(shadow, FN_IS_NSORT);
 
-#include <src/sortbase.h>
+#include "sortbase.h"
 
 #define SORT_FUNC_NAME SORT_PARA_LISTComp
 #define SORT_FUNC_ARGS Obj list, Obj shadow, Obj func
@@ -773,7 +786,7 @@ Obj             FuncPOSITION_FIRST_COMPONENT_SORTED (
     RESET_FILT_LIST(shadow, FN_IS_NSORT); \
     RESET_FILT_LIST(shadow, FN_IS_SSORT);
 
-#include <src/sortbase.h>
+#include "sortbase.h"
   
 #define SORT_FUNC_NAME SortParaDensePlistComp
 #define SORT_FUNC_ARGS Obj list, Obj shadow, Obj func
@@ -796,7 +809,7 @@ Obj             FuncPOSITION_FIRST_COMPONENT_SORTED (
     RESET_FILT_LIST(shadow, FN_IS_NSORT); \
     RESET_FILT_LIST(shadow, FN_IS_SSORT);
 
-#include <src/sortbase.h>
+#include "sortbase.h"
 
 
 
@@ -1004,13 +1017,7 @@ Obj FuncSORT_PARA_LIST (
     /* check the first two arguments                                       */
     CheckIsSmallList(list, "SORT_PARA_LIST");
     CheckIsSmallList(shadow, "SORT_PARA_LIST");
-
-    if( LEN_LIST( list ) != LEN_LIST( shadow ) ) {
-        ErrorMayQuit( 
-            "SORT_PARA_LIST: lists must have the same length (not %d and %d)",
-            (Int)LEN_LIST( list ),
-            (Int)LEN_LIST( shadow ));
-    }
+    CheckSameLength("SORT_PARA_LIST", "list", "shadow", list, shadow);
 
     /* dispatch                                                            */
     if ( IS_DENSE_PLIST(list) && IS_DENSE_PLIST(shadow) ) {
@@ -1033,13 +1040,7 @@ Obj FuncSTABLE_SORT_PARA_LIST (
     /* check the first two arguments                                       */
     CheckIsSmallList(list, "STABLE_SORT_PARA_LIST");
     CheckIsSmallList(shadow, "STABLE_SORT_PARA_LIST");
-
-    if( LEN_LIST( list ) != LEN_LIST( shadow ) ) {
-        ErrorMayQuit( 
-            "STABLE_SORT_PARA_LIST: lists must have the same length (not %d and %d)",
-            (Int)LEN_LIST( list ),
-            (Int)LEN_LIST( shadow ));
-    }
+    CheckSameLength("STABLE_SORT_PARA_LIST", "list", "shadow", list, shadow);
 
     /* dispatch                                                            */
     if ( IS_DENSE_PLIST(list) && IS_DENSE_PLIST(shadow) ) {
@@ -1068,13 +1069,7 @@ Obj FuncSORT_PARA_LIST_COMP (
     /* check the first two arguments                                       */
     CheckIsSmallList(list, "SORT_PARA_LIST_COMP");
     CheckIsSmallList(shadow, "SORT_PARA_LIST_COMP");
-
-    if( LEN_LIST( list ) != LEN_LIST( shadow ) ) {
-        ErrorMayQuit( 
-            "SORT_PARA_LIST_COMP: lists must have the same length (not %d and %d)",
-            (Int)LEN_LIST( list ),
-            (Int)LEN_LIST( shadow ));
-    }
+    CheckSameLength("SORT_PARA_LIST_COMP", "list", "shadow", list, shadow);
 
     /* check the third argument                                            */
     CheckIsFunction(func, "SORT_PARA_LIST_COMP");
@@ -1100,13 +1095,7 @@ Obj FuncSTABLE_SORT_PARA_LIST_COMP (
     /* check the first two arguments                                       */
     CheckIsSmallList(list, "SORT_PARA_LIST_COMP");
     CheckIsSmallList(shadow, "SORT_PARA_LIST_COMP");
-
-    if( LEN_LIST( list ) != LEN_LIST( shadow ) ) {
-        ErrorMayQuit( 
-            "SORT_PARA_LIST_COMP: lists must have the same length (not %d and %d)",
-            (Int)LEN_LIST( list ),
-            (Int)LEN_LIST( shadow ));
-    }
+    CheckSameLength("SORT_PARA_LIST_COMP", "list", "shadow", list, shadow);
 
     /* check the third argument                                            */
     CheckIsFunction(func, "SORT_PARA_LIST_COMP");
@@ -1173,7 +1162,7 @@ Obj             FuncOnPairs (
     }
 
     /* create a new bag for the result                                     */
-    img = NEW_PLIST( IS_MUTABLE_OBJ(pair) ? T_PLIST : T_PLIST+IMMUTABLE, 2 );
+    img = NEW_PLIST_WITH_MUTABILITY( IS_MUTABLE_OBJ(pair), T_PLIST, 2 );
     SET_LEN_PLIST( img, 2 );
 
     /* and enter the images of the points into the result bag              */
@@ -1219,10 +1208,9 @@ Obj             FuncOnTuples (
     }
 
     /* special case for the empty list */
-    if ( HAS_FILT_LIST( tuple, FN_IS_EMPTY )) {
+    if (LEN_LIST(tuple) == 0) {
       if (IS_MUTABLE_OBJ(tuple)) {
         img = NEW_PLIST(T_PLIST_EMPTY, 0);
-        SET_LEN_PLIST(img,0);
         return img;
       } else {
         return tuple;
@@ -1247,7 +1235,7 @@ Obj             FuncOnTuples (
     }
 
     /* create a new bag for the result                                     */
-    img = NEW_PLIST( IS_MUTABLE_OBJ(tuple) ? T_PLIST : T_PLIST+IMMUTABLE, LEN_LIST(tuple) );
+    img = NEW_PLIST_WITH_MUTABILITY( IS_MUTABLE_OBJ(tuple), T_PLIST, LEN_LIST(tuple) );
     SET_LEN_PLIST( img, LEN_LIST(tuple) );
 
     /* and enter the images of the points into the result bag              */
@@ -1291,10 +1279,9 @@ Obj             FuncOnSets (
     }
 
     /* special case for the empty list */
-    if ( HAS_FILT_LIST( set, FN_IS_EMPTY )) {
+    if (LEN_LIST(set) == 0) {
       if (IS_MUTABLE_OBJ(set)) {
         img = NEW_PLIST(T_PLIST_EMPTY, 0);
-        SET_LEN_PLIST(img,0);
         return img;
       } else {
         return set;
@@ -1445,9 +1432,7 @@ static Obj FuncSTRONGLY_CONNECTED_COMPONENTS_DIGRAPH(Obj self, Obj digraph)
     }
   val = NewBag(T_DATOBJ, (n+1)*sizeof(UInt));
   stack = NEW_PLIST(T_PLIST_CYC, n);
-  SET_LEN_PLIST(stack, 0);
   comps = NEW_PLIST(T_PLIST_TAB, n);
-  SET_LEN_PLIST(comps, 0);
   frames = NewBag(T_DATOBJ, (4*n+1)*sizeof(UInt));  
   for (k = 1; k <= n; k++)
     {
@@ -1539,18 +1524,12 @@ static Obj FuncSTRONGLY_CONNECTED_COMPONENTS_DIGRAPH(Obj self, Obj digraph)
 
 static inline Int GetIntObj( Obj list, UInt pos)
 {
-  Obj entry;
-  entry = ELM_PLIST(list, pos);
-  if (!entry)
-    {
-      Pr("panic: internal inconsistency", 0L, 0L);
-      SyExit(1);
-    }
-  if (!IS_INTOBJ(entry))
-    {
+  Obj entry = ELM_PLIST(list, pos);
+  GAP_ASSERT(entry);
+  if (!IS_INTOBJ(entry)) {
       ErrorMayQuit("COPY_LIST_ENTRIES: argument %d  must be a small integer, not a %s",
-                   (Int)pos, (Int)InfoBags[TNUM_OBJ(entry)].name);
-    }
+                   (Int)pos, (Int)TNAM_OBJ(entry));
+  }
   return INT_INTOBJ(entry);
 }
 
@@ -1569,40 +1548,28 @@ Obj FuncCOPY_LIST_ENTRIES( Obj self, Obj args )
   Obj *dptr;
   UInt ct;
 
-  if (!IS_PLIST(args))
-    {
-      Pr("panic: internal inconsistency",0L,0L);
-      SyExit(1);
-    }
+  GAP_ASSERT(IS_PLIST(args));
   if (LEN_PLIST(args) != 7)
     {
       ErrorMayQuit("COPY_LIST_ENTRIES: number of arguments must be 7, not %d",
                    (Int)LEN_PLIST(args), 0L);
     }
   srclist = ELM_PLIST(args,1);
-  if (!srclist)
-    {
-      Pr("panic: internal inconsistency", 0L, 0L);
-      SyExit(1);
-    }
+  GAP_ASSERT(srclist != 0);
   if (!IS_PLIST(srclist))
     {
       ErrorMayQuit("COPY_LIST_ENTRIES: source must be a plain list not a %s",
-                   (Int)InfoBags[TNUM_OBJ(srclist)].name, 0L);
+                   (Int)TNAM_OBJ(srclist), 0L);
     }
 
   srcstart = GetIntObj(args,2);
   srcinc = GetIntObj(args,3);
   dstlist = ELM_PLIST(args,4);
-  if (!dstlist)
-    {
-      Pr("panic: internal inconsistency", 0L, 0L);
-      SyExit(1);
-    }
+  GAP_ASSERT(dstlist != 0);
   while (!IS_PLIST(dstlist) || !IS_MUTABLE_OBJ(dstlist))
     {
       ErrorMayQuit("COPY_LIST_ENTRIES: destination must be a mutable plain list not a %s",
-                   (Int)InfoBags[TNUM_OBJ(dstlist)].name, 0L);
+                   (Int)TNAM_OBJ(dstlist), 0L);
     }
   dststart = GetIntObj(args,5);
   dstinc = GetIntObj(args,6);
@@ -1770,7 +1737,7 @@ Obj FuncLIST_WITH_IDENTICAL_ENTRIES(Obj self, Obj n, Obj obj)
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

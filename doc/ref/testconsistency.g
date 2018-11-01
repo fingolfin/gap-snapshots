@@ -31,12 +31,15 @@ elif IsOperation( op ) then
     class := "Oper";
     if IS_IDENTICAL_OBJ(op,IS_OBJECT) then
         class := "Filt";
-    elif op in CONSTRUCTORS then
+    elif IS_CONSTRUCTOR(op) then
         class := "Constructor"; # seem to never get one
     elif IsFilter(op) then
         class := "Filt";
         flags := TRUES_FLAGS(FLAGS_FILTER(op));
-        types := INFO_FILTERS{flags};
+        types := [];
+        for t in flags do
+            AddSet(types, INFO_FILTERS[t]);
+        od;
         catok := true;
         repok := true;
         propok := true;
@@ -109,7 +112,7 @@ for elt in x do
         errcount:=errcount+1;
       fi;
       if elt.name="Meth" then
-        if Length( Filtered( x, t -> t.attributes.Name=name and t.name in ["Attr","Prop","Oper"] ) ) = 0 then
+        if Number( x, t -> t.attributes.Name=name and t.name in ["Attr","Prop","Oper"] ) = 0 then
           pos:=OriginalPositionDocument(doc[2],elt.start);
           Print( pos[1], ":", pos[2], " : ", name, " uses Meth with no matching Oper/Attr/Prop\n" );
           errcount:=errcount+1;

@@ -231,7 +231,7 @@ InstallGlobalFunction( CoeffsCyc, function( z, N )
         #   and $n / s$, and hence remain in the reduced expression,
         # - all primes but the squarefree part of the rest.
 
-        factors:= Set( FactorsInt( s ) );
+        factors:= PrimeDivisors( s );
         second:= 1;
         for p in factors do
           if s mod p <> 0 or ( n / s ) mod p <> 0 then
@@ -264,7 +264,7 @@ InstallGlobalFunction( CoeffsCyc, function( z, N )
         # must be equal, and the negative of this value is put at the
         # position of the $p$-th element of this congruence class.
         if second > 1 then
-          for p in FactorsInt( second ) do
+          for p in Factors(Integers, second ) do
             nn:= n / p;
             newcoeffs:= ListWithIdenticalEntries( nn, 0 );
             for k in [ 1 .. n ] do
@@ -301,7 +301,7 @@ InstallGlobalFunction( CoeffsCyc, function( z, N )
     # `E(n)^k' by $ - \sum_{j=1}^{p-1} `E(n*p)^(p*k+j*n)'$.
     if quo <> 1 then
 
-      for p in Set( FactorsInt( quo ) ) do
+      for p in PrimeDivisors( quo ) do
         if p <> 2 and n mod p <> 0 then
           nn  := n * p;
           quo := quo / p;
@@ -634,7 +634,7 @@ InstallGlobalFunction( NK, function( n, k, deriv )
       od;
     elif k in [ 3, 5, 7 ] then   # for odd primes
       if ( n mod ( k*k ) <> 0 ) and
-         ForAll( Set( FactorsInt( n ) ), p -> (p-1) mod k <> 0 ) then
+         ForAll( PrimeDivisors( n ), p -> (p-1) mod k <> 0 ) then
         return fail;
       fi;
       while true do
@@ -666,7 +666,7 @@ InstallGlobalFunction( NK, function( n, k, deriv )
     elif k = 4 then
       # An automorphism of order 4 exists if 4 divides $p-1$ for an odd
       # prime divisor $p$ of `n', or if 16 divides `n'.
-      if ForAll( Set( FactorsInt( n ) ), p -> (p-1) mod k <> 0 )
+      if ForAll( PrimeDivisors( n ), p -> (p-1) mod k <> 0 )
          and n mod 16 <> 0 then
         return fail;
       fi;
@@ -691,7 +691,7 @@ InstallGlobalFunction( NK, function( n, k, deriv )
       # An automorphism of order 6 exists if automorphisms of the orders
       # 2 and 3 exist; the former is always true.
       if ( n mod 9 <> 0 ) and
-         ForAll( Set( FactorsInt( n ) ), p -> (p-1) mod 3 <> 0 ) then
+         ForAll( PrimeDivisors( n ), p -> (p-1) mod 3 <> 0 ) then
         return fail;
       fi;
       while true do
@@ -721,7 +721,7 @@ InstallGlobalFunction( NK, function( n, k, deriv )
     elif k = 8 then
       # An automorphism of order 8 exists if 8 divides $p-1$ for an odd
       # prime divisor $p$ of `n', or if 32 divides `n'.
-      if ForAll( Set( FactorsInt( n ) ), p -> (p-1) mod k <> 0 )
+      if ForAll( PrimeDivisors( n ), p -> (p-1) mod k <> 0 )
          and n mod 32 <> 0 then
         return fail;
       fi;
@@ -1245,7 +1245,7 @@ InstallGlobalFunction( Quadratic, function( arg )
     fi;
 
     coeffs:= ExtRepOfObj( cyc );
-    facts:= FactorsInt( Length( coeffs ) );
+    facts:= Factors(Integers, Length( coeffs ) );
     factsset:= Set( facts );
     two_part:= Number( facts, x -> x = 2 );
 
@@ -1540,7 +1540,8 @@ InstallMethod( GaloisMat,
         for j in [ i+1 .. ncha ] do
           if mat[j] = X then
             galoisfams[j]:= Unknown();
-            InfoWarning( 1, "GaloisMat: row ", i, " is equal to row ", j );
+            Info( InfoWarning, 1,
+                  "GaloisMat: row ", i, " is equal to row ", j );
           fi;
         od;
 
@@ -2001,8 +2002,8 @@ BindGlobal("CompareCyclotomicCollectionHelper_Filters", [
 BindGlobal("CompareCyclotomicCollectionHelper_Proxies", [
 	[ 1 ], [ 0, 1 ],
 	[ -1, 0, 1 ], [ -1, 0, 1, E(4) ],
-	[ -1, 0, 1/2, 1 ], [ -1, 0, 1, 1/2, E(4) ],
-	[ -1, 0, 1, 1/2, E(4), E(9) ], fail
+	[ -1, 0, 1/2, 1 ], [ -1, 0, 1/2, 1, E(4), 1/2+E(4) ],
+	[ -1, 0, 1/2, 1, E(4), 1/2+E(4), E(9) ], fail
 ] );
 
 if IsHPCGAP then
@@ -2032,6 +2033,7 @@ function (A,B)
   return ab[1] = ab[2];
 end );
 
+
 InstallMethod( IsSubset, "for certain cyclotomic semirings",
              [IsCyclotomicCollection and IsSemiringWithOne,
               IsCyclotomicCollection and IsSemiringWithOne],
@@ -2053,6 +2055,20 @@ function (A,B)
   # Verify that we recognized both A and B, otherwise give up.
   if fail in ab then TryNextMethod(); fi;
   i := Position( CompareCyclotomicCollectionHelper_Proxies, Intersection2( ab[1], ab[2] ) );
+  return CompareCyclotomicCollectionHelper_Semirings[i];
+end );
+
+
+InstallMethod( Union2, "for certain cyclotomic semirings",
+             [IsCyclotomicCollection and IsSemiringWithOne,
+              IsCyclotomicCollection and IsSemiringWithOne],
+function (A,B)
+  local ab, i;
+  ab := CompareCyclotomicCollectionHelper(A, B);
+  # Verify that we recognized both A and B, otherwise give up.
+  if fail in ab then TryNextMethod(); fi;
+  i := Position( CompareCyclotomicCollectionHelper_Proxies, Union2( ab[1], ab[2] ) );
+  if i = fail then TryNextMethod(); fi;
   return CompareCyclotomicCollectionHelper_Semirings[i];
 end );
 

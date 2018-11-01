@@ -633,6 +633,7 @@ local mon,iso;
     mon:=mon*iso;
     SetIsInjective(mon,true);
     SetIsSurjective(mon,true);
+    ProcessEpimorphismToNewFpGroup(mon);
     return mon;
   fi;
 end);
@@ -653,6 +654,7 @@ local mon,iso;
     iso:=mon*iso;
     SetIsInjective(iso,true);
     SetIsSurjective(iso,true);
+    ProcessEpimorphismToNewFpGroup(iso);
     mon:=MappingGeneratorsImages(iso);
     SetName(iso,Concatenation("<composed isomorphism:",
       String(mon[1]),"->",String(mon[2]),">"));
@@ -794,12 +796,11 @@ SubgroupMethodByNiceMonomorphism( RadicalGroup,
 ##
 #M  Random( <G> )
 ##
-InstallMethod( Random,
-    "handled by nice monomorphism",
-    true,
-    [ IsGroup and IsHandledByNiceMonomorphism ], 0,
-    G -> PreImagesRepresentative( NiceMonomorphism( G ),
-                                  Random( NiceObject( G ) ) ) );
+InstallMethodWithRandomSource( Random,
+    "for a random source and a group handled by nice monomorphism",
+    [ IsRandomSource, IsGroup and IsHandledByNiceMonomorphism ], 0,
+    {rs, G} -> PreImagesRepresentative( NiceMonomorphism( G ),
+                                  Random( rs, NiceObject( G ) ) ) );
 
 
 #############################################################################
@@ -847,6 +848,13 @@ end);
 #M  Size( <G> ) . . . . . . . . . . . . . . . . . . . . . . . . . size of <G>
 ##
 AttributeMethodByNiceMonomorphism( Size,
+    [ IsGroup ] );
+
+#############################################################################
+##
+#M  StructureDescription( <G> )
+##
+AttributeMethodByNiceMonomorphism( StructureDescription,
     [ IsGroup ] );
 
 

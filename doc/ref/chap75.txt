@@ -368,8 +368,9 @@
   
   [33X[0;0Y[2XTestMonomialQuick[102X  does  some  cheap tests whether the irreducible character
   [3Xchi[103X  or  the  group  [3XG[103X,  respectively,  is  monomial.  Here  [21Xcheap[121X  means in
-  particular that no computations of character tables are involved. The return
-  value is a record with components[133X
+  particular  that no computations of character tables are involved, and it is
+  [13Xnot[113X  checked whether [3Xchi[103X is a character and irreducible. The return value is
+  a record with components[133X
   
   [8X[10XisMonomial[110X[8X[108X
         [33X[0;6Yeither  [9Xtrue[109X  or  [9Xfalse[109X  or  the  string  [10X"?"[110X,  depending  on  whether
@@ -405,9 +406,9 @@
   [33X[1;0Y[29X[2XIsSubnormallyMonomial[102X( [3XG[103X ) [32X property[133X
   [33X[1;0Y[29X[2XIsSubnormallyMonomial[102X( [3Xchi[103X ) [32X property[133X
   
-  [33X[0;0YA  character of the group [22XG[122X is called [13Xsubnormally monomial[113X (SM for short) if
-  it  is induced from a linear character of a subnormal subgroup of [22XG[122X. A group
-  [22XG[122X is called SM if all its irreducible characters are SM.[133X
+  [33X[0;0YAn  irreducible  character of the group [22XG[122X is called [13Xsubnormally monomial[113X ([13XSM[113X
+  for  short) if it is induced from a linear character of a subnormal subgroup
+  of [22XG[122X. A group [22XG[122X is called SM if all its irreducible characters are SM.[133X
   
   [33X[0;0Y[2XTestSubnormallyMonomial[102X  returns a record with information whether the group
   [3XG[103X or the irreducible character [3Xchi[103X of [3XG[103X is SM.[133X

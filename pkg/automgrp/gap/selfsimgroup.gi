@@ -2,9 +2,9 @@
 ##
 #W  selfsimgroup.gi           automgrp package                 Yevgen Muntyan
 #W                                                             Dmytro Savchuk
-##  automgrp v 1.3
+##  automgrp v 1.3.1
 ##
-#Y  Copyright (C) 2003 - 2016 Yevgen Muntyan, Dmytro Savchuk
+#Y  Copyright (C) 2003 - 2018 Yevgen Muntyan, Dmytro Savchuk
 ##
 
 
@@ -162,7 +162,7 @@ function(G, gens, level)
   return SubgroupNC(overgroup, gens);
 end);
 
-InstallMethod(__AG_SubgroupOnLevel, [IsSelfSimGroup, IsList and IsEmpty, IsPosInt],
+InstallOtherMethod(__AG_SubgroupOnLevel, [IsSelfSimGroup, IsList and IsEmpty, IsPosInt],
 function(G, gens, level)
   return TrivialSubgroup(G);
 end);
@@ -646,20 +646,20 @@ end);
 ##  v*u^-3
 ##  \endexample
 ##
-InstallMethod(Random, "for [IsSelfSimGroup]",
-              [IsSelfSimGroup],
-function(G)
+InstallMethodWithRandomSource(Random, "for a random source and [IsSelfSimGroup]",
+              [IsRandomSource, IsSelfSimGroup],
+function(rs, G)
   local F, gens, pi;
 
   if IsTrivial(G) then
     return One(G);
   elif IsSelfSimilarGroup(G) then
-    return SelfSim(Random(UnderlyingFreeGroup(G)), UnderlyingSelfSimFamily(G));
+    return SelfSim(Random(rs, UnderlyingFreeGroup(G)), UnderlyingSelfSimFamily(G));
   else
     gens := GeneratorsOfGroup(G);
     F := FreeGroup(Length(gens));
     pi := GroupHomomorphismByImagesNC(F, G,  GeneratorsOfGroup(F), gens);
-    return Random(F)^pi;
+    return Random(rs, F)^pi;
   fi;
 end);
 

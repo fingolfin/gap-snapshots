@@ -2,9 +2,9 @@
 ##
 #W  selfs.gd             automgrp package                      Yevgen Muntyan
 #W                                                             Dmytro Savchuk
-##  automgrp v 1.3
+##  automgrp v 1.3.1
 ##
-#Y  Copyright (C) 2003 - 2016 Yevgen Muntyan, Dmytro Savchuk
+#Y  Copyright (C) 2003 - 2018 Yevgen Muntyan, Dmytro Savchuk
 ##
 
 
@@ -702,7 +702,7 @@ DeclareGlobalFunction("AutomPortraitDepth");
 ##  [ 2, 6, 14, 30, 62, 126 ]
 ##  \endexample
 ##
-DeclareOperation("Growth", [IsTreeHomomorphismSemigroup, IsCyclotomic]);
+DeclareOperation("Growth", [IsSemigroup, IsCyclotomic]);
 
 ################################################################################
 ##
@@ -718,7 +718,7 @@ DeclareOperation("Growth", [IsTreeHomomorphismSemigroup, IsCyclotomic]);
 ##    b*a*c, b*a*d, c*a*b, c*a*c, c*a*d, d*a*b, d*a*c, d*a*d ]
 ##  \endexample
 ##
-DeclareOperation("ListOfElements", [IsTreeHomomorphismSemigroup, IsCyclotomic]);
+DeclareOperation("ListOfElements", [IsSemigroup, IsCyclotomic]);
 
 
 ################################################################################
@@ -926,8 +926,8 @@ DeclareGlobalFunction("AG_SuspiciousForNoncontraction");
 ##    (c*a)^2*b ]
 ##  \endexample
 ##
-DeclareOperation("FindElement", [IsTreeHomomorphismSemigroup, IsFunction, IsObject, IsCyclotomic]);
-DeclareOperation("FindElements", [IsTreeHomomorphismSemigroup, IsFunction, IsObject, IsCyclotomic]);
+DeclareOperation("FindElement", [IsSemigroup, IsFunction, IsObject, IsCyclotomic]);
+DeclareOperation("FindElements", [IsSemigroup, IsFunction, IsObject, IsCyclotomic]);
 
 
 
@@ -1010,8 +1010,9 @@ DeclareGlobalFunction("IsNoncontracting");
 ##  \endexample
 ##
 DeclareProperty("IsAmenable", IsTreeAutomorphismGroup);
-InstallTrueMethod(IsAmenable, IsAbelian);
-InstallTrueMethod(IsAmenable, IsFinite);
+InstallTrueMethod(IsAmenable, IsAbelian and IsGroup);
+InstallTrueMethod(IsAmenable, IsFinite and IsGroup);
+
 
 
 

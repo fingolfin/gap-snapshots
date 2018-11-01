@@ -1358,8 +1358,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xbreak;[127X[104X
-    [4X[28XError, A break statement can only appear inside a loop[128X[104X
-    [4X[28Xnot in any function[128X[104X
+    [4X[28XSyntax error: 'break' statement not enclosed in a loop[128X[104X
   [4X[32X[104X
   
   
@@ -1387,8 +1386,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xcontinue;[127X[104X
-    [4X[28XError, A continue statement can only appear inside a loop[128X[104X
-    [4X[28Xnot in any function[128X[104X
+    [4X[28XSyntax error: 'continue' statement not enclosed in a loop[128X[104X
   [4X[32X[104X
   
   

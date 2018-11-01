@@ -7,7 +7,7 @@
 **  This file contains the GAP build version
 */
 
-#include <src/system.h>
+#include "system.h"
 
 /****************************************************************************
 **
@@ -15,4 +15,4 @@
 *V  SyBuildDateTime . . . . . . . . . . . . . . . . . date and time of build
 */
 const Char * SyBuildVersion  = "@GAP_VERSION@";
-const Char * SyBuildDateTime = "05-Sep-2018";
+const Char * SyBuildDateTime = "01-Nov-2018";

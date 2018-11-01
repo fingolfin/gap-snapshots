@@ -58,7 +58,8 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap42.html#X78D611D17EA6E3BC">42.5-2 PermList</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap42.html#X8087DCC780B9656A">42.5-3 MappingPermListList</a></span>
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap42.html#X7EF8388E7DA8E600">42.5-4 RestrictedPerm</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap42.html#X8353AB8987E35DF3">42.5-5 AsPermutation</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap42.html#X80665A5D800CAFE1">42.5-5 CycleFromList</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap42.html#X8353AB8987E35DF3">42.5-6 AsPermutation</a></span>
 </div></div>
 </div>
 
@@ -310,9 +311,30 @@ false
 (3,4)
 </pre></div>
 
+<p><a id="X80665A5D800CAFE1" name="X80665A5D800CAFE1"></a></p>
+
+<h5>42.5-5 CycleFromList</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CycleFromList</code>( <var class="Arg">list</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>For the given dense, duplicate-free list of positive integers <span class="SimpleMath">[a_1, a_2, ..., a_n]</span> return the <span class="SimpleMath">n</span>-cycle <span class="SimpleMath">(a_1,a_2,...,a_n)</span>. For the empty list the trivial permutation <span class="SimpleMath">()</span> is returned.</p>
+
+<p>If the given <var class="Arg">list</var> contains duplicates or holes, return <code class="keyw">fail</code>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CycleFromList( [1,2,3,4] );</span>
+(1,2,3,4)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CycleFromList( [3,2,6,4,5] );</span>
+(2,6,4,5,3)
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CycleFromList( [2,3,2] );</span>
+fail
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CycleFromList( [1,,3] );</span>
+fail
+</pre></div>
+
 <p><a id="X8353AB8987E35DF3" name="X8353AB8987E35DF3"></a></p>
 
-<h5>42.5-5 AsPermutation</h5>
+<h5>42.5-6 AsPermutation</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsPermutation</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
 <p>Returns: A permutation or <code class="keyw">fail</code>.</p>

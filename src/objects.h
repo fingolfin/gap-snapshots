@@ -17,9 +17,8 @@
 #ifndef GAP_OBJECTS_H
 #define GAP_OBJECTS_H
 
-#include <src/debug.h>
-#include <src/intobj.h>
-#include <src/gasman.h>
+#include "gasman.h"
+#include "intobj.h"
 
 #ifdef HPCGAP
 #define USE_THREADSAFE_COPYING
@@ -28,7 +27,7 @@
 
 /****************************************************************************
 **
-*T  Obj . . . . . . . . . . . . . . . . . . . . . . . . . . . type of objects
+*t  Obj . . . . . . . . . . . . . . . . . . . . . . . . . . . type of objects
 **
 **  'Obj' is the type of objects.
 **
@@ -139,24 +138,31 @@ enum TNUM {
     START_ENUM_RANGE(FIRST_REAL_TNUM),
 
     START_ENUM_RANGE(FIRST_CONSTANT_TNUM),
-        T_INT,      // immediate
-        T_INTPOS,
-        T_INTNEG,
-        T_RAT,
-        T_CYC,
-        T_FFE,      // immediate
-        T_PERM2,
-        T_PERM4,
-        T_TRANS2,
-        T_TRANS4,
-        T_PPERM2,
-        T_PPERM4,
+
+        // The next range contains all constant TNUMs for which multiplication
+        // with an integer resp. powering by an integer makes sense
+        START_ENUM_RANGE(FIRST_MULT_TNUM),
+            T_INT,      // immediate
+            T_INTPOS,
+            T_INTNEG,
+            T_RAT,
+            T_CYC,
+            T_FFE,      // immediate
+            T_MACFLOAT,
+            T_PERM2,
+            T_PERM4,
+            T_TRANS2,
+            T_TRANS4,
+            T_PPERM2,
+            T_PPERM4,
+        END_ENUM_RANGE(LAST_MULT_TNUM),
+
         T_BOOL,
         T_CHAR,
+
         T_FUNCTION,
         T_BODY,     // the type of function body bags
         T_FLAGS,
-        T_MACFLOAT,
         T_LVARS,
         T_HVARS,
     END_ENUM_RANGE(LAST_CONSTANT_TNUM),
@@ -224,8 +230,8 @@ enum TNUM {
         T_DATOBJ,
         T_WPOBJ,
 #ifdef HPCGAP
-        T_APOSOBJ,
         T_ACOMOBJ,
+        T_APOSOBJ,
 #endif
 
         // package TNUMs, for use by kernel extensions
@@ -330,7 +336,7 @@ static inline void CLEAR_OBJ_FLAG(Obj obj, uint8_t flag)
 
 /****************************************************************************
 **
-** Object flags for use with SET_OBJ_FLAG() etc.
+**  Object flags for use with SET_OBJ_FLAG() etc.
 **
 */
 enum {
@@ -359,11 +365,18 @@ static inline UInt TNUM_OBJ(Obj obj)
 
 /****************************************************************************
 **
+*F  TNAM_TNUM( <obj> ) . . . . . . . . . . . . . . . . . . . . name of a type
+*/
+const Char * TNAM_TNUM(UInt tnum);
+
+
+/****************************************************************************
+**
 *F  TNAM_OBJ( <obj> ) . . . . . . . . . . . . . name of the type of an object
 */
 static inline const Char * TNAM_OBJ(Obj obj)
 {
-    return InfoBags[TNUM_OBJ(obj)].name;
+    return TNAM_TNUM(TNUM_OBJ(obj));
 }
 
 
@@ -399,11 +412,28 @@ static inline const Obj *CONST_ADDR_OBJ(Obj obj)
 
 /****************************************************************************
 **
+*S  POS_FAMILY_TYPE . . . . . . position where the family of a type is stored
+*S  POS_FLAGS_TYPE . . . . . .  position where the flags of a type are stored
+*S  POS_DATA_TYPE . . . . . . . . position where the data of a type is stored
+*S  POS_NUMB_TYPE . . . . . . . position where the number of a type is stored
+*S  POS_FIRST_FREE_TYPE . . . . .  first position that has no overall meaning
+*/
+enum {
+    POS_FAMILY_TYPE = 1,
+    POS_FLAGS_TYPE = 2,
+    POS_DATA_TYPE = 3,
+    POS_NUMB_TYPE = 4,
+    POS_FIRST_FREE_TYPE = 5,
+};
+
+
+/****************************************************************************
+**
 *F  FAMILY_TYPE( <type> ) . . . . . . . . . . . . . . . . .  family of a type
 **
 **  'FAMILY_TYPE' returns the family of the type <type>.
 */
-#define FAMILY_TYPE(type)       ELM_PLIST( type, 1 )
+#define FAMILY_TYPE(type)       ELM_PLIST( type, POS_FAMILY_TYPE )
 
 
 /****************************************************************************
@@ -419,7 +449,7 @@ static inline const Obj *CONST_ADDR_OBJ(Obj obj)
 **
 **  'FLAGS_TYPE' returns the flags boolean list of the type <type>.
 */
-#define FLAGS_TYPE(type)        ELM_PLIST( type, 2 )
+#define FLAGS_TYPE(type)        ELM_PLIST( type, POS_FLAGS_TYPE )
 
 
 /****************************************************************************
@@ -429,7 +459,7 @@ static inline const Obj *CONST_ADDR_OBJ(Obj obj)
 **  'DATA_TYPE' returns the shared data of the type <type>.
 **  Not used by the GAP kernel right now, but useful for kernel extensions.
 */
-#define DATA_TYPE(type)       ELM_PLIST( type, 3 )
+#define DATA_TYPE(type)       ELM_PLIST( type, POS_DATA_TYPE )
 
 
 /****************************************************************************
@@ -440,8 +470,8 @@ static inline const Obj *CONST_ADDR_OBJ(Obj obj)
 **  will renumber all IDs.  Therefore the  corresponding routine must excatly
 **  know where such numbers are stored.
 */
-#define ID_TYPE(type) ELM_PLIST(type, 4)
-#define SET_ID_TYPE(type, val) SET_ELM_PLIST(type, 4, val)
+#define ID_TYPE(type) ELM_PLIST(type, POS_NUMB_TYPE)
+#define SET_ID_TYPE(type, val) SET_ELM_PLIST(type, POS_NUMB_TYPE, val)
 
 
 /****************************************************************************
@@ -450,9 +480,12 @@ static inline const Obj *CONST_ADDR_OBJ(Obj obj)
 **
 **  'TYPE_OBJ' returns the type of the object <obj>.
 */
-#define TYPE_OBJ(obj)   ((*TypeObjFuncs[ TNUM_OBJ(obj) ])( obj ))
-
 extern Obj (*TypeObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
+static inline Obj TYPE_OBJ(Obj obj)
+{
+    UInt tnum = TNUM_OBJ(obj);
+    return (*TypeObjFuncs[tnum])(obj);
+}
 
 
 /****************************************************************************
@@ -461,10 +494,12 @@ extern Obj (*TypeObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 **
 **  'SET_TYPE_OBJ' sets the kind <kind>of the object <obj>.
 */
-#define SET_TYPE_OBJ(obj, kind) \
-  ((*SetTypeObjFuncs[ TNUM_OBJ(obj) ])( obj, kind ))
-
 extern void (*SetTypeObjFuncs[ LAST_REAL_TNUM+1 ]) ( Obj obj, Obj kind );
+static inline void SET_TYPE_OBJ(Obj obj, Obj type)
+{
+    UInt tnum = TNUM_OBJ(obj);
+    (*SetTypeObjFuncs[tnum])(obj, type);
+}
 
 
 /****************************************************************************
@@ -511,10 +546,33 @@ extern void CheckedMakeImmutable( Obj obj );
 **  'IS_MUTABLE_OBJ' returns   1 if the object  <obj> is mutable   (i.e., can
 **  change due to assignments), and 0 otherwise.
 */
-#define IS_MUTABLE_OBJ(obj) \
-                        ((*IsMutableObjFuncs[ TNUM_OBJ(obj) ])( obj ))
-
 extern Int (*IsMutableObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
+static inline Int IS_MUTABLE_OBJ(Obj obj)
+{
+    UInt tnum = TNUM_OBJ(obj);
+    if (/*FIRST_CONSTANT_TNUM <= tnum &&*/ tnum <= LAST_CONSTANT_TNUM)
+        return 0;
+    if (FIRST_IMM_MUT_TNUM <= tnum && tnum <= LAST_IMM_MUT_TNUM)
+        return !(tnum & IMMUTABLE);
+    return ((*IsMutableObjFuncs[tnum])(obj));
+}
+
+
+/****************************************************************************
+**
+*F  IS_MUTABLE_PLAIN_OBJ( <obj> ) . . . . . .  is an object plain and mutable
+**
+**  'IS_MUTABLE_PLAIN_OBJ' returns 1 if the object <obj> is a plain object
+**  (i.e., built into GAP), and mutable (i.e., can change due to assignments),
+**  and 0 otherwise.
+*/
+static inline Int IS_MUTABLE_PLAIN_OBJ(Obj obj)
+{
+    UInt type = TNUM_OBJ(obj);
+    return (FIRST_IMM_MUT_TNUM <= type) && (type <= LAST_IMM_MUT_TNUM)
+            && !(type & IMMUTABLE);
+}
+
 
 /****************************************************************************
 **
@@ -532,40 +590,40 @@ extern Int IsInternallyMutableObj(Obj obj);
 
 /****************************************************************************
 **
-*V  SaveObjFuncs (<type>) . . . . . . . . . . . . . functions to save objects
+*V  SaveObjFuncs[ <type> ]  . . . . . . . . . . . . functions to save objects
 **
-** 'SaveObjFuncs' is the dispatch table that  contains, for every type
+**  'SaveObjFuncs' is the dispatch table that  contains, for every type
 **  of  objects, a pointer to the saving function for objects of that type
 **  These should not handle the file directly, but should work via the
 **  functions 'SaveObjRef', 'SaveUInt<n>' (<n> = 1,2,4 or 8), and others
 **  to be determined. Their role is to identify the C types of the various
 **  parts of the bag, and perhaps to leave out some information that does
 **  not need to be saved. By the time this function is called, the bag
-**  size and type have already been saved
-**  No saving function may allocate any bag
+**  size and type have already been saved.
+**  No saving function may allocate any bag.
 */
 
-extern void (*SaveObjFuncs[256]) ( Obj obj );
+extern void (*SaveObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 
 extern void SaveObjError( Obj obj );
 
 
 /****************************************************************************
 **
-*V  LoadObjFuncs (<type>) . . . . . . . . . . . . . functions to load objects
+*V  LoadObjFuncs[ <type> ]  . . . . . . . . . . . . functions to load objects
 **
-** 'LoadObjFuncs' is the dispatch table that  contains, for every type
+**  'LoadObjFuncs' is the dispatch table that  contains, for every type
 **  of  objects, a pointer to the loading function for objects of that type
 **  These should not handle the file directly, but should work via the
 **  functions 'LoadObjRef', 'LoadUInt<n>' (<n> = 1,2,4 or 8), and others
 **  to be determined. Their role is to reinstall the information in the bag
 **  and reconstruct anything that was left out. By the time this function is
 **  called, the bag size and type have already been loaded and the bag argument
-**  contains the bag in question
-**  No loading function may allocate any bag
+**  contains the bag in question.
+**  No loading function may allocate any bag.
 */
 
-extern void (*LoadObjFuncs[256]) ( Obj obj );
+extern void (*LoadObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 
 extern void LoadObjError( Obj obj );
 
@@ -576,27 +634,27 @@ extern void LoadObjError( Obj obj );
 **  'IS_COPYABLE_OBJ' returns 1 if the object <obj> is copyable (i.e., can be
 **  copied into a mutable object), and 0 otherwise.
 */
-#define IS_COPYABLE_OBJ(obj) \
-                        ((IsCopyableObjFuncs[ TNUM_OBJ(obj) ])( obj ))
-
 extern Int (*IsCopyableObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
-
-
-/****************************************************************************
-**
-*F  SHALLOW_COPY_OBJ( <obj> ) . . . . . . .  make a shallow copy of an object
-**
-**  'SHALLOW_COPY_OBJ' makes a shallow copy of the object <obj>.
-*/
-#define SHALLOW_COPY_OBJ(obj) \
-                        ((*ShallowCopyObjFuncs[ TNUM_OBJ(obj) ])( obj ))
+static inline Int IS_COPYABLE_OBJ(Obj obj)
+{
+    UInt tnum = TNUM_OBJ(obj);
+    return (IsCopyableObjFuncs[tnum])(obj);
+}
 
 
 /****************************************************************************
 **
 *V  ShallowCopyObjFuncs[<type>] . . . . . . . . . .  shallow copier functions
+*F  SHALLOW_COPY_OBJ( <obj> ) . . . . . . .  make a shallow copy of an object
+**
+**  'SHALLOW_COPY_OBJ' makes a shallow copy of the object <obj>.
 */
 extern Obj (*ShallowCopyObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
+static inline Obj SHALLOW_COPY_OBJ(Obj obj)
+{
+    UInt tnum = TNUM_OBJ(obj);
+    return (ShallowCopyObjFuncs[tnum])(obj);
+}
 
 
 /****************************************************************************
@@ -664,7 +722,7 @@ extern Obj CopyObj (
 **  already unmarked object, it should simply return.
 */
 #if !defined(USE_THREADSAFE_COPYING)
-extern Obj (*CopyObjFuncs[LAST_REAL_TNUM+COPYING+1]) ( Obj obj, Int mut );
+extern Obj (*CopyObjFuncs[LAST_COPYING_TNUM+1]) ( Obj obj, Int mut );
 #endif
 
 
@@ -673,7 +731,7 @@ extern Obj (*CopyObjFuncs[LAST_REAL_TNUM+COPYING+1]) ( Obj obj, Int mut );
 *V  CleanObjFuncs[<type>] . . . . . . . . . . . . table of cleaning functions
 */
 #if !defined(USE_THREADSAFE_COPYING)
-extern void (*CleanObjFuncs[LAST_REAL_TNUM+COPYING+1]) ( Obj obj );
+extern void (*CleanObjFuncs[LAST_COPYING_TNUM+1]) ( Obj obj );
 #endif
 
 
@@ -698,11 +756,6 @@ extern void PrintObj (
 **  is the function '<func>(<obj>)' that should be called to print the object
 **  <obj> of this type.
 */
-/* TL: extern Obj  PrintObjThis; */
-
-/* TL: extern Int  PrintObjIndex; */
-/* TL: extern Int  PrintObjDepth; */
-
 extern void (* PrintObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 
 
@@ -714,8 +767,6 @@ extern void (* PrintObjFuncs[LAST_REAL_TNUM+1]) ( Obj obj );
 */
 extern void ViewObj (
             Obj                 obj );
-
-
 
 
 /****************************************************************************
@@ -739,56 +790,80 @@ extern void (* PrintPathFuncs[LAST_REAL_TNUM+1]) (
 **
 *F  IS_COMOBJ( <obj> )  . . . . . . . . . . . is an object a component object
 */
-#define IS_COMOBJ(obj)            (TNUM_OBJ(obj) == T_COMOBJ)
+static inline Int IS_COMOBJ(Obj obj)
+{
+    return TNUM_OBJ(obj) == T_COMOBJ;
+}
 
 
 /****************************************************************************
 **
 *F  TYPE_COMOBJ( <obj> )  . . . . . . . . . . . .  type of a component object
 */
-#define TYPE_COMOBJ(obj)          ADDR_OBJ(obj)[0]
+static inline Obj TYPE_COMOBJ(Obj obj)
+{
+    return CONST_ADDR_OBJ(obj)[0];
+}
 
 
 /****************************************************************************
 **
 *F  SET_TYPE_COMOBJ( <obj>, <val> ) . . .  set the type of a component object
 */
-#define SET_TYPE_COMOBJ(obj,val)  (ADDR_OBJ(obj)[0] = (val))
+static inline void SET_TYPE_COMOBJ(Obj obj, Obj val)
+{
+    ADDR_OBJ(obj)[0] = val;
+}
 
 
 /****************************************************************************
 **
 *F  IS_POSOBJ( <obj> )  . . . . . . . . . .  is an object a positional object
 */
-#define IS_POSOBJ(obj)            (TNUM_OBJ(obj) == T_POSOBJ)
+static inline Int IS_POSOBJ(Obj obj)
+{
+    return TNUM_OBJ(obj) == T_POSOBJ;
+}
 
 
 /****************************************************************************
 **
 *F  TYPE_POSOBJ( <obj> )  . . . . . . . . . . . . type of a positional object
 */
-#define TYPE_POSOBJ(obj)          ADDR_OBJ(obj)[0]
+static inline Obj TYPE_POSOBJ(Obj obj)
+{
+    return CONST_ADDR_OBJ(obj)[0];
+}
 
 
 /****************************************************************************
 **
 *F  SET_TYPE_POSOBJ( <obj>, <val> ) . . . set the type of a positional object
 */
-#define SET_TYPE_POSOBJ(obj,val)  (ADDR_OBJ(obj)[0] = (val))
+static inline void SET_TYPE_POSOBJ(Obj obj, Obj val)
+{
+    ADDR_OBJ(obj)[0] = val;
+}
 
 
 /****************************************************************************
 **
 *F  IS_DATOBJ( <obj> )  . . . . . . . . . . . . .  is an object a data object
 */
-#define IS_DATOBJ(obj)            (TNUM_OBJ(obj) == T_DATOBJ)
+static inline Int IS_DATOBJ(Obj obj)
+{
+    return TNUM_OBJ(obj) == T_DATOBJ;
+}
 
 
 /****************************************************************************
 **
 *F  TYPE_DATOBJ( <obj> )  . . . . . . . . . . . . . . . type of a data object
 */
-#define TYPE_DATOBJ(obj)          ADDR_OBJ(obj)[0]
+static inline Obj TYPE_DATOBJ(Obj obj)
+{
+    return CONST_ADDR_OBJ(obj)[0];
+}
 
 
 /****************************************************************************
@@ -797,14 +872,17 @@ extern void (* PrintPathFuncs[LAST_REAL_TNUM+1]) (
 **
 **  'SetTypeDatobj' sets the kind <kind> of the data object <obj>.
 */
-extern void SetTypeDatObj( Obj obj, Obj type );
+static inline void SET_TYPE_DATOBJ(Obj obj, Obj val)
+{
+    ADDR_OBJ(obj)[0] = val;
+}
 
-#define SET_TYPE_DATOBJ(obj, type)  SetTypeDatObj(obj, type)
+extern void SetTypeDatObj(Obj obj, Obj type);
 
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

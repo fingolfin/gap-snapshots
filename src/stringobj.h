@@ -15,18 +15,15 @@
 **  and the compact representation of strings.
 **
 **  Strings in compact representation  can be accessed and handled through
-**  the  macros     'NEW_STRING',   `CHARS_STRING'  (and   'CSTR_STRING'),
-**  'GET_LEN_STRING',   `SET_LEN_STRING', `GROW_STRING',  'GET_ELM_STRING'
-**  and `SET_ELM_STRING'.
-**  
-**  This  package also contains the   list  function  for ranges, which   are
-**  installed in the appropriate tables by 'InitString'.
+**  the functions 'NEW_STRING', 'CHARS_STRING' (and 'CSTR_STRING'),
+**  'GET_LEN_STRING',   'SET_LEN_STRING', 'GROW_STRING',  'GET_ELM_STRING'
+**  and 'SET_ELM_STRING'.
 */
 
 #ifndef GAP_STRINGOBJ_H
 #define GAP_STRINGOBJ_H
 
-#include <src/objects.h>
+#include "objects.h"
 
 
 /****************************************************************************
@@ -184,9 +181,6 @@ static inline void GROW_STRING(Obj list, Int len)
 *F  SHRINK_STRING(<list>) . . . . . . . . .  shrink a string to minimal size
 **
 **  'SHRINK_STRING' gives back not needed memory allocated by string.
-**
-**  Note that 'SHRINK_STRING' is a macro, so do not call it with arguments that
-**  have side effects.
 */
 static inline void SHRINK_STRING(Obj list)
 {
@@ -206,7 +200,7 @@ static inline Obj GET_ELM_STRING(Obj list, Int pos)
 {
     GAP_ASSERT(IS_STRING_REP(list));
     GAP_ASSERT(pos > 0);
-    GAP_ASSERT(pos <= GET_LEN_STRING(list));
+    GAP_ASSERT((UInt) pos <= GET_LEN_STRING(list));
     UChar c = CHARS_STRING(list)[pos - 1];
     return ObjsChar[c];
 }
@@ -222,7 +216,7 @@ static inline void SET_ELM_STRING(Obj list, Int pos, Obj val)
 {
     GAP_ASSERT(IS_STRING_REP(list));
     GAP_ASSERT(pos > 0);
-    GAP_ASSERT(pos <= GET_LEN_STRING(list));
+    GAP_ASSERT((UInt) pos <= GET_LEN_STRING(list));
     GAP_ASSERT(TNUM_OBJ(val) == T_CHAR);
     UChar * ptr = CHARS_STRING(list) + (pos - 1);
     *ptr = CHAR_VALUE(val);
@@ -251,7 +245,8 @@ static inline void COPY_CHARS(Obj str, UChar * pnt, Int n)
 **  'PrintString' prints the string with the handle <list>.
 **
 **  No  linebreaks are allowed,  if one must be  inserted  anyhow, it must be
-** escaped by a backslash '\', which is done in 'Pr'.  */
+**  escaped by a backslash '\', which is done in 'Pr'.
+*/
 extern void PrintString (
     Obj                 list );
 
@@ -295,7 +290,7 @@ extern Int IsString (
 
 /****************************************************************************
 **
-*F  CopyToStringRep( <string> )  . . copy a string to the string representation
+*F  CopyToStringRep( <string> ) . . .  copy a string to string representation
 **
 **  'CopyToStringRep' copies the string <string> to a new string in string
 **  representation.
@@ -306,9 +301,9 @@ extern Obj CopyToStringRep(
 
 /****************************************************************************
 **
-*F  ConvString( <string> )  . . convert a string to the string representation
+*F  ConvString( <string> ) . . . .  convert a string to string representation
 **
-**  'ConvString' converts the string <list> to the string representation.
+**  'ConvString' converts the string <string> to string representation.
 */
 extern void ConvString (
             Obj                 string );
@@ -366,10 +361,8 @@ static inline Obj MakeImmString(const Char * cstr)
 
 
 Obj MakeString2(const Char *cstr1, const Char *cstr2);
-Obj MakeString3(const Char *cstr1, const Char *cstr2, const Char *cstr3);
 
 Obj MakeImmString2(const Char *cstr1, const Char *cstr2);
-Obj MakeImmString3(const Char *cstr1, const Char *cstr2, const Char *cstr3);
 Obj ConvImmString(Obj str);
 
 
@@ -377,11 +370,12 @@ Obj ConvImmString(Obj str);
 **
 *F  C_NEW_STRING_DYN( <string>, <cstring> ) . . . . . . . . create GAP string
 **
-** The cstring is assumed to be allocated on the heap, hence its length
-** is dynamic and must be computed during runtime using strlen.
+**  The cstring is assumed to be allocated on the heap, hence its length
+**  is dynamic and must be computed during runtime using strlen.
 **
-** This macro is provided for backwards compatibility of packages.
-** MakeString and MakeImmString are as efficient and should be used instead.
+**  This macro is provided for backwards compatibility of packages.
+**  'MakeString' and 'MakeImmString' are as efficient and should be used
+**  instead.
 */
 #define C_NEW_STRING_DYN(string,cstr) \
   C_NEW_STRING(string, strlen(cstr), cstr)
@@ -404,7 +398,7 @@ Obj ConvImmString(Obj str);
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************

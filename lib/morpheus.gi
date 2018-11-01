@@ -16,36 +16,111 @@
 ##
 MORPHEUSELMS := 50000;
 
+# this method calculates a chief series invariant under `hom` and calculates
+# orders of group elements in factors of this series under action of `hom`.
+# Every time an orbit length is found, `hom` is replaced by the appropriate
+# power. Initially small chief factors are preferred. In the end all
+# generators are used while stepping through the series descendingly, thus
+# ensuring the proper order is found.
 InstallMethod(Order,"for automorphisms",true,[IsGroupHomomorphism],0,
 function(hom)
-local map,phi,o,lo,i,start,img;
+local map,phi,o,lo,i,j,start,img,d,nat,ser,jord,first;
+  d:=Source(hom);
+  if Size(d)<=10000 then
+    ser:=[d,TrivialSubgroup(d)]; # no need to be clever if small
+  else
+    if HasAutomorphismGroup(d) then
+      if IsBound(d!.characteristicSeries) then
+        ser:=d!.characteristicSeries;
+      else
+        ser:=ChiefSeries(d); # could try to be more clever, introduce attribute
+        # `CharacteristicSeries`.
+        ser:=Filtered(ser,x->ForAll(GeneratorsOfGroup(AutomorphismGroup(d)),
+          a->ForAll(GeneratorsOfGroup(x),y->ImageElm(a,y) in x)));
+        d!.characteristicSeries:=ser;
+      fi;
+    else
+      ser:=ChiefSeries(d); # could try to be more clever, introduce attribute
+      # `CharacteristicSeries`.
+      ser:=Filtered(ser,
+            x->ForAll(GeneratorsOfGroup(x),y->ImageElm(hom,y) in x));
+    fi;
+  fi;
+
+  # try to do factors in ascending order in the hope to get short orbits
+  # first
+  jord:=[2..Length(ser)]; # order in which we go through factors
+  if Length(ser)>2 then
+    i:=List(jord,x->Size(ser[x-1])/Size(ser[x]));
+    SortParallel(i,jord);
+  fi;
+
   o:=1;
   phi:=hom;
   map:=MappingGeneratorsImages(phi);
-  i:=1;
-  while i<=Length(map[1]) do
-    lo:=1;
-    start:=map[1][i];
-    img:=map[2][i];
-    while img<>start do
-      img:=ImagesRepresentative(phi,img);
-      lo:=lo+1;
-      # do the bijectivity test only if high local order, then it does not
-      # matter
-      if lo=1000 and not IsBijective(hom) then
-	Error("<hom> must be bijective");
-      fi;
+
+  first:=true;
+  while map[1]<>map[2] do
+    for j in jord do
+      i:=1;
+      while i<=Length(map[1]) do
+        # the first time, do only the generators from prior layer
+        if (not first) 
+           or (map[1][i] in ser[j-1] and not map[1][i] in ser[j]) then
+
+          lo:=1;
+          if j<Length(ser) then
+            nat:=NaturalHomomorphismByNormalSubgroup(d,ser[j]);
+            start:=ImagesRepresentative(nat,map[1][i]);
+            img:=map[2][i];
+            while ImagesRepresentative(nat,img)<>start do
+              img:=ImagesRepresentative(phi,img);
+              lo:=lo+1;
+
+              # do the bijectivity test only if high local order, then it
+              # does not matter. IsBijective is cached, so second test is
+              # cheap.
+              if lo=1000 and not IsBijective(hom) then
+                Error("<hom> must be bijective");
+              fi;
+
+            od;
+
+          else
+            start:=map[1][i];
+            img:=map[2][i];
+            while img<>start do
+              img:=ImagesRepresentative(phi,img);
+              lo:=lo+1;
+
+              # do the bijectivity test only if high local order, then it
+              # does not matter. IsBijective is cached, so second test is
+              # cheap.
+              if lo=1000 and not IsBijective(hom) then
+                Error("<hom> must be bijective");
+              fi;
+
+            od;
+          fi;
+
+          if lo>1 then
+            o:=o*lo;
+            #if i<Length(map[1]) then
+              phi:=phi^lo;
+              map:=MappingGeneratorsImages(phi);
+              i:=0; # restart search, as generator set may have changed.
+            #fi;
+          fi;
+        fi;
+        i:=i+1;
+      od;
     od;
-    if lo>1 then
-      o:=o*lo;
-      if i<Length(map[1]) then
-	phi:=phi^lo;
-	map:=MappingGeneratorsImages(phi);
-        i:=0; # restart search, as generator set may have changed.
-      fi;
-    fi;
-    i:=i+1;
+
+    # if iterating make `jord` standard to we don't skip generators
+    jord:=[2..Length(ser)];
+    first:=false;
   od;
+
   return o;
 end);
 
@@ -252,6 +327,18 @@ v, val, o, i, comb, best,actbase;
 
   if not IsFinite(g) then
     Error("can't do!");
+
+  elif IsFpGroup(g) then
+    # no sane person should work with automorphism groups of fp groups, but
+    # if someone really does this is a shortcut that avoids canonization
+    # issues.
+    c:=Filtered(Elements(g),x->not IsOne(x));
+    hom:=ActionHomomorphism(au,c,
+           function(e,a) return Image(a,e);end,"surjective");
+    SetFilterObj(hom,IsNiceMonomorphism);
+    SetNiceMonomorphism(au,hom);
+    SetIsHandledByNiceMonomorphism(au,true);
+    return;
 
   elif IsAbelian(g) then
 
@@ -1175,13 +1262,12 @@ local G,cl,lcl,len,comb,combc,com,a,cnt,s,alltwo;
   Info(InfoMorph,1,"FindGenerators");
   # throw out the 1-Class
   cl:=Filtered(cl,i->Length(i)>1 or Size(i[1].representative)>1);
-  alltwo:=Set(Factors(Size(G)))=[2];
+  alltwo:=PrimeDivisors(Size(G))=[2];
 
   #create just a list of ordinary classes.
   lcl:=List(cl,i->Concatenation(List(i,j->j.classes)));
   len:=1;
-  len:=Maximum(1,Length(MinimalGeneratingSet(
-		    Image(IsomorphismPcGroup((G/DerivedSubgroup(G))))))-1);
+  len:=Maximum(1,AbelianRank(G)-1);
   while true do
     len:=len+1;
     Info(InfoMorph,2,"Trying length ",len);
@@ -1193,7 +1279,7 @@ local G,cl,lcl,len,comb,combc,com,a,cnt,s,alltwo;
     com:=0;
     while com<Length(comb) do
       com:=com+1;
-      # don't try only order 2 generators unless its a 2-group
+      # don't try only order 2 generators unless it's a 2-group
       if Set(List(Flat(combc[com]),i->Order(Representative(i))))<>[2] or
 	alltwo then
 	a:=MorClassLoop(G,combc[com],rec(to:=G),4);
@@ -1419,7 +1505,7 @@ local i,j,k,l,m,o,nl,nj,max,r,e,au,p,gens,offs;
 
   au:=[];
   # run by primes
-  p:=Set(Factors(Size(G)));
+  p:=PrimeDivisors(Size(G));
   for i in p do
     l:=Filtered(gens,j->IsInt(Order(j)/i));
     nl:=Filtered(gens,i->not i in l);
@@ -1486,6 +1572,12 @@ local i,j,k,l,m,o,nl,nj,max,r,e,au,p,gens,offs;
       od;
     od;
   od;
+  
+  if IsFpGroup(G) and IsWholeFamily(G) then
+    # rewrite to standard generators
+    gens:=GeneratorsOfGroup(G);
+    au:=List(au,x->GroupHomomorphismByImagesNC(G,G,gens,List(gens,y->Image(x,y))));
+  fi;
 
   for i in au do
     SetIsBijective(i,true);
@@ -2095,8 +2187,8 @@ local m;
     return fail;
   fi;
 
-  if (Length(AbelianInvariants(G))>2 or Length(SmallGeneratingSet(G))>2) and Size(RadicalGroup(G))>1 then
-    # In place until a proper implementation of Cannon/Holt automorphism is
+  if (AbelianRank(G)>2 or Length(SmallGeneratingSet(G))>2) and Size(RadicalGroup(G))>1 then
+    # In place until a proper implementation of Cannon/Holt isomorphism is
     # made available.
     return PatheticIsomorphism(G,H);
   fi;
@@ -2180,6 +2272,12 @@ local Fgens,	# generators of F
       # just map them
       return [GroupHomomorphismByImagesNC(F,G,[u],[h])];
     fi;
+  fi;
+
+  if IsFinite(F) and not IsPerfectGroup(G) and 
+    CanMapFiniteAbelianInvariants(AbelianInvariants(F),
+                                  AbelianInvariants(G))=false then
+    return [];
   fi;
 
   if IsAbelian(G) then

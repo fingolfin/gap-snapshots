@@ -15,13 +15,31 @@
 **  code here.                                                                    
 */
 
-#include <src/objcftl.h>
+#include "objcftl.h"
 
-#include <src/ariths.h>
-#include <src/gap.h>
-#include <src/gvars.h>
-#include <src/integer.h>
-#include <src/plist.h>
+#include "ariths.h"
+#include "bool.h"
+#include "error.h"
+#include "gapstate.h"
+#include "gvars.h"
+#include "integer.h"
+#include "modules.h"
+#include "plist.h"
+
+
+static ModuleStateOffset CFTLStateOffset = -1;
+
+struct CFTLModuleState {
+    Obj WORD_STACK;
+    Obj WORD_EXPONENT_STACK;
+    Obj SYLLABLE_STACK;
+    Obj EXPONENT_STACK;
+};
+
+extern inline struct CFTLModuleState *CFTLState(void)
+{
+    return (struct CFTLModuleState *)StateSlotsAtOffset(CFTLStateOffset);
+}
 
 
 #define IS_INT_ZERO( n )  ((n) == INTOBJ_INT(0))
@@ -45,6 +63,10 @@
 
 #define PUSH_STACK( word, exp ) {  \
   st++; \
+  GROW_PLIST( wst,  st ); \
+  GROW_PLIST( west, st ); \
+  GROW_PLIST( sst,  st ); \
+  GROW_PLIST( est,  st ); \
   SET_ELM_PLIST( wst,  st, word ); \
   SET_ELM_PLIST( west, st, exp );  \
   SET_ELM_PLIST( sst,  st, INTOBJ_INT(1) ); \
@@ -86,14 +108,14 @@ Obj CollectPolycyc (
     Obj    ipow    = ADDR_OBJ(pcp)[ PC_INVERSEPOWERS ];
     Obj    exp     = ADDR_OBJ(pcp)[ PC_EXPONENTS ];
 
-    Obj    wst  = ADDR_OBJ(pcp)[ PC_WORD_STACK ];
-    Obj    west = ADDR_OBJ(pcp)[ PC_WORD_EXPONENT_STACK ];
-    Obj    sst  = ADDR_OBJ(pcp)[ PC_SYLLABLE_STACK ];
-    Obj    est  = ADDR_OBJ(pcp)[ PC_EXPONENT_STACK ];
+    Obj    wst  = CFTLState()->WORD_STACK;
+    Obj    west = CFTLState()->WORD_EXPONENT_STACK;
+    Obj    sst  = CFTLState()->SYLLABLE_STACK;
+    Obj    est  = CFTLState()->EXPONENT_STACK;
 
     Obj    conj=0, iconj=0;   /*QQ initialize to please compiler */
 
-    Int    st, bottom = INT_INTOBJ( ADDR_OBJ(pcp)[ PC_STACK_POINTER ] );
+    Int    st;
 
     Int    g, syl, h, hh;
 
@@ -112,16 +134,16 @@ Obj CollectPolycyc (
         return (Obj)0;
     }
 
-    st = bottom;
+    st = 0;
     PUSH_STACK( word, INTOBJ_INT(1) );
 
-    while( st > bottom ) {
+    while( st > 0 ) {
 
       w   = ELM_PLIST( wst, st );
       syl = INT_INTOBJ( ELM_PLIST( sst, st ) );
       g   = INT_INTOBJ( ELM_PLIST( w, syl )  );
 
-      if( st > bottom+1 && syl==1 && g == GET_COMMUTE(g) ) {
+      if( st > 1 && syl==1 && g == GET_COMMUTE(g) ) {
         /* Collect word^exponent in one go. */
 
         e = ELM_PLIST( west, st );
@@ -148,7 +170,7 @@ Obj CollectPolycyc (
                   if( (y = GET_IPOWER( h )) ) {
                       e = QuoInt( s, e );
                       if( !IS_INT_ZERO( t ) ) e = DiffInt( e, INTOBJ_INT(1) );
-                      e = ProdInt( e, INTOBJ_INT(-1) );
+                      e = AInvInt(e);
                   }
               }
           }
@@ -172,7 +194,7 @@ Obj CollectPolycyc (
           
           if( LtInt( INTOBJ_INT(0), e ) ) {
             C_DIFF_FIA( ee, e, INTOBJ_INT(1) );  e = ee;
-            SET_ELM_PLIST( est, st, e );
+            SET_ELM_PLIST( est, st, e ); CHANGED_BAG( est );
             conj  = ADDR_OBJ(pcp)[PC_CONJUGATES];
             iconj = ADDR_OBJ(pcp)[PC_INVERSECONJUGATES];
             
@@ -180,7 +202,7 @@ Obj CollectPolycyc (
           }
           else {
             C_SUM_FIA( ee, e, INTOBJ_INT(1) );  e = ee;
-            SET_ELM_PLIST( est, st, e );
+            SET_ELM_PLIST( est, st, e ); CHANGED_BAG( est );
             conj  = ADDR_OBJ(pcp)[PC_CONJUGATESINVERSE];
             iconj = ADDR_OBJ(pcp)[PC_INVERSECONJUGATESINVERSE];
             
@@ -209,7 +231,7 @@ Obj CollectPolycyc (
                     ge = QuoInt( ge, e );
                     if( !IS_INT_ZERO( mge ) ) 
                         ge = DiffInt( ge, INTOBJ_INT(1) );
-                    ge = ProdInt( ge, INTOBJ_INT(-1) );
+                    ge = AInvInt(ge);
                 }
             }
         }
@@ -274,7 +296,7 @@ Obj CollectPolycyc (
         if( y != (Obj)0 ) PUSH_STACK( y, ge );
       }
 
-      while( st > bottom && IS_INT_ZERO( ELM_PLIST( est, st ) ) ) {
+      while( st > 0 && IS_INT_ZERO( ELM_PLIST( est, st ) ) ) {
         w   = ELM_PLIST( wst, st );
         syl = INT_INTOBJ( ELM_PLIST( sst, st ) ) + 2;
         if( syl > LEN_PLIST( w ) ) {
@@ -295,7 +317,6 @@ Obj CollectPolycyc (
       }
     }
 
-    ADDR_OBJ(pcp)[ PC_STACK_POINTER ] = INTOBJ_INT( bottom );
     return (Obj)0;
 }
 
@@ -311,7 +332,7 @@ Obj FuncCollectPolycyclic (
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 
@@ -347,18 +368,6 @@ static Int InitKernel (
 
 /****************************************************************************
 **
-*F  PostRestore( <module> ) . . . . . . . . . . . . . after restore workspace
-*/
-static Int PostRestore (
-    StructInitInfo *    module )
-{
-    /* return success                                                      */
-    return 0;
-}
-
-
-/****************************************************************************
-**
 *F  InitLibrary( <module> ) . . . . . . .  initialise library data structures
 */
 static Int InitLibrary (
@@ -386,6 +395,10 @@ static Int InitLibrary (
     ExportAsConstantGVar(PC_STACK_POINTER);
     ExportAsConstantGVar(PC_DEFAULT_TYPE);
 
+    // signal to polycyclic that 'CollectPolycyclic' does not use resp.
+    // require stacks inside the collector objects
+    AssConstantGVar(GVarName("NO_STACKS_INSIDE_COLLECTORS"), True);
+
     /* init filters and functions                                          */
     InitGVarFuncsFromTable( GVarFuncs );
 
@@ -393,6 +406,21 @@ static Int InitLibrary (
     return 0;
 }
 
+static Int InitModuleState(void)
+{
+    InitGlobalBag( &CFTLState()->WORD_STACK, "WORD_STACK" );
+    InitGlobalBag( &CFTLState()->WORD_EXPONENT_STACK, "WORD_EXPONENT_STACK" );
+    InitGlobalBag( &CFTLState()->SYLLABLE_STACK, "SYLLABLE_STACK" );
+    InitGlobalBag( &CFTLState()->EXPONENT_STACK, "EXPONENT_STACK" );
+
+    CFTLState()->WORD_STACK = NEW_PLIST( T_PLIST, 4096 );
+    CFTLState()->WORD_EXPONENT_STACK = NEW_PLIST( T_PLIST, 4096 );
+    CFTLState()->SYLLABLE_STACK = NEW_PLIST( T_PLIST, 4096 );
+    CFTLState()->EXPONENT_STACK = NEW_PLIST( T_PLIST, 4096 );
+
+    // return success
+    return 0;
+}
 
 /****************************************************************************
 **
@@ -405,7 +433,10 @@ static StructInitInfo module = {
     .name = "objcftl",
     .initKernel = InitKernel,
     .initLibrary = InitLibrary,
-    .postRestore = PostRestore
+
+    .moduleStateSize = sizeof(struct CFTLModuleState),
+    .moduleStateOffsetPtr = &CFTLStateOffset,
+    .initModuleState = InitModuleState,
 };
 
 StructInitInfo * InitInfoPcc ( void )

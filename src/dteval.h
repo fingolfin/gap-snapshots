@@ -15,11 +15,11 @@
 #ifndef GAP_DTEVAL_H
 #define GAP_DTEVAL_H
 
-#include <src/system.h>
+#include "system.h"
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 

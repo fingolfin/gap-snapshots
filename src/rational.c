@@ -43,15 +43,16 @@
 **  'SumInt', 'ProdInt' or 'GcdInt'.
 */
 
-#include <src/rational.h>
+#include "rational.h"
 
-#include <src/ariths.h>
-#include <src/bool.h>
-#include <src/gap.h>
-#include <src/integer.h>
-#include <src/io.h>
-#include <src/opers.h>
-#include <src/saveload.h>
+#include "ariths.h"
+#include "bool.h"
+#include "error.h"
+#include "integer.h"
+#include "io.h"
+#include "modules.h"
+#include "opers.h"
+#include "saveload.h"
 
 
 #if defined(DEBUG_RATIONALS)
@@ -119,23 +120,12 @@ Int             EqRat (
 
     CHECK_RAT(opL);
     CHECK_RAT(opR);
+
     /* get numerator and denominator of the operands                       */
-    if ( TNUM_OBJ(opL) == T_RAT ) {
-        numL = NUM_RAT(opL);
-        denL = DEN_RAT(opL);
-    }
-    else {
-        numL = opL;
-        denL = INTOBJ_INT( 1L );
-    }
-    if ( TNUM_OBJ(opR) == T_RAT ) {
-        numR = NUM_RAT(opR);
-        denR = DEN_RAT(opR);
-    }
-    else {
-        numR = opR;
-        denR = INTOBJ_INT( 1L );
-    }
+    numL = NUM_RAT(opL);
+    denL = DEN_RAT(opL);
+    numR = NUM_RAT(opR);
+    denR = DEN_RAT(opR);
 
     /* compare the numerators                                              */
     if ( ! EQ( numL, numR ) ) {
@@ -285,7 +275,7 @@ Obj             AInvRat (
     Obj                 tmp;
     CHECK_RAT(op);
     res = NewBag( T_RAT, 2 * sizeof(Obj) );
-    tmp = AINV( NUM_RAT(op) );
+    tmp = AInvInt( NUM_RAT(op) );
     SET_NUM_RAT(res, tmp);
     SET_DEN_RAT(res, DEN_RAT(op));
     CHANGED_BAG(res);
@@ -572,8 +562,8 @@ Obj             QuoRat (
     /* we multiply the left numerator with the right denominator           */
     /* so the right denominator should carry the sign of the right operand */
     if ( IS_NEG_INT(numR) ) {
-        numR = ProdInt( INTOBJ_INT( -1L ), numR );
-        denR = ProdInt( INTOBJ_INT( -1L ), denR );
+        numR = AInvInt( numR );
+        denR = AInvInt( denR );
     }
 
     /* find the gcds                                                       */
@@ -611,10 +601,10 @@ Obj             QuoRat (
 
 /****************************************************************************
 **
-*F  ModRat( <opL>, <opR> )  . . . . . . . . remainder of fraction mod integer
+*F  ModRat( <opL>, <n> )  . . . . . . . . remainder of fraction mod integer
 **
 **  'ModRat' returns the remainder  of the fraction  <opL> modulo the integer
-**  <opR>.  The remainder is always an integer.
+**  <n>.  The remainder is always an integer.
 **
 **  '<r>  / <s> mod  <n>' yields  the remainder of   the fraction '<p> / <q>'
 **  modulo  the  integer '<n>',  where '<p> / <q>' is  the  reduced  form  of
@@ -634,43 +624,20 @@ Obj             QuoRat (
 **  such that $0 \<= t/s \< n$ and $r/s - t/s$ is a multiple of $n$.  This is
 **  rarely needed while computing modular inverses is very useful.
 */
-Obj             ModRat (
-    Obj                 opL,
-    Obj                 opR )
+Obj ModRat(Obj opL, Obj n)
 {
-    Obj                 a, aL, b, bL, c, cL, hdQ;
+    // invert the denominator
+    Obj d = InverseModInt( DEN_RAT(opL), n );
 
-    /* make the integer positive                                           */
-    if ( IS_NEG_INT(opR) ) {
-        opR = ProdInt( INTOBJ_INT( -1L ), opR );
+    // check whether the denominator of <opL> really was invertible mod <n> */
+    if ( d == Fail ) {
+        ErrorMayQuit(
+                  "ModRat: for <r>/<s> mod <n>, <s>/gcd(<r>,<s>) and <n> must be coprime",
+                  0, 0 );
     }
 
-    /* let <p>/<q> represent <r>/<s> in reduced form                       */
-    /* invert the denominator <q> modulo <n> with Euclids algorithm        */
-    a = opR;           aL = INTOBJ_INT( 0L );   /* a = <n>                 */
-    b = DEN_RAT(opL);  bL = INTOBJ_INT( 1L );   /* b = <q>                 */
-    while ( a != INTOBJ_INT( 1L ) ) {
-        while ( b != INTOBJ_INT( 0L ) ) {
-            hdQ  = QuoInt( a, b );
-            c  = b;  cL = bL;
-            b  = DiffInt( a,  ProdInt( hdQ, b  ) );
-            bL = DiffInt( aL, ProdInt( hdQ, bL ) );
-            a  = c;  aL = cL;
-        }
-
-        /* check whether the denominator <q> really was invertible mod <n> */
-        if ( a != INTOBJ_INT( 1L ) ) {
-            opR = ErrorReturnObj(
-                      "ModRat: for <r>/<s> mod <n>, <s>/gcd(<r>,<s>) and <n> must be coprime",
-                      0L, 0L,
-                      "you can replace the integer <n> via 'return <n>;'" );
-            a = opR;           aL = INTOBJ_INT( 0L );   /* a = <n>         */
-            b = DEN_RAT(opL);  bL = INTOBJ_INT( 1L );   /* b = <q>         */
-        }
-    }
-
-    /* return the remainder                                                */
-    return ModInt( ProdInt( NUM_RAT(opL), aL ), opR );
+    // return the remainder
+    return ModInt( ProdInt( NUM_RAT(opL), d ), n );
 }
 
 
@@ -712,28 +679,28 @@ Obj             PowRat (
 
     /* if <opR> is negative and numerator is 1 just power the denominator  */
     else if ( NUM_RAT(opL) == INTOBJ_INT( 1L ) ) {
-        pow = PowInt( DEN_RAT(opL), ProdInt( INTOBJ_INT(-1L), opR ) );
+        pow = PowInt( DEN_RAT(opL), AInvInt( opR ) );
     }
 
     /* if <opR> is negative and numerator is -1 return (-1)^r * num(l)     */
     else if ( NUM_RAT(opL) == INTOBJ_INT( -1L ) ) {
-        numP = PowInt( NUM_RAT(opL), ProdInt( INTOBJ_INT( -1L ), opR ) );
-        denP = PowInt( DEN_RAT(opL), ProdInt( INTOBJ_INT( -1L ), opR ) );
+        numP = PowInt( NUM_RAT(opL), AInvInt( opR ) );
+        denP = PowInt( DEN_RAT(opL), AInvInt( opR ) );
         pow = ProdInt(numP, denP);
     }
 
     /* if <opR> is negative do both powers, take care of the sign          */
     else {
-        numP = PowInt( DEN_RAT(opL), ProdInt( INTOBJ_INT( -1L ), opR ) );
-        denP = PowInt( NUM_RAT(opL), ProdInt( INTOBJ_INT( -1L ), opR ) );
+        numP = PowInt( DEN_RAT(opL), AInvInt( opR ) );
+        denP = PowInt( NUM_RAT(opL), AInvInt( opR ) );
         pow  = NewBag( T_RAT, 2 * sizeof(Obj) );
         if ( IS_POS_INT(denP) ) {
             SET_NUM_RAT(pow, numP);
             SET_DEN_RAT(pow, denP);
         }
         else {
-            SET_NUM_RAT(pow, ProdInt( INTOBJ_INT( -1L ), numP ));
-            SET_DEN_RAT(pow, ProdInt( INTOBJ_INT( -1L ), denP ));
+            SET_NUM_RAT(pow, AInvInt( numP ));
+            SET_DEN_RAT(pow, AInvInt( denP ));
         }
         /* 'CHANGED_BAG' not needed, 'pow' is the youngest bag             */
     }
@@ -791,7 +758,7 @@ Obj             FuncNUMERATOR_RAT (
     /* check the argument                                                   */
     while ( TNUM_OBJ(rat) != T_RAT && !IS_INT(rat) ) {
         rat = ErrorReturnObj(
-            "Numerator: <rat> must be a rational (not a %s)",
+            "NumeratorRat: <rat> must be a rational (not a %s)",
             (Int)TNAM_OBJ(rat), 0L,
             "you can replace <rat> via 'return <rat>;'" );
     }
@@ -863,7 +830,7 @@ void LoadRat(Obj rat)
 
 /****************************************************************************
 **
-*F * * * * * * * * * * * * * initialize package * * * * * * * * * * * * * * *
+*F * * * * * * * * * * * * * initialize module * * * * * * * * * * * * * * *
 */
 
 /****************************************************************************
@@ -893,6 +860,14 @@ static StructGVarFunc GVarFuncs [] = {
     { 0, 0, 0, 0, 0 }
 
 };
+/****************************************************************************
+**
+*V  BagNames  . . . . . . . . . . . . . . . . . . . . . . . list of bag names
+*/
+static StructBagNames BagNames[] = {
+  { T_RAT, "rational" },
+  { -1,    ""         }
+};
 
 
 /****************************************************************************
@@ -902,13 +877,15 @@ static StructGVarFunc GVarFuncs [] = {
 static Int InitKernel (
     StructInitInfo *    module )
 {
+    // set the bag type names (for error messages and debugging)
+    InitBagNamesFromTable( BagNames );
+
     /* install the marking function                                        */
-    InfoBags[         T_RAT ].name = "rational";
     /* MarkTwoSubBags() is faster for Gasman, but MarkAllSubBags() is
      * more space-efficient for the Boehm GC and does not incur a
      * speed penalty.
      */
-#ifndef BOEHM_GC
+#ifdef USE_GASMAN
     InitMarkFuncBags( T_RAT, MarkTwoSubBags );
 #else
     InitMarkFuncBags( T_RAT, MarkAllSubBags );
@@ -1007,7 +984,9 @@ static Int InitKernel (
     PowFuncs [ T_RAT    ][ T_INTPOS ] = PowRat;
     PowFuncs [ T_RAT    ][ T_INTNEG ] = PowRat;
 
+#ifdef HPCGAP
     MakeBagTypePublic(T_RAT);
+#endif
 
     /* return success                                                      */
     return 0;

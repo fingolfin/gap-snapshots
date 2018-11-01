@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    Automata
+  </Title>
+  <Subtitle>
+    A package on automata
+  </Subtitle>
+  <Version>
+    1.14
+  </Version>
+  <Author>
+    Manuel Delgado<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Departamento de Matemática - Faculdade de Ciências<Br/>
+Porto<Br/>
+Portugal<Br/>
+</Address>
+<Email>mdelgado@fc.up.pt</Email>
+<Homepage>http://www.fc.up.pt/cmup/mdelgado/</Homepage>
+
+  </Author>
+  <Author>
+    Steve Linton<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+School of Computer Science<Br/>
+University of St Andrews<Br/>
+Jack Cole Building, North Haugh<Br/>
+St Andrews, Fife, KY16 9SX<Br/>
+United Kingdom<Br/>
+</Address>
+<Email>steve.linton@st-andrews.ac.uk</Email>
+<Homepage>http://www-groups.dcs.st-and.ac.uk/~sal/</Homepage>
+
+  </Author>
+  <Author>
+    José João Morais<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+No address known<Br/>
+</Address>
+
+  </Author>
+  <Date>
+    26 September 2018
+  </Date>
+  </TitlePage>
