@@ -1,0 +1,108 @@
+  
+  [1X1 [33X[0;0YIntroduction[133X[101X
+  
+  
+  [1X1.1 [33X[0;0YPurpose[133X[101X
+  
+  [33X[0;0YSince 2017, it has been possible to use [5XGAP[105X in Jupyter ([7Xhttp://jupyter.org/[107X)
+  through  the  [5XJupyterKernel[105X package. Output was limited to the ordinary text
+  output [5XGAP[105X produces; charts and graphs were not possible.[133X
+  
+  [33X[0;0YIn    2018,    Martins    and    Pfeiffer    released   [5Xfrancy[105X   (repository
+  ([7Xhttps://github.com/mcmartins/francy[107X),                               article
+  ([7Xhttps://arxiv.org/abs/1806.08648[107X)), which lets users create graphs of a few
+  types  (vertices  and  edges,  line  chart,  bar  chart, scatter chart) in a
+  Jupyter  notebook. It also allows the user to attach actions to the elements
+  of  these  charts,  which  result  in  callbacks  to [5XGAP[105X that can update the
+  visualization.[133X
+  
+  [33X[0;0YThis  visualization  package has different aims in three ways. First, it can
+  function  either  in a Jupyter notebook or directly from the [5XGAP[105X REPL on the
+  command  line.  Second,  it  aims  to make a wider variety of visualizations
+  accessible  to  [5XGAP[105X users. Third, it does not provide tools for conveniently
+  making  such  visualizations interactive. Where the [5Xfrancy[105X package excels at
+  interactive  visualizations,  this  package instead gives a broader scope of
+  visualization tools and does not require Jupyter.[133X
+  
+  [33X[0;0YThese   goals   are   achieved  by  importing  several  existing  JavaScript
+  visualization  toolkits and exposing them to [5XGAP[105X code, as described later in
+  this manual.[133X
+  
+  
+  [1X1.2 [33X[0;0YTerminology (What is a Graph?)[133X[101X
+  
+  [33X[0;0YThere  is an unfortunate ambiguity about the word "graph" in mathematics. It
+  is  used to mean both "the graph of a function drawn on coordinate axes" and
+  "a  collection of vertices with edges connecting them." This is particularly
+  troublesome  in  a  package  like  this one, where we will provide tools for
+  drawing  both  of  these  things!  Consequently,  we remove the ambiguity as
+  follows.[133X
+  
+  [33X[0;0YWe will say "charts and plots" to refer to the first concept (lines, curves,
+  bars,  dots,  etc.  on  coordinate  axes)  and "graphs" (or sometimes "graph
+  drawing")  to  refer  only  to the second concept (vertices and edges). This
+  convention holds throughout this entire document.[133X
+  
+  [33X[0;0YResulting images not shown here.[133X
+  
+  [33X[0;0YTo  support  both  of  these types of visualizations, this package imports a
+  breadth  of  JavaScript  visualization libraries (and you can extend it with
+  more, as in Chapter [14X5[114X). We split them into the categories defined above.[133X
+  
+  
+  [1X1.2-1 [33X[0;0YToolkits for drawing charts and plots[133X[101X
+  
+  [30X    [33X[0;6YAnyChart ([7Xhttps://www.anychart.com/[107X)[133X
+  
+  [30X    [33X[0;6YCanvasJS ([7Xhttps://canvasjs.com/[107X)[133X
+  
+  [30X    [33X[0;6YChartJS ([7Xhttps://www.chartjs.org/[107X)[133X
+  
+  [30X    [33X[0;6YPlotly  ([7Xhttps://plot.ly/[107X)  (the  default tool used when you call [2XPlot[102X
+        ([14X7.1-1[114X))[133X
+  
+  
+  [1X1.2-2 [33X[0;0YToolkits for drawing graphs[133X[101X
+  
+  [30X    [33X[0;6YCytoscape  ([7Xhttp://www.cytoscape.org/[107X) (the default tool used when you
+        call [2XPlotGraph[102X ([14X7.1-3[114X))[133X
+  
+  
+  [1X1.2-3 [33X[0;0YGeneral purpose tools with which you can define custom visualizations[133X[101X
+  
+  [30X    [33X[0;6YD3 ([7Xhttps://d3js.org/[107X)[133X
+  
+  [30X    [33X[0;6YNative HTML [10Xcanvas[110X element[133X
+  
+  [30X    [33X[0;6YPlain HTML[133X
+  
+  
+  [1X1.3 [33X[0;0YThe high-level API and the low-level API[133X[101X
+  
+  [33X[0;0YThis package exposes the JavaScript tools to the [5XGAP[105X user in two ways.[133X
+  
+  [33X[0;0YFoundationally,  a  low-level  API gives direct access to the JSON passed to
+  those  tools  and to JavaScript code for manipulating the visualizations the
+  tools create. This is powerful but not convenient to use.[133X
+  
+  [33X[0;0YMore  conveniently,  a  high-level API gives two functions, one for creating
+  plots  and  charts  ([2XPlot[102X  ([14X7.1-1[114X))  and  one for creating graphs ([2XPlotGraph[102X
+  ([14X7.1-3[114X)).  The  high-level API should handle the vast majority of use cases,
+  but  if  an  option  you  need  is  not  supported by it, there is still the
+  low-level API on which you can fall back.[133X
+  
+  
+  [1X1.4 [33X[0;0YLoading the package (in Jupyter or otherwise)[133X[101X
+  
+  [33X[0;0YTo  import this package, use the following [5XGAP[105X command from the command line
+  or from a cell in a Jupyter notebook running a [5XGAP[105X kernel.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28XLoadPackage( "jupyterviz" );[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YTo  see  how  to use the package, we recommend next reading Chapter [14X2[114X on the
+  high-level  API,  and  if  you  find  it  necessary,  also  Chapter [14X3[114X on the
+  low-level  API.  Each  chapter  contains numerous examples of how to use the
+  package.[133X
+  

@@ -124,7 +124,7 @@
   \item \texttt  {Add}, \hyperpage{260}
   \item add
     \subitem an element to a set, \hyperpage{287}
-  \item \texttt  {AddCoeffs}, \hyperpage{314}
+  \item \texttt  {AddCoeffs}, \hyperpage{315}
   \item \texttt  {AddDictionary}, \hyperpage{385}
   \item \texttt  {AddGenerator}, \hyperpage{717}
   \item \texttt  {AddGeneratorsExtendSchreierTree}, \hyperpage{632}
@@ -1049,7 +1049,7 @@
     \subitem for IsVectorObj,IsVectorObj, \hyperpage{360}
   \item \texttt  {DistancePerms}, \hyperpage{612}
   \item \texttt  {DistancesDistributionMatFFEVecFFE}, \hyperpage{317}
-  \item \texttt  {DistancesDistributionVecFFEsVecFFE}, \hyperpage{316}
+  \item \texttt  {DistancesDistributionVecFFEsVecFFE}, \hyperpage{317}
   \item \texttt  {DistanceVecFFE}, \hyperpage{316}
   \item division, \hyperpage{58}
     \subitem operation, \hyperpage{425}
@@ -4090,7 +4090,7 @@
   \item redisplay a help section, \hyperpage{29}
   \item redisplay with next help viewer, \hyperpage{29}
   \item \texttt  {ReduceCoeffs}, \hyperpage{318}
-  \item \texttt  {ReduceCoeffsMod}, \hyperpage{318}
+  \item \texttt  {ReduceCoeffsMod}, \hyperpage{319}
   \item \texttt  {ReducedAdditiveInverse}, \hyperpage{504}
   \item \texttt  {ReducedCharacters}, \hyperpage{1153}
   \item \texttt  {ReducedClassFunctions}, \hyperpage{1152}
@@ -4239,7 +4239,7 @@
   \item \texttt  {RightOne}
     \subitem for a partial perm, \hyperpage{838}
     \subitem for a transformation, \hyperpage{818}
-  \item \texttt  {RightShiftRowVector}, \hyperpage{315}
+  \item \texttt  {RightShiftRowVector}, \hyperpage{316}
   \item \texttt  {RightTransversal}, \hyperpage{521}
   \item \texttt  {Ring}
     \subitem for a collection, \hyperpage{856}

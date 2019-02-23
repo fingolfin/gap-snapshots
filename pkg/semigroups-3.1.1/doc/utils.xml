@@ -1,0 +1,121 @@
+#############################################################################
+##
+#W  utils.xml
+#Y  Copyright (C) 2011-14                                James D. Mitchell
+##
+##  Licensing information can be found in the README file of this package.
+##
+#############################################################################
+##
+
+<#GAPDoc Label="SemigroupsMakeDoc">
+  <ManSection>
+    <Func Name = "SemigroupsMakeDoc" Arg = ""/>
+    <Returns>Nothing.</Returns>
+    <Description>
+      This function should be called with no argument to compile the
+      &Semigroups; documentation.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="SEMIGROUPS.DefaultOptionsRec">
+  <ManSection>
+     <Var Name = "SEMIGROUPS.DefaultOptionsRec"/>
+     <Description>
+       This global variable is a record whose components contain the default
+       values of certain options for semigroups.  A description of these
+       options is given above in Section
+       <Ref Sect = "Options when creating semigroups"/>.
+       <P/>
+
+       The value of <C>SEMIGROUPS.DefaultOptionsRec</C> is defined in the file
+       <C>semigroups/gap/options.g</C>.
+     </Description>
+   </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="SemigroupsTestStandard">
+  <ManSection>
+    <Func Name = "SemigroupsTestStandard" Arg = ""/>
+    <Returns>A list indicating which tests passed and failed and the time take
+      to run each file.</Returns>
+    <Description>
+      This function should be called with no argument to comprehensively test
+      that &Semigroups; is working correctly. These tests should take no more
+      than a few minutes to complete.  To quickly test that &Semigroups; is
+      installed correctly use <Ref Func = "SemigroupsTestInstall"/>.<P/>
+
+      Each test file is run twice, once when the methods for 
+      <Ref Filt="IsActingSemigroup"/> are enabled and once when they are
+      disabled. 
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="SemigroupsTestInstall">
+  <ManSection>
+    <Func Name = "SemigroupsTestInstall" Arg = ""/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      This function should be called with no argument to test your installation
+      of &Semigroups; is working correctly. These tests should take no more
+      than a few seconds to complete.  To more comprehensively test
+      that &Semigroups; is installed correctly use
+      <Ref Func = "SemigroupsTestStandard"/>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="SemigroupsTestExtreme">
+  <ManSection>
+    <Func Name = "SemigroupsTestExtreme" Arg = ""/>
+    <Returns>A list indicating which tests passed and failed and the time take
+      to run each file.</Returns>
+    <Description>
+      This function should be called with no argument to run some long-running
+      tests, which could be used to benchmark &Semigroups; or test your
+      hardware. These tests should take no more than around half an hour to
+      complete.  To quickly test that &Semigroups; is installed correctly use
+      <Ref Func = "SemigroupsTestInstall"/>, or to test all aspects of the
+      package use <Ref Func = "SemigroupsTestStandard"/>.<P/>
+
+      Each test file is run twice, once when the methods for semigroups
+      satisfying <Ref Filt="IsActingSemigroup"/> are enabled and once when they
+      are disabled.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="SemigroupsTestAll">
+  <ManSection>
+    <Func Name = "SemigroupsTestAll" Arg = ""/>
+    <Returns><K>true</K> or <K>false</K>.</Returns>
+    <Description>
+      This function should be called with no argument to compile the
+      &Semigroups; package's documentation, run the standard suite of tests, and
+      run all the examples from the documentation to ensure that their output is
+      correct.  The value returned is <K>true</K> if all the tests succeed, and
+      <K>false</K> otherwise.  The whole process should take no more than a few
+      minutes. <P/>
+
+      See <Ref Func = "SemigroupsMakeDoc"/>
+      and <Ref Func = "SemigroupsTestStandard"/>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>
+
+<#GAPDoc Label="InfoSemigroups">
+  <ManSection>
+    <InfoClass Name = "InfoSemigroups"/>
+    <Description>
+    <C>InfoSemigroups</C> is the info class of the &Semigroups; package.  The
+    info level is initially set to 0 and no info messages are displayed.  To
+    increase the amount of information displayed during a computation increase
+    the info level to 2 or 3. To stop all info messages from being displayed,
+    set the info level to 0.  See also
+    <Ref Subsect = "Info Functions" BookName = "ref"/> and
+    <Ref Oper = "SetInfoLevel" BookName = "ref"/>.
+    </Description>
+  </ManSection>
+<#/GAPDoc>

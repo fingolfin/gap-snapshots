@@ -739,26 +739,26 @@
 \contentsline {subsection}{\numberline {23.3.3}\leavevmode {\color {Chapter }NumberFFVector}}{314}{subsection.23.3.3}
 \contentsline {section}{\numberline {23.4}\leavevmode {\color {Chapter }Coefficient List Arithmetic}}{314}{section.23.4}
 \contentsline {subsection}{\numberline {23.4.1}\leavevmode {\color {Chapter }AddRowVector}}{314}{subsection.23.4.1}
-\contentsline {subsection}{\numberline {23.4.2}\leavevmode {\color {Chapter }AddCoeffs}}{314}{subsection.23.4.2}
+\contentsline {subsection}{\numberline {23.4.2}\leavevmode {\color {Chapter }AddCoeffs}}{315}{subsection.23.4.2}
 \contentsline {subsection}{\numberline {23.4.3}\leavevmode {\color {Chapter }MultRowVector}}{315}{subsection.23.4.3}
 \contentsline {subsection}{\numberline {23.4.4}\leavevmode {\color {Chapter }CoeffsMod}}{315}{subsection.23.4.4}
 \contentsline {section}{\numberline {23.5}\leavevmode {\color {Chapter }Shifting and Trimming Coefficient Lists}}{315}{section.23.5}
 \contentsline {subsection}{\numberline {23.5.1}\leavevmode {\color {Chapter }LeftShiftRowVector}}{315}{subsection.23.5.1}
-\contentsline {subsection}{\numberline {23.5.2}\leavevmode {\color {Chapter }RightShiftRowVector}}{315}{subsection.23.5.2}
+\contentsline {subsection}{\numberline {23.5.2}\leavevmode {\color {Chapter }RightShiftRowVector}}{316}{subsection.23.5.2}
 \contentsline {subsection}{\numberline {23.5.3}\leavevmode {\color {Chapter }ShrinkRowVector}}{316}{subsection.23.5.3}
 \contentsline {subsection}{\numberline {23.5.4}\leavevmode {\color {Chapter }RemoveOuterCoeffs}}{316}{subsection.23.5.4}
 \contentsline {section}{\numberline {23.6}\leavevmode {\color {Chapter }Functions for Coding Theory}}{316}{section.23.6}
 \contentsline {subsection}{\numberline {23.6.1}\leavevmode {\color {Chapter }WeightVecFFE}}{316}{subsection.23.6.1}
 \contentsline {subsection}{\numberline {23.6.2}\leavevmode {\color {Chapter }DistanceVecFFE}}{316}{subsection.23.6.2}
-\contentsline {subsection}{\numberline {23.6.3}\leavevmode {\color {Chapter }DistancesDistributionVecFFEsVecFFE}}{316}{subsection.23.6.3}
+\contentsline {subsection}{\numberline {23.6.3}\leavevmode {\color {Chapter }DistancesDistributionVecFFEsVecFFE}}{317}{subsection.23.6.3}
 \contentsline {subsection}{\numberline {23.6.4}\leavevmode {\color {Chapter }DistancesDistributionMatFFEVecFFE}}{317}{subsection.23.6.4}
 \contentsline {subsection}{\numberline {23.6.5}\leavevmode {\color {Chapter }AClosestVectorCombinationsMatFFEVecFFE}}{317}{subsection.23.6.5}
 \contentsline {subsection}{\numberline {23.6.6}\leavevmode {\color {Chapter }CosetLeadersMatFFE}}{317}{subsection.23.6.6}
-\contentsline {section}{\numberline {23.7}\leavevmode {\color {Chapter }Vectors as coefficients of polynomials}}{317}{section.23.7}
+\contentsline {section}{\numberline {23.7}\leavevmode {\color {Chapter }Vectors as coefficients of polynomials}}{318}{section.23.7}
 \contentsline {subsection}{\numberline {23.7.1}\leavevmode {\color {Chapter }ValuePol}}{318}{subsection.23.7.1}
 \contentsline {subsection}{\numberline {23.7.2}\leavevmode {\color {Chapter }ProductCoeffs}}{318}{subsection.23.7.2}
 \contentsline {subsection}{\numberline {23.7.3}\leavevmode {\color {Chapter }ReduceCoeffs}}{318}{subsection.23.7.3}
-\contentsline {subsection}{\numberline {23.7.4}\leavevmode {\color {Chapter }ReduceCoeffsMod}}{318}{subsection.23.7.4}
+\contentsline {subsection}{\numberline {23.7.4}\leavevmode {\color {Chapter }ReduceCoeffsMod}}{319}{subsection.23.7.4}
 \contentsline {subsection}{\numberline {23.7.5}\leavevmode {\color {Chapter }PowerModCoeffs}}{319}{subsection.23.7.5}
 \contentsline {subsection}{\numberline {23.7.6}\leavevmode {\color {Chapter }ShiftedCoeffs}}{319}{subsection.23.7.6}
 \contentsline {chapter}{\numberline {24}\leavevmode {\color {Chapter }Matrices}}{320}{chapter.24}

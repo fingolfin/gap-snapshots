@@ -1,0 +1,212 @@
+#SIXFORMAT  GapDocGAP
+HELPBOOKINFOSIXTMP := rec(
+encoding := "UTF-8",
+bookname := "JupyterViz",
+entries :=
+[ [ "Title page", ".", [ 0, 0, 0 ], 1, 1, "title page", "X7D2C85EC87DD46E5" ],
+  [ "Table of Contents", ".-1", [ 0, 0, 1 ], 29, 2, "table of contents", 
+      "X8537FEB07AF2BEC8" ], 
+  [ "\033[1X\033[33X\033[0;-2YIntroduction\033[133X\033[101X", "1", 
+      [ 1, 0, 0 ], 1, 4, "introduction", "X7DFB63A97E67C0A1" ], 
+  [ "\033[1X\033[33X\033[0;-2YPurpose\033[133X\033[101X", "1.1", [ 1, 1, 0 ], 
+      4, 4, "purpose", "X78E0A9867DABCE86" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YTerminology (What is a Graph?)\033[133X\033[101X"
+        , "1.2", [ 1, 2, 0 ], 31, 4, "terminology what is a graph?", 
+      "X8376A2517DEBB867" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YToolkits for drawing charts and plots\033[133X\\
+033[101X", "1.2-1", [ 1, 2, 1 ], 52, 5, 
+      "toolkits for drawing charts and plots", "X83000C697990B06C" ], 
+  [ "\033[1X\033[33X\033[0;-2YToolkits for drawing graphs\033[133X\033[101X", 
+      "1.2-2", [ 1, 2, 2 ], 64, 5, "toolkits for drawing graphs", 
+      "X7C46B954786E37AE" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YGeneral purpose tools with which you can define c\
+ustom visualizations\033[133X\033[101X", "1.2-3", [ 1, 2, 3 ], 70, 5, 
+      "general purpose tools with which you can define custom visualizations",
+      "X7F2C8A0B7E3BB3F1" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YThe high-level API and the low-level API\033[133X\
+\033[101X", "1.3", [ 1, 3, 0 ], 79, 5, 
+      "the high-level api and the low-level api", "X856998F578ABF3A1" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YLoading the package (in Jupyter or otherwise)\\
+033[133X\033[101X", "1.4", [ 1, 4, 0 ], 94, 6, 
+      "loading the package in jupyter or otherwise", "X7FA0757281D33109" ], 
+  [ "\033[1X\033[33X\033[0;-2YUsing the high-level API\033[133X\033[101X", 
+      "2", [ 2, 0, 0 ], 1, 7, "using the high-level api", "X83888F2D8472E029" 
+     ], [ "\033[1X\033[33X\033[0;-2YCharts and Plots\033[133X\033[101X", 
+      "2.1", [ 2, 1, 0 ], 4, 7, "charts and plots", "X78078AC381F666C7" ], 
+  [ "\033[1X\033[33X\033[0;-2YOptions for charts and plots\033[133X\033[101X",
+      "2.2", [ 2, 2, 0 ], 126, 11, "options for charts and plots", 
+      "X7827F05D814CFB10" ], 
+  [ "\033[1X\033[33X\033[0;-2YGraphs\033[133X\033[101X", "2.3", [ 2, 3, 0 ], 
+      167, 12, "graphs", "X815691877F8C800C" ], 
+  [ "\033[1X\033[33X\033[0;-2YOptions for graphs\033[133X\033[101X", "2.4", 
+      [ 2, 4, 0 ], 238, 14, "options for graphs", "X8109348A84B8A4D4" ], 
+  [ "\033[1X\033[33X\033[0;-2YUsing the low-level API\033[133X\033[101X", 
+      "3", [ 3, 0, 0 ], 1, 15, "using the low-level api", "X8363BC74806376BE" 
+     ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YThe \033[10XCreateVisualization\033[110X\033[101X\
+\027\033[1X\027 function\033[133X\033[101X", "3.1", [ 3, 1, 0 ], 4, 15, 
+      "the createvisualization function", "X7A4D73457C664283" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YLooking beneath the high-level API\033[133X\033[1\
+01X", "3.2", [ 3, 2, 0 ], 24, 15, "looking beneath the high-level api", 
+      "X82B836487E900D62" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YLooking beneath \033[10XPlot\033[110X\033[101X\\
+027\033[1X\027\033[133X\033[101X", "3.2-1", [ 3, 2, 1 ], 34, 15, 
+      "looking beneath plot", "X7BA83ABA84945681" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YLooking beneath \033[10XPlotGraph\033[110X\033[10\
+1X\027\033[1X\027\033[133X\033[101X", "3.2-2", [ 3, 2, 2 ], 98, 17, 
+      "looking beneath plotgraph", "X792C30817A29E033" ], 
+  [ "\033[1X\033[33X\033[0;-2YUsing JSON from a file\033[133X\033[101X", 
+      "3.3", [ 3, 3, 0 ], 211, 19, "using json from a file", 
+      "X835575F282027572" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YDocumentation for each visualization tool\033[133\
+X\033[101X", "3.4", [ 3, 4, 0 ], 244, 20, 
+      "documentation for each visualization tool", "X860FD2F97E9F936B" ], 
+  [ "\033[1X\033[33X\033[0;-2YCharting and plotting tools\033[133X\033[101X", 
+      "3.4-1", [ 3, 4, 1 ], 252, 20, "charting and plotting tools", 
+      "X82D1D7E380E9F6CD" ], 
+  [ "\033[1X\033[33X\033[0;-2YGraph drawing tools\033[133X\033[101X", 
+      "3.4-2", [ 3, 4, 2 ], 271, 20, "graph drawing tools", 
+      "X795882857B6028D4" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YGeneral-purpose tools for custom visualizations\\
+033[133X\033[101X", "3.4-3", [ 3, 4, 3 ], 278, 20, 
+      "general-purpose tools for custom visualizations", "X79F3C554780769C5" ]
+    , 
+  [ 
+      "\033[1X\033[33X\033[0;-2YExample uses of the low-level API\033[133X\033[10\
+1X", "3.5", [ 3, 5, 0 ], 294, 21, "example uses of the low-level api", 
+      "X83A1AF4B7E339161" ], 
+  [ "\033[1X\033[33X\033[0;-2YExample: AnyChart\033[133X\033[101X", "3.5-1", 
+      [ 3, 5, 1 ], 297, 21, "example: anychart", "X7B0290B3876FCDA1" ], 
+  [ "\033[1X\033[33X\033[0;-2YExample: Cytoscape\033[133X\033[101X", "3.5-2", 
+      [ 3, 5, 2 ], 344, 22, "example: cytoscape", "X7E2737FC7EDB79B1" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YUsing general tools (HTML, canvas, D3)\033[133X\\
+033[101X", "4", [ 4, 0, 0 ], 1, 24, "using general tools html canvas d3", 
+      "X87D903D77FD35AED" ], 
+  [ "\033[1X\033[33X\033[0;-2YWhy these tools are present\033[133X\033[101X", 
+      "4.1", [ 4, 1, 0 ], 4, 24, "why these tools are present", 
+      "X856317C47839F0C0" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YPost-processing visualizations\033[133X\033[101X"
+        , "4.2", [ 4, 2, 0 ], 17, 24, "post-processing visualizations", 
+      "X7D65933280120650" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YInjecting JavaScript into general tools\033[133X\\
+033[101X", "4.3", [ 4, 3, 0 ], 49, 25, 
+      "injecting javascript into general tools", "X85EA7D2579837F4D" ], 
+  [ "\033[1X\033[33X\033[0;-2YExample: Native HTML Canvas\033[133X\033[101X", 
+      "4.3-1", [ 4, 3, 1 ], 52, 25, "example: native html canvas", 
+      "X7836DDAA82B6A536" ], 
+  [ "\033[1X\033[33X\033[0;-2YExample: Plain HTML\033[133X\033[101X", 
+      "4.3-2", [ 4, 3, 2 ], 78, 25, "example: plain html", 
+      "X7C06E0117C8EF31B" ], 
+  [ "\033[1X\033[33X\033[0;-2YExample: D3\033[133X\033[101X", "4.3-3", 
+      [ 4, 3, 3 ], 121, 26, "example: d3", "X7A2554B0847DD027" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YAdding new visualization tools\033[133X\033[101X"
+        , "5", [ 5, 0, 0 ], 1, 27, "adding new visualization tools", 
+      "X81249ADA79916213" ], 
+  [ "\033[1X\033[33X\033[0;-2YWhy you might want to do this\033[133X\033[101X"
+        , "5.1", [ 5, 1, 0 ], 4, 27, "why you might want to do this", 
+      "X7DB91A9C7C03FF67" ], 
+  [ "\033[1X\033[33X\033[0;-2YWhat you will need\033[133X\033[101X", "5.2", 
+      [ 5, 2, 0 ], 23, 27, "what you will need", "X858B113D80E8D32B" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YExtending this package with a new tool\033[133X\\
+033[101X", "5.3", [ 5, 3, 0 ], 58, 28, 
+      "extending this package with a new tool", "X7E5726AC788EADCC" ], 
+  [ 
+      "\033[1X\033[33X\033[0;-2YInstalling a new tool at runtime\033[133X\033[101\
+X", "5.4", [ 5, 4, 0 ], 237, 31, "installing a new tool at runtime", 
+      "X8434DB9C80EC7E6B" ], 
+  [ "\033[1X\033[33X\033[0;-2YLimitations\033[133X\033[101X", "6", 
+      [ 6, 0, 0 ], 1, 33, "limitations", "X8481628E878FF644" ], 
+  [ "\033[1X\033[33X\033[0;-2YFunction reference\033[133X\033[101X", "7", 
+      [ 7, 0, 0 ], 1, 34, "function reference", "X7ECCCA82839EA283" ], 
+  [ "\033[1X\033[33X\033[0;-2YHigh-Level Public API\033[133X\033[101X", 
+      "7.1", [ 7, 1, 0 ], 4, 34, "high-level public api", "X80378EDF79B85A46" 
+     ], [ "\033[1X\033[33X\033[0;-2YLow-Level Public API\033[133X\033[101X", 
+      "7.2", [ 7, 2, 0 ], 331, 40, "low-level public api", 
+      "X83E0040584EAF486" ], 
+  [ "\033[1X\033[33X\033[0;-2YInternal methods\033[133X\033[101X", "7.3", 
+      [ 7, 3, 0 ], 465, 42, "internal methods", "X7B106BA97FD3C2BF" ], 
+  [ "\033[1X\033[33X\033[0;-2YRepresentation wrapper\033[133X\033[101X", 
+      "7.4", [ 7, 4, 0 ], 755, 47, "representation wrapper", 
+      "X7CB82ABE7B3255EB" ], 
+  [ "Index", "ind", [ "Ind", 0, 0 ], 1, 49, "index", "X83A0356F839C696F" ], 
+  [ "\033[2XPlot\033[102X", "7.1-1", [ 7, 1, 1 ], 7, 34, "plot", 
+      "X811D60857B0B2B68" ], 
+  [ "\033[2XConvertDataSeriesForTool\033[102X", "7.1-2", [ 7, 1, 2 ], 73, 35, 
+      "convertdataseriesfortool", "X7B36451A873E06B2" ], 
+  [ "\033[2XPlotGraph\033[102X", "7.1-3", [ 7, 1, 3 ], 114, 36, "plotgraph", 
+      "X79FCD4E67FF49A5F" ], 
+  [ "\033[2XConvertGraphForTool\033[102X", "7.1-4", [ 7, 1, 4 ], 172, 37, 
+      "convertgraphfortool", "X80380CBB7E1FA082" ], 
+  [ "\033[2XPlotDisplayMethod\033[102X", "7.1-5", [ 7, 1, 5 ], 219, 38, 
+      "plotdisplaymethod", "X81D8CBD97B9677C0" ], 
+  [ "\033[2XPlotDisplayMethod_Jupyter\033[102X", "7.1-6", [ 7, 1, 6 ], 252, 
+      39, "plotdisplaymethod_jupyter", "X877563A087BAF265" ], 
+  [ "\033[2XPlotDisplayMethod_JupyterSimple\033[102X", "7.1-7", [ 7, 1, 7 ], 
+      280, 39, "plotdisplaymethod_jupytersimple", "X85332D257DD44070" ], 
+  [ "\033[2XPlotDisplayMethod_HTML\033[102X", "7.1-8", [ 7, 1, 8 ], 307, 40, 
+      "plotdisplaymethod_html", "X818039C5844E897B" ], 
+  [ "\033[2XRunJavaScript\033[102X", "7.2-1", [ 7, 2, 1 ], 334, 40, 
+      "runjavascript", "X78BDA43D7E633E33" ], 
+  [ "\033[2XLoadJavaScriptFile\033[102X", "7.2-2", [ 7, 2, 2 ], 359, 40, 
+      "loadjavascriptfile", "X81E2B3A07EA7A02B" ], 
+  [ "\033[2XInstallVisualizationTool\033[102X", "7.2-3", [ 7, 2, 3 ], 375, 
+      41, "installvisualizationtool", "X83454CD67FF0EED7" ], 
+  [ "\033[2XInstallVisualizationToolFromTemplate\033[102X", "7.2-4", 
+      [ 7, 2, 4 ], 397, 41, "installvisualizationtoolfromtemplate", 
+      "X876DFB2B87FC3732" ], 
+  [ "\033[2XCreateVisualization\033[102X", "7.2-5", [ 7, 2, 5 ], 420, 41, 
+      "createvisualization", "X7BFFD8B7808F5BDA" ], 
+  [ "\033[2XJUPVIZAbsoluteJavaScriptFilename\033[102X", "7.3-1", [ 7, 3, 1 ], 
+      476, 42, "jupvizabsolutejavascriptfilename", "X7FA27984822A0E5E" ], 
+  [ "\033[2XJUPVIZLoadedJavaScriptCache\033[102X", "7.3-2", [ 7, 3, 2 ], 488, 
+      42, "jupvizloadedjavascriptcache", "X7F877B4279081217" ], 
+  [ "\033[2XJUPVIZFillInJavaScriptTemplate\033[102X", "7.3-3", [ 7, 3, 3 ], 
+      497, 43, "jupvizfillinjavascripttemplate", "X84F0A3C97FBC57EE" ], 
+  [ "\033[2XJUPVIZRunJavaScriptFromTemplate\033[102X", "7.3-4", [ 7, 3, 4 ], 
+      520, 43, "jupvizrunjavascriptfromtemplate", "X8603271979CCFA2A" ], 
+  [ "\033[2XJUPVIZRunJavaScriptUsingRunGAP\033[102X", "7.3-5", [ 7, 3, 5 ], 
+      529, 43, "jupvizrunjavascriptusingrungap", "X804379D07F29E905" ], 
+  [ "\033[2XJUPVIZRunJavaScriptUsingLibraries\033[102X", "7.3-6", 
+      [ 7, 3, 6 ], 547, 43, "jupvizrunjavascriptusinglibraries", 
+      "X79B7692C7F543161" ], 
+  [ "\033[2XJUPVIZMakePlotDataSeries\033[102X", "7.3-7", [ 7, 3, 7 ], 580, 
+      44, "jupvizmakeplotdataseries", "X8620A70785F90EE6" ], 
+  [ "\033[2XJUPVIZMakePlotGraphRecord\033[102X", "7.3-8", [ 7, 3, 8 ], 595, 
+      44, "jupvizmakeplotgraphrecord", "X7B5CF2DA86E91C11" ], 
+  [ "\033[2XJUPVIZPlotDataSeriesList\033[102X", "7.3-9", [ 7, 3, 9 ], 610, 
+      44, "jupvizplotdataserieslist", "X87B06B5C872845E9" ], 
+  [ "\033[2XJUPVIZRecordKeychainLookup\033[102X", "7.3-10", [ 7, 3, 10 ], 
+      624, 45, "jupvizrecordkeychainlookup", "X873A09F5852A33E9" ], 
+  [ "\033[2XJUPVIZRecordsKeychainLookup\033[102X", "7.3-11", [ 7, 3, 11 ], 
+      660, 45, "jupvizrecordskeychainlookup", "X7C8A5FCD7B96D5DC" ], 
+  [ "\033[2XJUPVIZFetchWithDefault\033[102X", "7.3-12", [ 7, 3, 12 ], 694, 
+      46, "jupvizfetchwithdefault", "X784852877814711F" ], 
+  [ "\033[2XJUPVIZFetchIfPresent\033[102X", "7.3-13", [ 7, 3, 13 ], 733, 46, 
+      "jupvizfetchifpresent", "X856669217AADA94F" ], 
+  [ "\033[2XJUPVIZIsFileContents\033[102X for isobject", "7.4-1", 
+      [ 7, 4, 1 ], 783, 47, "jupvizisfilecontents for isobject", 
+      "X82269732822D224D" ], 
+  [ 
+      "\033[2XJUPVIZIsFileContentsRep\033[102X for iscomponentobjectrep and jupvi\
+zisfilecontents", "7.4-2", [ 7, 4, 2 ], 791, 47, 
+      "jupvizisfilecontentsrep for iscomponentobjectrep and jupvizisfileconten\
+ts", "X84D70ACD7A72AA84" ], 
+  [ "\033[2XJUPVIZFileContents\033[102X for isstring", "7.4-3", [ 7, 4, 3 ], 
+      798, 47, "jupvizfilecontents for isstring", "X7D401DB582A5EBA2" ] ]
+);

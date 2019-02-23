@@ -33,6 +33,7 @@
 #include "records.h"
 #include "stats.h"
 #include "stringobj.h"
+#include "sysenv.h"
 #include "sysopt.h"
 
 #include "hpc/thread.h"
@@ -161,19 +162,24 @@ ssize_t echoandcheck(int fid, const char *buf, size_t count) {
   int ret;
   if (syBuf[fid].type == gzip_socket) {
       ret = gzwrite(syBuf[fid].gzfp, buf, count);
-      if (ret < 0)
+      if (ret < 0) {
           ErrorQuit(
               "Could not write to compressed file, see 'LastSystemError();'\n",
               0L, 0L);
+      }
   }
   else {
       ret = write(syBuf[fid].echo, buf, count);
-      if (ret < 0)
-          ErrorQuit("Could not write to file descriptor %d, see "
-                    "'LastSystemError();'\n",
-                    syBuf[fid].fp, 0L);
+      if (ret < 0) {
+          if (syBuf[fid].fp == fileno(stdout) || syBuf[fid].fp == fileno(stderr)) {
+              Panic("Could not write to stdout/stderr.");
+          } else {
+              ErrorQuit("Could not write to file descriptor %d, see "
+                        "'LastSystemError();'\n",
+                        syBuf[fid].fp, 0L);
+          }
+      }
   }
-
   return ret;
 }
 
@@ -1638,17 +1644,23 @@ static ssize_t SyWriteandcheck(Int fid, const void * buf, size_t count)
     int ret;
     if (syBuf[fid].type == gzip_socket) {
         ret = gzwrite(syBuf[fid].gzfp, buf, count);
-        if (ret < 0)
+        if (ret < 0) {
             ErrorQuit(
                 "Cannot write to compressed file, see 'LastSystemError();'\n",
                 0L, 0L);
+        }
     }
     else {
         ret = write(syBuf[fid].fp, buf, count);
-        if (ret < 0)
-            ErrorQuit("Cannot write to file descriptor %d, see "
-                      "'LastSystemError();'\n",
-                      syBuf[fid].fp, 0L);
+        if (ret < 0) {
+            if (syBuf[fid].fp == fileno(stdout) || syBuf[fid].fp == fileno(stderr)) {
+                Panic("Could not write to stdout/stderr.");
+            } else {
+                ErrorQuit("Cannot write to file descriptor %d, see "
+                          "'LastSystemError();'\n",
+                          syBuf[fid].fp, 0L);
+            }
+        }
     }
 
     return ret;
@@ -2045,9 +2057,6 @@ void HandleCharReadHook(int stdinfd)
 
 Int HasAvailableBytes( UInt fid )
 {
-#if !defined(HAVE_SELECT)
-  Int ret;
-#endif
   UInt bufno;
   if (!SyBufInUse(fid))
     return -1;
@@ -2060,7 +2069,8 @@ Int HasAvailableBytes( UInt fid )
     }
 
 #ifdef HAVE_SELECT
-  {
+  // All sockets other than raw sockets are always ready
+  if (syBuf[fid].type == raw_socket) {
     fd_set set;
     struct timeval tv;
     FD_ZERO( &set);
@@ -2069,11 +2079,10 @@ Int HasAvailableBytes( UInt fid )
     tv.tv_usec = 0;
     return select( syBuf[fid].fp + 1, &set, NULL, NULL, &tv);
   }
-#else
-    /* best guess */
-  ret =  SyIsEndOfFile( fid);
-  return (ret != -1 && ret != 1);
 #endif
+  /* best guess */
+  Int ret = SyIsEndOfFile(fid);
+  return (ret != -1 && ret != 1);
 }
 
 
@@ -2215,15 +2224,17 @@ int GAP_rl_func(int count, int key)
       if (hook == 1) {
          /* display matches */
          if (!IS_LIST(data)) return 0;
-         dlen = LEN_LIST(data);
-         char **strs = (char**)malloc((dlen+1) * sizeof(char*));
+         /* -1, because first is word to be completed */
+         dlen = LEN_LIST(data)-1;
+         /* +2, must be in 'argv' format, terminated by 0 */
+         char **strs = (char**)calloc(dlen+2, sizeof(char*));
          max = 0;
-         for (i=1; i <= dlen; i++) {
-            if (!IsStringConv(ELM_LIST(data, i))) {
+         for (i=0; i <= dlen; i++) {
+            if (!IsStringConv(ELM_LIST(data, i+1))) {
                free(strs);
                return 0;
             }
-            strs[i] = CSTR_STRING(ELM_LIST(data, i));
+            strs[i] = CSTR_STRING(ELM_LIST(data, i+1));
             if (max < strlen(strs[i])) max = strlen(strs[i]);
          }
          rl_display_match_list(strs, dlen, max);
@@ -3073,12 +3084,6 @@ void SySetErrorNo ( void )
 #endif
 #ifndef WIFEXITED
 # define WIFEXITED(stat_val) (((stat_val) & 255) == 0)
-#endif
-
-#ifdef SYS_IS_CYGWIN32
-// cygwin declares environ in unistd.h
-#else
-extern char ** environ;
 #endif
 
 void NullSignalHandler(int scratch) {}

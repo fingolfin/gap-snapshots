@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<#Include SYSTEM "_Chapter_Introduction.xml">
+<#Include SYSTEM "_Chapter_Shapes_of_a_Majorana_representation.xml">
+<#Include SYSTEM "_Chapter_Majorana_representations.xml">
+<#Include SYSTEM "_Chapter_funcs.xml">
+<#Include SYSTEM "_Chapter_Functions_for_testing_Majorana_representations.xml">

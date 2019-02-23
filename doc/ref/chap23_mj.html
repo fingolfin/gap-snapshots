@@ -269,13 +269,26 @@ true
 <h5>23.3-3 NumberFFVector</h5>
 
 <div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NumberFFVector</code>( <var class="Arg">vec</var>, <var class="Arg">sz</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>returns an integer that gives the position of the finite field row vector <var class="Arg">vec</var> in the sorted list of all row vectors over the field with <var class="Arg">sz</var> elements in the same dimension as <var class="Arg">vec</var>. <code class="func">NumberFFVector</code> returns <code class="keyw">fail</code> if the vector cannot be represented over the field with <var class="Arg">sz</var> elements.</p>
+<p>returns an integer that gives the position minus one of the finite field row vector <var class="Arg">vec</var> in the sorted list of all row vectors over the field with <var class="Arg">sz</var> elements in the same dimension as <var class="Arg">vec</var>. <code class="func">NumberFFVector</code> returns <code class="keyw">fail</code> if the vector cannot be represented over the field with <var class="Arg">sz</var> elements.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">v:=[0,1,2,0]*Z(3);;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NumberFFVector(v, 3);</span>
+21
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">NumberFFVector(Zero(v),3);</span>
+0
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V:=EnumeratorSorted(GF(3)^4);</span>
+&lt;enumerator of ( GF(3)^4 )&gt;
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">V[21+1] = v;</span>
+true
+</pre></div>
 
 <p><a id="X85C68AED805E4B9C" name="X85C68AED805E4B9C"></a></p>
 
 <h4>23.4 <span class="Heading">Coefficient List Arithmetic</span></h4>
 
-<p>The following operations all perform arithmetic on row vectors. given as homogeneous lists of the same length, containing elements of a commutative ring.</p>
+<p>The following operations all perform arithmetic on row vectors, given as homogeneous lists of the same length, containing elements of a commutative ring.</p>
 
 <p>There are two reasons for using <code class="func">AddRowVector</code> (<a href="chap23_mj.html#X78E6897186F482F6"><span class="RefLink">23.4-1</span></a>) in preference to arithmetic operators. Firstly, the three argument form has no single-step equivalent. Secondly <code class="func">AddRowVector</code> (<a href="chap23_mj.html#X78E6897186F482F6"><span class="RefLink">23.4-1</span></a>) changes its first argument in-place, rather than allocating a new vector to hold the result, and may thus produce less garbage.</p>
 

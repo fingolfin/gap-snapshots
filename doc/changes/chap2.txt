@@ -576,7 +576,7 @@
         clicking, selecting, dragging and zooming.[133X
   
   [30X    [33X[0;6YThe  [5XJupyterVis[105X package by Nathan Carter, which is intended for use in
-        Jupyter Notebooks running GAP kernels and adds visualization tools for
+        Jupyter Notebooks running [5XGAP[105X kernels and adds visualization tools for
         use in such notebooks, such as charts and graphs.[133X
   
   [33X[0;0YNo longer redistributed with [5XGAP[105X:[133X
@@ -589,4 +589,131 @@
   
   [30X    [33X[0;6YThe  [5Xrecogbase[105X  package  has  been  merged into the [10Xrecog[110X package, and
         therefore is no longer distributed with [5XGAP[105X.[133X
+  
+  
+  [1X2.2 [33X[0;0Y[5XGAP[105X[101X[1X 4.10.1 (February 2019)[133X[101X
+  
+  
+  [1X2.2-1 [33X[0;0YChanges in the core [5XGAP[105X[101X[1X system introduced in [5XGAP[105X[101X[1X 4.10.1[133X[101X
+  
+  [33X[0;0YFixes  in  the  experimental  way  to  allow 3rd party code to link [5XGAP[105X as a
+  library:[133X
+  
+  [30X    [33X[0;6YDo  not start a session when loading workspace if [10X--nointeract[110X command
+        line            option            is            used            (#2840
+        ([7Xhttps://github.com/gap-system/gap/pull/2840[107X)).[133X
+  
+  [30X    [33X[0;6YAdd    prototype   for   [10XGAP_Enter[110X   and   [10XGAP_Leave[110X   macros   (#3096
+        ([7Xhttps://github.com/gap-system/gap/pull/3096[107X)).[133X
+  
+  [30X    [33X[0;6YPrevent infinite recursions in [10Xechoandcheck[110X and [10XSyWriteandcheck[110X (#3102
+        ([7Xhttps://github.com/gap-system/gap/pull/3102[107X)).[133X
+  
+  [30X    [33X[0;6YRemove      [10Xenviron[110X      arguments      and      [10Xsysenviron[110X     (#3111
+        ([7Xhttps://github.com/gap-system/gap/pull/3111[107X)).[133X
+  
+  [33X[0;0YFixes in the experimental support for using the Julia garbage collector:[133X
+  
+  [30X    [33X[0;6YFix      task     scanning     for     the     Julia     GC     (#2969
+        ([7Xhttps://github.com/gap-system/gap/pull/2969[107X)).[133X
+  
+  [30X    [33X[0;6YFix      stack     marking     for     the     Julia     GC     (#3199
+        ([7Xhttps://github.com/gap-system/gap/pull/3199[107X)).[133X
+  
+  [30X    [33X[0;6YSpecify   the   Julia  binary  instead  of  the  Julia  prefix  (#3243
+        ([7Xhttps://github.com/gap-system/gap/pull/3243[107X)).[133X
+  
+  [30X    [33X[0;6YExport   Julia   [10XCFLAGS[110X,  [10XLDFLAGS[110X,  and  [10XLIBS[110X  to  [10Xsysinfo.gap[110X  (#3248
+        ([7Xhttps://github.com/gap-system/gap/pull/3248[107X)).[133X
+  
+  [33X[0;0YImproved and extended functionality:[133X
+  
+  [30X    [33X[0;6YAlways  generate [10Xsysinfo.gap[110X (previously, it was only generated if the
+        "compatibility   mode"   of  the  build  system  was  enabled)  (#3042
+        ([7Xhttps://github.com/gap-system/gap/pull/3042[107X)).[133X
+  
+  [30X    [33X[0;6YAdd  support  for  writing  to  [10XERROR_OUTPUT[110X  from  kernel code (#3043
+        ([7Xhttps://github.com/gap-system/gap/pull/3043[107X)).[133X
+  
+  [30X    [33X[0;6YAdd [10Xmake check[110X (#3285 ([7Xhttps://github.com/gap-system/gap/pull/3285[107X)).[133X
+  
+  [33X[0;0YChanged documentation:[133X
+  
+  [30X    [33X[0;6YFix  documentation  of  [2XNumberFFVector[102X ([14XReference: NumberFFVector[114X) and
+        add an example (#3079 ([7Xhttps://github.com/gap-system/gap/pull/3079[107X)).[133X
+  
+  [33X[0;0YFixed bugs that could lead to crashes:[133X
+  
+  [30X    [33X[0;6YFix     readline     crash     when     using     autocomplete    with
+        [10Xcolored-completion-prefix[110X     turned     on     in     Bash     (#2991
+        ([7Xhttps://github.com/gap-system/gap/pull/2991[107X)).[133X
+  
+  [30X    [33X[0;6YFix       overlapping      [10Xmemcpy[110X      in      [10XAPPEND_LIST[110X      (#3216
+        ([7Xhttps://github.com/gap-system/gap/pull/3216[107X)).[133X
+  
+  [33X[0;0YFixed bugs that could lead to incorrect results:[133X
+  
+  [30X    [33X[0;6YFix    bugs    in   the   code   for   partial   permutations   (#3220
+        ([7Xhttps://github.com/gap-system/gap/pull/3220[107X)).[133X
+  
+  [30X    [33X[0;6YFix  a  bug  in [10XGcd[110X for polynomials not returning standard associates,
+        introduced           in           [5XGAP[105X           4.10.0          (#3227
+        ([7Xhttps://github.com/gap-system/gap/pull/3227[107X)).[133X
+  
+  [33X[0;0YFixed bugs that could lead to break loops:[133X
+  
+  [30X    [33X[0;6YChange  [2XGroupWithGenerators[102X ([14XReference: GroupWithGenerators[114X) to accept
+        collections  again  (to  avoid regressions in code that relied on this
+        undocumented                      behavior)                     (#3095
+        ([7Xhttps://github.com/gap-system/gap/pull/3095[107X)).[133X
+  
+  [30X    [33X[0;6YFix  [2XShallowCopy[102X  ([14XReference:  ShallowCopy[114X)  for  for  a  Knuth-Bendix
+        rewriting                         system                        (#3128
+        ([7Xhttps://github.com/gap-system/gap/pull/3128[107X)).   [Reported  by  Ignat
+        Soroko][133X
+  
+  [30X    [33X[0;6YFix   [2XIsMonomialMatrix[102X  ([14XReference:  IsMonomialMatrix[114X)  to  work  with
+        compressed                       matrices                       (#3149
+        ([7Xhttps://github.com/gap-system/gap/pull/3149[107X)).  [Reported  by Dominik
+        Bernhardt][133X
+  
+  [33X[0;0YRemoved or obsolete functionality:[133X
+  
+  [30X    [33X[0;6YDisable  [10Xmake  install[110X  (previously it displayed a warning which often
+        got ignored) (#3005 ([7Xhttps://github.com/gap-system/gap/pull/3005[107X)).[133X
+  
+  [33X[0;0YOther fixed bugs:[133X
+  
+  [30X    [33X[0;6YFix   some  errors  which  stopped  triggering  a  break  loop  (#3013
+        ([7Xhttps://github.com/gap-system/gap/pull/3013[107X)).[133X
+  
+  [30X    [33X[0;6YFix      compiler      error      with      GCC      4.4.7      (#3026
+        ([7Xhttps://github.com/gap-system/gap/pull/3026[107X)).[133X
+  
+  [30X    [33X[0;6YFix           string           copying           logic          (#3071
+        ([7Xhttps://github.com/gap-system/gap/pull/3071[107X)).[133X
+  
+  
+  [1X2.2-2 [33X[0;0YNew and updated packages since [5XGAP[105X[101X[1X 4.10.0[133X[101X
+  
+  [33X[0;0Y[5XGAP[105X 4.10.1 distribution contains 145 packages, including updated versions of
+  35  packages  from  [5XGAP[105X 4.10.0 distribution, and also the following five new
+  packages:[133X
+  
+  [30X    [33X[0;6Y[5XMajoranaAlgebras[105X  by  Markus  Pfeiffer  and  Madeleine  Whybrow, which
+        constructs Majorana representations of finite groups.[133X
+  
+  [30X    [33X[0;6Y[5XPackageManager[105X  by Michael Torpey, providing a collection of functions
+        for  installing  and  removing  [5XGAP[105X packages, with the eventual aim of
+        becoming a full pip-style package manager for the [5XGAP[105X system.[133X
+  
+  [30X    [33X[0;6Y[5XThelma[105X  by  Victor  Bovdi  and Vasyl Laver, implementing algorithms to
+        deal with threshold elements.[133X
+  
+  [30X    [33X[0;6Y[5Xwalrus[105X by Markus Pfeiffer, providing methods for proving hyperbolicity
+        of finitely presented groups in polynomial time.[133X
+  
+  [30X    [33X[0;6Y[5XYangBaxter[105X   by  Leandro  Vendramin  and  Alexander  Konovalov,  which
+        provides  functionality  to  construct  classical and skew braces, and
+        also includes a database of classical and skew braces of small orders.[133X
   

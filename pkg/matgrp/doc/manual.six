@@ -1,4 +1,5 @@
 C matgrp.tex 1. matgrp
 S 1.1. Usage
-S 1.2. Generic Treatment of Matrix groups
-S 1.3. Error Messages
+S 1.2. Matrices over Residue class rings
+S 1.3. Generic Treatment of Matrix groups
+S 1.4. Error Messages

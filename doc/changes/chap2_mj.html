@@ -47,6 +47,14 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X844ECC8387ADC6D7">2.1-9 <span class="Heading">Packages</span></a>
 </span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2_mj.html#X858254CF7D9DE943">2.2 <span class="Heading"><strong class="pkg">GAP</strong> 4.10.1 (February 2019)</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X785A404B8565D020">2.2-1 <span class="Heading">Changes in the core <strong class="pkg">GAP</strong> system introduced in <strong class="pkg">GAP</strong> 4.10.1</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2_mj.html#X7D3DEF227BFDF572">2.2-2 <span class="Heading">New and updated packages since <strong class="pkg">GAP</strong> 4.10.0</span></a>
+</span>
+</div></div>
 </div>
 
 <h3>2 <span class="Heading">Changes between <strong class="pkg">GAP</strong> 4.9 and <strong class="pkg">GAP</strong> 4.10</span></h3>
@@ -522,7 +530,7 @@ IsomorphismGroups(G,PcGroupCode(CodePcGroup(G),Size(G)))&lt;&gt;fail;
 <li><p>The <strong class="pkg">francy</strong> package by Manuel Martins, which provides an interface to draw graphics using objects. This interface allows creation of directed and undirected graphs, trees, line charts, bar charts and scatter charts. These graphical objects are drawn inside a canvas that includes a space for menus and to display informative messages. Within the canvas it is possible to interact with the graphical objects by clicking, selecting, dragging and zooming.</p>
 
 </li>
-<li><p>The <strong class="pkg">JupyterVis</strong> package by Nathan Carter, which is intended for use in Jupyter Notebooks running GAP kernels and adds visualization tools for use in such notebooks, such as charts and graphs.</p>
+<li><p>The <strong class="pkg">JupyterVis</strong> package by Nathan Carter, which is intended for use in Jupyter Notebooks running <strong class="pkg">GAP</strong> kernels and adds visualization tools for use in such notebooks, such as charts and graphs.</p>
 
 </li>
 </ul>
@@ -534,6 +542,152 @@ IsomorphismGroups(G,PcGroupCode(CodePcGroup(G),Size(G)))&lt;&gt;fail;
 
 </li>
 <li><p>The <strong class="pkg">recogbase</strong> package has been merged into the <code class="code">recog</code> package, and therefore is no longer distributed with <strong class="pkg">GAP</strong>.</p>
+
+</li>
+</ul>
+<p><a id="X858254CF7D9DE943" name="X858254CF7D9DE943"></a></p>
+
+<h4>2.2 <span class="Heading"><strong class="pkg">GAP</strong> 4.10.1 (February 2019)</span></h4>
+
+<p><a id="X785A404B8565D020" name="X785A404B8565D020"></a></p>
+
+<h5>2.2-1 <span class="Heading">Changes in the core <strong class="pkg">GAP</strong> system introduced in <strong class="pkg">GAP</strong> 4.10.1</span></h5>
+
+<p>Fixes in the experimental way to allow 3rd party code to link <strong class="pkg">GAP</strong> as a library:</p>
+
+
+<ul>
+<li><p>Do not start a session when loading workspace if <code class="code">--nointeract</code> command line option is used (<span class="URL"><a href="https://github.com/gap-system/gap/pull/2840">#2840</a></span>).</p>
+
+</li>
+<li><p>Add prototype for <code class="code">GAP_Enter</code> and <code class="code">GAP_Leave</code> macros (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3096">#3096</a></span>).</p>
+
+</li>
+<li><p>Prevent infinite recursions in <code class="code">echoandcheck</code> and <code class="code">SyWriteandcheck</code> (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3102">#3102</a></span>).</p>
+
+</li>
+<li><p>Remove <code class="code">environ</code> arguments and <code class="code">sysenviron</code> (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3111">#3111</a></span>).</p>
+
+</li>
+</ul>
+<p>Fixes in the experimental support for using the Julia garbage collector:</p>
+
+
+<ul>
+<li><p>Fix task scanning for the Julia GC (<span class="URL"><a href="https://github.com/gap-system/gap/pull/2969">#2969</a></span>).</p>
+
+</li>
+<li><p>Fix stack marking for the Julia GC (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3199">#3199</a></span>).</p>
+
+</li>
+<li><p>Specify the Julia binary instead of the Julia prefix (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3243">#3243</a></span>).</p>
+
+</li>
+<li><p>Export Julia <code class="code">CFLAGS</code>, <code class="code">LDFLAGS</code>, and <code class="code">LIBS</code> to <code class="code">sysinfo.gap</code> (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3248">#3248</a></span>).</p>
+
+</li>
+</ul>
+<p>Improved and extended functionality:</p>
+
+
+<ul>
+<li><p>Always generate <code class="code">sysinfo.gap</code> (previously, it was only generated if the "compatibility mode" of the build system was enabled) (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3042">#3042</a></span>).</p>
+
+</li>
+<li><p>Add support for writing to <code class="code">ERROR_OUTPUT</code> from kernel code (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3043">#3043</a></span>).</p>
+
+</li>
+<li><p>Add <code class="code">make check</code> (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3285">#3285</a></span>).</p>
+
+</li>
+</ul>
+<p>Changed documentation:</p>
+
+
+<ul>
+<li><p>Fix documentation of <code class="func">NumberFFVector</code> (<span class="RefLink">Reference: NumberFFVector</span>) and add an example (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3079">#3079</a></span>).</p>
+
+</li>
+</ul>
+<p>Fixed bugs that could lead to crashes:</p>
+
+
+<ul>
+<li><p>Fix readline crash when using autocomplete with <code class="code">colored-completion-prefix</code> turned on in Bash (<span class="URL"><a href="https://github.com/gap-system/gap/pull/2991">#2991</a></span>).</p>
+
+</li>
+<li><p>Fix overlapping <code class="code">memcpy</code> in <code class="code">APPEND_LIST</code> (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3216">#3216</a></span>).</p>
+
+</li>
+</ul>
+<p>Fixed bugs that could lead to incorrect results:</p>
+
+
+<ul>
+<li><p>Fix bugs in the code for partial permutations (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3220">#3220</a></span>).</p>
+
+</li>
+<li><p>Fix a bug in <code class="code">Gcd</code> for polynomials not returning standard associates, introduced in <strong class="pkg">GAP</strong> 4.10.0 (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3227">#3227</a></span>).</p>
+
+</li>
+</ul>
+<p>Fixed bugs that could lead to break loops:</p>
+
+
+<ul>
+<li><p>Change <code class="func">GroupWithGenerators</code> (<span class="RefLink">Reference: GroupWithGenerators</span>) to accept collections again (to avoid regressions in code that relied on this undocumented behavior) (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3095">#3095</a></span>).</p>
+
+</li>
+<li><p>Fix <code class="func">ShallowCopy</code> (<span class="RefLink">Reference: ShallowCopy</span>) for for a Knuth-Bendix rewriting system (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3128">#3128</a></span>). [Reported by Ignat Soroko]</p>
+
+</li>
+<li><p>Fix <code class="func">IsMonomialMatrix</code> (<span class="RefLink">Reference: IsMonomialMatrix</span>) to work with compressed matrices (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3149">#3149</a></span>). [Reported by Dominik Bernhardt]</p>
+
+</li>
+</ul>
+<p>Removed or obsolete functionality:</p>
+
+
+<ul>
+<li><p>Disable <code class="code">make install</code> (previously it displayed a warning which often got ignored) (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3005">#3005</a></span>).</p>
+
+</li>
+</ul>
+<p>Other fixed bugs:</p>
+
+
+<ul>
+<li><p>Fix some errors which stopped triggering a break loop (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3013">#3013</a></span>).</p>
+
+</li>
+<li><p>Fix compiler error with GCC 4.4.7 (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3026">#3026</a></span>).</p>
+
+</li>
+<li><p>Fix string copying logic (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3071">#3071</a></span>).</p>
+
+</li>
+</ul>
+<p><a id="X7D3DEF227BFDF572" name="X7D3DEF227BFDF572"></a></p>
+
+<h5>2.2-2 <span class="Heading">New and updated packages since <strong class="pkg">GAP</strong> 4.10.0</span></h5>
+
+<p><strong class="pkg">GAP</strong> 4.10.1 distribution contains 145 packages, including updated versions of 35 packages from <strong class="pkg">GAP</strong> 4.10.0 distribution, and also the following five new packages:</p>
+
+
+<ul>
+<li><p><strong class="pkg">MajoranaAlgebras</strong> by Markus Pfeiffer and Madeleine Whybrow, which constructs Majorana representations of finite groups.</p>
+
+</li>
+<li><p><strong class="pkg">PackageManager</strong> by Michael Torpey, providing a collection of functions for installing and removing <strong class="pkg">GAP</strong> packages, with the eventual aim of becoming a full pip-style package manager for the <strong class="pkg">GAP</strong> system.</p>
+
+</li>
+<li><p><strong class="pkg">Thelma</strong> by Victor Bovdi and Vasyl Laver, implementing algorithms to deal with threshold elements.</p>
+
+</li>
+<li><p><strong class="pkg">walrus</strong> by Markus Pfeiffer, providing methods for proving hyperbolicity of finitely presented groups in polynomial time.</p>
+
+</li>
+<li><p><strong class="pkg">YangBaxter</strong> by Leandro Vendramin and Alexander Konovalov, which provides functionality to construct classical and skew braces, and also includes a database of classical and skew braces of small orders.</p>
 
 </li>
 </ul>

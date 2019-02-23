@@ -10,81 +10,84 @@
 \contentsline {subsection}{\numberline {2.1.7}\leavevmode {\color {Chapter }Other fixed bugs}}{12}{subsection.2.1.7}
 \contentsline {subsection}{\numberline {2.1.8}\leavevmode {\color {Chapter }Removed or obsolete functionality}}{13}{subsection.2.1.8}
 \contentsline {subsection}{\numberline {2.1.9}\leavevmode {\color {Chapter }Packages}}{13}{subsection.2.1.9}
-\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Changes between \textsf {GAP} 4.8 and \textsf {GAP} 4.9}}{14}{chapter.3}
-\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }\textsf {GAP} 4.9.1 (May 2018)}}{14}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.9}}{14}{subsection.3.1.1}
-\contentsline {subsection}{\numberline {3.1.2}\leavevmode {\color {Chapter }\textsf {HPC-GAP}}}{25}{subsection.3.1.2}
-\contentsline {subsection}{\numberline {3.1.3}\leavevmode {\color {Chapter }New and updated packages since \textsf {GAP} 4.8.10}}{25}{subsection.3.1.3}
-\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }\textsf {GAP} 4.9.2 (July 2018)}}{26}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.9.2}}{26}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}\leavevmode {\color {Chapter }New and updated packages since \textsf {GAP} 4.9.1}}{27}{subsection.3.2.2}
-\contentsline {section}{\numberline {3.3}\leavevmode {\color {Chapter }\textsf {GAP} 4.9.3 (September 2018)}}{27}{section.3.3}
-\contentsline {subsection}{\numberline {3.3.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.9.3}}{27}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}\leavevmode {\color {Chapter }New and updated packages since \textsf {GAP} 4.9.2}}{27}{subsection.3.3.2}
-\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Changes between \textsf {GAP} 4.7 and \textsf {GAP} 4.8}}{28}{chapter.4}
-\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }\textsf {GAP} 4.8.2 (February 2016)}}{28}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.8}}{28}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}\leavevmode {\color {Chapter }New and updated packages since \textsf {GAP} 4.7.8}}{31}{subsection.4.1.2}
-\contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }\textsf {GAP} 4.8.3 (March 2016)}}{31}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.8.3}}{31}{subsection.4.2.1}
-\contentsline {section}{\numberline {4.3}\leavevmode {\color {Chapter }\textsf {GAP} 4.8.4 (June 2016)}}{32}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.8.4}}{32}{subsection.4.3.1}
-\contentsline {section}{\numberline {4.4}\leavevmode {\color {Chapter }\textsf {GAP} 4.8.5 (September 2016)}}{34}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.8.5}}{34}{subsection.4.4.1}
-\contentsline {section}{\numberline {4.5}\leavevmode {\color {Chapter }\textsf {GAP} 4.8.6 (November 2016)}}{34}{section.4.5}
-\contentsline {subsection}{\numberline {4.5.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.8.6}}{34}{subsection.4.5.1}
-\contentsline {section}{\numberline {4.6}\leavevmode {\color {Chapter }\textsf {GAP} 4.8.7 (March 2017)}}{34}{section.4.6}
-\contentsline {subsection}{\numberline {4.6.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.8.7}}{34}{subsection.4.6.1}
-\contentsline {subsection}{\numberline {4.6.2}\leavevmode {\color {Chapter }New and updated packages since \textsf {GAP} 4.8.6}}{35}{subsection.4.6.2}
-\contentsline {section}{\numberline {4.7}\leavevmode {\color {Chapter }\textsf {GAP} 4.8.8 (August 2017)}}{35}{section.4.7}
-\contentsline {subsection}{\numberline {4.7.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.8.8}}{35}{subsection.4.7.1}
-\contentsline {subsection}{\numberline {4.7.2}\leavevmode {\color {Chapter }New and updated packages since \textsf {GAP} 4.8.7}}{35}{subsection.4.7.2}
-\contentsline {chapter}{\numberline {5}\leavevmode {\color {Chapter }Changes between \textsf {GAP} 4.6 and \textsf {GAP} 4.7}}{36}{chapter.5}
-\contentsline {section}{\numberline {5.1}\leavevmode {\color {Chapter }\textsf {GAP} 4.7.2 (December 2013)}}{36}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.7}}{36}{subsection.5.1.1}
-\contentsline {subsection}{\numberline {5.1.2}\leavevmode {\color {Chapter }New and updated packages since \textsf {GAP} 4.6.5}}{40}{subsection.5.1.2}
-\contentsline {section}{\numberline {5.2}\leavevmode {\color {Chapter }\textsf {GAP} 4.7.3 (February 2014)}}{41}{section.5.2}
-\contentsline {section}{\numberline {5.3}\leavevmode {\color {Chapter }\textsf {GAP} 4.7.4 (February 2014)}}{41}{section.5.3}
-\contentsline {section}{\numberline {5.4}\leavevmode {\color {Chapter }\textsf {GAP} 4.7.5 (May 2014)}}{41}{section.5.4}
-\contentsline {section}{\numberline {5.5}\leavevmode {\color {Chapter }\textsf {GAP} 4.7.6 (November 2014)}}{42}{section.5.5}
-\contentsline {section}{\numberline {5.6}\leavevmode {\color {Chapter }\textsf {GAP} 4.7.7 (February 2015)}}{43}{section.5.6}
-\contentsline {section}{\numberline {5.7}\leavevmode {\color {Chapter }\textsf {GAP} 4.7.8 (June 2015)}}{44}{section.5.7}
-\contentsline {chapter}{\numberline {6}\leavevmode {\color {Chapter }Changes between \textsf {GAP} 4.5 and \textsf {GAP} 4.6}}{46}{chapter.6}
-\contentsline {section}{\numberline {6.1}\leavevmode {\color {Chapter }\textsf {GAP} 4.6.2 (February 2013)}}{46}{section.6.1}
-\contentsline {subsection}{\numberline {6.1.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.6}}{46}{subsection.6.1.1}
-\contentsline {subsection}{\numberline {6.1.2}\leavevmode {\color {Chapter }New and updated packages since \textsf {GAP} 4.5.4}}{48}{subsection.6.1.2}
-\contentsline {section}{\numberline {6.2}\leavevmode {\color {Chapter }\textsf {GAP} 4.6.3 (March 2013)}}{48}{section.6.2}
-\contentsline {section}{\numberline {6.3}\leavevmode {\color {Chapter }\textsf {GAP} 4.6.4 (April 2013)}}{50}{section.6.3}
-\contentsline {section}{\numberline {6.4}\leavevmode {\color {Chapter }\textsf {GAP} 4.6.5 (July 2013)}}{51}{section.6.4}
-\contentsline {chapter}{\numberline {7}\leavevmode {\color {Chapter }Changes between \textsf {GAP} 4.4 and \textsf {GAP} 4.5}}{52}{chapter.7}
-\contentsline {section}{\numberline {7.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.5}}{52}{section.7.1}
-\contentsline {subsection}{\numberline {7.1.1}\leavevmode {\color {Chapter }Improved functionality}}{52}{subsection.7.1.1}
-\contentsline {subsection}{\numberline {7.1.2}\leavevmode {\color {Chapter }Changes in distribution formats}}{56}{subsection.7.1.2}
-\contentsline {subsection}{\numberline {7.1.3}\leavevmode {\color {Chapter }Improvements to the user interface}}{57}{subsection.7.1.3}
-\contentsline {subsection}{\numberline {7.1.4}\leavevmode {\color {Chapter }Better documentation}}{58}{subsection.7.1.4}
-\contentsline {section}{\numberline {7.2}\leavevmode {\color {Chapter }Packages in \textsf {GAP} 4.5}}{59}{section.7.2}
-\contentsline {subsection}{\numberline {7.2.1}\leavevmode {\color {Chapter }Interface between the core system and packages}}{59}{subsection.7.2.1}
-\contentsline {subsection}{\numberline {7.2.2}\leavevmode {\color {Chapter }New and updated packages since \textsf {GAP} 4.4.12}}{59}{subsection.7.2.2}
-\contentsline {section}{\numberline {7.3}\leavevmode {\color {Chapter }\textsf {GAP} 4.5.5 (July 2012)}}{64}{section.7.3}
-\contentsline {section}{\numberline {7.4}\leavevmode {\color {Chapter }\textsf {GAP} 4.5.6 (September 2012)}}{65}{section.7.4}
-\contentsline {section}{\numberline {7.5}\leavevmode {\color {Chapter }\textsf {GAP} 4.5.7 (December 2012)}}{67}{section.7.5}
-\contentsline {chapter}{\numberline {8}\leavevmode {\color {Chapter }Changes between \textsf {GAP} 4.3 and \textsf {GAP} 4.4}}{69}{chapter.8}
-\contentsline {section}{\numberline {8.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.4}}{69}{section.8.1}
-\contentsline {subsection}{\numberline {8.1.1}\leavevmode {\color {Chapter }Potentially Incompatible Changes}}{69}{subsection.8.1.1}
-\contentsline {subsection}{\numberline {8.1.2}\leavevmode {\color {Chapter }New Packages}}{70}{subsection.8.1.2}
-\contentsline {subsection}{\numberline {8.1.3}\leavevmode {\color {Chapter }Performance Enhancements}}{71}{subsection.8.1.3}
-\contentsline {subsection}{\numberline {8.1.4}\leavevmode {\color {Chapter }New Programming and User Features}}{71}{subsection.8.1.4}
-\contentsline {section}{\numberline {8.2}\leavevmode {\color {Chapter }\textsf {GAP} 4.4 Bugfix 2 (April 2004)}}{72}{section.8.2}
-\contentsline {section}{\numberline {8.3}\leavevmode {\color {Chapter }\textsf {GAP} 4.4 Bugfix 3 (May 2004)}}{72}{section.8.3}
-\contentsline {section}{\numberline {8.4}\leavevmode {\color {Chapter }\textsf {GAP} 4.4 Bugfix 4 (December 2004)}}{73}{section.8.4}
-\contentsline {section}{\numberline {8.5}\leavevmode {\color {Chapter }\textsf {GAP} 4.4 Update 5 (May 2005)}}{74}{section.8.5}
-\contentsline {section}{\numberline {8.6}\leavevmode {\color {Chapter }\textsf {GAP} 4.4 Update 6 (September 2005)}}{78}{section.8.6}
-\contentsline {section}{\numberline {8.7}\leavevmode {\color {Chapter }\textsf {GAP} 4.4 Update 7 (March 2006)}}{82}{section.8.7}
-\contentsline {section}{\numberline {8.8}\leavevmode {\color {Chapter }\textsf {GAP} 4.4 Update 8 (September 2006)}}{85}{section.8.8}
-\contentsline {section}{\numberline {8.9}\leavevmode {\color {Chapter }\textsf {GAP} 4.4 Update 9 (November 2006)}}{88}{section.8.9}
-\contentsline {section}{\numberline {8.10}\leavevmode {\color {Chapter }\textsf {GAP} 4.4 Update 10 (October 2007)}}{88}{section.8.10}
-\contentsline {section}{\numberline {8.11}\leavevmode {\color {Chapter }\textsf {GAP} 4.4 Update 11 (December 2008)}}{91}{section.8.11}
-\contentsline {section}{\numberline {8.12}\leavevmode {\color {Chapter }\textsf {GAP} 4.4 Update 12 (December 2008)}}{94}{section.8.12}
-\contentsline {chapter}{\numberline {9}\leavevmode {\color {Chapter }Changes from Earlier Versions}}{95}{chapter.9}
-\contentsline {section}{\numberline {9.1}\leavevmode {\color {Chapter }Earlier Changes}}{95}{section.9.1}
-\contentsline {chapter}{Index}{98}{section*.3}
+\contentsline {section}{\numberline {2.2}\leavevmode {\color {Chapter }\textsf {GAP} 4.10.1 (February 2019)}}{13}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.10.1}}{13}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}\leavevmode {\color {Chapter }New and updated packages since \textsf {GAP} 4.10.0}}{15}{subsection.2.2.2}
+\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Changes between \textsf {GAP} 4.8 and \textsf {GAP} 4.9}}{16}{chapter.3}
+\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }\textsf {GAP} 4.9.1 (May 2018)}}{16}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.9}}{16}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}\leavevmode {\color {Chapter }\textsf {HPC-GAP}}}{27}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}\leavevmode {\color {Chapter }New and updated packages since \textsf {GAP} 4.8.10}}{27}{subsection.3.1.3}
+\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }\textsf {GAP} 4.9.2 (July 2018)}}{28}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.9.2}}{28}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}\leavevmode {\color {Chapter }New and updated packages since \textsf {GAP} 4.9.1}}{29}{subsection.3.2.2}
+\contentsline {section}{\numberline {3.3}\leavevmode {\color {Chapter }\textsf {GAP} 4.9.3 (September 2018)}}{29}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.9.3}}{29}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}\leavevmode {\color {Chapter }New and updated packages since \textsf {GAP} 4.9.2}}{29}{subsection.3.3.2}
+\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Changes between \textsf {GAP} 4.7 and \textsf {GAP} 4.8}}{30}{chapter.4}
+\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }\textsf {GAP} 4.8.2 (February 2016)}}{30}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.8}}{30}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}\leavevmode {\color {Chapter }New and updated packages since \textsf {GAP} 4.7.8}}{33}{subsection.4.1.2}
+\contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }\textsf {GAP} 4.8.3 (March 2016)}}{33}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.8.3}}{33}{subsection.4.2.1}
+\contentsline {section}{\numberline {4.3}\leavevmode {\color {Chapter }\textsf {GAP} 4.8.4 (June 2016)}}{34}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.8.4}}{34}{subsection.4.3.1}
+\contentsline {section}{\numberline {4.4}\leavevmode {\color {Chapter }\textsf {GAP} 4.8.5 (September 2016)}}{36}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.8.5}}{36}{subsection.4.4.1}
+\contentsline {section}{\numberline {4.5}\leavevmode {\color {Chapter }\textsf {GAP} 4.8.6 (November 2016)}}{36}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.8.6}}{36}{subsection.4.5.1}
+\contentsline {section}{\numberline {4.6}\leavevmode {\color {Chapter }\textsf {GAP} 4.8.7 (March 2017)}}{36}{section.4.6}
+\contentsline {subsection}{\numberline {4.6.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.8.7}}{36}{subsection.4.6.1}
+\contentsline {subsection}{\numberline {4.6.2}\leavevmode {\color {Chapter }New and updated packages since \textsf {GAP} 4.8.6}}{37}{subsection.4.6.2}
+\contentsline {section}{\numberline {4.7}\leavevmode {\color {Chapter }\textsf {GAP} 4.8.8 (August 2017)}}{37}{section.4.7}
+\contentsline {subsection}{\numberline {4.7.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.8.8}}{37}{subsection.4.7.1}
+\contentsline {subsection}{\numberline {4.7.2}\leavevmode {\color {Chapter }New and updated packages since \textsf {GAP} 4.8.7}}{37}{subsection.4.7.2}
+\contentsline {chapter}{\numberline {5}\leavevmode {\color {Chapter }Changes between \textsf {GAP} 4.6 and \textsf {GAP} 4.7}}{38}{chapter.5}
+\contentsline {section}{\numberline {5.1}\leavevmode {\color {Chapter }\textsf {GAP} 4.7.2 (December 2013)}}{38}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.7}}{38}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}\leavevmode {\color {Chapter }New and updated packages since \textsf {GAP} 4.6.5}}{42}{subsection.5.1.2}
+\contentsline {section}{\numberline {5.2}\leavevmode {\color {Chapter }\textsf {GAP} 4.7.3 (February 2014)}}{43}{section.5.2}
+\contentsline {section}{\numberline {5.3}\leavevmode {\color {Chapter }\textsf {GAP} 4.7.4 (February 2014)}}{43}{section.5.3}
+\contentsline {section}{\numberline {5.4}\leavevmode {\color {Chapter }\textsf {GAP} 4.7.5 (May 2014)}}{43}{section.5.4}
+\contentsline {section}{\numberline {5.5}\leavevmode {\color {Chapter }\textsf {GAP} 4.7.6 (November 2014)}}{44}{section.5.5}
+\contentsline {section}{\numberline {5.6}\leavevmode {\color {Chapter }\textsf {GAP} 4.7.7 (February 2015)}}{45}{section.5.6}
+\contentsline {section}{\numberline {5.7}\leavevmode {\color {Chapter }\textsf {GAP} 4.7.8 (June 2015)}}{46}{section.5.7}
+\contentsline {chapter}{\numberline {6}\leavevmode {\color {Chapter }Changes between \textsf {GAP} 4.5 and \textsf {GAP} 4.6}}{48}{chapter.6}
+\contentsline {section}{\numberline {6.1}\leavevmode {\color {Chapter }\textsf {GAP} 4.6.2 (February 2013)}}{48}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.6}}{48}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}\leavevmode {\color {Chapter }New and updated packages since \textsf {GAP} 4.5.4}}{50}{subsection.6.1.2}
+\contentsline {section}{\numberline {6.2}\leavevmode {\color {Chapter }\textsf {GAP} 4.6.3 (March 2013)}}{50}{section.6.2}
+\contentsline {section}{\numberline {6.3}\leavevmode {\color {Chapter }\textsf {GAP} 4.6.4 (April 2013)}}{52}{section.6.3}
+\contentsline {section}{\numberline {6.4}\leavevmode {\color {Chapter }\textsf {GAP} 4.6.5 (July 2013)}}{53}{section.6.4}
+\contentsline {chapter}{\numberline {7}\leavevmode {\color {Chapter }Changes between \textsf {GAP} 4.4 and \textsf {GAP} 4.5}}{54}{chapter.7}
+\contentsline {section}{\numberline {7.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.5}}{54}{section.7.1}
+\contentsline {subsection}{\numberline {7.1.1}\leavevmode {\color {Chapter }Improved functionality}}{54}{subsection.7.1.1}
+\contentsline {subsection}{\numberline {7.1.2}\leavevmode {\color {Chapter }Changes in distribution formats}}{58}{subsection.7.1.2}
+\contentsline {subsection}{\numberline {7.1.3}\leavevmode {\color {Chapter }Improvements to the user interface}}{59}{subsection.7.1.3}
+\contentsline {subsection}{\numberline {7.1.4}\leavevmode {\color {Chapter }Better documentation}}{60}{subsection.7.1.4}
+\contentsline {section}{\numberline {7.2}\leavevmode {\color {Chapter }Packages in \textsf {GAP} 4.5}}{61}{section.7.2}
+\contentsline {subsection}{\numberline {7.2.1}\leavevmode {\color {Chapter }Interface between the core system and packages}}{61}{subsection.7.2.1}
+\contentsline {subsection}{\numberline {7.2.2}\leavevmode {\color {Chapter }New and updated packages since \textsf {GAP} 4.4.12}}{61}{subsection.7.2.2}
+\contentsline {section}{\numberline {7.3}\leavevmode {\color {Chapter }\textsf {GAP} 4.5.5 (July 2012)}}{66}{section.7.3}
+\contentsline {section}{\numberline {7.4}\leavevmode {\color {Chapter }\textsf {GAP} 4.5.6 (September 2012)}}{67}{section.7.4}
+\contentsline {section}{\numberline {7.5}\leavevmode {\color {Chapter }\textsf {GAP} 4.5.7 (December 2012)}}{69}{section.7.5}
+\contentsline {chapter}{\numberline {8}\leavevmode {\color {Chapter }Changes between \textsf {GAP} 4.3 and \textsf {GAP} 4.4}}{71}{chapter.8}
+\contentsline {section}{\numberline {8.1}\leavevmode {\color {Chapter }Changes in the core \textsf {GAP} system introduced in \textsf {GAP} 4.4}}{71}{section.8.1}
+\contentsline {subsection}{\numberline {8.1.1}\leavevmode {\color {Chapter }Potentially Incompatible Changes}}{71}{subsection.8.1.1}
+\contentsline {subsection}{\numberline {8.1.2}\leavevmode {\color {Chapter }New Packages}}{72}{subsection.8.1.2}
+\contentsline {subsection}{\numberline {8.1.3}\leavevmode {\color {Chapter }Performance Enhancements}}{73}{subsection.8.1.3}
+\contentsline {subsection}{\numberline {8.1.4}\leavevmode {\color {Chapter }New Programming and User Features}}{73}{subsection.8.1.4}
+\contentsline {section}{\numberline {8.2}\leavevmode {\color {Chapter }\textsf {GAP} 4.4 Bugfix 2 (April 2004)}}{74}{section.8.2}
+\contentsline {section}{\numberline {8.3}\leavevmode {\color {Chapter }\textsf {GAP} 4.4 Bugfix 3 (May 2004)}}{74}{section.8.3}
+\contentsline {section}{\numberline {8.4}\leavevmode {\color {Chapter }\textsf {GAP} 4.4 Bugfix 4 (December 2004)}}{75}{section.8.4}
+\contentsline {section}{\numberline {8.5}\leavevmode {\color {Chapter }\textsf {GAP} 4.4 Update 5 (May 2005)}}{76}{section.8.5}
+\contentsline {section}{\numberline {8.6}\leavevmode {\color {Chapter }\textsf {GAP} 4.4 Update 6 (September 2005)}}{80}{section.8.6}
+\contentsline {section}{\numberline {8.7}\leavevmode {\color {Chapter }\textsf {GAP} 4.4 Update 7 (March 2006)}}{84}{section.8.7}
+\contentsline {section}{\numberline {8.8}\leavevmode {\color {Chapter }\textsf {GAP} 4.4 Update 8 (September 2006)}}{87}{section.8.8}
+\contentsline {section}{\numberline {8.9}\leavevmode {\color {Chapter }\textsf {GAP} 4.4 Update 9 (November 2006)}}{90}{section.8.9}
+\contentsline {section}{\numberline {8.10}\leavevmode {\color {Chapter }\textsf {GAP} 4.4 Update 10 (October 2007)}}{90}{section.8.10}
+\contentsline {section}{\numberline {8.11}\leavevmode {\color {Chapter }\textsf {GAP} 4.4 Update 11 (December 2008)}}{93}{section.8.11}
+\contentsline {section}{\numberline {8.12}\leavevmode {\color {Chapter }\textsf {GAP} 4.4 Update 12 (December 2008)}}{96}{section.8.12}
+\contentsline {chapter}{\numberline {9}\leavevmode {\color {Chapter }Changes from Earlier Versions}}{97}{chapter.9}
+\contentsline {section}{\numberline {9.1}\leavevmode {\color {Chapter }Earlier Changes}}{97}{section.9.1}
+\contentsline {chapter}{Index}{100}{section*.3}

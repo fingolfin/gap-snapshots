@@ -1,0 +1,253 @@
+  
+  [1X12 [33X[0;0YMcAlister triple semigroups and E-unitary inverse semigroups[133X[101X
+  
+  [33X[0;0YIn this section, we describe the functions in [5XGAP[105X for creating and computing
+  with   McAlister   triple   semigroups   and   their   subsemigroups.   This
+  implementation  is  based on the section in Chapter 5 of [How95] but differs
+  from  the  treatment  in  Howie by using right actions instead of left. Some
+  definitions found in the documentation are changed for this reason.[133X
+  
+  [33X[0;0YThe importance of the McAlister triple semigroups lies in the fact that they
+  are  exactly  the E-unitary inverse semigroups, which are an important class
+  in the study of inverse semigroups.[133X
+  
+  [33X[0;0YFirst  we  define E-unitary inverse semigroups. It is standard to denote the
+  subsemigroup  of a semigroup consisting of its idempotents by [10XE[110X. A semigroup
+  [10XS[110X is said to be [13XE-unitary[113X if for all [10Xe[110X in [10XE[110X and for all [10Xs[110X in [10XS[110X:[133X
+  
+  [30X    [33X[0;6Y[10Xes[110X [22X∈[122X [10XE[110X implies [10Xs[110X [22X∈[122X [10XE[110X,[133X
+  
+  [30X    [33X[0;6Y[10Xse[110X [22X∈[122X [10XE[110X implies [10Xs[110X [22X∈[122X [10XE[110X.[133X
+  
+  [33X[0;0YFor  inverse  semigroups  these  two  conditions are equivalent. We are only
+  interested in [13XE-unitary inverse semigroups[113X. Before defining McAlister triple
+  semigroups  we  define  a  McAlister  triple. A [13XMcAlister triple[113X is a triple
+  [10X(G,X,Y)[110X which consists of:[133X
+  
+  [30X    [33X[0;6Ya partial order [10XX[110X,[133X
+  
+  [30X    [33X[0;6Ya subset [10XY[110X of [10XX[110X,[133X
+  
+  [30X    [33X[0;6Ya  group [10XG[110X which acts on [10XX[110X, on the right, by order automorphisms. That
+        means for all [10XA,B[110X [22X∈[122X [10XX[110X and for all [10Xg[110X [22X∈[122X [10XG[110X: [10XA[110X [22X≤[122X [10XB[110X if and only if [10XAg[110X [22X≤[122X [10XBg[110X.[133X
+  
+  [33X[0;0YFurthermore,  [10X(G,X,Y)[110X  must  satisfy  the  following four properties to be a
+  McAlister triple:[133X
+  
+  [8X M1 [108X
+        [33X[0;6Y[10XY[110X  is  a  subset  of  [10XX[110X  which is a join-semilattice together with the
+        restriction of the order relation of [10XX[110X to [10XY[110X.[133X
+  
+  [8X M2 [108X
+        [33X[0;6Y[10XY[110X  is an order ideal of [10XX[110X. That is to say, for all [10XA[110X [22X∈[122X [10XX[110X and for all [10XB[110X
+        [22X∈[122X [10XY[110X: if [10XA[110X [22X≤[122X [10XB[110X, then [10XA[110X [22X∈[122X [10XY[110X.[133X
+  
+  [8X M3 [108X
+        [33X[0;6YEvery  element  of  [10XX[110X  is  the  image of some element in [10XY[110X moved by an
+        element of [10XG[110X. That is to say, for every [10XA[110X [22X∈[122X [10XX[110X, there exists some [10XB[110X [22X∈[122X [10XY[110X
+        and there exists [10Xg[110X [22X∈[122X [10XG[110X such that [10XA[110X = [10XBg[110X.[133X
+  
+  [8X M4 [108X
+        [33X[0;6YFinally,  for  all  [10Xg[110X  [22X∈[122X  [10XG[110X,  the  intersection  [10X{yg  :  y [110X[22X∈[122X[10X Y}[110X [22X∩[122X [10XY[110X is
+        non-empty.[133X
+  
+  [33X[0;0YWe may define an E-unitary inverse semigroup using a McAlister triple. Given
+  [10X(G,X,Y)[110X  let  [10XM(G,X,Y)[110X  be  the  set of all pairs [10X(A,g)[110X in [10XY x G[110X such that [10XA[110X
+  acted on by the inverse of [10Xg[110X is in [10XY[110X together with multiplication defined by[133X
+  
+  [33X[0;0Y[10X(A,g)*(B,h) = (Join(A,Bg^-1),hg)[110X[133X
+  
+  [33X[0;0Ywhere  [10XJoin[110X  is the natural join operation of the semilattice and [10XBg^-1[110X is [10XB[110X
+  acted  on  by the inverse of [10Xg[110X. With this operation, [10XM(G,X,Y)[110X is a semigroup
+  which  we  call  a  [13XMcAlister  triple  semigroup[113X over [10X(G,X,Y)[110X. In fact every
+  McAlister  triple  semigroup  is  an  E-unitary  inverse semigroup and every
+  E-unitary   inverse   semigroup  is  isomorphic  to  some  McAlister  triple
+  semigroup.  Note  that there need not be a unqiue McAlister triple semigroup
+  for  a particular McAlister triple because in general there is more than one
+  way for a group to act on a partial order.[133X
+  
+  
+  [1X12.1 [33X[0;0YCreating McAlister triple semigroups[133X[101X
+  
+  [1X12.1-1 IsMcAlisterTripleSemigroup[101X
+  
+  [33X[1;0Y[29X[2XIsMcAlisterTripleSemigroup[102X( [3XS[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YThis function returns [9Xtrue[109X if [3XS[103X is a McAlister triple semigroup. A [13XMcAlister
+  triple  semigroup[113X  is  a  special  representation  of  an  E-unitary inverse
+  semigroup      [2XIsEUnitaryInverseSemigroup[102X      ([14X16.2-3[114X)      created      by
+  [2XMcAlisterTripleSemigroup[102X ([14X12.1-2[114X).[133X
+  
+  [1X12.1-2 McAlisterTripleSemigroup[101X
+  
+  [33X[1;0Y[29X[2XMcAlisterTripleSemigroup[102X( [3XG[103X, [3XX[103X, [3XY[103X[, [3Xact[103X] ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA McAlister triple semigroup.[133X
+  
+  [33X[0;0YThe  following  documentation  covers  the  technical  information needed to
+  create McAlister triple semigroups in GAP, the underlying theory can be read
+  in the introduction to Chapter [14X12[114X.[133X
+  
+  [33X[0;0YIn  this  implementation  the  partial  order  [10XX[110X  of  a  McAlister triple is
+  represented   by  a  [2XDigraph[102X  ([14XDigraphs:  Digraph[114X)  object  [3XX[103X.  The  digraph
+  represents  a  partial  order in the sense that vertices are the elements of
+  the  partial order and the order relation is defined by [10XA[110X [22X≤[122X [10XB[110X if and only if
+  there  is  an  edge  from  [10XB[110X to [10XA[110X. The semilattice [10XY[110X of the McAlister triple
+  should  be  an  induced  subdigraph  [3XY[103X  of  [3XX[103X  and  the  [2XDigraphVertexLabels[102X
+  ([14XDigraphs:  DigraphVertexLabels[114X)  must  correspond  to  the vertices of [3XX[103X on
+  which [3XY[103X is induced. That means that the following:[133X
+  
+  [33X[0;0Y[10X[3XY[103X[10X = InducedSubdigraph([3XX[103X[10X, DigraphVertexLabels([3XY[103X[10X)) [110X[133X
+  
+  [33X[0;0Ymust  return  [9Xtrue[109X.  Herein if we say that a vertex [10XA[110X of [3XX[103X is 'in' [3XY[103X then we
+  mean  there  is a vertex of [3XY[103X whose label is [10XA[110X. Alerternatively the user may
+  choose to give the argument [3XY[103X as the vertices of [3XX[103X on which [3XY[103X is the induced
+  subdigraph.[133X
+  
+  [33X[0;0YA  McAlister  triple  semigroup  is  created from a quadruple [10X([3XG[103X[10X, [3XX[103X[10X, [3XY[103X[10X, [3Xact[103X[10X)[110X
+  where:[133X
+  
+  [30X    [33X[0;6Y[3XG[103X is a finite group.[133X
+  
+  [30X    [33X[0;6Y[3XX[103X   is   a   digraph   satisfying   [2XIsPartialOrderDigraph[102X   ([14XDigraphs:
+        IsPartialOrderDigraph[114X).[133X
+  
+  [30X    [33X[0;6Y[3XY[103X   is   a   digraph  satisfying  [2XIsJoinSemilatticeDigraph[102X  ([14XDigraphs:
+        IsJoinSemilatticeDigraph[114X)   which   is  an  induced  subdigraph  of  [3XX[103X
+        satisfying  the  aforementioned  labeling  criteria.  Furthermore  the
+        [2XOutNeighbours[102X  ([14XDigraphs:  OutNeighbours[114X) of each vertex of [3XX[103X which is
+        in [3XY[103X must contain only vertices which are in [3XY[103X.[133X
+  
+  [30X    [33X[0;6Y[3Xact[103X  is  a  function which takes as its first argument a vertex of the
+        digraph  [3XX[103X, its second argument should be an element of [3XG[103X, and it must
+        return  a  vertex  of  [3XX[103X.  [3Xact[103X  must  be  a right action, meaning that
+        [3Xact[103X[10X(A,gh)=[3Xact[103X[10X([3Xact[103X[10X(A,g),h)[110X   holds  for  all  [10XA[110X  in  [3XX[103X  and  [10Xg,h[110X  [22X∈[122X  [3XG[103X.
+        Furthermore  the  permutation  represenation  of this action must be a
+        subgroup  of  the  automorphism  group of [3XX[103X. That means we require the
+        following to return [9Xtrue[109X:[133X
+  
+        [33X[0;6Y[10XIsSubgroup(AutomorphismGroup([110X[3XX[103X[10X),           Image(ActionHomomorphism([110X[3XG[103X[10X,
+        DigraphVertices([110X[3XX[103X[10X), [110X[3Xact[103X[10X));[110X[133X
+  
+        [33X[0;6YFurthermore every vertex of [3XX[103X must be in the orbit of some vertex of [3XX[103X
+        which  is  in  [3XY[103X.  Finally,  [3Xact[103X must fix the vertex of [3XX[103X which is the
+        minimal  vertex  of  [3XY[103X,  i.e.  the  unique  vertex  of  [3XY[103X  whose  only
+        out-neighbour is itself.[133X
+  
+  [33X[0;0YFor     user     convienience,    there    are    multiple    versions    of
+  [10XMcAlisterTripleSemigroup[110X. When the argument [3Xact[103X is ommitted it is assumed to
+  be  [2XOnPoints[102X ([14XReference: OnPoints[114X). Additionally, the semilattice argument [3XY[103X
+  may be replaced by a homogeneous list [3Xsub_ver[103X of vertices of [3XX[103X. When [3Xsub_ver[103X
+  is   provided,   [10XMcAlisterTripleSemigroup[110X   is   called   with  [3XY[103X  equalling
+  [10XInducedSubdigraph([3XX[103X[10X, [3Xsub_ver[103X[10X)[110X with the appropriate labels.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := Digraph([[1], [1, 2], [1, 2, 3], [1, 4], [1, 4, 5]]);[127X[104X
+    [4X[28X<digraph with 5 vertices, 11 edges>[128X[104X
+    [4X[25Xgap>[125X [27Xy := InducedSubdigraph(x, [1, 4, 5]);[127X[104X
+    [4X[28X<digraph with 3 vertices, 6 edges>[128X[104X
+    [4X[25Xgap>[125X [27XDigraphVertexLabels(y);[127X[104X
+    [4X[28X[ 1, 4, 5 ][128X[104X
+    [4X[25Xgap>[125X [27XA := AutomorphismGroup(x);[127X[104X
+    [4X[28XGroup([ (2,4)(3,5) ])[128X[104X
+    [4X[25Xgap>[125X [27XS := McAlisterTripleSemigroup(A, x, y, OnPoints);[127X[104X
+    [4X[28X<McAlister triple semigroup over Group([ (2,4)(3,5) ])>[128X[104X
+    [4X[25Xgap>[125X [27XT := McAlisterTripleSemigroup(A, x, y);[127X[104X
+    [4X[28X<McAlister triple semigroup over Group([ (2,4)(3,5) ])>[128X[104X
+    [4X[25Xgap>[125X [27XS = T;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsIsomorphicSemigroup(S, T);[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
+  
+  [1X12.1-3 McAlisterTripleSemigroupGroup[101X
+  
+  [33X[1;0Y[29X[2XMcAlisterTripleSemigroupGroup[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA group.[133X
+  
+  [33X[0;0YReturns  the  group  used  to  create  the  McAlister triple semigroup [3XS[103X via
+  [2XMcAlisterTripleSemigroup[102X ([14X12.1-2[114X).[133X
+  
+  [1X12.1-4 McAlisterTripleSemigroupPartialOrder[101X
+  
+  [33X[1;0Y[29X[2XMcAlisterTripleSemigroupPartialOrder[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA partial order digraph.[133X
+  
+  [33X[0;0YReturns  the [2XIsPartialOrderDigraph[102X ([14XDigraphs: IsPartialOrderDigraph[114X) used to
+  create   the  McAlister  triple  semigroup  [3XS[103X  via  [2XMcAlisterTripleSemigroup[102X
+  ([14X12.1-2[114X).[133X
+  
+  [1X12.1-5 McAlisterTripleSemigroupSemilattice[101X
+  
+  [33X[1;0Y[29X[2XMcAlisterTripleSemigroupSemilattice[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA join-semilattice digraph.[133X
+  
+  [33X[0;0YReturns  the  [2XIsJoinSemilatticeDigraph[102X  ([14XDigraphs: IsJoinSemilatticeDigraph[114X)
+  used to create the McAlister triple semigroup [3XS[103X via [2XMcAlisterTripleSemigroup[102X
+  ([14X12.1-2[114X).[133X
+  
+  [1X12.1-6 McAlisterTripleSemigroupAction[101X
+  
+  [33X[1;0Y[29X[2XMcAlisterTripleSemigroupAction[102X( [3XS[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10YA function.[133X
+  
+  [33X[0;0YReturns  the  action  used  to  create  the McAlister triple semigroup [3XS[103X via
+  [2XMcAlisterTripleSemigroup[102X ([14X12.1-2[114X).[133X
+  
+  [1X12.1-7 IsMcAlisterTripleSemigroupElement[101X
+  
+  [33X[1;0Y[29X[2XIsMcAlisterTripleSemigroupElement[102X( [3Xx[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsMTSE[102X( [3Xx[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X.[133X
+  
+  [33X[0;0YReturns  [9Xtrue[109X  if  [3Xx[103X  is  an  element  of  a  McAlister triple semigroup; in
+  particular,    this    returns    [9Xtrue[109X    if   [3Xx[103X   has   been   created   by
+  [2XMcAlisterTripleSemigroupElement[102X   ([14X12.1-8[114X).   The   functions   [10XIsMTSE[110X   and
+  [10XIsMcAlisterTripleSemigroupElement[110X are synonyms. The mathematical description
+  of these objects can be found in the introduction to Chapter [14X12[114X.[133X
+  
+  [1X12.1-8 McAlisterTripleSemigroupElement[101X
+  
+  [33X[1;0Y[29X[2XMcAlisterTripleSemigroupElement[102X( [3XS[103X, [3XA[103X, [3Xg[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XMTSE[102X( [3XS[103X, [3XA[103X, [3Xg[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10YA McAlister triple semigroup element.[133X
+  
+  [33X[0;0YReturns  the  [13XMcAlister  triple  semigroup  element[113X  of the McAlister triple
+  semigroup   [3XS[103X  which  corresponds  to  a  label  [3XA[103X  of  a  vertex  from  the
+  [2XMcAlisterTripleSemigroupSemilattice[102X  ([14X12.1-5[114X)  of [3XS[103X and a group element [3Xg[103X of
+  the  [2XMcAlisterTripleSemigroupGroup[102X  ([14X12.1-3[114X)  of  [3XS[103X.  The  pair  [3X(A,g)[103X  only
+  represents an element of [3XS[103X if the following holds: [3XA[103X acted on by the inverse
+  of  [3Xg[103X  (via  [2XMcAlisterTripleSemigroupAction[102X  ([14X12.1-6[114X))  is  a  vertex of the
+  join-semilattice of [3XS[103X.[133X
+  
+  [33X[0;0YThe functions [10XMTSE[110X and [10XMcAlisterTripleSemigroupElement[110X are synonyms.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xx := Digraph([[1], [1, 2], [1, 2, 3], [1, 4], [1, 4, 5]]);[127X[104X
+    [4X[28X<digraph with 5 vertices, 11 edges>[128X[104X
+    [4X[25Xgap>[125X [27Xy := InducedSubdigraph(x, [1, 2, 3]);[127X[104X
+    [4X[28X<digraph with 3 vertices, 6 edges>[128X[104X
+    [4X[25Xgap>[125X [27XA := AutomorphismGroup(x);[127X[104X
+    [4X[28XGroup([ (2,4)(3,5) ])[128X[104X
+    [4X[25Xgap>[125X [27XS := McAlisterTripleSemigroup(A, x, y, OnPoints);[127X[104X
+    [4X[28X<McAlister triple semigroup over Group([ (2,4)(3,5) ])>[128X[104X
+    [4X[25Xgap>[125X [27XT := McAlisterTripleSemigroup(A, x, y);[127X[104X
+    [4X[28X<McAlister triple semigroup over Group([ (2,4)(3,5) ])>[128X[104X
+    [4X[25Xgap>[125X [27XS = T;[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27XIsIsomorphicSemigroup(S, T);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xa := MTSE(S, 1, (2, 4)(3, 5));[127X[104X
+    [4X[28X(1, (2,4)(3,5))[128X[104X
+    [4X[25Xgap>[125X [27Xb := MTSE(S, 2, ());[127X[104X
+    [4X[28X(2, ())[128X[104X
+    [4X[25Xgap>[125X [27Xa * a;[127X[104X
+    [4X[28X(1, ())[128X[104X
+    [4X[25Xgap>[125X [27XIsMTSE(a * a);[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xa = MTSE(T, 1, (2, 4)(3, 5));[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[25Xgap>[125X [27Xa * b;[127X[104X
+    [4X[28X(1, (2,4)(3,5))[128X[104X
+  [4X[32X[104X
+  

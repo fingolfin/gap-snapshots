@@ -269,15 +269,27 @@
   
   [33X[1;0Y[29X[2XNumberFFVector[102X( [3Xvec[103X, [3Xsz[103X ) [32X operation[133X
   
-  [33X[0;0Yreturns  an  integer  that gives the position of the finite field row vector
-  [3Xvec[103X in the sorted list of all row vectors over the field with [3Xsz[103X elements in
-  the  same dimension as [3Xvec[103X. [2XNumberFFVector[102X returns [9Xfail[109X if the vector cannot
-  be represented over the field with [3Xsz[103X elements.[133X
+  [33X[0;0Yreturns an integer that gives the position minus one of the finite field row
+  vector  [3Xvec[103X  in  the  sorted  list of all row vectors over the field with [3Xsz[103X
+  elements  in  the  same dimension as [3Xvec[103X. [2XNumberFFVector[102X returns [9Xfail[109X if the
+  vector cannot be represented over the field with [3Xsz[103X elements.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xv:=[0,1,2,0]*Z(3);;[127X[104X
+    [4X[25Xgap>[125X [27XNumberFFVector(v, 3);[127X[104X
+    [4X[28X21[128X[104X
+    [4X[25Xgap>[125X [27XNumberFFVector(Zero(v),3);[127X[104X
+    [4X[28X0[128X[104X
+    [4X[25Xgap>[125X [27XV:=EnumeratorSorted(GF(3)^4);[127X[104X
+    [4X[28X<enumerator of ( GF(3)^4 )>[128X[104X
+    [4X[25Xgap>[125X [27XV[21+1] = v;[127X[104X
+    [4X[28Xtrue[128X[104X
+  [4X[32X[104X
   
   
   [1X23.4 [33X[0;0YCoefficient List Arithmetic[133X[101X
   
-  [33X[0;0YThe  following  operations  all  perform arithmetic on row vectors. given as
+  [33X[0;0YThe  following  operations  all  perform arithmetic on row vectors, given as
   homogeneous  lists  of the same length, containing elements of a commutative
   ring.[133X
   

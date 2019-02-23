@@ -14,6 +14,9 @@
 \makelabel{changes:Other fixed bugs}{2.1.7}{X8470A7907B252827}
 \makelabel{changes:Removed or obsolete functionality}{2.1.8}{X7E82CC3E7C54ACEC}
 \makelabel{changes:Packages}{2.1.9}{X844ECC8387ADC6D7}
+\makelabel{changes:GAP 4.10.1 (February 2019)}{2.2}{X858254CF7D9DE943}
+\makelabel{changes:Changes in the core GAP system introduced in GAP 4.10.1}{2.2.1}{X785A404B8565D020}
+\makelabel{changes:New and updated packages since GAP 4.10.0}{2.2.2}{X7D3DEF227BFDF572}
 \makelabel{changes:Changes between GAP 4.8 and GAP 4.9}{3}{X7DE3F944789F9676}
 \makelabel{changes:GAP 4.9.1 (May 2018)}{3.1}{X7E74F2127F858880}
 \makelabel{changes:Changes in the core GAP system introduced in GAP 4.9}{3.1.1}{X87E35B7B7D7B2AF6}

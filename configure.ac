@@ -477,20 +477,42 @@ AC_SUBST([READLINE_LIBS])
 
 dnl Find julia
 AC_ARG_WITH([julia],
-  [AS_HELP_STRING([--with-julia@<:@=PREFIX@:>@],
-    [specify a prefix where julia can be found])],
-  [],[with_julia=no]
-)
+  [AS_HELP_STRING([--with-julia@<:@=PATH@:>@],
+    [specify a prefix for a julia binary or a julia binary])],
+  [],[
+    AS_IF([test "x$with_gc" = xjulia],
+    [
+      with_julia=yes
+    ],
+    [
+      with_julia=no
+    ])
+  ])
 
-AS_IF([test "x$with_julia" != xno],[
-  AC_PATH_PROG([JULIA], [julia], [], [${with_julia}/bin ${PATH}])
+AS_IF([test "x$with_julia" != xno ],[
+  AS_IF([test -x "$with_julia" && test ! -d "$with_julia" ],
+  [
+    JULIA="${with_julia}"
+  ],
+  [
+    AS_IF([test -d "$with_julia"  ],
+    [
+      JULIA_PATH="${with_julia}/bin:${with_julia}:${with_julia}/usr/bin"
+    ],
+    [
+      AS_IF([test "x$with_julia" != xyes ],
+        [ AC_MSG_ERROR([invalid argument to --with-julia]) ] )
+      JULIA_PATH="${PATH}"
+    ])
+    AC_PATH_PROG([JULIA], [julia], [], [$JULIA_PATH])
+  ])
   AS_IF([test "x$JULIA" = x],[ AC_MSG_ERROR([no julia executable found]) ])
 
-  JL_SHARE=$($JULIA -e 'print(joinpath(Sys.BINDIR, Base.DATAROOTDIR, "julia"))')
+  JL_SHARE=$($JULIA --startup-file=no -e 'print(joinpath(Sys.BINDIR, Base.DATAROOTDIR, "julia"))')
   AS_IF([test -f "${JL_SHARE}/julia-config.jl"], [], [AC_MSG_ERROR([no julia-config.jl found])])
 
   AC_MSG_CHECKING([for JULIA_CPPFLAGS])
-  JULIA_CPPFLAGS=$(${JULIA} ${JL_SHARE}/julia-config.jl --cflags 2>/dev/null)
+  JULIA_CPPFLAGS=$(${JULIA} --startup-file=no ${JL_SHARE}/julia-config.jl --cflags 2>/dev/null)
   AS_IF([ test $? != 0 ], [AC_MSG_ERROR([failed to obtain JULIA_CPPFLAGS from julia-config.jl])])
   JULIA_CPPFLAGS=${JULIA_CPPFLAGS/-std=gnu99/}  # need to remove -std=gnu99 for our C++ code
   # remove apostrophes, they mess up quoting when used in shell code(although
@@ -502,16 +524,22 @@ AS_IF([test "x$with_julia" != xno],[
   AC_MSG_RESULT([${JULIA_CPPFLAGS}])
 
   AC_MSG_CHECKING([for JULIA_LDFLAGS])
-  JULIA_LDFLAGS=$(${JULIA} ${JL_SHARE}/julia-config.jl --ldflags)
+  JULIA_LDFLAGS=$(${JULIA} --startup-file=no ${JL_SHARE}/julia-config.jl --ldflags)
   AS_IF([ test $? != 0 ], [AC_MSG_ERROR([failed to obtain JULIA_LDFLAGS from julia-config.jl])])
   JULIA_LDFLAGS=${JULIA_LDFLAGS//\'/}
   AC_MSG_RESULT([${JULIA_LDFLAGS}])
 
   AC_MSG_CHECKING([for JULIA_LIBS])
-  JULIA_LIBS=$(${JULIA} ${JL_SHARE}/julia-config.jl --ldlibs)
+  JULIA_LIBS=$(${JULIA} --startup-file=no ${JL_SHARE}/julia-config.jl --ldlibs)
   AS_IF([ test $? != 0 ], [AC_MSG_ERROR([failed to obtain JULIA_LIBS from julia-config.jl])])
   JULIA_LIBS=${JULIA_LIBS//\'/}
   AC_MSG_RESULT([${JULIA_LIBS}])
+],
+[
+  AS_IF( [ test "x$with_gc" = xjulia ],
+  [
+    AC_MSG_ERROR([ julia was selected as GC, but julia support was disabled ])
+  ])
 ])
 AC_SUBST([JULIA])
 AC_SUBST([JULIA_CPPFLAGS])
@@ -579,13 +607,29 @@ AS_IF([test "x$with_gc" = xboehm],
   ]
 )
 
+dnl
+dnl Define kernel version
+dnl
+
+
+gap_kernel_major_version=3
+gap_kernel_minor_version=0
+AC_SUBST([gap_kernel_major_version])
+AC_SUBST([gap_kernel_minor_version])
+
+AC_DEFINE_UNQUOTED([GAP_KERNEL_MAJOR_VERSION], $gap_kernel_major_version, [The major version of the kernel ABI])
+AC_DEFINE_UNQUOTED([GAP_KERNEL_MINOR_VERSION], $gap_kernel_minor_version, [The minor version of the kernel ABI])
 
 dnl
 dnl User setting: Compatibility mode (on by default)
 dnl
-AS_IF([test "x$enable_hpcgap" = xyes],
-  [GAPARCH="$host-hpcgap${ABI}"],
-  [GAPARCH="$host-default${ABI}"])
+AS_IF(
+  [test "x$enable_hpcgap" = xyes],
+     [GAPARCH="$host-hpcgap${ABI}-kv${gap_kernel_major_version}"],
+  [test "x$with_julia" != xno],
+     [GAPARCH="$host-julia${ABI}-kv${gap_kernel_major_version}"],
+  # else
+     [GAPARCH="$host-default${ABI}-kv${gap_kernel_major_version}"])
 AS_IF([test "x$ARCHEXT" != "x"],
   [GAPARCH="$GAPARCH-$ARCHEXT"])
 AS_IF([test "x$ARCH" != "x"],

@@ -6,8 +6,9 @@
 <H3>Sections</H3>
 <oL>
 <li> <A HREF="CHAP001.htm#SECT001">Usage</a>
-<li> <A HREF="CHAP001.htm#SECT002">Generic Treatment of Matrix groups</a>
-<li> <A HREF="CHAP001.htm#SECT003">Error Messages</a>
+<li> <A HREF="CHAP001.htm#SECT002">Matrices over Residue class rings</a>
+<li> <A HREF="CHAP001.htm#SECT003">Generic Treatment of Matrix groups</a>
+<li> <A HREF="CHAP001.htm#SECT004">Error Messages</a>
 </ol><p>
 <p>
 This manual describes the <font face="Gill Sans,Helvetica,Arial">matgrp</font> package. This package for <font face="Gill Sans,Helvetica,Arial">GAP</font>
@@ -91,7 +92,31 @@ gap&gt; n:=NormalizerViaRadical(g,s);
 </pre>
 <p>
 <p>
-<h2><a name="SECT002">1.2 Generic Treatment of Matrix groups</a></h2>
+<h2><a name="SECT002">1.2 Matrices over Residue class rings</a></h2>
+<p><p>
+To improve performance, the package provides a rudinemntary data type for
+matrices over residue class rings (which in the long run ought to be replaced
+by a better implementation in the main system), that yields a somewhat faster
+multiplication than using lists of lists.
+<p>
+The command <code>ZmodnzMat(ring,intmat)</code> will create a matrix in this compact
+format, for best performance convert matrices into this format before
+creating a group.
+<p>
+<pre>
+gap&gt; r:=Integers mod 2403;
+(Integers mod 2403)
+gap&gt; gens:=List(gens,x-&gt;ZmodnZMat(r,x));
+[ [ [ 2375, 3, 9 ], [ 0, 2402, 2397 ], [ 3, 0, 1 ] ]*ZmodnZObj(1,2403),
+  [ [ 2402, 0, 0 ], [ 2394, 1, 3 ], [ 2400, 0, 2402 ] ]*ZmodnZObj(1,2403),
+  [ [ 0, 0, 1 ], [ 1, 0, 9 ], [ 0, 1, 0 ] ]*ZmodnZObj(1,2403) ]
+gap&gt; h:=Group(gens);
+&lt;matrix group with 3 generators&gt;
+gap&gt; ffs:=FittingFreeLiftSetup(h);;
+</pre>
+<p>
+<p>
+<h2><a name="SECT003">1.3 Generic Treatment of Matrix groups</a></h2>
 <p><p>
 The ultimate goal of this package surely must be to have <font face="Gill Sans,Helvetica,Arial">GAP</font> work with
 matrix groups in the same way as with permutation groups, simply using
@@ -115,7 +140,7 @@ carry ``family'' matrix group with them to make such a membership test easy.
 </dl>
 <p>
 <p>
-<h2><a name="SECT003">1.3 Error Messages</a></h2>
+<h2><a name="SECT004">1.4 Error Messages</a></h2>
 <p><p>
 In certain situations the current version of the code may produce (one-off)
 error messages. Some reasons for this are:
@@ -160,5 +185,5 @@ due to an error in the randomized stabilizer chain computation.
 <p>
 [<a href = "chapters.htm">Up</a>] [<a href = "theindex.htm">Index</a>]
 <P>
-<address>matgrp manual<br>September 2018
+<address>matgrp manual<br>October 2018
 </address></body></html>

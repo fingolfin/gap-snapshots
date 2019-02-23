@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<Chapter Label="Chapter_Union-Find">
+<Heading>Union-Find</Heading>
+
+<P/>
+<Section Label="Chapter_Union-Find_Section_Introduction">
+<Heading>Introduction</Heading>
+
+<P/>
+<Package>datastructures</Package> defines the interface for mutable data structures
+representing partitions of <C>[1..n]</C>, commonly known as union-find data structures.
+Key operations are
+<Ref Oper="Unite" Label="for IsPartitionDS and IsMutable, IsPosInt, IsPosInt"/>
+which fuses two parts of a partition and
+<Ref Oper="Representative" Label="for IsPartitionDS, IsPosInt"/> which
+returns a canonical representative of the part containing a given point.
+<P/>
+</Section>
+
+
+<Section Label="Chapter_Union-Find_Section_API">
+<Heading>API</Heading>
+
+<P/>
+<ManSection>
+  <Filt Arg="arg" Name="IsPartitionDS" Label="for IsObject"/>
+ <Returns><C>true</C> or <C>false</C>
+</Returns>
+ <Description>
+Category of datastructures representing partitions.
+Equality is identity and family is ignored.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Constr Arg="filter, n" Name="PartitionDS" Label="for IsPartitionDS, IsPosInt"/>
+ <Description>
+Family containing all partition data structures
+Returns the trivial partition of the set <C>[1..n]</C>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Constr Arg="filter, partition" Name="PartitionDS" Label="for IsPartitionDS, IsCyclotomicCollColl"/>
+ <Description>
+Returns the union find structure of <A>partition</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="unionfind, k" Name="Representative" Label="for IsPartitionDS, IsPosInt"/>
+ <Returns>a positive integer
+</Returns>
+ <Description>
+Returns a canonical representative of the part of the partition that
+<A>k</A> is contained in.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="unionfind, k1, k2" Name="Unite" Label="for IsPartitionDS and IsMutable, IsPosInt, IsPosInt"/>
+ <Description>
+Fuses the parts of the paritition <A>unionfind</A> containing <A>k1</A>
+and <A>k2</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Oper Arg="unionfind" Name="RootsIteratorOfPartitionDS" Label="for IsPartitionDS"/>
+ <Returns>an iterator
+</Returns>
+ <Description>
+Returns an iterator that runs through canonical representatives of parts
+of the partition <A>unionfind</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="unionfind" Name="NumberParts" Label="for IsPartitionDS"/>
+ <Returns>a positive integer
+</Returns>
+ <Description>
+Returns the number of parts of the partition <A>unionfind</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="unionfind" Name="SizeUnderlyingSetDS" Label="for IsPartitionDS"/>
+ <Returns>a positive integer
+</Returns>
+ <Description>
+Returns the size of the underlying set of the partition <A>unionfind</A>.
+ </Description>
+</ManSection>
+
+
+<ManSection>
+  <Attr Arg="unionfind" Name="PartsOfPartitionDS" Label="for IsPartitionDS"/>
+ <Returns>a list of lists
+</Returns>
+ <Description>
+Returns the partition <A>unionfind</A> as a list of lists.
+ </Description>
+</ManSection>
+
+
+</Section>
+
+
+
+<P/>
+</Chapter>
+

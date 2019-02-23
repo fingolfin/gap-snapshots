@@ -645,6 +645,8 @@ wincygbin
 wingapdir
 COMPAT_MODE
 GAPARCH
+gap_kernel_minor_version
+gap_kernel_major_version
 BOEHM_GC_LIBS
 BOEHM_GC_LDFLAGS
 BOEHM_GC_CPPFLAGS
@@ -1460,7 +1462,8 @@ Optional Packages:
   --with-readline[=PREFIX]
                           support fancy command line editing via GNU readline;
                           optionally specify a prefix where it can be found
-  --with-julia[=PREFIX]   specify a prefix where julia can be found
+  --with-julia[=PATH]     specify a prefix for a julia binary or a julia
+                          binary
   --with-ward[=PREFIX]    prefix to the ward tool (used for building HPC-GAP)
 
 Some influential environment variables:
@@ -17886,14 +17889,41 @@ fi
 if test "${with_julia+set}" = set; then :
   withval=$with_julia;
 else
-  with_julia=no
+
+    if test "x$with_gc" = xjulia; then :
+
+      with_julia=yes
+
+else
+
+      with_julia=no
+
+fi
 
 fi
 
 
-if test "x$with_julia" != xno; then :
+if test "x$with_julia" != xno ; then :
 
-  # Extract the first word of "julia", so it can be a program name with args.
+  if test -x "$with_julia" && test ! -d "$with_julia" ; then :
+
+    JULIA="${with_julia}"
+
+else
+
+    if test -d "$with_julia"  ; then :
+
+      JULIA_PATH="${with_julia}/bin:${with_julia}:${with_julia}/usr/bin"
+
+else
+
+      if test "x$with_julia" != xyes ; then :
+   as_fn_error $? "invalid argument to --with-julia" "$LINENO" 5
+fi
+      JULIA_PATH="${PATH}"
+
+fi
+    # Extract the first word of "julia", so it can be a program name with args.
 set dummy julia; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
@@ -17906,7 +17936,7 @@ else
   ;;
   *)
   as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in ${with_julia}/bin ${PATH}
+for as_dir in $JULIA_PATH
 do
   IFS=$as_save_IFS
   test -z "$as_dir" && as_dir=.
@@ -17933,11 +17963,13 @@ $as_echo "no" >&6; }
 fi
 
 
+
+fi
   if test "x$JULIA" = x; then :
    as_fn_error $? "no julia executable found" "$LINENO" 5
 fi
 
-  JL_SHARE=$($JULIA -e 'print(joinpath(Sys.BINDIR, Base.DATAROOTDIR, "julia"))')
+  JL_SHARE=$($JULIA --startup-file=no -e 'print(joinpath(Sys.BINDIR, Base.DATAROOTDIR, "julia"))')
   if test -f "${JL_SHARE}/julia-config.jl"; then :
 
 else
@@ -17946,7 +17978,7 @@ fi
 
   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for JULIA_CPPFLAGS" >&5
 $as_echo_n "checking for JULIA_CPPFLAGS... " >&6; }
-  JULIA_CPPFLAGS=$(${JULIA} ${JL_SHARE}/julia-config.jl --cflags 2>/dev/null)
+  JULIA_CPPFLAGS=$(${JULIA} --startup-file=no ${JL_SHARE}/julia-config.jl --cflags 2>/dev/null)
   if  test $? != 0 ; then :
   as_fn_error $? "failed to obtain JULIA_CPPFLAGS from julia-config.jl" "$LINENO" 5
 fi
@@ -17962,7 +17994,7 @@ $as_echo "${JULIA_CPPFLAGS}" >&6; }
 
   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for JULIA_LDFLAGS" >&5
 $as_echo_n "checking for JULIA_LDFLAGS... " >&6; }
-  JULIA_LDFLAGS=$(${JULIA} ${JL_SHARE}/julia-config.jl --ldflags)
+  JULIA_LDFLAGS=$(${JULIA} --startup-file=no ${JL_SHARE}/julia-config.jl --ldflags)
   if  test $? != 0 ; then :
   as_fn_error $? "failed to obtain JULIA_LDFLAGS from julia-config.jl" "$LINENO" 5
 fi
@@ -17972,13 +18004,21 @@ $as_echo "${JULIA_LDFLAGS}" >&6; }
 
   { $as_echo "$as_me:${as_lineno-$LINENO}: checking for JULIA_LIBS" >&5
 $as_echo_n "checking for JULIA_LIBS... " >&6; }
-  JULIA_LIBS=$(${JULIA} ${JL_SHARE}/julia-config.jl --ldlibs)
+  JULIA_LIBS=$(${JULIA} --startup-file=no ${JL_SHARE}/julia-config.jl --ldlibs)
   if  test $? != 0 ; then :
   as_fn_error $? "failed to obtain JULIA_LIBS from julia-config.jl" "$LINENO" 5
 fi
   JULIA_LIBS=${JULIA_LIBS//\'/}
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: ${JULIA_LIBS}" >&5
 $as_echo "${JULIA_LIBS}" >&6; }
+
+else
+
+  if  test "x$with_gc" = xjulia ; then :
+
+    as_fn_error $? " julia was selected as GC, but julia support was disabled " "$LINENO" 5
+
+fi
 
 fi
 
@@ -18092,10 +18132,30 @@ if test "x$with_gc" = xboehm; then :
 fi
 
 
+
+gap_kernel_major_version=3
+gap_kernel_minor_version=0
+
+
+
+
+cat >>confdefs.h <<_ACEOF
+#define GAP_KERNEL_MAJOR_VERSION $gap_kernel_major_version
+_ACEOF
+
+
+cat >>confdefs.h <<_ACEOF
+#define GAP_KERNEL_MINOR_VERSION $gap_kernel_minor_version
+_ACEOF
+
+
 if test "x$enable_hpcgap" = xyes; then :
-  GAPARCH="$host-hpcgap${ABI}"
+  GAPARCH="$host-hpcgap${ABI}-kv${gap_kernel_major_version}"
+elif test "x$with_julia" != xno; then :
+  GAPARCH="$host-julia${ABI}-kv${gap_kernel_major_version}"
 else
-  GAPARCH="$host-default${ABI}"
+  # else
+     GAPARCH="$host-default${ABI}-kv${gap_kernel_major_version}"
 fi
 if test "x$ARCHEXT" != "x"; then :
   GAPARCH="$GAPARCH-$ARCHEXT"

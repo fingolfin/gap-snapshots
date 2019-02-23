@@ -9,7 +9,7 @@
 **  and gasman.c for two other garbage collector implementations.
 **/
 
-#include "code.h"
+#include "fibhash.h"
 #include "funcs.h"
 #include "gapstate.h"
 #include "gasman.h"
@@ -18,7 +18,6 @@
 #include "sysmem.h"
 #include "system.h"
 #include "vars.h"
-#include "fibhash.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,12 +26,41 @@
 #include "julia.h"
 #include "julia_gcext.h"
 
+
+/****************************************************************************
+**
+**  Various options controlling special features of the Julia GC code follow
+*/
+
+// if DISABLE_BIGVAL_TRACKING is defined, we don't track the location of
+// large bags; this speeds up some things, but may expose bugs in GAP code
+// which incorrectly holds pointers into bags over a GC.
+// #define DISABLE_BIGVAL_TRACKING
+
+// if REQUIRE_PRECISE_MARKING is defined, we assume that all marking
+// functions are precise, i.e., they only invoke MarkBag on valid bags,
+// immediate objects or NULL pointers, but not on any other random data
+// #define REQUIRE_PRECISE_MARKING
+
+// if STAT_MARK_CACHE is defined, we track some statistics about the
+// usage of the MarkCache
+// #define STAT_MARK_CACHE
+
+// if MARKING_STRESS_TEST is defined, we stress test the TryMark code
+// #define MARKING_STRESS_TEST
+
+
+/****************************************************************************
+**
+**
+*/
+
+#ifndef REQUIRE_PRECISE_MARKING
+
 #define MARK_CACHE_BITS 16
 #define MARK_CACHE_SIZE (1 << MARK_CACHE_BITS)
 
 #define MARK_HASH(x) (FibHash((x), MARK_CACHE_BITS))
-
-// #define STAT_MARK_CACHE
 
 // The MarkCache exists to speed up the conservative tracing of
 // objects. While its performance benefit is minimal with the current
@@ -51,6 +79,7 @@ static Bag MarkCache[MARK_CACHE_SIZE];
 static UInt MarkCacheHits, MarkCacheAttempts, MarkCacheCollisions;
 #endif
 
+#endif
 
 TNumInfoBags InfoBags[NUM_TYPES];
 
@@ -81,7 +110,7 @@ void InitFreeFuncBag(UInt type, TNumFreeFuncBags finalizer_func)
     TabFreeFuncBags[type] = finalizer_func;
 }
 
-void JFinalizer(jl_value_t * obj)
+static void JFinalizer(jl_value_t * obj)
 {
     BagHeader * hdr = (BagHeader *)obj;
     Bag         contents = (Bag)(hdr + 1);
@@ -93,6 +122,8 @@ void JFinalizer(jl_value_t * obj)
     if (TabFreeFuncBags[tnum])
         TabFreeFuncBags[tnum]((Bag)&contents);
 }
+
+#if !defined(DISABLE_BIGVAL_TRACKING)
 
 /****************************************************************************
 **
@@ -126,6 +157,7 @@ static inline int cmp_ptr(void * p, void * q)
     else
         return 0;
 }
+#endif
 
 static inline int lt_ptr(void * a, void * b)
 {
@@ -163,6 +195,8 @@ static inline void * align_ptr(void * p)
     return (void *)u;
 }
 
+#if !defined(DISABLE_BIGVAL_TRACKING)
+
 typedef struct treap_t {
     struct treap_t *left, *right;
     size_t          prio;
@@ -188,7 +222,7 @@ treap_t * alloc_treap(void)
     return result;
 }
 
-void free_treap(treap_t * t)
+static void free_treap(treap_t * t)
 {
     t->right = treap_free_list;
     treap_free_list = t;
@@ -342,7 +376,7 @@ static uint64_t xorshift_rng(void)
 
 static treap_t * bigvals;
 
-void alloc_bigval(void * addr, size_t size)
+static void alloc_bigval(void * addr, size_t size)
 {
     treap_t * node = alloc_treap();
     node->addr = addr;
@@ -351,22 +385,26 @@ void alloc_bigval(void * addr, size_t size)
     treap_insert(&bigvals, node);
 }
 
-void free_bigval(void * p)
+static void free_bigval(void * p)
 {
     if (p) {
         treap_delete(&bigvals, p);
     }
 }
 
+#endif
+
 static jl_module_t *   Module;
 static jl_datatype_t * datatype_mptr;
 static jl_datatype_t * datatype_bag;
 static jl_datatype_t * datatype_largebag;
-static Bag *           StackBottomBags;
 static UInt            StackAlignBags;
+static Bag *           GapStackBottom;
 static jl_ptls_t       JuliaTLS, SaveTLS;
 static size_t          max_pool_obj_size;
+#if !defined(DISABLE_BIGVAL_TRACKING)
 static size_t          bigval_startoffset;
+#endif
 static UInt            YoungRef;
 
 
@@ -443,6 +481,7 @@ static void TryMark(void * p)
 {
     jl_value_t * p2 = jl_gc_internal_obj_base_ptr(p);
     if (!p2) {
+#if !defined(DISABLE_BIGVAL_TRACKING)
         // It is possible for p to point past the end of
         // the object, so we subtract one word from the
         // address. This is safe, as the object is preceded
@@ -462,15 +501,33 @@ static void TryMark(void * p)
             if (hdr->type != jl_gc_internal_obj_base_ptr(hdr->type))
                 return;
         }
+#endif
     }
     else {
         // Prepopulate the mark cache with references we know
         // are valid and in current use.
+#ifndef REQUIRE_PRECISE_MARKING
         if (jl_typeis(p2, datatype_mptr))
             MarkCache[MARK_HASH((UInt)p2)] = (Bag)p2;
+#endif
     }
     if (p2) {
         JMark(p2);
+    }
+}
+
+static void TryMarkRangeReverse(void * start, void * end)
+{
+    if (lt_ptr(end, start)) {
+        SWAP(void *, start, end);
+    }
+    char * p = (char *)(align_ptr(start));
+    char * q = (char *)end - sizeof(void *);
+    while (!lt_ptr(q, p)) {
+        void * addr = *(void **)q;
+        if (addr)
+            TryMark(addr);
+        q -= StackAlignBags;
     }
 }
 
@@ -479,10 +536,12 @@ static void TryMarkRange(void * start, void * end)
     if (lt_ptr(end, start)) {
         SWAP(void *, start, end);
     }
-    char * p = align_ptr(start);
+    char * p = (char *)align_ptr(start);
     char * q = (char *)end - sizeof(void *) + StackAlignBags;
     while (lt_ptr(p, q)) {
-        TryMark(*(void **)p);
+        void * addr = *(void **)p;
+        if (addr)
+            TryMark(addr);
         p += StackAlignBags;
     }
 }
@@ -497,11 +556,22 @@ void CHANGED_BAG(Bag bag)
     jl_gc_wb_back(BAG_HEADER(bag));
 }
 
-void GapRootScanner(int full)
+static void GapRootScanner(int full)
 {
     // mark our Julia module (this contains references to our custom data
     // types, which thus also will not be collected prematurely)
     JMark(Module);
+    jl_task_t * task = JuliaTLS->current_task;
+    size_t      size;
+    int         tid;
+    // We figure out the end of the stack from the current task. While
+    // `stack_bottom` is passed to InitBags(), we cannot use that if
+    // current_task != root_task.
+    char * stackend = (char *)jl_task_stack_buffer(task, &size, &tid);
+    stackend += size;
+    if (JuliaTLS->tid == 0 && JuliaTLS->root_task == task) {
+        stackend = (char *)GapStackBottom;
+    }
 
     // allow installing a custom marking function. This is used for
     // integrating GAP (possibly linked as a shared library) with other code
@@ -514,7 +584,7 @@ void GapRootScanner(int full)
     syJmp_buf registers;
     sySetjmp(registers);
     TryMarkRange(registers, (char *)registers + sizeof(syJmp_buf));
-    TryMarkRange((char *)registers + sizeof(syJmp_buf), StackBottomBags);
+    TryMarkRange((char *)registers + sizeof(syJmp_buf), stackend);
 
     // mark all global objects
     for (Int i = 0; i < GlobalCount; i++) {
@@ -525,13 +595,33 @@ void GapRootScanner(int full)
     }
 }
 
-void GapTaskScanner(jl_task_t * task, int root_task)
+static void GapTaskScanner(jl_task_t * task, int root_task)
 {
     size_t size;
     int    tid;
-    void * stack = jl_task_stack_buffer(task, &size, &tid);
+    char * stack = (char *)jl_task_stack_buffer(task, &size, &tid);
     if (stack && tid < 0) {
-        TryMarkRange(stack, (char *)stack + size);
+        if (task->copy_stack) {
+            // We know which part of the task stack is actually used,
+            // so we shorten the range we have to scan.
+            stack = stack + size - task->copy_stack;
+            size = task->copy_stack;
+        }
+        volatile jl_jmp_buf * old_safe_restore =
+            (volatile jl_jmp_buf *)JuliaTLS->safe_restore;
+        jl_jmp_buf exc_buf;
+        if (!jl_setjmp(exc_buf, 0)) {
+            // The bottom of the stack may be protected with
+            // guard pages; accessing these results in segmentation
+            // faults. Julia catches those segmentation faults and
+            // longjmps to JuliaTLS->safe_restore; we use this
+            // mechamism to abort stack scanning when a protected
+            // page is hit. For this to work, we must scan the stack
+            // from top to bottom, so we see any guard pages last.
+            JuliaTLS->safe_restore = &exc_buf;
+            TryMarkRangeReverse(stack, stack + size);
+        }
+        JuliaTLS->safe_restore = (jl_jmp_buf *)old_safe_restore;
     }
 }
 
@@ -544,11 +634,20 @@ static void PreGCHook(int full)
     // a thread-local variable.
     SaveTLS = JuliaTLS;
     JuliaTLS = jl_get_ptls_states();
+    // This is the same code as in VarsBeforeCollectBags() for GASMAN.
+    // It is necessary because ASS_LVAR() and related functionality
+    // does not call CHANGED_BAG() for performance reasons. CHANGED_BAG()
+    // is only called when the current lvars bag is being changed. Thus,
+    // we have to add a write barrier at the start of the GC, too.
+    if (STATE(CurrLVars))
+        CHANGED_BAG(STATE(CurrLVars));
     /* information at the beginning of garbage collections                 */
     SyMsgsBags(full, 0, 0);
-    memset(MarkCache, 0, sizeof(MarkCache));
+#ifndef REQUIRE_PRECISE_MARKING
+   memset(MarkCache, 0, sizeof(MarkCache));
 #ifdef STAT_MARK_CACHE
     MarkCacheHits = MarkCacheAttempts = MarkCacheCollisions = 0;
+#endif
 #endif
 }
 
@@ -573,6 +672,12 @@ static uintptr_t JMarkMPtr(jl_ptls_t ptls, jl_value_t * obj)
 {
     if (!*(void **)obj)
         return 0;
+#ifdef MARKING_STRESS_TEST
+    for (int j = 0; j < 1000; ++j) {
+        UInt val = (UInt)obj + rand() - rand();
+        TryMark((void*)val);
+    }
+#endif
     if (JMark(BAG_HEADER((Bag)obj)))
         return 1;
     return 0;
@@ -593,13 +698,16 @@ static uintptr_t JMarkBag(jl_ptls_t ptls, jl_value_t * obj)
 void InitBags(UInt initial_size, Bag * stack_bottom, UInt stack_align)
 {
     // HOOK: initialization happens here.
+    GapStackBottom = stack_bottom;
     for (UInt i = 0; i < NUM_TYPES; i++)
         TabMarkFuncBags[i] = MarkAllSubBags;
     // These callbacks need to be set before initialization so
     // that we can track objects allocated during `jl_init()`.
+#if !defined(DISABLE_BIGVAL_TRACKING)
     jl_gc_set_cb_notify_external_alloc(alloc_bigval, 1);
     jl_gc_set_cb_notify_external_free(free_bigval, 1);
     bigval_startoffset = jl_gc_external_obj_hdr_size();
+#endif
     max_pool_obj_size = jl_gc_max_internal_obj_size();
     jl_gc_enable_conservative_gc_support();
     jl_init();
@@ -633,7 +741,6 @@ void InitBags(UInt initial_size, Bag * stack_bottom, UInt stack_align)
     GAP_ASSERT(jl_is_datatype(datatype_mptr));
     GAP_ASSERT(jl_is_datatype(datatype_bag));
     GAP_ASSERT(jl_is_datatype(datatype_largebag));
-    StackBottomBags = stack_bottom;
     StackAlignBags = stack_align;
 }
 
@@ -647,7 +754,7 @@ UInt CollectBags(UInt size, UInt full)
 void RetypeBag(Bag bag, UInt new_type)
 {
     BagHeader * header = BAG_HEADER(bag);
-    UInt old_type = header->type;
+    UInt        old_type = header->type;
 
 #ifdef COUNT_BAGS
     /* update the statistics      */
@@ -685,8 +792,6 @@ void RetypeBag(Bag bag, UInt new_type)
         // of supporting a feature nobody uses right now, we error out and
         // wait to see if somebody complains.
         Panic("cannot change bag type to one which requires a 'free' callback");
-
-
     }
     header->type = new_type;
 }
@@ -711,15 +816,27 @@ Bag NewBag(UInt type, UInt size)
     if (size == 0)
         alloc_size++;
 
+#if defined(DISABLE_BIGVAL_TRACKING)
+    bag = jl_gc_alloc_typed(JuliaTLS, sizeof(void *), datatype_mptr);
+    SET_PTR_BAG(bag, 0);
+#endif
+
     BagHeader * header = AllocateBagMemory(type, alloc_size);
 
     header->type = type;
     header->flags = 0;
     header->size = size;
 
+
+#if !defined(DISABLE_BIGVAL_TRACKING)
     // allocate the new masterpointer
     bag = jl_gc_alloc_typed(JuliaTLS, sizeof(void *), datatype_mptr);
     SET_PTR_BAG(bag, DATA(header));
+#else
+    // change the masterpointer to reference the new bag memory
+    SET_PTR_BAG(bag, DATA(header));
+    jl_gc_wb_back((void *)bag);
+#endif
 
     // return the identifier of the new bag
     return bag;
@@ -790,6 +907,7 @@ inline void MarkBag(Bag bag)
         return;
 
     jl_value_t * p = (jl_value_t *)bag;
+#ifndef REQUIRE_PRECISE_MARKING
 #ifdef STAT_MARK_CACHE
     MarkCacheAttempts++;
 #endif
@@ -805,11 +923,13 @@ inline void MarkBag(Bag bag)
             MarkCacheCollisions++;
 #endif
         MarkCache[hash] = bag;
-    } else {
+    }
+    else {
 #ifdef STAT_MARK_CACHE
         MarkCacheHits++;
 #endif
     }
+#endif
     // The following code is a performance optimization and
     // relies on Julia internals. It is functionally equivalent
     // to:

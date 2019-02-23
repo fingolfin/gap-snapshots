@@ -20,11 +20,11 @@
 
 BIND_GLOBAL( "GAPInfo", rec(
 
-# do not edit the following three lines. Occurences of `4.10.0' and `01-Nov-2018'
+# do not edit the following three lines. Occurences of `4.10.1' and `23-Feb-2019'
 # will be replaced by string matching by distribution wrapping scripts.
-    Version := MakeImmutable("4.10.0"),
-    Date := MakeImmutable("01-Nov-2018"),
-    NeedKernelVersion := MakeImmutable("4.10.0"),
+    Version := MakeImmutable("4.10.1"),
+    Date := MakeImmutable("23-Feb-2019"),
+    NeedKernelVersion := MakeImmutable("4.10.1"),
 
 # Without the needed packages, GAP does not start.
     Dependencies := MakeImmutable(rec(

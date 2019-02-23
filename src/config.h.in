@@ -9,6 +9,12 @@
 /* define if building in debug mode */
 #undef GAP_KERNEL_DEBUG
 
+/* The major version of the kernel ABI */
+#undef GAP_KERNEL_MAJOR_VERSION
+
+/* The minor version of the kernel ABI */
+#undef GAP_KERNEL_MINOR_VERSION
+
 /* define if building with memory checking */
 #undef GAP_MEM_CHECK
 

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE Book SYSTEM "gapdoc.dtd">
+
+<Book Name="polymaking">
+
+<#Include SYSTEM "title.xml">
+
+<TableOfContents/>
+
+<Body>
+    <#Include SYSTEM "environment.xml">
+   
+  <Chapter><Heading>Polymake interaction</Heading>
+
+  <#Include SYSTEM "input.xml">
+
+   <#Include SYSTEM "output.xml">
+
+ </Chapter>
+ 
+ <#Include SYSTEM "internals.xml"> 
+ 
+</Body>
+<Bibliography Databases="polymaking"/> 
+<TheIndex/>
+</Book>

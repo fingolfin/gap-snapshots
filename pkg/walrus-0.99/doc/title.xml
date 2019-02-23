@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    walrus
+  </Title>
+  <Subtitle>
+    A new approach to proving hyperbolicity
+  </Subtitle>
+  <Version>
+    0.99
+  </Version>
+  <Author>
+    Markus Pfeiffer<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+School of Computer Science<Br/>
+University of St Andrews<Br/>
+Jack Cole Building, North Haugh<Br/>
+St Andrews, Fife, KY16 9SX<Br/>
+United Kingdom<Br/>
+</Address>
+<Email>markus.pfeiffer@st-andrews.ac.uk</Email>
+<Homepage>http://www.morphism.de/~markusp/</Homepage>
+
+  </Author>
+  <Date>
+    19 February 2019
+  </Date>
+  </TitlePage>

@@ -3,7 +3,7 @@
                                [1XGAP --- A Tutorial[101X
   
   
-                          Release 4.10.0, 01-Nov-2018
+                          Release 4.10.1, 23-Feb-2019
   
   
                                  The GAP Group
@@ -16,7 +16,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0YCopyright  ©  (1987-2018)  for  the  core  part of the [5XGAP[105X system by the [5XGAP[105X
+  [33X[0;0YCopyright  ©  (1987-2019)  for  the  core  part of the [5XGAP[105X system by the [5XGAP[105X
   Group.[133X
   
   [33X[0;0YMost  parts  of this distribution, including the core part of the [5XGAP[105X system

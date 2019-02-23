@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    RDS
+  </Title>
+  <Subtitle>
+    A package for searching relative difference sets
+  </Subtitle>
+  <Version>
+    1.6dev
+  </Version>
+  <Author>
+    Marc Roeder<Alt Only="LaTeX"><Br/></Alt>
+<Email>roeder.marc@gmail.com</Email>
+<Homepage>http://csserver.evansville.edu/~mroeder</Homepage>
+
+  </Author>
+  <Date>
+    16 February 2012
+  </Date>
+  </TitlePage>

@@ -71,10 +71,10 @@ Int enableCodeCoverageAtStartup( Char **argv, void * dummy);
 /****************************************************************************
 **
 *V  SyKernelVersion  . . . . . . . . . . . . . . . hard coded kernel version
-** do not edit the following line. Occurrences of `4.10.0' and `today'
+** do not edit the following line. Occurrences of `4.10.1' and `today'
 ** will be replaced by string matching by distribution wrapping scripts.
 */
-const Char * SyKernelVersion = "4.10.0";
+const Char * SyKernelVersion = "4.10.1";
 
 /****************************************************************************
 **
@@ -1102,7 +1102,8 @@ UInt SyOriginalArgc;
 
 void InitSystem (
     Int                 argc,
-    Char *              argv [] )
+    Char *              argv [],
+    UInt                handleSignals )
 {
     Char *              *ptrlist;
     UInt                i;             /* loop variable                   */
@@ -1155,10 +1156,13 @@ void InitSystem (
     InitSysFiles();
 
 #ifdef HAVE_LIBREADLINE
+    rl_readline_name = "GAP";
     rl_initialize ();
 #endif
     
-    SyInstallAnswerIntr();
+    if (handleSignals) {
+        SyInstallAnswerIntr();
+    }
 
 #if defined(SYS_DEFAULT_PATHS)
     SySetGapRootPath( SYS_DEFAULT_PATHS );

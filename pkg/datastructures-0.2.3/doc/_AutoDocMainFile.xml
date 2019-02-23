@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<#Include SYSTEM "_Chapter_Heaps.xml">
+<#Include SYSTEM "_Chapter_Queues_and_Deques.xml">
+<#Include SYSTEM "_Chapter_Union-Find.xml">
+<#Include SYSTEM "_Chapter_HashFunctions.xml">
+<#Include SYSTEM "_Chapter_Hashmaps.xml">
+<#Include SYSTEM "_Chapter_Hashsets.xml">
+<#Include SYSTEM "_Chapter_Memoisation.xml">
+<#Include SYSTEM "_Chapter_Ordered_Set_Datastructures.xml">
+<#Include SYSTEM "_Chapter_Slices.xml">
+<#Include SYSTEM "_Chapter_Stacks.xml">

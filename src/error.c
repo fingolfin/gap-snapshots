@@ -33,12 +33,52 @@
 
 
 static Obj ErrorInner;
+static Obj ERROR_OUTPUT = NULL;
+static Obj IsOutputStream;
 
 
 /****************************************************************************
 **
 *F * * * * * * * * * * * * * * error functions * * * * * * * * * * * * * * *
 */
+
+/****************************************************************************
+**
+*F  OpenErrorOutput()  . . . . . . . open the file or stream assigned to the
+**                                   ERROR_OUTPUT global variable defined in
+**                                   error.g, or "*errout*" otherwise
+*/
+UInt OpenErrorOutput( void )
+{
+    /* Try to print the output to stream. Use *errout* as a fallback. */
+    UInt ret = 0;
+
+    if (ERROR_OUTPUT != NULL) {
+        if (IsStringConv(ERROR_OUTPUT)) {
+            ret = OpenOutput(CSTR_STRING(ERROR_OUTPUT));
+        }
+        else {
+            if (CALL_1ARGS(IsOutputStream, ERROR_OUTPUT) == True) {
+                ret = OpenOutputStream(ERROR_OUTPUT);
+            }
+        }
+    }
+
+    if (!ret) {
+        /* It may be we already tried and failed to open *errout* above but
+         * but this is an extreme case so it can't hurt to try again
+         * anyways */
+        ret = OpenOutput("*errout*");
+        if (ret) {
+            Pr("failed to open error stream\n", 0, 0);
+        }
+        else {
+            Panic("failed to open *errout*");
+        }
+    }
+
+    return ret;
+}
 
 
 /****************************************************************************
@@ -551,7 +591,7 @@ void ErrorMayQuit(const Char * msg, Int arg1, Int arg2)
 void CheckIsPossList(const Char * desc, Obj poss)
 {
     if ( ! IS_POSS_LIST( poss ) ) {
-        ErrorQuit("%s: <positions> must be a dense list of positive integers",
+        ErrorMayQuit("%s: <positions> must be a dense list of positive integers",
             (Int)desc, 0 );
     }
 }
@@ -563,7 +603,7 @@ void CheckIsPossList(const Char * desc, Obj poss)
 void CheckIsDenseList(const Char * desc, const Char * listName, Obj list)
 {
     if (!IS_DENSE_LIST(list)) {
-        ErrorQuit("%s: <%s> must be a dense list", (Int)desc, (Int)listName);
+        ErrorMayQuit("%s: <%s> must be a dense list", (Int)desc, (Int)listName);
     }
 }
 
@@ -615,6 +655,8 @@ static Int InitKernel(StructInitInfo * module)
     InitHdlrFuncsFromTable(GVarFuncs);
 
     ImportFuncFromLibrary("ErrorInner", &ErrorInner);
+    ImportFuncFromLibrary("IsOutputStream", &IsOutputStream);
+    ImportGVarFromLibrary("ERROR_OUTPUT", &ERROR_OUTPUT);
 
     // return success
     return 0;

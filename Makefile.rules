@@ -470,21 +470,22 @@ clean:
 LTINSTALL=$(LIBTOOL) --mode=install $(INSTALL)
 
 install: install-libgap install-headers
-	@echo "Warning, 'make install' has not yet been fully implemented"
-	$(QUIET_INSTALL)$(INSTALL) -d -m 0755 $(DESTDIR)$(bindir)
-	$(QUIET_INSTALL)$(INSTALL) gap $(DESTDIR)$(bindir)
-	$(QUIET_INSTALL)$(INSTALL) gac $(DESTDIR)$(bindir)
-
-install-headers:
-	$(QUIET_INSTALL)$(INSTALL) -d -m 0755 $(DESTDIR)$(includedir)/gap
-	$(QUIET_INSTALL)$(INSTALL) -d -m 0755 $(DESTDIR)$(includedir)/gap/hpc
-	$(QUIET_INSTALL)$(INSTALL) -m 0644 $(srcdir)/src/*.h $(DESTDIR)$(includedir)/gap
-	$(QUIET_INSTALL)$(INSTALL) -m 0644 $(srcdir)/src/hpc/*.h $(DESTDIR)$(includedir)/gap/hpc
-	# TODO: take care of config.h
-
-install-libgap: libgap.la
-	$(QUIET_INSTALL)$(INSTALL) -d -m 0755 $(DESTDIR)$(libdir)
-	$(QUIET_INSTALL)$(LTINSTALL) libgap.la $(DESTDIR)$(libdir)
+	@echo "Error, 'make install' has not yet been implemented"
+	exit 1
+# 	$(QUIET_INSTALL)$(INSTALL) -d -m 0755 $(DESTDIR)$(bindir)
+# 	$(QUIET_INSTALL)$(INSTALL) gap $(DESTDIR)$(bindir)
+# 	$(QUIET_INSTALL)$(INSTALL) gac $(DESTDIR)$(bindir)
+# 
+# install-headers:
+# 	$(QUIET_INSTALL)$(INSTALL) -d -m 0755 $(DESTDIR)$(includedir)/gap
+# 	$(QUIET_INSTALL)$(INSTALL) -d -m 0755 $(DESTDIR)$(includedir)/gap/hpc
+# 	$(QUIET_INSTALL)$(INSTALL) -m 0644 $(srcdir)/src/*.h $(DESTDIR)$(includedir)/gap
+# 	$(QUIET_INSTALL)$(INSTALL) -m 0644 $(srcdir)/src/hpc/*.h $(DESTDIR)$(includedir)/gap/hpc
+# 	# TODO: take care of config.h
+# 
+# install-libgap: libgap.la
+# 	$(QUIET_INSTALL)$(INSTALL) -d -m 0755 $(DESTDIR)$(libdir)
+# 	$(QUIET_INSTALL)$(LTINSTALL) libgap.la $(DESTDIR)$(libdir)
 
 
 .PHONY: install install-libgap
@@ -654,15 +655,6 @@ distclean-extern:
 	rm -rf extern/install
 
 
-########################################################################
-# Compatibility mode
-#
-# If enabled, we prepare the environment to look like it did with
-# the old build system, thus enabling existing packages with kernel
-# extensions to be compiled against this version of GAP/
-########################################################################
-ifeq ($(COMPAT_MODE),yes)
-
 # regenerate sysinfo.gap if necessary
 all: sysinfo.gap
 sysinfo.gap: config.status $(srcdir)/Makefile.rules cnf/GAP-CFLAGS cnf/GAP-CPPFLAGS cnf/GAP-LDFLAGS cnf/GAP-LIBS
@@ -673,6 +665,9 @@ sysinfo.gap: config.status $(srcdir)/Makefile.rules cnf/GAP-CFLAGS cnf/GAP-CPPFL
 	@echo "GAP_ABI=$(ABI)" >> $@
 	@echo "GAP_HPCGAP=$(HPCGAP)" >> $@
 	@echo "GAP_ADDGUARDS2=$(ADDGUARDS2)" >> $@
+	@echo "" >> $@
+	@echo "GAP_KERNEL_MAJOR_VERSION=$(GAP_KERNEL_MAJOR_VERSION)" >> $@
+	@echo "GAP_KERNEL_MINOR_VERSION=$(GAP_KERNEL_MINOR_VERSION)" >> $@
 	@echo "" >> $@
 	@echo "GAP_BIN_DIR=\"$(abs_builddir)\"" >> $@
 	@echo "GAP_LIB_DIR=\"$(abs_srcdir)\"" >> $@
@@ -686,6 +681,19 @@ sysinfo.gap: config.status $(srcdir)/Makefile.rules cnf/GAP-CFLAGS cnf/GAP-CPPFL
 	@echo "GAP_OBJS=\"$(OBJS)\"" >> $@
 	@echo "" >> $@
 	@echo "JULIA=\"$(JULIA)\"" >> $@
+	@echo "JULIA_CPPFLAGS=\"$(JULIA_CPPFLAGS)\"" >> $@
+	@echo "JULIA_LDFLAGS=\"$(JULIA_LDFLAGS)\"" >> $@
+	@echo "JULIA_LIBS=\"$(JULIA_LIBS)\"" >> $@
+
+
+########################################################################
+# Compatibility mode
+#
+# If enabled, we prepare the environment to look like it did with
+# the old build system, thus enabling existing packages with kernel
+# extensions to be compiled against this version of GAP/
+########################################################################
+ifeq ($(COMPAT_MODE),yes)
 
 # regenerate bin/gap.sh if necessary
 all: bin/gap.sh
@@ -754,9 +762,11 @@ check-manuals: all
 testinstall: all
 	$(MKDIR_P) dev/log
 	( echo 'SetUserPreference("UseColorsInTerminal",false); \
+	        SetUserPreference("ReproducibleBehaviour", true); \
             ReadGapRoot( "tst/testinstall.g" );' | $(TESTGAP) | \
             tee `date -u +dev/log/testinstall1_%Y-%m-%d-%H-%M` )
 	( echo 'SetUserPreference("UseColorsInTerminal",false); LoadAllPackages(); \
+	        SetUserPreference("ReproducibleBehaviour", true); \
             ReadGapRoot( "tst/testinstall.g" );' | $(TESTGAP) | \
             tee `date -u +dev/log/testinstall2_%Y-%m-%d-%H-%M` )
 
@@ -768,6 +778,7 @@ testmanuals: all
 	$(MKDIR_P) dev/log
 	((cd doc/tut ; \
 	  echo 'SetUserPreference("UseColorsInTerminal",false); SetAssertionLevel( 2 ); \
+	  SetUserPreference("ReproducibleBehaviour", true); \
 	  Read("extractexamples.g"); Read("runexamples.g"); ' | $(TESTGAP);\
 	  echo '============================================================';\
 	  cd ../.. ; ff=`ls doc/tut/EXAMPLEDIFFS* 2> /dev/null | wc -l`; \
@@ -776,6 +787,7 @@ testmanuals: all
 	  echo '============================================================';\
 	  cd doc/ref ; \
 	  echo 'SetUserPreference("UseColorsInTerminal",false); SetAssertionLevel( 2 ); \
+	  SetUserPreference("ReproducibleBehaviour", true); \
 	  Read("extractexamples.g"); Read("runexamples.g"); ' | $(TESTGAP);\
 	  echo '============================================================';\
 	  cd ../.. ; ff=`ls doc/ref/EXAMPLEDIFFS* 2> /dev/null | wc -l`; \
@@ -785,6 +797,7 @@ testmanuals: all
 	( rm -rf doc/tut/EXAMPLEDIFFS*; rm -rf doc/ref/EXAMPLEDIFFS* )
 	((cd doc/tut ; \
 	  echo 'SetUserPreference("UseColorsInTerminal",false); SetAssertionLevel( 2 ); \
+	  SetUserPreference("ReproducibleBehaviour", true); \
 	  Read("extractexamples.g"); Read("runexamples.g"); ' | $(TESTGAPauto);\
 	  echo '============================================================';\
 	  cd ../.. ; ff=`ls doc/tut/EXAMPLEDIFFS* 2> /dev/null | wc -l`; \
@@ -793,6 +806,7 @@ testmanuals: all
 	  echo '============================================================';\
 	  cd doc/ref ; \
 	  echo 'SetUserPreference("UseColorsInTerminal",false); SetAssertionLevel( 2 ); \
+	  SetUserPreference("ReproducibleBehaviour", true); \
 	  Read("extractexamples.g"); Read("runexamples.g"); ' | $(TESTGAPauto);\
 	  echo '============================================================';\
 	  cd ../.. ; ff=`ls doc/ref/EXAMPLEDIFFS* 2> /dev/null | wc -l`; \
@@ -803,6 +817,7 @@ testmanuals: all
 	((cd doc/tut ; \
 	  echo 'SetUserPreference("UseColorsInTerminal",false); SetAssertionLevel( 2 ); \
 	  LoadAllPackages() ; \
+	  SetUserPreference("ReproducibleBehaviour", true); \
 	  Read("extractexamples.g"); Read("runexamples.g"); ' | $(TESTGAP);\
 	  echo '============================================================';\
 	  cd ../.. ; ff=`ls doc/tut/EXAMPLEDIFFS* 2> /dev/null | wc -l`; \
@@ -812,6 +827,7 @@ testmanuals: all
 	  cd doc/ref ; \
 	  echo 'SetUserPreference("UseColorsInTerminal",false); SetAssertionLevel( 2 ); \
 	  LoadAllPackages() ; \
+	  SetUserPreference("ReproducibleBehaviour", true); \
 	  Read("extractexamples.g"); Read("runexamples.g"); ' | $(TESTGAP);\
 	  echo '============================================================';\
 	  cd ../.. ; ff=`ls doc/ref/EXAMPLEDIFFS* 2> /dev/null | wc -l`; \
@@ -968,9 +984,11 @@ testpackagesvars: all
 teststandard: all
 	$(MKDIR_P) dev/log
 	( echo 'SetUserPreference("UseColorsInTerminal",false); \
+          SetUserPreference("ReproducibleBehaviour", true); \
           ReadGapRoot( "tst/teststandard.g" );' | $(TESTGAP) | \
             tee `date -u +dev/log/teststandard1_%Y-%m-%d-%H-%M` )
 	( echo 'SetUserPreference("UseColorsInTerminal",false); LoadAllPackages(); \
+	      SetUserPreference("ReproducibleBehaviour", true); \
           ReadGapRoot( "tst/teststandard.g" );' | $(TESTGAP) | \
             tee `date -u +dev/log/teststandard2_%Y-%m-%d-%H-%M` )
 
@@ -980,11 +998,17 @@ teststandard: all
 testbugfix: all
 	$(MKDIR_P) dev/log
 	( echo 'SetUserPreference("UseColorsInTerminal",false); \
+	      SetUserPreference("ReproducibleBehaviour", true); \
           ReadGapRoot( "tst/testbugfix.g" );' | $(TESTGAP) | \
             tee `date -u +dev/log/testbugfix1_%Y-%m-%d-%H-%M` )
 	( echo 'SetUserPreference("UseColorsInTerminal",false); LoadAllPackages(); \
+	      SetUserPreference("ReproducibleBehaviour", true); \
           ReadGapRoot( "tst/testbugfix.g" );' | $(TESTGAP) | \
             tee `date -u +dev/log/testbugfix2_%Y-%m-%d-%H-%M` )
+
+#
+check:
+	$(TESTGAP) tst/testinstall.g
 
 testlibgap: libgap.la obj/tst/testlibgap/basic.lo 
 	$(QUIET_LINK)$(LINK) $(GAP_LDFLAGS) obj/tst/testlibgap/basic.lo libgap.la -o test-libgap
@@ -998,6 +1022,7 @@ coverage:
 .PHONY: testinstall testmanuals testobsoletes teststandard testbugfix
 .PHONY: testpackage testpackages testpackagesload testpackagesvars
 .PHONY: coverage
+.PHONY: check
 
 ########################################################################
 # Bootstrap rules
