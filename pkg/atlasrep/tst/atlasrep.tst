@@ -5,22 +5,37 @@
 #Y  Copyright (C)  2001,   Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
 ##  This file contains among others the function calls needed to perform some
-##  of the sanity checks mentioned in the manual section about sanity checks.
+##  of the sanity checks mentioned in the corresponding manual section.
 ##
-##  In order to run the tests, one starts GAP from the `tst' subdirectory
-##  of the `pkg/atlasrep' directory, and calls `Test( "atlasrep.tst" );'.
+##  In order to run the tests, one starts GAP from the 'tst' subdirectory
+##  of the 'pkg/atlasrep' directory, and calls 'Test( "atlasrep.tst" );'.
 ##
+##  If one of the functions 'AGR.Test.Words', 'AGR.Test.FileHeaders' reports
+##  an error then detailed information can be obtained by increasing the
+##  info level of 'InfoAtlasRep' to at least 1 and then running the tests
+##  again.
+##
+gap> START_TEST( "atlasrep.tst" );
 
-gap> START_TEST( "Input file: atlasrep.tst" );
+# Load the necessary packages.
+gap> LoadPackage( "atlasrep", false );
+true
+gap> LoadPackage( "ctbllib", false );
+true
 
-# Load the package.
-gap> LoadPackage( "atlasrep" );
+# Test the internally available class scripts.
+gap> AGR.Test.ClassScripts( "internal" );
 true
-gap> LoadPackage( "ctbllib" );
+gap> AGR.Test.CycToCcls( "internal" );
 true
-gap> if not IsBound( AGR.Test ) then
->      ReadPackage( "atlasrep", "gap/test.g" );
->    fi;
+
+# Test the availability of peripheral information.
+gap> AllAtlasGeneratingSetInfos( Ring, fail );
+[  ]
+gap> AllAtlasGeneratingSetInfos( IsTransitive, fail );
+[  ]
+gap> AllAtlasGeneratingSetInfos( IsPrimitive, fail );
+[  ]
 
 # Test reading and writing straight line programs.
 gap> str:= "\
@@ -147,7 +162,7 @@ gap> str:= "\
 > 1 4 5 2 3 8 6 9 7";;
 gap> perms = ScanMeatAxeFile( str, "string" );
 true
-gap> ScanMeatAxeFile( Filename( dir, "perm7.tst" ) );
+gap> ScanMeatAxeFile( Filename( dir, "perm7.txt" ) );
 [ (1,2,3)(4,6) ]
 
 # mode 1
@@ -167,9 +182,9 @@ gap> str:= "\
 > 331";;
 gap> scan = ScanMeatAxeFile( str, "string" );
 true
-gap> scan = ScanMeatAxeFile( Filename( dir, "matf9r3.tst" ) );
+gap> scan = ScanMeatAxeFile( Filename( dir, "matf9r3.txt" ) );
 true
-gap> scan = ScanMeatAxeFile( Filename( dir, "matf81r3.tst" ) );
+gap> scan = ScanMeatAxeFile( Filename( dir, "matf81r3.txt" ) );
 true
 
 # mode 3
@@ -221,13 +236,13 @@ gap> str:= "\
 >  10 10  9  9  1  6  1  6  0 10";;
 gap> scan = ScanMeatAxeFile( str, "string" );
 true
-gap> scan = ScanMeatAxeFile( Filename( dir, "matf11r10.tst" ) );
+gap> scan = ScanMeatAxeFile( Filename( dir, "matf11r10.txt" ) );
 true
 
 # mode 4
 
 # mode 5
-gap> file:= Filename( dir, "matf7r3.tst" );;
+gap> file:= Filename( dir, "matf7r3.txt" );;
 gap> scan:= ScanMeatAxeFile( file );
 [ [ Z(7)^5, 0*Z(7), Z(7)^0 ], [ 0*Z(7), Z(7), 0*Z(7) ], 
   [ Z(7)^2, Z(7)^2, Z(7) ] ]
@@ -254,13 +269,17 @@ gap> str:= "\
 > 100000";;
 gap> scan = ScanMeatAxeFile( str, "string" );
 true
-gap> scan:= ScanMeatAxeFile( Filename( dir, "permmat7.tst" ) );;
+gap> scan:= ScanMeatAxeFile( Filename( dir, "permmat7.txt" ) );;
 gap> scan = PermutationMat( (1,2,3)(4,6), 7, GF(3) );
 true
 
 # Test writing group generators in MeatAxe format.
 # (Cover the cases of matrices over small fields, over large prime fields,
 # and over large nonprime fields.)
+# 1. Write numeric file headers.
+gap> pref:= UserPreference( "AtlasRep", "WriteHeaderFormatOfMeatAxeFiles" );;
+gap> SetUserPreference( "AtlasRep", "WriteHeaderFormatOfMeatAxeFiles",
+>        "numeric" );;
 gap> mat:= [ [ 1, 0 ], [ 0, 0 ] ] * Z(3)^0;; # (not a permutation matrix)
 gap> MeatAxeString( mat, 3 );
 "1 3 2 2\n10\n00\n"
@@ -279,6 +298,109 @@ gap> str:= MeatAxeString( mat, q );;
 gap> ScanMeatAxeFile( str, "string" ) = mat;
 true
 
+# 2. Write numeric (fixed) file headers.
+gap> SetUserPreference( "AtlasRep", "WriteHeaderFormatOfMeatAxeFiles",
+>        "numeric (fixed)" );;
+gap> mat:= [ [ 1, 0 ], [ 0, 0 ] ] * Z(3)^0;; # (not a permutation matrix)
+gap> MeatAxeString( mat, 3 );
+"     1     3     2     2\n10\n00\n"
+gap> mat:= [ [ 1, 0 ], [ 1, 0 ] ] * Z(3)^0;  # (not a permutation matrix)
+[ [ Z(3)^0, 0*Z(3) ], [ Z(3)^0, 0*Z(3) ] ]
+gap> MeatAxeString( mat, 3 );
+"     1     3     2     2\n10\n10\n"
+gap> q:= 101;;
+gap> mat:= RandomMat( 20, 20, GF(q) );;
+gap> str:= MeatAxeString( mat, q );;
+gap> ScanMeatAxeFile( str, "string" ) = mat;
+true
+gap> q:= 3^7;;
+gap> mat:= RandomMat( 20, 20, GF(q) );;
+gap> str:= MeatAxeString( mat, q );;
+gap> ScanMeatAxeFile( str, "string" ) = mat;
+true
+
+# 3. Write textual file headers.
+gap> SetUserPreference( "AtlasRep", "WriteHeaderFormatOfMeatAxeFiles",
+>        "textual" );;
+gap> mat:= [ [ 1, 0 ], [ 0, 0 ] ] * Z(3)^0;; # (not a permutation matrix)
+gap> MeatAxeString( mat, 3 );
+"matrix field=3 rows=2 cols=2\n10\n00\n"
+gap> mat:= [ [ 1, 0 ], [ 1, 0 ] ] * Z(3)^0;  # (not a permutation matrix)
+[ [ Z(3)^0, 0*Z(3) ], [ Z(3)^0, 0*Z(3) ] ]
+gap> MeatAxeString( mat, 3 );
+"matrix field=3 rows=2 cols=2\n10\n10\n"
+gap> q:= 101;;
+gap> mat:= RandomMat( 20, 20, GF(q) );;
+gap> str:= MeatAxeString( mat, q );;
+gap> ScanMeatAxeFile( str, "string" ) = mat;
+true
+gap> q:= 3^7;;
+gap> mat:= RandomMat( 20, 20, GF(q) );;
+gap> str:= MeatAxeString( mat, q );;
+gap> ScanMeatAxeFile( str, "string" ) = mat;
+true
+gap> SetUserPreference( "AtlasRep", "WriteHeaderFormatOfMeatAxeFiles",
+>        pref );;
+gap> Print( MeatAxeString( [ [ 1, 2 ], [ 3, 4 ] ] ) );
+integer matrix rows=2 cols=2
+1 2 
+3 4 
+
+# Check the interface functions.
+gap> g:= "A5";;
+gap> IsRecord( OneAtlasGeneratingSetInfo( g ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, 1 ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, IsPermGroup ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, IsPermGroup, true ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, IsPermGroup, NrMovedPoints, 5 ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, IsPermGroup, true,
+>                                         NrMovedPoints, 5 ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, 1, IsPermGroup ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, NrMovedPoints, 5 ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, 1, NrMovedPoints, 5 ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, IsMatrixGroup ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, IsMatrixGroup, true ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, IsMatrixGroup, Dimension, 2 ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, IsMatrixGroup, true,
+>                                         Dimension, 2 ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, 1, IsMatrixGroup ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, Characteristic, 2 ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, 1, Characteristic, 2 ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, Dimension, 2 ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, 1, Dimension, 2 ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, Characteristic, 2,
+>                                         Dimension, 2 ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, 1, Characteristic, 2,
+>                                         Dimension, 2 ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, Ring, GF(2) ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, 1, Ring, GF(2) ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, Ring, GF(2), Dimension, 4 ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( g, 1, Ring, GF(2), Dimension, 4 ) );
+true
+
 # Check access to representations with unusual parameters.
 gap> OneAtlasGeneratingSetInfo( IsPermGroup, true );;
 gap> OneAtlasGeneratingSetInfo( [ "A5", "A6" ], IsPermGroup, true );;
@@ -288,28 +410,158 @@ gap> OneAtlasGeneratingSetInfo( Identifier, "a" );;
 gap> OneAtlasGeneratingSetInfo( Position, 1 );;
 gap> OneAtlasGeneratingSetInfo( Position, 10^6 );
 fail
-gap> chi:= PermChars( CharacterTable( "M11" ), [ 11 ] )[1];;
-gap> OneAtlasGeneratingSetInfo( Character, chi );;
-gap> OneAtlasGeneratingSetInfo( "M11", Character, chi );;
-
-# Check that the function `StringOfAtlasTableOfContents' works.
-gap> StringOfAtlasTableOfContents( "remote" );;
-
-# Check whether reading the file `atlasprm.g' reports inconsistencies,
-# and whether store/replace of a table of contents works.
-gap> level:= InfoLevel( InfoAtlasRep );;
-gap> SetInfoLevel( InfoAtlasRep, 3 );
-gap> tmpname:= Filename( DirectoryTemporary(), "atlastoc.tmp" );;
-gap> StoreAtlasTableOfContents( tmpname );
-gap> oldval:= AtlasOfGroupRepresentationsInfo.TableOfContents.( "remote" );;
-gap> ReplaceAtlasTableOfContents( tmpname );
-gap> newval:= AtlasOfGroupRepresentationsInfo.TableOfContents.( "remote" );;
-gap> newval = oldval;
+gap> OneAtlasGeneratingSetInfo( Ring, Integers );;
+gap> AllAtlasGeneratingSetInfos( Ring, Integers );;
+gap> tbl:= CharacterTable( "M11" );;
+gap> chi:= PermChars( tbl, [ 11 ] )[1];;
+gap> IsRecord( OneAtlasGeneratingSetInfo( Character, chi ) );
 true
-gap> SetInfoLevel( InfoAtlasRep, level );
+gap> IsRecord( OneAtlasGeneratingSetInfo( "M11", Character, chi ) );
+true
+gap> phi:= Irr( tbl mod 2 )[2];;
+gap> IsRecord( OneAtlasGeneratingSetInfo( Character, phi ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( Character, phi,
+>                                         Characteristic, IsEvenInt ) );
+true
+gap> OneAtlasGeneratingSetInfo( Character, phi, Characteristic, IsOddInt );
+fail
+gap> IsRecord( OneAtlasGeneratingSetInfo( "L2(11)", Character, "10a" ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( Character, "10a" ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( "M11", Character, 2 ) );
+true
+gap> IsRecord( OneAtlasGeneratingSetInfo( Character, 2 ) );
+true
 
-##
-gap> STOP_TEST( "atlasrep.tst", 10000000 );
+# Check access to straight line programs with unusual parameters.
+gap> IsRecord( AtlasProgramInfo( "M11", "maxes", 1, "version", 1 ) );
+true
+gap> IsRecord( AtlasProgramInfo( "M11", "maxes", 1, "version", 10^6 ) );
+false
+gap> IsRecord( AtlasProgramInfo( "M11", 1, "maxes", 1, "contents", "core" ) );
+true
+gap> IsRecord( AtlasProgramInfo( "M11", 1, "maxes", 1, "contents", "other" ) );
+false
+gap> IsRecord( AtlasProgramInfo( "J1", 1, "maxstd", 1, 1, 1 ) );
+true
+gap> IsRecord( AtlasProgramInfo( "J1", 1, "maxstd", 1, 1, 10^6 ) );
+false
+gap> IsRecord( AtlasProgramInfo( "2.M12", "kernel", "M12", "version", 1 ) );
+true
+gap> IsRecord( AtlasProgramInfo( "2.M12", "kernel", "M12", "version", 10^6 ) );
+false
+gap> IsRecord( AtlasProgramInfo( "M11", "cyclic", "version", 1 ) );
+true
+gap> IsRecord( AtlasProgramInfo( "M11", "cyclic", "version", 10^6 ) );
+false
+gap> IsRecord( AtlasProgramInfo( "M11", "classes", "version", 1 ) );
+true
+gap> IsRecord( AtlasProgramInfo( "M11", "classes", "version", 10^6 ) );
+false
+gap> IsRecord( AtlasProgramInfo( "M11", "cyc2ccl", "version", 1 ) );
+true
+gap> IsRecord( AtlasProgramInfo( "M11", "cyc2ccl", "version", 10^6 ) );
+false
+gap> IsRecord( AtlasProgramInfo( "M11", "cyc2ccl", 1, "version", 1 ) );
+true
+gap> IsRecord( AtlasProgramInfo( "M11", "cyc2ccl", 1, "version", 10^6 ) );
+false
+gap> IsRecord( AtlasProgramInfo( "Suz", "automorphism", "2", "version", 1 ) );
+true
+gap> IsRecord( AtlasProgramInfo( "Suz", "automorphism", "2",
+>                                "version", 10^6 ) );
+false
+gap> IsRecord( AtlasProgramInfo( "M11", "check", "version", 1 ) );
+true
+gap> IsRecord( AtlasProgramInfo( "M11", "check", "version", 10^6 ) );
+false
+gap> IsRecord( AtlasProgramInfo( "M11", "presentation", "version", 1 ) );
+true
+gap> IsRecord( AtlasProgramInfo( "M11", "presentation", "version", 10^6 ) );
+false
+gap> IsRecord( AtlasProgramInfo( "M11", "find", "version", 1 ) );
+true
+gap> IsRecord( AtlasProgramInfo( "M11", "find", "version", 10^6 ) );
+false
+gap> IsRecord( AtlasProgramInfo( "L3(5)", 1, "restandardize", 2,
+>                                "version", 1 ) );
+true
+gap> IsRecord( AtlasProgramInfo( "L3(5)", 1, "restandardize", 2,
+>                                "version", 10^6 ) );
+false
+
+# Call 'AtlasClassNames' for all tables of almost simple and quasisimple
+# groups that are not simple.
+# (We do not have direct access to the list of quasisimple groups,
+# here we use a heuristic argument based on the structure of names.)
+# We check whether the function runs without error messages,
+# and that the class names returned are different and are compatible with
+# the element orders.
+gap> digitprefix:= function( str )
+>        local bad;
+>        bad:= First( str, x -> not IsDigitChar( x ) );
+>        if bad = fail then
+>          return str;
+>        else
+>          return str{ [ 1 .. Position( str, bad ) - 1 ] };
+>        fi;
+> end;;
+gap> simpl:= AllCharacterTableNames( IsSimple, true,
+>                                    IsDuplicateTable, false );;
+gap> bad:= [ "A6.D8", "L2(64).6", "L3(4).D12",
+>            "O12-(2).2", "O12+(2).2",
+>            "U3(8).3^2", "U4(4).4",
+>            "U4(5).2^2",
+>            "2.Alt(3)", "2.Sym(2)",
+>            "4.L4(5)" ];;
+gap> pos:= "dummy";;
+gap> for name in AllCharacterTableNames() do
+>      pos:= Position( name, '.' );
+>      if pos <> fail then
+>        for simp in simpl do
+>          if     Length( simp ) = pos-1
+>             and name{ [ 1 .. pos-1 ] } = simp
+>             and ForAll( "xMN", x -> Position( name, x, pos ) = fail )
+>             and not name in bad then
+>            # upward extension of a simple group
+>            tbl:= CharacterTable( name );
+>            classnames:= AtlasClassNames( tbl );
+>            if    classnames = fail
+>               or Length( classnames ) <> Length( Set( classnames ) )
+>               or List( classnames, digitprefix )
+>                   <> List( OrdersClassRepresentatives( tbl ), String ) then
+>              Print( "#I  AtlasClassNames: problem for '", name, "'\n" );
+>            fi;
+>          elif   Length( simp ) = Length( name ) - pos
+>             and name{ [ pos+1 .. Length( name ) ] } = simp
+>             and ForAll( name{ [ 1 .. pos-1 ] },
+>                         c -> IsDigitChar( c ) or c = '_' )
+>             and not name in bad then
+>            tbl:= CharacterTable( name );
+>            classnames:= AtlasClassNames( tbl );
+>            if    classnames = fail
+>               or Length( classnames ) <> Length( Set( classnames ) ) then
+>              Print( "#I  AtlasClassNames: problem for '", name, "'\n" );
+>            fi;
+>          fi;
+>        od;
+>      fi;
+>    od;
+
+# Check that the function 'StringOfAtlasTableOfContents' works.
+gap> dir:= DirectoriesPackageLibrary( "atlasrep", "" );;
+gap> str:= StringOfAtlasTableOfContents( "core" );;
+gap> str = StringFile( Filename( dir, "atlasprm.json" ) );
+true
+gap> dir:= DirectoriesPackageLibrary( "atlasrep", "datapkg" );;
+gap> str:= StringOfAtlasTableOfContents( "internal" );;
+gap> str = StringFile( Filename( dir, "toc.json" ) );
+true
+
+# Done.
+gap> STOP_TEST( "atlasrep.tst" );
 
 
 #############################################################################

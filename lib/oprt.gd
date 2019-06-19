@@ -746,10 +746,6 @@ end );
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-DeclareOperation( "PreOrbishProcessing", [IsGroup]);
-
-InstallMethod( PreOrbishProcessing, [IsGroup], x->x );
-
 BindGlobal( "OrbitishFO", function( name, reqs, famrel, usetype,realenum )
 local str, orbish, func,isnotest;
 
@@ -822,8 +818,6 @@ local str, orbish, func,isnotest;
 	Error( "usage: ", name, "(<xset>,<pnt>)\n",
 	      "or ", name, "(<G>[,<Omega>],<pnt>[,<gens>,<acts>][,<act>])" );
       fi;
-      
-      G := PreOrbishProcessing(G);
       
       if not IsBound( gens )  then
 	  if (not IsPermGroup(G)) and CanEasilyComputePcgs( G )  then
@@ -1074,10 +1068,76 @@ DeclareGlobalFunction("MultiActionsHomomorphism");
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
-OrbitishFO( "SparseActionHomomorphism", OrbitishReq,
-               IsIdenticalObj, false,false );
-OrbitishFO( "SortedSparseActionHomomorphism", OrbitishReq,
-               IsIdenticalObj, false,false );
+
+BindGlobal( "SparseActHomFO", function( name, reqs, famrel )
+local str, orbish, func;
+
+    # Create the operation.
+    str:= SHALLOW_COPY_OBJ( name );
+
+    APPEND_LIST_INTR( str, "Op" );
+    orbish := NewOperation( str, reqs );
+    BIND_GLOBAL( str, orbish );
+
+    # Create the wrapper function.
+    func := function( arg )
+    local   G,  D,  pnt,  gens,  acts,  act,   p,  attrG,  result,le;
+
+      # Get the arguments.
+      if 2 <= Length( arg ) then
+	  le:=Length(arg);
+	  G := arg[ 1 ];
+	  if IsFunction( arg[ le ] )  then
+	      act := arg[ le ];
+	  else
+	      act := OnPoints;
+	  fi;
+	  if     Length( arg ) > 2
+	    and famrel( FamilyObj( arg[ 2 ] ), FamilyObj( arg[ 3 ] ) )
+	    then
+	      D := arg[ 2 ];
+	      if IsDomain( D )  then
+	   if IsFinite( D ) then D:= AsSSortedList( D ); else D:= Enumerator( D ); fi;
+	      fi;
+	      p := 3;
+	  else
+	      p := 2;
+	  fi;
+	  pnt := Immutable(arg[ p ]);
+	  if Length( arg ) > p + 1  then
+	      gens := arg[ p + 1 ];
+	      acts := arg[ p + 2 ];
+	  fi;
+      else
+	Error( "usage: ", name, "(<G>[,<Omega>],<pnts>[,<gens>,<acts>][,<act>])" );
+      fi;
+      
+      if not IsBound( gens )  then
+	  if (not IsPermGroup(G)) and CanEasilyComputePcgs( G )  then
+	    gens := Pcgs( G );
+	  else
+	    gens := GeneratorsOfGroup( G );
+	  fi;
+	  acts := gens;
+      fi;
+
+      for p in pnt do
+        TestIdentityAction(acts,p,act);
+      od;
+
+      if IsBound( D )  then
+	  result := orbish( G, D, pnt, gens, acts, act );
+      else
+	  result := orbish( G, pnt, gens, acts, act );
+      fi;
+
+      return result;
+  end;
+  BIND_GLOBAL( name, func );
+end );
+
+SparseActHomFO( "SparseActionHomomorphism", OrbitishReq, IsIdenticalObj );
+SparseActHomFO( "SortedSparseActionHomomorphism", OrbitishReq, IsIdenticalObj );
 
 #############################################################################
 ##

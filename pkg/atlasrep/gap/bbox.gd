@@ -3,7 +3,7 @@
 #W  bbox.gd              GAP 4 package AtlasRep                 Thomas Breuer
 #W                                                            Simon Nickerson
 ##
-#Y  Copyright (C)  2005,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
+#Y  Copyright (C)  2005,   Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
 ##  This file contains the declarations of the operations
 ##  for black box programs and straight line decisions.
@@ -77,7 +77,7 @@
 ##  <P/>
 ##  The special case of the <Q>find</Q> scripts mentioned above is also
 ##  admissible as an argument of <Ref Func="ResultOfBBoxProgram"/>,
-##  which returns either the set of generators or <K>fail</K>.
+##  which returns either the set of found generators or <K>fail</K>.
 ##  <P/>
 ##  Contrary to the general situation,
 ##  more support is provided for straight line programs and straight line
@@ -94,9 +94,9 @@
 ##  a straight line program or from a straight line decision with
 ##  <Ref Func="AsBBoxProgram"/>.
 ##  <P/>
-##  (Computing a straight line program related to a given straight line
+##  Computing a straight line program related to a given straight line
 ##  decision is supported in the sense of
-##  <Ref Func="StraightLineProgramFromStraightLineDecision"/>.)
+##  <Ref Func="StraightLineProgramFromStraightLineDecision"/>.
 ##  <P/>
 ##  Note that none of these three kinds of objects is a special case of
 ##  another:
@@ -304,7 +304,7 @@ DeclareGlobalFunction( "BBoxPerformInstruction" );
 ##  <Mark><C>orderfunction</C></Mark>
 ##  <Item>
 ##    the function for computing element orders
-##    (the default is <Ref Oper="Order" BookName="ref"/>),
+##    (default <Ref Oper="Order" BookName="ref"/>),
 ##  </Item>
 ##  <Mark><C>quiet</C></Mark>
 ##  <Item>
@@ -371,10 +371,16 @@ DeclareGlobalFunction( "RunBBoxProgram" );
 ##  <Description>
 ##  This function calls <Ref Func="RunBBoxProgram"/>
 ##  with the black box program <A>prog</A> and second argument either a group
-##  or a list of group elements; the default options are assumed.
+##  or a list of group elements; the default options of
+##  <Ref Func="RunBBoxProgram"/> are assumed.
 ##  The return value is <K>fail</K> if this call yields <K>fail</K>,
 ##  otherwise the <C>gens</C> component of the result, if bound,
 ##  or the <C>result</C> component if not.
+##  <P/>
+##  Note that a <E>group</E> <A>G</A> is used as the second argument in the
+##  call of <Ref Func="RunBBoxProgram"/> (the source for random elements),
+##  whereas a <E>list</E> <A>G</A> is used as the third argument (the
+##  inputs).
 ##  <P/>
 ##  As an example, we run the black box programs constructed in the example
 ##  for <Ref Func="ScanBBoxProgram"/>.
@@ -411,7 +417,7 @@ DeclareGlobalFunction( "ResultOfBBoxProgram" );
 ##  <E>Straight line decisions</E> are similar to straight line programs
 ##  (see Section&nbsp;<Ref Sect="Straight Line Programs" BookName="ref"/>)
 ##  but return <K>true</K> or <K>false</K>.
-##  A straight line decisions checks a property for its inputs.
+##  A straight line decision checks whether its inputs have some property.
 ##  An important example is to check whether a given list of group generators
 ##  is in fact a list of standard generators
 ##  (cf.&nbsp;Section<Ref Sect="sect:Standard Generators Used in AtlasRep"/>)
@@ -438,8 +444,8 @@ DeclareGlobalFunction( "ResultOfBBoxProgram" );
 ##  <P/>
 ##  The first two forms have the same meaning as for straight line programs
 ##  (see Section&nbsp;<Ref Sect="Straight Line Programs" BookName="ref"/>),
-##  the last form means a check whether the element stored at the label
-##  <M>i</M>-th has the order <M>n</M>.
+##  the last form means a check whether the element stored at the
+##  <M>i</M>-th label has the order <M>n</M>.
 ##  <P/>
 ##  For the meaning of the list of lines, see
 ##  <Ref Oper="ResultOfStraightLineDecision"/>.
@@ -706,8 +712,7 @@ DeclareOperation( "ResultOfStraightLineDecision",
 ##  that checks whether the order of <M>x</M> is both <M>2</M> and <M>3</M>
 ##  clearly always returns <K>false</K>.)
 ##  <P/>
-##  The &ATLAS; of Group Representations contains the following two kinds of
-##  straight line decisions.
+##  &AtlasRep; supports the following two kinds of straight line decisions.
 ##  <P/>
 ##  <List>
 ##  <Item>
@@ -760,9 +765,11 @@ DeclareOperation( "ResultOfStraightLineDecision",
 ##  gap> check:= AtlasProgram( "L2(8)", "check" );
 ##  rec( groupname := "L2(8)", 
 ##    identifier := [ "L2(8)", "L28G1-check1", 1, 1 ], 
-##    program := <straight line decision>, standardization := 1 )
+##    program := <straight line decision>, standardization := 1, 
+##    version := "1" )
 ##  gap> gens:= AtlasGenerators( "L2(8)", 1 );
-##  rec( charactername := "1a+8a", 
+##  rec( charactername := "1a+8a", constituents := [ 1, 6 ], 
+##    contents := "core", 
 ##    generators := [ (1,2)(3,4)(6,7)(8,9), (1,3,2)(4,5,6)(7,8,9) ], 
 ##    groupname := "L2(8)", id := "", 
 ##    identifier := [ "L2(8)", [ "L28G1-p9B0.m1", "L28G1-p9B0.m2" ], 1, 9 
@@ -773,7 +780,7 @@ DeclareOperation( "ResultOfStraightLineDecision",
 ##  gap> ResultOfStraightLineDecision( check.program, gens.generators );
 ##  true
 ##  gap> gens:= AtlasGenerators( "L3(2)", 1 );
-##  rec( generators := [ (2,4)(3,5), (1,2,3)(5,6,7) ], 
+##  rec( contents := "core", generators := [ (2,4)(3,5), (1,2,3)(5,6,7) ],
 ##    groupname := "L3(2)", id := "a", 
 ##    identifier := [ "L3(2)", [ "L27G1-p7aB0.m1", "L27G1-p7aB0.m2" ], 1, 
 ##        7 ], isPrimitive := true, maxnr := 1, p := 7, rankAction := 2, 

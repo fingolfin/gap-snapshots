@@ -7,7 +7,7 @@
 ##  This file contains, among others, those checks for the AtlasRep package
 ##  that examine the transfer from a server and the matrices that are
 ##  contained in the local `atlasgens' directory.
-##  NOTE that these tests cannot be performed without server access.
+##  These tests cannot be performed without access to remote files.
 ##
 ##  In order to run the tests, one starts GAP from the `tst' subdirectory
 ##  of the `pkg/atlasrep' directory, and calls `Test( "hardtest.tst" );'.
@@ -18,35 +18,34 @@
 ##  again.
 ##
 
-gap> START_TEST( "Input file: hardtest.tst" );
+gap> START_TEST( "hardtest.tst" );
 
 # Load the package if necessary.
 gap> LoadPackage( "atlasrep" );
 true
 gap> LoadPackage( "ctbllib" );
 true
-gap> if not IsBound( AGR.Test ) then
->      ReadPackage( "atlasrep", "gap/test.g" );
->    fi;
 
 # Test transferring group generators in MeatAxe format (using `IO').
+gap> pref:= UserPreference( "AtlasRep", "HowToAccessRemoteFiles" );;
+gap> SetUserPreference( "AtlasRep", "HowToAccessRemoteFiles", "io" );
 gap> dir:= DirectoriesPackageLibrary( "atlasrep", "datagens" );;
 gap> id:= OneAtlasGeneratingSet( "A5", Characteristic, 2 ).identifier;;
 gap> for file in List( id[2], name -> Filename( dir, name ) ) do
 >      RemoveFile( file );
 > od;
-gap> gens:= AtlasGenerators( id );
+gap> gens:= AtlasGenerators( id );;
 gap> IsRecord( gens ) and id = gens.identifier;
 true
 
 # Test transferring group generators in GAP format (using `wget').
-gap> AtlasOfGroupRepresentationsInfo.wget:= true;;
+gap> SetUserPreference( "AtlasRep", "HowToAccessRemoteFiles", "wget" );
 gap> id:= OneAtlasGeneratingSetInfo( "A5", Characteristic, 0 ).identifier;;
 gap> RemoveFile( Filename( dir, id[2] ) );;
-gap> gens:= AtlasGenerators( id );
+gap> gens:= AtlasGenerators( id );;
 gap> IsRecord( gens ) and id = gens.identifier;
 true
-gap> Unbind( AtlasOfGroupRepresentationsInfo.wget );
+gap> SetUserPreference( "AtlasRep", "HowToAccessRemoteFiles", pref );
 
 # Test whether the locally stored straight line programs
 # can be read and processed.
@@ -69,11 +68,11 @@ gap> if not AGR.Test.Files() then
 gap> if not AGR.Test.GroupOrders() then
 >      Print( "#I  Error in `AGR.Test.GroupOrders'\n" );
 > fi;
-gap> if not AGR.Test.SubgroupData() then
->      Print( "#I  Error in `AGR.Test.SubgroupData'\n" );
-> fi;
 gap> if not AGR.Test.StdCompatibility() then
 >      Print( "#I  Error in `AGR.Test.StdCompatibility'\n" );
+> fi;
+gap> if not AGR.Test.KernelGenerators() then
+>      Print( "#I  Error in `AGR.Test.KernelGenerators'\n" );
 > fi;
 
 # Check the conversion between binary and text format.
@@ -81,63 +80,7 @@ gap> if not AGR.Test.BinaryFormat() then
 >      Print( "#I  Error in `AGR.Test.BinaryFormat'\n" );
 > fi;
 
-# Check whether changes of server files require cleanup.
-gap> if not IsEmpty( AGR.Test.TableOfContentsRemoteUpdates() ) then
->      Print( "#I  Cleanup required by `AGR.Test.TableOfContentsRemoteUpdates'\n" );
-> fi;
-
-# Check the interface functions.
-gap> g:= "A5";;
-gap> IsRecord( OneAtlasGeneratingSet( g ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, 1 ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, IsPermGroup ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, IsPermGroup, true ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, IsPermGroup, NrMovedPoints, 5 ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, IsPermGroup,true,NrMovedPoints,5 ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, 1, IsPermGroup ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, NrMovedPoints, 5 ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, 1, NrMovedPoints, 5 ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, IsMatrixGroup ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, IsMatrixGroup, true ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, IsMatrixGroup, Dimension, 2 ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, IsMatrixGroup,true,Dimension,2 ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, 1, IsMatrixGroup ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, Characteristic, 2 ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, 1, Characteristic, 2 ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, Dimension, 2 ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, 1, Dimension, 2 ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, Characteristic,2,Dimension,2 ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, 1,Characteristic,2,Dimension,2 ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, Ring, GF(2) ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, 1, Ring, GF(2) ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, Ring, GF(2), Dimension, 4 ) );
-true
-gap> IsRecord( OneAtlasGeneratingSet( g, 1, Ring, GF(2), Dimension, 4 ) );
-true
-
-gap> # missing: \= method for SLPs!
+# Download and check some straight line programs.
 gap> checkprg:= function( id )
 > return IsRecord( id ) and LinesOfStraightLineProgram( id.program ) =
 >  LinesOfStraightLineProgram(
@@ -167,63 +110,10 @@ gap> checkprg( AtlasProgram( "J4", 1, "restandardize", 2 ) );
 true
 
 # Test the ``minimal degrees feature''.
-gap> info:= ComputedMinimalRepresentationInfo();;
-gap> infostr:= StringOfMinimalRepresentationInfoData( info );;
-# eventually, compare old and new version!
+# gap> info:= ComputedMinimalRepresentationInfo();;
+# gap> infostr:= StringOfMinimalRepresentationInfoData( info );;
 gap> AGR.Test.MinimalDegrees();
 true
-
-# Call `AtlasClassNames' for all tables of nonsimple and almost simple
-# groups.
-# (Note that we have no easy access to the list of almost simple groups,
-# here we use a heuristic argument based on the structure of names.)
-# We check whether the function runs without error messages,
-# and that the class names returned are different and are compatible with
-# the element orders.
-gap> digitprefix:= function( str )
->        local bad;
->        bad:= First( str, x -> not IsDigitChar( x ) );
->        if bad = fail then
->          return str;
->        else
->          return str{ [ 1 .. Position( str, bad ) - 1 ] };
->        fi;
-> end;;
-gap> simpl:= AllCharacterTableNames( IsSimple, true );;
-gap> bad:= [ "A6.D8" ];;
-gap> name:= "dummy";;
-gap> for name in AllCharacterTableNames() do
->      pos:= Position( name, '.' );
->      if pos <> fail then
->        for simp in simpl do
->          if     Length( simp ) = pos-1
->             and name{ [ 1 .. pos-1 ] } = simp
->             and ForAll( "xMN", x -> Position( name, x, pos ) = fail )
->             and not name in bad then
->            # upward extension of a simple group
->            tbl:= CharacterTable( name );
->            classnames:= AtlasClassNames( tbl );
->            if    classnames = fail
->               or Length( classnames ) <> Length( Set( classnames ) )
->               or List( classnames, digitprefix )
->                   <> List( OrdersClassRepresentatives( tbl ), String ) then
->              Print( "#I  AtlasClassNames: problem for `", name, "'\n" );
->            fi;
->          elif   Length( simp ) = Length( name ) - pos
->             and name{ [ pos+1 .. Length( name ) ] } = simp
->             and ForAll( name{ [ 1 .. pos-1 ] },
->                         c -> IsDigitChar( c ) or c = '_' )
->             and not name in bad then
->            tbl:= CharacterTable( name );
->            classnames:= AtlasClassNames( tbl );
->            if    classnames = fail
->               or Length( classnames ) <> Length( Set( classnames ) ) then
->              Print( "#I  AtlasClassNames: problem for `", name, "'\n" );
->            fi;
->          fi;
->        od;
->      fi;
->    od;
 
 # Test whether there are new `cyc' scripts for which the `cyc2ccls' script
 # can be computed by GAP.
@@ -240,7 +130,7 @@ gap> if not AGR.Test.ClassScripts() then
 > fi;
 
 ##
-gap> STOP_TEST( "hardtest.tst", 10000000 );
+gap> STOP_TEST( "hardtest.tst" );
 
 
 #############################################################################

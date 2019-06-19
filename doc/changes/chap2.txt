@@ -626,6 +626,10 @@
   [30X    [33X[0;6YExport   Julia   [10XCFLAGS[110X,  [10XLDFLAGS[110X,  and  [10XLIBS[110X  to  [10Xsysinfo.gap[110X  (#3248
         ([7Xhttps://github.com/gap-system/gap/pull/3248[107X)).[133X
   
+  [30X    [33X[0;6YChange  [10XMPtr[110X Julia type of [5XGAP[105X objects to be a subtype of the abstract
+        Julia  [10XGapObj[110X  type  provided  by the Julia package [10XGAPTypes.jl[110X (#3497
+        ([7Xhttps://github.com/gap-system/gap/pull/3497[107X)).[133X
+  
   [33X[0;0YImproved and extended functionality:[133X
   
   [30X    [33X[0;6YAlways  generate [10Xsysinfo.gap[110X (previously, it was only generated if the
@@ -716,4 +720,87 @@
   [30X    [33X[0;6Y[5XYangBaxter[105X   by  Leandro  Vendramin  and  Alexander  Konovalov,  which
         provides  functionality  to  construct  classical and skew braces, and
         also includes a database of classical and skew braces of small orders.[133X
+  
+  
+  [1X2.3 [33X[0;0Y[5XGAP[105X[101X[1X 4.10.2 (June 2019)[133X[101X
+  
+  
+  [1X2.3-1 [33X[0;0YChanges in the core [5XGAP[105X[101X[1X system introduced in [5XGAP[105X[101X[1X 4.10.21[133X[101X
+  
+  [33X[0;0YImprovements  in the experimental way to allow 3rd party code to link [5XGAP[105X as
+  a library:[133X
+  
+  [30X    [33X[0;6YAdd [10XGAP_AssignGlobalVariable[110X and [10XGAP_IsNameOfWritableGlobalVariable[110X to
+        the [5XlibGAP[105X API (#3438 ([7Xhttps://github.com/gap-system/gap/pull/3438[107X)).[133X
+  
+  [33X[0;0YFixes in the experimental support for using the [5XJulia[105X garbage collector:[133X
+  
+  [30X    [33X[0;6YFix of a problem where the Julia GC during a partial sweep frees some,
+        but  not  all  objects  of an unreachable data structure, and also may
+        erroneously    try    to   mark   the   deallocated   objects   (#3412
+        ([7Xhttps://github.com/gap-system/gap/pull/3412[107X)).[133X
+  
+  [30X    [33X[0;6YFix  stack  scanning  for  the  Julia GC when GAP is used as a library
+        (#3432 ([7Xhttps://github.com/gap-system/gap/pull/3432[107X)).[133X
+  
+  [33X[0;0YFixed bugs that could lead to crashes:[133X
+  
+  [30X    [33X[0;6YFix a bug in [2XTransformationListList[102X ([14XReference: TransformationListList
+        for  a  source  and  destination[114X)  which  could  cause  a crash (#3463
+        ([7Xhttps://github.com/gap-system/gap/pull/3463[107X)).[133X
+  
+  [33X[0;0YFixed bugs that could lead to incorrect results:[133X
+  
+  [30X    [33X[0;6YFix    a   bug   in   [2XClassPositionsOfLowerCentralSeries[102X   ([14XReference:
+        ClassPositionsOfLowerCentralSeries[114X).  [Reported  by  Frieder  Ladisch]
+        (#3321 ([7Xhttps://github.com/gap-system/gap/pull/3321[107X)).[133X
+  
+  [30X    [33X[0;6YFix  a  dangerous  bug  in  the comparison of large negative integers,
+        introduced  in  GAP  4.10.1: if [10Xx[110X and [10Xy[110X were equal, but not identical,
+        large  negative  numbers  then  [10Xx  < y[110X returned [9Xtrue[109X instead of [9Xfalse[109X.
+        (#3478 ([7Xhttps://github.com/gap-system/gap/pull/3478[107X)).[133X
+  
+  [33X[0;0YFixed bugs that could lead to break loops:[133X
+  
+  [30X    [33X[0;6YIf   the   group   has  been  obtained  as  subgroup  from  a  Fitting
+        free/solvable radical computation, the data is inherited and might not
+        guarantee  that the factor group really is Fitting free. Added a check
+        and     an     assertion    to    catch    this    situation    (#3154
+        ([7Xhttps://github.com/gap-system/gap/pull/3154[107X)).[133X
+  
+  [30X    [33X[0;6YFix    declaration    of    sparse    action    homomorphisms   (#3281
+        ([7Xhttps://github.com/gap-system/gap/pull/3281[107X)).[133X
+  
+  [30X    [33X[0;6Y[10XLatticeViaRadical[110X       called      [2XClosureSubgroupNC[102X      ([14XReference:
+        ClosureSubgroupNC[114X)  assuming that the parent contained all generators.
+        It  now  calls  [2XClosureSubgroup[102X  ([14XReference: ClosureSubgroup[114X) instead,
+        since  this  can  not  be  always  guaranteed  (this could happen, for
+        example,  in perfect subgroup computation). Also added an assertion to
+        [2XClosureSubgroupNC[102X   ([14XReference:   ClosureSubgroupNC[114X)   to  catch  this
+        situation   in   other   cases.   [Reported   by  Serge  Bouc]  (#3397
+        ([7Xhttps://github.com/gap-system/gap/pull/3397[107X)).[133X
+  
+  [30X    [33X[0;6YFix  a  "method  not  found"  error  in  [2XSubdirectProduct[102X  ([14XReference:
+        SubdirectProduct[114X)                                               (#3485
+        ([7Xhttps://github.com/gap-system/gap/pull/3485[107X)).[133X
+  
+  [33X[0;0YOther fixed bugs:[133X
+  
+  [30X    [33X[0;6YFix  corner  case  in  modified Todd-Coxeter algorithm when relator is
+        trivial (#3311 ([7Xhttps://github.com/gap-system/gap/pull/3311[107X)).[133X
+  
+  
+  [1X2.3-2 [33X[0;0YNew and updated packages since [5XGAP[105X[101X[1X 4.10.1[133X[101X
+  
+  [33X[0;0Y[5XGAP[105X 4.10.1 distribution contains 145 packages, including updated versions of
+  55 packages from [5XGAP[105X 4.10.1 distribution,[133X
+  
+  [33X[0;0YA  new  package [5XMonoidalCategories[105X by Mohamed Barakat, Sebastian Gutsche and
+  Sebastian  Posur have been added to the distribution. It is based on the [5XCAP[105X
+  package and implements monoidal structures for [5XCAP[105X.[133X
+  
+  [33X[0;0YUnfortunately  we had to withdraw the [5XQaoS[105X package from distribution of GAP,
+  as  the  servers  it  crucially  relies  on  for its functionality have been
+  permanently   retired   some   time   ago  and  are  not  coming  back  (see
+  [7Xhttps://github.com/gap-packages/qaos/issues/13[107X for details).[133X
   

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<TitlePage>
+  <Title>
+    kan
+  </Title>
+  <Subtitle>
+    including double coset rewriting systems
+  </Subtitle>
+  <Version>
+    1.29
+  </Version>
+  <Author>
+    Anne Heyworth<Alt Only="LaTeX"><Br/></Alt>
+
+  </Author>
+  <Author>
+    Christopher D. Wensley<Alt Only="LaTeX"><Br/></Alt>
+<Address>
+Dr. C.D. Wensley<Br/>
+School of Computer Science<Br/>
+Bangor University<Br/>
+Dean Street<Br/>
+Bangor<Br/>
+Gwynedd LL57 1UT<Br/>
+UK<Br/>
+</Address>
+<Email>c.d.wensley@bangor.ac.uk</Email>
+<Homepage>http://pages.bangor.ac.uk/~mas023/</Homepage>
+
+  </Author>
+  <Date>
+    29 May 2019
+  </Date>
+  <Abstract>
+    &Kan; is a &GAP; package originally implemented in 1996 using the &GAP; 3 language, to compute induced actions of categories, when the first author was studying for a Ph.D. in Bangor.
+<P/>
+This reduced version only provides functions for the computation of normal forms of representatives of double cosets of finitely presented groups.
+<P/>
+&Kan; became an accepted &GAP; package in May 2015.
+<P/>
+Bug reports, suggestions and comments are, of course, welcome.
+Please contact the last author at <Email>c.d.wensley@bangor.ac.uk</Email> or submit an issue at the GitHub repository <URL>https://github.com/gap-packages/kan/issues/</URL>.
+
+  </Abstract>
+  <Copyright>
+    &copyright; 1996-2019 Anne Heyworth and Chris Wensley<P/>
+The &Kan; package is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+
+  </Copyright>
+  <Acknowledgements>
+    This documentation was prepared using the &GAPDoc; <Cite Key='GAPDoc'/> and &AutoDoc; <Cite Key='AutoDoc'/> packages.<P/>
+The procedure used to produce new releases uses the package <Package>GitHubPagesForGAP</Package> <Cite Key='GitHubPagesForGAP' /> and the package <Package>ReleaseTools</Package>.<P/>
+  </Acknowledgements>
+  </TitlePage>

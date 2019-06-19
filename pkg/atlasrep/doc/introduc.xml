@@ -5,26 +5,26 @@
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Chapter Label="chap:introduc">
-<Heading>Introduction to the <Package>AtlasRep</Package> Package</Heading>
+<Heading>Introduction to the &AtlasRep; Package</Heading>
 
-The aim of the &GAP;&nbsp;4 package <Package>AtlasRep</Package> is to provide
-a link between &GAP; and the <Q>&ATLAS; of Group Representations</Q>
-<Cite Key="AGRv3"/>,
-a database that comprises generating permutations and matrices
+The aim of the &GAP;&nbsp;4 package &AtlasRep; is
+to provide a link between &GAP; and databases such as the
+&ATLAS; of Group Representations <Cite Key="AGRv3"/>,
+which comprises generating permutations and matrices
 for many almost simple groups,
 and information about their maximal subgroups.
 This database is available independent of &GAP; at
 
 <P/>
-&ATLASSERVER;
+<URL>&ATLASSERVER;</URL>.
 <P/>
 
-The <Package>AtlasRep</Package> package consists of this database
+The &AtlasRep; package consists of this database
 (see Section&nbsp;<Ref Sect="sect:An Atlas of Group Representations"/>)
 and a &GAP; interface
 (see Section&nbsp;<Ref Sect="sect:The GAP Interface to the Atlas of Group Representations"/>);
 the latter is extended by further information available via the internet
-(see Section&nbsp;<Ref Sect="sect:Web Services for the AtlasRep Package"/>).
+(see Section&nbsp;<Ref Sect="sect:Web Contents for the AtlasRep Package"/>).
 
 <P/>
 
@@ -38,7 +38,7 @@ This package manual has the following parts.
 </Item>
 <Mark>User interface functions</Mark>
 <Item>
-    are described in 
+    are described in
     Chapter&nbsp;<Ref Chap="chap:The User Interface of the AtlasRep Package"/>.
 </Item>
 <Mark>Customizations of the package</Mark>
@@ -63,7 +63,8 @@ This package manual has the following parts.
 <Section Label="sect:An Atlas of Group Representations">
 <Heading>The &ATLAS; of Group Representations</Heading>
 
-The &ATLAS; of Group Representations consists of matrices over various rings,
+The &ATLAS; of Group Representations &nbsp;<Cite Key="AGRv3"/>
+consists of matrices over various rings,
 permutations, and shell scripts encoding so-called black box programs
 <Index>black box program</Index>
 (see <Cite Key="Nic06"/>
@@ -98,8 +99,10 @@ Magma (see&nbsp;<Cite Key="CP96"/>), and &GAP;
 <Index Key="Magma"><Package>Magma</Package></Index>
 Part of the constructions have been documented in the literature on
 almost simple groups, or the results have been used in such publications,
-see for example the references in&nbsp;<Cite Key="CCN85"/>
-and&nbsp;<Cite Key="BN95"/>.
+see for example the bibliographies in&nbsp;<Cite Key="CCN85"/>
+and&nbsp;<Cite Key="BN95"/>
+which are available online at
+<URL>http://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep/bibl</URL>.
 
 <P/>
 
@@ -113,29 +116,14 @@ with the entry&nbsp;<Cite Key="AGRv3"/> in the bibliography of this manual.
 If your work made use of functions of the &GAP; interface
 (see Section&nbsp;<Ref Sect="sect:The GAP Interface to the Atlas of Group Representations"/>)
 then you should also reference this interface,
-as follows.
-
-<Listing>
-@misc{ AtlasRep&VERSIONNUMBER;,
-  author =       {Wilson, R. A. and Parker, R. A. and Nickerson, S. and
-                  Bray, J. N. and Breuer, T.},
-  title =        {{AtlasRep}, A \textsf{GAP} Interface to the Atlas of
-                  Group Representations,
-                  {V}ersion &VERSIONNUMBER;},
-  month =        {&RELEASEMONTH;},
-  year =         {&RELEASEYEAR;},
-  note =         {\textsf{GAP} package},
-  howpublished = {http://www.math.rwth-aachen.de/\~{}Thomas.Breuer/atlasrep}
-}
-</Listing>
+using the information printed by the &GAP; function
+<Ref Func="Cite" BookName="ref"/>.
 
 <P/>
 
 For referencing the &GAP; system in general,
 use the entry&nbsp;<Cite Key="GAP"/> in the bibliography of this manual,
-see also
-<P/>
-<URL>http://www.gap-system.org</URL>.
+see also <URL>http://www.gap-system.org</URL>.
 
 </Section>
 
@@ -175,11 +163,8 @@ including the manual&nbsp;<Cite Key="CMeatAxe"/>,
 can be found at
 
 <P/>
-<URL>http://www.math.rwth-aachen.de/LDFM/homes/MTX</URL>
+<URL>http://www.math.rwth-aachen.de/~MTX</URL>
 <P/>
-
-<!-- A &GAP;&nbsp;4 Package that provides access to the functionality of the
-C-&MeatAxe; is in preparation. -->
 
 The interface and this manual have been provided by Thomas Breuer,
 except for the interpreter for black box programs
@@ -195,15 +180,226 @@ can be sent to&nbsp;<Email>sam@math.rwth-aachen.de</Email>.
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Section Label="sect:What's New in AtlasRep?">
-<Heading>What's New in <Package>AtlasRep</Package>,
-Compared to Older Versions?</Heading>
+<Heading>What's New in &AtlasRep;, Compared to Older Versions?</Heading>
 
 <!-- The section title is referenced in index.html. -->
 <Alt Only="HTML"><![CDATA[<a id="sect:news"/>]]></Alt>
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
-<Subsection Label="sect:What's New in Version 1.5.1?">
+<Subsection Label="sect:What's New in Version 2.1?">
 <Heading>What's New in Version &VERSIONNUMBER;?
 (&RELEASEMONTH; &RELEASEYEAR;)</Heading>
+
+The main differences to earlier versions concern extensions of the
+available data.
+Up to now, such extensions were possible only in the sense that one could
+notify certain <E>locally available files</E> to the package's functions.
+With this version,
+it becomes possible to notify also <E>remote data files</E>,
+i. e., data files which have to be downloaded before they can be read
+into &GAP;,
+in the same way as the data from the &ATLAS; of Group Representations.
+Two extensions of this kind become automatically available
+with this package version,
+see Section <Ref Sect="sect:Adding a Private Data Directory"/> for details.
+
+<P/>
+
+Thus the focus of the package has changed.
+In earlier versions, it provided a &GAP; interface to the data in the
+&ATLAS; of Group Representations,
+whereas now this database is regarded as one collection (the <Q>core part</Q>)
+among others.
+Where applicable,
+the package manual tries to distinguish between general data available to
+the &AtlasRep; functions and the data from the
+&ATLAS; of Group Representations.
+
+<P/>
+
+In order to provide this new functionality,
+the following changes have been implemented.
+Note that some are <E>incompatible changes</E>,
+compared with earlier versions of the package.
+
+<P/>
+
+<List>
+<Item>
+  The format of the <C>identifier</C> components of the records returned by
+  <Ref Func="AtlasGenerators"/>, <Ref Func="AtlasProgram"/>, etc.,
+  has been changed for those data that belong to extensions,
+  see <Ref Sect="sect:identifier component"/>.
+  In the new format, the name of the extension is not added to the
+  group name but to the individual filenames;
+  this allows for example the combination of files from the core database
+  and from extensions in one identifier.
+  Functions for converting between the old and the new format are available,
+  see <Ref Func="AtlasRepIdentifier"
+  Label="convert an old type identifier to a new type one"/>.
+</Item>
+<Item>
+  The records returned by <Ref Func="AtlasGenerators"/> etc.
+  contain also a component <C>contents</C>,
+  with value the identifier of the part of the database to shich the
+  generators belong.
+</Item>
+<Item>
+  The tables of contents of the &ATLAS; of Group Representations and
+  of extensions are no longer stored in the form of sequences of
+  calls to &GAP; functions.
+  Instead, each table of contents is defined via a JSON format file,
+  see <Ref Sect="sect:JSON"/>.
+  In particular, the file <F>atlasprm.json</F> replaces the former
+  <F>gap/atlasprm.g</F>.
+  <P/>
+  Two advantages of this change are that there is no danger to call
+  unwanted &GAP; functions when such files (which are expected to be
+  available in the world wide web) get evaluated,
+  and that the information is independent of &GAP;
+  &ndash;note that &MeatAxe; format files and straight line programs
+  can be used by other program systems as well.
+</Item>
+<Item>
+  The functions <C>ReloadAtlasTableOfContents</C>,
+  <C>StoreAtlasTableOfContents</C>, and
+  <C>ReplaceAtlasTableOfContents</C> are no longer available.
+  They had been intended for updating the table of contents of the
+  &ATLAS; of Group Representations, but it has turned out that this was
+  in fact not useful.
+</Item>
+</List>
+
+The second major change concerns the handling of user parameters.
+
+<List>
+<Item>
+  &GAP;'s general <E>user preferences</E> mechanism
+  (see <Ref Func="SetUserPreference" BookName="ref"/>)
+  has been used since version 1.5.1 of the package for dealing with certain
+  customizations of &AtlasRep;'s behaviour,
+  concerning the paths of data directories and two issues with 
+  &MeatAxe; format files.
+  <P/>
+  Now this mechanism is used in more cases,
+  see Section <Ref Sect="sect:atlasrep user preferences"/> for an overview.
+  The new user preferences replace certain components of the record
+  <Ref Var="AtlasOfGroupRepresentationsInfo"/>
+  that were recommended in earlier versions of the package.
+  These components are currently still available but are no longer used
+  by the package's functions.
+  Also the global variable <C>ATLASREP_TOCFILE</C> is no longer supported,
+  use the user preference <C>AtlasRepTOCData</C> instead,
+  see Section <Ref Subsect="subsect:AtlasRepTOCData"/>.
+  Analogously, use the user preference <C>HowToReadMeatAxeTextFiles</C>
+  instead of the no longer available <C>CMeatAxe.FastRead</C>.
+  <P/>
+  The switch to user preferences is an <E>incompatible change</E> if you
+  are used to change the values of these components in your code,
+  for example in your <F>gaprc</F> file,
+  see&nbsp;<Ref Sect="The gap.ini and gaprc files" BookName="ref"/>.
+  All assignments to these components should be changed to calls of
+  <Ref Func="SetUserPreference" BookName="ref"/>.
+  <P/>
+  Another consequence of this change is that the former
+  function <C>AtlasOfGroupRepresentationsUserParameters</C> of the package
+  is no longer supported,
+  use <Ref Func="ShowUserPreferences" BookName="ref"/>
+  or <Ref Func="BrowseUserPreferences" BookName="Browse"/>
+  with argument <C>"AtlasRep"</C> instead.
+</Item>
+</List>
+
+Finally, the following improvements have been added.
+
+<List>
+<Item>
+  Straight line programs for computing generators of normal subgroups
+  can now be fetched with <Ref Func="AtlasProgram"/>,
+  using the argument <C>"kernel"</C>.
+  The available programs of this type are shown in the
+  <Ref Func="DisplayAtlasInfo"/> overview for a group.
+  More than <M>200</M> such programs are available in a new data directory
+  <F>datapkg</F> of the package.
+  If fact, this collection of files is part of an extension of the
+  database that is distributed together with the package.
+  <P/>
+  In earlier versions of the package, this kind of information had been
+  available only implicitly; it had been stored via <C>AGR.KERPRG</C>,
+  which is not supported anymore.
+</Item>
+<Item>
+  <Ref Func="AtlasProgram"/> supports more variants of arguments:
+  <C>"contents"</C> can be used to list the available data extensions,
+  <C>"contents"</C> and <C>"version"</C> can be used to restrict the
+  data under consideration,
+  and one can request a program for computing <E>standard</E> generators
+  of some maximal subgroup, not just generators (provided that this
+  information is available).
+  <P/>
+  The information about the version of straight line programs is shown by
+  <Ref Func="DisplayAtlasInfo"/>, as well as the availability of straight
+  line programs for computing standard generators of maximal subgroups.
+  <P/>
+  Making this information more explicit has the side-effect that the
+  access to the &AtlasRep; data with
+  <Ref Func="BrowseAtlasInfo" BookName="Browse"/> is both safer and simpler,
+  if at least version&nbsp;1.8.6 of the <Package>Browse</Package> package
+  is available.
+  (For that, the function <C>AGR.InfoPrgs</C> has been extended
+  such that also the <C>identifier</C> records are included in the result.)
+</Item>
+<Item>
+  Straight line programs for computing <E>standard</E> generators
+  of a maximal subgroup, if available,
+  can now be fetched with <Ref Func="AtlasProgram"/>,
+  using the argument <C>"maxstd"</C>.
+</Item>
+<Item>
+  The function <Ref Attr="AtlasRepInfoRecord" Label="for a string"/>
+  now admits a group name as its argument, and then returns information
+  about the group and its maximal subgroups;
+  this information had been used before by <Ref Func="DisplayAtlasInfo"/>,
+  but it had not been programmatically accessible.
+</Item>
+<Item>
+  The sanity checks for the data
+  (see Section&nbsp;<Ref Sect="sect:AGR Sanity Checks"/>)
+  have been extended, in particular they can be applied also to
+  data extensions.
+  To some extent, these checks can be used also to derive new information;
+  the code for that should be regarded as heuristic and experimental,
+  runtimes and space requirements may be large,
+  depending on the new data to be examined.
+</Item>
+<Item>
+  Different header formats are now supported when reading and writing
+  &MeatAxe; format files,
+  see Section <Ref Subsect="subsect:WriteHeaderFormatOfMeatAxeFiles"/>,
+  and one can set a global default for the creation of mode 2 &MeatAxe; files,
+  see Section <Ref Subsect="subsect:WriteMeatAxeFilesOfMode2"/>.
+</Item>
+<Item>
+  The function <Ref Func="MeatAxeString"/> admits also an integer matrix
+  as argument.
+</Item>
+<Item>
+  The function <Ref Func="CMtxBinaryFFMatOrPerm"/> admits an optional
+  argument <A>base</A>, in order to write &MeatAxe; format files that
+  contain either zero based or one based permutations.
+</Item>
+<Item>
+  The meaningless lines about <M>p</M>-modular representations of
+  groups with nontrivial <M>p</M>-core have been removed from the file
+  <F>gap/mindeg.g</F>.
+</Item>
+</List>
+
+</Subsection>
+
+
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<Subsection Label="sect:What's New in Version 1.5.1?">
+<Heading>What's New in Version 1.5.1? (March 2016)</Heading>
 
 <List>
 <Item>
@@ -215,7 +411,7 @@ Compared to Older Versions?</Heading>
   installation of the package.
   (Note that choosing other data directories can be useful also in order to
   keep existing local data files when a new version of &GAP;
-  or of the <Package>AtlasRep</Package> package gets installed.)
+  or of the &AtlasRep; package gets installed.)
   Thanks to Bill Allombert for pointing out this problem.
 </Item>
 <Item>
@@ -261,8 +457,8 @@ Compared to Older Versions?</Heading>
   Thanks to Klaus Lux for pointing out this problem.
 </Item>
 <Item>
-  Depending on the terminal capabilities and the value of
-  <C>AtlasOfGroupRepresentationsInfo.displayFunction</C>,
+  Depending on the terminal capabilities and the user preference
+  <C>DisplayFunction</C> (see <Ref Subsect="subsect:DisplayFunction"/>),
   some non-ASCII characters may appear in the output shown by
   <Ref Func="DisplayAtlasInfo"/>.
 </Item>
@@ -274,7 +470,7 @@ Compared to Older Versions?</Heading>
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Subsection Label="sect:What's New in Version 1.5?">
 <Heading>What's New in Version 1.5? (July 2011)</Heading>
- 
+
 <List>
 <Item>
   The function
@@ -285,7 +481,8 @@ Compared to Older Versions?</Heading>
   <Ref Func="AtlasGroup" Label="for various arguments"/> as its first
   argument.
   The latter is implemented via the new attribute
-  <Ref Attr="AtlasRepInfoRecord"/>, which is set in the groups constructed
+  <Ref Attr="AtlasRepInfoRecord" Label="for a group"/>,
+  which is set in the groups constructed
   by <Ref Func="AtlasGroup" Label="for various arguments"/>.
 </Item>
 <Item>
@@ -295,7 +492,7 @@ Compared to Older Versions?</Heading>
   <Ref Func="OneAtlasGeneratingSetInfo"/>,
   it is part of the overview shown by <Ref Func="DisplayAtlasInfo"/>,
   and it is shown also in the data overview in the web,
-  see Section <Ref Sect="sect:Web Services for the AtlasRep Package"/>.
+  see Section <Ref Sect="sect:Web Contents for the AtlasRep Package"/>.
   <P/>
   Two new manual sections about point stabilizers have been added,
   see the sections
@@ -310,42 +507,34 @@ Compared to Older Versions?</Heading>
   for matrix representations it is part of the overview shown by
   <Ref Func="DisplayAtlasInfo"/>,
   and it is shown also in the data overview in the web,
-  see Section <Ref Sect="sect:Web Services for the AtlasRep Package"/>.
+  see Section <Ref Sect="sect:Web Contents for the AtlasRep Package"/>.
 </Item>
 <Item>
   The functions <Ref Func="Character"
   Label="for a character table and a list" BookName="ref"/>,
   <Ref Func="Identifier" Label="for character tables" BookName="ref"/>,
   <Ref Func="IsPrimitive" BookName="ref"/>,
-  <Ref Func="IsTransitive" BookName="ref"/>, 
+  <Ref Func="IsTransitive" BookName="ref"/>,
   <Ref Func="Transitivity" BookName="ref"/>, and
   <Ref Func="RankAction" BookName="ref"/>
   are now supported as input conditions in
-  <Ref Func="DisplayAtlasInfo"/>,
-  <Ref Func="OneAtlasGeneratingSetInfo"/>, etc..
+  <Ref Func="DisplayAtlasInfo"/> and
+  <Ref Func="OneAtlasGeneratingSetInfo"/>.
 </Item>
 <Item>
   It is now possible to restrict the data shown by
-  <Ref Func="DisplayAtlasInfo"/> to private or non-private data.
-  Also the data returned by <Ref Func="OneAtlasGeneratingSetInfo"/>
-  can be restricted to private or non-private data.
+  <Ref Func="DisplayAtlasInfo"/> or returned by
+  <Ref Func="OneAtlasGeneratingSetInfo"/> to private or non-private data.
 </Item>
 <Item>
   A tutorial for beginners was added to the manual,
   see Chapter <Ref Chap="chap:tutorial"/>,
   and the manual was restructured.
 </Item>
-<!--
-<Item>
-  Due to the omission of some consistency checks which are not necessary
-  at runtime, loading the package needs less time now.
-  (This could be improved further.)
-</Item>
--->
 <Item>
   In the overview shown by <Ref Func="DisplayAtlasInfo"/>
   and in the data overview in the web
-  (see Section <Ref Sect="sect:Web Services for the AtlasRep Package"/>),
+  (see Section <Ref Sect="sect:Web Contents for the AtlasRep Package"/>),
   the ordering of groups was improved such that, e.g.,
   <C>"A9"</C> precedes <C>"A10"</C>.
 </Item>
@@ -366,21 +555,20 @@ Compared to Older Versions?</Heading>
   have been turned into components of the new global variable
   <Ref Var="AGR"/>.
   A few of these functions had been documented in the previous version,
-  the old values are still available if the package file
-  <F>gap/obsolete.g</F> has been read.
-  This file is read automatically when the package gets loaded
-  if <C>GAPInfo.UserPreferences.ReadObsolete</C> is <K>true</K>,
+  the old values are still available if the package files
+  <F>gap/obsolete.gd</F> and <F>gap/obsolete.gi</F> have been read.
+  These files are read automatically if &GAP;'s user preference
+  <C>"ReadObsolete"</C> is <K>true</K> when the package gets loaded,
   see <Ref Subsect="The gap.ini file" BookName="ref"/>.
 </Item>
 <Item>
   A few nicer characters are used by <Ref Func="DisplayAtlasInfo"/>
   if <C>GAPInfo.TermEncoding</C> has the value <C>"UTF-8"</C> and if
-  <C>AtlasOfGroupRepresentationsInfo.displayFunction</C> is different from
-  <Ref Func="Print" BookName="ref"/>,
-  see Section&nbsp;<Ref Subsect="subsect:Customizing DisplayAtlasInfo"/>.
+  <Ref Func="Print" BookName="ref"/> is not the display function to be used,
+  see Section&nbsp;<Ref Subsect="subsect:DisplayFunction"/>.
 </Item>
 <Item>
-  A bug in the function <Ref Func="ReloadAtlasTableOfContents"/> was fixed.
+  A bug in the function <C>ReloadAtlasTableOfContents</C> was fixed.
   Thanks to Jack Schmidt for reporting this bug.
 </Item>
 </List>
@@ -391,7 +579,7 @@ Compared to Older Versions?</Heading>
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Subsection Label="sect:What's New in Version 1.4?">
 <Heading>What's New in Version 1.4? (June 2008)</Heading>
- 
+
 <List>
 <Item>
   In addition to the group orders that were added in version 1.3
@@ -435,7 +623,8 @@ Compared to Older Versions?</Heading>
 <Item>
   The bibliographies contained in the &ATLAS; of Finite Groups
   <Cite Key="CCN85"/> and in the &ATLAS; of Brauer Characters
-  <Cite Key="JLPW95"/> are now available,
+  <Cite Key="JLPW95"/> are now available
+  as HTML files, as BibXMLext files, and within &GAP;,
   see <Ref Func="BrowseBibliographySporadicSimple"/>.
 </Item>
 <Item>
@@ -461,7 +650,7 @@ Compared to Older Versions?</Heading>
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Subsection Label="sect:What's New in Version 1.3.1?">
 <Heading>What's New in Version 1.3.1? (October 2007)</Heading>
- 
+
 This version was mainly released in order to fix a few problems.
 Now one does not get warnings about unbound variables
 when the package is loaded
@@ -489,11 +678,11 @@ version 4.4.10 of &GAP;.)
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Subsection Label="sect:What's New in Version 1.3?">
 <Heading>What's New in Version 1.3? (June 2007)</Heading>
- 
+
 <List>
 <Item>
   The database was extended, see
-  Section&nbsp;<Ref Subsect="subsect:Compressed or uncompressed data files"/>
+  Section&nbsp;<Ref Subsect="subsect:CompressDownloadedMeatAxeFiles"/>
   for the number and size of files.
 </Item>
 <Item>
@@ -530,14 +719,14 @@ version 4.4.10 of &GAP;.)
 <Item>
   One can now use <Ref Func="Pager" BookName="ref"/> functionality
   in <Ref Func="DisplayAtlasInfo"/>,
-  see Section&nbsp;<Ref Subsect="subsect:Customizing DisplayAtlasInfo"/>.
+  see Section&nbsp;<Ref Subsect="subsect:DisplayFunction"/>.
 
   <P/>
 
   An interactive alternative to <Ref Func="DisplayAtlasInfo"/> is provided by
   the function <Ref Func="BrowseAtlasInfo" BookName="Browse"/> from the
   new (recommended) &GAP; package <Package>Browse</Package>
-  <Cite Key="Browse"/>.
+  (see <Cite Key="Browse"/>).
 </Item>
 <Item>
   The functions <Ref Func="OneAtlasGeneratingSetInfo"/> and
@@ -546,21 +735,21 @@ version 4.4.10 of &GAP;.)
 </Item>
 <Item>
   The functions for actually accessing the data are more flexible now, see
-  Section&nbsp;<Ref Subsect="subsect:Customizing the Access to Data files"/>.
+  Section&nbsp;<Ref Subsect="sect:How to Customize the Access to Data files"/>.
 </Item>
 <Item>
   For transferring remote data,
-  the &GAP; package <Package>IO</Package> <Cite Key="IO"/>
+  the &GAP; package <Package>IO</Package> (see <Cite Key="IO"/>)
   can now be used (and is recommended) as an alternative to <F>wget</F>,
   <Index Key="wget"><F>wget</F></Index>
   see
-  Section&nbsp;<Ref Subsect="subsect:Accessing data files with wget or IO"/>.
+  Section&nbsp;<Ref Subsect="subsect:FileTransferTool"/>.
 </Item>
 <Item>
   The address of the data server has changed.
   <Index Key="ftp"><F>ftp</F></Index>
-  Since the access to the server is no longer possible via <F>ftp</F>,
-  the mechanim used up to version 1.2, which was based on <F>ftp</F>,
+  The access to the server is no longer possible via <F>ftp</F>,
+  thus the mechanism used up to version 1.2, which was based on <F>ftp</F>,
   had to be rewritten.
 
   <P/>
@@ -582,7 +771,7 @@ version 4.4.10 of &GAP;.)
 </Item>
 <Item>
   The package manual has been restructured, extended and improved.
-  It is now based on the package &GAPDoc; <Cite Key="GAPDoc"/>.
+  It is now based on the package &GAPDoc; (see <Cite Key="GAPDoc"/>).
 </Item>
 </List>
 
@@ -614,9 +803,9 @@ This opportunity was used
     for &GAP;&nbsp;4.4,
 </Item>
 <Item>
-    to extend the test suite, 
+    to extend the test suite,
     which now covers more consistency checks using
-    the &GAP; Character Table Library&nbsp;<Cite Key="CTblLib"/>,
+    the &GAP; Character Table Library (see <Cite Key="CTblLib"/>),
 </Item>
 <Item>
     to make the function <Ref Func="ScanMeatAxeFile"/> more robust,
@@ -640,8 +829,7 @@ This opportunity was used
 
 <P/>
 
-For <Package>AtlasRep</Package> users,
-the new feature of &GAP;&nbsp;4.4 is particularly
+For &AtlasRep; users, the new feature of &GAP;&nbsp;4.4 is particularly
 interesting that due to better kernel support, reading large matrices
 over finite fields is now faster than it was in &GAP;&nbsp;4.3.
 
@@ -652,8 +840,8 @@ over finite fields is now faster than it was in &GAP;&nbsp;4.3.
 <Subsection Label="sect:What's New in Version 1.1?">
 <Heading>What's New in Version 1.1? (October 2002)</Heading>
 
-The biggest change w.r.t.&nbsp;Version&nbsp;1.1 is the addition of
-private extensions
+The biggest change w.&nbsp;r.&nbsp;t.&nbsp;Version&nbsp;1.1 is the addition
+of private extensions
 (see Chapter&nbsp;<Ref Chap="chap:Private Extensions"/>).
 It includes a new <Q>free format</Q> for straight line programs
 (see Section&nbsp;<Ref Sect="sect:Effect of Private Extensions"/>).
@@ -678,18 +866,18 @@ remained the same.
 <Index Key="wget"><F>wget</F></Index>
 As an alternative to <C>perl</C>, one can use <C>wget</C> now
 for transferring data files
-(see&nbsp;<Ref Sect="sect:User Parameters for the AtlasRep Package"/>).
+(see&nbsp;<Ref Sect="sect:atlasrep user preferences"/>).
 
 <P/>
 
 Data files can be read much more efficiently in &GAP;&nbsp;4.3 than in
 &GAP;&nbsp;4.2.
-In Version&nbsp;1.1 of the <Package>AtlasRep</Package> package,
+In Version&nbsp;1.1 of the &AtlasRep; package,
 this feature is used for reading
 matrices and permutations in &MeatAxe; text format with
 <Ref Func="ScanMeatAxeFile"/>.
 As a consequence, (at least) &GAP;&nbsp;4.3 is required for
-<Package>AtlasRep</Package> Version&nbsp;1.1.
+&AtlasRep; Version&nbsp;1.1.
 
 <P/>
 
@@ -702,25 +890,24 @@ allows one to store data files automatically in <F>gzip</F>ped form.
 
 For matrix representations in characteristic zero, invariant forms and
 generators for the centralizer algebra are now accessible in &GAP; if they
-are contained in the source files --this information had been ignored in
-Version&nbsp;1.0
-(see&nbsp;<Ref
+are contained in the source files
+&ndash;this information had been ignored in Version&nbsp;1.0.
+<!-- (see&nbsp;<Ref
 Func="AtlasOfGroupRepresentationsTestTableOfContentsRemoteUpdates"/>
-for necessary updates).
+for necessary updates). -->
 
 <P/>
 
 Additional information is now available via the internet
-(see&nbsp;<Ref Sect="sect:Web Services for the AtlasRep Package"/>).
+(see&nbsp;<Ref Sect="sect:Web Contents for the AtlasRep Package"/>).
 
 <P/>
 
-The update facilities have been extended
-(see&nbsp;<Ref Sect="sect:Maintaining the Local Data of the AtlasRep Package"/>).
+The facilities for updating the table of contents have been extended.
 
 <P/>
 
-The manual is now distributed also in pdf and HTML format; on the other hand,
+The manual is now distributed also in PDF and HTML format; on the other hand,
 the PostScript format manual is no longer contained in the archives.
 
 <P/>
@@ -752,9 +939,9 @@ have been improved.
     Ulrich Kaiser helped with preparing the package for MS Windows.
 </Item>
 <Item>
-    Klaus Lux had the idea to support private extensions of the package,
-    see Chapter&nbsp;<Ref Chap="chap:Private Extensions"/>
-    and helped to fix several bugs.
+    Klaus Lux had the idea to support data extensions,
+    see Chapter&nbsp;<Ref Chap="chap:Private Extensions"/>,
+    he did a lot of beta testing, and helped to fix several bugs.
 </Item>
 <Item>
     Frank Lübeck contributed the functions
@@ -765,7 +952,7 @@ have been improved.
     Frank Lübeck and Max Neunhöffer wrote
     the &GAPDoc; package <Cite Key="GAPDoc"/>,
     which is used for processing the documentation of the
-    <Package>AtlasRep</Package> package
+    &AtlasRep; package
     and for processing the bibliographies included in this package
     (see <Ref Func="BrowseBibliographySporadicSimple"/>),
 </Item>
@@ -774,13 +961,16 @@ have been improved.
     <Cite Key="IO"/>, which is recommended for transferring data.
 </Item>
 <Item>
-    Max has also suggested the generalization of the data access described in
+    Max Neunhöffer has also suggested the generalization of the data access
+    described in
     Section&nbsp;<Ref Sect="sect:How to Customize the Access to Data files"/>,
-    and the admissibility of the function
+    the admissibility of the function
     <Ref Func="Character" Label="for a character table and a list" BookName="ref"/>
     as a filter in <Ref Func="DisplayAtlasInfo"/>,
     <Ref Func="OneAtlasGeneratingSetInfo"/>, and
-    <Ref Func="AllAtlasGeneratingSetInfos"/>.
+    <Ref Func="AllAtlasGeneratingSetInfos"/>,
+    and the variant of <Ref Attr="AtlasRepInfoRecord" Label="for a string"/>
+    that takes a group name as its input.
 </Item>
 <Item>
     Gunter Malle suggested to make the information about representations

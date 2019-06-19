@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This is an automatically generated file. -->
+<#Include SYSTEM "_Chapter_Tutorial.xml">
+<#Include SYSTEM "_Chapter_Functionality_provided_by_the_profiling_package.xml">

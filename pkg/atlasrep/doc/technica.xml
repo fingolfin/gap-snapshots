@@ -1,11 +1,11 @@
 
 <!-- %W  technica.xml    GAP 4 package AtlasRep             Thomas Breuer -->
-<!-- %Y  Copyright 2001, Lehrstuhl D für Mathematik, RWTH Aachen, Germany -->
+<!-- %Y  Copyright 2001, Lehrstuhl D fÃ¼r Mathematik, RWTH Aachen, Germany -->
 
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Chapter Label="chap:Technicalities of the AtlasRep Package">
-<Heading>Technicalities of the <Package>AtlasRep</Package> Package</Heading>
+<Heading>Technicalities of the &AtlasRep; Package</Heading>
 
 This chapter describes those parts of the &GAP; interface to the
 &ATLAS; of Group Representations that do not belong to the user interface
@@ -39,12 +39,10 @@ in future versions of the package.
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Section Label="sect:Global Variables Used by the AtlasRep Package">
-<Heading>Global Variables Used by the <Package>AtlasRep</Package> Package
-</Heading>
+<Heading>Global Variables Used by the &AtlasRep; Package</Heading>
 
-For debugging purposes, the functions from the &GAP; interface to the
-&ATLAS; of Group Representations print information depending on the info
-level of the info classes <Ref InfoClass="InfoAtlasRep"/>,
+For debugging purposes, &AtlasRep; functions print information depending on
+the info level of the info classes <Ref InfoClass="InfoAtlasRep"/>,
 <Ref InfoClass="InfoCMeatAxe"/>, and <Ref InfoClass="InfoBBox"/>
 (cf.&nbsp;<Ref Sect="Info Functions" BookName="ref"/>).
 
@@ -53,43 +51,14 @@ level of the info classes <Ref InfoClass="InfoAtlasRep"/>,
 The info level of an info class can be changed using
 <Ref Func="SetInfoLevel" BookName="ref"/>.
 For example, the info level of <Ref InfoClass="InfoAtlasRep"/> can be set
-to the nonnegative integer <A>n</A> using
-<C>SetInfoLevel( InfoAtlasRep, <A>n</A> )</C>.
-
-<P/>
-
-Information about files being read can be obtained by setting the
-value of the global variable <C>InfoRead1</C>
-to <Ref Func="Print" BookName="ref"/>.
+to the nonnegative integer <M>n</M> using
+<C>SetInfoLevel( InfoAtlasRep, </C><M>n</M><C> )</C>.
 
 <P/>
 
 <#Include Label="InfoAtlasRep">
 <#Include Label="InfoCMeatAxe">
 <#Include Label="InfoBBox">
-
-<P/>
-
-<ManSection>
-<Var Name="CMeatAxe.FastRead"/>
-
-<Description>
-If this component is bound and has the value <K>true</K> then
-<Ref Func="ScanMeatAxeFile"/> reads text files via
-<Ref Func="StringFile" BookName="gapdoc"/>.
-Otherwise each file containing a matrix over a finite field is read line by
-line via <Ref Func="ReadLine" BookName="ref"/>,
-and the &GAP; matrix is constructed line by line, in a compressed
-representation
-(see&nbsp;<Ref Sect="Row Vectors over Finite Fields" BookName="ref"/>
-and&nbsp;<Ref Sect="Matrices over Finite Fields" BookName="ref"/>),
-which makes it possible to read large matrices in a reasonable amount
-of space.
-The <Ref Func="StringFile" BookName="gapdoc"/> approach is faster
-but needs more intermediate space when text files containing
-matrices over finite fields are read.
-</Description>
-</ManSection>
 
 <P/>
 
@@ -136,10 +105,10 @@ matrices over finite fields are read.
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Section Label="sect:Data Types Used in the AGR">
-<Heading>Data Types Used in the &ATLAS; of Group Representations</Heading>
+<Heading>Data Types Used in the &AtlasRep; Package</Heading>
 
 Each representation or program that is administrated by the
-<Package>AtlasRep</Package> package belongs to a unique <E>data type</E>.
+&AtlasRep; package belongs to a unique <E>data type</E>.
 Informally, examples of data types are
 <Q>permutation representation</Q>,
 <Q>matrix representation over the integers</Q>, or
@@ -187,7 +156,7 @@ The details are described in the following.
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Section Label="sect:Filenames Used in the AGR">
-<Heading>Filenames Used in the &ATLAS; of Group Representations</Heading>
+<Heading>Filenames Used in the &AtlasRep; Package</Heading>
 
 <#Include Label="[1]{access}">
 
@@ -200,9 +169,101 @@ The details are described in the following.
 
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<Section Label="sect:identifier component">
+<Heading>The record component <C>identifier</C> used by the &AtlasRep; Package</Heading>
+
+The functions
+<Ref Func="AtlasGenerators"/>,
+<Ref Func="AtlasProgram"/>,
+<Ref Func="AtlasProgramInfo"/>,
+<Ref Func="OneAtlasGeneratingSetInfo"/>, and
+<Ref Func="AllAtlasGeneratingSetInfos"/>
+return records which have a component <C>identifier</C>.
+The value of this component describes the record
+in the sense that one can reconstruct the whole record from it,
+and the <C>identifier</C> value can be used as an input for
+<Ref Func="AtlasGenerators"/>,
+<Ref Func="AtlasProgram"/>,
+<Ref Func="AtlasProgramInfo"/>,
+<Ref Func="AtlasGroup" Label="for various arguments"/>, and
+<Ref Func="AtlasSubgroup"
+Label="for a group name (and various arguments) and a number"/>.
+
+<P/>
+
+The <C>identifier</C> component has the following format.
+
+<P/>
+
+<List>
+<Item>
+For records describing representations,
+it is a list of the form <C>[ gapname, files, std, info ]</C>.
+</Item>
+<Item>
+For records describing straight line programs and straight line decisions,
+it is a list of the form <C>[ gapname, files, std ]</C>.
+</Item>
+</List>
+
+<P/>
+
+Here <C>gapname</C> is the &GAP; name of the group in question,
+<C>files</C> defines the data files,
+<C>std</C> is the standardization of its generators,
+and <C>info</C> is some information that depends on the type of the
+representation, for example the number of moved points in the case of a
+permutation representation.
+
+<P/>
+
+The <C>files</C> entry has one of the following formats:
+
+<P/>
+
+<List>
+<Item>
+  a string, in the case that exactly one file is needed
+  that does not belong to a private extension;
+  an example of such an <C>identifier</C> value is
+  <C>[ "J1", "J1G1-cycW1", 1 ]</C>
+</Item>
+<Item>
+  a list whose entries are strings
+  (which refer to files from the core part of the database)
+  and pairs of the form <C>[ tocid, file ]</C>
+  (which refer to files from the extension given by <C>tocid</C>);
+  examples of <C>identifier</C> values are
+  <C>[ "A5", [ "A5G1-p5B0.m1", "A5G1-p5B0.m2" ], 1, 5 ]</C>,
+  <C>[ "2.M12", [ [ "mfer", "2M12G1-cclsW1" ] ], 1 ]</C>,
+  <C>[ "2.M12", [ "M12G1-max1W1", [ "internal", "2M12G1-kerM12W1" ] ], 1 ]</C>,
+  <C>[ "2.M12", [ [ "mfer", "2M12G1-p24bB0.m1" ],
+  [ "mfer", "2M12G1-p24bB0.m2" ] ], 1, 24 ]</C>.
+</Item>
+</List>
+
+<P/>
+
+Up to version&nbsp;1.5 of the &AtlasRep; package,
+a different <C>identifier</C> format was used for files from
+extensions of the database.
+Namely, the first entry of the list was a pair <C>[ tocid, groupname ]</C>,
+and the second entry was either a string or a list of strings.
+Note that with that old format,
+it was not possible to describe a combination of several files
+from different sources (core part and extension, or different extensions).
+The function <Ref Func="AtlasRepIdentifier"
+Label="convert an old type identifier to a new type one"/>
+can be used to convert between the two formats.
+
+<#Include Label="AtlasRepIdentifier">
+
+</Section>
+
+
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Section Label="sect:The Tables of Contents of the AGR">
-<Heading>The Tables of Contents of the &ATLAS; of Group Representations
-</Heading>
+<Heading>The Tables of Contents of the &AtlasRep; Package</Heading>
 
 <#Include Label="toc">
 
@@ -211,9 +272,20 @@ The details are described in the following.
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Section Label="sect:AGR Sanity Checks">
-<Heading>Sanity Checks for the &ATLAS; of Group Representations</Heading>
+<Heading>Sanity Checks for the &AtlasRep; Package</Heading>
 
 <#Include Label="tests">
+
+
+Finally, we reset the user preference and the info level
+which had been set at the beginning of Chapter <Ref Chap="chap:tutorial"/>.
+
+<P/>
+
+<Example><![CDATA[
+gap> SetUserPreference( "AtlasRep", "DisplayFunction", origpref );
+gap> SetInfoLevel( InfoAtlasRep, globallevel );
+]]></Example>
 
 </Section>
 

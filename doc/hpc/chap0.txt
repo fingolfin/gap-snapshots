@@ -3,7 +3,7 @@
                           [1XHPC-GAP --- Reference Manual[101X
   
   
-                          Release 4.10.1, 23-Feb-2019
+                          Release 4.10.2, 19-Jun-2019
   
   
                                  The GAP Group

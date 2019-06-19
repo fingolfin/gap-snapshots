@@ -228,7 +228,7 @@
   
   [4X[32X[104X
     [4X[GAP] The GAP Group, GAP - Groups, Algorithms, and Programming,[104X
-    [4X      Version 4.10.1; 2019 (https://www.gap-system.org)[104X
+    [4X      Version 4.10.2; 2019 (https://www.gap-system.org)[104X
   [4X[32X[104X
   
   [33X[0;0YYou are permitted to modify and redistribute [5XGAP[105X, but you are not allowed to
@@ -316,5 +316,5 @@
   
   [33X[0;0YThe GAP Group,[133X
   
-  [33X[0;0Y23-Feb-2019[133X
+  [33X[0;0Y19-Jun-2019[133X
   

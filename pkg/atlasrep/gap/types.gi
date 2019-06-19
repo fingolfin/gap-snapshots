@@ -2,7 +2,7 @@
 ##
 #W  types.gi             GAP 4 package AtlasRep                 Thomas Breuer
 ##
-#Y  Copyright (C)  2001,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
+#Y  Copyright (C)  2001,   Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
 ##  This file contains implementations of the functions for administrating
 ##  the data types used in the ATLAS of Group Representations.
@@ -14,13 +14,35 @@
 #F  TOCEntryStringDefault( <typename>, <entry> )
 ##
 BindGlobal( "TOCEntryStringDefault", function( typename, entry )
-    return Concatenation( [
-    "AGR.TOC(\"", typename, "\",\"", entry[ Length( entry ) ], "\",",
-    ReplacedString( String(
-                      [ First( AtlasOfGroupRepresentationsInfo.filenames,
-                               p -> p[1] = entry[ Length( entry ) ] )[2] ] ),
-                    " ", "" ),
-    ");\n" ] );
+    local list, name, pos, info, crc;
+
+    list:= AtlasOfGroupRepresentationsInfo.filenames;
+    name:= entry[ Length( entry ) ];
+    pos:= PositionSorted( list, [ name ] );
+    if pos <= Length( list ) and list[ pos ][1] = name then
+      entry:= list[ pos ];
+      if Length( entry ) < 4 then
+        # There is no crc value yet.
+        # If the file is available locally then compute the value,
+        # otherwise leave it out.
+        info:= AtlasOfGroupRepresentationsLocalFilename( [ [ entry[3], entry[1] ] ], typename );
+        info:= First( info, l -> l[2][1][2] = true );
+        if info <> fail then
+          crc:= CrcFile( info[2][1][1] );
+        else
+          crc:= fail;
+        fi;
+      else
+        crc:= entry[4];
+      fi;
+      info:= Concatenation( "\"", typename, "\",\"", entry[2], "\"" );
+      if crc <> fail then
+        Append( info, Concatenation( ",[", String( crc ), "]" ) );
+      fi;
+      return info;
+    else
+      return fail;
+    fi;
 end );
 
 
@@ -52,7 +74,7 @@ AGR.DisplayOverviewInfoDefault:= function( dispname, align, compname )
           if IsBound( record.( compname ) ) then
             new:= ForAny( record.( compname ),
                           x -> std = true or x[1] in std );
-            if IsBound( toc.diridPrivate ) and new then
+            if toc.TocID <> "core" and new then
               private:= true;
             fi;
             value:= value or new;
@@ -90,10 +112,10 @@ AGR.TestWordsSLPDefault:= function( tocid, name, file, type, outputs, verbose )
     local filename, prog, prg, gens;
 
     # Read the program.
-    if tocid = "local" then
+    if tocid = "core" then
       tocid:= "dataword";
     fi;
-    prog:= AGR.FileContents( tocid, name, file, type );
+    prog:= AGR.FileContents( [ [ tocid, file ] ], type );
     if prog = fail then
       Print( "#E  file `", file, "' is corrupted\n" );
       return false;
@@ -144,10 +166,10 @@ AGR.TestWordsSLDDefault:= function( tocid, name, file, type, format, verbose )
     local filename, prog, result, gapname, orderfunc, std, entry, gens;
 
     # Read the program.
-    if tocid = "local" then
+    if tocid = "core" then
       tocid:= "dataword"; 
     fi;
-    prog:= AGR.FileContents( tocid, name, file, type );
+    prog:= AGR.FileContents( [ [ tocid, file ] ], type );
     if prog = fail then
       Print( "#E  file `", file, "' is corrupted\n" );
       return false;
@@ -172,6 +194,7 @@ AGR.TestWordsSLDDefault:= function( tocid, name, file, type, format, verbose )
 
     orderfunc:= function( g )
       if IsMatrix( g ) then
+        # We know that the group elements that occur have small order.
         return OrderMatTrial( g, 10000 );
       else
         return Order( g );
@@ -180,7 +203,8 @@ AGR.TestWordsSLDDefault:= function( tocid, name, file, type, format, verbose )
 
     std:= ParseBackwards( file, format );
     std:= std[3];
-    for entry in AllAtlasGeneratingSetInfos( gapname, std ) do
+    for entry in AllAtlasGeneratingSetInfos( gapname, std,
+                                             "contents", "local" ) do
       gens:= AtlasGenerators( entry.identifier );
       if gens <> fail then
         if not ResultOfStraightLineDecision( prog, gens.generators,
@@ -201,16 +225,25 @@ AGR.TestWordsSLDDefault:= function( tocid, name, file, type, format, verbose )
 #F  AGR.TestFileHeadersDefault( <tocid>, <groupname>, <entry>, <type>, <dim>,
 #F                              <special> )
 ##
+##  This function can be used only if the last entry in the list <entry> is
+##  the name of *one* file that contains a list of matrices.
+##
 AGR.TestFileHeadersDefault:= function( tocid, groupname, entry, type, dim, special )
-    local filename, name, mats;
+    local filename, cand, name, mats;
 
-    # Try to read the file.
-    if tocid = "local" then
+    if tocid = "core" then
       tocid:= "datagens";
     fi;
+
+    # Try to read the file.
     dim:= [ dim, dim ];
     filename:= entry[ Length( entry ) ];
-    mats:= AGR.FileContents( tocid, groupname, filename, type );
+    cand:= AtlasOfGroupRepresentationsLocalFilename(
+               [ [ tocid, filename ] ], type );
+    if not ( Length( cand ) = 1 and ForAll( cand[1][2], x -> x[2] ) ) then
+      return true;
+    fi;
+    mats:= AGR.FileContents( [ [ tocid, filename ] ], type );
 
     # Check that the file contains a list of matrices of the right dimension.
     if   mats = fail then
@@ -238,54 +271,81 @@ AGR.TestFileHeadersDefault:= function( tocid, groupname, entry, type, dim, speci
 
 #############################################################################
 ##
-#F  AGRTestFilesMTX( <tocid>, <groupname>, <entry>, <type> )
+#F  AGR.TestFilesMTX( <tocid>, <groupname>, <entry>, <type> )
 ##
 AGR.TestFilesMTX:= function( tocid, groupname, entry, type )
-    local result;
+    local result, filename;
 
-    if tocid = "local" then
+    if tocid = "core" then
       tocid:= "datagens";
     fi;
+
     # Read the file(s).
-    result:= AGR.FileContents( tocid, groupname, entry[ Length( entry ) ],
-                              type ) <> fail;
-    if not result then
-      Print( "#E  file(s) `", entry[ Length( entry ) ], "' corrupted\n" );
-    fi;
+    result:= true;
+    for filename in entry[ Length( entry ) ] do
+      if AGR.FileContents( [ [ tocid, filename ] ], type ) = fail then
+        Print( "#E  file `", filename, "' corrupted\n" );
+        result:= false;
+      fi;
+    od;
+
     return result;
     end;
 
 
 #############################################################################
 ##
-#F  AtlasProgramInfoDefault( <type>, <identifier>, <prefix>, <groupname> )
+#F  AtlasProgramInfoDefault( <type>, <identifier>, <groupname> )
+##
+##  This function can be used only in the case that the second entry in
+##  <identifier> is either one filename or a list of length one,
+##  such that the unique entry is a list of a t.o.c. identifier and
+##  a filename.
 ##
 BindGlobal( "AtlasProgramInfoDefault",
-    function( type, identifier, prefix, groupname )
-    local prog, result;
+    function( type, identifier, groupname )
+    local filename;
 
-    if IsString( identifier[2] ) and
-       AGR.ParseFilenameFormat( identifier[2], type[2].FilenameFormat )
+    filename:= identifier[2];
+    if not IsString( filename ) then
+      filename:= filename[1][2];
+    fi;
+
+    if IsString( filename ) and
+       AGR.ParseFilenameFormat( filename, type[2].FilenameFormat )
            <> fail then
       return rec( standardization := identifier[3],
                   identifier      := identifier );
     fi;
+
     return fail;  
 end );
 
 
 #############################################################################
 ##
-#F  AtlasProgramDefault( <type>, <identifier>, <prefix>, <groupname> )
+#F  AtlasProgramDefault( <type>, <identifier>, <groupname> )
 ##
-BindGlobal( "AtlasProgramDefault",
-    function( type, identifier, prefix, groupname )
-    local prog, result;
+##  This function can be used only in the case that the second entry in
+##  <identifier> is either one filename or a list of length one,
+##  such that the unique entry is a list of a t.o.c. identifier and
+##  a filename.
+##
+BindGlobal( "AtlasProgramDefault", function( type, identifier, groupname )
+    local filename, tocid, prog, result;
 
-    if IsString( identifier[2] ) and
-       AGR.ParseFilenameFormat( identifier[2], type[2].FilenameFormat )
+    filename:= identifier[2];
+    if IsString( filename ) then
+      tocid:= "dataword";
+    else
+      tocid:= filename[1][1];
+      filename:= filename[1][2];
+    fi;
+
+    if IsString( filename ) and
+       AGR.ParseFilenameFormat( filename, type[2].FilenameFormat )
            <> fail then
-      prog:= AGR.FileContents( prefix, groupname, identifier[2], type );
+      prog:= AGR.FileContents( [ [ tocid, filename ] ], type );
       if prog <> fail then
         result:= rec( program         := prog.program,
                       standardization := identifier[3],
@@ -296,6 +356,7 @@ BindGlobal( "AtlasProgramDefault",
         return result;
       fi;
     fi;
+
     return fail;  
 end );
 
@@ -317,11 +378,6 @@ AGR.CheckOneCondition:= function( arg )
       condlist:= arg[3];
     fi;
     pos:= Position( condlist, func );
-    if   pos = fail then
-      # The function does not occur as a condition.
-      return true;
-    fi;
-
     while pos <> fail do
       if Length( arg ) = 2 then
         # Support `IsPermGroup' etc. *without* subsequent `true'.
@@ -398,11 +454,11 @@ AGR.DeclareDataType:= function( kind, name, record )
       fi;
     elif kind = "prg" then
       if not IsBound( record.DisplayPRG ) then
-        record.DisplayPRG := function( tocs, name, std, stdavail )
+        record.DisplayPRG := function( tocs, names, std, stdavail )
             return []; end;
       fi;
       if not IsBound( record.AccessPRG ) then
-        record.AccessPRG := function( record, std, conditions )
+        record.AccessPRG := function( toc, groupname, std, conditions )
           return fail;
         end;
       fi;
@@ -430,6 +486,7 @@ AGR.DeclareDataType:= function( kind, name, record )
 ##
 ##  returns the list of pairs <C>[ <A>name</A>, <A>record</A> ]</C>
 ##  as declared for the kinds in question.
+##
 AGR.DataTypes:= function( arg )
     local types, result, kind;
 
@@ -449,6 +506,218 @@ AGR.DataTypes:= function( arg )
 
     return result[2];
     end;
+
+
+#############################################################################
+##
+#F  AGR.VersionOfSLP( <filename> )
+##
+##  Note that 'cyc2ccl' scripts involve *two* version numbers,
+##  the one of the corresponding 'cyc' script and the one of their own.
+##  We return the *list* of these version numbers in this case.
+##
+AGR.VersionOfSLP:= function( filename )
+    local len, pos, pos2;
+
+    if not IsString( filename ) then
+      # a list of one or more file descriptions, take the first of them
+      filename:= filename[1];
+      if not IsString( filename ) then
+        # a file from a private extension
+        filename:= filename[2];
+      fi;
+    fi;
+
+    len:= Length( filename );
+    pos:= len;
+    while IsDigitChar( filename[ pos ] ) do
+      pos:= pos - 1;
+    od;
+    if 6 < pos and filename{ [ pos-5 .. pos ] } = "-cclsW" then
+      # Check whether we are in the case of a 'cyc2ccls' script.
+      pos2:= pos-6;
+      while IsDigitChar( filename[ pos2 ] ) do
+        pos2:= pos2 - 1;
+      od;
+      if 4 < pos2 and filename{ [ pos2-3 .. pos2 ] } = "cycW" then
+        return [ filename{ [ pos2+1 .. pos-6 ] },
+                 filename{ [ pos+1 .. len ] } ];
+      fi;
+    fi;
+
+    return filename{ [ pos+1 .. len ] };
+    end;
+
+
+#############################################################################
+##
+#F  AGR.StandardizeMaximalSubgroup( <groupname>, <maxslpname>, <std>, <vers> )
+##
+##  returns <K>fail</K> or the list
+##  <C>[ <A>filename</A>, <A>std</A> ]</C>
+##  where a straight line program for standardizing the generators of the
+##  maximal subgroup given by <maxslpname> can be found in the file
+##  <A>filename</A> (which is either a string or a list containng the
+##  name of the table of contents and the actual filename.
+##  The standardization number of the result is <A>std</A>.
+##  One can prescribe this standardization via a list or integer <std>,
+##  otherwise one can enter <K>true</K> as <std>.
+##  If <A>vers</A> is <K>true</K> then any version of the program is taken,
+##  otherwise only a version in the list <A>vers</A>.
+##
+AGR.StandardizeMaximalSubgroup:= function( groupname, maxslpname, std, vers )
+    local prefix, toc, r, l, filename;
+
+    if IsInt( std ) then
+      std:= [ std ];
+    fi;
+    if IsInt( vers ) then
+      vers:= [ vers ];
+    fi;
+    prefix:= ReplacedString( maxslpname, "-", "" );
+    for toc in AGR.TablesOfContents( "all" ) do
+      if IsBound( toc.( groupname ) ) then
+        r:= toc.( groupname );
+        if IsBound( r.maxstd ) then
+          for l in r.maxstd do
+            filename:= l[6];
+            if l[6]{ [ 1 .. Position( filename, '-' ) - 1 ] } = prefix and
+               ( std = true or l[5] in std ) and
+               ( vers = true or AGR.VersionOfSLP( filename ) in vers ) then
+              if toc.TocID <> "core" then
+                return [ [ toc.TocID, filename], l[5] ];
+              else
+                return [ filename, l[5] ];
+              fi;
+            fi;
+          od;
+        fi;
+      fi;
+    od;
+
+    return fail;
+    end;
+
+
+#############################################################################
+##
+#F  AGR.CommonDisplayPRG( <title>, <stdavail>, <data>, <onelineonly> )
+##
+##  This is a utility for the 'DisplayPRG' functions of "prg" types.
+##
+##  <data> is a matrix whose columns correspond to
+##  1. the values to be shown in the first column
+##  2. the privacy flags
+##  3. the standardizations,
+##  4. the versions,
+##  5. the identifiers,
+##  6. (optional) additional information for the second column
+##
+AGR.CommonDisplayPRG:= function( title, stdavail, data, onelineonly )
+    local res, entry, line, private;
+
+    res:= [];
+
+    if Length( data ) = 0 then
+      return res;
+    elif Length( data ) = 1 and onelineonly then
+      # Show just one line.
+      # (If there is only one line then showing version info makes no sense.)
+      entry:= data[1];
+      if 1 < Length( stdavail ) then
+        Add( res, Concatenation( "(for std. generators ", entry[3], ")" ) );
+      fi;
+      if IsBound( entry[6] ) then
+        Add( res, Concatenation( "(", entry[6], ")" ) );
+      fi;
+      return [ Concatenation( title, entry[2] ),
+               JoinStringsWithSeparator( res, "  " ),
+               entry[5] ];
+    else
+      # Show a header line plus one line for each program.
+      for entry in data do
+        line:= []; 
+        # Show the standardization only if several are available.
+        if 1 < Length( stdavail ) then
+          Add( line, Concatenation( "(for std. gen. ", entry[3], ")" ) );
+        fi;
+        # Show the version only if several are available.
+        if 0 < Number( data, x -> x[1] = entry[1] and x[4] <> entry[4] ) then
+          Add( line, Concatenation( "(version ", entry[4], ")" ) );
+        fi;
+        # Show additional information whenever available.
+        if IsBound( entry[6] ) then
+          Add( line, Concatenation( "(", entry[6], ")" ) );
+        fi;
+        Add( res, [ Concatenation( entry[1], entry[2] ),
+                    JoinStringsWithSeparator( line, "  " ),
+                    entry[5] ] );
+      od;
+
+      private:= First( data, x -> x[2] <> "" );
+      if private = fail then
+        private:= "";
+      else
+        private:= private[2];
+      fi;
+      return Concatenation( [ Concatenation( title, private ) ], res );
+    fi;
+    end;
+
+
+#############################################################################
+##
+#F  AtlasProgramInfoForFilename( <filename> )
+##
+##  returns the `AtlasProgramInfo' record for the straight line program with
+##  filename <filename>, which must be a string.
+##
+##  A copy of this function is in 'ctblocks/gap/access.g'!
+##
+BindGlobal( "AtlasProgramInfoForFilename", function( filename )
+    local type, parsed, gapname, toc, data, l, id;
+
+    for type in AGR.DataTypes( "prg" ) do
+      parsed:= AGR.ParseFilenameFormat( filename, type[2].FilenameFormat );
+      if parsed <> fail then
+        # We need always GAP name, filename, and standardization.
+        # In case of a private extension,
+        # the second entry is a pair of the form [ <tocid>, <gapname> ].
+        gapname:= First( AtlasOfGroupRepresentationsInfo.GAPnames,
+                         pair -> pair[2] = parsed[1] )[1];
+
+        for toc in AGR.TablesOfContents( "all" ) do
+          if IsBound( toc.( parsed[1] ) ) then
+            data:= toc.( parsed[1] );
+            if IsBound( data.( type[1] ) ) then
+              for l in data.( type[1] ) do
+                if l[ Length( l ) ] = filename then
+                  id:= [ gapname, filename, parsed[3] ];
+                  if toc.TocID <> "core" then
+                    id[2]:= [ [ toc.TocID, filename ] ];
+                  fi;
+                  # ...
+                  if type[1] in [ "check", "find", "kernel", "pres", "switch" ] then
+                    id[4]:= parsed[5];
+                  elif type[1] = "out" then
+                    id[3]:= parsed[5];
+#T is this really intended? -> better add the standardization of G!!!
+                  elif not type[1] in [ "maxes", "classes", "cyclic",
+                                        "cyc2ccl", "maxstd", "switch",
+                                        "otherscripts" ] then
+                    Error( "unknown type <type>" );
+                  fi;
+                  return AtlasProgramInfo( id );
+                fi;
+              od;
+            fi;
+          fi;
+        od;
+      fi;
+    od;
+
+    return fail;
+    end );
 
 
 #############################################################################

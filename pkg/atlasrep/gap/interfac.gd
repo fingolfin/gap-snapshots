@@ -2,7 +2,7 @@
 ##
 #W  interfac.gd          GAP 4 package AtlasRep                 Thomas Breuer
 ##
-#Y  Copyright (C)  2001,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
+#Y  Copyright (C)  2001,   Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
 ##  This file contains the declaration part of the ``high level'' GAP
 ##  interface to the ATLAS of Group Representations.
@@ -14,16 +14,26 @@
 #F  DisplayAtlasInfo( [<listofnames>][,][<std>][,]["contents", <sources>]
 #F                    [, IsPermGroup[, true]]
 #F                    [, NrMovedPoints, <n>]
+#F                    [, IsTransitive[, <bool>]]
+#F                    [, Transitivty[, <n>]]
+#F                    [, IsPrimitive[, <bool>]]
+#F                    [, RankAction[, <n>]]
 #F                    [, IsMatrixGroup[, true]]
 #F                    [, Characteristic, <p>][, Dimension, <n>]
+#F                    [, Ring, <R>]
 #F                    [, Position, <n>]
 #F                    [, Character, <chi>]
 #F                    [, Identifier, <id>] )
 #F  DisplayAtlasInfo( <gapname>[, <std>][, "contents", <sources>]
 #F                    [, IsPermGroup[, true]]
 #F                    [, NrMovedPoints, <n>]
+#F                    [, IsTransitive[, <bool>]]
+#F                    [, Transitivty[, <n>]]
+#F                    [, IsPrimitive[, <bool>]]
+#F                    [, RankAction[, <n>]]
 #F                    [, IsMatrixGroup[, true]]
 #F                    [, Characteristic, <p>][, Dimension, <n>]
+#F                    [, Ring, <R>]
 #F                    [, Position, <n>]
 #F                    [, Character, <chi>]
 #F                    [, Identifier, <id>]
@@ -37,20 +47,52 @@
 ##  Label="for a group name, and optionally further restrictions"/>
 ##
 ##  <Description>
-##  This function lists the information available via the
-##  <Package>AtlasRep</Package> package, for the given input.
-##  Depending on whether remote access to data is enabled
-##  (see Section <Ref Subsect="subsect:Local or remote access"/>),
-##  all the data provided by the &ATLAS; of Group Representations
-##  or only those in the local installation are considered.
+##  This function lists the information available via the &AtlasRep; package,
+##  for the given input.
 ##  <P/>
+##  There are essentially three ways of calling this function.
+##  <List>
+##  <Item>
+##    If there is no argument or if the first argument is a list
+##    <A>listofnames</A> of strings that are &GAP; names of groups,
+##    <Ref Func="DisplayAtlasInfo"/> shows an overview of
+##    the known information.
+##  </Item>
+##  <Item>
+##    If the first argument is a string <A>gapname</A> that is a
+##    &GAP; name of a group,
+##    <Ref Func="DisplayAtlasInfo"/> shows an overview of the information
+##    that is available for this group.
+##  </Item>
+##  <Item>
+##    If the string <C>"contents"</C> is the only argument
+##    then the function shows which parts of the database are available;
+##    these are at least the <C>"core"</C> part, which means the data from
+##    the &ATLAS; of Group Representations, and the <C>"internal"</C> part,
+##    which means the data that are distributed with the &AtlasRep; package.
+##    Other parts can become available by calls to 
+##    <Ref Func="AtlasOfGroupRepresentationsNotifyData"
+##    Label="for a local file describing private data"/>.
+##  </Item>
+##  </List>
+##  <P/>
+##  In each case,
+##  the information will be printed to the screen
+##  or will be fed into a pager,
+##  see Section <Ref Subsect="subsect:DisplayFunction"/>.
 ##  An interactive alternative to <Ref Func="DisplayAtlasInfo"/> is the
 ##  function <Ref Func="BrowseAtlasInfo" BookName="Browse"/>,
 ##  see <Cite Key="Browse"/>.
 ##  <P/>
-##  Called without arguments, <Ref Func="DisplayAtlasInfo"/> prints an
-##  overview what information the &ATLAS; of Group Representations provides.
-##  One line is printed for each group <M>G</M>, with the following columns.
+##  The following paragraphs describe the structure of the output in the
+##  two cases.
+##  Examples can be found in
+##  Section&nbsp;<Ref Subsect="sect:Examples for DisplayAtlasInfo"/>.
+##  <P/>
+##  Called without arguments, <Ref Func="DisplayAtlasInfo"/> shows a general
+##  overview for all groups.
+##  If some information is available for the group <M>G</M>, say,
+##  then one line is shown for <M>G</M>, with the following columns.
 ##  <P/>
 ##  <List>
 ##  <Mark><C>group</C></Mark>
@@ -102,46 +144,42 @@
 ##  </Item>
 ##  </List>
 ##  <P/>
-##  (The list can be printed to the screen or can be fed into a pager,
-##  see Section <Ref Subsect="subsect:Customizing DisplayAtlasInfo"/>.)
-##  <P/>
-##  Called with a list <A>listofnames</A> of strings that are &GAP; names for
-##  a group from the &ATLAS; of Group Representations,
+##  Called with a list <A>listofnames</A> of strings that are &GAP; names of
+##  some groups,
 ##  <Ref Func="DisplayAtlasInfo"/> prints the overview described above
 ##  but restricted to the groups in this list.
 ##  <P/>
 ##  In addition to or instead of <A>listofnames</A>,
-##  the string <C>"contents"</C> and a description <A>sources</A> of the
+##  the string <C>"contents"</C> and a description <M>sources</M> of the
 ##  data may be given about which the overview is formed.
-##  See below for admissible values of <A>sources</A>.
+##  See below for admissible values of <M>sources</M>.
 ##  <P/>
-##  Called with a string <A>gapname</A> that is a &GAP; name for a group from
-##  the &ATLAS; of Group Representations,
+##  Called with a string <A>gapname</A> that is a &GAP; name of a group,
 ##  <Ref Func="DisplayAtlasInfo"/> prints an overview of the information
 ##  that is available for this group.
 ##  One line is printed for each faithful representation,
 ##  showing the number of this representation
 ##  (which can be used in calls of <Ref Func="AtlasGenerators"/>),
 ##  and a string of one of the following forms;
-##  in both cases, <A>id</A> is a (possibly empty) string.
+##  in both cases, <M>id</M> is a (possibly empty) string.
 ##  <P/>
 ##  <List>
-##  <Mark><C>G &lt;= Sym(<A>n</A><A>id</A>)</C></Mark>
+##  <Mark><C>G &lt;= Sym(</C><M>n</M><M>id</M><C>)</C></Mark>
 ##  <Item>
-##      denotes a permutation representation of degree <A>n</A>,
+##      denotes a permutation representation of degree <M>n</M>,
 ##      for example <C>G &lt;= Sym(40a)</C> and <C>G &lt;= Sym(40b)</C>
 ##      denote two (nonequivalent) representations of degree <M>40</M>.
 ##  </Item>
-##  <Mark><C>G &lt;= GL(<A>n</A><A>id</A>,<A>descr</A>)</C></Mark>
+##  <Mark><C>G &lt;= GL(</C><M>n</M><M>id</M>,<M>descr</M><C>)</C></Mark>
 ##  <Item>
-##      denotes a matrix representation of dimension <A>n</A> over a
-##      coefficient ring described by <A>descr</A>,
+##      denotes a matrix representation of dimension <M>n</M> over a
+##      coefficient ring described by <M>descr</M>,
 ##      which can be a prime power,
 ##      <C>ℤ</C> (denoting the ring of integers),
 ##      a description of an algebraic extension field,
 ##      <C>ℂ</C> (denoting an unspecified algebraic extension field), or
-##      <C>ℤ/<A>m</A>ℤ</C> for an integer <A>m</A>
-##      (denoting the ring of residues mod <A>m</A>);
+##      <C>ℤ/</C><M>m</M><C>ℤ</C> for an integer <M>m</M>
+##      (denoting the ring of residues mod <M>m</M>);
 ##      for example, <C>G &lt;= GL(2a,4)</C> and <C>G &lt;= GL(2b,4)</C>
 ##      denote two (nonequivalent) representations of dimension <M>2</M> over
 ##      the field with four elements.
@@ -150,7 +188,6 @@
 ##  <P/>
 ##  After the representations,
 ##  the programs available for <A>gapname</A> are listed.
-##  <P/>
 ##  The following optional arguments can be used to restrict the overviews.
 ##  <P/>
 ##  <List>
@@ -163,120 +200,147 @@
 ##    (see
 ##    Section&nbsp;<Ref Sect="sect:Standard Generators Used in AtlasRep"/>),
 ##  </Item>
-##  <Mark><C>"contents"</C> and <A>sources</A></Mark>
+##  <Mark><C>"contents"</C> and <M>sources</M></Mark>
 ##  <Item>
-##    for a string or a list of strings <A>sources</A>,
+##    for a string or a list of strings <M>sources</M>,
 ##    restrict the data about which the overview is formed;
-##    if <A>sources</A> is the string <C>"public"</C> then only non-private
-##    data
-##    (see Chapter <Ref Chap="chap:Private Extensions"/>)
-##    are considered,
-##    if <A>sources</A> is a string that denotes a private extension in the
-##    sense of a <A>dirid</A> argument of
-##    <Ref Func="AtlasOfGroupRepresentationsNotifyPrivateDirectory"/> then
-##    only the data that belong to this private extension are considered;
+##    if <M>sources</M> is the string <C>"core"</C> then only data from the
+##    &ATLAS; of Group Representations are considered,
+##    if <M>sources</M> is a string that denotes a data extension in the
+##    sense of a <C>dirid</C> argument of
+##    <Ref Func="AtlasOfGroupRepresentationsNotifyData"
+##    Label="for a local file describing private data"/> then
+##    only the data that belong to this data extension are considered;
 ##    also a list of such strings may be given, then the union of these
 ##    data is considered,
 ##  </Item>
-##  <Mark><C>Identifier</C> and <A>id</A></Mark>
+##  <Mark><C>Identifier</C> and <M>id</M></Mark>
 ##  <Item>
 ##    restrict to representations with <C>identifier</C> component in the
-##    list <A>id</A> (note that this component is itself a list, entering
+##    list <M>id</M> (note that this component is itself a list, entering
 ##    this list is not admissible),
-##    or satisfying the function <A>id</A>,
+##    or satisfying the function <M>id</M>,
 ##  </Item>
 ##  <Mark><C>IsPermGroup</C> and <K>true</K></Mark>
 ##  <Item>
 ##    restrict to permutation representations,
 ##  </Item>
-##  <Mark><C>NrMovedPoints</C> and <A>n</A></Mark>
+##  <Mark><C>NrMovedPoints</C> and <M>n</M></Mark>
 ##  <Item>
 ##    for a positive integer, a list of positive integers,
-##    or a property <A>n</A>,
-##    restrict to permutation representations of degree equal to <A>n</A>,
-##    or in the list <A>n</A>, or satisfying the function <A>n</A>,
+##    or a property <M>n</M>,
+##    restrict to permutation representations of degree equal to <M>n</M>,
+##    or in the list <M>n</M>, or satisfying the function <M>n</M>,
 ##  </Item>
 ##  <Mark><C>NrMovedPoints</C> and the string <C>"minimal"</C></Mark>
 ##  <Item>
 ##    restrict to faithful permutation representations of minimal degree
 ##    (if this information is available),
 ##  </Item>
-##  <Mark><C>IsTransitive</C> and <K>true</K> or <K>false</K></Mark>
+##  <Mark><C>IsTransitive</C> and a boolean value</Mark>
 ##  <Item>
 ##    restrict to transitive or intransitive permutation representations
-##    (if this information is available),
+##    where this information is available (if the value <K>true</K> or
+##    <K>false</K> is given),
+##    or to representations for which this information is not available
+##    (if the value <K>fail</K> is given),
 ##  </Item>
-##  <Mark><C>IsPrimitive</C> and <K>true</K> or <K>false</K></Mark>
+##  <Mark><C>IsPrimitive</C> and a boolean value</Mark>
 ##  <Item>
 ##    restrict to primitive or imprimitive permutation representations
-##    (if this information is available),
+##    where this information is available (if the value <K>true</K> or
+##    <K>false</K> is given),
+##    or to representations for which this information is not available
+##    (if the value <K>fail</K> is given),
 ##  </Item>
-##  <Mark><C>Transitivity</C> and <A>n</A></Mark>
+##  <Mark><C>Transitivity</C> and <M>n</M></Mark>
 ##  <Item>
 ##    for a nonnegative integer, a list of nonnegative integers,
-##    or a property <A>n</A>,
-##    restrict to permutation representations of transitivity equal to
-##    <A>n</A>, or in the list <A>n</A>, or satisfying the function <A>n</A>
-##    (if this information is available),
+##    or a property <M>n</M>,
+##    restrict to permutation representations for which the information is
+##    available that the transitivity is equal to <M>n</M>,
+##    or is in the list <M>n</M>, or satisfies the function <M>n</M>;
+##    if <M>n</M> is <K>fail</K> then restrict to all permutation
+##    representations for which this information is not available,
 ##  </Item>
-##  <Mark><C>RankAction</C> and <A>n</A></Mark>
+##  <Mark><C>RankAction</C> and <M>n</M></Mark>
 ##  <Item>
 ##    for a nonnegative integer, a list of nonnegative integers,
-##    or a property <A>n</A>,
-##    restrict to permutation representations of rank equal to
-##    <A>n</A>, or in the list <A>n</A>, or satisfying the function <A>n</A>
-##    (if this information is available),
+##    or a property <M>n</M>,
+##    restrict to permutation representations for which the information is
+##    available that the rank is equal to <M>n</M>,
+##    or is in the list <M>n</M>, or satisfies the function <M>n</M>;
+##    if <M>n</M> is <K>fail</K> then restrict to all permutation
+##    representations for which this information is not available,
 ##  </Item>
 ##  <Mark><C>IsMatrixGroup</C> and <K>true</K></Mark>
 ##  <Item>
 ##    restrict to matrix representations,
 ##  </Item>
-##  <Mark><C>Characteristic</C> and <A>p</A></Mark>
+##  <Mark><C>Characteristic</C> and <M>p</M></Mark>
 ##  <Item>
-##    for a prime integer, a list of prime integers, or a property <A>p</A>,
+##    for a prime integer, a list of prime integers, or a property <M>p</M>,
 ##    restrict to matrix representations over fields of characteristic equal
-##    to <A>p</A>, or in the list <A>p</A>,
-##    or satisfying the function <A>p</A>
+##    to <M>p</M>, or in the list <M>p</M>,
+##    or satisfying the function <M>p</M>
 ##    (representations over residue class rings that are not fields can be
-##    addressed by entering <K>fail</K> as the value of <A>p</A>),
+##    addressed by entering <K>fail</K> as the value of <M>p</M>),
 ##  </Item>
-##  <Mark><C>Dimension</C> and <A>n</A></Mark>
+##  <Mark><C>Dimension</C> and <M>n</M></Mark>
 ##  <Item>
 ##    for a positive integer, a list of positive integers,
-##    or a property <A>n</A>,
-##    restrict to matrix representations of dimension equal to <A>n</A>,
-##    or in the list <A>n</A>, or satisfying the function <A>n</A>,
+##    or a property <M>n</M>,
+##    restrict to matrix representations of dimension equal to <M>n</M>,
+##    or in the list <M>n</M>, or satisfying the function <M>n</M>,
 ##  </Item>
-##  <Mark><C>Characteristic</C>, <A>p</A>, <C>Dimension</C>,
+##  <Mark><C>Characteristic</C>, <M>p</M>, <C>Dimension</C>,
 ##        and the string <C>"minimal"</C></Mark>
 ##  <Item>
-##    for a prime integer <A>p</A>,
+##    for a prime integer <M>p</M>,
 ##    restrict to faithful matrix representations over fields
-##    of characteristic <A>p</A> that have minimal dimension
+##    of characteristic <M>p</M> that have minimal dimension
 ##    (if this information is available),
 ##  </Item>
-##  <Mark><C>Ring</C> and <A>R</A></Mark>
+##  <Mark><C>Ring</C> and <M>R</M></Mark>
 ##  <Item>
-##    for a ring or a property <A>R</A>,
-##    restrict to matrix representations over this ring
-##    or satisfying this function
-##    (note that the representation might be defined over a proper subring
-##    of <A>R</A>),
+##    for a ring or a property <M>R</M>,
+##    restrict to matrix representations for which the information is
+##    available that the ring spanned by the matrix entries is contained
+##    in this ring or satisfies this property
+##    (note that the representation might be defined over a proper subring);
+##    if <M>R</M> is <K>fail</K> then restrict to all matrix representations
+##    for which this information is not available,
 ##  </Item>
-##  <Mark><C>Ring</C>, <A>R</A>, <C>Dimension</C>,
+##  <Mark><C>Ring</C>, <M>R</M>, <C>Dimension</C>,
 ##        and the string <C>"minimal"</C></Mark>
 ##  <Item>
-##    for a ring <A>R</A>, restrict to faithful matrix representations
+##    for a ring <M>R</M>, restrict to faithful matrix representations
 ##    over this ring that have minimal dimension
 ##    (if this information is available),
 ##  </Item>
-##  <Mark><C>Character</C> and <A>chi</A></Mark>
+##  <Mark><C>Character</C> and <M>chi</M></Mark>
 ##  <Item>
-##    for a class function or a list of class functions <A>chi</A>,
-##    restrict to matrix representations with these characters
+##    for a class function or a list of class functions <M>chi</M>,
+##    restrict to representations with these characters
 ##    (note that the underlying characteristic of the class function,
 ##    see Section&nbsp;<Ref Sect="UnderlyingCharacteristic" BookName="ref"/>,
-##    determines the characteristic of the matrices),
+##    determines the characteristic of the representation),
+##  </Item>
+##  <Mark><C>Character</C> and <M>name</M></Mark>
+##  <Item>
+##    for a string <M>name</M>,
+##    restrict to representations for which the character is known to have
+##    this name,
+##    according to the information shown by <Ref Func="DisplayAtlasInfo"/>;
+##    if the characteristic is not specified then it defaults to zero,
+##  </Item>
+##  <Mark><C>Character</C> and <M>n</M></Mark>
+##  <Item>
+##    for a positive integer <M>n</M>,
+##    restrict to representations for which the character is known to be the
+##    <M>n</M>-th irreducible character in &GAP;'s library character table
+##    of the group in question;
+##    if the characteristic is not specified then it defaults to zero,
 ##    and
 ##  </Item>
 ##  <Mark><C>IsStraightLineProgram</C> and <K>true</K></Mark>
@@ -331,16 +395,64 @@
 ##  maximal subgroup of <M>G.p</M> are in general not related.
 ##  (This coincides with the numbering used for the
 ##  <Ref Func="Maxes" BookName="ctbllib"/> attribute for character tables.)
+##  </Description>
+##  </ManSection>
+##
+##  <Subsection Label="sect:Examples for DisplayAtlasInfo">
+##  <Heading>Examples for DisplayAtlasInfo</Heading>
+##
+##  Here are some examples how <Ref Func="DisplayAtlasInfo"/> can be called,
+##  and how it output can be interpreted.
+##  <P/>
+##  <Log><![CDATA[
+##  gap> DisplayAtlasInfo( "contents" );
+##  - AtlasRepAccessRemoteFiles: false
+##  
+##  - AtlasRepDataDirectory: /home/you/gap/pkg/atlasrep/
+##  
+##  ID       | address, version, files                        
+##  ---------+------------------------------------------------
+##  core     | http://brauer.maths.qmul.ac.uk/Atlas/,         
+##           | version 2019-04-08,                            
+##           | 10586 files locally available.                 
+##  ---------+------------------------------------------------
+##  internal | atlasrep/datapkg,                              
+##           | version 2019-05-06,                            
+##           | 276 files locally available.                   
+##  ---------+------------------------------------------------
+##  mfer     | http://www.math.rwth-aachen.de/~mfer/datagens/,
+##           | version 2015-10-06,                            
+##           | 34 files locally available.                    
+##  ---------+------------------------------------------------
+##  ctblocks | ctblocks/atlas/,   
+##           | version 2019-04-08,                            
+##           | 121 files locally available.                   
+##  ]]></Log>
+##  <P/>
+##  Note: The above output does not fit to the rest of the manual examples,
+##  since data extensions except <C>internal</C> have been removed at the
+##  beginning of Chapter <Ref Chap="chap:tutorial" Style="Number"/>.
+##  <P/>
+##  The output tells us that two data extensions have been notified
+##  in addition to the core data from the &ATLAS; of Group Representations
+##  and the (local) internal data distributed with the &AtlasRep; package.
+##  The files of the extension <C>mfer</C> must be downloaded before they
+##  can be read (but note that the access to remote files is disabled),
+##  and the files of the extension <C>ctblocks</C> are locally available
+##  in the <F>ctblocks/atlas</F> subdirectory of the &GAP; package directory.
+##  This table (in particular the numbers of locally available files)
+##  depends on your installation of the package and how many files you have
+##  already downloaded.
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> DisplayAtlasInfo( [ "M11", "A5" ] );
 ##  group |  # | maxes | cl | cyc | out | fnd | chk | prs
 ##  ------+----+-------+----+-----+-----+-----+-----+----
 ##  M11   | 42 |     5 |  + |  +  |     |  +  |  +  |  + 
-##  A5    | 18 |     3 |    |     |     |     |  +  |  + 
+##  A5*   | 18 |     3 |  + |     |     |     |  +  |  + 
 ##  ]]></Example>
 ##  <P/>
-##  The above output means that the &ATLAS; of Group Representations contains
+##  The above output means that the database provides
 ##  <M>42</M> representations of the Mathieu group <M>M_{11}</M>,
 ##  straight line programs for computing generators of representatives
 ##  of all five classes of maximal subgroups,
@@ -360,6 +472,22 @@
 ##  and no for computing images under outer automorphisms;
 ##  straight line decisions for checking the standardization of generators
 ##  or group elements are available.
+##  <P/>
+##  <Example><![CDATA[
+##  gap> DisplayAtlasInfo( [ "M11", "A5" ], NrMovedPoints, 11 );
+##  group | # | maxes | cl | cyc | out | fnd | chk | prs
+##  ------+---+-------+----+-----+-----+-----+-----+----
+##  M11   | 1 |     5 |  + |  +  |     |  +  |  +  |  + 
+##  ]]></Example>
+##  <P/>
+##  The given conditions restrict the overview to permutation representations
+##  on <M>11</M> points.
+##  The rows for all those groups are omitted for which no such
+##  representation is available, and the numbers of those representations are
+##  shown that satisfy the given conditions.
+##  In the above example, we see that no representation on <M>11</M> points
+##  is available for <M>A_5</M>, and exactly one such representation is
+##  available for <M>M_{11}</M>.
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> DisplayAtlasInfo( "A5", IsPermGroup, true );
@@ -382,21 +510,21 @@
 ##  gap> DisplayAtlasInfo( "A5", Dimension, [ 1 .. 3 ] );
 ##  Representations for G = A5:    (all refer to std. generators 1)
 ##  ---------------------------
-##   8: G <= GL(2a,4)                
-##   9: G <= GL(2b,4)                
-##  10: G <= GL(3,5)                 
-##  12: G <= GL(3a,9)                
-##  13: G <= GL(3b,9)                
-##  17: G <= GL(3a,Field([Sqrt(5)])) 
-##  18: G <= GL(3b,Field([Sqrt(5)])) 
+##   8: G <= GL(2a,4)                character 2a
+##   9: G <= GL(2b,4)                character 2b
+##  10: G <= GL(3,5)                 character 3a
+##  12: G <= GL(3a,9)                character 3a
+##  13: G <= GL(3b,9)                character 3b
+##  17: G <= GL(3a,Field([Sqrt(5)])) character 3a
+##  18: G <= GL(3b,Field([Sqrt(5)])) character 3b
 ##  gap> DisplayAtlasInfo( "A5", Characteristic, 0 );
 ##  Representations for G = A5:    (all refer to std. generators 1)
 ##  ---------------------------
-##  14: G <= GL(4,Z)                 
-##  15: G <= GL(5,Z)                 
-##  16: G <= GL(6,Z)                 
-##  17: G <= GL(3a,Field([Sqrt(5)])) 
-##  18: G <= GL(3b,Field([Sqrt(5)])) 
+##  14: G <= GL(4,Z)                 character 4a
+##  15: G <= GL(5,Z)                 character 5a
+##  16: G <= GL(6,Z)                 character 3ab
+##  17: G <= GL(3a,Field([Sqrt(5)])) character 3a
+##  18: G <= GL(3b,Field([Sqrt(5)])) character 3b
 ##  ]]></Example>
 ##  <P/>
 ##  The representations with number between <M>4</M> and <M>13</M> are
@@ -410,10 +538,10 @@
 ##  gap> DisplayAtlasInfo( "A5", Identifier, "a" );
 ##  Representations for G = A5:    (all refer to std. generators 1)
 ##  ---------------------------
-##   4: G <= GL(4a,2)                
-##   8: G <= GL(2a,4)                
-##  12: G <= GL(3a,9)                
-##  17: G <= GL(3a,Field([Sqrt(5)])) 
+##   4: G <= GL(4a,2)                character 4a
+##   8: G <= GL(2a,4)                character 2a
+##  12: G <= GL(3a,9)                character 3a
+##  17: G <= GL(3a,Field([Sqrt(5)])) character 3a
 ##  ]]></Example>
 ##  <P/>
 ##  Each of the representations with the numbers <M>4, 8, 12</M>,
@@ -427,33 +555,33 @@
 ##  gap> DisplayAtlasInfo( "A5", Characteristic, IsOddInt );
 ##  Representations for G = A5:    (all refer to std. generators 1)
 ##  ---------------------------
-##   6: G <= GL(4,3)  
-##   7: G <= GL(6,3)  
-##  10: G <= GL(3,5)  
-##  11: G <= GL(5,5)  
-##  12: G <= GL(3a,9) 
-##  13: G <= GL(3b,9) 
+##   6: G <= GL(4,3)  character 4a
+##   7: G <= GL(6,3)  character 3ab
+##  10: G <= GL(3,5)  character 3a
+##  11: G <= GL(5,5)  character 5a
+##  12: G <= GL(3a,9) character 3a
+##  13: G <= GL(3b,9) character 3b
 ##  gap> DisplayAtlasInfo( "A5", Dimension, IsPrimeInt );
 ##  Representations for G = A5:    (all refer to std. generators 1)
 ##  ---------------------------
-##   8: G <= GL(2a,4)                
-##   9: G <= GL(2b,4)                
-##  10: G <= GL(3,5)                 
-##  11: G <= GL(5,5)                 
-##  12: G <= GL(3a,9)                
-##  13: G <= GL(3b,9)                
-##  15: G <= GL(5,Z)                 
-##  17: G <= GL(3a,Field([Sqrt(5)])) 
-##  18: G <= GL(3b,Field([Sqrt(5)])) 
+##   8: G <= GL(2a,4)                character 2a
+##   9: G <= GL(2b,4)                character 2b
+##  10: G <= GL(3,5)                 character 3a
+##  11: G <= GL(5,5)                 character 5a
+##  12: G <= GL(3a,9)                character 3a
+##  13: G <= GL(3b,9)                character 3b
+##  15: G <= GL(5,Z)                 character 5a
+##  17: G <= GL(3a,Field([Sqrt(5)])) character 3a
+##  18: G <= GL(3b,Field([Sqrt(5)])) character 3b
 ##  gap> DisplayAtlasInfo( "A5", Ring, IsFinite and IsPrimeField );
 ##  Representations for G = A5:    (all refer to std. generators 1)
 ##  ---------------------------
-##   4: G <= GL(4a,2) 
-##   5: G <= GL(4b,2) 
-##   6: G <= GL(4,3)  
-##   7: G <= GL(6,3)  
-##  10: G <= GL(3,5)  
-##  11: G <= GL(5,5)  
+##   4: G <= GL(4a,2) character 4a
+##   5: G <= GL(4b,2) character 2ab
+##   6: G <= GL(4,3)  character 4a
+##   7: G <= GL(6,3)  character 3ab
+##  10: G <= GL(3,5)  character 3a
+##  11: G <= GL(5,5)  character 5a
 ##  ]]></Example>
 ##  <P/>
 ##  The above examples show how the output can be restricted using a property
@@ -468,12 +596,15 @@
 ##  gap> DisplayAtlasInfo( "A5", IsStraightLineProgram, true );
 ##  Programs for G = A5:    (all refer to std. generators 1)
 ##  --------------------
-##  presentation
-##  std. gen. checker
-##  maxes (all 3):
-##    1:  A4
-##    2:  D10
-##    3:  S3
+##  - class repres.*      
+##  - presentation        
+##  - maxes (all 3):
+##    1:  A4              
+##    2:  D10             
+##    3:  S3              
+##  - std. gen. checker:
+##    (check)             
+##    (pres)              
 ##  ]]></Example>
 ##  <P/>
 ##  Straight line programs are available for computing generators of
@@ -482,8 +613,7 @@
 ##  in fact standard generators is available as well as a presentation
 ##  in terms of standard generators,
 ##  see&nbsp;<Ref Func="AtlasProgram"/>.
-##  </Description>
-##  </ManSection>
+##  </Subsection>
 ##  <#/GAPDoc>
 ##
 DeclareGlobalFunction( "DisplayAtlasInfo" );
@@ -507,9 +637,8 @@ DeclareGlobalFunction( "DisplayAtlasInfo" );
 ##  (see
 ##  Section&nbsp;<Ref Sect="sect:Group Names Used in the AtlasRep Package"/>)
 ##  of a group, and <A>repnr</A> a positive integer.
-##  If the &ATLAS; of Group Representations contains at least <A>repnr</A>
-##  representations for the group with &GAP; name <A>gapname</A> then
-##  <Ref Func="AtlasGenerators"/>,
+##  If at least <A>repnr</A> representations for the group with &GAP; name
+##  <A>gapname</A> are available then <Ref Func="AtlasGenerators"/>,
 ##  when called with <A>gapname</A> and <A>repnr</A>,
 ##  returns an immutable record describing the <A>repnr</A>-th
 ##  representation;
@@ -522,6 +651,11 @@ DeclareGlobalFunction( "DisplayAtlasInfo" );
 ##  The result record has at least the following components.
 ##  <P/>
 ##  <List>
+##  <Mark><C>contents</C></Mark>
+##  <Item>
+##    the identifier of the part of the database to which the generators
+##    belong, for example <C>"core"</C> or <C>"internal"</C>,
+##  </Item>
 ##  <Mark><C>generators</C></Mark>
 ##  <Item>
 ##    a list of generators for the group,
@@ -534,9 +668,14 @@ DeclareGlobalFunction( "DisplayAtlasInfo" );
 ##  <Mark><C>identifier</C></Mark>
 ##  <Item>
 ##    a &GAP; object (a list of filenames plus additional information)
-##    that uniquely determines the representation;
-##    the value can be used as <A>identifier</A> argument of
+##    that uniquely determines the representation,
+##    see Section <Ref Sect="sect:identifier component"/>;
+##    the value can be used as <C>identifier</C> argument of
 ##    <Ref Func="AtlasGenerators"/>.
+##  </Item>
+##  <Mark><C>repname</C></Mark>
+##  <Item>
+##    a string that is an initial part of the filenames of the generators.
 ##  </Item>
 ##  <Mark><C>repnr</C></Mark>
 ##  <Item>
@@ -547,23 +686,85 @@ DeclareGlobalFunction( "DisplayAtlasInfo" );
 ##  <Item>
 ##    the positive integer denoting the underlying standard generators,
 ##  </Item>
+##  <Mark><C>type</C></Mark>
+##  <Item>
+##    a string that describes the type of the representation
+##    (<C>"perm"</C> for a permutation representation,
+##    <C>"matff"</C> for a matrix representation over a finite field,
+##    <C>"matint"</C> for a matrix representation over the ring of integers,
+##    <C>"matalg"</C> for a matrix representation over an algebraic number
+##    field).
+##  </Item>
 ##  </List>
 ##  <P/>
-##  Additionally, the group order may be stored in the component <C>size</C>,
-##  and describing components may be available that depend on the data type
-##  of the representation:
-##  For permutation representations, these are <C>p</C> for the number of
-##  moved points, <C>id</C> for the distinguishing string as described for
-##  <Ref Func="DisplayAtlasInfo"/>, and information about primitivity,
-##  point stabilizers etc. if available;
-##  for matrix representations, these are <C>dim</C> for the dimension of the
-##  matrices, <C>ring</C> (if known) for the ring generated by the matrix
-##  entries, <C>id</C> for the distinguishing string, and information about
-##  the character if available.
+##  Additionally, the following <E>describing components</E> may be available
+##  if they are known, and depending on the data type of the representation.
+##  <P/>
+##  <List>
+##  <Mark><C>size</C></Mark>
+##  <Item>
+##    the group order,
+##  </Item>
+##  <Mark><C>id</C></Mark>
+##  <Item>
+##    the distinguishing string as described for
+##    <Ref Func="DisplayAtlasInfo"/>,
+##  </Item>
+##  <Mark><C>charactername</C></Mark>
+##  <Item>
+##    a string that describes the character of the representation,
+##  </Item>
+##  <Mark><C>constituents</C></Mark>
+##  <Item>
+##    a list of positive integers denoting the positions of the irreducible
+##    constituents of the character of the representation,
+##  </Item>
+##  <Mark><C>p</C> (for permutation representations)</Mark>
+##  <Item>
+##    for the number of moved points,
+##  </Item>
+##  <Mark><C>dim</C> (for matrix representations)</Mark>
+##  <Item>
+##    the dimension of the matrices,
+##  </Item>
+##  <Mark><C>ring</C> (for matrix representations)</Mark>
+##  <Item>
+##    the ring generated by the matrix entries,
+##  </Item>
+##  <Mark><C>transitivity</C> (for permutation representations)</Mark>
+##  <Item>
+##    a nonnegative integer, see <Ref Oper="Transitivity" BookName="ref"/>,
+##  </Item>
+##  <Mark><C>orbits</C> (for intransitive permutation representations)</Mark>
+##  <Item>
+##    the sorted list of orbit lengths on the set of moved points,
+##  </Item>
+##  <Mark><C>rankAction</C> (for transitive permutation representations)</Mark>
+##  <Item>
+##    the number of orbits of the point stabilizer on the set of moved points,
+##    see <Ref Oper="RankAction" BookName="ref"/>,
+##  </Item>
+##  <Mark><C>stabilizer</C> (for transitive permutation representations)</Mark>
+##  <Item>
+##    a string that describes the structure of the point stabilizers,
+##  </Item>
+##  <Mark><C>isPrimitive</C> (for transitive permutation representations)</Mark>
+##  <Item>
+##    <K>true</K> if the point stabilizers are maximal subgroups,
+##    and <K>false</K> otherwise,
+##  </Item>
+##  <Mark><C>maxnr</C> (for primitive permutation representations)</Mark>
+##  <Item>
+##    the number of the class of maximal subgroups that contains the point
+##    stabilizers, w.&nbsp;r.&nbsp;t.&nbsp;the
+##    <Ref Attr="Maxes" BookName="ctbllib"/> list.
+##  </Item>
+##  </List>
 ##  <P/>
 ##  It should be noted that the number <A>repnr</A> refers to the number
 ##  shown by <Ref Func="DisplayAtlasInfo"/> <E>in the current session</E>;
-##  it may be that after the addition of new representations,
+##  it may be that after the addition of new representations
+##  (for example after loading a package that provides some),
 ##  <A>repnr</A> refers to another representation.
 ##  <P/>
 ##  The alternative form of <Ref Func="AtlasGenerators"/>,
@@ -575,14 +776,16 @@ DeclareGlobalFunction( "DisplayAtlasInfo" );
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> gens1:= AtlasGenerators( "A5", 1 );
-##  rec( generators := [ (1,2)(3,4), (1,3,5) ], groupname := "A5", 
-##    id := "", 
+##  rec( charactername := "1a+4a", constituents := [ 1, 4 ], 
+##    contents := "core", generators := [ (1,2)(3,4), (1,3,5) ], 
+##    groupname := "A5", id := "", 
 ##    identifier := [ "A5", [ "A5G1-p5B0.m1", "A5G1-p5B0.m2" ], 1, 5 ], 
 ##    isPrimitive := true, maxnr := 1, p := 5, rankAction := 2, 
 ##    repname := "A5G1-p5B0", repnr := 1, size := 60, stabilizer := "A4", 
 ##    standardization := 1, transitivity := 3, type := "perm" )
 ##  gap> gens8:= AtlasGenerators( "A5", 8 );
-##  rec( dim := 2, 
+##  rec( charactername := "2a", constituents := [ 2 ], contents := "core",
+##    dim := 2, 
 ##    generators := [ [ [ Z(2)^0, 0*Z(2) ], [ Z(2^2), Z(2)^0 ] ], 
 ##        [ [ 0*Z(2), Z(2)^0 ], [ Z(2)^0, Z(2)^0 ] ] ], groupname := "A5",
 ##    id := "a", 
@@ -590,7 +793,8 @@ DeclareGlobalFunction( "DisplayAtlasInfo" );
 ##        4 ], repname := "A5G1-f4r2aB0", repnr := 8, ring := GF(2^2), 
 ##    size := 60, standardization := 1, type := "matff" )
 ##  gap> gens17:= AtlasGenerators( "A5", 17 );
-##  rec( dim := 3, 
+##  rec( charactername := "3a", constituents := [ 2 ], contents := "core",
+##    dim := 3, 
 ##    generators := 
 ##      [ [ [ -1, 0, 0 ], [ 0, -1, 0 ], [ -E(5)-E(5)^4, -E(5)-E(5)^4, 1 ] 
 ##           ], [ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 1, 0, 0 ] ] ], 
@@ -605,9 +809,13 @@ DeclareGlobalFunction( "DisplayAtlasInfo" );
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> gens1max2:= AtlasGenerators( "A5", 1, 2 );
-##  rec( generators := [ (1,2)(3,4), (2,3)(4,5) ], groupname := "D10", 
+##  rec( charactername := "1a+4a", constituents := [ 1, 4 ], 
+##    contents := "core", generators := [ (1,2)(3,4), (2,3)(4,5) ], 
+##    groupname := "D10", id := "", 
 ##    identifier := [ "A5", [ "A5G1-p5B0.m1", "A5G1-p5B0.m2" ], 1, 5, 2 ],
-##    repnr := 1, size := 10, standardization := 1 )
+##    isPrimitive := true, maxnr := 1, p := 5, rankAction := 2, 
+##    repname := "A5G1-p5B0", repnr := 1, size := 10, stabilizer := "A4", 
+##    standardization := 1, transitivity := 3, type := "perm" )
 ##  gap> id:= gens1max2.identifier;;
 ##  gap> gens1max2 = AtlasGenerators( id );
 ##  true
@@ -633,19 +841,25 @@ DeclareGlobalFunction( "AtlasGenerators" );
 #############################################################################
 ##
 #F  AtlasProgramInfo( <gapname>[, <std>][, "maxes"], <maxnr> )
+#F  AtlasProgramInfo( <gapname>[, <std>], "maxes", <maxnr>[, <std2>] )
+#F  AtlasProgramInfo( <gapname>[, <std>], "maxstd", <maxnr>, <vers>, <substd> )
+#F  AtlasProgramInfo( <gapname>[, <std>], "kernel", <factname> )
 #F  AtlasProgramInfo( <gapname>[, <std>], "classes" )
 #F  AtlasProgramInfo( <gapname>[, <std>], "cyclic" )
+#F  AtlasProgramInfo( <gapname>[, <std>], "cyc2ccl"[, <vers>] )
 #F  AtlasProgramInfo( <gapname>[, <std>], "automorphism", <autname> )
 #F  AtlasProgramInfo( <gapname>[, <std>], "check" )
-#F  AtlasProgramInfo( <gapname>[, <std>], "pres" )
+#F  AtlasProgramInfo( <gapname>[, <std>], "presentation" )
 #F  AtlasProgramInfo( <gapname>[, <std>], "find" )
 #F  AtlasProgramInfo( <gapname>, <std>, "restandardize", <std2> )
 #F  AtlasProgramInfo( <gapname>[, <std>], "other", <descr> )
 ##
+##  (same arguments as 'AtlasProgram')
+##
 ##  <#GAPDoc Label="AtlasProgramInfo">
 ##  <ManSection>
 ##  <Func Name="AtlasProgramInfo"
-##  Arg='gapname[, std][, "contents", sources][, ...]'/>
+##  Arg='gapname[, std][, "contents", sources][, "version", vers ], ...'/>
 ##
 ##  <Returns>
 ##  a record describing a program, or <K>fail</K>.
@@ -658,7 +872,7 @@ DeclareGlobalFunction( "AtlasGenerators" );
 ##  <C>outputs</C>.
 ##  The idea is that one can use <Ref Func="AtlasProgramInfo"/> for
 ##  testing whether the program in question is available at all,
-##  but without transferring it from a remote server.
+##  but without downloading files.
 ##  The <C>identifier</C> component of the result of
 ##  <Ref Func="AtlasProgramInfo"/> can then be used to fetch the program
 ##  with <Ref Func="AtlasProgram"/>.
@@ -666,7 +880,7 @@ DeclareGlobalFunction( "AtlasGenerators" );
 ##  <Example><![CDATA[
 ##  gap> AtlasProgramInfo( "J1", "cyclic" );
 ##  rec( groupname := "J1", identifier := [ "J1", "J1G1-cycW1", 1 ], 
-##    standardization := 1 )
+##    standardization := 1, version := "1" )
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
@@ -678,8 +892,12 @@ DeclareGlobalFunction( "AtlasProgramInfo" );
 #############################################################################
 ##
 #F  AtlasProgram( <gapname>[, <std>][, "maxes"], <maxnr> )
+#F  AtlasProgram( <gapname>[, <std>], "maxes", <maxnr>[, <std2>] )
+#F  AtlasProgram( <gapname>[, <std>], "maxstd", <maxnr>, <vers>, <substd> )
+#F  AtlasProgram( <gapname>[, <std>], "kernel", <factname> )
 #F  AtlasProgram( <gapname>[, <std>], "classes" )
 #F  AtlasProgram( <gapname>[, <std>], "cyclic" )
+#F  AtlasProgram( <gapname>[, <std>], "cyc2ccl"[, <vers>] )
 #F  AtlasProgram( <gapname>[, <std>], "automorphism", <autname> )
 #F  AtlasProgram( <gapname>[, <std>], "check" )
 #F  AtlasProgram( <gapname>[, <std>], "presentation" )
@@ -688,9 +906,13 @@ DeclareGlobalFunction( "AtlasProgramInfo" );
 #F  AtlasProgram( <gapname>[, <std>], "other", <descr> )
 #F  AtlasProgram( <identifier> )
 ##
+##  (Also the argument pairs '[ "contents", <sources> ]' and
+##  '[ "version", <v> ]' are supported.)
+##
 ##  <#GAPDoc Label="AtlasProgram">
 ##  <ManSection>
-##  <Func Name="AtlasProgram" Arg='gapname[, std], ...'/>
+##  <Func Name="AtlasProgram"
+##  Arg='gapname[, std][, "contents", sources][, "version", vers ], ...'/>
 ##  <Func Name="AtlasProgram" Arg='identifier' Label="for an identifier"/>
 ##
 ##  <Returns>
@@ -698,16 +920,16 @@ DeclareGlobalFunction( "AtlasProgramInfo" );
 ##  </Returns>
 ##  <Description>
 ##  In the first form, <A>gapname</A> must be a string denoting a &GAP; name
-##  (see Section
-##  &nbsp;<Ref Sect="sect:Group Names Used in the AtlasRep Package"/>)
+##  (see
+##  Section&nbsp;<Ref Sect="sect:Group Names Used in the AtlasRep Package"/>)
 ##  of a group <M>G</M>, say.
-##  If the &ATLAS; of Group Representations contains a straight line program
+##  If the database contains a straight line program
 ##  (see Section&nbsp;<Ref Sect="Straight Line Programs" BookName="ref"/>)
 ##  or straight line decision
 ##  (see Section&nbsp;<Ref Sect="sect:Straight Line Decisions"/>)
 ##  or black box program
 ##  (see Section&nbsp;<Ref Sect="sect:Black Box Programs"/>)
-##  as described by the remaining arguments (see below) then
+##  as described by the arguments indicated by <A>...</A> (see below) then
 ##  <Ref Func="AtlasProgram"/> returns an immutable record
 ##  containing this program.
 ##  Otherwise <K>fail</K> is returned.
@@ -718,9 +940,29 @@ DeclareGlobalFunction( "AtlasProgramInfo" );
 ##  of standard generators of <M>G</M> as input,
 ##  see Section&nbsp;<Ref Sect="sect:Standard Generators Used in AtlasRep"/>.
 ##  <P/>
-##  The result record has the following components.
+##  If the optional arguments <C>"contents"</C> and <A>sources</A> are
+##  given then the latter must be either a string or a list of strings,
+##  with the same meaning as described for <Ref Func="DisplayAtlasInfo"/>.
+##  <P/>
+##  If the optional arguments <C>"version"</C> and <A>vers</A> are
+##  given then the latter must be either a number or a list of numbers,
+##  and only those straight line programs/decisions are considered
+##  whose version number fits to <A>vers</A>.
+##  <P/>
+##  The result record has at least the following components.
 ##  <P/>
 ##  <List>
+##  <Mark><C>groupname</C></Mark>
+##  <Item>
+##      the string <A>gapname</A>,
+##  </Item>
+##  <Mark><C>identifier</C></Mark>
+##  <Item>
+##      a &GAP; object (a list of filenames plus additional information)
+##      that uniquely determines the program;
+##      the value can be used as <A>identifier</A> argument of
+##      <Ref Func="AtlasProgram"/> (see below),
+##  </Item>
 ##  <Mark><C>program</C></Mark>
 ##  <Item>
 ##      the required straight line program/decision, or black box program,
@@ -730,29 +972,74 @@ DeclareGlobalFunction( "AtlasProgramInfo" );
 ##      the positive integer denoting the underlying standard generators of
 ##      <M>G</M>,
 ##  </Item>
-##  <Mark><C>identifier</C></Mark>
+##  <Mark><C>version</C></Mark>
 ##  <Item>
-##      a &GAP; object (a list of filenames plus additional information)
-##      that uniquely determines the program;
-##      the value can be used as <A>identifier</A> argument of
-##      <Ref Func="AtlasProgram"/> (see below).
+##      the substring of the filename of the program that denotes the
+##      version of the program.
 ##  </Item>
 ##  </List>
 ##  <P/>
-##  In the first form, the last arguments must be as follows.
+##  If the program computes generators of the restriction to a maximal
+##  subgroup then also the following components are present.
 ##  <P/>
 ##  <List>
-##  <Mark>(the string <C>"maxes"</C> and) a positive integer <A>maxnr</A>
+##  <Mark><C>size</C></Mark>
+##  <Item>
+##      the order of the maximal subgroup,
+##  </Item>
+##  <Mark><C>subgroupname</C></Mark>
+##  <Item>
+##      a string denoting a name of the maximal subgroup.
+##  </Item>
+##  </List>
+##  <P/>
+##  In the first form,
+##  the arguments indicated by <A>...</A> must be as follows.
+##  <P/>
+##  <List>
+##  <Mark>(the string <C>"maxes"</C> and) a positive integer <M>maxnr</M>
 ##  </Mark>
 ##  <Item>
-##    the required program computes generators of the <A>maxnr</A>-th
-##    maximal subgroup of the group with &GAP; name <A>gapname</A>.
+##    the required program computes generators of the <M>maxnr</M>-th
+##    maximal subgroup of the group with &GAP; name <M>gapname</M>.
 ##    <Index Subkey="for maximal subgroups">straight line program</Index>
 ##    <Index>maximal subgroups</Index>
 ##    <P/>
 ##    In this case, the result record of <Ref Func="AtlasProgram"/> also
 ##    may contain a component <C>size</C>,
 ##    whose value is the order of the maximal subgroup in question.
+##  </Item>
+##  <Mark>the string <C>"maxes"</C>
+##        and two positive integers <M>maxnr</M> and <M>std2</M></Mark>
+##  <Item>
+##    the required program computes standard generators of the
+##    <M>maxnr</M>-th maximal subgroup of the group with &GAP; name
+##    <M>gapname</M>, w.&nbsp;r.&nbsp;t.&nbsp;the standardization <M>std2</M>.
+##    <P/>
+##    A prescribed <C>"version"</C> parameter refers to the straight line
+##    program for computing the restriction, not to the program for
+##    standardizing the result of the restriction.
+##    <P/>
+##    The meaning of the component <C>size</C> in the result, if present,
+##    is the same as in the previous case.
+##  </Item>
+##  <Mark>the string <C>"maxstd"</C> and three positive integers
+##  <M>maxnr</M>, <M>vers</M>, <M>substd</M></Mark>
+##  <Item>
+##    the required program computes standard generators of the
+##    <M>maxnr</M>-th maximal subgroup of the group with &GAP; name
+##    <M>gapname</M> w.&nbsp;r.&nbsp;t.&nbsp;standardization <M>substd</M>;
+##    in this case, the inputs of the program are <E>not</E> standard
+##    generators of the group with &GAP; name <M>gapname</M>
+##    but the outputs of the straight line program with version <M>vers</M>
+##    for computing generators of its <M>maxnr</M>-th maximal subgroup.
+##  </Item>
+##  <Mark>the string <C>"kernel"</C> and a string <M>factname</M></Mark>
+##  <Item>
+##    the required program computes generators of the kernel of an
+##    epimorphism from <M>G</M> to a group with &GAP; name <M>factname</M>.
+##    <Index Subkey="for normal subgroups">straight line program</Index>
+##    <Index Subkey="for kernels of epimorphisms">straight line program</Index>
 ##  </Item>
 ##  <Mark>one of the strings <C>"classes"</C> or <C>"cyclic"</C></Mark>
 ##  <Item>
@@ -774,14 +1061,31 @@ DeclareGlobalFunction( "AtlasProgramInfo" );
 ##    as described in
 ##    Section&nbsp;<Ref Sect="sect:Class Names Used in the AtlasRep Package"/>.
 ##  </Item>
-##  <Mark>the strings <C>"automorphism"</C> and <A>autname</A></Mark>
+##  <Mark>the string <C>"cyc2ccl"</C> (and the string <M>vers</M>)</Mark>
+##  <Item>
+##    the required program computes representatives of conjugacy classes
+##    of elements from representatives of generators of maximally cyclic
+##    subgroups of <M>G</M>.
+##    Thus the inputs are the outputs of the program of type <C>"cyclic"</C>
+##    whose version is <M>vers</M>.
+##  </Item>
+##  <Mark>the strings <C>"cyc2ccl"</C>, <M>vers1</M>, <C>"version"</C>, <M>vers2</M></Mark>
+##  <Item>
+##    the required program computes representatives of conjugacy classes
+##    of elements from representatives of generators of maximally cyclic
+##    subgroups of <M>G</M>,
+##    where the inputs are the outputs of the program of type <C>"cyclic"</C>
+##    whose version is <M>vers1</M> and the required program itself has
+##    version <M>vers2</M>.
+##  </Item>
+##  <Mark>the strings <C>"automorphism"</C> and <M>autname</M></Mark>
 ##  <Item>
 ##    <Index Subkey="for outer automorphisms">straight line program</Index>
 ##    <Index>automorphisms</Index>
 ##    the required program computes images of standard generators under
 ##    the outer automorphism of <M>G</M> that is given by this string.
 ##    <P/>
-##    Note that a value <C>"2"</C> of <A>autname</A> means that the square of
+##    Note that a value <C>"2"</C> of <M>autname</M> means that the square of
 ##    the automorphism is an inner automorphism of <M>G</M> (not necessarily
 ##    the identity mapping) but the automorphism itself is not.
 ##  </Item>
@@ -792,7 +1096,7 @@ DeclareGlobalFunction( "AtlasProgramInfo" );
 ##    the required result is a straight line decision that
 ##    takes a list of generators for <M>G</M>
 ##    and returns <K>true</K> if these generators are standard generators of
-##    <M>G</M> w.r.t.&nbsp;the standardization <A>std</A>,
+##    <M>G</M> w.&nbsp;r.&nbsp;t.&nbsp;the standardization <A>std</A>,
 ##    and <K>false</K> otherwise.
 ##  </Item>
 ##  <Mark>the string <C>"presentation"</C></Mark>
@@ -802,7 +1106,7 @@ DeclareGlobalFunction( "AtlasProgramInfo" );
 ##    the required result is a straight line decision that
 ##    takes a list of group elements
 ##    and returns <K>true</K> if these elements are standard generators of
-##    <M>G</M> w.r.t.&nbsp;the standardization <A>std</A>,
+##    <M>G</M> w.&nbsp;r.&nbsp;t.&nbsp;the standardization <A>std</A>,
 ##    and <K>false</K> otherwise.
 ##    <P/>
 ##    See <Ref Func="StraightLineProgramFromStraightLineDecision"/> for an
@@ -815,20 +1119,20 @@ DeclareGlobalFunction( "AtlasProgramInfo" );
 ##    </Index>
 ##    the required result is a black box program that takes <M>G</M>
 ##    and returns a list of standard generators of <M>G</M>,
-##    w.r.t.&nbsp;the standardization <A>std</A>.
+##    w.&nbsp;r.&nbsp;t.&nbsp;the standardization <A>std</A>.
 ##  </Item>
-##  <Mark>the string <C>"restandardize"</C> and an integer <A>std2</A></Mark>
+##  <Mark>the string <C>"restandardize"</C> and an integer <M>std2</M></Mark>
 ##  <Item>
 ##    <Index Subkey="for restandardizing">straight line program</Index>
 ##    the required result is a straight line program that computes
-##    standard generators of <M>G</M> w.r.t. the <A>std2</A>-th set
-##    of standard generators of <M>G</M>;
+##    standard generators of <M>G</M> w.&nbsp;r.&nbsp;t.&nbsp;the
+##    <M>std2</M>-th set of standard generators of <M>G</M>;
 ##    in this case, the argument <A>std</A> must be given.
 ##  </Item>
-##  <Mark>the strings <C>"other"</C> and <A>descr</A></Mark>
+##  <Mark>the strings <C>"other"</C> and <M>descr</M></Mark>
 ##  <Item>
 ##    <Index Subkey="free format">straight line program</Index>
-##    the required program is described by <A>descr</A>.
+##    the required program is described by <M>descr</M>.
 ##  </Item>
 ##  </List>
 ##  <P/>
@@ -840,17 +1144,19 @@ DeclareGlobalFunction( "AtlasProgramInfo" );
 ##  gap> prog:= AtlasProgram( "A5", 2 );
 ##  rec( groupname := "A5", identifier := [ "A5", "A5G1-max2W1", 1 ], 
 ##    program := <straight line program>, size := 10, 
-##    standardization := 1, subgroupname := "D10" )
+##    standardization := 1, subgroupname := "D10", version := "1" )
 ##  gap> StringOfResultOfStraightLineProgram( prog.program, [ "a", "b" ] );
 ##  "[ a, bbab ]"
 ##  gap> gens1:= AtlasGenerators( "A5", 1 );
-##  rec( generators := [ (1,2)(3,4), (1,3,5) ], groupname := "A5", 
-##    id := "", 
+##  rec( charactername := "1a+4a", constituents := [ 1, 4 ], 
+##    contents := "core", generators := [ (1,2)(3,4), (1,3,5) ], 
+##    groupname := "A5", id := "", 
 ##    identifier := [ "A5", [ "A5G1-p5B0.m1", "A5G1-p5B0.m2" ], 1, 5 ], 
 ##    isPrimitive := true, maxnr := 1, p := 5, rankAction := 2, 
 ##    repname := "A5G1-p5B0", repnr := 1, size := 60, stabilizer := "A4", 
 ##    standardization := 1, transitivity := 3, type := "perm" )
-##  gap> maxgens:= ResultOfStraightLineProgram( prog.program, gens1.generators );
+##  gap> maxgens:= ResultOfStraightLineProgram( prog.program,
+##  >                  gens1.generators );
 ##  [ (1,2)(3,4), (2,3)(4,5) ]
 ##  gap> maxgens = gens1max2.generators;
 ##  true
@@ -861,10 +1167,11 @@ DeclareGlobalFunction( "AtlasProgramInfo" );
 ##  we can also fetch and apply the appropriate straight line program.
 ##  Such a program
 ##  (see&nbsp;<Ref Sect="Straight Line Programs" BookName="ref"/>)
-##  takes standard generators of a group --in this example <M>A_5</M>--
+##  takes standard generators of a group
+##  &ndash;in this example <M>A_5</M>&ndash;
 ##  as its input, and returns a list of elements in this group
-##  --in this example generators of the <M>D_{10}</M> subgroup we had met
-##  above--
+##  &ndash;in this example generators of the <M>D_{10}</M> subgroup we had
+##  met above&ndash;
 ##  which are computed essentially by evaluating structured words in terms of
 ##  the standard generators.
 ##  <P/>
@@ -872,7 +1179,8 @@ DeclareGlobalFunction( "AtlasProgramInfo" );
 ##  gap> prog:= AtlasProgram( "J1", "cyclic" );
 ##  rec( groupname := "J1", identifier := [ "J1", "J1G1-cycW1", 1 ], 
 ##    outputs := [ "6A", "7A", "10B", "11A", "15B", "19A" ], 
-##    program := <straight line program>, standardization := 1 )
+##    program := <straight line program>, standardization := 1, 
+##    version := "1" )
 ##  gap> gens:= GeneratorsOfGroup( FreeGroup( "x", "y" ) );;
 ##  gap> ResultOfStraightLineProgram( prog.program, gens );
 ##  [ (x*y)^2*((y*x)^2*y^2*x)^2*y^2, x*y, (x*(y*x*y)^2)^2*y, 
@@ -911,23 +1219,23 @@ DeclareGlobalFunction( "AtlasProgram" );
 ##  or <K>fail</K>.
 ##  </Returns>
 ##  <Description>
-##  Let <A>gapname</A> be a string denoting a &GAP; name (see Section
-##  &nbsp;<Ref Sect="sect:Group Names Used in the AtlasRep Package"/>)
+##  Let <A>gapname</A> be a string denoting a &GAP; name (see
+##  Section&nbsp;<Ref Sect="sect:Group Names Used in the AtlasRep Package"/>)
 ##  of a group <M>G</M>, say.
-##  If the &ATLAS; of Group Representations contains at least one
-##  representation for <M>G</M> with the required properties
-##  then <Ref Func="OneAtlasGeneratingSetInfo"/> returns a record <A>r</A>
+##  If the database contains at least one representation for <M>G</M> with
+##  the required properties
+##  then <Ref Func="OneAtlasGeneratingSetInfo"/> returns a record <M>r</M>
 ##  whose components are the same as those of the records returned by
 ##  <Ref Func="AtlasGenerators"/>,
 ##  except that the component <C>generators</C> is not contained;
-##  the component <C>identifier</C> of <A>r</A> can be used as input for
+##  the component <C>identifier</C> of <M>r</M> can be used as input for
 ##  <Ref Func="AtlasGenerators"/> in order to fetch the generators.
 ##  If no representation satisfying the given conditions is available
 ##  then <K>fail</K> is returned.
 ##  <P/>
 ##  If the argument <A>std</A> is given then it must be a positive integer
 ##  or a list of positive integers, denoting the sets of standard generators
-##  w.r.t.&nbsp;which the representation shall be given (see
+##  w.&nbsp;r.&nbsp;t.&nbsp;which the representation shall be given (see
 ##  Section&nbsp;<Ref Sect="sect:Standard Generators Used in AtlasRep"/>).
 ##  <P/>
 ##  The argument <A>gapname</A> can be missing (then all available groups are
@@ -939,9 +1247,9 @@ DeclareGlobalFunction( "AtlasProgram" );
 ##  generating set for <M>G</M> that matches the restrictions,
 ##  in the ordering shown by <Ref Func="DisplayAtlasInfo"/>.
 ##  <P/>
-##  Note that even in the case that the user parameter <Q>remote</Q>
-##  has the value <K>true</K>
-##  (see Section&nbsp;<Ref Subsect="subsect:Local or remote access"/>),
+##  Note that even in the case that the user preference
+##  <C>AtlasRepAccessRemoteFiles</C> has the value <K>true</K>
+##  (see Section&nbsp;<Ref Subsect="subsect:AtlasRepAccessRemoteFiles"/>),
 ##  <Ref Func="OneAtlasGeneratingSetInfo"/> does <E>not</E> attempt
 ##  to <E>transfer</E> remote data files,
 ##  just the table of contents is evaluated.
@@ -955,14 +1263,16 @@ DeclareGlobalFunction( "AtlasProgram" );
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> info:= OneAtlasGeneratingSetInfo( "A5" );
-##  rec( groupname := "A5", id := "", 
+##  rec( charactername := "1a+4a", constituents := [ 1, 4 ], 
+##    contents := "core", groupname := "A5", id := "", 
 ##    identifier := [ "A5", [ "A5G1-p5B0.m1", "A5G1-p5B0.m2" ], 1, 5 ], 
 ##    isPrimitive := true, maxnr := 1, p := 5, rankAction := 2, 
 ##    repname := "A5G1-p5B0", repnr := 1, size := 60, stabilizer := "A4", 
 ##    standardization := 1, transitivity := 3, type := "perm" )
 ##  gap> gens:= AtlasGenerators( info.identifier );
-##  rec( generators := [ (1,2)(3,4), (1,3,5) ], groupname := "A5", 
-##    id := "", 
+##  rec( charactername := "1a+4a", constituents := [ 1, 4 ], 
+##    contents := "core", generators := [ (1,2)(3,4), (1,3,5) ], 
+##    groupname := "A5", id := "", 
 ##    identifier := [ "A5", [ "A5G1-p5B0.m1", "A5G1-p5B0.m2" ], 1, 5 ], 
 ##    isPrimitive := true, maxnr := 1, p := 5, rankAction := 2, 
 ##    repname := "A5G1-p5B0", repnr := 1, size := 60, stabilizer := "A4", 
@@ -979,21 +1289,22 @@ DeclareGlobalFunction( "AtlasProgram" );
 ##  <P/>
 ##  Note that a permutation representation of degree <M>20</M> could be
 ##  obtained by taking twice the primitive representation on <M>10</M> points;
-##  however, the &ATLAS; of Group Representations does not store this
-##  imprimitive representation (cf.
+##  however, the database does not store this imprimitive representation (cf.
 ##  Section&nbsp;<Ref Sect="sect:Accessing vs. Constructing Representations"/>).
 ##  <P/>
-##  We continue this example a little.
+##  We continue this example.
 ##  Next we access matrix representations of <M>A_5</M>.
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> info:= OneAtlasGeneratingSetInfo( "A5", IsMatrixGroup, true );
-##  rec( dim := 4, groupname := "A5", id := "a", 
+##  rec( charactername := "4a", constituents := [ 4 ], contents := "core",
+##    dim := 4, groupname := "A5", id := "a", 
 ##    identifier := [ "A5", [ "A5G1-f2r4aB0.m1", "A5G1-f2r4aB0.m2" ], 1, 
 ##        2 ], repname := "A5G1-f2r4aB0", repnr := 4, ring := GF(2), 
 ##    size := 60, standardization := 1, type := "matff" )
 ##  gap> gens:= AtlasGenerators( info.identifier );
-##  rec( dim := 4, 
+##  rec( charactername := "4a", constituents := [ 4 ], contents := "core",
+##    dim := 4, 
 ##    generators := [ <an immutable 4x4 matrix over GF2>, 
 ##        <an immutable 4x4 matrix over GF2> ], groupname := "A5", 
 ##    id := "a", 
@@ -1007,19 +1318,23 @@ DeclareGlobalFunction( "AtlasProgram" );
 ##  gap> info = OneAtlasGeneratingSetInfo( "A5", Ring, GF(2) );
 ##  true
 ##  gap> OneAtlasGeneratingSetInfo( "A5", Characteristic, [2,5], Dimension, 2 );
-##  rec( dim := 2, groupname := "A5", id := "a", 
+##  rec( charactername := "2a", constituents := [ 2 ], contents := "core",
+##    dim := 2, groupname := "A5", id := "a", 
 ##    identifier := [ "A5", [ "A5G1-f4r2aB0.m1", "A5G1-f4r2aB0.m2" ], 1, 
 ##        4 ], repname := "A5G1-f4r2aB0", repnr := 8, ring := GF(2^2), 
 ##    size := 60, standardization := 1, type := "matff" )
 ##  gap> OneAtlasGeneratingSetInfo( "A5", Characteristic, [2,5], Dimension, 1 );
 ##  fail
-##  gap> info:= OneAtlasGeneratingSetInfo( "A5", Characteristic, 0, Dimension, 4 );
-##  rec( dim := 4, groupname := "A5", id := "", 
+##  gap> info:= OneAtlasGeneratingSetInfo( "A5", Characteristic, 0,
+##  >                                            Dimension, 4 );
+##  rec( charactername := "4a", constituents := [ 4 ], contents := "core",
+##    dim := 4, groupname := "A5", id := "", 
 ##    identifier := [ "A5", "A5G1-Zr4B0.g", 1, 4 ], 
 ##    repname := "A5G1-Zr4B0", repnr := 14, ring := Integers, size := 60, 
 ##    standardization := 1, type := "matint" )
 ##  gap> gens:= AtlasGenerators( info.identifier );
-##  rec( dim := 4, 
+##  rec( charactername := "4a", constituents := [ 4 ], contents := "core",
+##    dim := 4, 
 ##    generators := 
 ##      [ 
 ##        [ [ 1, 0, 0, 0 ], [ 0, 0, 1, 0 ], [ 0, 1, 0, 0 ], 
@@ -1036,12 +1351,14 @@ DeclareGlobalFunction( "AtlasProgram" );
 ##  gap> OneAtlasGeneratingSetInfo( "A5", Ring, Integers mod 77 );
 ##  fail
 ##  gap> info:= OneAtlasGeneratingSetInfo( "A5", Ring, CF(5), Dimension, 3 );
-##  rec( dim := 3, groupname := "A5", id := "a", 
+##  rec( charactername := "3a", constituents := [ 2 ], contents := "core",
+##    dim := 3, groupname := "A5", id := "a", 
 ##    identifier := [ "A5", "A5G1-Ar3aB0.g", 1, 3 ], 
 ##    repname := "A5G1-Ar3aB0", repnr := 17, ring := NF(5,[ 1, 4 ]), 
 ##    size := 60, standardization := 1, type := "matalg" )
 ##  gap> gens:= AtlasGenerators( info.identifier );
-##  rec( dim := 3, 
+##  rec( charactername := "3a", constituents := [ 2 ], contents := "core",
+##    dim := 3, 
 ##    generators := 
 ##      [ [ [ -1, 0, 0 ], [ 0, -1, 0 ], [ -E(5)-E(5)^4, -E(5)-E(5)^4, 1 ] 
 ##           ], [ [ 0, 1, 0 ], [ 0, 0, 1 ], [ 1, 0, 0 ] ] ], 
@@ -1089,19 +1406,22 @@ DeclareGlobalFunction( "OneAtlasGeneratingSetInfo" );
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> AllAtlasGeneratingSetInfos( "A5", IsPermGroup, true );
-##  [ rec( groupname := "A5", id := "", 
+##  [ rec( charactername := "1a+4a", constituents := [ 1, 4 ], 
+##        contents := "core", groupname := "A5", id := "", 
 ##        identifier := [ "A5", [ "A5G1-p5B0.m1", "A5G1-p5B0.m2" ], 1, 5 ]
 ##          , isPrimitive := true, maxnr := 1, p := 5, rankAction := 2, 
 ##        repname := "A5G1-p5B0", repnr := 1, size := 60, 
 ##        stabilizer := "A4", standardization := 1, transitivity := 3, 
 ##        type := "perm" ), 
-##    rec( groupname := "A5", id := "", 
+##    rec( charactername := "1a+5a", constituents := [ 1, 5 ], 
+##        contents := "core", groupname := "A5", id := "", 
 ##        identifier := [ "A5", [ "A5G1-p6B0.m1", "A5G1-p6B0.m2" ], 1, 6 ]
 ##          , isPrimitive := true, maxnr := 2, p := 6, rankAction := 2, 
 ##        repname := "A5G1-p6B0", repnr := 2, size := 60, 
 ##        stabilizer := "D10", standardization := 1, transitivity := 2, 
 ##        type := "perm" ), 
-##    rec( groupname := "A5", id := "", 
+##    rec( charactername := "1a+4a+5a", constituents := [ 1, 4, 5 ], 
+##        contents := "core", groupname := "A5", id := "", 
 ##        identifier := [ "A5", [ "A5G1-p10B0.m1", "A5G1-p10B0.m2" ], 1, 
 ##            10 ], isPrimitive := true, maxnr := 3, p := 10, 
 ##        rankAction := 3, repname := "A5G1-p10B0", repnr := 3, 
@@ -1111,9 +1431,9 @@ DeclareGlobalFunction( "OneAtlasGeneratingSetInfo" );
 ##  <P/>
 ##  Note that a matrix representation in any characteristic can be obtained by
 ##  reducing a permutation representation or an integral matrix representation;
-##  however, the &ATLAS; of Group Representations does not <E>store</E> such a
-##  representation
-##  (cf. Section&nbsp;<Ref Sect="sect:Accessing vs. Constructing Representations"/>).
+##  however, the database does not <E>store</E> such a representation
+##  (cf.&nbsp;Section&nbsp;
+##  <Ref Sect="sect:Accessing vs. Constructing Representations"/>).
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -1124,13 +1444,16 @@ DeclareGlobalFunction( "AllAtlasGeneratingSetInfos" );
 #############################################################################
 ##
 #A  AtlasRepInfoRecord( <G> )
+#A  AtlasRepInfoRecord( <name> )
 ##
 ##  <#GAPDoc Label="AtlasRepInfoRecord">
 ##  <ManSection>
-##  <Attr Name="AtlasRepInfoRecord" Arg='G'/>
+##  <Attr Name="AtlasRepInfoRecord" Arg='G' Label="for a group"/>
+##  <Attr Name="AtlasRepInfoRecord" Arg='name' Label="for a string"/>
 ##  <Returns>
 ##  the record stored in the group <A>G</A> when this was constructed
-##  with <Ref Func="AtlasGroup" Label="for various arguments"/>.
+##  with <Ref Func="AtlasGroup" Label="for various arguments"/>,
+##  or a record with information about the group with name <A>name</A>.
 ##  </Returns>
 ##  <Description>
 ##  For a group <A>G</A> that has been constructed with
@@ -1144,17 +1467,73 @@ DeclareGlobalFunction( "AllAtlasGeneratingSetInfos" );
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> AtlasRepInfoRecord( AtlasGroup( "A5" ) );
-##  rec( groupname := "A5", id := "", 
+##  rec( charactername := "1a+4a", constituents := [ 1, 4 ], 
+##    contents := "core", groupname := "A5", id := "", 
 ##    identifier := [ "A5", [ "A5G1-p5B0.m1", "A5G1-p5B0.m2" ], 1, 5 ], 
 ##    isPrimitive := true, maxnr := 1, p := 5, rankAction := 2, 
 ##    repname := "A5G1-p5B0", repnr := 1, size := 60, stabilizer := "A4", 
 ##    standardization := 1, transitivity := 3, type := "perm" )
+##  ]]></Example>
+##  <P/>
+##  For a string <A>name</A> that is a &GAP; name of a group <M>G</M>, say,
+##  <Ref Attr="AtlasRepInfoRecord" Label="for a string"/> returns a record
+##  that contains information about <M>G</M> which is used by
+##  <Ref Func="DisplayAtlasInfo"/>.
+##  The following components may be bound in the record.
+##  <P/>
+##  <List>
+##  <Mark><C>name</C></Mark>
+##  <Item>
+##    the string <A>name</A>,
+##  </Item>
+##  <Mark><C>nrMaxes</C></Mark>
+##  <Item>
+##    the number of conjugacy classes of maximal subgroups of <M>G</M>,
+##  </Item>
+##  <Mark><C>size</C></Mark>
+##  <Item>
+##    the order of <M>G</M>,
+##  </Item>
+##  <Mark><C>sizesMaxes</C></Mark>
+##  <Item>
+##    a list which contains at position <M>i</M>, if bound,
+##    the order of a subgroup in the <M>i</M>-th class of maximal subgroups
+##    of <M>G</M>,
+##  </Item>
+##  <Mark><C>slpMaxes</C></Mark>
+##  <Item>
+##    a list of length two;
+##    the first entry is a list of positions <M>i</M> such that
+##    a straight line program for computing the restriction of
+##    representations of <M>G</M> to a subgroup in the <M>i</M>-th class of
+##    maximal subgroups is available via &AtlasRep;;
+##    the second entry is the corresponding list of standardizations of
+##    the generators of <M>G</M> for which these straight line programs
+##    are available,
+##  </Item>
+##  <Mark><C>structureMaxes</C></Mark>
+##  <Item>
+##    a list which contains at position <M>i</M>, if bound,
+##    a string that describes the structure of the subgroups in the
+##    <M>i</M>-th class of maximal subgroups of <M>G</M>.
+##  </Item>
+##  </List>
+##  <P/>
+##  <Example><![CDATA[
+##  gap> AtlasRepInfoRecord( "A5" );
+##  rec( name := "A5", nrMaxes := 3, size := 60, sizesMaxes := [ 12, 10, 6 ], 
+##    slpMaxes := [ [ 1 .. 3 ], [ [ 1 ], [ 1 ], [ 1 ] ] ], 
+##    structureMaxes := [ "A4", "D10", "S3" ] )
+##  gap> AtlasRepInfoRecord( "J5" );
+##  rec(  )
 ##  ]]></Example>
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
 ##
 DeclareAttribute( "AtlasRepInfoRecord", IsGroup );
+
+DeclareAttribute( "AtlasRepInfoRecord", IsString );
 
 
 #############################################################################
@@ -1171,7 +1550,7 @@ DeclareAttribute( "AtlasRepInfoRecord", IsGroup );
 ##  <#GAPDoc Label="AtlasGroup">
 ##  <ManSection>
 ##  <Heading>AtlasGroup</Heading>
-##  <Func Name="AtlasGroup" Arg='[gapname[, std]][, ...]'
+##  <Func Name="AtlasGroup" Arg='[gapname][, std][, ...]'
 ##   Label="for various arguments"/>
 ##  <Func Name="AtlasGroup" Arg='identifier'
 ##   Label="for an identifier record"/>
@@ -1202,7 +1581,8 @@ DeclareAttribute( "AtlasRepInfoRecord", IsGroup );
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> info:= OneAtlasGeneratingSetInfo( "A5" );
-##  rec( groupname := "A5", id := "", 
+##  rec( charactername := "1a+4a", constituents := [ 1, 4 ], 
+##    contents := "core", groupname := "A5", id := "", 
 ##    identifier := [ "A5", [ "A5G1-p5B0.m1", "A5G1-p5B0.m2" ], 1, 5 ], 
 ##    isPrimitive := true, maxnr := 1, p := 5, rankAction := 2, 
 ##    repname := "A5G1-p5B0", repnr := 1, size := 60, stabilizer := "A4", 
@@ -1215,7 +1595,8 @@ DeclareAttribute( "AtlasRepInfoRecord", IsGroup );
 ##  <P/>
 ##  In the groups returned by
 ##  <Ref Func="AtlasGroup" Label="for various arguments"/>,
-##  the value of the attribute <Ref Attr="AtlasRepInfoRecord"/> is set.
+##  the value of the attribute
+##  <Ref Attr="AtlasRepInfoRecord" Label="for a group"/> is set.
 ##  This information is used for example by
 ##  <Ref Func="AtlasSubgroup" Label="for a group and a number"/>
 ##  when this function is called with second argument a group created by
@@ -1257,11 +1638,11 @@ DeclareGlobalFunction( "AtlasGroup" );
 ##  The arguments of
 ##  <Ref Func="AtlasSubgroup"
 ##   Label="for a group name (and various arguments) and a number"/>,
-##  except the last argument <A>maxn</A>, are the same as for
+##  except the last argument <A>maxnr</A>, are the same as for
 ##  <Ref Func="AtlasGroup" Label="for various arguments"/>.
-##  If the &ATLAS; of Group Representations provides a straight line program
+##  If the database provides a straight line program
 ##  for restricting representations of the group with name <A>gapname</A>
-##  (given w.r.t. the <A>std</A>-th standard generators)
+##  (given w.&nbsp;r.&nbsp;t.&nbsp;the <A>std</A>-th standard generators)
 ##  to the <A>maxnr</A>-th maximal subgroup
 ##  and if a representation with the required properties is available,
 ##  in the sense that calling
@@ -1298,7 +1679,8 @@ DeclareGlobalFunction( "AtlasGroup" );
 ##  <P/>
 ##  <Example><![CDATA[
 ##  gap> info:= OneAtlasGeneratingSetInfo( "A5" );
-##  rec( groupname := "A5", id := "", 
+##  rec( charactername := "1a+4a", constituents := [ 1, 4 ], 
+##    contents := "core", groupname := "A5", id := "", 
 ##    identifier := [ "A5", [ "A5G1-p5B0.m1", "A5G1-p5B0.m2" ], 1, 5 ], 
 ##    isPrimitive := true, maxnr := 1, p := 5, rankAction := 2, 
 ##    repname := "A5G1-p5B0", repnr := 1, size := 60, stabilizer := "A4", 
@@ -1315,26 +1697,6 @@ DeclareGlobalFunction( "AtlasGroup" );
 ##  <#/GAPDoc>
 ##
 DeclareGlobalFunction( "AtlasSubgroup" );
-
-
-#############################################################################
-##
-#F  AtlasOfGroupRepresentationsUserParameters()
-##
-##  <#GAPDoc Label="AtlasOfGroupRepresentationsShowUserParameters">
-##  <ManSection>
-##  <Func Name="AtlasOfGroupRepresentationsUserParameters" Arg=''/>
-##
-##  <Description>
-##  This function returns a string that describes an overview of the current
-##  values of the user parameters introduced in this section.
-##  One can use <Ref Func="Print" BookName="ref"/> or
-##  <Ref Func="Pager" BookName="ref"/> for showing the overview.
-##  </Description>
-##  </ManSection>
-##  <#/GAPDoc>
-##
-DeclareGlobalFunction( "AtlasOfGroupRepresentationsUserParameters" );
 
 
 #############################################################################

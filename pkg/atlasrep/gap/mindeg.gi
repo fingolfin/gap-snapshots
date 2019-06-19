@@ -2,7 +2,7 @@
 ##
 #W  mindeg.gi            GAP 4 package AtlasRep                 Thomas Breuer
 ##
-#Y  Copyright (C)  2007,   Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  Copyright (C)  2007,   Lehrstuhl D fÃ¼r Mathematik,  RWTH Aachen,  Germany
 ##
 ##  This file contains declarations for dealing with information about
 ##  permutation and matrix representations of minimal degree
@@ -19,9 +19,9 @@ if IsPackageMarkedForLoading( "ctbllib", "" ) then
 InstallGlobalFunction( MinimalPermutationRepresentationInfo,
     function( grpname, mode )
     local result, addvalue, parse, ordtbl, identifier, value, s, cand, maxes,
-          indices, perms, corefreepos, cand1, other, minpos, cand2min, tom,
-          faith, mincand, minsubmindeg, subname, subtbl, pi, submindeg, fus,
-          n, N, l;
+          indices, perms, m, corefreepos, cand1, other, minpos, cand2min,
+          tom, faith, mincand, minsubmindeg, subname, subtbl, pi, submindeg,
+          fus, n, N, l;
 
     # Initialize the result values.
     result:= rec( value:= "unknown",
@@ -112,6 +112,7 @@ InstallGlobalFunction( MinimalPermutationRepresentationInfo,
         fi;
 
         # If all tables of maximal subgroups are available then inspect them.
+        # (We try to avoid assuming that the fusions are stored.)
         if HasMaxes( ordtbl ) then
           maxes:= List( Maxes( ordtbl ), CharacterTable );
           indices:= List( maxes, s -> Size( ordtbl ) / Size( s ) );
@@ -122,13 +123,26 @@ InstallGlobalFunction( MinimalPermutationRepresentationInfo,
               return result;
             fi;
           fi;
-          perms:= List( maxes, s -> TrivialCharacter( s ) ^ ordtbl );
-          corefreepos:= Filtered( [ 1 .. Length( perms ) ],
-              i -> Length( ClassPositionsOfKernel( perms[i] ) ) = 1 );
+          perms:= [];
+          for m in maxes do
+            if GetFusionMap( m, ordtbl ) <> fail then
+              Add( perms, TrivialCharacter( m ) ^ ordtbl );
+            else
+              Add( perms, fail );
+            fi;
+          od;
+          if IsSimpleCharacterTable( ordtbl ) then
+            corefreepos:= [ 1 .. Length( perms ) ];
+          elif not fail in perms then
+            corefreepos:= Filtered( [ 1 .. Length( perms ) ],
+                i -> Length( ClassPositionsOfKernel( perms[i] ) ) = 1 );
+          else
+            corefreepos:= fail;
+          fi;
 
           # If the maximal subgroups of largest order are core-free
           # then we are done.
-          if not IsEmpty( corefreepos ) then
+          if corefreepos <> fail and not IsEmpty( corefreepos ) then
             cand1:= Minimum( indices{ corefreepos } );
             if Minimum( indices ) = cand1 then
               addvalue( cand1, "computed (char. table)" );
@@ -138,28 +152,30 @@ InstallGlobalFunction( MinimalPermutationRepresentationInfo,
             fi;
           fi;
 
-          # If the group has a unique minimal normal subgroup
-          # (so the minimal permutation representation is transitive)
-          # that is simple and maximal
-          # then all candidate subgroups in this normal subgroup
-          # are admissible also inside this subgroup;
-          # so the candidate indices for point stabilizers inside this
-          # normal subgroup are minimal degree times index.
-          other:= Difference( [ 1 .. Length( maxes ) ], corefreepos );
-          if     Length( other ) = 1
-             and IsSimpleCharacterTable( maxes[ other[1] ] ) then
-            minpos:= ClassPositionsOfMinimalNormalSubgroups( ordtbl );
-            if Length( minpos ) = 1 and
-               ClassPositionsOfKernel( TrivialCharacter( maxes[ other[1] ]
-                                       )^ordtbl ) = minpos[1] then
-              cand2min:= MinimalRepresentationInfo(
-                             Identifier( maxes[ other[1] ] ), NrMovedPoints );
-              if IsRecord( cand2min ) then
-                addvalue( Minimum( cand1,
-                                   indices[ other[1] ] * cand2min.value ),
-                          "computed (char. table)" );
-                if mode = "one" then
-                  return result;
+          if corefreepos <> fail then
+            # If the group has a unique minimal normal subgroup
+            # (so the minimal permutation representation is transitive)
+            # that is simple and maximal
+            # then all candidate subgroups in this normal subgroup
+            # are admissible also inside this subgroup;
+            # so the candidate indices for point stabilizers inside this
+            # normal subgroup are minimal degree times index.
+            other:= Difference( [ 1 .. Length( maxes ) ], corefreepos );
+            if     Length( other ) = 1
+               and IsSimpleCharacterTable( maxes[ other[1] ] ) then
+              minpos:= ClassPositionsOfMinimalNormalSubgroups( ordtbl );
+              if Length( minpos ) = 1 and
+                 ClassPositionsOfKernel( TrivialCharacter( maxes[ other[1] ]
+                                         )^ordtbl ) = minpos[1] then
+                cand2min:= MinimalRepresentationInfo(
+                               Identifier( maxes[ other[1] ] ), NrMovedPoints );
+                if IsRecord( cand2min ) then
+                  addvalue( Minimum( cand1,
+                                     indices[ other[1] ] * cand2min.value ),
+                            "computed (char. table)" );
+                  if mode = "one" then
+                    return result;
+                  fi;
                 fi;
               fi;
             fi;
@@ -195,7 +211,7 @@ InstallGlobalFunction( MinimalPermutationRepresentationInfo,
       # and a core-free subgroup of index $n$,
       # then $n$ is the minimal degree of $G$.
       mincand:= infinity;
-      minsubmindeg:= Maximum( Set( Factors( Size( ordtbl ) ) ) );
+      minsubmindeg:= Maximum( PrimeDivisors( Size( ordtbl ) ) );
       for subname in NamesOfFusionSources( ordtbl ) do
         subtbl:= CharacterTable( subname );
         if subtbl <> fail and IsOrdinaryTable( subtbl ) and
@@ -324,6 +340,7 @@ InstallGlobalFunction( MinimalRepresentationInfo, function( arg )
         # This works only if the package `CTblLib' is available.
         if   mode = "recompute" then
           result:= MinimalPermutationRepresentationInfo( grpname, "all" );
+#T currently gets stuck at "B", because of missing fusion from "(2^2xF4(2)):2"
         elif known = fail then
           result:= MinimalPermutationRepresentationInfo( grpname, "one" );
         fi;
@@ -567,7 +584,6 @@ InstallGlobalFunction( SetMinimalRepresentationInfo,
     elif IsList( op ) and Length( op ) = 2
                       and op[1] = "Size"
                       and IsInt( op[2] ) and IsPrimePowerInt( op[2] ) then
-#T change IsPrimePowerInt to include an IsInt test!
       if not IsBound( info.CharacteristicAndSize ) then
         info.CharacteristicAndSize:= rec();
       fi;
@@ -626,15 +642,15 @@ InstallGlobalFunction( ComputedMinimalRepresentationInfo, function()
       MinimalRepresentationInfo( grpname, Characteristic, 0, "recompute" );
       if IsBound( info[3].size ) then
         size:= info[3].size;
-        for p in Set( Factors( size ) ) do
+        for p in PrimeDivisors( size ) do
           MinimalRepresentationInfo( grpname, Characteristic, p,
                                      "recompute" );
-          if ordtbl <> fail then
+          # If O_p is nontrivial then the Brauer table belongs to a factor.
+          if ordtbl <> fail and ClassPositionsOfPCore( ordtbl, p ) = [ 1 ] then
             modtbl:= ordtbl mod p;
             if modtbl <> fail then
               sizes:= Set( List( Irr( modtbl ),
                              phi -> SizeOfFieldOfDefinition( phi, p ) ) );
-#T is this a reasonable approach?
               for q in Filtered( sizes, IsInt ) do
                 MinimalRepresentationInfo( grpname, Size, q, "recompute" );
               od;
@@ -643,7 +659,6 @@ InstallGlobalFunction( ComputedMinimalRepresentationInfo, function()
                 if IsBound( r.CharacteristicAndSize ) then
                   r:= r.CharacteristicAndSize;
                   if not fail in sizes then
-#T can one not do better?
                     SetMinimalRepresentationInfo( grpname,
                       [ "Characteristic", p, "complete" ], true,
                       [ "computed (char. table)" ] );

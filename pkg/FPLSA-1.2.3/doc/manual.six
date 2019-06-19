@@ -1,0 +1,26 @@
+#SIXFORMAT  GapDocGAP
+HELPBOOKINFOSIXTMP := rec(
+encoding := "UTF-8",
+bookname := "fplsa",
+entries :=
+[ [ "Title page", ".", [ 0, 0, 0 ], 1, 1, "title page", "X7D2C85EC87DD46E5" ],
+  [ "Table of Contents", ".-1", [ 0, 0, 1 ], 29, 2, "table of contents", 
+      "X8537FEB07AF2BEC8" ], 
+  [ "\033[1X\033[33X\033[0;-2YThe FPLSA Package\033[133X\033[101X", "1", 
+      [ 1, 0, 0 ], 1, 3, "the fplsa package", "X805DE95983EEA672" ], 
+  [ "\033[1X\033[33X\033[0;-2YMain Functions\033[133X\033[101X", "1.1", 
+      [ 1, 1, 0 ], 15, 3, "main functions", "X8240F18D7AFA30F4" ], 
+  [ "\033[1X\033[33X\033[0;-2YAuxiliary Variables of FPLSA\033[133X\033[101X",
+      "1.2", [ 1, 2, 0 ], 92, 4, "auxiliary variables of fplsa", 
+      "X7C991B3B79A45BE5" ], 
+  [ "\033[1X\033[33X\033[0;-2YInstalling the FPLSA Package\033[133X\033[101X",
+      "1.3", [ 1, 3, 0 ], 159, 5, "installing the fplsa package", 
+      "X7F15E49B8173004C" ], 
+  [ "Index", "ind", [ "Ind", 0, 0 ], 1, 7, "index", "X83A0356F839C696F" ], 
+  [ "\033[2XSCAlgebraInfoOfFpLieAlgebra\033[102X", "1.1-1", [ 1, 1, 1 ], 28, 
+      3, "scalgebrainfooffpliealgebra", "X8019B72B8298566A" ], 
+  [ "\033[2X IsomorphicSCAlgebra\033[102X", "1.1-2", [ 1, 1, 2 ], 65, 4, 
+      "isomorphicscalgebra", "X7C5E1F7B80268EBD" ], 
+  [ "\033[2XFPLSA\033[102X", "1.2-1", [ 1, 2, 1 ], 95, 4, "fplsa", 
+      "X87E75AD286BA918B" ] ]
+);

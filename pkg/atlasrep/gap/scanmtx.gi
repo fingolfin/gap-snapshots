@@ -6,14 +6,14 @@
 #Y  Copyright (C)  2001,   Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
 ##  Whenever this file is changed in one of the packages
-##  `atlasrep' or `meataxe',
+##  'atlasrep' or 'meataxe',
 ##  do not forget to update the corresponding file in the other package!
 ##
 ##  This file contains the implementation part of the interface routines for
 ##  reading and writing C-MeatAxe text and binary format,
 ##  and straight line programs used in the ATLAS of Group Representations.
 ##
-##  The functions `CMtxBinaryFFMatOrPerm' and `FFMatOrPermCMtxBinary'
+##  The functions 'CMtxBinaryFFMatOrPerm' and 'FFMatOrPermCMtxBinary'
 ##  were contributed by Frank Lübeck.
 ##
 
@@ -32,16 +32,13 @@ InstallValue( CMeatAxe,
 
 #############################################################################
 ##
-##  The C-MeatAxe defines the bijection between the elements in the field
-##  with $q = p^d$ elements and the set $\{ 0, 1, \ldots, q-1 \}$ of integers
-##  by assigning the field element $\sum_{i=0}^{d-1} c_i z^i$ to the integer
-##  $\sum_{i=0}^{d-1} c_i p^i$,
-##  where the $c_i$ are in the set $\{ 0, 1, \ldots, p-1 \}$ and $z$ is the
-##  primitive root of the field with $q$ elements that corresponds to the
-##  residue class of the indeterminate, modulo the ideal spanned by the
-##  Conway polynomial of degree $d$ over the field with $p$ elements.
+#V  FFLists
+#V  FFLogLists
+#V  NONNEG_INTEGERS_STRINGS
 ##
-##  The bijection is implemented via lookup tables `l1 = FFList( GF(<q>) )'
+##  The bijection between elements in the finite field with $q$ elements and
+##  the integers in the set $\{ 0, 1, \ldots, q-1 \}$ is implemented
+##  via lookup tables `l1 = FFList( GF(<q>) )'
 ##  and `l2 = FFLogList( GF(<q>) )'.
 ##
 ##  If the field element <x> corresponds to the integer <i> then
@@ -58,14 +55,6 @@ InstallValue( CMeatAxe,
 ##  For $<x> = <z>^k$,
 ##  we have `String( <i> ) = FFLogList( GF(<q>) )[ LogFFE( <x>, <z> ) + 1 ]'.
 ##
-
-
-#############################################################################
-##
-#V  FFLists
-#V  FFLogLists
-#V  NONNEG_INTEGERS_STRINGS
-##
 InstallFlushableValue( FFLists, [] );
 InstallFlushableValue( FFLogLists, [] );
 InstallFlushableValue( NONNEG_INTEGERS_STRINGS, [] );
@@ -78,23 +67,13 @@ InstallFlushableValue( NONNEG_INTEGERS_STRINGS, [] );
 ##  (This program was originally written by Meinolf Geck.)
 ##
 InstallGlobalFunction( FFList, function( F )
-    local sizeF,
-          p,
-          dim,
-          elms,
-          root,
-          powers,
-          i,
-          pow;
+    local sizeF, dim, root, pow, powers, i, elms;
 
     sizeF:= Size( F );
 
     if not IsBound( FFLists[ sizeF ] ) then
 
-      p:= Characteristic( F );
       dim:= DegreeOverPrimeField( F );
-      elms:= List( Cartesian( List( [ 1 .. dim ], i -> [ 0 .. p-1 ] ) ),
-                   Reversed );
       root:= PrimitiveRoot( F );
       pow:= One( root );
       powers:= [ pow ];
@@ -102,7 +81,8 @@ InstallGlobalFunction( FFList, function( F )
         pow:= pow * root;
         powers[i]:= pow;
       od;
-      elms:= elms * powers;
+      elms:= Tuples( [ 0 .. Characteristic( F )-1 ], dim )
+             * Reversed( powers );
       ConvertToVectorRep( elms, sizeF );
       FFLists[ sizeF ]:= elms;
 
@@ -163,17 +143,11 @@ InstallGlobalFunction( "CMeatAxeFileHeaderInfo", function( string )
     fi;
 
     # Split the header string, and convert the entries to integers.
-    lline:= List( SplitString( string, "", " \n" ), Int );
+    header:= SplitString( string, "", " \n" );
+    lline:= List( header, Int );
     if fail in lline then
 
-      # If the header is valid then it is of new type;
-      # remove everything before a leading `"'.
-      header:= SplitString( string, "", " \n" );
-      pos:= First( header, x -> not IsEmpty( x ) and x[1] = '\"' );
-      if pos <> fail then
-        header:= header{ [ pos .. Length( header ) ] };
-      fi;
-
+      # If the header is valid then it is of new type.
       if Length( header ) = 2 and header[1] = "permutation" then
 
         line:= [ 12, 1,, 1 ];
@@ -191,6 +165,17 @@ InstallGlobalFunction( "CMeatAxeFileHeaderInfo", function( string )
             line[1]:= 1;
           fi;
         fi;
+        if 5 < Length( header[3] ) and header[3]{ [ 1 .. 5 ] } = "rows=" then
+          line[3]:= Int( header[3]{ [ 6 .. Length( header[3] ) ] } );
+        fi;
+        if 5 < Length( header[4] ) and header[4]{ [ 1 .. 5 ] } = "cols=" then
+          line[4]:= Int( header[4]{ [ 6 .. Length( header[4] ) ] } );
+        fi;
+
+      elif Length( header ) = 4 and header[1] = "integer"
+                                and header[2] = "matrix" then
+
+        line:= [ 8, 0 ];
         if 5 < Length( header[3] ) and header[3]{ [ 1 .. 5 ] } = "rows=" then
           line[3]:= Int( header[3]{ [ 6 .. Length( header[3] ) ] } );
         fi;
@@ -292,8 +277,9 @@ InstallGlobalFunction( ScanMeatAxeFile, function( arg )
       filename:= arg[1];
 
       # Do we want to read the file *fast* (but using more space)?
-      InfoRead1( "#I  reading `", filename, "' started\n" );
-      if IsBound( CMeatAxe.FastRead ) and CMeatAxe.FastRead = true then
+      AGR.InfoRead( "#I  reading `", filename, "' started\n" );
+      if UserPreference( "AtlasRep", "HowToReadMeatAxeTextFiles" ) = "fast"
+         then
         string:= AGR.StringFile( filename );
         if Length( arg ) = 1 then
           return ScanMeatAxeFile( string, "string" );
@@ -354,10 +340,11 @@ InstallGlobalFunction( ScanMeatAxeFile, function( arg )
 
     mode:= line[1];
 
-    if mode in [ 2, 12 ] then
+    if mode in [ 2, 12, 8 ] then
 
       # a permutation, to be converted to a matrix,
-      # or a list of permutations
+      # or a list of permutations,
+      # or an integer matrix
       if not IsBound( string ) then
         string:= AGR.StringFile( filename );
 
@@ -366,7 +353,7 @@ InstallGlobalFunction( ScanMeatAxeFile, function( arg )
         string{ [ 1 .. headlen ] }:= ListWithIdenticalEntries( headlen, ' ' );
 
         CloseStream( file );
-        InfoRead1( "#I  reading `", filename, "' done\n" );
+        AGR.InfoRead( "#I  reading `", filename, "' done\n" );
       fi;
 
       # Remove comment parts
@@ -382,7 +369,7 @@ InstallGlobalFunction( ScanMeatAxeFile, function( arg )
         pos:= Position( string, '#' );
       od;
 
-      # Split the line into substrings representing numbers.
+      # Split the line into substrings representing integers.
       # (Admittedly, the code looks ugly, but simply calling `SplitString'
       # and `Int' is slower, and calling `SplitString' and `EvalString'
       # would be even slower than that.)
@@ -429,7 +416,7 @@ InstallGlobalFunction( ScanMeatAxeFile, function( arg )
           return fail;
         fi;
 
-      else
+      elif mode = 2 then
 
         # mode = 2:
         # a permutation, to be converted to a matrix
@@ -454,12 +441,37 @@ InstallGlobalFunction( ScanMeatAxeFile, function( arg )
         fi;
         ConvertToMatrixRep( result, q );
 
+      else
+
+        # mode = 8:
+        # an integer matrix
+        nrows:= line[3];
+        ncols:= line[4];
+        if Length( string ) <> nrows * ncols then
+          Info( InfoCMeatAxe, 1, "corrupted file" );
+          return fail;
+        fi;
+        result:= NullMat( nrows, ncols );
+        pos:= 1;
+        for i in [ 1 .. nrows ] do
+          for j in [ 1 .. ncols ] do
+            result[i][j]:= string[ pos ];
+            pos:= pos + 1;
+          od;
+        od;
+
       fi;
 
     elif mode = 1 then
 
       # a matrix, in fixed format
       Fsize:= line[2];
+      if Fsize > 10 then
+        Info( InfoCMeatAxe, 1, "too large field for mode 1 matrix" );
+        return fail;
+#T Extend the scope of mode 1, as proposed by Richard:
+#T Allow A .. Z for 10 .. 35 and a .. z for -26 .. -1.
+      fi;
       F:= GF( Fsize );
       fflist:= FFList( F );
       fflist:= fflist{ Concatenation( ListWithIdenticalEntries( 47, 1 ),
@@ -533,7 +545,7 @@ od;
 
         # Close the stream.
         CloseStream( file );
-        InfoRead1( "#I  reading `", filename, "' done\n" );
+        AGR.InfoRead( "#I  reading `", filename, "' done\n" );
 
       fi;
 
@@ -666,7 +678,7 @@ od;
 
         # Close the stream.
         CloseStream( file );
-        InfoRead1( "#I  reading `", filename, "' done\n" );
+        AGR.InfoRead( "#I  reading `", filename, "' done\n" );
 
       fi;
 
@@ -700,29 +712,33 @@ InstallMethod( MeatAxeString,
           row,       # one row of `mat'
           j,         # loop over the columns of `mat'
           mode,      # mode of the MeatAxe string (first header entry)
-          str,       # MeatAxe string, result
-          tail,      #
-          fflist,    #
-          ffloglist, #
-          z,         #
+          header,    # mode of the header
           values,
           linelen,
           nol,
-          k;
+          tail,      #
+          fflist,    #
+          len,
+          str,       # MeatAxe string, result
+          k,
+          N,
+          d,
+          ffloglist, #
+          z;         #
 
     # Check that `mat' is rectangular.
-    if not IsMatrix( mat ) then
+    if not IsMatrixObj( mat ) then
       Error( "<mat> must be a matrix" );
     fi;
-    nrows:= Length( mat );
-    ncols:= Length( mat[1] );
+    nrows:= NumberRows( mat );
+    ncols:= NumberColumns( mat );
 
     # Check that `q' and `mat' are compatible.
     if not IsPrimePowerInt( q ) or ( q mod Characteristic( mat ) <> 0 ) then
       Error( "<q> and the characteristic of <mat> are incompatible" );
     fi;
 
-    one:= One( mat[1][1] );
+    one:= One( mat[1,1] );
     zero:= Zero( one );
     perm:= fail;
     if UserPreference( "AtlasRep", "WriteMeatAxeFilesOfMode2" ) = true then
@@ -737,6 +753,7 @@ InstallMethod( MeatAxeString,
         else
           for j in [ 1 .. ncols ] do
             if row[j] = one then
+#T deal with mat[i,j] etc.
               if noone and not j in perm then
                 perm[i]:= j;
                 noone:= false;
@@ -766,14 +783,21 @@ InstallMethod( MeatAxeString,
     else
       mode:= "6";
     fi;
-    str:= ShallowCopy( mode );          # mode,
-    Append( str, " " );
-    Append( str, String( q ) );         # field size,
-    Append( str, " " );
-    Append( str, String( nrows ) );     # number of rows,
-    Append( str, " " );
-    Append( str, String( ncols ) );     # number of columns
-    Append( str, "\n" );
+
+    header:= UserPreference( "AtlasRep", "WriteHeaderFormatOfMeatAxeFiles" );
+    if   header= "numeric" then
+      header:= Concatenation( mode, " ", String( q ), " ",
+                   String( nrows ), " ", String( ncols ), "\n" );
+    elif header= "numeric (fixed)" then
+      header:= Concatenation( String( mode, 6 ), " ", String( q, 5 ), " ",
+                   String( nrows, 5 ), " ", String( ncols, 5 ), "\n" );
+    elif header= "textual" then
+      header:= Concatenation( "matrix field=", String( q ), " rows=",
+                   String( nrows ), " cols=", String( ncols ), "\n" );
+    else
+      Error( "the user preference 'WriteHeaderFormatOfMeatAxeFiles' must ",
+             "be one of \"numeric\", \"numeric (fixed)\", \"textual\"" );
+    fi;
 
     # Add the matrix entries.
     if mode = "1" then
@@ -785,11 +809,18 @@ InstallMethod( MeatAxeString,
       tail:= [ nol * linelen + 1 .. ncols ];
       fflist:= FFList( GF(q) );
 
+      # Compute the length of the string.
+      len:= Length( header )
+            + nrows * ( ncols + 1 + Int( ( ncols - 1 ) / linelen ) );
+      str:= EmptyString( len );
+      Append( str, header );
+
       for row in mat do
         i:= 1;
         for j in [ 0 .. nol-1 ] do
           for k in [ 1 .. linelen ] do
             Add( str, values[ Position( fflist, row[i] ) ] );
+#T deal with mat[i,j]
             i:= i + 1;
           od;
           Add( str, '\n' );
@@ -804,6 +835,19 @@ InstallMethod( MeatAxeString,
 
     elif mode = "2" then
 
+      # Compute the length of the string.
+      N:= Length( perm );
+      k:= LogInt( N, 10 );
+      d:= 0;
+      for i in [ 1 .. k ] do
+        d:= d * 10;
+        d:= d + i;
+      od;
+      len:= Length( header )
+            + ( k + 2 ) * N - 9 * d;
+      str:= EmptyString( len );
+      Append( str, header );
+
       for i in perm do
         Append( str, String( i ) );
         Add( str, '\n' );
@@ -812,6 +856,13 @@ InstallMethod( MeatAxeString,
     else
 
       # free format
+      # The length of the result depends on the matrix entries,
+      # thus we start with an estimate of the length.
+      len:= Length( header )
+            + nrows * ncols * Int( ( LogInt( q, 10 ) + 4 ) / 2 );
+      str:= EmptyString( len );
+      Append( str, header );
+
       if IsPrimeInt( q ) then
         # Avoid the call to `FFList', and expensive `Position' calls.
         # Also store the strings once;
@@ -840,6 +891,8 @@ InstallMethod( MeatAxeString,
         od;
       fi;
 
+      ShrinkAllocationString( str );
+
     fi;
 
     # Return the result.
@@ -854,14 +907,39 @@ InstallMethod( MeatAxeString,
 InstallMethod( MeatAxeString,
     [ "IsPermCollection and IsList", "IsPosInt" ],
     function( perms, degree )
-    local str, perm, i;
+    local header, k, d, len, str, perm, i;
 
     # Start with the header line.
-    str:= "12 1 ";
-    Append( str, String( degree ) );
-    Append( str, " " );
-    Append( str, String( Length( perms ) ) );
-    Append( str, "\n" );
+    header:= UserPreference( "AtlasRep", "WriteHeaderFormatOfMeatAxeFiles" );
+    if   header= "numeric" then
+      header:= Concatenation( "12 1 ", String( degree ), " ",
+                   String( Length( perms ) ), "\n" );
+    elif header= "numeric (fixed)" then
+      header:= Concatenation( "    12     1 ", String( degree, 5 ), " ",
+                   String( Length( perms ), 5 ), "\n" );
+    elif header= "textual" then
+      if Length( perms ) <> 1 then
+        Error( "<perms> must have length 1 if the user preference ",
+               "\"WriteHeaderFormatOfMeatAxeFiles\" has the value ",
+               "\"textual\"" );
+      fi;
+      header:= Concatenation( "permutation degree=", String( degree ), "\n" );
+    else
+      Error( "the user preference 'WriteHeaderFormatOfMeatAxeFiles' must ",
+             "be one of \"numeric\", \"numeric (fixed)\", \"textual\"" );
+    fi;
+
+    # Compute the length of the string.
+    k:= LogInt( degree, 10 );
+    d:= 0;
+    for i in [ 1 .. k ] do
+      d:= d * 10;
+      d:= d + i;
+    od;
+    len:= Length( header )
+          + ( k + 2 ) * degree - 9 * d;
+    str:= EmptyString( len );
+    Append( str, header );
 
     # Add the images.
     for perm in perms do
@@ -883,21 +961,76 @@ InstallMethod( MeatAxeString,
 InstallMethod( MeatAxeString,
     [ "IsPerm", "IsPosInt", "IsList" ],
     function( perm, q, dims )
-    local str, i;
+    local header, str, i;
 
     # Start with the header line.
     # (The mode is `2': a permutation, to be converted to a matrix.)
-    str:= "2 ";                         # mode,
-    Append( str, String( q ) );         # field size,
-    Append( str, " " );
-    Append( str, String( dims[1] ) );   # number of rows,
-    Append( str, " " );
-    Append( str, String( dims[2] ) );   # number of columns
-    Append( str, "\n" );
+    header:= UserPreference( "AtlasRep", "WriteHeaderFormatOfMeatAxeFiles" );
+    if   header = "numeric" then
+      str:= "2 ";                         # mode,
+      Append( str, String( q ) );         # field size,
+      Append( str, " " );
+      Append( str, String( dims[1] ) );   # number of rows,
+      Append( str, " " );
+      Append( str, String( dims[2] ) );   # number of columns
+      Append( str, "\n" );
+    elif header = "numeric (fixed)" then
+      str:= "     2 ";
+      Append( str, String( q, 5 ) );
+      Append( str, " " );
+      Append( str, String( dims[1], 5 ) );
+      Append( str, " " );
+      Append( str, String( dims[2], 5 ) );
+      Append( str, "\n" );
+    elif header = "textual" then
+#T does zcv support this at all?
+      str:= "permutation degree=";
+      Append( str, String( q ) );         # field size,
+      Append( str, "\n" );
+    else
+      Error( "the user preference 'WriteHeaderFormatOfMeatAxeFiles' must ",
+             "be one of \"numeric\", \"numeric (fixed)\", \"textual\"" );
+    fi;
 
     # Add the images.
     for i in [ 1 .. dims[1] ] do
       Append( str, String( i ^ perm ) );
+      Add( str, '\n' );
+    od;
+
+    # Return the result.
+    return str;
+    end );
+
+
+#############################################################################
+##
+#M  MeatAxeString( <intmat> )
+##
+##  This is supported only for integer matrices
+##  and only with the new header format.
+##
+InstallMethod( MeatAxeString,
+    [ "IsTable and IsCyclotomicCollColl" ],
+    function( intmat )
+    local str, row, entry;
+
+    # Start with the header line.
+    str:= "integer matrix rows=";
+    Append( str, String( Length( intmat ) ) );
+    Append( str, " cols=" );
+    Append( str, String( Length( intmat[1] ) ) );
+    Append( str, "\n" );
+
+    for row in intmat do
+      for entry in row do
+        if not IsInt( entry ) then
+          Error( "in characteristic zero, ",
+                 "only integer matrices are supported by MeatAxeString" );
+        fi;
+        Append( str, String( entry ) );
+        Append( str, " " );
+      od;
       Add( str, '\n' );
     od;
 
@@ -1333,9 +1466,7 @@ InstallGlobalFunction( ScanStraightLineProgram, function( arg )
     elif Length( arg ) = 1 and IsString( arg[1] ) then
       # Read the data.
       filename:= arg[1];
-      InfoRead1( "#I  reading `", filename, "' started\n" );
       strdata:= AGR.StringFile( filename );
-      InfoRead1( "#I  reading `", filename, "' done\n" );
       if strdata = fail then
         Error( "cannot read file <filename>" );
       fi;
@@ -1429,7 +1560,7 @@ InstallGlobalFunction( AtlasStringOfProgram, function( arg )
     else
       # Write the line that describes the inputs.
       Append( str, "# inputs are expected in " );
-      Append( str, JoinStringsWithSeparator( List( [ 1 .. resused ], 
+      Append( str, JoinStringsWithSeparator( List( [ 1 .. resused ],
                                                    String ), " " ) );
       Add( str, '\n' );
 

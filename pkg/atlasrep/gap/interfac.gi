@@ -2,9 +2,9 @@
 ##
 #W  interfac.gi          GAP 4 package AtlasRep                 Thomas Breuer
 ##
-#Y  Copyright (C)  2001,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
+#Y  Copyright (C)  2001,   Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
-##  This file contains the implementation part of the ``high level'' GAP
+##  This file contains the implementation part of the ''high level'' GAP
 ##  interface to the ATLAS of Group Representations.
 ##
 
@@ -13,7 +13,7 @@
 ##
 #F  AGR.Pager( <string> )
 ##
-##  Simply calling `Pager' is not good enough, because GAP introduces
+##  Simply calling 'Pager' is not good enough, because GAP introduces
 ##  line breaks in too long lines, and GAP does not compute the printable
 ##  length of the line but the length as a string.
 ##
@@ -32,12 +32,12 @@ AGR.Pager:= function( string )
 #F  AGR.ShowOnlyASCII()
 ##
 ##  Show nicer grids and symbols such as ℤ if the terminal admits this.
-##  Currently we do not do this if `Print' is used to show the data,
+##  Currently we do *not* do this if 'Print' is used to show the data,
 ##  because of the automatically inserted line breaks.
 ##
 AGR.ShowOnlyASCII:= function()
-    return IsIdenticalObj( AtlasOfGroupRepresentationsInfo.displayFunction,
-                           Print ) or GAPInfo.TermEncoding <> "UTF-8";
+    return UserPreference( "AtlasRep", "DisplayFunction" ) = "Print" or
+           GAPInfo.TermEncoding <> "UTF-8";
     end;
 
 
@@ -46,7 +46,8 @@ AGR.ShowOnlyASCII:= function()
 #F  AGR.StringAtlasInfoOverview( <gapnames>, <conditions> )
 ##
 AGR.StringAtlasInfoOverview:= function( gapnames, conditions )
-    local columns, type, i, widths, width, fstring, result, mid;
+    local rep_rest_funs, only_if_rep, columns, len, type, widths, choice, i,
+          j, fstring, result, mid;
 
     # Consider only those names for which actually information is available.
     # (The ordering shall be the same as in the input.)
@@ -57,11 +58,19 @@ AGR.StringAtlasInfoOverview:= function( gapnames, conditions )
                            x -> x <> fail );
     fi;
     if IsEmpty( gapnames ) then
-      return;
+      return [];
     fi;
+
+    # If 'conditions' restricts the representations then omit rows
+    # with empty representations part.
+    rep_rest_funs:= [ Characteristic, Dimension, Identifier, IsMatrixGroup, 
+                      IsPermGroup, IsPrimitive, IsTransitive, NrMovedPoints, 
+                      RankAction, Ring, Transitivity ];
+    only_if_rep:= ForAny( conditions, x -> x in rep_rest_funs );
 
     # Compute the data of the columns.
     columns:= [ [ "group", "l", List( gapnames, x -> [ x[1], false ] ) ] ];
+    len:= 0;
     for type in AGR.DataTypes( "rep", "prg" ) do
       if type[2].DisplayOverviewInfo <> fail then
         Add( columns, [
@@ -70,24 +79,43 @@ AGR.StringAtlasInfoOverview:= function( gapnames, conditions )
              List( gapnames,
                    n -> type[2].DisplayOverviewInfo[3](
                             Concatenation( [ n ], conditions ) ) ) ] );
+        if only_if_rep then
+          if type[3] = "rep" then
+            len:= Length( columns );
+          fi;
+        else
+          len:= Length( columns );
+        fi;
       fi;
     od;
 
-    # Evaluate the privacy flag.
+    # Initialize the column widths; the header string shall fit.
+    widths:= List( columns, c -> [ Length( c[1] ), c[2] ] );
+
+    # Restrict the lists to the nonempty rows.
+    choice:= [];
     for i in [ 1 .. Length( gapnames ) ] do
-      if ForAny( columns, x -> x[3][i][2] ) then
-        columns[1][3][i][1]:= Concatenation( columns[1][3][i][1],
-            AtlasOfGroupRepresentationsInfo.markprivate );
+      if ForAny( [ 2 .. len ],
+                 c -> columns[c][3][i][1] <> "" ) then
+        Add( choice, i );
+
+        # Evaluate the privacy flag.
+        if ForAny( columns, x -> x[3][i][2] ) then
+          columns[1][3][i][1]:= Concatenation( columns[1][3][i][1],
+              UserPreference( "AtlasRep", "AtlasRepMarkNonCoreData" ) );
+        fi;
+
+        for j in [ 1 .. Length( columns ) ] do
+          widths[j][1]:= Maximum( widths[j][1],
+                                  Length( columns[j][3][i][1] ) );
+        od;
+
       fi;
     od;
 
-    # Compute the appropriate column widths.
-    widths:= [];
-    for i in columns do
-      width:= Maximum( Length( i[1] ),       # the header string shall fit
-                  Maximum( List( i[3], y -> Length( y[1] ) ) ) );
-      Add( widths, [ width, i[2] ] );
-    od;
+    if IsEmpty( choice ) then
+      return [];
+    fi;
 
     fstring:= function( string, width )
       local strwidth, n, n1, n2;
@@ -128,12 +156,123 @@ AGR.StringAtlasInfoOverview:= function( gapnames, conditions )
     fi;
 
     # Add the information for each group.
-    for i in [ 1 .. Length( gapnames ) ] do
-      if ForAny( [ 2 .. Length( columns ) ],
-                 j -> columns[j][3][i][1] <> "" ) then
-        Add( result, JoinStringsWithSeparator( List( [ 1 .. Length( columns ) ],
-                 j -> fstring( columns[j][3][i][1], widths[j] ) ), mid ) );
+    for i in choice do
+      Add( result, JoinStringsWithSeparator( List( [ 1 .. Length( columns ) ],
+               j -> fstring( columns[j][3][i][1], widths[j] ) ), mid ) );
+    od;
+
+    return result;
+    end;
+
+
+#############################################################################
+##
+#F  AGR.StringAtlasInfoContents()
+##
+AGR.StringAtlasInfoContents:= function()
+    local datadir, result, mid, dir, header, table, info, n, path, subdir,
+          dstfile, prefix, ncols, widths, i, row, sep;
+
+    # general information
+    datadir:= UserPreference( "AtlasRep", "AtlasRepDataDirectory" );
+    result:= [];
+    Add( result, Concatenation( "- AtlasRepAccessRemoteFiles: ",
+                     String( UserPreference( "AtlasRep",
+                                 "AtlasRepAccessRemoteFiles" ) ), "\n" ) );
+    Add( result, Concatenation( "- AtlasRepDataDirectory: ", datadir, "\n" ) );
+
+    # information per part of the database
+    if AGR.ShowOnlyASCII() then
+      mid:= " | ";
+    else
+      mid:= " │ ";
+    fi;
+
+    dir:= Directory( datadir );
+    header:= [ "ID", mid, "address, version, files" ];
+    table:= [];
+    for info in AtlasOfGroupRepresentationsInfo.notified do
+      n:= 0;
+      if info.ID = "core" then
+        path:= Filename( dir, "datagens" );
+        if IsDirectoryPath( path ) then
+          n:= n + Length( Difference( DirectoryContents( path ),
+                                      [ ".", "..", "dummy" ] ) );
+        fi;
+        path:= Filename( dir, "dataword" );
+        if IsDirectoryPath( path ) then
+          n:= n + Length( Difference( DirectoryContents( path ),
+                                      [ ".", "..", "dummy" ] ) );
+        fi;
+      elif StartsWith( info.DataURL, "http" ) then
+        # remote data extension
+        path:= Filename( dir, Concatenation( "dataext/", info.ID ) );
+        if IsDirectoryPath( path ) then
+          n:= n + Length( Difference( DirectoryContents( path ),
+                                      [ ".", "..", "toc.json" ] ) );
+        fi;
+      else
+        # local data extension (perhaps with one intermediate directory level)
+        path:= info.DataURL;
+        if IsDirectoryPath( path ) then
+          path:= Directory( path );
+          for subdir in Difference( DirectoryContents( path ),
+                                    [ ".", "..", "toc.json" ] ) do
+            dstfile:= Filename( path, subdir );
+            if IsDirectoryPath( dstfile ) then
+              n:= n + Length( Difference( DirectoryContents( dstfile ),
+                                          [ ".", ".." ] ) );
+            else
+              n:= n + 1;
+            fi;
+          od;
+        fi;
       fi;
+      path:= info.DataURL;
+      if not StartsWith( path, "http" ) then
+        prefix:= First( List( DirectoriesLibrary( "pkg" ),
+                              d -> Filename( d, "" ) ),
+                        str -> StartsWith( path, str ) );
+        if prefix <> fail then
+          path:= ReplacedString( path, prefix, "" );
+        fi;
+      fi;
+      Add( table, [ info.ID, mid, Concatenation( path, "," ) ] );
+
+      if IsBound( info.Version ) then
+        Add( table, [ "", mid, Concatenation( "version ", info.Version,
+                                   "," ) ] );
+      fi;
+      Add( table, [ "", mid, Concatenation( String( n ),
+                                 " files locally available." ) ] );
+    od;
+    ncols:= Length( header );
+    widths:= List( header, Length );
+    for row in table do
+      for i in [ 1 .. ncols ] do
+        widths[i]:= Maximum( widths[i], WidthUTF8String( row[i] ) );
+      od;
+    od;
+    for i in [ 1, 3 ] do
+      widths[i]:= -widths[i];
+    od;
+
+    Add( result, Concatenation( List( [ 1 .. ncols ],
+                                i -> String( header[i], widths[i] ) ) ) );
+    if AGR.ShowOnlyASCII() then
+      sep:= JoinStringsWithSeparator( List( [ 1, 3 .. ncols ],
+              j -> RepeatedString( "-", AbsInt( widths[j] ) ) ), "-+-" );
+    else
+      sep:= JoinStringsWithSeparator( List( [ 1, 3 .. ncols ],
+              j -> RepeatedUTF8String( "─", AbsInt( widths[j] ) ) ), "─┼─" );
+    fi;
+    for row in table do
+      if row[1] <> "" then
+        Add( result, sep );
+      fi;
+      Add( result,
+           Concatenation( List( [ 1 .. ncols ],
+                                i -> String( row[i], widths[i] ) ) ) );
     od;
 
     return result;
@@ -145,10 +284,11 @@ AGR.StringAtlasInfoOverview:= function( gapnames, conditions )
 #F  AGR.InfoPrgs( <conditions> )
 ##
 AGR.InfoPrgs:= function( conditions )
-    local groupname, name, tocs, std, argpos, stdavail, toc, record, type,
-          list, header, nams, sort, info, pi;
+    local gapname, groupname, name, tocs, std, argpos, stdavail, toc, record,
+          type, list, header, nams, sort, info, pi;
 
-    groupname:= AGR.InfoForName( conditions[1] );
+    gapname:= conditions[1];
+    groupname:= AGR.InfoForName( gapname );
     if groupname = fail then
       return rec( list:= [] );
     fi;
@@ -191,8 +331,8 @@ AGR.InfoPrgs:= function( conditions )
     fi;
 
     # Create the header line.
-    # (Because of `AtlasRepCreateHTMLInfoForGroup',
-    # `gapname' must occur as an entry of its own .)
+    # (Because of 'AGR.CreateHTMLInfoForGroup',
+    # the group name must occur as an entry of its own .)
     header:= [ "Programs for G = ", groupname[1], ":" ];
     if Length( stdavail ) = 1 then
       Append( header, [ "    (all refer to std. generators ",
@@ -210,11 +350,12 @@ AGR.InfoPrgs:= function( conditions )
             and conditions[ argpos + 1 ] = true )
        or Length( conditions ) < argpos then
       for type in AGR.DataTypes( "prg" ) do
-        info:= type[2].DisplayPRG( tocs, name, std, stdavail );
+        info:= type[2].DisplayPRG( tocs, [ gapname, groupname[2] ], std,
+                                   stdavail );
         Add( list, info );
         if IsEmpty( info ) then
           Add( sort, [ 0 ] );
-        elif Length( info ) = 1 then
+        elif IsString( info[2] ) then
           Add( sort, [ 0, info[1] ] );
         else
           Add( sort, [ 1, info[1] ] );
@@ -225,7 +366,7 @@ AGR.InfoPrgs:= function( conditions )
 
     # Sort the information such that those come first for which a single
     # line is given.
-    # (This is because `BrowseAtlasInfo' turns the parts with more than
+    # (This is because 'BrowseAtlasInfo' turns the parts with more than
     # one line into a subcategory which is created from the first line.)
     # Inside this ordering of entries, sort the information alphabetically.
     pi:= Sortex( sort );
@@ -240,10 +381,10 @@ AGR.InfoPrgs:= function( conditions )
 ##
 #F  AGR.EvaluateMinimalityCondition( <gapname>, <conditions> )
 ##
-##  Evaluate conditions involving `"minimal"':
-##  Replace the string `"minimal"' by the number in question if known,
-##  return `true' in this case and `false' otherwise.
-##  (In the `false' case, an info message is printed.)
+##  Evaluate conditions involving '"minimal"':
+##  Replace the string '"minimal"' by the number in question if known,
+##  return 'true' in this case and 'false' otherwise.
+##  (In the 'false' case, an info message is printed.)
 ##
 AGR.EvaluateMinimalityCondition:= function( gapname, conditions )
     local pos, info, pos2;
@@ -255,7 +396,7 @@ AGR.EvaluateMinimalityCondition:= function( gapname, conditions )
         info:= MinimalRepresentationInfo( gapname, NrMovedPoints );
         if info = fail then
           Info( InfoAtlasRep, 1,
-                "minimal perm. repr. of `", gapname, "' not known" );
+                "minimal perm. repr. of '", gapname, "' not known" );
           return false;
         fi;
         conditions[ pos ]:= info.value;
@@ -267,7 +408,7 @@ AGR.EvaluateMinimalityCondition:= function( gapname, conditions )
                      Characteristic, conditions[ pos2+1 ] );
           if info = fail then
             Info( InfoAtlasRep, 1,
-                  "minimal matrix repr. of `", gapname,
+                  "minimal matrix repr. of '", gapname,
                   "' in characteristic ", conditions[ pos2+1 ],
                   " not known" );
             return false;
@@ -283,8 +424,8 @@ AGR.EvaluateMinimalityCondition:= function( gapname, conditions )
                        Size, Size( conditions[ pos2+1 ] ) );
             if info = fail then
               Info( InfoAtlasRep, 1,
-                    "minimal matrix repr. of `", gapname,
-                    "' over `", conditions[ pos2+1 ], "' not known" );
+                    "minimal matrix repr. of '", gapname,
+                    "' over '", conditions[ pos2+1 ], "' not known" );
               return false;
             fi;
             conditions[ pos ]:= info.value;
@@ -301,8 +442,8 @@ AGR.EvaluateMinimalityCondition:= function( gapname, conditions )
 ##
 #F  AGR.InfoReps( <conditions> )
 ##
-##  This function is used by `AGR.DisplayAtlasInfoGroup' and
-##  `BrowseData.AtlasRepGroupInfoTable'.
+##  This function is used by 'AGR.StringAtlasInfoGroup' and
+##  'BrowseData.AtlasRepGroupInfoTable'.
 ##
 AGR.InfoReps:= function( conditions )
     local info, stdavail, header, list, types, r, type, entry;
@@ -315,8 +456,8 @@ AGR.InfoReps:= function( conditions )
     stdavail:= Set( List( info, x -> x.standardization ) );
 
     # Construct the header line.
-    # (Because of `AtlasRepCreateHTMLInfoForGroup',
-    # `gapname' must occur as an entry of its own .)
+    # (Because of 'AGR.CreateHTMLInfoForGroup',
+    # 'gapname' must occur as an entry of its own .)
     header:= [ "Representations for G = ", AGR.GAPName( conditions[1] ),
                ":" ];
     if Length( stdavail ) = 1 then
@@ -335,8 +476,9 @@ AGR.InfoReps:= function( conditions )
       fi;
       entry:= [ [ String( r.repnr ), ":" ], [ entry[1], "" ],
                 entry{ [ 2 .. Length( entry ) ] } ];
-      if not IsString( r.identifier[1] ) then
-        entry[2][2]:= AtlasOfGroupRepresentationsInfo.markprivate;
+      if not ( IsString( r.identifier[2] ) or
+               ForAll( r.identifier[2], IsString ) ) then
+        entry[2][2]:= UserPreference( "AtlasRep", "AtlasRepMarkNonCoreData" );
       fi;
       if 1 < Length( stdavail ) then
         Add( entry, [ ", w.r.t. std. gen. ", String( r.standardization ) ] );
@@ -357,12 +499,13 @@ AGR.InfoReps:= function( conditions )
 ##
 AGR.StringAtlasInfoGroup:= function( conditions )
     local result, screenwidth, inforeps, list, line, len1, len2, indent,
-          underline, i, prefix, entry, infoprgs, j;
+          underline, bullet, bulletlength, i, prefix, entry, infoprgs, j,
+          colsep;
 
     result:= [];
     screenwidth:= SizeScreen()[1] - 1;
 
-    # `DisplayAtlasInfo( <gapname>[, <std>][, <conditions>] )'
+    # 'DisplayAtlasInfo( <gapname>[, <std>][, <conditions>] )'
     inforeps:= AGR.InfoReps( conditions );
     if not IsEmpty( inforeps.list ) then
 
@@ -423,21 +566,26 @@ AGR.StringAtlasInfoGroup:= function( conditions )
       od;
     fi;
 
-    # `DisplayAtlasInfo( <gapname>[, <std>][, IsStraightLineProgram] )'
+    # 'DisplayAtlasInfo( <gapname>[, <std>][, IsStraightLineProgram] )'
     infoprgs:= AGR.InfoPrgs( conditions );
     if ForAny( infoprgs.list, x -> not IsEmpty( x ) ) then
       if IsBound( inforeps ) and not IsEmpty( inforeps.list ) then
         Add( result, "" );
       fi;
       indent:= 0;
+
+      # Format the header.
       line:= Concatenation( infoprgs.header{ [ 1 .. 3 ] } );
       if AGR.ShowOnlyASCII() then
         underline:= RepeatedString( "-", Sum( List(
                         infoprgs.header{ [ 1 .. 3 ] }, Length ) ) );
+        bullet:= "- ";
       else
         underline:= RepeatedUTF8String( "─", Sum( List(
                         infoprgs.header{ [ 1 .. 3 ] }, Length ) ) );
+        bullet:= "• ";
       fi;
+      bulletlength:= 2;
       for i in [ 4 .. Length( infoprgs.header ) ] do
         if WidthUTF8String( line ) + WidthUTF8String( infoprgs.header[i] )
            >= screenwidth
@@ -455,14 +603,58 @@ AGR.StringAtlasInfoGroup:= function( conditions )
       if underline <> "" then
         Add( result, underline );
       fi;
+
+      # Format the info list.  Each entry is a list of the following type:
+      # - empty or
+      # - consists of two strings (corresponding to table columns),
+      #   plus a program identifier, or
+      # - has a string at position 1
+      #   and non-string lists of length 3 at the other positions,
+      #   each representing the columns of a table row,
+      #   plus a program identifier.
+      len1:= 0;
+      len2:= 0;
       for i in infoprgs.list do
         if not IsEmpty( i ) then
-          if Length( i ) = 1 then
-            Add( result, i[1] );
+          if IsString( i[2] ) then
+            # This happens if only one program is available,
+            # and if the type is not "automorphisms", "kernels", or "maxes".
+            len1:= Maximum( len1, WidthUTF8String( i[1] ) );
+            if Length( i ) = 2 then
+              len2:= Maximum( len2, WidthUTF8String( i[2] ) );
+            fi;
           else
-            Add( result, Concatenation( i[1], ":" ) );
+            # This happens for "automorphisms", "kernels", and "maxes",
+            # and whenever more than one program is available for a type.
+            len1:= Maximum( len1, WidthUTF8String( i[1] ) + 1 );
             for j in [ 2 .. Length( i ) ] do
-              Add( result, Concatenation( "  ", i[j] ) );
+              len1:= Maximum( len1, WidthUTF8String( i[j][1] ) );
+              len2:= Maximum( len2, WidthUTF8String( i[j][2] ) );
+            od;
+          fi;
+        fi;
+      od;
+
+      # The two columns shall be left aligned.
+      len1:= -len1;
+      len2:= -len2;
+      colsep:= "  ";
+      indent:= RepeatedString( " ", bulletlength );
+
+      for i in infoprgs.list do
+        if not IsEmpty( i ) then
+          if IsString( i[2] ) then
+            Add( result, Concatenation( bullet,
+                                        String( i[1], len1 ),
+                                        colsep,
+                                        String( i[2], len2 ) ) );
+          else
+            Add( result, Concatenation( bullet, i[1], ":" ) );
+            for j in [ 2 .. Length( i ) ] do
+              Add( result, Concatenation( indent,
+                  String( i[j][1], len1 ),
+                  colsep,
+                  String( i[j][2], len2 ) ) );
             od;
           fi;
         fi;
@@ -475,31 +667,47 @@ AGR.StringAtlasInfoGroup:= function( conditions )
 
 #############################################################################
 ##
-#F  DisplayAtlasInfo( [<listofnames>][,][<std>][,]["contents", <sourcesid>]
+#F  DisplayAtlasInfo( [<listofnames>][,][<std>][,]["contents", <sources>]
 #F                    [, IsPermGroup[, true]]
 #F                    [, NrMovedPoints, <n>]
+#F                    [, IsTransitive[, <bool>]]
+#F                    [, Transitivty[, <n>]]
+#F                    [, IsPrimitive[, <bool>]]
+#F                    [, RankAction[, <n>]]
 #F                    [, IsMatrixGroup[, true]]
 #F                    [, Characteristic, <p>][, Dimension, <n>]
+#F                    [, Ring, <R>]
 #F                    [, Position, <n>]
 #F                    [, Character, <chi>]
 #F                    [, Identifier, <id>] )
-#F  DisplayAtlasInfo( <gapname>[, <std>][, "contents", <sourcesid>]
+#F  DisplayAtlasInfo( <gapname>[, <std>][, "contents", <sources>]
 #F                    [, IsPermGroup[, true]]
 #F                    [, NrMovedPoints, <n>]
+#F                    [, IsTransitive[, <bool>]]
+#F                    [, Transitivty[, <n>]]
+#F                    [, IsPrimitive[, <bool>]] 
+#F                    [, RankAction[, <n>]]
 #F                    [, IsMatrixGroup[, true]]
 #F                    [, Characteristic, <p>][, Dimension, <n>]
+#F                    [, Ring, <R>]
 #F                    [, Position, <n>]
 #F                    [, Character, <chi>]
 #F                    [, Identifier, <id>]
 #F                    [, IsStraightLineProgram[, true]] )
+#F  DisplayAtlasInfo( "contents" )
+##
+#T support DisplayAtlasInfo( <tbl> ) for a character table <tbl>
+#T with admissible Identifier value
 ##
 InstallGlobalFunction( DisplayAtlasInfo, function( arg )
-    local result, width;
+    local result, width, fun;
 
     # Distinguish the summary overview for at least one group
     # from the detailed overview for exactly one group.
     if   Length( arg ) = 0 then
       result:= AGR.StringAtlasInfoOverview( "all", arg );
+    elif Length( arg ) = 1 and arg[1] = "contents" then
+      result:= AGR.StringAtlasInfoContents();
     elif IsList( arg[1] ) and ForAll( arg[1], IsString ) then
       result:= AGR.StringAtlasInfoOverview( arg[1],
                     arg{ [ 2 .. Length( arg ) ] } );
@@ -510,12 +718,17 @@ InstallGlobalFunction( DisplayAtlasInfo, function( arg )
     fi;
 
     width:= SizeScreen()[1] - 2;
-    result:= List( result,
-               l -> InitialSubstringUTF8StringWithSuffix( l, width, "*" ) );
+    if AGR.ShowOnlyASCII() then
+      result:= List( result,
+               l -> InitialSubstringUTF8String( l, width, "*" ) );
+    else
+      result:= List( result,
+               l -> InitialSubstringUTF8String( l, width, "⋯" ) );
+    fi;
     Add( result, "" );
 
-    AtlasOfGroupRepresentationsInfo.displayFunction(
-        JoinStringsWithSeparator( result, "\n" ) );
+    fun:= EvalString( UserPreference( "AtlasRep", "DisplayFunction" ) );
+    fun( JoinStringsWithSeparator( result, "\n" ) );
     end );
 
 
@@ -536,148 +749,92 @@ InstallGlobalFunction( DisplayAtlasInfo, function( arg )
 ##  number of the maximal subgroup to which the representation is restricted.
 ##
 InstallGlobalFunction( AtlasGenerators, function( arg )
-    local tocs, identifier, gapname, prefix, groupname, maxnr, file, repnr,
-          res, type, j, toc, record, pos, try, gens, name, gen, result, prog,
-          repname;
+    local identifier, gapname, id, maxnr, rep, repnr, reps, prog, filenames,
+          i, groupname, type, gens, result;
 
-    tocs:= AGR.TablesOfContents( "all" );
     if Length( arg ) = 1 then
 
-      # `AtlasGenerators( <identifier> )'
+      # 'AtlasGenerators( <identifier> )'
       identifier:= arg[1];
       if IsRecord( identifier ) and IsBound( identifier.identifier ) then
         identifier:= identifier.identifier;
       fi;
       gapname:= identifier[1];
-      if Length( gapname ) = 2 and IsString( gapname[1] ) then
-        # file in a private directory
-        prefix:= gapname[1];
-        gapname:= gapname[2];
-      else
-        prefix:= "datagens";
-      fi;
-      groupname:= AGR.InfoForName( gapname );
+      id:= identifier;
       if IsBound( identifier[5] ) then
         maxnr:= identifier[5];
+        id:= identifier{ [ 1 .. 4 ] };
       fi;
-      file:= identifier[2];
-      if not IsString( file ) then
-        file:= file[1];
-      fi;
-
-      # Compute the type, and the current number of the representation.
-      repnr:= 0;
-      res:= false;
-      for type in AGR.DataTypes( "rep" ) do
-        for toc in tocs do
-          if IsBound( toc.( groupname[2] ) ) then
-            record:= toc.( groupname[2] );
-            if IsBound( record.( type[1] ) ) then
-              pos:= PositionProperty( record.( type[1] ),
-                        entry -> entry[ Length( entry ) ] = identifier[2] );
-              if pos = fail then
-                repnr:= repnr + Length( record.( type[1] ) );
-              else
-                repnr:= repnr + pos;
-                res:= true;
-                break;
-              fi;
-            fi;
-          fi;
-        od;
-        if res then
-          break;
-        fi;
-      od;
-      if not res then
-        return fail;
-      fi;
+      rep:= First( AGR.MergedTableOfContents( "all", gapname ),
+                   r -> r.identifier = id );
 
     elif  ( Length( arg ) = 2 and IsString( arg[1] ) and IsPosInt( arg[2] ) )
        or ( Length( arg ) = 3 and IsString( arg[1] ) and IsPosInt( arg[2] )
                               and IsPosInt( arg[3] ) ) then
 
-      # `AtlasGenerators( <gapname>, <repnr>[, <maxnr>] )'
+      # 'AtlasGenerators( <gapname>, <repnr>[, <maxnr>] )'
       gapname:= arg[1];
-      groupname:= AGR.InfoForName( gapname );
-      if groupname = fail then
-        Info( InfoAtlasRep, 1,
-              "AtlasGenerators: no group with GAP name `", gapname, "'" );
-        return fail;
-      fi;
-
-      try:= function( repnr, type )
-        local j, toc, record;
-        for j in [ 1 .. Length( tocs ) ] do
-          toc:= tocs[j];
-          if IsBound( toc.( groupname[2] ) ) then
-            record:= toc.( groupname[2] );
-            if IsBound( record.( type ) ) then
-              if repnr <= Length( record.( type ) ) then
-                return [ j, record.( type )[ repnr ] ];
-              fi;
-              repnr:= repnr - Length( record.( type ) );
-            fi;
-          fi;
-        od;
-        return repnr;
-      end;
-
       repnr:= arg[2];
-      res:= repnr;
-      for type in AGR.DataTypes( "rep" ) do
-        res:= try( res, type[1] );
-        if not IsInt( res ) then
-          break;
-        fi;
-      od;
-      if IsInt( res ) then
+      reps:= AGR.MergedTableOfContents( "all", gapname );
+      rep:= First( reps, r -> r.repnr = repnr );
+      if rep = fail then
         return fail;
       fi;
-
-      if res[1] = 1 then
-        prefix:= "datagens";
-      else
-        prefix:= AtlasOfGroupRepresentationsInfo.private[ res[1]-1 ][2];
-      fi;
-      res:= res[2];
-      identifier:= [ gapname, res[ Length( res) ], res[1], res[2] ];
-      if prefix <> "datagens" then
-        identifier[1]:= [ prefix, gapname ];
-      fi;
+      identifier:= ShallowCopy( rep.identifier );
       if IsBound( arg[3] ) then
         maxnr:= arg[3];
         identifier[5]:= maxnr;
       fi;
-
     else
       Error( "usage: AtlasGenerators( <gapname>,<repnr>[,<maxnr>] ) or\n",
              "       AtlasGenerators( <identifier> )" );
     fi;
 
-    # Access the data file(s).
-    gens:= AGR.FileContents( prefix, groupname[2], identifier[2], type );
-    if gens = fail then
-      return fail;
-    fi;
-    result:= rec( generators      := gens,
-                  standardization := identifier[3],
-                  repnr           := repnr,
-                  identifier      := identifier );
-
+    # If the restriction to a subgroup is required then
+    # try to fetch the program (w.r.t. the correct standardization)
+    # *before* reading the generators;
+    # if we do not get the program then the generators are not needed.
     if IsBound( maxnr ) then
-
-      # Compute the straight line program for the restriction
-      # (w.r.t. the correct standardization).
       prog:= AtlasProgram( gapname, identifier[3], maxnr );
       if prog = fail then
         return fail;
       fi;
+    fi;
+
+    filenames:= identifier[2];
+    if IsString( filenames ) then
+      filenames:= [ [ "datagens", filenames ] ];
+    else
+      filenames:= ShallowCopy( filenames );
+      for i in [ 1 .. Length( filenames ) ] do
+        if IsString( filenames[i] ) then
+          filenames[i]:= [ "datagens", filenames[i] ];
+        fi;
+      od;
+    fi;
+
+    # Access the data file(s).
+    groupname:= AGR.InfoForName( gapname );
+    if groupname = fail then
+      Info( InfoAtlasRep, 1,
+            "AtlasGenerators: no group with GAP name '", gapname, "'" );
+      return fail;
+    fi;
+    type:= First( AGR.DataTypes( "rep" ), l -> l[1] = rep.type );
+    gens:= AGR.FileContents( filenames, type );
+    if gens = fail then
+      return fail;
+    fi;
+    result:= ShallowCopy( rep );
+
+    if IsBound( maxnr ) then
+
+      result.identifier:= identifier;
 
       # Evaluate the straight line program.
       result.generators:= ResultOfStraightLineProgram( prog.program, gens );
 
-      # Add info.
+      # Add/adjust info.
       if IsBound( groupname[3].sizesMaxes )
          and IsBound( groupname[3].sizesMaxes[ maxnr ] ) then
         result.size:= groupname[3].sizesMaxes[ maxnr ];
@@ -688,23 +845,7 @@ InstallGlobalFunction( AtlasGenerators, function( arg )
       fi;
 
     else
-
-      # Add info.
-      repname:= identifier[2];
-      if not IsString( repname ) then
-        repname:= repname[1];
-      fi;
-      repname:= repname{ [ 1 .. Position( repname, '.' )-1 ] };
-
-      result.groupname:= gapname;
-      result.repname:= repname;
-      result.type:= type[1];
-
-      type[2].AddDescribingComponents( result, type );
-      if IsBound( groupname[3].size ) then
-        result.size:= groupname[3].size;
-      fi;
-
+      result.generators:= gens;
     fi;
 
     # Return the result.
@@ -716,33 +857,38 @@ InstallGlobalFunction( AtlasGenerators, function( arg )
 ##
 #F  AGR.MergedTableOfContents( <tocid>, <gapname> )
 ##
-##  `AGR.MergedTableOfContents' returns a list of the known representations
+##  'AGR.MergedTableOfContents' returns a list of the known representations
 ##  for the group with name <gapname>.
-##  This list is sorted by types and for each type by its `SortTOCEntries'
+##  This list is sorted by types and for each type by its 'SortTOCEntries'
 ##  function.
 ##  The list is cached in the component <gapname> of the global record
-##  `AtlasOfGroupRepresentationsInfo.TableOfContents.merged'.
+##  'AtlasOfGroupRepresentationsInfo.TableOfContents.merged'.
 ##  When a new table of contents is notified with
-##  `AtlasOfGroupRepresentationsNotifyPrivateDirectory' then the cache is
+##  'AtlasOfGroupRepresentationsNotifyPrivateDirectory' then the cache is
 ##  cleared.
 ##
 AGR.MergedTableOfContents:= function( tocid, gapname )
     local merged, label, groupname, result, tocs, type, typeresult, sortkeys,
-          toc, record, id, i, repname, oneresult;
+          toc, record, id, i, repname, oneresult, types, r, loc;
 
     merged:= AtlasOfGroupRepresentationsInfo.TableOfContents.merged;
-    label:= Concatenation( tocid, "|", gapname );
-    if not IsBound( merged.( label ) ) then
+    if IsString( tocid ) then
+      tocid:= [ tocid ];
+    fi;
+    label:= Concatenation( JoinStringsWithSeparator( tocid, "|" ),
+                           "|", gapname );
+    if IsBound( merged.( label ) ) then
+      return merged.( label );
+    fi;
 
-      groupname:= AGR.InfoForName( gapname );
-      if groupname = fail then
-        return [];
-      fi;
-
+    groupname:= AGR.InfoForName( gapname );
+    if groupname = fail then
+      return [];
+    elif tocid = [ "all" ] then
       result:= [];
 
-      # Loop over the relevant representations, sort them for each type.
-      tocs:= AGR.TablesOfContents( [ "contents", tocid ] );
+      # collect all representations, sort them for each type.
+      tocs:= AGR.TablesOfContents( [ "contents", "all" ] );
       for type in AGR.DataTypes( "rep" ) do
         typeresult:= [];
         sortkeys:= [];
@@ -750,23 +896,30 @@ AGR.MergedTableOfContents:= function( tocid, gapname )
           if IsBound( toc.( groupname[2] ) ) then
             record:= toc.( groupname[2] );
             if IsBound( record.( type[1] ) ) then
-              if not IsBound( toc.diridPrivate ) then
-                id:= gapname;
-              else
-                id:= [ toc.diridPrivate, gapname ];
-              fi;
               for i in record.( type[1] ) do
                 repname:= i[ Length(i) ];
                 if not IsString( repname ) then
                   repname:= repname[1];
                 fi;
                 repname:= repname{ [ 1 .. Position( repname, '.' )-1 ] };
+                id:= i[ Length(i) ];
+
+                if toc.TocID <> "core" then
+                  if IsString( id ) then
+                    id:= [ [ toc.TocID, id ] ];
+                  else
+                    id:= List( id, x -> [ toc.TocID, x ] );
+                  fi;
+                fi;
+
                 oneresult:= rec( groupname       := gapname,
-                                 identifier      := [ id, i[ Length(i) ],
+                                 identifier      := [ gapname, id,
                                                       i[1], i[2] ],
                                  repname         := repname,
                                  standardization := i[1],
-                                 type            := type[1] );
+                                 type            := type[1],
+                                 contents        := toc.TocID );
+
                 type[2].AddDescribingComponents( oneresult, type );
                 Add( typeresult, oneresult );
                 Add( sortkeys, type[2].SortTOCEntries( i ) );
@@ -786,11 +939,38 @@ AGR.MergedTableOfContents:= function( tocid, gapname )
       for i in [ 1 .. Length( result ) ] do
         result[i].repnr:= i;
       od;
-
-      merged.( label ):= result;
+    elif tocid = [ "local" ] then
+      types:= AGR.DataTypes( "rep" );
+      result:= [];
+      for r in AGR.MergedTableOfContents( "all", gapname ) do
+        type:= First( types, x -> x[1] = r.type );
+        if r.contents <> "core" then
+          loc:= AtlasOfGroupRepresentationsLocalFilename(
+                    r.identifier[2], type );
+        elif IsString( r.identifier[2] ) then
+          loc:= AtlasOfGroupRepresentationsLocalFilename(
+                    [ [ "datagens", r.identifier[2] ] ], type );
+        else
+          loc:= AtlasOfGroupRepresentationsLocalFilename(
+                    List( r.identifier[2], x -> [ "datagens", x ] ), type );
+        fi;
+        if not IsEmpty( loc ) and ForAll( loc[1][2], x -> x[2] ) then
+          Add( result, r );
+        fi;
+      od;
+    else
+      # Now we know that we have to filter a list which we can compute.
+      if "local" in tocid then
+        result:= AGR.MergedTableOfContents( "local", gapname );
+      else
+        result:= AGR.MergedTableOfContents( "all", gapname );
+      fi;
+      tocid:= Difference( tocid, [ "all", "local" ] );
+      result:= Filtered( result, r -> r.contents in tocid );
     fi;
 
-    return merged.( label );
+    merged.( label ):= result;
+    return result;
 end;
 
 
@@ -798,17 +978,17 @@ end;
 ##
 #F  AGR.EvaluateCharacterCondition( <gapname>, <conditions>, <reps> )
 ##
-##  Evaluate conditions involving `Character'.
-##  The list <conditions> is changed in place.
-##  The return value is a copy of <conditions> in which one occurrence of
-##  `Character' is replaced by the corresponding `Identifier' condition
-##  if this is known,
-##  or a nonempty string describing an info message otherwise.
+##  Evaluate conditions involving 'Character'.
+##  The list <conditions> is changed in place such that the first occurrence
+##  of 'Character' and the subsequent entry (the condition on the character)
+##  are removed.
+##  The return value is the sublist of those entries in <reps> that satisfy
+##  the condition.
 ##
 AGR.EvaluateCharacterCondition:= function( gapname, conditions, reps )
-    local pos, chi, len, i, map, tbl, p, dec, list, j, repname, newreps;
+    local pos, map, chi, tbl, pos2, p, dec, i, repnames, mapi, j, len;
 
-    # If `Character' does not occur then we need not work.
+    # If 'Character' does not occur then we need not work.
     pos:= Position( conditions, Character );
     if pos = fail then
       return reps;
@@ -824,14 +1004,109 @@ AGR.EvaluateCharacterCondition:= function( gapname, conditions, reps )
     fi;
     map:= map.( gapname );
 
-    tbl:= CharacterTable( gapname );
-    if tbl = fail then
-      Info( InfoAtlasRep, 1, "no character table for ", gapname, " known" );
+    chi:= conditions[ pos+1 ];
+    if IsClassFunction( chi ) then
+      tbl:= UnderlyingCharacterTable( chi );
+      if IsOrdinaryTable( tbl ) then
+        if gapname <> Identifier( tbl ) then
+          return [];
+        fi;
+      elif gapname <> Identifier( OrdinaryCharacterTable( tbl ) ) then
+        return [];
+      fi;
+    else
+      tbl:= CharacterTable( gapname );
+      if tbl = fail then
+        Info( InfoAtlasRep, 1, "no character table for ", gapname, " known" );
+        return [];
+      fi;
+    fi;
+
+    # Check whether also 'Characteristic' is specified.
+    pos2:= Position( conditions, Characteristic );
+    if pos2 = fail then
+      p:= "?";
+    elif pos2 = Length( conditions ) then
+      return [];
+    else
+      p:= conditions[ pos2+1 ];
+      if IsInt( p ) then
+        p:= [ p ];
+      fi;
+    fi;
+
+    # Interpret the character.
+    if   IsClassFunction( chi ) then
+      # The character is explicitly given.
+      if p = "?" then
+        p:= [ UnderlyingCharacteristic( tbl ) ];
+      elif IsFunction( p ) then
+        if p( UnderlyingCharacteristic( tbl ) ) = true then
+          p:= [ UnderlyingCharacteristic( tbl ) ];
+        else
+          return [];
+        fi;
+      elif IsList( p ) then
+        if UnderlyingCharacteristic( tbl ) in p then
+          p:= [ UnderlyingCharacteristic( tbl ) ];
+        else
+          return [];
+        fi;
+      fi;
+      if p[1] = 0 then
+        dec:= MatScalarProducts( tbl, Irr( tbl ), [ chi ] )[1];
+      else
+        dec:= Decomposition( Irr( tbl ), [ chi ], "nonnegative" )[1];
+      fi;
+      if dec = fail or not ForAll( dec, x -> IsInt( x ) and 0 <= x ) then
+        Info( InfoAtlasRep, 1, "character does not decompose properly" );
+        return [];
+      fi;
+      chi:= [];
+      for i in [ 1 .. Length( dec ) ] do
+        if dec[i] = 1 then
+          Add( chi, i );
+        elif 1 < dec[i] then
+          Add( chi, [ i, dec[i] ] );
+        fi;
+      od;
+      if Length( chi ) = 1 then
+        chi:= chi[1];
+      fi;
+    elif not ( IsInt( chi ) or IsString( chi ) ) then
+#T perhaps admit a list of positions or strings?
+      return [];
+    else
+      # The position in the list of irreducibles or the name is given.
+      if p = "?" then
+        # No characteristic is specified, this means *ordinary* character.
+        p:= [ 0 ];
+      fi;
+    fi;
+
+    # Look for the character(s) in the info lists.
+    repnames:= [];
+    for i in [ 1 .. Length( map ) ] do
+      if IsBound( map[i] ) and
+         ( ( IsFunction( p ) and ( ( i = 1 and p( 0 ) = true ) or
+                                   ( 1 < i and p( i ) = true ) ) ) or
+           ( IsList( p ) and ( ( i = 1 and 0 in p ) or i in p ) ) ) then
+        mapi:= map[i];
+        for j in [ 1 .. Length( mapi[1] ) ] do
+          if ( IsPosInt( chi ) and mapi[1][j] = chi ) or
+             ( IsString( chi ) and mapi[3][j] = chi ) or
+             ( IsList( chi ) and mapi[1][j] = chi ) then
+            # We have found a character that matches.
+            Add( repnames, mapi[2][j] );
+          fi;
+        od;
+      fi;
+    od;
+    if Length( repnames ) = 0 then
       return [];
     fi;
-    chi:= conditions[ pos+1 ];
 
-    # Remove the entries from `conditions'.
+    # We will return a nonempty list. Remove 'Character' from 'conditions'.
     len:= Length( conditions );
     for i in [ pos .. Length( conditions )-2 ] do
       conditions[i]:= conditions[ i+2 ];
@@ -839,103 +1114,7 @@ AGR.EvaluateCharacterCondition:= function( gapname, conditions, reps )
     Unbind( conditions[ len ] );
     Unbind( conditions[ len-1 ] );
 
-    # Check whether `Characteristic' is specified.
-    pos:= Position( conditions, Characteristic );
-    if pos = fail then
-      p:= "?";
-    elif pos = Length( conditions ) then
-      return [];
-    else
-      p:= conditions[ pos+1 ];
-      if not ( p = 0 or IsPosInt( p ) ) then
-        return [];
-      fi;
-    fi;
-
-    # Interpret the character.
-    if   IsClassFunction( chi ) then
-      # the character is explicitly given
-      if p = "?" then
-        p:= UnderlyingCharacteristic( UnderlyingCharacterTable( chi ) );
-      elif p <> UnderlyingCharacteristic( UnderlyingCharacterTable( chi ) ) then
-        return [];
-      elif p <> 0 then
-        tbl:= tbl mod p;
-      fi;
-    else
-      if p = "?" then
-        p:= 0;
-      elif p <> 0 then
-        tbl:= tbl mod p;
-      fi;
-      if   IsPosInt( chi ) and chi <= NrConjugacyClasses( tbl ) then
-        # the `chi'-th irreducible character in characteristic `p'
-        chi:= Irr( tbl )[ chi ];
-      elif IsString( chi ) then
-        # the character is irreducible and specified by its name,
-        # as defined by `AtlasCharacterNames'.
-        chi:= Position( AtlasCharacterNames( tbl ), chi );
-        if chi = fail then
-          return [];
-        fi;
-        chi:= Irr( tbl )[ chi ];
-      else
-        return [];
-      fi;
-    fi;
-
-    if Identifier( UnderlyingCharacterTable( chi ) ) <> Identifier( tbl ) then
-      return [];
-    fi;
-             
-    # Check whether character information for the given type is stored.
-    if p = 0 and IsBound( map[1] ) then
-      map:= map[1];
-    elif IsPosInt( p ) and IsBound( map[p] ) then
-      if tbl = fail then
-        Info( InfoAtlasRep, 1,
-              "no ", p, "-modular character table for ", gapname, " known" );
-        return [];
-      fi;
-      map:= map[p];
-    else
-      Info( InfoAtlasRep, 1,
-            "no character information for ", gapname, " in characteristic ",
-            p, " known" );
-      return [];
-    fi;
-
-    # Look for the character.
-    if p = 0 then
-      dec:= MatScalarProducts( tbl, Irr( tbl ), [ chi ] )[1];
-    else
-      dec:= Decomposition( Irr( tbl ), [ chi ], "nonnegative" )[1];
-    fi;
-    if dec = fail or not ForAll( dec, x -> IsInt( x ) and 0 <= x ) then
-      Info( InfoAtlasRep, 1, "character does not decompose properly" );
-      return [];
-    fi;
-    list:= [];
-    for i in [ 1 .. Length( dec ) ] do
-      if dec[i] = 1 then
-        Add( list, i );
-      elif 1 < dec[i] then
-        Add( list, [ i, dec[i] ] );
-      fi;
-    od;
-    if Length( list ) = 1 then
-      list:= list[1];
-    fi;
-    pos:= Position( map[1], list );
-    if pos = fail then
-      Info( InfoAtlasRep, 1, "character not found" );
-      return [];
-    fi;
-
-    # We have found the character.
-    repname:= map[2][ pos ];
-
-    return Filtered( reps, r -> r.repname = repname );
+    return Filtered( reps, r -> r.repname in repnames );
     end;
 
 
@@ -945,8 +1124,8 @@ AGR.EvaluateCharacterCondition:= function( gapname, conditions, reps )
 #F  AGR.AtlasGeneratingSetInfo( <conditions>, "all" )
 #F  AGR.AtlasGeneratingSetInfo( <conditions>, <types> )
 ##
-##  This function does the work for `OneAtlasGeneratingSetInfo',
-##  `AllAtlasGeneratingSetInfos', and `AGR.InfoReps'.
+##  This function does the work for 'OneAtlasGeneratingSetInfo',
+##  'AllAtlasGeneratingSetInfos', and 'AGR.InfoReps'.
 ##  The first entry in <conditions> can be a group name
 ##  or a list of group names.
 ##
@@ -988,9 +1167,9 @@ AGR.AtlasGeneratingSetInfo:= function( conditions, mode )
 
     # Deal with a prescribed standardization.
     if 1 <= Length( conditions ) and
-       ( IsPosInt( conditions[1] ) or IsList( conditions[1] ) ) then
+       ( IsInt( conditions[1] ) or IsList( conditions[1] ) ) then
       std:= conditions[1];
-      if IsPosInt( std ) then
+      if IsInt( std ) then
         std:= [ std ];
       fi;
       conditions:= conditions{ [ 2 .. Length( conditions ) ] };
@@ -1002,7 +1181,7 @@ AGR.AtlasGeneratingSetInfo:= function( conditions, mode )
     pos:= Position( conditions, Position );
     if pos <> fail then
       if pos = Length( conditions ) or not IsPosInt( conditions[ pos+1 ] ) then
-        Error( "condition `Position' must be followed by a pos. integer" );
+        Error( "condition 'Position' must be followed by a pos. integer" );
       fi;
       position:= conditions[ pos+1 ];
       conditions:= Concatenation( conditions{ [ 1 .. pos-1 ] },
@@ -1015,20 +1194,16 @@ AGR.AtlasGeneratingSetInfo:= function( conditions, mode )
 
       reps:= AGR.MergedTableOfContents( tocid, gapname );
 
-      # Evaluate the `Position' condition.
+      # Evaluate the 'Position' condition.
       if pos <> fail then
-        if position <= Length( reps ) then
-          reps:= [ reps[ position ] ];
-        else
-          reps:= [];
-        fi;
+        reps:= Filtered( reps, r -> r.repnr = position );
       fi;
 
       cond:= ShallowCopy( conditions );
 
-      # Evaluate conditions involving `"minimal"' (modify `cond' in place).
+      # Evaluate conditions involving '"minimal"' (modify 'cond' in place).
       if AGR.EvaluateMinimalityCondition( gapname, cond ) then
-        # Evaluate the `Character' condition.
+        # Evaluate the 'Character' condition.
         if Character in cond then
           reps:= AGR.EvaluateCharacterCondition( gapname, cond, reps );
         fi;
@@ -1092,6 +1267,70 @@ InstallGlobalFunction( AllAtlasGeneratingSetInfos, function( arg )
 
 #############################################################################
 ##
+#M  AtlasRepInfoRecord( <gapname> )
+##
+InstallMethod( AtlasRepInfoRecord,
+    [ "IsString" ],
+    function( gapname )
+    local info, result, comp, groupname, name, maxes, maxstd, toc, record, i;
+
+    # Make sure that the file 'gap/types.g' is already loaded.
+    IsRecord( AtlasOfGroupRepresentationsInfo );
+
+    if not IsBound( AGR.GAPnamesRec.( gapname ) ) then
+      return rec();
+    fi;
+
+    info:= AGR.GAPnamesRec.( gapname )[3];
+    result:= rec( name:= gapname );
+    for comp in [ "size", "nrMaxes", "sizesMaxes", "structureMaxes" ] do
+      if IsBound( info.( comp ) ) then
+        result.( comp ):= StructuralCopy( info.( comp ) );
+      fi;
+    od;
+
+    groupname:= AGR.InfoForName( gapname );
+    name:= groupname[2];
+
+    maxes:= [];
+    maxstd:= [];
+    for toc in AGR.TablesOfContents( "all" ) do
+      if IsBound( toc.( name ) ) then
+        record:= toc.( name );
+        if IsBound( record.maxes ) then
+          for i in record.maxes do
+            if i[2] in maxes then
+              AddSet( maxstd[ Position( maxes, i[2] ) ], i[1] );
+            else
+              Add( maxes, i[2] );
+              Add( maxstd, [ i[1] ] );
+            fi;
+          od;
+        fi;
+      fi;
+    od;
+    if IsBound( info.maxext ) then
+      for i in info.maxext do
+        if i[2] in maxes then
+          AddSet( maxstd[ Position( maxes, i[2] ) ], i[1] );
+        else
+          Add( maxes, i[2] );
+          Add( maxstd, [ i[1] ] );
+        fi;
+      od;
+    fi;
+    if not IsEmpty( maxes ) then
+      SortParallel( maxes, maxstd );
+      ConvertToRangeRep( maxes );
+      result.slpMaxes:= [ maxes, maxstd ];
+    fi;
+
+    return result;
+    end );
+
+
+#############################################################################
+##
 #F  AtlasGroup( [<gapname>[, <std>]] )
 #F  AtlasGroup( [<gapname>[, <std>]], IsPermGroup[, true] )
 #F  AtlasGroup( [<gapname>[, <std>]], NrMovedPoints, <n> )
@@ -1118,8 +1357,9 @@ InstallGlobalFunction( AtlasGroup, function( arg )
         result:= GroupWithGenerators( gens.generators );
         if IsBound( gens.size ) then
           SetSize( result, gens.size );
-          SetAtlasRepInfoRecord( result, info );
         fi;
+        SetAtlasRepInfoRecord( result, info );
+#T improve the sit. where only identifier is bound!
         return result;
       fi;
     fi;
@@ -1154,7 +1394,7 @@ InstallGlobalFunction( AtlasSubgroup, function( arg )
       groupname:= info.groupname;
     elif Length( arg ) = 2 and IsGroup( arg[1] ) then
       if not HasAtlasRepInfoRecord( arg[1] ) then
-        Error( "the `AtlasRepInfoRecord' value is not set for the group" );
+        Error( "the 'AtlasRepInfoRecord' value is not set for the group" );
       fi;
       info:= AtlasRepInfoRecord( arg[1] );
       groupname:= info.groupname;
@@ -1197,7 +1437,7 @@ InstallGlobalFunction( AtlasSubgroup, function( arg )
     fi;
     inforec:= rec( identifier:= Concatenation( info.identifier,
                                                [ maxnr ] ),
-                   standardization:= info.standardization );
+                   standardization:= std );
     if IsBound( info.repnr ) then
       inforec.repnr:= info.repnr;
     fi;
@@ -1216,41 +1456,37 @@ InstallGlobalFunction( AtlasSubgroup, function( arg )
 #############################################################################
 ##
 #F  AtlasProgramInfo( <gapname>[, <std>][, "maxes"], <maxnr> )
+#F  AtlasProgramInfo( <gapname>[, <std>], "maxes", <maxnr>[, <std2>] )
+#F  AtlasProgramInfo( <gapname>[, <std>], "maxstd", <maxnr>, <vers>, <substd> )
+#F  AtlasProgramInfo( <gapname>[, <std>], "kernel", <factname> )
 #F  AtlasProgramInfo( <gapname>[, <std>], "classes" )
 #F  AtlasProgramInfo( <gapname>[, <std>], "cyclic" )
+#F  AtlasProgramInfo( <gapname>[, <std>], "cyc2ccl"[, <vers>] )
 #F  AtlasProgramInfo( <gapname>[, <std>], "automorphism", <autname> )
 #F  AtlasProgramInfo( <gapname>[, <std>], "check" )
-#F  AtlasProgramInfo( <gapname>[, <std>], "pres" )
+#F  AtlasProgramInfo( <gapname>[, <std>], "presentation" )
 #F  AtlasProgramInfo( <gapname>[, <std>], "find" )
 #F  AtlasProgramInfo( <gapname>, <std>, "restandardize", <std2> )
 #F  AtlasProgramInfo( <gapname>[, <std>], "other", <descr> )
 ##
-##  (Also the argument pair [, "contents", <sources> ] is supported.)
-##
 InstallGlobalFunction( AtlasProgramInfo, function( arg )
-    local identifier, gapname, prefix, groupname, type, result, std, argpos,
-          conditions, tocs, toc, record, id;
+    local identifier, gapname, groupname, type, result, std, argpos,
+          conditions, tocs, toc, id;
 
     if Length( arg ) = 1 then
 
-      # `AtlasProgramInfo( <identifier> )'
+      # 'AtlasProgramInfo( <identifier> )'
       identifier:= arg[1];
       gapname:= identifier[1];
-      if Length( gapname ) = 2 and IsString( gapname[1] ) then
-        prefix:= gapname[1];
-        gapname:= gapname[2];
-      else
-        prefix:= "dataword";
-      fi;
       groupname:= AGR.InfoForName( gapname );
       if groupname = fail then
         return fail;
       fi;
       for type in AGR.DataTypes( "prg" ) do
-        result:= type[2].AtlasProgramInfo( type, identifier, prefix,
-                                           groupname[2] );
+        result:= type[2].AtlasProgramInfo( type, identifier, groupname[2] );
         if result <> fail then
           result.groupname:= gapname;
+          result.version:= AGR.VersionOfSLP( identifier[2] );
           return Immutable( result );
         fi;
       od;
@@ -1265,12 +1501,15 @@ InstallGlobalFunction( AtlasProgramInfo, function( arg )
     groupname:= AGR.InfoForName( gapname );
     if groupname = fail then
       Info( InfoAtlasRep, 1,
-            "AtlasProgramInfo: no group with GAP name `", gapname, "'" );
+            "AtlasProgramInfo: no group with GAP name '", gapname, "'" );
       return fail;
     fi;
 
     if IsInt( arg[2] ) and 2 < Length( arg ) then
       std:= [ arg[2] ];
+      argpos:= 3;
+    elif IsBool( arg[2] ) and 2 < Length( arg ) then
+      std:= true;
       argpos:= 3;
     else
       std:= true;
@@ -1281,34 +1520,29 @@ InstallGlobalFunction( AtlasProgramInfo, function( arg )
     # Restrict to a prescribed selection of tables of contents.
     tocs:= AGR.TablesOfContents( conditions );
 
-    # `AtlasProgramInfo( <gapname>[, <std>][, "maxes"], <maxnr> )'
-    if Length( conditions ) = 1 and IsInt( conditions[1] ) then
-      conditions:= [ "maxes", conditions[1] ];
+    # 'AtlasProgramInfo( <gapname>[, <std>][, "maxes"], <maxnr> )'
+    if ( Length( conditions ) = 1 and IsInt( conditions[1] ) ) or
+       ( Length( conditions ) = 3 and IsInt( conditions[1] )
+                                  and conditions[2] = "version" ) then
+      conditions:= Concatenation( [ "maxes" ], conditions );
     fi;
 
     for toc in tocs do
-      if IsBound( toc.( groupname[2] ) ) then
-        record:= toc.( groupname[2] );
-        for type in AGR.DataTypes( "prg" ) do
-          id:= type[2].AccessPRG( record, std, conditions );
-          if id <> fail then
-            # The table of contents provides a program as is required.
-            if not IsBound( toc.diridPrivate ) then
-              id:= Concatenation( [ groupname[1] ], id );
-            else
-              id:= Concatenation( [ [ toc.diridPrivate, groupname[1] ] ],
-                                  id );
-            fi;
-            return AtlasProgramInfo( id );
-          fi;
-        od;
-      fi;
+      # Note that 'toc.( groupname[2] )' need not be bound
+      # if database extensions provide straight line pograms.
+      for type in AGR.DataTypes( "prg" ) do
+        id:= type[2].AccessPRG( toc, groupname[2], std, conditions );
+        if id <> fail then
+          # The table of contents provides a program as is required.
+          return AtlasProgramInfo( Concatenation( [ groupname[1] ], id ) );
+        fi;
+      od;
     od;
 
     # No program was found.
     Info( InfoAtlasRep, 2,
           "no program for conditions ", conditions, "\n",
-          "#I  of the group with GAP name `", groupname[1], "'" );
+          "#I  of the group with GAP name '", groupname[1], "'" );
     return fail;
 end );
 
@@ -1316,11 +1550,15 @@ end );
 #############################################################################
 ##
 #F  AtlasProgram( <gapname>[, <std>][, "maxes"], <maxnr> )
+#F  AtlasProgram( <gapname>[, <std>], "maxes", <maxnr>[, <std2>] )
+#F  AtlasProgram( <gapname>[, <std>], "maxstd", <maxnr>, <vers>, <substd> )
+#F  AtlasProgram( <gapname>[, <std>], "kernel", <factname> )
 #F  AtlasProgram( <gapname>[, <std>], "classes" )
 #F  AtlasProgram( <gapname>[, <std>], "cyclic" )
+#F  AtlasProgram( <gapname>[, <std>], "cyc2ccl"[, <vers>] )
 #F  AtlasProgram( <gapname>[, <std>], "automorphism", <autname> )
 #F  AtlasProgram( <gapname>[, <std>], "check" )
-#F  AtlasProgram( <gapname>[, <std>], "pres" )
+#F  AtlasProgram( <gapname>[, <std>], "presentation" )
 #F  AtlasProgram( <gapname>[, <std>], "find" )
 #F  AtlasProgram( <gapname>, <std>, "restandardize", <std2> )
 #F  AtlasProgram( <gapname>[, <std>], "other", <descr> )
@@ -1334,28 +1572,22 @@ end );
 ##  of the program.
 ##
 InstallGlobalFunction( AtlasProgram, function( arg )
-    local identifier, gapname, prefix, groupname, type, result, info;
+    local identifier, gapname, groupname, type, result, info;
 
     if Length( arg ) = 1 then
 
-      # `AtlasProgram( <identifier> )'
+      # 'AtlasProgram( <identifier> )'
       identifier:= arg[1];
       gapname:= identifier[1];
-      if Length( gapname ) = 2 and IsString( gapname[1] ) then
-        prefix:= gapname[1];
-        gapname:= gapname[2];
-      else
-        prefix:= "dataword";
-      fi;
       groupname:= AGR.InfoForName( gapname );
       if groupname = fail then
         return fail;
       fi;
       for type in AGR.DataTypes( "prg" ) do
-        result:= type[2].AtlasProgram( type, identifier, prefix,
-                                       groupname[2] );
+        result:= type[2].AtlasProgram( type, identifier, groupname[2] );
         if result <> fail then
           result.groupname:= groupname[1];
+          result.version:= AGR.VersionOfSLP( identifier[2] );
           return Immutable( result );
         fi;
       od;
@@ -1371,76 +1603,6 @@ InstallGlobalFunction( AtlasProgram, function( arg )
       return fail;
     fi;
     return AtlasProgram( info.identifier );
-end );
-
-
-#############################################################################
-##
-#F  AtlasOfGroupRepresentationsUserParameters()
-##
-InstallGlobalFunction( AtlasOfGroupRepresentationsUserParameters,
-  function()
-    local str, prefix, pair, r;
-
-    str:= "access to remote data:    ";
-    if AtlasOfGroupRepresentationsInfo.remote then
-      Append( str, "yes\n" );
-    else
-      Append( str, "no\n" );
-    fi;
-
-    prefix:= "servers:                  ";
-    for pair in AtlasOfGroupRepresentationsInfo.servers do
-      Append( str, prefix );
-      prefix:= "                          ";
-      Append( str, pair[1] );
-      Append( str, "/" );
-      Append( str, pair[2] );
-      Append( str, "\n" );
-    od;
-
-    Append( str, "access remote data:       " );
-    if   not IsBound( AtlasOfGroupRepresentationsInfo.wget )
-         or not AtlasOfGroupRepresentationsInfo.wget in [ true, false ] then
-      Append( str, "via the IO package (preferred) or wget\n" );
-    elif AtlasOfGroupRepresentationsInfo.wget = true then
-      Append( str, "only via wget\n" );
-    else
-      Append( str, "only via the IO package\n" );
-    fi;
-
-    Append( str, "compress data files:      " );
-    if AtlasOfGroupRepresentationsInfo.compress then
-      Append( str, "yes\n" );
-    else
-      Append( str, "no\n" );
-    fi;
-
-    Append( str, "display overviews via:    " );
-    Append( str,
-        NameFunction( AtlasOfGroupRepresentationsInfo.displayFunction ) );
-    Append( str, "\n" );
-
-    prefix:= "access functions:         ";
-    for r in Reversed( AtlasOfGroupRepresentationsInfo.accessFunctions ) do
-      Append( str, prefix );
-      prefix:= "                          ";
-      Append( str, r.description );
-      if r.active = true then
-        Append( str, " [enabled]\n" );
-      else
-        Append( str, " [disabled]\n" );
-      fi;
-    od;
-
-    Append( str, "read MeatAxe text files:  " );
-    if IsBound( CMeatAxe.FastRead ) and CMeatAxe.FastRead = true then
-      Append( str, "fast\n" );
-    else
-      Append( str, "minimizing the space\n" );
-    fi;
-
-    return str;
 end );
 
 

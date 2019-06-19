@@ -1,5 +1,5 @@
   
-  [1X6 [33X[0;0YNew [5XGAP[105X[101X[1X Objects and Utility Functions Provided by the [5XAtlasRep[105X[101X[1X Package[133X[101X
+  [1X6 [33X[0;0YNew [5XGAP[105X[101X[1X Objects and Utility Functions provided by the [5XAtlasRep[105X[101X[1X Package[133X[101X
   
   [33X[0;0YThis  chapter  describes  [5XGAP[105X objects and functions that are provided by the
   [5XAtlasRep[105X package but that might be of general interest.[133X
@@ -8,16 +8,16 @@
   programs (see Section [14X6.2[114X).[133X
   
   [33X[0;0YThe  new functions are concerned with representations of minimal degree, see
-  Section [14X6.3[114X.[133X
+  Section [14X6.3[114X, and a JSON interface, see Section [14X6.4[114X.[133X
   
   
   [1X6.1 [33X[0;0YStraight Line Decisions[133X[101X
   
   [33X[0;0Y[13XStraight   line  decisions[113X  are  similar  to  straight  line  programs  (see
   Section [14X'Reference:  Straight  Line  Programs'[114X)  but return [9Xtrue[109X or [9Xfalse[109X. A
-  straight  line  decisions  checks  a  property  for its inputs. An important
-  example  is  to  check whether a given list of group generators is in fact a
-  list of standard generators (cf. Section[14X3.3[114X) for this group.[133X
+  straight  line  decision  checks  whether  its inputs have some property. An
+  important example is to check whether a given list of group generators is in
+  fact a list of standard generators (cf. Section[14X3.3[114X) for this group.[133X
   
   [33X[0;0YA  straight  line  decision in [5XGAP[105X is represented by an object in the filter
   [2XIsStraightLineDecision[102X ([14X6.1-1[114X) that stores a list of [21Xlines[121X each of which has
@@ -32,7 +32,7 @@
   
   [33X[0;0YThe first two forms have the same meaning as for straight line programs (see
   Section [14X'Reference:  Straight  Line  Programs'[114X), the last form means a check
-  whether the element stored at the label [22Xi[122X-th has the order [22Xn[122X.[133X
+  whether the element stored at the [22Xi[122X-th label has the order [22Xn[122X.[133X
   
   [33X[0;0YFor  the  meaning  of  the  list  of lines, see [2XResultOfStraightLineDecision[102X
   ([14X6.1-6[114X).[133X
@@ -58,14 +58,14 @@
   
   [1X6.1-1 IsStraightLineDecision[101X
   
-  [29X[2XIsStraightLineDecision[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsStraightLineDecision[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YEach    straight    line    decision    in    [5XGAP[105X   lies   in   the   filter
   [2XIsStraightLineDecision[102X.[133X
   
   [1X6.1-2 LinesOfStraightLineDecision[101X
   
-  [29X[2XLinesOfStraightLineDecision[102X( [3Xprog[103X ) [32X operation
+  [33X[1;0Y[29X[2XLinesOfStraightLineDecision[102X( [3Xprog[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe list of lines that define the straight line decision.[133X
   
   [33X[0;0YThis   defining   attribute   for  the  straight  line  decision  [3Xprog[103X  (see
@@ -83,7 +83,7 @@
   
   [1X6.1-3 NrInputsOfStraightLineDecision[101X
   
-  [29X[2XNrInputsOfStraightLineDecision[102X( [3Xprog[103X ) [32X operation
+  [33X[1;0Y[29X[2XNrInputsOfStraightLineDecision[102X( [3Xprog[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe number of inputs required for the straight line decision.[133X
   
   [33X[0;0YThis   defining   attribute   corresponds  to  [2XNrInputsOfStraightLineProgram[102X
@@ -96,7 +96,7 @@
   
   [1X6.1-4 ScanStraightLineDecision[101X
   
-  [29X[2XScanStraightLineDecision[102X( [3Xstring[103X ) [32X function
+  [33X[1;0Y[29X[2XScanStraightLineDecision[102X( [3Xstring[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ya record containing the straight line decision, or [9Xfail[109X.[133X
   
   [33X[0;0YLet  [3Xstring[103X  be  a string that encodes a straight line decision in the sense
@@ -104,7 +104,7 @@
   except  that  [10Xoup[110X  lines are not allowed, and instead lines of the following
   form may occur.[133X
   
-  [8X[10Xchor [110X[22Xa[122X [22Xb[122X[108X
+  [8X[10Xchor [110X[8X[22Xa[122X [22Xb[122X[108X
         [33X[0;6Ymeans  that  it is checked whether the order of the element at label [22Xa[122X
         is [22Xb[122X.[133X
   
@@ -134,8 +134,8 @@
   
   [1X6.1-5 StraightLineDecision[101X
   
-  [29X[2XStraightLineDecision[102X( [3Xlines[103X[, [3Xnrgens[103X] ) [32X function
-  [29X[2XStraightLineDecisionNC[102X( [3Xlines[103X[, [3Xnrgens[103X] ) [32X function
+  [33X[1;0Y[29X[2XStraightLineDecision[102X( [3Xlines[103X[, [3Xnrgens[103X] ) [32X function[133X
+  [33X[1;0Y[29X[2XStraightLineDecisionNC[102X( [3Xlines[103X[, [3Xnrgens[103X] ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ythe straight line decision given by the list of lines.[133X
   
   [33X[0;0YLet  [3Xlines[103X  be  a list of lists that defines a unique straight line decision
@@ -151,7 +151,7 @@
   
   [1X6.1-6 ResultOfStraightLineDecision[101X
   
-  [29X[2XResultOfStraightLineDecision[102X( [3Xprog[103X, [3Xgens[103X[, [3Xorderfunc[103X] ) [32X operation
+  [33X[1;0Y[29X[2XResultOfStraightLineDecision[102X( [3Xprog[103X, [3Xgens[103X[, [3Xorderfunc[103X] ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X if all checks succeed, otherwise [9Xfalse[109X.[133X
   
   [33X[0;0Y[2XResultOfStraightLineDecision[102X    evaluates   the   straight   line   decision
@@ -231,8 +231,7 @@
   trivial  group, but the straight line decision that checks whether the order
   of [22Xx[122X is both [22X2[122X and [22X3[122X clearly always returns [9Xfalse[109X.)[133X
   
-  [33X[0;0YThe  [5XATLAS[105X  of  Group  Representations  contains  the following two kinds of
-  straight line decisions.[133X
+  [33X[0;0Y[5XAtlasRep[105X supports the following two kinds of straight line decisions.[133X
   
   [30X    [33X[0;6YA  [13Xpresentation[113X  is a straight line decision [3Xdec[103X that is defined for a
         set  of  standard generators of a group [22XG[122X and that returns [9Xtrue[109X if and
@@ -257,7 +256,7 @@
         [33X[0;6YMore about semi-presentations can be found in [NW05].[133X
   
   [33X[0;0YAvailable    presentations    and    semi-presentations    are   listed   by
-  [2XDisplayAtlasInfo[102X  ([14X3.5-1[114X),  they  can  be accessed via [2XAtlasProgram[102X ([14X3.5-3[114X).
+  [2XDisplayAtlasInfo[102X  ([14X3.5-1[114X),  they  can  be accessed via [2XAtlasProgram[102X ([14X3.5-4[114X).
   (Clearly   each   presentation   is   also   a   semi-presentation.   So   a
   semi-presentation  for  some  standard  generators of a group is regarded as
   available  whenever  a  presentation  for these standard generators and this
@@ -273,9 +272,11 @@
     [4X[25Xgap>[125X [27Xcheck:= AtlasProgram( "L2(8)", "check" );[127X[104X
     [4X[28Xrec( groupname := "L2(8)", [128X[104X
     [4X[28X  identifier := [ "L2(8)", "L28G1-check1", 1, 1 ], [128X[104X
-    [4X[28X  program := <straight line decision>, standardization := 1 )[128X[104X
+    [4X[28X  program := <straight line decision>, standardization := 1, [128X[104X
+    [4X[28X  version := "1" )[128X[104X
     [4X[25Xgap>[125X [27Xgens:= AtlasGenerators( "L2(8)", 1 );[127X[104X
-    [4X[28Xrec( charactername := "1a+8a", [128X[104X
+    [4X[28Xrec( charactername := "1a+8a", constituents := [ 1, 6 ], [128X[104X
+    [4X[28X  contents := "core", [128X[104X
     [4X[28X  generators := [ (1,2)(3,4)(6,7)(8,9), (1,3,2)(4,5,6)(7,8,9) ], [128X[104X
     [4X[28X  groupname := "L2(8)", id := "", [128X[104X
     [4X[28X  identifier := [ "L2(8)", [ "L28G1-p9B0.m1", "L28G1-p9B0.m2" ], 1, 9 [128X[104X
@@ -286,7 +287,7 @@
     [4X[25Xgap>[125X [27XResultOfStraightLineDecision( check.program, gens.generators );[127X[104X
     [4X[28Xtrue[128X[104X
     [4X[25Xgap>[125X [27Xgens:= AtlasGenerators( "L3(2)", 1 );[127X[104X
-    [4X[28Xrec( generators := [ (2,4)(3,5), (1,2,3)(5,6,7) ], [128X[104X
+    [4X[28Xrec( contents := "core", generators := [ (2,4)(3,5), (1,2,3)(5,6,7) ],[128X[104X
     [4X[28X  groupname := "L3(2)", id := "a", [128X[104X
     [4X[28X  identifier := [ "L3(2)", [ "L27G1-p7aB0.m1", "L27G1-p7aB0.m2" ], 1, [128X[104X
     [4X[28X      7 ], isPrimitive := true, maxnr := 1, p := 7, rankAction := 2, [128X[104X
@@ -299,7 +300,7 @@
   
   [1X6.1-8 AsStraightLineDecision[101X
   
-  [29X[2XAsStraightLineDecision[102X( [3Xbbox[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAsStraightLineDecision[102X( [3Xbbox[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Yan  equivalent  straight  line  decision  for  the given black box
             program, or [9Xfail[109X.[133X
   
@@ -325,7 +326,7 @@
   
   [1X6.1-9 StraightLineProgramFromStraightLineDecision[101X
   
-  [29X[2XStraightLineProgramFromStraightLineDecision[102X( [3Xdec[103X ) [32X operation
+  [33X[1;0Y[29X[2XStraightLineProgramFromStraightLineDecision[102X( [3Xdec[103X ) [32X operation[133X
   [6XReturns:[106X  [33X[0;10Ythe  straight  line  program associated to the given straight line
             decision.[133X
   
@@ -418,7 +419,7 @@
   
   [33X[0;0YThe  special  case of the [21Xfind[121X scripts mentioned above is also admissible as
   an  argument of [2XResultOfBBoxProgram[102X ([14X6.2-4[114X), which returns either the set of
-  generators or [9Xfail[109X.[133X
+  found generators or [9Xfail[109X.[133X
   
   [33X[0;0YContrary  to  the  general  situation, more support is provided for straight
   line  programs  and  straight line decisions in [5XGAP[105X, see Section [14X'Reference:
@@ -433,9 +434,9 @@
   straight  line  program  or from a straight line decision with [2XAsBBoxProgram[102X
   ([14X6.2-5[114X).[133X
   
-  [33X[0;0Y(Computing a straight line program related to a given straight line decision
+  [33X[0;0YComputing  a straight line program related to a given straight line decision
   is  supported  in  the  sense of [2XStraightLineProgramFromStraightLineDecision[102X
-  ([14X6.1-9[114X).)[133X
+  ([14X6.1-9[114X).[133X
   
   [33X[0;0YNote that none of these three kinds of objects is a special case of another:
   Running  a  black  box  program with [2XRunBBoxProgram[102X ([14X6.2-3[114X) yields a record,
@@ -446,13 +447,13 @@
   
   [1X6.2-1 IsBBoxProgram[101X
   
-  [29X[2XIsBBoxProgram[102X( [3Xobj[103X ) [32X Category
+  [33X[1;0Y[29X[2XIsBBoxProgram[102X( [3Xobj[103X ) [32X Category[133X
   
   [33X[0;0YEach black box program in [5XGAP[105X lies in the filter [2XIsBBoxProgram[102X.[133X
   
   [1X6.2-2 ScanBBoxProgram[101X
   
-  [29X[2XScanBBoxProgram[102X( [3Xstring[103X ) [32X function
+  [33X[1;0Y[29X[2XScanBBoxProgram[102X( [3Xstring[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ya  record  containing  the  black box program encoded by the input
             string, or [9Xfail[109X.[133X
   
@@ -515,7 +516,7 @@
   
   [1X6.2-3 RunBBoxProgram[101X
   
-  [29X[2XRunBBoxProgram[102X( [3Xprog[103X, [3XG[103X, [3Xinput[103X, [3Xoptions[103X ) [32X function
+  [33X[1;0Y[29X[2XRunBBoxProgram[102X( [3Xprog[103X, [3XG[103X, [3Xinput[103X, [3Xoptions[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ya  record  describing the result and the statistics of running the
             black box program [3Xprog[103X, or [9Xfail[109X, or the string [10X"timeout"[110X.[133X
   
@@ -528,10 +529,10 @@
   reached.  (The  latter  might  mean  that  the random choices were unlucky.)
   Otherwise a record with the following components is returned.[133X
   
-  [8X[10Xgens[110X[108X
+  [8X[10Xgens[110X[8X[108X
         [33X[0;6Ya list of group elements, bound if an [10Xoup[110X statement was reached,[133X
   
-  [8X[10Xresult[110X[108X
+  [8X[10Xresult[110X[8X[108X
         [33X[0;6Y[9Xtrue[109X  if  a  [10Xtrue[110X  statement  was  reached,  [9Xfalse[109X  if  either a [10Xfalse[110X
         statement or a failed order check was reached,[133X
   
@@ -541,22 +542,22 @@
   
   [33X[0;0YThe following components of [3Xoptions[103X are supported.[133X
   
-  [8X[10Xrandomfunction[110X[108X
+  [8X[10Xrandomfunction[110X[8X[108X
         [33X[0;6Ythe  function  called  with  argument  [3XG[103X  in order to compute a random
         element of [3XG[103X (default [2XPseudoRandom[102X ([14XReference: PseudoRandom[114X))[133X
   
-  [8X[10Xorderfunction[110X[108X
-        [33X[0;6Ythe  function  for  computing  element  orders  (the  default is [2XOrder[102X
-        ([14XReference: Order[114X)),[133X
+  [8X[10Xorderfunction[110X[8X[108X
+        [33X[0;6Ythe  function  for computing element orders (default [2XOrder[102X ([14XReference:
+        Order[114X)),[133X
   
-  [8X[10Xquiet[110X[108X
+  [8X[10Xquiet[110X[8X[108X
         [33X[0;6Yif [9Xtrue[109X then ignore [10Xecho[110X statements (default [9Xfalse[109X),[133X
   
-  [8X[10Xverbose[110X[108X
+  [8X[10Xverbose[110X[8X[108X
         [33X[0;6Yif  [9Xtrue[109X  then  print  information  about  the  line that is currently
         processed, and about order checks (default [9Xfalse[109X),[133X
   
-  [8X[10Xallowbreaks[110X[108X
+  [8X[10Xallowbreaks[110X[8X[108X
         [33X[0;6Yif  [9Xtrue[109X  then call [2XError[102X ([14XReference: Error[114X) when a [10Xbreak[110X statement is
         reached, otherwise ignore [10Xbreak[110X statements (default [9Xtrue[109X).[133X
   
@@ -587,15 +588,19 @@
   
   [1X6.2-4 ResultOfBBoxProgram[101X
   
-  [29X[2XResultOfBBoxProgram[102X( [3Xprog[103X, [3XG[103X ) [32X function
+  [33X[1;0Y[29X[2XResultOfBBoxProgram[102X( [3Xprog[103X, [3XG[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ya  list  of  group  elements  or  [9Xtrue[109X, [9Xfalse[109X, [9Xfail[109X, or the string
             [10X"timeout"[110X.[133X
   
   [33X[0;0YThis  function  calls [2XRunBBoxProgram[102X ([14X6.2-3[114X) with the black box program [3Xprog[103X
   and  second argument either a group or a list of group elements; the default
-  options  are  assumed.  The  return  value is [9Xfail[109X if this call yields [9Xfail[109X,
-  otherwise  the  [10Xgens[110X  component  of  the  result,  if  bound,  or the [10Xresult[110X
-  component if not.[133X
+  options  of  [2XRunBBoxProgram[102X ([14X6.2-3[114X) are assumed. The return value is [9Xfail[109X if
+  this call yields [9Xfail[109X, otherwise the [10Xgens[110X component of the result, if bound,
+  or the [10Xresult[110X component if not.[133X
+  
+  [33X[0;0YNote  that  a  [13Xgroup[113X  [3XG[103X  is  used  as  the  second  argument  in the call of
+  [2XRunBBoxProgram[102X ([14X6.2-3[114X) (the source for random elements), whereas a [13Xlist[113X [3XG[103X is
+  used as the third argument (the inputs).[133X
   
   [33X[0;0YAs  an example, we run the black box programs constructed in the example for
   [2XScanBBoxProgram[102X ([14X6.2-2[114X).[133X
@@ -616,7 +621,7 @@
   
   [1X6.2-5 AsBBoxProgram[101X
   
-  [29X[2XAsBBoxProgram[102X( [3Xslp[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAsBBoxProgram[102X( [3Xslp[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Yan  equivalent  black  box  program  for  the  given straight line
             program or straight line decision.[133X
   
@@ -656,7 +661,7 @@
   
   [1X6.2-6 AsStraightLineProgram[101X
   
-  [29X[2XAsStraightLineProgram[102X( [3Xbbox[103X ) [32X attribute
+  [33X[1;0Y[29X[2XAsStraightLineProgram[102X( [3Xbbox[103X ) [32X attribute[133X
   [6XReturns:[106X  [33X[0;10Yan  equivalent  straight  line  program  for  the  given black box
             program, or [9Xfail[109X.[133X
   
@@ -686,18 +691,17 @@
   [33X[0;0YThis   section   deals  with  minimal  degrees  of  permutation  and  matrix
   representations.  We do not provide an algorithm that computes these degrees
   for  an  arbitrary  group,  we  only provide some tools for evaluating known
-  databases,    mainly   concerning   [21Xbicyclic   extensions[121X   (see   [CCNPW85,
-  Section 6.5])  of simple groups, in order to derive the minimal degrees, see
-  Section [14X6.3-4[114X.[133X
+  databases, mainly concerning [21Xbicyclic extensions[121X (see [CCN+85, Section 6.5])
+  of simple groups, in order to derive the minimal degrees, see Section [14X6.3-4[114X.[133X
   
   [33X[0;0YIn  the  [5XAtlasRep[105X  package,  this  information  can  be used for prescribing
   [21Xminimality conditions[121X in [2XDisplayAtlasInfo[102X ([14X3.5-1[114X), [2XOneAtlasGeneratingSetInfo[102X
-  ([14X3.5-5[114X),  and  [2XAllAtlasGeneratingSetInfos[102X ([14X3.5-6[114X). An overview of the stored
+  ([14X3.5-6[114X),  and  [2XAllAtlasGeneratingSetInfos[102X ([14X3.5-7[114X). An overview of the stored
   minimal degrees can be shown with [2XBrowseMinimalDegrees[102X ([14X3.6-1[114X).[133X
   
   [1X6.3-1 MinimalRepresentationInfo[101X
   
-  [29X[2XMinimalRepresentationInfo[102X( [3Xgrpname[103X, [3Xconditions[103X ) [32X function
+  [33X[1;0Y[29X[2XMinimalRepresentationInfo[102X( [3Xgrpname[103X, [3Xconditions[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Ya record with the components [10Xvalue[110X and [10Xsource[110X, or [9Xfail[109X[133X
   
   [33X[0;0YLet  [3Xgrpname[103X be the [5XGAP[105X name of a group [22XG[122X, say. If the information described
@@ -707,10 +711,9 @@
   
   [33X[0;0YThe following values for [3Xconditions[103X are supported.[133X
   
-  [30X    [33X[0;6YIf  [3Xconditions[103X  is  [2XNrMovedPoints[102X  ([14XReference:  NrMovedPoints  (for  a
-        permutation)[114X)  then  [10Xvalue[110X,  if  known,  is  the  degree  of a minimal
-        faithful  (not  necessarily transitive) permutation representation for
-        [22XG[122X.[133X
+  [30X    [33X[0;6YIf   [3Xconditions[103X  is  [2XNrMovedPoints[102X  ([14XReference:  NrMovedPoints  for  a
+        permutation[114X) then [10Xvalue[110X, if known, is the degree of a minimal faithful
+        (not necessarily transitive) permutation representation for [22XG[122X.[133X
   
   [30X    [33X[0;6YIf  [3Xconditions[103X  consists of [2XCharacteristic[102X ([14XReference: Characteristic[114X)
         and  a  prime  integer  [3Xp[103X  then [10Xvalue[110X, if known, is the dimension of a
@@ -724,8 +727,8 @@
   
   [33X[0;0YIn  all  cases,  the value of the component [10Xsource[110X is a list of strings that
   describe  sources  of  the information, which can be the ordinary or modular
-  character  table  of [22XG[122X (see [CCNPW85], [JLPW95], [HL89]), the table of marks
-  of  [22XG[122X,  or  [Jan05].  For  an overview of minimal degrees of faithful matrix
+  character table of [22XG[122X (see [CCN+85], [JLPW95], [HL89]), the table of marks of
+  [22XG[122X,  or  [Jan05].  For  an  overview  of  minimal  degrees of faithful matrix
   representations  for  sporadic  simple groups and their covering groups, see
   also[133X
   
@@ -743,17 +746,17 @@
   
   [33X[0;0YOne of the following strings can be given as an additional last argument.[133X
   
-  [8X[10X"cache"[110X[108X
+  [8X[10X"cache"[110X[8X[108X
         [33X[0;6Ymeans  that the function tries to compute (and then store) values that
         are  not  stored  in [2XMinimalRepresentationInfoData[102X ([14X6.3-2[114X), but stored
         values are preferred; this is also the default.[133X
   
-  [8X[10X"lookup"[110X[108X
+  [8X[10X"lookup"[110X[8X[108X
         [33X[0;6Ymeans  that  stored  values  are  returned  but  the function does not
         attempt    to    compute    values    that    are    not   stored   in
         [2XMinimalRepresentationInfoData[102X ([14X6.3-2[114X).[133X
   
-  [8X[10X"recompute"[110X[108X
+  [8X[10X"recompute"[110X[8X[108X
         [33X[0;6Ymeans that the function always tries to compute the desired value, and
         checks the result against stored values.[133X
   
@@ -772,26 +775,26 @@
   
   [1X6.3-2 MinimalRepresentationInfoData[101X
   
-  [29X[2XMinimalRepresentationInfoData[102X[32X global variable
+  [33X[1;0Y[29X[2XMinimalRepresentationInfoData[102X[32X global variable[133X
   
   [33X[0;0YThis  is  a  record  whose  components  are  [5XGAP[105X  names  of groups for which
   information  about minimal permutation and matrix representations were known
   in  advance  or have been computed in the current [5XGAP[105X session. The value for
   the group [22XG[122X, say, is a record with the following components.[133X
   
-  [8X[10XNrMovedPoints[110X[108X
+  [8X[10XNrMovedPoints[110X[8X[108X
         [33X[0;6Ya  record with the components [10Xvalue[110X (the degree of a smallest faithful
         permutation  representation  of [22XG[122X) and [10Xsource[110X (a string describing the
         source of this information).[133X
   
-  [8X[10XCharacteristic[110X[108X
+  [8X[10XCharacteristic[110X[8X[108X
         [33X[0;6Ya  record  whose components are at most [10X0[110X and strings corresponding to
         prime  integers, each bound to a record with the components [10Xvalue[110X (the
         degree  of  a  smallest  faithful  matrix  representation of [22XG[122X in this
         characteristic)  and  [10Xsource[110X  (a  string describing the source of this
         information).[133X
   
-  [8X[10XCharacteristicAndSize[110X[108X
+  [8X[10XCharacteristicAndSize[110X[8X[108X
         [33X[0;6Ya  record whose components are strings corresponding to prime integers
         [3Xp[103X,  each bound to a record with the components [10Xsizes[110X (a list of powers
         [3Xq[103X  of  [3Xp[103X), [10Xdimensions[110X (the corresponding list of minimal dimensions of
@@ -806,7 +809,7 @@
   
   [1X6.3-3 SetMinimalRepresentationInfo[101X
   
-  [29X[2XSetMinimalRepresentationInfo[102X( [3Xgrpname[103X, [3Xop[103X, [3Xvalue[103X, [3Xsource[103X ) [32X function
+  [33X[1;0Y[29X[2XSetMinimalRepresentationInfo[102X( [3Xgrpname[103X, [3Xop[103X, [3Xvalue[103X, [3Xsource[103X ) [32X function[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X  if  the values were successfully set, [9Xfalse[109X if stored values
             contradict the given ones.[133X
   
@@ -815,8 +818,8 @@
   
   [33X[0;0YSupported values for [3Xop[103X are[133X
   
-  [30X    [33X[0;6Y[10X"NrMovedPoints"[110X  (see  [2XNrMovedPoints[102X  ([14XReference: NrMovedPoints (for a
-        permutation)[114X)),  which  means  that  [3Xvalue[103X  is  the  degree of minimal
+  [30X    [33X[0;6Y[10X"NrMovedPoints"[110X  (see  [2XNrMovedPoints[102X  ([14XReference:  NrMovedPoints for a
+        permutation[114X)),  which  means  that  [3Xvalue[103X  is  the  degree  of minimal
         faithful  (not  necessarily transitive) permutation representations of
         [22XG[122X,[133X
   
@@ -890,15 +893,17 @@
   [30X    [33X[0;6YIf  the  largest  maximal subgroup of [22XG[122X is core-free then the index of
         this  subgroup  is  the  minimal  degree.  (This  is used when the two
         character  tables  in  question  and the class fusion are available in
-        [5XGAP[105X's  Character  Table  Library  ([Bre13]);  this  happens  for  many
-        character tables of simple groups.)[133X
+        [5XGAP[105X's Character Table Library [Bre13]; this happens for many character
+        tables of simple groups.)[133X
   
   [30X    [33X[0;6YIf  [22XG[122X  has a unique minimal normal subgroup then each minimal faithful
-        permutation representation is transitive.[133X
+        permutation  representation is transitive. (Note that the core of each
+        point  stabilizer  is  either  trivial  or contains the unique minimal
+        normal subgroup.)[133X
   
         [33X[0;6YIn  this  case,  the  minimal degree can be computed directly from the
         information  in  the table of marks of [22XG[122X if this is available in [5XGAP[105X's
-        Library of Tables of Marks ([NMP13]).[133X
+        Library of Tables of Marks [NMP18].[133X
   
         [33X[0;6YSuppose  that  the  largest maximal subgroup of [22XG[122X is not core-free but
         simple  and normal in [22XG[122X, and that the other maximal subgroups of [22XG[122X are
@@ -919,4 +924,163 @@
         or  a  faithful permutation representation of degree [22Xn[122X for [22XG[122X then [22Xn[122X is
         the  minimal  degree  for  [22XG[122X. (This happens often for tables of almost
         simple groups.)[133X
+  
+  
+  [1X6.4 [33X[0;0YA JSON Interface[133X[101X
+  
+  [33X[0;0YWe  define a mapping between certain [5XGAP[105X objects and JSON (JavaScript Object
+  Notation) texts (see [JSO14]), as follows.[133X
+  
+  [30X    [33X[0;6YThe  three  [5XGAP[105X  values  [9Xtrue[109X,  [9Xfalse[109X, and [9Xfail[109X correspond to the JSON
+        texts [10Xtrue[110X, [10Xfalse[110X, and [10Xnull[110X, respectively.[133X
+  
+  [30X    [33X[0;6Y[5XGAP[105X  strings  correspond  to JSON strings; special characters in a [5XGAP[105X
+        string  (control characters ASCII [22X0[122X to [22X31[122X, backslash and double quote)
+        are  mapped  as  defined  in  JSON's  specification,  and  other ASCII
+        characters  are  kept  as they are; if a [5XGAP[105X string contains non-ASCII
+        characters, it is assumed that it is UTF-8 encoded, and one may choose
+        either to keep non-ASCII characters as they are, or to create an ASCII
+        only  JSON  string,  using  JSON's  syntax  for  Unicode  code  points
+        ([21X[10X\uXXXX[110X[121X); in the other direction, JSON strings are assumed to be UTF-8
+        encoded,  and  are mapped to UTF-8 encoded [5XGAP[105X strings, by keeping the
+        non-ASCII  characters  and  converting  substrings  of the form [10X\uXXXX[110X
+        accordingly.[133X
+  
+  [30X    [33X[0;6Y[5XGAP[105X  integers (in the sense of [2XIsInt[102X ([14XReference: IsInt[114X)) are mapped to
+        JSON  numbers  that  consist  of  digits and optionally a leading sign
+        character  [10X-[110X;  in  the  other direction, JSON numbers of this form and
+        also  JSON  numbers  that involve no decimal dots and have no negative
+        exponent (for example [10X"2e3"[110X) are mapped to [5XGAP[105X integers.[133X
+  
+  [30X    [33X[0;6Y[5XGAP[105X rationals (in the sense of [2XIsRat[102X ([14XReference: IsRat[114X)) which are not
+        integers  are  represented  by  JSON  floating point numbers; the JSON
+        representation  (and  hence  the precision) is given by first applying
+        [2XFloat[102X ([14XReference: Float[114X) and then [2XString[102X ([14XReference: String[114X).[133X
+  
+  [30X    [33X[0;6Y[5XGAP[105X  floats  (in  the  sense of Chapter [14X'Reference: Floats'[114X in the [5XGAP[105X
+        Reference  Manual) are mapped to JSON floating point numbers; the JSON
+        representation  (and  hence the precision) is given by applying [2XString[102X
+        ([14XReference: String[114X); in the other direction, JSON numbers that involve
+        a decimal dot or a negative exponent are mapped to [5XGAP[105X floats.[133X
+  
+  [30X    [33X[0;6Y(Nested   and   not  self-referential)  dense  [5XGAP[105X  lists  of  objects
+        correspond  to  JSON  arrays  such that the list entries correspond to
+        each other. (Note that JSON does not support non-dense arrays.)[133X
+  
+  [30X    [33X[0;6Y(Nested  and  not  self-referential)  [5XGAP[105X  records  correspond to JSON
+        objects  such that both labels (which are strings in [5XGAP[105X and JSON) and
+        values correspond to each other.[133X
+  
+  [33X[0;0YThe  [5XGAP[105X  functions [2XAGR.JsonText[102X ([14X6.4-2[114X) and [2XAGR.GapObjectOfJsonText[102X ([14X6.4-3[114X)
+  can  be  used  to  create a JSON text from a suitable [5XGAP[105X object and the [5XGAP[105X
+  object that corresponds to a given JSON text, respectively.[133X
+  
+  [33X[0;0YNote  that  the  composition  of  the  two  functions  is in general [13Xnot[113X the
+  identity   mapping,   because   [2XAGR.JsonText[102X   ([14X6.4-2[114X)  accepts  non-integer
+  rationals,  whereas  [2XAGR.GapObjectOfJsonText[102X  ([14X6.4-3[114X)  does  not create such
+  objects.[133X
+  
+  [33X[0;0YNote   also  that  the  results  of  [2XAGR.JsonText[102X  ([14X6.4-2[114X)  do  not  contain
+  information  about  dependencies  between common subobjects. This is another
+  reason    why    applying    first    [2XAGR.JsonText[102X    ([14X6.4-2[114X)    and    then
+  [2XAGR.GapObjectOfJsonText[102X  ([14X6.4-3[114X)  may  yield  a  [5XGAP[105X  object  with different
+  behaviour.[133X
+  
+  [33X[0;0YApplying  [2XAGR.JsonText[102X  ([14X6.4-2[114X)  to  a self-referential object such as [10X[ ~ ][110X
+  will raise a [21Xrecursion depth trap[121X error.[133X
+  
+  
+  [1X6.4-1 [33X[0;0YWhy JSON?[133X[101X
+  
+  [33X[0;0YThe  aim of this JSON interface is to read and write certain data files with
+  [5XGAP[105X  such  that these files become easily accessible independent of [5XGAP[105X. The
+  function  [2XAGR.JsonText[102X  ([14X6.4-2[114X) is intended just as a prototype, variants of
+  this  function  are  very likely to appear in other contexts, for example in
+  order to force certain line formatting or ordering of record components.[133X
+  
+  [33X[0;0YIt  is  [13Xnot[113X  the  aim  of  the  JSON  interface  to  provide  self-contained
+  descriptions  of  arbitrary  [5XGAP[105X  objects,  in order to read them into a [5XGAP[105X
+  session. Note that those [5XGAP[105X objects for which a JSON equivalent exists (and
+  many more) can be easily written to files as they are, and [5XGAP[105X can read them
+  efficiently.  On the other hand, more complicated [5XGAP[105X objects can be written
+  and  read  via  the so-called [13Xpickling[113X, for which a framework is provided by
+  the [5XGAP[105X package [5XIO[105X [Neu14].[133X
+  
+  [33X[0;0YHere  are  a  few  situations  which  are handled well by pickling but which
+  cannot be addressed with a JSON interface.[133X
+  
+  [30X    [33X[0;6YPickling  and  unpickling  take care of common subobjects of the given
+        [5XGAP[105X  object.  The  following  example  shows  that  the applying first
+        [2XAGR.JsonText[102X  ([14X6.4-2[114X)  and  then  [2XAGR.GapObjectOfJsonText[102X  ([14X6.4-3[114X) may
+        yield an object which behaves differently.[133X
+  
+  [4X      [32X  Example  [32X[104X
+          [4X[25Xgap>[125X [27Xl:= [ [ 1 ] ];; l[2]:= l[1];;  l;[127X[104X
+          [4X[28X[ [ 1 ], [ 1 ] ][128X[104X
+          [4X[25Xgap>[125X [27Xnew:= AGR.GapObjectOfJsonText( AGR.JsonText( l ) ).value;[127X[104X
+          [4X[28X[ [ 1 ], [ 1 ] ][128X[104X
+          [4X[25Xgap>[125X [27XAdd( l[1], 2 );  l;[127X[104X
+          [4X[28X[ [ 1, 2 ], [ 1, 2 ] ][128X[104X
+          [4X[25Xgap>[125X [27XAdd( new[1], 2 );  new;[127X[104X
+          [4X[28X[ [ 1, 2 ], [ 1 ] ][128X[104X
+        [4X[32X[104X
+  
+  [30X    [33X[0;6Y[5XGAP[105X admits self-referential objects, for example as follows.[133X
+  
+  [4X      [32X  Example  [32X[104X
+          [4X[25Xgap>[125X [27Xl:= [];;  l[1]:= l;;[127X[104X
+        [4X[32X[104X
+  
+        [33X[0;6YPickling  and  unpickling  take  care of self-referential objects, but
+        [2XAGR.JsonText[102X ([14X6.4-2[114X) does not support the conversion of such objects.[133X
+  
+  [1X6.4-2 AGR.JsonText[101X
+  
+  [33X[1;0Y[29X[2XAGR.JsonText[102X( [3Xobj[103X[, [3Xmode[103X] ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya new mutable string that describes [3Xobj[103X as a JSON text, or [9Xfail[109X.[133X
+  
+  [33X[0;0YIf [3Xobj[103X is a [5XGAP[105X object for which a corresponding JSON text exists, according
+  to  the  mapping  described  above,  then  such  a  JSON  text  is returned.
+  Otherwise, [9Xfail[109X is returned.[133X
+  
+  [33X[0;0YIf  the  optional  argument [3Xmode[103X is given and has the value [10X"ASCII"[110X then the
+  result  in  an  ASCII  string,  otherwise  the  encoding of strings that are
+  involved in [3Xobj[103X is kept.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XAGR.JsonText( [] );[127X[104X
+    [4X[28X"[]"[128X[104X
+    [4X[25Xgap>[125X [27XAGR.JsonText( "" );[127X[104X
+    [4X[28X"\"\""[128X[104X
+    [4X[25Xgap>[125X [27XAGR.JsonText( "abc\ndef\cghi" );[127X[104X
+    [4X[28X"\"abc\\ndef\\u0003ghi\""[128X[104X
+    [4X[25Xgap>[125X [27XAGR.JsonText( rec() );[127X[104X
+    [4X[28X"{}"[128X[104X
+    [4X[25Xgap>[125X [27XAGR.JsonText( [ , 2 ] );[127X[104X
+    [4X[28Xfail[128X[104X
+    [4X[25Xgap>[125X [27Xstr:= [ '\303', '\266' ];;  # umlaut o[127X[104X
+    [4X[25Xgap>[125X [27Xjson:= AGR.JsonText( str );;  List( json, IntChar );[127X[104X
+    [4X[28X[ 34, 195, 182, 34 ][128X[104X
+    [4X[25Xgap>[125X [27XAGR.JsonText( str, "ASCII" );[127X[104X
+    [4X[28X"\"\\u00F6\""[128X[104X
+  [4X[32X[104X
+  
+  [1X6.4-3 AGR.GapObjectOfJsonText[101X
+  
+  [33X[1;0Y[29X[2XAGR.GapObjectOfJsonText[102X( [3Xstring[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya  new  mutable record whose [10Xvalue[110X component, if bound, contains a
+            mutable [5XGAP[105X object that represents the JSON text [3Xstring[103X.[133X
+  
+  [33X[0;0YIf  [3Xstring[103X  is  a  string  that  represents a JSON text then the result is a
+  record  with the components [10Xvalue[110X (the corresponding [5XGAP[105X object in the sense
+  of  the above interface) and [10Xstatus[110X (value [9Xtrue[109X). Otherwise, the result is a
+  record  with the components [10Xstatus[110X (value [9Xfalse[109X) and [10Xerrpos[110X (the position in
+  [3Xstring[103X where the string turns out to be not valid JSON).[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XAGR.GapObjectOfJsonText( "{ \"a\": 1 }" );[127X[104X
+    [4X[28Xrec( status := true, value := rec( a := 1 ) )[128X[104X
+    [4X[25Xgap>[125X [27XAGR.GapObjectOfJsonText( "{ \"a\": x }" );[127X[104X
+    [4X[28Xrec( errpos := 8, status := false )[128X[104X
+  [4X[32X[104X
   

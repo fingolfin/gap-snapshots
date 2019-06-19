@@ -1,0 +1,56 @@
+\chapcontents {1}{How to read this manual}{5}
+\chapcontents {2}{What is XGAP?}{6}
+\seccontents {2.1}{Basics} {6}
+\seccontents {2.2}{What you can do with XGAP} {6}
+\seccontents {2.3}{How does it work?} {7}
+\seccontents {2.4}{Historical Remarks and Acknowledgements} {8}
+\chapcontents {3}{Installing XGAP}{9}
+\seccontents {3.1}{Overview} {9}
+\seccontents {3.2}{What you need to install XGAP} {9}
+\seccontents {3.3}{Getting and unpacking the sources} {9}
+\seccontents {3.4}{Configuring and Compiling the C part} {10}
+\seccontents {3.5}{Installing the Startup Script} {11}
+\seccontents {3.6}{Installing in a different than the standard location} {11}
+\chapcontents {4}{Subgroup Lattices - Examples}{12}
+\seccontents {4.1}{The Subgroup Lattice of the Dihedral Group of Order 8} {12}
+\seccontents {4.2}{A Partial Subgroup Lattice of the Symmetric Group on 6 Points} {15}
+\seccontents {4.3}{A Partial Subgroup Lattice of the Cavicchioli Group} {17}
+\seccontents {4.4}{A Partial Subgroup Lattice of the Trefoil Knot Group} {19}
+\seccontents {4.5}{A Partial Subgroup Lattice of a Finitely Presented Group} {20}
+\seccontents {4.6}{A Partial Subgroup Lattice of a Space Group} {21}
+\chapcontents {5}{Subgroup Lattices - Systematic Description}{24}
+\seccontents {5.1}{GraphicSubgroupLattice} {24}
+\seccontents {5.2}{GraphicSubgroupLattice, Protocol of Group Theoretic Constructions} {24}
+\seccontents {5.3}{GraphicSubgroupLattice, Labelling of Levels} {25}
+\seccontents {5.4}{GraphicSubgroupLattice, Moving Vertices} {25}
+\seccontents {5.5}{GraphicSubgroupLattice, Selecting Vertices} {26}
+\seccontents {5.6}{GraphicSubgroupLattice, Inserting Vertices} {26}
+\seccontents {5.7}{GraphicSubgroupLattice, Sheet Menu} {27}
+\seccontents {5.8}{GraphicSubgroupLattice, Poset Menu} {27}
+\seccontents {5.9}{GraphicSubgroupLattice, Subgroups Menu} {28}
+\seccontents {5.10}{GraphicSubgroupLattice, Information Menu} {31}
+\seccontents {5.11}{Vertex Shapes} {32}
+\seccontents {5.12}{GraphicSubgroupLattice for FpGroups, Subgroups Menu} {32}
+\seccontents {5.13}{GraphicSubgroupLattice for FpGroups, Information Menu} {35}
+\chapcontents {6}{Graphic Sheets - Basic graphic operations}{36}
+\seccontents {6.1}{Graphic Sheet Objects} {36}
+\seccontents {6.2}{Graphic Objects in Sheets} {38}
+\seccontents {6.3}{Colors in XGAP} {41}
+\seccontents {6.4}{Operations for Graphic Objects} {42}
+\seccontents {6.5}{Global Information} {42}
+\chapcontents {7}{User Communication}{43}
+\seccontents {7.1}{Menus in Graphic Sheets} {43}
+\seccontents {7.2}{Mouse Events} {44}
+\seccontents {7.3}{Dialogs} {45}
+\seccontents {7.4}{Popups} {45}
+\chapcontents {8}{Graphic Posets}{47}
+\seccontents {8.1}{Introduction} {47}
+\seccontents {8.2}{Operations} {48}
+\seccontents {8.3}{An Example} {55}
+\chapcontents {9}{Graphic Graphs}{57}
+\chapcontents {10}{Differences to XGAP 3}{58}
+\seccontents {10.1}{Concept} {58}
+\seccontents {10.2}{User Interface} {59}
+\seccontents {10.3}{Where code has to be changed} {59}
+\chapcontents {}{Bibliography}{60}
+\chapcontents {}{Index}{61}

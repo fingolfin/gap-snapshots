@@ -2,7 +2,7 @@
 ##
 #W  types.gd             GAP 4 package AtlasRep                 Thomas Breuer
 ##
-#Y  Copyright (C)  2001,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
+#Y  Copyright (C)  2001,   Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
 ##  This file contains declarations of the functions for administrating
 ##  the data types used in the &ATLAS; of Group Representations.
@@ -20,15 +20,15 @@
 ##  <Description>
 ##  Let <A>kind</A> be one of the strings <C>"rep"</C> or <C>"prg"</C>,
 ##  and <A>record</A> be a record.
-##  <Ref Func="AGR.DeclareDataType"/> declares a new data type of
-##  representations (if <A>kind</A> is <C>"rep"</C>) or of
-##  programs (if <A>kind</A> is <C>"prg"</C>).
-##  For each group used in the <Package>AtlasRep</Package> package,
-##  the record that contains the information about the data will have
-##  a component <A>name</A> whose value is a list
-##  containing the data about the new type.
-##  Examples of <A>name</A> are <C>"perm"</C>, <C>"matff"</C>,
-##  and <C>"classes"</C>.
+##  If <A>kind</A> is <C>"rep"</C> then <Ref Func="AGR.DeclareDataType"/>
+##  declares a new data type of representations,
+##  if <A>kind</A> is <C>"prg"</C> then it declares a new data type of
+##  programs.
+##  The string <A>name</A> is the name of the type,
+##  for example <C>"perm"</C>, <C>"matff"</C>, or <C>"classes"</C>.
+##  &AtlasRep; stores the data for each group internally in a record
+##  whose component <A>name</A> holds the list of the data about the type
+##  with this name.
 ##  <P/>
 ##  <E>Mandatory components</E> of <A>record</A> are
 ##  <P/>
@@ -101,7 +101,7 @@
 ##    position one of the strings <C>"r"</C> or <C>"l"</C>,
 ##    denoting right or left aligned column entries,
 ##    and at its third position a function that takes two arguments
-##    (a list of tables of contents of the <Package>AtlasRep</Package>
+##    (a list of tables of contents of the &AtlasRep;
 ##    package and a group name), and returns a list of length two,
 ##    containing the string to be printed as the column value and
 ##    <K>true</K> or <K>false</K>,
@@ -112,12 +112,15 @@
 ##  <Mark><C>DisplayPRG</C> (for <C>prg</C> only)</Mark>
 ##  <Item>
 ##    This is used in <Ref Func="DisplayAtlasInfo"/> for &ATLAS; programs.
-##    The value must be a function that takes four arguments (a list of
-##    tables of contents to examine, the name of the given group,
+##    The value must be a function that takes four arguments
+##    (a list of tables of contents to examine,
+##    a list containing the &GAP; name and the &ATLAS; name of the given
+##    group,
 ##    a list of integers or <K>true</K> for the required standardization,
-##    and a list of all available standardizations), and returns the list
-##    of lines (strings) to be printed as the information about the
-##    available programs of the current type and for the given group.
+##    and a list of all available standardizations),
+##    and returns the list of lines (strings) to be printed as the
+##    information about the available programs of the current type and for
+##    the given group.
 ##    (The default is to return an empty list.)
 ##  </Item>
 ##  <Mark><C>AccessGroupCondition</C> (for <C>rep</C> only)</Mark>
@@ -142,11 +145,11 @@
 ##  <Mark><C>AccessPRG</C> (for <C>prg</C> only)</Mark>
 ##  <Item>
 ##    This is used in <Ref Func="AtlasProgram"/>.
-##    The value must be a function that takes three arguments (the record
-##    with the information about the given group in the current table of
-##    contents, an integer or a list of integers or <K>true</K> for the
-##    required standardization, and a list of conditions given by the
-##    optional arguments of <Ref Func="AtlasProgram"/>),
+##    The value must be a function that takes four arguments (the current
+##    table of contents, the group name, an integer or a list of integers
+##    or <K>true</K> for the required standardization, and a list of
+##    conditions given by the optional arguments of
+##    <Ref Func="AtlasProgram"/>),
 ##    and returns either <K>fail</K> or a list that together with the group
 ##    name forms the identifier of a program that matches the
 ##    conditions.
@@ -169,17 +172,17 @@
 ##  </Item>
 ##  <Mark><C>TOCEntryString</C></Mark>
 ##  <Item>
-##    This is used in <Ref Func="StoreAtlasTableOfContents"/>.
-##    The value must be a function that takes two arguments
-##    (the name <A>name</A> of the type and a list as returned by
-##    <Ref Func="AGR.ParseFilenameFormat"/>
-##    and returns a string that describes the appropriate function call.
+##    This is used in <Ref Func="StringOfAtlasTableOfContents"/>.
+##    The value must be a function that takes two or three arguments
+##    (the name <A>name</A> of the type, a list as returned by
+##    <Ref Func="AGR.ParseFilenameFormat"/>,
+##    and optionally a string that indicates the <Q>remote</Q> format)
+##    and returns a string that describes the appropriate data format.
 ##    (The default value is <C>TOCEntryStringDefault</C>.)
 ##  </Item>
 ##  <Mark><C>PostprocessFileInfo</C></Mark>
 ##  <Item>
-##    This is used in the construction of a table of contents via
-##    <Ref Func="ReloadAtlasTableOfContents"/>,
+##    This is used in the construction of a table of contents
 ##    for testing or rearranging the data of the current table of contents.
 ##    The value must be a function that takes two arguments,
 ##    the table of contents record and the record in it that belongs to
@@ -189,7 +192,6 @@
 ##  <Mark><C>SortTOCEntries</C></Mark>
 ##  <Item>
 ##    This is used in the construction of a table of contents
-##    (see <Ref Func="ReloadAtlasTableOfContents"/>),
 ##    for sorting the entries after they have been added and after the
 ##    value of the component <C>PostprocessFileInfo</C> has been called.
 ##    The value must be a function that takes a list as returned by
@@ -202,8 +204,7 @@
 ##    This is used in the function <C>AGR.Test.FileHeaders</C>.
 ##    The value must be a function that takes the same four arguments as
 ##    <Ref Func="AGR.FileContents"/>,
-##    except that the first argument <C>"datagens"</C> can be replaced by
-##    <C>"local"</C> and that the third argument is a list as returned by
+##    except that the third argument is a list as returned by
 ##    <Ref Func="AGR.ParseFilenameFormat"/>.
 ##    (The default value is <Ref Func="ReturnTrue" BookName="ref"/>.)
 ##  </Item>
@@ -211,16 +212,14 @@
 ##  <Item>
 ##    This is used in the function <C>AGR.Test.Files</C>.
 ##    The format of the value and the default are the same as for
-##    the value of the component <C>TestFileHeaders</C>.
+##    the component <C>TestFileHeaders</C>.
 ##  </Item>
 ##  <Mark><C>TestWords</C> (for <C>prg</C> only)</Mark>
 ##  <Item>
 ##    This is used in the function <C>AGR.Test.Words</C>.
 ##    The value must be a function that takes five arguments where the first
 ##    four are the same arguments as for <Ref Func="AGR.FileContents"/>,
-##    except that the first argument <C>"dataword"</C> can be replaced by
-##    <C>"local"</C>,
-##    and the fifth argument is <K>true</K> or <K>false</K>,
+##    except that the fifth argument is <K>true</K> or <K>false</K>,
 ##    indicating verbose mode or not.
 ##  </Item>
 ##  </List>
@@ -242,73 +241,6 @@
 ##  This is a record that is defined in the file <F>gap/types.g</F> of the
 ##  package, with the following components.
 ##  <P/>
-##  Components corresponding to <E>user parameters</E> (see
-##  Section&nbsp;<Ref Sect="sect:User Parameters for the AtlasRep Package"/>)
-##  are
-##  <P/>
-##  <List>
-##  <Mark><C>remote</C></Mark>
-##  <Item>
-##    a boolean that controls what files are available;
-##    if the value is <K>true</K> then &GAP; is allowed to try remotely
-##    accessing any &ATLAS; file from the servers (see below) and thus all
-##    files listed in the global table of contents are available,
-##    if the value is <K>false</K> then &GAP; may access
-##    only those files that are stored in the database directories of the
-##    local &GAP; installation
-##    (see Section&nbsp;<Ref Subsect="subsect:Local or remote access"/>),
-##  </Item>
-##  <Mark><C>servers</C></Mark>
-##  <Item>
-##    a list of pairs <C>[ </C><A>server</A><C>, </C><A>path</A><C> ]</C>,
-##    where <A>server</A> is a string denoting the <F>http</F> address of
-##    a server where files can be fetched that are not stored in the local
-##    database,
-##    and <A>path</A> is a string describing the path
-##    where the data directories on the server reside,
-##  </Item>
-##  <Mark><C>wget</C></Mark>
-##  <Item>
-##    controls whether the &GAP; package
-##    <Package>IO</Package><Index>IO package</Index> <Cite Key="IO"/>
-##    or the external program
-##    <F>wget</F><Index Key="wget"><F>wget</F></Index>
-##    is used to fetch data files,
-##    see&nbsp;<Ref Subsect="subsect:Accessing data files with wget or IO"/>,
-##  </Item>
-##  <Mark><C>compress</C></Mark>
-##  <Item>
-##    <Index Key="gzip"><F>gzip</F></Index>
-##    a boolean that controls whether &MeatAxe; format text files are stored
-##    in compressed form;
-##    if the value is <K>true</K> then these files are compressed with
-##    <F>gzip</F> after they have been fetched from a server, see
-##    Section&nbsp;<Ref Subsect="subsect:Compressed or uncompressed data files"/>,
-##  </Item>
-##  <Mark><C>displayFunction</C></Mark>
-##  <Item>
-##    the function that is used by <Ref Func="DisplayAtlasInfo"/> for
-##    printing the formatted data,
-##    see Section&nbsp;<Ref Subsect="subsect:Customizing DisplayAtlasInfo"/>,
-##  </Item>
-##  <Mark><C>accessFunctions</C></Mark>
-##  <Item>
-##    a list of records, each describing how to access the data files, see
-##    Sections <Ref Subsect="subsect:Customizing the Access to Data files"/>
-##    and <Ref Sect="sect:How to Customize the Access to Data files"/>,
-##    and
-##  </Item>
-##  <Mark><C>markprivate</C></Mark>
-##  <Item>
-##    a string used in <Ref Func="DisplayAtlasInfo"/> to mark private data,
-##    see Section&nbsp; <Ref Sect="sect:Effect of Private Extensions"/>.
-##  </Item>
-##  </List>
-##
-##  <P/>
-##
-##  <E>System components</E> (which are computed automatically) are
-##  <P/>
 ##  <List>
 ##  <Mark><C>GAPnames</C></Mark>
 ##  <Item>
@@ -316,43 +248,40 @@
 ##    &ATLAS;-file name of a group, see
 ##    Section&nbsp;<Ref Sect="sect:Group Names Used in the AtlasRep Package"/>,
 ##  </Item>
-##  <Mark><C>groupnames</C></Mark>
+##  <Mark><C>notified</C></Mark>
 ##  <Item>
-##    a list of triples, each containing at the first position the name of
-##    the directory on each server that contains data about the group
-##    <M>G</M> in question,
-##    at the second position the name of the (usually simple) group for
-##    which a subdirectory exists that contains the data about <M>G</M>,
-##    and at the third position the &ATLAS;-file name used for <M>G</M>,
-##    see Section&nbsp;<Ref Sect="sect:Filenames Used in the AGR"/>,
-##  </Item>
-##  <Mark><C>private</C></Mark>
-##  <Item>
-##    a list of pairs of strings used for administrating private data
+##    a list used for administrating extensions of the database
 ##    (see Chapter&nbsp;<Ref Chap="chap:Private Extensions"/>);
 ##    the value is changed by
-##    <Ref Func="AtlasOfGroupRepresentationsNotifyPrivateDirectory"/>
-##    and <Ref Func="AtlasOfGroupRepresentationsForgetPrivateDirectory"/>,
+##    <Ref Func="AtlasOfGroupRepresentationsNotifyData"
+##    Label="for a local file describing private data"/>
+##    and <Ref Func="AtlasOfGroupRepresentationsForgetData"/>,
 ##  </Item>
 ##  <Mark><C>characterinfo</C>, <C>permrepinfo</C>, <C>ringinfo</C></Mark>
 ##  <Item>
 ##    additional information about representations,
-##    concerning the characters afforded,
+##    concerning the afforded characters,
 ##    the point stabilizers of permutation representations, and
-##    the ring of definition of matrix representations;
+##    the rings of definition of matrix representations;
 ##    this information is used by <Ref Func="DisplayAtlasInfo"/>,
 ##  </Item>
 ##  <Mark><C>TableOfContents</C></Mark>
 ##  <Item>
-##    a record with at most the components <C>local</C>, <C>remote</C>,
-##    <C>types</C>, and the names of private data directories.
-##    The values of the components <C>local</C> and <C>remote</C> can be
-##    computed automatically by <Ref Func="ReloadAtlasTableOfContents"/>,
-##    the value of the component <C>types</C> is set in
+##    a record with at most the components <C>core</C>, <C>internal</C>,
+##    <C>local</C>, <C>merged</C>, <C>types</C>,
+##    and the identifiers of database extensions.
+##    The value of the component <C>types</C> is set in
 ##    <Ref Func="AGR.DeclareDataType"/>,
-##    and the values of the components for local data directories are
-##    created by
-##    <Ref Func="AtlasOfGroupRepresentationsNotifyPrivateDirectory"/>.
+##    and the values of the other components are created by
+##    <Ref Func="AtlasOfGroupRepresentationsNotifyData"
+##    Label="for a local file describing private data"/>.
+##  </Item>
+##  <Mark><C>accessFunctions</C></Mark>
+##  <Item>
+##    a list of records, each describing how to access the data files, see
+##    Sections <Ref Subsect="subsect:FileAccessFunctions"/>
+##    and <Ref Sect="sect:How to Customize the Access to Data files"/>,
+##    and
 ##  </Item>
 ##  </List>
 ##  </Description>

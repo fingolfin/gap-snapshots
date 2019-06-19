@@ -56,7 +56,7 @@ mo,cs,j,k,dims,bas,basc,basinv,nb,lastdim,cand,fcand,sel,limit,trysel,submodule;
   local lgens;
     # nor the trivial action
     if ForAny(mo,x->Order(x{sel}{sel})>1) then
-    Info(InfoFFMat,2,"range ",sel," have ",Length(cand.points),"\n");
+    Info(InfoFFMat,2,"range ",sel," have ",Length(cand.points));
       lgens:=List(mo,x->x{sel}{sel});
       fcand:=FindBasePointCandidates(Group(lgens),opt,ii,
 	       false:Subrecurse:=recsub,Facrecurse:=recfac);
@@ -64,7 +64,7 @@ mo,cs,j,k,dims,bas,basc,basinv,nb,lastdim,cand,fcand,sel,limit,trysel,submodule;
 	    " candidates");
       for k in [1..Length(fcand.ops)] do
 	if ForAll(lgens,x->fcand.ops[k](fcand.points[k],x)=fcand.points[k]) then
-	  Info(InfoFFMat,2,"Ignoring fixed element for base\n");
+	  Info(InfoFFMat,2,"Ignoring fixed element for base");
 
 	elif fcand.ops[k]=OnRight or fcand.ops[k]=OnPoints or fcand.ops[k]=OnLines then
 	  nb:=fcand.points[k]*bas{sel};
@@ -104,7 +104,7 @@ mo,cs,j,k,dims,bas,basc,basinv,nb,lastdim,cand,fcand,sel,limit,trysel,submodule;
 	  fct:=MakeSubmoduleCosetAction(submodule);
 	  Add(FUNCSPACEHASH,[fct,submodule]); 
           Add(cand.ops,fct);
-    Info(InfoFFMat,2,"ACTPOP\n");
+    Info(InfoFFMat,2,"ACTPOP");
 	elif fcand.ops[k]=OnSubspacesByCanonicalBasis then
 	  nb:=fcand.points[k]*bas{sel};
 	  nb:=OnSubspacesByCanonicalBasis(Concatenation(bas{[1..lastdim]},nb),
@@ -150,7 +150,7 @@ mo,cs,j,k,dims,bas,basc,basinv,nb,lastdim,cand,fcand,sel,limit,trysel,submodule;
 
   # build new basis corresponding to comp ser.
   cs:=MTX.BasesCompositionSeries(mo);
-  Info(InfoFFMat,2,"dims=",List(cs,Length),"\n");
+  Info(InfoFFMat,2,"dims=",List(cs,Length));
   dims:=List(cs,Length);
   bas:=[];
   basc:=[];
@@ -173,7 +173,6 @@ mo,cs,j,k,dims,bas,basc,basinv,nb,lastdim,cand,fcand,sel,limit,trysel,submodule;
       if (j=Length(dims) and lastdim>0) or 
 	(j<Length(dims) and Size(F)^(dims[j+1]-lastdim)>limit) then
 	sel:=[lastdim+1..dims[j]];
-  #Print("sel=",sel,"\n");
 	if trysel(false,true) then
 	  # we tried a space
 	  lastdim:=dims[j];
@@ -193,7 +192,6 @@ mo,cs,j,k,dims,bas,basc,basinv,nb,lastdim,cand,fcand,sel,limit,trysel,submodule;
       lastdim:=dims[j]-1;
       if (j>1 and Size(F)^(dim-dims[j-1])>limit) then
 	sel:=[lastdim+1..dim];
-  #Print("self=",sel,"\n");
 	if trysel(false,false) then
 	  j:=0;
 	fi;
@@ -230,7 +228,7 @@ mo,cs,j,k,dims,bas,basc,basinv,nb,lastdim,cand,fcand,sel,limit,trysel,submodule;
 	Add(cand.ops,mo);
       fi;
     od;
-    Info(InfoFFMat,2,"Selected ",Length(sel)," of ",Length(opt.PCand.points)," group basis vectors\n");
+    Info(InfoFFMat,2,"Selected ",Length(sel)," of ",Length(opt.PCand.points)," group basis vectors");
     if Length(cand.points)>0 then return cand; fi;
   fi;
 
@@ -253,12 +251,12 @@ local treerecurse,n,factors,homs,leafgens,niceranges,genum,sz,leafs,g,
   hom,f,k,sel,u,i,j,x,cs,nsol,xf,bigger,nicehom,ngi,stbc,opt,act,ng,dom,v;
     if IsLeaf(r) then
       f:=Length(NiceGens(r));
-      Info(InfoFFMat,2,"Leaf",Size(r)," ",genum," ",f,"\n");
+      Info(InfoFFMat,2,"Leaf",Size(r)," ",genum," ",f);
       k:=[genum+1..genum+f];
       if Size(r)=1 then
-	Info(InfoFFMat,2,"ignoring trivial factor\n");
+	Info(InfoFFMat,2,"ignoring trivial factor");
       elif Length(Set(Factors(Size(r))))<3 then
-	Info(InfoFFMat,2,"ignoring solvable factor of order ",Size(r),"\n");
+	Info(InfoFFMat,2,"ignoring solvable factor of order ",Size(r));
 
 	# store info
 	n:=n+Length(Factors(Size(r)));
@@ -293,7 +291,7 @@ local treerecurse,n,factors,homs,leafgens,niceranges,genum,sz,leafs,g,
 	    od;
 	    if Length(orbit)>1 and Length(orbit)<50000 then
 	      nicehom:=ActionHomomorphism(Grp(r),orbit,stbc.ops[1],"surjective");
-	      Info(InfoFFMat,2,"Got degree ",Length(orbit),"\n");
+	      Info(InfoFFMat,2,"Got degree ",Length(orbit));
 	    fi;
 	  fi;
 	fi;
@@ -344,7 +342,7 @@ local treerecurse,n,factors,homs,leafgens,niceranges,genum,sz,leafs,g,
 	      nicehom:=nicehom*SmallerDegreePermutationRepresentation(g);
 	      gd:=Image(nicehom);
 	      Info(InfoFFMat,2,"Improved degree ",NrMovedPoints(g),"->",
-	        NrMovedPoints(gd),"\n");
+	        NrMovedPoints(gd));
 	      if HasIsSimpleGroup(g) and IsSimpleGroup(g) then
 		SetIsSimpleGroup(gd,true);
 		SetIsSolvableGroup(gd,false);
@@ -359,10 +357,10 @@ local treerecurse,n,factors,homs,leafgens,niceranges,genum,sz,leafs,g,
 
 
 	if IsSolvableGroup(g) then
-	  Info(InfoFFMat,2,"Ignoring solvable factor of order ",Size(g),"\n");
+	  Info(InfoFFMat,2,"Ignoring solvable factor of order ",Size(g));
 	    n:=n+Length(Factors(Size(g)));
 	  elif not IsSimpleGroup(g) then
-  Info(InfoFFMat,2,"doing size",Size(g)," ",IsSimpleGroup(g),"\n");
+  Info(InfoFFMat,2,"doing size",Size(g)," ",IsSimpleGroup(g));
 
 	  # not simple -- split
 	  cs:=CompositionSeries(g);
@@ -385,7 +383,7 @@ local treerecurse,n,factors,homs,leafgens,niceranges,genum,sz,leafs,g,
 	    map:=EpimorphismFromFreeGroup(nicegp);
 
 	    if Size(u)<Size(cs[i-1]) then
-	      Info(InfoFFMat,2,"cannot compatibilize generators -- add extras\n");
+	      Info(InfoFFMat,2,"cannot compatibilize generators -- add extras");
 	      while Size(u)<Size(cs[i-1]) do
 	        x:=First(GeneratorsOfGroup(cs[i-1]),x->not x in u);
 		u:=ClosureSubgroup(u,x);
@@ -678,7 +676,7 @@ doesaut,biggens,wrimages,m,w,e,poolimggens,img,localgens,dfgens,wrs,dfimgs,b,per
       
       #find out what the previous factors do on it
       for j in Filtered([1..i-1],x->IsBound(csi.minranges[x])) do
-	Info(InfoFFMat,2,"Try ",i," mapped by ",j,"\n");
+	Info(InfoFFMat,2,"Try ",i," mapped by ",j);
 
 	for kn in csi.minranges[j] do
 	  #k:=csinice[kn];
@@ -700,7 +698,6 @@ doesaut,biggens,wrimages,m,w,e,poolimggens,img,localgens,dfgens,wrs,dfimgs,b,per
 	    if imgdepth=fail then
 	      # new image -- isomorphism
 	      imgdepth:=d;
-	      #Print(kn,"maps to",d,"\n");
 	      perms[kn][i]:=d; # record permutations
 	    elif imgdepth<>d then
 	      # this cannot happen
@@ -768,7 +765,7 @@ doesaut,biggens,wrimages,m,w,e,poolimggens,img,localgens,dfgens,wrs,dfimgs,b,per
 	    a:=First([1..Length(pools)],x->d in pools[x]);
 	    if a=fail then
 	      # we did not yet know layer d -- add it
-Info(InfoFFMat,2,"Found Layer ",d,"\n");
+              Info(InfoFFMat,2,"Found Layer ",d);
 	      Add(pools[poolnum],d);
 	      isoms[d]:=isom*hom;
               Assert(3,IsBijective(isoms[d]));
@@ -785,7 +782,7 @@ Info(InfoFFMat,2,"Found Layer ",d,"\n");
 	    else
 	      Error("This cannot happen??");
 	      # we knew the layer and join pools
-	      Info(InfoFFMat,2,"Join ",pools[a]," to ",pools[poolnum],"\n");
+	      Info(InfoFFMat,2,"Join ",pools[a]," to ",pools[poolnum]);
 	      conj:=isom*hom;
 	      if not d=pools[a][1] then
 		# translate to normal form
@@ -863,13 +860,13 @@ Info(InfoFFMat,2,"Found Layer ",d,"\n");
 
     for j in Filtered([1..n],x->IsBound(csi.minranges[x])) do
       c:=csi.minranges[j];
-Info(InfoFFMat,2,"Images for ",j," ",c,"\n");
+    Info(InfoFFMat,2,"Images for ",j," ",c);
 
       # does any of the elements actually do something -- if so, what?
 
 #      if true or ForAny(c,x->IsBound(doesaut[x]) 
 #        and ForAny(pools[i],y->y in doesaut[x])) then
-        Info(InfoFFMat,2,c," acts ",pools[i],j,"\n");
+        Info(InfoFFMat,2,c," acts ",pools[i],j);
 	for kn in c do
 	  #Add(biggens,csinice[kn]);
 	  Add(biggens,CSINiceGens(csi,kn));
@@ -908,96 +905,6 @@ Info(InfoFFMat,2,"Images for ",j," ",c,"\n");
 
 	  Add(wrimages,img);
 	od;
-
-#      elif j in pools[i] then
-#        Print(c,"inner\n");
-#	for kn in c do
-#	  #Add(biggens,csinice[kn]);
-#	  Add(biggens,CSINiceGens(csi,kn));
-#	  img:=One(w);
-#	  for l in [1..Length(pools[i])] do
-#	    # we have not yet computed the images, so we need to do so
-#	    # Determine the image via its conjugation action, as it has no
-#	    # necessary relation to the good generators.
-#	    d:=List(goodgens[pools[i][l]],
-#	            x->ImagesRepresentative(csi.permap[pools[i][l]],
-#		      CSIImageHomNr(csi,pools[i][l],x^CSINiceGens(csi,kn))));
-#	    if isoms[pools[i][l]]<>false then
-#	      d:=List(d,x->PreImagesRepresentative(isoms[pools[i][l]],x));
-#	    fi;
-#	    d:=aelement(d);
-##	    # do we really need -- test
-#	    #if
-#	    #d<>ImagesRepresentative(csi.permap[pools[i][l]],
-#	    #  CSIImageHomNr(csi,pools[i][l],CSINiceGens(csi,kn))) then
-#	      #Error("Yes it happens");
-#	    #fi;
-#	    img:=img*Image(e[l],d);
-#	  od;
-#	  # is it a nontrivial permutation
-#	  if IsBound(perms[kn]) and ForAny([1..Length(perms[kn])],
-#	    x->IsBound(perms[kn][x]) and perms[kn][x]<>x) then
-#	    # permuting part
-#	    d:=PermList(List(perms[kn]{pool},x->Position(pool,x)));
-#	    img:=img*Image(e[Length(pool)+1],d);
-#	  fi;
-#	  Add(wrimages,img);
-#	od;
-#
-#      else
-#        Print(c," noact\n");
-#        for kn in c do
-#	  Add(biggens,CSINiceGens(csi,kn));
-#	  # is it a nontrivial permutation
-#	  if IsBound(perms[kn]) and ForAny([1..Length(perms[kn])],
-#	    x->IsBound(perms[kn][x]) and perms[kn][x]<>x) then
-#	    # permuting part
-#	    d:=PermList(List(perms[kn]{pool},x->Position(pool,x)));
-#	    img:=Image(e[Length(pool)+1],d);
-#	  else
-#	    img:=One(w);
-#	  fi;
-#
-#	  Add(wrimages,img);
-#	od;
-#      fi;
-
-
-
-#      if false and ForAny(c,x->IsBound(doesperm[x]) and 
-#	ForAny(pools[i],y->y in doesperm[x])) then
-#        Print(kn," permutes\n");
-#	for kn in c do
-#	  #Add(biggens,csinice[kn]);
-#	  Add(biggens,CSINiceGens(csi,kn));
-#	  perm:=List(perms[kn]{pools[i]},x->Position(pools[i],x));
-#	  img:=Image(e[m+1],PermList(perm));
-#	  for l in [1..Length(pools[i])] do
-#Print("l=",l,"perm=",perm," pv=",pools[i][l],"\n");
-#	    lims:=genimgs[kn][pools[i][l]];
-#	    if perm[l]<>l then
-#	      # we did not map back
-#	      map:=isoms[perms[kn][pools[i][l]]];
-#	    Error("GUGU");
-#	      if map<>false then
-#		lims:=List(lims,x->PreImagesRepresentative(map,x));
-#	      fi;
-#	    fi;
-#	    img:=Image(e[l],aelement(lims))*img;
-#	  od;
-#	  Add(wrimages,img);
-#	od;
-#
-
-#      else
-#	# the image in the factor is trivial -- still need to give
-#	# generators to have proper homomorphism
-#        Info(InfoFFMat,2,"nothing\n");
-#	for k in csinice{c} do
-#	  Add(biggens,k);
-#	  Add(wrimages,One(w));
-#	od;
-#      fi;
 
     od;
     Add(wrs,w);
@@ -1211,7 +1118,6 @@ local orbtranslimit,f,total,gens,mo,bas,basn,dims,a,p,vec,orb,t,dict,use,fct,
 	  Add(t,t[pnt]*g);
 	elif coinc then
 	  coinc:=false;
-	  #Print("length estimate: ",Length(orb)^2,"\n");
 	fi;
       od;
       pnt:=pnt+1;
@@ -1242,7 +1148,6 @@ local orbtranslimit,f,total,gens,mo,bas,basn,dims,a,p,vec,orb,t,dict,use,fct,
 	    return best;
 	  fi;
 	fi;
-	#Print("orbtry ",bestl," * ",bestc,"\n");
       elif bestl>0 then
 	# we found at least one and others failed
         return best;
@@ -1384,7 +1289,7 @@ local orbtranslimit,f,total,gens,mo,bas,basn,dims,a,p,vec,orb,t,dict,use,fct,
     orb:=orb[2];
     vec:=orb[1];
     Info(InfoFFMat,2,"got Length ",Length(orb),":",
-      Collected(Factors(total*Length(orb))),"\n");
+      Collected(Factors(total*Length(orb))));
 
     Add(use,rec(vec:=vec,fct:=fct,orb:=orb,dict:=dict,t:=t,gens:=gens));
 
@@ -1415,7 +1320,7 @@ local orbtranslimit,f,total,gens,mo,bas,basn,dims,a,p,vec,orb,t,dict,use,fct,
       use:=use{[1..a[2]-1]};
       total:=Product(List(use,x->Length(x.orb)));
       Info(InfoFFMat,2,"construction fail on level ",a[2]," of ",Length(use),
-        " -- redo ",total,"\n");
+        " -- redo ",total);
     else
       total:=total*Length(orb);
       gens:=new;
@@ -1466,6 +1371,7 @@ MATGRP_StabilizerChainInner:=
     else
         if (Length(S!.orb) > 50 or S!.orb!.depth > 5) and
            S!.opt.OrbitsWithLog then
+            Error("ARGH!");
             Info(InfoGenSS, 3, "Trying to make Schreier tree shallower (depth=",
                  S!.orb!.depth,")...");
             merk := Length(S!.orb!.gens);
@@ -1568,8 +1474,8 @@ MATGRP_AddGeneratorToStabilizerChain:=
     #      the identity, then we have to prolong the chain
     if r.S <> false then   # case (1)
         SS := r.S;
-        Info( InfoGenSS, 2, "Adding new generator to stabilizer chain ",
-              "in layer ", SS!.layer, "..." );
+        Info( InfoGenSS, 2, "Adding new generator to stab. chain ",
+              "in layer ", SS!.layer, " from ",Length(SS!.stronggens) );
         Add(SS!.stronggens,r.rem);
         Add(SS!.layergens,Length(SS!.stronggens));
         AddGeneratorsToOrbit(SS!.orb,[r.rem]);
@@ -1624,9 +1530,6 @@ solvNC,S,pcgs,x,r,c,w,a,bound,U,xp,depths,oldsz,prime,relord,gens,acter,ogens,st
 
   goodbase:=[];
   CHAINTEST:=function(X,str)
-      #  return;
-  #Print("TST:",List(BaseStabilizerChain(X).points,y->Position(goodbase.points,y)),"\n");
-  #if Size(X)<>Size(Group(X!.stronggens)) then Error("EEE"); fi;
     while X<>false do
       #if IsBound(X!.stronggens) and
       #  Length(X!.layergens)>Length(Factors(Size(X))) then
@@ -1640,6 +1543,14 @@ solvNC,S,pcgs,x,r,c,w,a,bound,U,xp,depths,oldsz,prime,relord,gens,acter,ogens,st
       #fi;
       #if IsBound(X!.opt) and IsBound(X!.opt.StrictlyUseCandidates) and
       #  X!.opt.StrictlyUseCandidates=false then Error("eh5!"); fi;
+
+      if IsBound(X!.orb!.gens) and Length(X!.orb!.gens)<>Length(Factors(Size(X))) then
+        Error("length!");
+      fi;
+
+      if IsBound(X!.orb!.gens) and Length(Difference(X!.orb!.gens,strongs))>0 then
+        Error("XTRA!");
+      fi;
 
       if IsBound(X!.orb!.gensi) and List(X!.orb!.gens,Inverse)<>X!.orb!.gensi then
 	Error(str,"inverse!");
@@ -1715,7 +1626,8 @@ solvNC,S,pcgs,x,r,c,w,a,bound,U,xp,depths,oldsz,prime,relord,gens,acter,ogens,st
   FUNCSPACEHASH:=[]; # needed in base point selection code
   CBase:=StabilizerChain(a,opt);
   if sz<>fail and Size(CBase)<sz then
-    Error("Wrong size -- set `doall' option");
+    Info(InfoWarning,1,"Wrong size -- redo with `doall' option");
+    return fail;
   fi;
 
   primes:=Set(Factors(Size(CBase)));
@@ -1746,25 +1658,18 @@ solvNC,S,pcgs,x,r,c,w,a,bound,U,xp,depths,oldsz,prime,relord,gens,acter,ogens,st
   fi;
 
   normalizingGenerator:=function(g)
-  local oldstrong,oldsz,phq,pbp;
+  local oldstrong,oldsz,phq,pbp,pba;
     oldsz:=Size(S);
     oldstrong:=ShallowCopy(StrongGenerators(S));
     # work around the ommission of prior redundant base points
-    pbp:=First([1..Length(goodbase.points)],x->goodbase.ops[x](goodbase.points[x],g)<>goodbase.points[x]);
+    pba:=Filtered([1..Length(goodbase.points)],x->goodbase.ops[x](goodbase.points[x],g)<>goodbase.points[x]);
+    pbp:=pba[1];
 
-#    if false and Size(S)>1 and not goodbase.points[pbp] in BaseStabilizerChain(S).points then
-#      pbp:=Concatenation(StrongGenerators(S),[g]);
-#      Info(InfoFFMat,2,"rebuild chain to ensure new point\n");
-#      #prime:=First(primes,x->SiftGroupElement(S,g^x).isone);
-#      S:=StabilizerChain(Group(pbp),rec(Base:=CBase,Size:=oldsz*prime,Reduced:=false,StrictlyUseCandidates:=true)); 
-#
-#    else
-      MATGRP_AddGeneratorToStabilizerChain(S,g,goodbase.points[pbp],goodbase.ops[pbp]);
+    #Print("\n");
+    #View(S);
+    #Print("\n use ",pba,"\n");
 
-#if ForAny(StrongGenerators(S),x->x<>g and not x in oldstrong) then
-#  Error("extrastrong3");
-#fi;
-#    fi;
+    MATGRP_AddGeneratorToStabilizerChain(S,g,goodbase.points[pbp],goodbase.ops[pbp]);
 
     while Size(S)=oldsz do 
       Error("orderr BUG !!!\n");
@@ -1775,9 +1680,6 @@ solvNC,S,pcgs,x,r,c,w,a,bound,U,xp,depths,oldsz,prime,relord,gens,acter,ogens,st
 
   solvNC:=function()
   local N,process,layergens,U,g,h,r,V,x,comm,pow,wp,sift;
-#Print("solvNC ",Order(w),"\n");
-#View(S);
-#Print("\n");
     N:=StabilizerChain(Group(StrongGenerators(S)),rec(Base:=CBase,Size:=Size(S),Reduced:=false,StrictlyUseCandidates:=true)); # really should be copy
 
     # determine relative order
@@ -1793,7 +1695,7 @@ solvNC,S,pcgs,x,r,c,w,a,bound,U,xp,depths,oldsz,prime,relord,gens,acter,ogens,st
     else
       prime:=pow;
     fi;
-    Info(InfoFFMat,2,"Relative order ",pow," prime ",prime,"\n");
+    Info(InfoFFMat,2,"Relative order ",pow," prime ",prime);
 
     process:=[w];
     layergens:=[];
@@ -1801,7 +1703,7 @@ solvNC,S,pcgs,x,r,c,w,a,bound,U,xp,depths,oldsz,prime,relord,gens,acter,ogens,st
     for g in process do
       sift:=SiftGroupElement(S,g);
       if not sift.isone then
-Info(InfoFFMat,2,"SS=",Size(S)," ",Length(U),"\n");
+        Info(InfoFFMat,2,"SS=",Size(S)," ",Length(U));
 
         for h in layergens do
 	  comm:=Comm(g,h);
@@ -1842,7 +1744,7 @@ Info(InfoFFMat,2,"SS=",Size(S)," ",Length(U),"\n");
   relord:=[];
   xp:=1;
   while xp<=Length(gens) do
-    Info(InfoFFMat,2,"Processing ",xp,"\n");
+    Info(InfoFFMat,2,"Processing ",xp);
     x:=gens[xp];
     # feed through derived series if necessary
     while not SiftGroupElement(S,x).isone do
@@ -1885,158 +1787,7 @@ Info(InfoFFMat,2,"n");
 
   blocksz:=[];
 
-# this was the old hand-made function, not needed any more
-#  normalizingGenerator:=function(g)
-#  local sift,SS,n,case;
-#CHAINTEST(S,"C");
-#
-#    # empty chain?
-#    if IsBound(S!.trivialgroup) and S!.trivialgroup then
-#      lstrongs:=[g];
-#      lstrongsinv:=List(lstrongs,Inverse);
-#      SS:=StabilizerChain(Group(g),S!.opt);
-#      for n in NamesOfComponents(SS) do
-#        S!.(n):=SS!.(n);
-#      od;
-#      Unbind(S!.trivialgroup);
-#      if Length(StrongGenerators(SS))>1 then
-#	Info(InfoFFMat,2,"Fixing strong generators\n");
-#	SS:=S;
-#	while SS<>false do
-#	  SS!.stronggens:=lstrongs;
-#	  SS!.layergens:=[1];
-#	  SS!.orb:=Orb(lstrongs,SS!.orb!.orbit[1],SS!.orb!.op,
-#                       rec(treehashsize:=SS!.orb!.treehashsize,
-#		           log:=SS!.orb!.log,
-#		           schreier:=true,
-#			   report:=SS!.orb!.report));
-#          Enumerate(SS!.orb);
-#	  SS!.orb!.gensi:=lstrongsinv;
-#          SS:=SS!.stab;
-#	od;
-#      fi;
-#CHAINTEST(S,"D");
-#      SS:=BaseStabilizerChain(S);
-#      Add(blocksz,1);
-#      return;
-#    fi;
-#
-##if Length(StrongGenerators(S))>Length(Factors(Size(S))) then Error("more1\n");fi;
-#
-#    sift:=SiftGroupElement(S,g);
-#    firstmoved:=First([1..Length(goodbase.points)],
-#	  x->goodbase.points[x]<>goodbase.ops[x](goodbase.points[x],sift.rem));
-#    if goodbase.points[firstmoved] in BaseStabilizerChain(S).points and
-#      sift.S<>false then
-#      Info(InfoFFMat,2,"changeorderpts\n");
-#      firstmoved:=Position(goodbase.points,BaseStabilizerChain(sift.S).points[1]);
-#    fi;
-#
-#    # Bottom case
-#    #if sift.S=false then
-#
-##      SS:=sift.preS;
-##CHAINTEST(SS,"J");
-##repeat
-##CHAINTEST(SS,"N");
-##      SS!.stab := GENSS_SCI([sift.rem],Order(sift.rem),
-##		    SS!.layer+1,SS!.cand, SS!.opt, SS);
-##Print(Size(SS!.stab)," ",Order(sift.rem),"\n");
-##until Size(SS!.stab)=Order(sift.rem);
-##
-##
-##      if IsString(SS!.stab) then
-##        Error("string return");
-##      fi; 
-#
-#
-##      Add(blocksz,1);
-#
-##    else
-##if ForAny(StrongGenerators(S),a->not SiftGroupElement(S,a).isone) then Error("mist3!");fi; 
-#
-#    # are we on the bottom, or do we need a new intermediate layer?
-#    if sift.S=false
-#      or BaseStabilizerChain(sift.S).points[1]<>goodbase.points[firstmoved]
-#      then
-#
-#      # insert trivial record
-#      if sift.S=false then
-#	case:=1;
-#Info(InfoFFMat,2,"Case1\n");
-#	SS := GENSS_CreateStabChainRecord(false,#sift.preS,
-#				      [sift.rem],1,
-#				      goodbase.points[firstmoved],
-#				      goodbase.ops[firstmoved],sift.preS!.cand,
-#				      sift.preS!.opt);
-#CHAINTEST(SS,"X");
-#        SS!.parentS:=sift.preS;
-#      elif sift.preS<>false then
-#	case:=2;
-#Info(InfoFFMat,2,"Case2\n");
-#	SS := GENSS_CreateStabChainRecord(sift.preS,
-#				      sift.S!.stronggens{sift.S!.layergens},1,
-#				      goodbase.points[firstmoved],
-#				      goodbase.ops[firstmoved],sift.S!.cand,
-#				      sift.S!.opt);
-#	sift.S!.parentS:=SS;
-#      else # topmost -- put over S
-#	case:=3;
-#Info(InfoFFMat,2,"Case3\n");
-#	SS := GENSS_CreateStabChainRecord(sift.preS,
-#				      sift.S!.stronggens{sift.S!.layergens},1,
-#				      goodbase.points[firstmoved],
-#				      goodbase.ops[firstmoved],sift.S!.cand,
-#				      sift.S!.opt);
-#        S:=SS;
-#	sift.S!.parentS:=SS;
-#
-#      fi;
-#      SS!.orb!.gensi := List(SS!.orb!.gens,x->x^-1);
-#      SS!.stab:=sift.S;
-#      if not IsBool(sift.preS) then
-#	sift.preS!.stab:=SS;
-#      fi;
-##
-#      Add(blocksz,1);
-#
-#    else
-#      Add(blocksz,Length(sift.S!.orb));
-#      case:=0;
-#Info(InfoFFMat,2,"Case0\n");
-#     SS:=sift.S;
-#    fi;
-#if Length(StrongGenerators(SS))>Length(Factors(Size(SS))) then Error("more\n");fi;
-#
-#if ForAny(StrongGenerators(S),a->not SiftGroupElement(S,a).isone) then Error("mist2!");fi; 
-#
-#    if case<>-1 then
-#Info(InfoFFMat,3,Size(SS)," ", Length(StrongGenerators(SS)),"->");
-#      AddNormalizingGenToLayer(SS,sift.rem,10000);
-#Info(InfoFFMat,3,Length(StrongGenerators(SS)),"\n");
-#CHAINTEST(SS,"Y");
-#    fi;
-#
-##if ForAny(StrongGenerators(S),a->not SiftGroupElement(S,a).isone) then Error("mist4!");fi; 
-#
-#    # the higher layers may have changed as well -- update gensi
-#    SS:=S;
-#    while SS<>false do
-#      if Length(SS!.orb!.gens)<>Length(SS!.orb!.gensi) then
-#	Info(InfoFFMat,2,"updating gensi!\n");
-#	SS!.orb!.gensi := List(SS!.orb!.gens,x->x^-1);
-#      fi;
-#      #SS!.opt!.StrictlyUseCandidates:=true;
-#      SS:=SS!.stab;
-#    od;
-##if ForAny(StrongGenerators(S),a->not SiftGroupElement(S,a).isone) then Error("mist1!");fi; 
-#
-#CHAINTEST(S,"G");
-#CHAINTEST(sift.S,"H");
-#    return;
-#  end;
-
-Info(InfoFFMat,2,"NOW",Size(S)," ",Length(pcgs),"\n");
+  Info(InfoFFMat,2,"NOW",Size(S)," ",Length(pcgs));
   if Length(Factors(Size(S)))<>Length(pcgs) then Error("redundancies");fi;
 
   # now sift the generators through so that the strong generators *ARE* a pcgs
@@ -2057,46 +1808,84 @@ Info(InfoFFMat,2,"NOW",Size(S)," ",Length(pcgs),"\n");
   stronglevs:=[];
   while xp<=Length(gens) do
 
+
     if S<>false then
-CHAINTEST(S,"E");
+      #CHAINTEST(S,"E");
       oldsz:=Size(S);
-      Info(InfoFFMat,2,"ProcessiNg ",xp," ",Size(S),"\n");
+      Info(InfoFFMat,2,"ProcessiNg ",xp," ",Size(S));
 
 
 #if Length(StrongGenerators(S))>Length(Factors(Size(S))) then Error("more2\n");fi;
       x:=gens[xp];
       x:=SiftGroupElement(S,x).rem;
       #SiftGroupElement(S,x);
+
       if not IsOne(x) then
 	normalizingGenerator(x);
       fi;
     else
       x:=gens[1];
-      # OrbitsWithLog will add powers as strong generators to make the tree shallower. This messes with the correspondemcd of
-      # strong generators and pcgs elements
-      S:=StabilizerChain(Group(x),rec(Base:=CBase,StrictlyUseCandidates:=true,OrbitsWithLog := false));
-if Length(StrongGenerators(S))>Length(Factors(Size(S))) then Error("more3\n");fi;
+      # OrbitsWithLog will add powers as strong generators to make the tree shallower.
+      # This messes with the correspondence of strong generators and pcgs elements
+
+      S:=StabilizerChain(Group(x),rec(Base:=CBase,Reduced:=false,StrictlyUseCandidates:=true,
+        OrbitsWithLog := false,RandomStabGens:=1,Size:=Order(x)));
+
+      # Remove those ~!@#$ extra generators (powers of x) that are added 
+      # to make the tree shallower, but cause problems here.
+      strongs:=[x];
+
+      a:=S;
+
+      while a<>false do 
+        a!.stronggens:=ShallowCopy(strongs);
+        a!.layergens:=[1];
+        if Length(a!.orb!.gens)>0 then
+          if a!.orb!.gens<>strongs then
+            a!.orb:=Orb(ShallowCopy(strongs),a!.orb[1],a!.orb!.op,rec(schreier:=true));
+            a!.orb!.gensi:=List(a!.orb!.gens,Inverse);
+            repeat
+              Enumerate(a!.orb);
+            until IsClosed(a!.orb);
+            a!.orb!.depth:=Size(a!.orb)-1;
+            #if Length(a!.orb)=1 then
+            #  a!.orb!.schreiergen:=ShallowCopy(strongs);
+            #else
+            #  a!.orb!.schreiergen:=[];
+            #fi;
+          fi;
+        fi;
+        a:=a!.stab;
+      od;
+
+      #CHAINTEST(S,"F2");
+
+      strongs:=[];
+      
     fi;
 
-if Size(S)=oldsz then Error("no change!");fi;
-#if ForAny([1..xp-1],a->not SiftGroupElement(S,pcgs[a]).isone) then Error("mists!");fi; 
-
-#if S!.opt.StrictlyUseCandidates=false then Error("eh3!"); fi;
-
-CHAINTEST(S,"F");
+    if Size(S)=oldsz then Error("no change!");fi;
 
     Add(pcgs,x);
     a:=Set(Filtered(StrongGenerators(S),x->not x in strongs));
     a:=Difference(a,List([0..Order(x)],y->x^y));
-    if Length(a)>0 then Error("nanu");fi;
+    if Length(a)>0 then 
+      # redo
+      Info(InfoFFMat,1,"nanu-redo");
+      #Error("nanu");
+      return SolvableBSGS(arg[1],arg[2],arg[3]);
+    fi;
     Append(strongs,[x]);
+
+    #CHAINTEST(S,"F");
+
+
     Append(stronglevs,ListWithIdenticalEntries(1,n+1-xp));
     #if n+1-xp in depths then 
     #  Add(stabs,StructuralCopy(S));
     #fi;
     xp:=xp+1;
   od;
-
 
   pcgs:=Reversed(pcgs);
 
@@ -2112,7 +1901,6 @@ CHAINTEST(S,"F");
   for i in [1..Length(CBase.points)] do
     p:=List(xp,x->Position(a!.orb!.orbit,CBase.ops[i](CBase.points[i],pcgs[x])));
     sel:=Filtered([1..Length(xp)],x->p[x]<>1);
-    #Print(xp,p,sel,"\n");
     baspts{xp{sel}}:=ListWithIdenticalEntries(Length(sel),i);
     levp[i]:=xp{sel};
     blocksz{xp{sel}}:=p{sel}-1;
@@ -2315,14 +2103,12 @@ local pcgs,laynums,ox,o,p,po,preS,r,isone,ind,i,prd,S,q,rem,bs,pS,x,dep,e,layer,
 	q:=QuoInt(po,bs[i]);
 	rem:=po-q*bs[i];
 	if q>0 then
-#Print("divide off ",seli," with ",q,"\n");
 	  if seli<dep[layer] then
 	    # decrease layer in which we decompose
 	    layer:=layer-1;
 	    while seli<dep[layer] do
 	      layer:=layer-1;
 	    od;
-#Print("layer reset to ",layer,"\n");
 	    delta:=ShallowCopy(z); # we need to forget all in the previous layer
 	    prime:=RelativeOrders(pcgs)[seli];
 	    curran:=pcgs!.layranges[layer];
@@ -2338,7 +2124,6 @@ local pcgs,laynums,ox,o,p,po,preS,r,isone,ind,i,prd,S,q,rem,bs,pS,x,dep,e,layer,
 	  x:=x*pcgs!.invpows[seli][q]; # use stored inverse powers
 
 	fi;
-  #Print(po,",",bs[i]," ",Position(o,o!.op(o[1],x))-1,"\n");
 	po:=rem;
       od;
 
@@ -2366,7 +2151,6 @@ local pcgs,laynums,ox,o,p,po,preS,r,isone,ind,i,prd,S,q,rem,bs,pS,x,dep,e,layer,
 
     fi;
 
-    #Print(layer,e,delta,IsOne(ox),"\n");
   # stop when we've set the lowest layer or if the remainder is the identity
   until layer=laynums[Length(laynums)] or delta=fail; 
 
@@ -2492,6 +2276,9 @@ local csi,r,factorhom,sbs,k,pc,hom,rad,it,i,sz,x,stop;
     sbs:=rec(pcgs:=[],depths:=[1],relord:=[],pcisom:=IsomorphismPcGroup(sbs),radical:=sbs);
   else
     sbs:=SolvableBSGS(G,k,sz);
+    while sbs=fail do
+      sbs:=SolvableBSGS(G,k,sz:doall);
+    od;
     rad:=SubgroupNC(G,sbs.pcgs);
     SetSize(rad,Product(RelativeOrders(sbs.pcgs)));
     sbs.radical:=rad;
@@ -2579,10 +2366,10 @@ UnreduceModM:=Error;
 InstallMethod(FittingFreeLiftSetup,"residue class rings",true,
   [IsMatrixGroup],0,
 function(g)
-local r,m,f,a,p,i,homs,hom,img,ff,ffp,ffpi,ffppc,ffhoms,ffsubs,d,elmimg,
+local r,m,f,a,ao,p,i,homs,hom,img,ff,ffp,ffpi,ffppc,ffhoms,ffsubs,d,elmimg,
   upperpcgs,upperexp,it,e,moli,pli,j,idx,depths,pcgs,levs,relord,idmat,
-  fac,idmats,bas,basrep,s,triv,addPcElement,procrels,addCleanUpper,k,l,bl,stack,
-  gens,gnew;
+  fac,idmats,bas,basrep,basrepi,s,triv,addPcElement,procrels,addCleanUpper,
+  k,l,bl,stack,stacks,gens,gnew,layerlimit,fertig;
 
   triv:=TrivialSubgroup(CyclicGroup(2));
   r:=DefaultFieldOfMatrixGroup(g);
@@ -2633,7 +2420,7 @@ local r,m,f,a,p,i,homs,hom,img,ff,ffp,ffpi,ffppc,ffhoms,ffsubs,d,elmimg,
     hom:=List(gens,x->ReduceModM(x,p));
     if ForAll(hom,IsOne) then
       hom:=GroupHomomorphismByFunction(gnew,Group(()),x->());
-      Info(InfoFFMat,2,"alltrivial ",p,"\n");
+      Info(InfoFFMat,2,"alltrivial ",p);
       Add(ffp,[]);
       Add(homs,hom);
       Add(ffhoms,hom);
@@ -2679,9 +2466,16 @@ local r,m,f,a,p,i,homs,hom,img,ff,ffp,ffpi,ffppc,ffhoms,ffsubs,d,elmimg,
 
   upperpcgs:=List([1..Length(ffpi)],x->[]);
 
+  # Do we have an upper limit for the space on each layer?
+  layerlimit:=ValueOption("layerlimit");
+  if layerlimit=fail then
+    layerlimit:=Length(One(g))^2; # full matrix space
+  fi;
+
   it:=CoKernelGensIterator(InverseGeneralMapping(hom));
   bas:=List(moli,x->[]);
   basrep:=List(moli,x->[]);
+  basrepi:=List(moli,x->[]);
 
   addCleanUpper:=function(i,a)
   local r,p,s,e;
@@ -2706,73 +2500,111 @@ local r,m,f,a,p,i,homs,hom,img,ff,ffp,ffpi,ffppc,ffhoms,ffsubs,d,elmimg,
   end;
 
   addPcElement:=function(a,start)
-    local i,p,e,s,added;
+    local i,j,p,e,s,added,bot,tmp;
       added:=fail;
       for i in [start..Length(moli)] do
+        bot:=i=Length(moli); # last step -- powers are multiples
 	p:=pli[idx[i]];
 	e:=List(a,x->List(x,y->y![1] mod moli[i]));
 	e:=e-idmat;
 	e:=fac[i]*Concatenation(e);
 	e:=ImmutableVector(GF(p),e*Z(p)^0);
 	if not IsZero(e) then
-	  if IsBound(bas[i]) and Length(bas[i])>0 then
+          if bot and IsBound(bas[i]) and Length(bas[i])=layerlimit then
+            # Bottom layer is full, nothing else needed to do
+            a:=fail; 
+	  elif IsBound(bas[i]) and Length(bas[i])>0 then
 	    s:=SolutionMat(bas[i],e);
 	    if s=fail then
 	      Add(bas[i],e);
 	      Add(basrep[i],a);
+              Add(basrepi[i],a^-1);
 	      if added=fail then added:=i;fi;
-	      a:=a^p;
-	      #a:=One(a);
+              if not bot then a:=a^p;fi; # no need to do if on bottom
 	    else
 	      s:=List(s,Int);
-	      s:=LinearCombinationPcgs(basrep[i],s);
-	      a:=LeftQuotient(s,a);
+              # avoid inverse by imediately dividing off
+              for j in [Length(s),Length(s)-1..1] do
+                 if not IsZero(s[j]) then
+                  if not bot then
+                    a:=basrepi[i][j]^s[j]*a;
+                  else
+                    # else case is not needed, as we are on the bottom :-)
+                    a:=fail;
+#                    # multiplication is addition of p-residues
+#                    tmp:=(basrepi[i][j]![1]*s[j]-s[j]*One(basrepi[i][j]![1])+a![1]);
+#                    tmp:=tmp mod Characteristic(a);
+#                    tmp:=MakeZmodnZMat(ElementsFamily(ElementsFamily(FamilyObj(a))),tmp);
+#                    a:=tmp;
+                  fi;
+                fi;
+              od;
 	    fi;
 	  else
 	    bas[i]:=[e];
 	    basrep[i]:=[a];
+            basrepi[i]:=[a^-1];
 	    if added=fail then added:=i;fi;
-	    #a:=One(a);
-	    a:=a^p;
+            if not bot then a:=a^p;fi; # no need to do if on bottom
 	  fi;
 	fi;
       od;
       return added;
     end;
 
-  stack:=[];
+  fertig:=false;
+  stacks:=[];
   repeat
     a:=NextIterator(it);
     if not IsOne(a) then
+      ao:=a;
 
       for i in [1..Length(ffpi)] do
 	a:=addCleanUpper(i,a);
       od;
 
+      bl:=List([2..Length(moli)],x->Length(bas[x]));
       addPcElement(a,2);
-      Add(stack,a);
+      if ForAny([2..Length(moli)],x->Length(bas[x])>bl[x-1]) then
+        AddSet(stacks,ao);
+      fi;
 
     fi;
-  until IsDoneIterator(it);
+    fertig:=Length(moli)>1 and ForAll([2..Length(moli)],x->Length(basrep[x])=layerlimit);
+  until IsDoneIterator(it) or fertig;
 
-  # conjugates
+  if fertig then stack:=[];fi;
+  Info(InfoFFMat,2,"layerdimsc:",List(bas,Length));
+
+  stack:=ShallowCopy(stacks); # we'll add to the list
+
+  # G-conjugates
   for k in stack do
     for j in gens do
       a:=k^j;
 
       for i in [1..Length(ffpi)] do
-	a:=addCleanUpper(i,a);
+        a:=addCleanUpper(i,a);
       od;
 
-      # base length
-      bl:=List([2..Length(moli)],x->Length(bas[x]));
-      addPcElement(a,2);
-      if ForAny([2..Length(moli)],x->Length(bas[x])>bl[x-1]) then
-	Add(stack,a);
+      if not a in stacks then
+
+        AddSet(stacks,a);
+
+        # old base length
+        bl:=List([2..Length(moli)],x->Length(bas[x]));
+        addPcElement(a,2);
+        if ForAny([2..Length(moli)],x->Length(bas[x])>bl[x-1]) then
+          if not a in stack then Add(stack,a); fi;
+        fi;
       fi;
 
     od;
   od;
+  Info(InfoFFMat,2,"layerdimsb:",List(bas,Length));
+
+  Unbind(stack);
+  Unbind(stacks);
 
   pcgs:=[];
   relord:=[];
@@ -2782,20 +2614,24 @@ local r,m,f,a,p,i,homs,hom,img,ff,ffp,ffpi,ffppc,ffhoms,ffsubs,d,elmimg,
     if Length(upperpcgs[i])>0 then
 
       r:=RelativeOrders(ffpi[i]);
-      for j in [1..Length(upperpcgs[i])] do
-	a:=upperpcgs[i][j]^r[j];
-	for k in [i..Length(ffp)] do
-	  a:=addCleanUpper(k,a);
-	od;
-        addPcElement(a,2);
-	for l in Concatenation(pcgs,upperpcgs[i]) do
-	  a:=upperpcgs[i][j]^l;
-	  for k in [i..Length(ffp)] do
-	    a:=addCleanUpper(k,a);
-	  od;
-	  addPcElement(a,2);
-	od;
-      od;
+      if not fertig then
+        j:=1;
+        while j<=Length(upperpcgs[i]) do
+          a:=upperpcgs[i][j]^r[j];
+          for k in [i..Length(ffp)] do
+            a:=addCleanUpper(k,a);
+          od;
+          addPcElement(a,2);
+          for l in Concatenation(pcgs,upperpcgs[i]) do
+            a:=upperpcgs[i][j]^l;
+            for k in [i..Length(ffp)] do
+              a:=addCleanUpper(k,a);
+            od;
+            addPcElement(a,2);
+          od;
+          j:=j+1;
+        od;
+      fi;
 
       Append(pcgs,upperpcgs[i]);
       if not HasIndicesEANormalSteps(ffpi[i]) then
@@ -2813,12 +2649,16 @@ local r,m,f,a,p,i,homs,hom,img,ff,ffp,ffpi,ffppc,ffhoms,ffsubs,d,elmimg,
   od;
   Add(levs,Length(pcgs)+1);
 
-  # conjugation relations in linear bit
+  Info(InfoFFMat,2,"layerdimsa:",List(bas,Length));
+
+  # conjugation relations in linear bits. Will rarely add new elements (so the
+  # danger of running through multiple times is minimal).
   procrels:=function()
   local i,j,k,l,a,b;
     b:=true;
     for i in [2..Length(moli)] do
-      for j in [i..Length(moli)] do
+      # if j>=Length(moli)-1+@ the conjugate is guaranteed the same
+      for j in [i..Length(moli)-i+1] do
 	if IsBound(basrep[i]) and IsBound(basrep[j]) then
 	  for k in basrep[i] do
 	    for l in basrep[j] do
@@ -2842,9 +2682,9 @@ local r,m,f,a,p,i,homs,hom,img,ff,ffp,ffpi,ffppc,ffhoms,ffsubs,d,elmimg,
     return b;
   end;
 
-  repeat until procrels();
+  repeat until fertig or procrels();
 
-  Info(InfoFFMat,2,List(bas,Length),"\n");
+  Info(InfoFFMat,2,"layerdims:",List(bas,Length));
 
   for i in [2..Length(bas)] do
     if IsBound(bas[i]) then
@@ -2873,13 +2713,6 @@ local r,m,f,a,p,i,homs,hom,img,ff,ffp,ffpi,ffppc,ffhoms,ffsubs,d,elmimg,
   SetSize(g,Size(Image(hom))*Size(s));
   SetKernelOfMultiplicativeGeneralMapping(hom,s);
 
-#  for i in [1..Length(pcgs)] do
-#    ExponentsOfPcElement(pcgs,pcgs[i]^RelativeOrders(pcgs)[i]);
-##    for j in [2..Length(pcgs)] do
-#Print("Try:",i,",",j,"\n");
-#      ExponentsOfPcElement(pcgs,pcgs[j]^pcgs[i]);
-#    od;
-#  od;
   r:=rec(pcgs:=pcgs,radical:=s,factorhom:=hom,depths:=levs);
 
   if ValueOption("pcisom")<>false then

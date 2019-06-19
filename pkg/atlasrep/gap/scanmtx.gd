@@ -6,7 +6,7 @@
 #Y  Copyright (C)  2001,   Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
 ##  Whenever this file is changed in one of the packages
-##  <Package>AtlasRep</Package> or `meataxe',
+##  AtlasRep or 'meataxe',
 ##  do not forget to update the corresponding file in the other package!
 ##
 ##  This file contains the implementation part of the interface routines for
@@ -61,7 +61,9 @@ DeclareGlobalVariable( "CMeatAxe" );
 ##  <Description>
 ##  If the info level of <Ref InfoClass="InfoCMeatAxe"/> is at least <M>1</M>
 ##  then information about <K>fail</K> results of <C>C</C>-&MeatAxe;
-##  functions is printed.
+##  functions
+##  (see Section <Ref Sect="sect:Reading and Writing MeatAxe Format Files"/>)
+##  is printed.
 ##  The default level is zero, no information is printed on this level.
 ##  </Description>
 ##  </ManSection>
@@ -107,6 +109,17 @@ DeclareInfoClass( "InfoCMeatAxe" );
 ##  gap> IsBound( FFLists[4] );
 ##  true
 ##  ]]></Example>
+##  <P/>
+##  The &MeatAxe; defines the bijection between the elements in the field
+##  with <M>q = p^d</M> elements and the set <M>\{ 0, 1, \ldots, q-1 \}</M>
+##  of integers by assigning the field element
+##  <M>\sum_{{i=0}}^{{d-1}} c_i z^i</M> to the integer
+##  <M>\sum_{{i=0}}^{{d-1}} c_i p^i</M>,
+##  where the <M>c_i</M> are in the set <M>\{ 0, 1, \ldots, p-1 \}</M>
+##  and <M>z</M> is the primitive root of the field with <M>q</M> elements
+##  that corresponds to the residue class of the indeterminate,
+##  modulo the ideal spanned by the Conway polynomial of degree <M>d</M>
+##  over the field with <M>p</M> elements.
 ##  </Description>
 ##  </ManSection>
 ##  <#/GAPDoc>
@@ -220,7 +233,8 @@ SMFSTRING := "";
 ##  <P/>
 ##  If the file contains a matrix then the way how it is read by
 ##  <Ref Func="ScanMeatAxeFile"/> depends on the
-##  value of the global variable <Ref Var="CMeatAxe.FastRead"/>.
+##  value of the user preference <C>HowToReadMeatAxeTextFiles</C>,
+##  see Section <Ref Subsect="subsect:HowToReadMeatAxeTextFiles"/>.
 ##  <P/>
 ##  If the parameter <A>q</A> is given then the result matrix is represented
 ##  over the field with <A>q</A> elements,
@@ -248,6 +262,7 @@ DeclareGlobalFunction( "ScanMeatAxeFile" );
 #O  MeatAxeString( <mat>, <q> )
 #O  MeatAxeString( <perms>, <degree> )
 #O  MeatAxeString( <perm>, <q>, <dims> )
+#O  MeatAxeString( <intmat> )
 ##
 ##  <#GAPDoc Label="MeatAxeString">
 ##  <ManSection>
@@ -256,31 +271,36 @@ DeclareGlobalFunction( "ScanMeatAxeFile" );
 ##  Label="for permutations and a degree"/>
 ##  <Oper Name="MeatAxeString" Arg='perm, q, dims'
 ##  Label="for a permutation, q, and dims"/>
+##  <Oper Name="MeatAxeString" Arg='intmat'
+##  Label="for a matrix of integers"/>
 ##
 ##  <Returns>
-##  a string encoding the &GAP; objects given as input in &MeatAxe; format.
+##  a string encoding the &GAP; objects given as input in <C>C</C>-&MeatAxe;
+##  text format, see&nbsp;<Cite Key="CMeatAxe"/>.
 ##  </Returns>
 ##  <Description>
 ##  In the first form, for a matrix <A>mat</A> whose entries lie in the
 ##  finite field with <A>q</A> elements,
 ##  <Ref Oper="MeatAxeString"/> returns a string that encodes <A>mat</A>
-##  as a matrix over <C>GF(<A>q</A>)</C>, in &MeatAxe; text format.
+##  as a matrix over <C>GF(<A>q</A>)</C>.
 ##  <P/>
 ##  In the second form, for a nonempty list <A>perms</A> of permutations that
 ##  move only points up to the positive integer <A>degree</A>,
 ##  <Ref Oper="MeatAxeString"/> returns a string that encodes <A>perms</A> as
-##  permutations of degree <A>degree</A>,
-##  in <C>C</C>-&MeatAxe; text format (see&nbsp;<Cite Key="CMeatAxe"/>).
+##  permutations of degree <A>degree</A>.
 ##  <P/>
 ##  In the third form, for a permutation <A>perm</A> with largest moved point
 ##  <M>n</M>, say, a prime power <A>q</A>, and a list <A>dims</A> of length
-##  two containing two positive integers larger than or equal to
-##  <M>n</M>,
+##  two containing two positive integers larger than or equal to <M>n</M>,
 ##  <Ref Oper="MeatAxeString"/> returns a string that encodes <A>perm</A>
 ##  as a matrix over <C>GF(<A>q</A>)</C>, of dimensions <A>dims</A>,
 ##  whose first <M>n</M> rows and columns describe the permutation matrix
 ##  corresponding to <A>perm</A>,
 ##  and the remaining rows and columns are zero.
+##  <P/>
+##  In the fourth form, for a matrix <A>intmat</A> of integers,
+##  <Ref Oper="MeatAxeString"/> returns a string that encodes <A>intmat</A>
+##  as an integer matrix.
 ##  <P/>
 ##  When strings are printed to files
 ##  using <Ref Func="PrintTo" BookName="ref"/>
@@ -347,6 +367,7 @@ DeclareOperation( "MeatAxeString", [ IsTable, IsPosInt ] );
 DeclareOperation( "MeatAxeString",
     [ IsPermCollection and IsList, IsPosInt ] );
 DeclareOperation( "MeatAxeString", [ IsPerm, IsPosInt, IsList ] );
+DeclareOperation( "MeatAxeString", [ IsTable and IsCyclotomicCollColl ] );
 
 
 #############################################################################
@@ -458,7 +479,7 @@ DeclareGlobalFunction( "FFMatOrPermCMtxBinary" );
 ##  <Func Name="ScanStraightLineProgram" Arg='filename[, "string"]'/>
 ##
 ##  <Returns>
-##  a record containing the straight line program.
+##  a record containing the straight line program, or <K>fail</K>.
 ##  </Returns>
 ##  <Description>
 ##  Let <A>filename</A> be the name of a file that contains a straight line
@@ -663,7 +684,7 @@ DeclareGlobalFunction( "ScanStraightLineDecision" );
 ##  <#GAPDoc Label="AtlasStringOfProgram">
 ##  <ManSection>
 ##  <Func Name="AtlasStringOfProgram" Arg='prog[, outputnames]'/>
-##  <Func Name="AtlasStringOfProgram" Arg='prog[, "mtx"]'
+##  <Func Name="AtlasStringOfProgram" Arg='prog, "mtx"'
 ##  Label="for MeatAxe format output"/>
 ##
 ##  <Returns>
@@ -676,8 +697,7 @@ DeclareGlobalFunction( "ScanStraightLineDecision" );
 ##  <Ref Func="IsStraightLineDecision"/>),
 ##  this function returns a string describing the input format of an
 ##  equivalent straight line program or straight line decision
-##  as used in the &ATLAS; of Group Representations, that is,
-##  the lines are of the form described
+##  as used in the data files, that is, the lines are of the form described
 ##  in&nbsp;<Ref Func="ScanStraightLineProgram"/>.
 ##  <P/>
 ##  A list of strings that is given as the optional second argument
@@ -687,9 +707,8 @@ DeclareGlobalFunction( "ScanStraightLineDecision" );
 ##  <P/>
 ##  If the string <C>"mtx"</C> is given as the second argument then the
 ##  result has the format used in the <C>C</C>-&MeatAxe;
-##  (see&nbsp;<Cite Key="CMeatAxe"/>)
-##  rather than the format described in
-##  Section&nbsp;<Ref Sect="sect:Reading and Writing Atlas Straight Line Programs"/>.
+##  (see&nbsp;<Cite Key="CMeatAxe"/>) rather than the format described
+##  for&nbsp;<Ref Func="ScanStraightLineProgram"/>.
 ##  (Note that the <C>C</C>-&MeatAxe; format does not make sense if the
 ##  argument <A>outputnames</A> is given, and that this format does not
 ##  support <C>inp</C> and <C>oup</C> statements.)
@@ -752,18 +771,6 @@ DeclareGlobalFunction( "ScanStraightLineDecision" );
 ##  <#/GAPDoc>
 ##
 DeclareGlobalFunction( "AtlasStringOfProgram" );
-
-
-#############################################################################
-##
-#F  AtlasStringOfStraightLineProgram( ... )
-##
-##  This was the documented name before version 1.3 of the package,
-##  when no straight line decisions and black box programs were available.
-##  We keep it for backwards compatibility reasons,
-##  but leave it undocumented.
-##
-DeclareSynonym( "AtlasStringOfStraightLineProgram", AtlasStringOfProgram );
 
 
 #############################################################################

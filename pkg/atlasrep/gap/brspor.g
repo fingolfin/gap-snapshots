@@ -2,7 +2,7 @@
 ##
 #W  brspor.g             GAP 4 package AtlasRep                 Thomas Breuer
 ##
-#Y  Copyright (C)  2007,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
+#Y  Copyright (C)  2007,   Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
 ##  This file contains
 ##  - a record `BibliographySporadicSimple' containing the customizations for
@@ -184,7 +184,7 @@ InstallValue( BibliographySporadicSimple, rec(
 ##  <P/>
 ##  The source data in BibXMLext format, which are used by
 ##  <Ref Func="BrowseBibliographySporadicSimple"/>,
-##  is part of the <Package>AtlasRep</Package> package,
+##  are distributed with the &AtlasRep; package,
 ##  in four files with suffix <F>xml</F> in the package's <F>bibl</F>
 ##  directory.
 ##  Note that each of the two books contains two bibliographies.

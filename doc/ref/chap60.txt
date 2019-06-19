@@ -417,7 +417,7 @@
   
   [4X[32X  Example  [32X[104X
     [4X[25Xgap>[125X [27Xg:= GaloisGroup( AsField( Field( [ Sqrt(5) ] ), CF(5) ) );[127X[104X
-    [4X[28X<group with 1 generators>[128X[104X
+    [4X[28X<group of size 2 with 1 generators>[128X[104X
     [4X[25Xgap>[125X [27Xgens:= GeneratorsOfGroup( g );[127X[104X
     [4X[28X[ ANFAutomorphism( AsField( NF(5,[ 1, 4 ]), CF(5) ), 4 ) ][128X[104X
     [4X[25Xgap>[125X [27Xx:= last[1];;  x^2;[127X[104X

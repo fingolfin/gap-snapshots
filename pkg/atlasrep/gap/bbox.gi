@@ -3,7 +3,7 @@
 #W  bbox.gi              GAP 4 package AtlasRep                 Thomas Breuer
 #W                                                            Simon Nickerson
 ##
-#Y  Copyright (C)  2005,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
+#Y  Copyright (C)  2005,   Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
 ##  This file contains the implementations of the operations
 ##  for black box programs and straight line decisions.
@@ -557,8 +557,10 @@ InstallGlobalFunction( ResultOfBBoxProgram, function( prog, G )
     local result;
 
     if IsList( G ) then
+      # We need the argument list as inputs.
       result:= RunBBoxProgram( prog, "dummy", G, rec() );
     else
+      # We need the group for creating random elements.
       result:= RunBBoxProgram( prog, G, [], rec() );
     fi;
     if   result = fail or result = "timeout" then
@@ -664,8 +666,7 @@ end );
 ##
 #M  NrInputsOfStraightLineDecision( <prog> )
 ##
-##  This is equal to the code for straight line programs.
-#T  (Unify this!)
+##  This is almost equal to the code for straight line programs.
 ##
 InstallMethod( NrInputsOfStraightLineDecision,
     "for a straight line decision",

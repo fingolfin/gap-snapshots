@@ -1,0 +1,24 @@
+all: doc test
+
+doc: doc/manual.six
+
+doc/manual.six: makedoc.g \
+		PackageInfo.g \
+		gap/*.gd gap/*.gi examples/*.g
+	        gap makedoc.g
+
+docclean:
+	(cd doc ; ./clean)
+
+test:	doc
+	gap maketest.g
+
+test-with-coverage:	doc
+	OUTPUT=$$(gap --banner --quitonbreak --cover stats maketest.g 2>&1); \
+	echo "$$OUTPUT"; \
+	! echo "$$OUTPUT" | grep -v "Running list" | grep -v "^#I  " | grep "" > /dev/null
+	echo 'LoadPackage("profiling"); OutputJsonCoverage("stats", "coverage.json");' | gap
+
+ci-test:	test-with-coverage
+
+.PHONY: all doc docclean test

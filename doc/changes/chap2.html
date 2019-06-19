@@ -52,6 +52,14 @@
 <span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7D3DEF227BFDF572">2.2-2 <span class="Heading">New and updated packages since <strong class="pkg">GAP</strong> 4.10.0</span></a>
 </span>
 </div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X788B3576809DC149">2.3 <span class="Heading"><strong class="pkg">GAP</strong> 4.10.2 (June 2019)</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B1174477F4EB41B">2.3-1 <span class="Heading">Changes in the core <strong class="pkg">GAP</strong> system introduced in <strong class="pkg">GAP</strong> 4.10.21</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7A4D9C2B857C8C78">2.3-2 <span class="Heading">New and updated packages since <strong class="pkg">GAP</strong> 4.10.1</span></a>
+</span>
+</div></div>
 </div>
 
 <h3>2 <span class="Heading">Changes between <strong class="pkg">GAP</strong> 4.9 and <strong class="pkg">GAP</strong> 4.10</span></h3>
@@ -583,6 +591,9 @@ IsomorphismGroups(G,PcGroupCode(CodePcGroup(G),Size(G)))&lt;&gt;fail;
 <li><p>Export Julia <code class="code">CFLAGS</code>, <code class="code">LDFLAGS</code>, and <code class="code">LIBS</code> to <code class="code">sysinfo.gap</code> (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3248">#3248</a></span>).</p>
 
 </li>
+<li><p>Change <code class="code">MPtr</code> Julia type of <strong class="pkg">GAP</strong> objects to be a subtype of the abstract Julia <code class="code">GapObj</code> type provided by the Julia package <code class="code">GAPTypes.jl</code> (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3497">#3497</a></span>).</p>
+
+</li>
 </ul>
 <p>Improved and extended functionality:</p>
 
@@ -688,6 +699,87 @@ IsomorphismGroups(G,PcGroupCode(CodePcGroup(G),Size(G)))&lt;&gt;fail;
 
 </li>
 </ul>
+<p><a id="X788B3576809DC149" name="X788B3576809DC149"></a></p>
+
+<h4>2.3 <span class="Heading"><strong class="pkg">GAP</strong> 4.10.2 (June 2019)</span></h4>
+
+<p><a id="X7B1174477F4EB41B" name="X7B1174477F4EB41B"></a></p>
+
+<h5>2.3-1 <span class="Heading">Changes in the core <strong class="pkg">GAP</strong> system introduced in <strong class="pkg">GAP</strong> 4.10.21</span></h5>
+
+<p>Improvements in the experimental way to allow 3rd party code to link <strong class="pkg">GAP</strong> as a library:</p>
+
+
+<ul>
+<li><p>Add <code class="code">GAP_AssignGlobalVariable</code> and <code class="code">GAP_IsNameOfWritableGlobalVariable</code> to the <strong class="pkg">libGAP</strong> API (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3438">#3438</a></span>).</p>
+
+</li>
+</ul>
+<p>Fixes in the experimental support for using the <strong class="pkg">Julia</strong> garbage collector:</p>
+
+
+<ul>
+<li><p>Fix of a problem where the Julia GC during a partial sweep frees some, but not all objects of an unreachable data structure, and also may erroneously try to mark the deallocated objects (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3412">#3412</a></span>).</p>
+
+</li>
+<li><p>Fix stack scanning for the Julia GC when GAP is used as a library (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3432">#3432</a></span>).</p>
+
+</li>
+</ul>
+<p>Fixed bugs that could lead to crashes:</p>
+
+
+<ul>
+<li><p>Fix a bug in <code class="func">TransformationListList</code> (<span class="RefLink">Reference: TransformationListList for a source and destination</span>) which could cause a crash (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3463">#3463</a></span>).</p>
+
+</li>
+</ul>
+<p>Fixed bugs that could lead to incorrect results:</p>
+
+
+<ul>
+<li><p>Fix a bug in <code class="func">ClassPositionsOfLowerCentralSeries</code> (<span class="RefLink">Reference: ClassPositionsOfLowerCentralSeries</span>). [Reported by Frieder Ladisch] (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3321">#3321</a></span>).</p>
+
+</li>
+<li><p>Fix a dangerous bug in the comparison of large negative integers, introduced in GAP 4.10.1: if <code class="code">x</code> and <code class="code">y</code> were equal, but not identical, large negative numbers then <code class="code">x &lt; y</code> returned <code class="keyw">true</code> instead of <code class="keyw">false</code>. (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3478">#3478</a></span>).</p>
+
+</li>
+</ul>
+<p>Fixed bugs that could lead to break loops:</p>
+
+
+<ul>
+<li><p>If the group has been obtained as subgroup from a Fitting free/solvable radical computation, the data is inherited and might not guarantee that the factor group really is Fitting free. Added a check and an assertion to catch this situation (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3154">#3154</a></span>).</p>
+
+</li>
+<li><p>Fix declaration of sparse action homomorphisms (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3281">#3281</a></span>).</p>
+
+</li>
+<li><p><code class="code">LatticeViaRadical</code> called <code class="func">ClosureSubgroupNC</code> (<span class="RefLink">Reference: ClosureSubgroupNC</span>) assuming that the parent contained all generators. It now calls <code class="func">ClosureSubgroup</code> (<span class="RefLink">Reference: ClosureSubgroup</span>) instead, since this can not be always guaranteed (this could happen, for example, in perfect subgroup computation). Also added an assertion to <code class="func">ClosureSubgroupNC</code> (<span class="RefLink">Reference: ClosureSubgroupNC</span>) to catch this situation in other cases. [Reported by Serge Bouc] (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3397">#3397</a></span>).</p>
+
+</li>
+<li><p>Fix a "method not found" error in <code class="func">SubdirectProduct</code> (<span class="RefLink">Reference: SubdirectProduct</span>) (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3485">#3485</a></span>).</p>
+
+</li>
+</ul>
+<p>Other fixed bugs:</p>
+
+
+<ul>
+<li><p>Fix corner case in modified Todd-Coxeter algorithm when relator is trivial (<span class="URL"><a href="https://github.com/gap-system/gap/pull/3311">#3311</a></span>).</p>
+
+</li>
+</ul>
+<p><a id="X7A4D9C2B857C8C78" name="X7A4D9C2B857C8C78"></a></p>
+
+<h5>2.3-2 <span class="Heading">New and updated packages since <strong class="pkg">GAP</strong> 4.10.1</span></h5>
+
+<p><strong class="pkg">GAP</strong> 4.10.1 distribution contains 145 packages, including updated versions of 55 packages from <strong class="pkg">GAP</strong> 4.10.1 distribution,</p>
+
+<p>A new package <strong class="pkg">MonoidalCategories</strong> by Mohamed Barakat, Sebastian Gutsche and Sebastian Posur have been added to the distribution. It is based on the <strong class="pkg">CAP</strong> package and implements monoidal structures for <strong class="pkg">CAP</strong>.</p>
+
+<p>Unfortunately we had to withdraw the <strong class="pkg">QaoS</strong> package from distribution of GAP, as the servers it crucially relies on for its functionality have been permanently retired some time ago and are not coming back (see <span class="URL"><a href="https://github.com/gap-packages/qaos/issues/13">https://github.com/gap-packages/qaos/issues/13</a></span> for details).</p>
+
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
 

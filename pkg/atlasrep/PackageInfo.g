@@ -6,7 +6,7 @@ SetPackageInfo( rec(
 PackageName :=
   "AtlasRep",
 MyVersion :=
-  "1r5p1",
+  "2r1p0",
 MyWWWHome :=
   "http://www.math.rwth-aachen.de/~Thomas.Breuer",
 Subtitle :=
@@ -22,12 +22,16 @@ Date :=
   # "01/10/2007" -- Version 1.3.1
   # "23/06/2008" -- Version 1.4
   # "12/07/2011" -- Version 1.5.0
-  "30/03/2016", # -- Version 1.5.1
+  # "30/03/2016" -- Version 1.5.1
+  # "02/05/2019" -- Version 2.0.0
+  "10/05/2019", # -- Version 2.1.0
+License :=
+  "GPL-3.0-or-later",
 PackageWWWHome :=
   Concatenation( ~.MyWWWHome, "/", LowercaseString( ~.PackageName ) ),
 ArchiveURL :=
   Concatenation( ~.PackageWWWHome, "/", LowercaseString( ~.PackageName ),
-                 ~.MyVersion ),
+                 "-", ~.MyVersion ),
 ArchiveFormats :=
   ".tar.gz",
 Persons := [
@@ -49,7 +53,7 @@ Persons := [
     FirstNames := "Richard A.",
     IsAuthor := true,
     IsMaintainer := false,
-    Email := "richpark@gmx.co.uk",
+    Email := "richpark7920@gmail.com",
   ),
   rec(
     LastName := "Nickerson",
@@ -100,7 +104,7 @@ CommunicatedBy :=
 AcceptDate :=
   "04/2001",
 README_URL :=
-  Concatenation( ~.PackageWWWHome, "/README" ),
+  Concatenation( ~.PackageWWWHome, "/README.md" ),
 PackageInfoURL :=
   Concatenation( ~.PackageWWWHome, "/PackageInfo.g" ),
 AbstractHTML := Concatenation( [
@@ -124,30 +128,27 @@ PackageDoc := rec(
   ),
 Dependencies := rec(
   GAP :=
-    ">= 4.5",                  # need GAP 4.5's user preferences format
-  NeededOtherPackages :=
-    [ [ "gapdoc", ">= 1.5" ],  # want `RepeatedUTF8String'
+    ">= 4.10.1",                  # need GAP 4.5's user preferences format
+  NeededOtherPackages := [
+      [ "gapdoc", ">= 1.6.2" ],  # want extended `InitialSubstringUTF8String'
     ],
-  SuggestedOtherPackages :=
-    [ [ "browse", ">= 1.4" ],  # want `BrowseData.SortKeyFunctionBibRec'
+  SuggestedOtherPackages := [
+      [ "browse", ">= 1.8.3" ], # want extended `BrowseAtlasInfo'
       [ "ctbllib", ">= 1.2" ], # want `StructureDescriptionCharacterTableName'
-      [ "tomlib", ">= 1.2.1" ],
-      [ "io", ">= 3.3" ] ],
-  # needed external conditions (programs, operating system, ...)  provide
-  # just strings as text or
-  # pairs [text, URL] where URL  provides further information
-  # about that point.
-  # (no automatic test will be done for this, do this in your
-  # 'AvailabilityTest' function below)
+      [ "io", ">= 3.3" ], # want file transfer tools
+      [ "mfer", ">= 1.0" ], # yields a data extension
+      [ "ctblocks", ">= 1.0" ], # yields a data extension
+      [ "recog", ">= 1.3.1" ], # because of some functions in 'gap/test.g'
+    ],
   ExternalConditions :=
     []
   ),
 AvailabilityTest :=
   ReturnTrue,
 TestFile :=
-  "tst/testall.g",
+  "tst/testauto.g",
 Keywords :=
-  [ "group representations", "finite simple groups" ]
+  [ "group representations", "finite simple groups" ],
 ) );
 
 

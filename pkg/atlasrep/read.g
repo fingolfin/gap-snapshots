@@ -11,12 +11,15 @@ ReadPackage( "atlasrep", "gap/access.gi"   );
 ReadPackage( "atlasrep", "gap/types.gi"    );
 ReadPackage( "atlasrep", "gap/interfac.gi" );
 ReadPackage( "atlasrep", "gap/mindeg.gi"   );
+ReadPackage( "atlasrep", "gap/utlmrkup.g"  );
 ReadPackage( "atlasrep", "gap/utils.gi"    );
+ReadPackage( "atlasrep", "gap/test.g"      );
+ReadPackage( "atlasrep", "gap/json.g"      );
 
 # Read Browse applications only if the Browse package will be loaded.
-if IsPackageMarkedForLoading( "Browse", "1.3" ) then
+if IsPackageMarkedForLoading( "Browse", ">= 1.8.3" ) then
   ReadPackage( "atlasrep", "gap/brmindeg.g" );
-  if IsPackageMarkedForLoading( "ctbllib", "" ) then
+  if IsPackageMarkedForLoading( "CTblLib", "" ) then
     ReadPackage( "atlasrep", "gap/brspor.g" );
   fi;
 fi;

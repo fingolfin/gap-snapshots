@@ -6,10 +6,10 @@
                      [1XA [5XGAP[105X toolbox for simplicial complexes[101X
   
   
-                                 Version 2.1.9
+                                 Version 2.1.10
   
   
-                                  October 2018
+                                   June 2019
   
   
                                Felix Effenberger
@@ -21,12 +21,10 @@
   Felix Effenberger
       Email:    [7Xmailto:exilef@gmail.com[107X
   Jonathan Spreer
-      Email:    [7Xmailto:jonathan.spreer@fu-berlin.de[107X
-      Address:  [33X[0;14YDiscrete Geometry Group[133X
-                [33X[0;14YMathematical Institute[133X
-                [33X[0;14YFreie Universitaet Berlin[133X
-                [33X[0;14YSchool of Mathematics and Physics[133X
-                [33X[0;14YArnimallee 2, 14195 Berlin, Germany[133X
+      Email:    [7Xmailto:jonathan.spreer@sydney.edu.au[107X
+      Address:  [33X[0;14YSchool of Mathematics and Statistics F07[133X
+                [33X[0;14Y", The University of Sydney[133X
+                [33X[0;14YNSW 2006 Australia[133X
   
   
   
@@ -65,7 +63,7 @@
   
   -------------------------------------------------------
   [1XCopyright[101X
-  [33X[0;0Y© 2018 Felix Effenberger and Jonathan Spreer. Permission is granted to copy,
+  [33X[0;0Y© 2019 Felix Effenberger and Jonathan Spreer. Permission is granted to copy,
   distribute  and/or  modify  this  document  under  the terms of the GNU Free
   Documentation  License,  Version  1.2  or any later version published by the
   Free Software Foundation, see [7Xhttp://www.fsf.org/licensing/licenses/fdl.html[107X

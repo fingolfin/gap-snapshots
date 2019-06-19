@@ -2,7 +2,7 @@
 ##
 #W  obsolete.gi          GAP 4 package AtlasRep                 Thomas Breuer
 ##
-#Y  Copyright (C)  2011,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
+#Y  Copyright (C)  2011,   Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
 ##  This file contains implementations of global variables
 ##  that had been documented in earlier versions of the AtlasRep package.
@@ -22,10 +22,6 @@
 ##
 ##  These functions are deprecated since version 1.5 of the package.
 ##
-if not IsBound( AGR.Test ) then
-  ReadPackage( "atlasrep", "gap/test.g" );
-fi;
-
 InstallGlobalFunction( AtlasOfGroupRepresentationsTestClassScripts,
     AGR.Test.ClassScripts );
 InstallGlobalFunction( AtlasOfGroupRepresentationsTestCompatibleMaxes,

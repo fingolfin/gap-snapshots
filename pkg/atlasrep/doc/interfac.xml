@@ -1,43 +1,30 @@
 
 <!-- %W  interfac.xml    GAP 4 package AtlasRep             Thomas Breuer -->
-<!-- %Y  Copyright 2001, Lehrstuhl D für Mathematik, RWTH Aachen, Germany -->
+<!-- %Y  Copyright 2001, Lehrstuhl D fÃ¼r Mathematik, RWTH Aachen, Germany -->
 
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Chapter Label="chap:The User Interface of the AtlasRep Package">
-<Heading>The User Interface of the <Package>AtlasRep</Package> Package
-</Heading>
+<Heading>The User Interface of the &AtlasRep; Package</Heading>
 
 The <E>user interface</E> is the part of the &GAP; interface that allows one
 to display information about the current contents of the database and to
-access individual data (perhaps from a remote server,
-see Section&nbsp;<Ref Sect="subsect:Local or remote access"/>).
+access individual data (perhaps by downloading them,
+see Section&nbsp;<Ref Sect="subsect:AtlasRepAccessRemoteFiles"/>).
 The corresponding functions are described in this chapter.
 See Section&nbsp;<Ref Sect="sect:Examples of Using the AtlasRep Package"/>
 for some small examples how to use the functions of the interface.
 
 <P/>
 
-Extensions of the <Package>AtlasRep</Package> package are regarded as another
+Data extensions of the &AtlasRep; package are regarded as another
 part of the &GAP; interface,
 they are described in Chapter&nbsp;<Ref Chap="chap:Private Extensions"/>.
-Finally, the low level part of the interface are described in
+Finally, the low level part of the interface is described in
 Chapter&nbsp;<Ref Chap="chap:Technicalities of the AtlasRep Package"/>.
 
-<P/>
-
-For some of the examples in this chapter,
-the &GAP; packages <Package>CTblLib</Package> and <Package>TomLib</Package>
-are needed, so we load them.
-
-<P/>
-
-<Example><![CDATA[
-gap> LoadPackage( "ctbllib" );
-true
-gap> LoadPackage( "tomlib" );
-true
-]]></Example>
+<!-- Note that we need not load the packages AtlasRep, CTblLib, TomLib
+     because they have been loaded already in the Tutorial chapter. -->
 
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
@@ -61,12 +48,12 @@ which in turn can be constructed from any permutation representation.
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Section Label="sect:Group Names Used in the AtlasRep Package">
-<Heading>Group Names Used in the <Package>AtlasRep</Package> Package</Heading>
+<Heading>Group Names Used in the &AtlasRep; Package</Heading>
 
 <!-- The section title is referenced in htm/data/overview.htm. -->
 <Alt Only="HTML"><![CDATA[<a id="sect:groupnames"/>]]></Alt>
 
-When you access data via the <Package>AtlasRep</Package> package,
+When you access data via the &AtlasRep; package,
 you specify the group in question by an admissible <E>name</E>.
 Thus it is essential to know these names,
 which are called <E>the &GAP; names</E> of the group in the following.
@@ -74,13 +61,13 @@ which are called <E>the &GAP; names</E> of the group in the following.
 <P/>
 
 For a group <M>G</M>, say, whose character table is available in
-&GAP;'s Character Table Library,
+&GAP;'s Character Table Library (see <Cite Key="CTblLib"/>),
 the admissible names of <M>G</M> are the admissible names
 of this character table.
-If <M>G</M> is almost simple, one such name is the 
+One such name is the 
 <Ref Attr="Identifier" Label="for character tables" BookName="ref"/> value
 of the character table,
-see&nbsp;<Ref Func="Accessing a Character Table from the Library" BookName="ctbllib"/>.
+see&nbsp;<Ref Subsect="Admissible Names for Character Tables in CTblLib" BookName="ctbllib"/>.
 This name is usually very similar to the name used in the
 &ATLAS; of Finite Groups <Cite Key="CCN85"/>.
 For example,
@@ -115,8 +102,7 @@ respectively.
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Section Label="sect:Standard Generators Used in AtlasRep">
-<Heading>Standard Generators Used in the <Package>AtlasRep</Package> Package
-</Heading>
+<Heading>Standard Generators Used in the &AtlasRep; Package</Heading>
 
 For the general definition of <E>standard generators</E> of a group,
 see <Cite Key="Wil96"/>.
@@ -126,10 +112,11 @@ Section&nbsp;<Ref Sect="Standard Generators of Groups" BookName="tomlib"/>. -->
 <P/>
 
 Several <E>different</E> standard generators may be defined for a group,
-the definitions can be found at
+the definitions for each group that occurs in the
+&ATLAS; of Group Representations can be found at
 
 <P/>
-&ATLASSERVER;
+<URL>&ATLASSERVER;</URL>.
 <P/>
 
 When one specifies the standardization,
@@ -142,8 +129,8 @@ of their inputs.
 That is, a straight line program for computing generators of a certain
 subgroup of a group <M>G</M> is defined only for a specific set of standard
 generators of <M>G</M>, and applying the program to matrix or permutation
-generators of <M>G</M> but w.r.t.&nbsp;a different standardization may yield
-unpredictable results.
+generators of <M>G</M> but w.&nbsp;r.&nbsp;t.&nbsp;a different
+standardization may yield unpredictable results.
 Therefore the results returned by the functions described in this chapter
 contain information about the standardizations they refer to.
 
@@ -152,7 +139,7 @@ contain information about the standardizations they refer to.
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Section Label="sect:Class Names Used in the AtlasRep Package">
-<Heading>Class Names Used in the <Package>AtlasRep</Package> Package</Heading>
+<Heading>Class Names Used in the &AtlasRep; Package</Heading>
 
 For each straight line program (see&nbsp;<Ref Func="AtlasProgram"/>)
 that is used to compute lists of class representatives,
@@ -178,11 +165,12 @@ of class names from the character table in the &GAP; Library.
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Section Label="sect:Accessing Data of the AtlasRep Package">
-<Heading>Accessing Data of the <Package>AtlasRep</Package> Package</Heading>
+<Heading>Accessing Data via &AtlasRep;</Heading>
 
-Note that the output of the examples in this section refers to a perhaps
-outdated table of contents;
-the current version of the database may contain more information
+The examples shown in this section refer to the situation
+that no extensions have been notified,
+and to a perhaps outdated table of contents.
+That is, the current version of the database may contain more information
 than is shown here.
 
 <P/>
@@ -202,8 +190,7 @@ than is shown here.
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Section Label="sect:Browse and AtlasRep">
-<Heading><Package>Browse</Package> Applications Provided by
-<Package>AtlasRep</Package></Heading>
+<Heading><Package>Browse</Package> Applications Provided by &AtlasRep;</Heading>
 
 The functions <Ref Func="BrowseMinimalDegrees"/>,
 <Ref Func="BrowseBibliographySporadicSimple"/>,

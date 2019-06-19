@@ -2,7 +2,7 @@
 ##
 #W  mindeg.gd            GAP 4 package AtlasRep                 Thomas Breuer
 ##
-#Y  Copyright (C)  2007,   Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
+#Y  Copyright (C)  2007,   Lehrstuhl D fÃ¼r Mathematik,  RWTH Aachen,  Germany
 ##
 ##  This file contains declarations for dealing with information about
 ##  permutation and matrix representations of minimal degree
@@ -49,16 +49,18 @@
 ##    then the index of this subgroup is the minimal degree.
 ##    (This is used when the two character tables in question and the class
 ##    fusion are available in &GAP;'s Character Table Library
-##    (<Cite Key="CTblLib"/>);
+##    <Cite Key="CTblLib"/>;
 ##    this happens for many character tables of simple groups.)
 ##  </Item>
 ##  <Item>
 ##    If <M>G</M> has a unique minimal normal subgroup then each minimal
 ##    faithful permutation representation is transitive.
+##    (Note that the core of each point stabilizer is either trivial or
+##    contains the unique minimal normal subgroup.)
 ##    <P/>
 ##    In this case, the minimal degree can be computed directly from the
 ##    information in the table of marks of <M>G</M> if this is available in
-##    &GAP;'s Library of Tables of Marks (<Cite Key="TomLib"/>).
+##    &GAP;'s Library of Tables of Marks <Cite Key="TomLib"/>.
 ##    <P/>
 ##    Suppose that the largest maximal subgroup of <M>G</M> is not core-free
 ##    but simple and normal in <M>G</M>, and that the other maximal subgroups
@@ -158,8 +160,8 @@ DeclareGlobalFunction( "MinimalPermutationRepresentationInfo" );
 ##  information about minimal representations over prescribed fields in
 ##  characteristic zero.
 ##  <P/>
-##  Information about groups that occur in the <Package>AtlasRep</Package>
-##  package is precomputed in <Ref Var="MinimalRepresentationInfoData"/>,
+##  Information about groups that occur in the &AtlasRep; package
+##  is precomputed in <Ref Var="MinimalRepresentationInfoData"/>,
 ##  so the packages <Package>CTblLib</Package> and <Package>TomLib</Package>
 ##  are not needed when <Ref Func="MinimalRepresentationInfo"/> is called for
 ##  these groups.

@@ -3,15 +3,24 @@
 ##
 SetInfoLevel( InfoGAPDoc, 2 );
 
-SetGapDocLaTeXOptions( "nocolor", "utf8",
-      rec( Maintitlesize := "\\fontsize{50}{55}\\selectfont" ) );
-#T change the numbers!
+SetGapDocLaTeXOptions( "nocolor", "utf8" );
 
-pathtodoc:= ".";
-main:= "main.xml";
-pkgname:= "AtlasRep";
-bookname:= "AtlasRep";
-pathtoroot:= "../../..";
+pathtodoc:= ".";;
+main:= "main.xml";;
+pkgname:= "AtlasRep";;
+
+# Extract the book name from the 'main' file.
+str:= StringFile( Concatenation( pathtodoc, "/", main ) );;
+pos:= PositionSublist( str, "<Book" );;
+pos:= PositionSublist( str, "Name=\"", pos );;
+pos:= Position( str, '\"', pos );;
+pos2:= Position( str, '\"', pos );;
+bookname:= str{ [ pos + 1 .. pos2 - 1 ] };;
+
+pathtoroot:= "../../..";;
+
+pathtotst:= "../tst";;
+authors:= [ "Thomas Breuer" ];;
 
 files:= [
     "../gap/access.gd",
@@ -20,6 +29,7 @@ files:= [
     "../gap/brmindeg.g",
     "../gap/brspor.g",
     "../gap/interfac.gd",
+    "../gap/json.g",
     "../gap/mindeg.gd",
     "../gap/scanmtx.gd",
     "../gap/test.g",
@@ -28,7 +38,7 @@ files:= [
     "../gap/types.gd",
     "../gap/userpref.g",
     "../gap/utils.gd",
-  ];
+  ];;
 
 AddHandlerBuildRecBibXMLEntry( "Wrap:Package", "BibTeX",
   function( entry, r, restype, strings, options )
@@ -42,7 +52,7 @@ AddHandlerBuildRecBibXMLEntry( "Wrap:Package", "HTML",
                entry, r, restype, strings, options ), "</strong>" );
   end );
 
-MakeGAPDocDoc( pathtodoc, main, files, bookname, pathtoroot );;
+MakeGAPDocDoc( pathtodoc, main, files, bookname, pathtoroot, "MathJax" );;
 CopyHTMLStyleFiles( pathtodoc );
 
 GAPDocManualLabFromSixFile( bookname,
@@ -76,16 +86,15 @@ CheckVersionNumber( pkgname, pathtodoc, main );
 
 #############################################################################
 
-pathtotst:= "../tst";
 tstfilename:= "docxpl.tst";
-authors:= [ "Thomas Breuer" ];
-tstheadertext:= Concatenation( "\
-This file contains the GAP code of the examples in the package\n\
+
+tstheadertext:= "\
+This file contains the GAP code of examples in the package\n\
 documentation files.\n\
 \n\
-In order to run the tests, one starts GAP from the `tst' subdirectory\n\
-of the `pkg/", LowercaseString( pkgname ), "' directory, and calls \
-`Test( \"", tstfilename, "\" );'.\n" );
+In order to run the tests, one starts GAP from the 'tst' subdirectory\n\
+of the 'pkg/PKGNAME' directory, and calls 'Test( \"FILENAME\" );'.\n\
+";
 
 ExampleFileHeader:= function( filename, pkgname, authors, text, linelen,
                               pathtodoc, main )
@@ -100,6 +109,10 @@ ExampleFileHeader:= function( filename, pkgname, authors, text, linelen,
 
     free1:= Int( ( linelen - Length( pkgname ) - 14 ) / 2 );
     free2:= linelen - free1 - 14 - Length( pkgname ) - Length( authors[1] );
+
+    text:= ReplacedString( text, "PKGNAME", LowercaseString( pkgname ) );
+    text:= ReplacedString( text, "FILENAME", filename );
+    text:= ReplacedString( text, "\n", "\n##  " );
 
     str:= RepeatedString( "#", linelen );
     Append( str, "\n##\n#W  " );
@@ -118,16 +131,21 @@ ExampleFileHeader:= function( filename, pkgname, authors, text, linelen,
     Append( str, releaseyear );
     Append( str, ",   Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany" );
     Append( str, "\n##\n##  " );
-    Append( str, ReplacedString( text, "\n", "\n##  " ) );
+    Append( str, text );
 
     Append( str, "\n\ngap> LoadPackage( \"" );
     Append( str, pkgname );
     Append( str, "\", false );\ntrue" );
     Append( str, "\ngap> save:= SizeScreen();;" );
     Append( str, "\ngap> SizeScreen( [ 72 ] );;" );
-    Append( str, "\ngap> START_TEST( \"Input file: " );
+    Append( str, "\ngap> START_TEST( \"" );
     Append( str, filename );
     Append( str, "\" );\n" );
+    Append( str, "\n##\ngap> if IsBound( BrowseData ) then\n" );
+    Append( str, ">      data:= BrowseData.defaults.dynamic.replayDefaults;\n" );
+    Append( str, ">      oldinterval:= data.replayInterval;\n" );
+    Append( str, ">      data.replayInterval:= 1;\n" );
+    Append( str, ">    fi;\n" );
 
     return str;
 end;
@@ -135,9 +153,13 @@ end;
 ExampleFileFooter:= function( filename, linelen )
     local str;
 
-    str:= "\n##\ngap> STOP_TEST( \"";
+    str:= "\n##\ngap> if IsBound( BrowseData ) then\n";
+    Append( str, ">      data:= BrowseData.defaults.dynamic.replayDefaults;\n" );
+    Append( str, ">      data.replayInterval:= oldinterval;\n" );
+    Append( str, ">    fi;\n" );
+    Append( str, "\n##\ngap> STOP_TEST( \"" );
     Append( str, filename );
-    Append( str, "\", 10000000 );\n" );
+    Append( str, "\" );\n" );
     Append( str, "gap> SizeScreen( save );;\n\n" );
     Append( str, RepeatedString( "#", linelen ) );
     Append( str, "\n##\n#E\n" );
@@ -146,42 +168,70 @@ ExampleFileFooter:= function( filename, linelen )
 end;
 
 
-# create the test file with manual examples
-# (for a package: combined for all chapters)
-CreateManualExamplesFile:= function( pkgname, authors, text,
-                                     path, main, files, tstpath, tstfilename )
-    local linelen, str, r, l, tstfilenameold;
+##  Create the test file(s) with examples.
+##  If 'tstfilename' equals "chapter-wise" then one file is created for each
+##  chapter, with filename <srcname>'.tst' if the contents of the chapter is
+##  in <srcname>'.xml'.
+##  Otherwise, all examples are collected in the file with name 'tstfilename'.
+##
+CreateManualExamplesFiles:= function( pkgname, authors, text, path, main,
+                                      files, tstpath, tstfilename )
+    local linelen, xpls, str, pos, pos2, tstfilenames, i, r, l,
+          tstfilenameold;
 
     linelen:= 77;
-    str:= "# This file was created automatically, do not edit!\n";
-    Append( str, ExampleFileHeader( tstfilename, pkgname, authors,
-                                    text, linelen, path, main ) );
-    Append( str, "\n##\ngap> if IsBound( BrowseData ) then\n> oldinterval:= BrowseData.defaults.dynamic.replayDefaults.replayInterval;\n> BrowseData.defaults.dynamic.replayDefaults.replayInterval:= 1;\n> fi;\n" );
-    for r in ExtractExamples( path, main, files, "Chapter" ) do
-      for l in r do
+
+    xpls:= ExtractExamples( path, main, files, "Chapter" );
+
+    # Distinguish chapter-wise or book-wise test files.
+    if tstfilename = "chapter-wise" then
+      str:= StringFile( Concatenation( pathtodoc, "/", main ) );
+      pos:= PositionSublist( str, "<Body>" );
+      pos2:= PositionSublist( str, "</Body>", pos );
+      str:= str{ [ pos .. pos2 ] };
+      tstfilenames:= [];
+      pos:= PositionSublist( str, "<#Include SYSTEM \"" );
+      while pos <> fail do
+        pos:= pos + 18;
+        pos2:= PositionSublist( str, "\"", pos );
+        Add( tstfilenames,
+             ReplacedString( str{ [ pos .. pos2-1 ] }, ".xml", ".tst" ) );
+        pos:= PositionSublist( str, "<#Include SYSTEM \"", pos2 );
+      od;
+      if Length( xpls ) <> Length( tstfilenames ) then
+        Error( "wrong number of chapters?" );
+      fi;
+    else
+      tstfilenames:= [ tstfilename ];
+      xpls:= [ Concatenation( xpls ) ];
+    fi;
+
+    for i in [ 1 .. Length( xpls ) ] do
+      str:= "# This file was created automatically, do not edit!\n";
+      Append( str, ExampleFileHeader( tstfilenames[i], pkgname, authors,
+                                      text, linelen, path, main ) );
+      for l in xpls[i] do
         Append( str, Concatenation( "\n##  ", l[2][1],
                 " (", String( l[2][2] ), "-", String( l[2][3] ), ")" ) );
         Append( str, l[1] );
       od;
+      Append( str, ExampleFileFooter( tstfilenames[i], linelen ) );
+      tstfilename:= Concatenation( tstpath, "/", tstfilenames[i] );
+      tstfilenameold:= Concatenation( tstfilename, "~" );
+      if IsExistingFile( tstfilename ) then
+        Exec( Concatenation( "rm -f ", tstfilenameold ) );
+        Exec( Concatenation( "mv ", tstfilename, " ", tstfilenameold ) );
+      fi;
+      FileString( tstfilename, str );
+      if IsExistingFile( tstfilenameold ) then
+        Print( "#I  differences in `", tstfilename, "':\n" );
+        Exec( Concatenation( "diff ", tstfilenameold, " ", tstfilename ) );
+      fi;
+      Exec( Concatenation( "chmod 444 ", tstfilename ) );
     od;
-    Append( str, "\n##\ngap> if IsBound( BrowseData ) then\n> BrowseData.defaults.dynamic.replayDefaults.replayInterval:= oldinterval;\n> fi;\n" );
-    Append( str, ExampleFileFooter( tstfilename, linelen ) );
-
-    tstfilename:= Concatenation( tstpath, "/", tstfilename );
-    tstfilenameold:= Concatenation( tstfilename, "~" );
-    if IsExistingFile( tstfilename ) then
-      Exec( Concatenation( "rm -f ", tstfilenameold ) );
-      Exec( Concatenation( "mv ", tstfilename, " ", tstfilenameold ) );
-    fi;
-    FileString( tstfilename, str );
-    if IsExistingFile( tstfilenameold ) then
-      Print( "#I  differences in `", tstfilename, "':\n" );
-      Exec( Concatenation( "diff ", tstfilenameold, " ", tstfilename ) );
-    fi;
-    Exec( Concatenation( "chmod 444 ", tstfilename ) );
 end;
 
 
-CreateManualExamplesFile( pkgname, authors, tstheadertext,
-                          pathtodoc, main, files, pathtotst, tstfilename );
+CreateManualExamplesFiles( pkgname, authors, tstheadertext, pathtodoc,
+                           main, files, pathtotst, tstfilename );
 

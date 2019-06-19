@@ -2,7 +2,7 @@
 ##
 #W  brmindeg.g           GAP 4 package AtlasRep                 Thomas Breuer
 ##
-#Y  Copyright (C)  2007,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
+#Y  Copyright (C)  2007,   Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
 ##  This file contains a Browse application for showing the minimal degree
 ##  data in a table.
@@ -11,11 +11,11 @@
 
 #############################################################################
 ##
-#F  BrowseMinimalDegrees( [<groupnames>] )
+#F  BrowseMinimalDegrees( [<gapnames>] )
 ##
 ##  <#GAPDoc Label="BrowseMinimalDegrees">
 ##  <ManSection>
-##  <Func Name="BrowseMinimalDegrees" Arg='[groupnames]'/>
+##  <Func Name="BrowseMinimalDegrees" Arg='[gapnames]'/>
 ##  
 ##  <Returns>
 ##  the list of info records for the clicked representations.
@@ -23,9 +23,8 @@
 ##  <Description>
 ##  If the &GAP; package <Package>Browse</Package> (see <Cite Key="Browse"/>)
 ##  is loaded then this function is available.
-##  It opens a browse table whose rows correspond to the groups for which the
-##  <Package>ATLAS</Package> of Group Representations contains
-##  some information about minimal degrees,
+##  It opens a browse table whose rows correspond to the groups for which
+##  &AtlasRep; knows some information about minimal degrees,
 ##  whose columns correspond to the characteristics that occur,
 ##  and whose entries are the known minimal degrees.
 ##  <P/>
@@ -46,9 +45,9 @@
 ##  > fi;
 ##  ]]></Example>
 ##  <P/>
-##  If an argument <A>groupnames</A> is given then it must be a list of
-##  group names of the <Package>ATLAS</Package> of Group Representations;
-##  the browse table is then restricted to the rows corresponding to these
+##  If an argument <A>gapnames</A> is given then it must be a list of
+##  &GAP; names of groups.
+##  The browse table is then restricted to the rows corresponding to these
 ##  group names and to the columns that are relevant for these groups.
 ##  A perhaps interesting example is the subtable with the data concerning
 ##  sporadic simple groups and their covering groups,
@@ -64,7 +63,7 @@
 ##  > fi;
 ##  ]]></Example>
 ##  <P/>
-##  The browse table does not contain rows for the groups
+##  The browse table does <E>not</E> contain rows for the groups
 ##  <M>6.M_{22}</M>, <M>12.M_{22}</M>, <M>6.Fi_{22}</M>.
 ##  Note that in spite of the title of <Cite Key="Jan05"/>, the entries in
 ##  Table 1 of this paper are in fact the minimal degrees of faithful
@@ -101,7 +100,7 @@ BindGlobal( "BrowseMinimalDegrees", function( arg )
         return [];
       fi;
     else
-      Error( "usage: BrowseMinimalDegrees( [<groupnames>] )" );
+      Error( "usage: BrowseMinimalDegrees( [<gapnames>] )" );
     fi;
 
     char:= Set( List( Filtered( data, x -> x[2][1] = "Characteristic" ),

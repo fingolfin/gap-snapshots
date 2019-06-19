@@ -12,8 +12,8 @@ SetPackageInfo( rec(
 
 PackageName := "simpcomp",
 Subtitle := "A GAP toolbox for simplicial complexes",
-Version := "2.1.9",
-Date := "20/10/2018",
+Version := "2.1.10",
+Date := "03/06/2019",
 
 PackageWWWHome := "https://simpcomp-team.github.io/simpcomp/",
 README_URL := Concatenation( ~.PackageWWWHome, "README.md" ),
@@ -46,14 +46,12 @@ Persons := [
       FirstNames    := "Jonathan",
       IsAuthor      := true,
       IsMaintainer  := true,
-      Email         := "jonathan.spreer@fu-berlin.de",
+      Email         := "jonathan.spreer@sydney.edu.au",
       WWWHome       := "http://www.tacet.de/Jonathan",
       PostalAddress := Concatenation( [
-            "Discrete Geometry Group\n",
-            "Mathematical Institute\n",
-            "Freie Universität Berlin" ] ),
-      Place         := "Arnimallee 2, 14195 Berlin",
-      Institution   := "Freie Universität Berlin")
+            "School of Mathematics and Statistics F07" ] ),
+      Place         := "NSW 2006 Australia",
+      Institution   := "The University of Sydney")
     ],
 
 ##  Status information. Currently the following cases are recognized:
@@ -114,11 +112,21 @@ BannerString :=Concatenation("Loading simpcomp ",String(~.Version),"\nby F. Effe
 
 AvailabilityTest := 
 function()
-	if not ARCH_IS_UNIX() then
-	  Info(InfoWarning, 1, "simpcomp: non-Unix architecture, some functionality will not be available.");
-	fi;
-	
-	return true;
+  local path, file;
+  if not ARCH_IS_UNIX() then
+    Info(InfoWarning, 1, "simpcomp: non-Unix architecture, some functionality will not be available.");
+  fi;
+
+  # test for existence of the compiled binary
+  path:= DirectoriesPackagePrograms( "bin" );
+  file:= Filename( path, "bistellar" );
+  if file = fail then
+    LogPackageLoadingMessage( PACKAGE_WARNING,
+        [ "The program `bistellar' is not compiled,",
+          "`SCReduceComplexFast()' is thus unavailable." ] );
+  fi;
+
+  return true;
 end,
 
 ##  *Optional*, but recommended: path relative to package root to a file which

@@ -1,0 +1,41 @@
+  
+  [1X6 [33X[0;0YLimitations[133X[101X
+  
+  [33X[0;0YWhen  this package is being used in a Jupyter Notebook, it has the following
+  limitations.[133X
+  
+  [30X    [33X[0;6YIf this package is used in [10XPlotDisplayMethod_Jupyter[110X mode in a Jupyter
+        notebook,  and  visualizations  are  created by this package, then the
+        notebook  is  saved  and  later  reloaded, the visualizations will not
+        persist.  They  will  be  replaced by an error message instructing the
+        user  to  re-run  the cell that created the visualization. You can get
+        around       this       by      setting      [10XPlotDisplayMethod      :=
+        PlotDisplayMethod_JupyterSimple[110X,  but  this increases the size of your
+        notebook  by embedding all the JavaScript needed by the visualizations
+        in  the  notebook  itself.  Note that [10XPlotDisplayMethod_Jupyter[110X is the
+        default mode in the notebook.[133X
+  
+  [30X    [33X[0;6YThe  [10Xnbconvert[110X  tool,  which converts [11X.ipynb[111X files into other formats,
+        will  not  include  the  visualizations,  because  [10Xnbconvert[110X  is not a
+        browser  that  can  evaluate  the  JavaScript  code that generates the
+        visualizations.[133X
+  
+  [30X    [33X[0;6YWhen  using  the  [10XPlotDisplayMethod_Jupyter[110X  mode, most visualizations
+        load  a  JavaScript  library from a CDN, which thus requires a working
+        Internet connection to function.[133X
+  
+  [33X[0;0YWhen  it  is  being  used  from  the  command  line,  it  has  the following
+  limitations.[133X
+  
+  [30X    [33X[0;6YThe  JavaScript  function  [10XrunGAP[110X  introduced  in  Section  [14X4.3[114X is not
+        available.  That  function depends upon the ability to ask the Jupyter
+        Kernel to run [5XGAP[105X code, and thus when there is no Jupyter Kernel, that
+        function cannot work.[133X
+  
+  [30X    [33X[0;6YEach    new    call   to   [2XPlot[102X   ([14X7.1-1[114X),   [2XPlotGraph[102X   ([14X7.1-3[114X),   or
+        [2XCreateVisualization[102X  ([14X7.2-5[114X) will be stored in a new temporary file on
+        the  user's  filesystem  and  thus shown in a new tab or window in the
+        user's  browser.  That  is,  one does not iteratively improve a single
+        visualization,  but  is  forced  to  open a new window or tab for each
+        call.[133X
+  

@@ -2,61 +2,11 @@
 ##
 #W  utils.gi             GAP 4 package AtlasRep                 Thomas Breuer
 ##
-#Y  Copyright (C)  2001,  Lehrstuhl D fuer Mathematik,  RWTH Aachen,  Germany
+#Y  Copyright (C)  2001,   Lehrstuhl D für Mathematik,  RWTH Aachen,  Germany
 ##
 ##  This file contains the implementations of utility functions for the
 ##  ATLAS of Group Representations.
 ##
-
-
-if IsString( InitialSubstringUTF8StringWithSuffix ) then
-
-#############################################################################
-##
-#F  InitialSubstringUTF8StringWithSuffix( <string>, <n>, <suffix> )
-##
-##  If the string <A>string</A> can be printed in at most <A>n</A> visible
-##  columns then <A>string</A> is returned.
-##  Otherwise the concatenation of the longest prefix of <A>string</A>
-##  and <A>suffix</A> (a string of visible length 1) is returned
-##  such that the result fits into exactly <A>n</A> visible columns.
-##
-##  This function is used by 'DisplayAtlasInfo'.
-##  Copies of the function are contained in the packages 'CTblLib' and
-##  'CTBlocks'.
-##  Perhaps the function should better be moved to 'GAPDoc'.
-##
-Unbind( InitialSubstringUTF8StringWithSuffix );
-
-BindGlobal( "InitialSubstringUTF8StringWithSuffix",
-    function( string, n, suffix )
-    local ints, sum, j, pos;
-
-    if WidthUTF8String( suffix ) <> 1 then
-      Error( "<suffix> must have visible length 1" );
-    fi;
-    ints:= IntListUnicodeString( Unicode( string, GAPInfo.TermEncoding ) );
-    sum:= 0;
-    for j in [ 1 .. Length( ints ) ] do
-      if ints[j] > 31 and ints[j] < 127 then
-        sum:= sum + 1;
-      else
-        pos:= POSITION_FIRST_COMPONENT_SORTED( WidthUnicodeTable, ints[j] );
-        if not IsBound( WidthUnicodeTable[ pos ] ) or
-           WidthUnicodeTable[ pos ][1] <> ints[j] then
-          pos:= pos-1;
-        fi;
-        sum:= sum + WidthUnicodeTable[ pos ][2];
-      fi;
-      if n - 1 < sum and ( j < Length( ints ) or n < sum ) then
-        return Concatenation( Encode( Unicode( ints{ [ 1 .. j-1 ] } ) ),
-                              suffix );
-      fi;
-    od;
-    return string;
-    end );
-
-fi;
 
 
 #############################################################################
@@ -89,10 +39,12 @@ InstallValue( AtlasClassNamesOffsetInfo, rec(
     [ "L3(8)", "L3(8).2", "L3(8).3", "L3(8).6" ],
     [ "L3(9)", "L3(9).2_1", "L3(9).2_2", "L3(9).2_3" ],
     [ "L4(3)", "L4(3).2_1", "L4(3).2_2", "L4(3).2_3" ],
+    [ "L4(4)", "L4(4).2_1", "L4(4).2_2", "L4(4).2_3" ],
     [ "O8-(3)", "O8-(3).2_1", "O8-(3).2_2", "O8-(3).2_3" ],
     [ "O8+(2)", "O8+(2).3", "O8+(2).2" ],
     [ "O8+(3)", "O8+(3).2_1", "O8+(3).3", "O8+(3).2_2", "O8+(3).4" ],
     [ "S4(4)", "S4(4).2", "S4(4).4" ],
+    [ "S4(9)", "S4(9).2_1", "S4(9).2_2", "S4(9).2_3" ],
     [ "2E6(2)", "2E6(2).2", "2E6(2).3" ],
     [ "U3(4)", "U3(4).2", "U3(4).4" ],
     [ "U3(5)", "U3(5).3", "U3(5).2" ],
@@ -100,6 +52,7 @@ InstallValue( AtlasClassNamesOffsetInfo, rec(
     [ "U3(9)", "U3(9).2", "U3(9).4" ],
     [ "U3(11)", "U3(11).3", "U3(11).2" ],
     [ "U4(3)", "U4(3).2_1", "U4(3).4", "U4(3).2_2", "U4(3).2_3" ],
+    [ "U4(5)", "U4(5).2_1", "U4(5).2_2", "U4(5).2_3" ],
     [ "U6(2)", "U6(2).3", "U6(2).2" ],
     ],
     special:= [
@@ -120,6 +73,15 @@ InstallValue( AtlasClassNamesOffsetInfo, rec(
       191,192,193,194,194,195,196,197,198,198,199,200,201,201,202,203,204,
       205,206,207,207,208,209,210,211,212,213,214,214,215,215,216,217,218,
       219]] ],
+    [ "O8+(3).(2^2)_{122}",
+      [ "O8+(3)", "O8+(3).2_1", "O8+(3).2_2", "O8+(3).2_2" ],
+      [,,,[1,2,3,4,5,8,7,6,7,10,10,9,11,12,13,14,15,16,17,18,19,20,21,24,23,
+      22,23,27,26,25,26,28,29,31,31,30,33,33,32,34,35,36,37,40,39,38,39,42,
+      42,41,44,44,43,45,46,47,48,51,50,49,50,52,54,54,53,57,56,55,56,58,59,
+      60,61,64,63,62,63,67,66,65,66,68,69,167,168,169,170,171,172,173,174,
+      175,176,177,177,178,179,180,181,181,182,183,184,185,186,187,188,189,
+      190,191,192,193,194,195,196,197,198,199,199,200,201,202,203,204,204,
+      205,205,206,207,208,209,210,211,212,213]] ],
     [ "O8+(3).D8",
       [ "O8+(3)", "O8+(3).2_1", "O8+(3).2_1", "O8+(3).2_2", "O8+(3).4" ],
       [,,[1,3,2,3,4,5,7,6,7,7,8,8,9,10,11,13,12,13,14,16,15,16,18,17,18,19,
@@ -777,7 +739,7 @@ InstallGlobalFunction( StringOfAtlasProgramCycToCcls,
 
     # Use power maps to fill missing entries.
     orders:= OrdersClassRepresentatives( tbl );
-    primes:= Set( Factors( Size( tbl ) ) );
+    primes:= PrimeDivisors( Size( tbl ) );
     known:= Filtered( [ 1 .. nccl ], x -> IsBound( result[x] ) );
     SortParallel( - orders{ known }, known );
     repeat
@@ -880,6 +842,176 @@ InstallGlobalFunction( StringOfAtlasProgramCycToCcls,
 
     # Return the string.
     return string;
+end );
+
+
+#############################################################################
+##
+#F  AGR.ComputeKernelGeneratorsInner( <gens>, <fgens>, <size>, <fsize>,
+#F                                    <goodorders>, <bound> )
+##
+##  This function does the work for 'AtlasRepComputedKernelGenerators'.
+##
+##  <gens> and <fgens> must be lists of generators as occur in the records
+##  that are returned by 'AtlasGenerators',
+##  and <size> and <fsize> must be the orders of the groups that are
+##  generated by these lists.
+##  The lists of generators are assumed to be compatible in the sense that
+##  mapping <gens> to <fgens> defines an epimorphism.
+##  Let <M>G</M> be the group generated by <gens>.
+##
+##  <goodorders> can be 'true' or the list of all those element orders in the
+##  factor group for which a preimage in the group has larger order.
+##
+##  The return value of the function and the meaning of <bound> are the same
+##  as described for 'AtlasRepComputedKernelGenerators'.
+##
+AGR.ComputeKernelGeneratorsInner:= function( gens, fgens, size, fsize,
+                                             goodorders, bound )
+    local kersize, ker, kerwords, f, mgens, iter, gensorders, i, word,
+          extrep, gm, fm, gord, ford, kergen;
+
+    if Length( gens ) <> Length( fgens ) then
+      Info( InfoAtlasRep, 3,
+            "AtlasRepComputeKernelGenerators:\n",
+            "#I  incompatible generators (lengths ", Length( gens ),
+            " and ", Length( fgens ), "\n" );
+      return fail;
+    fi;
+
+    if size = fail or fsize = fail then
+      kersize:= fail;
+    else
+      kersize:= size / fsize;
+      if not IsPosInt( kersize ) or kersize = 1 then
+        Info( InfoAtlasRep, 3,
+              "AtlasRepComputeKernelGenerators:\n",
+              "#I  strange kernel size ", kersize, "\n" );
+        return fail;
+      fi;
+    fi;
+
+    ker:= TrivialSubgroup( Group( gens[1] ) );
+    SetAsSSortedList( ker, [ gens[1]^0 ] );
+    kerwords:= [];
+    f:= FreeMonoid( Length( gens ) );
+    mgens:= GeneratorsOfMonoid( f );
+    iter:= Iterator( f );
+    gensorders:= List( gens, Order );
+
+    # Check at most 'bound' words.
+    i:= 1;
+    while i <= bound do
+      word:= NextIterator( iter );
+      extrep:= ExtRepOfObj( word );
+      if ForAll( [ 2, 4 .. Length( extrep ) ],
+                 j -> extrep[j] < gensorders[ extrep[ j-1 ] ] ) then
+        # No exponent in a syllable exceeds the generator order in question.
+        i:= i + 1;
+        fm:= MappedWord( word, mgens, fgens );
+        ford:= Order( fm );
+        if goodorders = true or ford in goodorders then
+          gm:= MappedWord( word, mgens, gens );
+          gord:= Order( gm );
+          if gord <> ford then
+            if gord mod ford <> 0 or kersize mod ( gord / ford ) <> 0 then
+              # The generators are not compatible.
+              Info( InfoAtlasRep, 3,
+                    "AtlasRepComputeKernelGenerators:\n",
+                    "#I  incompatible generators (elements orders ", gord,
+                    " and ", ford, " for word ", word, "\n" );
+              return fail;
+            elif kersize <> fail and gord / ford = kersize then
+              # One generator suffices.
+              return [ [ [ word, ford ] ], true ];
+            else
+              kergen:= gm^ford;
+              # The membership test does not involve the computation
+              # of a ``nice monomorphism'' because we have forced the
+              # elements list of 'ker'.
+              if not kergen in ker then
+                ker:= ClosureGroup( ker, kergen );
+                Add( kerwords, [ word, ford ] );
+                if kersize = fail then
+                  # We do not know how much we need,
+                  # return at least this word.
+                  return [ kerwords, false ];
+                elif Size( ker ) = kersize then
+                  return [ kerwords, true ];
+                fi;
+              fi;
+            fi;
+          fi;
+        fi;
+      fi;
+    od;
+
+    # We did not find enough elements among the first 'bound' words.
+    return [ kerwords, false ];
+end;
+
+
+#############################################################################
+##
+#F  AtlasRepComputedKernelGenerators( <gapname>, <std>,
+#F                                    <factgapname>, <factstd>,
+#F                                    <bound> )
+##
+InstallGlobalFunction( AtlasRepComputedKernelGenerators,
+    function( gapname, std, factgapname, factstd, bound )
+    local gens, fgens, tbl, facttbl, goodorders, fus, orders, factorders, i,
+          size, fsize;
+
+    gens:= AtlasGroup( gapname, std, "contents", "local" );
+    if gens = fail then
+      return fail;
+    fi;
+    fgens:= AtlasGroup( factgapname, factstd, "contents", "local" );
+    if fgens = fail then
+      return fail;
+    fi;
+
+    # Representations of both G and F are available.
+    # Assume that they are compatible.
+    # Try to compute a list of interesting element orders in the factor.
+    tbl:= CharacterTable( gapname );
+    facttbl:= CharacterTable( factgapname );
+    if tbl = fail or facttbl = fail then
+      goodorders:= true;
+    else
+      fus:= GetFusionMap( tbl, facttbl );
+      if fus = fail then
+        goodorders:= true;
+      else
+        goodorders:= [];
+        orders:= OrdersClassRepresentatives( tbl );
+        factorders:= OrdersClassRepresentatives( facttbl );
+        for i in [ 1 .. Length( fus ) ] do
+          if orders[i] <> factorders[ fus[i] ] then
+            AddSet( goodorders, factorders[ fus[i] ] );
+          fi;
+        od;
+      fi;
+    fi;
+
+    if HasSize( gens ) then
+      size:= Size( gens );
+    elif tbl <> fail then
+      size:= Size( tbl );
+    else
+      size:= fail;
+    fi;
+    if HasSize( fgens ) then
+      fsize:= Size( fgens );
+    elif facttbl <> fail then
+      fsize:= Size( facttbl );
+    else
+      fsize:= fail;
+    fi;
+
+    # Run the loop.
+    return AGR.ComputeKernelGeneratorsInner( GeneratorsOfGroup( gens ),
+               GeneratorsOfGroup( fgens ), size, fsize, goodorders, bound );
 end );
 
 
@@ -1083,6 +1215,83 @@ InstallGlobalFunction( "ParseForwardsWithSuffix", function( string, format )
     Append( result, suffixes );
     return result;
 end );
+
+
+#############################################################################
+##
+#F  AtlasRepIdentifier( <oldid> )
+#F  AtlasRepIdentifier( <id>, "old" )
+##
+InstallGlobalFunction( AtlasRepIdentifier, function( arg )
+    local id, tocid, groupname, files, res, type;
+
+    if Length( arg ) = 1 and IsList( arg[1] ) then
+      # Convert an old type identifier to a new type identifier.
+      id:= arg[1];
+      if not IsDenseList( id ) or Length( id ) < 3 then
+        return fail;
+      elif IsString( id[1] ) then
+        # The identifier belongs to non-private data.
+        return StructuralCopy( id );
+      elif IsDenseList( id[1] ) and Length( id[1] ) = 2 then
+        # The identifier belongs to private data.
+        tocid:= id[1][1];
+        groupname:= id[1][2];
+        files:= id[2];
+        if IsString( files ) then
+          files:= [ files ];
+        fi;
+        res:= StructuralCopy( id );
+        res[1]:= groupname;
+        res[2]:= List( files, x -> [ tocid, x ] );
+        return res;
+      else
+        return fail;
+      fi;
+    elif Length( arg ) = 2 and IsList( arg[1] ) and arg[2] = "old" then
+      # Convert a new type identifier to an old type identifier if possible.
+      id:= arg[1];
+      if not IsDenseList( id ) or Length( id ) < 3 then
+        return fail;
+      elif IsString( id[2] ) or
+           ( IsList( id[2] ) and ForAll( id[2], IsString ) ) then
+        # The identifier belongs to non-private data.
+        return StructuralCopy( id );
+      elif IsDenseList( id[2] ) and not ForAny( id[2], IsString ) then
+        # The identifier belongs to private data.
+        files:= id[2];
+        tocid:= Set( List( files, x -> x[1] ) );
+        if Length( tocid ) = 1 then
+          # The private data belong to the same extension.
+          tocid:= tocid[1];
+        else
+          return fail;
+        fi;
+        groupname:= id[1];
+        res:= StructuralCopy( id );
+        res[1]:= [ tocid, groupname ];
+        res[2]:= List( files, x -> x[2] );
+        if Length( res[2] ) = 1 then
+          # If the list describes MeatAxe matrices or permutations
+          # then keep the list, otherwise strip it.
+          res[2]:= res[2][1];
+          for type in AGR.DataTypes( "rep" ) do
+            if type[1] in [ "perm", "matff" ] and
+               AGR.ParseFilenameFormat( res[2], type[2].FilenameFormat )
+               <> fail then
+              res[2]:= [ res[2] ];
+              break;
+            fi;
+          od;
+        fi;
+        return res;
+      else
+        return fail;
+      fi;
+    else
+      Error( "usage: AtlasRepIdentifier( <id>[, \"old\"] )" );
+    fi;
+    end );
 
 
 #############################################################################
@@ -1308,6 +1517,433 @@ AGR.CompareAsNumbersAndNonnumbers:= function( nam1, nam2 )
 
     # Now the longer string is larger.
     return len1 < len2;
+    end;
+
+
+#############################################################################
+##
+#F  AGR.IsEquivalentSLP( <lines1>, <lines2>, <gens> )
+##
+##  returns 'true' if the straight line programs defined by the lists
+##  <lines1> and <lines2>, respectively, evaluate to the same results
+##  when applied to the list <gens>;
+##  returns 'false' otherwise.
+##
+AGR.IsEquivalentSLP:= function( lines1, lines2, gens )
+    local n, slp1, slp2;
+
+    if lines1 = lines2 then
+      return true;
+    fi;
+
+    n:= Length( gens );
+    slp1:= StraightLineProgram( lines1, n );
+    slp2:= StraightLineProgram( lines2, n );
+    return ResultOfStraightLineProgram( slp1, gens )
+           = ResultOfStraightLineProgram( slp2, gens );
+    end;
+
+
+#############################################################################
+##
+#F  AGR.CleanedGroupName( <name> )
+##
+##  The function is used for the creation of HTML files.
+##  Replace backslash and colon, as 'Filename' does not accept them.
+##
+AGR.CleanedGroupName:= name -> JoinStringsWithSeparator(
+                                   SplitString( name, ":\\" ), "." );
+
+
+#############################################################################
+##
+#F  AGR.CurrentAtlasPage( <atlasname> )
+##
+##  The usual URLs refer to the location of the data,
+##  but we need the web page with the overview (currently in the v3 variant).
+##
+##  The return value is 'fail' if the ''official'' AGR contains at least one
+##  file for the group <atlasname>.
+##
+##  (cf. MFERCurrentAtlasPage)
+##
+AGR.CurrentAtlasPage:= function( atlasname )
+    local prefix, list, pos, test, j, entry, info;
+
+    prefix:= Concatenation( atlasname, "G" );
+    list:= AtlasOfGroupRepresentationsInfo.filenames;
+    pos:= PositionSorted( list, [ prefix ] );
+    if Length( list ) < pos then
+      return fail;
+    fi;
+
+    # Assume that only the standardizations 0, 1, 2 occur.
+    test:= List( [ "0", "1", "2" ],
+                 i -> Concatenation( "/", prefix, i, "-" ) );
+
+    for j in [ pos .. Length( list ) ] do
+      entry:= list[j][2];
+      if list[j][3] = "core" and
+         ForAny( test, x -> ReplacedString( entry, x, "" ) <> entry ) then
+        entry:= SplitString( entry, "/" );
+        info:= AtlasOfGroupRepresentationsInfo.servers[1];
+        return Concatenation( "http://", info[1], "/", info[2], "v3/",
+                              entry[1], "/", entry[2] );
+      fi;
+    od;
+
+    return fail;
+    end;
+
+
+#############################################################################
+##
+#F  AGR.HTMLInfoForGroup( <tocids>, <gapname> )
+##
+##  the common part of the HTML file for a single group or of the combined
+##  file for all groups
+##
+AGR.HTMLInfoForGroup:= function( tocids, gapname )
+    local pref, str, inforeps, list, entry, infoprgs, i, pos;
+
+    # Make sure that 'AGR.ShowOnlyASCII' returns 'true',
+    # otherwise we cannot safely replace the "<=" substring.
+    pref:= UserPreference( "AtlasRep", "DisplayFunction" );
+    SetUserPreference( "AtlasRep", "DisplayFunction", "Print" );
+
+    str:= "";
+
+    # Append the information about representations.
+    Append( str, "<dl>\n" );
+    inforeps:= AGR.InfoReps( [ gapname, "contents", tocids ] );
+#T add links to data which are available in the internet
+    if not IsEmpty( inforeps.list ) then
+      Append( str, "<dt>\n" );
+      Append( str, Concatenation( inforeps.header[1],
+                       NormalizedNameOfGroup( inforeps.header[2], "HTML" ) ) );
+      Append( str, Concatenation(
+                       inforeps.header{ [ 3 .. Length( inforeps.header ) ] } ) );
+      Append( str, "\n" );
+      Append( str, "</dt>\n" );
+      Append( str, "<dd>\n" );
+
+      list:= [];
+      for entry in inforeps.list do
+        entry[2][1]:= ReplacedString( entry[2][1], "<=",
+                          MarkupGlobals.HTML.leq );
+        entry[2][1]:= ReplacedString( entry[2][1], ",Z)",
+                          Concatenation( ",", MarkupGlobals.HTML.Z, ")" ) );
+        if 3 <= Length( entry[3] ) then
+          entry[3][3]:= NormalizedNameOfGroup( entry[3][3], "HTML" );
+        fi;
+        Add( list, [ entry[1][1], entry[2][1], Concatenation( entry[3] ) ] );
+      od;
+      Append( str, HTMLStandardTable( fail, list,
+                                      "datatable",
+                                      [ "pright", "pleft", "pleft" ] ) );
+      Append( str, "</dd>\n" );
+    fi;
+    Append( str, "</dl>\n" );
+
+    # Append the information about programs.
+    infoprgs:= AGR.InfoPrgs( [ gapname, "contents", tocids ] );
+    if ForAny( infoprgs.list, x -> not IsEmpty( x ) ) then
+      Append( str, "<dl>\n" );
+      Append( str, "<dt>\n" );
+      Append( str, infoprgs.header[1] );
+      Append( str, NormalizedNameOfGroup( infoprgs.header[2], "HTML" ) );
+      Append( str, Concatenation(
+                       infoprgs.header{ [ 3 .. Length( infoprgs.header ) ] } ) );
+      Append( str, "\n" );
+      Append( str, "</dt>\n" );
+      Append( str, "<dd>\n" );
+      Append( str, "<ul>\n" );
+      for entry in infoprgs.list do
+        if not IsEmpty( entry ) then
+          Append( str, "<li>\n" );
+          Append( str, entry[1] );
+          if 1 < Length( entry ) then
+            Append( str, ":" );
+          fi;
+          Append( str, "\n" );
+          if 1 < Length( entry ) then
+            list:= entry{ [ 2 .. Length( entry ) ] };
+            if IsString( list[1] ) then
+              Append( str, list[1] );
+            else
+              for i in [ 1 .. Length( list ) ] do
+                if list[i] = "" then
+                  pos:= fail;
+                else
+                  pos:= Position( list[i][1], ':' );
+                fi;
+                if pos = fail or
+                   Int( NormalizedWhitespace( list[i][1]{ [ 1 .. pos-1 ] } ) )
+                     = fail then
+                  list[i]:= [ list[i][1], "" ];
+                else
+                  # This happens currently only for 'maxes'.
+                  list[i]:= [ list[i][1]{ [ 1 .. pos-1 ] },
+                              NormalizedNameOfGroup( NormalizedWhitespace(
+                                  list[i][1]{ [ pos+1 .. Length( list[i][1] ) ] } ),
+                                  "HTML" ) ];
+                fi;
+              od;
+              if ForAll( list, x -> x[2] = "" ) then
+                Append( str, HTMLStandardTable( fail, List( list, x -> [x[1]] ),
+                                          "datatable",
+                                          [ "pleft" ] ) );
+              else
+                Append( str, HTMLStandardTable( fail, list,
+                                          "datatable",
+                                          [ "pright", "pleft" ] ) );
+              fi;
+            fi;
+          fi;
+          Append( str, "</li>\n" );
+        fi;
+      od;
+      Append( str, "</ul>\n" );
+      Append( str, "</dd>\n" );
+      Append( str, "</dl>\n" );
+      Append( str, "\n" );
+    fi;
+
+    SetUserPreference( "AtlasRep", "DisplayFunction", pref );
+
+    return str;
+    end;
+
+
+#############################################################################
+##
+#F  AGR.CreateHTMLInfoForGroup( <tocids>, <gapname>, <dirname> )
+##
+##  <tocid> is a string or a list of strings,
+##  <gapname> and <atlasname> are the names of the group in question,
+##  <dirname> is the directory where the file will be created if necessary.
+##
+
+#T what about MathJax? -> introduce as a new option besides "HTML"?
+
+AGR.CreateHTMLInfoForGroup:= function( tocids, gapname, dirname )
+    local str, atlasname, link, inforeps, list, entry, infoprgs, i, pos;
+
+    # Create the file header.
+    str:= HTMLHeader( "GAP Package AtlasRep",
+                      "../../atlasrep.css",
+                      Concatenation( "<a href=\"../../index.html\">",
+                          "GAP Package AtlasRep</a>" ),
+#T -> indiv. title, link to AtlasRep, link to AGR, ...
+                      Concatenation( "AtlasRep Info for ",
+                          NormalizedNameOfGroup( gapname, "HTML" ) ) );
+#T change parameters:
+#T - automatically provide minimal css file in the dir. if not available,
+#T - turn title with link into an argument
+    Append( str, "<dl>\n" );
+
+    # Append the links to the overview
+    # and to the page for this group in the ATLAS database.
+    Append( str, "<dt>\n" );
+    atlasname:= AGR.GAPnamesRec.( gapname )[2];
+    link:= AGR.CurrentAtlasPage( atlasname );
+#T not for groups not in the AGR?
+    if link <> fail then
+      # There is a web page of the AGR to which we can point.
+      Append( str, Concatenation( "<a href=\"", link, "\">",
+                       MarkupGlobals.HTML.rightarrow,
+                       " ATLAS page for ",
+                       NormalizedNameOfGroup( gapname, "HTML" ),
+                       "</a>\n" ) );
+    fi;
+    Append( str, "</dt>\n" );
+    Append( str, "<dt>\n" );
+    Append( str, Concatenation( "<a href=\"overview.htm\">",
+                     MarkupGlobals.HTML.rightarrow,
+                     " Overview of Groups</a>\n" ) );
+    Append( str, "</dt>\n" );
+    Append( str, "</dl>\n" );
+
+    Append( str, AGR.HTMLInfoForGroup( tocids, gapname ) );
+
+    # Append the footer string.
+    Append( str, HTMLFooter() );
+
+    # Create the file.
+    return PrintToIfChanged( Concatenation( dirname, "/",
+               AGR.CleanedGroupName( gapname ), ".htm" ), str );
+    end;
+
+
+#############################################################################
+##
+#F  AGR.CreateHTMLOverview( <tocid>[, <info>] )
+##
+##  <tocid> must be the string "core" or an ID of a data extension.
+##  <info> must be a record with the components
+##  - title
+##  - cssfile
+##  - cornerlink
+##  - headerline
+##  - overviewtext
+##  - dir
+##
+##  The code was copied from 'DisplayAtlasInfoOverview'.
+##
+AGR.CreateHTMLOverview:= function( tocid, info... )
+    local conditions, tocs, title, cssfile, cornerlink, headerline, str, 
+          gapnames, groupnames, columns, type, matrix, alignments, col, i,
+          row, dir, name;
+
+    if Length( info ) = 0 then
+      info:= rec();
+    elif IsRecord( info[1] ) then
+      info:= info[1];
+    else
+      Error( "<info> must be a record" );
+    fi;
+ 
+    
+    conditions:= [ "contents", tocid ];
+    tocs:= AGR.TablesOfContents( tocid );
+    if Length( tocs ) = 0 then
+      Error( "no id <tocid> known" );
+    fi;
+
+    # Create the file header.
+    if IsBound( info.title ) then
+      title:= info.title;
+    elif tocid = "core" then
+      title:= "GAP Package AtlasRep";
+    else
+      title:= Concatenation( "AtlasRep extension '", tocid, "'" );
+    fi;
+
+    if IsBound( info.cssfile ) then
+      cssfile:= info.cssfile;
+    elif tocid = "core" then
+      cssfile:= "../../atlasrep.css";
+    else
+      cssfile:= fail;
+    fi;
+
+    if IsBound( info.cornerlink ) then
+      cornerlink:= info.cornerlink;
+    elif tocid = "core" then
+      cornerlink:= Concatenation( "<a href=\"../../index.html\">",
+                                  "GAP Package AtlasRep</a>" );
+    else
+      cornerlink:= fail;
+    fi;
+
+    if IsBound( info.headerline ) then
+      headerline:= info.headerline;
+    elif tocid = "core" then
+      headerline:= "Available via the GAP Interface";
+    else
+      headerline:= fail;
+    fi;
+
+    str:= HTMLHeader( title, cssfile, cornerlink, headerline );
+#T -> mention the name of the extension, the URL, ...
+
+    # Insert the explanatory text.
+    if IsBound( info.overviewtext ) then
+      Append( str, info.overviewtext );
+    elif tocid = "core" then
+      Append( str, AGR.StringFile( Filename(
+                       DirectoriesPackageLibrary( "atlasrep", "dev" ),
+                       "overviewtxt.htm" ) ) );
+    else
+      Append( str, "" );
+    fi;
+
+    # Consider only those names for which actually information is available.
+    gapnames:= Filtered( AtlasOfGroupRepresentationsInfo.GAPnamesSortDisp,
+                   x -> ForAny( tocs, toc -> IsBound( toc.( x[2] ) ) ) );
+
+    # Construct the links for the names.
+    groupnames:= List( gapnames,
+                       x -> Concatenation( "<a href=\"",
+                                AGR.CleanedGroupName( x[1] ), ".htm\">",
+                                NormalizedNameOfGroup( x[1], "HTML" ),
+                                "</a>" ) );
+
+    # Compute the data of the columns.
+    columns:= [ [ "group", "l", groupnames ] ];
+    for type in AGR.DataTypes( "rep", "prg" ) do
+      if type[2].DisplayOverviewInfo <> fail then
+        Add( columns, [
+             type[2].DisplayOverviewInfo[1],
+             type[2].DisplayOverviewInfo[2],
+             List( gapnames,
+                   name -> type[2].DisplayOverviewInfo[3](
+                               Concatenation( [ name ], conditions ) ) ) ] );
+      fi;
+    od;
+#T now omit empty columns
+
+    matrix:= [ [] ];
+    alignments:= [];
+
+    # Add the table header line.
+    for col in columns do
+      Add( matrix[1], col[1] );
+      if col[2] = "l" then
+        Add( alignments, "tdleft" );
+      elif col[2] = "r" then
+        Add( alignments, "tdright" );
+      else
+        Add( alignments, "tdcenter" );
+      fi;
+    od;
+
+    if IsBound( info.dir ) then
+      dir:= info.dir;
+    elif tocid = "core" then
+      dir:= Filename( DirectoriesPackageLibrary( "atlasrep", "htm" ), "" );
+    else
+      Error( "info.dir must be bound" );
+    fi;
+
+    # Collect the information for each group.
+    for i in [ 1 .. Length( gapnames ) ] do
+      row:= [ columns[1][3][i] ];
+      for col in columns{ [ 2 .. Length( columns ) ] } do
+        Add( row, col[3][i][1] );
+      od;
+      Add( matrix, row );
+
+      # Create the file for this group.
+      info:= AGR.CreateHTMLInfoForGroup( tocid, gapnames[i][1], dir );
+      if not StartsWith( info, "unchanged" ) then
+        Print( "#I  ", info, "\n" );
+      fi;
+    od;
+
+    Append( str, HTMLStandardTable( fail, matrix, "datatable", alignments ) );
+
+    # Append the footer string.
+    Append( str, HTMLFooter() );
+
+    # Create the overview file.
+    info:= PrintToIfChanged( Concatenation( dir, "/overview.htm" ), str );
+    if not StartsWith( info, "unchanged" ) then
+      Print( "#I  ", info, "\n" );
+    fi;
+
+    # Finally, report about HTML files that should be removed.
+    # List the files in `toc'.
+    str:= Difference( DirectoryContents( dir ), List( gapnames,
+          x -> Concatenation( AGR.CleanedGroupName( x[1] ), ".htm" ) ) );
+    SubtractSet( str, [ "changes.htm", "changes.htm.old",
+                        "overview.htm", ".", ".." ] );
+    if not IsEmpty( str ) then
+      Print( "#I  Remove the following files from '", dir, "':\n" );
+      for name in str do
+        Print( "#I  ", name, "\n" );
+      od;
+    fi;
     end;
 
 

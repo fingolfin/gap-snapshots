@@ -1,0 +1,306 @@
+  
+  [1X5 [33X[0;0YGroups and homomorphisms[133X[101X
+  
+  
+  [1X5.1 [33X[0;0YFunctions for groups[133X[101X
+  
+  [1X5.1-1 Comm[101X
+  
+  [33X[1;0Y[29X[2XComm[102X( [3XL[103X ) [32X operation[133X
+  
+  [33X[0;0YThis method has been transferred from package [5XResClasses[105X.[133X
+  
+  [33X[0;0YIt  provides  a  method  for  [10XComm[110X  when the argument is a list (enclosed in
+  square brackets), and calls the function [10XLeftNormedComm[110X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XComm( [ (1,2), (2,3) ] );[127X[104X
+    [4X[28X(1,2,3)[128X[104X
+    [4X[25Xgap>[125X [27XComm( [(1,2),(2,3),(3,4),(4,5),(5,6)] );[127X[104X
+    [4X[28X(1,5,6)[128X[104X
+    [4X[25Xgap>[125X [27XComm(Comm(Comm(Comm((1,2),(2,3)),(3,4)),(4,5)),(5,6));  ## the same[127X[104X
+    [4X[28X(1,5,6)[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X5.1-2 IsCommuting[101X
+  
+  [33X[1;0Y[29X[2XIsCommuting[102X( [3Xa[103X, [3Xb[103X ) [32X operation[133X
+  
+  [33X[0;0YThis function has been transferred from package [5XResClasses[105X.[133X
+  
+  [33X[0;0YIt tests whether two elements in a group commute.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XD12 := DihedralGroup( 12 );[127X[104X
+    [4X[28X<pc group of size 12 with 3 generators>[128X[104X
+    [4X[25Xgap>[125X [27XSetName( D12, "D12" ); [127X[104X
+    [4X[25Xgap>[125X [27Xa := D12.1;;  b := D12.2;;  [127X[104X
+    [4X[25Xgap>[125X [27XIsCommuting( a, b );[127X[104X
+    [4X[28Xfalse[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X5.1-3 ListOfPowers[101X
+  
+  [33X[1;0Y[29X[2XListOfPowers[102X( [3Xg[103X, [3Xexp[103X ) [32X operation[133X
+  
+  [33X[0;0YThis function has been transferred from package [5XRCWA[105X.[133X
+  
+  [33X[0;0YThe  operation  [10XListOfPowers(g,exp)[110X  returns  the  list [22X[g,g^2,...,g^exp][122X of
+  powers of the element [22Xg[122X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XListOfPowers( 2, 20 );[127X[104X
+    [4X[28X[ 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384,[128X[104X
+    [4X[28X 32768, 65536, 131072, 262144, 524288, 1048576 ][128X[104X
+    [4X[25Xgap>[125X [27XListOfPowers( (1,2,3)(4,5), 12 );[127X[104X
+    [4X[28X[ (1,2,3)(4,5), (1,3,2), (4,5), (1,2,3), (1,3,2)(4,5), (),[128X[104X
+    [4X[28X (1,2,3)(4,5), (1,3,2), (4,5), (1,2,3), (1,3,2)(4,5), () ][128X[104X
+    [4X[25Xgap>[125X [27XListOfPowers( D12.2, 6 );[127X[104X
+    [4X[28X[ f2, f3, f2*f3, f3^2, f2*f3^2, <identity> of ... ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X5.1-4 GeneratorsAndInverses[101X
+  
+  [33X[1;0Y[29X[2XGeneratorsAndInverses[102X( [3XG[103X ) [32X operation[133X
+  
+  [33X[0;0YThis function has been transferred from package [5XRCWA[105X.[133X
+  
+  [33X[0;0YThis operation returns a list containing the generators of [22XG[122X followed by the
+  inverses of these generators.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsAndInverses( D12 );[127X[104X
+    [4X[28X[ f1, f2, f3, f1, f2*f3^2, f3^2 ][128X[104X
+    [4X[25Xgap>[125X [27XGeneratorsAndInverses( SymmetricGroup(5) );     [127X[104X
+    [4X[28X[ (1,2,3,4,5), (1,2), (1,5,4,3,2), (1,2) ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  [1X5.1-5 UpperFittingSeries[101X
+  
+  [33X[1;0Y[29X[2XUpperFittingSeries[102X( [3XG[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XLowerFittingSeries[102X( [3XG[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XFittingLength[102X( [3XG[103X ) [32X attribute[133X
+  
+  [33X[0;0YThese three functions have been transferred from package [5XResClasses[105X.[133X
+  
+  [33X[0;0YThe  upper  and  lower  Fitting  series and the Fitting length of a solvable
+  group are described here: [7Xhttps://en.wikipedia.org/wiki/Fitting_length[107X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XUpperFittingSeries( D12 );  LowerFittingSeries( D12 );[127X[104X
+    [4X[28X[ Group([  ]), Group([ f3, f2*f3 ]), Group([ f3, f2*f3, f1 ]) ][128X[104X
+    [4X[28X[ D12, Group([ f3 ]), Group([  ]) ][128X[104X
+    [4X[25Xgap>[125X [27XFittingLength( D12 );[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27XS4 := SymmetricGroup( 4 );;[127X[104X
+    [4X[25Xgap>[125X [27XUpperFittingSeries( S4 );[127X[104X
+    [4X[28X[ Group(()), Group([ (1,2)(3,4), (1,4)(2,3) ]), Group([ (1,2)(3,4), (1,4)[128X[104X
+    [4X[28X  (2,3), (2,4,3) ]), Group([ (3,4), (2,3,4), (1,2)(3,4) ]) ][128X[104X
+    [4X[25Xgap>[125X [27XList( last, StructureDescription );[127X[104X
+    [4X[28X[ "1", "C2 x C2", "A4", "S4" ][128X[104X
+    [4X[25Xgap>[125X [27XLowerFittingSeries( S4 );[127X[104X
+    [4X[28X[ Sym( [ 1 .. 4 ] ), Alt( [ 1 .. 4 ] ), Group([ (1,4)(2,3), (1,3)[128X[104X
+    [4X[28X (2,4) ]), Group(()) ][128X[104X
+    [4X[25Xgap>[125X [27XList( last, StructureDescription );[127X[104X
+    [4X[28X[ "S4", "A4", "C2 x C2", "1" ][128X[104X
+    [4X[25Xgap>[125X [27XFittingLength( S4);[127X[104X
+    [4X[28X3[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.2 [33X[0;0YFunctions for group homomorphisms[133X[101X
+  
+  [1X5.2-1 EpimorphismByGenerators[101X
+  
+  [33X[1;0Y[29X[2XEpimorphismByGenerators[102X( [3XG[103X, [3XH[103X ) [32X operation[133X
+  
+  [33X[0;0YThis function has been transferred from package [5XRCWA[105X.[133X
+  
+  [33X[0;0YIt  constructs  a group homomorphism which maps the generators of [22XG[122X to those
+  of  [22XH[122X.  Its intended use is when [22XG[122X is a free group, and a warning is printed
+  when  this  is  not the case. Note that anything may happen if the resulting
+  map is not a homomorphism![133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XG := Group( (1,2,3), (3,4,5), (5,6,7), (7,8,9) );;[127X[104X
+    [4X[25Xgap>[125X [27Xphi := EpimorphismByGenerators( FreeGroup("a","b","c","d"), G );[127X[104X
+    [4X[28X[ a, b, c, d ] -> [ (1,2,3), (3,4,5), (5,6,7), (7,8,9) ][128X[104X
+    [4X[25Xgap>[125X [27XPreImagesRepresentative( phi, (1,2,3,4,5,6,7,8,9) );[127X[104X
+    [4X[28Xd*c*b*a[128X[104X
+    [4X[25Xgap>[125X [27Xa := G.1;; b := G.2;; c := G.3;; d := G.4;;[127X[104X
+    [4X[25Xgap>[125X [27Xd*c*b*a;[127X[104X
+    [4X[28X(1,2,3,4,5,6,7,8,9)[128X[104X
+    [4X[25Xgap>[125X [27X## note that it is easy to produce nonsense: [127X[104X
+    [4X[25Xgap>[125X [27Xepi := EpimorphismByGenerators( Group((1,2,3)), Group((8,9)) );[127X[104X
+    [4X[28XWarning: calling GroupHomomorphismByImagesNC without checks[128X[104X
+    [4X[28X[ (1,2,3) ] -> [ (8,9) ][128X[104X
+    [4X[25Xgap>[125X [27XIsGroupHomomorphism( epi );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XImage( epi, (1,2,3) );                                            [127X[104X
+    [4X[28X()[128X[104X
+    [4X[25Xgap>[125X [27XImage( epi, (1,3,2) );[127X[104X
+    [4X[28X(8,9)[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.3 [33X[0;0YPullback of group homomorphisms[133X[101X
+  
+  [1X5.3-1 Pullback[101X
+  
+  [33X[1;0Y[29X[2XPullback[102X( [3Xhom1[103X, [3Xhom2[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XPullbackInfo[102X( [3XG[103X ) [32X attribute[133X
+  
+  [33X[0;0YIf  [22Xϕ_1  :  G_1 -> H[122X and [22Xϕ_2 : G_2 -> H[122X are two group homomorphisms with the
+  same  range,  then their [13Xpullback[113X is the subgroup of [22XG_1 × G_2[122X consisting of
+  those elements [22X(g_1,g_2)[122X such that [22Xϕ_1 g_1 = ϕ_2 g_2[122X.[133X
+  
+  [33X[0;0YThe   attribute   [10XPullbackInfo[110X   of   a  pullback  group  [10XP[110X  is  similar  to
+  [10XDirectProductInfo[110X for a direct product of groups. It is a record with fields
+  [10XP!.directProduct[110X,  the  direct product [22XG_1 × G_2[122X; and [10XP!.projections[110X, a list
+  with  the  two projections onto [22XG_1[122X and [22XG_2[122X. There are no embeddings in this
+  record, but it is possible to use the embeddings into the direct product.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xs4 := Group( (1,2),(2,3),(3,4) );;[127X[104X
+    [4X[25Xgap>[125X [27Xs3 := Group( (5,6),(6,7) );;[127X[104X
+    [4X[25Xgap>[125X [27Xc3 := Subgroup( s3, [ (5,6,7) ] );;[127X[104X
+    [4X[25Xgap>[125X [27Xf := GroupHomomorphismByImages( s4, s3, [127X[104X
+    [4X[25X>[125X [27X            [(1,2),(2,3),(3,4)], [(5,6),(6,7),(5,6)] );; [127X[104X
+    [4X[25Xgap>[125X [27Xi := GroupHomomorphismByImages( c3, s3, [(5,6,7)], [(5,6,7)] );; [127X[104X
+    [4X[25Xgap>[125X [27XPfi := Pullback( f, i );[127X[104X
+    [4X[28XGroup([ (2,3,4)(5,7,6), (1,2)(3,4) ])[128X[104X
+    [4X[25Xgap>[125X [27XStructureDescription( Pfi );[127X[104X
+    [4X[28X"A4"[128X[104X
+    [4X[25Xgap>[125X [27Xinfo := PullbackInfo( Pfi );[127X[104X
+    [4X[28Xrec( directProduct := Group([ (1,2), (2,3), (3,4), (5,6,7) ]), [128X[104X
+    [4X[28X  projections := [ [ (2,3,4)(5,7,6), (1,2)(3,4) ] -> [ (2,3,4), (1,2)(3,4) ], [128X[104X
+    [4X[28X      [ (2,3,4)(5,7,6), (1,2)(3,4) ] -> [ (5,7,6), () ] ] )[128X[104X
+    [4X[25Xgap>[125X [27Xg := (1,2,3)(5,6,7);; [127X[104X
+    [4X[25Xgap>[125X [27XImageElm( info!.projections[1], g );[127X[104X
+    [4X[28X(1,2,3)[128X[104X
+    [4X[25Xgap>[125X [27XImageElm( info!.projections[2], g );[127X[104X
+    [4X[28X(5,6,7) [128X[104X
+    [4X[25Xgap>[125X [27Xdp := info!.directProduct;; [127X[104X
+    [4X[25Xgap>[125X [27Xa := ImageElm( Embedding( dp, 1 ), (1,4,3) );; [127X[104X
+    [4X[25Xgap>[125X [27Xb := ImageElm( Embedding( dp, 2 ), (5,7,6) );; [127X[104X
+    [4X[25Xgap>[125X [27Xa*b in Pfi;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.4 [33X[0;0YIterator for isomorphisms[133X[101X
+  
+  [1X5.4-1 AllIsomorphismsIterator[101X
+  
+  [33X[1;0Y[29X[2XAllIsomorphismsIterator[102X( [3XG[103X, [3XH[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAllIsomorphismsNumber[102X( [3XG[103X, [3XH[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XAllIsomorphisms[102X( [3XG[103X, [3XH[103X ) [32X operation[133X
+  
+  [33X[0;0YThe  main  [5XGAP[105X  library contains functions producing complete lists of group
+  homomorphisms     such    as    [10XAllHomomorphisms[110X;    [10XAllEndomorphisms[110X    and
+  [10XAllAutomorphisms[110X. Here we add the missing [10XAllIsomorphisms(G,H)[110X for a list of
+  isomorphisms  from [22XG[122X to [22XH[122X. The method is simple -- find one isomorphism [22XG ->
+  H[122X  and  compose  this with all the automorphisms of [22XG[122X. In all these cases it
+  may  not  be  desirable  to  construct  a  list  of  homomorphisms, but just
+  implement  an  iterator,  and  that  is  what  is  done  here. The operation
+  [10XAllIsomorphismsNumber[110X returns the number of isomorphisms iterated over (this
+  is,  of  course,  just  the order of the automorphisms group). The operation
+  [10XAllIsomorphisms[110X produces the list or isomorphisms.[133X
+  
+  [33X[0;0YThe  motivation  for  adding  these  operations  is  partly to give a simple
+  example  of  an iterator for a list that does not yet exist, and need not be
+  created.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27XG := SmallGroup( 6,1);; [127X[104X
+    [4X[25Xgap>[125X [27Xiter := AllIsomorphismsIterator( G, s3 );;[127X[104X
+    [4X[25Xgap>[125X [27XNextIterator( iter );[127X[104X
+    [4X[28X[ f1, f2 ] -> [ (6,7), (5,6,7) ][128X[104X
+    [4X[25Xgap>[125X [27Xn := AllIsomorphismsNumber( G, s3 );[127X[104X
+    [4X[28X6[128X[104X
+    [4X[25Xgap>[125X [27XAllIsomorphisms( G, s3 );[127X[104X
+    [4X[28X[ [ f1, f2 ] -> [ (6,7), (5,6,7) ], [ f1, f2 ] -> [ (5,7), (5,6,7) ], [128X[104X
+    [4X[28X  [ f1, f2 ] -> [ (5,6), (5,7,6) ], [ f1, f2 ] -> [ (6,7), (5,7,6) ], [128X[104X
+    [4X[28X  [ f1, f2 ] -> [ (5,7), (5,7,6) ], [ f1, f2 ] -> [ (5,6), (5,6,7) ] ][128X[104X
+    [4X[25Xgap>[125X [27Xiter := AllIsomorphismsIterator( G, s3 );;[127X[104X
+    [4X[25Xgap>[125X [27Xfor h in iter do Print( ImageElm( h, G.1 ) = (6,7), ", " ); od;[127X[104X
+    [4X[28Xtrue, false, false, true, false, false,[128X[104X
+    [4X[25Xgap>[125X [27Xn := AllIsomorphismsNumber( s3, s4 );[127X[104X
+    [4X[28X0[128X[104X
+    [4X[25Xgap>[125X [27XAllIsomorphisms( s3, s4 );[127X[104X
+    [4X[28X[ ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.5 [33X[0;0YIdempotentEndomorphisms[133X[101X
+  
+  [1X5.5-1 IdempotentEndomorphismsData[101X
+  
+  [33X[1;0Y[29X[2XIdempotentEndomorphismsData[102X( [3XG[103X ) [32X attribute[133X
+  [33X[1;0Y[29X[2XIdempotentEndomorphismsWithImage[102X( [3XgenG[103X, [3XR[103X ) [32X operation[133X
+  [33X[1;0Y[29X[2XIdempotentEndomorphisms[102X( [3XG[103X ) [32X operation[133X
+  
+  [33X[0;0YAn  idempotent [22Xf : G -> G[122X is idempotent if [22Xf^2=f[122X. It has an image [22XR leqslant
+  G[122X;  is  the  identity  map  when  restricted  to [22XR[122X; has a kernel [22XN[122X which has
+  trivial intersection with [22XR[122X and size [22X|G|/|R|[122X.[133X
+  
+  [33X[0;0YThe operation [10XIdempotentEndomorphismsWithImage(genG,R)[110X returns a list of the
+  images  of  the  generating  set  [10XgenG[110X  of  a  group  [22XG[122X under the idempotent
+  endomorphisms with image [22XR[122X.[133X
+  
+  [33X[0;0YThe  attribute  [10XIdempotentEndomorphismsData(G)[110X  returns  a  record [10Xdata[110X with
+  fields  [10Xdata.gens[110X,  a  fixed generating set for [22XG[122X, and [10Xdata.images[110X a list of
+  the  non-empty  outputs of [10XIdempotentEndomorphismsWithImage(genG,R)[110X obtained
+  by iterating over all subgroups of [22XG[122X.[133X
+  
+  [33X[0;0YThe  operation [10XIdempotentEndomorphisms(G)[110X returns the list of these mappings
+  obtained  using  [10XIdempotentEndomorphismsData(G)[110X.  The  first of these is the
+  zero map, the second is the identity.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[28X[128X[104X
+    [4X[25Xgap>[125X [27Xgens := [ (1,2,3,4), (1,2)(3,4) ];; [127X[104X
+    [4X[25Xgap>[125X [27Xd8 := Group( gens );;[127X[104X
+    [4X[25Xgap>[125X [27XSetName( d8, "d8" );[127X[104X
+    [4X[25Xgap>[125X [27Xc2 := Subgroup( d8, [ (2,4) ] );;[127X[104X
+    [4X[25Xgap>[125X [27XIdempotentEndomorphismsWithImage( gens, c2 );[127X[104X
+    [4X[28X[ [ (), (2,4) ], [ (2,4), () ] ][128X[104X
+    [4X[25Xgap>[125X [27XIdempotentEndomorphismsData( d8 );[127X[104X
+    [4X[28Xrec( gens := [ (1,2,3,4), (1,2)(3,4) ], [128X[104X
+    [4X[28X  images := [ [ [ (), () ] ], [ [ (), (2,4) ], [ (2,4), () ] ], [128X[104X
+    [4X[28X      [ [ (), (1,3) ], [ (1,3), () ] ], [128X[104X
+    [4X[28X      [ [ (), (1,2)(3,4) ], [ (1,2)(3,4), (1,2)(3,4) ] ], [128X[104X
+    [4X[28X      [ [ (), (1,4)(2,3) ], [ (1,4)(2,3), (1,4)(2,3) ] ], [128X[104X
+    [4X[28X      [ [ (1,2,3,4), (1,2)(3,4) ] ] ] )[128X[104X
+    [4X[25Xgap>[125X [27XList( last.images, L -> Length(L) );[127X[104X
+    [4X[28X[ 1, 2, 2, 2, 2, 1 ][128X[104X
+    [4X[25Xgap>[125X [27XIdempotentEndomorphisms( d8 );               [127X[104X
+    [4X[28X[ [ (1,2,3,4), (1,2)(3,4) ] -> [ (), () ], [128X[104X
+    [4X[28X  [ (1,2,3,4), (1,2)(3,4) ] -> [ (), (2,4) ], [128X[104X
+    [4X[28X  [ (1,2,3,4), (1,2)(3,4) ] -> [ (2,4), () ], [128X[104X
+    [4X[28X  [ (1,2,3,4), (1,2)(3,4) ] -> [ (), (1,3) ], [128X[104X
+    [4X[28X  [ (1,2,3,4), (1,2)(3,4) ] -> [ (1,3), () ], [128X[104X
+    [4X[28X  [ (1,2,3,4), (1,2)(3,4) ] -> [ (), (1,2)(3,4) ], [128X[104X
+    [4X[28X  [ (1,2,3,4), (1,2)(3,4) ] -> [ (1,2)(3,4), (1,2)(3,4) ], [128X[104X
+    [4X[28X  [ (1,2,3,4), (1,2)(3,4) ] -> [ (), (1,4)(2,3) ], [128X[104X
+    [4X[28X  [ (1,2,3,4), (1,2)(3,4) ] -> [ (1,4)(2,3), (1,4)(2,3) ], [128X[104X
+    [4X[28X  [ (1,2,3,4), (1,2)(3,4) ] -> [ (1,2,3,4), (1,2)(3,4) ] ][128X[104X
+    [4X[28X[128X[104X
+  [4X[32X[104X
+  

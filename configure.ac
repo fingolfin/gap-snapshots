@@ -478,7 +478,7 @@ AC_SUBST([READLINE_LIBS])
 dnl Find julia
 AC_ARG_WITH([julia],
   [AS_HELP_STRING([--with-julia@<:@=PATH@:>@],
-    [specify a prefix for a julia binary or a julia binary])],
+    [specify a julia binary or a prefix for a julia binary])],
   [],[
     AS_IF([test "x$with_gc" = xjulia],
     [
@@ -534,6 +534,9 @@ AS_IF([test "x$with_julia" != xno ],[
   AS_IF([ test $? != 0 ], [AC_MSG_ERROR([failed to obtain JULIA_LIBS from julia-config.jl])])
   JULIA_LIBS=${JULIA_LIBS//\'/}
   AC_MSG_RESULT([${JULIA_LIBS}])
+  AC_MSG_NOTICE([installing GAPTypes.jl])
+  ${JULIA} -e 'import Pkg; Pkg.add("GAPTypes")'
+  AS_IF([ test $? != 0 ], [AC_MSG_ERROR([failed to install GAPTypes.jl])])
 ],
 [
   AS_IF( [ test "x$with_gc" = xjulia ],
@@ -613,7 +616,7 @@ dnl
 
 
 gap_kernel_major_version=3
-gap_kernel_minor_version=0
+gap_kernel_minor_version=1
 AC_SUBST([gap_kernel_major_version])
 AC_SUBST([gap_kernel_minor_version])
 

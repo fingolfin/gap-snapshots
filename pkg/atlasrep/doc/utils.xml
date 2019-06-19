@@ -1,15 +1,15 @@
 
 <!-- %W  utils.xml    GAP 4 package AtlasRep             Thomas Breuer -->
-<!-- %Y  Copyright 2001, Lehrstuhl D für Mathematik, RWTH Aachen, Germany -->
+<!-- %Y  Copyright 2001, Lehrstuhl D fÃ¼r Mathematik, RWTH Aachen, Germany -->
 
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
 <Chapter Label="chap:utilities">
-<Heading>New &GAP; Objects and Utility Functions Provided by the
-<Package>AtlasRep</Package> Package</Heading>
+<Heading>New &GAP; Objects and Utility Functions provided by the
+&AtlasRep; Package</Heading>
 
 This chapter describes &GAP; objects and functions that are provided by the
-<Package>AtlasRep</Package> package but that might be of general interest.
+&AtlasRep; package but that might be of general interest.
 
 <P/>
 
@@ -20,7 +20,8 @@ black box programs (see Section&nbsp;<Ref Sect="sect:Black Box Programs"/>).
 <P/>
 
 The new functions are concerned with representations of minimal degree,
-see Section&nbsp;<Ref Sect="sect:Representations of Minimal Degree"/>.
+see Section&nbsp;<Ref Sect="sect:Representations of Minimal Degree"/>,
+and a JSON interface, see Section&nbsp;<Ref Sect="sect:JSON"/>.
 
 
 <!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
@@ -70,7 +71,7 @@ mainly concerning <Q>bicyclic extensions</Q>
 in order to derive the minimal degrees,
 see Section&nbsp;<Ref Subsect="subsect:minimality-criteria"/>.
 <P/>
-In the <Package>AtlasRep</Package> package,
+In the &AtlasRep; package,
 this information can be used for prescribing <Q>minimality conditions</Q> in
 <Ref Func="DisplayAtlasInfo"/>,
 <Ref Func="OneAtlasGeneratingSetInfo"/>, and
@@ -82,6 +83,17 @@ An overview of the stored minimal degrees can be shown with
 <#Include Label="MinimalRepresentationInfoData">
 <#Include Label="SetMinimalRepresentationInfo">
 <#Include Label="subsect:minimality-criteria">
+
+</Section>
+
+
+<!-- %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% -->
+<Section Label="sect:JSON">
+<Heading>A JSON Interface</Heading>
+
+<#Include Label="JsonIntro">
+<#Include Label="AGR.JsonText">
+<#Include Label="AGR.GapObjectOfJsonText">
 
 </Section>
 

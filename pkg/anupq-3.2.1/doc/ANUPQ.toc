@@ -1,0 +1,148 @@
+\contentsline {chapter}{\numberline {1}\leavevmode {\color {Chapter }Introduction}}{4}{chapter.1}
+\contentsline {section}{\numberline {1.1}\leavevmode {\color {Chapter }Overview}}{4}{section.1.1}
+\contentsline {section}{\numberline {1.2}\leavevmode {\color {Chapter }How to read this manual}}{4}{section.1.2}
+\contentsline {section}{\numberline {1.3}\leavevmode {\color {Chapter }Authors and Acknowledgements}}{5}{section.1.3}
+\contentsline {chapter}{\numberline {2}\leavevmode {\color {Chapter }Mathematical Background and Terminology}}{6}{chapter.2}
+\contentsline {section}{\numberline {2.1}\leavevmode {\color {Chapter }Basic notions}}{6}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}\leavevmode {\color {Chapter }pc Presentations and Consistency}}{6}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}\leavevmode {\color {Chapter }Exponent-$p$ Central Series and Weighted pc Presentations}}{7}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}\leavevmode {\color {Chapter }$p$-Cover, $p$-Multiplicator}}{7}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.4}\leavevmode {\color {Chapter }Descendants, Capable, Terminal, Nucleus}}{7}{subsection.2.1.4}
+\contentsline {subsection}{\numberline {2.1.5}\leavevmode {\color {Chapter }Laws}}{8}{subsection.2.1.5}
+\contentsline {section}{\numberline {2.2}\leavevmode {\color {Chapter }The p-quotient Algorithm}}{8}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}\leavevmode {\color {Chapter }Finding the $p$-cover}}{8}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}\leavevmode {\color {Chapter }Imposing the Relations of the fp Group}}{9}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}\leavevmode {\color {Chapter }Imposing Laws}}{9}{subsection.2.2.3}
+\contentsline {section}{\numberline {2.3}\leavevmode {\color {Chapter }The p-group generation Algorithm, Standard Presentation, Isomorphism Testing}}{9}{section.2.3}
+\contentsline {chapter}{\numberline {3}\leavevmode {\color {Chapter }Infrastructure}}{11}{chapter.3}
+\contentsline {section}{\numberline {3.1}\leavevmode {\color {Chapter }Loading the ANUPQ Package}}{11}{section.3.1}
+\contentsline {section}{\numberline {3.2}\leavevmode {\color {Chapter }The ANUPQData Record}}{12}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\leavevmode {\color {Chapter }ANUPQData}}{12}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}\leavevmode {\color {Chapter }ANUPQDirectoryTemporary}}{15}{subsection.3.2.2}
+\contentsline {section}{\numberline {3.3}\leavevmode {\color {Chapter }Setting the Verbosity of ANUPQ via Info and InfoANUPQ}}{15}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}\leavevmode {\color {Chapter }InfoANUPQ}}{15}{subsection.3.3.1}
+\contentsline {section}{\numberline {3.4}\leavevmode {\color {Chapter }Utility Functions}}{16}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}\leavevmode {\color {Chapter }PqLeftNormComm}}{16}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}\leavevmode {\color {Chapter }PqGAPRelators}}{16}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}\leavevmode {\color {Chapter }PqParseWord}}{17}{subsection.3.4.3}
+\contentsline {subsection}{\numberline {3.4.4}\leavevmode {\color {Chapter }PqExample (no arguments)}}{17}{subsection.3.4.4}
+\contentsline {subsection}{\numberline {3.4.5}\leavevmode {\color {Chapter }AllPqExamples}}{18}{subsection.3.4.5}
+\contentsline {subsection}{\numberline {3.4.6}\leavevmode {\color {Chapter }GrepPqExamples}}{18}{subsection.3.4.6}
+\contentsline {subsection}{\numberline {3.4.7}\leavevmode {\color {Chapter }ToPQLog}}{18}{subsection.3.4.7}
+\contentsline {section}{\numberline {3.5}\leavevmode {\color {Chapter }Attributes and a Property for fp and pc p-groups}}{18}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}\leavevmode {\color {Chapter }NuclearRank}}{18}{subsection.3.5.1}
+\contentsline {section}{\numberline {3.6}\leavevmode {\color {Chapter }Hints and Warnings regarding the use of Options}}{19}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}\leavevmode {\color {Chapter }ANUPQWarnOfOtherOptions}}{20}{subsection.3.6.1}
+\contentsline {chapter}{\numberline {4}\leavevmode {\color {Chapter }Non-interactive ANUPQ functions}}{23}{chapter.4}
+\contentsline {section}{\numberline {4.1}\leavevmode {\color {Chapter }Computing p-Quotients}}{23}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\leavevmode {\color {Chapter }Pq}}{23}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}\leavevmode {\color {Chapter }PqEpimorphism}}{26}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}\leavevmode {\color {Chapter }PqPCover}}{26}{subsection.4.1.3}
+\contentsline {section}{\numberline {4.2}\leavevmode {\color {Chapter }Computing Standard Presentations}}{28}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}\leavevmode {\color {Chapter }PqStandardPresentation}}{28}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}\leavevmode {\color {Chapter }EpimorphismPqStandardPresentation}}{29}{subsection.4.2.2}
+\contentsline {section}{\numberline {4.3}\leavevmode {\color {Chapter }Testing p-Groups for Isomorphism}}{30}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}\leavevmode {\color {Chapter }IsPqIsomorphicPGroup}}{30}{subsection.4.3.1}
+\contentsline {section}{\numberline {4.4}\leavevmode {\color {Chapter }Computing Descendants of a p-Group}}{31}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}\leavevmode {\color {Chapter }PqDescendants}}{31}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}\leavevmode {\color {Chapter }PqSupplementInnerAutomorphisms}}{33}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}\leavevmode {\color {Chapter }PqList}}{34}{subsection.4.4.3}
+\contentsline {subsection}{\numberline {4.4.4}\leavevmode {\color {Chapter }SavePqList}}{34}{subsection.4.4.4}
+\contentsline {chapter}{\numberline {5}\leavevmode {\color {Chapter }Interactive ANUPQ functions}}{35}{chapter.5}
+\contentsline {section}{\numberline {5.1}\leavevmode {\color {Chapter }Starting and Stopping Interactive ANUPQ Processes}}{35}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}\leavevmode {\color {Chapter }PqStart (with group and workspace size)}}{35}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}\leavevmode {\color {Chapter }PqQuit}}{36}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}\leavevmode {\color {Chapter }PqQuitAll}}{36}{subsection.5.1.3}
+\contentsline {section}{\numberline {5.2}\leavevmode {\color {Chapter }Interactive ANUPQ Process Utility Functions}}{36}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}\leavevmode {\color {Chapter }PqProcessIndex}}{36}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}\leavevmode {\color {Chapter }PqProcessIndices}}{37}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}\leavevmode {\color {Chapter }IsPqProcessAlive}}{37}{subsection.5.2.3}
+\contentsline {section}{\numberline {5.3}\leavevmode {\color {Chapter }Interactive Versions of Non-interactive ANUPQ Functions}}{37}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}\leavevmode {\color {Chapter }Pq (interactive)}}{37}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}\leavevmode {\color {Chapter }PqEpimorphism (interactive)}}{39}{subsection.5.3.2}
+\contentsline {subsection}{\numberline {5.3.3}\leavevmode {\color {Chapter }PqPCover (interactive)}}{39}{subsection.5.3.3}
+\contentsline {subsection}{\numberline {5.3.4}\leavevmode {\color {Chapter }PqStandardPresentation (interactive)}}{40}{subsection.5.3.4}
+\contentsline {subsection}{\numberline {5.3.5}\leavevmode {\color {Chapter }EpimorphismPqStandardPresentation (interactive)}}{41}{subsection.5.3.5}
+\contentsline {subsection}{\numberline {5.3.6}\leavevmode {\color {Chapter }PqDescendants (interactive)}}{42}{subsection.5.3.6}
+\contentsline {subsection}{\numberline {5.3.7}\leavevmode {\color {Chapter }PqSetPQuotientToGroup}}{45}{subsection.5.3.7}
+\contentsline {section}{\numberline {5.4}\leavevmode {\color {Chapter }Low-level Interactive ANUPQ functions based on menu items of the pq program}}{46}{section.5.4}
+\contentsline {section}{\numberline {5.5}\leavevmode {\color {Chapter }General commands}}{46}{section.5.5}
+\contentsline {subsection}{\numberline {5.5.1}\leavevmode {\color {Chapter }PqNrPcGenerators}}{46}{subsection.5.5.1}
+\contentsline {subsection}{\numberline {5.5.2}\leavevmode {\color {Chapter }PqFactoredOrder}}{46}{subsection.5.5.2}
+\contentsline {subsection}{\numberline {5.5.3}\leavevmode {\color {Chapter }PqOrder}}{46}{subsection.5.5.3}
+\contentsline {subsection}{\numberline {5.5.4}\leavevmode {\color {Chapter }PqPClass}}{47}{subsection.5.5.4}
+\contentsline {subsection}{\numberline {5.5.5}\leavevmode {\color {Chapter }PqWeight}}{47}{subsection.5.5.5}
+\contentsline {subsection}{\numberline {5.5.6}\leavevmode {\color {Chapter }PqCurrentGroup}}{47}{subsection.5.5.6}
+\contentsline {subsection}{\numberline {5.5.7}\leavevmode {\color {Chapter }PqDisplayPcPresentation}}{47}{subsection.5.5.7}
+\contentsline {subsection}{\numberline {5.5.8}\leavevmode {\color {Chapter }PqSetOutputLevel}}{47}{subsection.5.5.8}
+\contentsline {subsection}{\numberline {5.5.9}\leavevmode {\color {Chapter }PqEvaluateIdentities}}{48}{subsection.5.5.9}
+\contentsline {section}{\numberline {5.6}\leavevmode {\color {Chapter }Commands from the Main $p$-Quotient menu}}{48}{section.5.6}
+\contentsline {subsection}{\numberline {5.6.1}\leavevmode {\color {Chapter }PqPcPresentation}}{48}{subsection.5.6.1}
+\contentsline {subsection}{\numberline {5.6.2}\leavevmode {\color {Chapter }PqSavePcPresentation}}{49}{subsection.5.6.2}
+\contentsline {subsection}{\numberline {5.6.3}\leavevmode {\color {Chapter }PqRestorePcPresentation}}{49}{subsection.5.6.3}
+\contentsline {subsection}{\numberline {5.6.4}\leavevmode {\color {Chapter }PqNextClass}}{49}{subsection.5.6.4}
+\contentsline {subsection}{\numberline {5.6.5}\leavevmode {\color {Chapter }PqComputePCover}}{50}{subsection.5.6.5}
+\contentsline {section}{\numberline {5.7}\leavevmode {\color {Chapter }Commands from the Advanced $p$-Quotient menu}}{50}{section.5.7}
+\contentsline {subsection}{\numberline {5.7.1}\leavevmode {\color {Chapter }PqCollect}}{50}{subsection.5.7.1}
+\contentsline {subsection}{\numberline {5.7.2}\leavevmode {\color {Chapter }PqSolveEquation}}{51}{subsection.5.7.2}
+\contentsline {subsection}{\numberline {5.7.3}\leavevmode {\color {Chapter }PqCommutator}}{51}{subsection.5.7.3}
+\contentsline {subsection}{\numberline {5.7.4}\leavevmode {\color {Chapter }PqSetupTablesForNextClass}}{51}{subsection.5.7.4}
+\contentsline {subsection}{\numberline {5.7.5}\leavevmode {\color {Chapter }PqTails}}{51}{subsection.5.7.5}
+\contentsline {subsection}{\numberline {5.7.6}\leavevmode {\color {Chapter }PqComputeTails}}{52}{subsection.5.7.6}
+\contentsline {subsection}{\numberline {5.7.7}\leavevmode {\color {Chapter }PqAddTails}}{52}{subsection.5.7.7}
+\contentsline {subsection}{\numberline {5.7.8}\leavevmode {\color {Chapter }PqDoConsistencyChecks}}{52}{subsection.5.7.8}
+\contentsline {subsection}{\numberline {5.7.9}\leavevmode {\color {Chapter }PqCollectDefiningRelations}}{53}{subsection.5.7.9}
+\contentsline {subsection}{\numberline {5.7.10}\leavevmode {\color {Chapter }PqCollectWordInDefiningGenerators}}{53}{subsection.5.7.10}
+\contentsline {subsection}{\numberline {5.7.11}\leavevmode {\color {Chapter }PqCommutatorDefiningGenerators}}{54}{subsection.5.7.11}
+\contentsline {subsection}{\numberline {5.7.12}\leavevmode {\color {Chapter }PqDoExponentChecks}}{54}{subsection.5.7.12}
+\contentsline {subsection}{\numberline {5.7.13}\leavevmode {\color {Chapter }PqEliminateRedundantGenerators}}{54}{subsection.5.7.13}
+\contentsline {subsection}{\numberline {5.7.14}\leavevmode {\color {Chapter }PqRevertToPreviousClass}}{54}{subsection.5.7.14}
+\contentsline {subsection}{\numberline {5.7.15}\leavevmode {\color {Chapter }PqSetMaximalOccurrences}}{55}{subsection.5.7.15}
+\contentsline {subsection}{\numberline {5.7.16}\leavevmode {\color {Chapter }PqSetMetabelian}}{55}{subsection.5.7.16}
+\contentsline {subsection}{\numberline {5.7.17}\leavevmode {\color {Chapter }PqDoConsistencyCheck}}{55}{subsection.5.7.17}
+\contentsline {subsection}{\numberline {5.7.18}\leavevmode {\color {Chapter }PqCompact}}{56}{subsection.5.7.18}
+\contentsline {subsection}{\numberline {5.7.19}\leavevmode {\color {Chapter }PqEchelonise}}{56}{subsection.5.7.19}
+\contentsline {subsection}{\numberline {5.7.20}\leavevmode {\color {Chapter }PqSupplyAutomorphisms}}{56}{subsection.5.7.20}
+\contentsline {subsection}{\numberline {5.7.21}\leavevmode {\color {Chapter }PqExtendAutomorphisms}}{57}{subsection.5.7.21}
+\contentsline {subsection}{\numberline {5.7.22}\leavevmode {\color {Chapter }PqApplyAutomorphisms}}{57}{subsection.5.7.22}
+\contentsline {subsection}{\numberline {5.7.23}\leavevmode {\color {Chapter }PqDisplayStructure}}{57}{subsection.5.7.23}
+\contentsline {subsection}{\numberline {5.7.24}\leavevmode {\color {Chapter }PqDisplayAutomorphisms}}{58}{subsection.5.7.24}
+\contentsline {subsection}{\numberline {5.7.25}\leavevmode {\color {Chapter }PqWritePcPresentation}}{58}{subsection.5.7.25}
+\contentsline {section}{\numberline {5.8}\leavevmode {\color {Chapter }Commands from the Standard Presentation menu}}{59}{section.5.8}
+\contentsline {subsection}{\numberline {5.8.1}\leavevmode {\color {Chapter }PqSPComputePcpAndPCover}}{59}{subsection.5.8.1}
+\contentsline {subsection}{\numberline {5.8.2}\leavevmode {\color {Chapter }PqSPStandardPresentation}}{59}{subsection.5.8.2}
+\contentsline {subsection}{\numberline {5.8.3}\leavevmode {\color {Chapter }PqSPSavePresentation}}{60}{subsection.5.8.3}
+\contentsline {subsection}{\numberline {5.8.4}\leavevmode {\color {Chapter }PqSPCompareTwoFilePresentations}}{60}{subsection.5.8.4}
+\contentsline {subsection}{\numberline {5.8.5}\leavevmode {\color {Chapter }PqSPIsomorphism}}{60}{subsection.5.8.5}
+\contentsline {section}{\numberline {5.9}\leavevmode {\color {Chapter }Commands from the Main $p$-Group Generation menu}}{61}{section.5.9}
+\contentsline {subsection}{\numberline {5.9.1}\leavevmode {\color {Chapter }PqPGSupplyAutomorphisms}}{61}{subsection.5.9.1}
+\contentsline {subsection}{\numberline {5.9.2}\leavevmode {\color {Chapter }PqPGExtendAutomorphisms}}{61}{subsection.5.9.2}
+\contentsline {subsection}{\numberline {5.9.3}\leavevmode {\color {Chapter }PqPGConstructDescendants}}{61}{subsection.5.9.3}
+\contentsline {subsection}{\numberline {5.9.4}\leavevmode {\color {Chapter }PqPGSetDescendantToPcp (with class)}}{62}{subsection.5.9.4}
+\contentsline {section}{\numberline {5.10}\leavevmode {\color {Chapter }Commands from the Advanced $p$-Group Generation menu}}{62}{section.5.10}
+\contentsline {subsection}{\numberline {5.10.1}\leavevmode {\color {Chapter }PqAPGDegree}}{63}{subsection.5.10.1}
+\contentsline {subsection}{\numberline {5.10.2}\leavevmode {\color {Chapter }PqAPGPermutations}}{63}{subsection.5.10.2}
+\contentsline {subsection}{\numberline {5.10.3}\leavevmode {\color {Chapter }PqAPGOrbits}}{63}{subsection.5.10.3}
+\contentsline {subsection}{\numberline {5.10.4}\leavevmode {\color {Chapter }PqAPGOrbitRepresentatives}}{63}{subsection.5.10.4}
+\contentsline {subsection}{\numberline {5.10.5}\leavevmode {\color {Chapter }PqAPGSingleStage}}{63}{subsection.5.10.5}
+\contentsline {section}{\numberline {5.11}\leavevmode {\color {Chapter }Primitive Interactive ANUPQ Process Read/Write Functions}}{64}{section.5.11}
+\contentsline {subsection}{\numberline {5.11.1}\leavevmode {\color {Chapter }PqRead}}{64}{subsection.5.11.1}
+\contentsline {subsection}{\numberline {5.11.2}\leavevmode {\color {Chapter }PqReadAll}}{64}{subsection.5.11.2}
+\contentsline {subsection}{\numberline {5.11.3}\leavevmode {\color {Chapter }PqReadUntil}}{64}{subsection.5.11.3}
+\contentsline {subsection}{\numberline {5.11.4}\leavevmode {\color {Chapter }PqWrite}}{65}{subsection.5.11.4}
+\contentsline {chapter}{\numberline {6}\leavevmode {\color {Chapter }ANUPQ Options}}{66}{chapter.6}
+\contentsline {section}{\numberline {6.1}\leavevmode {\color {Chapter }Overview}}{66}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}\leavevmode {\color {Chapter }AllANUPQoptions}}{66}{subsection.6.1.1}
+\contentsline {subsection}{\numberline {6.1.2}\leavevmode {\color {Chapter }ANUPQoptions}}{66}{subsection.6.1.2}
+\contentsline {section}{\numberline {6.2}\leavevmode {\color {Chapter }Detailed descriptions of ANUPQ Options}}{67}{section.6.2}
+\contentsline {chapter}{\numberline {7}\leavevmode {\color {Chapter }Installing the ANUPQ Package}}{74}{chapter.7}
+\contentsline {section}{\numberline {7.1}\leavevmode {\color {Chapter }Testing your ANUPQ installation}}{75}{section.7.1}
+\contentsline {section}{\numberline {7.2}\leavevmode {\color {Chapter }Running the pq program as a standalone}}{76}{section.7.2}
+\contentsline {chapter}{\numberline {A}\leavevmode {\color {Chapter }Examples}}{78}{appendix.A}
+\contentsline {section}{\numberline {A.1}\leavevmode {\color {Chapter }The Relators Option}}{80}{section.A.1}
+\contentsline {section}{\numberline {A.2}\leavevmode {\color {Chapter }The Identities Option and PqEvaluateIdentities Function}}{82}{section.A.2}
+\contentsline {section}{\numberline {A.3}\leavevmode {\color {Chapter }A Large Example}}{84}{section.A.3}
+\contentsline {section}{\numberline {A.4}\leavevmode {\color {Chapter }Developing descendants trees}}{86}{section.A.4}
+\contentsline {subsection}{\numberline {A.4.1}\leavevmode {\color {Chapter }PqDescendantsTreeCoclassOne}}{89}{subsection.A.4.1}
+\contentsline {chapter}{References}{91}{appendix*.2}
+\contentsline {chapter}{Index}{92}{section*.3}
